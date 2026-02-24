@@ -28,8 +28,8 @@ When the user provides a GitHub PR as source material, use the GitHub MCP tools 
               │                           │
               ▼                           ▼
        ┌─────────────┐             ┌─────────────┐
-       │   REVIEW    │             │   CREATE    │
-       │    MODE     │             │    MODE     │
+       │   REVIEW    │             │  CREATE /   │
+       │    MODE     │             │  UPDATE     │
        └──────┬──────┘             └──────┬──────┘
               │                           │
               ▼                           ▼
@@ -87,13 +87,13 @@ Router → Outliner (Checker) → Style Checker → Integrity Checker
 
 ---
 
-#### Create Mode (new content)
+#### Create / Update Mode (new or updated content)
 
-**Trigger:** User provides source material to transform into documentation
+**Trigger:** User provides source material (PR, diff, spec, ticket, Notion doc, pasted content) and asks how to create or update the documentation with it.
 
 **Sequence:**
 ```
-Router → Outliner (Generator) → Drafter → Style Checker → Integrity Checker
+Router → Outliner (Generator) if needed → Drafter → Style Checker → Integrity Checker
 ```
 
 **Use cases:**
@@ -101,6 +101,73 @@ Router → Outliner (Generator) → Drafter → Style Checker → Integrity Chec
 - Documenting a new feature from a Jira or Linear ticket
 - Documenting code changes based on a GitHub pull request or git diff
 - Writing a guide based on GitHub issues
+- Updating existing pages based on a PR diff or changelog entry
+- Adding new content (sections, parameters, rows) to existing pages from source material
+
+---
+
+### Auto-Chain Execution
+
+**When Create / Update Mode is triggered, the Orchestrator runs the full pipeline automatically.** It does not stop after each step to ask the user to proceed — it chains the steps until the Drafter has produced output for all targets.
+
+#### Execution algorithm
+
+```
+1. RUN Router
+   ├─ Output: Routing Report artifact
+   ├─ Extract: YAML targets
+   │
+   ├─ IF ask_user is set OR any target has priority: conditional
+   │   └─ PAUSE: Present the question to the user. Resume on response.
+   │
+   └─ CONTINUE to step 2
+
+2. DISPATCH targets (process in priority order: primary → required → optional)
+   │
+   ├─ FOR EACH primary target:
+   │   │
+   │   ├─ IF action is create_page OR action is add_section with substantial new content:
+   │   │   ├─ RUN Outline Generator (pass Router YAML + source material)
+   │   │   ├─ Output: Outline Report artifact
+   │   │   └─ RUN Drafter in Compose mode (pass outline + Router YAML + source material)
+   │   │
+   │   └─ IF action is update_section (existing section being rewritten):
+   │       └─ RUN Drafter in Patch mode (pass Router YAML + source material)
+   │
+   ├─ FOR EACH required target:
+   │   └─ RUN Drafter in Patch mode (pass Router YAML + source material + target)
+   │
+   └─ FOR EACH optional target:
+       └─ RUN Drafter in Micro-edit mode (pass Router YAML + target)
+
+3. OUTPUT all Drafter deliverables as separate artifacts
+
+4. (Optional) RUN Style Checker on Drafter output if user requested a "full review"
+```
+
+#### Key rules for auto-chain execution
+
+1. **Run Router first, always.** The Router produces the YAML that drives everything downstream.
+2. **Do NOT pause between Router and Drafter** unless `ask_user` is set or a critical error occurs.
+3. **Output each step's result as a separate artifact** with descriptive titles (e.g., "Routing Report — MCP Server feature", "Outline — cms/features/mcp-server.md", "Draft — cms/features/mcp-server.md").
+4. **Only the Outline Generator needs the full Router report.** The Drafter receives the outline (for Compose) or the target info + source material (for Patch/Micro-edit).
+5. **Style Checker is deferred by default.** In auto-chain, the goal is to produce drafts quickly. Offer the Style Checker as a follow-up ("Would you like me to run a style check on this draft?") unless the user explicitly asked for a full review.
+6. **Handle multiple targets sequentially.** Process primary targets first (with OG → Drafter), then required (Drafter Patch), then optional (Drafter Micro-edit). Each produces its own artifact.
+7. **Respect `conditional` targets.** Do not process them until the condition is resolved. If the Router sets `ask_user`, present the question and wait.
+
+#### When OG is needed vs. straight to Drafter
+
+The key distinction:
+
+| Router target | Needs Outline Generator? | Drafter mode |
+|---------------|--------------------------|--------------|
+| `create_page` (primary) | **Yes** — new page needs structural planning | Compose |
+| `add_section` with substantial new content (primary) | **Yes** — major new section needs planning | Compose |
+| `update_section` (required) | **No** — existing structure provides context | Patch |
+| `add_section` with small addition (required) | **No** — minor addition doesn't need planning | Patch |
+| `add_link`, `add_mention`, `add_tip` (optional) | **No** — self-contained insertion | Micro-edit |
+
+**Rule of thumb:** If the target needs a new heading tree to be designed, use the Outline Generator. If the heading tree already exists (update) or the insertion is trivial (cross-link), go straight to the Drafter.
 
 ---
 
@@ -120,7 +187,7 @@ Router → Outliner (Generator) → Drafter → Style Checker → Integrity Chec
 
 ### Handoff Rules
 
-1. **Orchestrator → Prompts**: Orchestrator determines the mode (review/create) and calls prompts in sequence.
+1. **Orchestrator → Prompts**: Orchestrator determines the mode (review/create-update) and calls prompts in sequence.
 
 2. **Router → Outliner**: Router passes document type and template path; Outliner uses these for structure validation or generation.
 
@@ -138,7 +205,7 @@ Router → Outliner (Generator) → Drafter → Style Checker → Integrity Chec
 
 ### Branch and PR Conventions
 
-When a workflow involves creating a branch or opening a PR (typically in Create Mode), the Orchestrator must enforce the repository's branch naming and PR conventions.
+When a workflow involves creating a branch or opening a PR (typically in Create/Update Mode), the Orchestrator must enforce the repository's branch naming and PR conventions.
 
 **Branch prefix derivation** — The Router identifies the target documentation area. Use this to determine the prefix:
 
@@ -168,14 +235,20 @@ When a workflow involves creating a branch or opening a PR (typically in Create 
 - "style check"
 - "outline check"
 - "verify this documentation"
-- User pastes Markdown content or provides a PR link
+- User pastes Markdown content and asks to review it
 
-#### Create Mode Triggers
+#### Create / Update Mode Triggers
 - "create documentation for..."
 - "document this feature"
 - "write a guide based on..."
 - "draft an outline from..."
-- User provides Notion/Jira/GitHub links as source material
+- **"how do I update docs with this?"** / **"how should I update the documentation?"**
+- **"update docs with this"** / **"update the documentation based on this"**
+- **"how do I document this change?"**
+- User provides source material (PR, diff, spec, Notion doc, pasted code changes) and asks to create or update documentation
+- User provides a PR link/diff and asks what documentation changes are needed **and** wants them written (not just analyzed)
+
+**Disambiguation:** If the user says "what docs need updating?" without asking for the actual writing, run the Router only. If they say "update the docs with this" or "how do I update docs?", run the full auto-chain (Router → OG if needed → Drafter).
 
 ---
 
@@ -187,7 +260,7 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 # Documentation Review Report
 
 **File:** [filename or PR reference]
-**Mode:** [Review / Create]
+**Mode:** [Review / Create-Update]
 **Date:** [timestamp]
 
 ---
@@ -229,21 +302,23 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 1. **Determine mode first**: Before calling any prompt, identify which mode applies based on user intent.
 
 2. **State the mode explicitly**: Tell the user which mode is being executed.
-   > "Running **Review Mode**: Router → Outliner → Style Checker → Integrity Checker"
+   > "Running **Create / Update Mode**: Router → Outline Generator → Drafter"
 
 3. **Execute prompts in sequence**: Each prompt must complete before the next one starts.
 
 4. **Pass context forward**: Each prompt receives the output of the previous prompt(s) as context.
 
-5. **Consolidate at the end**: Merge all prompt outputs into a single, unified report.
+5. **In auto-chain mode, do not pause between steps** unless `ask_user` is set. Produce all artifacts in one turn when possible.
 
-6. **Deduplicate issues**: If multiple prompts flag the same issue, include it only once in the final report.
+6. **Consolidate at the end** (Review Mode): Merge all prompt outputs into a single, unified report.
 
-7. **Prioritize by severity**: Final recommendations should list errors first, then warnings, then suggestions.
+7. **Deduplicate issues**: If multiple prompts flag the same issue, include it only once in the final report.
 
-8. **Handle partial failures**: If one prompt fails or returns no issues, continue with the remaining prompts.
+8. **Prioritize by severity**: Final recommendations should list errors first, then warnings, then suggestions.
 
-9. **Use GitHub MCP when available**: When the source is a GitHub PR, use the GitHub MCP tools to fetch the PR content directly. See [GitHub MCP Usage Guide](shared/github-mcp-usage.md).
+9. **Handle partial failures**: If one prompt fails or returns no issues, continue with the remaining prompts.
+
+10. **Use GitHub MCP when available**: When the source is a GitHub PR, use the GitHub MCP tools to fetch the PR content directly. See [GitHub MCP Usage Guide](shared/github-mcp-usage.md).
 
 ---
 
@@ -253,3 +328,4 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 - **Incremental review**: Only run prompts relevant to the changed content in a PR
 - **Custom workflows**: Allow users to define custom prompt sequences
 - **Caching**: Cache Router results to avoid re-detecting document type
+- **Auto-retry**: If Style Checker finds errors in Drafter output, re-run Drafter once with the report as context (max 1 retry)
