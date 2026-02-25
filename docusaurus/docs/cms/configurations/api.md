@@ -52,7 +52,7 @@ module.exports = ({ env }) => ({
     prefix: '/v1',
     defaultLimit: 100,
     maxLimit: 250,
-    strictParams: true, // only allow parameters defined on routes or added via contentAPI.addQueryParams/addBodyParams
+    strictParams: true, // only allow parameters defined on routes or added via contentAPI.addQueryParams/addInputParams
   },
   documents: {
     strictParams: true, // reject unrecognized root-level parameters in strapi.documents() calls
@@ -74,7 +74,7 @@ export default ({ env }) => ({
     prefix: '/v1',
     defaultLimit: 100,
     maxLimit: 250,
-    strictParams: true, // only allow parameters defined on routes or added via contentAPI.addQueryParams/addBodyParams
+    strictParams: true, // only allow parameters defined on routes or added via contentAPI.addQueryParams/addInputParams
   },
   documents: {
     strictParams: true, // reject unrecognized root-level parameters in strapi.documents() calls
