@@ -238,21 +238,27 @@ Do NOT summarize or discuss the report before outputting it. Output the full rep
 
 ### Pipeline handoff
 
-The "Next step" section (under "Machine-readable summary") tells the user what to do next with the YAML. The Router must fill this in dynamically based on the targets. Apply these rules:
+The "Next step" section (under "Machine-readable summary") tells the user or the Orchestrator what to do next with the YAML. The Router must fill this in dynamically based on the targets.
 
-**No target has `create_page`:** All targets are updates or additions to existing pages. Copy the machine-readable YAML at the end of this report and pass it to the **Drafter** tool along with the source material.
+**Auto-chain mode (Orchestrator is running the pipeline):** The Orchestrator reads the YAML `targets` array and dispatches automatically — no manual copy-paste needed. The "Next step" text still serves as human-readable documentation of what will happen next. Write it as if addressing the user, but the Orchestrator will also use the target actions to decide routing.
 
-**All targets have `create_page`:** All targets require new pages. Copy the machine-readable YAML at the end of this report and pass it to the **Outline Generator** tool along with the source material. Then pass the generated outlines to the **Drafter** tool.
+**Manual mode (user is running steps individually):** The "Next step" text tells the user what to do with the YAML output.
 
-**Mixed targets (some `create_page`, some not):** List which targets go where. Example:
+In both modes, fill in the "Next step" section using these rules:
 
-> *Copy the machine-readable YAML at the end of this report. Pass it to the **Outline Generator** tool for the targets that need a new page (`cms/features/scheduler.md`). For the other targets (`cms/configurations/server.md`, `cms/api/rest/parameters.md`), pass the YAML directly to the **Drafter** tool along with the source material.*
+**No target has `create_page`:** All targets are updates or additions to existing pages.
 
-Always name the specific target paths so the user knows exactly which targets go to which agent.
+> *Next, pass this routing report to the **Drafter** along with the source material. The Drafter will operate in Patch or Micro-edit mode for each target.*
 
-**Key distinction:** Only `create_page` (and `create_category`) require the Outline Generator. Actions like `add_section`, `update_section`, and `add_link` on existing pages go directly to the Drafter — the existing page provides the structural context.
+**At least one target has `create_page`:** New pages need structural planning first.
 
----
+> *Next, pass this routing report to the **Outline Generator** for the targets that need a new page ([list paths]). The Outline Generator will produce a structured outline, which the **Drafter** will then use to write the content. For the other targets ([list paths]), pass the routing report directly to the **Drafter** along with the source material.*
+
+If all targets are `create_page`, simplify:
+
+> *Next, pass this routing report to the **Outline Generator** along with the source material. Then pass the generated outline(s) to the **Drafter**.*
+
+Always name the specific target paths so the reader knows exactly which targets go to which agent.
 
 ## Actions
 
@@ -445,7 +451,7 @@ The "Existing pages found" table must show the correct template and authoring gu
 
 ## Integration with Other Prompts
 
-The Router is the **first step** in both Review and Create workflows:
+The Router is the **first step** in both Review and Create / Update workflows:
 
 ### Review Mode
 ```
@@ -460,10 +466,13 @@ In Review Mode, the Router receives existing content (PR diff, existing page) an
 ```
 Router → Outline Generator → Drafter → Style Checker → Integrity Checker
 ```
-In Create Mode, the Router receives source material and determines:
+
+In Create / Update Mode, the Router receives source material and determines:
 - Where the new content should live
 - What action(s) to take (new page, new section, updates to related pages)
 - Which template and guide the Outline Generator should follow
+
+**In auto-chain mode**, the Orchestrator reads the Router's YAML output and dispatches targets automatically to the Outline Generator and/or Drafter without manual intervention. See `orchestrator.md` for the auto-chain execution logic.
 
 ### Handoff to Downstream Prompts
 
