@@ -27,6 +27,60 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+
+## 6.16.2
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add Cursor rules and refine core project instructions](https://github.com/strapi/documentation/pull/2978)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Add `strictParams` and custom Content API parameters](https://github.com/strapi/documentation/pull/2974)
+- [Improve REST API population page UX](https://github.com/strapi/documentation/pull/2971)
+- [SDK plugin v6](https://github.com/strapi/documentation/pull/2919)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix inconsistent database requirements](https://github.com/strapi/documentation/pull/2976)
+- [Update example request URL in REST API documentation](https://github.com/strapi/documentation/pull/2972)
+
+#### Repository
+- [Update Cursor rules to include auto-chain mode](https://github.com/strapi/documentation/pull/2981)
+- [Add auto-chain mode to Docs AI creation/review tools](https://github.com/strapi/documentation/pull/2980)
+- [Fix bug in Strapi CMS release notes link generation](https://github.com/strapi/documentation/pull/2970)
+- [Fix auto-labelling of PRs by source and content-type](https://github.com/strapi/documentation/pull/2969)
+- [Fix branch naming rules](https://github.com/strapi/documentation/pull/2967)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/innerdvations" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/999278?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="innerdvations"/>
+</a>
+<a href="https://github.com/jhoward1994" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/48524071?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="jhoward1994"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/suhaila-5" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/114446710?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="suhaila-5"/>
+</a>
+</div>
+<br/>
+<br/>
+
 _Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.36.1](https://github.com/strapi/strapi/releases/tag/v5.36.1)._
 
 ## 6.16.1
@@ -75,7 +129,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 <br/>
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [**5.36.0**](https://github.com/strapi/strapi/releases/tag/v5.36.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [**5.37.0**](https://github.com/strapi/strapi/releases/tag/v5.37.0)._
 
 ## 6.16.0
 
