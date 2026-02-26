@@ -41,7 +41,7 @@ The Admin Panel API includes:
 - and several [specific APIs](#available-actions) for your plugin to interact with the admin panel.
 
 :::note
-The whole code for the admin panel part of your plugin could live in the `/strapi-admin.js|ts` or `/admin/src/index.js|ts` file. However, it's recommended to split the code into different folders, just like the [structure](/cms/plugins-development/plugin-structure) created by the `strapi generate plugin` CLI generator command.
+The whole code for the admin panel part of your plugin could live in the `/strapi-admin.js|ts` or `/admin/src/index.js|ts` file. However, it's recommended to split the code into different folders, just like the [structure](/cms/plugins-development/plugin-structure) created by the `npx @strapi/sdk-plugin init` CLI generator command.
 :::
 
 ## Entry file

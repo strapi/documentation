@@ -250,6 +250,13 @@ An object with the [content-types](/cms/backend-customization/models) the plugin
 Content-Types keys in the `contentTypes` object should re-use the `singularName` defined in the [`info`](/cms/backend-customization/models#model-information) key of the schema.
 :::
 
+:::tip
+You can scaffold a content-type by using the [generate command](/cms/plugins-development/plugin-sdk#strapi-plugin-generate) inside the root of your plugin:
+```bash
+strapi-plugin generate content-type
+```
+:::
+
 **Example:**
 
 <Tabs groupId="js-ts">
@@ -527,6 +534,13 @@ An object with the [controllers](/cms/backend-customization/controllers) the plu
 
 **Type**: `Object`
 
+:::tip
+You can scaffold a controller by using the [generate command](/cms/plugins-development/plugin-sdk#strapi-plugin-generate) inside the root of your plugin:
+```bash
+strapi-plugin generate controller
+```
+:::
+
 **Example:**
 
 <Tabs groupdId="js-ts">
@@ -629,6 +643,13 @@ Services should be functions taking `strapi` as a parameter.
 
 **Type**: `Object`
 
+:::tip
+You can scaffold a service by using the [generate command](/cms/plugins-development/plugin-sdk#strapi-plugin-generate) inside the root of your plugin:
+```bash
+strapi-plugin generate service
+```
+:::
+
 **Example:**
 
 <Tabs groupdId="js-ts">
@@ -725,6 +746,13 @@ An object with the [policies](/cms/backend-customization/policies) the plugin pr
 
 **Type**: `Object`
 
+:::tip
+You can scaffold a policy by using the [generate command](/cms/plugins-development/plugin-sdk#strapi-plugin-generate) inside the root of your plugin:
+```bash
+strapi-plugin generate policy
+```
+:::
+
 **Example:**
 
 <Tabs groupdId="js-ts">
@@ -816,6 +844,13 @@ export default (policyContext, config, { strapi }) => {
 An object with the [middlewares](/cms/configurations/middlewares) the plugin provides.
 
 **Type**: `Object`
+
+:::tip
+You can scaffold a middleware by using the [generate command](/cms/plugins-development/plugin-sdk#strapi-plugin-generate) inside the root of your plugin:
+```bash
+strapi-plugin generate middleware
+```
+:::
 
 **Example:**
 
