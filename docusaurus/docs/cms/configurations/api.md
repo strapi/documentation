@@ -11,10 +11,10 @@ tags:
 # API configuration
 
 <Tldr>
-`/config/api` centralizes response privacy and REST defaults such as prefix, pagination limits, and max request size.
+`/config/api` centralizes response privacy, REST defaults (prefix, pagination limits, max request size), and strict parameter validation for both the REST Content API and the Document Service.
 </Tldr>
 
-General settings for API calls can be set in the `./config/api.js` file:
+General settings for API calls can be set in the `./config/api.js` (or `./config/api.ts`) file. Both `rest` and `documents` options live in this single config file.
 
 | Property                      | Description                                                                                                                                                                                                                                          | Type         | Default |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ------- |
@@ -24,11 +24,17 @@ General settings for API calls can be set in the `./config/api.js` file:
 | `rest.prefix`                 | The API prefix                       | String      | `/api`   |
 | `rest.defaultLimit`           | Default `limit` parameter used in API calls (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset))                                                                      | Integer      | `25`    |
 | `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)). | Integer      | `100`   |
+| `rest.strictParams`           | When `true`, only allowed query and body parameters are accepted on Content API routes; unknown top-level keys are rejected. Add allowed parameters via [Custom Content API parameters](/cms/backend-customization/routes#custom-content-api-parameters) in `register`. | Boolean      | -       |
+| `documents`                   | Document Service configuration                                                                                                                                                                                                                        | Object       | -       |
+| `documents.strictParams`      | When `true`, Document Service methods reject parameters with unrecognized root-level keys (e.g., invalid `status`, `locale`). When `false` or unset, unknown parameters are ignored. See [Document Service API](/cms/api/document-service#configuration). | Boolean      | -       |
 
 :::note 
 If the `rest.maxLimit` value is less than the `rest.defaultLimit` value, `maxLimit` will be the limit used.
 :::
 
+:::tip
+`rest.strictParams` applies to incoming REST Content API requests (query and body). `documents.strictParams` applies to parameters passed to `strapi.documents()` in server-side code. You can enable one or both in the same config file.
+:::
 
 **Example:**
 
@@ -46,6 +52,10 @@ module.exports = ({ env }) => ({
     prefix: '/v1',
     defaultLimit: 100,
     maxLimit: 250,
+    strictParams: true, // only allow parameters defined on routes or added via contentAPI.addQueryParams/addInputParams
+  },
+  documents: {
+    strictParams: true, // reject unrecognized root-level parameters in strapi.documents() calls
   },
 });
 ```
@@ -64,6 +74,10 @@ export default ({ env }) => ({
     prefix: '/v1',
     defaultLimit: 100,
     maxLimit: 250,
+    strictParams: true, // only allow parameters defined on routes or added via contentAPI.addQueryParams/addInputParams
+  },
+  documents: {
+    strictParams: true, // reject unrecognized root-level parameters in strapi.documents() calls
   },
 });
 ```
