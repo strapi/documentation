@@ -395,14 +395,14 @@ integrate_release_notes() {
 # Function to update Strapi CMS version in release notes
 update_cms_version_link() {
     echo -e "${BLUE}🔄 Checking latest Strapi CMS version...${NC}"
-    
+
     # Fetch latest release from strapi/strapi (not the docs repo)
     local latest_release=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
         -H "Accept: application/vnd.github.v3+json" \
         "https://api.github.com/repos/strapi/strapi/releases/latest")
-    
+
     local cms_version=$(echo "$latest_release" | jq -r '.tag_name' | sed 's/^v//')
-    
+
     if [ -z "$cms_version" ] || [ "$cms_version" = "null" ]; then
         echo -e "${YELLOW}⚠️  Could not fetch latest Strapi CMS version${NC}"
         echo -n "Do you want to continue without updating the CMS version? (y/N) "
@@ -412,38 +412,41 @@ update_cms_version_link() {
         fi
         return 1
     fi
-    
+
     echo -e "${BLUE}Latest Strapi CMS version: $cms_version${NC}"
-    
-    # Detect OS for sed -i compatibility (macOS requires '' argument)
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        SED_INPLACE=(sed -i '')
-    else
-        SED_INPLACE=(sed -i)
+
+    local reminder_line="_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [${cms_version}](https://github.com/strapi/strapi/releases/tag/v${cms_version})._"
+
+    # Step 1: Remove ALL existing Reminder lines (from any release section)
+    local removed_count=$(grep -c "^_Reminder: Version numbers on this page" "$RELEASE_NOTES_FILE" 2>/dev/null || echo "0")
+    if [ "$removed_count" -gt 0 ]; then
+        echo -e "${BLUE}Removing $removed_count existing Reminder line(s)...${NC}"
+        grep -v "^_Reminder: Version numbers on this page" "$RELEASE_NOTES_FILE" > "$TEMP_DIR/release_notes_cleaned.md"
+        mv "$TEMP_DIR/release_notes_cleaned.md" "$RELEASE_NOTES_FILE"
     fi
-    
-    # Update the reminder line in release-notes.md
-    if grep -q "The latest Strapi CMS version is" "$RELEASE_NOTES_FILE"; then
-        # Try __bold__ syntax first
-        "${SED_INPLACE[@]}" "s|\(The latest Strapi CMS version is \)\[__[^]]*__\](https://github.com/strapi/strapi/releases/tag/v[^)]*)\(.*\)|\1[__${cms_version}__](https://github.com/strapi/strapi/releases/tag/v${cms_version})\2|" "$RELEASE_NOTES_FILE"
-        
-        if grep -q "$cms_version" "$RELEASE_NOTES_FILE"; then
-            echo -e "${GREEN}✅ Updated Strapi CMS version to $cms_version in release notes${NC}"
-        else
-            echo -e "${YELLOW}⚠️  Sed replacement may not have matched. Trying alternate pattern...${NC}"
-            # Fallback: handle **bold** markdown syntax
-            "${SED_INPLACE[@]}" "s|\(The latest Strapi CMS version is \)\[\*\*[^]]*\*\*\](https://github.com/strapi/strapi/releases/tag/v[^)]*)\(.*\)|\1[**${cms_version}**](https://github.com/strapi/strapi/releases/tag/v${cms_version})\2|" "$RELEASE_NOTES_FILE"
-            
-            if grep -q "$cms_version" "$RELEASE_NOTES_FILE"; then
-                echo -e "${GREEN}✅ Updated Strapi CMS version to $cms_version (fallback pattern)${NC}"
-            else
-                echo -e "${RED}❌ Failed to update CMS version automatically${NC}"
-                echo -e "${BLUE}Please update the line manually in $RELEASE_NOTES_FILE${NC}"
-            fi
-        fi
+
+    # Step 2: Insert a single Reminder line after </details>, before the first ## heading
+    awk -v reminder="$reminder_line" '
+        /^<\/details>/ {
+            print
+            found_details = 1
+            next
+        }
+        found_details && !inserted && /^## / {
+            print ""
+            print reminder
+            print ""
+            inserted = 1
+        }
+        { print }
+    ' "$RELEASE_NOTES_FILE" > "$TEMP_DIR/release_notes_with_reminder.md"
+    mv "$TEMP_DIR/release_notes_with_reminder.md" "$RELEASE_NOTES_FILE"
+
+    if grep -q "$cms_version" "$RELEASE_NOTES_FILE"; then
+        echo -e "${GREEN}✅ Updated Strapi CMS version to $cms_version in release notes${NC}"
     else
-        echo -e "${YELLOW}⚠️  CMS version reminder line not found in $RELEASE_NOTES_FILE${NC}"
-        echo -e "${BLUE}The line might not have been added yet.${NC}"
+        echo -e "${RED}❌ Failed to update CMS version automatically${NC}"
+        echo -e "${BLUE}Please update the line manually in $RELEASE_NOTES_FILE${NC}"
     fi
 }
 
