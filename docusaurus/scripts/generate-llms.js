@@ -79,6 +79,11 @@ class DocusaurusLlmsGenerator {
         const subFiles = await this.getAllMdFiles(fullPath, path.join(prefix, item));
         files.push(...subFiles);
       } else if (item.endsWith('.md')) {
+        // Skip agent guides and templates
+        const rel = path.join(prefix, item).replace(/\\/g, '/');
+        if (/(^|\/)AGENTS(\.|\.md$)/.test(rel) || /(^|\/)templates\//.test(rel)) {
+          continue;
+        }
         files.push(path.join(prefix, item));
       }
     }

@@ -10,10 +10,10 @@ tags:
 - hosting server
 ---
 
-import DatabaseRequire from '/docs/snippets/database-require.md'
 import HardwareRequire from '/docs/snippets/hardware-require.md'
 import OperatingSystemRequire from '/docs/snippets/operating-system-require.md'
 import InstallPrereq from '/docs/snippets/installation-prerequisites.md'
+import SupportedDatabases from '/docs/snippets/supported-databases.md'
 
 # Deployment
 
@@ -53,7 +53,7 @@ To provide the best possible environment for Strapi the following requirements a
   <HardwareRequire components={props.components} />
 
 - A supported database version:
-<DatabaseRequire components={props.components} />
+<SupportedDatabases components={props.components} />
 
 :::strapi Database deployment
 Deploying databases along with Strapi is covered in the [databases guide](/cms/configurations/database#databases-installation).

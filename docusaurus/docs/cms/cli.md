@@ -56,19 +56,23 @@ Strapi also adds middlewares to support HMR (Hot Module Replacement) for the adm
 
 ```shell
 strapi develop
-options: [--no-build |--no-watch-admin |--browser |--debug |--silent]
+options: [--bundler | --open | --no-watch-admin | --no-build-admin | --polling | --debug | --silent]
 ```
 
+- **strapi develop --bundler [bundler]**<br/>
+  Selects the bundler for the admin panel build (`vite` or `webpack`).
 - **strapi develop --open**<br/>
   Starts your application with auto-reloading enabled & open your default browser with the administration panel running.
 - **strapi develop --no-watch-admin**<br/>
   Prevents the server from auto-reload when changes are made to the admin panel code.
-- [DEPRECATED] **strapi develop --no-build**<br/>
-  Starts your application with the auto-reloading enabled and skip the administration panel build process
-- [DEPRECATED] **strapi develop --watch-admin**<br/>
-  Starts your application with the auto-reloading enabled and the front-end development server. It allows you to customize the administration panel.
-- [DEPRECATED] **strapi develop --watch-admin --browser 'google chrome'**<br/>
-  Starts your application with the auto-reloading enabled and the front-end development server. It allows you to customize the administration panel. Provide a browser name to use instead of the default one, `false` means stop opening the browser.
+- **strapi develop --no-build-admin**<br/>
+  Prevents the admin panel from being built when `--no-watch-admin` is enabled.
+- **strapi develop --polling**<br/>
+  Watches for file changes in network directories.
+- **strapi develop --debug**<br/>
+  Enables debugging mode with verbose logs.
+- **strapi develop --silent**<br/>
+  Suppresses logs.
 
 :::warning
 You should never use this command to run a Strapi application in production.
@@ -355,7 +359,7 @@ The command displays an interactive menu with the following options:
 ![strapi generate GIF](/img/assets/cli/strapi-generate.gif)
 
 The generator detects TypeScript or JavaScript automatically and creates files with the correct extension (`.ts` or `.js`).
-Generated files include commented examples. Singular and plural names must be different and use kebab-case format.
+Generated files include commented examples. Singular and plural names must be different and use **kebab-case format** <NamingConventions/>.
 
 <ExpandableContent maxHeight="120px" showMoreText="Show more…" showLessText="Show less">
 

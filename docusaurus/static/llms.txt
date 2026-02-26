@@ -4,7 +4,7 @@
 - [Profile settings](https://docs.strapi.io/cloud/account/account-settings): Settings of the Profile page include account details, connected accounts, and account deletion options.
 - [Database](https://docs.strapi.io/cloud/advanced/database): Default PostgreSQL can be swapped for any supported SQL database by aligning configuration and environment variables.
 - [Email Provider](https://docs.strapi.io/cloud/advanced/email): Third‑party email services integrate through plugins and environment variables to replace the default sender.
-- [Upload Provider](https://docs.strapi.io/cloud/advanced/upload): External storage like S3 or Cloudinary requires plugin setup, security middleware, and Cloud variables.
+- [Upload Provider Configuration for Strapi Cloud](https://docs.strapi.io/cloud/advanced/upload): External storage like S3 or Cloudinary requires plugin setup, security middleware, and Cloud variables.
 - [Command Line Interface (CLI)](https://docs.strapi.io/cloud/cli/cloud-cli): CLI commands handle login, project deploy, linking, listing, and logout without needing a remote repository.
 - [Caching & Performance](https://docs.strapi.io/cloud/getting-started/caching): Edge caching via Cache-Control headers reduces latency and server load for heavy static content.
 - [Strapi Cloud fundamentals](https://docs.strapi.io/cloud/getting-started/cloud-fundamentals): Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understa...
@@ -48,7 +48,7 @@
 - [Interactive Query Builder](https://docs.strapi.io/cms/api/rest/interactive-query-builder): Use an interactive tool that leverages the querystring library to build your query URL
 - [Locale](https://docs.strapi.io/cms/api/rest/locale): Browse the REST API reference for the locale parameter to take advantage of the Internationalization feature through REST.
 - [Parameters](https://docs.strapi.io/cms/api/rest/parameters): Use API parameters to refine your Strapi REST API queries.
-- [Populate and Select](https://docs.strapi.io/cms/api/rest/populate-select): Use Strapi's REST API to populate or select certain fields.
+- [Populate and Select](https://docs.strapi.io/cms/api/rest/populate-select): Use the populate parameter to include relations, media fields, components, and dynamic zones in REST API responses. Use the fields parameter to return only specific fields.
 - [Relations](https://docs.strapi.io/cms/api/rest/relations): Use the REST API to manage the order of relations
 - [Sort and Pagination](https://docs.strapi.io/cms/api/rest/sort-pagination): Use Strapi's REST API to sort or paginate your data.
 - [Status](https://docs.strapi.io/cms/api/rest/status): Use Strapi's REST API to work with draft or published versions of your documents.
@@ -64,7 +64,7 @@
 - [Webhooks](https://docs.strapi.io/cms/backend-customization/webhooks): Webhooks let Strapi notify external systems when content changes, while omitting the Users type for privacy. Configuration in config/server sets default headers and endpoints to trigger third-party processing.
 - [Command Line Interface](https://docs.strapi.io/cms/cli): Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
 - [Configurations](https://docs.strapi.io/cms/configurations): Learn how you can manage and customize the configuration of your Strapi application.
-- [API calls configuration](https://docs.strapi.io/cms/configurations/api): /config/api centralizes response privacy and REST defaults such as prefix, pagination limits, and max request size.
+- [API calls configuration](https://docs.strapi.io/cms/configurations/api): /config/api centralizes response privacy, REST defaults (prefix, pagination limits, max request size), and strict parameter validation for both the REST Content API and the Document Service.
 - [CRON jobs](https://docs.strapi.io/cms/configurations/cron): Cron jobs schedule custom functions at specific times via node-schedule, activated through server config and optional task files.
 - [Database configuration](https://docs.strapi.io/cms/configurations/database): /config/database defines connections, clients, and pooling for supported databases like SQLite, MySQL, and PostgreSQL.
 - [Environment variables configuration](https://docs.strapi.io/cms/configurations/environment): Strapi-specific environment variables and .env usage enable per-environment configs, with env() helpers for casting values.

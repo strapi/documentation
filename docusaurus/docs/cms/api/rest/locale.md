@@ -44,7 +44,7 @@ The following table lists the new possible use cases added by i18n to the REST A
 | Get all documents in a specific locale | [`GET /api/restaurants?locale=fr`](#rest-get-all) |
 | Get a specific locale version for a document | [`GET /api/restaurants/abcdefghijklmno456?locale=fr`](#get-one-collection-type) |
 | Create a new document for the default locale | [`POST /api/restaurants`](#rest-create-default-locale)<br/>+ pass attributes in the request body |
-| Create a new document for a specific locale | [`POST /api/restaurants`](#rest-create-specific-locale)<br/>+ pass attributes **and locale** in the request body |
+| Create a new document for a specific locale | [`POST /api/restaurants?locale=fr`](#rest-create-specific-locale)<br/>+ pass attributes in the request body |
 | Create a new, or update an existing, locale version for an existing document | [`PUT /api/restaurants/abcdefghijklmno456?locale=fr`](#rest-put-collection-type)<br/>+ pass attributes in the request body |
 | Delete a specific locale version of a document | [`DELETE /api/restaurants/abcdefghijklmno456?locale=fr`](#rest-delete-collection-type) |
 
@@ -208,12 +208,12 @@ To get a specific single type document in a given locale, add the `locale` param
 
 ### `POST` Create a new localized document for a collection type {#rest-create}
 
-To create a localized document from scratch, send a POST request to the Content API. Depending on whether you want to create it for the default locale or for another locale, you might need to pass the `locale` parameter in the request's body
+To create a localized document from scratch, send a POST request to the Content API. Depending on whether you want to create it for the default locale or for another locale, you might need to pass the `locale` parameter in the query.
 
 | Use case                      | Syntax format and link for more information                                               |
 | ----------------------------- | --------------------------------------------------------------------------------------- |
 | Create for the default locale | [`POST /api/content-type-plural-name`](#rest-create-default-locale) |
-| Create for a specific locale  | [`POST /api/content-type-plural-name`](#rest-create-specific-locale)<br/>+ pass locale in request body               |
+| Create for a specific locale  | [`POST /api/content-type-plural-name?locale=fr`](#rest-create-specific-locale)
 
 #### For the default locale {#rest-create-default-locale}
 
@@ -257,18 +257,17 @@ If no locale has been passed in the request body, the document is created using 
 
 #### For a specific locale {#rest-create-specific-locale}
 
-To create a localized entry for a locale different from the default one, add the `locale` attribute to the body of the POST request:
+To create a localized entry for a locale different from the default one, add the `locale` parameter to the query URL of the POST request:
 
 <ApiCall>
 <Request>
 
-`POST http://localhost:1337/api/restaurants`
+`POST http://localhost:1337/api/restaurants?locale=fr`
 
 ```json {4}
 {
   "data": {
-    "Name": "She's Cake",
-    "locale": "fr"
+    "Name": "She's Cake"
   }
 }
 ```
@@ -287,7 +286,7 @@ To create a localized entry for a locale different from the default one, add the
     "createdAt": "2024-03-06T22:21:18.373Z",
     "updatedAt": "2024-03-06T22:21:18.373Z",
     "publishedAt": "2024-03-06T22:21:18.378Z",
-    "locale": "en"
+    "locale": "fr"
   },
   "meta": {}
 }
@@ -334,8 +333,8 @@ To create a new locale for an existing document in a collection type, add the `l
 
 ```json
 {
-  data: {
-    "Name": "She's Cake in French",
+  "data": {
+    "Name": "She's Cake in French"
   }
 }
 ```

@@ -392,6 +392,64 @@ integrate_release_notes() {
     echo -e "${GREEN}✅ Release notes integrated${NC}"
 }
 
+# Function to update Strapi CMS version in release notes
+update_cms_version_link() {
+    echo -e "${BLUE}🔄 Checking latest Strapi CMS version...${NC}"
+
+    # Fetch latest release from strapi/strapi (not the docs repo)
+    local latest_release=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+        -H "Accept: application/vnd.github.v3+json" \
+        "https://api.github.com/repos/strapi/strapi/releases/latest")
+
+    local cms_version=$(echo "$latest_release" | jq -r '.tag_name' | sed 's/^v//')
+
+    if [ -z "$cms_version" ] || [ "$cms_version" = "null" ]; then
+        echo -e "${YELLOW}⚠️  Could not fetch latest Strapi CMS version${NC}"
+        echo -n "Do you want to continue without updating the CMS version? (y/N) "
+        read -r skip_cms
+        if [[ ! "$skip_cms" =~ ^[Yy]$ ]]; then
+            exit 1
+        fi
+        return 1
+    fi
+
+    echo -e "${BLUE}Latest Strapi CMS version: $cms_version${NC}"
+
+    local reminder_line="_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [${cms_version}](https://github.com/strapi/strapi/releases/tag/v${cms_version})._"
+
+    # Step 1: Remove ALL existing Reminder lines (from any release section)
+    local removed_count=$(grep -c "^_Reminder: Version numbers on this page" "$RELEASE_NOTES_FILE" 2>/dev/null || echo "0")
+    if [ "$removed_count" -gt 0 ]; then
+        echo -e "${BLUE}Removing $removed_count existing Reminder line(s)...${NC}"
+        grep -v "^_Reminder: Version numbers on this page" "$RELEASE_NOTES_FILE" > "$TEMP_DIR/release_notes_cleaned.md"
+        mv "$TEMP_DIR/release_notes_cleaned.md" "$RELEASE_NOTES_FILE"
+    fi
+
+    # Step 2: Insert a single Reminder line after </details>, before the first ## heading
+    awk -v reminder="$reminder_line" '
+        /^<\/details>/ {
+            print
+            found_details = 1
+            next
+        }
+        found_details && !inserted && /^## / {
+            print ""
+            print reminder
+            print ""
+            inserted = 1
+        }
+        { print }
+    ' "$RELEASE_NOTES_FILE" > "$TEMP_DIR/release_notes_with_reminder.md"
+    mv "$TEMP_DIR/release_notes_with_reminder.md" "$RELEASE_NOTES_FILE"
+
+    if grep -q "$cms_version" "$RELEASE_NOTES_FILE"; then
+        echo -e "${GREEN}✅ Updated Strapi CMS version to $cms_version in release notes${NC}"
+    else
+        echo -e "${RED}❌ Failed to update CMS version automatically${NC}"
+        echo -e "${BLUE}Please update the line manually in $RELEASE_NOTES_FILE${NC}"
+    fi
+}
+
 # Function to commit and push changes
 commit_and_push() {
     echo -e "${BLUE}💾 Committing and pushing changes...${NC}"
@@ -532,6 +590,7 @@ show_summary() {
     echo -e "- ✅ Milestone: $MILESTONE_TITLE"
     echo -e "- ✅ Package.json updated"
     echo -e "- ✅ Release notes generated and integrated"
+    echo -e "- ✅ Strapi CMS version link updated"
     echo -e "- ✅ Changes committed and pushed"
     echo -e "- ✅ GitHub release created"
     echo -e "- ✅ Milestone closed"
@@ -580,6 +639,7 @@ main() {
     update_package_version
     generate_release_notes
     integrate_release_notes
+    update_cms_version_link
     commit_and_push
     wait_for_deployment
     create_github_release

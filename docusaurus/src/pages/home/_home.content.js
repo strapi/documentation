@@ -19,7 +19,7 @@ export default {
     {
       icon: 'newspaper-clipping',
       text: 'New Docs release - See what\'s new this week',
-      link: '/release-notes#6100',
+      link: '/release-notes',
     },
   ],
   carousel: [
