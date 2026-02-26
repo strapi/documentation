@@ -37,6 +37,7 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 <br />
 
 #### Repository
+- [Add auto-chain mode to Docs AI creation/review tools](https://github.com/strapi/documentation/pull/2980)
 - [Add Cursor rules and refine core project instructions](https://github.com/strapi/documentation/pull/2978)
 
 ### <Icon name='pen-nib' /> Updated content
@@ -58,7 +59,6 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 
 #### Repository
 - [Update Cursor rules to include auto-chain mode](https://github.com/strapi/documentation/pull/2981)
-- [Add auto-chain mode to Docs AI creation/review tools](https://github.com/strapi/documentation/pull/2980)
 - [Fix bug in Strapi CMS release notes link generation](https://github.com/strapi/documentation/pull/2970)
 - [Fix auto-labelling of PRs by source and content-type](https://github.com/strapi/documentation/pull/2969)
 - [Fix branch naming rules](https://github.com/strapi/documentation/pull/2967)
