@@ -38,23 +38,23 @@ When the user provides a GitHub PR as source material, use the GitHub MCP tools 
        └──────┬──────┘             └──────┬──────┘
               │                           │
               ▼                           ▼
-       ┌─────────────┐             ┌─────────────┐
-       │  Outliner   │             │  Outliner   │
-       │  (Checker)  │             │ (Generator) │
-       └──────┬──────┘             └──────┬──────┘
-              │                           │
-              ▼                           ▼
-       ┌─────────────┐             ┌─────────────┐
-       │   Style     │             │   Drafter   │
-       │   Checker   │             └──────┬──────┘
-       └──────┬──────┘                    │
+       ┌──────────────┐            ┌─────────────┐
+       │   Outliner   │            │  Outliner   │
+       │  (Quick or   │            │ (Generator) │
+       │ Full Review) │            └──────┬──────┘
+       └──────┬───────┘                   │
               │                           ▼
               ▼                    ┌─────────────┐
-       ┌─────────────┐             │   Style     │
-       │  Integrity  │             │   Checker   │
-       │   Checker   │             └──────┬──────┘
-       └─────────────┘                    │
-                                          ▼
+       ┌─────────────┐            │   Drafter   │
+       │   Style     │            └──────┬──────┘
+       │   Checker   │                   │
+       └──────┬──────┘                   ▼
+              │                    ┌─────────────┐
+              ▼                    │   Style     │
+       ┌─────────────┐            │   Checker   │
+       │  Integrity  │            └──────┬──────┘
+       │   Checker   │                   │
+       └─────────────┘                   ▼
                                    ┌─────────────┐
                                    │  Integrity  │
                                    │   Checker   │
@@ -73,8 +73,19 @@ The Orchestrator supports two main workflows:
 
 **Sequence:**
 ```
-Router → Outliner (Checker) → Style Checker → Integrity Checker
+Router → Outliner (Quick Check or Full Review) → Style Checker → Integrity Checker
 ```
+
+- **Quick Check** = Outline Checker only (structure/template compliance)
+- **Full Review** = Outline Checker + UX Analyzer (structure + reader experience)
+
+**Full Review escalation:** The Outliner automatically runs a Full Review when any of these conditions are met:
+- A file in the PR is **new** (not modifying an existing page)
+- The PR diff shows **>50% of a file changed**
+- A document exceeds **300 lines**
+- The user explicitly requests "full review" or "UX analysis"
+
+Otherwise, the Outliner runs a Quick Check. See `outliner.md` for details on mode selection logic and output formats.
 
 **Use cases:**
 - Reviewing a PR before merge
@@ -82,8 +93,6 @@ Router → Outliner (Checker) → Style Checker → Integrity Checker
 - Validating documentation after edits
 - Final review before a release
 - Auditing a section of the documentation
-
-**Note:** The Outliner internally decides whether to run a quick check (structure only) or a full review (structure + UX analysis) based on document characteristics. See `outliner.md` for details.
 
 ---
 
@@ -193,7 +202,7 @@ The key distinction:
 
 3. **Outliner → Drafter** *(create mode only)*: Outline Generator passes the approved outline structure; Drafter fills in content.
 
-4. **Outliner → Style Checker** *(review mode)*: Outliner completes structure check; Style Checker receives the same content for prose review.
+4. **Outliner → Style Checker** *(review mode)*: Outliner completes structure check (and UX analysis if Full Review); Style Checker receives the same content for prose review.
 
 5. **Style Checker → Integrity Checker**: Style Checker completes; Integrity Checker receives content for technical verification.
 
@@ -270,6 +279,7 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 | Check | Errors | Warnings | Suggestions |
 |-------|--------|----------|-------------|
 | Structure (Outliner) | X | Y | Z |
+| UX Analysis (if Full Review) | — | — | X |
 | Style (12 Rules) | X | Y | Z |
 | Integrity (Links) | X | Y | Z |
 | **Total** | **X** | **Y** | **Z** |
@@ -278,6 +288,9 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 
 ## Structure Issues
 [Output from Outline Checker]
+
+## UX Analysis
+[Output from UX Analyzer — only present when Full Review was triggered]
 
 ## Style Issues
 [Output from Style Checker]
@@ -292,7 +305,10 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 1. **[error]** [Most critical fix]
 2. **[error]** [Second critical fix]
 3. **[warning]** [Important fix]
-...
+4. **[ux-high]** [High-impact UX fix]
+5. **[suggestion]** [Style suggestion]
+6. **[ux-medium]** [Medium-impact UX fix]
+7. **[ux-low]** [Nice-to-have UX improvement]
 ```
 
 ---
@@ -303,6 +319,7 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 
 2. **State the mode explicitly**: Tell the user which mode is being executed.
    > "Running **Create / Update Mode**: Router → Outline Generator → Drafter"
+   > "Running **Review Mode** (Full Review): Router → Outliner (Checker + UX Analyzer) → Style Checker"
 
 3. **Execute prompts in sequence**: Each prompt must complete before the next one starts.
 
@@ -310,11 +327,11 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 
 5. **In auto-chain mode, do not pause between steps** unless `ask_user` is set. Produce all artifacts in one turn when possible.
 
-6. **Consolidate at the end** (Review Mode): Merge all prompt outputs into a single, unified report.
+6. **Consolidate at the end** (Review Mode): Merge all prompt outputs into a single, unified report. If the Outliner ran a Full Review, include the UX Analysis section in the consolidated report.
 
 7. **Deduplicate issues**: If multiple prompts flag the same issue, include it only once in the final report.
 
-8. **Prioritize by severity**: Final recommendations should list errors first, then warnings, then suggestions.
+8. **Prioritize by severity**: Final recommendations should list errors first, then warnings, then ux-high, then suggestions, then ux-medium, then ux-low.
 
 9. **Handle partial failures**: If one prompt fails or returns no issues, continue with the remaining prompts.
 
