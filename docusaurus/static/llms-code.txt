@@ -25526,6 +25526,628 @@ File path: N/A
 
 
 
+# Admin configuration & customization
+Source: https://docs.strapi.io/cms/plugins-development/admin-configuration-customization
+
+## Base configuration
+Description: The registerPlugin method is the core function for registering a plugin in the admin panel.
+(Source: https://docs.strapi.io/cms/plugins-development/admin-configuration-customization#base-configuration)
+
+Language: TypeScript
+File path: /src/index.ts
+
+```ts
+// admin/src/index.ts
+export default {
+  register(app) {
+    app.registerPlugin({
+      id: 'my-plugin',
+      name: 'My Plugin',
+      apis: {
+        // APIs exposed to other plugins
+      },
+      initializer: MyInitializerComponent,
+      injectionZones: {
+        // Areas where other plugins can inject components
+      },
+      isReady: false, // Plugin readiness status
+    });
+  },
+};
+```
+
+
+## Adding a menu link
+Description: The navigation sidebar is the main menu on the left side of the admin panel.
+(Source: https://docs.strapi.io/cms/plugins-development/admin-configuration-customization#adding-a-menu-link)
+
+Language: TypeScript
+File path: /src/index.ts
+
+```ts
+// admin/src/index.ts
+import PluginIcon from './components/PluginIcon';
+import type { StrapiApp } from '@strapi/admin/strapi-admin';
+
+export default {
+  register(app: StrapiApp) {
+    app.addMenuLink({
+      to: `/plugins/my-plugin`,
+      icon: PluginIcon,
+      intlLabel: {
+        id: 'my-plugin.plugin.name',
+        defaultMessage: 'My Plugin',
+      },
+      Component: async () => {
+        const { App } = await import('./pages/App');
+        return App;
+      },
+      permissions: [], // Array of permission objects
+      position: 3, // Position in the menu (lower numbers appear first)
+      licenseOnly: false, // Set to true to show ⚡ icon for paid features
+    });
+
+    app.registerPlugin({
+      id: 'my-plugin',
+      name: 'My Plugin',
+    });
+  },
+};
+```
+
+
+## Creating a new settings section
+Description: Use createSettingSection() in the register lifecycle function:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-configuration-customization#creating-a-new-settings-section)
+
+Language: JavaScript
+File path: /src/translations/[locale].js
+
+```js
+// admin/src/index.ts
+import type { StrapiApp } from '@strapi/admin/strapi-admin';
+
+export default {
+  register(app: StrapiApp) {
+    app.createSettingSection(
+      {
+        id: 'my-plugin',
+        intlLabel: {
+          id: 'my-plugin.settings.section-label',
+          defaultMessage: 'My Plugin Settings',
+        },
+      },
+      [
+        {
+          intlLabel: {
+            id: 'my-plugin.settings.general',
+            defaultMessage: 'General',
+          },
+          id: 'general',
+          to: 'my-plugin/general',
+          Component: async () => {
+            const { GeneralSettings } =
+              await import('./pages/Settings/General');
+            return GeneralSettings;
+          },
+        },
+        {
+          intlLabel: {
+            id: 'my-plugin.settings.advanced',
+            defaultMessage: 'Advanced',
+          },
+          id: 'advanced',
+          to: 'my-plugin/advanced',
+          Component: async () => {
+            const { AdvancedSettings } =
+              await import('./pages/Settings/Advanced');
+            return AdvancedSettings;
+          },
+        },
+      ],
+    );
+
+    app.registerPlugin({
+      id: 'my-plugin',
+      name: 'My Plugin',
+    });
+  },
+};
+```
+
+
+## Adding links to existing settings sections
+Description: To add links to existing settings sections (like the "Global" section), use addSettingsLink() in the bootstrap lifecycle function:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-configuration-customization#adding-links-to-existing-settings-sections)
+
+Language: JavaScript
+File path: /src/translations/[locale].js
+
+```js
+// admin/src/index.ts
+import type { StrapiApp } from '@strapi/admin/strapi-admin';
+
+export default {
+  register(app: StrapiApp) {
+    app.registerPlugin({
+      id: 'my-plugin',
+      name: 'My Plugin',
+    });
+  },
+  bootstrap(app: StrapiApp) {
+    // Add a link to the global settings section
+    app.addSettingsLink('global', {
+      intlLabel: {
+        id: 'my-plugin.settings.documentation',
+        defaultMessage: 'Documentation',
+      },
+      id: 'documentation',
+      to: 'my-plugin/documentation',
+      Component: async () => {
+        const { DocumentationPage } =
+          await import('./pages/Settings/Documentation');
+        return DocumentationPage;
+      },
+      permissions: [],
+      licenseOnly: false,
+    });
+  },
+};
+```
+
+
+
+# Admin injection zones
+Source: https://docs.strapi.io/cms/plugins-development/admin-injection-zones
+
+## Injecting into Content Manager zones
+Description: To inject a component into a Content Manager injection zone, use getPlugin('content-manager').injectComponent() in the bootstrap lifecycle:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-injection-zones#injecting-into-content-manager-zones)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// admin/src/index.ts
+import type { StrapiApp } from '@strapi/admin/strapi-admin';
+import { MyCustomButton } from './components/MyCustomButton';
+import { PreviewAction } from './components/PreviewAction';
+
+export default {
+  register(app: StrapiApp) {
+    app.registerPlugin({
+      id: 'my-plugin',
+      name: 'My Plugin',
+    });
+  },
+  bootstrap(app: StrapiApp) {
+    // Inject a button into the Edit view's right-links zone
+    app
+      .getPlugin('content-manager')
+      .injectComponent('editView', 'right-links', {
+        name: 'my-plugin-custom-button',
+        Component: MyCustomButton,
+      });
+
+    // Inject a component into the List view's actions zone
+    app.getPlugin('content-manager').injectComponent('listView', 'actions', {
+      name: 'my-plugin-list-action',
+      Component: () => <button>Custom List Action</button>,
+    });
+
+    // Inject a component into the Preview view's actions zone
+    app.getPlugin('content-manager').injectComponent('preview', 'actions', {
+      name: 'my-plugin-preview-action',
+      Component: PreviewAction,
+    });
+  },
+};
+```
+
+
+## Creating custom injection zones
+Description: Plugins can define their own injection zones to allow other plugins to extend their UI.
+(Source: https://docs.strapi.io/cms/plugins-development/admin-injection-zones#creating-custom-injection-zones)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// admin/src/index.ts
+import type { StrapiApp } from '@strapi/admin/strapi-admin';
+
+export default {
+  register(app: StrapiApp) {
+    app.registerPlugin({
+      id: 'dashboard',
+      name: 'Dashboard',
+      injectionZones: {
+        'dashboard.main': {
+          top: [], // Components injected at the top
+          middle: [], // Components injected in the middle
+          bottom: [], // Components injected at the bottom
+        },
+        'dashboard.sidebar': {
+          before: [], // Components injected before sidebar content
+          after: [], // Components injected after sidebar content
+        },
+      },
+    });
+  },
+};
+```
+
+
+## Using injection zones in components
+Description: To render injected components in your plugin's UI, use the component from @strapi/helper-plugin:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-injection-zones#using-injection-zones-in-components)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// admin/src/pages/Dashboard.tsx
+import { InjectionZone } from '@strapi/helper-plugin';
+
+const Dashboard = () => {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+
+      {/* Render components injected into the top zone */}
+      <InjectionZone area="dashboard.main.top" />
+
+      <div className="main-content">{/* Main dashboard content */}</div>
+
+      {/* Render components injected into the bottom zone */}
+      <InjectionZone area="dashboard.main.bottom" />
+    </div>
+  );
+};
+
+export default Dashboard;
+```
+
+
+## Injecting into custom zones
+Description: Other plugins can inject components into your custom injection zones using the injectComponent() method in their bootstrap lifecycle:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-injection-zones#injecting-into-custom-zones)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// Another plugin's admin/src/index.ts
+import type { StrapiApp } from '@strapi/admin/strapi-admin';
+import { Widget } from './components/Widget';
+
+export default {
+  register(app: StrapiApp) {
+    app.registerPlugin({
+      id: 'widget-plugin',
+      name: 'Widget Plugin',
+    });
+  },
+  bootstrap(app: StrapiApp) {
+    // Get the dashboard plugin and inject a widget
+    const dashboardPlugin = app.getPlugin('dashboard');
+
+    if (dashboardPlugin) {
+      dashboardPlugin.injectComponent('dashboard.main', 'top', {
+        name: 'widget-plugin-statistics',
+        Component: Widget,
+      });
+    }
+  },
+};
+```
+
+
+## Accessing Content Manager data
+Description: When injecting components into Content Manager injection zones, you can access the Edit View data using the useCMEditViewDataManager hook:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-injection-zones#accessing-content-manager-data)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// admin/src/components/MyCustomButton.tsx
+import { useCMEditViewDataManager } from '@strapi/helper-plugin';
+
+export const MyCustomButton = () => {
+  const {
+    slug, // Content type slug (e.g., 'api::article.article')
+    modifiedData, // Current form data
+    initialData, // Original data
+    isCreatingEntry, // Whether creating a new entry
+    layout, // Content type layout
+    onPublish, // Function to publish the entry
+    onChange, // Function to update field values
+  } = useCMEditViewDataManager();
+
+  const handleCustomAction = () => {
+    // Access and modify the entry data
+    onChange({ target: { name: 'customField', value: 'new value' } });
+  };
+
+  return <button onClick={handleCustomAction}>Custom Action</button>;
+};
+```
+
+
+## Best practices
+Description: Check plugin availability.
+(Source: https://docs.strapi.io/cms/plugins-development/admin-injection-zones#best-practices)
+
+Language: TypeScript
+File path: N/A
+
+```typescript
+  bootstrap(app: StrapiApp) {
+    const targetPlugin = app.getPlugin('target-plugin');
+    if (targetPlugin) {
+      targetPlugin.injectComponent('view', 'zone', {
+        name: 'my-component',
+        Component: MyComponent,
+      });
+    }
+  }
+```
+
+
+
+# Admin localization
+Source: https://docs.strapi.io/cms/plugins-development/admin-localization
+
+## Translation file structure
+Description: Translation files are stored in the admin/src/translations/ directory, with 1 JSON file per locale:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-localization#translation-file-structure)
+
+Language: JavaScript
+File path: N/A
+
+```
+admin/src/translations/
+  ├── en.json
+  ├── fr.json
+  ├── de.json
+  └── ...
+```
+
+Language: JSON
+File path: N/A
+
+```json
+// admin/src/translations/en.json
+{
+  "plugin.name": "My Plugin",
+  "plugin.description": "A custom Strapi plugin",
+  "settings.title": "Settings",
+  "settings.general": "General",
+  "settings.advanced": "Advanced"
+}
+```
+
+
+## Basic implementation
+Description: The registerTrads function is a required lifecycle function that loads translation files for all configured locales.
+(Source: https://docs.strapi.io/cms/plugins-development/admin-localization#basic-implementation)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// admin/src/index.ts
+import { prefixPluginTranslations } from './utils/prefixPluginTranslations';
+import { PLUGIN_ID } from './pluginId';
+
+export default {
+  register(app) {
+    app.registerPlugin({
+      id: PLUGIN_ID,
+      name: 'My Plugin',
+    });
+  },
+  async registerTrads({ locales }) {
+    const importedTranslations = await Promise.all(
+      locales.map((locale) => {
+        return import(`./translations/${locale}.json`)
+          .then(({ default: data }) => {
+            return {
+              data: prefixPluginTranslations(data, PLUGIN_ID),
+              locale,
+            };
+          })
+          .catch(() => {
+            return {
+              data: {},
+              locale,
+            };
+          });
+      }),
+    );
+
+    return importedTranslations;
+  },
+};
+```
+
+
+## Return value
+Description: The function must return a Promise that resolves to an array of translation objects:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-localization#return-value)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  data: Record<string, string>; // Translation key-value pairs
+  locale: string; // Locale code (e.g., 'en', 'fr')
+}
+```
+
+
+## Translation key prefixing
+Description: Use the prefixPluginTranslations utility function to automatically prefix all keys:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-localization#translation-key-prefixing)
+
+Language: TypeScript
+File path: N/A
+
+```typescript
+// admin/src/utils/prefixPluginTranslations.ts
+type TradOptions = Record<string, string>;
+
+const prefixPluginTranslations = (
+  trad: TradOptions,
+  pluginId: string,
+): TradOptions => {
+  if (!pluginId) {
+    throw new TypeError("pluginId can't be empty");
+  }
+  return Object.keys(trad).reduce((acc, current) => {
+    acc[`${pluginId}.${current}`] = trad[current];
+    return acc;
+  }, {} as TradOptions);
+};
+
+export { prefixPluginTranslations };
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "plugin.name": "My Plugin",
+  "settings.title": "Settings"
+}
+```
+
+
+## Handling missing translation files
+Description: The registerTrads function should gracefully handle missing translation files by returning an empty object for that locale.
+(Source: https://docs.strapi.io/cms/plugins-development/admin-localization#handling-missing-translation-files)
+
+Language: TypeScript
+File path: N/A
+
+```typescript
+.catch(() => {
+  return {
+    data: {},
+    locale,
+  };
+});
+```
+
+
+## Using translations in components
+Description: To use translations in your React components, use the useIntl hook from react-intl:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-localization#using-translations-in-components)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// admin/src/pages/HomePage.tsx
+import { useIntl } from 'react-intl';
+import { PLUGIN_ID } from '../pluginId';
+
+const HomePage = () => {
+  const { formatMessage } = useIntl();
+
+  return (
+    <div>
+      <h1>
+        {formatMessage({
+          id: `${PLUGIN_ID}.plugin.name`,
+          defaultMessage: 'My Plugin',
+        })}
+      </h1>
+      <p>
+        {formatMessage({
+          id: `${PLUGIN_ID}.plugin.description`,
+          defaultMessage: 'A custom Strapi plugin',
+        })}
+      </p>
+    </div>
+  );
+};
+
+export default HomePage;
+```
+
+
+## Helper function for translation keys
+Description: To avoid repeating the plugin ID prefix, create a helper function:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-localization#helper-function-for-translation-keys)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// admin/src/utils/getTranslation.ts
+import { PLUGIN_ID } from '../pluginId';
+
+export const getTranslation = (id: string) => `${PLUGIN_ID}.${id}`;
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+// admin/src/pages/HomePage.tsx
+import { useIntl } from 'react-intl';
+import { getTranslation } from '../utils/getTranslation';
+
+const HomePage = () => {
+  const { formatMessage } = useIntl();
+
+  return (
+    <div>
+      <h1>
+        {formatMessage({
+          id: getTranslation('plugin.name'),
+          defaultMessage: 'My Plugin',
+        })}
+      </h1>
+    </div>
+  );
+};
+```
+
+
+## Using translations in configuration
+Description: Translation keys are also used when configuring menu links, settings sections, and other admin panel elements:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-localization#using-translations-in-configuration)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// admin/src/index.ts
+export default {
+  register(app) {
+    app.addMenuLink({
+      to: '/plugins/my-plugin',
+      icon: PluginIcon,
+      intlLabel: {
+        id: 'my-plugin.plugin.name', // Prefixed translation key
+        defaultMessage: 'My Plugin', // Fallback if translation missing
+      },
+      Component: async () => {
+        const { App } = await import('./pages/App');
+        return App;
+      },
+    });
+  },
+};
+```
+
+
+
 # Admin Panel API
 Source: https://docs.strapi.io/cms/plugins-development/admin-panel-api
 
@@ -26095,6 +26717,290 @@ interface LayoutSettings extends Contracts.ContentTypes.Settings {
 
 
 
+# Accessing the Redux store
+Source: https://docs.strapi.io/cms/plugins-development/admin-redux-store
+
+## Reading state with useSelector
+Description: The most common way to access Redux state in your plugin components is using the useSelector hook from react-redux:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-redux-store#reading-state-with-useselector)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// admin/src/pages/HomePage.tsx
+import { useSelector } from 'react-redux';
+
+const HomePage = () => {
+  // Read current theme
+  const currentTheme = useSelector(
+    (state: any) => state.admin_app?.theme?.currentTheme
+  );
+
+  // Read current locale
+  const currentLocale = useSelector(
+    (state: any) => state.admin_app?.language?.locale
+  );
+
+  // Read authentication status
+  const isAuthenticated = useSelector((state: any) => !!state.admin_app?.token);
+
+  // Read available locales
+  const availableLocales = useSelector(
+    (state: any) => state.admin_app?.language?.localeNames || {}
+  );
+
+  return (
+    <div>
+      <p>Current Theme: {currentTheme}</p>
+      <p>Current Locale: {currentLocale}</p>
+      <p>Authenticated: {isAuthenticated ? 'Yes' : 'No'}</p>
+    </div>
+  );
+};
+```
+
+
+## Dispatching actions
+Description: To update the Redux store, use the useDispatch hook:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-redux-store#dispatching-actions)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// admin/src/pages/HomePage.tsx
+import { useDispatch } from 'react-redux';
+
+const HomePage = () => {
+  const dispatch = useDispatch();
+  const currentTheme = useSelector(
+    (state: any) => state.admin_app?.theme?.currentTheme
+  );
+
+  const handleToggleTheme = () => {
+    const newTheme =
+      currentTheme === 'light'
+        ? 'dark'
+        : currentTheme === 'dark'
+        ? 'system'
+        : 'light';
+    dispatch({
+      type: 'admin/setAppTheme',
+      payload: newTheme,
+    } as any);
+  };
+
+  const handleChangeLocale = (locale: string) => {
+    dispatch({
+      type: 'admin/setLocale',
+      payload: locale,
+    } as any);
+  };
+
+  return (
+    <div>
+      <button onClick={handleToggleTheme}>
+        Toggle Theme (Current: {currentTheme})
+      </button>
+      <button onClick={() => handleChangeLocale('en')}>Set English</button>
+    </div>
+  );
+};
+```
+
+
+## Accessing the store instance
+Description: For advanced use cases, you can access the store instance directly using the useStore hook:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-redux-store#accessing-the-store-instance)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// admin/src/pages/App.tsx
+import { useStore } from 'react-redux';
+import { useEffect } from 'react';
+
+const App = () => {
+  const store = useStore();
+
+  useEffect(() => {
+    // Get current state
+    const state = store.getState();
+    console.log('Redux Store State:', state);
+
+    // Subscribe to store changes
+    const unsubscribe = store.subscribe(() => {
+      const currentState = store.getState();
+      console.log('Store state changed:', {
+        theme: currentState.admin_app?.theme?.currentTheme,
+        locale: currentState.admin_app?.language?.locale,
+        timestamp: new Date().toISOString(),
+      });
+    });
+
+    // Cleanup subscription on unmount
+    return () => {
+      unsubscribe();
+    };
+  }, [store]);
+
+  return <div>My Plugin</div>;
+};
+```
+
+
+## Complete example
+Description: Example combining all 3 patterns (useSelector, useDispatch, useStore)
+(Source: https://docs.strapi.io/cms/plugins-development/admin-redux-store#complete-example)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// admin/src/pages/HomePage.tsx
+import { Main } from '@strapi/design-system';
+import { Button, Box, Typography, Flex } from '@strapi/design-system';
+import { useSelector, useDispatch, useStore } from 'react-redux';
+import { useEffect, useState } from 'react';
+
+const HomePage = () => {
+  const dispatch = useDispatch();
+  const store = useStore();
+
+  // Example 1: Reading state from Redux store using useSelector
+  const currentTheme = useSelector(
+    (state: any) => state.admin_app?.theme?.currentTheme
+  );
+  const currentLocale = useSelector(
+    (state: any) => state.admin_app?.language?.locale
+  );
+  const isAuthenticated = useSelector((state: any) => !!state.admin_app?.token);
+  const availableLocales = useSelector(
+    (state: any) => state.admin_app?.language?.localeNames || {}
+  );
+
+  // Example 2: Dispatching actions to update the store
+  const handleToggleTheme = () => {
+    const newTheme =
+      currentTheme === 'light'
+        ? 'dark'
+        : currentTheme === 'dark'
+        ? 'system'
+        : 'light';
+    dispatch({
+      type: 'admin/setAppTheme',
+      payload: newTheme,
+    } as any);
+  };
+
+  const handleChangeLocale = (locale: string) => {
+    dispatch({
+      type: 'admin/setLocale',
+      payload: locale,
+    } as any);
+  };
+
+  // Example 3: Subscribing to store changes
+  const [storeChangeCount, setStoreChangeCount] = useState(0);
+  const [lastChange, setLastChange] = useState<string>('');
+
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      const state = store.getState();
+      setStoreChangeCount((prev) => prev + 1);
+      setLastChange(new Date().toLocaleTimeString());
+
+      console.log('Store state changed:', {
+        theme: state.admin_app?.theme?.currentTheme,
+        locale: state.admin_app?.language?.locale,
+        timestamp: new Date().toISOString(),
+      });
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [store]);
+
+  return (
+    <Main>
+      <Box padding={8}>
+        <Typography variant="alpha" as="h1">
+          Redux Store Examples
+        </Typography>
+
+        <Flex direction="column" gap={4} paddingTop={6}>
+          {/* Reading State */}
+          <Box padding={4} background="neutral100" hasRadius>
+            <Typography variant="omega" fontWeight="bold" paddingBottom={2}>
+              Reading state
+            </Typography>
+            <Flex direction="column" gap={2}>
+              <Typography variant="omega">
+                Current Theme: <strong>{currentTheme || 'system'}</strong>
+              </Typography>
+              <Typography variant="omega">
+                Current Locale: <strong>{currentLocale || 'en'}</strong>
+              </Typography>
+              <Typography variant="omega">
+                Authentication Status:{' '}
+                <strong>
+                  {isAuthenticated ? 'Authenticated' : 'Not Authenticated'}
+                </strong>
+              </Typography>
+            </Flex>
+          </Box>
+
+          {/* Dispatching Actions */}
+          <Box padding={4} background="neutral100" hasRadius>
+            <Typography variant="omega" fontWeight="bold" paddingBottom={2}>
+              Dispatching actions
+            </Typography>
+            <Flex direction="row" gap={2} wrap="wrap">
+              <Button onClick={handleToggleTheme} variant="secondary">
+                Toggle Theme
+              </Button>
+              {Object.keys(availableLocales).map((locale) => (
+                <Button
+                  key={locale}
+                  onClick={() => handleChangeLocale(locale)}
+                  variant={currentLocale === locale ? 'default' : 'tertiary'}
+                >
+                  Set {availableLocales[locale] || locale}
+                </Button>
+              ))}
+            </Flex>
+          </Box>
+
+          {/* Subscribing to Store Changes */}
+          <Box padding={4} background="neutral100" hasRadius>
+            <Typography variant="omega" fontWeight="bold" paddingBottom={2}>
+              Subscribing to store changes
+            </Typography>
+            <Flex direction="column" gap={2}>
+              <Typography variant="omega">
+                Store has changed <strong>{storeChangeCount}</strong> time(s)
+              </Typography>
+              {lastChange && (
+                <Typography variant="omega">
+                  Last change at: <strong>{lastChange}</strong>
+                </Typography>
+              )}
+            </Flex>
+          </Box>
+        </Flex>
+      </Box>
+    </Main>
+  );
+};
+
+export { HomePage };
+```
+
+
+
 # Content Manager APIs
 Source: https://docs.strapi.io/cms/plugins-development/content-manager-apis
 
@@ -26422,9 +27328,68 @@ npx @strapi/sdk-plugin init my-strapi-plugin
 ```
 
 
-## Linking the plugin to your project
-Description: In a new terminal window, run the following commands:
-(Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin#linking-the-plugin-to-your-project)
+## Developing local plugins
+Description: When developing your plugin locally, you also need to add the following configuration to your plugins configuration file:
+(Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin#developing-local-plugins)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn watch
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run watch
+```
+
+Language: JavaScript
+File path: /config/plugins.js|ts
+
+```js
+myplugin: {
+  enabled: true,
+  resolve: `./src/plugins/local-plugin`,
+},
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+Error: 'X must be used within StrapiApp';
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
+```
+
+
+## Developing external plugins
+Description: First, in your plugin folder, run the watch:link command:
+(Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin#developing-external-plugins)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn watch:link
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run watch:link
+```
 
 Language: Bash
 File path: N/A
@@ -26464,9 +27429,9 @@ npm run build && npm run verify
 ```
 
 
-## Working with the Plugin SDK in a monorepo environment
-Description: However, if you are writing admin code, you might add an alias that targets the source code of your plugin to make it easier to work with within the context of the admin panel:
-(Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin#monorepo)
+## Admin panel development
+Description: If you are writing admin code, you might add an alias that targets the source code of your plugin to make it easier to work with within the context of the admin panel:
+(Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin#admin-panel-development)
 
 Language: JavaScript
 File path: N/A
@@ -26480,76 +27445,11 @@ export default (config, webpack) => {
     'my-strapi-plugin': path.resolve(
       __dirname,
       // We've assumed the plugin is local.
-      '../plugins/my-strapi-plugin/admin/src'
+      '../plugins/my-strapi-plugin/admin/src',
     ),
   };
 
   return config;
-};
-```
-
-
-## Configuration with a local plugin
-Description: When developing your plugin locally (using @strapi/sdk-plugin), your plugins configuration file looks like in the following example:
-(Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin#configuration-with-a-local-plugin)
-
-Language: JavaScript
-File path: /config/plugins.js|ts
-
-```js
-myplugin: {
-  enabled: true,
-  resolve: `./src/plugins/local-plugin`,
-},
-```
-
-Language: TypeScript
-File path: /src/index.ts
-
-```ts
-Error: 'X must be used within StrapiApp';
-```
-
-Language: TypeScript
-File path: /src/index.ts
-
-```ts
-import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
-```
-
-
-## Server entry point
-Description: The server entry point file initializes your plugin’s server-side functionalities.
-(Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin#server-entry-point)
-
-Language: TypeScript
-File path: /src/index.ts
-
-```ts
-module.exports = () => {
-  return {
-    register,
-    config,
-    controllers,
-    contentTypes,
-    routes,
-  };
-};
-```
-
-
-## Admin entry point
-Description: The admin entry point file sets up your plugin within the Strapi admin panel.
-(Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin#admin-entry-point)
-
-Language: TypeScript
-File path: /src/index.ts
-
-```ts
-export default {
-  register(app) {},
-  bootstrap() {},
-  registerTrads({ locales }) {},
 };
 ```
 

@@ -9538,6 +9538,247 @@ Follow the steps below and leverage retro-compatibility headers and guided migra
 
 
 
+# Admin configuration & customization
+Source: https://docs.strapi.io/cms/plugins-development/admin-configuration-customization
+
+# Admin configuration & customization
+
+This section covers configuration and customization options for Strapi plugins in the admin panel. Learn how to configure plugins, manage initialization, and customize the admin interface.
+
+:::prerequisites
+You have [created a Strapi plugin](/cms/plugins-development/create-a-plugin).
+:::
+
+## Overview
+
+The admin panel entry file (`admin/src/index.ts`) exports an object with lifecycle functions that control how your plugin integrates with Strapi's admin interface. The entry file can export 3 functions:
+
+| Function | Type | Description |
+|---|---|---|
+| `register` | Required | Called to load the plugin before the app is bootstrapped. Use it to register the plugin, add menu links, create settings sections, define injection zones, and add reducers. |
+| `bootstrap` | Optional | Executed after all plugins are registered. Use it to extend other plugins, register hooks, add settings links, inject components into injection zones, and add Content Manager actions. |
+| `registerTrads` | Required | Async function to register translation files for all locales. Creates separate chunks for application translations to reduce build size. See [Admin localization](/cms/plugins-development/admin-localization). |
+
+## Base configuration
+
+The `registerPlugin` method is the core function for registering a plugin in the admin panel. Call this method within the `register` lifecycle function of your plugin's entry file (`admin/src/index.ts`). It configures the main options to integrate the plugin with Strapi's admin interface.
+
+```typescript
+// admin/src/index.ts
+
+  register(app) {
+    app.registerPlugin({
+      id: 'my-plugin',
+      name: 'My Plugin',
+      apis: {
+        // APIs exposed to other plugins
+      },
+      initializer: MyInitializerComponent,
+      injectionZones: {
+        // Areas where other plugins can inject components
+      },
+      isReady: false, // Plugin readiness status
+    });
+  },
+};
+```
+
+### Configuration options
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | ✅ | Unique plugin identifier |
+| `name` | `string` | ✅ | Plugin display name |
+| `apis` | `Record<string, unknown>` | ❌ | APIs exposed to other plugins |
+| `initializer` | `React.ComponentType` | ❌ | Component for plugin initialization |
+| `injectionZones` | `object` | ❌ | Available injection zones (see [Injection zones](/cms/plugins-development/admin-injection-zones)) |
+| `isReady` | `boolean` | ❌ | Plugin readiness status (default: `true`) |
+
+## Customizing menu and settings
+
+Plugins can customize the admin panel's navigation sidebar and settings pages to provide access to their features.
+
+### Navigation sidebar (menu links)
+
+The navigation sidebar is the main menu on the left side of the admin panel. Plugins can add links to this sidebar using the `addMenuLink()` method in the `register` lifecycle function.
+
+#### Adding a menu link
+
+```typescript
+// admin/src/index.ts
+
+  register(app: StrapiApp) {
+    app.addMenuLink({
+      to: `/plugins/my-plugin`,
+      icon: PluginIcon,
+      intlLabel: {
+        id: 'my-plugin.plugin.name',
+        defaultMessage: 'My Plugin',
+      },
+      Component: async () => {
+        const { App } = await import('./pages/App');
+        return App;
+      },
+      permissions: [], // Array of permission objects
+      position: 3, // Position in the menu (lower numbers appear first)
+      licenseOnly: false, // Set to true to show ⚡ icon for paid features
+    });
+
+    app.registerPlugin({
+      id: 'my-plugin',
+      name: 'My Plugin',
+    });
+  },
+};
+```
+
+#### Menu link parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `to` | `string` | ✅ | Path the link should point to (relative to the admin panel root) |
+| `icon` | `React.Component` | ✅ | React component for the icon to display in the navigation |
+| `intlLabel` | `object` | ✅ | Localized label object with `id` (translation key) and `defaultMessage` (fallback label) |
+| `Component` | `async function` | ✅ | Async function that returns a dynamic import of the plugin's main page component |
+| `permissions` | `Array<object>` | ❌ | Array of permission objects that control access to the link |
+| `position` | `number` | ❌ | Numeric position in the menu (lower numbers appear first) |
+| `licenseOnly` | `boolean` | ❌ | If `true`, displays a ⚡ icon to indicate the feature requires a paid license (default: `false`) |
+
+:::note
+The `intlLabel.id` values should correspond to keys in your translation files located at `admin/src/translations/[locale].json`. See [Admin localization](/cms/plugins-development/admin-localization) for details.
+:::
+
+### Settings
+
+The Settings API allows plugins to create new settings sections or add links to existing sections. Settings sections are organized groups of configuration pages accessible from the Settings menu item in the navigation sidebar.
+
+#### Creating a new settings section
+
+Use `createSettingSection()` in the `register` lifecycle function:
+
+```typescript
+// admin/src/index.ts
+
+  register(app: StrapiApp) {
+    app.createSettingSection(
+      {
+        id: 'my-plugin',
+        intlLabel: {
+          id: 'my-plugin.settings.section-label',
+          defaultMessage: 'My Plugin Settings',
+        },
+      },
+      [
+        {
+          intlLabel: {
+            id: 'my-plugin.settings.general',
+            defaultMessage: 'General',
+          },
+          id: 'general',
+          to: 'my-plugin/general',
+          Component: async () => {
+            const { GeneralSettings } =
+              await import('./pages/Settings/General');
+            return GeneralSettings;
+          },
+        },
+        {
+          intlLabel: {
+            id: 'my-plugin.settings.advanced',
+            defaultMessage: 'Advanced',
+          },
+          id: 'advanced',
+          to: 'my-plugin/advanced',
+          Component: async () => {
+            const { AdvancedSettings } =
+              await import('./pages/Settings/Advanced');
+            return AdvancedSettings;
+          },
+        },
+      ],
+    );
+
+    app.registerPlugin({
+      id: 'my-plugin',
+      name: 'My Plugin',
+    });
+  },
+};
+```
+
+#### `createSettingSection` parameters
+
+**First argument** (`sectionConfig`):
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | ✅ | Unique identifier for the settings section |
+| `intlLabel` | `object` | ✅ | Localized label object with `id` (translation key) and `defaultMessage` (fallback label) |
+
+**Second argument** (`links`), an array of link objects:
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | `string` | ✅ | Unique identifier for the settings link |
+| `to` | `string` | ✅ | Path relative to the settings route (do not include `settings/` prefix) |
+| `intlLabel` | `object` | ✅ | Localized label object with `id` and `defaultMessage` |
+| `Component` | `async function` | ✅ | Async function that returns a dynamic import of the settings page component |
+| `permissions` | `Array<object>` | ❌ | Array of permission objects that control access to the link |
+| `licenseOnly` | `boolean` | ❌ | If `true`, displays a ⚡ icon (default: `false`) |
+
+#### Adding links to existing settings sections
+
+To add links to existing settings sections (like the "Global" section), use `addSettingsLink()` in the `bootstrap` lifecycle function:
+
+```typescript
+// admin/src/index.ts
+
+  register(app: StrapiApp) {
+    app.registerPlugin({
+      id: 'my-plugin',
+      name: 'My Plugin',
+    });
+  },
+  bootstrap(app: StrapiApp) {
+    // Add a link to the global settings section
+    app.addSettingsLink('global', {
+      intlLabel: {
+        id: 'my-plugin.settings.documentation',
+        defaultMessage: 'Documentation',
+      },
+      id: 'documentation',
+      to: 'my-plugin/documentation',
+      Component: async () => {
+        const { DocumentationPage } =
+          await import('./pages/Settings/Documentation');
+        return DocumentationPage;
+      },
+      permissions: [],
+      licenseOnly: false,
+    });
+  },
+};
+```
+
+#### `addSettingsLink` parameters
+
+**First argument** (`sectionId`): the ID of the existing settings section to extend (e.g., `'global'` or `'permissions'`).
+
+**Second argument** (`linkConfig`): a link object with the same properties as the `links` array in `createSettingSection` (see table above).
+
+#### Available settings sections
+
+Strapi provides built-in settings sections that plugins can extend:
+
+- `global`: General application settings
+- `permissions`: Administration panel settings
+
+:::note
+Creating a new settings section must be done in the `register` lifecycle function. Adding links to existing settings sections must be done in the `bootstrap` lifecycle function. The `to` path for settings links should be relative to the settings route (e.g., `'my-plugin/general'` not `'settings/my-plugin/general'`).
+:::
+
+
+
 # Admin Panel API
 Source: https://docs.strapi.io/cms/plugins-development/admin-panel-api
 
@@ -10342,84 +10583,39 @@ Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin
 
 # Plugin creation
 
-There are many ways to create a Strapi 5 plugin, but the fastest and recommended way is to use the Plugin SDK.
+This guide walks you through the complete process of creating, developing, and publishing Strapi 5 plugins that can be used locally or distributed via NPM and the Marketplace. The Plugin SDK is the recommended way to build plugins, providing a comprehensive toolkit from initial setup to publishing.
 
-The Plugin SDK is a set of commands orientated around developing plugins to use them as local plugins or to publish them on NPM and/or submit them to the Marketplace.
+The complete list of commands and their parameters are available in the [Plugin SDK reference](/cms/plugins-development/plugin-sdk). This page will guide you through using the main ones.
 
-With the Plugin SDK, you do not need to set up a Strapi project before creating a plugin.
+Before proceeding with plugin development, it's important to understand the difference between local and external plugins:
 
-The present guide covers creating a plugin from scratch, linking it to an existing Strapi project, and publishing the plugin. If you already have an existing plugin, you can instead retrofit the plugin setup to utilise the Plugin SDK commands (please refer to the [Plugin SDK reference](/cms/plugins-development/plugin-sdk) for a full list of available commands).
+- **Local plugins**: Plugins that are developed within your Strapi project. By default, if you're within a Strapi project, the plugin will be placed within the `src/plugins` folder with the new folder corresponding to the plugin name. If a `plugins` folder already exists, the new plugin code will be placed there.
+- **External plugins**: Plugins that are developed outside your Strapi project (in a separate directory).
 
-:::note
-This guide assumes you want to develop a plugin external to your Strapi project. However, the steps largely remain the same if you want to develop a plugin within your existing project. If you are not [using a monorepo](#monorepo) the steps are exactly the same.
-:::
+The Plugin SDK can create both types of plugins. If you run the Plugin SDK command from within an existing Strapi project, it will create a local plugin. If you run it from outside a Strapi project, it will create an external plugin. The development process differs slightly between the two approaches, as outlined in the sections below.
 
-:::prerequisites
+In addition to the plugin location, your Strapi project and plugin can be organized in different repository setups, which affects the development workflow:
 
-</Tabs>
+- **Separate repositories**: Your Strapi project and plugin are in different repositories. This is common for external plugins that you plan to publish or share across multiple projects.
+- **Monorepo setup**: Your Strapi project and plugin are in the same repository, often using workspace management tools like Yarn workspaces or npm workspaces. This is useful when you want to maintain everything in one place.
 
-The path `my-strapi-plugin` can be replaced with whatever you want to call your plugin, including the path to where it should be created (e.g., `code/strapi-plugins/my-new-strapi-plugin`).
+The development workflow and commands you use will vary based on both the plugin type (local vs external) and the repository setup (separate vs monorepo), as detailed in the sections below.
 
-You will be ran through a series of prompts to help you setup your plugin. If you selected yes to all options the final structure will be similar to the default [plugin structure](/cms/plugins-development/plugin-structure).
+## Creating the plugin
 
-### Linking the plugin to your project
-
-In order to test your plugin during its development, the recommended approach is to link it to a Strapi project.
-
-Linking your plugin to a project is done with the `watch:link` command. The command will output explanations on how to link your plugin to a Strapi project.
-
-In a new terminal window, run the following commands:
+To create your plugin, ensure you are in the parent directory of where you want it to be created and run the following command:
 
 </Tabs>
 
-:::note
-In the above examples we use the name of the plugin (`my-strapi-plugin`) when linking it to the project. This is the name of the package, not the name of the folder.
-:::
+The `my-strapi-plugin` part can be replaced with whatever you want to call your plugin, including the path to where it should be created (e.g., `code/strapi-plugins/my-new-strapi-plugin`).
 
-Because this plugin is installed via `node_modules` you won't need to explicity add it to your `plugins` [configuration file](/cms/configurations/plugins), so running the [`develop command`](/cms/cli#strapi-develop) to start your Strapi project will automatically pick up your plugin.
+You will be guided through a series of prompts to help you set up your plugin. If you select "yes" to all options, the final structure will be similar to the default [plugin structure](/cms/plugins-development/plugin-structure).
 
-Now that your plugin is linked to a project, run `yarn develop` or `npm run develop` to start the Strapi application.
+## Developing local plugins
 
-You are now ready to develop your plugin how you see fit! If you are making server changes, you will need to restart your server for them to take effect.
+If you run the Plugin SDK command from within an existing Strapi project, the plugin will be created in the `src/plugins` folder within that project, with the new folder equal to the init command name. If a `plugins` folder already exists, the new plugin code will be placed there. This allows you to develop plugins locally within your project structure.
 
-### Building the plugin for publishing
-
-When you are ready to publish your plugin, you will need to build it. To do this, run the following command:
-
-</Tabs>
-
-The above commands will not only build the plugin, but also verify that the output is valid and ready to be published. You can then publish your plugin to NPM as you would any other package.
-
-## Working with the Plugin SDK in a monorepo environment {#monorepo}
-
-If you are working with a monorepo environment to develop your plugin, you don't need to use the `watch:link` command because the monorepo workspace setup will handle the symlink. You can use the `watch` command instead.
-
-However, if you are writing admin code, you might add an `alias` that targets the source code of your plugin to make it easier to work with within the context of the admin panel:
-
-```ts
-
-  config.resolve.alias = {
-    ...config.resolve.alias,
-    'my-strapi-plugin': path.resolve(
-      __dirname,
-      // We've assumed the plugin is local.
-      '../plugins/my-strapi-plugin/admin/src'
-    ),
-  };
-
-  return config;
-};
-```
-
-:::caution
-Because the server looks at the `server/src/index.ts|js` file to import your plugin code, you must use the `watch` command otherwise the code will not be transpiled and the server will not be able to find your plugin.
-:::
-
-### Configuration with a local plugin
-
-Since the Plugin SDK is primarily designed for developing plugins, not locally, the configuration needs to be adjusted manually for local plugins.
-
-When developing your plugin locally (using `@strapi/sdk-plugin`), your plugins configuration file looks like in the following example:
+When developing your plugin locally, you also need to add the following configuration to your plugins configuration file:
 
 ```js title="/config/plugins.js|ts"
 myplugin: {
@@ -10428,7 +10624,8 @@ myplugin: {
 },
 ```
 
-However, this setup can sometimes lead to errors such as the following:
+:::note
+This setup can sometimes lead to errors such as:
 
 ```js
 Error: 'X must be used within StrapiApp';
@@ -10440,50 +10637,65 @@ This error often occurs when your plugin attempts to import core Strapi function
 
 ```
 
-To resolve the issue, remove `@strapi/strapi` as a dev dependency from your plugin. This ensures that your plugin uses the same instance of Strapi’s core modules as the main application, preventing conflicts and the associated errors.
-
-## Setting a local plugin in a monorepo environment without the Plugin SDK
-
-In a monorepo, you can configure your local plugin without using the Plugin SDK by adding 2 entry point files at the root of your plugin:
-
-- server entry point: `strapi-server.js|ts`
-- admin entry point: `strapi-admin.js|ts`
-
-### Server entry point
-
-The server entry point file initializes your plugin’s server-side functionalities. The expected structure for `strapi-server.js` (or its TypeScript variant) is:
-
-```js
-module.exports = () => {
-  return {
-    register,
-    config,
-    controllers,
-    contentTypes,
-    routes,
-  };
-};
-```
-
-Here, you export a function that returns your plugin's core components such as controllers, routes, and configuration. For more details, please refer to the [Server API reference](/cms/plugins-development/server-api).
-
-### Admin entry point
-
-The admin entry point file sets up your plugin within the Strapi admin panel. The expected structure for `strapi-admin.js` (or its TypeScript variant) is:
-
-```js
-
-  register(app) {},
-  bootstrap() {},
-  registerTrads({ locales }) {},
-};
-```
-
-This object includes methods to register your plugin with the admin application, perform bootstrapping actions, and handle translations. For more details, please refer to the [Admin Panel API reference](/cms/plugins-development/admin-panel-api).
-
-:::tip
-For a complete example of how to structure your local plugin in a monorepo environment, please check out our .
+To resolve this issue, remove `@strapi/strapi` as a dev dependency from your plugin. This ensures that your plugin uses the same instance of Strapi's core modules as the main application, preventing conflicts and the associated errors.
 :::
+
+Use the `watch` command in your plugin folder to start development mode:
+
+</Tabs>
+
+Then run `yarn develop` or `npm run develop` in your Strapi project to start the application with your local plugin.
+
+## Developing external plugins
+
+:::prerequisites
+
+</Tabs>
+
+Then, in a new terminal window, run the following commands in your Strapi project:
+
+</Tabs>
+
+:::note
+In the above examples, we use the name of the plugin (`my-strapi-plugin`) when linking it to the project. This is the name of the package, not the name of the folder.
+:::
+
+:::note
+If you're working in a monorepo environment, you don't need `yalc` because the monorepo workspace setup handles the symlinking automatically.
+:::
+
+Because this plugin is installed via `node_modules`, you won't need to explicitly add it to your `plugins` configuration file as we would do for a local plugin. Running the `develop` command to start your Strapi project will automatically pick up your plugin.
+
+Now that your plugin is linked to a project, run `yarn develop` or `npm run develop` to start the Strapi application.
+
+You are now ready to develop your plugin as needed! If you are making server changes, you will need to restart your server for them to take effect.
+
+## Building the plugin for publishing
+
+When you are ready to publish your plugin, you will need to build it. To do this, run the following command:
+
+</Tabs>
+
+These commands will not only build the plugin but also verify that the output is valid and ready to be published. You can then publish your plugin to NPM as you would any other package.
+
+## Admin panel development
+
+If you are writing admin code, you might add an `alias` that targets the source code of your plugin to make it easier to work with within the context of the admin panel:
+
+```ts
+
+  config.resolve.alias = {
+    ...config.resolve.alias,
+    'my-strapi-plugin': path.resolve(
+      __dirname,
+      // We've assumed the plugin is local.
+      '../plugins/my-strapi-plugin/admin/src',
+    ),
+  };
+
+  return config;
+};
+```
 
 
 
