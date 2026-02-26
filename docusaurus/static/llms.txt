@@ -64,7 +64,7 @@
 - [Webhooks](https://docs.strapi.io/cms/backend-customization/webhooks): Webhooks let Strapi notify external systems when content changes, while omitting the Users type for privacy. Configuration in config/server sets default headers and endpoints to trigger third-party processing.
 - [Command Line Interface](https://docs.strapi.io/cms/cli): Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
 - [Configurations](https://docs.strapi.io/cms/configurations): Learn how you can manage and customize the configuration of your Strapi application.
-- [API calls configuration](https://docs.strapi.io/cms/configurations/api): /config/api centralizes response privacy and REST defaults such as prefix, pagination limits, and max request size.
+- [API calls configuration](https://docs.strapi.io/cms/configurations/api): /config/api centralizes response privacy, REST defaults (prefix, pagination limits, max request size), and strict parameter validation for both the REST Content API and the Document Service.
 - [CRON jobs](https://docs.strapi.io/cms/configurations/cron): Cron jobs schedule custom functions at specific times via node-schedule, activated through server config and optional task files.
 - [Database configuration](https://docs.strapi.io/cms/configurations/database): /config/database defines connections, clients, and pooling for supported databases like SQLite, MySQL, and PostgreSQL.
 - [Environment variables configuration](https://docs.strapi.io/cms/configurations/environment): Strapi-specific environment variables and .env usage enable per-environment configs, with env() helpers for casting values.

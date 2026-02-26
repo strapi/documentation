@@ -4836,7 +4836,7 @@ Because these methods use the model associated with the current controller, if y
 
 #### Sanitization and validation when building custom controllers  {#sanitize-validate-custom-controllers}
 
-Within custom controllers, Strapi exposes the following functions via `strapi.contentAPI` for sanitization and validation:
+Within custom controllers, Strapi exposes the following functions via `strapi.contentAPI` for sanitization and validation. To add custom query or body parameters to Content API routes (e.g. in `register`), see [Custom Content API parameters](/cms/backend-customization/routes#custom-content-api-parameters).
 
 | Function Name                | Parameters         | Description                                             |
 |------------------------------|--------------------|---------------------------------------------------------|
@@ -5843,6 +5843,39 @@ In some scenarios, it can be useful to have a route publicly available and contr
 
 </Tabs>
 
+## Custom Content API parameters {#custom-content-api-parameters}
+
+You can extend the `query` and body parameters allowed on Content API routes by registering them in the [register](/cms/configurations/functions#register) lifecycle. Registered parameters are then validated and sanitized like core parameters. Clients can send extra query keys (e.g. `?search=...`) or root-level body keys (e.g. `clientMutationId`) without requiring custom routes or controllers.
+
+| What | Where |
+|------|--------|
+| Enable strict parameters (reject unknown query/body keys) | [API configuration](/cms/configurations/api): set `rest.strictParams: true` in `./config/api.js` (or `./config/api.ts`). |
+| Add allowed parameters (app) | Call `addQueryParams` / `addInputParams` in [register](/cms/configurations/functions#register) in `./src/index.js` or `./src/index.ts`. |
+| Add allowed parameters (plugin) | Call `addQueryParams` / `addInputParams` in the plugin's [register](/cms/plugins-development/server-api#register) lifecycle. |
+
+When `rest.strictParams` is enabled, only core parameters and parameters on each route's request schema are accepted; the parameters you register are merged into that schema. Use the `z` instance from `@strapi/utils` (or `zod/v4`) for schemas.
+
+### `addQueryParams`
+
+`strapi.contentAPI.addQueryParams(options)` registers extra `query` parameters. Schemas must be scalar or array-of-scalars (string, number, boolean, enum). For nested structures, use `addInputParams` instead. Each entry can have an optional `matchRoute: (route) => boolean` callback to add the parameter only to routes for which the callback returns true. You cannot register core query param names (e.g. `filters`, `sort`, `fields`) as extra params; they are reserved.
+
+### `addInputParams`
+
+`strapi.contentAPI.addInputParams(options)` registers extra input parameters: root-level keys in the request body (e.g. alongside `data`), with any Zod type. The optional `matchRoute` callback works the same way as for `addQueryParams`. You cannot register reserved names such as `id` or `documentId` as input params.
+
+### `matchRoute`
+
+The `matchRoute` callback receives a `route` object with the following properties:
+
+- `route.method`: the HTTP method (`'GET'`, `'POST'`, etc.)
+- `route.path`: the route path
+- `route.handler`: the controller action string
+- `route.info`: metadata about the route
+
+For example, to target only GET routes, use `matchRoute: (route) => route.method === 'GET'`. To target only routes whose path includes `articles`, use `matchRoute: (route) => route.path.includes('articles')`.
+
+</Tabs>
+
 
 
 # Services
@@ -6741,7 +6774,7 @@ Source: https://docs.strapi.io/cms/configurations/api
 
 # API configuration
 
-General settings for API calls can be set in the `./config/api.js` file:
+General settings for API calls can be set in the `./config/api.js` (or `./config/api.ts`) file. Both `rest` and `documents` options live in this single config file.
 
 | Property                      | Description                                                                                                                                                                                                                                          | Type         | Default |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ------- |
@@ -6751,9 +6784,16 @@ General settings for API calls can be set in the `./config/api.js` file:
 | `rest.prefix`                 | The API prefix                       | String      | `/api`   |
 | `rest.defaultLimit`           | Default `limit` parameter used in API calls (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset))                                                                      | Integer      | `25`    |
 | `rest.maxLimit`               | Maximum allowed number that can be requested as `limit` (see [REST API documentation](/cms/api/rest/sort-pagination#pagination-by-offset)). | Integer      | `100`   |
+| `rest.strictParams`           | When `true`, only allowed query and body parameters are accepted on Content API routes; unknown top-level keys are rejected. Add allowed parameters via [Custom Content API parameters](/cms/backend-customization/routes#custom-content-api-parameters) in `register`. | Boolean      | -       |
+| `documents`                   | Document Service configuration                                                                                                                                                                                                                        | Object       | -       |
+| `documents.strictParams`      | When `true`, Document Service methods reject parameters with unrecognized root-level keys (e.g., invalid `status`, `locale`). When `false` or unset, unknown parameters are ignored. See [Document Service API](/cms/api/document-service#configuration). | Boolean      | -       |
 
 :::note 
 If the `rest.maxLimit` value is less than the `rest.defaultLimit` value, `maxLimit` will be the limit used.
+:::
+
+:::tip
+`rest.strictParams` applies to incoming REST Content API requests (query and body). `documents.strictParams` applies to parameters passed to `strapi.documents()` in server-side code. You can enable one or both in the same config file.
 :::
 
 **Example:**

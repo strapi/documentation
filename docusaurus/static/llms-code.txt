@@ -13749,6 +13749,54 @@ export default  {
 ```
 
 
+## matchRoute
+Description: For example, to target only GET routes, use matchRoute: (route) => route.method === 'GET'.
+(Source: https://docs.strapi.io/cms/backend-customization/routes#matchroute)
+
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+module.exports = {
+  register({ strapi }) {
+    strapi.contentAPI.addQueryParams({
+      search: {
+        schema: (z) => z.string().max(200).optional(),
+        matchRoute: (route) => route.path.includes('articles'),
+      },
+    });
+    strapi.contentAPI.addInputParams({
+      clientMutationId: {
+        schema: (z) => z.string().max(100).optional(),
+      },
+    });
+  },
+};
+```
+
+---
+Language: TypeScript
+File path: ./src/index.ts
+
+```ts
+export default {
+  register({ strapi }) {
+    strapi.contentAPI.addQueryParams({
+      search: {
+        schema: (z) => z.string().max(200).optional(),
+        matchRoute: (route) => route.path.includes('articles'),
+      },
+    });
+    strapi.contentAPI.addInputParams({
+      clientMutationId: {
+        schema: (z) => z.string().max(100).optional(),
+      },
+    });
+  },
+};
+```
+
+
 
 # Services
 Source: https://docs.strapi.io/cms/backend-customization/services
@@ -15322,6 +15370,10 @@ module.exports = ({ env }) => ({
     prefix: '/v1',
     defaultLimit: 100,
     maxLimit: 250,
+    strictParams: true, // only allow parameters defined on routes or added via contentAPI.addQueryParams/addInputParams
+  },
+  documents: {
+    strictParams: true, // reject unrecognized root-level parameters in strapi.documents() calls
   },
 });
 ```
@@ -15340,6 +15392,10 @@ export default ({ env }) => ({
     prefix: '/v1',
     defaultLimit: 100,
     maxLimit: 250,
+    strictParams: true, // only allow parameters defined on routes or added via contentAPI.addQueryParams/addInputParams
+  },
+  documents: {
+    strictParams: true, // reject unrecognized root-level parameters in strapi.documents() calls
   },
 });
 ```
