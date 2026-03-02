@@ -225,6 +225,7 @@ Note also that relational fields have a couple limitations when it comes to sort
 | Setting name    | Instructions                                                                          |
 | --------------- | ------------------------------------------------------------------------------------- |
 | Entry title     | Choose among the drop-down list the field that should be used as title for the entry. |
+| Relation open behavior     | Choose how relation entries open when clicked: Modal (default), Navigate to page, or Open in new tab  |
 
 3. Click on the **Save** button.
 
