@@ -320,6 +320,7 @@ These rules govern how the Drafter writes prose. They apply to **both Compose an
 
 - **Simple words.** "Use" not "utilize". "Show" not "demonstrate". "Start" not "initiate".
 - **No subjective difficulty.** Never write "easy", "easily", "simple", "simply", "straightforward", "difficult", "hard", "complex" (when describing tasks), "tricky".
+- **No em dashes.** Never use em dashes (—) anywhere in documentation output. Em dashes are a reliable signal of AI-generated text and are almost never used in technical documentation written by humans. Use a colon, a period, or restructure the sentence instead. Example: "Status — shows the current state" → "Status: shows the current state". Example: "The button — visible only to admins — opens the panel" → "The button opens the panel. It is only visible to admins."
 - **Numbers as numerals.** Write "3 providers" not "three providers". Always.
 - **Strapi terminology.** Use the exact terms from existing Strapi docs: "content-type" (hyphenated), "admin panel" (lowercase), "entry" (not "record"), "component" (Strapi component, not React), etc.
 
@@ -330,6 +331,11 @@ These rules govern how the Drafter writes prose. They apply to **both Compose an
 - **Bold** for: UI element names the user interacts with. Example: Click **Save**, navigate to **Settings**.
 - **No bold for emphasis.** Use sentence structure to emphasize, not formatting.
 - **Code blocks** with language identifiers: ` ```js `, ` ```ts `, ` ```bash `, ` ```json `.
+- **Code highlights** for multi-option examples. When a code example shows a base configuration plus feature-specific options, use `// highlight-start` / `// highlight-end` to mark the lines that are specific to the feature being documented. Do not highlight surrounding boilerplate (host, port, auth, settings blocks, etc.). Apply highlights when:
+  - The example mixes baseline config with new or feature-specific keys (e.g., adding `dkim`, `pool`, or `auth.type: 'OAuth2'` to a standard SMTP block).
+  - The same base config pattern repeats across multiple scenarios in the same section — highlights help readers spot the diff at a glance.
+
+  Do not highlight when the entire example is the point (short single-option blocks, standalone snippets with no surrounding boilerplate). In Patch mode: if the existing page already uses `// highlight-*` markers in similar code examples, apply the same pattern to any new examples you add. Treat highlights as part of the page's voice — preserve them exactly in untouched blocks, replicate the pattern in new ones.
 
 ### Procedures (numbered steps)
 
@@ -629,9 +635,11 @@ Before delivering the output, verify:
 - [ ] All specified `components` are used
 - [ ] Code examples have language identifiers
 - [ ] JS/TS config examples use `<Tabs groupId="js-ts">`
+- [ ] Multi-option code examples use `// highlight-start` / `// highlight-end` to mark feature-specific lines (see Writing Rules > Formatting conventions)
 - [ ] Numbered lists for all procedures
 - [ ] One action per step in procedures
 - [ ] No "easy", "simple", "straightforward", "difficult" etc.
+- [ ] No em dashes (—) anywhere in the output
 - [ ] No transitional filler words
 - [ ] Numbers written as numerals
 - [ ] Headings in sentence case
@@ -651,10 +659,11 @@ Before delivering the output, verify:
 - [ ] Edited content matches existing page tone, terminology, and formatting
 - [ ] Table edits preserve existing column structure
 - [ ] No contradictions introduced with the rest of the page
+- [ ] No em dashes (—) in replacement content
 - [ ] `<!-- TODO -->` comments for any edit where source material was insufficient
 - [ ] No hallucinated information in replacement content
 - [ ] Output envelope present (drafter:mode, target, action header + drafter:notes footer)
-- [ ] Code block line highlights (`{N}`) point to the intended line (count lines manually from the opening ` ``` `)
+- [ ] `// highlight-*` markers preserved in untouched code blocks; pattern applied to new code examples where the existing page uses them
 
 ### Micro-edit mode
 
@@ -664,5 +673,6 @@ Before delivering the output, verify:
 - [ ] Content uses relative paths for internal links
 - [ ] Content follows Strapi formatting conventions (inline code, bold for UI elements)
 - [ ] No subjective difficulty words
+- [ ] No em dashes (—) in inserted content
 - [ ] Context field explains *why* this insertion is needed
 - [ ] Output envelope present (drafter:mode, target, action header + drafter:notes footer)
