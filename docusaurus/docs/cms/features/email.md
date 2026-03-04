@@ -144,7 +144,11 @@ For best deliverability, configure SPF/DKIM with your email provider and ensure 
 
 Newly installed providers are enabled and configured in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist you must create it.
 
-Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) or <ExternalLink to="https://www.npmjs.com/" text="npm"/> to learn more.
+:::info  Specific email providers configurations
+- Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) or <ExternalLink to="https://www.npmjs.com/" text="npm"/> to learn more.
+
+- For production scenarios with the Nodemailer provider (OAuth2, connection pooling, DKIM signing, rate limiting), see the [dedicated documentation](/cms/configurations/email-nodemailer).
+:::
 
 The following is an example configuration for the Sendgrid provider:
 
@@ -274,18 +278,14 @@ export default ({ env }) => ({
 
 If your provider gives you a single URL instead of host and port values, pass that URL (for example `https://api.eu.mailgun.net`) in `providerOptions` using the key the package expects.
 
-For production scenarios with the Nodemailer provider (OAuth2, connection pooling, DKIM signing, rate limiting), see the dedicated documentation:
 
-<CustomDocCardsWrapper>
-<CustomDocCard icon="gear" title="Advanced Nodemailer configuration" description="Configure OAuth2, connection pooling, DKIM signing, and rate limiting for the Nodemailer provider." link="/cms/configurations/email-nodemailer"/>
-</CustomDocCardsWrapper>
 
 ##### Building a custom provider
 
 To build your own provider, publish it to npm, or use it locally in your project, see the dedicated documentation:
 
 <CustomDocCardsWrapper>
-<CustomDocCard icon="wrench" title="Creating custom email providers" description="Implement the provider interface, use a local provider, or set up signed URLs for private assets." link="/cms/features/email-custom-providers"/>
+<CustomDocCard icon="wrench" title="Creating custom email providers" description="Implement the provider interface, use a local provider, or set up signed URLs for private assets." link="/cms/configurations/email-custom-providers"/>
 </CustomDocCardsWrapper>
 
 ## Usage

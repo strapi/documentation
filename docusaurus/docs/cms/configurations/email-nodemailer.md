@@ -15,7 +15,9 @@ tags:
 The Nodemailer provider supports OAuth2 authentication, connection pooling, DKIM signing, and rate limiting. Each scenario adds specific keys to `providerOptions` on top of a standard SMTP configuration.
 </Tldr>
 
-This page covers production scenarios for the community `@strapi/provider-email-nodemailer` package. For basic provider installation and SMTP setup, see [Configuring providers](/cms/features/email#configuring-providers). For the full list of supported `providerOptions`, refer to the <ExternalLink to="https://www.npmjs.com/package/@strapi/provider-email-nodemailer" text="provider README on npm"/>.
+This page covers production scenarios for the community `@strapi/provider-email-nodemailer` package. For basic provider installation and SMTP setup, see [Configuring providers](/cms/features/email#configuring-providers) in the Email features page.
+
+For the full list of supported `providerOptions`, refer to the <ExternalLink to="https://www.npmjs.com/package/@strapi/provider-email-nodemailer" text="provider README on npm"/>.
 
 ## OAuth2 authentication
 
