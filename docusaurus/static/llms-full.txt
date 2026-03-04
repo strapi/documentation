@@ -8097,7 +8097,7 @@ Dynamic zones are a combination of components, which themselves are composed of 
 :::tip
 - Not all entries are listed by default: more can be displayed by clicking on the **Load more** button. Also, instead of choosing an entry by scrolling the list, you can click any relational field drop-down list and type to search a specific entry.
 
-- Click on the name of an entry to display a modal from where you will be able to edit the relational field's content-type. For now, you can only edit a relation on-the-fly and not create a new one.
+- Click on the name of an entry to open it. The behavior depends on the **Relation open behavior** setting configured in the edit view: the entry opens in a modal (default), navigates to its full edit page, or opens in a new browser tab. See [Configuring the edit view](#edit-view-settings) to change this setting.
 :::
 
 :::note
