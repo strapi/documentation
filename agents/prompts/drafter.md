@@ -331,6 +331,11 @@ These rules govern how the Drafter writes prose. They apply to **both Compose an
 - **Bold** for: UI element names the user interacts with. Example: Click **Save**, navigate to **Settings**.
 - **No bold for emphasis.** Use sentence structure to emphasize, not formatting.
 - **Code blocks** with language identifiers: ` ```js `, ` ```ts `, ` ```bash `, ` ```json `.
+- **Code highlights** for multi-option examples. When a code example shows a base configuration plus feature-specific options, use `// highlight-start` / `// highlight-end` to mark the lines that are specific to the feature being documented. Do not highlight surrounding boilerplate (host, port, auth, settings blocks, etc.). Apply highlights when:
+  - The example mixes baseline config with new or feature-specific keys (e.g., adding `dkim`, `pool`, or `auth.type: 'OAuth2'` to a standard SMTP block).
+  - The same base config pattern repeats across multiple scenarios in the same section — highlights help readers spot the diff at a glance.
+
+  Do not highlight when the entire example is the point (short single-option blocks, standalone snippets with no surrounding boilerplate). In Patch mode: if the existing page already uses `// highlight-*` markers in similar code examples, apply the same pattern to any new examples you add. Treat highlights as part of the page's voice — preserve them exactly in untouched blocks, replicate the pattern in new ones.
 
 ### Procedures (numbered steps)
 
@@ -630,6 +635,7 @@ Before delivering the output, verify:
 - [ ] All specified `components` are used
 - [ ] Code examples have language identifiers
 - [ ] JS/TS config examples use `<Tabs groupId="js-ts">`
+- [ ] Multi-option code examples use `// highlight-start` / `// highlight-end` to mark feature-specific lines (see Writing Rules > Formatting conventions)
 - [ ] Numbered lists for all procedures
 - [ ] One action per step in procedures
 - [ ] No "easy", "simple", "straightforward", "difficult" etc.
@@ -657,7 +663,7 @@ Before delivering the output, verify:
 - [ ] `<!-- TODO -->` comments for any edit where source material was insufficient
 - [ ] No hallucinated information in replacement content
 - [ ] Output envelope present (drafter:mode, target, action header + drafter:notes footer)
-- [ ] Code block line highlights (`{N}`) point to the intended line (count lines manually from the opening ` ``` `)
+- [ ] `// highlight-*` markers preserved in untouched code blocks; pattern applied to new code examples where the existing page uses them
 
 ### Micro-edit mode
 
