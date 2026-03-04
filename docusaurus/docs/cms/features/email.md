@@ -122,7 +122,6 @@ For example, to install the Sendgrid provider:
 
 <TabItem value="yarn" label="Yarn">
 
-
 ```bash
 yarn add @strapi/provider-email-sendgrid
 ```
@@ -289,6 +288,7 @@ module.exports = ({ env }) => ({
   email: {
     config: {
       provider: 'nodemailer',
+      // highlight-start
       providerOptions: {
         host: 'smtp.gmail.com',
         port: 465,
@@ -301,6 +301,7 @@ module.exports = ({ env }) => ({
           refreshToken: env('OAUTH_REFRESH_TOKEN'),
         },
       },
+      // highlight-end
       settings: {
         defaultFrom: env('SMTP_USER'),
         defaultReplyTo: env('SMTP_USER'),
@@ -318,6 +319,7 @@ export default ({ env }) => ({
   email: {
     config: {
       provider: 'nodemailer',
+      // highlight-start
       providerOptions: {
         host: 'smtp.gmail.com',
         port: 465,
@@ -330,6 +332,7 @@ export default ({ env }) => ({
           refreshToken: env('OAUTH_REFRESH_TOKEN'),
         },
       },
+      // highlight-end
       settings: {
         defaultFrom: env('SMTP_USER'),
         defaultReplyTo: env('SMTP_USER'),
@@ -358,8 +361,10 @@ module.exports = ({ env }) => ({
         host: env('SMTP_HOST'),
         port: 465,
         secure: true,
+        // highlight-start
         pool: true,
         maxConnections: 5,
+        // highlight-end
         maxMessages: 100,
         auth: {
           user: env('SMTP_USERNAME'),
@@ -387,8 +392,10 @@ export default ({ env }) => ({
         host: env('SMTP_HOST'),
         port: 465,
         secure: true,
+        // highlight-start
         pool: true,
         maxConnections: 5,
+        // highlight-end
         maxMessages: 100,
         auth: {
           user: env('SMTP_USERNAME'),
@@ -426,11 +433,13 @@ module.exports = ({ env }) => ({
           user: env('SMTP_USERNAME'),
           pass: env('SMTP_PASSWORD'),
         },
+        // highlight-start
         dkim: {
           domainName: 'example.com',
           keySelector: 'mail',
           privateKey: env('DKIM_PRIVATE_KEY'),
         },
+        // highlight-end
       },
       settings: {
         defaultFrom: 'hello@example.com',
@@ -456,11 +465,13 @@ export default ({ env }) => ({
           user: env('SMTP_USERNAME'),
           pass: env('SMTP_PASSWORD'),
         },
+        // highlight-start
         dkim: {
           domainName: 'example.com',
           keySelector: 'mail',
           privateKey: env('DKIM_PRIVATE_KEY'),
         },
+        // highlight-end
       },
       settings: {
         defaultFrom: 'hello@example.com',
@@ -491,8 +502,10 @@ module.exports = ({ env }) => ({
         port: 465,
         secure: true,
         pool: true,
+        // highlight-start
         rateLimit: 5,    // max messages per rateDelta
         rateDelta: 1000, // time interval in ms (1 second)
+        // highlight-end
         auth: {
           user: env('SMTP_USERNAME'),
           pass: env('SMTP_PASSWORD'),
@@ -520,8 +533,10 @@ export default ({ env }) => ({
         port: 465,
         secure: true,
         pool: true,
+        // highlight-start
         rateLimit: 5,
         rateDelta: 1000,
+        // highlight-end
         auth: {
           user: env('SMTP_USERNAME'),
           pass: env('SMTP_PASSWORD'),
