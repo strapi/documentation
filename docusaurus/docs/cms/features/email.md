@@ -50,7 +50,19 @@ The Email feature only handles outbound delivery. Receiving or parsing incoming 
   }}
 />
 
-In the Configuration interface, only the email address field under "Test email delivery" is modifiable by users. A **Send test email** button sends a test email.
+The Configuration interface is read-only for most fields. It displays the current provider configuration and lets users test connectivity.
+
+The following information is shown in the Configuration panel:
+
+- **Default sender email** and, if the configured `defaultFrom` address includes a display name, **Default sender name**.
+- **Default response email** and, if the configured `defaultReplyTo` address includes a display name, **Default reply-to name**.
+- **Email provider** — the provider currently in use.
+
+If the active provider supports SMTP connection verification (for example, the Nodemailer provider), a **Connection status** field is also shown with a **Test connection** button. Clicking it verifies the SMTP connection without sending a message. The button displays a **Connected** or **Error** badge depending on the result.
+
+A **Provider capabilities** card appears below the main configuration when the active provider exposes SMTP metadata. It shows the SMTP server address, encryption protocol (TLS, STARTTLS, or None), authentication type and user, pool status (Idle or Active, when connection pooling is enabled), and badges for enabled features such as DKIM, OAuth2, rate limiting, and connection pool.
+
+The only user-editable field on this page is the **Recipient email** field under **Test email delivery**. A **Send test email** button sends a test message to that address.
 
 This page is only visible if the current role has the "Access the Email Settings page" permission enabled (see [RBAC feature](/cms/features/rbac) documentation for more information):
 
@@ -261,6 +273,272 @@ export default ({ env }) => ({
 
 If your provider gives you a single URL instead of host and port values, pass that URL (for example `https://api.eu.mailgun.net`) in `providerOptions` using the key the package expects.
 
+###### Advanced Nodemailer configuration
+
+The following examples cover common production scenarios for the Nodemailer provider. For the full list of supported `providerOptions`, refer to the <ExternalLink to="https://www.npmjs.com/package/@strapi/provider-email-nodemailer" text="provider README on npm"/>.
+
+**OAuth2 authentication**
+
+For services like Gmail or Outlook that support OAuth2:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+          type: 'OAuth2',
+          user: env('SMTP_USER'),
+          clientId: env('OAUTH_CLIENT_ID'),
+          clientSecret: env('OAUTH_CLIENT_SECRET'),
+          refreshToken: env('OAUTH_REFRESH_TOKEN'),
+        },
+      },
+      settings: {
+        defaultFrom: env('SMTP_USER'),
+        defaultReplyTo: env('SMTP_USER'),
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+export default ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+          type: 'OAuth2',
+          user: env('SMTP_USER'),
+          clientId: env('OAUTH_CLIENT_ID'),
+          clientSecret: env('OAUTH_CLIENT_SECRET'),
+          refreshToken: env('OAUTH_REFRESH_TOKEN'),
+        },
+      },
+      settings: {
+        defaultFrom: env('SMTP_USER'),
+        defaultReplyTo: env('SMTP_USER'),
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+**Connection pooling**
+
+Use connection pooling to improve performance when sending many emails:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: 465,
+        secure: true,
+        pool: true,
+        maxConnections: 5,
+        maxMessages: 100,
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+export default ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: 465,
+        secure: true,
+        pool: true,
+        maxConnections: 5,
+        maxMessages: 100,
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+**DKIM signing**
+
+Add DKIM signatures to improve deliverability:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: 587,
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+        dkim: {
+          domainName: 'example.com',
+          keySelector: 'mail',
+          privateKey: env('DKIM_PRIVATE_KEY'),
+        },
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+export default ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: 587,
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+        dkim: {
+          domainName: 'example.com',
+          keySelector: 'mail',
+          privateKey: env('DKIM_PRIVATE_KEY'),
+        },
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+**Rate limiting**
+
+Limit the number of messages sent per time interval to avoid spam filters:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: 465,
+        secure: true,
+        pool: true,
+        rateLimit: 5,    // max messages per rateDelta
+        rateDelta: 1000, // time interval in ms (1 second)
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+export default ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: 465,
+        secure: true,
+        pool: true,
+        rateLimit: 5,
+        rateDelta: 1000,
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
 ##### Creating providers
 
 To implement your own custom provider you must <ExternalLink to="https://docs.npmjs.com/creating-node-js-modules" text="create a Node.js module"/>.
@@ -356,16 +634,29 @@ The Email feature has an `email` [service](/cms/backend-customization/services) 
 
 To trigger an email in response to a user action add the `send()` function to a [controller](/cms/backend-customization/controllers) or [service](/cms/backend-customization/services). The send function has the following properties:
 
-| Property  | Type     | Format        | Description                                           |
-|-----------|----------|---------------|-------------------------------------------------------|
-| `from`    | `string` | email address | If not specified, uses `defaultFrom` in `plugins.js`. |
-| `to`      | `string` | email address | Required                                              |
-| `cc`      | `string` | email address | Optional                                              |
-| `bcc`     | `string` | email address | Optional                                              |
-| `replyTo` | `string` | email address | Optional                                              |
-| `subject` | `string` | -             | Required                                              |
-| `text`    | `string` | -             | Either `text` or `html` is required.                  |
-| `html`    | `string` | HTML          | Either `text` or `html` is required.                  |
+| Property      | Type                          | Description                                                                                      |
+|---------------|-------------------------------|--------------------------------------------------------------------------------------------------|
+| `from`        | `string` (email address)      | Sender address. If not specified, uses `defaultFrom` from `plugins.js`.                          |
+| `to`          | `string` (email address)      | Recipient address. Required.                                                                     |
+| `cc`          | `string` (email address)      | Carbon copy recipients. Optional.                                                                |
+| `bcc`         | `string` (email address)      | Blind carbon copy recipients. Optional.                                                          |
+| `replyTo`     | `string` (email address)      | Reply-to address. If not specified, uses `defaultReplyTo` from `plugins.js`.                     |
+| `subject`     | `string`                      | Email subject. Required.                                                                         |
+| `text`        | `string`                      | Plain-text body. Either `text` or `html` is required.                                            |
+| `html`        | `string`                      | HTML body. Either `text` or `html` is required.                                                  |
+| `attachments` | `object[]`                    | Array of attachment objects.                                                                     |
+| `headers`     | `object`                      | Custom SMTP headers, for example `{ 'X-Custom-Header': 'value' }`.                               |
+| `priority`    | `'high' \| 'normal' \| 'low'` | Email priority flag.                                                                             |
+| `inReplyTo`   | `string`                      | Message-ID of the email being replied to. Used for conversation threading.                       |
+| `references`  | `string \| string[]`          | Message-ID list this email references. Used for conversation threading.                          |
+| `envelope`    | `object`                      | Custom SMTP envelope with `from` and `to` fields. Useful for bounce handling.                    |
+| `list`        | `object`                      | RFC 2369 List-\* headers. Enables one-click unsubscribe in Gmail and Outlook for newsletters.    |
+| `icalEvent`   | `object`                      | Calendar event invitation in iCalendar format. Attach with `{ method, content }`.                |
+| `dsn`         | `object`                      | Delivery Status Notification — request bounce or delivery confirmation reports.                  |
+
+:::note When using the Nodemailer provider
+The Nodemailer provider uses an explicit allowlist for all `send()` fields. Unknown properties are silently dropped. For the complete list of supported fields — including `dkim`, `amp`, `raw`, `auth` (per-message OAuth2), and others — see the <ExternalLink to="https://www.npmjs.com/package/@strapi/provider-email-nodemailer" text="provider README on npm"/>.
+:::
 
 The following code example can be used in a controller or a service:
 
