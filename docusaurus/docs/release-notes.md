@@ -27,7 +27,51 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.37.0](https://github.com/strapi/strapi/releases/tag/v5.37.0)._
+
+
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.38.0](https://github.com/strapi/strapi/releases/tag/v5.38.0)._
+
+## 6.17.1
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add Outline generator and Drafter tools](https://github.com/strapi/documentation/pull/2947)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Expand Email documentation with Nodemailer v8 options](https://github.com/strapi/documentation/pull/2988)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Add relation open modal setting for content-manager configure the view](https://github.com/strapi/documentation/pull/2986)
+
+#### Repository
+- [Improve Drafter instructions: avoid em dashes, add code highlights](https://github.com/strapi/documentation/pull/2989)
+- [Ensure the Outline UX Analyzer tool is included in auto-chain mode](https://github.com/strapi/documentation/pull/2985)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/markkaylor" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/26598053?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="markkaylor"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 
 ## 6.17.0
 
@@ -128,7 +172,6 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 <br/>
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [**5.37.0**](https://github.com/strapi/strapi/releases/tag/v5.37.0)._
 
 ## 6.16.0
 
