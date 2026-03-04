@@ -16233,6 +16233,284 @@ File path: /config/plugins.js
 
 
 
+# Advanced Nodemailer configuration
+Source: https://docs.strapi.io/cms/configurations/email-nodemailer
+
+## OAuth2 authentication
+Description: For services like Gmail or Outlook that require OAuth2 instead of a password:
+(Source: https://docs.strapi.io/cms/configurations/email-nodemailer#oauth2-authentication)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        // highlight-start
+        auth: {
+          type: 'OAuth2',
+          user: env('SMTP_USER'),
+          clientId: env('OAUTH_CLIENT_ID'),
+          clientSecret: env('OAUTH_CLIENT_SECRET'),
+          refreshToken: env('OAUTH_REFRESH_TOKEN'),
+        },
+        // highlight-end
+      },
+      settings: {
+        defaultFrom: env('SMTP_USER'),
+        defaultReplyTo: env('SMTP_USER'),
+      },
+    },
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+export default ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        // highlight-start
+        auth: {
+          type: 'OAuth2',
+          user: env('SMTP_USER'),
+          clientId: env('OAUTH_CLIENT_ID'),
+          clientSecret: env('OAUTH_CLIENT_SECRET'),
+          refreshToken: env('OAUTH_REFRESH_TOKEN'),
+        },
+        // highlight-end
+      },
+      settings: {
+        defaultFrom: env('SMTP_USER'),
+        defaultReplyTo: env('SMTP_USER'),
+      },
+    },
+  },
+});
+```
+
+
+## Connection pooling
+Description: Use connection pooling to reuse SMTP connections and improve throughput when sending many emails:
+(Source: https://docs.strapi.io/cms/configurations/email-nodemailer#connection-pooling)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: 465,
+        secure: true,
+        // highlight-start
+        pool: true,
+        maxConnections: 5,
+        maxMessages: 100,
+        // highlight-end
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+export default ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: 465,
+        secure: true,
+        // highlight-start
+        pool: true,
+        maxConnections: 5,
+        maxMessages: 100,
+        // highlight-end
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+});
+```
+
+
+## DKIM signing
+Description: Add DKIM signatures to improve deliverability and authenticate outbound mail:
+(Source: https://docs.strapi.io/cms/configurations/email-nodemailer#dkim-signing)
+
+Language: DOCKERFILE
+File path: /config/plugins.js
+
+```dockerfile
+module.exports = ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: 587,
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+        // highlight-start
+        dkim: {
+          domainName: 'example.com',
+          keySelector: 'mail',
+          privateKey: env('DKIM_PRIVATE_KEY'),
+        },
+        // highlight-end
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+});
+```
+
+---
+Language: DOCKERFILE
+File path: /config/plugins.ts
+
+```dockerfile
+export default ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: 587,
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+        // highlight-start
+        dkim: {
+          domainName: 'example.com',
+          keySelector: 'mail',
+          privateKey: env('DKIM_PRIVATE_KEY'),
+        },
+        // highlight-end
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+});
+```
+
+
+## Rate limiting
+Description: Limit the number of messages sent per time interval to avoid triggering spam filters:
+(Source: https://docs.strapi.io/cms/configurations/email-nodemailer#rate-limiting)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: 465,
+        secure: true,
+        pool: true,
+        // highlight-start
+        rateLimit: 5,    // max messages per rateDelta
+        rateDelta: 1000, // time interval in ms (1 second)
+        // highlight-end
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+export default ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: 465,
+        secure: true,
+        pool: true,
+        // highlight-start
+        rateLimit: 5,
+        rateDelta: 1000,
+        // highlight-end
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+      },
+      settings: {
+        defaultFrom: 'hello@example.com',
+        defaultReplyTo: 'hello@example.com',
+      },
+    },
+  },
+});
+```
+
+
+
 # Environment variables configuration
 Source: https://docs.strapi.io/cms/configurations/environment
 
@@ -21912,7 +22190,6 @@ Language: JavaScript
 File path: /config/plugins.js
 
 ```js
-
 module.exports = ({ env }) => ({
   // ...
   email: {
@@ -21937,7 +22214,6 @@ Language: TypeScript
 File path: /config/plugins.ts
 
 ```ts
-
 export default ({ env }) => ({
   // ...
   email: {
@@ -21989,279 +22265,26 @@ module.exports = ({ env }) => ({
 ```
 
 ---
-Language: TypeScript
+Language: DOCKERFILE
 File path: /config/plugins.ts
 
-```ts
+```dockerfile
 export default ({ env }) => ({
   email: {
     config: {
-      provider: 'sendmail', // replace with your provider
+      provider: 'nodemailer',
       providerOptions: {
-        // ... provider-specific options
+        host: env('SMTP_HOST'),
+        port: 587,
+        secure: false, // Use `true` for port 465
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
       },
       settings: {
         defaultFrom: 'no-reply@example.com',
         defaultReplyTo: 'support@example.com',
-      },
-    },
-  },
-});
-```
-
-
-## Advanced Nodemailer configuration
-Description: For services like Gmail or Outlook that support OAuth2:
-(Source: https://docs.strapi.io/cms/features/email#advanced-nodemailer-configuration)
-
-Language: JavaScript
-File path: /config/plugins.js
-
-```js
-module.exports = ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        // highlight-start
-        auth: {
-          type: 'OAuth2',
-          user: env('SMTP_USER'),
-          clientId: env('OAUTH_CLIENT_ID'),
-          clientSecret: env('OAUTH_CLIENT_SECRET'),
-          refreshToken: env('OAUTH_REFRESH_TOKEN'),
-        },
-        // highlight-end
-      },
-      settings: {
-        defaultFrom: env('SMTP_USER'),
-        defaultReplyTo: env('SMTP_USER'),
-      },
-    },
-  },
-});
-```
-
----
-Language: TypeScript
-File path: /config/plugins.ts
-
-```ts
-export default ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        // highlight-start
-        auth: {
-          type: 'OAuth2',
-          user: env('SMTP_USER'),
-          clientId: env('OAUTH_CLIENT_ID'),
-          clientSecret: env('OAUTH_CLIENT_SECRET'),
-          refreshToken: env('OAUTH_REFRESH_TOKEN'),
-        },
-        // highlight-end
-      },
-      settings: {
-        defaultFrom: env('SMTP_USER'),
-        defaultReplyTo: env('SMTP_USER'),
-      },
-    },
-  },
-});
-```
-
-Language: JavaScript
-File path: /config/plugins.js
-
-```js
-module.exports = ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: env('SMTP_HOST'),
-        port: 465,
-        secure: true,
-        // highlight-start
-        pool: true,
-        maxConnections: 5,
-        maxMessages: 100,
-        // highlight-end
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-      },
-      settings: {
-        defaultFrom: 'hello@example.com',
-        defaultReplyTo: 'hello@example.com',
-      },
-    },
-  },
-});
-```
-
----
-Language: TypeScript
-File path: /config/plugins.ts
-
-```ts
-export default ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: env('SMTP_HOST'),
-        port: 465,
-        secure: true,
-        // highlight-start
-        pool: true,
-        maxConnections: 5,
-        maxMessages: 100,
-        // highlight-end
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-      },
-      settings: {
-        defaultFrom: 'hello@example.com',
-        defaultReplyTo: 'hello@example.com',
-      },
-    },
-  },
-});
-```
-
-Language: DOCKERFILE
-File path: /config/plugins.js
-
-```dockerfile
-module.exports = ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: env('SMTP_HOST'),
-        port: 587,
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-        // highlight-start
-        dkim: {
-          domainName: 'example.com',
-          keySelector: 'mail',
-          privateKey: env('DKIM_PRIVATE_KEY'),
-        },
-        // highlight-end
-      },
-      settings: {
-        defaultFrom: 'hello@example.com',
-        defaultReplyTo: 'hello@example.com',
-      },
-    },
-  },
-});
-```
-
----
-Language: DOCKERFILE
-File path: /config/plugins.ts
-
-```dockerfile
-export default ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: env('SMTP_HOST'),
-        port: 587,
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-        // highlight-start
-        dkim: {
-          domainName: 'example.com',
-          keySelector: 'mail',
-          privateKey: env('DKIM_PRIVATE_KEY'),
-        },
-        // highlight-end
-      },
-      settings: {
-        defaultFrom: 'hello@example.com',
-        defaultReplyTo: 'hello@example.com',
-      },
-    },
-  },
-});
-```
-
-Language: JavaScript
-File path: /config/plugins.js
-
-```js
-module.exports = ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: env('SMTP_HOST'),
-        port: 465,
-        secure: true,
-        pool: true,
-        // highlight-start
-        rateLimit: 5,    // max messages per rateDelta
-        rateDelta: 1000, // time interval in ms (1 second)
-        // highlight-end
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-      },
-      settings: {
-        defaultFrom: 'hello@example.com',
-        defaultReplyTo: 'hello@example.com',
-      },
-    },
-  },
-});
-```
-
----
-Language: TypeScript
-File path: /config/plugins.ts
-
-```ts
-export default ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: env('SMTP_HOST'),
-        port: 465,
-        secure: true,
-        pool: true,
-        // highlight-start
-        rateLimit: 5,
-        rateDelta: 1000,
-        // highlight-end
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-      },
-      settings: {
-        defaultFrom: 'hello@example.com',
-        defaultReplyTo: 'hello@example.com',
       },
     },
   },

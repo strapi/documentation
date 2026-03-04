@@ -8489,7 +8489,7 @@ The Email feature enables Strapi applications to send emails from a server or an
 
 Most configuration options for the Email feature are handled via your Strapi project's code. The admin panel provides a read-only view of the current configuration, connection status, and provider capabilities, and lets users send a test email.
 
-:::info Provider vs. Host
+:::info Provider vs. host
 - The email provider refers to the package that Strapi calls to send an email (e.g. official providers such as Sendgrid or community packages such as `@strapi/provider-email-nodemailer`). Providers implement the logic for sending mail when Strapi invokes them.
 - The provider host (or server) refers to the connection details (e.g. an SMTP hostname, port, or REST API endpoint) that the provider exposes. Some providers hide these details behind an API key, while others require you to supply host-related options in your configuration.
 
@@ -8512,17 +8512,19 @@ Newly installed providers are enabled and configured in [the `/config/plugins` f
 
 Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) or 
 
+The following is an example configuration for the Sendgrid provider:
+
 </Tabs>
 
 :::note
 
-* When using a different provider per environment, specify the correct configuration in `/config/env/${yourEnvironment}/plugins.js|ts` (See [Environments](/cms/configurations/environment)).
+* When using a different provider per environment, specify the correct configuration in `/config/env/${yourEnvironment}/plugins.js|ts` (see [Environments](/cms/configurations/environment)).
 * Only one email provider will be active at a time. If the email provider setting isn't picked up by Strapi, verify the `plugins.js|ts` file is in the correct folder.
-* When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (See [Configure templates locally](/cms/features/users-permissions#templating-emails)).
+* When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (see [Configure templates locally](/cms/features/users-permissions#templating-emails)).
 
 :::
 
-##### Per-environment configuration
+###### Per-environment configuration
 
 When configuring your provider you might want to change the configuration based on the `NODE_ENV` environment variable or use environment specific credentials.
 
@@ -8533,30 +8535,6 @@ Some providers expose SMTP-style connection details instead of (or in addition t
 </Tabs>
 
 If your provider gives you a single URL instead of host and port values, pass that URL (for example `https://api.eu.mailgun.net`) in `providerOptions` using the key the package expects.
-
-##### Advanced Nodemailer configuration
-
-The following examples cover common production scenarios for the Nodemailer provider. For the full list of supported `providerOptions`, refer to the 
-
-</Tabs>
-
-**Connection pooling**
-
-Use connection pooling to improve performance when sending many emails:
-
-</Tabs>
-
-**DKIM signing**
-
-Add DKIM signatures to improve deliverability:
-
-</Tabs>
-
-**Rate limiting**
-
-Limit the number of messages sent per time interval to avoid spam filters:
-
-</Tabs>
 
 ##### Building a custom provider
 
@@ -8593,9 +8571,9 @@ To trigger an email in response to a user action add the `send()` function to a 
 | `inReplyTo`   | `string`                      | Message-ID of the email being replied to. Used for conversation threading.                       |
 | `references`  | `string \| string[]`          | Message-ID list this email references. Used for conversation threading.                          |
 | `envelope`    | `object`                      | Custom SMTP envelope with `from` and `to` fields. Useful for bounce handling.                    |
-| `list`        | `object`                      | RFC 2369 List-\* headers. Enables one-click unsubscribe in Gmail and Outlook for newsletters.    |
+| `list`        | `object`                      | RFC 2369 List-* headers. Enables one-click unsubscribe in Gmail and Outlook for newsletters.     |
 | `icalEvent`   | `object`                      | Calendar event invitation in iCalendar format. Attach with `{ method, content }`.                |
-| `dsn`         | `object`                      | Delivery Status Notification — request bounce or delivery confirmation reports.                  |
+| `dsn`         | `object`                      | Delivery Status Notification settings. Requests bounce or delivery confirmation reports.         |
 
 :::note When using the Nodemailer provider
 The Nodemailer provider uses an explicit allowlist for all `send()` fields. Unknown properties are silently dropped. For the complete list of supported fields — including `dkim`, `amp`, `raw`, `auth` (per-message OAuth2), and others — see the 
