@@ -320,6 +320,7 @@ These rules govern how the Drafter writes prose. They apply to **both Compose an
 
 - **Simple words.** "Use" not "utilize". "Show" not "demonstrate". "Start" not "initiate".
 - **No subjective difficulty.** Never write "easy", "easily", "simple", "simply", "straightforward", "difficult", "hard", "complex" (when describing tasks), "tricky".
+- **No em dashes.** Never use em dashes (—) anywhere in documentation output. Em dashes are a reliable signal of AI-generated text and are almost never used in technical documentation written by humans. Use a colon, a period, or restructure the sentence instead. Example: "Status — shows the current state" → "Status: shows the current state". Example: "The button — visible only to admins — opens the panel" → "The button opens the panel. It is only visible to admins."
 - **Numbers as numerals.** Write "3 providers" not "three providers". Always.
 - **Strapi terminology.** Use the exact terms from existing Strapi docs: "content-type" (hyphenated), "admin panel" (lowercase), "entry" (not "record"), "component" (Strapi component, not React), etc.
 
@@ -632,6 +633,7 @@ Before delivering the output, verify:
 - [ ] Numbered lists for all procedures
 - [ ] One action per step in procedures
 - [ ] No "easy", "simple", "straightforward", "difficult" etc.
+- [ ] No em dashes (—) anywhere in the output
 - [ ] No transitional filler words
 - [ ] Numbers written as numerals
 - [ ] Headings in sentence case
@@ -651,6 +653,7 @@ Before delivering the output, verify:
 - [ ] Edited content matches existing page tone, terminology, and formatting
 - [ ] Table edits preserve existing column structure
 - [ ] No contradictions introduced with the rest of the page
+- [ ] No em dashes (—) in replacement content
 - [ ] `<!-- TODO -->` comments for any edit where source material was insufficient
 - [ ] No hallucinated information in replacement content
 - [ ] Output envelope present (drafter:mode, target, action header + drafter:notes footer)
@@ -664,5 +667,6 @@ Before delivering the output, verify:
 - [ ] Content uses relative paths for internal links
 - [ ] Content follows Strapi formatting conventions (inline code, bold for UI elements)
 - [ ] No subjective difficulty words
+- [ ] No em dashes (—) in inserted content
 - [ ] Context field explains *why* this insertion is needed
 - [ ] Output envelope present (drafter:mode, target, action header + drafter:notes footer)
