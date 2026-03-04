@@ -136,9 +136,6 @@ npm install @strapi/provider-email-sendgrid --save
 
 </Tabs>
 
-:::tip Deliverability
-For best deliverability, configure SPF/DKIM with your email provider and ensure the `defaultFrom` domain aligns with the domain you verified with the provider.
-:::
 
 ##### Configuring providers
 
@@ -204,12 +201,12 @@ export default ({ env }) => ({
 
 </Tabs>
 
-:::note
+:::note Notes
 
 * When using a different provider per environment, specify the correct configuration in `/config/env/${yourEnvironment}/plugins.js|ts` (see [Environments](/cms/configurations/environment)).
 * Only one email provider will be active at a time. If the email provider setting isn't picked up by Strapi, verify the `plugins.js|ts` file is in the correct folder.
 * When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (see [Configure templates locally](/cms/features/users-permissions#templating-emails)).
-
+* For best deliverability, configure SPF/DKIM with your email provider and ensure the `defaultFrom` domain aligns with the domain you verified with the provider.
 :::
 
 ###### Per-environment configuration
