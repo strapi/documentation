@@ -58,7 +58,9 @@ The following information is shown in the Configuration panel:
 - **Default response email** and, if the configured `defaultReplyTo` address includes a display name, **Default reply-to name**.
 - **Email provider**: the provider currently in use.
 
-If the active provider supports SMTP connection verification (for example, the Nodemailer provider), a **Connection status** field is also shown with a **Test connection** button. Clicking it verifies the SMTP connection without sending a message. The button displays a **Connected** or **Error** badge depending on the result.
+:::note
+If the active provider supports SMTP connection verification (for example, the [Nodemailer provider](#providers)), a **Connection status** field is also shown with a **Test connection** button. Clicking it verifies the SMTP connection without sending a message. The button displays a **Connected** or **Error** badge depending on the result.
+:::
 
 A **Provider capabilities** card appears below the main configuration when the active provider exposes SMTP metadata. It shows the SMTP server address, encryption protocol (TLS, STARTTLS, or None), authentication type and user, pool status (Idle or Active, when connection pooling is enabled), and badges for enabled features such as DKIM, OAuth2, rate limiting, and connection pool.
 
