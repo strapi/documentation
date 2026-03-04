@@ -29,7 +29,7 @@ The Email feature enables Strapi applications to send emails from a server or an
 
 ## Configuration
 
-Most configuration options for the Email feature are handled via your Strapi project's code. The Email feature is not configurable in the admin panel, however users can test email delivery if it has been setup by an administrator.
+Most configuration options for the Email feature are handled via your Strapi project's code. The admin panel provides a read-only view of the current configuration, connection status, and provider capabilities, and lets users send a test email.
 
 :::info Provider vs. Host
 - The email provider refers to the package that Strapi calls to send an email (e.g. official providers such as Sendgrid or community packages such as `@strapi/provider-email-nodemailer`). Providers implement the logic for sending mail when Strapi invokes them.
@@ -109,8 +109,6 @@ The Email feature can be extended via the installation and configuration of addi
 Providers add an extension to the core capabilities of the plugin, for example to use Amazon SES for emails instead of Sendmail.
 
 There are both official providers maintained by Strapi — discoverable via the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via <ExternalLink to="https://www.npmjs.com/" text="npm"/>.
-
-A provider can be configured to be [private](#private-providers) to ensure asset URLs will be signed for secure access.
 
 ##### Installing providers
 
@@ -212,7 +210,7 @@ export default ({ env }) => ({
 
 :::
 
-###### Configuration per environment
+###### Per-environment configuration
 
 When configuring your provider you might want to change the configuration based on the `NODE_ENV` environment variable or use environment specific credentials.
 
@@ -288,11 +286,11 @@ module.exports = ({ env }) => ({
   email: {
     config: {
       provider: 'nodemailer',
-      // highlight-start
       providerOptions: {
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
+        // highlight-start
         auth: {
           type: 'OAuth2',
           user: env('SMTP_USER'),
@@ -300,8 +298,8 @@ module.exports = ({ env }) => ({
           clientSecret: env('OAUTH_CLIENT_SECRET'),
           refreshToken: env('OAUTH_REFRESH_TOKEN'),
         },
+        // highlight-end
       },
-      // highlight-end
       settings: {
         defaultFrom: env('SMTP_USER'),
         defaultReplyTo: env('SMTP_USER'),
@@ -319,11 +317,11 @@ export default ({ env }) => ({
   email: {
     config: {
       provider: 'nodemailer',
-      // highlight-start
       providerOptions: {
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
+        // highlight-start
         auth: {
           type: 'OAuth2',
           user: env('SMTP_USER'),
@@ -331,8 +329,8 @@ export default ({ env }) => ({
           clientSecret: env('OAUTH_CLIENT_SECRET'),
           refreshToken: env('OAUTH_REFRESH_TOKEN'),
         },
+        // highlight-end
       },
-      // highlight-end
       settings: {
         defaultFrom: env('SMTP_USER'),
         defaultReplyTo: env('SMTP_USER'),
@@ -364,8 +362,8 @@ module.exports = ({ env }) => ({
         // highlight-start
         pool: true,
         maxConnections: 5,
-        // highlight-end
         maxMessages: 100,
+        // highlight-end
         auth: {
           user: env('SMTP_USERNAME'),
           pass: env('SMTP_PASSWORD'),
@@ -395,8 +393,8 @@ export default ({ env }) => ({
         // highlight-start
         pool: true,
         maxConnections: 5,
-        // highlight-end
         maxMessages: 100,
+        // highlight-end
         auth: {
           user: env('SMTP_USERNAME'),
           pass: env('SMTP_PASSWORD'),
@@ -554,85 +552,13 @@ export default ({ env }) => ({
 </TabItem>
 </Tabs>
 
-##### Creating providers
+##### Building a custom provider
 
-To implement your own custom provider you must <ExternalLink to="https://docs.npmjs.com/creating-node-js-modules" text="create a Node.js module"/>.
+To build your own provider, publish it to npm, or use it locally in your project, see the dedicated documentation:
 
-The interface that must be exported depends on the plugin you are developing the provider for. The following is a template for the Email feature:
-
-<Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js
-module.exports = {
-  init: (providerOptions = {}, settings = {}) => {
-    return {
-      send: async options => {},
-    };
-  },
-};
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts
-export {
-  init: (providerOptions = {}, settings = {}) => {
-    return {
-      send: async options => {},
-    };
-  },
-};
-```
-
-</TabItem>
-
-</Tabs>
-
-In the send function you will have access to:
-
-* `providerOptions` that contains configurations written in `plugins.js|ts`
-* `settings` that contains configurations written in `plugins.js|ts`
-* `options` that contains options you send when you call the send function from the email plugin service
-
-You can review the <ExternalLink to="https://github.com/strapi/strapi/tree/main/packages/providers" text="Strapi-maintained providers"/> for example implementations.
-
-After creating your new provider you can <ExternalLink to="https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages" text="publish it to npm"/> to share with the community or [use it locally](#local-providers) for your project only.
-
-###### Local providers
-
-If you want to create your own provider without publishing it on npm you can follow these steps:
-
-1. Create a `providers` folder in your application.
-2. Create your provider (e.g. `/providers/strapi-provider-<plugin>-<provider>`)
-3. Then update your `package.json` to link your `strapi-provider-<plugin>-<provider>` dependency to the <ExternalLink to="https://docs.npmjs.com/files/package.json#local-paths" text="local path"/> of your new provider.
-
-```json
-{
-  ...
-  "dependencies": {
-    ...
-    "strapi-provider-<plugin>-<provider>": "file:providers/strapi-provider-<plugin>-<provider>",
-    ...
-  }
-}
-```
-
-4. Update your `/config/plugins.js|ts` file to [configure the provider](#configuring-providers).
-5. Finally, run `yarn` or `npm install` to install your new custom provider.
-
-###### Private providers
-
-You can set up a private provider, meaning that every asset URL displayed in the Content Manager will be signed for secure access.
-
-To enable private providers, you must implement the `isPrivate()` method and return `true`.
-
-In the backend, Strapi generates a signed URL for each asset using the `getSignedUrl(file)` method implemented in the provider. The signed URL includes an encrypted signature that allows the user to access the asset (but normally only for a limited time and with specific restrictions, depending on the provider).
-
-Note that for security reasons, the content API will not provide any signed URLs. Instead, developers using the API should sign the urls themselves.
+<CustomDocCardsWrapper>
+<CustomDocCard icon="wrench" title="Creating custom email providers" description="Implement the provider interface, use a local provider, or set up signed URLs for private assets." link="/cms/configurations/email-custom-providers"/>
+</CustomDocCardsWrapper>
 
 ## Usage
 
