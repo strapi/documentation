@@ -31,7 +31,7 @@ The Email feature enables Strapi applications to send emails from a server or an
 
 Most configuration options for the Email feature are handled via your Strapi project's code. The admin panel provides a read-only view of the current configuration, connection status, and provider capabilities, and lets users send a test email.
 
-:::info Provider vs. Host
+:::info Provider vs. host
 - The email provider refers to the package that Strapi calls to send an email (e.g. official providers such as Sendgrid or community packages such as `@strapi/provider-email-nodemailer`). Providers implement the logic for sending mail when Strapi invokes them.
 - The provider host (or server) refers to the connection details (e.g. an SMTP hostname, port, or REST API endpoint) that the provider exposes. Some providers hide these details behind an API key, while others require you to supply host-related options in your configuration.
 
@@ -56,7 +56,7 @@ The following information is shown in the Configuration panel:
 
 - **Default sender email** and, if the configured `defaultFrom` address includes a display name, **Default sender name**.
 - **Default response email** and, if the configured `defaultReplyTo` address includes a display name, **Default reply-to name**.
-- **Email provider** — the provider currently in use.
+- **Email provider**: the provider currently in use.
 
 If the active provider supports SMTP connection verification (for example, the Nodemailer provider), a **Connection status** field is also shown with a **Test connection** button. Clicking it verifies the SMTP connection without sending a message. The button displays a **Connected** or **Error** badge depending on the result.
 
@@ -153,7 +153,6 @@ The following is an example configuration for the Sendgrid provider:
 <TabItem value="javascript" label="JavaScript">
 
 ```js title="/config/plugins.js"
-
 module.exports = ({ env }) => ({
   // ...
   email: {
@@ -178,7 +177,6 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="/config/plugins.ts"
-
 export default ({ env }) => ({
   // ...
   email: {
@@ -204,9 +202,9 @@ export default ({ env }) => ({
 
 :::note
 
-* When using a different provider per environment, specify the correct configuration in `/config/env/${yourEnvironment}/plugins.js|ts` (See [Environments](/cms/configurations/environment)).
+* When using a different provider per environment, specify the correct configuration in `/config/env/${yourEnvironment}/plugins.js|ts` (see [Environments](/cms/configurations/environment)).
 * Only one email provider will be active at a time. If the email provider setting isn't picked up by Strapi, verify the `plugins.js|ts` file is in the correct folder.
-* When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (See [Configure templates locally](/cms/features/users-permissions#templating-emails)).
+* When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (see [Configure templates locally](/cms/features/users-permissions#templating-emails)).
 
 :::
 
@@ -252,9 +250,15 @@ module.exports = ({ env }) => ({
 export default ({ env }) => ({
   email: {
     config: {
-      provider: 'sendmail', // replace with your provider
+      provider: 'nodemailer',
       providerOptions: {
-        // ... provider-specific options
+        host: env('SMTP_HOST'),
+        port: 587,
+        secure: false, // Use `true` for port 465
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
       },
       settings: {
         defaultFrom: 'no-reply@example.com',
@@ -270,294 +274,18 @@ export default ({ env }) => ({
 
 If your provider gives you a single URL instead of host and port values, pass that URL (for example `https://api.eu.mailgun.net`) in `providerOptions` using the key the package expects.
 
-###### Advanced Nodemailer configuration
+For production scenarios with the Nodemailer provider (OAuth2, connection pooling, DKIM signing, rate limiting), see the dedicated documentation:
 
-The following examples cover common production scenarios for the Nodemailer provider. For the full list of supported `providerOptions`, refer to the <ExternalLink to="https://www.npmjs.com/package/@strapi/provider-email-nodemailer" text="provider README on npm"/>.
-
-**OAuth2 authentication**
-
-For services like Gmail or Outlook that support OAuth2:
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js title="/config/plugins.js"
-module.exports = ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        // highlight-start
-        auth: {
-          type: 'OAuth2',
-          user: env('SMTP_USER'),
-          clientId: env('OAUTH_CLIENT_ID'),
-          clientSecret: env('OAUTH_CLIENT_SECRET'),
-          refreshToken: env('OAUTH_REFRESH_TOKEN'),
-        },
-        // highlight-end
-      },
-      settings: {
-        defaultFrom: env('SMTP_USER'),
-        defaultReplyTo: env('SMTP_USER'),
-      },
-    },
-  },
-});
-```
-
-</TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts title="/config/plugins.ts"
-export default ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        // highlight-start
-        auth: {
-          type: 'OAuth2',
-          user: env('SMTP_USER'),
-          clientId: env('OAUTH_CLIENT_ID'),
-          clientSecret: env('OAUTH_CLIENT_SECRET'),
-          refreshToken: env('OAUTH_REFRESH_TOKEN'),
-        },
-        // highlight-end
-      },
-      settings: {
-        defaultFrom: env('SMTP_USER'),
-        defaultReplyTo: env('SMTP_USER'),
-      },
-    },
-  },
-});
-```
-
-</TabItem>
-</Tabs>
-
-**Connection pooling**
-
-Use connection pooling to improve performance when sending many emails:
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js title="/config/plugins.js"
-module.exports = ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: env('SMTP_HOST'),
-        port: 465,
-        secure: true,
-        // highlight-start
-        pool: true,
-        maxConnections: 5,
-        maxMessages: 100,
-        // highlight-end
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-      },
-      settings: {
-        defaultFrom: 'hello@example.com',
-        defaultReplyTo: 'hello@example.com',
-      },
-    },
-  },
-});
-```
-
-</TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts title="/config/plugins.ts"
-export default ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: env('SMTP_HOST'),
-        port: 465,
-        secure: true,
-        // highlight-start
-        pool: true,
-        maxConnections: 5,
-        maxMessages: 100,
-        // highlight-end
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-      },
-      settings: {
-        defaultFrom: 'hello@example.com',
-        defaultReplyTo: 'hello@example.com',
-      },
-    },
-  },
-});
-```
-
-</TabItem>
-</Tabs>
-
-**DKIM signing**
-
-Add DKIM signatures to improve deliverability:
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js title="/config/plugins.js"
-module.exports = ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: env('SMTP_HOST'),
-        port: 587,
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-        // highlight-start
-        dkim: {
-          domainName: 'example.com',
-          keySelector: 'mail',
-          privateKey: env('DKIM_PRIVATE_KEY'),
-        },
-        // highlight-end
-      },
-      settings: {
-        defaultFrom: 'hello@example.com',
-        defaultReplyTo: 'hello@example.com',
-      },
-    },
-  },
-});
-```
-
-</TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts title="/config/plugins.ts"
-export default ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: env('SMTP_HOST'),
-        port: 587,
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-        // highlight-start
-        dkim: {
-          domainName: 'example.com',
-          keySelector: 'mail',
-          privateKey: env('DKIM_PRIVATE_KEY'),
-        },
-        // highlight-end
-      },
-      settings: {
-        defaultFrom: 'hello@example.com',
-        defaultReplyTo: 'hello@example.com',
-      },
-    },
-  },
-});
-```
-
-</TabItem>
-</Tabs>
-
-**Rate limiting**
-
-Limit the number of messages sent per time interval to avoid spam filters:
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js title="/config/plugins.js"
-module.exports = ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: env('SMTP_HOST'),
-        port: 465,
-        secure: true,
-        pool: true,
-        // highlight-start
-        rateLimit: 5,    // max messages per rateDelta
-        rateDelta: 1000, // time interval in ms (1 second)
-        // highlight-end
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-      },
-      settings: {
-        defaultFrom: 'hello@example.com',
-        defaultReplyTo: 'hello@example.com',
-      },
-    },
-  },
-});
-```
-
-</TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts title="/config/plugins.ts"
-export default ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: env('SMTP_HOST'),
-        port: 465,
-        secure: true,
-        pool: true,
-        // highlight-start
-        rateLimit: 5,
-        rateDelta: 1000,
-        // highlight-end
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-      },
-      settings: {
-        defaultFrom: 'hello@example.com',
-        defaultReplyTo: 'hello@example.com',
-      },
-    },
-  },
-});
-```
-
-</TabItem>
-</Tabs>
+<CustomDocCardsWrapper>
+<CustomDocCard icon="gear" title="Advanced Nodemailer configuration" description="Configure OAuth2, connection pooling, DKIM signing, and rate limiting for the Nodemailer provider." link="/cms/configurations/email-nodemailer"/>
+</CustomDocCardsWrapper>
 
 ##### Building a custom provider
 
 To build your own provider, publish it to npm, or use it locally in your project, see the dedicated documentation:
 
 <CustomDocCardsWrapper>
-<CustomDocCard icon="wrench" title="Creating custom email providers" description="Implement the provider interface, use a local provider, or set up signed URLs for private assets." link="/cms/configurations/email-custom-providers"/>
+<CustomDocCard icon="wrench" title="Creating custom email providers" description="Implement the provider interface, use a local provider, or set up signed URLs for private assets." link="/cms/features/email-custom-providers"/>
 </CustomDocCardsWrapper>
 
 ## Usage
@@ -591,9 +319,9 @@ To trigger an email in response to a user action add the `send()` function to a 
 | `inReplyTo`   | `string`                      | Message-ID of the email being replied to. Used for conversation threading.                       |
 | `references`  | `string \| string[]`          | Message-ID list this email references. Used for conversation threading.                          |
 | `envelope`    | `object`                      | Custom SMTP envelope with `from` and `to` fields. Useful for bounce handling.                    |
-| `list`        | `object`                      | RFC 2369 List-\* headers. Enables one-click unsubscribe in Gmail and Outlook for newsletters.    |
+| `list`        | `object`                      | RFC 2369 List-* headers. Enables one-click unsubscribe in Gmail and Outlook for newsletters.     |
 | `icalEvent`   | `object`                      | Calendar event invitation in iCalendar format. Attach with `{ method, content }`.                |
-| `dsn`         | `object`                      | Delivery Status Notification — request bounce or delivery confirmation reports.                  |
+| `dsn`         | `object`                      | Delivery Status Notification settings. Requests bounce or delivery confirmation reports.         |
 
 :::note When using the Nodemailer provider
 The Nodemailer provider uses an explicit allowlist for all `send()` fields. Unknown properties are silently dropped. For the complete list of supported fields — including `dkim`, `amp`, `raw`, `auth` (per-message OAuth2), and others — see the <ExternalLink to="https://www.npmjs.com/package/@strapi/provider-email-nodemailer" text="provider README on npm"/>.
@@ -651,9 +379,9 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 
 ### Sending emails from a lifecycle hook {#lifecycle-hook}
 
- To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/cms/backend-customization/models#lifecycle-hooks) and the [`send()` function](#using-the-send-function). 
+To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/cms/backend-customization/models#lifecycle-hooks) and the [`send()` function](#using-the-send-function).
 
- The following example illustrates how to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
+The following example illustrates how to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
 
 <Tabs groupId="js-ts">
 
