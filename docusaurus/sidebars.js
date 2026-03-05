@@ -162,7 +162,7 @@ const sidebars = {
     {
       // APIs
       type: 'category',
-      label: 'APIs',
+      label: 'Content APIs',
       className: 'category-cms-api',
       link: { type: 'doc', id: 'cms/api/content-api' },
       collapsible: false,
@@ -505,7 +505,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Basics',
-          collapsed: false,
+          collapsed: true,
           items: [
             'cms/plugins-development/create-a-plugin',
             'cms/plugins-development/plugin-sdk',
@@ -514,20 +514,21 @@ const sidebars = {
         {
           type: 'category',
           label: 'Admin Panel',
-          collapsed: false,
+          collapsed: true,
           items: [
             'cms/plugins-development/admin-panel-api',
-            'cms/plugins-development/admin-configuration-customization',
+            'cms/plugins-development/admin-navigation-settings',
             'cms/plugins-development/admin-localization',
             'cms/plugins-development/admin-injection-zones',
             'cms/plugins-development/admin-redux-store',
+            'cms/plugins-development/admin-hooks',
             'cms/plugins-development/content-manager-apis',
           ],
         },
         {
           type: 'category',
           label: 'Server',
-          collapsed: false,
+          collapsed: true,
           items: [
             'cms/plugins-development/server-api',
             'cms/plugins-development/plugins-extension',
@@ -536,7 +537,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Guides',
-          collapsed: false,
+          collapsed: true,
           items: [
             'cms/plugins-development/guides/pass-data-from-server-to-admin',
             'cms/plugins-development/guides/admin-permissions-for-plugins',
