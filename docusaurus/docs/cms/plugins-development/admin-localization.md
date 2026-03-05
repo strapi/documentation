@@ -151,7 +151,7 @@ The `registerTrads` function receives an object with the following property:
 
 The function must return a `Promise` that resolves to an array of translation objects. Each object has the following structure:
 
-```typescript
+```ts
 {
   data: Record<string, string>; // Translation key-value pairs
   locale: string; // Locale code (e.g., 'en', 'fr')
@@ -222,7 +222,7 @@ After prefixing with plugin ID `my-plugin`, these become:
 - `my-plugin.plugin.name`
 - `my-plugin.settings.title`
 
-### Handling missing translation files
+### Missing translation files
 
 The `registerTrads` function should gracefully handle missing translation files by returning an empty object for that locale. The `.catch()` handler in the example above ensures that if a translation file does not exist, the plugin still returns a valid translation object:
 
@@ -386,6 +386,9 @@ const HomePage = () => {
 
 Translation keys are also used when configuring menu links, settings sections, and other admin panel elements:
 
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript" default>
+
 ```js title="admin/src/index.js"
 export default {
   register(app) {
@@ -405,7 +408,34 @@ export default {
 };
 ```
 
-See [Admin navigation & settings](/cms/plugins-development/admin-navigation-settings) for more configuration examples.
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="admin/src/index.ts"
+import type { StrapiApp } from '@strapi/admin/strapi-admin';
+
+export default {
+  register(app: StrapiApp) {
+    app.addMenuLink({
+      to: '/plugins/my-plugin',
+      icon: PluginIcon,
+      intlLabel: {
+        id: 'my-plugin.plugin.name', // Prefixed translation key
+        defaultMessage: 'My Plugin', // Fallback if translation missing
+      },
+      Component: async () => {
+        const { App } = await import('./pages/App');
+        return App;
+      },
+    });
+  },
+};
+```
+
+</TabItem>
+</Tabs>
+
+See [Admin navigation & settings](/cms/plugins-development/admin-configuration-customization) for more configuration examples.
 
 ## Plugin translation lifecycle
 
