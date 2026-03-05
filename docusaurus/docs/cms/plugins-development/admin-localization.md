@@ -237,7 +237,7 @@ The `registerTrads` function should gracefully handle missing translation files 
 
 This allows plugins to provide translations for only some locales (e.g., only English) without breaking the admin panel for other locales.
 
-## Using translations in components
+## Translations in components
 
 To use translations in your React components, use the `useIntl` hook from `react-intl`:
 
@@ -382,7 +382,7 @@ const HomePage = () => {
 </TabItem>
 </Tabs>
 
-## Using translations in configuration
+## Translations in configuration
 
 Translation keys are also used when configuring menu links, settings sections, and other admin panel elements:
 
@@ -407,7 +407,7 @@ export default {
 
 See [Admin navigation & settings](/cms/plugins-development/admin-navigation-settings) for more configuration examples.
 
-## How Strapi integrates plugin translations
+## Plugin translation lifecycle
 
 Strapi's admin panel automatically:
 
