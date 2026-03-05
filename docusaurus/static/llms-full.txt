@@ -12303,6 +12303,10 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 
 *Estimated completion time: 5-10 minutes*
 
+:::strapi Try the hosted demo
+Strapi offers a [hosted demo](https://strapi.io/demo) so you can quickly try its [Content Manager](/cms/features/content-manager) and learn how to edit content. In this hosted demo, the Content-Type Builder is [disabled by design](/cms/faq#why-cant-i-create-or-update-content-types-in-productionstaging). 
+:::
+
 :::prerequisites
 
 2. The terminal will prompt you to log in or sign up. Once you do, a 30-day trial of the 
