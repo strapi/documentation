@@ -11,6 +11,8 @@ tags:
 - plugins development
 ---
 
+import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prerequisite.md'
+
 # Admin Panel API for plugins: An overview
 
 <Tldr>
@@ -27,9 +29,7 @@ The admin panel of Strapi is a <ExternalLink to="https://reactjs.org/" text="Rea
 
 To customize the admin panel of Strapi, you can use plugins and tap into the Admin Panel API. This consists in editing an [entry file](#entry-file) to export all the required interface, and choosing which [actions](#available-actions) you want to perform.
 
-:::prerequisites
-Before diving deeper into the concepts on this page, please ensure you [created a Strapi plugin](/cms/plugins-development/create-a-plugin).
-:::
+<Prerequisite />
 
 ## Entry file
 
