@@ -1,7 +1,7 @@
 ---
 title: Admin localization
 description: Provide translations for your Strapi plugin's admin panel interface using registerTrads and react-intl.
-pagination_prev: cms/plugins-development/admin-configuration-customization
+pagination_prev: cms/plugins-development/admin-navigation-settings
 pagination_next: cms/plugins-development/admin-injection-zones
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
@@ -14,7 +14,9 @@ tags:
   - plugins development
 ---
 
-# Admin localization
+import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prerequisite-admin-panel.md'
+
+# Admin Panel API: Localization
 
 <Tldr>
 
@@ -24,9 +26,7 @@ Register translation files with `registerTrads`, prefix keys with your plugin ID
 
 Plugins can provide translations for multiple languages to make the admin interface accessible to users worldwide. Strapi automatically loads and merges plugin translations with core translations, making them available throughout the admin panel.
 
-:::prerequisites
-You have [created a Strapi plugin](/cms/plugins-development/create-a-plugin) and are familiar with the [admin entry file lifecycle](/cms/plugins-development/admin-configuration-customization#overview).
-:::
+<Prerequisite />
 
 ## Translation file structure
 
@@ -405,7 +405,7 @@ export default {
 };
 ```
 
-See [Customizing menu and settings](/cms/plugins-development/admin-configuration-customization#customizing-menu-and-settings) for more configuration examples.
+See [Admin navigation & settings](/cms/plugins-development/admin-navigation-settings) for more configuration examples.
 
 ## How Strapi integrates plugin translations
 
