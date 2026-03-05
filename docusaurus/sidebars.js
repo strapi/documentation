@@ -487,7 +487,7 @@ const sidebars = {
     {
       // Plugins
       type: 'category',
-      label: 'Plugins',
+      label: 'Plugins development',
       className: 'category-cms-plugins',
       collapsible: false,
       collapsed: false,
@@ -498,29 +498,53 @@ const sidebars = {
           label: 'Marketplace',
         },
         {
+          type: 'doc',
+          label: 'Developing plugins',
+          id: 'cms/plugins-development/developing-plugins',
+        },
+        {
           type: 'category',
-          label: 'Plugins development',
-          collapsed: true,
+          label: 'Basics',
+          collapsed: false,
           items: [
-            {
-              type: 'doc',
-              label: 'Developing plugins',
-              id: 'cms/plugins-development/developing-plugins',
-            },
             'cms/plugins-development/create-a-plugin',
-            'cms/plugins-development/plugin-structure',
             'cms/plugins-development/plugin-sdk',
-            'cms/plugins-development/admin-configuration-customization',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Admin Panel',
+          collapsed: false,
+          items: [
             'cms/plugins-development/admin-panel-api',
+            'cms/plugins-development/admin-configuration-customization',
+            'cms/plugins-development/admin-localization',
+            'cms/plugins-development/admin-injection-zones',
+            'cms/plugins-development/admin-redux-store',
             'cms/plugins-development/content-manager-apis',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Server',
+          collapsed: false,
+          items: [
             'cms/plugins-development/server-api',
             'cms/plugins-development/plugins-extension',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Guides',
+          collapsed: false,
+          items: [
             'cms/plugins-development/guides/pass-data-from-server-to-admin',
             'cms/plugins-development/guides/admin-permissions-for-plugins',
             'cms/plugins-development/guides/store-and-access-data',
             'cms/plugins-development/guides/create-components-for-plugins',
           ],
         },
+        'cms/plugins-development/plugins-extension',
       ],
     },
 
@@ -703,338 +727,6 @@ const sidebars = {
       ],
     },
   ],
-  // devDocsRestApiSidebar: [
-  //   {
-  //     type: 'link',
-  //     label: '⬅️ Back to Dev Docs content',
-  //     href: '/cms/intro'
-  //   },
-  //   {
-  //     type: 'category',
-  //     collapsed: false,
-  //     label: 'REST API reference',
-  //     link: {
-  //       type: 'doc',
-  //       id: 'cms/api/rest'
-  //     },
-  //     items: [
-  //       {
-  //         type: 'category',
-  //         label: 'Endpoints and basic requests',
-  //         link: {type: 'doc', id: 'cms/api/rest'},
-  //         collapsed: false,
-  //         items: [
-  //           {
-  //             type: 'link',
-  //             label: 'Endpoints',
-  //             href: '/cms/api/rest#endpoints',
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'Get documents',
-  //             href: '/cms/api/rest#get-all'
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'Get a document',
-  //             href: '/cms/api/rest#get'
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'Create a document',
-  //             href: '/cms/api/rest#create'
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'Update a document',
-  //             href: '/cms/api/rest#update'
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'Delete a document',
-  //             href: '/cms/api/rest#delete'
-  //           },
-  //         ]
-  //       },
-  //       {
-  //         type: 'doc',
-  //         id: 'cms/api/rest/interactive-query-builder',
-  //         label: '✨ Interactive Query Builder'
-  //       },
-  //       {
-  //         type: 'doc',
-  //         id: 'cms/api/rest/parameters'
-  //       },
-  //       {
-  //         type: 'category',
-  //         label: 'Populate and Select',
-  //         link: {type: 'doc', id: 'cms/api/rest/populate-select'},
-  //         collapsed: false,
-  //         items: [
-  //           {
-  //             type: 'link',
-  //             label: 'Field selection',
-  //             href: '/cms/api/rest/populate-select#field-selection',
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'Population',
-  //             href: '/cms/api/rest/populate-select#population',
-  //           },
-  //         ]
-  //       },
-  //       {
-  //         type: 'category',
-  //         collapsed: false,
-  //         label: 'Filters, Locale, Publication State',
-  //         link: {type: 'doc', id: 'cms/api/rest/filters-locale-publication' },
-  //         items: [
-  //           {
-  //             type: 'link',
-  //             label: 'Filtering',
-  //             href: '/cms/api/rest/filters'
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'Complex filtering',
-  //             href: '/cms/api/rest/filters-locale-publication#complex-filtering',
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'Deep filtering',
-  //             href: '/cms/api/rest/filters-locale-publication#deep-filtering',
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'Locale',
-  //             href: '/cms/api/rest/locale',
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'Status',
-  //             href: '/cms/api/rest/status',
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         type: 'category',
-  //         collapsed: false,
-  //         label: 'Sort and Pagination',
-  //         link: { type: 'doc', id: 'cms/api/rest/sort-pagination'},
-  //         items: [
-  //           {
-  //             type: 'link',
-  //             label: 'Sorting',
-  //             href: '/cms/api/rest/sort-pagination#sorting'
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'Pagination',
-  //             href: '/cms/api/rest/sort-pagination#pagination'
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'Pagination by page',
-  //             href: '/cms/api/rest/sort-pagination#pagination-by-page'
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'Pagination by offset',
-  //             href: '/cms/api/rest/sort-pagination#pagination-by-offset'
-  //           },
-  //         ]
-  //       },
-  //       {
-  //         type: 'category',
-  //         collapsed: false,
-  //         label: 'Relations',
-  //         link: {type: 'doc', id: 'cms/api/rest/relations'},
-  //         items: [
-  //           {
-  //             type: 'link',
-  //             label: 'connect',
-  //             href: '/cms/api/rest/relations#connect'
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'disconnect',
-  //             href: '/cms/api/rest/relations#disconnect'
-  //           },
-  //           {
-  //             type: 'link',
-  //             label: 'set',
-  //             href: '/cms/api/rest/relations#set'
-  //           },
-  //         ]
-  //       },
-  //     ]
-  //   },
-  //   {
-  //     type: "category",
-  //     label: "Rest API guides",
-  //     collapsed: false,
-  //     link: {
-  //       type: 'doc',
-  //       id: 'cms/api/rest/guides/intro',
-  //     },
-  //     items: [
-  //       {
-  //         type: "doc",
-  //         label: "Understanding populate",
-  //         id: 'cms/api/rest/guides/understanding-populate',
-  //       },
-  //       {
-  //         type: "doc",
-  //         label: "How to populate creator fields",
-  //         id: 'cms/api/rest/guides/populate-creator-fields',
-  //       },
-  //       {
-  //         type: 'link',
-  //         label: 'Additional resources',
-  //         href: '/cms/api/rest/guides/intro#additional-resources'
-  //       },
-  //     ],
-  //   }
-  // ],
-  // devDocsConfigSidebar: [
-  //   {
-  //     type: 'link',
-  //     label: '⬅️ Back to Dev Docs content',
-  //     href: '/cms/intro'
-  //   },
-  //   {
-  //     type: 'category',
-  //     collapsed: false,
-  //     label: 'Configuration',
-  //     link: {
-  //       type: 'doc',
-  //       id: 'cms/configurations',
-  //     },
-  //     items: [
-  //       {
-  //         type: 'doc',
-  //         label: 'Introduction to configurations',
-  //         id: 'cms/configurations',
-  //       },
-  //       {
-  //         type: 'category',
-  //         collapsed: false,
-  //         label: 'Base configurations',
-  //         link: {
-  //           type: 'doc',
-  //           id: 'cms/configurations'
-  //         },
-  //         items: [
-  //           'cms/configurations/database',
-  //           'cms/configurations/server',
-  //           'cms/configurations/admin-panel',
-  //           'cms/configurations/middlewares',
-  //           'cms/configurations/api',
-  //         ]
-  //       },
-  //       {
-  //         type: 'category',
-  //         label: 'Additional configurations',
-  //         collapsed: false,
-  //         link: {
-  //           type: 'doc',
-  //           id: 'cms/configurations'
-  //         },
-  //         items: [
-  //           'cms/configurations/plugins',
-  //           'cms/configurations/typescript',
-  //           'cms/configurations/api-tokens',
-  //           'cms/configurations/functions',
-  //           'cms/configurations/cron',
-  //           'cms/configurations/environment',
-  //           'cms/configurations/sso',
-  //           'cms/configurations/features',
-  //         ]
-  //       },
-  //       {
-  //         type: 'category',
-  //         label: 'Guides',
-  //         collapsed: false,
-  //         link: {
-  //           type: 'doc',
-  //           id: 'cms/configurations'
-  //         },
-  //         items: [
-  //           'cms/configurations/guides/rbac',
-  //           'cms/configurations/guides/public-assets',
-  //           'cms/configurations/guides/access-cast-environment-variables',
-  //           'cms/configurations/guides/access-configuration-values',
-  //           'cms/configurations/guides/use-cron-jobs',
-  //         ]
-  //       }
-  //     ]
-  //   },
-  // ],
-  // devDocsMigrationV5Sidebar: [
-  //   {
-  //     type: 'link',
-  //     label: '⬅️ Back to Dev Docs content',
-  //     href: '/cms/intro'
-  //   },
-  //   {
-  //     type: 'category',
-  //     collapsed: false,
-  //     link: {
-  //       type: 'doc',
-  //       id: 'cms/migration/v4-to-v5/introduction-and-faq'
-  //     },
-  //     label: 'Upgrade to Strapi 5',
-  //     customProps: {
-  //       new: true,
-  //     },
-  //     items: [
-  //       {
-  //         type: "doc",
-  //         label: "Introduction and FAQ",
-  //         id: "cms/migration/v4-to-v5/introduction-and-faq"
-  //       },
-  //       {
-  //         type: "doc",
-  //         label: "Step-by-step guide",
-  //         id: "cms/migration/v4-to-v5/step-by-step"
-  //       },
-  //       {
-  //         type: "doc",
-  //         label: "Upgrade tool reference",
-  //         id: 'cms/upgrade-tool',
-  //       },
-  //       {
-  //         type: "category",
-  //         collapsible: true,
-  //         collapsed: true,
-  //         label: "Breaking changes",
-  //         link: {
-  //           type: 'doc',
-  //           id: 'cms/migration/v4-to-v5/breaking-changes'
-  //         },
-  //         items: [
-  //           {
-  //             type: "autogenerated",
-  //             dirName: 'cms/migration/v4-to-v5/breaking-changes'
-  //           },
-  //         ]
-  //       },
-  //       {
-  //         type: 'category',
-  //         label: 'Specific resources',
-  //         collapsed: false,
-  //         link: { type: 'doc', id: 'cms/migration/v4-to-v5/additional-resources/introduction' },
-  //         items: [
-  //           'cms/migration/v4-to-v5/additional-resources/introduction',
-  //           'cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service',
-  //           'cms/migration/v4-to-v5/additional-resources/plugins-migration',
-  //           'cms/migration/v4-to-v5/additional-resources/helper-plugin',
-  //         ]
-  //       }
-  //     ]
-  //   },
-
-  // ]
 };
 
 module.exports = sidebars;
