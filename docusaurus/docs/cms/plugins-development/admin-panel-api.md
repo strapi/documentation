@@ -1,7 +1,7 @@
 ---
 title: Admin Panel API
-pagination_prev: cms/plugins-development/admin-configuration-customization
-pagination_next: cms/plugins-development/content-manager-apis
+pagination_prev: cms/plugins-development/plugin-sdk
+pagination_next: cms/plugins-development/admin-configuration-customization
 toc_max_heading_level: 4
 tags:
 - admin panel
@@ -23,7 +23,7 @@ tags:
 # Admin Panel API for plugins
 
 <Tldr>
-The Admin Panel API exposes `register`, `bootstrap`, and `registerTrads` hooks to inject React components and translations into Strapi’s UI. Menu, settings, injection zone, reducer, and hook APIs let plugins add navigation, configuration panels, or custom actions.
+The Admin Panel API exposes `register`, `bootstrap`, and `registerTrads` hooks to inject React components and translations into Strapi's UI. Menu, settings, injection zone, reducer, and hook APIs let plugins add navigation, configuration panels, or custom actions.
 </Tldr>
 
 A Strapi plugin can interact with both the [back end](/cms/plugins-development/server-api) and the front end of a Strapi application. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/cms/intro).
@@ -121,6 +121,10 @@ export default {
 };
 ```
 
+:::strapi Additional configuration options
+For details on `apis`, `initializer`, and `isReady`, see [Admin configuration & customization](/cms/plugins-development/admin-configuration-customization#base-configuration).
+:::
+
 ### bootstrap()
 
 **Type**: `Function`
@@ -157,6 +161,10 @@ While [`register()`](#register) and [`bootstrap()`](#bootstrap) are lifecycle fu
 **Type**: `Function`
 
 To reduce the build size, the admin panel is only shipped with 2 locales by default (`en` and `fr`). The `registerTrads()` function is used to register a plugin's translations files and to create separate chunks for the application translations. It does not need to be modified.
+
+:::strapi Translations in depth
+For a full guide on key prefixing, using translations in components, and best practices, see [Admin localization](/cms/plugins-development/admin-localization).
+:::
 
 <details>
 <summary>Example: Register a plugin's translation files</summary>
@@ -234,6 +242,10 @@ The Menu API allows a plugin to add a new link to the main navigation through th
 
 :::note
 `intlLabel.id` are ids used in translation files (`[plugin-name]/admin/src/translations/[language].json`)
+:::
+
+:::strapi Detailed examples
+For more details on menu links and localization, see [Admin configuration & customization](/cms/plugins-development/admin-configuration-customization#navigation-sidebar-menu-links).
 :::
 
 **Example:**
@@ -314,6 +326,10 @@ All functions accept links as objects with the following parameters:
 | `Component`   | Async function   | Returns a dynamic import of the plugin entry point                                                                                                                                                                       |
 | `permissions` | Array of Objects | Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                          |
 | `licenseOnly` | Boolean | If set to `true`, adds a lightning ⚡️ icon next to the icon or menu entry to indicate that the feature or plugin requires a paid license.<br/>(Defaults to `false`) |
+
+:::strapi TypeScript examples
+For more details and TypeScript examples, see [Admin configuration & customization](/cms/plugins-development/admin-configuration-customization#settings).
+:::
 
 #### createSettingSection()
 
@@ -444,6 +460,10 @@ Plugins can use:
 * Strapi's [predefined injection zones](#using-predefined-injection-zones) for the Content Manager,
 * or custom injection zones, created by a plugin
 
+:::strapi Comprehensive injection zones guide
+For details on custom zone creation, component rendering, and Content Manager data access, see [Admin injection zones](/cms/plugins-development/admin-injection-zones).
+:::
+
 :::note
 Injection zones are defined in the [register()](#register) lifecycle but components are injected in the [bootstrap()](#bootstrap) lifecycle.
 :::
@@ -552,6 +572,10 @@ export default {
 
 Once an injection zone is defined, the component to be injected in the Content Manager can have access to all the data of the Edit View through the `useContentManagerContext` React hook.
 
+:::strapi Full hook reference
+For a detailed guide on using this hook with all available properties, see [Admin injection zones — Accessing Content Manager data](/cms/plugins-development/admin-injection-zones#accessing-content-manager-data).
+:::
+
 <details>
 <summary>Example of a basic component using the 'useContentManagerContext' hook</summary>
 
@@ -635,6 +659,10 @@ export default {
 
 
 ```
+
+:::strapi Reading and dispatching state
+For information on reading and dispatching to the Redux store from plugin components, see [Accessing the Redux store](/cms/plugins-development/admin-redux-store).
+:::
 
 ### Hooks API
 
