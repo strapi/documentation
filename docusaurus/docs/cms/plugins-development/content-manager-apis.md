@@ -30,6 +30,8 @@ Content Manager APIs are part of the [Admin Panel API](/cms/plugins-development/
 Strapi 5 provides 4 Content Manager APIs, all accessible through `app.getPlugin('content-manager').apis`. 
 All the Content Manager APIs share the same API shape and must use components.
 
+### Injection zones vs. Content Manager APIs
+
 <InjectionVsCmApis/>
 
 ### API shape

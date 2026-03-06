@@ -34,6 +34,8 @@ Plugins can extend and customize existing admin panel sections by injecting cust
 Injection zones are defined in the [`register`](/cms/plugins-development/admin-panel-api#register) lifecycle function, but components are injected in the [`bootstrap`](/cms/plugins-development/admin-panel-api#bootstrap) lifecycle function.
 :::
 
+## Injection zones vs. Content Manager APIs
+
 <InjectionVsCmApis />
 
 ## Predefined injection zones
