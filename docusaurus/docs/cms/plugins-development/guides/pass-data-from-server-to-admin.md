@@ -99,12 +99,12 @@ For instance, within a React component, you could use `useEffect` to get the dat
 
 ```js title="/my-plugin/admin/src/components/MyComponent/index.js"
 import foobarRequests from "../../api/foobar";
-const [foobar, setFoobar] = useState([]);
 
+const [foobar, setFoobar] = useState([]);
 // …
 useEffect(() => {
   foobarRequests.getFoobar().then(res => {
-    setSchemas(res.data);
+    setFoobar(res.data);
   });
 }, [setFoobar]);
 // …
