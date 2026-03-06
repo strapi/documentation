@@ -46,7 +46,7 @@ app.getPlugin('content-manager').apis.addEditViewSidePanel([
 ]);
 
 // Injection zone (plugin-defined zone)
-app.injectContentManagerComponent('editView', 'right-links', {
+app.getPlugin('content-manager').injectComponent('editView', 'right-links', {
   name: 'my-plugin.custom-link',
   Component: MyCustomLink,
 });
