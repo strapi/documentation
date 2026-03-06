@@ -394,23 +394,23 @@ const sidebars = {
           collapsed: true,
           customProps: {
             updated: false,
-            tooltip: 'This section has been reorganized, see details below.',
+            // tooltip: 'This section has been reorganized, see details below.',
           },
           items: [
-            {
-              type: 'html',
-              value: 'placeholder', // a value is required for the HTML type, but it is not rendered
-              customProps: {
-                tooltipTitle: `The section has been reorganized`,
-                tooltipContent: `We have reorganized the admin panel customization section to make it easier to navigate and find what you need.</div>
-                  <br/><br/>
-                  <div>The new structure groups customizations by their purpose, making it more intuitive to locate specific settings.</div>
-                  <br/>
-                  <div><em>Note: </em>
-                    Deployment-related configuration, including host, port, and path configuration, has been moved to the Configurations > Admin panel > <a href="/cms/configurations/admin-panel#admin-panel-server">Admin panel server</a> page.
-                  </div>`,
-              },
-            },
+            // {
+            //   type: 'html',
+            //   value: 'placeholder', // a value is required for the HTML type, but it is not rendered
+            //   customProps: {
+            //     tooltipTitle: `The section has been reorganized`,
+            //     tooltipContent: `We have reorganized the admin panel customization section to make it easier to navigate and find what you need.</div>
+            //       <br/><br/>
+            //       <div>The new structure groups customizations by their purpose, making it more intuitive to locate specific settings.</div>
+            //       <br/>
+            //       <div><em>Note: </em>
+            //         Deployment-related configuration, including host, port, and path configuration, has been moved to the Configurations > Admin panel > <a href="/cms/configurations/admin-panel#admin-panel-server">Admin panel server</a> page.
+            //       </div>`,
+            //   },
+            // },
             {
               type: 'doc',
               id: 'cms/admin-panel-customization',
