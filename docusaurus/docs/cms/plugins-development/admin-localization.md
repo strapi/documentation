@@ -41,8 +41,7 @@ admin/src/translations/
 
 Each translation file contains key-value pairs where keys are translation identifiers and values are the translated strings:
 
-```json
-// admin/src/translations/en.json
+```json title="admin/src/translations/en.json"
 {
   "plugin.name": "My Plugin",
   "plugin.description": "A custom Strapi plugin",
