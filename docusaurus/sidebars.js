@@ -504,6 +504,9 @@ const sidebars = {
           type: 'category',
           label: 'Admin Panel',
           collapsed: true,
+          customProps: {
+            new: true,
+          },
           items: [
             'cms/plugins-development/admin-panel-api',
             'cms/plugins-development/admin-navigation-settings',
