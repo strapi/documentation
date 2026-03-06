@@ -36,13 +36,13 @@ const bootstrap = ({ strapi }) => {
     {
       section: 'plugins',
       displayName: 'Access the overview page',
-      uid: 'overview',
+      uid: 'overview.access',
       pluginName: 'my-plugin',
     },
     {
       section: 'plugins',
       displayName: 'Access the content manager sidebar',
-      uid: 'sidebar',
+      uid: 'sidebar.access',
       pluginName: 'my-plugin',
     },
   ];
@@ -146,7 +146,7 @@ import pluginPermissions from './permissions';
 export default {
   register(app) {
     app.addMenuLink({
-      to: `plugins/${PluginIcon}`,
+      to: `plugins/${PLUGIN_ID}`,
       icon: PluginIcon,
       intlLabel: {
         id: `${PLUGIN_ID}.plugin.name`,

@@ -1,0 +1,646 @@
+---
+title: Redux store & reducers
+description: Add custom reducers, read state, dispatch actions, and subscribe to changes in Strapi's admin panel Redux store from your plugin.
+pagination_prev: cms/plugins-development/admin-injection-zones
+pagination_next: cms/plugins-development/admin-hooks
+displayed_sidebar: cmsSidebar
+toc_max_heading_level: 4
+tags:
+  - admin panel
+  - admin panel customization
+  - admin panel API
+  - plugins development
+---
+
+import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prerequisite-admin-panel.md'
+
+# Admin Panel API: Redux store & reducers
+
+<Tldr>
+
+Use `addReducers()` during `register` to add custom state to the Redux store. Then read state with `useSelector`, update it with `useDispatch`, and subscribe to changes with `useStore`. The `admin_app` slice exposes theme, locale, permissions, and authentication data.
+
+</Tldr>
+
+Strapi's admin panel uses a global Redux store to manage application state. Plugins can access this store to read state, dispatch actions, and subscribe to state changes. This enables plugins to interact with core admin functionality like theme settings, language preferences, and authentication state.
+
+<Prerequisite />
+
+## Store overview
+
+The Redux store is automatically provided to all plugin components through React Redux's `Provider`. The store contains several slices:
+
+- `admin_app`: core admin state including theme, language, permissions, and authentication token
+- `adminApi`: RTK Query API state for admin endpoints
+- Plugin-specific slices: additional reducers added by plugins
+
+## Adding custom reducers
+
+Reducers are <ExternalLink to="https://redux.js.org/" text="Redux"/> reducers that can be used to share state between components. Reducers can be useful when:
+
+* Large amounts of application state are needed in many places in the application.
+* The application state is updated frequently.
+* The logic to update that state may be complex.
+
+Reducers can be added to a plugin interface with the `addReducers()` function during the [`register`](/cms/plugins-development/admin-panel-api#register) lifecycle.
+
+A reducer is declared as an object with this syntax:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="my-plugin/admin/src/index.js"
+import { exampleReducer } from './reducers'
+import pluginId from './pluginId'
+
+const reducers = {
+  // Reducer Syntax
+  [`${pluginId}_exampleReducer`]: exampleReducer
+}
+
+export default {
+  register(app) {
+    app.addReducers(reducers)
+  },
+  bootstrap() {},
+};
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="my-plugin/admin/src/index.ts"
+import type { StrapiApp } from '@strapi/admin/strapi-admin';
+import { exampleReducer } from './reducers';
+import pluginId from './pluginId';
+
+const reducers = {
+  [`${pluginId}_exampleReducer`]: exampleReducer,
+};
+
+export default {
+  register(app: StrapiApp) {
+    app.addReducers(reducers);
+  },
+  bootstrap() {},
+};
+```
+
+</TabItem>
+</Tabs>
+
+## Reading state with `useSelector`
+
+The most common way to access Redux state in your plugin components is using the `useSelector` hook from `react-redux`:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```jsx title="admin/src/pages/HomePage.jsx"
+import { useSelector } from 'react-redux';
+
+const HomePage = () => {
+  // Read current theme
+  const currentTheme = useSelector(
+    (state) => state.admin_app?.theme?.currentTheme
+  );
+
+  // Read current locale
+  const currentLocale = useSelector(
+    (state) => state.admin_app?.language?.locale
+  );
+
+  // Read authentication status
+  const isAuthenticated = useSelector((state) => !!state.admin_app?.token);
+
+  // Read available locales
+  const availableLocales = useSelector(
+    (state) => state.admin_app?.language?.localeNames || {}
+  );
+
+  return (
+    <div>
+      <p>Current Theme: {currentTheme}</p>
+      <p>Current Locale: {currentLocale}</p>
+      <p>Authenticated: {isAuthenticated ? 'Yes' : 'No'}</p>
+    </div>
+  );
+};
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```tsx title="admin/src/pages/HomePage.tsx"
+import { useSelector } from 'react-redux';
+
+const HomePage = () => {
+  // Read current theme
+  const currentTheme = useSelector(
+    (state: any) => state.admin_app?.theme?.currentTheme
+  );
+
+  // Read current locale
+  const currentLocale = useSelector(
+    (state: any) => state.admin_app?.language?.locale
+  );
+
+  // Read authentication status
+  const isAuthenticated = useSelector((state: any) => !!state.admin_app?.token);
+
+  // Read available locales
+  const availableLocales = useSelector(
+    (state: any) => state.admin_app?.language?.localeNames || {}
+  );
+
+  return (
+    <div>
+      <p>Current Theme: {currentTheme}</p>
+      <p>Current Locale: {currentLocale}</p>
+      <p>Authenticated: {isAuthenticated ? 'Yes' : 'No'}</p>
+    </div>
+  );
+};
+```
+
+</TabItem>
+</Tabs>
+
+### Available state properties
+
+The `admin_app` slice contains the following state properties:
+
+| Property | Type | Description |
+|---|---|---|
+| `theme.currentTheme` | `string` | Current theme (`'light'`, `'dark'`, or `'system'`) |
+| `theme.availableThemes` | `string[]` | Array of available theme names |
+| `language.locale` | `string` | Current locale code (e.g., `'en'`, `'fr'`) |
+| `language.localeNames` | `object` | Object mapping locale codes to display names |
+| `token` | `string \| null` | Authentication token |
+| `permissions` | `object` | User permissions object |
+
+## Dispatching actions
+
+To update the Redux store, use the `useDispatch` hook:
+
+:::note
+The examples below dispatch actions to core admin state (theme, locale) for illustration purposes. In practice, most plugins should dispatch actions to their own custom reducers rather than modifying global admin state.
+:::
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```jsx title="admin/src/pages/HomePage.jsx"
+import { useSelector, useDispatch } from 'react-redux';
+
+const HomePage = () => {
+  const dispatch = useDispatch();
+  const currentTheme = useSelector(
+    (state) => state.admin_app?.theme?.currentTheme
+  );
+
+  const handleToggleTheme = () => {
+    const newTheme =
+      currentTheme === 'light'
+        ? 'dark'
+        : currentTheme === 'dark'
+        ? 'system'
+        : 'light';
+    dispatch({
+      type: 'admin/setAppTheme',
+      payload: newTheme,
+    });
+  };
+
+  const handleChangeLocale = (locale) => {
+    dispatch({
+      type: 'admin/setLocale',
+      payload: locale,
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={handleToggleTheme}>
+        Toggle Theme (Current: {currentTheme})
+      </button>
+      <button onClick={() => handleChangeLocale('en')}>Set English</button>
+    </div>
+  );
+};
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```tsx title="admin/src/pages/HomePage.tsx"
+import { useSelector, useDispatch } from 'react-redux';
+
+const HomePage = () => {
+  const dispatch = useDispatch();
+  const currentTheme = useSelector(
+    (state: any) => state.admin_app?.theme?.currentTheme
+  );
+
+  const handleToggleTheme = () => {
+    const newTheme =
+      currentTheme === 'light'
+        ? 'dark'
+        : currentTheme === 'dark'
+        ? 'system'
+        : 'light';
+    dispatch({
+      type: 'admin/setAppTheme',
+      payload: newTheme,
+    } as any);
+  };
+
+  const handleChangeLocale = (locale: string) => {
+    dispatch({
+      type: 'admin/setLocale',
+      payload: locale,
+    } as any);
+  };
+
+  return (
+    <div>
+      <button onClick={handleToggleTheme}>
+        Toggle Theme (Current: {currentTheme})
+      </button>
+      <button onClick={() => handleChangeLocale('en')}>Set English</button>
+    </div>
+  );
+};
+```
+
+</TabItem>
+</Tabs>
+
+### Available actions
+
+<!-- TODO: Verify action types and slice name against the @strapi/admin Redux slice in the strapi/strapi codebase. -->
+
+The `admin_app` slice provides the following actions:
+
+| Action type | Payload type | Description |
+|---|---|---|
+| `admin/setAppTheme` | `string` | Set the theme (`'light'`, `'dark'`, or `'system'`) |
+| `admin/setAvailableThemes` | `string[]` | Updates `theme.availableThemes` in `admin_app` |
+| `admin/setLocale` | `string` | Set the locale (e.g., `'en'`, `'fr'`) |
+| `admin/setToken` | `string \| null` | Set the authentication token |
+| `admin/login` | `{ token: string, persist?: boolean }` | Login action with token and persistence option |
+| `admin/logout` | `void` | Logout action (no payload) |
+
+:::note
+When dispatching actions, use the Redux Toolkit action type format: `'sliceName/actionName'`. The admin slice is named `'admin'`, so actions follow the pattern `'admin/actionName'`.
+:::
+
+## Accessing the store instance
+
+For advanced use cases, you can access the store instance directly using the `useStore` hook:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```jsx title="admin/src/pages/App.jsx"
+import { useStore } from 'react-redux';
+import { useEffect } from 'react';
+
+const App = () => {
+  const store = useStore();
+
+  useEffect(() => {
+    const state = store.getState();
+    console.log('Redux Store State:', state);
+
+    const unsubscribe = store.subscribe(() => {
+      const currentState = store.getState();
+      console.log('Store state changed:', {
+        theme: currentState.admin_app?.theme?.currentTheme,
+        locale: currentState.admin_app?.language?.locale,
+        timestamp: new Date().toISOString(),
+      });
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [store]);
+
+  return <div>My Plugin</div>;
+};
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```tsx title="admin/src/pages/App.tsx"
+import { useStore } from 'react-redux';
+import { useEffect } from 'react';
+
+const App = () => {
+  const store = useStore();
+
+  useEffect(() => {
+    const state = store.getState();
+    console.log('Redux Store State:', state);
+
+    const unsubscribe = store.subscribe(() => {
+      const currentState = store.getState();
+      console.log('Store state changed:', {
+        theme: currentState.admin_app?.theme?.currentTheme,
+        locale: currentState.admin_app?.language?.locale,
+        timestamp: new Date().toISOString(),
+      });
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [store]);
+
+  return <div>My Plugin</div>;
+};
+```
+
+</TabItem>
+</Tabs>
+
+## Complete example
+
+The following example combines all 3 patterns (useSelector, useDispatch, useStore) described on the present page:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+<ExpandableContent>
+
+```jsx title="admin/src/pages/HomePage.jsx"
+import { Main } from '@strapi/design-system';
+import { Button, Box, Typography, Flex } from '@strapi/design-system';
+import { useSelector, useDispatch, useStore } from 'react-redux';
+import { useEffect, useState } from 'react';
+
+const HomePage = () => {
+  const dispatch = useDispatch();
+  const store = useStore();
+
+  // Reading state
+  const currentTheme = useSelector(
+    (state) => state.admin_app?.theme?.currentTheme
+  );
+  const currentLocale = useSelector(
+    (state) => state.admin_app?.language?.locale
+  );
+  const isAuthenticated = useSelector((state) => !!state.admin_app?.token);
+  const availableLocales = useSelector(
+    (state) => state.admin_app?.language?.localeNames || {}
+  );
+
+  // Dispatching actions
+  const handleToggleTheme = () => {
+    const newTheme =
+      currentTheme === 'light'
+        ? 'dark'
+        : currentTheme === 'dark'
+        ? 'system'
+        : 'light';
+    dispatch({ type: 'admin/setAppTheme', payload: newTheme });
+  };
+
+  const handleChangeLocale = (locale) => {
+    dispatch({ type: 'admin/setLocale', payload: locale });
+  };
+
+  // Subscribing to store changes
+  const [storeChangeCount, setStoreChangeCount] = useState(0);
+  const [lastChange, setLastChange] = useState('');
+
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      setStoreChangeCount((prev) => prev + 1);
+      setLastChange(new Date().toLocaleTimeString());
+    });
+    return () => unsubscribe();
+  }, [store]);
+
+  return (
+    <Main>
+      <Box padding={8}>
+        <Typography variant="alpha" as="h1">
+          Redux Store Examples
+        </Typography>
+
+        <Flex direction="column" gap={4} paddingTop={6}>
+          <Box padding={4} background="neutral100" hasRadius>
+            <Typography variant="omega" fontWeight="bold" paddingBottom={2}>
+              Reading state
+            </Typography>
+            <Flex direction="column" gap={2}>
+              <Typography variant="omega">
+                Current Theme: <strong>{currentTheme || 'system'}</strong>
+              </Typography>
+              <Typography variant="omega">
+                Current Locale: <strong>{currentLocale || 'en'}</strong>
+              </Typography>
+              <Typography variant="omega">
+                Authentication Status:{' '}
+                <strong>
+                  {isAuthenticated ? 'Authenticated' : 'Not Authenticated'}
+                </strong>
+              </Typography>
+            </Flex>
+          </Box>
+
+          <Box padding={4} background="neutral100" hasRadius>
+            <Typography variant="omega" fontWeight="bold" paddingBottom={2}>
+              Dispatching actions
+            </Typography>
+            <Flex direction="row" gap={2} wrap="wrap">
+              <Button onClick={handleToggleTheme} variant="secondary">
+                Toggle Theme
+              </Button>
+              {Object.keys(availableLocales).map((locale) => (
+                <Button
+                  key={locale}
+                  onClick={() => handleChangeLocale(locale)}
+                  variant={currentLocale === locale ? 'default' : 'tertiary'}
+                >
+                  Set {availableLocales[locale] || locale}
+                </Button>
+              ))}
+            </Flex>
+          </Box>
+
+          <Box padding={4} background="neutral100" hasRadius>
+            <Typography variant="omega" fontWeight="bold" paddingBottom={2}>
+              Subscribing to store changes
+            </Typography>
+            <Flex direction="column" gap={2}>
+              <Typography variant="omega">
+                Store has changed <strong>{storeChangeCount}</strong> time(s)
+              </Typography>
+              {lastChange && (
+                <Typography variant="omega">
+                  Last change at: <strong>{lastChange}</strong>
+                </Typography>
+              )}
+            </Flex>
+          </Box>
+        </Flex>
+      </Box>
+    </Main>
+  );
+};
+
+export { HomePage };
+```
+
+</ExpandableContent>
+
+<br/>
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+<ExpandableContent>
+
+```tsx title="admin/src/pages/HomePage.tsx"
+import { Main } from '@strapi/design-system';
+import { Button, Box, Typography, Flex } from '@strapi/design-system';
+import { useSelector, useDispatch, useStore } from 'react-redux';
+import { useEffect, useState } from 'react';
+
+const HomePage = () => {
+  const dispatch = useDispatch();
+  const store = useStore();
+
+  // Reading state
+  const currentTheme = useSelector(
+    (state: any) => state.admin_app?.theme?.currentTheme
+  );
+  const currentLocale = useSelector(
+    (state: any) => state.admin_app?.language?.locale
+  );
+  const isAuthenticated = useSelector((state: any) => !!state.admin_app?.token);
+  const availableLocales = useSelector(
+    (state: any) => state.admin_app?.language?.localeNames || {}
+  );
+
+  // Dispatching actions
+  const handleToggleTheme = () => {
+    const newTheme =
+      currentTheme === 'light'
+        ? 'dark'
+        : currentTheme === 'dark'
+        ? 'system'
+        : 'light';
+    dispatch({ type: 'admin/setAppTheme', payload: newTheme } as any);
+  };
+
+  const handleChangeLocale = (locale: string) => {
+    dispatch({ type: 'admin/setLocale', payload: locale } as any);
+  };
+
+  // Subscribing to store changes
+  const [storeChangeCount, setStoreChangeCount] = useState(0);
+  const [lastChange, setLastChange] = useState<string>('');
+
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      setStoreChangeCount((prev) => prev + 1);
+      setLastChange(new Date().toLocaleTimeString());
+    });
+    return () => unsubscribe();
+  }, [store]);
+
+  return (
+    <Main>
+      <Box padding={8}>
+        <Typography variant="alpha" as="h1">
+          Redux Store Examples
+        </Typography>
+
+        <Flex direction="column" gap={4} paddingTop={6}>
+          <Box padding={4} background="neutral100" hasRadius>
+            <Typography variant="omega" fontWeight="bold" paddingBottom={2}>
+              Reading state
+            </Typography>
+            <Flex direction="column" gap={2}>
+              <Typography variant="omega">
+                Current Theme: <strong>{currentTheme || 'system'}</strong>
+              </Typography>
+              <Typography variant="omega">
+                Current Locale: <strong>{currentLocale || 'en'}</strong>
+              </Typography>
+              <Typography variant="omega">
+                Authentication Status:{' '}
+                <strong>
+                  {isAuthenticated ? 'Authenticated' : 'Not Authenticated'}
+                </strong>
+              </Typography>
+            </Flex>
+          </Box>
+
+          <Box padding={4} background="neutral100" hasRadius>
+            <Typography variant="omega" fontWeight="bold" paddingBottom={2}>
+              Dispatching actions
+            </Typography>
+            <Flex direction="row" gap={2} wrap="wrap">
+              <Button onClick={handleToggleTheme} variant="secondary">
+                Toggle Theme
+              </Button>
+              {Object.keys(availableLocales).map((locale) => (
+                <Button
+                  key={locale}
+                  onClick={() => handleChangeLocale(locale)}
+                  variant={currentLocale === locale ? 'default' : 'tertiary'}
+                >
+                  Set {availableLocales[locale] || locale}
+                </Button>
+              ))}
+            </Flex>
+          </Box>
+
+          <Box padding={4} background="neutral100" hasRadius>
+            <Typography variant="omega" fontWeight="bold" paddingBottom={2}>
+              Subscribing to store changes
+            </Typography>
+            <Flex direction="column" gap={2}>
+              <Typography variant="omega">
+                Store has changed <strong>{storeChangeCount}</strong> time(s)
+              </Typography>
+              {lastChange && (
+                <Typography variant="omega">
+                  Last change at: <strong>{lastChange}</strong>
+                </Typography>
+              )}
+            </Flex>
+          </Box>
+        </Flex>
+      </Box>
+    </Main>
+  );
+};
+
+export { HomePage };
+```
+
+</ExpandableContent>
+
+<br/>
+
+</TabItem>
+</Tabs>
+
+## Best practices
+
+- **Use `useSelector` for reading state.** Prefer [`useSelector`](#reading-state-with-useselector) over direct store access. It automatically subscribes to updates and re-renders components when the selected state changes.
+- **Clean up subscriptions.** Always unsubscribe from store subscriptions in `useEffect` cleanup functions to prevent memory leaks.
+- **Consider type safety.** For Redux state access in plugins, use `react-redux` hooks (`useSelector`, `useDispatch`) with plugin-local typing (for example `RootState` and `AppDispatch`). If you use Strapi admin utilities, import them from `@strapi/admin/strapi-admin` (not `@strapi/admin`). Avoid relying on undocumented typed Redux hooks as part of Strapi's public API until they are explicitly documented as stable.
+- **Avoid unnecessary dispatches.** Only dispatch actions when you need to update state. Reading state does not require dispatching actions.
+- **Respect core state.** Be careful when modifying core admin state (like theme or locale) as it affects the entire admin panel. Consider whether your plugin should modify global state or maintain its own local state.
+
+:::tip
+To add your own state to the Redux store, see [Adding custom reducers](#adding-custom-reducers) above.
+:::

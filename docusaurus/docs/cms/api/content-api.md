@@ -2,7 +2,7 @@
 title: Content API
 description: Learn more about Strapi 5's Content API
 displayed_sidebar: cmsSidebar
-sidebar_label: APIs Introduction
+sidebar_label: Content APIs Introduction
 pagination_prev: cms/setup-deployment
 pagination_next: cms/api/document
 tags:
