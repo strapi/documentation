@@ -44,9 +44,6 @@ const sidebars = {
           type: 'doc',
           id: 'cms/features/content-type-builder',
           label: 'Content Type Builder',
-          customProps: {
-            updated: true,
-          },
         },
         'cms/deployment',
       ],
@@ -90,17 +87,11 @@ const sidebars = {
           type: 'doc',
           label: 'Internationalization (i18n)',
           id: 'cms/features/internationalization',
-          customProps: {
-            updated: true,
-          },
         },
         {
           type: 'doc',
           label: 'Media Library',
           id: 'cms/features/media-library',
-          customProps: {
-            updated: true,
-          },
         },
         {
           type: 'doc',
