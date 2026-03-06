@@ -54,7 +54,7 @@ Each translation file contains key-value pairs where keys are translation identi
 
 ## The `registerTrads` function {#registertrads}
 
-In Strapi plugins that have an admin part, `registerTrads()` is used to load translations for your plugin’s UI labels and messages. If you don’t need localization, you can omit it and the plugin can still run.
+In Strapi plugins that have an admin part, `registerTrads()` is used to load translations for your plugin's UI labels and messages. If you don't need localization, you can omit it and the plugin can still run.
 
 The `registerTrads()` function is an async function that loads translation files for all configured locales. Strapi calls this function during admin panel initialization to collect translations from all plugins.
 
@@ -445,7 +445,7 @@ Strapi's admin panel automatically:
 3. Applies custom translations from the admin configuration (if any)
 4. Makes translations available via `react-intl` throughout the admin panel
 
-The merge order ensures that core Strapi translations are loaded first, plugin translations are merged on top, and custom translations from admin config override both (allowing users to customize translations).
+In practice, core admin translations are loaded first, plugin translations are merged on top, and project-level overrides in `config.translations` let you customize the labels displayed in the admin panel.
 
 ## Best practices
 
@@ -461,5 +461,5 @@ The `en` locale is always available in Strapi and serves as the fallback locale.
 :::
 
 :::tip
-To see which locales are available in your Strapi instance, check the `config.locales` array in your `src/admin/app.ts` or `src/admin/app.js` file. You can also access available locales from the Redux store using `useSelector((state) => state.admin_app?.language?.localeNames)` (see [Accessing the Redux store](/cms/plugins-development/admin-redux-store)).
+To see which locales are available in your Strapi instance, check the `config.locales` array in your `src/admin/app.ts` or `src/admin/app.js` file. For programmatic access at runtime, see [Accessing the Redux store](/cms/plugins-development/admin-redux-store) (note that internal store structure may change between versions).
 :::
