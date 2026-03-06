@@ -1,7 +1,7 @@
 ---
 title: Content Manager APIs
 description: The Content Manager APIs reference lists the APIs available to plugins for adding actions and options to the Content Manager List view and Edit view.
-pagination_prev: cms/plugins-development/admin-hooks
+pagination_prev: cms/plugins-development/admin-navigation-settings
 pagination_next: cms/plugins-development/admin-injection-zones
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
