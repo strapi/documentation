@@ -1,31 +1,30 @@
 ---
-title: Accessing the Redux store
-description: Read state, dispatch actions, and subscribe to changes in Strapi's admin panel Redux store from your plugin.
+title: Redux store & reducers
+description: Add custom reducers, read state, dispatch actions, and subscribe to changes in Strapi's admin panel Redux store from your plugin.
 pagination_prev: cms/plugins-development/admin-injection-zones
-pagination_next: cms/plugins-development/content-manager-apis
+pagination_next: cms/plugins-development/admin-hooks
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
 tags:
   - admin panel
-  - Redux store
-  - useSelector
-  - useDispatch
+  - admin panel customization
+  - admin panel API
   - plugins development
 ---
 
-# Accessing the Redux store
+import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prerequisite-admin-panel.md'
+
+# Admin Panel API: Redux store & reducers
 
 <Tldr>
 
-Strapi's admin panel uses a global Redux store. Plugins can read state with `useSelector`, update state with `useDispatch`, and subscribe to changes with `useStore`. The `admin_app` slice exposes theme, locale, permissions, and authentication data.
+Use `addReducers()` during `register` to add custom state to the Redux store. Then read state with `useSelector`, update it with `useDispatch`, and subscribe to changes with `useStore`. The `admin_app` slice exposes theme, locale, permissions, and authentication data.
 
 </Tldr>
 
 Strapi's admin panel uses a global Redux store to manage application state. Plugins can access this store to read state, dispatch actions, and subscribe to state changes. This enables plugins to interact with core admin functionality like theme settings, language preferences, and authentication state.
 
-:::prerequisites
-You have [created a Strapi plugin](/cms/plugins-development/create-a-plugin) and are familiar with the [admin entry file lifecycle](/cms/plugins-development/admin-configuration-customization#overview).
-:::
+<Prerequisite />
 
 ## Store overview
 
@@ -34,6 +33,34 @@ The Redux store is automatically provided to all plugin components through React
 - `admin_app`: core admin state including theme, language, permissions, and authentication token
 - `adminApi`: RTK Query API state for admin endpoints
 - Plugin-specific slices: additional reducers added by plugins
+
+## Adding custom reducers
+
+Reducers are <ExternalLink to="https://redux.js.org/" text="Redux"/> reducers that can be used to share state between components. Reducers can be useful when:
+
+* Large amounts of application state are needed in many places in the application.
+* The application state is updated frequently.
+* The logic to update that state may be complex.
+
+Reducers can be added to a plugin interface with the `addReducers()` function during the [`register`](/cms/plugins-development/admin-panel-api#register) lifecycle.
+
+A reducer is declared as an object with this syntax:
+
+```js title="my-plugin/admin/src/index.js"
+import { exampleReducer } from './reducers'
+
+const reducers = {
+  // Reducer Syntax
+  [`${pluginId}_exampleReducer`]: exampleReducer
+}
+
+export default {
+  register(app) {
+    app.addReducers(reducers)
+  },
+  bootstrap() {},
+};
+```
 
 ## Reading state with `useSelector`
 
@@ -307,11 +334,12 @@ const App = () => {
 
 ## Complete example
 
-<details>
-<summary>Example combining all 3 patterns (useSelector, useDispatch, useStore)</summary>
+The following example combines all 3 patterns (useSelector, useDispatch, useStore) described on the present page:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
+
+<ExpandableContent>
 
 ```jsx title="admin/src/pages/HomePage.jsx"
 import { Main } from '@strapi/design-system';
@@ -434,8 +462,14 @@ const HomePage = () => {
 export { HomePage };
 ```
 
+</ExpandableContent>
+
+<br/>
+
 </TabItem>
 <TabItem value="ts" label="TypeScript">
+
+<ExpandableContent>
 
 ```tsx title="admin/src/pages/HomePage.tsx"
 import { Main } from '@strapi/design-system';
@@ -558,19 +592,21 @@ const HomePage = () => {
 export { HomePage };
 ```
 
+</ExpandableContent>
+
+<br/>
+
 </TabItem>
 </Tabs>
 
-</details>
-
 ## Best practices
 
-- **Use `useSelector` for reading state.** Prefer `useSelector` over direct store access. It automatically subscribes to updates and re-renders components when the selected state changes.
+- **Use `useSelector` for reading state.** Prefer [`useSelector`](#reading-state-with-useselector) over direct store access. It automatically subscribes to updates and re-renders components when the selected state changes.
 - **Clean up subscriptions.** Always unsubscribe from store subscriptions in `useEffect` cleanup functions to prevent memory leaks.
 - **Consider type safety.** For better TypeScript support, create typed selectors or use typed hooks from `@strapi/admin` if available.
 - **Avoid unnecessary dispatches.** Only dispatch actions when you need to update state. Reading state does not require dispatching actions.
 - **Respect core state.** Be careful when modifying core admin state (like theme or locale) as it affects the entire admin panel. Consider whether your plugin should modify global state or maintain its own local state.
 
 :::tip
-For plugins that need to add their own state to the Redux store, use the `addReducers` method in the `register` lifecycle function to inject custom reducers. See the [Admin Panel API documentation](/cms/plugins-development/admin-panel-api) for details.
+To add your own state to the Redux store, see [Adding custom reducers](#adding-custom-reducers) above.
 :::
