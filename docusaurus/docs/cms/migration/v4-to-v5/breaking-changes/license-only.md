@@ -58,7 +58,7 @@ A similar result can be achieved in Strapi v4 by adding the `lockIcon` property.
 
   - a settings menu item will look like the following: ![](/img/assets/plugins/lightning-icon-settings.png)
 
-* Additional information and examples on how to use the `licenseOnly` property can be found in the [`addMenuLink()`](/cms/plugins-development/admin-panel-api#menu-api), [`addSettingsLink()`](/cms/plugins-development/admin-panel-api#addsettingslink), and [`addSettingsLinks()`](/cms/plugins-development/admin-panel-api#addsettingslinks) methods sections of the Admin Panel API documentation.
+* Additional information and examples on how to use the `licenseOnly` property can be found in the [`addMenuLink()`](/cms/plugins-development/admin-configuration-customization#navigation-sidebar-menu-links), [`addSettingsLink()`](/cms/plugins-development/admin-configuration-customization#adding-links-to-existing-settings-sections), and [`addSettingsLinks()`](/cms/plugins-development/admin-configuration-customization#adding-links-to-existing-settings-sections) methods sections of the Admin Panel API documentation.
 
 ### Manual migration
 
