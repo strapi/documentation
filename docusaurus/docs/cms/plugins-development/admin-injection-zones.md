@@ -28,15 +28,11 @@ Injection zones are predefined areas in the admin UI where plugins can inject Re
 
 Plugins can extend and customize existing admin panel sections by injecting custom React components into predefined areas. This allows you to add functionality to Strapi's built-in interfaces without modifying core code.
 
+<Prerequisite />
+
 :::note
 Injection zones are defined in the [`register`](/cms/plugins-development/admin-panel-api#register) lifecycle function, but components are injected in the [`bootstrap`](/cms/plugins-development/admin-panel-api#bootstrap) lifecycle function.
 :::
-
-:::tip
-For adding panels, actions, or buttons to the Content Manager, the [Content Manager APIs](/cms/plugins-development/content-manager-apis) (`addDocumentAction`, `addEditViewSidePanel`, etc.) are often more robust and better typed than injection zones. Use injection zones when you need to insert components into specific UI areas not covered by the Content Manager APIs.
-:::
-
-<Prerequisite />
 
 <InjectionVsCmApis />
 
