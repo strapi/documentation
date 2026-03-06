@@ -141,7 +141,7 @@ export default {
 </TabItem>
 </Tabs>
 
-## Hook execution modes
+## Running hooks
 
 Hooks can be run in 3 modes:
 
@@ -155,11 +155,11 @@ Hooks can be run in 3 modes:
 For `runHookWaterfall`, each subscriber must return the transformed value so that the next subscriber in the chain receives it. Failing to return a value will break the chain.
 :::
 
-## Predefined hooks
+## Using predefined hooks
 
 Strapi includes predefined hooks for the Content Manager's List and Edit views.
 
-### inject-column-in-table
+### `INJECT-COLUMN-IN-TABLE`
 
 The `Admin/CM/pages/ListView/inject-column-in-table` hook can add or mutate columns in the List View of the [Content Manager](/cms/intro):
 
@@ -235,8 +235,9 @@ export default {
 </TabItem>
 </Tabs>
 
-<details>
-<summary>ListFieldLayout and ListLayout type definitions</summary>
+**ListFieldLayout and ListLayout type definitions**:
+
+<ExpandableContent>
 
 ```tsx
 interface ListFieldLayout {
@@ -282,9 +283,9 @@ interface LayoutSettings extends Contracts.ContentTypes.Settings {
 }
 ```
 
-</details>
+</ExpandableContent>
 
-### mutate-edit-view-layout
+### `MUTATE-EDIT-VIEW-LAYOUT`
 
 The `Admin/CM/pages/EditView/mutate-edit-view-layout` hook can mutate the Edit View layout of the [Content Manager](/cms/intro).
 
@@ -343,8 +344,9 @@ export default {
 </TabItem>
 </Tabs>
 
-<details>
-<summary>EditLayout and EditFieldLayout type definitions</summary>
+**EditLayout and EditFieldLayout type definitions:**
+
+<ExpandableContent>
 
 ```tsx
 interface EditLayout {
@@ -392,7 +394,7 @@ interface LayoutSettings extends Contracts.ContentTypes.Settings {
 }
 ```
 
-</details>
+</ExpandableContent>
 
 :::note
 `EditViewLayout` and `ListViewLayout` are parts of the `useDocumentLayout` hook (see <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/core/content-manager/admin/src/hooks/useDocumentLayout.ts" text="source code"/>).
