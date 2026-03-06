@@ -15,7 +15,7 @@ Content Manager APIs and injection zones are both extension points to customize 
 | Add actions for selected entries in List View | Content Manager API ([`addBulkAction`](/cms/plugins-development/content-manager-apis#addbulkaction)) | Best for workflows that apply to multiple entries at once. |
 | Add UI to a predefined zone in a plugin view (localized visual customization) | Injection Zones API ([`injectComponent`](/cms/plugins-development/admin-injection-zones#injecting-into-content-manager-zones)) | Best when you target a specific zone exposed by a plugin. |
 
-For implementation details and up-to-date API signatures, please refer to the [`content-manager` file in the Strapi codebase](https://github.com/strapi/strapi/blob/develop/packages/core/content-manager/admin/src/content-manager.ts).
+For implementation details and up-to-date API signatures, please refer to the <ExternalLink text="content-manager" to="https://github.com/strapi/strapi/blob/develop/packages/core/content-manager/admin/src/content-manager.ts"/> file in the Strapi codebase]().
 
 <ExpandableContent>
 
