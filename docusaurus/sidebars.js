@@ -531,7 +531,6 @@ const sidebars = {
           collapsed: true,
           items: [
             'cms/plugins-development/server-api',
-            'cms/plugins-development/plugins-extension',
           ],
         },
         {
