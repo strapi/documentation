@@ -51,6 +51,7 @@ A reducer is declared as an object with this syntax:
 
 ```js title="my-plugin/admin/src/index.js"
 import { exampleReducer } from './reducers'
+import pluginId from './pluginId'
 
 const reducers = {
   // Reducer Syntax
@@ -71,6 +72,7 @@ export default {
 ```ts title="my-plugin/admin/src/index.ts"
 import type { StrapiApp } from '@strapi/admin/strapi-admin';
 import { exampleReducer } from './reducers';
+import pluginId from './pluginId';
 
 const reducers = {
   [`${pluginId}_exampleReducer`]: exampleReducer,
@@ -283,6 +285,7 @@ The `admin_app` slice provides the following actions:
 | Action type | Payload type | Description |
 |---|---|---|
 | `admin/setAppTheme` | `string` | Set the theme (`'light'`, `'dark'`, or `'system'`) |
+| `admin/setAvailableThemes` | `string[]` | Updates `theme.availableThemes` in `admin_app` |
 | `admin/setLocale` | `string` | Set the locale (e.g., `'en'`, `'fr'`) |
 | `admin/setToken` | `string \| null` | Set the authentication token |
 | `admin/login` | `{ token: string, persist?: boolean }` | Login action with token and persistence option |
@@ -634,7 +637,7 @@ export { HomePage };
 
 - **Use `useSelector` for reading state.** Prefer [`useSelector`](#reading-state-with-useselector) over direct store access. It automatically subscribes to updates and re-renders components when the selected state changes.
 - **Clean up subscriptions.** Always unsubscribe from store subscriptions in `useEffect` cleanup functions to prevent memory leaks.
-- **Consider type safety.** For better TypeScript support, create typed selectors using the store's `RootState` type rather than casting to `any`.
+- **Consider type safety.** For Redux state access in plugins, use `react-redux` hooks (`useSelector`, `useDispatch`) with plugin-local typing (for example `RootState` and `AppDispatch`). If you use Strapi admin utilities, import them from `@strapi/admin/strapi-admin` (not `@strapi/admin`). Avoid relying on undocumented typed Redux hooks as part of Strapi's public API until they are explicitly documented as stable.
 - **Avoid unnecessary dispatches.** Only dispatch actions when you need to update state. Reading state does not require dispatching actions.
 - **Respect core state.** Be careful when modifying core admin state (like theme or locale) as it affects the entire admin panel. Consider whether your plugin should modify global state or maintain its own local state.
 
