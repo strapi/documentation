@@ -97,7 +97,7 @@ export default {
       .injectComponent('listView', 'actions', {
         name: 'my-plugin-list-action',
         Component: () => <button>Custom List Action</button>,
-    });
+      });
     // highlight-end
 
     // Inject additional information into the publish modal
@@ -117,7 +117,7 @@ export default {
       .injectComponent('preview', 'actions', {
         name: 'my-plugin-preview-action',
         Component: PreviewAction,
-    });
+      });
     // highlight-end
   },
 };
@@ -151,18 +151,18 @@ export default {
     // highlight-end
 
     // Inject a component into the List view's actions zone
-    app
     // highlight-start
-      .getPlugin('content-manager') 
+    app
+      .getPlugin('content-manager')
       .injectComponent('listView', 'actions', {
         name: 'my-plugin-list-action',
         Component: () => <button>Custom List Action</button>,
-    });
+      });
     // highlight-end
 
     // Inject additional information into the publish modal
-    app
     // highlight-start
+    app
       .getPlugin('content-manager')
       .injectComponent('listView', 'publishModalAdditionalInfos', {
         name: 'my-plugin-publish-modal-info',
@@ -171,13 +171,13 @@ export default {
     // highlight-end
 
     // Inject a component into the Preview view's actions zone
-    app
     // highlight-start
+    app
       .getPlugin('content-manager')
       .injectComponent('preview', 'actions', {
         name: 'my-plugin-preview-action',
         Component: PreviewAction,
-    });
+      });
     // highlight-end
   },
 };
@@ -211,8 +211,8 @@ export default {
           after: [],
         },
       },
+      // highlight-end
     });
-    // highlight-end
   },
 };
 ```
@@ -251,15 +251,31 @@ export default {
 
 ### Rendering injection zones in components
 
-<!-- TODO: Verify the correct import path for InjectionZone in Strapi 5. The @strapi/helper-plugin package was deprecated in v5. Check if InjectionZone should be imported from @strapi/strapi/admin or another package. -->
-
-To render injected components in your plugin's UI, use the `<InjectionZone />` React component with an `area` prop following the naming convention `plugin-name.viewName.injectionZoneName`:
+In Strapi 5, the `InjectionZone` component from `@strapi/helper-plugin` is removed and has no direct replacement export. To render injected components, create your own component with `useStrapiApp` from `@strapi/strapi/admin`.
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
+```jsx title="admin/src/components/CustomInjectionZone.jsx"
+import { useStrapiApp } from '@strapi/strapi/admin';
+
+export const CustomInjectionZone = ({ area, ...props }) => {
+  const getPlugin = useStrapiApp('CustomInjectionZone', (state) => state.getPlugin);
+  const [pluginName, view, zone] = area.split('.');
+
+  const plugin = getPlugin(pluginName);
+  const components = plugin?.getInjectedComponents(view, zone);
+
+  if (!components?.length) {
+    return null;
+  }
+
+  return components.map(({ name, Component }) => <Component key={name} {...props} />);
+};
+```
+
 ```jsx title="admin/src/pages/Dashboard.jsx"
-import { InjectionZone } from '@strapi/helper-plugin';
+import { CustomInjectionZone } from '../components/CustomInjectionZone';
 
 const Dashboard = () => {
   return (
@@ -267,12 +283,12 @@ const Dashboard = () => {
       <h1>Dashboard</h1>
 
       {/* Render components injected into the top zone */}
-      <InjectionZone area="dashboard.homePage.top" />
+      <CustomInjectionZone area="dashboard.homePage.top" />
 
       <div className="main-content">{/* Main dashboard content */}</div>
 
       {/* Render components injected into the bottom zone */}
-      <InjectionZone area="dashboard.homePage.bottom" />
+      <CustomInjectionZone area="dashboard.homePage.bottom" />
     </div>
   );
 };
@@ -283,8 +299,31 @@ export default Dashboard;
 </TabItem>
 <TabItem value="ts" label="TypeScript">
 
+```tsx title="admin/src/components/CustomInjectionZone.tsx"
+import { useStrapiApp } from '@strapi/strapi/admin';
+
+type CustomInjectionZoneProps = {
+  area: `${string}.${string}.${string}`;
+  [key: string]: unknown;
+};
+
+export const CustomInjectionZone = ({ area, ...props }: CustomInjectionZoneProps) => {
+  const getPlugin = useStrapiApp('CustomInjectionZone', (state) => state.getPlugin);
+  const [pluginName, view, zone] = area.split('.');
+
+  const plugin = getPlugin(pluginName);
+  const components = plugin?.getInjectedComponents(view, zone);
+
+  if (!components?.length) {
+    return null;
+  }
+
+  return components.map(({ name, Component }) => <Component key={name} {...props} />);
+};
+```
+
 ```tsx title="admin/src/pages/Dashboard.tsx"
-import { InjectionZone } from '@strapi/helper-plugin';
+import { CustomInjectionZone } from '../components/CustomInjectionZone';
 
 const Dashboard = () => {
   return (
@@ -292,12 +331,12 @@ const Dashboard = () => {
       <h1>Dashboard</h1>
 
       {/* Render components injected into the top zone */}
-      <InjectionZone area="dashboard.homePage.top" />
+      <CustomInjectionZone area="dashboard.homePage.top" />
 
       <div className="main-content">{/* Main dashboard content */}</div>
 
       {/* Render components injected into the bottom zone */}
-      <InjectionZone area="dashboard.homePage.bottom" />
+      <CustomInjectionZone area="dashboard.homePage.bottom" />
     </div>
   );
 };
@@ -456,7 +495,7 @@ export const MyCustomButton = () => {
 </Tabs>
 
 :::caution
-The `useContentManagerContext` hook is currently exported as `unstable_useContentManagerContext`. The `unstable_` prefix indicates the API may change in future releases. This hook replaces the [deprecated `useCMEditViewDataManager`](/cms/migration/v4-to-v5/additional-resources/helper-plugin#usecmeditviewdatamanager)  from `@strapi/helper-plugin` which is not available in Strapi 5.
+The `useContentManagerContext` hook is currently exported as `unstable_useContentManagerContext`. The `unstable_` prefix indicates the API may change in future releases. This hook replaces the [deprecated `useCMEditViewDataManager`](/cms/migration/v4-to-v5/additional-resources/helper-plugin#usecmeditviewdatamanager) from `@strapi/helper-plugin` which is not available in Strapi 5.
 :::
 
 ## Best practices
