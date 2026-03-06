@@ -55,9 +55,11 @@ Each translation file contains key-value pairs where keys are translation identi
 }
 ```
 
-## The `registerTrads` function
+## The `registerTrads` function {#registertrads}
 
-The `registerTrads` function is a required lifecycle function that loads translation files for all configured locales. Strapi calls this function during admin panel initialization to collect translations from all plugins.
+In Strapi plugins that have an admin part, `registerTrads()` is used to load translations for your plugin’s UI labels and messages. If you don’t need localization, you can omit it and the plugin can still run.
+
+The `registerTrads()` function is an async function that loads translation files for all configured locales. Strapi calls this function during admin panel initialization to collect translations from all plugins.
 
 ### Basic implementation
 
@@ -436,8 +438,6 @@ export default {
 
 </TabItem>
 </Tabs>
-
-See [Admin navigation & settings](/cms/plugins-development/admin-configuration-customization) for more configuration examples.
 
 ## Plugin translation lifecycle
 
