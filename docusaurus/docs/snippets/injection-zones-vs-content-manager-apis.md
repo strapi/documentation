@@ -1,6 +1,10 @@
 
 ### Injection zones vs. Content Manager APIs
 
+:::tip tl;dr
+For adding panels, actions, or buttons to the Content Manager, the [Content Manager APIs](/cms/plugins-development/content-manager-apis) (`addDocumentAction`, `addEditViewSidePanel`, etc.) are often more robust and better typed than injection zones. Use injection zones when you need to insert components into specific UI areas not covered by the Content Manager APIs.
+:::
+
 Content Manager APIs and injection zones are both extension points to customize the admin panel, but they solve different needs:
 
 | Need | Recommended API | Why |
