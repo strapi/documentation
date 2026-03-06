@@ -2,16 +2,18 @@
 title: Content Manager APIs
 description: The Content Manager APIs reference lists the APIs available to plugins for adding actions and options to the Content Manager List view and Edit view.
 pagination_prev: cms/plugins-development/admin-hooks
-pagination_next: cms/plugins-development/server-api
+pagination_next: cms/plugins-development/admin-injection-zones
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
 tags:
+- admin panel
 - admin panel API
+- admin panel customization
 - plugins development
-- plugins
 ---
 
 import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prerequisite-admin-panel.md'
+import InjectionVsCmApis from '/docs/snippets/injection-zones-vs-content-manager-apis.md'
 
 # Content Manager APIs
 
@@ -23,16 +25,12 @@ Content Manager APIs are part of the [Admin Panel API](/cms/plugins-development/
 
 <Prerequisite />
 
-Strapi 5 provides 4 Content Manager APIs, all accessible through `app.getPlugin('content-manager').apis`:
-
-- [`addEditViewSidePanel`](#addeditviewsidepanel),
-- [`addDocumentAction`](#adddocumentaction),
-- [`addDocumentHeaderAction`](#adddocumentheaderaction),
-- and [`addBulkAction`](#addbulkaction).
-
 ## General information
 
+Strapi 5 provides 4 Content Manager APIs, all accessible through `app.getPlugin('content-manager').apis`. 
 All the Content Manager APIs share the same API shape and must use components.
+
+<InjectionVsCmApis/>
 
 ### API shape
 
