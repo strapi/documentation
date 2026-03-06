@@ -25,6 +25,10 @@ Admin panel customization is done by tweaking the code of the `src/admin/app` fi
 - Replace some other parts of the admin panel, such as the Rich text editor and the bundler,
 - Extend the theme or the admin panel to add new features or customize the existing user interface.
 
+:::strapi Plugins and Admin Panel API
+In addition to supported customizations detailed in this section, you can go further and create plugins that tap into the [Admin Panel API](/cms/plugins-development/admin-panel-api).
+:::
+
 ## General considerations
 
 :::prerequisites
@@ -84,6 +88,7 @@ The `config` object of `/src/admin/app` accepts the following parameters:
 | `tutorials`                    | Boolean          | Toggles displaying the video tutorials
 | `notifications`                | Object           | Accepts the `releases` key (Boolean) to toggle displaying notifications about new releases |
 
+<br/>
 Click on any of the following cards to get more details about a specific topic:
 
 <CustomDocCardsWrapper>
