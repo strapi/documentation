@@ -21,7 +21,7 @@ tags:
 
 # Server API for plugins
 
-A Strapi plugin can interact with both the back end and the  of a Strapi application. The Server API is about the back-end part, i.e. how the plugin interacts with the server part of a Strapi application.
+A Strapi plugin can interact with both the back end and the front-end of a Strapi application. The Server API is about the back-end part, i.e. how the plugin interacts with the server part of a Strapi application.
 
 For more information on how plugins can modify the front end part of Strapi, see [front end](/cms/plugins-development/admin-panel-api).
 
