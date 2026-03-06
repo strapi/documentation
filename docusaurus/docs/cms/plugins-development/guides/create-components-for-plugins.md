@@ -25,6 +25,7 @@ You can create components for your plugins in 2 different ways: using the Conten
 ### Using the Content-Type Builder 
 
 The recommended way to create components for your plugin is through the Content-Type Builder in the admin panel. 
+
 The [Content-Type Builder documentation](/cms/features/content-type-builder#new-component) provides more details on this process.
 
 ### Creating components manually
@@ -54,33 +55,27 @@ Components in Strapi follow the following format in their definition:
 }
 ```
 
-## Making components visible in the admin panel
+## Component schema example
 
-To ensure your plugin's components are visible in the admin panel, you need to set the appropriate `pluginOptions` in your component schema:
+A component schema defines the structure of a reusable data fragment. Here is an example of a component schema for a plugin:
 
-```javascript {9-16}
+```json title="my-plugin/server/components/my-category/my-component.json"
 {
-  "kind": "collectionType",
-  "collectionName": "my_plugin_components",
+  "collectionName": "components_my_category_my_components",
   "info": {
-    "singularName": "my-plugin-component",
-    "pluralName": "my-plugin-components",
-    "displayName": "My Plugin Component"
-  },
-  "pluginOptions": {
-    "content-manager": {
-      "visible": true
-    },
-    "content-type-builder": {
-      "visible": true
-    }
+    "displayName": "My Component",
+    "icon": "align-justify"
   },
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
     }
   }
 }
 ```
 
-This configuration ensures your components will be visible and editable in both the Content-Type Builder and Content Manager.
+This configuration ensures your components will be available in both the Content-Type Builder and Content Manager when used in a content-type that has `pluginOptions` visibility enabled.
