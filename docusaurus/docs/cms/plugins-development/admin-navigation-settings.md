@@ -62,6 +62,7 @@ import PluginIcon from './components/PluginIcon';
 
 export default {
   register(app) {
+    // highlight-start
     app.addMenuLink({
       to: `/plugins/my-plugin`,
       icon: PluginIcon,
@@ -77,6 +78,7 @@ export default {
       position: 3, // Position in the menu (lower numbers appear first)
       licenseOnly: false, // Set to true to show ⚡ icon for paid features
     });
+    // highlight-end
 
     app.registerPlugin({
       id: 'my-plugin',
@@ -95,6 +97,7 @@ import type { StrapiApp } from '@strapi/admin/strapi-admin';
 
 export default {
   register(app: StrapiApp) {
+    // highlight-start
     app.addMenuLink({
       to: `/plugins/my-plugin`,
       icon: PluginIcon,
@@ -110,6 +113,7 @@ export default {
       position: 3, // Position in the menu (lower numbers appear first)
       licenseOnly: false, // Set to true to show ⚡ icon for paid features
     });
+    // highlight-end
 
     app.registerPlugin({
       id: 'my-plugin',
@@ -138,6 +142,7 @@ Use `createSettingSection()` in the `register` lifecycle function:
 ```jsx title="admin/src/index.js"
 export default {
   register(app) {
+    // highlight-start
     app.createSettingSection(
       {
         id: 'my-plugin',
@@ -175,6 +180,7 @@ export default {
         },
       ],
     );
+    // highlight-end
 
     app.registerPlugin({
       id: 'my-plugin',
@@ -192,6 +198,7 @@ import type { StrapiApp } from '@strapi/admin/strapi-admin';
 
 export default {
   register(app: StrapiApp) {
+    // highlight-start
     app.createSettingSection(
       {
         id: 'my-plugin',
@@ -229,6 +236,7 @@ export default {
         },
       ],
     );
+    // highlight-end
 
     app.registerPlugin({
       id: 'my-plugin',
@@ -278,6 +286,7 @@ export default {
   },
   bootstrap(app) {
     // Add a single link to the global settings section
+    // highlight-start
     app.addSettingsLink('global', {
       intlLabel: {
         id: 'my-plugin.settings.documentation',
@@ -293,8 +302,10 @@ export default {
       permissions: [],
       licenseOnly: false,
     });
+    // highlight-end
 
     // Add multiple links at once to the global settings section
+    // highlight-start
     app.addSettingsLinks('global', [
       {
         intlLabel: {
@@ -323,6 +334,7 @@ export default {
         },
       },
     ]);
+    // highlight-end
   },
 };
 ```
@@ -342,6 +354,7 @@ export default {
   },
   bootstrap(app: StrapiApp) {
     // Add a single link to the global settings section
+    // highlight-start
     app.addSettingsLink('global', {
       intlLabel: {
         id: 'my-plugin.settings.documentation',
@@ -357,8 +370,10 @@ export default {
       permissions: [],
       licenseOnly: false,
     });
+    // highlight-end
 
     // Add multiple links at once to the global settings section
+    // highlight-start
     app.addSettingsLinks('global', [
       {
         intlLabel: {
@@ -387,6 +402,7 @@ export default {
         },
       },
     ]);
+    // highlight-end
   },
 };
 ```
