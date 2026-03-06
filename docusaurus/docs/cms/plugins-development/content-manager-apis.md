@@ -1,6 +1,8 @@
 ---
 title: Content Manager APIs
 description: The Content Manager APIs reference lists the APIs available to plugins for adding actions and options to the Content Manager List view and Edit view.
+pagination_prev: cms/plugins-development/admin-hooks
+pagination_next: cms/plugins-development/server-api
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
 tags:
@@ -9,15 +11,19 @@ tags:
 - plugins
 ---
 
+import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prerequisite-admin-panel.md'
+
 # Content Manager APIs
 
 <Tldr>
 Content Manager APIs add panels and actions to list or edit views through `addEditViewSidePanel`, `addDocumentAction`, `addDocumentHeaderAction`, or `addBulkAction`. Each API accepts component functions with typed contexts, enabling precise control over document-aware UI injections.
 </Tldr>
 
-Content-Manager APIs are part of the [Admin Panel API](/cms/plugins-development/admin-panel-api). They are a way to add content or options from plugins to the [Content-Manager](/cms/features/content-manager), so you can extend the Content-Manager by adding functionality from your own plugin, just like you can do it with [Injection Zones](/cms/plugins-development/admin-injection-zones).
+Content Manager APIs are part of the [Admin Panel API](/cms/plugins-development/admin-panel-api). They are a way for Strapi plugins to add content or options to the [Content Manager](/cms/features/content-manager). The Content Manager APIs allow you to extend the Content Manager by adding functionality from your own plugin, just like you can do it with [Injection zones](/cms/plugins-development/admin-injection-zones).
 
-Strapi 5 provides 4 Content-Manager APIs, all accessible through `app.getPlugin('content-manager').apis`:
+<Prerequisite />
+
+Strapi 5 provides 4 Content Manager APIs, all accessible through `app.getPlugin('content-manager').apis`:
 
 - [`addEditViewSidePanel`](#addeditviewsidepanel),
 - [`addDocumentAction`](#adddocumentaction),
@@ -30,33 +36,69 @@ All the Content Manager APIs share the same API shape and must use components.
 
 ### API shape
 
-All Content Manager APIs works in the same way: to use them, call them on your plugin’s [bootstrap](/cms/plugins-development/admin-panel-api#bootstrap) function, in 2 possible ways.
+All Content Manager APIs works in the same way: to use them, call them on your plugin's [`bootstrap()`](/cms/plugins-development/admin-panel-api#bootstrap) function, in 2 possible ways:
 
-When using TypeScript, the `apis` property returned by `app.getPlugin()` is typed as `unknown`. Cast it to `ContentManagerPlugin['config']['apis']` before calling the APIs:
+:::note
+When using TypeScript, the `apis` property returned by `app.getPlugin()` is typed as `unknown`. Cast it to `ContentManagerPlugin['config']['apis']` before calling the APIs.
+:::
 
 - Passing an array with what you want to add. For example, the following code would add the ReleasesPanel at the end of the current EditViewSidePanels:
 
-  ```tsx
-  import type { ContentManagerPlugin } from '@strapi/content-manager/strapi-admin';
+  <Tabs groupId="js-ts">
+  <TabItem value="js" label="JavaScript" default>
 
-  const apis =
-    app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+    ```js
+    const apis = app.getPlugin('content-manager').apis;
 
-  apis.addEditViewSidePanel([ReleasesPanel]);
-  ```
+    apis.addEditViewSidePanel([ReleasesPanel]);
+    ```
+
+  </TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+    ```tsx
+    import type { ContentManagerPlugin } from '@strapi/content-manager/strapi-admin';
+
+    const apis =
+      app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+    apis.addEditViewSidePanel([ReleasesPanel]);
+    ```
+
+  </TabItem>
+  </Tabs>
 
 - Passing a function that receives the current elements and return the new ones. This is useful if, for example, you want to add something in a specific position in the list, like in the following code:
 
-  ```tsx
-  const apis =
-    app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+  <Tabs groupId="js-ts">
+  <TabItem value="js" label="JavaScript" default>
 
-  apis.addEditViewSidePanel((panels) => [SuperImportantPanel, ...panels]);
-  ```
+    ```js
+    const apis = app.getPlugin('content-manager').apis;
+
+    apis.addEditViewSidePanel((panels) => [SuperImportantPanel, ...panels]);
+    ```
+
+  </TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+    ```tsx
+    const apis =
+      app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+    apis.addEditViewSidePanel((panels) => [SuperImportantPanel, ...panels]);
+    ```
+
+  </TabItem>
+  </Tabs>
 
 ### Components
 
-You need to pass components to the API in order to add things to the Content Manager. These components are basically functions that receive some properties and return and object with some shape (depending on the function). Each component’s return object is different based on the function you’re using, but they receive similar properties, depending on whether you use a ListView or EditView API. These properties include important information about the document(s) you are viewing or editing.
+You need to pass components to the API in order to add things to the Content Manager.
+
+Components are functions that receive some properties and return an object with some shape (depending on the function). Each component's return object is different based on the function you're using, but they receive similar properties, depending on whether you use a ListView or EditView API.
+
+Properties include important information about the document(s) you are viewing or editing.
 
 #### ListViewContext
 
@@ -115,9 +157,31 @@ More information about types and APIs can be found in <ExternalLink to="https://
 
 **Example:**
 
-Adding a panel to the sidebar can be done this way:
+Adding a panel to the sidebar can be done as follows:
 
-```jsx title="my-plugin/components/my-panel.ts"
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript" default>
+
+```jsx title="my-plugin/components/my-panel.js"
+const Panel = ({ 
+  activeTab, 
+  collectionType, 
+  document, 
+  documentId, 
+  meta, 
+  model 
+}) => {
+  return {
+    title: 'My Panel',
+    content: <p>I'm on {activeTab}</p>
+  }
+}
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```tsx title="my-plugin/components/my-panel.ts"
 import type { PanelComponent, PanelComponentProps } from '@strapi/content-manager/strapi-admin';
 
 const Panel: PanelComponent = ({ 
@@ -134,6 +198,9 @@ const Panel: PanelComponent = ({
   }
 }
 ```
+
+</TabItem>
+</Tabs>
 
 ## Available APIs
 
