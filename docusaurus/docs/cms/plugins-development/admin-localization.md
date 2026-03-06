@@ -1,18 +1,15 @@
 ---
 title: Admin localization
 description: Provide translations for your Strapi plugin's admin panel interface using registerTrads and react-intl.
-pagination_prev: cms/plugins-development/admin-navigation-settings
-pagination_next: cms/plugins-development/admin-injection-zones
+pagination_prev: cms/plugins-development/admin-hooks
+pagination_next: cms/plugins-development/server-api
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
 tags:
   - admin panel
   - admin panel customization
   - admin panel API
-  - localization
-  - translations
-  - registerTrads
-  - react-intl
+  - internationalization
   - plugins development
 ---
 
