@@ -48,7 +48,7 @@ Plugins can also be used to add [custom fields](/cms/features/custom-fields) to 
 <CustomDocCard small emoji="💁" title="How to store and access data from a Strapi plugin" description="" link="/cms/plugins-development/guides/store-and-access-data" />
 <CustomDocCard small emoji="💁" title="How to pass data from the backend server to the admin panel with a plugin" description="" link="/cms/plugins-development/guides/pass-data-from-server-to-admin" />
 <CustomDocCard small emoji="💁" title="How to create admin permissions for plugins" description="" link="/cms/plugins-development/guides/admin-permissions-for-plugins" />
-<CustomDocCard small emoji="💁" title="How to create components for plugins" description="" link="/cms/plugins-development/guides/pass-data-from-server-to-admin" />
+<CustomDocCard small emoji="💁" title="How to create components for plugins" description="" link="/cms/plugins-development/guides/create-components-for-plugins" />
 
 <br />
 
