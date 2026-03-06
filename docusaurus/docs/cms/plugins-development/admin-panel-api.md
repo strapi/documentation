@@ -23,7 +23,7 @@ The Admin Panel API exposes `register`, `bootstrap`, and `registerTrads` hooks t
 
 A Strapi plugin can interact with both the back end and the front end of a Strapi application. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/cms/intro).
 
-For more information about the back end part, see [Server API](/cms/plugins-development/server-api).
+For more information on how plugins can interact with the back end part of Strapi, see [Server API](/cms/plugins-development/server-api).
 
 ## General considerations
 
@@ -341,25 +341,26 @@ Use the following table as a reference to know which API and function to use, an
 | ---------------------------------------- | ------------------------------------------------- | --------------------------- |
 | Add a new link to the main navigation    | [`addMenuLink()`](/cms/plugins-development/admin-navigation-settings#navigation-sidebar-menu-links)                      | [`register()`](#register)   |
 | Create a new settings section            | [`createSettingSection()`](/cms/plugins-development/admin-navigation-settings#creating-a-new-settings-section) | [`register()`](#register)   |
-| Declare an injection zone                | [`registerPlugin()`](#registerplugin)             | [`register()`](#register)   |
-| Add a reducer                            | [`addReducers()`](/cms/plugins-development/admin-redux-store#adding-custom-reducers)                      | [`register()`](#register)   |
-| Create a hook                          | [`createHook()`](/cms/plugins-development/admin-hooks)                    | [`register()`](#register)   |
 | Add a single link to a settings section  | [`addSettingsLink()`](/cms/plugins-development/admin-navigation-settings#adding-links-to-existing-settings-sections)             | [`bootstrap()`](#bootstrap) |
 | Add multiple links to a settings section | [`addSettingsLinks()`](/cms/plugins-development/admin-navigation-settings#adding-links-to-existing-settings-sections)           | [`bootstrap()`](#bootstrap) |
-| Inject a Component in an injection zone  | [`injectComponent()`](/cms/plugins-development/admin-injection-zones)           | [`bootstrap()`](#bootstrap)  |
-| Add options and actions to the Content Manager's Edit view and List view | <ul><li>`addEditViewSidePanel()`</li><li>`addDocumentAction`</li><li>`addDocumentHeaderAction`</li><li>`addBulkAction`</li></ul> | [`bootstrap()`](#bootstrap) |
+| Add panels, options, and actions to the Content Manager's Edit view and List view | <ul><li>[`addEditViewSidePanel()`](/cms/plugins-development/content-manager-apis#addeditviewsidepanel)</li><li>[`addDocumentAction()`](/cms/plugins-development/content-manager-apis#adddocumentaction)</li><li>[`addDocumentHeaderAction()`](/cms/plugins-development/content-manager-apis#adddocumentheaderaction)</li><li>[`addBulkAction()`](/cms/plugins-development/content-manager-apis#addbulkaction)</li></ul> | [`bootstrap()`](#bootstrap) |
+| Declare an injection zone                | [`registerPlugin()`](#registerplugin)             | [`register()`](#register)   |
+| Inject a component in an injection zone  | [`injectComponent()`](/cms/plugins-development/admin-injection-zones)           | [`bootstrap()`](#bootstrap)  |
+| Add a reducer                            | [`addReducers()`](/cms/plugins-development/admin-redux-store#adding-custom-reducers)                      | [`register()`](#register)   |
+| Create a hook                          | [`createHook()`](/cms/plugins-development/admin-hooks)                    | [`register()`](#register)   |
 | Register a hook                          | [`registerHook()`](/cms/plugins-development/admin-hooks)                    | [`bootstrap()`](#bootstrap)   |
+| Provide translations for your plugin's admin interface | [`registerTrads()`](/cms/plugins-development/admin-localization#registertrads) | _(Handled in the async `registerTrads()` function itself)_ |
 
 <br/>
 Click on any of the following cards to get more details about a specific topic:
 
 <CustomDocCardsWrapper>
 <CustomDocCard icon="wrench" title="Navigation & settings" description="Add menu links and configure settings sections for your plugin." link="/cms/plugins-development/admin-navigation-settings" />
-<CustomDocCard icon="globe" title="Localization" description="Provide translations for your plugin's admin interface using registerTrads and react-intl." link="/cms/plugins-development/admin-localization" />
+<CustomDocCard icon="layout" title="Content Manager APIs" description="Add panels, actions, and options to the Content Manager List and Edit views." link="/cms/plugins-development/content-manager-apis" />
 <CustomDocCard icon="syringe" title="Injection zones" description="Inject React components into predefined or custom areas of the admin panel." link="/cms/plugins-development/admin-injection-zones" />
 <CustomDocCard icon="database" title="Redux store & reducers" description="Add custom reducers, read state, dispatch actions, and subscribe to changes in the Redux store." link="/cms/plugins-development/admin-redux-store" />
 <CustomDocCard icon="git-branch" title="Hooks" description="Create and register hooks to let other plugins add personalized behavior." link="/cms/plugins-development/admin-hooks" />
-<CustomDocCard icon="layout" title="Content Manager APIs" description="Add panels, actions, and options to the Content Manager List and Edit views." link="/cms/plugins-development/content-manager-apis" />
+<CustomDocCard icon="globe" title="Localization" description="Provide translations for your plugin's admin interface using registerTrads and react-intl." link="/cms/plugins-development/admin-localization" />
 </CustomDocCardsWrapper>
 
 :::tip Replacing the WYSIWYG
