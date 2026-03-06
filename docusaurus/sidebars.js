@@ -508,6 +508,7 @@ const sidebars = {
           collapsed: true,
           items: [
             'cms/plugins-development/create-a-plugin',
+            'cms/plugins-development/plugin-structure',
             'cms/plugins-development/plugin-sdk',
           ],
         },
