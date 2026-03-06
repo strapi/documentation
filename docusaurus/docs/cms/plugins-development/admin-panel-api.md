@@ -5,6 +5,8 @@ pagination_next: cms/plugins-development/admin-navigation-settings
 toc_max_heading_level: 4
 tags:
 - admin panel
+- admin panel customization
+- admin panel API
 - plugin APIs
 - lifecycle function
 - plugins

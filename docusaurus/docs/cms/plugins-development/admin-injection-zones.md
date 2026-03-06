@@ -7,6 +7,8 @@ displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
 tags:
   - admin panel
+  - admin panel customization
+  - admin panel API
   - injection zones
   - plugin customization
   - Content Manager

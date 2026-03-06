@@ -2,11 +2,13 @@
 title: Admin navigation & settings
 description: Add menu links, create settings sections, and configure settings links for your Strapi plugin in the admin panel.
 pagination_prev: cms/plugins-development/admin-panel-api
-pagination_next: cms/plugins-development/admin-localization
+pagination_next: cms/plugins-development/content-manager-apis
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
 tags:
   - admin panel
+  - admin panel customization
+  - admin panel API
   - menu links
   - settings
   - plugins development
