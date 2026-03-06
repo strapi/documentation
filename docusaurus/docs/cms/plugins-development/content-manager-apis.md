@@ -270,9 +270,10 @@ interface DocumentActionDescription {
      * @default 'secondary'
      */
     variant?: ButtonProps['variant'];
+    loading?: ButtonProps['loading'];
 }
 
-type DocumentActionPosition = 'panel' | 'header' | 'table-row';
+type DocumentActionPosition = 'panel' | 'header' | 'table-row' | 'preview' | 'relation-modal';
 
 interface DialogOptions {
     type: 'dialog';
