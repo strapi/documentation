@@ -42,7 +42,7 @@ A menu link accepts the following parameters:
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `to` | `string` | ✅ | Path the link should point to (relative to the admin panel root) |
+| `to` | `string` | ✅ | Path the link should point to (relative to the admin panel root) (see [additional information](#path-conventions-for-to)) |
 | `icon` | `React.Component` | ✅ | React component for the icon to display in the navigation |
 | `intlLabel` | `object` | ✅ | Label for the link, following the <ExternalLink to="https://formatjs.io/docs/react-intl" text="React Int'l"/> convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
 | `Component` | `async function` | ✅ | Async function that returns a dynamic import of the plugin's main page component |
@@ -52,6 +52,10 @@ A menu link accepts the following parameters:
 
 :::note
 The `intlLabel.id` values should correspond to keys in your translation files located at `admin/src/translations/[locale].json`. See [Admin localization](/cms/plugins-development/admin-localization) for details.
+:::
+
+:::caution
+The `permissions` parameter only controls whether the link is visible in the navigation. It does not protect the page itself. A user who knows the URL can still access the page directly. To fully secure a plugin route, you must also check permissions inside your page component and register your RBAC actions on the server side with `actionProvider.registerMany`. See the [Admin permissions for plugins](/cms/plugins-development/guides/admin-permissions-for-plugins) guide for a complete walkthrough.
 :::
 
 <Tabs groupId="js-ts">
@@ -263,7 +267,7 @@ The `createSettingSection()` function accepts the following parameters:
   | Parameter | Type | Required | Description |
   |---|---|---|---|
   | `id` | `string` | ✅ | Unique identifier for the settings link |
-  | `to` | `string` | ✅ | Path relative to the settings route (do not include `settings/` prefix) |
+  | `to` | `string` | ✅ | Path relative to the settings route (do not include `settings/` prefix) (see [additional information](#path-conventions-for-to)) |
   | `intlLabel` | `object` | ✅ | Localized label object with `id` and `defaultMessage` |
   | `Component` | `async function` | ✅ | Async function that returns a dynamic import of the settings page component |
   | `permissions` | `Array<object>` | ❌ | Array of permission objects that control access to the link |
@@ -420,5 +424,21 @@ Strapi provides built-in settings sections that plugins can extend:
 - `permissions`: Administration panel settings
 
 :::note
-Creating a new settings section must be done in the `register` lifecycle function. Adding links to existing settings sections must be done in the `bootstrap` lifecycle function. The `to` path for settings links should be relative to the settings route (e.g., `'my-plugin/general'` not `'settings/my-plugin/general'`).
+Creating a new settings section must be done in the `register` lifecycle function. Adding links to existing settings sections must be done in the `bootstrap` lifecycle function.
+:::
+
+### Path conventions for `to`
+
+The `to` parameter behaves differently depending on the context:
+
+| Context | `to` value | Final URL |
+|---|---|---|
+| `addMenuLink` | `/plugins/my-plugin` | `http://localhost:1337/admin/plugins/my-plugin` |
+| `createSettingSection` link | `my-plugin/general` | `http://localhost:1337/admin/settings/my-plugin/general` |
+| `addSettingsLink` | `my-plugin/documentation` | `http://localhost:1337/admin/settings/my-plugin/documentation` |
+
+For menu links, the path is relative to the admin panel root (`/admin`). For settings links, the path is relative to the settings route (`/admin/settings`). Do not include the `settings/` prefix in settings link paths.
+
+:::strapi Securing plugin routes
+The `permissions` parameter on links only controls visibility in the navigation. To fully protect your plugin pages and register RBAC actions, see the [Admin permissions for plugins](/cms/plugins-development/guides/admin-permissions-for-plugins) guide.
 :::
