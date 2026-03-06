@@ -46,6 +46,9 @@ Reducers can be added to a plugin interface with the `addReducers()` function du
 
 A reducer is declared as an object with this syntax:
 
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
 ```js title="my-plugin/admin/src/index.js"
 import { exampleReducer } from './reducers'
 
@@ -61,6 +64,28 @@ export default {
   bootstrap() {},
 };
 ```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="my-plugin/admin/src/index.ts"
+import type { StrapiApp } from '@strapi/admin/strapi-admin';
+import { exampleReducer } from './reducers';
+
+const reducers = {
+  [`${pluginId}_exampleReducer`]: exampleReducer,
+};
+
+export default {
+  register(app: StrapiApp) {
+    app.addReducers(reducers);
+  },
+  bootstrap() {},
+};
+```
+
+</TabItem>
+</Tabs>
 
 ## Reading state with `useSelector`
 
@@ -156,6 +181,10 @@ The `admin_app` slice contains the following state properties:
 
 To update the Redux store, use the `useDispatch` hook:
 
+:::note
+The examples below dispatch actions to core admin state (theme, locale) for illustration purposes. In practice, most plugins should dispatch actions to their own custom reducers rather than modifying global admin state.
+:::
+
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
@@ -246,6 +275,8 @@ const HomePage = () => {
 </Tabs>
 
 ### Available actions
+
+<!-- TODO: Verify action types and slice name against the @strapi/admin Redux slice in the strapi/strapi codebase. -->
 
 The `admin_app` slice provides the following actions:
 
@@ -603,7 +634,7 @@ export { HomePage };
 
 - **Use `useSelector` for reading state.** Prefer [`useSelector`](#reading-state-with-useselector) over direct store access. It automatically subscribes to updates and re-renders components when the selected state changes.
 - **Clean up subscriptions.** Always unsubscribe from store subscriptions in `useEffect` cleanup functions to prevent memory leaks.
-- **Consider type safety.** For better TypeScript support, create typed selectors or use typed hooks from `@strapi/admin` if available.
+- **Consider type safety.** For better TypeScript support, create typed selectors using the store's `RootState` type rather than casting to `any`.
 - **Avoid unnecessary dispatches.** Only dispatch actions when you need to update state. Reading state does not require dispatching actions.
 - **Respect core state.** Be careful when modifying core admin state (like theme or locale) as it affects the entire admin panel. Consider whether your plugin should modify global state or maintain its own local state.
 
