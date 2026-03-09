@@ -138,7 +138,7 @@ module.exports = (plugin) => {
 
 ### Within the register and bootstrap functions
 
-To extend a plugin's interface within `./src/index.js|ts`, use the `bootstrap()` and `register()` [functions](/cms/configurations/functions) of the whole project, and access the interface programmatically with [getters](/cms/plugins-development/server-api#usage).
+To extend a plugin's interface within `./src/index.js|ts`, use the `bootstrap()` and `register()` [functions](/cms/configurations/functions) of the whole project, and access the interface programmatically with [getters](/cms/plugins-development/server-getters-usage).
 
 <details>
 <summary>Example of extending a plugin's content-type within ./src/index.js|ts</summary>
