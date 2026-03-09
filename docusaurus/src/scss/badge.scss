@@ -377,6 +377,15 @@ main .badge--content:has(+ img) {
   position: relative;
   top: 12px;
 }
+.theme-doc-sidebar-item-category-level-2 .menu__link .badge--content {
+  position: absolute;
+  right: 30px;
+  padding-left: 0;
+
+  .strapi-icons {
+    margin-left: 4px;
+  }
+}
 /**
  * Adjustments for code blocks as we can't rely on child elements positioning
  */
