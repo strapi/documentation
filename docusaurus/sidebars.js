@@ -512,6 +512,9 @@ const sidebars = {
           type: 'category',
           label: 'Server API',
           collapsed: true,
+          customProps: {
+            new: true,
+          },
           items: [
             'cms/plugins-development/server-api',
             'cms/plugins-development/server-lifecycle',
