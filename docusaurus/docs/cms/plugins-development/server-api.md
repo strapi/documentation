@@ -11,7 +11,6 @@ tags:
   - register function
   - bootstrap function
   - destroy function
-  - configuration
   - server API
   - plugins development
   - backend customization
