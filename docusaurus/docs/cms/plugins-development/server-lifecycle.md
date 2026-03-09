@@ -45,7 +45,11 @@ Understanding when each lifecycle runs helps you put the right code in the right
 | 4. Bootstrap | Full `strapi` object: services, content-types, Document Service API, other plugins |
 | 6. Shutdown | Full `strapi` object, but requests are no longer being served |
 
-:::note Runtime behavior
+:::note
+Phase 5 (server live) is not a plugin lifecycle hook and is omitted from this table. It is the running state between `bootstrap()` completing and `destroy()` being called.
+:::
+
+:::note
 `register()` runs before the database, routes, and permissions systems are initialized. The `strapi` object is available, but you cannot query content-types or call services that depend on the database at this stage. Use `bootstrap()` for anything that needs the server to be fully set up.
 :::
 
@@ -69,12 +73,14 @@ Use `register()` to:
 'use strict';
 
 module.exports = ({ strapi }) => {
+  // highlight-start
   // Register a custom permission action for this plugin
   strapi.contentAPI.permissions.registerDefaultActions('plugin::my-plugin', [
     'find',
     'findOne',
     'create',
   ]);
+  // highlight-end
 };
 ```
 
@@ -85,12 +91,14 @@ module.exports = ({ strapi }) => {
 import type { Core } from '@strapi/strapi';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => {
+  // highlight-start
   // Register a custom permission action for this plugin
   strapi.contentAPI.permissions.registerDefaultActions('plugin::my-plugin', [
     'find',
     'findOne',
     'create',
   ]);
+  // highlight-end
 };
 ```
 
@@ -117,10 +125,12 @@ Use `bootstrap()` to:
 'use strict';
 
 module.exports = async ({ strapi }) => {
+  // highlight-start
   // Seed a default configuration entry if none exists
   const existing = await strapi
     .documents('plugin::my-plugin.config')
     .findFirst();
+  // highlight-end
 
   if (!existing) {
     await strapi.documents('plugin::my-plugin.config').create({
@@ -137,10 +147,12 @@ module.exports = async ({ strapi }) => {
 import type { Core } from '@strapi/strapi';
 
 export default async ({ strapi }: { strapi: Core.Strapi }) => {
+  // highlight-start
   // Seed a default configuration entry if none exists
   const existing = await strapi
     .documents('plugin::my-plugin.config')
     .findFirst();
+  // highlight-end
 
   if (!existing) {
     await strapi.documents('plugin::my-plugin.config').create({
@@ -157,7 +169,7 @@ export default async ({ strapi }: { strapi: Core.Strapi }) => {
 
 **Type:** `Function`
 
-`destroy()` is called during phase 6, when the Strapi instance is shutting down. It is optional — only implement it when your plugin holds resources that need explicit cleanup.
+`destroy()` is called during phase 6, when the Strapi instance is shutting down. It is optional. Only implement it when your plugin holds resources that need explicit cleanup.
 
 Use `destroy()` to:
 - Close external connections (databases, message queues, WebSocket servers)
@@ -171,6 +183,7 @@ Use `destroy()` to:
 'use strict';
 
 module.exports = ({ strapi }) => {
+  // highlight-next-line
   // Close an external connection opened in bootstrap()
   strapi.plugin('my-plugin').service('queue').disconnect();
 };
@@ -183,6 +196,7 @@ module.exports = ({ strapi }) => {
 import type { Core } from '@strapi/strapi';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => {
+  // highlight-next-line
   // Close an external connection opened in bootstrap()
   strapi.plugin('my-plugin').service('queue').disconnect();
 };
@@ -191,13 +205,13 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 </TabItem>
 </Tabs>
 
-:::caution Once-only guard
-Each lifecycle function is guarded by Strapi's module system and can only be called once per plugin instance. Calling it a second time throws an explicit error (e.g. `Register for plugin::my-plugin has already been called`). You will not encounter this under normal operation, but it can appear in tests or custom bootstrapping scripts that instantiate Strapi more than once.
+:::note Once-only guard
+Each lifecycle function is called once per plugin instance. In tests or custom bootstrapping scripts that instantiate Strapi more than once, calling a lifecycle a second time throws an explicit error (e.g. `Register for plugin::my-plugin has already been called`). This does not occur under normal operation.
 :::
 
 ## Best practices
 
-- **Keep `register()` synchronous when possible.** The registration phase runs across all modules in sequence. Slow async work in `register()` delays the entire startup. Move async initialization to `bootstrap()`.
+- **Keep `register()` synchronous when possible.** All modules register in sequence. Slow async work in `register()` delays the entire startup. Move async initialization to `bootstrap()`.
 
 - **Use `bootstrap()` for anything that reads or writes data.** The database is not available in `register()`. Any call to `strapi.documents()` or a service that queries the DB belongs in `bootstrap()`.
 

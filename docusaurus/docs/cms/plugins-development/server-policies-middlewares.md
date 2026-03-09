@@ -1,5 +1,6 @@
 ---
 title: Server policies & middlewares
+sidebar_label: Server policies & middlewares
 displayed_sidebar: cmsSidebar
 pagination_prev: cms/plugins-development/server-controllers-services
 pagination_next: cms/plugins-development/server-getters-usage
@@ -24,6 +25,19 @@ Policies run before a controller action and return `true` or `false` to allow or
 Policies and middlewares are the two mechanisms for intercepting requests in a plugin server. Policies decide whether a request should proceed. Middlewares shape how it is processed.
 
 <Prerequisite />
+
+## Decision guide
+
+Use this table to pick the right mechanism before writing any code:
+
+| Need | Mechanism |
+| --- | --- |
+| Block a request based on user role or state | Policy |
+| Block a request based on request content (body, headers) | Policy or inline policy in route config |
+| Add headers to every response for your plugin's routes | Route-level middleware |
+| Log or trace every request across the entire server | Server-level middleware (`strapi.server.use()`) |
+| Modify `ctx.query` before it reaches the controller | Route-level middleware |
+| Share logic between multiple routes | Named route-level middleware (registered and referenced by name) |
 
 ## Policies {#policies}
 
@@ -56,8 +70,10 @@ module.exports = {
 // Allow the request only if the user has the role specified in the route config
 // Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 module.exports = (policyContext, config, { strapi }) => {
+  // highlight-start
   const { user } = policyContext.state;
   const requiredRole = config.role;
+  // highlight-end
 
   if (!user || !requiredRole) {
     return false;
@@ -79,17 +95,25 @@ export default {
 ```
 
 ```ts title="/src/plugins/my-plugin/server/src/policies/has-role.ts"
+import type { Core } from '@strapi/strapi';
+
 // Allow the request only if the user has the role specified in the route config
 // Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
-export default (policyContext: any, config: any, { strapi }: any) => {
+export default (
+  policyContext: Core.PolicyContext,
+  config: { role?: string },
+  { strapi }: { strapi: Core.Strapi }
+) => {
+  // highlight-start
   const { user } = policyContext.state;
   const requiredRole = config?.role;
+  // highlight-end
 
   if (!user || !requiredRole) {
     return false;
   }
 
-  return user.roles?.some((role: any) => role.code === requiredRole) ?? false;
+  return (user as any).roles?.some((role: any) => role.code === requiredRole) ?? false;
 };
 ```
 
@@ -112,8 +136,8 @@ module.exports = [
     path: '/dashboard',
     handler: 'dashboard.find',
     config: {
-      // Simple reference by namespaced name
-      policies: ['plugin::my-plugin.isActive'],
+      // highlight-next-line
+      policies: ['plugin::my-plugin.isActive'], // simple reference by namespaced name
     },
   },
   {
@@ -121,8 +145,8 @@ module.exports = [
     path: '/articles/:id',
     handler: 'article.delete',
     config: {
-      // Reference with per-route config object
-      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }],
+      // highlight-next-line
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -130,12 +154,8 @@ module.exports = [
     path: '/public',
     handler: 'article.findAll',
     config: {
-      // Inline policy (no registration needed)
-      policies: [
-        (policyContext, config, { strapi }) => {
-          return true;
-        },
-      ],
+      // highlight-next-line
+      policies: [(policyContext, config, { strapi }) => true], // inline policy, no registration needed
     },
   },
 ];
@@ -151,7 +171,8 @@ export default [
     path: '/dashboard',
     handler: 'dashboard.find',
     config: {
-      policies: ['plugin::my-plugin.isActive'],
+      // highlight-next-line
+      policies: ['plugin::my-plugin.isActive'], // simple reference by namespaced name
     },
   },
   {
@@ -159,7 +180,8 @@ export default [
     path: '/articles/:id',
     handler: 'article.delete',
     config: {
-      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }],
+      // highlight-next-line
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
 ];
@@ -168,8 +190,8 @@ export default [
 </TabItem>
 </Tabs>
 
-:::note Policy return values
-Returning `false` causes Strapi to send a `403 Forbidden` response. Returning nothing (`undefined`) is treated as `false`. Throwing an error causes Strapi to send a `500` response unless you throw a Strapi HTTP error (e.g., `throw new ApplicationError('Not allowed', { status: 401 })`).
+:::caution Policy return values
+Returning `false` causes Strapi to send a `403 Forbidden` response. Returning nothing (`undefined`) is also treated as `false` and blocks the request. Always return explicitly. Throwing an error causes Strapi to send a `500` response unless you throw a Strapi HTTP error (e.g., `throw new ApplicationError('Not allowed', { status: 401 })`).
 :::
 
 :::strapi Backend customization
@@ -189,7 +211,7 @@ Plugins can export middlewares in two ways:
 
 Route-level middlewares are scoped to a specific route and are declared like policies: as an object of named factory functions, then referenced in the route config.
 
-Note the two-level signature: the outer function receives `(config, { strapi })` and returns the actual Koa middleware `async (ctx, next) => {}`. This is different from a plain Koa middleware and allows Strapi to pass per-route configuration to the function.
+Note the two-level signature: the outer function receives `(config, { strapi })` and returns the actual Koa middleware `async (ctx, next) => {}`. This allows Strapi to pass per-route configuration to the function.
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -208,9 +230,11 @@ module.exports = {
 'use strict';
 
 module.exports = (config, { strapi }) => async (ctx, next) => {
+  // highlight-start
   strapi.log.info(`[my-plugin] ${ctx.method} ${ctx.url}`);
   await next();
   strapi.log.info(`[my-plugin] → ${ctx.status}`);
+  // highlight-end
 };
 ```
 
@@ -230,9 +254,11 @@ import type { Core } from '@strapi/strapi';
 
 export default (config: unknown, { strapi }: { strapi: Core.Strapi }) =>
   async (ctx: any, next: () => Promise<void>) => {
+    // highlight-start
     strapi.log.info(`[my-plugin] ${ctx.method} ${ctx.url}`);
     await next();
     strapi.log.info(`[my-plugin] → ${ctx.status}`);
+    // highlight-end
   };
 ```
 
@@ -253,6 +279,7 @@ module.exports = [
     path: '/articles',
     handler: 'article.create',
     config: {
+      // highlight-next-line
       middlewares: ['plugin::my-plugin.logRequest'],
     },
   },
@@ -261,9 +288,9 @@ module.exports = [
     path: '/articles',
     handler: 'article.find',
     config: {
-      // Inline middleware (no registration needed)
       middlewares: [
-        async (ctx, next) => {
+        // highlight-next-line
+        async (ctx, next) => { // inline middleware, no registration needed
           ctx.query.pageSize = ctx.query.pageSize || '10';
           await next();
         },
@@ -283,6 +310,7 @@ export default [
     path: '/articles',
     handler: 'article.create',
     config: {
+      // highlight-next-line
       middlewares: ['plugin::my-plugin.logRequest'],
     },
   },
@@ -303,13 +331,15 @@ A server-level middleware is registered on the Strapi HTTP server directly and r
 'use strict';
 
 module.exports = ({ strapi }) => {
-  // Applied to all incoming requests on the Strapi server
+  // highlight-start
+  // Applied to ALL incoming requests on the Strapi server
   strapi.server.use(async (ctx, next) => {
     const start = Date.now();
     await next();
     const ms = Date.now() - start;
     ctx.set('X-Response-Time', `${ms}ms`);
   });
+  // highlight-end
 };
 ```
 
@@ -320,13 +350,15 @@ module.exports = ({ strapi }) => {
 import type { Core } from '@strapi/strapi';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => {
-  // Applied to all incoming requests on the Strapi server
+  // highlight-start
+  // Applied to ALL incoming requests on the Strapi server
   strapi.server.use(async (ctx: any, next: () => Promise<void>) => {
     const start = Date.now();
     await next();
     const ms = Date.now() - start;
     ctx.set('X-Response-Time', `${ms}ms`);
   });
+  // highlight-end
 };
 ```
 
@@ -334,23 +366,12 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 </Tabs>
 
 :::caution
-Server-level middlewares affect all routes across all plugins and the application itself, not just your plugin's routes. Use route-level middlewares when the concern is specific to your plugin's endpoints.
+Server-level middlewares affect all routes across all plugins and the application itself, not just your plugin's routes. A misbehaving server-level middleware (one that throws or never calls `next()`) will break every request to the Strapi server, not just your plugin's endpoints. Use route-level middlewares when the concern is specific to your plugin's endpoints.
 :::
 
 :::strapi Backend customization
 For the full middleware reference, see [Middlewares](/cms/backend-customization/middlewares).
 :::
-
-## Decision guide
-
-| Need | Mechanism |
-| --- | --- |
-| Block a request based on user role or state | Policy |
-| Block a request based on request content (body, headers) | Policy or inline policy in route config |
-| Add headers to every response for your plugin's routes | Route-level middleware |
-| Log or trace every request across the entire server | Server-level middleware (`strapi.server.use()`) |
-| Modify `ctx.query` before it reaches the controller | Route-level middleware |
-| Share logic between multiple routes | Named route-level middleware (registered and referenced by name) |
 
 ## Best practices
 
