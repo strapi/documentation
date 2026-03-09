@@ -37,12 +37,14 @@ The `config` object accepts two properties:
 
 When Strapi loads a plugin, it applies the following sequence:
 
-1. Compute the default config: if `default` is a function, call it with `{ env }` to support environment-aware defaults; otherwise use the object as-is.
-2. Deep-merge the default config with the user config from `config/plugins.js|ts` (user values take precedence).
-3. Call `validator(mergedConfig)` and throw a contextualized error if it throws.
-4. Store the final config on the plugin instance.
+| Step | What Strapi does | Notes |
+| --- | --- | --- |
+| 1 | Compute the default config | If `default` is a function, call it with `{ env }`. Otherwise use the object as-is. |
+| 2 | Deep-merge with user config | Values from `config/plugins.js\|ts` take precedence over defaults. |
+| 3 | Run `validator(mergedConfig)` | Throws a contextualized error if validation fails, stopping startup. |
+| 4 | Store the final config | Available on the plugin instance via `strapi.plugin('my-plugin').config('key')`. |
 
-:::note Runtime behavior
+:::note
 The `{ env }` argument passed to the `default` function is the same `env` utility used across Strapi configuration files. It reads `process.env` values and supports type casting: `env('MY_VAR')`, `env.int('PORT', 3000)`, `env.bool('ENABLED', true)`, etc.
 :::
 
@@ -55,11 +57,13 @@ The `{ env }` argument passed to the `default` function is the same `env` utilit
 'use strict';
 
 module.exports = {
+  // highlight-start
   default: ({ env }) => ({
     enabled: true,
     maxItems: env.int('MY_PLUGIN_MAX_ITEMS', 10),
     endpoint: env('MY_PLUGIN_ENDPOINT', 'https://api.example.com'),
   }),
+  // highlight-end
   validator: (config) => {
     if (typeof config.enabled !== 'boolean') {
       throw new Error('"enabled" must be a boolean');
@@ -76,11 +80,13 @@ module.exports = {
 
 ```ts title="/src/plugins/my-plugin/server/src/config/index.ts"
 export default {
+  // highlight-start
   default: ({ env }: { env: any }) => ({
     enabled: true,
     maxItems: env.int('MY_PLUGIN_MAX_ITEMS', 10),
     endpoint: env('MY_PLUGIN_ENDPOINT', 'https://api.example.com'),
   }),
+  // highlight-end
   validator: (config: { enabled: unknown; maxItems: unknown }) => {
     if (typeof config.enabled !== 'boolean') {
       throw new Error('"enabled" must be a boolean');
@@ -154,7 +160,7 @@ Use `yarn strapi console` or `npm run strapi console` to inspect the live config
 
 - **Always provide a `default`.** A plugin with no defaults forces every user to supply all configuration values, which creates friction. Make every option optional with a sensible default.
 
-- **Use the function form of `default` for environment-aware config.** The `({ env }) => ({...})` form lets users drive configuration from environment variables without any extra plumbing. The plain object form is fine for truly static defaults.
+- **Use the function form of `default` for environment-aware config.** The `({ env }) => ({...})` form lets users drive configuration from environment variables without any extra setup. The plain object form is fine for truly static defaults.
 
 - **Keep validation simple and explicit.** The `validator` runs at startup, before any request is served. Throw descriptive errors so the operator knows exactly what is wrong: `'"maxItems" must be a positive number'` is far more useful than `'Invalid config'`.
 
