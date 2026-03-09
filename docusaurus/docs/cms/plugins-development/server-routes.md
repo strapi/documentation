@@ -324,100 +324,12 @@ Each route accepts an optional `config` object with the following properties:
 
 | Property | Type | Description |
 | --- | --- | --- |
-| `policies` | `Array<string \| { name: string; config: unknown }>` | Policies to run before the controller action. Each item is either a policy name string or an object with `name` and `config`. |
-| `middlewares` | `Array<string \| MiddlewareHandler>` | Middlewares to apply to this route specifically. Each item is a middleware name string or an inline function. |
-| `auth` | `false \| { scope?: string[]; strategies?: string[] }` | Set to `false` to make the route public. Pass an object to override the auto-generated scope or specify custom auth strategies. |
-
-### Policies
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js
-config: {
-  // Reference a registered policy by name
-  policies: ['my-policy'],
-
-  // Reference a policy with custom configuration
-  policies: [{ name: 'my-policy', config: { maxAge: 3600 } }],
-
-  // Mix both forms
-  policies: ['my-policy', { name: 'my-other-policy', config: {} }],
-}
-```
-
-</TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts
-config: {
-  policies: ['my-policy'],
-  // or with config:
-  policies: [{ name: 'my-policy', config: { maxAge: 3600 } }],
-}
-```
-
-</TabItem>
-</Tabs>
-
-:::tip
-Policies declared in a plugin are referenced with their plugin namespace: `plugin::my-plugin.my-policy`. Policies from the application (in `src/policies/`) are referenced by name directly.
-:::
-
-### Auth
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js
-// Public route (no authentication required)
-config: {
-  auth: false,
-}
-
-// Override the auto-generated scope
-config: {
-  auth: {
-    scope: ['plugin::my-plugin.article.find'],
-  },
-}
-
-// Specify custom auth strategies
-config: {
-  auth: {
-    strategies: ['api-token'],
-  },
-}
-```
-
-</TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts
-// Public route
-config: {
-  auth: false,
-}
-
-// Override scope
-config: {
-  auth: {
-    scope: ['plugin::my-plugin.article.find'],
-  },
-}
-```
-
-</TabItem>
-</Tabs>
-
-:::caution
-Setting `auth: false` makes the route fully public. Any user, authenticated or not, can reach it. Use this only when the endpoint intentionally serves public data, and apply rate limiting or other protections as needed.
-
-Be equally careful when overriding `config.auth.scope` with a broader value than the auto-generated one, as this can grant unintended access through the Users & Permissions system.
-:::
+| `policies` | `Array<string \| { name: string; config: unknown }>` | Policies to run before the controller action. Each item is either a policy name string or an object with `name` and `config`. Plugin policies are referenced as `plugin::my-plugin.policy-name`. |
+| `middlewares` | `Array<string \| MiddlewareHandler>` | Middlewares to apply to this route. Each item is a middleware name string or an inline function. |
+| `auth` | `false \| { scope?: string[]; strategies?: string[] }` | Set to `false` to make the route public. Pass an object to override the auto-generated scope or specify custom auth strategies. Setting `auth: false` on an admin route is almost never intentional — it exposes the endpoint to unauthenticated requests. |
 
 :::strapi Backend customization
-For the full route configuration reference, including dynamic parameters, regular expressions in paths, and public routes, see [Routes](/cms/backend-customization/routes).
+For configuration examples including policies, public routes, dynamic URL parameters, and regular expressions in paths, see [Routes](/cms/backend-customization/routes).
 :::
 
 ## Best practices

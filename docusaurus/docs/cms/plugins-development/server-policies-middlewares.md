@@ -43,27 +43,10 @@ Policies are exported as plain functions (not factory functions). Each policy re
 ```js title="/src/plugins/my-plugin/server/src/policies/index.js"
 'use strict';
 
-const isActive = require('./is-active');
 const hasRole = require('./has-role');
 
 module.exports = {
-  isActive,
   hasRole,
-};
-```
-
-```js title="/src/plugins/my-plugin/server/src/policies/is-active.js"
-'use strict';
-
-// Allow the request only if the authenticated user has isActive: true
-module.exports = (policyContext, config, { strapi }) => {
-  const { user } = policyContext.state;
-
-  if (user && user.isActive) {
-    return true;
-  }
-
-  return false;
 };
 ```
 
@@ -71,6 +54,7 @@ module.exports = (policyContext, config, { strapi }) => {
 'use strict';
 
 // Allow the request only if the user has the role specified in the route config
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 module.exports = (policyContext, config, { strapi }) => {
   const { user } = policyContext.state;
   const requiredRole = config.role;
@@ -87,30 +71,16 @@ module.exports = (policyContext, config, { strapi }) => {
 <TabItem value="ts" label="TypeScript">
 
 ```ts title="/src/plugins/my-plugin/server/src/policies/index.ts"
-import isActive from './is-active';
 import hasRole from './has-role';
 
 export default {
-  isActive,
   hasRole,
-};
-```
-
-```ts title="/src/plugins/my-plugin/server/src/policies/is-active.ts"
-// Allow the request only if the authenticated user has isActive: true
-export default (policyContext: any, config: any, { strapi }: any) => {
-  const { user } = policyContext.state;
-
-  if (user && user.isActive) {
-    return true;
-  }
-
-  return false;
 };
 ```
 
 ```ts title="/src/plugins/my-plugin/server/src/policies/has-role.ts"
 // Allow the request only if the user has the role specified in the route config
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 export default (policyContext: any, config: any, { strapi }: any) => {
   const { user } = policyContext.state;
   const requiredRole = config?.role;
@@ -219,6 +189,8 @@ Plugins can export middlewares in two ways:
 
 Route-level middlewares are scoped to a specific route and are declared like policies: as an object of named factory functions, then referenced in the route config.
 
+Note the two-level signature: the outer function receives `(config, { strapi })` and returns the actual Koa middleware `async (ctx, next) => {}`. This is different from a plain Koa middleware and allows Strapi to pass per-route configuration to the function.
+
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
@@ -226,11 +198,9 @@ Route-level middlewares are scoped to a specific route and are declared like pol
 'use strict';
 
 const logRequest = require('./log-request');
-const setCorrelationId = require('./set-correlation-id');
 
 module.exports = {
   logRequest,
-  setCorrelationId,
 };
 ```
 
@@ -244,28 +214,14 @@ module.exports = (config, { strapi }) => async (ctx, next) => {
 };
 ```
 
-```js title="/src/plugins/my-plugin/server/src/middlewares/set-correlation-id.js"
-'use strict';
-
-const { randomUUID } = require('crypto');
-
-module.exports = (config, { strapi }) => async (ctx, next) => {
-  ctx.state.correlationId = ctx.headers['x-correlation-id'] || randomUUID();
-  ctx.set('X-Correlation-Id', ctx.state.correlationId);
-  await next();
-};
-```
-
 </TabItem>
 <TabItem value="ts" label="TypeScript">
 
 ```ts title="/src/plugins/my-plugin/server/src/middlewares/index.ts"
 import logRequest from './log-request';
-import setCorrelationId from './set-correlation-id';
 
 export default {
   logRequest,
-  setCorrelationId,
 };
 ```
 
@@ -277,18 +233,6 @@ export default (config: unknown, { strapi }: { strapi: Core.Strapi }) =>
     strapi.log.info(`[my-plugin] ${ctx.method} ${ctx.url}`);
     await next();
     strapi.log.info(`[my-plugin] → ${ctx.status}`);
-  };
-```
-
-```ts title="/src/plugins/my-plugin/server/src/middlewares/set-correlation-id.ts"
-import { randomUUID } from 'crypto';
-import type { Core } from '@strapi/strapi';
-
-export default (config: unknown, { strapi }: { strapi: Core.Strapi }) =>
-  async (ctx: any, next: () => Promise<void>) => {
-    ctx.state.correlationId = ctx.headers['x-correlation-id'] || randomUUID();
-    ctx.set('X-Correlation-Id', ctx.state.correlationId);
-    await next();
   };
 ```
 

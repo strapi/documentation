@@ -142,71 +142,24 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 
 When your plugin exposes Content API routes, sanitize query parameters and output data before returning them. This prevents leaking private fields or bypassing access rules.
 
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
+Plugin controllers do not use `createCoreController`, so the `this.sanitizeQuery` / `this.sanitizeOutput` shorthand is not available. Use `strapi.contentAPI.sanitize` directly instead, passing the content-type schema explicitly:
 
 ```js title="/src/plugins/my-plugin/server/src/controllers/article.js"
-'use strict';
-
 module.exports = ({ strapi }) => ({
   async find(ctx) {
+    const schema = strapi.contentType('plugin::my-plugin.article');
+
     const sanitizedQuery = await strapi.contentAPI.sanitize.query(
-      ctx.query,
-      strapi.contentType('plugin::my-plugin.article'),
-      { auth: ctx.state.auth }
+      ctx.query, schema, { auth: ctx.state.auth }
     );
-
-    const articles = await strapi
-      .plugin('my-plugin')
-      .service('article')
-      .findAll(sanitizedQuery);
-
-    const sanitizedOutput = await strapi.contentAPI.sanitize.output(
-      articles,
-      strapi.contentType('plugin::my-plugin.article'),
-      { auth: ctx.state.auth }
-    );
-
-    ctx.body = sanitizedOutput;
+    const articles = await strapi.plugin('my-plugin').service('article').findAll(sanitizedQuery);
+    ctx.body = await strapi.contentAPI.sanitize.output(articles, schema, { auth: ctx.state.auth });
   },
 });
 ```
 
-</TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts title="/src/plugins/my-plugin/server/src/controllers/article.ts"
-import type { Core } from '@strapi/strapi';
-
-export default ({ strapi }: { strapi: Core.Strapi }) => ({
-  async find(ctx: any) {
-    const sanitizedQuery = await strapi.contentAPI.sanitize.query(
-      ctx.query,
-      strapi.contentType('plugin::my-plugin.article'),
-      { auth: ctx.state.auth }
-    );
-
-    const articles = await strapi
-      .plugin('my-plugin')
-      .service('article')
-      .findAll(sanitizedQuery);
-
-    const sanitizedOutput = await strapi.contentAPI.sanitize.output(
-      articles,
-      strapi.contentType('plugin::my-plugin.article'),
-      { auth: ctx.state.auth }
-    );
-
-    ctx.body = sanitizedOutput;
-  },
-});
-```
-
-</TabItem>
-</Tabs>
-
-:::tip
-For the full sanitization and validation reference, including `sanitizeInput` and `validateQuery`, see [Controllers](/cms/backend-customization/controllers#sanitize-validate-custom-controllers).
+:::strapi Backend customization
+For the full sanitization and validation reference — including `sanitizeInput`, `validateQuery`, and `validateInput` — see [Controllers](/cms/backend-customization/controllers#sanitize-validate-custom-controllers).
 :::
 
 ## Services {#services}
