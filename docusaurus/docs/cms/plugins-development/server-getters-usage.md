@@ -52,9 +52,9 @@ The following table lists all available getters for a plugin named `todo` with a
 
 | Resource | Top-level getter | Global getter | Typical use case |
 | --- | --- | --- | --- |
-| Service | `strapi.plugin('todo').service('task')` | `strapi.service('plugin::todo.task')` | Call reusable business logic from a controller, lifecycle hook, or another service |
+| Service | `strapi.plugin('todo').service('task')` | `strapi.service('plugin::todo.task')` | Business logic from controllers, hooks, or other services |
 | Controller | `strapi.plugin('todo').controller('task')` | `strapi.controller('plugin::todo.task')` | Invoke a controller action programmatically (rare outside tests) |
-| Content-type | `strapi.plugin('todo').contentType('task')` | `strapi.contentType('plugin::todo.task')` | Access the content-type schema, for example to read field definitions or pass to `strapi.contentAPI.sanitize` |
+| Content-type | `strapi.plugin('todo').contentType('task')` | `strapi.contentType('plugin::todo.task')` | Access the content-type schema, e.g. to pass to `strapi.contentAPI.sanitize` |
 | Policy | `strapi.plugin('todo').policy('is-owner')` | `strapi.policy('plugin::todo.is-owner')` | Share an authorization check across routes or reference it in another plugin's route config |
 | Middleware | `strapi.plugin('todo').middleware('audit-log')` | `strapi.middleware('plugin::todo.audit-log')` | Reference a registered middleware in a route config or apply it with `strapi.server.use()` |
 | Configuration | `strapi.plugin('todo').config('featureFlag')` | `strapi.config.get('plugin::todo.featureFlag')` | Read a specific plugin config key at runtime |
@@ -78,8 +78,8 @@ The most common pattern: a controller delegates to its own plugin's service.
 
 module.exports = ({ strapi }) => ({
   async find(ctx) {
-    // Top-level getter — preferred inside your own plugin
-    const tasks = await strapi.plugin('todo').service('task').findAll();
+    // highlight-next-line
+    const tasks = await strapi.plugin('todo').service('task').findAll(); // top-level getter: preferred inside your own plugin
     ctx.body = tasks;
   },
 
@@ -102,7 +102,8 @@ import type { Core } from '@strapi/strapi';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => ({
   async find(ctx: any) {
-    const tasks = await (strapi.plugin('todo').service('task') as any).findAll();
+    // highlight-next-line
+    const tasks = await (strapi.plugin('todo').service('task') as any).findAll(); // top-level getter: preferred inside your own plugin
     ctx.body = tasks;
   },
 
@@ -150,6 +151,7 @@ import type { Core } from '@strapi/strapi';
 
 export default async ({ strapi }: { strapi: Core.Strapi }) => {
   const taskService = strapi.plugin('todo').service('task') as any;
+  // highlight-next-line
   const count = await taskService.count();
 
   if (count === 0) {
@@ -201,7 +203,8 @@ export default factories.createCoreController(
     async create(ctx: any) {
       const { data, meta } = await super.create(ctx);
 
-      await (strapi.service('plugin::todo.task') as any).create({
+      // highlight-next-line
+      await (strapi.service('plugin::todo.task') as any).create({ // global getter: preferred in application code
         title: `Review project: ${data.attributes.name}`,
         done: false,
       });
@@ -221,14 +224,11 @@ export default factories.createCoreController(
 <TabItem value="js" label="JavaScript">
 
 ```js
-// Read a single config key via top-level getter
-const maxItems = strapi.plugin('todo').config('maxItems');
-
-// Read the full plugin config object via global getter
-const todoConfig = strapi.config.get('plugin::todo');
-
-// Read a nested config key
-const endpoint = strapi.config.get('plugin::todo.endpoint');
+// highlight-start
+const maxItems = strapi.plugin('todo').config('maxItems');       // read a single key
+const todoConfig = strapi.config.get('plugin::todo');            // read the full config object
+const endpoint = strapi.config.get('plugin::todo.endpoint');     // read a nested key
+// highlight-end
 ```
 
 </TabItem>
@@ -251,9 +251,9 @@ const todoConfig = strapi.config.get('plugin::todo') as Record<string, unknown>;
 Use the content-type getter when you need the schema object, for example to pass it to the sanitization API:
 
 ```js
-const schema = strapi.contentType('plugin::todo.task');
+// highlight-next-line
+const schema = strapi.contentType('plugin::todo.task'); // access the content-type schema
 
-// Pass to contentAPI sanitization
 const sanitizedOutput = await strapi.contentAPI.sanitize.output(
   data,
   schema,
@@ -263,15 +263,13 @@ const sanitizedOutput = await strapi.contentAPI.sanitize.output(
 
 ## Common pitfalls
 
-- **Naming mismatch between route handler and controller key.** If your route declares `handler: 'task.find'`, then your controllers index must export a key called `task` and that controller must have a method called `find`. A mismatch throws a runtime error when the route is matched.
+- **Naming mismatch between route handler and controller key.** If your route declares `handler: 'task.find'`, your controllers index must export a key called `task` and that controller must have a method called `find`. A mismatch throws a runtime error when the route is matched.
 
 - **Using `ctx` instead of `policyContext` in policies.** The first argument to a policy function is `policyContext`, not `ctx`. Using the wrong variable name leads to `undefined` errors when accessing `ctx.state`.
 
-- **Calling a service at module load time.** Do not call `strapi.plugin(...).service(...)` at the top level of a module file. The `strapi` object is not yet initialized when modules are first loaded. Always call getters inside a function body that executes at runtime.
+- **Calling a service at module load time.** The `strapi` object is not initialized when modules are first loaded. Always call getters inside a function body. Never call them at the top level of a module file.
 
-- **Mixing `module.exports` and `export default` in the same plugin.** Each file in a plugin server must be consistently CommonJS or ESM. Mixing the two causes import resolution errors that are hard to debug.
-
-- **Forgetting the `plugin::` prefix in global getters.** `strapi.service('todo.task')` is not the same as `strapi.service('plugin::todo.task')`. The former looks for an API service, the latter for a plugin service. Missing the prefix results in `undefined` or a "not found" error at runtime.
+- **Forgetting the `plugin::` prefix in global getters.** `strapi.service('todo.task')` is not the same as `strapi.service('plugin::todo.task')`. The former looks for an API service; the latter for a plugin service. The missing prefix results in `undefined` or a "not found" error at runtime.
 
 ## Best practices
 
