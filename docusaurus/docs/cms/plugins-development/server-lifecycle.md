@@ -2,6 +2,8 @@
 title: Server lifecycle
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
+pagination_prev: cms/plugins-development/server-api
+pagination_next: cms/plugins-development/server-configuration
 description: Control when plugin server logic runs with register, bootstrap, and destroy lifecycle hooks.
 tags:
   - plugin APIs
@@ -34,6 +36,8 @@ Understanding when each lifecycle runs helps you put the right code in the right
     fallbackImageDark="/img/assets/diagrams/plugins-server-api-lifecycle_DARK.png"
     alt="Server API lifecycle diagram"
 />
+
+<br/>
 
 | Phase | What is available in your plugin |
 | --- | --- |

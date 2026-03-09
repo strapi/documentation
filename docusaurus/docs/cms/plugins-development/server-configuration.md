@@ -1,6 +1,8 @@
 ---
 title: Server configuration
 displayed_sidebar: cmsSidebar
+pagination_prev: cms/plugins-development/server-lifecycle
+pagination_next: cms/plugins-development/server-routes
 toc_max_heading_level: 4
 description: Define default plugin options, validate user-provided values, and read plugin configuration at runtime.
 tags:

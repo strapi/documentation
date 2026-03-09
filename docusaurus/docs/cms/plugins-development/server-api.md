@@ -1,8 +1,8 @@
 ---
 title: Server API for plugins
-sidebar_label: Overview
-pagination_prev: cms/plugins-development/plugin-sdk
-# pagination_next: cms/plugins-development/server-lifecycle
+sidebar_label: Server API overview
+pagination_prev: cms/plugins-development/admin-localization
+pagination_next: cms/plugins-development/server-lifecycle
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
 tags:

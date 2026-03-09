@@ -2,6 +2,8 @@
 title: Server getters & usage
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
+pagination_prev: cms/plugins-development/server-policies-middlewares
+pagination_next: cms/plugins-development/guides/pass-data-from-server-to-admin
 description: Access and reuse plugin controllers, services, policies, and other server resources using top-level and global getters.
 tags:
   - plugin APIs

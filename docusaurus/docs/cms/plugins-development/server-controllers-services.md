@@ -1,6 +1,8 @@
 ---
 title: Server controllers & services
 displayed_sidebar: cmsSidebar
+pagination_prev: cms/plugins-development/server-routes
+pagination_next: cms/plugins-development/server-policies-middlewares
 toc_max_heading_level: 4
 description: Handle HTTP requests in plugin controllers and organize reusable business logic in plugin services.
 tags:
