@@ -24,6 +24,12 @@ Routes expose your plugin's HTTP endpoints and map incoming requests to controll
 
 <Prerequisite />
 
+:::tip Which format should I use?
+- **[Array format](#array-format)** — Simple plugins with a single route type (all admin or all Content API).
+- **[Named router format](#named-router-format)** — Plugins that expose both admin and Content API routes, or need explicit type control. **Recommended for most cases.**
+- **[Factory callback format](#factory-callback-format)** — Advanced cases where route config depends on the `strapi` instance (e.g., reading plugin config).
+:::
+
 ## Route declaration formats
 
 Plugin routes accept three different formats. Choose the one that fits your use case.
@@ -99,8 +105,10 @@ const adminRoutes = require('./admin');
 const contentApiRoutes = require('./content-api');
 
 module.exports = {
+  // highlight-start
   admin: adminRoutes,
   'content-api': contentApiRoutes,
+  // highlight-end
 };
 ```
 
@@ -148,8 +156,10 @@ import adminRoutes from './admin';
 import contentApiRoutes from './content-api';
 
 export default {
+  // highlight-start
   admin: adminRoutes,
   'content-api': contentApiRoutes,
+  // highlight-end
 };
 ```
 
@@ -206,6 +216,7 @@ module.exports = ({ strapi }) => ({
       path: '/articles',
       handler: 'article.find',
       config: {
+        // highlight-next-line
         auth: strapi.plugin('my-plugin').config('publicRead') ? false : {},
       },
     },
@@ -227,6 +238,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
       path: '/articles',
       handler: 'article.find',
       config: {
+        // highlight-next-line
         auth: strapi.plugin('my-plugin').config('publicRead') ? false : {},
       },
     },
@@ -275,7 +287,8 @@ module.exports = {
       handler: 'article.find',
       config: {
         auth: {
-          scope: ['plugin::my-plugin.article.find'],
+          // highlight-next-line
+          scope: ['plugin::my-plugin.article.find'], // auto-generated from handler string
         },
       },
     },
@@ -307,7 +320,8 @@ export default {
       handler: 'article.find',
       config: {
         auth: {
-          scope: ['plugin::my-plugin.article.find'],
+          // highlight-next-line
+          scope: ['plugin::my-plugin.article.find'], // auto-generated from handler string
         },
       },
     },
@@ -324,7 +338,7 @@ Each route accepts an optional `config` object with the following properties:
 
 | Property | Type | Description |
 | --- | --- | --- |
-| `policies` | `Array<string \| { name: string; config: unknown }>` | Policies to run before the controller action. Each item is either a policy name string or an object with `name` and `config`. Plugin policies are referenced as `plugin::my-plugin.policy-name`. |
+| `policies` | `Array<string \| { name: string; config: object }>` | Policies to run before the controller action. Each item is either a policy name string or an object with `name` and `config`. The `config` object is passed as-is to the policy function's `config` argument — its shape depends on the policy. Plugin policies are referenced as `plugin::my-plugin.policy-name`. |
 | `middlewares` | `Array<string \| MiddlewareHandler>` | Middlewares to apply to this route. Each item is a middleware name string or an inline function. |
 | `auth` | `false \| { scope?: string[]; strategies?: string[] }` | Set to `false` to make the route public. Pass an object to override the auto-generated scope or specify custom auth strategies. Setting `auth: false` on an admin route is almost never intentional — it exposes the endpoint to unauthenticated requests. |
 
