@@ -142,24 +142,27 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 
 When your plugin exposes Content API routes, sanitize query parameters and output data before returning them. This prevents leaking private fields or bypassing access rules.
 
-Plugin controllers do not use `createCoreController`, so the `this.sanitizeQuery` / `this.sanitizeOutput` shorthand is not available. Use `strapi.contentAPI.sanitize` directly instead, passing the content-type schema explicitly:
+Because plugin controllers are plain factory functions and do not extend `createCoreController`, the `this.sanitizeQuery` and `this.sanitizeOutput` shorthands are not available. Use `strapi.contentAPI.sanitize` directly instead, passing the content-type schema explicitly:
 
 ```js title="/src/plugins/my-plugin/server/src/controllers/article.js"
 module.exports = ({ strapi }) => ({
   async find(ctx) {
+    // highlight-start
     const schema = strapi.contentType('plugin::my-plugin.article');
 
     const sanitizedQuery = await strapi.contentAPI.sanitize.query(
       ctx.query, schema, { auth: ctx.state.auth }
     );
+    // highlight-end
     const articles = await strapi.plugin('my-plugin').service('article').findAll(sanitizedQuery);
+    // highlight-next-line
     ctx.body = await strapi.contentAPI.sanitize.output(articles, schema, { auth: ctx.state.auth });
   },
 });
 ```
 
 :::strapi Backend customization
-For the full sanitization and validation reference — including `sanitizeInput`, `validateQuery`, and `validateInput` — see [Controllers](/cms/backend-customization/controllers#sanitize-validate-custom-controllers).
+For the full sanitization and validation reference, including `sanitizeInput`, `validateQuery`, and `validateInput` . See [Controllers](/cms/backend-customization/controllers#sanitize-validate-custom-controllers).
 :::
 
 ## Services {#services}
@@ -186,6 +189,7 @@ module.exports = {
 
 module.exports = ({ strapi }) => ({
   async findAll(params = {}) {
+    // highlight-next-line
     return strapi.documents('plugin::my-plugin.article').findMany(params);
   },
 
@@ -230,6 +234,7 @@ import type { Core } from '@strapi/strapi';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => ({
   async findAll(params: Record<string, unknown> = {}) {
+    // highlight-next-line
     return strapi.documents('plugin::my-plugin.article').findMany(params);
   },
 
@@ -261,8 +266,8 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 </TabItem>
 </Tabs>
 
-:::note Runtime behavior
-`services` is typed as `unknown` in the current `ServerObject` TypeScript interface (`@strapi/types`). This means `strapi.plugin('my-plugin').service('article')` returns `unknown` and you will need to cast it to call methods with type safety. This is a known limitation. For fully typed service calls, you can define and export the service type explicitly and cast at the call site.
+:::caution TypeScript service typing
+`services` is typed as `unknown` in the current `ServerObject` TypeScript interface (`@strapi/types`). This means `strapi.plugin('my-plugin').service('article')` returns `unknown` and requires a cast to call methods with type safety. For fully typed service calls, define and export the service type explicitly and cast at the call site.
 :::
 
 :::strapi Document Service API
@@ -272,6 +277,8 @@ Services interact with content-types through the [Document Service API](/cms/api
 ## End-to-end example
 
 The following example shows a complete request flow from route declaration through controller to service and back.
+
+<ExpandableContent maxHeight="400px">
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -286,13 +293,15 @@ module.exports = {
       {
         method: 'GET',
         path: '/articles',
-        handler: 'article.find',
+        // highlight-next-line
+        handler: 'article.find', // maps to controllers/article.js → find()
         config: { auth: false },
       },
       {
         method: 'POST',
         path: '/articles',
-        handler: 'article.create',
+        // highlight-next-line
+        handler: 'article.create', // maps to controllers/article.js → create()
         config: { auth: false },
       },
     ],
@@ -305,6 +314,7 @@ module.exports = {
 
 module.exports = ({ strapi }) => ({
   async find(ctx) {
+    // highlight-next-line
     ctx.body = await strapi.plugin('my-plugin').service('article').findAll();
   },
 
@@ -324,6 +334,7 @@ module.exports = ({ strapi }) => ({
 
 module.exports = ({ strapi }) => ({
   findAll() {
+    // highlight-next-line
     return strapi.documents('plugin::my-plugin.article').findMany();
   },
 
@@ -344,13 +355,15 @@ export default {
       {
         method: 'GET' as const,
         path: '/articles',
-        handler: 'article.find',
+        // highlight-next-line
+        handler: 'article.find', // maps to controllers/article.ts → find()
         config: { auth: false },
       },
       {
         method: 'POST' as const,
         path: '/articles',
-        handler: 'article.create',
+        // highlight-next-line
+        handler: 'article.create', // maps to controllers/article.ts → create()
         config: { auth: false },
       },
     ],
@@ -363,7 +376,8 @@ import type { Core } from '@strapi/strapi';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => ({
   async find(ctx: any) {
-    ctx.body = await strapi.plugin('my-plugin').service('article').findAll();
+    // highlight-next-line
+    ctx.body = await (strapi.plugin('my-plugin').service('article') as any).findAll();
   },
 
   async create(ctx: any) {
@@ -380,6 +394,7 @@ import type { Core } from '@strapi/strapi';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => ({
   findAll() {
+    // highlight-next-line
     return strapi.documents('plugin::my-plugin.article').findMany();
   },
 
@@ -392,6 +407,8 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 </TabItem>
 </Tabs>
 
+</ExpandableContent>
+
 ## Best practices
 
 - **Keep controllers thin.** A controller action should do three things: receive `ctx`, delegate to a service, and set the response. Business logic, database calls, and conditional branching all belong in services.
@@ -402,4 +419,4 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 
 - **Always sanitize Content API responses.** When exposing Content API routes, use `strapi.contentAPI.sanitize.output()` before returning data. Skipping sanitization can leak private fields to end users.
 
-- **Cast service types explicitly in TypeScript.** Until `services` is strongly typed in `@strapi/types`, cast the return value of `strapi.plugin('my-plugin').service('my-service')` to your service interface at the call site rather than using `any` throughout your codebase.
+- **Cast service types explicitly in TypeScript.** Until `services` is strongly typed in `@strapi/types`, cast the return value of `strapi.plugin('my-plugin').service('my-service')` to the service interface at each call site rather than using `any` throughout the codebase.
