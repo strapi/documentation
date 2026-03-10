@@ -7,6 +7,7 @@ pagination_next: cms/plugins-development/guides/pass-data-from-server-to-admin
 description: Access and reuse plugin controllers, services, policies, and other server resources using top-level and global getters.
 tags:
   - plugin APIs
+  - server API
   - plugins development
   - backend customization
 ---
@@ -19,13 +20,13 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 Access plugin resources through top-level getters (`strapi.plugin('my-plugin').service('name')`) or global getters (`strapi.service('plugin::my-plugin.name')`). Both return the same object. Use top-level getters inside your own plugin, and global getters from application code or other plugins. Routes have no global getter equivalent. Configuration uses dedicated config APIs.
 </Tldr>
 
-Plugin server resources — controllers, services, policies, middlewares, content-types, configuration, and routes — are accessible from any server-side location through the `strapi` instance: other plugins, lifecycle hooks, application controllers, or custom scripts.
+Plugin server resources, such as controllers, services, policies, middlewares, content-types, configuration, and routes, are accessible from any server-side location through the `strapi` instance: other plugins, lifecycle hooks, application controllers, or custom scripts.
 
 <Prerequisite />
 
 ## Getter styles
 
-Strapi exposes two styles for accessing plugin resources. Both return the same underlying object — the difference is purely syntactic.
+Strapi exposes 2 styles for accessing plugin resources. Both return the same underlying object, the difference is purely syntactic.
 
 **Top-level getters** chain through the plugin name:
 
