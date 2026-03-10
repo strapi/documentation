@@ -5855,7 +5855,7 @@ You can extend the `query` and body parameters allowed on Content API routes by 
 |------|--------|
 | Enable strict parameters (reject unknown query/body keys) | [API configuration](/cms/configurations/api): set `rest.strictParams: true` in `./config/api.js` (or `./config/api.ts`). |
 | Add allowed parameters (app) | Call `addQueryParams` / `addInputParams` in [register](/cms/configurations/functions#register) in `./src/index.js` or `./src/index.ts`. |
-| Add allowed parameters (plugin) | Call `addQueryParams` / `addInputParams` in the plugin's [register](/cms/plugins-development/server-api#register) lifecycle. |
+| Add allowed parameters (plugin) | Call `addQueryParams` / `addInputParams` in the plugin's [register](/cms/plugins-development/server-lifecycle#register) lifecycle. |
 
 When `rest.strictParams` is enabled, only core parameters and parameters on each route's request schema are accepted; the parameters you register are merged into that schema. Use the `z` instance from `@strapi/utils` (or `zod/v4`) for schemas.
 
@@ -5905,7 +5905,7 @@ A new service can be implemented:
 - with the [interactive CLI command `strapi generate`](/cms/cli#strapi-generate)
 - or manually by creating a JavaScript file in the appropriate folder (see [project structure](/cms/project-structure.md)):
   - `./src/api/[api-name]/services/` for API services
-  - or `./src/plugins/[plugin-name]/services/` for [plugin services](/cms/plugins-development/server-api#services).
+  - or `./src/plugins/[plugin-name]/services/` for [plugin services](/cms/plugins-development/server-controllers-services).
 
 To manually create a service, export a factory function that returns the service implementation (i.e. an object with methods). This factory function receives the `strapi` instance:
 
@@ -7200,7 +7200,7 @@ The `destroy` function, found in `./src/index.js` (or in `./src/index.ts`), is a
 The `destroy` function can be used to gracefully:
 
 - stop [services](/cms/backend-customization/services) that are running
-- [clean up plugin actions](/cms/plugins-development/server-api#destroy) (e.g. close connections, remove listeners, etc.)
+- [clean up plugin actions](/cms/plugins-development/server-lifecycle#destroy) (e.g. close connections, remove listeners, etc.)
 
 More specifically, a typical use-case for `destroy()` is to handle operational clean-up, such as closing database or queue connections and removing listeners so the application can shut down cleanly.
 
@@ -7279,7 +7279,7 @@ Global middlewares can be classified into different types depending on their ori
 | Internal          | Built-in middlewares (i.e. included with Strapi), automatically loaded                                                                                                                                                                  | `strapi::middleware-name`                                                                                            |
 | Application-level | Loaded from the `./src/middlewares` folder                                                                                                                                                                                              | `global::middleware-name`                                                                                            |
 | API-level         | Loaded from the `./src/api/[api-name]/middlewares` folder                                                                                                                                                                               | `api::api-name.middleware-name`                                                                                      |
-| Plugin            | Exported from `strapi-server.js` in the [`middlewares` property of the plugin interface](/cms/plugins-development/server-api#middlewares)                                                                                               | `plugin::plugin-name.middleware-name`                                                                                |
+| Plugin            | Exported from `strapi-server.js` in the [`middlewares` property of the plugin interface](/cms/plugins-development/server-policies-middlewares)                                                                                               | `plugin::plugin-name.middleware-name`                                                                                |
 | External          | Can be:<ul><li>either node modules installed with 
 
 </Tabs>
@@ -7426,7 +7426,7 @@ Plugin configurations are stored in `/config/plugins.js|ts` (see [project struct
 | Parameter                  | Description                                                                                                                                                            | Type    |
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `enabled`                  | Enable (`true`) or disable (`false`) an installed plugin                                                                                                               | Boolean |
-| `config`<br/><br/>_Optional_ | Used to override default plugin configuration ([defined in strapi-server.js](/cms/plugins-development/server-api#configuration)) | Object  |
+| `config`<br/><br/>_Optional_ | Used to override default plugin configuration ([defined in strapi-server.js](/cms/plugins-development/server-configuration)) | Object  |
 | `resolve`<br/> _Optional, only required for local plugins_             | Path to the plugin's folder                                                                                                                                            | String  |
 
 :::note Configurations for core features and providers
@@ -9932,13 +9932,7 @@ Source: https://docs.strapi.io/cms/plugins-development/admin-panel-api
 
 # Admin Panel API for plugins: An overview
 
-A Strapi plugin can interact with both the back end and the front end of a Strapi application. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/cms/intro).
-
-For more information on how plugins can interact with the back end part of Strapi, see [Server API](/cms/plugins-development/server-api).
-
-## General considerations
-
-The admin panel of Strapi is a 
+A Strapi plugin can interact with both the back end and the front end of a Strapi application. The Admin Panel API covers the front-end part: it allows a plugin to customize Strapi's [admin panel](/cms/intro). The admin panel is a 
 
 </Tabs>
 
@@ -9971,12 +9965,12 @@ Some parameters can be imported from the `package.json` file.
 
 Exposes the bootstrap function, executed after all the plugins are [registered](#register).
 
-Within the bootstrap function, a plugin can, for instance:
+Within the `bootstrap()` function, a plugin can:
 
-* extend another plugin, using `getPlugin('plugin-name')`,
+* extend another plugin using `getPlugin('plugin-name')`,
 * register hooks (see [Hooks](/cms/plugins-development/admin-hooks)),
 * [add links to a settings section](/cms/plugins-development/admin-navigation-settings#adding-links-to-existing-settings-sections),
-* add actions and options to the Content Manager's List view and Edit view (see details on the [Content Manager APIs page](/cms/plugins-development/content-manager-apis)).
+* add actions and options to the Content Manager's List view and Edit view (see [Content Manager APIs](/cms/plugins-development/content-manager-apis)).
 
 **Example:**
 
@@ -9984,9 +9978,9 @@ Within the bootstrap function, a plugin can, for instance:
 
 ## Available actions
 
-The Admin Panel API allows a plugin to take advantage of several small APIs to perform actions that will modify the user interface, user experience, or behavior of the admin panel. 
+The Admin Panel API provides several building blocks to customize the user interface, user experience, and behavior of the admin panel.
 
-Use the following table as a reference to know which API and function to use, and where to declare them, and click on any function name to learn more:
+Use the following table to find which function to use and where to declare it. Click any function name for details:
 
 | Action                                   | Function to use                                   | Related lifecycle function  |
 | ---------------------------------------- | ------------------------------------------------- | --------------------------- |
@@ -10000,7 +9994,7 @@ Use the following table as a reference to know which API and function to use, an
 | Add a reducer                            | [`addReducers()`](/cms/plugins-development/admin-redux-store#adding-custom-reducers)                      | [`register()`](#register)   |
 | Create a hook                          | [`createHook()`](/cms/plugins-development/admin-hooks)                    | [`register()`](#register)   |
 | Register a hook                          | [`registerHook()`](/cms/plugins-development/admin-hooks)                    | [`bootstrap()`](#bootstrap)   |
-| Provide translations for your plugin's admin interface | [`registerTrads()`](/cms/plugins-development/admin-localization#registertrads) | _(Handled in the async `registerTrads()` function itself)_ |
+| Provide translations for the plugin admin interface | [`registerTrads()`](/cms/plugins-development/admin-localization#registertrads) | `registerTrads()` |
 
 <br/>
 Click on any of the following cards to get more details about a specific topic:
@@ -11192,7 +11186,7 @@ The final schema of the content-types depends on the following loading order:
 
 1. the content-types of the original plugin,
 2. the content-types overridden by the declarations in the [schema](/cms/backend-customization/models#model-schema) defined in `./src/extensions/plugin-name/content-types/content-type-name/schema.json`
-3. the content-types declarations in the [`content-types` key exported from `strapi-server.js|ts`](/cms/plugins-development/server-api#content-types)
+3. the content-types declarations in the [`content-types` key exported from `strapi-server.js|ts`](/cms/plugins-development/server-content-types)
 4. the content-types declarations in the [`register()` function](/cms/configurations/functions#register) of the Strapi application
 
 To overwrite a plugin's [content-types](/cms/backend-customization/models):
@@ -11272,7 +11266,7 @@ module.exports = (plugin) => {
 
 ### Within the register and bootstrap functions
 
-To extend a plugin's interface within `./src/index.js|ts`, use the `bootstrap()` and `register()` [functions](/cms/configurations/functions) of the whole project, and access the interface programmatically with [getters](/cms/plugins-development/server-api#usage).
+To extend a plugin's interface within `./src/index.js|ts`, use the `bootstrap()` and `register()` [functions](/cms/configurations/functions) of the whole project, and access the interface programmatically with [getters](/cms/plugins-development/server-getters-usage).
 
 <details>
 <summary>Example of extending a plugin's content-type within ./src/index.js|ts</summary>
@@ -11301,226 +11295,508 @@ module.exports = {
 # Server API for plugins
 Source: https://docs.strapi.io/cms/plugins-development/server-api
 
-# Server API for plugins
+# Server API for plugins: An overview
 
-A Strapi plugin can interact with both the back end and the front end of a Strapi application. The Server API is about the back-end part, i.e. how the plugin interacts with the server part of a Strapi application.
+A Strapi plugin can interact with both the back end and the front end of a Strapi application. The Server API covers the back-end part: it defines what the plugin registers, exposes, and executes on the Strapi server. The server part is defined in the entry file, which exports an object (or a function returning an object). That object describes what the plugin contributes to the server.
 
-For more information on how plugins can modify the front end part of Strapi, see [front end](/cms/plugins-development/admin-panel-api).
+For more information on how plugins can customize the admin panel UI, see [Admin Panel API](/cms/plugins-development/admin-panel-api).
 
-:::prerequisites
-You have [created a Strapi plugin](/cms/plugins-development/create-a-plugin).
+</Tabs>
+
+All server code can technically live in the single entry file, but splitting each concern into its own folder, as generated by the Plugin SDK, is strongly recommended. The examples in this documentation follow that structure.
+
+:::note Notes
+* The entry file accepts either an object literal or a function that receives `{ strapi }` and returns the same object shape. The function form is useful when you need a reference to the Strapi instance at declaration time.
+* `config` is a configuration object, not an executable lifecycle hook. Unlike `register()`, `bootstrap()`, or `destroy()`, it is not called as a function during the plugin lifecycle. It is loaded at startup and used to set defaults and validate user configuration.
 :::
 
-The Server API includes:
+## Available actions
 
-- an [entry file](#entry-file) which export the required interface,
-- [lifecycle functions](#lifecycle-functions),
-- a [configuration](#configuration) API,
-- and the ability to [customize all elements of the back-end server](#backend-customization).
+The Server API lets a plugin take advantage of several building blocks to define its server-side behavior.
 
-Once you have declared and exported the plugin interface, you will be able to [use the plugin interface](#usage).
+Use the following table to find which capability matches your goal:
 
-:::note
-The whole code for the server part of your plugin could live in the `/server/src/index.ts|js` file. However, it's recommended to split the code into different folders, just like the [structure](/cms/plugins-development/plugin-structure) created by the Plugin SDK.
-:::
-
-## Entry file
-
-The `/src/server/index.js` file at the root of the plugin folder exports the required interface, with the following parameters available:
-
-| Parameter type         | Available parameters                                                                                                                                                                                           |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Lifecycle functions    | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul>                                                                                                           |
-| Configuration          | <ul><li>[config](#configuration) object   </li></ul>                                                                                                                                                                             |
-| Backend customizations | <ul><li>[contentTypes](#content-types)</li><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
-
-## Lifecycle functions
+| Goal | Parameter to use | When it runs |
+| --- | --- | --- |
+| Run code before the server starts | [`register()`](/cms/plugins-development/server-lifecycle#register) | Before database and routing initialization |
+| Run code after all plugins are loaded | [`bootstrap()`](/cms/plugins-development/server-lifecycle#bootstrap) | After database, routes, and permissions are initialized |
+| Clean up resources on shutdown | [`destroy()`](/cms/plugins-development/server-lifecycle#destroy) | On shutdown |
+| Define plugin options with defaults and validation | [`config`](/cms/plugins-development/server-configuration) | Loaded at startup |
+| Declare plugin content-types | [`contentTypes`](/cms/plugins-development/server-content-types) | Loaded at startup |
+| Expose HTTP endpoints | [`routes`](/cms/plugins-development/server-routes) | Loaded at startup |
+| Handle HTTP requests | [`controllers`](/cms/plugins-development/server-controllers-services#controllers) | Called per request |
+| Implement business logic | [`services`](/cms/plugins-development/server-controllers-services#services) | Called from controllers or lifecycle hooks |
+| Enforce access rules on routes | [`policies`](/cms/plugins-development/server-policies-middlewares#policies) | Evaluated per request, before controller |
+| Intercept and modify request/response flow | [`middlewares`](/cms/plugins-development/server-policies-middlewares#middlewares) | Attached in `register()` or referenced in route config |
+| Access plugin features at runtime | [Getters](/cms/plugins-development/server-getters-usage) | Any lifecycle or request handler |
 
 <br/>
 
-### register()
+The following cards link directly to each dedicated page:
 
-This function is called to load the plugin, before the application is [bootstrapped](#bootstrap), in order to register [permissions](/cms/features/users-permissions), the server part of [custom fields](/cms/features/custom-fields#registering-a-custom-field-on-the-server), or database migrations.
+:::strapi Backend customization
+Plugin routes, controllers, services, policies, and middlewares follow the same conventions as [backend customization](/cms/backend-customization) in a standard Strapi application. The Server API wraps these into the plugin namespace automatically — see [Content-types](/cms/plugins-development/server-content-types#uids-and-naming-conventions) for details on UIDs and naming conventions.
+:::
 
-**Type**: `Function`
 
-**Example:**
 
-</Tabs>
+# Server configuration
+Source: https://docs.strapi.io/cms/plugins-development/server-configuration
 
-### bootstrap()
+# Server API: Configuration
 
-The [bootstrap](/cms/configurations/functions#bootstrap) function is called right after the plugin has [registered](#register).
-
-**Type**: `Function`
-
-**Example:**
+A plugin can expose a `config` object from its [server entry file](/cms/plugins-development/server-api#entry-file). This object defines default configuration values and validates any user-provided overrides loaded from the application's `config/plugins.js|ts` file.
 
 </Tabs>
 
-### destroy()
-
-The [destroy](/cms/configurations/functions#destroy) lifecycle function is called to cleanup the plugin (close connections, remove listeners, etc.) when the Strapi instance is destroyed.
-
-**Type**: `Function`
-
-**Example:**
+A user can override these values in the application's plugin configuration file:
 
 </Tabs>
 
-## Configuration
+After deep-merging defaults with user overrides, the final config is `{ enabled: true, maxItems: 25, endpoint: 'https://api.production.example.com' }`.
 
-`config` stores the default plugin configuration. It loads and validates the configuration inputted from the user within the [`./config/plugins.js` configuration file](/cms/configurations/plugins).
+## Runtime access
 
-**Type**: `Object`
+Once the plugin is loaded, its configuration is available anywhere the `strapi` object is accessible:
 
-| Parameter   | Type                                           | Description                                                                                                                                              |
-| ----------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `default`   | Object, or Function that returns an Object | Default plugin configuration, merged with the user configuration                                                                                         |
-| `validator` | Function                                       | <ul><li>Checks if the results of merging the default plugin configuration with the user configuration is valid</li><li>Throws errors when the resulting configuration is invalid</li></ul> |
+```js
+// Read one key
+const maxItems = strapi.plugin('my-plugin').config('maxItems');
+```
 
-**Example:**
+```js
+// Read the entire plugin config object
+const pluginConfig = strapi.config.get('plugin::my-plugin');
+```
 
-</Tabs>
-
-Once defined, the configuration can be accessed:
-
-- with `strapi.plugin('plugin-name').config('some-key')` for a specific configuration property,
-- or with `strapi.config.get('plugin::plugin-name')` for the whole configuration object.
+Both `strapi.plugin().config()` and `strapi.config.get()` are typically used inside lifecycle functions, controllers, or services.
 
 :::tip
-Run `yarn strapi console` or `npm run strapi console` to access the strapi object in a live console.
+Use `yarn strapi console` or `npm run strapi console` to inspect the live configuration of a running Strapi instance.
 :::
 
-## Backend customization
+## Best practices
 
-All elements of the back-end server of Strapi can be customized through a plugin using the Server API.
+- **Always provide a `default`.** A plugin with no defaults forces every user to supply all configuration values, which creates friction. Make every option optional with a sensible default.
 
-:::prerequisites
-To better understand this section, ensure you have read through the [back-end customization](/cms/backend-customization) documentation of a Strapi application.
-:::
+- **Use the function form of `default` for environment-aware config.** The `({ env }) => ({...})` form lets users drive configuration from environment variables without any extra setup. The plain object form is fine for truly static defaults.
 
-### Content-types
+- **Keep validation simple and explicit.** The `validator` runs at startup, before any request is served. Throw descriptive errors so the operator knows exactly what is wrong. For example, `'"maxItems" must be a positive number'` is more useful than `'Invalid config'`.
 
-An object with the [content-types](/cms/backend-customization/models) the plugin provides.
+- **Do not store secrets in plugin config.** Plugin configuration is accessible server-side via `strapi.config` and can be exposed unintentionally through logs, debug tooling, or custom endpoints if mishandled. Use environment variables directly in services, or read those values via the `env` helper in `default`, rather than embedding raw credentials in the config object.
 
-**Type**: `Object`
+- **Read config in services, not inline.** Accessing `strapi.plugin('my-plugin').config('key')` inside a service method rather than at module load time ensures the value is always the final merged value, not a snapshot taken before user overrides are applied.
+
+
+
+# Server content-types
+Source: https://docs.strapi.io/cms/plugins-development/server-content-types
+
+# Server API: Content-types
+
+A plugin can declare its own content-types by exporting a `contentTypes` object from the [server entry file](/cms/plugins-development/server-api#entry-file). Strapi registers these content-types under the plugin namespace at startup and makes them available through the Document Service API and the content-type registry.
+
+</Tabs>
+
+## UIDs and naming conventions
+
+Once registered, a plugin content-type is identified by a stable UID that follows this format:
+
+```
+plugin::<plugin-name>.<singular-name>
+```
+
+For example, a plugin named `my-plugin` with a content-type whose `singularName` is `article` has the UID `plugin::my-plugin.article`.
+
+This UID is used consistently across all APIs:
+
+| Use case | Example |
+| --- | --- |
+| Query via Document Service | `strapi.documents('plugin::my-plugin.article').findMany()` |
+| Access schema via getter | `strapi.contentType('plugin::my-plugin.article')` |
+| Reference in route handler | `handler: 'article.find'` (short form, resolved via plugin registry) |
+| Pass to sanitization API | `strapi.contentAPI.sanitize.output(data, schema, { auth })` |
 
 :::note
-Content-Types keys in the `contentTypes` object should re-use the `singularName` defined in the [`info`](/cms/backend-customization/models#model-information) key of the schema.
+Controllers, services, policies, and middlewares use the same `plugin::<plugin-name>.<resource-name>` UID format for global getters, but are referenced by their short registry key (e.g., `'article'`) within plugin-level APIs such as route `handler` and `policies`. See [Getters & usage](/cms/plugins-development/server-getters-usage) for details.
 :::
 
-**Example:**
+## Accessing content-types at runtime
+
+### Querying with the Document Service API
+
+Use the Document Service API to query plugin content-types from controllers, services, or lifecycle hooks:
 
 </Tabs>
-
-### Routes
-
-An array of [routes](/cms/backend-customization/routes) configuration.
-
-**Type**: `Object[]`
-
-**Examples:**
-
-</Tabs>
-
-</TabItem>
-
-</Tabs>
-
-</TabItem>
-</Tabs>
-
-### Controllers
-
-An object with the [controllers](/cms/backend-customization/controllers) the plugin provides.
-
-**Type**: `Object`
-
-**Example:**
-
-</Tabs>
-
-### Services
-
-An object with the [services](/cms/backend-customization/services) the plugin provides.
-
-Services should be functions taking `strapi` as a parameter.
-
-**Type**: `Object`
-
-**Example:**
-
-</Tabs>
-
-### Policies
-
-An object with the [policies](/cms/backend-customization/policies) the plugin provides.
-
-**Type**: `Object`
-
-**Example:**
-
-</Tabs>
-
-### Middlewares
-
-An object with the [middlewares](/cms/configurations/middlewares) the plugin provides.
-
-**Type**: `Object`
-
-**Example:**
-
-</Tabs>
-
-## Usage
-
-Once a plugin is exported and loaded into Strapi, its features are accessible in the code through getters. The Strapi instance (`strapi`) exposes both top-level getters and global getters:
-
-- top-level getters imply chaining functions<br/>(e.g., `strapi.plugin('the-plugin-name').controller('the-controller-name'`),
-- global getters are syntactic sugar that allows direct access using a feature's uid<br/>(e.g., `strapi.controller('plugin::plugin-name.controller-name')`).
-
-```js
-// Access an API or a plugin controller using a top-level getter 
-strapi.api['api-name'].controller('controller-name')
-strapi.plugin('plugin-name').controller('controller-name')
-
-// Access an API or a plugin controller using a global getter
-strapi.controller('api::api-name.controller-name')
-strapi.controller('plugin::plugin-name.controller-name')
-```
-
-<details>
-<summary> Top-level getter syntax examples</summary>
-
-```js
-strapi.plugin('plugin-name').config
-strapi.plugin('plugin-name').routes
-strapi.plugin('plugin-name').controller('controller-name')
-strapi.plugin('plugin-name').service('service-name')
-strapi.plugin('plugin-name').contentType('content-type-name')
-strapi.plugin('plugin-name').policy('policy-name')
-strapi.plugin('plugin-name').middleware('middleware-name')
-```
-
-</details>
-
-<details>
-<summary> Global getter syntax examples</summary>
-
-```js
-strapi.controller('plugin::plugin-name.controller-name');
-strapi.service('plugin::plugin-name.service-name');
-strapi.contentType('plugin::plugin-name.content-type-name');
-strapi.policy('plugin::plugin-name.policy-name');
-strapi.middleware('plugin::plugin-name.middleware-name');
-```
-
-</details>
 
 :::strapi Document Service API
-To interact with the content-types, use the [Document Service API](/cms/api/document-service).
+For the full list of available methods and parameters, see the [Document Service API](/cms/api/document-service).
 :::
+
+### Accessing the schema
+
+Use the content-type getter to retrieve the schema object, for example to pass it to the sanitization API:
+
+</Tabs>
+
+## Best practices
+
+- **Match the export key to `info.singularName` exactly.** If the key and `singularName` don't match, Strapi may fail to register the content-type or generate an incorrect UID.
+
+- **Use `collectionName` to avoid table name conflicts.** The `collectionName` field sets the database table name. Prefix it with the plugin name (e.g., `my_plugin_articles`) to avoid collisions with application content-types or other plugins.
+
+- **Keep content-type schemas in their own files.** Define each schema in a dedicated `schema.json` file inside a subfolder named after the `singularName` (e.g., `content-types/article/schema.json`). This matches the structure generated by the Plugin SDK and keeps the index file readable.
+
+- **Enable `draftAndPublish` only when needed.** Draft and Publish adds a publication workflow to the content-type. Enable it only if the plugin's use case requires it — it adds complexity to queries and content management.
+
+
+
+# Server controllers & services
+Source: https://docs.strapi.io/cms/plugins-development/server-controllers-services
+
+# Server API: Controllers & services
+
+Controllers and services are the 2 building blocks that handle request processing and business logic in a plugin server. They work together in a clear separation of concerns: controllers own the HTTP layer, services own the domain layer:
+
+| Goal | Use |
+| --- | --- |
+| Receive `ctx`, read the request, set the response | [Controller](#controllers) |
+| Query the database or apply business rules | [Service](#services) |
+| Reuse logic across multiple controllers or lifecycle hooks | [Service](#services) |
+| Call an external API as part of a request | [Service](#services) |
+
+</Tabs>
+
+### Sanitization
+
+When your plugin exposes Content API routes, sanitize query parameters and output data before returning them. This prevents leaking private fields or bypassing access rules.
+
+Plugin controllers are plain factory functions and do not extend `createCoreController`. This means the `this.sanitizeQuery` and `this.sanitizeOutput` shorthands are not available. Use `strapi.contentAPI.sanitize` directly instead, passing the content-type schema explicitly:
+
+</Tabs>
+
+:::strapi Backend customization
+For the full sanitization and validation reference, including `sanitizeInput`, `validateQuery`, and `validateInput`, see [Controllers](/cms/backend-customization/controllers#sanitize-validate-custom-controllers).
+:::
+
+## Services
+
+A service is a factory function that receives `{ strapi }` and returns an object of named methods, or a plain object; like [controllers](#declaration), Strapi resolves both at runtime. Services hold business logic called from controllers, lifecycle hooks, or other services.
+
+### Declaration
+
+</Tabs>
+
+:::caution TypeScript service typing
+`services` is typed as `unknown` in the current `ServerObject` TypeScript interface (`@strapi/types`). This means `strapi.plugin('my-plugin').service('article')` returns `unknown` and requires a cast to call methods with type safety. For fully typed service calls, define and export the service type explicitly and cast at the call site.
+:::
+
+:::strapi Document Service API
+Services interact with content-types through the [Document Service API](/cms/api/document-service), which documents the full list of available methods and parameters.
+:::
+
+## End-to-end example
+
+The following example shows the complete request flow across routes, a controller, and a service for a simple article resource.
+
+</Tabs>
+
+</ExpandableContent>
+
+## Best practices
+
+- **Keep controllers thin.** A controller action should do 3 things: receive `ctx`, delegate to a service, and set the response. Business logic, database calls, and conditional branching all belong in services.
+
+- **One service per resource.** Organize services by the resource they manage (e.g., `article`, `comment`, `settings`) rather than by action type. This keeps each file focused and easy to test.
+
+- **Use the Document Service API in services, not in controllers.** Calling `strapi.documents(...)` directly in a controller bypasses the service layer and makes logic harder to reuse. Put all Document Service calls in services.
+
+- **Sanitize Content API responses.** When exposing Content API routes, use `strapi.contentAPI.sanitize.output()` before returning data. Skipping sanitization can leak private fields to end users. Admin routes are not subject to the same content-type field visibility rules, but sanitizing them as well is harmless.
+
+- **Cast service types explicitly in TypeScript.** Until `services` is strongly typed in `@strapi/types`, cast the return value of `strapi.plugin('my-plugin').service('my-service')` to the service interface at each call site. Avoid using `any` throughout the codebase.
+
+
+
+# Server getters & usage
+Source: https://docs.strapi.io/cms/plugins-development/server-getters-usage
+
+# Server API: Getters & usage
+
+Plugin server resources, such as controllers, services, policies, middlewares, and content-types, are accessible from any server-side location through the `strapi` instance: other plugins, lifecycle hooks, application controllers, or custom scripts. Routes and configuration use dedicated APIs — see the [getter reference](#full-getter-reference) below.
+
+</Tabs>
+
+### Calling a plugin service from bootstrap
+
+Services called in `bootstrap()` have access to the full `strapi` instance, including other plugins' services.
+
+</Tabs>
+
+### Calling across plugins or from application code
+
+From application-level controllers or services (outside the plugin), or when calling from another plugin, global getters using the full UID are often clearer:
+
+</Tabs>
+
+### Reading plugin configuration at runtime
+
+</Tabs>
+
+:::note
+`strapi.plugin('my-plugin').config('key')` reads the merged configuration (user overrides applied on top of plugin defaults). It is the recommended way to read config inside plugin code. See [Server configuration](/cms/plugins-development/server-configuration) for how plugin configuration is declared and merged.
+:::
+
+### Accessing a content-type schema
+
+Use the content-type getter when you need the schema object, for example to pass it to the sanitization API:
+
+</Tabs>
+
+## Common errors
+
+- **Naming mismatch between route handler and controller key.** If your route declares `handler: 'task.find'`, your controllers index must export a key called `task` and that controller must have a method called `find`. A mismatch throws a runtime error when the route is matched.
+
+- **Misusing the policy context argument.** The first argument to a policy function is a policy context object, not a raw Koa `ctx`. It wraps the request context but exposes a different interface. Naming it `ctx` in your code won't cause an error, but treating it as a Koa context (for example, calling `ctx.body` or `ctx.status`) will not work as expected. Use `policyContext.state` to access auth state, and call `return false` or throw a `PolicyError` to block the request.
+
+- **Calling a service at module load time.** The `strapi` object is not initialized when modules are first loaded. Always call getters inside a function body. Never call them at the top level of a module file.
+
+- **Using an incomplete UID in global getters.** `strapi.service('todo.task')` is not a valid plugin UID. Use the full `plugin::todo.task` form. Without the proper namespace, the service call fails or returns `undefined` at runtime.
+
+| Scope | Example UID |
+| --- | --- |
+| Plugin service | `plugin::todo.task` |
+| API service | `api::project.project` |
+
+## Best practices
+
+- **Prefer top-level getters inside your own plugin.** `strapi.plugin('my-plugin').service('task')` is more readable than the global form when both are inside the same plugin.
+
+- **Use global getters in application code and cross-plugin calls.** When calling from `src/api/` or from another plugin, the full UID `plugin::todo.task` makes the dependency explicit and is easier to search for.
+
+- **Access services in services, not at declaration time.** Avoid capturing service references in closures at module initialization. Always resolve them at call time using the getter, to ensure Strapi is fully loaded.
+
+
+
+# Server lifecycle
+Source: https://docs.strapi.io/cms/plugins-development/server-lifecycle
+
+# Server API: Lifecycle
+
+Lifecycle functions control when your plugin's server-side logic runs during the Strapi application startup and shutdown sequence. They are exported from the [server entry file](/cms/plugins-development/server-api#entry-file) alongside routes, controllers, services, and other server blocks.
+
+</Tabs>
+
+## bootstrap()
+
+**Type:** `Function`
+
+`bootstrap()` runs after plugins registration, database initialization, route initialization, and Content API action registration.
+
+Use `bootstrap()` to:
+- Seed the database with initial data
+- Register admin RBAC actions using `strapi.service('admin::permission').actionProvider.registerMany(...)`
+- Register cron jobs
+- Subscribe to database lifecycle events
+- Call services from your plugin or other plugins
+- Set up cross-plugin integrations that require other plugins to be registered first
+
+</Tabs>
+
+## destroy()
+
+**Type:** `Function`
+
+`destroy()` is called when the Strapi instance is shutting down. It is optional. Only implement it when your plugin holds resources that need explicit cleanup.
+
+Use `destroy()` to:
+- Close external connections (databases, message queues, WebSocket servers)
+- Clear intervals or timeouts set in `bootstrap()`
+- Remove event listeners registered during the plugin's lifetime
+
+</Tabs>
+
+## Best practices
+
+- **Keep `register()` lightweight.** It runs before full initialization.
+
+- **Use `bootstrap()` for database reads/writes.** The database is initialized during the bootstrap phase, not during register. Any call to `strapi.documents()` or a service that queries the database belongs in `bootstrap()`.
+
+- **Register admin RBAC actions in `bootstrap()`.** Use `strapi.service('admin::permission').actionProvider.registerMany(...)` in `bootstrap()`. This is when the permission service is available. Content API actions are registered automatically by Strapi during the same phase.
+
+- **Always pair resource creation with `destroy()`.** If your plugin opens a connection, registers a global interval, or attaches a process listener in `bootstrap()`, implement `destroy()` to clean up those resources. This prevents resource leaks during testing and graceful restarts.
+
+- **Avoid hard dependencies between plugins in `register()`.** At registration time, the order in which other plugins have registered is not guaranteed. Cross-plugin calls that rely on another plugin being initialized belong in `bootstrap()`.
+
+- **Prefer services over inline logic.** Move non-trivial bootstrap logic into a dedicated service method (e.g. `strapi.plugin('my-plugin').service('setup').initialize()`). This keeps lifecycle files readable and the logic testable.
+
+
+
+# Server policies & middlewares
+Source: https://docs.strapi.io/cms/plugins-development/server-policies-middlewares
+
+# Server API: Policies & middlewares
+
+Policies and middlewares are the two mechanisms for intercepting requests in a plugin server. Policies decide whether a request should proceed. Middlewares shape how it is processed.
+
+</Tabs>
+
+### Usage in routes
+
+Once declared, reference a plugin policy from a route using the `plugin::my-plugin.policy-name` namespace:
+
+</Tabs>
+
+:::caution Policy return values
+Returning `false` causes Strapi to send a `403 Forbidden` response. Returning nothing (`undefined`) is treated as permissive (allowed), not as a block. Always return `true` or `false` explicitly. Throwing an error causes Strapi to send a `500` response unless you throw a Strapi HTTP error class (e.g., `new errors.PolicyError(...)`, `new errors.ForbiddenError(...)`, or `new errors.UnauthorizedError(...)`).
+:::
+
+:::strapi Backend customization
+For the full policy reference including GraphQL support and the `policyContext` API, see [Policies](/cms/backend-customization/policies).
+:::
+
+## Middlewares
+
+A middleware is a Koa-style function that wraps the request/response cycle. Unlike policies (which are pass/fail guards), middlewares can read and modify the request before it reaches the controller, and modify the response after the controller has executed.
+
+Plugins can export middlewares in 2 ways:
+
+- as a **route-level middleware**, declared in the `middlewares` export of the server entry file and referenced in route `config.middlewares`
+- as a **server-level middleware**, registered directly on the Strapi HTTP server via `strapi.server.use()` in `register()`
+
+### Route-level middlewares
+
+Route-level middlewares are scoped to a specific route and are declared like policies: as an object of named factory functions, then referenced in the route config.
+
+Note the two-level signature: the outer function receives `(config, { strapi })` and returns the actual Koa middleware `async (ctx, next) => {}`. This allows Strapi to pass per-route configuration to the function.
+
+:::note
+- `middlewares` exports middleware functions from the plugin so they can be referenced and reused in route config.
+- `strapi.server.use(...)` attaches a middleware to the global server pipeline.
+- Middleware execution is request-based: once attached to a route or to the server pipeline, it runs for each matching request.
+:::
+
+</Tabs>
+
+Reference a route-level middleware in a route using the same `plugin::my-plugin.middleware-name` namespace as policies:
+
+</Tabs>
+
+### Server-level middlewares
+
+A server-level middleware is registered on the Strapi HTTP server directly and runs for every request, not just plugin routes. Register it in `register()` using `strapi.server.use()`:
+
+</Tabs>
+
+:::caution
+Server-level middlewares affect all routes across all plugins and the application itself, not just your plugin's routes. A server-level middleware that throws or never calls `next()` will break every request on the server, not just your plugin's endpoints. Use route-level middlewares when the concern is specific to your plugin's endpoints.
+:::
+
+:::strapi Backend customization
+For the full middleware reference, see [Middlewares](/cms/backend-customization/middlewares).
+:::
+
+## Best practices
+
+- **Use `policyContext`, not `ctx`, in policies.** The first argument to a policy is `policyContext`, a wrapper around the Koa context. Using it correctly ensures the policy works for both REST and GraphQL resolvers.
+
+- **Return explicitly from policies.** A policy that returns `undefined` is treated as permissive (allowed). Always return `true` to allow or `false` to deny. Never return implicitly if the intent is to block the request.
+
+- **Prefer route-level middlewares over server-level.** Server-level middlewares run on every request in the entire Strapi server. Scope middleware to plugin routes unless the behavior genuinely applies to all traffic.
+
+- **Always call `await next()` in middlewares.** Forgetting `next()` means the request chain is interrupted and the controller never executes, resulting in a hanging request with no response.
+
+- **Use `config` for reusable policies.** When the same policy logic needs different parameters per route (e.g., a required role name), receive those parameters via the `config` argument and pass them from the route's `{ name, config }` object. This avoids duplicating similar policies.
+
+
+
+# Server routes
+Source: https://docs.strapi.io/cms/plugins-development/server-routes
+
+# Server API: Routes
+
+Routes expose your plugin's HTTP endpoints and map incoming requests to controller actions. They are exported from the [server entry file](/cms/plugins-development/server-api#entry-file) as a `routes` value.
+
+</Tabs>
+
+### Named router format
+
+Use an object with named keys (`admin`, `content-api`, or any custom name) to declare separate router groups. Each group is a router object with a `type`, optional `prefix`, and a `routes` array. Use this format when your plugin exposes both admin and Content API routes.
+
+</Tabs>
+
+### Factory callback format
+
+For advanced cases where you need access to the `strapi` instance at route configuration time (for example, to build dynamic paths or conditionally include routes based on configuration), you can export a factory callback.
+
+:::note
+The factory callback must be attached to a named route entry (such as `admin` or `content-api`), not exported as the root of `routes/index`.
+
+`module.exports = ({ strapi }) => ({ ... })` at the root level is not a valid format.
+:::
+
+</Tabs>
+
+For details on what Strapi adds automatically at registration time, see [Defaults applied by Strapi](#defaults-applied-by-strapi).
+
+## Defaults applied by Strapi
+
+When Strapi registers plugin routes, it applies the following defaults automatically:
+
+| Property | Default value | Notes |
+| --- | --- | --- |
+| `type` | `'admin'` | Applied when using the array format or when `type` is omitted from a router object |
+| `prefix` | `'/<plugin-name>'` | Applied when `prefix` is omitted from a router object |
+| `config.auth.scope` | `['plugin::<plugin-name>.<handler>']` | Auto-generated for string handlers only, using `defaultsDeep` so existing values are not overwritten |
+
+The following 2 declarations are equivalent. Strapi applies the defaults from the table above automatically:
+
+</Tabs>
+
+## Route configuration reference
+
+Each route accepts an optional `config` object with the following properties:
+
+### `policies`
+
+**Type:** `Array<string | { name: string; config: object }>`
+
+Policies to run before the controller action. Each item is either a policy name string or an object with `name` and `config`.
+
+The `config` object is passed as-is to the policy function's `config` argument. The shape of this object depends on the policy.
+
+Plugin policies are referenced as `plugin::my-plugin.policy-name`.
+
+### `middlewares`
+
+**Type:** `Array<string | MiddlewareHandler | { name?: string; resolve?: string; config?: object }>` 
+
+Middlewares to apply to this route. Each item is a middleware name string, an inline function, or an object with `name` (targets a registered middleware), `resolve` (loads a middleware from a path or module), and `config` (passed to the middleware factory).
+
+### `auth`
+
+**Type:** `false | { scope?: string[]; strategies?: string[] }`
+
+Set to `false` to make the route public. Pass an object to override the auto-generated scope or specify custom auth strategies.
+
+:::caution
+Setting `auth: false` on an admin route is almost never intentional: it exposes the endpoint to unauthenticated requests.
+:::
+
+:::strapi General backend customization examples
+For configuration examples including policies, public routes, dynamic URL parameters, and regular expressions in paths, see [Routes](/cms/backend-customization/routes).
+:::
+
+## Best practices
+
+- **Use the named router format when exposing both admin and Content API endpoints.** It makes the intent of each route explicit and avoids relying on the `type` default, which can be surprising.
+
+- **Keep `handler` as a string.** String handlers get automatic auth scope generation. Function handlers do not: authentication still runs for both string and function handlers unless you set `config.auth: false`, but only string handlers get automatic `config.auth.scope`. If you use a function handler and need route-level permission scoping, define `config.auth.scope` explicitly.
+
+- **Scope policies to their namespace.** When referencing a plugin policy in a route, use the full `plugin::my-plugin.policy-name` form. This avoids ambiguity if a policy with the same short name exists elsewhere in the application.
+
+- **Do not disable auth on admin routes.** Admin routes default to requiring admin authentication. Disabling auth on an admin route exposes it to unauthenticated requests, which is almost never intentional.
+
+- **Group related routes in dedicated files.** As the plugin grows, a single route index file becomes hard to navigate. Split by resource (e.g., `routes/article.js`, `routes/comment.js`) and re-export from `routes/index.js`.
 
 
 
