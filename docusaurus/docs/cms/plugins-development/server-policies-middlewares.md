@@ -32,8 +32,10 @@ Use this table to pick the right mechanism before writing any code:
 
 | Need | Mechanism |
 | --- | --- |
-| Block a request based on user role or state | Policy |
-| Block a request based on request content (body, headers) | Policy or inline policy in route config |
+| Block a request based on user role or state | [Policy](#policies) |
+| Block a request based on request content (body, headers) | [Policy](#policies) or inline policy in route config |
+| Return a 403 when a condition is not met | [Policy](#policies) |
+| Reuse the same access rule across multiple routes | Named [policy](#policies) (registered and referenced by name) |
 | Add headers to every response for your plugin's routes | [Route-level middleware](#route-level-middlewares) |
 | Log or trace every request across the entire server | [Server-level middleware](#server-level-middlewares) (`strapi.server.use()`) |
 | Modify `ctx.query` before it reaches the controller | [Route-level middleware](#route-level-middlewares) |

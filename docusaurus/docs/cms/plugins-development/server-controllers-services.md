@@ -23,6 +23,13 @@ Controllers handle the HTTP layer: they receive `ctx`, call services, and return
 
 Controllers and services are the two building blocks that handle request processing and business logic in a plugin server. They work together in a clear separation of concerns: controllers own the HTTP layer, services own the domain layer.
 
+| Goal | Use |
+| --- | --- |
+| Receive `ctx`, read the request, set the response | Controller |
+| Query the database or apply business rules | Service |
+| Reuse logic across multiple controllers or lifecycle hooks | Service |
+| Call an external API as part of a request | Service |
+
 <Prerequisite />
 
 ## Controllers
@@ -144,6 +151,9 @@ When your plugin exposes Content API routes, sanitize query parameters and outpu
 
 Plugin controllers are plain factory functions and do not extend `createCoreController`. This means the `this.sanitizeQuery` and `this.sanitizeOutput` shorthands are not available. Use `strapi.contentAPI.sanitize` directly instead, passing the content-type schema explicitly:
 
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript" default>
+
 ```js title="/src/plugins/my-plugin/server/src/controllers/article.js"
 module.exports = ({ strapi }) => ({
   async find(ctx) {
@@ -161,13 +171,38 @@ module.exports = ({ strapi }) => ({
 });
 ```
 
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/src/plugins/my-plugin/server/src/controllers/article.ts"
+import type { Core } from '@strapi/strapi';
+
+export default ({ strapi }: { strapi: Core.Strapi }) => ({
+  async find(ctx: any) {
+    // highlight-start
+    const schema = strapi.contentType('plugin::my-plugin.article');
+
+    const sanitizedQuery = await strapi.contentAPI.sanitize.query(
+      ctx.query, schema, { auth: ctx.state.auth }
+    );
+    // highlight-end
+    const articles = await (strapi.plugin('my-plugin').service('article') as any).findAll(sanitizedQuery);
+    // highlight-next-line
+    ctx.body = await strapi.contentAPI.sanitize.output(articles, schema, { auth: ctx.state.auth });
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
 :::strapi Backend customization
 For the full sanitization and validation reference, including `sanitizeInput`, `validateQuery`, and `validateInput`, see [Controllers](/cms/backend-customization/controllers#sanitize-validate-custom-controllers).
 :::
 
 ## Services
 
-A service is a factory function that receives `{ strapi }` and returns an object of named methods. Services can also be exported as a plain object; at runtime, Strapi supports both forms and resolves function exports by calling them with `{ strapi }`. The factory function pattern is recommended for dependency injection. Services hold business logic that can be called from controllers, lifecycle hooks, or other services.
+A service is a factory function that receives `{ strapi }` and returns an object of named methods — or a plain object; like [controllers](#declaration), Strapi resolves both at runtime. Services hold business logic called from controllers, lifecycle hooks, or other services.
 
 ### Declaration
 
@@ -276,7 +311,7 @@ Services interact with content-types through the [Document Service API](/cms/api
 
 ## End-to-end example
 
-The following example shows a complete request flow: a route definition maps an HTTP method to a controller action, the controller delegates to a service, and the service queries the content-type through the Document Service API.
+The following example shows the complete request flow across routes, a controller, and a service for a simple article resource.
 
 <ExpandableContent maxHeight="400px">
 

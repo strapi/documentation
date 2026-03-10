@@ -198,7 +198,11 @@ export default {
 
 ### Factory callback format
 
-For advanced cases where you need access to the `strapi` instance at route configuration time (for example, to build dynamic paths or conditionally include routes based on config), you can export a factory callback. This callback must be attached to a named route entry (for example `admin` or `content-api`) rather than exported as the root of `routes/index`. This matches how `plugin.routes` is processed internally by Strapi.
+For advanced cases where you need access to the `strapi` instance at route configuration time (for example, to build dynamic paths or conditionally include routes based on config), you can export a factory callback.
+
+:::note
+The factory callback must be attached to a named route entry (such as `admin` or `content-api`), not exported as the root of `routes/index`. `module.exports = ({ strapi }) => ({ ... })` at the root level is not a valid format.
+:::
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -255,10 +259,6 @@ export default routes;
 
 </TabItem>
 </Tabs>
-
-:::note
-`module.exports = ({ strapi }) => ({ ... })` is not the expected root format for `routes/index`. The factory callback must be attached to a named route entry such as `admin` or `content-api`.
-:::
 
 For details on what Strapi adds automatically at registration time, see [Defaults applied by Strapi](#defaults-applied-by-strapi).
 
