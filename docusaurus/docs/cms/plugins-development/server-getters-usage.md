@@ -16,7 +16,7 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 # Server API: Getters & usage
 
 <Tldr>
-Access plugin resources through top-level getters (`strapi.plugin('my-plugin').service('name')`) or global getters (`strapi.service('plugin::my-plugin.name')`). Both return the same resource. Use top-level getters inside your own plugin, and global getters from application code or other plugins.
+Access plugin resources through top-level getters (`strapi.plugin('my-plugin').service('name')`) or global getters (`strapi.service('plugin::my-plugin.name')`). Both return the same object. Use top-level getters inside your own plugin, and global getters from application code or other plugins. Routes have no global getter equivalent. Configuration uses dedicated config APIs.
 </Tldr>
 
 Plugin server resources — controllers, services, policies, middlewares, content-types, configuration, and routes — are accessible from any server-side location through the `strapi` instance: other plugins, lifecycle hooks, application controllers, or custom scripts.
@@ -25,7 +25,7 @@ Plugin server resources — controllers, services, policies, middlewares, conten
 
 ## Getter styles
 
-Strapi exposes two equivalent styles for accessing plugin resources.
+Strapi exposes two styles for accessing plugin resources. Both return the same underlying object — the difference is purely syntactic.
 
 **Top-level getters** chain through the plugin name:
 
@@ -41,24 +41,26 @@ strapi.service('plugin::plugin-name.service-name')
 strapi.controller('plugin::plugin-name.controller-name')
 ```
 
-Both return the same object. The choice is a matter of context and readability:
+The choice is a matter of context and readability:
 
 - Inside your own plugin, top-level getters are more concise and make the plugin boundary explicit.
 - From application code or another plugin, global getters read more naturally alongside `api::` UIDs.
+
+2 resources are exceptions:
 
 ## Full getter reference
 
 The following table lists all available getters for a plugin named `todo` with a resource named `task`:
 
-| Resource | Top-level getter | Global getter | Typical use case |
-| --- | --- | --- | --- |
-| Service | `strapi.plugin('todo').service('task')` | `strapi.service('plugin::todo.task')` | Business logic from controllers, hooks, or other services |
-| Controller | `strapi.plugin('todo').controller('task')` | `strapi.controller('plugin::todo.task')` | Invoke a controller action programmatically (rare outside tests) |
-| Content-type | `strapi.plugin('todo').contentType('task')` | `strapi.contentType('plugin::todo.task')` | Access the content-type schema, e.g. to pass to `strapi.contentAPI.sanitize` |
-| Policy | `strapi.plugin('todo').policy('is-owner')` | `strapi.policy('plugin::todo.is-owner')` | Share an authorization check across routes or reference it in another plugin's route config |
-| Middleware | `strapi.plugin('todo').middleware('audit-log')` | `strapi.middleware('plugin::todo.audit-log')` | Reference a registered middleware in a route config or apply it with `strapi.server.use()` |
-| Configuration | `strapi.plugin('todo').config('featureFlag')` | `strapi.config.get('plugin::todo.featureFlag')` | Read a specific plugin config key at runtime |
-| Routes | `strapi.plugin('todo').routes` | — | Inspect registered route definitions (no global getter equivalent) |
+| Resource | Top-level getter | Global getter | Both return | Typical use case |
+| --- | --- | --- | --- | --- |
+| Service | `strapi.plugin('todo').service('task')` | `strapi.service('plugin::todo.task')` | The same object | Business logic from controllers, hooks, or other services |
+| Controller | `strapi.plugin('todo').controller('task')` | `strapi.controller('plugin::todo.task')` | The same object | Invoke a controller action programmatically (rare outside tests) |
+| Content-type | `strapi.plugin('todo').contentType('task')` | `strapi.contentType('plugin::todo.task')` | The same object | Access the content-type schema, e.g. to pass to `strapi.contentAPI.sanitize` |
+| Policy | `strapi.plugin('todo').policy('is-owner')` | `strapi.policy('plugin::todo.is-owner')` | The same object | Share an authorization check across routes or reference it in another plugin's route config |
+| Middleware | `strapi.plugin('todo').middleware('audit-log')` | `strapi.middleware('plugin::todo.audit-log')` | The same object | Reference a registered middleware in a route config or apply it with `strapi.server.use()` |
+| Routes | `strapi.plugin('todo').routes` | — | — | Inspect registered route definitions (no global getter equivalent) |
+| Configuration | `strapi.plugin('todo').config('featureFlag')` | `strapi.config.get('plugin::todo.featureFlag')` | The same value | Read a specific plugin config key at runtime (different APIs, same result) |
 
 :::tip
 Run `yarn strapi console` or `npm run strapi console` to inspect the `strapi` object in a live console and explore available plugins and their resources interactively.
@@ -98,20 +100,26 @@ module.exports = ({ strapi }) => ({
 <TabItem value="ts" label="TypeScript">
 
 ```ts title="/src/plugins/todo/server/src/controllers/task.ts"
+import type { Context } from 'koa';
 import type { Core } from '@strapi/strapi';
 
+type TaskService = {
+  findAll(): Promise<unknown[]>;
+  create(data: unknown): Promise<unknown>;
+};
+
 export default ({ strapi }: { strapi: Core.Strapi }) => ({
-  async find(ctx: any) {
-    // highlight-next-line
-    const tasks = await (strapi.plugin('todo').service('task') as any).findAll(); // top-level getter: preferred inside your own plugin
+  async find(ctx: Context) {
+    // Narrow cast: plugin services require app-level type augmentation for full typing.
+    const tasks = await (strapi.plugin('todo').service('task') as TaskService).findAll();
     ctx.body = tasks;
   },
 
-  async create(ctx: any) {
-    const task = await (strapi.plugin('todo').service('task') as any).create(
-      ctx.request.body
+  async create(ctx: Context) {
+    const task = await (strapi.plugin('todo').service('task') as TaskService).create(
+      (ctx.request as any).body
     );
-    ctx.status = 201;
+    (ctx as any).status = 201;
     ctx.body = task;
   },
 });
@@ -149,8 +157,14 @@ module.exports = async ({ strapi }) => {
 ```ts title="/src/plugins/todo/server/src/bootstrap.ts"
 import type { Core } from '@strapi/strapi';
 
+type TaskService = {
+  count(): Promise<number>;
+  create(data: unknown): Promise<unknown>;
+};
+
 export default async ({ strapi }: { strapi: Core.Strapi }) => {
-  const taskService = strapi.plugin('todo').service('task') as any;
+  // Narrow cast: plugin services are resolved dynamically unless your project augments Strapi service typings.
+  const taskService = strapi.plugin('todo').service('task') as TaskService;
   // highlight-next-line
   const count = await taskService.count();
 
@@ -196,6 +210,10 @@ module.exports = createCoreController('api::project.project', ({ strapi }) => ({
 ```ts title="/src/api/project/controllers/project.ts"
 import { factories } from '@strapi/strapi';
 
+type TaskService = {
+  create(data: unknown): Promise<unknown>;
+};
+
 export default factories.createCoreController(
   'api::project.project',
   ({ strapi }) => ({
@@ -203,7 +221,8 @@ export default factories.createCoreController(
       const { data, meta } = await super.create(ctx);
 
       // highlight-next-line
-      await (strapi.service('plugin::todo.task') as any).create({ // global getter: preferred in application code
+      // Narrow cast: this generic documentation cannot infer your app-specific service signatures.
+      await (strapi.service('plugin::todo.task') as TaskService).create({
         title: `Review project: ${data.attributes.name}`,
         done: false,
       });
@@ -289,7 +308,12 @@ const sanitizedOutput = await strapi.contentAPI.sanitize.output(
 
 - **Calling a service at module load time.** The `strapi` object is not initialized when modules are first loaded. Always call getters inside a function body. Never call them at the top level of a module file.
 
-- **Forgetting the `plugin::` prefix in global getters.** `strapi.service('todo.task')` is not the same as `strapi.service('plugin::todo.task')`. Without the prefix, `strapi.service('todo.task')` looks for an API service. With the prefix, `strapi.service('plugin::todo.task')` looks for a plugin service. The missing prefix results in `undefined` or a "not found" error at runtime.
+- **Using an incomplete UID in global getters.** `strapi.service('todo.task')` is not a valid plugin UID. Use the full `plugin::todo.task` form. Without the proper namespace, the service call fails or returns `undefined` at runtime.
+
+| Scope | Example UID |
+| --- | --- |
+| Plugin service | `plugin::todo.task` |
+| API service | `api::project.project` |
 
 ## Best practices
 
