@@ -198,7 +198,7 @@ export default {
 
 ### Factory callback format
 
-For advanced cases where you need access to the `strapi` instance at route configuration time (for example, to build dynamic paths or conditionally include routes based on config), export a function that receives `{ strapi }` and returns a router object.
+For advanced cases where you need access to the `strapi` instance at route configuration time (for example, to build dynamic paths or conditionally include routes based on config), you can export a factory callback. This callback must be attached to a named route entry (for example `admin` or `content-api`) rather than exported as the root of `routes/index`. This matches how `plugin.routes` is processed internally by Strapi.
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -206,20 +206,22 @@ For advanced cases where you need access to the `strapi` instance at route confi
 ```js title="/src/plugins/my-plugin/server/src/routes/index.js"
 'use strict';
 
-module.exports = ({ strapi }) => ({
-  type: 'content-api',
-  routes: [
-    {
-      method: 'GET',
-      path: '/articles',
-      handler: 'article.find',
-      config: {
-        // highlight-next-line
-        auth: strapi.plugin('my-plugin').config('publicRead') ? false : {},
+module.exports = {
+  'content-api': ({ strapi }) => ({
+    type: 'content-api',
+    routes: [
+      {
+        method: 'GET',
+        path: '/articles',
+        handler: 'article.find',
+        config: {
+          // highlight-next-line
+          auth: strapi.plugin('my-plugin').config('publicRead') ? false : {},
+        },
       },
-    },
-  ],
-});
+    ],
+  }),
+};
 ```
 
 </TabItem>
@@ -228,24 +230,35 @@ module.exports = ({ strapi }) => ({
 ```ts title="/src/plugins/my-plugin/server/src/routes/index.ts"
 import type { Core } from '@strapi/strapi';
 
-export default ({ strapi }: { strapi: Core.Strapi }) => ({
-  type: 'content-api' as const,
-  routes: [
-    {
-      method: 'GET' as const,
-      path: '/articles',
-      handler: 'article.find',
-      config: {
-        // highlight-next-line
-        auth: strapi.plugin('my-plugin').config('publicRead') ? false : {},
+const routes: Record<
+  string,
+  Core.RouterConfig | ((args: { strapi: Core.Strapi }) => Core.RouterConfig)
+> = {
+  'content-api': ({ strapi }) => ({
+    type: 'content-api',
+    routes: [
+      {
+        method: 'GET',
+        path: '/articles',
+        handler: 'article.find',
+        config: {
+          // highlight-next-line
+          auth: strapi.plugin('my-plugin').config('publicRead') ? false : {},
+        },
       },
-    },
-  ],
-});
+    ],
+  }),
+};
+
+export default routes;
 ```
 
 </TabItem>
 </Tabs>
+
+:::note
+`module.exports = ({ strapi }) => ({ ... })` is not the expected root format for `routes/index`. The factory callback must be attached to a named route entry such as `admin` or `content-api`.
+:::
 
 For details on what Strapi adds automatically at registration time, see [Defaults applied by Strapi](#defaults-applied-by-strapi).
 
@@ -274,23 +287,25 @@ module.exports = [
 ];
 ```
 
-```js title="Equivalent explicit declaration"
+```js title="Equivalent explicit declaration (named router format)"
 module.exports = {
-  type: 'admin',
-  prefix: '/my-plugin',
-  routes: [
-    {
-      method: 'GET',
-      path: '/articles',
-      handler: 'article.find',
-      config: {
-        auth: {
-          // highlight-next-line
-          scope: ['plugin::my-plugin.article.find'], // auto-generated from handler string
+  admin: {
+    type: 'admin',
+    prefix: '/my-plugin',
+    routes: [
+      {
+        method: 'GET',
+        path: '/articles',
+        handler: 'article.find',
+        config: {
+          auth: {
+            // highlight-next-line
+            scope: ['plugin::my-plugin.article.find'], // auto-generated from handler string
+          },
         },
       },
-    },
-  ],
+    ],
+  },
 };
 ```
 
@@ -307,23 +322,25 @@ export default [
 ];
 ```
 
-```ts title="Equivalent explicit declaration"
+```ts title="Equivalent explicit declaration (named router format)"
 export default {
-  type: 'admin' as const,
-  prefix: '/my-plugin',
-  routes: [
-    {
-      method: 'GET' as const,
-      path: '/articles',
-      handler: 'article.find',
-      config: {
-        auth: {
-          // highlight-next-line
-          scope: ['plugin::my-plugin.article.find'], // auto-generated from handler string
+  admin: {
+    type: 'admin' as const,
+    prefix: '/my-plugin',
+    routes: [
+      {
+        method: 'GET' as const,
+        path: '/articles',
+        handler: 'article.find',
+        config: {
+          auth: {
+            // highlight-next-line
+            scope: ['plugin::my-plugin.article.find'], // auto-generated from handler string
+          },
         },
       },
-    },
-  ],
+    ],
+  },
 };
 ```
 
@@ -337,7 +354,7 @@ Each route accepts an optional `config` object with the following properties:
 | Property | Type | Description |
 | --- | --- | --- |
 | `policies` | `Array<string \| { name: string; config: object }>` | Policies to run before the controller action. Each item is either a policy name string or an object with `name` and `config`. The `config` object is passed as-is to the policy function's `config` argument. The shape of this object depends on the policy. Plugin policies are referenced as `plugin::my-plugin.policy-name`. |
-| `middlewares` | `Array<string \| MiddlewareHandler>` | Middlewares to apply to this route. Each item is a middleware name string or an inline function. |
+| `middlewares` | `Array<string \| MiddlewareHandler \| { name?: string; resolve?: string; config?: object }>` | Middlewares to apply to this route. Each item is a middleware name string, an inline function, or an object with `name` (targets a registered middleware), `resolve` (loads a middleware from a path or module), and `config` (passed to the middleware factory). |
 | `auth` | `false \| { scope?: string[]; strategies?: string[] }` | Set to `false` to make the route public. Pass an object to override the auto-generated scope or specify custom auth strategies. Setting `auth: false` on an admin route is almost never intentional: it exposes the endpoint to unauthenticated requests. |
 
 :::strapi Backend customization
@@ -348,7 +365,7 @@ For configuration examples including policies, public routes, dynamic URL parame
 
 - **Use the named router format when exposing both admin and Content API endpoints.** It makes the intent of each route explicit and avoids relying on the `type` default, which can be surprising.
 
-- **Keep `handler` as a string.** String handlers get automatic auth scope generation. Function handlers do not, which means auth is bypassed unless you configure it explicitly.
+- **Keep `handler` as a string.** String handlers get automatic auth scope generation. Function handlers do not: authentication still runs for both string and function handlers unless you set `config.auth: false`, but only string handlers get automatic `config.auth.scope`. If you use a function handler and need route-level permission scoping, define `config.auth.scope` explicitly.
 
 - **Scope policies to their namespace.** When referencing a plugin policy in a route, use the full `plugin::my-plugin.policy-name` form. This avoids ambiguity if a policy with the same short name exists elsewhere in the application.
 
