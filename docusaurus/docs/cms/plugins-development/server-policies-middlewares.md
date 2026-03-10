@@ -3,7 +3,7 @@ title: Server policies & middlewares
 sidebar_label: Server policies & middlewares
 displayed_sidebar: cmsSidebar
 pagination_prev: cms/plugins-development/server-controllers-services
-pagination_next: cms/plugins-development/server-getters-usage
+pagination_next: cms/plugins-development/server-content-types
 toc_max_heading_level: 4
 description: Guard plugin routes with policies and intercept requests with middlewares in the Strapi plugin Server API.
 tags:

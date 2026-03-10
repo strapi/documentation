@@ -522,6 +522,7 @@ const sidebars = {
             'cms/plugins-development/server-routes',
             'cms/plugins-development/server-controllers-services',
             'cms/plugins-development/server-policies-middlewares',
+            'cms/plugins-development/server-content-types',
             'cms/plugins-development/server-getters-usage',
           ],
         },
