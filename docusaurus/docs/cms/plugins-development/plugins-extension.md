@@ -58,7 +58,7 @@ The final schema of the content-types depends on the following loading order:
 
 1. the content-types of the original plugin,
 2. the content-types overridden by the declarations in the [schema](/cms/backend-customization/models#model-schema) defined in `./src/extensions/plugin-name/content-types/content-type-name/schema.json`
-3. the content-types declarations in the [`content-types` key exported from `strapi-server.js|ts`](/cms/plugins-development/server-api#content-types)
+3. the content-types declarations in the [`content-types` key exported from `strapi-server.js|ts`](/cms/plugins-development/server-content-types)
 4. the content-types declarations in the [`register()` function](/cms/configurations/functions#register) of the Strapi application
 
 To overwrite a plugin's [content-types](/cms/backend-customization/models):
