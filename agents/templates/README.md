@@ -34,9 +34,11 @@ How to use
 - **Standard section headings** in the expected order for that page type.
 - **Placeholder comments** (`<!-- ... -->`) explaining what content to write in each section.
 - **Multi‑language patterns** using Tabs where applicable (see `agents/templates/components/tabs.md` for Tabs/TabItem rules).
+- **Progressive disclosure** using ExpandableContent where applicable (see `agents/templates/components/expandable-content.md` for usage rules).
 
 ## References
 
 - Root agent guide: `AGENTS.md`
 - Authoring area guides: `agents/authoring/AGENTS.*.md`
 - Tabs/TabItem rules: `agents/templates/components/tabs.md`
+- ExpandableContent rules: `agents/templates/components/expandable-content.md`
