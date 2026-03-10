@@ -238,28 +238,20 @@ export default factories.createCoreController(
 
 ### Reading plugin configuration at runtime
 
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
+```js
+// Read a single key
+const maxItems = strapi.plugin('todo').config('maxItems');
+```
 
 ```js
-// highlight-start
-const maxItems = strapi.plugin('todo').config('maxItems');       // read a single key
-const todoConfig = strapi.config.get('plugin::todo');            // read the full config object
-const endpoint = strapi.config.get('plugin::todo.endpoint');     // read a nested key
-// highlight-end
+// Read the full config object
+const todoConfig = strapi.config.get('plugin::todo');
 ```
 
-</TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts
-const maxItems = strapi.plugin('todo').config('maxItems') as number;
-const todoConfig = strapi.config.get('plugin::todo') as Record<string, unknown>;
-const endpoint = strapi.config.get('plugin::todo.endpoint') as string;
+```js
+// Read a nested key
+const endpoint = strapi.config.get('plugin::todo.endpoint');
 ```
-
-</TabItem>
-</Tabs>
 
 :::note
 `strapi.plugin('my-plugin').config('key')` reads the merged configuration (user overrides applied on top of plugin defaults). It is the recommended way to read config inside plugin code. See [Server configuration](/cms/plugins-development/server-configuration) for how plugin configuration is declared and merged.
@@ -273,8 +265,8 @@ Use the content-type getter when you need the schema object, for example to pass
 <TabItem value="js" label="JavaScript">
 
 ```js
-// highlight-next-line
-const schema = strapi.contentType('plugin::todo.task'); // access the content-type schema
+// Access the content-type schema
+const schema = strapi.contentType('plugin::todo.task');
 
 const sanitizedOutput = await strapi.contentAPI.sanitize.output(
   data,
@@ -310,10 +302,10 @@ const sanitizedOutput = await strapi.contentAPI.sanitize.output(
 
 - **Using an incomplete UID in global getters.** `strapi.service('todo.task')` is not a valid plugin UID. Use the full `plugin::todo.task` form. Without the proper namespace, the service call fails or returns `undefined` at runtime.
 
-| Scope | Example UID |
-| --- | --- |
-| Plugin service | `plugin::todo.task` |
-| API service | `api::project.project` |
+  | Scope | Example UID |
+  | --- | --- |
+  | Plugin service | `plugin::todo.task` |
+  | API service | `api::project.project` |
 
 ## Best practices
 
