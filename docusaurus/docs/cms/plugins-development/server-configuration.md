@@ -7,6 +7,7 @@ toc_max_heading_level: 4
 description: Define default plugin options, validate user-provided values, and read plugin configuration at runtime.
 tags:
   - plugin APIs
+  - server API
   - configuration
   - plugins development
   - backend customization
@@ -26,7 +27,7 @@ A plugin can expose a `config` object from its [server entry file](/cms/plugins-
 
 ## Configuration shape
 
-The `config` object accepts two properties:
+The `config` object accepts 2 properties:
 
 | Property | Type | Description |
 | --- | --- | --- |
@@ -57,13 +58,11 @@ The `{ env }` argument passed to the `default` function is the same `env` utilit
 'use strict';
 
 module.exports = {
-  // highlight-start
   default: ({ env }) => ({
     enabled: true,
     maxItems: env.int('MY_PLUGIN_MAX_ITEMS', 10),
     endpoint: env('MY_PLUGIN_ENDPOINT', 'https://api.example.com'),
   }),
-  // highlight-end
   validator: (config) => {
     if (typeof config.enabled !== 'boolean') {
       throw new Error('"enabled" must be a boolean');
@@ -80,13 +79,11 @@ module.exports = {
 
 ```ts title="/src/plugins/my-plugin/server/src/config/index.ts"
 export default {
-  // highlight-start
   default: ({ env }: { env: any }) => ({
     enabled: true,
     maxItems: env.int('MY_PLUGIN_MAX_ITEMS', 10),
     endpoint: env('MY_PLUGIN_ENDPOINT', 'https://api.example.com'),
   }),
-  // highlight-end
   validator: (config: { enabled: unknown; maxItems: unknown }) => {
     if (typeof config.enabled !== 'boolean') {
       throw new Error('"enabled" must be a boolean');
@@ -145,7 +142,9 @@ Once the plugin is loaded, its configuration is available anywhere the `strapi` 
 ```js
 // Read one key
 const maxItems = strapi.plugin('my-plugin').config('maxItems');
+```
 
+```js
 // Read the entire plugin config object
 const pluginConfig = strapi.config.get('plugin::my-plugin');
 ```
