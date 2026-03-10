@@ -47,7 +47,7 @@ A policy is a function that runs before the controller action for a given route.
 
 ### Declaration
 
-Policies are exported as plain functions (not factory functions). Each policy receives three arguments: `policyContext`, `config`, and `{ strapi }`.
+Policies are exported as plain functions (not factory functions). Each policy receives the following 3 arguments:
 
 - `policyContext` is a wrapper around the Koa context object. Use it to access `policyContext.state.user`, `policyContext.request`, etc.
 - `config` contains the per-route configuration passed when attaching the policy (e.g., `{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }`, where `config` is the per-policy options object).
@@ -76,10 +76,8 @@ module.exports = {
 // Allow the request only if the user has the role specified in the route config
 // Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 module.exports = (policyContext, config, { strapi }) => {
-  // highlight-start
   const { user } = policyContext.state;
   const targetRole = config.role;
-  // highlight-end
 
   if (!user || !targetRole) {
     return false;
@@ -122,10 +120,8 @@ export default (
   config: { role?: string },
   { strapi }: { strapi: Core.Strapi }
 ) => {
-  // highlight-start
   const { user } = policyContext.state;
   const targetRole = config?.role;
-  // highlight-end
 
   if (!user || !targetRole) {
     return false;
@@ -239,7 +235,7 @@ For the full policy reference including GraphQL support and the `policyContext` 
 
 A middleware is a Koa-style function that wraps the request/response cycle. Unlike policies (which are pass/fail guards), middlewares can read and modify the request before it reaches the controller, and modify the response after the controller has executed.
 
-Plugins can export middlewares in two ways:
+Plugins can export middlewares in 2 ways:
 
 - as a **route-level middleware**, declared in the `middlewares` export of the server entry file and referenced in route `config.middlewares`
 - as a **server-level middleware**, registered directly on the Strapi HTTP server via `strapi.server.use()` in `register()`
@@ -273,11 +269,9 @@ module.exports = {
 'use strict';
 
 module.exports = (config, { strapi }) => async (ctx, next) => {
-  // highlight-start
   strapi.log.info(`[my-plugin] ${ctx.method} ${ctx.url}`);
   await next();
   strapi.log.info(`[my-plugin] → ${ctx.status}`);
-  // highlight-end
 };
 ```
 
@@ -297,11 +291,9 @@ import type { Core } from '@strapi/strapi';
 
 export default (config: unknown, { strapi }: { strapi: Core.Strapi }) =>
   async (ctx: any, next: () => Promise<void>) => {
-    // highlight-start
     strapi.log.info(`[my-plugin] ${ctx.method} ${ctx.url}`);
     await next();
     strapi.log.info(`[my-plugin] → ${ctx.status}`);
-    // highlight-end
   };
 ```
 
@@ -322,7 +314,6 @@ module.exports = [
     path: '/articles',
     handler: 'article.create',
     config: {
-      // highlight-next-line
       middlewares: ['plugin::my-plugin.logRequest'],
     },
   },
@@ -333,7 +324,8 @@ module.exports = [
     config: {
       middlewares: [
         // highlight-next-line
-        async (ctx, next) => { // inline middleware, no registration needed
+        async (ctx, next) => {
+          // inline middleware, no registration needed
           ctx.query.pageSize = ctx.query.pageSize || '10';
           await next();
         },
@@ -363,8 +355,8 @@ export default [
     handler: 'article.find',
     config: {
       middlewares: [
-        // highlight-next-line
-        async (ctx: any, next: () => Promise<void>) => { // inline middleware, no registration needed
+        async (ctx: any, next: () => Promise<void>) => {
+          // inline middleware, no registration needed
           ctx.query.pageSize = ctx.query.pageSize || '10';
           await next();
         },
@@ -388,7 +380,6 @@ A server-level middleware is registered on the Strapi HTTP server directly and r
 'use strict';
 
 module.exports = ({ strapi }) => {
-  // highlight-start
   // Attached to the global server pipeline — runs per matching request
   strapi.server.use(async (ctx, next) => {
     const start = Date.now();
@@ -396,7 +387,6 @@ module.exports = ({ strapi }) => {
     const ms = Date.now() - start;
     ctx.set('X-Response-Time', `${ms}ms`);
   });
-  // highlight-end
 };
 ```
 
@@ -407,7 +397,6 @@ module.exports = ({ strapi }) => {
 import type { Core } from '@strapi/strapi';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => {
-  // highlight-start
   // Attached to the global server pipeline — runs per matching request
   strapi.server.use(async (ctx: any, next: () => Promise<void>) => {
     const start = Date.now();
@@ -415,7 +404,6 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
     const ms = Date.now() - start;
     ctx.set('X-Response-Time', `${ms}ms`);
   });
-  // highlight-end
 };
 ```
 
