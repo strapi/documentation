@@ -49,8 +49,8 @@ Understanding when each lifecycle runs helps you put the right code in the right
 Phase 5 (server live) is not a plugin lifecycle hook and is omitted from this table. It is the running state between `bootstrap()` completing and `destroy()` being called.
 :::
 
-:::note
-`register()` runs before the database, routes, and permissions systems are initialized. The `strapi` object is available, but you cannot query content-types or call services that depend on the database at this stage. Use `bootstrap()` for anything that needs the server to be fully set up.
+:::note Once-only guard
+Each lifecycle function is called once per plugin instance. In tests or custom bootstrapping scripts that instantiate Strapi more than once, calling a lifecycle a second time throws an explicit error (e.g. `Register for plugin::my-plugin has already been called`). This error does not occur under normal operation.
 :::
 
 ## register() {#register}
@@ -105,7 +105,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 </TabItem>
 </Tabs>
 
-## bootstrap() {#bootstrap}
+## bootstrap()
 
 **Type:** `Function`
 
@@ -165,7 +165,7 @@ export default async ({ strapi }: { strapi: Core.Strapi }) => {
 </TabItem>
 </Tabs>
 
-## destroy() {#destroy}
+## destroy()
 
 **Type:** `Function`
 
@@ -205,17 +205,13 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 </TabItem>
 </Tabs>
 
-:::note Once-only guard
-Each lifecycle function is called once per plugin instance. In tests or custom bootstrapping scripts that instantiate Strapi more than once, calling a lifecycle a second time throws an explicit error (e.g. `Register for plugin::my-plugin has already been called`). This does not occur under normal operation.
-:::
-
 ## Best practices
 
 - **Keep `register()` synchronous when possible.** All modules register in sequence. Slow async work in `register()` delays the entire startup. Move async initialization to `bootstrap()`.
 
 - **Use `bootstrap()` for anything that reads or writes data.** The database is not available in `register()`. Any call to `strapi.documents()` or a service that queries the DB belongs in `bootstrap()`.
 
-- **Always pair resource creation with `destroy()`.** If your plugin opens a connection, registers a global interval, or attaches a process listener in `bootstrap()`, implement `destroy()` to tear it down. This prevents resource leaks during testing and graceful restarts.
+- **Always pair resource creation with `destroy()`.** If your plugin opens a connection, registers a global interval, or attaches a process listener in `bootstrap()`, implement `destroy()` to clean up those resources. This prevents resource leaks during testing and graceful restarts.
 
 - **Avoid hard dependencies between plugins in `register()`.** At registration time, the order in which other plugins have registered is not guaranteed. Cross-plugin calls that rely on another plugin being initialized belong in `bootstrap()`.
 
