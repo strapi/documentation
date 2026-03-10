@@ -84,6 +84,7 @@ export default {
   "kind": "collectionType",
   "collectionName": "my_plugin_articles",
   "info": {
+    // highlight-next-line
     "singularName": "article",
     "pluralName": "articles",
     "displayName": "Article"
