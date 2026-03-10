@@ -7,6 +7,7 @@ toc_max_heading_level: 4
 description: Handle HTTP requests in plugin controllers and organize reusable business logic in plugin services.
 tags:
   - plugin APIs
+  - server API
   - controllers
   - services
   - plugins development
@@ -21,14 +22,14 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 Controllers handle the HTTP layer: they receive `ctx`, call services, and return responses. Services hold reusable business logic and interact with content-types through the Document Service API. Keep controllers thin and put domain logic in services.
 </Tldr>
 
-Controllers and services are the two building blocks that handle request processing and business logic in a plugin server. They work together in a clear separation of concerns: controllers own the HTTP layer, services own the domain layer.
+Controllers and services are the 2 building blocks that handle request processing and business logic in a plugin server. They work together in a clear separation of concerns: controllers own the HTTP layer, services own the domain layer:
 
 | Goal | Use |
 | --- | --- |
-| Receive `ctx`, read the request, set the response | Controller |
-| Query the database or apply business rules | Service |
-| Reuse logic across multiple controllers or lifecycle hooks | Service |
-| Call an external API as part of a request | Service |
+| Receive `ctx`, read the request, set the response | [Controller](#controllers) |
+| Query the database or apply business rules | [Service](#services) |
+| Reuse logic across multiple controllers or lifecycle hooks | [Service](#services) |
+| Call an external API as part of a request | [Service](#services) |
 
 <Prerequisite />
 
@@ -38,7 +39,9 @@ A controller is an object of action methods, each corresponding to a route handl
 
 ### Declaration
 
-Controllers can be exported either as a factory function receiving `{ strapi }` or as a plain object. The factory function pattern is the recommended approach for dependency injection and consistency with most documentation examples. At runtime, Strapi supports both exports and resolves function exports by calling them with `{ strapi }`.
+Controllers can be exported either as a factory function receiving `{ strapi }` or as a plain object. The factory function pattern is the recommended approach for dependency injection and consistency with most documentation examples.
+
+At runtime, Strapi supports both exports and resolves function exports by calling them with `{ strapi }`.
 
 The export key used in `controllers/index.js|ts` must match the handler name used in route definitions.
 
@@ -202,7 +205,7 @@ For the full sanitization and validation reference, including `sanitizeInput`, `
 
 ## Services
 
-A service is a factory function that receives `{ strapi }` and returns an object of named methods — or a plain object; like [controllers](#declaration), Strapi resolves both at runtime. Services hold business logic called from controllers, lifecycle hooks, or other services.
+A service is a factory function that receives `{ strapi }` and returns an object of named methods, or a plain object; like [controllers](#declaration), Strapi resolves both at runtime. Services hold business logic called from controllers, lifecycle hooks, or other services.
 
 ### Declaration
 
@@ -348,12 +351,13 @@ module.exports = {
 'use strict';
 
 module.exports = ({ strapi }) => ({
+  // highlight-next-line
   async find(ctx) {
-    // highlight-next-line
     ctx.body = await strapi.plugin('my-plugin').service('article').findAll();
     // Note: sanitize query and output in production — see the Sanitization section above
   },
 
+  // highlight-next-line
   async create(ctx) {
     const article = await strapi
       .plugin('my-plugin')
@@ -370,7 +374,6 @@ module.exports = ({ strapi }) => ({
 
 module.exports = ({ strapi }) => ({
   findAll() {
-    // highlight-next-line
     return strapi.documents('plugin::my-plugin.article').findMany();
   },
 
@@ -416,12 +419,13 @@ interface ArticleService {
 }
 
 export default ({ strapi }: { strapi: Core.Strapi }) => ({
+  // highlight-next-line
   async find(ctx: any) {
-    // highlight-next-line
     ctx.body = await (strapi.plugin('my-plugin').service('article') as ArticleService).findAll();
     // Note: sanitize query and output in production — see the Sanitization section above
   },
 
+  // highlight-next-line
   async create(ctx: any) {
     const article = await (strapi.plugin('my-plugin').service('article') as ArticleService)
       .create(ctx.request.body);
@@ -453,7 +457,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 
 ## Best practices
 
-- **Keep controllers thin.** A controller action should do three things: receive `ctx`, delegate to a service, and set the response. Business logic, database calls, and conditional branching all belong in services.
+- **Keep controllers thin.** A controller action should do 3 things: receive `ctx`, delegate to a service, and set the response. Business logic, database calls, and conditional branching all belong in services.
 
 - **One service per resource.** Organize services by the resource they manage (e.g., `article`, `comment`, `settings`) rather than by action type. This keeps each file focused and easy to test.
 
