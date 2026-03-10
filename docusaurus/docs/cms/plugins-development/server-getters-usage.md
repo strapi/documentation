@@ -47,6 +47,8 @@ The choice is a matter of context and readability:
 - From application code or another plugin, global getters read more naturally alongside `api::` UIDs.
 
 2 resources are exceptions:
+- routes (`strapi.plugin('plugin-name').routes`) have no global getter equivalent,
+- and configuration uses dedicated config APIs (`strapi.plugin('plugin-name').config()` and `strapi.config.get(...)`) rather than resource getters.
 
 ## Full getter reference
 
@@ -304,7 +306,7 @@ const sanitizedOutput = await strapi.contentAPI.sanitize.output(
 
 - **Naming mismatch between route handler and controller key.** If your route declares `handler: 'task.find'`, your controllers index must export a key called `task` and that controller must have a method called `find`. A mismatch throws a runtime error when the route is matched.
 
-- **Using `ctx` instead of `policyContext` in policies.** The first argument to a policy function is `policyContext`, not `ctx`. Using the wrong variable name leads to `undefined` errors when accessing `ctx.state`.
+- **Misusing the policy context argument.** The first argument to a policy function is a policy context object, not a raw Koa `ctx`. It wraps the request context but exposes a different interface. Naming it `ctx` in your code won't cause an error, but treating it as a Koa context (for example, calling `ctx.body` or `ctx.status`) will not work as expected. Use `policyContext.state` to access auth state, and call `return false` or throw a `PolicyError` to block the request.
 
 - **Calling a service at module load time.** The `strapi` object is not initialized when modules are first loaded. Always call getters inside a function body. Never call them at the top level of a module file.
 
