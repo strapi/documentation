@@ -19,7 +19,7 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 # Server API: Lifecycle
 
 <Tldr>
-Use `register()` to declare capabilities before the server initializes, `bootstrap()` to run logic once the server is ready, and `destroy()` to clean up resources on shutdown. Each function receives `{ strapi }` as its argument.
+Use `register()` to declare capabilities before the app is fully initialized, `bootstrap()` to run logic once Strapi is initialized, and `destroy()` to clean up resources on shutdown. Each function receives `{ strapi }` as its argument.
 </Tldr>
 
 Lifecycle functions control when your plugin's server-side logic runs during the Strapi application startup and shutdown sequence. They are exported from the [server entry file](/cms/plugins-development/server-api#entry-file) alongside routes, controllers, services, and other server blocks.
@@ -41,26 +41,26 @@ Understanding when each lifecycle runs helps you put the right code in the right
 
 | Phase | What is available in your plugin |
 | --- | --- |
-| 2. Register | `strapi` object, but no DB, no routes, no permissions yet |
-| 4. Bootstrap | Full `strapi` object: services, content-types, Document Service API, other plugins |
-| 6. Shutdown | Full `strapi` object, but requests are no longer being served |
+| 2. Register | `strapi` object is available, but the database is not initialized yet and routing is not initialized yet |
+| 4. Bootstrap | Full runtime: DB initialized, routes initialized, services and content-types loaded, other plugins available |
+| 6. Shutdown | Shutdown is in progress; use this hook to release resources before Strapi finishes stopping |
 
 :::note
 Phase 5 (server live) is not a plugin lifecycle hook and is omitted from this table. It is the running state between `bootstrap()` completing and `destroy()` being called.
 :::
 
 :::note Once-only guard
-Each lifecycle function is called once per plugin instance. In tests or custom bootstrapping scripts that instantiate Strapi more than once, calling a lifecycle a second time throws an explicit error (e.g. `Register for plugin::my-plugin has already been called`). This error does not occur under normal operation.
+Each lifecycle function is called once per plugin instance. If a lifecycle is called a second time on the same plugin instance (for example in custom tests), Strapi throws an explicit error (e.g. `Register for plugin::my-plugin has already been called`). This error does not occur under normal operation.
 :::
 
 ## register() {#register}
 
 **Type:** `Function`
 
-`register()` is called during phase 2, before the application is bootstrapped. It runs before the database connection is established and before routes and permissions are registered.
+`register()` runs early in startup, before database initialization and before route initialization.
 
 Use `register()` to:
-- Register [permissions](/cms/features/users-permissions) for your plugin
+- Register admin RBAC actions — Content API actions are automatically registered during `bootstrap()`
 - Register the server side of [custom fields](/cms/features/custom-fields#registering-a-custom-field-on-the-server)
 - Register database migrations
 - Register server middlewares on the Strapi HTTP server (e.g. `strapi.server.use(...)`)
@@ -72,16 +72,24 @@ Use `register()` to:
 ```js title="/src/plugins/my-plugin/server/src/register.js"
 'use strict';
 
-module.exports = ({ strapi }) => {
-  // highlight-start
-  // Register a custom permission action for this plugin
-  strapi.contentAPI.permissions.registerDefaultActions('plugin::my-plugin', [
-    'find',
-    'findOne',
-    'create',
+const register = async ({ strapi }) => {
+  await strapi.service('admin::permission').actionProvider.registerMany([
+    {
+      section: 'plugins',
+      displayName: 'Read',
+      uid: 'read',
+      pluginName: 'my-plugin',
+    },
+    {
+      section: 'plugins',
+      displayName: 'Settings',
+      uid: 'settings',
+      pluginName: 'my-plugin',
+    },
   ]);
-  // highlight-end
 };
+
+module.exports = register;
 ```
 
 </TabItem>
@@ -90,16 +98,24 @@ module.exports = ({ strapi }) => {
 ```ts title="/src/plugins/my-plugin/server/src/register.ts"
 import type { Core } from '@strapi/strapi';
 
-export default ({ strapi }: { strapi: Core.Strapi }) => {
-  // highlight-start
-  // Register a custom permission action for this plugin
-  strapi.contentAPI.permissions.registerDefaultActions('plugin::my-plugin', [
-    'find',
-    'findOne',
-    'create',
+const register = async ({ strapi }: { strapi: Core.Strapi }) => {
+  await strapi.service('admin::permission').actionProvider.registerMany([
+    {
+      section: 'plugins',
+      displayName: 'Read',
+      uid: 'read',
+      pluginName: 'my-plugin',
+    },
+    {
+      section: 'plugins',
+      displayName: 'Settings',
+      uid: 'settings',
+      pluginName: 'my-plugin',
+    },
   ]);
-  // highlight-end
 };
+
+export default register;
 ```
 
 </TabItem>
@@ -109,10 +125,11 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 
 **Type:** `Function`
 
-`bootstrap()` is called during phase 4, after all plugins have registered and after the database, routing, and permissions systems are initialized. The full `strapi` object is available, including services, content-types, and the Document Service API.
+`bootstrap()` runs after plugins registration, database initialization, route initialization, and Content API action registration.
 
 Use `bootstrap()` to:
 - Seed the database with initial data
+- Register admin permission actions (e.g. `strapi.admin.services.permission.actionProvider.registerMany(...)`)
 - Register cron jobs
 - Subscribe to database lifecycle events
 - Call services from your plugin or other plugins
@@ -207,9 +224,11 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 
 ## Best practices
 
-- **Keep `register()` synchronous when possible.** All modules register in sequence. Slow async work in `register()` delays the entire startup. Move async initialization to `bootstrap()`.
+- **Keep `register()` lightweight.** It runs before full initialization.
 
-- **Use `bootstrap()` for anything that reads or writes data.** The database is not available in `register()`. Any call to `strapi.documents()` or a service that queries the DB belongs in `bootstrap()`.
+- **Use `bootstrap()` for DB reads/writes.** The DB is initialized during the bootstrap phase, not during register. Any call to `strapi.documents()` or a service that queries the DB belongs in `bootstrap()`.
+
+- **Register admin RBAC actions in `register()`.** Use `strapi.service('admin::permission').actionProvider.registerMany(...)` in `register()`. Content API actions are registered automatically by Strapi during the bootstrap phase.
 
 - **Always pair resource creation with `destroy()`.** If your plugin opens a connection, registers a global interval, or attaches a process listener in `bootstrap()`, implement `destroy()` to clean up those resources. This prevents resource leaks during testing and graceful restarts.
 
