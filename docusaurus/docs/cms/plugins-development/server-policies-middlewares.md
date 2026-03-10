@@ -51,6 +51,10 @@ Policies are exported as plain functions (not factory functions). Each policy re
 - `config` contains the per-route configuration passed when attaching the policy (e.g., `{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }`, where `config` is the per-policy options object).
 - `{ strapi }` gives access to the Strapi instance.
 
+:::note
+The exact shape of `policyContext.state.user` depends on the authentication context (for example, admin panel authentication vs. Users & Permissions / Content API authentication). Adapt the role lookup logic to your project.
+:::
+
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
@@ -72,14 +76,24 @@ module.exports = {
 module.exports = (policyContext, config, { strapi }) => {
   // highlight-start
   const { user } = policyContext.state;
-  const requiredRole = config.role;
+  const targetRole = config.role;
   // highlight-end
 
-  if (!user || !requiredRole) {
+  if (!user || !targetRole) {
     return false;
   }
 
-  return user.roles?.some((role) => role.code === requiredRole) ?? false;
+  // Supports both `user.role` and `user.roles` shapes depending on auth strategy.
+  const roles = Array.isArray(user.roles)
+    ? user.roles
+    : user.role
+      ? [user.role]
+      : [];
+
+  return roles.some((role) => {
+    if (typeof role === 'string') return role === targetRole;
+    return role?.code === targetRole || role?.name === targetRole;
+  });
 };
 ```
 
@@ -97,6 +111,8 @@ export default {
 ```ts title="/src/plugins/my-plugin/server/src/policies/has-role.ts"
 import type { Core } from '@strapi/strapi';
 
+type UserRole = { code?: string; name?: string };
+
 // Allow the request only if the user has the role specified in the route config
 // Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
 export default (
@@ -106,14 +122,22 @@ export default (
 ) => {
   // highlight-start
   const { user } = policyContext.state;
-  const requiredRole = config?.role;
+  const targetRole = config?.role;
   // highlight-end
 
-  if (!user || !requiredRole) {
+  if (!user || !targetRole) {
     return false;
   }
 
-  return (user as any).roles?.some((role: any) => role.code === requiredRole) ?? false;
+  // Supports both `user.role` and `user.roles` shapes depending on auth strategy.
+  const userWithRoles = user as { roles?: UserRole[]; role?: UserRole };
+  const roles: UserRole[] = Array.isArray(userWithRoles.roles)
+    ? userWithRoles.roles
+    : userWithRoles.role
+      ? [userWithRoles.role]
+      : [];
+
+  return roles.some((role) => role?.code === targetRole || role?.name === targetRole);
 };
 ```
 
@@ -202,7 +226,7 @@ export default [
 </Tabs>
 
 :::caution Policy return values
-Returning `false` causes Strapi to send a `403 Forbidden` response. Returning nothing (`undefined`) is also treated as `false` and blocks the request. Always return explicitly. Throwing an error causes Strapi to send a `500` response unless you throw a Strapi HTTP error (e.g., `throw new ApplicationError('Not allowed', { status: 401 })`).
+Returning `false` causes Strapi to send a `403 Forbidden` response. Returning nothing (`undefined`) is treated as permissive (allowed), not as a block. Always return `true` or `false` explicitly. Throwing an error causes Strapi to send a `500` response unless you throw a Strapi HTTP error class (e.g., `new errors.PolicyError(...)`, `new errors.ForbiddenError(...)`, or `new errors.UnauthorizedError(...)`).
 :::
 
 :::strapi Backend customization
@@ -223,6 +247,12 @@ Plugins can export middlewares in two ways:
 Route-level middlewares are scoped to a specific route and are declared like policies: as an object of named factory functions, then referenced in the route config.
 
 Note the two-level signature: the outer function receives `(config, { strapi })` and returns the actual Koa middleware `async (ctx, next) => {}`. This allows Strapi to pass per-route configuration to the function.
+
+:::note
+- `middlewares` exports middleware functions from the plugin so they can be referenced and reused in route config.
+- `strapi.server.use(...)` attaches a middleware to the global server pipeline.
+- Middleware execution is request-based: once attached to a route or to the server pipeline, it runs for each matching request.
+:::
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -357,7 +387,7 @@ A server-level middleware is registered on the Strapi HTTP server directly and r
 
 module.exports = ({ strapi }) => {
   // highlight-start
-  // Applied to ALL incoming requests on the Strapi server
+  // Attached to the global server pipeline — runs per matching request
   strapi.server.use(async (ctx, next) => {
     const start = Date.now();
     await next();
@@ -376,7 +406,7 @@ import type { Core } from '@strapi/strapi';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => {
   // highlight-start
-  // Applied to ALL incoming requests on the Strapi server
+  // Attached to the global server pipeline — runs per matching request
   strapi.server.use(async (ctx: any, next: () => Promise<void>) => {
     const start = Date.now();
     await next();
@@ -402,7 +432,7 @@ For the full middleware reference, see [Middlewares](/cms/backend-customization/
 
 - **Use `policyContext`, not `ctx`, in policies.** The first argument to a policy is `policyContext`, a wrapper around the Koa context. Using it correctly ensures the policy works for both REST and GraphQL resolvers.
 
-- **Return explicitly from policies.** A policy that returns `undefined` is treated as `false` and blocks the request. Always return `true` to allow or `false` to deny. Never return nothing implicitly.
+- **Return explicitly from policies.** A policy that returns `undefined` is treated as permissive (allowed). Always return `true` to allow or `false` to deny. Never return implicitly if the intent is to block the request.
 
 - **Prefer route-level middlewares over server-level.** Server-level middlewares run on every request in the entire Strapi server. Scope middleware to plugin routes unless the behavior genuinely applies to all traffic.
 
