@@ -62,11 +62,11 @@ module.exports = ({ strapi }) => ({
   },
 
   async findOne(ctx) {
-    const { id } = ctx.params;
+    const { documentId } = ctx.params;
     const article = await strapi
       .plugin('my-plugin')
       .service('article')
-      .findOne(id);
+      .findOne(documentId);
 
     if (!article) {
       return ctx.notFound('Article not found');
@@ -116,8 +116,8 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
   },
 
   async findOne(ctx: any) {
-    const { id } = ctx.params;
-    const article = await (strapi.plugin('my-plugin').service('article') as ArticleService).findOne(id);
+    const { documentId } = ctx.params;
+    const article = await (strapi.plugin('my-plugin').service('article') as ArticleService).findOne(documentId);
 
     if (!article) {
       return ctx.notFound('Article not found');
@@ -316,6 +316,7 @@ module.exports = ({ strapi }) => ({
   async find(ctx) {
     // highlight-next-line
     ctx.body = await strapi.plugin('my-plugin').service('article').findAll();
+    // Note: sanitize query and output in production — see the Sanitization section above
   },
 
   async create(ctx) {
@@ -383,6 +384,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
   async find(ctx: any) {
     // highlight-next-line
     ctx.body = await (strapi.plugin('my-plugin').service('article') as ArticleService).findAll();
+    // Note: sanitize query and output in production — see the Sanitization section above
   },
 
   async create(ctx: any) {
@@ -422,6 +424,6 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 
 - **Use the Document Service API in services, not in controllers.** Calling `strapi.documents(...)` directly in a controller bypasses the service layer and makes logic harder to reuse. Put all Document Service calls in services.
 
-- **Always sanitize Content API responses.** When exposing Content API routes, use `strapi.contentAPI.sanitize.output()` before returning data. Skipping sanitization can leak private fields to end users.
+- **Sanitize Content API responses.** When exposing Content API routes, use `strapi.contentAPI.sanitize.output()` before returning data. Skipping sanitization can leak private fields to end users. Admin routes are not subject to the same content-type field visibility rules, but sanitizing them as well is harmless.
 
 - **Cast service types explicitly in TypeScript.** Until `services` is strongly typed in `@strapi/types`, cast the return value of `strapi.plugin('my-plugin').service('my-service')` to the service interface at each call site. Avoid using `any` throughout the codebase.
