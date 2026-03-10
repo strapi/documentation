@@ -164,6 +164,6 @@ Use `yarn strapi console` or `npm run strapi console` to inspect the live config
 
 - **Keep validation simple and explicit.** The `validator` runs at startup, before any request is served. Throw descriptive errors so the operator knows exactly what is wrong. For example, `'"maxItems" must be a positive number'` is more useful than `'Invalid config'`.
 
-- **Do not store secrets in plugin config.** Plugin configuration is serialized and accessible via `strapi.config`. Use environment variables directly in services, or read those values via the `env` helper in `default`, rather than embedding raw credentials in the config object.
+- **Do not store secrets in plugin config.** Plugin configuration is accessible server-side via `strapi.config` and can be exposed unintentionally through logs, debug tooling, or custom endpoints if mishandled. Use environment variables directly in services, or read those values via the `env` helper in `default`, rather than embedding raw credentials in the config object.
 
 - **Read config in services, not inline.** Accessing `strapi.plugin('my-plugin').config('key')` inside a service method rather than at module load time ensures the value is always the final merged value, not a snapshot taken before user overrides are applied.
