@@ -16,10 +16,10 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 # Server API: Getters & usage
 
 <Tldr>
-Once your plugin is loaded, access its resources through two getter styles: top-level getters (`strapi.plugin('my-plugin').service('name')`) for explicit plugin-scoped access, or global getters (`strapi.service('plugin::my-plugin.name')`) for direct access by UID. Both return the same resource. Use top-level getters inside your own plugin, and global getters when calling across plugins or from application code.
+Access plugin resources through top-level getters (`strapi.plugin('my-plugin').service('name')`) or global getters (`strapi.service('plugin::my-plugin.name')`). Both return the same resource. Use top-level getters inside your own plugin, and global getters from application code or other plugins.
 </Tldr>
 
-Once a plugin is declared and loaded by Strapi, all of its server resources become accessible through the `strapi` instance. You can retrieve controllers, services, policies, middlewares, content-types, configuration, and routes from any location in the server code: other plugins, lifecycle hooks, application controllers, or custom scripts.
+Plugin server resources — controllers, services, policies, middlewares, content-types, configuration, and routes — are accessible from any server-side location through the `strapi` instance: other plugins, lifecycle hooks, application controllers, or custom scripts.
 
 <Prerequisite />
 
@@ -163,9 +163,9 @@ export default async ({ strapi }: { strapi: Core.Strapi }) => {
 </TabItem>
 </Tabs>
 
-### Calling a plugin service from application code
+### Calling across plugins or from application code
 
-From application-level controllers or services (outside the plugin), global getters using the full UID are often clearer:
+From application-level controllers or services (outside the plugin), or when calling from another plugin, global getters using the full UID are often clearer:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -177,11 +177,10 @@ const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::project.project', ({ strapi }) => ({
   async create(ctx) {
-    // Create the project
     const { data, meta } = await super.create(ctx);
 
-    // Call the todo plugin service using a global getter
-    await strapi.service('plugin::todo.task').create({
+    // highlight-next-line
+    await strapi.service('plugin::todo.task').create({ // global getter: preferred in application code
       title: `Review project: ${data.attributes.name}`,
       done: false,
     });
@@ -237,6 +236,7 @@ const endpoint = strapi.config.get('plugin::todo.endpoint');     // read a neste
 ```ts
 const maxItems = strapi.plugin('todo').config('maxItems') as number;
 const todoConfig = strapi.config.get('plugin::todo') as Record<string, unknown>;
+const endpoint = strapi.config.get('plugin::todo.endpoint') as string;
 ```
 
 </TabItem>
@@ -250,6 +250,9 @@ const todoConfig = strapi.config.get('plugin::todo') as Record<string, unknown>;
 
 Use the content-type getter when you need the schema object, for example to pass it to the sanitization API:
 
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
 ```js
 // highlight-next-line
 const schema = strapi.contentType('plugin::todo.task'); // access the content-type schema
@@ -261,6 +264,23 @@ const sanitizedOutput = await strapi.contentAPI.sanitize.output(
 );
 ```
 
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+// highlight-next-line
+const schema = strapi.contentType('plugin::todo.task'); // access the content-type schema
+
+const sanitizedOutput = await strapi.contentAPI.sanitize.output(
+  data,
+  schema,
+  { auth: ctx.state.auth }
+);
+```
+
+</TabItem>
+</Tabs>
+
 ## Common pitfalls
 
 - **Naming mismatch between route handler and controller key.** If your route declares `handler: 'task.find'`, your controllers index must export a key called `task` and that controller must have a method called `find`. A mismatch throws a runtime error when the route is matched.
@@ -269,7 +289,7 @@ const sanitizedOutput = await strapi.contentAPI.sanitize.output(
 
 - **Calling a service at module load time.** The `strapi` object is not initialized when modules are first loaded. Always call getters inside a function body. Never call them at the top level of a module file.
 
-- **Forgetting the `plugin::` prefix in global getters.** `strapi.service('todo.task')` is not the same as `strapi.service('plugin::todo.task')`. The former looks for an API service; the latter for a plugin service. The missing prefix results in `undefined` or a "not found" error at runtime.
+- **Forgetting the `plugin::` prefix in global getters.** `strapi.service('todo.task')` is not the same as `strapi.service('plugin::todo.task')`. Without the prefix, `strapi.service('todo.task')` looks for an API service. With the prefix, `strapi.service('plugin::todo.task')` looks for a plugin service. The missing prefix results in `undefined` or a "not found" error at runtime.
 
 ## Best practices
 
