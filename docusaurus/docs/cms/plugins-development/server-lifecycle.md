@@ -49,8 +49,8 @@ Understanding when each lifecycle runs helps you put the right code in the right
 Phase 5 (server live) is not a plugin lifecycle hook and is omitted from this table. It is the running state between `bootstrap()` completing and `destroy()` being called.
 :::
 
-:::note Once-only guard
-Each lifecycle function is called once per plugin instance. If a lifecycle is called a second time on the same plugin instance (for example in custom tests), Strapi throws an explicit error (e.g. `Register for plugin::my-plugin has already been called`). This error does not occur under normal operation.
+:::note
+Each lifecycle function is called once per plugin instance. If a lifecycle is called a second time on the same plugin instance (for example in custom tests), Strapi throws an error. This does not occur under normal operation.
 :::
 
 ## register() {#register}
@@ -60,7 +60,6 @@ Each lifecycle function is called once per plugin instance. If a lifecycle is ca
 `register()` runs early in startup, before database initialization and before route initialization.
 
 Use `register()` to:
-- Register admin RBAC actions — Content API actions are automatically registered during `bootstrap()`
 - Register the server side of [custom fields](/cms/features/custom-fields#registering-a-custom-field-on-the-server)
 - Register database migrations
 - Register server middlewares on the Strapi HTTP server (e.g. `strapi.server.use(...)`)
@@ -72,24 +71,14 @@ Use `register()` to:
 ```js title="/src/plugins/my-plugin/server/src/register.js"
 'use strict';
 
-const register = async ({ strapi }) => {
-  await strapi.service('admin::permission').actionProvider.registerMany([
-    {
-      section: 'plugins',
-      displayName: 'Read',
-      uid: 'read',
-      pluginName: 'my-plugin',
-    },
-    {
-      section: 'plugins',
-      displayName: 'Settings',
-      uid: 'settings',
-      pluginName: 'my-plugin',
-    },
-  ]);
+module.exports = ({ strapi }) => {
+  // highlight-next-line
+  // Register a server-level middleware early in startup
+  strapi.server.use(async (ctx, next) => {
+    ctx.set('X-Plugin-Version', '1.0.0');
+    await next();
+  });
 };
-
-module.exports = register;
 ```
 
 </TabItem>
@@ -98,24 +87,14 @@ module.exports = register;
 ```ts title="/src/plugins/my-plugin/server/src/register.ts"
 import type { Core } from '@strapi/strapi';
 
-const register = async ({ strapi }: { strapi: Core.Strapi }) => {
-  await strapi.service('admin::permission').actionProvider.registerMany([
-    {
-      section: 'plugins',
-      displayName: 'Read',
-      uid: 'read',
-      pluginName: 'my-plugin',
-    },
-    {
-      section: 'plugins',
-      displayName: 'Settings',
-      uid: 'settings',
-      pluginName: 'my-plugin',
-    },
-  ]);
+export default ({ strapi }: { strapi: Core.Strapi }) => {
+  // highlight-next-line
+  // Register a server-level middleware early in startup
+  strapi.server.use(async (ctx: any, next: () => Promise<void>) => {
+    ctx.set('X-Plugin-Version', '1.0.0');
+    await next();
+  });
 };
-
-export default register;
 ```
 
 </TabItem>
@@ -129,7 +108,7 @@ export default register;
 
 Use `bootstrap()` to:
 - Seed the database with initial data
-- Register admin permission actions (e.g. `strapi.admin.services.permission.actionProvider.registerMany(...)`)
+- Register admin RBAC actions using `strapi.service('admin::permission').actionProvider.registerMany(...)`
 - Register cron jobs
 - Subscribe to database lifecycle events
 - Call services from your plugin or other plugins
@@ -143,17 +122,22 @@ Use `bootstrap()` to:
 
 module.exports = async ({ strapi }) => {
   // highlight-start
-  // Seed a default configuration entry if none exists
-  const existing = await strapi
-    .documents('plugin::my-plugin.config')
-    .findFirst();
+  // Register admin RBAC actions for this plugin
+  await strapi.service('admin::permission').actionProvider.registerMany([
+    {
+      section: 'plugins',
+      displayName: 'Read',
+      uid: 'read',
+      pluginName: 'my-plugin',
+    },
+    {
+      section: 'plugins',
+      displayName: 'Settings',
+      uid: 'settings',
+      pluginName: 'my-plugin',
+    },
+  ]);
   // highlight-end
-
-  if (!existing) {
-    await strapi.documents('plugin::my-plugin.config').create({
-      data: { enabled: true, maxItems: 10 },
-    });
-  }
 };
 ```
 
@@ -165,17 +149,22 @@ import type { Core } from '@strapi/strapi';
 
 export default async ({ strapi }: { strapi: Core.Strapi }) => {
   // highlight-start
-  // Seed a default configuration entry if none exists
-  const existing = await strapi
-    .documents('plugin::my-plugin.config')
-    .findFirst();
+  // Register admin RBAC actions for this plugin
+  await strapi.service('admin::permission').actionProvider.registerMany([
+    {
+      section: 'plugins',
+      displayName: 'Read',
+      uid: 'read',
+      pluginName: 'my-plugin',
+    },
+    {
+      section: 'plugins',
+      displayName: 'Settings',
+      uid: 'settings',
+      pluginName: 'my-plugin',
+    },
+  ]);
   // highlight-end
-
-  if (!existing) {
-    await strapi.documents('plugin::my-plugin.config').create({
-      data: { enabled: true, maxItems: 10 },
-    });
-  }
 };
 ```
 
@@ -228,7 +217,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 
 - **Use `bootstrap()` for DB reads/writes.** The DB is initialized during the bootstrap phase, not during register. Any call to `strapi.documents()` or a service that queries the DB belongs in `bootstrap()`.
 
-- **Register admin RBAC actions in `register()`.** Use `strapi.service('admin::permission').actionProvider.registerMany(...)` in `register()`. Content API actions are registered automatically by Strapi during the bootstrap phase.
+- **Register admin RBAC actions in `bootstrap()`.** Use `strapi.service('admin::permission').actionProvider.registerMany(...)` in `bootstrap()`. This is when the permission service is available. Content API actions are registered automatically by Strapi during the same phase.
 
 - **Always pair resource creation with `destroy()`.** If your plugin opens a connection, registers a global interval, or attaches a process listener in `bootstrap()`, implement `destroy()` to clean up those resources. This prevents resource leaks during testing and graceful restarts.
 
