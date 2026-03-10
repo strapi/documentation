@@ -31,7 +31,9 @@ A controller is an object of action methods, each corresponding to a route handl
 
 ### Declaration
 
-Controllers are exported as a factory function that receives `{ strapi }` and returns an object of named actions. The export key used in `controllers/index.js|ts` must match the handler name used in route definitions.
+Controllers can be exported either as a factory function receiving `{ strapi }` or as a plain object. The factory function pattern is the recommended approach for dependency injection and consistency with most documentation examples. At runtime, Strapi supports both exports and resolves function exports by calling them with `{ strapi }`.
+
+The export key used in `controllers/index.js|ts` must match the handler name used in route definitions.
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -99,22 +101,23 @@ export default {
 ```ts title="/src/plugins/my-plugin/server/src/controllers/article.ts"
 import type { Core } from '@strapi/strapi';
 
+interface ArticleService {
+  findAll(): Promise<unknown[]>;
+  findOne(id: string): Promise<unknown>;
+  create(data: unknown): Promise<unknown>;
+}
+
 export default ({ strapi }: { strapi: Core.Strapi }) => ({
   async find(ctx: any) {
-    const articles = await strapi
-      .plugin('my-plugin')
-      .service('article')
-      .findAll();
+    // Limitation: in @strapi/types, plugin services are currently typed as unknown.
+    const articleService = strapi.plugin('my-plugin').service('article') as ArticleService;
 
-    ctx.body = articles;
+    ctx.body = await articleService.findAll();
   },
 
   async findOne(ctx: any) {
     const { id } = ctx.params;
-    const article = await strapi
-      .plugin('my-plugin')
-      .service('article')
-      .findOne(id);
+    const article = await (strapi.plugin('my-plugin').service('article') as ArticleService).findOne(id);
 
     if (!article) {
       return ctx.notFound('Article not found');
@@ -124,13 +127,10 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
   },
 
   async create(ctx: any) {
-    const article = await strapi
-      .plugin('my-plugin')
-      .service('article')
-      .create(ctx.request.body);
+    const articleService = strapi.plugin('my-plugin').service('article') as ArticleService;
 
     ctx.status = 201;
-    ctx.body = article;
+    ctx.body = await articleService.create(ctx.request.body);
   },
 });
 ```
@@ -167,7 +167,7 @@ For the full sanitization and validation reference, including `sanitizeInput`, `
 
 ## Services
 
-A service is a factory function that receives `{ strapi }` and returns an object of named methods. Services hold business logic that can be called from controllers, lifecycle hooks, or other services.
+A service is a factory function that receives `{ strapi }` and returns an object of named methods. Services can also be exported as a plain object; at runtime, Strapi supports both forms and resolves function exports by calling them with `{ strapi }`. The factory function pattern is recommended for dependency injection. Services hold business logic that can be called from controllers, lifecycle hooks, or other services.
 
 ### Declaration
 
@@ -374,14 +374,19 @@ export default {
 ```ts title="/src/plugins/my-plugin/server/src/controllers/article.ts"
 import type { Core } from '@strapi/strapi';
 
+interface ArticleService {
+  findAll(): Promise<unknown[]>;
+  create(data: unknown): Promise<unknown>;
+}
+
 export default ({ strapi }: { strapi: Core.Strapi }) => ({
   async find(ctx: any) {
     // highlight-next-line
-    ctx.body = await (strapi.plugin('my-plugin').service('article') as any).findAll();
+    ctx.body = await (strapi.plugin('my-plugin').service('article') as ArticleService).findAll();
   },
 
   async create(ctx: any) {
-    const article = await (strapi.plugin('my-plugin').service('article') as any)
+    const article = await (strapi.plugin('my-plugin').service('article') as ArticleService)
       .create(ctx.request.body);
     ctx.status = 201;
     ctx.body = article;

@@ -28,7 +28,7 @@ import RelatedApis from '/docs/snippets/plugins-development-server-admin-crossli
 # Server API for plugins: An overview
 
 <Tldr>
-The Server API defines what a plugin registers, exposes, and executes on the Strapi server. It covers lifecycle hooks, routes, controllers, services, policies, middlewares, and configuration. Use the entry file to declare what the plugin contributes, then navigate to the dedicated pages below for each capability.
+The Server API defines what a plugin registers, exposes, and executes on the Strapi server. For services, controllers, policies, middlewares, and content-types, top-level and global getters resolve to the same underlying resource. Configuration access uses `strapi.plugin('x').config(...)` or `strapi.config.get(...)`. Routes do not have a direct global getter equivalent. Use the entry file to declare what the plugin contributes, then navigate to the dedicated pages below for each capability.
 </Tldr>
 
 A Strapi plugin can interact with both the back end and the front end of a Strapi application. The Server API covers the back-end part: it defines what the plugin registers, exposes, and executes on the Strapi server. The server part is defined in the entry file, which exports an object (or a function returning an object). That object describes what the plugin contributes to the server.
@@ -51,6 +51,10 @@ The entry file for the Server API is `[plugin-name]/server/src/index.js|ts`. Thi
 
 :::note
 The entry file accepts either an object literal or a function that receives `{ strapi }` and returns the same object shape. The function form is useful when you need a reference to the Strapi instance at declaration time.
+:::
+
+:::note
+`config` is a configuration object, not an executable lifecycle hook. Unlike `register()`, `bootstrap()`, or `destroy()`, it is not called as a function during the plugin lifecycle. It is loaded at startup and used to set defaults and validate user configuration.
 :::
 
 A minimal entry file looks like this:
@@ -128,15 +132,15 @@ Use the following table to find which capability matches your goal:
 
 | Goal | Parameter to use | When it runs |
 | --- | --- | --- |
-| Run code before the server starts | [`register()`](/cms/plugins-development/server-lifecycle#register) | Phase 2, before server init |
-| Run code after all plugins are loaded | [`bootstrap()`](/cms/plugins-development/server-lifecycle#bootstrap) | Phase 4, after all plugins load |
+| Run code before the server starts | [`register()`](/cms/plugins-development/server-lifecycle#register) | Phase 2, before database and routing initialization |
+| Run code after all plugins are loaded | [`bootstrap()`](/cms/plugins-development/server-lifecycle#bootstrap) | Phase 4, after database, routes, and permissions are initialized |
 | Clean up resources on shutdown | [`destroy()`](/cms/plugins-development/server-lifecycle#destroy) | Phase 6, on shutdown |
-| Define plugin options with defaults and validation | [`config`](/cms/plugins-development/server-configuration) | `register()` or `bootstrap()` |
+| Define plugin options with defaults and validation | [`config`](/cms/plugins-development/server-configuration) | Loaded at startup |
 | Expose HTTP endpoints | [`routes`](/cms/plugins-development/server-routes) | Loaded at startup |
 | Handle HTTP requests | [`controllers`](/cms/plugins-development/server-controllers-services#controllers) | Called per request |
 | Implement business logic | [`services`](/cms/plugins-development/server-controllers-services#services) | Called from controllers or lifecycle hooks |
 | Enforce access rules on routes | [`policies`](/cms/plugins-development/server-policies-middlewares#policies) | Evaluated per request, before controller |
-| Intercept and modify request/response flow | [`middlewares`](/cms/plugins-development/server-policies-middlewares#middlewares) | Registered in `register()` |
+| Intercept and modify request/response flow | [`middlewares`](/cms/plugins-development/server-policies-middlewares#middlewares) | Attached in `register()` or referenced in route config |
 | Declare plugin content-types | [`contentTypes`](#content-types-and-backend-customization) | Loaded at startup |
 | Access plugin features at runtime | [Getters](/cms/plugins-development/server-getters-usage) | Any lifecycle or request handler |
 
@@ -156,6 +160,14 @@ The following cards link directly to each dedicated page:
 ## Content-types and backend customization
 
 In addition to the Server API building blocks listed above, a plugin can declare its own content-types and leverage the full set of Strapi's [backend customization](/cms/backend-customization) primitives.
+
+### UIDs and registry names
+
+In plugin server code, access conventions differ depending on the feature and the API used:
+
+- **Content-types** use a stable UID format: `plugin::my-plugin.my-content-type`.
+- **Controllers, services, policies, and middlewares** are declared in plugin registries (`controllers`, `services`, `policies`, `middlewares`) and referenced by their registry key in plugin-level APIs (for instance in route `handler` and `policies`).
+- The same controllers, services, policies, and middlewares can also be accessed with global getters using their UID format when relevant (for example, `strapi.controller('plugin::my-plugin.controller-name')` and `strapi.service('plugin::my-plugin.service-name')`).
 
 ### Content-types
 
