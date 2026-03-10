@@ -25,7 +25,7 @@ Controllers and services are the two building blocks that handle request process
 
 <Prerequisite />
 
-## Controllers {#controllers}
+## Controllers
 
 A controller is an object of action methods, each corresponding to a route handler. Controllers receive a Koa context object (`ctx`) containing the request and response, call the appropriate service, and set `ctx.body` or `ctx.status` for the response.
 
@@ -142,7 +142,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 
 When your plugin exposes Content API routes, sanitize query parameters and output data before returning them. This prevents leaking private fields or bypassing access rules.
 
-Because plugin controllers are plain factory functions and do not extend `createCoreController`, the `this.sanitizeQuery` and `this.sanitizeOutput` shorthands are not available. Use `strapi.contentAPI.sanitize` directly instead, passing the content-type schema explicitly:
+Plugin controllers are plain factory functions and do not extend `createCoreController`. This means the `this.sanitizeQuery` and `this.sanitizeOutput` shorthands are not available. Use `strapi.contentAPI.sanitize` directly instead, passing the content-type schema explicitly:
 
 ```js title="/src/plugins/my-plugin/server/src/controllers/article.js"
 module.exports = ({ strapi }) => ({
@@ -162,10 +162,10 @@ module.exports = ({ strapi }) => ({
 ```
 
 :::strapi Backend customization
-For the full sanitization and validation reference, including `sanitizeInput`, `validateQuery`, and `validateInput` . See [Controllers](/cms/backend-customization/controllers#sanitize-validate-custom-controllers).
+For the full sanitization and validation reference, including `sanitizeInput`, `validateQuery`, and `validateInput`, see [Controllers](/cms/backend-customization/controllers#sanitize-validate-custom-controllers).
 :::
 
-## Services {#services}
+## Services
 
 A service is a factory function that receives `{ strapi }` and returns an object of named methods. Services hold business logic that can be called from controllers, lifecycle hooks, or other services.
 
@@ -271,12 +271,12 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 :::
 
 :::strapi Document Service API
-Services interact with content-types through the [Document Service API](/cms/api/document-service). Refer to that documentation for the full list of available methods and parameters.
+Services interact with content-types through the [Document Service API](/cms/api/document-service), which documents the full list of available methods and parameters.
 :::
 
 ## End-to-end example
 
-The following example shows a complete request flow from route declaration through controller to service and back.
+The following example shows a complete request flow: a route definition maps an HTTP method to a controller action, the controller delegates to a service, and the service queries the content-type through the Document Service API.
 
 <ExpandableContent maxHeight="400px">
 
@@ -419,4 +419,4 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 
 - **Always sanitize Content API responses.** When exposing Content API routes, use `strapi.contentAPI.sanitize.output()` before returning data. Skipping sanitization can leak private fields to end users.
 
-- **Cast service types explicitly in TypeScript.** Until `services` is strongly typed in `@strapi/types`, cast the return value of `strapi.plugin('my-plugin').service('my-service')` to the service interface at each call site rather than using `any` throughout the codebase.
+- **Cast service types explicitly in TypeScript.** Until `services` is strongly typed in `@strapi/types`, cast the return value of `strapi.plugin('my-plugin').service('my-service')` to the service interface at each call site. Avoid using `any` throughout the codebase.
