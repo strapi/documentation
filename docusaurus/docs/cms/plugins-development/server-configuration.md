@@ -33,13 +33,13 @@ The `config` object accepts two properties:
 | `default` | Object, or Function returning an Object | Default configuration values for the plugin. Merged with the user configuration using a deep merge (user values take precedence). |
 | `validator` | Function | Receives the merged configuration object and must throw an error if the result is invalid. |
 
-## How Strapi loads plugin configuration
+## Configuration loading
 
 When Strapi loads a plugin, it applies the following sequence:
 
 | Step | What Strapi does | Notes |
 | --- | --- | --- |
-| 1 | Compute the default config | If `default` is a function, call it with `{ env }`. Otherwise use the object as-is. |
+| 1 | Compute the default config | If `default` is a function, it is called with `{ env }`. Otherwise the object is used directly. |
 | 2 | Deep-merge with user config | Values from `config/plugins.js\|ts` take precedence over defaults. |
 | 3 | Run `validator(mergedConfig)` | Throws a contextualized error if validation fails, stopping startup. |
 | 4 | Store the final config | Available on the plugin instance via `strapi.plugin('my-plugin').config('key')`. |
@@ -48,7 +48,7 @@ When Strapi loads a plugin, it applies the following sequence:
 The `{ env }` argument passed to the `default` function is the same `env` utility used across Strapi configuration files. It reads `process.env` values and supports type casting: `env('MY_VAR')`, `env.int('PORT', 3000)`, `env.bool('ENABLED', true)`, etc.
 :::
 
-## Example
+## Configuration example
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -136,9 +136,9 @@ export default {
 </TabItem>
 </Tabs>
 
-The resulting merged config would be `{ enabled: true, maxItems: 25, endpoint: 'https://api.production.example.com' }`.
+After deep-merging defaults with user overrides, the final config is `{ enabled: true, maxItems: 25, endpoint: 'https://api.production.example.com' }`.
 
-## Read configuration at runtime
+## Runtime access
 
 Once the plugin is loaded, its configuration is available anywhere the `strapi` object is accessible:
 
@@ -150,7 +150,7 @@ const maxItems = strapi.plugin('my-plugin').config('maxItems');
 const pluginConfig = strapi.config.get('plugin::my-plugin');
 ```
 
-Both forms are typically used inside lifecycle functions, controllers, or services.
+Both `strapi.plugin().config()` and `strapi.config.get()` are typically used inside lifecycle functions, controllers, or services.
 
 :::tip
 Use `yarn strapi console` or `npm run strapi console` to inspect the live configuration of a running Strapi instance.
@@ -162,8 +162,8 @@ Use `yarn strapi console` or `npm run strapi console` to inspect the live config
 
 - **Use the function form of `default` for environment-aware config.** The `({ env }) => ({...})` form lets users drive configuration from environment variables without any extra setup. The plain object form is fine for truly static defaults.
 
-- **Keep validation simple and explicit.** The `validator` runs at startup, before any request is served. Throw descriptive errors so the operator knows exactly what is wrong: `'"maxItems" must be a positive number'` is far more useful than `'Invalid config'`.
+- **Keep validation simple and explicit.** The `validator` runs at startup, before any request is served. Throw descriptive errors so the operator knows exactly what is wrong. For example, `'"maxItems" must be a positive number'` is more useful than `'Invalid config'`.
 
-- **Do not store secrets in plugin config.** Plugin configuration is serialized and accessible via `strapi.config`. Use environment variables directly in services, or read them via the `env` helper in `default`, rather than embedding raw credentials in the config object.
+- **Do not store secrets in plugin config.** Plugin configuration is serialized and accessible via `strapi.config`. Use environment variables directly in services, or read those values via the `env` helper in `default`, rather than embedding raw credentials in the config object.
 
 - **Read config in services, not inline.** Accessing `strapi.plugin('my-plugin').config('key')` inside a service method rather than at module load time ensures the value is always the final merged value, not a snapshot taken before user overrides are applied.
