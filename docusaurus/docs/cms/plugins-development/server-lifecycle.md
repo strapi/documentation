@@ -7,6 +7,7 @@ pagination_next: cms/plugins-development/server-configuration
 description: Control when plugin server logic runs with register, bootstrap, and destroy lifecycle hooks.
 tags:
   - plugin APIs
+  - server API
   - lifecycle function
   - register function
   - bootstrap function
@@ -42,15 +43,12 @@ Understanding when each lifecycle runs helps you put the right code in the right
 | Phase | What is available in your plugin |
 | --- | --- |
 | 2. Register | `strapi` object is available, but the database is not initialized yet and routing is not initialized yet |
-| 4. Bootstrap | Full runtime: DB initialized, routes initialized, services and content-types loaded, other plugins available |
+| 4. Bootstrap | Full runtime: database initialized, routes initialized, services and content-types loaded, other plugins available |
 | 6. Shutdown | Shutdown is in progress; use this hook to release resources before Strapi finishes stopping |
 
-:::note
-Phase 5 (server live) is not a plugin lifecycle hook and is omitted from this table. It is the running state between `bootstrap()` completing and `destroy()` being called.
-:::
-
-:::note
-Each lifecycle function is called once per plugin instance. If a lifecycle is called a second time on the same plugin instance (for example in custom tests), Strapi throws an error. This does not occur under normal operation.
+:::note Notes
+* "Phase 5" in the diagram above (server live) is not a plugin lifecycle hook and is omitted from this table. It is the running state between `bootstrap()` completing and `destroy()` being called.
+* Each lifecycle function is called once per plugin instance. If a lifecycle is called a second time on the same plugin instance (for example in custom tests), Strapi throws an error. This does not occur under normal operation.
 :::
 
 ## register() {#register}
@@ -72,7 +70,6 @@ Use `register()` to:
 'use strict';
 
 module.exports = ({ strapi }) => {
-  // highlight-next-line
   // Register a server-level middleware early in startup
   strapi.server.use(async (ctx, next) => {
     ctx.set('X-Plugin-Version', '1.0.0');
@@ -88,7 +85,6 @@ module.exports = ({ strapi }) => {
 import type { Core } from '@strapi/strapi';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => {
-  // highlight-next-line
   // Register a server-level middleware early in startup
   strapi.server.use(async (ctx: any, next: () => Promise<void>) => {
     ctx.set('X-Plugin-Version', '1.0.0');
@@ -121,7 +117,6 @@ Use `bootstrap()` to:
 'use strict';
 
 module.exports = async ({ strapi }) => {
-  // highlight-start
   // Register admin RBAC actions for this plugin
   await strapi.service('admin::permission').actionProvider.registerMany([
     {
@@ -137,7 +132,6 @@ module.exports = async ({ strapi }) => {
       pluginName: 'my-plugin',
     },
   ]);
-  // highlight-end
 };
 ```
 
@@ -148,7 +142,6 @@ module.exports = async ({ strapi }) => {
 import type { Core } from '@strapi/strapi';
 
 export default async ({ strapi }: { strapi: Core.Strapi }) => {
-  // highlight-start
   // Register admin RBAC actions for this plugin
   await strapi.service('admin::permission').actionProvider.registerMany([
     {
@@ -164,7 +157,6 @@ export default async ({ strapi }: { strapi: Core.Strapi }) => {
       pluginName: 'my-plugin',
     },
   ]);
-  // highlight-end
 };
 ```
 
@@ -175,7 +167,7 @@ export default async ({ strapi }: { strapi: Core.Strapi }) => {
 
 **Type:** `Function`
 
-`destroy()` is called during phase 6, when the Strapi instance is shutting down. It is optional. Only implement it when your plugin holds resources that need explicit cleanup.
+`destroy()` is called when the Strapi instance is shutting down. It is optional. Only implement it when your plugin holds resources that need explicit cleanup.
 
 Use `destroy()` to:
 - Close external connections (databases, message queues, WebSocket servers)
@@ -189,7 +181,6 @@ Use `destroy()` to:
 'use strict';
 
 module.exports = ({ strapi }) => {
-  // highlight-next-line
   // Close an external connection opened in bootstrap()
   strapi.plugin('my-plugin').service('queue').disconnect();
 };
@@ -202,7 +193,6 @@ module.exports = ({ strapi }) => {
 import type { Core } from '@strapi/strapi';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => {
-  // highlight-next-line
   // Close an external connection opened in bootstrap()
   strapi.plugin('my-plugin').service('queue').disconnect();
 };
@@ -215,7 +205,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 
 - **Keep `register()` lightweight.** It runs before full initialization.
 
-- **Use `bootstrap()` for DB reads/writes.** The DB is initialized during the bootstrap phase, not during register. Any call to `strapi.documents()` or a service that queries the DB belongs in `bootstrap()`.
+- **Use `bootstrap()` for database reads/writes.** The database is initialized during the bootstrap phase, not during register. Any call to `strapi.documents()` or a service that queries the database belongs in `bootstrap()`.
 
 - **Register admin RBAC actions in `bootstrap()`.** Use `strapi.service('admin::permission').actionProvider.registerMany(...)` in `bootstrap()`. This is when the permission service is available. Content API actions are registered automatically by Strapi during the same phase.
 
