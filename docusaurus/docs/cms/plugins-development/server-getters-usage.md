@@ -20,7 +20,7 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 Access plugin resources through top-level getters (`strapi.plugin('my-plugin').service('name')`) or global getters (`strapi.service('plugin::my-plugin.name')`). Both return the same object. Use top-level getters inside your own plugin, and global getters from application code or other plugins. Routes have no global getter equivalent. Configuration uses dedicated config APIs.
 </Tldr>
 
-Plugin server resources, such as controllers, services, policies, middlewares, content-types, configuration, and routes, are accessible from any server-side location through the `strapi` instance: other plugins, lifecycle hooks, application controllers, or custom scripts.
+Plugin server resources, such as controllers, services, policies, middlewares, and content-types, are accessible from any server-side location through the `strapi` instance: other plugins, lifecycle hooks, application controllers, or custom scripts. Routes and configuration use dedicated APIs — see the [getter reference](#full-getter-reference) below.
 
 <Prerequisite />
 
@@ -300,7 +300,7 @@ const sanitizedOutput = await strapi.contentAPI.sanitize.output(
 </TabItem>
 </Tabs>
 
-## Common pitfalls
+## Common errors
 
 - **Naming mismatch between route handler and controller key.** If your route declares `handler: 'task.find'`, your controllers index must export a key called `task` and that controller must have a method called `find`. A mismatch throws a runtime error when the route is matched.
 
