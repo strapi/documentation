@@ -28,7 +28,7 @@ import RelatedApis from '/docs/snippets/plugins-development-server-admin-crossli
 # Server API for plugins: An overview
 
 <Tldr>
-The Server API defines what a plugin registers, exposes, and executes on the Strapi server. For services, controllers, policies, middlewares, and content-types, top-level and global getters resolve to the same underlying resource. Configuration access uses `strapi.plugin('x').config(...)` or `strapi.config.get(...)`. Routes do not have a direct global getter equivalent. Use the entry file to declare what the plugin contributes, then navigate to the dedicated pages below for each capability.
+The Server API defines what a plugin registers, exposes, and executes on the Strapi server. It covers lifecycle hooks, routes, controllers, services, policies, middlewares, and configuration. Use the entry file to declare what the plugin contributes, then navigate to the dedicated pages below for each capability.
 </Tldr>
 
 A Strapi plugin can interact with both the back end and the front end of a Strapi application. The Server API covers the back-end part: it defines what the plugin registers, exposes, and executes on the Strapi server. The server part is defined in the entry file, which exports an object (or a function returning an object). That object describes what the plugin contributes to the server.
@@ -132,9 +132,9 @@ Use the following table to find which capability matches your goal:
 
 | Goal | Parameter to use | When it runs |
 | --- | --- | --- |
-| Run code before the server starts | [`register()`](/cms/plugins-development/server-lifecycle#register) | Phase 2, before database and routing initialization |
-| Run code after all plugins are loaded | [`bootstrap()`](/cms/plugins-development/server-lifecycle#bootstrap) | Phase 4, after database, routes, and permissions are initialized |
-| Clean up resources on shutdown | [`destroy()`](/cms/plugins-development/server-lifecycle#destroy) | Phase 6, on shutdown |
+| Run code before the server starts | [`register()`](/cms/plugins-development/server-lifecycle#register) | Before database and routing initialization |
+| Run code after all plugins are loaded | [`bootstrap()`](/cms/plugins-development/server-lifecycle#bootstrap) | After database, routes, and permissions are initialized |
+| Clean up resources on shutdown | [`destroy()`](/cms/plugins-development/server-lifecycle#destroy) | On shutdown |
 | Define plugin options with defaults and validation | [`config`](/cms/plugins-development/server-configuration) | Loaded at startup |
 | Expose HTTP endpoints | [`routes`](/cms/plugins-development/server-routes) | Loaded at startup |
 | Handle HTTP requests | [`controllers`](/cms/plugins-development/server-controllers-services#controllers) | Called per request |
@@ -214,7 +214,10 @@ strapi.documents('plugin::my-plugin.my-content-type').findMany();
 
 ### Backend customization
 
-Plugin routes, controllers, services, policies, and middlewares follow the same conventions as [backend customization](/cms/backend-customization) in a standard Strapi application. The Server API wraps these into the plugin namespace so they are registered under `plugin::<plugin-name>.<singular-name>` UIDs automatically (e.g., `plugin::my-plugin.article`).
+Plugin routes, controllers, services, policies, and middlewares follow the same conventions as [backend customization](/cms/backend-customization) in a standard Strapi application. The Server API wraps these into the plugin namespace automatically:
+
+- **Content-types** are registered under `plugin::<plugin-name>.<singular-name>` (e.g., `plugin::my-plugin.article`), where `singular-name` matches the `info.singularName` field in the schema.
+- **Controllers, services, policies, and middlewares** are registered under `plugin::<plugin-name>.<resource-name>` (e.g., `plugin::my-plugin.article`), where `resource-name` is the key used when exporting the resource from its index file.
 
 :::strapi Backend customization documentation
 For deep reference on models, controllers, services, routes, policies, and middlewares, see the [backend customization](/cms/backend-customization) section.
