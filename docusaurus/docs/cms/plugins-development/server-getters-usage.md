@@ -55,15 +55,17 @@ The choice is a matter of context and readability:
 
 The following table lists all available getters for a plugin named `todo` with a resource named `task`:
 
-| Resource | Top-level getter | Global getter | Both return | Typical use case |
-| --- | --- | --- | --- | --- |
-| Service | `strapi.plugin('todo').service('task')` | `strapi.service('plugin::todo.task')` | The same object | Business logic from controllers, hooks, or other services |
-| Controller | `strapi.plugin('todo').controller('task')` | `strapi.controller('plugin::todo.task')` | The same object | Invoke a controller action programmatically (rare outside tests) |
-| Content-type | `strapi.plugin('todo').contentType('task')` | `strapi.contentType('plugin::todo.task')` | The same object | Access the content-type schema, e.g. to pass to `strapi.contentAPI.sanitize` |
-| Policy | `strapi.plugin('todo').policy('is-owner')` | `strapi.policy('plugin::todo.is-owner')` | The same object | Share an authorization check across routes or reference it in another plugin's route config |
-| Middleware | `strapi.plugin('todo').middleware('audit-log')` | `strapi.middleware('plugin::todo.audit-log')` | The same object | Reference a registered middleware in a route config or apply it with `strapi.server.use()` |
-| Routes | `strapi.plugin('todo').routes` | — | — | Inspect registered route definitions (no global getter equivalent) |
-| Configuration | `strapi.plugin('todo').config('featureFlag')` | `strapi.config.get('plugin::todo.featureFlag')` | The same value | Read a specific plugin config key at runtime (different APIs, same result) |
+| Resource | Top-level getter | Global getter |
+| --- | --- | --- |
+| Service | `strapi.plugin('todo').service('task')` | `strapi.service('plugin::todo.task')` |
+| Controller | `strapi.plugin('todo').controller('task')` | `strapi.controller('plugin::todo.task')` |
+| Content-type | `strapi.plugin('todo').contentType('task')` | `strapi.contentType('plugin::todo.task')` |
+| Policy | `strapi.plugin('todo').policy('is-owner')` | `strapi.policy('plugin::todo.is-owner')` |
+| Middleware | `strapi.plugin('todo').middleware('audit-log')` | `strapi.middleware('plugin::todo.audit-log')` |
+| Routes | `strapi.plugin('todo').routes` | — |
+| Configuration | `strapi.plugin('todo').config('featureFlag')` | `strapi.config.get('plugin::todo.featureFlag')` |
+
+Both styles return the same underlying object. Routes have no global getter equivalent. Configuration uses dedicated config APIs rather than resource getters — both forms read the same merged value.
 
 :::tip
 Run `yarn strapi console` or `npm run strapi console` to inspect the `strapi` object in a live console and explore available plugins and their resources interactively.
