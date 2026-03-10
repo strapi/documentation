@@ -34,12 +34,12 @@ Use this table to pick the right mechanism before writing any code:
 | --- | --- |
 | Block a request based on user role or state | Policy |
 | Block a request based on request content (body, headers) | Policy or inline policy in route config |
-| Add headers to every response for your plugin's routes | Route-level middleware |
-| Log or trace every request across the entire server | Server-level middleware (`strapi.server.use()`) |
-| Modify `ctx.query` before it reaches the controller | Route-level middleware |
-| Share logic between multiple routes | Named route-level middleware (registered and referenced by name) |
+| Add headers to every response for your plugin's routes | [Route-level middleware](#route-level-middlewares) |
+| Log or trace every request across the entire server | [Server-level middleware](#server-level-middlewares) (`strapi.server.use()`) |
+| Modify `ctx.query` before it reaches the controller | [Route-level middleware](#route-level-middlewares) |
+| Share logic between multiple routes | Named [route-level middleware](#route-level-middlewares) (registered and referenced by name) |
 
-## Policies {#policies}
+## Policies
 
 A policy is a function that runs before the controller action for a given route. It receives the request context, evaluates a condition, and returns `true` to allow the request or `false` (or throws) to block it with a 403 response.
 
@@ -48,7 +48,7 @@ A policy is a function that runs before the controller action for a given route.
 Policies are exported as plain functions (not factory functions). Each policy receives three arguments: `policyContext`, `config`, and `{ strapi }`.
 
 - `policyContext` is a wrapper around the Koa context object. Use it to access `policyContext.state.user`, `policyContext.request`, etc.
-- `config` contains the per-route configuration passed when attaching the policy (e.g., `{ name: 'my-policy', config: { role: 'admin' } }`).
+- `config` contains the per-route configuration passed when attaching the policy (e.g., `{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }`, where `config` is the per-policy options object).
 - `{ strapi }` gives access to the Strapi instance.
 
 <Tabs groupId="js-ts">
@@ -120,7 +120,7 @@ export default (
 </TabItem>
 </Tabs>
 
-### Referencing policies in routes
+### Usage in routes
 
 Once declared, reference a plugin policy from a route using the `plugin::my-plugin.policy-name` namespace:
 
@@ -165,6 +165,8 @@ module.exports = [
 <TabItem value="ts" label="TypeScript">
 
 ```ts title="/src/plugins/my-plugin/server/src/routes/index.ts"
+import type { Core } from '@strapi/strapi';
+
 export default [
   {
     method: 'GET' as const,
@@ -184,6 +186,15 @@ export default [
       policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
     },
   },
+  {
+    method: 'GET' as const,
+    path: '/public',
+    handler: 'article.findAll',
+    config: {
+      // highlight-next-line
+      policies: [(policyContext: Core.PolicyContext, config: unknown, { strapi }: { strapi: Core.Strapi }) => true], // inline policy, no registration needed
+    },
+  },
 ];
 ```
 
@@ -198,7 +209,7 @@ Returning `false` causes Strapi to send a `403 Forbidden` response. Returning no
 For the full policy reference including GraphQL support and the `policyContext` API, see [Policies](/cms/backend-customization/policies).
 :::
 
-## Middlewares {#middlewares}
+## Middlewares
 
 A middleware is a Koa-style function that wraps the request/response cycle. Unlike policies (which are pass/fail guards), middlewares can read and modify the request before it reaches the controller, and modify the response after the controller has executed.
 
@@ -314,6 +325,20 @@ export default [
       middlewares: ['plugin::my-plugin.logRequest'],
     },
   },
+  {
+    method: 'GET' as const,
+    path: '/articles',
+    handler: 'article.find',
+    config: {
+      middlewares: [
+        // highlight-next-line
+        async (ctx: any, next: () => Promise<void>) => { // inline middleware, no registration needed
+          ctx.query.pageSize = ctx.query.pageSize || '10';
+          await next();
+        },
+      ],
+    },
+  },
 ];
 ```
 
@@ -366,7 +391,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 </Tabs>
 
 :::caution
-Server-level middlewares affect all routes across all plugins and the application itself, not just your plugin's routes. A misbehaving server-level middleware (one that throws or never calls `next()`) will break every request to the Strapi server, not just your plugin's endpoints. Use route-level middlewares when the concern is specific to your plugin's endpoints.
+Server-level middlewares affect all routes across all plugins and the application itself, not just your plugin's routes. A server-level middleware that throws or never calls `next()` will break every request on the server, not just your plugin's endpoints. Use route-level middlewares when the concern is specific to your plugin's endpoints.
 :::
 
 :::strapi Backend customization
@@ -375,11 +400,11 @@ For the full middleware reference, see [Middlewares](/cms/backend-customization/
 
 ## Best practices
 
-- **Use `policyContext`, not `ctx`, in policies.** The first argument to a policy is `policyContext`, a wrapper around the Koa context. Using it correctly ensures your policy works for both REST and GraphQL resolvers.
+- **Use `policyContext`, not `ctx`, in policies.** The first argument to a policy is `policyContext`, a wrapper around the Koa context. Using it correctly ensures the policy works for both REST and GraphQL resolvers.
 
 - **Return explicitly from policies.** A policy that returns `undefined` is treated as `false` and blocks the request. Always return `true` to allow or `false` to deny. Never return nothing implicitly.
 
-- **Prefer route-level middlewares over server-level.** Server-level middlewares run on every request in the entire Strapi server. Scope middleware to your routes unless the behavior genuinely applies to all traffic.
+- **Prefer route-level middlewares over server-level.** Server-level middlewares run on every request in the entire Strapi server. Scope middleware to plugin routes unless the behavior genuinely applies to all traffic.
 
 - **Always call `await next()` in middlewares.** Forgetting `next()` means the request chain is interrupted and the controller never executes, resulting in a hanging request with no response.
 
