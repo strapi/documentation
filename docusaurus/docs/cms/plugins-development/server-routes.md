@@ -7,6 +7,7 @@ pagination_next: cms/plugins-development/server-controllers-services
 description: Expose plugin endpoints as Content API or admin routes, with full control over auth, policies, and route configuration.
 tags:
   - plugin APIs
+  - server API
   - routes
   - plugins development
   - backend customization
@@ -24,17 +25,17 @@ Routes expose your plugin's HTTP endpoints and map incoming requests to controll
 
 <Prerequisite />
 
+## Route declaration formats
+
 :::tip Which format should I use?
 - **[Array format](#array-format):** Simple plugins with a single route type (all admin or all Content API).
 - **[Named router format](#named-router-format):** Plugins that expose both admin and Content API routes, or need explicit type control. **Recommended for most cases.**
-- **[Factory callback format](#factory-callback-format):** Advanced cases where route config depends on the `strapi` instance (e.g., reading plugin config).
+- **[Factory callback format](#factory-callback-format):** Advanced cases where route config depends on the `strapi` instance (e.g., reading plugin configuration).
 :::
-
-## Route declaration formats
 
 ### Array format
 
-The simplest format: export an array of route objects directly. Strapi registers these as admin routes with the plugin name as prefix.
+The simplest format: export an array of route objects directly. Strapi registers these as admin routes with the plugin name as prefix:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -198,10 +199,12 @@ export default {
 
 ### Factory callback format
 
-For advanced cases where you need access to the `strapi` instance at route configuration time (for example, to build dynamic paths or conditionally include routes based on config), you can export a factory callback.
+For advanced cases where you need access to the `strapi` instance at route configuration time (for example, to build dynamic paths or conditionally include routes based on configuration), you can export a factory callback.
 
 :::note
-The factory callback must be attached to a named route entry (such as `admin` or `content-api`), not exported as the root of `routes/index`. `module.exports = ({ strapi }) => ({ ... })` at the root level is not a valid format.
+The factory callback must be attached to a named route entry (such as `admin` or `content-api`), not exported as the root of `routes/index`.
+
+`module.exports = ({ strapi }) => ({ ... })` at the root level is not a valid format.
 :::
 
 <Tabs groupId="js-ts">
@@ -272,7 +275,7 @@ When Strapi registers plugin routes, it applies the following defaults automatic
 | `prefix` | `'/<plugin-name>'` | Applied when `prefix` is omitted from a router object |
 | `config.auth.scope` | `['plugin::<plugin-name>.<handler>']` | Auto-generated for string handlers only, using `defaultsDeep` so existing values are not overwritten |
 
-The following two declarations are equivalent. Strapi applies the defaults from the table above automatically:
+The following 2 declarations are equivalent. Strapi applies the defaults from the table above automatically:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -351,13 +354,33 @@ export default {
 
 Each route accepts an optional `config` object with the following properties:
 
-| Property | Type | Description |
-| --- | --- | --- |
-| `policies` | `Array<string \| { name: string; config: object }>` | Policies to run before the controller action. Each item is either a policy name string or an object with `name` and `config`. The `config` object is passed as-is to the policy function's `config` argument. The shape of this object depends on the policy. Plugin policies are referenced as `plugin::my-plugin.policy-name`. |
-| `middlewares` | `Array<string \| MiddlewareHandler \| { name?: string; resolve?: string; config?: object }>` | Middlewares to apply to this route. Each item is a middleware name string, an inline function, or an object with `name` (targets a registered middleware), `resolve` (loads a middleware from a path or module), and `config` (passed to the middleware factory). |
-| `auth` | `false \| { scope?: string[]; strategies?: string[] }` | Set to `false` to make the route public. Pass an object to override the auto-generated scope or specify custom auth strategies. Setting `auth: false` on an admin route is almost never intentional: it exposes the endpoint to unauthenticated requests. |
+### `policies`
 
-:::strapi Backend customization
+**Type:** `Array<string | { name: string; config: object }>`
+
+Policies to run before the controller action. Each item is either a policy name string or an object with `name` and `config`.
+
+The `config` object is passed as-is to the policy function's `config` argument. The shape of this object depends on the policy.
+
+Plugin policies are referenced as `plugin::my-plugin.policy-name`.
+
+### `middlewares`
+
+**Type:** `Array<string | MiddlewareHandler | { name?: string; resolve?: string; config?: object }>` 
+
+Middlewares to apply to this route. Each item is a middleware name string, an inline function, or an object with `name` (targets a registered middleware), `resolve` (loads a middleware from a path or module), and `config` (passed to the middleware factory).
+
+### `auth`
+
+**Type:** `false | { scope?: string[]; strategies?: string[] }`
+
+Set to `false` to make the route public. Pass an object to override the auto-generated scope or specify custom auth strategies.
+
+:::caution
+Setting `auth: false` on an admin route is almost never intentional: it exposes the endpoint to unauthenticated requests.
+:::
+
+:::strapi General backend customization examples
 For configuration examples including policies, public routes, dynamic URL parameters, and regular expressions in paths, see [Routes](/cms/backend-customization/routes).
 :::
 
