@@ -29,7 +29,52 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.38.0](https://github.com/strapi/strapi/releases/tag/v5.38.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.39.0](https://github.com/strapi/strapi/releases/tag/v5.39.0)._
+
+## 6.18.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Fully rework and expand the server API part of the plugins development documentation](https://github.com/strapi/documentation/pull/2991)
+- [Fully rework and expand the admin panel API part of the plugins development documentation](https://github.com/strapi/documentation/pull/2920)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document list view filters for Draft & Publish](https://github.com/strapi/documentation/pull/2998)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix some inconsistencies between docs and codebase for Server API](https://github.com/strapi/documentation/pull/2996)
+- [Fix middleware file path in upload documentation](https://github.com/strapi/documentation/pull/2993)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/evrys" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/89287578?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="evrys"/>
+</a>
+<a href="https://github.com/maccomaccomaccomacco" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/2686869?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="maccomaccomaccomacco"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 6.17.1
 
