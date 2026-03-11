@@ -99,7 +99,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 
 **Type:** `Function`
 
-`bootstrap()` runs after plugins registration, database initialization, route initialization, and Content API action registration.
+`bootstrap()` runs after module lifecycle registration (plugins/APIs), database initialization, route initialization, and Content API action registration.
 
 Use `bootstrap()` to:
 - Seed the database with initial data

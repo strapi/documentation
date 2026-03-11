@@ -18,7 +18,7 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 # Server API: Routes
 
 <Tldr>
-The Server API exports a `routes` value from the server entry file to expose plugin endpoints. Use the array format for simple cases, the named router format to separate admin and Content API routes, or the factory callback format for dynamic route configuration.
+The Server API exports a `routes` value from the server entry file to expose plugin endpoints. Use the array format only for implicit admin routes, the named router format to separate admin and Content API routes, or the factory callback format for dynamic route configuration.
 </Tldr>
 
 Routes expose your plugin's HTTP endpoints and map incoming requests to controller actions. They are exported from the [server entry file](/cms/plugins-development/server-api#entry-file) as a `routes` value.
@@ -28,14 +28,19 @@ Routes expose your plugin's HTTP endpoints and map incoming requests to controll
 ## Route declaration formats
 
 :::tip Which format should I use?
-- **[Array format](#array-format):** Simple plugins with a single route type (all admin or all Content API).
+
+- **[Array format](#array-format):** Simple plugins that only need admin routes with default registration behavior
 - **[Named router format](#named-router-format):** Plugins that expose both admin and Content API routes, or need explicit type control. **Recommended for most cases.**
 - **[Factory callback format](#factory-callback-format):** Advanced cases where route config depends on the `strapi` instance (e.g., reading plugin configuration).
 :::
 
 ### Array format
 
-The array format is the most basic format: it exports an array of route objects directly. Strapi registers these objects as admin routes with the plugin name as prefix:
+The array format is the most basic format: it exports an array of route objects directly. Strapi registers these objects as admin routes by default, with the plugin name as prefix.
+
+:::tip
+To expose Content API routes, use the [named router format](#named-router-format) with `type: 'content-api'`.
+:::
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -271,8 +276,8 @@ When Strapi registers plugin routes, it applies the following defaults automatic
 
 | Property | Default value | Notes |
 | --- | --- | --- |
-| `type` | `'admin'` | Applied when using the array format or when `type` is omitted from a router object |
-| `prefix` | `'/<plugin-name>'` | Applied when `prefix` is omitted from a router object |
+| `type` | `'admin'` | Applied when using the array format, or when `type` is omitted from a router object in the named format |
+| `prefix` | `'/<plugin-name>'` | Applied when using the array format, or when `prefix` is omitted from a router object |
 | `config.auth.scope` | `['plugin::<plugin-name>.<handler>']` | Auto-generated for string handlers only, using `defaultsDeep` so existing values are not overwritten |
 
 The following 2 declarations are equivalent. Strapi applies the defaults from the table above automatically:
@@ -356,25 +361,44 @@ Each route accepts an optional `config` object with the following properties:
 
 ### `policies`
 
-**Type:** `Array<string | { name: string; config: object }>`
+**Type:** `Array<string | PolicyHandler | { name: string; options?: object }>`
 
-Policies to run before the controller action. Each item is either a policy name string or an object with `name` and `config`.
+Policies to run before the controller action. Each item is either a policy name string, an inline function, or an object with required `name` and optional `options`.
 
-The `config` object is passed as-is to the policy function's `config` argument. The shape of this object depends on the policy.
+The `options` object is passed as-is to the policy function's second argument (`config` in policy signatures). The shape of this object depends on the policy.
 
 Plugin policies are referenced as `plugin::my-plugin.policy-name`.
 
 ### `middlewares`
 
-**Type:** `Array<string | MiddlewareHandler | { name?: string; resolve?: string; config?: object }>` 
+**Type:** `Array<string | MiddlewareHandler | { name: string; options?: object }>`
 
-Middlewares to apply to this route. Each item is a middleware name string, an inline function, or an object with `name` (targets a registered middleware), `resolve` (loads a middleware from a path or module), and `config` (passed to the middleware factory).
+Middlewares to apply to this route. Each item is a middleware name string, an inline function, or an object with:
+
+- `name`: a registered middleware name,
+- `options` (optional): middleware options.
+
+:::note Route middlewares vs. global server middlewares
+At route validation time, Strapi validates middleware/policy objects against `{ name: string; options?: object }` (see `services/server/routing.ts`).
+
+The middleware resolver (`services/server/middleware.ts`) still contains runtime support for `{ resolve, config }` objects, but this shape is rejected by route validation before resolution for standard plugin route declarations.
+
+Use `{ name, options }` in route configs for compatibility with validation.
+:::
 
 ### `auth`
 
-**Type:** `false | { scope?: string[]; strategies?: string[] }`
+**Type:** `false | { scope: string[]; strategies?: string[] }`
 
-Set to `false` to make the route public. Pass an object to override the auto-generated scope or specify custom auth strategies.
+Set to `false` to make the route public. Pass an object to define the auth scope and, optionally, custom auth strategies.
+
+At runtime, `scope` must be present when `auth` is an object.
+
+:::note
+For **string handlers** (for example, `handler: 'article.find'`), Strapi auto-injects a default `config.auth.scope` value, so patterns such as `auth: {}` can still work.
+
+For **non-string handlers** (inline functions), do not assume auto-scope injection. Define `config.auth.scope` explicitly when `auth` is an object.
+:::
 
 :::caution
 Setting `auth: false` on an admin route is almost never intentional: it exposes the endpoint to unauthenticated requests.
@@ -395,3 +419,4 @@ For configuration examples including policies, public routes, dynamic URL parame
 - **Do not disable auth on admin routes.** Admin routes default to requiring admin authentication. Disabling auth on an admin route exposes it to unauthenticated requests, which is almost never intentional.
 
 - **Group related routes in dedicated files.** As the plugin grows, a single route index file becomes hard to navigate. Split by resource (e.g., `routes/article.js`, `routes/comment.js`) and re-export from `routes/index.js`.
+

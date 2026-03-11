@@ -4,13 +4,13 @@ flowchart TD
     B["⬡ Phase 1: Load all plugins, APIs, middlewares, policies, and content-types loaded in parallel"]
     B --> C
 
-    C["⚙ Phase 2: Register register() called on all modules (plugins first, then user app)"]:::highlight
+    C["⚙ Phase 2: Register module lifecycles (plugins/APIs), then user app lifecycle"]:::highlight
     C --> D
 
     D["⬡ Phase 3: Initialize DB/model sync · routing setup permissions registration"]
     D --> E
 
-    E["⚙ Phase 4: Bootstrap bootstrap() called on all modules (plugins first, then user app)"]:::highlight
+    E["⚙ Phase 4: Bootstrap module lifecycles (plugins/APIs), then user app lifecycle"]:::highlight
     E --> F
 
     F([Server is live])
