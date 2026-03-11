@@ -154,5 +154,5 @@ The following cards link directly to each dedicated page:
 </CustomDocCardsWrapper>
 
 :::strapi Backend customization
-Plugin routes, controllers, services, policies, and middlewares follow the same conventions as [backend customization](/cms/backend-customization) in a standard Strapi application. The Server API wraps these into the plugin namespace automatically — see [Content-types](/cms/plugins-development/server-content-types#uids-and-naming-conventions) for details on UIDs and naming conventions.
+Plugin routes, controllers, services, policies, and middlewares follow the same conventions as [backend customization](/cms/backend-customization) in a standard Strapi application. The Server API wraps these into the plugin namespace automatically (see [server content types](/cms/plugins-development/server-content-types#uids-and-naming-conventions) for details on UIDs and naming conventions).
 :::
