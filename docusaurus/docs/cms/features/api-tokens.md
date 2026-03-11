@@ -160,7 +160,7 @@ The two kinds serve distinct use cases:
 - Use **content-api tokens** for external integrations: CDN cache invalidation, static site generators, and third-party services calling the public REST or GraphQL API.
 - Use **admin tokens** for admin automation: MCP agents, CI/CD pipelines, and scripts that need to create, update, or delete content through the Admin API.
 
-The two kinds are strictly separated. An admin token is rejected on content-api routes, and a content-api token is rejected on admin routes. An agent that needs access to both route types requires two tokens — one of each kind.
+The two kinds are strictly separated. An admin token is rejected on content-api routes, and a content-api token is rejected on admin routes. An agent that needs access to both route types requires two tokens: one content-api token and one admin token.
 
 ### Ownership
 
@@ -169,7 +169,12 @@ Every admin token is owned by a specific admin user. By default, the owner is th
 Ownership has three practical effects:
 
 - **List visibility**: Non-super-admin users see only content-api tokens and their own admin tokens in the tokens list. Super-admins see all tokens. Neither role receives the plaintext key (`accessKey`) in list results — it is never included there.
-- **Key access (admin tokens only)**: Only the owner can view the plaintext token key or regenerate an admin token. Even a super-admin cannot read another user's key — this restriction is intentional and cannot be overridden. Content-api tokens are not subject to this restriction: any user with the appropriate route permission can read their key.
+- **Key access**: Who can view the plaintext token key depends on the token kind:
+
+  | Token kind | Who can view the key |
+  |---|---|
+  | `admin` | Token owner only. Even a super-admin cannot read another user's key — this restriction is intentional and cannot be overridden. |
+  | `content-api` | Any user with the appropriate route permission. |
 - **Permission ceiling**: The token's permissions are bounded by the owner's effective permissions at all times (see [Permission ceiling](#permission-ceiling)).
 
 :::caution Owner account deleted
@@ -209,7 +214,7 @@ Reconciliation is triggered by three events, and a fourth event causes full toke
 3. A role is deleted.
 4. **The token owner's account is deleted.** In this case, all admin tokens owned by that user are deleted entirely, not re-clamped. See [Ownership](#ownership) for details.
 
-When reconciliation runs, it applies conservative rules: permissions that no longer fall within the owner's ceiling are deleted, conditions are updated to match the owner's new inherited conditions, and permissions that are still valid are left untouched. For users with multiple roles, a permission shared by a role the user still holds is preserved.
+When reconciliation runs, it applies conservative rules. Permissions that exceed the owner's new ceiling are deleted. Conditions are updated to match the owner's inherited conditions. Permissions that remain valid are left untouched. For users with multiple roles, a permission shared by a role the user still holds is preserved.
 
 ### Creating an admin token
 
@@ -254,7 +259,11 @@ The following restrictions apply on the Admin Tokens page:
 - The token can only be edited by its owner or a super-admin.
 - The token can only be deleted by its owner or a super-admin.
 
-When a super-admin views an admin token owned by another user, a read-only **Owner** field appears in the token details panel, showing the owner's name and email address. In this view, the permissions matrix displays only the checkboxes that fall within the owner's permission scope — not the super-admin's. This ceiling is fetched via the `GET /admin/api-tokens/:id/owner-permissions` endpoint, which returns the token owner's effective permissions. The endpoint is accessible by the token owner or a super-admin; it returns `400 Bad Request` for content-api tokens.
+When a super-admin views an admin token owned by another user, a read-only **Owner** field appears in the token details panel. The permissions matrix shows only the checkboxes within the token owner's scope — not the super-admin's unrestricted access.
+
+:::note
+The owner's effective permissions are fetched via `GET /admin/api-tokens/:id/owner-permissions`. This endpoint is accessible by the token owner or a super-admin. It returns `400 Bad Request` for content-api tokens.
+:::
 
 ## Usage
 
