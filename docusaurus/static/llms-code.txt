@@ -29665,9 +29665,9 @@ File path: N/A
     strapi-server.js|ts
     /content-types
       /some-content-type-to-extend
-        model.json
+        schema.json
       /another-content-type-to-extend
-        model.json
+        schema.json
   /another-plugin-to-extend
     strapi-server.js|ts
 ```
@@ -29703,9 +29703,9 @@ File path: ./src/extensions/upload/strapi-server.js|ts
 ```js
 
 module.exports = (plugin) => {
-  plugin.services.upload.image.generateFileName = (file) => {
-    // Example: prefix a timestamp before the original name
-    return `${Date.now()}_${file.hash}${file.ext}`;
+  plugin.services['image-manipulation'].generateFileName = (file) => {
+    // Example: prefix a timestamp before the generated base name
+    return `${Date.now()}_${name}`;
   };
 
   return plugin;
