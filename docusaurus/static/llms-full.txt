@@ -11307,7 +11307,7 @@ All server code can technically live in the single entry file, but splitting eac
 
 :::note Notes
 * The entry file accepts either an object literal or a function that receives `{ strapi }` and returns the same object shape. The function form is useful when you need a reference to the Strapi instance at declaration time.
-* `config` is a configuration object, not an executable lifecycle hook. Unlike `register()`, `bootstrap()`, or `destroy()`, it is not called as a function during the plugin lifecycle. It is loaded at startup and used to set defaults and validate user configuration.
+* `config` is a configuration object, not an executable lifecycle hook. Unlike `register()`, `bootstrap()`, or `destroy()`, it is not called as a function during the plugin lifecycle. It is loaded at startup and used to set defaults and validate user configuration. See [server lifecycle](/cms/plugins-development/server-lifecycle) for more information.
 :::
 
 ## Available actions
@@ -11335,7 +11335,7 @@ Use the following table to find which capability matches your goal:
 The following cards link directly to each dedicated page:
 
 :::strapi Backend customization
-Plugin routes, controllers, services, policies, and middlewares follow the same conventions as [backend customization](/cms/backend-customization) in a standard Strapi application. The Server API wraps these into the plugin namespace automatically — see [Content-types](/cms/plugins-development/server-content-types#uids-and-naming-conventions) for details on UIDs and naming conventions.
+Plugin routes, controllers, services, policies, and middlewares follow the same conventions as [backend customization](/cms/backend-customization) in a standard Strapi application. The Server API wraps these into the plugin namespace automatically (see [server content types](/cms/plugins-development/server-content-types#uids-and-naming-conventions) for details on UIDs and naming conventions).
 :::
 
 
@@ -11421,7 +11421,7 @@ This UID is used consistently across all APIs:
 Controllers, services, policies, and middlewares use the same `plugin::<plugin-name>.<resource-name>` UID format for global getters, but are referenced by their short registry key (e.g., `'article'`) within plugin-level APIs such as route `handler` and `policies`. See [Getters & usage](/cms/plugins-development/server-getters-usage) for details.
 :::
 
-## Accessing content-types at runtime
+## Access at runtime
 
 ### Querying with the Document Service API
 
@@ -11471,7 +11471,7 @@ Controllers and services are the 2 building blocks that handle request processin
 
 When your plugin exposes Content API routes, sanitize query parameters and output data before returning them. This prevents leaking private fields or bypassing access rules.
 
-Plugin controllers are plain factory functions and do not extend `createCoreController`. This means the `this.sanitizeQuery` and `this.sanitizeOutput` shorthands are not available. Use `strapi.contentAPI.sanitize` directly instead, passing the content-type schema explicitly:
+Plugin controllers are plain factory functions and do not extend `createCoreController` like in the Strapi core (see [backend customization](/cms/backend-customization/controllers) for details). This means the `this.sanitizeQuery` and `this.sanitizeOutput` shorthands are not available. Use `strapi.contentAPI.sanitize` directly instead, passing the content-type schema explicitly:
 
 </Tabs>
 
@@ -11528,7 +11528,7 @@ Plugin server resources, such as controllers, services, policies, middlewares, a
 
 ### Calling a plugin service from bootstrap
 
-Services called in `bootstrap()` have access to the full `strapi` instance, including other plugins' services.
+Services called in `bootstrap()` have access to the full `strapi` instance, including other plugins' services:
 
 </Tabs>
 
@@ -11540,7 +11540,20 @@ From application-level controllers or services (outside the plugin), or when cal
 
 ### Reading plugin configuration at runtime
 
-</Tabs>
+```js
+// Read a single key
+const maxItems = strapi.plugin('todo').config('maxItems');
+```
+
+```js
+// Read the full config object
+const todoConfig = strapi.config.get('plugin::todo');
+```
+
+```js
+// Read a nested key
+const endpoint = strapi.config.get('plugin::todo.endpoint');
+```
 
 :::note
 `strapi.plugin('my-plugin').config('key')` reads the merged configuration (user overrides applied on top of plugin defaults). It is the recommended way to read config inside plugin code. See [Server configuration](/cms/plugins-development/server-configuration) for how plugin configuration is declared and merged.
@@ -11562,10 +11575,10 @@ Use the content-type getter when you need the schema object, for example to pass
 
 - **Using an incomplete UID in global getters.** `strapi.service('todo.task')` is not a valid plugin UID. Use the full `plugin::todo.task` form. Without the proper namespace, the service call fails or returns `undefined` at runtime.
 
-| Scope | Example UID |
-| --- | --- |
-| Plugin service | `plugin::todo.task` |
-| API service | `api::project.project` |
+  | Scope | Example UID |
+  | --- | --- |
+  | Plugin service | `plugin::todo.task` |
+  | API service | `api::project.project` |
 
 ## Best practices
 
@@ -11656,7 +11669,7 @@ For the full policy reference including GraphQL support and the `policyContext` 
 
 ## Middlewares
 
-A middleware is a Koa-style function that wraps the request/response cycle. Unlike policies (which are pass/fail guards), middlewares can read and modify the request before it reaches the controller, and modify the response after the controller has executed.
+A middleware is a Koa-style function that wraps the request/response cycle. Unlike [policies](#policies) (which are pass/fail guards), middlewares can read and modify the request before it reaches the controller, and modify the response after the controller has executed.
 
 Plugins can export middlewares in 2 ways:
 
@@ -11720,7 +11733,7 @@ Routes expose your plugin's HTTP endpoints and map incoming requests to controll
 
 ### Named router format
 
-Use an object with named keys (`admin`, `content-api`, or any custom name) to declare separate router groups. Each group is a router object with a `type`, optional `prefix`, and a `routes` array. Use this format when your plugin exposes both admin and Content API routes.
+With the named router format, use an object with named keys (`admin`, `content-api`, or any custom name) to declare separate router groups. Each group is a router object with a `type`, optional `prefix`, and a `routes` array. Use this format when your plugin exposes both admin and Content API routes.
 
 </Tabs>
 
@@ -11790,7 +11803,7 @@ For configuration examples including policies, public routes, dynamic URL parame
 
 - **Use the named router format when exposing both admin and Content API endpoints.** It makes the intent of each route explicit and avoids relying on the `type` default, which can be surprising.
 
-- **Keep `handler` as a string.** String handlers get automatic auth scope generation. Function handlers do not: authentication still runs for both string and function handlers unless you set `config.auth: false`, but only string handlers get automatic `config.auth.scope`. If you use a function handler and need route-level permission scoping, define `config.auth.scope` explicitly.
+- **Keep `handler` as a string.** String handlers get automatic auth scope generation, function handlers do not. Authentication still runs for both string and function handlers unless you set `config.auth: false`, but only string handlers get automatic `config.auth.scope`. If you use a function handler and need route-level permission scoping, define `config.auth.scope` explicitly.
 
 - **Scope policies to their namespace.** When referencing a plugin policy in a route, use the full `plugin::my-plugin.policy-name` form. This avoids ambiguity if a policy with the same short name exists elsewhere in the application.
 

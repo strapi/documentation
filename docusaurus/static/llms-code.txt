@@ -30314,7 +30314,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 
 
 ## Sanitization
-Description: Plugin controllers are plain factory functions and do not extend createCoreController.
+Description: Plugin controllers are plain factory functions and do not extend createCoreController like in the Strapi core (see backend customization for details).
 (Source: https://docs.strapi.io/cms/plugins-development/server-controllers-services#sanitization)
 
 Language: JavaScript
@@ -30541,7 +30541,7 @@ strapi.controller('plugin::plugin-name.controller-name')
 
 
 ## Calling a plugin service from a controller
-Description: The most common pattern: a controller delegates to its own plugin's service.
+Description: The most common pattern: a controller delegates to its own plugin's service:
 (Source: https://docs.strapi.io/cms/plugins-development/server-getters-usage#calling-a-plugin-service-from-a-controller)
 
 Language: JavaScript
@@ -30600,7 +30600,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 
 
 ## Calling a plugin service from bootstrap
-Description: Services called in bootstrap() have access to the full strapi instance, including other plugins' services.
+Description: Services called in bootstrap() have access to the full strapi instance, including other plugins' services:
 (Source: https://docs.strapi.io/cms/plugins-development/server-getters-usage#calling-a-plugin-service-from-bootstrap)
 
 Language: JavaScript
@@ -30713,21 +30713,26 @@ Language: JavaScript
 File path: N/A
 
 ```js
-// highlight-start
-const maxItems = strapi.plugin('todo').config('maxItems');       // read a single key
-const todoConfig = strapi.config.get('plugin::todo');            // read the full config object
-const endpoint = strapi.config.get('plugin::todo.endpoint');     // read a nested key
-// highlight-end
+// Read a single key
+const maxItems = strapi.plugin('todo').config('maxItems');
 ```
 
 ---
-Language: TypeScript
+Language: JavaScript
 File path: N/A
 
-```ts
-const maxItems = strapi.plugin('todo').config('maxItems') as number;
-const todoConfig = strapi.config.get('plugin::todo') as Record<string, unknown>;
-const endpoint = strapi.config.get('plugin::todo.endpoint') as string;
+```js
+// Read the full config object
+const todoConfig = strapi.config.get('plugin::todo');
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+// Read a nested key
+const endpoint = strapi.config.get('plugin::todo.endpoint');
 ```
 
 
@@ -30739,8 +30744,8 @@ Language: JavaScript
 File path: N/A
 
 ```js
-// highlight-next-line
-const schema = strapi.contentType('plugin::todo.task'); // access the content-type schema
+// Access the content-type schema
+const schema = strapi.contentType('plugin::todo.task');
 
 const sanitizedOutput = await strapi.contentAPI.sanitize.output(
   data,
@@ -31141,6 +31146,7 @@ module.exports = [
     path: '/articles',
     handler: 'article.create',
     config: {
+      // highlight-next-line
       middlewares: ['plugin::my-plugin.logRequest'],
     },
   },
@@ -31240,7 +31246,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 Source: https://docs.strapi.io/cms/plugins-development/server-routes
 
 ## Array format
-Description: The simplest format: export an array of route objects directly.
+Description: The array format is the most basic format: it exports an array of route objects directly.
 (Source: https://docs.strapi.io/cms/plugins-development/server-routes#array-format)
 
 Language: JavaScript
@@ -31296,7 +31302,7 @@ export default [
 
 
 ## Named router format
-Description: Use an object with named keys (admin, content-api, or any custom name) to declare separate router groups.
+Description: With the named router format, use an object with named keys (admin, content-api, or any custom name) to declare separate router groups.
 (Source: https://docs.strapi.io/cms/plugins-development/server-routes#named-router-format)
 
 Language: JavaScript
