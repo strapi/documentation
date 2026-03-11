@@ -166,13 +166,14 @@ The two kinds are strictly separated. An admin token is rejected on content-api 
 
 Every admin token is owned by a specific admin user. By default, the owner is the user who created the token. Ownership is immutable — it cannot be transferred after creation.
 
-Ownership has two practical effects:
+Ownership has three practical effects:
 
-- **Visibility**: Non-super-admin users only see content-api tokens and their own admin tokens in the API tokens list. Super-admins see all tokens.
-- **Key access**: Only the owner can view the plaintext token key or regenerate the token. Even a super-admin cannot read another user's key — this restriction is intentional and cannot be overridden.
+- **List visibility**: Non-super-admin users see only content-api tokens and their own admin tokens in the tokens list. Super-admins see all tokens. Neither role receives the plaintext key (`accessKey`) in list results — it is never included there.
+- **Key access (admin tokens only)**: Only the owner can view the plaintext token key or regenerate an admin token. Even a super-admin cannot read another user's key — this restriction is intentional and cannot be overridden. Content-api tokens are not subject to this restriction: any user with the appropriate route permission can read their key.
+- **Permission ceiling**: The token's permissions are bounded by the owner's effective permissions at all times (see [Permission ceiling](#permission-ceiling)).
 
-:::caution
-If the token owner's account is deleted, the token's key can no longer be retrieved or regenerated. A recovery workflow for this situation is not yet available. To avoid losing access, rotate and replace admin tokens before offboarding a team member who owns them.
+:::caution Owner account deleted
+If the token owner's account is deleted, all admin tokens owned by that user are automatically deleted along with their associated permissions. There is no recovery path. To avoid losing access to active integrations, rotate and replace admin tokens before offboarding a team member who owns them.
 :::
 
 :::caution Owner deactivation
@@ -186,7 +187,7 @@ An admin token can never hold more permissions than its owner currently has. Whe
 Three rules apply:
 
 1. **Action and subject must match.** A token cannot be granted a permission the owner does not hold. If the owner does not have `delete` on `api::article.article`, no token owned by that user can have it either.
-2. **Field scope must be a subset.** If the owner's permission for an action and content type is scoped to specific fields (for example, only `title` and `slug`), the token can request at most those same fields.
+2. **Field scope must be a subset.** If the owner's permission for an action and content type is scoped to specific fields (for example, only `title` and `slug`), the token can request at most those same fields. If the owner's permission has no field restrictions, the token may request any fields for that action and content type.
 3. **Conditions are inherited, not chosen.** If the owner's role applies conditions to a permission (for example, "only records I created"), those conditions are automatically applied to the token and cannot be removed or relaxed.
 
 Super-admins have no permission ceiling of their own. However, when a super-admin edits a token owned by another user, the ceiling is still enforced against the token owner's scope — not the super-admin's unrestricted access.
@@ -201,11 +202,12 @@ For more on how admin roles and permissions work, see [Role-Based Access Control
 
 Token permissions are automatically reconciled whenever the owner's effective permissions change. This ensures tokens can never silently retain access that the owner no longer holds.
 
-Reconciliation is triggered by three events:
+Reconciliation is triggered by three events, and a fourth event causes full token removal:
 
 1. A role's permission set is updated (an action is added or removed from a role).
 2. A user's role assignments change (a role is added to or removed from the user).
 3. A role is deleted.
+4. **The token owner's account is deleted.** In this case, all admin tokens owned by that user are deleted entirely, not re-clamped. See [Ownership](#ownership) for details.
 
 When reconciliation runs, it applies conservative rules: permissions that no longer fall within the owner's ceiling are deleted, conditions are updated to match the owner's new inherited conditions, and permissions that are still valid are left untouched. For users with multiple roles, a permission shared by a role the user still holds is preserved.
 
@@ -252,7 +254,7 @@ The following restrictions apply on the Admin Tokens page:
 - The token can only be edited by its owner or a super-admin.
 - The token can only be deleted by its owner or a super-admin.
 
-When a super-admin views an admin token owned by another user, a read-only **Owner** field appears in the token details panel, showing the owner's name and email address.
+When a super-admin views an admin token owned by another user, a read-only **Owner** field appears in the token details panel, showing the owner's name and email address. In this view, the permissions matrix displays only the checkboxes that fall within the owner's permission scope — not the super-admin's. This ceiling is fetched via the `GET /admin/api-tokens/:id/owner-permissions` endpoint, which returns the token owner's effective permissions. The endpoint is accessible by the token owner or a super-admin; it returns `400 Bad Request` for content-api tokens.
 
 ## Usage
 
