@@ -58,6 +58,13 @@ Click the search icons <Icon name="magnifying-glass" classes="ph-bold" /> to use
 Specifically for your collection types' entries, you can also use the <Icon name="funnel-simple" classes="ph-bold" /> **Filters** button to set condition-based filters, which add to one another (i.e., if you set several conditions, only the entries that match all the conditions will be displayed).
 :::
 
+When [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content type, the **Filters** menu includes a **Status** field. You can filter entries by:
+
+- *Draft (never published)* (entries that have never been published),
+- *Published (all)* (all published entries),
+- *Published (modified)* (published entries with draft changes not yet published),
+- or *Published (unmodified)* (published entries with no draft changes).
+
 <!-- TO INTEGRATE IN THE PAGE? USE A GUIDEFLOW?
 
 From the list view, it is possible to:
