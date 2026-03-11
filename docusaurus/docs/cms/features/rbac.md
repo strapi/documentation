@@ -172,6 +172,10 @@ Settings permissions can be configured for all settings accessible from *General
 
 4. Click on the **Save** button on the top right corner.
 
+:::tip
+To create admin permissions for your custom plugin, please refer to our [dedicated guide](/cms/plugins-development/guides/admin-permissions-for-plugins).
+:::
+
 #### Setting custom conditions for permissions
 
 For each permission of each category, a <Icon name="gear-six" /> **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission.

@@ -1,6 +1,7 @@
 ---
-title: Plugin SDK
+title: Plugin SDK reference
 description: Reference documentation for Strapi's Plugin SDK commands
+pagination_prev: cms/plugins-development/plugin-structure
 displayed_sidebar: cmsSidebar
 tags:
   - backend server

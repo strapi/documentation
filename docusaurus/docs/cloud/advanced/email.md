@@ -12,7 +12,7 @@ tags:
 - Strapi Cloud project
 ---
 
-# Email Provider
+# Email Providers configuration for Strapi Cloud 
 
 <Tldr>
 Third‑party email services integrate through plugins and environment variables to replace the default sender.

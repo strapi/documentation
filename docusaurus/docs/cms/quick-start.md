@@ -20,6 +20,12 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 
 *Estimated completion time: 5-10 minutes*
 
+:::strapi Hosted demo and LaunchPad
+Strapi offers a [hosted demo](https://strapi.io/demo) so you can quickly try its Content Manager and learn how to edit content. In this hosted demo, Strapi runs in production mode, so the Content-Type Builder is [disabled by design](/cms/faq#why-cant-i-create-or-update-content-types-in-productionstaging).
+
+If you also want to try the Content-Type Builder and learn how to build a content structure, install the [LaunchPad](https://github.com/strapi/launchpad) application locally.
+:::
+
 :::prerequisites
 <InstallPrerequisites components={props.components} />
 

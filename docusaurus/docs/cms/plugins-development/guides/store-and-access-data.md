@@ -11,11 +11,7 @@ tags:
 - plugins development guides
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # How to store and access data from a Strapi plugin
-
-<NotV5/>
 
 To store data with a Strapi [plugin](/cms/plugins-development/developing-plugins), use a plugin content-type. Plugin content-types work exactly like other [content-types](/cms/backend-customization/models). Once the content-type is [created](#create-a-content-type-for-your-plugin), you can start [interacting with the data](#interact-with-data-from-the-plugin).
 
@@ -165,9 +161,9 @@ Once you have created a content-type for your plugin, you can create, read, upda
 A plugin can only interact with data from the `/server` folder. If you need to update data from the admin panel, please refer to the [passing data guide](/cms/plugins-development/guides/pass-data-from-server-to-admin).
 :::
 
-To create, read, update, and delete data, you can use either the [Entity Service API](/cms/api/entity-service) or the [Query Engine API](/cms/api/query-engine). While it's recommended to use the Entity Service API, especially if you need access to components or dynamic zones, the Query Engine API is useful if you need unrestricted access to the underlying database.
+To create, read, update, and delete data, you can use either the [Document Service API](/cms/api/document-service) or the [Query Engine API](/cms/api/query-engine). While it's recommended to use the Document Service API, especially if you need access to components or dynamic zones, the Query Engine API is useful if you need unrestricted access to the underlying database.
 
-Use the `plugin::your-plugin-slug.the-plugin-content-type-name` syntax for content-type identifiers in Entity Service and Query Engine API queries.
+Use the `plugin::your-plugin-slug.the-plugin-content-type-name` syntax for content-type identifiers in Document Service and Query Engine API queries.
 
 **Example:**
 

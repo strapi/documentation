@@ -52,7 +52,7 @@ The present page will describe how to create and register your widgets.
 
 To register a widget, use `app.widgets.register()`:
 
-- in the plugin’s [`register` lifecycle method](/cms/plugins-development/server-api#register) of the `index` file if you're building a plugin (recommended way),
+- in the plugin’s [`register` lifecycle method](/cms/plugins-development/server-lifecycle#register) of the `index` file if you're building a plugin (recommended way),
 - or in the [application's global `register()` lifecycle method](/cms/configurations/functions#register) if you're adding the widget to just one Strapi application without a plugin.
 
 :::info

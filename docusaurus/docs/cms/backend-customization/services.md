@@ -35,7 +35,7 @@ A new service can be implemented:
 - with the [interactive CLI command `strapi generate`](/cms/cli#strapi-generate)
 - or manually by creating a JavaScript file in the appropriate folder (see [project structure](/cms/project-structure.md)):
   - `./src/api/[api-name]/services/` for API services
-  - or `./src/plugins/[plugin-name]/services/` for [plugin services](/cms/plugins-development/server-api#services).
+  - or `./src/plugins/[plugin-name]/services/` for [plugin services](/cms/plugins-development/server-controllers-services).
 
 To manually create a service, export a factory function that returns the service implementation (i.e. an object with methods). This factory function receives the `strapi` instance:
 

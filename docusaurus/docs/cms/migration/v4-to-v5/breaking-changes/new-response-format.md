@@ -98,7 +98,48 @@ The Content API returns attributes of requested content without wrapping them in
 
 ### Notes
 
-To use the Strapi v4 response format, set the following header: `Strapi-Response-Format: v4`. 
+The `Strapi-Response-Format: v4` header temporarily restores the Strapi v4 wrapping (`data.attributes.*`). You can keep the header in place while you update each consumer, then remove it once every client can read the flattened format. The header affects REST calls, including population on relations, but does not roll back the introduction of [`documentId`](/cms/migration/v4-to-v5/breaking-changes/use-document-id).
+
+To use the compatibility header while migrating:
+
+1. Capture a few baseline responses before you switch the header on. These samples help you compare payloads once `attributes` comes back and ensure that relations, components, and nested populations all respond as expected.
+2. Add the `Strapi-Response-Format: v4` header to every REST request made by legacy clients. Remove it only after you have updated and tested each endpoint.
+3. Keep in mind that `documentId` continues to be the only identifier returned by the REST API when the header is absent. With the header enabled, REST responses include both `id` (for backward compatibility) and `documentId` (the canonical identifier). Plan to migrate any downstream systems that still depend on numeric `id`.
+
+<details>
+<summary>Examples</summary>
+```bash title="curl"
+curl \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Strapi-Response-Format: v4' \
+  'https://api.example.com/api/articles?populate=category'
+```
+
+```js title="fetch"
+await fetch('https://api.example.com/api/articles', {
+  headers: {
+    Authorization: `Bearer ${token}`,
+    'Strapi-Response-Format': 'v4',
+  },
+});
+```
+
+```js title="Axios"
+const client = axios.create({
+  baseURL: 'https://api.example.com/api',
+  headers: {
+    Authorization: `Bearer ${token}`,
+    'Strapi-Response-Format': 'v4',
+  },
+});
+
+const articles = await client.get('/articles', { params: { populate: '*'} });
+```
+</details>
+
+:::tip
+If you need to keep a mix of formats running, enable the header for any routes that still rely on `attributes`, then gradually remove it per endpoint or per consumer once you finish testing.
+:::
 
 ### Manual procedure
 

@@ -209,8 +209,9 @@ In the following example, the custom routes file name is prefixed with `01-` to 
 <TabItem value="js" label="JavaScript">
 
 ```js title="./src/api/restaurant/routes/01-custom-restaurant.js"
-
-module.exports = {
+/** @type {import('@strapi/strapi').Core.RouterConfig} */
+const config = {
+  type: 'content-api',
   routes: [
     { // Path defined with an URL parameter
       method: 'POST',
@@ -224,6 +225,8 @@ module.exports = {
     }
   ]
 }
+
+module.exports = config
 ```
 
 </TabItem>
@@ -231,8 +234,10 @@ module.exports = {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./src/api/restaurant/routes/01-custom-restaurant.ts"
+import type { Core } from '@strapi/strapi';
 
-export default {
+const config: Core.RouterConfig = {
+  type: 'content-api',
   routes: [
     { // Path defined with a URL parameter
       method: 'GET',
@@ -246,6 +251,8 @@ export default {
     }
   ]
 }
+
+export default config
 ```
 
 </TabItem>
@@ -647,7 +654,7 @@ You can extend the `query` and body parameters allowed on Content API routes by 
 |------|--------|
 | Enable strict parameters (reject unknown query/body keys) | [API configuration](/cms/configurations/api): set `rest.strictParams: true` in `./config/api.js` (or `./config/api.ts`). |
 | Add allowed parameters (app) | Call `addQueryParams` / `addInputParams` in [register](/cms/configurations/functions#register) in `./src/index.js` or `./src/index.ts`. |
-| Add allowed parameters (plugin) | Call `addQueryParams` / `addInputParams` in the plugin's [register](/cms/plugins-development/server-api#register) lifecycle. |
+| Add allowed parameters (plugin) | Call `addQueryParams` / `addInputParams` in the plugin's [register](/cms/plugins-development/server-lifecycle#register) lifecycle. |
 
 When `rest.strictParams` is enabled, only core parameters and parameters on each route's request schema are accepted; the parameters you register are merged into that schema. Use the `z` instance from `@strapi/utils` (or `zod/v4`) for schemas.
 

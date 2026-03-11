@@ -29,9 +29,9 @@ The Email feature enables Strapi applications to send emails from a server or an
 
 ## Configuration
 
-Most configuration options for the Email feature are handled via your Strapi project's code. The Email feature is not configurable in the admin panel, however users can test email delivery if it has been setup by an administrator.
+Most configuration options for the Email feature are handled via your Strapi project's code. The admin panel provides a read-only view of the current configuration, connection status, and provider capabilities, and lets users send a test email.
 
-:::info Provider vs. Host
+:::info Provider vs. host
 - The email provider refers to the package that Strapi calls to send an email (e.g. official providers such as Sendgrid or community packages such as `@strapi/provider-email-nodemailer`). Providers implement the logic for sending mail when Strapi invokes them.
 - The provider host (or server) refers to the connection details (e.g. an SMTP hostname, port, or REST API endpoint) that the provider exposes. Some providers hide these details behind an API key, while others require you to supply host-related options in your configuration.
 
@@ -50,7 +50,21 @@ The Email feature only handles outbound delivery. Receiving or parsing incoming 
   }}
 />
 
-In the Configuration interface, only the email address field under "Test email delivery" is modifiable by users. A **Send test email** button sends a test email.
+The Configuration interface is read-only for most fields. It displays the current provider configuration and lets users test connectivity.
+
+The following information is shown in the Configuration panel:
+
+- **Default sender email** and, if the configured `defaultFrom` address includes a display name, **Default sender name**.
+- **Default response email** and, if the configured `defaultReplyTo` address includes a display name, **Default reply-to name**.
+- **Email provider**: the provider currently in use.
+
+:::note
+If the active provider supports SMTP connection verification (for example, the [Nodemailer provider](#providers)), a **Connection status** field is also shown with a **Test connection** button. Clicking it verifies the SMTP connection without sending a message. The button displays a **Connected** or **Error** badge depending on the result.
+:::
+
+A **Provider capabilities** card appears below the main configuration when the active provider exposes SMTP metadata. It shows the SMTP server address, encryption protocol (TLS, STARTTLS, or None), authentication type and user, pool status (Idle or Active, when connection pooling is enabled), and badges for enabled features such as DKIM, OAuth2, rate limiting, and connection pool.
+
+The only user-editable field on this page is the **Recipient email** field under **Test email delivery**. A **Send test email** button sends a test message to that address.
 
 This page is only visible if the current role has the "Access the Email Settings page" permission enabled (see [RBAC feature](/cms/features/rbac) documentation for more information):
 
@@ -98,8 +112,6 @@ Providers add an extension to the core capabilities of the plugin, for example t
 
 There are both official providers maintained by Strapi — discoverable via the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via <ExternalLink to="https://www.npmjs.com/" text="npm"/>.
 
-A provider can be configured to be [private](#private-providers) to ensure asset URLs will be signed for secure access.
-
 ##### Installing providers
 
 New providers can be installed using `npm` or `yarn` using the following format `@strapi/provider-<plugin>-<provider> --save`.
@@ -109,7 +121,6 @@ For example, to install the Sendgrid provider:
 <Tabs groupId="yarn-npm">
 
 <TabItem value="yarn" label="Yarn">
-
 
 ```bash
 yarn add @strapi/provider-email-sendgrid
@@ -127,11 +138,16 @@ npm install @strapi/provider-email-sendgrid --save
 
 </Tabs>
 
+
 ##### Configuring providers
 
 Newly installed providers are enabled and configured in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist you must create it.
 
-Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) or <ExternalLink to="https://www.npmjs.com/" text="npm"/> to learn more.
+:::info  Specific email providers configurations
+- Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) or <ExternalLink to="https://www.npmjs.com/" text="npm"/> to learn more.
+
+- For production scenarios with the Nodemailer provider (OAuth2, connection pooling, DKIM signing, rate limiting), see the [dedicated documentation](/cms/configurations/email-nodemailer).
+:::
 
 The following is an example configuration for the Sendgrid provider:
 
@@ -140,7 +156,6 @@ The following is an example configuration for the Sendgrid provider:
 <TabItem value="javascript" label="JavaScript">
 
 ```js title="/config/plugins.js"
-
 module.exports = ({ env }) => ({
   // ...
   email: {
@@ -165,7 +180,6 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="/config/plugins.ts"
-
 export default ({ env }) => ({
   // ...
   email: {
@@ -189,21 +203,24 @@ export default ({ env }) => ({
 
 </Tabs>
 
-:::note
+:::note Notes
 
-* When using a different provider per environment, specify the correct configuration in `/config/env/${yourEnvironment}/plugins.js|ts` (See [Environments](/cms/configurations/environment)).
+* When using a different provider per environment, specify the correct configuration in `/config/env/${yourEnvironment}/plugins.js|ts` (see [Environments](/cms/configurations/environment)).
 * Only one email provider will be active at a time. If the email provider setting isn't picked up by Strapi, verify the `plugins.js|ts` file is in the correct folder.
-* When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (See [Configure templates locally](/cms/features/users-permissions#templating-emails)).
-
+* When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (see [Configure templates locally](/cms/features/users-permissions#templating-emails)).
+* For best deliverability, configure SPF/DKIM with your email provider and ensure the `defaultFrom` domain aligns with the domain you verified with the provider.
 :::
 
-###### Configuration per environment
+###### Per-environment configuration
 
 When configuring your provider you might want to change the configuration based on the `NODE_ENV` environment variable or use environment specific credentials.
 
 You can set a specific configuration in the `/config/env/{env}/plugins.js|ts` configuration file and it will be used to overwrite the default configuration.
 
 Some providers expose SMTP-style connection details instead of (or in addition to) an API key. Add those values in `providerOptions` so Strapi can reach the provider host. For instance, the community Nodemailer provider expects the host, port, and authentication credentials:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
 
 ```js title="/config/plugins.js"
 module.exports = ({ env }) => ({
@@ -228,87 +245,47 @@ module.exports = ({ env }) => ({
 });
 ```
 
-If your provider gives you a single URL instead of host and port values, pass that URL (for example `https://api.eu.mailgun.net`) in `providerOptions` using the key the package expects.
+</TabItem>
 
-##### Creating providers
+<TabItem value="ts" label="TypeScript">
 
-To implement your own custom provider you must <ExternalLink to="https://docs.npmjs.com/creating-node-js-modules" text="create a Node.js module"/>.
-
-The interface that must be exported depends on the plugin you are developing the provider for. The following is a template for the Email feature:
-
-<Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js
-module.exports = {
-  init: (providerOptions = {}, settings = {}) => {
-    return {
-      send: async options => {},
-    };
+```ts title="/config/plugins.ts"
+export default ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: 587,
+        secure: false, // Use `true` for port 465
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+      },
+      settings: {
+        defaultFrom: 'no-reply@example.com',
+        defaultReplyTo: 'support@example.com',
+      },
+    },
   },
-};
+});
 ```
 
 </TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts
-export {
-  init: (providerOptions = {}, settings = {}) => {
-    return {
-      send: async options => {},
-    };
-  },
-};
-```
-
-</TabItem>
-
 </Tabs>
 
-In the send function you will have access to:
+If your provider gives you a single URL instead of host and port values, pass that URL (for example `https://api.eu.mailgun.net`) in `providerOptions` using the key the package expects.
 
-* `providerOptions` that contains configurations written in `plugins.js|ts`
-* `settings` that contains configurations written in `plugins.js|ts`
-* `options` that contains options you send when you call the send function from the email plugin service
 
-You can review the <ExternalLink to="https://github.com/strapi/strapi/tree/main/packages/providers" text="Strapi-maintained providers"/> for example implementations.
 
-After creating your new provider you can <ExternalLink to="https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages" text="publish it to npm"/> to share with the community or [use it locally](#local-providers) for your project only.
+##### Building a custom provider
 
-###### Local providers
+To build your own provider, publish it to npm, or use it locally in your project, see the dedicated documentation:
 
-If you want to create your own provider without publishing it on npm you can follow these steps:
-
-1. Create a `providers` folder in your application.
-2. Create your provider (e.g. `/providers/strapi-provider-<plugin>-<provider>`)
-3. Then update your `package.json` to link your `strapi-provider-<plugin>-<provider>` dependency to the <ExternalLink to="https://docs.npmjs.com/files/package.json#local-paths" text="local path"/> of your new provider.
-
-```json
-{
-  ...
-  "dependencies": {
-    ...
-    "strapi-provider-<plugin>-<provider>": "file:providers/strapi-provider-<plugin>-<provider>",
-    ...
-  }
-}
-```
-
-4. Update your `/config/plugins.js|ts` file to [configure the provider](#configuring-providers).
-5. Finally, run `yarn` or `npm install` to install your new custom provider.
-
-###### Private providers
-
-You can set up a private provider, meaning that every asset URL displayed in the Content Manager will be signed for secure access.
-
-To enable private providers, you must implement the `isPrivate()` method and return `true`.
-
-In the backend, Strapi generates a signed URL for each asset using the `getSignedUrl(file)` method implemented in the provider. The signed URL includes an encrypted signature that allows the user to access the asset (but normally only for a limited time and with specific restrictions, depending on the provider).
-
-Note that for security reasons, the content API will not provide any signed URLs. Instead, developers using the API should sign the urls themselves.
+<CustomDocCardsWrapper>
+<CustomDocCard icon="wrench" title="Creating custom email providers" description="Implement the provider interface, use a local provider, or set up signed URLs for private assets." link="/cms/configurations/email-custom-providers"/>
+</CustomDocCardsWrapper>
 
 ## Usage
 
@@ -325,16 +302,29 @@ The Email feature has an `email` [service](/cms/backend-customization/services) 
 
 To trigger an email in response to a user action add the `send()` function to a [controller](/cms/backend-customization/controllers) or [service](/cms/backend-customization/services). The send function has the following properties:
 
-| Property  | Type     | Format        | Description                                           |
-|-----------|----------|---------------|-------------------------------------------------------|
-| `from`    | `string` | email address | If not specified, uses `defaultFrom` in `plugins.js`. |
-| `to`      | `string` | email address | Required                                              |
-| `cc`      | `string` | email address | Optional                                              |
-| `bcc`     | `string` | email address | Optional                                              |
-| `replyTo` | `string` | email address | Optional                                              |
-| `subject` | `string` | -             | Required                                              |
-| `text`    | `string` | -             | Either `text` or `html` is required.                  |
-| `html`    | `string` | HTML          | Either `text` or `html` is required.                  |
+| Property      | Type                          | Description                                                                                      |
+|---------------|-------------------------------|--------------------------------------------------------------------------------------------------|
+| `from`        | `string` (email address)      | Sender address. If not specified, uses `defaultFrom` from `plugins.js`.                          |
+| `to`          | `string` (email address)      | Recipient address. Required.                                                                     |
+| `cc`          | `string` (email address)      | Carbon copy recipients. Optional.                                                                |
+| `bcc`         | `string` (email address)      | Blind carbon copy recipients. Optional.                                                          |
+| `replyTo`     | `string` (email address)      | Reply-to address. If not specified, uses `defaultReplyTo` from `plugins.js`.                     |
+| `subject`     | `string`                      | Email subject. Required.                                                                         |
+| `text`        | `string`                      | Plain-text body. Either `text` or `html` is required.                                            |
+| `html`        | `string`                      | HTML body. Either `text` or `html` is required.                                                  |
+| `attachments` | `object[]`                    | Array of attachment objects.                                                                     |
+| `headers`     | `object`                      | Custom SMTP headers, for example `{ 'X-Custom-Header': 'value' }`.                               |
+| `priority`    | `'high' \| 'normal' \| 'low'` | Email priority flag.                                                                             |
+| `inReplyTo`   | `string`                      | Message-ID of the email being replied to. Used for conversation threading.                       |
+| `references`  | `string \| string[]`          | Message-ID list this email references. Used for conversation threading.                          |
+| `envelope`    | `object`                      | Custom SMTP envelope with `from` and `to` fields. Useful for bounce handling.                    |
+| `list`        | `object`                      | RFC 2369 List-* headers. Enables one-click unsubscribe in Gmail and Outlook for newsletters.     |
+| `icalEvent`   | `object`                      | Calendar event invitation in iCalendar format. Attach with `{ method, content }`.                |
+| `dsn`         | `object`                      | Delivery Status Notification settings. Requests bounce or delivery confirmation reports.         |
+
+:::note When using the Nodemailer provider
+The Nodemailer provider uses an explicit allowlist for all `send()` fields. Unknown properties are silently dropped. For the complete list of supported fields — including `dkim`, `amp`, `raw`, `auth` (per-message OAuth2), and others — see the <ExternalLink to="https://www.npmjs.com/package/@strapi/provider-email-nodemailer" text="provider README on npm"/>.
+:::
 
 The following code example can be used in a controller or a service:
 
@@ -388,9 +378,9 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 
 ### Sending emails from a lifecycle hook {#lifecycle-hook}
 
- To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/cms/backend-customization/models#lifecycle-hooks) and the [`send()` function](#using-the-send-function). 
+To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/cms/backend-customization/models#lifecycle-hooks) and the [`send()` function](#using-the-send-function).
 
- The following example illustrates how to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
+The following example illustrates how to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
 
 <Tabs groupId="js-ts">
 
