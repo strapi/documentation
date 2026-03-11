@@ -2,7 +2,7 @@
 title: Server routes
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
-pagination_prev: cms/plugins-development/server-configuration
+pagination_prev: cms/plugins-development/server-content-types
 pagination_next: cms/plugins-development/server-controllers-services
 description: Expose plugin endpoints as Content API or admin routes, with full control over auth, policies, and route configuration.
 tags:

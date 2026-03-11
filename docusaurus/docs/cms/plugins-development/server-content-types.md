@@ -2,8 +2,8 @@
 title: Server content-types
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
-pagination_prev: cms/plugins-development/server-policies-middlewares
-pagination_next: cms/plugins-development/server-getters-usage
+pagination_prev: cms/plugins-development/server-configuration
+pagination_next: cms/plugins-development/server-routes
 description: Declare and register content-types in a Strapi plugin and access them at runtime through the Document Service API.
 tags:
   - plugin APIs
