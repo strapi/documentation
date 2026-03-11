@@ -37,7 +37,7 @@ A new application-level or API-level middleware can be implemented:
 - or manually by creating a JavaScript file in the appropriate folder (see [project structure](/cms/project-structure)):
   - `./src/middlewares/` for application-level middlewares
   - `./src/api/[api-name]/middlewares/` for API-level middlewares
-  - `./src/plugins/[plugin-name]/middlewares/` for [plugin middlewares](/cms/plugins-development/server-api#middlewares)
+  - `./src/plugins/[plugin-name]/middlewares/` for [plugin middlewares](/cms/plugins-development/server-policies-middlewares)
 
 Middlewares working with the REST API are functions like the following:
 

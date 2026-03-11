@@ -382,7 +382,7 @@ The `destroy` function, found in `./src/index.js` (or in `./src/index.ts`), is a
 The `destroy` function can be used to gracefully:
 
 - stop [services](/cms/backend-customization/services) that are running
-- [clean up plugin actions](/cms/plugins-development/server-api#destroy) (e.g. close connections, remove listeners, etc.)
+- [clean up plugin actions](/cms/plugins-development/server-lifecycle#destroy) (e.g. close connections, remove listeners, etc.)
 
 More specifically, a typical use-case for `destroy()` is to handle operational clean-up, such as closing database or queue connections and removing listeners so the application can shut down cleanly.
 

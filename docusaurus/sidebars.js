@@ -493,7 +493,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Admin Panel',
+          label: 'Admin Panel API',
           collapsed: true,
           customProps: {
             new: true,
@@ -510,10 +510,20 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Server',
+          label: 'Server API',
           collapsed: true,
+          customProps: {
+            new: true,
+          },
           items: [
             'cms/plugins-development/server-api',
+            'cms/plugins-development/server-lifecycle',
+            'cms/plugins-development/server-configuration',
+            'cms/plugins-development/server-content-types',
+            'cms/plugins-development/server-routes',
+            'cms/plugins-development/server-controllers-services',
+            'cms/plugins-development/server-policies-middlewares',
+            'cms/plugins-development/server-getters-usage',
           ],
         },
         {

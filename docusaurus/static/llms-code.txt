@@ -27967,30 +27967,13 @@ Language: JavaScript
 File path: my-plugin/admin/src/index.js
 
 ```js
-// Auto-generated component
-import PluginIcon from './components/PluginIcon';
-import pluginId from './pluginId'
+import pluginId from './pluginId';
 
 export default {
   register(app) {
-    app.addMenuLink({
-      to: `/plugins/${pluginId}`,
-      icon: PluginIcon,
-      intlLabel: {
-        id: `${pluginId}.plugin.name`,
-        defaultMessage: 'My plugin',
-      },
-      Component: async () => {
-        const component = await import(/* webpackChunkName: "my-plugin" */ './pages/App');
-
-        return component;
-      },
-      permissions: [], // array of permissions (object), allow a user to access a plugin depending on its permissions
-    });
-    app.registerPlugin({
-      id: pluginId,
-      name,
-    });
+    // highlight-next-line
+    app.registerPlugin({ id: pluginId, name: 'My Plugin' });
+    // Add menu links, settings sections, injection zones, and reducers here
   },
 };
 ```
@@ -28000,30 +27983,14 @@ Language: TypeScript
 File path: my-plugin/admin/src/index.ts
 
 ```ts
-import PluginIcon from './components/PluginIcon';
-import pluginId from './pluginId';
 import type { StrapiApp } from '@strapi/admin/strapi-admin';
+import pluginId from './pluginId';
 
 export default {
   register(app: StrapiApp) {
-    app.addMenuLink({
-      to: `/plugins/${pluginId}`,
-      icon: PluginIcon,
-      intlLabel: {
-        id: `${pluginId}.plugin.name`,
-        defaultMessage: 'My plugin',
-      },
-      Component: async () => {
-        const component = await import(/* webpackChunkName: "my-plugin" */ './pages/App');
-
-        return component;
-      },
-      permissions: [], // array of permissions (object), allow a user to access a plugin depending on its permissions
-    });
-    app.registerPlugin({
-      id: pluginId,
-      name,
-    });
+    // highlight-next-line
+    app.registerPlugin({ id: pluginId, name: 'My Plugin' });
+    // Add menu links, settings sections, injection zones, and reducers here
   },
 };
 ```
@@ -28089,14 +28056,12 @@ Language: JavaScript
 File path: my-plugin/admin/src/index.js
 
 ```js
-module.exports = () => {
-  return {
-    // ...
-    bootstrap(app) {
-      // execute some bootstrap code
-      app.getPlugin('content-manager').injectComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' })
-    },
-  };
+export default {
+  // ...
+  bootstrap(app) {
+    // highlight-next-line
+    app.getPlugin('content-manager').injectComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' });
+  },
 };
 ```
 
@@ -28110,8 +28075,8 @@ import type { StrapiApp } from '@strapi/admin/strapi-admin';
 export default {
   // ...
   bootstrap(app: StrapiApp) {
-    // execute some bootstrap code
-    app.getPlugin('content-manager').injectComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' })
+    // highlight-next-line
+    app.getPlugin('content-manager').injectComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' });
   },
 };
 ```
@@ -29778,118 +29743,98 @@ module.exports = {
 # Server API for plugins
 Source: https://docs.strapi.io/cms/plugins-development/server-api
 
-## register()
-Description: Example:
-(Source: https://docs.strapi.io/cms/plugins-development/server-api#register)
+## Entry file
+Description: A minimal entry file looks like this:
+(Source: https://docs.strapi.io/cms/plugins-development/server-api#entry-file)
 
 Language: JavaScript
-File path: /src/plugins/my-plugin/server/src/register.js
-
-```js
-
-'use strict';
-
-const register = ({ strapi }) => {
-  // execute some register code
-};
-
-module.exports = register;
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/src/register.ts
-
-```ts
-
-import type { Core } from '@strapi/strapi';
-
-const register = ({ strapi }: { strapi: Core.Strapi }) => {
-  // execute some register code
-};
-
-export default register;
-```
-
-
-## bootstrap()
-Description: Example:
-(Source: https://docs.strapi.io/cms/plugins-development/server-api#bootstrap)
-
-Language: JavaScript
-File path: /src/plugins/my-plugin/server/src/bootstrap.js
+File path: /src/plugins/my-plugin/server/src/index.js
 
 ```js
 'use strict';
 
-const bootstrap = ({ strapi }) => {
-  // execute some bootstrap code
-};
+const register = require('./register');
+const bootstrap = require('./bootstrap');
+const destroy = require('./destroy');
+const config = require('./config');
+const contentTypes = require('./content-types');
+const routes = require('./routes');
+const controllers = require('./controllers');
+const services = require('./services');
+const policies = require('./policies');
+const middlewares = require('./middlewares');
 
-module.exports = bootstrap;
+module.exports = () => ({
+  register,
+  bootstrap,
+  destroy,
+  config,
+  contentTypes,
+  routes,
+  controllers,
+  services,
+  policies,
+  middlewares,
+});
 ```
 
 ---
 Language: TypeScript
-File path: /src/plugins/my-plugin/server/src/bootstrap.ts
+File path: /src/plugins/my-plugin/server/src/index.ts
 
 ```ts
-import type { Core } from '@strapi/strapi';
+import register from './register';
+import bootstrap from './bootstrap';
+import destroy from './destroy';
+import config from './config';
+import contentTypes from './content-types';
+import routes from './routes';
+import controllers from './controllers';
+import services from './services';
+import policies from './policies';
+import middlewares from './middlewares';
 
-const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
-  // execute some bootstrap code
-};
-
-export default bootstrap;
+export default () => ({
+  register,
+  bootstrap,
+  destroy,
+  config,
+  contentTypes,
+  routes,
+  controllers,
+  services,
+  policies,
+  middlewares,
+});
 ```
 
 
-## destroy()
-Description: Example:
-(Source: https://docs.strapi.io/cms/plugins-development/server-api#destroy)
 
-Language: JavaScript
-File path: /src/plugins/my-plugin/server/src/destroy.js
+# Server configuration
+Source: https://docs.strapi.io/cms/plugins-development/server-configuration
 
-```js
-'use strict';
-
-const destroy = ({ strapi }) => {
-  // execute some destroy code
-};
-
-module.exports = destroy;
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/src/destroy.ts
-
-```ts
-import type { Core } from '@strapi/strapi';
-
-const destroy = ({ strapi }: { strapi: Core.Strapi }) => {
-  // destroy phase
-};
-
-export default destroy;
-```
-
-
-## Configuration
-Description: Example:
-(Source: https://docs.strapi.io/cms/plugins-development/server-api#configuration)
+## Configuration example
+Description: :::note The { env } argument passed to the default function is the same env utility used across Strapi configuration files.
+(Source: https://docs.strapi.io/cms/plugins-development/server-configuration#configuration-example)
 
 Language: JavaScript
 File path: /src/plugins/my-plugin/server/src/config/index.js
 
 ```js
+'use strict';
 
 module.exports = {
-  default: ({ env }) => ({ optionA: true }),
-  validator: (config) => { 
-    if (typeof config.optionA !== 'boolean') {
-      throw new Error('optionA has to be a boolean');
+  default: ({ env }) => ({
+    enabled: true,
+    maxItems: env.int('MY_PLUGIN_MAX_ITEMS', 10),
+    endpoint: env('MY_PLUGIN_ENDPOINT', 'https://api.example.com'),
+  }),
+  validator: (config) => {
+    if (typeof config.enabled !== 'boolean') {
+      throw new Error('"enabled" must be a boolean');
+    }
+    if (typeof config.maxItems !== 'number' || config.maxItems < 1) {
+      throw new Error('"maxItems" must be a positive number');
     }
   },
 };
@@ -29900,158 +29845,1188 @@ Language: TypeScript
 File path: /src/plugins/my-plugin/server/src/config/index.ts
 
 ```ts
-
 export default {
-  default: ({ env }) => ({ optionA: true }),
-  validator: (config) => { 
-    if (typeof config.optionA !== 'boolean') {
-      throw new Error('optionA has to be a boolean');
+  default: ({ env }: { env: any }) => ({
+    enabled: true,
+    maxItems: env.int('MY_PLUGIN_MAX_ITEMS', 10),
+    endpoint: env('MY_PLUGIN_ENDPOINT', 'https://api.example.com'),
+  }),
+  validator: (config: { enabled: unknown; maxItems: unknown }) => {
+    if (typeof config.enabled !== 'boolean') {
+      throw new Error('"enabled" must be a boolean');
+    }
+    if (typeof config.maxItems !== 'number' || config.maxItems < 1) {
+      throw new Error('"maxItems" must be a positive number');
     }
   },
 };
 ```
 
-
-## Content-types
-Description: Example:
-(Source: https://docs.strapi.io/cms/plugins-development/server-api#content-types)
-
 Language: JavaScript
-File path: /src/plugins/my-plugin/server/content-types/index.js
+File path: /config/plugins.js
 
 ```js
+module.exports = {
+  'my-plugin': {
+    enabled: true,
+    config: {
+      maxItems: 25,
+      endpoint: 'https://api.production.example.com',
+    },
+  },
+};
+```
 
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+export default {
+  'my-plugin': {
+    enabled: true,
+    config: {
+      maxItems: 25,
+      endpoint: 'https://api.production.example.com',
+    },
+  },
+};
+```
+
+
+## Runtime access
+Description: Once the plugin is loaded, its configuration is available anywhere the strapi object is accessible:
+(Source: https://docs.strapi.io/cms/plugins-development/server-configuration#runtime-access)
+
+Language: JavaScript
+File path: /plugins.js
+
+```js
+// Read one key
+const maxItems = strapi.plugin('my-plugin').config('maxItems');
+```
+
+---
+Language: JavaScript
+File path: /plugins.js
+
+```js
+// Read the entire plugin config object
+const pluginConfig = strapi.config.get('plugin::my-plugin');
+```
+
+
+
+# Server content-types
+Source: https://docs.strapi.io/cms/plugins-development/server-content-types
+
+## Declaration
+Description: The contentTypes export is an object where each key is the singularName of the content-type, matching the info.singularName field in its schema.
+(Source: https://docs.strapi.io/cms/plugins-development/server-content-types#declaration)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/content-types/index.js
+
+```js
 'use strict';
 
-const contentTypeA = require('./content-type-a');
-const contentTypeB = require('./content-type-b');
+const article = require('./article');
 
 module.exports = {
-  'content-type-a': { schema: contentTypeA }, // should re-use the singularName of the content-type
-  'content-type-b': { schema: contentTypeB },
+  // highlight-next-line
+  article: { schema: article }, // key must match info.singularName in the schema
 };
 ```
 
 ---
-Language: JavaScript
-File path: /src/plugins/my-plugin/server/content-types/content-type-a.js
+Language: JSON
+File path: /src/plugins/my-plugin/server/src/content-types/article/schema.json
 
-```js
-
-module.exports = {
-  kind: 'collectionType',
-  collectionName: 'content-type',
-  info: {
-    singularName: 'content-type-a', // kebab-case mandatory
-    pluralName: 'content-type-as', // kebab-case mandatory
-    displayName: 'Content Type A',
-    description: 'A regular content-type',
+```json
+{
+  "kind": "collectionType",
+  "collectionName": "my_plugin_articles",
+  "info": {
+    // highlight-next-line
+    "singularName": "article",
+    "pluralName": "articles",
+    "displayName": "Article"
   },
-  options: {
-    draftAndPublish: true,
+  "options": {
+    "draftAndPublish": false
   },
-  pluginOptions: {
-    'content-manager': {
-      visible: false,
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
     },
-    'content-type-builder': {
-      visible: false,
+    "body": {
+      "type": "richtext"
     }
-  },
-  attributes: {
-    name: {
-      type: 'string',
-      min: 1,
-      max: 50,
-      configurable: false,
-    },
   }
-};
+}
 ```
 
 ---
 Language: TypeScript
-File path: /src/plugins/my-plugin/server/content-types/index.ts
+File path: /src/plugins/my-plugin/server/src/content-types/index.ts
 
 ```ts
-
-const contentTypeA = require('./content-type-a');
-const contentTypeB = require('./content-type-b');
-
-module.exports = {
-  'content-type-a': { schema: contentTypeA }, // should re-use the singularName of the content-type
-  'content-type-b': { schema: contentTypeB },
-};
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/content-types/content-type-a.ts
-
-```ts
+import article from './article';
 
 export default {
-  kind: 'collectionType',
-  collectionName: 'content-type',
-  info: {
-    singularName: 'content-type-a', // kebab-case mandatory
-    pluralName: 'content-type-as', // kebab-case mandatory
-    displayName: 'Content Type A',
-    description: 'A regular content-type',
-  },
-  options: {
-    draftAndPublish: true,
-  },
-  pluginOptions: {
-    'content-manager': {
-      visible: false,
-    },
-    'content-type-builder': {
-      visible: false,
-    }
-  },
-  attributes: {
-    name: {
-      type: 'string',
-      min: 1,
-      max: 50,
-      configurable: false,
-    },
-  }
+  // highlight-next-line
+  article: { schema: article }, // key must match info.singularName in the schema
 };
 ```
 
+---
+Language: JSON
+File path: /src/plugins/my-plugin/server/src/content-types/article/schema.json
 
-## Routes
-Description: Examples:
-(Source: https://docs.strapi.io/cms/plugins-development/server-api#routes)
+```json
+{
+  "kind": "collectionType",
+  "collectionName": "my_plugin_articles",
+  "info": {
+    // highlight-next-line
+    "singularName": "article",
+    "pluralName": "articles",
+    "displayName": "Article"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "body": {
+      "type": "richtext"
+    }
+  }
+}
+```
+
+
+## UIDs and naming conventions
+Description: Once registered, a plugin content-type is identified by a stable UID that follows this format:
+(Source: https://docs.strapi.io/cms/plugins-development/server-content-types#uids-and-naming-conventions)
 
 Language: JavaScript
-File path: /src/plugins/my-plugin/server/index.js
+File path: N/A
+
+```
+plugin::<plugin-name>.<singular-name>
+```
+
+
+## Querying with the Document Service API
+Description: Use the Document Service API to query plugin content-types from controllers, services, or lifecycle hooks:
+(Source: https://docs.strapi.io/cms/plugins-development/server-content-types#querying-with-the-document-service-api)
+
+Language: JavaScript
+File path: N/A
 
 ```js
+module.exports = ({ strapi }) => ({
+  async findAll(params = {}) {
+    // highlight-next-line
+    return strapi.documents('plugin::my-plugin.article').findMany(params);
+  },
 
-const routes = require('./routes');
-
-module.exports = () => ({
-  routes,
-  type: 'content-api', // can also be 'admin' depending on the type of route
+  async create(data) {
+    return strapi.documents('plugin::my-plugin.article').create({ data });
+  },
 });
 ```
 
 ---
 Language: JavaScript
-File path: /src/plugins/my-plugin/server/routes/index.js
+File path: N/A
 
 ```js
+import type { Core } from '@strapi/strapi';
+
+export default ({ strapi }: { strapi: Core.Strapi }) => ({
+  async findAll(params: Record<string, unknown> = {}) {
+    // highlight-next-line
+    return strapi.documents('plugin::my-plugin.article').findMany(params);
+  },
+
+  async create(data: Record<string, unknown>) {
+    return strapi.documents('plugin::my-plugin.article').create({ data });
+  },
+});
+```
+
+
+## Accessing the schema
+Description: Use the content-type getter to retrieve the schema object, for example to pass it to the sanitization API:
+(Source: https://docs.strapi.io/cms/plugins-development/server-content-types#accessing-the-schema)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const schema = strapi.contentType('plugin::my-plugin.article');
+
+const sanitizedOutput = await strapi.contentAPI.sanitize.output(
+  data,
+  schema,
+  { auth: ctx.state.auth }
+);
+```
+
+---
+Language: TypeScript
+File path: N/A
+
+```ts
+const schema = strapi.contentType('plugin::my-plugin.article');
+
+const sanitizedOutput = await strapi.contentAPI.sanitize.output(
+  data,
+  schema,
+  { auth: ctx.state.auth }
+);
+```
+
+
+
+# Server controllers & services
+Source: https://docs.strapi.io/cms/plugins-development/server-controllers-services
+
+## Declaration
+Description: The export key used in controllers/index.js|ts must match the handler name used in route definitions.
+(Source: https://docs.strapi.io/cms/plugins-development/server-controllers-services#declaration)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/controllers/index.js
+
+```js
+'use strict';
+
+const article = require('./article');
+
+module.exports = {
+  article,
+};
+```
+
+---
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/controllers/article.js
+
+```js
+'use strict';
+
+module.exports = ({ strapi }) => ({
+  async find(ctx) {
+    const articles = await strapi
+      .plugin('my-plugin')
+      .service('article')
+      .findAll();
+
+    ctx.body = articles;
+  },
+
+  async findOne(ctx) {
+    const { documentId } = ctx.params;
+    const article = await strapi
+      .plugin('my-plugin')
+      .service('article')
+      .findOne(documentId);
+
+    if (!article) {
+      return ctx.notFound('Article not found');
+    }
+
+    ctx.body = article;
+  },
+
+  async create(ctx) {
+    const article = await strapi
+      .plugin('my-plugin')
+      .service('article')
+      .create(ctx.request.body);
+
+    ctx.status = 201;
+    ctx.body = article;
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/controllers/index.ts
+
+```ts
+import article from './article';
+
+export default {
+  article,
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/controllers/article.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+interface ArticleService {
+  findAll(): Promise<unknown[]>;
+  findOne(id: string): Promise<unknown>;
+  create(data: unknown): Promise<unknown>;
+}
+
+export default ({ strapi }: { strapi: Core.Strapi }) => ({
+  async find(ctx: any) {
+    // Limitation: in @strapi/types, plugin services are currently typed as unknown.
+    const articleService = strapi.plugin('my-plugin').service('article') as ArticleService;
+
+    ctx.body = await articleService.findAll();
+  },
+
+  async findOne(ctx: any) {
+    const { documentId } = ctx.params;
+    const article = await (strapi.plugin('my-plugin').service('article') as ArticleService).findOne(documentId);
+
+    if (!article) {
+      return ctx.notFound('Article not found');
+    }
+
+    ctx.body = article;
+  },
+
+  async create(ctx: any) {
+    const articleService = strapi.plugin('my-plugin').service('article') as ArticleService;
+
+    ctx.status = 201;
+    ctx.body = await articleService.create(ctx.request.body);
+  },
+});
+```
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/services/index.js
+
+```js
+'use strict';
+
+const article = require('./article');
+
+module.exports = {
+  article,
+};
+```
+
+---
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/services/article.js
+
+```js
+'use strict';
+
+module.exports = ({ strapi }) => ({
+  async findAll(params = {}) {
+    // highlight-next-line
+    return strapi.documents('plugin::my-plugin.article').findMany(params);
+  },
+
+  async findOne(documentId) {
+    return strapi.documents('plugin::my-plugin.article').findOne({
+      documentId,
+    });
+  },
+
+  async create(data) {
+    return strapi.documents('plugin::my-plugin.article').create({ data });
+  },
+
+  async update(documentId, data) {
+    return strapi.documents('plugin::my-plugin.article').update({
+      documentId,
+      data,
+    });
+  },
+
+  async delete(documentId) {
+    return strapi.documents('plugin::my-plugin.article').delete({
+      documentId,
+    });
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/services/index.ts
+
+```ts
+import article from './article';
+
+export default {
+  article,
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/services/article.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+export default ({ strapi }: { strapi: Core.Strapi }) => ({
+  async findAll(params: Record<string, unknown> = {}) {
+    // highlight-next-line
+    return strapi.documents('plugin::my-plugin.article').findMany(params);
+  },
+
+  async findOne(documentId: string) {
+    return strapi.documents('plugin::my-plugin.article').findOne({
+      documentId,
+    });
+  },
+
+  async create(data: Record<string, unknown>) {
+    return strapi.documents('plugin::my-plugin.article').create({ data });
+  },
+
+  async update(documentId: string, data: Record<string, unknown>) {
+    return strapi.documents('plugin::my-plugin.article').update({
+      documentId,
+      data,
+    });
+  },
+
+  async delete(documentId: string) {
+    return strapi.documents('plugin::my-plugin.article').delete({
+      documentId,
+    });
+  },
+});
+```
+
+
+## Sanitization
+Description: Plugin controllers are plain factory functions and do not extend createCoreController.
+(Source: https://docs.strapi.io/cms/plugins-development/server-controllers-services#sanitization)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/controllers/article.js
+
+```js
+module.exports = ({ strapi }) => ({
+  async find(ctx) {
+    // highlight-start
+    const schema = strapi.contentType('plugin::my-plugin.article');
+
+    const sanitizedQuery = await strapi.contentAPI.sanitize.query(
+      ctx.query, schema, { auth: ctx.state.auth }
+    );
+    // highlight-end
+    const articles = await strapi.plugin('my-plugin').service('article').findAll(sanitizedQuery);
+    // highlight-next-line
+    ctx.body = await strapi.contentAPI.sanitize.output(articles, schema, { auth: ctx.state.auth });
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/controllers/article.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+export default ({ strapi }: { strapi: Core.Strapi }) => ({
+  async find(ctx: any) {
+    // highlight-start
+    const schema = strapi.contentType('plugin::my-plugin.article');
+
+    const sanitizedQuery = await strapi.contentAPI.sanitize.query(
+      ctx.query, schema, { auth: ctx.state.auth }
+    );
+    // highlight-end
+    const articles = await (strapi.plugin('my-plugin').service('article') as any).findAll(sanitizedQuery);
+    // highlight-next-line
+    ctx.body = await strapi.contentAPI.sanitize.output(articles, schema, { auth: ctx.state.auth });
+  },
+});
+```
+
+
+## End-to-end example
+Description: Code example from "End-to-end example"
+(Source: https://docs.strapi.io/cms/plugins-development/server-controllers-services#end-to-end-example)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/routes/index.js
+
+```js
+'use strict';
+
+module.exports = {
+  'content-api': {
+    type: 'content-api',
+    routes: [
+      {
+        method: 'GET',
+        path: '/articles',
+        // highlight-next-line
+        handler: 'article.find', // maps to controllers/article.js → find()
+        config: { auth: false },
+      },
+      {
+        method: 'POST',
+        path: '/articles',
+        // highlight-next-line
+        handler: 'article.create', // maps to controllers/article.js → create()
+        config: { auth: false },
+      },
+    ],
+  },
+};
+```
+
+---
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/controllers/article.js
+
+```js
+'use strict';
+
+module.exports = ({ strapi }) => ({
+  // highlight-next-line
+  async find(ctx) {
+    ctx.body = await strapi.plugin('my-plugin').service('article').findAll();
+    // Note: sanitize query and output in production — see the Sanitization section above
+  },
+
+  // highlight-next-line
+  async create(ctx) {
+    const article = await strapi
+      .plugin('my-plugin')
+      .service('article')
+      .create(ctx.request.body);
+    ctx.status = 201;
+    ctx.body = article;
+  },
+});
+```
+
+---
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/services/article.js
+
+```js
+'use strict';
+
+module.exports = ({ strapi }) => ({
+  findAll() {
+    return strapi.documents('plugin::my-plugin.article').findMany();
+  },
+
+  create(data) {
+    return strapi.documents('plugin::my-plugin.article').create({ data });
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/routes/index.ts
+
+```ts
+export default {
+  'content-api': {
+    type: 'content-api' as const,
+    routes: [
+      {
+        method: 'GET' as const,
+        path: '/articles',
+        // highlight-next-line
+        handler: 'article.find', // maps to controllers/article.ts → find()
+        config: { auth: false },
+      },
+      {
+        method: 'POST' as const,
+        path: '/articles',
+        // highlight-next-line
+        handler: 'article.create', // maps to controllers/article.ts → create()
+        config: { auth: false },
+      },
+    ],
+  },
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/controllers/article.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+interface ArticleService {
+  findAll(): Promise<unknown[]>;
+  create(data: unknown): Promise<unknown>;
+}
+
+export default ({ strapi }: { strapi: Core.Strapi }) => ({
+  // highlight-next-line
+  async find(ctx: any) {
+    ctx.body = await (strapi.plugin('my-plugin').service('article') as ArticleService).findAll();
+    // Note: sanitize query and output in production — see the Sanitization section above
+  },
+
+  // highlight-next-line
+  async create(ctx: any) {
+    const article = await (strapi.plugin('my-plugin').service('article') as ArticleService)
+      .create(ctx.request.body);
+    ctx.status = 201;
+    ctx.body = article;
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/services/article.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+export default ({ strapi }: { strapi: Core.Strapi }) => ({
+  findAll() {
+    // highlight-next-line
+    return strapi.documents('plugin::my-plugin.article').findMany();
+  },
+
+  create(data: Record<string, unknown>) {
+    return strapi.documents('plugin::my-plugin.article').create({ data });
+  },
+});
+```
+
+
+
+# Server getters & usage
+Source: https://docs.strapi.io/cms/plugins-development/server-getters-usage
+
+## Getter styles
+Description: Top-level getters chain through the plugin name:
+(Source: https://docs.strapi.io/cms/plugins-development/server-getters-usage#getter-styles)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi.plugin('plugin-name').service('service-name')
+strapi.plugin('plugin-name').controller('controller-name')
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi.service('plugin::plugin-name.service-name')
+strapi.controller('plugin::plugin-name.controller-name')
+```
+
+
+## Calling a plugin service from a controller
+Description: The most common pattern: a controller delegates to its own plugin's service.
+(Source: https://docs.strapi.io/cms/plugins-development/server-getters-usage#calling-a-plugin-service-from-a-controller)
+
+Language: JavaScript
+File path: /src/plugins/todo/server/src/controllers/task.js
+
+```js
+'use strict';
+
+module.exports = ({ strapi }) => ({
+  async find(ctx) {
+    // highlight-next-line
+    const tasks = await strapi.plugin('todo').service('task').findAll(); // top-level getter: preferred inside your own plugin
+    ctx.body = tasks;
+  },
+
+  async create(ctx) {
+    const task = await strapi
+      .plugin('todo')
+      .service('task')
+      .create(ctx.request.body);
+    ctx.status = 201;
+    ctx.body = task;
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/todo/server/src/controllers/task.ts
+
+```ts
+import type { Context } from 'koa';
+import type { Core } from '@strapi/strapi';
+
+type TaskService = {
+  findAll(): Promise<unknown[]>;
+  create(data: unknown): Promise<unknown>;
+};
+
+export default ({ strapi }: { strapi: Core.Strapi }) => ({
+  async find(ctx: Context) {
+    // Narrow cast: plugin services require app-level type augmentation for full typing.
+    const tasks = await (strapi.plugin('todo').service('task') as TaskService).findAll();
+    ctx.body = tasks;
+  },
+
+  async create(ctx: Context) {
+    const task = await (strapi.plugin('todo').service('task') as TaskService).create(
+      (ctx.request as any).body
+    );
+    (ctx as any).status = 201;
+    ctx.body = task;
+  },
+});
+```
+
+
+## Calling a plugin service from bootstrap
+Description: Services called in bootstrap() have access to the full strapi instance, including other plugins' services.
+(Source: https://docs.strapi.io/cms/plugins-development/server-getters-usage#calling-a-plugin-service-from-bootstrap)
+
+Language: JavaScript
+File path: /src/plugins/todo/server/src/bootstrap.js
+
+```js
+'use strict';
+
+module.exports = async ({ strapi }) => {
+  // Call own plugin service to seed initial data
+  const count = await strapi.plugin('todo').service('task').count();
+
+  if (count === 0) {
+    await strapi.plugin('todo').service('task').create({
+      title: 'Welcome task',
+      done: false,
+    });
+  }
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/todo/server/src/bootstrap.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+type TaskService = {
+  count(): Promise<number>;
+  create(data: unknown): Promise<unknown>;
+};
+
+export default async ({ strapi }: { strapi: Core.Strapi }) => {
+  // Narrow cast: plugin services are resolved dynamically unless your project augments Strapi service typings.
+  const taskService = strapi.plugin('todo').service('task') as TaskService;
+  // highlight-next-line
+  const count = await taskService.count();
+
+  if (count === 0) {
+    await taskService.create({ title: 'Welcome task', done: false });
+  }
+};
+```
+
+
+## Calling across plugins or from application code
+Description: From application-level controllers or services (outside the plugin), or when calling from another plugin, global getters using the full UID are often clearer:
+(Source: https://docs.strapi.io/cms/plugins-development/server-getters-usage#calling-across-plugins-or-from-application-code)
+
+Language: JavaScript
+File path: /src/api/project/controllers/project.js
+
+```js
+'use strict';
+
+const { createCoreController } = require('@strapi/strapi').factories;
+
+module.exports = createCoreController('api::project.project', ({ strapi }) => ({
+  async create(ctx) {
+    const { data, meta } = await super.create(ctx);
+
+    // highlight-next-line
+    await strapi.service('plugin::todo.task').create({ // global getter: preferred in application code
+      title: `Review project: ${data.attributes.name}`,
+      done: false,
+    });
+
+    return { data, meta };
+  },
+}));
+```
+
+---
+Language: TypeScript
+File path: /src/api/project/controllers/project.ts
+
+```ts
+import { factories } from '@strapi/strapi';
+
+type TaskService = {
+  create(data: unknown): Promise<unknown>;
+};
+
+export default factories.createCoreController(
+  'api::project.project',
+  ({ strapi }) => ({
+    async create(ctx: any) {
+      const { data, meta } = await super.create(ctx);
+
+      // highlight-next-line
+      // Narrow cast: this generic documentation cannot infer your app-specific service signatures.
+      await (strapi.service('plugin::todo.task') as TaskService).create({
+        title: `Review project: ${data.attributes.name}`,
+        done: false,
+      });
+
+      return { data, meta };
+    },
+  })
+);
+```
+
+
+## Reading plugin configuration at runtime
+Description: From application-level controllers or services (outside the plugin), or when calling from another plugin, global getters using the full UID are often clearer:
+(Source: https://docs.strapi.io/cms/plugins-development/server-getters-usage#reading-plugin-configuration-at-runtime)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// highlight-start
+const maxItems = strapi.plugin('todo').config('maxItems');       // read a single key
+const todoConfig = strapi.config.get('plugin::todo');            // read the full config object
+const endpoint = strapi.config.get('plugin::todo.endpoint');     // read a nested key
+// highlight-end
+```
+
+---
+Language: TypeScript
+File path: N/A
+
+```ts
+const maxItems = strapi.plugin('todo').config('maxItems') as number;
+const todoConfig = strapi.config.get('plugin::todo') as Record<string, unknown>;
+const endpoint = strapi.config.get('plugin::todo.endpoint') as string;
+```
+
+
+## Accessing a content-type schema
+Description: Use the content-type getter when you need the schema object, for example to pass it to the sanitization API:
+(Source: https://docs.strapi.io/cms/plugins-development/server-getters-usage#accessing-a-content-type-schema)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// highlight-next-line
+const schema = strapi.contentType('plugin::todo.task'); // access the content-type schema
+
+const sanitizedOutput = await strapi.contentAPI.sanitize.output(
+  data,
+  schema,
+  { auth: ctx.state.auth }
+);
+```
+
+---
+Language: TypeScript
+File path: N/A
+
+```ts
+// highlight-next-line
+const schema = strapi.contentType('plugin::todo.task'); // access the content-type schema
+
+const sanitizedOutput = await strapi.contentAPI.sanitize.output(
+  data,
+  schema,
+  { auth: ctx.state.auth }
+);
+```
+
+
+
+# Server lifecycle
+Source: https://docs.strapi.io/cms/plugins-development/server-lifecycle
+
+## register()
+Description: Use register() to: - Register the server side of custom fields - Register database migrations - Register server middlewares on the Strapi HTTP server (e.g.
+(Source: https://docs.strapi.io/cms/plugins-development/server-lifecycle#register)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/register.js
+
+```js
+'use strict';
+
+module.exports = ({ strapi }) => {
+  // Register a server-level middleware early in startup
+  strapi.server.use(async (ctx, next) => {
+    ctx.set('X-Plugin-Version', '1.0.0');
+    await next();
+  });
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/register.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+export default ({ strapi }: { strapi: Core.Strapi }) => {
+  // Register a server-level middleware early in startup
+  strapi.server.use(async (ctx: any, next: () => Promise<void>) => {
+    ctx.set('X-Plugin-Version', '1.0.0');
+    await next();
+  });
+};
+```
+
+
+## bootstrap()
+Description: Register admin RBAC actions using strapi.service('admin::permission').actionProvider.registerMany(...) - Register cron jobs - Subscribe to database lifecycle events - Call services from your plugin or other plugins - Set up cross-plugin integrations that require other plugins to be registered first
+(Source: https://docs.strapi.io/cms/plugins-development/server-lifecycle#bootstrap)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/bootstrap.js
+
+```js
+'use strict';
+
+module.exports = async ({ strapi }) => {
+  // Register admin RBAC actions for this plugin
+  await strapi.service('admin::permission').actionProvider.registerMany([
+    {
+      section: 'plugins',
+      displayName: 'Read',
+      uid: 'read',
+      pluginName: 'my-plugin',
+    },
+    {
+      section: 'plugins',
+      displayName: 'Settings',
+      uid: 'settings',
+      pluginName: 'my-plugin',
+    },
+  ]);
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/bootstrap.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+export default async ({ strapi }: { strapi: Core.Strapi }) => {
+  // Register admin RBAC actions for this plugin
+  await strapi.service('admin::permission').actionProvider.registerMany([
+    {
+      section: 'plugins',
+      displayName: 'Read',
+      uid: 'read',
+      pluginName: 'my-plugin',
+    },
+    {
+      section: 'plugins',
+      displayName: 'Settings',
+      uid: 'settings',
+      pluginName: 'my-plugin',
+    },
+  ]);
+};
+```
+
+
+## destroy()
+Description: Use destroy() to: - Close external connections (databases, message queues, WebSocket servers) - Clear intervals or timeouts set in bootstrap() - Remove event listeners registered during the plugin's lifetime
+(Source: https://docs.strapi.io/cms/plugins-development/server-lifecycle#destroy)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/destroy.js
+
+```js
+'use strict';
+
+module.exports = ({ strapi }) => {
+  // Close an external connection opened in bootstrap()
+  strapi.plugin('my-plugin').service('queue').disconnect();
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/destroy.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+export default ({ strapi }: { strapi: Core.Strapi }) => {
+  // Close an external connection opened in bootstrap()
+  strapi.plugin('my-plugin').service('queue').disconnect();
+};
+```
+
+
+
+# Server policies & middlewares
+Source: https://docs.strapi.io/cms/plugins-development/server-policies-middlewares
+
+## Declaration
+Description: :::note The exact shape of policyContext.state.user depends on the authentication context (for example, admin panel authentication vs.
+(Source: https://docs.strapi.io/cms/plugins-development/server-policies-middlewares#declaration)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/policies/index.js
+
+```js
+'use strict';
+
+const hasRole = require('./has-role');
+
+module.exports = {
+  hasRole,
+};
+```
+
+---
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/policies/has-role.js
+
+```js
+'use strict';
+
+// Allow the request only if the user has the role specified in the route config
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
+module.exports = (policyContext, config, { strapi }) => {
+  const { user } = policyContext.state;
+  const targetRole = config.role;
+
+  if (!user || !targetRole) {
+    return false;
+  }
+
+  // Supports both `user.role` and `user.roles` shapes depending on auth strategy.
+  const roles = Array.isArray(user.roles)
+    ? user.roles
+    : user.role
+      ? [user.role]
+      : [];
+
+  return roles.some((role) => {
+    if (typeof role === 'string') return role === targetRole;
+    return role?.code === targetRole || role?.name === targetRole;
+  });
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/policies/index.ts
+
+```ts
+import hasRole from './has-role';
+
+export default {
+  hasRole,
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/policies/has-role.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+type UserRole = { code?: string; name?: string };
+
+// Allow the request only if the user has the role specified in the route config
+// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
+export default (
+  policyContext: Core.PolicyContext,
+  config: { role?: string },
+  { strapi }: { strapi: Core.Strapi }
+) => {
+  const { user } = policyContext.state;
+  const targetRole = config?.role;
+
+  if (!user || !targetRole) {
+    return false;
+  }
+
+  // Supports both `user.role` and `user.roles` shapes depending on auth strategy.
+  const userWithRoles = user as { roles?: UserRole[]; role?: UserRole };
+  const roles: UserRole[] = Array.isArray(userWithRoles.roles)
+    ? userWithRoles.roles
+    : userWithRoles.role
+      ? [userWithRoles.role]
+      : [];
+
+  return roles.some((role) => role?.code === targetRole || role?.name === targetRole);
+};
+```
+
+
+## Usage in routes
+Description: Once declared, reference a plugin policy from a route using the plugin::my-plugin.policy-name namespace:
+(Source: https://docs.strapi.io/cms/plugins-development/server-policies-middlewares#usage-in-routes)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/routes/index.js
+
+```js
+'use strict';
 
 module.exports = [
   {
     method: 'GET',
-    path: '/model',
-    handler: 'controllerName.action',
+    path: '/dashboard',
+    handler: 'dashboard.find',
     config: {
-      policies: ['policyName'],
+      // highlight-next-line
+      policies: ['plugin::my-plugin.isActive'], // simple reference by namespaced name
+    },
+  },
+  {
+    method: 'DELETE',
+    path: '/articles/:id',
+    handler: 'article.delete',
+    config: {
+      // highlight-next-line
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
+    },
+  },
+  {
+    method: 'GET',
+    path: '/public',
+    handler: 'article.findAll',
+    config: {
+      // highlight-next-line
+      policies: [(policyContext, config, { strapi }) => true], // inline policy, no registration needed
     },
   },
 ];
@@ -30059,595 +31034,529 @@ module.exports = [
 
 ---
 Language: TypeScript
-File path: /src/plugins/my-plugin/server/index.ts
+File path: /src/plugins/my-plugin/server/src/routes/index.ts
 
 ```ts
-
-const routes = require('./routes');
-
-export default {
-  routes,
-  type: 'content-api', // can also be 'admin' depending on the type of route
-};
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/routes/index.ts
-
-```ts
+import type { Core } from '@strapi/strapi';
 
 export default [
   {
-    method: 'GET',
-    path: '/model',
-    handler: 'controllerName.action',
+    method: 'GET' as const,
+    path: '/dashboard',
+    handler: 'dashboard.find',
     config: {
-      policies: ['policyName'],
+      // highlight-next-line
+      policies: ['plugin::my-plugin.isActive'], // simple reference by namespaced name
+    },
+  },
+  {
+    method: 'DELETE' as const,
+    path: '/articles/:id',
+    handler: 'article.delete',
+    config: {
+      // highlight-next-line
+      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
+    },
+  },
+  {
+    method: 'GET' as const,
+    path: '/public',
+    handler: 'article.findAll',
+    config: {
+      // highlight-next-line
+      policies: [(policyContext: Core.PolicyContext, config: unknown, { strapi }: { strapi: Core.Strapi }) => true], // inline policy, no registration needed
     },
   },
 ];
 ```
 
-Language: JavaScript
-File path: ./src/plugins/my-plugin/server/routes/index.js
 
-```js
-
-module.exports = {
-  admin: require('./admin'),
-  'content-api': require('./content-api'),
-};
-```
-
----
-Language: JavaScript
-File path: ./src/plugins/my-plugin/server/routes/admin/index.js
-
-```js
-
-module.exports = {
-  type: 'admin',
-  routes: [{
-    method: 'GET',
-    path: '/model',
-    handler: 'controllerName.action',
-    config: {
-      policies: ['policyName'],
-    },
-  }],
-};
-```
-
----
-Language: JavaScript
-File path: ./src/plugins/my-plugin/server/routes/content-api/index.js
-
-```js
-
-module.exports = {
-  type: 'content-api',
-  routes: [{
-    method: 'GET',
-    path: '/model',
-    handler: 'controllerName.action',
-    config: {
-      policies: ['differentPolicyName'],
-    },
-  }],
-};
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/routes/index.ts
-
-```ts
-
-export default {
-  admin: require('./admin'),
-  'content-api': require('./content-api'),
-};
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/routes/admin/index.ts
-
-```ts
-
-export default {
-  type: 'admin',
-  routes: [{
-    method: 'GET',
-    path: '/model',
-    handler: 'controllerName.action',
-    config: {
-      policies: ['policyName'],
-    },
-  }],
-};
-```
-
----
-Language: TypeScript
-File path: ./src/plugins/my-plugin/server/routes/content-api/index.ts
-
-```ts
-
-export default {
-  type: 'content-api',
-  routes: [{
-    method: 'GET',
-    path: '/model',
-    handler: 'controllerName.action',
-    config: {
-      policies: ['differentPolicyName'],
-    },
-  }],
-};
-```
-
-
-## Controllers
-Description: Example:
-(Source: https://docs.strapi.io/cms/plugins-development/server-api#controllers)
+## Route-level middlewares
+Description: :::note - middlewares exports middleware functions from the plugin so they can be referenced and reused in route config.
+(Source: https://docs.strapi.io/cms/plugins-development/server-policies-middlewares#route-level-middlewares)
 
 Language: JavaScript
-File path: /src/plugins/my-plugin/server/src/index.js
+File path: /src/plugins/my-plugin/server/src/middlewares/index.js
 
 ```js
-
-//…
-const controllers = require('./controllers');
-//…
-
-module.exports = () => ({
-  //…
-  controllers,
-  //…
-});
-```
-
----
-Language: JavaScript
-File path: /src/plugins/my-plugin/server/controllers/index.js
-
-```js
-
-const controllerA = require('./controller-a');
-const controllerB = require('./controller-b');
-
-module.exports = {
-  controllerA,
-  controllerB,
-};
-```
-
----
-Language: JavaScript
-File path: /src/plugins/my-plugin/server/controllers/controller-a.js
-
-```js
-
 'use strict';
 
-const controllerA = ({ strapi }) => ({
-  index(ctx) {
-    ctx.body = strapi
-      .plugin('my-strapi-plugin')
-      // the name of the service file & the method.
-      .service('service')
-      .getWelcomeMessage();
-  },
-});
-
-module.exports = controllerA;
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/src/index.ts
-
-```ts
-
-import controllers from './controllers';
-
-module.exports = () => ({
-  controllers,
-});
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/controllers/index.ts
-
-```ts
-
-import controllerA from './controller-a';
-import controllerB from './controller-b';
-
-export default {
-  controllerA,
-  controllerB,
-};
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/controllers/controller-a.ts
-
-```ts
-
-import type { Core } from '@strapi/strapi';
-
-const controllerA = ({ strapi }: { strapi: Core.Strapi }) => ({
-  index(ctx) {
-    ctx.body = strapi
-      .plugin('my-strapi-plugin')
-      // the name of the service file & the method.
-      .service('service')
-      .getWelcomeMessage();
-  },
-});
-
-export default controllerA;
-```
-
-
-## Services
-Description: Example:
-(Source: https://docs.strapi.io/cms/plugins-development/server-api#services)
-
-Language: JavaScript
-File path: /src/plugins/my-plugin/server/src/index.js
-
-```js
-
-// …
-const services = require('./services');
-// …
-
-module.exports = () => ({
-  // …
-  services,
-  // …
-});
-```
-
----
-Language: JavaScript
-File path: /src/plugins/my-plugin/server/services/index.js
-
-```js
-
-const serviceA = require('./service-a');
-const serviceB = require('./service-b');
+const logRequest = require('./log-request');
 
 module.exports = {
-  serviceA,
-  serviceB,
+  logRequest,
 };
 ```
 
 ---
 Language: JavaScript
-File path: ./src/plugins/my-plugin/server/services/service-a.js
+File path: /src/plugins/my-plugin/server/src/middlewares/log-request.js
 
 ```js
-
 'use strict';
 
-const service = ({ strapi }) => ({
-  getWelcomeMessage() {
-    return 'Welcome to Strapi 🚀';
-  },
-});
-
-module.exports = service;
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/src/index.ts
-
-```ts
-
-// …
-import services from './services';
-// …
-
-export default {
-  // …
-  services,
-  // …
-};
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/services/index.ts
-
-```ts
-
-import serviceA from './service-a';
-import serviceB from './service-b';
-
-export default {
-  serviceA,
-  serviceB,
-};
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/services/service-a.ts
-
-```ts
-
-import type { Core } from '@strapi/strapi';
-
-const serviceA = ({ strapi }: { strapi: Core.Strapi }) => ({
-  getWelcomeMessage() {
-    return 'Welcome to Strapi 🚀';
-  },
-});
-
-export default serviceA;
-```
-
-
-## Policies
-Description: Example:
-(Source: https://docs.strapi.io/cms/plugins-development/server-api#policies)
-
-Language: JavaScript
-File path: /src/plugins/my-plugin/server/src/index.js
-
-```js
-
-"use strict";
-
-//…
-const policies = require('./policies');
-//…
-
-module.exports = {
-  //…
-  policies,
-  //…
-};
-```
-
----
-Language: JavaScript
-File path: /src/plugins/my-plugin/server/policies/index.js
-
-```js
-
-const policyA = require('./policy-a');
-const policyB = require('./policy-b');
-
-module.exports = {
-  policyA,
-  policyB,
-};
-```
-
----
-Language: JavaScript
-File path: /src/plugins/my-plugin/server/policies/policy-a.js
-
-```js
-
-module.exports = (policyContext, config, { strapi }) => {
-  if (ctx.state.user && ctx.state.user.isActive) {
-    return true;
-  }
-
-  return false;
-};
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/src/index.ts
-
-```ts
-
-//…
-import policies from './policies';
-//…
-
-module.exports = {
-  //…
-  policies,
-  //…
-};
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/policies/index.ts
-
-```ts
-
-import policyA from './policy-a';
-import policyB from './policy-b';
-
-export default {
-  policyA,
-  policyB,
-};
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/policies/policy-a.ts
-
-```ts
-
-export default (policyContext, config, { strapi }) => {
-  if (ctx.state.user && ctx.state.user.isActive) {
-    return true;
-  }
-
-  return false;
-};
-```
-
-
-## Middlewares
-Description: Example:
-(Source: https://docs.strapi.io/cms/plugins-development/server-api#middlewares)
-
-Language: JavaScript
-File path: /src/plugins/my-plugin/server/middlewares/your-middleware.js
-
-```js
-
-/** 
- * The your-middleware.js file 
- * declares a basic middleware function and exports it.
- */
-'use strict';
-module.exports = async (ctx, next) => {
-  console.log("your custom logic")
+module.exports = (config, { strapi }) => async (ctx, next) => {
+  strapi.log.info(`[my-plugin] ${ctx.method} ${ctx.url}`);
   await next();
-}
-```
-
----
-Language: JavaScript
-File path: ./src/plugins/my-plugin/server/middlewares/index.js
-
-```js
-
-/**
- * The middleware function previously created
- * is imported from its file and
- * exported by the middlewares index.
- */
-'use strict';
-const yourMiddleware = require('./your-middleware');
-
-module.exports = {
-  yourMiddleware
+  strapi.log.info(`[my-plugin] → ${ctx.status}`);
 };
 ```
 
 ---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/middlewares/index.ts
+
+```ts
+import logRequest from './log-request';
+
+export default {
+  logRequest,
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/middlewares/log-request.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+export default (config: unknown, { strapi }: { strapi: Core.Strapi }) =>
+  async (ctx: any, next: () => Promise<void>) => {
+    strapi.log.info(`[my-plugin] ${ctx.method} ${ctx.url}`);
+    await next();
+    strapi.log.info(`[my-plugin] → ${ctx.status}`);
+  };
+```
+
 Language: JavaScript
-File path: ./src/plugins/my-plugin/server/register.js
+File path: /src/plugins/my-plugin/server/src/routes/index.js
 
 ```js
-
-/**
- * The middleware is called from 
- * the plugin's register lifecycle function.
- */
 'use strict';
-const middlewares = require('./middlewares');
+
+module.exports = [
+  {
+    method: 'POST',
+    path: '/articles',
+    handler: 'article.create',
+    config: {
+      middlewares: ['plugin::my-plugin.logRequest'],
+    },
+  },
+  {
+    method: 'GET',
+    path: '/articles',
+    handler: 'article.find',
+    config: {
+      middlewares: [
+        // highlight-next-line
+        async (ctx, next) => {
+          // inline middleware, no registration needed
+          ctx.query.pageSize = ctx.query.pageSize || '10';
+          await next();
+        },
+      ],
+    },
+  },
+];
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/routes/index.ts
+
+```ts
+export default [
+  {
+    method: 'POST' as const,
+    path: '/articles',
+    handler: 'article.create',
+    config: {
+      // highlight-next-line
+      middlewares: ['plugin::my-plugin.logRequest'],
+    },
+  },
+  {
+    method: 'GET' as const,
+    path: '/articles',
+    handler: 'article.find',
+    config: {
+      middlewares: [
+        async (ctx: any, next: () => Promise<void>) => {
+          // inline middleware, no registration needed
+          ctx.query.pageSize = ctx.query.pageSize || '10';
+          await next();
+        },
+      ],
+    },
+  },
+];
+```
+
+
+## Server-level middlewares
+Description: A server-level middleware is registered on the Strapi HTTP server directly and runs for every request, not just plugin routes.
+(Source: https://docs.strapi.io/cms/plugins-development/server-policies-middlewares#server-level-middlewares)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/register.js
+
+```js
+'use strict';
 
 module.exports = ({ strapi }) => {
-  strapi.server.use(middlewares.yourMiddleware);
+  // Attached to the global server pipeline — runs per matching request
+  strapi.server.use(async (ctx, next) => {
+    const start = Date.now();
+    await next();
+    const ms = Date.now() - start;
+    ctx.set('X-Response-Time', `${ms}ms`);
+  });
 };
 ```
 
 ---
 Language: TypeScript
-File path: /src/plugins/my-plugin/server/middlewares/your-middleware.ts
+File path: /src/plugins/my-plugin/server/src/register.ts
 
 ```ts
-
-/** 
- * The your-middleware.js file 
- * declares a basic middleware function and exports it.
- */
-const middleware = async (ctx, next) => {
-  console.log("your custom logic")
-  await next();
-}
-
-export default middleware;
-```
-
----
-Language: TypeScript
-File path: ./src/plugins/my-plugin/server/middlewares/index.ts
-
-```ts
-
-/**
- * The middleware function previously created
- * is imported from its file and
- * exported by the middlewares index.
- */
-import yourMiddleware from 'your-middleware';
-
-export default {
-  yourMiddleware
-};
-```
-
----
-Language: TypeScript
-File path: /src/plugins/my-plugin/server/register.ts
-
-```ts
-
-/**
- * The middleware is called from 
- * the plugin's register lifecycle function.
- */
 import type { Core } from '@strapi/strapi';
-import middlewares from './middlewares';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => {
-  strapi.server.use(middlewares.yourMiddleware);
+  // Attached to the global server pipeline — runs per matching request
+  strapi.server.use(async (ctx: any, next: () => Promise<void>) => {
+    const start = Date.now();
+    await next();
+    const ms = Date.now() - start;
+    ctx.set('X-Response-Time', `${ms}ms`);
+  });
 };
 ```
 
 
-## Usage
-Description: top-level getters imply chaining functions (e.g., strapi.plugin('the-plugin-name').controller('the-controller-name'), - global getters are syntactic sugar that allows direct access using a feature's uid (e.g., strapi.controller('plugin::plugin-name.controller-name')).
-(Source: https://docs.strapi.io/cms/plugins-development/server-api#usage)
+
+# Server routes
+Source: https://docs.strapi.io/cms/plugins-development/server-routes
+
+## Array format
+Description: The simplest format: export an array of route objects directly.
+(Source: https://docs.strapi.io/cms/plugins-development/server-routes#array-format)
 
 Language: JavaScript
-File path: N/A
+File path: /src/plugins/my-plugin/server/src/routes/index.js
 
 ```js
-// Access an API or a plugin controller using a top-level getter 
-strapi.api['api-name'].controller('controller-name')
-strapi.plugin('plugin-name').controller('controller-name')
+'use strict';
 
-// Access an API or a plugin controller using a global getter
-strapi.controller('api::api-name.controller-name')
-strapi.controller('plugin::plugin-name.controller-name')
+module.exports = [
+  {
+    method: 'GET',
+    path: '/articles',
+    handler: 'article.find',
+    config: {
+      policies: [],
+    },
+  },
+  {
+    method: 'POST',
+    path: '/articles',
+    handler: 'article.create',
+    config: {
+      policies: [],
+    },
+  },
+];
 ```
 
-Language: Bash
-File path: N/A
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/routes/index.ts
 
-```bash
-strapi.plugin('plugin-name').config
-strapi.plugin('plugin-name').routes
-strapi.plugin('plugin-name').controller('controller-name')
-strapi.plugin('plugin-name').service('service-name')
-strapi.plugin('plugin-name').contentType('content-type-name')
-strapi.plugin('plugin-name').policy('policy-name')
-strapi.plugin('plugin-name').middleware('middleware-name')
+```ts
+export default [
+  {
+    method: 'GET',
+    path: '/articles',
+    handler: 'article.find',
+    config: {
+      policies: [],
+    },
+  },
+  {
+    method: 'POST',
+    path: '/articles',
+    handler: 'article.create',
+    config: {
+      policies: [],
+    },
+  },
+];
 ```
 
-Language: Bash
-File path: N/A
 
-```bash
-strapi.controller('plugin::plugin-name.controller-name');
-strapi.service('plugin::plugin-name.service-name');
-strapi.contentType('plugin::plugin-name.content-type-name');
-strapi.policy('plugin::plugin-name.policy-name');
-strapi.middleware('plugin::plugin-name.middleware-name');
+## Named router format
+Description: Use an object with named keys (admin, content-api, or any custom name) to declare separate router groups.
+(Source: https://docs.strapi.io/cms/plugins-development/server-routes#named-router-format)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/routes/index.js
+
+```js
+'use strict';
+
+const adminRoutes = require('./admin');
+const contentApiRoutes = require('./content-api');
+
+module.exports = {
+  // highlight-start
+  admin: adminRoutes,
+  'content-api': contentApiRoutes,
+  // highlight-end
+};
+```
+
+---
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/routes/admin/index.js
+
+```js
+'use strict';
+
+module.exports = {
+  type: 'admin',
+  routes: [
+    {
+      method: 'GET',
+      path: '/articles',
+      handler: 'article.find',
+      config: {
+        policies: ['admin::isAuthenticatedAdmin'],
+      },
+    },
+  ],
+};
+```
+
+---
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/routes/content-api/index.js
+
+```js
+'use strict';
+
+module.exports = {
+  type: 'content-api',
+  routes: [
+    {
+      method: 'GET',
+      path: '/articles',
+      handler: 'article.find',
+      config: {
+        policies: [],
+      },
+    },
+  ],
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/routes/index.ts
+
+```ts
+import adminRoutes from './admin';
+import contentApiRoutes from './content-api';
+
+export default {
+  // highlight-start
+  admin: adminRoutes,
+  'content-api': contentApiRoutes,
+  // highlight-end
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/routes/admin/index.ts
+
+```ts
+export default {
+  type: 'admin' as const,
+  routes: [
+    {
+      method: 'GET' as const,
+      path: '/articles',
+      handler: 'article.find',
+      config: {
+        policies: ['admin::isAuthenticatedAdmin'],
+      },
+    },
+  ],
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/routes/content-api/index.ts
+
+```ts
+export default {
+  type: 'content-api' as const,
+  routes: [
+    {
+      method: 'GET' as const,
+      path: '/articles',
+      handler: 'article.find',
+      config: {
+        policies: [],
+      },
+    },
+  ],
+};
+```
+
+
+## Factory callback format
+Description: module.exports = ({ strapi }) => ({ ...
+(Source: https://docs.strapi.io/cms/plugins-development/server-routes#factory-callback-format)
+
+Language: JavaScript
+File path: /src/plugins/my-plugin/server/src/routes/index.js
+
+```js
+'use strict';
+
+module.exports = {
+  'content-api': ({ strapi }) => ({
+    type: 'content-api',
+    routes: [
+      {
+        method: 'GET',
+        path: '/articles',
+        handler: 'article.find',
+        config: {
+          // highlight-next-line
+          auth: strapi.plugin('my-plugin').config('publicRead') ? false : {},
+        },
+      },
+    ],
+  }),
+};
+```
+
+---
+Language: TypeScript
+File path: /src/plugins/my-plugin/server/src/routes/index.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+const routes: Record<
+  string,
+  Core.RouterConfig | ((args: { strapi: Core.Strapi }) => Core.RouterConfig)
+> = {
+  'content-api': ({ strapi }) => ({
+    type: 'content-api',
+    routes: [
+      {
+        method: 'GET',
+        path: '/articles',
+        handler: 'article.find',
+        config: {
+          // highlight-next-line
+          auth: strapi.plugin('my-plugin').config('publicRead') ? false : {},
+        },
+      },
+    ],
+  }),
+};
+
+export default routes;
+```
+
+
+## Defaults applied by Strapi
+Description: The following 2 declarations are equivalent.
+(Source: https://docs.strapi.io/cms/plugins-development/server-routes#defaults-applied-by-strapi)
+
+Language: JavaScript
+File path: Implicit
+
+```js
+module.exports = [
+  {
+    method: 'GET',
+    path: '/articles',
+    handler: 'article.find',
+  },
+];
+```
+
+---
+Language: JavaScript
+File path: Equivalent
+
+```js
+module.exports = {
+  admin: {
+    type: 'admin',
+    prefix: '/my-plugin',
+    routes: [
+      {
+        method: 'GET',
+        path: '/articles',
+        handler: 'article.find',
+        config: {
+          auth: {
+            // highlight-next-line
+            scope: ['plugin::my-plugin.article.find'], // auto-generated from handler string
+          },
+        },
+      },
+    ],
+  },
+};
+```
+
+---
+Language: JavaScript
+File path: Implicit
+
+```js
+export default [
+  {
+    method: 'GET' as const,
+    path: '/articles',
+    handler: 'article.find',
+  },
+];
+```
+
+---
+Language: JavaScript
+File path: Equivalent
+
+```js
+export default {
+  admin: {
+    type: 'admin' as const,
+    prefix: '/my-plugin',
+    routes: [
+      {
+        method: 'GET' as const,
+        path: '/articles',
+        handler: 'article.find',
+        config: {
+          auth: {
+            // highlight-next-line
+            scope: ['plugin::my-plugin.article.find'], // auto-generated from handler string
+          },
+        },
+      },
+    ],
+  },
+};
 ```
 
 
