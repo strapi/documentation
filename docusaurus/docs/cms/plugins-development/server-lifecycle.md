@@ -44,11 +44,10 @@ Understanding when each lifecycle runs helps you put the right code in the right
 | --- | --- |
 | 2. Register | `strapi` object is available, but the database is not initialized yet and routing is not initialized yet |
 | 4. Bootstrap | Full runtime: database initialized, routes initialized, services and content-types loaded, other plugins available |
-| 6. Shutdown | Shutdown is in progress; use this hook to release resources before Strapi finishes stopping |
+| 5. Shutdown | Shutdown is in progress; use this hook to release resources before Strapi finishes stopping |
 
-:::note Notes
-* "Phase 5" in the diagram above (server live) is not a plugin lifecycle hook and is omitted from this table. It is the running state between `bootstrap()` completing and `destroy()` being called.
-* Each lifecycle function is called once per plugin instance. If a lifecycle is called a second time on the same plugin instance (for example in custom tests), Strapi throws an error. This does not occur under normal operation.
+:::note
+Each lifecycle function is called once per plugin instance. If a lifecycle is called a second time on the same plugin instance (for example in custom tests), Strapi throws an error. This does not occur under normal operation.
 :::
 
 ## register() {#register}

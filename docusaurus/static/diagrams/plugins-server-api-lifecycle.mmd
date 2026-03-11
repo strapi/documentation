@@ -1,21 +1,21 @@
 flowchart TD
     A([Strapi starts]) --> B
 
-    B["⬡ Phase 1: Load\nAll plugins, APIs, middlewares,\npolicies, and content-types\nloaded in parallel"]
+    B["⬡ Phase 1: Load all plugins, APIs, middlewares, policies, and content-types loaded in parallel"]
     B --> C
 
-    C["⚙ Phase 2: Register\nregister() called on all modules\n(plugins first, then user app)"]:::highlight
+    C["⚙ Phase 2: Register register() called on all modules (plugins first, then user app)"]:::highlight
     C --> D
 
-    D["⬡ Phase 3: Initialize\nDB/model sync · routing setup\npermissions registration"]
+    D["⬡ Phase 3: Initialize DB/model sync · routing setup permissions registration"]
     D --> E
 
-    E["⚙ Phase 4: Bootstrap\nbootstrap() called on all modules\n(plugins first, then user app)"]:::highlight
+    E["⚙ Phase 4: Bootstrap bootstrap() called on all modules (plugins first, then user app)"]:::highlight
     E --> F
 
     F([Server is live])
     F --> G
 
-    G["⚙ Phase 6: Shutdown\ndestroy() called on all modules"]:::highlight
+    G["⚙ Phase 5: Shutdown destroy() called on all modules"]:::highlight
 
     classDef highlight fill:#4945FF,color:#fff,stroke:none
