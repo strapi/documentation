@@ -7,6 +7,7 @@ pagination_next: cms/plugins-development/server-routes
 description: Declare and register content-types in a Strapi plugin and access them at runtime through the Document Service API.
 tags:
   - plugin APIs
+  - server API
   - content-types
   - plugins development
   - backend customization
