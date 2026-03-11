@@ -242,7 +242,7 @@ Due to the default settings in the Strapi Security Middleware you will need to m
 
 To do this in your Strapi project:
 
-1. Navigate to `./config/middleware.js` or `./config/middleware.ts` in your Strapi project.
+1. Navigate to `./config/middlewares.js` or `./config/middlewares.ts` in your Strapi project.
 2. Replace the default `strapi::security` string with the object provided by the upload provider.
 
 **Example:**
