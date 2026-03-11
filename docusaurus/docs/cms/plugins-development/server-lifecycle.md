@@ -20,7 +20,7 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 # Server API: Lifecycle
 
 <Tldr>
-Use `register()` to declare capabilities before the app is fully initialized, `bootstrap()` to run logic once Strapi is initialized, and `destroy()` to clean up resources on shutdown. Each function receives `{ strapi }` as its argument.
+The Server API has 3 lifecycle functions. Use `register()` to declare capabilities before the app is fully initialized, `bootstrap()` to run logic once Strapi is initialized, and `destroy()` to clean up resources on shutdown. Each function receives `{ strapi }` as its argument.
 </Tldr>
 
 Lifecycle functions control when your plugin's server-side logic runs during the Strapi application startup and shutdown sequence. They are exported from the [server entry file](/cms/plugins-development/server-api#entry-file) alongside routes, controllers, services, and other server blocks.

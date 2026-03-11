@@ -3,11 +3,12 @@ title: Server policies & middlewares
 sidebar_label: Server policies & middlewares
 displayed_sidebar: cmsSidebar
 pagination_prev: cms/plugins-development/server-controllers-services
-pagination_next: cms/plugins-development/server-content-types
+pagination_next: cms/plugins-development/server-getters-usage
 toc_max_heading_level: 4
 description: Guard plugin routes with policies and intercept requests with middlewares in the Strapi plugin Server API.
 tags:
   - plugin APIs
+  - server API
   - policies
   - middlewares
   - plugins development
@@ -19,7 +20,7 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 # Server API: Policies & middlewares
 
 <Tldr>
-Policies run before a controller action and return `true` or `false` to allow or block the request. Middlewares run in sequence around the full request/response cycle and call `next()` to continue. Declare policies and middlewares as objects of factory functions and reference them by their plugin-namespaced name in routes.
+Just like the Strapi core, plugins can have policies and middlewares. Plugin policies run before a controller action and return `true` or `false` to allow or block the request. Plugin middlewares run in sequence around the full request/response cycle and call `next()` to continue. Declare policies and middlewares as objects of factory functions and reference them by their plugin-namespaced name in routes.
 </Tldr>
 
 Policies and middlewares are the two mechanisms for intercepting requests in a plugin server. Policies decide whether a request should proceed. Middlewares shape how it is processed.
@@ -233,7 +234,7 @@ For the full policy reference including GraphQL support and the `policyContext` 
 
 ## Middlewares
 
-A middleware is a Koa-style function that wraps the request/response cycle. Unlike policies (which are pass/fail guards), middlewares can read and modify the request before it reaches the controller, and modify the response after the controller has executed.
+A middleware is a Koa-style function that wraps the request/response cycle. Unlike [policies](#policies) (which are pass/fail guards), middlewares can read and modify the request before it reaches the controller, and modify the response after the controller has executed.
 
 Plugins can export middlewares in 2 ways:
 
@@ -314,6 +315,7 @@ module.exports = [
     path: '/articles',
     handler: 'article.create',
     config: {
+      // highlight-next-line
       middlewares: ['plugin::my-plugin.logRequest'],
     },
   },

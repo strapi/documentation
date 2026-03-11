@@ -18,7 +18,7 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 # Server API: Routes
 
 <Tldr>
-Export a `routes` value from the server entry file to expose plugin endpoints. Use the array format for simple cases, the named router format to separate admin and Content API routes, or the factory callback format for dynamic route configuration.
+The Server API exports a `routes` value from the server entry file to expose plugin endpoints. Use the array format for simple cases, the named router format to separate admin and Content API routes, or the factory callback format for dynamic route configuration.
 </Tldr>
 
 Routes expose your plugin's HTTP endpoints and map incoming requests to controller actions. They are exported from the [server entry file](/cms/plugins-development/server-api#entry-file) as a `routes` value.
@@ -35,7 +35,7 @@ Routes expose your plugin's HTTP endpoints and map incoming requests to controll
 
 ### Array format
 
-The simplest format: export an array of route objects directly. Strapi registers these as admin routes with the plugin name as prefix:
+The array format is the most basic format: it exports an array of route objects directly. Strapi registers these objects as admin routes with the plugin name as prefix:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -92,7 +92,7 @@ export default [
 
 ### Named router format
 
-Use an object with named keys (`admin`, `content-api`, or any custom name) to declare separate router groups. Each group is a router object with a `type`, optional `prefix`, and a `routes` array. Use this format when your plugin exposes both admin and Content API routes.
+With the named router format, use an object with named keys (`admin`, `content-api`, or any custom name) to declare separate router groups. Each group is a router object with a `type`, optional `prefix`, and a `routes` array. Use this format when your plugin exposes both admin and Content API routes.
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -388,7 +388,7 @@ For configuration examples including policies, public routes, dynamic URL parame
 
 - **Use the named router format when exposing both admin and Content API endpoints.** It makes the intent of each route explicit and avoids relying on the `type` default, which can be surprising.
 
-- **Keep `handler` as a string.** String handlers get automatic auth scope generation. Function handlers do not: authentication still runs for both string and function handlers unless you set `config.auth: false`, but only string handlers get automatic `config.auth.scope`. If you use a function handler and need route-level permission scoping, define `config.auth.scope` explicitly.
+- **Keep `handler` as a string.** String handlers get automatic auth scope generation, function handlers do not. Authentication still runs for both string and function handlers unless you set `config.auth: false`, but only string handlers get automatic `config.auth.scope`. If you use a function handler and need route-level permission scoping, define `config.auth.scope` explicitly.
 
 - **Scope policies to their namespace.** When referencing a plugin policy in a route, use the full `plugin::my-plugin.policy-name` form. This avoids ambiguity if a policy with the same short name exists elsewhere in the application.
 

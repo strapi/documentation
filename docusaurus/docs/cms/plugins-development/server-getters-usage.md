@@ -17,7 +17,7 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 # Server API: Getters & usage
 
 <Tldr>
-Access plugin resources through top-level getters (`strapi.plugin('my-plugin').service('name')`) or global getters (`strapi.service('plugin::my-plugin.name')`). Both return the same object. Use top-level getters inside your own plugin, and global getters from application code or other plugins. Routes have no global getter equivalent. Configuration uses dedicated config APIs.
+Access plugin resources through top-level getters (`strapi.plugin('my-plugin').service('name')`) or global getters (`strapi.service('plugin::my-plugin.name')`). Both return the same object. Use top-level getters inside your own plugin, and global getters from application code or other plugins. Routes have no global getter equivalent. Configuration uses dedicated configuration APIs.
 </Tldr>
 
 Plugin server resources, such as controllers, services, policies, middlewares, and content-types, are accessible from any server-side location through the `strapi` instance: other plugins, lifecycle hooks, application controllers, or custom scripts. Routes and configuration use dedicated APIs — see the [getter reference](#full-getter-reference) below.
@@ -60,7 +60,7 @@ The following table lists all available getters for a plugin named `todo` with a
 | **Top-level** | `strapi.plugin('todo').service('task')` | `strapi.plugin('todo').controller('task')` | `strapi.plugin('todo').contentType('task')` | `strapi.plugin('todo').policy('is-owner')` | `strapi.plugin('todo').middleware('audit-log')` | `strapi.plugin('todo').routes` | `strapi.plugin('todo').config('featureFlag')` |
 | **Global** | `strapi.service('plugin::todo.task')` | `strapi.controller('plugin::todo.task')` | `strapi.contentType('plugin::todo.task')` | `strapi.policy('plugin::todo.is-owner')` | `strapi.middleware('plugin::todo.audit-log')` | — | `strapi.config.get('plugin::todo.featureFlag')` |
 
-Both styles return the same underlying object. Routes have no global getter equivalent. Configuration uses dedicated config APIs rather than resource getters — both forms read the same merged value.
+Both styles return the same underlying object. Routes have no global getter equivalent. Configuration uses dedicated config APIs rather than resource getters, both forms read the same merged value.
 
 :::tip
 Run `yarn strapi console` or `npm run strapi console` to inspect the `strapi` object in a live console and explore available plugins and their resources interactively.
@@ -70,7 +70,7 @@ Run `yarn strapi console` or `npm run strapi console` to inspect the `strapi` ob
 
 ### Calling a plugin service from a controller
 
-The most common pattern: a controller delegates to its own plugin's service.
+The most common pattern: a controller delegates to its own plugin's service:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -130,7 +130,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 
 ### Calling a plugin service from bootstrap
 
-Services called in `bootstrap()` have access to the full `strapi` instance, including other plugins' services.
+Services called in `bootstrap()` have access to the full `strapi` instance, including other plugins' services:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">

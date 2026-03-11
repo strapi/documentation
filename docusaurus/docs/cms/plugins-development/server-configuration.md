@@ -18,7 +18,7 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 # Server API: Configuration
 
 <Tldr>
-Expose a `config` object with a `default` property and a `validator` function. Strapi deep-merges the defaults with the user's `config/plugins` file, then runs validation before the plugin loads. Read configuration at runtime with `strapi.plugin('my-plugin').config('key')`.
+The Server API exposes a `config` object with a `default` property and a `validator` function. Strapi deep-merges the defaults with the user's `config/plugins` file, then runs validation before the plugin loads. Read configuration at runtime with `strapi.plugin('my-plugin').config('key')`.
 </Tldr>
 
 A plugin can expose a `config` object from its [server entry file](/cms/plugins-development/server-api#entry-file). This object defines default configuration values and validates any user-provided overrides loaded from the application's `config/plugins.js|ts` file.
@@ -40,10 +40,10 @@ When Strapi loads a plugin, it applies the following sequence:
 
 | Step | What Strapi does | Notes |
 | --- | --- | --- |
-| 1 | Compute the default config | If `default` is a function, it is called with `{ env }`. Otherwise the object is used directly. |
+| 1 | Compute the default configuration | If `default` is a function, it is called with `{ env }`. Otherwise the object is used directly. |
 | 2 | Deep-merge with user config | Values from `config/plugins.js\|ts` take precedence over defaults. |
 | 3 | Run `validator(mergedConfig)` | Throws a contextualized error if validation fails, stopping startup. |
-| 4 | Store the final config | Available on the plugin instance via `strapi.plugin('my-plugin').config('key')`. |
+| 4 | Store the final configuration | Available on the plugin instance via `strapi.plugin('my-plugin').config('key')`. |
 
 :::note
 The `{ env }` argument passed to the `default` function is the same `env` utility used across Strapi configuration files. It reads `process.env` values and supports type casting: `env('MY_VAR')`, `env.int('PORT', 3000)`, `env.bool('ENABLED', true)`, etc.

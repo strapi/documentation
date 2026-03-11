@@ -19,7 +19,7 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 # Server API: Controllers & services
 
 <Tldr>
-Controllers handle the HTTP layer: they receive `ctx`, call services, and return responses. Services hold reusable business logic and interact with content-types through the Document Service API. Keep controllers thin and put domain logic in services.
+Just like the Strapi core, plugins can have controllers and services. Plugin controllers handle the HTTP layer: they receive `ctx`, call services, and return responses. Plugin services hold reusable business logic and interact with content-types through the Document Service API. Keep controllers thin and put domain logic in services.
 </Tldr>
 
 Controllers and services are the 2 building blocks that handle request processing and business logic in a plugin server. They work together in a clear separation of concerns: controllers own the HTTP layer, services own the domain layer:
@@ -152,7 +152,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 
 When your plugin exposes Content API routes, sanitize query parameters and output data before returning them. This prevents leaking private fields or bypassing access rules.
 
-Plugin controllers are plain factory functions and do not extend `createCoreController`. This means the `this.sanitizeQuery` and `this.sanitizeOutput` shorthands are not available. Use `strapi.contentAPI.sanitize` directly instead, passing the content-type schema explicitly:
+Plugin controllers are plain factory functions and do not extend `createCoreController` like in the Strapi core (see [backend customization](/cms/backend-customization/controllers) for details). This means the `this.sanitizeQuery` and `this.sanitizeOutput` shorthands are not available. Use `strapi.contentAPI.sanitize` directly instead, passing the content-type schema explicitly:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript" default>

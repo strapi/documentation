@@ -17,7 +17,7 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 # Server API: Content-types
 
 <Tldr>
-Export a `contentTypes` object from the server entry file to declare plugin content-types. Each key must match the content-type's `info.singularName`. The UID follows the `plugin::<plugin-name>.<singular-name>` convention and is used to query, sanitize, and reference the content-type at runtime.
+The Server API exports a `contentTypes` object from the server entry file to declare plugin content-types. The UID follows the `plugin::<plugin-name>.<singular-name>` convention and is used to query, sanitize, and reference the content-type at runtime.
 </Tldr>
 
 A plugin can declare its own content-types by exporting a `contentTypes` object from the [server entry file](/cms/plugins-development/server-api#entry-file). Strapi registers these content-types under the plugin namespace at startup and makes them available through the Document Service API and the content-type registry.
@@ -130,7 +130,7 @@ This UID is used consistently across all APIs:
 Controllers, services, policies, and middlewares use the same `plugin::<plugin-name>.<resource-name>` UID format for global getters, but are referenced by their short registry key (e.g., `'article'`) within plugin-level APIs such as route `handler` and `policies`. See [Getters & usage](/cms/plugins-development/server-getters-usage) for details.
 :::
 
-## Accessing content-types at runtime
+## Access at runtime
 
 ### Querying with the Document Service API
 
