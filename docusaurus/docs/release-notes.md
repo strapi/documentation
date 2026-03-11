@@ -27,8 +27,6 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
-
-
 _Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.39.0](https://github.com/strapi/strapi/releases/tag/v5.39.0)._
 
 ## 6.18.0
@@ -38,7 +36,7 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 
 <br />
 
-#### Repository
+#### CMS
 - [Fully rework and expand the server API part of the plugins development documentation](https://github.com/strapi/documentation/pull/2991)
 - [Fully rework and expand the admin panel API part of the plugins development documentation](https://github.com/strapi/documentation/pull/2920)
 
