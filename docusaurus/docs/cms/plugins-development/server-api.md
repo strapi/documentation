@@ -116,7 +116,7 @@ All server code can technically live in the single entry file, but splitting eac
 
 :::note Notes
 * The entry file accepts either an object literal or a function that receives `{ strapi }` and returns the same object shape. The function form is useful when you need a reference to the Strapi instance at declaration time.
-* `config` is a configuration object, not an executable lifecycle hook. Unlike `register()`, `bootstrap()`, or `destroy()`, it is not called as a function during the plugin lifecycle. It is loaded at startup and used to set defaults and validate user configuration.
+* `config` is a configuration object, not an executable lifecycle hook. Unlike `register()`, `bootstrap()`, or `destroy()`, it is not called as a function during the plugin lifecycle. It is loaded at startup and used to set defaults and validate user configuration. See [server lifecycle](/cms/plugins-development/server-lifecycle) for more information.
 :::
 
 ## Available actions
