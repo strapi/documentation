@@ -29921,7 +29921,7 @@ const pluginConfig = strapi.config.get('plugin::my-plugin');
 Source: https://docs.strapi.io/cms/plugins-development/server-content-types
 
 ## Declaration
-Description: The contentTypes export is an object where each key is the singularName of the content-type, matching the info.singularName field in its schema.
+Description: The contentTypes export is an object where each key registers a content-type under the plugin namespace.
 (Source: https://docs.strapi.io/cms/plugins-development/server-content-types#declaration)
 
 Language: JavaScript
@@ -29934,7 +29934,7 @@ const article = require('./article');
 
 module.exports = {
   // highlight-next-line
-  article: { schema: article }, // key must match info.singularName in the schema
+  article: { schema: article }, // recommended: keep key aligned with info.singularName
 };
 ```
 
@@ -29976,7 +29976,7 @@ import article from './article';
 
 export default {
   // highlight-next-line
-  article: { schema: article }, // key must match info.singularName in the schema
+  article: { schema: article }, // recommended: keep key aligned with info.singularName
 };
 ```
 
@@ -30011,8 +30011,15 @@ File path: /src/plugins/my-plugin/server/src/content-types/article/schema.json
 
 
 ## UIDs and naming conventions
-Description: Once registered, a plugin content-type is identified by a stable UID that follows this format:
+Description: When a plugin content-type is registered, Strapi builds its runtime UID from the plugin namespace and the key used in the contentTypes export:
 (Source: https://docs.strapi.io/cms/plugins-development/server-content-types#uids-and-naming-conventions)
+
+Language: JavaScript
+File path: N/A
+
+```
+plugin::<plugin-name>.<content-types-key>
+```
 
 Language: JavaScript
 File path: N/A
@@ -30925,7 +30932,7 @@ File path: /src/plugins/my-plugin/server/src/policies/has-role.js
 'use strict';
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
 module.exports = (policyContext, config, { strapi }) => {
   const { user } = policyContext.state;
   const targetRole = config.role;
@@ -30970,7 +30977,7 @@ import type { Core } from '@strapi/strapi';
 type UserRole = { code?: string; name?: string };
 
 // Allow the request only if the user has the role specified in the route config
-// Usage in route: { name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }
+// Usage in route: { name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }
 export default (
   policyContext: Core.PolicyContext,
   config: { role?: string },
@@ -31022,7 +31029,7 @@ module.exports = [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -31060,7 +31067,7 @@ export default [
     handler: 'article.delete',
     config: {
       // highlight-next-line
-      policies: [{ name: 'plugin::my-plugin.hasRole', config: { role: 'editor' } }], // with per-route config
+      policies: [{ name: 'plugin::my-plugin.hasRole', options: { role: 'editor' } }], // with per-route config
     },
   },
   {
@@ -31246,7 +31253,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 Source: https://docs.strapi.io/cms/plugins-development/server-routes
 
 ## Array format
-Description: The array format is the most basic format: it exports an array of route objects directly.
+Description: :::tip To expose Content API routes, use the named router format with type: 'content-api'.
 (Source: https://docs.strapi.io/cms/plugins-development/server-routes#array-format)
 
 Language: JavaScript
