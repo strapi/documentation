@@ -57,7 +57,9 @@ Most configuration options for API tokens are available in the admin panel, and 
 
 **Path to configure the feature:** <Icon name="gear-six" /> _Settings > Global settings > API Tokens_
 
-The _API Tokens_ interface displays a table listing all of the created API tokens. More specifically, it displays each API token's name, description, date of creation, and date of last use.
+The _API Tokens_ interface displays a table listing all of the created `content-api` tokens. For admin tokens, use the dedicated **Admin Tokens** page at <Icon name="gear-six" /> _Settings > Global settings > Admin Tokens_.
+
+The two pages are separate interfaces: _API Tokens_ shows only content-api tokens (unchanged behavior), and _Admin Tokens_ shows only admin tokens with an Owner column.
 
 From there, you have the possibility to:
 
@@ -135,7 +137,7 @@ module.exports = ({ env }) => ({
 
 <TabItem label="TypeScript" value="ts">
 
-```js title="/config/admin.ts"
+```ts title="/config/admin.ts"
 export default ({ env }) => ({
   // other config parameters
   secrets: {
@@ -148,6 +150,109 @@ export default ({ env }) => ({
 </Tabs>
 
 This key is used to encrypt and decrypt token values. Without this key, tokens remain usable, but will not be viewable after initial display. New Strapi projects will have this key automatically generated.
+
+## Admin tokens
+
+API tokens come in two permanent, purpose-built kinds: `content-api` and `admin`. Content-api tokens are the existing model — they authenticate against content API routes (REST and GraphQL) and work exactly as before. Admin tokens are a new kind designed for automation workflows that need to call the Strapi Admin API programmatically.
+
+The two kinds serve distinct use cases:
+
+- Use **content-api tokens** for external integrations: CDN cache invalidation, static site generators, and third-party services calling the public REST or GraphQL API.
+- Use **admin tokens** for admin automation: MCP agents, CI/CD pipelines, and scripts that need to create, update, or delete content through the Admin API.
+
+The two kinds are strictly separated. An admin token is rejected on content-api routes, and a content-api token is rejected on admin routes. An agent that needs access to both route types requires two tokens — one of each kind.
+
+### Ownership
+
+Every admin token is owned by a specific admin user. By default, the owner is the user who created the token. Ownership is immutable — it cannot be transferred after creation.
+
+Ownership has two practical effects:
+
+- **Visibility**: Non-super-admin users only see content-api tokens and their own admin tokens in the API tokens list. Super-admins see all tokens.
+- **Key access**: Only the owner can view the plaintext token key or regenerate the token. Even a super-admin cannot read another user's key — this restriction is intentional and cannot be overridden.
+
+:::caution
+If the token owner's account is deleted, the token's key can no longer be retrieved or regenerated. A recovery workflow for this situation is not yet available. To avoid losing access, rotate and replace admin tokens before offboarding a team member who owns them.
+:::
+
+:::caution Owner deactivation
+If the token owner's account is deactivated (`isActive === false`) or blocked (`blocked === true`), any request authenticated with that owner's admin token returns `401 Token owner is deactivated`. The token itself is not deleted — re-activating or unblocking the owner restores token functionality.
+:::
+
+### Permission ceiling
+
+An admin token can never hold more permissions than its owner currently has. When a token is created or updated, the requested permissions are validated against the owner's effective permissions — the union of all permissions granted by the owner's roles.
+
+Three rules apply:
+
+1. **Action and subject must match.** A token cannot be granted a permission the owner does not hold. If the owner does not have `delete` on `api::article.article`, no token owned by that user can have it either.
+2. **Field scope must be a subset.** If the owner's permission for an action and content type is scoped to specific fields (for example, only `title` and `slug`), the token can request at most those same fields.
+3. **Conditions are inherited, not chosen.** If the owner's role applies conditions to a permission (for example, "only records I created"), those conditions are automatically applied to the token and cannot be removed or relaxed.
+
+Super-admins have no permission ceiling of their own. However, when a super-admin edits a token owned by another user, the ceiling is still enforced against the token owner's scope — not the super-admin's unrestricted access.
+
+:::tip
+Any permission that exceeds the owner's ceiling is rejected at creation time with a validation error that lists the out-of-scope action, subject, and fields.
+:::
+
+For more on how admin roles and permissions work, see [Role-Based Access Control (RBAC)](/cms/features/rbac).
+
+### Role-change synchronization
+
+Token permissions are automatically reconciled whenever the owner's effective permissions change. This ensures tokens can never silently retain access that the owner no longer holds.
+
+Reconciliation is triggered by three events:
+
+1. A role's permission set is updated (an action is added or removed from a role).
+2. A user's role assignments change (a role is added to or removed from the user).
+3. A role is deleted.
+
+When reconciliation runs, it applies conservative rules: permissions that no longer fall within the owner's ceiling are deleted, conditions are updated to match the owner's new inherited conditions, and permissions that are still valid are left untouched. For users with multiple roles, a permission shared by a role the user still holds is preserved.
+
+### Creating an admin token
+
+**Path to configure the feature:** <Icon name="gear-six" /> _Settings > Global settings > Admin Tokens_
+
+1. Click on the **Create new API Token** button.
+2. In the token creation form, configure the new admin token:
+
+   | Setting name | Instructions |
+   | --- | --- |
+   | Name | Write the name of the token. |
+   | Description | (optional) Write a description for the token. |
+   | Token duration | Choose a duration: _7 days_, _30 days_, _90 days_, or _Unlimited_. |
+   | Kind | Select **Admin**. This field cannot be changed after creation. |
+   | Permissions | Use the permissions matrix to select which admin actions this token can perform. Permissions the current user does not hold appear disabled and cannot be selected. |
+
+3. Review the inherited conditions displayed in the permissions matrix. Conditions applied to the owner's role permissions are shown as read-only — they apply automatically to the token.
+4. Click **Save**. The token key is displayed once at the top of the interface.
+
+<!-- TODO: Add screenshot once UI is finalized — admin token creation form with ceiling-aware permissions matrix -->
+
+:::note
+The **Kind** field is set at creation time and cannot be changed. To switch a token from `content-api` to `admin` or vice versa, delete the existing token and create a new one.
+:::
+
+:::note
+The plaintext token key is shown only once, immediately after creation or regeneration. If an `encryptionKey` is configured in your project (see [code-based configuration](#code-based-configuration)), the key remains viewable at any time in the admin panel.
+:::
+
+### Managing admin tokens
+
+Admin tokens have a dedicated settings page, separate from content-api tokens. The two pages are independent interfaces, not filtered views of a shared list:
+
+- **Settings > Global settings > API Tokens** — shows only `content-api` tokens. Unchanged from previous behavior; no Owner column.
+- **Settings > Global settings > Admin Tokens** — shows only `admin` tokens. Has its own CRUD routes (`admin::admin-tokens.*` RBAC actions) and an **Owner** column displaying the display name of each token's owner.
+
+<!-- TODO: Add screenshot once UI is finalized — API tokens list view with Owner column -->
+
+The following restrictions apply on the Admin Tokens page:
+
+- The **Regenerate** button is only visible to the token's owner. Other users, including super-admins, do not see this button for tokens they do not own.
+- The token can only be edited by its owner or a super-admin.
+- The token can only be deleted by its owner or a super-admin.
+
+When a super-admin views an admin token owned by another user, a read-only **Owner** field appears in the token details panel, showing the owner's name and email address.
 
 ## Usage
 
