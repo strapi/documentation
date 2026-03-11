@@ -20,7 +20,6 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 <Tldr>
 The Server API exports a `contentTypes` object from the server entry file to declare plugin content-types. The recommended naming convention is to use the same value for the export key and `info.singularName` so the runtime UID remains predictable when querying or sanitizing data.
 </Tldr>
-</Tldr>
 
 A plugin can declare its own content-types by exporting a `contentTypes` object from the [server entry file](/cms/plugins-development/server-api#entry-file). Strapi registers these content-types under the plugin namespace at startup and makes them available through the Document Service API and the content-type registry.
 
