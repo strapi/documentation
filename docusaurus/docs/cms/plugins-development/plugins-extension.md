@@ -37,9 +37,9 @@ Plugin extensions code is located in the `./src/extensions` folder (see [project
     strapi-server.js|ts
     /content-types
       /some-content-type-to-extend
-        model.json
+        schema.json
       /another-content-type-to-extend
-        model.json
+        schema.json
   /another-plugin-to-extend
     strapi-server.js|ts
 ```
@@ -58,7 +58,7 @@ The final schema of the content-types depends on the following loading order:
 
 1. the content-types of the original plugin,
 2. the content-types overridden by the declarations in the [schema](/cms/backend-customization/models#model-schema) defined in `./src/extensions/plugin-name/content-types/content-type-name/schema.json`
-3. the content-types declarations in the [`content-types` key exported from `strapi-server.js|ts`](/cms/plugins-development/server-content-types)
+3. the content-types declarations in the [`contentTypes` export from `strapi-server.js|ts`](/cms/plugins-development/server-content-types)
 4. the content-types declarations in the [`register()` function](/cms/configurations/functions#register) of the Strapi application
 
 To overwrite a plugin's [content-types](/cms/backend-customization/models):
@@ -123,9 +123,9 @@ The `strapi-server.js|ts` file is also where you can override the image function
 ```js title="./src/extensions/upload/strapi-server.js|ts"
 
 module.exports = (plugin) => {
-  plugin.services.upload.image.generateFileName = (file) => {
-    // Example: prefix a timestamp before the original name
-    return `${Date.now()}_${file.hash}${file.ext}`;
+  plugin.services['image-manipulation'].generateFileName = (file) => {
+    // Example: prefix a timestamp before the generated base name
+    return `${Date.now()}_${name}`;
   };
 
   return plugin;
@@ -134,6 +134,12 @@ module.exports = (plugin) => {
 ```
 </details>
 
+:::
+
+`generateFileName()` belongs to the Upload plugin's `image-manipulation` service and expects a single `name: string` argument.
+
+:::caution
+This customization relies on an internal Upload plugin service (`image-manipulation`). Internal extension points are not part of Strapi's stable public API and can change between versions.
 :::
 
 ### Within the register and bootstrap functions
