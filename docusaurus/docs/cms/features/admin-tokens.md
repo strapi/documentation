@@ -1,6 +1,6 @@
 ---
 title: Admin Tokens
-description: Learn how to use admin tokens to authenticate programmatic access to the Strapi Admin API.
+description: Learn how to use Admin tokens to authenticate programmatic access to the Strapi Admin API.
 displayed_sidebar: cmsSidebar
 tags:
   - admin tokens
@@ -13,16 +13,12 @@ tags:
 # Admin Tokens
 
 <Tldr>
-Admin tokens are owner-scoped tokens that authenticate programmatic access to the Strapi Admin API. Unlike content-api tokens, they are bound to a specific admin user's permissions and are designed for automation workflows such as MCP agents, CI/CD pipelines, and scripts that need to create, update, or delete content through the Admin API.
+Admin tokens authenticate programmatic access to the Strapi Admin API. Each token is scoped to a subset of its owner's permissions and is designed for automation workflows such as MCP agents, CI/CD pipelines, and scripts.
 </Tldr>
 
-Strapi has 2 token kinds. Content-api tokens authenticate requests against the public REST and GraphQL APIs. Admin tokens authenticate requests against the Admin API. They are intended for automation workflows that need to manage content or settings programmatically.
+Admin tokens allow automated clients to authenticate requests to the Strapi Admin API. For authenticating requests to the Content API, see [API Tokens](/cms/features/api-tokens).
 
-The 2 kinds are strictly separated. An admin token is rejected on content-api routes, and a content-api token is rejected on admin routes. A workflow that needs access to both route types requires 1 token of each kind.
-
-This page covers how to create and manage admin tokens and how to authenticate Admin API requests with them. For a detailed explanation of the permission model, ownership rules, and role-change reconciliation, see [Admin token permission model](/cms/features/admin-tokens-permission-model).
-
-<Guideflow lightId="TODO" darkId="TODO" />
+Admin tokens and API tokens are strictly separated: an Admin token is rejected on Content API routes, and a Content API token is rejected on admin routes.
 
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">
@@ -41,40 +37,49 @@ This page covers how to create and manage admin tokens and how to authenticate A
   </IdentityCardItem>
 </IdentityCard>
 
+<ThemedImage
+  alt="Admin tokens in the admin panel"
+  sources={{
+      light: '/img/assets/settings/settings_admin-tokens-overview.png',
+      dark: '/img/assets/settings/settings_admin-tokens-overview_DARK.png',
+    }}
+/>
+
 ## Configuration
 
-Admin tokens are configured entirely from the admin panel. No code-based configuration is specific to admin tokens. The shared salt and encryption key that apply to all token kinds are set via `apiToken.salt` and `apiToken.secrets.encryptionKey` in your `/config/admin` file (see [API tokens — code-based configuration](/cms/features/api-tokens#code-based-configuration)).
+Admin tokens are configured entirely from the admin panel. No code-based configuration is specific to Admin tokens. The shared salt and encryption key that apply to all token kinds are set via `apiToken.salt` and `apiToken.secrets.encryptionKey` in your `/config/admin` file (see [API tokens — code-based configuration](/cms/features/api-tokens#code-based-configuration)).
 
-### Admin panel configuration
+### Admin panel settings
 
 **Path to configure the feature:** <Icon name="gear-six" /> _Settings > Administration Panel > Admin Tokens_
 
-#### Creating an admin token
+#### Creating a new Admin token
 
 1. Click on the **Add new Admin Token** button.
-2. In the token creation form, configure the new admin token:
-
+2. In the token creation form, configure the new Admin token:
    | Setting name | Instructions |
    | --- | --- |
    | Name | Write the name of the token. |
    | Description | (optional) Write a description for the token. |
    | Token duration | Choose a duration: _7 days_, _30 days_, _90 days_, or _Unlimited_. |
-   | Permissions | Use the permissions matrix to select which admin actions this token can perform. Permissions the current user does not hold appear disabled and cannot be selected. |
+3. Define which admin actions this token can perform by clicking on the tabs below the form and using checkboxes to enable or disable permissions. Permissions the current user does not hold appear disabled and cannot be selected. Conditions applied to the owner's role permissions are shown as read-only; they apply automatically to the token.
+4. Click on the **Save** button. The new Admin token will be displayed at the top of the interface, along with a copy button <Icon name="copy" />.
 
-3. Review the inherited conditions displayed in the permissions matrix. Conditions applied to the owner's role permissions are shown as read-only. They apply automatically to the token.
-4. Click **Save**. The token key is displayed once at the top of the interface.
+<ThemedImage
+alt="Admin token permissions"
+sources={{
+    light: '/img/assets/settings/settings_admin-token-creation.png',
+    dark: '/img/assets/settings/settings_admin-token-creation_DARK.png',
+  }}
+/>
 
-<!-- TODO: Add screenshot once UI is finalized — admin token creation form with ceiling-aware permissions matrix -->
-
-:::note
-The plaintext token key is shown only once, immediately after creation or regeneration. The `encryptionKey` configuration that makes content-api token keys persistently viewable does not apply to admin tokens. Admin token keys are always restricted to the token owner, regardless of encryption configuration.
+:::caution
+The plaintext token key is shown only once, immediately after creation or regeneration. The `admin.secrets.encryptionKey` configuration that makes Content API token keys persistently viewable does not apply to Admin tokens. Admin token keys are always restricted to the token owner, regardless of encryption configuration.
 :::
 
-#### Managing admin tokens
+#### Managing Admin tokens
 
-Admin tokens have a dedicated settings page at <Icon name="gear-six" /> _Settings > Administration Panel > Admin Tokens_, separate from the content-api tokens page at <Icon name="gear-six" /> _Settings > Global settings > API Tokens_. The Admin Tokens page and the API Tokens page are independent interfaces, not filtered views of a shared list. The Admin Tokens page has its own CRUD routes (`admin::admin-tokens.*` RBAC actions) and displays an **Owner** column showing the display name of each token's owner.
-
-<!-- TODO: Add screenshot once UI is finalized — Admin Tokens list view with Owner column -->
+Admin tokens have a dedicated settings page at <Icon name="gear-six" /> _Settings > Administration Panel > Admin Tokens_, separate from the API tokens page at <Icon name="gear-six" /> _Settings > Global settings > API Tokens_. The Admin Tokens page and the API Tokens page are independent interfaces, not filtered views of a shared list. The Admin Tokens page has its own CRUD routes (`admin::admin-tokens.*` RBAC actions) and displays an **Owner** column showing the display name of each token's owner.
 
 The following restrictions apply on the Admin Tokens page:
 
@@ -82,7 +87,13 @@ The following restrictions apply on the Admin Tokens page:
 - The token can only be edited by its owner or a super-admin.
 - The token can only be deleted by its owner or a super-admin.
 
-When a super-admin views an admin token owned by another user, a read-only **Owner** field appears in the token details panel. The permissions matrix shows only the checkboxes within the token owner's scope, not the super-admin's unrestricted access.
+When a super-admin views an Admin token owned by another user, a read-only **Owner** field appears in the token details panel. The permissions show only the checkboxes within the token owner's scope, not the super-admin's unrestricted access.
+
+:::caution Owner account deactivation and deletion
+
+* If the token owner's account is deleted, all Admin tokens owned by that user are automatically deleted along with their associated permissions. There is no recovery path. Rotate and replace Admin tokens before offboarding a team member who owns them.
+* If the token owner's account is deactivated or blocked, any request authenticated with that owner's Admin token returns `401 Token owner is deactivated`. The token itself is not deleted. Re-activating or unblocking the owner restores token functionality.
+:::
 
 ## Usage
 
@@ -95,26 +106,19 @@ curl -X GET \
 ```
 
 :::caution
-Never expose admin tokens in client-side code. Store them in a secrets manager or environment variable. Admin tokens authenticate against admin routes only. They are rejected on content-api routes.
+Never expose Admin tokens in client-side code. Store them in a secrets manager or environment variable. Admin tokens authenticate against admin routes only. They are rejected on content-api routes.
 :::
-
-For authenticating REST and GraphQL content API requests:
-
-<CustomDocCardsWrapper>
-<CustomDocCard icon="" title="API Tokens" description="Learn how to use content-api tokens to authenticate REST and GraphQL API requests." link="/cms/features/api-tokens" />
-</CustomDocCardsWrapper>
 
 For a detailed explanation of how token permissions are scoped, inherited, and reconciled when roles change:
 
 <CustomDocCardsWrapper>
-<CustomDocCard icon="" title="Admin token permission model" description="Learn how ownership, permission ceilings, and role-change reconciliation work for admin tokens." link="/cms/features/admin-tokens-permission-model" />
+<CustomDocCard icon="" title="Admin token permission model" description="Learn how ownership, permission ceilings, and role-change reconciliation work for Admin tokens." link="/cms/configurations/admin-tokens-permission-model" />
 </CustomDocCardsWrapper>
 
 <!-- drafter:notes
 - TODO: Confirm plan — Free or Growth — for IdentityCard Plan item
 - TODO: Confirm feature flag status for IdentityCard Activation item; if behind a flag, add <FeatureFlagBadge /> on H1 and :::note in intro
-- TODO: Add screenshot — admin token creation form with ceiling-aware permissions matrix (#### Creating an admin token)
-- TODO: Add screenshot — Admin Tokens list view with Owner column (#### Managing admin tokens)
-- TODO: Replace Guideflow placeholder IDs once embed is available
+- TODO: Add screenshot — Admin token creation form with ceiling-aware permissions matrix (#### Creating an Admin token)
+- TODO: Add screenshot — Admin Tokens list view with Owner column (#### Managing Admin tokens)
 - Permission model content extracted to /cms/features/admin-tokens-permission-model.md
 -->

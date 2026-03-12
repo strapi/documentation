@@ -15,10 +15,12 @@ tags:
 # API Tokens
 
 <Tldr>
-Content-api tokens provide scoped authentication for REST and GraphQL API requests without exposing user credentials. This page explains token types, creation, expiration, and secure usage within the admin panel. For programmatic access to the Admin API, see [Admin Tokens](/cms/features/admin-tokens).
+API tokens authenticate external requests to the Strapi Content API without exposing user credentials. Each token is scoped to a set of permissions and expires after a configurable duration.
 </Tldr>
 
-API tokens allow users to authenticate REST and GraphQL API queries (see [APIs introduction](/cms/api/content-api)). This page covers **content-api tokens** — the token kind for external integrations such as CDN cache invalidation, static site generators, and third-party services. For automation workflows that need to call the Admin API programmatically, see [Admin Tokens](/cms/features/admin-tokens).
+API tokens allow external clients to authenticate requests to the Strapi [Content API](/cms/api/content-api). For programmatic access to the Admin API, see [Admin Tokens](/cms/features/admin-tokens).
+
+API tokens and Admin tokens are strictly separated: a Content API token is rejected on admin routes, and an admin token is rejected on Content API routes.
 
 :::caution Security
 Prefer read-only tokens for public access, scope server tokens to only what you need, rotate long-lived tokens, and store them in a secrets manager.

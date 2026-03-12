@@ -60,6 +60,7 @@ const sidebars = {
           label: 'API Tokens',
           id: 'cms/features/api-tokens',
         },
+        'cms/features/admin-tokens',
         {
           type: 'doc',
           label: 'Audit Logs',
