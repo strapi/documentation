@@ -34,7 +34,7 @@ There are 2 use cases where you might want to extend the admin panel:
 Starting with a direct customization in `/src/admin/app` is the right default for project-specific needs. Consider moving to a plugin-based approach when one or more of these signals appear:
 
 - You are duplicating the same admin customization across several Strapi projects.
-- You want to version and distribute the extension — either internally or through the [Strapi Marketplace](https://market.strapi.io/).
+- You want to version and distribute the extension — either internally or through the <ExternalLink text="Strapi Marketplace" to="https://market.strapi.io/"/>.
 - You need stronger automated testing independent from a single project codebase.
 - Multiple teams need shared ownership and release management for the same extension.
 
