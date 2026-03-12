@@ -19,7 +19,7 @@ Admin tokens authenticate programmatic access to the Strapi Admin API. Each toke
 
 Admin tokens allow automated clients to authenticate requests to the Strapi Admin API. For authenticating requests to the Content API, see [API Tokens](/cms/features/api-tokens).
 
-Admin tokens and API tokens are strictly separated: an Admin token is rejected on Content API routes, and a Content API token is rejected on admin routes.
+Admin tokens and API tokens are strictly separated: each is rejected on the other's routes..
 
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">
