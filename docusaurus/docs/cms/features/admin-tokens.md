@@ -112,7 +112,7 @@ To regenerate an Admin token:
 
 ## Usage
 
-Admin tokens authenticate requests to Strapi Admin API routes. Once you have [created and copied an Admin token](#creating-a-new-admin-token), add it to the `Authorization` header of your request using `Bearer` syntax:
+Admin tokens authenticate requests to Strapi Admin API. Once you have [created and copied an Admin token](#creating-a-new-admin-token), add it to the `Authorization` header of your request using `Bearer` syntax:
 
 ```bash title="Example: authenticated Admin API request"
 curl -X GET \
