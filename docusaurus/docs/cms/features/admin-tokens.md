@@ -84,6 +84,8 @@ A token can only be edited or deleted by its owner or a super-admin.
 
 When a super-admin views an Admin token owned by another user, a read-only **Owner** field appears in the token details panel. The permissions show only the checkboxes within the token owner's scope, not the super-admin's unrestricted access.
 
+Removing a permission from a role causes admin tokens owned by users of that role to have the corresponding permission deleted automatically.
+
 :::caution Owner account deactivation and deletion
 
 * If the token owner's account is deleted, all Admin tokens owned by that user are automatically deleted along with their associated permissions. There is no recovery path. Rotate and replace Admin tokens before offboarding a team member who owns them.
