@@ -1,6 +1,7 @@
 ---
 title: Admin Tokens
 description: Learn how to use Admin tokens to authenticate programmatic access to the Strapi Admin API.
+toc_max_heading_level: 4
 displayed_sidebar: cmsSidebar
 tags:
   - admin tokens
