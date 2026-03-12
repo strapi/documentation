@@ -27,6 +27,8 @@ There are 2 use cases where you might want to extend the admin panel:
 - As a Strapi developer, you want to develop a unique solution for a Strapi user who only needs to extend a specific instance of a Strapi application.
   👉 This can be done by directly updating the `/src/admin/app` file, which can import any file located in `/src/admin/extensions`.
 
+<HotReloading />
+
 ## When to consider a plugin instead
 
 Starting with a direct customization in `/src/admin/app` is the right default for project-specific needs. Consider moving to a plugin-based approach when one or more of these signals appear:
@@ -42,5 +44,3 @@ For a full introduction to plugin development, see [Developing Strapi plugins](/
 * If you're looking for ways of replacing the default Rich text editor, refer to the [corresponding page](/cms/admin-panel-customization/wysiwyg-editor).
 * To understand how plugins integrate with the Strapi admin panel, start with the [Admin Panel API overview](/cms/plugins-development/admin-panel-api).
 :::
-
-<HotReloading />
