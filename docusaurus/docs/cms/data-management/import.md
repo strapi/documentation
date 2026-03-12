@@ -37,6 +37,7 @@ The following documentation details the available options to customize your data
 - `strapi import` deletes all existing data, including the database and uploads directory, before importing the backup file.
 - The source and target schemas must match to successfully use `strapi import`, meaning all content types must be identical.
 - Restored data does not include the `Admin users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.
+- If you are using a cloud storage provider (e.g. Cloudinary, AWS S3, Azure Blob Storage, Google Cloud Storage), any media files whose database records are removed during import may be permanently deleted from the cloud provider via its delete API. This affects all environments sharing the same cloud storage account. To avoid unintended deletion of remote assets, ensure each environment uses an isolated storage bucket/account.
 
 :::
 
