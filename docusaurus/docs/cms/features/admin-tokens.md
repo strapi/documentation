@@ -48,13 +48,11 @@ Admin tokens and API tokens are strictly separated: an Admin token is rejected o
 
 ## Configuration
 
-Admin tokens are configured entirely from the admin panel. No code-based configuration is specific to Admin tokens. The shared salt and encryption key that apply to all token kinds are set via `apiToken.salt` and `apiToken.secrets.encryptionKey` in your `/config/admin` file (see [API tokens — code-based configuration](/cms/features/api-tokens#code-based-configuration)).
-
-### Admin panel settings
+Admin tokens are configured entirely from the admin panel. No code-based configuration is specific to Admin tokens. The shared salt and encryption key that apply to all token kinds are set via `apiToken.salt` and `apiToken.secrets.encryptionKey` in your `/config/admin` file (see [API tokens](/cms/features/api-tokens#code-based-configuration)).
 
 **Path to configure the feature:** <Icon name="gear-six" /> _Settings > Administration Panel > Admin Tokens_
 
-#### Creating a new Admin token
+### Creating a new Admin token
 
 1. Click on the **Add new Admin Token** button.
 2. In the token creation form, configure the new Admin token:
@@ -78,15 +76,13 @@ sources={{
 The plaintext token key is shown only once, immediately after creation or regeneration. The `admin.secrets.encryptionKey` configuration that makes Content API token keys persistently viewable does not apply to Admin tokens. Admin token keys are always restricted to the token owner, regardless of encryption configuration.
 :::
 
-#### Managing Admin tokens
+### Managing Admin tokens
 
-Admin tokens have a dedicated settings page at <Icon name="gear-six" /> _Settings > Administration Panel > Admin Tokens_, separate from the API tokens page at <Icon name="gear-six" /> _Settings > Global settings > API Tokens_. The Admin Tokens page and the API Tokens page are independent interfaces, not filtered views of a shared list. The Admin Tokens page has its own CRUD routes (`admin::admin-tokens.*` RBAC actions) and displays an **Owner** column showing the display name of each token's owner.
+Admin tokens have a dedicated settings page at <Icon name="gear-six" /> _Settings > Administration Panel > Admin Tokens_. The Admin Tokens page and the API Tokens page are independent interfaces, not filtered views of a shared list.
 
-The following restrictions apply on the Admin Tokens page:
+The Admin Tokens page displays an **Owner** column showing the display name of each token's owner.
 
-- The **Regenerate** button is only visible to the token's owner. Other users, including super-admins, do not see this button for tokens they do not own.
-- The token can only be edited by its owner or a super-admin.
-- The token can only be deleted by its owner or a super-admin.
+A token can only be edited or deleted by its owner or a super-admin.
 
 When a super-admin views an Admin token owned by another user, a read-only **Owner** field appears in the token details panel. The permissions show only the checkboxes within the token owner's scope, not the super-admin's unrestricted access.
 
