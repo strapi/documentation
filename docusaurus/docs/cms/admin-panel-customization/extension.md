@@ -27,7 +27,7 @@ There are 2 use cases where you might want to extend the admin panel:
 Starting with a direct customization in `/src/admin/app` is the right default for project-specific needs. Consider moving to a plugin-based approach when one or more of these signals appear:
 
 - You are duplicating the same admin customization across several Strapi projects.
-- You want to version and distribute the extension, either internally or through the [Strapi Marketplace](https://market.strapi.io/).
+- You want to version and distribute the extension — either internally or through the [Strapi Marketplace](https://market.strapi.io/).
 - You need stronger automated testing independent from a single project codebase.
 - Multiple teams need shared ownership and release management for the same extension.
 
@@ -35,10 +35,7 @@ For a full introduction to plugin development, see [Developing Strapi plugins](/
 
 :::strapi Additional resources
 * If you're looking for ways of replacing the default Rich text editor, refer to the [corresponding page](/cms/admin-panel-customization/wysiwyg-editor).
-* If you're building a plugin, the following guides cover common extension use cases:
-  * [How to create components for Strapi plugins](/cms/plugins-development/guides/create-components-for-plugins)
-  * [How to create admin permissions for plugins](/cms/plugins-development/guides/admin-permissions-for-plugins)
-  * [How to pass data from the server to the admin panel](/cms/plugins-development/guides/pass-data-from-server-to-admin)
+* To understand how plugins integrate with the Strapi admin panel, start with the [Admin Panel API overview](/cms/plugins-development/admin-panel-api).
 :::
 
 <HotReloading />
