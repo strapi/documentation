@@ -245,7 +245,7 @@ The [API tokens](/cms/features/api-tokens) feature can be configured with the fo
 | `apiToken.secrets.encryptionKey`   | Encryption key used to set API token visibility in the admin panel. When set, token keys remain viewable at any time by the token's owner.                    | string | Random string |
 
 :::tip
-Admin tokens — the new kind of API token for programmatic access to the Admin API — are configured entirely from the admin panel. No additional code-based configuration is required beyond the parameters above (see [Admin tokens](/cms/features/api-tokens#admin-tokens)).
+Admin tokens — the new kind of API token for programmatic access to the Admin API — are configured entirely from the admin panel. No additional code-based configuration is required beyond the parameters above (see [Admin tokens](/cms/features/admin-tokens)).
 :::
 
 ## Audit logs
