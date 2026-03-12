@@ -23,7 +23,7 @@ API tokens allow external clients to authenticate requests to the Strapi [Conten
 API tokens and Admin tokens are strictly separated: a Content API token is rejected on admin routes, and an admin token is rejected on Content API routes.
 
 :::caution Security
-Prefer read-only tokens for public access, scope server tokens to only what you need, rotate long-lived tokens, and store them in a secrets manager.
+Prefer read-only tokens for public access, scope tokens to only what you need, rotate long-lived tokens, and store them in a secrets manager.
 :::
 
 <IdentityCard>
