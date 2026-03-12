@@ -23,14 +23,12 @@ Admin tokens and API tokens are strictly separated: an Admin token is rejected o
 
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">
-    <!-- TODO: Confirm plan with PM — Free or Growth -->
     Free feature
   </IdentityCardItem>
   <IdentityCardItem icon="user" title="Role & permission">
     Minimum "Access the Admin tokens settings page" in Roles > Settings - Admin tokens
   </IdentityCardItem>
   <IdentityCardItem icon="toggle-right" title="Activation">
-    <!-- TODO: Confirm with PM — available by default or behind a feature flag. If behind a flag, add <FeatureFlagBadge /> on the H1 above and a :::note in this intro section. -->
     Available and activated by default
   </IdentityCardItem>
   <IdentityCardItem icon="desktop" title="Environment">
