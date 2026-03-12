@@ -92,6 +92,17 @@ When a super-admin views an Admin token owned by another user, a read-only **Own
 * If the token owner's account is deactivated or blocked, any request authenticated with that owner's Admin token returns `401 Token owner is deactivated`. The token itself is not deleted. Re-activating or unblocking the owner restores token functionality.
 :::
 
+#### Regenerating an Admin token
+
+The **Regenerate** button is only visible to the token's owner. Other users, including super-admins, do not see this button for tokens they do not own.
+
+To regenerate an Admin token:
+
+1. Click on the Admin token's edit button.
+2. Click on the **Regenerate** button.
+3. Click on the **Regenerate** button to confirm in the dialog.
+4. Copy the new Admin token displayed at the top of the interface.
+
 ## Usage
 
 Admin tokens authenticate requests to Strapi Admin API routes. Add the token to the `Authorization` header of your request using `Bearer` syntax:
