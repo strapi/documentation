@@ -114,7 +114,7 @@ curl -X GET \
 ```
 
 :::caution
-Never expose Admin tokens in client-side code. Store them in a secrets manager or environment variable. Admin tokens authenticate against admin routes only. They are rejected on content-api routes.
+Never expose Admin tokens in client-side code. Store them in a secrets manager or environment variable. 
 :::
 
 For a detailed explanation of how token permissions are scoped, inherited, and reconciled when roles change:
