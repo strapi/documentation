@@ -54,12 +54,19 @@ Admin tokens are configured entirely from the admin panel. No code-based configu
 
 1. Click on the **Add new Admin Token** button.
 2. In the token creation form, configure the new Admin token:
+
    | Setting name | Instructions |
    | --- | --- |
    | Name | Write the name of the token. |
    | Description | (optional) Write a description for the token. |
    | Token duration | Choose a duration: _7 days_, _30 days_, _90 days_, or _Unlimited_. |
-3. Define which admin actions this token can perform by clicking on the tabs below the form and using checkboxes to enable or disable permissions. Permissions the current user does not hold appear disabled and cannot be selected. Conditions applied to the owner's role permissions are shown as read-only; they apply automatically to the token.
+3. Define which admin actions this token can perform:
+   - Click the tabs below the form to browse permission categories.
+   - Use the checkboxes to enable or disable individual permissions.
+
+    :::note
+    Permissions that the current user does not hold appear disabled and cannot be selected. Conditions applied to the owner's role are shown as read-only and apply automatically to the token.
+    :::
 4. Click on the **Save** button. The new Admin token will be displayed at the top of the interface, along with a copy button <Icon name="copy" />.
 
 <ThemedImage
@@ -82,7 +89,7 @@ The Admin Tokens page displays an **Owner** column showing the display name of e
 
 A token can only be edited or deleted by its owner or a super-admin.
 
-When a super-admin views an Admin token owned by another user, a read-only **Owner** field appears in the token details panel. The permissions show only the checkboxes within the token owner's scope, not the super-admin's unrestricted access.
+When a super-admin views an Admin token owned by another user, a read-only **Owner** field appears in the token details panel. The permissions panel shows only the checkboxes within the token owner's permission scope, not the super-admin's unrestricted access.
 
 Removing a permission from a role causes admin tokens owned by users of that role to have the corresponding permission deleted automatically.
 
