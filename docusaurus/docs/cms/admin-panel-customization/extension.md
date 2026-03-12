@@ -16,6 +16,11 @@ Extending Strapi's admin panel means leveraging its React foundation to adapt an
 
 There are 2 use cases where you might want to extend the admin panel:
 
+| Approach | Scope | Entry point | Docs |
+|---|---|---|---|
+| Local extension | One Strapi project | `/src/admin/app.(js\|ts)` and `/src/admin/extensions/` | [Admin panel customization](/cms/admin-panel-customization) |
+| Plugin extension | Any project that installs your plugin | `[plugin-name]/admin/src/index.(js\|ts)` | [Admin Panel API overview](/cms/plugins-development/admin-panel-api) |
+
 - As a Strapi plugin developer, you want to develop a Strapi plugin that extends the admin panel **everytime it's installed in any Strapi application**.
   👉 This can be done by taking advantage of the [Admin Panel API for plugins](/cms/plugins-development/admin-panel-api), which lets you add navigation links and settings sections, inject React components into predefined areas, manage state with Redux, extend the Content Manager's Edit and List views, and more.
 
