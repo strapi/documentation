@@ -72,6 +72,7 @@ Strapi pre-generates 2 API tokens for you, a Full access one and a Read-only one
 
 1. Click on the **Create new API Token** button.
 2. In the API token edition interface, configure the new API token:
+
    | Setting name | Instructions |
    | -------------- | ------------------------------------------------------------------------ |
    | Name | Write the name of the API token. |
