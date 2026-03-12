@@ -114,19 +114,5 @@ curl -X GET \
 ```
 
 :::caution
-Never expose Admin tokens in client-side code. Store them in a secrets manager or environment variable. 
+Never expose Admin tokens in client-side code. Store them in a secrets manager or environment variable.
 :::
-
-For a detailed explanation of how token permissions are scoped, inherited, and reconciled when roles change:
-
-<CustomDocCardsWrapper>
-<CustomDocCard icon="" title="Admin token permission model" description="Learn how ownership, permission ceilings, and role-change reconciliation work for Admin tokens." link="/cms/configurations/admin-tokens-permission-model" />
-</CustomDocCardsWrapper>
-
-<!-- drafter:notes
-- TODO: Confirm plan — Free or Growth — for IdentityCard Plan item
-- TODO: Confirm feature flag status for IdentityCard Activation item; if behind a flag, add <FeatureFlagBadge /> on H1 and :::note in intro
-- TODO: Add screenshot — Admin token creation form with ceiling-aware permissions matrix (#### Creating an Admin token)
-- TODO: Add screenshot — Admin Tokens list view with Owner column (#### Managing Admin tokens)
-- Permission model content extracted to /cms/features/admin-tokens-permission-model.md
--->
