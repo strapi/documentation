@@ -18,12 +18,14 @@ import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and content structure from scratch, then deploy your project to Strapi Cloud to add data from there.
 
-*Estimated completion time: 5-10 minutes*
+:::strapi 3 options to discover Strapi
+There are 3 options to discover Strapi. Choose what best suits you:
 
-:::strapi Hosted demo and LaunchPad
-Strapi offers a [hosted demo](https://strapi.io/demo) so you can quickly try its Content Manager and learn how to edit content. In this hosted demo, Strapi runs in production mode, so the Content-Type Builder is [disabled by design](/cms/faq#why-cant-i-create-or-update-content-types-in-productionstaging).
+* Strapi offers a [hosted demo](https://strapi.io/demo) so you can quickly try its Content Manager and learn how to edit content. In this hosted demo, Strapi runs in production mode, so the Content-Type Builder is [disabled by design](/cms/faq#why-cant-i-create-or-update-content-types-in-productionstaging).
 
-If you also want to try the Content-Type Builder and learn how to build a content structure, install the [LaunchPad](https://github.com/strapi/launchpad) application locally.
+* If you want to try a full-fledge application, complete with a Strapi back end, a Next.js front end, and example data, install the [LaunchPad](https://github.com/strapi/launchpad) application locally.
+
+* If you want to learn how to start from scratch, follow the present Quick Start Guide.
 :::
 
 :::prerequisites
