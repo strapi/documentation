@@ -31,7 +31,7 @@ There are 3 options to discover Strapi. Choose what best suits you:
 :::prerequisites
 <InstallPrerequisites components={props.components} />
 
-You will also need to <ExternalLink to="https://github.com/git-guides/install-git" text="install `git`"/> and to have a <ExternalLink to="https://github.com" text="GitHub"/> account to deploy your project to Strapi Cloud.
+You will also need to <ExternalLink to="https://github.com/git-guides/install-git" text="install git"/> and to have a <ExternalLink to="https://github.com" text="GitHub"/> account to deploy your project to Strapi Cloud.
 :::
 
 ## <Icon name="rocket-launch"/> Part A: Create a new project with Strapi
@@ -90,7 +90,13 @@ As you will see in the terminal, your project is now building locally.
 
 ### Step 2: Register the first local administrator user
 
-Once the installation is complete, you need to start the server. In the terminal, type `cd my-strapi-project && npm run develop` and your browser automatically opens a new tab.
+Once the installation is complete, you need to start the server. In the terminal, type or copy and paste the following:
+
+```sh
+cd my-strapi-project && npm run develop
+```
+
+Your browser automatically opens a new tab.
 
 :::tip
 As long as you stay in the `my-strapi-project` folder, you will just need to run `npm run develop` any time you want to start the Strapi server again.
