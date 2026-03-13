@@ -122,7 +122,7 @@ You have just created a new Strapi project! You can start playing with Strapi an
 
 ## <Icon name="wrench" /> Part B: Build your content structure with the Content-type Builder
 
-The installation script has just created an empty project. We will now guide you through creating a restaurants directory, inspired by our <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application.
+The installation script has just created an empty project. We will now guide you through creating a small restaurants directory.
 
 The admin panel of a local Strapi project runs at <ExternalLink to="http://localhost:1337/admin" text="http://localhost:1337/admin"/>. This is where you will spend most of your time creating and updating content.
 
