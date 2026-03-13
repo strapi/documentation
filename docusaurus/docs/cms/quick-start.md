@@ -55,7 +55,11 @@ Follow the steps below by clicking on the togglable content to read more instruc
 
     </TabItem>
 
-2. The terminal will prompt you to log in or sign up. Once you do, a 30-day trial of the <GrowthBadge tooltip="The CMS Growth plan includes the Live Preview, Releases, and Content History features."/> plan will be automatically applied to your project. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
+2. The terminal will prompt you to log in or sign up. Once you do, a 30-day trial of the <GrowthBadge tooltip="The CMS Growth plan includes the Live Preview, Releases, and Content History features."/> plan will be automatically applied to your project. For the purpose of this tutorial, ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
+
+    :::info
+    If you choose to skip the login, you won't be able to follow parts C and D of this tutorial, but will still be able to test things locally.
+    :::
 
 3. In the new browser tab that opens, ensure the confirmation code is the same as in the terminal and click **Confirm**.
 
