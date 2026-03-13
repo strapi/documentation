@@ -396,7 +396,6 @@ First, navigate to <Icon name="feather" /> _Content Manager > Collection types -
 
 1. Click the "Brunch" entry.
 2. On the next screen, click **Publish**.
-3. In the _Confirmation_ window, click **Yes, publish**.  
 
 Then, go back to the Categories list and repeat for the "French Food" category.
 
