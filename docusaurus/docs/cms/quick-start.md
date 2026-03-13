@@ -148,10 +148,10 @@ The Content-Type Builder helps you create your content structure. When creating 
 
 Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
-1. Click on the **Create your first Content type** button.<br />If it's not showing up, go to <Icon name="layout" /> <ExternalLink to="http://localhost:1337/admin/plugins/content-type-builder" text="Content-Type Builder"/> in the main navigation.
-2. Click on **Create new collection type**.
+1. Go to <Icon name="layout" /> <ExternalLink to="http://localhost:1337/admin/plugins/content-type-builder" text="Content-Type Builder"/> in the main navigation on the left of the admin panel.
+2. Click on the <Icon name="plus" classes="ph ph-plus"/> plus icon next to **Collection types**.
 3. Type `Restaurant` for the _Display name_, and click **Continue**.  
-4. Click the Text field.
+4. Click on the <Icon name="plus" classes="ph ph-plus"/> **Add new field** button, and select the Text field.
 5. Type `Name` in the _Name_ field.
 6. Switch to the _Advanced Settings_ tab, and check the **Required field** and the **Unique field** settings.
 7. Click on **Add another field**.
@@ -159,6 +159,7 @@ Your restaurants directory will eventually include many restaurants, so we need 
 9. Type `Description` under the _Name_ field, then click **Finish**.
 10. Finally, click **Save** and wait for Strapi to restart.
 
+<!-- TODO update GIF with new UI -->
 <ThemedImage
 alt="GIF: Create Restaurant collection type in Content-type Builder"
 sources={{
@@ -167,7 +168,8 @@ sources={{
 }}
 />
 
-Once Strapi has restarted, "Restaurant" is listed under <Icon name="feather" /> _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool — let's create another one right now, just for pleasure.
+Once Strapi has restarted, "Restaurant" is listed under <Icon name="feather" /> _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool, let's create another one right now, just for pleasure.
+<br/>
 
 </details>
 
@@ -179,15 +181,17 @@ Once Strapi has restarted, "Restaurant" is listed under <Icon name="feather" /> 
 It would help getting a bit more organized if our restaurants directory had some categories. Let's create a "Category" collection type:
 
 1. Go to <Icon name="layout" /> <ExternalLink to="http://localhost:1337/admin/plugins/content-type-builder" text="Content-type Builder"/> in the main navigation.
-2. Click on **Create new collection type**.
+2. Click on the <Icon name="plus" classes="ph ph-plus"/> plus icon next to **Collection types**.
 3. Type `Category` for the _Display name_, and click **Continue**.
-4. Click the Text field.
+4. Click on the <Icon name="plus" classes="ph ph-plus"/> **Add new field** button, and select the Text field.
 5. Type `Name` in the _Name_ field.
 6. Switch to the _Advanced Settings_ tab, and check the **Required field** and the **Unique field** settings.
 7. Click on **Add another field**.
 8. Choose the Relation field.
-9. In the center, select the icon that represents "many-to-many" ![icon many-to-many](/img/assets/icons/v5/ctb_relation_manytomany.svg). The text should read `Categories has and belongs to many Restaurants`.
+9. In the center, select the icon that represents "many-to-many" ![icon many-to-many](/img/assets/icons/v5/ctb_relation_manytomany.svg).
+10. On the right, click on _Category_ dropdown and choose _Restaurant_ in the list. The text should read `Categories has and belongs to many Restaurants`.
 
+<!-- TODO update screenshots with new UI -->
 <ThemedImage
 alt="Admin Panel screenshot: relations"
 sources={{
