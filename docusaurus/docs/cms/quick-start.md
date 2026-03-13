@@ -208,6 +208,10 @@ sources={{
 You have just created a basic content structure for your Strapi project! You can keep on playing with the [Content-Type Builder](/cms/features/content-type-builder), or proceed to parts C and D below to discover Strapi Cloud and add actual content to your project.
 :::
 
+:::tip
+While we showed here how to manually create a content structure, there are other options you can explore: you can import a Figma prototype, import some files from your computer, or even start prompting [Strapi AI](/cms/features/content-type-builder#strapi-ai) <GrowthBadge /> in natural language to let it create things for you. Feel free to try them out!
+:::
+
 ## <Icon name="cloud" />️ Part C: Deploy to Strapi Cloud
 
 Now that your beautiful first Strapi project is working locally, it's time for the world to see it live! The most straightforward way to host your project is to use Strapi Cloud: Deploying your project on Strapi Cloud is done with a single command! 🚀
