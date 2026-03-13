@@ -328,7 +328,7 @@ sources={{
 />
 
 The restaurant is now listed in the _Collection types - Restaurant_ view of the <Icon name="feather" /> _Content Manager_.
-
+<br/>
 </details>
 
 <details>
@@ -351,7 +351,7 @@ sources={{
   dark: '/img/assets/quick-start-guide/qsg-handson-categories-v5_DARK.gif',
 }}/>
 
-The "French Food" and "Brunch" categories are now listed in the _Collection types - Category_ view of the <Icon name="feather" /> _Content Manager_.
+The "French Food" and "Brunch" categories are now listed as drafts in the _Collection types - Category_ view of the <Icon name="feather" /> _Content Manager_.
 
 Now, we will add a category to a restaurant:
 
@@ -374,7 +374,7 @@ We have just added a restaurant and 2 categories. We now have enough content to 
 5. In the _Permissions_ tab, find _Restaurant_ and click on it.
 6. Click the checkboxes next to **find** and **findOne**.
 7. Repeat with _Category_: click the checkboxes next to **find** and **findOne**.
-8. Finally, click **Save**.
+8. Finally, click **Save** at the top of the page.
 
 <ThemedImage
 alt="Screenshot: Public Role in Users & Permissions plugin"
