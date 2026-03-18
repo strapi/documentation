@@ -65,6 +65,12 @@ The usage limits of additional environments are the same as for the project's pr
 
 Billing is based on the usage of your Strapi Cloud projects. Project plans and addons are either billed monthly or yearly, depending on your billing cycle, while overages are billed monthly. You can view your usage and billing information in the *Billing & Usage* section of your project settings.
 
+### Taxes
+
+For billing addresses in the US, UK and EU, local taxes may be added to your invoices. Tax amounts are calculated based on your billing address and VAT/Tax ID status, and are displayed during checkout and on invoices.
+
+You can add or update your VAT/Tax ID from your [Account Billing](/cloud/account/account-billing) settings.
+
 ### Overages
 
 :::caution
