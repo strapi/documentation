@@ -30,6 +30,10 @@ The following API parameters are available:
 | `sort`             | String or Array  | [Sort the response](/cms/api/rest/sort-pagination.md#sorting) |
 | `pagination`       | Object        | [Page through entries](/cms/api/rest/sort-pagination.md#pagination) |
 
+:::note
+Long bracket-encoded lists in a parameter (for example `populate` or `fields`) are limited by [`arrayLimit` on `strapi::query`](/cms/configurations/middlewares#query). See [Population](/cms/api/rest/populate-select#population).
+:::
+
 Query parameters use the <ExternalLink to="https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets" text="LHS bracket syntax"/> (i.e. they are encoded using square brackets `[]`).
 
 :::tip

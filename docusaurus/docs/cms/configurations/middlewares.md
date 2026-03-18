@@ -633,6 +633,10 @@ The `query` middleware is a query parser based on <ExternalLink to="https://gith
 | `arrayLimit`         | Maximum index limit when parsing arrays (see <ExternalLink to="https://github.com/ljharb/qs#parsing-arrays" text="qs documentation"/>)                    | `Number`  | `100`         |
 | `depth`              | Maximum depth of nested objects when parsing objects (see <ExternalLink to="https://github.com/ljharb/qs#parsing-objects" text="qs documentation"/>)      | `Number`  | `20`          |
 
+:::note
+Bracket-style arrays in the query string (`populate`, `fields`, `filters`, and nested keys) are parsed with `qs` using `arrayLimit`. When a list grows past that limit, `qs` can yield object-shaped values instead of arrays. Strapi may then reject the query or return errors that do not point to this setting. Increase `arrayLimit` when you need longer lists. Larger values allow longer query strings and increase parsing work on each request.
+:::
+
 <details>
 <summary> Example: Custom configuration for the query middleware </summary>
 
@@ -668,6 +672,53 @@ export default [
     config: {
       arrayLimit: 50,
       depth: 10,
+    },
+  },
+  // ...
+]
+```
+
+</TabItem>
+
+</Tabs>
+
+</details>
+
+<details>
+<summary> Example: Raise <code>arrayLimit</code> for long REST query lists </summary>
+
+Use a value that fits your longest bracket-encoded lists (for example many `populate[n]` entries). Adjust the number based on your needs and acceptable parsing cost.
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/middlewares.js"
+
+module.exports = [
+  // ...
+  {
+    name: 'strapi::query',
+    config: {
+      arrayLimit: 200,
+    },
+  },
+  // ...
+]
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/middlewares.ts"
+
+export default [
+  // ...
+  {
+    name: 'strapi::query',
+    config: {
+      arrayLimit: 200,
     },
   },
   // ...
