@@ -18,18 +18,20 @@ import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and content structure from scratch, then deploy your project to Strapi Cloud to add data from there.
 
-*Estimated completion time: 5-10 minutes*
+:::strapi 3 options to discover Strapi
+There are 3 options to discover Strapi. Choose what best suits you:
 
-:::strapi Hosted demo and LaunchPad
-Strapi offers a [hosted demo](https://strapi.io/demo) so you can quickly try its Content Manager and learn how to edit content. In this hosted demo, Strapi runs in production mode, so the Content-Type Builder is [disabled by design](/cms/faq#why-cant-i-create-or-update-content-types-in-productionstaging).
+* Strapi offers a [hosted demo](https://strapi.io/demo) so you can quickly try its Content Manager and learn how to edit content. In this hosted demo, Strapi runs in production mode, so the Content-Type Builder is [disabled by design](/cms/faq#why-cant-i-create-or-update-content-types-in-productionstaging).
 
-If you also want to try the Content-Type Builder and learn how to build a content structure, install the [LaunchPad](https://github.com/strapi/launchpad) application locally.
+* If you want to try a full-fledge application, complete with a Strapi back end, a Next.js front end, and example data, install the [LaunchPad](https://github.com/strapi/launchpad) application locally.
+
+* If you want to learn how to start from scratch, follow the present Quick Start Guide.
 :::
 
 :::prerequisites
 <InstallPrerequisites components={props.components} />
 
-You will also need to <ExternalLink to="https://github.com/git-guides/install-git" text="install `git`"/> and to have a <ExternalLink to="https://github.com" text="GitHub"/> account to deploy your project to Strapi Cloud.
+You will also need to <ExternalLink to="https://github.com/git-guides/install-git" text="install git"/> and to have a <ExternalLink to="https://github.com" text="GitHub"/> account to deploy your project to Strapi Cloud.
 :::
 
 ## <Icon name="rocket-launch"/> Part A: Create a new project with Strapi
@@ -53,7 +55,11 @@ Follow the steps below by clicking on the togglable content to read more instruc
 
     </TabItem>
 
-2. The terminal will prompt you to log in or sign up. Once you do, a 30-day trial of the <GrowthBadge tooltip="The CMS Growth plan includes the Live Preview, Releases, and Content History features."/> plan will be automatically applied to your project. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
+2. The terminal will prompt you to log in or sign up. Once you do, a 30-day trial of the <GrowthBadge tooltip="The CMS Growth plan includes the Live Preview, Releases, and Content History features."/> plan will be automatically applied to your project. For the purpose of this tutorial, ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
+
+    :::info
+    If you choose to skip the login, you won't be able to follow parts C and D of this tutorial, but will still be able to test things locally.
+    :::
 
 3. In the new browser tab that opens, ensure the confirmation code is the same as in the terminal and click **Confirm**.
 
@@ -88,7 +94,13 @@ As you will see in the terminal, your project is now building locally.
 
 ### Step 2: Register the first local administrator user
 
-Once the installation is complete, you need to start the server. In the terminal, type `cd my-strapi-project && npm run develop` and your browser automatically opens a new tab.
+Once the installation is complete, you need to start the server. In the terminal, type or copy and paste the following:
+
+```sh
+cd my-strapi-project && npm run develop
+```
+
+Your browser automatically opens a new tab.
 
 :::tip
 As long as you stay in the `my-strapi-project` folder, you will just need to run `npm run develop` any time you want to start the Strapi server again.
@@ -114,7 +126,7 @@ You have just created a new Strapi project! You can start playing with Strapi an
 
 ## <Icon name="wrench" /> Part B: Build your content structure with the Content-type Builder
 
-The installation script has just created an empty project. We will now guide you through creating a restaurants directory, inspired by our <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application.
+The installation script has just created an empty project. We will now guide you through creating a small restaurants directory.
 
 The admin panel of a local Strapi project runs at <ExternalLink to="http://localhost:1337/admin" text="http://localhost:1337/admin"/>. This is where you will spend most of your time creating and updating content.
 
@@ -136,10 +148,10 @@ The Content-Type Builder helps you create your content structure. When creating 
 
 Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
-1. Click on the **Create your first Content type** button.<br />If it's not showing up, go to <Icon name="layout" /> <ExternalLink to="http://localhost:1337/admin/plugins/content-type-builder" text="Content-Type Builder"/> in the main navigation.
-2. Click on **Create new collection type**.
+1. Go to <Icon name="layout" /> <ExternalLink to="http://localhost:1337/admin/plugins/content-type-builder" text="Content-Type Builder"/> in the main navigation on the left of the admin panel.
+2. Click on the <Icon name="plus" classes="ph ph-plus"/> plus icon next to **Collection types**.
 3. Type `Restaurant` for the _Display name_, and click **Continue**.  
-4. Click the Text field.
+4. Click on the <Icon name="plus" classes="ph ph-plus"/> **Add new field** button, and select the Text field.
 5. Type `Name` in the _Name_ field.
 6. Switch to the _Advanced Settings_ tab, and check the **Required field** and the **Unique field** settings.
 7. Click on **Add another field**.
@@ -150,12 +162,13 @@ Your restaurants directory will eventually include many restaurants, so we need 
 <ThemedImage
 alt="GIF: Create Restaurant collection type in Content-type Builder"
 sources={{
-    light: '/img/assets/quick-start-guide/qsg-handson-restaurant-v5.gif',
-    dark: '/img/assets/quick-start-guide/qsg-handson-restaurant-v5_DARK.gif',
+    light: '/img/assets/quick-start-guide/qsg-handson-restaurant-v6-compressed.gif',
+    dark: '/img/assets/quick-start-guide/qsg-handson-restaurant-v6-compressed_DARK.gif',
 }}
 />
 
-Once Strapi has restarted, "Restaurant" is listed under <Icon name="feather" /> _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool — let's create another one right now, just for pleasure.
+Once Strapi has restarted, "Restaurant" is listed under <Icon name="feather" /> _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool, let's create another one right now, just for pleasure.
+<br/>
 
 </details>
 
@@ -167,20 +180,21 @@ Once Strapi has restarted, "Restaurant" is listed under <Icon name="feather" /> 
 It would help getting a bit more organized if our restaurants directory had some categories. Let's create a "Category" collection type:
 
 1. Go to <Icon name="layout" /> <ExternalLink to="http://localhost:1337/admin/plugins/content-type-builder" text="Content-type Builder"/> in the main navigation.
-2. Click on **Create new collection type**.
+2. Click on the <Icon name="plus" classes="ph ph-plus"/> plus icon next to **Collection types**.
 3. Type `Category` for the _Display name_, and click **Continue**.
-4. Click the Text field.
+4. Click on the <Icon name="plus" classes="ph ph-plus"/> **Add new field** button, and select the Text field.
 5. Type `Name` in the _Name_ field.
 6. Switch to the _Advanced Settings_ tab, and check the **Required field** and the **Unique field** settings.
 7. Click on **Add another field**.
 8. Choose the Relation field.
-9. In the center, select the icon that represents "many-to-many" ![icon many-to-many](/img/assets/icons/v5/ctb_relation_manytomany.svg). The text should read `Categories has and belongs to many Restaurants`.
+9. In the center, select the icon that represents "many-to-many" ![icon many-to-many](/img/assets/icons/v5/ctb_relation_manytomany.svg).
+10. On the right, click on _Category_ dropdown and choose _Restaurant_ in the list. The text should read `Categories has and belongs to many Restaurants`.
 
 <ThemedImage
 alt="Admin Panel screenshot: relations"
 sources={{
-  light: '/img/assets/quick-start-guide/qsg-handson-part2-02-collection_ct-v5.png',
-  dark: '/img/assets/quick-start-guide/qsg-handson-part2-02-collection_ct-v5_DARK.png',
+  light: '/img/assets/quick-start-guide/qsg-handson-part2-02-collection_ct-v6.png',
+  dark: '/img/assets/quick-start-guide/qsg-handson-part2-02-collection_ct-v6_DARK.png',
 }}
 />
 
@@ -190,6 +204,10 @@ sources={{
 
 :::callout <Icon name="confetti" /> Congratulations!
 You have just created a basic content structure for your Strapi project! You can keep on playing with the [Content-Type Builder](/cms/features/content-type-builder), or proceed to parts C and D below to discover Strapi Cloud and add actual content to your project.
+:::
+
+:::tip
+While we showed here how to manually create a content structure, there are other options you can explore: you can import a Figma prototype, import some files from your computer, or even start prompting [Strapi AI](/cms/features/content-type-builder#strapi-ai) <GrowthBadge /> in natural language to let it create things for you. Feel free to try them out!
 :::
 
 ## <Icon name="cloud" />️ Part C: Deploy to Strapi Cloud
@@ -223,7 +241,7 @@ To deploy your project for free to Strapi Cloud, in your terminal:
 
 3. Answer questions in the terminal, giving your project a name (you can press Enter to keep the default name), choosing the recommended NodeJS version, and selecting the region closer to your current place:
 
-    ![Strapi Cloud terminal questions and answers](/img/assets/quick-start-guide/qsg-strapi-cloud-terminal-questions.png)
+    s th![Strapi Cloud terminal questions and answers](/img/assets/quick-start-guide/qsg-strapi-cloud-terminal-questions.png)
 
 Within a few moments, your local project will be hosted on Strapi Cloud. 🚀 
 
@@ -308,7 +326,7 @@ sources={{
 />
 
 The restaurant is now listed in the _Collection types - Restaurant_ view of the <Icon name="feather" /> _Content Manager_.
-
+<br/>
 </details>
 
 <details>
@@ -331,7 +349,7 @@ sources={{
   dark: '/img/assets/quick-start-guide/qsg-handson-categories-v5_DARK.gif',
 }}/>
 
-The "French Food" and "Brunch" categories are now listed in the _Collection types - Category_ view of the <Icon name="feather" /> _Content Manager_.
+The "French Food" and "Brunch" categories are now listed as drafts in the _Collection types - Category_ view of the <Icon name="feather" /> _Content Manager_.
 
 Now, we will add a category to a restaurant:
 
@@ -354,7 +372,7 @@ We have just added a restaurant and 2 categories. We now have enough content to 
 5. In the _Permissions_ tab, find _Restaurant_ and click on it.
 6. Click the checkboxes next to **find** and **findOne**.
 7. Repeat with _Category_: click the checkboxes next to **find** and **findOne**.
-8. Finally, click **Save**.
+8. Finally, click **Save** at the top of the page.
 
 <ThemedImage
 alt="Screenshot: Public Role in Users & Permissions plugin"
@@ -376,7 +394,6 @@ First, navigate to <Icon name="feather" /> _Content Manager > Collection types -
 
 1. Click the "Brunch" entry.
 2. On the next screen, click **Publish**.
-3. In the _Confirmation_ window, click **Yes, publish**.  
 
 Then, go back to the Categories list and repeat for the "French Food" category.
 
