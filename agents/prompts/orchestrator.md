@@ -49,12 +49,18 @@ When the user provides a GitHub PR as source material, use the GitHub MCP tools 
        │   Style     │            └──────┬──────┘
        │   Checker   │                   │
        └──────┬──────┘                   ▼
-              │                    ┌─────────────┐
-              ▼                    │   Style     │
-       ┌─────────────┐            │   Checker   │
-       │  Integrity  │            └──────┬──────┘
+              │                    ┌──────────────┐
+              ▼                    │ Self-Review  │
+       ┌─────────────┐            │ (OC+UX+SC)  │
+       │  Integrity  │            └──────┬───────┘
        │   Checker   │                   │
        └─────────────┘                   ▼
+                                   ┌──────────────┐
+                                   │ Auto-Correct │
+                                   │ (if errors)  │
+                                   └──────┬───────┘
+                                          │
+                                          ▼
                                    ┌─────────────┐
                                    │  Integrity  │
                                    │   Checker   │
@@ -85,7 +91,9 @@ Router → Outliner (Quick Check or Full Review) → Style Checker → Integrity
 - A document exceeds **300 lines**
 - The user explicitly requests "full review" or "UX analysis"
 
-Otherwise, the Outliner runs a Quick Check. See `outliner.md` for details on mode selection logic and output formats.
+Otherwise, the Outliner runs a Quick Check.
+
+See `outliner.md` for details on mode selection logic and output formats.
 
 **Use cases:**
 - Reviewing a PR before merge
@@ -102,7 +110,7 @@ Otherwise, the Outliner runs a Quick Check. See `outliner.md` for details on mod
 
 **Sequence:**
 ```
-Router → Outliner (Generator) if needed → Drafter → Style Checker → Integrity Checker
+Router → Outliner (Generator) if needed → Drafter → Self-Review (Outline Checker + UX Analyzer + Style Checker) → Auto-Correct (if errors) → Integrity Checker
 ```
 
 **Use cases:**
@@ -117,7 +125,7 @@ Router → Outliner (Generator) if needed → Drafter → Style Checker → Inte
 
 ### Auto-Chain Execution
 
-**When Create / Update Mode is triggered, the Orchestrator runs the full pipeline automatically.** It does not stop after each step to ask the user to proceed — it chains the steps until the Drafter has produced output for all targets.
+**When Create / Update Mode is triggered, the Orchestrator runs the full pipeline automatically.** It does not stop after each step to ask the user to proceed — it chains the steps until the Drafter has produced output for all targets, the self-review has run, and any error-level issues have been auto-corrected.
 
 #### Execution algorithm
 
@@ -151,7 +159,29 @@ Router → Outliner (Generator) if needed → Drafter → Style Checker → Inte
 
 3. OUTPUT all Drafter deliverables as separate artifacts
 
-4. (Optional) RUN Style Checker on Drafter output if user requested a "full review"
+4. SELF-REVIEW (automatic, no pause)
+   │
+   ├─ FOR EACH Drafter output:
+   │   ├─ RUN Outline Checker (template compliance)
+   │   ├─ IF action was create_page:
+   │   │   └─ RUN UX Analyzer (reader experience)
+   │   └─ RUN Style Checker (12 Rules compliance)
+   │
+   └─ COLLECT all review reports
+
+5. AUTO-CORRECT (conditional, max 1 retry per target)
+   │
+   ├─ IF any review report contains errors:
+   │   ├─ FOR EACH target with errors:
+   │   │   ├─ Inject review report(s) as context
+   │   │   └─ RE-RUN Drafter (same mode) with corrections
+   │   └─ OUTPUT corrected artifacts (replace originals)
+   │
+   └─ IF no errors (only warnings/suggestions):
+       └─ Append review summary to each artifact as a
+          <!-- drafter:review-notes --> comment block
+
+6. OUTPUT final deliverables + consolidated Self-Review Report artifact
 ```
 
 #### Key rules for auto-chain execution
@@ -160,9 +190,10 @@ Router → Outliner (Generator) if needed → Drafter → Style Checker → Inte
 2. **Do NOT pause between Router and Drafter** unless `ask_user` is set or a critical error occurs.
 3. **Output each step's result as a separate artifact** with descriptive titles (e.g., "Routing Report — MCP Server feature", "Outline — cms/features/mcp-server.md", "Draft — cms/features/mcp-server.md").
 4. **Only the Outline Generator needs the full Router report.** The Drafter receives the outline (for Compose) or the target info + source material (for Patch/Micro-edit).
-5. **Style Checker is deferred by default.** In auto-chain, the goal is to produce drafts quickly. Offer the Style Checker as a follow-up ("Would you like me to run a style check on this draft?") unless the user explicitly asked for a full review.
+5. **Self-review runs automatically after the Drafter.** The Outline Checker, UX Analyzer (for `create_page` targets), and Style Checker run on every Drafter output. If errors are found, the Drafter re-runs once with the review reports as context. Warnings and suggestions are appended as review notes but do not trigger a retry. Maximum 1 retry per target — never more.
 6. **Handle multiple targets sequentially.** Process primary targets first (with OG → Drafter), then required (Drafter Patch), then optional (Drafter Micro-edit). Each produces its own artifact.
 7. **Respect `conditional` targets.** Do not process them until the condition is resolved. If the Router sets `ask_user`, present the question and wait.
+8. **Self-review severity threshold.** Only `[error]`-level findings trigger a Drafter retry. `[warning]` and `[suggestion]` findings are reported but do not cause re-runs. This prevents infinite loops while catching clear rule violations (e.g., "easy/simple" slipping through, missing backticks on file paths, procedures not in numbered lists).
 
 #### When OG is needed vs. straight to Drafter
 
@@ -202,11 +233,13 @@ The key distinction:
 
 3. **Outliner → Drafter** *(create mode only)*: Outline Generator passes the approved outline structure; Drafter fills in content.
 
-4. **Outliner → Style Checker** *(review mode)*: Outliner completes structure check (and UX analysis if Full Review); Style Checker receives the same content for prose review.
+4. **Drafter → Self-Review** *(create/update mode)*: Drafter output is automatically reviewed by Outline Checker, UX Analyzer (for new pages), and Style Checker. If errors are found, the Drafter re-runs once with the review reports as context.
 
-5. **Style Checker → Integrity Checker**: Style Checker completes; Integrity Checker receives content for technical verification.
+5. **Outliner → Style Checker** *(review mode)*: Outliner completes structure check (and UX analysis if Full Review); Style Checker receives the same content for prose review.
 
-6. **All Prompts → Orchestrator**: Each prompt returns a structured report; Orchestrator consolidates into final output.
+6. **Style Checker → Integrity Checker**: Style Checker completes; Integrity Checker receives content for technical verification.
+
+7. **All Prompts → Orchestrator**: Each prompt returns a structured report; Orchestrator consolidates into final output.
 
 **Key principle:** Each prompt focuses on its domain. No prompt should duplicate another's checks.
 
@@ -257,7 +290,7 @@ When a workflow involves creating a branch or opening a PR (typically in Create/
 - User provides source material (PR, diff, spec, Notion doc, pasted code changes) and asks to create or update documentation
 - User provides a PR link/diff and asks what documentation changes are needed **and** wants them written (not just analyzed)
 
-**Disambiguation:** If the user says "what docs need updating?" without asking for the actual writing, run the Router only. If they say "update the docs with this" or "how do I update docs?", run the full auto-chain (Router → OG if needed → Drafter).
+**Disambiguation:** If the user says "what docs need updating?" without asking for the actual writing, run the Router only. If they say "update the docs with this" or "how do I update docs?", run the full auto-chain (Router → OG if needed → Drafter → Self-Review → Auto-Correct if needed).
 
 ---
 
@@ -313,12 +346,58 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 
 ---
 
+### Self-Review Report Format
+
+When the self-review loop runs in Create / Update Mode, the Orchestrator produces a separate report:
+
+```markdown
+# Self-Review Report
+
+**Mode:** Create / Update — Self-Review
+**Date:** [timestamp]
+
+---
+
+## Summary
+
+| Target | Outline Checker | UX Analyzer | Style Checker | Retry? |
+|--------|----------------|-------------|---------------|--------|
+| `path/to/file.md` | X errors, Y warnings | ✅ or N/A | X errors, Y warnings | Yes/No |
+
+---
+
+## Findings by target
+
+### `path/to/file.md`
+
+#### Structure
+[Outline Checker findings]
+
+#### UX (if create_page)
+[UX Analyzer findings]
+
+#### Style
+[Style Checker findings]
+
+#### Auto-Correct applied
+[What was corrected in the retry, or "No retry needed"]
+
+---
+
+## Remaining issues (warnings/suggestions not auto-corrected)
+
+1. **[warning]** [Issue description]
+2. **[suggestion]** [Issue description]
+```
+
+---
+
 ### Behavioral Notes
 
 1. **Determine mode first**: Before calling any prompt, identify which mode applies based on user intent.
 
 2. **State the mode explicitly**: Tell the user which mode is being executed.
-   > "Running **Create / Update Mode**: Router → Outline Generator → Drafter"
+   > "Running **Create / Update Mode**: Router → Outline Generator → Drafter → Self-Review → Auto-Correct (if needed)"
    > "Running **Review Mode** (Full Review): Router → Outliner (Checker + UX Analyzer) → Style Checker"
 
 3. **Execute prompts in sequence**: Each prompt must complete before the next one starts.
@@ -345,4 +424,3 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 - **Incremental review**: Only run prompts relevant to the changed content in a PR
 - **Custom workflows**: Allow users to define custom prompt sequences
 - **Caching**: Cache Router results to avoid re-detecting document type
-- **Auto-retry**: If Style Checker finds errors in Drafter output, re-run Drafter once with the report as context (max 1 retry)
