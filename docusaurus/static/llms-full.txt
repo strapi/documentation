@@ -4161,6 +4161,10 @@ The following API parameters are available:
 | `sort`             | String or Array  | [Sort the response](/cms/api/rest/sort-pagination.md#sorting) |
 | `pagination`       | Object        | [Page through entries](/cms/api/rest/sort-pagination.md#pagination) |
 
+:::note
+Long bracket-encoded lists in a parameter (for example `populate` or `fields`) are limited by [`arrayLimit` on `strapi::query`](/cms/configurations/middlewares#query). See [Population](/cms/api/rest/populate-select#population).
+:::
+
 Query parameters use the  (i.e. they are encoded using square brackets `[]`).
 
 :::tip
@@ -4192,6 +4196,10 @@ You can use the `populate` parameter alone or [in combination with multiple oper
 
 :::caution 
 `populate=deep` plugins are [not recommended in Strapi](https://support.strapi.io/articles/8544110758-why-populate-deep-plugins-are-not-recommended-in-strapi).
+:::
+
+:::note
+Large `populate` lists in the query string (many `populate[0]`, `populate[1]`, … entries) are bounded by the query parser `arrayLimit` (default: `100`). To allow a longer list, raise `arrayLimit` on the [`strapi::query` middleware](/cms/configurations/middlewares#query). Higher values increase parsing cost per request.
 :::
 
 The following table lists populate use cases with example syntax. Each row links to the Understanding populate guide for details:
@@ -7406,6 +7414,15 @@ The `poweredBy` middleware adds a `X-Powered-By` parameter to the response heade
 ### `query`
 
 The `query` middleware is a query parser based on 
+
+</Tabs>
+
+</details>
+
+<details>
+<summary> Example: Raise <code>arrayLimit</code> for long REST query lists </summary>
+
+Use a value that fits your longest bracket-encoded lists (for example many `populate[n]` entries). Adjust the number based on your needs and acceptable parsing cost.
 
 </Tabs>
 

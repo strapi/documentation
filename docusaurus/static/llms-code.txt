@@ -18906,6 +18906,41 @@ export default [
 ]
 ```
 
+Language: JavaScript
+File path: ./config/middlewares.js
+
+```js
+
+module.exports = [
+  // ...
+  {
+    name: 'strapi::query',
+    config: {
+      arrayLimit: 200,
+    },
+  },
+  // ...
+]
+```
+
+---
+Language: TypeScript
+File path: ./config/middlewares.ts
+
+```ts
+
+export default [
+  // ...
+  {
+    name: 'strapi::query',
+    config: {
+      arrayLimit: 200,
+    },
+  },
+  // ...
+]
+```
+
 
 ## public
 Description: Example: Custom configuration for the public middleware
