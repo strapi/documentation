@@ -166,20 +166,23 @@ The billing cycle of additional environments you purchase will match the billing
 
 To create a new environment:
 
-
 1. Click on the **Add a new environment** button.
-2. In the dialog that opens, you can see the price for the new environment and the date of the next invoice.
-3. Fill in the available settings:
+2. In the setup step, fill in the available settings:
 
     | Setting name     | Instructions                                                             |
     | ---------------- | ------------------------------------------------------------------------ |
     | Environment name | (mandatory) Write a name for your project's new environment.             |
     | Git branch       | (mandatory) Select the right branch for your new environment.            |
     | Base directory   | Write the name of the base directory of your new environment.            |
-    | Import variables | Tick the box to import variable names from an existing environment. Values will not be imported, and all variables will remain blank. |
     | Deploy on push      | Tick this box to automatically trigger a deployment when changes are pushed to your selected branch. When disabled, you will need to manually deploy the latest changes. |
+    | Import variables | Tick the box to import variable names from an existing environment. Values will not be imported, and all variables will remain blank. |
+  
 
-4. Click on the **Add environment** button to create your project's new environment. You will then be redirected to your *Project dashboard* where you will be able to follow your new environment's creation and first deployment.
+3. Click **Confirm** to proceed to the checkout step. 
+
+4. Review the environment price, applicable taxes and proration adjustment.
+
+5. Click on the **Add environment** button to create your project's new environment. You will then be redirected to your *Project dashboard* where you will be able to follow your new environment's creation and first deployment.
 
 :::note
 If an error occurs during the environment creation, the progress indicator will stop and display an error message. You will see a **Retry** button next to the failed step, allowing you to restart the creation process.
