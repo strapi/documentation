@@ -186,7 +186,8 @@ To upgrade your project to a paid plan, you will need to fill in your billing in
 <Icon name="fast-forward" /> Skip to step 5 of the section below to finalize the creation of your project.
 :::
 
-1. Click on the **Continue to billing** button. You will directly be redirected to the second and final project deployment interface. There you can review all your new project setup information, enter payment & billing details and receive your invoice.
+1. Click on the **Continue to billing** button. You will be redirected to the billing page where you can enter your payment details and review your invoice.
+
 
     <ThemedImage
     alt="Payment & Billing"
@@ -196,13 +197,19 @@ To upgrade your project to a paid plan, you will need to fill in your billing in
     }}
     />
 
-2. Review your project: make sure the plan and setup information are correct. If needed, click the <Icon name="pencil-simple" /> **Edit** button to navigate back to the first step of the project creation and fix any mistake.
+2. In the *Payment method* section, add a credit card. This card will be used for all project-related transactions, including add-ons and overages.
 
-3. In the Payment section, fill in at least all mandatory elements for *Payment method* and *Billing information*.
+3. In the *Billing information* section, fill in your payment details and billing address.
 
-4. Check your invoice which informs you of what should be paid now and the following month. Optionally, you can enter a *Discount code* if you have one.
+4. Review the *Invoice* section. When purchasing a monthly subscription, the subscription price will be prorated for the remaining days in the current billing cycle. Optionally, expand the *Discount code* section to enter a code.
 
-5. Click on the **Create project** button to finalize the creation of your new Strapi Cloud project.
+    :::note 
+    Taxes may be added to your invoice based on your billing address:
+    - In the EU and UK, providing a valid VAT ID exempts you from VAT. If no valid VAT ID is provided, VAT will be added to your invoice.
+    - In the US, applicable sales taxes are calculated based on your state and address.
+    :::
+
+5. Click on the **Subscribe** button to finalize the creation of your new Strapi Cloud project.
 
 ## Deploying your project
 
