@@ -39,6 +39,56 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 <br />
 
 #### CMS
+- [Refresh the Quick Start Guide](https://github.com/strapi/documentation/pull/3017)
+- [Add more information about the `arrayLimit` parameter from the `strapi::query` middleware](https://github.com/strapi/documentation/pull/3010)
+- [Improve the admin panel extension page](https://github.com/strapi/documentation/pull/3003)
+
+#### Cloud
+- [VAT handling on Strapi Cloud](https://github.com/strapi/documentation/pull/3011)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Extend warning about data loss when using DTS import](https://github.com/strapi/documentation/pull/3005)
+- [Fix plugins extension page](https://github.com/strapi/documentation/pull/3000)
+
+#### Cloud
+- [Downgrading with an organization repository](https://github.com/strapi/documentation/pull/3009)
+- [Update project creation page](https://github.com/strapi/documentation/pull/3008)
+- [Update deletion reasons](https://github.com/strapi/documentation/pull/3007)
+
+#### Repository
+- [Ensure the Style Checker spots em dashes](https://github.com/strapi/documentation/pull/3002)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/innerdvations" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/999278?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="innerdvations"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
+
+## 6.18.1
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
 - [Add more information about the `arrayLimit` parameter from the `strapi::query` middleware](https://github.com/strapi/documentation/pull/3010)
 - [Improve the admin panel extension page](https://github.com/strapi/documentation/pull/3003)
 
