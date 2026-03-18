@@ -159,12 +159,11 @@ Your restaurants directory will eventually include many restaurants, so we need 
 9. Type `Description` under the _Name_ field, then click **Finish**.
 10. Finally, click **Save** and wait for Strapi to restart.
 
-<!-- TODO update GIF with new UI -->
 <ThemedImage
 alt="GIF: Create Restaurant collection type in Content-type Builder"
 sources={{
-    light: '/img/assets/quick-start-guide/qsg-handson-restaurant-v5.gif',
-    dark: '/img/assets/quick-start-guide/qsg-handson-restaurant-v5_DARK.gif',
+    light: '/img/assets/quick-start-guide/qsg-handson-restaurant-v6-compressed.gif',
+    dark: '/img/assets/quick-start-guide/qsg-handson-restaurant-v6-compressed_DARK.gif',
 }}
 />
 
@@ -191,12 +190,11 @@ It would help getting a bit more organized if our restaurants directory had some
 9. In the center, select the icon that represents "many-to-many" ![icon many-to-many](/img/assets/icons/v5/ctb_relation_manytomany.svg).
 10. On the right, click on _Category_ dropdown and choose _Restaurant_ in the list. The text should read `Categories has and belongs to many Restaurants`.
 
-<!-- TODO update screenshots with new UI -->
 <ThemedImage
 alt="Admin Panel screenshot: relations"
 sources={{
-  light: '/img/assets/quick-start-guide/qsg-handson-part2-02-collection_ct-v5.png',
-  dark: '/img/assets/quick-start-guide/qsg-handson-part2-02-collection_ct-v5_DARK.png',
+  light: '/img/assets/quick-start-guide/qsg-handson-part2-02-collection_ct-v6.png',
+  dark: '/img/assets/quick-start-guide/qsg-handson-part2-02-collection_ct-v6_DARK.png',
 }}
 />
 
@@ -243,7 +241,7 @@ To deploy your project for free to Strapi Cloud, in your terminal:
 
 3. Answer questions in the terminal, giving your project a name (you can press Enter to keep the default name), choosing the recommended NodeJS version, and selecting the region closer to your current place:
 
-    ![Strapi Cloud terminal questions and answers](/img/assets/quick-start-guide/qsg-strapi-cloud-terminal-questions.png)
+    s th![Strapi Cloud terminal questions and answers](/img/assets/quick-start-guide/qsg-strapi-cloud-terminal-questions.png)
 
 Within a few moments, your local project will be hosted on Strapi Cloud. 🚀 
 
