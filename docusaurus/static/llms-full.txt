@@ -427,7 +427,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     | Region       | Choose the geographic location of the servers where your Strapi application is hosted. Selected region can either be US (East), Europe (West) or Asia (Southeast). |
 
     :::note
-    The Git branch and 'Deploy on push' settings can be modified afterwards through the project settings. However, the hosting region can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
+    The Git branch and "Deploy on push" settings can be modified afterwards through the project settings. However, the hosting region can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
     :::
 
     5.b. (optional) Click on **Show advanced settings** to fill in the following options:
