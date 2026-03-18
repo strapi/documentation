@@ -129,6 +129,10 @@ You can use the `populate` parameter alone or [in combination with multiple oper
 `populate=deep` plugins are [not recommended in Strapi](https://support.strapi.io/articles/8544110758-why-populate-deep-plugins-are-not-recommended-in-strapi).
 :::
 
+:::note
+Large `populate` lists in the query string (many `populate[0]`, `populate[1]`, … entries) are bounded by the query parser `arrayLimit` (default: `100`). To allow a longer list, raise `arrayLimit` on the [`strapi::query` middleware](/cms/configurations/middlewares#query). Higher values increase parsing cost per request.
+:::
+
 The following table lists populate use cases with example syntax. Each row links to the Understanding populate guide for details:
 
 | Use case  | Example parameter syntax | Detailed explanations to read |
