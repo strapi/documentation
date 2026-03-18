@@ -1124,7 +1124,9 @@ Plan downgrades can be managed, for each project, via the project settings. Down
 :::caution
 Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for overages. You may also lose access to some features: for example, downgrading to the Essential plan would result in the loss of all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
 
-Note also that you cannot downgrade if you have additional paid environments. You will first need to delete all additional environments that were not included in the base price of your plan (see [Resetting & Deleting environment](#resetting--deleting-environment)) before you can schedule a downgrade. When downgrading from Pro to Scale, the additional included environment will automatically be deleted when the downgrade takes effect.
+Note also that you cannot downgrade if you have additional paid environments. You will first need to delete all additional environments that were not included in the base price of you plan (see [Resetting & Deleting environment](#resetting--deleting-environment)) before you can schedule a downgrade. When downgrading from Scale to Pro, the additional included environment will automatically be deleted when the downgrade takes effect.
+
+You cannot downgrade to the Free plan if a GitHub organization repository is connected to the project. To downgrade, first switch to a personal repository in the [Connected Git repository](#modifying-git-repository--branch) settings.
 :::
 
 To downgrade your current plan to a lower one:
