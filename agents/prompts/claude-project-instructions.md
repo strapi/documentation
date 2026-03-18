@@ -183,8 +183,9 @@ Step 5: AUTO-CORRECT (conditional, max 1 retry per target)
   │   │   └─ RE-RUN Drafter (same mode) with corrections
   │   └─ OUTPUT corrected artifacts (replace originals)
   │
-  └─ IF no errors (only warnings/suggestions):
-      └─ Append review summary as <!-- drafter:review-notes --> comment
+  └─ IF no errors or warnings (suggestions only):
+     └─ Append review summary to each artifact as a
+        <!-- drafter:review-notes --> comment block
 
 Step 6: OUTPUT final deliverables + Self-Review Report artifact
 ```
@@ -196,10 +197,10 @@ Step 6: OUTPUT final deliverables + Self-Review Report artifact
 3. **Output each deliverable as a separate Markdown artifact** with a descriptive title (e.g., "Routing Report — MCP Server feature", "Draft — cms/features/mcp-server.md").
 4. **State the chain upfront.** At the start, tell the user what will run:
    > "Running **Create / Update Mode**: Router → Outline Generator → Drafter → Self-Review → Auto-Correct (if needed)"
-5. **Self-review runs automatically after the Drafter.** The Outline Checker, UX Analyzer (for `create_page` targets), and Style Checker run on every Drafter output. If errors are found, the Drafter re-runs once with the review reports as context. Warnings and suggestions are appended as review notes but do not trigger a retry. Maximum 1 retry per target — never more.
+5. **Self-review runs automatically after the Drafter.** The Outline Checker, UX Analyzer (for `create_page` targets), and Style Checker run on every Drafter output. If errors or warnings are found, the Drafter re-runs once with the review reports as context. Suggestions are appended as review notes but do not trigger a retry. Maximum 1 retry per target — never more.
 6. **Handle multiple targets sequentially.** Process primary targets first, then required, then optional.
 7. **Respect `conditional` targets.** Do not process them until the condition is resolved.
-8. **Self-review severity threshold.** Only `[error]`-level findings trigger a Drafter retry. `[warning]` and `[suggestion]` findings are reported but do not cause re-runs. This prevents infinite loops while catching clear rule violations.
+8. **Self-review severity threshold.** `[error]` and `[warning]` findings trigger a Drafter retry. Only `[suggestion]` findings are reported without causing re-runs. This prevents infinite loops while catching clear rule violations (e.g., "easy/simple" slipping through, missing backticks on file paths, procedures not in numbered lists).
 
 ### When Outline Generator is needed vs. straight to Drafter
 

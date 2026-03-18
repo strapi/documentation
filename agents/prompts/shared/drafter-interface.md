@@ -349,6 +349,6 @@ These questions were resolved during design (2025-02-11) and are documented here
 
 **Decision:** The Orchestrator runs a self-review loop after the Drafter completes. The Outline Checker, UX Analyzer (for `create_page` targets), and Style Checker run automatically on every Drafter output. If any report contains `[error]`-level findings, the Drafter re-runs once with the review reports injected as context. Maximum 1 retry per target, never more.
 
-**Severity threshold:** Only errors trigger a retry. Warnings and suggestions are appended as `<!-- drafter:review-notes -->` comments but do not cause re-runs. This prevents infinite loops while catching clear violations (e.g., "easy" slipping through, missing backticks on file paths, procedures not in numbered lists).
+**Severity threshold:** Errors and warnings trigger a retry. Only suggestions are appended as `<!-- drafter:review-notes -->` comments without causing re-runs.
 
 **Rationale:** Automated re-runs are valuable but risky if unbounded. A single retry with a severity threshold (errors only) balances automation with predictability. The expanded self-review (Outline Checker + UX Analyzer + Style Checker, not just Style Checker) ensures structural and experiential issues are also caught before delivery.
