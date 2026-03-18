@@ -32869,6 +32869,18 @@ File path: N/A
 ```
 
 
+## Step 2: Register the first local administrator user
+Description: Once the installation is complete, you need to start the server.
+(Source: https://docs.strapi.io/cms/quick-start#step-2-register-the-first-local-administrator-user)
+
+Language: Bash
+File path: .strapi-cloud.js
+
+```bash
+cd my-strapi-project && npm run develop
+```
+
+
 ## ️ Part C: Deploy to Strapi Cloud
 Description: If the server for your local Strapi project is running, which should be the case if you followed this tutorial so far, press Ctrl-C to stop the server.
 (Source: https://docs.strapi.io/cms/quick-start#part-c-deploy-to-strapi-cloud)

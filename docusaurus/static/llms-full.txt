@@ -12698,12 +12698,14 @@ Source: https://docs.strapi.io/cms/quick-start
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and content structure from scratch, then deploy your project to Strapi Cloud to add data from there.
 
-*Estimated completion time: 5-10 minutes*
+:::strapi 3 options to discover Strapi
+There are 3 options to discover Strapi. Choose what best suits you:
 
-:::strapi Hosted demo and LaunchPad
-Strapi offers a [hosted demo](https://strapi.io/demo) so you can quickly try its Content Manager and learn how to edit content. In this hosted demo, Strapi runs in production mode, so the Content-Type Builder is [disabled by design](/cms/faq#why-cant-i-create-or-update-content-types-in-productionstaging).
+* Strapi offers a [hosted demo](https://strapi.io/demo) so you can quickly try its Content Manager and learn how to edit content. In this hosted demo, Strapi runs in production mode, so the Content-Type Builder is [disabled by design](/cms/faq#why-cant-i-create-or-update-content-types-in-productionstaging).
 
-If you also want to try the Content-Type Builder and learn how to build a content structure, install the [LaunchPad](https://github.com/strapi/launchpad) application locally.
+* If you want to try a full-fledge application, complete with a Strapi back end, a Next.js front end, and example data, install the [LaunchPad](https://github.com/strapi/launchpad) application locally.
+
+* If you want to learn how to start from scratch, follow the present Quick Start Guide.
 :::
 
 :::prerequisites
@@ -12714,7 +12716,7 @@ If you also want to try the Content-Type Builder and learn how to build a conten
 
 3. Answer questions in the terminal, giving your project a name (you can press Enter to keep the default name), choosing the recommended NodeJS version, and selecting the region closer to your current place:
 
-    ![Strapi Cloud terminal questions and answers](/img/assets/quick-start-guide/qsg-strapi-cloud-terminal-questions.png)
+    s th![Strapi Cloud terminal questions and answers](/img/assets/quick-start-guide/qsg-strapi-cloud-terminal-questions.png)
 
 Within a few moments, your local project will be hosted on Strapi Cloud. 🚀 
 
@@ -12774,7 +12776,7 @@ Any project hosted on Strapi Cloud is accessible from its own URL, something lik
 5. Click **Save**.
 
 The restaurant is now listed in the _Collection types - Restaurant_ view of the  _Content Manager_.
-
+<br/>
 </details>
 
 <details>
@@ -12790,7 +12792,7 @@ Let's go to  _Content Manager > Collection types - Category_ and create 2 catego
 4. Go back to _Collection types - Category_, then click again on **Create new entry**.  
 5. Type `Brunch` in the _Name_ field, then click **Save**.
 
-The "French Food" and "Brunch" categories are now listed in the _Collection types - Category_ view of the  _Content Manager_.
+The "French Food" and "Brunch" categories are now listed as drafts in the _Collection types - Category_ view of the  _Content Manager_.
 
 Now, we will add a category to a restaurant:
 
@@ -12813,7 +12815,7 @@ We have just added a restaurant and 2 categories. We now have enough content to 
 5. In the _Permissions_ tab, find _Restaurant_ and click on it.
 6. Click the checkboxes next to **find** and **findOne**.
 7. Repeat with _Category_: click the checkboxes next to **find** and **findOne**.
-8. Finally, click **Save**.
+8. Finally, click **Save** at the top of the page.
 
 </details>
 
@@ -12828,7 +12830,6 @@ First, navigate to  _Content Manager > Collection types - Category_. From there:
 
 1. Click the "Brunch" entry.
 2. On the next screen, click **Publish**.
-3. In the _Confirmation_ window, click **Yes, publish**.  
 
 Then, go back to the Categories list and repeat for the "French Food" category.
 
