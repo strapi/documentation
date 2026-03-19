@@ -300,7 +300,7 @@ New entries are only considered created once some of their content has been writ
 :::
 
 :::tip
-While in the Edit view, click the <Icon name="dots-three-outline"/> at the top right of the page to view the published, updated, and created dates for the entry, and use the <Icon name="copy"/> **Copy document ID** button to save the value into your clipboard.
+While in the Edit view, click the <Icon name="dots-three-outline"/> at the top right of the page to view the published, updated, and created dates for the entry, and use the <Icon name="copy"/> **Copy document ID** button to save the value to your clipboard.
 :::
 
 <!-- MAY BE REMOVED - NOT SURE ABOUT RELEVANCE
