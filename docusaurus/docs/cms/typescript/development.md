@@ -149,3 +149,7 @@ There are 2 important distinctions for TypeScript applications:
 :::note
 It is not necessary to repeat the `yarn` or `npm install` command after the initial installation. The `yarn build` or `npm run build` command is necessary to implement any plugin development that affects the admin panel.
 :::
+
+### Type declaration generation
+
+When building TypeScript plugins using the Plugin SDK (`yarn build` or `npm run build`), the build process generates comprehensive type declarations for all source files in the plugin, not just the entry point. All TypeScript types, interfaces, and type definitions used throughout the plugin will have corresponding `.d.ts` declaration files emitted in the build output. This ensures better TypeScript support and IDE autocomplete for developers consuming the plugin.
