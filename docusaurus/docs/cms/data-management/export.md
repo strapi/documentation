@@ -34,7 +34,6 @@ The following documentation details the available options to customize your data
 
 :::caution
 * Admin users and API tokens are not exported.
-* Media from a 3rd party provider (e.g., Cloudinary or AWS S3) are not included in the export as those files do not exist in the upload folders.
 :::
 
 ## Understand the exported archive
