@@ -33,7 +33,7 @@
     "@docusaurus/theme-mermaid": "3.5.2",
     "@mdx-js/react": "^3.0.0",
     "@octokit/rest": "^22.0.0",
-    "axios": "^1.9.0",
+    "axios": "1.13.5",
     "classnames": "^2.5.1",
     "clsx": "^1.2.1",
     "docusaurus-plugin-hubspot": "^1.0.1",
