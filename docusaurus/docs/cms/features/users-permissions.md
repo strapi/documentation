@@ -590,7 +590,7 @@ When [session management](#jwt-management-modes) is enabled (`jwtManagement: 're
 
 #### User CRUD endpoints
 
-The Users & Permissions plugin also exposes a set of endpoints for managing user records directly. These endpoints are separate from the authentication endpoints and allow you to create, read, update, and delete user entries:
+The Users & Permissions feature also exposes a set of endpoints for managing user records directly. These endpoints are separate from the authentication endpoints and allow you to create, read, update, and delete user entries:
 
 | Method | URL | Description |
 | ------ | --- | ----------- |
