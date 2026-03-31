@@ -403,7 +403,7 @@ The following example fetches data for the `label` attribute of a "Closingperiod
 
 ### Fetch draft or published versions {#status}
 
-If the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled for the content-type, you can add a `status` parameter to queries to fetch draft or published versions of documents <DocumentDefinition/>:
+You can add a `status` parameter to queries to fetch draft or published versions of documents <DocumentDefinition/>:
 
 ```graphql title="Example: Fetch draft versions of documents"
 query Query($status: PublicationStatus) {
@@ -424,6 +424,10 @@ query Query($status: PublicationStatus) {
   }
 }
 ```
+
+:::note
+The `status` and `hasPublishedVersion` arguments appear in the GraphQL schema for all content types, including those without [Draft & Publish](/cms/features/draft-and-publish) enabled. This is because nested relations to D&P-enabled content types inherit these arguments from the root query. For example, querying a `User` type (which does not use Draft & Publish) with `status: PUBLISHED` ensures that any populated relation to a Draft & Publish-enabled type like `Article` returns the published version.
+:::
 
 ## Aggregations
 
