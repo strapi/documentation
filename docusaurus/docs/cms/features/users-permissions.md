@@ -565,7 +565,7 @@ Each time an API request is sent the server checks if an `Authorization` header 
 When you create a user without a role, or if you use the `/api/auth/local/register` route, the `authenticated` role is given to the user.
 :::
 
-#### Basic authentication endpoints
+#### Authentication endpoints {#authentication-endpoints}
 
 The Users & Permissions feature provides the following authentication endpoints for user management and [Content API](/cms/api/rest) access:
 
@@ -576,8 +576,10 @@ The Users & Permissions feature provides the following authentication endpoints 
 | `POST` | `/api/auth/forgot-password` | Request password reset |
 | `POST` | `/api/auth/reset-password` | Reset password using token |
 | `GET` | `/api/auth/email-confirmation` | Confirm user email address |
+| `POST` | `/api/auth/send-email-confirmation` | Resend confirmation email |
+| `POST` | `/api/auth/change-password` | Change password (requires authentication) |
 
-#### Session management endpoints
+##### Session management endpoints
 
 When [session management](#jwt-management-modes) is enabled (`jwtManagement: 'refresh'`), additional endpoints are available:
 
@@ -585,6 +587,209 @@ When [session management](#jwt-management-modes) is enabled (`jwtManagement: 're
 | ------ | --- | ----------- |
 | `POST` | `/api/auth/refresh` | Refresh access token using refresh token |
 | `POST` | `/api/auth/logout` | Revoke user sessions (supports device-specific logout) |
+
+#### User CRUD endpoints {#user-crud-endpoints}
+
+The Users & Permissions plugin also exposes a set of endpoints for managing user records directly. These endpoints are separate from the authentication endpoints and allow you to create, read, update, and delete user entries:
+
+| Method | URL | Description |
+| ------ | --- | ----------- |
+| `GET` | `/api/users` | Find all users |
+| `GET` | `/api/users/me` | Get the currently authenticated user |
+| `GET` | `/api/users/:id` | Find a specific user by ID |
+| `GET` | `/api/users/count` | Get the total number of users |
+| `POST` | `/api/users` | Create a new user |
+| `PUT` | `/api/users/:id` | Update a user by ID |
+| `DELETE` | `/api/users/:id` | Delete a user by ID |
+
+:::note
+These endpoints are protected by the role-based permission system. To access them, enable the corresponding action (e.g., `find`, `findOne`, `create`, `update`, `delete`) for the desired role in <Icon name="gear-six" /> *Users & Permissions plugin > Roles*.
+:::
+
+##### Get the authenticated user
+
+The `GET /api/users/me` endpoint returns the user associated with the current JWT. This is useful for front-end applications that need to display user profile information after login.
+
+<ApiCall>
+<Request title="Request example: Get the authenticated user">
+
+```bash
+curl -X GET http://localhost:1337/api/users/me \
+  -H "Authorization: Bearer your-access-token"
+```
+
+</Request>
+
+<Response>
+
+```json
+{
+  "id": 1,
+  "documentId": "abc123",
+  "username": "kai",
+  "email": "kai@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-15T09:00:00.000Z",
+  "updatedAt": "2024-01-15T09:00:00.000Z"
+}
+```
+
+</Response>
+</ApiCall>
+
+##### Find all users
+
+The `GET /api/users` endpoint returns a list of all users. Populate and filter parameters can be passed as query strings.
+
+<ApiCall>
+<Request title="Request example: Find all users with their role">
+
+```bash
+curl -X GET "http://localhost:1337/api/users?populate=role" \
+  -H "Authorization: Bearer your-access-token"
+```
+
+</Request>
+
+<Response>
+
+```json
+[
+  {
+    "id": 1,
+    "documentId": "abc123",
+    "username": "kai",
+    "email": "kai@strapi.io",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "role": {
+      "id": 1,
+      "name": "Authenticated",
+      "description": "Default role given to authenticated user.",
+      "type": "authenticated"
+    },
+    "createdAt": "2024-01-15T09:00:00.000Z",
+    "updatedAt": "2024-01-15T09:00:00.000Z"
+  }
+]
+```
+
+</Response>
+</ApiCall>
+
+##### Create a user
+
+The `POST /api/users` endpoint creates a new user. Unlike `/api/auth/local/register`, this endpoint requires the caller to have the `create` permission for the Users & Permissions plugin.
+
+<ApiCall>
+<Request title="Request example: Create a user">
+
+```bash
+curl -X POST http://localhost:1337/api/users \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-access-token" \
+  -d '{
+    "username": "newuser",
+    "email": "newuser@strapi.io",
+    "password": "Password123",
+    "role": 1,
+    "confirmed": true
+  }'
+```
+
+</Request>
+
+<Response>
+
+```json
+{
+  "id": 2,
+  "documentId": "def456",
+  "username": "newuser",
+  "email": "newuser@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-16T10:00:00.000Z",
+  "updatedAt": "2024-01-16T10:00:00.000Z"
+}
+```
+
+</Response>
+</ApiCall>
+
+##### Update a user
+
+The `PUT /api/users/:id` endpoint updates an existing user by ID.
+
+<ApiCall>
+<Request title="Request example: Update a user">
+
+```bash
+curl -X PUT http://localhost:1337/api/users/2 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-access-token" \
+  -d '{
+    "username": "updateduser"
+  }'
+```
+
+</Request>
+
+<Response>
+
+```json
+{
+  "id": 2,
+  "documentId": "def456",
+  "username": "updateduser",
+  "email": "newuser@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-16T10:00:00.000Z",
+  "updatedAt": "2024-01-17T11:00:00.000Z"
+}
+```
+
+</Response>
+</ApiCall>
+
+##### Delete a user
+
+The `DELETE /api/users/:id` endpoint deletes a user by ID.
+
+<ApiCall>
+<Request title="Request example: Delete a user">
+
+```bash
+curl -X DELETE http://localhost:1337/api/users/2 \
+  -H "Authorization: Bearer your-access-token"
+```
+
+</Request>
+
+<Response>
+
+```json
+{
+  "id": 2,
+  "documentId": "def456",
+  "username": "updateduser",
+  "email": "newuser@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-16T10:00:00.000Z",
+  "updatedAt": "2024-01-17T11:00:00.000Z"
+}
+```
+
+</Response>
+</ApiCall>
 
 To refresh your authentication token you could for instance send the following request:
 
@@ -773,3 +978,9 @@ create: async ctx => {
   ctx.created(data);
 };
 ```
+
+## Customizing routes and policies {#customizing-routes-and-policies}
+
+The Users & Permissions plugin routes and controllers can be extended and overridden through the [plugin extension system](/cms/plugins-development/plugins-extension). This is useful for adding custom policies to user endpoints, overriding controller logic, or adding new routes.
+
+For a complete guide with step-by-step instructions and code examples, see [Customizing Users & Permissions plugin routes](/cms/backend-customization/guides/customizing-users-permissions-plugin-routes).
