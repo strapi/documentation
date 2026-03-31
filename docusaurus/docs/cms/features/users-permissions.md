@@ -588,7 +588,7 @@ When [session management](#jwt-management-modes) is enabled (`jwtManagement: 're
 | `POST` | `/api/auth/refresh` | Refresh access token using refresh token |
 | `POST` | `/api/auth/logout` | Revoke user sessions (supports device-specific logout) |
 
-#### User CRUD endpoints {#user-crud-endpoints}
+#### User CRUD endpoints
 
 The Users & Permissions plugin also exposes a set of endpoints for managing user records directly. These endpoints are separate from the authentication endpoints and allow you to create, read, update, and delete user entries:
 
