@@ -1,5 +1,5 @@
 ---
-title: Utilities
+title: strapi-utils
 description: The @strapi/utils package provides shared utility functions for error handling, environment variables, data validation, hooks, string manipulation, and more.
 displayed_sidebar: cmsSidebar
 tags:
@@ -12,7 +12,7 @@ tags:
   - primitives
 ---
 
-# Utilities
+# `strapi-utils`
 
 <Tldr>
 The `@strapi/utils` package provides shared helper functions used across Strapi's core and available for use in custom code. It includes error classes, environment variable helpers, hook factories, type parsing, string and file utilities, and async helpers.
