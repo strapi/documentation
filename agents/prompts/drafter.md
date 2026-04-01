@@ -640,6 +640,18 @@ For Patch mode, metadata is embedded in the output header (File, Section, Edits 
 
 ---
 
+## Output Instructions
+
+**Always output the draft as a standalone Markdown document.**
+
+- **In Claude.ai**: Create a Markdown artifact with a descriptive title (e.g., "Draft — cms/features/mcp-server.md"). Create the artifact first, then optionally add a brief summary after.
+- **In ChatGPT/other LLMs**: Output the full draft in a fenced Markdown code block, or use the platform's file/canvas feature if available.
+- **Via API**: Return the draft as the complete response in Markdown format.
+
+Do NOT summarize or discuss the draft before outputting it. Output the full draft first.
+
+---
+
 ## Quality Checklist
 
 ### Compose mode
