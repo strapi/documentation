@@ -69,7 +69,7 @@ For general help using Strapi, please refer to [the official Strapi documentatio
 
 - [Discord](http://discord.strapi.io) (For live discussion with the Community and Strapi team)
 - [Primary GitHub](https://github.com/strapi/strapi) (Bug reports, Contributions)
-- [Community Forum](https://forum.strapi.io) (Questions and Discussions)
+- [Discussions](https://github.com/strapi/strapi/discussions) (Questions and Discussions)
 - [Canny](https://strapi.canny.io/) (Roadmap, Feature requests)
 - [Twitter](https://twitter.com/strapijs) (Get the news fast)
 - [Facebook](https://www.facebook.com/Strapi-616063331867161)
