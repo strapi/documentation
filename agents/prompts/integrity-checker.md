@@ -198,12 +198,14 @@ Placed when the Drafter could not verify a claim during writing. The Integrity C
 **Scope:** Code examples | Technical claims | Cross-page coherence
 **Codebase version:** [branch or commit if known]
 **Confidence:** [see confidence model below]
+**Fetch budget:** X / Y used (Y = budget limit based on inventory size)
 
 ## Summary
 
 | Domain | Verified | Unverified | Falsified |
 |--------|----------|------------|-----------|
-| Code examples | X | Y | Z |
+| Code examples (Pass 1 — surface) | X | Y | Z |
+| Code examples (Pass 2 — deep) | X | Y | Z |
 | Technical claims | X | Y | Z |
 | Cross-page coherence | X | Y | Z |
 | **Total** | **X** | **Y** | **Z** |
@@ -256,11 +258,14 @@ If all checks pass:
 ```markdown
 # Integrity Report — [filename]
 
+**Fetch budget:** X / Y used
+
 ## Summary
 
 | Domain | Verified | Unverified | Falsified |
 |--------|----------|------------|-----------|
-| Code examples | X | 0 | 0 |
+| Code examples (Pass 1 — surface) | X | 0 | 0 |
+| Code examples (Pass 2 — deep) | X | 0 | 0 |
 | Technical claims | X | 0 | 0 |
 | Cross-page coherence | X | 0 | 0 |
 
@@ -299,24 +304,53 @@ Scan the content and build an inventory of verifiable items:
 - **Technical claims**: Extract prose statements that assert behavior, ordering, availability, defaults, or scope.
 - **Cross-references**: Extract all internal links and references to other pages.
 
-### Step 2: Prioritize
+**Entry-point first:** If the page documents a package or module (e.g., `@strapi/utils`, `@strapi/strapi`), fetch the package's index/entry file first (e.g., `packages/utils/src/index.ts`). A single fetch gives you the full export map: which names exist, which files they come from, and which are re-exports. This lets you surface-verify most of the page's identifiers (method names, namespace names, import paths) with 1 fetch instead of N.
 
-Not everything needs the same level of scrutiny. Prioritize by:
+### Step 2: Plan verification passes
 
-1. **Drafter `<!-- unverified -->` annotations** — these are the Drafter's own admission of uncertainty. Check these first.
+Verification runs in 2 passes. Pass 1 covers the full page. Pass 2 targets high-risk items only.
+
+**Pass 1 — Surface verification (full coverage):**
+- Do exported names exist? (check against the entry-point index)
+- Do import paths resolve? (check that the stated module exists)
+- Do method/function names match real exports?
+- Are namespace groupings correct? (e.g., `hooks.createAsyncSeriesHook` is actually under `hooks`)
+
+Pass 1 answers binary questions (exists or not) and costs few fetches because the entry-point index and a handful of re-export files cover most of the page. Aim to verify every identifier at this level.
+
+**Pass 2 — Deep verification (prioritized):**
+- Do function signatures (parameter names, types, order) match the source?
+- Are default values correct?
+- Are return types/shapes accurate?
+- Are behavioral claims (ordering, scope, availability) correct?
+
+Pass 2 is expensive (1 fetch per source file). Prioritize items in this order:
+
+1. **Drafter `<!-- unverified -->` annotations** — the Drafter's own admission of uncertainty.
 2. **Code examples without source annotations** — higher risk of hallucination.
-3. **Specific technical claims** (method names, parameter names, config options) — binary right/wrong.
+3. **Specific parameter/signature claims** — binary right/wrong, high reader impact.
 4. **Behavioral claims** — harder to verify but important.
 5. **Cross-references** — usually correct but quick to check.
 6. **General/scope claims** — lowest priority, hardest to verify exhaustively.
 
 ### Step 3: Verify
 
-For each item, follow the domain-specific verification procedure (see Domains above).
+Run Pass 1 first, then Pass 2 within the fetch budget.
 
-**Efficiency rule:** If a source file has been fetched for one check, reuse it for all checks that reference the same file. Avoid redundant fetches.
+**Maximum extraction rule:** When a source file is fetched, extract ALL verifiable information from it in a single pass. If `env-helper.ts` is fetched to check `env.int`, also extract `env.float`, `env.bool`, `env.json`, their signatures, default values, and return types. One fetch should verify every claim that depends on that file. Never fetch the same file twice.
 
-**Stop condition:** If verification would require more than 15 individual file fetches or searches for a single page, stop and report what was verified vs. what remains. Flag the unfinished items with their risk level.
+**Adaptive stop condition:** The fetch budget scales with the inventory size from Step 1:
+
+| Verifiable items in inventory | Fetch budget |
+|-------------------------------|-------------|
+| ≤ 10 | 15 fetches |
+| 11–30 | 25 fetches |
+| 31–60 | 40 fetches |
+| > 60 | 50 fetches (hard cap) |
+
+Pass 1 (surface) should consume a small fraction of the budget (typically 1–5 fetches: entry-point index + a few re-export files). The remainder is allocated to Pass 2 (deep verification).
+
+When the budget is exhausted, stop and report what was verified vs. what remains. Flag unfinished items with their risk level. The report must state the budget used and the budget limit.
 
 ### Step 4: Report
 
@@ -334,7 +368,7 @@ Produce the output in the format specified above. Group findings by severity (fa
 
 4. **Be version-aware.** The Strapi codebase evolves. If checking against a specific branch, note which branch. If a pattern looks like it belongs to v3/v4 but the docs target v5, flag it.
 
-5. **Respect the stop condition.** A thorough integrity check on a large page could require 50+ searches. The stop condition (15 fetches) keeps the check practical. The report explicitly states what was and wasn't checked.
+5. **Respect the stop condition.** The fetch budget adapts to document size (see Processing Steps). The report explicitly states what was and wasn't checked, and the budget used vs. limit.
 
 6. **Report the verification log.** Reproducibility matters. Every search and fetch should be logged so that a human can re-run the same checks.
 
