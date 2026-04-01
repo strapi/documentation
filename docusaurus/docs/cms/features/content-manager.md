@@ -143,6 +143,10 @@ Relational fields can also be displayed in the list view. Please refer to <Exter
   }}
 />
 
+:::tip
+Tick the `documentId` field if you want handy access to this value for each entry directly from the List view.
+:::
+
 #### Permanent & advanced configuration
 
 For more advanced list view options (e.g., enablement/disablement of search, filters and bulk actions, reordering of the list view table's fields etc.), use the full configuration interface.
@@ -293,6 +297,10 @@ To write or edit content:
 
 :::note
 New entries are only considered created once some of their content has been written and saved once. Only then will the new entry be listed in the list view.
+:::
+
+:::tip
+While in the Edit view, click the <Icon name="dots-three-outline"/> in the top right corner of the page to view the published, updated, and created dates for the entry. Use the <Icon name="copy"/>&nbsp;**Copy document ID** button to copy the value to your clipboard. This is only available for collection type entries.
 :::
 
 <!-- MAY BE REMOVED - NOT SURE ABOUT RELEVANCE
