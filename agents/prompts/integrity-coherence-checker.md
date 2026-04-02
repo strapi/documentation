@@ -19,7 +19,7 @@ For the confidence model, risk assessment, and annotation format, see the parent
 - **content**: Markdown/MDX content to verify (documentation page, draft, or PR diff)
 - **file_path**: Path of the documentation file being verified. Needed to resolve relative links and identify the page's position in the docs structure.
 - **docs_access**: Ability to fetch other documentation pages. Methods, in order of preference:
-  1. Local filesystem access (e.g., `docusaurus/docs/` in the documentation repo). Fastest.
+  1. Local filesystem access (fastest). The docs location varies by setup. Common paths: `main-documentation/` in the `strapi/strapi-docs-product-merger` repo, or a local clone of `strapi/documentation`. The agent should receive the path as input or detect it from context, never assume a hardcoded location.
   2. GitHub MCP tools (`github:get_file_contents` on `strapi/documentation` repo)
   3. Raw GitHub fetch (`https://raw.githubusercontent.com/strapi/documentation/main/docusaurus/docs/[path]`)
 
