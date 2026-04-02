@@ -193,7 +193,7 @@ Do NOT summarize or discuss findings before outputting the full report. Output t
 
 ---
 
-## Integration with Drafter (Axe 1)
+## Integration with Drafter
 
 The Integrity Checker defines requirements that flow back upstream to the Drafter. See Behavioral Note #19 in `drafter.md` for the full annotation requirement.
 
@@ -209,13 +209,3 @@ The following are NOT checked by any sub-check:
 - **External links** (URLs outside the Strapi docs) → out of scope
 - **Screenshot accuracy** → cannot be verified programmatically
 - **Auto-generated files** (`llms*.txt`) → excluded from all checks
-
----
-
-## Future Extensions
-
-- **Automated test generation**: For falsified findings, generate a minimal test case that proves the documentation is wrong.
-- **Codebase change detection**: When the codebase changes (new PR), scan existing docs for claims that may be invalidated.
-- **Confidence scoring**: Instead of 3 levels, use a numeric confidence (0-100%) based on search depth and source quality.
-- **Integration with CI**: Run the Integrity Checker automatically on documentation PRs, blocking merge if falsified findings exist.
-- **True parallel execution**: When the runtime supports it, run both sub-checks as separate API calls and merge results.
