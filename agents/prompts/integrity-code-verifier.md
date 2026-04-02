@@ -18,7 +18,7 @@ For the confidence model, risk assessment, and annotation format, see the parent
 
 - **content**: Markdown/MDX content to verify (documentation page, draft, or PR diff)
 - **codebase_access**: Ability to search and fetch files from the Strapi codebase. Methods, in order of preference:
-  1. Local filesystem access (e.g., `strapi-codebase/` subdirectory in the merger repo). Fastest: `grep` and `cat` are near-instant.
+  1. Local filesystem access (fastest: `grep` and `cat` are near-instant). The codebase location varies by setup. Common paths: `strapi-codebase/` in the `strapi/strapi-docs-product-merger` repo, or a local clone of `strapi/strapi`. The agent should receive the path as input or detect it from context, never assume a hardcoded location.
   2. GitHub MCP tools (`github:get_file_contents`, `github:search_code`)
   3. Raw GitHub fetch (`https://raw.githubusercontent.com/strapi/strapi/develop/[path]`)
 
@@ -249,7 +249,7 @@ Produce the output in the format specified below. Group findings by severity (fa
 
 9. **Annotations are helpful, not required.** The checker works with or without Drafter annotations. Without them, it performs its own searches. With them, it can verify faster and focus effort on unverified items.
 
-10. **Local filesystem is preferred.** When running in Claude Code with the merger repo, prefer `grep` and `cat` over GitHub API fetches. Local access is faster, has no rate limits, and keeps the context lighter (grep returns matching lines, not entire files).
+10. **Local filesystem is preferred.** When running in Claude Code or any environment with local filesystem access, prefer `grep` and `cat` over GitHub API fetches. Local access is faster, has no rate limits, and keeps the context lighter (grep returns matching lines, not entire files). The agent should detect or be told the codebase root path rather than assuming a specific directory name.
 
 ---
 
