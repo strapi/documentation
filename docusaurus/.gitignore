@@ -39,6 +39,3 @@ llms*.txt
 !static/llms-code.txt
 pr-*.diff
 *-results.json
-
-# AI tools and related
-.claude/worktrees
