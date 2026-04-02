@@ -115,7 +115,9 @@ Router → Outliner (Generator) if needed → Drafter → Self-Review (Outline C
 | "outline check", "check structure", "template" | **Outline Checker** | `outline-checker.md` |
 | "UX check", "UX analysis", "reader experience" | **UX Analyzer** | `outline-ux-analyzer.md` |
 | "full outline review" | **Outline Checker** + **UX Analyzer** | `outline-checker.md` + `outline-ux-analyzer.md` |
-| "check links", "verify paths" | **Integrity Checker** | *(coming soon)* |
+| "check links", "verify paths", "integrity check" | **Integrity Checker** | `integrity-checker.md` → `integrity-code-verifier.md` + `integrity-coherence-checker.md` |
+| "verify code", "fact-check", "check against codebase" | **Integrity Checker** (Code Verifier only) | `integrity-checker.md` → `integrity-code-verifier.md` |
+| "check coherence", "check cross-references", "consistency check" | **Integrity Checker** (Coherence Checker only) | `integrity-checker.md` → `integrity-coherence-checker.md` |
 | "review this PR" | **Router** → **Outliner** (auto-selects Quick or Full) → **Style Checker** | `router.md` → `outliner.md` → `style-checker.md` |
 | "full review" | **Router** → **Outliner** (Full Review: Checker + UX) → **Style Checker** | `router.md` → `outliner.md` → `style-checker.md` |
 | "create docs for...", "document this feature" | **Auto-chain** (see below) | `router.md` → `outline-generator.md` → `drafter.md` → `outline-checker.md` + `style-checker.md` |
@@ -240,6 +242,9 @@ Read the full prompt file before doing any analysis. Each prompt is a self-conta
 | Outline Generator | `outline-generator.md` |
 | Drafter | `drafter.md` |
 | Style Checker | `style-checker.md` |
+| Integrity Checker | `integrity-checker.md` |
+| ↳ Code Verifier | `integrity-code-verifier.md` |
+| ↳ Coherence Checker | `integrity-coherence-checker.md` |
 
 **How to read these files depends on your platform** — see [Platform Integration](#platform-integration) below.
 
@@ -333,6 +338,7 @@ Recommended `.cursor/rules/` files:
 | `strapi-docs-ux-analyzer.mdc` | `"Run when user asks for UX analysis, reader experience review, or full outline review"` | `false` |
 | `strapi-docs-outline-generator.mdc` | `"Run when user needs an outline for new documentation from source material"` | `false` |
 | `strapi-docs-drafter.mdc` | `"Run when user asks to draft, write, or compose documentation content from an outline"` | `false` |
+| `strapi-docs-integrity-checker.mdc` | `"Run when user asks to verify code examples, fact-check technical claims, check links, or verify cross-page consistency"` | `false` |
 
 The `strapi-docs-orchestrator.mdc` file should contain this entire `claude-project-instructions.md` (including the appendix) with `alwaysApply: true`. It acts as the routing table and fallback. The individual prompt rules are loaded on-demand when Cursor detects a matching intent.
 
@@ -379,7 +385,9 @@ If GitHub MCP is unavailable, ask the user to paste the PR diff. Appending `.dif
 | ↳ Outline Generator | `outline-generator.md` | ✅ Available | Creates outlines from source material (Notion, GitHub) |
 | **Style Checker** | `style-checker.md` | ✅ Available | Checks compliance to 12 Rules of Technical Writing and Strapi style conventions |
 | **Drafter** | `drafter.md` | ✅ Available | Generates content from an outline and source material (3 modes: Compose, Patch, Micro-edit) |
-| **Integrity Checker** | — | 🔜 Coming soon | Checks for broken links, invalid paths, code block formatting, anchor consistency |
+| **Integrity Checker** | `integrity-checker.md` | ✅ Available | Coordinates technical integrity verification (dispatches to sub-checks) |
+| ↳ Code Verifier | `integrity-code-verifier.md` | ✅ Available | Verifies code examples and technical claims against the Strapi codebase |
+| ↳ Coherence Checker | `integrity-coherence-checker.md` | ✅ Available | Verifies cross-page consistency, links, and terminology |
 
 ### Shared Resources
 
@@ -388,6 +396,7 @@ The `shared/` folder contains guides used by multiple prompts:
 | Resource | File | Purpose |
 |----------|------|---------|
 | **GitHub MCP Usage** | `shared/github-mcp-usage.md` | How to fetch PR content using GitHub MCP tools |
+| **Known Pitfalls** | `integrity-known-pitfalls.md` | Documented hallucination patterns the Code Verifier checks proactively |
 
 ---
 
@@ -461,11 +470,19 @@ The `shared/` folder contains guides used by multiple prompts:
 
 ---
 
-### Integrity Checker (Coming Soon)
+### Integrity Checker
 
-**Purpose:** Verify technical accuracy and formatting of links, paths, and code blocks.
+**Purpose:** Verify that documentation content is technically accurate and consistent. Coordinates 2 specialized sub-checks.
 
-**Will check:** Internal links, code block language identifiers, file path consistency, anchor references, potential broken external links.
+**Sub-checks:**
+- **Code Verifier** (`integrity-code-verifier.md`) — Verifies code examples (method names, parameters, imports) and technical claims (lifecycle ordering, defaults, behavior) against the Strapi codebase. Uses a 2-pass strategy: surface verification (export map) then deep verification (file-level). Adaptive fetch budget (15-50) based on document size.
+- **Coherence Checker** (`integrity-coherence-checker.md`) — Verifies cross-page consistency: link targets exist, terminology is uniform, no contradictions between pages. Uses `sidebars.js` and `llms.txt` for cheap structural verification before fetching individual pages. Fixed budget of 10 page fetches.
+
+**Shared resource:** `integrity-known-pitfalls.md` — A list of documented hallucination patterns (e.g., `ctx.params.id` vs `ctx.params.documentId`) that the Code Verifier checks proactively. Maintained manually and via Code Verifier proposals.
+
+**Key behavior:** The Integrity Checker dispatches to one or both sub-checks based on user intent and document content. In sequential mode (Claude.ai), Code Verifier runs first, then Coherence Checker. In parallel-capable environments (Claude Code, API), both can run simultaneously.
+
+**Full specification:** `integrity-checker.md`, `integrity-code-verifier.md`, `integrity-coherence-checker.md`
 
 ---
 
@@ -817,6 +834,68 @@ tags: [...]
 
 ---
 
+### Integrity Checker — Output contract
+
+**Required inputs:** Markdown content to verify + codebase access (for Code Verifier) + docs access (for Coherence Checker)
+
+**Sub-check dispatch:** Default runs both. "verify code" / "fact-check" → Code Verifier only. "check coherence" / "check cross-references" → Coherence Checker only.
+
+**Output:** A consolidated Markdown report:
+
+```markdown
+# Integrity Report — [filename or description]
+
+**Scope:** Code & Claims | Cross-page coherence
+**Codebase version:** [branch or commit if known]
+**Fetch budget:** X / Y used (Code Verifier) · X / Y used (Coherence Checker)
+
+## Summary
+
+| Domain | Verified | Unverified | Falsified |
+|--------|----------|------------|-----------|
+| Code examples (Pass 1 — surface) | X | Y | Z |
+| Code examples (Pass 2 — deep) | X | Y | Z |
+| Technical claims | X | Y | Z |
+| Cross-page coherence | X | Y | Z |
+| **Total** | **X** | **Y** | **Z** |
+
+## Findings
+
+### [falsified] Domain — Short description
+**Location:** Section "Heading" > code example / prose
+**Claim:** What the documentation says.
+**Reality:** What the code actually does.
+**Source:** `path/to/file.ts#L42-L58`
+**Fix:** Specific correction.
+
+### [unverified] Domain — Short description
+**Location:** Section "Heading"
+**Claim:** What the documentation says.
+**Search performed:** What was searched and where.
+**Reason unverified:** Why confirmation could not be obtained.
+**Risk:** High / Medium / Low
+**Recommendation:** Verify manually / accept with caveat / flag for SME review.
+
+## Verification Log
+
+| # | Search query / file fetched | Result | Finding |
+|---|----------------------------|--------|---------|
+
+## Recommended Actions (by priority)
+
+1. **[falsified]** Most critical
+2. **[unverified, high-risk]** Needs manual verification
+3. **[unverified, medium-risk]** Should be verified before publication
+```
+
+**Confidence model:** verified (source found and matches), unverified (searched but inconclusive), falsified (source found and contradicts doc).
+
+**Risk assessment for unverified:** High = specific identifier, runtime error risk. Medium = behavior/defaults, confusion risk. Low = general/scope, unlikely practical impact.
+
+**Adaptive fetch budget (Code Verifier):** ≤ 10 items → 15 fetches, 11-30 → 25, 31-60 → 40, > 60 → 50 (hard cap). Coherence Checker: fixed 10 page fetches.
+
+---
+
 ### Orchestrator — Output contract
 
 **Required inputs:** User request + outputs from all prompts in the sequence
@@ -837,7 +916,7 @@ tags: [...]
 | Structure (Outliner) | X | Y | Z |
 | UX Analysis (if Full Review) | — | — | X |
 | Style (12 Rules) | X | Y | Z |
-| Integrity (Links) | X | Y | Z |
+| Integrity (Code & Coherence) | X | Y | Z |
 | **Total** | **X** | **Y** | **Z** |
 
 ## Structure Issues

@@ -29,7 +29,37 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.40.0](https://github.com/strapi/strapi/releases/tag/v5.40.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.41.1](https://github.com/strapi/strapi/releases/tag/v5.41.1)._
+
+## 6.19.0
+
+<br />
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [fix: export includes 3rd party providers assets](https://github.com/strapi/documentation/pull/3022)
+- [Add tips for List View and Edit View usage of `documentId` in Content Manager](https://github.com/strapi/documentation/pull/3021)
+
+#### Repository
+- [Allow agents to do a single round of self-check after PR creation](https://github.com/strapi/documentation/pull/3019)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/nclsndr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/5462986?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="nclsndr"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 6.18.1
 

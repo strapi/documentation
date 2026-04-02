@@ -221,7 +221,9 @@ The key distinction:
 | **Outliner (Generator)** | Create outline from source material | Content writing |
 | **Drafter** | Generate content from outline and source material | Structure decisions |
 | **Style Checker** | Prose quality, 12 Rules, formatting, tone | Structure, links |
-| **Integrity Checker** | Links, paths, anchors, code block syntax | Content quality |
+| **Integrity Checker** | Coordinates Code Verifier + Coherence Checker | Direct analysis (delegates to sub-checks) |
+| ↳ Code Verifier | Code examples, technical claims vs. codebase | Cross-page consistency, prose quality |
+| ↳ Coherence Checker | Cross-references, terminology, contradictions across pages | Code accuracy, prose quality |
 
 ---
 
@@ -237,7 +239,7 @@ The key distinction:
 
 5. **Outliner → Style Checker** *(review mode)*: Outliner completes structure check (and UX analysis if Full Review); Style Checker receives the same content for prose review.
 
-6. **Style Checker → Integrity Checker**: Style Checker completes; Integrity Checker receives content for technical verification.
+6. **Style Checker → Integrity Checker**: Style Checker completes; Integrity Checker receives content and dispatches to Code Verifier (verifies code/claims against codebase) and Coherence Checker (verifies cross-page consistency). In sequential mode, Code Verifier runs first. Both sub-checks read `integrity-checker.md` for shared concepts (confidence model, annotations).
 
 7. **All Prompts → Orchestrator**: Each prompt returns a structured report; Orchestrator consolidates into final output.
 
@@ -314,7 +316,7 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 | Structure (Outliner) | X | Y | Z |
 | UX Analysis (if Full Review) | — | — | X |
 | Style (12 Rules) | X | Y | Z |
-| Integrity (Links) | X | Y | Z |
+| Integrity (Code & Coherence) | X | Y | Z |
 | **Total** | **X** | **Y** | **Z** |
 
 ---
@@ -329,7 +331,7 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 [Output from Style Checker]
 
 ## Integrity Issues
-[Output from Integrity Checker]
+[Output from Integrity Checker — consolidated from Code Verifier and Coherence Checker]
 
 ---
 
