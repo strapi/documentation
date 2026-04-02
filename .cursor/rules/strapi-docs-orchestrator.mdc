@@ -929,7 +929,7 @@ tags: [...]
 [from Style Checker]
 
 ## Integrity Issues
-[from Integrity Checker — consolidated from Code Verifier and Coherence Checker]
+[from Integrity Checker]
 
 ## Recommended Fixes (by priority)
 1. **[error]** Most critical
