@@ -57,18 +57,21 @@ For each code example in the content:
 4. **Check usage context**: Verify the example uses the API in a valid context (e.g., correct lifecycle hook, correct service scope).
 5. **Cross-check internal consistency**: If the example has both JS and TS variants, verify they are semantically equivalent.
 
-#### Known pitfalls (from past experience)
+#### Known pitfalls
 
-These are documented patterns where hallucination has previously occurred:
+The known pitfalls list lives in a separate file: `integrity-known-pitfalls.md`. This file acts as a regression test: every pattern where hallucination has been observed is recorded there.
 
-- `ctx.params.id` → should be `ctx.params.documentId` in Strapi v5 Document Service
-- RBAC `actionProvider.registerMany()` called in `register()` → must be in `bootstrap()` (services unavailable during `register()`)
-- "Always sanitize" applied universally → sanitization notes apply specifically to Content API routes
-- Strapi v3/v4 patterns appearing in v5 documentation (e.g., `strapi.query()` instead of Document Service API)
-- `find()` examples using `id` parameter → Document Service uses `documentId`
-- `export * as namespace` confused with `export * from` (flattened re-exports) → check the actual index.ts to know if something is a namespace or a top-level export
+**The Code Verifier MUST read `integrity-known-pitfalls.md` before starting verification** and proactively check the content against every listed pitfall.
 
-> **Maintainer note:** Add new pitfalls to this list as they are discovered. This list acts as a regression test.
+**Adding new pitfalls:** When the Code Verifier discovers a new hallucination pattern (a falsified finding that represents a recurring risk), it SHOULD include a "Proposed pitfall addition" block at the end of its report:
+
+```markdown
+## Proposed pitfall additions
+
+- `[pattern]` → `[correct behavior]` — discovered in [filename], [date]
+```
+
+The maintainer reviews and merges these into `integrity-known-pitfalls.md`.
 
 ---
 
