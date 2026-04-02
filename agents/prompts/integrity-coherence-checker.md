@@ -23,6 +23,15 @@ For the confidence model, risk assessment, and annotation format, see the parent
   2. GitHub MCP tools (`github:get_file_contents` on `strapi/documentation` repo)
   3. Raw GitHub fetch (`https://raw.githubusercontent.com/strapi/documentation/main/docusaurus/docs/[path]`)
 
+### Structural inputs (strongly recommended)
+
+These files provide a cheap overview of the entire docs structure. Fetch them first, before any individual page.
+
+- **`sidebars.js`**: The Docusaurus sidebar configuration. Contains the full page tree with all file paths. Allows verifying that cross-reference targets exist without fetching each page individually. Also identifies sidebar siblings (pages in the same section that are likely to share terminology).
+- **`llms.txt`**: An auto-generated file listing every page with its title and description. Allows checking page titles, detecting overlapping topics, and verifying link targets by title match.
+
+If these files are already loaded (e.g., the Router fetched them earlier in the pipeline), reuse them. Do not re-fetch.
+
 ### Optional
 
 - **related_pages**: List of documentation pages known to cover overlapping topics. If not provided, the checker infers related pages from cross-links found in the content and from `sidebars.js` siblings.
@@ -50,24 +59,32 @@ Scan the content and extract:
 - **Component links**: `<CustomDocCard>` links, `<SideBySideColumn>` references
 - **Implicit references**: Mentions of features, APIs, or concepts that have their own doc pages (e.g., "the Content API" without a link could still create a coherence obligation)
 
-### Step 2: Identify pages to compare
+### Step 2: Structure-first verification
 
-From the cross-references, build a list of pages to fetch and compare. Prioritize:
+**This is the equivalent of the Code Verifier's "entry-point first" strategy.** Before fetching any individual page, use the structural inputs to verify link targets cheaply:
+
+1. **Load `sidebars.js`** (1 fetch, or reuse from Router). Extract all documented page paths.
+2. **Load `llms.txt`** (1 fetch, or reuse from Router). Extract all page titles and descriptions.
+3. **Verify cross-reference targets** against these files:
+   - For each internal link (`/cms/path/to/page`), check if the path exists in `sidebars.js`.
+   - For each link with display text, cross-check the text against `llms.txt` titles (flag if the link text doesn't match the page title).
+   - Mark all targets as **exists** or **not found** without fetching the actual pages.
+
+This step can verify most link targets with 0-2 fetches (the structural files). Only anchor links (`#section-name` on another page) require fetching the target page to confirm the heading exists.
+
+### Step 3: Identify pages to compare
+
+From the cross-references, build a list of pages to fetch for **content comparison** (not just existence). Prioritize:
 
 1. **Explicitly linked pages** — these are the strongest coherence obligations (the author deliberately pointed the reader there)
 2. **Sidebar siblings** — pages in the same sidebar section often describe related features and share terminology
 3. **Pages covering the same API** — if the current page documents `findMany()`, find other pages that also mention `findMany()`
 
-**Fetch budget:** 10 page fetches (hard cap). This is intentionally lower than the Code Verifier's budget because each page fetch returns a large document. Prioritize explicitly linked pages.
+**Fetch budget:** 10 page fetches (hard cap). This is intentionally lower than the Code Verifier's budget because each page fetch returns a large document. Prioritize explicitly linked pages. Note that the structural files (`sidebars.js`, `llms.txt`) do not count toward this budget — they are shared pipeline resources.
 
-### Step 3: Verify targets exist
+For anchor links on other pages (`/cms/path#section-name`), the target page must be fetched to confirm the heading exists. These fetches count toward the budget but also serve double duty: the fetched page can be used for content comparison in Step 4.
 
-For each internal link:
-1. Resolve the link to a file path in the docs repo.
-2. Verify the file exists.
-3. If the link includes an anchor (`#section-name`), verify the heading exists in the target page.
-
-For anchor links within the same page (`#errors`, `#env`), verify the heading exists in the current content.
+For anchor links within the same page (`#errors`, `#env`), verify the heading exists in the current content. No fetch needed.
 
 ### Step 4: Compare claims
 
@@ -157,6 +174,8 @@ Produce the output in the format specified below.
 6. **Report what you compared.** The verification log should list every page fetched and why. A human should be able to see the scope of the comparison.
 
 7. **Don't attempt exhaustive coverage.** Checking against all ~200 pages in the docs is not feasible. Focus on pages with explicit cross-references and obvious overlaps.
+
+8. **Use structural files before page fetches.** `sidebars.js` and `llms.txt` can verify most link targets without fetching individual pages. Reserve your 10-fetch budget for content comparisons and anchor verification. If these files were already fetched by the Router earlier in the pipeline, reuse them.
 
 ---
 
