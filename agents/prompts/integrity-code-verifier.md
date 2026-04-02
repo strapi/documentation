@@ -182,7 +182,7 @@ Produce the output in the format specified below. Group findings by severity (fa
 ```markdown
 # Code Verification Report — [filename or description]
 
-**Codebase version:** [branch or commit if known]
+**Codebase version:** [branch] — [`strapi/strapi`](https://github.com/strapi/strapi/tree/[branch])
 **Fetch budget:** X / Y used
 
 ## Summary
@@ -200,7 +200,7 @@ Produce the output in the format specified below. Group findings by severity (fa
 **Location:** Section "Heading" > code example / prose
 **Claim:** What the documentation says.
 **Reality:** What the code actually does.
-**Source:** `path/to/file.ts#L42-L58`
+**Source:** [`path/to/file.ts#L42-L58`](https://github.com/strapi/strapi/blob/[branch]/path/to/file.ts#L42-L58)
 **Fix:** Specific correction.
 
 ### [unverified] Domain — Short description
@@ -214,14 +214,14 @@ Produce the output in the format specified below. Group findings by severity (fa
 ### [verified] Domain — Short description (optional, only for noteworthy confirmations)
 **Location:** Section "Heading"
 **Claim:** What was verified.
-**Source:** `path/to/file.ts#L42-L58`
+**Source:** [`path/to/file.ts#L42-L58`](https://github.com/strapi/strapi/blob/[branch]/path/to/file.ts#L42-L58)
 
 ## Verification Log
 
 | # | Search query / file fetched | Result | Finding |
 |---|----------------------------|--------|---------|
-| 1 | `grep -r "registerMany" packages/` | Found in `bootstrap.ts` | Confirmed |
-| 2 | Fetched `packages/core/utils/src/index.ts` | Export map obtained | Surface verified |
+| 1 | `grep -r "registerMany" packages/` | Found in [`bootstrap.ts`](https://github.com/strapi/strapi/blob/[branch]/path/to/bootstrap.ts) | Confirmed |
+| 2 | Fetched [`packages/core/utils/src/index.ts`](https://github.com/strapi/strapi/blob/[branch]/packages/core/utils/src/index.ts) | Export map obtained | Surface verified |
 
 ## Recommended Actions (by priority)
 
@@ -253,6 +253,8 @@ Produce the output in the format specified below. Group findings by severity (fa
 9. **Annotations are helpful, not required.** The checker works with or without Drafter annotations. Without them, it performs its own searches. With them, it can verify faster and focus effort on unverified items.
 
 10. **Local filesystem is preferred.** When running in Claude Code or any environment with local filesystem access, prefer `grep` and `cat` over GitHub API fetches. Local access is faster, has no rate limits, and keeps the context lighter (grep returns matching lines, not entire files). The agent should detect or be told the codebase root path rather than assuming a specific directory name.
+
+11. **All source references must be clickable GitHub links.** In the report, every **Source** field and every file in the **Verification Log** must be a Markdown link pointing to the file on GitHub. Use `https://github.com/strapi/strapi/blob/[branch]/path/to/file.ts#L42-L58` for codebase files and `https://github.com/strapi/documentation/blob/main/docusaurus/docs/path/to/file.md` for documentation files. Replace `[branch]` with the actual codebase branch (typically `develop`). This makes reports actionable — reviewers can click to verify findings directly.
 
 ---
 

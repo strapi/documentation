@@ -129,7 +129,7 @@ When both sub-checks run, the Integrity Checker produces a single consolidated r
 # Integrity Report — [filename or description]
 
 **Scope:** Code & Claims | Cross-page coherence
-**Codebase version:** [branch or commit if known]
+**Codebase version:** [branch] — [`strapi/strapi`](https://github.com/strapi/strapi/tree/[branch])
 **Fetch budget:** X / Y used (Code Verifier) · X / Y used (Coherence Checker)
 
 ## Summary

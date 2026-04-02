@@ -134,21 +134,21 @@ Produce the output in the format specified below.
 ### [falsified] Behavioral consistency — Contradictory claims
 **Location:** Section "Heading"
 **This page says:** "X defaults to Y."
-**Other page says:** "`path/to/other-page.md` states X defaults to Z."
+**Other page says:** [`path/to/other-page.md`](https://github.com/strapi/documentation/blob/main/docusaurus/docs/path/to/other-page.md) states "X defaults to Z."
 **Fix:** Determine the correct default from the codebase and update both pages.
 
 ### [warning] Terminology — Inconsistent naming
 **Location:** Section "Heading"
 **This page uses:** "entity"
-**Other page uses:** "`path/to/other-page.md` uses 'entry' for the same concept."
+**Other page uses:** [`path/to/other-page.md`](https://github.com/strapi/documentation/blob/main/docusaurus/docs/path/to/other-page.md) uses 'entry' for the same concept.
 **Recommendation:** Align on the canonical Strapi term (usually "entry").
 
 ## Verification Log
 
 | # | Page fetched | Purpose | Finding |
 |---|-------------|---------|---------|
-| 1 | `cms/backend-customization/controllers.md` | Cross-link target | Target exists, heading verified |
-| 2 | `cms/api/document-service/find-many.md` | Overlapping API docs | Parameter table matches |
+| 1 | [`cms/backend-customization/controllers.md`](https://github.com/strapi/documentation/blob/main/docusaurus/docs/cms/backend-customization/controllers.md) | Cross-link target | Target exists, heading verified |
+| 2 | [`cms/api/document-service/find-many.md`](https://github.com/strapi/documentation/blob/main/docusaurus/docs/cms/api/document-service/find-many.md) | Overlapping API docs | Parameter table matches |
 
 ## Recommended Actions (by priority)
 
@@ -176,6 +176,8 @@ Produce the output in the format specified below.
 7. **Don't attempt exhaustive coverage.** Checking against all ~200 pages in the docs is not feasible. Focus on pages with explicit cross-references and obvious overlaps.
 
 8. **Use structural files before page fetches.** `sidebars.js` and `llms.txt` can verify most link targets without fetching individual pages. Reserve your 10-fetch budget for content comparisons and anchor verification. If these files were already fetched by the Router earlier in the pipeline, reuse them.
+
+9. **All page references must be clickable GitHub links.** In the report, every page path in **Findings** and the **Verification Log** must be a Markdown link pointing to the file on GitHub. Use `https://github.com/strapi/documentation/blob/main/docusaurus/docs/path/to/file.md` for documentation files and `https://github.com/strapi/strapi/blob/[branch]/path/to/file.ts` for codebase files. This makes reports actionable — reviewers can click to verify findings directly.
 
 ---
 
