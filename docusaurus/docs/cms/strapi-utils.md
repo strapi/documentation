@@ -24,6 +24,132 @@ The `@strapi/utils` package (`import { ... } from '@strapi/utils'`) contains uti
 The [error classes](#errors) section of this page expands on the error handling documentation found in the dedicated [Error handling](/cms/error-handling) page.
 :::
 
+## async
+
+The `async` namespace provides asynchronous utility functions.
+
+```js
+const { async } = require('@strapi/utils');
+```
+
+| Function | Description |
+| --- | --- |
+| `async.pipe(...fns)` | Compose functions: the first function runs with the original arguments, each subsequent function receives the previous return value. Returns a `Promise`. |
+| `async.map(iterable, mapper, options?)` | Parallel map using `p-map` (also supports curried usage). Set `concurrency` in options to control parallelism. |
+| `async.reduce(array)(iteratee, initialValue?)` | Asynchronous reduce over an array. The iteratee receives `(accumulator, item, index)`. |
+
+### Usage example
+
+```js
+const { async: asyncUtils } = require('@strapi/utils');
+
+const result = await asyncUtils.pipe(
+  fetchUser,
+  enrichWithProfile,
+  formatResponse
+)(userId);
+```
+
+## contentTypes
+
+The `contentTypes` namespace exposes constants and helper functions for working with Strapi content-type schemas.
+
+```js
+const { contentTypes } = require('@strapi/utils');
+```
+
+### Constants
+
+| Constant | Value | Description |
+| --- | --- | --- |
+| `ID_ATTRIBUTE` | `'id'` | Primary key field name |
+| `DOC_ID_ATTRIBUTE` | `'documentId'` | Document identifier field name |
+| `PUBLISHED_AT_ATTRIBUTE` | `'publishedAt'` | Publication timestamp field name |
+| `FIRST_PUBLISHED_AT_ATTRIBUTE` | `'firstPublishedAt'` | First publication timestamp field name |
+| `CREATED_BY_ATTRIBUTE` | `'createdBy'` | Creator reference field name |
+| `UPDATED_BY_ATTRIBUTE` | `'updatedBy'` | Last editor reference field name |
+| `CREATED_AT_ATTRIBUTE` | `'createdAt'` | Creation timestamp field name |
+| `UPDATED_AT_ATTRIBUTE` | `'updatedAt'` | Update timestamp field name |
+| `SINGLE_TYPE` | `'singleType'` | Single type kind identifier |
+| `COLLECTION_TYPE` | `'collectionType'` | Collection type kind identifier |
+
+### Attribute inspection functions
+
+| Function | Description |
+| --- | --- |
+| `isRelationalAttribute(attribute)` | Check if the attribute is a relation |
+| `isMediaAttribute(attribute)` | Check if the attribute is a media field |
+| `isDynamicZoneAttribute(attribute)` | Check if the attribute is a dynamic zone |
+| `isComponentAttribute(attribute)` | Check if the attribute is a component |
+| `isMorphToRelationalAttribute(attribute)` | Check if the attribute is a morph-to relation |
+| `isScalarAttribute(attribute)` | Check if the attribute is a scalar value |
+| `isTypedAttribute(attribute, type)` | Check if the attribute has a specific type |
+
+### Schema inspection functions
+
+| Function | Description |
+| --- | --- |
+| `getTimestamps(schema)` | Return timestamp fields present in the schema (`createdAt`, `updatedAt`) |
+| `getCreatorFields(schema)` | Return creator fields present in the schema (`createdBy`, `updatedBy`) |
+| `getNonWritableAttributes(schema)` | Return field names that cannot be written to |
+| `getWritableAttributes(schema)` | Return field names that can be written to |
+| `isWritableAttribute(schema, attributeName)` | Check if a specific attribute is writable |
+| `hasDraftAndPublish(schema)` | Check if the schema has draft and publish enabled |
+| `getVisibleAttributes(schema)` | Return schema attributes that are not marked as non-visible |
+| `getScalarAttributes(schema)` | Return attributes that are scalar values |
+
+## env
+
+A helper function to read environment variables with type-safe parsing. The `env` function returns the raw string value, while its methods parse the value to a specific type.
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const { env } = require('@strapi/utils');
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+import { env } from '@strapi/utils';
+```
+
+</TabItem>
+
+</Tabs>
+
+### Available methods
+
+| Method | Return type | Description |
+| --- | --- | --- |
+| `env(key)` | `string \| undefined` | Return the raw value |
+| `env(key, default)` | `string` | Return the raw value or the default |
+| `env.int(key, default?)` | `number \| undefined` | Parse as integer (`parseInt`) |
+| `env.float(key, default?)` | `number \| undefined` | Parse as float (`parseFloat`) |
+| `env.bool(key, default?)` | `boolean \| undefined` | `'true'` returns `true`, anything else returns `false` |
+| `env.json(key, default?)` | `object \| undefined` | Parse as JSON; throws on invalid JSON |
+| `env.array(key, default?)` | `string[] \| undefined` | Split by comma, trim values, strip surrounding `[]` and double quotes |
+| `env.date(key, default?)` | `Date \| undefined` | Parse with `new Date()` |
+| `env.oneOf(key, expectedValues, default?)` | `string \| undefined` | Return value if it matches one of `expectedValues`, otherwise return `default`; throws only for invalid function usage |
+
+### Usage example
+
+```js title="path: /config/server.js"
+const { env } = require('@strapi/utils');
+
+module.exports = {
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+};
+```
+
 ## errors
 
 Custom error classes that extend the Node.js `Error` class. All errors share a common structure:
@@ -90,91 +216,22 @@ throw new errors.PolicyError('Access denied', { policy: 'is-owner' });
 Use `ApplicationError` when throwing errors in model lifecycle hooks so that meaningful messages display in the admin panel. See the [Error handling](/cms/error-handling) page for more examples.
 :::
 
-## env
+## file
 
-A helper function to read environment variables with type-safe parsing. The `env` function returns the raw string value, while its methods parse the value to a specific type.
-
-<Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
+The `file` namespace provides helpers for working with streams and file sizes.
 
 ```js
-const { env } = require('@strapi/utils');
+const { file } = require('@strapi/utils');
 ```
 
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts
-import { env } from '@strapi/utils';
-```
-
-</TabItem>
-
-</Tabs>
-
-### Available methods
-
-| Method | Return type | Description |
+| Function | Return type | Description |
 | --- | --- | --- |
-| `env(key)` | `string \| undefined` | Return the raw value |
-| `env(key, default)` | `string` | Return the raw value or the default |
-| `env.int(key, default?)` | `number \| undefined` | Parse as integer (`parseInt`) |
-| `env.float(key, default?)` | `number \| undefined` | Parse as float (`parseFloat`) |
-| `env.bool(key, default?)` | `boolean \| undefined` | `'true'` returns `true`, anything else returns `false` |
-| `env.json(key, default?)` | `object \| undefined` | Parse as JSON; throws on invalid JSON |
-| `env.array(key, default?)` | `string[] \| undefined` | Split by comma, trim values, strip surrounding `[]` and double quotes |
-| `env.date(key, default?)` | `Date \| undefined` | Parse with `new Date()` |
-| `env.oneOf(key, expectedValues, default?)` | `string \| undefined` | Return value if it matches one of `expectedValues`, otherwise return `default`; throws only for invalid function usage |
-
-### Usage example
-
-```js title="path: /config/server.js"
-const { env } = require('@strapi/utils');
-
-module.exports = {
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  app: {
-    keys: env.array('APP_KEYS'),
-  },
-};
-```
-
-## parseType
-
-Cast a value to a specific Strapi field type.
-
-```js
-const { parseType } = require('@strapi/utils');
-```
-
-### Parameters
-
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `type` | `string` | Target type: `'boolean'`, `'integer'`, `'biginteger'`, `'float'`, `'decimal'`, `'time'`, `'date'`, `'timestamp'`, or `'datetime'` |
-| `value` | `unknown` | The value to parse |
-| `forceCast` | `boolean` | Force conversion for booleans. Default: `false` |
-
-### Return values by type
-
-| Type | Return type | Format |
-| --- | --- | --- |
-| `boolean` | `boolean` | Accepts `'true'`, `'t'`, `'1'`, `1` as `true` |
-| `integer`, `biginteger`, `float`, `decimal` | `number` | Numeric conversion |
-| `time` | `string` | `HH:mm:ss.SSS` |
-| `date` | `string` | `yyyy-MM-dd` |
-| `timestamp`, `datetime` | `Date` | Date object |
-
-### Usage example
-
-```js
-parseType({ type: 'boolean', value: 'true' }); // true
-parseType({ type: 'integer', value: '42' }); // 42
-parseType({ type: 'date', value: '2024-01-15T10:30:00Z' }); // '2024-01-15'
-```
+| `streamToBuffer(stream)` | `Promise<Buffer>` | Convert a readable stream into a Buffer |
+| `getStreamSize(stream)` | `Promise<number>` | Calculate the total size of a stream in bytes |
+| `bytesToHumanReadable(bytes)` | `string` | Format bytes as a human-readable string (e.g., `'2 MB'`) |
+| `bytesToKbytes(bytes)` | `number` | Convert bytes to kilobytes (rounded to 2 decimals) |
+| `kbytesToBytes(kbytes)` | `number` | Convert kilobytes to bytes |
+| `writableDiscardStream(options?)` | `Writable` | Create a writable stream that discards all data |
 
 ## hooks
 
@@ -221,6 +278,54 @@ myHook.register(async (context) => {
 await myHook.call({ data: 'example' });
 ```
 
+## pagination
+
+The `pagination` namespace provides helpers for handling pagination parameters.
+
+```js
+const { pagination } = require('@strapi/utils');
+```
+
+| Function | Description |
+| --- | --- |
+| `withDefaultPagination(params, options?)` | Apply default values and validate pagination parameters. Supports both `page`/`pageSize` and `start`/`limit` formats |
+| `transformPagedPaginationInfo(params, total)` | Transform pagination data into `{ page, pageSize, pageCount, total }` format |
+| `transformOffsetPaginationInfo(params, total)` | Transform pagination data into `{ start, limit, total }` format |
+
+## parseType
+
+Cast a value to a specific Strapi field type.
+
+```js
+const { parseType } = require('@strapi/utils');
+```
+
+### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Target type: `'boolean'`, `'integer'`, `'biginteger'`, `'float'`, `'decimal'`, `'time'`, `'date'`, `'timestamp'`, or `'datetime'` |
+| `value` | `unknown` | The value to parse |
+| `forceCast` | `boolean` | Force conversion for booleans. Default: `false` |
+
+### Return values by type
+
+| Type | Return type | Format |
+| --- | --- | --- |
+| `boolean` | `boolean` | Accepts `'true'`, `'t'`, `'1'`, `1` as `true` |
+| `integer`, `biginteger`, `float`, `decimal` | `number` | Numeric conversion |
+| `time` | `string` | `HH:mm:ss.SSS` |
+| `date` | `string` | `yyyy-MM-dd` |
+| `timestamp`, `datetime` | `Date` | Date object |
+
+### Usage example
+
+```js
+parseType({ type: 'boolean', value: 'true' }); // true
+parseType({ type: 'integer', value: '42' }); // 42
+parseType({ type: 'date', value: '2024-01-15T10:30:00Z' }); // '2024-01-15'
+```
+
 ## policy
 
 Helpers to create and manage [policies](/cms/backend-customization/policies).
@@ -263,152 +368,6 @@ policyCtx.is('admin'); // true
 policyCtx.type; // 'admin'
 ```
 
-## sanitize
-
-The `sanitize` namespace provides functions to clean input and output data based on content-type schemas. Use `sanitize` to remove disallowed, private, or restricted fields before processing or returning data.
-
-```js
-const { sanitize } = require('@strapi/utils');
-```
-
-### createAPISanitizers
-
-Create a set of sanitizer functions using a model resolver:
-
-```js
-const sanitizers = sanitize.createAPISanitizers({
-  getModel: strapi.getModel.bind(strapi),
-});
-```
-
-The returned object provides:
-
-| Method | Description |
-| --- | --- |
-| `sanitizers.input(data, schema, options?)` | Sanitize request body data |
-| `sanitizers.output(data, schema, options?)` | Sanitize response data |
-| `sanitizers.query(query, schema, options?)` | Sanitize query parameters |
-| `sanitizers.filters(filters, schema, options?)` | Sanitize filter expressions |
-| `sanitizers.sort(sort, schema, options?)` | Sanitize sort parameters |
-| `sanitizers.fields(fields, schema, options?)` | Sanitize field selections |
-| `sanitizers.populate(populate, schema, options?)` | Sanitize populate directives |
-
-The optional `options` object on each method can include `auth`, `strictParams`, and `route`.
-
-:::tip
-In controllers, you can use the built-in `sanitizeQuery` and `sanitizeOutput` methods instead of calling `sanitize.createAPISanitizers` directly. See [Controllers](/cms/backend-customization/controllers) for details.
-:::
-
-## validate
-
-The `validate` namespace provides functions to check input and query data against content-type schemas. Use `validate` to reject requests that reference unknown, private, or restricted fields.
-
-```js
-const { validate } = require('@strapi/utils');
-```
-
-### createAPIValidators
-
-Create a set of validator functions using a model resolver:
-
-```js
-const validators = validate.createAPIValidators({
-  getModel: strapi.getModel.bind(strapi),
-});
-```
-
-The returned object provides:
-
-| Method | Description |
-| --- | --- |
-| `validators.input(data, schema, options?)` | Validate request body data |
-| `validators.query(query, schema, options?)` | Validate query parameters |
-| `validators.filters(filters, schema, options?)` | Validate filter expressions |
-| `validators.sort(sort, schema, options?)` | Validate sort parameters |
-| `validators.fields(fields, schema, options?)` | Validate field selections |
-| `validators.populate(populate, schema, options?)` | Validate populate directives |
-
-The optional `options` object on each method can include `auth`, `strictParams`, and `route`.
-
-## contentTypes
-
-The `contentTypes` namespace exposes constants and helper functions for working with Strapi content-type schemas.
-
-```js
-const { contentTypes } = require('@strapi/utils');
-```
-
-### Constants
-
-| Constant | Value | Description |
-| --- | --- | --- |
-| `ID_ATTRIBUTE` | `'id'` | Primary key field name |
-| `DOC_ID_ATTRIBUTE` | `'documentId'` | Document identifier field name |
-| `PUBLISHED_AT_ATTRIBUTE` | `'publishedAt'` | Publication timestamp field name |
-| `FIRST_PUBLISHED_AT_ATTRIBUTE` | `'firstPublishedAt'` | First publication timestamp field name |
-| `CREATED_BY_ATTRIBUTE` | `'createdBy'` | Creator reference field name |
-| `UPDATED_BY_ATTRIBUTE` | `'updatedBy'` | Last editor reference field name |
-| `CREATED_AT_ATTRIBUTE` | `'createdAt'` | Creation timestamp field name |
-| `UPDATED_AT_ATTRIBUTE` | `'updatedAt'` | Update timestamp field name |
-| `SINGLE_TYPE` | `'singleType'` | Single type kind identifier |
-| `COLLECTION_TYPE` | `'collectionType'` | Collection type kind identifier |
-
-### Attribute inspection functions
-
-| Function | Description |
-| --- | --- |
-| `isRelationalAttribute(attribute)` | Check if the attribute is a relation |
-| `isMediaAttribute(attribute)` | Check if the attribute is a media field |
-| `isDynamicZoneAttribute(attribute)` | Check if the attribute is a dynamic zone |
-| `isComponentAttribute(attribute)` | Check if the attribute is a component |
-| `isMorphToRelationalAttribute(attribute)` | Check if the attribute is a morph-to relation |
-| `isScalarAttribute(attribute)` | Check if the attribute is a scalar value |
-| `isTypedAttribute(attribute, type)` | Check if the attribute has a specific type |
-
-### Schema inspection functions
-
-| Function | Description |
-| --- | --- |
-| `getTimestamps(schema)` | Return timestamp fields present in the schema (`createdAt`, `updatedAt`) |
-| `getCreatorFields(schema)` | Return creator fields present in the schema (`createdBy`, `updatedBy`) |
-| `getNonWritableAttributes(schema)` | Return field names that cannot be written to |
-| `getWritableAttributes(schema)` | Return field names that can be written to |
-| `isWritableAttribute(schema, attributeName)` | Check if a specific attribute is writable |
-| `hasDraftAndPublish(schema)` | Check if the schema has draft and publish enabled |
-| `getVisibleAttributes(schema)` | Return schema attributes that are not marked as non-visible |
-| `getScalarAttributes(schema)` | Return attributes that are scalar values |
-
-## relations
-
-The `relations` namespace provides helpers to inspect relation attributes.
-
-```js
-const { relations } = require('@strapi/utils');
-```
-
-| Function | Description |
-| --- | --- |
-| `getRelationalFields(contentType)` | Return all relation field names from a content type |
-| `isOneToAny(attribute)` | Check for `oneToOne` or `oneToMany` relations |
-| `isManyToAny(attribute)` | Check for `manyToMany` or `manyToOne` relations |
-| `isAnyToOne(attribute)` | Check for `oneToOne` or `manyToOne` relations |
-| `isAnyToMany(attribute)` | Check for `oneToMany` or `manyToMany` relations |
-| `isPolymorphic(attribute)` | Check for `morphOne`, `morphMany`, `morphToOne`, or `morphToMany` relations |
-
-## pagination
-
-The `pagination` namespace provides helpers for handling pagination parameters.
-
-```js
-const { pagination } = require('@strapi/utils');
-```
-
-| Function | Description |
-| --- | --- |
-| `withDefaultPagination(params, options?)` | Apply default values and validate pagination parameters. Supports both `page`/`pageSize` and `start`/`limit` formats |
-| `transformPagedPaginationInfo(params, total)` | Transform pagination data into `{ page, pageSize, pageCount, total }` format |
-| `transformOffsetPaginationInfo(params, total)` | Transform pagination data into `{ start, limit, total }` format |
-
 ## primitives
 
 The `primitives` namespace groups low-level data transformation helpers.
@@ -443,49 +402,6 @@ const { primitives } = require('@strapi/utils');
 | Function | Description |
 | --- | --- |
 | `includesString(arr, val)` | Check if an array includes a value when both are compared as strings |
-
-## async
-
-The `async` namespace provides asynchronous utility functions.
-
-```js
-const { async } = require('@strapi/utils');
-```
-
-| Function | Description |
-| --- | --- |
-| `async.pipe(...fns)` | Compose functions: the first function runs with the original arguments, each subsequent function receives the previous return value. Returns a `Promise`. |
-| `async.map(iterable, mapper, options?)` | Parallel map using `p-map` (also supports curried usage). Set `concurrency` in options to control parallelism. |
-| `async.reduce(array)(iteratee, initialValue?)` | Asynchronous reduce over an array. The iteratee receives `(accumulator, item, index)`. |
-
-### Usage example
-
-```js
-const { async: asyncUtils } = require('@strapi/utils');
-
-const result = await asyncUtils.pipe(
-  fetchUser,
-  enrichWithProfile,
-  formatResponse
-)(userId);
-```
-
-## file
-
-The `file` namespace provides helpers for working with streams and file sizes.
-
-```js
-const { file } = require('@strapi/utils');
-```
-
-| Function | Return type | Description |
-| --- | --- | --- |
-| `streamToBuffer(stream)` | `Promise<Buffer>` | Convert a readable stream into a Buffer |
-| `getStreamSize(stream)` | `Promise<number>` | Calculate the total size of a stream in bytes |
-| `bytesToHumanReadable(bytes)` | `string` | Format bytes as a human-readable string (e.g., `'2 MB'`) |
-| `bytesToKbytes(bytes)` | `number` | Convert bytes to kilobytes (rounded to 2 decimals) |
-| `kbytesToBytes(kbytes)` | `number` | Convert kilobytes to bytes |
-| `writableDiscardStream(options?)` | `Writable` | Create a writable stream that discards all data |
 
 ## providerFactory
 
@@ -543,6 +459,59 @@ registry.has('my-provider'); // true
 registry.size(); // 1
 ```
 
+## relations
+
+The `relations` namespace provides helpers to inspect relation attributes.
+
+```js
+const { relations } = require('@strapi/utils');
+```
+
+| Function | Description |
+| --- | --- |
+| `getRelationalFields(contentType)` | Return all relation field names from a content type |
+| `isOneToAny(attribute)` | Check for `oneToOne` or `oneToMany` relations |
+| `isManyToAny(attribute)` | Check for `manyToMany` or `manyToOne` relations |
+| `isAnyToOne(attribute)` | Check for `oneToOne` or `manyToOne` relations |
+| `isAnyToMany(attribute)` | Check for `oneToMany` or `manyToMany` relations |
+| `isPolymorphic(attribute)` | Check for `morphOne`, `morphMany`, `morphToOne`, or `morphToMany` relations |
+
+## sanitize
+
+The `sanitize` namespace provides functions to clean input and output data based on content-type schemas. Use `sanitize` to remove disallowed, private, or restricted fields before processing or returning data.
+
+```js
+const { sanitize } = require('@strapi/utils');
+```
+
+### createAPISanitizers
+
+Create a set of sanitizer functions using a model resolver:
+
+```js
+const sanitizers = sanitize.createAPISanitizers({
+  getModel: strapi.getModel.bind(strapi),
+});
+```
+
+The returned object provides:
+
+| Method | Description |
+| --- | --- |
+| `sanitizers.input(data, schema, options?)` | Sanitize request body data |
+| `sanitizers.output(data, schema, options?)` | Sanitize response data |
+| `sanitizers.query(query, schema, options?)` | Sanitize query parameters |
+| `sanitizers.filters(filters, schema, options?)` | Sanitize filter expressions |
+| `sanitizers.sort(sort, schema, options?)` | Sanitize sort parameters |
+| `sanitizers.fields(fields, schema, options?)` | Sanitize field selections |
+| `sanitizers.populate(populate, schema, options?)` | Sanitize populate directives |
+
+The optional `options` object on each method can include `auth`, `strictParams`, and `route`.
+
+:::tip
+In controllers, you can use the built-in `sanitizeQuery` and `sanitizeOutput` methods instead of calling `sanitize.createAPISanitizers` directly. See [Controllers](/cms/backend-customization/controllers) for details.
+:::
+
 ## setCreatorFields
 
 Set `createdBy` and `updatedBy` fields on an entity.
@@ -571,6 +540,37 @@ const updateCreator = setCreatorFields({ user: { id: 2 }, isEdition: true });
 const updated = updateCreator(data);
 // { title: 'My Article', createdBy: 1, updatedBy: 2 }
 ```
+
+## validate
+
+The `validate` namespace provides functions to check input and query data against content-type schemas. Use `validate` to reject requests that reference unknown, private, or restricted fields.
+
+```js
+const { validate } = require('@strapi/utils');
+```
+
+### createAPIValidators
+
+Create a set of validator functions using a model resolver:
+
+```js
+const validators = validate.createAPIValidators({
+  getModel: strapi.getModel.bind(strapi),
+});
+```
+
+The returned object provides:
+
+| Method | Description |
+| --- | --- |
+| `validators.input(data, schema, options?)` | Validate request body data |
+| `validators.query(query, schema, options?)` | Validate query parameters |
+| `validators.filters(filters, schema, options?)` | Validate filter expressions |
+| `validators.sort(sort, schema, options?)` | Validate sort parameters |
+| `validators.fields(fields, schema, options?)` | Validate field selections |
+| `validators.populate(populate, schema, options?)` | Validate populate directives |
+
+The optional `options` object on each method can include `auth`, `strictParams`, and `route`.
 
 ## yup
 
