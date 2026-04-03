@@ -826,6 +826,68 @@ tags: [...]
 
 ---
 
+### Integrity Checker — Output contract
+
+**Required inputs:** Markdown content to verify + codebase access (for Code Verifier) + docs access (for Coherence Checker)
+
+**Sub-check dispatch:** Default runs both. "verify code" / "fact-check" → Code Verifier only. "check coherence" / "check cross-references" → Coherence Checker only.
+
+**Output:** A consolidated Markdown report:
+
+```markdown
+# Integrity Report — [filename or description]
+
+**Scope:** Code & Claims | Cross-page coherence
+**Codebase version:** [branch or commit if known]
+**Fetch budget:** X / Y used (Code Verifier) · X / Y used (Coherence Checker)
+
+## Summary
+
+| Domain | Verified | Unverified | Falsified |
+|--------|----------|------------|-----------|
+| Code examples (Pass 1 — surface) | X | Y | Z |
+| Code examples (Pass 2 — deep) | X | Y | Z |
+| Technical claims | X | Y | Z |
+| Cross-page coherence | X | Y | Z |
+| **Total** | **X** | **Y** | **Z** |
+
+## Findings
+
+### [falsified] Domain — Short description
+**Location:** Section "Heading" > code example / prose
+**Claim:** What the documentation says.
+**Reality:** What the code actually does.
+**Source:** `path/to/file.ts#L42-L58`
+**Fix:** Specific correction.
+
+### [unverified] Domain — Short description
+**Location:** Section "Heading"
+**Claim:** What the documentation says.
+**Search performed:** What was searched and where.
+**Reason unverified:** Why confirmation could not be obtained.
+**Risk:** High / Medium / Low
+**Recommendation:** Verify manually / accept with caveat / flag for SME review.
+
+## Verification Log
+
+| # | Search query / file fetched | Result | Finding |
+|---|----------------------------|--------|---------|
+
+## Recommended Actions (by priority)
+
+1. **[falsified]** Most critical
+2. **[unverified, high-risk]** Needs manual verification
+3. **[unverified, medium-risk]** Should be verified before publication
+```
+
+**Confidence model:** verified (source found and matches), unverified (searched but inconclusive), falsified (source found and contradicts doc).
+
+**Risk assessment for unverified:** High = specific identifier, runtime error risk. Medium = behavior/defaults, confusion risk. Low = general/scope, unlikely practical impact.
+
+**Adaptive fetch budget (Code Verifier):** ≤ 10 items → 15 fetches, 11-30 → 25, 31-60 → 40, > 60 → 50 (hard cap). Coherence Checker: fixed 10 page fetches.
+
+---
+
 ### Orchestrator — Output contract
 
 **Required inputs:** User request + outputs from all prompts in the sequence
@@ -846,7 +908,7 @@ tags: [...]
 | Structure (Outliner) | X | Y | Z |
 | UX Analysis (if Full Review) | — | — | X |
 | Style (12 Rules) | X | Y | Z |
-| Integrity (Links) | X | Y | Z |
+| Integrity (Code & Coherence) | X | Y | Z |
 | **Total** | **X** | **Y** | **Z** |
 
 ## Structure Issues
