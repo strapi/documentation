@@ -217,7 +217,7 @@ The following are NOT checked by any sub-check:
 - **Auto-generated files** (`llms*.txt`) → excluded from all checks
 
 
--e 
+
 
 ---
 ---
@@ -499,7 +499,7 @@ Produce the output in the format specified below. Group findings by severity (fa
 | Scope claim too broad | warning | falsified |
 | Default value incorrect | warning | falsified |
 | Claim not verifiable | — | unverified |
--e 
+
 
 ---
 ---
@@ -698,7 +698,7 @@ Produce the output in the format specified below.
 | Contradictory claims across pages | error | falsified |
 | Terminology inconsistency | warning | unverified |
 | Parameter described differently on 2 pages | warning | falsified |
--e 
+
 
 ---
 ---
