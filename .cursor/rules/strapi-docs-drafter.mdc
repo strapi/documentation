@@ -1,5 +1,5 @@
 ---
-description: "Run when user asks to draft, write, or compose documentation content from an outline"
+description: "Run when the user asks to draft, write, or compose documentation content from an outline or source material. Also run when patching existing pages or making micro-edits like adding cross-links."
 globs: []
 alwaysApply: false
 ---
