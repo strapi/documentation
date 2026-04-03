@@ -80,7 +80,7 @@ const { contentTypes } = require('@strapi/utils');
 | `isRelationalAttribute(attribute)` | Check if the attribute is a relation |
 | `isMediaAttribute(attribute)` | Check if the attribute is a media field |
 | `isDynamicZoneAttribute(attribute)` | Check if the attribute is a dynamic zone |
-| `isComponentAttribute(attribute)` | Check if the attribute is a component |
+| `isComponentAttribute(attribute)` | Check if the attribute is a component or a dynamic zone |
 | `isMorphToRelationalAttribute(attribute)` | Check if the attribute is a morph-to relation |
 | `isScalarAttribute(attribute)` | Check if the attribute is a scalar value |
 | `isTypedAttribute(attribute, type)` | Check if the attribute has a specific type |
