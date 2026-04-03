@@ -390,6 +390,7 @@ The `shared/` folder contains guides used by multiple prompts:
 | Resource | File | Purpose |
 |----------|------|---------|
 | **GitHub MCP Usage** | `shared/github-mcp-usage.md` | How to fetch PR content using GitHub MCP tools |
+| **Known Pitfalls** | `integrity-known-pitfalls.md` | Documented hallucination patterns the Code Verifier checks proactively |
 
 ---
 
