@@ -619,6 +619,37 @@ For Patch mode, metadata is embedded in the output header (File, Section, Edits 
 
 18. **Read-proof example data.** After writing API examples, re-read each response from the reader's perspective: could any field value seem contradictory to the query's purpose? If so, add a brief explanatory sentence before the response block (preferred) or an inline comment in the code. For instance, a query for "drafts of published documents" returns `publishedAt: null` because the draft version is returned — this is technically correct but needs clarification for readers.
 
+19. **Annotate sources for the Integrity Checker.** For every code example and significant technical claim you produce, annotate the source to enable downstream verification. This applies to Compose and Patch modes.
+
+    **For code examples:**
+    1. Search the codebase for the primary identifiers (method names, config options, parameter names).
+    2. If found, add a `<!-- source: path/to/file.ts#L42-L58 -->` comment before the code block.
+    3. If not found, add a `<!-- unverified: description of what couldn't be confirmed -->` comment.
+    4. If you synthesize an example from multiple real usages, cite all sources: `<!-- source: path/one.ts#L12-L30, path/two.ts#L8-L22 -->`.
+
+    **For behavioral claims in prose** (lifecycle ordering, default values, scope statements):
+    1. Verify against the source when possible.
+    2. Annotate with `<!-- source: ... -->` when verified.
+    3. Annotate with `<!-- unverified: ... -->` when not verified.
+
+    **Rules:**
+    - Every code example MUST have either a `<!-- source: ... -->` or `<!-- unverified: ... -->` annotation.
+    - Technical claims about behavior, lifecycle ordering, or API availability SHOULD have source annotations.
+    - These annotations are pipeline metadata stripped before publication. They do not appear in rendered documentation.
+    - Prioritize annotation accuracy over annotation completeness: a missing annotation is better than a wrong one.
+
+---
+
+## Output Instructions
+
+**Always output the draft as a standalone Markdown document.**
+
+- **In Claude.ai**: Create a Markdown artifact with a descriptive title (e.g., "Draft — cms/features/mcp-server.md"). Create the artifact first, then optionally add a brief summary after.
+- **In ChatGPT/other LLMs**: Output the full draft in a fenced Markdown code block, or use the platform's file/canvas feature if available.
+- **Via API**: Return the draft as the complete response in Markdown format.
+
+Do NOT summarize or discuss the draft before outputting it. Output the full draft first.
+
 ---
 
 ## Quality Checklist
@@ -647,6 +678,8 @@ Before delivering the output, verify:
 - [ ] `<!-- TODO -->` comments for all gaps and uncertainties
 - [ ] No hallucinated information
 - [ ] Output envelope present (drafter:mode, target, action header + drafter:notes footer)
+- [ ] Every code example has a `<!-- source: ... -->` or `<!-- unverified: ... -->` annotation
+- [ ] Key behavioral claims have source annotations where verifiable
 
 ### Patch mode
 
@@ -664,6 +697,7 @@ Before delivering the output, verify:
 - [ ] No hallucinated information in replacement content
 - [ ] Output envelope present (drafter:mode, target, action header + drafter:notes footer)
 - [ ] `// highlight-*` markers preserved in untouched code blocks; pattern applied to new code examples where the existing page uses them
+- [ ] New or updated code examples have a `<!-- source: ... -->` or `<!-- unverified: ... -->` annotation
 
 ### Micro-edit mode
 
