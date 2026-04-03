@@ -423,7 +423,6 @@ const sidebars = {
         'cms/error-handling',
         'cms/templates',
         'cms/testing',
-        'cms/strapi-utils',
       ],
     },
     {
