@@ -370,38 +370,44 @@ policyCtx.type; // 'admin'
 
 ## primitives
 
-The `primitives` namespace groups low-level data transformation helpers.
+Low-level data transformation helpers. The primitives sub-modules (`strings`, `objects`, `arrays`, `dates`) are re-exported as top-level namespaces:
 
 ```js
-const { primitives } = require('@strapi/utils');
+const { strings, objects, arrays, dates } = require('@strapi/utils');
 ```
 
-### primitives.strings
+### strings
 
 | Function | Description |
 | --- | --- |
-| `nameToSlug(name, options?)` | Convert a name to a URL-friendly slug. Default separator: `'-'` |
-| `nameToCollectionName(name)` | Convert a name to a snake_case collection name |
-| `toRegressedEnumValue(value)` | Convert a value to `UPPER_SNAKE_CASE` for use as an enum key |
-| `getCommonPath(...paths)` | Find the common path prefix from multiple file paths |
-| `isCamelCase(value)` | Check if a string is in `camelCase` format |
-| `isKebabCase(value)` | Check if a string is in `kebab-case` format |
-| `toKebabCase(value)` | Convert a string to `kebab-case` |
-| `startsWithANumber(value)` | Check if a string starts with a digit |
-| `joinBy(separator, ...parts)` | Join strings with a separator, trimming duplicate separators at join points |
-| `isEqual(a, b)` | Compare 2 values as strings |
+| `strings.nameToSlug(name, options?)` | Convert a name to a URL-friendly slug. Default separator: `'-'` |
+| `strings.nameToCollectionName(name)` | Convert a name to a snake_case collection name |
+| `strings.toRegressedEnumValue(value)` | Convert a value to `UPPER_SNAKE_CASE` for use as an enum key |
+| `strings.getCommonPath(...paths)` | Find the common path prefix from multiple file paths |
+| `strings.isCamelCase(value)` | Check if a string is in `camelCase` format |
+| `strings.isKebabCase(value)` | Check if a string is in `kebab-case` format |
+| `strings.toKebabCase(value)` | Convert a string to `kebab-case` |
+| `strings.startsWithANumber(value)` | Check if a string starts with a digit |
+| `strings.joinBy(separator, ...parts)` | Join strings with a separator, trimming duplicate separators at join points |
+| `strings.isEqual(a, b)` | Compare 2 values as strings |
 
-### primitives.objects
-
-| Function | Description |
-| --- | --- |
-| `keysDeep(obj)` | Return all nested keys in dot-notation (e.g., `['a.b', 'a.c']`) |
-
-### primitives.arrays
+### objects
 
 | Function | Description |
 | --- | --- |
-| `includesString(arr, val)` | Check if an array includes a value when both are compared as strings |
+| `objects.keysDeep(obj)` | Return all nested keys in dot-notation (e.g., `['a.b', 'a.c']`) |
+
+### arrays
+
+| Function | Description |
+| --- | --- |
+| `arrays.includesString(arr, val)` | Check if an array includes a value when both are compared as strings |
+
+### dates
+
+| Function | Description |
+| --- | --- |
+| `dates.timestampCode(date?)` | Convert a `Date` (defaults to `new Date()`) to a base-36 string of the millisecond timestamp |
 
 ## providerFactory
 
@@ -594,6 +600,12 @@ const { yup } = require('@strapi/utils');
 | `.uniqueProperty(property, message)` | Array | Validate that a specific property is unique across array items |
 
 ### Schema validation helpers
+
+`validateYupSchema` and `validateYupSchemaSync` are top-level exports from `@strapi/utils`, not part of the `yup` namespace:
+
+```js
+const { validateYupSchema, validateYupSchemaSync } = require('@strapi/utils');
+```
 
 | Function | Description |
 | --- | --- |
