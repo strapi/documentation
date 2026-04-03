@@ -109,7 +109,9 @@ Router → Outliner (Generator) if needed → Drafter → Self-Review (Outline C
 | "outline check", "check structure", "template" | **Outline Checker** | `outline-checker.md` |
 | "UX check", "UX analysis", "reader experience" | **UX Analyzer** | `outline-ux-analyzer.md` |
 | "full outline review" | **Outline Checker** + **UX Analyzer** | `outline-checker.md` + `outline-ux-analyzer.md` |
-| "check links", "verify paths" | **Integrity Checker** | *(coming soon)* |
+| "check links", "verify paths", "integrity check" | **Integrity Checker** | `integrity-checker.md` → `integrity-code-verifier.md` + `integrity-coherence-checker.md` |
+| "verify code", "fact-check", "check against codebase" | **Integrity Checker** (Code Verifier only) | `integrity-checker.md` → `integrity-code-verifier.md` |
+| "check coherence", "check cross-references", "consistency check" | **Integrity Checker** (Coherence Checker only) | `integrity-checker.md` → `integrity-coherence-checker.md` |
 | "review this PR" | **Router** → **Outliner** (auto-selects Quick or Full) → **Style Checker** | `router.md` → `outliner.md` → `style-checker.md` |
 | "full review" | **Router** → **Outliner** (Full Review: Checker + UX) → **Style Checker** | `router.md` → `outliner.md` → `style-checker.md` |
 | "create docs for...", "document this feature" | **Auto-chain** (see below) | `router.md` → `outline-generator.md` → `drafter.md` → `outline-checker.md` + `style-checker.md` |
@@ -234,6 +236,9 @@ Read the full prompt file before doing any analysis. Each prompt is a self-conta
 | Outline Generator | `outline-generator.md` |
 | Drafter | `drafter.md` |
 | Style Checker | `style-checker.md` |
+| Integrity Checker | `integrity-checker.md` |
+| ↳ Code Verifier | `integrity-code-verifier.md` |
+| ↳ Coherence Checker | `integrity-coherence-checker.md` |
 
 **How to read these files depends on your platform** — see [Platform Integration](#platform-integration) below.
 
@@ -327,6 +332,7 @@ Recommended `.cursor/rules/` files:
 | `strapi-docs-ux-analyzer.mdc` | `"Run when user asks for UX analysis, reader experience review, or full outline review"` | `false` |
 | `strapi-docs-outline-generator.mdc` | `"Run when user needs an outline for new documentation from source material"` | `false` |
 | `strapi-docs-drafter.mdc` | `"Run when user asks to draft, write, or compose documentation content from an outline"` | `false` |
+| `strapi-docs-integrity-checker.mdc` | `"Run when user asks to verify code examples, fact-check technical claims, check links, or verify cross-page consistency"` | `false` |
 
 The `strapi-docs-orchestrator.mdc` file should contain this entire `claude-project-instructions.md` (including the appendix) with `alwaysApply: true`. It acts as the routing table and fallback. The individual prompt rules are loaded on-demand when Cursor detects a matching intent.
 
@@ -373,7 +379,9 @@ If GitHub MCP is unavailable, ask the user to paste the PR diff. Appending `.dif
 | ↳ Outline Generator | `outline-generator.md` | ✅ Available | Creates outlines from source material (Notion, GitHub) |
 | **Style Checker** | `style-checker.md` | ✅ Available | Checks compliance to 12 Rules of Technical Writing and Strapi style conventions |
 | **Drafter** | `drafter.md` | ✅ Available | Generates content from an outline and source material (3 modes: Compose, Patch, Micro-edit) |
-| **Integrity Checker** | — | 🔜 Coming soon | Checks for broken links, invalid paths, code block formatting, anchor consistency |
+| **Integrity Checker** | `integrity-checker.md` | ✅ Available | Coordinates technical integrity verification (dispatches to sub-checks) |
+| ↳ Code Verifier | `integrity-code-verifier.md` | ✅ Available | Verifies code examples and technical claims against the Strapi codebase |
+| ↳ Coherence Checker | `integrity-coherence-checker.md` | ✅ Available | Verifies cross-page consistency, links, and terminology |
 
 ### Shared Resources
 
@@ -455,11 +463,17 @@ The `shared/` folder contains guides used by multiple prompts:
 
 ---
 
-### Integrity Checker (Coming Soon)
+### Integrity Checker
 
-**Purpose:** Verify technical accuracy and formatting of links, paths, and code blocks.
+**Purpose:** Coordinate technical integrity verification for Strapi documentation. Dispatches to 2 specialized sub-checks, then consolidates findings into a single report.
 
-**Will check:** Internal links, code block language identifiers, file path consistency, anchor references, potential broken external links.
+**Sub-checks:**
+- **Code Verifier** (`integrity-code-verifier.md`) — Verifies code examples (method names, parameters, imports) and technical claims (lifecycle ordering, defaults, behavior) against the Strapi codebase. Uses a 2-pass strategy: surface verification (export map) then deep verification (file-level). Adaptive fetch budget (15-50) based on document size.
+- **Coherence Checker** (`integrity-coherence-checker.md`) — Verifies cross-page consistency: link targets exist, terminology is uniform, no contradictions between pages. Uses `sidebars.js` and `llms.txt` for cheap structural verification before fetching individual pages. Fixed budget of 10 page fetches.
+
+**Key behavior:** The Integrity Checker dispatches to one or both sub-checks based on user intent and document content. In sequential mode (Claude.ai), Code Verifier runs first, then Coherence Checker. In parallel-capable environments (Claude Code, API), both can run simultaneously.
+
+**Full specification:** `integrity-checker.md`, `integrity-code-verifier.md`, `integrity-coherence-checker.md`
 
 ---
 
