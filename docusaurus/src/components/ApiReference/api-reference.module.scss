@@ -33,7 +33,7 @@
   }
 
   &__sectionTitle {
-    font-family: var(--strapi-font-family-mono);
+    font-family: var(--strapi-font-family-technical);
     font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
@@ -75,7 +75,7 @@
   }
 
   &__badge {
-    font-family: var(--strapi-font-family-mono);
+    font-family: var(--strapi-font-family-technical);
     font-size: 9px;
     font-weight: 700;
     padding: 2px 5px;
@@ -249,7 +249,7 @@
 
 /* ═══ METHOD PILL ═══ */
 .methodPill {
-  font-family: var(--strapi-font-family-mono);
+  font-family: var(--strapi-font-family-technical);
   font-size: 11px;
   font-weight: 700;
   padding: 4px 10px;
@@ -300,7 +300,7 @@
 /* ═══ PARAMS TABLE ═══ */
 .params {
   &__header {
-    font-family: var(--strapi-font-family-mono);
+    font-family: var(--strapi-font-family-technical);
     font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
@@ -349,7 +349,7 @@
   }
 
   &__badge {
-    font-family: var(--strapi-font-family-mono);
+    font-family: var(--strapi-font-family-technical);
     font-size: 9px;
     font-weight: 700;
     padding: 2px 6px;
@@ -499,7 +499,7 @@
 }
 
 .responseTab {
-  font-family: var(--strapi-font-family-mono);
+  font-family: var(--strapi-font-family-technical);
   font-size: 10px;
   font-weight: 600;
   padding: 3px 8px;
