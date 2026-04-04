@@ -1,8 +1,38 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import Layout from '@theme/Layout';
 import styles from './home.module.scss';
 import { HomepageAIButton } from '../../components';
 import content from './_home.content';
+
+/**
+ * Copiable code block with copy button
+ */
+function CopyCodeBlock({ command, children }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText(command).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, [command]);
+
+  return (
+    <div className={styles.bentoCardCode}>
+      <div className={styles.codeContent}>{children}</div>
+      <button
+        className={`${styles.codeCopyBtn} ${copied ? styles.codeCopyBtnCopied : ''}`}
+        onClick={handleCopy}
+        title="Copy to clipboard"
+        aria-label="Copy to clipboard"
+      >
+        {copied ? '✓' : '⧉'}
+      </button>
+    </div>
+  );
+}
 
 /**
  * Bento grid items for the "Quick Start" section.
@@ -15,11 +45,11 @@ const BENTO_ITEMS = [
     desc: 'One command to scaffold, install, and start your Strapi backend.',
     to: '/cms/quick-start',
     code: (key) => (
-      <div key={key} className={styles.bentoCardCode}>
+      <CopyCodeBlock key={key} command="npx create-strapi@latest my-project --quickstart">
         <span className={styles.codeCm}>$</span>{' '}
         <span className={styles.codeFn}>npx</span> create-strapi@latest my-project{' '}
         <span className={styles.codeKw}>--quickstart</span>
-      </div>
+      </CopyCodeBlock>
     ),
   },
   {
@@ -83,19 +113,29 @@ const API_ITEMS = [
 const PRODUCT_CARDS = [
   {
     variant: 'cms',
-    icon: '📦',
-    title: 'CMS Documentation',
-    desc: 'Build, customize, and extend your content backend. APIs, plugins, admin panel, and more.',
+    title: 'CMS Docs',
+    desc: 'Build, customize, and extend your content backend with APIs, plugins, and more.',
     to: '/cms/intro',
-    tags: ['REST API', 'GraphQL', 'Plugins', 'TypeScript', 'Customization'],
+    links: [
+      { label: 'Quick Start', to: '/cms/quick-start' },
+      { label: 'REST API', to: '/cms/api/rest' },
+      { label: 'GraphQL', to: '/cms/api/graphql' },
+      { label: 'Plugins', to: '/cms/plugins' },
+      { label: 'TypeScript', to: '/cms/typescript' },
+    ],
   },
   {
     variant: 'cloud',
-    icon: '☁️',
-    title: 'Cloud Platform',
+    title: 'Cloud Docs',
     desc: 'Deploy in one click, scale with confidence. Managed hosting built for Strapi.',
     to: '/cloud/intro',
-    tags: ['Deploy', 'CLI', 'Domains', 'Environments'],
+    links: [
+      { label: 'Getting Started', to: '/cloud/getting-started/intro' },
+      { label: 'Deploy', to: '/cloud/getting-started/deployment' },
+      { label: 'Projects', to: '/cloud/projects/overview' },
+      { label: 'CLI', to: '/cloud/cli/cloud-cli' },
+      { label: 'Domains', to: '/cloud/projects/settings/domains' },
+    ],
   },
 ];
 
@@ -143,23 +183,25 @@ export default function PageHome() {
         <section className={styles.products}>
           <div className={styles.productsGrid}>
             {PRODUCT_CARDS.map((card, i) => (
-              <a
+              <div
                 key={i}
-                href={card.to}
                 className={`${styles.productCard} ${styles[`productCard${card.variant.charAt(0).toUpperCase() + card.variant.slice(1)}`]}`}
               >
-                <div className={styles.productCardTop}>
-                  <div className={styles.productCardIcon}>{card.icon}</div>
-                  <div className={styles.productCardArrow}>→</div>
+                <div className={styles.productCardHeader}>
+                  <a href={card.to} className={styles.productCardTitle}>
+                    {card.title}
+                    <span className={styles.productCardArrow}>→</span>
+                  </a>
+                  <p className={styles.productCardDesc}>{card.desc}</p>
                 </div>
-                <div className={styles.productCardTitle}>{card.title}</div>
-                <div className={styles.productCardDesc}>{card.desc}</div>
-                <div className={styles.productCardTags}>
-                  {card.tags.map((tag, j) => (
-                    <span key={j} className={styles.tag}>{tag}</span>
+                <div className={styles.productCardLinks}>
+                  {card.links.map((link, j) => (
+                    <a key={j} href={link.to} className={styles.productCardLink}>
+                      {link.label}
+                    </a>
                   ))}
                 </div>
-              </a>
+              </div>
             ))}
           </div>
         </section>
