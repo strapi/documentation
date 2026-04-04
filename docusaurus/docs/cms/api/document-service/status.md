@@ -33,10 +33,6 @@ Passing `{ status: 'draft' }` to a Document Service API query returns the same r
 
 ## Get the published version with `findOne()` {#find-one}
 
-`findOne()` queries return the draft version of a document by default.
-
-To return the published version while [finding a specific document](/cms/api/document-service#findone) with the Document Service API, pass `status: 'published'`:
-
 <Endpoint
   id="find-one"
   method="GET"
@@ -69,10 +65,6 @@ To return the published version while [finding a specific document](/cms/api/doc
 
 ## Get the published version with `findFirst()` {#find-first}
 
-`findFirst()` queries return the draft version of a document by default.
-
-To return the published version while [finding the first document](/cms/api/document-service#findfirst) with the Document Service API, pass `status: 'published'`:
-
 <Endpoint
   id="find-first"
   method="GET"
@@ -103,10 +95,6 @@ To return the published version while [finding the first document](/cms/api/docu
 />
 
 ## Get the published version with `findMany()` {#find-many}
-
-`findMany()` queries return the draft version of documents by default.
-
-To return the published version while [finding documents](/cms/api/document-service#findmany) with the Document Service API, pass `status: 'published'`:
 
 <Endpoint
   id="find-many"
@@ -166,8 +154,6 @@ This means that counting with the `status: 'draft'` parameter still returns the 
 
 ## Create a draft and publish it {#create}
 
-To automatically publish a document while creating it, add `status: 'published'` to parameters passed to `create()`:
-
 <Endpoint
   id="create"
   method="POST"
@@ -201,8 +187,6 @@ To automatically publish a document while creating it, add `status: 'published'`
 />
 
 ## Update a draft and publish it {#update}
-
-To automatically publish a document while updating it, add `status: 'published'` to parameters passed to `update()`:
 
 <Endpoint
   id="update"

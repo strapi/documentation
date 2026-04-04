@@ -23,8 +23,6 @@ To sort results returned by the Document Service API, include the `sort` paramet
 
 ### Sort on a single field
 
-To sort results based on a single field:
-
 <Endpoint
   id="sort-single-field"
   method="GET"
@@ -63,8 +61,6 @@ To sort results based on a single field:
 
 ### Sort on multiple fields
 
-To sort on multiple fields, pass them all in an array:
-
 <Endpoint
   id="sort-multiple-fields"
   method="GET"
@@ -102,8 +98,6 @@ To sort on multiple fields, pass them all in an array:
 />
 
 ## Pagination
-
-To paginate results, pass the `limit` and `start` parameters:
 
 <Endpoint
   id="pagination"

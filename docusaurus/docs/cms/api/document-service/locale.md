@@ -28,8 +28,6 @@ By default the [Document Service API](/cms/api/document-service) returns the def
 
 ## Get a locale version with `findOne()` {#find-one}
 
-If a `locale` is passed, the [`findOne()` method](/cms/api/document-service#findone) of the Document Service API returns the version of the document for this locale:
-
 <Endpoint
   id="find-one"
   method="GET"
@@ -64,8 +62,6 @@ If no `status` parameter is passed, the `draft` version is returned by default.
 
 ## Get a locale version with `findFirst()` {#find-first}
 
-To return a specific locale while [finding the first document](/cms/api/document-service#findfirst) matching the parameters with the Document Service API:
-
 <Endpoint
   id="find-first"
   method="GET"
@@ -96,8 +92,6 @@ To return a specific locale while [finding the first document](/cms/api/document
 If no `status` parameter is passed, the `draft` version is returned by default.
 
 ## Get locale versions with `findMany()` {#find-many}
-
-When a `locale` is passed to the [`findMany()` method](/cms/api/document-service#findmany) of the Document Service API, the response will return all documents that have this locale available.
 
 If no `status` parameter is passed, the `draft` versions are returned by default.
 
@@ -156,8 +150,6 @@ Given the following 4 documents that have various locales:
 
 ## `create()` a document for a locale {#create}
 
-To create a document for specific locale, pass the `locale` as a parameter to the [`create` method](/cms/api/document-service#create) of the Document Service API:
-
 <Endpoint
   id="create"
   method="POST"
@@ -189,8 +181,6 @@ To create a document for specific locale, pass the `locale` as a parameter to th
 />
 
 ## `update()` a locale version {#update}
-
-To update only a specific locale version of a document, pass the `locale` parameter to the [`update()` method](/cms/api/document-service#update) of the Document Service API:
 
 <Endpoint
   id="update"
@@ -229,8 +219,6 @@ Use the `locale` parameter with the [`delete()` method](/cms/api/document-servic
 
 ### Delete a locale version
 
-To delete a specific locale version of a document:
-
 <Endpoint
   id="delete-locale"
   method="DELETE"
@@ -249,8 +237,6 @@ To delete a specific locale version of a document:
 />
 
 ### Delete all locale versions
-
-The `*` wildcard is supported by the `locale` parameter and can be used to delete all locale versions of a document:
 
 <Endpoint
   id="delete-all-locales"
@@ -290,8 +276,6 @@ To publish only specific locale versions of a document with the [`publish()` met
 
 ### Publish a locale version
 
-To publish a specific locale version of a document:
-
 <Endpoint
   id="publish-locale"
   method="POST"
@@ -327,8 +311,6 @@ To publish a specific locale version of a document:
 />
 
 ### Publish all locale versions
-
-The `*` wildcard is supported by the `locale` parameter to publish all locale versions of a document:
 
 <Endpoint
   id="publish-all-locales"
@@ -380,8 +362,6 @@ To publish only specific locale versions of a document with the [`unpublish()` m
 
 ### Unpublish a locale version
 
-To unpublish a specific locale version of a document, pass the `locale` as a parameter to `unpublish()`:
-
 <Endpoint
   id="unpublish-locale"
   method="DELETE"
@@ -408,8 +388,6 @@ To unpublish a specific locale version of a document, pass the `locale` as a par
 />
 
 ### Unpublish all locale versions
-
-The `*` wildcard is supported by the `locale` parameter, to unpublish all locale versions of a document:
 
 <Endpoint
   id="unpublish-all-locales"
@@ -474,8 +452,6 @@ To discard draft data only for some locales versions of a document with the [`di
 
 ### Discard draft for a locale version
 
-To discard draft data for a specific locale version of a document and override it with data from the published version for this locale, pass the `locale` as a parameter to `discardDraft()`:
-
 <Endpoint
   id="discard-draft-locale"
   method="DELETE"
@@ -510,8 +486,6 @@ To discard draft data for a specific locale version of a document and override i
 />
 
 ### Discard drafts for all locale versions
-
-The `*` wildcard is supported by the `locale` parameter, to discard draft data for all locale versions of a document and replace them with the data from the published versions:
 
 <Endpoint
   id="discard-draft-all-locales"

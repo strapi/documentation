@@ -33,8 +33,6 @@ You can also use the `populate` parameter to populate relations, media fields, c
 
 ## Select fields with `findOne()` queries {#findone}
 
-To select fields to return while [finding a specific document](/cms/api/document-service#findone) with the Document Service API:
-
 <Endpoint
   id="findone"
   method="GET"
@@ -65,8 +63,6 @@ To select fields to return while [finding a specific document](/cms/api/document
 
 ## Select fields with `findFirst()` queries {#findfirst}
 
-To select fields to return while [finding the first document](/cms/api/document-service#findfirst) matching the parameters with the Document Service API:
-
 <Endpoint
   id="findfirst"
   method="GET"
@@ -95,8 +91,6 @@ To select fields to return while [finding the first document](/cms/api/document-
 />
 
 ## Select fields with `findMany()` queries {#findmany}
-
-To select fields to return while [finding documents](/cms/api/document-service#findmany) with the Document Service API:
 
 <Endpoint
   id="findmany"
@@ -129,8 +123,6 @@ To select fields to return while [finding documents](/cms/api/document-service#f
 />
 
 ## Select fields with `create()` queries {#create}
-
-To select fields to return while [creating documents](/cms/api/document-service#create) with the Document Service API:
 
 <Endpoint
   id="create"
@@ -166,8 +158,6 @@ To select fields to return while [creating documents](/cms/api/document-service#
 
 ## Select fields with `update()` queries {#update}
 
-To select fields to return while [updating documents](/cms/api/document-service#update) with the Document Service API:
-
 <Endpoint
   id="update"
   method="PUT"
@@ -199,8 +189,6 @@ To select fields to return while [updating documents](/cms/api/document-service#
 />
 
 ## Select fields with `delete()` queries {#delete}
-
-To select fields to return while [deleting documents](/cms/api/document-service#delete) with the Document Service API:
 
 <Endpoint
   id="delete"
@@ -238,8 +226,6 @@ To select fields to return while [deleting documents](/cms/api/document-service#
 
 ## Select fields with `publish()` queries {#publish}
 
-To select fields to return while [publishing documents](/cms/api/document-service#publish) with the Document Service API:
-
 <Endpoint
   id="publish"
   method="POST"
@@ -275,8 +261,6 @@ To select fields to return while [publishing documents](/cms/api/document-servic
 
 ## Select fields with `unpublish()` queries {#unpublish}
 
-To select fields to return while [unpublishing documents](/cms/api/document-service#unpublish) with the Document Service API:
-
 <Endpoint
   id="unpublish"
   method="DELETE"
@@ -311,8 +295,6 @@ To select fields to return while [unpublishing documents](/cms/api/document-serv
 />
 
 ## Select fields with `discardDraft()` queries {#discarddraft}
-
-To select fields to return while [discarding draft versions of documents](/cms/api/document-service#discarddraft) with the Document Service API:
 
 <Endpoint
   id="discarddraft"

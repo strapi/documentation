@@ -36,8 +36,6 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 
 ### Populate 1 level for all relations
 
-To populate one-level deep for all relations, use the `*` wildcard in combination with the `populate` parameter:
-
 <Endpoint
   method="GET"
   path='strapi.documents("api::article.article").findMany()'
@@ -93,8 +91,6 @@ To populate one-level deep for all relations, use the `*` wildcard in combinatio
 
 ### Populate 1 level for specific relations
 
-To populate specific relations one-level deep, pass the relation names in a `populate` array:
-
 <Endpoint
   method="GET"
   path='strapi.documents("api::article.article").findMany()'
@@ -133,8 +129,6 @@ To populate specific relations one-level deep, pass the relation names in a `pop
 />
 
 ### Populate several levels deep for specific relations
-
-To populate specific relations several levels deep, use the object format with `populate`:
 
 <Endpoint
   method="GET"
@@ -230,7 +224,7 @@ Components are populated the same way as relations:
   ]}
 />
 
-Dynamic zones are highly dynamic content structures by essence. To populate a dynamic zone, you must define per-component populate queries using the `on` property.
+Dynamic zones are highly dynamic content structures by essence.
 
 <Endpoint
   method="GET"
@@ -286,8 +280,6 @@ Dynamic zones are highly dynamic content structures by essence. To populate a dy
 
 ## Populating with `create()`
 
-To populate while creating documents:
-
 <Endpoint
   method="POST"
   path='strapi.documents("api::article.article").create()'
@@ -329,8 +321,6 @@ To populate while creating documents:
 
 ## Populating with `update()`
 
-To populate while updating documents:
-
 <Endpoint
   method="PUT"
   path='strapi.documents("api::article.article").update()'
@@ -370,7 +360,7 @@ To populate while updating documents:
 
 ## Populating with `publish()`
 
-To populate while publishing documents (same behavior with `unpublish()` and `discardDraft()`):
+Same behavior applies with `unpublish()` and `discardDraft()`.
 
 <Endpoint
   method="POST"
