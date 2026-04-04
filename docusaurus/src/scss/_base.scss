@@ -55,7 +55,6 @@ main {
       max-width: 720px;
       padding-left: 40px !important;
       padding-right: 40px !important;
-      transition: max-width var(--strapi-duration-slow) var(--strapi-ease);
     }
   }
 
@@ -69,29 +68,6 @@ main {
    */
   [class*="docMainContainer"] .row:not(:has(.col--3)) {
     padding-right: 240px;
-    transition: padding-right var(--strapi-duration-slow) var(--strapi-ease);
-  }
-
-  /** When TOC would be collapsed, shrink the reserved space */
-  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) [class*="docMainContainer"] .row:not(:has(.col--3)) {
-    padding-right: 44px;
-  }
-
-  /**
-   * Sanity-style: content grows when sidebars collapse.
-   * One sidebar collapsed → 840px. Both collapsed → 960px.
-   * Excludes API pages which are already full-width (max-width: 100%).
-   */
-  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) main:not(:has(.api-call)):not(:has(.api-endpoint-block)) article:first-child:not(.col),
-  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) main:not(:has(.api-call)):not(:has(.api-endpoint-block)) article:first-child:not(.col) + nav,
-  [class*="docRoot"]:has(.toc-v3-wrapper--collapsed) main:not(:has(.api-call)):not(:has(.api-endpoint-block)) article:first-child:not(.col),
-  [class*="docRoot"]:has(.toc-v3-wrapper--collapsed) main:not(:has(.api-call)):not(:has(.api-endpoint-block)) article:first-child:not(.col) + nav {
-    max-width: 840px;
-  }
-
-  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed):has(.toc-v3-wrapper--collapsed) main:not(:has(.api-call)):not(:has(.api-endpoint-block)) article:first-child:not(.col),
-  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed):has(.toc-v3-wrapper--collapsed) main:not(:has(.api-call)):not(:has(.api-endpoint-block)) article:first-child:not(.col) + nav {
-    max-width: 960px;
   }
 }
 
@@ -182,29 +158,30 @@ main:has(.api-endpoint-block) {
       margin-right: 0 !important;
     }
 
-    /** Content column: take all remaining space */
+    /** Content column: take all remaining space, smooth reflow on sidebar toggle */
     [class*="docItemCol"] {
       max-width: none !important;
       flex: 1 1 0% !important;
       min-width: 0;
     }
 
+
     /** TOC column: fixed width, flush right, no inner padding. */
     .col--3 {
-      max-width: none !important;
-      flex: 0 0 240px !important;
+      max-width: 240px !important;
+      flex: 0 0 auto !important;
       width: 240px !important;
+      min-width: 240px !important;
       padding-right: 0 !important;
       padding-left: 0 !important;
-      transition: flex var(--strapi-duration-slow) var(--strapi-ease),
-                  width var(--strapi-duration-slow) var(--strapi-ease),
+      overflow: hidden;
+      transition: width var(--strapi-duration-slow) var(--strapi-ease),
                   max-width var(--strapi-duration-slow) var(--strapi-ease),
                   min-width var(--strapi-duration-slow) var(--strapi-ease);
     }
 
     /** Collapsed: shrink to just the toggle button */
     .col--3:has(.toc-v3-wrapper--collapsed) {
-      flex: 0 0 44px !important;
       width: 44px !important;
       max-width: 44px !important;
       min-width: 44px !important;
