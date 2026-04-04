@@ -158,8 +158,6 @@ The population and pagination operators cannot be combined.
 
 #### Populate with field selection
 
-`fields` and `populate` can be combined.
-
 <Endpoint
   id="populate-with-field-selection"
   method="GET"
@@ -217,8 +215,6 @@ await request(\`/api/articles?\${query}\`);`,
 />
 
 #### Populate with filtering
-
-`filters` and `populate` can be combined.
 
 <Endpoint
   id="populate-with-filtering"
