@@ -27,7 +27,7 @@ export default function NavbarBreadcrumbs() {
 
   return (
     <div className={styles.navbarBreadcrumbs}>
-      <span className={styles.separator}>|</span>
+      <div className={styles.separator} />
       <nav className={styles.crumbs} aria-label="Breadcrumbs">
         {crumbs.map((crumb, i) => (
           <React.Fragment key={crumb.href}>

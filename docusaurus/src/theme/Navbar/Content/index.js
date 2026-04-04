@@ -1,6 +1,11 @@
 /**
- * Swizzled Navbar/Content — adds mockup-v3 style breadcrumbs next to logo.
- * Based on @docusaurus/theme-classic Navbar/Content.
+ * Swizzled Navbar/Content — mockup-v3 minimal navbar.
+ *
+ * Left:  Logo + breadcrumbs
+ * Right: Compact search pill (⌘K) + GitHub icon + color mode toggle
+ *
+ * CMS/Cloud nav items are rendered but hidden via CSS on desktop —
+ * they remain visible in the mobile sidebar.
  */
 import React from 'react';
 import { useThemeConfig, ErrorCauseBoundary } from '@docusaurus/theme-common';
@@ -65,6 +70,7 @@ export default function NavbarContent() {
           {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
           <NavbarLogo />
           <NavbarBreadcrumbs />
+          {/* CMS/Cloud items rendered but hidden on desktop via CSS */}
           <NavbarItems items={leftItems} />
         </>
       }

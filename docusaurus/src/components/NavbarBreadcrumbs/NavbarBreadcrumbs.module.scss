@@ -3,15 +3,15 @@
 .navbarBreadcrumbs {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-left: 16px;
+  gap: 20px;
+  margin-left: 20px;
 }
 
 .separator {
-  color: var(--strapi-neutral-200);
-  font-size: 18px;
-  font-weight: 300;
-  user-select: none;
+  width: 1px;
+  height: 20px;
+  background: var(--strapi-neutral-200);
+  flex-shrink: 0;
 }
 
 .crumbs {

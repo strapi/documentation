@@ -35,23 +35,12 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   &__items {
     display: flex;
     gap: var(--strapi-spacing-2);
-    justify-content: space-between;
     align-items: center;
   }
 
   &__items:not(.navbar__items--right) {
-    width: calc(100%);
-    /**
-     * Optical adjustments to have CMS and Cloud items centered
-     * Docusaurus DOM is weird so we can't rely on classical centering techniques
-     */
-    margin-left: calc(194px + 226px); // 194px = logo size
-    margin-right: 64px;
-    /**
-     * Use these if we remove the GitHub logo from navbar
-     */
-    // margin-left: calc(194px + 20px); // 194px = logo size
-    // margin-right: 170px;
+    /** V3: No centering hack — breadcrumbs flow naturally after logo */
+    flex: 1;
   }
 
   &__item {
@@ -70,14 +59,20 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   &__brand {
-    margin-right: auto;
-    position: absolute;
-    left: 20px;
+    margin-right: 0;
   }
 
-  &__items::before, &__items::after {
-    content: '';
-    flex: 1;
+  /** V3: Hide CMS/Cloud and GitHub/Contribution items on desktop.
+   *  They live in the sidebar (product switcher) and footer instead.
+   *  Still visible in mobile sidebar via Docusaurus's mobile nav.
+   */
+  @media (min-width: 997px) {
+    &__item.navbar__link[href*="/cms/"],
+    &__item.navbar__link[href*="/cloud/"],
+    &__item.navbar__link[href*="github.com"],
+    &__item.navbar__link[href*="notion.site"] {
+      display: none;
+    }
   }
 
   &__toggle {
