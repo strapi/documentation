@@ -80,16 +80,17 @@ main {
   /**
    * Sanity-style: content grows when sidebars collapse.
    * One sidebar collapsed → 840px. Both collapsed → 960px.
+   * Excludes API pages which are already full-width (max-width: 100%).
    */
-  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) main article:first-child:not(.col),
-  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) main article:first-child:not(.col) + nav,
-  [class*="docRoot"]:has(.toc-v3-wrapper--collapsed) main article:first-child:not(.col),
-  [class*="docRoot"]:has(.toc-v3-wrapper--collapsed) main article:first-child:not(.col) + nav {
+  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) main:not(:has(.api-call)):not(:has(.api-endpoint-block)) article:first-child:not(.col),
+  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) main:not(:has(.api-call)):not(:has(.api-endpoint-block)) article:first-child:not(.col) + nav,
+  [class*="docRoot"]:has(.toc-v3-wrapper--collapsed) main:not(:has(.api-call)):not(:has(.api-endpoint-block)) article:first-child:not(.col),
+  [class*="docRoot"]:has(.toc-v3-wrapper--collapsed) main:not(:has(.api-call)):not(:has(.api-endpoint-block)) article:first-child:not(.col) + nav {
     max-width: 840px;
   }
 
-  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed):has(.toc-v3-wrapper--collapsed) main article:first-child:not(.col),
-  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed):has(.toc-v3-wrapper--collapsed) main article:first-child:not(.col) + nav {
+  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed):has(.toc-v3-wrapper--collapsed) main:not(:has(.api-call)):not(:has(.api-endpoint-block)) article:first-child:not(.col),
+  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed):has(.toc-v3-wrapper--collapsed) main:not(:has(.api-call)):not(:has(.api-endpoint-block)) article:first-child:not(.col) + nav {
     max-width: 960px;
   }
 }
@@ -170,8 +171,9 @@ main:has(.api-endpoint-block) {
  */
 @include medium-up {
   [class*="docMainContainer"] {
-    /** Remove container right padding so TOC is flush to viewport edge */
+    /** Remove container max-width + right padding so layout fills available space */
     > .container {
+      max-width: 100% !important;
       padding-right: 0 !important;
     }
 
