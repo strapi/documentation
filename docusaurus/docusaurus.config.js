@@ -97,7 +97,7 @@ const config = {
       // 'data-search-mode-enabled': true,
       'data-modal-override-open-class': 'kapa-widget-button',
       'data-modal-title-ask-ai': 'Ask your question',
-      'data-modal-border-radius': '4px',
+      'data-modal-border-radius': '16px',
       'data-submit-query-button-bg-color': '#4945FF',
       'data-modal-body-padding-top': '20px',
       'data-user-analytics-cookie-enabled': true,
