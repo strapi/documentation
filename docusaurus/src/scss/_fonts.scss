@@ -1,10 +1,14 @@
-/** Fonts — V3 Redesign (matching mockup-v2) */
+/** Fonts — V3 Redesign
+ * Display/headings: Outfit (bold, geometric — used on homepage and headings)
+ * Body/content: Inter (optimized for readability in long-form text)
+ * Monospace: JetBrains Mono (code blocks, API references)
+ */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   --strapi-font-family-display: 'Outfit', sans-serif;
-  --strapi-font-family-body: 'Space Grotesk', sans-serif;
+  --strapi-font-family-body: 'Inter', sans-serif;
   --strapi-font-family-mono: 'JetBrains Mono', monospace;
 }
 
