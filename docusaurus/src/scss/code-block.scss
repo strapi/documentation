@@ -675,10 +675,18 @@ pre.prism-code {
     [class*="codeBlockContainer"] {
       &:not(:has([class*="codeBlockTitle"])) {
         .prism-code {
-          background-color: var(--strapi-neutral-0) !important;
+          background-color: transparent !important;
         }
       }
     }
+
+    // Code blocks with titles: transparent pre in dark mode too
+    [class*="codeBlockContent"] {
+      pre.prism-code {
+        background-color: transparent !important;
+      }
+    }
+
     &-highlighted-line [class*="codeLineNumber"],
     &-highlighted-line {
       background-color: #11111B !important;
