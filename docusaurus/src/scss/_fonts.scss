@@ -1,10 +1,10 @@
 /** Fonts — V3 Redesign */
 
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --strapi-font-family-display: 'Sora', sans-serif;
-  --strapi-font-family-body: 'Instrument Sans', sans-serif;
+  --strapi-font-family-display: 'Poppins', sans-serif;
+  --strapi-font-family-body: 'Inter', sans-serif;
   --strapi-font-family-mono: 'JetBrains Mono', monospace;
 }
 
