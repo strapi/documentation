@@ -69,7 +69,7 @@ const BENTO_ITEMS = [
     icon: '🔌',
     title: 'Plugin Ecosystem',
     desc: 'Extend everything. Build custom plugins or use community ones.',
-    to: '/cms/plugins',
+    to: '/cms/plugins-development/developing-plugins',
     stat: '60+',
     statLabel: 'community plugins',
   },
