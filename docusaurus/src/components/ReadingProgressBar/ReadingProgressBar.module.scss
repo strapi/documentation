@@ -1,10 +1,10 @@
 .progressBar {
   position: fixed;
-  top: var(--ifm-navbar-height);
+  top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  z-index: 99;
+  height: 3px;
+  z-index: 201; /* Above navbar (z-index: 200) so backdrop-filter doesn't hide it */
   background: transparent;
   pointer-events: none;
 }
@@ -13,5 +13,5 @@
   height: 100%;
   background: linear-gradient(90deg, #4945FF 0%, #7B79FF 50%, #A855F7 100%);
   will-change: width;
-  box-shadow: 0 0 12px rgba(73, 69, 255, 0.4);
+  box-shadow: 0 0 8px rgba(73, 69, 255, 0.3);
 }
