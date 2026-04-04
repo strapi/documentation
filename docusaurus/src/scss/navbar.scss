@@ -267,21 +267,23 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
  */
 @include medium-down {
 
-  nav.navbar:not(.navbar-sidebar--show) {
-    div.navbar-sidebar {
-      transform: translateX(100vw);
-    }
+  /**
+   * Mobile sidebar: slide from RIGHT instead of infima's default left.
+   * IMPORTANT: backdrop-filter on the parent <nav> creates a new containing
+   * block for fixed-position children, so we must set explicit height.
+   */
+  .navbar-sidebar {
+    --ifm-navbar-sidebar-width: 280px;
+    left: auto;
+    right: 0;
+    height: 100vh;
+    height: 100dvh; /* dynamic viewport height for mobile browsers */
+    transform: translate3d(100%, 0, 0);
   }
-  nav.navbar-sidebar--show {
-    div.navbar-sidebar {
-      transform: translateX(calc(100vw - var(--navbar-sidebar-max-width)));
-    }
+  .navbar-sidebar--show .navbar-sidebar {
+    transform: translate3d(0, 0, 0);
   }
   .navbar-sidebar {
-    --navbar-sidebar-mobile-width: 100%;
-    width: var(--navbar-sidebar-mobile-width);
-    --navbar-sidebar-max-width: 280px;
-    max-width: var(--navbar-sidebar-max-width);
 
     .mobile--search {
       position: absolute;
@@ -306,7 +308,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       padding-left: 10px;
 
       &:nth-of-type(2) {
-        max-width: calc(var(--navbar-sidebar-max-width) - 16px);
+        max-width: calc(var(--ifm-navbar-sidebar-width) - 16px);
         width: 100%;
       }
     }
