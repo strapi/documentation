@@ -6,16 +6,6 @@
   padding: 40px 40px 0 40px;
   border-top: solid 1px var(--strapi-border);
 
-  /** V3: Gradient top accent — only visible in dark mode */
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background: transparent;
-  }
 
   &::after {
     content: '';
@@ -71,14 +61,6 @@
 
 @include medium-up {
   .footer {
-    &::before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 280px;
-      height: 100%;
-    }
-
     &::after {
       content: '';
       background: url('/img/logo-v5.png') no-repeat;
@@ -163,10 +145,6 @@
   .footer {
     border-top-color: var(--strapi-neutral-150) !important;
 
-    &::before {
-      background: var(--strapi-gradient-primary);
-      opacity: 0.5;
-    }
   }
   .footer::after {
     content: '';
