@@ -298,6 +298,8 @@ The databases for your Strapi Cloud project and your local project are different
 Any project hosted on Strapi Cloud is accessible from its own URL, something like `https://my-strapi-project-name.strapiapp.com`. To access the admin panel of your online project, simply add `/admin` to the URL, for instance as in `https://my-strapi-project-name.strapiapp.com/admin`. URLs can be found in your Strapi Cloud dashboard and you can also directly access your Strapi Cloud projects from there by clicking on the name of your project then on the **Visit app** button.
 :::
 
+</details>
+
 </StepDetails>
 
 <StepDetails title="Step 2: Create an entry for the &quot;Restaurant&quot; collection type">
