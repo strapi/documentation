@@ -7,10 +7,6 @@ export default function HomepageAIButton() {
       <button className={`${styles['homepage-ai-button']} kapa-widget-button`}>
         <span className={styles['sparkle']}>✦</span>
         <span className={styles['placeholder']}>Ask AI anything about Strapi...</span>
-        <span className={styles['keys']}>
-          <kbd>⌘</kbd>
-          <kbd>K</kbd>
-        </span>
       </button>
     </div>
   );
