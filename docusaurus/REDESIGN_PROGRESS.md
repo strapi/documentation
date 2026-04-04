@@ -21,9 +21,11 @@ This file tracks the progress of the v3 visual redesign. It complements the git 
 - [x] **Footer** (`footer.scss`): removed gradient accent entirely (both modes)
 
 ### Phase 2: Navigation & Progress
-- [x] **Reading progress bar** (`src/components/ReadingProgressBar/`): fixed position below navbar, 2px, blue-to-purple gradient with glow, only on doc pages
-- [x] **Navbar breadcrumbs** (`src/components/NavbarBreadcrumbs/`): monospace path-style breadcrumbs inside the navbar (mockup-v3 style), swizzled `Navbar/Content`
+- [x] **Reading progress bar** (`src/components/ReadingProgressBar/`): fixed position below navbar, 2px, blue-to-purple gradient with glow, only on doc pages. Uses ref-based DOM updates + RAF for smooth scrolling (no CSS transition flash).
+- [x] **Navbar redesign** (`navbar.scss`, `src/theme/Navbar/Content/`): mockup-v3 minimal layout — Logo + vertical separator + monospace breadcrumbs (left), theme toggle (right). CMS/Cloud/GitHub/Contribution items hidden on desktop.
+- [x] **Navbar breadcrumbs** (`src/components/NavbarBreadcrumbs/`): monospace path-style breadcrumbs from URL path, 1px vertical separator after logo
 - [x] **Standard breadcrumbs hidden** (`breadcrumbs.scss`): replaced by navbar breadcrumbs
+- [x] **Product switcher** (`src/components/ProductSwitcher/`): CMS/Cloud dropdown in sidebar top, colored dot indicator, replaces navbar CMS/Cloud links
 - [x] **Navbar glass effect** (`navbar.scss`): backdrop-filter blur, semi-transparent bg, active item accent line
 - [x] **Root.js** (`src/theme/Root.js`): wraps app with ReadingProgressBar
 
@@ -53,13 +55,15 @@ This file tracks the progress of the v3 visual redesign. It complements the git 
 | `src/scss/pagination-nav.scss` | Redesigned prev/next buttons |
 | `src/scss/sidebar.scss` | Collapse button restyle |
 | `src/scss/footer.scss` | Removed gradient accent |
-| `src/scss/navbar.scss` | Glass effect, active accent line |
+| `src/scss/navbar.scss` | Minimal layout, hidden nav items on desktop, glass effect |
 | `src/scss/breadcrumbs.scss` | Hidden (replaced by navbar crumbs) |
 | `src/theme/Root.js` | ReadingProgressBar wrapper |
-| `src/theme/Navbar/Content/index.js` | Swizzled to add breadcrumbs |
+| `src/theme/Navbar/Content/index.js` | Swizzled: breadcrumbs + minimal right side |
+| `src/theme/DocSidebar/index.js` | Added ProductSwitcher above search |
 | `src/theme/MDXComponents.js` | Added StepDetails, ApiDocLayout, Endpoint |
-| `src/components/ReadingProgressBar/` | New: scroll progress bar |
-| `src/components/NavbarBreadcrumbs/` | New: navbar-style breadcrumbs |
+| `src/components/ReadingProgressBar/` | New: ref-based scroll progress bar |
+| `src/components/NavbarBreadcrumbs/` | New: monospace navbar-style breadcrumbs |
+| `src/components/ProductSwitcher/` | New: CMS/Cloud sidebar dropdown switcher |
 | `src/components/StepDetails/` | New: gamified details with checkmarks |
 | `docs/cms/quick-start.md` | Converted to StepDetails, removed duplicate headings |
 
