@@ -961,38 +961,18 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
-/** V3: When left sidebar is collapsed, shrink the sidebar container so content reclaims the space */
-[class*="docSidebarContainer"]:has(.sidebar-v3-wrapper--collapsed) {
-  width: 52px !important;
-  min-width: 52px !important;
-  max-width: 52px !important;
-  transition: width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1),
-              min-width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1),
-              max-width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1);
-}
+/**
+ * V3: Smooth sidebar collapse
+ *
+ * The swizzled DocRoot/Layout/Sidebar controls width + transition via
+ * inline styles. Main content uses flex:1 to fill freed space smoothly.
+ */
 
-/** Smooth transition on the sidebar container for expand too */
-[class*="docSidebarContainer"] {
-  transition: width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1),
-              min-width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1),
-              max-width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/** V3: When sidebar is collapsed, override the sidebar width variable so docMainContainer reclaims space */
-[class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) {
-  --doc-sidebar-width: 52px;
-}
-
-@include medium-up {
-  /** Override docMainContainer max-width when sidebar is collapsed */
-  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) > [class*="docMainContainer"] {
-    max-width: calc(100% - 52px) !important;
-  }
-
-  /** Smooth transition on the main container */
-  [class*="docMainContainer"] {
-    transition: max-width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1);
-  }
+/** Main content: flex: 1 fills remaining space, slides smoothly */
+[class*="docMainContainer"] {
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  max-width: none !important;
 }
 
 /** V3: Sidebar header with monospace label + collapse button (v2 mockup) */

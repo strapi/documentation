@@ -6,19 +6,17 @@ import ProductSwitcher from '../../components/ProductSwitcher/ProductSwitcher';
 const STORAGE_KEY = 'strapi-sidebar-collapsed';
 
 export default function DocSidebarWrapper(props) {
-  const [collapsed, setCollapsed] = useState(false);
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored === 'true') setCollapsed(true);
-    } catch {}
-  }, []);
+  const [collapsed, setCollapsed] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    try { return localStorage.getItem(STORAGE_KEY) === 'true'; } catch { return false; }
+  });
 
   const toggle = useCallback(() => {
     setCollapsed(prev => {
       const next = !prev;
       try { localStorage.setItem(STORAGE_KEY, String(next)); } catch {}
+      // Notify the swizzled Sidebar layout component
+      window.dispatchEvent(new CustomEvent('sidebar-v3-toggle', { detail: { collapsed: next } }));
       return next;
     });
   }, []);
