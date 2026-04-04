@@ -550,49 +550,37 @@ pre.prism-code {
   }
 }
 
-// Non-terminal code blocks with floating AI button
-.code-block-enhanced--with-ai {
-  position: relative;
+// "Ask AI" button injected into Docusaurus button group (non-terminal blocks)
+.ai-button-injected {
+  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--strapi-radius-sm, 6px);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: all 0.2s ease;
 
-  .ai-button--floating {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    z-index: 2;
-    padding: 4px 10px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    font-weight: 600;
-    border-radius: var(--strapi-radius-sm, 6px);
-    cursor: pointer;
-    background: var(--strapi-surface-1, #fff);
-    border: 1px solid var(--strapi-neutral-150, rgba(0,0,0,0.08));
-    opacity: 0;
-    transition: all 0.2s ease;
-
-    i {
-      font-size: 13px;
-      color: var(--strapi-primary-500);
-    }
-
-    span {
-      color: var(--strapi-neutral-600);
-    }
-
-    &:hover {
-      background: var(--strapi-primary-100);
-      border-color: var(--strapi-primary-200);
-
-      span {
-        color: var(--strapi-primary-600);
-      }
-    }
+  i {
+    font-size: 13px;
+    color: var(--strapi-primary-500);
   }
 
-  &:hover .ai-button--floating {
-    opacity: 1;
+  span {
+    color: var(--strapi-neutral-600);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  &:hover {
+    background: var(--strapi-primary-100);
+
+    span {
+      color: var(--strapi-primary-600);
+    }
   }
 }
 

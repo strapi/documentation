@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import CodeBlock from '@theme-original/CodeBlock';
 
 // Terminal-type languages that get the macOS-style title bar + blinking cursor
@@ -50,19 +50,34 @@ function handleAskAI(language, codeContent) {
   }
 }
 
-// AI "Ask AI" floating button for non-terminal code blocks
-function AIButton({ language, codeContent }) {
-  return (
-    <button
-      className="clean-btn ai-button ai-button--floating"
-      title="Ask AI to explain this code"
-      aria-label="Ask AI to explain this code example"
-      onClick={() => handleAskAI(language, codeContent)}
-    >
-      <i className="ph ph-sparkle" />
-      <span>Ask AI</span>
-    </button>
-  );
+/**
+ * Injects an "Ask AI" button into the Docusaurus button group
+ * after the component mounts. This avoids wrapping the CodeBlock
+ * in a container div which breaks its layout.
+ */
+function useInjectAIButton(ref, language, codeContent, showAI) {
+  useEffect(() => {
+    if (!showAI || !ref.current) return;
+
+    const container = ref.current.querySelector('[class*="buttonGroup"]');
+    if (!container) return;
+
+    // Don't add if already there
+    if (container.querySelector('.ai-button-injected')) return;
+
+    const btn = document.createElement('button');
+    btn.className = 'clean-btn ai-button-injected';
+    btn.title = 'Ask AI to explain this code';
+    btn.setAttribute('aria-label', 'Ask AI to explain this code example');
+    btn.innerHTML = '<i class="ph ph-sparkle"></i><span>Ask AI</span>';
+    btn.addEventListener('click', () => handleAskAI(language, codeContent));
+
+    container.prepend(btn);
+
+    return () => {
+      btn.remove();
+    };
+  }, [ref, language, codeContent, showAI]);
 }
 
 // macOS-style title bar for terminal blocks
@@ -104,6 +119,7 @@ function TerminalTitleBar({ language, title, showAI, codeContent }) {
 
 export default function CodeBlockWrapper(props) {
   const { children, className = '', ...otherProps } = props;
+  const wrapperRef = useRef(null);
 
   let codeContent = '';
   if (typeof children === 'string') {
@@ -117,6 +133,9 @@ export default function CodeBlockWrapper(props) {
   const isTerminal = TERMINAL_LANGS.has(language);
   const docTitle = otherProps.title || '';
   const showAI = shouldShowAIButton(codeContent);
+
+  // Inject AI button into Docusaurus button group for non-terminal blocks
+  useInjectAIButton(wrapperRef, language, codeContent?.trim(), showAI && !isTerminal);
 
   // Terminal blocks: macOS-style wrapper with title bar + blinking cursor (CSS)
   if (isTerminal) {
@@ -135,21 +154,12 @@ export default function CodeBlockWrapper(props) {
     );
   }
 
-  // Non-terminal blocks: standard rendering with floating AI button
-  if (showAI) {
-    return (
-      <div className="code-block-enhanced code-block-enhanced--with-ai">
-        <CodeBlock className={className} {...otherProps}>
-          {children}
-        </CodeBlock>
-        <AIButton language={language} codeContent={codeContent?.trim()} />
-      </div>
-    );
-  }
-
+  // Non-terminal blocks: standard rendering, AI button injected via useEffect
   return (
-    <CodeBlock className={className} {...otherProps}>
-      {children}
-    </CodeBlock>
+    <div ref={wrapperRef}>
+      <CodeBlock className={className} {...otherProps}>
+        {children}
+      </CodeBlock>
+    </div>
   );
 }
