@@ -1,4 +1,4 @@
-/** Component: Homepage AI Command Bar — V3 matching mockup-v2 */
+/** Component: Homepage AI Command Bar — V3 matching mockup-v2 exactly */
 @use '@site/src/scss/_mixins.scss' as mixins;
 
 .homepage-ai-button-container {
@@ -19,7 +19,7 @@
   align-items: center;
   gap: 12px;
   cursor: text;
-  padding: 0 20px;
+  padding: 0 24px;
   width: 100%;
   max-width: 580px;
   height: 56px;
@@ -31,6 +31,7 @@
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/** Gradient border glow on hover */
 .homepage-ai-button::before {
   content: '';
   position: absolute;
@@ -51,8 +52,9 @@
   box-shadow: 0 0 40px var(--strapi-accent-glow), 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
+/** 4-point star sparkle icon */
 .sparkle {
-  font-size: 20px;
+  font-size: 22px;
   background: linear-gradient(135deg, var(--strapi-accent-light, #7B79FF), #c084fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -66,19 +68,22 @@
   color: var(--strapi-fg-5);
 }
 
+/** Keyboard shortcut pills */
 .keys {
   display: flex;
-  gap: 3px;
+  gap: 4px;
 
   kbd {
     font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
-    font-size: 11px;
-    padding: 3px 7px;
+    font-size: 12px;
+    padding: 4px 8px;
     border-radius: 6px;
     background: var(--strapi-surface-2);
     color: var(--strapi-fg-5);
     border: 1px solid var(--strapi-border);
     line-height: 1;
+    min-width: 28px;
+    text-align: center;
   }
 }
 
@@ -103,9 +108,24 @@
   100% { background-position: 200% 0; }
 }
 
+/** Dark mode — more visible text, darker surface */
 @include mixins.dark {
   .homepage-ai-button {
-    background: var(--strapi-surface-1);
+    background: var(--strapi-surface-2);
     border-color: var(--strapi-border-strong);
+  }
+
+  .placeholder {
+    color: var(--strapi-fg-3);
+  }
+
+  .keys kbd {
+    background: var(--strapi-surface-3);
+    border-color: var(--strapi-border-strong);
+    color: var(--strapi-fg-4);
+  }
+
+  .homepage-ai-button:hover {
+    box-shadow: 0 0 60px var(--strapi-accent-glow), 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 }
