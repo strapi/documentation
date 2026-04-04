@@ -10,7 +10,7 @@ const PRODUCTS = {
 // Segments whose URL path doesn't match their slug in the URL.
 // e.g. /cms/api → /cms/content-api (because /cms/api is a 404)
 const SEGMENT_REWRITES = {
-  'cms/api': '/cms/content-api',
+  'cms/api': '/cms/api/content-api',
 };
 
 /**
