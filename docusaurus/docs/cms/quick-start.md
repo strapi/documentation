@@ -452,11 +452,22 @@ Keep on creating amazing content!
 The databases for your Strapi Cloud project and your local project are different. This means that data is not automatically synchronized between your Strapi Cloud and local projects. You can use the [data management system](/cms/features/data-management) to transfer data between projects.
 :::
 
-## <Icon name="fast-forward"/> What to do next?
+## What's next?
 
-Now that you know the basics of creating and publishing content with Strapi, we encourage you to explore and dig deeper into some Strapi features:
-
-<Icon name="arrow-fat-right"/> learn how to use Strapi's [REST](/cms/api/rest) API to query the content,<br/>
-<Icon name="arrow-fat-right"/> learn more about Strapi features by browsing the <Icon name="backpack" /> **Features** category,<br/>
-<Icon name="arrow-fat-right"/> learn more about Strapi Cloud projects by reading the [Cloud Documentation](/cloud/intro),<br/>
-<Icon name="arrow-fat-right"/> and [customize your Strapi back end](/cms/backend-customization) and [admin panel](/cms/admin-panel-customization) for advanced use cases.<br/>
+<NextSteps title="">
+  <NextSteps.Step
+    title="Explore the admin panel"
+    description="Create entries, set up roles, manage media files."
+    link="/cms/features/admin-panel"
+  />
+  <NextSteps.Step
+    title="Connect a frontend"
+    description="Use REST or GraphQL with Next.js, Nuxt, or any framework."
+    link="/cms/api/rest"
+  />
+  <NextSteps.Step
+    title="Deploy to production"
+    description="Strapi Cloud, Docker, or your own infrastructure."
+    link="/cloud/getting-started/deployment"
+  />
+</NextSteps>

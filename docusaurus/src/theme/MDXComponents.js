@@ -45,6 +45,7 @@ import DebugComponent from '../components/DebugComponent';
 import ApiDocLayout from '../components/ApiDocLayout/ApiDocLayout';
 import Endpoint from '../components/ApiReference/Endpoint';
 import StepDetails from '../components/StepDetails/StepDetails';
+import NextSteps from '../components/NextSteps/NextSteps';
 
 export default {
   // Re-use the default mapping
@@ -113,4 +114,5 @@ export default {
   ApiDocLayout,
   Endpoint,
   StepDetails,
+  NextSteps,
 };
