@@ -21,6 +21,19 @@
   --custom-code-block-line-height: var(--strapi-line-height-sm);
   --custom-code-block-title-font-family: var(--strapi-font-family-body);
   --custom-code-block-border-color: var(--strapi-border-strong);
+
+  // Title bar
+  --code-title-bar-bg: var(--strapi-neutral-100);
+  --code-title-bar-border: var(--custom-code-block-border-color);
+  --code-title-bar-label-color: var(--strapi-neutral-500);
+  --code-title-bar-lang-bg: var(--strapi-neutral-200);
+  --code-title-bar-lang-color: var(--strapi-neutral-600);
+
+  // Traffic light dots
+  --code-dot-default: var(--strapi-neutral-300);
+  --code-dot-close: #FF5F57;
+  --code-dot-minimize: #FEBC2E;
+  --code-dot-maximize: #28C840;
 }
 
 pre {
@@ -78,7 +91,6 @@ pre.prism-code {
   code {
     .token {
       color: var(--strapi-neutral-800);
-      // TODO: define syntax coloring
 
       &.comment {
         color: var(--custom-code-block-comment-color) !important;
@@ -151,6 +163,221 @@ pre.prism-code {
   }
 }
 
+/* ──────────────────────────────────────────────────────
+   Custom macOS-style title bar
+   ────────────────────────────────────────────────────── */
+
+.code-title-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--code-title-bar-bg);
+  border-bottom: 1px solid var(--code-title-bar-border);
+  border-radius: var(--strapi-radius-md) var(--strapi-radius-md) 0 0;
+  min-height: 40px;
+  user-select: none;
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__dots {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--code-dot-default);
+    transition: background-color var(--strapi-duration-fast) var(--strapi-ease);
+  }
+
+  // On hover of the title bar, dots become colored
+  &:hover &__dot {
+    &--close { background: var(--code-dot-close); }
+    &--minimize { background: var(--code-dot-minimize); }
+    &--maximize { background: var(--code-dot-maximize); }
+  }
+
+  &__label {
+    font-family: var(--custom-code-block-title-font-family);
+    font-size: var(--strapi-font-size-xs);
+    color: var(--code-title-bar-label-color);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__lang {
+    font-family: var(--custom-code-block-title-font-family);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--code-title-bar-lang-color);
+    background: var(--code-title-bar-lang-bg);
+    padding: 3px 8px;
+    border-radius: var(--strapi-radius-xs);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  // Style for buttons moved into the title bar
+  .clean-btn {
+    position: static !important;
+    top: auto !important;
+    background: transparent !important;
+    padding: 4px 8px;
+    border-radius: var(--strapi-radius-xs);
+    font-size: var(--strapi-font-size-xs);
+    opacity: 0.6;
+    transition: opacity var(--strapi-duration-fast) var(--strapi-ease),
+                background-color var(--strapi-duration-fast) var(--strapi-ease);
+
+    &:hover {
+      opacity: 1;
+      background: var(--code-title-bar-lang-bg) !important;
+    }
+
+    svg, i::before, span {
+      color: var(--code-title-bar-lang-color) !important;
+      opacity: 1 !important;
+    }
+  }
+
+  // AI button inside the title bar
+  .ai-button {
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: var(--strapi-radius-xs);
+    cursor: pointer;
+    transition: all var(--strapi-duration-fast) var(--strapi-ease);
+    min-height: auto;
+    opacity: 0.6;
+    background: transparent;
+
+    &:hover {
+      opacity: 1;
+      background: var(--code-title-bar-lang-bg);
+    }
+
+    i {
+      font-size: 12px;
+      color: var(--code-title-bar-lang-color);
+    }
+
+    span {
+      color: var(--code-title-bar-lang-color);
+    }
+  }
+}
+
+/* ──────────────────────────────────────────────────────
+   Blinking cursor for terminal blocks (CSS-only)
+   ────────────────────────────────────────────────────── */
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+// The cursor is rendered via ::after on the last token-line in terminal blocks
+.code-block-enhanced code .token-line:last-child::after {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 1.1em;
+  background: var(--strapi-primary-500);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: cursorBlink 1.2s step-end infinite;
+  border-radius: 1px;
+}
+
+/* ──────────────────────────────────────────────────────
+   Enhanced code block wrapper
+   ────────────────────────────────────────────────────── */
+
+.code-block-enhanced {
+  // The wrapper provides the border and radius
+  border: solid 1px var(--custom-code-block-border-color);
+  border-radius: var(--strapi-radius-md);
+  overflow: hidden;
+  transition: border-color var(--strapi-duration-fast) var(--strapi-ease);
+  margin-bottom: var(--ifm-leading);
+
+  &:hover {
+    border-color: var(--strapi-border-accent);
+  }
+
+  // The inner .theme-code-block should not have its own border
+  .theme-code-block {
+    border: none !important;
+    border-radius: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  // Hide original Docusaurus title (we render our own)
+  [class*="codeBlockTitle"] {
+    display: none !important;
+  }
+
+  // Code block container inside enhanced wrapper
+  .theme-code-block[class*="codeBlockContainer"],
+  .theme-code-block [class*="codeBlockContainer"] {
+    padding: 0 !important;
+    box-shadow: none !important;
+
+    .prism-code {
+      border-radius: 0;
+
+      code {
+        padding: 16px 24px;
+      }
+    }
+  }
+
+  // Docusaurus copy/wrap buttons — show on hover, positioned in code area
+  [class*="buttonGroup"] {
+    opacity: 0;
+    transition: opacity var(--strapi-duration-fast) var(--strapi-ease);
+
+    .clean-btn {
+      background: var(--code-title-bar-lang-bg) !important;
+      position: static !important;
+      top: auto !important;
+      border-radius: var(--strapi-radius-xs);
+
+      svg, i::before, span {
+        color: var(--code-title-bar-lang-color) !important;
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  &:hover [class*="buttonGroup"] {
+    opacity: 1;
+  }
+}
+
+/* ──────────────────────────────────────────────────────
+   Code block container adjustments (non-enhanced blocks)
+   ────────────────────────────────────────────────────── */
+
 .theme-code-block {
   &[class*="codeBlockContainer"],
   [class*="codeBlockContainer"] {
@@ -163,7 +390,6 @@ pre.prism-code {
 
       .prism-code {
         background-color: white !important;
-        // TODO fix by finding a better way
 
         code {
           padding: 0;
@@ -229,6 +455,7 @@ pre.prism-code {
     margin-left: 32px;
   }
 
+  // Legacy .clean-btn positioning (for blocks without our title bar)
   .clean-btn {
     background-color: white;
     position: relative;
@@ -244,7 +471,8 @@ pre.prism-code {
     }
   }
 
-  .ai-button {
+  // Legacy .ai-button positioning (for blocks without our title bar)
+  .ai-button:not(.code-title-bar .ai-button) {
     padding: 6px 8px;
     display: flex;
     align-items: center;
@@ -269,9 +497,6 @@ pre.prism-code {
 
     /**
      * Fix style when lines are wrapped
-     * No class is added by the JS code of the button;
-     * Instead, the button adds inline style,
-     * so we're targetting this style
      */
     [style*="pre-wrap"] {
       [class*="codeLineContent"] {
@@ -283,14 +508,14 @@ pre.prism-code {
         position: relative;
         left: 6px;
 
-        &::before { // line number
+        &::before {
           color: var(--strapi-neutral-800);
           top: 0px;
           position: absolute;
           right: 0px;
         }
 
-        &::after { // border in the gutter
+        &::after {
           content: '';
           position: absolute;
           width: 1px;
@@ -302,10 +527,6 @@ pre.prism-code {
     }
 
     [class*="codeBlockLines"]:has([class*="codeLineNumber"]) {
-      /**
-       * Adding border below title to simulate border continuity
-       * because each code line has its own 'gutter' border
-       */
       &::after {
         content: '';
         width: 1px;
@@ -330,10 +551,10 @@ pre.prism-code {
   [class*="buttonGroup"],
   .ai-button-group {
     opacity: 1;
-    
+
     .clean-btn {
       opacity: 1 !important;
-      
+
       svg,
       i::before,
       span {
@@ -416,6 +637,13 @@ pre.prism-code {
   --custom-code-block-string-color: var(--strapi-code-rose);
   --custom-code-block-function-color: var(--strapi-code-fluo-green);
 
+  // Title bar dark overrides
+  --code-title-bar-bg: var(--strapi-neutral-100);
+  --code-title-bar-label-color: var(--strapi-neutral-500);
+  --code-title-bar-lang-bg: var(--strapi-neutral-300);
+  --code-title-bar-lang-color: var(--strapi-neutral-800);
+  --code-dot-default: var(--strapi-neutral-400);
+
   pre,
   .theme-code-block {
     --ifm-scrollbar-track-background-color: var(--strapi-neutral-200);
@@ -438,7 +666,6 @@ pre.prism-code {
       &:not(:has([class*="codeBlockTitle"])) {
         .prism-code {
           background-color: var(--strapi-neutral-0) !important;
-          // TODO fix by finding a better way
         }
       }
     }
@@ -455,5 +682,28 @@ pre.prism-code {
         border: solid 1px var(--strapi-neutral-200);
       }
     }
+  }
+
+  // Enhanced wrapper in dark mode
+  .code-block-enhanced {
+    border-color: var(--strapi-neutral-200);
+
+    .theme-code-block {
+      border: none !important;
+
+      &[class*="codeBlockContainer"],
+      [class*="codeBlockContainer"] {
+        border: none !important;
+
+        .prism-code {
+          background-color: var(--strapi-neutral-0) !important;
+        }
+      }
+    }
+  }
+
+  // Cursor color in dark mode
+  .code-cursor {
+    background: var(--strapi-primary-400);
   }
 }

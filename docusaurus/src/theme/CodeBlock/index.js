@@ -1,23 +1,28 @@
-import { useEffect, useRef } from 'react';
+import React from 'react';
 import CodeBlock from '@theme-original/CodeBlock';
+
+// Terminal-type languages that get the macOS-style title bar + blinking cursor
+const TERMINAL_LANGS = new Set([
+  'bash', 'sh', 'shell', 'zsh', 'console', 'terminal',
+  'powershell', 'cmd', 'batch',
+]);
+
+// Language display labels
+const LANG_LABELS = {
+  bash: 'BASH', sh: 'BASH', shell: 'BASH', zsh: 'ZSH',
+  console: 'BASH', terminal: 'BASH', powershell: 'POWERSHELL',
+  cmd: 'CMD', batch: 'CMD',
+};
 
 // Helper function to check if we should show the AI button
 function shouldShowAIButton(codeContent) {
-  if (!codeContent || typeof codeContent !== 'string') {
-    return false;
-  }
-
+  if (!codeContent || typeof codeContent !== 'string') return false;
   const content = codeContent.trim();
-  
-  // Must be substantial content
-  if (content.length <= 30) { // currently limited to 30 characters
-    return false;
-  }
+  if (content.length <= 30) return false;
 
-  // Must be multi-line OR contain code structures
-  const hasCodeStructures = 
+  const hasCodeStructures =
     (content.includes('\n') && content.split('\n').length > 1) ||
-    content.includes('{') || 
+    content.includes('{') ||
     content.includes('function') ||
     content.includes('const ') ||
     content.includes('let ') ||
@@ -28,132 +33,101 @@ function shouldShowAIButton(codeContent) {
     content.includes('module.exports') ||
     content.includes('require(');
 
-  if (!hasCodeStructures) {
-    return false;
-  }
+  if (!hasCodeStructures) return false;
 
-  // Exclude command line operations
   const excludePatterns = [
     'npm install', 'yarn add', 'yarn install', 'npm run', 'yarn run',
-    'cd ', 'ls ', 'mkdir ', 'strapi generate', 'strapi develop', 
+    'cd ', 'ls ', 'mkdir ', 'strapi generate', 'strapi develop',
     'strapi build', 'strapi start'
   ];
-
-  if (excludePatterns.some(pattern => content.includes(pattern))) {
-    return false;
-  }
-
-  // Exclude simple file paths or configuration values
-  if (content.match(/^[\/\w\-\.]+$/) || content.match(/^\w+:\s*\w+$/)) {
-    return false;
-  }
+  if (excludePatterns.some(pattern => content.includes(pattern))) return false;
+  if (content.match(/^[\/\w\-\.]+$/) || content.match(/^\w+:\s*\w+$/)) return false;
 
   return true;
 }
 
-// Function to create and inject AI button
-function injectAIButton(codeBlockElement, codeContent, language) {
-  // Find the button group or create injection point
-  let buttonGroup = codeBlockElement.querySelector('[class*="buttonGroup"]');
-  
-  if (!buttonGroup) {
-    // If no button group exists, create our own container
-    const codeBlockContainer = codeBlockElement.querySelector('[class*="codeBlockContainer"]');
-    if (!codeBlockContainer) return;
+// macOS-style title bar for terminal blocks
+function TerminalTitleBar({ language, title, showAI, codeContent }) {
+  const langLabel = LANG_LABELS[language] || (language ? language.toUpperCase() : '');
+  const labelText = title || 'terminal';
 
-    buttonGroup = document.createElement('div');
-    buttonGroup.className = 'ai-button-group';
-    
-    codeBlockContainer.style.position = 'relative';
-    codeBlockContainer.appendChild(buttonGroup);
-    
-    // Show on hover
-    const showButtons = () => buttonGroup.style.opacity = '1';
-    const hideButtons = () => buttonGroup.style.opacity = '0';
-    
-    codeBlockElement.addEventListener('mouseenter', showButtons);
-    codeBlockElement.addEventListener('mouseleave', hideButtons);
-  }
-
-  // Check if AI button already exists
-  if (buttonGroup.querySelector('.ai-button')) {
-    return;
-  }
-
-  // Create AI button
-  const aiButton = document.createElement('button');
-  aiButton.className = 'clean-btn ai-button';
-  aiButton.title = 'Ask AI to explain this code';
-  aiButton.setAttribute('aria-label', 'Ask AI to explain this code example');
-
-  // Create Phosphor sparkle icon
-  const icon = document.createElement('i');
-  icon.className = 'ph ph-sparkle';
-  
-  const text = document.createElement('span');
-  text.textContent = 'Ask AI';
-
-  aiButton.appendChild(icon);
-  aiButton.appendChild(text);
-
-  // Add click handler
-  aiButton.addEventListener('click', () => {
+  function handleAskAI() {
     if (typeof window !== 'undefined' && window.Kapa) {
-      const prompt = `Could you explain the code example below:
-
-\`\`\`${language}
-${codeContent}
-\`\`\``;
-
-      window.Kapa.open({
-        query: prompt,
-        submit: true
-      });
-    } else {
-      console.warn('Kapa widget not available');
+      const prompt = `Could you explain the code example below:\n\n\`\`\`${language}\n${codeContent}\n\`\`\``;
+      window.Kapa.open({ query: prompt, submit: true });
     }
-  });
+  }
 
-  // Add button to group
-  buttonGroup.appendChild(aiButton);
+  return (
+    <div className="code-title-bar">
+      <div className="code-title-bar__left">
+        <div className="code-title-bar__dots">
+          <span className="code-title-bar__dot code-title-bar__dot--close" />
+          <span className="code-title-bar__dot code-title-bar__dot--minimize" />
+          <span className="code-title-bar__dot code-title-bar__dot--maximize" />
+        </div>
+        {labelText && (
+          <span className="code-title-bar__label">{labelText}</span>
+        )}
+      </div>
+      <div className="code-title-bar__actions">
+        {showAI && (
+          <button
+            className="clean-btn ai-button"
+            title="Ask AI to explain this code"
+            aria-label="Ask AI to explain this code example"
+            onClick={handleAskAI}
+          >
+            <i className="ph ph-sparkle" />
+            <span>Ask AI</span>
+          </button>
+        )}
+        {langLabel && (
+          <span className="code-title-bar__lang">{langLabel}</span>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default function CodeBlockWrapper(props) {
   const { children, className = '', ...otherProps } = props;
-  const codeBlockRef = useRef(null);
-  
-  // Extract code content and language
+
   let codeContent = '';
   if (typeof children === 'string') {
     codeContent = children;
   } else if (children?.props?.children) {
     codeContent = children.props.children;
   }
-  
-  // Extract language from className (format: "language-javascript")
+
   const languageMatch = className.match(/language-(\w+)/);
   const language = languageMatch ? languageMatch[1] : '';
-  
-  // Check if we should show the AI button
+  const isTerminal = TERMINAL_LANGS.has(language);
+  const docTitle = otherProps.title || '';
   const showAI = shouldShowAIButton(codeContent);
 
-  // Inject AI button after component mounts
-  useEffect(() => {
-    if (showAI && codeBlockRef.current) {
-      // Small delay to ensure Docusaurus has fully rendered
-      const timer = setTimeout(() => {
-        injectAIButton(codeBlockRef.current, codeContent.trim(), language);
-      }, 100);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [showAI, codeContent, language]);
+  // Terminal blocks: macOS-style wrapper with title bar + blinking cursor (CSS)
+  if (isTerminal) {
+    return (
+      <div className="code-block-enhanced">
+        <TerminalTitleBar
+          language={language}
+          title={docTitle}
+          showAI={showAI}
+          codeContent={codeContent?.trim()}
+        />
+        <CodeBlock className={className} {...otherProps}>
+          {children}
+        </CodeBlock>
+      </div>
+    );
+  }
 
+  // Non-terminal blocks: standard rendering
+  // (Docusaurus provides copy/wrap buttons natively)
   return (
-    <div ref={codeBlockRef}>
-      <CodeBlock className={className} {...otherProps}>
-        {children}
-      </CodeBlock>
-    </div>
+    <CodeBlock className={className} {...otherProps}>
+      {children}
+    </CodeBlock>
   );
 }
