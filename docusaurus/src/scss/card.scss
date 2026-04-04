@@ -2,9 +2,9 @@
 @use './mixins' as *;
 
 :root body {
-  --custom-card-border-color: var(--strapi-border-strong);
+  --custom-card-border-color: var(--strapi-neutral-150);
 
-  --ifm-card-background-color: var(--strapi-surface-1);
+  --ifm-card-background-color: transparent;
   --ifm-card-border-radius: var(--strapi-radius-lg);
 }
 
@@ -13,19 +13,19 @@
 
   border: 1px solid var(--custom-card-border-color);
   border-radius: var(--strapi-radius-lg);
-  box-shadow: var(--strapi-shadow-sm) !important;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, color 0.2s ease;
 
   &[href] {
     color: var(--strapi-fg-2);
 
     &:hover {
-      transform: translateY(-4px);
-      border-color: var(--strapi-border-accent);
-      box-shadow: var(--strapi-shadow-lg) !important;
+      transform: translateY(-2px);
+      border-color: var(--strapi-primary-200);
+      box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1) !important;
 
-      img {
-        transform: scale(1.02);
+      h2, .cardTitle {
+        color: var(--strapi-primary-600);
       }
     }
   }
@@ -54,8 +54,8 @@
 /** Dark mode */
 @include dark {
   :root body {
-    --custom-card-border-color: var(--strapi-border);
-    --ifm-card-background-color: var(--strapi-surface-2);
+    --custom-card-border-color: var(--strapi-neutral-200);
+    --ifm-card-background-color: transparent;
   }
 
   .card {
@@ -63,8 +63,8 @@
       color: var(--strapi-fg-2);
 
       &:hover {
-        border-color: var(--strapi-border-accent);
-        box-shadow: var(--strapi-shadow-lg), 0 0 30px var(--strapi-accent-glow) !important;
+        border-color: var(--strapi-primary-500);
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2) !important;
       }
     }
   }

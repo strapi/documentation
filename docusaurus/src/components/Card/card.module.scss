@@ -47,11 +47,9 @@
 .card {
   position: var(--strapi-card-position);
   overflow: var(--strapi-card-overflow);
-  // background: var(--strapi-card-background);
-  background-color: transparent;
+  background: transparent;
   border-radius: var(--strapi-card-border-radius);
   border: 1px solid var(--strapi-card-border-color-light);
-  // box-shadow: var(--strapi-card-box-shadow);
   display: flex;
   flex-direction: column;
   gap: var(--strapi-card-gap);
@@ -60,7 +58,6 @@
   text-align: var(--strapi-card-text-align);
   padding: var(--strapi-card-py) var(--strapi-card-px);
   transition: all 0.2s ease;
-  background: var(--strapi-card-background-light);
 
   &:focus, &:hover {
     --strapi-card-border-color: var(--strapi-card-hover-border-color);
@@ -68,7 +65,8 @@
     --strapi-card-img-bg-scale: var(--strapi-card-hover-img-bg-scale);
     cursor: pointer;
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-color: var(--strapi-card-hover-border-color);
+    box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1);
   }
 
   &-category-icon-container {
@@ -222,7 +220,7 @@
   --strapi-card-container-icon-background-color-cloud: var(--strapi-neutral-0);
 
   .card {
-    background: var(--strapi-card-background-dark);
+    background: transparent;
 
     &-category-icon-container {
       /* Couleur par défaut pour tous les conteneurs d'icônes */
