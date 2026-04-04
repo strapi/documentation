@@ -79,8 +79,6 @@ Each section below documents the parameters and examples for a specific method:
 
 ### `findOne()`
 
-Find a document matching the passed `documentId` and parameters.
-
 Syntax: `findOne(parameters: Params) => Document`
 
 <Endpoint
@@ -120,8 +118,6 @@ Syntax: `findOne(parameters: Params) => Document`
 />
 
 ### `findFirst()`
-
-Find the first document matching the parameters.
 
 Syntax:  `findFirst(parameters: Params) => Document`
 
@@ -186,8 +182,6 @@ If no `locale` or `status` parameters are passed, results return the draft versi
 </Endpoint>
 
 ### `findMany()`
-
-Find documents matching the parameters.
 
 Syntax: `findMany(parameters: Params) => Document[]`
 
@@ -267,10 +261,6 @@ If no `locale` or `status` parameters are passed, results return the draft versi
 
 ### `create()`
 
-Creates a drafted document and returns it.
-
-Pass fields for the content to create in a `data` object.
-
 Syntax: `create(parameters: Params) => Document`
 
 <Endpoint
@@ -317,8 +307,6 @@ If the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled on 
 </Endpoint>
 
 ### `update()`
-
-Updates document versions and returns them.
 
 Syntax: `update(parameters: Params) => Promise<Document>`
 
@@ -376,8 +364,6 @@ It's not recommended to update repeatable components with the Document Service A
 
 ### `delete()`
 
-Deletes one document, or a specific locale of it.
-
 Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 <Endpoint
@@ -422,10 +408,6 @@ Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }
 />
 
 ### `publish()`
-
-Publishes one or multiple locales of a document.
-
-This method is only available if [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content-type.
 
 Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
@@ -472,10 +454,6 @@ Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number 
 
 ### `unpublish()`
 
-Unpublishes one or all locale versions of a document, and returns how many locale versions were unpublished.
-
-This method is only available if [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content-type.
-
 Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 <Endpoint
@@ -521,10 +499,6 @@ Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Numbe
 
 ### `discardDraft()`
 
-Discards draft data and overrides it with the published version.
-
-This method is only available if [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content-type.
-
 Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 <Endpoint
@@ -569,8 +543,6 @@ Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Nu
 />
 
 ### `count()`
-
-Count the number of documents that match the provided parameters.
 
 Syntax: `count(parameters: Params) => number`
 

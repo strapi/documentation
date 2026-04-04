@@ -120,8 +120,6 @@ Some plugins (including Users & Permissions and Upload) may not follow this resp
 
 ### Get documents {#get-all}
 
-Returns documents matching the query filters (see [API parameters](/cms/api/rest/parameters) documentation).
-
 :::tip Tip: Strapi 5 vs. Strapi 4
 In Strapi 5 the response format has been flattened, and attributes are directly accessible from the `data` object instead of being nested in `data.attributes`.
 
@@ -209,8 +207,6 @@ const data = await response.json();`,
 
 ### Get a document {#get}
 
-Returns a document by `documentId`.
-
 :::strapi Strapi 5 vs. Strapi v4
 In Strapi 5, a specific document is reached by its `documentId`.
 :::
@@ -282,10 +278,6 @@ const data = await response.json();`,
 />
 
 ### Create a document {#create}
-
-Creates a document and returns its value.
-
-If the [Internationalization (i18n) plugin](/cms/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/cms/api/rest/locale#rest-delete).
 
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations.md) for more details).
@@ -375,10 +367,6 @@ const data = await response.json();`,
 />
 
 ### Update a document {#update}
-
-Partially updates a document by `documentId` and returns its value.
-
-Send a `null` value to clear fields.
 
 :::note NOTES
 * Even with the [Internationalization (i18n) plugin](/cms/features/internationalization) installed, it's currently not possible to [update the locale of a document](/cms/api/rest/locale#rest-update).
@@ -470,10 +458,6 @@ const data = await response.json();`,
 />
 
 ### Delete a document {#delete}
-
-Deletes a document.
-
-`DELETE` requests only send a 204 HTTP status code on success and do not return any data in the response body.
 
 <Endpoint
   id="delete-endpoint"
