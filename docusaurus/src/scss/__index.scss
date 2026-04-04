@@ -14,6 +14,9 @@
 @forward 'fonts';
 @forward 'base';
 
+/** V3: Animations */
+@use 'animations';
+
 /** Components */
 @use 'admonition.scss';
 @use 'ai-toolbar.scss';

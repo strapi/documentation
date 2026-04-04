@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strapi Docs — V2 Bold Redesign: API 2-Column Layout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #4945FF;
+    --accent-light: #7B79FF;
+    --accent-glow: rgba(73, 69, 255, 0.4);
+    --bg: #09090B;
+    --bg-elevated: #111113;
+    --bg-surface: #18181B;
+    --bg-surface-2: #1F1F23;
+    --bg-hover: #27272A;
+    --border: rgba(255,255,255,0.06);
+    --border-strong: rgba(255,255,255,0.1);
+    --text-primary: #FAFAFA;
+    --text-secondary: #A1A1AA;
+    --text-tertiary: #71717A;
+    --text-quaternary: #52525B;
+    --green: #22C55E;
+    --green-dim: rgba(34, 197, 94, 0.12);
+    --amber: #F59E0B;
+    --amber-dim: rgba(245, 158, 11, 0.12);
+    --red: #EF4444;
+    --red-dim: rgba(239, 68, 68, 0.12);
+    --blue: #3B82F6;
+    --blue-dim: rgba(59, 130, 246, 0.12);
+    --font-display: 'Outfit', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --nav-h: 64px;
+    --sidebar-w: 240px;
+  }
+  [data-theme="light"] {
+    --bg: #FAFAFA;
+    --bg-elevated: #FFFFFF;
+    --bg-surface: #F4F4F5;
+    --bg-surface-2: #E4E4E7;
+    --bg-hover: #E4E4E7;
+    --border: rgba(0,0,0,0.06);
+    --border-strong: rgba(0,0,0,0.1);
+    --text-primary: #09090B;
+    --text-secondary: #52525B;
+    --text-tertiary: #71717A;
+    --text-quaternary: #A1A1AA;
+    --accent-glow: rgba(73, 69, 255, 0.15);
+    --green-dim: rgba(34, 197, 94, 0.08);
+    --amber-dim: rgba(245, 158, 11, 0.08);
+    --red-dim: rgba(239, 68, 68, 0.08);
+    --blue-dim: rgba(59, 130, 246, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: white; }
+
+  .theme-toggle {
+    position: fixed; top: 18px; right: 24px; z-index: 1000;
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-surface); cursor: pointer;
+    font-size: 14px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent-light); }
+
+  /* ═══ NAV ═══ */
+  .nav {
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--border);
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg);
+  }
+  .nav__left { display: flex; align-items: center; gap: 32px; }
+  .nav__logo {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-display); font-weight: 700; font-size: 16px;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav__logo-mark {
+    width: 24px; height: 24px; border-radius: 6px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav__links { display: flex; gap: 2px; }
+  .nav__link {
+    font-size: 13px; font-weight: 500; color: var(--text-tertiary);
+    text-decoration: none; padding: 5px 10px; border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .nav__link:hover { color: var(--text-primary); background: var(--bg-hover); }
+  .nav__link.active { color: var(--text-primary); background: var(--bg-surface); }
+
+  /* ═══ LAYOUT ═══ */
+  .layout {
+    display: flex;
+    margin-top: var(--nav-h);
+    min-height: calc(100vh - var(--nav-h));
+  }
+
+  /* ═══ SIDEBAR ═══ */
+  .sidebar {
+    width: var(--sidebar-w); min-width: var(--sidebar-w);
+    border-right: 1px solid var(--border);
+    height: calc(100vh - var(--nav-h));
+    position: sticky; top: var(--nav-h);
+    overflow-y: auto;
+    background: var(--bg);
+    padding: 12px 0;
+  }
+  .sidebar__section { padding: 0 8px; margin-bottom: 4px; }
+  .sidebar__section-title {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-quaternary);
+    padding: 12px 10px 6px;
+  }
+  .s-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-size: 13px; color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.12s;
+    cursor: pointer;
+  }
+  .s-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+  .s-item.active {
+    background: rgba(73, 69, 255, 0.1);
+    color: var(--accent-light);
+    font-weight: 600;
+  }
+  .s-item__method {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    padding: 2px 5px; border-radius: 4px;
+    text-transform: uppercase;
+    width: 38px; text-align: center;
+    flex-shrink: 0;
+  }
+  .s-item__method--get { background: var(--green-dim); color: var(--green); }
+  .s-item__method--post { background: rgba(73,69,255,0.12); color: var(--accent-light); }
+  .s-item__method--put { background: var(--amber-dim); color: var(--amber); }
+  .s-item__method--del { background: var(--red-dim); color: var(--red); }
+  .s-divider {
+    height: 1px; background: var(--border); margin: 6px 12px;
+  }
+
+  /* ═══ MAIN — 2 COLUMN ═══ */
+  .main {
+    flex: 1; min-width: 0;
+    overflow-y: auto;
+  }
+
+  /* Page header */
+  .api-header {
+    padding: 40px 48px 32px;
+    border-bottom: 1px solid var(--border);
+    max-width: 1300px;
+  }
+  .api-header__breadcrumbs {
+    font-family: var(--font-mono);
+    font-size: 12px; color: var(--text-quaternary);
+    margin-bottom: 16px;
+    display: flex; gap: 6px;
+  }
+  .api-header__breadcrumbs a { color: var(--text-tertiary); text-decoration: none; }
+  .api-header__breadcrumbs a:hover { color: var(--accent-light); }
+  .api-header h1 {
+    font-family: var(--font-display);
+    font-size: 36px; font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 10px;
+  }
+  .api-header__desc {
+    font-size: 16px; line-height: 1.6;
+    color: var(--text-tertiary);
+    max-width: 600px;
+  }
+  .api-header__base {
+    margin-top: 20px;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .api-header__base-label {
+    font-size: 11px; font-weight: 600;
+    color: var(--text-quaternary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* ═══ ENDPOINT SECTION — THE 2-COL MAGIC ═══ */
+  .endpoint {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+    min-height: 400px;
+  }
+
+  /* Left: Description */
+  .endpoint__desc {
+    padding: 40px 48px;
+    border-right: 1px solid var(--border);
+  }
+  .endpoint__method-line {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .method-badge {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 700;
+    padding: 4px 10px; border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .method-badge--get { background: var(--green-dim); color: var(--green); }
+  .method-badge--post { background: rgba(73,69,255,0.12); color: var(--accent-light); }
+  .method-badge--put { background: var(--amber-dim); color: var(--amber); }
+  .method-badge--del { background: var(--red-dim); color: var(--red); }
+  .endpoint__path {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    color: var(--text-primary);
+  }
+  .endpoint__path .param { color: var(--accent-light); }
+
+  .endpoint__title {
+    font-family: var(--font-display);
+    font-size: 24px; font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .endpoint__text {
+    font-size: 15px; line-height: 1.7;
+    color: var(--text-tertiary);
+    margin-bottom: 24px;
+  }
+
+  /* Params table */
+  .params {
+    margin-top: 8px;
+  }
+  .params__title {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-quaternary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .param {
+    display: grid;
+    grid-template-columns: 1fr auto 1.2fr;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .param:last-child { border-bottom: none; }
+  .param__name {
+    font-family: var(--font-mono);
+    font-size: 13px; font-weight: 500;
+    color: var(--text-primary);
+  }
+  .param__type {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-quaternary);
+    margin-top: 2px;
+  }
+  .param__required {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 6px; border-radius: 4px;
+  }
+  .param__required--yes { background: var(--red-dim); color: var(--red); }
+  .param__required--no { background: var(--bg-surface); color: var(--text-quaternary); }
+  .param__desc {
+    font-size: 13px; line-height: 1.5;
+    color: var(--text-tertiary);
+  }
+
+  /* Right: Code */
+  .endpoint__code {
+    padding: 40px 32px;
+    background: var(--bg-elevated);
+    position: sticky;
+    top: var(--nav-h);
+    align-self: start;
+    max-height: calc(100vh - var(--nav-h));
+    overflow-y: auto;
+  }
+  [data-theme="light"] .endpoint__code {
+    background: var(--bg-surface);
+  }
+
+  /* Code panel */
+  .code-panel {
+    border-radius: 12px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  [data-theme="light"] .code-panel {
+    background: var(--bg-elevated);
+  }
+  .code-panel__tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    padding: 0 4px;
+  }
+  .code-panel__tab {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 500;
+    padding: 9px 12px;
+    color: var(--text-quaternary);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .code-panel__tab.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--accent);
+  }
+  .code-panel__tab:hover { color: var(--text-secondary); }
+
+  .code-panel__url {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .code-panel__url-method {
+    font-weight: 700; font-size: 11px;
+    padding: 2px 6px; border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .code-panel__url-method--get { background: var(--green-dim); color: var(--green); }
+  .code-panel__url-method--post { background: rgba(73,69,255,0.12); color: var(--accent-light); }
+  .code-panel__url-method--put { background: var(--amber-dim); color: var(--amber); }
+  .code-panel__url-method--del { background: var(--red-dim); color: var(--red); }
+  .code-panel__url-path { color: var(--text-secondary); }
+  .code-panel__url-path .p { color: var(--accent-light); }
+
+  .code-panel pre {
+    padding: 14px; margin: 0; overflow-x: auto;
+  }
+  .code-panel code {
+    font-family: var(--font-mono);
+    font-size: 13px; line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  .kw { color: #c084fc; }
+  .str { color: var(--green); }
+  .fn { color: var(--accent-light); }
+  .cm { color: var(--text-quaternary); }
+  .num { color: var(--amber); }
+  .key { color: #60A5FA; }
+
+  /* Response panel */
+  .response-label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-quaternary);
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+  }
+  .status-dot--ok { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .status-dot--err { background: var(--red); box-shadow: 0 0 6px var(--red); }
+  .status-code {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 600;
+    padding: 2px 8px; border-radius: 4px;
+  }
+  .status-code--200 { background: var(--green-dim); color: var(--green); }
+  .status-code--201 { background: var(--green-dim); color: var(--green); }
+  .status-code--400 { background: var(--red-dim); color: var(--red); }
+
+  /* Try it button */
+  .try-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+    margin-top: 12px;
+  }
+  .try-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--accent-light);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+  .try-btn__icon { font-size: 14px; }
+
+  /* ═══ DIVIDER ═══ */
+  .endpoint-divider {
+    grid-column: 1 / -1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  @media (max-width: 1024px) {
+    .endpoint {
+      grid-template-columns: 1fr;
+    }
+    .endpoint__desc { border-right: none; border-bottom: 1px solid var(--border); }
+    .endpoint__code { position: static; max-height: none; }
+  }
+</style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">☀️</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav__left">
+      <a class="nav__logo" href="#">
+        <div class="nav__logo-mark">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="5" width="7" height="7" rx="1" fill="white" opacity="0.9"/>
+            <rect x="5" y="2" width="7" height="7" rx="1" fill="white" opacity="0.5"/>
+          </svg>
+        </div>
+        strapi <span style="color: var(--text-quaternary); font-weight: 400;">docs</span>
+      </a>
+      <div class="nav__links">
+        <a class="nav__link" href="#">CMS</a>
+        <a class="nav__link" href="#">Cloud</a>
+        <a class="nav__link active" href="#">API</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <!-- SIDEBAR — API ENDPOINTS LIST -->
+    <aside class="sidebar">
+      <div class="sidebar__section">
+        <div class="sidebar__section-title">REST API</div>
+        <a class="s-item" href="#" style="font-weight: 600; color: var(--text-primary);">Overview</a>
+      </div>
+      <div class="s-divider"></div>
+      <div class="sidebar__section">
+        <div class="sidebar__section-title">Entries</div>
+        <a class="s-item" href="#">
+          <span class="s-item__method s-item__method--get">GET</span>
+          List entries
+        </a>
+        <a class="s-item active" href="#">
+          <span class="s-item__method s-item__method--get">GET</span>
+          Get entry
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__method s-item__method--post">POST</span>
+          Create entry
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__method s-item__method--put">PUT</span>
+          Update entry
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__method s-item__method--del">DEL</span>
+          Delete entry
+        </a>
+      </div>
+      <div class="s-divider"></div>
+      <div class="sidebar__section">
+        <div class="sidebar__section-title">Upload</div>
+        <a class="s-item" href="#">
+          <span class="s-item__method s-item__method--get">GET</span>
+          List files
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__method s-item__method--post">POST</span>
+          Upload files
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__method s-item__method--del">DEL</span>
+          Delete file
+        </a>
+      </div>
+      <div class="s-divider"></div>
+      <div class="sidebar__section">
+        <div class="sidebar__section-title">Users & Auth</div>
+        <a class="s-item" href="#">
+          <span class="s-item__method s-item__method--post">POST</span>
+          Register
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__method s-item__method--post">POST</span>
+          Login
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__method s-item__method--get">GET</span>
+          Get me
+        </a>
+      </div>
+      <div class="s-divider"></div>
+      <div class="sidebar__section">
+        <div class="sidebar__section-title">Utilities</div>
+        <a class="s-item" href="#">
+          <span class="s-item__method s-item__method--get">GET</span>
+          Healthcheck
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN — 2 COLUMN CONTENT -->
+    <div class="main">
+      <!-- Page Header -->
+      <div class="api-header">
+        <div class="api-header__breadcrumbs">
+          <a href="#">docs</a> <span>/</span>
+          <a href="#">rest-api</a> <span>/</span>
+          <span style="color: var(--text-secondary);">entries</span>
+        </div>
+        <h1>Entries</h1>
+        <p class="api-header__desc">
+          CRUD operations on your content-type entries. Strapi auto-generates these endpoints from your content-type schemas.
+        </p>
+        <div class="api-header__base">
+          <span class="api-header__base-label">Base URL</span>
+          <code style="font-family: var(--font-mono); color: var(--text-primary);">http://localhost:1337</code>
+        </div>
+      </div>
+
+      <!-- ═══ ENDPOINT 1: GET LIST ═══ -->
+      <div class="endpoint">
+        <div class="endpoint__desc">
+          <div class="endpoint__method-line">
+            <span class="method-badge method-badge--get">GET</span>
+            <span class="endpoint__path">/api/<span class="param">:pluralApiId</span></span>
+          </div>
+          <h2 class="endpoint__title">List entries</h2>
+          <p class="endpoint__text">
+            Returns a paginated list of entries. Supports filtering, sorting, field selection, population of relations, and locale-based queries.
+          </p>
+
+          <div class="params">
+            <div class="params__title">Query Parameters</div>
+            <div class="param">
+              <div>
+                <div class="param__name">sort</div>
+                <div class="param__type">string | string[]</div>
+              </div>
+              <span class="param__required param__required--no">optional</span>
+              <div class="param__desc">Sort by field. Use <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent-light);background:var(--bg-surface);padding:1px 5px;border-radius:4px;">field:asc</code> or <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent-light);background:var(--bg-surface);padding:1px 5px;border-radius:4px;">field:desc</code></div>
+            </div>
+            <div class="param">
+              <div>
+                <div class="param__name">filters</div>
+                <div class="param__type">object</div>
+              </div>
+              <span class="param__required param__required--no">optional</span>
+              <div class="param__desc">Filter with operators like <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent-light);background:var(--bg-surface);padding:1px 5px;border-radius:4px;">$eq</code>, <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent-light);background:var(--bg-surface);padding:1px 5px;border-radius:4px;">$contains</code>, <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent-light);background:var(--bg-surface);padding:1px 5px;border-radius:4px;">$gt</code></div>
+            </div>
+            <div class="param">
+              <div>
+                <div class="param__name">populate</div>
+                <div class="param__type">string | object</div>
+              </div>
+              <span class="param__required param__required--no">optional</span>
+              <div class="param__desc">Relations and components to include in the response</div>
+            </div>
+            <div class="param">
+              <div>
+                <div class="param__name">pagination[page]</div>
+                <div class="param__type">integer</div>
+              </div>
+              <span class="param__required param__required--no">optional</span>
+              <div class="param__desc">Page number. Default: <code style="font-family:var(--font-mono);font-size:12px;color:var(--amber);background:var(--bg-surface);padding:1px 5px;border-radius:4px;">1</code></div>
+            </div>
+            <div class="param">
+              <div>
+                <div class="param__name">pagination[pageSize]</div>
+                <div class="param__type">integer</div>
+              </div>
+              <span class="param__required param__required--no">optional</span>
+              <div class="param__desc">Items per page. Default: <code style="font-family:var(--font-mono);font-size:12px;color:var(--amber);background:var(--bg-surface);padding:1px 5px;border-radius:4px;">25</code>, max: <code style="font-family:var(--font-mono);font-size:12px;color:var(--amber);background:var(--bg-surface);padding:1px 5px;border-radius:4px;">100</code></div>
+            </div>
+            <div class="param">
+              <div>
+                <div class="param__name">fields</div>
+                <div class="param__type">string[]</div>
+              </div>
+              <span class="param__required param__required--no">optional</span>
+              <div class="param__desc">Select specific fields to return</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="endpoint__code">
+          <div class="code-panel">
+            <div class="code-panel__tabs">
+              <span class="code-panel__tab active">cURL</span>
+              <span class="code-panel__tab">JavaScript</span>
+              <span class="code-panel__tab">Python</span>
+            </div>
+            <div class="code-panel__url">
+              <span class="code-panel__url-method code-panel__url-method--get">GET</span>
+              <span class="code-panel__url-path">/api/<span class="p">restaurants</span></span>
+            </div>
+            <pre><code><span class="fn">curl</span> <span class="str">'http://localhost:1337/api/restaurants'</span> \
+  <span class="kw">-H</span> <span class="str">'Authorization: Bearer &lt;token&gt;'</span> \
+  <span class="kw">-G</span> \
+  <span class="kw">--data-urlencode</span> <span class="str">'sort=name:asc'</span> \
+  <span class="kw">--data-urlencode</span> <span class="str">'pagination[page]=1'</span> \
+  <span class="kw">--data-urlencode</span> <span class="str">'pagination[pageSize]=25'</span> \
+  <span class="kw">--data-urlencode</span> <span class="str">'populate=*'</span></code></pre>
+          </div>
+
+          <div class="response-label">
+            <span class="status-dot status-dot--ok"></span>
+            Response
+            <span class="status-code status-code--200">200 OK</span>
+          </div>
+
+          <div class="code-panel">
+            <pre><code>{
+  <span class="key">"data"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="num">1</span>,
+      <span class="key">"documentId"</span>: <span class="str">"a1b2c3d4e5"</span>,
+      <span class="key">"name"</span>: <span class="str">"Biscotte Restaurant"</span>,
+      <span class="key">"description"</span>: <span class="str">"A cozy place"</span>,
+      <span class="key">"createdAt"</span>: <span class="str">"2026-01-15T09:00:00.000Z"</span>,
+      <span class="key">"updatedAt"</span>: <span class="str">"2026-01-15T09:00:00.000Z"</span>
+    }
+  ],
+  <span class="key">"meta"</span>: {
+    <span class="key">"pagination"</span>: {
+      <span class="key">"page"</span>: <span class="num">1</span>,
+      <span class="key">"pageSize"</span>: <span class="num">25</span>,
+      <span class="key">"pageCount"</span>: <span class="num">1</span>,
+      <span class="key">"total"</span>: <span class="num">1</span>
+    }
+  }
+}</code></pre>
+          </div>
+
+          <button class="try-btn">
+            <span class="try-btn__icon">▶</span>
+            Try it
+          </button>
+        </div>
+      </div>
+
+      <!-- ═══ ENDPOINT 2: POST CREATE ═══ -->
+      <div class="endpoint">
+        <div class="endpoint__desc">
+          <div class="endpoint__method-line">
+            <span class="method-badge method-badge--post">POST</span>
+            <span class="endpoint__path">/api/<span class="param">:pluralApiId</span></span>
+          </div>
+          <h2 class="endpoint__title">Create an entry</h2>
+          <p class="endpoint__text">
+            Creates a new entry for the collection type. Send field values inside a <code style="font-family:var(--font-mono);font-size:14px;color:var(--accent-light);background:var(--bg-surface);padding:2px 6px;border-radius:5px;border:1px solid var(--border);">data</code> object in the request body.
+          </p>
+
+          <div class="params">
+            <div class="params__title">Body Parameters</div>
+            <div class="param">
+              <div>
+                <div class="param__name">data</div>
+                <div class="param__type">object</div>
+              </div>
+              <span class="param__required param__required--yes">required</span>
+              <div class="param__desc">Object containing the field values to set</div>
+            </div>
+            <div class="param">
+              <div>
+                <div class="param__name">data.name</div>
+                <div class="param__type">string</div>
+              </div>
+              <span class="param__required param__required--yes">required</span>
+              <div class="param__desc">Name of the restaurant</div>
+            </div>
+            <div class="param">
+              <div>
+                <div class="param__name">data.description</div>
+                <div class="param__type">richtext</div>
+              </div>
+              <span class="param__required param__required--no">optional</span>
+              <div class="param__desc">Description in rich text format</div>
+            </div>
+            <div class="param">
+              <div>
+                <div class="param__name">data.rating</div>
+                <div class="param__type">integer</div>
+              </div>
+              <span class="param__required param__required--no">optional</span>
+              <div class="param__desc">Rating from 1 to 5</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="endpoint__code">
+          <div class="code-panel">
+            <div class="code-panel__tabs">
+              <span class="code-panel__tab active">cURL</span>
+              <span class="code-panel__tab">JavaScript</span>
+              <span class="code-panel__tab">Python</span>
+            </div>
+            <div class="code-panel__url">
+              <span class="code-panel__url-method code-panel__url-method--post">POST</span>
+              <span class="code-panel__url-path">/api/<span class="p">restaurants</span></span>
+            </div>
+            <pre><code><span class="fn">curl</span> <span class="kw">-X POST</span> \
+  <span class="str">'http://localhost:1337/api/restaurants'</span> \
+  <span class="kw">-H</span> <span class="str">'Authorization: Bearer &lt;token&gt;'</span> \
+  <span class="kw">-H</span> <span class="str">'Content-Type: application/json'</span> \
+  <span class="kw">-d</span> <span class="str">'{
+    "data": {
+      "name": "New Restaurant",
+      "description": "A great place",
+      "rating": 5
+    }
+  }'</span></code></pre>
+          </div>
+
+          <div class="response-label">
+            <span class="status-dot status-dot--ok"></span>
+            Response
+            <span class="status-code status-code--201">201 Created</span>
+          </div>
+
+          <div class="code-panel">
+            <pre><code>{
+  <span class="key">"data"</span>: {
+    <span class="key">"id"</span>: <span class="num">2</span>,
+    <span class="key">"documentId"</span>: <span class="str">"f6g7h8i9j0"</span>,
+    <span class="key">"name"</span>: <span class="str">"New Restaurant"</span>,
+    <span class="key">"description"</span>: <span class="str">"A great place"</span>,
+    <span class="key">"rating"</span>: <span class="num">5</span>,
+    <span class="key">"createdAt"</span>: <span class="str">"2026-04-04T14:30:00.000Z"</span>,
+    <span class="key">"updatedAt"</span>: <span class="str">"2026-04-04T14:30:00.000Z"</span>
+  },
+  <span class="key">"meta"</span>: {}
+}</code></pre>
+          </div>
+
+          <button class="try-btn">
+            <span class="try-btn__icon">▶</span>
+            Try it
+          </button>
+        </div>
+      </div>
+
+      <!-- ═══ ENDPOINT 3: DELETE ═══ -->
+      <div class="endpoint">
+        <div class="endpoint__desc">
+          <div class="endpoint__method-line">
+            <span class="method-badge method-badge--del">DELETE</span>
+            <span class="endpoint__path">/api/<span class="param">:pluralApiId</span>/<span class="param">:documentId</span></span>
+          </div>
+          <h2 class="endpoint__title">Delete an entry</h2>
+          <p class="endpoint__text">
+            Permanently removes an entry by its document ID. This action is irreversible.
+          </p>
+
+          <div class="params">
+            <div class="params__title">Path Parameters</div>
+            <div class="param">
+              <div>
+                <div class="param__name">pluralApiId</div>
+                <div class="param__type">string</div>
+              </div>
+              <span class="param__required param__required--yes">required</span>
+              <div class="param__desc">Plural API ID of the content type (e.g. <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent-light);background:var(--bg-surface);padding:1px 5px;border-radius:4px;">restaurants</code>)</div>
+            </div>
+            <div class="param">
+              <div>
+                <div class="param__name">documentId</div>
+                <div class="param__type">string</div>
+              </div>
+              <span class="param__required param__required--yes">required</span>
+              <div class="param__desc">The document ID of the entry to delete</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="endpoint__code">
+          <div class="code-panel">
+            <div class="code-panel__tabs">
+              <span class="code-panel__tab active">cURL</span>
+              <span class="code-panel__tab">JavaScript</span>
+            </div>
+            <div class="code-panel__url">
+              <span class="code-panel__url-method code-panel__url-method--del">DEL</span>
+              <span class="code-panel__url-path">/api/<span class="p">restaurants</span>/<span class="p">a1b2c3d4e5</span></span>
+            </div>
+            <pre><code><span class="fn">curl</span> <span class="kw">-X DELETE</span> \
+  <span class="str">'http://localhost:1337/api/restaurants/a1b2c3d4e5'</span> \
+  <span class="kw">-H</span> <span class="str">'Authorization: Bearer &lt;token&gt;'</span></code></pre>
+          </div>
+
+          <div class="response-label">
+            <span class="status-dot status-dot--ok"></span>
+            Response
+            <span class="status-code status-code--200">200 OK</span>
+          </div>
+
+          <div class="code-panel">
+            <pre><code>{
+  <span class="key">"data"</span>: {
+    <span class="key">"id"</span>: <span class="num">1</span>,
+    <span class="key">"documentId"</span>: <span class="str">"a1b2c3d4e5"</span>,
+    <span class="key">"name"</span>: <span class="str">"Biscotte Restaurant"</span>,
+    <span class="key">"description"</span>: <span class="str">"A cozy place"</span>
+  },
+  <span class="key">"meta"</span>: {}
+}</code></pre>
+          </div>
+
+          <button class="try-btn">
+            <span class="try-btn__icon">▶</span>
+            Try it
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+    }
+  </script>
+</body>
+</html>

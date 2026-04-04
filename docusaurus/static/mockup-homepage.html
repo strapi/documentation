@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strapi Docs — Redesign Mockup: Homepage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --surface-0: #FFFFFF;
+    --surface-1: #FAFAFE;
+    --surface-2: #F4F4FB;
+    --surface-3: #EDEDF7;
+    --neutral-1000: #181826;
+    --neutral-800: #32324D;
+    --neutral-600: #666687;
+    --neutral-500: #8E8EA9;
+    --neutral-400: #A5A5BA;
+    --neutral-300: #C0C0CF;
+    --neutral-200: #DCDCE4;
+    --neutral-150: #EAEAEF;
+    --neutral-100: #F6F6F9;
+    --primary-700: #271FE0;
+    --primary-600: #4945FF;
+    --primary-500: #7B79FF;
+    --primary-200: #D9D8FF;
+    --primary-100: #F0F0FF;
+    --secondary-600: #0C75AF;
+    --secondary-500: #66B7F1;
+    --secondary-100: #EAF5FF;
+    --alternative-600: #9736E8;
+    --gradient-primary: linear-gradient(135deg, #4945FF 0%, #7B79FF 100%);
+    --gradient-accent: linear-gradient(135deg, #9736E8 0%, #4945FF 100%);
+    --glow-primary: 0 0 40px rgba(73, 69, 255, 0.15);
+    --shadow-sm: 0 2px 8px rgba(24, 24, 38, 0.06);
+    --shadow-md: 0 4px 16px rgba(24, 24, 38, 0.08);
+    --shadow-lg: 0 8px 32px rgba(24, 24, 38, 0.10);
+    --shadow-xl: 0 16px 48px rgba(24, 24, 38, 0.12);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --font-display: 'Inter Tight', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  [data-theme="dark"] {
+    --surface-0: #181826;
+    --surface-1: #1E1E30;
+    --surface-2: #252539;
+    --surface-3: #2C2C44;
+    --neutral-1000: #FFFFFF;
+    --neutral-800: #EAEAEF;
+    --neutral-600: #A5A5BA;
+    --neutral-500: #8E8EA9;
+    --neutral-400: #666687;
+    --neutral-300: #4A4A6A;
+    --neutral-200: #32324D;
+    --neutral-150: #2C2C44;
+    --neutral-100: #212134;
+    --primary-600: #7B79FF;
+    --primary-500: #9B99FF;
+    --primary-100: rgba(73, 69, 255, 0.15);
+    --secondary-100: rgba(12, 117, 175, 0.15);
+    --glow-primary: 0 0 60px rgba(73, 69, 255, 0.25);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--surface-0);
+    color: var(--neutral-800);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ═══ THEME TOGGLE ═══ */
+  .theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--neutral-200);
+    background: var(--surface-1);
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s var(--ease-out-expo);
+    box-shadow: var(--shadow-sm);
+  }
+  .theme-toggle:hover {
+    box-shadow: var(--shadow-md);
+    transform: scale(1.05);
+  }
+
+  /* ═══ NAVBAR ═══ */
+  .navbar {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.85);
+    border-bottom: 1px solid var(--neutral-150);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: all 0.3s var(--ease-out-expo);
+  }
+  [data-theme="dark"] .navbar {
+    background: rgba(24, 24, 38, 0.85);
+    border-bottom-color: var(--neutral-200);
+  }
+  .navbar__logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--neutral-1000);
+    text-decoration: none;
+  }
+  .navbar__logo svg {
+    width: 32px;
+    height: 32px;
+  }
+  .navbar__links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+  .navbar__link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--neutral-600);
+    text-decoration: none;
+    padding: 8px 0;
+    position: relative;
+    transition: color 0.2s;
+  }
+  .navbar__link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--gradient-primary);
+    border-radius: 1px;
+    transform: scaleX(0);
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+  .navbar__link:hover { color: var(--neutral-1000); }
+  .navbar__link:hover::after, .navbar__link.active::after { transform: scaleX(1); }
+  .navbar__link.active { color: var(--primary-600); }
+
+  /* ═══ NEWS TICKER ═══ */
+  .ticker {
+    background: var(--surface-2);
+    padding: 10px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--neutral-600);
+    border-bottom: 1px solid var(--neutral-150);
+  }
+  .ticker__badge {
+    background: var(--gradient-accent);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .ticker a {
+    color: var(--primary-600);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .ticker a:hover { text-decoration: underline; }
+
+  /* ═══ HERO ═══ */
+  .hero {
+    padding: 96px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 30%, var(--primary-100) 0%, transparent 70%);
+  }
+  [data-theme="dark"] .hero {
+    background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(73, 69, 255, 0.08) 0%, transparent 70%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, var(--neutral-300) 1px, transparent 1px);
+    background-size: 32px 32px;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: 64px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--neutral-1000);
+    margin-bottom: 20px;
+  }
+  .hero__title .gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero__subtitle {
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--neutral-500);
+    max-width: 560px;
+    margin: 0 auto;
+    font-weight: 400;
+  }
+
+  /* Character reveal animation */
+  .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: charReveal 0.5s var(--ease-out-expo) forwards;
+  }
+  .char.space { width: 0.3em; }
+  @keyframes charReveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ═══ AI SEARCH BAR ═══ */
+  .ai-search {
+    display: flex;
+    justify-content: center;
+    padding: 0 40px 64px;
+    position: relative;
+    z-index: 1;
+    margin-top: -8px;
+  }
+  .ai-search__bar {
+    width: 100%;
+    max-width: 620px;
+    height: 56px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--neutral-200);
+    background: var(--surface-0);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-out-expo);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+  }
+  .ai-search__bar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(73, 69, 255, 0.04), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .ai-search__bar:hover::before { opacity: 1; }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  .ai-search__bar:hover {
+    border-color: var(--primary-500);
+    box-shadow: var(--glow-primary);
+    transform: translateY(-1px);
+  }
+  .ai-search__icon {
+    color: var(--primary-600);
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+  .ai-search__text {
+    flex: 1;
+    font-size: 15px;
+    color: var(--neutral-400);
+    font-weight: 400;
+  }
+  .ai-search__kbd {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .ai-search__kbd kbd {
+    background: var(--surface-2);
+    border: 1px solid var(--neutral-200);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--neutral-500);
+    line-height: 20px;
+  }
+
+  /* ═══ CATEGORIES ═══ */
+  .categories {
+    padding: 0 40px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .categories__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .category-card {
+    border-radius: var(--radius-xl);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.4s var(--ease-out-expo);
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+  .category-card--cms {
+    background: linear-gradient(135deg, var(--primary-100) 0%, var(--surface-0) 60%);
+    border-color: var(--primary-200);
+  }
+  .category-card--cms:hover { border-color: var(--primary-500); }
+  .category-card--cloud {
+    background: linear-gradient(135deg, var(--secondary-100) 0%, var(--surface-0) 60%);
+    border-color: rgba(102, 183, 241, 0.3);
+  }
+  .category-card--cloud:hover { border-color: var(--secondary-500); }
+  [data-theme="dark"] .category-card--cms {
+    background: linear-gradient(135deg, rgba(73, 69, 255, 0.1) 0%, var(--surface-1) 60%);
+    border-color: var(--neutral-200);
+  }
+  [data-theme="dark"] .category-card--cloud {
+    background: linear-gradient(135deg, rgba(12, 117, 175, 0.1) 0%, var(--surface-1) 60%);
+    border-color: var(--neutral-200);
+  }
+  .category-card__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+  }
+  .category-card--cms .category-card__icon { background: var(--gradient-primary); }
+  .category-card--cloud .category-card__icon { background: linear-gradient(135deg, #0C75AF, #66B7F1); }
+  .category-card__title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--neutral-1000);
+  }
+  .category-card__desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--neutral-500);
+  }
+  .category-card__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .category-card__link {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--primary-600);
+    text-decoration: none;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    background: var(--primary-100);
+    transition: all 0.2s;
+  }
+  .category-card__link:hover {
+    background: var(--primary-200);
+  }
+  [data-theme="dark"] .category-card__link {
+    background: rgba(73, 69, 255, 0.15);
+  }
+  .category-card__cta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .category-card--cms .category-card__cta { color: var(--primary-600); }
+  .category-card--cloud .category-card__cta { color: var(--secondary-600); }
+  .category-card__cta .arrow {
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+  .category-card:hover .category-card__cta .arrow {
+    transform: translateX(4px);
+  }
+
+  /* ═══ QUICK LINKS ═══ */
+  .quick-links {
+    padding: 0 40px 96px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .quick-links__label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--neutral-400);
+    margin-bottom: 24px;
+  }
+  .quick-links__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .quick-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    transition: all 0.25s var(--ease-out-expo);
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .quick-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.25s;
+    pointer-events: none;
+  }
+  .quick-link:hover {
+    background: var(--surface-1);
+  }
+  .quick-link__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--primary-600);
+    flex-shrink: 0;
+    transition: all 0.25s var(--ease-out-expo);
+  }
+  .quick-link:hover .quick-link__icon {
+    background: var(--primary-100);
+    color: var(--primary-700);
+  }
+  .quick-link__content { flex: 1; min-width: 0; }
+  .quick-link__title {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--neutral-800);
+    margin-bottom: 2px;
+  }
+  .quick-link__desc {
+    font-size: 13px;
+    color: var(--neutral-500);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .quick-link__arrow {
+    color: var(--neutral-300);
+    font-size: 16px;
+    flex-shrink: 0;
+    transition: all 0.25s var(--ease-out-expo);
+    opacity: 0;
+  }
+  .quick-link:hover .quick-link__arrow {
+    opacity: 1;
+    transform: translateX(4px);
+    color: var(--primary-600);
+  }
+
+  /* ═══ FOOTER ═══ */
+  .footer {
+    padding: 64px 40px 40px;
+    border-top: 1px solid;
+    border-image: linear-gradient(to right, var(--primary-200), transparent) 1;
+    background: var(--surface-1);
+  }
+  [data-theme="dark"] .footer {
+    border-image: linear-gradient(to right, rgba(73,69,255,0.3), transparent) 1;
+  }
+  .footer__grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 64px;
+  }
+  .footer__logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--neutral-1000);
+  }
+  .footer__columns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+  .footer__col-title {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--neutral-400);
+    margin-bottom: 16px;
+  }
+  .footer__link {
+    display: block;
+    font-size: 14px;
+    color: var(--neutral-600);
+    text-decoration: none;
+    padding: 4px 0;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s var(--ease-out-expo), color 0.2s;
+  }
+  .footer__link:hover {
+    color: var(--neutral-800);
+    background-size: 100% 1px;
+  }
+  .footer__bottom {
+    max-width: 1200px;
+    margin: 40px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--neutral-150);
+    font-size: 13px;
+    color: var(--neutral-400);
+  }
+
+  /* ═══ SCROLL REVEAL ═══ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+    transition-delay: var(--stagger, 0ms);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ═══ BADGE: MOCKUP ═══ */
+  .mockup-badge {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--neutral-1000);
+    color: var(--surface-0);
+    padding: 8px 20px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    z-index: 1000;
+    box-shadow: var(--shadow-lg);
+  }
+
+  @media (max-width: 768px) {
+    .hero__title { font-size: 40px; }
+    .categories__grid { grid-template-columns: 1fr; }
+    .quick-links__grid { grid-template-columns: 1fr; }
+    .footer__grid { grid-template-columns: 1fr; gap: 32px; }
+    .footer__columns { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">☀️</button>
+  <div class="mockup-badge">Design Mockup — Homepage</div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a class="navbar__logo" href="#">
+      <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="url(#g)"/><path d="M9 12h8v8H9z" fill="#fff" opacity=".9"/><path d="M13 8h10v10H13z" fill="#fff" opacity=".6"/><defs><linearGradient id="g" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#4945FF"/><stop offset="1" stop-color="#7B79FF"/></linearGradient></defs></svg>
+      Strapi Docs
+    </a>
+    <div class="navbar__links">
+      <a class="navbar__link active" href="#">CMS</a>
+      <a class="navbar__link" href="#">Cloud</a>
+      <a class="navbar__link" href="#">GitHub</a>
+      <a class="navbar__link" href="#">Contribute</a>
+    </div>
+  </nav>
+
+  <!-- NEWS TICKER -->
+  <div class="ticker">
+    <span class="ticker__badge">New</span>
+    <span>Strapi 5.12 is out — <a href="#">Read the release notes →</a></span>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero__content">
+      <h1 class="hero__title" id="heroTitle"></h1>
+      <p class="hero__subtitle reveal" style="--stagger: 600ms">
+        Design APIs fast, manage content easily. Build powerful digital experiences with the leading open-source headless CMS.
+      </p>
+    </div>
+  </section>
+
+  <!-- AI SEARCH -->
+  <div class="ai-search reveal" style="--stagger: 800ms">
+    <div class="ai-search__bar" tabindex="0">
+      <span class="ai-search__icon">✦</span>
+      <span class="ai-search__text">Ask AI anything about Strapi...</span>
+      <span class="ai-search__kbd">
+        <kbd>⌘</kbd><kbd>K</kbd>
+      </span>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section class="categories">
+    <div class="categories__grid">
+      <a class="category-card category-card--cms reveal" style="--stagger: 200ms">
+        <div class="category-card__icon">📦</div>
+        <div class="category-card__title">CMS Documentation</div>
+        <div class="category-card__desc">
+          Everything you need to build, customize, and deploy your Strapi CMS. From quick start to advanced plugin development.
+        </div>
+        <div class="category-card__links">
+          <span class="category-card__link">Quick Start</span>
+          <span class="category-card__link">REST API</span>
+          <span class="category-card__link">GraphQL</span>
+          <span class="category-card__link">Content-Types</span>
+          <span class="category-card__link">Plugins</span>
+        </div>
+        <div class="category-card__cta">
+          Explore CMS Docs <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a class="category-card category-card--cloud reveal" style="--stagger: 350ms">
+        <div class="category-card__icon">☁️</div>
+        <div class="category-card__title">Cloud Documentation</div>
+        <div class="category-card__desc">
+          Deploy, manage, and scale your Strapi projects on Strapi Cloud. One-click deployments, custom domains, and more.
+        </div>
+        <div class="category-card__links">
+          <span class="category-card__link">Getting Started</span>
+          <span class="category-card__link">Deployments</span>
+          <span class="category-card__link">CLI</span>
+          <span class="category-card__link">Custom Domains</span>
+        </div>
+        <div class="category-card__cta">
+          Explore Cloud Docs <span class="arrow">→</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- QUICK LINKS -->
+  <section class="quick-links">
+    <div class="quick-links__label">Popular Pages</div>
+    <div class="quick-links__grid">
+      <a class="quick-link reveal" style="--stagger: 100ms">
+        <div class="quick-link__icon">🚀</div>
+        <div class="quick-link__content">
+          <div class="quick-link__title">Quick Start Guide</div>
+          <div class="quick-link__desc">Get up and running in under 5 minutes</div>
+        </div>
+        <span class="quick-link__arrow">→</span>
+      </a>
+      <a class="quick-link reveal" style="--stagger: 150ms">
+        <div class="quick-link__icon">⚡</div>
+        <div class="quick-link__content">
+          <div class="quick-link__title">REST API Reference</div>
+          <div class="quick-link__desc">Complete endpoint documentation</div>
+        </div>
+        <span class="quick-link__arrow">→</span>
+      </a>
+      <a class="quick-link reveal" style="--stagger: 200ms">
+        <div class="quick-link__icon">◈</div>
+        <div class="quick-link__content">
+          <div class="quick-link__title">GraphQL API</div>
+          <div class="quick-link__desc">Query your content with GraphQL</div>
+        </div>
+        <span class="quick-link__arrow">→</span>
+      </a>
+      <a class="quick-link reveal" style="--stagger: 250ms">
+        <div class="quick-link__icon">🔧</div>
+        <div class="quick-link__content">
+          <div class="quick-link__title">Customization</div>
+          <div class="quick-link__desc">Extend Strapi to fit your needs</div>
+        </div>
+        <span class="quick-link__arrow">→</span>
+      </a>
+      <a class="quick-link reveal" style="--stagger: 300ms">
+        <div class="quick-link__icon">🧩</div>
+        <div class="quick-link__content">
+          <div class="quick-link__title">Plugin Development</div>
+          <div class="quick-link__desc">Build and publish custom plugins</div>
+        </div>
+        <span class="quick-link__arrow">→</span>
+      </a>
+      <a class="quick-link reveal" style="--stagger: 350ms">
+        <div class="quick-link__icon">🌐</div>
+        <div class="quick-link__content">
+          <div class="quick-link__title">Deployment</div>
+          <div class="quick-link__desc">Deploy to any platform</div>
+        </div>
+        <span class="quick-link__arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__grid">
+      <div class="footer__logo">Strapi</div>
+      <div class="footer__columns">
+        <div>
+          <div class="footer__col-title">Documentation</div>
+          <a class="footer__link" href="#">CMS Docs</a>
+          <a class="footer__link" href="#">Cloud Docs</a>
+          <a class="footer__link" href="#">API Reference</a>
+          <a class="footer__link" href="#">Release Notes</a>
+        </div>
+        <div>
+          <div class="footer__col-title">Resources</div>
+          <a class="footer__link" href="#">Quick Start</a>
+          <a class="footer__link" href="#">Tutorials</a>
+          <a class="footer__link" href="#">Blog</a>
+          <a class="footer__link" href="#">Starters</a>
+        </div>
+        <div>
+          <div class="footer__col-title">Community</div>
+          <a class="footer__link" href="#">GitHub</a>
+          <a class="footer__link" href="#">Discord</a>
+          <a class="footer__link" href="#">Forum</a>
+          <a class="footer__link" href="#">Contribute</a>
+        </div>
+        <div>
+          <div class="footer__col-title">Company</div>
+          <a class="footer__link" href="#">About</a>
+          <a class="footer__link" href="#">Careers</a>
+          <a class="footer__link" href="#">Partners</a>
+          <a class="footer__link" href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">© 2024 Strapi. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+    }
+
+    // Character reveal animation (simulating Pretext)
+    function animateTitle() {
+      const title = document.getElementById('heroTitle');
+      const words = ['Strapi 5', ' ', 'Documentation'];
+      let html = '';
+      let charIndex = 0;
+
+      words.forEach((word, wi) => {
+        if (word === ' ') {
+          html += '<span class="char space" style="animation-delay: ' + (charIndex * 25) + 'ms">&nbsp;</span>';
+          charIndex++;
+          return;
+        }
+        const isGradient = wi === 0;
+        if (isGradient) html += '<span class="gradient">';
+        for (let i = 0; i < word.length; i++) {
+          const ch = word[i];
+          if (ch === ' ') {
+            html += '<span class="char space" style="animation-delay: ' + (charIndex * 25) + 'ms">&nbsp;</span>';
+          } else {
+            html += '<span class="char" style="animation-delay: ' + (charIndex * 25) + 'ms">' + ch + '</span>';
+          }
+          charIndex++;
+        }
+        if (isGradient) html += '</span>';
+      });
+
+      title.innerHTML = html;
+    }
+
+    // Scroll reveal
+    function initScrollReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
+
+    // Init
+    animateTitle();
+    initScrollReveal();
+  </script>
+</body>
+</html>

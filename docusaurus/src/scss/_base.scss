@@ -1,4 +1,4 @@
-/** Base: General Styles */
+/** Base: General Styles — V3 Redesign */
 
 @use './tokens.scss' as *;
 @use './tokens-overrides' as *;
@@ -13,10 +13,29 @@
   color: var(--custom-selection-color, var(--strapi-neutral-0));
 }
 
+/** V3: Film grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.012;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px;
+}
+
+/** V3: Smooth background transition */
+body {
+  background: var(--strapi-surface-0);
+  transition: background var(--strapi-duration-slow) var(--strapi-ease);
+}
+
 main {
   article:first-child:not(.col):not(.custom-doc-card),
   article:first-child:not(.col) + nav {
-    max-width: 608px;
+    max-width: 640px;
     padding-left: 0 !important;
     padding-right: 0 !important;
     margin-left: auto;
@@ -28,39 +47,14 @@ main {
     width: 0;
   }
 
-/**
- * Experimental: Different identity based on URL
- */
-// html[class*="docs-doc-id-dev-docs"] {
-//   .navbar {
-//     background-color: var(--strapi-primary-100);
-//   }
-// }
-
-// html[class*="docs-doc-id-cloud"] {
-//   .navbar {
-//     background-color: var(--strapi-secondary-100);
-//   }
-
-//   .markdown {
-//     a {
-//       color: var(--strapi-secondary-600);
-//     }
-//   }
-
-//   .theme-doc-sidebar-item-link:has(.menu__link--active) {
-//     background-color: var(--strapi-secondary-100);
-//   }
-// }
-
 /** Responsive */
 @include medium-up {
   main {
     article:first-child:not(.col),
     article:first-child:not(.col) + nav {
-      max-width: 672px;
-      padding-left: 32px !important;
-      padding-right: 32px !important;
+      max-width: 720px;
+      padding-left: 40px !important;
+      padding-right: 40px !important;
     }
   }
 
@@ -69,6 +63,36 @@ main {
   }
 }
 
+
+/**
+ * V3: Widen pages that contain ApiCall blocks for 2-column layout
+ * Uses :has() to detect .api-call presence and remove width constraints
+ */
+main:has(.api-call) {
+  article:first-child:not(.col):not(.custom-doc-card),
+  article:first-child:not(.col) + nav {
+    max-width: 100%;
+  }
+}
+
+@include medium-up {
+  main:has(.api-call) {
+    article:first-child:not(.col),
+    article:first-child:not(.col) + nav {
+      max-width: 100%;
+      padding-left: 24px !important;
+      padding-right: 24px !important;
+    }
+  }
+
+  /** Also widen the column and hide TOC when ApiCall blocks are present */
+  [class*="docMainContainer"]:has(.api-call) {
+    [class*="docItemCol"] {
+      max-width: 100% !important;
+      flex-basis: 100% !important;
+    }
+  }
+}
 
 /** Dark mode */
 @include dark {

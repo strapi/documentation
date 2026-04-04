@@ -1,0 +1,84 @@
+/** Component: API 2-Column Layout — V3 Redesign */
+@use '../../scss/_mixins.scss' as *;
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--strapi-spacing-7);
+  margin: var(--strapi-spacing-7) 0;
+
+  /** Break out of article max-width constraint */
+  width: calc(100% + 200px);
+  margin-left: -100px;
+  max-width: none;
+}
+
+.description {
+  min-width: 0;
+
+  h2, h3, h4 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.code {
+  min-width: 0;
+  background: var(--strapi-surface-1);
+  border: 1px solid var(--strapi-border);
+  border-radius: var(--strapi-radius-lg);
+  padding: var(--strapi-spacing-6);
+  position: relative;
+
+  /** Override nested code block styles */
+  .theme-code-block {
+    border: none;
+    margin: 0;
+
+    &[class*="codeBlockContainer"],
+    [class*="codeBlockContainer"] {
+      padding: 0 !important;
+    }
+  }
+
+  pre {
+    margin: 0;
+    border: none;
+  }
+}
+
+/** Responsive: 2-column on desktop */
+@include medium-up {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--strapi-spacing-9);
+    align-items: start;
+  }
+
+  .code {
+    position: sticky;
+    top: calc(var(--ifm-navbar-height) + 24px);
+    max-height: calc(100vh - var(--ifm-navbar-height) - 48px);
+    overflow-y: auto;
+  }
+}
+
+/** Responsive: reset breakout on small screens */
+@include medium-down {
+  .layout {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+/** Dark mode */
+@include dark {
+  .code {
+    background: var(--strapi-surface-2);
+    border-color: var(--strapi-border);
+  }
+}

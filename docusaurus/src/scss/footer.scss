@@ -4,7 +4,19 @@
 .footer {
   position: relative;
   padding: 40px 40px 0 40px;
-  border-top: solid 1px var(--strapi-neutral-200);
+  border-top: solid 1px var(--strapi-border);
+
+  /** V3: Gradient top accent */
+  &::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--strapi-gradient-primary);
+    opacity: 0.5;
+  }
 
   &::before {
     position: absolute;

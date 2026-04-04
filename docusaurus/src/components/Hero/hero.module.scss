@@ -1,55 +1,115 @@
-/** Component: Hero */
+/** Component: Hero — V3 Redesign */
 @use '../../scss/_mixins.scss' as *;
 
-:root {
-  --strapi-hero-py: var(--strapi-spacing-6);
-  --strapi-hero-gap: var(--strapi-spacing-4);
-  --strapi-hero-title-color: #1D1B84;
-  --strapi-hero-title-font-size: var(--strapi-font-size-xl);
-  --strapi-hero-title-line-height: 1.25;
-  --strapi-hero-description-color: #4E6294;
-  --strapi-hero-description-font-size: var(--strapi-font-size-lg);
-  --strapi-hero-description-line-height: 1.25;
-}
-
 .hero {
-  padding-top: var(--strapi-hero-py);
-  padding-bottom: var(--strapi-hero-py);
+  position: relative;
+  padding-top: 96px;
+  padding-bottom: 48px;
   text-align: center;
+  overflow: hidden;
+
+  /** V3: Mesh gradient orbs */
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &::before {
+    width: 500px;
+    height: 500px;
+    background: rgba(73, 69, 255, 0.12);
+    top: -100px;
+    left: -100px;
+    animation: meshFloat 20s ease-in-out infinite;
+  }
+
+  &::after {
+    width: 400px;
+    height: 400px;
+    background: rgba(192, 132, 252, 0.08);
+    bottom: -50px;
+    right: -50px;
+    animation: meshFloat 25s ease-in-out infinite reverse;
+  }
 
   &__title {
-    color: var(--strapi-hero-title-color);
-    font-weight: 700;
-    font-size: var(--strapi-hero-title-font-size);
-    line-height: var(--strapi-hero-title-line-height);
-    letter-spacing: 0.4px;
-    margin: 0 0 var(--strapi-hero-gap);
-    margin-top: 70px;
+    font-family: var(--strapi-font-family-display);
+    color: var(--strapi-fg-1);
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin: 0 0 var(--strapi-spacing-5);
+    position: relative;
+    z-index: 1;
   }
 
   &__description {
-    color: var(--strapi-hero-description-color);
-    font-size: var(--strapi-hero-description-font-size);
-    line-height: var(--strapi-hero-description-line-height);
+    font-family: var(--strapi-font-family-body);
+    color: var(--strapi-fg-3);
+    font-size: 18px;
+    line-height: 1.6;
     margin: 0;
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
 /** Responsive */
 @include medium-up {
-  :root {
-    --strapi-hero-py: 40px;
-    --strapi-hero-title-font-size: 43px;
-    --strapi-hero-title-line-height: 56px;
-    --strapi-hero-description-font-size: 21px;
-    --strapi-hero-description-line-height: 28px;
+  .hero {
+    padding-top: 120px;
+    padding-bottom: 56px;
+
+    &__title {
+      font-size: 56px;
+      line-height: 1.1;
+    }
+
+    &__description {
+      font-size: 20px;
+    }
+
+    &::before {
+      width: 700px;
+      height: 700px;
+    }
+
+    &::after {
+      width: 600px;
+      height: 600px;
+    }
   }
 }
 
 /** Dark mode */
 @include dark {
-  :root {
-    --strapi-hero-title-color: #FFFFFF;
-    --strapi-hero-description-color: #A5A5BA;
+  .hero {
+    &::before {
+      background: rgba(73, 69, 255, 0.15);
+    }
+    &::after {
+      background: rgba(192, 132, 252, 0.1);
+    }
+  }
+}
+
+@keyframes meshFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -20px) scale(1.05);
+  }
+  66% {
+    transform: translate(-20px, 15px) scale(0.95);
   }
 }

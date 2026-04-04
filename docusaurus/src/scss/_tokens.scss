@@ -1,4 +1,4 @@
-/** Core: Strapi Design System Tokens */
+/** Core: Strapi Design System Tokens — V3 Redesign */
 @use './mixins' as *;
 
 :root {
@@ -15,6 +15,10 @@
   --strapi-spacing-9: 3rem;       // 48px
   --strapi-spacing-10: 3.5rem;    // 56px
   --strapi-spacing-11: 3.75rem;   // 64px
+  --strapi-spacing-12: 4rem;      // 64px
+  --strapi-spacing-14: 5rem;      // 80px
+  --strapi-spacing-16: 6rem;      // 96px
+  --strapi-spacing-20: 8rem;      // 128px
 
   /** Fonts */
   --strapi-font-size-tiny: 0.625rem;  // 10px
@@ -27,6 +31,8 @@
   --strapi-font-size-xl: 1.5rem;      // 24px
   --strapi-font-size-xxl: 1.75rem;    // 28px
   --strapi-font-size-xxxl: 2rem;      // 32px
+  --strapi-font-size-display-sm: 2.5rem;  // 40px
+  --strapi-font-size-display: 3.5rem;     // 56px
 
   --strapi-line-height-xs: 1rem;      // 16px
   --strapi-line-height-ssm: 1.125rem; // 18px
@@ -106,6 +112,72 @@
   --strapi-code-purple: #BD93F9;
   --strapi-code-dark-blue: #6272A4;
 
+  /** V3: Accent variants */
+  --strapi-accent: #4945FF;
+  --strapi-accent-light: #7B79FF;
+  --strapi-accent-lighter: #a5a3ff;
+  --strapi-accent-glow: rgba(73, 69, 255, 0.15);
+  --strapi-accent-2: #c084fc;   /* purple */
+  --strapi-accent-3: #22d3ee;   /* cyan */
+  --strapi-accent-4: #34d399;   /* emerald */
+
+  /** V3: Surface hierarchy (light mode) */
+  --strapi-surface-0: #FAFAFA;
+  --strapi-surface-1: #F5F5F7;
+  --strapi-surface-2: #EEEEEF;
+  --strapi-surface-3: #E5E5EA;
+  --strapi-surface-4: #D1D1D6;
+  --strapi-surface-hover: #D1D1D6;
+
+  /** V3: Foreground hierarchy (light mode) */
+  --strapi-fg-1: #0a0a0f;
+  --strapi-fg-2: #3a3a4a;
+  --strapi-fg-3: #6a6a7a;
+  --strapi-fg-4: #9a9aaa;
+  --strapi-fg-5: #c0c0c8;
+
+  /** V3: Borders */
+  --strapi-border: rgba(0, 0, 0, 0.05);
+  --strapi-border-strong: rgba(0, 0, 0, 0.08);
+  --strapi-border-accent: rgba(73, 69, 255, 0.15);
+
+  /** V3: Semantic colors */
+  --strapi-green: #34d399;
+  --strapi-amber: #fbbf24;
+  --strapi-red: #f87171;
+
+  /** V3: Border radius */
+  --strapi-radius-xs: 4px;
+  --strapi-radius-sm: 6px;
+  --strapi-radius-md: 10px;
+  --strapi-radius-lg: 16px;
+  --strapi-radius-xl: 24px;
+  --strapi-radius-full: 9999px;
+
+  /** V3: Shadows */
+  --strapi-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --strapi-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+  --strapi-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --strapi-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --strapi-shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
+  --strapi-shadow-glow: 0 0 40px var(--strapi-accent-glow);
+
+  /** V3: Gradients */
+  --strapi-gradient-primary: linear-gradient(135deg, #4945FF, #7B79FF);
+  --strapi-gradient-accent: linear-gradient(135deg, #4945FF, #c084fc);
+  --strapi-gradient-surface: linear-gradient(180deg, var(--strapi-surface-0), var(--strapi-surface-1));
+
+  /** V3: Easings */
+  --strapi-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --strapi-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --strapi-ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /** V3: Durations */
+  --strapi-duration-fast: 150ms;
+  --strapi-duration-normal: 250ms;
+  --strapi-duration-slow: 400ms;
+  --strapi-duration-slower: 600ms;
+
   /** Components */
   --strapi-input-border-color: var(--strapi-neutral-200);
   --strapi-input-border-width: 1px;
@@ -136,4 +208,37 @@
   /** Dark Color: Primary */
   --strapi-primary-600: #7B79FF;
   --strapi-primary-100: #181826;
+
+  /** V3 Dark: Surfaces — true dark */
+  --strapi-surface-0: #050507;
+  --strapi-surface-1: #0a0a0f;
+  --strapi-surface-2: #111118;
+  --strapi-surface-3: #1a1a24;
+  --strapi-surface-4: #23232f;
+  --strapi-surface-hover: #2a2a38;
+
+  /** V3 Dark: Foregrounds */
+  --strapi-fg-1: #f0f0f5;
+  --strapi-fg-2: #b0b0c0;
+  --strapi-fg-3: #70708a;
+  --strapi-fg-4: #50506a;
+  --strapi-fg-5: #35354a;
+
+  /** V3 Dark: Borders */
+  --strapi-border: rgba(255, 255, 255, 0.05);
+  --strapi-border-strong: rgba(255, 255, 255, 0.08);
+  --strapi-border-accent: rgba(73, 69, 255, 0.2);
+
+  /** V3 Dark: Accent glow (brighter in dark) */
+  --strapi-accent-glow: rgba(73, 69, 255, 0.35);
+
+  /** V3 Dark: Shadows */
+  --strapi-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --strapi-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --strapi-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --strapi-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --strapi-shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+
+  /** V3 Dark: Gradients */
+  --strapi-gradient-surface: linear-gradient(180deg, var(--strapi-surface-0), var(--strapi-surface-1));
 }

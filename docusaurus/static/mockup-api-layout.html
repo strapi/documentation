@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strapi Docs — Redesign Mockup: API 2-Column Layout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --surface-0: #FFFFFF;
+    --surface-1: #FAFAFE;
+    --surface-2: #F4F4FB;
+    --surface-3: #EDEDF7;
+    --neutral-1000: #181826;
+    --neutral-800: #32324D;
+    --neutral-600: #666687;
+    --neutral-500: #8E8EA9;
+    --neutral-400: #A5A5BA;
+    --neutral-300: #C0C0CF;
+    --neutral-200: #DCDCE4;
+    --neutral-150: #EAEAEF;
+    --neutral-100: #F6F6F9;
+    --primary-700: #271FE0;
+    --primary-600: #4945FF;
+    --primary-500: #7B79FF;
+    --primary-200: #D9D8FF;
+    --primary-100: #F0F0FF;
+    --gradient-primary: linear-gradient(135deg, #4945FF 0%, #7B79FF 100%);
+    --shadow-sm: 0 2px 8px rgba(24, 24, 38, 0.06);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --font-display: 'Inter Tight', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --navbar-height: 72px;
+  }
+  [data-theme="dark"] {
+    --surface-0: #181826;
+    --surface-1: #1E1E30;
+    --surface-2: #252539;
+    --surface-3: #2C2C44;
+    --neutral-1000: #FFFFFF;
+    --neutral-800: #EAEAEF;
+    --neutral-600: #A5A5BA;
+    --neutral-500: #8E8EA9;
+    --neutral-400: #666687;
+    --neutral-300: #4A4A6A;
+    --neutral-200: #32324D;
+    --neutral-150: #2C2C44;
+    --neutral-100: #212134;
+    --primary-600: #7B79FF;
+    --primary-100: rgba(73, 69, 255, 0.15);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font-body);
+    background: var(--surface-0);
+    color: var(--neutral-800);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .theme-toggle {
+    position: fixed; top: 20px; right: 20px; z-index: 1000;
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 1px solid var(--neutral-200); background: var(--surface-1);
+    cursor: pointer; font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .mockup-badge {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--neutral-1000); color: var(--surface-0);
+    padding: 8px 20px; border-radius: 9999px; font-size: 12px;
+    font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    z-index: 1000;
+  }
+
+  /* ═══ NAVBAR ═══ */
+  .navbar {
+    height: var(--navbar-height);
+    display: flex; align-items: center; padding: 0 24px;
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.85);
+    border-bottom: 1px solid var(--neutral-150);
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  }
+  [data-theme="dark"] .navbar {
+    background: rgba(24, 24, 38, 0.85);
+    border-bottom-color: var(--neutral-200);
+  }
+  .navbar__logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-display); font-weight: 700; font-size: 17px;
+    color: var(--neutral-1000); text-decoration: none;
+  }
+  .navbar__logo svg { width: 28px; height: 28px; }
+
+  /* ═══ API LAYOUT ═══ */
+  .api-page {
+    margin-top: var(--navbar-height);
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 48px 40px;
+  }
+
+  .api-header {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--neutral-150);
+  }
+  .api-header__breadcrumbs {
+    font-size: 13px; color: var(--neutral-400); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .api-header__breadcrumbs a { color: var(--neutral-500); text-decoration: none; }
+  .api-header h1 {
+    font-family: var(--font-display); font-size: 36px; font-weight: 700;
+    letter-spacing: -0.02em; color: var(--neutral-1000); margin-bottom: 12px;
+  }
+  .api-header p {
+    font-size: 16px; line-height: 1.6; color: var(--neutral-500); max-width: 640px;
+  }
+
+  /* ═══ TWO-COLUMN SECTION ═══ */
+  .api-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 64px;
+    padding-bottom: 64px;
+    border-bottom: 1px solid var(--neutral-150);
+  }
+
+  .api-section__desc {
+    padding-right: 20px;
+  }
+  .api-section__desc h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--neutral-1000);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .api-method {
+    display: inline-flex;
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .api-method--get { background: rgba(80, 200, 120, 0.12); color: #328048; }
+  .api-method--post { background: rgba(73, 69, 255, 0.12); color: var(--primary-600); }
+  .api-method--put { background: rgba(217, 130, 47, 0.12); color: #D9822F; }
+  .api-method--delete { background: rgba(208, 43, 32, 0.12); color: #D02B20; }
+  [data-theme="dark"] .api-method--get { background: rgba(80, 200, 120, 0.15); color: #5CB176; }
+  [data-theme="dark"] .api-method--post { background: rgba(123, 121, 255, 0.15); color: #9B99FF; }
+
+  .api-section__desc p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--neutral-600);
+    margin-bottom: 16px;
+  }
+
+  /* Parameters Table */
+  .param-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  .param-table th {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--neutral-400);
+    text-align: left;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--neutral-150);
+  }
+  .param-table td {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--neutral-150);
+    vertical-align: top;
+    font-size: 14px;
+  }
+  .param-table tr:last-child td { border-bottom: none; }
+  .param-name {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--neutral-1000);
+  }
+  .param-type {
+    font-size: 12px;
+    color: var(--neutral-400);
+    margin-top: 2px;
+  }
+  .param-required {
+    font-size: 11px;
+    font-weight: 600;
+    color: #D02B20;
+    text-transform: uppercase;
+  }
+  .param-optional {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--neutral-400);
+  }
+
+  /* Code Column */
+  .api-section__code {
+    position: sticky;
+    top: calc(var(--navbar-height) + 24px);
+    align-self: start;
+  }
+
+  .code-panel {
+    background: #1a1a2e;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  }
+  [data-theme="dark"] .code-panel {
+    background: #12121f;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  .code-panel__tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 0 4px;
+  }
+  .code-panel__tab {
+    padding: 10px 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .code-panel__tab.active {
+    color: rgba(255,255,255,0.9);
+    border-bottom-color: var(--primary-600);
+  }
+  .code-panel__tab:hover { color: rgba(255,255,255,0.7); }
+
+  .code-panel__header {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .code-panel__method {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  .code-panel__method--get { background: rgba(80, 200, 120, 0.2); color: #50FA7B; }
+  .code-panel__method--post { background: rgba(189, 147, 249, 0.2); color: #BD93F9; }
+  .code-panel__url {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .code-panel pre {
+    padding: 16px;
+    overflow-x: auto;
+    margin: 0;
+  }
+  .code-panel code {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.65;
+    color: #E2E8F0;
+  }
+  .code-panel .keyword { color: #FF79C6; }
+  .code-panel .string { color: #50FA7B; }
+  .code-panel .comment { color: #6272A4; }
+  .code-panel .number { color: #BD93F9; }
+  .code-panel .key { color: #66B7F1; }
+
+  .code-panel__label {
+    padding: 10px 16px 4px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .code-panel + .code-panel {
+    margin-top: 16px;
+  }
+
+  /* Status badge */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .status-badge--200 { background: rgba(80,200,120,0.12); color: #328048; }
+  .status-badge--200::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #50C878; }
+  .status-badge--400 { background: rgba(208,43,32,0.12); color: #D02B20; }
+  .status-badge--400::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #D02B20; }
+
+  @media (max-width: 996px) {
+    .api-section {
+      grid-template-columns: 1fr;
+    }
+    .api-section__code {
+      position: static;
+    }
+  }
+</style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">☀️</button>
+  <div class="mockup-badge">Design Mockup — API 2-Column Layout</div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a class="navbar__logo" href="#">
+      <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="url(#g)"/><path d="M9 12h8v8H9z" fill="#fff" opacity=".9"/><path d="M13 8h10v10H13z" fill="#fff" opacity=".6"/><defs><linearGradient id="g" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#4945FF"/><stop offset="1" stop-color="#7B79FF"/></linearGradient></defs></svg>
+      Strapi Docs
+    </a>
+  </nav>
+
+  <div class="api-page">
+    <!-- HEADER -->
+    <div class="api-header">
+      <div class="api-header__breadcrumbs">
+        <a href="#">Docs</a> <span>/</span>
+        <a href="#">Content APIs</a> <span>/</span>
+        <a href="#">REST API</a> <span>/</span>
+        <span>Endpoints</span>
+      </div>
+      <h1>REST API Endpoints</h1>
+      <p>Use the REST API to interact with your content-types. Strapi automatically generates API endpoints for your content types.</p>
+    </div>
+
+    <!-- SECTION: GET entries -->
+    <div class="api-section">
+      <div class="api-section__desc">
+        <h2>
+          <span class="api-method api-method--get">GET</span>
+          Get entries
+        </h2>
+        <p>Returns entries matching the query filters. Use this endpoint to fetch a list of entries from a collection type, with optional filtering, sorting, and pagination.</p>
+
+        <table class="param-table">
+          <thead>
+            <tr>
+              <th style="width: 40%">Parameter</th>
+              <th style="width: 20%">Status</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="param-name">sort</div>
+                <div class="param-type">string | string[]</div>
+              </td>
+              <td><span class="param-optional">Optional</span></td>
+              <td style="color: var(--neutral-600); font-size: 14px;">Sort the response by field(s)</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="param-name">filters</div>
+                <div class="param-type">object</div>
+              </td>
+              <td><span class="param-optional">Optional</span></td>
+              <td style="color: var(--neutral-600); font-size: 14px;">Filter the results using operators</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="param-name">populate</div>
+                <div class="param-type">string | object</div>
+              </td>
+              <td><span class="param-optional">Optional</span></td>
+              <td style="color: var(--neutral-600); font-size: 14px;">Relations, media fields, components to populate</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="param-name">pagination[page]</div>
+                <div class="param-type">integer</div>
+              </td>
+              <td><span class="param-optional">Optional</span></td>
+              <td style="color: var(--neutral-600); font-size: 14px;">Page number (default: 1)</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="param-name">pagination[pageSize]</div>
+                <div class="param-type">integer</div>
+              </td>
+              <td><span class="param-optional">Optional</span></td>
+              <td style="color: var(--neutral-600); font-size: 14px;">Page size (default: 25, max: 100)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="api-section__code">
+        <div class="code-panel">
+          <div class="code-panel__tabs">
+            <span class="code-panel__tab active">cURL</span>
+            <span class="code-panel__tab">JavaScript</span>
+            <span class="code-panel__tab">Python</span>
+          </div>
+          <div class="code-panel__header">
+            <span class="code-panel__method code-panel__method--get">GET</span>
+            <span class="code-panel__url">/api/restaurants</span>
+          </div>
+          <pre><code><span class="function">curl</span> <span class="string">'http://localhost:1337/api/restaurants'</span> \
+  <span class="keyword">-H</span> <span class="string">'Authorization: Bearer &lt;token&gt;'</span> \
+  <span class="keyword">-H</span> <span class="string">'Content-Type: application/json'</span> \
+  <span class="keyword">--data-urlencode</span> <span class="string">'sort=name:asc'</span> \
+  <span class="keyword">--data-urlencode</span> <span class="string">'pagination[page]=1'</span> \
+  <span class="keyword">--data-urlencode</span> <span class="string">'pagination[pageSize]=25'</span></code></pre>
+        </div>
+
+        <div class="code-panel">
+          <div class="code-panel__label">Response</div>
+          <div class="code-panel__header">
+            <span class="status-badge status-badge--200">200 OK</span>
+          </div>
+          <pre><code>{
+  <span class="key">"data"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="number">1</span>,
+      <span class="key">"documentId"</span>: <span class="string">"a1b2c3d4e5f6"</span>,
+      <span class="key">"name"</span>: <span class="string">"Biscotte Restaurant"</span>,
+      <span class="key">"description"</span>: <span class="string">"A cozy place for brunch"</span>,
+      <span class="key">"createdAt"</span>: <span class="string">"2024-01-15T09:00:00.000Z"</span>,
+      <span class="key">"updatedAt"</span>: <span class="string">"2024-01-15T09:00:00.000Z"</span>
+    }
+  ],
+  <span class="key">"meta"</span>: {
+    <span class="key">"pagination"</span>: {
+      <span class="key">"page"</span>: <span class="number">1</span>,
+      <span class="key">"pageSize"</span>: <span class="number">25</span>,
+      <span class="key">"pageCount"</span>: <span class="number">1</span>,
+      <span class="key">"total"</span>: <span class="number">1</span>
+    }
+  }
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION: POST entry -->
+    <div class="api-section">
+      <div class="api-section__desc">
+        <h2>
+          <span class="api-method api-method--post">POST</span>
+          Create an entry
+        </h2>
+        <p>Creates a new entry for the given collection type. The request body should contain a <code style="background: var(--surface-2); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 13px;">data</code> object with the field values.</p>
+
+        <table class="param-table">
+          <thead>
+            <tr>
+              <th style="width: 40%">Body Parameter</th>
+              <th style="width: 20%">Status</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="param-name">data</div>
+                <div class="param-type">object</div>
+              </td>
+              <td><span class="param-required">Required</span></td>
+              <td style="color: var(--neutral-600); font-size: 14px;">Object containing the fields to create</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="param-name">data.name</div>
+                <div class="param-type">string</div>
+              </td>
+              <td><span class="param-required">Required</span></td>
+              <td style="color: var(--neutral-600); font-size: 14px;">Name of the restaurant</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="param-name">data.description</div>
+                <div class="param-type">string</div>
+              </td>
+              <td><span class="param-optional">Optional</span></td>
+              <td style="color: var(--neutral-600); font-size: 14px;">Description in rich text format</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="api-section__code">
+        <div class="code-panel">
+          <div class="code-panel__tabs">
+            <span class="code-panel__tab active">cURL</span>
+            <span class="code-panel__tab">JavaScript</span>
+            <span class="code-panel__tab">Python</span>
+          </div>
+          <div class="code-panel__header">
+            <span class="code-panel__method code-panel__method--post">POST</span>
+            <span class="code-panel__url">/api/restaurants</span>
+          </div>
+          <pre><code><span class="function">curl</span> <span class="keyword">-X POST</span> <span class="string">'http://localhost:1337/api/restaurants'</span> \
+  <span class="keyword">-H</span> <span class="string">'Authorization: Bearer &lt;token&gt;'</span> \
+  <span class="keyword">-H</span> <span class="string">'Content-Type: application/json'</span> \
+  <span class="keyword">-d</span> <span class="string">'{
+    "data": {
+      "name": "New Restaurant",
+      "description": "A great new place"
+    }
+  }'</span></code></pre>
+        </div>
+
+        <div class="code-panel">
+          <div class="code-panel__label">Response</div>
+          <div class="code-panel__header">
+            <span class="status-badge status-badge--200">200 Created</span>
+          </div>
+          <pre><code>{
+  <span class="key">"data"</span>: {
+    <span class="key">"id"</span>: <span class="number">2</span>,
+    <span class="key">"documentId"</span>: <span class="string">"g7h8i9j0k1l2"</span>,
+    <span class="key">"name"</span>: <span class="string">"New Restaurant"</span>,
+    <span class="key">"description"</span>: <span class="string">"A great new place"</span>,
+    <span class="key">"createdAt"</span>: <span class="string">"2024-03-20T14:30:00.000Z"</span>,
+    <span class="key">"updatedAt"</span>: <span class="string">"2024-03-20T14:30:00.000Z"</span>
+  },
+  <span class="key">"meta"</span>: {}
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION: DELETE -->
+    <div class="api-section" style="border-bottom: none;">
+      <div class="api-section__desc">
+        <h2>
+          <span class="api-method api-method--delete">DELETE</span>
+          Delete an entry
+        </h2>
+        <p>Deletes an entry by its document ID. This action is irreversible and will permanently remove the entry and its associated data.</p>
+
+        <table class="param-table">
+          <thead>
+            <tr>
+              <th style="width: 40%">Path Parameter</th>
+              <th style="width: 20%">Status</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="param-name">documentId</div>
+                <div class="param-type">string</div>
+              </td>
+              <td><span class="param-required">Required</span></td>
+              <td style="color: var(--neutral-600); font-size: 14px;">The document ID of the entry to delete</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="api-section__code">
+        <div class="code-panel">
+          <div class="code-panel__tabs">
+            <span class="code-panel__tab active">cURL</span>
+            <span class="code-panel__tab">JavaScript</span>
+          </div>
+          <div class="code-panel__header">
+            <span class="code-panel__method" style="background: rgba(208,43,32,0.2); color: #FF5555;">DELETE</span>
+            <span class="code-panel__url">/api/restaurants/:documentId</span>
+          </div>
+          <pre><code><span class="function">curl</span> <span class="keyword">-X DELETE</span> \
+  <span class="string">'http://localhost:1337/api/restaurants/a1b2c3d4e5f6'</span> \
+  <span class="keyword">-H</span> <span class="string">'Authorization: Bearer &lt;token&gt;'</span></code></pre>
+        </div>
+
+        <div class="code-panel">
+          <div class="code-panel__label">Response</div>
+          <div class="code-panel__header">
+            <span class="status-badge status-badge--200">200 OK</span>
+          </div>
+          <pre><code>{
+  <span class="key">"data"</span>: {
+    <span class="key">"id"</span>: <span class="number">1</span>,
+    <span class="key">"documentId"</span>: <span class="string">"a1b2c3d4e5f6"</span>,
+    <span class="key">"name"</span>: <span class="string">"Biscotte Restaurant"</span>,
+    <span class="key">"description"</span>: <span class="string">"A cozy place for brunch"</span>
+  },
+  <span class="key">"meta"</span>: {}
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+    }
+  </script>
+</body>
+</html>

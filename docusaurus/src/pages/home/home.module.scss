@@ -1,35 +1,28 @@
-/** Page: Home */
+/** Page: Home — V3 Redesign */
 @use '../../scss/_mixins.scss' as *;
 
 :root {
-  --strapi-home-faded-bg-display: block;
   --strapi-home-gap: var(--strapi-spacing-4);
-  --strapi-home-pb: var(--strapi-spacing-4);
-  --strapi-home-bg-color-start: rgba(215, 214, 255, 1);
-  --strapi-home-bg-color-end: rgba(0, 0, 0, 0);
-  --strapi-home-huitd-margin: 15px 0 -15px;
+  --strapi-home-pb: var(--strapi-spacing-8);
 }
 
 :global(.heroTitle) {
-  color: var(--strapi-neutral-800) !important;
+  color: var(--strapi-fg-1) !important;
   text-align: center;
-  font-feature-settings: 'liga' off, 'clig' off;
-  font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-  font-size: 48px !important;
-  font-style: normal !important;
-  font-weight: 600 !important;
-  line-height: 56px !important;
+  font-family: var(--strapi-font-family-display) !important;
+  font-size: 36px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.03em !important;
 }
 
 :global(.heroDescription) {
-  color: var(--text-neutral-tertiary-neutral-600, #666687) !important;
+  color: var(--strapi-fg-3) !important;
   text-align: center !important;
-  font-feature-settings: 'liga' off, 'clig' off !important;
-  font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  font-family: var(--strapi-font-family-body) !important;
   font-size: 18px !important;
-  font-style: normal !important;
   font-weight: 400 !important;
-  line-height: 32px !important; 
+  line-height: 1.6 !important;
 }
 
 .home {
@@ -42,92 +35,154 @@
   padding-bottom: var(--strapi-home-pb);
   top: calc(var(--ifm-navbar-height) * -1);
   padding-top: var(--ifm-navbar-height);
-
-  &:before {
-    content: " ";
-    display: var(--strapi-home-faded-bg-display);
-    position: absolute;
-    z-index: -1;
-    top: -8px;
-    right: 0;
-    left: 0;
-    height: 448px;
-    opacity: 0.5;
-  }
-
-  &__carousel {
-    margin-bottom: calc(var(--strapi-home-gap) / 2);
-
-    &__cta {
-      margin: 10px 0 5px;
-    }
-  }
+  background: var(--strapi-surface-0);
 
   &__categories {
-    margin-bottom: 28px; // spacing before footer
+    margin-bottom: 28px;
+
     .row {
       --custom-grid-spacing: var(--strapi-spacing-4);
     }
 
     &__item {
       margin: calc(var(--strapi-home-gap) / 2) 0;
-      // border: solid 10px tomato;
-
-      &__links {
-        display: flex;
-        align-items: stretch;
-        justify-content: flex-start;
-        margin: var(--strapi-home-gap) 0 0 0;
-      }
     }
   }
 
-  &__huitd {
-    margin: var(--strapi-home-huitd-margin);
-
-    &__link {
-      background-color: var(--strapi-home-huitd-link-background-color, #F6F6FF);
-      border-radius: 7px;
-      border: 1px solid var(--strapi-home-huitd-link-border-color, var(--strapi-card-border-color));
-      padding: 11px 24px;
-
-      &:hover {
-        --strapi-home-huitd-link-border-color: var(
-          --strapi-home-huitd-link-hover-border-color,
-          var(--strapi-card-hover-border-color)
-        );
-      }
-    }
+  &__quicklinks {
+    padding: 0 var(--strapi-spacing-6);
+    margin-bottom: var(--strapi-spacing-12);
   }
+}
+
+/** V3: Quick links grid */
+.quickLinksGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--strapi-spacing-4);
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.quickLinkItem {
+  display: flex;
+  align-items: center;
+  gap: var(--strapi-spacing-4);
+  padding: var(--strapi-spacing-5) var(--strapi-spacing-6);
+  background: var(--strapi-neutral-0);
+  border: 1px solid var(--strapi-neutral-150);
+  border-radius: var(--strapi-radius-lg);
+  box-shadow: var(--strapi-shadow-xs);
+  text-decoration: none !important;
+  color: var(--strapi-fg-1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--strapi-border-accent);
+    transform: translateY(-2px);
+    box-shadow: var(--strapi-shadow-lg);
+    background: var(--strapi-surface-2);
+    color: var(--strapi-fg-1);
+    text-decoration: none !important;
+  }
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--strapi-radius-md);
+    background: var(--strapi-primary-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+    color: var(--strapi-accent);
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    display: block;
+    font-family: var(--strapi-font-family-display);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--strapi-fg-1);
+    margin-bottom: 2px;
+  }
+
+  &__desc {
+    display: block;
+    font-size: 13px;
+    color: var(--strapi-fg-3);
+    line-height: 1.4;
+  }
+
+  &__arrow {
+    color: var(--strapi-fg-5);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+  }
+
+  &:hover &__arrow {
+    color: var(--strapi-accent);
+    transform: translateX(4px);
+  }
+}
+
+.sectionTitle {
+  font-family: var(--strapi-font-family-display);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--strapi-fg-4);
+  text-align: center;
+  margin-bottom: var(--strapi-spacing-7);
 }
 
 /** Responsive */
 @include medium-up {
   :root {
     --strapi-home-gap: var(--strapi-spacing-8);
-    --strapi-home-huitd-margin: 20px 0 20px;
+  }
+
+  :global(.heroTitle) {
+    font-size: 56px !important;
+    line-height: 1.1 !important;
+  }
+
+  :global(.heroDescription) {
+    font-size: 20px !important;
+  }
+
+  .quickLinksGrid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 /** Dark mode */
 @include dark {
-  --strapi-home-faded-bg-display: none;
-  --strapi-home-pb: var(--strapi-spacing-8);
-  --strapi-home-huitd-link-background-color: var(--strapi-neutral-0);
-
   :global(.heroTitle) {
-    color: var(--strapi-neutral-800) !important;
+    color: var(--strapi-fg-1) !important;
   }
 
   :global(.heroDescription) {
-    color: var(--strapi-neutral-400) !important;
+    color: var(--strapi-fg-3) !important;
   }
 
-  .home {
-    &__huitd {
-      &__link {
-        --ifm-link-hover-color: var(--strapi-neutral-1000) !important;
-      }
+  .quickLinkItem {
+    background: var(--strapi-surface-2);
+
+    &:hover {
+      background: var(--strapi-surface-3);
+    }
+
+    &__icon {
+      background: var(--strapi-surface-3);
     }
   }
 }

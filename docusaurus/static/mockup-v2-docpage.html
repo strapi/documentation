@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strapi Docs — V2 Bold Redesign: Doc Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #4945FF;
+    --accent-light: #7B79FF;
+    --accent-glow: rgba(73, 69, 255, 0.4);
+    --bg: #09090B;
+    --bg-elevated: #111113;
+    --bg-surface: #18181B;
+    --bg-surface-2: #1F1F23;
+    --bg-hover: #27272A;
+    --border: rgba(255,255,255,0.06);
+    --border-strong: rgba(255,255,255,0.1);
+    --text-primary: #FAFAFA;
+    --text-secondary: #A1A1AA;
+    --text-tertiary: #71717A;
+    --text-quaternary: #52525B;
+    --green: #22C55E;
+    --green-dim: rgba(34, 197, 94, 0.12);
+    --amber: #F59E0B;
+    --red: #EF4444;
+    --font-display: 'Outfit', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --nav-h: 64px;
+    --sidebar-w: 260px;
+    --toc-w: 220px;
+  }
+  [data-theme="light"] {
+    --bg: #FAFAFA;
+    --bg-elevated: #FFFFFF;
+    --bg-surface: #F4F4F5;
+    --bg-surface-2: #E4E4E7;
+    --bg-hover: #E4E4E7;
+    --border: rgba(0,0,0,0.06);
+    --border-strong: rgba(0,0,0,0.1);
+    --text-primary: #09090B;
+    --text-secondary: #52525B;
+    --text-tertiary: #71717A;
+    --text-quaternary: #A1A1AA;
+    --accent-glow: rgba(73, 69, 255, 0.15);
+    --green-dim: rgba(34, 197, 94, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: white; }
+
+  .theme-toggle {
+    position: fixed; top: 18px; right: 24px; z-index: 1000;
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-surface); cursor: pointer;
+    font-size: 14px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent-light); }
+
+  /* ═══ NAV ═══ */
+  .nav {
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--border);
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg);
+  }
+  .nav__left { display: flex; align-items: center; gap: 32px; }
+  .nav__logo {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-display); font-weight: 700; font-size: 16px;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav__logo-mark {
+    width: 24px; height: 24px; border-radius: 6px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav__links { display: flex; gap: 2px; }
+  .nav__link {
+    font-size: 13px; font-weight: 500; color: var(--text-tertiary);
+    text-decoration: none; padding: 5px 10px; border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .nav__link:hover { color: var(--text-primary); background: var(--bg-hover); }
+  .nav__link.active { color: var(--text-primary); background: var(--bg-surface); }
+
+  /* ═══ LAYOUT ═══ */
+  .layout {
+    display: flex;
+    margin-top: var(--nav-h);
+    min-height: calc(100vh - var(--nav-h));
+  }
+
+  /* ═══ SIDEBAR ═══ */
+  .sidebar {
+    width: var(--sidebar-w);
+    min-width: var(--sidebar-w);
+    border-right: 1px solid var(--border);
+    height: calc(100vh - var(--nav-h));
+    position: sticky; top: var(--nav-h);
+    overflow-y: auto;
+    transition: all 0.4s var(--ease);
+    display: flex; flex-direction: column;
+    background: var(--bg);
+  }
+  .sidebar.collapsed {
+    width: 52px; min-width: 52px;
+  }
+  .sidebar.collapsed .sidebar__inner { opacity: 0; pointer-events: none; }
+
+  /* Toggle */
+  .sidebar__header {
+    padding: 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    min-height: 48px;
+  }
+  .sidebar__header-label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600;
+    color: var(--text-quaternary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .sidebar__collapse-btn {
+    width: 28px; height: 28px; border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-quaternary);
+    font-size: 14px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .sidebar__collapse-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+  }
+
+  .sidebar__inner {
+    padding: 8px 0;
+    overflow-y: auto;
+    flex: 1;
+    transition: opacity 0.2s;
+  }
+
+  .sidebar__section { padding: 0 8px; margin-bottom: 4px; }
+  .sidebar__section-title {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-quaternary);
+    padding: 12px 10px 6px;
+  }
+  .s-item {
+    display: flex; align-items: center;
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-size: 14px; color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.12s;
+    cursor: pointer;
+    gap: 8px;
+  }
+  .s-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+  .s-item.active {
+    background: rgba(73, 69, 255, 0.1);
+    color: var(--accent-light);
+    font-weight: 600;
+  }
+  .s-item.active::before {
+    content: '';
+    width: 3px; height: 18px;
+    border-radius: 2px;
+    background: var(--accent);
+    margin-left: -10px;
+    margin-right: 7px;
+    flex-shrink: 0;
+  }
+  .s-item--child { padding-left: 26px; font-size: 13px; }
+  .s-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 6px 12px;
+  }
+
+  /* ═══ MAIN ═══ */
+  .main { flex: 1; min-width: 0; display: flex; justify-content: center; }
+  .article {
+    max-width: 740px; width: 100%;
+    padding: 40px 56px 120px;
+  }
+
+  /* Breadcrumbs */
+  .breadcrumbs {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--text-quaternary);
+    margin-bottom: 24px;
+    font-family: var(--font-mono);
+  }
+  .breadcrumbs a { color: var(--text-tertiary); text-decoration: none; }
+  .breadcrumbs a:hover { color: var(--accent-light); }
+
+  /* Doc Header */
+  .doc-header {
+    margin-bottom: 40px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .doc-header h1 {
+    font-family: var(--font-display);
+    font-size: 40px; font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .doc-header__desc {
+    font-size: 17px; line-height: 1.6;
+    color: var(--text-tertiary);
+    max-width: 580px;
+  }
+
+  /* Content */
+  .content h2 {
+    font-family: var(--font-display);
+    font-size: 26px; font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 48px 0 16px;
+    padding-top: 28px;
+    color: var(--text-primary);
+  }
+  .content h2:first-child { margin-top: 0; padding-top: 0; }
+  .content h3 {
+    font-family: var(--font-display);
+    font-size: 18px; font-weight: 600;
+    margin: 32px 0 12px;
+    color: var(--text-primary);
+  }
+  .content p {
+    font-size: 16px; line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+  .content a {
+    color: var(--accent-light);
+    text-decoration: underline;
+    text-decoration-color: rgba(123, 121, 255, 0.3);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s;
+  }
+  .content a:hover { text-decoration-color: var(--accent-light); }
+
+  .content code:not(pre code) {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    color: var(--accent-light);
+  }
+
+  /* Code Block */
+  .code-block {
+    border-radius: 14px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-elevated);
+    margin: 24px 0;
+    overflow: hidden;
+  }
+  .code-block__bar {
+    display: flex; align-items: center;
+    padding: 0 16px;
+    height: 40px;
+    border-bottom: 1px solid var(--border);
+    gap: 8px;
+  }
+  .code-block__dots {
+    display: flex; gap: 6px;
+  }
+  .code-block__dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--bg-hover);
+    border: 1px solid var(--border-strong);
+  }
+  .code-block__file {
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--text-quaternary);
+    margin-left: 4px;
+  }
+  .code-block__copy {
+    margin-left: auto;
+    font-family: var(--font-mono); font-size: 11px;
+    padding: 3px 10px; border-radius: 6px;
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text-quaternary); cursor: pointer;
+    opacity: 0; transition: all 0.2s;
+  }
+  .code-block:hover .code-block__copy { opacity: 1; }
+  .code-block__copy:hover { background: var(--bg-hover); color: var(--text-secondary); }
+  .code-block pre {
+    padding: 16px; margin: 0; overflow-x: auto;
+  }
+  .code-block code {
+    font-family: var(--font-mono);
+    font-size: 13.5px; line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  .kw { color: #c084fc; }
+  .str { color: #22C55E; }
+  .fn { color: var(--accent-light); }
+  .cm { color: var(--text-quaternary); }
+  .num { color: #F59E0B; }
+
+  /* Callout */
+  .callout {
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    padding: 18px 20px;
+    margin: 24px 0;
+    display: flex;
+    gap: 14px;
+    background: var(--bg-elevated);
+    position: relative;
+  }
+  .callout::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 12px; bottom: 12px;
+    width: 3px; border-radius: 3px;
+  }
+  .callout--info { border-color: rgba(73, 69, 255, 0.15); }
+  .callout--info::before { background: var(--accent); }
+  .callout--tip { border-color: rgba(34, 197, 94, 0.15); }
+  .callout--tip::before { background: var(--green); }
+  .callout--warn { border-color: rgba(245, 158, 11, 0.15); }
+  .callout--warn::before { background: var(--amber); }
+  .callout__icon { font-size: 18px; flex-shrink: 0; }
+  .callout__body { flex: 1; }
+  .callout__title {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .callout--info .callout__title { color: var(--accent-light); }
+  .callout--tip .callout__title { color: var(--green); }
+  .callout--warn .callout__title { color: var(--amber); }
+  .callout__text {
+    font-size: 14px; line-height: 1.6;
+    color: var(--text-tertiary);
+  }
+
+  /* Steps */
+  .steps {
+    margin: 24px 0;
+    padding-left: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+  .step {
+    display: flex; gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    counter-increment: step;
+  }
+  .step:last-child { border-bottom: none; }
+  .step__num {
+    width: 32px; height: 32px;
+    border-radius: 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 13px; font-weight: 600;
+    color: var(--accent-light);
+    flex-shrink: 0;
+  }
+  .step__num::after { content: counter(step); }
+  .step__body { flex: 1; }
+  .step__title {
+    font-family: var(--font-display);
+    font-size: 16px; font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .step__desc {
+    font-size: 14px; line-height: 1.65;
+    color: var(--text-tertiary);
+  }
+
+  /* ═══ TOC ═══ */
+  .toc {
+    width: var(--toc-w); min-width: var(--toc-w);
+    height: calc(100vh - var(--nav-h));
+    position: sticky; top: var(--nav-h);
+    padding: 28px 16px;
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    transition: all 0.4s var(--ease);
+  }
+  .toc.collapsed { width: 52px; min-width: 52px; }
+  .toc.collapsed .toc__inner { opacity: 0; pointer-events: none; }
+
+  .toc__header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .toc__label {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-quaternary);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .toc__toggle {
+    width: 24px; height: 24px; border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-quaternary); font-size: 12px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .toc__toggle:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+  .toc__inner { transition: opacity 0.2s; }
+
+  .toc__list {
+    list-style: none;
+    position: relative;
+    padding-left: 12px;
+    border-left: 1px solid var(--border);
+  }
+  .toc__item {
+    display: block;
+    padding: 5px 0 5px 12px;
+    font-size: 13px;
+    color: var(--text-quaternary);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.15s;
+    position: relative;
+  }
+  .toc__item::before {
+    content: '';
+    position: absolute;
+    left: -1px; top: 8px;
+    width: 1px; height: 14px;
+    background: transparent;
+    transition: background 0.2s;
+  }
+  .toc__item:hover { color: var(--text-secondary); }
+  .toc__item.active {
+    color: var(--accent-light);
+    font-weight: 500;
+  }
+  .toc__item.active::before { background: var(--accent); }
+  .toc__item--child { padding-left: 24px; font-size: 12px; }
+
+  /* ═══ BOTTOM NAV ═══ */
+  .bottom-nav {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+  .bottom-nav__item {
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    text-decoration: none; color: inherit;
+    transition: all 0.2s var(--ease);
+    cursor: pointer;
+  }
+  .bottom-nav__item:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-surface);
+  }
+  .bottom-nav__label {
+    font-family: var(--font-mono);
+    font-size: 11px; color: var(--text-quaternary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .bottom-nav__title {
+    font-family: var(--font-display);
+    font-size: 15px; font-weight: 600;
+    color: var(--text-primary);
+  }
+  .bottom-nav__item--next { text-align: right; }
+</style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">☀️</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav__left">
+      <a class="nav__logo" href="#">
+        <div class="nav__logo-mark">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="5" width="7" height="7" rx="1" fill="white" opacity="0.9"/>
+            <rect x="5" y="2" width="7" height="7" rx="1" fill="white" opacity="0.5"/>
+          </svg>
+        </div>
+        strapi <span style="color: var(--text-quaternary); font-weight: 400;">docs</span>
+      </a>
+      <div class="nav__links">
+        <a class="nav__link active" href="#">CMS</a>
+        <a class="nav__link" href="#">Cloud</a>
+        <a class="nav__link" href="#">API</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <span class="sidebar__header-label">Navigation</span>
+        <button class="sidebar__collapse-btn" onclick="toggleSidebar()">◀</button>
+      </div>
+      <div class="sidebar__inner">
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Getting Started</div>
+          <a class="s-item" href="#">Introduction</a>
+          <a class="s-item active" href="#">Quick Start</a>
+          <a class="s-item" href="#">Installation</a>
+          <a class="s-item" href="#">Project Structure</a>
+          <a class="s-item" href="#">Deployment</a>
+        </div>
+        <div class="s-divider"></div>
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Content APIs</div>
+          <a class="s-item" href="#">REST API</a>
+          <a class="s-item s-item--child" href="#">Endpoints</a>
+          <a class="s-item s-item--child" href="#">Filtering</a>
+          <a class="s-item s-item--child" href="#">Population</a>
+          <a class="s-item" href="#">GraphQL API</a>
+          <a class="s-item" href="#">Document Service</a>
+        </div>
+        <div class="s-divider"></div>
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Configuration</div>
+          <a class="s-item" href="#">Database</a>
+          <a class="s-item" href="#">Server</a>
+          <a class="s-item" href="#">Middlewares</a>
+          <a class="s-item" href="#">Plugins</a>
+          <a class="s-item" href="#">TypeScript</a>
+        </div>
+        <div class="s-divider"></div>
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Customization</div>
+          <a class="s-item" href="#">Controllers</a>
+          <a class="s-item" href="#">Services</a>
+          <a class="s-item" href="#">Routes</a>
+          <a class="s-item" href="#">Policies</a>
+          <a class="s-item" href="#">Middlewares</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CONTENT -->
+    <div class="main">
+      <article class="article">
+        <div class="breadcrumbs">
+          <a href="#">docs</a> <span>/</span>
+          <a href="#">getting-started</a> <span>/</span>
+          <span style="color: var(--text-secondary);">quick-start</span>
+        </div>
+
+        <div class="doc-header">
+          <h1>Quick Start</h1>
+          <p class="doc-header__desc">Get a full-stack Strapi application running locally in under 5 minutes.</p>
+        </div>
+
+        <div class="content">
+          <div class="callout callout--tip">
+            <div class="callout__icon">💡</div>
+            <div class="callout__body">
+              <div class="callout__title">Prerequisites</div>
+              <div class="callout__text">Node.js ≥ 18.15 and npm ≥ 6. We recommend the latest LTS release.</div>
+            </div>
+          </div>
+
+          <h2>Create your project</h2>
+          <p>Scaffold a new Strapi application with a single command. The <code>--quickstart</code> flag uses SQLite so you don't need to configure a database.</p>
+
+          <div class="code-block">
+            <div class="code-block__bar">
+              <div class="code-block__dots">
+                <span class="code-block__dot"></span>
+                <span class="code-block__dot"></span>
+                <span class="code-block__dot"></span>
+              </div>
+              <span class="code-block__file">terminal</span>
+              <button class="code-block__copy">copy</button>
+            </div>
+            <pre><code><span class="cm">$</span> <span class="fn">npx</span> create-strapi@latest my-project <span class="kw">--quickstart</span></code></pre>
+          </div>
+
+          <p>This installs dependencies and starts the dev server on <a href="#">localhost:1337</a>. The admin panel opens automatically in your browser.</p>
+
+          <div class="callout callout--info">
+            <div class="callout__icon">ℹ️</div>
+            <div class="callout__body">
+              <div class="callout__title">First user is Super Admin</div>
+              <div class="callout__text">The first account you create has full access to every feature and setting in Strapi.</div>
+            </div>
+          </div>
+
+          <h2>Define your content</h2>
+          <p>Open the <strong>Content-Type Builder</strong> from the left menu. Create a new <em>Collection Type</em> — for example, <code>Restaurant</code>.</p>
+
+          <div class="code-block">
+            <div class="code-block__bar">
+              <div class="code-block__dots">
+                <span class="code-block__dot"></span>
+                <span class="code-block__dot"></span>
+                <span class="code-block__dot"></span>
+              </div>
+              <span class="code-block__file">schema.json</span>
+              <button class="code-block__copy">copy</button>
+            </div>
+            <pre><code>{
+  <span class="str">"kind"</span>: <span class="str">"collectionType"</span>,
+  <span class="str">"info"</span>: {
+    <span class="str">"singularName"</span>: <span class="str">"restaurant"</span>,
+    <span class="str">"pluralName"</span>: <span class="str">"restaurants"</span>,
+    <span class="str">"displayName"</span>: <span class="str">"Restaurant"</span>
+  },
+  <span class="str">"attributes"</span>: {
+    <span class="str">"name"</span>:        { <span class="str">"type"</span>: <span class="str">"string"</span> },
+    <span class="str">"description"</span>: { <span class="str">"type"</span>: <span class="str">"richtext"</span> },
+    <span class="str">"rating"</span>:      { <span class="str">"type"</span>: <span class="str">"integer"</span> }
+  }
+}</code></pre>
+          </div>
+
+          <h2>Query your API</h2>
+          <p>Strapi auto-generates REST and GraphQL endpoints for every content type. No configuration needed — just publish an entry and fetch it.</p>
+
+          <div class="callout callout--warn">
+            <div class="callout__icon">⚠️</div>
+            <div class="callout__body">
+              <div class="callout__title">Permissions</div>
+              <div class="callout__text">By default, APIs are locked down. Go to Settings → Roles → Public and enable <code>find</code> / <code>findOne</code> for your content type.</div>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-block__bar">
+              <div class="code-block__dots">
+                <span class="code-block__dot"></span>
+                <span class="code-block__dot"></span>
+                <span class="code-block__dot"></span>
+              </div>
+              <span class="code-block__file">terminal</span>
+              <button class="code-block__copy">copy</button>
+            </div>
+            <pre><code><span class="cm">$</span> <span class="fn">curl</span> http://localhost:<span class="num">1337</span>/api/restaurants
+
+{
+  <span class="str">"data"</span>: [
+    {
+      <span class="str">"id"</span>: <span class="num">1</span>,
+      <span class="str">"name"</span>: <span class="str">"Biscotte"</span>,
+      <span class="str">"description"</span>: <span class="str">"A cozy place."</span>,
+      <span class="str">"rating"</span>: <span class="num">5</span>
+    }
+  ],
+  <span class="str">"meta"</span>: { <span class="str">"pagination"</span>: { <span class="str">"total"</span>: <span class="num">1</span> } }
+}</code></pre>
+          </div>
+
+          <h3>What's next?</h3>
+
+          <ol class="steps">
+            <li class="step">
+              <div class="step__num"></div>
+              <div class="step__body">
+                <div class="step__title">Explore the admin panel</div>
+                <div class="step__desc">Create content entries, set up roles and permissions, manage media files.</div>
+              </div>
+            </li>
+            <li class="step">
+              <div class="step__num"></div>
+              <div class="step__body">
+                <div class="step__title">Connect a frontend</div>
+                <div class="step__desc">Use the REST or GraphQL API with Next.js, Nuxt, Gatsby, or any framework.</div>
+              </div>
+            </li>
+            <li class="step">
+              <div class="step__num"></div>
+              <div class="step__body">
+                <div class="step__title">Deploy to Strapi Cloud</div>
+                <div class="step__desc">One command to push your project to production with managed hosting.</div>
+              </div>
+            </li>
+          </ol>
+
+          <div class="bottom-nav">
+            <a class="bottom-nav__item" href="#">
+              <div class="bottom-nav__label">← Previous</div>
+              <div class="bottom-nav__title">Introduction</div>
+            </a>
+            <a class="bottom-nav__item bottom-nav__item--next" href="#">
+              <div class="bottom-nav__label">Next →</div>
+              <div class="bottom-nav__title">Installation</div>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- TOC -->
+    <aside class="toc" id="toc">
+      <div class="toc__header">
+        <span class="toc__label">On this page</span>
+        <button class="toc__toggle" onclick="toggleToc()">▶</button>
+      </div>
+      <div class="toc__inner">
+        <div class="toc__list">
+          <a class="toc__item active" onclick="activate(this)">Create your project</a>
+          <a class="toc__item" onclick="activate(this)">Define your content</a>
+          <a class="toc__item" onclick="activate(this)">Query your API</a>
+          <a class="toc__item toc__item--child" onclick="activate(this)">What's next?</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+    }
+    function toggleSidebar() {
+      const sb = document.getElementById('sidebar');
+      sb.classList.toggle('collapsed');
+      sb.querySelector('.sidebar__collapse-btn').textContent = sb.classList.contains('collapsed') ? '▶' : '◀';
+    }
+    function toggleToc() {
+      const t = document.getElementById('toc');
+      t.classList.toggle('collapsed');
+      t.querySelector('.toc__toggle').textContent = t.classList.contains('collapsed') ? '◀' : '▶';
+    }
+    function activate(el) {
+      document.querySelectorAll('.toc__item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+    }
+  </script>
+</body>
+</html>

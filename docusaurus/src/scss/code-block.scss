@@ -19,13 +19,13 @@
   --custom-code-block-plain-color: var(--strapi-neutral-800);
   --custom-code-block-font-size: var(--strapi-font-size-sm);
   --custom-code-block-line-height: var(--strapi-line-height-sm);
-  --custom-code-block-title-font-family: font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --custom-code-block-border-color: var(--strapi-neutral-200);
+  --custom-code-block-title-font-family: var(--strapi-font-family-body);
+  --custom-code-block-border-color: var(--strapi-border-strong);
 }
 
 pre {
-  --ifm-code-border-radius: 6px;
-  --ifm-pre-border-radius: 6px;
+  --ifm-code-border-radius: var(--strapi-radius-md);
+  --ifm-pre-border-radius: var(--strapi-radius-md);
 
   background: var(--custom-code-block-background-color);
   color: var(--custom-code-block-color);
@@ -55,12 +55,18 @@ pre,
 
   --prism-background-color: var(--custom-code-block-background-color) !important;
   --prism-color: var(--custom-code-block-color);
-  border-radius: var(--strapi-spacing-1);
+  border-radius: var(--strapi-radius-md);
   box-shadow: none;
 }
 
 .theme-code-block {
   border: solid 1px var(--custom-code-block-border-color);
+  transition: border-color var(--strapi-duration-fast) var(--strapi-ease),
+              box-shadow var(--strapi-duration-fast) var(--strapi-ease);
+
+  &:hover {
+    border-color: var(--strapi-border-accent);
+  }
 
   &-highlighted-line,
   &-highlighted-line [class*="codeLineNumber"] {

@@ -1,0 +1,48 @@
+/** V3: Collapsible Table of Contents */
+
+.wrapper {
+  position: relative;
+  width: 240px;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: width;
+}
+
+.collapsed {
+  width: 48px;
+
+  .content {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.content {
+  opacity: 1;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toggle {
+  position: absolute;
+  left: -16px;
+  top: 70px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--strapi-border-strong);
+  background: var(--strapi-surface-1);
+  color: var(--strapi-fg-3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(12px);
+
+  &:hover {
+    border-color: var(--strapi-accent);
+    color: var(--strapi-accent);
+    box-shadow: 0 0 20px var(--strapi-accent-glow);
+    transform: scale(1.1);
+  }
+}

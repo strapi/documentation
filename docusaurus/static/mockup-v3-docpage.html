@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strapi Docs — V3 Ultra Bold: Doc Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #4945FF;
+    --accent-light: #7B79FF;
+    --accent-lighter: #a5a3ff;
+    --accent-2: #c084fc;
+    --accent-3: #22d3ee;
+    --accent-4: #34d399;
+    --bg-0: #050507;
+    --bg-1: #0a0a0f;
+    --bg-2: #111118;
+    --bg-3: #1a1a24;
+    --bg-4: #23232f;
+    --bg-hover: #2a2a38;
+    --border: rgba(255,255,255,0.05);
+    --border-strong: rgba(255,255,255,0.08);
+    --fg-1: #f0f0f5;
+    --fg-2: #b0b0c0;
+    --fg-3: #70708a;
+    --fg-4: #50506a;
+    --fg-5: #35354a;
+    --green: #34d399;
+    --amber: #fbbf24;
+    --red: #f87171;
+    --font-display: 'Sora', sans-serif;
+    --font-body: 'Instrument Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --nav-h: 56px;
+    --sidebar-w: 256px;
+    --toc-w: 210px;
+  }
+  [data-theme="light"] {
+    --bg-0: #FAFAFA; --bg-1: #F5F5F7; --bg-2: #EEEEEF;
+    --bg-3: #E5E5EA; --bg-4: #D1D1D6; --bg-hover: #D1D1D6;
+    --border: rgba(0,0,0,0.05); --border-strong: rgba(0,0,0,0.08);
+    --fg-1: #0a0a0f; --fg-2: #3a3a4a; --fg-3: #6a6a7a;
+    --fg-4: #9a9aaa; --fg-5: #c0c0c8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg-0);
+    color: var(--fg-1);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: white; }
+
+  /* Grain */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 9999;
+    pointer-events: none; opacity: 0.012;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px;
+  }
+
+  .theme-toggle {
+    position: fixed; top: 16px; right: 20px; z-index: 10000;
+    width: 36px; height: 36px; border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-2); cursor: pointer;
+    font-size: 14px; display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(20px);
+    transition: all 0.3s var(--ease);
+  }
+  .theme-toggle:hover { border-color: var(--accent); box-shadow: 0 0 24px rgba(73,69,255,0.2); }
+
+  /* ═══ NAV ═══ */
+  .nav {
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(5,5,7,0.6);
+    backdrop-filter: blur(24px) saturate(1.5);
+    border-bottom: 1px solid var(--border);
+  }
+  [data-theme="light"] .nav { background: rgba(250,250,250,0.7); }
+  .nav__left { display: flex; align-items: center; gap: 24px; }
+  .nav__logo {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-display); font-weight: 700; font-size: 15px;
+    color: var(--fg-1); text-decoration: none; letter-spacing: -0.03em;
+  }
+  .nav__logo-icon {
+    width: 24px; height: 24px; border-radius: 7px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .nav__logo-icon::after {
+    content: '';
+    position: absolute; width: 200%; height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    animation: logoShimmer 4s ease-in-out infinite;
+    transform: rotate(45deg);
+  }
+  @keyframes logoShimmer {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    50%, 100% { transform: translateX(100%) rotate(45deg); }
+  }
+  .nav__sep { width: 1px; height: 20px; background: var(--border-strong); }
+  .nav__crumbs {
+    font-family: var(--font-mono);
+    font-size: 12px; color: var(--fg-4);
+    display: flex; gap: 6px; align-items: center;
+  }
+  .nav__crumbs a { color: var(--fg-3); text-decoration: none; transition: color 0.15s; }
+  .nav__crumbs a:hover { color: var(--accent-light); }
+  .nav__crumbs .current { color: var(--fg-2); }
+
+  /* ═══ LAYOUT ═══ */
+  .layout {
+    display: flex;
+    margin-top: var(--nav-h);
+    min-height: calc(100vh - var(--nav-h));
+  }
+
+  /* ═══ SIDEBAR ═══ */
+  .sidebar {
+    width: var(--sidebar-w); min-width: var(--sidebar-w);
+    border-right: 1px solid var(--border);
+    height: calc(100vh - var(--nav-h));
+    position: sticky; top: var(--nav-h);
+    overflow-y: auto; overflow-x: hidden;
+    background: var(--bg-0);
+    transition: width 0.5s var(--ease), min-width 0.5s var(--ease);
+    display: flex; flex-direction: column;
+  }
+  .sidebar.collapsed {
+    width: 52px; min-width: 52px;
+  }
+  .sidebar.collapsed .sidebar__inner { opacity: 0; pointer-events: none; }
+  .sidebar.collapsed .sidebar__toggle-icon { transform: rotate(180deg); }
+
+  .sidebar__top {
+    padding: 12px 10px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    gap: 8px;
+  }
+  .sidebar__product {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 10px; border-radius: 8px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 600;
+    color: var(--fg-2);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap; overflow: hidden;
+  }
+  .sidebar__product:hover { background: var(--bg-3); border-color: var(--border-strong); }
+  .sidebar__product-dot {
+    width: 8px; height: 8px; border-radius: 3px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .sidebar__toggle {
+    width: 28px; height: 28px; border-radius: 7px;
+    border: 1px solid var(--border);
+    background: transparent; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--fg-4); font-size: 12px;
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .sidebar__toggle:hover { background: var(--bg-3); color: var(--fg-1); }
+  .sidebar__toggle-icon { transition: transform 0.3s var(--ease); }
+
+  .sidebar__inner {
+    padding: 8px 0; flex: 1;
+    overflow-y: auto;
+    transition: opacity 0.25s var(--ease);
+  }
+
+  .sidebar__section { padding: 0 8px; margin-bottom: 2px; }
+  .sidebar__section-title {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-5);
+    padding: 16px 10px 6px;
+  }
+  .s-item {
+    display: flex; align-items: center;
+    padding: 6px 10px;
+    border-radius: 7px;
+    font-size: 13px; color: var(--fg-3);
+    text-decoration: none;
+    transition: all 0.12s;
+    cursor: pointer;
+    position: relative;
+  }
+  .s-item:hover { background: var(--bg-3); color: var(--fg-1); }
+  .s-item.active {
+    background: rgba(73, 69, 255, 0.08);
+    color: var(--accent-light);
+    font-weight: 600;
+  }
+  /* Animated left bar on active */
+  .s-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 6px; bottom: 6px;
+    width: 2.5px; border-radius: 2px;
+    background: var(--accent);
+    animation: barSlide 0.3s var(--ease);
+  }
+  @keyframes barSlide {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
+  .s-item--child { padding-left: 24px; font-size: 12px; }
+  .s-item--new::after {
+    content: 'new';
+    font-family: var(--font-mono);
+    font-size: 9px; font-weight: 700;
+    padding: 1px 5px; border-radius: 4px;
+    background: rgba(52, 211, 153, 0.12);
+    color: var(--green);
+    margin-left: auto;
+    text-transform: uppercase;
+  }
+  .s-divider { height: 1px; background: var(--border); margin: 4px 12px; }
+
+  /* ═══ MAIN ═══ */
+  .main { flex: 1; min-width: 0; display: flex; justify-content: center; }
+  .article {
+    max-width: 720px; width: 100%;
+    padding: 48px 56px 140px;
+  }
+
+  /* ═══ DOC HEADER — EXPRESSIVE ═══ */
+  .doc-header {
+    margin-bottom: 48px;
+    position: relative;
+  }
+  /* Gradient accent line */
+  .doc-header::before {
+    content: '';
+    position: absolute;
+    top: -48px; left: 0;
+    width: 80px; height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    animation: lineExpand 0.8s var(--ease) 0.2s both;
+  }
+  @keyframes lineExpand {
+    from { width: 0; opacity: 0; }
+    to { width: 80px; opacity: 1; }
+  }
+  .doc-header h1 {
+    font-family: var(--font-display);
+    font-size: 42px; font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin-bottom: 14px;
+    animation: fadeUp 0.6s var(--ease) both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .doc-header__desc {
+    font-size: 17px; line-height: 1.6;
+    color: var(--fg-3);
+    max-width: 560px;
+    animation: fadeUp 0.6s var(--ease) 0.1s both;
+  }
+  .doc-header__meta {
+    display: flex; gap: 12px; margin-top: 20px;
+    animation: fadeUp 0.6s var(--ease) 0.2s both;
+  }
+  .doc-header__tag {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500;
+    padding: 4px 10px; border-radius: 6px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    color: var(--fg-4);
+  }
+
+  /* ═══ CONTENT ═══ */
+  .content h2 {
+    font-family: var(--font-display);
+    font-size: 26px; font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 56px 0 16px;
+    padding-top: 32px;
+    color: var(--fg-1);
+    position: relative;
+  }
+  /* Hover anchor */
+  .content h2::before {
+    content: '#';
+    position: absolute;
+    left: -24px;
+    color: var(--fg-5);
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-weight: 400;
+  }
+  .content h2:hover::before { opacity: 1; }
+
+  .content h3 {
+    font-family: var(--font-display);
+    font-size: 18px; font-weight: 600;
+    margin: 36px 0 12px;
+    color: var(--fg-1);
+  }
+  .content p {
+    font-size: 16px; line-height: 1.8;
+    color: var(--fg-2);
+    margin-bottom: 20px;
+  }
+  .content strong { color: var(--fg-1); font-weight: 600; }
+  .content em { color: var(--fg-2); }
+  .content a {
+    color: var(--accent-light);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(123,121,255,0.2);
+    transition: border-color 0.2s;
+  }
+  .content a:hover { border-color: var(--accent-light); }
+  .content code:not(pre code) {
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    color: var(--accent-lighter);
+  }
+  .content ul, .content ol {
+    padding-left: 20px;
+    margin-bottom: 20px;
+  }
+  .content li {
+    font-size: 15px; line-height: 1.75;
+    color: var(--fg-2);
+    margin-bottom: 6px;
+  }
+  .content li::marker {
+    color: var(--fg-5);
+  }
+
+  /* ═══ CODE BLOCK ═══ */
+  .code-block {
+    border-radius: 14px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-1);
+    margin: 24px 0;
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+  .code-block:hover { border-color: rgba(73,69,255,0.15); }
+
+  .code-block__bar {
+    display: flex; align-items: center;
+    padding: 0 14px; height: 38px;
+    border-bottom: 1px solid var(--border);
+    gap: 8px;
+  }
+  .code-block__dots { display: flex; gap: 5px; }
+  .code-block__dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--bg-4);
+    border: 1px solid var(--border-strong);
+    transition: all 0.3s;
+  }
+  .code-block:hover .code-block__dot:nth-child(1) { background: var(--red); border-color: var(--red); }
+  .code-block:hover .code-block__dot:nth-child(2) { background: var(--amber); border-color: var(--amber); }
+  .code-block:hover .code-block__dot:nth-child(3) { background: var(--green); border-color: var(--green); }
+  .code-block__file {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--fg-5); margin-left: 4px;
+  }
+  .code-block__lang {
+    margin-left: auto;
+    font-family: var(--font-mono); font-size: 10px;
+    padding: 2px 7px; border-radius: 4px;
+    background: var(--bg-3);
+    color: var(--fg-5);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .code-block__copy {
+    font-family: var(--font-mono); font-size: 10px;
+    padding: 3px 10px; border-radius: 6px;
+    background: transparent; border: 1px solid var(--border);
+    color: var(--fg-5); cursor: pointer;
+    opacity: 0; transition: all 0.2s;
+    margin-left: 6px;
+  }
+  .code-block:hover .code-block__copy { opacity: 1; }
+  .code-block__copy:hover { background: var(--bg-hover); color: var(--fg-2); border-color: var(--border-strong); }
+  .code-block pre {
+    padding: 16px; margin: 0; overflow-x: auto;
+  }
+  .code-block code {
+    font-family: var(--font-mono);
+    font-size: 13px; line-height: 1.7;
+    color: var(--fg-2);
+  }
+  .kw { color: var(--accent-2); }
+  .str { color: var(--green); }
+  .fn { color: var(--accent-light); }
+  .cm { color: var(--fg-5); }
+  .num { color: var(--amber); }
+  .key { color: #60a5fa; }
+  .cursor {
+    display: inline-block; width: 2px; height: 14px;
+    background: var(--accent-light); vertical-align: middle; margin-left: 1px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* ═══ CALLOUT ═══ */
+  .callout {
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    padding: 18px 20px;
+    margin: 28px 0;
+    display: flex; gap: 14px;
+    background: var(--bg-1);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  /* Animated gradient accent on left */
+  .callout::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+  .callout--info { border-color: rgba(73,69,255,0.1); }
+  .callout--info::before {
+    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  }
+  .callout--info:hover { border-color: rgba(73,69,255,0.2); }
+  .callout--tip { border-color: rgba(52,211,153,0.1); }
+  .callout--tip::before { background: linear-gradient(180deg, var(--green), var(--accent-3)); }
+  .callout--tip:hover { border-color: rgba(52,211,153,0.2); }
+  .callout--warn { border-color: rgba(251,191,36,0.1); }
+  .callout--warn::before { background: linear-gradient(180deg, var(--amber), #f97316); }
+  .callout--warn:hover { border-color: rgba(251,191,36,0.2); }
+  .callout--danger { border-color: rgba(248,113,113,0.1); }
+  .callout--danger::before { background: linear-gradient(180deg, var(--red), #ec4899); }
+
+  .callout__icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+  .callout__body { flex: 1; }
+  .callout__title {
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .callout--info .callout__title { color: var(--accent-light); }
+  .callout--tip .callout__title { color: var(--green); }
+  .callout--warn .callout__title { color: var(--amber); }
+  .callout--danger .callout__title { color: var(--red); }
+  .callout__text {
+    font-size: 14px; line-height: 1.6;
+    color: var(--fg-3);
+  }
+
+  /* ═══ STEPS ═══ */
+  .steps { margin: 32px 0; padding: 0; list-style: none; counter-reset: step; }
+  .step {
+    display: flex; gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    counter-increment: step;
+    transition: background 0.2s;
+  }
+  .step:last-child { border-bottom: none; }
+  .step:hover { background: var(--bg-1); margin: 0 -12px; padding: 20px 12px; border-radius: 12px; }
+  .step__num {
+    width: 30px; height: 30px; border-radius: 10px;
+    background: var(--bg-2); border: 1px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+    color: var(--accent-light); flex-shrink: 0;
+    transition: all 0.3s var(--ease);
+  }
+  .step:hover .step__num {
+    background: rgba(73,69,255,0.1);
+    border-color: rgba(73,69,255,0.2);
+    box-shadow: 0 0 16px rgba(73,69,255,0.15);
+  }
+  .step__num::after { content: counter(step); }
+  .step__body { flex: 1; }
+  .step__title {
+    font-family: var(--font-display);
+    font-size: 15px; font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .step__desc {
+    font-size: 14px; line-height: 1.6;
+    color: var(--fg-3);
+  }
+
+  /* ═══ BOTTOM NAV ═══ */
+  .bottom-nav {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-top: 64px; padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  .bottom-nav__item {
+    padding: 18px 20px; border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--bg-1);
+    text-decoration: none; color: inherit;
+    transition: all 0.3s var(--ease);
+    cursor: pointer; position: relative; overflow: hidden;
+  }
+  .bottom-nav__item::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 100%, rgba(73,69,255,0.04), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .bottom-nav__item:hover::before { opacity: 1; }
+  .bottom-nav__item:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+  .bottom-nav__label {
+    font-family: var(--font-mono);
+    font-size: 10px; color: var(--fg-5);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 6px;
+    position: relative; z-index: 1;
+  }
+  .bottom-nav__title {
+    font-family: var(--font-display);
+    font-size: 15px; font-weight: 600;
+    color: var(--fg-1); position: relative; z-index: 1;
+    letter-spacing: -0.01em;
+  }
+  .bottom-nav__item--next { text-align: right; }
+
+  /* ═══ TOC ═══ */
+  .toc {
+    width: var(--toc-w); min-width: var(--toc-w);
+    height: calc(100vh - var(--nav-h));
+    position: sticky; top: var(--nav-h);
+    padding: 24px 14px;
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    transition: all 0.5s var(--ease);
+  }
+  .toc.collapsed { width: 52px; min-width: 52px; }
+  .toc.collapsed .toc__inner { opacity: 0; pointer-events: none; }
+
+  .toc__top {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .toc__label {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-5);
+  }
+  .toc__toggle {
+    width: 24px; height: 24px; border-radius: 6px;
+    border: 1px solid var(--border); background: transparent;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: var(--fg-5); font-size: 10px;
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .toc__toggle:hover { background: var(--bg-3); color: var(--fg-2); }
+  .toc__inner { transition: opacity 0.25s; }
+
+  .toc__list {
+    list-style: none;
+    padding-left: 12px;
+    border-left: 1px solid var(--border);
+    position: relative;
+  }
+  /* Animated indicator */
+  .toc__indicator {
+    position: absolute;
+    left: -1px;
+    width: 2px; height: 20px;
+    background: var(--accent);
+    border-radius: 1px;
+    transition: top 0.35s var(--ease), height 0.2s;
+    box-shadow: 0 0 8px rgba(73,69,255,0.4);
+  }
+  .toc__item {
+    display: block;
+    padding: 5px 0 5px 12px;
+    font-size: 12px; color: var(--fg-4);
+    text-decoration: none; cursor: pointer;
+    transition: color 0.15s;
+  }
+  .toc__item:hover { color: var(--fg-2); }
+  .toc__item.active { color: var(--accent-light); font-weight: 500; }
+  .toc__item--child { padding-left: 22px; font-size: 11px; }
+
+  /* Reading progress */
+  .progress {
+    position: fixed; top: var(--nav-h); left: 0; right: 0;
+    height: 2px; z-index: 99;
+    background: transparent;
+  }
+  .progress__bar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+    transition: width 0.15s;
+    box-shadow: 0 0 12px var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">☀️</button>
+
+  <!-- READING PROGRESS -->
+  <div class="progress"><div class="progress__bar" id="progressBar"></div></div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav__left">
+      <a class="nav__logo" href="#">
+        <div class="nav__logo-icon">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="5" width="7" height="7" rx="1.5" fill="white" opacity="0.9"/>
+            <rect x="5" y="2" width="7" height="7" rx="1.5" fill="white" opacity="0.5"/>
+          </svg>
+        </div>
+        strapi
+      </a>
+      <div class="nav__sep"></div>
+      <div class="nav__crumbs">
+        <a href="#">cms</a> <span>/</span>
+        <a href="#">getting-started</a> <span>/</span>
+        <span class="current">quick-start</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__top">
+        <div class="sidebar__product">
+          <span class="sidebar__product-dot"></span>
+          CMS Docs
+        </div>
+        <button class="sidebar__toggle" onclick="toggleSidebar()">
+          <span class="sidebar__toggle-icon">◀</span>
+        </button>
+      </div>
+      <div class="sidebar__inner">
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Getting Started</div>
+          <a class="s-item" href="#">Introduction</a>
+          <a class="s-item active" href="#">Quick Start</a>
+          <a class="s-item" href="#">Installation</a>
+          <a class="s-item" href="#">Project Structure</a>
+          <a class="s-item" href="#">Deployment</a>
+        </div>
+        <div class="s-divider"></div>
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Features</div>
+          <a class="s-item" href="#">Content Manager</a>
+          <a class="s-item s-item--new" href="#">Content History</a>
+          <a class="s-item" href="#">Draft & Publish</a>
+          <a class="s-item" href="#">Internationalization</a>
+          <a class="s-item" href="#">Media Library</a>
+        </div>
+        <div class="s-divider"></div>
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Content APIs</div>
+          <a class="s-item" href="#">REST API</a>
+          <a class="s-item s-item--child" href="#">Endpoints</a>
+          <a class="s-item s-item--child" href="#">Filtering</a>
+          <a class="s-item s-item--child" href="#">Population</a>
+          <a class="s-item" href="#">GraphQL API</a>
+          <a class="s-item" href="#">Document Service</a>
+        </div>
+        <div class="s-divider"></div>
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Configuration</div>
+          <a class="s-item" href="#">Database</a>
+          <a class="s-item" href="#">Server</a>
+          <a class="s-item" href="#">Middlewares</a>
+          <a class="s-item" href="#">TypeScript</a>
+        </div>
+        <div class="s-divider"></div>
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Customization</div>
+          <a class="s-item" href="#">Controllers</a>
+          <a class="s-item" href="#">Services</a>
+          <a class="s-item" href="#">Routes</a>
+          <a class="s-item" href="#">Policies</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CONTENT -->
+    <div class="main">
+      <article class="article">
+        <div class="doc-header">
+          <div class="doc-header__meta">
+            <span class="doc-header__tag">8 min read</span>
+            <span class="doc-header__tag">Updated Apr 2026</span>
+          </div>
+          <h1>Quick Start</h1>
+          <p class="doc-header__desc">Get a full Strapi application running locally in under 5 minutes.</p>
+        </div>
+
+        <div class="content">
+          <div class="callout callout--tip">
+            <div class="callout__icon">💡</div>
+            <div class="callout__body">
+              <div class="callout__title">Prerequisites</div>
+              <div class="callout__text">Node.js ≥ 18.15 and npm ≥ 6. We recommend the latest LTS release.</div>
+            </div>
+          </div>
+
+          <h2 id="create">Create your project</h2>
+          <p>Scaffold a new Strapi application with a single command. The <code>--quickstart</code> flag uses SQLite — zero database config needed.</p>
+
+          <div class="code-block">
+            <div class="code-block__bar">
+              <div class="code-block__dots">
+                <span class="code-block__dot"></span>
+                <span class="code-block__dot"></span>
+                <span class="code-block__dot"></span>
+              </div>
+              <span class="code-block__file">terminal</span>
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy">copy</button>
+            </div>
+            <pre><code><span class="cm">$</span> <span class="fn">npx</span> create-strapi@latest my-project <span class="kw">--quickstart</span><span class="cursor"></span></code></pre>
+          </div>
+
+          <p>This installs all dependencies and starts the dev server on <a href="#">localhost:1337</a>. The admin panel opens automatically.</p>
+
+          <div class="callout callout--info">
+            <div class="callout__icon">ℹ️</div>
+            <div class="callout__body">
+              <div class="callout__title">Super Admin</div>
+              <div class="callout__text">The first account you create has full access to every feature and setting in Strapi.</div>
+            </div>
+          </div>
+
+          <h2 id="content">Define your content</h2>
+          <p>Open the <strong>Content-Type Builder</strong> from the sidebar. Create a new <em>Collection Type</em> — for example, <code>Restaurant</code>:</p>
+
+          <div class="code-block">
+            <div class="code-block__bar">
+              <div class="code-block__dots">
+                <span class="code-block__dot"></span>
+                <span class="code-block__dot"></span>
+                <span class="code-block__dot"></span>
+              </div>
+              <span class="code-block__file">schema.json</span>
+              <span class="code-block__lang">json</span>
+              <button class="code-block__copy">copy</button>
+            </div>
+            <pre><code>{
+  <span class="key">"kind"</span>: <span class="str">"collectionType"</span>,
+  <span class="key">"info"</span>: {
+    <span class="key">"singularName"</span>: <span class="str">"restaurant"</span>,
+    <span class="key">"pluralName"</span>: <span class="str">"restaurants"</span>,
+    <span class="key">"displayName"</span>: <span class="str">"Restaurant"</span>
+  },
+  <span class="key">"attributes"</span>: {
+    <span class="key">"name"</span>:        { <span class="key">"type"</span>: <span class="str">"string"</span> },
+    <span class="key">"description"</span>: { <span class="key">"type"</span>: <span class="str">"richtext"</span> },
+    <span class="key">"rating"</span>:      { <span class="key">"type"</span>: <span class="str">"integer"</span> }
+  }
+}</code></pre>
+          </div>
+
+          <h2 id="api">Query your API</h2>
+          <p>Strapi auto-generates REST and GraphQL endpoints for every content type. No configuration needed — publish an entry and fetch it.</p>
+
+          <div class="callout callout--warn">
+            <div class="callout__icon">⚠️</div>
+            <div class="callout__body">
+              <div class="callout__title">Permissions</div>
+              <div class="callout__text">By default, APIs are locked down. Go to <strong>Settings → Roles → Public</strong> and enable <code>find</code> / <code>findOne</code>.</div>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-block__bar">
+              <div class="code-block__dots">
+                <span class="code-block__dot"></span>
+                <span class="code-block__dot"></span>
+                <span class="code-block__dot"></span>
+              </div>
+              <span class="code-block__file">terminal</span>
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy">copy</button>
+            </div>
+            <pre><code><span class="cm">$</span> <span class="fn">curl</span> http://localhost:<span class="num">1337</span>/api/restaurants
+
+{
+  <span class="key">"data"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="num">1</span>,
+      <span class="key">"name"</span>: <span class="str">"Biscotte"</span>,
+      <span class="key">"description"</span>: <span class="str">"A cozy place."</span>,
+      <span class="key">"rating"</span>: <span class="num">5</span>
+    }
+  ],
+  <span class="key">"meta"</span>: { <span class="key">"pagination"</span>: { <span class="key">"total"</span>: <span class="num">1</span> } }
+}</code></pre>
+          </div>
+
+          <h3 id="next">What's next?</h3>
+
+          <ol class="steps">
+            <li class="step">
+              <div class="step__num"></div>
+              <div class="step__body">
+                <div class="step__title">Explore the admin panel</div>
+                <div class="step__desc">Create entries, set up roles, manage media files.</div>
+              </div>
+            </li>
+            <li class="step">
+              <div class="step__num"></div>
+              <div class="step__body">
+                <div class="step__title">Connect a frontend</div>
+                <div class="step__desc">Use REST or GraphQL with Next.js, Nuxt, or any framework.</div>
+              </div>
+            </li>
+            <li class="step">
+              <div class="step__num"></div>
+              <div class="step__body">
+                <div class="step__title">Deploy to production</div>
+                <div class="step__desc">Strapi Cloud, Docker, or your own infrastructure.</div>
+              </div>
+            </li>
+          </ol>
+
+          <div class="bottom-nav">
+            <a class="bottom-nav__item" href="#">
+              <div class="bottom-nav__label">← Previous</div>
+              <div class="bottom-nav__title">Introduction</div>
+            </a>
+            <a class="bottom-nav__item bottom-nav__item--next" href="#">
+              <div class="bottom-nav__label">Next →</div>
+              <div class="bottom-nav__title">Installation</div>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- TOC -->
+    <aside class="toc" id="toc">
+      <div class="toc__top">
+        <span class="toc__label">On this page</span>
+        <button class="toc__toggle" onclick="toggleToc()">▶</button>
+      </div>
+      <div class="toc__inner">
+        <div class="toc__list">
+          <div class="toc__indicator" id="tocIndicator" style="top: 5px;"></div>
+          <a class="toc__item active" data-i="0" onclick="tocClick(this)">Create your project</a>
+          <a class="toc__item" data-i="1" onclick="tocClick(this)">Define your content</a>
+          <a class="toc__item" data-i="2" onclick="tocClick(this)">Query your API</a>
+          <a class="toc__item toc__item--child" data-i="3" onclick="tocClick(this)">What's next?</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+    }
+    function toggleSidebar() {
+      const s = document.getElementById('sidebar');
+      s.classList.toggle('collapsed');
+      s.querySelector('.sidebar__toggle-icon').textContent = s.classList.contains('collapsed') ? '▶' : '◀';
+    }
+    function toggleToc() {
+      document.getElementById('toc').classList.toggle('collapsed');
+    }
+    function tocClick(el) {
+      document.querySelectorAll('.toc__item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+      const i = parseInt(el.dataset.i);
+      const indicator = document.getElementById('tocIndicator');
+      indicator.style.top = (5 + i * 30) + 'px';
+    }
+
+    // Reading progress
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+      document.getElementById('progressBar').style.width = pct + '%';
+    });
+  </script>
+</body>
+</html>

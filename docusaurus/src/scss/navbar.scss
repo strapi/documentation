@@ -95,8 +95,11 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
   &__link {
     font-size: var(--custom-navbar-items-font-size);
-    border-radius: 4px;
+    border-radius: var(--strapi-radius-sm);
     border: solid 1px transparent;
+    position: relative;
+    transition: color var(--strapi-duration-fast) var(--strapi-ease),
+                background-color var(--strapi-duration-fast) var(--strapi-ease);
     i {
       position: relative;
       top: 1px;
@@ -109,14 +112,27 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       i {
         color: var(--strapi-primary-600);
       }
+
+      /** V3: Animated bottom accent */
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 16px;
+        height: 2px;
+        background: var(--strapi-gradient-primary);
+        border-radius: var(--strapi-radius-full);
+      }
     }
 
     &:not(.navbar__link--active) {
-      --ifm-navbar-link-hover-color: var(--strapi-neutral-800);
+      --ifm-navbar-link-hover-color: var(--strapi-fg-1);
 
       &:hover {
-        color: var(--strapi-neutral-900) !important;
-        background-color: var(--strapi-neutral-100);
+        color: var(--strapi-fg-1) !important;
+        background-color: var(--strapi-surface-1);
       }
     }
   }
@@ -440,22 +456,32 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
+/** V3: Glass navbar with backdrop blur */
 .navbar {
-  border-bottom: 1px solid var(--strapi-neutral-150);
+  border-bottom: 1px solid var(--strapi-border);
   --ifm-navbar-shadow: none;
+  background: rgba(250, 250, 250, 0.7);
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  transition: background var(--strapi-duration-normal) var(--strapi-ease),
+              border-color var(--strapi-duration-normal) var(--strapi-ease);
 }
 
 @include dark {
+  /** V3: Dark glass navbar */
+  .navbar {
+    background: rgba(5, 5, 7, 0.6);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border-bottom-color: var(--strapi-border);
+  }
+
   .kapa-widget-button {
     button {
       svg {
         fill: var(--strapi-neutral-800);
       }
     }
-  }
-
-  .navbar {
-    border-bottom-color: var(--strapi-neutral-150);
   }
 
   .navbar__link {

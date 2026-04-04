@@ -1,12 +1,18 @@
-/** Fonts */
+/** Fonts — V3 Redesign */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --strapi-font-family-display: 'Sora', sans-serif;
+  --strapi-font-family-body: 'Instrument Sans', sans-serif;
+  --strapi-font-family-mono: 'JetBrains Mono', monospace;
+}
 
 .font-poppins,
 .font-poppins button,
 .font-poppins input {
-  --custom-font-family: "Poppins", sans-serif;
-  --ifm-heading-font-family: "Poppins", sans-serif;
+  --custom-font-family: var(--strapi-font-family-body);
+  --ifm-heading-font-family: var(--strapi-font-family-display);
 
   font-family: var(--custom-font-family);
 }

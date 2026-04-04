@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strapi Docs — Redesign Mockup: Doc Page + Collapsible Sidebars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --surface-0: #FFFFFF;
+    --surface-1: #FAFAFE;
+    --surface-2: #F4F4FB;
+    --surface-3: #EDEDF7;
+    --neutral-1000: #181826;
+    --neutral-800: #32324D;
+    --neutral-600: #666687;
+    --neutral-500: #8E8EA9;
+    --neutral-400: #A5A5BA;
+    --neutral-300: #C0C0CF;
+    --neutral-200: #DCDCE4;
+    --neutral-150: #EAEAEF;
+    --neutral-100: #F6F6F9;
+    --primary-700: #271FE0;
+    --primary-600: #4945FF;
+    --primary-500: #7B79FF;
+    --primary-200: #D9D8FF;
+    --primary-100: #F0F0FF;
+    --secondary-600: #0C75AF;
+    --gradient-primary: linear-gradient(135deg, #4945FF 0%, #7B79FF 100%);
+    --glow-primary: 0 0 40px rgba(73, 69, 255, 0.15);
+    --shadow-sm: 0 2px 8px rgba(24, 24, 38, 0.06);
+    --shadow-md: 0 4px 16px rgba(24, 24, 38, 0.08);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --font-display: 'Inter Tight', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --sidebar-width: 280px;
+    --toc-width: 240px;
+    --navbar-height: 72px;
+  }
+  [data-theme="dark"] {
+    --surface-0: #181826;
+    --surface-1: #1E1E30;
+    --surface-2: #252539;
+    --surface-3: #2C2C44;
+    --neutral-1000: #FFFFFF;
+    --neutral-800: #EAEAEF;
+    --neutral-600: #A5A5BA;
+    --neutral-500: #8E8EA9;
+    --neutral-400: #666687;
+    --neutral-300: #4A4A6A;
+    --neutral-200: #32324D;
+    --neutral-150: #2C2C44;
+    --neutral-100: #212134;
+    --primary-600: #7B79FF;
+    --primary-500: #9B99FF;
+    --primary-100: rgba(73, 69, 255, 0.15);
+    --glow-primary: 0 0 60px rgba(73, 69, 255, 0.25);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font-body);
+    background: var(--surface-0);
+    color: var(--neutral-800);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Theme Toggle */
+  .theme-toggle {
+    position: fixed; top: 20px; right: 20px; z-index: 1000;
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 1px solid var(--neutral-200); background: var(--surface-1);
+    cursor: pointer; font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s var(--ease-out-expo); box-shadow: var(--shadow-sm);
+  }
+  .theme-toggle:hover { box-shadow: var(--shadow-md); transform: scale(1.05); }
+
+  .mockup-badge {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--neutral-1000); color: var(--surface-0);
+    padding: 8px 20px; border-radius: 9999px; font-size: 12px;
+    font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    z-index: 1000; box-shadow: var(--shadow-md);
+  }
+
+  /* ═══ NAVBAR ═══ */
+  .navbar {
+    height: var(--navbar-height);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.85);
+    border-bottom: 1px solid var(--neutral-150);
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  }
+  [data-theme="dark"] .navbar {
+    background: rgba(24, 24, 38, 0.85);
+    border-bottom-color: var(--neutral-200);
+  }
+  .navbar__logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-display); font-weight: 700; font-size: 17px;
+    color: var(--neutral-1000); text-decoration: none;
+  }
+  .navbar__logo svg { width: 28px; height: 28px; }
+  .navbar__center { display: flex; gap: 28px; }
+  .navbar__link {
+    font-size: 14px; font-weight: 500; color: var(--neutral-600);
+    text-decoration: none; position: relative; padding: 4px 0;
+  }
+  .navbar__link.active { color: var(--primary-600); }
+  .navbar__link::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px;
+    background: var(--gradient-primary); border-radius: 1px;
+    transform: scaleX(0); transition: transform 0.3s var(--ease-out-expo);
+  }
+  .navbar__link:hover::after, .navbar__link.active::after { transform: scaleX(1); }
+
+  /* ═══ LAYOUT ═══ */
+  .layout {
+    display: flex;
+    margin-top: var(--navbar-height);
+    min-height: calc(100vh - var(--navbar-height));
+  }
+
+  /* ═══ LEFT SIDEBAR ═══ */
+  .sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    border-right: 1px solid var(--neutral-150);
+    background: var(--surface-0);
+    height: calc(100vh - var(--navbar-height));
+    position: sticky;
+    top: var(--navbar-height);
+    overflow-y: auto;
+    transition: width 0.4s var(--ease-out-expo), min-width 0.4s var(--ease-out-expo);
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar.collapsed {
+    width: 48px;
+    min-width: 48px;
+  }
+  .sidebar.collapsed .sidebar__content { opacity: 0; pointer-events: none; }
+  .sidebar.collapsed .sidebar__toggle svg { transform: rotate(180deg); }
+
+  .sidebar__toggle {
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--neutral-200);
+    background: var(--surface-0);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.3s var(--ease-out-expo);
+    box-shadow: var(--shadow-sm);
+  }
+  .sidebar__toggle:hover {
+    box-shadow: var(--glow-primary);
+    border-color: var(--primary-500);
+  }
+  .sidebar__toggle svg {
+    width: 14px; height: 14px;
+    fill: none; stroke: var(--neutral-600); stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+
+  .sidebar__search {
+    padding: 16px;
+    border-bottom: 1px solid var(--neutral-150);
+  }
+  .sidebar__search-input {
+    width: 100%;
+    height: 36px;
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-sm);
+    padding: 0 12px;
+    font-size: 13px;
+    font-family: var(--font-body);
+    background: var(--surface-1);
+    color: var(--neutral-800);
+    outline: none;
+    transition: all 0.2s;
+  }
+  .sidebar__search-input:focus {
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 3px var(--primary-100);
+  }
+  .sidebar__search-input::placeholder { color: var(--neutral-400); }
+
+  .sidebar__content {
+    padding: 12px 0;
+    overflow-y: auto;
+    flex: 1;
+    transition: opacity 0.25s var(--ease-out-expo);
+  }
+
+  .sidebar__section {
+    padding: 0 12px;
+    margin-bottom: 8px;
+  }
+  .sidebar__section-title {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--neutral-400);
+    padding: 12px 12px 6px;
+  }
+  .sidebar__item {
+    display: flex;
+    align-items: center;
+    padding: 7px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: var(--neutral-600);
+    text-decoration: none;
+    transition: all 0.15s;
+    cursor: pointer;
+    position: relative;
+  }
+  .sidebar__item:hover {
+    background: var(--surface-1);
+    color: var(--neutral-800);
+  }
+  .sidebar__item.active {
+    background: var(--primary-100);
+    color: var(--primary-600);
+    font-weight: 600;
+  }
+  .sidebar__item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    bottom: 6px;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--primary-600);
+  }
+  .sidebar__item--child {
+    padding-left: 28px;
+    font-size: 13px;
+  }
+  .sidebar__separator {
+    height: 1px;
+    background: var(--neutral-150);
+    margin: 8px 12px;
+  }
+
+  /* ═══ MAIN CONTENT ═══ */
+  .main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+  }
+  .article {
+    max-width: 720px;
+    width: 100%;
+    padding: 40px 48px;
+  }
+
+  /* Doc Header */
+  .doc-header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--neutral-150);
+    position: relative;
+  }
+  .doc-header::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    border-radius: 1px;
+  }
+  .doc-header__breadcrumbs {
+    font-size: 13px;
+    color: var(--neutral-400);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .doc-header__breadcrumbs a {
+    color: var(--neutral-500);
+    text-decoration: none;
+  }
+  .doc-header__breadcrumbs a:hover { color: var(--primary-600); }
+  .doc-header h1 {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--neutral-1000);
+    margin-bottom: 12px;
+  }
+  .doc-header__meta {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--neutral-400);
+  }
+
+  /* Content Typography */
+  .content h2 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--neutral-1000);
+    margin: 40px 0 16px;
+    padding-top: 32px;
+    border-top: 1px solid var(--neutral-150);
+  }
+  .content h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--neutral-1000);
+    margin: 28px 0 12px;
+  }
+  .content p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--neutral-600);
+    margin-bottom: 20px;
+  }
+  .content a {
+    color: var(--primary-600);
+    text-decoration: none;
+    border-bottom: 1px solid var(--primary-200);
+    transition: border-color 0.2s;
+  }
+  .content a:hover { border-color: var(--primary-600); }
+
+  /* Code Block */
+  .code-block {
+    background: #1E1E30;
+    border-radius: var(--radius-md);
+    margin: 20px 0;
+    overflow: hidden;
+  }
+  .code-block__header {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .code-block__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .code-block__dot--red { background: #FF5F56; }
+  .code-block__dot--yellow { background: #FFBD2E; }
+  .code-block__dot--green { background: #27C93F; }
+  .code-block__title {
+    margin-left: 8px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    color: rgba(255,255,255,0.4);
+  }
+  .code-block__copy {
+    margin-left: auto;
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    font-family: var(--font-body);
+    padding: 4px 12px;
+    border-radius: 9999px;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s;
+  }
+  .code-block:hover .code-block__copy { opacity: 1; }
+  .code-block__copy:hover { background: rgba(255,255,255,0.15); color: white; }
+  .code-block pre {
+    padding: 16px;
+    overflow-x: auto;
+  }
+  .code-block code {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.6;
+    color: #E2E8F0;
+  }
+  .code-block .keyword { color: #FF79C6; }
+  .code-block .string { color: #50FA7B; }
+  .code-block .comment { color: #6272A4; }
+  .code-block .function { color: #BD93F9; }
+
+  /* Admonition */
+  .admonition {
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    margin: 20px 0;
+    border: 1px solid;
+    display: flex;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .admonition::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+  .admonition--tip {
+    background: linear-gradient(135deg, rgba(80, 200, 120, 0.06) 0%, transparent 50%);
+    border-color: rgba(80, 200, 120, 0.2);
+  }
+  .admonition--tip::before { background: #50C878; }
+  .admonition--info {
+    background: linear-gradient(135deg, rgba(73, 69, 255, 0.04) 0%, transparent 50%);
+    border-color: var(--primary-200);
+  }
+  .admonition--info::before { background: var(--primary-600); }
+  .admonition__icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .admonition__content { flex: 1; }
+  .admonition__title {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .admonition__text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--neutral-600);
+  }
+
+  /* ═══ RIGHT SIDEBAR (TOC) ═══ */
+  .toc {
+    width: var(--toc-width);
+    min-width: var(--toc-width);
+    height: calc(100vh - var(--navbar-height));
+    position: sticky;
+    top: var(--navbar-height);
+    padding: 32px 16px;
+    overflow-y: auto;
+    transition: width 0.4s var(--ease-out-expo), min-width 0.4s var(--ease-out-expo);
+    border-left: 1px solid var(--neutral-150);
+  }
+  .toc.collapsed {
+    width: 48px;
+    min-width: 48px;
+  }
+  .toc.collapsed .toc__content { opacity: 0; pointer-events: none; }
+  .toc.collapsed .toc__toggle svg { transform: rotate(180deg); }
+
+  .toc__toggle {
+    position: absolute;
+    left: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--neutral-200);
+    background: var(--surface-0);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.3s var(--ease-out-expo);
+    box-shadow: var(--shadow-sm);
+  }
+  .toc__toggle:hover {
+    box-shadow: var(--glow-primary);
+    border-color: var(--primary-500);
+  }
+  .toc__toggle svg {
+    width: 14px; height: 14px;
+    fill: none; stroke: var(--neutral-600); stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+
+  .toc__content {
+    transition: opacity 0.25s var(--ease-out-expo);
+  }
+  .toc__label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--neutral-400);
+    margin-bottom: 16px;
+  }
+  .toc__list {
+    list-style: none;
+    position: relative;
+  }
+  .toc__indicator {
+    position: absolute;
+    left: 0;
+    width: 2px;
+    height: 28px;
+    background: var(--primary-600);
+    border-radius: 1px;
+    transition: top 0.3s var(--ease-out-expo);
+  }
+  .toc__item {
+    display: block;
+    padding: 6px 0 6px 16px;
+    font-size: 13px;
+    color: var(--neutral-500);
+    text-decoration: none;
+    transition: color 0.15s;
+    border-left: 2px solid transparent;
+    cursor: pointer;
+  }
+  .toc__item:hover { color: var(--primary-500); }
+  .toc__item.active {
+    color: var(--primary-600);
+    font-weight: 600;
+    border-left-color: transparent;
+  }
+  .toc__item--child { padding-left: 28px; font-size: 12px; }
+</style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" style="right: 80px;">☀️</button>
+  <div class="mockup-badge">Design Mockup — Doc Page + Collapsible Sidebars</div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a class="navbar__logo" href="#">
+      <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="url(#g)"/><path d="M9 12h8v8H9z" fill="#fff" opacity=".9"/><path d="M13 8h10v10H13z" fill="#fff" opacity=".6"/><defs><linearGradient id="g" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#4945FF"/><stop offset="1" stop-color="#7B79FF"/></linearGradient></defs></svg>
+      Strapi Docs
+    </a>
+    <div class="navbar__center">
+      <a class="navbar__link active" href="#">CMS</a>
+      <a class="navbar__link" href="#">Cloud</a>
+    </div>
+    <div></div>
+  </nav>
+
+  <div class="layout">
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar" id="sidebar" style="position: relative;">
+      <button class="sidebar__toggle" onclick="toggleSidebar()">
+        <svg viewBox="0 0 16 16"><polyline points="10 4 6 8 10 12"/></svg>
+      </button>
+      <div class="sidebar__search">
+        <input class="sidebar__search-input" type="text" placeholder="Search docs...">
+      </div>
+      <div class="sidebar__content">
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Getting Started</div>
+          <a class="sidebar__item" href="#">Introduction</a>
+          <a class="sidebar__item active" href="#">Quick Start Guide</a>
+          <a class="sidebar__item" href="#">Installation</a>
+          <a class="sidebar__item" href="#">Project Structure</a>
+        </div>
+        <div class="sidebar__separator"></div>
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Content APIs</div>
+          <a class="sidebar__item" href="#">REST API</a>
+          <a class="sidebar__item--child sidebar__item" href="#">Endpoints</a>
+          <a class="sidebar__item--child sidebar__item" href="#">Filtering</a>
+          <a class="sidebar__item--child sidebar__item" href="#">Population</a>
+          <a class="sidebar__item" href="#">GraphQL</a>
+          <a class="sidebar__item" href="#">Document Service</a>
+        </div>
+        <div class="sidebar__separator"></div>
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Configuration</div>
+          <a class="sidebar__item" href="#">Database</a>
+          <a class="sidebar__item" href="#">Server</a>
+          <a class="sidebar__item" href="#">Middlewares</a>
+          <a class="sidebar__item" href="#">Plugins</a>
+        </div>
+        <div class="sidebar__separator"></div>
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Development</div>
+          <a class="sidebar__item" href="#">Backend Customization</a>
+          <a class="sidebar__item" href="#">Admin Panel</a>
+          <a class="sidebar__item" href="#">TypeScript</a>
+          <a class="sidebar__item" href="#">Plugin Development</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+      <article class="article">
+        <div class="doc-header">
+          <div class="doc-header__breadcrumbs">
+            <a href="#">Docs</a> <span>/</span>
+            <a href="#">Getting Started</a> <span>/</span>
+            <span>Quick Start Guide</span>
+          </div>
+          <h1>Quick Start Guide</h1>
+          <div class="doc-header__meta">
+            <span>Last updated: March 2026</span>
+            <span>·</span>
+            <span>8 min read</span>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="admonition admonition--tip">
+            <div class="admonition__icon">💡</div>
+            <div class="admonition__content">
+              <div class="admonition__title">Tip</div>
+              <div class="admonition__text">Strapi 5 requires Node.js 18.15+ and npm 6+. We recommend using the latest LTS version.</div>
+            </div>
+          </div>
+
+          <p>Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or prefer to dive deeper into the product, we got you covered. For this tutorial, we'll go for the quick option.</p>
+
+          <h2>Step 1: Create a new project</h2>
+          <p>Create a new Strapi project using the CLI. The following command will create a new project with the default SQLite database:</p>
+
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__dot code-block__dot--red"></span>
+              <span class="code-block__dot code-block__dot--yellow"></span>
+              <span class="code-block__dot code-block__dot--green"></span>
+              <span class="code-block__title">terminal</span>
+              <button class="code-block__copy">Copy</button>
+            </div>
+            <pre><code><span class="function">npx</span> create-strapi@latest my-project <span class="keyword">--quickstart</span></code></pre>
+          </div>
+
+          <p>This will create a new Strapi project in a <code style="background: var(--surface-2); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 14px;">my-project</code> directory, install all dependencies, and start the development server.</p>
+
+          <h2>Step 2: Register the first administrator</h2>
+          <p>After creating your project, the admin panel opens in your browser at <a href="#">http://localhost:1337/admin</a>. Complete the form to create the first administrator account.</p>
+
+          <div class="admonition admonition--info">
+            <div class="admonition__icon">ℹ️</div>
+            <div class="admonition__content">
+              <div class="admonition__title">Note</div>
+              <div class="admonition__text">The first user created is the Super Admin, who has access to all features and settings.</div>
+            </div>
+          </div>
+
+          <h2>Step 3: Create content types</h2>
+          <p>Navigate to the Content-Type Builder in the admin panel. This is where you'll define the structure of your content. Think of content types as the data models for your application.</p>
+
+          <h3>Creating a collection type</h3>
+          <p>Collection types are content types that can have multiple entries. For example, a "Restaurant" collection type could have many restaurant entries. Click <strong>Create new collection type</strong> and give it a display name.</p>
+
+          <div class="code-block">
+            <div class="code-block__header">
+              <span class="code-block__dot code-block__dot--red"></span>
+              <span class="code-block__dot code-block__dot--yellow"></span>
+              <span class="code-block__dot code-block__dot--green"></span>
+              <span class="code-block__title">config/api/restaurant/content-types/restaurant/schema.json</span>
+              <button class="code-block__copy">Copy</button>
+            </div>
+            <pre><code>{
+  <span class="string">"kind"</span>: <span class="string">"collectionType"</span>,
+  <span class="string">"collectionName"</span>: <span class="string">"restaurants"</span>,
+  <span class="string">"info"</span>: {
+    <span class="string">"singularName"</span>: <span class="string">"restaurant"</span>,
+    <span class="string">"pluralName"</span>: <span class="string">"restaurants"</span>,
+    <span class="string">"displayName"</span>: <span class="string">"Restaurant"</span>
+  },
+  <span class="string">"attributes"</span>: {
+    <span class="string">"name"</span>: { <span class="string">"type"</span>: <span class="string">"string"</span> },
+    <span class="string">"description"</span>: { <span class="string">"type"</span>: <span class="string">"richtext"</span> }
+  }
+}</code></pre>
+          </div>
+
+          <h3>Adding fields</h3>
+          <p>Strapi provides a wide range of field types to model your content. The most common fields include text, rich text, media, relations, and components. Each field can be configured with validations and custom settings.</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- RIGHT SIDEBAR (TOC) -->
+    <aside class="toc" id="toc" style="position: relative;">
+      <button class="toc__toggle" onclick="toggleToc()">
+        <svg viewBox="0 0 16 16"><polyline points="6 4 10 8 6 12"/></svg>
+      </button>
+      <div class="toc__content">
+        <div class="toc__label">On This Page</div>
+        <div class="toc__list">
+          <div class="toc__indicator" id="tocIndicator" style="top: 6px;"></div>
+          <a class="toc__item active" data-index="0" onclick="setActiveToc(this)">Step 1: Create a new project</a>
+          <a class="toc__item" data-index="1" onclick="setActiveToc(this)">Step 2: Register the first administrator</a>
+          <a class="toc__item" data-index="2" onclick="setActiveToc(this)">Step 3: Create content types</a>
+          <a class="toc__item toc__item--child" data-index="3" onclick="setActiveToc(this)">Creating a collection type</a>
+          <a class="toc__item toc__item--child" data-index="4" onclick="setActiveToc(this)">Adding fields</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+    }
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('collapsed');
+    }
+
+    function toggleToc() {
+      document.getElementById('toc').classList.toggle('collapsed');
+    }
+
+    function setActiveToc(el) {
+      document.querySelectorAll('.toc__item').forEach(item => item.classList.remove('active'));
+      el.classList.add('active');
+      const index = parseInt(el.dataset.index);
+      document.getElementById('tocIndicator').style.top = (6 + index * 34) + 'px';
+    }
+  </script>
+</body>
+</html>

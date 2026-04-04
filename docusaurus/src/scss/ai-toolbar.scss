@@ -24,7 +24,7 @@
     color: var(--strapi-neutral-600);
     font-size: var(--strapi-font-size-sm);
     font-weight: 500;
-    font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--strapi-font-family-body);
     cursor: pointer;
     text-decoration: none;
     transition: all 0.2s ease;

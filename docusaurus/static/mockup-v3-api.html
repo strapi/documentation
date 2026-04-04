@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strapi Docs — V3 Ultra Bold: API Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #4945FF;
+    --accent-light: #7B79FF;
+    --accent-lighter: #a5a3ff;
+    --accent-2: #c084fc;
+    --accent-3: #22d3ee;
+    --accent-4: #34d399;
+    --bg-0: #050507;
+    --bg-1: #0a0a0f;
+    --bg-2: #111118;
+    --bg-3: #1a1a24;
+    --bg-4: #23232f;
+    --bg-hover: #2a2a38;
+    --border: rgba(255,255,255,0.05);
+    --border-strong: rgba(255,255,255,0.08);
+    --fg-1: #f0f0f5;
+    --fg-2: #b0b0c0;
+    --fg-3: #70708a;
+    --fg-4: #50506a;
+    --fg-5: #35354a;
+    --green: #34d399;
+    --green-dim: rgba(52,211,153,0.1);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.1);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.1);
+    --blue: #60a5fa;
+    --font-display: 'Sora', sans-serif;
+    --font-body: 'Instrument Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --nav-h: 56px;
+    --sidebar-w: 240px;
+  }
+  [data-theme="light"] {
+    --bg-0: #FAFAFA; --bg-1: #F5F5F7; --bg-2: #EEEEEF;
+    --bg-3: #E5E5EA; --bg-4: #D1D1D6; --bg-hover: #D1D1D6;
+    --border: rgba(0,0,0,0.05); --border-strong: rgba(0,0,0,0.08);
+    --fg-1: #0a0a0f; --fg-2: #3a3a4a; --fg-3: #6a6a7a;
+    --fg-4: #9a9aaa; --fg-5: #c0c0c8;
+    --green-dim: rgba(52,211,153,0.08);
+    --amber-dim: rgba(251,191,36,0.08);
+    --red-dim: rgba(248,113,113,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg-0);
+    color: var(--fg-1);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: white; }
+
+  /* Grain */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 9999;
+    pointer-events: none; opacity: 0.012;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px;
+  }
+
+  .theme-toggle {
+    position: fixed; top: 16px; right: 20px; z-index: 10000;
+    width: 36px; height: 36px; border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-2); cursor: pointer;
+    font-size: 14px; display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(20px); transition: all 0.3s var(--ease);
+  }
+  .theme-toggle:hover { border-color: var(--accent); box-shadow: 0 0 24px rgba(73,69,255,0.2); }
+
+  /* ═══ NAV ═══ */
+  .nav {
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(5,5,7,0.6);
+    backdrop-filter: blur(24px) saturate(1.5);
+    border-bottom: 1px solid var(--border);
+  }
+  [data-theme="light"] .nav { background: rgba(250,250,250,0.7); }
+  .nav__left { display: flex; align-items: center; gap: 24px; }
+  .nav__logo {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-display); font-weight: 700; font-size: 15px;
+    color: var(--fg-1); text-decoration: none; letter-spacing: -0.03em;
+  }
+  .nav__logo-icon {
+    width: 24px; height: 24px; border-radius: 7px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .nav__logo-icon::after {
+    content: '';
+    position: absolute; width: 200%; height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    animation: logoShimmer 4s ease-in-out infinite;
+    transform: rotate(45deg);
+  }
+  @keyframes logoShimmer {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    50%,100% { transform: translateX(100%) rotate(45deg); }
+  }
+  .nav__sep { width: 1px; height: 20px; background: var(--border-strong); }
+  .nav__crumbs {
+    font-family: var(--font-mono); font-size: 12px; color: var(--fg-4);
+    display: flex; gap: 6px; align-items: center;
+  }
+  .nav__crumbs a { color: var(--fg-3); text-decoration: none; }
+  .nav__crumbs a:hover { color: var(--accent-light); }
+  .nav__right { display: flex; align-items: center; gap: 8px; }
+  .nav__env {
+    font-family: var(--font-mono); font-size: 11px;
+    padding: 4px 10px; border-radius: 6px;
+    background: var(--green-dim); color: var(--green);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav__env-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  /* ═══ LAYOUT ═══ */
+  .layout {
+    display: flex;
+    margin-top: var(--nav-h);
+    min-height: calc(100vh - var(--nav-h));
+  }
+
+  /* ═══ SIDEBAR ═══ */
+  .sidebar {
+    width: var(--sidebar-w); min-width: var(--sidebar-w);
+    border-right: 1px solid var(--border);
+    height: calc(100vh - var(--nav-h));
+    position: sticky; top: var(--nav-h);
+    overflow-y: auto; background: var(--bg-0);
+    padding: 8px 0;
+  }
+  .sidebar__section { padding: 0 8px; margin-bottom: 2px; }
+  .sidebar__section-title {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--fg-5); padding: 14px 10px 6px;
+  }
+  .s-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 10px; border-radius: 7px;
+    font-size: 12.5px; color: var(--fg-3);
+    text-decoration: none; transition: all 0.12s; cursor: pointer;
+  }
+  .s-item:hover { background: var(--bg-3); color: var(--fg-1); }
+  .s-item.active {
+    background: rgba(73,69,255,0.08);
+    color: var(--accent-light); font-weight: 600;
+  }
+  .s-item__badge {
+    font-family: var(--font-mono);
+    font-size: 9px; font-weight: 700;
+    padding: 2px 5px; border-radius: 4px;
+    text-transform: uppercase;
+    width: 34px; text-align: center; flex-shrink: 0;
+  }
+  .s-item__badge--get { background: var(--green-dim); color: var(--green); }
+  .s-item__badge--post { background: rgba(73,69,255,0.1); color: var(--accent-light); }
+  .s-item__badge--put { background: var(--amber-dim); color: var(--amber); }
+  .s-item__badge--del { background: var(--red-dim); color: var(--red); }
+  .s-divider { height: 1px; background: var(--border); margin: 4px 12px; }
+
+  /* ═══ MAIN — SPLIT VIEW ═══ */
+  .main { flex: 1; min-width: 0; }
+
+  /* Page header */
+  .api-header {
+    padding: 40px 48px 32px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .api-header::before {
+    content: '';
+    position: absolute; top: 0; left: 48px;
+    width: 60px; height: 3px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    animation: lineExpand 0.6s var(--ease) both;
+  }
+  @keyframes lineExpand {
+    from { width: 0; opacity: 0; }
+    to { width: 60px; opacity: 1; }
+  }
+  .api-header h1 {
+    font-family: var(--font-display);
+    font-size: 34px; font-weight: 800;
+    letter-spacing: -0.03em; margin-bottom: 10px;
+  }
+  .api-header__desc {
+    font-size: 16px; line-height: 1.6;
+    color: var(--fg-3); max-width: 560px;
+  }
+  .api-header__base {
+    margin-top: 20px;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 14px; border-radius: 10px;
+    background: var(--bg-2); border: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 13px;
+  }
+  .api-header__base-label {
+    font-size: 10px; font-weight: 600;
+    color: var(--fg-5); text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .api-header__base-url { color: var(--fg-2); }
+
+  /* ═══ ENDPOINT ═══ */
+  .endpoint {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Left */
+  .endpoint__desc {
+    padding: 40px 44px;
+    border-right: 1px solid var(--border);
+  }
+  .endpoint__method-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .method-pill {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700;
+    padding: 4px 10px; border-radius: 6px;
+    text-transform: uppercase; letter-spacing: 0.02em;
+    position: relative; overflow: hidden;
+  }
+  .method-pill--get { background: var(--green-dim); color: var(--green); }
+  .method-pill--post { background: rgba(73,69,255,0.1); color: var(--accent-light); }
+  .method-pill--put { background: var(--amber-dim); color: var(--amber); }
+  .method-pill--del { background: var(--red-dim); color: var(--red); }
+  /* Shimmer on method pill */
+  .method-pill::after {
+    content: '';
+    position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    animation: methodShimmer 3s ease-in-out infinite;
+  }
+  @keyframes methodShimmer {
+    0%,70% { left: -100%; }
+    100% { left: 100%; }
+  }
+  .endpoint__path {
+    font-family: var(--font-mono);
+    font-size: 14px; color: var(--fg-2);
+  }
+  .endpoint__path .p { color: var(--accent-light); }
+
+  .endpoint__title {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 700;
+    letter-spacing: -0.02em; margin-bottom: 12px;
+  }
+  .endpoint__text {
+    font-size: 15px; line-height: 1.7;
+    color: var(--fg-3); margin-bottom: 28px;
+  }
+
+  /* Params */
+  .params__header {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--fg-5); padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+  .param-row {
+    display: grid;
+    grid-template-columns: 1.2fr auto 1.5fr;
+    gap: 12px; padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+    transition: background 0.15s;
+  }
+  .param-row:hover { background: var(--bg-1); margin: 0 -8px; padding: 12px 8px; border-radius: 8px; }
+  .param-row:last-child { border-bottom: none; }
+  .param__name {
+    font-family: var(--font-mono);
+    font-size: 13px; font-weight: 500;
+    color: var(--fg-1);
+  }
+  .param__type {
+    font-family: var(--font-mono);
+    font-size: 11px; color: var(--fg-5);
+    margin-top: 2px;
+  }
+  .param__badge {
+    font-family: var(--font-mono);
+    font-size: 9px; font-weight: 700;
+    padding: 2px 6px; border-radius: 4px;
+    text-transform: uppercase; letter-spacing: 0.02em;
+  }
+  .param__badge--req { background: var(--red-dim); color: var(--red); }
+  .param__badge--opt { background: var(--bg-3); color: var(--fg-5); }
+  .param__desc {
+    font-size: 13px; line-height: 1.5; color: var(--fg-3);
+  }
+  .param__desc code {
+    font-family: var(--font-mono); font-size: 12px;
+    padding: 1px 5px; border-radius: 4px;
+    background: var(--bg-2); color: var(--accent-lighter);
+    border: 1px solid var(--border);
+  }
+
+  /* Right — Code */
+  .endpoint__code {
+    padding: 40px 32px;
+    background: var(--bg-1);
+    position: sticky;
+    top: var(--nav-h);
+    align-self: start;
+    max-height: calc(100vh - var(--nav-h));
+    overflow-y: auto;
+  }
+  [data-theme="light"] .endpoint__code { background: var(--bg-2); }
+
+  .code-panel {
+    border-radius: 12px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-0);
+    overflow: hidden; margin-bottom: 16px;
+    transition: border-color 0.3s;
+  }
+  [data-theme="light"] .code-panel { background: var(--bg-1); }
+  .code-panel:hover { border-color: rgba(73,69,255,0.12); }
+
+  .code-panel__tabs {
+    display: flex; border-bottom: 1px solid var(--border);
+    padding: 0 4px; background: var(--bg-2);
+  }
+  [data-theme="light"] .code-panel__tabs { background: var(--bg-3); }
+  .code-panel__tab {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500;
+    padding: 9px 12px; color: var(--fg-4);
+    cursor: pointer; border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .code-panel__tab.active { color: var(--fg-1); border-bottom-color: var(--accent); }
+  .code-panel__tab:hover { color: var(--fg-2); }
+
+  .code-panel__url {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 12px;
+  }
+  .code-panel__url-method {
+    font-weight: 700; font-size: 10px;
+    padding: 2px 6px; border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .code-panel__url-method--get { background: var(--green-dim); color: var(--green); }
+  .code-panel__url-method--post { background: rgba(73,69,255,0.1); color: var(--accent-light); }
+  .code-panel__url-method--del { background: var(--red-dim); color: var(--red); }
+  .code-panel__url-path { color: var(--fg-2); }
+  .code-panel__url-path .p { color: var(--accent-light); }
+
+  .code-panel pre { padding: 14px; margin: 0; overflow-x: auto; }
+  .code-panel code {
+    font-family: var(--font-mono);
+    font-size: 12.5px; line-height: 1.65; color: var(--fg-2);
+  }
+  .kw { color: var(--accent-2); }
+  .str { color: var(--green); }
+  .fn { color: var(--accent-light); }
+  .cm { color: var(--fg-5); }
+  .num { color: var(--amber); }
+  .key { color: var(--blue); }
+
+  /* Response */
+  .response-header {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 8px;
+    font-family: var(--font-mono); font-size: 11px;
+  }
+  .response-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .response-dot--ok { background: var(--green); color: var(--green); }
+  .response-dot--err { background: var(--red); color: var(--red); }
+  .response-status { font-weight: 600; }
+  .response-status--ok { color: var(--green); }
+  .response-status--err { color: var(--red); }
+  .response-time { color: var(--fg-5); margin-left: auto; }
+
+  /* Send button */
+  .send-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 18px; border-radius: 8px;
+    background: var(--accent); color: white;
+    border: none; font-family: var(--font-mono);
+    font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.3s var(--ease);
+    margin-top: 12px; position: relative; overflow: hidden;
+  }
+  .send-btn:hover {
+    box-shadow: 0 0 30px rgba(73,69,255,0.4);
+    transform: translateY(-1px);
+  }
+  .send-btn::after {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  .send-btn:hover::after { left: 100%; }
+
+  /* Tabs for response variants */
+  .response-tabs {
+    display: flex; gap: 2px; margin-bottom: 8px;
+  }
+  .response-tab {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 600;
+    padding: 3px 8px; border-radius: 5px;
+    cursor: pointer; transition: all 0.15s;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .response-tab--200 {
+    background: var(--green-dim); color: var(--green);
+    border: 1px solid transparent;
+  }
+  .response-tab--200.active { border-color: var(--green); }
+  .response-tab--400 {
+    background: var(--red-dim); color: var(--red);
+    border: 1px solid transparent;
+  }
+  .response-tab--400.active { border-color: var(--red); }
+  .response-tab--401 {
+    background: var(--amber-dim); color: var(--amber);
+    border: 1px solid transparent;
+  }
+
+  @media (max-width: 1024px) {
+    .endpoint { grid-template-columns: 1fr; }
+    .endpoint__desc { border-right: none; border-bottom: 1px solid var(--border); }
+    .endpoint__code { position: static; max-height: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">☀️</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav__left">
+      <a class="nav__logo" href="#">
+        <div class="nav__logo-icon">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="5" width="7" height="7" rx="1.5" fill="white" opacity="0.9"/>
+            <rect x="5" y="2" width="7" height="7" rx="1.5" fill="white" opacity="0.5"/>
+          </svg>
+        </div>
+        strapi
+      </a>
+      <div class="nav__sep"></div>
+      <div class="nav__crumbs">
+        <a href="#">cms</a> <span>/</span>
+        <a href="#">rest-api</a> <span>/</span>
+        <span style="color: var(--fg-2);">entries</span>
+      </div>
+    </div>
+    <div class="nav__right">
+      <div class="nav__env">
+        <span class="nav__env-dot"></span>
+        localhost:1337
+      </div>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar__section">
+        <div class="sidebar__section-title">REST API</div>
+        <a class="s-item" href="#" style="font-weight:600; color:var(--fg-1);">Overview</a>
+        <a class="s-item" href="#">Authentication</a>
+      </div>
+      <div class="s-divider"></div>
+      <div class="sidebar__section">
+        <div class="sidebar__section-title">Entries</div>
+        <a class="s-item active" href="#">
+          <span class="s-item__badge s-item__badge--get">GET</span> List entries
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__badge s-item__badge--get">GET</span> Get entry
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__badge s-item__badge--post">POST</span> Create entry
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__badge s-item__badge--put">PUT</span> Update entry
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__badge s-item__badge--del">DEL</span> Delete entry
+        </a>
+      </div>
+      <div class="s-divider"></div>
+      <div class="sidebar__section">
+        <div class="sidebar__section-title">Upload</div>
+        <a class="s-item" href="#">
+          <span class="s-item__badge s-item__badge--get">GET</span> List files
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__badge s-item__badge--post">POST</span> Upload
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__badge s-item__badge--del">DEL</span> Delete file
+        </a>
+      </div>
+      <div class="s-divider"></div>
+      <div class="sidebar__section">
+        <div class="sidebar__section-title">Auth</div>
+        <a class="s-item" href="#">
+          <span class="s-item__badge s-item__badge--post">POST</span> Register
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__badge s-item__badge--post">POST</span> Login
+        </a>
+        <a class="s-item" href="#">
+          <span class="s-item__badge s-item__badge--get">GET</span> Get me
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+      <!-- Header -->
+      <div class="api-header">
+        <h1>REST API — Entries</h1>
+        <p class="api-header__desc">CRUD operations on content-type entries. Auto-generated from your schemas.</p>
+        <div class="api-header__base">
+          <span class="api-header__base-label">Base</span>
+          <span class="api-header__base-url">http://localhost:1337</span>
+        </div>
+      </div>
+
+      <!-- ═══ GET LIST ═══ -->
+      <div class="endpoint">
+        <div class="endpoint__desc">
+          <div class="endpoint__method-row">
+            <span class="method-pill method-pill--get">GET</span>
+            <span class="endpoint__path">/api/<span class="p">:pluralApiId</span></span>
+          </div>
+          <h2 class="endpoint__title">List entries</h2>
+          <p class="endpoint__text">Returns a paginated list of entries. Supports filtering, sorting, field selection, and relation population.</p>
+
+          <div class="params__header">Query Parameters</div>
+          <div class="param-row">
+            <div>
+              <div class="param__name">sort</div>
+              <div class="param__type">string | string[]</div>
+            </div>
+            <span class="param__badge param__badge--opt">optional</span>
+            <div class="param__desc">Sort by field. Use <code>field:asc</code> or <code>field:desc</code></div>
+          </div>
+          <div class="param-row">
+            <div>
+              <div class="param__name">filters</div>
+              <div class="param__type">object</div>
+            </div>
+            <span class="param__badge param__badge--opt">optional</span>
+            <div class="param__desc">Filter with operators: <code>$eq</code>, <code>$contains</code>, <code>$gt</code>, <code>$lt</code></div>
+          </div>
+          <div class="param-row">
+            <div>
+              <div class="param__name">populate</div>
+              <div class="param__type">string | object</div>
+            </div>
+            <span class="param__badge param__badge--opt">optional</span>
+            <div class="param__desc">Relations and components to include. Use <code>*</code> for all.</div>
+          </div>
+          <div class="param-row">
+            <div>
+              <div class="param__name">pagination[page]</div>
+              <div class="param__type">integer</div>
+            </div>
+            <span class="param__badge param__badge--opt">optional</span>
+            <div class="param__desc">Page number. Default: <code>1</code></div>
+          </div>
+          <div class="param-row">
+            <div>
+              <div class="param__name">pagination[pageSize]</div>
+              <div class="param__type">integer</div>
+            </div>
+            <span class="param__badge param__badge--opt">optional</span>
+            <div class="param__desc">Items per page. Default <code>25</code>, max <code>100</code></div>
+          </div>
+          <div class="param-row">
+            <div>
+              <div class="param__name">fields</div>
+              <div class="param__type">string[]</div>
+            </div>
+            <span class="param__badge param__badge--opt">optional</span>
+            <div class="param__desc">Select specific fields to return</div>
+          </div>
+        </div>
+
+        <div class="endpoint__code">
+          <div class="code-panel">
+            <div class="code-panel__tabs">
+              <span class="code-panel__tab active">cURL</span>
+              <span class="code-panel__tab">JavaScript</span>
+              <span class="code-panel__tab">Python</span>
+            </div>
+            <div class="code-panel__url">
+              <span class="code-panel__url-method code-panel__url-method--get">GET</span>
+              <span class="code-panel__url-path">/api/<span class="p">restaurants</span>?populate=*</span>
+            </div>
+            <pre><code><span class="fn">curl</span> <span class="str">'http://localhost:1337/api/restaurants'</span> \
+  <span class="kw">-H</span> <span class="str">'Authorization: Bearer &lt;token&gt;'</span> \
+  <span class="kw">-G</span> \
+  <span class="kw">--data-urlencode</span> <span class="str">'sort=name:asc'</span> \
+  <span class="kw">--data-urlencode</span> <span class="str">'populate=*'</span> \
+  <span class="kw">--data-urlencode</span> <span class="str">'pagination[pageSize]=25'</span></code></pre>
+          </div>
+
+          <div class="response-tabs">
+            <span class="response-tab response-tab--200 active">200</span>
+            <span class="response-tab response-tab--400">400</span>
+            <span class="response-tab response-tab--401">401</span>
+          </div>
+
+          <div class="response-header">
+            <span class="response-dot response-dot--ok"></span>
+            <span class="response-status response-status--ok">200 OK</span>
+            <span class="response-time">23ms</span>
+          </div>
+
+          <div class="code-panel">
+            <pre><code>{
+  <span class="key">"data"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="num">1</span>,
+      <span class="key">"documentId"</span>: <span class="str">"a1b2c3d4e5"</span>,
+      <span class="key">"name"</span>: <span class="str">"Biscotte Restaurant"</span>,
+      <span class="key">"description"</span>: <span class="str">"A cozy place for brunch"</span>,
+      <span class="key">"rating"</span>: <span class="num">5</span>,
+      <span class="key">"createdAt"</span>: <span class="str">"2026-01-15T09:00:00.000Z"</span>,
+      <span class="key">"updatedAt"</span>: <span class="str">"2026-03-20T14:30:00.000Z"</span>
+    }
+  ],
+  <span class="key">"meta"</span>: {
+    <span class="key">"pagination"</span>: {
+      <span class="key">"page"</span>: <span class="num">1</span>,
+      <span class="key">"pageSize"</span>: <span class="num">25</span>,
+      <span class="key">"pageCount"</span>: <span class="num">1</span>,
+      <span class="key">"total"</span>: <span class="num">1</span>
+    }
+  }
+}</code></pre>
+          </div>
+
+          <button class="send-btn">
+            ▶ Try it live
+          </button>
+        </div>
+      </div>
+
+      <!-- ═══ POST CREATE ═══ -->
+      <div class="endpoint">
+        <div class="endpoint__desc">
+          <div class="endpoint__method-row">
+            <span class="method-pill method-pill--post">POST</span>
+            <span class="endpoint__path">/api/<span class="p">:pluralApiId</span></span>
+          </div>
+          <h2 class="endpoint__title">Create an entry</h2>
+          <p class="endpoint__text">Creates a new entry. Send field values inside a <code style="font-family:var(--font-mono);font-size:13px;padding:2px 6px;border-radius:5px;background:var(--bg-2);color:var(--accent-lighter);border:1px solid var(--border);">data</code> object in the request body.</p>
+
+          <div class="params__header">Body Parameters</div>
+          <div class="param-row">
+            <div>
+              <div class="param__name">data</div>
+              <div class="param__type">object</div>
+            </div>
+            <span class="param__badge param__badge--req">required</span>
+            <div class="param__desc">Object containing the field values</div>
+          </div>
+          <div class="param-row">
+            <div>
+              <div class="param__name">data.name</div>
+              <div class="param__type">string</div>
+            </div>
+            <span class="param__badge param__badge--req">required</span>
+            <div class="param__desc">Name of the restaurant</div>
+          </div>
+          <div class="param-row">
+            <div>
+              <div class="param__name">data.description</div>
+              <div class="param__type">richtext</div>
+            </div>
+            <span class="param__badge param__badge--opt">optional</span>
+            <div class="param__desc">Rich text description</div>
+          </div>
+          <div class="param-row">
+            <div>
+              <div class="param__name">data.rating</div>
+              <div class="param__type">integer</div>
+            </div>
+            <span class="param__badge param__badge--opt">optional</span>
+            <div class="param__desc">Rating from 1 to 5</div>
+          </div>
+        </div>
+
+        <div class="endpoint__code">
+          <div class="code-panel">
+            <div class="code-panel__tabs">
+              <span class="code-panel__tab active">cURL</span>
+              <span class="code-panel__tab">JavaScript</span>
+              <span class="code-panel__tab">Python</span>
+            </div>
+            <div class="code-panel__url">
+              <span class="code-panel__url-method code-panel__url-method--post">POST</span>
+              <span class="code-panel__url-path">/api/<span class="p">restaurants</span></span>
+            </div>
+            <pre><code><span class="fn">curl</span> <span class="kw">-X POST</span> \
+  <span class="str">'http://localhost:1337/api/restaurants'</span> \
+  <span class="kw">-H</span> <span class="str">'Authorization: Bearer &lt;token&gt;'</span> \
+  <span class="kw">-H</span> <span class="str">'Content-Type: application/json'</span> \
+  <span class="kw">-d</span> <span class="str">'{
+    "data": {
+      "name": "New Restaurant",
+      "description": "A great place",
+      "rating": 5
+    }
+  }'</span></code></pre>
+          </div>
+
+          <div class="response-tabs">
+            <span class="response-tab response-tab--200 active">201</span>
+            <span class="response-tab response-tab--400">400</span>
+          </div>
+
+          <div class="response-header">
+            <span class="response-dot response-dot--ok"></span>
+            <span class="response-status response-status--ok">201 Created</span>
+            <span class="response-time">45ms</span>
+          </div>
+
+          <div class="code-panel">
+            <pre><code>{
+  <span class="key">"data"</span>: {
+    <span class="key">"id"</span>: <span class="num">2</span>,
+    <span class="key">"documentId"</span>: <span class="str">"f6g7h8i9j0"</span>,
+    <span class="key">"name"</span>: <span class="str">"New Restaurant"</span>,
+    <span class="key">"description"</span>: <span class="str">"A great place"</span>,
+    <span class="key">"rating"</span>: <span class="num">5</span>,
+    <span class="key">"createdAt"</span>: <span class="str">"2026-04-04T14:30:00.000Z"</span>,
+    <span class="key">"updatedAt"</span>: <span class="str">"2026-04-04T14:30:00.000Z"</span>
+  },
+  <span class="key">"meta"</span>: {}
+}</code></pre>
+          </div>
+
+          <button class="send-btn">
+            ▶ Try it live
+          </button>
+        </div>
+      </div>
+
+      <!-- ═══ DELETE ═══ -->
+      <div class="endpoint" style="border-bottom: none;">
+        <div class="endpoint__desc">
+          <div class="endpoint__method-row">
+            <span class="method-pill method-pill--del">DELETE</span>
+            <span class="endpoint__path">/api/<span class="p">:pluralApiId</span>/<span class="p">:documentId</span></span>
+          </div>
+          <h2 class="endpoint__title">Delete an entry</h2>
+          <p class="endpoint__text">Permanently deletes an entry by document ID. This action is irreversible.</p>
+
+          <div class="params__header">Path Parameters</div>
+          <div class="param-row">
+            <div>
+              <div class="param__name">pluralApiId</div>
+              <div class="param__type">string</div>
+            </div>
+            <span class="param__badge param__badge--req">required</span>
+            <div class="param__desc">Plural API ID (e.g. <code>restaurants</code>)</div>
+          </div>
+          <div class="param-row">
+            <div>
+              <div class="param__name">documentId</div>
+              <div class="param__type">string</div>
+            </div>
+            <span class="param__badge param__badge--req">required</span>
+            <div class="param__desc">Document ID of the entry to delete</div>
+          </div>
+        </div>
+
+        <div class="endpoint__code">
+          <div class="code-panel">
+            <div class="code-panel__tabs">
+              <span class="code-panel__tab active">cURL</span>
+              <span class="code-panel__tab">JavaScript</span>
+            </div>
+            <div class="code-panel__url">
+              <span class="code-panel__url-method code-panel__url-method--del">DEL</span>
+              <span class="code-panel__url-path">/api/<span class="p">restaurants</span>/<span class="p">a1b2c3d4e5</span></span>
+            </div>
+            <pre><code><span class="fn">curl</span> <span class="kw">-X DELETE</span> \
+  <span class="str">'http://localhost:1337/api/restaurants/a1b2c3d4e5'</span> \
+  <span class="kw">-H</span> <span class="str">'Authorization: Bearer &lt;token&gt;'</span></code></pre>
+          </div>
+
+          <div class="response-header">
+            <span class="response-dot response-dot--ok"></span>
+            <span class="response-status response-status--ok">200 OK</span>
+            <span class="response-time">18ms</span>
+          </div>
+
+          <div class="code-panel">
+            <pre><code>{
+  <span class="key">"data"</span>: {
+    <span class="key">"id"</span>: <span class="num">1</span>,
+    <span class="key">"documentId"</span>: <span class="str">"a1b2c3d4e5"</span>,
+    <span class="key">"name"</span>: <span class="str">"Biscotte Restaurant"</span>
+  },
+  <span class="key">"meta"</span>: {}
+}</code></pre>
+          </div>
+
+          <button class="send-btn">
+            ▶ Try it live
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+    }
+  </script>
+</body>
+</html>

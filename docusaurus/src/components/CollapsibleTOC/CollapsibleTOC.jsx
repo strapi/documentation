@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import DocSidebar from '@theme-original/DocSidebar';
-import CustomSearchBarWrapper from './CustomSearchBar';
+import styles from './CollapsibleTOC.module.scss';
 
-const STORAGE_KEY = 'strapi-sidebar-collapsed';
+const STORAGE_KEY = 'strapi-toc-collapsed';
 
-export default function DocSidebarWrapper(props) {
+export default function CollapsibleTOC({ children }) {
   const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
@@ -23,20 +22,18 @@ export default function DocSidebarWrapper(props) {
   }, []);
 
   return (
-    <div
-      className={`sidebar-v3-wrapper ${collapsed ? 'sidebar-v3-wrapper--collapsed' : ''}`}
-    >
+    <div className={`${styles.wrapper} ${collapsed ? styles.collapsed : ''}`}>
       <button
-        className="sidebar-v3-toggle"
+        className={styles.toggle}
         onClick={toggle}
-        aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        aria-label={collapsed ? 'Expand table of contents' : 'Collapse table of contents'}
+        title={collapsed ? 'Expand' : 'Collapse'}
       >
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d={collapsed
-              ? 'M5.25 2.5L9.75 7L5.25 11.5'  // caret right
-              : 'M8.75 2.5L4.25 7L8.75 11.5'    // caret left
+              ? 'M8.75 2.5L4.25 7L8.75 11.5'  // caret left (expand)
+              : 'M5.25 2.5L9.75 7L5.25 11.5'    // caret right (collapse)
             }
             stroke="currentColor"
             strokeWidth="1.5"
@@ -45,9 +42,8 @@ export default function DocSidebarWrapper(props) {
           />
         </svg>
       </button>
-      <div className="sidebar-v3-content">
-        <CustomSearchBarWrapper />
-        <DocSidebar {...props} />
+      <div className={styles.content}>
+        {children}
       </div>
     </div>
   );

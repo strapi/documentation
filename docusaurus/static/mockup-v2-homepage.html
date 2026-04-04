@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strapi Docs — V2 Bold Redesign: Homepage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* The Strapi accent — kept sacred */
+    --accent: #4945FF;
+    --accent-light: #7B79FF;
+    --accent-glow: rgba(73, 69, 255, 0.4);
+
+    /* Dark-first palette */
+    --bg: #09090B;
+    --bg-elevated: #111113;
+    --bg-surface: #18181B;
+    --bg-surface-2: #1F1F23;
+    --bg-hover: #27272A;
+    --border: rgba(255,255,255,0.06);
+    --border-strong: rgba(255,255,255,0.1);
+    --text-primary: #FAFAFA;
+    --text-secondary: #A1A1AA;
+    --text-tertiary: #71717A;
+    --text-quaternary: #52525B;
+
+    /* Accent variants */
+    --green: #22C55E;
+    --green-dim: rgba(34, 197, 94, 0.12);
+    --amber: #F59E0B;
+    --red: #EF4444;
+
+    --font-display: 'Outfit', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  [data-theme="light"] {
+    --bg: #FAFAFA;
+    --bg-elevated: #FFFFFF;
+    --bg-surface: #F4F4F5;
+    --bg-surface-2: #E4E4E7;
+    --bg-hover: #E4E4E7;
+    --border: rgba(0,0,0,0.06);
+    --border-strong: rgba(0,0,0,0.1);
+    --text-primary: #09090B;
+    --text-secondary: #52525B;
+    --text-tertiary: #71717A;
+    --text-quaternary: #A1A1AA;
+    --accent-glow: rgba(73, 69, 255, 0.2);
+    --green-dim: rgba(34, 197, 94, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: white;
+  }
+
+  /* ═══ THEME TOGGLE ═══ */
+  .theme-toggle {
+    position: fixed; top: 24px; right: 24px; z-index: 1000;
+    width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-surface);
+    cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s var(--ease);
+    backdrop-filter: blur(12px);
+  }
+  .theme-toggle:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent-light);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  /* ═══ NAVBAR ═══ */
+  .nav {
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg);
+    backdrop-filter: blur(20px);
+  }
+  .nav__left { display: flex; align-items: center; gap: 40px; }
+  .nav__logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-display); font-weight: 700; font-size: 18px;
+    color: var(--text-primary); text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav__logo-mark {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .nav__logo-mark::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.2));
+  }
+  .nav__links { display: flex; gap: 4px; }
+  .nav__link {
+    font-size: 14px; font-weight: 500; color: var(--text-tertiary);
+    text-decoration: none; padding: 6px 12px; border-radius: 8px;
+    transition: all 0.15s;
+  }
+  .nav__link:hover { color: var(--text-primary); background: var(--bg-hover); }
+  .nav__link.active { color: var(--text-primary); background: var(--bg-surface); }
+  .nav__right { display: flex; align-items: center; gap: 12px; }
+  .nav__search {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 14px; border-radius: 10px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-surface);
+    font-size: 13px; color: var(--text-quaternary);
+    cursor: pointer; transition: all 0.2s var(--ease);
+    min-width: 200px;
+  }
+  .nav__search:hover {
+    border-color: var(--accent-light);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+  .nav__search kbd {
+    margin-left: auto;
+    font-family: var(--font-mono); font-size: 11px;
+    padding: 1px 6px; border-radius: 4px;
+    background: var(--bg-hover); color: var(--text-quaternary);
+    border: 1px solid var(--border);
+  }
+
+  /* ═══ HERO — THE BOLD PART ═══ */
+  .hero {
+    padding: 100px 32px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Massive gradient orb behind */
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 800px; height: 800px;
+    left: 50%; top: -200px;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    pointer-events: none;
+    filter: blur(60px);
+    animation: orbPulse 8s ease-in-out infinite alternate;
+  }
+  @keyframes orbPulse {
+    0% { opacity: 0.4; transform: translateX(-50%) scale(1); }
+    100% { opacity: 0.7; transform: translateX(-50%) scale(1.2); }
+  }
+  /* Grid lines */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 60% 80% at 50% 0%, black 20%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero__content {
+    position: relative; z-index: 1;
+    max-width: 900px; margin: 0 auto;
+  }
+  .hero__badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 14px 5px 6px;
+    border-radius: 100px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-surface);
+    font-size: 13px; font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+  }
+  .hero__badge:hover {
+    border-color: var(--accent-light);
+    background: var(--bg-surface-2);
+  }
+  .hero__badge-dot {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--green-dim);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero__badge-dot::after {
+    content: '';
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+  .hero__title .dim { color: var(--text-quaternary); }
+  .hero__title .accent {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 50%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero__sub {
+    font-size: 18px; line-height: 1.6;
+    color: var(--text-tertiary);
+    max-width: 520px; margin: 0 auto 40px;
+    font-weight: 400;
+  }
+
+  /* AI Bar — centerpiece */
+  .ai-bar {
+    max-width: 580px; margin: 0 auto;
+    position: relative;
+  }
+  .ai-bar__input {
+    width: 100%; height: 56px;
+    border-radius: 16px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-elevated);
+    display: flex; align-items: center;
+    padding: 0 20px; gap: 12px;
+    cursor: text;
+    transition: all 0.3s var(--ease);
+    position: relative;
+    overflow: hidden;
+  }
+  .ai-bar__input::before {
+    content: '';
+    position: absolute; inset: -1px;
+    border-radius: 17px;
+    background: linear-gradient(135deg, var(--accent), transparent 40%, transparent 60%, var(--accent-light));
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: -1;
+  }
+  .ai-bar__input:hover::before { opacity: 1; }
+  .ai-bar__input:hover {
+    border-color: transparent;
+    box-shadow: 0 0 40px var(--accent-glow), 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .ai-bar__sparkle {
+    font-size: 20px;
+    background: linear-gradient(135deg, var(--accent-light), #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .ai-bar__placeholder {
+    flex: 1; font-size: 15px; color: var(--text-quaternary);
+  }
+  .ai-bar__keys {
+    display: flex; gap: 3px;
+  }
+  .ai-bar__keys kbd {
+    font-family: var(--font-mono); font-size: 11px;
+    padding: 3px 7px; border-radius: 6px;
+    background: var(--bg-surface); color: var(--text-quaternary);
+    border: 1px solid var(--border);
+  }
+
+  /* ═══ PRODUCT CARDS — BREAKING CONVENTION ═══ */
+  .products {
+    padding: 0 32px 96px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .products__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .product-card {
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.4s var(--ease);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .product-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .product-card--cms::before {
+    background: radial-gradient(circle at 30% 20%, rgba(73, 69, 255, 0.08) 0%, transparent 60%);
+  }
+  .product-card--cloud::before {
+    background: radial-gradient(circle at 70% 20%, rgba(192, 132, 252, 0.08) 0%, transparent 60%);
+  }
+  .product-card:hover::before { opacity: 1; }
+  .product-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+  }
+
+  .product-card__top {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .product-card__icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .product-card--cms .product-card__icon {
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: white;
+  }
+  .product-card--cloud .product-card__icon {
+    background: linear-gradient(135deg, #8B5CF6, #c084fc);
+    color: white;
+  }
+  .product-card__arrow {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-quaternary);
+    font-size: 18px;
+    transition: all 0.3s var(--ease);
+  }
+  .product-card:hover .product-card__arrow {
+    border-color: var(--accent-light);
+    color: var(--accent-light);
+    transform: translateX(2px);
+  }
+
+  .product-card__title {
+    font-family: var(--font-display);
+    font-size: 26px; font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .product-card__desc {
+    font-size: 15px; line-height: 1.6;
+    color: var(--text-tertiary);
+  }
+
+  .product-card__tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: auto;
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 500;
+    padding: 5px 12px; border-radius: 8px;
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .tag:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-strong);
+  }
+
+  /* ═══ BENTO GRID — THE REAL BOLDNESS ═══ */
+  .bento {
+    padding: 0 32px 96px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .bento__label {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 500;
+    color: var(--text-quaternary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+  .bento__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 12px;
+  }
+
+  .bento-card {
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    padding: 28px;
+    transition: all 0.3s var(--ease);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .bento-card:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-surface);
+  }
+  .bento-card--wide { grid-column: span 2; }
+  .bento-card--tall { grid-row: span 2; }
+
+  .bento-card__icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--bg-surface-2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  .bento-card__title {
+    font-family: var(--font-display);
+    font-size: 16px; font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+  }
+  .bento-card__desc {
+    font-size: 14px; line-height: 1.5;
+    color: var(--text-tertiary);
+    flex: 1;
+  }
+
+  /* Code preview inside bento */
+  .bento-card__code {
+    margin-top: 16px;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .bento-card__code .kw { color: #c084fc; }
+  .bento-card__code .str { color: var(--green); }
+  .bento-card__code .fn { color: var(--accent-light); }
+  .bento-card__code .cm { color: var(--text-quaternary); }
+
+  /* Stat card */
+  .bento-card__stat {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-tertiary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 8px;
+  }
+
+  /* ═══ API PREVIEW ROW ═══ */
+  .api-preview {
+    padding: 0 32px 96px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .api-preview__label {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 500;
+    color: var(--text-quaternary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .api-preview__label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .api-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .api-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+    text-decoration: none;
+    color: inherit;
+  }
+  .api-item:hover {
+    background: var(--bg-surface);
+    border-color: var(--border-strong);
+  }
+  .api-item__method {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700;
+    padding: 3px 8px; border-radius: 6px;
+    text-transform: uppercase;
+    width: 56px; text-align: center;
+  }
+  .api-item__method--get { background: var(--green-dim); color: var(--green); }
+  .api-item__method--post { background: rgba(73, 69, 255, 0.12); color: var(--accent-light); }
+  .api-item__method--put { background: rgba(245, 158, 11, 0.12); color: var(--amber); }
+  .api-item__method--del { background: rgba(239, 68, 68, 0.12); color: var(--red); }
+  .api-item__path {
+    font-family: var(--font-mono);
+    font-size: 14px; color: var(--text-secondary);
+    flex: 1;
+  }
+  .api-item__path .param { color: var(--accent-light); }
+  .api-item__desc {
+    font-size: 13px;
+    color: var(--text-quaternary);
+  }
+  .api-item__arrow {
+    color: var(--text-quaternary);
+    font-size: 16px;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: all 0.2s var(--ease);
+  }
+  .api-item:hover .api-item__arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ═══ FOOTER ═══ */
+  .footer {
+    padding: 48px 32px;
+    border-top: 1px solid var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer__left {
+    font-size: 13px;
+    color: var(--text-quaternary);
+  }
+  .footer__links {
+    display: flex; gap: 24px;
+  }
+  .footer__link {
+    font-size: 13px; color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .footer__link:hover { color: var(--text-primary); }
+
+  /* ═══ ANIMATIONS ═══ */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.6s var(--ease) forwards;
+  }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .delay-1 { animation-delay: 100ms; }
+  .delay-2 { animation-delay: 200ms; }
+  .delay-3 { animation-delay: 300ms; }
+  .delay-4 { animation-delay: 400ms; }
+  .delay-5 { animation-delay: 500ms; }
+  .delay-6 { animation-delay: 600ms; }
+  .delay-7 { animation-delay: 700ms; }
+
+  @media (max-width: 768px) {
+    .hero__title { font-size: 40px; }
+    .products__grid { grid-template-columns: 1fr; }
+    .bento__grid { grid-template-columns: 1fr; }
+    .bento-card--wide { grid-column: span 1; }
+    .nav__search { display: none; }
+  }
+</style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">☀️</button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav__left">
+      <a class="nav__logo" href="#">
+        <div class="nav__logo-mark">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="5" width="7" height="7" rx="1" fill="white" opacity="0.9"/>
+            <rect x="5" y="2" width="7" height="7" rx="1" fill="white" opacity="0.5"/>
+          </svg>
+        </div>
+        strapi <span style="color: var(--text-quaternary); font-weight: 400;">docs</span>
+      </a>
+      <div class="nav__links">
+        <a class="nav__link active" href="#">CMS</a>
+        <a class="nav__link" href="#">Cloud</a>
+        <a class="nav__link" href="#">API</a>
+        <a class="nav__link" href="#">Changelog</a>
+      </div>
+    </div>
+    <div class="nav__right">
+      <div class="nav__search">
+        <span style="font-size: 14px;">⌕</span>
+        Search or ask AI...
+        <kbd>⌘K</kbd>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__content">
+      <div class="hero__badge fade-up">
+        <span class="hero__badge-dot"></span>
+        Strapi 5.12 — Read what's new →
+      </div>
+      <h1 class="hero__title fade-up delay-1">
+        Build <span class="accent">anything</span><br>
+        <span class="dim">with Strapi.</span>
+      </h1>
+      <p class="hero__sub fade-up delay-2">
+        The open-source headless CMS that gives you the freedom to choose your tools and frameworks.
+      </p>
+      <div class="ai-bar fade-up delay-3">
+        <div class="ai-bar__input">
+          <span class="ai-bar__sparkle">✦</span>
+          <span class="ai-bar__placeholder">Ask AI anything about Strapi...</span>
+          <span class="ai-bar__keys"><kbd>⌘</kbd><kbd>K</kbd></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products">
+    <div class="products__grid">
+      <a class="product-card product-card--cms fade-up delay-4">
+        <div class="product-card__top">
+          <div class="product-card__icon">📦</div>
+          <div class="product-card__arrow">→</div>
+        </div>
+        <div class="product-card__title">CMS Documentation</div>
+        <div class="product-card__desc">
+          Build, customize, and extend your content backend. APIs, plugins, admin panel, and more.
+        </div>
+        <div class="product-card__tags">
+          <span class="tag">REST API</span>
+          <span class="tag">GraphQL</span>
+          <span class="tag">Plugins</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Customization</span>
+        </div>
+      </a>
+
+      <a class="product-card product-card--cloud fade-up delay-5">
+        <div class="product-card__top">
+          <div class="product-card__icon">☁️</div>
+          <div class="product-card__arrow">→</div>
+        </div>
+        <div class="product-card__title">Cloud Platform</div>
+        <div class="product-card__desc">
+          Deploy in one click, scale with confidence. Managed hosting built for Strapi.
+        </div>
+        <div class="product-card__tags">
+          <span class="tag">Deploy</span>
+          <span class="tag">CLI</span>
+          <span class="tag">Domains</span>
+          <span class="tag">Environments</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- BENTO GRID -->
+  <section class="bento">
+    <div class="bento__label">Quick Start</div>
+    <div class="bento__grid">
+      <a class="bento-card bento-card--wide fade-up delay-4">
+        <div class="bento-card__icon">🚀</div>
+        <div class="bento-card__title">Create a project in 30 seconds</div>
+        <div class="bento-card__desc">One command to scaffold, install, and start your Strapi backend.</div>
+        <div class="bento-card__code">
+          <span class="cm">$</span> <span class="fn">npx</span> create-strapi@latest my-project <span class="kw">--quickstart</span>
+        </div>
+      </a>
+
+      <a class="bento-card fade-up delay-5">
+        <div class="bento-card__icon">⚡</div>
+        <div class="bento-card__title">Content APIs</div>
+        <div class="bento-card__desc">REST and GraphQL APIs auto-generated from your content types.</div>
+        <div style="margin-top: auto; padding-top: 16px;">
+          <div class="bento-card__code">
+            <span class="fn">GET</span> /api/articles<br>
+            <span class="fn">POST</span> /api/articles<br>
+            <span class="fn">PUT</span> /api/articles/<span class="str">:id</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="bento-card fade-up delay-5">
+        <div class="bento-card__icon">🔌</div>
+        <div class="bento-card__title">Plugin Ecosystem</div>
+        <div class="bento-card__desc">Extend everything. Build custom plugins or use community ones.</div>
+        <div class="bento-card__stat">60+</div>
+        <div style="font-size: 13px; color: var(--text-quaternary);">community plugins</div>
+      </a>
+
+      <a class="bento-card fade-up delay-6">
+        <div class="bento-card__icon">🔧</div>
+        <div class="bento-card__title">Customization</div>
+        <div class="bento-card__desc">Lifecycle hooks, middlewares, policies, and custom controllers.</div>
+      </a>
+
+      <a class="bento-card bento-card--wide fade-up delay-6">
+        <div class="bento-card__icon">🌐</div>
+        <div class="bento-card__title">Deploy Anywhere</div>
+        <div class="bento-card__desc">Strapi Cloud, AWS, Heroku, DigitalOcean, Vercel, or your own infrastructure. One-click deploy or full control.</div>
+        <div class="bento-card__code" style="margin-top: auto;">
+          <span class="cm">$</span> <span class="fn">strapi</span> deploy <span class="kw">--cloud</span><br>
+          <span class="str">✓ Project deployed to https://my-project.strapiapp.com</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- API PREVIEW -->
+  <section class="api-preview">
+    <div class="api-preview__label">REST API Reference</div>
+    <div class="api-row">
+      <a class="api-item fade-up delay-4">
+        <span class="api-item__method api-item__method--get">GET</span>
+        <span class="api-item__path">/api/<span class="param">:pluralApiId</span></span>
+        <span class="api-item__desc">Get entries</span>
+        <span class="api-item__arrow">→</span>
+      </a>
+      <a class="api-item fade-up delay-5">
+        <span class="api-item__method api-item__method--get">GET</span>
+        <span class="api-item__path">/api/<span class="param">:pluralApiId</span>/<span class="param">:documentId</span></span>
+        <span class="api-item__desc">Get an entry</span>
+        <span class="api-item__arrow">→</span>
+      </a>
+      <a class="api-item fade-up delay-5">
+        <span class="api-item__method api-item__method--post">POST</span>
+        <span class="api-item__path">/api/<span class="param">:pluralApiId</span></span>
+        <span class="api-item__desc">Create an entry</span>
+        <span class="api-item__arrow">→</span>
+      </a>
+      <a class="api-item fade-up delay-6">
+        <span class="api-item__method api-item__method--put">PUT</span>
+        <span class="api-item__path">/api/<span class="param">:pluralApiId</span>/<span class="param">:documentId</span></span>
+        <span class="api-item__desc">Update an entry</span>
+        <span class="api-item__arrow">→</span>
+      </a>
+      <a class="api-item fade-up delay-7">
+        <span class="api-item__method api-item__method--del">DEL</span>
+        <span class="api-item__path">/api/<span class="param">:pluralApiId</span>/<span class="param">:documentId</span></span>
+        <span class="api-item__desc">Delete an entry</span>
+        <span class="api-item__arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__left">© 2026 Strapi. Open-source headless CMS.</div>
+    <div class="footer__links">
+      <a class="footer__link" href="#">GitHub</a>
+      <a class="footer__link" href="#">Discord</a>
+      <a class="footer__link" href="#">Blog</a>
+      <a class="footer__link" href="#">Status</a>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+    }
+  </script>
+</body>
+</html>
