@@ -125,8 +125,26 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
 
     .theme-doc-sidebar-item-link:has(.menu__link--active) {
-      background-color: var(--strapi-primary-100);
-      border-radius: 4px;
+      background-color: rgba(73, 69, 255, 0.1);
+      border-radius: 8px;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 18px;
+        border-radius: 2px;
+        background: var(--strapi-accent, #4945FF);
+      }
+
+      .menu__link--active {
+        color: var(--strapi-accent-light, #7B79FF) !important;
+        font-weight: 600;
+      }
     }
   }
 

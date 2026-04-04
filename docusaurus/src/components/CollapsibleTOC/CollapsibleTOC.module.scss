@@ -7,7 +7,7 @@
   max-height: calc(100vh - var(--ifm-navbar-height, 56px) - 32px);
   overflow-y: auto;
   border-left: 1px solid var(--strapi-neutral-150);
-  padding: 16px;
+  padding: 28px 16px;
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: width;
 
