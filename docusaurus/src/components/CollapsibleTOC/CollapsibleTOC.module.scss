@@ -1,11 +1,13 @@
-/** V3: Collapsible Table of Contents */
+/** V3: Collapsible Table of Contents — v2 mockup design */
 
 .wrapper {
   position: sticky;
   top: calc(var(--ifm-navbar-height, 56px) + 16px);
-  width: 240px;
+  width: 220px;
   max-height: calc(100vh - var(--ifm-navbar-height, 56px) - 32px);
   overflow-y: auto;
+  border-left: 1px solid var(--strapi-neutral-150);
+  padding: 16px;
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: width;
 
@@ -23,48 +25,74 @@
 }
 
 .collapsed {
-  width: 48px;
+  width: 52px;
+  padding: 16px 0;
+
+  .label {
+    opacity: 0;
+  }
 
   .content {
     opacity: 0;
     pointer-events: none;
   }
+
+  .header {
+    justify-content: center;
+    border-bottom: none;
+  }
+}
+
+/** Header: monospace label + toggle button */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.label {
+  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--strapi-neutral-400);
+  white-space: nowrap;
+  overflow: hidden;
+  transition: opacity 0.2s;
+}
+
+.headerToggle {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 1px solid var(--strapi-neutral-200);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--strapi-neutral-400);
+  font-size: 12px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  padding: 0;
+
+  &:hover {
+    background: var(--strapi-neutral-100);
+    color: var(--strapi-neutral-800);
+  }
 }
 
 .content {
   opacity: 1;
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.2s;
 
   /* Override inner Docusaurus TOC sticky — our wrapper handles it */
   :global(.theme-doc-toc-desktop) {
     position: static;
     max-height: none;
     overflow-y: visible;
-  }
-}
-
-.toggle {
-  position: absolute;
-  left: -16px;
-  top: 70px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid var(--strapi-border-strong);
-  background: var(--strapi-surface-1);
-  color: var(--strapi-fg-3);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  backdrop-filter: blur(12px);
-
-  &:hover {
-    border-color: var(--strapi-accent);
-    color: var(--strapi-accent);
-    box-shadow: 0 0 20px var(--strapi-accent-glow);
-    transform: scale(1.1);
   }
 }

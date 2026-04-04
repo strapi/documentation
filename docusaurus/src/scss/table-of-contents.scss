@@ -87,36 +87,26 @@ ul.table-of-contents__left-border {
   margin-bottom: 0;
 }
 
-/** Responsive */
+/** Responsive — Desktop TOC inside CollapsibleTOC wrapper */
 @include medium-up {
   .table-of-contents {
     --custom-toc-items-py: var(--strapi-spacing-2);
-    margin-top: 70px;
+    margin-top: 0;
     font-weight: 500;
 
-    &::before {
-      content: '\e484';
-      font-family: "Phosphor";
-      font-size: 16px;
-      position: relative;
-      top: -9px;
-      left: 6px;
-    }
-    &::after {
-      content: 'On this page';
-      position: absolute;
-      top: 65px;
-      left: 40px;
+    /* "On this page" label is now in CollapsibleTOC React component */
+    &::before, &::after {
+      display: none;
     }
 
     > li {
       position: relative;
       &::before {
-        content:'';
+        content: '';
         position: absolute;
         height: calc(100% + 4px);
-        width: 2px;
-        background-color: var(--strapi-neutral-100);
+        width: 1px;
+        background-color: var(--strapi-neutral-150);
         left: -2px;
         top: -2px;
       }
