@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import DocSidebar from '@theme-original/DocSidebar';
 import CustomSearchBarWrapper from './CustomSearchBar';
+import ProductSwitcher from '../../components/ProductSwitcher/ProductSwitcher';
 
 const STORAGE_KEY = 'strapi-sidebar-collapsed';
 
@@ -46,6 +47,7 @@ export default function DocSidebarWrapper(props) {
         </svg>
       </button>
       <div className="sidebar-v3-content">
+        <ProductSwitcher />
         <CustomSearchBarWrapper />
         <DocSidebar {...props} />
       </div>
