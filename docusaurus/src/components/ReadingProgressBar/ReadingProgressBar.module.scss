@@ -1,10 +1,10 @@
 .progressBar {
   position: fixed;
-  top: 0;
+  top: var(--ifm-navbar-height);
   left: 0;
   right: 0;
-  height: 3px;
-  z-index: 1000;
+  height: 2px;
+  z-index: 99;
   background: transparent;
   pointer-events: none;
 }
@@ -12,7 +12,7 @@
 .progressFill {
   height: 100%;
   background: linear-gradient(90deg, #4945FF 0%, #7B79FF 50%, #A855F7 100%);
-  border-radius: 0 2px 2px 0;
-  transition: width 100ms linear;
+  transition: width 150ms linear;
   will-change: width;
+  box-shadow: 0 0 12px rgba(73, 69, 255, 0.4);
 }
