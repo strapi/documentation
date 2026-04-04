@@ -1,4 +1,4 @@
-/** Page: Home — V2 Bold Redesign */
+/** Page: Home — V2 Mockup Exact Match */
 @use '../../scss/_mixins.scss' as *;
 
 /* ═══ MAIN CONTAINER ═══ */
@@ -18,7 +18,7 @@
 /* ═══ HERO ═══ */
 .hero {
   position: relative;
-  padding: 80px 32px 40px;
+  padding: 100px 32px 80px;
   text-align: center;
   overflow: hidden;
 
@@ -64,9 +64,57 @@
   margin: 0 auto;
 }
 
+/* Badge pill */
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px 5px 6px;
+  border-radius: 100px;
+  border: 1px solid var(--strapi-border-strong);
+  background: var(--strapi-surface-1);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--strapi-fg-3);
+  margin-bottom: 32px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none !important;
+
+  &:hover {
+    border-color: var(--strapi-accent-light);
+    background: var(--strapi-surface-2);
+    color: var(--strapi-fg-2);
+    text-decoration: none !important;
+  }
+}
+
+.heroBadgeDot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroBadgeDotInner {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22C55E;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+
 .heroTitle {
   font-family: var(--strapi-font-family-display);
-  font-size: clamp(44px, 8vw, 88px);
+  font-size: clamp(48px, 8vw, 88px);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 0.95;
@@ -75,7 +123,7 @@
 }
 
 .heroAccent {
-  background: linear-gradient(135deg, var(--strapi-accent) 0%, var(--strapi-accent-light) 50%, #c084fc 100%);
+  background: linear-gradient(135deg, var(--strapi-accent, #4945FF) 0%, var(--strapi-accent-light, #7B79FF) 50%, #c084fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -91,8 +139,147 @@
   line-height: 1.6;
   color: var(--strapi-fg-3);
   max-width: 520px;
-  margin: 0 auto 8px;
+  margin: 0 auto 40px;
   font-weight: 400;
+}
+
+/* ═══ PRODUCT CARDS ═══ */
+.products {
+  padding: 0 32px 96px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.productCard {
+  border-radius: 20px;
+  border: 1px solid var(--strapi-border);
+  background: var(--strapi-surface-1);
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none !important;
+  color: inherit;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  &:hover::before { opacity: 1; }
+  &:hover {
+    border-color: var(--strapi-border-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+    text-decoration: none !important;
+    color: inherit;
+  }
+}
+
+.productCardCms::before {
+  background: radial-gradient(circle at 30% 20%, rgba(73, 69, 255, 0.08) 0%, transparent 60%);
+}
+
+.productCardCloud::before {
+  background: radial-gradient(circle at 70% 20%, rgba(192, 132, 252, 0.08) 0%, transparent 60%);
+}
+
+.productCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.productCardIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  background: var(--strapi-surface-2);
+}
+
+.productCardCms .productCardIcon {
+  background: linear-gradient(135deg, var(--strapi-accent, #4945FF), var(--strapi-accent-light, #7B79FF));
+}
+
+.productCardCloud .productCardIcon {
+  background: linear-gradient(135deg, #8B5CF6, #c084fc);
+}
+
+.productCardArrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--strapi-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--strapi-fg-5);
+  font-size: 18px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  .productCard:hover & {
+    border-color: var(--strapi-accent-light);
+    color: var(--strapi-accent-light);
+    transform: translateX(2px);
+  }
+}
+
+.productCardTitle {
+  font-family: var(--strapi-font-family-display);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--strapi-fg-1);
+}
+
+.productCardDesc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--strapi-fg-3);
+}
+
+.productCardTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.tag {
+  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 8px;
+  background: var(--strapi-surface-2);
+  color: var(--strapi-fg-3);
+  border: 1px solid var(--strapi-border);
+  transition: all 0.2s;
+
+  &:hover {
+    background: var(--strapi-surface-3);
+    color: var(--strapi-fg-1);
+    border-color: var(--strapi-border-strong);
+  }
 }
 
 /* ═══ BENTO GRID ═══ */
@@ -120,8 +307,8 @@
 }
 
 .bentoCard {
-  border-radius: var(--strapi-radius-lg);
-  border: 1px solid var(--strapi-border-strong);
+  border-radius: var(--strapi-radius-lg, 16px);
+  border: 1px solid var(--strapi-border);
   background: var(--strapi-surface-1);
   padding: 28px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -132,9 +319,10 @@
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 
   &:hover {
-    border-color: var(--strapi-border-accent);
+    border-color: var(--strapi-border-strong);
     background: var(--strapi-surface-2);
     text-decoration: none !important;
     color: inherit;
@@ -148,7 +336,7 @@
 .bentoCardIcon {
   width: 40px;
   height: 40px;
-  border-radius: var(--strapi-radius-md);
+  border-radius: var(--strapi-radius-md, 10px);
   background: var(--strapi-surface-2);
   display: flex;
   align-items: center;
@@ -176,7 +364,7 @@
 .bentoCardCode {
   margin-top: 16px;
   background: var(--strapi-surface-0);
-  border-radius: var(--strapi-radius-md);
+  border-radius: var(--strapi-radius-md, 10px);
   padding: 14px;
   font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
   font-size: 12px;
@@ -186,7 +374,7 @@
   overflow: hidden;
 }
 
-.codeFn { color: var(--strapi-accent-light); }
+.codeFn { color: var(--strapi-accent-light, #7B79FF); }
 .codeKw { color: #c084fc; }
 .codeStr { color: #22C55E; }
 .codeCm { color: var(--strapi-fg-4); }
@@ -282,7 +470,7 @@
 
 .apiMethodPost {
   background: rgba(73, 69, 255, 0.1);
-  color: var(--strapi-accent-light);
+  color: var(--strapi-accent-light, #7B79FF);
 }
 
 .apiMethodPut {
@@ -303,7 +491,7 @@
 }
 
 .apiParam {
-  color: var(--strapi-accent-light);
+  color: var(--strapi-accent-light, #7B79FF);
 }
 
 .apiDesc {
@@ -326,8 +514,8 @@
 
 /* ═══ RESPONSIVE ═══ */
 @include medium-up {
-  .hero {
-    padding: 100px 32px 60px;
+  .productsGrid {
+    grid-template-columns: 1fr 1fr;
   }
 
   .bentoGrid {
@@ -340,6 +528,17 @@
 }
 
 @media (max-width: 768px) {
+  .hero {
+    padding: 60px 20px 40px;
+  }
+
+  .products,
+  .bento,
+  .apiPreview {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
   .apiItem {
     flex-wrap: wrap;
     gap: 8px;
@@ -361,6 +560,18 @@
     opacity: 0.6;
   }
 
+  .heroBadge {
+    background: var(--strapi-surface-2);
+  }
+
+  .productCard {
+    background: var(--strapi-surface-1);
+
+    &:hover {
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+    }
+  }
+
   .bentoCard {
     background: var(--strapi-surface-1);
 
@@ -375,6 +586,11 @@
 
   .bentoCardCode {
     background: var(--strapi-surface-0);
+    border-color: var(--strapi-border);
+  }
+
+  .tag {
+    background: var(--strapi-surface-2);
     border-color: var(--strapi-border);
   }
 

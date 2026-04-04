@@ -2,13 +2,10 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import styles from './home.module.scss';
 import { HomepageAIButton } from '../../components';
-import NewsTicker from '@site/src/components/NewsTicker';
 import content from './_home.content';
-import useIsBrowser from '@docusaurus/useIsBrowser';
 
 /**
  * Bento grid items for the "Quick Start" section.
- * Layout: 2 wide + 1 regular (row 1), 1 regular + 1 wide (row 2)
  */
 const BENTO_ITEMS = [
   {
@@ -17,12 +14,12 @@ const BENTO_ITEMS = [
     title: 'Create a project in 30 seconds',
     desc: 'One command to scaffold, install, and start your Strapi backend.',
     to: '/cms/quick-start',
-    code: (
-      <>
+    code: (key) => (
+      <div key={key} className={styles.bentoCardCode}>
         <span className={styles.codeCm}>$</span>{' '}
         <span className={styles.codeFn}>npx</span> create-strapi@latest my-project{' '}
         <span className={styles.codeKw}>--quickstart</span>
-      </>
+      </div>
     ),
   },
   {
@@ -30,14 +27,13 @@ const BENTO_ITEMS = [
     title: 'Content APIs',
     desc: 'REST and GraphQL APIs auto-generated from your content types.',
     to: '/cms/api/content-api',
-    code: (
-      <>
+    code: (key) => (
+      <div key={key} className={styles.bentoCardCode} style={{ marginTop: 'auto' }}>
         <span className={styles.codeFn}>GET</span> /api/articles<br />
         <span className={styles.codeFn}>POST</span> /api/articles<br />
         <span className={styles.codeFn}>PUT</span> /api/articles/<span className={styles.codeStr}>:id</span>
-      </>
+      </div>
     ),
-    codeAtBottom: true,
   },
   {
     icon: '🔌',
@@ -59,15 +55,14 @@ const BENTO_ITEMS = [
     title: 'Deploy Anywhere',
     desc: 'Strapi Cloud, AWS, Heroku, DigitalOcean, Vercel, or your own infrastructure. One-click deploy or full control.',
     to: '/cloud/getting-started/deployment',
-    code: (
-      <>
+    code: (key) => (
+      <div key={key} className={styles.bentoCardCode} style={{ marginTop: 'auto' }}>
         <span className={styles.codeCm}>$</span>{' '}
         <span className={styles.codeFn}>strapi</span> deploy{' '}
         <span className={styles.codeKw}>--cloud</span><br />
         <span className={styles.codeStr}>✓ Project deployed to https://my-project.strapiapp.com</span>
-      </>
+      </div>
     ),
-    codeAtBottom: true,
   },
 ];
 
@@ -82,8 +77,29 @@ const API_ITEMS = [
   { method: 'DEL', path: '/api/:pluralApiId/:documentId', desc: 'Delete an entry', to: '/cms/api/rest#delete' },
 ];
 
+/**
+ * Product cards — CMS + Cloud
+ */
+const PRODUCT_CARDS = [
+  {
+    variant: 'cms',
+    icon: '📦',
+    title: 'CMS Documentation',
+    desc: 'Build, customize, and extend your content backend. APIs, plugins, admin panel, and more.',
+    to: '/cms/intro',
+    tags: ['REST API', 'GraphQL', 'Plugins', 'TypeScript', 'Customization'],
+  },
+  {
+    variant: 'cloud',
+    icon: '☁️',
+    title: 'Cloud Platform',
+    desc: 'Deploy in one click, scale with confidence. Managed hosting built for Strapi.',
+    to: '/cloud/intro',
+    tags: ['Deploy', 'CLI', 'Domains', 'Environments'],
+  },
+];
+
 function ApiPath({ path }) {
-  // Highlight :param segments
   return path.split(/(:[\w]+)/).map((segment, i) =>
     segment.startsWith(':')
       ? <span key={i} className={styles.apiParam}>{segment}</span>
@@ -102,7 +118,14 @@ export default function PageHome() {
         <section className={styles.hero}>
           <div className={styles.heroGrid} aria-hidden="true" />
           <div className={styles.heroContent}>
-            <NewsTicker newsItems={content.newsTicker} />
+            {/* Badge pill */}
+            <a href="/release-notes" className={styles.heroBadge}>
+              <span className={styles.heroBadgeDot}>
+                <span className={styles.heroBadgeDotInner} />
+              </span>
+              Strapi 5.12 — Read what's new →
+            </a>
+
             <h1 className={styles.heroTitle}>
               Build <span className={styles.heroAccent}>anything</span>
               <br />
@@ -113,6 +136,31 @@ export default function PageHome() {
               to choose your tools and frameworks.
             </p>
             <HomepageAIButton />
+          </div>
+        </section>
+
+        {/* ═══ PRODUCT CARDS ═══ */}
+        <section className={styles.products}>
+          <div className={styles.productsGrid}>
+            {PRODUCT_CARDS.map((card, i) => (
+              <a
+                key={i}
+                href={card.to}
+                className={`${styles.productCard} ${styles[`productCard${card.variant.charAt(0).toUpperCase() + card.variant.slice(1)}`]}`}
+              >
+                <div className={styles.productCardTop}>
+                  <div className={styles.productCardIcon}>{card.icon}</div>
+                  <div className={styles.productCardArrow}>→</div>
+                </div>
+                <div className={styles.productCardTitle}>{card.title}</div>
+                <div className={styles.productCardDesc}>{card.desc}</div>
+                <div className={styles.productCardTags}>
+                  {card.tags.map((tag, j) => (
+                    <span key={j} className={styles.tag}>{tag}</span>
+                  ))}
+                </div>
+              </a>
+            ))}
           </div>
         </section>
 
@@ -135,14 +183,7 @@ export default function PageHome() {
                     <div className={styles.bentoCardStatLabel}>{item.statLabel}</div>
                   </>
                 )}
-                {item.code && (
-                  <div
-                    className={styles.bentoCardCode}
-                    style={item.codeAtBottom ? { marginTop: 'auto' } : undefined}
-                  >
-                    {item.code}
-                  </div>
-                )}
+                {item.code && item.code(`code-${i}`)}
               </a>
             ))}
           </div>
