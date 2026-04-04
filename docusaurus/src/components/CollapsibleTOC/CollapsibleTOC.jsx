@@ -22,7 +22,7 @@ export default function CollapsibleTOC({ children }) {
   }, []);
 
   return (
-    <div className={`${styles.wrapper} ${collapsed ? styles.collapsed : ''}`}>
+    <div className={`${styles.wrapper} toc-v3-wrapper ${collapsed ? `${styles.collapsed} toc-v3-wrapper--collapsed` : ''}`}>
       <button
         className={styles.toggle}
         onClick={toggle}

@@ -12,6 +12,7 @@ tags:
 ---
 
 import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
+import Endpoint from '@site/src/components/ApiReference/Endpoint';
 
 # Document Service API: Filters
 
@@ -52,14 +53,16 @@ The following operators are available:
 
 <br/>
 
-### `$not`
-
-Negates the nested condition(s).
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="not"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$not"
+  description="Negates the nested condition(s)."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $not: {
@@ -67,376 +70,461 @@ const entries = await strapi.documents('api::article.article').findMany({
       },
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$eq`
-
-Attribute equals input value.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="eq"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$eq"
+  description="Attribute equals input value."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $eq: 'Hello World',
     },
   },
-});
-```
-
-`$eq` can be omitted:
-
-```js
+});`
+    },
+    {
+      label: 'Shorthand',
+      code: `// $eq can be omitted:
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: 'Hello World',
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$eqi`
-
-Attribute equals input value (case-insensitive).
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="eqi"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$eqi"
+  description="Attribute equals input value (case-insensitive)."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $eqi: 'HELLO World',
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$ne`
-
-Attribute does not equal input value.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="ne"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$ne"
+  description="Attribute does not equal input value."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $ne: 'ABCD',
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$nei`
-
-Attribute does not equal input value (case-insensitive).
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="nei"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$nei"
+  description="Attribute does not equal input value (case-insensitive)."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $nei: 'abcd',
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$in`
-
-Attribute is contained in the input list.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="in"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$in"
+  description="Attribute is contained in the input list."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $in: ['Hello', 'Hola', 'Bonjour'],
     },
   },
-});
-```
-
-`$in` can be omitted when passing an array of values:
-
-```js
+});`
+    },
+    {
+      label: 'Shorthand',
+      code: `// $in can be omitted when passing an array of values:
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: ['Hello', 'Hola', 'Bonjour'],
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$notIn`
-
-Attribute is not contained in the input list.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="notin"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$notIn"
+  description="Attribute is not contained in the input list."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $notIn: ['Hello', 'Hola', 'Bonjour'],
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$lt`
-
-Attribute is less than the input value.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="lt"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$lt"
+  description="Attribute is less than the input value."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
       $lt: 10,
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$lte`
-
-Attribute is less than or equal to the input value.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="lte"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$lte"
+  description="Attribute is less than or equal to the input value."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
       $lte: 10,
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$gt`
-
-Attribute is greater than the input value.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="gt"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$gt"
+  description="Attribute is greater than the input value."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
       $gt: 5,
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$gte`
-
-Attribute is greater than or equal to the input value.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="gte"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$gte"
+  description="Attribute is greater than or equal to the input value."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
       $gte: 5,
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$between`
-
-Attribute is between the 2 input values, boundaries included (e.g., `$between[1, 3]` will also return `1` and `3`).
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="between"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$between"
+  description={<>Attribute is between the 2 input values, boundaries included (e.g., <code>$between[1, 3]</code> will also return <code>1</code> and <code>3</code>).</>}
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
       $between: [1, 20],
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$contains`
-
-Attribute contains the input value (case-sensitive).
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="contains"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$contains"
+  description="Attribute contains the input value (case-sensitive)."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $contains: 'Hello',
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$notContains`
-
-Attribute does not contain the input value (case-sensitive).
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="notcontains"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$notContains"
+  description="Attribute does not contain the input value (case-sensitive)."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $notContains: 'Hello',
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$containsi`
-
-Attribute contains the input value. `$containsi` is not case-sensitive, while [$contains](#contains) is.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="containsi"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$containsi"
+  description={<><code>$containsi</code> is not case-sensitive, while <a href="#contains">$contains</a> is.</>}
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $containsi: 'hello',
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$notContainsi`
-
-Attribute does not contain the input value. `$notContainsi` is not case-sensitive, while [$notContains](#notcontains) is.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="notcontainsi"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$notContainsi"
+  description={<><code>$notContainsi</code> is not case-sensitive, while <a href="#notcontains">$notContains</a> is.</>}
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $notContainsi: 'hello',
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$startsWith`
-
-Attribute starts with input value (case-sensitive).
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="startswith"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$startsWith"
+  description="Attribute starts with input value (case-sensitive)."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $startsWith: 'ABCD',
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$startsWithi`
-
-Attribute starts with input value (case-insensitive).
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="startswithi"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$startsWithi"
+  description="Attribute starts with input value (case-insensitive)."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $startsWithi: 'ABCD', // will return the same as filtering with 'abcd'
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$endsWith`
-
-Attribute ends with input value (case-sensitive).
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="endswith"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$endsWith"
+  description="Attribute ends with input value (case-sensitive)."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $endsWith: 'ABCD',
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$endsWithi`
-
-Attribute ends with input value (case-insensitive).
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="endswithi"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$endsWithi"
+  description="Attribute ends with input value (case-insensitive)."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $endsWith: 'ABCD', // will return the same as filtering with 'abcd'
     },
-    },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$null`
-
-Attribute is `null`.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="null"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$null"
+  description={<>Attribute is <code>null</code>.</>}
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $null: true,
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$notNull`
-
-Attribute is not `null`.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="notnull"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$notNull"
+  description={<>Attribute is not <code>null</code>.</>}
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $notNull: true,
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
 ## Logical operators
 
-### `$and`
-
-All nested conditions must be `true`.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="and"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$and"
+  description={<>All nested conditions must be <code>true</code>.</>}
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $and: [
       {
@@ -447,28 +535,31 @@ const entries = await strapi.documents('api::article.article').findMany({
       },
     ],
   },
-});
-```
-
-`$and` will be used implicitly when passing an object with nested conditions:
-
-```js
+});`
+    },
+    {
+      label: 'Implicit $and',
+      code: `// $and will be used implicitly when passing an object with nested conditions:
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: 'Hello World',
     createdAt: { $gt: '2021-11-17T14:28:25.843Z' },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$or`
-
-One or many nested conditions must be `true`.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="or"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$or"
+  description={<>One or many nested conditions must be <code>true</code>.</>}
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $or: [
       {
@@ -479,30 +570,36 @@ const entries = await strapi.documents('api::article.article').findMany({
       },
     ],
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
-### `$not`
-
-Negates the nested conditions.
-
-**Example**
-
-```js
-const entries = await strapi.documents('api::article.article').findMany({
+<Endpoint
+  id="not-logical"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="$not"
+  description="Negates the nested conditions."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $not: {
       title: 'Hello World',
     },
   },
-});
-```
+});`
+    }
+  ]}
+/>
 
 :::note
 `$not` can be used as:
 
-- a logical operator (e.g. in `filters: { $not: { // conditions… }}`)
-- [an attribute operator](#not) (e.g. in `filters: { attribute-name: $not: { … } }`).
+- a logical operator (e.g. in `filters: { $not: { // conditions... }}`)
+- [an attribute operator](#not) (e.g. in `filters: { attribute-name: $not: { ... } }`).
 :::
 
 :::tip

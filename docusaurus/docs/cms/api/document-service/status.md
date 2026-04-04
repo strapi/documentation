@@ -17,12 +17,14 @@ tags:
 
 ---
 
+import Endpoint from '@site/src/components/ApiReference/Endpoint';
+
 # Document Service API: Usage with Draft & Publish
 
 By default the [Document Service API](/cms/api/document-service) returns the draft version of a document when the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled. This page describes how to use the `status` parameter to:
 
 - return the published version of a document,
-- count documents depending on their status, 
+- count documents depending on their status,
 - and directly publish a document while creating it or updating it.
 
 :::note
@@ -35,34 +37,35 @@ Passing `{ status: 'draft' }` to a Document Service API query returns the same r
 
 To return the published version while [finding a specific document](/cms/api/document-service#findone) with the Document Service API, pass `status: 'published'`:
 
-<ApiCall>
-
-<Request>
-
-```js
-await strapi.documents('api::restaurant.restaurant').findOne({
+<Endpoint
+  id="find-one"
+  method="GET"
+  path="strapi.documents().findOne()"
+  title="findOne() with status: 'published'"
+  description="Return the published version of a specific document."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi.documents('api::restaurant.restaurant').findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   status: 'published'
-});
-```
-
-</Request>
-
-<Response>
-
-```js {4}
-{
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Biscotte Restaurant",
   publishedAt: "2024-03-14T15:40:45.330Z",
   locale: "en", // default locale
   // …
-}
-```
-
-</Response>
-
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Get the published version with `findFirst()` {#find-first}
 
@@ -70,31 +73,34 @@ await strapi.documents('api::restaurant.restaurant').findOne({
 
 To return the published version while [finding the first document](/cms/api/document-service#findfirst) with the Document Service API, pass `status: 'published'`:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const document = await strapi.documents("api::restaurant.restaurant").findFirst({
+<Endpoint
+  id="find-first"
+  method="GET"
+  path="strapi.documents().findFirst()"
+  title="findFirst() with status: 'published'"
+  description="Return the published version of the first matching document."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const document = await strapi.documents("api::restaurant.restaurant").findFirst({
   status: 'published',
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```js {4}
-{
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Biscotte Restaurant",
   publishedAt: "2024-03-14T15:40:45.330Z",
   locale: "en", // default locale
   // …
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Get the published version with `findMany()` {#find-many}
 
@@ -102,21 +108,25 @@ const document = await strapi.documents("api::restaurant.restaurant").findFirst(
 
 To return the published version while [finding documents](/cms/api/document-service#findmany) with the Document Service API, pass `status: 'published'`:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+<Endpoint
+  id="find-many"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="findMany() with status: 'published'"
+  description="Return the published versions of all matching documents."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const documents = await strapi.documents("api::restaurant.restaurant").findMany({
   status: 'published'
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```js {5}
-[
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `[
   {
     documentId: "a1b2c3d4e5f6g7h8i9j0klm",
     name: "Biscotte Restaurant",
@@ -125,11 +135,10 @@ const documents = await strapi.documents("api::restaurant.restaurant").findMany(
     // …
   }
   // …
-]
-```
-
-</Response>
-</ApiCall>
+]`
+    }
+  ]}
+/>
 
 ## `count()` only draft or published versions {#count}
 
@@ -159,68 +168,71 @@ This means that counting with the `status: 'draft'` parameter still returns the 
 
 To automatically publish a document while creating it, add `status: 'published'` to parameters passed to `create()`:
 
-<ApiCall>
-
-<Request>
-
-```js
-await strapi.documents('api::restaurant.restaurant').create({
+<Endpoint
+  id="create"
+  method="POST"
+  path="strapi.documents().create()"
+  title="create() with status: 'published'"
+  description="Create a new document and immediately publish it."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi.documents('api::restaurant.restaurant').create({
   data: {
     name: "New Restaurant",
   },
   status: 'published',
-})
-```
-
-</Request>
-
-<Response>
-
-```js {5}
-{
+})`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   documentId: "d41r46wac4xix5vpba7561at",
   name: "New Restaurant",
   publishedAt: "2024-03-14T17:29:03.399Z",
   locale: "en" // default locale
   // …
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Update a draft and publish it {#update}
 
 To automatically publish a document while updating it, add `status: 'published'` to parameters passed to `update()`:
 
-<ApiCall>
-
-<Request>
-
-```js
-await strapi.documents('api::restaurant.restaurant').update({
+<Endpoint
+  id="update"
+  method="PUT"
+  path="strapi.documents().update()"
+  title="update() with status: 'published'"
+  description="Update an existing document and immediately publish it."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi.documents('api::restaurant.restaurant').update({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   data: {
     name: "Biscotte Restaurant (closed)",
   },
   status: 'published',
-})
-```
-
-</Request>
-
-<Response>
-
-```js {4}
-{
+})`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Biscotte Restaurant (closed)",
   publishedAt: "2024-03-14T17:29:03.399Z",
   locale: "en" // default locale
   // …
-}
-```
-
-</Response>
-</ApiCall>
-
+}`
+    }
+  ]}
+/>

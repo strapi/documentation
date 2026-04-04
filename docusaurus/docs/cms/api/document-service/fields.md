@@ -13,13 +13,13 @@ tags:
 - findOne()
 - findMany()
 - findFirst()
-- publish()
 - fields
 - update()
 - unpublishing content
 ---
- 
+
 import IdsInResponse from '/docs/snippets/id-in-responses.md'
+import Endpoint from '@site/src/components/ApiReference/Endpoint';
 
 # Document Service API: Selecting fields
 
@@ -35,174 +35,193 @@ You can also use the `populate` parameter to populate relations, media fields, c
 
 To select fields to return while [finding a specific document](/cms/api/document-service#findone) with the Document Service API:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const document = await strapi.documents("api::restaurant.restaurant").findOne({
+<Endpoint
+  id="findone"
+  method="GET"
+  path='strapi.documents("api::restaurant.restaurant").findOne()'
+  title="Select fields with findOne()"
+  description="Select specific fields to return when finding a document by documentId."
+  codeTabs={[
+    {
+      label: "JavaScript",
+      code: `const document = await strapi.documents("api::restaurant.restaurant").findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   fields: ["name", "description"],
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```js
-{
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Biscotte Restaurant",
   description: "Welcome to Biscotte restaurant! …"
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Select fields with `findFirst()` queries {#findfirst}
 
 To select fields to return while [finding the first document](/cms/api/document-service#findfirst) matching the parameters with the Document Service API:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const document = await strapi.documents("api::restaurant.restaurant").findFirst({
+<Endpoint
+  id="findfirst"
+  method="GET"
+  path='strapi.documents("api::restaurant.restaurant").findFirst()'
+  title="Select fields with findFirst()"
+  description="Select specific fields to return when finding the first matching document."
+  codeTabs={[
+    {
+      label: "JavaScript",
+      code: `const document = await strapi.documents("api::restaurant.restaurant").findFirst({
   fields: ["name", "description"],
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```js
-{
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Biscotte Restaurant",
   description: "Welcome to Biscotte restaurant! …"
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Select fields with `findMany()` queries {#findmany}
 
 To select fields to return while [finding documents](/cms/api/document-service#findmany) with the Document Service API:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+<Endpoint
+  id="findmany"
+  method="GET"
+  path='strapi.documents("api::restaurant.restaurant").findMany()'
+  title="Select fields with findMany()"
+  description="Select specific fields to return when finding multiple documents."
+  codeTabs={[
+    {
+      label: "JavaScript",
+      code: `const documents = await strapi.documents("api::restaurant.restaurant").findMany({
   fields: ["name", "description"],
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```js
-[
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `[
   {
     documentId: "a1b2c3d4e5f6g7h8i9j0klm",
     name: "Biscotte Restaurant",
     description: "Welcome to Biscotte restaurant! …"
   }
   // ...
-]
-```
-
-</Response>
-</ApiCall>
+]`
+    }
+  ]}
+/>
 
 ## Select fields with `create()` queries {#create}
 
 To select fields to return while [creating documents](/cms/api/document-service#create) with the Document Service API:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const document = await strapi.documents("api::restaurant.restaurant").create({
+<Endpoint
+  id="create"
+  method="POST"
+  path='strapi.documents("api::restaurant.restaurant").create()'
+  title="Select fields with create()"
+  description="Select specific fields to return when creating a new document."
+  codeTabs={[
+    {
+      label: "JavaScript",
+      code: `const document = await strapi.documents("api::restaurant.restaurant").create({
   data: {
     name: "Restaurant B",
     description: "Description for the restaurant",
   },
   fields: ["name", "description"],
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```js
-{
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   id: 4,
   documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   name: 'Restaurant B',
   description: 'Description for the restaurant'
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Select fields with `update()` queries {#update}
 
 To select fields to return while [updating documents](/cms/api/document-service#update) with the Document Service API:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const document = await strapi.documents("api::restaurant.restaurant").update({
+<Endpoint
+  id="update"
+  method="PUT"
+  path='strapi.documents("api::restaurant.restaurant").update()'
+  title="Select fields with update()"
+  description="Select specific fields to return when updating a document."
+  codeTabs={[
+    {
+      label: "JavaScript",
+      code: `const document = await strapi.documents("api::restaurant.restaurant").update({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   data: {
     name: "Restaurant C",
   },
   fields: ["name"],
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```js
-{ 
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   name: 'Restaurant C'
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Select fields with `delete()` queries {#delete}
 
 To select fields to return while [deleting documents](/cms/api/document-service#delete) with the Document Service API:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const document = await strapi.documents("api::restaurant.restaurant").delete({
+<Endpoint
+  id="delete"
+  method="DELETE"
+  path='strapi.documents("api::restaurant.restaurant").delete()'
+  title="Select fields with delete()"
+  description="Select specific fields to return when deleting a document."
+  codeTabs={[
+    {
+      label: "JavaScript",
+      code: `const document = await strapi.documents("api::restaurant.restaurant").delete({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```js
-  documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `  documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   // All of the deleted document's versions are returned
   entries: [
     {
@@ -212,32 +231,35 @@ const document = await strapi.documents("api::restaurant.restaurant").delete({
       // …
     }
   ]
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Select fields with `publish()` queries {#publish}
 
 To select fields to return while [publishing documents](/cms/api/document-service#publish) with the Document Service API:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const document = await strapi.documents("api::restaurant.restaurant").publish({
+<Endpoint
+  id="publish"
+  method="POST"
+  path='strapi.documents("api::restaurant.restaurant").publish()'
+  title="Select fields with publish()"
+  description="Select specific fields to return when publishing a document."
+  codeTabs={[
+    {
+      label: "JavaScript",
+      code: `const document = await strapi.documents("api::restaurant.restaurant").publish({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```js
-{
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   // All of the published locale entries are returned
   entries: [
@@ -246,32 +268,35 @@ const document = await strapi.documents("api::restaurant.restaurant").publish({
       name: 'Restaurant B'
     }
   ]
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Select fields with `unpublish()` queries {#unpublish}
 
 To select fields to return while [unpublishing documents](/cms/api/document-service#unpublish) with the Document Service API:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const document = await strapi.documents("api::restaurant.restaurant").unpublish({
+<Endpoint
+  id="unpublish"
+  method="DELETE"
+  path='strapi.documents("api::restaurant.restaurant").unpublish()'
+  title="Select fields with unpublish()"
+  description="Select specific fields to return when unpublishing a document."
+  codeTabs={[
+    {
+      label: "JavaScript",
+      code: `const document = await strapi.documents("api::restaurant.restaurant").unpublish({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   fields: ["name"],
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```js
-{
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   // All of the published locale entries are returned
   entries: [
@@ -280,32 +305,35 @@ const document = await strapi.documents("api::restaurant.restaurant").unpublish(
       name: 'Restaurant B'
     }
   ]
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Select fields with `discardDraft()` queries {#discarddraft}
 
 To select fields to return while [discarding draft versions of documents](/cms/api/document-service#discarddraft) with the Document Service API:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const document = await strapi.documents("api::restaurant.restaurant").discardDraft({
+<Endpoint
+  id="discarddraft"
+  method="DELETE"
+  path='strapi.documents("api::restaurant.restaurant").discardDraft()'
+  title="Select fields with discardDraft()"
+  description="Select specific fields to return when discarding a draft document."
+  codeTabs={[
+    {
+      label: "JavaScript",
+      code: `const document = await strapi.documents("api::restaurant.restaurant").discardDraft({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   // All of the discarded draft entries are returned
   entries: [
@@ -313,8 +341,8 @@ const document = await strapi.documents("api::restaurant.restaurant").discardDra
       "name": "Restaurant B"
     }
   ]
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+  isLast
+/>

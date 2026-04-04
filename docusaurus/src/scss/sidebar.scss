@@ -920,6 +920,40 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
+/** V3: When left sidebar is collapsed, shrink the sidebar container so content reclaims the space */
+[class*="docSidebarContainer"]:has(.sidebar-v3-wrapper--collapsed) {
+  width: 48px !important;
+  min-width: 48px !important;
+  max-width: 48px !important;
+  transition: width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1),
+              min-width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1),
+              max-width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/** Smooth transition on the sidebar container for expand too */
+[class*="docSidebarContainer"] {
+  transition: width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1),
+              min-width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1),
+              max-width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/** V3: When sidebar is collapsed, override the sidebar width variable so docMainContainer reclaims space */
+[class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) {
+  --doc-sidebar-width: 48px;
+}
+
+@include medium-up {
+  /** Override docMainContainer max-width when sidebar is collapsed */
+  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) > [class*="docMainContainer"] {
+    max-width: calc(100% - 48px) !important;
+  }
+
+  /** Smooth transition on the main container */
+  [class*="docMainContainer"] {
+    transition: max-width var(--strapi-duration-slow, 400ms) cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
 .sidebar-v3-content {
   opacity: 1;
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);

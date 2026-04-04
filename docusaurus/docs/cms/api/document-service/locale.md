@@ -20,6 +20,8 @@ tags:
 - unpublishing content
 ---
 
+import Endpoint from '@site/src/components/ApiReference/Endpoint';
+
 # Document Service API: Using the `locale` parameter
 
 By default the [Document Service API](/cms/api/document-service) returns the default locale version of documents (which is 'en', i.e. the English version, unless another default locale has been set for the application, see [Internationalization (i18n) feature](/cms/features/internationalization)). This page describes how to use the `locale` parameter to get or manipulate data only for specific locales.
@@ -28,34 +30,35 @@ By default the [Document Service API](/cms/api/document-service) returns the def
 
 If a `locale` is passed, the [`findOne()` method](/cms/api/document-service#findone) of the Document Service API returns the version of the document for this locale:
 
-<ApiCall>
-
-<Request>
-
-```js
-await strapi.documents('api::restaurant.restaurant').findOne({
+<Endpoint
+  id="find-one"
+  method="GET"
+  path="strapi.documents().findOne()"
+  title="Get a locale version with findOne()"
+  description="Pass a locale to findOne() to get the version of the document for that locale."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi.documents('api::restaurant.restaurant').findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'fr',
-});
-```
-
-</Request>
-
-<Response>
-
-```js {5}
-{
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Biscotte Restaurant",
   publishedAt: null, // draft version (default)
   locale: "fr", // as asked from the parameters
   // …
-}
-```
-
-</Response>
-
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 If no `status` parameter is passed, the `draft` version is returned by default.
 
@@ -63,29 +66,32 @@ If no `status` parameter is passed, the `draft` version is returned by default.
 
 To return a specific locale while [finding the first document](/cms/api/document-service#findfirst) matching the parameters with the Document Service API:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const document = await strapi.documents('api::article.article').findFirst({
+<Endpoint
+  id="find-first"
+  method="GET"
+  path="strapi.documents().findFirst()"
+  title="Get a locale version with findFirst()"
+  description="Pass a locale to findFirst() to return documents matching that locale."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const document = await strapi.documents('api::article.article').findFirst({
   locale: 'fr',
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   "documentId": "cjld2cjxh0000qzrmn831i7rn",
   "title": "Test Article"
   // …
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 If no `status` parameter is passed, the `draft` version is returned by default.
 
@@ -95,20 +101,24 @@ When a `locale` is passed to the [`findMany()` method](/cms/api/document-service
 
 If no `status` parameter is passed, the `draft` versions are returned by default.
 
-<ApiCall>
-<Request>
-
-```js
-// Defaults to status: draft
-await strapi.documents('api::restaurant.restaurant').findMany({ locale: 'fr' });
-```
-
-</Request>
-
-<Response>
-
-```js {6}
-[
+<Endpoint
+  id="find-many"
+  method="GET"
+  path="strapi.documents().findMany()"
+  title="Get locale versions with findMany()"
+  description="Pass a locale to findMany() to return all documents that have this locale available."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `// Defaults to status: draft
+await strapi.documents('api::restaurant.restaurant').findMany({ locale: 'fr' });`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `[
   {
     documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
     name: 'Restaurant Biscotte',
@@ -117,11 +127,10 @@ await strapi.documents('api::restaurant.restaurant').findMany({ locale: 'fr' });
     // …
   },
   // …
-];
-```
-
-</Response>
-</ApiCall>
+]`
+    }
+  ]}
+/>
 
 <details>
 <summary>Explanation:</summary>
@@ -141,7 +150,7 @@ Given the following 4 documents that have various locales:
   - `fr`
   - it
 
-`findMany({ locale: 'fr' })` would only return the draft version of the documents that have a `‘fr’` locale version, that is documents A, C, and D.
+`findMany({ locale: 'fr' })` would only return the draft version of the documents that have a `'fr'` locale version, that is documents A, C, and D.
 
 </details>
 
@@ -149,68 +158,70 @@ Given the following 4 documents that have various locales:
 
 To create a document for specific locale, pass the `locale` as a parameter to the [`create` method](/cms/api/document-service#create) of the Document Service API:
 
-<ApiCall>
-
-<Request title="Create the Spanish draft locale of a document">
-
-```js
-await strapi.documents('api::restaurant.restaurant').create({
+<Endpoint
+  id="create"
+  method="POST"
+  path="strapi.documents().create()"
+  title="Create a document for a locale"
+  description="Pass a locale to create() to create the document for that specific locale."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi.documents('api::restaurant.restaurant').create({
   locale: 'es' // if not passed, the draft is created for the default locale
   data: { name: 'Restaurante B' }
-})
-```
-
-</Request>
-
-<Response>
-
-```js
-{
+})`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   documentId: "pw2s0nh5ub1zmnk0d80vgqrh",
   name: "Restaurante B",
   publishedAt: null,
   locale: "es"
   // …
-}
-```
-
-</Response>
-
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## `update()` a locale version {#update}
 
 To update only a specific locale version of a document, pass the `locale` parameter to the [`update()` method](/cms/api/document-service#update) of the Document Service API:
 
-<ApiCall>
-
-<Request title="Update the Spanish locale of a document">
-
-```js
-await strapi.documents('api::restaurant.restaurant').update({
+<Endpoint
+  id="update"
+  method="PUT"
+  path="strapi.documents().update()"
+  title="Update a locale version"
+  description="Pass a locale to update() to update only that specific locale version of a document."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi.documents('api::restaurant.restaurant').update({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'es',
   data: { name: 'Nuevo nombre del restaurante' },
-});
-```
-
-</Request>
-
-<Response>
-
-```js {3}
-{
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Nuevo nombre del restaurante",
   locale: "es",
   publishedAt: null,
   // …
-}
-```
-
-</Response>
-
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## `delete()` locale versions {#delete}
 
@@ -220,37 +231,47 @@ Use the `locale` parameter with the [`delete()` method](/cms/api/document-servic
 
 To delete a specific locale version of a document:
 
-<Request title="Delete the Spanish locale of a document">
-
-```js
-await strapi.documents('api::restaurant.restaurant').delete({
+<Endpoint
+  id="delete-locale"
+  method="DELETE"
+  path="strapi.documents().delete()"
+  title="Delete a locale version"
+  description="Pass a locale to delete() to delete only that specific locale version of a document."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi.documents('api::restaurant.restaurant').delete({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
   locale: 'es',
-});
-```
-
-</Request>
+});`
+    }
+  ]}
+/>
 
 ### Delete all locale versions
 
 The `*` wildcard is supported by the `locale` parameter and can be used to delete all locale versions of a document:
 
-<ApiCall>
-<Request>
-
-```js
-await strapi.documents('api::restaurant.restaurant').delete({
+<Endpoint
+  id="delete-all-locales"
+  method="DELETE"
+  path="strapi.documents().delete()"
+  title="Delete all locale versions"
+  description="Use the * wildcard with the locale parameter to delete all locale versions of a document."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi.documents('api::restaurant.restaurant').delete({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
   locale: '*',
-}); // for all existing locales
-```
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
+}); // for all existing locales`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
   // All of the deleted locale versions are returned
   "versions": [
@@ -258,11 +279,10 @@ await strapi.documents('api::restaurant.restaurant').delete({
       "title": "Test Article"
     }
   ]
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## `publish()` locale versions {#publish}
 
@@ -272,23 +292,26 @@ To publish only specific locale versions of a document with the [`publish()` met
 
 To publish a specific locale version of a document:
 
-<ApiCall>
-
-<Request title="Publish the French locale of document">
-
-```js
-await strapi.documents('api::restaurant.restaurant').publish({
+<Endpoint
+  id="publish-locale"
+  method="POST"
+  path="strapi.documents().publish()"
+  title="Publish a locale version"
+  description="Pass a locale to publish() to publish only that specific locale version of a document."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi.documents('api::restaurant.restaurant').publish({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'fr',
-});
-```
-
-</Request>
-
-<Response>
-
-```js
-{
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   versions: [
     {
       documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
@@ -297,34 +320,35 @@ await strapi.documents('api::restaurant.restaurant').publish({
       locale: 'fr',
       // …
     },
-  ];
-}
-```
-
-</Response>
-
-</ApiCall>
+  ]
+}`
+    }
+  ]}
+/>
 
 ### Publish all locale versions
 
 The `*` wildcard is supported by the `locale` parameter to publish all locale versions of a document:
 
-<ApiCall>
-
-<Request title="Publish all locales of a document">
-
-```js
-await strapi
+<Endpoint
+  id="publish-all-locales"
+  method="POST"
+  path="strapi.documents().publish()"
+  title="Publish all locale versions"
+  description="Use the * wildcard with the locale parameter to publish all locale versions of a document."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi
   .documents('api::restaurant.restaurant')
-  .publish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
-```
-
-</Request>
-
-<Response>
-
-```js
-{
+  .publish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   "versions": [
     {
       "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
@@ -345,12 +369,10 @@ await strapi
       // …
     }
   ]
-}
-```
-
-</Response>
-
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## `unpublish()` locale versions {#unpublish}
 
@@ -360,74 +382,80 @@ To publish only specific locale versions of a document with the [`unpublish()` m
 
 To unpublish a specific locale version of a document, pass the `locale` as a parameter to `unpublish()`:
 
-<ApiCall>
-
-<Request title="Unpublish the French locale version of document">
-
-```js
-await strapi
+<Endpoint
+  id="unpublish-locale"
+  method="DELETE"
+  path="strapi.documents().unpublish()"
+  title="Unpublish a locale version"
+  description="Pass a locale to unpublish() to unpublish only that specific locale version of a document."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi
   .documents('api::restaurant.restaurant')
-  .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });
-```
-
-</Request>
-
-<Response>
-
-```js
-{
-  versions: 1;
-}
-```
-
-</Response>
-
-</ApiCall>
+  .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
+  versions: 1
+}`
+    }
+  ]}
+/>
 
 ### Unpublish all locale versions
 
 The `*` wildcard is supported by the `locale` parameter, to unpublish all locale versions of a document:
 
-<ApiCall>
-
-<Request title="Unpublish all locale versions of a document">
-
-```js
-await strapi
+<Endpoint
+  id="unpublish-all-locales"
+  method="DELETE"
+  path="strapi.documents().unpublish()"
+  title="Unpublish all locale versions"
+  description="Use the * wildcard with the locale parameter to unpublish all locale versions of a document."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi
   .documents('api::restaurant.restaurant')
-  .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
-```
+  .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
+  versions: 3
+}`
+    }
+  ]}
+/>
 
-</Request>
-
-<Response>
-
-```js
-{
-  versions: 3;
-}
-```
-
-</Response>
-
-</ApiCall>
-
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const document = await strapi.documents('api::article.article').unpublish({
+<Endpoint
+  id="unpublish-with-fields"
+  method="DELETE"
+  path="strapi.documents().unpublish()"
+  title="Unpublish with fields selection"
+  description="Unpublish a document while selecting specific fields to return."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const document = await strapi.documents('api::article.article').unpublish({
   documentId: 'cjld2cjxh0000qzrmn831i7rn',
   fields: ['title'],
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
+});`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   "documentId": "cjld2cjxh0000qzrmn831i7rn",
   // All of the unpublished locale versions are returned
   "versions": [
@@ -435,11 +463,10 @@ const document = await strapi.documents('api::article.article').unpublish({
       "title": "Test Article"
     }
   ]
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## `discardDraft()` for locale versions {#discard-draft}
 
@@ -449,22 +476,25 @@ To discard draft data only for some locales versions of a document with the [`di
 
 To discard draft data for a specific locale version of a document and override it with data from the published version for this locale, pass the `locale` as a parameter to `discardDraft()`:
 
-<ApiCall>
-
-<Request title="Discard draft for the French locale version of document">
-
-```js
-await strapi
+<Endpoint
+  id="discard-draft-locale"
+  method="DELETE"
+  path="strapi.documents().discardDraft()"
+  title="Discard draft for a locale version"
+  description="Pass a locale to discardDraft() to discard draft data for that specific locale version."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi
   .documents('api::restaurant.restaurant')
-  .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });
-```
-
-</Request>
-
-<Response>
-
-```js
-{
+  .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   versions: [
     {
       documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
@@ -473,34 +503,35 @@ await strapi
       locale: 'fr',
       // …
     },
-  ];
-}
-```
-
-</Response>
-
-</ApiCall>
+  ]
+}`
+    }
+  ]}
+/>
 
 ### Discard drafts for all locale versions
 
 The `*` wildcard is supported by the `locale` parameter, to discard draft data for all locale versions of a document and replace them with the data from the published versions:
 
-<ApiCall>
-
-<Request title="Discard drafts for all locale versions of a document">
-
-```js
-await strapi
+<Endpoint
+  id="discard-draft-all-locales"
+  method="DELETE"
+  path="strapi.documents().discardDraft()"
+  title="Discard drafts for all locale versions"
+  description="Use the * wildcard with the locale parameter to discard drafts for all locale versions of a document."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `await strapi
   .documents('api::restaurant.restaurant')
-  .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
-```
-
-</Request>
-
-<Response>
-
-```js
-{
+  .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `{
   versions: [
     {
       documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
@@ -523,13 +554,11 @@ await strapi
       locale: 'es',
       // …
     },
-  ];
-}
-```
-
-</Response>
-
-</ApiCall>
+  ]
+}`
+    }
+  ]}
+/>
 
 ## `count()` documents for a locale {#count}
 

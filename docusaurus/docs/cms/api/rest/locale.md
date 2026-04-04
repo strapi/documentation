@@ -16,6 +16,7 @@ tags:
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
+import Endpoint from '@site/src/components/ApiReference/Endpoint';
 
 # REST API: `locale`
 
@@ -63,53 +64,57 @@ The following table lists the new possible use cases added by i18n to the REST A
 
 ### `GET` Get all documents in a specific locale {#rest-get-all}
 
-<ApiCall>
-
-<Request> 
-
-`GET http://localhost:1337/api/restaurants?locale=fr`
-
-</Request>
-
-<Response> 
-
-```json
-{
-  "data": [
+<Endpoint
+  id="rest-get-all-endpoint"
+  method="GET"
+  path="/api/restaurants?locale=fr"
+  title="Get all documents in a specific locale"
+  description="Returns all documents for a given locale."
+  codeTabs={[
     {
-      "id": 5,
-      "documentId": "h90lgohlzfpjf3bvan72mzll",
-      "Title": "Meilleures pizzas",
-      "Body": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "text": "On déguste les meilleures pizzas de la ville à la Pizzeria Arrivederci."
-            }
-          ]
+      label: 'Request',
+      code: `GET http://localhost:1337/api/restaurants?locale=fr`,
+    },
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: JSON.stringify({
+        data: [
+          {
+            id: 5,
+            documentId: "h90lgohlzfpjf3bvan72mzll",
+            Title: "Meilleures pizzas",
+            Body: [
+              {
+                type: "paragraph",
+                children: [
+                  {
+                    type: "text",
+                    text: "On déguste les meilleures pizzas de la ville à la Pizzeria Arrivederci."
+                  }
+                ]
+              }
+            ],
+            createdAt: "2024-03-06T22:08:59.643Z",
+            updatedAt: "2024-03-06T22:10:21.127Z",
+            publishedAt: "2024-03-06T22:10:21.130Z",
+            locale: "fr"
+          }
+        ],
+        meta: {
+          pagination: {
+            page: 1,
+            pageSize: 25,
+            pageCount: 1,
+            total: 1
+          }
         }
-      ],
-      "createdAt": "2024-03-06T22:08:59.643Z",
-      "updatedAt": "2024-03-06T22:10:21.127Z",
-      "publishedAt": "2024-03-06T22:10:21.130Z",
-      "locale": "fr"
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 1
-    }
-  }
-}
-```
-
-</Response>
-</ApiCall>
+      }, null, 2),
+    },
+  ]}
+/>
 
 ### `GET` Get a document in a specific locale {#rest-get}
 
@@ -124,87 +129,91 @@ To get a specific document in a given locale, add the `locale` parameter to the 
 
 To get a specific document in a collection type in a given locale, add the `locale` parameter to the query, after the `documentId`:
 
-<ApiCall>
-
-<Request>
-
-`GET /api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr`
-
-</Request>
-
-<Response>
-
-```json
-{
-  "data": [
+<Endpoint
+  id="get-one-collection-type-endpoint"
+  method="GET"
+  path="/api/restaurants/:documentId?locale=fr"
+  title="Get a document in a specific locale (collection type)"
+  description="Returns a specific document in a collection type for a given locale."
+  codeTabs={[
     {
-      "id": 22,
-      "documentId": "lr5wju2og49bf820kj9kz8c3",
-      "Name": "Biscotte Restaurant",
-      "Description": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "text": "Bienvenue au restaurant Biscotte! Le Restaurant Biscotte propose une cuisine à base de produits frais et de qualité, souvent locaux, biologiques lorsque cela est possible, et toujours produits par des producteurs passionnés."
-            }
-          ]
-        }
-      ],
-      // …
-      "locale": "fr"
+      label: 'Request',
+      code: `GET /api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr`,
     },
-    // …
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 3
-    }
-  }
-}
-```
-
-</Response>
-
-</ApiCall>
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: JSON.stringify({
+        data: [
+          {
+            id: 22,
+            documentId: "lr5wju2og49bf820kj9kz8c3",
+            Name: "Biscotte Restaurant",
+            Description: [
+              {
+                type: "paragraph",
+                children: [
+                  {
+                    type: "text",
+                    text: "Bienvenue au restaurant Biscotte! Le Restaurant Biscotte propose une cuisine à base de produits frais et de qualité, souvent locaux, biologiques lorsque cela est possible, et toujours produits par des producteurs passionnés."
+                  }
+                ]
+              }
+            ],
+            locale: "fr"
+          }
+        ],
+        meta: {
+          pagination: {
+            page: 1,
+            pageSize: 25,
+            pageCount: 1,
+            total: 3
+          }
+        }
+      }, null, 2),
+    },
+  ]}
+/>
 
 #### Single types {#get-one-single-type}
 
 To get a specific single type document in a given locale, add the `locale` parameter to the query, after the single type name:
 
-<ApiCall>
-
-<Request>
-
-`GET /api/homepage?locale=fr`
-
-</Request>
-
-<Response>
-
-```json
-{
-  "data": {
-    "id": 10,
-    "documentId": "ukbpbnu8kbutpn98rsanyi50",
-    "Title": "Page d'accueil",
-    "Body": null,
-    "createdAt": "2024-03-07T13:28:26.349Z",
-    "updatedAt": "2024-03-07T13:28:26.349Z",
-    "publishedAt": "2024-03-07T13:28:26.353Z",
-    "locale": "fr"
-  },
-  "meta": {}
-}
-```
-
-</Response>
-
-</ApiCall>
+<Endpoint
+  id="get-one-single-type-endpoint"
+  method="GET"
+  path="/api/homepage?locale=fr"
+  title="Get a document in a specific locale (single type)"
+  description="Returns a specific single type document for a given locale."
+  codeTabs={[
+    {
+      label: 'Request',
+      code: `GET /api/homepage?locale=fr`,
+    },
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: JSON.stringify({
+        data: {
+          id: 10,
+          documentId: "ukbpbnu8kbutpn98rsanyi50",
+          Title: "Page d'accueil",
+          Body: null,
+          createdAt: "2024-03-07T13:28:26.349Z",
+          updatedAt: "2024-03-07T13:28:26.349Z",
+          publishedAt: "2024-03-07T13:28:26.353Z",
+          locale: "fr"
+        },
+        meta: {}
+      }, null, 2),
+    },
+  ]}
+/>
 
 ### `POST` Create a new localized document for a collection type {#rest-create}
 
@@ -219,81 +228,87 @@ To create a localized document from scratch, send a POST request to the Content 
 
 If no locale has been passed in the request body, the document is created using the default locale for the application:
 
-<ApiCall>
-<Request> 
+<Endpoint
+  id="rest-create-default-locale-endpoint"
+  method="POST"
+  path="/api/restaurants"
+  title="Create a document for the default locale"
+  description="Creates a new document using the default locale."
+  codeTabs={[
+    {
+      label: 'Request',
+      code: `POST http://localhost:1337/api/restaurants
 
-`POST http://localhost:1337/api/restaurants`
-
-```json
 {
   "data": {
-    "Name": "Oplato",
+    "Name": "Oplato"
   }
-}
-```
-
-</Request>
-
-<Response>
-
-```json
-{
-  "data": {
-    "id": 13,
-    "documentId": "jae8klabhuucbkgfe2xxc5dj",
-    "Name": "Oplato",
-    "Description": null,
-    "createdAt": "2024-03-06T22:19:54.646Z",
-    "updatedAt": "2024-03-06T22:19:54.646Z",
-    "publishedAt": "2024-03-06T22:19:54.649Z",
-    "locale": "en"
-  },
-  "meta": {}
-}
-```
-
-</Response>
-</ApiCall>
+}`,
+    },
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: JSON.stringify({
+        data: {
+          id: 13,
+          documentId: "jae8klabhuucbkgfe2xxc5dj",
+          Name: "Oplato",
+          Description: null,
+          createdAt: "2024-03-06T22:19:54.646Z",
+          updatedAt: "2024-03-06T22:19:54.646Z",
+          publishedAt: "2024-03-06T22:19:54.649Z",
+          locale: "en"
+        },
+        meta: {}
+      }, null, 2),
+    },
+  ]}
+/>
 
 #### For a specific locale {#rest-create-specific-locale}
 
 To create a localized entry for a locale different from the default one, add the `locale` parameter to the query URL of the POST request:
 
-<ApiCall>
-<Request>
+<Endpoint
+  id="rest-create-specific-locale-endpoint"
+  method="POST"
+  path="/api/restaurants?locale=fr"
+  title="Create a document for a specific locale"
+  description="Creates a new document for a specified locale."
+  codeTabs={[
+    {
+      label: 'Request',
+      code: `POST http://localhost:1337/api/restaurants?locale=fr
 
-`POST http://localhost:1337/api/restaurants?locale=fr`
-
-```json {4}
 {
   "data": {
     "Name": "She's Cake"
   }
-}
-```
-
-</Request>
-
-<Response>
-
-```json
-{
-  "data": {
-    "id": 15,
-    "documentId": "ldcmn698iams5nuaehj69j5o",
-    "Name": "She's Cake",
-    "Description": null,
-    "createdAt": "2024-03-06T22:21:18.373Z",
-    "updatedAt": "2024-03-06T22:21:18.373Z",
-    "publishedAt": "2024-03-06T22:21:18.378Z",
-    "locale": "fr"
-  },
-  "meta": {}
-}
-```
-
-</Response>
-</ApiCall>
+}`,
+    },
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: JSON.stringify({
+        data: {
+          id: 15,
+          documentId: "ldcmn698iams5nuaehj69j5o",
+          Name: "She's Cake",
+          Description: null,
+          createdAt: "2024-03-06T22:21:18.373Z",
+          updatedAt: "2024-03-06T22:21:18.373Z",
+          publishedAt: "2024-03-06T22:21:18.378Z",
+          locale: "fr"
+        },
+        meta: {}
+      }, null, 2),
+    },
+  ]}
+/>
 
 ### `PUT` Create a new, or update an existing, locale version for an existing document {#rest-update}
 
@@ -325,85 +340,87 @@ It is not possible to change the locale of an existing localized entry. When upd
 
 To create a new locale for an existing document in a collection type, add the `locale` parameter to the query, after the `documentId`, and pass data to the request's body:
 
-<ApiCall noSideBySide>
+<Endpoint
+  id="rest-put-collection-type-endpoint"
+  method="PUT"
+  path="/api/restaurants/:documentId?locale=fr"
+  title="Create or update a locale version (collection type)"
+  description="Creates a French locale for an existing restaurant, or updates it if it already exists."
+  codeTabs={[
+    {
+      label: 'Request',
+      code: `PUT http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr
 
-<Request title="Example request: Creating a French locale for an existing restaurant">
-
-`PUT http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr`
-
-```json
 {
   "data": {
     "Name": "She's Cake in French"
   }
-}
-```
-
-</Request>
-
-<Response>
-
-```json
-{
-  "data": {
-    "id": 19,
-    "documentId": "lr5wju2og49bf820kj9kz8c3",
-    "Name": "She's Cake in French",
-    "Description": null,
-    "createdAt": "2024-03-07T12:13:09.551Z",
-    "updatedAt": "2024-03-07T12:13:09.551Z",
-    "publishedAt": "2024-03-07T12:13:09.554Z",
-    "locale": "fr"
-  },
-  "meta": {}
-}
-```
-
-</Response>
-
-</ApiCall>
+}`,
+    },
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: JSON.stringify({
+        data: {
+          id: 19,
+          documentId: "lr5wju2og49bf820kj9kz8c3",
+          Name: "She's Cake in French",
+          Description: null,
+          createdAt: "2024-03-07T12:13:09.551Z",
+          updatedAt: "2024-03-07T12:13:09.551Z",
+          publishedAt: "2024-03-07T12:13:09.554Z",
+          locale: "fr"
+        },
+        meta: {}
+      }, null, 2),
+    },
+  ]}
+/>
 
 #### In a single type {#rest-put-single-type}
 
 To create a new locale for an existing single type document, add the `locale` parameter to the query, after the single type name, and pass data to the request's body:
 
-<ApiCall>
+<Endpoint
+  id="rest-put-single-type-endpoint"
+  method="PUT"
+  path="/api/homepage?locale=fr"
+  title="Create or update a locale version (single type)"
+  description="Creates a French locale for an existing Homepage single type, or updates it if it already exists."
+  codeTabs={[
+    {
+      label: 'Request',
+      code: `PUT http://localhost:1337/api/homepage?locale=fr
 
-<Request title="Example: Create a FR locale for an existing Homepage single type">
-
-`PUT http://localhost:1337/api/homepage?locale=fr`
-
-```json
 {
   "data": {
     "Title": "Page d'accueil"
   }
-}
-```
-
-</Request>
-
-<Response>
-
-```json
-{
-  "data": {
-    "id": 10,
-    "documentId": "ukbpbnu8kbutpn98rsanyi50",
-    "Title": "Page d'accueil",
-    "Body": null,
-    "createdAt": "2024-03-07T13:28:26.349Z",
-    "updatedAt": "2024-03-07T13:28:26.349Z",
-    "publishedAt": "2024-03-07T13:28:26.353Z",
-    "locale": "fr"
-  },
-  "meta": {}
-}
-```
-
-</Response>
-
-</ApiCall>
+}`,
+    },
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: JSON.stringify({
+        data: {
+          id: 10,
+          documentId: "ukbpbnu8kbutpn98rsanyi50",
+          Title: "Page d'accueil",
+          Body: null,
+          createdAt: "2024-03-07T13:28:26.349Z",
+          updatedAt: "2024-03-07T13:28:26.349Z",
+          publishedAt: "2024-03-07T13:28:26.353Z",
+          locale: "fr"
+        },
+        meta: {}
+      }, null, 2),
+    },
+  ]}
+/>
 
 <br/>
 
@@ -417,18 +434,48 @@ To delete a locale version of a document, send a `DELETE` request with the appro
 
 To delete only a specific locale version of a document in a collection type, add the `locale` parameter to the query after the `documentId`:
 
-<Request>
-
-`DELETE /api/restaurants/abcdefghijklmno456?locale=fr`
-
-</Request>
+<Endpoint
+  id="rest-delete-collection-type-endpoint"
+  method="DELETE"
+  path="/api/restaurants/:documentId?locale=fr"
+  title="Delete a locale version (collection type)"
+  description="Deletes a specific locale version of a document in a collection type."
+  codeTabs={[
+    {
+      label: 'Request',
+      code: `DELETE /api/restaurants/abcdefghijklmno456?locale=fr`,
+    },
+  ]}
+  responses={[
+    {
+      status: 204,
+      statusText: 'No Content',
+      body: '',
+    },
+  ]}
+/>
 
 #### In a single type {#rest-delete-single-type}
 
 To delete only a specific locale version of a single type document, add the `locale` parameter to the query after the single type name:
 
-<Request>
-
-`DELETE /api/homepage?locale=fr`
-
-</Request>
+<Endpoint
+  id="rest-delete-single-type-endpoint"
+  method="DELETE"
+  path="/api/homepage?locale=fr"
+  title="Delete a locale version (single type)"
+  description="Deletes a specific locale version of a single type document."
+  codeTabs={[
+    {
+      label: 'Request',
+      code: `DELETE /api/homepage?locale=fr`,
+    },
+  ]}
+  responses={[
+    {
+      status: 204,
+      statusText: 'No Content',
+      body: '',
+    },
+  ]}
+/>

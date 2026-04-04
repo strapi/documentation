@@ -19,6 +19,7 @@ import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
+import Endpoint from '@site/src/components/ApiReference/Endpoint';
 
 # 🧠 Understanding the `populate` parameter for the REST API
 
@@ -80,17 +81,23 @@ The following example is the full response for all 4 entries from the `articles`
 
 Notice how the response only includes the `title`, `slug`, `createdAt`, `updatedAt`, `publishedAt`, and `locale` fields, and the field content of the article as handled by the CKEditor plugin (`ckeditor_content`, truncated for brevity):
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles`
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
+<Endpoint
+  method="GET"
+  path="/api/articles"
+  title="Without populate"
+  description="Returns only default attributes, without any media fields, relations, components, or dynamic zones."
+  id="without-populate"
+  codeTabs={[
+    {
+      label: "Request",
+      code: "GET /api/articles"
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "id": 1,
@@ -101,7 +108,7 @@ Notice how the response only includes the `title`, `slug`, `createdAt`, `updated
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": // truncated content
+      "ckeditor_content": "// truncated content"
     },
     {
       "id": 2,
@@ -112,18 +119,18 @@ Notice how the response only includes the `title`, `slug`, `createdAt`, `updated
       "updatedAt": "2023-06-01T14:32:50.984Z",
       "publishedAt": "2022-09-22T12:36:48.312Z",
       "locale": "en",
-      "ckeditor_content": // truncated content
+      "ckeditor_content": "// truncated content"
     },
     {
       "id": 3,
-      "documentId": "k6m6l9q0n6v9z2m3i0z5jah"
+      "documentId": "k6m6l9q0n6v9z2m3i0z5jah",
       "title": "7 Places worth visiting for the food alone",
       "slug": "7-places-worth-visiting-for-the-food-alone",
       "createdAt": "2021-11-12T13:33:19.948Z",
       "updatedAt": "2023-06-02T11:30:00.075Z",
       "publishedAt": "2023-06-02T11:30:00.075Z",
       "locale": "en",
-      "ckeditor_content": // truncated content
+      "ckeditor_content": "// truncated content"
     },
     {
       "id": 4,
@@ -134,7 +141,7 @@ Notice how the response only includes the `title`, `slug`, `createdAt`, `updated
       "updatedAt": "2023-06-02T10:59:35.148Z",
       "publishedAt": "2022-09-22T12:35:53.899Z",
       "locale": "en",
-      "ckeditor_content": // truncated content
+      "ckeditor_content": "// truncated content"
     }
   ],
   "meta": {
@@ -145,11 +152,10 @@ Notice how the response only includes the `title`, `slug`, `createdAt`, `updated
       "total": 4
     }
   }
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ### Example: With `populate=*`
 
@@ -158,7 +164,7 @@ With the `populate=*` parameter, a `GET` request to `/api/articles` also returns
 The following example is the full response for the first of all 4 entries from the `articles` content-types (the data from articles with ids 2, 3, and 4 is truncated for brevity).
 
 Scroll down to see that the response size is much bigger than without populate. The response now includes additional fields (see highlighted lines) such as:
-* the `image` media field (which stores all information about the article cover, including all its different formats), 
+* the `image` media field (which stores all information about the article cover, including all its different formats),
 * the first-level fields of the `blocks` dynamic zone and the `seo` component,
 * the `category` relation and its fields,
 * and even some information about the articles translated in other languages, as shown by the `localizations` object.
@@ -168,17 +174,24 @@ To populate deeply nested components, see the [populate components](#populate-co
 :::
 
 <br />
-<ApiCall noSideBySide>
-<Request title="Example request">
 
-`GET /api/articles?populate=*`
-
-</Request>
-
-<Response title="Example response">
-
-```json {13-122}
-{
+<Endpoint
+  method="GET"
+  path="/api/articles"
+  title="With populate=*"
+  description="Returns all media fields, first-level relations, components, and dynamic zones."
+  id="with-populate-all"
+  codeTabs={[
+    {
+      label: "Request",
+      code: "GET /api/articles?populate=*"
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "id": 1,
@@ -188,7 +201,7 @@ To populate deeply nested components, see the [populate components](#populate-co
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": // truncated content
+      "ckeditor_content": "// truncated content",
       "image": {
         "data": {
             "id": 12,
@@ -293,7 +306,7 @@ To populate deeply nested components, see the [populate components](#populate-co
               "updatedAt": "2023-06-02T10:57:19.606Z",
               "publishedAt": "2022-09-22T13:00:00.069Z",
               "locale": "fr-FR",
-              "ckeditor_content": // truncated content
+              "ckeditor_content": "// truncated content"
             }
           ]
         }
@@ -301,15 +314,15 @@ To populate deeply nested components, see the [populate components](#populate-co
     },
     {
       "id": 2,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 3,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 4,
-      // truncated content
+      "// truncated content": true
     }
   ],
   "meta": {
@@ -320,11 +333,10 @@ To populate deeply nested components, see the [populate components](#populate-co
       "total": 4
     }
   }
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Populate specific relations and fields
 
@@ -375,7 +387,7 @@ Populate as an array<br/>(to populate many relations 1 level deep)
 
 ```json
 {
-  populate: [ 
+  populate: [
     'articles',
     'restaurants'
   ],
@@ -411,17 +423,23 @@ Notice that the response does not include any media fields, relations, component
 
 <br/>
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles`
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
+<Endpoint
+  method="GET"
+  path="/api/articles"
+  title="Without populate"
+  description="Returns only default attributes for all articles."
+  id="specific-without-populate"
+  codeTabs={[
+    {
+      label: "Request",
+      code: "GET /api/articles"
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "id": 1,
@@ -432,7 +450,7 @@ Notice that the response does not include any media fields, relations, component
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…"
     },
     {
       "id": 2,
@@ -443,7 +461,7 @@ Notice that the response does not include any media fields, relations, component
       "updatedAt": "2023-06-01T14:32:50.984Z",
       "publishedAt": "2022-09-22T12:36:48.312Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…"
     },
     {
       "id": 3,
@@ -454,7 +472,7 @@ Notice that the response does not include any media fields, relations, component
       "updatedAt": "2023-06-02T11:30:00.075Z",
       "publishedAt": "2023-06-02T11:30:00.075Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…"
     },
     {
       "id": 4,
@@ -465,7 +483,7 @@ Notice that the response does not include any media fields, relations, component
       "updatedAt": "2023-06-02T10:59:35.148Z",
       "publishedAt": "2022-09-22T12:35:53.899Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…"
     }
   ],
   "meta": {
@@ -476,12 +494,10 @@ Notice that the response does not include any media fields, relations, component
       "total": 4
     }
   }
-}
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 #### Example: With `populate[0]=category`
 
@@ -491,17 +507,23 @@ The following example is the full response for all 4 entries from the `articles`
 
 Notice that the response now includes additional data with the `category` field for each article (see highlighted lines):
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles?populate[0]=category`
-
-</Request>
-
-<Response title="Example response">
-
-```json {13-23,36-46,59-69,82-92}
-{
+<Endpoint
+  method="GET"
+  path="/api/articles"
+  title="With populate[0]=category"
+  description="Returns articles with their related category data populated."
+  id="with-populate-category"
+  codeTabs={[
+    {
+      label: "Request",
+      code: "GET /api/articles?populate[0]=category"
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "id": 1,
@@ -512,7 +534,7 @@ Notice that the response now includes additional data with the `category` field 
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 4,
@@ -533,7 +555,7 @@ Notice that the response now includes additional data with the `category` field 
       "updatedAt": "2023-06-01T14:32:50.984Z",
       "publishedAt": "2022-09-22T12:36:48.312Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 13,
@@ -553,7 +575,7 @@ Notice that the response now includes additional data with the `category` field 
       "updatedAt": "2023-06-02T11:30:00.075Z",
       "publishedAt": "2023-06-02T11:30:00.075Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 3,
@@ -574,7 +596,7 @@ Notice that the response now includes additional data with the `category` field 
       "updatedAt": "2023-06-02T10:59:35.148Z",
       "publishedAt": "2022-09-22T12:35:53.899Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 3,
@@ -595,11 +617,10 @@ Notice that the response now includes additional data with the `category` field 
       "total": 4
     }
   }
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ### Populate several levels deep for specific relations
 
@@ -641,17 +662,23 @@ Let's compare and explain the responses returned with `populate[0]=category` (1 
 
 When we only populate 1 level deep, asking for the categories associated to articles, we can get the following example response (highlighted lines show the `category` relations field):
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles?populate[0]=category`
-
-</Request>
-
-<Response title="Example response">
-
-```json {13-23,36-46,59-69,82-92}
-{
+<Endpoint
+  method="GET"
+  path="/api/articles"
+  title="With 1-level deep population"
+  description="Populates the category relation 1 level deep."
+  id="with-1-level-deep-population"
+  codeTabs={[
+    {
+      label: "Request",
+      code: "GET /api/articles?populate[0]=category"
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "id": 1,
@@ -662,7 +689,7 @@ When we only populate 1 level deep, asking for the categories associated to arti
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 4,
@@ -682,7 +709,7 @@ When we only populate 1 level deep, asking for the categories associated to arti
       "updatedAt": "2023-06-01T14:32:50.984Z",
       "publishedAt": "2022-09-22T12:36:48.312Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 13,
@@ -703,7 +730,7 @@ When we only populate 1 level deep, asking for the categories associated to arti
       "updatedAt": "2023-06-02T11:30:00.075Z",
       "publishedAt": "2023-06-02T11:30:00.075Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 3,
@@ -724,7 +751,7 @@ When we only populate 1 level deep, asking for the categories associated to arti
       "updatedAt": "2023-06-02T10:59:35.148Z",
       "publishedAt": "2022-09-22T12:35:53.899Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 3,
@@ -745,11 +772,10 @@ When we only populate 1 level deep, asking for the categories associated to arti
       "total": 4
     }
   }
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 #### Example: With 2-level deep population
 
@@ -757,17 +783,23 @@ When we populate 2 levels deep, asking for the categories associated to articles
 
 Notice that we now have the `restaurants` relation field included with the response inside the `category` relation (see highlighted lines):
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles?populate[category][populate][0]=restaurants`
-
-</Request>
-
-<Response title="Example response">
-
-```json {13-56}
-{{
+<Endpoint
+  method="GET"
+  path="/api/articles"
+  title="With 2-level deep population"
+  description="Populates the category relation and the nested restaurants relation 2 levels deep."
+  id="with-2-level-deep-population"
+  codeTabs={[
+    {
+      label: "Request",
+      code: "GET /api/articles?populate[category][populate][0]=restaurants"
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "id": 1,
@@ -778,7 +810,7 @@ Notice that we now have the `restaurants` relation field included with the respo
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 4,
@@ -801,23 +833,23 @@ Notice that we now have the `restaurants` relation field included with the respo
               },
               {
                 "id": 9,
-                // truncated content
+                "// truncated content": true
               },
               {
                 "id": 10,
-                // truncated content
+                "// truncated content": true
               },
               {
                 "id": 12,
-                // truncated content
+                "// truncated content": true
               },
               {
                 "id": 21,
-                // truncated content
+                "// truncated content": true
               },
               {
                 "id": 26,
-                // truncated content
+                "// truncated content": true
               }
             ]
           }
@@ -826,15 +858,15 @@ Notice that we now have the `restaurants` relation field included with the respo
     },
     {
       "id": 2,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 3,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 4,
-      // truncated content
+      "// truncated content": true
     }
   ],
   "meta": {
@@ -845,11 +877,10 @@ Notice that we now have the `restaurants` relation field included with the respo
       "total": 4
     }
   }
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ### Populate components
 
@@ -892,17 +923,23 @@ When we only populate the `seo` component, we go only 1 level deep, and we can g
 
 Notice there's no mention of the `metaSocial` component nested within the `seo` component:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles?populate[0]=seo`
-
-</Request>
-
-<Response title="Example response">
-
-```json {13-22}
-{
+<Endpoint
+  method="GET"
+  path="/api/articles"
+  title="Only 1st level component"
+  description="Populates only the seo component, 1 level deep."
+  id="only-1st-level-component"
+  codeTabs={[
+    {
+      label: "Request",
+      code: "GET /api/articles?populate[0]=seo"
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "id": 1,
@@ -913,7 +950,7 @@ Notice there's no mention of the `metaSocial` component nested within the `seo` 
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "seo": {
         "id": 1,
         "documentId": "kqcwhq6hes25kt9ebj8x7j",
@@ -928,16 +965,16 @@ Notice there's no mention of the `metaSocial` component nested within the `seo` 
     },
     {
       "id": 2,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 3,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 4,
-      // truncated content
-    },
+      "// truncated content": true
+    }
   ],
   "meta": {
     "pagination": {
@@ -947,11 +984,10 @@ Notice there's no mention of the `metaSocial` component nested within the `seo` 
       "total": 4
     }
   }
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 #### Example: 1st level and 2nd level component
 
@@ -959,17 +995,23 @@ When we populate 2 levels deep, asking both for the `seo` component and the `met
 
 Notice that we now have the `metaSocial` component-related data included with the response (see highlighted lines):
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles?populate[0]=seo&populate[1]=seo.metaSocial`
-
-</Request>
-
-<Response title="Example response">
-
-```json {13,22-29}
-{
+<Endpoint
+  method="GET"
+  path="/api/articles"
+  title="1st level and 2nd level component"
+  description="Populates the seo component and the nested metaSocial component."
+  id="1st-level-and-2nd-level-component"
+  codeTabs={[
+    {
+      label: "Request",
+      code: "GET /api/articles?populate[0]=seo&populate[1]=seo.metaSocial"
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "id": 1,
@@ -980,7 +1022,7 @@ Notice that we now have the `metaSocial` component-related data included with th
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "seo": {
         "id": 1,
         "documentId": "e8cnux5ejxyqrejd5addfv",
@@ -1004,16 +1046,16 @@ Notice that we now have the `metaSocial` component-related data included with th
     },
     {
       "id": 2,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 3,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 4,
-      // truncated content
-    },
+      "// truncated content": true
+    }
   ],
   "meta": {
     "pagination": {
@@ -1023,11 +1065,10 @@ Notice that we now have the `metaSocial` component-related data included with th
       "total": 4
     }
   }
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ### Populate dynamic zones
 
@@ -1068,17 +1109,23 @@ Let's compare and explain the responses returned with `populate[0]=blocks` (only
 
 When we only populate the `blocks` dynamic zone, we go only 1 level deep, and we can get the following example response. Highlighted lines show the `blocks` dynamic zone and the 2 components it includes:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles?populate[0]=blocks`
-
-</Request>
-
-<Response title="Example response">
-
-```json {13-26}
-{
+<Endpoint
+  method="GET"
+  path="/api/articles"
+  title="Populating only the dynamic zone"
+  description="Populates the blocks dynamic zone 1 level deep."
+  id="populating-only-the-dynamic-zone"
+  codeTabs={[
+    {
+      label: "Request",
+      code: "GET /api/articles?populate[0]=blocks"
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "id": 1,
@@ -1089,7 +1136,7 @@ When we only populate the `blocks` dynamic zone, we go only 1 level deep, and we
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…" // truncated content
+      "ckeditor_content": "…",
       "blocks": [
         {
           "id": 2,
@@ -1109,15 +1156,15 @@ When we only populate the `blocks` dynamic zone, we go only 1 level deep, and we
     },
     {
       "id": 2,
-      // …
+      "// …": true
     },
     {
       "id": 3,
-      // …
+      "// …": true
     },
     {
       "id": 4,
-      // …
+      "// …": true
     }
   ],
   "meta": {
@@ -1128,27 +1175,32 @@ When we only populate the `blocks` dynamic zone, we go only 1 level deep, and we
       "total": 4
     }
   }
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ##### Example: Populating the dynamic zone and applying a shared strategy to its components
 
 When we populate the `blocks` dynamic zone and apply a shared population strategy to all its components with `[populate]=*`, we not only include components fields but also their 1st-level relations, as shown in the highlighted lines of the following example response:
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles?populate[blocks][populate]=*`
-
-</Request>
-
-<Response>
-
-```json {13-63}
-{
+<Endpoint
+  method="GET"
+  path="/api/articles"
+  title="Populating the dynamic zone with shared strategy"
+  description="Populates the blocks dynamic zone and applies a shared population strategy to all its components."
+  id="populating-dynamic-zone-shared-strategy"
+  codeTabs={[
+    {
+      label: "Request",
+      code: "GET /api/articles?populate[blocks][populate]=*"
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "id": 1,
@@ -1159,7 +1211,7 @@ When we populate the `blocks` dynamic zone and apply a shared population strateg
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "blocks": [
         {
           "id": 2,
@@ -1183,7 +1235,7 @@ When we populate the `blocks` dynamic zone and apply a shared population strateg
                 "updatedAt": "2023-06-01T14:32:50.984Z",
                 "publishedAt": "2022-09-22T12:36:48.312Z",
                 "locale": "en",
-                "ckeditor_content": "…", // truncated content
+                "ckeditor_content": "…"
               },
               {
                 "id": 3,
@@ -1194,7 +1246,7 @@ When we populate the `blocks` dynamic zone and apply a shared population strateg
                 "updatedAt": "2023-06-02T11:30:00.075Z",
                 "publishedAt": "2023-06-02T11:30:00.075Z",
                 "locale": "en",
-                "ckeditor_content": "…", // truncated content
+                "ckeditor_content": "…"
               },
               {
                 "id": 4,
@@ -1205,7 +1257,7 @@ When we populate the `blocks` dynamic zone and apply a shared population strateg
                 "updatedAt": "2023-06-02T10:59:35.148Z",
                 "publishedAt": "2022-09-22T12:35:53.899Z",
                 "locale": "en",
-                "ckeditor_content": "…", // truncated content
+                "ckeditor_content": "…"
               }
             ]
           }
@@ -1223,15 +1275,15 @@ When we populate the `blocks` dynamic zone and apply a shared population strateg
     },
     {
       "id": 2,
-      // …
+      "// …": true
     },
     {
       "id": 3,
-      // … 
+      "// …": true
     },
     {
       "id": 4,
-      // …
+      "// …": true
     }
   ],
   "meta": {
@@ -1242,11 +1294,10 @@ When we populate the `blocks` dynamic zone and apply a shared population strateg
       "total": 4
     }
   }
-}
-```
-
-</Response>
-</ApiCall> -->
+}`
+    }
+  ]}
+/> -->
 
 To do so, you can define per-component populate queries using the `on` property.
 
@@ -1298,18 +1349,23 @@ In the following example response, highlighted lines show that:
 
 - But because we have only asked to populate everything for the `CtaCommandLine` component and have not defined anything for the `faq` component, no data from the `faq` component is returned.
 
-<ApiCall noSideBySide>
-
-<Request title="Example request with a detailed population">
-
-`GET /api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*`
-
-</Request>
-
-<Response title="Example response with a detailed population">
-
-```json {16-17,29-34}
-{
+<Endpoint
+  method="GET"
+  path="/api/articles"
+  title="Detailed population strategy for dynamic zones"
+  description="Populates the blocks dynamic zone using a detailed per-component population strategy."
+  id="detailed-population-dynamic-zones"
+  codeTabs={[
+    {
+      label: "Request",
+      code: "GET /api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*"
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "id": 1,
@@ -1320,7 +1376,7 @@ In the following example response, highlighted lines show that:
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "blocks": [
         {
           "id": 2,
@@ -1337,21 +1393,21 @@ In the following example response, highlighted lines show that:
                 "updatedAt": "2023-06-01T14:32:50.984Z",
                 "publishedAt": "2022-09-22T12:36:48.312Z",
                 "locale": "en",
-                "ckeditor_content": "…", // truncated content
+                "ckeditor_content": "…",
                 "image": {
                   "data": {
-                      // …
+                      "// …": true
                     }
                   }
                 }
               },
               {
                 "id": 3,
-                // …
+                "// …": true
               },
               {
                 "id": 4,
-                // …
+                "// …": true
               }
             ]
           }
@@ -1368,7 +1424,7 @@ In the following example response, highlighted lines show that:
     },
     {
       "id": 2,
-      // …
+      "// …": true
     },
     {
       "id": 3,
@@ -1379,14 +1435,14 @@ In the following example response, highlighted lines show that:
       "updatedAt": "2023-06-02T11:30:00.075Z",
       "publishedAt": "2023-06-02T11:30:00.075Z",
       "locale": "en",
-      "ckeditor_content": "…", // … truncated content
+      "ckeditor_content": "…",
       "blocks": [
         {
           "id": 1,
           "documentId": "ks7xsp9fewoi0qljcz9qa0",
           "__component": "blocks.related-articles",
           "articles": {
-            // …
+            "// …": true
           }
         },
         {
@@ -1402,7 +1458,7 @@ In the following example response, highlighted lines show that:
     },
     {
       "id": 4,
-      // …
+      "// …": true
     }
   ],
   "meta": {
@@ -1413,9 +1469,7 @@ In the following example response, highlighted lines show that:
       "total": 4
     }
   }
-}
-```
-
-</Response>
-
-</ApiCall>
+}`
+    }
+  ]}
+/>

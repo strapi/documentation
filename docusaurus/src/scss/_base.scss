@@ -65,10 +65,18 @@ main {
 
 
 /**
- * V3: Widen pages that contain ApiCall blocks for 2-column layout
- * Uses :has() to detect .api-call presence and remove width constraints
+ * V3: Fluid-width API pages
+ *
+ * Strategy:
+ * - The article container is full-width (no max-width)
+ * - Endpoint blocks (.api-endpoint-block, .api-call) are full-width with 2-col grid
+ * - Regular content between endpoints is constrained to readable width via inner max-width
+ * - When sidebars collapse, the content area grows to fill available space (all flex-based)
  */
-main:has(.api-call) {
+
+/** On API pages, lift the article max-width constraint */
+main:has(.api-call),
+main:has(.api-endpoint-block) {
   article:first-child:not(.col):not(.custom-doc-card),
   article:first-child:not(.col) + nav {
     max-width: 100%;
@@ -76,21 +84,94 @@ main:has(.api-call) {
 }
 
 @include medium-up {
-  main:has(.api-call) {
+  main:has(.api-call),
+  main:has(.api-endpoint-block) {
     article:first-child:not(.col),
     article:first-child:not(.col) + nav {
       max-width: 100%;
-      padding-left: 24px !important;
-      padding-right: 24px !important;
+      padding-left: 16px !important;
+      padding-right: 16px !important;
     }
   }
 
-  /** Also widen the column and hide TOC when ApiCall blocks are present */
-  [class*="docMainContainer"]:has(.api-call) {
-    [class*="docItemCol"] {
-      max-width: 100% !important;
-      flex-basis: 100% !important;
+  /**
+   * Fluid doc column: uses flex instead of fixed percentages
+   * so it reacts to sidebar collapse/expand automatically.
+   */
+  [class*="docMainContainer"]:has(.api-call),
+  [class*="docMainContainer"]:has(.api-endpoint-block) {
+    .row {
+      flex-wrap: nowrap !important;
     }
+
+    /** Content column: take all remaining space */
+    [class*="docItemCol"] {
+      max-width: none !important;
+      flex: 1 1 0% !important;
+      min-width: 0;
+    }
+
+    /** TOC column: fixed width but collapsible */
+    .col--3 {
+      max-width: none !important;
+      flex: 0 0 auto !important;
+      width: auto !important;
+    }
+  }
+
+  /**
+   * Constrain regular prose content on API pages to a readable width.
+   * Endpoint blocks break out of this via their own full-width grid.
+   */
+  main:has(.api-endpoint-block) article .theme-doc-markdown {
+    /** All direct children get a max readable width by default */
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header {
+      max-width: 720px;
+    }
+
+    /** Endpoint blocks break out to full width */
+    > .api-endpoint-block,
+    > .api-call {
+      max-width: 100% !important;
+    }
+  }
+
+  main:has(.api-call):not(:has(.api-endpoint-block)) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header {
+      max-width: 720px;
+    }
+
+    > .api-call {
+      max-width: 100% !important;
+    }
+  }
+}
+
+/**
+ * V3: When TOC (secondary sidebar) is collapsed, shrink the TOC column
+ * so the content area reclaims the space.
+ */
+@include medium-up {
+  .col--3:has(.toc-v3-wrapper--collapsed) {
+    flex: 0 0 48px !important;
+    width: 48px !important;
+    max-width: 48px !important;
+    min-width: 48px !important;
+    transition: all var(--strapi-duration-slow) var(--strapi-ease);
+  }
+
+  .col--3 {
+    transition: all var(--strapi-duration-slow) var(--strapi-ease);
   }
 }
 

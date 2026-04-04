@@ -17,6 +17,7 @@ tags:
 
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
+import Endpoint from '@site/src/components/ApiReference/Endpoint';
 
 # REST API: Population & Field Selection
 
@@ -50,18 +51,20 @@ Queries can accept a `fields` parameter to select only some fields. By default, 
 Field selection does not work on relational, media, component, or dynamic zone fields. To populate these fields, use the [`populate` parameter](#population).
 :::
 
-<ApiCall noSideBySide>
-<Request title="Example request: Return only name and description fields">
-
-`GET /api/restaurants?fields[0]=name&fields[1]=description`
-
-<details>
-<summary>JavaScript query (built with the qs library)</summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
+<Endpoint
+  id="field-selection-example"
+  method="GET"
+  path="/api/restaurants"
+  title="Return only name and description fields"
+  description="Use the fields parameter to select only specific fields in the response."
+  codeTabs={[
+    {
+      label: 'URL',
+      code: `GET /api/restaurants?fields[0]=name&fields[1]=description`,
+    },
+    {
+      label: 'JavaScript',
+      code: `const qs = require('qs');
 const query = qs.stringify(
   {
     fields: ['name', 'description'],
@@ -71,49 +74,44 @@ const query = qs.stringify(
   }
 );
 
-await request(`/api/users?${query}`);
-```
-
-<br/>
-</details>
-</Request>
-
-<Response title="Example response">
-
-```json
-{
-  "data": [
-    {
-      "id": 4,
-      "Name": "Pizzeria Arrivederci",
-      "Description": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "text": "Specialized in pizza, we invite you to rediscover our classics, such as 4 Formaggi or Calzone, and our original creations such as Do Luigi or Nduja."
-            }
-          ]
-        }
-      ],
-      "documentId": "lr5wju2og49bf820kj9kz8c3"
+await request(\`/api/users?\${query}\`);`,
     },
-    // …
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
-</Response>
-</ApiCall>
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: JSON.stringify({
+        data: [
+          {
+            id: 4,
+            Name: "Pizzeria Arrivederci",
+            Description: [
+              {
+                type: "paragraph",
+                children: [
+                  {
+                    type: "text",
+                    text: "Specialized in pizza, we invite you to rediscover our classics, such as 4 Formaggi or Calzone, and our original creations such as Do Luigi or Nduja."
+                  }
+                ]
+              }
+            ],
+            documentId: "lr5wju2og49bf820kj9kz8c3"
+          }
+        ],
+        meta: {
+          pagination: {
+            page: 1,
+            pageSize: 25,
+            pageCount: 1,
+            total: 4
+          }
+        }
+      }, null, 2),
+    },
+  ]}
+/>
 
 ## Population
 
@@ -125,7 +123,7 @@ The `find` permission must be enabled for the content-types that are being popul
 
 You can use the `populate` parameter alone or [in combination with multiple operators](#combining-population-with-other-operators) for more control over the population.
 
-:::caution 
+:::caution
 `populate=deep` plugins are [not recommended in Strapi](https://support.strapi.io/articles/8544110758-why-populate-deep-plugins-are-not-recommended-in-strapi).
 :::
 
@@ -162,18 +160,20 @@ The population and pagination operators cannot be combined.
 
 `fields` and `populate` can be combined.
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url`
-
-<details>
-<summary>JavaScript query (built with the qs library)</summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
+<Endpoint
+  id="populate-with-field-selection"
+  method="GET"
+  path="/api/articles"
+  title="Populate with field selection"
+  description="Combine fields and populate parameters to select specific fields on both the main entry and its relations."
+  codeTabs={[
+    {
+      label: 'URL',
+      code: `GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url`,
+    },
+    {
+      label: 'JavaScript',
+      code: `const qs = require('qs');
 const query = qs.stringify(
   {
     fields: ['title', 'slug'],
@@ -188,56 +188,52 @@ const query = qs.stringify(
   }
 );
 
-await request(`/api/articles?${query}`);
-```
-
-<br/>
-</details>
-</Request>
-
-<Response title="Example response">
-
-```json
-{
-  "data": [
+await request(\`/api/articles?\${query}\`);`,
+    },
+  ]}
+  responses={[
     {
-      "id": 1,
-      "documentId": "h90lgohlzfpjf3bvan72mzll",
-      "title": "Test Article",
-      "slug": "test-article",
-      "headerImage": {
-        "id": 1,
-        "documentId": "cf07g1dbusqr8mzmlbqvlegx",
-        "name": "17520.jpg",
-        "url": "/uploads/17520_73c601c014.jpg"
-      }
-    }
-  ],
-  "meta": {
-    // ...
-  }
-}
-```
-
-</Response>
-</ApiCall>
+      status: 200,
+      statusText: 'OK',
+      body: JSON.stringify({
+        data: [
+          {
+            id: 1,
+            documentId: "h90lgohlzfpjf3bvan72mzll",
+            title: "Test Article",
+            slug: "test-article",
+            headerImage: {
+              id: 1,
+              documentId: "cf07g1dbusqr8mzmlbqvlegx",
+              name: "17520.jpg",
+              url: "/uploads/17520_73c601c014.jpg"
+            }
+          }
+        ],
+        meta: {}
+      }, null, 2),
+    },
+  ]}
+/>
 
 #### Populate with filtering
 
 `filters` and `populate` can be combined.
 
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars`
-
-<details>
-<summary>JavaScript query (built with the qs library)</summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
+<Endpoint
+  id="populate-with-filtering"
+  method="GET"
+  path="/api/articles"
+  title="Populate with filtering"
+  description="Combine populate with sort and filter parameters to refine which related entries are returned."
+  codeTabs={[
+    {
+      label: 'URL',
+      code: `GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars`,
+    },
+    {
+      label: 'JavaScript',
+      code: `const qs = require('qs');
 const query = qs.stringify(
   {
     populate: {
@@ -256,42 +252,32 @@ const query = qs.stringify(
   }
 );
 
-await request(`/api/articles?${query}`);
-```
-
-<br/>
-
-</details>
-</Request>
-
-<Response title="Example response">
-
-```json
-{
-  "data": [
+await request(\`/api/articles?\${query}\`);`,
+    },
+  ]}
+  responses={[
     {
-      "id": 1,
-      "documentId": "a1b2c3d4e5d6f7g8h9i0jkl",
-      "title": "Test Article",
-      // ...
-      "categories": {
-        "data": [
+      status: 200,
+      statusText: 'OK',
+      body: JSON.stringify({
+        data: [
           {
-            "id": 2,
-            "documentId": "jKd8djla9ndalk98hflj3",
-            "name": "Cars"
-            // ...
+            id: 1,
+            documentId: "a1b2c3d4e5d6f7g8h9i0jkl",
+            title: "Test Article",
+            categories: {
+              data: [
+                {
+                  id: 2,
+                  documentId: "jKd8djla9ndalk98hflj3",
+                  name: "Cars"
+                }
+              ]
+            }
           }
-        ]
-        }
-      }
-    }
-  ],
-  "meta": {
-    // ...
-  }
-}
-```
-
-</Response>
-</ApiCall>
+        ],
+        meta: {}
+      }, null, 2),
+    },
+  ]}
+/>

@@ -43,6 +43,7 @@ import Checklist, { ChecklistItem } from '../components/Checklist';
 import DebugComponent from '../components/DebugComponent';
 // V3: API 2-column layout
 import ApiDocLayout from '../components/ApiDocLayout/ApiDocLayout';
+import Endpoint from '../components/ApiReference/Endpoint';
 
 export default {
   // Re-use the default mapping
@@ -109,4 +110,5 @@ export default {
   Codemods,
   NamingConventions,
   ApiDocLayout,
+  Endpoint,
 };
