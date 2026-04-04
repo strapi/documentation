@@ -23,7 +23,7 @@
   --custom-code-block-border-color: var(--strapi-border-strong);
 
   // Title bar
-  --code-title-bar-bg: var(--strapi-neutral-100);
+  --code-title-bar-bg: var(--strapi-neutral-0);
   --code-title-bar-border: var(--custom-code-block-border-color);
   --code-title-bar-label-color: var(--strapi-neutral-500);
   --code-title-bar-lang-bg: var(--strapi-neutral-200);
@@ -295,8 +295,8 @@ pre.prism-code {
   50% { opacity: 0; }
 }
 
-// The cursor is rendered via ::after on the last token-line in terminal blocks
-.code-block-enhanced code .token-line:last-child::after {
+// The cursor is rendered via ::after on the last span token before the <br>
+.code-block-enhanced code .token-line:last-child > span:last-of-type::after {
   content: '';
   display: inline-block;
   width: 8px;
@@ -313,12 +313,13 @@ pre.prism-code {
    ────────────────────────────────────────────────────── */
 
 .code-block-enhanced {
-  // The wrapper provides the border and radius
+  // The wrapper provides the border, radius, and background
   border: solid 1px var(--custom-code-block-border-color);
   border-radius: var(--strapi-radius-md);
   overflow: hidden;
   transition: border-color var(--strapi-duration-fast) var(--strapi-ease);
   margin-bottom: var(--ifm-leading);
+  background: var(--strapi-neutral-0);
 
   &:hover {
     border-color: var(--strapi-border-accent);
@@ -337,16 +338,21 @@ pre.prism-code {
   }
 
   // Code block container inside enhanced wrapper
+  // All backgrounds are transparent — the wrapper controls the bg
+  .theme-code-block,
   .theme-code-block[class*="codeBlockContainer"],
   .theme-code-block [class*="codeBlockContainer"] {
     padding: 0 !important;
     box-shadow: none !important;
+    background: transparent !important;
 
     .prism-code {
       border-radius: 0;
+      background: transparent !important;
 
       code {
         padding: 16px 24px;
+        background: transparent !important;
       }
     }
   }
@@ -684,26 +690,38 @@ pre.prism-code {
     }
   }
 
-  // Enhanced wrapper in dark mode
+  // Enhanced wrapper in dark mode — uniform background
   .code-block-enhanced {
     border-color: var(--strapi-neutral-200);
+    background: var(--strapi-neutral-0);
+
+    .code-title-bar {
+      background: var(--strapi-neutral-0);
+      border-bottom-color: var(--strapi-neutral-200);
+    }
 
     .theme-code-block {
       border: none !important;
+      background: transparent !important;
 
       &[class*="codeBlockContainer"],
       [class*="codeBlockContainer"] {
         border: none !important;
+        background: transparent !important;
 
         .prism-code {
-          background-color: var(--strapi-neutral-0) !important;
+          background: transparent !important;
+        }
+
+        code {
+          background: transparent !important;
         }
       }
     }
-  }
 
-  // Cursor color in dark mode
-  .code-cursor {
-    background: var(--strapi-primary-400);
+    // Cursor in dark mode
+    code .token-line:last-child > span:last-of-type::after {
+      background: var(--strapi-primary-400);
+    }
   }
 }

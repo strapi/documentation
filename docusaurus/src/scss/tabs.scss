@@ -108,6 +108,29 @@
       [class*="codeBlockContainer"]:has([class*="codeBlockTitle"]) {
         margin: 22px 20px;
       }
+
+      // Enhanced terminal blocks inside tabs: remove double border, add spacing
+      .code-block-enhanced {
+        border: none !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        background: transparent !important;
+
+        .code-title-bar {
+          border-radius: 0;
+          margin: 0 20px;
+          border: 1px solid var(--custom-code-block-border-color);
+          border-bottom: 1px solid var(--code-title-bar-border);
+          border-radius: var(--strapi-radius-md) var(--strapi-radius-md) 0 0;
+        }
+
+        .theme-code-block {
+          margin: 0 20px 20px !important;
+          border: 1px solid var(--custom-code-block-border-color) !important;
+          border-top: none !important;
+          border-radius: 0 0 var(--strapi-radius-md) var(--strapi-radius-md) !important;
+        }
+      }
     }
   }
   
