@@ -206,7 +206,7 @@ pre.prism-code {
   }
 
   &__label {
-    font-family: var(--custom-code-block-title-font-family);
+    font-family: var(--strapi-font-family-technical);
     font-size: var(--strapi-font-size-xs);
     color: var(--code-title-bar-label-color);
     font-weight: 500;
@@ -220,7 +220,7 @@ pre.prism-code {
   }
 
   &__lang {
-    font-family: var(--custom-code-block-title-font-family);
+    font-family: var(--strapi-font-family-technical);
     font-size: 10px;
     font-weight: 600;
     color: var(--code-title-bar-lang-color);

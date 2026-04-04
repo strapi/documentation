@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+  font-family: var(--strapi-font-family-technical, 'Space Grotesk', sans-serif);
   font-size: 12px;
   color: var(--strapi-neutral-600);
 }
@@ -61,7 +61,7 @@
 .switchLink {
   display: inline-flex;
   align-items: center;
-  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+  font-family: var(--strapi-font-family-technical, 'Space Grotesk', sans-serif);
   font-size: 11px;
   color: var(--strapi-neutral-400);
   text-decoration: none;
