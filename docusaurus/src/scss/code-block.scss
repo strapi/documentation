@@ -346,13 +346,17 @@ pre.prism-code {
     box-shadow: none !important;
     background: transparent !important;
 
+    // Must override .theme-code-block [codeBlockContainer]:not(:has(codeBlockTitle)) .prism-code { bg: white }
+    &:not(:has([class*="codeBlockTitle"])) .prism-code,
     .prism-code {
       border-radius: 0;
       background: transparent !important;
+      background-color: transparent !important;
 
       code {
         padding: 16px 24px;
         background: transparent !important;
+        background-color: transparent !important;
       }
     }
   }
