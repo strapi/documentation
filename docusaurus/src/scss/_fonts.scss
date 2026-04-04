@@ -1,14 +1,16 @@
-/** Fonts — V3 Redesign
- * Display/headings: Outfit (bold, geometric — used on homepage and headings)
+/** Fonts — V3 Redesign (Option 3: Triple pairing)
+ * Display/headings: Poppins (brand font, geometric rounds — strapi.io consistency)
  * Body/content: Inter (optimized for readability in long-form text)
- * Monospace: JetBrains Mono (code blocks, API references)
+ * Technical/labels: Space Grotesk (API badges, method pills, breadcrumbs, code labels)
+ * Monospace: JetBrains Mono (code blocks, inline code)
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --strapi-font-family-display: 'Outfit', sans-serif;
+  --strapi-font-family-display: 'Poppins', sans-serif;
   --strapi-font-family-body: 'Inter', sans-serif;
+  --strapi-font-family-technical: 'Space Grotesk', sans-serif;
   --strapi-font-family-mono: 'JetBrains Mono', monospace;
 }
 
