@@ -271,10 +271,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         padding-left: 10px;
         background-color: transparent;
         text-transform: uppercase;
-        font-size: 11px;
+        font-size: 12px;
         letter-spacing: 0.06em;
         color: var(--strapi-neutral-400);
-        font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+        font-family: var(--strapi-font-family-technical, 'JetBrains Mono', monospace);
         font-weight: 600;
 
         a::before {
@@ -985,8 +985,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   min-height: 48px;
 
   &__label {
-    font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
-    font-size: 11px;
+    font-family: var(--strapi-font-family-technical, 'JetBrains Mono', monospace);
+    font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
