@@ -7,10 +7,10 @@
   --custom-tabs-py: var(--strapi-spacing-2);
   --ifm-tabs-padding-horizontal: var(--custom-tabs-px);
   --ifm-tabs-padding-vertical: var(--custom-tabs-py);
-  --tabs-item-height: 36px;
-  --tabs-item-border-radius: 4px;
-  --tabs-item-margin: 10px 4px;
-  --tabs-item-padding: 4px 12px;
+  --tabs-item-height: 34px;
+  --tabs-item-border-radius: 8px;
+  --tabs-item-margin: 8px 3px;
+  --tabs-item-padding: 4px 14px;
   --tabs-active-bg: var(--strapi-primary-100);
 }
 
@@ -23,21 +23,25 @@
     border-top: 2px solid transparent;
     border-bottom-width: 2px;
     padding-bottom: 18px !important;
+    font-family: var(--strapi-font-family-technical);
     font-weight: 600;
-    
+    font-size: 13px;
+    letter-spacing: 0.01em;
+    transition: color 0.15s ease, background-color 0.15s ease;
+
     &:not(.tabs__item--active):hover {
       background-color: transparent;
       color: var(--strapi-primary-600);
     }
   }
-  
+
   &:not(.tabs__item--active) {
-    color: var(--strapi-neutral-600);
+    color: var(--strapi-neutral-500);
   }
   
   // Container styles
   &-container {
-    border-radius: 4px;
+    border-radius: var(--strapi-radius-md, 10px);
     border: solid 1px var(--strapi-neutral-150);
     overflow: hidden; // Prevents children from overflowing the border-radius
     
@@ -80,6 +84,8 @@
     gap: 8px;
     border-radius: var(--tabs-item-border-radius);
     background-color: var(--tabs-active-bg);
+    color: var(--strapi-primary-700);
+    font-weight: 700;
   }
   
   // Nested tabs

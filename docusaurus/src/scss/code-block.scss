@@ -171,11 +171,11 @@ pre.prism-code {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px;
+  padding: 10px 18px;
   background: var(--code-title-bar-bg);
   border-bottom: 1px solid var(--code-title-bar-border);
   border-radius: var(--strapi-radius-md) var(--strapi-radius-md) 0 0;
-  min-height: 40px;
+  min-height: 42px;
   user-select: none;
 
   &__left {
@@ -414,10 +414,14 @@ pre.prism-code {
 
   [class*="codeBlockTitle"] {
     border-bottom: none;
-    color: var(--strapi-neutral-800);
-    font-family: var(--custom-code-block-title-font-family);
+    color: var(--strapi-neutral-700);
+    font-family: var(--strapi-font-family-technical);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
     background-color: var(--strapi-neutral-100);
     border-bottom: solid 1px var(--custom-code-block-border-color);
+    padding: 10px 18px;
     position: relative;
 
     &:before { // file icon from Phosphor icons
