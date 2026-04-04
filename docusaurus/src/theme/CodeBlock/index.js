@@ -31,32 +31,44 @@ function shouldShowAIButton(codeContent) {
     content.includes('import ') ||
     content.includes('export ') ||
     content.includes('module.exports') ||
-    content.includes('require(');
+    content.includes('require(') ||
+    content.includes('curl ') ||
+    content.includes('GET ') ||
+    content.includes('POST ') ||
+    content.includes('PUT ') ||
+    content.includes('DELETE ');
 
   if (!hasCodeStructures) return false;
 
-  const excludePatterns = [
-    'npm install', 'yarn add', 'yarn install', 'npm run', 'yarn run',
-    'cd ', 'ls ', 'mkdir ', 'strapi generate', 'strapi develop',
-    'strapi build', 'strapi start'
-  ];
-  if (excludePatterns.some(pattern => content.includes(pattern))) return false;
-  if (content.match(/^[\/\w\-\.]+$/) || content.match(/^\w+:\s*\w+$/)) return false;
-
   return true;
+}
+
+function handleAskAI(language, codeContent) {
+  if (typeof window !== 'undefined' && window.Kapa) {
+    const prompt = `Could you explain the code example below:\n\n\`\`\`${language}\n${codeContent}\n\`\`\``;
+    window.Kapa.open({ query: prompt, submit: true });
+  }
+}
+
+// AI "Ask AI" floating button for non-terminal code blocks
+function AIButton({ language, codeContent }) {
+  return (
+    <button
+      className="clean-btn ai-button ai-button--floating"
+      title="Ask AI to explain this code"
+      aria-label="Ask AI to explain this code example"
+      onClick={() => handleAskAI(language, codeContent)}
+    >
+      <i className="ph ph-sparkle" />
+      <span>Ask AI</span>
+    </button>
+  );
 }
 
 // macOS-style title bar for terminal blocks
 function TerminalTitleBar({ language, title, showAI, codeContent }) {
   const langLabel = LANG_LABELS[language] || (language ? language.toUpperCase() : '');
   const labelText = title || 'terminal';
-
-  function handleAskAI() {
-    if (typeof window !== 'undefined' && window.Kapa) {
-      const prompt = `Could you explain the code example below:\n\n\`\`\`${language}\n${codeContent}\n\`\`\``;
-      window.Kapa.open({ query: prompt, submit: true });
-    }
-  }
 
   return (
     <div className="code-title-bar">
@@ -76,7 +88,7 @@ function TerminalTitleBar({ language, title, showAI, codeContent }) {
             className="clean-btn ai-button"
             title="Ask AI to explain this code"
             aria-label="Ask AI to explain this code example"
-            onClick={handleAskAI}
+            onClick={() => handleAskAI(language, codeContent)}
           >
             <i className="ph ph-sparkle" />
             <span>Ask AI</span>
@@ -123,8 +135,18 @@ export default function CodeBlockWrapper(props) {
     );
   }
 
-  // Non-terminal blocks: standard rendering
-  // (Docusaurus provides copy/wrap buttons natively)
+  // Non-terminal blocks: standard rendering with floating AI button
+  if (showAI) {
+    return (
+      <div className="code-block-enhanced code-block-enhanced--with-ai">
+        <CodeBlock className={className} {...otherProps}>
+          {children}
+        </CodeBlock>
+        <AIButton language={language} codeContent={codeContent?.trim()} />
+      </div>
+    );
+  }
+
   return (
     <CodeBlock className={className} {...otherProps}>
       {children}
