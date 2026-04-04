@@ -18,9 +18,14 @@ export default function NavbarBreadcrumbs() {
   const segments = pathname.replace(/^\//, '').replace(/\/$/, '').split('/');
   if (segments.length === 0) return null;
 
+  // Map root sections to their intro pages
+  const rootLinks = { cms: '/cms/intro', cloud: '/cloud/intro' };
+
   // Build breadcrumb items with cumulative paths
   const crumbs = segments.map((segment, index) => {
-    const href = '/' + segments.slice(0, index + 1).join('/');
+    const href = index === 0 && rootLinks[segment]
+      ? rootLinks[segment]
+      : '/' + segments.slice(0, index + 1).join('/');
     const isLast = index === segments.length - 1;
     return { label: segment, href, isLast };
   });
