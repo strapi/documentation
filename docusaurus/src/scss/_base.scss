@@ -169,12 +169,12 @@ main:has(.api-endpoint-block) {
                   min-width var(--strapi-duration-slow) var(--strapi-ease);
     }
 
-    /** Collapsed: shrink to toggle-button width */
+    /** Collapsed: shrink to just the toggle button */
     .col--3:has(.toc-v3-wrapper--collapsed) {
-      flex: 0 0 48px !important;
-      width: 48px !important;
-      max-width: 48px !important;
-      min-width: 48px !important;
+      flex: 0 0 44px !important;
+      width: 44px !important;
+      max-width: 44px !important;
+      min-width: 44px !important;
     }
   }
 }

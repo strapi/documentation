@@ -24,19 +24,21 @@ export default function CollapsibleTOC({ children }) {
   return (
     <div className={`${styles.wrapper} toc-v3-wrapper ${collapsed ? `${styles.collapsed} toc-v3-wrapper--collapsed` : ''}`}>
       <div className={styles.header}>
-        <span className={styles.label}>On this page</span>
+        {!collapsed && <span className={styles.label}>On this page</span>}
         <button
-          className={styles.headerToggle}
+          className={styles.toggle}
           onClick={toggle}
-          aria-label={collapsed ? 'Expand table of contents' : 'Collapse table of contents'}
-          title={collapsed ? 'Expand' : 'Collapse'}
+          aria-label={collapsed ? 'Show table of contents' : 'Hide table of contents'}
+          title={collapsed ? 'Show table of contents' : 'Hide table of contents'}
         >
-          {collapsed ? '◀' : '▶'}
+          <i className={collapsed ? 'ph ph-sidebar-simple' : 'ph ph-sidebar-simple'} />
         </button>
       </div>
-      <div className={styles.content}>
-        {children}
-      </div>
+      {!collapsed && (
+        <div className={styles.content}>
+          {children}
+        </div>
+      )}
     </div>
   );
 }
