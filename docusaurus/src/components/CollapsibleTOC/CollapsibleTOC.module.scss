@@ -5,6 +5,11 @@
   width: 240px;
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: width;
+
+  // Hide on mobile/tablet — Docusaurus shows a "On this page" dropdown instead
+  @media (max-width: 996px) {
+    display: none;
+  }
 }
 
 .collapsed {

@@ -980,10 +980,15 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 .sidebar-v3-content {
   opacity: 1;
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  // Push all sidebar content below the fixed navbar
+  padding-top: calc(var(--ifm-navbar-height) + 12px);
+  padding-left: 16px;
+  padding-right: 16px;
 
   // ProductSwitcher spacing
   > div:first-child {
-    padding: 12px 16px 0;
+    margin-bottom: 10px;
+    max-width: 232px;
   }
 }
 
