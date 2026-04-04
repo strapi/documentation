@@ -26,6 +26,21 @@
   align-items: center;
   flex: 1 1 auto;
   min-width: 140px;
+  height: 100%;
+  border-radius: 9px 0 0 9px;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: var(--strapi-neutral-100);
+
+    :global(.docsearch-btn-placeholder) {
+      color: var(--strapi-neutral-600);
+    }
+
+    :global(.docsearch-btn-placeholder)::before {
+      color: var(--strapi-primary-500);
+    }
+  }
 
   :global(.navbar__search) {
     width: 100%;
@@ -43,10 +58,6 @@
     font-family: var(--strapi-font-family-body);
     font-size: 13px;
     color: var(--strapi-neutral-500);
-
-    &:hover {
-      color: var(--strapi-neutral-700);
-    }
   }
 
   :global(.docsearch-btn-icon-container) {
@@ -58,6 +69,7 @@
     font-size: 13px;
     font-weight: 400;
     color: var(--strapi-neutral-400);
+    transition: color 0.15s ease;
 
     &::before {
       content: '\E30C';
@@ -67,6 +79,7 @@
       font-size: 15px;
       position: relative;
       top: 2px;
+      transition: color 0.15s ease;
     }
   }
 
@@ -105,16 +118,17 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  height: 36px;
+  height: 100%;
   padding: 0 14px;
   border: none;
   background: transparent;
   cursor: pointer;
   white-space: nowrap;
-  color: var(--strapi-neutral-500);
+  color: var(--strapi-neutral-400);
   font-family: var(--strapi-font-family-body);
   font-size: 13px;
   font-weight: 500;
+  border-radius: 0 9px 9px 0;
   transition: color 0.15s ease, background 0.15s ease;
 
   i {
@@ -125,7 +139,7 @@
 
   &:hover {
     background: var(--strapi-neutral-100);
-    color: var(--strapi-primary-600);
+    color: var(--strapi-neutral-600);
 
     i {
       color: var(--strapi-primary-500);
@@ -138,6 +152,14 @@
   .wrapper {
     background: var(--strapi-neutral-100);
     border-color: var(--strapi-neutral-300);
+
+    &:hover {
+      border-color: var(--strapi-neutral-400);
+    }
+  }
+
+  .searchSlot:hover {
+    background: var(--strapi-neutral-200);
   }
 
   .divider {
