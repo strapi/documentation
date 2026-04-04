@@ -34,6 +34,13 @@ This file tracks the progress of the v3 visual redesign. It complements the git 
 - [x] **QSG converted** (`docs/cms/quick-start.md`): all 6 steps use `<StepDetails>`, duplicate H2/H3 headings removed, nested `<details>` preserved, TOC navigation via `id` attributes
 - [x] **Registered in MDXComponents.js** for global availability
 
+### Phase 4: Bug Fixes & Polish (session 2)
+- [x] **Mobile sidebar fix** (`navbar.scss`): `backdrop-filter` on `<nav>` was creating a new containing block for `position: fixed` children, constraining sidebar to 55px height. Fixed with explicit `height: 100dvh`.
+- [x] **Progress bar positioning** (`ReadingProgressBar.module.scss`): moved to `top: 0; z-index: 201` to render above the navbar glass effect (z-index 200). Increased to 3px height.
+- [x] **Card styling** (`card.scss`, `card.module.scss`): transparent background, no box-shadow at rest, subtle `translateY(-2px)` + light shadow on hover for relief effect (matching docs.strapi.io).
+- [x] **Cloud Docs link fix** (`ProductSwitcher.jsx`): changed from `/cloud/getting-started/intro` (404) to `/cloud/intro`.
+- [x] **Sidebar spacing** (`sidebar.scss`, `custom-search-bar.scss`): reduced gaps between ProductSwitcher, Search/Ask AI, and nav items.
+
 ## In Progress / Not Yet Started
 
 ### From the Plan (see `.claude/plans/linear-enchanting-sunbeam.md`)
@@ -55,7 +62,9 @@ This file tracks the progress of the v3 visual redesign. It complements the git 
 | `src/scss/pagination-nav.scss` | Redesigned prev/next buttons |
 | `src/scss/sidebar.scss` | Collapse button restyle |
 | `src/scss/footer.scss` | Removed gradient accent |
-| `src/scss/navbar.scss` | Minimal layout, hidden nav items on desktop, glass effect |
+| `src/scss/navbar.scss` | Minimal layout, hidden nav items on desktop, glass effect, mobile sidebar fix (height: 100dvh) |
+| `src/scss/card.scss` | Transparent bg, subtle hover relief |
+| `src/components/Card/card.module.scss` | Transparent bg, hover translateY + shadow |
 | `src/scss/breadcrumbs.scss` | Hidden (replaced by navbar crumbs) |
 | `src/theme/Root.js` | ReadingProgressBar wrapper |
 | `src/theme/Navbar/Content/index.js` | Swizzled: breadcrumbs + minimal right side |
