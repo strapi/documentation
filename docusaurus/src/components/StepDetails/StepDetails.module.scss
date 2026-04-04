@@ -1,62 +1,17 @@
-/** StepDetails — Gamified collapsible step with progress tracking
- * V3 design: clean card-style with accent check circle
+/** StepDetails — Adds gamified progress tracking to standard details/accordion
+ * Inherits all styling from details.alert (details.scss)
+ * Only adds: checkmark icon + completed state border color
  */
 @use '../../scss/mixins' as *;
 
 .stepDetails {
-  border: 1px solid var(--strapi-border, rgba(0, 0, 0, 0.08)) !important;
-  border-radius: 12px !important;
-  background: var(--strapi-surface-1, #FFFFFF) !important;
-  padding: 0 !important;
-  margin-bottom: 12px !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-
-  &[open] {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  }
+  /* Let details.alert handle all base styling — we just layer on top */
 
   summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding: 16px 20px;
-    cursor: pointer;
-    list-style: none;
-    user-select: none;
-    font-family: var(--strapi-font-family-display, 'Outfit', sans-serif);
-    font-weight: 600;
-    font-size: 15px;
-
-    &::-webkit-details-marker {
-      display: none;
-    }
-
-    &::marker {
-      display: none;
-      content: '';
-    }
-
-    &::before {
-      display: none !important;
-    }
-
-    &:hover {
-      background: var(--strapi-surface-2, #F4F4F5);
-    }
   }
-
-  // Content area
-  > *:not(summary) {
-    padding: 0 20px 16px;
-  }
-}
-
-.titleText {
-  flex: 1;
-  color: var(--strapi-fg-1, var(--ifm-font-color-base));
 }
 
 .checkmark {
@@ -66,13 +21,17 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  font-size: 18px;
+  font-size: 20px;
   flex-shrink: 0;
+  margin-left: 12px;
+  /* Position above the summary::after overlay so it's visible */
+  position: relative;
+  z-index: 2;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 
   i {
     margin-right: 0 !important;
-    color: var(--strapi-fg-5, #A1A1AA);
+    color: var(--strapi-neutral-300, #D4D4D8);
     transition: color 0.3s;
   }
 }
@@ -88,23 +47,13 @@
 .completed {
   border-color: rgba(34, 197, 94, 0.2) !important;
 
-  summary {
-    .titleText {
-      color: var(--strapi-fg-3, #52525B);
-    }
+  /* Override the left accent bar color to green */
+  &::after {
+    background: #22C55E !important;
   }
 }
 
 @include dark {
-  .stepDetails {
-    background: var(--strapi-surface-1, #111113) !important;
-    border-color: var(--strapi-border, rgba(255, 255, 255, 0.06)) !important;
-
-    summary:hover {
-      background: var(--strapi-surface-2, #18181B);
-    }
-  }
-
   .completed {
     border-color: rgba(34, 197, 94, 0.15) !important;
   }

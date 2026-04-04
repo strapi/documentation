@@ -40,7 +40,6 @@ export default function StepDetails({ title, children }) {
   const stepId = slugify(title);
   const [pageId, setPageId] = useState('');
   const [completed, setCompleted] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -52,7 +51,6 @@ export default function StepDetails({ title, children }) {
 
   const handleToggle = useCallback((e) => {
     const open = e.target.open;
-    setIsOpen(open);
 
     // Mark as completed when opened (user has "read" it)
     if (open && pageId && !completed) {
@@ -64,11 +62,11 @@ export default function StepDetails({ title, children }) {
   return (
     <details
       id={stepId}
-      className={`${styles.stepDetails} ${completed ? styles.completed : ''}`}
+      className={`alert alert--info ${styles.stepDetails} ${completed ? styles.completed : ''}`}
       onToggle={handleToggle}
     >
       <summary>
-        <span className={styles.titleText}>{title}</span>
+        {title}
         <span
           className={`${styles.checkmark} ${completed ? styles.checkmarkVisible : ''}`}
           title={completed ? 'Step completed' : 'Not yet completed'}
