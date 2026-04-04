@@ -269,10 +269,7 @@ Feel free to play with the Content-Type Builder even further and add more fields
 
 Now that we have created a basic content structure with 2 collection types, "Restaurant" and "Category", and deployed your project to Strapi Cloud, let's use the Cloud to actually add content by creating new entries.
 
-<details>
-<summary>Step 1: Log in to the admin panel of your new Strapi Cloud project</summary>
-
-### Step 1: Log in to the admin panel of your new Strapi Cloud project
+<StepDetails title="Step 1: Log in to the admin panel of your new Strapi Cloud project">
 
 Now that your Strapi Cloud project is created, let's log in into the project:
 
@@ -301,15 +298,9 @@ The databases for your Strapi Cloud project and your local project are different
 Any project hosted on Strapi Cloud is accessible from its own URL, something like `https://my-strapi-project-name.strapiapp.com`. To access the admin panel of your online project, simply add `/admin` to the URL, for instance as in `https://my-strapi-project-name.strapiapp.com/admin`. URLs can be found in your Strapi Cloud dashboard and you can also directly access your Strapi Cloud projects from there by clicking on the name of your project then on the **Visit app** button.
 :::
 
-</details>
+</StepDetails>
 
-</details>
-
-<details>
-<summary>Step 2: Create an entry for the "Restaurant" collection type</summary>
-
-
-### Step 2: Create an entry for the "Restaurant" collection type
+<StepDetails title="Step 2: Create an entry for the &quot;Restaurant&quot; collection type">
 
 1. Go to <Icon name="feather" /> _Content Manager > Collection types - Restaurant_ in the navigation.
 2. Click on **Create new entry**.
@@ -327,12 +318,9 @@ sources={{
 
 The restaurant is now listed in the _Collection types - Restaurant_ view of the <Icon name="feather" /> _Content Manager_.
 <br/>
-</details>
+</StepDetails>
 
-<details>
-<summary>Step 3: Add Categories</summary>
-
-#### Step 3: Add Categories
+<StepDetails title="Step 3: Add Categories">
 
 Let's go to <Icon name="feather" /> _Content Manager > Collection types - Category_ and create 2 categories:
 
@@ -356,12 +344,9 @@ Now, we will add a category to a restaurant:
 1. Go to <Icon name="feather" /> _Content Manager > Collection types - Restaurant_ in the navigation, and click on "Biscotte Restaurant".
 2. In the **Categories** drop-down list at the bottom of the page, select "French Food". Scroll back to the top of the page and click **Save**.
 
-</details>
+</StepDetails>
 
-<details>
-<summary>Step 4: Set Roles & Permissions</summary>
-
-### Step 4: Set Roles & Permissions
+<StepDetails title="Step 4: Set Roles & Permissions">
 
 We have just added a restaurant and 2 categories. We now have enough content to consume (pun intended). But first, we need to make sure that the content is publicly accessible through the API:
 
@@ -381,12 +366,9 @@ sources={{
   dark: '/img/assets/quick-start-guide/qsg-handson-part2-04-roles-v5_DARK.png'
 }}/>
 
-</details>
+</StepDetails>
 
-<details>
-<summary>Step 5: Publish the content</summary>
-
-### Step 5: Publish the content
+<StepDetails title="Step 5: Publish the content">
 
 By default, any content you create is saved as a draft. Let's publish our categories and restaurant.
 
@@ -407,12 +389,9 @@ sources={{
 }}
 />
 
-</details>
+</StepDetails>
 
-<details>
-<summary>Step 6: Use the API</summary>
-
-### Step 6: Use the API
+<StepDetails title="Step 6: Use the API">
 
 OK dear gourmet, we have just finished creating our content and making it accessible through the API. You can give yourself a pat on the back — but you have yet to see the final result of your hard work.
 
@@ -460,7 +439,7 @@ Try it now! The result should be similar to the example response below 👇.
 
 </details>
 
-</details>
+</StepDetails>
 
 :::callout <Icon name="confetti"/> Congratulations!
 Now your content is created, published, and you have permissions to request it through the API.

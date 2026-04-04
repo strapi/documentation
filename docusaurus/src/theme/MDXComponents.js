@@ -44,6 +44,7 @@ import DebugComponent from '../components/DebugComponent';
 // V3: API 2-column layout
 import ApiDocLayout from '../components/ApiDocLayout/ApiDocLayout';
 import Endpoint from '../components/ApiReference/Endpoint';
+import StepDetails from '../components/StepDetails/StepDetails';
 
 export default {
   // Re-use the default mapping
@@ -111,4 +112,5 @@ export default {
   NamingConventions,
   ApiDocLayout,
   Endpoint,
+  StepDetails,
 };
