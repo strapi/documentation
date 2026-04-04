@@ -116,35 +116,36 @@
   --strapi-accent: #4945FF;
   --strapi-accent-light: #7B79FF;
   --strapi-accent-lighter: #a5a3ff;
-  --strapi-accent-glow: rgba(73, 69, 255, 0.15);
+  --strapi-accent-glow: rgba(73, 69, 255, 0.2);
   --strapi-accent-2: #c084fc;   /* purple */
   --strapi-accent-3: #22d3ee;   /* cyan */
   --strapi-accent-4: #34d399;   /* emerald */
 
-  /** V3: Surface hierarchy (light mode) */
+  /** V3: Surface hierarchy (light mode) — matches mockup-v2 */
   --strapi-surface-0: #FAFAFA;
-  --strapi-surface-1: #F5F5F7;
-  --strapi-surface-2: #EEEEEF;
-  --strapi-surface-3: #E5E5EA;
-  --strapi-surface-4: #D1D1D6;
-  --strapi-surface-hover: #D1D1D6;
+  --strapi-surface-1: #FFFFFF;
+  --strapi-surface-2: #F4F4F5;
+  --strapi-surface-3: #E4E4E7;
+  --strapi-surface-4: #D4D4D8;
+  --strapi-surface-hover: #E4E4E7;
 
-  /** V3: Foreground hierarchy (light mode) */
-  --strapi-fg-1: #0a0a0f;
-  --strapi-fg-2: #3a3a4a;
-  --strapi-fg-3: #6a6a7a;
-  --strapi-fg-4: #9a9aaa;
-  --strapi-fg-5: #c0c0c8;
+  /** V3: Foreground hierarchy (light mode) — matches mockup-v2 */
+  --strapi-fg-1: #09090B;
+  --strapi-fg-2: #27272A;
+  --strapi-fg-3: #52525B;
+  --strapi-fg-4: #71717A;
+  --strapi-fg-5: #A1A1AA;
 
-  /** V3: Borders */
-  --strapi-border: rgba(0, 0, 0, 0.05);
-  --strapi-border-strong: rgba(0, 0, 0, 0.08);
+  /** V3: Borders — matches mockup-v2 */
+  --strapi-border: rgba(0, 0, 0, 0.08);
+  --strapi-border-strong: rgba(0, 0, 0, 0.12);
   --strapi-border-accent: rgba(73, 69, 255, 0.15);
 
-  /** V3: Semantic colors */
-  --strapi-green: #34d399;
-  --strapi-amber: #fbbf24;
-  --strapi-red: #f87171;
+  /** V3: Semantic colors — matches mockup-v2 */
+  --strapi-green: #22C55E;
+  --strapi-green-dim: rgba(34, 197, 94, 0.08);
+  --strapi-amber: #F59E0B;
+  --strapi-red: #EF4444;
 
   /** V3: Border radius */
   --strapi-radius-xs: 4px;
@@ -209,28 +210,31 @@
   --strapi-primary-600: #7B79FF;
   --strapi-primary-100: #181826;
 
-  /** V3 Dark: Surfaces — true dark */
-  --strapi-surface-0: #050507;
-  --strapi-surface-1: #0a0a0f;
-  --strapi-surface-2: #111118;
-  --strapi-surface-3: #1a1a24;
-  --strapi-surface-4: #23232f;
-  --strapi-surface-hover: #2a2a38;
+  /** V3 Dark: Surfaces — matches mockup-v2 */
+  --strapi-surface-0: #09090B;
+  --strapi-surface-1: #111113;
+  --strapi-surface-2: #18181B;
+  --strapi-surface-3: #1F1F23;
+  --strapi-surface-4: #27272A;
+  --strapi-surface-hover: #27272A;
 
-  /** V3 Dark: Foregrounds */
-  --strapi-fg-1: #f0f0f5;
-  --strapi-fg-2: #b0b0c0;
-  --strapi-fg-3: #70708a;
-  --strapi-fg-4: #50506a;
-  --strapi-fg-5: #35354a;
+  /** V3 Dark: Foregrounds — matches mockup-v2 */
+  --strapi-fg-1: #FAFAFA;
+  --strapi-fg-2: #D4D4D8;
+  --strapi-fg-3: #A1A1AA;
+  --strapi-fg-4: #71717A;
+  --strapi-fg-5: #52525B;
 
-  /** V3 Dark: Borders */
-  --strapi-border: rgba(255, 255, 255, 0.05);
-  --strapi-border-strong: rgba(255, 255, 255, 0.08);
+  /** V3 Dark: Borders — matches mockup-v2 */
+  --strapi-border: rgba(255, 255, 255, 0.06);
+  --strapi-border-strong: rgba(255, 255, 255, 0.1);
   --strapi-border-accent: rgba(73, 69, 255, 0.2);
 
+  /** V3 Dark: Semantic */
+  --strapi-green-dim: rgba(34, 197, 94, 0.12);
+
   /** V3 Dark: Accent glow (brighter in dark) */
-  --strapi-accent-glow: rgba(73, 69, 255, 0.35);
+  --strapi-accent-glow: rgba(73, 69, 255, 0.4);
 
   /** V3 Dark: Shadows */
   --strapi-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
