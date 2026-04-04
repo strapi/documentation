@@ -111,11 +111,12 @@ main:has(.api-endpoint-block) {
       min-width: 0;
     }
 
-    /** TOC column: fixed width but collapsible */
+    /** TOC column: fixed width but collapsible, flush to right edge */
     .col--3 {
       max-width: none !important;
-      flex: 0 0 auto !important;
-      width: auto !important;
+      flex: 0 0 220px !important;
+      width: 220px !important;
+      padding-right: 0 !important;
     }
   }
 

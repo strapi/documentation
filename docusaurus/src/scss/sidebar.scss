@@ -1054,6 +1054,11 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   .my-custom-search-bar {
     margin: 0 12px 8px;
   }
+
+  // Remove Docusaurus default navbar-height padding on sidebar (our wrapper handles it)
+  [class*="sidebar_"][class*="theme-classic"] {
+    padding-top: 0 !important;
+  }
 }
 
 @include medium-down {
