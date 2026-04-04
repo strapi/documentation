@@ -50,16 +50,47 @@ main {
 /** Responsive */
 @include medium-up {
   main {
-    article:first-child:not(.col),
+    article:first-child:not(.col):not(.custom-doc-card),
     article:first-child:not(.col) + nav {
       max-width: 720px;
       padding-left: 40px !important;
       padding-right: 40px !important;
+      transition: max-width var(--strapi-duration-slow) var(--strapi-ease);
     }
   }
 
   [class*="docRoot"]:not(:has(main)) {
     width: 300px;
+  }
+
+  /**
+   * Pages without a TOC column: reserve the same right-edge space
+   * so content stays aligned with pages that have a TOC.
+   */
+  [class*="docMainContainer"] .row:not(:has(.col--3)) {
+    padding-right: 240px;
+    transition: padding-right var(--strapi-duration-slow) var(--strapi-ease);
+  }
+
+  /** When TOC would be collapsed, shrink the reserved space */
+  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) [class*="docMainContainer"] .row:not(:has(.col--3)) {
+    padding-right: 44px;
+  }
+
+  /**
+   * Sanity-style: content grows when sidebars collapse.
+   * One sidebar collapsed → 840px. Both collapsed → 960px.
+   */
+  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) main article:first-child:not(.col),
+  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed) main article:first-child:not(.col) + nav,
+  [class*="docRoot"]:has(.toc-v3-wrapper--collapsed) main article:first-child:not(.col),
+  [class*="docRoot"]:has(.toc-v3-wrapper--collapsed) main article:first-child:not(.col) + nav {
+    max-width: 840px;
+  }
+
+  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed):has(.toc-v3-wrapper--collapsed) main article:first-child:not(.col),
+  [class*="docRoot"]:has(.sidebar-v3-wrapper--collapsed):has(.toc-v3-wrapper--collapsed) main article:first-child:not(.col) + nav {
+    max-width: 960px;
   }
 }
 

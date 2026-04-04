@@ -31,7 +31,7 @@ export default function CollapsibleTOC({ children }) {
           aria-label={collapsed ? 'Show table of contents' : 'Hide table of contents'}
           title={collapsed ? 'Show table of contents' : 'Hide table of contents'}
         >
-          <i className={collapsed ? 'ph ph-sidebar-simple' : 'ph ph-sidebar-simple'} />
+          {collapsed ? '◀' : '▶'}
         </button>
       </div>
       {!collapsed && (
