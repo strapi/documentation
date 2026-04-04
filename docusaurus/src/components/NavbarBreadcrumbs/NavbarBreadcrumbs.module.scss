@@ -10,7 +10,7 @@
 .separator {
   width: 1px;
   height: 20px;
-  background: var(--strapi-neutral-200);
+  background: var(--strapi-neutral-300);
   flex-shrink: 0;
 }
 
@@ -20,16 +20,16 @@
   gap: 6px;
   font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
   font-size: 12px;
-  color: var(--strapi-neutral-400);
+  color: var(--strapi-neutral-600);
 }
 
 .slash {
-  color: var(--strapi-neutral-300);
+  color: var(--strapi-neutral-400);
   user-select: none;
 }
 
 .crumbLink {
-  color: var(--strapi-neutral-400);
+  color: var(--strapi-neutral-600);
   text-decoration: none;
   transition: color 0.15s ease;
 
@@ -40,20 +40,56 @@
 }
 
 .current {
-  color: var(--strapi-neutral-600);
+  color: var(--strapi-neutral-800);
+  font-weight: 500;
 }
 
+/* ── Root crumb with inline product switch ── */
+.rootCrumb {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+
+  &:hover .switchLink {
+    opacity: 1;
+    max-width: 80px;
+    margin-left: 8px;
+  }
+}
+
+.switchLink {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  color: var(--strapi-neutral-400);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 0;
+  opacity: 0;
+  margin-left: 0;
+  transition: opacity 0.2s ease, max-width 0.25s ease, margin-left 0.25s ease;
+
+  &:hover {
+    color: var(--strapi-primary-600);
+    text-decoration: none;
+  }
+}
+
+/* ── Dark mode ── */
 @include dark {
   .separator {
-    color: var(--strapi-neutral-200);
+    background: var(--strapi-neutral-400);
   }
 
   .slash {
-    color: var(--strapi-neutral-300);
+    color: var(--strapi-neutral-500);
   }
 
   .crumbLink {
-    color: var(--strapi-neutral-400);
+    color: var(--strapi-neutral-500);
 
     &:hover {
       color: var(--strapi-primary-400);
@@ -61,7 +97,15 @@
   }
 
   .current {
+    color: var(--strapi-neutral-600);
+  }
+
+  .switchLink {
     color: var(--strapi-neutral-500);
+
+    &:hover {
+      color: var(--strapi-primary-400);
+    }
   }
 }
 
