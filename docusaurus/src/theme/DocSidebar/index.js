@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import DocSidebar from '@theme-original/DocSidebar';
-import CustomSearchBarWrapper from './CustomSearchBar';
 
 const STORAGE_KEY = 'strapi-sidebar-collapsed';
 
@@ -36,7 +35,6 @@ export default function DocSidebarWrapper(props) {
             {collapsed ? '▶' : '◀'}
           </button>
         </div>
-        <CustomSearchBarWrapper />
         <DocSidebar {...props} />
       </div>
     </div>
