@@ -36,9 +36,12 @@ export default function Endpoint({
   isLast = false,
   children,
 }) {
+  const hasColumns = (params.length > 0 || children) && (codeTabs.length > 0 || responses.length > 0);
+
   return (
     <div className={`${styles.endpoint} api-endpoint-block`} id={id} style={isLast ? { borderBottom: 'none' } : undefined}>
-      <div className={styles.endpoint__desc}>
+      {/* Header: full-width, above the 2-column grid */}
+      <div className={styles.endpoint__header}>
         <div className={styles.endpoint__methodRow}>
           <MethodPill method={method} />
           <span className={styles.endpoint__path}>
@@ -47,20 +50,46 @@ export default function Endpoint({
         </div>
         <h2 className={styles.endpoint__title}>{title}</h2>
         {description && <p className={styles.endpoint__text}>{description}</p>}
-        {params.length > 0 && <ParamTable title={paramTitle} params={params} />}
-        {children}
       </div>
-      <div className={styles.endpoint__code}>
-        {codeTabs.length > 0 && (
-          <CodePanel
-            method={method}
-            path={codePath || path}
-            pathHighlights={codePathHighlights}
-            tabs={codeTabs}
-          />
-        )}
-        {responses.length > 0 && <ResponsePanel responses={responses} />}
-      </div>
+
+      {/* 2-column grid: params left, code right */}
+      {hasColumns ? (
+        <div className={styles.endpoint__columns}>
+          <div className={styles.endpoint__desc}>
+            {params.length > 0 && <ParamTable title={paramTitle} params={params} />}
+            {children}
+          </div>
+          <div className={styles.endpoint__code}>
+            {codeTabs.length > 0 && (
+              <CodePanel
+                method={method}
+                path={codePath || path}
+                pathHighlights={codePathHighlights}
+                tabs={codeTabs}
+              />
+            )}
+            {responses.length > 0 && <ResponsePanel responses={responses} />}
+          </div>
+        </div>
+      ) : (
+        /* Fallback: no params, just code below the header */
+        <>
+          {(codeTabs.length > 0 || responses.length > 0) && (
+            <div className={styles.endpoint__codeOnly}>
+              {codeTabs.length > 0 && (
+                <CodePanel
+                  method={method}
+                  path={codePath || path}
+                  pathHighlights={codePathHighlights}
+                  tabs={codeTabs}
+                />
+              )}
+              {responses.length > 0 && <ResponsePanel responses={responses} />}
+            </div>
+          )}
+          {children && <div className={styles.endpoint__desc}>{children}</div>}
+        </>
+      )}
     </div>
   );
 }
