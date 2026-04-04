@@ -3,11 +3,36 @@
 
 .pagination-nav {
   --ifm-spacing-horizontal: var(--strapi-spacing-4);
+  gap: 16px;
 
   &__link {
+    border: 1px solid var(--strapi-neutral-150);
+    border-radius: var(--strapi-radius-md);
+    background: transparent;
+    padding: 16px 20px;
+    transition: border-color var(--strapi-duration-fast) var(--strapi-ease),
+                background-color var(--strapi-duration-fast) var(--strapi-ease);
+
     &:hover {
-      --ifm-pagination-nav-color-hover: var(--custom-card-border-color);
+      border-color: var(--strapi-primary-500);
+      background: var(--strapi-primary-100);
+      --ifm-pagination-nav-color-hover: var(--strapi-primary-600);
     }
+  }
+
+  &__sublabel {
+    font-size: var(--strapi-font-size-xs);
+    color: var(--strapi-neutral-500);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  &__label {
+    font-weight: 600;
+    font-size: var(--strapi-font-size-sm);
+    color: var(--strapi-primary-600);
   }
 }
 
@@ -22,5 +47,24 @@
       position: relative;
       right: -16px;
     }
+  }
+}
+
+@include dark {
+  .pagination-nav__link {
+    border-color: var(--strapi-neutral-200);
+
+    &:hover {
+      border-color: var(--strapi-primary-500);
+      background: rgba(73, 69, 255, 0.1);
+    }
+  }
+
+  .pagination-nav__sublabel {
+    color: var(--strapi-neutral-500);
+  }
+
+  .pagination-nav__label {
+    color: var(--strapi-primary-400);
   }
 }
