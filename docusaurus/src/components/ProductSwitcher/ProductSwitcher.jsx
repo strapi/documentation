@@ -13,7 +13,7 @@ const products = [
   {
     id: 'cloud',
     label: 'Cloud Docs',
-    href: '/cloud/getting-started/intro',
+    href: '/cloud/intro',
     icon: 'ph-fill ph-cloud',
     color: 'var(--strapi-secondary-500)',
   },

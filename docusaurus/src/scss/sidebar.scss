@@ -980,15 +980,17 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 .sidebar-v3-content {
   opacity: 1;
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  // Push all sidebar content below the fixed navbar
-  padding-top: calc(var(--ifm-navbar-height) + 12px);
-  padding-left: 16px;
-  padding-right: 16px;
+  // Push content below fixed navbar
+  padding-top: calc(var(--ifm-navbar-height) + 8px);
 
-  // ProductSwitcher spacing
+  // ProductSwitcher — compact, aligned with search bar
   > div:first-child {
-    margin-bottom: 10px;
-    max-width: 232px;
+    margin: 0 12px 6px;
+  }
+
+  // Search bar — reduce gap before nav items
+  .my-custom-search-bar {
+    margin: 0 12px 8px;
   }
 }
 
