@@ -1,4 +1,4 @@
-/** Component: Homepage AI Command Bar — V3 Redesign */
+/** Component: Homepage AI Command Bar — V3 matching mockup-v2 */
 @use '@site/src/scss/_mixins.scss' as mixins;
 
 .homepage-ai-button-container {
@@ -6,8 +6,6 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  margin-top: 16px;
-  margin-bottom: 64px;
   z-index: 100;
   position: relative;
 }
@@ -15,73 +13,76 @@
 .homepage-ai-button {
   position: relative;
   background: var(--strapi-surface-1);
-  border-radius: var(--strapi-radius-lg);
+  border-radius: 16px;
   border: 1px solid var(--strapi-border-strong);
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 12px;
-  cursor: pointer;
-  padding: 20px 32px;
+  cursor: text;
+  padding: 0 20px;
   width: 100%;
-  max-width: 520px;
-  color: var(--strapi-fg-4);
+  max-width: 580px;
+  height: 56px;
+  color: var(--strapi-fg-5);
   font-family: var(--strapi-font-family-body);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: -0.01em;
+  font-size: 15px;
+  font-weight: 400;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-  > svg {
-    fill: var(--strapi-fg-4);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    flex-shrink: 0;
-  }
+.homepage-ai-button::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 17px;
+  background: linear-gradient(135deg, var(--strapi-accent, #4945FF), transparent 40%, transparent 60%, var(--strapi-accent-light, #7B79FF));
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: -1;
+}
 
-  p {
-    margin-bottom: 0;
-    color: var(--strapi-fg-4);
-    transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  /** V3: Kbd shortcut pill */
-  &::before {
-    content: '\2318K';
-    position: absolute;
-    right: 20px;
-    font-size: 12px;
-    font-family: var(--strapi-font-family-mono);
-    color: var(--strapi-fg-5);
-    background: var(--strapi-surface-2);
-    padding: 4px 8px;
-    border-radius: var(--strapi-radius-sm);
-    letter-spacing: 0.05em;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
+.homepage-ai-button:hover::before {
+  opacity: 1;
 }
 
 .homepage-ai-button:hover {
-  border-color: var(--strapi-accent);
-  box-shadow: 0 0 60px var(--strapi-accent-glow), 0 0 0 1px var(--strapi-accent);
-  transform: translateY(-2px);
+  border-color: transparent;
+  box-shadow: 0 0 40px var(--strapi-accent-glow), 0 8px 32px rgba(0, 0, 0, 0.1);
+}
 
-  p {
-    color: var(--strapi-fg-1);
-  }
+.sparkle {
+  font-size: 20px;
+  background: linear-gradient(135deg, var(--strapi-accent-light, #7B79FF), #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  flex-shrink: 0;
+}
 
-  > svg {
-    fill: var(--strapi-accent);
-  }
+.placeholder {
+  flex: 1;
+  text-align: left;
+  color: var(--strapi-fg-5);
+}
 
-  &::before {
-    color: var(--strapi-accent-light);
-    background: rgba(73, 69, 255, 0.1);
+.keys {
+  display: flex;
+  gap: 3px;
+
+  kbd {
+    font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+    font-size: 11px;
+    padding: 3px 7px;
+    border-radius: 6px;
+    background: var(--strapi-surface-2);
+    color: var(--strapi-fg-5);
+    border: 1px solid var(--strapi-border);
+    line-height: 1;
   }
 }
 
-/** V3: Shimmer sweep on hover */
+/** Shimmer sweep on hover */
 .homepage-ai-button::after {
   content: "";
   position: absolute;
@@ -104,7 +105,7 @@
 
 @include mixins.dark {
   .homepage-ai-button {
-    background: var(--strapi-surface-2);
-    border-color: var(--strapi-border);
+    background: var(--strapi-surface-1);
+    border-color: var(--strapi-border-strong);
   }
 }

@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './homepageaibutton.module.scss'
-import Icon from '../Icon'
 
 export default function HomepageAIButton() {
   return (
     <div className={styles['homepage-ai-button-container']}>
       <button className={`${styles['homepage-ai-button']} kapa-widget-button`}>
-        <Icon name="sparkle" />
-        <p>Ask AI anything</p>
+        <span className={styles['sparkle']}>✦</span>
+        <span className={styles['placeholder']}>Ask AI anything about Strapi...</span>
+        <span className={styles['keys']}>
+          <kbd>⌘</kbd>
+          <kbd>K</kbd>
+        </span>
       </button>
     </div>
   );
