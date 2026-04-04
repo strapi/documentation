@@ -2,12 +2,12 @@
 
 .wrapper {
   position: sticky;
-  top: calc(var(--ifm-navbar-height, 56px) + 16px);
+  top: var(--ifm-navbar-height, 56px);
   width: 100%;
-  max-height: calc(100vh - var(--ifm-navbar-height, 56px) - 32px);
+  max-height: calc(100vh - var(--ifm-navbar-height, 56px));
   overflow-y: auto;
   border-left: 1px solid var(--strapi-neutral-150);
-  padding: 20px 8px 28px 20px;
+  padding: 24px 8px 28px 20px;
 
   /* Thin scrollbar when TOC content overflows */
   scrollbar-width: thin;
@@ -24,7 +24,7 @@
 
 .collapsed {
   border-left: none;
-  padding: 20px 0;
+  padding: 24px 0;
   display: flex;
   align-items: flex-start;
   justify-content: center;

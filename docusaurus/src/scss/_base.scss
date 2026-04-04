@@ -174,7 +174,6 @@ main:has(.api-endpoint-block) {
       min-width: 240px !important;
       padding-right: 0 !important;
       padding-left: 0 !important;
-      overflow: hidden;
       transition: width var(--strapi-duration-slow) var(--strapi-ease),
                   max-width var(--strapi-duration-slow) var(--strapi-ease),
                   min-width var(--strapi-duration-slow) var(--strapi-ease);
