@@ -1,5 +1,4 @@
-import React from 'react';
-import { useLocation } from '@docusaurus/router';
+import React, { useRef, useEffect, useCallback } from 'react';
 import styles from './NavbarBreadcrumbs.module.scss';
 
 const PRODUCTS = {
@@ -7,76 +6,119 @@ const PRODUCTS = {
   cloud: { switchTo: 'cms', switchHref: '/cms/intro' },
 };
 
-// Segments whose URL path doesn't match their slug in the URL.
-// e.g. /cms/api → /cms/content-api (because /cms/api is a 404)
 const SEGMENT_REWRITES = {
   'cms/api': '/cms/api/content-api',
 };
 
-/**
- * Mockup-v3 style breadcrumbs that render inside the navbar.
- * Shows a monospace path-style trail: cms / getting-started / quick-start
- * The first segment (cms/cloud) shows a subtle switch link on hover.
- * Only visible on doc pages (paths starting with /cms/ or /cloud/).
- */
-export default function NavbarBreadcrumbs() {
-  const { pathname } = useLocation();
+const ROOT_LINKS = { cms: '/cms/intro', cloud: '/cloud/intro' };
 
-  // Only show on doc pages
-  const isDocPage = pathname.startsWith('/cms/') || pathname.startsWith('/cloud/');
-  if (!isDocPage) return null;
-
-  // Build crumbs from URL path segments
+function buildCrumbs(pathname) {
   const segments = pathname.replace(/^\//, '').replace(/\/$/, '').split('/');
-  if (segments.length === 0) return null;
+  if (segments.length === 0) return [];
 
-  const rootSegment = segments[0]; // 'cms' or 'cloud'
-  const product = PRODUCTS[rootSegment];
-
-  // Map root sections to their intro pages
-  const rootLinks = { cms: '/cms/intro', cloud: '/cloud/intro' };
-
-  // Build breadcrumb items with cumulative paths
-  const crumbs = segments.map((segment, index) => {
+  return segments.map((segment, index) => {
     const cumPath = segments.slice(0, index + 1).join('/');
     let href;
-    if (index === 0 && rootLinks[segment]) {
-      href = rootLinks[segment];
+    if (index === 0 && ROOT_LINKS[segment]) {
+      href = ROOT_LINKS[segment];
     } else if (SEGMENT_REWRITES[cumPath]) {
       href = SEGMENT_REWRITES[cumPath];
     } else {
       href = '/' + cumPath;
     }
-    const isLast = index === segments.length - 1;
-    return { label: segment, href, isLast, isRoot: index === 0 };
+    return { label: segment, href, isLast: index === segments.length - 1, isRoot: index === 0 };
+  });
+}
+
+/**
+ * Renders breadcrumbs into the container ref imperatively.
+ * This bypasses React's render cycle which Docusaurus blocks for the navbar.
+ */
+function renderBreadcrumbs(container, pathname) {
+  if (!container) return;
+
+  const isDocPage = pathname.startsWith('/cms/') || pathname.startsWith('/cloud/');
+  if (!isDocPage) {
+    container.style.display = 'none';
+    return;
+  }
+  container.style.display = '';
+
+  const rootSegment = pathname.split('/')[1]; // 'cms' or 'cloud'
+  const product = PRODUCTS[rootSegment];
+  const crumbs = buildCrumbs(pathname);
+
+  // Build HTML
+  let html = `<div class="${styles.separator}"></div>`;
+  html += `<nav class="${styles.crumbs}" aria-label="Breadcrumbs">`;
+
+  crumbs.forEach((crumb, i) => {
+    if (i > 0) html += `<span class="${styles.slash}">/</span>`;
+
+    if (crumb.isRoot && product) {
+      html += `<span class="${styles.rootCrumb}">`;
+      html += `<a href="${crumb.href}" class="${styles.crumbLink}">${crumb.label}</a>`;
+      html += `<a href="${product.switchHref}" class="${styles.switchLink}">${product.switchTo} ↗</a>`;
+      html += `</span>`;
+    } else if (crumb.isLast) {
+      html += `<span class="${styles.current}">${crumb.label}</span>`;
+    } else {
+      html += `<a href="${crumb.href}" class="${styles.crumbLink}">${crumb.label}</a>`;
+    }
   });
 
-  return (
-    <div className={styles.navbarBreadcrumbs}>
-      <div className={styles.separator} />
-      <nav className={styles.crumbs} aria-label="Breadcrumbs">
-        {crumbs.map((crumb, i) => (
-          <React.Fragment key={crumb.href}>
-            {i > 0 && <span className={styles.slash}>/</span>}
-            {crumb.isRoot && product ? (
-              <span className={styles.rootCrumb}>
-                <a href={crumb.href} className={styles.crumbLink}>
-                  {crumb.label}
-                </a>
-                <a href={product.switchHref} className={styles.switchLink}>
-                  {product.switchTo} ↗
-                </a>
-              </span>
-            ) : crumb.isLast ? (
-              <span className={styles.current}>{crumb.label}</span>
-            ) : (
-              <a href={crumb.href} className={styles.crumbLink}>
-                {crumb.label}
-              </a>
-            )}
-          </React.Fragment>
-        ))}
-      </nav>
-    </div>
-  );
+  html += `</nav>`;
+  container.innerHTML = html;
+}
+
+/**
+ * Mockup-v3 style breadcrumbs that render inside the navbar.
+ * Shows a monospace path-style trail: cms / getting-started / quick-start
+ * The first segment (cms/cloud) shows a subtle switch link on hover.
+ *
+ * Uses imperative DOM updates because Docusaurus memoizes the navbar tree
+ * and prevents React re-renders on client-side navigation.
+ */
+export default function NavbarBreadcrumbs() {
+  const containerRef = useRef(null);
+  const lastPathRef = useRef('');
+
+  const update = useCallback(() => {
+    const current = window.location.pathname;
+    if (current !== lastPathRef.current) {
+      lastPathRef.current = current;
+      renderBreadcrumbs(containerRef.current, current);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Initial render
+    lastPathRef.current = window.location.pathname;
+    renderBreadcrumbs(containerRef.current, window.location.pathname);
+
+    // Listen for all navigation types
+    // 1. popstate (back/forward)
+    window.addEventListener('popstate', update);
+
+    // 2. Patch pushState/replaceState for SPA navigations
+    const origPush = history.pushState;
+    const origReplace = history.replaceState;
+    history.pushState = function (...args) {
+      origPush.apply(this, args);
+      // Defer to next microtask so URL is updated
+      Promise.resolve().then(update);
+    };
+    history.replaceState = function (...args) {
+      origReplace.apply(this, args);
+      Promise.resolve().then(update);
+    };
+
+    return () => {
+      window.removeEventListener('popstate', update);
+      history.pushState = origPush;
+      history.replaceState = origReplace;
+    };
+  }, [update]);
+
+  return <div ref={containerRef} className={styles.navbarBreadcrumbs} />;
 }
