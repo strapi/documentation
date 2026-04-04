@@ -1,164 +1,167 @@
 import React from 'react';
-import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import styles from './home.module.scss';
-import {
-  Card,
-  CardCta,
-  CardIcon,
-  CardDescription,
-  CardImg,
-  CardTitle,
-  Container,
-  Hero,
-  HeroDescription,
-  HeroTitle,
-  HomepageAIButton,
-} from '../../components';
+import { HomepageAIButton } from '../../components';
 import NewsTicker from '@site/src/components/NewsTicker';
-import Icon from '../../components/Icon';
 import content from './_home.content';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 
-const QUICK_LINKS = [
+/**
+ * Bento grid items for the "Quick Start" section.
+ * Layout: 2 wide + 1 regular (row 1), 1 regular + 1 wide (row 2)
+ */
+const BENTO_ITEMS = [
   {
-    icon: 'rocket-launch',
-    title: 'Quick Start',
-    desc: 'Get up and running in 5 minutes',
+    wide: true,
+    icon: '🚀',
+    title: 'Create a project in 30 seconds',
+    desc: 'One command to scaffold, install, and start your Strapi backend.',
     to: '/cms/quick-start',
+    code: (
+      <>
+        <span className={styles.codeCm}>$</span>{' '}
+        <span className={styles.codeFn}>npx</span> create-strapi@latest my-project{' '}
+        <span className={styles.codeKw}>--quickstart</span>
+      </>
+    ),
   },
   {
-    icon: 'plugs-connected',
-    title: 'REST API',
-    desc: 'Create, read, update, delete content',
-    to: '/cms/api/rest',
+    icon: '⚡',
+    title: 'Content APIs',
+    desc: 'REST and GraphQL APIs auto-generated from your content types.',
+    to: '/cms/api/content-api',
+    code: (
+      <>
+        <span className={styles.codeFn}>GET</span> /api/articles<br />
+        <span className={styles.codeFn}>POST</span> /api/articles<br />
+        <span className={styles.codeFn}>PUT</span> /api/articles/<span className={styles.codeStr}>:id</span>
+      </>
+    ),
+    codeAtBottom: true,
   },
   {
-    icon: 'graph',
-    title: 'GraphQL API',
-    desc: 'Query your content with GraphQL',
-    to: '/cms/api/graphql',
-  },
-  {
-    icon: 'puzzle-piece',
-    title: 'Plugins',
-    desc: 'Extend Strapi with plugins',
+    icon: '🔌',
+    title: 'Plugin Ecosystem',
+    desc: 'Extend everything. Build custom plugins or use community ones.',
     to: '/cms/plugins',
+    stat: '60+',
+    statLabel: 'community plugins',
   },
   {
-    icon: 'code',
+    icon: '🔧',
     title: 'Customization',
-    desc: 'Tailor Strapi to your needs',
+    desc: 'Lifecycle hooks, middlewares, policies, and custom controllers.',
     to: '/cms/customization',
   },
   {
-    icon: 'cloud',
-    title: 'Deploy to Cloud',
-    desc: 'One-click deployment on Strapi Cloud',
+    wide: true,
+    icon: '🌐',
+    title: 'Deploy Anywhere',
+    desc: 'Strapi Cloud, AWS, Heroku, DigitalOcean, Vercel, or your own infrastructure. One-click deploy or full control.',
     to: '/cloud/getting-started/deployment',
+    code: (
+      <>
+        <span className={styles.codeCm}>$</span>{' '}
+        <span className={styles.codeFn}>strapi</span> deploy{' '}
+        <span className={styles.codeKw}>--cloud</span><br />
+        <span className={styles.codeStr}>✓ Project deployed to https://my-project.strapiapp.com</span>
+      </>
+    ),
+    codeAtBottom: true,
   },
 ];
 
-export default function PageHome() {
-  const isBrowser = useIsBrowser();
-  const isDarkTheme = isBrowser
-    ? document.documentElement.getAttribute('data-theme') === 'dark'
-    : false;
+/**
+ * REST API Reference preview items
+ */
+const API_ITEMS = [
+  { method: 'GET', path: '/api/:pluralApiId', desc: 'Get entries', to: '/cms/api/rest#get-all' },
+  { method: 'GET', path: '/api/:pluralApiId/:documentId', desc: 'Get an entry', to: '/cms/api/rest#get' },
+  { method: 'POST', path: '/api/:pluralApiId', desc: 'Create an entry', to: '/cms/api/rest#create' },
+  { method: 'PUT', path: '/api/:pluralApiId/:documentId', desc: 'Update an entry', to: '/cms/api/rest#update' },
+  { method: 'DEL', path: '/api/:pluralApiId/:documentId', desc: 'Delete an entry', to: '/cms/api/rest#delete' },
+];
 
+function ApiPath({ path }) {
+  // Highlight :param segments
+  return path.split(/(:[\w]+)/).map((segment, i) =>
+    segment.startsWith(':')
+      ? <span key={i} className={styles.apiParam}>{segment}</span>
+      : <span key={i}>{segment}</span>
+  );
+}
+
+export default function PageHome() {
   return (
     <Layout
       title={content.page.title}
       description={content.page.description}
     >
       <main className={styles.home}>
-        <NewsTicker newsItems={content.newsTicker} />
-
-        <Hero id="homeHero">
-          <Container>
-            <HeroTitle className="heroTitle">
-              {content.page.title}
-            </HeroTitle>
-            <HeroDescription className="heroDescription">
-              {content.page.description}
-            </HeroDescription>
-          </Container>
-        </Hero>
-
-        <HomepageAIButton />
-
-        <section id="homeCategories" className={styles.home__categories}>
-          <Container>
-            <div className="row row--huge">
-              {content.categories.map(({
-                cardTitle: categoryItemCardTitle,
-                cardDescription: categoryItemCardDescription,
-                cardImgSrc: categoryItemCardImgSrc,
-                cardLink: categoryItemCardLink,
-                cardIconName: categoryItemCardIconName,
-                cardIconColor: categoryItemCardIconColor,
-                cardCtaText: categoryItemCardCtaText,
-                categoryType,
-                ...categoryItem
-              }, categoryItemIndex) => (
-                <div
-                  key={`pageHomeCategoryItem${categoryItemIndex}`}
-                  className={clsx('col', 'col--6', styles.home__categories__item)}
-                >
-                  <Card
-                    categoryType={categoryType}
-                    href={categoryItemCardLink}
-                    asCallToAction
-                    isDarkTheme={isDarkTheme}
-                  >
-                    {categoryItemCardIconName && (
-                      <CardIcon name={categoryItemCardIconName} color={categoryItemCardIconColor} isDarkTheme={isDarkTheme} />
-                    )}
-                    {categoryItemCardTitle && <CardTitle>{categoryItemCardTitle}</CardTitle>}
-                    {categoryItemCardDescription && <CardDescription>{categoryItemCardDescription}</CardDescription>}
-                    {categoryItemCardLink && (
-                      <CardCta
-                        asPlainContent
-                        withArrow
-                        to={categoryItemCardLink}
-                        text={categoryItemCardCtaText}
-                        color={categoryItemCardIconColor}
-                        className="category-card-cta"
-                        isDarkTheme={isDarkTheme}
-                      />
-                    )}
-                    {isDarkTheme && categoryItem.cardImgSrcDark
-                      ? <CardImg src={categoryItem.cardImgSrcDark} isDarkTheme={isDarkTheme} />
-                      : categoryItemCardImgSrc && <CardImg src={categoryItemCardImgSrc} isDarkTheme={isDarkTheme} />
-                    }
-                  </Card>
-                </div>
-              ))}
-            </div>
-          </Container>
+        {/* ═══ HERO ═══ */}
+        <section className={styles.hero}>
+          <div className={styles.heroGrid} aria-hidden="true" />
+          <div className={styles.heroContent}>
+            <NewsTicker newsItems={content.newsTicker} />
+            <h1 className={styles.heroTitle}>
+              Build <span className={styles.heroAccent}>anything</span>
+              <br />
+              <span className={styles.heroDim}>with Strapi.</span>
+            </h1>
+            <p className={styles.heroSub}>
+              The open-source headless CMS that gives you the freedom
+              to choose your tools and frameworks.
+            </p>
+            <HomepageAIButton />
+          </div>
         </section>
 
-        <section className={styles.home__quicklinks}>
-          <p className={styles.sectionTitle}>Popular resources</p>
-          <div className={styles.quickLinksGrid}>
-            {QUICK_LINKS.map((link, i) => (
+        {/* ═══ BENTO GRID ═══ */}
+        <section className={styles.bento}>
+          <div className={styles.bentoLabel}>Quick Start</div>
+          <div className={styles.bentoGrid}>
+            {BENTO_ITEMS.map((item, i) => (
               <a
-                key={link.to}
-                href={link.to}
-                className={styles.quickLinkItem}
-                style={{ '--stagger': i }}
+                key={i}
+                href={item.to}
+                className={`${styles.bentoCard} ${item.wide ? styles.bentoCardWide : ''}`}
               >
-                <span className={styles.quickLinkItem__icon}>
-                  <Icon name={link.icon} />
+                <div className={styles.bentoCardIcon}>{item.icon}</div>
+                <div className={styles.bentoCardTitle}>{item.title}</div>
+                <div className={styles.bentoCardDesc}>{item.desc}</div>
+                {item.stat && (
+                  <>
+                    <div className={styles.bentoCardStat}>{item.stat}</div>
+                    <div className={styles.bentoCardStatLabel}>{item.statLabel}</div>
+                  </>
+                )}
+                {item.code && (
+                  <div
+                    className={styles.bentoCardCode}
+                    style={item.codeAtBottom ? { marginTop: 'auto' } : undefined}
+                  >
+                    {item.code}
+                  </div>
+                )}
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* ═══ API PREVIEW ═══ */}
+        <section className={styles.apiPreview}>
+          <div className={styles.apiPreviewLabel}>REST API Reference</div>
+          <div className={styles.apiRow}>
+            {API_ITEMS.map((item, i) => (
+              <a key={i} href={item.to} className={styles.apiItem}>
+                <span className={`${styles.apiMethod} ${styles[`apiMethod${item.method.charAt(0).toUpperCase() + item.method.slice(1).toLowerCase()}`] || styles.apiMethodGet}`}>
+                  {item.method}
                 </span>
-                <span className={styles.quickLinkItem__content}>
-                  <span className={styles.quickLinkItem__title}>{link.title}</span>
-                  <span className={styles.quickLinkItem__desc}>{link.desc}</span>
+                <span className={styles.apiPath}>
+                  <ApiPath path={item.path} />
                 </span>
-                <span className={styles.quickLinkItem__arrow}>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M6 3L11 8L6 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </span>
+                <span className={styles.apiDesc}>{item.desc}</span>
+                <span className={styles.apiArrow}>→</span>
               </a>
             ))}
           </div>
