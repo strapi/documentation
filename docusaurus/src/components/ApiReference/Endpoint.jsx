@@ -48,7 +48,6 @@ export default function Endpoint({
             {path}
           </span>
         </div>
-        <h2 className={styles.endpoint__title}>{title}</h2>
         {description && <p className={styles.endpoint__text}>{description}</p>}
       </div>
 
