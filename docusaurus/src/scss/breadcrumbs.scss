@@ -1,4 +1,4 @@
-/** Component: Breadcrumbs */
+/** Component: Breadcrumbs — Minimalist navbar-style */
 @use './mixins' as *;
 
 .breadcrumbs {
@@ -8,7 +8,7 @@
   --ifm-link-hover-color: var(--strapi-neutral-700);
   --ifm-breadcrumb-separator-size: 10px;
   --ifm-breadcrumb-size-multiplier: .8;
-  --ifm-breadcrumb-separator-size-multiplier: 1.25;
+  --ifm-breadcrumb-separator-size-multiplier: 1;
 
   --custom-breadcrumbs-font-size: var(--strapi-font-size-xs);
   --custom-breadcrumbs-pt: var(--strapi-spacing-4);
@@ -17,19 +17,14 @@
   padding: var(--custom-breadcrumbs-pt) 0 0;
 
   &__item {
-    // Use this to remove the Home breadcrumb entirely 👇
-    // &:first-of-type {
-    //   display: none;
-    // }
-
     /**
-     * Replace home icon by text*
+     * Replace home icon with text
      */
     &:first-of-type .breadcrumbs__link {
       padding-left: 0;
 
       &::before {
-        content: 'Home'
+        content: 'Home';
       }
 
       svg {
@@ -38,24 +33,48 @@
     }
 
     a {
-      color: var(--strapi-neutral-600);
-      font-weight: 500;
+      color: var(--strapi-neutral-500);
+      font-weight: 400;
+      font-size: var(--custom-breadcrumbs-font-size);
+
+      &:hover {
+        color: var(--strapi-primary-600);
+      }
     }
 
     &--active {
-      font-weight: 600;
+      font-weight: 500;
+
+      .breadcrumbs__link {
+        color: var(--strapi-neutral-700);
+      }
     }
+  }
+
+  // Slash separator instead of caret
+  &__item:not(:last-child)::after {
+    content: '/' !important;
+    background: none !important;
+    width: auto !important;
+    height: auto !important;
+    transform: none !important;
+    font-size: var(--custom-breadcrumbs-font-size);
+    color: var(--strapi-neutral-400);
+    margin: 0 6px;
+    opacity: 1 !important;
   }
 
   &__link {
     background-color: transparent;
     font-size: var(--custom-breadcrumbs-font-size);
-    padding: 8px 5px 8px 5px;
-
-    @include transition;
+    padding: 4px 2px;
+    border-radius: 4px;
+    transition: color var(--strapi-duration-fast) var(--strapi-ease),
+                background-color var(--strapi-duration-fast) var(--strapi-ease);
 
     &:any-link:hover {
-      --ifm-breadcrumb-item-background-active: var(--strapi-neutral-100);
+      --ifm-breadcrumb-item-background-active: transparent;
+      text-decoration: none;
     }
   }
 }
@@ -63,7 +82,7 @@
 @include medium-up {
   .breadcrumbs {
     --custom-breadcrumbs-pt: var(--strapi-spacing-6);
-    --custom-breadcrumbs-item-caret-mx: var(--strapi-spacing-3);
+    --custom-breadcrumbs-item-caret-mx: var(--strapi-spacing-2);
   }
 }
 
@@ -73,5 +92,27 @@
   }
   .breadcrumbs__link {
     padding: 0 2px;
+  }
+}
+
+@include dark {
+  .breadcrumbs {
+    &__item {
+      a {
+        color: var(--strapi-neutral-500);
+
+        &:hover {
+          color: var(--strapi-primary-400);
+        }
+      }
+
+      &--active .breadcrumbs__link {
+        color: var(--strapi-neutral-700);
+      }
+    }
+
+    &__item:not(:last-child)::after {
+      color: var(--strapi-neutral-400);
+    }
   }
 }
