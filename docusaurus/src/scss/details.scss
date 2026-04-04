@@ -7,20 +7,50 @@ details.alert {
 
   --ifm-alert-background-color: var(--strapi-neutral-0);
   --ifm-alert-background-color-highlight: var(--strapi-neutral-500);
-  --ifm-alert-border-radius: var(--strapi-spacing-1);
-  --ifm-alert-foreground-color: var( --ifm-color-info-contrast-foreground );
-  --ifm-alert-border-color: var(--strapi-neutral-200);
+  --ifm-alert-border-radius: var(--strapi-radius-md);
+  --ifm-alert-foreground-color: var(--ifm-color-info-contrast-foreground);
+  --ifm-alert-border-color: var(--strapi-neutral-150);
+  --details-accent-color: var(--strapi-primary-500);
 
   --ifm-tabs-color-active: var(--ifm-color-primary);
   --ifm-tabs-color-active-border: var(--ifm-color-primary);
+
   box-shadow: none;
-  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.04));
+  border-radius: var(--strapi-radius-md);
+  --ifm-alert-border-left-width: 0px;
+  --ifm-alert-border-color: var(--strapi-neutral-150);
+  --ifm-color-info-dark: var(--strapi-neutral-150);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--strapi-duration-fast) var(--strapi-ease);
+
   --ifm-alert-padding-horizontal: 24px;
   --ifm-alert-padding-vertical: 24px;
-  padding: 0;
+
+  // Left accent bar via pseudo-element (avoids border specificity issues with infima)
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--details-accent-color);
+    border-radius: var(--strapi-radius-md) 0 0 var(--strapi-radius-md);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &:hover {
+    border-color: var(--strapi-neutral-200);
+  }
 
   summary {
     position: relative;
+    font-weight: 600;
+    color: var(--strapi-neutral-800);
+    cursor: pointer;
 
     p {
       margin: 0;
@@ -28,24 +58,23 @@ details.alert {
 
     list-style: none;
 
-    &::before { // Triangle icon to open/close the details block
+    &::before {
       content: "";
       position: relative;
       display: inline-block;
       border: none;
       top: 0px;
-      width: 8px;
-      height: 8px;
-      border-right: 1px solid var(--strapi-neutral-600);
-      border-bottom: 1px solid var(--strapi-neutral-600);
+      width: 7px;
+      height: 7px;
+      border-right: 2px solid var(--details-accent-color);
+      border-bottom: 2px solid var(--details-accent-color);
       transform: rotate(-45deg);
-      transform-origin: calc(var(--docusaurus-details-summary-arrow-size)/2);
-      transition: transform .3s ease;
+      transform-origin: calc(var(--docusaurus-details-summary-arrow-size) / 2);
+      transition: transform 0.25s var(--strapi-ease);
       margin-right: 14px;
     }
 
     &::after {
-      // Ensures you can open/close by clicking anywhere, not just on title
       content: '';
       position: absolute;
       top: 0;
@@ -58,7 +87,7 @@ details.alert {
 
   summary,
   > div {
-    padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-vertical);
+    padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-horizontal);
   }
 
   > *:last-child {
@@ -67,8 +96,7 @@ details.alert {
   }
 
   > div:first-of-type,
-  > div > *:first-child,
-   {
+  > div > *:first-child {
     padding-top: 0 !important;
     margin-top: 0 !important;
   }
@@ -77,17 +105,22 @@ details.alert {
     margin-top: 10px;
   }
 
-  &[open] summary::before {
-    transform: rotate(45deg) !important;
-    position: relative;
-    top: -4px;
-    left: 0.15rem;
+  &[open] {
+    summary {
+      border-bottom: 1px solid var(--strapi-neutral-150);
+
+      &::before {
+        transform: rotate(45deg) !important;
+        position: relative;
+        top: -3px;
+        left: 0.15rem;
+      }
+    }
   }
 
   /** Content element */
   > div > div {
     --docusaurus-details-decoration-color: transparent;
-
     margin-top: 0;
   }
 
@@ -96,7 +129,7 @@ details.alert {
   }
 
   a {
-    color: var(--custom-code-color);
+    color: var(--strapi-primary-600);
   }
 
   a:hover {
@@ -110,12 +143,19 @@ details.alert {
 
 @include dark {
   details.alert {
+    --ifm-alert-border-color: var(--strapi-neutral-200);
+    --details-accent-color: var(--strapi-primary-400);
+
     .theme-code-block-highlighted-line {
       background-color: var(--strapi-neutral-0);
     }
 
-    summary::before {
-      border-color: #8E8EA9
+    summary {
+      color: var(--strapi-neutral-800);
+    }
+
+    &[open] summary {
+      border-bottom-color: var(--strapi-neutral-200);
     }
   }
 }
