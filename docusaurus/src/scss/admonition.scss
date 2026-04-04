@@ -4,7 +4,7 @@
 .theme-admonition {
   --custom-admonition-background-color: transparent;
   --custom-admonition-border-color: var(--strapi-neutral-200);
-  --custom-admonition-border-radius: var(--strapi-radius-md);
+  --custom-admonition-border-radius: var(--strapi-spacing-1);
   --custom-admonition-color: var(--strapi-fg-2);
   --custom-admonition-heading-color: var(--strapi-fg-1);
   --custom-admonition-heading-mb: var(--strapi-spacing-2);
@@ -14,7 +14,6 @@
   --custom-prerequisites-px: 40px;
   --custom-prerequisites-py: 46px;
   --custom-admonition-my: var(--strapi-spacing-7);
-  --custom-admonition-accent-color: var(--strapi-neutral-400);
 
   --ifm-link-decoration: none;
   --ifm-link-color: var(--custom-admonition-heading-color);
@@ -23,12 +22,9 @@
   background-color: var(--custom-admonition-background-color);
   border: 1px solid var(--custom-admonition-border-color);
   border-radius: var(--custom-admonition-border-radius);
-  border-left: 3px solid var(--custom-admonition-accent-color);
   color: var(--custom-admonition-color);
   margin: var(--custom-admonition-my) 0;
   padding: var(--custom-admonition-py) var(--custom-admonition-px);
-  transition: border-color var(--strapi-duration-fast) var(--strapi-ease),
-              box-shadow var(--strapi-duration-fast) var(--strapi-ease);
 
   /** Alert Title element */
   &__heading,
@@ -108,7 +104,6 @@
   &--note {
     --custom-admonition-background-color: var(--strapi-primary-100);
     --custom-admonition-border-color: var(--strapi-primary-200);
-    --custom-admonition-accent-color: var(--strapi-primary-600);
     --custom-admonition-code-background-color: var(--strapi-primary-200);
     --custom-admonition-code-color: var(--strapi-primary-600);
     --custom-admonition-heading-color: var(--strapi-primary-600);
@@ -121,7 +116,6 @@
   &--success {
     --custom-admonition-background-color: var(--strapi-success-100);
     --custom-admonition-border-color: var(--strapi-success-500);
-    --custom-admonition-accent-color: var(--strapi-success-600);
     --custom-admonition-code-background-color: var(--strapi-success-200);
     --custom-admonition-code-color: var(--strapi-success-600);
     --custom-admonition-heading-color: var(--strapi-success-600);
@@ -134,7 +128,6 @@
   &--caution {
     --custom-admonition-background-color: var(--strapi-warning-100);
     --custom-admonition-border-color: var(--strapi-warning-200);
-    --custom-admonition-accent-color: var(--strapi-warning-600);
     --custom-admonition-code-background-color: var(--strapi-warning-200);
     --custom-admonition-code-color: var(--strapi-warning-600);
     --custom-admonition-heading-color: var(--strapi-warning-600);
@@ -147,7 +140,6 @@
   &--warning {
     --custom-admonition-background-color: var(--strapi-danger-100);
     --custom-admonition-border-color: var(--strapi-danger-200);
-    --custom-admonition-accent-color: var(--strapi-danger-600);
     --custom-admonition-code-background-color: var(--strapi-danger-200);
     --custom-admonition-code-color: var(--strapi-danger-600);
     --custom-admonition-heading-color: var(--strapi-danger-600);
@@ -159,7 +151,6 @@
   &--strapi {
     --custom-admonition-background-color: transparent;
     --custom-admonition-border-color: var(--strapi-primary-500);
-    --custom-admonition-accent-color: var(--strapi-primary-500);
     --custom-admonition-code-background-color: var(--strapi-primary-200);
     --custom-admonition-code-color: var(--strapi-primary-600);
     --custom-admonition-heading-color: var(--strapi-neutral-800);
