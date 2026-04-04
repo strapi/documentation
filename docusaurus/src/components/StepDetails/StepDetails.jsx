@@ -64,7 +64,7 @@ export default function StepDetails({ title, children }) {
   return (
     <details
       id={stepId}
-      className={`alert alert--info ${styles.stepDetails} ${completed ? styles.completed : ''}`}
+      className={`${styles.stepDetails} ${completed ? styles.completed : ''}`}
       onToggle={handleToggle}
     >
       <summary>
