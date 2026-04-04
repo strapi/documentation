@@ -3838,8 +3838,6 @@ Each section below documents the parameters and examples for a specific method:
 
 ### `findOne()`
 
-Find a document matching the passed `documentId` and parameters.
-
 Syntax: `findOne(parameters: Params) => Document`
 
 #### GET strapi.documents().findOne() — findOne()
@@ -3871,8 +3869,6 @@ await strapi.documents('api::restaurant.restaurant').findOne({
 ```
 
 ### `findFirst()`
-
-Find the first document matching the parameters.
 
 Syntax:  `findFirst(parameters: Params) => Document`
 
@@ -3928,8 +3924,6 @@ await strapi.documents('api::restaurant.restaurant').findFirst(
 If no `locale` or `status` parameters are passed, results return the draft version for the default locale.
 
 ### `findMany()`
-
-Find documents matching the parameters.
 
 Syntax: `findMany(parameters: Params) => Document[]`
 
@@ -4000,10 +3994,6 @@ If no `locale` or `status` parameters are passed, results return the draft versi
 
 ### `create()`
 
-Creates a drafted document and returns it.
-
-Pass fields for the content to create in a `data` object.
-
 Syntax: `create(parameters: Params) => Document`
 
 #### POST strapi.documents().create() — create()
@@ -4040,8 +4030,6 @@ If the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled on 
 :::
 
 ### `update()`
-
-Updates document versions and returns them.
 
 Syntax: `update(parameters: Params) => Promise<Document>`
 
@@ -4089,8 +4077,6 @@ It's not recommended to update repeatable components with the Document Service A
 
 ### `delete()`
 
-Deletes one document, or a specific locale of it.
-
 Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 #### DELETE strapi.documents().delete() — delete()
@@ -4127,10 +4113,6 @@ await strapi.documents('api::restaurant.restaurant').delete({
 ```
 
 ### `publish()`
-
-Publishes one or multiple locales of a document.
-
-This method is only available if [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content-type.
 
 Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
@@ -4169,10 +4151,6 @@ await strapi.documents('api::restaurant.restaurant').publish({
 
 ### `unpublish()`
 
-Unpublishes one or all locale versions of a document, and returns how many locale versions were unpublished.
-
-This method is only available if [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content-type.
-
 Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 #### PUT strapi.documents().unpublish() — unpublish()
@@ -4210,10 +4188,6 @@ await strapi.documents('api::restaurant.restaurant').unpublish({
 
 ### `discardDraft()`
 
-Discards draft data and overrides it with the published version.
-
-This method is only available if [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content-type.
-
 Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 #### PUT strapi.documents().discardDraft() — discardDraft()
@@ -4250,8 +4224,6 @@ strapi.documents.discardDraft({
 ```
 
 ### `count()`
-
-Count the number of documents that match the provided parameters.
 
 Syntax: `count(parameters: Params) => number`
 
@@ -4305,8 +4277,6 @@ You can also use the `populate` parameter to populate relations, media fields, c
 
 ## Select fields with `findOne()` queries {#findone}
 
-To select fields to return while [finding a specific document](/cms/api/document-service#findone) with the Document Service API:
-
 #### GET strapi.documents( — Select fields with findOne()
 
 Select specific fields to return when finding a document by documentId.
@@ -4330,8 +4300,6 @@ const document = await strapi.documents("api::restaurant.restaurant").findOne({
 
 ## Select fields with `findFirst()` queries {#findfirst}
 
-To select fields to return while [finding the first document](/cms/api/document-service#findfirst) matching the parameters with the Document Service API:
-
 #### GET strapi.documents( — Select fields with findFirst()
 
 Select specific fields to return when finding the first matching document.
@@ -4353,8 +4321,6 @@ const document = await strapi.documents("api::restaurant.restaurant").findFirst(
 ```
 
 ## Select fields with `findMany()` queries {#findmany}
-
-To select fields to return while [finding documents](/cms/api/document-service#findmany) with the Document Service API:
 
 #### GET strapi.documents( — Select fields with findMany()
 
@@ -4380,8 +4346,6 @@ const documents = await strapi.documents("api::restaurant.restaurant").findMany(
 ```
 
 ## Select fields with `create()` queries {#create}
-
-To select fields to return while [creating documents](/cms/api/document-service#create) with the Document Service API:
 
 #### POST strapi.documents( — Select fields with create()
 
@@ -4410,8 +4374,6 @@ const document = await strapi.documents("api::restaurant.restaurant").create({
 
 ## Select fields with `update()` queries {#update}
 
-To select fields to return while [updating documents](/cms/api/document-service#update) with the Document Service API:
-
 #### PUT strapi.documents( — Select fields with update()
 
 Select specific fields to return when updating a document.
@@ -4436,8 +4398,6 @@ const document = await strapi.documents("api::restaurant.restaurant").update({
 ```
 
 ## Select fields with `delete()` queries {#delete}
-
-To select fields to return while [deleting documents](/cms/api/document-service#delete) with the Document Service API:
 
 #### DELETE strapi.documents( — Select fields with delete()
 
@@ -4468,8 +4428,6 @@ documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
 
 ## Select fields with `publish()` queries {#publish}
 
-To select fields to return while [publishing documents](/cms/api/document-service#publish) with the Document Service API:
-
 #### POST strapi.documents( — Select fields with publish()
 
 Select specific fields to return when publishing a document.
@@ -4498,8 +4456,6 @@ const document = await strapi.documents("api::restaurant.restaurant").publish({
 
 ## Select fields with `unpublish()` queries {#unpublish}
 
-To select fields to return while [unpublishing documents](/cms/api/document-service#unpublish) with the Document Service API:
-
 #### DELETE strapi.documents( — Select fields with unpublish()
 
 Select specific fields to return when unpublishing a document.
@@ -4527,8 +4483,6 @@ const document = await strapi.documents("api::restaurant.restaurant").unpublish(
 ```
 
 ## Select fields with `discardDraft()` queries {#discarddraft}
-
-To select fields to return while [discarding draft versions of documents](/cms/api/document-service#discarddraft) with the Document Service API:
 
 #### DELETE strapi.documents( — Select fields with discardDraft()
 
@@ -5025,8 +4979,6 @@ By default the [Document Service API](/cms/api/document-service) returns the def
 
 ## Get a locale version with `findOne()` {#find-one}
 
-If a `locale` is passed, the [`findOne()` method](/cms/api/document-service#findone) of the Document Service API returns the version of the document for this locale:
-
 #### GET strapi.documents().findOne() — Get a locale version with findOne()
 
 Pass a locale to findOne() to get the version of the document for that locale.
@@ -5054,8 +5006,6 @@ If no `status` parameter is passed, the `draft` version is returned by default.
 
 ## Get a locale version with `findFirst()` {#find-first}
 
-To return a specific locale while [finding the first document](/cms/api/document-service#findfirst) matching the parameters with the Document Service API:
-
 #### GET strapi.documents().findFirst() — Get a locale version with findFirst()
 
 Pass a locale to findFirst() to return documents matching that locale.
@@ -5079,8 +5029,6 @@ const document = await strapi.documents('api::article.article').findFirst({
 If no `status` parameter is passed, the `draft` version is returned by default.
 
 ## Get locale versions with `findMany()` {#find-many}
-
-When a `locale` is passed to the [`findMany()` method](/cms/api/document-service#findmany) of the Document Service API, the response will return all documents that have this locale available.
 
 If no `status` parameter is passed, the `draft` versions are returned by default.
 
@@ -5132,8 +5080,6 @@ Given the following 4 documents that have various locales:
 
 ## `create()` a document for a locale {#create}
 
-To create a document for specific locale, pass the `locale` as a parameter to the [`create` method](/cms/api/document-service#create) of the Document Service API:
-
 #### POST strapi.documents().create() — Create a document for a locale
 
 Pass a locale to create() to create the document for that specific locale.
@@ -5158,8 +5104,6 @@ await strapi.documents('api::restaurant.restaurant').create({
 ```
 
 ## `update()` a locale version {#update}
-
-To update only a specific locale version of a document, pass the `locale` parameter to the [`update()` method](/cms/api/document-service#update) of the Document Service API:
 
 #### PUT strapi.documents().update() — Update a locale version
 
@@ -5191,8 +5135,6 @@ Use the `locale` parameter with the [`delete()` method](/cms/api/document-servic
 
 ### Delete a locale version
 
-To delete a specific locale version of a document:
-
 #### DELETE strapi.documents().delete() — Delete a locale version
 
 Pass a locale to delete() to delete only that specific locale version of a document.
@@ -5206,8 +5148,6 @@ await strapi.documents('api::restaurant.restaurant').delete({
 ```
 
 ### Delete all locale versions
-
-The `*` wildcard is supported by the `locale` parameter and can be used to delete all locale versions of a document:
 
 #### DELETE strapi.documents().delete() — Delete all locale versions
 
@@ -5240,8 +5180,6 @@ To publish only specific locale versions of a document with the [`publish()` met
 
 ### Publish a locale version
 
-To publish a specific locale version of a document:
-
 #### POST strapi.documents().publish() — Publish a locale version
 
 Pass a locale to publish() to publish only that specific locale version of a document.
@@ -5270,8 +5208,6 @@ await strapi.documents('api::restaurant.restaurant').publish({
 ```
 
 ### Publish all locale versions
-
-The `*` wildcard is supported by the `locale` parameter to publish all locale versions of a document:
 
 #### POST strapi.documents().publish() — Publish all locale versions
 
@@ -5316,8 +5252,6 @@ To publish only specific locale versions of a document with the [`unpublish()` m
 
 ### Unpublish a locale version
 
-To unpublish a specific locale version of a document, pass the `locale` as a parameter to `unpublish()`:
-
 #### DELETE strapi.documents().unpublish() — Unpublish a locale version
 
 Pass a locale to unpublish() to unpublish only that specific locale version of a document.
@@ -5337,8 +5271,6 @@ await strapi
 ```
 
 ### Unpublish all locale versions
-
-The `*` wildcard is supported by the `locale` parameter, to unpublish all locale versions of a document:
 
 #### DELETE strapi.documents().unpublish() — Unpublish all locale versions
 
@@ -5389,8 +5321,6 @@ To discard draft data only for some locales versions of a document with the [`di
 
 ### Discard draft for a locale version
 
-To discard draft data for a specific locale version of a document and override it with data from the published version for this locale, pass the `locale` as a parameter to `discardDraft()`:
-
 #### DELETE strapi.documents().discardDraft() — Discard draft for a locale version
 
 Pass a locale to discardDraft() to discard draft data for that specific locale version.
@@ -5418,8 +5348,6 @@ await strapi
 ```
 
 ### Discard drafts for all locale versions
-
-The `*` wildcard is supported by the `locale` parameter, to discard draft data for all locale versions of a document and replace them with the data from the published versions:
 
 #### DELETE strapi.documents().discardDraft() — Discard drafts for all locale versions
 
@@ -5844,8 +5772,6 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 
 ### Populate 1 level for all relations
 
-To populate one-level deep for all relations, use the `*` wildcard in combination with the `populate` parameter:
-
 #### GET strapi.documents( — Populate 1 level for all relations
 
 Populate one-level deep for all relations using the wildcard.
@@ -5894,8 +5820,6 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 ### Populate 1 level for specific relations
 
-To populate specific relations one-level deep, pass the relation names in a `populate` array:
-
 #### GET strapi.documents( — Populate 1 level for specific relations
 
 Populate specific relations one-level deep using an array.
@@ -5927,8 +5851,6 @@ const documents = await strapi.documents("api::article.article").findMany({
 ```
 
 ### Populate several levels deep for specific relations
-
-To populate specific relations several levels deep, use the object format with `populate`:
 
 #### GET strapi.documents( — Populate several levels deep for specific relations
 
@@ -6010,7 +5932,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 ]
 ```
 
-Dynamic zones are highly dynamic content structures by essence. To populate a dynamic zone, you must define per-component populate queries using the `on` property.
+Dynamic zones are highly dynamic content structures by essence.
 
 #### GET strapi.documents( — Populate dynamic zones
 
@@ -6059,8 +5981,6 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 ## Populating with `create()`
 
-To populate while creating documents:
-
 #### POST strapi.documents( — Populate with create
 
 Populate relations in the response when creating a document.
@@ -6095,8 +6015,6 @@ strapi.documents("api::article.article").create({
 
 ## Populating with `update()`
 
-To populate while updating documents:
-
 #### PUT strapi.documents( — Populate with update
 
 Populate relations in the response when updating a document.
@@ -6129,7 +6047,7 @@ strapi.documents("api::article.article").update({
 
 ## Populating with `publish()`
 
-To populate while publishing documents (same behavior with `unpublish()` and `discardDraft()`):
+Same behavior applies with `unpublish()` and `discardDraft()`.
 
 #### POST strapi.documents( — Populate with publish
 
@@ -6177,8 +6095,6 @@ To sort results returned by the Document Service API, include the `sort` paramet
 
 ### Sort on a single field
 
-To sort results based on a single field:
-
 #### GET strapi.documents().findMany() — Sort on a single field
 
 Sort results based on a single field using a string value.
@@ -6210,8 +6126,6 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 ### Sort on multiple fields
 
-To sort on multiple fields, pass them all in an array:
-
 #### GET strapi.documents().findMany() — Sort on multiple fields
 
 Sort results on multiple fields by passing an array of sort objects.
@@ -6242,8 +6156,6 @@ const documents = await strapi.documents("api::article.article").findMany({
 ```
 
 ## Pagination
-
-To paginate results, pass the `limit` and `start` parameters:
 
 #### GET strapi.documents().findMany() — Pagination
 
@@ -6294,10 +6206,6 @@ Passing `{ status: 'draft' }` to a Document Service API query returns the same r
 
 ## Get the published version with `findOne()` {#find-one}
 
-`findOne()` queries return the draft version of a document by default.
-
-To return the published version while [finding a specific document](/cms/api/document-service#findone) with the Document Service API, pass `status: 'published'`:
-
 #### GET strapi.documents().findOne() — findOne() with status: 
 
 Return the published version of a specific document.
@@ -6323,10 +6231,6 @@ await strapi.documents('api::restaurant.restaurant').findOne({
 
 ## Get the published version with `findFirst()` {#find-first}
 
-`findFirst()` queries return the draft version of a document by default.
-
-To return the published version while [finding the first document](/cms/api/document-service#findfirst) with the Document Service API, pass `status: 'published'`:
-
 #### GET strapi.documents().findFirst() — findFirst() with status: 
 
 Return the published version of the first matching document.
@@ -6350,10 +6254,6 @@ const document = await strapi.documents("api::restaurant.restaurant").findFirst(
 ```
 
 ## Get the published version with `findMany()` {#find-many}
-
-`findMany()` queries return the draft version of documents by default.
-
-To return the published version while [finding documents](/cms/api/document-service#findmany) with the Document Service API, pass `status: 'published'`:
 
 #### GET strapi.documents().findMany() — findMany() with status: 
 
@@ -6406,8 +6306,6 @@ This means that counting with the `status: 'draft'` parameter still returns the 
 
 ## Create a draft and publish it {#create}
 
-To automatically publish a document while creating it, add `status: 'published'` to parameters passed to `create()`:
-
 #### POST strapi.documents().create() — create() with status: 
 
 Create a new document and immediately publish it.
@@ -6434,8 +6332,6 @@ await strapi.documents('api::restaurant.restaurant').create({
 ```
 
 ## Update a draft and publish it {#update}
-
-To automatically publish a document while updating it, add `status: 'published'` to parameters passed to `update()`:
 
 #### PUT strapi.documents().update() — update() with status: 
 
@@ -7903,8 +7799,6 @@ Some plugins (including Users & Permissions and Upload) may not follow this resp
 
 ### Get documents {#get-all}
 
-Returns documents matching the query filters (see [API parameters](/cms/api/rest/parameters) documentation).
-
 :::tip Tip: Strapi 5 vs. Strapi 4
 In Strapi 5 the response format has been flattened, and attributes are directly accessible from the `data` object instead of being nested in `data.attributes`.
 
@@ -7992,8 +7886,6 @@ const data = await response.json();
 
 ### Get a document {#get}
 
-Returns a document by `documentId`.
-
 :::strapi Strapi 5 vs. Strapi v4
 In Strapi 5, a specific document is reached by its `documentId`.
 :::
@@ -8064,10 +7956,6 @@ const data = await response.json();
 ```
 
 ### Create a document {#create}
-
-Creates a document and returns its value.
-
-If the [Internationalization (i18n) plugin](/cms/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/cms/api/rest/locale#rest-delete).
 
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations.md) for more details).
@@ -8152,10 +8040,6 @@ const data = await response.json();
 ```
 
 ### Update a document {#update}
-
-Partially updates a document by `documentId` and returns its value.
-
-Send a `null` value to clear fields.
 
 :::note NOTES
 * Even with the [Internationalization (i18n) plugin](/cms/features/internationalization) installed, it's currently not possible to [update the locale of a document](/cms/api/rest/locale#rest-update).
@@ -8242,10 +8126,6 @@ const data = await response.json();
 ```
 
 ### Delete a document {#delete}
-
-Deletes a document.
-
-`DELETE` requests only send a 204 HTTP status code on success and do not return any data in the response body.
 
 #### DELETE /api/:pluralApiId/:documentId — Delete a document
 
@@ -8337,19 +8217,11 @@ By default, the filters can only be used from `find` endpoints generated by the 
 
 ## Example: Find users having 'John' as a first name
 
-You can use the `$eq` filter operator to find an exact match.
-
 ## Example: Find multiple restaurants with ids 3, 6,8
-
-You can use the `$in` filter operator with an array of values to find multiple exact values.
 
 ## Complex filtering
 
-Complex filtering is combining multiple filters using advanced methods such as combining `$and` & `$or`. This allows for more flexibility to request exactly the data needed.
-
 ## Deep filtering
-
-Deep filtering is filtering on a relation's fields.
 
 :::note
 - Relations, media fields, components, and dynamic zones are not populated by default. Use the `populate` parameter to populate these content structures (see [`populate` documentation](/cms/api/rest/populate-select#population))
@@ -8922,11 +8794,7 @@ The population and pagination operators cannot be combined.
 
 #### Populate with field selection
 
-`fields` and `populate` can be combined.
-
 #### Populate with filtering
-
-`filters` and `populate` can be combined.
 
 
 
@@ -29389,7 +29257,7 @@ To deploy your project for free to Strapi Cloud, in your terminal:
 
 3. Answer questions in the terminal, giving your project a name (you can press Enter to keep the default name), choosing the recommended NodeJS version, and selecting the region closer to your current place:
 
-    s th![Strapi Cloud terminal questions and answers](/img/assets/quick-start-guide/qsg-strapi-cloud-terminal-questions.png)
+    ![Strapi Cloud terminal questions and answers](/img/assets/quick-start-guide/qsg-strapi-cloud-terminal-questions.png)
 
 Within a few moments, your local project will be hosted on Strapi Cloud. 🚀 
 
@@ -29409,10 +29277,7 @@ Feel free to play with the Content-Type Builder even further and add more fields
 
 Now that we have created a basic content structure with 2 collection types, "Restaurant" and "Category", and deployed your project to Strapi Cloud, let's use the Cloud to actually add content by creating new entries.
 
-<details>
-<summary>Step 1: Log in to the admin panel of your new Strapi Cloud project</summary>
-
-### Step 1: Log in to the admin panel of your new Strapi Cloud project
+<StepDetails title="Step 1: Log in to the admin panel of your new Strapi Cloud project">
 
 Now that your Strapi Cloud project is created, let's log in into the project:
 
@@ -29435,13 +29300,6 @@ Any project hosted on Strapi Cloud is accessible from its own URL, something lik
 
 </details>
 
-</details>
-
-<details>
-<summary>Step 2: Create an entry for the "Restaurant" collection type</summary>
-
-### Step 2: Create an entry for the "Restaurant" collection type
-
 1. Go to  _Content Manager > Collection types - Restaurant_ in the navigation.
 2. Click on **Create new entry**.
 3. Type the name of your favorite local restaurant in the _Name_ field. Let's say it's `Biscotte Restaurant`.
@@ -29450,12 +29308,6 @@ Any project hosted on Strapi Cloud is accessible from its own URL, something lik
 
 The restaurant is now listed in the _Collection types - Restaurant_ view of the  _Content Manager_.
 <br/>
-</details>
-
-<details>
-<summary>Step 3: Add Categories</summary>
-
-#### Step 3: Add Categories
 
 Let's go to  _Content Manager > Collection types - Category_ and create 2 categories:
 
@@ -29472,13 +29324,6 @@ Now, we will add a category to a restaurant:
 1. Go to  _Content Manager > Collection types - Restaurant_ in the navigation, and click on "Biscotte Restaurant".
 2. In the **Categories** drop-down list at the bottom of the page, select "French Food". Scroll back to the top of the page and click **Save**.
 
-</details>
-
-<details>
-<summary>Step 4: Set Roles & Permissions</summary>
-
-### Step 4: Set Roles & Permissions
-
 We have just added a restaurant and 2 categories. We now have enough content to consume (pun intended). But first, we need to make sure that the content is publicly accessible through the API:
 
 1. Click on _ Settings_ at the bottom of the main navigation.
@@ -29489,13 +29334,6 @@ We have just added a restaurant and 2 categories. We now have enough content to 
 6. Click the checkboxes next to **find** and **findOne**.
 7. Repeat with _Category_: click the checkboxes next to **find** and **findOne**.
 8. Finally, click **Save** at the top of the page.
-
-</details>
-
-<details>
-<summary>Step 5: Publish the content</summary>
-
-### Step 5: Publish the content
 
 By default, any content you create is saved as a draft. Let's publish our categories and restaurant.
 
@@ -29508,12 +29346,7 @@ Then, go back to the Categories list and repeat for the "French Food" category.
 
 Finally, to publish your favorite restaurant, go to  _Content Manager > Collection types - Restaurant_, click the "Biscotte Restaurant" entry, and **Publish** it.
 
-</details>
-
-<details>
-<summary>Step 6: Use the API</summary>
-
-### Step 6: Use the API
+<StepDetails title="Step 6: Use the API">
 
 OK dear gourmet, we have just finished creating our content and making it accessible through the API. You can give yourself a pat on the back — but you have yet to see the final result of your hard work.
 
@@ -29558,8 +29391,6 @@ Try it now! The result should be similar to the example response below 👇.
   }
 }
 ```
-
-</details>
 
 </details>
 
