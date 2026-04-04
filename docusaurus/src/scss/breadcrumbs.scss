@@ -1,7 +1,16 @@
-/** Component: Breadcrumbs — Minimalist navbar-style */
+/** Component: Breadcrumbs — Hidden (replaced by navbar breadcrumbs in v3 redesign) */
 @use './mixins' as *;
 
+/**
+ * Standard Docusaurus breadcrumbs are hidden because we now show
+ * breadcrumbs inside the navbar via the NavbarBreadcrumbs component.
+ */
 .breadcrumbs {
+  display: none !important;
+}
+
+/* Original styles kept below for reference, but overridden by display:none above */
+.breadcrumbs--original {
   --ifm-breadcrumb-item-background-active: transparent;
   --ifm-breadcrumb-border-radius: var(--strapi-spacing-1);
   --ifm-breadcrumb-color-active: var(--strapi-neutral-800);

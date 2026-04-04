@@ -1,0 +1,73 @@
+@use '../../scss/mixins' as *;
+
+.navbarBreadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 16px;
+}
+
+.separator {
+  color: var(--strapi-neutral-200);
+  font-size: 18px;
+  font-weight: 300;
+  user-select: none;
+}
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+  font-size: 12px;
+  color: var(--strapi-neutral-400);
+}
+
+.slash {
+  color: var(--strapi-neutral-300);
+  user-select: none;
+}
+
+.crumbLink {
+  color: var(--strapi-neutral-400);
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--strapi-primary-600);
+    text-decoration: none;
+  }
+}
+
+.current {
+  color: var(--strapi-neutral-600);
+}
+
+@include dark {
+  .separator {
+    color: var(--strapi-neutral-200);
+  }
+
+  .slash {
+    color: var(--strapi-neutral-300);
+  }
+
+  .crumbLink {
+    color: var(--strapi-neutral-400);
+
+    &:hover {
+      color: var(--strapi-primary-400);
+    }
+  }
+
+  .current {
+    color: var(--strapi-neutral-500);
+  }
+}
+
+// Hide on mobile — too cluttered
+@include medium-down {
+  .navbarBreadcrumbs {
+    display: none;
+  }
+}
