@@ -1,4 +1,5 @@
 import React from 'react';
+import useBrokenLinks from '@docusaurus/useBrokenLinks';
 import styles from './api-reference.module.scss';
 import MethodPill from './MethodPill';
 import ParamTable from './ParamTable';
@@ -36,6 +37,7 @@ export default function Endpoint({
   isLast = false,
   children,
 }) {
+  useBrokenLinks().collectAnchor(id);
   const hasColumns = (params.length > 0 || children) && (codeTabs.length > 0 || responses.length > 0);
 
   return (
