@@ -174,8 +174,9 @@ export default function PageHome() {
               <span className={styles.heroDim}>with Strapi.</span>
             </h1>
             <p className={styles.heroSub}>
-              The open-source headless CMS that gives you the freedom
-              to choose your tools and frameworks.
+              The open-source headless CMS with instant APIs,
+              full extensibility,{' '}
+              <span style={{ whiteSpace: 'nowrap' }}>and AI built in.</span>
             </p>
             <HomepageAIButton />
           </div>
