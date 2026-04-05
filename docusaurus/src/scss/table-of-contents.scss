@@ -36,6 +36,7 @@
 
     &--active {
       color: var(--strapi-primary-600);
+      font-weight: 600;
 
       &:before {
         content: " ";
@@ -47,6 +48,7 @@
         width: 2px;
         border-radius: 0 2px 2px 0;
         background-color: var(--strapi-primary-600);
+        transition: top 0.2s ease, bottom 0.2s ease;
       }
     }
 
@@ -105,10 +107,11 @@ ul.table-of-contents__left-border {
         content: '';
         position: absolute;
         height: calc(100% + 4px);
-        width: 1px;
+        width: 2px;
         background-color: var(--strapi-neutral-150);
         left: -2px;
         top: -2px;
+        border-radius: 1px;
       }
     }
   }
