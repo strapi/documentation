@@ -6,7 +6,7 @@ const STORAGE_KEY = 'strapi-docs-completed-steps';
 function getCompletedSteps() {
   if (typeof window === 'undefined') return {};
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}');
   } catch {
     return {};
   }
@@ -19,7 +19,7 @@ function setStepCompleted(pageId, stepId) {
     if (!steps[pageId]) steps[pageId] = [];
     if (!steps[pageId].includes(stepId)) {
       steps[pageId].push(stepId);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(steps));
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(steps));
     }
   } catch {}
 }

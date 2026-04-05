@@ -11,6 +11,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 20px 28px !important;
+  }
+
+  > :not(summary) {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  &[open] {
+    padding-bottom: 24px;
   }
 }
 
