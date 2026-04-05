@@ -7,7 +7,7 @@
   border-radius: 10px;
   background: var(--strapi-neutral-0);
   height: 36px;
-  min-width: 280px;
+  min-width: 310px;
   overflow: hidden;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
@@ -27,6 +27,7 @@
   align-items: center;
   flex: 1 1 50%;
   height: 100%;
+  overflow: hidden;
   border-radius: 9px 0 0 9px;
   transition: background 0.15s ease;
 
@@ -44,6 +45,7 @@
 
   :global(.navbar__search) {
     width: 100%;
+    min-width: 0;
     padding: 0;
   }
 
@@ -51,10 +53,14 @@
     all: unset;
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 6px;
     height: 36px;
     width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
     cursor: pointer;
-    padding: 0 12px;
+    padding: 0 10px;
     font-family: var(--strapi-font-family-body);
     font-size: 13px;
     color: var(--strapi-neutral-500);
@@ -86,20 +92,19 @@
   :global(.docsearch-btn-keys) {
     display: flex;
     align-items: center;
-    gap: 2px;
-    margin-left: auto;
-    padding-right: 4px;
+    gap: 1px;
+    flex-shrink: 0;
   }
 
   :global(.docsearch-btn-key) {
     font-family: var(--strapi-font-family-technical);
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 500;
     color: var(--strapi-neutral-400);
     background: var(--strapi-neutral-100);
     border: none;
     border-radius: 4px;
-    padding: 1px 5px;
+    padding: 1px 4px;
     box-shadow: none;
     line-height: 1.4;
     width: auto;
