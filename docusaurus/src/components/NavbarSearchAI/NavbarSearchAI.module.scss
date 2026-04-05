@@ -67,7 +67,7 @@
   :global(.docsearch-btn-placeholder) {
     font-family: var(--strapi-font-family-body);
     font-size: 13px;
-    font-weight: 400;
+    font-weight: 500;
     color: var(--strapi-neutral-400);
     transition: color 0.15s ease;
 
@@ -117,9 +117,9 @@
 .askAI {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   height: 100%;
-  padding: 0 14px;
+  padding: 0 12px;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -134,6 +134,8 @@
   i {
     font-size: 15px;
     color: var(--strapi-neutral-400);
+    position: relative;
+    top: 1px;
     transition: color 0.15s ease;
   }
 
