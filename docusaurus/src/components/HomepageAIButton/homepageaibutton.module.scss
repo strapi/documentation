@@ -62,6 +62,17 @@
   flex-shrink: 0;
 }
 
+.homepage-ai-button:hover .sparkle {
+  animation: sparkleWobble 3s ease-in-out infinite;
+}
+
+@keyframes sparkleWobble {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(15deg); }
+  75%  { transform: rotate(-15deg); }
+  100% { transform: rotate(0deg); }
+}
+
 .placeholder {
   flex: 1;
   text-align: left;
