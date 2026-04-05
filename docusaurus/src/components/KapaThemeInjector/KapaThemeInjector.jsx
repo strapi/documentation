@@ -147,6 +147,13 @@ const LIGHT_STYLES = `
 `;
 
 const DARK_STYLES = `
+  /* Override Mantine root CSS variables — Kapa forces data-mantine-color-scheme="light",
+     so we must redefine these for dark mode to propagate through var() references */
+  #kapa-widget-root {
+    --mantine-color-gray-light: rgba(255, 255, 255, 0.06) !important;
+    --mantine-color-gray-light-hover: rgba(255, 255, 255, 0.1) !important;
+    --mantine-color-gray-light-color: #A1A1AA !important;
+  }
   .mantine-Paper-root {
     background: #111113 !important;
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
@@ -317,29 +324,29 @@ const DARK_STYLES = `
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
     color: #FAFAFA !important;
   }
-  /* Deep Thinking button — dark-mode base state */
-  .mantine-Button-root[data-with-left-section] {
+  /* Deep Thinking button — dark-mode base state (default variant + left section) */
+  .mantine-Button-root[data-variant="default"][data-with-left-section] {
     background: #18181B !important;
     border: 1px solid rgba(255, 255, 255, 0.06) !important;
     color: #D4D4D8 !important;
   }
-  .mantine-Button-root[data-with-left-section] .mantine-Button-label {
+  .mantine-Button-root[data-variant="default"][data-with-left-section] .mantine-Button-label {
     color: #D4D4D8 !important;
   }
-  .mantine-Button-root[data-with-left-section]:hover {
+  .mantine-Button-root[data-variant="default"][data-with-left-section]:hover {
     background: #1F1F23 !important;
     border-color: rgba(255, 255, 255, 0.1) !important;
   }
   /* Deep Thinking active/expanded state — violet accent */
-  .mantine-Button-root[data-with-left-section][aria-expanded="true"] {
+  .mantine-Button-root[data-variant="default"][data-with-left-section][aria-expanded="true"] {
     background: rgba(73, 69, 255, 0.12) !important;
     border-color: rgba(73, 69, 255, 0.4) !important;
     color: #A5B4FC !important;
   }
-  .mantine-Button-root[data-with-left-section][aria-expanded="true"] .mantine-Button-label {
+  .mantine-Button-root[data-variant="default"][data-with-left-section][aria-expanded="true"] .mantine-Button-label {
     color: #A5B4FC !important;
   }
-  .mantine-Button-root[data-with-left-section][aria-expanded="true"] svg {
+  .mantine-Button-root[data-variant="default"][data-with-left-section][aria-expanded="true"] svg {
     color: #A5B4FC !important;
   }
   .mantine-Alert-root {
@@ -377,36 +384,123 @@ function injectStyles(theme) {
   styleEl.textContent = SHARED_STYLES + themeStyles;
 }
 
+const DEEP_THINKING_LABEL_DISABLED = 'Enable deep thinking';
+const DEEP_THINKING_LABEL_ENABLED = 'Deep thinking enabled';
+
+/**
+ * Overrides the Deep Thinking button label based on its toggle state.
+ *
+ * Kapa uses data-variant="outline" when enabled, "default" when disabled.
+ * React re-renders the label text on every hover/state change, replacing
+ * any DOM text we set. To counteract this we observe both:
+ *   – button attributes (data-variant) to detect toggle state changes
+ *   – label childList to catch React text-node replacements
+ *
+ * Returns a cleanup function, or null if the button is not found yet.
+ */
+function setupDeepThinkingLabel(shadow) {
+  if (!shadow) return null;
+
+  const btn = shadow.querySelector(
+    '.mantine-Button-root[data-with-left-section][aria-haspopup="dialog"]'
+  );
+  if (!btn) return null;
+
+  const labelEl = btn.querySelector('.mantine-Button-label');
+  if (!labelEl) return null;
+
+  let updating = false; // guard against infinite recursion
+
+  const update = () => {
+    if (updating) return;
+    updating = true;
+    const isEnabled = btn.getAttribute('data-variant') === 'outline';
+    const desired = isEnabled
+      ? DEEP_THINKING_LABEL_ENABLED
+      : DEEP_THINKING_LABEL_DISABLED;
+    if (labelEl.textContent !== desired) {
+      labelEl.textContent = desired;
+    }
+    updating = false;
+  };
+
+  // Set initial label
+  update();
+
+  // Watch button attributes for state changes (variant, aria-expanded)
+  const btnObs = new MutationObserver(update);
+  btnObs.observe(btn, {
+    attributes: true,
+    attributeFilter: ['data-variant', 'aria-expanded'],
+  });
+
+  // Watch label childList to catch React re-renders that replace our text
+  const labelObs = new MutationObserver(update);
+  labelObs.observe(labelEl, { childList: true, subtree: true });
+
+  return {
+    disconnect() {
+      btnObs.disconnect();
+      labelObs.disconnect();
+    },
+  };
+}
+
 export default function KapaThemeInjector() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
     const getTheme = () => document.documentElement.dataset.theme || 'light';
+    let deepThinkingObserver = null;
+    let trackedBtn = null; // the DOM node we're currently observing
+
+    function ensureDeepThinkingLabel(shadow) {
+      if (!shadow) return;
+      const btn = shadow.querySelector(
+        '.mantine-Button-root[data-with-left-section][aria-haspopup="dialog"]'
+      );
+      // Re-attach if the button is new (Kapa re-rendered its tree)
+      if (btn && btn !== trackedBtn) {
+        deepThinkingObserver?.disconnect();
+        deepThinkingObserver = setupDeepThinkingLabel(shadow);
+        trackedBtn = btn;
+      }
+    }
 
     // Inject immediately if container already exists
     injectStyles(getTheme());
 
+    const container = document.getElementById('kapa-widget-container');
+    if (container?.shadowRoot) {
+      ensureDeepThinkingLabel(container.shadowRoot);
+    }
+
     // Observe theme changes on <html>
-    const observer = new MutationObserver(() => {
+    const themeObserver = new MutationObserver(() => {
       injectStyles(getTheme());
+      // Kapa may re-render on theme change — re-attach label observer
+      const c = document.getElementById('kapa-widget-container');
+      if (c?.shadowRoot) ensureDeepThinkingLabel(c.shadowRoot);
     });
-    observer.observe(document.documentElement, {
+    themeObserver.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['data-theme'],
     });
 
-    // Also observe when Kapa container appears in the DOM (lazy-loaded)
+    // Observe when Kapa container appears or re-renders in the DOM
     const bodyObserver = new MutationObserver(() => {
-      const container = document.getElementById('kapa-widget-container');
-      if (container?.shadowRoot) {
+      const c = document.getElementById('kapa-widget-container');
+      if (c?.shadowRoot) {
         injectStyles(getTheme());
+        ensureDeepThinkingLabel(c.shadowRoot);
       }
     });
     bodyObserver.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      observer.disconnect();
+      themeObserver.disconnect();
       bodyObserver.disconnect();
+      deepThinkingObserver?.disconnect();
     };
   }, []);
 
