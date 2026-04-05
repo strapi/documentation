@@ -107,8 +107,16 @@ main:has(.api-endpoint-block) {
    * Endpoint blocks break out of this via their own full-width grid.
    */
   main:has(.api-endpoint-block) article .theme-doc-markdown {
-    /** All direct children get a max readable width and are centered */
-    > h1, > h2, > h3, > h4, > h5, > h6,
+    /** Headings need display:block to allow margin:auto centering
+     *  (a global rule sets h1-h5 to inline-block for anchor links) */
+    > h1, > h2, > h3, > h4, > h5, > h6 {
+      display: block !important;
+      max-width: 720px;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    /** All other direct children get a max readable width and are centered */
     > p, > ul, > ol, > blockquote, > table,
     > details, > .theme-admonition,
     > [class*="admonition"], > nav,
@@ -127,7 +135,13 @@ main:has(.api-endpoint-block) {
   }
 
   main:has(.api-call):not(:has(.api-endpoint-block)) article .theme-doc-markdown {
-    > h1, > h2, > h3, > h4, > h5, > h6,
+    > h1, > h2, > h3, > h4, > h5, > h6 {
+      display: block !important;
+      max-width: 720px;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
     > p, > ul, > ol, > blockquote, > table,
     > details, > .theme-admonition,
     > [class*="admonition"], > nav,
