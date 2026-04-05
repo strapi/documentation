@@ -428,7 +428,90 @@
   width: 100%;
 }
 
-/* ═══ 4. SHOWCASE (Plugins + Customize) ═══ */
+/* ═══ POWERFUL FEATURES ═══ */
+.features {
+  padding: 0 32px 56px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.featureCard {
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  border-radius: var(--strapi-radius-lg);
+  border: 1px solid var(--strapi-neutral-150);
+  background: var(--strapi-surface-0);
+  text-decoration: none;
+  color: var(--strapi-neutral-800);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    border-color: var(--strapi-primary-500);
+    text-decoration: none;
+    color: var(--strapi-neutral-800);
+  }
+}
+
+.featureCardIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+  background: color-mix(in srgb, var(--strapi-primary-500) 10%, transparent);
+  color: var(--strapi-primary-500);
+}
+
+.featureCardTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--strapi-neutral-800);
+}
+
+.featureCardDesc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--strapi-neutral-600);
+  flex: 1;
+}
+
+.featureCardCta {
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--strapi-primary-500);
+
+  span {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  .featureCard:hover & span {
+    transform: translateX(4px);
+  }
+}
+
+/* ═══ 5. SHOWCASE (Plugins + Customize) ═══ */
 .showcase {
   padding: 0 32px 56px;
   max-width: 1100px;
@@ -757,5 +840,28 @@
     &::after {
       background: rgba(255, 255, 255, 0.08);
     }
+  }
+
+  .featureCard {
+    background: #1a1a2e;
+    border-color: rgba(255, 255, 255, 0.08);
+
+    &:hover {
+      background: #222240;
+      border-color: rgba(73, 69, 255, 0.4);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .featureCardTitle {
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .featureCardDesc {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .featureCardIcon {
+    background: rgba(73, 69, 255, 0.15);
   }
 }

@@ -116,9 +116,9 @@ const EXPLORE_SECTIONS = [
   {
     label: 'Getting Started',
     links: [
-      { icon: 'ph-compass', title: 'Guided Tour', desc: 'Discover Strapi in 5 minutes.', to: '/cms/quick-start' },
+      { icon: 'ph-compass', title: 'Quick Start Guide', desc: 'Discover Strapi in 5 minutes.', to: '/cms/quick-start' },
       { icon: 'ph-download-simple', title: 'Installation', desc: 'Install Strapi with your preferred method.', to: '/cms/installation' },
-      { icon: 'ph-arrow-square-up-right', title: "What's New", desc: 'Latest features and improvements.', to: '/whats-new' },
+      { icon: 'ph-layout', title: 'Admin Panel', desc: 'Navigate and customize your dashboard.', to: '/cms/features/admin-panel' },
     ],
   },
   {
@@ -129,21 +129,29 @@ const EXPLORE_SECTIONS = [
       { icon: 'ph-translate', title: 'Internationalization', desc: 'Manage content in multiple locales.', to: '/cms/features/internationalization' },
     ],
   },
+];
+
+/**
+ * Powerful Features — Growth/Enterprise features with bold card design
+ */
+const POWERFUL_FEATURES = [
   {
-    label: 'APIs & Integration',
-    links: [
-      { icon: 'ph-plugs', title: 'REST API', desc: 'Auto-generated CRUD endpoints.', to: '/cms/api/rest' },
-      { icon: 'ph-graph', title: 'GraphQL', desc: 'Flexible queries and mutations.', to: '/cms/api/graphql' },
-      { icon: 'ph-file-code', title: 'Document Service', desc: 'Server-side programmatic API.', to: '/cms/api/document-service' },
-    ],
+    icon: 'ph-eye',
+    title: 'Live Preview',
+    desc: 'See your content changes in real time on your front end before publishing.',
+    to: '/cms/features/preview',
   },
   {
-    label: 'Deploy & Scale',
-    links: [
-      { icon: 'ph-cloud', title: 'Strapi Cloud', desc: 'One-click managed hosting.', to: '/cloud/getting-started/intro' },
-      { icon: 'ph-terminal', title: 'Cloud CLI', desc: 'Deploy from the terminal.', to: '/cloud/cli/cloud-cli' },
-      { icon: 'ph-globe-simple', title: 'Custom Domains', desc: 'Connect your own domain name.', to: '/cloud/projects/settings' },
-    ],
+    icon: 'ph-clock-counter-clockwise',
+    title: 'Content History',
+    desc: 'Track every change to your content and restore any previous version in one click.',
+    to: '/cms/features/content-history',
+  },
+  {
+    icon: 'ph-clipboard-text',
+    title: 'Audit Logs',
+    desc: 'Monitor who did what and when. Full activity trail for your team.',
+    to: '/cms/features/audit-logs',
   },
 ];
 
@@ -230,14 +238,35 @@ export default function PageHome() {
           ))}
         </section>
 
-        {/* ═══ 3. API EXPLORER ═══ */}
+        {/* ═══ 3. POWERFUL FEATURES ═══ */}
+        <section className={styles.features}>
+          <div className={styles.sectionLabel}>Powerful Features</div>
+          <div className={styles.featuresGrid}>
+            {POWERFUL_FEATURES.map((feature, i) => (
+              <Reveal key={i} delay={i * 100}>
+                <a href={feature.to} className={styles.featureCard}>
+                  <div className={styles.featureCardIcon}>
+                    <i className={`ph ${feature.icon}`} />
+                  </div>
+                  <div className={styles.featureCardTitle}>{feature.title}</div>
+                  <div className={styles.featureCardDesc}>{feature.desc}</div>
+                  <div className={styles.featureCardCta}>
+                    Learn more <span>→</span>
+                  </div>
+                </a>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* ═══ 4. API EXPLORER ═══ */}
         <Reveal>
           <section className={styles.apiExplorerSection}>
             <ApiExplorer />
           </section>
         </Reveal>
 
-        {/* ═══ 4. PLUGINS + CUSTOMIZE + OPEN SOURCE — three cards ═══ */}
+        {/* ═══ 5. PLUGINS + CUSTOMIZE + OPEN SOURCE — three cards ═══ */}
         <section className={styles.showcase}>
           <div className={styles.sectionLabel}>Extend & Customize</div>
           <div className={styles.showcaseGrid}>
@@ -313,7 +342,7 @@ export default function PageHome() {
           </div>
         </section>
 
-        {/* ═══ 5. DEPLOY ═══ */}
+        {/* ═══ 6. DEPLOY ═══ */}
         <Reveal>
           <section className={styles.deploy}>
             <div className={styles.sectionLabel}>Deploy</div>
