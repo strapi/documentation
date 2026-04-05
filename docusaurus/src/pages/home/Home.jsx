@@ -142,7 +142,7 @@ const EXPLORE_SECTIONS = [
     links: [
       { icon: 'ph-cloud', title: 'Strapi Cloud', desc: 'One-click managed hosting.', to: '/cloud/getting-started/intro' },
       { icon: 'ph-terminal', title: 'Cloud CLI', desc: 'Deploy from the terminal.', to: '/cloud/cli/cloud-cli' },
-      { icon: 'ph-globe-simple', title: 'Custom Domains', desc: 'Connect your own domain name.', to: '/cloud/projects/settings/domains' },
+      { icon: 'ph-globe-simple', title: 'Custom Domains', desc: 'Connect your own domain name.', to: '/cloud/projects/settings' },
     ],
   },
 ];
@@ -242,7 +242,7 @@ export default function PageHome() {
           <div className={styles.showcaseGrid}>
             {/* Plugins */}
             <Reveal delay={0}>
-              <a href="/cms/plugins" className={styles.showcaseCard}>
+              <a href="/cms/plugins/installing-plugins-via-marketplace" className={styles.showcaseCard}>
                 <div className={styles.showcaseCardIcon}>
                   <i className="ph ph-puzzle-piece" />
                 </div>
