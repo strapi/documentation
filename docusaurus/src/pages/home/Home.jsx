@@ -248,7 +248,7 @@ export default function PageHome() {
                   <i className="ph ph-puzzle-piece" />
                 </div>
                 <div className={styles.showcaseCardStat}>
-                  <AnimatedCounter target={79} suffix="+" />
+                  <AnimatedCounter target={274} suffix="+" />
                 </div>
                 <div className={styles.showcaseCardStatLabel}>plugins on the Marketplace</div>
                 <div className={styles.showcaseCardDesc}>
