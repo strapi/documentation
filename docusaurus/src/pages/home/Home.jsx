@@ -116,7 +116,7 @@ const EXPLORE_SECTIONS = [
   {
     label: 'Getting Started',
     links: [
-      { icon: 'ph-rocket-launch', title: 'Quick Start', desc: 'Scaffold a project in 30 seconds.', to: '/cms/quick-start' },
+      { icon: 'ph-compass', title: 'Guided Tour', desc: 'Discover Strapi in 5 minutes.', to: '/cms/quick-start' },
       { icon: 'ph-download-simple', title: 'Installation', desc: 'Install Strapi with your preferred method.', to: '/cms/installation' },
       { icon: 'ph-arrow-square-up-right', title: "What's New", desc: 'Latest features and improvements.', to: '/whats-new' },
     ],
@@ -188,7 +188,7 @@ export default function PageHome() {
                   <i className="ph ph-rocket-launch" />
                 </div>
                 <div>
-                  <div className={styles.quickstartTitle}>Create a project in 30 seconds</div>
+                  <div className={styles.quickstartTitle}>Scaffold a project in one minute</div>
                   <div className={styles.quickstartDesc}>
                     One command to scaffold, install, and start your Strapi backend.
                   </div>
