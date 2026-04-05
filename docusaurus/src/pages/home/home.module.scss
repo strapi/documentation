@@ -1,5 +1,26 @@
-/** Page: Home — V2 Mockup Exact Match */
+/** Page: Home — Redesigned narrative flow */
 @use '../../scss/_mixins.scss' as *;
+
+/* ═══ SCROLL REVEAL ═══ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.revealVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
 
 /* ═══ MAIN CONTAINER ═══ */
 .home {
@@ -22,7 +43,6 @@
   text-align: center;
   overflow: hidden;
 
-  /* Gradient orb behind hero */
   &::before {
     content: '';
     position: absolute;
@@ -43,7 +63,6 @@
   100% { opacity: 0.7; transform: translateX(-50%) scale(1.2); }
 }
 
-/* Grid lines overlay */
 .heroGrid {
   position: absolute;
   inset: 0;
@@ -64,7 +83,6 @@
   margin: 0 auto;
 }
 
-/* Badge pill — centered above title */
 .heroBadge {
   display: flex;
   width: fit-content;
@@ -145,209 +163,41 @@
   font-weight: 400;
 }
 
-/* ═══ PRODUCT CARDS ═══ */
-.products {
-  padding: 0 32px 80px;
-  max-width: 1100px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.productsGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-
-.productCard {
-  border-radius: 16px;
-  border: 1px solid var(--strapi-border);
-  background: var(--strapi-surface-1);
-  padding: 32px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-
-  &:hover {
-    border-color: var(--strapi-border-strong);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-  }
-}
-
-/** Accent top bar */
-.productCardCms {
-  border-top: 2px solid var(--strapi-accent, #4945FF);
-}
-
-.productCardCloud {
-  border-top: 2px solid #8B5CF6;
-}
-
-.productCardHeader {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.productCardTitle {
-  font-family: var(--strapi-font-family-display);
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--strapi-fg-1);
-  text-decoration: none !important;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-
-  &:hover {
-    color: var(--strapi-accent);
-    text-decoration: none !important;
-  }
-}
-
-.productCardArrow {
-  font-size: 18px;
-  color: var(--strapi-fg-5);
-  transition: all 0.2s;
-
-  .productCardTitle:hover & {
-    color: var(--strapi-accent);
-    transform: translateX(3px);
-  }
-}
-
-.productCardDesc {
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--strapi-fg-4);
-  margin: 0;
-}
-
-.productCardLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.productCardLink {
+/* ═══ SECTION LABEL (reusable) ═══ */
+.sectionLabel {
   font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
-  font-size: 12px;
-  font-weight: 500;
-  padding: 6px 14px;
-  border-radius: 8px;
-  background: var(--strapi-surface-2);
-  color: var(--strapi-fg-3);
-  border: 1px solid var(--strapi-border);
-  text-decoration: none !important;
-  transition: all 0.2s;
-
-  &:hover {
-    background: var(--strapi-accent);
-    color: white;
-    border-color: var(--strapi-accent);
-    text-decoration: none !important;
-  }
-}
-
-/* ═══ BENTO GRID ═══ */
-.bento {
-  padding: 0 32px 96px;
-  max-width: 1100px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.bentoLabel {
-  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--strapi-fg-4);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 16px;
-}
-
-.bentoGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-.bentoCard {
-  border-radius: var(--strapi-radius-lg, 16px);
-  border: 1px solid var(--strapi-border);
-  background: var(--strapi-surface-1);
-  padding: 28px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: pointer;
-  text-decoration: none !important;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-
-  &:hover {
-    border-color: var(--strapi-border-strong);
-    background: var(--strapi-surface-2);
-    text-decoration: none !important;
-    color: inherit;
-  }
-}
-
-.bentoCardWide {
-  /* Wide on desktop only */
-}
-
-.bentoCardIcon {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--strapi-radius-md, 10px);
-  background: var(--strapi-surface-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  margin-bottom: 16px;
-}
-
-.bentoCardTitle {
-  font-family: var(--strapi-font-family-display);
-  font-size: 16px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: -0.01em;
-  margin-bottom: 6px;
-  color: var(--strapi-fg-1);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--strapi-fg-4);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--strapi-border);
+  }
 }
 
-.bentoCardDesc {
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--strapi-fg-3);
-  flex: 1;
-}
-
-.bentoCardCode {
-  margin-top: 16px;
+/* ═══ SHARED CODE BLOCK ═══ */
+.codeBlock {
   background: var(--strapi-surface-0);
-  border-radius: var(--strapi-radius-md, 10px);
-  padding: 14px;
+  border-radius: 10px;
+  padding: 14px 16px;
   font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
-  font-size: 12px;
-  line-height: 1.6;
+  font-size: 12.5px;
+  line-height: 1.7;
   color: var(--strapi-fg-3);
   border: 1px solid var(--strapi-border);
-  overflow: hidden;
-  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 8px;
+  overflow: hidden;
 }
 
 .codeContent {
@@ -388,151 +238,393 @@
 .codeStr { color: #22C55E; }
 .codeCm { color: var(--strapi-fg-4); }
 
-.bentoCardStat {
-  font-family: var(--strapi-font-family-display);
-  font-size: 48px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--strapi-fg-1) 0%, var(--strapi-fg-3) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-top: 8px;
-}
-
-.bentoCardStatLabel {
-  font-size: 13px;
-  color: var(--strapi-fg-4);
-}
-
-/* ═══ API PREVIEW ═══ */
-.apiPreview {
-  padding: 0 32px 96px;
+/* ═══ 1. QUICK START ═══ */
+.quickstart {
+  padding: 0 32px 56px;
   max-width: 1100px;
   margin: 0 auto;
   width: 100%;
 }
 
-.apiPreviewLabel {
-  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--strapi-fg-4);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 16px;
+.quickstartCard {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 24px;
+  padding: 28px 32px;
+  border-radius: 16px;
+  border: 1px solid var(--strapi-border);
+  background: var(--strapi-surface-1);
+  text-decoration: none !important;
+  color: inherit;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+  &:hover {
+    border-color: var(--strapi-accent-light);
+    box-shadow: 0 8px 32px rgba(73, 69, 255, 0.08);
+    text-decoration: none !important;
+    color: inherit;
+    transform: translateY(-2px);
+  }
+}
+
+.quickstartLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.quickstartIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(73, 69, 255, 0.08);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  i {
+    font-size: 24px;
+    color: var(--strapi-accent, #4945FF);
+  }
+}
+
+.quickstartTitle {
+  font-family: var(--strapi-font-family-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--strapi-fg-1);
+  margin-bottom: 4px;
+}
+
+.quickstartDesc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--strapi-fg-4);
+}
+
+/* ═══ 2. EXPLORE SECTIONS ═══ */
+.explore {
+  padding: 0 32px 48px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.exploreSection {}
+
+.exploreLabel {
+  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--strapi-fg-4);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
   &::after {
     content: '';
     flex: 1;
     height: 1px;
-    background: var(--strapi-border-strong);
+    background: var(--strapi-border);
   }
 }
 
-.apiRow {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.exploreGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
 }
 
-.apiItem {
+.exploreCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--strapi-border);
+  background: var(--strapi-surface-1);
+  text-decoration: none !important;
+  color: inherit;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+
+  &:hover {
+    border-color: var(--strapi-border-strong);
+    background: var(--strapi-surface-2);
+    text-decoration: none !important;
+    color: inherit;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+}
+
+.exploreCardIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--strapi-surface-2);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  i {
+    font-size: 18px;
+    color: var(--strapi-accent, #4945FF);
+  }
+}
+
+.exploreCardBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.exploreCardTitle {
+  font-family: var(--strapi-font-family-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--strapi-fg-1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.exploreCardArrow {
+  font-size: 14px;
+  color: var(--strapi-fg-5);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.2s;
+
+  .exploreCard:hover & {
+    opacity: 1;
+    transform: translateX(0);
+    color: var(--strapi-accent);
+  }
+}
+
+.exploreCardDesc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--strapi-fg-4);
+  margin-top: 2px;
+}
+
+/* ═══ 3. API EXPLORER ═══ */
+.apiExplorerSection {
+  padding: 0 32px 56px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ═══ 4. SHOWCASE (Plugins + Customize) ═══ */
+.showcase {
+  padding: 0 32px 56px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.showcaseGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.showcaseCard {
+  border-radius: 16px;
+  border: 1px solid var(--strapi-border);
+  background: var(--strapi-surface-1);
+  padding: 32px;
+  text-decoration: none !important;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+  &:hover {
+    border-color: var(--strapi-border-strong);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    text-decoration: none !important;
+    color: inherit;
+    transform: translateY(-2px);
+  }
+}
+
+.showcaseCardIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--strapi-surface-2);
+  display: grid;
+  place-items: center;
+  margin-bottom: 20px;
+
+  i {
+    font-size: 24px;
+    color: var(--strapi-accent, #4945FF);
+  }
+}
+
+.showcaseCardStat {
+  margin-bottom: 4px;
+}
+
+.animatedCounter {
+  font-family: var(--strapi-font-family-display);
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--strapi-accent, #4945FF) 0%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.showcaseCardStatLabel {
+  font-family: var(--strapi-font-family-body);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--strapi-fg-3);
+  margin-bottom: 12px;
+}
+
+.showcaseCardTitle {
+  font-family: var(--strapi-font-family-display);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--strapi-fg-1);
+  margin-bottom: 12px;
+}
+
+.showcaseCardDesc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--strapi-fg-4);
+  margin-bottom: 16px;
+}
+
+.showcaseCardCode {
+  background: var(--strapi-surface-0);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--strapi-fg-3);
+  border: 1px solid var(--strapi-border);
+  margin-bottom: 16px;
+}
+
+.showcaseCardCta {
+  font-family: var(--strapi-font-family-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--strapi-accent, #4945FF);
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  span {
+    transition: transform 0.2s;
+  }
+
+  .showcaseCard:hover & span {
+    transform: translateX(4px);
+  }
+}
+
+/* ═══ 5. DEPLOY ═══ */
+.deploy {
+  padding: 0 32px 64px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.deployCard {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 32px;
+  border-radius: 16px;
+  border: 1px solid var(--strapi-border);
+  background: var(--strapi-surface-1);
+  text-decoration: none !important;
+  color: inherit;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+  &:hover {
+    border-color: var(--strapi-accent-light);
+    box-shadow: 0 8px 32px rgba(73, 69, 255, 0.08);
+    text-decoration: none !important;
+    color: inherit;
+    transform: translateY(-2px);
+  }
+}
+
+.deployLeft {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 14px 20px;
-  border-radius: 12px;
-  background: var(--strapi-surface-1);
-  border: 1px solid var(--strapi-border);
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  text-decoration: none !important;
-  color: inherit;
-
-  &:hover {
-    background: var(--strapi-surface-2);
-    border-color: var(--strapi-border-strong);
-    text-decoration: none !important;
-    color: inherit;
-  }
-}
-
-.apiMethod {
-  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 6px;
-  text-transform: uppercase;
-  width: 56px;
-  text-align: center;
-  flex-shrink: 0;
-}
-
-.apiMethodGet {
-  background: rgba(34, 197, 94, 0.1);
-  color: #22C55E;
-}
-
-.apiMethodPost {
-  background: rgba(73, 69, 255, 0.1);
-  color: var(--strapi-accent-light, #7B79FF);
-}
-
-.apiMethodPut {
-  background: rgba(245, 158, 11, 0.1);
-  color: #F59E0B;
-}
-
-.apiMethodDel {
-  background: rgba(239, 68, 68, 0.1);
-  color: #EF4444;
-}
-
-.apiPath {
-  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
-  font-size: 14px;
-  color: var(--strapi-fg-3);
   flex: 1;
+  min-width: 0;
 }
 
-.apiParam {
-  color: var(--strapi-accent-light, #7B79FF);
-}
+.deployIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(73, 69, 255, 0.08);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
 
-.apiDesc {
-  font-size: 13px;
-  color: var(--strapi-fg-4);
-}
-
-.apiArrow {
-  color: var(--strapi-fg-5);
-  font-size: 16px;
-  opacity: 0;
-  transform: translateX(-4px);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-
-  .apiItem:hover & {
-    opacity: 1;
-    transform: translateX(0);
+  i {
+    font-size: 24px;
+    color: var(--strapi-accent, #4945FF);
   }
+}
+
+.deployTitle {
+  font-family: var(--strapi-font-family-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--strapi-fg-1);
+  margin-bottom: 4px;
+}
+
+.deployDesc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--strapi-fg-4);
 }
 
 /* ═══ RESPONSIVE ═══ */
 @include medium-up {
-  .productsGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .bentoGrid {
+  .exploreGrid {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .bentoCardWide {
-    grid-column: span 2;
+  .showcaseGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -541,25 +633,27 @@
     padding: 60px 20px 40px;
   }
 
-  .products,
-  .bento,
-  .apiPreview {
+  .quickstart,
+  .explore,
+  .apiExplorerSection,
+  .showcase,
+  .deploy {
     padding-left: 20px;
     padding-right: 20px;
   }
 
-  .apiItem {
-    flex-wrap: wrap;
-    gap: 8px;
+  .quickstartCard {
+    flex-direction: column;
+    gap: 16px;
   }
 
-  .apiPath {
-    font-size: 12px;
-    flex-basis: calc(100% - 72px);
+  .deployCard {
+    flex-direction: column;
+    gap: 16px;
   }
 
-  .apiDesc {
-    display: none;
+  .animatedCounter {
+    font-size: 44px;
   }
 }
 
@@ -573,7 +667,32 @@
     background: var(--strapi-surface-2);
   }
 
-  .productCard {
+  .quickstartCard {
+    background: var(--strapi-surface-1);
+
+    &:hover {
+      box-shadow: 0 8px 32px rgba(73, 69, 255, 0.15);
+    }
+  }
+
+  .quickstartIcon {
+    background: rgba(73, 69, 255, 0.15);
+  }
+
+  .exploreCard {
+    background: var(--strapi-surface-1);
+
+    &:hover {
+      background: var(--strapi-surface-2);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .exploreCardIcon {
+    background: var(--strapi-surface-3);
+  }
+
+  .showcaseCard {
     background: var(--strapi-surface-1);
 
     &:hover {
@@ -581,31 +700,28 @@
     }
   }
 
-  .productCardLink {
-    background: var(--strapi-surface-2);
-    border-color: var(--strapi-border);
-    color: var(--strapi-fg-4);
-
-    &:hover {
-      background: var(--strapi-accent);
-      color: white;
-      border-color: var(--strapi-accent);
-    }
-  }
-
-  .bentoCard {
-    background: var(--strapi-surface-1);
-
-    &:hover {
-      background: var(--strapi-surface-2);
-    }
-  }
-
-  .bentoCardIcon {
+  .showcaseCardIcon {
     background: var(--strapi-surface-3);
   }
 
-  .bentoCardCode {
+  .showcaseCardCode {
+    background: var(--strapi-surface-0);
+    border-color: var(--strapi-border);
+  }
+
+  .deployCard {
+    background: var(--strapi-surface-1);
+
+    &:hover {
+      box-shadow: 0 8px 32px rgba(73, 69, 255, 0.15);
+    }
+  }
+
+  .deployIcon {
+    background: rgba(73, 69, 255, 0.15);
+  }
+
+  .codeBlock {
     background: var(--strapi-surface-0);
     border-color: var(--strapi-border);
   }
@@ -613,13 +729,5 @@
   .codeCopyBtn {
     background: var(--strapi-surface-2);
     border-color: var(--strapi-border);
-  }
-
-  .apiItem {
-    background: var(--strapi-surface-1);
-
-    &:hover {
-      background: var(--strapi-surface-2);
-    }
   }
 }

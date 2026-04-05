@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Layout from '@theme/Layout';
 import styles from './home.module.scss';
 import { HomepageAIButton } from '../../components';
+import ApiExplorer from '../../components/ApiExplorer/ApiExplorer';
 import content from './_home.content';
 
 /**
@@ -20,7 +21,7 @@ function CopyCodeBlock({ command, children }) {
   }, [command]);
 
   return (
-    <div className={styles.bentoCardCode}>
+    <div className={styles.codeBlock}>
       <div className={styles.codeContent}>{children}</div>
       <button
         className={`${styles.codeCopyBtn} ${copied ? styles.codeCopyBtnCopied : ''}`}
@@ -35,117 +36,116 @@ function CopyCodeBlock({ command, children }) {
 }
 
 /**
- * Bento grid items for the "Quick Start" section.
+ * Animated counter that counts up from 0 to target when visible
  */
-const BENTO_ITEMS = [
-  {
-    wide: true,
-    icon: '🚀',
-    title: 'Create a project in 30 seconds',
-    desc: 'One command to scaffold, install, and start your Strapi backend.',
-    to: '/cms/quick-start',
-    code: (key) => (
-      <CopyCodeBlock key={key} command="npx create-strapi@latest my-project --quickstart">
-        <span className={styles.codeCm}>$</span>{' '}
-        <span className={styles.codeFn}>npx</span> create-strapi@latest my-project{' '}
-        <span className={styles.codeKw}>--quickstart</span>
-      </CopyCodeBlock>
-    ),
-  },
-  {
-    icon: '⚡',
-    title: 'Content APIs',
-    desc: 'REST and GraphQL APIs auto-generated from your content types.',
-    to: '/cms/api/content-api',
-    code: (key) => (
-      <div key={key} className={styles.bentoCardCode} style={{ marginTop: 'auto' }}>
-        <span className={styles.codeFn}>GET</span> /api/articles<br />
-        <span className={styles.codeFn}>POST</span> /api/articles<br />
-        <span className={styles.codeFn}>PUT</span> /api/articles/<span className={styles.codeStr}>:id</span>
-      </div>
-    ),
-  },
-  {
-    icon: '🔌',
-    title: 'Plugin Ecosystem',
-    desc: 'Extend everything. Build custom plugins or use community ones.',
-    to: '/cms/plugins-development/developing-plugins',
-    stat: '60+',
-    statLabel: 'community plugins',
-  },
-  {
-    icon: '🔧',
-    title: 'Customization',
-    desc: 'Lifecycle hooks, middlewares, policies, and custom controllers.',
-    to: '/cms/customization',
-  },
-  {
-    wide: true,
-    icon: '🌐',
-    title: 'Deploy Anywhere',
-    desc: 'Strapi Cloud, AWS, Heroku, DigitalOcean, Vercel, or your own infrastructure. One-click deploy or full control.',
-    to: '/cloud/getting-started/deployment',
-    code: (key) => (
-      <div key={key} className={styles.bentoCardCode} style={{ marginTop: 'auto' }}>
-        <span className={styles.codeCm}>$</span>{' '}
-        <span className={styles.codeFn}>strapi</span> deploy{' '}
-        <span className={styles.codeKw}>--cloud</span><br />
-        <span className={styles.codeStr}>✓ Project deployed to https://my-project.strapiapp.com</span>
-      </div>
-    ),
-  },
-];
+function AnimatedCounter({ target, suffix = '' }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const hasAnimated = useRef(false);
 
-/**
- * REST API Reference preview items
- */
-const API_ITEMS = [
-  { method: 'GET', path: '/api/:pluralApiId', desc: 'Get entries', to: '/cms/api/rest#get-all' },
-  { method: 'GET', path: '/api/:pluralApiId/:documentId', desc: 'Get an entry', to: '/cms/api/rest#get' },
-  { method: 'POST', path: '/api/:pluralApiId', desc: 'Create an entry', to: '/cms/api/rest#create' },
-  { method: 'PUT', path: '/api/:pluralApiId/:documentId', desc: 'Update an entry', to: '/cms/api/rest#update' },
-  { method: 'DEL', path: '/api/:pluralApiId/:documentId', desc: 'Delete an entry', to: '/cms/api/rest#delete' },
-];
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
 
-/**
- * Product cards — CMS + Cloud
- */
-const PRODUCT_CARDS = [
-  {
-    variant: 'cms',
-    title: 'CMS Docs',
-    desc: 'Build, customize, and extend your content backend with APIs, plugins, and more.',
-    to: '/cms/intro',
-    links: [
-      { label: 'Quick Start', to: '/cms/quick-start' },
-      { label: 'REST API', to: '/cms/api/rest' },
-      { label: 'GraphQL', to: '/cms/api/graphql' },
-      { label: 'Plugins', to: '/cms/plugins' },
-      { label: 'TypeScript', to: '/cms/typescript' },
-    ],
-  },
-  {
-    variant: 'cloud',
-    title: 'Cloud Docs',
-    desc: 'Deploy in one click, scale with confidence. Managed hosting built for Strapi.',
-    to: '/cloud/intro',
-    links: [
-      { label: 'Getting Started', to: '/cloud/getting-started/intro' },
-      { label: 'Deploy', to: '/cloud/getting-started/deployment' },
-      { label: 'Projects', to: '/cloud/projects/overview' },
-      { label: 'CLI', to: '/cloud/cli/cloud-cli' },
-      { label: 'Domains', to: '/cloud/projects/settings/domains' },
-    ],
-  },
-];
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          const duration = 1600;
+          const steps = 60;
+          const increment = target / steps;
+          let current = 0;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              setCount(target);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(current));
+            }
+          }, duration / steps);
+        }
+      },
+      { threshold: 0.3 }
+    );
 
-function ApiPath({ path }) {
-  return path.split(/(:[\w]+)/).map((segment, i) =>
-    segment.startsWith(':')
-      ? <span key={i} className={styles.apiParam}>{segment}</span>
-      : <span key={i}>{segment}</span>
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target]);
+
+  return (
+    <span ref={ref} className={styles.animatedCounter}>
+      {count}{suffix}
+    </span>
   );
 }
+
+/**
+ * Scroll-reveal wrapper — fades in children when they enter the viewport
+ */
+function Reveal({ children, delay = 0, className = '' }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`${styles.reveal} ${visible ? styles.revealVisible : ''} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/**
+ * Explore link cards — categorized documentation navigation
+ */
+const EXPLORE_SECTIONS = [
+  {
+    label: 'Getting Started',
+    links: [
+      { icon: 'ph-rocket-launch', title: 'Quick Start', desc: 'Scaffold a project in 30 seconds.', to: '/cms/quick-start' },
+      { icon: 'ph-download-simple', title: 'Installation', desc: 'Install Strapi with your preferred method.', to: '/cms/installation' },
+      { icon: 'ph-arrow-square-up-right', title: "What's New", desc: 'Latest features and improvements.', to: '/whats-new' },
+    ],
+  },
+  {
+    label: 'Build Your Content',
+    links: [
+      { icon: 'ph-table', title: 'Content-Type Builder', desc: 'Define your data structure visually.', to: '/cms/features/content-type-builder' },
+      { icon: 'ph-pencil-simple-line', title: 'Content Manager', desc: 'Create, edit, and publish content.', to: '/cms/features/content-manager' },
+      { icon: 'ph-translate', title: 'Internationalization', desc: 'Manage content in multiple locales.', to: '/cms/features/internationalization' },
+    ],
+  },
+  {
+    label: 'APIs & Integration',
+    links: [
+      { icon: 'ph-plugs', title: 'REST API', desc: 'Auto-generated CRUD endpoints.', to: '/cms/api/rest' },
+      { icon: 'ph-graph', title: 'GraphQL', desc: 'Flexible queries and mutations.', to: '/cms/api/graphql' },
+      { icon: 'ph-file-code', title: 'Document Service', desc: 'Server-side programmatic API.', to: '/cms/api/document-service' },
+    ],
+  },
+  {
+    label: 'Deploy & Scale',
+    links: [
+      { icon: 'ph-cloud', title: 'Strapi Cloud', desc: 'One-click managed hosting.', to: '/cloud/getting-started/intro' },
+      { icon: 'ph-terminal', title: 'Cloud CLI', desc: 'Deploy from the terminal.', to: '/cloud/cli/cloud-cli' },
+      { icon: 'ph-globe-simple', title: 'Custom Domains', desc: 'Connect your own domain name.', to: '/cloud/projects/settings/domains' },
+    ],
+  },
+];
 
 export default function PageHome() {
   return (
@@ -158,7 +158,6 @@ export default function PageHome() {
         <section className={styles.hero}>
           <div className={styles.heroGrid} aria-hidden="true" />
           <div className={styles.heroContent}>
-            {/* Badge pill */}
             <a href="/release-notes" className={styles.heroBadge}>
               <span className={styles.heroBadgeDot}>
                 <span className={styles.heroBadgeDotInner} />
@@ -179,76 +178,143 @@ export default function PageHome() {
           </div>
         </section>
 
-        {/* ═══ PRODUCT CARDS ═══ */}
-        <section className={styles.products}>
-          <div className={styles.productsGrid}>
-            {PRODUCT_CARDS.map((card, i) => (
-              <div
-                key={i}
-                className={`${styles.productCard} ${styles[`productCard${card.variant.charAt(0).toUpperCase() + card.variant.slice(1)}`]}`}
-              >
-                <div className={styles.productCardHeader}>
-                  <a href={card.to} className={styles.productCardTitle}>
-                    {card.title}
-                    <span className={styles.productCardArrow}>→</span>
-                  </a>
-                  <p className={styles.productCardDesc}>{card.desc}</p>
+        {/* ═══ 1. QUICK START ═══ */}
+        <Reveal>
+          <section className={styles.quickstart}>
+            <div className={styles.sectionLabel}>Quick Start</div>
+            <a href="/cms/quick-start" className={styles.quickstartCard}>
+              <div className={styles.quickstartLeft}>
+                <div className={styles.quickstartIcon}>
+                  <i className="ph ph-rocket-launch" />
                 </div>
-                <div className={styles.productCardLinks}>
-                  {card.links.map((link, j) => (
-                    <a key={j} href={link.to} className={styles.productCardLink}>
-                      {link.label}
+                <div>
+                  <div className={styles.quickstartTitle}>Create a project in 30 seconds</div>
+                  <div className={styles.quickstartDesc}>
+                    One command to scaffold, install, and start your Strapi backend.
+                  </div>
+                </div>
+              </div>
+              <CopyCodeBlock command="npx create-strapi@latest my-project --quickstart">
+                <span className={styles.codeCm}>$</span>{' '}
+                <span className={styles.codeFn}>npx</span> create-strapi@latest my-project{' '}
+                <span className={styles.codeKw}>--quickstart</span>
+              </CopyCodeBlock>
+            </a>
+          </section>
+        </Reveal>
+
+        {/* ═══ 2. EXPLORE SECTIONS ═══ */}
+        <section className={styles.explore}>
+          {EXPLORE_SECTIONS.map((section, i) => (
+            <Reveal key={i} delay={i * 80}>
+              <div className={styles.exploreSection}>
+                <div className={styles.exploreLabel}>{section.label}</div>
+                <div className={styles.exploreGrid}>
+                  {section.links.map((link, j) => (
+                    <a key={j} href={link.to} className={styles.exploreCard}>
+                      <div className={styles.exploreCardIcon}>
+                        <i className={`ph ${link.icon}`} />
+                      </div>
+                      <div className={styles.exploreCardBody}>
+                        <div className={styles.exploreCardTitle}>
+                          {link.title}
+                          <span className={styles.exploreCardArrow}>→</span>
+                        </div>
+                        <div className={styles.exploreCardDesc}>{link.desc}</div>
+                      </div>
                     </a>
                   ))}
                 </div>
               </div>
-            ))}
+            </Reveal>
+          ))}
+        </section>
+
+        {/* ═══ 3. API EXPLORER ═══ */}
+        <Reveal>
+          <section className={styles.apiExplorerSection}>
+            <ApiExplorer />
+          </section>
+        </Reveal>
+
+        {/* ═══ 4. PLUGINS + CUSTOMIZE — side by side ═══ */}
+        <section className={styles.showcase}>
+          <div className={styles.showcaseGrid}>
+            {/* Plugins */}
+            <Reveal delay={0}>
+              <a href="/cms/plugins" className={styles.showcaseCard}>
+                <div className={styles.showcaseCardIcon}>
+                  <i className="ph ph-puzzle-piece" />
+                </div>
+                <div className={styles.showcaseCardStat}>
+                  <AnimatedCounter target={79} suffix="+" />
+                </div>
+                <div className={styles.showcaseCardStatLabel}>plugins on the Marketplace</div>
+                <div className={styles.showcaseCardDesc}>
+                  GraphQL, Sentry, Documentation, and dozens of community plugins.
+                  Build your own or install from the Marketplace.
+                </div>
+                <div className={styles.showcaseCardCta}>
+                  Browse plugins <span>→</span>
+                </div>
+              </a>
+            </Reveal>
+
+            {/* Customization */}
+            <Reveal delay={120}>
+              <a href="/cms/customization" className={styles.showcaseCard}>
+                <div className={styles.showcaseCardIcon}>
+                  <i className="ph ph-wrench" />
+                </div>
+                <div className={styles.showcaseCardTitle}>Fully Customizable</div>
+                <div className={styles.showcaseCardDesc}>
+                  Lifecycle hooks, custom controllers, services, policies, and middlewares.
+                  Extend every layer of Strapi to fit your exact needs.
+                </div>
+                <div className={styles.showcaseCardCode}>
+                  <span className={styles.codeCm}>// Register lifecycle hook</span><br />
+                  <span className={styles.codeFn}>beforeCreate</span>(event) {'{'}<br />
+                  {'  '}event.params.data.slug = <span className={styles.codeStr}>slugify</span>(event.params.data.title);<br />
+                  {'}'}
+                </div>
+                <div className={styles.showcaseCardCta}>
+                  Explore customization <span>→</span>
+                </div>
+              </a>
+            </Reveal>
           </div>
         </section>
 
-        {/* ═══ BENTO GRID ═══ */}
-        <section className={styles.bento}>
-          <div className={styles.bentoLabel}>Quick Start</div>
-          <div className={styles.bentoGrid}>
-            {BENTO_ITEMS.map((item, i) => (
-              <a
-                key={i}
-                href={item.to}
-                className={`${styles.bentoCard} ${item.wide ? styles.bentoCardWide : ''}`}
-              >
-                <div className={styles.bentoCardIcon}>{item.icon}</div>
-                <div className={styles.bentoCardTitle}>{item.title}</div>
-                <div className={styles.bentoCardDesc}>{item.desc}</div>
-                {item.stat && (
-                  <>
-                    <div className={styles.bentoCardStat}>{item.stat}</div>
-                    <div className={styles.bentoCardStatLabel}>{item.statLabel}</div>
-                  </>
-                )}
-                {item.code && item.code(`code-${i}`)}
-              </a>
-            ))}
-          </div>
-        </section>
-
-        {/* ═══ API PREVIEW ═══ */}
-        <section className={styles.apiPreview}>
-          <div className={styles.apiPreviewLabel}>REST API Reference</div>
-          <div className={styles.apiRow}>
-            {API_ITEMS.map((item, i) => (
-              <a key={i} href={item.to} className={styles.apiItem}>
-                <span className={`${styles.apiMethod} ${styles[`apiMethod${item.method.charAt(0).toUpperCase() + item.method.slice(1).toLowerCase()}`] || styles.apiMethodGet}`}>
-                  {item.method}
-                </span>
-                <span className={styles.apiPath}>
-                  <ApiPath path={item.path} />
-                </span>
-                <span className={styles.apiDesc}>{item.desc}</span>
-                <span className={styles.apiArrow}>→</span>
-              </a>
-            ))}
-          </div>
-        </section>
+        {/* ═══ 5. DEPLOY ═══ */}
+        <Reveal>
+          <section className={styles.deploy}>
+            <div className={styles.sectionLabel}>Deploy</div>
+            <a href="/cloud/getting-started/deployment" className={styles.deployCard}>
+              <div className={styles.deployLeft}>
+                <div className={styles.deployIcon}>
+                  <i className="ph ph-cloud-arrow-up" />
+                </div>
+                <div>
+                  <div className={styles.deployTitle}>Deploy to Strapi Cloud</div>
+                  <div className={styles.deployDesc}>
+                    Login and deploy from your terminal. Or push to GitHub for automatic deploys.
+                    Also supports AWS, Heroku, DigitalOcean, and any Node.js host.
+                  </div>
+                </div>
+              </div>
+              <div className={styles.codeBlock}>
+                <div className={styles.codeContent}>
+                  <span className={styles.codeCm}>$</span>{' '}
+                  <span className={styles.codeFn}>strapi</span> login<br />
+                  <span className={styles.codeStr}>✓ Successfully logged in</span><br />
+                  <span className={styles.codeCm}>$</span>{' '}
+                  <span className={styles.codeFn}>strapi</span> deploy<br />
+                  <span className={styles.codeStr}>✓ Project deployed to https://my-project.strapiapp.com</span>
+                </div>
+              </div>
+            </a>
+          </section>
+        </Reveal>
       </main>
     </Layout>
   );
