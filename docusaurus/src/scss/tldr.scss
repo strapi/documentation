@@ -3,23 +3,38 @@
 
 .tldr {
   margin: 0 0 var(--strapi-spacing-10) 0;
-  background-color: transparent;
-  // opacity: .9;
-  
+  background: transparent;
+  border: none;
+  border-left: none;
+  padding: 0;
+
   p {
-    color: var(--strapi-neutral-600);
-  
+    color: var(--strapi-fg-4);
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+    font-style: italic;
+
     strong {
-      display: inline-block;
-      padding-bottom: 6px;
+      display: none;
     }
+
+    /* Nested paragraph (the actual summary text) */
+    p {
+      padding: 0;
+    }
+  }
+
+  /* Hide the icon */
+  i.strapi-icons {
+    display: none;
   }
 }
 
 @include dark {
   .tldr {
     p {
-      color: var(--strapi-neutral-700);
+      color: var(--strapi-fg-4);
     }
   }
 }
