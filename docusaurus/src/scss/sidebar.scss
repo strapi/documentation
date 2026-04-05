@@ -432,58 +432,11 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     margin-bottom: 80px;
   }
 
+  /** Hide default Docusaurus collapse/expand buttons — replaced by custom v3 toggle */
   @include medium-up {
-    [class*="collapseSidebar"]::after,
-    [class*="expandButton"]::after {
-        font-family: "Phosphor";
-        position: relative;
-        top: 0;
-        left: 0;
-        color: var(--strapi-neutral-400);
-        font-weight: 500;
-        font-size: 16px;
-        transition: color var(--strapi-duration-fast) var(--strapi-ease);
-    }
-
-    [class*="collapseSidebar"] {
-      border: none !important;
-      border-top: 1px solid var(--strapi-neutral-150) !important;
-      min-height: 38px;
-      background: transparent !important;
-      opacity: 0.6;
-      transition: opacity var(--strapi-duration-fast) var(--strapi-ease);
-
-      &:hover {
-        opacity: 1;
-        background: transparent !important;
-
-        &::after {
-          color: var(--strapi-primary-500);
-        }
-      }
-
-      &::after {
-        content:'\E128';
-      }
-    }
-    [class*="collapseSidebarButtonIcon"] {
-      display: none;
-    }
+    [class*="collapseSidebar"],
     [class*="expandButton"] {
-      background: transparent !important;
-      border: none !important;
-
-      svg {
-        display: none;
-      }
-
-      &:hover::after {
-        color: var(--strapi-primary-500);
-      }
-
-      &::after {
-        content:'\E12A';
-      }
+      display: none !important;
     }
   }
 }
