@@ -38,16 +38,15 @@ const SHARED_STYLES = `
   }
   .mantine-Input-input,
   .mantine-Textarea-input {
-    border-radius: 12px !important;
     font-family: var(--strapi-font-family-body, 'Inter', sans-serif) !important;
     font-size: 14px !important;
-    padding: 14px 16px !important;
     transition: border-color 0.2s !important;
   }
   .mantine-Input-input:focus,
   .mantine-Textarea-input:focus {
     border-color: #4945FF !important;
-    box-shadow: 0 0 0 3px rgba(73, 69, 255, 0.2) !important;
+    box-shadow: none !important;
+    outline: none !important;
   }
   .mantine-ActionIcon-root {
     background: #4945FF !important;
@@ -57,6 +56,10 @@ const SHARED_STYLES = `
   }
   .mantine-ActionIcon-root:hover {
     background: #7B79FF !important;
+  }
+  .mantine-ActionIcon-root svg,
+  .mantine-ActionIcon-root .mantine-ActionIcon-icon {
+    color: #FFFFFF !important;
   }
   .mantine-Overlay-root {
     backdrop-filter: blur(4px) !important;
