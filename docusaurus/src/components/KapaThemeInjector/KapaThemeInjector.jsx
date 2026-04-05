@@ -251,16 +251,23 @@ const DARK_STYLES = `
     color: #D4D4D8 !important;
   }
   .mantine-Button-root:not([data-with-left-section]) {
-    background: transparent !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
-    color: #A1A1AA !important;
+    --button-bg: rgba(255, 255, 255, 0.04) !important;
+    --button-hover: rgba(255, 255, 255, 0.1) !important;
+    --button-color: #71717A !important;
+    --button-bd: 1px solid transparent !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid transparent !important;
+    color: #71717A !important;
   }
   .mantine-Button-root:not([data-with-left-section]):hover {
-    background: rgba(255, 255, 255, 0.04) !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: transparent !important;
     color: #D4D4D8 !important;
   }
   .mantine-Button-root:not([data-with-left-section]) .mantine-Button-label {
+    color: inherit !important;
+  }
+  .mantine-Button-root:not([data-with-left-section]) svg {
     color: inherit !important;
   }
   /* Input wrapper (inner Paper-root) — match modal background */
