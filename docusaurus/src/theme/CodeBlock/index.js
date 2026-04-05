@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import CodeBlock from '@theme-original/CodeBlock';
 
 // Terminal-type languages that get the macOS-style title bar + blinking cursor
@@ -137,10 +137,40 @@ export default function CodeBlockWrapper(props) {
   // Inject AI button into Docusaurus button group for non-terminal blocks
   useInjectAIButton(wrapperRef, language, codeContent?.trim(), showAI && !isTerminal);
 
-  // Terminal blocks: macOS-style wrapper with title bar + blinking cursor (CSS)
+  // Inject a real DOM cursor element into terminal blocks
+  // (CSS ::after pseudo-elements get their background overridden by parent rules)
+  const terminalRef = useRef(null);
+  const injectCursor = useCallback((node) => {
+    terminalRef.current = node;
+    if (!node) return;
+
+    // Find the last token line and append a real cursor span
+    const injectCursorElement = () => {
+      // Remove any previously injected cursor
+      const existing = node.querySelector('.terminal-cursor');
+      if (existing) existing.remove();
+
+      const codeEl = node.querySelector('code');
+      if (!codeEl) return;
+
+      const lastLine = codeEl.querySelector('.token-line:last-child');
+      if (!lastLine) return;
+
+      const cursor = document.createElement('span');
+      cursor.className = 'terminal-cursor';
+      lastLine.appendChild(cursor);
+    };
+
+    // Run after Docusaurus finishes rendering the code block
+    requestAnimationFrame(() => {
+      requestAnimationFrame(injectCursorElement);
+    });
+  }, []);
+
+  // Terminal blocks: macOS-style wrapper with title bar + blinking cursor
   if (isTerminal) {
     return (
-      <div className="code-block-enhanced">
+      <div className="code-block-enhanced" ref={injectCursor}>
         <TerminalTitleBar
           language={language}
           title={docTitle}

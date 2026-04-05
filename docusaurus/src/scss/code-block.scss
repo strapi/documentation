@@ -295,16 +295,16 @@ pre.prism-code {
   50% { opacity: 0; }
 }
 
-// The cursor is rendered via ::after on the last span token before the <br>
-.code-block-enhanced code .token-line:last-child > span:last-of-type::after {
-  content: '';
-  display: inline-block;
-  width: 8px;
-  height: 1.1em;
-  background: var(--strapi-primary-500);
+// Real DOM cursor element injected by CodeBlockWrapper
+// Uses !important to override `code { background: transparent !important }` inheritance
+.code-block-enhanced .terminal-cursor {
+  display: inline-block !important;
+  width: 8px !important;
+  height: 1.1em !important;
+  background-color: var(--strapi-primary-500) !important;
   margin-left: 2px;
   vertical-align: text-bottom;
-  animation: cursorBlink 1.2s step-end infinite;
+  animation: cursorBlink 1.2s step-end infinite !important;
   border-radius: 1px;
 }
 
@@ -357,6 +357,11 @@ pre.prism-code {
         padding: 16px 24px;
         background: transparent !important;
         background-color: transparent !important;
+
+        // Exclude cursor element from transparent override
+        .terminal-cursor {
+          background-color: var(--strapi-primary-500) !important;
+        }
       }
     }
   }
@@ -770,8 +775,8 @@ pre.prism-code {
     }
 
     // Cursor in dark mode
-    code .token-line:last-child > span:last-of-type::after {
-      background: var(--strapi-primary-400);
+    .terminal-cursor {
+      background-color: var(--strapi-primary-400) !important;
     }
   }
 }
