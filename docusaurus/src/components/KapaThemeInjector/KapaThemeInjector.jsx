@@ -96,16 +96,16 @@ const LIGHT_STYLES = `
   .mantine-Modal-body .mantine-Text-root {
     color: #27272A !important;
   }
-  .mantine-Button-root {
+  .mantine-Button-root:not([data-with-left-section]) {
     background: #FFFFFF !important;
     border: 1px solid rgba(0, 0, 0, 0.08) !important;
     color: #27272A !important;
   }
-  .mantine-Button-root:hover {
+  .mantine-Button-root:not([data-with-left-section]):hover {
     background: #F4F4F5 !important;
     border-color: rgba(0, 0, 0, 0.12) !important;
   }
-  .mantine-Button-root .mantine-Button-label {
+  .mantine-Button-root:not([data-with-left-section]) .mantine-Button-label {
     color: #27272A !important;
   }
   .mantine-Input-input,
@@ -117,9 +117,6 @@ const LIGHT_STYLES = `
   .mantine-Input-input::placeholder,
   .mantine-Textarea-input::placeholder {
     color: #A1A1AA !important;
-  }
-  .mantine-UnstyledButton-root {
-    color: #27272A !important;
   }
   .mantine-Anchor-root {
     color: #A1A1AA !important;
@@ -160,16 +157,22 @@ const DARK_STYLES = `
   .mantine-Modal-body .mantine-Text-root {
     color: #D4D4D8 !important;
   }
-  .mantine-Button-root {
+  /* Disclaimer banner — force dark background on the wrapper with light bg */
+  .scrollable-container div:has(> .mantine-Group-root > .mantine-Text-root) {
+    background: #18181B !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 10px !important;
+  }
+  .mantine-Button-root:not([data-with-left-section]) {
     background: #18181B !important;
     border: 1px solid rgba(255, 255, 255, 0.06) !important;
     color: #D4D4D8 !important;
   }
-  .mantine-Button-root:hover {
+  .mantine-Button-root:not([data-with-left-section]):hover {
     background: #1F1F23 !important;
     border-color: rgba(255, 255, 255, 0.1) !important;
   }
-  .mantine-Button-root .mantine-Button-label {
+  .mantine-Button-root:not([data-with-left-section]) .mantine-Button-label {
     color: #D4D4D8 !important;
   }
   .mantine-Input-input,
@@ -182,9 +185,6 @@ const DARK_STYLES = `
   .mantine-Textarea-input::placeholder {
     color: #71717A !important;
   }
-  .mantine-UnstyledButton-root {
-    color: #D4D4D8 !important;
-  }
   .mantine-Anchor-root {
     color: #71717A !important;
   }
@@ -193,6 +193,20 @@ const DARK_STYLES = `
     border: 1px solid rgba(255, 255, 255, 0.06) !important;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
     color: #FAFAFA !important;
+  }
+  /* Deep Thinking button — dark-mode base (inactive) state.
+     No !important so Kapa's own active-state styles can win. */
+  .mantine-Button-root[data-with-left-section] {
+    background: #18181B;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #D4D4D8;
+  }
+  .mantine-Button-root[data-with-left-section] .mantine-Button-label {
+    color: #D4D4D8;
+  }
+  .mantine-Button-root[data-with-left-section]:hover {
+    background: #1F1F23;
+    border-color: rgba(255, 255, 255, 0.1);
   }
   .mantine-Alert-root {
     background: transparent !important;
