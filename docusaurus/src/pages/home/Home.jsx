@@ -272,10 +272,12 @@ export default function PageHome() {
                   Extend every layer of Strapi to fit your exact needs.
                 </div>
                 <div className={styles.showcaseCardCode}>
-                  <span className={styles.codeCm}>// Register lifecycle hook</span><br />
-                  <span className={styles.codeFn}>beforeCreate</span>(event) {'{'}<br />
-                  {'  '}event.params.data.slug = <span className={styles.codeStr}>slugify</span>(event.params.data.title);<br />
-                  {'}'}
+                  <span className={styles.codeCm}>// lifecycles.js</span><br />
+                  <span className={styles.codeKw}>module.exports</span> = {'{'}<br />
+                  {'  '}<span className={styles.codeFn}>beforeCreate</span>(event) {'{'}<br />
+                  {'    '}event.params.data.price *= <span className={styles.codeStr}>0.8</span>;<br />
+                  {'  '}{'}'},{'\n'}
+                  {'}'};
                 </div>
                 <div className={styles.showcaseCardCta}>
                   Explore customization <span>→</span>
