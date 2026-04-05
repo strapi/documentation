@@ -667,70 +667,95 @@
   }
 
   .heroBadge {
-    background: var(--strapi-surface-2);
+    background: #1a1a2e;
+    border-color: rgba(255, 255, 255, 0.1);
   }
 
   .quickstartCard {
-    background: var(--strapi-surface-1);
+    background: #1a1a2e;
+    border-color: rgba(255, 255, 255, 0.08);
 
     &:hover {
+      border-color: rgba(73, 69, 255, 0.4);
       box-shadow: 0 8px 32px rgba(73, 69, 255, 0.15);
     }
   }
 
   .quickstartIcon {
-    background: rgba(73, 69, 255, 0.15);
+    background: rgba(73, 69, 255, 0.2);
   }
 
   .exploreCard {
-    background: var(--strapi-surface-1);
+    background: #1a1a2e;
+    border-color: rgba(255, 255, 255, 0.08);
 
     &:hover {
-      background: var(--strapi-surface-2);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      background: #222240;
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     }
   }
 
   .exploreCardIcon {
-    background: var(--strapi-surface-3);
+    background: rgba(73, 69, 255, 0.15);
   }
 
   .showcaseCard {
-    background: var(--strapi-surface-1);
+    background: #1a1a2e;
+    border-color: rgba(255, 255, 255, 0.08);
 
     &:hover {
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
   }
 
   .showcaseCardIcon {
-    background: var(--strapi-surface-3);
+    background: rgba(73, 69, 255, 0.15);
   }
 
   .showcaseCardCode {
-    background: var(--strapi-surface-0);
-    border-color: var(--strapi-border);
+    background: #12121e;
+    border-color: rgba(255, 255, 255, 0.06);
   }
 
   .deployCard {
-    background: var(--strapi-surface-1);
+    background: #1a1a2e;
+    border-color: rgba(255, 255, 255, 0.08);
 
     &:hover {
+      border-color: rgba(73, 69, 255, 0.4);
       box-shadow: 0 8px 32px rgba(73, 69, 255, 0.15);
     }
   }
 
   .deployIcon {
-    background: rgba(73, 69, 255, 0.15);
+    background: rgba(73, 69, 255, 0.2);
   }
 
   .codeBlock {
-    background: var(--strapi-surface-0);
-    border-color: var(--strapi-border);
+    background: #12121e;
+    border-color: rgba(255, 255, 255, 0.06);
   }
 
   .codeCopyBtn {
-    background: var(--strapi-surface-2);
-    border-color: var(--strapi-border);
+    background: #222240;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .sectionLabel {
+    color: rgba(255, 255, 255, 0.5);
+
+    &::after {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  .exploreLabel {
+    color: rgba(255, 255, 255, 0.5);
+
+    &::after {
+      background: rgba(255, 255, 255, 0.08);
+    }
   }
 }
