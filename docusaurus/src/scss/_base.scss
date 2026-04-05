@@ -67,7 +67,7 @@ main {
    * so content stays aligned with pages that have a TOC.
    */
   [class*="docMainContainer"] .row:not(:has(.col--3)) {
-    padding-right: 240px;
+    padding-right: 280px;
   }
 }
 
@@ -168,10 +168,10 @@ main:has(.api-endpoint-block) {
 
     /** TOC column: fixed width, flush right, no inner padding. */
     .col--3 {
-      max-width: 240px !important;
+      max-width: 280px !important;
       flex: 0 0 auto !important;
-      width: 240px !important;
-      min-width: 240px !important;
+      width: 280px !important;
+      min-width: 280px !important;
       padding-right: 0 !important;
       padding-left: 0 !important;
       transition: width var(--strapi-duration-slow) var(--strapi-ease),
