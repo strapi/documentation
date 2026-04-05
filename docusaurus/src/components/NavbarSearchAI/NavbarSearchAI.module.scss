@@ -84,26 +84,7 @@
   }
 
   :global(.docsearch-btn-keys) {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    margin-left: auto;
-    padding-right: 4px;
-  }
-
-  :global(.docsearch-btn-key) {
-    font-family: var(--strapi-font-family-technical);
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--strapi-neutral-400);
-    background: var(--strapi-neutral-100);
-    border: none;
-    border-radius: 4px;
-    padding: 1px 5px;
-    box-shadow: none;
-    line-height: 1.4;
-    width: auto;
-    min-width: 0;
+    display: none;
   }
 }
 
@@ -161,7 +142,11 @@
   }
 
   .searchSlot:hover {
-    background: var(--strapi-neutral-200);
+    background: rgba(255, 255, 255, 0.06);
+
+    :global(.docsearch-btn-placeholder) {
+      color: rgba(255, 255, 255, 0.8);
+    }
   }
 
   .divider {
@@ -169,7 +154,12 @@
   }
 
   .askAI:hover {
-    background: var(--strapi-neutral-200);
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.8);
+
+    i {
+      color: var(--strapi-primary-500);
+    }
   }
 }
 
