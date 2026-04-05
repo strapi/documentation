@@ -26,21 +26,23 @@
 
   a {
     color: var(--strapi-primary-600);
-    // @include transition;
-    font-size: var(--strapi-font-size-sm);
-    line-height: var(--strapi-line-height-sm);
+    font-family: var(--strapi-font-family-body);
+    font-size: 13px;
+    line-height: 1.5;
 
     &:hover {
-      // font-weight: 700;
+      color: var(--strapi-accent, #4945FF);
     }
   }
 
   &__title {
+    font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
     font-size: 11px;
     line-height: 16px;
     font-weight: 600;
     margin-bottom: 12px;
     text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--strapi-neutral-500);
   }
 
