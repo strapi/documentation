@@ -121,6 +121,11 @@ const LIGHT_STYLES = `
   .mantine-Anchor-root {
     color: #A1A1AA !important;
   }
+  /* Disclaimer banner — remove tinted background */
+  .scrollable-container div:has(> .mantine-Group-root > .mantine-Text-root) {
+    background: transparent !important;
+    border: none !important;
+  }
   .mantine-Popover-dropdown {
     background: #FFFFFF !important;
     border: 1px solid rgba(0, 0, 0, 0.08) !important;
@@ -153,9 +158,57 @@ const DARK_STYLES = `
   }
   .mantine-Modal-body {
     background: #111113 !important;
+    color: #D4D4D8 !important;
   }
   .mantine-Modal-body .mantine-Text-root {
     color: #D4D4D8 !important;
+  }
+  /* Response content — headings, text, tables, links */
+  .mantine-Modal-body h1,
+  .mantine-Modal-body h2,
+  .mantine-Modal-body h3,
+  .mantine-Modal-body h4 {
+    color: #FAFAFA !important;
+  }
+  .mantine-Modal-body p,
+  .mantine-Modal-body li,
+  .mantine-Modal-body td,
+  .mantine-Modal-body span {
+    color: #D4D4D8 !important;
+  }
+  .mantine-Modal-body th {
+    color: #FAFAFA !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+  }
+  .mantine-Modal-body table {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  .mantine-Modal-body td,
+  .mantine-Modal-body th {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  .mantine-Modal-body a {
+    color: #7B79FF !important;
+  }
+  .mantine-Modal-body strong {
+    color: #FAFAFA !important;
+  }
+  /* Source cards */
+  .mantine-Modal-body .mantine-Card-root,
+  .mantine-Modal-body [class*="Card"] {
+    background: #18181B !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+  }
+  /* Action buttons (New chat, Copy, Good/Bad answer) */
+  .mantine-Modal-body .mantine-UnstyledButton-root {
+    color: #D4D4D8 !important;
+  }
+  .mantine-Modal-body .mantine-UnstyledButton-root:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+  }
+  /* SVGs in modal body inherit light color */
+  .mantine-Modal-body svg {
+    color: #A1A1AA !important;
   }
   /* Disclaimer banner — remove the light bg, keep it transparent */
   .scrollable-container div:has(> .mantine-Group-root > .mantine-Text-root) {
@@ -190,9 +243,14 @@ const DARK_STYLES = `
   .mantine-Button-root:not([data-with-left-section]) .mantine-Button-label {
     color: #D4D4D8 !important;
   }
+  /* Input wrapper (inner Paper-root) — match modal background */
+  .mantine-Paper-root:has(.mantine-Textarea-input) {
+    background: transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
   .mantine-Input-input,
   .mantine-Textarea-input {
-    background: #18181B !important;
+    background: transparent !important;
     border-color: rgba(255, 255, 255, 0.06) !important;
     color: #FAFAFA !important;
   }
