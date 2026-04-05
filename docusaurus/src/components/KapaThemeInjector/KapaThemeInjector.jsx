@@ -157,11 +157,26 @@ const DARK_STYLES = `
   .mantine-Modal-body .mantine-Text-root {
     color: #D4D4D8 !important;
   }
-  /* Disclaimer banner — force dark background on the wrapper with light bg */
+  /* Disclaimer banner — remove the light bg, keep it transparent */
   .scrollable-container div:has(> .mantine-Group-root > .mantine-Text-root) {
+    background: transparent !important;
+    border: none !important;
+  }
+  /* Use MCP button in header — dark mode */
+  .mantine-Modal-header .mantine-Group-root:has(> .mantine-Text-root) {
     background: #18181B !important;
     border: 1px solid rgba(255, 255, 255, 0.06) !important;
-    border-radius: 10px !important;
+    color: #D4D4D8 !important;
+  }
+  .mantine-Modal-header .mantine-Group-root:has(> .mantine-Text-root):hover {
+    background: #1F1F23 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  .mantine-Modal-header .mantine-Group-root:has(> .mantine-Text-root) .mantine-Text-root {
+    color: #D4D4D8 !important;
+  }
+  .mantine-Modal-header .mantine-Group-root:has(> .mantine-Text-root) svg {
+    color: #D4D4D8 !important;
   }
   .mantine-Button-root:not([data-with-left-section]) {
     background: #18181B !important;
@@ -194,19 +209,30 @@ const DARK_STYLES = `
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
     color: #FAFAFA !important;
   }
-  /* Deep Thinking button — dark-mode base (inactive) state.
-     No !important so Kapa's own active-state styles can win. */
+  /* Deep Thinking button — dark-mode base state */
   .mantine-Button-root[data-with-left-section] {
-    background: #18181B;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    color: #D4D4D8;
+    background: #18181B !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    color: #D4D4D8 !important;
   }
   .mantine-Button-root[data-with-left-section] .mantine-Button-label {
-    color: #D4D4D8;
+    color: #D4D4D8 !important;
   }
   .mantine-Button-root[data-with-left-section]:hover {
-    background: #1F1F23;
-    border-color: rgba(255, 255, 255, 0.1);
+    background: #1F1F23 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  /* Deep Thinking active/expanded state — violet accent */
+  .mantine-Button-root[data-with-left-section][aria-expanded="true"] {
+    background: rgba(73, 69, 255, 0.12) !important;
+    border-color: rgba(73, 69, 255, 0.4) !important;
+    color: #A5B4FC !important;
+  }
+  .mantine-Button-root[data-with-left-section][aria-expanded="true"] .mantine-Button-label {
+    color: #A5B4FC !important;
+  }
+  .mantine-Button-root[data-with-left-section][aria-expanded="true"] svg {
+    color: #A5B4FC !important;
   }
   .mantine-Alert-root {
     background: transparent !important;
