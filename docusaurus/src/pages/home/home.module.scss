@@ -440,6 +440,9 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
+
+  /* Equal height cards via inner stretch */
+  > div { display: flex; }
 }
 
 .showcaseCard {
@@ -624,7 +627,7 @@
   }
 
   .showcaseGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

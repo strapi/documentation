@@ -237,8 +237,9 @@ export default function PageHome() {
           </section>
         </Reveal>
 
-        {/* ═══ 4. PLUGINS + CUSTOMIZE — side by side ═══ */}
+        {/* ═══ 4. PLUGINS + CUSTOMIZE + OPEN SOURCE — three cards ═══ */}
         <section className={styles.showcase}>
+          <div className={styles.sectionLabel}>Extend & Customize</div>
           <div className={styles.showcaseGrid}>
             {/* Plugins */}
             <Reveal delay={0}>
@@ -261,7 +262,7 @@ export default function PageHome() {
             </Reveal>
 
             {/* Customization */}
-            <Reveal delay={120}>
+            <Reveal delay={80}>
               <a href="/cms/customization" className={styles.showcaseCard}>
                 <div className={styles.showcaseCardIcon}>
                   <i className="ph ph-wrench" />
@@ -281,6 +282,31 @@ export default function PageHome() {
                 </div>
                 <div className={styles.showcaseCardCta}>
                   Explore customization <span>→</span>
+                </div>
+              </a>
+            </Reveal>
+
+            {/* Open Source */}
+            <Reveal delay={160}>
+              <a
+                href="https://github.com/strapi/strapi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.showcaseCard}
+              >
+                <div className={styles.showcaseCardIcon}>
+                  <i className="ph ph-github-logo" />
+                </div>
+                <div className={styles.showcaseCardStat}>
+                  <AnimatedCounter target={71} suffix="k+" />
+                </div>
+                <div className={styles.showcaseCardStatLabel}>stars on GitHub</div>
+                <div className={styles.showcaseCardDesc}>
+                  100% open source, MIT licensed. Join thousands of contributors
+                  building the leading headless CMS.
+                </div>
+                <div className={styles.showcaseCardCta}>
+                  Star on GitHub <span>→</span>
                 </div>
               </a>
             </Reveal>
