@@ -107,7 +107,7 @@ main:has(.api-endpoint-block) {
    * Endpoint blocks break out of this via their own full-width grid.
    */
   main:has(.api-endpoint-block) article .theme-doc-markdown {
-    /** All direct children get a max readable width by default */
+    /** All direct children get a max readable width and are centered */
     > h1, > h2, > h3, > h4, > h5, > h6,
     > p, > ul, > ol, > blockquote, > table,
     > details, > .theme-admonition,
@@ -115,6 +115,8 @@ main:has(.api-endpoint-block) {
     > .tabs-container, > .tabs,
     > header {
       max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /** Endpoint blocks break out to full width */
@@ -132,6 +134,8 @@ main:has(.api-endpoint-block) {
     > .tabs-container, > .tabs,
     > header {
       max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     > .api-call {
