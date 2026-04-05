@@ -67,6 +67,10 @@ const SHARED_STYLES = `
   .mantine-Popover-dropdown {
     border-radius: 10px !important;
   }
+  /* Response links — smooth transition on hover */
+  .mantine-Modal-body a:not(.mantine-Paper-root) {
+    transition: color 0.15s ease !important;
+  }
 `;
 
 const LIGHT_STYLES = `
@@ -125,6 +129,10 @@ const LIGHT_STYLES = `
   .scrollable-container div:has(> .mantine-Group-root > .mantine-Text-root) {
     background: transparent !important;
     border: none !important;
+  }
+  /* Links hover — dark violet in light mode */
+  .mantine-Modal-body a:not(.mantine-Paper-root):hover {
+    color: #4945FF !important;
   }
   .mantine-Popover-dropdown {
     background: #FFFFFF !important;
@@ -189,6 +197,10 @@ const DARK_STYLES = `
   }
   .mantine-Modal-body a {
     color: #7B79FF !important;
+  }
+  /* Links hover — brighter violet in dark mode */
+  .mantine-Modal-body a:not(.mantine-Paper-root):hover {
+    color: #A5A3FF !important;
   }
   .mantine-Modal-body strong {
     color: #FAFAFA !important;
