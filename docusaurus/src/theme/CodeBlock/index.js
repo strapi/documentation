@@ -158,7 +158,15 @@ export default function CodeBlockWrapper(props) {
 
       const cursor = document.createElement('span');
       cursor.className = 'terminal-cursor';
-      lastLine.appendChild(cursor);
+
+      // Insert before the trailing <br> so the cursor stays on the same line
+      const lastBr = lastLine.querySelector('br:last-child');
+      if (lastBr) {
+        lastLine.insertBefore(cursor, lastBr);
+        lastBr.remove();
+      } else {
+        lastLine.appendChild(cursor);
+      }
     };
 
     // Run after Docusaurus finishes rendering the code block
