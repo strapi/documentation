@@ -99,7 +99,7 @@
 /* ─── Body: sidebar + request pane ─── */
 .explorerBody {
   display: flex;
-  min-height: 360px;
+  min-height: 520px;
 }
 
 /* ─── Endpoint sidebar ─── */
@@ -287,7 +287,7 @@
   flex: 1;
   overflow: auto;
   padding: 16px;
-  max-height: 280px;
+  max-height: 480px;
 
   /* Thin scrollbar */
   scrollbar-width: thin;
