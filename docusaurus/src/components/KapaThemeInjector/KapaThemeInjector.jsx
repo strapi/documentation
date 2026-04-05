@@ -193,11 +193,18 @@ const DARK_STYLES = `
   .mantine-Modal-body strong {
     color: #FAFAFA !important;
   }
-  /* Source cards */
-  .mantine-Modal-body .mantine-Card-root,
-  .mantine-Modal-body [class*="Card"] {
+  /* Source cards (anchor elements styled as Paper) */
+  a.mantine-Paper-root {
     background: #18181B !important;
-    border-color: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    color: #D4D4D8 !important;
+  }
+  a.mantine-Paper-root:hover {
+    background: #1F1F23 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  a.mantine-Paper-root .mantine-Text-root {
+    color: #A1A1AA !important;
   }
   /* Action buttons (New chat, Copy, Good/Bad answer) */
   .mantine-Modal-body .mantine-UnstyledButton-root {
@@ -232,16 +239,17 @@ const DARK_STYLES = `
     color: #D4D4D8 !important;
   }
   .mantine-Button-root:not([data-with-left-section]) {
-    background: #18181B !important;
+    background: transparent !important;
     border: 1px solid rgba(255, 255, 255, 0.06) !important;
-    color: #D4D4D8 !important;
+    color: #A1A1AA !important;
   }
   .mantine-Button-root:not([data-with-left-section]):hover {
-    background: #1F1F23 !important;
+    background: rgba(255, 255, 255, 0.04) !important;
     border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #D4D4D8 !important;
   }
   .mantine-Button-root:not([data-with-left-section]) .mantine-Button-label {
-    color: #D4D4D8 !important;
+    color: inherit !important;
   }
   /* Input wrapper (inner Paper-root) — match modal background */
   .mantine-Paper-root:has(.mantine-Textarea-input) {
@@ -299,6 +307,11 @@ const DARK_STYLES = `
   .mantine-Modal-body code,
   .mantine-Modal-header code {
     background: #09090B !important;
+    color: #E4E4E7 !important;
+  }
+  .mantine-Code-root {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: #E4E4E7 !important;
   }
   .mantine-Modal-body pre,
   .mantine-Modal-header pre {
