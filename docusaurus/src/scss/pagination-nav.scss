@@ -1,70 +1,123 @@
-/** Component: Pagination Nav */
+/** Component: Pagination Nav — Bold redesign (Payload-inspired) */
 @use './mixins' as *;
 
 .pagination-nav {
-  --ifm-spacing-horizontal: var(--strapi-spacing-4);
-  gap: 16px;
+  --ifm-spacing-horizontal: 0;
+  gap: 0;
+  margin-top: 48px;
+  border-top: 1px solid var(--strapi-border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 
   &__link {
-    border: 1px solid var(--strapi-neutral-150);
-    border-radius: var(--strapi-radius-md);
+    border: none;
+    border-radius: 0;
     background: transparent;
-    padding: 16px 20px;
-    transition: border-color var(--strapi-duration-fast) var(--strapi-ease),
-                background-color var(--strapi-duration-fast) var(--strapi-ease);
+    padding: 28px 8px;
+    transition: background var(--strapi-duration-fast) var(--strapi-ease);
+    line-height: 1.3;
 
     &:hover {
-      border-color: var(--strapi-primary-500);
-      background: var(--strapi-primary-100);
-      --ifm-pagination-nav-color-hover: var(--strapi-primary-600);
+      background: var(--strapi-surface-1);
+      --ifm-pagination-nav-color-hover: var(--strapi-fg-1);
+    }
+
+    &--next {
+      border-left: 1px solid var(--strapi-border);
+      text-align: right;
     }
   }
 
   &__sublabel {
-    font-size: var(--strapi-font-size-xs);
-    color: var(--strapi-neutral-500);
+    font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+    font-size: 11px;
+    color: var(--strapi-fg-4);
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 4px;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+
+    &::before,
+    &::after {
+      display: none;
+    }
   }
 
   &__label {
-    font-weight: 600;
-    font-size: var(--strapi-font-size-sm);
-    color: var(--strapi-primary-600);
+    font-family: var(--strapi-font-family-display);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    color: var(--strapi-fg-1);
+    transition: color var(--strapi-duration-fast) var(--strapi-ease);
+
+    .pagination-nav__link:hover & {
+      color: var(--strapi-accent, #4945FF);
+    }
   }
 }
 
 @include medium-up {
-  .pagination-nav__link {
-    &--prev {
-      position: relative;
-      left: -16px;
+  .pagination-nav {
+    &__link {
+      padding: 32px 16px;
+
+      &--prev {
+        position: static;
+      }
+
+      &--next {
+        position: static;
+      }
     }
 
-    &--next {
-      position: relative;
-      right: -16px;
+    &__label {
+      font-size: 20px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .pagination-nav {
+    grid-template-columns: 1fr;
+
+    &__link--next {
+      border-left: none;
+      border-top: 1px solid var(--strapi-border);
     }
   }
 }
 
 @include dark {
-  .pagination-nav__link {
-    border-color: var(--strapi-neutral-200);
+  .pagination-nav {
+    border-color: rgba(255, 255, 255, 0.08);
 
-    &:hover {
-      border-color: var(--strapi-primary-500);
-      background: rgba(73, 69, 255, 0.1);
+    &__link {
+      &:hover {
+        background: #1a1a2e;
+      }
+
+      &--next {
+        border-left-color: rgba(255, 255, 255, 0.08);
+      }
+    }
+
+    &__sublabel {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    &__label {
+      color: var(--strapi-fg-1);
+
+      .pagination-nav__link:hover & {
+        color: var(--strapi-accent-light, #7B79FF);
+      }
     }
   }
 
-  .pagination-nav__sublabel {
-    color: var(--strapi-neutral-500);
-  }
-
-  .pagination-nav__label {
-    color: var(--strapi-primary-400);
+  @media (max-width: 768px) {
+    .pagination-nav__link--next {
+      border-top-color: rgba(255, 255, 255, 0.08);
+    }
   }
 }
