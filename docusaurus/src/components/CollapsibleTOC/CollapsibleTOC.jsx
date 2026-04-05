@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import styles from './CollapsibleTOC.module.scss';
 
 const STORAGE_KEY = 'strapi-toc-collapsed';
 
-export default function CollapsibleTOC({ children }) {
-  const [collapsed, setCollapsed] = useState(false);
+function getInitialCollapsed() {
+  try {
+    return localStorage.getItem(STORAGE_KEY) === 'true';
+  } catch {
+    return false;
+  }
+}
 
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored === 'true') setCollapsed(true);
-    } catch {}
-  }, []);
+export default function CollapsibleTOC({ children }) {
+  const [collapsed, setCollapsed] = useState(getInitialCollapsed);
 
   const toggle = useCallback(() => {
     setCollapsed(prev => {
