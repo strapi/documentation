@@ -36,7 +36,7 @@ function slugify(text) {
     .replace(/(^-|-$)/g, '');
 }
 
-export default function StepDetails({ title, children }) {
+export default function StepDetails({ title, children, defaultOpen = false }) {
   const stepId = slugify(title);
   const [pageId, setPageId] = useState('');
   const [completed, setCompleted] = useState(false);
@@ -64,6 +64,7 @@ export default function StepDetails({ title, children }) {
       id={stepId}
       className={`alert alert--info ${styles.stepDetails} ${completed ? styles.completed : ''}`}
       onToggle={handleToggle}
+      open={defaultOpen || undefined}
     >
       <summary>
         {title}

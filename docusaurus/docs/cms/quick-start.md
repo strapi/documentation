@@ -13,6 +13,7 @@ tags:
 ---
 
 import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
+import StepDetails from '@site/src/components/StepDetails/StepDetails'
 
 # Quick Start Guide
 
@@ -40,10 +41,7 @@ We will first create a new Strapi project on your machine by running a command i
 
 Follow the steps below by clicking on the togglable content to read more instructions.
 
-<details open>
-<summary>Step 1: Run the installation script and create a Strapi Cloud account</summary>
-
-### Step 1: Run the installation script and create a Strapi Cloud account
+<StepDetails title="Step 1: Run the installation script and create a Strapi Cloud account" defaultOpen>
 
 1. Run the following command in a terminal:
 
@@ -87,12 +85,9 @@ As you will see in the terminal, your project is now building locally.
 * Many more installation options are available. Please refer to the [installation documentation](/cms/installation) for details.
 :::
 
-</details>
+</StepDetails>
 
-<details>
-<summary>Step 2: Register the first local administrator user</summary>
-
-### Step 2: Register the first local administrator user
+<StepDetails title="Step 2: Register the first local administrator user">
 
 Once the installation is complete, you need to start the server. In the terminal, type or copy and paste the following:
 
@@ -116,9 +111,9 @@ sources={{
     light: '/img/assets/quick-start-guide/qsg-handson-part1-01-admin_panel-v5.png',
     dark: '/img/assets/quick-start-guide/qsg-handson-part1-01-admin_panel-v5_DARK.png',
 }}
-/> 
+/>
 
-</details>
+</StepDetails>
 
 :::callout <Icon name="confetti" /> Congratulations!
 You have just created a new Strapi project! You can start playing with Strapi and discover the [Content Manager](/cms/features/content-manager) by yourself, or proceed to part B below.
@@ -140,11 +135,7 @@ You might also need to run `npm run build` or `yarn build` prior to the `develop
 
 The Content-Type Builder helps you create your content structure. When creating an empty project with Strapi, this is where to get the party started!
 
-<details >
-
-<summary>Step 1: Create a "Restaurant" collection type</summary>
-
-### Step 1: Create a "Restaurant" collection type
+<StepDetails title='Step 1: Create a "Restaurant" collection type'>
 
 Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
@@ -170,12 +161,9 @@ sources={{
 Once Strapi has restarted, "Restaurant" is listed under <Icon name="feather" /> _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool, let's create another one right now, just for pleasure.
 <br/>
 
-</details>
+</StepDetails>
 
-<details>
-<summary>Step 2: Create a "Category" collection type</summary>
-
-### Step 2: Create a "Category" collection type
+<StepDetails title='Step 2: Create a "Category" collection type'>
 
 It would help getting a bit more organized if our restaurants directory had some categories. Let's create a "Category" collection type:
 
@@ -200,7 +188,7 @@ sources={{
 
 11. Finally, click **Finish**, then the **Save** button, and wait for Strapi to restart.
 
-</details>
+</StepDetails>
 
 :::callout <Icon name="confetti" /> Congratulations!
 You have just created a basic content structure for your Strapi project! You can keep on playing with the [Content-Type Builder](/cms/features/content-type-builder), or proceed to parts C and D below to discover Strapi Cloud and add actual content to your project.
