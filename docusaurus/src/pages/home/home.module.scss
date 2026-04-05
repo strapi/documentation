@@ -83,52 +83,14 @@
   margin: 0 auto;
 }
 
-.heroBadge {
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 14px 5px 6px;
-  border-radius: 100px;
-  border: 1px solid var(--strapi-border-strong);
-  background: var(--strapi-surface-1);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--strapi-fg-3);
-  margin: 0 auto 32px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  text-decoration: none !important;
-
-  &:hover {
-    border-color: var(--strapi-accent-light);
-    background: var(--strapi-surface-2);
-    color: var(--strapi-fg-2);
-    text-decoration: none !important;
-  }
-}
-
-.heroBadgeDot {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(34, 197, 94, 0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.heroBadgeDotInner {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #22C55E;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(0.85); }
+.heroLabel {
+  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--strapi-fg-4);
+  margin-bottom: 24px;
 }
 
 .heroTitle {
@@ -280,14 +242,14 @@
   width: 48px;
   height: 48px;
   border-radius: 14px;
-  background: rgba(73, 69, 255, 0.08);
+  background: color-mix(in srgb, var(--strapi-primary-500) 10%, transparent);
   display: grid;
   place-items: center;
   flex-shrink: 0;
 
   i {
     font-size: 24px;
-    color: var(--strapi-accent, #4945FF);
+    color: var(--strapi-primary-500);
   }
 }
 
@@ -372,14 +334,14 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: var(--strapi-surface-2);
+  background: color-mix(in srgb, var(--strapi-primary-500) 10%, transparent);
   display: grid;
   place-items: center;
   flex-shrink: 0;
 
   i {
     font-size: 18px;
-    color: var(--strapi-accent, #4945FF);
+    color: var(--strapi-primary-500);
   }
 }
 
@@ -553,14 +515,14 @@
   width: 48px;
   height: 48px;
   border-radius: 14px;
-  background: var(--strapi-surface-2);
+  background: color-mix(in srgb, var(--strapi-primary-500) 10%, transparent);
   display: grid;
   place-items: center;
   margin-bottom: 20px;
 
   i {
     font-size: 24px;
-    color: var(--strapi-accent, #4945FF);
+    color: var(--strapi-primary-500);
   }
 }
 
@@ -620,7 +582,7 @@
   font-family: var(--strapi-font-family-display);
   font-size: 14px;
   font-weight: 600;
-  color: var(--strapi-accent, #4945FF);
+  color: var(--strapi-primary-500);
   margin-top: auto;
   display: flex;
   align-items: center;
@@ -677,14 +639,14 @@
   width: 48px;
   height: 48px;
   border-radius: 14px;
-  background: rgba(73, 69, 255, 0.08);
+  background: color-mix(in srgb, var(--strapi-primary-500) 10%, transparent);
   display: grid;
   place-items: center;
   flex-shrink: 0;
 
   i {
     font-size: 24px;
-    color: var(--strapi-accent, #4945FF);
+    color: var(--strapi-primary-500);
   }
 }
 
@@ -749,9 +711,8 @@
     opacity: 0.6;
   }
 
-  .heroBadge {
-    background: #1a1a2e;
-    border-color: rgba(255, 255, 255, 0.1);
+  .heroLabel {
+    color: rgba(255, 255, 255, 0.5);
   }
 
   .quickstartCard {

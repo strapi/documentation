@@ -166,12 +166,7 @@ export default function PageHome() {
         <section className={styles.hero}>
           <div className={styles.heroGrid} aria-hidden="true" />
           <div className={styles.heroContent}>
-            <a href="/release-notes" className={styles.heroBadge}>
-              <span className={styles.heroBadgeDot}>
-                <span className={styles.heroBadgeDotInner} />
-              </span>
-              Strapi 5.12 — Read what's new →
-            </a>
+            <div className={styles.heroLabel}>Strapi 5 Documentation</div>
 
             <h1 className={styles.heroTitle}>
               Build <span className={styles.heroAccent}>anything</span>
