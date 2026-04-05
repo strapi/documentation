@@ -99,13 +99,17 @@
 ## IN PROGRESS / NEEDS VERIFICATION
 
 ### Homepage — DONE
-- Categorized explore sections render correctly ✅ (4 categories, 16 links total)
-- API Explorer renders and is interactive ✅ (tabs switch, Send button works, loading animation plays)
+- Narrative flow: Quick Start → Explore (4 categories) → API Explorer → Plugins + Customize + GitHub → Deploy ✅
+- Scroll-reveal animations (IntersectionObserver) with staggered delays ✅
+- Animated counter: 0→79+ plugins and 0→71k+ GitHub stars on scroll ✅
+- API Explorer: accurate Strapi v5 data, request bodies for POST/PUT, per-endpoint doc links ✅
+- Deploy card: exact `strapi login` + `strapi deploy` commands ✅
+- Lifecycle hook code: correct module.exports wrapper, price discount example from docs ✅
+- All links verified against actual docs files ✅
 - DELETE endpoint correctly shows 204 No Content ✅
-- Doc links below explorer work and change per tab ✅
+- Secondary sidebar widened to 280px to match left sidebar ✅
 - **TODO:** Test dark mode on homepage
 - **TODO:** Responsive testing of homepage components (mobile)
-- **TODO:** Polish bento card hover effects
 
 ---
 
