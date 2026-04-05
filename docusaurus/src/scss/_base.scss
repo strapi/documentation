@@ -51,10 +51,16 @@ main {
 @include medium-up {
   main {
     article:first-child:not(.col):not(.custom-doc-card),
-    article:first-child:not(.col) + nav {
+    article:first-child:not(.col) + nav:not(.pagination-nav) {
       max-width: 720px;
       padding-left: 40px !important;
       padding-right: 40px !important;
+    }
+
+    article:first-child:not(.col) + nav.pagination-nav {
+      max-width: 720px;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
     }
   }
 
