@@ -1,0 +1,373 @@
+@use '../../scss/mixins' as *;
+
+/* ─── Explorer wrapper ─── */
+.explorer {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.explorerLabel {
+  font-family: var(--strapi-font-family-technical);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--strapi-neutral-400);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--strapi-neutral-200);
+  }
+}
+
+/* ─── Dark card container ─── */
+.explorerCard {
+  background: #1a1a2e;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24), 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* ─── API Tabs ─── */
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0 20px;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: var(--strapi-font-family-technical);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s ease;
+  white-space: nowrap;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background 0.2s ease;
+  }
+}
+
+.tabActive {
+  color: #fff;
+
+  &::after {
+    background: var(--strapi-primary-500);
+  }
+
+  .tabDot {
+    background: #4ade80;
+  }
+}
+
+.tabDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+/* ─── Body: sidebar + request pane ─── */
+.explorerBody {
+  display: flex;
+  min-height: 360px;
+}
+
+/* ─── Endpoint sidebar ─── */
+.endpointList {
+  width: 200px;
+  flex-shrink: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.endpointItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--strapi-font-family-body);
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.12s ease, color 0.12s ease;
+  text-align: left;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.85);
+  }
+}
+
+.endpointItemActive {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.endpointName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── Method badges ─── */
+.methodBadge {
+  font-family: var(--strapi-font-family-technical);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.methodget { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+.methodpost { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+.methodput { background: rgba(96, 165, 250, 0.15); color: #60a5fa; }
+.methoddelete { background: rgba(248, 113, 113, 0.15); color: #f87171; }
+
+/* ─── Request pane ─── */
+.requestPane {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── URL bar ─── */
+.urlBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.urlMethod {
+  font-family: var(--strapi-font-family-technical);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.urlPath {
+  flex: 1;
+  font-family: var(--strapi-font-family-mono);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sendBtn {
+  flex-shrink: 0;
+  padding: 6px 16px;
+  border: none;
+  border-radius: 8px;
+  background: var(--strapi-primary-600);
+  color: #fff;
+  font-family: var(--strapi-font-family-technical);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--strapi-primary-500);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/* ─── Request body ─── */
+.requestBodySection {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.requestBodyHeader {
+  font-family: var(--strapi-font-family-technical);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.35);
+  padding: 8px 16px 0;
+}
+
+/* ─── Response area ─── */
+.response {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.responseHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.statusOk { background: #4ade80; }
+.statusErr { background: #f87171; }
+
+.statusCode {
+  font-family: var(--strapi-font-family-technical);
+  font-size: 13px;
+  font-weight: 600;
+  color: #4ade80;
+}
+
+.responseTime {
+  margin-left: auto;
+  font-family: var(--strapi-font-family-technical);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.responseBody {
+  flex: 1;
+  overflow: auto;
+  padding: 16px;
+  max-height: 280px;
+
+  /* Thin scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+}
+
+/* ─── JSON syntax highlighting ─── */
+.jsonPre {
+  margin: 0;
+  font-family: var(--strapi-font-family-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: pre;
+  tab-size: 2;
+
+  :global(.json-key) { color: #c4b5fd; }
+  :global(.json-string) { color: #fbbf24; }
+  :global(.json-number) { color: #4ade80; }
+  :global(.json-bool) { color: #60a5fa; }
+}
+
+/* ─── Loading animation ─── */
+.loadingBar {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.loadingBarInner {
+  height: 100%;
+  width: 40%;
+  background: var(--strapi-primary-500);
+  border-radius: 2px;
+  animation: loadSlide 0.8s ease-in-out infinite;
+}
+
+@keyframes loadSlide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
+/* ─── Doc link ─── */
+.explorerDocLink {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 12px;
+  font-family: var(--strapi-font-family-technical);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--strapi-neutral-400);
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--strapi-primary-500);
+    text-decoration: none;
+  }
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .explorerBody {
+    flex-direction: column;
+  }
+
+  .endpointList {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 8px;
+    gap: 4px;
+  }
+
+  .endpointItem {
+    white-space: nowrap;
+  }
+}
