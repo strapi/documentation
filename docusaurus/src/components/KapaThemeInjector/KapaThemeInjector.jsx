@@ -71,6 +71,10 @@ const SHARED_STYLES = `
   .mantine-Modal-body a:not(.mantine-Paper-root) {
     transition: color 0.15s ease !important;
   }
+  /* Code blocks — add padding-right so copy button doesn't overlap text */
+  div:has(> .mantine-ActionIcon-root) > div {
+    padding-right: 40px !important;
+  }
 `;
 
 const LIGHT_STYLES = `
@@ -100,16 +104,17 @@ const LIGHT_STYLES = `
   .mantine-Modal-body .mantine-Text-root {
     color: #27272A !important;
   }
-  .mantine-Button-root:not([data-with-left-section]) {
+  /* Suggestion buttons (default variant, no icon) */
+  .mantine-Button-root[data-variant="default"]:not([data-with-left-section]) {
     background: #FFFFFF !important;
     border: 1px solid rgba(0, 0, 0, 0.08) !important;
     color: #27272A !important;
   }
-  .mantine-Button-root:not([data-with-left-section]):hover {
+  .mantine-Button-root[data-variant="default"]:not([data-with-left-section]):hover {
     background: #F4F4F5 !important;
     border-color: rgba(0, 0, 0, 0.12) !important;
   }
-  .mantine-Button-root:not([data-with-left-section]) .mantine-Button-label {
+  .mantine-Button-root[data-variant="default"]:not([data-with-left-section]) .mantine-Button-label {
     color: #27272A !important;
   }
   .mantine-Input-input,
@@ -250,7 +255,25 @@ const DARK_STYLES = `
   .mantine-Modal-header .mantine-Group-root:has(> .mantine-Text-root) svg {
     color: #D4D4D8 !important;
   }
-  .mantine-Button-root:not([data-with-left-section]) {
+  /* Suggestion buttons (default variant, no icon) */
+  .mantine-Button-root[data-variant="default"]:not([data-with-left-section]) {
+    --button-bg: #18181B !important;
+    --button-hover: #1F1F23 !important;
+    --button-color: #D4D4D8 !important;
+    --button-bd: 1px solid rgba(255, 255, 255, 0.06) !important;
+    background: #18181B !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    color: #D4D4D8 !important;
+  }
+  .mantine-Button-root[data-variant="default"]:not([data-with-left-section]):hover {
+    background: #1F1F23 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  .mantine-Button-root[data-variant="default"]:not([data-with-left-section]) .mantine-Button-label {
+    color: #D4D4D8 !important;
+  }
+  /* Action buttons — New chat, Copy, Good/Bad answer (light variant) */
+  .mantine-Button-root[data-variant="light"] {
     --button-bg: rgba(255, 255, 255, 0.04) !important;
     --button-hover: rgba(255, 255, 255, 0.1) !important;
     --button-color: #71717A !important;
@@ -259,15 +282,15 @@ const DARK_STYLES = `
     border: 1px solid transparent !important;
     color: #71717A !important;
   }
-  .mantine-Button-root:not([data-with-left-section]):hover {
+  .mantine-Button-root[data-variant="light"]:hover {
     background: rgba(255, 255, 255, 0.1) !important;
     border-color: transparent !important;
     color: #D4D4D8 !important;
   }
-  .mantine-Button-root:not([data-with-left-section]) .mantine-Button-label {
+  .mantine-Button-root[data-variant="light"] .mantine-Button-label {
     color: inherit !important;
   }
-  .mantine-Button-root:not([data-with-left-section]) svg {
+  .mantine-Button-root[data-variant="light"] svg {
     color: inherit !important;
   }
   /* Input wrapper (inner Paper-root) — match modal background */
