@@ -5,7 +5,7 @@ details.alert {
   --docusaurus-details-decoration-color: var(--strapi-neutral-800);
   --docusaurus-details-summary-arrow-size: 6px;
 
-  --ifm-alert-background-color: var(--strapi-neutral-0);
+  --ifm-alert-background-color: transparent;
   --ifm-alert-background-color-highlight: var(--strapi-neutral-500);
   --ifm-alert-border-radius: var(--strapi-radius-md);
   --ifm-alert-foreground-color: var(--ifm-color-info-contrast-foreground);
@@ -25,8 +25,8 @@ details.alert {
   overflow: hidden;
   transition: border-color var(--strapi-duration-fast) var(--strapi-ease);
 
-  --ifm-alert-padding-horizontal: 24px;
-  --ifm-alert-padding-vertical: 24px;
+  --ifm-alert-padding-horizontal: 20px;
+  --ifm-alert-padding-vertical: 16px;
 
   // Left accent bar via pseudo-element (avoids border specificity issues with infima)
   &::after {
