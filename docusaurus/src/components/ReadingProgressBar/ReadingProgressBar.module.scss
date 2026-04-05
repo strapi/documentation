@@ -1,12 +1,20 @@
+@use '../../scss/mixins' as *;
+
 .progressBar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 6px;
   z-index: 201; /* Above navbar (z-index: 200) so backdrop-filter doesn't hide it */
   background: transparent;
   pointer-events: none;
+}
+
+@include dark {
+  .progressBar {
+    height: 3px;
+  }
 }
 
 .progressFill {
