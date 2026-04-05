@@ -22,9 +22,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1, .markdown h1:first-child {
-  --ifm-h1-font-size: var(--strapi-font-size-xxxl);
-  font-size: var(--strapi-font-size-xxxl);
-  line-height: var(--strapi-line-height-xxxl);
+  --ifm-h1-font-size: var(--strapi-font-size-display-sm);
+  font-size: var(--strapi-font-size-display-sm);
+  line-height: 1.15;
   letter-spacing: -0.03em;
   font-weight: 800;
 }
