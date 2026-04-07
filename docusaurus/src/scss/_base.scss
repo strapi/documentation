@@ -113,7 +113,7 @@ main:has(.api-endpoint-block) {
    * Endpoint blocks break out of this via their own full-width grid.
    */
   main:has(.api-endpoint-block) article .theme-doc-markdown {
-    /** Prose content constrained to readable width, left-aligned
+    /** Prose content constrained to half-width, left-aligned
      *  to stay flush with the left column of endpoint blocks */
     > h1, > h2, > h3, > h4, > h5, > h6,
     > p, > ul, > ol, > blockquote, > table,
@@ -121,7 +121,7 @@ main:has(.api-endpoint-block) {
     > [class*="admonition"], > nav,
     > .tabs-container, > .tabs,
     > header {
-      max-width: 720px;
+      max-width: 50%;
     }
 
     /** Endpoint blocks break out to full width */
