@@ -7,7 +7,7 @@
   max-height: calc(100vh - var(--ifm-navbar-height, 56px));
   overflow-y: auto;
   border-left: none;
-  padding: 24px 8px 28px 20px;
+  padding: 8px 8px 28px 20px;
 
   /* Thin scrollbar when TOC content overflows */
   scrollbar-width: thin;
@@ -24,7 +24,7 @@
 
 .collapsed {
   border-left: none;
-  padding: 24px 0;
+  padding: 8px 0;
   display: flex;
   align-items: flex-start;
   justify-content: center;
