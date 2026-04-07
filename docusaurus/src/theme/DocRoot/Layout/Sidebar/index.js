@@ -104,7 +104,11 @@ export default function DocRootLayoutSidebar({
           className={clsx(
             styles.sidebarViewport,
             hiddenSidebar && styles.sidebarViewportHidden,
-          )}>
+          )}
+          style={{
+            top: 'var(--ifm-navbar-height, 3.75rem)',
+            maxHeight: 'calc(100vh - var(--ifm-navbar-height, 3.75rem))',
+          }}>
           <DocSidebar
             sidebar={sidebar}
             path={pathname}

@@ -934,6 +934,15 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   justify-content: space-between;
   padding: 12px 12px 8px;
   min-height: 44px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--strapi-surface-0);
+  border-bottom: 1px solid var(--strapi-neutral-150);
+
+  .sidebar-v3-wrapper--collapsed & {
+    border-bottom: none;
+  }
 
   &__label {
     font-family: var(--strapi-font-family-technical, 'JetBrains Mono', monospace);
@@ -974,8 +983,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 .sidebar-v3-content {
   opacity: 1;
   transition: opacity 0.2s;
-  // Push content below fixed navbar
-  padding-top: calc(var(--ifm-navbar-height) + 8px);
 
   // ProductSwitcher — compact, aligned with search bar
   > div:nth-child(2) {
