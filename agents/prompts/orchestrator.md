@@ -45,16 +45,16 @@ When the user provides a GitHub PR as source material, use the GitHub MCP tools 
        └──────┬───────┘                   │
               │                           ▼
               ▼                    ┌─────────────┐
-       ┌─────────────┐            │   Drafter   │
-       │   Style     │            └──────┬──────┘
-       │   Checker   │                   │
-       └──────┬──────┘                   ▼
+       ┌─────────────┐             │   Drafter   │
+       │   Style     │             └──────┬──────┘
+       │   Checker   │                    │
+       └──────┬──────┘                    ▼
               │                    ┌──────────────┐
               ▼                    │ Self-Review  │
-       ┌─────────────┐            │ (OC+UX+SC)  │
-       │  Integrity  │            └──────┬───────┘
-       │   Checker   │                   │
-       └─────────────┘                   ▼
+       ┌─────────────┐             │ (OC+UX+SC)   │
+       │  Integrity  │             └──────┬───────┘
+       │   Checker   │                    │
+       └─────────────┘                    ▼
                                    ┌──────────────┐
                                    │ Auto-Correct │
                                    │ (if errors)  │
