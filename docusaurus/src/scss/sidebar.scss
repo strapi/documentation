@@ -907,8 +907,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
 
     .sidebar-v3-header {
-      justify-content: center;
-      padding: 12px 0;
+      justify-content: flex-end;
+      padding: 12px 12px 8px;
     }
   }
 }
