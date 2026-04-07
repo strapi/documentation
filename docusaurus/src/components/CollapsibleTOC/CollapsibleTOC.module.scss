@@ -35,11 +35,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  padding-bottom: 8px;
+  min-height: 44px;
 }
 
 .collapsed .header {
-  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .label {

@@ -909,7 +909,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     .sidebar-v3-header {
       justify-content: center;
       padding: 12px 0;
-      border-bottom: none;
     }
   }
 }
@@ -928,14 +927,13 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   max-width: none !important;
 }
 
-/** V3: Sidebar header with monospace label + collapse button (v2 mockup) */
+/** V3: Sidebar header with monospace label + collapse button */
 .sidebar-v3-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px;
-  border-bottom: 1px solid var(--strapi-neutral-150);
-  min-height: 48px;
+  padding: 12px 12px 8px;
+  min-height: 44px;
 
   &__label {
     font-family: var(--strapi-font-family-technical, 'JetBrains Mono', monospace);
@@ -956,18 +954,19 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     border: 1px solid var(--strapi-neutral-200);
     background: transparent;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
     color: var(--strapi-neutral-400);
     font-size: 14px;
-    transition: all 0.2s;
+    line-height: 1;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
     flex-shrink: 0;
     padding: 0;
 
     &:hover {
       background: var(--strapi-neutral-100);
       color: var(--strapi-neutral-800);
+      border-color: var(--strapi-neutral-300);
     }
   }
 }
