@@ -78,6 +78,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          label: 'Developer MCP Server',
+          id: 'cms/features/developer-mcp-server',
+        },
+        {
+          type: 'doc',
           label: 'Draft & Publish',
           id: 'cms/features/draft-and-publish',
         },

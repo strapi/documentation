@@ -22194,6 +22194,293 @@ export default ({ env }) => ({
 
 
 
+# Developer MCP Server
+Source: https://docs.strapi.io/cms/features/developer-mcp-server
+
+## Code-based configuration
+Description: Open a terminal in your Strapi project root.
+(Source: https://docs.strapi.io/cms/features/developer-mcp-server#code-based-configuration)
+
+Language: Bash
+File path: N/A
+
+```bash
+npx strapi mcp
+```
+
+Language: JSON
+File path: /mcp-config.json
+
+```json
+{
+  "servers": {
+    "strapi-local": {
+      "protocol": "file",
+      "command": "npx",
+      "args": ["strapi", "mcp"],
+      "cwd": "/absolute/path/to/your-strapi-project"
+    }
+  }
+}
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+npx strapi mcp
+```
+
+Language: JSON
+File path: /mcp-config.json
+
+```json
+{
+  "servers": {
+    "strapi-local": {
+      "protocol": "file",
+      "command": "npx",
+      "args": ["strapi", "mcp"],
+      "cwd": "/absolute/path/to/your-strapi-project"
+    }
+  }
+}
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+npx strapi mcp
+```
+
+Language: JSON
+File path: /mcp-config.json
+
+```json
+{
+  "servers": {
+    "strapi-local": {
+      "protocol": "file",
+      "command": "npx",
+      "args": ["strapi", "mcp"],
+      "cwd": "/absolute/path/to/your-strapi-project"
+    }
+  }
+}
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+npx strapi mcp
+```
+
+Language: JSON
+File path: /mcp-config.json
+
+```json
+{
+  "servers": {
+    "strapi-local": {
+      "protocol": "file",
+      "command": "npx strapi",
+      "args": ["mcp"],
+      "cwd": "/Users/dev/my-strapi-project"
+    }
+  }
+}
+```
+
+
+## Send structured MCP actions
+Description: Example request:
+(Source: https://docs.strapi.io/cms/features/developer-mcp-server#send-structured-mcp-actions)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "action": "createRole",
+  "payload": {
+    "name": "Reviewer",
+    "permissions": ["read:articles"]
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "status": "success",
+  "summary": "Role 'Reviewer' created with read access to Articles"
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "status": "error",
+  "type": "permission_denied",
+  "message": "The configured admin context does not allow role updates"
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "action": "createRole",
+  "payload": {
+    "name": "Reviewer",
+    "permissions": ["read:articles"]
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "status": "success",
+  "summary": "Role 'Reviewer' created with read access to Articles"
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "status": "error",
+  "type": "permission_denied",
+  "message": "The configured admin context does not allow role updates"
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "action": "createRole",
+  "payload": {
+    "name": "Reviewer",
+    "permissions": ["read:articles"]
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "status": "success",
+  "summary": "Role 'Reviewer' created with read access to Articles"
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "status": "error",
+  "type": "permission_denied",
+  "message": "The configured admin context does not allow role updates"
+}
+```
+
+
+## Review logs and auditability
+Description: Use the logs command when supported by your version:
+(Source: https://docs.strapi.io/cms/features/developer-mcp-server#review-logs-and-auditability)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi mcp:logs
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+strapi mcp:logs
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+strapi mcp:logs
+```
+
+
+## Logging and auditability
+Description: Use the following command to inspect MCP logs:
+(Source: https://docs.strapi.io/cms/features/developer-mcp-server#logging-and-auditability)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi mcp:logs
+```
+
+
+## Run an administrative action
+Description: Example request:
+(Source: https://docs.strapi.io/cms/features/developer-mcp-server#run-an-administrative-action)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "action": "createRole",
+  "payload": {
+    "name": "Reviewer",
+    "permissions": ["read:articles"]
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "status": "success",
+  "summary": "Role 'Reviewer' created with read access to Articles"
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "status": "error",
+  "type": "permission_denied",
+  "message": "The configured admin context does not allow role updates"
+}
+```
+
+
+
 # Email
 Source: https://docs.strapi.io/cms/features/email
 
@@ -22435,6 +22722,91 @@ export default {
     }
   }
 }
+```
+
+
+
+# Developer MCP Server
+Source: https://docs.strapi.io/cms/features/mcp-server
+
+## Connecting an AI tool
+Description: The following example shows a generic MCP server configuration:
+(Source: https://docs.strapi.io/cms/features/mcp-server#connecting-an-ai-tool)
+
+Language: JSON
+File path: MCP
+
+```json
+{
+  "servers": {
+    "strapi-local": {
+      "protocol": "file",
+      "command": "npx strapi",
+      "args": ["mcp"],
+      "cwd": "/path/to/my-strapi-project"
+    }
+  }
+}
+```
+
+
+## Usage
+Description: The AI tool sends a structured JSON command to the MCP server.
+(Source: https://docs.strapi.io/cms/features/mcp-server#usage)
+
+Language: JSON
+File path: Example
+
+```json
+{
+  "action": "createRole",
+  "payload": {
+    "name": "Reviewer",
+    "permissions": ["read:articles"]
+  }
+}
+```
+
+---
+Language: JSON
+File path: Example
+
+```json
+{
+  "status": "success",
+  "summary": "Role 'Reviewer' created with read access to Articles"
+}
+```
+
+---
+Language: JSON
+File path: Example
+
+```json
+{
+  "status": "error",
+  "type": "validation_error",
+  "message": "Role name 'Reviewer' already exists"
+}
+```
+
+
+## Logging and auditability
+Description: Timestamp - Admin user email or ID - Action name - Outcome (success or error) - Short summary
+(Source: https://docs.strapi.io/cms/features/mcp-server#logging-and-auditability)
+
+Language: JSON
+File path: Example
+
+```json
+[2025-11-05T14:32:10] user:admin@example.com → action:createRole → success
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi mcp:logs
 ```
 
 

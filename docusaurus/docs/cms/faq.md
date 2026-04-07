@@ -132,5 +132,8 @@ You can see the <ExternalLink to="https://feedback.strapi.io/" text="public road
 
 ## Is there an MCP server for Strapi?
 
-There’s currently no MCP (<ExternalLink to="https://www.anthropic.com/news/model-context-protocol" text="Model Context Protocol" />) server available, but it’s in the works!
-First, an MCP server for Docs is already in development and should be available soon, and other AI-related tools, including additional MCP servers for various Strapi actions, are currently under discussion.
+Yes. Strapi provides a local Developer MCP Server for AI-assisted project workflows.
+
+To learn how it works and how to configure it, see [Developer MCP Server](/cms/features/developer-mcp-server).
+
+In this phase, MCP execution is local only. Remote MCP access is planned for a future phase with a dedicated secure authentication model for Admin APIs.

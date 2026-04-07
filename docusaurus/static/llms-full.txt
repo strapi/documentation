@@ -8513,6 +8513,638 @@ The Data Management system is CLI-based only, meaning any import, export, or tra
 
 
 
+# Developer MCP Server
+Source: https://docs.strapi.io/cms/features/developer-mcp-server
+
+# Developer MCP Server
+
+Most Strapi administration is currently UI-driven. The Developer MCP Server adds a local automation layer for AI-assisted workflows by mapping structured MCP requests to the same internal services used by the admin panel.
+
+In phase 1, the server is local only. It runs as a project process, uses one configured admin context at startup, and keeps command execution on the same machine.
+
+:::note Availability
+CLI entry points and configuration details depend on the Strapi version you run. If `strapi mcp` is not available in your project, check [release notes](/release-notes) and the [public roadmap](https://feedback.strapi.io/).
+:::
+
+</IdentityCard>
+
+## Configuration
+
+Configure your local environment before using MCP actions from an AI assistant.
+
+### Admin panel configuration
+
+The Developer MCP Server does not add a dedicated settings screen in the admin panel. It executes actions in domains that already exist in Strapi administration.
+
+Review related domains in the existing documentation:
+
+- [Role-Based Access Control (RBAC)](/cms/features/rbac)
+- [Users & Permissions](/cms/features/users-permissions)
+- [Internationalization (i18n)](/cms/features/internationalization)
+- [Media Library](/cms/features/media-library)
+- [API Tokens](/cms/features/api-tokens)
+- [Review Workflows](/cms/features/review-workflows) and [Releases](/cms/features/releases) when licensed
+
+:::caution Local-only execution
+In phase 1, the Developer MCP Server does not expose remote HTTP endpoints. All requests are handled through a local process.
+:::
+
+### Code-based configuration
+
+1. Open a terminal in your Strapi project root.
+1. Start the MCP server process:
+
+```bash
+npx strapi mcp
+```
+
+1. Register the local server in your MCP client configuration. A common setup looks like:
+
+```json title="/mcp-config.json"
+{
+  "servers": {
+    "strapi-local": {
+      "protocol": "file",
+      "command": "npx",
+      "args": ["strapi", "mcp"],
+      "cwd": "/absolute/path/to/your-strapi-project"
+    }
+  }
+}
+```
+
+1. Configure the admin identity required by your Strapi version before starting the process.
+
+The MCP server executes requests through Strapi services. It does not write directly to the database.
+
+## Usage
+
+Use the MCP server to automate local setup and repeatable development tasks.
+
+### Start and verify the MCP connection
+
+1. Start your Strapi project.
+1. Run `npx strapi mcp` in the same project root.
+1. Start your AI assistant with the MCP client configuration.
+1. Send a read operation first, for example listing available roles.
+
+### Send structured MCP actions
+
+MCP clients send JSON payloads with an action and payload. Strapi validates the request and returns structured output.
+
+Example request:
+
+```json
+{
+  "action": "createRole",
+  "payload": {
+    "name": "Reviewer",
+    "permissions": ["read:articles"]
+  }
+}
+```
+
+Example success response:
+
+```json
+{
+  "status": "success",
+  "summary": "Role 'Reviewer' created with read access to Articles"
+}
+```
+
+Example error response:
+
+```json
+{
+  "status": "error",
+  "type": "permission_denied",
+  "message": "The configured admin context does not allow role updates"
+}
+```
+
+### Supported domains in local mode
+
+| Domain | Example operations |
+| --- | --- |
+| RBAC | Create, update, or delete roles and permissions |
+| Users and permissions | Assign admin roles and review access settings |
+| Settings | Manage locales, webhooks, branding, and workflow settings |
+| Media Library | Create folders, move files, and reorganize assets |
+| API and transfer tokens | Create, rotate, and revoke tokens |
+| Content operations | Create, edit, and delete entries for local automation |
+| Premium domains (licensed) | Manage review workflows and releases |
+
+### Review logs and auditability
+
+Each operation is logged locally (for example in `.strapi/mcp.log`) with metadata such as timestamp, admin identifier, action, and outcome.
+
+Use the logs command when supported by your version:
+
+```bash
+strapi mcp:logs
+```
+
+If your project uses [Audit Logs](/cms/features/audit-logs), MCP-driven actions can be included in broader administrative tracking depending on your edition and setup.
+
+### Apply safety practices
+
+Use these safeguards in AI-assisted workflows:
+
+1. Require explicit confirmation before destructive actions.
+1. Review operation logs after each automation session.
+1. Treat local MCP capabilities as full administrative power over local project state.
+
+### Keep environments aligned
+
+MCP actions modify local project data and configuration. Promote those changes to other environments using your regular delivery flow, including [Data Management transfer](/cms/data-management/transfer) when relevant.
+
+### Plan for extension and remote phases
+
+The MCP server is designed to be extensible through Strapi and plugin tooling. Future phases can extend the same model to remote instances once secure authentication for Admin API actions is available.
+
+## Related resources
+
+- [Admin panel](/cms/features/admin-panel)
+- [Data Management](/cms/features/data-management)
+- [FAQ: Is there an MCP server for Strapi?](/cms/faq#is-there-an-mcp-server-for-strapi)
+---
+title: Developer MCP Server
+description: Run a local Model Context Protocol (MCP) server in your Strapi project so AI assistants can execute validated admin and content operations.
+displayed_sidebar: cmsSidebar
+toc_max_heading_level: 4
+tags:
+  - features
+  - admin panel
+  - mcp
+  - cli
+  - ai assistants
+---
+
+# Developer MCP Server
+
+Most Strapi administration is currently UI-driven. The Developer MCP Server adds a local automation layer for AI-assisted workflows by mapping structured MCP requests to the same internal services used by the admin panel.
+
+In phase 1, the server is local only. It runs as a project process, uses one configured admin context at startup, and keeps command execution on the same machine.
+
+:::note Availability
+CLI entry points and configuration details depend on the Strapi version you run. If `strapi mcp` is not available in your project, check [release notes](/release-notes) and the [public roadmap](https://feedback.strapi.io/).
+:::
+
+</IdentityCard>
+
+## Configuration
+
+Configure your local environment before using MCP actions from an AI assistant.
+
+### Admin panel configuration
+
+The Developer MCP Server does not add a dedicated settings screen in the admin panel. It executes actions in domains that already exist in Strapi administration.
+
+Review related domains in the existing documentation:
+
+- [Role-Based Access Control (RBAC)](/cms/features/rbac)
+- [Users & Permissions](/cms/features/users-permissions)
+- [Internationalization (i18n)](/cms/features/internationalization)
+- [Media Library](/cms/features/media-library)
+- [API Tokens](/cms/features/api-tokens)
+- [Review Workflows](/cms/features/review-workflows) and [Releases](/cms/features/releases) when licensed
+
+:::caution Local-only execution
+In phase 1, the Developer MCP Server does not expose remote HTTP endpoints. All requests are handled through a local process.
+:::
+
+### Code-based configuration
+
+1. Open a terminal in your Strapi project root.
+2. Start the MCP server process:
+
+```bash
+npx strapi mcp
+```
+
+3. Register the local server in your MCP client configuration. A common setup looks like:
+
+```json title="/mcp-config.json"
+{
+  "servers": {
+    "strapi-local": {
+      "protocol": "file",
+      "command": "npx",
+      "args": ["strapi", "mcp"],
+      "cwd": "/absolute/path/to/your-strapi-project"
+    }
+  }
+}
+```
+
+4. Configure the admin identity required by your Strapi version before starting the process.
+
+The MCP server executes requests through Strapi services. It does not write directly to the database.
+
+## Usage
+
+Use the MCP server to automate local setup and repeatable development tasks.
+
+### Start and verify the MCP connection
+
+1. Start your Strapi project.
+2. Run `npx strapi mcp` in the same project root.
+3. Start your AI assistant with the MCP client configuration.
+4. Send a read operation first, for example listing available roles.
+
+### Send structured MCP actions
+
+MCP clients send JSON payloads with an action and payload. Strapi validates the request and returns structured output.
+
+Example request:
+
+```json
+{
+  "action": "createRole",
+  "payload": {
+    "name": "Reviewer",
+    "permissions": ["read:articles"]
+  }
+}
+```
+
+Example success response:
+
+```json
+{
+  "status": "success",
+  "summary": "Role 'Reviewer' created with read access to Articles"
+}
+```
+
+Example error response:
+
+```json
+{
+  "status": "error",
+  "type": "permission_denied",
+  "message": "The configured admin context does not allow role updates"
+}
+```
+
+### Supported domains in local mode
+
+| Domain | Example operations |
+| --- | --- |
+| RBAC | Create, update, or delete roles and permissions |
+| Users and permissions | Assign admin roles and review access settings |
+| Settings | Manage locales, webhooks, branding, and workflow settings |
+| Media Library | Create folders, move files, and reorganize assets |
+| API and transfer tokens | Create, rotate, and revoke tokens |
+| Content operations | Create, edit, and delete entries for local automation |
+| Premium domains (licensed) | Manage review workflows and releases |
+
+### Review logs and auditability
+
+Each operation is logged locally (for example in `.strapi/mcp.log`) with metadata such as timestamp, admin identifier, action, and outcome.
+
+Use the logs command when supported by your version:
+
+```bash
+strapi mcp:logs
+```
+
+If your project uses [Audit Logs](/cms/features/audit-logs), MCP-driven actions can be included in broader administrative tracking depending on your edition and setup.
+
+### Apply safety practices
+
+Use these safeguards in AI-assisted workflows:
+
+1. Require explicit confirmation before destructive actions.
+2. Review operation logs after each automation session.
+3. Treat local MCP capabilities as full administrative power over local project state.
+
+### Keep environments aligned
+
+MCP actions modify local project data and configuration. Promote those changes to other environments using your regular delivery flow, including [Data Management transfer](/cms/data-management/transfer) when relevant.
+
+### Plan for extension and remote phases
+
+The MCP server is designed to be extensible through Strapi and plugin tooling. Future phases can extend the same model to remote instances once secure authentication for Admin API actions is available.
+
+## Related resources
+
+- [Admin panel](/cms/features/admin-panel)
+- [Data Management](/cms/features/data-management)
+- [FAQ: Is there an MCP server for Strapi?](/cms/faq#is-there-an-mcp-server-for-strapi)
+---
+title: Developer MCP Server
+description: Run a local Model Context Protocol (MCP) server in your Strapi project so AI assistants can execute validated admin and content operations.
+displayed_sidebar: cmsSidebar
+toc_max_heading_level: 4
+tags:
+  - features
+  - admin panel
+  - mcp
+  - cli
+  - ai assistants
+---
+
+# Developer MCP Server
+
+Most Strapi administration is currently UI-driven. The Developer MCP Server adds a local automation layer for AI-assisted workflows by mapping structured MCP requests to the same internal services used by the admin panel.
+
+In phase 1, the server is local only. It runs as a project process, uses one configured admin context at startup, and keeps command execution on the same machine.
+
+:::note Availability
+CLI entry points and configuration details depend on the Strapi version you run. If `strapi mcp` is not available in your project, check [release notes](/release-notes) and the [public roadmap](https://feedback.strapi.io/).
+:::
+
+</IdentityCard>
+
+## Configuration
+
+Configure your local environment before using MCP actions from an AI assistant.
+
+### Admin panel configuration
+
+The Developer MCP Server does not add a dedicated settings screen in the admin panel. It executes actions in domains that already exist in Strapi administration.
+
+Review related domains in the existing documentation:
+
+- [Role-Based Access Control (RBAC)](/cms/features/rbac)
+- [Users & Permissions](/cms/features/users-permissions)
+- [Internationalization (i18n)](/cms/features/internationalization)
+- [Media Library](/cms/features/media-library)
+- [API Tokens](/cms/features/api-tokens)
+- [Review Workflows](/cms/features/review-workflows) and [Releases](/cms/features/releases) when licensed
+
+:::caution Local-only execution
+In phase 1, the Developer MCP Server does not expose remote HTTP endpoints. All requests are handled through a local process.
+:::
+
+### Code-based configuration
+
+1. Open a terminal in your Strapi project root.
+2. Start the MCP server process:
+
+```bash
+npx strapi mcp
+```
+
+3. Register the local server in your MCP client configuration. A common setup looks like:
+
+```json title="/mcp-config.json"
+{
+  "servers": {
+    "strapi-local": {
+      "protocol": "file",
+      "command": "npx",
+      "args": ["strapi", "mcp"],
+      "cwd": "/absolute/path/to/your-strapi-project"
+    }
+  }
+}
+```
+
+4. Configure the admin identity required by your Strapi version before starting the process.
+
+The MCP server executes requests through Strapi services. It does not write directly to the database.
+
+## Usage
+
+Use the MCP server to automate local setup and repeatable development tasks.
+
+### Start and verify the MCP connection
+
+1. Start your Strapi project.
+2. Run `npx strapi mcp` in the same project root.
+3. Start your AI assistant with the MCP client configuration.
+4. Send a read operation first, for example listing available roles.
+
+### Send structured MCP actions
+
+MCP clients send JSON payloads with an action and payload. Strapi validates the request and returns structured output.
+
+Example request:
+
+```json
+{
+  "action": "createRole",
+  "payload": {
+    "name": "Reviewer",
+    "permissions": ["read:articles"]
+  }
+}
+```
+
+Example success response:
+
+```json
+{
+  "status": "success",
+  "summary": "Role 'Reviewer' created with read access to Articles"
+}
+```
+
+Example error response:
+
+```json
+{
+  "status": "error",
+  "type": "permission_denied",
+  "message": "The configured admin context does not allow role updates"
+}
+```
+
+### Supported domains in local mode
+
+| Domain | Example operations |
+| --- | --- |
+| RBAC | Create, update, or delete roles and permissions |
+| Users and permissions | Assign admin roles and review access settings |
+| Settings | Manage locales, webhooks, branding, and workflow settings |
+| Media Library | Create folders, move files, and reorganize assets |
+| API and transfer tokens | Create, rotate, and revoke tokens |
+| Content operations | Create, edit, and delete entries for local automation |
+| Premium domains (licensed) | Manage review workflows and releases |
+
+### Review logs and auditability
+
+Each operation is logged locally (for example in `.strapi/mcp.log`) with metadata such as timestamp, admin identifier, action, and outcome.
+
+Use the logs command when supported by your version:
+
+```bash
+strapi mcp:logs
+```
+
+If your project uses [Audit Logs](/cms/features/audit-logs), MCP-driven actions can be included in broader administrative tracking depending on your edition and setup.
+
+### Apply safety practices
+
+Use these safeguards in AI-assisted workflows:
+
+1. Require explicit confirmation before destructive actions.
+2. Review operation logs after each automation session.
+3. Treat local MCP capabilities as full administrative power over local project state.
+
+### Keep environments aligned
+
+MCP actions modify local project data and configuration. Promote those changes to other environments using your regular delivery flow, including [Data Management transfer](/cms/data-management/transfer) when relevant.
+
+### Plan for extension and remote phases
+
+The MCP server is designed to be extensible through Strapi and plugin tooling. Future phases can extend the same model to remote instances once secure authentication for Admin API actions is available.
+
+## Related resources
+
+- [Admin panel](/cms/features/admin-panel)
+- [Data Management](/cms/features/data-management)
+- [FAQ: Is there an MCP server for Strapi?](/cms/faq#is-there-an-mcp-server-for-strapi)
+*** End of File
+
+The Developer MCP Server is a local Strapi service designed for AI-assisted development workflows. It translates structured MCP requests into validated Strapi operations and returns structured JSON responses.
+
+This page documents phase 1 of the feature: local mode only. The server runs in your project process, does not open HTTP endpoints, and keeps all operations on your machine.
+
+</IdentityCard>
+
+## Configuration
+
+Configure the MCP server before asking your AI assistant to run actions. In local mode, configuration focuses on admin context, local process access, and MCP client connection settings.
+
+### Admin panel configuration
+
+No dedicated admin panel screen is required to enable the MCP server. The server uses existing Strapi admin services and permissions.
+
+Before using MCP actions, review the related admin settings in your project:
+
+1. Open **Settings** in the admin panel.
+2. Review access configuration for features your assistant will modify, such as [RBAC](/cms/features/rbac), [Internationalization](/cms/features/internationalization), [Media Library](/cms/features/media-library), [API Tokens](/cms/features/api-tokens), [Review Workflows](/cms/features/review-workflows), and [Releases](/cms/features/releases).
+3. Confirm you are working in a local development environment.
+
+:::caution Local-only execution
+In phase 1, the Developer MCP Server is local only. It does not expose HTTP endpoints and does not support remote execution.
+:::
+
+### Code-based configuration
+
+Start the MCP server from your Strapi project root:
+
+```bash
+npx strapi mcp
+```
+
+Then configure your MCP client to launch the local command. The example below shows a typical local setup used by AI tools:
+
+```json title="/mcp-config.json"
+{
+  "servers": {
+    "strapi-local": {
+      "protocol": "file",
+      "command": "npx strapi",
+      "args": ["mcp"],
+      "cwd": "/Users/dev/my-strapi-project"
+    }
+  }
+}
+```
+
+All MCP actions are executed through Strapi services, not through direct database writes.
+
+### Logging and auditability
+
+Every MCP action is logged locally in `.strapi/mcp.log`.
+
+Each log entry includes:
+
+- Timestamp
+- Admin user identifier used by the MCP context
+- Action name
+- Result status (`success` or `error`)
+- Short summary
+
+Use the following command to inspect MCP logs:
+
+```bash
+strapi mcp:logs
+```
+
+## Usage
+
+Use the Developer MCP Server to automate local setup and repeatable project tasks from your AI assistant.
+
+### Connect an assistant
+
+1. Start your Strapi project.
+2. Run `npx strapi mcp` from the same project root.
+3. Open your AI assistant configuration and add the local MCP server entry.
+4. Ask a read-only question first to confirm the connection, such as listing available roles.
+
+### Supported domains in local mode
+
+The local MCP server can expose actions across several admin domains:
+
+| Domain | Example operations |
+| --- | --- |
+| RBAC | Create roles, update permissions, inspect role capabilities |
+| Users and permissions | Assign admin roles and review access settings |
+| Settings | Manage locales, webhooks, branding, and workflow-related settings |
+| Media Library | Create folders, move files, and reorganize media assets |
+| API and transfer tokens | Create, rotate, and revoke tokens |
+| Content operations | Create, edit, and delete entries for local development workflows |
+| Premium features (licensed) | Manage review workflows and releases |
+
+### Run an administrative action
+
+An assistant sends structured JSON to the MCP server. The server validates the request, executes the mapped Strapi service action, and returns a structured response.
+
+Example request:
+
+```json
+{
+  "action": "createRole",
+  "payload": {
+    "name": "Reviewer",
+    "permissions": ["read:articles"]
+  }
+}
+```
+
+Example success response:
+
+```json
+{
+  "status": "success",
+  "summary": "Role 'Reviewer' created with read access to Articles"
+}
+```
+
+Example error response:
+
+```json
+{
+  "status": "error",
+  "type": "permission_denied",
+  "message": "The configured admin context does not allow role updates"
+}
+```
+
+### Automate local content setup
+
+Use content-focused MCP actions to speed up development tasks:
+
+- Create sample entries for a new content-type
+- Apply repeatable updates to existing local entries
+- Prepare local datasets before [Data Management transfer](/cms/data-management/transfer)
+
+For high-impact actions, require explicit confirmation in your assistant workflow before applying changes.
+
+### Understand local and remote phases
+
+The Developer MCP Server currently documents local mode. Remote mode is planned for a future phase once secure authentication for Admin APIs is available.
+
+Use local mode to validate workflows now, then promote resulting data and configuration through your existing deployment process.
+
+
+
 # Draft & Publish
 Source: https://docs.strapi.io/cms/features/draft-and-publish
 
