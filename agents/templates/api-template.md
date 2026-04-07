@@ -12,52 +12,44 @@ Briefly describe the endpoint(s), authentication, and typical use.
 </Tldr>
 
 ## Endpoints
-### GET /path
-- Purpose: …
-- Auth: …
-- Query params: …
 
-```bash title="Example"
-curl -H "Authorization: Bearer …" https://example.com/path
-```
+<!-- Use one <Endpoint> per operation. See agents/templates/components/endpoint.md for full props and rules. -->
 
-### POST /path
-- Purpose: …
-- Auth: …
-
-```json title="Request body"
-{
-  "example": true
-}
-```
-
-## Responses
-```json title="200 OK"
-{ "ok": true }
-```
+<Endpoint
+  id="example-get"
+  method="GET"
+  path="/api/:pluralApiId"
+  title="List resources"
+  description="Short description of what this endpoint returns."
+  paramTitle="Query Parameters"
+  params={[
+    { name: 'sort', type: 'string', required: false, description: 'Sort order.' },
+  ]}
+  codePath="/api/examples"
+  codePathHighlights={['examples']}
+  codeTabs={[
+    { label: 'cURL', code: `curl 'http://localhost:1337/api/examples' \\\n  -H 'Authorization: Bearer <token>'` },
+    { label: 'JavaScript', code: `const res = await fetch('http://localhost:1337/api/examples', {\n  headers: { Authorization: 'Bearer <token>' },\n});\nconst data = await res.json();` },
+  ]}
+  responses={[
+    { status: 200, statusText: 'OK', time: '23ms', body: JSON.stringify({ data: [], meta: {} }, null, 2) },
+  ]}
+/>
 
 ## Notes and Limits
 Versioning, deprecations, rate limits, or pagination.
 
-<!-- 
+<!--
   Component patterns — match the target page
   ============================================
-  Production API pages use custom MDX components not shown in this
-  skeleton. When drafting or patching, always check the existing page
-  and replicate its patterns:
-
-  • Document Service pages:
-    <ApiCall> wrapping <Request> and <Response>.
-    Use `noSideBySide` prop for longer examples.
-    Responses use JS object literal notation (not JSON).
-
-  • REST pages:
-    <ApiCall> wrapping <Request>, a <details> block for the
-    qs.stringify equivalent (with <QsForQueryBody /> snippet),
-    and <Response>. Responses use JSON.
+  • REST and Document Service pages:
+    Use the <Endpoint> component (one per operation).
+    See agents/templates/components/endpoint.md for props, canonical
+    examples, and rules.
 
   • GraphQL pages:
-    Plain code blocks with `graphql` language identifier.
+    Use <ApiCall> wrapping <Request> and <Response> with plain
+    code blocks using the `graphql` language identifier.
 
   Do not mix patterns across page types.
 -->

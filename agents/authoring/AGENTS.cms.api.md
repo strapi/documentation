@@ -52,11 +52,11 @@ Component Patterns by Page Type
 
 API pages use custom MDX components that vary by sub-section. When editing an existing page, always match the page's established patterns:
 
-- **Document Service API pages** use `<ApiCall>` with `<Request>` / `<Response>` for code examples. The `noSideBySide` prop is used for longer examples. Response code blocks use JS object literal notation (not JSON).
-- **REST API pages** use `<ApiCall>` wrapping `<Request>`, a `<details>` block for the `qs.stringify` equivalent, and `<Response>`. Snippet imports (`QsForQueryBody`, `QsForQueryTitle`, `QsIntroFull`) are used inside the `<details>` blocks. Response code blocks use JSON.
-- **GraphQL API pages** use plain code blocks with `graphql` language identifier for query examples.
+- **REST API pages** use the `<Endpoint>` component (one per endpoint). Each `<Endpoint>` includes method, path, params, `codeTabs` (cURL + JavaScript), `codePath`/`codePathHighlights`, and `responses` with `JSON.stringify` bodies. See `agents/templates/components/endpoint.md` for full props and rules.
+- **Document Service API pages** also use `<Endpoint>`, with method-signature paths (e.g., `strapi.documents().findOne()`), a single `Request` code tab, and `JSON.stringify` response bodies. See `agents/templates/components/endpoint.md`.
+- **GraphQL API pages** use `<ApiCall>` wrapping `<Request>` and `<Response>` with plain code blocks using the `graphql` language identifier.
 
-Do not mix patterns across page types (e.g., do not use `<details>` on a Document Service page, or plain code blocks where `<ApiCall>` is expected).
+Do not mix patterns across page types (e.g., do not use `<ApiCall>` on a REST or Document Service page, or `<Endpoint>` on a GraphQL page).
 
 Cross‑linking
 - Link to neighboring APIs (Content API, Query Engine), relevant features, and migration notes.

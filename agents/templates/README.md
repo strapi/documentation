@@ -35,6 +35,7 @@ How to use
 - **Placeholder comments** (`<!-- ... -->`) explaining what content to write in each section.
 - **Multi‑language patterns** using Tabs where applicable (see `agents/templates/components/tabs.md` for Tabs/TabItem rules).
 - **Progressive disclosure** using ExpandableContent where applicable (see `agents/templates/components/expandable-content.md` for usage rules).
+- **API reference blocks** using Endpoint where applicable (see `agents/templates/components/endpoint.md` for Endpoint rules).
 
 ## References
 
@@ -42,3 +43,4 @@ How to use
 - Authoring area guides: `agents/authoring/AGENTS.*.md`
 - Tabs/TabItem rules: `agents/templates/components/tabs.md`
 - ExpandableContent rules: `agents/templates/components/expandable-content.md`
+- Endpoint (API blocks) rules: `agents/templates/components/endpoint.md`
