@@ -932,7 +932,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 12px 8px;
+  padding: 16px 12px 8px;
   min-height: 44px;
   position: sticky;
   top: 0;
@@ -942,6 +942,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
   .sidebar-v3-wrapper--collapsed & {
     border-bottom: none;
+    background: transparent;
   }
 
   &__label {
