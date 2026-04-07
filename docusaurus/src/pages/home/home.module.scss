@@ -825,4 +825,7 @@
   .featureCardIcon {
     background: rgba(73, 69, 255, 0.15);
   }
+
+  .codeFn { color: var(--strapi-accent-light, #7B79FF); }
+  .codeKw { color: #c084fc; }
 }
