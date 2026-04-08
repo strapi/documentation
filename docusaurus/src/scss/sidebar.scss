@@ -911,6 +911,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       padding: 16px 12px 8px;
     }
   }
+
+  [class^="sidebar_"] {
+    padding-top: 0;
+  }
 }
 
 /**
