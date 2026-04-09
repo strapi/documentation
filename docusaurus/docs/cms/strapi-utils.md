@@ -538,13 +538,19 @@ The following functions are available:
 
 ## sanitize
 
-The `sanitize` namespace provides functions to clean input and output data based on content-type schemas. Use `sanitize` to remove disallowed, private, or restricted fields before processing or returning data. It is imported as follows:
+The `sanitize` namespace provides functions to clean input and output data based on content-type schemas. Use `sanitize` to remove disallowed, private, or restricted fields before processing or returning data.
+
+:::tip
+In most controllers, you do not need to call `sanitize` directly. Strapi provides built-in `sanitizeQuery` and `sanitizeOutput` helpers that handle the setup for you (see [Controllers](/cms/backend-customization/controllers#sanitization-and-validation-in-controllers) documentation for details). Use the lower-level API below when you need sanitization outside of a controller context (e.g., in a service or a custom script).
+:::
+
+The namespace is imported as follows:
 
 ```js
 const { sanitize } = require('@strapi/utils');
 ```
 
-The `createAPISanitizers` function takes a model resolver and returns a set of sanitizer methods scoped to that model:
+The `createAPISanitizers` function takes a model resolver (a function that returns a content-type schema for a given UID) and returns a set of sanitizer methods scoped to that model. You typically call this once during bootstrap or at the top of a service:
 
 ```js
 const sanitizers = sanitize.createAPISanitizers({
@@ -571,10 +577,6 @@ Each method accepts an optional `options` object with the following properties:
 | `auth` | `object` | `undefined` | The authentication object from the request (typically `ctx.state.auth`). When provided, relation fields the user does not have permission to access are removed from the output. When omitted, no permission-based filtering is applied. |
 | `strictParams` | `boolean` | `false` | When `true`, removes fields or query parameters not declared in the content-type schema. When `false`, unrecognized fields pass through. |
 | `route` | `object` | `undefined` | The route object (typically `ctx.route`). Used together with `strictParams` to allow custom query or body parameters defined in the [route's request schema](/cms/backend-customization/routes). Has no effect when `strictParams` is `false`. |
-
-:::tip
-In controllers, you can use the built-in `sanitizeQuery` and `sanitizeOutput` methods instead of calling `sanitize.createAPISanitizers` directly (see [Controllers](/cms/backend-customization/controllers#sanitization-and-validation-in-controllers) documentation for details).
-:::
 
 ## setCreatorFields
 
