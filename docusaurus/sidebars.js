@@ -421,6 +421,7 @@ const sidebars = {
           },
         },
         'cms/error-handling',
+        'cms/strapi-utils',
         'cms/templates',
         'cms/testing',
       ],

@@ -32945,6 +32945,434 @@ File path: N/A
 
 
 
+# strapi-utils
+Source: https://docs.strapi.io/cms/strapi-utils
+
+## async
+Description: The async namespace provides asynchronous utility functions.
+(Source: https://docs.strapi.io/cms/strapi-utils#async)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { async } = require('@strapi/utils');
+```
+
+
+## Usage example
+Description: | Function | Description | | --- | --- | | async.pipe(...fns) | Compose functions: the first function runs with the original arguments, each subsequent function receives the previous return value.
+(Source: https://docs.strapi.io/cms/strapi-utils#usage-example)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { async: asyncUtils } = require('@strapi/utils');
+
+const result = await asyncUtils.pipe(
+  fetchUser,
+  enrichWithProfile,
+  formatResponse
+)(userId);
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { env } = require('@strapi/utils');
+
+module.exports = {
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+};
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { errors } = require('@strapi/utils');
+
+// In a service or lifecycle hook
+throw new errors.ApplicationError('Something went wrong', { foo: 'bar' });
+
+// In a policy
+throw new errors.PolicyError('Access denied', { policy: 'is-owner' });
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { hooks } = require('@strapi/utils');
+
+const myHook = hooks.createAsyncSeriesHook();
+
+myHook.register(async (context) => {
+  console.log('First handler', context);
+});
+
+myHook.register(async (context) => {
+  console.log('Second handler', context);
+});
+
+// Execute all handlers in order
+await myHook.call({ data: 'example' });
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+parseType({ type: 'boolean', value: 'true' }); // true
+parseType({ type: 'integer', value: '42' }); // 42
+parseType({ type: 'date', value: '2024-01-15T10:30:00Z' }); // '2024-01-15'
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { providerFactory } = require('@strapi/utils');
+
+const registry = providerFactory();
+
+registry.hooks.willRegister.register(async ({ key, value }) => {
+  console.log(`About to register: ${key}`);
+});
+
+await registry.register('my-provider', { execute: () => {} });
+
+registry.get('my-provider'); // { execute: [Function] }
+registry.has('my-provider'); // true
+registry.size(); // 1
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { setCreatorFields } = require('@strapi/utils');
+
+const addCreator = setCreatorFields({ user: { id: 1 } });
+const data = addCreator({ title: 'My Article' });
+// { title: 'My Article', createdBy: 1, updatedBy: 1 }
+
+const updateCreator = setCreatorFields({ user: { id: 2 }, isEdition: true });
+const updated = updateCreator(data);
+// { title: 'My Article', createdBy: 1, updatedBy: 2 }
+```
+
+
+## contentTypes
+Description: The contentTypes namespace exposes constants and helper functions for working with Strapi content-type schemas.
+(Source: https://docs.strapi.io/cms/strapi-utils#contenttypes)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { contentTypes } = require('@strapi/utils');
+```
+
+
+## env
+Description: A helper function to read environment variables with type-safe parsing.
+(Source: https://docs.strapi.io/cms/strapi-utils#env)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { env } = require('@strapi/utils');
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+import { env } from '@strapi/utils';
+```
+
+
+## errors
+Description: Import errors from the package:
+(Source: https://docs.strapi.io/cms/strapi-utils#errors)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { errors } = require('@strapi/utils');
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+import { errors } from '@strapi/utils';
+```
+
+
+## file
+Description: The file namespace provides helpers for working with streams and file sizes.
+(Source: https://docs.strapi.io/cms/strapi-utils#file)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { file } = require('@strapi/utils');
+```
+
+
+## hooks
+Description: Factory functions to create hook registries.
+(Source: https://docs.strapi.io/cms/strapi-utils#hooks)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { hooks } = require('@strapi/utils');
+```
+
+
+## pagination
+Description: The pagination namespace provides helpers for handling pagination parameters.
+(Source: https://docs.strapi.io/cms/strapi-utils#pagination)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { pagination } = require('@strapi/utils');
+```
+
+
+## parseType
+Description: Cast a value to a specific Strapi field type.
+(Source: https://docs.strapi.io/cms/strapi-utils#parsetype)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { parseType } = require('@strapi/utils');
+```
+
+
+## policy
+Description: Helpers to create and manage policies.
+(Source: https://docs.strapi.io/cms/strapi-utils#policy)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { policy } = require('@strapi/utils');
+```
+
+
+## createPolicy
+Description: | Parameter | Type | Required | Description | | --- | --- | --- | --- | | name | string | No | Policy name (defaults to 'unnamed') | | handler | function | Yes | Policy handler function | | validator | function | No | Validate the policy configuration; throws on invalid config |
+(Source: https://docs.strapi.io/cms/strapi-utils#createpolicy)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const myPolicy = policy.createPolicy({
+  name: 'is-owner',
+  validator: (config) => {
+    if (!config.field) throw new Error('Missing field');
+  },
+  handler: (ctx, config, { strapi }) => {
+    // policy logic
+    return true;
+  },
+});
+```
+
+
+## createPolicyContext
+Description: Create a typed context object for use within a policy:
+(Source: https://docs.strapi.io/cms/strapi-utils#createpolicycontext)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const policyCtx = policy.createPolicyContext('admin', ctx);
+
+policyCtx.is('admin'); // true
+policyCtx.type; // 'admin'
+```
+
+
+## primitives
+Description: Low-level data transformation helpers.
+(Source: https://docs.strapi.io/cms/strapi-utils#primitives)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { strings, objects, arrays, dates } = require('@strapi/utils');
+```
+
+
+## providerFactory
+Description: Create a registry that stores and retrieves items by key, with lifecycle hooks.
+(Source: https://docs.strapi.io/cms/strapi-utils#providerfactory)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { providerFactory } = require('@strapi/utils');
+```
+
+
+## relations
+Description: The relations namespace provides helpers to inspect relation attributes.
+(Source: https://docs.strapi.io/cms/strapi-utils#relations)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { relations } = require('@strapi/utils');
+```
+
+
+## sanitize
+Description: The sanitize namespace provides functions to clean input and output data based on content-type schemas.
+(Source: https://docs.strapi.io/cms/strapi-utils#sanitize)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { sanitize } = require('@strapi/utils');
+```
+
+
+## createAPISanitizers
+Description: Create a set of sanitizer functions using a model resolver:
+(Source: https://docs.strapi.io/cms/strapi-utils#createapisanitizers)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const sanitizers = sanitize.createAPISanitizers({
+  getModel: strapi.getModel.bind(strapi),
+});
+```
+
+
+## setCreatorFields
+Description: Set createdBy and updatedBy fields on an entity.
+(Source: https://docs.strapi.io/cms/strapi-utils#setcreatorfields)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { setCreatorFields } = require('@strapi/utils');
+```
+
+
+## validate
+Description: The validate namespace provides functions to check input and query data against content-type schemas.
+(Source: https://docs.strapi.io/cms/strapi-utils#validate)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { validate } = require('@strapi/utils');
+```
+
+
+## createAPIValidators
+Description: Create a set of validator functions using a model resolver:
+(Source: https://docs.strapi.io/cms/strapi-utils#createapivalidators)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const validators = validate.createAPIValidators({
+  getModel: strapi.getModel.bind(strapi),
+});
+```
+
+
+## yup
+Description: The yup namespace re-exports the with Strapi-specific extensions.
+(Source: https://docs.strapi.io/cms/strapi-utils#yup)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { yup } = require('@strapi/utils');
+```
+
+
+## Schema validation helpers
+Description: validateYupSchema and validateYupSchemaSync are top-level exports from @strapi/utils, not part of the yup namespace:
+(Source: https://docs.strapi.io/cms/strapi-utils#schema-validation-helpers)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { validateYupSchema, validateYupSchemaSync } = require('@strapi/utils');
+```
+
+
+## zod
+Description: Strapi exposes Zod helpers as named exports.
+(Source: https://docs.strapi.io/cms/strapi-utils#zod)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { validateZod, z } = require('@strapi/utils');
+
+const schema = z.object({
+  name: z.string().min(1),
+  age: z.number().positive(),
+});
+```
+
+
+## validateZod
+Description: Create a validator function from a Zod schema:
+(Source: https://docs.strapi.io/cms/strapi-utils#validatezod)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const validate = validateZod(schema);
+
+validate(data); // throws ValidationError on failure
+```
+
+
+
 # Templates
 Source: https://docs.strapi.io/cms/templates
 
