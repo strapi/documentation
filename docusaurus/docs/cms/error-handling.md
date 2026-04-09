@@ -166,7 +166,7 @@ This example shows wrapping a [core service](/cms/backend-customization/services
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="path: ./src/api/restaurant/services/restaurant.js"
+```js title="./src/api/restaurant/services/restaurant.js"
 
 const { errors } = require('@strapi/utils');
 const { ApplicationError } = errors;
@@ -192,7 +192,7 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="path: ./src/api/[api-name]/policies/my-policy.ts"
+```ts title="./src/api/[api-name]/policies/my-policy.ts"
 
 import { errors } from '@strapi/utils';
 import { factories } from '@strapi/strapi';
@@ -228,7 +228,7 @@ This example shows building a [custom model lifecycle](/cms/backend-customizatio
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="path: ./src/api/[api-name]/content-types/[api-name]/lifecycles.js"
+```js title="./src/api/[api-name]/content-types/[api-name]/lifecycles.js"
 
 const { errors } = require('@strapi/utils');
 const { ApplicationError } = errors;
@@ -250,7 +250,7 @@ module.exports = {
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="path: ./src/api/[api-name]/content-types/[api-name]/lifecycles.ts"
+```ts title="./src/api/[api-name]/content-types/[api-name]/lifecycles.ts"
 
 import { errors } from '@strapi/utils';
 const { ApplicationError } = errors;
@@ -288,7 +288,7 @@ This example shows building a [custom policy](/cms/backend-customization/policie
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="path: ./src/api/[api-name]/policies/my-policy.js"
+```js title="./src/api/[api-name]/policies/my-policy.js"
 
 const { errors } = require('@strapi/utils');
 const { PolicyError } = errors;
@@ -312,7 +312,7 @@ module.exports = (policyContext, config, { strapi }) => {
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="path: ./src/api/[api-name]/policies/my-policy.ts"
+```ts title="./src/api/[api-name]/policies/my-policy.ts"
 
 import { errors } from '@strapi/utils';
 const { PolicyError } = errors;

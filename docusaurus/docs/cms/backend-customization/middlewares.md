@@ -91,7 +91,7 @@ module.exports = {
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js title="path: /config/middlewares.js"
+```js title="/config/middlewares.js"
 module.exports = () => {
   return async (ctx, next) => {
     const start = Date.now();
