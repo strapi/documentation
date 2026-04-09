@@ -122,8 +122,6 @@ import { env } from '@strapi/utils';
 
 </Tabs>
 
-### Available methods
-
 | Method | Return type | Description |
 | --- | --- | --- |
 | `env(key)` | `string \| undefined` | Return the raw value |
@@ -300,15 +298,13 @@ Cast a value to a specific Strapi field type.
 const { parseType } = require('@strapi/utils');
 ```
 
-### Parameters
-
 | Parameter | Type | Description |
 | --- | --- | --- |
 | `type` | `string` | Target type: `'boolean'`, `'integer'`, `'biginteger'`, `'float'`, `'decimal'`, `'time'`, `'date'`, `'timestamp'`, or `'datetime'` |
 | `value` | `unknown` | The value to parse |
 | `forceCast` | `boolean` | Force conversion for booleans. Default: `false` |
 
-### Return values by type
+Return values by type:
 
 | Type | Return type | Format |
 | --- | --- | --- |
@@ -490,9 +486,7 @@ The `sanitize` namespace provides functions to clean input and output data based
 const { sanitize } = require('@strapi/utils');
 ```
 
-### createAPISanitizers
-
-Create a set of sanitizer functions using a model resolver:
+Create a set of sanitizer functions with `createAPISanitizers`, using a model resolver:
 
 ```js
 const sanitizers = sanitize.createAPISanitizers({
@@ -526,8 +520,6 @@ Set `createdBy` and `updatedBy` fields on an entity.
 const { setCreatorFields } = require('@strapi/utils');
 ```
 
-### Parameters
-
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
 | `user` | `{ id: string \| number }` | (required) | The user performing the action |
@@ -555,9 +547,7 @@ The `validate` namespace provides functions to check input and query data agains
 const { validate } = require('@strapi/utils');
 ```
 
-### createAPIValidators
-
-Create a set of validator functions using a model resolver:
+Create a set of validator functions with `createAPIValidators`, using a model resolver:
 
 ```js
 const validators = validate.createAPIValidators({
@@ -625,9 +615,7 @@ const schema = z.object({
 });
 ```
 
-### validateZod
-
-Create a validator function from a Zod schema:
+Create a validator function from a Zod schema with `validateZod`:
 
 ```js
 const validate = validateZod(schema);
