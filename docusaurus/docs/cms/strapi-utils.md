@@ -609,8 +609,8 @@ const { validateYupSchema, validateYupSchemaSync } = require('@strapi/utils');
 
 | Function | Description |
 | --- | --- |
-| `validateYupSchema(schema)` | Return an async validator function for a Yup schema |
-| `validateYupSchemaSync(schema)` | Return a synchronous validator function for a Yup schema |
+| `validateYupSchema(schema, options?)` | Return an async validator function `(body, errorMessage?) => Promise` for a Yup schema. Default options: `{ strict: true, abortEarly: false }`. |
+| `validateYupSchemaSync(schema, options?)` | Return a synchronous validator function `(body, errorMessage?) => result` for a Yup schema. Default options: `{ strict: true, abortEarly: false }`. |
 
 ## zod
 
