@@ -286,7 +286,7 @@ Each hook instance exposes the following 4 methods:
 
 ### Available hook factories
 
-The following factory functions create different hook types:
+The following factory functions create different hook types. Use **series** when handlers must run in order, **waterfall** when each handler transforms data for the next, **parallel** when handlers are independent and can run concurrently, and **bail** when you need the first handler that returns a value to short-circuit the rest:
 
 | Factory | Execution pattern |
 | --- | --- |
@@ -701,21 +701,22 @@ The following helper functions are available:
 
 ## zod
 
-Strapi exposes Zod helpers as named exports, imported as follows:
+Strapi re-exports the `z` instance from <ExternalLink to="https://github.com/colinhacks/zod" text="Zod" /> and provides a `validateZod` helper that wraps a Zod schema into a Strapi-style validator. Strapi does not add custom methods to Zod — `z` is the standard Zod API. The helpers are imported as follows:
 
 ```js
 const { validateZod, z } = require('@strapi/utils');
+```
 
+The following example defines a schema and creates a validator function with `validateZod`. On success, the function returns the parsed data. On failure, it throws a `ValidationError` (see [errors](#errors)) with details about which fields failed:
+
+```js
 const schema = z.object({
   name: z.string().min(1),
   age: z.number().positive(),
 });
-```
 
-Create a validator function from a Zod schema with `validateZod`:
-
-```js
 const validate = validateZod(schema);
 
-validate(data); // throws ValidationError on failure
+const parsed = validate({ name: 'Alice', age: 30 }); // returns parsed data
+validate({ name: '' }); // throws ValidationError
 ```
