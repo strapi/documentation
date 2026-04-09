@@ -89,7 +89,7 @@ The following functions check the type of a single attribute:
 | `isMediaAttribute(attribute)` | Check if the attribute is a media field |
 | `isMorphToRelationalAttribute(attribute)` | Check if the attribute is a morph-to relation |
 | `isRelationalAttribute(attribute)` | Check if the attribute is a relation |
-| `isScalarAttribute(attribute)` | Check if the attribute is a scalar value |
+| `isScalarAttribute(attribute)` | Check if the attribute is a scalar value <Annotation>A scalar value is a single, individual value rather than a collection or structure. In Strapi, this means a basic field like a string, number, boolean, or date — not a relation, component, or nested object.</Annotation> |
 | `isTypedAttribute(attribute, type)` | Check if the attribute has a specific type |
 
 ### Schema inspection functions
@@ -132,7 +132,7 @@ if (contentTypes.hasDraftAndPublish(articleSchema)) {
 
 ## env
 
-A helper function to read environment variables with type-safe parsing. The `env` function returns the raw string value, while its methods parse the value to a specific type.
+A helper function to read environment variables with type-safe parsing. The `env` function returns the raw string value, while its methods parse the value to a specific type. It is imported as follows:
 
 <Tabs groupId="js-ts">
 
@@ -192,7 +192,7 @@ Custom error classes that extend the Node.js `Error` class. All errors share a c
 | `message` | `string` | Human-readable error message |
 | `details` | `object` | Additional error context |
 
-Import errors from the package:
+The error classes are imported as follows:
 
 <Tabs groupId="js-ts">
 
