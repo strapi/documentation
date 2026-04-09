@@ -19,7 +19,7 @@ tags:
 The `@strapi/utils` package provides shared helper functions used across Strapi's core and available for use in custom code. It includes error classes, environment variable helpers, hook factories, type parsing, string and file utilities, and async helpers.
 </Tldr>
 
-The `@strapi/utils` package (`import { ... } from '@strapi/utils'`) contains utility functions that Strapi uses internally but that you can also use in your own [controllers](/cms/backend-customization/controllers), [services](/cms/backend-customization/services), [policies](/cms/backend-customization/policies), [middlewares](/cms/backend-customization/middlewares), and [lifecycle hooks](/cms/backend-customization/models#lifecycle-hooks).
+The `@strapi/utils` package (`import { ... } from '@strapi/utils'`) contains utility functions that Strapi uses internally but that you can also use in your own [controllers](/cms/backend-customization/controllers), [services](/cms/backend-customization/services), [policies](/cms/backend-customization/policies), [middlewares](/cms/backend-customization/middlewares), and [lifecycle hooks](/cms/backend-customization/models#lifecycle-hooks). Sections on this page are organized alphabetically by export name.
 
 :::note
 The [error classes](#errors) section of this page expands on the error handling documentation found in the dedicated [Error handling](/cms/error-handling) page.
@@ -84,7 +84,7 @@ The following functions check the type of a single attribute:
 
 | Function | Description |
 | --- | --- |
-| `isComponentAttribute(attribute)` | Check if the attribute is a component or a dynamic zone |
+| `isComponentAttribute(attribute)` | Check if the attribute is a component or a dynamic zone (returns `true` for both; use `isDynamicZoneAttribute` to distinguish) |
 | `isDynamicZoneAttribute(attribute)` | Check if the attribute is a dynamic zone |
 | `isMediaAttribute(attribute)` | Check if the attribute is a media field |
 | `isMorphToRelationalAttribute(attribute)` | Check if the attribute is a morph-to relation |
@@ -166,7 +166,7 @@ The `env` helper can be called directly or with the following typed methods:
 | `env.float(key, default?)` | `number \| undefined` | Parse as float (`parseFloat`) |
 | `env.int(key, default?)` | `number \| undefined` | Parse as integer (`parseInt`) |
 | `env.json(key, default?)` | `object \| undefined` | Parse as JSON; throws an `Error` with a descriptive message on invalid JSON |
-| `env.oneOf(key, expectedValues, default?)` | `string \| undefined` | Return the value if it matches one of `expectedValues`; if the value does not match, return `default` (or `undefined`). Throws if `expectedValues` is missing or if `default` is not in `expectedValues`. |
+| `env.oneOf(key, expectedValues, default?)` | `string \| undefined` | Return the value only if it matches one of `expectedValues`, otherwise return `default`. Throws if `expectedValues` is not provided or if `default` is not itself in `expectedValues`. |
 
 The following example shows how to use `env` helpers in a server configuration file:
 
@@ -431,7 +431,7 @@ The following string utility functions are available:
 | `strings.nameToSlug(name, options?)` | Convert a name to a URL-friendly slug. Default separator: `'-'` |
 | `strings.startsWithANumber(value)` | Check if a string starts with a digit |
 | `strings.toKebabCase(value)` | Convert a string to `kebab-case` |
-| `strings.toRegressedEnumValue(value)` | Convert a value to a regressed, underscore-separated string suitable for use as an enum key (preserves original casing) |
+| `strings.toRegressedEnumValue(value)` | Replace accented characters with their ASCII equivalents, then separate words with underscores to produce a string suitable for use as an enum key (preserves original casing) |
 
 ### objects
 
@@ -459,7 +459,7 @@ The following date utility function is available:
 
 ## providerFactory
 
-Create a registry that stores and retrieves items by key, with lifecycle hooks. The factory is imported as follows:
+Create a pluggable registry that stores and retrieves items by key, with lifecycle hooks. Use `providerFactory` when you need a store of interchangeable strategies or adapters (e.g., upload providers, email providers). The factory is imported as follows:
 
 ```js
 const { providerFactory } = require('@strapi/utils');
@@ -519,7 +519,7 @@ registry.size(); // 1
 
 ## relations
 
-The `relations` namespace provides helpers to inspect relation attributes. It is imported as follows:
+The `relations` namespace provides helpers to inspect the cardinality of relation attributes (e.g., one-to-many vs. many-to-many). To check whether an attribute is a relation at all, use [`contentTypes.isRelationalAttribute`](#attribute-inspection-functions) instead. The namespace is imported as follows:
 
 ```js
 const { relations } = require('@strapi/utils');
@@ -578,7 +578,7 @@ In controllers, you can use the built-in `sanitizeQuery` and `sanitizeOutput` me
 
 ## setCreatorFields
 
-Set `createdBy` and `updatedBy` fields on an entity. The function is imported as follows:
+Set `createdBy` and `updatedBy` fields on an entity. The function returns a curried function: call it with options first, then with the entity data. It is imported as follows:
 
 ```js
 const { setCreatorFields } = require('@strapi/utils');
