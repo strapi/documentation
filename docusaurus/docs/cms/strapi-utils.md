@@ -131,10 +131,10 @@ import { env } from '@strapi/utils';
 | `env.int(key, default?)` | `number \| undefined` | Parse as integer (`parseInt`) |
 | `env.float(key, default?)` | `number \| undefined` | Parse as float (`parseFloat`) |
 | `env.bool(key, default?)` | `boolean \| undefined` | `'true'` returns `true`, anything else returns `false` |
-| `env.json(key, default?)` | `object \| undefined` | Parse as JSON; throws on invalid JSON |
+| `env.json(key, default?)` | `object \| undefined` | Parse as JSON; throws an `Error` with a descriptive message on invalid JSON |
 | `env.array(key, default?)` | `string[] \| undefined` | Split by comma, trim values, strip surrounding `[]` and double quotes |
 | `env.date(key, default?)` | `Date \| undefined` | Parse with `new Date()` |
-| `env.oneOf(key, expectedValues, default?)` | `string \| undefined` | Return value if it matches one of `expectedValues`, otherwise return `default`; throws only for invalid function usage |
+| `env.oneOf(key, expectedValues, default?)` | `string \| undefined` | Return the value if it matches one of `expectedValues`; if the value does not match, return `default` (or `undefined`). Throws if `expectedValues` is missing or if `default` is not in `expectedValues`. |
 
 ### Usage example
 
