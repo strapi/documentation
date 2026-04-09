@@ -288,7 +288,7 @@ const { pagination } = require('@strapi/utils');
 
 | Function | Description |
 | --- | --- |
-| `withDefaultPagination(params, options?)` | Apply default values and validate pagination parameters. Supports both `page`/`pageSize` and `start`/`limit` formats |
+| `withDefaultPagination(params, options?)` | Apply default values and validate pagination parameters. Supports both `page`/`pageSize` and `start`/`limit` formats. The `options` object accepts `defaults` (override initial values for each format) and `maxLimit` (cap the `limit` value; `-1` means no cap). |
 | `transformPagedPaginationInfo(params, total)` | Transform pagination data into `{ page, pageSize, pageCount, total }` format |
 | `transformOffsetPaginationInfo(params, total)` | Transform pagination data into `{ start, limit, total }` format |
 
