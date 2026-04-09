@@ -35,8 +35,8 @@ const { async } = require('@strapi/utils');
 
 | Function | Description |
 | --- | --- |
-| `async.pipe(...fns)` | Compose functions: the first function runs with the original arguments, each subsequent function receives the previous return value. Returns a `Promise`. |
 | `async.map(iterable, mapper, options?)` | Parallel map using `p-map` (also supports curried usage). Set `concurrency` in options to control parallelism. |
+| `async.pipe(...fns)` | Compose functions: the first function runs with the original arguments, each subsequent function receives the previous return value. Returns a `Promise`. |
 | `async.reduce(array)(iteratee, initialValue?)` | Asynchronous reduce over an array. The iteratee receives `(accumulator, item, index)`. |
 
 The following example uses `pipe` to compose async functions:
@@ -78,11 +78,11 @@ const { contentTypes } = require('@strapi/utils');
 
 | Function | Description |
 | --- | --- |
-| `isRelationalAttribute(attribute)` | Check if the attribute is a relation |
-| `isMediaAttribute(attribute)` | Check if the attribute is a media field |
-| `isDynamicZoneAttribute(attribute)` | Check if the attribute is a dynamic zone |
 | `isComponentAttribute(attribute)` | Check if the attribute is a component or a dynamic zone |
+| `isDynamicZoneAttribute(attribute)` | Check if the attribute is a dynamic zone |
+| `isMediaAttribute(attribute)` | Check if the attribute is a media field |
 | `isMorphToRelationalAttribute(attribute)` | Check if the attribute is a morph-to relation |
+| `isRelationalAttribute(attribute)` | Check if the attribute is a relation |
 | `isScalarAttribute(attribute)` | Check if the attribute is a scalar value |
 | `isTypedAttribute(attribute, type)` | Check if the attribute has a specific type |
 
@@ -90,14 +90,14 @@ const { contentTypes } = require('@strapi/utils');
 
 | Function | Description |
 | --- | --- |
-| `getTimestamps(schema)` | Return timestamp fields present in the schema (`createdAt`, `updatedAt`) |
 | `getCreatorFields(schema)` | Return creator fields present in the schema (`createdBy`, `updatedBy`) |
 | `getNonWritableAttributes(schema)` | Return field names that cannot be written to |
-| `getWritableAttributes(schema)` | Return field names that can be written to |
-| `isWritableAttribute(schema, attributeName)` | Check if a specific attribute is writable |
-| `hasDraftAndPublish(schema)` | Check if the schema has draft and publish enabled |
-| `getVisibleAttributes(schema)` | Return schema attributes that are not marked as non-visible |
 | `getScalarAttributes(schema)` | Return attributes that are scalar values |
+| `getTimestamps(schema)` | Return timestamp fields present in the schema (`createdAt`, `updatedAt`) |
+| `getVisibleAttributes(schema)` | Return schema attributes that are not marked as non-visible |
+| `getWritableAttributes(schema)` | Return field names that can be written to |
+| `hasDraftAndPublish(schema)` | Check if the schema has draft and publish enabled |
+| `isWritableAttribute(schema, attributeName)` | Check if a specific attribute is writable |
 
 ## env
 
@@ -127,12 +127,12 @@ import { env } from '@strapi/utils';
 | --- | --- | --- |
 | `env(key)` | `string \| undefined` | Return the raw value |
 | `env(key, default)` | `string` | Return the raw value or the default |
-| `env.int(key, default?)` | `number \| undefined` | Parse as integer (`parseInt`) |
-| `env.float(key, default?)` | `number \| undefined` | Parse as float (`parseFloat`) |
-| `env.bool(key, default?)` | `boolean \| undefined` | `'true'` returns `true`, anything else returns `false` |
-| `env.json(key, default?)` | `object \| undefined` | Parse as JSON; throws an `Error` with a descriptive message on invalid JSON |
 | `env.array(key, default?)` | `string[] \| undefined` | Split by comma, trim values, strip surrounding `[]` and double quotes |
+| `env.bool(key, default?)` | `boolean \| undefined` | `'true'` returns `true`, anything else returns `false` |
 | `env.date(key, default?)` | `Date \| undefined` | Parse with `new Date()` |
+| `env.float(key, default?)` | `number \| undefined` | Parse as float (`parseFloat`) |
+| `env.int(key, default?)` | `number \| undefined` | Parse as integer (`parseInt`) |
+| `env.json(key, default?)` | `object \| undefined` | Parse as JSON; throws an `Error` with a descriptive message on invalid JSON |
 | `env.oneOf(key, expectedValues, default?)` | `string \| undefined` | Return the value if it matches one of `expectedValues`; if the value does not match, return `default` (or `undefined`). Throws if `expectedValues` is missing or if `default` is not in `expectedValues`. |
 
 The following example shows how to use `env` helpers in a server configuration file:
@@ -225,11 +225,11 @@ const { file } = require('@strapi/utils');
 
 | Function | Return type | Description |
 | --- | --- | --- |
-| `streamToBuffer(stream)` | `Promise<Buffer>` | Convert a readable stream into a Buffer |
-| `getStreamSize(stream)` | `Promise<number>` | Calculate the total size of a stream in bytes |
 | `bytesToHumanReadable(bytes)` | `string` | Format bytes as a human-readable string (e.g., `'2 MB'`) |
 | `bytesToKbytes(bytes)` | `number` | Convert bytes to kilobytes (rounded to 2 decimals) |
+| `getStreamSize(stream)` | `Promise<number>` | Calculate the total size of a stream in bytes |
 | `kbytesToBytes(kbytes)` | `number` | Convert kilobytes to bytes |
+| `streamToBuffer(stream)` | `Promise<Buffer>` | Convert a readable stream into a Buffer |
 | `writableDiscardStream(options?)` | `Writable` | Create a writable stream that discards all data |
 
 ## hooks
@@ -287,9 +287,9 @@ const { pagination } = require('@strapi/utils');
 
 | Function | Description |
 | --- | --- |
-| `withDefaultPagination(params, options?)` | Apply default values and validate pagination parameters. Supports both `page`/`pageSize` and `start`/`limit` formats. The `options` object accepts `defaults` (override initial values for each format) and `maxLimit` (cap the `limit` value; `-1` means no cap). |
-| `transformPagedPaginationInfo(params, total)` | Transform pagination data into `{ page, pageSize, pageCount, total }` format |
 | `transformOffsetPaginationInfo(params, total)` | Transform pagination data into `{ start, limit, total }` format |
+| `transformPagedPaginationInfo(params, total)` | Transform pagination data into `{ page, pageSize, pageCount, total }` format |
+| `withDefaultPagination(params, options?)` | Apply default values and validate pagination parameters. Supports both `page`/`pageSize` and `start`/`limit` formats. The `options` object accepts `defaults` (override initial values for each format) and `maxLimit` (cap the `limit` value; `-1` means no cap). |
 
 ## parseType
 
@@ -377,16 +377,16 @@ const { strings, objects, arrays, dates } = require('@strapi/utils');
 
 | Function | Description |
 | --- | --- |
-| `strings.nameToSlug(name, options?)` | Convert a name to a URL-friendly slug. Default separator: `'-'` |
-| `strings.nameToCollectionName(name)` | Convert a name to a snake_case collection name |
-| `strings.toRegressedEnumValue(value)` | Convert a value to a regressed, underscore-separated string suitable for use as an enum key (preserves original casing) |
 | `strings.getCommonPath(...paths)` | Find the common path prefix from multiple file paths |
 | `strings.isCamelCase(value)` | Check if a string is in `camelCase` format |
-| `strings.isKebabCase(value)` | Check if a string is in `kebab-case` format |
-| `strings.toKebabCase(value)` | Convert a string to `kebab-case` |
-| `strings.startsWithANumber(value)` | Check if a string starts with a digit |
-| `strings.joinBy(separator, ...parts)` | Join strings with a separator, trimming duplicate separators at join points |
 | `strings.isEqual(a, b)` | Compare 2 values as strings |
+| `strings.isKebabCase(value)` | Check if a string is in `kebab-case` format |
+| `strings.joinBy(separator, ...parts)` | Join strings with a separator, trimming duplicate separators at join points |
+| `strings.nameToCollectionName(name)` | Convert a name to a snake_case collection name |
+| `strings.nameToSlug(name, options?)` | Convert a name to a URL-friendly slug. Default separator: `'-'` |
+| `strings.startsWithANumber(value)` | Check if a string starts with a digit |
+| `strings.toKebabCase(value)` | Convert a string to `kebab-case` |
+| `strings.toRegressedEnumValue(value)` | Convert a value to a regressed, underscore-separated string suitable for use as an enum key (preserves original casing) |
 
 ### objects
 
@@ -473,10 +473,10 @@ const { relations } = require('@strapi/utils');
 | Function | Description |
 | --- | --- |
 | `getRelationalFields(contentType)` | Return all relation field names from a content type |
-| `isOneToAny(attribute)` | Check for `oneToOne` or `oneToMany` relations |
-| `isManyToAny(attribute)` | Check for `manyToMany` or `manyToOne` relations |
-| `isAnyToOne(attribute)` | Check for `oneToOne` or `manyToOne` relations |
 | `isAnyToMany(attribute)` | Check for `oneToMany` or `manyToMany` relations |
+| `isAnyToOne(attribute)` | Check for `oneToOne` or `manyToOne` relations |
+| `isManyToAny(attribute)` | Check for `manyToMany` or `manyToOne` relations |
+| `isOneToAny(attribute)` | Check for `oneToOne` or `oneToMany` relations |
 | `isPolymorphic(attribute)` | Check for `morphOne`, `morphMany`, `morphToOne`, or `morphToMany` relations |
 
 ## sanitize
