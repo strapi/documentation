@@ -43,7 +43,7 @@ The following functions are available:
 | --- | --- |
 | `async.map(iterable, mapper, options?)` | Parallel map using `p-map`. Set `concurrency` in options to control parallelism. |
 | `async.pipe(...fns)` | Compose functions: the first function runs with the original arguments, each subsequent function receives the previous return value. Returns a `Promise`. |
-| `async.reduce(array)(iteratee, initialValue?)` | Asynchronous reduce over an array. Called in two steps: first pass the array, then pass the iteratee and optional initial value. The iteratee receives `(accumulator, item, index)`. |
+| `async.reduce(array)(iteratee, initialValue?)` | Asynchronous reduce over an array. Called in 2 steps: first pass the array, then pass the iteratee and optional initial value. The iteratee receives `(accumulator, item, index)`. |
 
 The following example uses `pipe` to compose async functions, and `reduce` to accumulate values:
 
@@ -374,7 +374,7 @@ parseType({ type: 'date', value: '2024-01-15T10:30:00Z' }); // '2024-01-15'
 
 ## policy
 
-Helpers to create and manage [policies](/cms/backend-customization/policies). The namespace exposes two functions: [`createPolicy`](#createpolicy) to define a policy handler with an optional configuration validator, and [`createPolicyContext`](#createpolicycontext) to build a typed context object that the handler can inspect. The namespace is imported as follows:
+Helpers to create and manage [policies](/cms/backend-customization/policies). The namespace exposes 2 functions: [`createPolicy`](#createpolicy) to define a policy handler with an optional configuration validator, and [`createPolicyContext`](#createpolicycontext) to build a typed context object that the handler can inspect. The namespace is imported as follows:
 
 ```js
 const { policy } = require('@strapi/utils');
@@ -602,7 +602,7 @@ Each method accepts an optional `options` object with the following properties:
 
 ## setCreatorFields
 
-Set `createdBy` and `updatedBy` fields on an entity. Use this when building a custom controller or service that creates or updates entries outside of Strapi's default [Document Service](/cms/api/document-service). The function returns a curried function: call it with options first, then with the entity data. It is imported as follows:
+Set `createdBy` and `updatedBy` fields on an entity. Use this when building a custom controller or service that creates or updates entries outside of Strapi's default [Document Service](/cms/api/document-service). The function returns a **curried function** <Annotation>A curried function is a function that does not take all its arguments at once. Instead, it returns a new function for each argument. This lets you fix some parameters first and pass the rest later — for example, `setCreatorFields({ user })` returns a reusable function that you can then call on any entity data.</Annotation>: call it with options first, then with the entity data. It is imported as follows:
 
 ```js
 const { setCreatorFields } = require('@strapi/utils');
