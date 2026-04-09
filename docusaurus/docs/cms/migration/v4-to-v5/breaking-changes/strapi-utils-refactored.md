@@ -29,7 +29,7 @@ In Strapi 5, the `strapi-utils` core package has been refactored. This page list
 | Element                   |  Description of the change |
 |---------------------------|-----------------------------------------------------------------------------------------------------|
 | `arrays` utils            | Added, and moved the `stringIncludes` method inside it (see [additional notes](#additional-notes)). |
-| <ul><li>`dates` utils</li><li>`objects` utils</li><li>`async` utils</li><li>`strings` utils</li></ul> | Added (see [additional notes](#additional-notes)).| Added (see [additional notes](#additional-notes)). |
+| <ul><li>`dates` utils</li><li>`objects` utils</li><li>`async` utils</li><li>`strings` utils</li></ul> | Added (see [additional notes](#additional-notes)). |
 | `strings.getCommonPath`    | Added |
 | `nameToSlug`               | Moved to `strings.nameToSlug` |
 | `nameToCollectionName`     | Moved to `strings.nameToCollectionName` |
@@ -61,6 +61,8 @@ In Strapi 5, the `strapi-utils` core package has been refactored. This page list
 - `arrays` utils: To use these new utils:
   1. Import them in your code with `import { arrays, dates, strings, objects } from '@strapi/utils';`.
   2. Use them, for instance as `arrays.includesString` or `strings.isEqual`.
+
+  For the complete reference of all available utilities, see the [`strapi-utils` documentation](/cms/strapi-utils).
 
 - `convertQueryParams` is replaced:
 
