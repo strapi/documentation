@@ -100,7 +100,7 @@ The following functions check the type of a single attribute:
 | `isMediaAttribute(attribute)` | Check if the attribute is a media field |
 | `isMorphToRelationalAttribute(attribute)` | Check if the attribute is a morph-to relation |
 | `isRelationalAttribute(attribute)` | Check if the attribute is a relation |
-| `isScalarAttribute(attribute)` | Check if the attribute is a **scalar value** <Annotation>A scalar value is a single, individual value rather than a collection or structure. In Strapi, this means a basic field like a string, number, boolean, or date — not a relation, component, or nested object.</Annotation> |
+| `isScalarAttribute(attribute)` | Check if the attribute is a **scalar value** <Annotation>A scalar value is a single, individual value rather than a collection or structure. In Strapi, this means a basic field like a string, number, boolean, or date -- not a relation, component, or nested object.</Annotation> |
 | `isTypedAttribute(attribute, type)` | Check if the attribute has a specific type |
 
 ### Schema inspection functions
@@ -602,7 +602,7 @@ Each method accepts an optional `options` object with the following properties:
 
 ## setCreatorFields
 
-Set `createdBy` and `updatedBy` fields on an entity. Use this when building a custom controller or service that creates or updates entries outside of Strapi's default [Document Service](/cms/api/document-service). The function returns a **curried function** <Annotation>A curried function is a function that does not take all its arguments at once. Instead, it returns a new function for each argument. This lets you fix some parameters first and pass the rest later — for example, `setCreatorFields({ user })` returns a reusable function that you can then call on any entity data.</Annotation>: call it with options first, then with the entity data. It is imported as follows:
+Set `createdBy` and `updatedBy` fields on an entity. Use this when building a custom controller or service that creates or updates entries outside of Strapi's default [Document Service](/cms/api/document-service). The function returns a **curried function** <Annotation>A curried function is a function that does not take all its arguments at once. Instead, it returns a new function for each argument. This lets you fix some parameters first and pass the rest later. For example, `setCreatorFields({ user })` returns a reusable function that you can then call on any entity data.</Annotation>: call it with options first, then with the entity data. It is imported as follows:
 
 ```js
 const { setCreatorFields } = require('@strapi/utils');
@@ -723,7 +723,7 @@ The following helper functions are available:
 
 ## zod
 
-Strapi re-exports the `z` instance from <ExternalLink to="https://github.com/colinhacks/zod" text="Zod" /> and provides a `validateZod` helper that wraps a Zod schema into a Strapi-style validator. Strapi does not add custom methods to Zod — `z` is the standard Zod API. The helpers are imported as follows:
+Strapi re-exports the `z` instance from <ExternalLink to="https://github.com/colinhacks/zod" text="Zod" /> and provides a `validateZod` helper that wraps a Zod schema into a Strapi-style validator. Strapi does not add custom methods to Zod. `z` is the standard Zod API. The helpers are imported as follows:
 
 ```js
 const { validateZod, z } = require('@strapi/utils');
