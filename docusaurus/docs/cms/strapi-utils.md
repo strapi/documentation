@@ -564,7 +564,13 @@ The returned object provides the following:
 | `sanitizers.fields(fields, schema, options?)` | Sanitize field selections |
 | `sanitizers.populate(populate, schema, options?)` | Sanitize populate directives |
 
-The optional `options` object on each method can include `auth`, `strictParams`, and `route`.
+Each method accepts an optional `options` object with the following properties:
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `auth` | `object` | `undefined` | The authentication object from the request (typically `ctx.state.auth`). When provided, relation fields the user does not have permission to access are removed from the output. When omitted, no permission-based filtering is applied. |
+| `strictParams` | `boolean` | `false` | When `true`, removes fields or query parameters not declared in the content-type schema. When `false`, unrecognized fields pass through. |
+| `route` | `object` | `undefined` | The route object (typically `ctx.route`). Used together with `strictParams` to allow custom query or body parameters defined in the [route's request schema](/cms/backend-customization/routes). Has no effect when `strictParams` is `false`. |
 
 :::tip
 In controllers, you can use the built-in `sanitizeQuery` and `sanitizeOutput` methods instead of calling `sanitize.createAPISanitizers` directly (see [Controllers](/cms/backend-customization/controllers#sanitization-and-validation-in-controllers) documentation for details).
@@ -626,7 +632,7 @@ The returned object provides the following:
 | `validators.fields(fields, schema, options?)` | Validate field selections |
 | `validators.populate(populate, schema, options?)` | Validate populate directives |
 
-The optional `options` object on each method can include `auth`, `strictParams`, and `route`.
+Each method accepts an optional `options` object with the same properties as the [sanitize options](#sanitize): `auth` for permission-based checks, `strictParams` to reject unknown fields, and `route` to allow custom route parameters in strict mode.
 
 ## yup
 
