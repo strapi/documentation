@@ -21,6 +21,11 @@ MDX and code blocks
 - Always specify code fence language. Use `title="<file path>"` (e.g., `title="/config/server.js"`) to show the file path in the code block header — never prefix the path with `path:` inside the title.
 - Never place a code block, table, or other structured element immediately after a heading or another block without an introductory sentence. Every block must be preceded by a complete sentence (subject + verb) that tells the reader what the block contains or demonstrates. End the sentence with a colon when it directly introduces the block. Examples: "The function accepts the following parameters:", "The following example shows how to configure the server:".
 
+Annotations
+- Use the `<Annotation>` component to define unfamiliar or domain-specific terms inline.
+- Always bold the annotated term: `**series hook** <Annotation>A series hook executes…</Annotation>`.
+- Keep annotation text concise (1-3 sentences). Use `<br/>` for line breaks inside the tooltip if needed.
+
 Preflight checks before PR
 - `npm run generate:llms-code` (anchors + file checks by default)
 - `npm run generate:llms`
