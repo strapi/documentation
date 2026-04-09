@@ -42,3 +42,4 @@ How to use
 - Authoring area guides: `agents/authoring/AGENTS.*.md`
 - Tabs/TabItem rules: `agents/templates/components/tabs.md`
 - ExpandableContent rules: `agents/templates/components/expandable-content.md`
+- Annotation rules: `agents/templates/components/annotation.md`

@@ -22,9 +22,7 @@ MDX and code blocks
 - Never place a code block, table, or other structured element immediately after a heading or another block without an introductory sentence. Every block must be preceded by a complete sentence (subject + verb) that tells the reader what the block contains or demonstrates. End the sentence with a colon when it directly introduces the block. Examples: "The function accepts the following parameters:", "The following example shows how to configure the server:".
 
 Annotations
-- Use the `<Annotation>` component to define unfamiliar or domain-specific terms inline.
-- Always bold the annotated term: `**series hook** <Annotation>A series hook executes…</Annotation>`.
-- Keep annotation text concise (1-3 sentences). Use `<br/>` for line breaks inside the tooltip if needed.
+- Use the `<Annotation>` component for inline glossary tooltips. See `agents/templates/components/annotation.md` for full rules, props, and canonical examples.
 
 Preflight checks before PR
 - `npm run generate:llms-code` (anchors + file checks by default)
