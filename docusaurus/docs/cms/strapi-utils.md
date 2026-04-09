@@ -366,7 +366,7 @@ parseType({ type: 'date', value: '2024-01-15T10:30:00Z' }); // '2024-01-15'
 
 ## policy
 
-Helpers to create and manage [policies](/cms/backend-customization/policies). The namespace exposes two functions: [`createPolicy`](#createpolicy) to define a policy handler with an optional config validator, and [`createPolicyContext`](#createpolicycontext) to build a typed context object that the handler can inspect. The namespace is imported as follows:
+Helpers to create and manage [policies](/cms/backend-customization/policies). The namespace exposes two functions: [`createPolicy`](#createpolicy) to define a policy handler with an optional configuration validator, and [`createPolicyContext`](#createpolicycontext) to build a typed context object that the handler can inspect. The namespace is imported as follows:
 
 ```js
 const { policy } = require('@strapi/utils');
@@ -382,7 +382,7 @@ Create a policy with an optional configuration validator. The function accepts t
 | `handler` | `function` | Yes | Policy handler function |
 | `validator` | `function` | No | Validate the policy configuration; throws on invalid config |
 
-The following example creates a policy with a config validator:
+The following example creates a policy with a configuration validator:
 
 ```js
 const myPolicy = policy.createPolicy({
