@@ -512,7 +512,7 @@ The returned object provides:
 | `sanitizers.fields(fields, schema, options?)` | Sanitize field selections |
 | `sanitizers.populate(populate, schema, options?)` | Sanitize populate directives |
 
-The optional `options` object on each method can include `auth`, `strictParams`, and `route`.
+The optional `options` object on each method can include `auth`.
 
 :::tip
 In controllers, you can use the built-in `sanitizeQuery` and `sanitizeOutput` methods instead of calling `sanitize.createAPISanitizers` directly. See [Controllers](/cms/backend-customization/controllers) for details.
@@ -576,7 +576,7 @@ The returned object provides:
 | `validators.fields(fields, schema, options?)` | Validate field selections |
 | `validators.populate(populate, schema, options?)` | Validate populate directives |
 
-The optional `options` object on each method can include `auth`, `strictParams`, and `route`.
+The optional `options` object on each method can include `auth`.
 
 ## yup
 
