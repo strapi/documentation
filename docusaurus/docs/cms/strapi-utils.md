@@ -27,11 +27,13 @@ The [error classes](#errors) section of this page expands on the error handling 
 
 ## async
 
-The `async` namespace provides asynchronous utility functions.
+The `async` namespace provides asynchronous utility functions. It is imported as follows:
 
 ```js
 const { async } = require('@strapi/utils');
 ```
+
+The following functions are available:
 
 | Function | Description |
 | --- | --- |
@@ -53,13 +55,15 @@ const result = await asyncUtils.pipe(
 
 ## contentTypes
 
-The `contentTypes` namespace exposes constants and helper functions for working with Strapi content-type schemas.
+The `contentTypes` namespace exposes constants and helper functions for working with Strapi content-type schemas. It is imported as follows:
 
 ```js
 const { contentTypes } = require('@strapi/utils');
 ```
 
 ### Constants
+
+The following constants are available:
 
 | Constant | Value | Description |
 | --- | --- | --- |
@@ -76,6 +80,8 @@ const { contentTypes } = require('@strapi/utils');
 
 ### Attribute inspection functions
 
+The following functions check the type of a single attribute:
+
 | Function | Description |
 | --- | --- |
 | `isComponentAttribute(attribute)` | Check if the attribute is a component or a dynamic zone |
@@ -87,6 +93,8 @@ const { contentTypes } = require('@strapi/utils');
 | `isTypedAttribute(attribute, type)` | Check if the attribute has a specific type |
 
 ### Schema inspection functions
+
+The following functions inspect an entire content-type schema:
 
 | Function | Description |
 | --- | --- |
@@ -145,6 +153,8 @@ import { env } from '@strapi/utils';
 </TabItem>
 
 </Tabs>
+
+The `env` helper can be called directly or with the following typed methods:
 
 | Method | Return type | Description |
 | --- | --- | --- |
@@ -240,11 +250,13 @@ Use `ApplicationError` when throwing errors in model lifecycle hooks so that mea
 
 ## file
 
-The `file` namespace provides helpers for working with streams and file sizes.
+The `file` namespace provides helpers for working with streams and file sizes. It is imported as follows:
 
 ```js
 const { file } = require('@strapi/utils');
 ```
+
+The following functions are available:
 
 | Function | Return type | Description |
 | --- | --- | --- |
@@ -257,13 +269,13 @@ const { file } = require('@strapi/utils');
 
 ## hooks
 
-Factory functions to create hook registries. Hooks let you register handler functions and execute them in different patterns.
+Factory functions to create hook registries. Hooks let you register handler functions and execute them in different patterns. The namespace is imported as follows:
 
 ```js
 const { hooks } = require('@strapi/utils');
 ```
 
-Each hook exposes 4 methods:
+Each hook instance exposes the following 4 methods:
 
 | Method | Description |
 | --- | --- |
@@ -273,6 +285,8 @@ Each hook exposes 4 methods:
 | `call(...args)` | Execute registered handlers according to the hook type |
 
 ### Available hook factories
+
+The following factory functions create different hook types:
 
 | Factory | Execution pattern |
 | --- | --- |
@@ -302,11 +316,13 @@ await myHook.call({ data: 'example' });
 
 ## pagination
 
-The `pagination` namespace provides helpers for handling pagination parameters.
+The `pagination` namespace provides helpers for handling pagination parameters. It is imported as follows:
 
 ```js
 const { pagination } = require('@strapi/utils');
 ```
+
+The following functions are available:
 
 | Function | Description |
 | --- | --- |
@@ -316,11 +332,13 @@ const { pagination } = require('@strapi/utils');
 
 ## parseType
 
-Cast a value to a specific Strapi field type.
+Cast a value to a specific Strapi field type. The function is imported as follows:
 
 ```js
 const { parseType } = require('@strapi/utils');
 ```
+
+The function accepts the following parameters:
 
 | Parameter | Type | Description |
 | --- | --- | --- |
@@ -348,7 +366,7 @@ parseType({ type: 'date', value: '2024-01-15T10:30:00Z' }); // '2024-01-15'
 
 ## policy
 
-Helpers to create and manage [policies](/cms/backend-customization/policies).
+Helpers to create and manage [policies](/cms/backend-customization/policies). The namespace is imported as follows:
 
 ```js
 const { policy } = require('@strapi/utils');
@@ -356,13 +374,15 @@ const { policy } = require('@strapi/utils');
 
 ### createPolicy
 
-Create a policy with an optional configuration validator:
+Create a policy with an optional configuration validator. The function accepts the following parameters:
 
 | Parameter | Type | Required | Description |
 | --- | --- | --- | --- |
 | `name` | `string` | No | Policy name (defaults to `'unnamed'`) |
 | `handler` | `function` | Yes | Policy handler function |
 | `validator` | `function` | No | Validate the policy configuration; throws on invalid config |
+
+The following example creates a policy with a config validator:
 
 ```js
 const myPolicy = policy.createPolicy({
@@ -390,13 +410,15 @@ policyCtx.type; // 'admin'
 
 ## primitives
 
-Low-level data transformation helpers. The primitives sub-modules (`strings`, `objects`, `arrays`, `dates`) are re-exported as top-level namespaces:
+Low-level data transformation helpers. The primitives sub-modules (`strings`, `objects`, `arrays`, `dates`) are re-exported as top-level namespaces and imported as follows:
 
 ```js
 const { strings, objects, arrays, dates } = require('@strapi/utils');
 ```
 
 ### strings
+
+The following string utility functions are available:
 
 | Function | Description |
 | --- | --- |
@@ -413,11 +435,15 @@ const { strings, objects, arrays, dates } = require('@strapi/utils');
 
 ### objects
 
+The following object utility function is available:
+
 | Function | Description |
 | --- | --- |
 | `objects.keysDeep(obj)` | Return all nested keys in dot-notation (e.g., `['a.b', 'a.c']`) |
 
 ### arrays
+
+The following array utility function is available:
 
 | Function | Description |
 | --- | --- |
@@ -425,13 +451,15 @@ const { strings, objects, arrays, dates } = require('@strapi/utils');
 
 ### dates
 
+The following date utility function is available:
+
 | Function | Description |
 | --- | --- |
 | `dates.timestampCode(date?)` | Convert a `Date` (defaults to `new Date()`) to a base-36 string of the millisecond timestamp |
 
 ## providerFactory
 
-Create a registry that stores and retrieves items by key, with lifecycle hooks.
+Create a registry that stores and retrieves items by key, with lifecycle hooks. The factory is imported as follows:
 
 ```js
 const { providerFactory } = require('@strapi/utils');
@@ -439,11 +467,15 @@ const { providerFactory } = require('@strapi/utils');
 
 ### Parameters
 
+The factory accepts the following parameter:
+
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
 | `throwOnDuplicates` | `boolean` | `true` | Throw an error when registering a key that already exists |
 
 ### Provider methods
+
+The returned provider instance exposes the following methods:
 
 | Method | Return type | Description |
 | --- | --- | --- |
@@ -487,11 +519,13 @@ registry.size(); // 1
 
 ## relations
 
-The `relations` namespace provides helpers to inspect relation attributes.
+The `relations` namespace provides helpers to inspect relation attributes. It is imported as follows:
 
 ```js
 const { relations } = require('@strapi/utils');
 ```
+
+The following functions are available:
 
 | Function | Description |
 | --- | --- |
@@ -504,7 +538,7 @@ const { relations } = require('@strapi/utils');
 
 ## sanitize
 
-The `sanitize` namespace provides functions to clean input and output data based on content-type schemas. Use `sanitize` to remove disallowed, private, or restricted fields before processing or returning data.
+The `sanitize` namespace provides functions to clean input and output data based on content-type schemas. Use `sanitize` to remove disallowed, private, or restricted fields before processing or returning data. It is imported as follows:
 
 ```js
 const { sanitize } = require('@strapi/utils');
@@ -538,11 +572,13 @@ In controllers, you can use the built-in `sanitizeQuery` and `sanitizeOutput` me
 
 ## setCreatorFields
 
-Set `createdBy` and `updatedBy` fields on an entity.
+Set `createdBy` and `updatedBy` fields on an entity. The function is imported as follows:
 
 ```js
 const { setCreatorFields } = require('@strapi/utils');
 ```
+
+The function accepts the following parameters:
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -565,7 +601,7 @@ const updated = updateCreator(data);
 
 ## validate
 
-The `validate` namespace provides functions to check input and query data against content-type schemas. Use `validate` to reject requests that reference unknown, private, or restricted fields.
+The `validate` namespace provides functions to check input and query data against content-type schemas. Use `validate` to reject requests that reference unknown, private, or restricted fields. It is imported as follows:
 
 ```js
 const { validate } = require('@strapi/utils');
@@ -594,13 +630,15 @@ The optional `options` object on each method can include `auth`, `strictParams`,
 
 ## yup
 
-The `yup` namespace re-exports the <ExternalLink to="https://github.com/jquense/yup" text="Yup validation library" /> with Strapi-specific extensions.
+The `yup` namespace re-exports the <ExternalLink to="https://github.com/jquense/yup" text="Yup validation library" /> with Strapi-specific extensions. It is imported as follows:
 
 ```js
 const { yup } = require('@strapi/utils');
 ```
 
 ### Additional Yup methods
+
+Strapi adds the following methods to Yup schemas:
 
 | Method | Schema type | Description |
 | --- | --- | --- |
@@ -621,6 +659,8 @@ const { yup } = require('@strapi/utils');
 const { validateYupSchema, validateYupSchemaSync } = require('@strapi/utils');
 ```
 
+The following helper functions are available:
+
 | Function | Description |
 | --- | --- |
 | `validateYupSchema(schema, options?)` | Return an async validator function `(body, errorMessage?) => Promise` for a Yup schema. Default options: `{ strict: true, abortEarly: false }`. |
@@ -628,7 +668,7 @@ const { validateYupSchema, validateYupSchemaSync } = require('@strapi/utils');
 
 ## zod
 
-Strapi exposes Zod helpers as named exports.
+Strapi exposes Zod helpers as named exports, imported as follows:
 
 ```js
 const { validateZod, z } = require('@strapi/utils');
