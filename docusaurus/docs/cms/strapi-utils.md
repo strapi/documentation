@@ -99,6 +99,29 @@ const { contentTypes } = require('@strapi/utils');
 | `hasDraftAndPublish(schema)` | Check if the schema has draft and publish enabled |
 | `isWritableAttribute(schema, attributeName)` | Check if a specific attribute is writable |
 
+The following example iterates over a content type's attributes to find relations and writable fields:
+
+```js
+const { contentTypes } = require('@strapi/utils');
+
+const articleSchema = strapi.contentType('api::article.article');
+
+// List all relation fields
+for (const [name, attribute] of Object.entries(articleSchema.attributes)) {
+  if (contentTypes.isRelationalAttribute(attribute)) {
+    console.log(`${name} is a relation`);
+  }
+}
+
+// Get only the fields that can be written to
+const writableFields = contentTypes.getWritableAttributes(articleSchema);
+
+// Check if draft and publish is enabled
+if (contentTypes.hasDraftAndPublish(articleSchema)) {
+  console.log('This content type supports drafts');
+}
+```
+
 ## env
 
 A helper function to read environment variables with type-safe parsing. The `env` function returns the raw string value, while its methods parse the value to a specific type.
