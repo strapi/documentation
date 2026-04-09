@@ -609,7 +609,13 @@ const updated = updateCreator(data);
 
 ## validate
 
-The `validate` namespace provides functions to check input and query data against content-type schemas. Use `validate` to reject requests that reference unknown, private, or restricted fields. It is imported as follows:
+The `validate` namespace provides functions to check input and query data against content-type schemas. Use `validate` to reject requests that reference unknown, private, or restricted fields.
+
+:::tip
+Like `sanitize`, controllers already provide built-in validation helpers (`validateQuery`, `validateInput`). Use the lower-level API below when you need validation outside of a controller context.
+:::
+
+The namespace is imported as follows:
 
 ```js
 const { validate } = require('@strapi/utils');
@@ -635,6 +641,25 @@ The returned object provides the following:
 | `validators.populate(populate, schema, options?)` | Validate populate directives |
 
 Each method accepts an optional `options` object with the same properties as the [sanitize options](#sanitize): `auth` for permission-based checks, `strictParams` to reject unknown fields, and `route` to allow custom route parameters in strict mode.
+
+The following example validates a query in a custom service and catches the error:
+
+```js
+const { validate, errors } = require('@strapi/utils');
+
+const validators = validate.createAPIValidators({
+  getModel: strapi.getModel.bind(strapi),
+});
+
+try {
+  await validators.query(ctx.query, 'api::article.article', {
+    auth: ctx.state.auth,
+  });
+} catch (error) {
+  // error is a ValidationError with details about which fields failed
+  console.error(error.message, error.details);
+}
+```
 
 ## yup
 
