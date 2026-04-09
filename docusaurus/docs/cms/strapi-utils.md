@@ -136,7 +136,7 @@ A helper function to read environment variables with type-safe parsing. The `env
 
 <Tabs groupId="js-ts">
 
-<TabItem value="javascript" label="JavaScript">
+<TabItem value="js" label="JavaScript" default>
 
 ```js
 const { env } = require('@strapi/utils');
@@ -144,7 +144,7 @@ const { env } = require('@strapi/utils');
 
 </TabItem>
 
-<TabItem value="typescript" label="TypeScript">
+<TabItem value="ts" label="TypeScript">
 
 ```ts
 import { env } from '@strapi/utils';
@@ -196,7 +196,7 @@ The error classes are imported as follows:
 
 <Tabs groupId="js-ts">
 
-<TabItem value="javascript" label="JavaScript">
+<TabItem value="js" label="JavaScript" default>
 
 ```js
 const { errors } = require('@strapi/utils');
@@ -204,7 +204,7 @@ const { errors } = require('@strapi/utils');
 
 </TabItem>
 
-<TabItem value="typescript" label="TypeScript">
+<TabItem value="ts" label="TypeScript">
 
 ```ts
 import { errors } from '@strapi/utils';
