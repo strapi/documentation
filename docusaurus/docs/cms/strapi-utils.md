@@ -346,7 +346,7 @@ The function accepts the following parameters:
 | `value` | `unknown` | The value to parse |
 | `forceCast` | `boolean` | Force conversion for booleans. Default: `false` |
 
-Return values by type:
+The return value depends on the target type:
 
 | Type | Return type | Format |
 | --- | --- | --- |
