@@ -347,7 +347,7 @@ The `ApplicationError` class is a generic error class for application errors and
 
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |
-| `message` | `string` | The error message | `An application error occured` |
+| `message` | `string` | The error message | `An application error occurred` |
 | `details` | `object` | Object to define additional details | `{}` |
 
 ```js
@@ -436,7 +436,7 @@ The `NotImplementedError` class is a specific error class used when the incoming
 
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |
-| `message` | `string` | The error message | `This feature isn't implemented` |
+| `message` | `string` | The error message | `This feature is not implemented yet` |
 
 ```js
 throw new errors.NotImplementedError('This isn\'t implemented', { feature: 'test', implemented: false });
