@@ -1,0 +1,744 @@
+---
+title: strapi-utils
+description: The @strapi/utils package provides shared utility functions for error handling, environment variables, data validation, hooks, string manipulation, and more.
+displayed_sidebar: cmsSidebar
+toc_max_heading_level: 2
+tags:
+  - api
+  - strapi-utils
+  - error-handling
+  - env
+  - hooks
+  - validation
+  - primitives
+---
+
+# `strapi-utils`
+
+<Tldr>
+The `@strapi/utils` package provides shared helper functions used across Strapi's core and available for use in custom code. It includes error classes, environment variable helpers, hook factories, type parsing, string and file utilities, and async helpers.
+</Tldr>
+
+The `@strapi/utils` package (`import { ... } from '@strapi/utils'`) contains utility functions that Strapi uses internally but that you can also use in your own [controllers](/cms/backend-customization/controllers), [services](/cms/backend-customization/services), [policies](/cms/backend-customization/policies), [middlewares](/cms/backend-customization/middlewares), and [lifecycle hooks](/cms/backend-customization/models#lifecycle-hooks).
+
+:::tip Finding what you need
+Sections on this page are organized **alphabetically by export name**. Use the table of contents on the right to jump directly to the utility you need.
+:::
+
+:::note
+The [error classes](#errors) section of this page expands on the error handling documentation found in the dedicated [Error handling](/cms/error-handling) page.
+:::
+
+## async
+
+The `async` namespace provides asynchronous utility functions. It is imported as follows:
+
+```js
+const { async } = require('@strapi/utils');
+```
+
+The following functions are available:
+
+| Function | Description |
+| --- | --- |
+| `async.map(iterable, mapper, options?)` | Parallel map using `p-map`. Set `concurrency` in options to control parallelism. |
+| `async.pipe(...fns)` | Compose functions: the first function runs with the original arguments, each subsequent function receives the previous return value. Returns a `Promise`. |
+| `async.reduce(array)(iteratee, initialValue?)` | Asynchronous reduce over an array. Called in 2 steps: first pass the array, then pass the iteratee and optional initial value. The iteratee receives `(accumulator, item, index)`. |
+
+The following example uses `pipe` to compose async functions, and `reduce` to accumulate values:
+
+```js
+const { async: asyncUtils } = require('@strapi/utils');
+
+// Compose async functions into a pipeline
+const result = await asyncUtils.pipe(
+  fetchUser,
+  enrichWithProfile,
+  formatResponse
+)(userId);
+
+// Reduce an array asynchronously (note the curried call)
+const total = await asyncUtils.reduce([1, 2, 3])(
+  async (sum, n) => sum + n,
+  0
+); // 6
+```
+
+## contentTypes
+
+The `contentTypes` namespace exposes constants and helper functions for working with Strapi content-type schemas. It is imported as follows:
+
+```js
+const { contentTypes } = require('@strapi/utils');
+```
+
+### Constants
+
+The following constants are available:
+
+| Constant | Value | Description |
+| --- | --- | --- |
+| `ID_ATTRIBUTE` | `'id'` | Primary key field name |
+| `DOC_ID_ATTRIBUTE` | `'documentId'` | Document identifier field name |
+| `PUBLISHED_AT_ATTRIBUTE` | `'publishedAt'` | Publication timestamp field name |
+| `FIRST_PUBLISHED_AT_ATTRIBUTE` | `'firstPublishedAt'` | First publication timestamp field name |
+| `CREATED_BY_ATTRIBUTE` | `'createdBy'` | Creator reference field name |
+| `UPDATED_BY_ATTRIBUTE` | `'updatedBy'` | Last editor reference field name |
+| `CREATED_AT_ATTRIBUTE` | `'createdAt'` | Creation timestamp field name |
+| `UPDATED_AT_ATTRIBUTE` | `'updatedAt'` | Update timestamp field name |
+| `SINGLE_TYPE` | `'singleType'` | Single type kind identifier |
+| `COLLECTION_TYPE` | `'collectionType'` | Collection type kind identifier |
+
+### Attribute inspection functions
+
+The following functions check the type of a single attribute:
+
+| Function | Description |
+| --- | --- |
+| `isComponentAttribute(attribute)` | Check if the attribute is a component or a dynamic zone (returns `true` for both; use `isDynamicZoneAttribute` to distinguish) |
+| `isDynamicZoneAttribute(attribute)` | Check if the attribute is a dynamic zone |
+| `isMediaAttribute(attribute)` | Check if the attribute is a media field |
+| `isMorphToRelationalAttribute(attribute)` | Check if the attribute is a morph-to relation |
+| `isRelationalAttribute(attribute)` | Check if the attribute is a relation |
+| `isScalarAttribute(attribute)` | Check if the attribute is a **scalar value** <Annotation>A scalar value is a single, individual value rather than a collection or structure. In Strapi, this means a basic field like a string, number, boolean, or date -- not a relation, component, or nested object.</Annotation> |
+| `isTypedAttribute(attribute, type)` | Check if the attribute has a specific type |
+
+### Schema inspection functions
+
+The following functions inspect an entire content-type schema:
+
+| Function | Description |
+| --- | --- |
+| `getCreatorFields(schema)` | Return creator fields present in the schema (`createdBy`, `updatedBy`) |
+| `getNonWritableAttributes(schema)` | Return field names that cannot be written to |
+| `getScalarAttributes(schema)` | Return attributes that are scalar values |
+| `getTimestamps(schema)` | Return timestamp fields present in the schema (`createdAt`, `updatedAt`) |
+| `getVisibleAttributes(schema)` | Return schema attributes that are not marked as non-visible |
+| `getWritableAttributes(schema)` | Return field names that can be written to |
+| `hasDraftAndPublish(schema)` | Check if the schema has draft and publish enabled |
+| `isWritableAttribute(schema, attributeName)` | Check if a specific attribute is writable |
+
+The following example iterates over a content type's attributes to find relations and writable fields:
+
+```js
+const { contentTypes } = require('@strapi/utils');
+
+const articleSchema = strapi.contentType('api::article.article');
+
+// List all relation fields
+for (const [name, attribute] of Object.entries(articleSchema.attributes)) {
+  if (contentTypes.isRelationalAttribute(attribute)) {
+    console.log(`${name} is a relation`);
+  }
+}
+
+// Get only the fields that can be written to
+const writableFields = contentTypes.getWritableAttributes(articleSchema);
+
+// Check if draft and publish is enabled
+if (contentTypes.hasDraftAndPublish(articleSchema)) {
+  console.log('This content type supports drafts');
+}
+```
+
+## env
+
+A helper function to read environment variables with type-safe parsing. The `env` function returns the raw string value, while its methods parse the value to a specific type. It is imported as follows:
+
+```js
+const { env } = require('@strapi/utils');
+// or in TypeScript: import { env } from '@strapi/utils';
+```
+
+The `env` helper can be called directly or with the following typed methods:
+
+| Method | Return type | Description |
+| --- | --- | --- |
+| `env(key)` | `string \| undefined` | Return the raw value |
+| `env(key, default)` | `string` | Return the raw value or the default |
+| `env.array(key, default?)` | `string[] \| undefined` | Split by comma, trim values, strip surrounding `[]` and double quotes |
+| `env.bool(key, default?)` | `boolean \| undefined` | `'true'` returns `true`, anything else returns `false` |
+| `env.date(key, default?)` | `Date \| undefined` | Parse with `new Date()` |
+| `env.float(key, default?)` | `number \| undefined` | Parse as float (`parseFloat`) |
+| `env.int(key, default?)` | `number \| undefined` | Parse as integer (`parseInt`) |
+| `env.json(key, default?)` | `object \| undefined` | Parse as JSON; throws an `Error` with a descriptive message on invalid JSON |
+| `env.oneOf(key, expectedValues, default?)` | `string \| undefined` | Return the value only if it matches one of `expectedValues`, otherwise return `default`. Throws if `expectedValues` is not provided or if `default` is not itself in `expectedValues`. |
+
+The following example shows how to use `env` helpers in a server configuration file:
+
+```js title="/config/server.js"
+const { env } = require('@strapi/utils');
+
+module.exports = {
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+};
+```
+
+## errors
+
+Custom error classes that extend the Node.js `Error` class. All errors share a common structure:
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `name` | `string` | Error class name (e.g., `'ApplicationError'`, `'ValidationError'`) |
+| `message` | `string` | Human-readable error message |
+| `details` | `object` | Additional error context |
+
+The error classes are imported as follows:
+
+```js
+const { errors } = require('@strapi/utils');
+// or in TypeScript: import { errors } from '@strapi/utils';
+```
+
+The following error classes are available:
+
+| Error class | Default message | Details default |
+| --- | --- | --- |
+| `ApplicationError` | `'An application error occurred'` | `{}` |
+| `ValidationError` | (required) | depends on constructor input |
+| `YupValidationError` | `'Validation'` (or formatted Yup message) | `{ errors: [] }` |
+| `PaginationError` | `'Invalid pagination'` | depends on constructor input |
+| `NotFoundError` | `'Entity not found'` | depends on constructor input |
+| `ForbiddenError` | `'Forbidden access'` | depends on constructor input |
+| `UnauthorizedError` | `'Unauthorized'` | depends on constructor input |
+| `RateLimitError` | `'Too many requests, please try again later.'` | `{}` |
+| `PayloadTooLargeError` | `'Entity too large'` | depends on constructor input |
+| `PolicyError` | `'Policy Failed'` | `{}` |
+| `NotImplementedError` | `'This feature is not implemented yet'` | depends on constructor input |
+
+`PolicyError` extends `ForbiddenError`. All other error classes extend `ApplicationError`.
+
+The following example shows how to throw errors in a service and a policy:
+
+```js
+const { errors } = require('@strapi/utils');
+
+// In a service or lifecycle hook
+throw new errors.ApplicationError('Something went wrong', { foo: 'bar' });
+
+// In a policy
+throw new errors.PolicyError('Access denied', { policy: 'is-owner' });
+```
+
+:::tip
+Use `ApplicationError` when throwing errors in model lifecycle hooks so that meaningful messages display in the admin panel. See the [Error handling](/cms/error-handling) page for more examples.
+:::
+
+## file
+
+The `file` namespace provides helpers for working with streams and file sizes. It is imported as follows:
+
+```js
+const { file } = require('@strapi/utils');
+```
+
+The following functions are available:
+
+| Function | Return type | Description |
+| --- | --- | --- |
+| `bytesToHumanReadable(bytes)` | `string` | Format bytes as a human-readable string (e.g., `'2 MB'`) |
+| `bytesToKbytes(bytes)` | `number` | Convert bytes to kilobytes (rounded to 2 decimals) |
+| `getStreamSize(stream)` | `Promise<number>` | Calculate the total size of a stream in bytes |
+| `kbytesToBytes(kbytes)` | `number` | Convert kilobytes to bytes |
+| `streamToBuffer(stream)` | `Promise<Buffer>` | Convert a readable stream into a Buffer |
+| `writableDiscardStream(options?)` | `Writable` | Create a writable stream that discards all data |
+
+The following example converts an uploaded stream to a buffer and logs its size:
+
+```js
+const { file } = require('@strapi/utils');
+
+const buffer = await file.streamToBuffer(uploadStream);
+const sizeInKb = file.bytesToKbytes(buffer.length);
+console.log(`Uploaded ${file.bytesToHumanReadable(buffer.length)} (${sizeInKb} KB)`);
+```
+
+## hooks
+
+Factory functions to create hook registries. Hooks let you register handler functions and execute them in different patterns. The namespace is imported as follows:
+
+```js
+const { hooks } = require('@strapi/utils');
+```
+
+Each hook instance exposes the following 4 methods:
+
+| Method | Description |
+| --- | --- |
+| `register(handler)` | Add a handler function to the hook |
+| `delete(handler)` | Remove a previously registered handler |
+| `getHandlers()` | Return the list of registered handlers |
+| `call(...args)` | Execute registered handlers according to the hook type |
+
+### Available hook factories
+
+The following factory functions create different hook types. Use **series** when handlers must run in order, **waterfall** when each handler transforms data for the next, **parallel** when handlers are independent and can run concurrently, and **bail** when you need the first handler that returns a value to short-circuit the rest:
+
+| Factory | Execution pattern |
+| --- | --- |
+| `hooks.createAsyncSeriesHook()` | Execute handlers sequentially with the same context |
+| `hooks.createAsyncSeriesWaterfallHook()` | Execute handlers sequentially, passing each return value to the next handler |
+| `hooks.createAsyncParallelHook()` | Execute all handlers concurrently |
+| `hooks.createAsyncBailHook()` | Execute handlers sequentially, stop at the first handler that returns a non-`undefined` value |
+
+The following example registers and calls handlers with a **series hook** <Annotation>A series hook executes handlers sequentially, one after another, in the order they were registered. Other patterns include waterfall (each handler receives the previous handler's return value), parallel (all handlers run concurrently), and bail (stops at the first handler that returns a value). See [admin hooks](/cms/plugins-development/admin-hooks) for more details.</Annotation>:
+
+```js
+const { hooks } = require('@strapi/utils');
+
+const myHook = hooks.createAsyncSeriesHook();
+
+myHook.register(async (context) => {
+  console.log('First handler', context);
+});
+
+myHook.register(async (context) => {
+  console.log('Second handler', context);
+});
+
+// Execute all handlers in order
+await myHook.call({ data: 'example' });
+```
+
+## pagination
+
+The `pagination` namespace provides helpers for handling pagination parameters. It is imported as follows:
+
+```js
+const { pagination } = require('@strapi/utils');
+```
+
+The following functions are available:
+
+| Function | Description |
+| --- | --- |
+| `transformOffsetPaginationInfo(params, total)` | Transform pagination data into `{ start, limit, total }` format |
+| `transformPagedPaginationInfo(params, total)` | Transform pagination data into `{ page, pageSize, pageCount, total }` format |
+| `withDefaultPagination(params, options?)` | Apply default values and validate pagination parameters (see details below) |
+
+The `withDefaultPagination` function supports both `page`/`pageSize` and `start`/`limit` formats. It accepts an optional `options` object with the following properties:
+
+| Option | Type | Description |
+| --- | --- | --- |
+| `defaults` | `object` | Override the initial pagination values for each format (e.g., `{ page: { pageSize: 25 } }`) |
+| `maxLimit` | `number` | Cap the `limit` or `pageSize` value. Set to `-1` for no cap. |
+
+The following example applies default pagination and transforms the result:
+
+```js
+const { pagination } = require('@strapi/utils');
+
+const params = pagination.withDefaultPagination({ page: 2 }, { maxLimit: 100 });
+const info = pagination.transformPagedPaginationInfo(params, 250);
+// { page: 2, pageSize: 25, pageCount: 10, total: 250 }
+```
+
+## parseType
+
+Cast a value to a specific Strapi field type. The function is imported as follows:
+
+```js
+const { parseType } = require('@strapi/utils');
+```
+
+The function accepts the following parameters:
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Target type: `'boolean'`, `'integer'`, `'biginteger'`, `'float'`, `'decimal'`, `'time'`, `'date'`, `'timestamp'`, or `'datetime'` |
+| `value` | `unknown` | The value to parse |
+| `forceCast` | `boolean` | Force conversion for booleans. Default: `false` |
+
+The return value depends on the target type:
+
+| Type | Return type | Format |
+| --- | --- | --- |
+| `boolean` | `boolean` | Accepts `'true'`, `'t'`, `'1'`, `1` as `true` |
+| `integer`, `biginteger`, `float`, `decimal` | `number` | Numeric conversion |
+| `time` | `string` | `HH:mm:ss.SSS` |
+| `date` | `string` | `yyyy-MM-dd` |
+| `timestamp`, `datetime` | `Date` | Date object |
+
+The following example demonstrates parsing different field types:
+
+```js
+parseType({ type: 'boolean', value: 'true' }); // true
+parseType({ type: 'integer', value: '42' }); // 42
+parseType({ type: 'date', value: '2024-01-15T10:30:00Z' }); // '2024-01-15'
+```
+
+## policy
+
+Helpers to create and manage [policies](/cms/backend-customization/policies). The namespace exposes 2 functions: [`createPolicy`](#createpolicy) to define a policy handler with an optional configuration validator, and [`createPolicyContext`](#createpolicycontext) to build a typed context object that the handler can inspect. The namespace is imported as follows:
+
+```js
+const { policy } = require('@strapi/utils');
+```
+
+### createPolicy
+
+Create a policy with an optional configuration validator. The function accepts the following parameters:
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | No | Policy name (defaults to `'unnamed'`) |
+| `handler` | `function` | Yes | Policy handler function |
+| `validator` | `function` | No | Validate the policy configuration; throws on invalid config |
+
+The following example creates a policy with a configuration validator:
+
+```js
+const myPolicy = policy.createPolicy({
+  name: 'is-owner',
+  validator: (config) => {
+    if (!config.field) throw new Error('Missing field');
+  },
+  handler: (ctx, config, { strapi }) => {
+    // policy logic
+    return true;
+  },
+});
+```
+
+### createPolicyContext
+
+The `createPolicyContext` function creates a typed context object for use within a policy handler. It accepts a type string (e.g., `'admin'` or `'koa'`) and the Koa context, and returns an object with an `is()` method and a `type` property:
+
+```js
+const policyCtx = policy.createPolicyContext('admin', ctx);
+
+policyCtx.is('admin'); // true
+policyCtx.type; // 'admin'
+```
+
+## primitives
+
+Low-level data transformation helpers. The following sub-modules are available as direct top-level imports from `@strapi/utils`:
+
+```js
+const { strings, objects, arrays, dates } = require('@strapi/utils');
+```
+
+### strings
+
+The following string utility functions are available:
+
+| Function | Description |
+| --- | --- |
+| `strings.getCommonPath(...paths)` | Find the common path prefix from multiple file paths |
+| `strings.isCamelCase(value)` | Check if a string is in `camelCase` format |
+| `strings.isEqual(a, b)` | Compare 2 values as strings |
+| `strings.isKebabCase(value)` | Check if a string is in `kebab-case` format |
+| `strings.joinBy(separator, ...parts)` | Join strings with a separator, trimming duplicate separators at join points |
+| `strings.nameToCollectionName(name)` | Convert a name to a `snake_case` collection name |
+| `strings.nameToSlug(name, options?)` | Convert a name to a URL-friendly slug. Default separator: `'-'` |
+| `strings.startsWithANumber(value)` | Check if a string starts with a digit |
+| `strings.toKebabCase(value)` | Convert a string to `kebab-case` |
+| `strings.toRegressedEnumValue(value)` | Replace accented characters with their ASCII equivalents, then separate words with underscores to produce a string suitable for use as an enum key (preserves original casing) |
+
+### objects
+
+The following object utility function is available:
+
+| Function | Description |
+| --- | --- |
+| `objects.keysDeep(obj)` | Return all nested keys in dot-notation (e.g., `['a.b', 'a.c']`) |
+
+### arrays
+
+The following array utility function is available:
+
+| Function | Description |
+| --- | --- |
+| `arrays.includesString(arr, val)` | Check if an array includes a value when both are compared as strings |
+
+### dates
+
+The following date utility function is available:
+
+| Function | Description |
+| --- | --- |
+| `dates.timestampCode(date?)` | Convert a `Date` (defaults to `new Date()`) to a base-36 string of the millisecond timestamp |
+
+## providerFactory
+
+Create a pluggable registry that stores and retrieves items by key, with lifecycle hooks. This is the same factory Strapi uses internally for its upload and email providers. Use `providerFactory` when you need a store of interchangeable strategies or adapters in your own plugins. The factory is imported as follows:
+
+```js
+const { providerFactory } = require('@strapi/utils');
+```
+
+### Parameters
+
+The factory accepts the following parameter:
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `throwOnDuplicates` | `boolean` | `true` | Throw an error when registering a key that already exists |
+
+### Provider methods
+
+The returned provider instance exposes the following methods:
+
+| Method | Return type | Description |
+| --- | --- | --- |
+| `register(key, item)` | `Promise<Provider>` | Register an item. Triggers `willRegister` and `didRegister` [hooks](#provider-hooks). |
+| `delete(key)` | `Promise<Provider>` | Remove an item. Triggers `willDelete` and `didDelete` [hooks](#provider-hooks). |
+| `get(key)` | `T \| undefined` | Retrieve an item by key |
+| `values()` | `T[]` | Return all registered items |
+| `keys()` | `string[]` | Return all registered keys |
+| `has(key)` | `boolean` | Check if a key is registered |
+| `size()` | `number` | Return the number of registered items |
+| `clear()` | `Promise<Provider>` | Remove all items |
+
+### Provider hooks
+
+Each provider instance exposes a `hooks` object with 4 hook registries:
+
+| Hook | Type | Trigger |
+| --- | --- | --- |
+| `hooks.willRegister` | Async series | Before an item is registered |
+| `hooks.didRegister` | Async parallel | After an item is registered |
+| `hooks.willDelete` | Async parallel | Before an item is deleted |
+| `hooks.didDelete` | Async parallel | After an item is deleted |
+
+The following example creates a provider and registers an item with a lifecycle hook:
+
+```js
+const { providerFactory } = require('@strapi/utils');
+
+const registry = providerFactory();
+
+registry.hooks.willRegister.register(async ({ key, value }) => {
+  console.log(`About to register: ${key}`);
+});
+
+await registry.register('my-provider', { execute: () => {} });
+
+registry.get('my-provider'); // { execute: [Function] }
+registry.has('my-provider'); // true
+registry.size(); // 1
+```
+
+## relations
+
+The `relations` namespace provides helpers to inspect the cardinality of relation attributes (e.g., one-to-many vs. many-to-many). To check whether an attribute is a relation at all, use [`contentTypes.isRelationalAttribute`](#attribute-inspection-functions) instead. The namespace is imported as follows:
+
+```js
+const { relations } = require('@strapi/utils');
+```
+
+The following functions are available:
+
+| Function | Description |
+| --- | --- |
+| `getRelationalFields(contentType)` | Return all relation field names from a content type |
+| `isAnyToMany(attribute)` | Check for `oneToMany` or `manyToMany` relations |
+| `isAnyToOne(attribute)` | Check for `oneToOne` or `manyToOne` relations |
+| `isManyToAny(attribute)` | Check for `manyToMany` or `manyToOne` relations |
+| `isOneToAny(attribute)` | Check for `oneToOne` or `oneToMany` relations |
+| `isPolymorphic(attribute)` | Check for `morphOne`, `morphMany`, `morphToOne`, or `morphToMany` relations |
+
+The following example filters a content type's attributes to find all one-to-many or many-to-many relations:
+
+```js
+const { relations, contentTypes } = require('@strapi/utils');
+
+const schema = strapi.contentType('api::article.article');
+
+for (const [name, attribute] of Object.entries(schema.attributes)) {
+  if (contentTypes.isRelationalAttribute(attribute) && relations.isAnyToMany(attribute)) {
+    console.log(`${name} is a *-to-many relation`);
+  }
+}
+```
+
+## sanitize
+
+The `sanitize` namespace provides functions to clean input and output data based on content-type schemas. Use `sanitize` to remove disallowed, private, or restricted fields before processing or returning data.
+
+:::tip
+In most controllers, you do not need to call `sanitize` directly. Strapi provides built-in `sanitizeQuery` and `sanitizeOutput` helpers that handle the setup for you (see [Controllers](/cms/backend-customization/controllers#sanitization-and-validation-in-controllers) documentation for details). Use the lower-level API below when you need sanitization outside of a controller context (e.g., in a service or a custom script).
+:::
+
+The namespace is imported as follows:
+
+```js
+const { sanitize } = require('@strapi/utils');
+```
+
+The `createAPISanitizers` function takes a model resolver and returns a set of sanitizer methods scoped to that model. A model resolver is a function that, given a content-type UID (e.g., `'api::article.article'`), returns the corresponding schema. In practice, `strapi.getModel` already does this. You typically call `createAPISanitizers` once during bootstrap or at the top of a service:
+
+```js
+const sanitizers = sanitize.createAPISanitizers({
+  getModel: strapi.getModel.bind(strapi),
+});
+```
+
+The returned object provides the following:
+
+| Method | Description |
+| --- | --- |
+| `sanitizers.input(data, schema, options?)` | Sanitize request body data |
+| `sanitizers.output(data, schema, options?)` | Sanitize response data |
+| `sanitizers.query(query, schema, options?)` | Sanitize query parameters |
+| `sanitizers.filters(filters, schema, options?)` | Sanitize filter expressions |
+| `sanitizers.sort(sort, schema, options?)` | Sanitize sort parameters |
+| `sanitizers.fields(fields, schema, options?)` | Sanitize field selections |
+| `sanitizers.populate(populate, schema, options?)` | Sanitize populate directives |
+
+Each method accepts an optional `options` object with the following properties:
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `auth` | `object` | `undefined` | The authentication object from the request (typically `ctx.state.auth`). When provided, relation fields the user does not have permission to access are removed from the output. When omitted, no permission-based filtering is applied. |
+| `strictParams` | `boolean` | `false` | When `true`, removes fields or query parameters not declared in the content-type schema. When `false`, unrecognized fields pass through. |
+| `route` | `object` | `undefined` | The route object (typically `ctx.route`). When `strictParams` is `true`, the sanitizer reads the `request` key from the route configuration to know which custom query or body parameters are allowed beyond the core set. Has no effect when `strictParams` is `false`. See [Routes](/cms/backend-customization/routes) for details on route configuration. |
+
+## setCreatorFields
+
+Set `createdBy` and `updatedBy` fields on an entity. Use this when building a custom controller or service that creates or updates entries outside of Strapi's default [Document Service](/cms/api/document-service). The function returns a **curried function** <Annotation>A curried function is a function that does not take all its arguments at once. Instead, it returns a new function for each argument. This lets you fix some parameters first and pass the rest later. For example, `setCreatorFields({ user })` returns a reusable function that you can then call on any entity data.</Annotation>: call it with options first, then with the entity data. It is imported as follows:
+
+```js
+const { setCreatorFields } = require('@strapi/utils');
+```
+
+The function accepts the following parameters:
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `user` | `{ id: string \| number }` | (required) | The user performing the action |
+| `isEdition` | `boolean` | `false` | If `true`, only set `updatedBy`; if `false`, set both `createdBy` and `updatedBy` |
+
+The following example shows how to set creator fields on creation and update:
+
+```js
+const { setCreatorFields } = require('@strapi/utils');
+
+const addCreator = setCreatorFields({ user: { id: 1 } });
+const data = addCreator({ title: 'My Article' });
+// { title: 'My Article', createdBy: 1, updatedBy: 1 }
+
+const updateCreator = setCreatorFields({ user: { id: 2 }, isEdition: true });
+const updated = updateCreator(data);
+// { title: 'My Article', createdBy: 1, updatedBy: 2 }
+```
+
+## validate
+
+The `validate` namespace provides functions to check input and query data against content-type schemas. Use `validate` to reject requests that reference unknown, private, or restricted fields.
+
+:::tip
+Like `sanitize`, controllers already provide built-in validation helpers (`validateQuery`, `validateInput`). Use the lower-level API below when you need validation outside of a controller context.
+:::
+
+The namespace is imported as follows:
+
+```js
+const { validate } = require('@strapi/utils');
+```
+
+The `createAPIValidators` function takes a model resolver (see [sanitize](#sanitize) for details) and returns a set of validator methods scoped to that model:
+
+```js
+const validators = validate.createAPIValidators({
+  getModel: strapi.getModel.bind(strapi),
+});
+```
+
+The returned object provides the following:
+
+| Method | Description |
+| --- | --- |
+| `validators.input(data, schema, options?)` | Validate request body data |
+| `validators.query(query, schema, options?)` | Validate query parameters |
+| `validators.filters(filters, schema, options?)` | Validate filter expressions |
+| `validators.sort(sort, schema, options?)` | Validate sort parameters |
+| `validators.fields(fields, schema, options?)` | Validate field selections |
+| `validators.populate(populate, schema, options?)` | Validate populate directives |
+
+Each method accepts an optional `options` object with the same properties as the [sanitize options](#sanitize): `auth` for permission-based checks, `strictParams` to reject unknown fields, and `route` to allow custom route parameters in strict mode.
+
+The following example validates a query in a custom service and catches the error:
+
+```js
+const { validate, errors } = require('@strapi/utils');
+
+const validators = validate.createAPIValidators({
+  getModel: strapi.getModel.bind(strapi),
+});
+
+try {
+  await validators.query(ctx.query, 'api::article.article', {
+    auth: ctx.state.auth,
+  });
+} catch (error) {
+  // error is a ValidationError with details about which fields failed
+  console.error(error.message, error.details);
+}
+```
+
+## yup
+
+The `yup` namespace re-exports the <ExternalLink to="https://github.com/jquense/yup" text="Yup validation library" /> with Strapi-specific extensions. It is imported as follows:
+
+```js
+const { yup } = require('@strapi/utils');
+```
+
+### Additional Yup methods
+
+Strapi adds the following methods to Yup schemas:
+
+| Method | Schema type | Description |
+| --- | --- | --- |
+| `yup.strapiID()` | Custom | Validate a Strapi ID (string or non-negative integer) |
+| `.notNil()` | Any | Ensure value is not `undefined` or `null` |
+| `.notNull()` | Any | Ensure value is not `null` |
+| `.isFunction()` | Mixed | Validate that the value is a function |
+| `.isCamelCase()` | String | Validate `camelCase` format |
+| `.isKebabCase()` | String | Validate `kebab-case` format |
+| `.onlyContainsFunctions()` | Object | Validate that all values in the object are functions |
+| `.uniqueProperty(property, message)` | Array | Validate that a specific property is unique across array items |
+
+### Schema validation helpers
+
+`validateYupSchema` and `validateYupSchemaSync` are top-level exports from `@strapi/utils`, not part of the `yup` namespace:
+
+```js
+const { validateYupSchema, validateYupSchemaSync } = require('@strapi/utils');
+```
+
+The following helper functions are available:
+
+| Function | Description |
+| --- | --- |
+| `validateYupSchema(schema, options?)` | Return an async validator function `(body, errorMessage?) => Promise` for a Yup schema. Default options: `{ strict: true, abortEarly: false }`. |
+| `validateYupSchemaSync(schema, options?)` | Return a synchronous validator function `(body, errorMessage?) => result` for a Yup schema. Default options: `{ strict: true, abortEarly: false }`. |
+
+## zod
+
+Strapi re-exports the `z` instance from <ExternalLink to="https://github.com/colinhacks/zod" text="Zod" /> and provides a `validateZod` helper that wraps a Zod schema into a Strapi-style validator. Strapi does not add custom methods to Zod. `z` is the standard Zod API. The helpers are imported as follows:
+
+```js
+const { validateZod, z } = require('@strapi/utils');
+```
+
+The following example defines a schema and creates a validator function with `validateZod`. On success, the function returns the parsed data. On failure, it throws a `ValidationError` (see [errors](#errors)) with details about which fields failed:
+
+```js
+const schema = z.object({
+  name: z.string().min(1),
+  age: z.number().positive(),
+});
+
+const validate = validateZod(schema);
+
+const parsed = validate({ name: 'Alice', age: 30 }); // returns parsed data
+validate({ name: '' }); // throws ValidationError
+```
