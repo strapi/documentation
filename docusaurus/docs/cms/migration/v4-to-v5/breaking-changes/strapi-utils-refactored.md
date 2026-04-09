@@ -62,7 +62,6 @@ In Strapi 5, the `strapi-utils` core package has been refactored. This page list
   1. Import them in your code with `import { arrays, dates, strings, objects } from '@strapi/utils';`.
   2. Use them, for instance as `arrays.includesString` or `strings.isEqual`.
 
-  For the complete reference of all available utilities, see the [`strapi-utils` documentation](/cms/strapi-utils).
 
 - `convertQueryParams` is replaced:
 
@@ -99,3 +98,7 @@ In Strapi 5, the `strapi-utils` core package has been refactored. This page list
   strapi.contentAPI.sanitize.xxx();
   strapi.contentAPI.validate.xxx();
   ```
+
+:::strapi
+For the complete reference of all available utilities, see the [`strapi-utils` documentation](/cms/strapi-utils).
+:::
