@@ -614,10 +614,11 @@ const { validateYupSchema, validateYupSchemaSync } = require('@strapi/utils');
 
 ## zod
 
-Strapi exposes Zod helpers as named exports.
+Strapi exposes a Zod validation helper as a named export. The `z` schema builder must be imported directly from the `zod` package.
 
 ```js
-const { validateZod, z } = require('@strapi/utils');
+const { validateZod } = require('@strapi/utils');
+const { z } = require('zod');
 
 const schema = z.object({
   name: z.string().min(1),
@@ -632,5 +633,5 @@ Create a validator function from a Zod schema:
 ```js
 const validate = validateZod(schema);
 
-validate(data); // throws ValidationError on failure
+validate(data); // returns parsed data, or throws ValidationError on failure
 ```
