@@ -19,6 +19,7 @@ Templates
 MDX and code blocks
 - Use MDX Tabs for language variants (JS/TS) under the same example.
 - Always specify code fence language and prefer `title=` with nearby `path:` lines.
+- Never place a code block, table, or other structured element immediately after a heading or another block without an introductory sentence. Every block must be preceded by a complete sentence (subject + verb) that tells the reader what the block contains or demonstrates. End the sentence with a colon when it directly introduces the block. Examples: "The function accepts the following parameters:", "The following example shows how to configure the server:".
 
 Preflight checks before PR
 - `npm run generate:llms-code` (anchors + file checks by default)
