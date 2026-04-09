@@ -544,7 +544,7 @@ The `sanitize` namespace provides functions to clean input and output data based
 const { sanitize } = require('@strapi/utils');
 ```
 
-Create a set of sanitizer functions with `createAPISanitizers`, using a model resolver:
+The `createAPISanitizers` function takes a model resolver and returns a set of sanitizer methods scoped to that model:
 
 ```js
 const sanitizers = sanitize.createAPISanitizers({
@@ -567,7 +567,7 @@ The returned object provides the following:
 The optional `options` object on each method can include `auth`, `strictParams`, and `route`.
 
 :::tip
-In controllers, you can use the built-in `sanitizeQuery` and `sanitizeOutput` methods instead of calling `sanitize.createAPISanitizers` directly. See [Controllers](/cms/backend-customization/controllers) for details.
+In controllers, you can use the built-in `sanitizeQuery` and `sanitizeOutput` methods instead of calling `sanitize.createAPISanitizers` directly (see [Controllers](/cms/backend-customization/controllers#sanitization-and-validation-in-controllers) documentation for details).
 :::
 
 ## setCreatorFields
@@ -607,7 +607,7 @@ The `validate` namespace provides functions to check input and query data agains
 const { validate } = require('@strapi/utils');
 ```
 
-Create a set of validator functions with `createAPIValidators`, using a model resolver:
+The `createAPIValidators` function takes a model resolver and returns a set of validator methods scoped to that model:
 
 ```js
 const validators = validate.createAPIValidators({
