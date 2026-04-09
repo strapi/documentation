@@ -19,7 +19,11 @@ tags:
 The `@strapi/utils` package provides shared helper functions used across Strapi's core and available for use in custom code. It includes error classes, environment variable helpers, hook factories, type parsing, string and file utilities, and async helpers.
 </Tldr>
 
-The `@strapi/utils` package (`import { ... } from '@strapi/utils'`) contains utility functions that Strapi uses internally but that you can also use in your own [controllers](/cms/backend-customization/controllers), [services](/cms/backend-customization/services), [policies](/cms/backend-customization/policies), [middlewares](/cms/backend-customization/middlewares), and [lifecycle hooks](/cms/backend-customization/models#lifecycle-hooks). Sections on this page are organized alphabetically by export name.
+The `@strapi/utils` package (`import { ... } from '@strapi/utils'`) contains utility functions that Strapi uses internally but that you can also use in your own [controllers](/cms/backend-customization/controllers), [services](/cms/backend-customization/services), [policies](/cms/backend-customization/policies), [middlewares](/cms/backend-customization/middlewares), and [lifecycle hooks](/cms/backend-customization/models#lifecycle-hooks).
+
+:::tip Finding what you need
+Sections on this page are organized **alphabetically by export name**. Use the table of contents on the right to jump directly to the utility you need.
+:::
 
 :::note
 The [error classes](#errors) section of this page expands on the error handling documentation found in the dedicated [Error handling](/cms/error-handling) page.
@@ -37,20 +41,27 @@ The following functions are available:
 
 | Function | Description |
 | --- | --- |
-| `async.map(iterable, mapper, options?)` | Parallel map using `p-map` (also supports curried usage). Set `concurrency` in options to control parallelism. |
+| `async.map(iterable, mapper, options?)` | Parallel map using `p-map`. Set `concurrency` in options to control parallelism. |
 | `async.pipe(...fns)` | Compose functions: the first function runs with the original arguments, each subsequent function receives the previous return value. Returns a `Promise`. |
-| `async.reduce(array)(iteratee, initialValue?)` | Asynchronous reduce over an array. The iteratee receives `(accumulator, item, index)`. |
+| `async.reduce(array)(iteratee, initialValue?)` | Asynchronous reduce over an array. Called in two steps: first pass the array, then pass the iteratee and optional initial value. The iteratee receives `(accumulator, item, index)`. |
 
-The following example uses `pipe` to compose async functions:
+The following example uses `pipe` to compose async functions, and `reduce` to accumulate values:
 
 ```js
 const { async: asyncUtils } = require('@strapi/utils');
 
+// Compose async functions into a pipeline
 const result = await asyncUtils.pipe(
   fetchUser,
   enrichWithProfile,
   formatResponse
 )(userId);
+
+// Reduce an array asynchronously (note the curried call)
+const total = await asyncUtils.reduce([1, 2, 3])(
+  async (sum, n) => sum + n,
+  0
+); // 6
 ```
 
 ## contentTypes
@@ -134,25 +145,10 @@ if (contentTypes.hasDraftAndPublish(articleSchema)) {
 
 A helper function to read environment variables with type-safe parsing. The `env` function returns the raw string value, while its methods parse the value to a specific type. It is imported as follows:
 
-<Tabs groupId="js-ts">
-
-<TabItem value="js" label="JavaScript" default>
-
 ```js
 const { env } = require('@strapi/utils');
+// or in TypeScript: import { env } from '@strapi/utils';
 ```
-
-</TabItem>
-
-<TabItem value="ts" label="TypeScript">
-
-```ts
-import { env } from '@strapi/utils';
-```
-
-</TabItem>
-
-</Tabs>
 
 The `env` helper can be called directly or with the following typed methods:
 
@@ -194,25 +190,10 @@ Custom error classes that extend the Node.js `Error` class. All errors share a c
 
 The error classes are imported as follows:
 
-<Tabs groupId="js-ts">
-
-<TabItem value="js" label="JavaScript" default>
-
 ```js
 const { errors } = require('@strapi/utils');
+// or in TypeScript: import { errors } from '@strapi/utils';
 ```
-
-</TabItem>
-
-<TabItem value="ts" label="TypeScript">
-
-```ts
-import { errors } from '@strapi/utils';
-```
-
-</TabItem>
-
-</Tabs>
 
 The following error classes are available:
 
@@ -266,6 +247,16 @@ The following functions are available:
 | `kbytesToBytes(kbytes)` | `number` | Convert kilobytes to bytes |
 | `streamToBuffer(stream)` | `Promise<Buffer>` | Convert a readable stream into a Buffer |
 | `writableDiscardStream(options?)` | `Writable` | Create a writable stream that discards all data |
+
+The following example converts an uploaded stream to a buffer and logs its size:
+
+```js
+const { file } = require('@strapi/utils');
+
+const buffer = await file.streamToBuffer(uploadStream);
+const sizeInKb = file.bytesToKbytes(buffer.length);
+console.log(`Uploaded ${file.bytesToHumanReadable(buffer.length)} (${sizeInKb} KB)`);
+```
 
 ## hooks
 
@@ -328,7 +319,24 @@ The following functions are available:
 | --- | --- |
 | `transformOffsetPaginationInfo(params, total)` | Transform pagination data into `{ start, limit, total }` format |
 | `transformPagedPaginationInfo(params, total)` | Transform pagination data into `{ page, pageSize, pageCount, total }` format |
-| `withDefaultPagination(params, options?)` | Apply default values and validate pagination parameters. Supports both `page`/`pageSize` and `start`/`limit` formats. The `options` object accepts `defaults` (override initial values for each format) and `maxLimit` (cap the `limit` value; `-1` means no cap). |
+| `withDefaultPagination(params, options?)` | Apply default values and validate pagination parameters (see details below) |
+
+The `withDefaultPagination` function supports both `page`/`pageSize` and `start`/`limit` formats. It accepts an optional `options` object with the following properties:
+
+| Option | Type | Description |
+| --- | --- | --- |
+| `defaults` | `object` | Override the initial pagination values for each format (e.g., `{ page: { pageSize: 25 } }`) |
+| `maxLimit` | `number` | Cap the `limit` or `pageSize` value. Set to `-1` for no cap. |
+
+The following example applies default pagination and transforms the result:
+
+```js
+const { pagination } = require('@strapi/utils');
+
+const params = pagination.withDefaultPagination({ page: 2 }, { maxLimit: 100 });
+const info = pagination.transformPagedPaginationInfo(params, 250);
+// { page: 2, pageSize: 25, pageCount: 10, total: 250 }
+```
 
 ## parseType
 
@@ -410,7 +418,7 @@ policyCtx.type; // 'admin'
 
 ## primitives
 
-Low-level data transformation helpers. The primitives sub-modules (`strings`, `objects`, `arrays`, `dates`) are re-exported as top-level namespaces and imported as follows:
+Low-level data transformation helpers. The following sub-modules are available as direct top-level imports from `@strapi/utils`:
 
 ```js
 const { strings, objects, arrays, dates } = require('@strapi/utils');
@@ -459,7 +467,7 @@ The following date utility function is available:
 
 ## providerFactory
 
-Create a pluggable registry that stores and retrieves items by key, with lifecycle hooks. Use `providerFactory` when you need a store of interchangeable strategies or adapters (e.g., upload providers, email providers). The factory is imported as follows:
+Create a pluggable registry that stores and retrieves items by key, with lifecycle hooks. This is the same factory Strapi uses internally for its upload and email providers. Use `providerFactory` when you need a store of interchangeable strategies or adapters in your own plugins. The factory is imported as follows:
 
 ```js
 const { providerFactory } = require('@strapi/utils');
@@ -536,6 +544,20 @@ The following functions are available:
 | `isOneToAny(attribute)` | Check for `oneToOne` or `oneToMany` relations |
 | `isPolymorphic(attribute)` | Check for `morphOne`, `morphMany`, `morphToOne`, or `morphToMany` relations |
 
+The following example filters a content type's attributes to find all one-to-many or many-to-many relations:
+
+```js
+const { relations, contentTypes } = require('@strapi/utils');
+
+const schema = strapi.contentType('api::article.article');
+
+for (const [name, attribute] of Object.entries(schema.attributes)) {
+  if (contentTypes.isRelationalAttribute(attribute) && relations.isAnyToMany(attribute)) {
+    console.log(`${name} is a *-to-many relation`);
+  }
+}
+```
+
 ## sanitize
 
 The `sanitize` namespace provides functions to clean input and output data based on content-type schemas. Use `sanitize` to remove disallowed, private, or restricted fields before processing or returning data.
@@ -550,7 +572,7 @@ The namespace is imported as follows:
 const { sanitize } = require('@strapi/utils');
 ```
 
-The `createAPISanitizers` function takes a model resolver (a function that returns a content-type schema for a given UID) and returns a set of sanitizer methods scoped to that model. You typically call this once during bootstrap or at the top of a service:
+The `createAPISanitizers` function takes a model resolver and returns a set of sanitizer methods scoped to that model. A model resolver is a function that, given a content-type UID (e.g., `'api::article.article'`), returns the corresponding schema. In practice, `strapi.getModel` already does this. You typically call `createAPISanitizers` once during bootstrap or at the top of a service:
 
 ```js
 const sanitizers = sanitize.createAPISanitizers({
@@ -576,11 +598,11 @@ Each method accepts an optional `options` object with the following properties:
 | --- | --- | --- | --- |
 | `auth` | `object` | `undefined` | The authentication object from the request (typically `ctx.state.auth`). When provided, relation fields the user does not have permission to access are removed from the output. When omitted, no permission-based filtering is applied. |
 | `strictParams` | `boolean` | `false` | When `true`, removes fields or query parameters not declared in the content-type schema. When `false`, unrecognized fields pass through. |
-| `route` | `object` | `undefined` | The route object (typically `ctx.route`). Used together with `strictParams` to allow custom query or body parameters defined in the [route's request schema](/cms/backend-customization/routes). Has no effect when `strictParams` is `false`. |
+| `route` | `object` | `undefined` | The route object (typically `ctx.route`). When `strictParams` is `true`, the sanitizer reads the `request` key from the route configuration to know which custom query or body parameters are allowed beyond the core set. Has no effect when `strictParams` is `false`. See [Routes](/cms/backend-customization/routes) for details on route configuration. |
 
 ## setCreatorFields
 
-Set `createdBy` and `updatedBy` fields on an entity. The function returns a curried function: call it with options first, then with the entity data. It is imported as follows:
+Set `createdBy` and `updatedBy` fields on an entity. Use this when building a custom controller or service that creates or updates entries outside of Strapi's default [Document Service](/cms/api/document-service). The function returns a curried function: call it with options first, then with the entity data. It is imported as follows:
 
 ```js
 const { setCreatorFields } = require('@strapi/utils');
@@ -621,7 +643,7 @@ The namespace is imported as follows:
 const { validate } = require('@strapi/utils');
 ```
 
-The `createAPIValidators` function takes a model resolver and returns a set of validator methods scoped to that model:
+The `createAPIValidators` function takes a model resolver (see [sanitize](#sanitize) for details) and returns a set of validator methods scoped to that model:
 
 ```js
 const validators = validate.createAPIValidators({
