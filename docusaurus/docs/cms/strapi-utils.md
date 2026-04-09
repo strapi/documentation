@@ -2,6 +2,7 @@
 title: strapi-utils
 description: The @strapi/utils package provides shared utility functions for error handling, environment variables, data validation, hooks, string manipulation, and more.
 displayed_sidebar: cmsSidebar
+toc_max_heading_level: 2
 tags:
   - api
   - strapi-utils
@@ -38,7 +39,7 @@ const { async } = require('@strapi/utils');
 | `async.map(iterable, mapper, options?)` | Parallel map using `p-map` (also supports curried usage). Set `concurrency` in options to control parallelism. |
 | `async.reduce(array)(iteratee, initialValue?)` | Asynchronous reduce over an array. The iteratee receives `(accumulator, item, index)`. |
 
-Example using `pipe` to compose async functions:
+The following example uses `pipe` to compose async functions:
 
 ```js
 const { async: asyncUtils } = require('@strapi/utils');
@@ -134,7 +135,7 @@ import { env } from '@strapi/utils';
 | `env.date(key, default?)` | `Date \| undefined` | Parse with `new Date()` |
 | `env.oneOf(key, expectedValues, default?)` | `string \| undefined` | Return the value if it matches one of `expectedValues`; if the value does not match, return `default` (or `undefined`). Throws if `expectedValues` is missing or if `default` is not in `expectedValues`. |
 
-Example using `env` helpers in a server configuration file:
+The following example shows how to use `env` helpers in a server configuration file:
 
 ```js title="path: /config/server.js"
 const { env } = require('@strapi/utils');
@@ -198,7 +199,7 @@ The following error classes are available:
 
 `PolicyError` extends `ForbiddenError`. All other error classes extend `ApplicationError`.
 
-Example throwing errors in a service and a policy:
+The following example shows how to throw errors in a service and a policy:
 
 ```js
 const { errors } = require('@strapi/utils');
@@ -257,7 +258,7 @@ Each hook exposes 4 methods:
 | `hooks.createAsyncParallelHook()` | Execute all handlers concurrently |
 | `hooks.createAsyncBailHook()` | Execute handlers sequentially, stop at the first handler that returns a non-`undefined` value |
 
-Example registering and calling handlers with a series hook:
+The following example registers and calls handlers with a series hook:
 
 ```js
 const { hooks } = require('@strapi/utils');
@@ -314,7 +315,7 @@ Return values by type:
 | `date` | `string` | `yyyy-MM-dd` |
 | `timestamp`, `datetime` | `Date` | Date object |
 
-Example parsing different field types:
+The following example demonstrates parsing different field types:
 
 ```js
 parseType({ type: 'boolean', value: 'true' }); // true
@@ -443,7 +444,7 @@ Each provider instance exposes a `hooks` object with 4 hook registries:
 | `hooks.willDelete` | Async parallel | Before an item is deleted |
 | `hooks.didDelete` | Async parallel | After an item is deleted |
 
-Example creating a provider and registering an item with a lifecycle hook:
+The following example creates a provider and registers an item with a lifecycle hook:
 
 ```js
 const { providerFactory } = require('@strapi/utils');
@@ -525,7 +526,7 @@ const { setCreatorFields } = require('@strapi/utils');
 | `user` | `{ id: string \| number }` | (required) | The user performing the action |
 | `isEdition` | `boolean` | `false` | If `true`, only set `updatedBy`; if `false`, set both `createdBy` and `updatedBy` |
 
-Example setting creator fields on creation and update:
+The following example shows how to set creator fields on creation and update:
 
 ```js
 const { setCreatorFields } = require('@strapi/utils');
