@@ -170,7 +170,7 @@ The `env` helper can be called directly or with the following typed methods:
 
 The following example shows how to use `env` helpers in a server configuration file:
 
-```js title="path: /config/server.js"
+```js title="/config/server.js"
 const { env } = require('@strapi/utils');
 
 module.exports = {
