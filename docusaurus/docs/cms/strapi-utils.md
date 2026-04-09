@@ -382,7 +382,7 @@ const { strings, objects, arrays, dates } = require('@strapi/utils');
 | --- | --- |
 | `strings.nameToSlug(name, options?)` | Convert a name to a URL-friendly slug. Default separator: `'-'` |
 | `strings.nameToCollectionName(name)` | Convert a name to a snake_case collection name |
-| `strings.toRegressedEnumValue(value)` | Convert a value to `UPPER_SNAKE_CASE` for use as an enum key |
+| `strings.toRegressedEnumValue(value)` | Convert a value to a regressed, underscore-separated string suitable for use as an enum key (preserves original casing) |
 | `strings.getCommonPath(...paths)` | Find the common path prefix from multiple file paths |
 | `strings.isCamelCase(value)` | Check if a string is in `camelCase` format |
 | `strings.isKebabCase(value)` | Check if a string is in `kebab-case` format |
