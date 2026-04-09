@@ -295,7 +295,7 @@ The following factory functions create different hook types:
 | `hooks.createAsyncParallelHook()` | Execute all handlers concurrently |
 | `hooks.createAsyncBailHook()` | Execute handlers sequentially, stop at the first handler that returns a non-`undefined` value |
 
-The following example registers and calls handlers with a series hook:
+The following example registers and calls handlers with a series hook <Annotation>A series hook executes handlers sequentially, one after another, in the order they were registered. Other patterns include waterfall (each handler receives the previous handler's return value), parallel (all handlers run concurrently), and bail (stops at the first handler that returns a value). See [admin hooks](/cms/plugins-development/admin-hooks) for more details.</Annotation>:
 
 ```js
 const { hooks } = require('@strapi/utils');
@@ -366,7 +366,7 @@ parseType({ type: 'date', value: '2024-01-15T10:30:00Z' }); // '2024-01-15'
 
 ## policy
 
-Helpers to create and manage [policies](/cms/backend-customization/policies). The namespace is imported as follows:
+Helpers to create and manage [policies](/cms/backend-customization/policies). The namespace exposes two functions: [`createPolicy`](#createpolicy) to define a policy handler with an optional config validator, and [`createPolicyContext`](#createpolicycontext) to build a typed context object that the handler can inspect. The namespace is imported as follows:
 
 ```js
 const { policy } = require('@strapi/utils');
@@ -399,7 +399,7 @@ const myPolicy = policy.createPolicy({
 
 ### createPolicyContext
 
-Create a typed context object for use within a policy:
+The `createPolicyContext` function creates a typed context object for use within a policy handler. It accepts a type string (e.g., `'admin'` or `'koa'`) and the Koa context, and returns an object with an `is()` method and a `type` property:
 
 ```js
 const policyCtx = policy.createPolicyContext('admin', ctx);
