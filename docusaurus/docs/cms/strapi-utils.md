@@ -479,8 +479,8 @@ The returned provider instance exposes the following methods:
 
 | Method | Return type | Description |
 | --- | --- | --- |
-| `register(key, item)` | `Promise<Provider>` | Register an item. Triggers `willRegister` and `didRegister` hooks. |
-| `delete(key)` | `Promise<Provider>` | Remove an item. Triggers `willDelete` and `didDelete` hooks. |
+| `register(key, item)` | `Promise<Provider>` | Register an item. Triggers `willRegister` and `didRegister` [hooks](#provider-hooks). |
+| `delete(key)` | `Promise<Provider>` | Remove an item. Triggers `willDelete` and `didDelete` [hooks](#provider-hooks). |
 | `get(key)` | `T \| undefined` | Retrieve an item by key |
 | `values()` | `T[]` | Return all registered items |
 | `keys()` | `string[]` | Return all registered keys |
@@ -552,7 +552,7 @@ const sanitizers = sanitize.createAPISanitizers({
 });
 ```
 
-The returned object provides:
+The returned object provides the following:
 
 | Method | Description |
 | --- | --- |
@@ -615,7 +615,7 @@ const validators = validate.createAPIValidators({
 });
 ```
 
-The returned object provides:
+The returned object provides the following:
 
 | Method | Description |
 | --- | --- |
