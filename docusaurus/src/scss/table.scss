@@ -4,6 +4,11 @@ table {
   overflow: auto;
   border-radius: 4px;
 
+  /* Allow annotation tooltips to overflow the table when open */
+  &:has(.annotation__tooltip) {
+    overflow: visible;
+  }
+
   thead {
     --ifm-table-background: transparent;
     --ifm-table-stripe-background: transparent;
