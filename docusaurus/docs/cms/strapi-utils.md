@@ -89,7 +89,7 @@ The following functions check the type of a single attribute:
 | `isMediaAttribute(attribute)` | Check if the attribute is a media field |
 | `isMorphToRelationalAttribute(attribute)` | Check if the attribute is a morph-to relation |
 | `isRelationalAttribute(attribute)` | Check if the attribute is a relation |
-| `isScalarAttribute(attribute)` | Check if the attribute is a scalar value <Annotation>A scalar value is a single, individual value rather than a collection or structure. In Strapi, this means a basic field like a string, number, boolean, or date — not a relation, component, or nested object.</Annotation> |
+| `isScalarAttribute(attribute)` | Check if the attribute is a **scalar value** <Annotation>A scalar value is a single, individual value rather than a collection or structure. In Strapi, this means a basic field like a string, number, boolean, or date — not a relation, component, or nested object.</Annotation> |
 | `isTypedAttribute(attribute, type)` | Check if the attribute has a specific type |
 
 ### Schema inspection functions
@@ -295,7 +295,7 @@ The following factory functions create different hook types:
 | `hooks.createAsyncParallelHook()` | Execute all handlers concurrently |
 | `hooks.createAsyncBailHook()` | Execute handlers sequentially, stop at the first handler that returns a non-`undefined` value |
 
-The following example registers and calls handlers with a series hook <Annotation>A series hook executes handlers sequentially, one after another, in the order they were registered. Other patterns include waterfall (each handler receives the previous handler's return value), parallel (all handlers run concurrently), and bail (stops at the first handler that returns a value). See [admin hooks](/cms/plugins-development/admin-hooks) for more details.</Annotation>:
+The following example registers and calls handlers with a **series hook** <Annotation>A series hook executes handlers sequentially, one after another, in the order they were registered. Other patterns include waterfall (each handler receives the previous handler's return value), parallel (all handlers run concurrently), and bail (stops at the first handler that returns a value). See [admin hooks](/cms/plugins-development/admin-hooks) for more details.</Annotation>:
 
 ```js
 const { hooks } = require('@strapi/utils');
