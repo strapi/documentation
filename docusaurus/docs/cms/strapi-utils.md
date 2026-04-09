@@ -427,7 +427,7 @@ The following string utility functions are available:
 | `strings.isEqual(a, b)` | Compare 2 values as strings |
 | `strings.isKebabCase(value)` | Check if a string is in `kebab-case` format |
 | `strings.joinBy(separator, ...parts)` | Join strings with a separator, trimming duplicate separators at join points |
-| `strings.nameToCollectionName(name)` | Convert a name to a snake_case collection name |
+| `strings.nameToCollectionName(name)` | Convert a name to a `snake_case` collection name |
 | `strings.nameToSlug(name, options?)` | Convert a name to a URL-friendly slug. Default separator: `'-'` |
 | `strings.startsWithANumber(value)` | Check if a string starts with a digit |
 | `strings.toKebabCase(value)` | Convert a string to `kebab-case` |
