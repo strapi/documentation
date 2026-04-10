@@ -16,7 +16,10 @@ These prompts are LLM‑agnostic, though the best results so far have been with 
 | ↳ Outline Generator | `outline-generator.md` | ✅ Available | Creates outlines from source material (Notion, Jira, specs) |
 | **Style Checker** | `style-checker.md` | ✅ Available | 12 Rules of Technical Writing, Strapi style conventions |
 | **Drafter** | `drafter.md` | ✅ Available | Generates content from an outline and source material (3 modes: Compose, Patch, Micro-edit) |
-| **Integrity Checker** | — | 🔜 Coming soon | Broken links, invalid paths, code block formatting, anchor consistency |
+| **Integrity Checker** | `integrity-checker.md` | ✅ Available | Coordinates Code Verifier and Coherence Checker, consolidates findings |
+| ↳ Code Verifier | `integrity-code-verifier.md` | ✅ Available | Verifies code examples and technical claims against the Strapi codebase |
+| ↳ Coherence Checker | `integrity-coherence-checker.md` | ✅ Available | Cross-page consistency, terminology, cross-references |
+| ↳ Known Pitfalls | `integrity-known-pitfalls.md` | ✅ Available | Regression test list for known hallucination patterns |
 
 ## Shared Resources
 
@@ -37,8 +40,6 @@ Router → Outline Checker → Style Checker → Integrity Checker
 ```
 Router → Outline Generator → Drafter → Style Checker → Integrity Checker
 ```
-
-Prompts marked "Coming soon" can be skipped; run the available ones in order.
 
 ## Usage
 

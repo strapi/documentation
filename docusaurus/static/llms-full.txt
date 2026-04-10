@@ -9133,13 +9133,14 @@ The maximum number of .
 1. Click on the **Add new stage** button.
 2. Write the *Stage name*.
 3. Select a *Color*.
-4. Select *Roles* that can change the stage, if the entity is currently in that review stage.
-5. Click on the **Save** button.
+4. Select *Roles that can change from this stage*, to define which roles can move content out of this stage.
+5. Select *Roles that can move content to this stage*, to define which roles can transition content into this stage.
+6. Click on the **Save** button.
 
 By default new stages are appended, but they can be reordered anytime using the  button.
 
 :::tip
-To set up roles for each stage, you can either click "Apply to all stages" to apply the current roles to all other stages of the workflow or use "Duplicate stage" of the stage context menu.
+Each permission field has its own "Apply to all stages" option, which copies that field's role selection to every other stage in the workflow. Alternatively, use "Duplicate stage" from the stage context menu to copy the entire stage configuration including both permission types.
 :::
 
 #### Duplicating a stage
@@ -9169,7 +9170,7 @@ It is not possible to delete the last workflow.
 
 ### Changing review stage {#change-review-stage}
 
-As content is created and revised among your team, you can change the review stage of the content to any stage defined in the review workflow.
+As content is created and revised among your team, you can change the review stage of the content. The available target stages in the dropdown depend on your role's permissions: you must have permission to move content from the current stage and permission to move content to the target stage.
 
 1. Access the edit view of your content-type.
 2. In the *Review Workflows* box on the right side of the interface, click on the _Review stage_ drop-down list.

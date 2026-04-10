@@ -29,7 +29,51 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.41.1](https://github.com/strapi/strapi/releases/tag/v5.41.1)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.42.0](https://github.com/strapi/strapi/releases/tag/v5.42.0)._
+
+## 6.20.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add CLAUDE.MD](https://github.com/strapi/documentation/pull/3033)
+- [Add Integrity Checker](https://github.com/strapi/documentation/pull/3031)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix Dockerfile by adjusting WORKDIR in production dockerfile](https://github.com/strapi/documentation/pull/3036)
+- [Review workflows stage to permissions](https://github.com/strapi/documentation/pull/3024)
+
+#### Cloud
+- [One time password update](https://github.com/strapi/documentation/pull/3037)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/Tasleem222" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/200180442?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Tasleem222"/>
+</a>
+<a href="https://github.com/jhoward1994" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/48524071?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="jhoward1994"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 6.19.0
 

@@ -76,8 +76,8 @@ Specialized prompts for reviewing and creating Strapi documentation. Located in 
 | **Outline UX Analyzer** | `agents/prompts/outline-ux-analyzer.md` | ✅ Available | Checks reader experience, section order, cognitive load |
 | **Style Checker** | `agents/prompts/style-checker.md` | ✅ Available | Ensures compliance to 12 Rules of Technical Writing |
 | **Outline Generator** | `agents/prompts/outline-generator.md` | ✅ Available | Creates outlines from source material (Notion, Jira, specs) |
-| **Drafter** | `agents/prompts/drafter-interface.md` | ✅ Available | Drafts documentation based on inputs from Router and Outliner |
-| **Integrity Checker** | — | 🔜 Coming soon | Ensures production-ready compliance (broken links, formatting, etc.) |
+| **Drafter** | `agents/prompts/drafter.md` | ✅ Available | Drafts documentation based on inputs from Router and Outliner |
+| **Integrity Checker** | `agents/prompts/integrity-checker.md` | ✅ Available | Coordinates technical verification (code examples, cross-page coherence) |
 
 ### Shared Resources
 
