@@ -21,7 +21,7 @@ All development is done in the `/docusaurus` subdirectory (`cd docusaurus`).
 - `yarn && yarn dev` — Install dependencies and start development server (port 8080)
 - `yarn build` — Build the documentation (**required before submitting PRs**)
 - `yarn serve` — Serve the built documentation locally
-- `yarn clear` — Clear Docusaurus cache
+
 
 ### Content generation and validation
 - `yarn generate-llms` — Generate LLM-specific content files (`docusaurus/scripts/generate-llms.js` → generates `llms.txt`, uses `<Tldr>` when present)
