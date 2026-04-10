@@ -12257,7 +12257,7 @@ export default (config, { strapi })=> {
 ```
 
 Language: JavaScript
-File path: N/A
+File path: /config/middlewares.js
 
 ```js
 module.exports = () => {
@@ -14648,6 +14648,9 @@ strapi export -f myData
 
 # export your data without encryption.
 strapi export --no-encrypt
+
+# export your data as an unpacked directory.
+strapi export --format dir --no-encrypt -f my-export
 ```
 
 
@@ -14663,12 +14666,14 @@ strapi import
 ```
 
 Language: Bash
-File path: Example
+File path: Examples
 
 ```bash
-
 # import your data with the default parameters and pass an encryption key:
 strapi import -f your-filepath-and-filename --key my-key
+
+# import from an unpacked export directory:
+strapi import -f ./my-export
 ```
 
 
@@ -20407,8 +20412,28 @@ export_202401011230.tar
 ```
 
 
+## Export to a directory
+Description: Directory exports do not support encryption or compression.
+(Source: https://docs.strapi.io/cms/data-management/export#export-to-a-directory)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi export --format dir --no-encrypt -f my-export
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi export -- --format dir --no-encrypt -f my-export
+```
+
+
 ## Example: Export data with a custom filename
-Description: Exported data are contained in a .tar file that is automatically named using the format export_YYYYMMDDHHMMSS.
+Description: Exported data are contained in a .tar file (or a directory when using --format dir) that is automatically named using the format export_YYYYMMDDHHMMSS.
 (Source: https://docs.strapi.io/cms/data-management/export#example-export-data-with-a-custom-filename)
 
 Language: Bash
@@ -20573,8 +20598,28 @@ tar -xf my-export.tar
 ```
 
 
+## Import from a directory
+Description: Instead of a .tar archive, you can pass the path to an unpacked export directory.
+(Source: https://docs.strapi.io/cms/data-management/import#import-from-a-directory)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi import -f ./my-export
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi import -- -f ./my-export
+```
+
+
 ## Example: Minimum command to import data from a file in the Strapi project root
-Description: To import data into a Strapi instance use the strapi import command in the destination project root directory.
+Description: To import data into a Strapi instance, use the strapi import command in the destination project root directory.
 (Source: https://docs.strapi.io/cms/data-management/import#example-minimum-command-to-import-data-from-a-file-in-the-strapi-project-root)
 
 Language: Bash
@@ -20594,7 +20639,7 @@ npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc
 
 
 ## Example: Import a plain .tar archive
-Description: To import data into a Strapi instance use the strapi import command in the destination project root directory.
+Description: To import data into a Strapi instance, use the strapi import command in the destination project root directory.
 (Source: https://docs.strapi.io/cms/data-management/import#example-import-a-plain-tar-archive)
 
 Language: Bash
@@ -21317,7 +21362,7 @@ Description: This example shows wrapping a core service and doing a custom valid
 (Source: https://docs.strapi.io/cms/error-handling#example-throwing-an-error-in-a-service)
 
 Language: JavaScript
-File path: N/A
+File path: ./src/api/restaurant/services/restaurant.js
 
 ```js
 
@@ -21342,10 +21387,10 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 ```
 
 ---
-Language: JavaScript
-File path: N/A
+Language: TypeScript
+File path: ./src/api/[api-name]/policies/my-policy.ts
 
-```js
+```ts
 
 import { errors } from '@strapi/utils';
 import { factories } from '@strapi/strapi';
@@ -21374,7 +21419,7 @@ Description: This example shows building a custom model lifecycle and being able
 (Source: https://docs.strapi.io/cms/error-handling#example-throwing-an-error-in-a-model-lifecycle)
 
 Language: JavaScript
-File path: N/A
+File path: ./src/api/[api-name]/content-types/[api-name]/lifecycles.js
 
 ```js
 
@@ -21394,10 +21439,10 @@ module.exports = {
 ```
 
 ---
-Language: JavaScript
-File path: N/A
+Language: TypeScript
+File path: ./src/api/[api-name]/content-types/[api-name]/lifecycles.ts
 
-```js
+```ts
 
 import { errors } from '@strapi/utils';
 const { ApplicationError } = errors;
@@ -21420,7 +21465,7 @@ Description: This example shows building a custom policy that will throw a custo
 (Source: https://docs.strapi.io/cms/error-handling#example-throwing-a-policyerror-in-a-custom-policy)
 
 Language: JavaScript
-File path: N/A
+File path: ./src/api/[api-name]/policies/my-policy.js
 
 ```js
 
@@ -21442,10 +21487,10 @@ module.exports = (policyContext, config, { strapi }) => {
 ```
 
 ---
-Language: JavaScript
-File path: N/A
+Language: TypeScript
+File path: ./src/api/[api-name]/policies/my-policy.ts
 
-```js
+```ts
 
 import { errors } from '@strapi/utils';
 const { PolicyError } = errors;
@@ -21466,7 +21511,7 @@ export default (policyContext, config, { strapi }) => {
 
 
 ## Default error classes
-Description: | Parameter | Type | Description | Default | | --- | --- | --- | --- | | message | string | The error message | An application error occured | | details | object | Object to define additional details | {} |
+Description: | Parameter | Type | Description | Default | | --- | --- | --- | --- | | message | string | The error message | An application error occurred | | details | object | Object to define additional details | {} |
 (Source: https://docs.strapi.io/cms/error-handling#default-error-classes)
 
 Language: JavaScript
@@ -21558,7 +21603,7 @@ The `NotImplementedError` class is a specific error class used when the incoming
 
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |
-| `message` | `string` | The error message | `This feature isn't implemented` |
+| `message` | `string` | The error message | `This feature is not implemented yet` |
 ```
 
 ---
@@ -32959,26 +33004,82 @@ File path: N/A
 const { async } = require('@strapi/utils');
 ```
 
-
-## Usage example
-Description: | Function | Description | | --- | --- | | async.pipe(...fns) | Compose functions: the first function runs with the original arguments, each subsequent function receives the previous return value.
-(Source: https://docs.strapi.io/cms/strapi-utils#usage-example)
-
 Language: JavaScript
 File path: N/A
 
 ```js
 const { async: asyncUtils } = require('@strapi/utils');
 
+// Compose async functions into a pipeline
 const result = await asyncUtils.pipe(
   fetchUser,
   enrichWithProfile,
   formatResponse
 )(userId);
+
+// Reduce an array asynchronously (note the curried call)
+const total = await asyncUtils.reduce([1, 2, 3])(
+  async (sum, n) => sum + n,
+  0
+); // 6
 ```
+
+
+## contentTypes
+Description: The contentTypes namespace exposes constants and helper functions for working with Strapi content-type schemas.
+(Source: https://docs.strapi.io/cms/strapi-utils#contenttypes)
 
 Language: JavaScript
 File path: N/A
+
+```js
+const { contentTypes } = require('@strapi/utils');
+```
+
+
+## Schema inspection functions
+Description: The following example iterates over a content type's attributes to find relations and writable fields:
+(Source: https://docs.strapi.io/cms/strapi-utils#schema-inspection-functions)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { contentTypes } = require('@strapi/utils');
+
+const articleSchema = strapi.contentType('api::article.article');
+
+// List all relation fields
+for (const [name, attribute] of Object.entries(articleSchema.attributes)) {
+  if (contentTypes.isRelationalAttribute(attribute)) {
+    console.log(`${name} is a relation`);
+  }
+}
+
+// Get only the fields that can be written to
+const writableFields = contentTypes.getWritableAttributes(articleSchema);
+
+// Check if draft and publish is enabled
+if (contentTypes.hasDraftAndPublish(articleSchema)) {
+  console.log('This content type supports drafts');
+}
+```
+
+
+## env
+Description: A helper function to read environment variables with type-safe parsing.
+(Source: https://docs.strapi.io/cms/strapi-utils#env)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { env } = require('@strapi/utils');
+// or in TypeScript: import { env } from '@strapi/utils';
+```
+
+Language: JavaScript
+File path: /config/server.js
 
 ```js
 const { env } = require('@strapi/utils');
@@ -32990,6 +33091,19 @@ module.exports = {
     keys: env.array('APP_KEYS'),
   },
 };
+```
+
+
+## errors
+Description: The error classes are imported as follows:
+(Source: https://docs.strapi.io/cms/strapi-utils#errors)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { errors } = require('@strapi/utils');
+// or in TypeScript: import { errors } from '@strapi/utils';
 ```
 
 Language: JavaScript
@@ -33004,6 +33118,46 @@ throw new errors.ApplicationError('Something went wrong', { foo: 'bar' });
 // In a policy
 throw new errors.PolicyError('Access denied', { policy: 'is-owner' });
 ```
+
+
+## file
+Description: The file namespace provides helpers for working with streams and file sizes.
+(Source: https://docs.strapi.io/cms/strapi-utils#file)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { file } = require('@strapi/utils');
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { file } = require('@strapi/utils');
+
+const buffer = await file.streamToBuffer(uploadStream);
+const sizeInKb = file.bytesToKbytes(buffer.length);
+console.log(`Uploaded ${file.bytesToHumanReadable(buffer.length)} (${sizeInKb} KB)`);
+```
+
+
+## hooks
+Description: Factory functions to create hook registries.
+(Source: https://docs.strapi.io/cms/strapi-utils#hooks)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { hooks } = require('@strapi/utils');
+```
+
+
+## Available hook factories
+Description: The following example registers and calls handlers with a series hook A series hook executes handlers sequentially, one after another, in the order they were registered.
+(Source: https://docs.strapi.io/cms/strapi-utils#available-hook-factories)
 
 Language: JavaScript
 File path: N/A
@@ -33025,125 +33179,6 @@ myHook.register(async (context) => {
 await myHook.call({ data: 'example' });
 ```
 
-Language: JavaScript
-File path: N/A
-
-```js
-parseType({ type: 'boolean', value: 'true' }); // true
-parseType({ type: 'integer', value: '42' }); // 42
-parseType({ type: 'date', value: '2024-01-15T10:30:00Z' }); // '2024-01-15'
-```
-
-Language: JavaScript
-File path: N/A
-
-```js
-const { providerFactory } = require('@strapi/utils');
-
-const registry = providerFactory();
-
-registry.hooks.willRegister.register(async ({ key, value }) => {
-  console.log(`About to register: ${key}`);
-});
-
-await registry.register('my-provider', { execute: () => {} });
-
-registry.get('my-provider'); // { execute: [Function] }
-registry.has('my-provider'); // true
-registry.size(); // 1
-```
-
-Language: JavaScript
-File path: N/A
-
-```js
-const { setCreatorFields } = require('@strapi/utils');
-
-const addCreator = setCreatorFields({ user: { id: 1 } });
-const data = addCreator({ title: 'My Article' });
-// { title: 'My Article', createdBy: 1, updatedBy: 1 }
-
-const updateCreator = setCreatorFields({ user: { id: 2 }, isEdition: true });
-const updated = updateCreator(data);
-// { title: 'My Article', createdBy: 1, updatedBy: 2 }
-```
-
-
-## contentTypes
-Description: The contentTypes namespace exposes constants and helper functions for working with Strapi content-type schemas.
-(Source: https://docs.strapi.io/cms/strapi-utils#contenttypes)
-
-Language: JavaScript
-File path: N/A
-
-```js
-const { contentTypes } = require('@strapi/utils');
-```
-
-
-## env
-Description: A helper function to read environment variables with type-safe parsing.
-(Source: https://docs.strapi.io/cms/strapi-utils#env)
-
-Language: JavaScript
-File path: N/A
-
-```js
-const { env } = require('@strapi/utils');
-```
-
----
-Language: JavaScript
-File path: N/A
-
-```js
-import { env } from '@strapi/utils';
-```
-
-
-## errors
-Description: Import errors from the package:
-(Source: https://docs.strapi.io/cms/strapi-utils#errors)
-
-Language: JavaScript
-File path: N/A
-
-```js
-const { errors } = require('@strapi/utils');
-```
-
----
-Language: JavaScript
-File path: N/A
-
-```js
-import { errors } from '@strapi/utils';
-```
-
-
-## file
-Description: The file namespace provides helpers for working with streams and file sizes.
-(Source: https://docs.strapi.io/cms/strapi-utils#file)
-
-Language: JavaScript
-File path: N/A
-
-```js
-const { file } = require('@strapi/utils');
-```
-
-
-## hooks
-Description: Factory functions to create hook registries.
-(Source: https://docs.strapi.io/cms/strapi-utils#hooks)
-
-Language: JavaScript
-File path: N/A
-
-```js
-const { hooks } = require('@strapi/utils');
-```
-
 
 ## pagination
 Description: The pagination namespace provides helpers for handling pagination parameters.
@@ -33156,6 +33191,17 @@ File path: N/A
 const { pagination } = require('@strapi/utils');
 ```
 
+Language: JavaScript
+File path: N/A
+
+```js
+const { pagination } = require('@strapi/utils');
+
+const params = pagination.withDefaultPagination({ page: 2 }, { maxLimit: 100 });
+const info = pagination.transformPagedPaginationInfo(params, 250);
+// { page: 2, pageSize: 25, pageCount: 10, total: 250 }
+```
+
 
 ## parseType
 Description: Cast a value to a specific Strapi field type.
@@ -33166,6 +33212,15 @@ File path: N/A
 
 ```js
 const { parseType } = require('@strapi/utils');
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+parseType({ type: 'boolean', value: 'true' }); // true
+parseType({ type: 'integer', value: '42' }); // 42
+parseType({ type: 'date', value: '2024-01-15T10:30:00Z' }); // '2024-01-15'
 ```
 
 
@@ -33182,7 +33237,7 @@ const { policy } = require('@strapi/utils');
 
 
 ## createPolicy
-Description: | Parameter | Type | Required | Description | | --- | --- | --- | --- | | name | string | No | Policy name (defaults to 'unnamed') | | handler | function | Yes | Policy handler function | | validator | function | No | Validate the policy configuration; throws on invalid config |
+Description: The following example creates a policy with a configuration validator:
 (Source: https://docs.strapi.io/cms/strapi-utils#createpolicy)
 
 Language: JavaScript
@@ -33203,7 +33258,7 @@ const myPolicy = policy.createPolicy({
 
 
 ## createPolicyContext
-Description: Create a typed context object for use within a policy:
+Description: The createPolicyContext function creates a typed context object for use within a policy handler.
 (Source: https://docs.strapi.io/cms/strapi-utils#createpolicycontext)
 
 Language: JavaScript
@@ -33230,7 +33285,7 @@ const { strings, objects, arrays, dates } = require('@strapi/utils');
 
 
 ## providerFactory
-Description: Create a registry that stores and retrieves items by key, with lifecycle hooks.
+Description: Create a pluggable registry that stores and retrieves items by key, with lifecycle hooks.
 (Source: https://docs.strapi.io/cms/strapi-utils#providerfactory)
 
 Language: JavaScript
@@ -33241,8 +33296,32 @@ const { providerFactory } = require('@strapi/utils');
 ```
 
 
+## Provider hooks
+Description: The following example creates a provider and registers an item with a lifecycle hook:
+(Source: https://docs.strapi.io/cms/strapi-utils#provider-hooks)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { providerFactory } = require('@strapi/utils');
+
+const registry = providerFactory();
+
+registry.hooks.willRegister.register(async ({ key, value }) => {
+  console.log(`About to register: ${key}`);
+});
+
+await registry.register('my-provider', { execute: () => {} });
+
+registry.get('my-provider'); // { execute: [Function] }
+registry.has('my-provider'); // true
+registry.size(); // 1
+```
+
+
 ## relations
-Description: The relations namespace provides helpers to inspect relation attributes.
+Description: The relations namespace provides helpers to inspect the cardinality of relation attributes (e.g., one-to-many vs.
 (Source: https://docs.strapi.io/cms/strapi-utils#relations)
 
 Language: JavaScript
@@ -33252,9 +33331,24 @@ File path: N/A
 const { relations } = require('@strapi/utils');
 ```
 
+Language: JavaScript
+File path: N/A
+
+```js
+const { relations, contentTypes } = require('@strapi/utils');
+
+const schema = strapi.contentType('api::article.article');
+
+for (const [name, attribute] of Object.entries(schema.attributes)) {
+  if (contentTypes.isRelationalAttribute(attribute) && relations.isAnyToMany(attribute)) {
+    console.log(`${name} is a *-to-many relation`);
+  }
+}
+```
+
 
 ## sanitize
-Description: The sanitize namespace provides functions to clean input and output data based on content-type schemas.
+Description: The namespace is imported as follows:
 (Source: https://docs.strapi.io/cms/strapi-utils#sanitize)
 
 Language: JavaScript
@@ -33263,11 +33357,6 @@ File path: N/A
 ```js
 const { sanitize } = require('@strapi/utils');
 ```
-
-
-## createAPISanitizers
-Description: Create a set of sanitizer functions using a model resolver:
-(Source: https://docs.strapi.io/cms/strapi-utils#createapisanitizers)
 
 Language: JavaScript
 File path: N/A
@@ -33290,9 +33379,24 @@ File path: N/A
 const { setCreatorFields } = require('@strapi/utils');
 ```
 
+Language: JavaScript
+File path: N/A
+
+```js
+const { setCreatorFields } = require('@strapi/utils');
+
+const addCreator = setCreatorFields({ user: { id: 1 } });
+const data = addCreator({ title: 'My Article' });
+// { title: 'My Article', createdBy: 1, updatedBy: 1 }
+
+const updateCreator = setCreatorFields({ user: { id: 2 }, isEdition: true });
+const updated = updateCreator(data);
+// { title: 'My Article', createdBy: 1, updatedBy: 2 }
+```
+
 
 ## validate
-Description: The validate namespace provides functions to check input and query data against content-type schemas.
+Description: The namespace is imported as follows:
 (Source: https://docs.strapi.io/cms/strapi-utils#validate)
 
 Language: JavaScript
@@ -33302,11 +33406,6 @@ File path: N/A
 const { validate } = require('@strapi/utils');
 ```
 
-
-## createAPIValidators
-Description: Create a set of validator functions using a model resolver:
-(Source: https://docs.strapi.io/cms/strapi-utils#createapivalidators)
-
 Language: JavaScript
 File path: N/A
 
@@ -33314,6 +33413,26 @@ File path: N/A
 const validators = validate.createAPIValidators({
   getModel: strapi.getModel.bind(strapi),
 });
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { validate, errors } = require('@strapi/utils');
+
+const validators = validate.createAPIValidators({
+  getModel: strapi.getModel.bind(strapi),
+});
+
+try {
+  await validators.query(ctx.query, 'api::article.article', {
+    auth: ctx.state.auth,
+  });
+} catch (error) {
+  // error is a ValidationError with details about which fields failed
+  console.error(error.message, error.details);
+}
 ```
 
 
@@ -33342,7 +33461,7 @@ const { validateYupSchema, validateYupSchemaSync } = require('@strapi/utils');
 
 
 ## zod
-Description: Strapi exposes Zod helpers as named exports.
+Description: Strapi re-exports the z instance from and provides a validateZod helper that wraps a Zod schema into a Strapi-style validator.
 (Source: https://docs.strapi.io/cms/strapi-utils#zod)
 
 Language: JavaScript
@@ -33350,25 +33469,21 @@ File path: N/A
 
 ```js
 const { validateZod, z } = require('@strapi/utils');
-
-const schema = z.object({
-  name: z.string().min(1),
-  age: z.number().positive(),
-});
 ```
-
-
-## validateZod
-Description: Create a validator function from a Zod schema:
-(Source: https://docs.strapi.io/cms/strapi-utils#validatezod)
 
 Language: JavaScript
 File path: N/A
 
 ```js
+const schema = z.object({
+  name: z.string().min(1),
+  age: z.number().positive(),
+});
+
 const validate = validateZod(schema);
 
-validate(data); // throws ValidationError on failure
+const parsed = validate({ name: 'Alice', age: 30 }); // returns parsed data
+validate({ name: '' }); // throws ValidationError
 ```
 
 
