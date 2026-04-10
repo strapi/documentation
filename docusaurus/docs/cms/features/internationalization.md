@@ -135,7 +135,9 @@ To translate content in another locale:
 />
 
 :::tip
-Click on the <Icon name="globe-hemisphere-west" /> *Fill in from another locale* button, in the top right corner, for all fields (including relations) to be filled up with the values of another chosen locale. It can be useful if you do not remember what was the exact content in another locale. This button is not visible if you've enabled [AI-powered internationalization](#ai-powered-internationalization) since translations are automatically handled by Strapi AI. The latest version of the source document is retrieved by this feature. For localizable relations, Strapi automatically fetch the corresponding entry in the target locale if it exists. If the target locale does not exist for that relation, it will not be filled in. For non-localizable relations, the exact same entry is used.
+Click on the <Icon name="globe-hemisphere-west" /> *Fill in from another locale* button, in the top right corner, for all fields (including relations) to be filled up with the values of another chosen locale. It can be useful if you do not remember what was the exact content in another locale. This button is not visible if you've enabled [AI-powered internationalization](#ai-powered-internationalization) since translations are automatically handled by Strapi AI. The latest version of the source document is retrieved by this feature.
+
+<VersionBadge version="5.42.1+" tooltip="Preserving relations is available since Strapi 5.42.1."/> For localizable relations, Strapi automatically fetch the corresponding entry in the target locale if it exists. If the target locale does not exist for that relation, it will not be filled in. For non-localizable relations, the exact same entry is used.
 :::
 
 ### AI-powered internationalization <NewBadge /> {#ai-powered-internationalization}
