@@ -96,7 +96,7 @@ Path‑based policy (applies to folders and all subfolders):
 - Use numbered lists for procedures, bullet points for features/options
 
 ### Content validation
-- Auto-generated files: `llms.txt`, `llms-code.txt` — content is optimized for AI consumption while maintaining human readability
+- Auto-generated files: `llms.txt`, `llms-full.txt`, `llms-code.txt` — content is optimized for AI consumption while maintaining human readability
 - All code examples produced by AI agents MUST be validated against the actual [strapi/strapi](https://github.com/strapi/strapi) codebase
 - Include both JavaScript and TypeScript variants when applicable
 - Build process: LLM content generation → code example validation → link checking → static site generation
