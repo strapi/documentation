@@ -165,8 +165,24 @@ See [`git-rules.md`](git-rules.md) for all commit, PR, and branch safety convent
 - `repo/` — everything else
 - If ambiguous, ask the user; user choice always supersedes auto-branch naming
 
-### Security and tokens
-- Never commit secrets. Use `GITHUB_TOKEN` env var if needed; least privilege; rotate/revoke after use.
+### Security
+
+**Always:**
+- Reference where secrets live (env vars, vault), never the secrets themselves.
+- When using tokens or API keys: least privilege; rotate/revoke after use.
+
+**Ask user first:**
+- Installing or removing dependencies (`yarn add`, `yarn remove`).
+- Modifying CI/CD config (`.github/workflows/`).
+- Deleting files.
+- Pushing to remote or creating PRs.
+
+**Never:**
+- Commit secrets, API keys, tokens, passwords, or `.env` files.
+- Hardcode credentials in source files.
+- Modify `node_modules/` or other vendor directories.
+- Run destructive commands (`rm -rf`, `git push --force`) without explicit approval.
+- Remove failing tests without explicit approval.
 
 ## Output and communication expectations
 
