@@ -77,6 +77,7 @@ Path‑based policy (applies to folders and all subfolders):
 - AI toolbar: `docusaurus/src/components/AiToolbar/openLLM.js`, `.../config/aiToolsConfig.js`, `.../config/aiPromptTemplates.js`
 - Generators/validators: `docusaurus/scripts/generate-llms-code.js`, `docusaurus/scripts/generate-llms.js`, `docusaurus/scripts/validate-prompts.js`
 - Authoring templates: `agents/templates/*.md` (see `agents/templates/INDEX.md`)
+- Agent prompts: `agents/prompts/` (see table in Documentation Review System section)
 - Components guidance: `agents/templates/components/tabs.md` (Tabs/TabItem rules)
 - Configuration: `docusaurus.config.js`, `sidebars.js`, `package.json`
 
