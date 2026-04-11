@@ -6,3 +6,4 @@ Before installing Strapi, the following requirements must be installed on your c
     - <ExternalLink to="https://yarnpkg.com/getting-started/install" text="yarn"/>
     - <ExternalLink to="https://pnpm.io/" text="pnpm" />
 - <ExternalLink to="https://www.python.org/downloads/" text="Python"/> (if using a SQLite database)
+- **Web browser (Admin panel):** The Admin UI targets browsers matching the default <ExternalLink to="https://github.com/browserslist/browserslist" text="Browserslist"/> query: `last 3 major versions`, `Firefox ESR`, `last 2 Opera versions`, and `not dead`. See <ExternalLink to="https://browsersl.ist/#q=last+3+major+versions%2C+Firefox+ESR%2C+last+2+Opera+versions%2C+not+dead" text="browsersl.ist"/> for the current coverage matrix. Projects can override these defaults with a Browserslist configuration at the project root.
