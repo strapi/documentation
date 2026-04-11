@@ -99,7 +99,7 @@ await request(`/api/users?${query}`);
       ],
       "documentId": "lr5wju2og49bf820kj9kz8c3"
     },
-    // …
+    // â€¦
   ],
   "meta": {
     "pagination": {
@@ -130,7 +130,7 @@ You can use the `populate` parameter alone or [in combination with multiple oper
 :::
 
 :::note
-Large `populate` lists in the query string (many `populate[0]`, `populate[1]`, … entries) are bounded by the query parser `arrayLimit` (default: `100`). To allow a longer list, raise `arrayLimit` on the [`strapi::query` middleware](/cms/configurations/middlewares#query). Higher values increase parsing cost per request.
+Large `populate` lists in the query string (many `populate[0]`, `populate[1]`, â€¦ entries) are bounded by the query parser `arrayLimit` (default: `100`). To allow a longer list, raise `arrayLimit` on the [`strapi::query` middleware](/cms/configurations/middlewares#query). Higher values increase parsing cost per request.
 :::
 
 The following table lists populate use cases with example syntax. Each row links to the Understanding populate guide for details:
@@ -155,7 +155,7 @@ To build complex queries with multiple-level population, use the [interactive qu
 You can combine the `populate` operator with other operators such as [field selection](/cms/api/rest/populate-select#field-selection), [filters](/cms/api/rest/filters), and [sort](/cms/api/rest/sort-pagination) in the population queries.
 
 :::note
-The population and pagination operators cannot be combined.
+Top-level pagination parameters (for example, `pagination[page]` and `pagination[pageSize]`) work alongside `populate` to paginate the main query results. However, you cannot apply pagination parameters directly to populated relations to limit the number of related entries returned within each result (nested pagination on relations is not supported in the REST API).
 :::
 
 #### Populate with field selection
