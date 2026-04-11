@@ -16,6 +16,8 @@ tags:
 - default ID name
 - SSL
 - typescript
+- database
+- foreign keys
 
 ---
 
@@ -94,6 +96,14 @@ There is currently no ETA on this migration however.
 ## Does Strapi allow me to change the default ID type or name?
 
 No, currently does not have the ability to allow for changing the default id name nor does it allow you to switch the data type (such as UUID in PostgreSQL), support for this is being looked at in future.
+
+## Can I disable foreign key creation?
+
+Strapi relies on foreign keys to maintain relational integrity between content types. There is currently no supported configuration option to disable foreign key generation.
+
+If your database environment restricts foreign keys (for example, PlanetScale or similar distributed databases that do not support foreign keys), this is a known limitation. See the <ExternalLink to="https://github.com/strapi/strapi/issues/11775" text="related discussion"/> on the Strapi repository for context and workarounds shared by the community.
+
+For environments that require foreign key-free schemas, consider using Strapi with a database that fully supports foreign keys (PostgreSQL, MySQL, MariaDB, or SQLite).
 
 ## Can you filter and/or deep filter on dynamic zones and polymorphic relations?
 
