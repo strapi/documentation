@@ -14640,16 +14640,23 @@ strapi export
 ```
 
 Language: Bash
-File path: Examples
+File path: N/A
 
 ```bash
-# export your data with the default options and the filename myData, which results in a file named myData.tar.gz.enc.
 strapi export -f myData
+```
 
-# export your data without encryption.
+Language: Bash
+File path: N/A
+
+```bash
 strapi export --no-encrypt
+```
 
-# export your data as an unpacked directory.
+Language: Bash
+File path: N/A
+
+```bash
 strapi export --format dir --no-encrypt -f my-export
 ```
 
@@ -14666,13 +14673,16 @@ strapi import
 ```
 
 Language: Bash
-File path: Examples
+File path: N/A
 
 ```bash
-# import your data with the default parameters and pass an encryption key:
 strapi import -f your-filepath-and-filename --key my-key
+```
 
-# import from an unpacked export directory:
+Language: Bash
+File path: N/A
+
+```bash
 strapi import -f ./my-export
 ```
 
