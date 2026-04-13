@@ -989,6 +989,6 @@ create: async ctx => {
 
 ## Customizing routes and policies {#customizing-routes-and-policies}
 
-The Users & Permissions plugin routes and controllers can be extended and overridden through the [plugin extension system](/cms/plugins-development/plugins-extension). This is useful for adding custom policies to user endpoints, overriding controller logic, or adding new routes.
+The Users & Permissions routes and controllers can be extended and overridden through the [plugin extension system](/cms/plugins-development/plugins-extension). This is useful for adding custom policies to user endpoints, overriding controller logic, or adding new routes.
 
 For a complete guide with step-by-step instructions and code examples, see [Customizing Users & Permissions plugin routes](/cms/backend-customization/guides/customizing-users-permissions-plugin-routes).
