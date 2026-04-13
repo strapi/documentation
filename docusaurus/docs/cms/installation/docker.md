@@ -72,7 +72,7 @@ ENV NODE_ENV=${NODE_ENV}
 WORKDIR /opt/
 COPY package.json yarn.lock ./
 RUN yarn global add node-gyp
-RUN yarn config set network-timeout 600000 -g && yarn install
+RUN yarn config set network-timeout 600000 -g && yarn install --frozen-lockfile
 ENV PATH=/opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
@@ -98,7 +98,7 @@ ENV NODE_ENV=${NODE_ENV}
 WORKDIR /opt/
 COPY package.json package-lock.json ./
 RUN npm install -g node-gyp
-RUN npm config set fetch-retry-maxtimeout 600000 -g && npm install
+RUN npm config set fetch-retry-maxtimeout 600000 -g && npm ci
 ENV PATH=/opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
@@ -114,6 +114,17 @@ CMD ["npm", "run", "develop"]
 </TabItem>
 
 </Tabs>
+
+:::tip Alternative base image for restricted networks
+If your CI environment has limited network access (e.g., DNS restrictions that prevent downloading Sharp prebuilt binaries from GitHub), consider using `node:22-slim` instead of `node:22-alpine`. The Debian-based slim image avoids the need to compile native dependencies like `libvips` from source, and Sharp's prebuilt binaries work out of the box:
+
+```dockerfile
+FROM node:22-slim
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+```
+
+This trades a slightly larger image for simpler builds and fewer network dependencies.
+:::
 
 ### (Optional) Docker Compose
 
@@ -352,7 +363,7 @@ ENV NODE_ENV=${NODE_ENV}
 WORKDIR /opt/
 COPY package.json yarn.lock ./
 RUN yarn global add node-gyp
-RUN yarn config set network-timeout 600000 -g && yarn install --production
+RUN yarn config set network-timeout 600000 -g && yarn install --frozen-lockfile --production
 ENV PATH=/opt/node_modules/.bin:$PATH
 WORKDIR /opt/app
 COPY . .
@@ -388,7 +399,7 @@ ENV NODE_ENV=${NODE_ENV}
 WORKDIR /opt/
 COPY package.json package-lock.json ./
 RUN npm install -g node-gyp
-RUN npm config set fetch-retry-maxtimeout 600000 -g && npm install --only=production
+RUN npm config set fetch-retry-maxtimeout 600000 -g && npm ci --only=production
 ENV PATH=/opt/node_modules/.bin:$PATH
 WORKDIR /opt/app
 COPY . .
