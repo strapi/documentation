@@ -364,6 +364,15 @@ const sidebars = {
             'cms/backend-customization/services',
             'cms/backend-customization/models',
             'cms/backend-customization/webhooks',
+            {
+              type: 'category',
+              label: 'Guides',
+              collapsible: true,
+              collapsed: true,
+              items: [
+                'cms/backend-customization/guides/customizing-users-permissions-plugin-routes',
+              ],
+            },
           ],
         },
         {

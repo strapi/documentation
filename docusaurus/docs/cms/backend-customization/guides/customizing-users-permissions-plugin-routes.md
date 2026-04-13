@@ -17,7 +17,7 @@ tags:
 The Users & Permissions plugin exposes `/users` and `/auth` routes that can be extended or overridden using the plugin extension system. This guide shows how to add custom policies, override controllers, and add new routes to the User collection.
 </Tldr>
 
-The [Users & Permissions plugin](/cms/features/users-permissions) ships with built-in routes for authentication (`/auth`) and user management (`/users`). Because these routes belong to a plugin rather than a user-created content-type, they cannot be customized with `createCoreRouter`. Instead, you extend them through the [plugin extension system](/cms/plugins-development/plugins-extension) using a `strapi-server.js` or `strapi-server.ts` file in the `./src/extensions/users-permissions/` folder.
+The [Users & Permissions plugin](/cms/features/users-permissions) ships with built-in routes for authentication (`/auth`) and user management (`/users`). Because these routes belong to a plugin rather than a user-created content-type, they cannot be customized with `createCoreRouter`. Instead, extend them through the [plugin extension system](/cms/plugins-development/plugins-extension) using a `strapi-server.js` or `strapi-server.ts` file in the `/src/extensions/users-permissions/` folder.
 
 :::prerequisites
 - A Strapi 5 project with the Users & Permissions plugin installed (included by default).
@@ -26,10 +26,14 @@ The [Users & Permissions plugin](/cms/features/users-permissions) ships with bui
 
 ## How Users & Permissions routes work {#how-routes-work}
 
-Unlike content-types you create (e.g., `api::restaurant.restaurant`), the Users & Permissions plugin registers its routes inside the `plugin.routes['content-api'].routes` array. This array contains all `/users`, `/auth`, and `/roles` route definitions.
+<!-- source: packages/plugins/users-permissions/server/routes/content-api/index.js -->
+<!-- source: packages/core/utils/src/content-api-router.ts#L3-L33 -->
+
+Content-types you create (e.g., `api::restaurant.restaurant`) register routes differently. The Users & Permissions plugin registers its routes inside the `plugin.routes['content-api'].routes` array, which contains all `/users`, `/auth`, and `/roles` route definitions.
 
 Each route is an object with the following shape:
 
+<!-- source: packages/plugins/users-permissions/server/routes/content-api/user.js#L10-L26 -->
 ```js
 {
   method: 'GET',          // HTTP method
@@ -37,17 +41,25 @@ Each route is an object with the following shape:
   handler: 'user.find',   // controller.action
   config: {
     prefix: '',           // path prefix (empty means /api)
-    policies: [],         // array of policies to run before the handler
-    middlewares: [],       // array of middlewares
   },
 }
 ```
 
+Route configs can also include optional `policies` and `middlewares` arrays (see [Add a custom policy to a user route](#add-custom-policy)).
+
+<!-- source: packages/plugins/users-permissions/server/controllers/user.js#L37-L219 -->
 The available `user` controller actions are: `find`, `findOne`, `create`, `update`, `destroy`, `me`, and `count`.
 
-The available `auth` controller actions are: `callback` (login), `register`, `forgotPassword`, `resetPassword`, `changePassword`, `emailConfirmation`, `sendEmailConfirmation`, `connect`, and `refresh`.
+<!-- source: packages/plugins/users-permissions/server/controllers/auth.js#L40-L700 -->
+The available `auth` controller actions are: `callback` (login), `register`, `forgotPassword`, `resetPassword`, `changePassword`, `emailConfirmation`, `sendEmailConfirmation`, `connect`, `refresh`, and `logout`.
+
+:::note Understanding the controller types
+The `user` controller is a plain object with methods, while the `auth` controller is a factory function `({ strapi }) => ({...})` that Strapi resolves lazily. In the plugin extension file, both are accessible on `plugin.controllers`, but they behave differently when overridden. See [Override a controller action](#override-controller) and [Override an auth controller action](#override-auth-route) for the correct pattern for each.
+:::
 
 ## Extend routes with strapi-server {#extend-routes}
+
+<!-- source: packages/core/core/src/loaders/plugins/index.ts#L34-L61 -->
 
 All customizations to the Users & Permissions plugin go in a single file:
 
@@ -55,7 +67,7 @@ All customizations to the Users & Permissions plugin go in a single file:
 
 <TabItem value="js" label="JavaScript">
 
-```js title="./src/extensions/users-permissions/strapi-server.js"
+```js title="/src/extensions/users-permissions/strapi-server.js"
 module.exports = (plugin) => {
   // Your customizations here
 
@@ -67,7 +79,7 @@ module.exports = (plugin) => {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./src/extensions/users-permissions/strapi-server.ts"
+```ts title="/src/extensions/users-permissions/strapi-server.ts"
 export default (plugin) => {
   // Your customizations here
 
@@ -83,17 +95,22 @@ The function receives the full plugin object and must return it. You can modify 
 
 ## Add a custom policy to a user route {#add-custom-policy}
 
-A common requirement is to restrict who can update or delete user accounts. For example, you might want to ensure that users can only update their own profile.
+A common requirement is restricting who can update or delete user accounts: for example, ensuring users can only update their own profile.
 
 ### 1. Create the policy file
 
-Create a global policy that checks whether the authenticated user matches the target user:
+<!-- source: packages/core/utils/src/policy.ts#L29-L39 -->
+<!-- source: packages/core/core/src/services/server/policy.ts#L9-L14 -->
+
+Create a global policy that checks whether the authenticated user matches the target user. The policy function receives the Koa context (with access to `state.user` and `params`), an optional config object, and `{ strapi }`:
 
 <Tabs groupId="js-ts">
 
 <TabItem value="js" label="JavaScript">
 
-```js title="./src/policies/is-own-user.js"
+```js title="/src/policies/is-own-user.js"
+"use strict";
+
 module.exports = (policyContext, config, { strapi }) => {
   const currentUser = policyContext.state.user;
 
@@ -115,7 +132,7 @@ module.exports = (policyContext, config, { strapi }) => {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./src/policies/is-own-user.ts"
+```ts title="/src/policies/is-own-user.ts"
 export default (policyContext, config, { strapi }) => {
   const currentUser = policyContext.state.user;
 
@@ -139,13 +156,16 @@ export default (policyContext, config, { strapi }) => {
 
 ### 2. Attach the policy to the user routes
 
+<!-- source: packages/core/core/src/loaders/policies.ts#L28 -->
+<!-- source: tests/api/core/strapi/plugin-routes-extension-bc.test.api.ts#L11-L19 -->
+
 In the plugin extension file, find the `update` and `delete` routes and add the policy:
 
 <Tabs groupId="js-ts">
 
 <TabItem value="js" label="JavaScript">
 
-```js title="./src/extensions/users-permissions/strapi-server.js"
+```js title="/src/extensions/users-permissions/strapi-server.js"
 module.exports = (plugin) => {
   // Find the routes that need the policy
   const routes = plugin.routes['content-api'].routes;
@@ -180,7 +200,7 @@ module.exports = (plugin) => {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./src/extensions/users-permissions/strapi-server.ts"
+```ts title="/src/extensions/users-permissions/strapi-server.ts"
 export default (plugin) => {
   // Find the routes that need the policy
   const routes = plugin.routes['content-api'].routes;
@@ -215,7 +235,7 @@ export default (plugin) => {
 
 </Tabs>
 
-With this configuration, `PUT /api/users/:id` and `DELETE /api/users/:id` will return a `403 Forbidden` error if the authenticated user does not match the `:id` in the URL.
+With this configuration, `PUT /api/users/:id` and `DELETE /api/users/:id` return a `403 Forbidden` error if the authenticated user does not match the `:id` in the URL.
 
 :::tip
 For a more informative error message, throw a `PolicyError` instead of returning `false`:
@@ -233,13 +253,15 @@ See the [policies documentation](/cms/backend-customization/policies) for more d
 
 ## Override a controller action {#override-controller}
 
-You can replace or wrap an existing controller action. For instance, to add custom logic to the `me` endpoint:
+<!-- source: packages/plugins/users-permissions/server/controllers/user.js#L37 -->
+
+The `user` controller is a plain object, so you can directly read and replace its methods in the extension file. For instance, to add custom logic to the `me` endpoint:
 
 <Tabs groupId="js-ts">
 
 <TabItem value="js" label="JavaScript">
 
-```js title="./src/extensions/users-permissions/strapi-server.js"
+```js title="/src/extensions/users-permissions/strapi-server.js"
 module.exports = (plugin) => {
   const originalMe = plugin.controllers.user.me;
 
@@ -261,7 +283,7 @@ module.exports = (plugin) => {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./src/extensions/users-permissions/strapi-server.ts"
+```ts title="/src/extensions/users-permissions/strapi-server.ts"
 export default (plugin) => {
   const originalMe = plugin.controllers.user.me;
 
@@ -287,15 +309,98 @@ export default (plugin) => {
 When wrapping a controller, always call the original function first to preserve the default behavior. Skipping the original function means you take over the full request handling, including sanitization and error handling.
 :::
 
-## Add a new route {#add-new-route}
+## Override an auth controller action {#override-auth-route}
 
-You can add custom routes to the Users & Permissions plugin. For example, to add an endpoint that deactivates a user account:
+<!-- source: packages/plugins/users-permissions/server/controllers/auth.js#L40 -->
+<!-- source: packages/core/core/src/registries/controllers.ts#L34-L35 -->
+
+The `auth` controller uses a factory pattern: it exports a function `({ strapi }) => ({...})` instead of a plain object. When your extension code runs, Strapi has not yet resolved this factory. As a result, `plugin.controllers.auth` is a function, not an object with methods.
+
+To override an auth action, wrap the factory itself:
 
 <Tabs groupId="js-ts">
 
 <TabItem value="js" label="JavaScript">
 
-```js title="./src/extensions/users-permissions/strapi-server.js"
+```js title="/src/extensions/users-permissions/strapi-server.js"
+module.exports = (plugin) => {
+  const originalAuthFactory = plugin.controllers.auth;
+
+  plugin.controllers.auth = ({ strapi }) => {
+    // Resolve the original factory to get the controller methods
+    const originalAuth = originalAuthFactory({ strapi });
+
+    // Override the register method
+    const originalRegister = originalAuth.register;
+
+    originalAuth.register = async (ctx) => {
+      // Call the original register logic
+      await originalRegister(ctx);
+
+      // Custom post-registration logic
+      if (ctx.body && ctx.body.user) {
+        strapi.log.info(`New user registered: ${ctx.body.user.email}`);
+      }
+    };
+
+    return originalAuth;
+  };
+
+  return plugin;
+};
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/src/extensions/users-permissions/strapi-server.ts"
+export default (plugin) => {
+  const originalAuthFactory = plugin.controllers.auth;
+
+  plugin.controllers.auth = ({ strapi }) => {
+    // Resolve the original factory to get the controller methods
+    const originalAuth = originalAuthFactory({ strapi });
+
+    // Override the register method
+    const originalRegister = originalAuth.register;
+
+    originalAuth.register = async (ctx) => {
+      // Call the original register logic
+      await originalRegister(ctx);
+
+      // Custom post-registration logic
+      if (ctx.body && ctx.body.user) {
+        strapi.log.info(`New user registered: ${ctx.body.user.email}`);
+      }
+    };
+
+    return originalAuth;
+  };
+
+  return plugin;
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+:::caution
+Do not access `plugin.controllers.auth.register` directly. Because `auth` is a factory function at extension time, its methods are not accessible until Strapi calls the factory. Always wrap the factory as shown above.
+:::
+
+## Add a new route {#add-new-route}
+
+You can add custom routes to the Users & Permissions plugin. For example, to add an endpoint that deactivates a user account:
+
+<!-- source: packages/plugins/users-permissions/server/services/user.js#L74-L80 -->
+
+<Tabs groupId="js-ts">
+
+<TabItem value="js" label="JavaScript">
+
+```js title="/src/extensions/users-permissions/strapi-server.js"
 module.exports = (plugin) => {
   // Add a new controller action
   plugin.controllers.user.deactivate = async (ctx) => {
@@ -328,7 +433,7 @@ module.exports = (plugin) => {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./src/extensions/users-permissions/strapi-server.ts"
+```ts title="/src/extensions/users-permissions/strapi-server.ts"
 export default (plugin) => {
   // Add a new controller action
   plugin.controllers.user.deactivate = async (ctx) => {
@@ -363,58 +468,6 @@ export default (plugin) => {
 
 After restarting Strapi, `POST /api/users/:id/deactivate` becomes available. Grant the corresponding permission in the admin panel under <Icon name="gear-six" /> *Users & Permissions plugin > Roles* for the roles that should access this endpoint.
 
-## Override an auth route {#override-auth-route}
-
-Authentication routes can be customized in the same way. For example, to add a rate-limiting middleware to the login endpoint or to run custom logic after registration:
-
-<Tabs groupId="js-ts">
-
-<TabItem value="js" label="JavaScript">
-
-```js title="./src/extensions/users-permissions/strapi-server.js"
-module.exports = (plugin) => {
-  const originalRegister = plugin.controllers.auth.register;
-
-  plugin.controllers.auth.register = async (ctx) => {
-    // Call the original register logic
-    await originalRegister(ctx);
-
-    // Custom post-registration logic
-    if (ctx.body && ctx.body.user) {
-      strapi.log.info(`New user registered: ${ctx.body.user.email}`);
-    }
-  };
-
-  return plugin;
-};
-```
-
-</TabItem>
-
-<TabItem value="ts" label="TypeScript">
-
-```ts title="./src/extensions/users-permissions/strapi-server.ts"
-export default (plugin) => {
-  const originalRegister = plugin.controllers.auth.register;
-
-  plugin.controllers.auth.register = async (ctx) => {
-    // Call the original register logic
-    await originalRegister(ctx);
-
-    // Custom post-registration logic
-    if (ctx.body && ctx.body.user) {
-      strapi.log.info(`New user registered: ${ctx.body.user.email}`);
-    }
-  };
-
-  return plugin;
-};
-```
-
-</TabItem>
-
-</Tabs>
-
 ## Remove a route {#remove-route}
 
 You can disable a route by filtering it out of the routes array. For example, to disable the user count endpoint:
@@ -423,7 +476,7 @@ You can disable a route by filtering it out of the routes array. For example, to
 
 <TabItem value="js" label="JavaScript">
 
-```js title="./src/extensions/users-permissions/strapi-server.js"
+```js title="/src/extensions/users-permissions/strapi-server.js"
 module.exports = (plugin) => {
   plugin.routes['content-api'].routes = plugin.routes['content-api'].routes.filter(
     (route) => route.handler !== 'user.count'
@@ -437,7 +490,7 @@ module.exports = (plugin) => {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./src/extensions/users-permissions/strapi-server.ts"
+```ts title="/src/extensions/users-permissions/strapi-server.ts"
 export default (plugin) => {
   plugin.routes['content-api'].routes = plugin.routes['content-api'].routes.filter(
     (route) => route.handler !== 'user.count'
@@ -459,7 +512,7 @@ In practice, you often combine several customizations in the same file. The foll
 
 <TabItem value="js" label="JavaScript">
 
-```js title="./src/extensions/users-permissions/strapi-server.js"
+```js title="/src/extensions/users-permissions/strapi-server.js"
 module.exports = (plugin) => {
   const routes = plugin.routes['content-api'].routes;
 
@@ -518,7 +571,7 @@ module.exports = (plugin) => {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./src/extensions/users-permissions/strapi-server.ts"
+```ts title="/src/extensions/users-permissions/strapi-server.ts"
 export default (plugin) => {
   const routes = plugin.routes['content-api'].routes;
 
@@ -590,8 +643,9 @@ After making changes, restart Strapi and verify your customizations:
 
 | Symptom | Possible cause |
 | ------- | -------------- |
-| Route not found (404) | The route was not pushed to `plugin.routes['content-api'].routes`, or the `prefix` property is missing. |
+| Route not found (404) | The new route was not pushed to `plugin.routes['content-api'].routes`, or its `prefix` property is missing. |
 | Policy not applied | The policy name is incorrect. Global policies require the `global::` prefix (e.g., `global::is-own-user`). |
 | Controller returns 500 | The controller action name does not match the `handler` value in the route definition. |
 | Changes not reflected | Strapi was not restarted after modifying the extension file. Extensions are loaded at startup. |
 | Permission denied (403) | The new action is not enabled for the role. Enable it in <Icon name="gear-six" /> *Users & Permissions plugin > Roles*. |
+| Cannot read property of `auth` controller | The `auth` controller is a factory function, not a plain object. Wrap the factory instead of accessing methods directly (see [Override an auth controller action](#override-auth-route)). |

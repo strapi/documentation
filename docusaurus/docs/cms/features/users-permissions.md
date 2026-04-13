@@ -1,6 +1,7 @@
 ---
 title: Users & Permissions
 description: Learn to use the Users & Permissions and API tokens features to manage end-users.
+displayed_sidebar: cmsSidebar
 toc_max_heading_level: 5
 tags:
 - admin panel
@@ -588,6 +589,41 @@ When [session management](#jwt-management-modes) is enabled (`jwtManagement: 're
 | `POST` | `/api/auth/refresh` | Refresh access token using refresh token |
 | `POST` | `/api/auth/logout` | Revoke user sessions (supports device-specific logout) |
 
+To refresh your authentication token you could for instance send the following request:
+
+<ApiCall>
+<Request title="Request example: Using the refresh endpoint">
+```
+curl -X POST http://localhost:1337/api/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d '{
+    "refreshToken": "your-refresh-token"
+  }'
+```
+</Request>
+
+<Response>
+```json
+{
+  "jwt": "your-new-access-token"
+}
+```
+</Response>
+</ApiCall>
+
+To log out of all sessions, send the following request:
+
+<ApiCall>
+<Request title="Request example: Using the logout endpoint">
+
+```bash
+curl -X POST http://localhost:1337/api/auth/logout \
+  -H "Authorization: Bearer your-access-token"
+```
+
+</Request>
+</ApiCall>
+
 #### User CRUD endpoints
 
 The Users & Permissions feature also exposes a set of endpoints for managing user records directly. These endpoints are separate from the authentication endpoints and allow you to create, read, update, and delete user entries:
@@ -603,12 +639,12 @@ The Users & Permissions feature also exposes a set of endpoints for managing use
 | `DELETE` | `/api/users/:id` | Delete a user by ID |
 
 :::note
-These endpoints are protected by the role-based permission system. To access them, enable the corresponding action (e.g., `find`, `findOne`, `create`, `update`, `delete`) for the desired role in <Icon name="gear-six" /> *Users & Permissions plugin > Roles*.
+These endpoints are protected by the role-based permission system. To access them, enable the corresponding action (e.g., `find`, `findOne`, `create`, `update`, `destroy`, `me`, `count`) for the desired role in <Icon name="gear-six" /> *Users & Permissions plugin > Roles*.
 :::
 
 ##### Get the authenticated user
 
-The `GET /api/users/me` endpoint returns the user associated with the current JWT. This is useful for front-end applications that need to display user profile information after login.
+The `GET /api/users/me` endpoint returns the user associated with the current JWT. The endpoint is useful for front-end applications that need to display user profile information after login.
 
 <ApiCall>
 <Request title="Request example: Get the authenticated user">
@@ -632,7 +668,8 @@ curl -X GET http://localhost:1337/api/users/me \
   "confirmed": true,
   "blocked": false,
   "createdAt": "2024-01-15T09:00:00.000Z",
-  "updatedAt": "2024-01-15T09:00:00.000Z"
+  "updatedAt": "2024-01-15T09:00:00.000Z",
+  "publishedAt": "2024-01-15T09:00:00.000Z"
 }
 ```
 
@@ -641,7 +678,7 @@ curl -X GET http://localhost:1337/api/users/me \
 
 ##### Find all users
 
-The `GET /api/users` endpoint returns a list of all users. Populate and filter parameters can be passed as query strings.
+The `GET /api/users` endpoint returns a list of all users. [`populate` and `filters` parameters](/cms/api/rest/parameters) can be passed as query strings.
 
 <ApiCall>
 <Request title="Request example: Find all users with their role">
@@ -669,10 +706,13 @@ curl -X GET "http://localhost:1337/api/users?populate=role" \
       "id": 1,
       "name": "Authenticated",
       "description": "Default role given to authenticated user.",
-      "type": "authenticated"
+      "type": "authenticated",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z"
     },
     "createdAt": "2024-01-15T09:00:00.000Z",
-    "updatedAt": "2024-01-15T09:00:00.000Z"
+    "updatedAt": "2024-01-15T09:00:00.000Z",
+    "publishedAt": "2024-01-15T09:00:00.000Z"
   }
 ]
 ```
@@ -682,7 +722,7 @@ curl -X GET "http://localhost:1337/api/users?populate=role" \
 
 ##### Create a user
 
-The `POST /api/users` endpoint creates a new user. Unlike `/api/auth/local/register`, this endpoint requires the caller to have the `create` permission for the Users & Permissions plugin.
+The `POST /api/users` endpoint creates a new user. Unlike `/api/auth/local/register`, this endpoint requires `create` permission for the Users & Permissions plugin.
 
 <ApiCall>
 <Request title="Request example: Create a user">
@@ -714,7 +754,8 @@ curl -X POST http://localhost:1337/api/users \
   "confirmed": true,
   "blocked": false,
   "createdAt": "2024-01-16T10:00:00.000Z",
-  "updatedAt": "2024-01-16T10:00:00.000Z"
+  "updatedAt": "2024-01-16T10:00:00.000Z",
+  "publishedAt": "2024-01-16T10:00:00.000Z"
 }
 ```
 
@@ -751,7 +792,8 @@ curl -X PUT http://localhost:1337/api/users/2 \
   "confirmed": true,
   "blocked": false,
   "createdAt": "2024-01-16T10:00:00.000Z",
-  "updatedAt": "2024-01-17T11:00:00.000Z"
+  "updatedAt": "2024-01-17T11:00:00.000Z",
+  "publishedAt": "2024-01-16T10:00:00.000Z"
 }
 ```
 
@@ -784,46 +826,12 @@ curl -X DELETE http://localhost:1337/api/users/2 \
   "confirmed": true,
   "blocked": false,
   "createdAt": "2024-01-16T10:00:00.000Z",
-  "updatedAt": "2024-01-17T11:00:00.000Z"
+  "updatedAt": "2024-01-17T11:00:00.000Z",
+  "publishedAt": "2024-01-16T10:00:00.000Z"
 }
 ```
 
 </Response>
-</ApiCall>
-
-To refresh your authentication token you could for instance send the following request:
-
-<ApiCall>
-<Request title="Request example: Using the refresh endpoint">
-```
-curl -X POST http://localhost:1337/api/auth/refresh \
-  -H "Content-Type: application/json" \
-  -d '{
-    "refreshToken": "your-refresh-token"
-  }'
-```
-</Request>
-
-<Response>
-```json
-{
-  "jwt": "your-new-access-token"
-}
-```
-</Response>
-</ApiCall>
-
-To log out of all sessions, send the following request:
-
-<ApiCall>
-<Request title="Request example: Using the logout endpoint">
-
-```bash
-curl -X POST http://localhost:1337/api/auth/logout \
-  -H "Authorization: Bearer your-access-token"
-```
-
-</Request>
 </ApiCall>
 
 #### Identifier
