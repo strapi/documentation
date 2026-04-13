@@ -50,7 +50,7 @@ Route configs can also include optional `policies` and `middlewares` arrays (see
 <!-- source: packages/plugins/users-permissions/server/controllers/user.js#L37-L219 -->
 The available `user` controller actions are: `find`, `findOne`, `create`, `update`, `destroy`, `me`, and `count`.
 
-<!-- source: packages/plugins/users-permissions/server/controllers/auth.js#L40-L700 -->
+<!-- source: packages/plugins/users-permissions/server/controllers/auth.js#L40-L690 -->
 The available `auth` controller actions are: `callback` (login), `register`, `forgotPassword`, `resetPassword`, `changePassword`, `emailConfirmation`, `sendEmailConfirmation`, `connect`, `refresh`, and `logout`.
 
 :::note Understanding the controller types
@@ -91,7 +91,7 @@ export default (plugin) => {
 
 </Tabs>
 
-The function receives the full plugin object and must return it. You can modify `plugin.routes`, `plugin.controllers`, `plugin.policies`, and `plugin.services` before returning.
+The function receives the full plugin object and must return the plugin. You can modify `plugin.routes`, `plugin.controllers`, `plugin.policies`, and `plugin.services` before returning.
 
 ## Add a custom policy to a user route {#add-custom-policy}
 
@@ -157,7 +157,6 @@ export default (policyContext, config, { strapi }) => {
 ### 2. Attach the policy to the user routes
 
 <!-- source: packages/core/core/src/loaders/policies.ts#L28 -->
-<!-- source: tests/api/core/strapi/plugin-routes-extension-bc.test.api.ts#L11-L19 -->
 
 In the plugin extension file, find the `update` and `delete` routes and add the policy:
 
