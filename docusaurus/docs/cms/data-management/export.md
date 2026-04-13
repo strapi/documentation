@@ -81,9 +81,43 @@ The command above creates `my-export.tar` in the project root. After extracting 
 Large datasets are automatically split across multiple `.jsonl` files. The `maxSizeJsonl` provider option controls the maximum size of each file.
 :::
 
+## Export to a directory
+
+<VersionBadge version="5.42.0" />
+
+By default, `strapi export` produces a `.tar` archive. Pass `--format dir` to write the export as an unpacked directory instead. The directory uses the same layout as the archive (`metadata.json`, `schemas/`, `entities/`, `links/`, `configuration/`, `assets/`), making the exported data readable and diffable without extracting an archive first.
+
+Directory exports do not support encryption or compression. You must pass `--no-encrypt` explicitly:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn strapi export --format dir --no-encrypt -f my-export
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi export -- --format dir --no-encrypt -f my-export
+```
+
+</TabItem>
+
+</Tabs>
+
+The command creates a `my-export` directory in the project root containing all exported data.
+
+:::tip
+The directory format is useful when you want to commit exported data to version control. JSON and JSONL files appear as regular text diffs, making changes visible in pull requests.
+:::
+
 ## Name the export file
 
-Exported data are contained in a `.tar` file that is automatically named using the format `export_YYYYMMDDHHMMSS`. You can optionally name the exported file by passing the `--file` or `-f` option with the `strapi export` command. Do not include a file extension as one will be set automatically depending on options provided.
+Exported data are contained in a `.tar` file (or a directory when using `--format dir`) that is automatically named using the format `export_YYYYMMDDHHMMSS`. You can optionally name the exported file or directory by passing the `--file` or `-f` option with the `strapi export` command. Do not include a file extension for archive exports, as one is set automatically depending on options provided. For directory exports, the value of `-f` is used as the output directory path.
 
 ### Example: Export data with a custom filename
 

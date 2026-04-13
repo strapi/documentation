@@ -14648,6 +14648,9 @@ strapi export -f myData
 
 # export your data without encryption.
 strapi export --no-encrypt
+
+# export your data as an unpacked directory.
+strapi export --format dir --no-encrypt -f my-export
 ```
 
 
@@ -14663,12 +14666,14 @@ strapi import
 ```
 
 Language: Bash
-File path: Example
+File path: Examples
 
 ```bash
-
 # import your data with the default parameters and pass an encryption key:
 strapi import -f your-filepath-and-filename --key my-key
+
+# import from an unpacked export directory:
+strapi import -f ./my-export
 ```
 
 
@@ -20407,8 +20412,28 @@ export_202401011230.tar
 ```
 
 
+## Export to a directory
+Description: Directory exports do not support encryption or compression.
+(Source: https://docs.strapi.io/cms/data-management/export#export-to-a-directory)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi export --format dir --no-encrypt -f my-export
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi export -- --format dir --no-encrypt -f my-export
+```
+
+
 ## Example: Export data with a custom filename
-Description: Exported data are contained in a .tar file that is automatically named using the format export_YYYYMMDDHHMMSS.
+Description: Exported data are contained in a .tar file (or a directory when using --format dir) that is automatically named using the format export_YYYYMMDDHHMMSS.
 (Source: https://docs.strapi.io/cms/data-management/export#example-export-data-with-a-custom-filename)
 
 Language: Bash
@@ -20573,8 +20598,28 @@ tar -xf my-export.tar
 ```
 
 
+## Import from a directory
+Description: Instead of a .tar archive, you can pass the path to an unpacked export directory.
+(Source: https://docs.strapi.io/cms/data-management/import#import-from-a-directory)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi import -f ./my-export
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi import -- -f ./my-export
+```
+
+
 ## Example: Minimum command to import data from a file in the Strapi project root
-Description: To import data into a Strapi instance use the strapi import command in the destination project root directory.
+Description: To import data into a Strapi instance, use the strapi import command in the destination project root directory.
 (Source: https://docs.strapi.io/cms/data-management/import#example-minimum-command-to-import-data-from-a-file-in-the-strapi-project-root)
 
 Language: Bash
@@ -20594,7 +20639,7 @@ npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc
 
 
 ## Example: Import a plain .tar archive
-Description: To import data into a Strapi instance use the strapi import command in the destination project root directory.
+Description: To import data into a Strapi instance, use the strapi import command in the destination project root directory.
 (Source: https://docs.strapi.io/cms/data-management/import#example-import-a-plain-tar-archive)
 
 Language: Bash

@@ -19,7 +19,7 @@ tags:
 
 <VersionBadge version="4.6.0" />
 
-The `strapi import` command is part of the [Data Management feature](/cms/features/data-management) and used to import data from a file. By default, the `strapi import` command imports data from an encrypted and compressed `tar.gz.enc` file which includes:
+The `strapi import` command is part of the [Data Management feature](/cms/features/data-management) and used to import data from a file or directory. By default, the `strapi import` command imports data from an encrypted and compressed `tar.gz.enc` file which includes:
 
 - the project configuration,
 - entities: all of your content,
@@ -28,7 +28,7 @@ The `strapi import` command is part of the [Data Management feature](/cms/featur
 - schemas,
 - the `metadata.json` file.
 
-The archive follows the same structure as the one produced by [`strapi export`](/cms/data-management/export): a `.tar` containing `configuration`, `entities`, `links`, and `schemas` folders filled with numbered <ExternalLink to="https://jsonlines.org/" text="JSON lines" /> files. Compression (`.gz`) and encryption (`.enc`) are detected from the file extension, so a plain `.tar` can be imported as well.
+The archive follows the same structure as the one produced by [`strapi export`](/cms/data-management/export): a `.tar` containing `configuration`, `entities`, `links`, and `schemas` folders filled with numbered <ExternalLink to="https://jsonlines.org/" text="JSON lines" /> files. Compression (`.gz`) and encryption (`.enc`) are detected from the file extension, so a plain `.tar` can be imported as well. You can also point `-f` at an unpacked export directory (see [Import from a directory](#import-from-a-directory)).
 
 The following documentation details the available options to customize your data import. The import command and all of the available options are run using the [Strapi CLI](/cms/cli#strapi-import).
 
@@ -79,9 +79,37 @@ tar -xf my-export.tar
 
 After adjusting the `.jsonl` files, re‑create the archive (`tar -cf my-export.tar configuration entities links schemas metadata.json`) and import it with `strapi import -f my-export.tar`. Encryption and compression are detected automatically based on the file extension.
 
+## Import from a directory
+
+<VersionBadge version="5.42.0" />
+
+Instead of a `.tar` archive, you can pass the path to an unpacked export directory. The directory must contain the same layout produced by [`strapi export --format dir`](/cms/data-management/export#export-to-a-directory) (`metadata.json`, `schemas/`, `entities/`, `links/`, `configuration/`, and optionally `assets/`). Encryption and compression are skipped automatically when importing from a directory.
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn strapi import -f ./my-export
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi import -- -f ./my-export
+```
+
+</TabItem>
+
+</Tabs>
+
+Strapi detects that the path is a directory and reads the data files directly instead of extracting an archive.
+
 ## Specify the import file
 
-To import data into a Strapi instance use the `strapi import` command in the destination project root directory. Specify the file to be imported using the `-f` or `--file` option. The filename, extension, and path are required. If the file is encrypted, you are prompted for the encryption key before the import starts.
+To import data into a Strapi instance, use the `strapi import` command in the destination project root directory. Specify the file or directory to be imported using the `-f` or `--file` option. For archive imports, the filename, extension, and path are required. If the file is encrypted, you are prompted for the encryption key before the import starts. For directory imports, pass the path to the export directory (see [Import from a directory](#import-from-a-directory)).
 
 ### Example: Minimum command to import data from a file in the Strapi project root
 
