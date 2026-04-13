@@ -99,7 +99,7 @@ await request(`/api/users?${query}`);
       ],
       "documentId": "lr5wju2og49bf820kj9kz8c3"
     },
-    // â€¦
+    // …
   ],
   "meta": {
     "pagination": {
@@ -130,7 +130,7 @@ You can use the `populate` parameter alone or [in combination with multiple oper
 :::
 
 :::note
-Large `populate` lists in the query string (many `populate[0]`, `populate[1]`, â€¦ entries) are bounded by the query parser `arrayLimit` (default: `100`). To allow a longer list, raise `arrayLimit` on the [`strapi::query` middleware](/cms/configurations/middlewares#query). Higher values increase parsing cost per request.
+Large `populate` lists in the query string (many `populate[0]`, `populate[1]`, … entries) are bounded by the query parser `arrayLimit` (default: `100`). To allow a longer list, raise `arrayLimit` on the [`strapi::query` middleware](/cms/configurations/middlewares#query). Higher values increase parsing cost per request.
 :::
 
 The following table lists populate use cases with example syntax. Each row links to the Understanding populate guide for details:
