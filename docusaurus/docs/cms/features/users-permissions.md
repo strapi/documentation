@@ -409,7 +409,7 @@ export default ({ env }) => ({
 
 </Tabs>
 
-### Templating emails
+### Email template configuration {#templating-emails}
 
 By default this plugin comes with two templates: reset password and email address confirmation. The templates use <ExternalLink to="https://lodash.com/docs/4.17.15#template" text="Lodash's `template()` method"/> to populate the variables.
 
@@ -520,7 +520,7 @@ If you need to configure a custom handler to accept other URLs, you can create a
   },
 ```
 
-### Customizing routes and policies {#customizing-routes-and-policies}
+### Route and policy customization {#customizing-routes-and-policies}
 
 The Users & Permissions plugin routes and controllers can be extended and overridden through the [plugin extension system](/cms/plugins-development/plugins-extension). This is useful for adding custom policies to user endpoints, overriding controller logic, or adding new routes.
 
