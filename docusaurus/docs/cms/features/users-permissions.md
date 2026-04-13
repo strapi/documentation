@@ -520,6 +520,14 @@ If you need to configure a custom handler to accept other URLs, you can create a
   },
 ```
 
+### Customizing routes and policies {#customizing-routes-and-policies}
+
+The Users & Permissions plugin routes and controllers can be extended and overridden through the [plugin extension system](/cms/plugins-development/plugins-extension). This is useful for adding custom policies to user endpoints, overriding controller logic, or adding new routes.
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="code" title="Customizing Users & Permissions plugin routes" description="Add custom policies, override controllers, and add new routes to the User collection." link="/cms/backend-customization/guides/customizing-users-permissions-plugin-routes" />
+</CustomDocCardsWrapper>
+
 ## Usage
 
 The Users & Permissions feature can be used both via the admin panel, to create new end-user accounts, and via the APIs.
@@ -986,9 +994,3 @@ create: async ctx => {
   ctx.created(data);
 };
 ```
-
-## Customizing routes and policies {#customizing-routes-and-policies}
-
-The Users & Permissions plugin routes and controllers can be extended and overridden through the [plugin extension system](/cms/plugins-development/plugins-extension). This is useful for adding custom policies to user endpoints, overriding controller logic, or adding new routes.
-
-For a complete guide with step-by-step instructions and code examples, see [Customizing Users & Permissions plugin routes](/cms/backend-customization/guides/customizing-users-permissions-plugin-routes).
