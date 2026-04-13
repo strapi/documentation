@@ -14,13 +14,13 @@ tags:
 # Customizing Users & Permissions plugin routes
 
 <Tldr>
-The Users & Permissions plugin exposes `/users` and `/auth` routes that can be extended or overridden using the plugin extension system. This guide shows how to add custom policies, override controllers, and add new routes to the User collection.
+The Users & Permissions feature exposes `/users` and `/auth` routes that can be extended or overridden using the plugin extension system. This guide shows how to add custom policies, override controllers, and add new routes to the User collection.
 </Tldr>
 
-The [Users & Permissions plugin](/cms/features/users-permissions) ships with built-in routes for authentication (`/auth`) and user management (`/users`). Because these routes belong to a plugin rather than a user-created content-type, they cannot be customized with `createCoreRouter`. Instead, extend them through the [plugin extension system](/cms/plugins-development/plugins-extension) using a `strapi-server.js` or `strapi-server.ts` file in the `/src/extensions/users-permissions/` folder.
+The [Users & Permissions feature](/cms/features/users-permissions) ships with built-in routes for authentication (`/auth`) and user management (`/users`). Because these routes belong to a plugin rather than a user-created content-type, they cannot be customized with `createCoreRouter`. Instead, extend them through the [plugin extension system](/cms/plugins-development/plugins-extension) using a `strapi-server.js` or `strapi-server.ts` file in the `/src/extensions/users-permissions/` folder.
 
 :::prerequisites
-- A Strapi 5 project with the Users & Permissions plugin installed (included by default).
+- A Strapi 5 project.
 - Familiarity with [routes](/cms/backend-customization/routes) and [policies](/cms/backend-customization/policies).
 :::
 
@@ -29,7 +29,7 @@ The [Users & Permissions plugin](/cms/features/users-permissions) ships with bui
 <!-- source: packages/plugins/users-permissions/server/routes/content-api/index.js -->
 <!-- source: packages/core/utils/src/content-api-router.ts#L3-L33 -->
 
-Content-types you create (e.g., `api::restaurant.restaurant`) register routes differently. The Users & Permissions plugin registers its routes inside the `plugin.routes['content-api'].routes` array, which contains all `/users`, `/auth`, and `/roles` route definitions.
+Unlike content-types you create (e.g., `api::restaurant.restaurant`), the Users & Permissions plugin registers its routes inside the `plugin.routes['content-api'].routes` array. This array contains all `/users`, `/auth`, and `/roles` route definitions.
 
 Each route is an object with the following shape:
 
