@@ -543,7 +543,7 @@ Do not access `plugin.controllers.auth.register` directly. Because `auth` is a f
 
 ## Full example {#combine-customizations}
 
-The following example combines several customizations in a single file: it adds a policy to `update` and `delete`, wraps the `me` controller, and adds a new route:
+The following example combines several customizations in a single file: it adds a policy to `update` and `delete`, wraps the `me` controller, and adds a new `profile` route:
 
 <Tabs groupId="js-ts">
 
