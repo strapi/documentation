@@ -283,7 +283,7 @@ const { PolicyError } = errors;
 throw new PolicyError('You can only modify your own account');
 ```
 
-See the [policies documentation](/cms/backend-customization/policies) for more details.
+For more details on policy patterns and error handling, see the [policies documentation](/cms/backend-customization/policies).
 :::
 
 ### Add a new route {#add-new-route}
