@@ -79,7 +79,7 @@ The `auth` controller is a factory function `({ strapi }) => ({...})`. It expose
 | `auth.logout` | `POST` | `/auth/logout` | No |
 
 :::note
-Because the two controllers have different types (plain object vs. factory function), they require different override patterns. See [Override a controller action](#override-controller) and [Override an auth controller action](#override-auth-route) for the correct approach for each.
+Because the two controllers have different types (plain object vs. factory function), they require different override patterns. See [Override a `user` controller action](#override-controller) and [Override an `auth` controller action](#override-auth-route) for the correct approach for each.
 :::
 
 ## Extend routes with strapi-server {#extend-routes}
@@ -279,7 +279,7 @@ throw new PolicyError('You can only modify your own account');
 See the [policies documentation](/cms/backend-customization/policies) for more details.
 :::
 
-## Override a controller action {#override-controller}
+## Override a `user` controller action {#override-controller}
 
 <!-- source: packages/plugins/users-permissions/server/controllers/user.js#L37 -->
 
@@ -337,7 +337,7 @@ export default (plugin) => {
 When wrapping a controller, always call the original function first to preserve the default behavior. Skipping the original function means you take over the full request handling, including sanitization and error handling.
 :::
 
-## Override an auth controller action {#override-auth-route}
+## Override an `auth` controller action {#override-auth-route}
 
 <!-- source: packages/plugins/users-permissions/server/controllers/auth.js#L40 -->
 <!-- source: packages/core/core/src/registries/controllers.ts#L34-L35 -->
@@ -676,4 +676,4 @@ After making changes, restart Strapi and verify your customizations:
 | Controller returns 500 | The controller action name does not match the `handler` value in the route definition. |
 | Changes not reflected | Strapi was not restarted after modifying the extension file. Extensions are loaded at startup. |
 | Permission denied (403) | The new action is not enabled for the role. Enable it in <Icon name="gear-six" /> *Users & Permissions plugin > Roles*. |
-| Cannot read property of `auth` controller | The `auth` controller is a factory function, not a plain object. Wrap the factory instead of accessing methods directly (see [Override an auth controller action](#override-auth-route)). |
+| Cannot read property of `auth` controller | The `auth` controller is a factory function, not a plain object. Wrap the factory instead of accessing methods directly (see [Override an `auth` controller action](#override-auth-route)). |
