@@ -24,7 +24,9 @@ The [Users & Permissions feature](/cms/features/users-permissions) ships with bu
 - Familiarity with [routes](/cms/backend-customization/routes) and [policies](/cms/backend-customization/policies).
 :::
 
-## How it works {#how-routes-work}
+## How it works
+
+The Users & Permissions plugin uses a route array and controller objects that differ from standard content-types. Understanding their structure is essential before customizing them.
 
 ### Route structure
 
@@ -124,6 +126,8 @@ Because the two controllers have different types (plain object vs. factory funct
 :::
 
 ## Customize routes {#customize-routes}
+
+You can add policies, register new endpoints, or remove existing ones by modifying the `plugin.routes['content-api'].routes` array in the extension file.
 
 ### Add a custom policy {#add-custom-policy}
 
@@ -401,6 +405,8 @@ export default (plugin) => {
 </Tabs>
 
 ## Override controllers {#override-controllers}
+
+Beyond route-level customizations, you can override the controller actions themselves to change how the plugin handles requests. The `user` and `auth` controllers use different patterns, so each requires a specific approach.
 
 ### Override a `user` controller action {#override-controller}
 
