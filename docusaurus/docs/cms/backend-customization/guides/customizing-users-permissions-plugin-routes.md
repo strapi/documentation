@@ -179,6 +179,10 @@ export default (policyContext, config, { strapi }) => {
 
 </Tabs>
 
+:::tip
+The `is-own-user` policy above applies specifically to Users & Permissions plugin routes. For a similar pattern on standard content-types (restricting access to the entry author), see the [is-owner middleware example](/cms/backend-customization/middlewares#restricting-content-access-with-an-is-owner-policy) and the [is-owner-review policy example](/cms/backend-customization/examples/policies#creating-a-custom-policy).
+:::
+
 ### 2. Attach the policy to the user routes
 
 <!-- source: packages/core/core/src/loaders/policies.ts#L28 -->
@@ -273,10 +277,6 @@ throw new PolicyError('You can only modify your own account');
 ```
 
 See the [policies documentation](/cms/backend-customization/policies) for more details.
-:::
-
-:::tip
-The `is-own-user` policy above applies specifically to Users & Permissions plugin routes. For a similar pattern on standard content-types (restricting access to the entry author), see the [is-owner middleware example](/cms/backend-customization/middlewares#restricting-content-access-with-an-is-owner-policy) and the [is-owner-review policy example](/cms/backend-customization/examples/policies#creating-a-custom-policy).
 :::
 
 ## Override a controller action {#override-controller}
