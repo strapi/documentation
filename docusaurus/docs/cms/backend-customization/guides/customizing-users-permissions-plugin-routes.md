@@ -120,7 +120,7 @@ The `auth` controller is a factory function `({ strapi }) => ({...})`. It expose
 | `auth.logout` | `POST` | `/auth/logout` | No |
 
 :::note
-Because the two controllers have different types (plain object vs. factory function), they require different override patterns. See [Override a `user` controller action](#override-controller) and [Override an `auth` controller action](#override-auth-route) for the correct approach for each.
+Because the two controllers have different types (plain object vs. factory function), they require different override patterns (see [Override a `user` controller action](#override-controller) and [Override an `auth` controller action](#override-auth-route)).
 :::
 
 ## Customize routes {#customize-routes}
