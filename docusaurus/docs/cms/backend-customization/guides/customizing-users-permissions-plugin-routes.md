@@ -108,6 +108,7 @@ The `auth` controller is a factory function `({ strapi }) => ({...})`. It expose
 | Action | Method | Path | Rate limited |
 | ------ | ------ | ---- | ------------ |
 | `auth.callback` | `POST` | `/auth/local` | Yes |
+| `auth.callback` | `GET` | `/auth/:provider/callback` | No |
 | `auth.register` | `POST` | `/auth/local/register` | Yes |
 | `auth.connect` | `GET` | `/connect/(.*)` | Yes |
 | `auth.forgotPassword` | `POST` | `/auth/forgot-password` | Yes |
