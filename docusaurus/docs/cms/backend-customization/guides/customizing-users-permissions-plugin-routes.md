@@ -17,7 +17,7 @@ tags:
 The Users & Permissions feature exposes `/users` and `/auth` routes that can be extended or overridden using the plugin extension system. This guide shows how to add custom policies, override controllers, and add new routes to the User collection.
 </Tldr>
 
-The [Users & Permissions feature](/cms/features/users-permissions) ships with built-in routes for authentication (`/auth`) and user management (`/users`). Because these routes belong to a plugin rather than a user-created content-type, they cannot be customized with `createCoreRouter`. Instead, extend them through the [plugin extension system](/cms/plugins-development/plugins-extension) using a `strapi-server.js` or `strapi-server.ts` file in the `/src/extensions/users-permissions/` folder.
+The [Users & Permissions feature](/cms/features/users-permissions) ships with built-in routes for authentication (`/auth`) and user management (`/users`). Because these routes belong to a plugin rather than a user-created content-type, they cannot be customized with `createCoreRouter`. Instead, extend them through the [plugin extension system](/cms/plugins-development/plugins-extension) using a `strapi-server` file in the `/src/extensions/users-permissions/` folder.
 
 :::prerequisites
 - A Strapi 5 project.
@@ -48,13 +48,38 @@ Each route is an object with the following shape:
 Route configurations can also include optional `policies` and `middlewares` arrays (see [Add a custom policy to a user route](#add-custom-policy)).
 
 <!-- source: packages/plugins/users-permissions/server/controllers/user.js#L37-L219 -->
-The available `user` controller actions are: `find`, `findOne`, `create`, `update`, `destroy`, `me`, and `count`.
+<!-- source: packages/plugins/users-permissions/server/routes/content-api/user.js -->
+The `user` controller is a plain object. It exposes the following actions:
+
+| Action | Method | Path | Description |
+| ------ | ------ | ---- | ----------- |
+| `user.count` | `GET` | `/users/count` | Count users |
+| `user.find` | `GET` | `/users` | Find all users |
+| `user.me` | `GET` | `/users/me` | Get authenticated user |
+| `user.findOne` | `GET` | `/users/:id` | Find one user |
+| `user.create` | `POST` | `/users` | Create a user |
+| `user.update` | `PUT` | `/users/:id` | Update a user |
+| `user.destroy` | `DELETE` | `/users/:id` | Delete a user |
 
 <!-- source: packages/plugins/users-permissions/server/controllers/auth.js#L40-L690 -->
-The available `auth` controller actions are: `callback` (login), `register`, `forgotPassword`, `resetPassword`, `changePassword`, `emailConfirmation`, `sendEmailConfirmation`, `connect`, `refresh`, and `logout`.
+<!-- source: packages/plugins/users-permissions/server/routes/content-api/auth.js -->
+The `auth` controller is a factory function `({ strapi }) => ({...})`. It exposes the following actions:
 
-:::note Understanding the controller types
-The `user` controller is a plain object with methods, while the `auth` controller is a factory function `({ strapi }) => ({...})` that Strapi resolves lazily. In the plugin extension file, both are accessible on `plugin.controllers`, but they behave differently when overridden. See [Override a controller action](#override-controller) and [Override an auth controller action](#override-auth-route) for the correct pattern for each.
+| Action | Method | Path | Rate limited |
+| ------ | ------ | ---- | ------------ |
+| `auth.callback` | `POST` | `/auth/local` | Yes |
+| `auth.register` | `POST` | `/auth/local/register` | Yes |
+| `auth.connect` | `GET` | `/connect/(.*)` | Yes |
+| `auth.forgotPassword` | `POST` | `/auth/forgot-password` | Yes |
+| `auth.resetPassword` | `POST` | `/auth/reset-password` | Yes |
+| `auth.changePassword` | `POST` | `/auth/change-password` | Yes |
+| `auth.emailConfirmation` | `GET` | `/auth/email-confirmation` | No |
+| `auth.sendEmailConfirmation` | `POST` | `/auth/send-email-confirmation` | No |
+| `auth.refresh` | `POST` | `/auth/refresh` | No |
+| `auth.logout` | `POST` | `/auth/logout` | No |
+
+:::note
+Because the two controllers have different types (plain object vs. factory function), they require different override patterns. See [Override a controller action](#override-controller) and [Override an auth controller action](#override-auth-route) for the correct approach for each.
 :::
 
 ## Extend routes with strapi-server {#extend-routes}
