@@ -31678,7 +31678,7 @@ Description: To install the documentation plugin, run following command in your 
 (Source: https://docs.strapi.io/cms/plugins/documentation#installation)
 
 Language: Bash
-File path: `src/extensions/documentation/documentation/<version>/full_documentation.json`
+File path: />`<server-url>:<server-port>/documentation/<version>/openapi.js
 
 ```bash
 yarn add @strapi/plugin-documentation
@@ -31686,7 +31686,7 @@ yarn add @strapi/plugin-documentation
 
 ---
 Language: Bash
-File path: `src/extensions/documentation/documentation/<version>/full_documentation.json`
+File path: />`<server-url>:<server-port>/documentation/<version>/openapi.js
 
 ```bash
 npm install @strapi/plugin-documentation
