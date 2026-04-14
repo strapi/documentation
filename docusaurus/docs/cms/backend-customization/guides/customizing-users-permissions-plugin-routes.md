@@ -45,7 +45,7 @@ Each route is an object with the following shape:
 }
 ```
 
-Route configs can also include optional `policies` and `middlewares` arrays (see [Add a custom policy to a user route](#add-custom-policy)).
+Route configurations can also include optional `policies` and `middlewares` arrays (see [Add a custom policy to a user route](#add-custom-policy)).
 
 <!-- source: packages/plugins/users-permissions/server/controllers/user.js#L37-L219 -->
 The available `user` controller actions are: `find`, `findOne`, `create`, `update`, `destroy`, `me`, and `count`.
@@ -102,7 +102,7 @@ A common requirement is restricting who can update or delete user accounts: for 
 <!-- source: packages/core/utils/src/policy.ts#L29-L39 -->
 <!-- source: packages/core/core/src/services/server/policy.ts#L9-L14 -->
 
-Create a global policy that checks whether the authenticated user matches the target user. The policy function receives the Koa context (with access to `state.user` and `params`), an optional config object, and `{ strapi }`:
+Create a global policy that checks whether the authenticated user matches the target user. The policy function receives the Koa context (with access to `state.user` and `params`), an optional configuration object, and `{ strapi }`:
 
 <Tabs groupId="js-ts">
 
