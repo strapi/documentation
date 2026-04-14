@@ -14,10 +14,10 @@ tags:
 # Customizing Users & Permissions plugin routes
 
 <Tldr>
-The Users & Permissions feature exposes `/users` and `/auth` routes that can be extended or overridden using the plugin extension system. This guide shows how to add custom policies, override controllers, and add new routes to the User collection.
+[Users & Permissions](/cms/features/users-permissions) feature exposes `/users` and `/auth` routes that can be extended or overridden using the plugin extension system. This guide shows how to add custom policies, override controllers, and add new routes to the User collection.
 </Tldr>
 
-The [Users & Permissions feature](/cms/features/users-permissions) ships with built-in routes for authentication (`/auth`) and user management (`/users`). Because these routes belong to a plugin rather than a user-created content-type, they cannot be customized with `createCoreRouter`. Instead, extend them through the [plugin extension system](/cms/plugins-development/plugins-extension) using a `strapi-server` file in the `/src/extensions/users-permissions/` folder.
+The Users & Permissions feature ships with built-in routes for authentication (`/auth`) and user management (`/users`). Because these routes belong to a plugin rather than a user-created content-type, they cannot be customized with `createCoreRouter`. Instead, extend them through the [plugin extension system](/cms/plugins-development/plugins-extension) using a `strapi-server` file in the `/src/extensions/users-permissions/` folder.
 
 :::prerequisites
 - A Strapi 5 project.
@@ -26,7 +26,7 @@ The [Users & Permissions feature](/cms/features/users-permissions) ships with bu
 
 ## How it works
 
-The Users & Permissions plugin uses a route array and controller objects that differ from standard content-types. Understanding their structure is essential before customizing them.
+[Users & Permissions](/cms/features/users-permissions) uses a route array and controller objects that differ from standard content-types. Understanding their structure is essential before customizing them.
 
 ### Route structure
 
@@ -91,7 +91,7 @@ The function receives the full plugin object and must return the plugin. You can
 
 <!-- source: packages/plugins/users-permissions/server/controllers/user.js#L37-L219 -->
 <!-- source: packages/plugins/users-permissions/server/routes/content-api/user.js -->
-The `user` controller is a plain object. It exposes the following actions:
+The `user` controller is a plain object that exposes the following actions:
 
 | Action | Method | Path | Description |
 | ------ | ------ | ---- | ----------- |
@@ -105,7 +105,7 @@ The `user` controller is a plain object. It exposes the following actions:
 
 <!-- source: packages/plugins/users-permissions/server/controllers/auth.js#L40-L690 -->
 <!-- source: packages/plugins/users-permissions/server/routes/content-api/auth.js -->
-The `auth` controller is a factory function `({ strapi }) => ({...})`. It exposes the following actions:
+The `auth` controller is a factory function `({ strapi }) => ({...})` that exposes the following actions:
 
 | Action | Method | Path | Rate limited |
 | ------ | ------ | ---- | ------------ |
@@ -122,7 +122,7 @@ The `auth` controller is a factory function `({ strapi }) => ({...})`. It expose
 | `auth.logout` | `POST` | `/auth/logout` | No |
 
 :::note
-Because the two controllers have different types (plain object vs. factory function), they require different override patterns (see [Override a `user` controller action](#override-controller) and [Override an `auth` controller action](#override-auth-route)).
+Because the `user` and `auth` controllers have different types (plain object vs. factory function), they require different override patterns (see [Override a `user` controller action](#override-controller) and [Override an `auth` controller action](#override-auth-route)).
 :::
 
 ## Customize routes {#customize-routes}
@@ -287,12 +287,13 @@ const { PolicyError } = errors;
 throw new PolicyError('You can only modify your own account');
 ```
 
+<br/>
 For more details on policy patterns and error handling, see the [policies documentation](/cms/backend-customization/policies).
 :::
 
 ### Add a new route {#add-new-route}
 
-You can add custom routes to the Users & Permissions plugin. For example, to add an endpoint that deactivates a user account:
+You can add custom routes to the Users & Permissions plugin. For example, add an endpoint that deactivates a user account as follows:
 
 <!-- source: packages/plugins/users-permissions/server/services/user.js#L74-L80 -->
 
@@ -370,7 +371,7 @@ After restarting Strapi, `POST /api/users/:id/deactivate` becomes available. Gra
 
 ### Remove a route {#remove-route}
 
-You can disable a route by filtering it out of the routes array. For example, to disable the user count endpoint:
+You can disable a route by filtering it out of the routes array. For example, disable the user count endpoint as follows:
 
 <Tabs groupId="js-ts">
 
@@ -549,7 +550,7 @@ Do not access `plugin.controllers.auth.register` directly. Because `auth` is a f
 
 ## Full example {#combine-customizations}
 
-The following example combines several customizations in a single file: it adds a policy to `update` and `delete`, wraps the `me` controller, and adds a new `profile` route:
+The following example combines several customizations in a single file: it adds a policy to `update` and `delete`, wraps the `me` controller, and adds a new `profile` route.
 
 <Tabs groupId="js-ts">
 
