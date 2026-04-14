@@ -31,7 +31,7 @@ The [Users & Permissions feature](/cms/features/users-permissions) ships with bu
 <!-- source: packages/plugins/users-permissions/server/routes/content-api/index.js -->
 <!-- source: packages/core/utils/src/content-api-router.ts#L3-L33 -->
 
-Unlike content-types you create (e.g., `api::restaurant.restaurant`), the Users & Permissions plugin registers its routes inside the `plugin.routes['content-api'].routes` array. This array contains all `/users`, `/auth`, and `/roles` route definitions.
+Unlike content-types you create (e.g., `api::restaurant.restaurant`), the Users & Permissions plugin registers its routes inside the `plugin.routes['content-api'].routes` array. This array contains all `/users`, `/auth`, `/roles`, and `/permissions` route definitions.
 
 Each route is an object with the following shape:
 
