@@ -33,7 +33,7 @@ Unlike content-types you create (e.g., `api::restaurant.restaurant`), the Users 
 
 Each route is an object with the following shape:
 
-<!-- source: packages/plugins/users-permissions/server/routes/content-api/user.js#L10-L26 -->
+<!-- source: packages/plugins/users-permissions/server/routes/content-api/user.js#L24-L43 -->
 ```js
 {
   method: 'GET',          // HTTP method
