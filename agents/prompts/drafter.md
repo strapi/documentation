@@ -327,13 +327,13 @@ These rules govern how the Drafter writes prose. They apply to **both Compose an
 ### Formatting conventions
 
 - **Sentence case** for all headings. Only capitalize the first word and proper nouns.
-- **Inline code** for: file paths, function names, parameters, commands, config keys, values, HTTP methods and endpoints. Example: `mcp.enabled`, `/config/server.js`, `POST /mcp`.
+- **Inline code** for: file paths, function names, parameters, commands, configuration keys, values, HTTP methods and endpoints. Example: `mcp.enabled`, `/config/server.js`, `POST /mcp`.
 - **Bold** for: UI element names the user interacts with. Example: Click **Save**, navigate to **Settings**.
 - **No bold for emphasis.** Use sentence structure to emphasize, not formatting.
 - **Code blocks** with language identifiers: ` ```js `, ` ```ts `, ` ```bash `, ` ```json `.
 - **Code highlights** for multi-option examples. When a code example shows a base configuration plus feature-specific options, use `// highlight-start` / `// highlight-end` to mark the lines that are specific to the feature being documented. Do not highlight surrounding boilerplate (host, port, auth, settings blocks, etc.). Apply highlights when:
-  - The example mixes baseline config with new or feature-specific keys (e.g., adding `dkim`, `pool`, or `auth.type: 'OAuth2'` to a standard SMTP block).
-  - The same base config pattern repeats across multiple scenarios in the same section — highlights help readers spot the diff at a glance.
+  - The example mixes baseline configuration with new or feature-specific keys (e.g., adding `dkim`, `pool`, or `auth.type: 'OAuth2'` to a standard SMTP block).
+  - The same base configuration pattern repeats across multiple scenarios in the same section — highlights help readers spot the diff at a glance.
 
   Do not highlight when the entire example is the point (short single-option blocks, standalone snippets with no surrounding boilerplate). In Patch mode: if the existing page already uses `// highlight-*` markers in similar code examples, apply the same pattern to any new examples you add. Treat highlights as part of the page's voice — preserve them exactly in untouched blocks, replicate the pattern in new ones.
 
@@ -622,7 +622,7 @@ For Patch mode, metadata is embedded in the output header (File, Section, Edits 
 19. **Annotate sources for the Integrity Checker.** For every code example and significant technical claim you produce, annotate the source to enable downstream verification. This applies to Compose and Patch modes.
 
     **For code examples:**
-    1. Search the codebase for the primary identifiers (method names, config options, parameter names).
+    1. Search the codebase for the primary identifiers (method names, configuration options, parameter names).
     2. If found, add a `<!-- source: path/to/file.ts#L42-L58 -->` comment before the code block.
     3. If not found, add a `<!-- unverified: description of what couldn't be confirmed -->` comment.
     4. If you synthesize an example from multiple real usages, cite all sources: `<!-- source: path/one.ts#L12-L30, path/two.ts#L8-L22 -->`.
@@ -665,7 +665,7 @@ Before delivering the output, verify:
 - [ ] Every `content_hint` has been addressed
 - [ ] All specified `components` are used
 - [ ] Code examples have language identifiers
-- [ ] JS/TS config examples use `<Tabs groupId="js-ts">`
+- [ ] JS/TS configuration examples use `<Tabs groupId="js-ts">`
 - [ ] Multi-option code examples use `// highlight-start` / `// highlight-end` to mark feature-specific lines (see Writing Rules > Formatting conventions)
 - [ ] Numbered lists for all procedures
 - [ ] One action per step in procedures
