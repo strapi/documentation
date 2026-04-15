@@ -276,7 +276,7 @@ In this case, use `s3.yourRegion.amazonaws.com` (without the bucket name) for th
 
 ## S3-compatible services
 
-The AWS S3 provider works with S3-compatible services by using the `endpoint` option. The provider automatically constructs correct URLs for S3-compatible services that return incorrect `Location` formats for multipart uploads (e.g., IONOS, MinIO).
+The AWS S3 provider works with S3-compatible services by using the `endpoint` option. When an S3-compatible provider returns a valid URL in its upload response, the provider trusts that URL as-is, preserving the correct format (virtual-hosted or path-style) for the provider. For providers that return malformed URLs in multipart upload responses (e.g., IONOS, some MinIO configurations), the provider falls back to constructing the URL from the `endpoint` configuration.
 
 Some providers require `forcePathStyle: true` in the `s3Options`. This option is needed when the provider does not support virtual-hosted-style URLs (e.g., `bucket.endpoint.com`), and instead uses path-style URLs (e.g., `endpoint.com/bucket`).
 
@@ -284,15 +284,15 @@ The following table shows compatibility settings for each provider:
 
 | Provider            | `forcePathStyle` | `ACL`             | Notes                             |
 | ------------------- | ---------------- | ----------------- | --------------------------------- |
-| IONOS               | `true`           | Supported         | Multipart `Location` bug auto-fixed |
-| MinIO               | `true`           | Supported         | -                                 |
+| IONOS               | `true`           | Supported         | Malformed multipart `Location` auto-fixed via endpoint fallback |
+| MinIO               | `true`           | Supported         | Some configs may return malformed `Location`; auto-fixed via endpoint fallback |
 | Contabo             | `true`           | Supported         | -                                 |
 | Hetzner             | `true`           | Supported         | -                                 |
-| DigitalOcean Spaces | Not needed       | Supported         | -                                 |
+| DigitalOcean Spaces | Not needed       | Supported         | Returns correct virtual-hosted URLs |
 | Wasabi              | Not needed       | Supported         | -                                 |
-| Scaleway            | Not needed       | Supported         | -                                 |
+| Scaleway            | Not needed       | Supported         | Returns correct virtual-hosted URLs |
 | Vultr               | Not needed       | Supported         | -                                 |
-| Backblaze B2        | Not needed       | Supported         | -                                 |
+| Backblaze B2        | Not needed       | Supported         | Returns correct virtual-hosted URLs |
 | Cloudflare R2       | Not needed       | Not supported     | Omit `ACL` from parameters        |
 
 ### Scaleway
