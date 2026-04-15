@@ -285,7 +285,7 @@ The following table shows compatibility settings for each provider:
 | Provider            | `forcePathStyle` | `ACL`             | Notes                             |
 | ------------------- | ---------------- | ----------------- | --------------------------------- |
 | IONOS               | `true`           | Supported         | Malformed multipart `Location` auto-fixed via endpoint fallback |
-| MinIO               | `true`           | Supported         | Some configs may return malformed `Location`; auto-fixed via endpoint fallback |
+| MinIO               | `true`           | Supported         | Some configurations may return malformed `Location`; auto-fixed via endpoint fallback |
 | Contabo             | `true`           | Supported         | -                                 |
 | Hetzner             | `true`           | Supported         | -                                 |
 | DigitalOcean Spaces | Not needed       | Supported         | Returns correct virtual-hosted URLs |
