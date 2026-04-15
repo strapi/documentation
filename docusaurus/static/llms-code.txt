@@ -17970,7 +17970,7 @@ module.exports = [
 
 
 ## Scaleway
-Description: | Wasabi | Not needed | Supported | - | | Scaleway | Not needed | Supported | - | | Vultr | Not needed | Supported | - | | Backblaze B2 | Not needed | Supported | - | | Cloudflare R2 | Not needed | Not supported | Omit ACL from parameters |
+Description: | Wasabi | Not needed | Supported | - | | Scaleway | Not needed | Supported | Returns correct virtual-hosted URLs | | Vultr | Not needed | Supported | - | | Backblaze B2 | Not needed | Supported | Returns correct virtual-hosted URLs | | Cloudflare R2 | Not needed | Not supported | Omit ACL from parameters |
 (Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#scaleway)
 
 Language: JavaScript
