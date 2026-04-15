@@ -29,7 +29,59 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.42.0](https://github.com/strapi/strapi/releases/tag/v5.42.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.42.1](https://github.com/strapi/strapi/releases/tag/v5.42.1)._
+
+## 6.21.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Document `@strapi/utils`](https://github.com/strapi/documentation/pull/3032)
+
+#### Repository
+- [Add directory export/import instructions for the Data Management feature](https://github.com/strapi/documentation/pull/3043)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Clarify S3 URL construction priority for compatible providers](https://github.com/strapi/documentation/pull/3055)
+- [Clarify populate and pagination combination](https://github.com/strapi/documentation/pull/3048)
+- [Add FAQ entry about disabling foreign key creation in databases](https://github.com/strapi/documentation/pull/3047)
+- [Use lockfile-based installs and document alternative base image for Docker](https://github.com/strapi/documentation/pull/3046)
+- [Add supported browsers for Strapi Admin in Quick Start Guide prerequisites](https://github.com/strapi/documentation/pull/3045)
+- [Preserve relations in fill from another locale feature](https://github.com/strapi/documentation/pull/3041)
+- [Add openapi.json route documentation (#2143) (#2159)](https://github.com/strapi/documentation/pull/2759)
+
+#### Repository
+- [Expand config abbreviations in agent prompts and authoring guides](https://github.com/strapi/documentation/pull/3057)
+- [Merge AGENTS.md and CLAUDE.md](https://github.com/strapi/documentation/pull/3044)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/Adzouz" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3693028?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Adzouz"/>
+</a>
+<a href="https://github.com/faessler" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/7090566?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="faessler"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/singhvishalkr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/107715446?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="singhvishalkr"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 6.20.0
 
