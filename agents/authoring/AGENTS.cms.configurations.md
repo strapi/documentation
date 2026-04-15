@@ -16,7 +16,7 @@ Frontmatter (mandatory)
 
 Common Core (always present)
 1) H1 title — matches `title` frontmatter unless instructed differently.
-2) `<Tldr>` component — brief description of what the config file(s) control and where they live.
+2) `<Tldr>` component — brief description of what the configuration file(s) control and where they live.
 3) Intro paragraph — names the main file(s)/paths (e.g., `/config/admin`, `/config/api.js|ts`) and summarizes what the configuration controls.
 4) Optional `:::caution` callout if changes require rebuilding the admin panel or restarting the server.
 
@@ -45,7 +45,7 @@ Use these recurring patterns within H2 sections as applicable:
 - **Advanced examples**: Use `<details>` blocks for edge-case or advanced scenarios (e.g., timezones, SSL, one-off cron jobs).
 
 Heading Conventions
-- Use H2 for thematic blocks; H3 for sub-topics, nested config objects, or specific tasks within a block.
+- Use H2 for thematic blocks; H3 for sub-topics, nested configuration objects, or specific tasks within a block.
 - Prefer explicit, descriptive headings (e.g., "`connection` configuration object", "Admin panel server") over generic ones (e.g., "Options", "Settings").
 - Use sentence case for all headings.
 
@@ -56,7 +56,7 @@ Templates
 Quality Checklist (before commit)
 - TL;DR present and precise about file paths and scope.
 - Intro paragraph states where the configuration lives (paths) and what it controls.
-- H2 sections are thematic and appropriate for the page's complexity (not too many for small configs, not too few for large ones).
+- H2 sections are thematic and appropriate for the page's complexity (not too many for small configurations, not too few for large ones).
 - Parameter tables use the standard column pattern and document all options.
 - Code examples include file path titles and are runnable.
 - JS/TS variants use `<Tabs groupId="js-ts">` consistently.

@@ -43,7 +43,7 @@ Verify that code examples in the documentation reflect real APIs, methods, and p
 | Import paths | Verify the module/package exists at the stated path | **error** |
 | Return value shapes | Compare with actual return types in source | **warning** |
 | API call patterns (e.g., `strapi.service(...)`) | Find real usage examples in the codebase | **warning** |
-| Configuration option names and types | Find the config schema or validation logic | **error** |
+| Configuration option names and types | Find the configuration schema or validation logic | **error** |
 | Lifecycle hook usage context | Verify which services/APIs are available at that lifecycle stage | **error** |
 | JS/TS parity | If both JS and TS tabs exist, verify they are equivalent | **warning** |
 
@@ -53,7 +53,7 @@ For each code example in the content:
 
 1. **Extract identifiers**: List all method names, parameter names, imported modules, and API patterns.
 2. **Search the codebase**: For each identifier, search (grep or GitHub search) to confirm it exists.
-3. **Fetch and compare**: For critical identifiers (method signatures, config schemas), fetch the actual source file and compare.
+3. **Fetch and compare**: For critical identifiers (method signatures, configuration schemas), fetch the actual source file and compare.
 4. **Check usage context**: Verify the example uses the API in a valid context (e.g., correct lifecycle hook, correct service scope).
 5. **Cross-check internal consistency**: If the example has both JS and TS variants, verify they are semantically equivalent.
 
@@ -86,7 +86,7 @@ Verify that prose statements about Strapi's behavior match the actual implementa
 | Lifecycle ordering ("X runs before Y") | Trace the boot sequence in the codebase | **error** |
 | Behavioral claims ("X automatically does Y") | Find the implementation and confirm the behavior | **error** |
 | Availability claims ("X is available in Y context") | Check if the API/service is registered at that point | **error** |
-| Default values ("X defaults to Y") | Find the config schema or factory function | **warning** |
+| Default values ("X defaults to Y") | Find the configuration schema or factory function | **warning** |
 | Conditional claims ("If X, then Y") | Find the branching logic in source | **warning** |
 | Scope claims ("X applies to all Y") | Verify the scope isn't narrower than stated | **warning** |
 | Version-specific claims ("Since v5, X does Y") | Check the changelog or git history | **suggestion** |
@@ -267,7 +267,7 @@ Produce the output in the format specified below. Group findings by severity (fa
 | Import path doesn't exist | error | falsified |
 | API pattern doesn't match real usage | warning | falsified |
 | Return shape doesn't match | warning | falsified |
-| Config option not found in schema | error | unverified |
+| Configuration option not found in schema | error | unverified |
 | JS/TS examples not equivalent | warning | falsified |
 | v3/v4 pattern in v5 docs | error | falsified |
 | Lifecycle ordering incorrect | error | falsified |

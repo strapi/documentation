@@ -99,7 +99,7 @@ If both `template` and `guide` are null (rare), fall back to the type-specific h
 Extract the key information that will need to be documented. What you look for depends on the document type:
 
 **For all types:**
-- What is being documented? (feature, plugin, config area, API, procedure, breaking change)
+- What is being documented? (feature, plugin, configuration area, API, procedure, breaking change)
 - What is the audience? (end users, developers, admins)
 - What related pages exist that should be cross-linked?
 
@@ -151,7 +151,7 @@ Generate the structured YAML outline following the output format defined below.
 **Skeleton:** H1 → `<Tldr>` → Intro → `<IdentityCard>` → `## Configuration` → `## Usage`
 
 **Outline Generator decisions (not in template):**
-- **Configuration H3s:** If both admin UI and code config exist → 2 H3s. If only one → single H3. If a subsection has multiple distinct areas → add H4s.
+- **Configuration H3s:** If both admin UI and code configuration exist → 2 H3s. If only one → single H3. If a subsection has multiple distinct areas → add H4s.
 - **Usage H3s:** One H3 per distinct user task. Group related tasks; aim for 3–7 H3s. If API usage exists → add H3s or `<CustomDocCardsWrapper>` linking to API pages.
 
 ---

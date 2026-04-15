@@ -822,7 +822,7 @@ tags: [...]
 
 **Micro-edit output:** A single insertion instruction: which file, where, what to insert.
 
-**Key writing rules:** Direct neutral tone. Short sentences (< 25 words). "Use" not "utilize". No "easy/simple/difficult". Numbers as numerals. Sentence case headings. One action per numbered step. JS + TS variants for config files.
+**Key writing rules:** Direct neutral tone. Short sentences (< 25 words). "Use" not "utilize". No "easy/simple/difficult". Numbers as numerals. Sentence case headings. One action per numbered step. JS + TS variants for configuration files.
 
 ---
 

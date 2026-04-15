@@ -319,10 +319,10 @@ Set `ask_user` (as a top-level YAML field or as the placement decision) when:
 
 1. **Path-based** (highest confidence): If the target path clearly maps to a type, use it.
 2. **Sidebar-based**: The position in `sidebars.js` can disambiguate (e.g., a page under the "Configurations" category is a configuration page).
-3. **Content-based**: Analyze the source material's nature — is it describing a feature, a procedure, an API, a config file?
+3. **Content-based**: Analyze the source material's nature — is it describing a feature, a procedure, an API, a configuration file?
 4. **Heuristic**: When nothing else matches, use content signals:
    - Step-by-step instructions → Guide
-   - Config file structures, env variables → Configuration
+   - Configuration file structures, env variables → Configuration
    - Endpoints, methods, parameters → API
    - UI feature description → Feature
    - "How to…" in title → Guide
@@ -334,7 +334,7 @@ Set `ask_user` (as a top-level YAML field or as the placement decision) when:
 ### Step 1 — Understand the source (briefly)
 
 Read the source material just enough to answer these placement questions:
-- **What is it?** (feature, fix, config change, new API, etc.)
+- **What is it?** (feature, fix, configuration change, new API, etc.)
 - **Key topics** (specific terms, feature names — these are your search keywords for Step 2)
 - **How big is it?** (minor tweak → update; significant addition → new section; entirely new capability → new page)
 
@@ -406,7 +406,7 @@ For **each target** in the routing:
 
 **Important:** Each target may have a different document type. For example, a routing with both `cms/features/mcp-server.md` and `cms/configurations/server.md` requires:
 - Feature template + Features authoring guide for the feature page
-- Configuration template + Configurations authoring guide for the config page
+- Configuration template + Configurations authoring guide for the configuration page
 
 The "Existing pages found" table must show the correct template and authoring guide **per row**, not just for the primary target.
 
@@ -577,8 +577,8 @@ ask_user: "The diff modifies convert-query-params.ts, suggesting hasPublishedVer
 **Source:** Jira ticket: "Add rate limiting documentation"
 
 **Expected routing:**
-- Search `llms.txt` → no dedicated rate limiting page; `cms/configurations/` has related config pages
-- Could be: a configuration page, a section in an existing server config page, or a guide
+- Search `llms.txt` → no dedicated rate limiting page; `cms/configurations/` has related configuration pages
+- Could be: a configuration page, a section in an existing server configuration page, or a guide
 - Targets: uncertain
 
 ```yaml
@@ -640,5 +640,5 @@ targets:
 
 1. Fetch PR metadata → Title: "Add MCP Server documentation"
 2. Fetch changed files → `docs/cms/features/mcp-server.md` (added), `docs/cms/configurations/server.md` (modified)
-3. Analyze: new file in `cms/features/` → Feature page; modified config → required update
+3. Analyze: new file in `cms/features/` → Feature page; modified configuration → required update
 4. Proceed with standard routing analysis
