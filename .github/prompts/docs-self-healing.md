@@ -186,3 +186,4 @@ After processing all PRs (or if none qualify), write a JSON summary to `/tmp/sel
 - **Max 5 PRs per run** — log skipped PRs to stdout
 - **Max 3000 lines per diff** — skip and log oversized diffs
 - **Never modify workflow files, configuration files, or sidebars.js**
+- **NEVER run any write operation on strapi/strapi** — no issues, no comments, no PRs, no pushes, no API calls that modify state. The GH_TOKEN has write access but this workflow ONLY writes to strapi/documentation. Read-only access to strapi/strapi (diffs, PR bodies) is the only permitted use.
