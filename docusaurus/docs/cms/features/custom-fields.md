@@ -711,3 +711,7 @@ As compared to how other types of models are defined, custom fields' attributes 
 // …
 }
 ```
+
+:::tip Custom fields for performance
+Custom fields that store structured JSON can be a performant alternative to deeply nested relational structures. When data does not need to be queried independently, storing it as a single JSON field avoids costly joins. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog.
+:::

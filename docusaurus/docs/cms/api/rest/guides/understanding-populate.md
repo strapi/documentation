@@ -1419,3 +1419,7 @@ In the following example response, highlighted lines show that:
 </Response>
 
 </ApiCall>
+
+:::tip Avoid over-populating in production
+Using `populate=*` or deep population plugins can create unpredictable, costly database queries. In production, always populate explicitly and limit depth to 2-3 levels. Consider using route-level middlewares to centralize population logic. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog.
+:::

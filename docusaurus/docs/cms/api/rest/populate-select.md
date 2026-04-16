@@ -295,3 +295,7 @@ await request(`/api/articles?${query}`);
 
 </Response>
 </ApiCall>
+
+:::tip Performance tip
+In production, always use explicit population instead of wildcards like `populate=*`. Limit population depth to 2-3 levels and consider centralizing population logic in route middlewares. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog.
+:::
