@@ -69,12 +69,15 @@ jobs:
           echo "After title filtering: $FILTERED candidates ($EXCLUDED excluded as chore/CI/deps/test)"
 
           # Check idempotency: remove PRs that already have a doc PR
-          EXISTING_BODIES=$(gh pr list --repo strapi/documentation --label auto-doc-healing --state all \
-            --json body --jq '.[].body' 2>/dev/null || echo "")
+          # Extract PR numbers already referenced in auto-doc-healing PR bodies
+          gh pr list --repo strapi/documentation --label auto-doc-healing --state all \
+            --json body --jq '[.[].body | scan("strapi/strapi/pull/([0-9]+)") | .[0] | tonumber] | unique' \
+            > /tmp/existing-pr-numbers.json 2>/dev/null || echo "[]" > /tmp/existing-pr-numbers.json
 
-          jq --arg bodies "$EXISTING_BODIES" '[.[] | select(
-            ($bodies | contains("strapi/strapi/pull/" + (.number | tostring))) | not
-          )]' /tmp/filtered-prs.json > /tmp/new-prs.json
+          # Filter out PRs whose number appears in existing doc PRs
+          jq --slurpfile existing /tmp/existing-pr-numbers.json \
+            '[.[] | select(.number as $n | $existing[0] | index($n) | not)]' \
+            /tmp/filtered-prs.json > /tmp/new-prs.json
 
           ALREADY=$((FILTERED - $(jq 'length' /tmp/new-prs.json)))
           FINAL=$(jq 'length' /tmp/new-prs.json)
