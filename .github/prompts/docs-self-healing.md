@@ -9,7 +9,7 @@ documentation PR on `strapi/documentation` for every one that requires a doc upd
 - `$STRAPI_SOURCE` — local checkout of `strapi/strapi` (read-only, for diffs)
 - `$DOC_REPO` — local checkout of `strapi/documentation` (read + write, for creating PRs)
 - GitHub CLI (`gh`) is authenticated via `GH_TOKEN`
-- Model: Claude Sonnet (optimized for cost on batch automation)
+- Model: `claude-sonnet-4-6` (set in the workflow YAML; optimized for cost on batch automation)
 
 ## Step 1 — Identify merged PRs (last 24 hours)
 
