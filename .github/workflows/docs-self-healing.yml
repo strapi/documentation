@@ -99,14 +99,37 @@ jobs:
             echo "PR_LIST_EOF"
           } >> $GITHUB_OUTPUT
 
-          # Log pre-filtering results in summary
-          echo "### Pre-filtering results" >> $GITHUB_STEP_SUMMARY
+          # Log detailed pre-filtering results in summary
+          echo "### Pre-filtering ($TOTAL merged PRs in 24h)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Total merged PRs (24h):** $TOTAL" >> $GITHUB_STEP_SUMMARY
-          echo "- **Excluded (chore/CI/deps/test/typo):** $EXCLUDED" >> $GITHUB_STEP_SUMMARY
-          echo "- **Already processed (idempotency):** $ALREADY" >> $GITHUB_STEP_SUMMARY
-          echo "- **Candidates for Claude:** $FINAL" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # List excluded PRs
+          if [ "$EXCLUDED" -gt 0 ]; then
+            echo "**Excluded by title filter ($EXCLUDED):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r --argjson filtered "$(cat /tmp/filtered-prs.json)" \
+              '[.[] | select(.number as $n | $filtered | map(.number) | index($n) | not)]
+              | .[] | "- ~~#\(.number) — \(.title)~~"' /tmp/all-prs.json >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # List already processed PRs
+          if [ "$ALREADY" -gt 0 ]; then
+            echo "**Already processed ($ALREADY):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r --argjson newprs "$(cat /tmp/new-prs.json)" \
+              '[.[] | select(.number as $n | $newprs | map(.number) | index($n) | not)]
+              | .[] | "- #\(.number) — \(.title) *(doc PR already exists)*"' /tmp/filtered-prs.json >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # List candidates sent to Claude
+          if [ "$FINAL" -gt 0 ]; then
+            echo "**Sent to Claude ($FINAL):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.[] | "- **#\(.number) — \(.title)**"' /tmp/new-prs.json >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Load prompt from file
         if: steps.check-prs.outputs.has_prs == 'true'
@@ -134,15 +157,6 @@ jobs:
           DOC_REPO: ${{ github.workspace }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
           FILTERED_PRS: ${{ steps.check-prs.outputs.pr_list }}
-
-      - name: Save Claude log as artifact
-        if: always() && steps.check-prs.outputs.has_prs == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: self-healing-log-${{ github.run_number }}
-          path: /tmp/self-healing-summary.json
-          retention-days: 30
-          if-no-files-found: warn
 
       - name: Summary
         if: always()
