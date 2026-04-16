@@ -111,12 +111,17 @@ BRANCH_NAME="<prefix>/<short-kebab-description>"
 git checkout -b "$BRANCH_NAME"
 # (apply all Drafter outputs to the appropriate files)
 git add .
-git commit -m "Update docs for strapi/strapi#<NUMBER> — <PR_TITLE>"
+git commit -m "Update docs for strapi/strapi#<NUMBER>
+# Commit message: imperative mood, no prefix, describe the doc change."
 git push -u origin "$BRANCH_NAME"
 
 gh pr create \
   --repo strapi/documentation \
-  --title "<PR_TITLE> (strapi/strapi#<NUMBER>)" \
+  --title "<DOCS_CHANGE_DESCRIPTION> (strapi/strapi#<NUMBER>)"
+  # Title must follow git-rules.md: imperative mood, no prefix (no fix:/feat:/chore:),
+  # describe what the DOC change does (not the source PR). Example:
+  #   "Clarify admin panel redirect behavior (strapi/strapi#25458)"
+  # NOT: "fix: use admin basename for 401 redirect path (strapi/strapi#25458)" \
   --body "$(cat <<'BODY'
 This PR updates documentation based on https://github.com/strapi/strapi/pull/<NUMBER>.
 
