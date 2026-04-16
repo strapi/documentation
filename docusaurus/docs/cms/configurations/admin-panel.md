@@ -87,6 +87,10 @@ module.exports = ({ env }) => ({
 
 Since by default the back-end server and the admin panel server run on the same host and port, only updating the `config/admin` file should work if you left the `host` and `port` property values untouched in the back-end [server configuration](/cms/configurations/server) file.
 
+:::note Session expiry and 401 redirects
+When you configure a custom admin panel path, session expiry and 401 authentication errors automatically redirect users to the correct login URL. For example, with `url: "/dashboard"`, the redirect target becomes `/dashboard/auth/login` instead of the default `/admin/auth/login`.
+:::
+
 ### Update the admin panel's host and port
 
 If the admin panel server and the back-end server are not hosted on the same server, you will need to update the host and port of the admin panel. For example, to host the admin panel on `my-host.com:3000`:
