@@ -180,9 +180,10 @@ jobs:
         run: |
           TRIAGE_FILE="/tmp/triage-results.json"
           if [ ! -f "$TRIAGE_FILE" ]; then
-            echo "Triage did not produce results — passing all PRs to Router"
-            cp /tmp/new-prs.json /tmp/triaged-prs.json
-            echo "has_candidates=true" >> $GITHUB_OUTPUT
+            echo "⚠️ Triage did not produce results file — stopping pipeline"
+            echo "has_candidates=false" >> $GITHUB_OUTPUT
+            echo "**⚠️ Triage (Haiku) failed to produce results. Router was not invoked.**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
           else
             # Keep only PRs where triage said "yes"
             YES_NUMBERS=$(jq '[.prs[] | select(.triage == "yes") | .number]' "$TRIAGE_FILE")
