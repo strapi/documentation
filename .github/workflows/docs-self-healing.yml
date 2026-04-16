@@ -68,6 +68,7 @@ jobs:
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
           prompt: ${{ steps.load-prompt.outputs.prompt }}
           claude_args: "--model claude-sonnet-4-6 --max-turns 50"
+          show_full_output: true
         env:
           STRAPI_SOURCE: ${{ github.workspace }}/.strapi-source
           DOC_REPO: ${{ github.workspace }}
