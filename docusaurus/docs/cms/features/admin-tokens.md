@@ -11,9 +11,7 @@ tags:
   - features
 ---
 
-# Admin Tokens <FeatureFlagBadge feature="TODO_FEATURE_FLAG_NAME" /> {#admin-tokens}
-
-{/* TODO: Replace TODO_FEATURE_FLAG_NAME with the actual feature flag name once defined */}
+# Admin Tokens <FeatureFlagBadge feature="adminTokens" /> {#admin-tokens}
 
 <Tldr>
 Admin tokens authenticate programmatic access to the Strapi Admin API. Each token is scoped to a subset of its owner's permissions and is designed for automation workflows such as MCP agents, CI/CD pipelines, and scripts.
