@@ -56,35 +56,39 @@ The Router will produce a YAML `targets` block.
 Note: chores, CI, deps, tests, and translations are already filtered out by the workflow
 before Claude runs. The Router only sees PRs that passed the pre-filter.
 
+**If the Router finds no targets for ANY PR, skip Step 4 entirely.**
+Do not load Drafter/checker prompts unless at least one PR has targets.
+
 ## Step 4 — Run the documentation pipeline (per PR with targets)
 
 For each PR where the Router identified targets, run the Create/Update Mode pipeline.
 
-**Read these agent prompts once at the start of the run** (not per PR):
+**Load these agent prompts now** (not before — only if Step 3 found targets):
 - Orchestrator: `$DOC_REPO/agents/prompts/orchestrator.md`
 - Outline Generator: `$DOC_REPO/agents/prompts/outline-generator.md`
 - Drafter: `$DOC_REPO/agents/prompts/drafter.md`
 - Style Checker: `$DOC_REPO/agents/prompts/style-checker.md`
-- Outline Checker: `$DOC_REPO/agents/prompts/outline-checker.md`
 - Integrity Checker: `$DOC_REPO/agents/prompts/integrity-checker.md`
 
 Follow the auto-chain execution from the Orchestrator:
 
 1. **For `create_page` targets:**
    - Run Outline Generator with Router YAML + source material
+   - Also load: `$DOC_REPO/agents/prompts/outline-checker.md`
    - Run Drafter in Compose mode with the outline
+   - Self-review: run Style Checker and Outline Checker on output
+   - If errors: re-run Drafter once with corrections (max 1 retry)
 
 2. **For `update_section` / `add_section` targets:**
    - Run Drafter in Patch mode with Router YAML + source material
+   - Self-review: run Style Checker on output
+   - If errors: re-run Drafter once with corrections (max 1 retry)
 
 3. **For `add_link` / `add_mention` / `add_tip` targets:**
    - Run Drafter in Micro-edit mode
+   - **No self-review** — these are too small to warrant checker overhead
 
-4. **Self-review (automatic):**
-   - Run Style Checker and Outline Checker on each Drafter output
-   - If errors found: re-run Drafter once with corrections (max 1 retry per target)
-
-5. **Integrity check (after self-review):**
+4. **Integrity check (after all targets for a PR are drafted):**
    - Run Integrity Checker on the final output (links, paths, anchors, code block syntax)
    - Log any issues but do not block PR creation — Pierre will verify during review
 
@@ -111,17 +115,19 @@ BRANCH_NAME="<prefix>/<short-kebab-description>"
 git checkout -b "$BRANCH_NAME"
 # (apply all Drafter outputs to the appropriate files)
 git add .
-git commit -m "Update docs for strapi/strapi#<NUMBER>
-# Commit message: imperative mood, no prefix, describe the doc change."
+git commit -m "<DOCS_CHANGE_DESCRIPTION>
+# Imperative mood, no prefix, describe the doc change. Max 80 chars."
 git push -u origin "$BRANCH_NAME"
 
 gh pr create \
   --repo strapi/documentation \
-  --title "<DOCS_CHANGE_DESCRIPTION> (strapi/strapi#<NUMBER>)"
-  # Title must follow git-rules.md: imperative mood, no prefix (no fix:/feat:/chore:),
-  # describe what the DOC change does (not the source PR). Example:
-  #   "Clarify admin panel redirect behavior (strapi/strapi#25458)"
-  # NOT: "fix: use admin basename for 401 redirect path (strapi/strapi#25458)" \
+  --title "[Docs self-healing] <DOCS_CHANGE_DESCRIPTION>"
+  # Title rules:
+  #   - Always prefixed with [Docs self-healing]
+  #   - Imperative mood, no conventional prefix (no fix:/feat:/chore:)
+  #   - Describe what the DOC change does, not the source PR
+  #   - Example: "[Docs self-healing] Clarify admin panel redirect behavior"
+  #   - NOT: "[Docs self-healing] fix: use admin basename for 401 redirect path" \
   --body "$(cat <<'BODY'
 This PR updates documentation based on https://github.com/strapi/strapi/pull/<NUMBER>.
 
