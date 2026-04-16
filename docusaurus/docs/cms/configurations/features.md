@@ -112,3 +112,6 @@ Developers can use the following APIs to interact with future flags:
 | Property name | Related feature | Suggested environment variable name |
 | ------------- | --------------- | ---------------------------------- |
 | `experimental_firstPublishedAt` | [Draft & Publish](/cms/features/draft-and-publish#recording-the-first-publication-date) | `STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT` |
+| `TODO_FEATURE_FLAG_NAME` | [Admin Tokens](/cms/features/admin-tokens) | `TODO_ENV_VARIABLE_NAME` |
+
+{/* TODO: Replace TODO_FEATURE_FLAG_NAME and TODO_ENV_VARIABLE_NAME with actual values once defined */}

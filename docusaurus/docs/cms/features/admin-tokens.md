@@ -11,7 +11,9 @@ tags:
   - features
 ---
 
-# Admin Tokens
+# Admin Tokens <FeatureFlagBadge feature="TODO_FEATURE_FLAG_NAME" /> {#admin-tokens}
+
+{/* TODO: Replace TODO_FEATURE_FLAG_NAME with the actual feature flag name once defined */}
 
 <Tldr>
 Admin tokens authenticate programmatic access to the Strapi Admin API. Each token is scoped to a subset of its owner's permissions and is designed for automation workflows such as MCP agents, CI/CD pipelines, and scripts.
@@ -26,10 +28,10 @@ Admin tokens and API tokens are strictly separated: each is rejected on the othe
     Free feature
   </IdentityCardItem>
   <IdentityCardItem icon="user" title="Role & permission">
-    Minimum "Access the Admin tokens settings page" in Roles > Settings - Admin tokens
+    Activated by default for Super Admin. Each lower-level role needs an explicit permission grant in Roles > Settings - Admin tokens.
   </IdentityCardItem>
   <IdentityCardItem icon="toggle-right" title="Activation">
-    Available and activated by default
+    Requires enabling the corresponding future flag (see [Features configuration](/cms/configurations/features))
   </IdentityCardItem>
   <IdentityCardItem icon="desktop" title="Environment">
     Available in both Development & Production environment
@@ -52,7 +54,7 @@ Admin tokens are configured entirely from the admin panel. No code-based configu
 
 ### Creating a new Admin token
 
-1. Click on the **Add new Admin Token** button.
+1. Click on the **Create new Admin Token** button.
 2. In the token creation form, configure the new Admin token:
 
    | Setting name | Instructions |
@@ -83,11 +85,11 @@ The plaintext token key is shown only once, immediately after creation or regene
 
 ### Managing Admin tokens
 
-Admin tokens have a dedicated settings page at <Icon name="gear-six" /> _Settings > Administration Panel > Admin Tokens_. The Admin Tokens page and the API Tokens page are independent interfaces, not filtered views of a shared list.
+Admin tokens have a dedicated settings page at <Icon name="gear-six" /> _Settings > Administration Panel > Admin Tokens_. Admin tokens and API tokens are stored in the same database table (differentiated by a `kind` field) but are managed through independent interfaces in the admin panel.
 
 The Admin Tokens page displays an **Owner** column showing the display name of each token's owner.
 
-A token can only be edited or deleted by its owner or a super-admin.
+Any user with access to the Admin Tokens settings page can view Admin tokens. A token can only be edited or deleted by its owner or a super-admin.
 
 When a super-admin views an Admin token owned by another user, a read-only **Owner** field appears in the token details panel. The permissions panel shows only the checkboxes within the token owner's permission scope, not the super-admin's unrestricted access.
 
@@ -96,7 +98,7 @@ Removing a permission from a role causes admin tokens owned by users of that rol
 :::caution Owner account deactivation and deletion
 
 * If the token owner's account is deleted, all Admin tokens owned by that user are automatically deleted along with their associated permissions. There is no recovery path. Rotate and replace Admin tokens before offboarding a team member who owns them.
-* If the token owner's account is deactivated or blocked, any request authenticated with that owner's Admin token returns `401 Token owner is deactivated`. The token itself is not deleted. Re-activating or unblocking the owner restores token functionality.
+* If the token owner's account is deactivated or blocked, any request authenticated with that owner's Admin token is rejected. The token itself is not deleted. Re-activating or unblocking the owner restores token functionality.
 :::
 
 #### Regenerating an Admin token
@@ -112,13 +114,17 @@ To regenerate an Admin token:
 
 ## Usage
 
-Admin tokens authenticate requests to Strapi Admin API. Once you have [created and copied an Admin token](#creating-a-new-admin-token), add it to the `Authorization` header of your request using `Bearer` syntax:
+Admin tokens authenticate requests to Strapi's admin routes. Once you have [created and copied an Admin token](#creating-a-new-admin-token), pass it in the `Authorization` header using `Bearer` syntax:
 
-```bash title="Example: authenticated Admin API request"
+```bash title="Example: authenticated admin route request"
 curl -X GET \
   https://your-strapi-instance.com/admin/content-manager/collection-types/api::article.article \
   -H "Authorization: Bearer your-admin-token"
 ```
+
+:::note
+The Admin API is not yet publicly documented. Admin tokens are primarily intended for use with integrations such as the [Strapi MCP server](/cms/features/mcp-server).
+:::
 
 :::caution
 Never expose Admin tokens in client-side code. Store them in a secrets manager or environment variable.
