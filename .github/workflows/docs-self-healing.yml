@@ -74,6 +74,15 @@ jobs:
           DOC_REPO: ${{ github.workspace }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
 
+      - name: Save Claude log as artifact
+        if: always() && steps.check-prs.outputs.has_prs == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: self-healing-log-${{ github.run_number }}
+          path: /tmp/self-healing-summary.json
+          retention-days: 30
+          if-no-files-found: warn
+
       - name: Summary
         if: always()
         run: |
@@ -81,6 +90,56 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Date:** $(date -u '+%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
           echo "**Trigger:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
           if [ "${{ steps.check-prs.outputs.has_prs }}" == "false" ]; then
             echo "**Result:** No merged PRs in the last 24h. Nothing to process." >> $GITHUB_STEP_SUMMARY
+            exit 0
           fi
+
+          SUMMARY_FILE="/tmp/self-healing-summary.json"
+          if [ ! -f "$SUMMARY_FILE" ]; then
+            echo "**Result:** Claude agent ran but no summary file was produced. Check the log artifact." >> $GITHUB_STEP_SUMMARY
+            exit 0
+          fi
+
+          # PRs processed (doc PRs created)
+          PROCESSED=$(jq -r '.processed | length' "$SUMMARY_FILE")
+          if [ "$PROCESSED" -gt 0 ]; then
+            echo "### PRs processed ($PROCESSED)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.processed[] | "- [strapi/strapi#\(.number) — \(.title)](\(.doc_pr))"' "$SUMMARY_FILE" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # PRs skipped
+          SKIPPED=$(jq -r '.skipped | length' "$SUMMARY_FILE")
+          if [ "$SKIPPED" -gt 0 ]; then
+            echo "### PRs skipped ($SKIPPED)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.skipped[] | "- strapi/strapi#\(.number) — \(.title): \(.reason)"' "$SUMMARY_FILE" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Already processed
+          ALREADY=$(jq -r '.already_processed | length' "$SUMMARY_FILE")
+          if [ "$ALREADY" -gt 0 ]; then
+            echo "### Already processed ($ALREADY)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.already_processed[] | "- strapi/strapi#\(.number) — \(.title): \(.reason)"' "$SUMMARY_FILE" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Errors
+          ERRORS=$(jq -r '.errors | length' "$SUMMARY_FILE")
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "### Errors ($ERRORS)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.errors[] | "- ⚠️ strapi/strapi#\(.number) — \(.title): \(.error)"' "$SUMMARY_FILE" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Totals
+          TOTAL=$((PROCESSED + SKIPPED + ALREADY + ERRORS))
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "**Total PRs scanned:** $TOTAL | **Doc PRs created:** $PROCESSED | **Skipped:** $SKIPPED | **Errors:** $ERRORS" >> $GITHUB_STEP_SUMMARY

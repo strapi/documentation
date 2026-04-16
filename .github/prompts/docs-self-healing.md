@@ -151,6 +151,30 @@ git clean -fd
 git reset --hard origin/main
 ```
 
+## Step 7 — Write run summary
+
+After processing all PRs (or if none qualify), write a JSON summary to `/tmp/self-healing-summary.json`:
+
+```json
+{
+  "processed": [
+    {"number": 12345, "title": "Add feature X", "doc_pr": "https://github.com/strapi/documentation/pull/99", "branch": "cms/add-feature-x"}
+  ],
+  "skipped": [
+    {"number": 12346, "title": "Fix typo in test", "reason": "Router: no doc update needed"},
+    {"number": 12347, "title": "Massive refactor", "reason": "Diff too large (4200 lines)"}
+  ],
+  "already_processed": [
+    {"number": 12340, "title": "Update middleware", "reason": "Existing PR found with auto-doc-healing label"}
+  ],
+  "errors": [
+    {"number": 12348, "title": "Add plugin Y", "error": "Drafter failed after retry"}
+  ]
+}
+```
+
+**Always write this file**, even if all arrays are empty. The workflow reads it to build the job summary.
+
 ## Rules
 
 - **One draft PR per strapi/strapi PR** — never consolidate multiple PRs into one
