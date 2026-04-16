@@ -355,6 +355,75 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 | -p, --password | string | New password for the user |
 | -h, --help     |        | display help for command  |
 
+## strapi admin:list-users
+
+**Alias** `admin:list`
+
+Displays a table listing all administrator accounts, including their ID, email, first and last name, active status, blocked status, and assigned roles.
+
+```bash
+strapi admin:list-users
+```
+
+## strapi admin:delete-user
+
+**Alias** `admin:delete`
+
+Deletes an existing administrator account. The email can be passed as an option or provided interactively if you call the command without options. An interactive confirmation prompt is shown before deletion.
+
+**Example**
+
+```bash
+strapi admin:delete-user --email=chef@strapi.io
+```
+
+**Options**
+
+| Option          | Type   | Description                   | Required |
+| --------------- | ------ | ----------------------------- | -------- |
+| -e, --email     | string | The administrator's email     | Yes      |
+| -h, --help      |        | display help for command      |          |
+
+## strapi admin:active-user
+
+**Alias** `admin:active`
+
+Sets the active status of an administrator account. The email and active status can be passed as options or provided interactively if you call the command without options.
+
+**Example**
+
+```bash
+strapi admin:active-user --email=chef@strapi.io --active=true
+```
+
+**Options**
+
+| Option       | Type   | Description                                  | Required |
+| ------------ | ------ | -------------------------------------------- | -------- |
+| -e, --email  | string | The administrator's email                    | Yes      |
+| -a, --active | string | The active status to set (`true` or `false`) | Yes      |
+| -h, --help   |        | display help for command                     |          |
+
+## strapi admin:block-user
+
+**Alias** `admin:block`
+
+Sets the blocked status of an administrator account. The email and block status can be passed as options or provided interactively if you call the command without options.
+
+**Example**
+
+```bash
+strapi admin:block-user --email=chef@strapi.io --block=true
+```
+
+**Options**
+
+| Option      | Type   | Description                                   | Required |
+| ----------- | ------ | --------------------------------------------- | -------- |
+| -e, --email | string | The administrator's email                     | Yes      |
+| -b, --block | string | The blocked status to set (`true` or `false`) | Yes      |
+| -h, --help  |        | display help for command                      |          |
+
 ## strapi generate
 
 Generate APIs, [controllers](/cms/backend-customization/controllers), [content-types](/cms/backend-customization/models), [policies](/cms/backend-customization/policies), [middlewares](/cms/backend-customization/middlewares), [services](/cms/backend-customization/services), and [migrations](/cms/database-migrations).
