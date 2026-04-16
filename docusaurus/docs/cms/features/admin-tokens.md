@@ -114,7 +114,7 @@ To regenerate an Admin token:
 
 Using Admin tokens allows executing a request on Strapi's admin routes as an authenticated user.
 
-Admin tokens can be helpful to give access to people or applications without managing a user account, for instance to connect an [MCP server](/cms/features/mcp-server) or a CI/CD pipeline.
+Admin tokens can be helpful to give access to people or applications without managing a user account, for instance to connect an MCP server or a CI/CD pipeline.
 
 When performing a request to Strapi's admin routes, the Admin token should be added to the request's `Authorization` header with the following syntax: `bearer your-admin-token`.
 
