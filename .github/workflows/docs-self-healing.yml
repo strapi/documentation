@@ -153,9 +153,74 @@ jobs:
             fi
           done
 
-      # ── Step A: Haiku Router (cheap, fast) ──
-      - name: Load Router prompt
+      # ── Step 0: Haiku Triage (ultra-light, ~$0.01) ──
+      - name: Load Triage prompt
         if: steps.check-prs.outputs.has_prs == 'true'
+        id: load-triage-prompt
+        run: |
+          echo "prompt<<PROMPT_EOF" >> $GITHUB_OUTPUT
+          cat .github/prompts/docs-self-healing-triage.md >> $GITHUB_OUTPUT
+          echo "PROMPT_EOF" >> $GITHUB_OUTPUT
+
+      - name: Run Triage (Haiku)
+        if: steps.check-prs.outputs.has_prs == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
+          github_token: ${{ secrets.PAT_TOKEN_PIWI }}
+          prompt: ${{ steps.load-triage-prompt.outputs.prompt }}
+          claude_args: '--model claude-haiku-4-5-20251001 --max-turns 10 --allowedTools "Bash,Read"'
+          show_full_output: true
+        env:
+          FILTERED_PRS: ${{ steps.check-prs.outputs.pr_list }}
+
+      - name: Check Triage results
+        if: steps.check-prs.outputs.has_prs == 'true'
+        id: check-triage
+        run: |
+          TRIAGE_FILE="/tmp/triage-results.json"
+          if [ ! -f "$TRIAGE_FILE" ]; then
+            echo "Triage did not produce results — passing all PRs to Router"
+            cp /tmp/new-prs.json /tmp/triaged-prs.json
+            echo "has_candidates=true" >> $GITHUB_OUTPUT
+          else
+            # Keep only PRs where triage said "yes"
+            YES_NUMBERS=$(jq '[.prs[] | select(.triage == "yes") | .number]' "$TRIAGE_FILE")
+            jq --argjson yes "$YES_NUMBERS" '[.[] | select(.number as $n | $yes | index($n))]' \
+              /tmp/new-prs.json > /tmp/triaged-prs.json
+
+            YES_COUNT=$(jq 'length' /tmp/triaged-prs.json)
+            NO_COUNT=$(jq '[.prs[] | select(.triage == "no")] | length' "$TRIAGE_FILE")
+
+            echo "Triage: $YES_COUNT candidates, $NO_COUNT eliminated"
+
+            # Log triage results in summary
+            if [ "$NO_COUNT" -gt 0 ]; then
+              echo "### Triage (Haiku — title+body only)" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "**Eliminated ($NO_COUNT):**" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              jq -r '.prs[] | select(.triage == "no") | "- ~~#\(.number) — \(.title)~~ — \(.reason)"' "$TRIAGE_FILE" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+            fi
+
+            if [ "$YES_COUNT" -eq 0 ]; then
+              echo "has_candidates=false" >> $GITHUB_OUTPUT
+            else
+              echo "has_candidates=true" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+          # Update PR list for Router
+          {
+            echo "triaged_pr_list<<TRIAGE_EOF"
+            cat /tmp/triaged-prs.json
+            echo "TRIAGE_EOF"
+          } >> $GITHUB_OUTPUT
+
+      # ── Step A: Haiku Router (only for triage "yes" PRs) ──
+      - name: Load Router prompt
+        if: steps.check-triage.outputs.has_candidates == 'true'
         id: load-router-prompt
         run: |
           echo "prompt<<PROMPT_EOF" >> $GITHUB_OUTPUT
@@ -163,7 +228,7 @@ jobs:
           echo "PROMPT_EOF" >> $GITHUB_OUTPUT
 
       - name: Run Router (Haiku)
-        if: steps.check-prs.outputs.has_prs == 'true'
+        if: steps.check-triage.outputs.has_candidates == 'true'
         id: router
         uses: anthropics/claude-code-action@v1
         with:
@@ -175,10 +240,10 @@ jobs:
         env:
           DOC_REPO: ${{ github.workspace }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
-          FILTERED_PRS: ${{ steps.check-prs.outputs.pr_list }}
+          FILTERED_PRS: ${{ steps.check-triage.outputs.triaged_pr_list }}
 
       - name: Check Router results
-        if: steps.check-prs.outputs.has_prs == 'true'
+        if: steps.check-triage.outputs.has_candidates == 'true'
         id: check-router
         run: |
           RESULTS_FILE="/tmp/router-results.json"
@@ -275,13 +340,19 @@ jobs:
           echo "**Trigger:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          # Case 1: No PRs passed pre-filter
+          # Case 1: No PRs passed bash pre-filter
           if [ "${{ steps.check-prs.outputs.has_prs }}" == "false" ]; then
-            echo "**Result:** No candidate PRs after pre-filtering. Sonnet was not invoked." >> $GITHUB_STEP_SUMMARY
+            echo "**Result:** No candidate PRs after pre-filtering. No AI invoked." >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
 
-          # Case 2: Router ran but found no targets — Sonnet was NOT invoked
+          # Case 2: Triage eliminated all PRs
+          if [ "${{ steps.check-triage.outputs.has_candidates }}" != "true" ]; then
+            echo "**Result:** Triage (Haiku) eliminated all PRs. Router and Sonnet were not invoked." >> $GITHUB_STEP_SUMMARY
+            exit 0
+          fi
+
+          # Case 3: Router ran but found no targets — Sonnet was NOT invoked
           if [ "${{ steps.check-router.outputs.has_targets }}" != "true" ]; then
             echo "**Result:** Router (Haiku) found no documentation targets. Sonnet was not invoked." >> $GITHUB_STEP_SUMMARY
             exit 0
