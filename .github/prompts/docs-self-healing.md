@@ -83,6 +83,7 @@ For each PR where the Router identified targets, run the Create/Update Mode pipe
 - Drafter: `$DOC_REPO/agents/prompts/drafter.md`
 - Style Checker: `$DOC_REPO/agents/prompts/style-checker.md`
 - Outline Checker: `$DOC_REPO/agents/prompts/outline-checker.md`
+- Integrity Checker: `$DOC_REPO/agents/prompts/integrity-checker.md`
 
 Follow the auto-chain execution from the Orchestrator:
 
@@ -99,6 +100,10 @@ Follow the auto-chain execution from the Orchestrator:
 4. **Self-review (automatic):**
    - Run Style Checker and Outline Checker on each Drafter output
    - If errors found: re-run Drafter once with corrections (max 1 retry per target)
+
+5. **Integrity check (after self-review):**
+   - Run Integrity Checker on the final output (links, paths, anchors, code block syntax)
+   - Log any issues but do not block PR creation — Pierre will verify during review
 
 **Authoring guides:** For each target, load the relevant authoring guide from `$DOC_REPO/agents/authoring/`
 based on the Router's `doc_type` and target path. These contain section-specific conventions.
