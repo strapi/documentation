@@ -131,5 +131,5 @@ Update `/tmp/router-results.json` to include a `doc_pr` field for micro PRs you 
 - **For micro-edits only:** you may read and modify documentation files and create branches/PRs
 - **For full complexity:** do NOT modify files or create PRs — leave that for Sonnet
 - **ONLY read diffs, the Router prompt, sidebars.js, llms.txt, and write the result file** (plus doc files for micro-edits)
-- **Max 1 PR per run** (testing mode). Log extras to stdout.
+- **Max 5 PRs per run.** Log extras to stdout for the next run.
 - **NEVER run any write operation on strapi/strapi**
