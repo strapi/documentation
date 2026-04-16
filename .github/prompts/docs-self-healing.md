@@ -56,20 +56,16 @@ gh api repos/strapi/strapi/pulls/<NUMBER>.diff > /tmp/pr-<NUMBER>.diff
 
 ## Step 4 — Run the Router (per PR)
 
-Read the Router prompt and apply it to the PR:
+**Read these files once at the start of the run** (not per PR):
+- Router prompt: `$DOC_REPO/agents/prompts/router.md`
+- Sidebars: `$DOC_REPO/docusaurus/sidebars.js`
+- Page index: `$DOC_REPO/docusaurus/static/llms.txt`
 
-**Router prompt:** `$DOC_REPO/agents/prompts/router.md`
-
-**Required context files for the Router:**
-- `$DOC_REPO/docusaurus/sidebars.js`
-- `$DOC_REPO/docusaurus/static/llms.txt`
-
-**Source material for the Router:**
+Then, for each PR, apply the Router logic using:
 - PR title and description from Step 3
-- List of changed files from Step 3
 - The diff from Step 3
 
-Apply the Router logic. The Router will produce a YAML `targets` block.
+The Router will produce a YAML `targets` block.
 
 **Skip the PR if:**
 - The Router finds no targets
@@ -81,31 +77,32 @@ Apply the Router logic. The Router will produce a YAML `targets` block.
 
 For each PR where the Router identified targets, run the Create/Update Mode pipeline.
 
-Read the Orchestrator prompt at: `$DOC_REPO/agents/prompts/orchestrator.md`
+**Read these agent prompts once at the start of the run** (not per PR):
+- Orchestrator: `$DOC_REPO/agents/prompts/orchestrator.md`
+- Outline Generator: `$DOC_REPO/agents/prompts/outline-generator.md`
+- Drafter: `$DOC_REPO/agents/prompts/drafter.md`
+- Style Checker: `$DOC_REPO/agents/prompts/style-checker.md`
+- Outline Checker: `$DOC_REPO/agents/prompts/outline-checker.md`
 
 Follow the auto-chain execution from the Orchestrator:
 
 1. **For `create_page` targets:**
-   - Read the Outline Generator prompt at: `$DOC_REPO/agents/prompts/outline-generator.md`
-   - Generate outline from Router YAML + source material
-   - Read the Drafter prompt at: `$DOC_REPO/agents/prompts/drafter.md`
+   - Run Outline Generator with Router YAML + source material
    - Run Drafter in Compose mode with the outline
 
 2. **For `update_section` / `add_section` targets:**
-   - Read the Drafter prompt at: `$DOC_REPO/agents/prompts/drafter.md`
    - Run Drafter in Patch mode with Router YAML + source material
 
 3. **For `add_link` / `add_mention` / `add_tip` targets:**
    - Run Drafter in Micro-edit mode
 
 4. **Self-review (automatic):**
-   - Read the Style Checker at: `$DOC_REPO/agents/prompts/style-checker.md`
-   - Read the Outline Checker at: `$DOC_REPO/agents/prompts/outline-checker.md`
-   - Run both on each Drafter output
+   - Run Style Checker and Outline Checker on each Drafter output
    - If errors found: re-run Drafter once with corrections (max 1 retry per target)
 
 **Authoring guides:** For each target, load the relevant authoring guide from `$DOC_REPO/agents/authoring/`
 based on the Router's `doc_type` and target path. These contain section-specific conventions.
+Authoring guides are small and target-specific — read them per target, not upfront.
 
 **Templates:** For `create_page` targets, load the relevant template from `$DOC_REPO/agents/templates/`
 based on the Router's `doc_type`.
