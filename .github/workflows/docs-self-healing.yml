@@ -29,24 +29,126 @@ jobs:
           token: ${{ secrets.PAT_TOKEN_PIWI }}
           fetch-depth: 50
 
-      - name: Check for merged PRs in last 24 hours
+      - name: List and filter merged PRs in last 24 hours
         id: check-prs
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
         run: |
           echo "Checking for PRs merged into strapi/strapi develop in the last 24h..."
           SINCE=$(date -u -d '24 hours ago' '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || date -u -v-24H '+%Y-%m-%dT%H:%M:%SZ')
-          PR_COUNT=$(gh api search/issues \
+
+          # Fetch all merged PRs with metadata
+          gh api search/issues \
             --method GET \
             -f q="repo:strapi/strapi is:pr is:merged base:develop merged:>=$SINCE" \
             -f per_page=50 \
-            --jq '.total_count')
-          echo "Found $PR_COUNT merged PRs in the last 24h"
-          if [ "$PR_COUNT" -eq 0 ]; then
+            --jq '.items | [.[] | {number, title, html_url: .pull_request.html_url}]' > /tmp/all-prs.json
+
+          TOTAL=$(jq 'length' /tmp/all-prs.json)
+          echo "Found $TOTAL merged PRs in the last 24h"
+
+          # Filter out PRs that never need documentation.
+          # Based on analysis of 100+ merged PR titles in strapi/strapi.
+          #
+          # EXCLUDED: chore(*), test(*), docs:, security: package,
+          #           *translation(s), *typo, Remove/Update yarn/README
+          #
+          # KEPT (Router decides): feat, fix, enhancement, and anything else
+          jq '[.[] | select(
+            (.title | test("^chore"; "i") | not) and
+            (.title | test("^test[:(\\s]"; "i") | not) and
+            (.title | test("^docs:"; "i") | not) and
+            (.title | test("^security: package"; "i") | not) and
+            (.title | test("translation[s]?$"; "i") | not) and
+            (.title | test("typo"; "i") | not) and
+            (.title | test("^(Remove|Update) (yarn|README)"; "i") | not)
+          )]' /tmp/all-prs.json > /tmp/filtered-prs.json
+
+          FILTERED=$(jq 'length' /tmp/filtered-prs.json)
+          EXCLUDED=$((TOTAL - FILTERED))
+          echo "After title filtering: $FILTERED candidates ($EXCLUDED excluded as chore/CI/deps/test)"
+
+          # Check idempotency: remove PRs that already have a doc PR
+          EXISTING_BODIES=$(gh pr list --repo strapi/documentation --label auto-doc-healing --state all \
+            --json body --jq '.[].body' 2>/dev/null || echo "")
+
+          jq --arg bodies "$EXISTING_BODIES" '[.[] | select(
+            ($bodies | contains("strapi/strapi/pull/" + (.number | tostring))) | not
+          )]' /tmp/filtered-prs.json > /tmp/new-prs.json
+
+          ALREADY=$((FILTERED - $(jq 'length' /tmp/new-prs.json)))
+          FINAL=$(jq 'length' /tmp/new-prs.json)
+
+          if [ "$ALREADY" -gt 0 ]; then
+            echo "Idempotency: $ALREADY PRs already have a doc PR, skipped"
+          fi
+
+          echo "Final candidates for Claude: $FINAL"
+
+          # Set outputs based on final filtered list
+          if [ "$FINAL" -eq 0 ]; then
             echo "has_prs=false" >> $GITHUB_OUTPUT
           else
             echo "has_prs=true" >> $GITHUB_OUTPUT
           fi
+
+          # Pass the final list to Claude
+          {
+            echo "pr_list<<PR_LIST_EOF"
+            cat /tmp/new-prs.json
+            echo "PR_LIST_EOF"
+          } >> $GITHUB_OUTPUT
+
+          # Log detailed pre-filtering results in summary
+          echo "### Pre-filtering ($TOTAL merged PRs in 24h)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # List excluded PRs
+          if [ "$EXCLUDED" -gt 0 ]; then
+            echo "**Excluded by title filter ($EXCLUDED):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r --argjson filtered "$(cat /tmp/filtered-prs.json)" \
+              '[.[] | select(.number as $n | $filtered | map(.number) | index($n) | not)]
+              | .[] | "- ~~#\(.number) — \(.title)~~"' /tmp/all-prs.json >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # List already processed PRs
+          if [ "$ALREADY" -gt 0 ]; then
+            echo "**Already processed ($ALREADY):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r --argjson newprs "$(cat /tmp/new-prs.json)" \
+              '[.[] | select(.number as $n | $newprs | map(.number) | index($n) | not)]
+              | .[] | "- #\(.number) — \(.title) *(doc PR already exists)*"' /tmp/filtered-prs.json >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # List candidates sent to Claude
+          if [ "$FINAL" -gt 0 ]; then
+            echo "**Sent to Claude ($FINAL):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.[] | "- **#\(.number) — \(.title)**"' /tmp/new-prs.json >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Pre-fetch PR diffs and bodies
+        if: steps.check-prs.outputs.has_prs == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+        run: |
+          for NUMBER in $(jq -r '.[].number' /tmp/new-prs.json); do
+            echo "Fetching body and diff for PR #$NUMBER..."
+            gh api "repos/strapi/strapi/pulls/$NUMBER" --jq '.body' > "/tmp/pr-${NUMBER}-body.txt" 2>/dev/null || echo "" > "/tmp/pr-${NUMBER}-body.txt"
+            gh api "repos/strapi/strapi/pulls/$NUMBER.diff" > "/tmp/pr-${NUMBER}.diff" 2>/dev/null || echo "" > "/tmp/pr-${NUMBER}.diff"
+
+            DIFF_LINES=$(wc -l < "/tmp/pr-${NUMBER}.diff")
+            echo "  PR #$NUMBER: body $(wc -c < "/tmp/pr-${NUMBER}-body.txt") bytes, diff $DIFF_LINES lines"
+
+            # Flag oversized diffs
+            if [ "$DIFF_LINES" -gt 3000 ]; then
+              echo "  ⚠️ PR #$NUMBER diff exceeds 3000 lines, will be skipped by Claude"
+            fi
+          done
 
       - name: Load prompt from file
         if: steps.check-prs.outputs.has_prs == 'true'
@@ -73,15 +175,7 @@ jobs:
           STRAPI_SOURCE: ${{ github.workspace }}/.strapi-source
           DOC_REPO: ${{ github.workspace }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
-
-      - name: Save Claude log as artifact
-        if: always() && steps.check-prs.outputs.has_prs == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: self-healing-log-${{ github.run_number }}
-          path: /tmp/self-healing-summary.json
-          retention-days: 30
-          if-no-files-found: warn
+          FILTERED_PRS: ${{ steps.check-prs.outputs.pr_list }}
 
       - name: Summary
         if: always()
@@ -121,15 +215,6 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
-          # Already processed
-          ALREADY=$(jq -r '.already_processed | length' "$SUMMARY_FILE")
-          if [ "$ALREADY" -gt 0 ]; then
-            echo "### Already processed ($ALREADY)" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            jq -r '.already_processed[] | "- strapi/strapi#\(.number) — \(.title): \(.reason)"' "$SUMMARY_FILE" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-          fi
-
           # Errors
           ERRORS=$(jq -r '.errors | length' "$SUMMARY_FILE")
           if [ "$ERRORS" -gt 0 ]; then
@@ -140,6 +225,6 @@ jobs:
           fi
 
           # Totals
-          TOTAL=$((PROCESSED + SKIPPED + ALREADY + ERRORS))
+          TOTAL=$((PROCESSED + SKIPPED + ERRORS))
           echo "---" >> $GITHUB_STEP_SUMMARY
           echo "**Total PRs scanned:** $TOTAL | **Doc PRs created:** $PROCESSED | **Skipped:** $SKIPPED | **Errors:** $ERRORS" >> $GITHUB_STEP_SUMMARY
