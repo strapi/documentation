@@ -11,6 +11,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      id-token: write
 
     steps:
       - name: Checkout strapi/documentation
@@ -47,16 +48,26 @@ jobs:
             echo "has_prs=true" >> $GITHUB_OUTPUT
           fi
 
+      - name: Load prompt from file
+        if: steps.check-prs.outputs.has_prs == 'true'
+        id: load-prompt
+        run: |
+          PROMPT=$(cat .github/prompts/docs-self-healing.md)
+          # Write to file for multiline support
+          echo "$PROMPT" > /tmp/self-healing-prompt.txt
+          # Use delimiter for multiline output
+          echo "prompt<<PROMPT_EOF" >> $GITHUB_OUTPUT
+          cat .github/prompts/docs-self-healing.md >> $GITHUB_OUTPUT
+          echo "PROMPT_EOF" >> $GITHUB_OUTPUT
+
       - name: Run Claude doc agent
         if: steps.check-prs.outputs.has_prs == 'true'
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
-          model: claude-sonnet-4-6
-          prompt_file: .github/prompts/docs-self-healing.md
-          allowed_tools: "Bash(git:*),Bash(gh:*),View,GlobTool,GrepTool,Edit,Write"
-          max_turns: 50
-          timeout_minutes: 30
+          github_token: ${{ secrets.PAT_TOKEN_PIWI }}
+          prompt: ${{ steps.load-prompt.outputs.prompt }}
+          claude_args: "--model claude-sonnet-4-6 --max-turns 50"
         env:
           STRAPI_SOURCE: ${{ github.workspace }}/.strapi-source
           DOC_REPO: ${{ github.workspace }}
