@@ -35,13 +35,11 @@ jobs:
         run: |
           echo "Checking for PRs merged into strapi/strapi develop in the last 24h..."
           SINCE=$(date -u -d '24 hours ago' '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || date -u -v-24H '+%Y-%m-%dT%H:%M:%SZ')
-          PR_COUNT=$(gh api repos/strapi/strapi/pulls \
-            -f state=closed \
-            -f base=develop \
-            -f sort=updated \
-            -f direction=desc \
+          PR_COUNT=$(gh api search/issues \
+            --method GET \
+            -f q="repo:strapi/strapi is:pr is:merged base:develop merged:>=$SINCE" \
             -f per_page=50 \
-            --jq "[.[] | select(.merged_at != null and .merged_at > \"$SINCE\")] | length")
+            --jq '.total_count')
           echo "Found $PR_COUNT merged PRs in the last 24h"
           if [ "$PR_COUNT" -eq 0 ]; then
             echo "has_prs=false" >> $GITHUB_OUTPUT
