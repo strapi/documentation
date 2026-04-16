@@ -67,7 +67,7 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
           prompt: ${{ steps.load-prompt.outputs.prompt }}
-          claude_args: "--model claude-sonnet-4-6 --max-turns 50"
+          claude_args: '--model claude-sonnet-4-6 --max-turns 50 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
           show_full_output: true
         env:
           STRAPI_SOURCE: ${{ github.workspace }}/.strapi-source
