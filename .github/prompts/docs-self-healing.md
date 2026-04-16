@@ -31,13 +31,15 @@ to stdout and they will be picked up on the next run.
 
 ## Step 2 — Check idempotency (per PR)
 
-Before processing each PR, check if a branch for it already exists on the remote:
+Before processing each PR, check if a doc PR already exists for it by searching
+the body of open PRs with the `auto-doc-healing` label:
 
 ```bash
-git ls-remote --exit-code --heads origin | grep "strapi-pr-<NUMBER>"
+gh pr list --repo strapi/documentation --label auto-doc-healing --state all \
+  --json body --jq '.[].body' | grep -q "strapi/strapi/pull/<NUMBER>"
 ```
 
-If a matching branch exists, skip the PR entirely. This ensures the workflow is idempotent
+If a match is found, skip the PR entirely. This ensures the workflow is idempotent
 and recovers gracefully from partial failures.
 
 ## Step 3 — Get the diff (per PR)
@@ -125,7 +127,7 @@ cd $DOC_REPO
 # - targets under docs/cms/ -> /cms
 # - targets under docs/cloud/ -> /cloud
 # - mixed or other -> /repo
-BRANCH_NAME="<prefix>/strapi-pr-<NUMBER>-<short-kebab-description>"
+BRANCH_NAME="<prefix>/<short-kebab-description>"
 
 git checkout -b "$BRANCH_NAME"
 # (apply all Drafter outputs to the appropriate files)
