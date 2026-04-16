@@ -153,32 +153,118 @@ jobs:
             fi
           done
 
-      - name: Load prompt from file
+      # ── Step A: Haiku Router (cheap, fast) ──
+      - name: Load Router prompt
         if: steps.check-prs.outputs.has_prs == 'true'
-        id: load-prompt
+        id: load-router-prompt
         run: |
-          PROMPT=$(cat .github/prompts/docs-self-healing.md)
-          # Write to file for multiline support
-          echo "$PROMPT" > /tmp/self-healing-prompt.txt
-          # Use delimiter for multiline output
           echo "prompt<<PROMPT_EOF" >> $GITHUB_OUTPUT
-          cat .github/prompts/docs-self-healing.md >> $GITHUB_OUTPUT
+          cat .github/prompts/docs-self-healing-router.md >> $GITHUB_OUTPUT
           echo "PROMPT_EOF" >> $GITHUB_OUTPUT
 
-      - name: Run Claude doc agent
+      - name: Run Router (Haiku)
         if: steps.check-prs.outputs.has_prs == 'true'
+        id: router
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
-          prompt: ${{ steps.load-prompt.outputs.prompt }}
-          claude_args: '--model claude-sonnet-4-6 --max-turns 25 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
+          prompt: ${{ steps.load-router-prompt.outputs.prompt }}
+          claude_args: '--model claude-haiku-4-5-20251001 --max-turns 20 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
           show_full_output: true
         env:
-          STRAPI_SOURCE: ${{ github.workspace }}/.strapi-source
           DOC_REPO: ${{ github.workspace }}
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
           FILTERED_PRS: ${{ steps.check-prs.outputs.pr_list }}
+
+      - name: Check Router results
+        if: steps.check-prs.outputs.has_prs == 'true'
+        id: check-router
+        run: |
+          RESULTS_FILE="/tmp/router-results.json"
+          if [ ! -f "$RESULTS_FILE" ]; then
+            echo "Router did not produce results file"
+            echo "has_targets=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Count PRs by decision and complexity
+          MICRO=$(jq '[.prs[] | select(.decision == "has_targets" and .complexity == "micro")] | length' "$RESULTS_FILE")
+          FULL=$(jq '[.prs[] | select(.decision == "has_targets" and .complexity == "full")] | length' "$RESULTS_FILE")
+          SKIPPED=$(jq '[.prs[] | select(.decision == "skip")] | length' "$RESULTS_FILE")
+          ASK_USER=$(jq '[.prs[] | select(.decision == "ask_user")] | length' "$RESULTS_FILE")
+          TARGETS=$((MICRO + FULL))
+
+          echo "Router results: $TARGETS with targets ($MICRO micro, $FULL full), $SKIPPED skipped, $ASK_USER ask_user"
+
+          # Log Router decisions in summary
+          echo "### Router decisions (Haiku)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "$MICRO" -gt 0 ]; then
+            echo "**Micro-edits handled by Haiku ($MICRO):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.prs[] | select(.decision == "has_targets" and .complexity == "micro") | "- **#\(.number) — \(.title)**" + (if .doc_pr then " → [\(.doc_pr)](\(.doc_pr))" else "" end)' "$RESULTS_FILE" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ "$FULL" -gt 0 ]; then
+            echo "**Full drafting needed — sent to Sonnet ($FULL):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.prs[] | select(.decision == "has_targets" and .complexity == "full") | "- **#\(.number) — \(.title)**"' "$RESULTS_FILE" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ "$SKIPPED" -gt 0 ]; then
+            echo "**No docs needed ($SKIPPED):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.prs[] | select(.decision == "skip") | "- ~~#\(.number) — \(.title)~~ — \(.reason)"' "$RESULTS_FILE" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ "$ASK_USER" -gt 0 ]; then
+            echo "**Needs manual review ($ASK_USER):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.prs[] | select(.decision == "ask_user") | "- ⚠️ #\(.number) — \(.title) — \(.reason)"' "$RESULTS_FILE" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Sonnet only needed for "full" complexity PRs
+          if [ "$FULL" -eq 0 ]; then
+            echo "has_targets=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_targets=true" >> $GITHUB_OUTPUT
+          fi
+
+          # Pass router results to Sonnet (only full-complexity PRs)
+          {
+            echo "router_results<<ROUTER_EOF"
+            cat "$RESULTS_FILE"
+            echo "ROUTER_EOF"
+          } >> $GITHUB_OUTPUT
+
+      # ── Step B: Sonnet Drafter (only if full-complexity targets found) ──
+      - name: Load Drafter prompt
+        if: steps.check-router.outputs.has_targets == 'true'
+        id: load-drafter-prompt
+        run: |
+          echo "prompt<<PROMPT_EOF" >> $GITHUB_OUTPUT
+          cat .github/prompts/docs-self-healing-drafter.md >> $GITHUB_OUTPUT
+          echo "PROMPT_EOF" >> $GITHUB_OUTPUT
+
+      - name: Run Drafter (Sonnet)
+        if: steps.check-router.outputs.has_targets == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
+          github_token: ${{ secrets.PAT_TOKEN_PIWI }}
+          prompt: ${{ steps.load-drafter-prompt.outputs.prompt }}
+          claude_args: '--model claude-sonnet-4-6 --max-turns 25 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
+          show_full_output: true
+        env:
+          DOC_REPO: ${{ github.workspace }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          ROUTER_RESULTS: ${{ steps.check-router.outputs.router_results }}
 
       - name: Summary
         if: always()
@@ -189,45 +275,41 @@ jobs:
           echo "**Trigger:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
+          # Case 1: No PRs passed pre-filter
           if [ "${{ steps.check-prs.outputs.has_prs }}" == "false" ]; then
-            echo "**Result:** No merged PRs in the last 24h. Nothing to process." >> $GITHUB_STEP_SUMMARY
+            echo "**Result:** No candidate PRs after pre-filtering. Sonnet was not invoked." >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
 
+          # Case 2: Router ran but found no targets — Sonnet was NOT invoked
+          if [ "${{ steps.check-router.outputs.has_targets }}" != "true" ]; then
+            echo "**Result:** Router (Haiku) found no documentation targets. Sonnet was not invoked." >> $GITHUB_STEP_SUMMARY
+            exit 0
+          fi
+
+          # Case 3: Sonnet ran — read its summary
           SUMMARY_FILE="/tmp/self-healing-summary.json"
           if [ ! -f "$SUMMARY_FILE" ]; then
-            echo "**Result:** Claude agent ran but no summary file was produced. Check the log artifact." >> $GITHUB_STEP_SUMMARY
+            echo "**Result:** Sonnet ran but no summary file was produced. Check logs." >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
 
-          # PRs processed (doc PRs created)
+          # Drafter results
+          echo "### Drafter results (Sonnet)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
           PROCESSED=$(jq -r '.processed | length' "$SUMMARY_FILE")
           if [ "$PROCESSED" -gt 0 ]; then
-            echo "### PRs processed ($PROCESSED)" >> $GITHUB_STEP_SUMMARY
+            echo "**Doc PRs created ($PROCESSED):**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             jq -r '.processed[] | "- [strapi/strapi#\(.number) — \(.title)](\(.doc_pr))"' "$SUMMARY_FILE" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
-          # PRs skipped
-          SKIPPED=$(jq -r '.skipped | length' "$SUMMARY_FILE")
-          if [ "$SKIPPED" -gt 0 ]; then
-            echo "### PRs skipped ($SKIPPED)" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            jq -r '.skipped[] | "- strapi/strapi#\(.number) — \(.title): \(.reason)"' "$SUMMARY_FILE" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-          fi
-
-          # Errors
           ERRORS=$(jq -r '.errors | length' "$SUMMARY_FILE")
           if [ "$ERRORS" -gt 0 ]; then
-            echo "### Errors ($ERRORS)" >> $GITHUB_STEP_SUMMARY
+            echo "**Errors ($ERRORS):**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             jq -r '.errors[] | "- ⚠️ strapi/strapi#\(.number) — \(.title): \(.error)"' "$SUMMARY_FILE" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
-
-          # Totals
-          TOTAL=$((PROCESSED + SKIPPED + ERRORS))
-          echo "---" >> $GITHUB_STEP_SUMMARY
-          echo "**Total PRs scanned:** $TOTAL | **Doc PRs created:** $PROCESSED | **Skipped:** $SKIPPED | **Errors:** $ERRORS" >> $GITHUB_STEP_SUMMARY
