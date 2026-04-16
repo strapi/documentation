@@ -42,18 +42,12 @@ gh pr list --repo strapi/documentation --label auto-doc-healing --state all \
 If a match is found, skip the PR entirely. This ensures the workflow is idempotent
 and recovers gracefully from partial failures.
 
-## Step 3 — Get the diff (per PR)
+## Step 3 — Get PR context (per PR)
 
-For each PR to process, fetch the diff. Use the merge commit in `$STRAPI_SOURCE`:
+For each PR to process, fetch the description and the diff:
 
 ```bash
-cd $STRAPI_SOURCE
-gh api repos/strapi/strapi/pulls/<NUMBER>/files --jq '.[].filename' > /tmp/pr-<NUMBER>-files.txt
 gh api repos/strapi/strapi/pulls/<NUMBER> --jq '.body' > /tmp/pr-<NUMBER>-body.txt
-```
-
-Also fetch the actual diff (excluding tests and specs):
-```bash
 gh api repos/strapi/strapi/pulls/<NUMBER>.diff > /tmp/pr-<NUMBER>.diff
 ```
 
