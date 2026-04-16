@@ -223,3 +223,7 @@ Proper implementation largely depends on your project's needs and custom code, b
 :::info
 You can find more information about route middlewares in the [routes documentation](/cms/backend-customization/routes).
 :::
+
+:::tip Middlewares for performance
+Route-level middlewares are a good place to centralize population logic and prevent accidental over-fetching. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog for patterns and examples.
+:::

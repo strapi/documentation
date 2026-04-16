@@ -26,6 +26,10 @@ All content types are private by default and need to be either made public or qu
 By default, the REST API responses only include top-level fields and does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/cms/api/rest/populate-select) to populate specific fields. Ensure that the find permission is given to the field(s) for the relation(s) you populate.
 :::
 
+:::tip Performance best practices
+For production applications, be intentional about data fetching: use explicit population, limit population depth, and centralize population logic in route middlewares. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog for a comprehensive guide.
+:::
+
 :::strapi Strapi Client
 The [Strapi Client](/cms/api/client) library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content.
 :::

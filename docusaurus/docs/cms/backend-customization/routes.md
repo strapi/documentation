@@ -548,6 +548,10 @@ export default  {
 
 </Tabs>
 
+:::tip Centralizing population logic
+Route-level middlewares are the recommended place to enforce consistent population rules across your API. This prevents accidental over-fetching and ensures predictable response sizes. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog.
+:::
+
 ### Public routes
 
 By default, routes are protected by Strapi's authentication system, which is based on [API tokens](/cms/features/api-tokens) or on the use of the [Users & Permissions plugin](/cms/features/users-permissions).
