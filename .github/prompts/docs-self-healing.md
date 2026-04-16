@@ -2,7 +2,6 @@
 
 You are running in automated mode inside a GitHub Actions workflow on `strapi/documentation`.
 Your job is to process each PR merged into `strapi/strapi` in the last 24 hours and open a draft documentation PR on `strapi/documentation` for every one that requires a doc update.
-documentation PR on `strapi/documentation` for every one that requires a doc update.
 
 ## Environment
 
