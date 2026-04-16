@@ -24,14 +24,14 @@ Parse this list. **Do NOT re-fetch PRs from the GitHub API** — the workflow al
 **Rate limit:** Process a maximum of 1 PR per run (testing mode). If more qualify, log the skipped ones
 to stdout and they will be picked up on the next run.
 
-## Step 2 — Get PR context (per PR)
+## Step 2 — Read pre-fetched PR context (per PR)
 
-For each PR to process, fetch the description and the diff:
+The workflow has already fetched the body and diff for each PR. Read them from:
 
-```bash
-gh api repos/strapi/strapi/pulls/<NUMBER> --jq '.body' > /tmp/pr-<NUMBER>-body.txt
-gh api repos/strapi/strapi/pulls/<NUMBER>.diff > /tmp/pr-<NUMBER>.diff
-```
+- `/tmp/pr-<NUMBER>-body.txt` — PR description
+- `/tmp/pr-<NUMBER>.diff` — full diff
+
+**Do NOT fetch these from the GitHub API** — they are already on disk.
 
 **Diff size threshold:** If the diff exceeds 3000 lines, skip this PR and log:
 "PR #<NUMBER> skipped — diff too large (X lines), flag for manual /autodoc".

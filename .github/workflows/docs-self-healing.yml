@@ -131,6 +131,25 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
+      - name: Pre-fetch PR diffs and bodies
+        if: steps.check-prs.outputs.has_prs == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+        run: |
+          for NUMBER in $(jq -r '.[].number' /tmp/new-prs.json); do
+            echo "Fetching body and diff for PR #$NUMBER..."
+            gh api "repos/strapi/strapi/pulls/$NUMBER" --jq '.body' > "/tmp/pr-${NUMBER}-body.txt" 2>/dev/null || echo "" > "/tmp/pr-${NUMBER}-body.txt"
+            gh api "repos/strapi/strapi/pulls/$NUMBER.diff" > "/tmp/pr-${NUMBER}.diff" 2>/dev/null || echo "" > "/tmp/pr-${NUMBER}.diff"
+
+            DIFF_LINES=$(wc -l < "/tmp/pr-${NUMBER}.diff")
+            echo "  PR #$NUMBER: body $(wc -c < "/tmp/pr-${NUMBER}-body.txt") bytes, diff $DIFF_LINES lines"
+
+            # Flag oversized diffs
+            if [ "$DIFF_LINES" -gt 3000 ]; then
+              echo "  ⚠️ PR #$NUMBER diff exceeds 3000 lines, will be skipped by Claude"
+            fi
+          done
+
       - name: Load prompt from file
         if: steps.check-prs.outputs.has_prs == 'true'
         id: load-prompt
