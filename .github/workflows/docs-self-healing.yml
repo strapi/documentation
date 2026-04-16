@@ -53,7 +53,7 @@ jobs:
         if: steps.check-prs.outputs.has_prs == 'true'
         uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           model: claude-sonnet-4-6
           prompt_file: .github/prompts/docs-self-healing.md
           allowed_tools: "Bash(git:*),Bash(gh:*),View,GlobTool,GrepTool,Edit,Write"
