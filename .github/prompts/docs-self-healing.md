@@ -25,7 +25,7 @@ gh api repos/strapi/strapi/pulls \
 
 Filter to only those whose `merged_at` is within the last 24 hours.
 
-**Rate limit:** Process a maximum of 5 PRs per run. If more than 5 qualify, log the skipped ones
+**Rate limit:** Process a maximum of 1 PR per run (testing mode). If more qualify, log the skipped ones
 to stdout and they will be picked up on the next run.
 
 ## Step 2 — Check idempotency (per PR)
