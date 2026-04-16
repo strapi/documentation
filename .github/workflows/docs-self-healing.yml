@@ -1,0 +1,76 @@
+name: Docs Self-Healing
+
+on:
+  schedule:
+    - cron: '30 1 * * *' # 1:30 AM UTC daily (after merger repo sync at 1:00)
+  workflow_dispatch: # manual trigger for testing
+
+jobs:
+  docs-self-healing:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout strapi/documentation
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN_PIWI }}
+
+      - name: Checkout strapi/strapi (read-only)
+        uses: actions/checkout@v4
+        with:
+          repository: strapi/strapi
+          ref: develop
+          path: .strapi-source
+          token: ${{ secrets.PAT_TOKEN_PIWI }}
+          fetch-depth: 50
+
+      - name: Check for merged PRs in last 24 hours
+        id: check-prs
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+        run: |
+          echo "Checking for PRs merged into strapi/strapi develop in the last 24h..."
+          SINCE=$(date -u -d '24 hours ago' '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || date -u -v-24H '+%Y-%m-%dT%H:%M:%SZ')
+          PR_COUNT=$(gh api repos/strapi/strapi/pulls \
+            -f state=closed \
+            -f base=develop \
+            -f sort=updated \
+            -f direction=desc \
+            -f per_page=50 \
+            --jq "[.[] | select(.merged_at != null and .merged_at > \"$SINCE\")] | length")
+          echo "Found $PR_COUNT merged PRs in the last 24h"
+          if [ "$PR_COUNT" -eq 0 ]; then
+            echo "has_prs=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_prs=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run Claude doc agent
+        if: steps.check-prs.outputs.has_prs == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
+          model: claude-sonnet-4-6
+          prompt_file: .github/prompts/docs-self-healing.md
+          allowed_tools: "Bash(git:*),Bash(gh:*),View,GlobTool,GrepTool,Edit,Write"
+          max_turns: 50
+          timeout_minutes: 30
+        env:
+          STRAPI_SOURCE: ${{ github.workspace }}/.strapi-source
+          DOC_REPO: ${{ github.workspace }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Docs Self-Healing Run" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Date:** $(date -u '+%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "**Trigger:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.check-prs.outputs.has_prs }}" == "false" ]; then
+            echo "**Result:** No merged PRs in the last 24h. Nothing to process." >> $GITHUB_STEP_SUMMARY
+          fi
