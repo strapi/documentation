@@ -25,7 +25,7 @@ You run on Haiku for cost efficiency. Do NOT draft content or create PRs.
    - If the diff exceeds 3000 lines, mark as `skipped` with reason "Diff too large"
    - Otherwise, apply the Router logic to decide if docs need updating
 
-4. **Write the routing result** to `/tmp/router-results.json` using this exact schema:
+4. **Write the routing result** to `/tmp/router-results.json` using Bash (`cat <<'EOF' > /tmp/router-results.json`). Do NOT use the Write tool — it may be denied. Use this exact schema:
 
 ```json
 {
