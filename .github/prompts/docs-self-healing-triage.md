@@ -20,7 +20,7 @@ You only read the PR title and body (no diff, no sidebars, no agent prompts).
    - `"yes"` — this PR changes user-facing behavior, APIs, configuration, features, or CLI commands. Documentation might need updating.
    - `"no"` — this PR is clearly internal: refactors, race condition fixes, internal optimizations, test infrastructure, build tooling, admin UI polish with no behavior change, dependency version alignment, code style changes. No documentation impact.
 
-4. Write the result to `/tmp/triage-results.json`:
+4. Write the result to `/tmp/triage-results.json` using Bash (not the Write tool — use `cat <<'EOF' > /tmp/triage-results.json`):
 
 ```json
 {
@@ -37,9 +37,9 @@ False negatives are worse than false positives. If you're not sure, say `"yes"` 
 
 ## Rules
 
+- **Write files using Bash only** (`cat <<'EOF' > /tmp/file`). Do NOT use the Write tool — it will be denied.
 - **Do NOT read diffs** — you don't need them
 - **Do NOT read sidebars.js, llms.txt, or any agent prompts**
-- **Do NOT modify any files except `/tmp/triage-results.json`**
 - **Do NOT create branches, commits, or PRs**
 - **NEVER run any write operation on strapi/strapi**
 - **Be fast** — this step should use minimal tokens
