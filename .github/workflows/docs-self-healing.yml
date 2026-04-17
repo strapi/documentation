@@ -2,7 +2,7 @@ name: Docs Self-Healing
 
 on:
   schedule:
-    - cron: '30 1 * * *' # 1:30 AM UTC daily (after merger repo sync at 1:00)
+    - cron: '30 1 * * 2-6' # 1:30 AM UTC Tue-Sat (covers Mon-Fri merges; no strapi/strapi merges on weekends)
   workflow_dispatch: # manual trigger for testing
 
 jobs:
