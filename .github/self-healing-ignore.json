@@ -4,6 +4,11 @@
       "number": 25886,
       "reason": "feat(core/*): introduce strapi.ai namespace — Uncertain whether this needs plugin-developer documentation or if it's internal API restructuring only. Decision pending.",
       "added": "2026-04-17"
+    },
+    {
+      "number": 26037,
+      "reason": "UI translation update (Chinese Simplified) — admin panel localization, no docs impact.",
+      "added": "2026-04-17"
     }
   ]
 }
