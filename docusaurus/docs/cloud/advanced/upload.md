@@ -126,6 +126,20 @@ module.exports = ({ env }) => ({
 </TabItem >
 <TabItem value="amazon-s3" label="Amazon S3">
 
+:::caution AWS S3 Credential Format
+The recommended format for passing AWS S3 credentials is within a `credentials` object. If you're using root-level `accessKeyId` and `secretAccessKey` properties (an older pattern from earlier Strapi guides), they still work but will trigger a deprecation warning. Please migrate to the new format shown below:
+
+```js
+s3Options: {
+  credentials: {
+    accessKeyId: env('AWS_ACCESS_KEY_ID'),
+    secretAccessKey: env('AWS_ACCESS_SECRET'),
+  },
+  // ... rest of options
+}
+```
+:::
+
 ```js title=./config/env/production/plugins.js
 module.exports = ({ env }) => ({
   // ...
@@ -136,8 +150,10 @@ module.exports = ({ env }) => ({
         baseUrl: env('CDN_URL'),
         rootPath: env('CDN_ROOT_PATH'),
         s3Options: {
-          accessKeyId: env('AWS_ACCESS_KEY_ID'),
-          secretAccessKey: env('AWS_ACCESS_SECRET'),
+          credentials: {
+            accessKeyId: env('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: env('AWS_ACCESS_SECRET'),
+          },
           region: env('AWS_REGION'),
           params: {
             ACL: env('AWS_ACL', 'public-read'),
@@ -189,6 +205,20 @@ export default ({ env }) => ({
 </TabItem >
 <TabItem value="amazon-s3" label="Amazon S3">
 
+:::caution AWS S3 Credential Format
+The recommended format for passing AWS S3 credentials is within a `credentials` object. If you're using root-level `accessKeyId` and `secretAccessKey` properties (an older pattern from earlier Strapi guides), they still work but will trigger a deprecation warning. Please migrate to the new format shown below:
+
+```ts
+s3Options: {
+  credentials: {
+    accessKeyId: env('AWS_ACCESS_KEY_ID'),
+    secretAccessKey: env('AWS_ACCESS_SECRET'),
+  },
+  // ... rest of options
+}
+```
+:::
+
 ```ts title=./config/env/production/plugins.ts
 export default ({ env }) => ({
   // ...
@@ -199,8 +229,10 @@ export default ({ env }) => ({
         baseUrl: env('CDN_URL'),
         rootPath: env('CDN_ROOT_PATH'),
         s3Options: {
-          accessKeyId: env('AWS_ACCESS_KEY_ID'),
-          secretAccessKey: env('AWS_ACCESS_SECRET'),
+          credentials: {
+            accessKeyId: env('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: env('AWS_ACCESS_SECRET'),
+          },
           region: env('AWS_REGION'),
           params: {
             ACL: env('AWS_ACL', 'public-read'),
