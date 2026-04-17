@@ -5,7 +5,7 @@
 # the repo. Unless a later match takes precedence,
 # @pwizla and @meganelacheny will be requested for
 # review when someone opens a pull request.
-*       @pwizla @meganelacheny
+*       @pwizla
 
 # Order is important; the last matching pattern takes the most
 # precedence. When someone opens a pull request that only
@@ -14,8 +14,8 @@
 *.js    @pwizla
 *.jsx   @pwizla
 *.json  @pwizla
-*.css   @pwizla @udimberto
-*.scss  @pwizla @udimberto
+*.css   @pwizla
+*.scss  @pwizla
 
 # With this configuration, @pwizla owns any files in the dev-docs
 # directory located in docusaurus/docs and any of its
@@ -25,11 +25,11 @@
 # With this configuration, @meganelacheny owns any files in the user-docs
 # directory located in docusaurus/docs and any of its
 # subdirectories.
-/docusaurus/docs/cms/ @meganelacheny
+/docusaurus/docs/cms/
 
 # In this example, any change inside the `/docusaurus/docs/cloud` directory
-# will require approval from @pwizla or @meganelacheny.
-/docusaurus/docs/cloud/ @pwizla @meganelacheny
+# will require approval from @pwizla.
+/docusaurus/docs/cloud/ @pwizla
 
 # With this configuration, any change inside the `/docusaurus/src` or
 # `/docusaurus/static` folders will require approval from @pwizla
@@ -37,5 +37,5 @@
 /docusaurus/static @pwizla
 
 # With this configuration, any update to `/.github` should be
-# approved either by @derrickmehaffy or @pwizla
-/.github @pwizla @derrickmehaffy
+# approved by @pwizla
+/.github @pwizla

@@ -475,10 +475,11 @@ jobs:
           fi
 
           # Post main message and capture timestamp for thread
+          MAIN_FORMATTED=$(printf "$MAIN")
           RESPONSE=$(curl -s -X POST "https://slack.com/api/chat.postMessage" \
             -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
             -H "Content-type: application/json; charset=utf-8" \
-            -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$MAIN" '{channel: $channel, text: $text}')")
+            -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$MAIN_FORMATTED" '{channel: $channel, text: $text}')")
 
           MSG_TS=$(echo "$RESPONSE" | jq -r '.ts // empty')
 
@@ -487,61 +488,18 @@ jobs:
             exit 0
           fi
 
-          # Build the detailed thread message from the GitHub Step Summary
-          DETAIL="*Full run summary:*\n"
+          # Post the full GitHub Step Summary as a thread reply
+          # Convert Markdown to Slack mrkdwn: ### headings → *bold*, **bold** → *bold*
+          DETAIL=$(cat "$GITHUB_STEP_SUMMARY" \
+            | sed 's/^### /\n*/' | sed 's/^## /\n*/' \
+            | sed '/^\*[^*]*$/s/$/*/' \
+            | sed 's/\*\*\([^*]*\)\*\*/\*\1\*/g' \
+            | sed 's/~~\([^~]*\)~~/~\1~/g' \
+            | sed 's/\[View run\]/View run/g')
 
-          # Pre-filtering details
-          if [ -f /tmp/all-prs.json ]; then
-            TOTAL=$(jq 'length' /tmp/all-prs.json)
-            DETAIL="${DETAIL}\n*Pre-filtering ($TOTAL merged PRs in 24h):*\n"
+          DETAIL="${DETAIL}
 
-            if [ -f /tmp/flagged-prs.json ] && [ "$(jq 'length' /tmp/flagged-prs.json)" -gt 0 ]; then
-              DETAIL="${DETAIL}$(jq -r '.[] | "• :label: #\(.number) — \(.title) _(flagged for docs)_"' /tmp/flagged-prs.json)\n"
-            fi
-
-            if [ -f /tmp/filtered-prs.json ]; then
-              FILTERED=$(jq 'length' /tmp/filtered-prs.json)
-              UNFLAGGED=$(jq 'length' /tmp/unflagged-prs.json 2>/dev/null || echo "$TOTAL")
-              EXCLUDED=$((UNFLAGGED - FILTERED))
-              if [ "$EXCLUDED" -gt 0 ]; then
-                DETAIL="${DETAIL}_${EXCLUDED} excluded by title filter (chore/test/docs/etc.)_\n"
-              fi
-            fi
-
-            if [ -f /tmp/new-prs.json ]; then
-              ALREADY=$(($(jq 'length' /tmp/filtered-prs.json 2>/dev/null || echo 0) - $(jq 'length' /tmp/new-prs.json 2>/dev/null || echo 0)))
-              if [ "$ALREADY" -gt 0 ]; then
-                DETAIL="${DETAIL}_${ALREADY} already processed (doc PR exists)_\n"
-              fi
-            fi
-          fi
-
-          # Triage details
-          if [ -f /tmp/triage-results.json ]; then
-            TRIAGE_NO=$(jq '[.prs[] | select(.triage == "no")] | length' /tmp/triage-results.json 2>/dev/null || echo 0)
-            if [ "$TRIAGE_NO" -gt 0 ]; then
-              DETAIL="${DETAIL}\n*Triage (Haiku):*\n"
-              DETAIL="${DETAIL}$(jq -r '.prs[] | select(.triage == "no") | "• ~#\(.number) — \(.title)~ — \(.reason)"' /tmp/triage-results.json)\n"
-            fi
-          fi
-
-          # Router details
-          if [ -f /tmp/router-results.json ]; then
-            DETAIL="${DETAIL}\n*Router (Haiku):*\n"
-            DETAIL="${DETAIL}$(jq -r '.prs[] | if .decision == "skip" then "• ~#\(.number) — \(.title)~ — \(.reason)" elif .decision == "has_targets" then "• :noted: #\(.number) — \(.title) → \(.complexity)" elif .decision == "ask_user" then "• :warning: #\(.number) — \(.title) — \(.reason)" else empty end' /tmp/router-results.json)\n"
-          fi
-
-          # Drafter details
-          SUMMARY_FILE="/tmp/self-healing-summary.json"
-          if [ -f "$SUMMARY_FILE" ]; then
-            PROCESSED=$(jq -r '.processed | length' "$SUMMARY_FILE")
-            if [ "$PROCESSED" -gt 0 ]; then
-              DETAIL="${DETAIL}\n*Drafter (Sonnet):*\n"
-              DETAIL="${DETAIL}$(jq -r '.processed[] | "• :noted: <\(.doc_pr)|#\(.number) — \(.title)>"' "$SUMMARY_FILE")\n"
-            fi
-          fi
-
-          DETAIL="${DETAIL}\n<${RUN_URL}|View full run on GitHub>"
+<${RUN_URL}|View full run on GitHub>"
 
           # Post thread reply
           curl -s -X POST "https://slack.com/api/chat.postMessage" \
