@@ -1,0 +1,9 @@
+{
+  "ignored_prs": [
+    {
+      "number": 25886,
+      "reason": "feat(core/*): introduce strapi.ai namespace — Uncertain whether this needs plugin-developer documentation or if it's internal API restructuring only. Decision pending.",
+      "added": "2026-04-17"
+    }
+  ]
+}

@@ -56,7 +56,22 @@ jobs:
             echo "Label filter: $FLAGGED PRs manually flagged for docs, skipping automation"
           fi
 
-          # 2. Filter out PRs that never need documentation (by title).
+          # 2. Remove manually ignored PRs (from .github/self-healing-ignore.json)
+          IGNORE_FILE="${GITHUB_WORKSPACE}/.github/self-healing-ignore.json"
+          if [ -f "$IGNORE_FILE" ]; then
+            jq --slurpfile ignore "$IGNORE_FILE" \
+              '[.[] | select(.number as $n | $ignore[0].ignored_prs | map(.number) | index($n) | not)]' \
+              /tmp/unflagged-prs.json > /tmp/not-ignored-prs.json
+            IGNORED=$(($(jq 'length' /tmp/unflagged-prs.json) - $(jq 'length' /tmp/not-ignored-prs.json)))
+            mv /tmp/not-ignored-prs.json /tmp/unflagged-prs.json
+            if [ "$IGNORED" -gt 0 ]; then
+              echo "Ignore list: $IGNORED PRs manually ignored, skipping"
+            fi
+          else
+            IGNORED=0
+          fi
+
+          # 3. Filter out PRs that never need documentation (by title).
           # Based on analysis of 100+ merged PR titles in strapi/strapi.
           #
           # EXCLUDED: chore(*), test(*), docs:, security: package,
@@ -74,7 +89,7 @@ jobs:
           )]' /tmp/unflagged-prs.json > /tmp/filtered-prs.json
 
           FILTERED=$(jq 'length' /tmp/filtered-prs.json)
-          EXCLUDED=$((TOTAL - FLAGGED - FILTERED))
+          EXCLUDED=$((TOTAL - FLAGGED - IGNORED - FILTERED))
           echo "After title filtering: $FILTERED candidates ($EXCLUDED excluded as chore/CI/deps/test)"
 
           # Check idempotency: remove PRs that already have a doc PR
@@ -121,6 +136,16 @@ jobs:
             echo "**Manually flagged for docs ($FLAGGED):**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             jq -r '.[] | "- #\(.number) — \(.title) *(has `flag: documentation` label, skipping automation)*"' /tmp/flagged-prs.json >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # List manually ignored PRs
+          if [ "$IGNORED" -gt 0 ]; then
+            echo "**Manually ignored ($IGNORED):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r --slurpfile ignore "${GITHUB_WORKSPACE}/.github/self-healing-ignore.json" \
+              '[.[] | . as $pr | $ignore[0].ignored_prs[] | select(.number == $pr.number) | "- #\($pr.number) — \($pr.title) *(\(.reason))*"]
+              | .[]' /tmp/all-prs.json >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
