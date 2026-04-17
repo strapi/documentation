@@ -489,6 +489,12 @@ jobs:
           fi
 
           # Post the full GitHub Step Summary as a thread reply
+          echo "=== DEBUG: GITHUB_STEP_SUMMARY path = $GITHUB_STEP_SUMMARY ==="
+          echo "=== DEBUG: file size = $(wc -c < "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo 'FILE NOT FOUND') ==="
+          echo "=== DEBUG: first 500 chars ==="
+          head -c 500 "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo "CANNOT READ FILE"
+          echo "=== END DEBUG ==="
+
           # Minimal conversion: **bold** → *bold*, ~~strike~~ → ~strike~, strip ### headings to plain bold
           DETAIL=$(cat "$GITHUB_STEP_SUMMARY" \
             | sed 's/^### \(.*\)/*\1*/' \
@@ -497,8 +503,11 @@ jobs:
             | sed 's/~~\([^~]*\)~~/~\1~/g')
           DETAIL=$(printf "%s\n\n<%s|View full run on GitHub>" "$DETAIL" "$RUN_URL")
 
+          echo "=== DEBUG: DETAIL length = ${#DETAIL} ==="
+
           # Post thread reply
-          curl -s -X POST "https://slack.com/api/chat.postMessage" \
+          THREAD_RESPONSE=$(curl -s -X POST "https://slack.com/api/chat.postMessage" \
             -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
             -H "Content-type: application/json; charset=utf-8" \
-            -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$DETAIL" --arg ts "$MSG_TS" '{channel: $channel, text: $text, thread_ts: $ts}')" > /dev/null || echo "Thread reply failed (non-blocking)"
+            -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$DETAIL" --arg ts "$MSG_TS" '{channel: $channel, text: $text, thread_ts: $ts}')")
+          echo "=== DEBUG: Thread response = $THREAD_RESPONSE ==="
