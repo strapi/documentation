@@ -271,8 +271,10 @@ module.exports = ({ env }) => ({
         baseUrl: env('CDN_URL'),
         rootPath: env('CDN_ROOT_PATH'),
         s3Options: {
-          accessKeyId: env('AWS_ACCESS_KEY_ID'),
-          secretAccessKey: env('AWS_ACCESS_SECRET'),
+          credentials: {
+            accessKeyId: env('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: env('AWS_ACCESS_SECRET'),
+          },
           region: env('AWS_REGION'),
           params: {
             ACL: env('AWS_ACL', 'public-read'),
@@ -331,8 +333,10 @@ export default ({ env }) => ({
         baseUrl: env('CDN_URL'),
         rootPath: env('CDN_ROOT_PATH'),
         s3Options: {
-          accessKeyId: env('AWS_ACCESS_KEY_ID'),
-          secretAccessKey: env('AWS_ACCESS_SECRET'),
+          credentials: {
+            accessKeyId: env('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: env('AWS_ACCESS_SECRET'),
+          },
           region: env('AWS_REGION'),
           params: {
             ACL: env('AWS_ACL', 'public-read'),
@@ -17893,7 +17897,7 @@ Description: The following are the minimum amount of permissions needed for the 
 (Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#iam-policy-actions)
 
 Language: JSON
-File path: /config/env/${yourEnvironment}/plugins.js
+File path: N/A
 
 ```json
 "Action": [
