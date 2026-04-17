@@ -145,6 +145,10 @@ baseUrl: `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_B
 
 :::
 
+:::caution Deprecated root-level credential format
+Older Strapi guides and blog posts show `accessKeyId` and `secretAccessKey` placed directly in `s3Options`. This root-level format still works but triggers a deprecation warning. Pass credentials inside a `credentials` object instead (as shown in the examples above).
+:::
+
 :::caution
 To ensure the provider works correctly, you also need to configure IAM permissions, bucket CORS, and the Strapi security middleware (see [Required setup](#required-setup)).
 :::

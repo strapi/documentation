@@ -126,18 +126,8 @@ module.exports = ({ env }) => ({
 </TabItem >
 <TabItem value="amazon-s3" label="Amazon S3">
 
-:::caution AWS S3 Credential Format
-The recommended format for passing AWS S3 credentials is within a `credentials` object. If you're using root-level `accessKeyId` and `secretAccessKey` properties (an older pattern from earlier Strapi guides), they still work but will trigger a deprecation warning. Please migrate to the new format shown below:
-
-```js
-s3Options: {
-  credentials: {
-    accessKeyId: env('AWS_ACCESS_KEY_ID'),
-    secretAccessKey: env('AWS_ACCESS_SECRET'),
-  },
-  // ... rest of options
-}
-```
+:::tip
+For full S3 provider configuration details (credential formats, extended options, S3-compatible services), see the [Amazon S3 provider](/cms/configurations/media-library-providers/amazon-s3) page.
 :::
 
 ```js title=./config/env/production/plugins.js
@@ -204,20 +194,6 @@ export default ({ env }) => ({
 
 </TabItem >
 <TabItem value="amazon-s3" label="Amazon S3">
-
-:::caution AWS S3 Credential Format
-The recommended format for passing AWS S3 credentials is within a `credentials` object. If you're using root-level `accessKeyId` and `secretAccessKey` properties (an older pattern from earlier Strapi guides), they still work but will trigger a deprecation warning. Please migrate to the new format shown below:
-
-```ts
-s3Options: {
-  credentials: {
-    accessKeyId: env('AWS_ACCESS_KEY_ID'),
-    secretAccessKey: env('AWS_ACCESS_SECRET'),
-  },
-  // ... rest of options
-}
-```
-:::
 
 ```ts title=./config/env/production/plugins.ts
 export default ({ env }) => ({
