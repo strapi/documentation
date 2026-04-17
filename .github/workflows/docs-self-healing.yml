@@ -47,28 +47,28 @@ jobs:
           TOTAL=$(jq 'length' /tmp/all-prs.json)
           echo "Found $TOTAL merged PRs in the last 24h"
 
-          # 1. Separate PRs with "flag: documentation" label (manually flagged, skip automation)
-          jq '[.[] | select(.labels | index("flag: documentation"))]' /tmp/all-prs.json > /tmp/flagged-prs.json
-          jq '[.[] | select(.labels | index("flag: documentation") | not)]' /tmp/all-prs.json > /tmp/unflagged-prs.json
-          FLAGGED=$(jq 'length' /tmp/flagged-prs.json)
-
-          if [ "$FLAGGED" -gt 0 ]; then
-            echo "Label filter: $FLAGGED PRs manually flagged for docs, skipping automation"
-          fi
-
-          # 2. Remove manually ignored PRs (from .github/self-healing-ignore.json)
+          # 1. Remove manually ignored PRs (from .github/self-healing-ignore.json)
           IGNORE_FILE="${GITHUB_WORKSPACE}/.github/self-healing-ignore.json"
           if [ -f "$IGNORE_FILE" ]; then
             jq --slurpfile ignore "$IGNORE_FILE" \
               '[.[] | select(.number as $n | $ignore[0].ignored_prs | map(.number) | index($n) | not)]' \
-              /tmp/unflagged-prs.json > /tmp/not-ignored-prs.json
-            IGNORED=$(($(jq 'length' /tmp/unflagged-prs.json) - $(jq 'length' /tmp/not-ignored-prs.json)))
-            mv /tmp/not-ignored-prs.json /tmp/unflagged-prs.json
+              /tmp/all-prs.json > /tmp/not-ignored-prs.json
+            IGNORED=$((TOTAL - $(jq 'length' /tmp/not-ignored-prs.json)))
             if [ "$IGNORED" -gt 0 ]; then
               echo "Ignore list: $IGNORED PRs manually ignored, skipping"
             fi
           else
+            cp /tmp/all-prs.json /tmp/not-ignored-prs.json
             IGNORED=0
+          fi
+
+          # 2. Separate PRs with "flag: documentation" label (manually flagged, skip automation)
+          jq '[.[] | select(.labels | index("flag: documentation"))]' /tmp/not-ignored-prs.json > /tmp/flagged-prs.json
+          jq '[.[] | select(.labels | index("flag: documentation") | not)]' /tmp/not-ignored-prs.json > /tmp/unflagged-prs.json
+          FLAGGED=$(jq 'length' /tmp/flagged-prs.json)
+
+          if [ "$FLAGGED" -gt 0 ]; then
+            echo "Label filter: $FLAGGED PRs manually flagged for docs, skipping automation"
           fi
 
           # 3. Filter out PRs that never need documentation (by title).
@@ -130,22 +130,21 @@ jobs:
           echo "### Pre-filtering ($TOTAL merged PRs in 24h)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          # List excluded PRs (title filter)
-          # List manually flagged PRs (first — most important to see)
-          if [ "$FLAGGED" -gt 0 ]; then
-            echo "**Manually flagged for docs ($FLAGGED):**" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            jq -r '.[] | "- #\(.number) — \(.title) *(has `flag: documentation` label, skipping automation)*"' /tmp/flagged-prs.json >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-          fi
-
-          # List manually ignored PRs
+          # List manually ignored PRs (first — most important to see)
           if [ "$IGNORED" -gt 0 ]; then
             echo "**Manually ignored ($IGNORED):**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             jq -r --slurpfile ignore "${GITHUB_WORKSPACE}/.github/self-healing-ignore.json" \
               '[.[] | . as $pr | $ignore[0].ignored_prs[] | select(.number == $pr.number) | "- [strapi/strapi#\($pr.number) — \($pr.title)](https://github.com/strapi/strapi/pull/\($pr.number)) *(\(.reason))*"]
               | .[]' /tmp/all-prs.json >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # List manually flagged PRs
+          if [ "$FLAGGED" -gt 0 ]; then
+            echo "**Manually flagged for docs ($FLAGGED):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.[] | "- #\(.number) — \(.title) *(has `flag: documentation` label, skipping automation)*"' /tmp/flagged-prs.json >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
