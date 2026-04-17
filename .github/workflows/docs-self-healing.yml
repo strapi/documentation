@@ -431,52 +431,120 @@ jobs:
       - name: Notify Slack
         if: always()
         env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_DOCUMENTATION_OPS }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
         run: |
-          if [ -z "$SLACK_WEBHOOK" ]; then
-            echo "No Slack webhook configured, skipping notification"
+          if [ -z "$SLACK_BOT_TOKEN" ] || [ -z "$SLACK_CHANNEL" ]; then
+            echo "Slack bot token or channel not configured, skipping notification"
             exit 0
           fi
 
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           DATE=$(date -u '+%Y-%m-%d %H:%M UTC')
-
-          # Check if any step failed
           JOB_STATUS="${{ job.status }}"
 
-          # Build the message based on what happened
+          # Build the main message (short summary)
           if [ "$JOB_STATUS" == "failure" ]; then
-            TEXT=":pepe_alarm: *Docs Self-Healing FAILED* ($DATE)\nOne or more steps failed. Check the run for details.\n<${RUN_URL}|View run>"
+            MAIN=":pepe_alarm: *Docs Self-Healing FAILED* ($DATE)\nOne or more steps failed. Check the run for details.\n<${RUN_URL}|View run>"
           elif [ "${{ steps.check-prs.outputs.has_prs }}" == "false" ]; then
-            TEXT=":white_check_mark: *Docs Self-Healing* ($DATE)\nNo candidate PRs after pre-filtering. No AI invoked.\n<${RUN_URL}|View run>"
+            MAIN=":white_check_mark: *Docs Self-Healing* ($DATE)\nNo candidate PRs after pre-filtering. No AI invoked.\n<${RUN_URL}|View run>"
           elif [ "${{ steps.check-triage.outputs.has_candidates }}" != "true" ]; then
-            TEXT=":white_check_mark: *Docs Self-Healing* ($DATE)\nTriage (Haiku) eliminated all PRs. Router and Sonnet were not invoked.\n<${RUN_URL}|View run>"
+            MAIN=":white_check_mark: *Docs Self-Healing* ($DATE)\nTriage (Haiku) eliminated all PRs. Router and Sonnet were not invoked.\n<${RUN_URL}|View run> · see thread for details :thread:"
           elif [ "${{ steps.check-router.outputs.has_targets }}" != "true" ]; then
-            TEXT=":frog_shrug: *Docs Self-Healing* ($DATE)\nRouter (Haiku) found no documentation targets. Sonnet was not invoked.\n<${RUN_URL}|View run>"
+            MAIN=":frog_shrug: *Docs Self-Healing* ($DATE)\nRouter (Haiku) found no documentation targets. Sonnet was not invoked.\n<${RUN_URL}|View run> · see thread for details :thread:"
           else
-            # Sonnet ran — build detailed message
             SUMMARY_FILE="/tmp/self-healing-summary.json"
             if [ -f "$SUMMARY_FILE" ]; then
               PROCESSED=$(jq -r '.processed | length' "$SUMMARY_FILE")
               ERRORS=$(jq -r '.errors | length' "$SUMMARY_FILE")
 
               if [ "$PROCESSED" -gt 0 ]; then
-                PR_LIST=$(jq -r '.processed[] | "• <\(.doc_pr)|strapi/strapi#\(.number) — \(.title)>"' "$SUMMARY_FILE" | tr '\n' '\n')
-                TEXT=":noted: *Docs Self-Healing* ($DATE)\n*${PROCESSED} doc PR(s) created:*\n${PR_LIST}\n<${RUN_URL}|View run>"
+                PR_LIST=$(jq -r '.processed[] | "• <\(.doc_pr)|strapi/strapi#\(.number) — \(.title)>"' "$SUMMARY_FILE")
+                MAIN=":noted: *Docs Self-Healing* ($DATE)\n*${PROCESSED} doc PR(s) created:*\n${PR_LIST}\n<${RUN_URL}|View run> · see thread for details :thread:"
               else
-                TEXT=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but created no PRs.\n<${RUN_URL}|View run>"
+                MAIN=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but created no PRs.\n<${RUN_URL}|View run> · see thread for details :thread:"
               fi
 
               if [ "$ERRORS" -gt 0 ]; then
-                ERROR_LIST=$(jq -r '.errors[] | "• strapi/strapi#\(.number): \(.error)"' "$SUMMARY_FILE" | tr '\n' '\n')
-                TEXT="${TEXT}\n\n:warning: *Errors:*\n${ERROR_LIST}"
+                ERROR_LIST=$(jq -r '.errors[] | "• strapi/strapi#\(.number): \(.error)"' "$SUMMARY_FILE")
+                MAIN="${MAIN}\n\n:warning: *Errors:*\n${ERROR_LIST}"
               fi
             else
-              TEXT=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but no summary file was produced.\n<${RUN_URL}|View run>"
+              MAIN=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but no summary file was produced.\n<${RUN_URL}|View run>"
             fi
           fi
 
-          # Send to Slack
-          curl -s -X POST "$SLACK_WEBHOOK" \
-            -H 'Content-type: application/json' \
-            -d "{\"text\": \"${TEXT}\"}" || echo "Slack notification failed (non-blocking)"
+          # Post main message and capture timestamp for thread
+          RESPONSE=$(curl -s -X POST "https://slack.com/api/chat.postMessage" \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-type: application/json; charset=utf-8" \
+            -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$MAIN" '{channel: $channel, text: $text}')")
+
+          MSG_TS=$(echo "$RESPONSE" | jq -r '.ts // empty')
+
+          if [ -z "$MSG_TS" ]; then
+            echo "Failed to post main Slack message: $RESPONSE"
+            exit 0
+          fi
+
+          # Build the detailed thread message from the GitHub Step Summary
+          DETAIL="*Full run summary:*\n"
+
+          # Pre-filtering details
+          if [ -f /tmp/all-prs.json ]; then
+            TOTAL=$(jq 'length' /tmp/all-prs.json)
+            DETAIL="${DETAIL}\n*Pre-filtering ($TOTAL merged PRs in 24h):*\n"
+
+            if [ -f /tmp/flagged-prs.json ] && [ "$(jq 'length' /tmp/flagged-prs.json)" -gt 0 ]; then
+              DETAIL="${DETAIL}$(jq -r '.[] | "• :label: #\(.number) — \(.title) _(flagged for docs)_"' /tmp/flagged-prs.json)\n"
+            fi
+
+            if [ -f /tmp/filtered-prs.json ]; then
+              FILTERED=$(jq 'length' /tmp/filtered-prs.json)
+              UNFLAGGED=$(jq 'length' /tmp/unflagged-prs.json 2>/dev/null || echo "$TOTAL")
+              EXCLUDED=$((UNFLAGGED - FILTERED))
+              if [ "$EXCLUDED" -gt 0 ]; then
+                DETAIL="${DETAIL}_${EXCLUDED} excluded by title filter (chore/test/docs/etc.)_\n"
+              fi
+            fi
+
+            if [ -f /tmp/new-prs.json ]; then
+              ALREADY=$(($(jq 'length' /tmp/filtered-prs.json 2>/dev/null || echo 0) - $(jq 'length' /tmp/new-prs.json 2>/dev/null || echo 0)))
+              if [ "$ALREADY" -gt 0 ]; then
+                DETAIL="${DETAIL}_${ALREADY} already processed (doc PR exists)_\n"
+              fi
+            fi
+          fi
+
+          # Triage details
+          if [ -f /tmp/triage-results.json ]; then
+            TRIAGE_NO=$(jq '[.prs[] | select(.triage == "no")] | length' /tmp/triage-results.json 2>/dev/null || echo 0)
+            if [ "$TRIAGE_NO" -gt 0 ]; then
+              DETAIL="${DETAIL}\n*Triage (Haiku):*\n"
+              DETAIL="${DETAIL}$(jq -r '.prs[] | select(.triage == "no") | "• ~#\(.number) — \(.title)~ — \(.reason)"' /tmp/triage-results.json)\n"
+            fi
+          fi
+
+          # Router details
+          if [ -f /tmp/router-results.json ]; then
+            DETAIL="${DETAIL}\n*Router (Haiku):*\n"
+            DETAIL="${DETAIL}$(jq -r '.prs[] | if .decision == "skip" then "• ~#\(.number) — \(.title)~ — \(.reason)" elif .decision == "has_targets" then "• :noted: #\(.number) — \(.title) → \(.complexity)" elif .decision == "ask_user" then "• :warning: #\(.number) — \(.title) — \(.reason)" else empty end' /tmp/router-results.json)\n"
+          fi
+
+          # Drafter details
+          SUMMARY_FILE="/tmp/self-healing-summary.json"
+          if [ -f "$SUMMARY_FILE" ]; then
+            PROCESSED=$(jq -r '.processed | length' "$SUMMARY_FILE")
+            if [ "$PROCESSED" -gt 0 ]; then
+              DETAIL="${DETAIL}\n*Drafter (Sonnet):*\n"
+              DETAIL="${DETAIL}$(jq -r '.processed[] | "• :noted: <\(.doc_pr)|#\(.number) — \(.title)>"' "$SUMMARY_FILE")\n"
+            fi
+          fi
+
+          DETAIL="${DETAIL}\n<${RUN_URL}|View full run on GitHub>"
+
+          # Post thread reply
+          curl -s -X POST "https://slack.com/api/chat.postMessage" \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-type: application/json; charset=utf-8" \
+            -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$DETAIL" --arg ts "$MSG_TS" '{channel: $channel, text: $text, thread_ts: $ts}')" > /dev/null || echo "Thread reply failed (non-blocking)"
