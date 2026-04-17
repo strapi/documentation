@@ -2,7 +2,7 @@ name: Docs Self-Healing
 
 on:
   schedule:
-    - cron: '30 1 * * *' # 1:30 AM UTC daily (after merger repo sync at 1:00)
+    - cron: '30 1 * * 2-6' # 1:30 AM UTC Tue-Sat (covers Mon-Fri merges; no strapi/strapi merges on weekends)
   workflow_dispatch: # manual trigger for testing
 
 jobs:
@@ -42,12 +42,21 @@ jobs:
             --method GET \
             -f q="repo:strapi/strapi is:pr is:merged base:develop merged:>=$SINCE" \
             -f per_page=50 \
-            --jq '.items | [.[] | {number, title, html_url: .pull_request.html_url}]' > /tmp/all-prs.json
+            --jq '.items | [.[] | {number, title, html_url: .pull_request.html_url, labels: [.labels[].name]}]' > /tmp/all-prs.json
 
           TOTAL=$(jq 'length' /tmp/all-prs.json)
           echo "Found $TOTAL merged PRs in the last 24h"
 
-          # Filter out PRs that never need documentation.
+          # 1. Separate PRs with "flag: documentation" label (manually flagged, skip automation)
+          jq '[.[] | select(.labels | index("flag: documentation"))]' /tmp/all-prs.json > /tmp/flagged-prs.json
+          jq '[.[] | select(.labels | index("flag: documentation") | not)]' /tmp/all-prs.json > /tmp/unflagged-prs.json
+          FLAGGED=$(jq 'length' /tmp/flagged-prs.json)
+
+          if [ "$FLAGGED" -gt 0 ]; then
+            echo "Label filter: $FLAGGED PRs manually flagged for docs, skipping automation"
+          fi
+
+          # 2. Filter out PRs that never need documentation (by title).
           # Based on analysis of 100+ merged PR titles in strapi/strapi.
           #
           # EXCLUDED: chore(*), test(*), docs:, security: package,
@@ -62,10 +71,10 @@ jobs:
             (.title | test("translation[s]?$"; "i") | not) and
             (.title | test("typo"; "i") | not) and
             (.title | test("^(Remove|Update) (yarn|README)"; "i") | not)
-          )]' /tmp/all-prs.json > /tmp/filtered-prs.json
+          )]' /tmp/unflagged-prs.json > /tmp/filtered-prs.json
 
           FILTERED=$(jq 'length' /tmp/filtered-prs.json)
-          EXCLUDED=$((TOTAL - FILTERED))
+          EXCLUDED=$((TOTAL - FLAGGED - FILTERED))
           echo "After title filtering: $FILTERED candidates ($EXCLUDED excluded as chore/CI/deps/test)"
 
           # Check idempotency: remove PRs that already have a doc PR
@@ -106,13 +115,22 @@ jobs:
           echo "### Pre-filtering ($TOTAL merged PRs in 24h)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          # List excluded PRs
+          # List excluded PRs (title filter)
+          # List manually flagged PRs (first — most important to see)
+          if [ "$FLAGGED" -gt 0 ]; then
+            echo "**Manually flagged for docs ($FLAGGED):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.[] | "- #\(.number) — \(.title) *(has `flag: documentation` label, skipping automation)*"' /tmp/flagged-prs.json >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # List excluded PRs (title filter)
           if [ "$EXCLUDED" -gt 0 ]; then
             echo "**Excluded by title filter ($EXCLUDED):**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            jq -r --argjson filtered "$(cat /tmp/filtered-prs.json)" \
-              '[.[] | select(.number as $n | $filtered | map(.number) | index($n) | not)]
-              | .[] | "- ~~#\(.number) — \(.title)~~"' /tmp/all-prs.json >> $GITHUB_STEP_SUMMARY
+            jq -r --argjson kept "$(jq '[.[].number]' /tmp/filtered-prs.json)" \
+              '[.[] | select(.number as $n | $kept | index($n) | not)]
+              | .[] | "- ~~#\(.number) — \(.title)~~"' /tmp/unflagged-prs.json >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
