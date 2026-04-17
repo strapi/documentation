@@ -489,14 +489,12 @@ jobs:
           fi
 
           # Post the full GitHub Step Summary as a thread reply
-          # Convert Markdown to Slack mrkdwn: ### headings → *bold*, **bold** → *bold*
+          # Minimal conversion: **bold** → *bold*, ~~strike~~ → ~strike~, strip ### headings to plain bold
           DETAIL=$(cat "$GITHUB_STEP_SUMMARY" \
-            | sed 's/^### /\n*/' | sed 's/^## /\n*/' \
-            | sed '/^\*[^*]*$/s/$/*/' \
+            | sed 's/^### \(.*\)/*\1*/' \
+            | sed 's/^## \(.*\)/*\1*/' \
             | sed 's/\*\*\([^*]*\)\*\*/\*\1\*/g' \
-            | sed 's/~~\([^~]*\)~~/~\1~/g' \
-            | sed 's/\[View run\]/View run/g')
-
+            | sed 's/~~\([^~]*\)~~/~\1~/g')
           DETAIL=$(printf "%s\n\n<%s|View full run on GitHub>" "$DETAIL" "$RUN_URL")
 
           # Post thread reply
