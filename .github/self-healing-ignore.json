@@ -9,6 +9,10 @@
       "number": 26037,
       "reason": "UI translation update (Chinese Simplified) — admin panel localization, no docs impact.",
       "added": "2026-04-17"
-    }
+    },
+    {
+      "number": 25437,
+      "reason": "temporarily excluded while testing Slack notifications",
+      "added": "2026-04-17"
   ]
 }
