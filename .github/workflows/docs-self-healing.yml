@@ -427,3 +427,56 @@ jobs:
             jq -r '.errors[] | "- ⚠️ strapi/strapi#\(.number) — \(.title): \(.error)"' "$SUMMARY_FILE" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
+
+      - name: Notify Slack
+        if: always()
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_DOCUMENTATION_OPS }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK" ]; then
+            echo "No Slack webhook configured, skipping notification"
+            exit 0
+          fi
+
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          DATE=$(date -u '+%Y-%m-%d %H:%M UTC')
+
+          # Check if any step failed
+          JOB_STATUS="${{ job.status }}"
+
+          # Build the message based on what happened
+          if [ "$JOB_STATUS" == "failure" ]; then
+            TEXT=":pepe_alarm: *Docs Self-Healing FAILED* ($DATE)\nOne or more steps failed. Check the run for details.\n<${RUN_URL}|View run>"
+          elif [ "${{ steps.check-prs.outputs.has_prs }}" == "false" ]; then
+            TEXT=":white_check_mark: *Docs Self-Healing* ($DATE)\nNo candidate PRs after pre-filtering. No AI invoked.\n<${RUN_URL}|View run>"
+          elif [ "${{ steps.check-triage.outputs.has_candidates }}" != "true" ]; then
+            TEXT=":white_check_mark: *Docs Self-Healing* ($DATE)\nTriage (Haiku) eliminated all PRs. Router and Sonnet were not invoked.\n<${RUN_URL}|View run>"
+          elif [ "${{ steps.check-router.outputs.has_targets }}" != "true" ]; then
+            TEXT=":frog_shrug: *Docs Self-Healing* ($DATE)\nRouter (Haiku) found no documentation targets. Sonnet was not invoked.\n<${RUN_URL}|View run>"
+          else
+            # Sonnet ran — build detailed message
+            SUMMARY_FILE="/tmp/self-healing-summary.json"
+            if [ -f "$SUMMARY_FILE" ]; then
+              PROCESSED=$(jq -r '.processed | length' "$SUMMARY_FILE")
+              ERRORS=$(jq -r '.errors | length' "$SUMMARY_FILE")
+
+              if [ "$PROCESSED" -gt 0 ]; then
+                PR_LIST=$(jq -r '.processed[] | "• <\(.doc_pr)|strapi/strapi#\(.number) — \(.title)>"' "$SUMMARY_FILE" | tr '\n' '\n')
+                TEXT=":noted: *Docs Self-Healing* ($DATE)\n*${PROCESSED} doc PR(s) created:*\n${PR_LIST}\n<${RUN_URL}|View run>"
+              else
+                TEXT=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but created no PRs.\n<${RUN_URL}|View run>"
+              fi
+
+              if [ "$ERRORS" -gt 0 ]; then
+                ERROR_LIST=$(jq -r '.errors[] | "• strapi/strapi#\(.number): \(.error)"' "$SUMMARY_FILE" | tr '\n' '\n')
+                TEXT="${TEXT}\n\n:warning: *Errors:*\n${ERROR_LIST}"
+              fi
+            else
+              TEXT=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but no summary file was produced.\n<${RUN_URL}|View run>"
+            fi
+          fi
+
+          # Send to Slack
+          curl -s -X POST "$SLACK_WEBHOOK" \
+            -H 'Content-type: application/json' \
+            -d "{\"text\": \"${TEXT}\"}" || echo "Slack notification failed (non-blocking)"
