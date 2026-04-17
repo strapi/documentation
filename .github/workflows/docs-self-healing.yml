@@ -441,8 +441,13 @@ jobs:
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           DATE=$(date -u '+%Y-%m-%d %H:%M UTC')
 
+          # Check if any step failed
+          JOB_STATUS="${{ job.status }}"
+
           # Build the message based on what happened
-          if [ "${{ steps.check-prs.outputs.has_prs }}" == "false" ]; then
+          if [ "$JOB_STATUS" == "failure" ]; then
+            TEXT=":rotating_light: *Docs Self-Healing FAILED* ($DATE)\nOne or more steps failed. Check the run for details.\n<${RUN_URL}|View run>"
+          elif [ "${{ steps.check-prs.outputs.has_prs }}" == "false" ]; then
             TEXT=":white_check_mark: *Docs Self-Healing* ($DATE)\nNo candidate PRs after pre-filtering. No AI invoked.\n<${RUN_URL}|View run>"
           elif [ "${{ steps.check-triage.outputs.has_candidates }}" != "true" ]; then
             TEXT=":white_check_mark: *Docs Self-Healing* ($DATE)\nTriage (Haiku) eliminated all PRs. Router and Sonnet were not invoked.\n<${RUN_URL}|View run>"
@@ -457,9 +462,9 @@ jobs:
 
               if [ "$PROCESSED" -gt 0 ]; then
                 PR_LIST=$(jq -r '.processed[] | "• <\(.doc_pr)|strapi/strapi#\(.number) — \(.title)>"' "$SUMMARY_FILE" | tr '\n' '\n')
-                TEXT=":tada: *Docs Self-Healing* ($DATE)\n*${PROCESSED} doc PR(s) created:*\n${PR_LIST}\n<${RUN_URL}|View run>"
+                TEXT=":noted: *Docs Self-Healing* ($DATE)\n*${PROCESSED} doc PR(s) created:*\n${PR_LIST}\n<${RUN_URL}|View run>"
               else
-                TEXT=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but created no PRs."
+                TEXT=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but created no PRs.\n<${RUN_URL}|View run>"
               fi
 
               if [ "$ERRORS" -gt 0 ]; then
