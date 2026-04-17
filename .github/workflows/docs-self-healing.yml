@@ -446,13 +446,13 @@ jobs:
 
           # Build the message based on what happened
           if [ "$JOB_STATUS" == "failure" ]; then
-            TEXT=":rotating_light: *Docs Self-Healing FAILED* ($DATE)\nOne or more steps failed. Check the run for details.\n<${RUN_URL}|View run>"
+            TEXT=":pepe_alarm: *Docs Self-Healing FAILED* ($DATE)\nOne or more steps failed. Check the run for details.\n<${RUN_URL}|View run>"
           elif [ "${{ steps.check-prs.outputs.has_prs }}" == "false" ]; then
             TEXT=":white_check_mark: *Docs Self-Healing* ($DATE)\nNo candidate PRs after pre-filtering. No AI invoked.\n<${RUN_URL}|View run>"
           elif [ "${{ steps.check-triage.outputs.has_candidates }}" != "true" ]; then
             TEXT=":white_check_mark: *Docs Self-Healing* ($DATE)\nTriage (Haiku) eliminated all PRs. Router and Sonnet were not invoked.\n<${RUN_URL}|View run>"
           elif [ "${{ steps.check-router.outputs.has_targets }}" != "true" ]; then
-            TEXT=":mag: *Docs Self-Healing* ($DATE)\nRouter (Haiku) found no documentation targets. Sonnet was not invoked.\n<${RUN_URL}|View run>"
+            TEXT=":frog_shrug: *Docs Self-Healing* ($DATE)\nRouter (Haiku) found no documentation targets. Sonnet was not invoked.\n<${RUN_URL}|View run>"
           else
             # Sonnet ran — build detailed message
             SUMMARY_FILE="/tmp/self-healing-summary.json"
@@ -469,7 +469,7 @@ jobs:
 
               if [ "$ERRORS" -gt 0 ]; then
                 ERROR_LIST=$(jq -r '.errors[] | "• strapi/strapi#\(.number): \(.error)"' "$SUMMARY_FILE" | tr '\n' '\n')
-                TEXT="${TEXT}\n\n:x: *Errors:*\n${ERROR_LIST}"
+                TEXT="${TEXT}\n\n:warning: *Errors:*\n${ERROR_LIST}"
               fi
             else
               TEXT=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but no summary file was produced.\n<${RUN_URL}|View run>"
