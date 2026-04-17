@@ -144,7 +144,7 @@ jobs:
             echo "**Manually ignored ($IGNORED):**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             jq -r --slurpfile ignore "${GITHUB_WORKSPACE}/.github/self-healing-ignore.json" \
-              '[.[] | . as $pr | $ignore[0].ignored_prs[] | select(.number == $pr.number) | "- #\($pr.number) — \($pr.title) *(\(.reason))*"]
+              '[.[] | . as $pr | $ignore[0].ignored_prs[] | select(.number == $pr.number) | "- [strapi/strapi#\($pr.number) — \($pr.title)](https://github.com/strapi/strapi/pull/\($pr.number)) *(\(.reason))*"]
               | .[]' /tmp/all-prs.json >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
