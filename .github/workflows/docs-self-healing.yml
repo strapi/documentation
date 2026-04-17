@@ -497,9 +497,7 @@ jobs:
             | sed 's/~~\([^~]*\)~~/~\1~/g' \
             | sed 's/\[View run\]/View run/g')
 
-          DETAIL="${DETAIL}
-
-<${RUN_URL}|View full run on GitHub>"
+          DETAIL=$(printf "%s\n\n<%s|View full run on GitHub>" "$DETAIL" "$RUN_URL")
 
           # Post thread reply
           curl -s -X POST "https://slack.com/api/chat.postMessage" \
