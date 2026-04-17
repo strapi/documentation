@@ -30,13 +30,14 @@ Admin tokens and API tokens are strictly separated: each is rejected on the othe
     Activated by default for Super Admin. Each lower-level role needs an explicit permission grant in Roles > Settings - Admin tokens.
   </IdentityCardItem>
   <IdentityCardItem icon="toggle-right" title="Activation">
-    Requires enabling the corresponding future flag (see [Features configuration](/cms/configurations/features))
+    Requires enabling the corresponding future flag,<br/>see [Features configuration](/cms/configurations/features)
   </IdentityCardItem>
   <IdentityCardItem icon="desktop" title="Environment">
     Available in both Development & Production environment
   </IdentityCardItem>
 </IdentityCard>
 
+<!-- TODO: Update screenshot once admin tokens UI is finalized behind the feature flag -->
 <ThemedImage
   alt="Admin tokens in the admin panel"
   sources={{
@@ -70,6 +71,7 @@ Admin tokens are configured entirely from the admin panel. No code-based configu
     :::
 4. Click on the **Save** button. The new Admin token will be displayed at the top of the interface, along with a copy button <Icon name="copy" />.
 
+<!-- TODO: Update screenshot once admin tokens UI is finalized behind the feature flag -->
 <ThemedImage
 alt="Admin token permissions"
 sources={{
