@@ -127,7 +127,7 @@ module.exports = ({ env }) => ({
 <TabItem value="amazon-s3" label="Amazon S3">
 
 :::tip
-For full S3 provider configuration details (credential formats, extended options, S3-compatible services), see the [Amazon S3 provider](/cms/configurations/media-library-providers/amazon-s3) page.
+For full S3 provider configuration details (credential formats, extended options, S3-compatible services), see the [Amazon S3 provider](/cms/configurations/media-library-providers/amazon-s3) page in the CMS documentation.
 :::
 
 ```js title=./config/env/production/plugins.js
