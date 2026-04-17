@@ -4531,6 +4531,10 @@ Upload one or more files to your application.
 
 `files` is the only accepted parameter, and describes the file(s) to upload. The value(s) can be a Buffer or Stream.
 
+:::info Signed URLs with private S3 buckets
+When using AWS S3 with the `ACL` parameter set to `"private"`, file URLs returned by the upload endpoints are automatically signed. Signed URLs include `X-Amz-Signature` query parameters and an `isUrlSigned: true` flag in the response, making them accessible despite the private bucket ACL. Signed URLs expire based on your `signedUrlExpires` configuration (default: 15 minutes).
+:::
+
 :::tip
 When uploading an image, include a `fileInfo` object to set the file name, alt text, and caption.
 :::
