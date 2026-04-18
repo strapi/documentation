@@ -134,6 +134,12 @@ Click the search button <Icon name="search" classes="ph-bold" /> above the table
 :::
 --->
 
+#### Username generation during provider registration
+
+When an end user registers via an authentication provider (such as Google or GitHub), Strapi automatically generates a username from the provider email address, using the part before the `@` symbol (e.g., `joe` from `joe@gmail.com`).
+
+If the generated username is already taken, Strapi appends an incrementing number to make it unique (e.g., `joe1`, then `joe2`, and so on). The existing account's username is not affected.
+
 ### Email templates
 
 **Path:** <Icon name="gear-six" /> *Users & Permissions plugin > Email templates*
