@@ -18,7 +18,9 @@ Strapi integrates AI capabilities in several areas. This page provides an overvi
 
 ## AI features in Strapi CMS
 
-<GrowthBadge /> Strapi AI features require a Growth plan or above and consume AI credits included in your plan.
+<GrowthBadge /> 
+
+Strapi AI features require a Growth plan and consume AI credits included in your plan.
 
 ### Content-Type Builder: AI chat assistant {#ctb-ai}
 
