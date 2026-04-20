@@ -20,7 +20,7 @@ Strapi integrates AI capabilities in several areas. This page provides an overvi
 
 ## AI features in Strapi CMS
 
-Strapi AI features require a <GrowthBadge noTooltip /> plan or above.
+Strapi AI features require a <GrowthBadge noTooltip /> plan.
 
 <StrapiAiCredits />
 
