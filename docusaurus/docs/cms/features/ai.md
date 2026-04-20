@@ -20,6 +20,8 @@ Strapi integrates AI capabilities in several areas. This page provides an overvi
 
 ## AI features in Strapi CMS
 
+Strapi AI features require a <GrowthBadge noTooltip /> plan or above.
+
 <StrapiAiCredits />
 
 ### Content-Type Builder: AI chat assistant {#ctb-ai}
