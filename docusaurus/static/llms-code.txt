@@ -21657,6 +21657,27 @@ The `PolicyError` class is a specific error designed to be used with [route poli
 
 
 
+# AI features
+Source: https://docs.strapi.io/cms/features/ai
+
+## Configuration
+Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
+(Source: https://docs.strapi.io/cms/features/ai#config)
+
+Language: JavaScript
+File path: /config/admin.js|ts
+
+```js
+module.exports = {
+  // ...
+  ai: {
+    enabled: true, // set to false to disable all Strapi AI features
+  },
+};
+```
+
+
+
 # API Tokens
 Source: https://docs.strapi.io/cms/features/api-tokens
 
