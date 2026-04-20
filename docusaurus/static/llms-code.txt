@@ -21660,7 +21660,7 @@ The `PolicyError` class is a specific error designed to be used with [route poli
 # AI features
 Source: https://docs.strapi.io/cms/features/ai
 
-## Configuration
+## Activation and configuration
 Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
 (Source: https://docs.strapi.io/cms/features/ai#config)
 

@@ -1861,6 +1861,222 @@ When evaluating editors, start with a plugin from the Marketplace for a quick tr
 
 
 
+# AI for content management
+Source: https://docs.strapi.io/cms/ai/cms
+
+# AI for content management
+
+Some Strapi CMS features can be enhanced with AI, helping content managers and administrators design content structures, translate content automatically, and generate asset metadata — all from the admin panel.
+
+## Content-Type Builder: AI chat assistant {#ctb-ai}
+
+The [Content-Type Builder](/cms/features/content-type-builder) includes an AI chat assistant that helps you design your content architecture. Describe what you need in plain language, and the assistant suggests content-type structures, explains existing schemas, or helps you plan your data model.
+
+The AI chat uses your existing content types as context, so suggestions are tailored to your project. You can iterate on the suggestions until the structure matches your needs, then apply them directly.
+
+### What you can ask the assistant
+
+- **Create content types:** "Create a blog post content type with a title, body, author, and cover image."
+- **Add relations:** "Create an author collection and link it to blog posts. An author can write multiple posts, but each post has one author."
+- **Explain schemas:** "What fields does my restaurant content type have?"
+- **Suggest improvements:** "What fields should I add to my product content type for an e-commerce site?"
+
+The assistant generates content types and fields that you can review and apply with a single click.
+
+👉 See [Content-Type Builder > Strapi AI](/cms/features/content-type-builder#strapi-ai) for the full interface walkthrough.
+
+## Internationalization: AI-powered translations {#i18n-ai}
+
+When [Internationalization (i18n)](/cms/features/internationalization) is enabled, Strapi can automatically translate your content from the default locale to all other configured locales using AI.
+
+### How it works
+
+1. Edit an entry in the default locale and click **Save**.
+2. Strapi automatically generates translations for all other configured locales.
+3. A notification confirms when all locales have been translated.
+
+Translations are one-way: from the default locale to derived locales. Text fields are translated, while media, relations, booleans, and enumerations are copied from the source. The process is asynchronous and non-blocking — you can continue working while translations are generated.
+
+:::caution
+When AI-powered internationalization is enabled, manually editing content in the default locale and saving it will overwrite any manual modifications previously made to other locales.
+:::
+
+### Enabling AI translations
+
+To enable AI translations, go to <ExternalLink to="http://localhost:1337/admin/settings/internationalization" text="Settings > Internationalization" /> and toggle the AI translations option.
+
+👉 See [Internationalization > AI-powered internationalization](/cms/features/internationalization#ai-powered-internationalization) for the full setup guide and screenshots.
+
+## Media Library: AI-powered metadata generation {#media-ai}
+
+The [Media Library](/cms/features/media-library) can automatically generate metadata for uploaded image assets using AI. When you upload an image, Strapi analyzes it and suggests:
+
+- **Alternative text** — for accessibility (screen readers, SEO)
+- **Caption** — a short description of the image
+- **Description** — a longer, more detailed description
+
+This saves time when managing large volumes of media, and improves accessibility across your content.
+
+### Enabling AI metadata
+
+To enable AI metadata generation, go to <ExternalLink to="http://localhost:1337/admin/settings/media-library" text="Settings > Media Library" /> and toggle the AI metadata generation option.
+
+👉 See [Media Library > AI-powered metadata generation](/cms/features/media-library#ai-powered-metadata-generation) for details and screenshots.
+
+## Activation and configuration {#config}
+
+Strapi AI is available since Strapi 5.30 and works with both Strapi Cloud and self-hosted deployments. To get started:
+
+1. **Upgrade to Strapi v5.30+.** AI features are not available on earlier versions.
+2. **Activate a Growth license key**, or start a 30-day free trial via CLI or Strapi Cloud. The trial includes 10 free credits to explore AI features.
+3. **Access AI features** from the Content-Type Builder, Media Library, or Content Manager — they are enabled by default.
+
+### Disabling AI features globally
+
+All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
+
+```js title="/config/admin.js|ts"
+module.exports = {
+  // ...
+  ai: {
+    enabled: true, // set to false to disable all Strapi AI features
+  },
+};
+```
+
+👉 See [Admin panel configuration > Strapi AI](/cms/configurations/admin-panel#strapi-ai) for all configuration options.
+
+## Data handling {#data-handling}
+
+All AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi AI follows the same GDPR-aligned framework as Strapi Cloud.
+
+👉 See [Usage information > Strapi AI data handling](/cms/usage-information#strapi-ai-data-handling) for more details.
+
+
+
+# AI for developers
+Source: https://docs.strapi.io/cms/ai/developer-tools
+
+# AI for developers
+
+The Strapi documentation site ([docs.strapi.io](https://docs.strapi.io)) includes AI-powered tools to help developers learn, explore, and integrate Strapi more effectively. These tools are free and available to everyone.
+
+## AI toolbar {#ai-toolbar}
+
+Every documentation page includes an AI toolbar near the top of the page, right after the title. The toolbar provides quick access to all AI-related actions for the current page.
+
+Clicking the dropdown arrow reveals additional options:
+
+The toolbar includes the following actions:
+
+| Action | Description |
+|--------|-------------|
+| **Copy Markdown** | Copies the raw Markdown source of the current page to your clipboard |
+| **Open with ChatGPT** | Opens a new ChatGPT conversation prefilled with the current page URL |
+| **Open with Claude** | Opens a new Claude conversation and copies the prompt to your clipboard |
+| **View LLMs.txt** | Opens the lightweight page index for AI models |
+| **View LLMs-code.txt** | Opens the code examples file for AI models |
+| **View LLMs-full.txt** | Opens the complete documentation file for AI models |
+
+### Copy Markdown
+
+The primary action in the toolbar. Clicking **Copy Markdown** fetches the raw Markdown source of the current page directly from the repository and copies it to your clipboard. You can then paste it into any AI assistant (ChatGPT, Claude, Gemini, etc.) for:
+
+- Asking questions about a specific page with full context
+- Summarizing or simplifying documentation content
+- Generating code based on documented APIs
+- Translating documentation into another language
+
+### Open with LLM
+
+The **Open with ChatGPT** and **Open with Claude** buttons open a new conversation in the respective AI assistant, prefilled with a prompt that includes the current page URL. The prompt is automatically localized to your browser's language.
+
+For Claude, the prompt is also copied to your clipboard since URL encoding works differently.
+
+## Kapa AI chatbot {#kapa}
+
+An AI chatbot powered by [Kapa](https://kapa.ai) is integrated directly into the documentation site. It draws from the full documentation, community forums, blog posts, and other Strapi resources to provide contextual answers.
+
+### Sidebar entry point
+
+Click **Ask AI** in the left sidebar (below the search bar) to open a conversation about anything related to Strapi.
+
+You can ask questions like:
+- "How do I create a Strapi project?"
+- "How does population work in REST API?"
+- "How do I customize the admin panel?"
+
+For complex questions, enable **deep thinking mode** for more thorough (but slower) answers.
+
+### Code block entry point
+
+Hover over any code block on a documentation page to reveal an **Ask AI** button in the top-right corner of the block. Clicking it opens a Kapa conversation prefilled with the code snippet, so you can ask for an explanation or adaptation.
+
+This is particularly useful for understanding configuration examples, API responses, or lifecycle hook patterns.
+
+## LLMs text files {#llms-txt}
+
+Three text files are available for feeding Strapi documentation content directly to LLMs. These follow the [llms.txt](https://llmstxt.org/) convention and are designed for programmatic consumption by AI tools.
+
+| File | URL | Content | Best for |
+|------|-----|---------|----------|
+| `llms.txt` | [/llms.txt](https://docs.strapi.io/llms.txt) | Concise, link-rich overview of all pages | High-level context, navigation, RAG pipelines |
+| `llms-full.txt` | [/llms-full.txt](https://docs.strapi.io/llms-full.txt) | Entire documentation in a single file | Full-site context when token limits allow |
+| `llms-code.txt` | [/llms-code.txt](https://docs.strapi.io/llms-code.txt) | All code examples, grouped by page | Code-centric work, migrations, API discovery |
+
+### When to use each file
+
+- **`llms.txt`** — Use this to give an AI model an overview of what Strapi documentation covers, without consuming too many tokens. Ideal for RAG (Retrieval-Augmented Generation) systems or as a first pass before diving deeper.
+- **`llms-full.txt`** — Use this when you need the AI to have access to the complete documentation content. This is a large file; make sure your model's context window can handle it.
+- **`llms-code.txt`** — Use this when you're working on code and want to give an AI all of Strapi's documented code examples. Each snippet includes the source page URL and anchor for traceability.
+
+## MCP server {#mcp}
+
+A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server is available, powered by [Kapa](https://kapa.ai), that exposes the Strapi documentation to AI coding tools. Connect it to your IDE to get Strapi-aware code suggestions and answers directly in your development environment.
+
+### Compatible tools
+
+The MCP server works with any tool that supports the MCP protocol, including:
+
+- [Cursor](https://cursor.com)
+- [VS Code](https://code.visualstudio.com) with GitHub Copilot
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+- [Windsurf](https://codeium.com/windsurf)
+- Any other MCP-compatible IDE or tool
+
+### Connection details
+
+Add the following MCP server configuration to your IDE:
+
+- **Server URL:** `https://strapi-docs.mcp.kapa.ai`
+- **Transport:** SSE (Server-Sent Events)
+
+For example, in a `.cursor/mcp.json` or VS Code MCP settings file:
+
+```json title="MCP configuration example"
+{
+  "mcpServers": {
+    "strapi-docs": {
+      "url": "https://strapi-docs.mcp.kapa.ai/sse"
+    }
+  }
+}
+```
+
+Once connected, your AI coding assistant can query the Strapi documentation directly to answer questions, suggest implementations, and verify API usage.
+
+## Tips for better results {#tips}
+
+:::tip Tips for better results with AI tools
+- **Include the page URL** so the assistant grounds its answer in the right context.
+- **Mention your Strapi version** (e.g., Strapi 5) to avoid outdated suggestions.
+- **Pair code examples with their source page** when sharing snippets from `llms-code.txt`.
+- **Prefer documented APIs** (controllers, services, middlewares) over private internals when asking for code generation.
+- **Use the MCP server in your IDE** for the fastest developer experience — no copy-paste needed.
+:::
+
+
+
 # Strapi Client
 Source: https://docs.strapi.io/cms/api/client
 
@@ -7978,117 +8194,6 @@ To access the admin panel:
 
 :::note
 If you prefer or are required to log in via an SSO provider, please refer to the [Single Sign-On documentation](/cms/features/sso).
-:::
-
-
-
-# AI features
-Source: https://docs.strapi.io/cms/features/ai
-
-# AI features
-
-Strapi integrates AI capabilities in several areas. This page provides an overview of all AI-powered features available in the CMS and on the documentation site.
-
-## AI features in Strapi CMS
-
- Strapi AI features require a Growth plan or above and consume AI credits included in your plan.
-
-### Content-Type Builder: AI chat assistant {#ctb-ai}
-
-The [Content-Type Builder](/cms/features/content-type-builder) includes an AI chat assistant that helps you design your content architecture. You can ask the assistant to suggest content-type structures, explain existing schemas, or help you plan your data model.
-
-The AI chat uses your existing content types as context, so suggestions are tailored to your project. This feature is available directly in the Content-Type Builder interface.
-
-👉 See [Content-Type Builder > Strapi AI](/cms/features/content-type-builder#strapi-ai) for details and screenshots.
-
-### Internationalization: AI-powered translations {#i18n-ai}
-
-When [Internationalization (i18n)](/cms/features/internationalization) is enabled, Strapi can automatically translate your content from the default locale to all other locales using AI.
-
-How it works:
-- Edit an entry in the default locale and save it.
-- Strapi automatically generates translations for all configured locales.
-- Translations are one-way: from the default locale to derived locales, not the other way around.
-- Text fields are translated. Media, relations, booleans, and enumerations are copied from the source.
-- The process is asynchronous and non-blocking.
-
-To enable AI translations, go to Settings > Internationalization and toggle the AI translations option.
-
-👉 See [Internationalization > AI-powered translations](/cms/features/internationalization) for the full guide.
-
-### Media Library: AI-powered metadata generation {#media-ai}
-
-The [Media Library](/cms/features/media-library) can automatically generate metadata for uploaded assets using AI. When enabled, Strapi analyzes images and suggests:
-- Alternative text (for accessibility)
-- Captions
-- Descriptions
-
-To enable AI metadata, go to Settings > Media Library and toggle the AI metadata generation option.
-
-👉 See [Media Library > AI-powered metadata generation](/cms/features/media-library#ai-powered-metadata-generation) for details and screenshots.
-
-### Configuration {#config}
-
-All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
-
-```js title="/config/admin.js|ts"
-module.exports = {
-  // ...
-  ai: {
-    enabled: true, // set to false to disable all Strapi AI features
-  },
-};
-```
-
-👉 See [Admin panel configuration > Strapi AI](/cms/configurations/admin-panel#strapi-ai) for all configuration options.
-
-:::note
-Strapi AI features consume AI credits included with Growth plans and above. You can monitor your usage in the Strapi Cloud dashboard.
-:::
-
----
-
-## AI tools on the documentation site {#docs-ai}
-
-The Strapi documentation site ([docs.strapi.io](https://docs.strapi.io)) includes several AI-oriented tools to help you learn, explore, and integrate Strapi more effectively.
-
-### Kapa AI chatbot {#kapa}
-
-An AI chatbot is integrated directly into the documentation:
-
-- **Sidebar entry point:** Click "Ask AI" in the left sidebar (next to search) to open a conversation about anything in the docs.
-- **Code-block entry point:** Hover any code block and click "Ask AI" to ask for an explanation or adaptation of that snippet.
-- **Deep thinking mode:** For complex questions, enable deep thinking mode for more thorough (but slower) answers.
-
-The chatbot draws from the full documentation, community forums, and other Strapi resources to provide contextual answers.
-
-### Copy Markdown {#copy-markdown}
-
-Use the "Copy Markdown" button in the AI toolbar at the top of each documentation page to copy the raw Markdown source. Paste it into your preferred AI assistant (ChatGPT, Claude, etc.) for analysis, summarization, or code generation with full page context.
-
-### LLMs text files {#llms-txt}
-
-Three text files are available for feeding documentation content to LLMs:
-
-| File | URL | Content | Best for |
-|------|-----|---------|----------|
-| `llms.txt` | [/llms.txt](https://docs.strapi.io/llms.txt) | Concise, link-rich overview of all pages | High-level context, navigation |
-| `llms-full.txt` | [/llms-full.txt](https://docs.strapi.io/llms-full.txt) | Entire documentation in a single file | Full-site context (large file) |
-| `llms-code.txt` | [/llms-code.txt](https://docs.strapi.io/llms-code.txt) | All code examples, grouped by page | Code-centric work, migrations, API discovery |
-
-### Open with LLM {#open-with-llm}
-
-The AI toolbar on each page includes "Open with ChatGPT" and "Open with Claude" buttons. These open a new tab with a prompt prefilled with the current page content, so you can immediately start asking questions about it.
-
-### MCP Server {#mcp}
-
-A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server is available, powered by [Kapa](https://kapa.ai), that exposes the Strapi documentation to AI coding tools. Connect it to your IDE (Cursor, VS Code with GitHub Copilot, etc.) to get Strapi-aware code suggestions and answers.
-
-:::tip Tips for better results with AI tools
-- **Include the page URL** so the assistant grounds its answer in the right context.
-- **Mention your Strapi version** (e.g., Strapi 5) to avoid outdated suggestions.
-- **Pair code examples with their source page** when sharing snippets from `llms-code.txt`.
-- **Prefer documented APIs** (controllers, services, middlewares) over private internals when asking for code generation.
 :::
 
 
