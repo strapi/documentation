@@ -49,20 +49,37 @@ const sidebars = {
       ],
     },
     {
+      // Strapi AI
+      type: 'category',
+      label: 'Strapi AI',
+      collapsible: false,
+      className: 'category-cms-ai',
+      items: [
+        {
+          type: 'doc',
+          label: 'AI for content management',
+          id: 'cms/ai/cms',
+          customProps: {
+            new: true,
+          },
+        },
+        {
+          type: 'doc',
+          label: 'AI for developers',
+          id: 'cms/ai/developer-tools',
+          customProps: {
+            new: true,
+          },
+        },
+      ],
+    },
+    {
       // Features
       type: 'category',
       label: 'Features',
       collapsible: false,
       className: 'category-cms-features',
       items: [
-        {
-          type: 'doc',
-          label: 'AI features',
-          id: 'cms/features/ai',
-          customProps: {
-            new: true,
-          },
-        },
         {
           type: 'doc',
           label: 'API Tokens',
