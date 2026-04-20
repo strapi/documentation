@@ -30,14 +30,7 @@ The AI chat uses your existing content types as context, so suggestions are tail
 
 ### Internationalization: AI-powered translations {#i18n-ai}
 
-When [Internationalization (i18n)](/cms/features/internationalization) is enabled, Strapi can automatically translate your content from the default locale to all other locales using AI.
-
-How it works:
-- Edit an entry in the default locale and save it.
-- Strapi automatically generates translations for all configured locales.
-- Translations are one-way: from the default locale to derived locales, not the other way around.
-- Text fields are translated. Media, relations, booleans, and enumerations are copied from the source.
-- The process is asynchronous and non-blocking.
+When [Internationalization (i18n)](/cms/features/internationalization) is enabled, Strapi can automatically translate your content from the default locale to all other locales using AI. When you save an entry in the default locale, Strapi generates translations for all configured locales asynchronously.
 
 To enable AI translations, go to Settings > Internationalization and toggle the AI translations option.
 
