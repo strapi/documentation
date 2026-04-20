@@ -1,4 +1,3 @@
-:::note Strapi AI credits
 Strapi AI includes 1,000 credits per month on the <GrowthBadge noTooltip /> plan, and 10 free credits during the free trial.
 Lightweight actions use fewer credits, while more complex ones use more.
 
@@ -9,4 +8,3 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 When your credits run out on the <GrowthBadge noTooltip/> plan, you can keep using Strapi AI, with overages billed monthly.
 
 For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
-:::
