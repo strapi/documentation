@@ -136,7 +136,6 @@ The MCP server works with any tool that supports the MCP protocol, including:
 Add the following MCP server configuration to your IDE:
 
 - **Server URL:** `https://strapi-docs.mcp.kapa.ai`
-- **Transport:** SSE (Server-Sent Events)
 
 For example, in a `.cursor/mcp.json` or VS Code MCP settings file:
 
@@ -144,7 +143,7 @@ For example, in a `.cursor/mcp.json` or VS Code MCP settings file:
 {
   "mcpServers": {
     "strapi-docs": {
-      "url": "https://strapi-docs.mcp.kapa.ai/sse"
+      "url": "https://strapi-docs.mcp.kapa.ai"
     }
   }
 }
