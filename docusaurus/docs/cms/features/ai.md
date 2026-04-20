@@ -20,7 +20,7 @@ Strapi integrates AI capabilities in several areas. This page provides an overvi
 
 ## AI features in Strapi CMS
 
-Strapi AI features require a <GrowthBadge noTooltip /> plan.
+Strapi AI features are available on the <GrowthBadge noTooltip /> plan. They consume AI credits included with your plan:
 
 <StrapiAiCredits />
 
@@ -38,7 +38,7 @@ When [Internationalization (i18n)](/cms/features/internationalization) is enable
 
 To enable AI translations, go to Settings > Internationalization and toggle the AI translations option.
 
-👉 See [Internationalization > AI-powered translations](/cms/features/internationalization) for the full guide.
+👉 See [Internationalization > AI-powered translations](/cms/features/internationalization#ai-powered-internationalization) for the full guide.
 
 ### Media Library: AI-powered metadata generation {#media-ai}
 
