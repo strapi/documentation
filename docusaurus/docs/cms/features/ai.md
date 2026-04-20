@@ -12,6 +12,8 @@ tags:
 toc_max_heading_level: 3
 ---
 
+import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
+
 # AI features
 
 Strapi integrates AI capabilities in several areas. This page provides an overview of all AI-powered features available in the CMS and on the documentation site.
@@ -61,9 +63,7 @@ module.exports = {
 
 👉 See [Admin panel configuration > Strapi AI](/cms/configurations/admin-panel#strapi-ai) for all configuration options.
 
-:::note
-Strapi AI features consume AI credits included with Growth plans and above. You can monitor your usage in the Strapi Cloud dashboard.
-:::
+<StrapiAiCredits />
 
 ---
 
