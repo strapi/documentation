@@ -20,9 +20,7 @@ Strapi integrates AI capabilities in several areas. This page provides an overvi
 
 ## AI features in Strapi CMS
 
-<GrowthBadge /> 
-
-Strapi AI features require a Growth plan and consume AI credits included in your plan.
+<StrapiAiCredits />
 
 ### Content-Type Builder: AI chat assistant {#ctb-ai}
 
@@ -62,8 +60,6 @@ module.exports = {
 ```
 
 👉 See [Admin panel configuration > Strapi AI](/cms/configurations/admin-panel#strapi-ai) for all configuration options.
-
-<StrapiAiCredits />
 
 ---
 
