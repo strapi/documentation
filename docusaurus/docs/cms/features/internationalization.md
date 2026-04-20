@@ -161,7 +161,9 @@ AI-powered internationalization only works one way, keeping the default locale c
 - When editing the content for the default locale, the manual modifications made to other locales will be overwritten.
 :::
 
+:::note Strapi AI credits
 <StrapiAiCredits />
+:::
 
 ### Usage with APIs
 
