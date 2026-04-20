@@ -38,10 +38,7 @@ To enable AI translations, go to Settings > Internationalization and toggle the 
 
 ### Media Library: AI-powered metadata generation {#media-ai}
 
-The [Media Library](/cms/features/media-library) can automatically generate metadata for uploaded assets using AI. When enabled, Strapi analyzes images and suggests:
-- Alternative text (for accessibility)
-- Captions
-- Descriptions
+The [Media Library](/cms/features/media-library) can automatically generate metadata for uploaded assets using AI. When enabled, Strapi analyzes images and suggests alternative text, captions, and descriptions.
 
 To enable AI metadata, go to Settings > Media Library and toggle the AI metadata generation option.
 
