@@ -240,7 +240,7 @@ To log everything, use the `--all` option:
 strapi report --all
 ```
 
-## strapi configuration:dump
+## `strapi configuration:dump`
 
 **Alias**: `config:dump`
 
@@ -273,7 +273,7 @@ In case of doubt, you should avoid committing the dump file into a versioning sy
 
 :::
 
-## strapi configuration:restore
+## `strapi configuration:restore`
 
 **Alias**: `config:restore`
 
@@ -306,7 +306,7 @@ When running the restore command, you can choose from three different strategies
 - **merge**: Will create missing keys and merge existing keys with their new value.
 - **keep**: Will create missing keys and keep existing keys as is.
 
-## strapi admin:create-user
+## `strapi admin:create-user`
 
 **Alias** `admin:create`
 
@@ -333,7 +333,7 @@ strapi admin:create-user --firstname=Kai --lastname=Doe --email=chef@strapi.io -
 | -p, --password  | string | New password for the administrator | No       |
 | -h, --help      |        | display help for command           |          |
 
-## strapi admin:reset-user-password
+## `strapi admin:reset-user-password`
 
 **Alias** `admin:reset-password`
 
@@ -355,7 +355,7 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 | -p, --password | string | New password for the user |
 | -h, --help     |        | display help for command  |
 
-## strapi admin:list-users
+## `strapi admin:list-users`
 
 **Alias** `admin:list`
 
@@ -365,7 +365,7 @@ Displays a table listing all administrator accounts, including their ID, email, 
 strapi admin:list-users
 ```
 
-## strapi admin:delete-user
+## `strapi admin:delete-user`
 
 **Alias** `admin:delete`
 
@@ -384,7 +384,7 @@ strapi admin:delete-user --email=chef@strapi.io
 | -e, --email     | string | The administrator's email     | Yes      |
 | -h, --help      |        | display help for command      |          |
 
-## strapi admin:active-user
+## `strapi admin:active-user`
 
 **Alias** `admin:active`
 
@@ -404,7 +404,7 @@ strapi admin:active-user --email=chef@strapi.io --active=true
 | -a, --active | string | The active status to set (`true` or `false`) | Yes      |
 | -h, --help   |        | display help for command                     |          |
 
-## strapi admin:block-user
+## `strapi admin:block-user`
 
 **Alias** `admin:block`
 
@@ -592,7 +592,7 @@ npm run strapi openapi generate -- --output ./docs/api-spec.json
 </TabItem>
 </Tabs>
 
-## strapi templates:generate
+## `strapi templates:generate`
 
 Create a template from the current Strapi project.
 
@@ -605,7 +605,7 @@ strapi templates:generate <path>
 
   Example: `strapi templates:generate ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
 
-## strapi ts:generate-types
+## `strapi ts:generate-types`
 
 Generate [TypeScript](/cms/typescript) typings for the project schemas.
 
@@ -624,7 +624,7 @@ strapi ts:generate-types
 Strapi requires the project types to be generated in the `types` directory for them to work. The `--out-dir` option should not be used for most cases. However, it can be useful for cases such as generating a second copy to compare the difference between your existing and updated types after changing your content structure.
 :::
 
-## strapi routes:list
+## `strapi routes:list`
 
 Display a list of all the available [routes](/cms/backend-customization/routes).
 
@@ -632,7 +632,7 @@ Display a list of all the available [routes](/cms/backend-customization/routes).
 strapi routes:list
 ```
 
-## strapi policies:list
+## `strapi policies:list`
 
 Display a list of all the registered [policies](/cms/backend-customization/policies).
 
@@ -640,7 +640,7 @@ Display a list of all the registered [policies](/cms/backend-customization/polic
 strapi policies:list
 ```
 
-## strapi middlewares:list
+## `strapi middlewares:list`
 
 Display a list of all the registered [middlewares](/cms/backend-customization/middlewares).
 
@@ -648,7 +648,7 @@ Display a list of all the registered [middlewares](/cms/backend-customization/mi
 strapi middlewares:list
 ```
 
-## strapi content-types:list
+## `strapi content-types:list`
 
 Display a list of all the existing [content-types](/cms/backend-customization/models).
 
@@ -656,7 +656,7 @@ Display a list of all the existing [content-types](/cms/backend-customization/mo
 strapi content-types:list
 ```
 
-## strapi hooks:list
+## `strapi hooks:list`
 
 Display a list of all the available hooks.
 
@@ -664,7 +664,7 @@ Display a list of all the available hooks.
 strapi hooks:list
 ```
 
-## strapi controllers:list
+## `strapi controllers:list`
 
 Display a list of all the registered [controllers](/cms/backend-customization/controllers).
 
@@ -672,7 +672,7 @@ Display a list of all the registered [controllers](/cms/backend-customization/co
 strapi controllers:list
 ```
 
-## strapi services:list
+## `strapi services:list`
 
 Display a list of all the registered [services](/cms/backend-customization/services).
 
@@ -680,7 +680,7 @@ Display a list of all the registered [services](/cms/backend-customization/servi
 strapi services:list
 ```
 
-## strapi telemetry:disable
+## `strapi telemetry:disable`
 
 Disable data collection for the project (see [Usage Information](/cms/usage-information)).
 
@@ -688,7 +688,7 @@ Disable data collection for the project (see [Usage Information](/cms/usage-info
 strapi telemetry:disable
 ```
 
-## strapi telemetry:enable
+## `strapi telemetry:enable`
 
 Re-enable data collection for the project after it was disabled (see [Usage Information](/cms/usage-information)).
 
