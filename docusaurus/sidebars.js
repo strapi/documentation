@@ -57,6 +57,14 @@ const sidebars = {
       items: [
         {
           type: 'doc',
+          label: 'AI features',
+          id: 'cms/features/ai',
+          customProps: {
+            new: true,
+          },
+        },
+        {
+          type: 'doc',
           label: 'API Tokens',
           id: 'cms/features/api-tokens',
         },
