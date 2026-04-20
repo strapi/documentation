@@ -20,7 +20,7 @@ Strapi integrates AI capabilities in several areas. This page provides an overvi
 
 ## AI features in Strapi CMS
 
-Strapi integrates AI across the Content-Type Builder, Internationalization, and Media Library to help you design content structures, translate content automatically, and generate asset metadata.
+Some Strapi CMS features can be enhanced with AI, for instance to help you design content structures, translate content automatically, and generate asset metadata. These features consume Strapi AI credits.
 
 <StrapiAiCredits />
 
@@ -48,7 +48,13 @@ To enable AI metadata, go to Settings > Media Library and toggle the AI metadata
 
 👉 See [Media Library > AI-powered metadata generation](/cms/features/media-library#ai-powered-metadata-generation) for details and screenshots.
 
-### Configuration {#config}
+### Activation and configuration {#config}
+
+Strapi AI is available since Strapi 5.30 and works with both Strapi Cloud and self-hosted deployments. To get started:
+
+1. Upgrade to or install Strapi v5.30+.
+2. Activate a Growth license key, or start a 30-day free trial via CLI or Strapi Cloud. The trial includes 10 free credits to explore AI features.
+3. Access AI features from the Content-Type Builder, Media Library, or Content Manager.
 
 All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
 
@@ -62,6 +68,10 @@ module.exports = {
 ```
 
 👉 See [Admin panel configuration > Strapi AI](/cms/configurations/admin-panel#strapi-ai) for all configuration options.
+
+### Data handling {#data-handling}
+
+All AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. For more details, see [Usage information > Strapi AI data handling](/cms/usage-information#strapi-ai-data-handling).
 
 ---
 
