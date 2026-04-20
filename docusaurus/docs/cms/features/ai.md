@@ -20,7 +20,7 @@ Strapi integrates AI capabilities in several areas. This page provides an overvi
 
 ## AI features in Strapi CMS
 
-Strapi AI features are available on the <GrowthBadge noTooltip /> plan. They consume AI credits included with your plan:
+Strapi integrates AI across the Content-Type Builder, Internationalization, and Media Library to help you design content structures, translate content automatically, and generate asset metadata. These features are available on the <GrowthBadge noTooltip /> plan and consume AI credits:
 
 <StrapiAiCredits />
 
