@@ -42,7 +42,7 @@ jobs:
             --method GET \
             -f q="repo:strapi/strapi is:pr is:merged base:develop merged:>=$SINCE" \
             -f per_page=50 \
-            --jq '.items | [.[] | {number, title, html_url: .pull_request.html_url, labels: [.labels[].name]}]' > /tmp/all-prs.json
+            --jq '.items | [.[] | {number, title, author: .user.login, html_url: .pull_request.html_url, labels: [.labels[].name]}]' > /tmp/all-prs.json
 
           TOTAL=$(jq 'length' /tmp/all-prs.json)
           echo "Found $TOTAL merged PRs in the last 24h"
@@ -63,34 +63,61 @@ jobs:
           fi
 
           # 2. Separate PRs with "flag: documentation" label (manually flagged, skip automation)
+          #    Also filter out PRs with "translations" label (i18n work, never needs docs)
           jq '[.[] | select(.labels | index("flag: documentation"))]' /tmp/not-ignored-prs.json > /tmp/flagged-prs.json
-          jq '[.[] | select(.labels | index("flag: documentation") | not)]' /tmp/not-ignored-prs.json > /tmp/unflagged-prs.json
+          jq '[.[] | select(
+            (.labels | index("flag: documentation") | not) and
+            (.labels | index("translations") | not)
+          )]' /tmp/not-ignored-prs.json > /tmp/unflagged-prs.json
           FLAGGED=$(jq 'length' /tmp/flagged-prs.json)
+          TRANSLATIONS=$(jq '[.[] | select(.labels | index("translations"))] | length' /tmp/not-ignored-prs.json)
 
           if [ "$FLAGGED" -gt 0 ]; then
             echo "Label filter: $FLAGGED PRs manually flagged for docs, skipping automation"
           fi
+          if [ "$TRANSLATIONS" -gt 0 ]; then
+            echo "Label filter: $TRANSLATIONS PRs with 'translations' label, skipping"
+          fi
+
+          # 2b. Filter out bot PRs (dependabot, renovate, etc.)
+          jq '[.[] | select(.author | test("\\[bot\\]$"; "i") | not)]' /tmp/unflagged-prs.json > /tmp/no-bots-prs.json
+          BOTS=$(($(jq 'length' /tmp/unflagged-prs.json) - $(jq 'length' /tmp/no-bots-prs.json)))
+          if [ "$BOTS" -gt 0 ]; then
+            echo "Bot filter: $BOTS PRs from bots (dependabot, etc.), skipping"
+          fi
 
           # 3. Filter out PRs that never need documentation (by title).
-          # Based on analysis of 100+ merged PR titles in strapi/strapi.
+          # Based on Strapi conventional commits (contributor.strapi.io)
+          # and conventionalcommits.org/en/v1.0.0/.
           #
-          # EXCLUDED: chore(*), test(*), docs:, security: package,
-          #           *translation(s), *typo, Remove/Update yarn/README
+          # EXCLUDED (never user-facing):
+          #   chore(*), test(*), docs:, doc:, security:,
+          #   refactor(*), ci(*), build(*), style(*),
+          #   translations/i18n/localization (any prefix),
+          #   typo, Remove/Update yarn/README,
+          #   dependency upgrades with patch/minor version bumps
           #
-          # KEPT (Router decides): feat, fix, enhancement, and anything else
+          # KEPT (Router decides): feat, fix, enhancement, perf, and anything else
           jq '[.[] | select(
             (.title | test("^chore"; "i") | not) and
             (.title | test("^test[:(\\s]"; "i") | not) and
-            (.title | test("^docs:"; "i") | not) and
-            (.title | test("^security: package"; "i") | not) and
-            (.title | test("translation[s]?$"; "i") | not) and
+            (.title | test("^docs?:"; "i") | not) and
+            (.title | test("^security:"; "i") | not) and
+            (.title | test("^refactor"; "i") | not) and
+            (.title | test("^ci[:(\\s]"; "i") | not) and
+            (.title | test("^build[:(\\s]"; "i") | not) and
+            (.title | test("^style[:(\\s]"; "i") | not) and
+            (.title | test("translat(ion|e|ing)"; "i") | not) and
+            (.title | test("locali[sz](ation|e)"; "i") | not) and
+            (.title | test("i18n"; "i") | not) and
             (.title | test("typo"; "i") | not) and
-            (.title | test("^(Remove|Update) (yarn|README)"; "i") | not)
-          )]' /tmp/unflagged-prs.json > /tmp/filtered-prs.json
+            (.title | test("^(Remove|Update) (yarn|README)"; "i") | not) and
+            (.title | test("(upgrade|bump|update).*(\\d+\\.\\d+\\.\\d+|[1-9]\\d*\\.[1-9]\\d*)"; "i") | not)
+          )]' /tmp/no-bots-prs.json > /tmp/filtered-prs.json
 
           FILTERED=$(jq 'length' /tmp/filtered-prs.json)
-          EXCLUDED=$((TOTAL - FLAGGED - IGNORED - FILTERED))
-          echo "After title filtering: $FILTERED candidates ($EXCLUDED excluded as chore/CI/deps/test)"
+          EXCLUDED=$((TOTAL - FLAGGED - IGNORED - BOTS - FILTERED))
+          echo "After title filtering: $FILTERED candidates ($EXCLUDED excluded by title, $BOTS by bot author)"
 
           # Check idempotency: remove PRs that already have a doc PR
           # Extract PR numbers already referenced in auto-doc-healing PR bodies
@@ -148,13 +175,23 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
+          # List bot PRs
+          if [ "$BOTS" -gt 0 ]; then
+            echo "**Excluded by bot author ($BOTS):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r --argjson kept "$(jq '[.[].number]' /tmp/no-bots-prs.json)" \
+              '[.[] | select(.number as $n | $kept | index($n) | not)]
+              | .[] | "- ~~#\(.number) — \(.title)~~ *(\(.author))*"' /tmp/unflagged-prs.json >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
           # List excluded PRs (title filter)
           if [ "$EXCLUDED" -gt 0 ]; then
             echo "**Excluded by title filter ($EXCLUDED):**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             jq -r --argjson kept "$(jq '[.[].number]' /tmp/filtered-prs.json)" \
               '[.[] | select(.number as $n | $kept | index($n) | not)]
-              | .[] | "- ~~#\(.number) — \(.title)~~"' /tmp/unflagged-prs.json >> $GITHUB_STEP_SUMMARY
+              | .[] | "- ~~#\(.number) — \(.title)~~"' /tmp/no-bots-prs.json >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
@@ -401,10 +438,18 @@ jobs:
             exit 0
           fi
 
-          # Case 3: Sonnet ran — read its summary
+          # Case 4: Sonnet ran — read its summary
           SUMMARY_FILE="/tmp/self-healing-summary.json"
           if [ ! -f "$SUMMARY_FILE" ]; then
-            echo "**Result:** Sonnet ran but no summary file was produced. Check logs." >> $GITHUB_STEP_SUMMARY
+            # Check for common error patterns in the job
+            JOB_STATUS="${{ job.status }}"
+            if [ "$JOB_STATUS" == "failure" ]; then
+              echo "**Result:** Sonnet ran but no summary file was produced." >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "**Error type:** Check annotations above for details (common causes: max turns reached, API timeout, SDK error)." >> $GITHUB_STEP_SUMMARY
+            else
+              echo "**Result:** Sonnet ran but no summary file was produced. Check logs." >> $GITHUB_STEP_SUMMARY
+            fi
             exit 0
           fi
 
