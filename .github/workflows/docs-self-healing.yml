@@ -3,7 +3,13 @@ name: Docs Self-Healing
 on:
   schedule:
     - cron: '30 1 * * 2-6' # 1:30 AM UTC Tue-Sat (covers Mon-Fri merges; no strapi/strapi merges on weekends)
-  workflow_dispatch: # manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run — only run bash pre-filtering, no AI invoked'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   docs-self-healing:
@@ -171,7 +177,7 @@ jobs:
           if [ "$FLAGGED" -gt 0 ]; then
             echo "**Manually flagged for docs ($FLAGGED):**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            jq -r '.[] | "- #\(.number) — \(.title) *(has `flag: documentation` label, skipping automation)*"' /tmp/flagged-prs.json >> $GITHUB_STEP_SUMMARY
+            jq -r '.[] | "- [strapi/strapi#\(.number) — \(.title)](https://github.com/strapi/strapi/pull/\(.number)) *(has `flag: documentation` label, skipping automation)*"' /tmp/flagged-prs.json >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
@@ -181,7 +187,7 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
             jq -r --argjson kept "$(jq '[.[].number]' /tmp/no-bots-prs.json)" \
               '[.[] | select(.number as $n | $kept | index($n) | not)]
-              | .[] | "- ~~#\(.number) — \(.title)~~ *(\(.author))*"' /tmp/unflagged-prs.json >> $GITHUB_STEP_SUMMARY
+              | .[] | "- ~~[strapi/strapi#\(.number) — \(.title)](https://github.com/strapi/strapi/pull/\(.number))~~ *(\(.author))*"' /tmp/unflagged-prs.json >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
@@ -191,7 +197,7 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
             jq -r --argjson kept "$(jq '[.[].number]' /tmp/filtered-prs.json)" \
               '[.[] | select(.number as $n | $kept | index($n) | not)]
-              | .[] | "- ~~#\(.number) — \(.title)~~"' /tmp/no-bots-prs.json >> $GITHUB_STEP_SUMMARY
+              | .[] | "- ~~[strapi/strapi#\(.number) — \(.title)](https://github.com/strapi/strapi/pull/\(.number))~~"' /tmp/no-bots-prs.json >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
@@ -205,12 +211,24 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
-          # List candidates sent to Claude
+          # List candidates that would be sent to Claude
           if [ "$FINAL" -gt 0 ]; then
-            echo "**Sent to Claude ($FINAL):**" >> $GITHUB_STEP_SUMMARY
+            if [ "${{ inputs.dry_run }}" == "true" ]; then
+              echo "**Would be sent to Claude ($FINAL) — DRY RUN, stopping here:**" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "**Sent to Claude ($FINAL):**" >> $GITHUB_STEP_SUMMARY
+            fi
             echo "" >> $GITHUB_STEP_SUMMARY
-            jq -r '.[] | "- **#\(.number) — \(.title)**"' /tmp/new-prs.json >> $GITHUB_STEP_SUMMARY
+            jq -r '.[] | "- [strapi/strapi#\(.number) — \(.title)](https://github.com/strapi/strapi/pull/\(.number))"' /tmp/new-prs.json >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # In dry run mode, stop after pre-filtering
+          if [ "${{ inputs.dry_run }}" == "true" ]; then
+            echo "has_prs=false" >> $GITHUB_OUTPUT
+            echo "---" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "🧪 **DRY RUN** — Pre-filtering complete. No AI was invoked. No tokens consumed." >> $GITHUB_STEP_SUMMARY
           fi
 
       - name: Pre-fetch PR diffs and bodies
