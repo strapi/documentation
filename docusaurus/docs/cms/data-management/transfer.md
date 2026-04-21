@@ -40,6 +40,7 @@ The CLI command consists of the following arguments:
 | `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                    |
 | `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
 | `--throttle` | Time in milliseconds to inject an artificial delay between the "chunks" during a transfer. |
+| `--no-checksums` | Disable end-to-end SHA-256 checksum verification for assets. Checksum verification is enabled by default when both the source and destination instances support it. |
 | `--verbose` | Enable verbose logs. |
 
 :::caution
