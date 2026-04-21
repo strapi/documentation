@@ -92,9 +92,15 @@ git checkout -b "$BRANCH_NAME"
 git add .
 git commit -m "<DOCS_CHANGE_DESCRIPTION>"
 git push -u origin "$BRANCH_NAME"
+# Read config for PR creation
+CONFIG=".github/workflows/config.json"
+TITLE_PREFIX=$(jq -r '.["docs-self-healing"].title_prefix' "$CONFIG")
+ASSIGNEE=$(jq -r '.["docs-self-healing"].assignee' "$CONFIG")
+LABEL=$(jq -r '.["docs-self-healing"].labels[0]' "$CONFIG")
+
 gh pr create \
   --repo strapi/documentation \
-  --title "[Docs self-healing] <DOCS_CHANGE_DESCRIPTION>" \
+  --title "$TITLE_PREFIX <DOCS_CHANGE_DESCRIPTION>" \
   --body "$(cat <<'BODY'
 This PR updates documentation based on https://github.com/strapi/strapi/pull/<NUMBER>.
 
@@ -103,7 +109,8 @@ Review before merging.
 BODY
 )" \
   --draft \
-  --label "auto-doc-healing"
+  --label "$LABEL" \
+  --assignee "$ASSIGNEE"
 git checkout main
 git clean -fd
 git reset --hard origin/main

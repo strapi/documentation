@@ -77,11 +77,17 @@ git commit -m "<DOCS_CHANGE_DESCRIPTION>
 # Imperative mood, no prefix, describe the doc change. Max 80 chars."
 git push -u origin "$BRANCH_NAME"
 
+# Read config for PR creation
+CONFIG=".github/workflows/config.json"
+TITLE_PREFIX=$(jq -r '.["docs-self-healing"].title_prefix' "$CONFIG")
+ASSIGNEE=$(jq -r '.["docs-self-healing"].assignee' "$CONFIG")
+LABEL=$(jq -r '.["docs-self-healing"].labels[0]' "$CONFIG")
+
 gh pr create \
   --repo strapi/documentation \
-  --title "[Docs self-healing] <DOCS_CHANGE_DESCRIPTION>"
+  --title "$TITLE_PREFIX <DOCS_CHANGE_DESCRIPTION>"
   # Title rules:
-  #   - Always prefixed with [Docs self-healing]
+  #   - Always prefixed with the title_prefix from config.json
   #   - Imperative mood, no conventional prefix (no fix:/feat:/chore:)
   #   - Describe what the DOC change does, not the source PR
   #   - Example: "[Docs self-healing] Clarify admin panel redirect behavior"
@@ -94,7 +100,8 @@ Review before merging.
 BODY
 )" \
   --draft \
-  --label "auto-doc-healing"
+  --label "$LABEL" \
+  --assignee "$ASSIGNEE"
 ```
 
 Then reset the working copy before processing the next PR:

@@ -3,5 +3,10 @@
     "assignee": "pwizla",
     "labels": [],
     "title_prefix": "[Auto-sync]"
+  },
+  "docs-self-healing": {
+    "assignee": "pwizla",
+    "labels": ["auto-doc-healing"],
+    "title_prefix": "[Docs self-healing]"
   }
 }
