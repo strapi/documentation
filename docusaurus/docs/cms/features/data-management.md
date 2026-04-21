@@ -133,5 +133,5 @@ The Data Management system is CLI-based only, meaning any import, export, or tra
 <CustomDocCardsWrapper>
 <CustomDocCard icon="terminal" title="Import" description="Learn how to import data into a Strapi instance." link="/cms/data-management/import"/>
 <CustomDocCard icon="terminal" title="Export" description="Learn how to export data from a Strapi instance." link="/cms/data-management/export"/>
-<CustomDocCard icon="terminal" title="Transfer" description="Learn how to transfer data from a Strapi instance to another one." link="/cms/data-management/transfer"/>
+<CustomDocCard icon="terminal" title="Transfer" description="Learn how to transfer data from a Strapi instance to another one. The CLI shows real-time progress with elapsed time, per-stage throughput, and estimated time remaining." link="/cms/data-management/transfer"/>
 </CustomDocCardsWrapper>
