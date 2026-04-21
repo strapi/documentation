@@ -14,6 +14,16 @@
       "number": 25437,
       "reason": "temporarily excluded while testing Slack notifications",
       "added": "2026-04-17"
+    },
+    {
+      "number": 22654,
+      "reason": "Webpack bundler config fix — internal build system, no user-facing docs impact.",
+      "added": "2026-04-21"
+    },
+    {
+      "number": 24444,
+      "reason": "Internal admin panel crash fix (race condition in permission loading) — no new features or config changes.",
+      "added": "2026-04-21"
     }
   ]
 }
