@@ -87,19 +87,26 @@ jobs:
           fi
 
           # 3. Filter out PRs that never need documentation (by title).
-          # Based on analysis of 100+ merged PR titles in strapi/strapi.
+          # Based on Strapi conventional commits (contributor.strapi.io)
+          # and conventionalcommits.org/en/v1.0.0/.
           #
-          # EXCLUDED: chore(*), test(*), docs:, security: package,
-          #           *translation(s)/i18n translations/locali(s|z)ation,
-          #           *typo, Remove/Update yarn/README,
-          #           dependency upgrades with patch/minor version bumps
+          # EXCLUDED (never user-facing):
+          #   chore(*), test(*), docs:, doc:, security:,
+          #   refactor(*), ci(*), build(*), style(*),
+          #   translations/i18n/localization (any prefix),
+          #   typo, Remove/Update yarn/README,
+          #   dependency upgrades with patch/minor version bumps
           #
-          # KEPT (Router decides): feat, fix, enhancement, and anything else
+          # KEPT (Router decides): feat, fix, enhancement, perf, and anything else
           jq '[.[] | select(
             (.title | test("^chore"; "i") | not) and
             (.title | test("^test[:(\\s]"; "i") | not) and
-            (.title | test("^docs:"; "i") | not) and
+            (.title | test("^docs?:"; "i") | not) and
             (.title | test("^security:"; "i") | not) and
+            (.title | test("^refactor"; "i") | not) and
+            (.title | test("^ci[:(\\s]"; "i") | not) and
+            (.title | test("^build[:(\\s]"; "i") | not) and
+            (.title | test("^style[:(\\s]"; "i") | not) and
             (.title | test("translat(ion|e|ing)"; "i") | not) and
             (.title | test("locali[sz](ation|e)"; "i") | not) and
             (.title | test("i18n"; "i") | not) and
