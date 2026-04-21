@@ -42,7 +42,7 @@ jobs:
             --method GET \
             -f q="repo:strapi/strapi is:pr is:merged base:develop merged:>=$SINCE" \
             -f per_page=50 \
-            --jq '.items | [.[] | {number, title, html_url: .pull_request.html_url, labels: [.labels[].name]}]' > /tmp/all-prs.json
+            --jq '.items | [.[] | {number, title, author: .user.login, html_url: .pull_request.html_url, labels: [.labels[].name]}]' > /tmp/all-prs.json
 
           TOTAL=$(jq 'length' /tmp/all-prs.json)
           echo "Found $TOTAL merged PRs in the last 24h"
@@ -71,6 +71,13 @@ jobs:
             echo "Label filter: $FLAGGED PRs manually flagged for docs, skipping automation"
           fi
 
+          # 2b. Filter out bot PRs (dependabot, renovate, etc.)
+          jq '[.[] | select(.author | test("\\[bot\\]$"; "i") | not)]' /tmp/unflagged-prs.json > /tmp/no-bots-prs.json
+          BOTS=$(($(jq 'length' /tmp/unflagged-prs.json) - $(jq 'length' /tmp/no-bots-prs.json)))
+          if [ "$BOTS" -gt 0 ]; then
+            echo "Bot filter: $BOTS PRs from bots (dependabot, etc.), skipping"
+          fi
+
           # 3. Filter out PRs that never need documentation (by title).
           # Based on analysis of 100+ merged PR titles in strapi/strapi.
           #
@@ -91,11 +98,11 @@ jobs:
             (.title | test("typo"; "i") | not) and
             (.title | test("^(Remove|Update) (yarn|README)"; "i") | not) and
             (.title | test("(upgrade|bump|update).*(\\d+\\.\\d+\\.\\d+|[1-9]\\d*\\.[1-9]\\d*)"; "i") | not)
-          )]' /tmp/unflagged-prs.json > /tmp/filtered-prs.json
+          )]' /tmp/no-bots-prs.json > /tmp/filtered-prs.json
 
           FILTERED=$(jq 'length' /tmp/filtered-prs.json)
-          EXCLUDED=$((TOTAL - FLAGGED - IGNORED - FILTERED))
-          echo "After title filtering: $FILTERED candidates ($EXCLUDED excluded as chore/CI/deps/test)"
+          EXCLUDED=$((TOTAL - FLAGGED - IGNORED - BOTS - FILTERED))
+          echo "After title filtering: $FILTERED candidates ($EXCLUDED excluded by title, $BOTS by bot author)"
 
           # Check idempotency: remove PRs that already have a doc PR
           # Extract PR numbers already referenced in auto-doc-healing PR bodies
@@ -153,13 +160,23 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
+          # List bot PRs
+          if [ "$BOTS" -gt 0 ]; then
+            echo "**Excluded by bot author ($BOTS):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r --argjson kept "$(jq '[.[].number]' /tmp/no-bots-prs.json)" \
+              '[.[] | select(.number as $n | $kept | index($n) | not)]
+              | .[] | "- ~~#\(.number) — \(.title)~~ *(\(.author))*"' /tmp/unflagged-prs.json >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
           # List excluded PRs (title filter)
           if [ "$EXCLUDED" -gt 0 ]; then
             echo "**Excluded by title filter ($EXCLUDED):**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             jq -r --argjson kept "$(jq '[.[].number]' /tmp/filtered-prs.json)" \
               '[.[] | select(.number as $n | $kept | index($n) | not)]
-              | .[] | "- ~~#\(.number) — \(.title)~~"' /tmp/unflagged-prs.json >> $GITHUB_STEP_SUMMARY
+              | .[] | "- ~~#\(.number) — \(.title)~~"' /tmp/no-bots-prs.json >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
