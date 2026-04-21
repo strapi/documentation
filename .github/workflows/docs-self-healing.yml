@@ -406,6 +406,61 @@ jobs:
             echo "ROUTER_EOF"
           } >> $GITHUB_OUTPUT
 
+      # ── Auto-ignore rejected PRs for future runs ──
+      - name: Add rejected PRs to ignore list
+        if: steps.check-prs.outputs.has_prs == 'true' && inputs.dry_run != true
+        run: |
+          IGNORE_FILE="${GITHUB_WORKSPACE}/.github/self-healing-ignore.json"
+          TODAY=$(date -u '+%Y-%m-%d')
+          ADDED=0
+
+          # Collect PRs rejected by Triage (no docs needed)
+          TRIAGE_FILE="/tmp/triage-results.json"
+          if [ -f "$TRIAGE_FILE" ]; then
+            for ROW in $(jq -c '.prs[] | select(.triage == "no")' "$TRIAGE_FILE"); do
+              NUM=$(echo "$ROW" | jq -r '.number')
+              TITLE=$(echo "$ROW" | jq -r '.title')
+              REASON=$(echo "$ROW" | jq -r '.reason')
+              # Skip if already in ignore list
+              if jq -e --argjson n "$NUM" '.ignored_prs | map(.number) | index($n)' "$IGNORE_FILE" > /dev/null 2>&1; then
+                continue
+              fi
+              jq --argjson n "$NUM" --arg r "Triage: $REASON" --arg d "$TODAY" \
+                '.ignored_prs += [{"number": $n, "reason": $r, "added": $d}]' \
+                "$IGNORE_FILE" > /tmp/ignore-updated.json && mv /tmp/ignore-updated.json "$IGNORE_FILE"
+              echo "Added #$NUM ($TITLE) to ignore list (triage rejection)"
+              ADDED=$((ADDED + 1))
+            done
+          fi
+
+          # Collect PRs rejected by Router (skip decision)
+          RESULTS_FILE="/tmp/router-results.json"
+          if [ -f "$RESULTS_FILE" ]; then
+            for ROW in $(jq -c '.prs[] | select(.decision == "skip")' "$RESULTS_FILE"); do
+              NUM=$(echo "$ROW" | jq -r '.number')
+              TITLE=$(echo "$ROW" | jq -r '.title')
+              REASON=$(echo "$ROW" | jq -r '.reason')
+              # Skip if already in ignore list
+              if jq -e --argjson n "$NUM" '.ignored_prs | map(.number) | index($n)' "$IGNORE_FILE" > /dev/null 2>&1; then
+                continue
+              fi
+              jq --argjson n "$NUM" --arg r "Router: $REASON" --arg d "$TODAY" \
+                '.ignored_prs += [{"number": $n, "reason": $r, "added": $d}]' \
+                "$IGNORE_FILE" > /tmp/ignore-updated.json && mv /tmp/ignore-updated.json "$IGNORE_FILE"
+              echo "Added #$NUM ($TITLE) to ignore list (router rejection)"
+              ADDED=$((ADDED + 1))
+            done
+          fi
+
+          if [ "$ADDED" -gt 0 ]; then
+            echo "Auto-ignored $ADDED PRs for future runs"
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add .github/self-healing-ignore.json
+            git commit -m "Auto-ignore $ADDED rejected PRs from self-healing run"
+            git push
+          fi
+
       # ── Step B: Sonnet Drafter (only if full-complexity targets found) ──
       - name: Load Drafter prompt
         if: steps.check-router.outputs.has_targets == 'true'
