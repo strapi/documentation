@@ -75,17 +75,22 @@ jobs:
           # Based on analysis of 100+ merged PR titles in strapi/strapi.
           #
           # EXCLUDED: chore(*), test(*), docs:, security: package,
-          #           *translation(s), *typo, Remove/Update yarn/README
+          #           *translation(s)/i18n translations/locali(s|z)ation,
+          #           *typo, Remove/Update yarn/README,
+          #           dependency upgrades with patch/minor version bumps
           #
           # KEPT (Router decides): feat, fix, enhancement, and anything else
           jq '[.[] | select(
             (.title | test("^chore"; "i") | not) and
             (.title | test("^test[:(\\s]"; "i") | not) and
             (.title | test("^docs:"; "i") | not) and
-            (.title | test("^security: package"; "i") | not) and
-            (.title | test("translation[s]?$"; "i") | not) and
+            (.title | test("^security:"; "i") | not) and
+            (.title | test("translat(ion|e|ing)"; "i") | not) and
+            (.title | test("locali[sz](ation|e)"; "i") | not) and
+            (.title | test("i18n"; "i") | not) and
             (.title | test("typo"; "i") | not) and
-            (.title | test("^(Remove|Update) (yarn|README)"; "i") | not)
+            (.title | test("^(Remove|Update) (yarn|README)"; "i") | not) and
+            (.title | test("(upgrade|bump|update).*(\\d+\\.\\d+\\.\\d+|[1-9]\\d*\\.[1-9]\\d*)"; "i") | not)
           )]' /tmp/unflagged-prs.json > /tmp/filtered-prs.json
 
           FILTERED=$(jq 'length' /tmp/filtered-prs.json)
