@@ -77,6 +77,7 @@ jobs:
             let touchesCloud = false;
             let touchesOther = false;
             let hasNewFile = false;
+            let hasDocContent = false;
             let totalChanges = 0;
 
             /**
@@ -108,9 +109,9 @@ jobs:
               console.log(`  → area: ${area}`);
 
               switch (area) {
-                case 'cms':   touchesCMS = true; break;
-                case 'cloud': touchesCloud = true; break;
-                case 'static': /* neutral — does not influence source */ break;
+                case 'cms':   touchesCMS = true; hasDocContent = true; break;
+                case 'cloud': touchesCloud = true; hasDocContent = true; break;
+                case 'static': hasDocContent = true; break;
                 default:      touchesOther = true; break;
               }
 
@@ -142,9 +143,15 @@ jobs:
 
             // -------------------------------------------------------
             // 5. Determine PR type label
+            //
+            //    Infrastructure-only PRs (.github/, agents/, scripts/,
+            //    src/, config files, etc.) are always "pr: chore",
+            //    regardless of size.
             // -------------------------------------------------------
             let prTypeLabel;
-            if (hasNewFile) {
+            if (!hasDocContent) {
+              prTypeLabel = 'pr: chore';
+            } else if (hasNewFile) {
               prTypeLabel = 'pr: new content';
             } else if (totalChanges > 10) {
               prTypeLabel = 'pr: updated content';
@@ -152,7 +159,7 @@ jobs:
               prTypeLabel = 'pr: chore';
             }
 
-            console.log(`Determined labels: ${sourceLabel}, ${prTypeLabel}`);
+            console.log(`Determined labels: ${sourceLabel}, ${prTypeLabel} (hasDocContent=${hasDocContent})`);
 
             // -------------------------------------------------------
             // 6. Apply labels (skip categories that already have one)
