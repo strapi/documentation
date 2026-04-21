@@ -63,12 +63,20 @@ jobs:
           fi
 
           # 2. Separate PRs with "flag: documentation" label (manually flagged, skip automation)
+          #    Also filter out PRs with "translations" label (i18n work, never needs docs)
           jq '[.[] | select(.labels | index("flag: documentation"))]' /tmp/not-ignored-prs.json > /tmp/flagged-prs.json
-          jq '[.[] | select(.labels | index("flag: documentation") | not)]' /tmp/not-ignored-prs.json > /tmp/unflagged-prs.json
+          jq '[.[] | select(
+            (.labels | index("flag: documentation") | not) and
+            (.labels | index("translations") | not)
+          )]' /tmp/not-ignored-prs.json > /tmp/unflagged-prs.json
           FLAGGED=$(jq 'length' /tmp/flagged-prs.json)
+          TRANSLATIONS=$(jq '[.[] | select(.labels | index("translations"))] | length' /tmp/not-ignored-prs.json)
 
           if [ "$FLAGGED" -gt 0 ]; then
             echo "Label filter: $FLAGGED PRs manually flagged for docs, skipping automation"
+          fi
+          if [ "$TRANSLATIONS" -gt 0 ]; then
+            echo "Label filter: $TRANSLATIONS PRs with 'translations' label, skipping"
           fi
 
           # 2b. Filter out bot PRs (dependabot, renovate, etc.)
