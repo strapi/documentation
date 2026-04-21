@@ -69,7 +69,30 @@ export default (config) => {
 ```
 
 </TabItem>
+
+<TabItem value="mts" label="TypeScript (ESM)">
+
+```ts title="/src/admin/vite.config.mts"
+import { mergeConfig } from "vite";
+
+export default (config) => {
+  // Important: always return the modified config
+  return mergeConfig(config, {
+    resolve: {
+      alias: {
+        "@": "/src",
+      },
+    },
+  });
+};
+```
+
+</TabItem>
 </Tabs>
+
+:::info
+ESM syntax is now supported for Vite configuration files. You can use `.mts` file extension to write your config in TypeScript with ESM syntax, which is the recommended approach as CJS is being phased out by Vite.
+:::
 
 ## Webpack
 
