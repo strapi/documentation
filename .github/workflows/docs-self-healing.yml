@@ -492,7 +492,7 @@ jobs:
           fi
 
       - name: Notify Slack
-        if: always()
+        if: always() && inputs.dry_run != true
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
