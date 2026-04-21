@@ -406,10 +406,18 @@ jobs:
             exit 0
           fi
 
-          # Case 3: Sonnet ran — read its summary
+          # Case 4: Sonnet ran — read its summary
           SUMMARY_FILE="/tmp/self-healing-summary.json"
           if [ ! -f "$SUMMARY_FILE" ]; then
-            echo "**Result:** Sonnet ran but no summary file was produced. Check logs." >> $GITHUB_STEP_SUMMARY
+            # Check for common error patterns in the job
+            JOB_STATUS="${{ job.status }}"
+            if [ "$JOB_STATUS" == "failure" ]; then
+              echo "**Result:** Sonnet ran but no summary file was produced." >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "**Error type:** Check annotations above for details (common causes: max turns reached, API timeout, SDK error)." >> $GITHUB_STEP_SUMMARY
+            else
+              echo "**Result:** Sonnet ran but no summary file was produced. Check logs." >> $GITHUB_STEP_SUMMARY
+            fi
             exit 0
           fi
 
