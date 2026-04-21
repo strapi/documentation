@@ -98,7 +98,10 @@ jobs:
               // Snippets live under docs/ and are shared — treat as CMS by convention
               if (f.includes('/docs/snippets/') || f.startsWith('docs/snippets/')) return 'cms';
 
-              // Everything else (src/, scripts, config, .github/, agents/, etc.)
+              // Site source (components, SCSS, theme) — not infra, can be significant changes
+              if (f.includes('/src/') || f.startsWith('src/')) return 'static';
+
+              // Everything else (scripts, config, .github/, agents/, etc.)
               return 'other';
             }
 
@@ -145,8 +148,8 @@ jobs:
             // 5. Determine PR type label
             //
             //    Infrastructure-only PRs (.github/, agents/, scripts/,
-            //    src/, config files, etc.) are always "pr: chore",
-            //    regardless of size.
+            //    config files, etc.) are always "pr: chore",
+            //    regardless of size. src/ is NOT infra (SCSS, components).
             // -------------------------------------------------------
             let prTypeLabel;
             if (!hasDocContent) {
