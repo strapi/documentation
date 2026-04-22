@@ -26581,7 +26581,7 @@ const MyComponent = () => {
 
 
 ## getFetchClient
-Description: For non-React contexts (services, utility functions, event handlers outside of component trees), use getFetchClient instead:
+Description: For non-React contexts (services, utility functions, event handlers outside of component trees), use getFetchClient instead of useFetchClient:
 (Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#getfetchclient)
 
 Language: JavaScript

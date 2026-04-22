@@ -9662,13 +9662,13 @@ Strapi provides a built-in HTTP client for the admin panel that handles authenti
 
 </Tabs>
 
-## getFetchClient
+## `getFetchClient`
 
-For non-React contexts (services, utility functions, event handlers outside of component trees), use `getFetchClient` instead:
+For non-React contexts (services, utility functions, event handlers outside of component trees), use `getFetchClient` instead of `useFetchClient`:
 
 </Tabs>
 
-## Sending data with post and put {#sending-data}
+## Sending data with `post` and `put` {#sending-data}
 
 The `post` and `put` methods accept a data parameter as their second argument:
 

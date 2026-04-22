@@ -171,7 +171,7 @@ All methods accept an options object with the following properties:
 
 Pass `params` to automatically serialize query strings:
 
-```js
+```js title="my-plugin/admin/src/components/MyComponent.js"
 const { data } = await get('/content-manager/collection-types/api::article.article', {
   params: {
     page: 1,
