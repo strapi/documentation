@@ -148,6 +148,8 @@ Initiating a data transfer depends on whether you want to push data to a remote 
 </TabItem>
 </Tabs>
 
+Once the transfer starts, the command reports live progress in the terminal, including preparation steps, per-stage progress, and timing with an estimated time remaining.
+
 ## Bypass all `transfer` command line prompts
 
 When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is useful for implementing `strapi transfer` programmatically. You must pass the `to-token` option with the transfer token if you use the `--force` option.
