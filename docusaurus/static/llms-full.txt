@@ -6597,7 +6597,7 @@ strapi openapi generate
 
 </Tabs>
 
-## strapi templates:generate
+## `strapi templates:generate`
 
 Create a template from the current Strapi project.
 
@@ -6610,7 +6610,7 @@ strapi templates:generate <path>
 
   Example: `strapi templates:generate ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
 
-## strapi ts:generate-types
+## `strapi ts:generate-types`
 
 Generate [TypeScript](/cms/typescript) typings for the project schemas.
 
@@ -6629,7 +6629,7 @@ strapi ts:generate-types
 Strapi requires the project types to be generated in the `types` directory for them to work. The `--out-dir` option should not be used for most cases. However, it can be useful for cases such as generating a second copy to compare the difference between your existing and updated types after changing your content structure.
 :::
 
-## strapi routes:list
+## `strapi routes:list`
 
 Display a list of all the available [routes](/cms/backend-customization/routes).
 
@@ -6637,7 +6637,7 @@ Display a list of all the available [routes](/cms/backend-customization/routes).
 strapi routes:list
 ```
 
-## strapi policies:list
+## `strapi policies:list`
 
 Display a list of all the registered [policies](/cms/backend-customization/policies).
 
@@ -6645,7 +6645,7 @@ Display a list of all the registered [policies](/cms/backend-customization/polic
 strapi policies:list
 ```
 
-## strapi middlewares:list
+## `strapi middlewares:list`
 
 Display a list of all the registered [middlewares](/cms/backend-customization/middlewares).
 
@@ -6653,7 +6653,7 @@ Display a list of all the registered [middlewares](/cms/backend-customization/mi
 strapi middlewares:list
 ```
 
-## strapi content-types:list
+## `strapi content-types:list`
 
 Display a list of all the existing [content-types](/cms/backend-customization/models).
 
@@ -6661,7 +6661,7 @@ Display a list of all the existing [content-types](/cms/backend-customization/mo
 strapi content-types:list
 ```
 
-## strapi hooks:list
+## `strapi hooks:list`
 
 Display a list of all the available hooks.
 
@@ -6669,7 +6669,7 @@ Display a list of all the available hooks.
 strapi hooks:list
 ```
 
-## strapi controllers:list
+## `strapi controllers:list`
 
 Display a list of all the registered [controllers](/cms/backend-customization/controllers).
 
@@ -6677,7 +6677,7 @@ Display a list of all the registered [controllers](/cms/backend-customization/co
 strapi controllers:list
 ```
 
-## strapi services:list
+## `strapi services:list`
 
 Display a list of all the registered [services](/cms/backend-customization/services).
 
@@ -6685,7 +6685,7 @@ Display a list of all the registered [services](/cms/backend-customization/servi
 strapi services:list
 ```
 
-## strapi telemetry:disable
+## `strapi telemetry:disable`
 
 Disable data collection for the project (see [Usage Information](/cms/usage-information)).
 
@@ -6693,7 +6693,7 @@ Disable data collection for the project (see [Usage Information](/cms/usage-info
 strapi telemetry:disable
 ```
 
-## strapi telemetry:enable
+## `strapi telemetry:enable`
 
 Re-enable data collection for the project after it was disabled (see [Usage Information](/cms/usage-information)).
 
@@ -14065,7 +14065,7 @@ To experience TypeScript-based autocomplete while developing Strapi applications
 
 ## Generate typings for content-types schemas
 
-To generate typings for your project schemas use the [`ts:generate-types` CLI command](/cms/cli#strapi-ts). The `ts:generate-types` command creates the folder `types`, at the project root, which stores the typings for your project. The optional `--debug` flag returns a detailed table of the generated schemas.
+To generate typings for your project schemas use the [`ts:generate-types` CLI command](/cms/cli#strapi-tsgenerate-types). The `ts:generate-types` command creates the folder `types`, at the project root, which stores the typings for your project. The optional `--debug` flag returns a detailed table of the generated schemas.
 
 To use `ts:generate-types`run the following code in a terminal at the project root:
 

@@ -44,7 +44,7 @@ The `strapi install`, `strapi uninstall`, `strapi new`, and `strapi watch-admin`
 
 </details>
 
-## strapi develop
+## `strapi develop`
 
 **Alias**: `dev`
 
@@ -78,14 +78,14 @@ options: [--bundler | --open | --no-watch-admin | --no-build-admin | --polling |
 You should never use this command to run a Strapi application in production.
 :::
 
-## strapi start
+## `strapi start`
 
 Start a Strapi application with auto-reloading disabled.
 
 This command is to run a Strapi application without restarts and file writes, primarily for use in production.
 Certain features such as the Content-type Builder are disabled in the `strapi start` mode because they require application restarts. The `start` command can be prefaced with [environment variables](/cms/configurations/environment#strapi) to customize the application start.
 
-## strapi build
+## `strapi build`
 
 Builds your admin panel.
 
@@ -102,19 +102,19 @@ strapi build
 | `--sourcemaps`      |  -   | Produce sourcemaps (default: false)                      |
 | `--stats`           |  -   | Print build statistics to the console (default: false)   |
 
-## strapi login
+## `strapi login`
 
 Logs in to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-login) documentation).
 
-## strapi logout
+## `strapi logout`
 
 Logs out from Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-logout) documentation).
 
-## strapi deploy
+## `strapi deploy`
 
 Deploys to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-deploy) documentation).
 
-## strapi export
+## `strapi export`
 
 [Exports your project data](/cms/features/data-management). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
 
@@ -157,7 +157,7 @@ Export data as an unpacked directory:
 strapi export --format dir --no-encrypt -f my-export
 ```
 
-## strapi import
+## `strapi import`
 
 [Imports data](/cms/features/data-management) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the file or directory for the import action.
 
@@ -187,7 +187,7 @@ Import from an unpacked export directory:
 strapi import -f ./my-export
 ```
 
-## strapi transfer
+## `strapi transfer`
 
 [Transfers data](/cms/data-management/transfer) between 2 Strapi instances. This command is primarily intended for use between a local instance and a remote instance or 2 remote instances. The `transfer` command requires a Transfer token, which is generated in the destination instance Admin panel. See the [User Guide](/cms/features/data-management#admin-panel-settings) for detailed documentation on creating Transfer tokens.
 
@@ -216,7 +216,7 @@ Either `--to` or `--from` is required, but it's not currently allowed to enter b
 strapi transfer --to http://example.com/admin --to-token my-transfer-token
 ```
 
-## strapi report
+## `strapi report`
 
 Prints out debug information useful for debugging and required when reporting an issue.
 
@@ -365,25 +365,6 @@ Displays a table listing all administrator accounts, including their ID, email, 
 strapi admin:list-users
 ```
 
-## `strapi admin:delete-user`
-
-**Alias** `admin:delete`
-
-Deletes an existing administrator account. The email can be passed as an option or provided interactively if you call the command without options. An interactive confirmation prompt is shown before deletion.
-
-**Example**
-
-```bash
-strapi admin:delete-user --email=chef@strapi.io
-```
-
-**Options**
-
-| Option          | Type   | Description                   | Required |
-| --------------- | ------ | ----------------------------- | -------- |
-| -e, --email     | string | The administrator's email     | Yes      |
-| -h, --help      |        | display help for command      |          |
-
 ## `strapi admin:active-user`
 
 **Alias** `admin:active`
@@ -424,7 +405,26 @@ strapi admin:block-user --email=chef@strapi.io --block=true
 | -b, --block | string | The blocked status to set (`true` or `false`) | Yes      |
 | -h, --help  |        | display help for command                      |          |
 
-## strapi generate
+## `strapi admin:delete-user`
+
+**Alias** `admin:delete`
+
+Deletes an existing administrator account. The email can be passed as an option or provided interactively if you call the command without options. An interactive confirmation prompt is shown before deletion.
+
+**Example**
+
+```bash
+strapi admin:delete-user --email=chef@strapi.io
+```
+
+**Options**
+
+| Option          | Type   | Description                   | Required |
+| --------------- | ------ | ----------------------------- | -------- |
+| -e, --email     | string | The administrator's email     | Yes      |
+| -h, --help      |        | display help for command      |          |
+
+## `strapi generate`
 
 Generate APIs, [controllers](/cms/backend-customization/controllers), [content-types](/cms/backend-customization/models), [policies](/cms/backend-customization/policies), [middlewares](/cms/backend-customization/middlewares), [services](/cms/backend-customization/services), and [migrations](/cms/database-migrations).
 
@@ -552,7 +552,7 @@ You will also have to define various types of names. The following table explain
 
 </ExpandableContent>
 
-## strapi openapi generate
+## `strapi openapi generate`
 
 [Generate OpenAPI specifications](/cms/api/openapi) for your Strapi application.
 
@@ -696,7 +696,7 @@ Re-enable data collection for the project after it was disabled (see [Usage Info
 strapi telemetry:enable
 ```
 
-## strapi console
+## `strapi console`
 
 Start the server and evaluate commands in your application in real time.
 
@@ -730,7 +730,7 @@ Use this environment to test code and inspect your project with direct access to
 Strapi uses a Node.js feature called <ExternalLink to="https://nodejs.org/api/async_context.html" text="AsyncLocalStorage"/> to make the context available anywhere.
 :::
 
-## strapi version
+## `strapi version`
 
 Print the currently installed Strapi version.
 It will output the current globally installed version if this command is strapi is installed globally, or the current version of Strapi within a Strapi project if the command is run from a given folder containing a Strapi project.
@@ -739,7 +739,7 @@ It will output the current globally installed version if this command is strapi 
 strapi version
 ```
 
-## strapi help
+## `strapi help`
 
 List CLI commands.
 
