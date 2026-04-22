@@ -23694,27 +23694,19 @@ Language: Bash
 File path: N/A
 
 ```bash
-    yarn create strapi
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
     pnpm create strapi
 ```
 
 
 ## Running Strapi
-Description: To start the Strapi application, run the following command in the project folder:
+Description: Code example from "Running Strapi"
 (Source: https://docs.strapi.io/cms/installation/cli#running-strapi)
 
 Language: Bash
 File path: N/A
 
 ```bash
-yarn develop
+pnpm develop
 ```
 
 ---
@@ -32950,14 +32942,6 @@ cd my-strapi-project && npm run develop
 Description: If the server for your local Strapi project is running, which should be the case if you followed this tutorial so far, press Ctrl-C to stop the server.
 (Source: https://docs.strapi.io/cms/quick-start#part-c-deploy-to-strapi-cloud)
 
-Language: Bash
-File path: N/A
-
-```bash
-      yarn strapi deploy
-```
-
----
 Language: Bash
 File path: N/A
 
