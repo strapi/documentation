@@ -474,3 +474,7 @@ throw new errors.PolicyError('Something went wrong', { policy: 'my-policy' });
 </TabItem>
 
 </Tabs>
+
+:::tip
+For handling HTTP errors in the admin panel (e.g., in plugins making API requests), use the `isFetchError` utility and the `FetchError` class from Strapi's built-in fetch client. See [Admin Panel API: Fetch client > Error handling](/cms/plugins-development/admin-fetch-client#error-handling) for details.
+:::

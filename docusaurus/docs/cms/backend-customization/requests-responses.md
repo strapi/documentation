@@ -200,3 +200,7 @@ module.exports = {
 :::note
 Strapi uses a Node.js feature called <ExternalLink to="https://nodejs.org/docs/latest-v16.x/api/async_context.html#class-asynclocalstorage" text="AsyncLocalStorage"/> to make the context available anywhere.
 :::
+
+:::tip
+For making authenticated HTTP requests from the admin panel in plugins, see [Admin Panel API: Fetch client](/cms/plugins-development/admin-fetch-client).
+:::
