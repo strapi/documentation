@@ -9660,13 +9660,24 @@ Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client
 
 Strapi provides a built-in HTTP client for the admin panel that manages authentication automatically. Plugin developers should use it instead of raw `fetch` or `axios`.
 
+Both `useFetchClient` and `getFetchClient` are exported from `@strapi/strapi/admin` and expose the same `get`, `post`, `put`, and `del` methods. Choose based on where the call is made from:
+
+| Entry point | Use when |
+|---|---|
+| [`useFetchClient`](#inside-a-react-component) | Inside a React component (auto-cancels requests on unmount) |
+| [`getFetchClient`](#outside-a-react-component) | Services, utility functions, event handlers, or any non-React code |
+
 </Tabs>
 
-## `getFetchClient`
+### Outside a React component {#outside-a-react-component}
 
-Call `getFetchClient` from any non-React context to get the same four methods. The typical pattern is to wrap calls inside exported helper functions that the rest of the plugin imports:
+`getFetchClient` works in any JavaScript context. The typical pattern is to wrap calls inside exported helper functions that the rest of the plugin imports:
 
 </Tabs>
+
+:::note
+The `del` method is named this way because `delete` is a reserved word in JavaScript.
+:::
 
 ## Sending data with `post` and `put` {#sending-data}
 
@@ -9678,7 +9689,7 @@ The `post` and `put` methods accept a payload as their second argument:
 When sending `FormData` (for example, file uploads), the fetch client automatically removes the `Content-Type` header so the browser can set the correct multipart boundary.
 :::
 
-## Request options {#options}
+## Configuring requests {#options}
 
 All methods accept an options object as their last argument:
 
@@ -9690,11 +9701,11 @@ All methods accept an options object as their last argument:
 | `validateStatus` | `(status: number) => boolean \| null` | Custom function that determines which HTTP statuses should throw. |
 | `responseType` | `'json' \| 'blob' \| 'text' \| 'arrayBuffer'` | Controls response parsing (see [Response types](#response-types)). Only effective on `get`. |
 
-### Using query parameters {#params}
+### Query parameters {#params}
 
 Pass `params` to serialize query strings automatically:
 
-```js
+```js title="my-plugin/admin/src/components/MyComponent.js"
 const { data } = await get('/content-manager/collection-types/api::article.article', {
   params: {
     page: 1,
@@ -9704,7 +9715,7 @@ const { data } = await get('/content-manager/collection-types/api::article.artic
 });
 ```
 
-## Response types {#response-types}
+### Response types {#response-types}
 
 By default, responses are parsed as JSON. The `get` method accepts a `responseType` option to handle non-JSON responses such as file downloads, CSV exports, or binary data:
 
@@ -9719,7 +9730,7 @@ Non-JSON responses include `status` and `headers` in the return object:
 
 </Tabs>
 
-## Error handling {#error-handling}
+## Handling errors {#error-handling}
 
 The fetch client throws a `FetchError` when a request fails. Use the `isFetchError` utility to check errors safely:
 
@@ -10123,7 +10134,7 @@ Use the following table to find which function to use and where to declare it. C
 | Add a reducer                            | [`addReducers()`](/cms/plugins-development/admin-redux-store#adding-custom-reducers)                      | [`register()`](#register)   |
 | Create a hook                          | [`createHook()`](/cms/plugins-development/admin-hooks)                    | [`register()`](#register)   |
 | Register a hook                          | [`registerHook()`](/cms/plugins-development/admin-hooks)                    | [`bootstrap()`](#bootstrap)   |
-| Make authenticated HTTP requests | [`useFetchClient()`](/cms/plugins-development/admin-fetch-client) / [`getFetchClient()`](/cms/plugins-development/admin-fetch-client#getfetchclient) | Any |
+| Make authenticated HTTP requests | [`useFetchClient()`](/cms/plugins-development/admin-fetch-client) / [`getFetchClient()`](/cms/plugins-development/admin-fetch-client#outside-a-react-component) | Any |
 | Provide translations for the plugin admin interface | [`registerTrads()`](/cms/plugins-development/admin-localization#registertrads) | `registerTrads()` |
 
 <br/>

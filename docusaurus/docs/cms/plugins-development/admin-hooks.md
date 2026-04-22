@@ -2,7 +2,7 @@
 title: Admin hooks
 description: Create and register hooks in Strapi plugins to let other plugins add personalized behavior to your application.
 pagination_prev: cms/plugins-development/admin-redux-store
-pagination_next: cms/plugins-development/admin-localization
+pagination_next: cms/plugins-development/admin-fetch-client
 displayed_sidebar: cmsSidebar
 tags:
 - admin panel

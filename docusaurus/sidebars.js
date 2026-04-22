@@ -501,6 +501,11 @@ const sidebars = {
           },
           items: [
             'cms/plugins-development/admin-panel-api',
+            'cms/plugins-development/admin-navigation-settings',
+            'cms/plugins-development/content-manager-apis',
+            'cms/plugins-development/admin-injection-zones',
+            'cms/plugins-development/admin-redux-store',
+            'cms/plugins-development/admin-hooks',
             {
               type: 'doc',
               id: 'cms/plugins-development/admin-fetch-client',
@@ -509,11 +514,6 @@ const sidebars = {
                 new: true,
               },
             },
-            'cms/plugins-development/admin-navigation-settings',
-            'cms/plugins-development/content-manager-apis',
-            'cms/plugins-development/admin-injection-zones',
-            'cms/plugins-development/admin-redux-store',
-            'cms/plugins-development/admin-hooks',
             'cms/plugins-development/admin-localization',
           ],
         },

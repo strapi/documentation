@@ -1,7 +1,7 @@
 ---
 title: Admin localization
 description: Provide translations for your Strapi plugin's admin panel interface using registerTrads and react-intl.
-pagination_prev: cms/plugins-development/admin-hooks
+pagination_prev: cms/plugins-development/admin-fetch-client
 pagination_next: cms/plugins-development/server-api
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
