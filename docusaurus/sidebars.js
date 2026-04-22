@@ -506,6 +506,14 @@ const sidebars = {
             'cms/plugins-development/admin-redux-store',
             'cms/plugins-development/admin-hooks',
             'cms/plugins-development/admin-localization',
+            {
+              type: 'doc',
+              id: 'cms/plugins-development/admin-fetch-client',
+              label: 'Fetch client',
+              customProps: {
+                new: true,
+              },
+            },
           ],
         },
         {

@@ -226,6 +226,7 @@ Use the following table to find which function to use and where to declare it. C
 | Create a hook                          | [`createHook()`](/cms/plugins-development/admin-hooks)                    | [`register()`](#register)   |
 | Register a hook                          | [`registerHook()`](/cms/plugins-development/admin-hooks)                    | [`bootstrap()`](#bootstrap)   |
 | Provide translations for the plugin admin interface | [`registerTrads()`](/cms/plugins-development/admin-localization#registertrads) | `registerTrads()` |
+| Make authenticated HTTP requests | [`useFetchClient()`](/cms/plugins-development/admin-fetch-client) / [`getFetchClient()`](/cms/plugins-development/admin-fetch-client#outside-a-react-component) | Any |
 
 <br/>
 Click on any of the following cards to get more details about a specific topic:
@@ -237,6 +238,7 @@ Click on any of the following cards to get more details about a specific topic:
 <CustomDocCard icon="database" title="Redux store & reducers" description="Add custom reducers, read state, dispatch actions, and subscribe to changes in the Redux store." link="/cms/plugins-development/admin-redux-store" />
 <CustomDocCard icon="git-branch" title="Hooks" description="Create and register hooks to let other plugins add personalized behavior." link="/cms/plugins-development/admin-hooks" />
 <CustomDocCard icon="globe" title="Localization" description="Provide translations for your plugin's admin interface using registerTrads and react-intl." link="/cms/plugins-development/admin-localization" />
+<CustomDocCard icon="cloud-arrow-down" title="Fetch client" description="Make authenticated HTTP requests from the admin panel using useFetchClient and getFetchClient." link="/cms/plugins-development/admin-fetch-client" />
 </CustomDocCardsWrapper>
 
 :::tip Replacing the WYSIWYG
