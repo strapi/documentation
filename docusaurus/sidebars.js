@@ -51,13 +51,13 @@ const sidebars = {
     {
       // Strapi AI
       type: 'category',
-      label: 'Strapi AI',
+      label: 'AI',
       collapsible: false,
       className: 'category-cms-ai',
       items: [
         {
           type: 'doc',
-          label: 'AI for content management',
+          label: 'Strapi AI for content management',
           id: 'cms/ai/cms',
           customProps: {
             new: true,
@@ -65,7 +65,7 @@ const sidebars = {
         },
         {
           type: 'doc',
-          label: 'AI for developers',
+          label: 'AI for developers and docs',
           id: 'cms/ai/developer-tools',
           customProps: {
             new: true,
