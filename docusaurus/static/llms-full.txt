@@ -6501,7 +6501,9 @@ The `strapi install`, `strapi uninstall`, `strapi new`, and `strapi watch-admin`
 
 </details>
 
-## strapi develop
+## Development
+
+### `strapi develop`
 
 **Alias**: `dev`
 
@@ -6535,14 +6537,14 @@ options: [--bundler | --open | --no-watch-admin | --no-build-admin | --polling |
 You should never use this command to run a Strapi application in production.
 :::
 
-## strapi start
+### `strapi start`
 
 Start a Strapi application with auto-reloading disabled.
 
 This command is to run a Strapi application without restarts and file writes, primarily for use in production.
 Certain features such as the Content-type Builder are disabled in the `strapi start` mode because they require application restarts. The `start` command can be prefaced with [environment variables](/cms/configurations/environment#strapi) to customize the application start.
 
-## strapi build
+### `strapi build`
 
 Builds your admin panel.
 
@@ -6559,29 +6561,17 @@ strapi build
 | `--sourcemaps`      |  -   | Produce sourcemaps (default: false)                      |
 | `--stats`           |  -   | Print build statistics to the console (default: false)   |
 
-## strapi login
+### `strapi console`
 
-Logs in to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-login) documentation).
-
-## strapi logout
-
-Logs out from Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-logout) documentation).
-
-## strapi deploy
-
-Deploys to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-deploy) documentation).
-
-## strapi export
-
-[Exports your project data](/cms/features/data-management). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
+Start the server and evaluate commands in your application in real time.
 
 ```bash
-strapi export
+strapi console
 ```
 
-The archive contains folders such as `configuration`, `entities`, `links`, and `schemas` with data stored in 
+The `console` command compiles and loads your application, starts the server in the background, then opens a Node.js 
 
-## strapi openapi generate
+### `strapi openapi generate`
 
 [Generate OpenAPI specifications](/cms/api/openapi) for your Strapi application.
 
@@ -6593,11 +6583,11 @@ strapi openapi generate
 | ---------- | -------- | --------------------- | ------------------------------------------------ |
 | `--output` | `string` | `./openapi-spec.json` | Output file path for the generated specification |
 
-### Examples
+#### Examples
 
 </Tabs>
 
-## `strapi templates:generate`
+### `strapi templates:generate`
 
 Create a template from the current Strapi project.
 
@@ -6610,7 +6600,7 @@ strapi templates:generate <path>
 
   Example: `strapi templates:generate ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
 
-## `strapi ts:generate-types`
+### `strapi ts:generate-types`
 
 Generate [TypeScript](/cms/typescript) typings for the project schemas.
 
@@ -6629,7 +6619,9 @@ strapi ts:generate-types
 Strapi requires the project types to be generated in the `types` directory for them to work. The `--out-dir` option should not be used for most cases. However, it can be useful for cases such as generating a second copy to compare the difference between your existing and updated types after changing your content structure.
 :::
 
-## `strapi routes:list`
+## Listing
+
+### `strapi routes:list`
 
 Display a list of all the available [routes](/cms/backend-customization/routes).
 
@@ -6637,7 +6629,7 @@ Display a list of all the available [routes](/cms/backend-customization/routes).
 strapi routes:list
 ```
 
-## `strapi policies:list`
+### `strapi policies:list`
 
 Display a list of all the registered [policies](/cms/backend-customization/policies).
 
@@ -6645,7 +6637,7 @@ Display a list of all the registered [policies](/cms/backend-customization/polic
 strapi policies:list
 ```
 
-## `strapi middlewares:list`
+### `strapi middlewares:list`
 
 Display a list of all the registered [middlewares](/cms/backend-customization/middlewares).
 
@@ -6653,7 +6645,7 @@ Display a list of all the registered [middlewares](/cms/backend-customization/mi
 strapi middlewares:list
 ```
 
-## `strapi content-types:list`
+### `strapi content-types:list`
 
 Display a list of all the existing [content-types](/cms/backend-customization/models).
 
@@ -6661,7 +6653,7 @@ Display a list of all the existing [content-types](/cms/backend-customization/mo
 strapi content-types:list
 ```
 
-## `strapi hooks:list`
+### `strapi hooks:list`
 
 Display a list of all the available hooks.
 
@@ -6669,7 +6661,7 @@ Display a list of all the available hooks.
 strapi hooks:list
 ```
 
-## `strapi controllers:list`
+### `strapi controllers:list`
 
 Display a list of all the registered [controllers](/cms/backend-customization/controllers).
 
@@ -6677,79 +6669,12 @@ Display a list of all the registered [controllers](/cms/backend-customization/co
 strapi controllers:list
 ```
 
-## `strapi services:list`
+### `strapi services:list`
 
 Display a list of all the registered [services](/cms/backend-customization/services).
 
 ```bash
 strapi services:list
-```
-
-## `strapi telemetry:disable`
-
-Disable data collection for the project (see [Usage Information](/cms/usage-information)).
-
-```bash
-strapi telemetry:disable
-```
-
-## `strapi telemetry:enable`
-
-Re-enable data collection for the project after it was disabled (see [Usage Information](/cms/usage-information)).
-
-```bash
-strapi telemetry:enable
-```
-
-## strapi console
-
-Start the server and evaluate commands in your application in real time.
-
-```bash
-strapi console
-```
-
-The `console` command compiles and loads your application, starts the server in the background, then opens a Node.js . The REPL provides a prompt based on your application's name and gives access to all Strapi APIs through the global `strapi` object. Closing the REPL by pressing `Ctrl-C` twice gracefully stops the server.
-
-### Available helpers
-
-The `strapi` object exposes the following getters and methods to interact with your application:
-
-- `strapi.services` and `strapi.service(uid)` to use [services](/cms/backend-customization/services)
-- `strapi.controllers` and `strapi.controller(uid)` to call [controllers](/cms/backend-customization/controllers)
-- `strapi.contentTypes` and `strapi.contentType(uid)` to inspect [content-types](/cms/backend-customization/models)
-- `strapi.components` to list components
-- `strapi.policies` and `strapi.policy(name)` for [policies](/cms/backend-customization/policies)
-- `strapi.middlewares` and `strapi.middleware(name)` for [middlewares](/cms/backend-customization/middlewares)
-- `strapi.plugins` and `strapi.plugin(name)` for plugins
-- `strapi.hooks` and `strapi.hook(name)` for hooks
-- `strapi.apis` and `strapi.api(name)` for APIs
-- `strapi.db` to directly query the database through the [Query Engine API](/cms/api/query-engine), for example as follows:<br/><br/>
-  ```js
-  await strapi.db.query('api::article.article').findMany();
-  ```
-
-Use this environment to test code and inspect your project with direct access to all Strapi APIs.
-
-:::note
-Strapi uses a Node.js feature called  to make the context available anywhere.
-:::
-
-## strapi version
-
-Print the currently installed Strapi version.
-It will output the current globally installed version if this command is strapi is installed globally, or the current version of Strapi within a Strapi project if the command is run from a given folder containing a Strapi project.
-
-```bash
-strapi version
-```
-
-## strapi help
-
-List CLI commands.
-
-```bash
-strapi help
 ```
 
 

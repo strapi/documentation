@@ -14628,6 +14628,30 @@ strapi build
 ```
 
 
+## strapi console
+Description: Start the server and evaluate commands in your application in real time.
+(Source: https://docs.strapi.io/cms/cli#strapi-console)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi console
+```
+
+
+## Available helpers
+Description: strapi.middlewares and strapi.middleware(name) for middlewares - strapi.plugins and strapi.plugin(name) for plugins - strapi.hooks and strapi.hook(name) for hooks - strapi.apis and strapi.api(name) for APIs - strapi.db to directly query the database through the Query Engine API, for example as follows:
+(Source: https://docs.strapi.io/cms/cli#available-helpers)
+
+Language: JavaScript
+File path: N/A
+
+```js
+  await strapi.db.query('api::article.article').findMany();
+```
+
+
 ## strapi export
 Description: Exports your project data.
 (Source: https://docs.strapi.io/cms/cli#strapi-export)
@@ -14718,6 +14742,54 @@ strapi report --all
 ```
 
 
+## strapi telemetry:disable
+Description: Disable data collection for the project (see Usage Information).
+(Source: https://docs.strapi.io/cms/cli#strapi-telemetry-disable)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi telemetry:disable
+```
+
+
+## strapi telemetry:enable
+Description: Re-enable data collection for the project after it was disabled (see Usage Information).
+(Source: https://docs.strapi.io/cms/cli#strapi-telemetry-enable)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi telemetry:enable
+```
+
+
+## strapi version
+Description: Print the currently installed Strapi version.
+(Source: https://docs.strapi.io/cms/cli#strapi-version)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi version
+```
+
+
+## strapi help
+Description: List CLI commands.
+(Source: https://docs.strapi.io/cms/cli#strapi-help)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi help
+```
+
+
 ## strapi configuration:dump
 Description: The dump format will be a JSON array.
 (Source: https://docs.strapi.io/cms/cli#strapi-configuration-dump)
@@ -14787,18 +14859,6 @@ strapi admin:list-users
 ```
 
 
-## strapi admin:delete-user
-Description: Example
-(Source: https://docs.strapi.io/cms/cli#strapi-admin-delete-user)
-
-Language: Bash
-File path: N/A
-
-```bash
-strapi admin:delete-user --email=chef@strapi.io
-```
-
-
 ## strapi admin:active-user
 Description: Example
 (Source: https://docs.strapi.io/cms/cli#strapi-admin-active-user)
@@ -14820,6 +14880,18 @@ File path: N/A
 
 ```bash
 strapi admin:block-user --email=chef@strapi.io --block=true
+```
+
+
+## strapi admin:delete-user
+Description: Example
+(Source: https://docs.strapi.io/cms/cli#strapi-admin-delete-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi admin:delete-user --email=chef@strapi.io
 ```
 
 
@@ -14928,7 +15000,7 @@ Description: Display a list of all the registered middlewares.
 (Source: https://docs.strapi.io/cms/cli#strapi-middlewares-list)
 
 Language: Bash
-File path: ./openapi-spec.js
+File path: N/A
 
 ```bash
 strapi middlewares:list
@@ -14980,78 +15052,6 @@ File path: N/A
 
 ```bash
 strapi services:list
-```
-
-
-## strapi telemetry:disable
-Description: Disable data collection for the project (see Usage Information).
-(Source: https://docs.strapi.io/cms/cli#strapi-telemetry-disable)
-
-Language: Bash
-File path: N/A
-
-```bash
-strapi telemetry:disable
-```
-
-
-## strapi telemetry:enable
-Description: Re-enable data collection for the project after it was disabled (see Usage Information).
-(Source: https://docs.strapi.io/cms/cli#strapi-telemetry-enable)
-
-Language: Bash
-File path: N/A
-
-```bash
-strapi telemetry:enable
-```
-
-
-## strapi console
-Description: Start the server and evaluate commands in your application in real time.
-(Source: https://docs.strapi.io/cms/cli#strapi-console)
-
-Language: Bash
-File path: N/A
-
-```bash
-strapi console
-```
-
-
-## Available helpers
-Description: strapi.middlewares and strapi.middleware(name) for middlewares - strapi.plugins and strapi.plugin(name) for plugins - strapi.hooks and strapi.hook(name) for hooks - strapi.apis and strapi.api(name) for APIs - strapi.db to directly query the database through the Query Engine API, for example as follows:
-(Source: https://docs.strapi.io/cms/cli#available-helpers)
-
-Language: JavaScript
-File path: N/A
-
-```js
-  await strapi.db.query('api::article.article').findMany();
-```
-
-
-## strapi version
-Description: Print the currently installed Strapi version.
-(Source: https://docs.strapi.io/cms/cli#strapi-version)
-
-Language: Bash
-File path: N/A
-
-```bash
-strapi version
-```
-
-
-## strapi help
-Description: List CLI commands.
-(Source: https://docs.strapi.io/cms/cli#strapi-help)
-
-Language: Bash
-File path: N/A
-
-```bash
-strapi help
 ```
 
 
