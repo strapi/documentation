@@ -501,6 +501,14 @@ const sidebars = {
           },
           items: [
             'cms/plugins-development/admin-panel-api',
+            {
+              type: 'doc',
+              id: 'cms/plugins-development/admin-fetch-client',
+              label: 'Fetch client',
+              customProps: {
+                new: true,
+              },
+            },
             'cms/plugins-development/admin-navigation-settings',
             'cms/plugins-development/content-manager-apis',
             'cms/plugins-development/admin-injection-zones',
