@@ -201,37 +201,6 @@ module.exports = {
 Strapi uses a Node.js feature called <ExternalLink to="https://nodejs.org/docs/latest-v16.x/api/async_context.html#class-asynclocalstorage" text="AsyncLocalStorage"/> to make the context available anywhere.
 :::
 
-## Using the fetch client in plugins
-
-<!-- TODO: Verify placement — this section documents admin panel frontend utilities (useFetchClient/getFetchClient). Consider moving to a dedicated plugin development hooks reference page. -->
-
-The `useFetchClient` hook from `@strapi/strapi/admin` allows plugin developers to make authenticated HTTP requests from the admin panel.
-
-The `get` method accepts a `responseType` option that controls how the response body is parsed. By default, responses are parsed as JSON. Use `responseType` when handling non-JSON responses such as file downloads, CSV exports, or binary data.
-
-| `responseType` value | Response parsed as |
-|---|---|
-| `json` | JSON object (default) |
-| `blob` | `Blob` |
-| `text` | Plain text string |
-| `arrayBuffer` | `ArrayBuffer` |
-
-The following example fetches a resource and returns it as a `Blob`:
-
-<!-- unverified: responseType values sourced from strapi/strapi PR #25974 body; useFetchClient import confirmed in migration docs at docusaurus/docs/cms/migration/v4-to-v5/additional-resources/helper-plugin.md -->
-```js
-import { useFetchClient } from '@strapi/strapi/admin';
-
-const MyComponent = () => {
-  const { get } = useFetchClient();
-
-  const downloadFile = async (url) => {
-    const { data: blob, headers } = await get(url, { responseType: 'blob' });
-    // Process the blob, e.g. trigger a file download
-  };
-};
-```
-
 :::tip
-For non-React contexts, use `getFetchClient` from `@strapi/strapi/admin` instead of the `useFetchClient` hook.
+For making authenticated HTTP requests from the admin panel in plugins, see [Admin Panel API: Fetch client](/cms/plugins-development/admin-fetch-client).
 :::
