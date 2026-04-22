@@ -237,8 +237,8 @@ Click on any of the following cards to get more details about a specific topic:
 <CustomDocCard icon="syringe" title="Injection zones" description="Inject React components into predefined or custom areas of the admin panel." link="/cms/plugins-development/admin-injection-zones" />
 <CustomDocCard icon="database" title="Redux store & reducers" description="Add custom reducers, read state, dispatch actions, and subscribe to changes in the Redux store." link="/cms/plugins-development/admin-redux-store" />
 <CustomDocCard icon="git-branch" title="Hooks" description="Create and register hooks to let other plugins add personalized behavior." link="/cms/plugins-development/admin-hooks" />
-<CustomDocCard icon="cloud-arrow-down" title="Fetch client" description="Make authenticated HTTP requests from the admin panel using useFetchClient and getFetchClient." link="/cms/plugins-development/admin-fetch-client" />
 <CustomDocCard icon="globe" title="Localization" description="Provide translations for your plugin's admin interface using registerTrads and react-intl." link="/cms/plugins-development/admin-localization" />
+<CustomDocCard icon="cloud-arrow-down" title="Fetch client" description="Make authenticated HTTP requests from the admin panel using useFetchClient and getFetchClient." link="/cms/plugins-development/admin-fetch-client" />
 </CustomDocCardsWrapper>
 
 :::tip Replacing the WYSIWYG
