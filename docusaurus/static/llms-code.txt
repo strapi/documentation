@@ -26542,9 +26542,9 @@ File path: N/A
 # Admin fetch client
 Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client
 
-## useFetchClient
-Description: Call useFetchClient inside a React component to get the four methods.
-(Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#usefetchclient)
+## Inside a React component
+Description: useFetchClient is a React hook that automatically provides an AbortSignal tied to the component lifecycle, so requests are cancelled when the component unmounts:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#inside-a-react-component)
 
 Language: JavaScript
 File path: my-plugin/admin/src/components/MyComponent.js
@@ -26553,7 +26553,7 @@ File path: my-plugin/admin/src/components/MyComponent.js
 import { useFetchClient } from '@strapi/strapi/admin';
 
 const MyComponent = () => {
-  const { get, post, put, del } = useFetchClient();
+  const { get } = useFetchClient();
 
   const fetchData = async () => {
     const { data } = await get('/my-plugin/my-endpoint');
@@ -26570,7 +26570,7 @@ File path: my-plugin/admin/src/components/MyComponent.tsx
 import { useFetchClient } from '@strapi/strapi/admin';
 
 const MyComponent = () => {
-  const { get, post, put, del } = useFetchClient();
+  const { get } = useFetchClient();
 
   const fetchData = async () => {
     const { data } = await get('/my-plugin/my-endpoint');
@@ -26580,9 +26580,9 @@ const MyComponent = () => {
 ```
 
 
-## getFetchClient
-Description: Call getFetchClient from any non-React context to get the same four methods.
-(Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#getfetchclient)
+## Outside a React component
+Description: getFetchClient works in any JavaScript context.
+(Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#outside-a-react-component)
 
 Language: JavaScript
 File path: my-plugin/admin/src/utils/api.js
@@ -26590,7 +26590,7 @@ File path: my-plugin/admin/src/utils/api.js
 ```js
 import { getFetchClient } from '@strapi/strapi/admin';
 
-const { get, post, put, del } = getFetchClient();
+const { get, del } = getFetchClient();
 
 export const fetchItems = async () => {
   const { data } = await get('/my-plugin/items');
@@ -26609,7 +26609,7 @@ File path: my-plugin/admin/src/utils/api.ts
 ```ts
 import { getFetchClient } from '@strapi/strapi/admin';
 
-const { get, post, put, del } = getFetchClient();
+const { get, del } = getFetchClient();
 
 export const fetchItems = async () => {
   const { data } = await get('/my-plugin/items');
@@ -26670,12 +26670,12 @@ export const updateItem = async (id: string, payload: Record<string, unknown>) =
 ```
 
 
-## Using query parameters
+## Query parameters
 Description: Pass params to serialize query strings automatically:
 (Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#params)
 
 Language: JavaScript
-File path: N/A
+File path: my-plugin/admin/src/components/MyComponent.js
 
 ```js
 const { data } = await get('/content-manager/collection-types/api::article.article', {
@@ -26726,7 +26726,7 @@ const DownloadButton = () => {
 ```
 
 
-## Error handling
+## Handling errors
 Description: The fetch client throws a FetchError when a request fails.
 (Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#error-handling)
 
