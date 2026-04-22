@@ -2,7 +2,7 @@
 title: Server API for plugins
 description: Overview of the Strapi Server API for plugins, with entry file, lifecycle hooks, routes, controllers, services, policies, middlewares, and configuration.
 sidebar_label: Server API overview
-pagination_prev: cms/plugins-development/admin-localization
+pagination_prev: cms/plugins-development/admin-fetch-client
 pagination_next: cms/plugins-development/server-lifecycle
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4

@@ -22,7 +22,7 @@ Strapi is **headless** <HeadlessCms />. The admin panel is completely separate f
 
 When [developing a Strapi plugin](/cms/plugins-development/developing-plugins) you might want to pass data from the `/server` to the `/admin` folder. Within the `/server` folder you have access to the Strapi object and can do database queries whereas in the `/admin` folder you can't.
 
-Passing data from the `/server` to the `/admin` folder can be done using the admin panel's Axios instance:
+Passing data from the `/server` to the `/admin` folder can be done using the admin panel's built-in [fetch client](/cms/plugins-development/admin-fetch-client):
 
 <MermaidWithFallback
     chartFile="/diagrams/pass-data.mmd"
@@ -82,11 +82,13 @@ Any request sent from an admin panel component to the endpoint for which we defi
 So for instance, if you create an `/admin/src/api/foobar.js` file and copy and paste the following code example:
 
 ```js title="/my-plugin/admin/src/api/foobar.js"
-import axios from 'axios';
+import { getFetchClient } from '@strapi/strapi/admin';
+
+const { get } = getFetchClient();
 
 const foobarRequests = {
   getFoobar: async () => {
-    const data = await axios.get(`/my-plugin/pass-data`);
+    const { data } = await get('/my-plugin/pass-data');
     return data;
   },
 };
@@ -103,8 +105,8 @@ import foobarRequests from "../../api/foobar";
 const [foobar, setFoobar] = useState([]);
 // …
 useEffect(() => {
-  foobarRequests.getFoobar().then(res => {
-    setFoobar(res.data);
+  foobarRequests.getFoobar().then(data => {
+    setFoobar(data);
   });
 }, [setFoobar]);
 // …
