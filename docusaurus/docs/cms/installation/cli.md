@@ -57,19 +57,6 @@ Follow the steps below to create a new Strapi project, being sure to use the app
     
     </TabItem>
 
-    <TabItem value="yarn" label="Yarn">
-
-    ```bash
-    yarn create strapi
-   
-    ```
-
-    :::note
-    Yarn does not support passing the version tag such as `@latest`, as opposed to npm. If you experience unexpected results with yarn and the latest version of Strapi is not installed, you might need to <ExternalLink to="https://yarnpkg.com/cli/cache/clean" text="run the `yarn cache clean` command"/> to clean your Yarn cache.
-    :::
-
-    </TabItem>
-
     <TabItem value="pnpm" label="pnpm">
 
     :::caution
@@ -111,7 +98,6 @@ The above installation guide only covers the basic installation option using the
 | `--ts`<br/>`--typescript`           | Initialize the project with TypeScript (default)                                                                                                                                                                                                |
 | `--js`<br/>`--javascript`           | Initialize the project with JavaScript                                                                                                                                                                                                          |
 | `--use-npm`                         | Force the usage of <ExternalLink to="https://www.npmjs.com/" text="npm"/> as the project package manager                                                                                                                                        |
-| `--use-yarn`                        | Force the usage of <ExternalLink to="https://yarnpkg.com/" text="yarn"/> as the project package manager                                                                                                                                         |
 | `--use-pnpm`                        | Force the usage of <ExternalLink to="https://pnpm.io/" text="pnpm"/> as the project package manager                                                                                                                                             |
 | `--install`                         | Install all dependencies, skipping the related CLI prompt                                                                                                                                                                                       |
 | `--no-install`                      | Do not install all dependencies, skipping the related CLI prompt                                                                                                                                                                                |
@@ -135,7 +121,7 @@ The above installation guide only covers the basic installation option using the
 | `--quickstart`                      | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode. Use `--non-interactive` instead.                                                                                                                               |
 
 :::note Notes
-* If you do not pass a `--use-yarn|npm|pnpm` option, the installation script will use whatever package manager was used with the create command to install all dependencies (e.g., `npm create strapi` will install all the project's dependencies with npm).
+* If you do not pass a `--use-npm|pnpm` option, the installation script will use whatever package manager was used with the create command to install all dependencies (e.g., `npm create strapi` will install all the project's dependencies with npm).
 * For additional information about database configuration, please refer to the [database configuration documentation](/cms/configurations/database).
 * Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi@experimental`. Please use these experimental builds at your own risk. It is not recommended to use them in production.
 :::
@@ -181,13 +167,13 @@ To start the Strapi application, run the following command in the project folder
 
 <Tabs groupId="yarn-npm">
 
-<TabItem value="yarn" label="Yarn">
+<!-- <TabItem value="pnpm" label="pnpm">
 
 ```bash
-yarn develop
+pnpm develop
 ```
 
-</TabItem>
+</TabItem> -->
 
 <TabItem value="npm" label="NPM">
 
