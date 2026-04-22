@@ -17,18 +17,40 @@ tags:
 
 # Command Line Interface (CLI)
 
+<Tldr>
+
 Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. The CLI works with both the `yarn` and `npm` package managers.
+
+</Tldr>
+
+Commands on the present page are grouped by category:
+
+| Category | Commands |
+|---|---|
+| [Development](#development) | `develop`, `start`, `build`, `console` |
+| [Cloud](#cloud) | `login`, `logout`, `deploy` |
+| [Data management](#data-management) | `export`, `import`, `transfer` |
+| [Project information](#project-information) | `report`, `telemetry:disable`, `telemetry:enable`, `version`, `help` |
+| [Configuration](#configuration) | `configuration:dump`, `configuration:restore` |
+| [Administration](#administration) | `admin:create-user`, `admin:reset-user-password`, `admin:list-users`, `admin:active-user`, `admin:block-user`, `admin:delete-user` |
+| [Code generation](#code-generation) | `generate`, `openapi generate`, `templates:generate`, `ts:generate-types` |
+| [Listing](#listing) | `routes:list`, `policies:list`, `middlewares:list`, `content-types:list`, `hooks:list`, `controllers:list`, `services:list` |
 
 :::caution
 Interactive commands such as `strapi admin:create-user` don't display prompts with `npm`. Please consider using the `yarn` package manager.
 :::
 
-:::note
+## General considerations
+
 It is recommended to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
 
-To pass options with `npm` use the syntax: `npm run strapi <command> -- --<option>`.
+:::note The format for passing options differs between npm and yarn
 
-To pass options with `yarn` use the syntax: `yarn strapi <command> --<option>`
+* To pass options with `npm` use the following syntax:<br/>
+   `npm run strapi <command> -- --<option>`.
+
+* To pass options with `yarn` use the following syntax:<br/>
+   `yarn strapi <command> --<option>`
 :::
 
 <details>
