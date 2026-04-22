@@ -28,7 +28,7 @@ Strapi provides a built-in HTTP client for the admin panel that handles authenti
 
 <Prerequisite />
 
-## useFetchClient
+## `useFetchClient`
 
 The `useFetchClient` hook is designed for use inside React components. It returns an object with `get`, `post`, `put`, and `del` methods:
 
@@ -67,9 +67,9 @@ const MyComponent = () => {
 </TabItem>
 </Tabs>
 
-## getFetchClient
+## `getFetchClient`
 
-For non-React contexts (services, utility functions, event handlers outside of component trees), use `getFetchClient` instead:
+For non-React contexts (services, utility functions, event handlers outside of component trees), use `getFetchClient` instead of `useFetchClient`:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -102,7 +102,7 @@ export const fetchItems = async () => {
 </TabItem>
 </Tabs>
 
-## Sending data with post and put {#sending-data}
+## Sending data with `post` and `put` {#sending-data}
 
 The `post` and `put` methods accept a data parameter as their second argument:
 
