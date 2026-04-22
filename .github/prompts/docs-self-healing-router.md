@@ -100,7 +100,7 @@ LABEL=$(jq -r '.["docs-self-healing"].labels[0]' "$CONFIG")
 
 gh pr create \
   --repo strapi/documentation \
-  --title "$TITLE_PREFIX <DOCS_CHANGE_DESCRIPTION>" \
+  --title "${TITLE_PREFIX:+$TITLE_PREFIX }<DOCS_CHANGE_DESCRIPTION>" \
   --body "$(cat <<'BODY'
 This PR updates documentation based on https://github.com/strapi/strapi/pull/<NUMBER>.
 
@@ -116,7 +116,7 @@ git clean -fd
 git reset --hard origin/main
 ```
 
-**Title rules:** `[Docs self-healing]` prefix, imperative mood, no conventional prefix, describe the doc change.
+**Title rules:** Imperative mood, no conventional prefix, describe the doc change. The `auto-doc-healing` label handles identification (no title prefix needed).
 
 After micro-edits, add the PR to the results file with `decision: "has_targets"` and record the doc PR URL.
 

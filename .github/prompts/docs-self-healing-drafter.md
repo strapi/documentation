@@ -85,13 +85,13 @@ LABEL=$(jq -r '.["docs-self-healing"].labels[0]' "$CONFIG")
 
 gh pr create \
   --repo strapi/documentation \
-  --title "$TITLE_PREFIX <DOCS_CHANGE_DESCRIPTION>"
+  --title "${TITLE_PREFIX:+$TITLE_PREFIX }<DOCS_CHANGE_DESCRIPTION>"
   # Title rules:
-  #   - Always prefixed with the title_prefix from config.json
   #   - Imperative mood, no conventional prefix (no fix:/feat:/chore:)
   #   - Describe what the DOC change does, not the source PR
-  #   - Example: "[Docs self-healing] Clarify admin panel redirect behavior"
-  #   - NOT: "[Docs self-healing] fix: use admin basename for 401 redirect path" \
+  #   - The auto-doc-healing label handles identification (no title prefix needed)
+  #   - Example: "Clarify admin panel redirect behavior"
+  #   - NOT: "fix: use admin basename for 401 redirect path" \
   --body "$(cat <<'BODY'
 This PR updates documentation based on https://github.com/strapi/strapi/pull/<NUMBER>.
 
