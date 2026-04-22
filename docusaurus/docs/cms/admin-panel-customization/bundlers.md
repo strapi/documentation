@@ -72,7 +72,7 @@ export default (config) => {
 </Tabs>
 
 :::tip
-Strapi also supports the `.mts` file extension for Vite config files (`vite.config.mts`), for projects that use explicit ESM module resolution in their `package.json`.
+Strapi also supports the `.mts` file extension for Vite config files (`vite.config.mts`), for projects that use explicit ESM module resolution in their `package.json`. This is useful as Vite's CJS Node API is [deprecated since Vite 6](https://v6.vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated) and will be removed in a future version.
 :::
 
 ## Webpack
