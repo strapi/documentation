@@ -34,12 +34,15 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 ## 6.22.0
 
 <br />
-### <Icon name='sparkle' /> New content
+### <Icon name='sparkle' /> New
 
 <br />
 
 #### CMS
 - [Document responseType option for useFetchClient in plugins](https://github.com/strapi/documentation/pull/3081)
+
+#### Repo
+- [Add docs self-healing workflow](https://github.com/strapi/documentation/pull/3059)
 
 ### <Icon name='pen-nib' /> Updated content
 
@@ -65,14 +68,13 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 - [Fix auto-labeling: infra-only PRs always labeled as chore](https://github.com/strapi/documentation/pull/3085)
 - [Docs self-healing workflow improvements: Auto-ignore rejected PRs for future runs](https://github.com/strapi/documentation/pull/3084)
 - [Docs self-healing workflow improvements: Add dry run mode](https://github.com/strapi/documentation/pull/3082)
-- [Docs self-healing workflow improvements: exclude translations, bots, dependency upgrades](https://github.com/strapi/documentation/pull/3078)
+- [Docs self-healing workflow improvements: Exclude translations, bots, dependency upgrades](https://github.com/strapi/documentation/pull/3078)
 - [Docs self-healing workflow improvements: Add Slack notification](https://github.com/strapi/documentation/pull/3072)
 - [Docs self-healing workflow improvements: Add ignore list](https://github.com/strapi/documentation/pull/3070)
 - [Docs self-healing workflow improvements: Skip `flag: documentation` PRs and run Tue-Sat only](https://github.com/strapi/documentation/pull/3066)
 - [Docs self-healing workflow improvements: Add ultra-light Haiku triage before Router](https://github.com/strapi/documentation/pull/3065)
 - [Docs self-healing workflow improvements: Split into Haiku Router + Sonnet Drafter](https://github.com/strapi/documentation/pull/3064)
-- [Docs self-healing workflow improvements: pre-filter PRs before Claude](https://github.com/strapi/documentation/pull/3062)
-- [Add docs self-healing workflow](https://github.com/strapi/documentation/pull/3059)
+- [Docs self-healing workflow improvements: Pre-filter PRs before Claude](https://github.com/strapi/documentation/pull/3062)
 
 ***
 This release was made possible thanks to the following contributors. Thank you! 🫶
