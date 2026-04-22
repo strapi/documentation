@@ -26539,6 +26539,242 @@ File path: N/A
 
 
 
+# Admin fetch client
+Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client
+
+## useFetchClient
+Description: The useFetchClient hook is designed for use inside React components.
+(Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#usefetchclient)
+
+Language: JavaScript
+File path: my-plugin/admin/src/components/MyComponent.js
+
+```js
+import { useFetchClient } from '@strapi/strapi/admin';
+
+const MyComponent = () => {
+  const { get, post, put, del } = useFetchClient();
+
+  const fetchData = async () => {
+    const { data } = await get('/my-plugin/my-endpoint');
+    // data contains the parsed JSON response
+  };
+};
+```
+
+---
+Language: TypeScript
+File path: my-plugin/admin/src/components/MyComponent.tsx
+
+```ts
+import { useFetchClient } from '@strapi/strapi/admin';
+
+const MyComponent = () => {
+  const { get, post, put, del } = useFetchClient();
+
+  const fetchData = async () => {
+    const { data } = await get('/my-plugin/my-endpoint');
+    // data contains the parsed JSON response
+  };
+};
+```
+
+
+## getFetchClient
+Description: For non-React contexts (services, utility functions, event handlers outside of component trees), use getFetchClient instead:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#getfetchclient)
+
+Language: JavaScript
+File path: my-plugin/admin/src/utils/api.js
+
+```js
+import { getFetchClient } from '@strapi/strapi/admin';
+
+const { get, post } = getFetchClient();
+
+export const fetchItems = async () => {
+  const { data } = await get('/my-plugin/items');
+  return data;
+};
+```
+
+---
+Language: TypeScript
+File path: my-plugin/admin/src/utils/api.ts
+
+```ts
+import { getFetchClient } from '@strapi/strapi/admin';
+
+const { get, post } = getFetchClient();
+
+export const fetchItems = async () => {
+  const { data } = await get('/my-plugin/items');
+  return data;
+};
+```
+
+
+## Sending data with post and put
+Description: The post and put methods accept a data parameter as their second argument:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#sending-data)
+
+Language: JavaScript
+File path: my-plugin/admin/src/utils/api.js
+
+```js
+import { getFetchClient } from '@strapi/strapi/admin';
+
+const { post, put } = getFetchClient();
+
+// Create a new item
+export const createItem = async (payload) => {
+  const { data } = await post('/my-plugin/items', payload);
+  return data;
+};
+
+// Update an existing item
+export const updateItem = async (id, payload) => {
+  const { data } = await put(`/my-plugin/items/${id}`, payload);
+  return data;
+};
+```
+
+---
+Language: TypeScript
+File path: my-plugin/admin/src/utils/api.ts
+
+```ts
+import { getFetchClient } from '@strapi/strapi/admin';
+
+const { post, put } = getFetchClient();
+
+// Create a new item
+export const createItem = async (payload: Record<string, unknown>) => {
+  const { data } = await post('/my-plugin/items', payload);
+  return data;
+};
+
+// Update an existing item
+export const updateItem = async (id: string, payload: Record<string, unknown>) => {
+  const { data } = await put(`/my-plugin/items/${id}`, payload);
+  return data;
+};
+```
+
+
+## Using query parameters
+Description: Pass params to automatically serialize query strings:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#params)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const { data } = await get('/content-manager/collection-types/api::article.article', {
+  params: {
+    page: 1,
+    pageSize: 10,
+    sort: 'title:asc',
+  },
+});
+```
+
+
+## Response types
+Description: Non-JSON responses include status and headers in the return object:
+(Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#response-types)
+
+Language: JavaScript
+File path: my-plugin/admin/src/components/DownloadButton.js
+
+```js
+import { useFetchClient } from '@strapi/strapi/admin';
+
+const DownloadButton = () => {
+  const { get } = useFetchClient();
+
+  const downloadFile = async (url) => {
+    const { data: blob, status, headers } = await get(url, { responseType: 'blob' });
+    // Process the blob, e.g. trigger a file download
+  };
+};
+```
+
+---
+Language: TypeScript
+File path: my-plugin/admin/src/components/DownloadButton.tsx
+
+```ts
+import { useFetchClient } from '@strapi/strapi/admin';
+
+const DownloadButton = () => {
+  const { get } = useFetchClient();
+
+  const downloadFile = async (url: string) => {
+    const { data: blob, status, headers } = await get(url, { responseType: 'blob' });
+    // Process the blob, e.g. trigger a file download
+  };
+};
+```
+
+
+## Error handling
+Description: The fetch client throws a FetchError when a request fails.
+(Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#error-handling)
+
+Language: JavaScript
+File path: my-plugin/admin/src/components/MyComponent.js
+
+```js
+import { useFetchClient, isFetchError } from '@strapi/strapi/admin';
+
+const MyComponent = () => {
+  const { get } = useFetchClient();
+
+  const fetchData = async () => {
+    try {
+      const { data } = await get('/my-plugin/my-endpoint');
+      // handle success
+    } catch (error) {
+      if (isFetchError(error)) {
+        // error.status contains the HTTP status code
+        console.error('Request failed:', error.status, error.message);
+      } else {
+        throw error; // re-throw non-fetch errors
+      }
+    }
+  };
+};
+```
+
+---
+Language: TypeScript
+File path: my-plugin/admin/src/components/MyComponent.tsx
+
+```ts
+import { useFetchClient, isFetchError } from '@strapi/strapi/admin';
+
+const MyComponent = () => {
+  const { get } = useFetchClient();
+
+  const fetchData = async () => {
+    try {
+      const { data } = await get('/my-plugin/my-endpoint');
+      // handle success
+    } catch (error) {
+      if (isFetchError(error)) {
+        // error.status contains the HTTP status code
+        console.error('Request failed:', error.status, error.message);
+      } else {
+        throw error; // re-throw non-fetch errors
+      }
+    }
+  };
+};
+```
+
+
+
 # Admin hooks
 Source: https://docs.strapi.io/cms/plugins-development/admin-hooks
 

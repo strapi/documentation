@@ -5742,6 +5742,10 @@ module.exports = {
 Strapi uses a Node.js feature called  to make the context available anywhere.
 :::
 
+:::tip
+For making authenticated HTTP requests from the admin panel in plugins, see [Admin Panel API: Fetch client](/cms/plugins-development/admin-fetch-client).
+:::
+
 
 
 # Routes
@@ -7887,6 +7891,10 @@ The `ValidationError` and `YupValidationError` classes are specific error classe
 
 </Tabs>
 
+:::tip
+For handling HTTP errors in the admin panel (e.g., in plugins making API requests), use the `isFetchError` utility and the `FetchError` class from Strapi's built-in fetch client. See [Admin Panel API: Fetch client > Error handling](/cms/plugins-development/admin-fetch-client#error-handling) for details.
+:::
+
 
 
 # Admin panel
@@ -9645,6 +9653,86 @@ Follow the steps below and leverage retro-compatibility headers and guided migra
 
 
 
+# Admin fetch client
+Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client
+
+# Admin Panel API: Fetch client
+
+Strapi provides a built-in HTTP client for the admin panel that handles authentication automatically. Plugin developers should use this client instead of raw `fetch` or `axios` to ensure requests are properly authenticated and intercepted.
+
+</Tabs>
+
+## getFetchClient
+
+For non-React contexts (services, utility functions, event handlers outside of component trees), use `getFetchClient` instead:
+
+</Tabs>
+
+## Sending data with post and put {#sending-data}
+
+The `post` and `put` methods accept a data parameter as their second argument:
+
+</Tabs>
+
+:::tip
+When sending `FormData` (e.g., file uploads), the fetch client automatically removes the `Content-Type` header so the browser can set the correct multipart boundary.
+:::
+
+## Request options {#options}
+
+All methods accept an options object with the following properties:
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `params` | `object` | Query string parameters, serialized automatically |
+| `headers` | `Record<string, string>` | Additional request headers (merged with defaults) |
+| `signal` | `AbortSignal` | For cancelling requests (automatically provided by `useFetchClient`) |
+| `validateStatus` | `(status: number) => boolean \| null` | Custom function to determine which HTTP statuses should throw |
+| `responseType` | `'json' \| 'blob' \| 'text' \| 'arrayBuffer'` | Controls response parsing (see [Response types](#response-types)). Only effective on `get`. |
+
+### Using query parameters {#params}
+
+Pass `params` to automatically serialize query strings:
+
+```js
+const { data } = await get('/content-manager/collection-types/api::article.article', {
+  params: {
+    page: 1,
+    pageSize: 10,
+    sort: 'title:asc',
+  },
+});
+```
+
+## Response types {#response-types}
+
+By default, responses are parsed as JSON. The `get` method accepts a `responseType` option to handle non-JSON responses such as file downloads, CSV exports, or binary data:
+
+| `responseType` value | Response parsed as |
+|---|---|
+| `json` | JSON object (default) |
+| `blob` | `Blob` |
+| `text` | Plain text string |
+| `arrayBuffer` | `ArrayBuffer` |
+
+Non-JSON responses include `status` and `headers` in the return object:
+
+</Tabs>
+
+## Error handling {#error-handling}
+
+The fetch client throws a `FetchError` when a request fails. Use the `isFetchError` utility to safely check errors:
+
+</Tabs>
+
+:::note
+When a request returns a 401 status (except on authentication endpoints), the fetch client automatically attempts to refresh the authentication token and retry the request before throwing an error.
+:::
+
+👉 For server-side error handling (controllers, services, middlewares), see [Error handling](/cms/error-handling).
+
+
+
 # Admin hooks
 Source: https://docs.strapi.io/cms/plugins-development/admin-hooks
 
@@ -10035,6 +10123,7 @@ Use the following table to find which function to use and where to declare it. C
 | Add a reducer                            | [`addReducers()`](/cms/plugins-development/admin-redux-store#adding-custom-reducers)                      | [`register()`](#register)   |
 | Create a hook                          | [`createHook()`](/cms/plugins-development/admin-hooks)                    | [`register()`](#register)   |
 | Register a hook                          | [`registerHook()`](/cms/plugins-development/admin-hooks)                    | [`bootstrap()`](#bootstrap)   |
+| Make authenticated HTTP requests | [`useFetchClient()`](/cms/plugins-development/admin-fetch-client) / [`getFetchClient()`](/cms/plugins-development/admin-fetch-client#getfetchclient) | Any |
 | Provide translations for the plugin admin interface | [`registerTrads()`](/cms/plugins-development/admin-localization#registertrads) | `registerTrads()` |
 
 <br/>
@@ -10816,7 +10905,7 @@ Strapi is **headless** . The admin panel is completely separate from the server.
 
 When [developing a Strapi plugin](/cms/plugins-development/developing-plugins) you might want to pass data from the `/server` to the `/admin` folder. Within the `/server` folder you have access to the Strapi object and can do database queries whereas in the `/admin` folder you can't.
 
-Passing data from the `/server` to the `/admin` folder can be done using the admin panel's Axios instance:
+Passing data from the `/server` to the `/admin` folder can be done using the admin panel's built-in [fetch client](/cms/plugins-development/admin-fetch-client):
 
 To pass data from the `/server` to `/admin` folder you would first [create a custom admin route](#create-a-custom-admin-route) and then [get the data returned in the admin panel](#get-the-data-in-the-admin-panel).
 
