@@ -8505,6 +8505,10 @@ A `transfer.token.salt` should be defined in the `config/admin` configuration fi
 
 The Data Management system is CLI-based only, meaning any import, export, or transfer command must be executed from the terminal. Exhaustive documentation for each command is accessible from the following pages:
 
+:::note
+The `strapi transfer` command verifies asset integrity using SHA-256 checksums by default when both instances support it. Pass `--no-checksums` to disable this verification. For large file transfers or slow connections that trigger false stall detections, set `transfer.remote.assetIdleTimeoutMs` in your [server configuration](/cms/configurations/server).
+:::
+
 
 
 # Draft & Publish
