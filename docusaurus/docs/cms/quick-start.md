@@ -133,9 +133,9 @@ The admin panel of a local Strapi project runs at <ExternalLink to="http://local
 First we will build a content structure for your content. This can only be done while in development mode, which is the default mode for projects that are created locally.
 
 :::tip
-If the server is not already running, in your terminal, `cd` into the `my-strapi-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
+If the server is not already running, in your terminal, `cd` into the `my-strapi-project` folder and run `npm run develop` to launch it.
 
-You might also need to run `npm run build` or `yarn build` prior to the `develop` command, especially in cases where building the website is important, such as for TypeScript projects for instance.
+You might also need to run `npm run build` prior to the `develop` command, especially in cases where building the website is important, such as for TypeScript projects for instance.
 :::
 
 The Content-Type Builder helps you create your content structure. When creating an empty project with Strapi, this is where to get the party started!
@@ -220,14 +220,6 @@ To deploy your project for free to Strapi Cloud, in your terminal:
 2. Ensure you are in the folder of your Strapi project (if needed, run for instance `cd my-strapi-project` to reach this folder), and run the following command:
 
     <Tabs groupId="yarn-npm">
-
-    <TabItem value="yarn" label="Yarn">
-
-      ```sh
-      yarn strapi deploy
-      ```
-
-    </TabItem>
 
     <TabItem value="npm" label="NPM">
 
