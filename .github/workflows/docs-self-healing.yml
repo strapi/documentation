@@ -527,8 +527,9 @@ jobs:
             ERROR_MSG="Job failed (likely: max turns reached or SDK error)"
           fi
 
-          # Retrospective: check previous doc PRs' fate (merged as-is, rejected)
+          # Retrospective: check previous doc PRs' fate (merged as-is, merged with edits, rejected)
           MERGED_AS_IS=0
+          MERGED_WITH_EDITS=0
           REJECTED=0
           EXISTING_PRS=$(gh pr list --repo strapi/documentation --label auto-doc-healing --state all \
             --json number,state,mergedAt,closedAt,commits \
@@ -537,6 +538,8 @@ jobs:
           if [ "$EXISTING_PRS" != "[]" ]; then
             # Merged PRs with exactly 1 commit = merged as-is (no human edits)
             MERGED_AS_IS=$(echo "$EXISTING_PRS" | jq '[.[] | select(.mergedAt != null and (.commits | length) <= 1)] | length' 2>/dev/null || echo "0")
+            # Merged PRs with >1 commit = merged with edits (Pierre made changes)
+            MERGED_WITH_EDITS=$(echo "$EXISTING_PRS" | jq '[.[] | select(.mergedAt != null and (.commits | length) > 1)] | length' 2>/dev/null || echo "0")
             # Closed without merge = rejected
             REJECTED=$(echo "$EXISTING_PRS" | jq '[.[] | select(.closedAt != null and .mergedAt == null)] | length' 2>/dev/null || echo "0")
           fi
@@ -555,6 +558,7 @@ jobs:
             --argjson sonnet_drafted "$SONNET_DRAFTED" \
             --argjson prs_created "$DOC_PRS_CREATED" \
             --argjson merged_as_is "$MERGED_AS_IS" \
+            --argjson merged_with_edits "$MERGED_WITH_EDITS" \
             --argjson rejected "$REJECTED" \
             '{
               parent: { database_id: $db },
@@ -568,6 +572,7 @@ jobs:
                 "Drafted by Sonnet": { number: $sonnet_drafted },
                 "Doc PRs created": { number: $prs_created },
                 "Merged as-is": { number: $merged_as_is },
+                "Merged with edits": { number: $merged_with_edits },
                 "Rejected by Pierre": { number: $rejected },
                 "Status": { select: { name: $status } },
                 "Error": { rich_text: [{ text: { content: ($error | if length > 2000 then .[:2000] else . end) } }] },
