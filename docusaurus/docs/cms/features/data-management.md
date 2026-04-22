@@ -130,6 +130,10 @@ export default ({ env }) => ({
 
 The Data Management system is CLI-based only, meaning any import, export, or transfer command must be executed from the terminal. Exhaustive documentation for each command is accessible from the following pages:
 
+:::note
+The `strapi transfer` command verifies asset integrity using SHA-256 checksums by default when both instances support it. Pass `--no-checksums` to disable this verification. For large file transfers or slow connections that trigger false stall detections, set `transfer.remote.assetIdleTimeoutMs` in your [server configuration](/cms/configurations/server).
+:::
+
 <CustomDocCardsWrapper>
 <CustomDocCard icon="terminal" title="Import" description="Learn how to import data into a Strapi instance." link="/cms/data-management/import"/>
 <CustomDocCard icon="terminal" title="Export" description="Learn how to export data from a Strapi instance." link="/cms/data-management/export"/>
