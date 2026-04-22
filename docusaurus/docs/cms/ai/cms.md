@@ -15,9 +15,9 @@ toc_max_heading_level: 3
 
 import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
 
-# AI for content management
+# Strapi AI for content management
 
-<GrowthBadge />
+<GrowthBadge /> <VersionBadge version="5.30+" />
 
 Some Strapi CMS features can be enhanced with Strapi AI, helping content managers and administrators design content structures, translate content automatically, and generate asset metadata, all from the admin panel.
 
