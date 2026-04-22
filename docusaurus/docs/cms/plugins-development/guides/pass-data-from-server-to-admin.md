@@ -22,7 +22,7 @@ Strapi is **headless** <HeadlessCms />. The admin panel is completely separate f
 
 When [developing a Strapi plugin](/cms/plugins-development/developing-plugins) you might want to pass data from the `/server` to the `/admin` folder. Within the `/server` folder you have access to the Strapi object and can do database queries whereas in the `/admin` folder you can't.
 
-Passing data from the `/server` to the `/admin` folder can be done using the admin panel's Axios instance:
+Passing data from the `/server` to the `/admin` folder can be done using the admin panel's built-in [fetch client](/cms/plugins-development/admin-fetch-client):
 
 <MermaidWithFallback
     chartFile="/diagrams/pass-data.mmd"
