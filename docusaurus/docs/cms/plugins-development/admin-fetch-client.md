@@ -2,8 +2,8 @@
 title: Admin fetch client
 description: Make authenticated HTTP requests from the admin panel using useFetchClient and getFetchClient.
 sidebar_label: Fetch client
-pagination_prev: cms/plugins-development/admin-hooks
-pagination_next: cms/plugins-development/admin-localization
+pagination_prev: cms/plugins-development/admin-localization
+pagination_next: cms/plugins-development/server-api
 displayed_sidebar: cmsSidebar
 tags:
 - admin panel
