@@ -26543,7 +26543,7 @@ File path: N/A
 Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client
 
 ## useFetchClient
-Description: The useFetchClient hook is designed for use inside React components.
+Description: Call useFetchClient inside a React component to get the four methods.
 (Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#usefetchclient)
 
 Language: JavaScript
@@ -26581,7 +26581,7 @@ const MyComponent = () => {
 
 
 ## getFetchClient
-Description: For non-React contexts (services, utility functions, event handlers outside of component trees), use getFetchClient instead of useFetchClient:
+Description: Call getFetchClient from any non-React context to get the same four methods.
 (Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#getfetchclient)
 
 Language: JavaScript
@@ -26590,11 +26590,15 @@ File path: my-plugin/admin/src/utils/api.js
 ```js
 import { getFetchClient } from '@strapi/strapi/admin';
 
-const { get, post } = getFetchClient();
+const { get, post, put, del } = getFetchClient();
 
 export const fetchItems = async () => {
   const { data } = await get('/my-plugin/items');
   return data;
+};
+
+export const deleteItem = async (id) => {
+  await del(`/my-plugin/items/${id}`);
 };
 ```
 
@@ -26605,17 +26609,21 @@ File path: my-plugin/admin/src/utils/api.ts
 ```ts
 import { getFetchClient } from '@strapi/strapi/admin';
 
-const { get, post } = getFetchClient();
+const { get, post, put, del } = getFetchClient();
 
 export const fetchItems = async () => {
   const { data } = await get('/my-plugin/items');
   return data;
 };
+
+export const deleteItem = async (id: string) => {
+  await del(`/my-plugin/items/${id}`);
+};
 ```
 
 
 ## Sending data with post and put
-Description: The post and put methods accept a data parameter as their second argument:
+Description: The post and put methods accept a payload as their second argument:
 (Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#sending-data)
 
 Language: JavaScript
@@ -26663,7 +26671,7 @@ export const updateItem = async (id: string, payload: Record<string, unknown>) =
 
 
 ## Using query parameters
-Description: Pass params to automatically serialize query strings:
+Description: Pass params to serialize query strings automatically:
 (Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client#params)
 
 Language: JavaScript
@@ -26695,7 +26703,7 @@ const DownloadButton = () => {
 
   const downloadFile = async (url) => {
     const { data: blob, status, headers } = await get(url, { responseType: 'blob' });
-    // Process the blob, e.g. trigger a file download
+    // Process the blob, for example to trigger a file download
   };
 };
 ```
@@ -26712,7 +26720,7 @@ const DownloadButton = () => {
 
   const downloadFile = async (url: string) => {
     const { data: blob, status, headers } = await get(url, { responseType: 'blob' });
-    // Process the blob, e.g. trigger a file download
+    // Process the blob, for example to trigger a file download
   };
 };
 ```
@@ -29758,11 +29766,13 @@ Language: JavaScript
 File path: /my-plugin/admin/src/api/foobar.js
 
 ```js
-import axios from 'axios';
+import { getFetchClient } from '@strapi/strapi/admin';
+
+const { get } = getFetchClient();
 
 const foobarRequests = {
   getFoobar: async () => {
-    const data = await axios.get(`/my-plugin/pass-data`);
+    const { data } = await get('/my-plugin/pass-data');
     return data;
   },
 };
@@ -29778,8 +29788,8 @@ import foobarRequests from "../../api/foobar";
 const [foobar, setFoobar] = useState([]);
 // …
 useEffect(() => {
-  foobarRequests.getFoobar().then(res => {
-    setFoobar(res.data);
+  foobarRequests.getFoobar().then(data => {
+    setFoobar(data);
   });
 }, [setFoobar]);
 // …

@@ -9658,41 +9658,41 @@ Source: https://docs.strapi.io/cms/plugins-development/admin-fetch-client
 
 # Admin Panel API: Fetch client
 
-Strapi provides a built-in HTTP client for the admin panel that handles authentication automatically. Plugin developers should use this client instead of raw `fetch` or `axios` to ensure requests are properly authenticated and intercepted.
+Strapi provides a built-in HTTP client for the admin panel that manages authentication automatically. Plugin developers should use it instead of raw `fetch` or `axios`.
 
 </Tabs>
 
 ## `getFetchClient`
 
-For non-React contexts (services, utility functions, event handlers outside of component trees), use `getFetchClient` instead of `useFetchClient`:
+Call `getFetchClient` from any non-React context to get the same four methods. The typical pattern is to wrap calls inside exported helper functions that the rest of the plugin imports:
 
 </Tabs>
 
 ## Sending data with `post` and `put` {#sending-data}
 
-The `post` and `put` methods accept a data parameter as their second argument:
+The `post` and `put` methods accept a payload as their second argument:
 
 </Tabs>
 
 :::tip
-When sending `FormData` (e.g., file uploads), the fetch client automatically removes the `Content-Type` header so the browser can set the correct multipart boundary.
+When sending `FormData` (for example, file uploads), the fetch client automatically removes the `Content-Type` header so the browser can set the correct multipart boundary.
 :::
 
 ## Request options {#options}
 
-All methods accept an options object with the following properties:
+All methods accept an options object as their last argument:
 
 | Option | Type | Description |
-|--------|------|-------------|
-| `params` | `object` | Query string parameters, serialized automatically |
-| `headers` | `Record<string, string>` | Additional request headers (merged with defaults) |
-| `signal` | `AbortSignal` | For cancelling requests (automatically provided by `useFetchClient`) |
-| `validateStatus` | `(status: number) => boolean \| null` | Custom function to determine which HTTP statuses should throw |
+|---|---|---|
+| `params` | `object` | Query string parameters. Serialized automatically. |
+| `headers` | `Record<string, string>` | Additional request headers. Merged with defaults. |
+| `signal` | `AbortSignal` | Used to cancel requests. `useFetchClient` provides one automatically. |
+| `validateStatus` | `(status: number) => boolean \| null` | Custom function that determines which HTTP statuses should throw. |
 | `responseType` | `'json' \| 'blob' \| 'text' \| 'arrayBuffer'` | Controls response parsing (see [Response types](#response-types)). Only effective on `get`. |
 
 ### Using query parameters {#params}
 
-Pass `params` to automatically serialize query strings:
+Pass `params` to serialize query strings automatically:
 
 ```js
 const { data } = await get('/content-manager/collection-types/api::article.article', {
@@ -9721,12 +9721,12 @@ Non-JSON responses include `status` and `headers` in the return object:
 
 ## Error handling {#error-handling}
 
-The fetch client throws a `FetchError` when a request fails. Use the `isFetchError` utility to safely check errors:
+The fetch client throws a `FetchError` when a request fails. Use the `isFetchError` utility to check errors safely:
 
 </Tabs>
 
 :::note
-When a request returns a 401 status (except on authentication endpoints), the fetch client automatically attempts to refresh the authentication token and retry the request before throwing an error.
+When a request returns a 401 status, the fetch client automatically refreshes the authentication token and retries the request before throwing an error. This automatic retry does not apply to authentication endpoints themselves.
 :::
 
 👉 For server-side error handling (controllers, services, middlewares), see [Error handling](/cms/error-handling).
@@ -10959,9 +10959,11 @@ So for instance, if you create an `/admin/src/api/foobar.js` file and copy and p
 
 ```js title="/my-plugin/admin/src/api/foobar.js"
 
+const { get } = getFetchClient();
+
 const foobarRequests = {
   getFoobar: async () => {
-    const data = await axios.get(`/my-plugin/pass-data`);
+    const { data } = await get('/my-plugin/pass-data');
     return data;
   },
 };
@@ -10977,8 +10979,8 @@ For instance, within a React component, you could use `useEffect` to get the dat
 const [foobar, setFoobar] = useState([]);
 // …
 useEffect(() => {
-  foobarRequests.getFoobar().then(res => {
-    setFoobar(res.data);
+  foobarRequests.getFoobar().then(data => {
+    setFoobar(data);
   });
 }, [setFoobar]);
 // …

@@ -20,17 +20,28 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 
 <Tldr>
 
-The `useFetchClient` hook and `getFetchClient` utility from `@strapi/strapi/admin` let plugins make authenticated HTTP requests from the admin panel. All requests automatically include the user's authentication token and support automatic token refresh.
+Use `useFetchClient` inside React components and `getFetchClient` elsewhere to call Strapi APIs with the user's authentication token attached. Both expose `get`, `post`, `put`, and `del` methods with automatic token refresh on 401 responses.
 
 </Tldr>
 
-Strapi provides a built-in HTTP client for the admin panel that handles authentication automatically. Plugin developers should use this client instead of raw `fetch` or `axios` to ensure requests are properly authenticated and intercepted.
+Strapi provides a built-in HTTP client for the admin panel that manages authentication automatically. Plugin developers should use it instead of raw `fetch` or `axios`.
+
+Both `useFetchClient` and `getFetchClient` are exported from `@strapi/strapi/admin` and expose the same `get`, `post`, `put`, and `del` methods. Choose based on where the call is made from:
+
+| Entry point | Use when |
+|---|---|
+| [`useFetchClient`](#inside-a-react-component) | Inside a React component (auto-cancels requests on unmount) |
+| [`getFetchClient`](#outside-a-react-component) | Services, utility functions, event handlers, or any non-React code |
 
 <Prerequisite />
 
-## `useFetchClient`
+## Fetching data {#fetching-data}
 
-The `useFetchClient` hook is designed for use inside React components. It returns an object with `get`, `post`, `put`, and `del` methods:
+The most common operation is fetching data with `get`. Import the client, destructure the methods you need, and `await` the result:
+
+### Inside a React component {#inside-a-react-component}
+
+`useFetchClient` is a React hook that automatically provides an `AbortSignal` tied to the component lifecycle, so requests are cancelled when the component unmounts:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -39,7 +50,7 @@ The `useFetchClient` hook is designed for use inside React components. It return
 import { useFetchClient } from '@strapi/strapi/admin';
 
 const MyComponent = () => {
-  const { get, post, put, del } = useFetchClient();
+  const { get } = useFetchClient();
 
   const fetchData = async () => {
     const { data } = await get('/my-plugin/my-endpoint');
@@ -55,7 +66,7 @@ const MyComponent = () => {
 import { useFetchClient } from '@strapi/strapi/admin';
 
 const MyComponent = () => {
-  const { get, post, put, del } = useFetchClient();
+  const { get } = useFetchClient();
 
   const fetchData = async () => {
     const { data } = await get('/my-plugin/my-endpoint');
@@ -67,9 +78,9 @@ const MyComponent = () => {
 </TabItem>
 </Tabs>
 
-## `getFetchClient`
+### Outside a React component {#outside-a-react-component}
 
-For non-React contexts (services, utility functions, event handlers outside of component trees), use `getFetchClient` instead of `useFetchClient`:
+`getFetchClient` works in any JavaScript context. The typical pattern is to wrap calls inside exported helper functions that the rest of the plugin imports:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -77,11 +88,15 @@ For non-React contexts (services, utility functions, event handlers outside of c
 ```js title="my-plugin/admin/src/utils/api.js"
 import { getFetchClient } from '@strapi/strapi/admin';
 
-const { get, post } = getFetchClient();
+const { get, del } = getFetchClient();
 
 export const fetchItems = async () => {
   const { data } = await get('/my-plugin/items');
   return data;
+};
+
+export const deleteItem = async (id) => {
+  await del(`/my-plugin/items/${id}`);
 };
 ```
 
@@ -91,20 +106,28 @@ export const fetchItems = async () => {
 ```ts title="my-plugin/admin/src/utils/api.ts"
 import { getFetchClient } from '@strapi/strapi/admin';
 
-const { get, post } = getFetchClient();
+const { get, del } = getFetchClient();
 
 export const fetchItems = async () => {
   const { data } = await get('/my-plugin/items');
   return data;
+};
+
+export const deleteItem = async (id: string) => {
+  await del(`/my-plugin/items/${id}`);
 };
 ```
 
 </TabItem>
 </Tabs>
 
+:::note
+The `del` method is named this way because `delete` is a reserved word in JavaScript.
+:::
+
 ## Sending data with `post` and `put` {#sending-data}
 
-The `post` and `put` methods accept a data parameter as their second argument:
+The `post` and `put` methods accept a payload as their second argument:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -152,24 +175,24 @@ export const updateItem = async (id: string, payload: Record<string, unknown>) =
 </Tabs>
 
 :::tip
-When sending `FormData` (e.g., file uploads), the fetch client automatically removes the `Content-Type` header so the browser can set the correct multipart boundary.
+When sending `FormData` (for example, file uploads), the fetch client automatically removes the `Content-Type` header so the browser can set the correct multipart boundary.
 :::
 
-## Request options {#options}
+## Configuring requests {#options}
 
-All methods accept an options object with the following properties:
+All methods accept an options object as their last argument:
 
 | Option | Type | Description |
-|--------|------|-------------|
-| `params` | `object` | Query string parameters, serialized automatically |
-| `headers` | `Record<string, string>` | Additional request headers (merged with defaults) |
-| `signal` | `AbortSignal` | For cancelling requests (automatically provided by `useFetchClient`) |
-| `validateStatus` | `(status: number) => boolean \| null` | Custom function to determine which HTTP statuses should throw |
+|---|---|---|
+| `params` | `object` | Query string parameters. Serialized automatically. |
+| `headers` | `Record<string, string>` | Additional request headers. Merged with defaults. |
+| `signal` | `AbortSignal` | Used to cancel requests. `useFetchClient` provides one automatically. |
+| `validateStatus` | `(status: number) => boolean \| null` | Custom function that determines which HTTP statuses should throw. |
 | `responseType` | `'json' \| 'blob' \| 'text' \| 'arrayBuffer'` | Controls response parsing (see [Response types](#response-types)). Only effective on `get`. |
 
-### Using query parameters {#params}
+### Query parameters {#params}
 
-Pass `params` to automatically serialize query strings:
+Pass `params` to serialize query strings automatically:
 
 ```js title="my-plugin/admin/src/components/MyComponent.js"
 const { data } = await get('/content-manager/collection-types/api::article.article', {
@@ -181,7 +204,7 @@ const { data } = await get('/content-manager/collection-types/api::article.artic
 });
 ```
 
-## Response types {#response-types}
+### Response types {#response-types}
 
 By default, responses are parsed as JSON. The `get` method accepts a `responseType` option to handle non-JSON responses such as file downloads, CSV exports, or binary data:
 
@@ -205,7 +228,7 @@ const DownloadButton = () => {
 
   const downloadFile = async (url) => {
     const { data: blob, status, headers } = await get(url, { responseType: 'blob' });
-    // Process the blob, e.g. trigger a file download
+    // Process the blob, for example to trigger a file download
   };
 };
 ```
@@ -221,7 +244,7 @@ const DownloadButton = () => {
 
   const downloadFile = async (url: string) => {
     const { data: blob, status, headers } = await get(url, { responseType: 'blob' });
-    // Process the blob, e.g. trigger a file download
+    // Process the blob, for example to trigger a file download
   };
 };
 ```
@@ -229,9 +252,9 @@ const DownloadButton = () => {
 </TabItem>
 </Tabs>
 
-## Error handling {#error-handling}
+## Handling errors {#error-handling}
 
-The fetch client throws a `FetchError` when a request fails. Use the `isFetchError` utility to safely check errors:
+The fetch client throws a `FetchError` when a request fails. Use the `isFetchError` utility to check errors safely:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -287,7 +310,7 @@ const MyComponent = () => {
 </Tabs>
 
 :::note
-When a request returns a 401 status (except on authentication endpoints), the fetch client automatically attempts to refresh the authentication token and retry the request before throwing an error.
+When a request returns a 401 status, the fetch client automatically refreshes the authentication token and retries the request before throwing an error. This automatic retry does not apply to authentication endpoints themselves.
 :::
 
 👉 For server-side error handling (controllers, services, middlewares), see [Error handling](/cms/error-handling).
