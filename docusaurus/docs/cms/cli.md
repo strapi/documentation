@@ -23,7 +23,7 @@ Strapi comes with a full featured Command Line Interface (CLI) which lets you sc
 
 </Tldr>
 
-Commands on the present page are grouped by category:
+Strapi CLI commands on the present page are grouped by category:
 
 | Category | Commands |
 |---|---|
