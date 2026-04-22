@@ -29,7 +29,66 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.42.1](https://github.com/strapi/strapi/releases/tag/v5.42.1)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.43.0](https://github.com/strapi/strapi/releases/tag/v5.43.0)._
+
+## 6.22.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Document responseType option for useFetchClient in plugins](https://github.com/strapi/documentation/pull/3081)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Add admin user management CLI commands + group CLI commands by category](https://github.com/strapi/documentation/pull/3061)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Document transfer checksum verification and asset idle timeout](https://github.com/strapi/documentation/pull/3077)
+- [Mention improved transfer CLI progress display](https://github.com/strapi/documentation/pull/3076)
+- [Document unique username generation for auth provider registration](https://github.com/strapi/documentation/pull/3075)
+- [Document AWS S3 credential format with deprecation notice](https://github.com/strapi/documentation/pull/3068)
+- [Document signed URL behavior for S3 private buckets](https://github.com/strapi/documentation/pull/3067)
+- [Cross-link best practices for high-performance Strapi blog post](https://github.com/strapi/documentation/pull/3060)
+- [Remove yarn from main pages](https://github.com/strapi/documentation/pull/3042)
+
+#### Repository
+- [Fix auto-labeling: infra-only PRs always labeled as chore](https://github.com/strapi/documentation/pull/3085)
+- [Docs self-healing workflow improvements: Auto-ignore rejected PRs for future runs](https://github.com/strapi/documentation/pull/3084)
+- [Docs self-healing workflow improvements: Add dry run mode](https://github.com/strapi/documentation/pull/3082)
+- [Docs self-healing workflow improvements: exclude translations, bots, dependency upgrades](https://github.com/strapi/documentation/pull/3078)
+- [Docs self-healing workflow improvements: Add Slack notification](https://github.com/strapi/documentation/pull/3072)
+- [Docs self-healing workflow improvements: Add ignore list](https://github.com/strapi/documentation/pull/3070)
+- [Docs self-healing workflow improvements: Skip `flag: documentation` PRs and run Tue-Sat only](https://github.com/strapi/documentation/pull/3066)
+- [Docs self-healing workflow improvements: Add ultra-light Haiku triage before Router](https://github.com/strapi/documentation/pull/3065)
+- [Docs self-healing workflow improvements: Split into Haiku Router + Sonnet Drafter](https://github.com/strapi/documentation/pull/3064)
+- [Docs self-healing workflow improvements: pre-filter PRs before Claude](https://github.com/strapi/documentation/pull/3062)
+- [Add docs self-healing workflow](https://github.com/strapi/documentation/pull/3059)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/cache-your-dreams" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/104358430?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="cache-your-dreams"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 6.21.0
 
