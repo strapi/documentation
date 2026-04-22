@@ -1879,6 +1879,49 @@ export default {
 
 
 
+# Strapi AI
+Source: https://docs.strapi.io/cms/ai/cms
+
+## Activation and configuration
+Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
+(Source: https://docs.strapi.io/cms/ai/cms#activation)
+
+Language: JavaScript
+File path: /config/admin.js|ts
+
+```js
+module.exports = {
+  // ...
+  ai: {
+    enabled: true, // set to false to disable all Strapi AI features
+  },
+};
+```
+
+
+
+# AI for developers
+Source: https://docs.strapi.io/cms/ai/developer-tools
+
+## Connection details
+Description: For example, in a .cursor/mcp.json or VS Code MCP settings file:
+(Source: https://docs.strapi.io/cms/ai/developer-tools#connection-details)
+
+Language: JSON
+File path: MCP
+
+```json
+{
+  "mcpServers": {
+    "strapi-docs": {
+      "url": "https://strapi-docs.mcp.kapa.ai"
+    }
+  }
+}
+```
+
+
+
 # Strapi Client
 Source: https://docs.strapi.io/cms/api/client
 
@@ -21653,27 +21696,6 @@ The `PolicyError` class is a specific error designed to be used with [route poli
 | --- | --- | --- | --- |
 | `message` | `string` | The error message | `Policy Failed` |
 | `details` | `object` | Object to define additional details | `{}` |
-```
-
-
-
-# AI features
-Source: https://docs.strapi.io/cms/features/ai
-
-## Activation and configuration
-Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
-(Source: https://docs.strapi.io/cms/features/ai#config)
-
-Language: JavaScript
-File path: /config/admin.js|ts
-
-```js
-module.exports = {
-  // ...
-  ai: {
-    enabled: true, // set to false to disable all Strapi AI features
-  },
-};
 ```
 
 
