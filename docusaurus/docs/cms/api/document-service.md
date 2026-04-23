@@ -791,3 +791,33 @@ If no `locale` and no `status` parameter is passed, draft documents (which is th
  */
 strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $startsWith: "Pizzeria" }}})`
 ```
+
+## Helper functions
+
+### `getFetchParams()`
+
+`getFetchParams()` is a utility function that extracts and normalizes query parameters (like `fields`, `populate`, `filters`, `sort`, and `status`) from parameter objects. This function is useful when building custom services or middleware that need to apply the same parameter processing as the Document Service API.
+
+**Syntax:** `getFetchParams(params) => ProcessedParams`
+
+**Import:**
+
+```js
+import { getFetchParams } from '@strapi/strapi';
+```
+
+**Example:**
+
+```js
+import { factories, getFetchParams } from '@strapi/strapi';
+
+export default factories.createCoreService('api::article.article', ({ strapi }) => ({
+  async findPublished(params = {}) {
+    const processedParams = getFetchParams(params);
+    return strapi.documents('api::article.article').findMany({
+      ...processedParams,
+      status: 'published',
+    });
+  },
+}));
+```
