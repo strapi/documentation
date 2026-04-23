@@ -20,8 +20,7 @@ const sidebars = {
     //   value: '<i class="ph-fill ph-github-logo"></i> <a href="https://strapi.notion.site/Documentation-Contribution-Program-1d08f359807480d480fdde68bb7a5a71?pvs=74">Docs Contribution Program</a>', // The HTML to be rendered
     //   defaultStyle: true, // Use the default menu item styling
     // },
-    {
-      // Getting Started
+    { // Getting Started
       type: 'category',
       label: 'Getting Started',
       className: 'category-cms-getting-started',
@@ -48,33 +47,7 @@ const sidebars = {
         'cms/deployment',
       ],
     },
-    {
-      // Strapi AI
-      type: 'category',
-      label: 'AI',
-      collapsible: false,
-      className: 'category-cms-ai',
-      items: [
-        {
-          type: 'doc',
-          label: 'Strapi AI for content management',
-          id: 'cms/ai/cms',
-          customProps: {
-            new: true,
-          },
-        },
-        {
-          type: 'doc',
-          label: 'AI for developers and docs',
-          id: 'cms/ai/developer-tools',
-          customProps: {
-            new: true,
-          },
-        },
-      ],
-    },
-    {
-      // Features
+    { // Features
       type: 'category',
       label: 'Features',
       collapsible: false,
@@ -175,8 +148,31 @@ const sidebars = {
         },
       ],
     },
-    {
-      // APIs
+        { // Strapi AI
+      type: 'category',
+      label: 'AI',
+      collapsible: false,
+      className: 'category-cms-ai',
+      items: [
+        {
+          type: 'doc',
+          label: 'Strapi AI for content managers',
+          id: 'cms/ai/for-content-managers',
+          customProps: {
+            new: true,
+          },
+        },
+        {
+          type: 'doc',
+          label: 'AI for developers and docs',
+          id: 'cms/ai/for-developers',
+          customProps: {
+            new: true,
+          },
+        },
+      ],
+    },
+    { // APIs
       type: 'category',
       label: 'Content APIs',
       className: 'category-cms-api',
@@ -239,8 +235,7 @@ const sidebars = {
         },
       ],
     },
-    {
-      // Configurations
+    { // Configurations
       type: 'category',
       label: 'Configurations',
       collapsed: false,
@@ -355,8 +350,7 @@ const sidebars = {
         'cms/configurations/server',
       ],
     },
-    {
-      // Development
+    { // Development
       type: 'category',
       label: 'Development',
       className: 'category-cms-development',
@@ -451,7 +445,7 @@ const sidebars = {
         'cms/testing',
       ],
     },
-    {
+    { // TypeScript
       type: 'category',
       label: 'TypeScript',
       collapsed: false,
@@ -480,8 +474,7 @@ const sidebars = {
         },
       ],
     },
-    {
-      // Command Line Interface
+    { // Command Line Interface
       type: 'category',
       label: 'Command Line Interface',
       className: 'category-cms-cli',
@@ -489,8 +482,7 @@ const sidebars = {
       collapsible: false,
       items: ['cms/cli'],
     },
-    {
-      // Plugins
+    { // Plugins
       type: 'category',
       label: 'Plugins development',
       className: 'category-cms-plugins',
@@ -566,9 +558,7 @@ const sidebars = {
         'cms/plugins-development/plugins-extension',
       ],
     },
-
-    {
-      // Upgrades
+    { // Upgrades
       type: 'category',
       label: 'Upgrades',
       className: 'category-cms-upgrade',
@@ -592,8 +582,7 @@ const sidebars = {
   ],
 
   cloudSidebar: [
-    {
-      // Getting Started
+    { // Getting Started
       type: 'category',
       collapsed: false,
       label: 'Getting Started',
@@ -651,8 +640,7 @@ const sidebars = {
         },
       ],
     },
-    {
-      // Projects Management
+    { // Projects Management
       type: 'category',
       collapsed: false,
       collapsible: false,
@@ -672,8 +660,7 @@ const sidebars = {
         'cloud/projects/runtime-logs',
       ],
     },
-    {
-      // Deployments
+    { // Deployments
       type: 'category',
       collapsed: false,
       collapsible: false,
@@ -681,8 +668,7 @@ const sidebars = {
       className: 'category-cloud-deployments',
       items: ['cloud/projects/deploys', 'cloud/projects/deploys-history'],
     },
-    {
-      // Account Management
+    { // Account Management
       type: 'category',
       collapsed: false,
       collapsible: false,
@@ -700,8 +686,7 @@ const sidebars = {
         },
       ],
     },
-    {
-      // CLI
+    { // CLI
       type: 'category',
       collapsed: false,
       collapsible: false,
@@ -718,8 +703,7 @@ const sidebars = {
         },
       ],
     },
-    {
-      // Advanced configurations
+    { // Advanced configurations
       type: 'category',
       collapsed: false,
       collapsible: false,
