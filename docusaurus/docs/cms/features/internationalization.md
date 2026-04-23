@@ -157,7 +157,7 @@ Once enabled, whenever you edit a content-type in the default locale and click *
 
 :::caution
 AI-powered internationalization only works one way, keeping the default locale content as the unique source of truth. Consequently, once the feature is enabled:
-- Editing and saving content for any locale othen than the default one will not trigger automatic translations.
+- Editing and saving content for any locale other than the default one will not trigger automatic translations.
 - When editing the content for the default locale, the manual modifications made to other locales will be overwritten.
 :::
 
