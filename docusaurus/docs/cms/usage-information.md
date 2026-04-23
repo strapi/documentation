@@ -85,7 +85,7 @@ If you have any questions or concerns regarding data collection, please contact 
 
 ## Strapi AI data handling {#strapi-ai-data-handling}
 
-[Strapi AI features](/cms/features/ai) process requests through Strapi-managed infrastructure. Temporary metadata and content snippets exist only for the duration of each request. Strapi never stores unpublished content or credentials outside your instance.
+[Strapi AI features](/cms/ai/for-content-managers) process requests through Strapi-managed infrastructure. Temporary metadata and content snippets exist only for the duration of each request. Strapi never stores unpublished content or credentials outside your instance.
 
 Strapi AI follows the same GDPR-aligned framework as Strapi Cloud. Processing occurs in secure, Strapi-managed environments, and data is not retained after the operation completes.
 
