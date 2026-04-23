@@ -1,7 +1,7 @@
 ---
 title: Strapi AI for content managers
 description: Learn about AI-powered features in the Strapi admin panel, such as content-type design, automatic translations, and media metadata generation.
-sidebar_label: AI for content management
+sidebar_label: AI for content managers
 displayed_sidebar: cmsSidebar
 tags:
 - ai
