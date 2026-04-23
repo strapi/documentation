@@ -1,6 +1,6 @@
 ---
-title: Strapi AI
-description: Learn about AI-powered features in the Strapi admin panel — content-type design, automatic translations, and media metadata generation.
+title: Strapi AI for content managers
+description: Learn about AI-powered features in the Strapi admin panel, such as content-type design, automatic translations, and media metadata generation.
 sidebar_label: AI for content management
 displayed_sidebar: cmsSidebar
 tags:
@@ -23,7 +23,7 @@ Some Strapi CMS features can be enhanced with Strapi AI, helping content manager
 
 ## Activation and configuration {#activation}
 
-Strapi AI is available since Strapi 5.30 and works with both Strapi Cloud and self-hosted deployments. To get started:
+Strapi AI is available for Growth plan users since Strapi 5.30 and works with both Strapi Cloud and self-hosted deployments. To get started:
 
 1. Upgrade to Strapi v5.30+. AI features are not available on earlier versions.
 2. Activate a Growth license key, or start a 30-day free trial via CLI or Strapi Cloud. The trial includes 10 free credits to explore AI features.
@@ -40,7 +40,7 @@ module.exports = {
 };
 ```
 
-👉 See [Admin panel configuration > Strapi AI](/cms/configurations/admin-panel#strapi-ai) for all configuration options.
+<Icon name="arrow-fat-right"/> See [Admin panel configuration > Strapi AI](/cms/configurations/admin-panel#strapi-ai) for all configuration options.
 
 ## Available features {#features}
 
@@ -51,10 +51,10 @@ module.exports = {
 | [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text, captions, and descriptions for uploaded images. |
 ## Credits and data handling {#credits}
 
-Strapi AI features consume AI credits:
+Strapi AI features consume AI credits.
 
 <StrapiAiCredits />
 
 All AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi AI follows the same GDPR-aligned framework as Strapi Cloud.
 
-👉 See [Usage information > Strapi AI data handling](/cms/usage-information#strapi-ai-data-handling) for more details.
+ <Icon name="arrow-fat-right" /> See [Usage information > Strapi AI data handling](/cms/usage-information#strapi-ai-data-handling) for more details.

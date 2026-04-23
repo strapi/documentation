@@ -1,6 +1,6 @@
 ---
 title: AI for developers
-description: Use AI-powered tools on the Strapi documentation site — chatbot, Copy Markdown, LLMs.txt files, Open with LLM, and MCP server for IDE integration.
+description: Use AI-powered tools on the Strapi documentation site. Chatbot, Copy Markdown, LLMs.txt files, Open with LLM, and MCP server for IDE integration.
 sidebar_label: AI for developers
 displayed_sidebar: cmsSidebar
 tags:
@@ -8,7 +8,6 @@ tags:
 - developer tools
 - LLMs
 - MCP
-- Kapa
 toc_max_heading_level: 3
 ---
 
