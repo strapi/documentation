@@ -333,7 +333,7 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
           prompt: ${{ steps.load-router-prompt.outputs.prompt }}
-          claude_args: '--model claude-haiku-4-5-20251001 --max-turns 20 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
+          claude_args: '--model claude-haiku-4-5-20251001 --max-turns 50 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
           show_full_output: true
         env:
           DOC_REPO: ${{ github.workspace }}
