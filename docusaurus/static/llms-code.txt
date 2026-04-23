@@ -1875,6 +1875,64 @@ export default {
 
 
 
+# Strapi AI for content managers
+Source: https://docs.strapi.io/cms/ai/for-content-managers
+
+## Activation and configuration
+Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
+(Source: https://docs.strapi.io/cms/ai/for-content-managers#activation)
+
+Language: JavaScript
+File path: /config/admin.js|ts
+
+```js
+module.exports = {
+  // ...
+  ai: {
+    enabled: true, // set to false to disable all Strapi AI features
+  },
+};
+```
+
+
+
+# AI for developers
+Source: https://docs.strapi.io/cms/ai/for-developers
+
+## Connection details
+Description: Add to your .cursor/mcp.json file:
+(Source: https://docs.strapi.io/cms/ai/for-developers#connection-details)
+
+Language: JSON
+File path: .cursor/mcp.json
+
+```json
+    {
+      "mcpServers": {
+        "strapi-docs": {
+          "url": "https://strapi-docs.mcp.kapa.ai"
+        }
+      }
+    }
+```
+
+---
+Language: JSON
+File path: .vscode/mcp.json
+
+```json
+    {
+      "servers": {
+        "strapi-docs": {
+          "type": "http",
+          "url": "https://strapi-docs.mcp.kapa.ai"
+        }
+      }
+    }
+```
+
+
+
 # Strapi Client
 Source: https://docs.strapi.io/cms/api/client
 
