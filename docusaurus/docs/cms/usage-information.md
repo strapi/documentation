@@ -82,3 +82,11 @@ Data collection can later be re-enabled by deleting the flag or setting it to fa
 :::note
 If you have any questions or concerns regarding data collection, please contact us at the following email address [privacy@strapi.io](mailto:privacy@strapi.io).
 :::
+
+## Strapi AI data handling {#strapi-ai-data-handling}
+
+[Strapi AI features](/cms/ai/for-content-managers) process requests through Strapi-managed infrastructure. Temporary metadata and content snippets exist only for the duration of each request. Strapi never stores unpublished content or credentials outside your instance.
+
+Strapi AI follows the same GDPR-aligned framework as Strapi Cloud. Processing occurs in secure, Strapi-managed environments, and data is not retained after the operation completes.
+
+For more information, refer to Strapi's <ExternalLink to="https://strapi.io/privacy" text="Privacy Policy"/>.
