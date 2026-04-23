@@ -85,7 +85,9 @@ The more precise your prompts, the more accurate your created schemas are likely
   For example, the following prompt example works well when creating relations: `Could you please generate a collection of dogs then also generate an owner collection and add relationship to dogs? An owner can have multiple dogs, but a dog can only have one owner.`
 :::
 
+:::note Strapi AI credits
 <StrapiAiCredits />
+:::
 
 #### Creating content-types manually {#new-content-type}
 

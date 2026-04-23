@@ -140,7 +140,7 @@ Click on the <Icon name="globe-hemisphere-west" /> *Fill in from another locale*
 <VersionBadge version="5.42.1+" tooltip="Preserving relations is available since Strapi 5.42.1."/> For localizable relations, Strapi automatically fetch the corresponding entry in the target locale if it exists. If the target locale does not exist for that relation, it will not be filled in. For non-localizable relations, the exact same entry is used.
 :::
 
-### AI-powered internationalization <NewBadge /> {#ai-powered-internationalization}
+### AI-powered internationalization
 <GrowthBadge /> 
 
 [When enabled](#enabling-ai-powered-internationalization), AI-powered internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds. The idea behind the feature is to ensure users only manually fill in content in the default locale, and Strapi AI translates it for all other existing locales.
@@ -161,7 +161,9 @@ AI-powered internationalization only works one way, keeping the default locale c
 - When editing the content for the default locale, the manual modifications made to other locales will be overwritten.
 :::
 
+:::note Strapi AI credits
 <StrapiAiCredits />
+:::
 
 ### Usage with APIs
 

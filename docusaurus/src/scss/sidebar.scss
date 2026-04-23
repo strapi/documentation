@@ -285,6 +285,14 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
           top: 2px;
         }
       }
+      .theme-doc-sidebar-item-category-level-1.category-cms-ai > .menu__list-item-collapsible a {
+        pointer-events: none;
+        &::before {
+          content: '\E6A2';
+          position: relative;
+          top: -2px;
+        }
+      }
       .theme-doc-sidebar-item-category-level-1.category-cms-features > .menu__list-item-collapsible a {
         pointer-events: none;
         &::before {
