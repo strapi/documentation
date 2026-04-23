@@ -24,6 +24,16 @@
       "number": 24444,
       "reason": "Internal admin panel crash fix (race condition in permission loading) — no new features or config changes.",
       "added": "2026-04-21"
+    },
+    {
+      "number": 26050,
+      "reason": "Router: Internal content-manager UI bug fix (event.preventDefault). Single-line fix for browser default behavior. No user-facing behavior change or API modification.",
+      "added": "2026-04-23"
+    },
+    {
+      "number": 25123,
+      "reason": "Router: Internal content-manager UI bug fix for drag-and-drop preview behavior. The fix ensures the preview doesn't disappear during drag operations. This is a visual bug fix with no user-facing API or feature changes.",
+      "added": "2026-04-23"
     }
   ]
 }
