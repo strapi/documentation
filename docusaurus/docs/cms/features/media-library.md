@@ -612,7 +612,9 @@ The [Media Library settings](#configuring-settings) also allow generating metada
   }}
 />
 
+:::note Strapi AI credits
 <StrapiAiCredits />
+:::
 
 ### Managing individual assets {#managing-assets}
 

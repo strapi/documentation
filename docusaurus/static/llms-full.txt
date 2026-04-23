@@ -3307,6 +3307,78 @@ When evaluating editors, start with a plugin from the Marketplace for a quick tr
 
 
 
+# Strapi AI for content managers
+Source: https://docs.strapi.io/cms/ai/for-content-managers
+
+# Strapi AI for content management
+
+Some Strapi CMS features can be enhanced with Strapi AI, helping content managers and administrators design content structures, translate content automatically, and generate asset metadata, all from the admin panel.
+
+## Activation and configuration {#activation}
+
+Strapi AI is available for Growth plan users since Strapi 5.30 and works with both Strapi Cloud and self-hosted deployments. To get started:
+
+1. Upgrade to Strapi v5.30+. AI features are not available on earlier versions.
+2. Activate a Growth license key, or start a 30-day free trial via CLI or Strapi Cloud. The trial includes 10 free credits to explore AI features.
+3. Access AI features from the Content-Type Builder, Media Library, or Content Manager; they are enabled by default.
+
+All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
+
+```js title="/config/admin.js|ts"
+module.exports = {
+  // ...
+  ai: {
+    enabled: true, // set to false to disable all Strapi AI features
+  },
+};
+```
+
+ See [Admin panel configuration > Strapi AI](/cms/configurations/admin-panel#strapi-ai) for all configuration options.
+
+## Available features {#features}
+
+| Feature | Description |
+|---------|-------------|
+| [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. |
+| [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. |
+| [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text, captions, and descriptions for uploaded images. |
+## Credits and data handling {#credits}
+
+Strapi AI features consume AI credits.
+
+All AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi AI follows the same GDPR-aligned framework as Strapi Cloud.
+
+  See [Usage information > Strapi AI data handling](/cms/usage-information#strapi-ai-data-handling) for more details.
+
+
+
+# AI for developers
+Source: https://docs.strapi.io/cms/ai/for-developers
+
+# AI for developers
+
+The Strapi documentation site includes AI-powered tools to help developers learn, explore, and integrate Strapi more effectively. These tools are free to use and available to everyone.
+
+## AI toolbar
+
+Every documentation page includes an AI toolbar near the top of the page, right after the title. The toolbar provides quick access to all AI-related actions for the current page.
+
+Clicking the dropdown arrow reveals additional options:
+
+    </Tabs>
+
+Once connected, your AI coding assistant can query the Strapi documentation directly to answer questions, suggest implementations, and verify API usage.
+
+## Tips for better results {#tips}
+
+- Include the page URL so the assistant grounds its answer in the right context.
+- Mention your Strapi version (e.g., Strapi 5) to avoid outdated suggestions.
+- Pair code examples with their source page when sharing snippets from `llms-code.txt`.
+- Prefer documented APIs over private internals when asking for code generation.
+- Use the MCP server in your IDE for the fastest developer experience.
+
+
+
 # Strapi Client
 Source: https://docs.strapi.io/cms/api/client
 
