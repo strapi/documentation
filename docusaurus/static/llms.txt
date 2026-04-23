@@ -29,8 +29,8 @@
 - [Logos](https://docs.strapi.io/cms/admin-panel-customization/logos): Update login and navigation logos by extending the admin app. Prefer SVG for crisp rendering; provide light/dark variants when possible for contrast.
 - [Theme extension](https://docs.strapi.io/cms/admin-panel-customization/theme-extension): Extend Strapi's admin panel theme.
 - [Customizing the rich text editor](https://docs.strapi.io/cms/admin-panel-customization/wysiwyg-editor): Learn more about the various strategies available to customize the WYSIWYG editor in Strapi's admin panel.
-- [Strapi AI](https://docs.strapi.io/cms/ai/cms): Learn about AI-powered features in the Strapi admin panel — content-type design, automatic translations, and media metadata generation.
-- [AI for developers](https://docs.strapi.io/cms/ai/developer-tools): Use AI-powered tools on the Strapi documentation site — chatbot, Copy Markdown, LLMs.txt files, Open with LLM, and MCP server for IDE integration.
+- [Strapi AI for content managers](https://docs.strapi.io/cms/ai/for-content-managers): Learn about AI-powered features in the Strapi admin panel, such as content-type design, automatic translations, and media metadata generation.
+- [AI for developers](https://docs.strapi.io/cms/ai/for-developers): Use AI-powered tools on the Strapi documentation site. Chatbot, Copy Markdown, LLMs.txt files, Open with LLM, and MCP server for IDE integration.
 - [Strapi Client](https://docs.strapi.io/cms/api/client): The Strapi Client library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content.
 - [Content API](https://docs.strapi.io/cms/api/content-api): Learn more about Strapi 5's Content API
 - [Documents](https://docs.strapi.io/cms/api/document): Learn what a Document is in Strapi v5
