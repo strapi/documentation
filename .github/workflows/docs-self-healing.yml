@@ -417,7 +417,7 @@ jobs:
           # Collect PRs rejected by Triage (no docs needed)
           TRIAGE_FILE="/tmp/triage-results.json"
           if [ -f "$TRIAGE_FILE" ]; then
-            for ROW in $(jq -c '.prs[] | select(.triage == "no")' "$TRIAGE_FILE"); do
+            while IFS= read -r ROW; do
               NUM=$(echo "$ROW" | jq -r '.number')
               TITLE=$(echo "$ROW" | jq -r '.title')
               REASON=$(echo "$ROW" | jq -r '.reason')
@@ -430,13 +430,13 @@ jobs:
                 "$IGNORE_FILE" > /tmp/ignore-updated.json && mv /tmp/ignore-updated.json "$IGNORE_FILE"
               echo "Added #$NUM ($TITLE) to ignore list (triage rejection)"
               ADDED=$((ADDED + 1))
-            done
+            done < <(jq -c '.prs[] | select(.triage == "no")' "$TRIAGE_FILE")
           fi
 
           # Collect PRs rejected by Router (skip decision)
           RESULTS_FILE="/tmp/router-results.json"
           if [ -f "$RESULTS_FILE" ]; then
-            for ROW in $(jq -c '.prs[] | select(.decision == "skip")' "$RESULTS_FILE"); do
+            while IFS= read -r ROW; do
               NUM=$(echo "$ROW" | jq -r '.number')
               TITLE=$(echo "$ROW" | jq -r '.title')
               REASON=$(echo "$ROW" | jq -r '.reason')
@@ -449,7 +449,7 @@ jobs:
                 "$IGNORE_FILE" > /tmp/ignore-updated.json && mv /tmp/ignore-updated.json "$IGNORE_FILE"
               echo "Added #$NUM ($TITLE) to ignore list (router rejection)"
               ADDED=$((ADDED + 1))
-            done
+            done < <(jq -c '.prs[] | select(.decision == "skip")' "$RESULTS_FILE")
           fi
 
           if [ "$ADDED" -gt 0 ]; then
