@@ -44,6 +44,11 @@
       "number": 25890,
       "reason": "Router: Bug fix to preserve self-referential relations during publish/discard operations. The existing Draft & Publish documentation at cms/features/draft-and-publish.md already covers the feature. This fix corrects the implementation to match the documented behavior (relations should be preserved). No new user-facing features or API changes require documentation updates.",
       "added": "2026-04-24"
+    },
+    {
+      "number": 26045,
+      "reason": "Router: Internal database migration fix with no change to user-facing behavior, APIs, or configuration. The idempotency improvements and error handling are implementation details of the internal 5.0.0-02-created-document-id migration that don't require user documentation.",
+      "added": "2026-04-24"
     }
   ]
 }
