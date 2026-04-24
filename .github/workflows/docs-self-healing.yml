@@ -628,8 +628,10 @@ jobs:
 
           # Router results
           SONNET_DRAFTED=0
+          ROUTER_SKIPPED=0
           if [ -f "/tmp/router-results.json" ]; then
             SONNET_DRAFTED=$(jq '[.prs[] | select(.decision == "has_targets" and .complexity == "full")] | length' /tmp/router-results.json 2>/dev/null || echo "0")
+            ROUTER_SKIPPED=$(jq '[.prs[] | select(.decision == "skip")] | length' /tmp/router-results.json 2>/dev/null || echo "0")
           fi
 
           # Drafter results
@@ -672,7 +674,8 @@ jobs:
             --argjson total "$TOTAL_MERGED" \
             --argjson bash_filtered "$FILTERED_BASH" \
             --argjson sent_haiku "$SENT_TO_HAIKU" \
-            --argjson haiku_rejected "$HAIKU_NO_DOCS" \
+            --argjson triage_rejected "$HAIKU_NO_DOCS" \
+            --argjson router_skipped "$ROUTER_SKIPPED" \
             --argjson sonnet_drafted "$SONNET_DRAFTED" \
             --argjson prs_created "$DOC_PRS_CREATED" \
             --argjson merged_as_is "$MERGED_AS_IS" \
@@ -686,7 +689,8 @@ jobs:
                 "PRs merged (strapi)": { number: $total },
                 "Filtered by bash": { number: $bash_filtered },
                 "Sent to Haiku": { number: $sent_haiku },
-                "Rejected by Haiku": { number: $haiku_rejected },
+                "Rejected by Haiku Triage": { number: $triage_rejected },
+                "Rejected by Haiku Router": { number: $router_skipped },
                 "Drafted by Sonnet": { number: $sonnet_drafted },
                 "Doc PRs created": { number: $prs_created },
                 "Merged as-is": { number: $merged_as_is },
