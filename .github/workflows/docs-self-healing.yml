@@ -598,3 +598,116 @@ jobs:
             -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
             -H "Content-type: application/json; charset=utf-8" \
             -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$MAIN_FORMATTED" '{channel: $channel, text: $text}')" > /dev/null || echo "Slack notification failed (non-blocking)"
+
+      - name: Log metrics to Notion
+        if: always()
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_SELF_HEALING_DB: ${{ secrets.NOTION_SELF_HEALING_DB }}
+        run: |
+          if [ -z "$NOTION_API_KEY" ] || [ -z "$NOTION_SELF_HEALING_DB" ]; then
+            echo "Notion API key or database ID not configured, skipping metrics logging"
+            exit 0
+          fi
+
+          DATE=$(date -u '+%Y-%m-%d')
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          JOB_STATUS="${{ job.status }}"
+
+          # Collect metrics from intermediate files
+          TOTAL_MERGED=$(jq 'length' /tmp/all-prs.json 2>/dev/null || echo "0")
+          FILTERED_BASH=$((TOTAL_MERGED - $(jq 'length' /tmp/new-prs.json 2>/dev/null || echo "$TOTAL_MERGED")))
+          SENT_TO_HAIKU=$(jq 'length' /tmp/new-prs.json 2>/dev/null || echo "0")
+
+          # Triage results
+          if [ -f "/tmp/triage-results.json" ]; then
+            HAIKU_NO_DOCS=$(jq '[.prs[] | select(.triage == "no")] | length' /tmp/triage-results.json 2>/dev/null || echo "0")
+          else
+            HAIKU_NO_DOCS=0
+          fi
+
+          # Router results
+          SONNET_DRAFTED=0
+          if [ -f "/tmp/router-results.json" ]; then
+            SONNET_DRAFTED=$(jq '[.prs[] | select(.decision == "has_targets" and .complexity == "full")] | length' /tmp/router-results.json 2>/dev/null || echo "0")
+          fi
+
+          # Drafter results
+          DOC_PRS_CREATED=0
+          ERROR_MSG=""
+          if [ -f "/tmp/self-healing-summary.json" ]; then
+            DOC_PRS_CREATED=$(jq '.processed | length' /tmp/self-healing-summary.json 2>/dev/null || echo "0")
+            ERRORS=$(jq '.errors | length' /tmp/self-healing-summary.json 2>/dev/null || echo "0")
+            if [ "$ERRORS" -gt 0 ]; then
+              ERROR_MSG=$(jq -r '[.errors[] | "#\(.number): \(.error)"] | join("; ")' /tmp/self-healing-summary.json 2>/dev/null || echo "")
+            fi
+          elif [ "$JOB_STATUS" == "failure" ]; then
+            ERROR_MSG="Job failed (likely: max turns reached or SDK error)"
+          fi
+
+          # Retrospective: check previous doc PRs' fate (merged as-is, merged with edits, rejected)
+          MERGED_AS_IS=0
+          MERGED_WITH_EDITS=0
+          REJECTED=0
+          EXISTING_PRS=$(gh pr list --repo strapi/documentation --label auto-doc-healing --state all \
+            --json number,state,mergedAt,closedAt,commits \
+            --jq '[.[] | select(.mergedAt != null or .closedAt != null)]' 2>/dev/null || echo "[]")
+
+          if [ "$EXISTING_PRS" != "[]" ]; then
+            # Merged PRs with exactly 1 commit = merged as-is (no human edits)
+            MERGED_AS_IS=$(echo "$EXISTING_PRS" | jq '[.[] | select(.mergedAt != null and (.commits | length) <= 1)] | length' 2>/dev/null || echo "0")
+            # Merged PRs with >1 commit = merged with edits (Pierre made changes)
+            MERGED_WITH_EDITS=$(echo "$EXISTING_PRS" | jq '[.[] | select(.mergedAt != null and (.commits | length) > 1)] | length' 2>/dev/null || echo "0")
+            # Closed without merge = rejected
+            REJECTED=$(echo "$EXISTING_PRS" | jq '[.[] | select(.closedAt != null and .mergedAt == null)] | length' 2>/dev/null || echo "0")
+          fi
+
+          # Build Notion page payload
+          PAYLOAD=$(jq -n \
+            --arg db "$NOTION_SELF_HEALING_DB" \
+            --arg date "$DATE" \
+            --arg run_url "$RUN_URL" \
+            --arg status "$JOB_STATUS" \
+            --arg error "$ERROR_MSG" \
+            --argjson total "$TOTAL_MERGED" \
+            --argjson bash_filtered "$FILTERED_BASH" \
+            --argjson sent_haiku "$SENT_TO_HAIKU" \
+            --argjson haiku_rejected "$HAIKU_NO_DOCS" \
+            --argjson sonnet_drafted "$SONNET_DRAFTED" \
+            --argjson prs_created "$DOC_PRS_CREATED" \
+            --argjson merged_as_is "$MERGED_AS_IS" \
+            --argjson merged_with_edits "$MERGED_WITH_EDITS" \
+            --argjson rejected "$REJECTED" \
+            '{
+              parent: { database_id: $db },
+              properties: {
+                "Run": { title: [{ text: { content: ("Self-healing " + $date) } }] },
+                "Date": { date: { start: $date } },
+                "PRs merged (strapi)": { number: $total },
+                "Filtered by bash": { number: $bash_filtered },
+                "Sent to Haiku": { number: $sent_haiku },
+                "Rejected by Haiku": { number: $haiku_rejected },
+                "Drafted by Sonnet": { number: $sonnet_drafted },
+                "Doc PRs created": { number: $prs_created },
+                "Merged as-is": { number: $merged_as_is },
+                "Merged with edits": { number: $merged_with_edits },
+                "Rejected by Pierre": { number: $rejected },
+                "Status": { select: { name: $status } },
+                "Error": { rich_text: [{ text: { content: ($error | if length > 2000 then .[:2000] else . end) } }] },
+                "Run URL": { url: $run_url }
+              }
+            }')
+
+          # Post to Notion
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X POST "https://api.notion.com/v1/pages" \
+            -H "Authorization: Bearer $NOTION_API_KEY" \
+            -H "Notion-Version: 2022-06-28" \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD")
+
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
+            echo "Metrics logged to Notion (HTTP $HTTP_STATUS)"
+          else
+            echo "Notion logging failed (HTTP $HTTP_STATUS) — non-blocking"
+          fi
