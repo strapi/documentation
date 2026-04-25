@@ -49,6 +49,11 @@
       "number": 26045,
       "reason": "Router: Internal database migration fix with no change to user-facing behavior, APIs, or configuration. The idempotency improvements and error handling are implementation details of the internal 5.0.0-02-created-document-id migration that don't require user documentation.",
       "added": "2026-04-24"
+    },
+    {
+      "number": 26104,
+      "reason": "Router: Internal bug fix for review workflows. The fix ensures stage/assignee selection correctly respects locale params in i18n-enabled content types. No new functionality or API changes - the behavior aligns with what's already documented. Documentation does not need updates.",
+      "added": "2026-04-25"
     }
   ]
 }
