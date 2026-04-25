@@ -640,7 +640,7 @@ const sidebars = {
             updated: false,
           },
         },
-        'cloud/getting-started/caching',
+        // 'cloud/getting-started/caching',
         {
           type: 'doc',
           label: 'Notifications',
