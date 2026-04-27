@@ -21179,8 +21179,13 @@ File path: N/A
 ```js
 await strapi.db.transaction(async ({ trx, rollback, commit, onCommit, onRollback }) => {
   // It will implicitly use the transaction
-  await strapi.entityService.create();
-  await strapi.entityService.create();
+  const article = await strapi.documents('api::article.article').create({
+    data: { title: 'My Article', slug: 'my-article' },
+  });
+
+  await strapi.documents('api::log.log').create({
+    data: { action: 'article_created', targetId: article.documentId },
+  });
 });
 ```
 
@@ -21195,11 +21200,15 @@ File path: N/A
 ```js
 await strapi.db.transaction(async () => {
   // It will implicitly use the transaction
-  await strapi.entityService.create();
+  await strapi.documents('api::article.article').create({
+    data: { title: 'My Article', slug: 'my-article' },
+  });
 
   // Nested transactions will implicitly use the outer transaction
-  await strapi.db.transaction(async ({}) => {
-    await strapi.entityService.create();
+  await strapi.db.transaction(async () => {
+    await strapi.documents('api::category.category').create({
+      data: { name: 'Tech' },
+    });
   });
 });
 ```
@@ -21215,15 +21224,18 @@ File path: N/A
 ```js
 await strapi.db.transaction(async ({ onCommit, onRollback }) => {
   // It will implicitly use the transaction
-  await strapi.entityService.create();
-  await strapi.entityService.create();
+  const user = await strapi.documents('api::user.user').create({
+    data: { username: 'johndoe', email: 'john@example.com' },
+  });
 
   onCommit(() => {
-    // This will be executed after the transaction is committed
+    // This will be executed after the transaction is committed,
+    // e.g., send a welcome email
   });
 
   onRollback(() => {
-    // This will be executed after the transaction is rolled back
+    // This will be executed after the transaction is rolled back,
+    // e.g., log the failure
   });
 });
 ```

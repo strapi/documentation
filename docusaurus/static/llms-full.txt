@@ -7616,7 +7616,7 @@ Source: https://docs.strapi.io/cms/database-transactions
 This is an experimental feature and is subject to change in future versions.
 :::
 
-Strapi 5 provide an API to wrap a set of operations in a transaction that ensures the integrity of data.
+Strapi 5 provides an API to wrap a set of operations in a transaction that ensures the integrity of data.
 
 Transactions are a set of operations that are executed together as a single unit. If any of the operations fail, the entire transaction fails and the data is rolled back to its previous state. If all operations succeed, the transaction is committed and the data is permanently saved to the database.
 
@@ -7627,15 +7627,20 @@ Transactions are handled by passing a handler function into `strapi.db.transacti
 ```js
 await strapi.db.transaction(async ({ trx, rollback, commit, onCommit, onRollback }) => {
   // It will implicitly use the transaction
-  await strapi.entityService.create();
-  await strapi.entityService.create();
+  const article = await strapi.documents('api::article.article').create({
+    data: { title: 'My Article', slug: 'my-article' },
+  });
+
+  await strapi.documents('api::log.log').create({
+    data: { action: 'article_created', targetId: article.documentId },
+  });
 });
 ```
 
 After the transaction handler is executed, the transaction is committed if all operations succeed. If any of the operations throws, the transaction is rolled back and the data is restored to its previous state.
 
 :::note
-Every `strapi.entityService` or `strapi.db.query` operation performed in a transaction block will implicitly use the transaction.
+Every [Document Service API](/cms/api/document-service), `strapi.db.query`, and `strapi.entityService` operation performed inside a `strapi.db.transaction` block will implicitly use the transaction. Strapi uses  to propagate the transaction context, so there is no need to pass the transaction object explicitly to these APIs.
 :::
 
 ### Transaction handler properties
@@ -7657,11 +7662,15 @@ Transactions can be nested. When a transaction is nested, the inner transaction 
 ```js
 await strapi.db.transaction(async () => {
   // It will implicitly use the transaction
-  await strapi.entityService.create();
+  await strapi.documents('api::article.article').create({
+    data: { title: 'My Article', slug: 'my-article' },
+  });
 
   // Nested transactions will implicitly use the outer transaction
-  await strapi.db.transaction(async ({}) => {
-    await strapi.entityService.create();
+  await strapi.db.transaction(async () => {
+    await strapi.documents('api::category.category').create({
+      data: { name: 'Tech' },
+    });
   });
 });
 ```
@@ -7673,15 +7682,18 @@ The `onCommit` and `onRollback` hooks can be used to execute code after the tran
 ```js
 await strapi.db.transaction(async ({ onCommit, onRollback }) => {
   // It will implicitly use the transaction
-  await strapi.entityService.create();
-  await strapi.entityService.create();
+  const user = await strapi.documents('api::user.user').create({
+    data: { username: 'johndoe', email: 'john@example.com' },
+  });
 
   onCommit(() => {
-    // This will be executed after the transaction is committed
+    // This will be executed after the transaction is committed,
+    // e.g., send a welcome email
   });
 
   onRollback(() => {
-    // This will be executed after the transaction is rolled back
+    // This will be executed after the transaction is rolled back,
+    // e.g., log the failure
   });
 });
 ```
