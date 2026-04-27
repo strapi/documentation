@@ -2,6 +2,7 @@
 sidebar_label: 'Caching for app performance'
 displayed_sidebar: cloudSidebar
 sidebar_position: 4
+unlisted: true
 tags:
 - caching
 - Content Delivery Network (CDN)
