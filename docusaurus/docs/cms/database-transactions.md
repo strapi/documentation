@@ -40,7 +40,7 @@ await strapi.db.transaction(async ({ trx, rollback, commit, onCommit, onRollback
 After the transaction handler is executed, the transaction is committed if all operations succeed. If any of the operations throws, the transaction is rolled back and the data is restored to its previous state.
 
 :::note
-Every [Document Service API](/cms/api/document-service), `strapi.db.query`, and `strapi.entityService` operation performed inside a `strapi.db.transaction` block will implicitly use the transaction. Strapi uses [AsyncLocalStorage](https://nodejs.org/api/async_context.html#class-asynclocalstorage) to propagate the transaction context, so there is no need to pass the transaction object explicitly to these APIs.
+Every [Document Service API](/cms/api/document-service), `strapi.db.query`, and `strapi.entityService` operation performed inside a `strapi.db.transaction` block will implicitly use the transaction. Strapi uses <ExternalLink to="https://nodejs.org/api/async_context.html#class-asynclocalstorage" text="AsyncLocalStorage"/> to propagate the transaction context, so there is no need to pass the transaction object explicitly to these APIs.
 :::
 
 ### Transaction handler properties
