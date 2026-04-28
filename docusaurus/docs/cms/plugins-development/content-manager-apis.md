@@ -18,7 +18,7 @@ import InjectionVsCmApis from '/docs/snippets/injection-zones-vs-content-manager
 # Content Manager APIs
 
 <Tldr>
-Content Manager APIs add panels and actions to list or edit views through `addEditViewSidePanel`, `addDocumentAction`, `addDocumentHeaderAction`, or `addBulkAction`. Each API accepts component functions with typed contexts, enabling precise control over document-aware UI injections.
+Content Manager APIs add panels, actions, and custom rich text blocks to the Content Manager through `addEditViewSidePanel`, `addDocumentAction`, `addDocumentHeaderAction`, `addBulkAction`, or `addRichTextBlocks`. Each API accepts component functions with typed contexts, enabling precise control over document-aware UI injections.
 </Tldr>
 
 Content Manager APIs are part of the [Admin Panel API](/cms/plugins-development/admin-panel-api). They are a way for Strapi plugins to add content or options to the [Content Manager](/cms/features/content-manager). The Content Manager APIs allow you to extend the Content Manager by adding functionality from your own plugin, just like you can do it with [Injection zones](/cms/plugins-development/admin-injection-zones).
@@ -381,3 +381,138 @@ interface BulkActionDescription {
   variant?: ButtonProps['variant'];
 }
 ```
+
+### `addRichTextBlocks`
+
+Use this API to register custom block types in the [Blocks](/cms/features/content-manager) rich text field. Custom blocks appear in the toolbar dropdown alongside built-in ones.
+
+:::note
+`addRichTextBlocks` must be called in the `register()` lifecycle function, not `bootstrap()`. The editor initializes its Slate instance during `register`, so blocks must be available at that point.
+:::
+
+```jsx
+addRichTextBlocks(blocks: RichTextBlocksStore | ((currentBlocks: RichTextBlocksStore) => RichTextBlocksStore))
+```
+
+The API accepts 2 call signatures:
+
+- Passing an **object**: the provided blocks are merged into the existing blocks store.
+
+  <Tabs groupId="js-ts">
+  <TabItem value="js" label="JavaScript" default>
+
+  ```js title="src/admin/app.js"
+  export default {
+    register(app) {
+      app.getPlugin('content-manager').apis.addRichTextBlocks({
+        callout: {
+          renderElement: (props) => <Callout {...props.attributes}>{props.children}</Callout>,
+          icon: Information,
+          label: { id: 'my-plugin.blocks.callout', defaultMessage: 'Callout' },
+          matchNode: (node) => node.type === 'callout',
+          isInBlocksSelector: true,
+          handleConvert(editor) { /* use Slate Transforms to set node type */ },
+          snippets: [':::callout'],
+        },
+      });
+    },
+  };
+  ```
+
+  </TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+  ```tsx title="src/admin/app.ts"
+  import type { ContentManagerPlugin } from '@strapi/content-manager/strapi-admin';
+
+  export default {
+    register(app) {
+      const apis =
+        app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+      apis.addRichTextBlocks({
+        callout: {
+          renderElement: (props) => <Callout {...props.attributes}>{props.children}</Callout>,
+          icon: Information,
+          label: { id: 'my-plugin.blocks.callout', defaultMessage: 'Callout' },
+          matchNode: (node) => node.type === 'callout',
+          isInBlocksSelector: true,
+          handleConvert(editor) { /* use Slate Transforms to set node type */ },
+          snippets: [':::callout'],
+        },
+      });
+    },
+  };
+  ```
+
+  </TabItem>
+  </Tabs>
+
+- Passing a **function**: the function receives the current blocks store and must return the updated store. Use this form to remove or replace built-in blocks.
+
+  <Tabs groupId="js-ts">
+  <TabItem value="js" label="JavaScript" default>
+
+  ```js title="src/admin/app.js"
+  export default {
+    register(app) {
+      app.getPlugin('content-manager').apis.addRichTextBlocks((currentBlocks) => {
+        // Remove the built-in code block
+        const { code: _removed, ...rest } = currentBlocks;
+        return rest;
+      });
+    },
+  };
+  ```
+
+  </TabItem>
+  <TabItem value="ts" label="TypeScript">
+
+  ```tsx title="src/admin/app.ts"
+  import type {
+    ContentManagerPlugin,
+    RichTextBlocksStore,
+  } from '@strapi/content-manager/strapi-admin';
+
+  export default {
+    register(app) {
+      const apis =
+        app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+      apis.addRichTextBlocks((currentBlocks: RichTextBlocksStore) => {
+        const { code: _removed, ...rest } = currentBlocks;
+        return rest;
+      });
+    },
+  };
+  ```
+
+  </TabItem>
+  </Tabs>
+
+#### Block definition
+
+Each entry in the blocks object is a block definition with the following properties:
+
+| Property | Required | Description |
+|---|---|---|
+| `renderElement` | Yes | React render function. Spread `props.attributes` on the root element and render `props.children`. |
+| `matchNode` | Yes | Returns `true` if a given Slate node belongs to this block type. |
+| `isInBlocksSelector` | No | Set to `true` to show the block in the toolbar dropdown. Defaults to `false`. |
+| `icon` | No | Icon component shown in the toolbar dropdown. Required when `isInBlocksSelector` is `true`. |
+| `label` | No | `MessageDescriptor` (`{ id, defaultMessage }`) shown in the toolbar dropdown. Required when `isInBlocksSelector` is `true`. |
+| `handleConvert` | No | Called when the user selects this block from the dropdown. Use Slate's `Transforms` to set the node type. |
+| `handleEnterKey` | No | Custom Enter key behavior inside this block. |
+| `handleBackspaceKey` | No | Custom Backspace key behavior. |
+| `handleTab` | No | Custom Tab key behavior (e.g., indentation). |
+| `handleShiftTab` | No | Custom Shift+Tab key behavior. |
+| `snippets` | No | Typing one of these strings followed by Space triggers a conversion to this block type. |
+| `dragHandleTopMargin` | No | Adjusts the vertical position of the drag-to-reorder grip icon. |
+| `plugin` | No | A [Slate plugin](https://docs.slatejs.org/) registered when the editor instance is created. Use this for custom normalizers or Slate-level behavior. |
+| `isDraggable` | No | Function returning whether a given element is draggable. Defaults to `() => true`. |
+
+The built-in block keys are: `paragraph`, `heading-one`, `heading-two`, `heading-three`, `heading-four`, `heading-five`, `heading-six`, `list-ordered`, `list-unordered`, `image`, `quote`, `code`, `link`, `list-item`.
+
+:::tip
+More information about types can be found in <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/BlocksInput/BlocksEditor.tsx" text="Strapi's codebase, in the BlocksEditor.tsx file"/>.
+:::
