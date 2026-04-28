@@ -111,7 +111,11 @@ To reactivate the project immediately, users can upgrade to a paid plan.
 
 If you have unpaid invoices, the subscription of your project will automatically be canceled and the project suspended. 
 
-To reactivate your project's subscription, head to *Settings > Billing & Usage* and click on the **Reactivate subscription** button.
+To reactivate your project subscription:
+
+1. Click the **Pay now** button in the project banner, or in *Settings > Billing & Usage*
+2. Pay your overdue invoice(s) on the external payment page
+3. Wait up to 1 minute for your project to reactivate
 
 <ThemedImage
   alt="Reactivate subscription"
