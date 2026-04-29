@@ -383,3 +383,44 @@ strapi.documents("api::article.article").publish({
 
 </Response>
 </ApiCall>
+
+## Populating with `delete()`
+
+To populate while deleting documents:
+
+<ApiCall noSideBySide>
+<Request title="Example request">
+
+```js
+strapi.documents("api::article.article").delete({
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
+  populate: ["headerImage"],
+});
+```
+
+</Request>
+
+<Response title="Example response">
+
+```json
+{
+  "documentId": "cjld2cjxh0000qzrmn831i7rn",
+  "entries": [
+    {
+      "id": "cjld2cjxh0000qzrmn831i7rn",
+      "title": "Test Article",
+      "slug": "test-article",
+      "body": "Test 1",
+      "headerImage": {
+        "id": 2,
+        "name": "17520.jpg"
+        // ...
+      }
+      // ...
+    }
+  ]
+}
+```
+
+</Response>
+</ApiCall>
