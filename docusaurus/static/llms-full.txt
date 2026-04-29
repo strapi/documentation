@@ -1906,12 +1906,9 @@ Source: https://docs.strapi.io/cms/ai/for-developers
 
 The Strapi documentation site includes AI-powered tools to help developers learn, explore, and integrate Strapi more effectively. These tools are free to use and available to everyone.
 
-## AI toolbar
-
-Every documentation page includes an AI toolbar near the top of the page, right after the title. The toolbar provides quick access to all AI-related actions for the current page.
-
-Clicking the dropdown arrow reveals additional options:
-
+:::tip AGENTS.MD files
+In addition to docs and product features described on the present page, the <code>
+    
     </Tabs>
 
 Once connected, your AI coding assistant can query the Strapi documentation directly to answer questions, suggest implementations, and verify API usage.
