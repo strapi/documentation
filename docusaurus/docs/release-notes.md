@@ -29,7 +29,50 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.43.0](https://github.com/strapi/strapi/releases/tag/v5.43.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.44.0](https://github.com/strapi/strapi/releases/tag/v5.44.0)._
+
+## 6.23.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Add recap pages for AI features](https://github.com/strapi/documentation/pull/3091)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Add a tip to AI for devs page to cross-link agents.md files](https://github.com/strapi/documentation/pull/3104)
+- [Update database transactions page to use Document Service API](https://github.com/strapi/documentation/pull/3097)
+- [Document populate support in Document Service API `delete()` operations](https://github.com/strapi/documentation/pull/3094)
+- [Add note about Vite `.mts` ESM syntax support](https://github.com/strapi/documentation/pull/3080)
+
+#### Cloud
+- [Reactivate the subscription flow for Strapi Cloud](https://github.com/strapi/documentation/pull/3101)
+
+#### Repository
+- [Docs self-healing workflow improvements: Split Notion rejection metrics into Triage and Router](https://github.com/strapi/documentation/pull/3095)
+- [Add Notion metrics logging for self-healing runs](https://github.com/strapi/documentation/pull/3079)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 6.22.0
 
