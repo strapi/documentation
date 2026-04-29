@@ -4596,6 +4596,45 @@ File path: N/A
 ```
 
 
+## Populating with delete()
+Description: Code example from "Populating with delete()"
+(Source: https://docs.strapi.io/cms/api/document-service/populate#populating-with-delete)
+
+Language: JavaScript
+File path: N/A
+
+```js
+strapi.documents("api::article.article").delete({
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
+  populate: ["headerImage"],
+});
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "documentId": "cjld2cjxh0000qzrmn831i7rn",
+  "entries": [
+    {
+      "id": "cjld2cjxh0000qzrmn831i7rn",
+      "title": "Test Article",
+      "slug": "test-article",
+      "body": "Test 1",
+      "headerImage": {
+        "id": 2,
+        "name": "17520.jpg"
+        // ...
+      }
+      // ...
+    }
+  ]
+}
+```
+
+
 
 # Using Sort & Pagination with the Document Service API
 Source: https://docs.strapi.io/cms/api/document-service/sort-pagination

@@ -1454,9 +1454,8 @@ In Strapi 5,
 
 </Tabs>
 
-## Webpack
-
-In Strapi 5, the default bundler is Vite. To use 
+:::tip
+Strapi also supports the `.mts` file extension for Vite config files (`vite.config.mts`), for projects that use explicit ESM module resolution in their `package.json`. This is useful as Vite's CJS Node API is 
 
 </Tabs>
 
@@ -3479,6 +3478,12 @@ To populate while updating documents:
 ## Populating with `publish()`
 
 To populate while publishing documents (same behavior with `unpublish()` and `discardDraft()`):
+
+</ApiCall>
+
+## Populating with `delete()`
+
+To populate while deleting documents:
 
 </ApiCall>
 
