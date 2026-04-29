@@ -1,0 +1,202 @@
+name: PR Title Lint
+
+on:
+  pull_request:
+    types: [opened, edited]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run — log suggestions without posting comments'
+        required: false
+        type: boolean
+        default: false
+      pr_number:
+        description: 'PR number to check (leave empty to scan all open PRs)'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  pull-requests: write
+
+jobs:
+  lint-pr-title:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const isDryRun = context.eventName === 'workflow_dispatch'
+              && '${{ inputs.dry_run }}' === 'true';
+
+            // --- Helpers ---
+
+            // Banned prefixes: feat(scope): / fix: / chore(scope): etc.
+            const BANNED_PREFIX_RE = /^(?:feat|fix|chore|docs|style|refactor|perf|test|build|ci|revert)(?:\([^)]*\))?:\s*/i;
+
+            // Optional bracket qualifier at the start, e.g. [experimental]
+            const BRACKET_RE = /^(\[[^\]]+\]\s*)?(.*)$/;
+
+            // Strip banned prefix and return cleaned title
+            function stripPrefix(title) {
+              return title.replace(BANNED_PREFIX_RE, '');
+            }
+
+            // Capitalize first letter (after optional bracket)
+            function capitalize(title) {
+              const m = title.match(BRACKET_RE);
+              if (!m) return title;
+              const bracket = m[1] || '';
+              const rest = m[2];
+              if (!rest) return title;
+              return bracket + rest.charAt(0).toUpperCase() + rest.slice(1);
+            }
+
+            // Check if title starts with a valid opening
+            // (action verb or specific feature noun phrase — at least 3 words, capitalized)
+            function hasValidOpening(title) {
+              const m = title.match(BRACKET_RE);
+              const rest = (m ? m[2] : title).trim();
+              // Must start with a capital letter
+              if (!/^[A-Z]/.test(rest)) return false;
+              // Must have at least 3 words to not be too vague
+              if (rest.split(/\s+/).length < 3) return false;
+              return true;
+            }
+
+            // Build list of issues for a title
+            function lintTitle(title) {
+              const issues = [];
+              let suggested = title;
+
+              // Check banned prefix
+              if (BANNED_PREFIX_RE.test(title)) {
+                issues.push('Title starts with a banned prefix (`feat:`, `fix:`, `chore:`, etc.)');
+                suggested = stripPrefix(suggested);
+              }
+
+              // After stripping, check bracket + rest
+              const m = suggested.match(BRACKET_RE);
+              const bracket = m[1] || '';
+              let rest = m[2] || '';
+
+              // Capitalize
+              if (rest && /^[a-z]/.test(rest)) {
+                issues.push('First word after any bracket qualifier must be capitalized');
+                rest = rest.charAt(0).toUpperCase() + rest.slice(1);
+                suggested = bracket + rest;
+              }
+
+              // Too short / vague (less than 3 words)
+              if (rest.split(/\s+/).filter(Boolean).length < 3) {
+                issues.push('Title is too short or vague — use a specific action verb or feature noun phrase (aim for 3+ words)');
+              }
+
+
+              // Must start with a capital letter (after optional bracket)
+              // Already handled above via capitalize check
+
+              return { issues, suggested: suggested.trim() };
+            }
+
+            // Format a single PR result for the summary log
+            function formatLogEntry(pr, result) {
+              const status = result.issues.length === 0 ? '✅' : '⚠️';
+              let entry = `${status} **#${pr.number}** — \`${pr.title}\`\n`;
+              if (result.issues.length > 0) {
+                for (const issue of result.issues) {
+                  entry += `  - ${issue}\n`;
+                }
+                if (result.suggested !== pr.title) {
+                  entry += `  - **Suggested:** \`${result.suggested}\`\n`;
+                }
+              }
+              return entry;
+            }
+
+            // Post a comment on a PR (unless dry run)
+            async function postComment(pr, result) {
+              if (result.issues.length === 0) return;
+              if (isDryRun) return;
+
+              const issueList = result.issues.map(i => `- ${i}`).join('\n');
+              const suggestedLine = result.suggested !== pr.title
+                ? `\n**Suggested:** \`${result.suggested}\`\n`
+                : '';
+
+              const body = [
+                'Thank you for your contribution! 🙏',
+                '',
+                `The PR title does not follow our [naming conventions](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/git-rules.md#pull-request-titles).`,
+                '',
+                `**Current:** \`${pr.title}\``,
+                suggestedLine,
+                issueList,
+                '',
+                'Please update the title. See [git-rules.md](https://github.com/' +
+                  `${context.repo.owner}/${context.repo.repo}/blob/main/git-rules.md) for details.`,
+              ].filter(line => line !== undefined).join('\n');
+
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                body,
+              });
+            }
+
+            // --- Main ---
+
+            let prsToCheck = [];
+
+            if (context.eventName === 'pull_request') {
+              // Single PR triggered by open/edit
+              prsToCheck = [context.payload.pull_request];
+            } else if (context.eventName === 'workflow_dispatch') {
+              const prNumber = '${{ inputs.pr_number }}'.trim();
+              if (prNumber) {
+                // Single PR by number
+                const { data: pr } = await github.rest.pulls.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: parseInt(prNumber, 10),
+                });
+                prsToCheck = [pr];
+              } else {
+                // All open PRs
+                const { data: prs } = await github.rest.pulls.list({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  state: 'open',
+                  per_page: 100,
+                });
+                prsToCheck = prs;
+              }
+            }
+
+            let summaryLines = [];
+            summaryLines.push(`## PR Title Lint${isDryRun ? ' (dry run)' : ''}\n`);
+            summaryLines.push(`Checked ${prsToCheck.length} PR(s).\n`);
+
+            let failCount = 0;
+
+            for (const pr of prsToCheck) {
+              const result = lintTitle(pr.title);
+              summaryLines.push(formatLogEntry(pr, result));
+
+              if (result.issues.length > 0) {
+                failCount++;
+                await postComment(pr, result);
+              }
+            }
+
+            summaryLines.push(`\n---\n**${failCount}** PR(s) with title issues, **${prsToCheck.length - failCount}** OK.`);
+
+            // Always write to step summary (visible in Actions tab)
+            await core.summary.addRaw(summaryLines.join('\n')).write();
+
+            if (failCount > 0 && context.eventName === 'pull_request') {
+              core.setFailed(`PR title does not follow naming conventions. See the comment for details.`);
+            } else if (failCount > 0) {
+              core.info(`${failCount} PR(s) with non-compliant titles.`);
+            }
