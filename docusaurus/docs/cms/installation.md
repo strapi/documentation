@@ -16,4 +16,4 @@ Strapi projects can be installed either locally on a computer or on a remote ser
 
 If you already have an existing Strapi project on your local machine, the following guide provides step-by-step instructions on creating a custom Docker image for your project:
 
-<CustomDocCard title="Docker" description="Create a custom Docker container from a local project." link="/cms/installation/docker" />
+<CustomDocCard title="Docker" description="Build and run a Strapi project in Docker for development and production." link="/cms/installation/docker" />
