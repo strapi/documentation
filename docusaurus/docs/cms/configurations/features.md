@@ -35,7 +35,7 @@ To enable a future flag:
 
 1. (_optional_) If the server is running, stop it with `Ctrl-C`.
 2. Open the `config/features.js|ts` file or create it if the file does not exist yet. The file will export a `future` object with all the future flags to enable.
-3. To enable a future flag, add its property name (see [full list](#available-future-flags)) to the `future` object and ensure the property's value is set to `true`. The following example shows how to enable the `experimental_firstPublishedAt` future flag:
+3. To enable a future flag, add its property name (see [full list](#available-future-flags)) to the `future` object and ensure the property's value is set to `true`. The following example shows how to enable the `admin_tokens` future flag:
 
   <Tabs groupId='js-ts'>
 
@@ -44,7 +44,7 @@ To enable a future flag:
   ```ts title="/config/features.ts"
   module.exports = ({ env }) => ({
     future: {
-      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
+      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
     },
   })
 
@@ -53,10 +53,10 @@ To enable a future flag:
   This example assumes that you have an `.env` environment file at the root of your application and that the file includes the following line:
 
   ```json title=".env"
-  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
+  STRAPI_FUTURE_ADMIN_TOKENS=true
   ```
 
-  If your environment file does not include this value, the `experimental_firstPublishedAt` future flag property value will default to `false` and the experimental feature will not be enabled.
+  If your environment file does not include this value, the `adminTokens` future flag property value will default to `false` and the experimental feature will not be enabled.
 
   </TabItem>
 
@@ -65,7 +65,7 @@ To enable a future flag:
   ```ts title="/config/features.ts"
   export default {
     future: {
-      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
+      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
     },
   };
   ```
@@ -73,7 +73,7 @@ To enable a future flag:
   This example assumes that you have an `.env` environment file at the root of your application and that the file includes the following line:
 
   ```json title=".env"
-  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
+  STRAPI_FUTURE_ADMIN_TOKESN=true
   ```
 
   If your environment file does not include this value, the `experimental_firstPublishedAt` future flag property value will default to `false` and the experimental feature will not be enabled.
