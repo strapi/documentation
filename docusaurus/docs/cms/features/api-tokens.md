@@ -18,7 +18,7 @@ tags:
 API tokens authenticate external requests to the Strapi Content API without exposing user credentials. Each token is scoped to a set of permissions and expires after a configurable duration.
 </Tldr>
 
-API tokens allow external clients to authenticate requests to the Strapi [Content API](/cms/api/content-api). For programmatic access to the Admin API, see [Admin Tokens](/cms/features/admin-tokens).
+API tokens allow external clients to authenticate requests to the Strapi [Content API](/cms/api/content-api). For programmatic access to the Admin panel features, see [Admin Tokens](/cms/features/admin-tokens).
 
 API tokens and Admin tokens are strictly separated: a Content API token is rejected on admin routes, and an admin token is rejected on Content API routes.
 
