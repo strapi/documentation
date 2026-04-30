@@ -59,6 +59,11 @@
       "number": 26133,
       "reason": "Router: Internal admin UI styling fix that addresses a rendering bug (double scrollbar in list view). This is an implementation detail of the OverflowingItem styled component and does not introduce new user-facing features, APIs, or behavior changes. Users do not interact with or configure this component directly. No documentation update needed.",
       "added": "2026-04-29"
+    },
+    {
+      "number": 26148,
+      "reason": "Router: Internal bug fix in content manager crash handling when viewing history of entries with deleted dynamic zone components. No public API change, no new user-facing behavior — just fixes an unexpected crash.",
+      "added": "2026-04-30"
     }
   ]
 }
