@@ -151,7 +151,7 @@ export default ({ env }) => ({
 This key is used to encrypt and decrypt token values. Without this key, tokens remain usable, but will not be viewable after initial display. New Strapi projects will have this key automatically generated.
 
 :::tip
-For automation workflows that need to call the Admin API programmatically, use admin tokens instead. See [Admin Tokens](/cms/features/admin-tokens) for the full documentation.
+For automation workflows that need to call the Admin panel features programmatically, use admin tokens instead. See [Admin Tokens](/cms/features/admin-tokens) for the full documentation.
 :::
 
 ## Usage
