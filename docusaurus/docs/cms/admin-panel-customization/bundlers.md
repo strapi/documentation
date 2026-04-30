@@ -71,6 +71,10 @@ export default (config) => {
 </TabItem>
 </Tabs>
 
+:::tip
+Strapi also supports the `.mts` file extension for Vite config files (`vite.config.mts`), for projects that use explicit ESM module resolution in their `package.json`. This is useful as Vite's CJS Node API is <ExternalLink text="deprecated since Vite 6" to="https://v6.vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated" /> and will be removed in a future version.
+:::
+
 ## Webpack
 
 In Strapi 5, the default bundler is Vite. To use <ExternalLink to="https://webpack.js.org/" text="webpack"/> as a bundler you will need to pass it as an option to the `strapi develop` command:
