@@ -53,6 +53,14 @@ Admin tokens are configured entirely from the admin panel. No code-based configu
 
 ### Creating a new Admin token
 
+:::prerequisites
+If you're not the Strapi instance's super admin, the super admin must have granted you the following permissions:
+  * access the Admin tokens settings page
+  * create (generate) admin tokens
+  
+  (see [RBAC > Configuring role's permissions](/cms/features/rbac#plugins-and-settings) for details).
+:::
+
 1. Click on the **Create new Admin Token** button.
 2. In the token creation form, configure the new Admin token:
 
