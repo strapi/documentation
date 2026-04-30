@@ -10,19 +10,20 @@ tags:
 ---
 
 # Homepage customization
-<VersionBadge version="5.13.0+" tooltip="Adding custom widgets is available since Strapi 5.13.0. The newest widgets (profile, entries, statistics) are available from Strapi 5.23.0."/>
+<VersionBadge version="5.13.0+" tooltip="Adding custom widgets is available since Strapi 5.13.0. The profile, entries, and statistics widgets are available from Strapi 5.23.0. The Deploy widget is available from Strapi 5.44.0."/>
 
 <Tldr>
 The admin panel homepage displays default content and profile widgets and supports custom additions through the `app.widgets.register` API.
 </Tldr>
 
-The <Icon name="house" /> Homepage is the landing page of the Strapi admin panel. By default, it provides an overview of your content with 5 default widgets:
+The <Icon name="house" /> Homepage is the landing page of the Strapi admin panel. By default, it provides an overview of your content with 6 default widgets:
 
 - _Last edited entries_: Displays recently modified content entries, including their content type, status, and when they were updated.
 - _Last published entries_: Shows recently published content entries, allowing you to quickly access and manage your published content.
 - _Profile_: Displays a short summary of your profile, including your name, email address, and role.
 - _Entries_: Displays the total number of Draft & Published entries.
 - _Project statistics_: Displays statistics about your entries, content-types, locales, assets, and more.
+- _Deploy_: Displays a **Deploy Now** button that links to [Strapi Cloud](https://cloud.strapi.io/login) for deploying your project.
 
 
 <ThemedImage
