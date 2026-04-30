@@ -35,7 +35,7 @@ To enable a future flag:
 
 1. (_optional_) If the server is running, stop it with `Ctrl-C`.
 2. Open the `config/features.js|ts` file or create it if the file does not exist yet. The file will export a `future` object with all the future flags to enable.
-3. To enable a future flag, add its property name (see [full list](#available-future-flags)) to the `future` object and ensure the property's value is set to `true`. The following example shows how to enable the `admin_tokens` future flag:
+3. To enable a future flag, add its property name (see [full list](#available-future-flags)) to the `future` object and ensure the property's value is set to `true`. The following example shows how to enable the `adminTokens` future flag:
 
   <Tabs groupId='js-ts'>
 
