@@ -73,7 +73,7 @@ To enable a future flag:
   This example assumes that you have an `.env` environment file at the root of your application and that the file includes the following line:
 
   ```json title=".env"
-  STRAPI_FUTURE_ADMIN_TOKESN=true
+  STRAPI_FUTURE_ADMIN_TOKENS=true
   ```
 
   If your environment file does not include this value, the `experimental_firstPublishedAt` future flag property value will default to `false` and the experimental feature will not be enabled.
