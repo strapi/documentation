@@ -15,6 +15,10 @@ toc_max_heading_level: 3
 
 The Strapi documentation site includes AI-powered tools to help developers learn, explore, and integrate Strapi more effectively. These tools are free to use and available to everyone.
 
+:::tip AGENTS.MD files
+In addition to docs and product features described on the present page, the <code><ExternalLink to="https://github.com/strapi/strapi/blob/develop/AGENTS.md" text="strapi/strapi"/></code> and <code><ExternalLink to="https://github.com/strapi/documentation/blob/main/AGENTS.md" text="strapi/documentation"/></code> repositories also have their own `AGENTS.md` files. Use them to guide your AI-based tools when developing Strapi features or updating documentation.
+:::
+
 ## AI toolbar
 
 Every documentation page includes an AI toolbar near the top of the page, right after the title. The toolbar provides quick access to all AI-related actions for the current page.
