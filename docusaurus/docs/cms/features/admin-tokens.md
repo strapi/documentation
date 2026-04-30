@@ -37,7 +37,6 @@ Admin tokens and API tokens are strictly separated: each is rejected on the othe
   </IdentityCardItem>
 </IdentityCard>
 
-<!-- TODO: Update screenshot once admin tokens UI is finalized behind the feature flag -->
 <ThemedImage
   alt="Admin tokens in the admin panel"
   sources={{
