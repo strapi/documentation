@@ -30,7 +30,7 @@ If the Users & Permissions plugin is installed, the `find` permission must be en
 
 ## Relations and media fields
 
-Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax option examples.
+Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax option examples. This includes all relation types: one-to-many, many-to-one, many-to-many, and polymorphic relations (morphToOne, morphToMany).
 
 ### Populate 1 level for all relations
 
