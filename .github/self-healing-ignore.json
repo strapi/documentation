@@ -64,6 +64,26 @@
       "number": 26148,
       "reason": "Router: Internal bug fix in content manager crash handling when viewing history of entries with deleted dynamic zone components. No public API change, no new user-facing behavior — just fixes an unexpected crash.",
       "added": "2026-04-30"
+    },
+    {
+      "number": 25015,
+      "reason": "Triage: admin UI polish with no behavior change; removes spurious console warnings",
+      "added": "2026-05-01"
+    },
+    {
+      "number": 25574,
+      "reason": "Router: Internal framework migration from Yup to Zod for server-side validation schemas. This is implementation detail, not a user-facing API or configuration change.",
+      "added": "2026-05-01"
+    },
+    {
+      "number": 25900,
+      "reason": "Router: Internal bug fix in URL parameter serialization that prevents trailing ? in query strings. Fixes a side effect (duplicate history versions) but doesn't change public API surface.",
+      "added": "2026-05-01"
+    },
+    {
+      "number": 25967,
+      "reason": "Router: UI enhancement to the Review Workflows admin panel feature (incremental loading + search in assignee dropdown). No API change or configuration change.",
+      "added": "2026-05-01"
     }
   ]
 }
