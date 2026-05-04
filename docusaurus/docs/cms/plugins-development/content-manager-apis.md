@@ -494,24 +494,50 @@ The API accepts 2 call signatures:
 
 Each entry in the blocks object is a block definition with the following properties:
 
-| Property | Required | Description |
-|---|---|---|
-| `renderElement` | Yes | React render function. Spread `props.attributes` on the root element and render `props.children`. |
-| `matchNode` | Yes | Returns `true` if a given Slate node belongs to this block type. |
-| `isInBlocksSelector` | No | Set to `true` to show the block in the toolbar dropdown. Defaults to `false`. |
-| `icon` | No | Icon component shown in the toolbar dropdown. Required when `isInBlocksSelector` is `true`. |
-| `label` | No | `MessageDescriptor` (`{ id, defaultMessage }`) shown in the toolbar dropdown. Required when `isInBlocksSelector` is `true`. |
-| `handleConvert` | No | Called when the user selects this block from the dropdown. Use Slate's `Transforms` to set the node type. |
-| `handleEnterKey` | No | Custom Enter key behavior inside this block. |
-| `handleBackspaceKey` | No | Custom Backspace key behavior. |
-| `handleTab` | No | Custom Tab key behavior (e.g., indentation). |
-| `handleShiftTab` | No | Custom Shift+Tab key behavior. |
-| `snippets` | No | Typing one of these strings followed by Space triggers a conversion to this block type. |
-| `dragHandleTopMargin` | No | Adjusts the vertical position of the drag-to-reorder grip icon. |
-| `plugin` | No | A [Slate plugin](https://docs.slatejs.org/) registered when the editor instance is created. Use this for custom normalizers or Slate-level behavior. |
-| `isDraggable` | No | Function returning whether a given element is draggable. Defaults to `() => true`. |
+| Property | Required | Type | Description |
+|---|---|---|---|
+| `renderElement` | Yes | `React.FC` | React render function. Spread `props.attributes` on the root element and render `props.children`. |
+| `matchNode` | Yes | `(node: Node) => boolean` | Returns `true` if a given <ExternalLink text="Slate" to="https://docs.slatejs.org/" /> node belongs to this block type. |
+| `isInBlocksSelector` | No | `boolean` | Set to `true` to show the block in the toolbar dropdown. Defaults to `false`. |
+| `icon` | No | `React.ComponentType` | Icon component shown in the toolbar dropdown. Required when `isInBlocksSelector` is `true`. |
+| `label` | No | `{ id: string, defaultMessage: string }` | `MessageDescriptor` shown in the toolbar dropdown. Required when `isInBlocksSelector` is `true`. |
+| `handleConvert` | No | `(editor: Editor) => void \| (() => React.JSX.Element)` | Called when the user selects this block from the dropdown. Use Slate's `Transforms` to set the node type. Can return a React element factory to render a modal. |
+| `handleEnterKey` | No | `(editor: Editor) => void` | Custom Enter key behavior inside this block. |
+| `handleBackspaceKey` | No | `(editor: Editor, event: React.KeyboardEvent<HTMLElement>) => void` | Custom Backspace key behavior. |
+| `handleTab` | No | `(editor: Editor) => void` | Custom Tab key behavior (e.g., indentation). |
+| `handleShiftTab` | No | `(editor: Editor) => void` | Custom Shift+Tab key behavior. |
+| `snippets` | No | `string[]` | Typing one of these strings followed by Space triggers a conversion to this block type. |
+| `dragHandleTopMargin` | No | `string` | Adjusts the vertical position of the drag-to-reorder grip icon. |
+| `plugin` | No | `(editor: Editor) => Editor` | A <ExternalLink text="Slate plugin" to="https://docs.slatejs.org/" /> registered when the editor instance is created. Use this for custom normalizers or Slate-level behavior. |
+| `isDraggable` | No | `(element: Element) => boolean` | Function returning whether a given element is draggable. Defaults to `() => true`. |
 
 The built-in block keys are: `paragraph`, `heading-one`, `heading-two`, `heading-three`, `heading-four`, `heading-five`, `heading-six`, `list-ordered`, `list-unordered`, `image`, `quote`, `code`, `link`, `list-item`.
+
+**Key handler example**
+
+Key handlers each receive the Slate `editor` instance. Use Slate's `Transforms` API to modify the document:
+
+```js
+callout: {
+  // ...
+  handleEnterKey(editor) {
+    // Exit the block on Enter and insert a new paragraph below
+    Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] });
+  },
+  handleBackspaceKey(editor, event) {
+    // Convert back to paragraph when backspacing in an empty callout
+    Transforms.setNodes(editor, { type: 'paragraph' });
+  },
+  handleTab(editor) {
+    // Increase indentation level on Tab
+    Transforms.setNodes(editor, { indent: (editor.selection ? 1 : 0) });
+  },
+  handleShiftTab(editor) {
+    // Decrease indentation level on Shift+Tab
+    Transforms.setNodes(editor, { indent: 0 });
+  },
+},
+```
 
 :::tip
 More information about types can be found in <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/core/content-manager/admin/src/pages/EditView/components/FormInputs/BlocksInput/BlocksEditor.tsx" text="Strapi's codebase, in the BlocksEditor.tsx file"/>.
