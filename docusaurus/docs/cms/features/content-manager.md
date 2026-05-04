@@ -65,6 +65,12 @@ When [Draft & Publish](/cms/features/draft-and-publish) is enabled for the conte
 - *Published (modified)* (published entries with draft changes not yet published),
 - or *Published (unmodified)* (published entries with no draft changes).
 
+When [Draft & Publish](/cms/features/draft-and-publish) is enabled, you can also sort entries by publication status. Click the **Status** column header to sort from draft to published, or click it again to reverse the order.
+
+:::note
+The **Status** column sort is disabled when a status filter is active, since filtered results already share the same publication status.
+:::
+
 <!-- TO INTEGRATE IN THE PAGE? USE A GUIDEFLOW?
 
 From the list view, it is possible to:
