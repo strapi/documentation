@@ -126,9 +126,9 @@ jobs:
           echo "After title filtering: $FILTERED candidates ($EXCLUDED excluded by title, $BOTS by bot author)"
 
           # Check idempotency: remove PRs that already have a doc PR
-          # Extract PR numbers already referenced in auto-doc-healing PR bodies
-          gh pr list --repo strapi/documentation --label auto-doc-healing --state all \
-            --json body --jq '[.[].body | scan("strapi/strapi/pull/([0-9]+)") | .[0] | tonumber] | unique' \
+          # Scan ALL doc PRs (not just auto-doc-healing labeled) to catch manual PRs too
+          gh pr list --repo strapi/documentation --state all --limit 200 \
+            --json body --jq '[.[].body // "" | scan("strapi/strapi/pull/([0-9]+)") | .[0] | tonumber] | unique' \
             > /tmp/existing-pr-numbers.json 2>/dev/null || echo "[]" > /tmp/existing-pr-numbers.json
 
           # Filter out PRs whose number appears in existing doc PRs
