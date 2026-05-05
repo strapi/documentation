@@ -12286,6 +12286,532 @@ module.exports = createCoreController('api::review.review', ({ strapi }) => ({
 
 
 
+# Customizing Users & Permissions plugin routes
+Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes
+
+## How Users & Permissions routes work
+Description: Code example from "How Users & Permissions routes work"
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#how-routes-work)
+
+Language: JSON
+File path: /plugins/users-permissions/server/routes/content-api/user.js
+
+```json
+{
+  method: 'GET',          // HTTP method
+  path: '/users',         // URL path (relative to /api)
+  handler: 'user.find',   // controller.action
+  config: {
+    prefix: '',           // path prefix (empty means /api)
+  },
+}
+```
+
+
+## Extend routes with strapi-server
+Description: All customizations to the Users & Permissions plugin go in a single file:
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#extend-routes)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  // Your customizations here
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  // Your customizations here
+
+  return plugin;
+};
+```
+
+
+## 1. Create the policy file
+Description: Create a global policy that checks whether the authenticated user matches the target user.
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#1-create-the-policy-file)
+
+Language: JavaScript
+File path: /src/policies/is-own-user.js
+
+```js
+"use strict";
+
+module.exports = (policyContext, config, { strapi }) => {
+  const currentUser = policyContext.state.user;
+
+  if (!currentUser) {
+    return false;
+  }
+
+  const targetUserId = Number(policyContext.params.id);
+
+  if (currentUser.id !== targetUserId) {
+    return false;
+  }
+
+  return true;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/policies/is-own-user.ts
+
+```ts
+export default (policyContext, config, { strapi }) => {
+  const currentUser = policyContext.state.user;
+
+  if (!currentUser) {
+    return false;
+  }
+
+  const targetUserId = Number(policyContext.params.id);
+
+  if (currentUser.id !== targetUserId) {
+    return false;
+  }
+
+  return true;
+};
+```
+
+
+## 2. Attach the policy to the user routes
+Description: In the plugin extension file, find the update and delete routes and add the policy:
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#2-attach-the-policy-to-the-user-routes)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  // Find the routes that need the policy
+  const routes = plugin.routes['content-api'].routes;
+
+  // Add the 'is-own-user' policy to the update route
+  const updateRoute = routes.find(
+    (route) => route.handler === 'user.update'
+  );
+
+  if (updateRoute) {
+    updateRoute.config = updateRoute.config || {};
+    updateRoute.config.policies = updateRoute.config.policies || [];
+    updateRoute.config.policies.push('global::is-own-user');
+  }
+
+  // Add the same policy to the delete route
+  const deleteRoute = routes.find(
+    (route) => route.handler === 'user.destroy'
+  );
+
+  if (deleteRoute) {
+    deleteRoute.config = deleteRoute.config || {};
+    deleteRoute.config.policies = deleteRoute.config.policies || [];
+    deleteRoute.config.policies.push('global::is-own-user');
+  }
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  // Find the routes that need the policy
+  const routes = plugin.routes['content-api'].routes;
+
+  // Add the 'is-own-user' policy to the update route
+  const updateRoute = routes.find(
+    (route) => route.handler === 'user.update'
+  );
+
+  if (updateRoute) {
+    updateRoute.config = updateRoute.config || {};
+    updateRoute.config.policies = updateRoute.config.policies || [];
+    updateRoute.config.policies.push('global::is-own-user');
+  }
+
+  // Add the same policy to the delete route
+  const deleteRoute = routes.find(
+    (route) => route.handler === 'user.destroy'
+  );
+
+  if (deleteRoute) {
+    deleteRoute.config = deleteRoute.config || {};
+    deleteRoute.config.policies = deleteRoute.config.policies || [];
+    deleteRoute.config.policies.push('global::is-own-user');
+  }
+
+  return plugin;
+};
+```
+
+Language: TypeScript
+File path: /api/core/strapi/plugin-routes-extension-bc.test.api.ts
+
+```ts
+const { errors } = require('@strapi/utils');
+const { PolicyError } = errors;
+
+// Inside the policy:
+throw new PolicyError('You can only modify your own account');
+```
+
+
+## Override a controller action
+Description: The user controller is a plain object, so you can directly read and replace its methods in the extension file.
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#override-controller)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  const originalMe = plugin.controllers.user.me;
+
+  plugin.controllers.user.me = async (ctx) => {
+    // Call the original controller
+    await originalMe(ctx);
+
+    // Add extra data to the response
+    if (ctx.body) {
+      ctx.body.timestamp = new Date().toISOString();
+    }
+  };
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  const originalMe = plugin.controllers.user.me;
+
+  plugin.controllers.user.me = async (ctx) => {
+    // Call the original controller
+    await originalMe(ctx);
+
+    // Add extra data to the response
+    if (ctx.body) {
+      ctx.body.timestamp = new Date().toISOString();
+    }
+  };
+
+  return plugin;
+};
+```
+
+
+## Override an auth controller action
+Description: To override an auth action, wrap the factory itself:
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#override-auth-route)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  const originalAuthFactory = plugin.controllers.auth;
+
+  plugin.controllers.auth = ({ strapi }) => {
+    // Resolve the original factory to get the controller methods
+    const originalAuth = originalAuthFactory({ strapi });
+
+    // Override the register method
+    const originalRegister = originalAuth.register;
+
+    originalAuth.register = async (ctx) => {
+      // Call the original register logic
+      await originalRegister(ctx);
+
+      // Custom post-registration logic
+      if (ctx.body && ctx.body.user) {
+        strapi.log.info(`New user registered: ${ctx.body.user.email}`);
+      }
+    };
+
+    return originalAuth;
+  };
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  const originalAuthFactory = plugin.controllers.auth;
+
+  plugin.controllers.auth = ({ strapi }) => {
+    // Resolve the original factory to get the controller methods
+    const originalAuth = originalAuthFactory({ strapi });
+
+    // Override the register method
+    const originalRegister = originalAuth.register;
+
+    originalAuth.register = async (ctx) => {
+      // Call the original register logic
+      await originalRegister(ctx);
+
+      // Custom post-registration logic
+      if (ctx.body && ctx.body.user) {
+        strapi.log.info(`New user registered: ${ctx.body.user.email}`);
+      }
+    };
+
+    return originalAuth;
+  };
+
+  return plugin;
+};
+```
+
+
+## Add a new route
+Description: Code example from "Add a new route"
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#add-new-route)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  // Add a new controller action
+  plugin.controllers.user.deactivate = async (ctx) => {
+    const { id } = ctx.params;
+
+    const user = await strapi
+      .plugin('users-permissions')
+      .service('user')
+      .edit(id, { blocked: true });
+
+    ctx.body = { message: `User ${user.username} has been deactivated` };
+  };
+
+  // Register the route
+  plugin.routes['content-api'].routes.push({
+    method: 'POST',
+    path: '/users/:id/deactivate',
+    handler: 'user.deactivate',
+    config: {
+      prefix: '',
+      policies: ['global::is-own-user'],
+    },
+  });
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  // Add a new controller action
+  plugin.controllers.user.deactivate = async (ctx) => {
+    const { id } = ctx.params;
+
+    const user = await strapi
+      .plugin('users-permissions')
+      .service('user')
+      .edit(id, { blocked: true });
+
+    ctx.body = { message: `User ${user.username} has been deactivated` };
+  };
+
+  // Register the route
+  plugin.routes['content-api'].routes.push({
+    method: 'POST',
+    path: '/users/:id/deactivate',
+    handler: 'user.deactivate',
+    config: {
+      prefix: '',
+      policies: ['global::is-own-user'],
+    },
+  });
+
+  return plugin;
+};
+```
+
+
+## Remove a route
+Description: Disable a route by filtering it out of the routes array.
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#remove-route)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  plugin.routes['content-api'].routes = plugin.routes['content-api'].routes.filter(
+    (route) => route.handler !== 'user.count'
+  );
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  plugin.routes['content-api'].routes = plugin.routes['content-api'].routes.filter(
+    (route) => route.handler !== 'user.count'
+  );
+
+  return plugin;
+};
+```
+
+
+## Combine multiple customizations
+Description: In practice, you often combine several customizations in the same file.
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#combine-customizations)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  const routes = plugin.routes['content-api'].routes;
+
+  // 1. Add 'is-own-user' policy to update and delete
+  for (const route of routes) {
+    if (route.handler === 'user.update' || route.handler === 'user.destroy') {
+      route.config = route.config || {};
+      route.config.policies = route.config.policies || [];
+      route.config.policies.push('global::is-own-user');
+    }
+  }
+
+  // 2. Wrap the 'me' controller to include the user's role
+  const originalMe = plugin.controllers.user.me;
+
+  plugin.controllers.user.me = async (ctx) => {
+    await originalMe(ctx);
+
+    if (ctx.state.user && ctx.body) {
+      const user = await strapi
+        .plugin('users-permissions')
+        .service('user')
+        .fetch(ctx.state.user.id, { populate: ['role'] });
+
+      ctx.body.role = user.role;
+    }
+  };
+
+  // 3. Add a custom route
+  plugin.controllers.user.profile = async (ctx) => {
+    const user = await strapi
+      .plugin('users-permissions')
+      .service('user')
+      .fetch(ctx.state.user.id, { populate: ['role'] });
+
+    ctx.body = {
+      username: user.username,
+      email: user.email,
+      role: user.role?.name,
+      createdAt: user.createdAt,
+    };
+  };
+
+  routes.push({
+    method: 'GET',
+    path: '/users/profile',
+    handler: 'user.profile',
+    config: { prefix: '' },
+  });
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  const routes = plugin.routes['content-api'].routes;
+
+  // 1. Add 'is-own-user' policy to update and delete
+  for (const route of routes) {
+    if (route.handler === 'user.update' || route.handler === 'user.destroy') {
+      route.config = route.config || {};
+      route.config.policies = route.config.policies || [];
+      route.config.policies.push('global::is-own-user');
+    }
+  }
+
+  // 2. Wrap the 'me' controller to include the user's role
+  const originalMe = plugin.controllers.user.me;
+
+  plugin.controllers.user.me = async (ctx) => {
+    await originalMe(ctx);
+
+    if (ctx.state.user && ctx.body) {
+      const user = await strapi
+        .plugin('users-permissions')
+        .service('user')
+        .fetch(ctx.state.user.id, { populate: ['role'] });
+
+      ctx.body.role = user.role;
+    }
+  };
+
+  // 3. Add a custom route
+  plugin.controllers.user.profile = async (ctx) => {
+    const user = await strapi
+      .plugin('users-permissions')
+      .service('user')
+      .fetch(ctx.state.user.id, { populate: ['role'] });
+
+    ctx.body = {
+      username: user.username,
+      email: user.email,
+      role: user.role?.name,
+      createdAt: user.createdAt,
+    };
+  };
+
+  routes.push({
+    method: 'GET',
+    path: '/users/profile',
+    handler: 'user.profile',
+    config: { prefix: '' },
+  });
+
+  return plugin;
+};
+```
+
+
+
 # Middlewares
 Source: https://docs.strapi.io/cms/backend-customization/middlewares
 
@@ -23527,10 +24053,188 @@ File path: /config/plugins.js|ts
 ```
 
 
-## Session management endpoints
-Description: Code example from "Session management endpoints"
-(Source: https://docs.strapi.io/cms/features/users-permissions#session-management-endpoints)
+## Get the authenticated user
+Description: Code example from "Get the authenticated user"
+(Source: https://docs.strapi.io/cms/features/users-permissions#get-the-authenticated-user)
 
+Language: Bash
+File path: N/A
+
+```bash
+curl -X GET http://localhost:1337/api/users/me \
+  -H "Authorization: Bearer your-access-token"
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "id": 1,
+  "documentId": "abc123",
+  "username": "kai",
+  "email": "kai@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-15T09:00:00.000Z",
+  "updatedAt": "2024-01-15T09:00:00.000Z",
+  "publishedAt": "2024-01-15T09:00:00.000Z"
+}
+```
+
+
+## Find all users
+Description: Code example from "Find all users"
+(Source: https://docs.strapi.io/cms/features/users-permissions#find-all-users)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X GET "http://localhost:1337/api/users?populate=role" \
+  -H "Authorization: Bearer your-access-token"
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+[
+  {
+    "id": 1,
+    "documentId": "abc123",
+    "username": "kai",
+    "email": "kai@strapi.io",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "role": {
+      "id": 1,
+      "name": "Authenticated",
+      "description": "Default role given to authenticated user.",
+      "type": "authenticated",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z"
+    },
+    "createdAt": "2024-01-15T09:00:00.000Z",
+    "updatedAt": "2024-01-15T09:00:00.000Z",
+    "publishedAt": "2024-01-15T09:00:00.000Z"
+  }
+]
+```
+
+
+## Create a user
+Description: Code example from "Create a user"
+(Source: https://docs.strapi.io/cms/features/users-permissions#create-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/users \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-access-token" \
+  -d '{
+    "username": "newuser",
+    "email": "newuser@strapi.io",
+    "password": "Password123",
+    "role": 1,
+    "confirmed": true
+  }'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "id": 2,
+  "documentId": "def456",
+  "username": "newuser",
+  "email": "newuser@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-16T10:00:00.000Z",
+  "updatedAt": "2024-01-16T10:00:00.000Z",
+  "publishedAt": "2024-01-16T10:00:00.000Z"
+}
+```
+
+
+## Update a user
+Description: Code example from "Update a user"
+(Source: https://docs.strapi.io/cms/features/users-permissions#update-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X PUT http://localhost:1337/api/users/2 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-access-token" \
+  -d '{
+    "username": "updateduser"
+  }'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "id": 2,
+  "documentId": "def456",
+  "username": "updateduser",
+  "email": "newuser@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-16T10:00:00.000Z",
+  "updatedAt": "2024-01-17T11:00:00.000Z",
+  "publishedAt": "2024-01-16T10:00:00.000Z"
+}
+```
+
+
+## Delete a user
+Description: Code example from "Delete a user"
+(Source: https://docs.strapi.io/cms/features/users-permissions#delete-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X DELETE http://localhost:1337/api/users/2 \
+  -H "Authorization: Bearer your-access-token"
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "id": 2,
+  "documentId": "def456",
+  "username": "updateduser",
+  "email": "newuser@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-16T10:00:00.000Z",
+  "updatedAt": "2024-01-17T11:00:00.000Z",
+  "publishedAt": "2024-01-16T10:00:00.000Z"
+}
+```
+
+---
 Language: JavaScript
 File path: N/A
 
