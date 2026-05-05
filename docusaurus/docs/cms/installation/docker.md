@@ -356,9 +356,9 @@ networks:
 
 1. Build and start all containers:
 
-  ```bash
-  docker compose up --build
-  ```
+    ```bash
+    docker compose up --build
+    ```
 
 2. Open `http://localhost:1337/admin` in your browser to access the Strapi admin panel.
 
@@ -366,7 +366,7 @@ To stop the containers, run `docker compose down`. Add the `-v` flag to also rem
 
 ## Production environment
 
-Production images differ from development images in three key ways: they use multi-stage builds to reduce image size, they install only production dependencies in the final stage, and they run `npm run start` instead of the develop command. This ensures the image contains only what is needed to serve the application, without development tooling or source maps. A reverse proxy should sit in front of the Strapi container in production (see [deployment documentation](/cms/deployment)).
+Production images differ from development images in 3 key ways: they use multi-stage builds to reduce image size, they install only production dependencies in the final stage, and they run `npm run start` instead of the develop command. This ensures the image contains only what is needed to serve the application, without development tooling or source maps. A reverse proxy should sit in front of the Strapi container in production (see [deployment documentation](/cms/deployment)).
 
 ### Create the production Dockerfile
 
@@ -475,17 +475,11 @@ networks:
     driver: bridge
 ```
 
-:::tip
-In production, avoid exposing database ports to the host. The `strapiDB` service above has no `ports` mapping, making it accessible only to other containers on the `strapi` network.
-:::
-
-:::caution Upload persistence
-The production docker-compose above does not mount a volume for `/opt/app/public/uploads`. If you use the default local upload provider, all uploaded files are lost when the container is recreated. Either add a named volume (e.g., `strapi-uploads:/opt/app/public/uploads`) or configure an external upload provider such as AWS S3 or Cloudinary.
-:::
-
-:::tip Secrets management
-The production docker-compose uses `env_file: .env` to load secrets, which is acceptable for single-host deployments. For production environments with orchestrators, prefer Docker secrets, environment variables injected by your orchestrator (Kubernetes, ECS), or a dedicated secret manager (HashiCorp Vault, AWS Secrets Manager).
-:::
+<Checklist title="Production checklist">
+  <ChecklistItem>Do not expose database ports to the host. The <code>strapiDB</code> service above has no <code>ports</code> mapping, making it accessible only to other containers on the <code>strapi</code> network.</ChecklistItem>
+  <ChecklistItem>Persist uploads. The production docker-compose does not mount a volume for <code>/opt/app/public/uploads</code>. If you use the default local upload provider, add a named volume (e.g., <code>strapi-uploads:/opt/app/public/uploads</code>) or configure an external provider such as AWS S3 or Cloudinary.</ChecklistItem>
+  <ChecklistItem>Secure your secrets. The production docker-compose uses <code>env_file: .env</code>, which is acceptable for single-host deployments. For orchestrated environments, prefer Docker secrets, environment variables injected by your orchestrator (Kubernetes, ECS), or a dedicated secret manager (HashiCorp Vault, AWS Secrets Manager).</ChecklistItem>
+</Checklist>
 
 ### Build and publish
 
@@ -522,10 +516,6 @@ The `@strapi-community/dockerize` package is a CLI tool that generates a `Docker
 To get started, run `npx @strapi-community/dockerize@latest` within an existing Strapi project folder and follow the CLI prompts.
 
 For more information, see the official <ExternalLink to="https://github.com/strapi-community/strapi-tool-dockerize" text="GitHub repository"/> or the <ExternalLink to="https://www.npmjs.com/package/@strapi-community/dockerize" text="npm package"/>.
-
-:::caution
-Strapi 5 compatibility is in progress for this tool. Check the <ExternalLink to="https://github.com/strapi-community/strapi-tool-dockerize/issues/127" text="GitHub issue"/> for the current status before using it with a Strapi 5 project. You may need to adjust the generated files manually.
-:::
 
 ### Community-maintained Docker images
 
