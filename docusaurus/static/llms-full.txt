@@ -10047,6 +10047,10 @@ Plugins can customize the admin panel's navigation sidebar and settings pages to
 
 </Tabs>
 
+:::note
+The page module referenced by `Component` must export the component as the **default export** (e.g. `export default App;` in `admin/src/pages/App.tsx`). Earlier versions of Strapi accepted an `async` callback that returned a named export, but this pattern is deprecated and logs a warning at runtime. Use `Component: () => import(path)` so the dynamic import directly resolves to the module's default export.
+:::
+
 ## Settings
 
 The Settings API allows plugins to create new settings sections or add links to existing sections. Settings sections are organized groups of configuration pages accessible from the 
@@ -10817,11 +10821,7 @@ The previous example makes sure that the permissions of a user that visits your 
         id: `${PLUGIN_ID}.plugin.name`,
         defaultMessage: PLUGIN_ID,
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-
-        return App;
-      },
+      Component: () => import('./pages/App'),
       permissions: [
         pluginPermissions.accessOverview[0],
       ],

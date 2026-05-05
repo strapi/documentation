@@ -1179,10 +1179,7 @@ export default {
         id: `${PLUGIN_ID}.plugin.name`,
         defaultMessage: PLUGIN_ID,
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
     });
 
     app.registerPlugin({
@@ -1386,10 +1383,7 @@ export default {
         id: `${PLUGIN_ID}.plugin.name`,
         defaultMessage: PLUGIN_ID,
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
     });
 
     app.registerPlugin({
@@ -28078,10 +28072,7 @@ export default {
         id: 'my-plugin.plugin.name', // Prefixed translation key
         defaultMessage: 'My Plugin', // Fallback if translation missing
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
     });
   },
 };
@@ -28103,10 +28094,7 @@ export default {
         id: 'my-plugin.plugin.name', // Prefixed translation key
         defaultMessage: 'My Plugin', // Fallback if translation missing
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
     });
   },
 };
@@ -28137,10 +28125,7 @@ export default {
         id: 'my-plugin.plugin.name',
         defaultMessage: 'My Plugin',
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
       permissions: [], // Array of permission objects
       position: 3, // Position in the menu (lower numbers appear first)
       licenseOnly: false, // Set to true to show ⚡ icon for paid features
@@ -28173,10 +28158,7 @@ export default {
         id: 'my-plugin.plugin.name',
         defaultMessage: 'My Plugin',
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
       permissions: [], // Array of permission objects
       position: 3, // Position in the menu (lower numbers appear first)
       licenseOnly: false, // Set to true to show ⚡ icon for paid features
@@ -28219,11 +28201,7 @@ export default {
           },
           id: 'general',
           to: 'my-plugin/general',
-          Component: async () => {
-            const { GeneralSettings } =
-              await import('./pages/Settings/General');
-            return GeneralSettings;
-          },
+          Component: () => import('./pages/Settings/General'),
         },
         {
           intlLabel: {
@@ -28232,11 +28210,7 @@ export default {
           },
           id: 'advanced',
           to: 'my-plugin/advanced',
-          Component: async () => {
-            const { AdvancedSettings } =
-              await import('./pages/Settings/Advanced');
-            return AdvancedSettings;
-          },
+          Component: () => import('./pages/Settings/Advanced'),
         },
       ],
     );
@@ -28276,11 +28250,7 @@ export default {
           },
           id: 'general',
           to: 'my-plugin/general',
-          Component: async () => {
-            const { GeneralSettings } =
-              await import('./pages/Settings/General');
-            return GeneralSettings;
-          },
+          Component: () => import('./pages/Settings/General'),
         },
         {
           intlLabel: {
@@ -28289,11 +28259,7 @@ export default {
           },
           id: 'advanced',
           to: 'my-plugin/advanced',
-          Component: async () => {
-            const { AdvancedSettings } =
-              await import('./pages/Settings/Advanced');
-            return AdvancedSettings;
-          },
+          Component: () => import('./pages/Settings/Advanced'),
         },
       ],
     );
@@ -28333,11 +28299,7 @@ export default {
       },
       id: 'documentation',
       to: 'my-plugin/documentation',
-      Component: async () => {
-        const { DocumentationPage } =
-          await import('./pages/Settings/Documentation');
-        return DocumentationPage;
-      },
+      Component: () => import('./pages/Settings/Documentation'),
       permissions: [],
       licenseOnly: false,
     });
@@ -28353,11 +28315,7 @@ export default {
         },
         id: 'general',
         to: 'my-plugin/general',
-        Component: async () => {
-          const { GeneralSettings } =
-            await import('./pages/Settings/General');
-          return GeneralSettings;
-        },
+        Component: () => import('./pages/Settings/General'),
       },
       {
         intlLabel: {
@@ -28366,11 +28324,7 @@ export default {
         },
         id: 'advanced',
         to: 'my-plugin/advanced',
-        Component: async () => {
-          const { AdvancedSettings } =
-            await import('./pages/Settings/Advanced');
-          return AdvancedSettings;
-        },
+        Component: () => import('./pages/Settings/Advanced'),
       },
     ]);
     // highlight-end
@@ -28402,11 +28356,7 @@ export default {
       },
       id: 'documentation',
       to: 'my-plugin/documentation',
-      Component: async () => {
-        const { DocumentationPage } =
-          await import('./pages/Settings/Documentation');
-        return DocumentationPage;
-      },
+      Component: () => import('./pages/Settings/Documentation'),
       permissions: [],
       licenseOnly: false,
     });
@@ -28422,11 +28372,7 @@ export default {
         },
         id: 'general',
         to: 'my-plugin/general',
-        Component: async () => {
-          const { GeneralSettings } =
-            await import('./pages/Settings/General');
-          return GeneralSettings;
-        },
+        Component: () => import('./pages/Settings/General'),
       },
       {
         intlLabel: {
@@ -28435,11 +28381,7 @@ export default {
         },
         id: 'advanced',
         to: 'my-plugin/advanced',
-        Component: async () => {
-          const { AdvancedSettings } =
-            await import('./pages/Settings/Advanced');
-          return AdvancedSettings;
-        },
+        Component: () => import('./pages/Settings/Advanced'),
       },
     ]);
     // highlight-end
@@ -29759,11 +29701,7 @@ export default {
         id: `${PLUGIN_ID}.plugin.name`,
         defaultMessage: PLUGIN_ID,
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-
-        return App;
-      },
+      Component: () => import('./pages/App'),
       permissions: [
         pluginPermissions.accessOverview[0],
       ],
