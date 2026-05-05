@@ -399,10 +399,7 @@ export default {
         id: 'my-plugin.plugin.name', // Prefixed translation key
         defaultMessage: 'My Plugin', // Fallback if translation missing
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
     });
   },
 };
@@ -423,10 +420,7 @@ export default {
         id: 'my-plugin.plugin.name', // Prefixed translation key
         defaultMessage: 'My Plugin', // Fallback if translation missing
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
     });
   },
 };
