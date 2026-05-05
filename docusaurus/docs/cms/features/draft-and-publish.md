@@ -64,7 +64,17 @@ With Draft & Publish enabled, the [Content Manager's edit view](/cms/features/co
 - <span style={{color:"#ac73e6"}}>Modified</span>: The content was previously published. You made some changes to the draft version and saved these changes, but the changes have not been published yet.
 - <span style={{color:"#7b79ff"}}>Draft</span>: The content has never been published yet.
 
-When Draft & Publish is eanbled, in the [Content Manager](/cms/features/content-manager) list view, you can filter entries by status using the **Filters** button.
+When Draft & Publish is enabled, in the [Content Manager](/cms/features/content-manager) list view, you can filter entries by status using the **Filters** button.
+
+### Sorting entries by publication status
+
+**Path:** <Icon name="feather" /> Content Manager, list view of your content type
+
+When Draft & Publish is enabled for a content type, you can sort entries by publication status in the list view. Click the **Status** column header in the list view table to sort entries by their publication status.
+
+:::note
+When a **Status** filter is active, the **Status** column header button is disabled. Sorting by status is redundant when entries are already filtered by state. Adding a status filter while a status sort is active automatically removes the sort.
+:::
 
 ### Working with drafts
 
