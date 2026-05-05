@@ -12326,9 +12326,9 @@ module.exports = createCoreController('api::review.review', ({ strapi }) => ({
 # Customizing Users & Permissions plugin routes
 Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes
 
-## How Users & Permissions routes work
-Description: Code example from "How Users & Permissions routes work"
-(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#how-routes-work)
+## Route structure
+Description: Code example from "Route structure"
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#route-structure)
 
 Language: JSON
 File path: /plugins/users-permissions/server/routes/content-api/user.js
@@ -12345,7 +12345,7 @@ File path: /plugins/users-permissions/server/routes/content-api/user.js
 ```
 
 
-## Extend routes with strapi-server
+## The strapi-server extension file
 Description: All customizations to the Users & Permissions plugin go in a single file:
 (Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#extend-routes)
 
@@ -12497,7 +12497,7 @@ export default (plugin) => {
 ```
 
 Language: TypeScript
-File path: /api/core/strapi/plugin-routes-extension-bc.test.api.ts
+File path: /core/core/src/loaders/policies.ts
 
 ```ts
 const { errors } = require('@strapi/utils');
@@ -12508,7 +12508,109 @@ throw new PolicyError('You can only modify your own account');
 ```
 
 
-## Override a controller action
+## Add a new route
+Description: Code example from "Add a new route"
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#add-new-route)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  // Add a new controller action
+  plugin.controllers.user.deactivate = async (ctx) => {
+    const { id } = ctx.params;
+
+    const user = await strapi
+      .plugin('users-permissions')
+      .service('user')
+      .edit(id, { blocked: true });
+
+    ctx.body = { message: `User ${user.username} has been deactivated` };
+  };
+
+  // Register the route
+  plugin.routes['content-api'].routes.push({
+    method: 'POST',
+    path: '/users/:id/deactivate',
+    handler: 'user.deactivate',
+    config: {
+      prefix: '',
+      policies: ['global::is-own-user'],
+    },
+  });
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  // Add a new controller action
+  plugin.controllers.user.deactivate = async (ctx) => {
+    const { id } = ctx.params;
+
+    const user = await strapi
+      .plugin('users-permissions')
+      .service('user')
+      .edit(id, { blocked: true });
+
+    ctx.body = { message: `User ${user.username} has been deactivated` };
+  };
+
+  // Register the route
+  plugin.routes['content-api'].routes.push({
+    method: 'POST',
+    path: '/users/:id/deactivate',
+    handler: 'user.deactivate',
+    config: {
+      prefix: '',
+      policies: ['global::is-own-user'],
+    },
+  });
+
+  return plugin;
+};
+```
+
+
+## Remove a route
+Description: You can disable a route by filtering it out of the routes array.
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#remove-route)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  plugin.routes['content-api'].routes = plugin.routes['content-api'].routes.filter(
+    (route) => route.handler !== 'user.count'
+  );
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  plugin.routes['content-api'].routes = plugin.routes['content-api'].routes.filter(
+    (route) => route.handler !== 'user.count'
+  );
+
+  return plugin;
+};
+```
+
+
+## Override a user controller action
 Description: The user controller is a plain object, so you can directly read and replace its methods in the extension file.
 (Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#override-controller)
 
@@ -12624,110 +12726,8 @@ export default (plugin) => {
 ```
 
 
-## Add a new route
-Description: Code example from "Add a new route"
-(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#add-new-route)
-
-Language: JavaScript
-File path: /src/extensions/users-permissions/strapi-server.js
-
-```js
-module.exports = (plugin) => {
-  // Add a new controller action
-  plugin.controllers.user.deactivate = async (ctx) => {
-    const { id } = ctx.params;
-
-    const user = await strapi
-      .plugin('users-permissions')
-      .service('user')
-      .edit(id, { blocked: true });
-
-    ctx.body = { message: `User ${user.username} has been deactivated` };
-  };
-
-  // Register the route
-  plugin.routes['content-api'].routes.push({
-    method: 'POST',
-    path: '/users/:id/deactivate',
-    handler: 'user.deactivate',
-    config: {
-      prefix: '',
-      policies: ['global::is-own-user'],
-    },
-  });
-
-  return plugin;
-};
-```
-
----
-Language: TypeScript
-File path: /src/extensions/users-permissions/strapi-server.ts
-
-```ts
-export default (plugin) => {
-  // Add a new controller action
-  plugin.controllers.user.deactivate = async (ctx) => {
-    const { id } = ctx.params;
-
-    const user = await strapi
-      .plugin('users-permissions')
-      .service('user')
-      .edit(id, { blocked: true });
-
-    ctx.body = { message: `User ${user.username} has been deactivated` };
-  };
-
-  // Register the route
-  plugin.routes['content-api'].routes.push({
-    method: 'POST',
-    path: '/users/:id/deactivate',
-    handler: 'user.deactivate',
-    config: {
-      prefix: '',
-      policies: ['global::is-own-user'],
-    },
-  });
-
-  return plugin;
-};
-```
-
-
-## Remove a route
-Description: Disable a route by filtering it out of the routes array.
-(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#remove-route)
-
-Language: JavaScript
-File path: /src/extensions/users-permissions/strapi-server.js
-
-```js
-module.exports = (plugin) => {
-  plugin.routes['content-api'].routes = plugin.routes['content-api'].routes.filter(
-    (route) => route.handler !== 'user.count'
-  );
-
-  return plugin;
-};
-```
-
----
-Language: TypeScript
-File path: /src/extensions/users-permissions/strapi-server.ts
-
-```ts
-export default (plugin) => {
-  plugin.routes['content-api'].routes = plugin.routes['content-api'].routes.filter(
-    (route) => route.handler !== 'user.count'
-  );
-
-  return plugin;
-};
-```
-
-
-## Combine multiple customizations
-Description: In practice, you often combine several customizations in the same file.
+## Full example
+Description: The following example combines several customizations in a single file: it adds a policy to update and delete, wraps the me controller, and adds a new profile route.
 (Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#combine-customizations)
 
 Language: JavaScript
@@ -23935,7 +23935,7 @@ export default async function fetchContentType(
 Source: https://docs.strapi.io/cms/features/users-permissions
 
 ## JWT management modes
-Description: For backwards compatibility, the Users & Permission feature defaults to legacy mode:
+Description: For backwards compatibility, the Users & Permissions feature defaults to legacy mode:
 (Source: https://docs.strapi.io/cms/features/users-permissions#jwt-management-modes)
 
 Language: JavaScript
@@ -24103,7 +24103,7 @@ Description: By default you can set a JWT_SECRET environment variable and it wil
 (Source: https://docs.strapi.io/cms/features/users-permissions#security-configuration)
 
 Language: JavaScript
-File path: /extensions/users-permissions/config/jwt.js
+File path: /src/extensions/users-permissions/config/jwt.js
 
 ```js
 
@@ -24114,7 +24114,7 @@ module.exports = {
 
 ---
 Language: TypeScript
-File path: /extensions/users-permissions/config/jwt.ts
+File path: /src/extensions/users-permissions/config/jwt.ts
 
 ```ts
 
@@ -24157,6 +24157,41 @@ File path: /config/plugins.js|ts
       },
     },
   },
+```
+
+
+## Session management endpoints
+Description: Code example from "Session management endpoints"
+(Source: https://docs.strapi.io/cms/features/users-permissions#session-management-endpoints)
+
+Language: JavaScript
+File path: N/A
+
+```
+curl -X POST http://localhost:1337/api/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d '{
+    "refreshToken": "your-refresh-token"
+  }'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "jwt": "your-new-access-token"
+}
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/logout \
+  -H "Authorization: Bearer your-access-token"
 ```
 
 
@@ -24341,37 +24376,6 @@ File path: N/A
 }
 ```
 
----
-Language: JavaScript
-File path: N/A
-
-```
-curl -X POST http://localhost:1337/api/auth/refresh \
-  -H "Content-Type: application/json" \
-  -d '{
-    "refreshToken": "your-refresh-token"
-  }'
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  "jwt": "your-new-access-token"
-}
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-curl -X POST http://localhost:1337/api/auth/logout \
-  -H "Authorization: Bearer your-access-token"
-```
-
 
 ## Identifier
 Description: The identifier parameter sent with requests can be an email or username, as in the following examples:
@@ -24475,7 +24479,7 @@ axios
 
 
 ## User registration
-Description: Creating a new user in the database with a default role as 'registered' can be done like in the following example:
+Description: Creating a new user in the database with a default role as 'authenticated' can be done as in the following example:
 (Source: https://docs.strapi.io/cms/features/users-permissions#user-registration)
 
 Language: JavaScript
