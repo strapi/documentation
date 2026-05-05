@@ -540,22 +540,22 @@ To resolve Sharp issues:
 
 1. Verify that your Dockerfile installs the required Alpine packages:
 
-  ```dockerfile
-  RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git
-  ```
+    ```dockerfile
+    RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git
+    ```
 
-2. If the issue persists, switch to `node:22-slim` (Debian-based) to avoid musl libc compatibility problems:
+2. If the issue persists, switch to `node:22-slim` (Debian-based) to avoid native library compatibility problems: <Annotation>Alpine Linux uses a lightweight C library called **musl** instead of the standard **glibc** used by Debian and Ubuntu. Some npm packages ship pre-compiled binaries built for glibc that do not work on Alpine. Switching to a Debian-based image like `node:22-slim` avoids this issue entirely.</Annotation>
 
-  ```dockerfile
-  FROM node:22-slim
-  RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
-  ```
+    ```dockerfile
+    FROM node:22-slim
+    RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+    ```
 
 3. For ARM builds (see [below](#apple-silicon-and-arm-builds)), add the following environment variable before installing dependencies:
 
-  ```dockerfile
-  ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
-  ```
+    ```dockerfile
+    ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
+    ```
 
 ### Apple Silicon and ARM builds
 
@@ -587,43 +587,43 @@ If Strapi cannot connect to the database in Docker, check the following:
 
 3. Set the connection pool `min` value to `0` in your [database configuration](/cms/configurations/database), as Docker may kill idle connections:
 
-  <Tabs>
+    <Tabs>
 
-  <TabItem value="js" label="JavaScript">
+    <TabItem value="js" label="JavaScript">
 
-  ```js title="./config/database.js"
-  module.exports = ({ env }) => ({
-    connection: {
-      client: env('DATABASE_CLIENT'),
-      // ...
-      pool: {
-        min: 0,
-        max: 10,
+    ```js title="./config/database.js"
+    module.exports = ({ env }) => ({
+      connection: {
+        client: env('DATABASE_CLIENT'),
+        // ...
+        pool: {
+          min: 0,
+          max: 10,
+        },
       },
-    },
-  });
-  ```
+    });
+    ```
 
-  </TabItem>
+    </TabItem>
 
-  <TabItem value="ts" label="TypeScript">
+    <TabItem value="ts" label="TypeScript">
 
-  ```ts title="./config/database.ts"
-  export default ({ env }) => ({
-    connection: {
-      client: env('DATABASE_CLIENT'),
-      // ...
-      pool: {
-        min: 0,
-        max: 10,
+    ```ts title="./config/database.ts"
+    export default ({ env }) => ({
+      connection: {
+        client: env('DATABASE_CLIENT'),
+        // ...
+        pool: {
+          min: 0,
+          max: 10,
+        },
       },
-    },
-  });
-  ```
+    });
+    ```
 
-  </TabItem>
+    </TabItem>
 
-  </Tabs>
+    </Tabs>
 
 4. Configure `pool.acquireTimeoutMillis` and `pool.idleTimeoutMillis` in your database configuration if the database container becomes unreachable after periods of inactivity.
 
