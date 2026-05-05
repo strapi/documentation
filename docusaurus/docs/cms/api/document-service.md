@@ -77,6 +77,10 @@ Each section below documents the parameters and examples for a specific method:
 | [`discardDraft()`](#discarddraft) | Drop draft data and keep only the published version. |
 | [`count()`](#count) | Count how many documents match the parameters. |
 
+:::note Draft & Publish method availability
+The [`publish()`](#publish), [`unpublish()`](#unpublish), and [`discardDraft()`](#discarddraft) methods are only available when the **Draft & Publish** feature is enabled on the content-type. Calling these methods on a content-type that does not have Draft & Publish enabled will throw an error. To enable Draft & Publish, see the [Draft & Publish documentation](/cms/features/draft-and-publish).
+:::
+
 ### `findOne()`
 
 Find a document matching the passed `documentId` and parameters.
@@ -102,9 +106,9 @@ If only a `documentId` is passed without any other parameters, `findOne()` retur
 <Request title="Find a document by passing its documentId">
 
 ```js
-await strapi.documents('api::restaurant.restaurant').findOne({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm'
-})
+strapi.documents.discardDraft({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', 
+});
 ```
 
 </Request>
@@ -696,8 +700,8 @@ If no `locale` parameter is passed, `discardDraft()` discards draft data and ove
 <Request title="Discard draft for the default locale of a document">
 
 ```js
-strapi.documents.discardDraft({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', 
+await strapi.documents('api::restaurant.restaurant').discardDraft({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
 });
 ```
 
