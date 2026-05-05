@@ -31,13 +31,13 @@ Containerizing Strapi makes the runtime environment reproducible across machines
 - <ExternalLink to="https://docs.docker.com/compose/" text="Docker Compose"/> v2 or later
 - A [supported version of Node.js](/cms/installation/cli#preparing-the-installation)
 - An **existing Strapi 5 project**, or a new one created with the [Quick Start guide](/cms/quick-start)
-- <ExternalLink to="https://yarnpkg.com/" text="Yarn"/> or npm as your package manager
+- npm as your package manager
 
 :::
 
 ## Development environment
 
-Development images use `yarn develop` or `npm run develop` and mount your local source code for hot-reload. Before creating the Dockerfile, set up 2 required files: `.dockerignore` and `.env`.
+Development images use `npm run develop` and mount your local source code for hot-reload. Before creating the Dockerfile, set up 2 required files: `.dockerignore` and `.env`.
 
 ### Create a .dockerignore file
 
@@ -59,40 +59,10 @@ build/
 The following `Dockerfile` can be used to build a non-production Docker image for a Strapi project.
 
 :::note
-When using Docker Compose, the variables defined in the `.env` file are automatically loaded into the containers — no need to `export` them in your shell.
+When using Docker Compose, the variables defined in the `.env` file are automatically loaded into the containers, so there is no need to `export` them in your shell.
 :::
 
 <DockerEnvTable components={props.components} />
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="Yarn">
-
-```dockerfile title="./Dockerfile"
-FROM node:22-alpine
-# Installing libvips-dev for sharp compatibility
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git
-ARG NODE_ENV=development
-ENV NODE_ENV=${NODE_ENV}
-
-WORKDIR /opt/
-COPY package.json yarn.lock ./
-RUN yarn global add node-gyp
-RUN yarn config set network-timeout 600000 -g && yarn install --frozen-lockfile
-ENV PATH=/opt/node_modules/.bin:$PATH
-
-WORKDIR /opt/app
-COPY . .
-RUN chown -R node:node /opt/app
-USER node
-# RUN ["yarn", "build"]  # Optional: pre-builds the admin panel to speed up the first start. Not required since yarn develop rebuilds it in watch mode.
-EXPOSE 1337
-CMD ["yarn", "develop"]
-```
-
-</TabItem>
-
-<TabItem value="npm" label="NPM">
 
 ```dockerfile title="./Dockerfile"
 FROM node:22-alpine
@@ -115,10 +85,6 @@ USER node
 EXPOSE 1337
 CMD ["npm", "run", "develop"]
 ```
-
-</TabItem>
-
-</Tabs>
 
 :::tip Alternative base image for restricted networks
 If your CI environment has limited network access (e.g., DNS restrictions that prevent downloading Sharp prebuilt binaries from GitHub), consider using `node:22-slim` instead of `node:22-alpine`. The Debian-based slim image avoids the need to compile native dependencies like `libvips` from source, and Sharp's prebuilt binaries work out of the box:
@@ -197,7 +163,7 @@ services:
       - ./config:/opt/app/config
       - ./src:/opt/app/src
       - ./package.json:/opt/package.json
-      - ./yarn.lock:/opt/yarn.lock
+      - ./package-lock.json:/opt/package-lock.json
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
     ports:
@@ -267,7 +233,7 @@ services:
       - ./config:/opt/app/config
       - ./src:/opt/app/src
       - ./package.json:/opt/package.json
-      - ./yarn.lock:/opt/yarn.lock
+      - ./package-lock.json:/opt/package-lock.json
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
     ports:
@@ -338,7 +304,7 @@ services:
       - ./config:/opt/app/config
       - ./src:/opt/app/src
       - ./package.json:/opt/package.json
-      - ./yarn.lock:/opt/yarn.lock
+      - ./package-lock.json:/opt/package-lock.json
       - ./.env:/opt/app/.env
       - ./public/uploads:/opt/app/public/uploads
     ports:
@@ -400,58 +366,11 @@ To stop the containers, run `docker compose down`. Add the `-v` flag to also rem
 
 ## Production environment
 
-Production images differ from development images in three key ways: they use multi-stage builds to reduce image size, they install only production dependencies in the final stage, and they run `yarn start` or `npm run start` instead of the develop command. This ensures the image contains only what is needed to serve the application, without development tooling or source maps. A reverse proxy should sit in front of the Strapi container in production (see [deployment documentation](/cms/deployment)).
+Production images differ from development images in three key ways: they use multi-stage builds to reduce image size, they install only production dependencies in the final stage, and they run `npm run start` instead of the develop command. This ensures the image contains only what is needed to serve the application, without development tooling or source maps. A reverse proxy should sit in front of the Strapi container in production (see [deployment documentation](/cms/deployment)).
 
 ### Create the production Dockerfile
 
 The following `Dockerfile.prod` uses a multi-stage build. The first stage installs all dependencies, including devDependencies needed for the build step, and builds the admin panel. The second stage copies only production assets into the final image.
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="Yarn">
-
-```dockerfile title="./Dockerfile.prod"
-# Build stage
-FROM node:22-alpine AS build
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
-
-WORKDIR /opt/
-COPY package.json yarn.lock ./
-RUN yarn global add node-gyp
-RUN yarn config set network-timeout 600000 -g && yarn install --frozen-lockfile
-ENV PATH=/opt/node_modules/.bin:$PATH
-
-WORKDIR /opt/app
-COPY . .
-ENV NODE_ENV=production
-RUN yarn build
-
-# Production stage
-FROM node:22-alpine
-RUN apk add --no-cache vips-dev
-ENV NODE_ENV=production
-
-WORKDIR /opt/
-COPY --from=build /opt/package.json /opt/yarn.lock ./
-RUN yarn install --frozen-lockfile --production && yarn cache clean
-ENV PATH=/opt/node_modules/.bin:$PATH
-
-WORKDIR /opt/app
-COPY --from=build /opt/app ./
-
-RUN chown -R node:node /opt/app
-USER node
-EXPOSE 1337
-# highlight-start
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost:1337/_health || exit 1
-# highlight-end
-CMD ["yarn", "start"]
-```
-
-</TabItem>
-
-<TabItem value="npm" label="NPM">
 
 ```dockerfile title="./Dockerfile.prod"
 # Build stage
@@ -492,12 +411,8 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 CMD ["npm", "run", "start"]
 ```
 
-</TabItem>
-
-</Tabs>
-
 :::note Key difference from the development Dockerfile
-The build stage installs all dependencies (including devDependencies) because the `yarn build` step needs them to compile the admin panel. The production stage then installs only production dependencies, keeping the final image lean.
+The build stage installs all dependencies (including devDependencies) because the `npm run build` step needs them to compile the admin panel. The production stage then installs only production dependencies, keeping the final image lean.
 :::
 
 ### Add Docker Compose for production
