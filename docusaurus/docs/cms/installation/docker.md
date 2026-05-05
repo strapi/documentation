@@ -594,7 +594,38 @@ Popular container registries include:
 - <ExternalLink to="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry" text="GitHub Container Registry"/>
 - <ExternalLink to="https://docs.gitlab.com/ee/user/packages/container_registry/" text="Gitlab Container Registry"/>
 
+## Community tools and images
+
+Strapi does not provide official Docker images (see [FAQ](/cms/faq)). The following community-maintained tools and images can help you get started.
+
+If you would like to add your tool to this list, please open a pull request on the <ExternalLink to="https://github.com/strapi/documentation" text="Strapi documentation repository"/>.
+
+### The `@strapi-community/dockerize` CLI
+
+The `@strapi-community/dockerize` package is a CLI tool that generates a `Dockerfile` and `docker-compose.yml` file for a Strapi project.
+
+To get started, run `npx @strapi-community/dockerize@latest` within an existing Strapi project folder and follow the CLI prompts.
+
+For more information, see the official <ExternalLink to="https://github.com/strapi-community/strapi-tool-dockerize" text="GitHub repository"/> or the <ExternalLink to="https://www.npmjs.com/package/@strapi-community/dockerize" text="npm package"/>.
+
+:::caution
+Strapi 5 compatibility is in progress for this tool. Check the <ExternalLink to="https://github.com/strapi-community/strapi-tool-dockerize/issues/127" text="GitHub issue"/> for the current status before using it with a Strapi 5 project. You may need to adjust the generated files manually.
+:::
+
+### Community-maintained Docker images
+
+Pre-built Docker images maintained by community members are available for Strapi 5. These images let you run Strapi without writing your own Dockerfile.
+
+:::caution
+These images are community-maintained and not officially supported by Strapi. Review their documentation and source code before using them in production.
+:::
+
+- <ExternalLink to="https://github.com/naskio/docker-strapi" text="naskio/strapi"/>: Actively maintained image that tracks Strapi 5 releases. Available on <ExternalLink to="https://hub.docker.com/r/naskio/strapi" text="Docker Hub"/>.
+- <ExternalLink to="https://hub.docker.com/r/vshadbolt/strapi" text="vshadbolt/strapi"/>: Supports both AMD64 and ARM64 architectures. Tracks Strapi 5 releases.
+
 ## Troubleshooting
+
+<br/>
 
 ### Sharp and libvips errors
 
@@ -691,56 +722,10 @@ If Strapi cannot connect to the database in Docker, check the following:
 
 4. Configure `pool.acquireTimeoutMillis` and `pool.idleTimeoutMillis` in your database configuration if the database container becomes unreachable after periods of inactivity.
 
-## Community tools and images
+## <Icon name="fast-forward" /> What to do next?
 
-Strapi does not provide official Docker images (see [FAQ](#faq)). The following community-maintained tools and images can help you get started.
+Now that Strapi is running in a Docker container, you can:
 
-If you would like to add your tool to this list, please open a pull request on the <ExternalLink to="https://github.com/strapi/documentation" text="Strapi documentation repository"/>.
-
-### The `@strapi-community/dockerize` CLI
-
-The `@strapi-community/dockerize` package is a CLI tool that generates a `Dockerfile` and `docker-compose.yml` file for a Strapi project.
-
-To get started, run `npx @strapi-community/dockerize@latest` within an existing Strapi project folder and follow the CLI prompts.
-
-For more information, see the official <ExternalLink to="https://github.com/strapi-community/strapi-tool-dockerize" text="GitHub repository"/> or the <ExternalLink to="https://www.npmjs.com/package/@strapi-community/dockerize" text="npm package"/>.
-
-:::caution
-Strapi 5 compatibility is in progress for this tool. Check the <ExternalLink to="https://github.com/strapi-community/strapi-tool-dockerize/issues/127" text="GitHub issue"/> for the current status before using it with a Strapi 5 project. You may need to adjust the generated files manually.
-:::
-
-### Community-maintained Docker images
-
-Pre-built Docker images maintained by community members are available for Strapi 5. These images let you run Strapi without writing your own Dockerfile.
-
-:::caution
-These images are community-maintained and not officially supported by Strapi. Review their documentation and source code before using them in production.
-:::
-
-- <ExternalLink to="https://github.com/naskio/docker-strapi" text="naskio/strapi"/>: Actively maintained image that tracks Strapi 5 releases. Available on <ExternalLink to="https://hub.docker.com/r/naskio/strapi" text="Docker Hub"/>.
-- <ExternalLink to="https://hub.docker.com/r/vshadbolt/strapi" text="vshadbolt/strapi"/>: Supports both AMD64 and ARM64 architectures. Tracks Strapi 5 releases.
-
-## Next steps
-
-Once Strapi is running in a Docker container, you can:
-
-- Set up the [admin panel](/cms/features/admin-panel) and create your first content types with the [Content-Type Builder](/cms/features/content-type-builder).
-- Configure a reverse proxy and deploy to production (see [deployment documentation](/cms/deployment)).
-- Explore [environment configuration](/cms/configurations/environment) for fine-tuning your Strapi instance.
-
-## FAQ
-
-### Why doesn't Strapi provide official Docker images?
-
-Strapi is a framework used to build many different types of applications. A single Docker image cannot cover all use cases, so Strapi provides Dockerfile examples instead.
-
-### Why use different Dockerfiles for development and production?
-
-Strapi builds the admin panel with React and bundles it into the application during the build process. The Strapi backend serves the admin panel as a web server, and the following environment variables are statically compiled into the built admin panel:
-
-- `STRAPI_ADMIN_BACKEND_URL`
-- `ADMIN_PATH` (if using a custom admin path)
-
-Because these values are baked in at build time, you must either pass them as `ARG` in your Dockerfile or rebuild the image when they change. Without this, the admin panel may point to `localhost:1337` instead of your production URL.
-
-Build different Docker images for development and production environments. The development environment does not optimize for performance and should not be exposed to the public internet.
+<Icon name="arrow-fat-right" /> Set up the [admin panel](/cms/features/admin-panel) and create your first content types with the [Content-Type Builder](/cms/features/content-type-builder).<br/>
+<Icon name="arrow-fat-right" /> Configure a reverse proxy and deploy to production (see [deployment documentation](/cms/deployment)).<br/>
+<Icon name="arrow-fat-right" /> Explore [environment configuration](/cms/configurations/environment) for fine-tuning your Strapi instance.

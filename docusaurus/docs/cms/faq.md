@@ -18,6 +18,7 @@ tags:
 - typescript
 - database
 - foreign keys
+- docker
 
 ---
 
@@ -139,6 +140,19 @@ By default, most package managers enable hoisting, however, if it's not function
 ## Is X feature available yet?
 
 You can see the <ExternalLink to="https://feedback.strapi.io/" text="public roadmap"/> to see which feature requests are currently being worked on and which have not been started yet, and to add new feature requests.
+
+## Why doesn't Strapi provide official Docker images?
+
+Strapi is a framework used to build many different types of applications. A single Docker image cannot cover all use cases, so Strapi provides Dockerfile examples instead. See the [Docker installation guide](/cms/installation/docker) for details.
+
+## Why use different Dockerfiles for development and production with Docker?
+
+Strapi builds the admin panel with React and bundles it into the application during the build process. The Strapi backend serves the admin panel as a web server, and the following environment variables are statically compiled into the built admin panel:
+
+- `STRAPI_ADMIN_BACKEND_URL`
+- `ADMIN_PATH` (if using a custom admin path)
+
+Because these values are baked in at build time, you must either pass them as `ARG` in your Dockerfile or rebuild the image when they change. Without this, the admin panel may point to `localhost:1337` instead of your production URL. Build different Docker images for development and production environments. The development environment does not optimize for performance and should not be exposed to the public internet. See the [Docker installation guide](/cms/installation/docker) for full Dockerfile examples.
 
 ## Is there an MCP server for Strapi?
 
