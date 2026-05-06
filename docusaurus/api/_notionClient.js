@@ -26,7 +26,7 @@ export async function writeFeedbackItem({ data, ip, userAgent, country }) {
   const page = await notion.pages.create({
     parent: { database_id: databaseId },
     properties: {
-      ID: {
+      'Feedback ID': {
         title: [{ text: { content: feedbackId } }],
       },
       'Page path': {
