@@ -239,9 +239,9 @@ This object includes methods to register your plugin with the admin application,
 
 ### TypeScript configuration
 
-For a TypeScript local plugin, the project-level TypeScript configuration handles compilation, so you do not need a per-plugin `tsconfig.json` once you are using the `strapi-server.ts` / `strapi-admin.ts` entry points described above. Two pieces have to be in place:
+For a TypeScript local plugin you usually keep a single project-level setup instead of adding another `tsconfig.json` inside each plugin, once the `strapi-server.ts` / `strapi-admin.ts` exports from the earlier sections are in place. Two pieces have to be in place:
 
-1. **Server-side compilation** is delegated to the project's root `./tsconfig.json`. The default Strapi configuration already excludes `src/plugins/**`, which is what you want here: the plugin's server-side TypeScript is then compiled by the project's regular build pipeline.
+1. **Root `./tsconfig.json` covers the host app's server TypeScript only.** `strapi develop` calls `@strapi/typescript-utils/compile`, which drives `tsc` using that file. Official templates intentionally `exclude` `src/plugins/**`, and the `create-strapi-app` starter labels that as keeping plugins out of the server compilation pass, which means those paths are not part of the root `tsc` emit graph. At runtime Strapi still loads each plugin's `strapi-server.js` through `loadPlugins` in `packages/core/core/src/loaders/plugins/index.ts`, so any server TypeScript still has to arrive as the `.js` entrypoint Node can `require` (the stock `examples/getstarted` local plugin ships `strapi-server.js`, or you add a small plugin-local build / SDK packaging step if you author `.ts`).
 2. **Admin-side compilation** (including `.tsx` files for components) is handled by `./src/admin/tsconfig.json`, which extends `@strapi/typescript-utils/tsconfigs/admin` and is the file responsible for JSX. Make sure its `include` array picks up your plugin's admin sources, for example by adding `../plugins/**/admin/src/**/*`:
 
 ```json title="./src/admin/tsconfig.json"
