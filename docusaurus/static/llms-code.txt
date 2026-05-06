@@ -21558,6 +21558,23 @@ Language: Bash
 File path: N/A
 
 ```bash
+cd <new-instance-name>
+yarn install
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+cd <new-instance-name>
+npm install
+```
+
+Language: Bash
+File path: N/A
+
+```bash
    npx create-strapi-app@latest <project-name> --quickstart
 ```
 
