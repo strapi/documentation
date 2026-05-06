@@ -106,7 +106,7 @@ If only a `documentId` is passed without any other parameters, `findOne()` retur
 <Request title="Find a document by passing its documentId">
 
 ```js
-strapi.documents.discardDraft({
+await strapi.documents('api::restaurant.restaurant').findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm', 
 });
 ```
