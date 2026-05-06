@@ -35300,9 +35300,34 @@ File path: ./scripts/seed.js
 ```
 
 
-## Create smoke tests
-Description: With the harness in place you can confirm Strapi boots correctly by adding a minimal Jest suite with the following smoke tests Smoke tests are basic tests that verify the most critical functionality works.
-(Source: https://docs.strapi.io/cms/testing#create-smoke-tests)
+## TypeScript smoke tests must load tests/strapi.js first
+Description: The harness patches both the directory scan and the per-file loader so .ts, .cts, and .mts configs work under Jest.
+(Source: https://docs.strapi.io/cms/testing#typescript-smoke-tests-must-load-tests-strapi-js-first)
+
+Language: TypeScript
+File path: ./tests/app.test.ts
+
+```ts
+import type { Strapi } from '@strapi/strapi';
+
+const { setupStrapi, cleanupStrapi } = require('./strapi');
+
+declare global {
+  var strapi: Strapi;
+}
+
+beforeAll(async () => {
+  await setupStrapi();
+});
+
+afterAll(async () => {
+  await cleanupStrapi();
+});
+
+it('strapi is defined', () => {
+  expect(strapi).toBeDefined();
+});
+```
 
 Language: JavaScript
 File path: ./tests/app.test.js
@@ -35329,7 +35354,7 @@ require('./user');
 ```
 
 Language: YAML
-File path: /app.test.js
+File path: /strapi.js
 
 ```yaml
 PASS tests/create-service.test.js
