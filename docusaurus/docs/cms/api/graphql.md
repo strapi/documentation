@@ -425,6 +425,52 @@ query Query($status: PublicationStatus) {
 }
 ```
 
+### Filter by publication history with `hasPublishedVersion` <NewBadge /> {#haspublishedversion}
+
+If the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled for the content-type, you can add a `hasPublishedVersion` parameter to queries to filter documents based on whether they have a published version.
+
+Use `hasPublishedVersion` with `status: DRAFT` to distinguish between documents that have never been published and drafts of already-published documents:
+
+```graphql title="Example: Fetch only never-published drafts"
+{
+  restaurants(status: DRAFT, hasPublishedVersion: false) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+```graphql title="Example: Fetch drafts of already-published documents"
+{
+  restaurants(status: DRAFT, hasPublishedVersion: true) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+`hasPublishedVersion` also works with Relay-style connection queries:
+
+```graphql title="Example: Count never-published drafts with Relay-style query"
+{
+  restaurants_connection(status: DRAFT, hasPublishedVersion: false) {
+    nodes {
+      documentId
+      name
+    }
+    pageInfo {
+      total
+    }
+  }
+}
+```
+
+:::tip
+When `hasPublishedVersion` is used with queries that include relations, the filter also applies to related documents. Each related document is filtered based on whether a published version exists for it.
+:::
+
 ## Aggregations
 
 Aggregations can be used to compute metrics such as counts, sums, or grouped totals without fetching every document individually. Aggregations are exposed through <ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> connection queries: every collection type includes an `aggregate` field under its `<plural>_connection` query.
