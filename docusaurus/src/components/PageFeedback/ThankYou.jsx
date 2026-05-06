@@ -15,7 +15,7 @@ function buildGitHubIssueUrl({ pagePath, pageTitle, comment }) {
     template: 'doc-feedback.yml',
     title,
     body,
-    labels: 'feedback: from-widget',
+    labels: 'feedback: from-docs-widget',
   });
 
   return `https://github.com/strapi/documentation/issues/new?${params.toString()}`;

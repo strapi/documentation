@@ -1,7 +1,7 @@
 @use '../../scss/_mixins.scss' as *;
 
 .pageFeedback {
-  margin-top: var(--strapi-spacing-6, 2rem);
+  margin-top: 4rem;
   margin-bottom: var(--strapi-spacing-4, 1rem);
   padding: var(--strapi-spacing-4, 1rem) var(--strapi-spacing-5, 1.5rem);
   border: 1px solid var(--ifm-toc-border-color);

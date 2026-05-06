@@ -96,10 +96,10 @@ export default function SelectionFeedback({ onFeedback }) {
         setBubble(null);
         window.getSelection()?.removeAllRanges();
       }}
-      aria-label="Give feedback on selected text"
+      aria-label="Leave feedback on selected text"
     >
       <i className="ph ph-chat-text" aria-hidden="true" />
-      <span>Feedback</span>
+      <span>Leave feedback</span>
     </button>
   );
 }
