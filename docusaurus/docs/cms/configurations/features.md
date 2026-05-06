@@ -20,7 +20,7 @@ The `config/features.js|ts` file is used to enable feature flags. Currently this
 
 Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback on these new features or changes. With these experimental features, developers have the flexibility to choose and integrate new features and changes into their Strapi applications as they become available in the current major version as well as assist us in shaping these new features.
 
-Such experimental features are indicated by a <FeatureFlagBadge /> badge throughout the documentation, where the name of the feature flag to use is included in the badge (e.g., <FeatureFlagBadge feature="FeatureFlagName" />). Enabling these features requires enabling the corresponding future flags. Future flags differ from features that are in alpha in that future flags are disabled by default.
+Such experimental features are indicated by a <FeatureFlagBadge /> badge throughout the documentation, where the name of the feature flag to use is included in the badge (e.g., <FeatureFlagBadge feature="FeatureFlagName" noTooltip />). Enabling these features requires enabling the corresponding future flags. Future flags differ from features that are in alpha in that future flags are disabled by default.
 
 :::danger
 Enable future flags at your own risk. Experimental features may be subject to change or removal, may contain breaking changes, may be unstable or not fully ready for use, and some parts may still be under development or using mock data.
@@ -35,7 +35,7 @@ To enable a future flag:
 
 1. (_optional_) If the server is running, stop it with `Ctrl-C`.
 2. Open the `config/features.js|ts` file or create it if the file does not exist yet. The file will export a `future` object with all the future flags to enable.
-3. To enable a future flag, add its property name (see [full list](#available-future-flags)) to the `future` object and ensure the property's value is set to `true`. The following example shows how to enable the `experimental_firstPublishedAt` future flag:
+3. To enable a future flag, add its property name (see [full list](#available-future-flags)) to the `future` object and ensure the property's value is set to `true`. The following example shows how to enable the `adminTokens` future flag:
 
   <Tabs groupId='js-ts'>
 
@@ -44,7 +44,7 @@ To enable a future flag:
   ```ts title="/config/features.ts"
   module.exports = ({ env }) => ({
     future: {
-      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
+      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
     },
   })
 
@@ -53,10 +53,10 @@ To enable a future flag:
   This example assumes that you have an `.env` environment file at the root of your application and that the file includes the following line:
 
   ```json title=".env"
-  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
+  STRAPI_FUTURE_ADMIN_TOKENS=true
   ```
 
-  If your environment file does not include this value, the `experimental_firstPublishedAt` future flag property value will default to `false` and the experimental feature will not be enabled.
+  If your environment file does not include this value, the `adminTokens` future flag property value will default to `false` and the experimental feature will not be enabled.
 
   </TabItem>
 
@@ -65,7 +65,7 @@ To enable a future flag:
   ```ts title="/config/features.ts"
   export default {
     future: {
-      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
+      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
     },
   };
   ```
@@ -73,7 +73,7 @@ To enable a future flag:
   This example assumes that you have an `.env` environment file at the root of your application and that the file includes the following line:
 
   ```json title=".env"
-  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
+  STRAPI_FUTURE_ADMIN_TOKENS=true
   ```
 
   If your environment file does not include this value, the `experimental_firstPublishedAt` future flag property value will default to `false` and the experimental feature will not be enabled.
@@ -112,3 +112,5 @@ Developers can use the following APIs to interact with future flags:
 | Property name | Related feature | Suggested environment variable name |
 | ------------- | --------------- | ---------------------------------- |
 | `experimental_firstPublishedAt` | [Draft & Publish](/cms/features/draft-and-publish#recording-the-first-publication-date) | `STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT` |
+| `adminTokens` | [Admin Tokens](/cms/features/admin-tokens) | `STRAPI_FUTURE_ADMIN_TOKENS` |
+
