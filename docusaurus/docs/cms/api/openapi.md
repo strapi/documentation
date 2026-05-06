@@ -120,7 +120,7 @@ The generated OpenAPI specification follows the <ExternalLink to="https://spec.o
       "Article": {
         "type": "object",
         "properties": {
-          "id": { "type": "integer" },
+          "id": { "type": "string" },
           "title": { "type": "string" },
           "content": { "type": "string" }
         }
