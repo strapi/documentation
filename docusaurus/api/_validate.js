@@ -5,7 +5,7 @@
 
 const VALID_VOTES = ['up', 'down'];
 const VALID_KINDS = ['page', 'selection', 'element'];
-const MIN_COMMENT_LENGTH = 10;
+const MIN_COMMENT_LENGTH = 20;
 const MAX_COMMENT_LENGTH = 2000;
 const MAX_FIELD_LENGTH = 500;
 

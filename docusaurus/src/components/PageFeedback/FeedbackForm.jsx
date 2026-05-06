@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const MIN_COMMENT_LENGTH = 10;
+const MIN_COMMENT_LENGTH = 20;
 const MAX_COMMENT_LENGTH = 2000;
 
 export default function FeedbackForm({
