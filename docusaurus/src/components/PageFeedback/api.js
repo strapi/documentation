@@ -9,9 +9,8 @@
 const FEEDBACK_ENDPOINT = '/api/feedback';
 
 export async function submitFeedback(payload) {
-  // TODO: Remove this stub once the backend endpoint is deployed.
-  // For local development and Vercel preview without a backend,
-  // we log the payload and return a fake ID.
+  // Local development: log and return a fake ID.
+  // This allows testing the widget UI without a running backend.
   if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
     console.log('[PageFeedback] Stub mode -- payload:', payload);
     return `stub-${Date.now()}`;
@@ -23,10 +22,7 @@ export async function submitFeedback(payload) {
       'Content-Type': 'application/json',
       'X-Feedback-Source': 'docs-widget',
     },
-    body: JSON.stringify({
-      ...payload,
-      _hp: undefined, // Honeypot field -- never sent from real widget
-    }),
+    body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
