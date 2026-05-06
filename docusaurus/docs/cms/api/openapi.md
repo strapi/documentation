@@ -23,6 +23,12 @@ The OpenAPI generation feature is currently experimental. Its behavior and outpu
 
 The OpenAPI generation tool is included with Strapi core and doesn't require additional installation. You can use it directly from the command line in any Strapi project to generate comprehensive API documentation.
 
+:::note Known limitation for nested component `required` metadata
+When individual fields inside a component are marked **Required** in the Admin panel, the generated OpenAPI document can still omit a `required` array on those inner properties. A parent object (for example the component instance inside a dynamic zone) may still declare `required` while inner scalars do not. See [GitHub issue #2236](https://github.com/strapi/documentation/issues/2236); OpenAPI-only client generators can then under-specify types.
+
+OpenAPI generation remains experimental ([see callout above](#openapi-specification-generation)); expect this area to evolve. Until the generator aligns with every Admin rule, validate nested input in application code or use Strapi's [REST validation helpers](/cms/backend-customization/controllers#sanitization-and-validation-in-controllers) rather than relying solely on generated `required` flags for nested component fields.
+:::
+
 ### CLI usage
 
 Executing the command without any arguments will generate a `specification.json` file at the root of your Strapi folder project:
