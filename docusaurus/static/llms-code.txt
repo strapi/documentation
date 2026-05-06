@@ -17299,7 +17299,7 @@ File path: /config/features.ts
 ```ts
   module.exports = ({ env }) => ({
     future: {
-      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
+      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
     },
   })
 ```
@@ -17309,7 +17309,7 @@ Language: DOTENV
 File path: .env
 
 ```dotenv
-  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
+  STRAPI_FUTURE_ADMIN_TOKENS=true
 ```
 
 ---
@@ -17319,7 +17319,7 @@ File path: /config/features.ts
 ```ts
   export default {
     future: {
-      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
+      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
     },
   };
 ```
@@ -17329,7 +17329,7 @@ Language: DOTENV
 File path: .env
 
 ```dotenv
-  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
+  STRAPI_FUTURE_ADMIN_TOKENS=true
 ```
 
 Language: Bash
