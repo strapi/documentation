@@ -94,6 +94,11 @@
       "number": 26134,
       "reason": "Router: Internal database optimization/fix for PostgreSQL deadlock prevention. No user-facing API or behavior change, no documentation needed.",
       "added": "2026-05-05"
+    },
+    {
+      "number": 26211,
+      "reason": "Triage: internal refactoring — no behavior change expected",
+      "added": "2026-05-06"
     }
   ]
 }
