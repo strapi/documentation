@@ -7225,7 +7225,7 @@ File path: N/A
       "Article": {
         "type": "object",
         "properties": {
-          "id": { "type": "integer" },
+          "id": { "type": "string" },
           "title": { "type": "string" },
           "content": { "type": "string" }
         }
@@ -23219,6 +23219,10 @@ module.exports = ({ env })=>({
         small: 500,
         xsmall: 64
       },
+      sharp: {
+        cache: true,
+        concurrency: 4,
+      },
       security: {
         allowedTypes: ['image/*', 'application/*'],
         deniedTypes: ['application/x-sh', 'application/x-dosexec']
@@ -23248,6 +23252,10 @@ export default () => ({
         medium: 750,
         small: 500,
         xsmall: 64
+      },
+      sharp: {
+        cache: true,
+        concurrency: 4,
       },
       security: {
         allowedTypes: ['image/*', 'application/*'],
@@ -23489,6 +23497,44 @@ export default ({ env }) => ({
         medium: 750,
         small: 500,
         xsmall: 64
+      },
+    },
+  },
+});
+```
+
+
+## Sharp configuration
+Description: The default values (cache: false, concurrency: 1) are optimized for low memory usage.
+(Source: https://docs.strapi.io/cms/features/media-library#sharp-configuration)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = ({ env }) => ({
+  upload: {
+    config: {
+      sharp: {
+        cache: true,
+        concurrency: 4,
+      },
+    },
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+export default ({ env }) => ({
+  upload: {
+    config: {
+      sharp: {
+        cache: true,
+        concurrency: 4,
       },
     },
   },
