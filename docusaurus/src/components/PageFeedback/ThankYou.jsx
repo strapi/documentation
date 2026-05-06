@@ -3,9 +3,11 @@ import React from 'react';
 export default function ThankYou({ vote }) {
   return (
     <div className="pageFeedback__thankYou" role="status">
-      <span className="pageFeedback__thankYouIcon" aria-hidden="true">
-        {vote === 'up' ? '\u2705' : '\u2709\uFE0F'}
-      </span>
+      <i
+        className={vote === 'up' ? 'ph ph-check-circle' : 'ph ph-envelope'}
+        aria-hidden="true"
+        style={vote === 'up' ? { color: 'var(--ifm-color-success, #00a854)' } : undefined}
+      />
       <p className="pageFeedback__thankYouText">
         {vote === 'up'
           ? 'Thanks for your feedback!'
