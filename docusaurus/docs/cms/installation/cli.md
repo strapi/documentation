@@ -60,7 +60,7 @@ Follow the steps below to create a new Strapi project, being sure to use the app
     <TabItem value="pnpm" label="pnpm">
 
     :::caution
-    You might have issues with projects created with pnpm on Strapi Cloud. Strapi Cloud does not support pnpm yet, so it's recommended to use yarn or npm if you plan to eventually host your project on Strapi Cloud.
+    You might have issues with projects created with pnpm on Strapi Cloud. Strapi Cloud is fixed to pnpm v9, so it's recommended to use npm if you plan to eventually host your project on Strapi Cloud.
     :::
 
     ```bash
