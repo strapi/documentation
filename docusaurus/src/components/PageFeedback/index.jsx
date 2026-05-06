@@ -88,10 +88,12 @@ export default function PageFeedback({ pagePath, pageId, pageTitle }) {
         </div>
       )}
 
-      <p className={styles.pageFeedback__disclosure}>
-        By submitting feedback, you agree we may store your comment. We don't
-        collect personal information.
-      </p>
+      {(stage === 'initial' || stage === 'form') && (
+        <p className={styles.pageFeedback__disclosure}>
+          By submitting feedback, you agree we may store your comment. We don't
+          collect personal information.
+        </p>
+      )}
     </section>
   );
 }
