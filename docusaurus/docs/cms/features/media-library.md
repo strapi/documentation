@@ -111,6 +111,7 @@ When using the default upload provider, the following specific configuration opt
 | `providerOptions.localServer`        | Options that will be passed to <ExternalLink to="https://github.com/koajs/static" text="koa-static"/> upon which the Upload server is build (see [local server configuration](#local-server)) | Object  | -       |
 | `sizeLimit`                                  | Maximum file size in bytes (see [max file size](#max-file-size)) | Integer | `209715200`<br/><br/>(200 MB in bytes, i.e., 200 x 1024 x 1024 bytes) |
 | `breakpoints`             | Allows to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
+| `sharp`             | Configures <ExternalLink to="https://sharp.pixelplumbing.com/" text="sharp"/> image processing options (see [sharp configuration](#sharp-configuration)) | Object | `{ cache: false, concurrency: 1 }` |
 | `security`             | Configures validation rules for uploaded files to enhance media security | Object | - |
 
 :::note
@@ -146,6 +147,10 @@ module.exports = ({ env })=>({
         small: 500,
         xsmall: 64
       },
+      sharp: {
+        cache: true,
+        concurrency: 4,
+      },
       security: {
         allowedTypes: ['image/*', 'application/*'],
         deniedTypes: ['application/x-sh', 'application/x-dosexec']
@@ -175,6 +180,10 @@ export default () => ({
         medium: 750,
         small: 500,
         xsmall: 64
+      },
+      sharp: {
+        cache: true,
+        concurrency: 4,
       },
       security: {
         allowedTypes: ['image/*', 'application/*'],
@@ -484,6 +493,55 @@ export default ({ env }) => ({
 :::caution
 Breakpoint changes will only apply to new images, existing images will not be resized or have new sizes generated.
 :::
+
+#### Sharp configuration
+
+The `sharp` option configures the <ExternalLink to="https://sharp.pixelplumbing.com/" text="sharp"/> image processing library used for generating responsive image formats. Adjusting these settings can help reduce memory usage during image processing, which is particularly useful for memory-constrained environments.
+
+| Parameter | Description | Type | Default |
+| --------- | ----------- | ---- | ------- |
+| `cache` | Enables or disables <ExternalLink to="https://sharp.pixelplumbing.com/api-utility#cache" text="libvips' operation cache"/>. Disabling the cache reduces memory usage. | Boolean | `false` |
+| `concurrency` | Sets the number of threads <ExternalLink to="https://sharp.pixelplumbing.com/api-utility#concurrency" text="libvips uses for image processing"/>. Lower values reduce peak memory usage but may slow down processing. | Integer | `1` |
+
+The default values (`cache: false`, `concurrency: 1`) are optimized for low memory usage. For environments with more available memory, you can enable caching and increase concurrency to improve image processing performance:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  upload: {
+    config: {
+      sharp: {
+        cache: true,
+        concurrency: 4,
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+export default ({ env }) => ({
+  upload: {
+    config: {
+      sharp: {
+        cache: true,
+        concurrency: 4,
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Usage
 
