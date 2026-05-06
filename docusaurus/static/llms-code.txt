@@ -24581,16 +24581,33 @@ npm run develop
 # Docker
 Source: https://docs.strapi.io/cms/installation/docker
 
-## Development Dockerfile
-Description: Sample Dockerfile:
-(Source: https://docs.strapi.io/cms/installation/docker#development-dockerfile)
+## Create a .dockerignore file
+Description: Create a .dockerignore file at the root of your Strapi project:
+(Source: https://docs.strapi.io/cms/installation/docker#create-a-dockerignore-file)
+
+Language: TXT
+File path: ./.dockerignore
+
+```txt
+node_modules/
+.tmp/
+.cache/
+.git/
+build/
+.env
+```
+
+
+## Create the Dockerfile
+Description: :::tip Alternative base image for restricted networks If your CI environment has limited network access (e.g., DNS restrictions that prevent downloading Sharp prebuilt binaries from GitHub), consider using node:22-slim instead of node:22-alpine.
+(Source: https://docs.strapi.io/cms/installation/docker#create-the-dockerfile)
 
 Language: DOCKERFILE
 File path: ./Dockerfile
 
 ```dockerfile
 FROM node:22-alpine
-# Installing libvips-dev for sharp Compatibility
+# Installing libvips-dev for sharp compatibility
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
@@ -24616,7 +24633,7 @@ File path: ./Dockerfile
 
 ```dockerfile
 FROM node:22-alpine
-# Installing libvips-dev for sharp Compatibility
+# Installing libvips-dev for sharp compatibility
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
@@ -24645,9 +24662,41 @@ RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 ```
 
 
-## (Optional) Docker Compose
-Description: Sample docker-compose.yml:
-(Source: https://docs.strapi.io/cms/installation/docker#optional-docker-compose)
+## Set up environment variables
+Description: Code example from "Set up environment variables"
+(Source: https://docs.strapi.io/cms/installation/docker#set-up-environment-variables)
+
+Language: DOTENV
+File path: ./.env
+
+```dotenv
+# Server
+HOST=0.0.0.0
+PORT=1337
+
+# Database
+DATABASE_CLIENT=postgres
+DATABASE_HOST=strapiDB
+DATABASE_PORT=5432
+DATABASE_NAME=strapi
+DATABASE_USERNAME=strapi
+DATABASE_PASSWORD=strapi
+
+# Secrets
+APP_KEYS=toBeModified1,toBeModified2
+API_TOKEN_SALT=tobemodified
+ADMIN_JWT_SECRET=tobemodified
+TRANSFER_TOKEN_SALT=tobemodified
+JWT_SECRET=tobemodified
+
+# Environment
+NODE_ENV=development
+```
+
+
+## Add Docker Compose for the database
+Description: Code example from "Add Docker Compose for the database"
+(Source: https://docs.strapi.io/cms/installation/docker#add-docker-compose-for-the-database)
 
 Language: YAML
 File path: ./docker-compose.yml
@@ -24683,15 +24732,15 @@ services:
     networks:
       - strapi
     depends_on:
-      - strapiDB
+      strapiDB:
+        condition: service_healthy
 
   strapiDB:
     container_name: strapiDB
     platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
     env_file: .env
-    image: mysql:8.0
-    command: --default-authentication-plugin=mysql_native_password
+    image: mysql:8.4
     environment:
       MYSQL_USER: ${DATABASE_USERNAME}
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
@@ -24704,6 +24753,11 @@ services:
       - "3306:3306"
     networks:
       - strapi
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   strapi-data:
@@ -24719,7 +24773,6 @@ Language: YAML
 File path: ./docker-compose.yml
 
 ```yaml
-version: "3"
 services:
   strapi:
     container_name: strapi
@@ -24750,14 +24803,15 @@ services:
     networks:
       - strapi
     depends_on:
-      - strapiDB
+      strapiDB:
+        condition: service_healthy
 
   strapiDB:
     container_name: strapiDB
     platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
     env_file: .env
-    image: mariadb:latest
+    image: mariadb:11.4
     environment:
       MYSQL_USER: ${DATABASE_USERNAME}
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
@@ -24770,6 +24824,11 @@ services:
       - "3306:3306"
     networks:
       - strapi
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   strapi-data:
@@ -24785,7 +24844,6 @@ Language: YAML
 File path: ./docker-compose.yml
 
 ```yaml
-version: "3"
 services:
   strapi:
     container_name: strapi
@@ -24816,26 +24874,31 @@ services:
     networks:
       - strapi
     depends_on:
-      - strapiDB
+      strapiDB:
+        condition: service_healthy
 
   strapiDB:
     container_name: strapiDB
     platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
     env_file: .env
-    image: postgres:16.0-alpine
+    image: postgres:16-alpine
     environment:
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
     volumes:
-      - strapi-data:/var/lib/postgresql/data/ #using a volume
+      - strapi-data:/var/lib/postgresql/data/
       #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
-
     ports:
       - "5432:5432"
     networks:
       - strapi
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   strapi-data:
@@ -24847,42 +24910,61 @@ networks:
 ```
 
 
-## Production Dockerfile
-Description: The following Dockerfile can be used to build a production Docker image for a Strapi project.
-(Source: https://docs.strapi.io/cms/installation/docker#production-dockerfile)
+## Build and run
+Description: Build and start all containers:
+(Source: https://docs.strapi.io/cms/installation/docker#build-and-run)
+
+Language: Bash
+File path: N/A
+
+```bash
+  docker compose up --build
+```
+
+
+## Create the production Dockerfile
+Description: Code example from "Create the production Dockerfile"
+(Source: https://docs.strapi.io/cms/installation/docker#create-the-production-dockerfile)
 
 Language: DOCKERFILE
 File path: ./Dockerfile.prod
 
 ```dockerfile
-# Creating multi-stage build for production
+# Build stage
 FROM node:22-alpine AS build
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /opt/
 COPY package.json yarn.lock ./
 RUN yarn global add node-gyp
-RUN yarn config set network-timeout 600000 -g && yarn install --frozen-lockfile --production
+RUN yarn config set network-timeout 600000 -g && yarn install --frozen-lockfile
 ENV PATH=/opt/node_modules/.bin:$PATH
+
 WORKDIR /opt/app
 COPY . .
+ENV NODE_ENV=production
 RUN yarn build
 
-# Creating final production image
+# Production stage
 FROM node:22-alpine
 RUN apk add --no-cache vips-dev
 ENV NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-WORKDIR /opt/app
-COPY --from=build /opt/node_modules ./node_modules
-COPY --from=build /opt/app ./
+
+WORKDIR /opt/
+COPY --from=build /opt/package.json /opt/yarn.lock ./
+RUN yarn install --frozen-lockfile --production && yarn cache clean
 ENV PATH=/opt/node_modules/.bin:$PATH
+
+WORKDIR /opt/app
+COPY --from=build /opt/app ./
 
 RUN chown -R node:node /opt/app
 USER node
 EXPOSE 1337
+# highlight-start
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:1337/_health || exit 1
+# highlight-end
 CMD ["yarn", "start"]
 ```
 
@@ -24891,51 +24973,168 @@ Language: DOCKERFILE
 File path: ./Dockerfile.prod
 
 ```dockerfile
-# Creating multi-stage build for production
+# Build stage
 FROM node:22-alpine AS build
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /opt/
 COPY package.json package-lock.json ./
 RUN npm install -g node-gyp
-RUN npm config set fetch-retry-maxtimeout 600000 -g && npm ci --only=production
+RUN npm config set fetch-retry-maxtimeout 600000 -g && npm ci
 ENV PATH=/opt/node_modules/.bin:$PATH
+
 WORKDIR /opt/app
 COPY . .
+ENV NODE_ENV=production
 RUN npm run build
 
-# Creating final production image
+# Production stage
 FROM node:22-alpine
 RUN apk add --no-cache vips-dev
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-WORKDIR /opt/app
-COPY --from=build /opt/node_modules ./node_modules
-COPY --from=build /opt/app ./
+ENV NODE_ENV=production
+
+WORKDIR /opt/
+COPY --from=build /opt/package.json /opt/package-lock.json ./
+RUN npm ci --only=production && npm cache clean --force
 ENV PATH=/opt/node_modules/.bin:$PATH
+
+WORKDIR /opt/app
+COPY --from=build /opt/app ./
 
 RUN chown -R node:node /opt/app
 USER node
 EXPOSE 1337
+# highlight-start
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:1337/_health || exit 1
+# highlight-end
 CMD ["npm", "run", "start"]
 ```
 
 
-## Building the production container
-Description: To build a production Docker image for a Strapi project, run the following command:
-(Source: https://docs.strapi.io/cms/installation/docker#building-the-production-container)
+## Add Docker Compose for production
+Description: Code example from "Add Docker Compose for production"
+(Source: https://docs.strapi.io/cms/installation/docker#add-docker-compose-for-production)
 
-Language: Bash
-File path: N/A
+Language: YAML
+File path: ./docker-compose.prod.yml
 
-```bash
+```yaml
+services:
+  strapi:
+    container_name: strapi
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: strapi:latest
+    restart: always
+    env_file: .env
+    environment:
+      DATABASE_CLIENT: ${DATABASE_CLIENT}
+      DATABASE_HOST: strapiDB
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      APP_KEYS: ${APP_KEYS}
+      NODE_ENV: production
+    ports:
+      - "127.0.0.1:1337:1337"
+    networks:
+      - strapi
+    depends_on:
+      strapiDB:
+        condition: service_healthy
+
+  strapiDB:
+    container_name: strapiDB
+    restart: always
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - strapi-data:/var/lib/postgresql/data/
+    networks:
+      - strapi
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  strapi-data:
+
+networks:
+  strapi:
+    name: strapi
+    driver: bridge
+```
+
+
+## Build and publish
+Description: To build a production Docker image, run the following command:
+(Source: https://docs.strapi.io/cms/installation/docker#build-and-publish)
+
+Language: YAML
+File path: .prod.yml
+
+```yaml
 docker build \
-  --build-arg NODE_ENV=production \
-  # --build-arg STRAPI_URL=https://api.example.com \ # Uncomment to set the Strapi Server URL
-  -t mystrapiapp:latest \ # Replace with your image name
+  -t mystrapiapp:latest \
   -f Dockerfile.prod .
+```
+
+
+## Sharp and libvips errors
+Description: Verify that your Dockerfile installs the required Alpine packages:
+(Source: https://docs.strapi.io/cms/installation/docker#sharp-and-libvips-errors)
+
+Language: DOCKERFILE
+File path: .prod.yml
+
+```dockerfile
+  RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
+```
+
+Language: DOCKERFILE
+File path: .prod.yml
+
+```dockerfile
+  FROM node:22-slim
+  RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+```
+
+Language: DOCKERFILE
+File path: .prod.yml
+
+```dockerfile
+  ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
+```
+
+
+## Database connection issues
+Description: Code example from "Database connection issues"
+(Source: https://docs.strapi.io/cms/installation/docker#database-connection-issues)
+
+Language: JavaScript
+File path: ./config/database.js
+
+```js
+  module.exports = ({ env }) => ({
+    connection: {
+      client: env('DATABASE_CLIENT'),
+      // ...
+      pool: {
+        min: 0,
+        max: 10,
+      },
+    },
+  });
 ```
 
 

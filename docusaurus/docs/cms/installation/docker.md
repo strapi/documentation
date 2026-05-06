@@ -3,16 +3,23 @@ title: Docker
 displayed_sidebar: cmsSidebar
 pagination_prev: cms/installation/cli
 pagination_next: cms/features/admin-panel
-description: Quickly create a Docker container from a local project.
+description: Build and run a Strapi project in a Docker container for development and production environments.
 tags:
-- installation
-- environment 
-- MySQL
+  - installation
+  - docker
+  - deployment
+  - production
 ---
 
 import DockerEnvTable from '/docs/snippets/docker-env-table.md'
 
 # Running Strapi in a Docker container
+
+<Tldr>
+
+This page guides you through running Strapi in Docker containers for development and production environments, including Dockerfile examples, Docker Compose configurations, and troubleshooting common issues.
+
+</Tldr>
 
 :::caution
 Strapi does not build any official container images. The following instructions are provided as a courtesy to the community. If you have any questions please reach out on <ExternalLink to="https://discord.strapi.io" text="Discord"/>.
@@ -22,49 +29,58 @@ Strapi does not build any official container images. The following instructions 
  Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data such as dropped tables.
 :::
 
-The following documentation will guide you through building a custom <ExternalLink to="https://www.docker.com/" text="Docker"/> container with an existing Strapi project.
-
-Docker is an open platform that allows developing, shipping, and running applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies). Containers are isolated from each other and bundle their own software, libraries, and configuration files; they can communicate with each other through well-defined channels.
+This page covers building custom Docker images for an existing Strapi 5 project. You will find separate instructions for [development](#development-environment) and [production](#production-environment) environments, along with a [troubleshooting](#troubleshooting) section and a list of [community tools](#community-tools-and-images).
 
 :::prerequisites
 
 - <ExternalLink to="https://www.docker.com/" text="Docker"/> installed on your machine
+- <ExternalLink to="https://docs.docker.com/compose/" text="Docker Compose"/> v2 or later
 - A [supported version of Node.js](/cms/installation/cli#preparing-the-installation)
 - An **existing Strapi 5 project**, or a new one created with the [Quick Start guide](/cms/quick-start.md)
-- (_optional_) <ExternalLink to="https://yarnpkg.com/" text="Yarn"/> installed on your machine
-- (_optional_) <ExternalLink to="https://docs.docker.com/compose/" text="Docker Compose"/> installed on your machine
+- <ExternalLink to="https://yarnpkg.com/" text="Yarn"/> or npm as your package manager
 
 :::
 
-## Development and/or Staging environments
+## Development environment
 
-For working with Strapi locally on your host machine you can use the <ExternalLink to="https://docs.docker.com/engine/reference/builder/" text="Dockerfile"/>, and if needed the <ExternalLink to="https://docs.docker.com/compose/compose-file/" text="docker-compose.yml"/> can also be used to start up a database container.
+Development images use `yarn develop` or `npm run develop` and mount your local source code for hot-reload. Before creating the Dockerfile, set up 2 required files: `.dockerignore` and `.env`.
 
-Both methods require an existing Strapi project or a new one created (see [Quick Start guide](/cms/quick-start.md)).
+### Create a .dockerignore file
 
-### Development Dockerfile
+A `.dockerignore` file prevents local files from being copied into the Docker image. Without it, your local `node_modules` directory gets included in the build context, which causes architecture mismatches (e.g., x64 binaries on ARM) and increases the image size.
+
+<!-- unverified: .dockerignore best practice, not from Strapi codebase -->
+
+Create a `.dockerignore` file at the root of your Strapi project:
+
+```txt title="./.dockerignore"
+node_modules/
+.tmp/
+.cache/
+.git/
+build/
+.env
+```
+
+### Create the Dockerfile
 
 The following `Dockerfile` can be used to build a non-production Docker image for a Strapi project.
 
 :::note
-
-If you are using `docker-compose`, you can skip setting the environment variables manually, as they will be set in the `docker-compose.yml` file or a `.env` file.
-
+If you are using Docker Compose, you can skip setting the environment variables manually, as they will be set in the `docker-compose.yml` file or a `.env` file.
 :::
 
 <DockerEnvTable components={props.components} />
 
-For more information on the `Dockerfile` and its commands, please refer to the <ExternalLink to="https://docs.docker.com/engine/reference/commandline/cli/" text="official Docker documentation"/>.
-
-Sample `Dockerfile`:
-
 <Tabs groupId="yarn-npm">
 
-<TabItem value="yarn" label="yarn">
+<TabItem value="yarn" label="Yarn">
+
+<!-- unverified: Dockerfile works with current Strapi 5; based on existing docs + community patterns -->
 
 ```dockerfile title="./Dockerfile"
 FROM node:22-alpine
-# Installing libvips-dev for sharp Compatibility
+# Installing libvips-dev for sharp compatibility
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
@@ -86,11 +102,13 @@ CMD ["yarn", "develop"]
 
 </TabItem>
 
-<TabItem value="npm" label="npm">
+<TabItem value="npm" label="NPM">
+
+<!-- unverified: Dockerfile works with current Strapi 5; based on existing docs + community patterns -->
 
 ```dockerfile title="./Dockerfile"
 FROM node:22-alpine
-# Installing libvips-dev for sharp Compatibility
+# Installing libvips-dev for sharp compatibility
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
@@ -108,7 +126,6 @@ USER node
 RUN ["npm", "run", "build"]
 EXPOSE 1337
 CMD ["npm", "run", "develop"]
-
 ```
 
 </TabItem>
@@ -123,22 +140,54 @@ FROM node:22-slim
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 ```
 
-This trades a slightly larger image for simpler builds and fewer network dependencies.
+This trades a slightly larger image for fewer build dependencies and fewer network requirements.
 :::
 
-### (Optional) Docker Compose
+### Set up environment variables
 
-The following `docker-compose.yml` can be used to start up a database container and a Strapi container along with a shared network for communication between the two.
+Create a `.env` file at the root of your Strapi project. Docker Compose reads this file automatically when starting containers.
+
+The following example contains placeholder values. Replace them with your own values before starting the containers:
+
+<!-- unverified: .env example, placeholder values -->
+
+```bash title="./.env"
+# Server
+HOST=0.0.0.0
+PORT=1337
+
+# Database
+DATABASE_CLIENT=postgres
+DATABASE_HOST=strapiDB
+DATABASE_PORT=5432
+DATABASE_NAME=strapi
+DATABASE_USERNAME=strapi
+DATABASE_PASSWORD=strapi
+
+# Secrets
+APP_KEYS=toBeModified1,toBeModified2
+API_TOKEN_SALT=tobemodified
+ADMIN_JWT_SECRET=tobemodified
+TRANSFER_TOKEN_SALT=tobemodified
+JWT_SECRET=tobemodified
+
+# Environment
+NODE_ENV=development
+```
+
+### Add Docker Compose for the database
+
+The following `docker-compose.yml` starts a database container and a Strapi container on a shared network.
 
 :::note
-For more information about running Docker compose and its commands, please refer to the <ExternalLink to="https://docs.docker.com/compose/" text="Docker Compose documentation"/>.
+For more information about Docker Compose and its commands, see the <ExternalLink to="https://docs.docker.com/compose/" text="Docker Compose documentation"/>.
 :::
-
-Sample `docker-compose.yml`:
 
 <Tabs groupId="databases">
 
 <TabItem value="mysql" label="MySQL">
+
+<!-- unverified: docker-compose config; based on existing docs with fixes applied -->
 
 ```yml title="./docker-compose.yml"
 services:
@@ -171,15 +220,15 @@ services:
     networks:
       - strapi
     depends_on:
-      - strapiDB
+      strapiDB:
+        condition: service_healthy
 
   strapiDB:
     container_name: strapiDB
     platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
     env_file: .env
-    image: mysql:8.0
-    command: --default-authentication-plugin=mysql_native_password
+    image: mysql:8.4
     environment:
       MYSQL_USER: ${DATABASE_USERNAME}
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
@@ -192,6 +241,11 @@ services:
       - "3306:3306"
     networks:
       - strapi
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   strapi-data:
@@ -206,8 +260,9 @@ networks:
 
 <TabItem value="mariadb" label="MariaDB">
 
+<!-- unverified: docker-compose config; based on existing docs with fixes applied -->
+
 ```yml title="./docker-compose.yml"
-version: "3"
 services:
   strapi:
     container_name: strapi
@@ -238,14 +293,15 @@ services:
     networks:
       - strapi
     depends_on:
-      - strapiDB
+      strapiDB:
+        condition: service_healthy
 
   strapiDB:
     container_name: strapiDB
     platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
     env_file: .env
-    image: mariadb:latest
+    image: mariadb:11.4
     environment:
       MYSQL_USER: ${DATABASE_USERNAME}
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
@@ -258,6 +314,11 @@ services:
       - "3306:3306"
     networks:
       - strapi
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   strapi-data:
@@ -272,8 +333,9 @@ networks:
 
 <TabItem value="postgresql" label="PostgreSQL">
 
+<!-- unverified: docker-compose config; based on existing docs with fixes applied -->
+
 ```yml title="./docker-compose.yml"
-version: "3"
 services:
   strapi:
     container_name: strapi
@@ -304,26 +366,31 @@ services:
     networks:
       - strapi
     depends_on:
-      - strapiDB
+      strapiDB:
+        condition: service_healthy
 
   strapiDB:
     container_name: strapiDB
     platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
     env_file: .env
-    image: postgres:16.0-alpine
+    image: postgres:16-alpine
     environment:
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
     volumes:
-      - strapi-data:/var/lib/postgresql/data/ #using a volume
+      - strapi-data:/var/lib/postgresql/data/
       #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
-
     ports:
       - "5432:5432"
     networks:
       - strapi
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   strapi-data:
@@ -338,115 +405,203 @@ networks:
 
 </Tabs>
 
-## Production Environments
+### Build and run
 
-The Docker image in production is different from the one used in development/staging environments because of the differences in the admin build process in addition to the command used to run the application. Typical production environments will use a reverse proxy to serve the application and the admin panel. The Docker image is built with the production build of the admin panel and the command used to run the application is `strapi start`.
+1. Build and start all containers:
 
-Once the [Dockerfile](#production-dockerfile) is created, the [production container](#building-the-production-container) can be built. Optionally, the container can be published to a [registry](#optional-publishing-the-container-to-a-registry) to make it available to the community. [Community tools](#community-tools) can help you
-in the process of building a production Docker image and deploying it to a production environment.
+  ```bash
+  docker compose up --build
+  ```
 
-### Production Dockerfile
+2. Open `http://localhost:1337/admin` in your browser to access the Strapi admin panel.
 
-The following `Dockerfile` can be used to build a production Docker image for a Strapi project.
+To stop the containers, run `docker compose down`. Add the `-v` flag to also remove the database volume.
+
+## Production environment
+
+Production images differ from development images. They use multi-stage builds to reduce image size and run `yarn start` or `npm run start` instead of the develop command. A reverse proxy should sit in front of the Strapi container in production (see [deployment documentation](/cms/deployment)).
+
+### Create the production Dockerfile
+
+The following `Dockerfile.prod` uses a multi-stage build. The first stage installs all dependencies, including devDependencies needed for the build step, and builds the admin panel. The second stage copies only production assets into the final image.
 
 <Tabs groupId="yarn-npm">
 
-<TabItem value="yarn" label="yarn">
+<TabItem value="yarn" label="Yarn">
+
+<!-- unverified: Production Dockerfile; fixed from existing docs (devDeps needed for build stage) -->
 
 ```dockerfile title="./Dockerfile.prod"
-# Creating multi-stage build for production
+# Build stage
 FROM node:22-alpine AS build
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /opt/
 COPY package.json yarn.lock ./
 RUN yarn global add node-gyp
-RUN yarn config set network-timeout 600000 -g && yarn install --frozen-lockfile --production
+RUN yarn config set network-timeout 600000 -g && yarn install --frozen-lockfile
 ENV PATH=/opt/node_modules/.bin:$PATH
+
 WORKDIR /opt/app
 COPY . .
+ENV NODE_ENV=production
 RUN yarn build
 
-# Creating final production image
+# Production stage
 FROM node:22-alpine
 RUN apk add --no-cache vips-dev
 ENV NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-WORKDIR /opt/app
-COPY --from=build /opt/node_modules ./node_modules
-COPY --from=build /opt/app ./
+
+WORKDIR /opt/
+COPY --from=build /opt/package.json /opt/yarn.lock ./
+RUN yarn install --frozen-lockfile --production && yarn cache clean
 ENV PATH=/opt/node_modules/.bin:$PATH
+
+WORKDIR /opt/app
+COPY --from=build /opt/app ./
 
 RUN chown -R node:node /opt/app
 USER node
 EXPOSE 1337
+# highlight-start
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:1337/_health || exit 1
+# highlight-end
 CMD ["yarn", "start"]
 ```
 
 </TabItem>
 
-<TabItem value="npm" label="npm">
+<TabItem value="npm" label="NPM">
+
+<!-- unverified: Production Dockerfile; fixed from existing docs (devDeps needed for build stage) -->
 
 ```dockerfile title="./Dockerfile.prod"
-# Creating multi-stage build for production
+# Build stage
 FROM node:22-alpine AS build
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /opt/
 COPY package.json package-lock.json ./
 RUN npm install -g node-gyp
-RUN npm config set fetch-retry-maxtimeout 600000 -g && npm ci --only=production
+RUN npm config set fetch-retry-maxtimeout 600000 -g && npm ci
 ENV PATH=/opt/node_modules/.bin:$PATH
+
 WORKDIR /opt/app
 COPY . .
+ENV NODE_ENV=production
 RUN npm run build
 
-# Creating final production image
+# Production stage
 FROM node:22-alpine
 RUN apk add --no-cache vips-dev
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-WORKDIR /opt/app
-COPY --from=build /opt/node_modules ./node_modules
-COPY --from=build /opt/app ./
+ENV NODE_ENV=production
+
+WORKDIR /opt/
+COPY --from=build /opt/package.json /opt/package-lock.json ./
+RUN npm ci --only=production && npm cache clean --force
 ENV PATH=/opt/node_modules/.bin:$PATH
+
+WORKDIR /opt/app
+COPY --from=build /opt/app ./
 
 RUN chown -R node:node /opt/app
 USER node
 EXPOSE 1337
+# highlight-start
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:1337/_health || exit 1
+# highlight-end
 CMD ["npm", "run", "start"]
-
 ```
 
 </TabItem>
 
 </Tabs>
 
-### Building the production container
+:::note Key difference from the development Dockerfile
+The build stage installs all dependencies (including devDependencies) because the `yarn build` step needs them to compile the admin panel. The production stage then installs only production dependencies, keeping the final image lean.
+:::
 
-Building production Docker images can have several options. The following example uses the `docker build` command to build a production Docker image for a Strapi project. However, it is recommended you review the <ExternalLink to="https://docs.docker.com/engine/reference/commandline/build/" text="Docker documentation"/> for more information on building Docker images with more advanced options.
+### Add Docker Compose for production
 
-To build a production Docker image for a Strapi project, run the following command:
+The following `docker-compose.prod.yml` is suitable for production deployments. It uses PostgreSQL and includes healthchecks. The Strapi port binds to `127.0.0.1` so that only a local reverse proxy can reach it.
+
+<!-- unverified: production docker-compose; assembled from community patterns and best practices -->
+
+```yml title="./docker-compose.prod.yml"
+services:
+  strapi:
+    container_name: strapi
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: strapi:latest
+    restart: always
+    env_file: .env
+    environment:
+      DATABASE_CLIENT: ${DATABASE_CLIENT}
+      DATABASE_HOST: strapiDB
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      APP_KEYS: ${APP_KEYS}
+      NODE_ENV: production
+    ports:
+      - "127.0.0.1:1337:1337"
+    networks:
+      - strapi
+    depends_on:
+      strapiDB:
+        condition: service_healthy
+
+  strapiDB:
+    container_name: strapiDB
+    restart: always
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - strapi-data:/var/lib/postgresql/data/
+    networks:
+      - strapi
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  strapi-data:
+
+networks:
+  strapi:
+    name: strapi
+    driver: bridge
+```
+
+:::tip
+In production, avoid exposing database ports to the host. The `strapiDB` service above has no `ports` mapping, making it accessible only to other containers on the `strapi` network.
+:::
+
+### Build and publish
+
+To build a production Docker image, run the following command:
 
 ```bash
 docker build \
-  --build-arg NODE_ENV=production \
-  # --build-arg STRAPI_URL=https://api.example.com \ # Uncomment to set the Strapi Server URL
-  -t mystrapiapp:latest \ # Replace with your image name
+  -t mystrapiapp:latest \
   -f Dockerfile.prod .
 ```
 
-### (Optional) Publishing the container to a registry
+After building, you can publish the image to a Docker registry. For production usage, use a private registry since your Docker image may contain sensitive configuration.
 
-After you have built a production Docker image for a Strapi project, you can publish the image to a Docker registry. Ideally for production usage this should be a private registry as your Docker image will contain sensitive information.
-
-Depending on your hosting provider you may need to use a different command to publish your image. It is recommended you review the <ExternalLink to="https://docs.docker.com/engine/reference/commandline/push/" text="Docker documentation"/> for more information on publishing Docker images with more advanced options.
-
-Some popular hosting providers are:
+Some popular container registries include:
 
 - <ExternalLink to="https://aws.amazon.com/ecr/" text="AWS ECR"/>
 - <ExternalLink to="https://azure.microsoft.com/en-us/services/container-registry/" text="Azure Container Registry"/>
@@ -456,38 +611,119 @@ Some popular hosting providers are:
 - <ExternalLink to="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry" text="GitHub Container Registry"/>
 - <ExternalLink to="https://docs.gitlab.com/ee/user/packages/container_registry/" text="Gitlab Container Registry"/>
 
-## Community tools
+## Troubleshooting
 
-Several community tools are available to assist you in deploying Strapi to various cloud providers and setting up Docker in a development or production environment.
+### Sharp and libvips errors
 
-We strongly support our community efforts and encourage you to check out the following tools, please help support them by contributing to their development.
+Sharp is the image processing library used by Strapi. It depends on `libvips`, which requires native compilation on Alpine-based images. Common error messages include `Cannot find module 'sharp'` or `Error: sharp: Installation error`.
+
+To resolve Sharp issues:
+
+1. Verify that your Dockerfile installs the required Alpine packages:
+
+  ```dockerfile
+  RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
+  ```
+
+2. If the issue persists, switch to `node:22-slim` (Debian-based) to avoid musl libc compatibility problems:
+
+  ```dockerfile
+  FROM node:22-slim
+  RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+  ```
+
+3. For ARM builds (see [below](#apple-silicon-and-arm-builds)), add the following environment variable before installing dependencies:
+
+  ```dockerfile
+  ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
+  ```
+
+### Apple Silicon and ARM builds
+
+The `platform: linux/amd64` flag in docker-compose files forces containers to run under x86 emulation on ARM-based machines (Apple M1/M2/M3). This works but is slower than native ARM builds.
+
+For native ARM performance:
+
+- Remove the `platform: linux/amd64` line from your docker-compose file.
+- Use `node:22-alpine` or `node:22-slim` as your base image. Both support ARM64 natively.
+- Ensure Sharp dependencies are installed correctly (see [Sharp and libvips errors](#sharp-and-libvips-errors)).
+
+:::note
+The `platform: linux/amd64` flag is included in the docker-compose examples above because some database images do not yet provide ARM64 variants. Remove it for services where ARM64 images are available.
+:::
+
+### Database connection issues
+
+If Strapi cannot connect to the database in Docker, check the following:
+
+1. Verify that `DATABASE_HOST` matches the service name in your docker-compose file (e.g., `strapiDB`), not `localhost` or `127.0.0.1`. Containers communicate over the Docker network using service names.
+
+2. Check for port conflicts with local database instances. If a database is already running locally on the same port, either stop the local database or change the host-side port mapping in your docker-compose file (e.g., `"5433:5432"`).
+
+3. Set the connection pool `min` value to `0` in your [database configuration](/cms/configurations/database), as Docker may kill idle connections:
+
+<!-- source: existing docs reference in cms/configurations/database.md -->
+
+  ```js title="./config/database.js"
+  module.exports = ({ env }) => ({
+    connection: {
+      client: env('DATABASE_CLIENT'),
+      // ...
+      pool: {
+        min: 0,
+        max: 10,
+      },
+    },
+  });
+  ```
+
+4. Configure `pool.acquireTimeoutMillis` and `pool.idleTimeoutMillis` in your database configuration if the database container becomes unreachable after periods of inactivity.
+
+## Community tools and images
+
+Strapi does not provide official Docker images (see [FAQ](#faq)). The following community-maintained tools and images can help you get started.
 
 If you would like to add your tool to this list, please open a pull request on the <ExternalLink to="https://github.com/strapi/documentation" text="Strapi documentation repository"/>.
 
 ### @strapi-community/dockerize
 
-The `@strapi-community/dockerize` package is a CLI tool that can be used to generate a `Dockerfile` and `docker-compose.yml` file for a Strapi project.
+The `@strapi-community/dockerize` package is a CLI tool that generates a `Dockerfile` and `docker-compose.yml` file for a Strapi project.
 
-To get started run `npx @strapi-community/dockerize@latest` within an existing Strapi project folder and follow the CLI prompts.
+To get started, run `npx @strapi-community/dockerize@latest` within an existing Strapi project folder and follow the CLI prompts.
 
-For more information please see the official <ExternalLink to="https://github.com/strapi-community/strapi-tool-dockerize" text="GitHub repository"/> or the <ExternalLink to="https://www.npmjs.com/package/@strapi-community/dockerize" text="npm package"/>.
+For more information, see the official <ExternalLink to="https://github.com/strapi-community/strapi-tool-dockerize" text="GitHub repository"/> or the <ExternalLink to="https://www.npmjs.com/package/@strapi-community/dockerize" text="npm package"/>.
 
-### @strapi-community/deployify
+:::caution
+Strapi 5 compatibility is in progress for this tool. Check the <ExternalLink to="https://github.com/strapi-community/strapi-tool-dockerize/issues/127" text="GitHub issue"/> for the current status before using it with a Strapi 5 project. You may need to adjust the generated files manually.
+:::
 
-The `@strapi-community/deployify` package is a CLI tool that can be used to deploy your application to various cloud providers and hosting services. Several of these also support deploying a Strapi project with a Docker container and will call on the `@strapi-community/dockerize` package to generate the required files if they don't already exist.
+### Community Docker images
 
-To get started run `npx @strapi-community/deployify@latest` within an existing Strapi project folder and follow the CLI prompts.
+Pre-built Docker images maintained by community members are available for Strapi 5. These images let you run Strapi without writing your own Dockerfile.
 
-For more information please see the official <ExternalLink to="https://github.com/strapi-community/strapi-tool-deployify" text="GitHub repository"/> or the <ExternalLink to="https://www.npmjs.com/package/@strapi-community/deployify" text="npm package"/>.
+:::caution
+These images are community-maintained and not officially supported by Strapi. Review their documentation and source code before using them in production.
+:::
 
-## Docker FAQ
+- <ExternalLink to="https://github.com/naskio/docker-strapi" text="naskio/strapi"/>: Actively maintained image that tracks Strapi 5 releases. Available on <ExternalLink to="https://hub.docker.com/r/naskio/strapi" text="Docker Hub"/>.
+- <ExternalLink to="https://hub.docker.com/r/vshadbolt/strapi" text="vshadbolt/strapi"/>: Supports both AMD64 and ARM64 architectures. Tracks Strapi 5 releases.
+
+## Next steps
+
+Once Strapi is running in a Docker container, you can:
+
+- Set up the [admin panel](/cms/features/admin-panel) and create your first content types with the [Content-Type Builder](/cms/features/content-type-builder).
+- Configure a reverse proxy and deploy to production (see [deployment documentation](/cms/deployment)).
+- Explore [environment configuration](/cms/configurations/environment) for fine-tuning your Strapi instance.
+
+## FAQ
 
 ### Why doesn't Strapi provide official Docker images?
 
-Strapi is a framework that can be used to build many different types of applications. As such, it is not possible to provide a single Docker image that can be used for all use cases.
+Strapi is a framework used to build many different types of applications. A single Docker image cannot cover all use cases, so Strapi provides Dockerfile examples instead.
 
-### Why do we have different Dockerfiles for development and production?
+### Why use different Dockerfiles for development and production?
 
-The primary reason for various Docker images is due to the way our Admin panel is built. The Admin panel is built using React and is bundled into the Strapi application during the build process. This means that the Strapi backend is acting as a web server to serve the Admin panel and thus certain environment variables are statically compiled into the built Admin panel.
+Strapi builds the admin panel with React and bundles it into the application during the build process. The Strapi backend serves the admin panel as a web server, and certain environment variables are statically compiled into the built admin panel.
 
-It is generally considered a best practice with Strapi to build different Docker images for development and production environments. This is because the development environment is not optimized for performance and is not intended to be exposed to the public internet.
+Build different Docker images for development and production environments. The development environment does not optimize for performance and should not be exposed to the public internet.
