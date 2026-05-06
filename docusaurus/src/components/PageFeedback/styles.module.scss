@@ -154,6 +154,7 @@
 
   .pageFeedback__thankYou {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: var(--strapi-spacing-2, 0.5rem);
@@ -168,6 +169,25 @@
     margin: 0;
     font-size: 0.95rem;
     color: var(--ifm-font-color-base);
+  }
+
+  .pageFeedback__issueLink {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--strapi-spacing-1, 0.25rem);
+    margin-top: var(--strapi-spacing-1, 0.25rem);
+    padding: var(--strapi-spacing-1, 0.25rem) var(--strapi-spacing-3, 0.75rem);
+    border: 1px solid var(--ifm-toc-border-color);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--ifm-font-color-secondary);
+    text-decoration: none;
+
+    &:hover {
+      border-color: var(--ifm-color-primary);
+      color: var(--ifm-color-primary);
+      text-decoration: none;
+    }
   }
 }
 

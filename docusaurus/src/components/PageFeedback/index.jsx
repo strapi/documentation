@@ -7,6 +7,7 @@ import styles from './styles.module.scss';
 export default function PageFeedback({ pagePath, pageId, pageTitle }) {
   const [stage, setStage] = useState('initial'); // initial | form | submitting | done | error
   const [vote, setVote] = useState(null);
+  const [lastComment, setLastComment] = useState(null);
 
   const handleVote = useCallback((value) => {
     setVote(value);
@@ -15,6 +16,7 @@ export default function PageFeedback({ pagePath, pageId, pageTitle }) {
 
   const doSubmit = useCallback(
     async (comment) => {
+      setLastComment(comment);
       setStage('submitting');
       try {
         await submitFeedback({
@@ -74,7 +76,14 @@ export default function PageFeedback({ pagePath, pageId, pageTitle }) {
         </div>
       )}
 
-      {stage === 'done' && <ThankYou vote={vote} />}
+      {stage === 'done' && (
+        <ThankYou
+          vote={vote}
+          pagePath={pagePath}
+          pageTitle={pageTitle}
+          comment={lastComment}
+        />
+      )}
 
       {stage === 'error' && (
         <div className={styles.pageFeedback__error} role="alert">

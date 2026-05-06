@@ -1,6 +1,27 @@
 import React from 'react';
 
-export default function ThankYou({ vote }) {
+function buildGitHubIssueUrl({ pagePath, pageTitle, comment }) {
+  const title = `[Doc feedback] ${pageTitle}`;
+  const body = [
+    `**Page:** [${pageTitle}](https://docs.strapi.io${pagePath})`,
+    '',
+    '**Feedback:**',
+    comment,
+    '',
+    '<!-- This issue was opened from the docs feedback widget -->',
+  ].join('\n');
+
+  const params = new URLSearchParams({
+    template: 'doc-feedback.yml',
+    title,
+    body,
+    labels: 'feedback: from-widget',
+  });
+
+  return `https://github.com/strapi/documentation/issues/new?${params.toString()}`;
+}
+
+export default function ThankYou({ vote, pagePath, pageTitle, comment }) {
   return (
     <div className="pageFeedback__thankYou" role="status">
       <i
@@ -13,6 +34,17 @@ export default function ThankYou({ vote }) {
           ? 'Thanks for your feedback!'
           : 'Thanks for letting us know. We\'ll look into it.'}
       </p>
+      {vote === 'down' && comment && (
+        <a
+          className="pageFeedback__issueLink"
+          href={buildGitHubIssueUrl({ pagePath, pageTitle, comment })}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i className="ph ph-github-logo" aria-hidden="true" />
+          {' '}Create a GitHub issue
+        </a>
+      )}
     </div>
   );
 }
