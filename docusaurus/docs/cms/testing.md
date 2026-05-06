@@ -795,7 +795,39 @@ It's recommended to keep seeds deterministic to ensure stable assertions. If you
 
 ## Create smoke tests
 
-With the harness in place you can confirm Strapi boots correctly by adding a minimal Jest suite with the following **smoke tests** <Annotation>Smoke tests are basic tests that verify the most critical functionality works. The term comes from hardware testing: if you turn on a device and it doesn't catch fire (produce smoke), it passes the first test. In software, smoke tests check if the application starts correctly and basic features work before running more detailed tests.</Annotation> in a `tests/app.test.js` as follows:
+With the harness in place you can confirm Strapi boots correctly by adding a minimal Jest suite with the following **smoke tests** <Annotation>Smoke tests are basic tests that verify the most critical functionality works. The term comes from hardware testing: if you turn on a device and it doesn't catch fire (produce smoke), it passes the first test. In software, smoke tests check if the application starts correctly and basic features work before running more detailed tests.</Annotation> in a `tests/app.test.js` or `tests/app.test.ts` file as follows.
+
+### TypeScript smoke tests must load `tests/strapi.js` first
+
+If you use `tests/app.test.ts` and a helper that calls `import { createStrapi } from '@strapi/strapi'` without first loading the `tests/strapi.js` harness from this guide, Jest still uses Strapi's stock configuration scanner. That scanner only accepts `.js` and `.json` files, so you will see warnings such as `Config file not loaded, extension must be one of .js,.json): database.ts`, and `createStrapi().load()` can fail because the database block never loaded.
+
+The harness patches both the directory scan and the per-file loader so `.ts`, `.cts`, and `.mts` configs work under Jest. Pull `setupStrapi` / `cleanupStrapi` from that module (CommonJS `require` from `.ts` tests is fine) and avoid calling `createStrapi` directly unless you copy the same patch preamble from `tests/strapi.js` above your import.
+
+```ts title="./tests/app.test.ts"
+import type { Strapi } from '@strapi/strapi';
+
+const { setupStrapi, cleanupStrapi } = require('./strapi');
+
+declare global {
+  var strapi: Strapi;
+}
+
+beforeAll(async () => {
+  await setupStrapi();
+});
+
+afterAll(async () => {
+  await cleanupStrapi();
+});
+
+it('strapi is defined', () => {
+  expect(strapi).toBeDefined();
+});
+```
+
+Some teams run `yarn build` and pass `{ distDir: './dist' }` so Strapi reads compiled `.js` configuration from disk. That matches the workaround described in the issue thread, but it adds a full build to every test run. The harness on this page is meant to keep the inner loop fast without that step.
+
+JavaScript smoke tests can keep the original pattern:
 
 ```js title="./tests/app.test.js"
 const { setupStrapi, cleanupStrapi } = require('./strapi');
