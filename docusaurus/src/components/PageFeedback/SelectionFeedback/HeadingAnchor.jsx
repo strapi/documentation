@@ -2,8 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 /**
  * Injects a small feedback button in the gutter next to each H2/H3 heading
- * inside <article>. Clicking opens the feedback form pre-filled with the
- * heading text and anchor.
+ * inside <article>. The button appears on heading hover and clicking it
+ * opens the feedback form pre-filled with the heading text and anchor.
  */
 export default function HeadingAnchor({ onFeedback }) {
   const [headings, setHeadings] = useState([]);
@@ -47,6 +47,7 @@ export default function HeadingAnchor({ onFeedback }) {
 
 function HeadingButton({ heading, onClick }) {
   const [pos, setPos] = useState(null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     function updatePosition() {
@@ -56,8 +57,19 @@ function HeadingButton({ heading, onClick }) {
       });
     }
     updatePosition();
+
+    // Show button when hovering the heading element
+    const show = () => setVisible(true);
+    const hide = () => setVisible(false);
+    heading.el.addEventListener('mouseenter', show);
+    heading.el.addEventListener('mouseleave', hide);
+
     window.addEventListener('resize', updatePosition);
-    return () => window.removeEventListener('resize', updatePosition);
+    return () => {
+      heading.el.removeEventListener('mouseenter', show);
+      heading.el.removeEventListener('mouseleave', hide);
+      window.removeEventListener('resize', updatePosition);
+    };
   }, [heading.el]);
 
   if (!pos) return null;
@@ -69,7 +81,10 @@ function HeadingButton({ heading, onClick }) {
         position: 'absolute',
         top: `${pos.top}px`,
         left: '-36px',
+        opacity: visible ? 1 : undefined,
       }}
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
       onClick={() => onClick(heading)}
       aria-label={`Give feedback on section: ${heading.text}`}
       title="Give feedback on this section"

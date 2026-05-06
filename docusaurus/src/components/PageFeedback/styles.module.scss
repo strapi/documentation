@@ -221,3 +221,78 @@
     color: #fff;
   }
 }
+
+/* Selection context shown above the form when triggered from L2 */
+.pageFeedback__selectionContext {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--strapi-spacing-2, 0.5rem);
+  padding: var(--strapi-spacing-2, 0.5rem) var(--strapi-spacing-3, 0.75rem);
+  margin-bottom: var(--strapi-spacing-2, 0.5rem);
+  border-left: 3px solid var(--ifm-color-primary);
+  background: var(--ifm-color-primary-lightest, rgba(99, 91, 255, 0.05));
+  border-radius: 0 6px 6px 0;
+  font-size: 0.85rem;
+  color: var(--ifm-font-color-secondary);
+  text-align: left;
+
+  i {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--ifm-color-primary);
+  }
+}
+
+/* L2: Floating selection bubble */
+:global {
+  .selectionFeedback__bubble {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--strapi-spacing-1, 0.25rem);
+    padding: 6px 12px;
+    border: none;
+    border-radius: 20px;
+    background: var(--ifm-color-primary);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+    @include transition;
+
+    &:hover {
+      background: var(--ifm-color-primary-dark);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    i {
+      font-size: 1rem;
+    }
+  }
+
+  /* L2: Heading anchor feedback button */
+  .headingAnchor__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--ifm-font-color-secondary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    opacity: 0;
+    @include transition;
+
+    &:hover {
+      opacity: 1;
+      border-color: var(--ifm-color-primary);
+      color: var(--ifm-color-primary);
+      background: var(--ifm-color-primary-lightest, rgba(99, 91, 255, 0.05));
+    }
+  }
+
+}

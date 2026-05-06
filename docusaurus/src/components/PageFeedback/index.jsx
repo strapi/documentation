@@ -1,18 +1,35 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useImperativeHandle, forwardRef } from 'react';
 import FeedbackForm from './FeedbackForm';
 import ThankYou from './ThankYou';
 import { submitFeedback } from './api';
 import styles from './styles.module.scss';
 
-export default function PageFeedback({ pagePath, pageId, pageTitle }) {
+const PageFeedback = forwardRef(function PageFeedback({ pagePath, pageId, pageTitle }, ref) {
   const [stage, setStage] = useState('initial'); // initial | form | submitting | done | error
   const [vote, setVote] = useState(null);
   const [lastComment, setLastComment] = useState(null);
+  const [selectionData, setSelectionData] = useState(null); // L2: { kind, selection }
 
   const handleVote = useCallback((value) => {
     setVote(value);
+    setSelectionData(null);
     setStage('form');
   }, []);
+
+  const handleSelectionFeedback = useCallback((data) => {
+    setVote('down');
+    setSelectionData(data);
+    setStage('form');
+    document.querySelector('[aria-label="Page feedback"]')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+  }, []);
+
+  // Expose handleSelectionFeedback to the footer wrapper via ref
+  useImperativeHandle(ref, () => ({
+    onSelectionFeedback: handleSelectionFeedback,
+  }), [handleSelectionFeedback]);
 
   const doSubmit = useCallback(
     async (comment) => {
@@ -20,20 +37,26 @@ export default function PageFeedback({ pagePath, pageId, pageTitle }) {
       setStage('submitting');
       try {
         await submitFeedback({
-          kind: 'page',
+          kind: selectionData?.kind || 'page',
           vote,
           comment: comment || undefined,
           pagePath,
           pageId,
           pageTitle,
+          selection: selectionData?.selection || undefined,
         });
         setStage('done');
       } catch {
         setStage('error');
       }
     },
-    [vote, pagePath, pageId, pageTitle],
+    [vote, pagePath, pageId, pageTitle, selectionData],
   );
+
+  const handleCancel = useCallback(() => {
+    setSelectionData(null);
+    setStage('initial');
+  }, []);
 
   return (
     <section className={styles.pageFeedback} aria-label="Page feedback">
@@ -62,12 +85,23 @@ export default function PageFeedback({ pagePath, pageId, pageTitle }) {
       )}
 
       {stage === 'form' && (
-        <FeedbackForm
-          required={vote === 'down'}
-          onSubmit={doSubmit}
-          onCancel={() => setStage('initial')}
-          isSubmitting={false}
-        />
+        <>
+          {selectionData && (
+            <div className={styles.pageFeedback__selectionContext}>
+              <i className="ph ph-quotes" aria-hidden="true" />
+              <span>
+                {selectionData.selection?.text?.slice(0, 100)}
+                {selectionData.selection?.text?.length > 100 ? '...' : ''}
+              </span>
+            </div>
+          )}
+          <FeedbackForm
+            required={vote === 'down'}
+            onSubmit={doSubmit}
+            onCancel={handleCancel}
+            isSubmitting={false}
+          />
+        </>
       )}
 
       {stage === 'submitting' && (
@@ -99,4 +133,6 @@ export default function PageFeedback({ pagePath, pageId, pageTitle }) {
 
     </section>
   );
-}
+});
+
+export default PageFeedback;
