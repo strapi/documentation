@@ -116,6 +116,7 @@ const PageFeedback = forwardRef(function PageFeedback({ pagePath, pageId, pageTi
           pagePath={pagePath}
           pageTitle={pageTitle}
           comment={lastComment}
+          selectionText={selectionData?.selection?.text}
         />
       )}
 

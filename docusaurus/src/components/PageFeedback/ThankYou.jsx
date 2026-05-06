@@ -1,15 +1,16 @@
 import React from 'react';
 
-function buildGitHubIssueUrl({ pagePath, pageTitle, comment }) {
+function buildGitHubIssueUrl({ pagePath, pageTitle, comment, selectionText }) {
   const title = `[Doc feedback] ${pageTitle}`;
   const body = [
     `**Page:** [${pageTitle}](https://docs.strapi.io${pagePath})`,
+    selectionText ? `\n**Selected text:**\n> ${selectionText}` : null,
     '',
     '**Feedback:**',
     comment,
     '',
     '<!-- This issue was opened from the docs feedback widget -->',
-  ].join('\n');
+  ].filter(Boolean).join('\n');
 
   const params = new URLSearchParams({
     template: 'doc-feedback.yml',
@@ -21,7 +22,7 @@ function buildGitHubIssueUrl({ pagePath, pageTitle, comment }) {
   return `https://github.com/strapi/documentation/issues/new?${params.toString()}`;
 }
 
-export default function ThankYou({ vote, pagePath, pageTitle, comment }) {
+export default function ThankYou({ vote, pagePath, pageTitle, comment, selectionText }) {
   return (
     <div className="pageFeedback__thankYou" role="status">
       <i
@@ -37,7 +38,7 @@ export default function ThankYou({ vote, pagePath, pageTitle, comment }) {
       {vote === 'down' && comment && (
         <a
           className="pageFeedback__issueLink"
-          href={buildGitHubIssueUrl({ pagePath, pageTitle, comment })}
+          href={buildGitHubIssueUrl({ pagePath, pageTitle, comment, selectionText })}
           target="_blank"
           rel="noopener noreferrer"
         >
