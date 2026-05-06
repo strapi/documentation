@@ -45,6 +45,12 @@ Additional information on how to migrate from the Entity Service API to the Docu
 Relations can also be connected, disconnected, and set through the Document Service API, just like with the REST API (see the [REST API relations documentation](/cms/api/rest/relations) for examples).
 :::
 
+:::caution Document Service returns unsanitized data
+The Document Service is a data-access layer: it interacts with the database and is not aware of user permissions or field visibility. Results may include private fields, passwords, and restricted relations.
+
+The built-in REST and GraphQL APIs automatically sanitize responses before sending them to the client. But if you build custom controllers or plugin routes that call Document Service methods directly, you must sanitize the output yourself before returning it. Use `strapi.contentAPI.sanitize.output()` in your controller (see [Sanitization and validation when building custom controllers](/cms/backend-customization/controllers#sanitize-validate-custom-controllers) for details and code examples).
+:::
+
 ## Configuration
 
 The `documents.strictParams` option enables strict validation of parameters passed to Document Service methods such as `findMany` and `findOne`. Configure it in the [API configuration](/cms/configurations/api) file (`./config/api.js` or `./config/api.ts`). See the [API configuration](/cms/configurations/api) table for details on `documents.strictParams`.
