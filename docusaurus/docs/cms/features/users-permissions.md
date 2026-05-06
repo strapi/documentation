@@ -1,18 +1,19 @@
 ---
 title: Users & Permissions
-description: Learn to use the Users & Permissions and API tokens features to manage end-users.
+description: Learn to use the Users & Permissions feature to manage end-user accounts, authentication, and role-based access.
+displayed_sidebar: cmsSidebar
 toc_max_heading_level: 5
 tags:
 - admin panel
 - users & permissions
-- api tokens
+- authentication
 - features
 ---
 
 # Users & Permissions
 
 <Tldr>
-Users & Permissions manages end-user accounts, JWT-based authentication, and role-based access to APIs. This documentation explains how to create roles, configure permissions, and issue API tokens for secure access control.
+Users & Permissions manages end-user accounts, JWT-based authentication, and role-based access to APIs. This documentation explains how to create roles, configure permissions, and secure access to your content API.
 </Tldr>
 
 The Users & Permissions feature allows the management of the end-users <Annotation>💡 **What are end users?** <br/> End-users are the users who consume the content that is created and managed with a Strapi application and displayed on front-end applications (e.g. websites, mobile applications, connected devices etc.). Unlike the administrators, they do not have access to the admin panel.</Annotation> of a Strapi project. It provides a full authentication process based on JSON Web Tokens (JWT) to protect your API, and an access-control list (ACL) strategy that enables you to manage permissions between groups of users.
@@ -30,13 +31,13 @@ The Users & Permissions feature is configured from both the admin panel settings
 
 ### Roles
 
-The Users & Permissions feature allows to create and manage roles for end users, to configure what they can have access to.
+The Users & Permissions feature allows creating and managing roles for end users, to configure what they can have access to.
 
 #### Creating a new role
 
 **Path:** <Icon name="gear-six" /> *Users & Permissions plugin > Roles*
 
-On the top right side of the *Roles* interface, an **Add new role** button is displayed. It allows to create a new role for end users of your Strapi application.
+On the top right side of the *Roles* interface, an **Add new role** button is displayed. It allows creating a new role for end users of your Strapi application.
 
 Click on the **Add new role** button to be redirected to the roles edition interface, where you will be able to name your new role and define its details and permissions (see [Editing a role](#editing-a-role)).
 
@@ -65,7 +66,7 @@ By default, 2 end-user roles are defined for any Strapi application:
 
 More roles can however be created (see [Creating a new role](#creating-a-new-role)), and all can be edited through the role edition interface.
 
-1. Click on the edit button <Icon name="pencil-simple" /> of the role to edit — except if you directly landed on the role edition interface from creating a new role.
+1. Click on the edit button <Icon name="pencil-simple" /> of the role to edit. Skip this step if you directly landed on the role edition interface from creating a new role.
 2. Fill in the *Role details*, following the instructions from the table below:
 
 | Role details  | Instructions |
@@ -103,7 +104,7 @@ Although the 2 default end-user roles cannot be deleted, the other ones can, as 
 
 **Path:** <Icon name="gear-six" /> *Users & Permissions plugin > Providers*
 
-The Users & Permissions feature allows enabling and configuring providers, for end users to login via a third-party provider to access the content of a front-end application through the Strapi application API.
+The Users & Permissions feature allows enabling and configuring providers, for end users to log in via a third-party provider to access the content of a front-end application through the Strapi application API.
 
 By default, a list of providers is available including one, "Email", enabled by default for all Strapi applications with Users & Permissions enabled.
 
@@ -170,7 +171,7 @@ Both email templates can be modified.
   }}
 />
 
-### Advanced Settings
+### Advanced settings
 
 **Path:** <Icon name="gear-six" /> *Users & Permissions plugin > Advanced settings*
 
@@ -215,9 +216,9 @@ Defining which mode is used is done by setting the `jwtManagement` property of t
 | Mode | Description | Use case |
 |------|-------------|----------|
 | `legacy-support` | (default) Issues long-lived JWTs using traditional configuration | Existing applications, simple authentication |
-| `refresh` | Uses session management with short-lived access tokens and refresh tokens for enhanced security | New applications, enhanced security requirements<br />(additional information can be found in [admin panel configuration](/cms/configurations/admin-panel#session-management) documentation) |
+| `refresh` | Uses session management with short-lived access tokens and refresh tokens for enhanced security | New applications, enhanced security requirements<br />(see [admin panel configuration](/cms/configurations/admin-panel#session-management)) |
 
-For backwards compatibility, the Users & Permission feature defaults to legacy mode:
+For backwards compatibility, the Users & Permissions feature defaults to legacy mode:
 
 ```js title="/config/plugins.js"
 module.exports = ({ env }) => ({
@@ -235,14 +236,14 @@ module.exports = ({ env }) => ({
 :::note Notes
 - `jwtSecret` is a random string used to create new JWTs, typically set using the `JWT_SECRET` [environment variable](/cms/configurations/environment#strapi).
 - `jwt.expiresIn` is (legacy-mode only) is expressed in seconds or a string describing a time span.<br/>
-  Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
+  For example: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 :::
 
 :::warning
 Setting JWT expiry for more than 30 days is not recommended due to security concerns.
 :::
 
-When the `refresh` mode is used, the configuration file could look like as follows:
+When the `refresh` mode is used, the configuration file looks like the following:
 
 <Tabs groupId="js-ts">
 
@@ -308,7 +309,7 @@ export default ({ env }) => ({
 
 ### Registration configuration
 
-If you have added any additional fields in your User **model** <Annotation>Models, also called content-types in Strapi, define a representation of the content structure.<br/>Users are a special type of built-in content-type found in any new Strapi application. You can customize the Users model, adding more fields for instance, like any other models.<br/>For more information, please refer to the [models](/cms/backend-customization/models) documentation.</Annotation> that need to be accepted on registration, you need to added them to the list of allowed fields in the `config.register` object of [the `/config/plugins` file](/cms/configurations/plugins), otherwise they will not be accepted.
+If you have added any additional fields in your User **model** <Annotation>Models, also called content-types in Strapi, define a representation of the content structure.<br/>Users are a special type of built-in content-type found in any new Strapi application. You can customize the Users model, adding more fields for instance, like any other models.<br/>For more information, please refer to the [models](/cms/backend-customization/models) documentation.</Annotation> that need to be accepted on registration, you need to add them to the list of allowed fields in the `config.register` object of [the `/config/plugins` file](/cms/configurations/plugins), otherwise they will not be accepted.
 
 The following example shows how to ensure a field called "nickname" is accepted by the API on user registration:
 
@@ -354,7 +355,7 @@ export default ({ env }) => ({
 
 ### Rate limiting configuration
 
-Rate limiting is applied to authentication and registration endpoints to prevent abuse.  The following parameters can be configured to change its behavior. Additional configuration options are provided by the <ExternalLink text="koa2-ratelimit" to="https://github.com/ysocorp/koa2-ratelimit?tab=readme-ov-file#configuration"/> package:
+Rate limiting is applied to authentication and registration endpoints to prevent abuse. The following parameters can be configured to change its behavior. Additional configuration options are provided by the <ExternalLink text="koa2-ratelimit" to="https://github.com/ysocorp/koa2-ratelimit?tab=readme-ov-file#configuration"/> package:
 
 
 The following options are available in [the `/config/plugins` file](/cms/configurations/plugins):
@@ -414,7 +415,7 @@ export default ({ env }) => ({
 
 </Tabs>
 
-### Templating emails
+### Email template configuration {#templating-emails}
 
 By default this plugin comes with two templates: reset password and email address confirmation. The templates use <ExternalLink to="https://lodash.com/docs/4.17.15#template" text="Lodash's `template()` method"/> to populate the variables.
 
@@ -431,7 +432,7 @@ The following variables can be used:
   - `email`
 - `TOKEN` corresponds to the token generated to be able to reset the password.
 - `URL` is the link where the user will be redirected after clicking on it in the email.
-- `SERVER_URL` is the absolute server url (configured in server configuration).
+- `SERVER_URL` is the absolute server URL (configured in server configuration).
 
 </TabItem>
 
@@ -443,7 +444,7 @@ The following variables can be used:
   - `email`
 - `CODE` corresponds to the CODE generated to be able confirm the user email.
 - `URL` is the Strapi backend URL that confirms the code (by default `/auth/email-confirmation`).
-- `SERVER_URL` is the absolute server url (configured in server configuration).
+- `SERVER_URL` is the absolute server URL (configured in server configuration).
 
 </TabItem>
 
@@ -451,7 +452,7 @@ The following variables can be used:
 
 ### Security configuration
 
-JWTs can be verified and trusted because the information is digitally signed. To sign a token a _secret_ is required. By default Strapi generates and stores it in `/extensions/users-permissions/config/jwt.js`.
+JWTs can be verified and trusted because the information is digitally signed. To sign a token a _secret_ is required. By default Strapi generates and stores it in `/src/extensions/users-permissions/config/jwt.js`.
 
 This is useful during development but for security reasons it is recommended to set a custom token via an environment variable `JWT_SECRET` when deploying to production.
 
@@ -461,7 +462,7 @@ By default you can set a `JWT_SECRET` environment variable and it will be used a
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="/extensions/users-permissions/config/jwt.js"
+```js title="/src/extensions/users-permissions/config/jwt.js"
 
 module.exports = {
   jwtSecret: process.env.SOME_ENV_VAR,
@@ -472,7 +473,7 @@ module.exports = {
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="/extensions/users-permissions/config/jwt.ts"
+```ts title="/src/extensions/users-permissions/config/jwt.ts"
 
 export default {
   jwtSecret: process.env.SOME_ENV_VAR,
@@ -495,7 +496,7 @@ By default, Strapi SSO only redirects to the redirect URL that is exactly equal 
     }}
 />
 
-If you need to configure a custom handler to accept other URLs, you can create a callback `validate` function in your plugins.js for the `users-permissions` plugin.
+If you need to configure a custom handler to accept other URLs, you can create a callback `validate` function in your `plugins.js` for the `users-permissions` plugin.
 
 ```tsx title="/config/plugins.js|ts"
   // ... other plugins configuration ...
@@ -525,6 +526,14 @@ If you need to configure a custom handler to accept other URLs, you can create a
   },
 ```
 
+### Route and policy customization {#customizing-routes-and-policies}
+
+The Users & Permissions plugin routes and controllers can be extended and overridden through the [plugin extension system](/cms/plugins-development/plugins-extension). This is useful for adding custom policies to user endpoints, overriding controller logic, or adding new routes.
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="code" title="Customizing Users & Permissions plugin routes" description="Add custom policies, override controllers, and add new routes to the User collection." link="/cms/backend-customization/guides/customizing-users-permissions-plugin-routes" />
+</CustomDocCardsWrapper>
+
 ## Usage
 
 The Users & Permissions feature can be used both via the admin panel, to create new end-user accounts, and via the APIs.
@@ -543,7 +552,7 @@ With the Users & Permissions feature, the end users and their account informatio
   }}
 />
 
-Registering new end users in a front-end application with the Users & Permissions plugin consists in adding a new entry to the User collection type.
+Registering new end users in a front-end application with the Users & Permissions plugin consists of adding a new entry to the User collection type.
 
 1. Go to the User collection type in the <Icon name="feather" /> Content Manager.
 2. Click on the **Create new entry** button in the top right corner.
@@ -559,7 +568,7 @@ Registering new end users in a front-end application with the Users & Permission
 4. Click on the **Save** button.
 
 :::note
-If end users can register themselves on your front-end application (see "Enable signups" option in [advanced settings](#advanced-settings)), a new entry will automatically be created and the fields of that entry will be filled up with the information indicated by the end user. All fields can however be edited by an administrator of the Strapi application.
+If end users can register themselves on your front-end application (see "Enable signups" option in [advanced settings](#advanced-settings)), a new entry will automatically be created and the fields of that entry will be populated with the information indicated by the end user. All fields can however be edited by an administrator of the Strapi application.
 :::
 
 ### API usage
@@ -571,7 +580,7 @@ Each time an API request is sent the server checks if an `Authorization` header 
 When you create a user without a role, or if you use the `/api/auth/local/register` route, the `authenticated` role is given to the user.
 :::
 
-#### Basic authentication endpoints
+#### Authentication endpoints {#authentication-endpoints}
 
 The Users & Permissions feature provides the following authentication endpoints for user management and [Content API](/cms/api/rest) access:
 
@@ -582,8 +591,10 @@ The Users & Permissions feature provides the following authentication endpoints 
 | `POST` | `/api/auth/forgot-password` | Request password reset |
 | `POST` | `/api/auth/reset-password` | Reset password using token |
 | `GET` | `/api/auth/email-confirmation` | Confirm user email address |
+| `POST` | `/api/auth/send-email-confirmation` | Resend confirmation email |
+| `POST` | `/api/auth/change-password` | Change password (requires authentication) |
 
-#### Session management endpoints
+##### Session management endpoints
 
 When [session management](#jwt-management-modes) is enabled (`jwtManagement: 'refresh'`), additional endpoints are available:
 
@@ -592,7 +603,7 @@ When [session management](#jwt-management-modes) is enabled (`jwtManagement: 're
 | `POST` | `/api/auth/refresh` | Refresh access token using refresh token |
 | `POST` | `/api/auth/logout` | Revoke user sessions (supports device-specific logout) |
 
-To refresh your authentication token you could for instance send the following request:
+To refresh your authentication token, send the following request:
 
 <ApiCall>
 <Request title="Request example: Using the refresh endpoint">
@@ -625,6 +636,216 @@ curl -X POST http://localhost:1337/api/auth/logout \
 ```
 
 </Request>
+</ApiCall>
+
+#### User CRUD endpoints
+
+The Users & Permissions feature also exposes a set of endpoints for managing user records directly. These endpoints are separate from the authentication endpoints and allow you to create, read, update, and delete user entries:
+
+| Method | URL | Description |
+| ------ | --- | ----------- |
+| `GET` | `/api/users` | Find all users |
+| `GET` | `/api/users/me` | Get the currently authenticated user |
+| `GET` | `/api/users/:id` | Find a specific user by ID |
+| `GET` | `/api/users/count` | Get the total number of users |
+| `POST` | `/api/users` | Create a new user |
+| `PUT` | `/api/users/:id` | Update a user by ID |
+| `DELETE` | `/api/users/:id` | Delete a user by ID |
+
+:::note
+These endpoints are protected by the role-based permission system. To access them, enable the corresponding action (e.g., `find`, `findOne`, `create`, `update`, `destroy`, `me`, `count`) for the desired role in <Icon name="gear-six" /> *Users & Permissions plugin > Roles*.
+:::
+
+##### Get the authenticated user
+
+The `GET /api/users/me` endpoint returns the user associated with the current JWT. The endpoint is useful for front-end applications that need to display user profile information after login.
+
+<ApiCall>
+<Request title="Request example: Get the authenticated user">
+
+```bash
+curl -X GET http://localhost:1337/api/users/me \
+  -H "Authorization: Bearer your-access-token"
+```
+
+</Request>
+
+<Response>
+
+```json
+{
+  "id": 1,
+  "documentId": "abc123",
+  "username": "kai",
+  "email": "kai@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-15T09:00:00.000Z",
+  "updatedAt": "2024-01-15T09:00:00.000Z",
+  "publishedAt": "2024-01-15T09:00:00.000Z"
+}
+```
+
+</Response>
+</ApiCall>
+
+##### Find all users
+
+The `GET /api/users` endpoint returns a list of all users. [`populate` and `filters` parameters](/cms/api/rest/parameters) can be passed as query strings.
+
+<ApiCall>
+<Request title="Request example: Find all users with their role">
+
+```bash
+curl -X GET "http://localhost:1337/api/users?populate=role" \
+  -H "Authorization: Bearer your-access-token"
+```
+
+</Request>
+
+<Response>
+
+```json
+[
+  {
+    "id": 1,
+    "documentId": "abc123",
+    "username": "kai",
+    "email": "kai@strapi.io",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "role": {
+      "id": 1,
+      "name": "Authenticated",
+      "description": "Default role given to authenticated user.",
+      "type": "authenticated",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z"
+    },
+    "createdAt": "2024-01-15T09:00:00.000Z",
+    "updatedAt": "2024-01-15T09:00:00.000Z",
+    "publishedAt": "2024-01-15T09:00:00.000Z"
+  }
+]
+```
+
+</Response>
+</ApiCall>
+
+##### Create a user
+
+The `POST /api/users` endpoint creates a new user. Unlike `/api/auth/local/register`, this endpoint requires `create` permission for the Users & Permissions plugin.
+
+<ApiCall>
+<Request title="Request example: Create a user">
+
+```bash
+curl -X POST http://localhost:1337/api/users \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-access-token" \
+  -d '{
+    "username": "newuser",
+    "email": "newuser@strapi.io",
+    "password": "Password123",
+    "role": 1,
+    "confirmed": true
+  }'
+```
+
+</Request>
+
+<Response>
+
+```json
+{
+  "id": 2,
+  "documentId": "def456",
+  "username": "newuser",
+  "email": "newuser@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-16T10:00:00.000Z",
+  "updatedAt": "2024-01-16T10:00:00.000Z",
+  "publishedAt": "2024-01-16T10:00:00.000Z"
+}
+```
+
+</Response>
+</ApiCall>
+
+##### Update a user
+
+The `PUT /api/users/:id` endpoint updates an existing user by ID.
+
+<ApiCall>
+<Request title="Request example: Update a user">
+
+```bash
+curl -X PUT http://localhost:1337/api/users/2 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-access-token" \
+  -d '{
+    "username": "updateduser"
+  }'
+```
+
+</Request>
+
+<Response>
+
+```json
+{
+  "id": 2,
+  "documentId": "def456",
+  "username": "updateduser",
+  "email": "newuser@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-16T10:00:00.000Z",
+  "updatedAt": "2024-01-17T11:00:00.000Z",
+  "publishedAt": "2024-01-16T10:00:00.000Z"
+}
+```
+
+</Response>
+</ApiCall>
+
+##### Delete a user
+
+The `DELETE /api/users/:id` endpoint deletes a user by ID.
+
+<ApiCall>
+<Request title="Request example: Delete a user">
+
+```bash
+curl -X DELETE http://localhost:1337/api/users/2 \
+  -H "Authorization: Bearer your-access-token"
+```
+
+</Request>
+
+<Response>
+
+```json
+{
+  "id": 2,
+  "documentId": "def456",
+  "username": "updateduser",
+  "email": "newuser@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-16T10:00:00.000Z",
+  "updatedAt": "2024-01-17T11:00:00.000Z",
+  "publishedAt": "2024-01-16T10:00:00.000Z"
+}
+```
+
+</Response>
 </ApiCall>
 
 #### Identifier
@@ -703,7 +924,7 @@ If the request is successful you will receive the **user's JWT** in the `jwt` ke
 
 The `jwt` may then be used for making permission-restricted API requests. To make an API request as a user place the JWT into an `Authorization` header of the `GET` request.
 
-Any request without a token will assume the `public` role permissions by default. Modify the permissions of each user's role in the admin dashboard.
+Any request without a token will assume the `public` role permissions by default. Modify the permissions of each user's role in the admin panel.
 
 Authentication failures return a `401 (unauthorized)` error.
 
@@ -733,7 +954,7 @@ axios
 
 #### User registration
 
-Creating a new user in the database with a default role as 'registered' can be done like in the following example:
+Creating a new user in the database with a default role as 'authenticated' can be done as in the following example:
 
 ```js
 import axios from 'axios';
@@ -779,3 +1000,4 @@ create: async ctx => {
   ctx.created(data);
 };
 ```
+
