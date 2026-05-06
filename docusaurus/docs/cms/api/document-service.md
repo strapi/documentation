@@ -78,7 +78,7 @@ Each section below documents the parameters and examples for a specific method:
 | [`count()`](#count) | Count how many documents match the parameters. |
 
 :::note Draft & Publish method availability
-The [`publish()`](#publish), [`unpublish()`](#unpublish), and [`discardDraft()`](#discarddraft) methods are only available when the **Draft & Publish** feature is enabled on the content-type. Calling these methods on a content-type that does not have Draft & Publish enabled will throw an error. To enable Draft & Publish, see the [Draft & Publish documentation](/cms/features/draft-and-publish).
+The [`publish()`](#publish), [`unpublish()`](#unpublish), and [`discardDraft()`](#discarddraft) methods are only available when the Draft & Publish feature is enabled on the content-type. Calling these methods on a content-type that does not have Draft & Publish enabled will throw an error. To enable Draft & Publish, see the [Draft & Publish documentation](/cms/features/draft-and-publish).
 :::
 
 ### `findOne()`
