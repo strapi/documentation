@@ -156,13 +156,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: var(--strapi-spacing-2, 0.5rem);
     padding: var(--strapi-spacing-2, 0.5rem) 0;
   }
 
-  .pageFeedback__thankYouIcon {
-    font-size: 1.2rem;
+  .pageFeedback__thankYouRow {
+    display: flex;
+    align-items: center;
+    gap: var(--strapi-spacing-2, 0.5rem);
+
+    i {
+      font-size: 1.2rem;
+    }
   }
 
   .pageFeedback__thankYouText {
