@@ -237,6 +237,31 @@ export default {
 
 This object includes methods to register your plugin with the admin application, perform bootstrapping actions, and handle translations. For more details, please refer to the [Admin Panel API reference](/cms/plugins-development/admin-panel-api).
 
+### TypeScript configuration
+
+For a TypeScript local plugin, the project-level TypeScript configuration handles compilation, so you do not need a per-plugin `tsconfig.json` once you are using the `strapi-server.ts` / `strapi-admin.ts` entry points described above. Two pieces have to be in place:
+
+1. **Server-side compilation** is delegated to the project's root `./tsconfig.json`. The default Strapi configuration already excludes `src/plugins/**`, which is what you want here: the plugin's server-side TypeScript is then compiled by the project's regular build pipeline.
+2. **Admin-side compilation** (including `.tsx` files for components) is handled by `./src/admin/tsconfig.json`, which extends `@strapi/typescript-utils/tsconfigs/admin` and is the file responsible for JSX. Make sure its `include` array picks up your plugin's admin sources, for example by adding `../plugins/**/admin/src/**/*`:
+
+```json title="./src/admin/tsconfig.json"
+{
+  "extends": "@strapi/typescript-utils/tsconfigs/admin",
+  "include": [
+    "../plugins/**/admin/src/**/*",
+    "./"
+  ],
+  "exclude": [
+    "node_modules/",
+    "build/",
+    "dist/",
+    "**/*.test.ts"
+  ]
+}
+```
+
+Without that `include` entry, admin TypeScript files in the plugin compile under the server-side `tsconfig.json` and produce errors such as `TS6142: ... but --jsx is not set` and `TS2307: Cannot find module @strapi/strapi/admin or its corresponding type declarations`. As noted in [Configuration with a local plugin](#configuration-with-a-local-plugin), do not add `@strapi/strapi` as a dev dependency inside the plugin: it should use the same instance of `@strapi/strapi` as the main application.
+
 :::tip
 For a complete example of how to structure your local plugin in a monorepo environment, please check out our <ExternalLink to="https://github.com/strapi/strapi/tree/develop/examples/getstarted/src/plugins/local-plugin" text="example setup in the strapi/strapi repository" />.
 :::
