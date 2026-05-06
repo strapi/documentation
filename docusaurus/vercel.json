@@ -1,4 +1,14 @@
 {
+  "headers": [
+    {
+      "source": "/api/feedback",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "https://docs.strapi.io" },
+        { "key": "Access-Control-Allow-Methods", "value": "POST, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, X-Feedback-Source" }
+      ]
+    }
+  ],
   "redirects": [
     {
       "source": "/cloud",
