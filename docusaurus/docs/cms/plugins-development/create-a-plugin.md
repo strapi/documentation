@@ -239,10 +239,9 @@ This object includes methods to register your plugin with the admin application,
 
 ### TypeScript configuration
 
-For a TypeScript local plugin you usually keep a single project-level setup instead of adding another `tsconfig.json` inside each plugin, once the `strapi-server.ts` / `strapi-admin.ts` exports from the earlier sections are in place. Two pieces have to be in place:
+These notes apply when you follow the `strapi-server.ts` / `strapi-admin.ts` entry points from the earlier sections and keep TypeScript sources in the app plus local plugin folders instead of adding another `tsconfig.json` inside every plugin.
 
-1. **Root `./tsconfig.json` covers the host app's server TypeScript only.** `strapi develop` calls `@strapi/typescript-utils/compile`, which drives `tsc` using that file. Official templates intentionally `exclude` `src/plugins/**`, and the `create-strapi-app` starter labels that as keeping plugins out of the server compilation pass, which means those paths are not part of the root `tsc` emit graph. At runtime Strapi still loads each plugin's `strapi-server.js` through `loadPlugins` in `packages/core/core/src/loaders/plugins/index.ts`, so any server TypeScript still has to arrive as the `.js` entrypoint Node can `require` (the stock `examples/getstarted` local plugin ships `strapi-server.js`, or you add a small plugin-local build / SDK packaging step if you author `.ts`).
-2. **Admin-side compilation** (including `.tsx` files for components) is handled by `./src/admin/tsconfig.json`, which extends `@strapi/typescript-utils/tsconfigs/admin` and is the file responsible for JSX. Make sure its `include` array picks up your plugin's admin sources, for example by adding `../plugins/**/admin/src/**/*`:
+1. **Admin-side compilation** lives in `./src/admin/tsconfig.json`, which extends `@strapi/typescript-utils/tsconfigs/admin` and owns JSX settings. Add your plugin admin tree to `include`, for example `../plugins/**/admin/src/**/*`, so `.tsx` files are not parsed under the server program (which produces `TS6142` / missing `@strapi/strapi/admin` type errors otherwise).
 
 ```json title="./src/admin/tsconfig.json"
 {
@@ -260,7 +259,15 @@ For a TypeScript local plugin you usually keep a single project-level setup inst
 }
 ```
 
-Without that `include` entry, admin TypeScript files in the plugin compile under the server-side `tsconfig.json` and produce errors such as `TS6142: ... but --jsx is not set` and `TS2307: Cannot find module @strapi/strapi/admin or its corresponding type declarations`. As noted in [Configuration with a local plugin](#configuration-with-a-local-plugin), do not add `@strapi/strapi` as a dev dependency inside the plugin: it should use the same instance of `@strapi/strapi` as the main application.
+2. **Server-side TypeScript** can follow either of these layouts:
+
+   - **Starter-default path:** keep the generated root `exclude` entry for `src/plugins/**`. The root `tsc` pass that `strapi develop` runs through `@strapi/typescript-utils/compile` will not emit plugin server sources, so you ship a runtime `strapi-server.js` next to the plugin `package.json` (see `examples/getstarted`) or run a **dedicated compile step** inside the plugin that outputs that file before boot.
+
+   - **Monorepo path without a second server bundler:** narrow the root exclude list so only admin assets stay out of the server program, for example replace `src/plugins/**` with `src/plugins/**/admin`. Root `tsc` can then emit `src/plugins/<plugin>/server/**/*.ts` into `dist/`, and your plugin `package.json` `exports["./strapi-server"].require` can target that emitted file. A worked example lives in the Strapi community repo: <ExternalLink to="https://github.com/strapi/community/commit/51566eec2c4065c664af7f3ce0752691fd165236" text="owner-selector monorepo refactor" />. Double-check `rootDir`, `outDir`, and Strapi upgrades whenever you diverge from the default template.
+
+Regardless of which server path you pick, runtime resolution still flows through `loadPlugins` in Strapi core, which ultimately `require`s the `strapi-server` export your `package.json` exposes.
+
+Without the admin `include` line from step 1, admin TypeScript files in the plugin compile under the server-side `tsconfig.json` and produce errors such as `TS6142: ... but --jsx is not set` and `TS2307: Cannot find module @strapi/strapi/admin or its corresponding type declarations`. As noted in [Configuration with a local plugin](#configuration-with-a-local-plugin), do not add `@strapi/strapi` as a dev dependency inside the plugin: it should use the same instance of `@strapi/strapi` as the main application.
 
 :::tip
 For a complete example of how to structure your local plugin in a monorepo environment, please check out our <ExternalLink to="https://github.com/strapi/strapi/tree/develop/examples/getstarted/src/plugins/local-plugin" text="example setup in the strapi/strapi repository" />.
