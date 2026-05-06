@@ -46,7 +46,7 @@ Relations can also be connected, disconnected, and set through the Document Serv
 :::
 
 :::caution Document Service returns unsanitized data
-The Document Service is a **data-access layer**: it interacts with the database and is not aware of user permissions or field visibility. Results may include private fields, passwords, and restricted relations.
+The Document Service is a data-access layer: it interacts with the database and is not aware of user permissions or field visibility. Results may include private fields, passwords, and restricted relations.
 
 The built-in REST and GraphQL APIs automatically sanitize responses before sending them to the client. But if you build custom controllers or plugin routes that call Document Service methods directly, you must sanitize the output yourself before returning it. Use `strapi.contentAPI.sanitize.output()` in your controller (see [Sanitization and validation when building custom controllers](/cms/backend-customization/controllers#sanitize-validate-custom-controllers) for details and code examples).
 :::
