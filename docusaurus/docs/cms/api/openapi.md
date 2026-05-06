@@ -24,9 +24,9 @@ The OpenAPI generation feature is currently experimental. Its behavior and outpu
 The OpenAPI generation tool is included with Strapi core and doesn't require additional installation. You can use it directly from the command line in any Strapi project to generate comprehensive API documentation.
 
 :::note Known limitation for nested component `required` metadata
-When individual fields inside a component are marked **Required** in the Admin panel, the generated OpenAPI document can still omit a `required` array on those inner properties. A parent object (for example the component instance inside a dynamic zone) may still declare `required` while inner scalars do not. See [GitHub issue #2236](https://github.com/strapi/documentation/issues/2236); OpenAPI-only client generators can then under-specify types.
+The Admin panel can mark inner fields on a component as required, yet the generated OpenAPI file may still skip a `required` entry for those scalars. The parent object (for instance a component inside a dynamic zone) might list `required` while the nested properties do not. There is more background in [GitHub issue #2236](https://github.com/strapi/documentation/issues/2236). Client generators that trust the raw schema alone can therefore emit types that look looser than what Strapi actually enforces.
 
-OpenAPI generation remains experimental ([see callout above](#openapi-specification-generation)); expect this area to evolve. Until the generator aligns with every Admin rule, validate nested input in application code or use Strapi's [REST validation helpers](/cms/backend-customization/controllers#sanitization-and-validation-in-controllers) rather than relying solely on generated `required` flags for nested component fields.
+This area is still experimental, same as the warning banner at the top of the page, so keep validating nested payloads in application code or with the [REST validation helpers](/cms/backend-customization/controllers#sanitization-and-validation-in-controllers) from the controllers guide instead of assuming every Admin rule is mirrored in the exported JSON schema yet.
 :::
 
 ### CLI usage
