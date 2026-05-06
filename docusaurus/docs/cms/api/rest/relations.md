@@ -25,8 +25,10 @@ Relations can be connected, disconnected or set through the Content API by passi
 | [`disconnect`](#disconnect)    | Disconnects entities.<br /><br />Can be used in combination with `connect`. | Partial |
 | [`set`](#set)           | Set entities to a specific set. Using `set` will overwrite all existing connections to other entities.<br /><br />Cannot be used in combination with `connect` or `disconnect`.  | Full |
 
-:::note
-Multi relations can be managed from the REST API and the [GraphQL API](/cms/api/graphql#fetch-relations): the  `connect`, `disconnect`, and `set` operations are available across both APIs. However, the [Document Service API](/cms/api/document-service) does not handle relations.
+:::info Relations across REST, GraphQL, and Document Service
+The `connect`, `disconnect`, and `set` payloads described on this page apply to [REST](/cms/api/rest) and [GraphQL](/cms/api/graphql#fetch-relations) requests, and the same object shapes are supported when you call [Document Service](/cms/api/document-service) methods from server or plugin code. The Document Service introduction repeats this, and the Internationalization example further down on this page shows `strapi.documents(...).update()` with `connect`.
+
+If TypeScript reports `TS2353` and claims `connect` is not a valid property on your `data` object while you mirror these examples, treat that as a typings gap rather than Strapi rejecting the call at runtime. Until the Strapi type packages align fully, narrow the `data` payload with a type assertion or build it through a small helper typed more loosely so you can keep the documented shape. See [GitHub issue #2904](https://github.com/strapi/documentation/issues/2904) for discussion.
 :::
 
 :::note
