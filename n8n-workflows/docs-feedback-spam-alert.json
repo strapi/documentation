@@ -6,13 +6,13 @@
         "rule": {
           "interval": [
             {
-              "field": "minutes",
-              "minutesInterval": 1
+              "field": "hours",
+              "hoursInterval": 1
             }
           ]
         }
       },
-      "name": "Every Minute",
+      "name": "Every Hour",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [200, 300]
@@ -45,9 +45,9 @@
     },
     {
       "parameters": {
-        "jsCode": "// Count how many feedbacks were created in the last 60 seconds\nconst now = Date.now();\nconst oneMinuteAgo = now - 60 * 1000;\n\nconst items = $input.all();\nlet recentCount = 0;\n\nfor (const item of items) {\n  const createdTime = item.json.created_time || item.json.Created_time;\n  if (createdTime) {\n    const ts = new Date(createdTime).getTime();\n    if (ts >= oneMinuteAgo) {\n      recentCount++;\n    }\n  }\n}\n\nreturn [{ json: { recentCount, threshold: 100, isSpam: recentCount > 100 } }];"
+        "jsCode": "// Count how many feedbacks were created in the last hour\nconst now = Date.now();\nconst oneHourAgo = now - 60 * 60 * 1000;\n\nconst items = $input.all();\nlet recentCount = 0;\n\nfor (const item of items) {\n  const createdTime = item.json.created_time || item.json.Created_time;\n  if (createdTime) {\n    const ts = new Date(createdTime).getTime();\n    if (ts >= oneHourAgo) {\n      recentCount++;\n    }\n  }\n}\n\nreturn [{ json: { recentCount, threshold: 100, isSpam: recentCount > 100 } }];"
       },
-      "name": "Count Last Minute",
+      "name": "Count Last Hour",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [640, 300]
@@ -85,7 +85,7 @@
         "url": "REPLACE_WITH_SLACK_WEBHOOK_URL",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ text: '\\u26a0\\ufe0f *Docs Feedback Spam Alert*\\n' + $json.recentCount + ' feedbacks received in the last minute (threshold: 100).\\nPossible spam attack on the docs feedback widget. Check the Notion database.' }) }}"
+        "jsonBody": "={{ JSON.stringify({ text: '\\u26a0\\ufe0f *Docs Feedback Spam Alert*\\n' + $json.recentCount + ' feedbacks received in the last hour (threshold: 100).\\nPossible spam attack on the docs feedback widget. Check the Notion database.' }) }}"
       },
       "name": "Slack Alert",
       "type": "n8n-nodes-base.httpRequest",
@@ -101,7 +101,7 @@
     }
   ],
   "connections": {
-    "Every Minute": {
+    "Every Hour": {
       "main": [
         [
           {
@@ -116,14 +116,14 @@
       "main": [
         [
           {
-            "node": "Count Last Minute",
+            "node": "Count Last Hour",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Count Last Minute": {
+    "Count Last Hour": {
       "main": [
         [
           {
