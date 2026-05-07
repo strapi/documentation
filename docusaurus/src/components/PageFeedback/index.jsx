@@ -32,7 +32,7 @@ const PageFeedback = forwardRef(function PageFeedback({ pagePath, pageId, pageTi
   }), [handleSelectionFeedback]);
 
   const doSubmit = useCallback(
-    async (comment) => {
+    async (comment, hp) => {
       setLastComment(comment);
       setStage('submitting');
       try {
@@ -44,6 +44,7 @@ const PageFeedback = forwardRef(function PageFeedback({ pagePath, pageId, pageTi
           pageId,
           pageTitle,
           selection: selectionData?.selection || undefined,
+          _hp: hp || undefined,
         });
         setStage('done');
       } catch {

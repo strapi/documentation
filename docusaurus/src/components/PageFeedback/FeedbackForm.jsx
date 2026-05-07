@@ -20,7 +20,8 @@ export default function FeedbackForm({
   function handleSubmit(e) {
     e.preventDefault();
     if (!canSubmit) return;
-    onSubmit(trimmed || null);
+    const hp = e.target.elements._hp?.value || '';
+    onSubmit(trimmed || null, hp);
   }
 
   return (
