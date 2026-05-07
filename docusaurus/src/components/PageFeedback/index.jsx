@@ -2,9 +2,11 @@ import React, { useState, useCallback, useImperativeHandle, forwardRef } from 'r
 import FeedbackForm from './FeedbackForm';
 import ThankYou from './ThankYou';
 import { submitFeedback } from './api';
+import { FEEDBACK_ENABLED } from './config';
 import styles from './styles.module.scss';
 
 const PageFeedback = forwardRef(function PageFeedback({ pagePath, pageId, pageTitle }, ref) {
+  if (!FEEDBACK_ENABLED) return null;
   const [stage, setStage] = useState('initial'); // initial | form | submitting | done | error
   const [vote, setVote] = useState(null);
   const [lastComment, setLastComment] = useState(null);
