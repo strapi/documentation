@@ -3,12 +3,9 @@ import styles from './widthToggle.module.scss';
 
 const STORAGE_KEY = 'strapi-content-width';
 const WIDTHS = [
-  { value: 'default', label: 'Default width', viewBox: '0 0 20 16',
-    path: 'M5 1h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V3a2 2 0 012-2z' },
-  { value: 'wide', label: 'Wide', viewBox: '0 0 20 16',
-    path: 'M3 1h14a2 2 0 012 2v10a2 2 0 01-2 2H3a2 2 0 01-2-2V3a2 2 0 012-2z' },
-  { value: 'max', label: 'Full width', viewBox: '0 0 20 16',
-    path: 'M1 1h18a1 1 0 011 1v12a1 1 0 01-1 1H1a1 1 0 01-1-1V2a1 1 0 011-1z' },
+  { value: 'default', label: 'Default width', icon: 'arrows-in-line-horizontal' },
+  { value: 'wide', label: 'Wide', icon: 'arrows-out-line-horizontal' },
+  { value: 'max', label: 'Full width', icon: 'arrows-out' },
 ];
 
 function getInitialWidth() {
@@ -80,18 +77,7 @@ export default function WidthToggle() {
             tabIndex={isActive ? 0 : -1}
             onClick={() => handleChange(w.value)}
           >
-            <svg
-              width="18"
-              height="14"
-              viewBox={w.viewBox}
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d={w.path} />
-            </svg>
+            <i className={`ph-bold ph-${w.icon}`} />
           </button>
         );
       })}
