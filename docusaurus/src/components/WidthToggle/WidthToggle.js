@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styles from './widthToggle.module.scss';
 
 const STORAGE_KEY = 'strapi-content-width';
+const SCROLL_THRESHOLD = 50;
 const WIDTHS = [
   { value: 'default', label: 'Default width', icon: 'arrows-in-line-horizontal' },
   { value: 'wide', label: 'Wide width', icon: 'arrows-out-line-horizontal' },
@@ -19,6 +20,25 @@ function getInitialWidth() {
 
 export default function WidthToggle() {
   const [width, setWidth] = useState(getInitialWidth);
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  // Auto-hide on scroll down, show on scroll up
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      if (currentY < SCROLL_THRESHOLD) {
+        setVisible(true);
+      } else if (currentY > lastScrollY.current) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+      lastScrollY.current = currentY;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Sync DOM attribute on mount and changes
   useEffect(() => {
@@ -59,7 +79,7 @@ export default function WidthToggle() {
 
   return (
     <div
-      className={styles.widthToggle}
+      className={`${styles.widthToggle} ${visible ? '' : styles.hidden}`}
       role="radiogroup"
       aria-label="Content width"
       onKeyDown={handleKeyDown}
