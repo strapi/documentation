@@ -4,7 +4,7 @@ import styles from './widthToggle.module.scss';
 const STORAGE_KEY = 'strapi-content-width';
 const WIDTHS = [
   { value: 'default', label: 'Default width', icon: 'arrows-in-line-horizontal' },
-  { value: 'wide', label: 'Wide', icon: 'arrows-out-line-horizontal' },
+  { value: 'wide', label: 'Wide width', icon: 'arrows-out-line-horizontal' },
   { value: 'max', label: 'Full width', icon: 'arrows-out' },
 ];
 
