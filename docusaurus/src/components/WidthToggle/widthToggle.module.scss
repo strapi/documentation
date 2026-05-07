@@ -11,10 +11,10 @@
     border-radius: 8px;
     background: var(--strapi-neutral-150);
     position: sticky;
-    top: calc(var(--ifm-navbar-height, 3.75rem) + 8px);
+    top: calc(var(--ifm-navbar-height, 3.75rem) + 16px);
     z-index: 1;
     float: right;
-    margin-top: 4px;
+    margin-top: 12px;
     transition: opacity 0.3s ease;
   }
 }
