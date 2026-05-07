@@ -10,8 +10,10 @@
     padding: 3px;
     border-radius: 8px;
     background: var(--strapi-neutral-150);
-    float: right;
-    margin-bottom: 8px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
   }
 }
 

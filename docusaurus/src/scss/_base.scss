@@ -42,6 +42,10 @@ body {
 }
 
 main {
+  article:first-child:not(.col):not(.custom-doc-card) {
+    position: relative;
+  }
+
   article:first-child:not(.col):not(.custom-doc-card),
   article:first-child:not(.col) + nav {
     max-width: var(--doc-content-max-width);
