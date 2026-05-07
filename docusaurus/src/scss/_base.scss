@@ -42,10 +42,6 @@ body {
 }
 
 main {
-  article:first-child:not(.col):not(.custom-doc-card) {
-    position: relative;
-  }
-
   article:first-child:not(.col):not(.custom-doc-card),
   article:first-child:not(.col) + nav {
     max-width: var(--doc-content-max-width);
@@ -142,12 +138,36 @@ main:has(.api-endpoint-block) {
     > .tabs-container, > .tabs,
     > header {
       max-width: 50%;
+      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /** Endpoint blocks break out to full width */
     > .api-endpoint-block,
     > .api-call {
       max-width: 100% !important;
+    }
+  }
+
+  /** Width toggle overrides for API endpoint pages */
+  [data-content-width="wide"] main:has(.api-endpoint-block) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header {
+      max-width: 70%;
+    }
+  }
+
+  [data-content-width="max"] main:has(.api-endpoint-block) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header {
+      max-width: 100%;
     }
   }
 
@@ -158,7 +178,8 @@ main:has(.api-endpoint-block) {
     > [class*="admonition"], > nav,
     > .tabs-container, > .tabs,
     > header {
-      max-width: 720px;
+      max-width: var(--doc-content-max-width);
+      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     > .api-call {

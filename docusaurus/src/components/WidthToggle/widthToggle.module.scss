@@ -10,10 +10,11 @@
     padding: 3px;
     border-radius: 8px;
     background: var(--strapi-neutral-150);
-    position: absolute;
-    right: 0;
-    top: 0;
+    position: sticky;
+    top: calc(var(--ifm-navbar-height, 3.75rem) + 8px);
     z-index: 1;
+    float: right;
+    margin-top: 4px;
   }
 }
 
