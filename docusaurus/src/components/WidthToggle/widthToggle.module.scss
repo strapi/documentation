@@ -1,0 +1,48 @@
+@use '../../scss/mixins' as *;
+
+.widthToggle {
+  display: none;
+
+  @include medium-up {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 8px;
+    background: var(--strapi-neutral-150);
+    float: right;
+    margin-bottom: 8px;
+  }
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ifm-color-emphasis-600);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover:not(.active) {
+    background: var(--strapi-neutral-200);
+  }
+
+  svg {
+    display: block;
+  }
+}
+
+.active {
+  background: var(--strapi-primary-600);
+  color: white;
+
+  &:hover {
+    background: var(--strapi-primary-600);
+  }
+}
