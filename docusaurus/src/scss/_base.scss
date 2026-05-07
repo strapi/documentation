@@ -85,6 +85,12 @@ main {
   [class*="docMainContainer"] .row:not(:has(.col--3)) {
     padding-right: 280px;
   }
+
+  /** When wide or max width, remove the TOC-placeholder padding */
+  [data-content-width="wide"] [class*="docMainContainer"] .row:not(:has(.col--3)),
+  [data-content-width="max"] [class*="docMainContainer"] .row:not(:has(.col--3)) {
+    padding-right: 0;
+  }
 }
 
 
