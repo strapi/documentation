@@ -7,9 +7,9 @@
     display: inline-flex;
     align-items: center;
     gap: 2px;
-    padding: 3px;
-    border-radius: 8px;
-    background: var(--strapi-neutral-150);
+    padding: 0;
+    border-radius: 6px;
+    background: transparent;
     position: sticky;
     top: calc(var(--ifm-navbar-height, 3.75rem) + 20px);
     z-index: 1;
@@ -28,7 +28,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
+  width: 28px;
   height: 28px;
   border: none;
   border-radius: 6px;
