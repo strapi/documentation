@@ -7,7 +7,7 @@
   max-height: calc(100vh - var(--ifm-navbar-height, 56px));
   overflow-y: auto;
   border-left: none;
-  padding: 8px 8px 28px 20px;
+  padding: 0 8px 28px 20px;
 
   /* Thin scrollbar when TOC content overflows */
   scrollbar-width: thin;
