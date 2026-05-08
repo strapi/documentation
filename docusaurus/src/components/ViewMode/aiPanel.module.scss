@@ -211,8 +211,59 @@
 }
 
 .answerText {
-  white-space: pre-wrap;
+  white-space: normal;
   word-wrap: break-word;
+
+  :global {
+    p {
+      margin: 8px 0;
+      &:first-child { margin-top: 0; }
+      &:last-child { margin-bottom: 0; }
+    }
+
+    a {
+      color: var(--strapi-primary-600);
+      text-decoration: underline;
+    }
+
+    code {
+      font-family: var(--strapi-font-family-technical);
+      font-size: 12px;
+      background: var(--strapi-neutral-150);
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+    pre {
+      background: var(--strapi-neutral-100);
+      border: 1px solid var(--strapi-neutral-150);
+      border-radius: 6px;
+      padding: 12px;
+      overflow-x: auto;
+      margin: 8px 0;
+
+      code {
+        background: transparent;
+        padding: 0;
+        border-radius: 0;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+    }
+
+    ul, ol {
+      margin: 8px 0;
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    strong {
+      font-weight: 700;
+    }
+  }
 }
 
 .sources {
