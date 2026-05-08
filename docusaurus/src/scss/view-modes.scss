@@ -37,11 +37,12 @@
   // Simplify admonitions: left border + colored title only
   [class*="admonition"] {
     border: none !important;
-    border-left: 3px solid var(--ifm-alert-border-color) !important;
-    border-radius: 0;
+    border-left: 3px solid var(--ifm-alert-foreground-color, var(--strapi-neutral-400)) !important;
+    border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
-    padding: var(--strapi-spacing-2) var(--strapi-spacing-4) !important;
+    padding: 4px 0 4px 16px !important;
+    margin: 8px 0 !important;
 
     // Title: colored, no icon decoration
     [class*="admonitionHeading"] {
@@ -50,6 +51,65 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    // Tighten content inside
+    [class*="admonitionContent"] {
+      > p, > ul, > ol {
+        margin: 4px 0;
+      }
+    }
+  }
+
+  // ---- GLOBAL SPACING STRIP DOWN ----
+  // Tighten all vertical spacing to feel like raw markdown
+  article {
+    // Reduce margins on all block elements
+    p {
+      margin: 8px 0;
+    }
+
+    h1 { margin: 16px 0 8px; }
+    h2 { margin: 16px 0 8px; }
+    h3 { margin: 12px 0 6px; }
+    h4, h5, h6 { margin: 8px 0 4px; }
+
+    ul, ol {
+      margin: 4px 0;
+      padding-left: 24px;
+
+      li {
+        margin: 2px 0;
+      }
+    }
+
+    // Remove extra spacing from docusaurus containers
+    [class*="margin-top"],
+    [class*="margin-bottom"] {
+      margin-top: 8px !important;
+      margin-bottom: 8px !important;
+    }
+
+    // Tighten spacing around code blocks
+    pre {
+      margin: 8px 0;
+    }
+
+    // Tighten blockquotes
+    blockquote {
+      margin: 8px 0;
+      padding: 4px 0 4px 16px;
+    }
+
+    hr {
+      margin: 12px 0;
+    }
+
+    // Remove extra padding from section wrappers
+    > div, section {
+      margin-top: 0;
+      margin-bottom: 0;
     }
   }
 
