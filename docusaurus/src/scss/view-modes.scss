@@ -176,6 +176,11 @@
     display: none !important;
   }
 
+  // Hide Tldr in page (already shown in AI panel summary)
+  .tldr {
+    display: none;
+  }
+
   // Compress content area for the panel
   @include medium-up {
     [class*="docMainContainer"],
