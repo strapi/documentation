@@ -39,9 +39,81 @@
     border-radius: 0;
   }
 
-  // Simplify code blocks
+  // Strip code blocks: remove custom styling, keep plain
   [class*="codeBlockContainer"] {
     border-radius: 0;
+    border: 1px solid var(--strapi-neutral-200) !important;
+    box-shadow: none !important;
+  }
+
+  [class*="codeBlockTitle"] {
+    border-radius: 0;
+    font-family: var(--strapi-font-family-technical);
+  }
+
+  // Enhanced terminal blocks: strip decoration
+  .code-block-enhanced {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+
+    .code-title-bar {
+      border-radius: 0 !important;
+    }
+  }
+
+  // Details/collapsible blocks: force open and strip toggle
+  details {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+
+    &[open] > summary ~ * {
+      // Content is visible when open (default)
+    }
+
+    > summary {
+      font-family: var(--strapi-font-family-technical);
+      font-weight: 700;
+      list-style: none;
+      cursor: default;
+      padding: 0;
+      border: none !important;
+      background: transparent !important;
+
+      &::marker,
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      &::before {
+        display: none !important;
+      }
+    }
+  }
+
+  // Force details open via attribute
+  details:not([open]) {
+    // Use CSS to visually expand -- but we need JS for this, handled in component
+  }
+
+  // Subtle callouts: simplify
+  [class*="subtleCallout"] {
+    border-radius: 0;
+    border: 1px solid var(--strapi-neutral-200);
+    background: transparent !important;
+  }
+
+  // Side-by-side columns: stack vertically
+  [class*="sideBySide"] {
+    display: block !important;
+  }
+
+  // Remove hover effects on links
+  a {
+    text-decoration: underline !important;
   }
 
   // Remove film grain overlay

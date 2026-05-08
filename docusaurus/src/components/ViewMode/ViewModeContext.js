@@ -24,6 +24,20 @@ export function ViewModeProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.dataset.viewMode = viewMode;
+
+    // In markdown mode, force all <details> elements open
+    if (viewMode === 'markdown') {
+      document.querySelectorAll('article details:not([open])').forEach((el) => {
+        el.setAttribute('open', '');
+        el.dataset.forcedOpen = 'true';
+      });
+    } else {
+      // Restore closed state for elements we forced open
+      document.querySelectorAll('article details[data-forced-open]').forEach((el) => {
+        el.removeAttribute('open');
+        delete el.dataset.forcedOpen;
+      });
+    }
   }, [viewMode]);
 
   const setViewMode = useCallback((mode) => {
