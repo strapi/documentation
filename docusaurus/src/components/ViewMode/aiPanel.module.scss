@@ -376,4 +376,12 @@
   .sources {
     border-top-color: var(--strapi-neutral-200);
   }
+
+  .chatInput {
+    border-top-color: var(--strapi-neutral-200);
+  }
+
+  .userMessage {
+    background: var(--strapi-primary-500);
+  }
 }
