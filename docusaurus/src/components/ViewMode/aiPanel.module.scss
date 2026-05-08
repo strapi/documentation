@@ -386,6 +386,38 @@
   }
 }
 
+.jumpLinks {
+  margin-top: var(--strapi-spacing-3);
+  padding-top: var(--strapi-spacing-2);
+  border-top: 1px solid var(--strapi-neutral-150);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.jumpButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 0;
+  border: none;
+  background: transparent;
+  color: var(--strapi-primary-600);
+  cursor: pointer;
+  font-family: var(--strapi-font-family-technical);
+  font-size: 12px;
+  text-align: left;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  i {
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+}
+
 .chatActions {
   display: flex;
   gap: var(--strapi-spacing-2);
@@ -478,5 +510,13 @@
       background: var(--strapi-neutral-100);
       color: var(--strapi-neutral-300);
     }
+  }
+
+  .jumpLinks {
+    border-top-color: var(--strapi-neutral-200);
+  }
+
+  .jumpButton {
+    color: var(--strapi-primary-400);
   }
 }

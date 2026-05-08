@@ -8,6 +8,27 @@ import styles from './aiPanel.module.scss';
 const KAPA_INTEGRATION_ID = 'e35b7c7b-7ec8-4c1a-8a39-0ab7b6d8db3a';
 
 /**
+ * Finds page headings that are mentioned in an AI answer.
+ * Returns an array of { id, text } for headings referenced in the answer.
+ */
+function findMatchingHeadings(answerText) {
+  if (!answerText) return [];
+  const headings = document.querySelectorAll('article h2[id], article h3[id]');
+  const matches = [];
+  const answerLower = answerText.toLowerCase();
+
+  headings.forEach((h) => {
+    const text = h.textContent.trim();
+    // Match if the heading text (or a significant portion) appears in the answer
+    if (text.length > 3 && answerLower.includes(text.toLowerCase())) {
+      matches.push({ id: h.id, text });
+    }
+  });
+
+  return matches;
+}
+
+/**
  * Extracts Tldr content from the current page DOM.
  * The Tldr component renders as <blockquote class="tldr">.
  */
@@ -105,6 +126,27 @@ function ChatInterface({ pageContext }) {
                         ))}
                       </div>
                     )}
+                    {(() => {
+                      const headings = findMatchingHeadings(qa.answer);
+                      if (headings.length === 0) return null;
+                      return (
+                        <div className={styles.jumpLinks}>
+                          <span className={styles.sourcesLabel}>Jump to:</span>
+                          {headings.map((h) => (
+                            <button
+                              key={h.id}
+                              className={styles.jumpButton}
+                              onClick={() => {
+                                const el = document.getElementById(h.id);
+                                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                              }}
+                            >
+                              <i className="ph-bold ph-arrow-square-out" /> {h.text}
+                            </button>
+                          ))}
+                        </div>
+                      );
+                    })()}
                   </>
                 ) : (
                   <div className={styles.thinking}>

@@ -4,9 +4,21 @@
   display: flex;
   align-items: center;
   gap: 4px;
+  position: sticky;
+  top: calc(var(--ifm-navbar-height, 3.75rem) + 8px);
+  z-index: 2;
   margin-bottom: 8px;
   transition: opacity 0.3s ease;
   flex-wrap: wrap;
+
+  @include small-down {
+    position: static;
+  }
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .button {
