@@ -98,7 +98,7 @@
     color: var(--strapi-neutral-500);
 
     &:hover {
-      color: var(--strapi-primary-400);
+      color: var(--strapi-primary-600);
     }
   }
 
@@ -110,8 +110,12 @@
     color: var(--strapi-neutral-500);
 
     &:hover {
-      color: var(--strapi-primary-400);
+      color: var(--strapi-primary-600);
     }
+  }
+
+  .homeDash {
+    color: var(--strapi-neutral-500);
   }
 }
 
