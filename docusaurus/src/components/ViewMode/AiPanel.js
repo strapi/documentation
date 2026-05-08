@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from '@docusaurus/router';
+import { KapaProvider, useChat } from '@kapaai/react-sdk';
 import { useViewMode } from './ViewModeContext';
 import styles from './aiPanel.module.scss';
+
+const KAPA_INTEGRATION_ID = 'e35b7c7b-7ec8-4c1a-8a39-0ab7b6d8db3a';
 
 /**
  * Extracts Tldr content from the current page DOM.
@@ -34,15 +37,101 @@ function useTldrContent(viewMode) {
   return tldrText;
 }
 
-/**
- * Opens the Kapa AI modal with context about the current page.
- * MVP fallback -- will be replaced with inline embed if Kapa supports it.
- */
-function openKapaWithContext() {
-  const kapaButton = document.querySelector('[class*="kapa-widget-button"]');
-  if (kapaButton) {
-    kapaButton.click();
-  }
+function ChatInterface() {
+  const [question, setQuestion] = useState('');
+  const messagesEndRef = useRef(null);
+  const { conversation, submitQuery, resetConversation, isGeneratingAnswer } = useChat();
+  const { pathname } = useLocation();
+
+  // Reset conversation on page navigation
+  useEffect(() => {
+    if (conversation.length > 0) {
+      resetConversation();
+    }
+  }, [pathname]);
+
+  // Auto-scroll to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [conversation]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (question.trim() && !isGeneratingAnswer) {
+      submitQuery(question);
+      setQuestion('');
+    }
+  };
+
+  return (
+    <>
+      <div className={styles.chatMessages}>
+        {conversation.length === 0 ? (
+          <p className={styles.chatPrompt}>
+            What would you like to know more about this topic?
+          </p>
+        ) : (
+          conversation.map((qa, index) => (
+            <div key={index} className={styles.messageGroup}>
+              <div className={styles.userMessage}>{qa.question}</div>
+              <div className={styles.aiMessage}>
+                {qa.answer ? (
+                  <>
+                    <div className={styles.answerText}>{qa.answer}</div>
+                    {qa.sources && qa.sources.length > 0 && (
+                      <div className={styles.sources}>
+                        <span className={styles.sourcesLabel}>Sources:</span>
+                        {qa.sources.map((source, i) => (
+                          <a
+                            key={i}
+                            href={source.source_url}
+                            className={styles.sourceLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {source.title}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className={styles.thinking}>
+                    <span>Thinking</span>
+                    <span className={styles.thinkingDots}>
+                      <span className={styles.dot} />
+                      <span className={styles.dot} />
+                      <span className={styles.dot} />
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))
+        )}
+        <div ref={messagesEndRef} />
+      </div>
+
+      <form onSubmit={handleSubmit} className={styles.chatInput}>
+        <input
+          type="text"
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          placeholder="Ask a question..."
+          className={styles.textInput}
+          disabled={isGeneratingAnswer}
+        />
+        <button
+          type="submit"
+          disabled={!question.trim() || isGeneratingAnswer}
+          className={styles.sendButton}
+          aria-label="Send question"
+        >
+          <i className="ph-bold ph-paper-plane-right" />
+        </button>
+      </form>
+    </>
+  );
 }
 
 export default function AiPanel() {
@@ -86,17 +175,9 @@ export default function AiPanel() {
 
         <hr className={styles.divider} />
 
-        <p className={styles.chatPrompt}>
-          What would you like to know more about this topic?
-        </p>
-
-        <button
-          className={styles.chatTrigger}
-          onClick={openKapaWithContext}
-        >
-          <i className="ph-bold ph-chat-circle" />
-          Ask AI about this page
-        </button>
+        <KapaProvider integrationId={KAPA_INTEGRATION_ID} callbacks={{ askAI: {} }}>
+          <ChatInterface />
+        </KapaProvider>
       </div>
     </aside>
   );
