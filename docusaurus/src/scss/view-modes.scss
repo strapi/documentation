@@ -28,7 +28,7 @@
     }
   }
 
-  // Flatten card grids
+  // Flatten card grids into simple list
   [class*="docCardList"],
   [class*="customDocCardsWrapper"],
   [class*="CardGrid"],
@@ -36,13 +36,46 @@
     display: block !important;
   }
 
-  // Simplify cards
+  // Convert cards to simple links
   [class*="card"] {
-    border-radius: 0;
+    display: inline !important;
+    border: none !important;
+    border-radius: 0 !important;
     box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+
     &:hover {
       transform: none;
     }
+
+    // Hide description and images, keep only title as link
+    [class*="card__description"],
+    [class*="card__img"],
+    [class*="card-category-icon"] {
+      display: none !important;
+    }
+
+    [class*="card__title"] {
+      display: inline !important;
+      font-size: inherit !important;
+      font-weight: 600 !important;
+      font-family: var(--strapi-font-family-technical) !important;
+      color: var(--strapi-primary-600) !important;
+      text-decoration: underline !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+  }
+
+  // DocCardList items: render as bullet list
+  .theme-doc-sidebar-item-link,
+  [class*="cardContainer"] {
+    display: list-item !important;
+    list-style: disc !important;
+    margin-left: 24px !important;
+    margin-bottom: 4px !important;
   }
 
   // Simplify admonitions: left border + colored title only
@@ -123,10 +156,10 @@
       margin: 8px 0;
     }
 
-    h1 { margin: 16px 0 8px; }
-    h2 { margin: 16px 0 8px; }
-    h3 { margin: 12px 0 6px; }
-    h4, h5, h6 { margin: 8px 0 4px; }
+    h1 { margin: 24px 0 8px; }
+    h2 { margin: 32px 0 8px; }
+    h3 { margin: 24px 0 6px; }
+    h4, h5, h6 { margin: 16px 0 4px; }
 
     ul, ol {
       margin: 4px 0;
