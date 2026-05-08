@@ -17,6 +17,17 @@
     }
   }
 
+  // Secondary sidebar (TOC / "On this page") in monospace
+  [class*="tableOfContents"],
+  [class*="tocCollapsible"] {
+    font-family: var(--strapi-font-family-technical);
+    font-size: 12px;
+
+    a {
+      text-decoration: none !important;
+    }
+  }
+
   // Flatten card grids
   [class*="docCardList"],
   [class*="customDocCardsWrapper"],
