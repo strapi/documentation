@@ -36,46 +36,59 @@
     display: block !important;
   }
 
-  // Convert cards to simple links
+  // Convert cards to bullet list with title link + description text
   [class*="card"] {
-    display: inline !important;
+    display: block !important;
     border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     padding: 0 !important;
     margin: 0 !important;
     background: transparent !important;
+    text-align: left !important;
 
     &:hover {
       transform: none;
     }
 
-    // Hide description and images, keep only title as link
-    [class*="card__description"],
+    // Hide images and icons only
     [class*="card__img"],
     [class*="card-category-icon"] {
       display: none !important;
     }
 
+    // Title as link
     [class*="card__title"] {
-      display: inline !important;
-      font-size: inherit !important;
+      display: block !important;
+      font-size: 14px !important;
       font-weight: 600 !important;
       font-family: var(--strapi-font-family-technical) !important;
       color: var(--strapi-primary-600) !important;
       text-decoration: underline !important;
       padding: 0 !important;
       margin: 0 !important;
+      line-height: 1.5 !important;
+    }
+
+    // Description as plain text below title
+    [class*="card__description"] {
+      display: block !important;
+      font-size: 13px !important;
+      font-family: var(--strapi-font-family-technical) !important;
+      color: var(--strapi-neutral-600) !important;
+      padding: 0 !important;
+      margin: 2px 0 0 0 !important;
+      line-height: 1.5 !important;
     }
   }
 
-  // DocCardList items: render as bullet list
+  // Card containers: render as bullet list items
   .theme-doc-sidebar-item-link,
   [class*="cardContainer"] {
     display: list-item !important;
     list-style: disc !important;
     margin-left: 24px !important;
-    margin-bottom: 4px !important;
+    margin-bottom: 8px !important;
   }
 
   // Simplify admonitions: left border + colored title only
