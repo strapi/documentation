@@ -28,6 +28,12 @@
   user-select: none;
 }
 
+.homeDash {
+  color: var(--strapi-neutral-400);
+  user-select: none;
+  margin: 0 2px;
+}
+
 .crumbLink {
   color: var(--strapi-neutral-600);
   text-decoration: none;
@@ -40,7 +46,7 @@
 }
 
 .current {
-  color: var(--strapi-neutral-800);
+  color: var(--strapi-primary-600);
   font-weight: 500;
 }
 
@@ -92,20 +98,24 @@
     color: var(--strapi-neutral-500);
 
     &:hover {
-      color: var(--strapi-primary-400);
+      color: var(--strapi-primary-600);
     }
   }
 
   .current {
-    color: var(--strapi-neutral-600);
+    color: var(--strapi-primary-600);
   }
 
   .switchLink {
     color: var(--strapi-neutral-500);
 
     &:hover {
-      color: var(--strapi-primary-400);
+      color: var(--strapi-primary-600);
     }
+  }
+
+  .homeDash {
+    color: var(--strapi-neutral-500);
   }
 }
 
