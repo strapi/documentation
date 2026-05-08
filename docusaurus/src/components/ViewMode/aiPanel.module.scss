@@ -22,7 +22,8 @@
   @include small-down {
     width: 100vw;
     top: 0;
-    z-index: 200;
+    // Must exceed Docusaurus navbar z-index (200) to fully cover on mobile
+    z-index: 300;
   }
 
   @include small-to-medium {

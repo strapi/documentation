@@ -6,6 +6,7 @@
   gap: 4px;
   margin-bottom: 8px;
   transition: opacity 0.3s ease;
+  flex-wrap: wrap;
 }
 
 .button {
@@ -43,6 +44,14 @@
 
   &:hover {
     background: var(--strapi-primary-100);
+  }
+}
+
+@include small-down {
+  .button {
+    font-size: 10px;
+    padding: 4px 7px;
+    letter-spacing: 0.03em;
   }
 }
 
