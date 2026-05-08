@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { useViewMode } from './ViewModeContext';
 import styles from './viewModeSwitcher.module.scss';
 
-const SCROLL_THRESHOLD = 50;
 const MODES = [
   { value: 'elegant', label: 'Elegant Mode', icon: 'sparkle' },
   { value: 'markdown', label: 'Markdown Mode', icon: 'code' },
@@ -11,24 +10,6 @@ const MODES = [
 
 export default function ViewModeSwitcher() {
   const { viewMode, setViewMode } = useViewMode();
-  const [visible, setVisible] = useState(true);
-  const lastScrollY = useRef(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      if (currentY < SCROLL_THRESHOLD) {
-        setVisible(true);
-      } else if (currentY > lastScrollY.current) {
-        setVisible(false);
-      } else {
-        setVisible(true);
-      }
-      lastScrollY.current = currentY;
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const handleKeyDown = useCallback((e) => {
     const currentIndex = MODES.findIndex((m) => m.value === viewMode);
@@ -47,7 +28,7 @@ export default function ViewModeSwitcher() {
 
   return (
     <div
-      className={`${styles.switcher} ${visible ? '' : styles.hidden}`}
+      className={styles.switcher}
       role="radiogroup"
       aria-label="View mode"
       onKeyDown={handleKeyDown}

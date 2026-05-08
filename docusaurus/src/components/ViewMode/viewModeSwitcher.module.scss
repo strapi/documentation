@@ -4,25 +4,8 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  margin-bottom: 12px;
-  position: sticky;
-  top: calc(var(--ifm-navbar-height, 3.75rem) + 12px);
-  z-index: 2;
-  float: right;
-  clear: right;
-  margin-top: 4px;
+  margin-bottom: 8px;
   transition: opacity 0.3s ease;
-
-  @include small-down {
-    position: static;
-    float: none;
-    margin-bottom: 16px;
-  }
-}
-
-.hidden {
-  opacity: 0;
-  pointer-events: none;
 }
 
 .button {

@@ -46,7 +46,6 @@ export default function DocItemLayout({children}) {
     <>
       <div className="row">
         <div className={clsx('col', !docTOC.hidden && styles.docItemCol)}>
-          <ViewModeSwitcher />
           <WidthToggle />
           <ContentVisibility metadata={metadata} />
           <DocVersionBanner />
@@ -55,6 +54,7 @@ export default function DocItemLayout({children}) {
               <DocBreadcrumbs />
               <DocVersionBadge />
               {docTOC.mobile}
+              <ViewModeSwitcher />
               <DocItemContent>{children}</DocItemContent>
               <DocItemFooter />
             </article>
