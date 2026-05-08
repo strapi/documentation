@@ -34,9 +34,23 @@
     }
   }
 
-  // Simplify admonitions: keep but remove radius
+  // Simplify admonitions: left border + colored title only
   [class*="admonition"] {
+    border: none !important;
+    border-left: 3px solid var(--ifm-alert-border-color) !important;
     border-radius: 0;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: var(--strapi-spacing-2) var(--strapi-spacing-4) !important;
+
+    // Title: colored, no icon decoration
+    [class*="admonitionHeading"] {
+      font-family: var(--strapi-font-family-technical);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
   }
 
   // Strip code blocks: remove custom styling, keep plain
