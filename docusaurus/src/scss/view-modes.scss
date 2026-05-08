@@ -28,16 +28,16 @@
     }
   }
 
-  // Flatten card grids into simple list
-  [class*="docCardList"],
-  [class*="customDocCardsWrapper"],
-  [class*="CardGrid"],
-  [class*="card-grid"] {
+  // Flatten card grids into simple list (article only)
+  article [class*="docCardList"],
+  article [class*="customDocCardsWrapper"],
+  article [class*="CardGrid"],
+  article [class*="card-grid"] {
     display: block !important;
   }
 
-  // Convert cards to bullet list with title link + description text
-  [class*="card"] {
+  // Convert cards to bullet list with title link + description text (article only)
+  article [class*="card"] {
     display: block !important;
     border: none !important;
     border-radius: 0 !important;
@@ -94,17 +94,17 @@
     }
   }
 
-  // Card containers: render as bullet list items
-  .theme-doc-sidebar-item-link,
-  [class*="cardContainer"] {
+  // Card containers: render as bullet list items (article only)
+  article .theme-doc-sidebar-item-link,
+  article [class*="cardContainer"] {
     display: list-item !important;
     list-style: disc !important;
     margin-left: 24px !important;
     margin-bottom: 8px !important;
   }
 
-  // CustomDocCard: hide icons, style as simple link
-  .custom-doc-card {
+  // CustomDocCard: hide icons, style as simple link (article only)
+  article .custom-doc-card {
     border: none !important;
     background: transparent !important;
     box-shadow: none !important;
@@ -120,9 +120,9 @@
     }
   }
 
-  // Global: hide all Phosphor icons inside any card-like element
-  [class*="card"] i[class*="ph-"],
-  [class*="card"] svg:not([class*="codeBlock"]) {
+  // Hide all Phosphor icons inside cards (article only)
+  article [class*="card"] i[class*="ph-"],
+  article [class*="card"] svg:not([class*="codeBlock"]) {
     display: none !important;
   }
 
@@ -319,8 +319,8 @@
     display: block !important;
   }
 
-  // Remove hover effects on links
-  a {
+  // Remove hover effects on links (article only, not sidebar/tags)
+  article a {
     text-decoration: underline !important;
   }
 
