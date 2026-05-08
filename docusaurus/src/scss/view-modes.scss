@@ -391,6 +391,49 @@
       transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
   }
+
+  // Force all content to fit within the compressed area
+  article {
+    overflow: hidden;
+
+    img,
+    video,
+    picture,
+    svg:not([class*="ph-"]) {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+
+    table {
+      max-width: 100% !important;
+      display: block;
+      overflow-x: auto;
+    }
+
+    pre,
+    [class*="codeBlockContainer"] {
+      max-width: 100% !important;
+      overflow-x: auto !important;
+    }
+
+    // Constrain any wide component
+    [class*="sideBySide"],
+    [class*="apiDocLayout"],
+    [class*="Columns"] {
+      max-width: 100% !important;
+      overflow: hidden;
+    }
+
+    // Constrain themed images
+    [class*="themedImage"] {
+      max-width: 100% !important;
+
+      img {
+        max-width: 100% !important;
+        height: auto !important;
+      }
+    }
+  }
 }
 
 // ============================================================
