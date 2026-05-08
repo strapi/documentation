@@ -1,0 +1,128 @@
+/** View Modes: Markdown + AI mode overrides */
+@use './mixins' as *;
+
+// ============================================================
+// MARKDOWN MODE
+// ============================================================
+[data-view-mode="markdown"] {
+  // Typography: switch everything to monospace
+  article {
+    font-family: var(--strapi-font-family-technical);
+    font-size: 14px;
+    line-height: 1.7;
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--strapi-font-family-technical);
+      letter-spacing: 0;
+    }
+  }
+
+  // Flatten card grids
+  [class*="docCardList"],
+  [class*="customDocCardsWrapper"],
+  [class*="CardGrid"],
+  [class*="card-grid"] {
+    display: block !important;
+  }
+
+  // Simplify cards
+  [class*="card"] {
+    border-radius: 0;
+    box-shadow: none !important;
+    &:hover {
+      transform: none;
+    }
+  }
+
+  // Simplify admonitions: keep but remove radius
+  [class*="admonition"] {
+    border-radius: 0;
+  }
+
+  // Simplify code blocks
+  [class*="codeBlockContainer"] {
+    border-radius: 0;
+  }
+
+  // Remove film grain overlay
+  body::before {
+    display: none;
+  }
+
+  // Flat tabs styling (rendered by swizzled Tabs component)
+  .tabs-flat {
+    border-left: 2px solid var(--strapi-neutral-200);
+    padding-left: var(--strapi-spacing-4);
+    margin: var(--strapi-spacing-4) 0;
+
+    &__heading {
+      font-family: var(--strapi-font-family-technical);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--strapi-neutral-500);
+      margin-top: var(--strapi-spacing-4);
+      margin-bottom: var(--strapi-spacing-2);
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    &__content {
+      margin-bottom: var(--strapi-spacing-4);
+    }
+
+    &__section + &__section {
+      border-top: 1px dashed var(--strapi-neutral-150);
+      padding-top: var(--strapi-spacing-4);
+    }
+  }
+}
+
+// ============================================================
+// AI MODE
+// ============================================================
+[data-view-mode="ai"] {
+  // Hide WidthToggle
+  [class*="widthToggle"] {
+    display: none !important;
+  }
+
+  // Compress content area for the panel
+  @include medium-up {
+    [class*="docMainContainer"],
+    [class*="docRoot"] > div {
+      max-width: 50vw;
+      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+
+  @include small-to-medium {
+    [class*="docMainContainer"],
+    [class*="docRoot"] > div {
+      max-width: 60vw;
+      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+}
+
+// ============================================================
+// DARK MODE OVERRIDES
+// ============================================================
+@include dark {
+  [data-view-mode="markdown"] {
+    .tabs-flat {
+      border-left-color: var(--strapi-neutral-200);
+
+      &__heading {
+        color: var(--strapi-neutral-400);
+      }
+
+      &__section + &__section {
+        border-top-color: var(--strapi-neutral-200);
+      }
+    }
+  }
+}
