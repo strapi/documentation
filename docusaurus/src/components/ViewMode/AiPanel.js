@@ -156,7 +156,7 @@ export default function AiPanel() {
           <i className="ph-bold ph-arrow-left" />
           Back
         </button>
-        <h3>AI Assistant</h3>
+        <h3>Strapi Docs AI Assistant</h3>
         <button
           className={styles.closeButton}
           onClick={() => setViewMode('elegant')}
