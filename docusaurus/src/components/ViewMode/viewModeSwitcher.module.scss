@@ -1,0 +1,84 @@
+@use '../../scss/mixins' as *;
+
+.switcher {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+  position: sticky;
+  top: calc(var(--ifm-navbar-height, 3.75rem) + 12px);
+  z-index: 2;
+  float: right;
+  clear: right;
+  margin-top: 4px;
+  transition: opacity 0.3s ease;
+
+  @include small-down {
+    position: static;
+    float: none;
+    margin-bottom: 16px;
+  }
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--strapi-neutral-500);
+  cursor: pointer;
+  font-family: var(--strapi-font-family-technical);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+
+  &:hover:not(.active) {
+    color: var(--strapi-neutral-700);
+    background: var(--strapi-neutral-100);
+  }
+
+  i {
+    font-size: 14px;
+    line-height: 1;
+  }
+}
+
+.active {
+  color: var(--strapi-primary-600);
+  background: var(--strapi-primary-100);
+
+  &:hover {
+    background: var(--strapi-primary-100);
+  }
+}
+
+@include dark {
+  .button {
+    color: var(--strapi-neutral-400);
+
+    &:hover:not(.active) {
+      color: var(--strapi-neutral-300);
+      background: var(--strapi-neutral-100);
+    }
+  }
+
+  .active {
+    color: var(--strapi-primary-500);
+    background: rgba(73, 69, 255, 0.15);
+
+    &:hover {
+      background: rgba(73, 69, 255, 0.15);
+    }
+  }
+}

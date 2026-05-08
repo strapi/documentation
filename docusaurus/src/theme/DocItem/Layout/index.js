@@ -18,6 +18,7 @@ import DocItemContent from '@theme/DocItem/Content';
 import DocBreadcrumbs from '@theme/DocBreadcrumbs';
 import ContentVisibility from '@theme/ContentVisibility';
 import WidthToggle from '@site/src/components/WidthToggle/WidthToggle';
+import ViewModeSwitcher from '@site/src/components/ViewMode/ViewModeSwitcher';
 import styles from '@docusaurus/theme-classic/lib/theme/DocItem/Layout/styles.module.css';
 
 function useDocTOC() {
@@ -43,6 +44,7 @@ export default function DocItemLayout({children}) {
   return (
     <div className="row">
       <div className={clsx('col', !docTOC.hidden && styles.docItemCol)}>
+        <ViewModeSwitcher />
         <WidthToggle />
         <ContentVisibility metadata={metadata} />
         <DocVersionBanner />
