@@ -375,63 +375,78 @@
     display: none;
   }
 
-  // Compress content area for the panel
+  // Compress content area: override the doc-content-max-width variable
+  // and constrain the entire main wrapper
   @include medium-up {
+    --doc-content-max-width: 100% !important;
+
+    main,
     [class*="docMainContainer"],
-    [class*="docRoot"] > div {
-      max-width: 50vw;
+    [class*="docRoot"] > div,
+    [class*="docItemWrapper"],
+    .row,
+    .col {
+      max-width: 50vw !important;
+      overflow: hidden !important;
       transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    // Hide the TOC sidebar in AI mode (no room)
+    .col--3 {
+      display: none !important;
     }
   }
 
   @include small-to-medium {
+    --doc-content-max-width: 100% !important;
+
+    main,
     [class*="docMainContainer"],
-    [class*="docRoot"] > div {
-      max-width: 60vw;
+    [class*="docRoot"] > div,
+    [class*="docItemWrapper"],
+    .row,
+    .col {
+      max-width: 60vw !important;
+      overflow: hidden !important;
       transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .col--3 {
+      display: none !important;
     }
   }
 
-  // Force all content to fit within the compressed area
+  // Force all content inside article to fit
   article {
-    overflow: hidden;
+    max-width: 100% !important;
+    overflow: hidden !important;
 
-    img,
-    video,
-    picture,
-    svg:not([class*="ph-"]) {
+    // All media
+    img, video, picture, svg:not([class*="ph-"]),
+    [class*="themedImage"], [class*="themedImage"] img {
       max-width: 100% !important;
       height: auto !important;
     }
 
+    // Tables scroll horizontally
     table {
       max-width: 100% !important;
       display: block;
       overflow-x: auto;
     }
 
-    pre,
-    [class*="codeBlockContainer"] {
+    // Code blocks scroll horizontally
+    pre, [class*="codeBlockContainer"] {
       max-width: 100% !important;
       overflow-x: auto !important;
     }
 
-    // Constrain any wide component
+    // Wide layouts
     [class*="sideBySide"],
     [class*="apiDocLayout"],
     [class*="Columns"] {
       max-width: 100% !important;
       overflow: hidden;
-    }
-
-    // Constrain themed images
-    [class*="themedImage"] {
-      max-width: 100% !important;
-
-      img {
-        max-width: 100% !important;
-        height: auto !important;
-      }
     }
   }
 }
