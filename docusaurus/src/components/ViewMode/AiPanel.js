@@ -123,6 +123,30 @@ function ChatInterface({ pageContext }) {
         <div ref={messagesEndRef} />
       </div>
 
+      {conversation.length > 0 && (
+        <div className={styles.chatActions}>
+          <button
+            className={styles.chatActionButton}
+            onClick={() => {
+              const lastAnswer = [...conversation].reverse().find(qa => qa.answer)?.answer;
+              if (lastAnswer) {
+                navigator.clipboard.writeText(lastAnswer);
+              }
+            }}
+            title="Copy last answer"
+          >
+            <i className="ph-bold ph-copy" /> Copy
+          </button>
+          <button
+            className={styles.chatActionButton}
+            onClick={resetConversation}
+            title="Clear conversation"
+          >
+            <i className="ph-bold ph-trash" /> Clear
+          </button>
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className={styles.chatInput}>
         <input
           type="text"

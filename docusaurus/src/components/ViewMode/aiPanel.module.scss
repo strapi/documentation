@@ -386,6 +386,40 @@
   }
 }
 
+.chatActions {
+  display: flex;
+  gap: var(--strapi-spacing-2);
+  padding: var(--strapi-spacing-2) 0;
+  flex-shrink: 0;
+}
+
+.chatActionButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border: 1px solid var(--strapi-neutral-150);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--strapi-neutral-500);
+  cursor: pointer;
+  font-family: var(--strapi-font-family-technical);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background: var(--strapi-neutral-100);
+    color: var(--strapi-neutral-700);
+  }
+
+  i {
+    font-size: 13px;
+  }
+}
+
 @include dark {
   .aiPanel {
     border-left-color: var(--strapi-neutral-200);
@@ -434,5 +468,15 @@
 
   .userMessage {
     background: var(--strapi-primary-500);
+  }
+
+  .chatActionButton {
+    border-color: var(--strapi-neutral-200);
+    color: var(--strapi-neutral-400);
+
+    &:hover {
+      background: var(--strapi-neutral-100);
+      color: var(--strapi-neutral-300);
+    }
   }
 }
