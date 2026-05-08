@@ -46,23 +46,24 @@
   }
 
   // Simplify admonitions: left border + colored title only
-  [class*="admonition"] {
+  .theme-admonition {
     border: none !important;
-    border-left: 3px solid var(--ifm-alert-foreground-color, var(--strapi-neutral-400)) !important;
+    border-left: 3px solid var(--custom-admonition-heading-color, var(--strapi-neutral-400)) !important;
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
     padding: 4px 0 4px 16px !important;
     margin: 8px 0 !important;
 
-    // Title: colored, no icon decoration
-    [class*="admonitionHeading"] {
+    // Title: colored, monospace
+    .theme-admonition__heading {
       font-family: var(--strapi-font-family-technical);
       font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       margin-bottom: 4px;
+      color: var(--custom-admonition-heading-color);
     }
 
     // Tighten content inside
@@ -70,6 +71,47 @@
       > p, > ul, > ol {
         margin: 4px 0;
       }
+    }
+  }
+
+  // Details/accordion blocks (e.g. Prerequisites): strip all decoration
+  details.alert {
+    border: none !important;
+    border-left: 3px solid var(--details-accent-color, var(--strapi-primary-500)) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 8px 0 !important;
+    overflow: visible;
+
+    // Remove the pseudo-element left accent bar (we use border-left instead)
+    &::after {
+      display: none !important;
+    }
+
+    // Summary: no border, no arrow
+    summary {
+      padding: 4px 0 4px 16px !important;
+      border: none !important;
+      font-family: var(--strapi-font-family-technical);
+
+      &::before {
+        display: none !important;
+      }
+
+      &::after {
+        display: none !important;
+      }
+    }
+
+    &[open] summary {
+      border-bottom: none !important;
+    }
+
+    // Content
+    > div {
+      padding: 4px 0 4px 16px !important;
     }
   }
 
