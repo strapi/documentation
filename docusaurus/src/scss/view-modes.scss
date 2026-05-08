@@ -36,34 +36,45 @@
     display: block !important;
   }
 
-  // Convert cards to bullet list with title link + description text (article only)
-  article [class*="card"] {
-    display: block !important;
+  // === CARDS: Convert to simple bullet list ===
+  // Target both CustomDocCard and Docusaurus DocCard
+  article .custom-doc-card,
+  article [class*="docCardList"] article {
+    display: list-item !important;
+    list-style: disc !important;
+    margin-left: 24px !important;
+    margin-bottom: 8px !important;
     border: none !important;
-    border-radius: 0 !important;
+    background: transparent !important;
     box-shadow: none !important;
     padding: 0 !important;
-    margin: 0 !important;
-    background: transparent !important;
-    text-align: left !important;
-    text-decoration: none !important;
-    color: inherit !important;
 
     &:hover {
-      transform: none;
+      transform: none !important;
     }
 
-    // Hide images, icons (SVG, Phosphor, icon containers)
-    [class*="card__img"],
-    [class*="card-category-icon"],
-    [class*="card__title__arrow"],
-    > svg,
-    > i,
-    > i[class*="ph-"] {
-      display: none !important;
+    // The link wrapper inside: strip all card styling
+    a,
+    > a {
+      display: block !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      background: transparent !important;
+      text-decoration: none !important;
+      color: inherit !important;
+
+      &:hover {
+        transform: none !important;
+        box-shadow: none !important;
+      }
     }
 
-    // Title as link
+    // Title: clickable link
+    h2, h3,
+    .cardTitle,
     [class*="card__title"] {
       display: block !important;
       font-size: 14px !important;
@@ -74,14 +85,11 @@
       padding: 0 !important;
       margin: 0 !important;
       line-height: 1.5 !important;
-
-      // Hide arrow icons inside title
-      span, svg {
-        display: none !important;
-      }
     }
 
-    // Description as plain text (NOT a link)
+    // Description: plain text, not a link
+    p,
+    .cardDescription,
     [class*="card__description"] {
       display: block !important;
       font-size: 13px !important;
@@ -91,39 +99,49 @@
       padding: 0 !important;
       margin: 2px 0 0 0 !important;
       line-height: 1.5 !important;
+      max-width: none !important;
+      -webkit-line-clamp: unset !important;
+      overflow: visible !important;
+    }
+
+    // Hide icons
+    i[class*="ph-"],
+    .custom-doc-card__icon,
+    [class*="card-category-icon"],
+    [class*="card__img"],
+    [class*="card__title__arrow"],
+    svg {
+      display: none !important;
     }
   }
 
-  // Card containers: render as bullet list items (article only)
-  article .theme-doc-sidebar-item-link,
-  article [class*="cardContainer"] {
+  // Flatten card grid wrappers
+  article [class*="docCardList"],
+  article [class*="customDocCardsWrapper"],
+  article [class*="CardGrid"],
+  article [class*="card-grid"] {
+    display: block !important;
+    padding: 0 !important;
+    margin: 8px 0 !important;
+  }
+
+  // Also handle cards used as direct links (Card component)
+  article [class*="card--cta"],
+  article .card {
     display: list-item !important;
     list-style: disc !important;
     margin-left: 24px !important;
     margin-bottom: 8px !important;
-  }
-
-  // CustomDocCard: hide icons, style as simple link (article only)
-  article .custom-doc-card {
     border: none !important;
     background: transparent !important;
     box-shadow: none !important;
     padding: 0 !important;
-
-    &__icon,
-    i[class*="ph-"] {
-      display: none !important;
-    }
+    border-radius: 0 !important;
 
     &:hover {
       transform: none !important;
+      box-shadow: none !important;
     }
-  }
-
-  // Hide all Phosphor icons inside cards (article only)
-  article [class*="card"] i[class*="ph-"],
-  article [class*="card"] svg:not([class*="codeBlock"]) {
-    display: none !important;
   }
 
   // Simplify admonitions: left border + colored title only
