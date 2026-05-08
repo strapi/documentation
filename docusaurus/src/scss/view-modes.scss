@@ -46,14 +46,20 @@
     margin: 0 !important;
     background: transparent !important;
     text-align: left !important;
+    text-decoration: none !important;
+    color: inherit !important;
 
     &:hover {
       transform: none;
     }
 
-    // Hide images and icons only
+    // Hide images, icons (SVG, Phosphor, icon containers)
     [class*="card__img"],
-    [class*="card-category-icon"] {
+    [class*="card-category-icon"],
+    [class*="card__title__arrow"],
+    > svg,
+    > i,
+    > i[class*="ph-"] {
       display: none !important;
     }
 
@@ -68,14 +74,20 @@
       padding: 0 !important;
       margin: 0 !important;
       line-height: 1.5 !important;
+
+      // Hide arrow icons inside title
+      span, svg {
+        display: none !important;
+      }
     }
 
-    // Description as plain text below title
+    // Description as plain text (NOT a link)
     [class*="card__description"] {
       display: block !important;
       font-size: 13px !important;
       font-family: var(--strapi-font-family-technical) !important;
       color: var(--strapi-neutral-600) !important;
+      text-decoration: none !important;
       padding: 0 !important;
       margin: 2px 0 0 0 !important;
       line-height: 1.5 !important;
@@ -89,6 +101,29 @@
     list-style: disc !important;
     margin-left: 24px !important;
     margin-bottom: 8px !important;
+  }
+
+  // CustomDocCard: hide icons, style as simple link
+  .custom-doc-card {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+
+    &__icon,
+    i[class*="ph-"] {
+      display: none !important;
+    }
+
+    &:hover {
+      transform: none !important;
+    }
+  }
+
+  // Global: hide all Phosphor icons inside any card-like element
+  [class*="card"] i[class*="ph-"],
+  [class*="card"] svg:not([class*="codeBlock"]) {
+    display: none !important;
   }
 
   // Simplify admonitions: left border + colored title only
