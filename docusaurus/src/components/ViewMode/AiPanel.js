@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from '@docusaurus/router';
 import { KapaProvider, useChat } from '@kapaai/react-sdk';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { useViewMode } from './ViewModeContext';
 import styles from './aiPanel.module.scss';
 
@@ -108,7 +109,7 @@ function ChatInterface({ pageContext }) {
                 {qa.answer ? (
                   <>
                     <div className={styles.answerText}>
-                      <ReactMarkdown>{qa.answer}</ReactMarkdown>
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{qa.answer}</ReactMarkdown>
                     </div>
                     {qa.sources && qa.sources.length > 0 && (
                       <div className={styles.sources}>

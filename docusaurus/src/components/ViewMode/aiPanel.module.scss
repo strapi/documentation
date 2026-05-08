@@ -190,23 +190,25 @@
 .userMessage {
   align-self: flex-end;
   max-width: 85%;
-  background: var(--strapi-primary-600);
-  color: white;
-  padding: var(--strapi-spacing-3) var(--strapi-spacing-4);
-  border-radius: 12px 12px 2px 12px;
-  font-size: 14px;
+  background: transparent;
+  color: var(--strapi-primary-600);
+  padding: var(--strapi-spacing-2) 0;
+  font-family: var(--strapi-font-family-technical);
+  font-size: 13px;
+  font-weight: 600;
   line-height: 1.5;
   word-wrap: break-word;
+  text-align: right;
+  border-bottom: 1px solid var(--strapi-neutral-150);
 }
 
 .aiMessage {
   align-self: flex-start;
-  max-width: 90%;
-  background: var(--strapi-neutral-100);
-  border: 1px solid var(--strapi-neutral-150);
-  padding: var(--strapi-spacing-3) var(--strapi-spacing-4);
-  border-radius: 12px 12px 12px 2px;
-  font-size: 14px;
+  max-width: 100%;
+  background: transparent;
+  border: none;
+  padding: var(--strapi-spacing-2) 0;
+  font-size: 13px;
   line-height: 1.6;
 }
 
@@ -216,10 +218,22 @@
 
   :global {
     p {
-      margin: 8px 0;
+      margin: 6px 0;
+      font-size: 13px;
       &:first-child { margin-top: 0; }
       &:last-child { margin-bottom: 0; }
     }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--strapi-font-family-technical);
+      font-weight: 700;
+      margin: 12px 0 4px;
+    }
+
+    h1 { font-size: 16px; }
+    h2 { font-size: 15px; }
+    h3 { font-size: 14px; }
+    h4, h5, h6 { font-size: 13px; }
 
     a {
       color: var(--strapi-primary-600);
@@ -237,10 +251,11 @@
     pre {
       background: var(--strapi-neutral-100);
       border: 1px solid var(--strapi-neutral-150);
-      border-radius: 6px;
-      padding: 12px;
+      border-radius: 4px;
+      padding: 10px;
       overflow-x: auto;
       margin: 8px 0;
+      font-size: 12px;
 
       code {
         background: transparent;
@@ -251,17 +266,44 @@
       }
     }
 
-    ul, ol {
+    // Tables (rendered by remark-gfm)
+    table {
+      width: 100%;
+      border-collapse: collapse;
       margin: 8px 0;
+      font-size: 12px;
+      font-family: var(--strapi-font-family-technical);
+    }
+
+    th, td {
+      border: 1px solid var(--strapi-neutral-200);
+      padding: 6px 10px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--strapi-neutral-100);
+      font-weight: 700;
+    }
+
+    ul, ol {
+      margin: 6px 0;
       padding-left: 20px;
+      font-size: 13px;
     }
 
     li {
-      margin: 4px 0;
+      margin: 3px 0;
     }
 
     strong {
       font-weight: 700;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--strapi-neutral-150);
+      margin: 8px 0;
     }
   }
 }
@@ -480,8 +522,13 @@
   }
 
   .aiMessage {
-    background: var(--strapi-neutral-100);
-    border-color: var(--strapi-neutral-200);
+    background: transparent;
+  }
+
+  .userMessage {
+    background: transparent;
+    color: var(--strapi-primary-400);
+    border-bottom-color: var(--strapi-neutral-200);
   }
 
   .textInput {
@@ -496,10 +543,6 @@
 
   .chatInput {
     border-top-color: var(--strapi-neutral-200);
-  }
-
-  .userMessage {
-    background: var(--strapi-primary-500);
   }
 
   .chatActionButton {

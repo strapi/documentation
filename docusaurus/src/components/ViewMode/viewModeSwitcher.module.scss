@@ -6,19 +6,24 @@
   gap: 4px;
   position: sticky;
   top: calc(var(--ifm-navbar-height, 3.75rem) + 8px);
-  z-index: 2;
+  z-index: 10;
   margin-bottom: 8px;
-  transition: opacity 0.3s ease;
+  padding: 6px 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   flex-wrap: wrap;
+  // Opaque background so it doesn't blend with content when scrolling
+  background: var(--strapi-surface-0);
 
   @include small-down {
     position: static;
+    background: transparent;
   }
 }
 
 .hidden {
   opacity: 0;
   pointer-events: none;
+  transform: translateY(-10px);
 }
 
 .button {
@@ -68,6 +73,10 @@
 }
 
 @include dark {
+  .switcher {
+    background: var(--strapi-surface-0);
+  }
+
   .button {
     color: var(--strapi-neutral-400);
 
