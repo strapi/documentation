@@ -38,7 +38,7 @@ function useTldrContent(viewMode) {
   return tldrText;
 }
 
-function ChatInterface() {
+function ChatInterface({ pageContext }) {
   const [question, setQuestion] = useState('');
   const messagesEndRef = useRef(null);
   const { conversation, submitQuery, resetConversation, isGeneratingAnswer } = useChat();
@@ -59,7 +59,12 @@ function ChatInterface() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (question.trim() && !isGeneratingAnswer) {
-      submitQuery(question);
+      // On the first message, prefix with page context so Kapa knows what page we're on
+      let query = question;
+      if (conversation.length === 0 && pageContext) {
+        query = `[Context: The user is reading the Strapi documentation page "${pageContext.title}" at ${pageContext.url}. Page summary: ${pageContext.summary}]\n\n${question}`;
+      }
+      submitQuery(query);
       setQuestion('');
     }
   };
@@ -74,7 +79,10 @@ function ChatInterface() {
         ) : (
           conversation.map((qa, index) => (
             <div key={index} className={styles.messageGroup}>
-              <div className={styles.userMessage}>{qa.question}</div>
+              <div className={styles.userMessage}>
+                {/* Strip the context prefix from display */}
+                {qa.question.replace(/^\[Context:.*?\]\n\n/s, '')}
+              </div>
               <div className={styles.aiMessage}>
                 {qa.answer ? (
                   <>
@@ -179,7 +187,11 @@ export default function AiPanel() {
         <hr className={styles.divider} />
 
         <KapaProvider integrationId={KAPA_INTEGRATION_ID} callbacks={{ askAI: {} }}>
-          <ChatInterface />
+          <ChatInterface pageContext={{
+            title: document.querySelector('article h1')?.textContent || '',
+            url: window.location.href,
+            summary: tldrText,
+          }} />
         </KapaProvider>
       </div>
     </aside>
