@@ -106,9 +106,10 @@ HOST=0.0.0.0
 PORT=1337
 
 # Database
-DATABASE_CLIENT=postgres  # or 'mysql' for MySQL/MariaDB
+# Use 'mysql' for MySQL or MariaDB, and change DATABASE_PORT to 3306
+DATABASE_CLIENT=postgres
 DATABASE_HOST=strapiDB
-DATABASE_PORT=5432  # use 3306 for MySQL/MariaDB
+DATABASE_PORT=5432
 DATABASE_NAME=strapi
 DATABASE_USERNAME=strapi
 DATABASE_PASSWORD=strapi
@@ -150,7 +151,7 @@ services:
       - ./src:/opt/app/src
       - ./package.json:/opt/package.json
       - ./package-lock.json:/opt/package-lock.json
-      - ./.env:/opt/app/.env
+      - ./.env:/opt/app/.env  # Needed because Strapi uses dotenv to read .env in development
       - ./public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
@@ -164,7 +165,6 @@ services:
     container_name: strapiDB
     # platform: linux/amd64  # Uncomment if you encounter platform errors on Apple Silicon
     restart: unless-stopped
-    env_file: .env
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: ${DATABASE_USERNAME}
@@ -209,7 +209,7 @@ services:
       - ./src:/opt/app/src
       - ./package.json:/opt/package.json
       - ./package-lock.json:/opt/package-lock.json
-      - ./.env:/opt/app/.env
+      - ./.env:/opt/app/.env  # Needed because Strapi uses dotenv to read .env in development
       - ./public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
@@ -223,7 +223,6 @@ services:
     container_name: strapiDB
     # platform: linux/amd64  # Uncomment if you encounter platform errors on Apple Silicon
     restart: unless-stopped
-    env_file: .env
     image: mysql:8.4
     environment:
       MYSQL_USER: ${DATABASE_USERNAME}
@@ -269,7 +268,7 @@ services:
       - ./src:/opt/app/src
       - ./package.json:/opt/package.json
       - ./package-lock.json:/opt/package-lock.json
-      - ./.env:/opt/app/.env
+      - ./.env:/opt/app/.env  # Needed because Strapi uses dotenv to read .env in development
       - ./public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
@@ -283,7 +282,6 @@ services:
     container_name: strapiDB
     # platform: linux/amd64  # Uncomment if you encounter platform errors on Apple Silicon
     restart: unless-stopped
-    env_file: .env
     image: mariadb:11.4
     environment:
       MYSQL_USER: ${DATABASE_USERNAME}
@@ -339,7 +337,7 @@ The following `Dockerfile.prod` uses a multi-stage build. The first stage instal
 ```dockerfile title="./Dockerfile.prod"
 # Build stage
 FROM node:22-alpine AS build
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git > /dev/null 2>&1
 
 WORKDIR /opt/
 COPY package.json package-lock.json ./
@@ -406,7 +404,6 @@ services:
   strapiDB:
     container_name: strapiDB
     restart: always
-    env_file: .env
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: ${DATABASE_USERNAME}
