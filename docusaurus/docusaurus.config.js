@@ -89,7 +89,26 @@ const config = {
       'data-modal-disclaimer':
         'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
       'data-project-color': '#4945FF',
+      'data-project-color-dark': '#7B79FF',
       'data-button-bg-color': '#32324D',
+      // Dark mode: sync with Docusaurus theme toggle
+      'data-color-scheme': 'auto',
+      'data-color-scheme-selector': "[data-theme='dark']",
+      // Light mode palette (defaults are fine, override only what we need)
+      'data-surface-color': '#ffffff',
+      'data-surface-elevated-color': '#f8f9fa',
+      'data-text-color': '#212529',
+      'data-text-muted-color': '#868e96',
+      'data-border-color': '#dee2e6',
+      'data-anchor-color': '#4945FF',
+      // Dark mode palette
+      'data-surface-color-dark': '#181826',
+      'data-surface-elevated-color-dark': '#212134',
+      'data-surface-hover-color-dark': '#2a2a3e',
+      'data-text-color-dark': '#e4e4e7',
+      'data-text-muted-color-dark': '#a1a1a9',
+      'data-border-color-dark': '#3f3f45',
+      'data-anchor-color-dark': '#7B79FF',
       'data-modal-example-questions': "How to create a Strapi project?,How does population work?,How to customize the admin panel?,Explain the Growth plan benefits",
       // 'data-modal-override-open-class-search': 'DocSearch-Button',
       // 'data-modal-title-search': 'Search Strapi Docs',
