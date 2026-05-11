@@ -310,41 +310,35 @@
     }
   }
 
-  // Details/collapsible blocks: force open and strip toggle
+  // Details/collapsible blocks: flatten completely (no toggle, always visible)
   details {
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: transparent !important;
-    padding: 0 !important;
+    display: contents !important;
+  }
 
-    &[open] > summary ~ * {
-      // Content is visible when open (default)
+  details > summary {
+    display: block !important;
+    font-family: var(--strapi-font-family-technical);
+    font-weight: 700;
+    list-style: none;
+    cursor: default;
+    padding: 0;
+    border: none !important;
+    background: transparent !important;
+    margin: 12px 0 4px;
+
+    &::marker,
+    &::-webkit-details-marker {
+      display: none;
     }
 
-    > summary {
-      font-family: var(--strapi-font-family-technical);
-      font-weight: 700;
-      list-style: none;
-      cursor: default;
-      padding: 0;
-      border: none !important;
-      background: transparent !important;
-
-      &::marker,
-      &::-webkit-details-marker {
-        display: none;
-      }
-
-      &::before {
-        display: none !important;
-      }
+    &::before,
+    &::after {
+      display: none !important;
     }
   }
 
-  // Force details open via attribute
-  details:not([open]) {
-    // Use CSS to visually expand -- but we need JS for this, handled in component
+  details > summary ~ * {
+    display: block !important;
   }
 
   // Subtle callouts: simplify
@@ -410,8 +404,8 @@
     display: none !important;
   }
 
-  // Fully hide sidebar content, only show the collapse/expand button
-  .sidebar-v3-wrapper {
+  // Sidebar in AI mode: start collapsed, show content when expanded
+  .sidebar-v3-wrapper--collapsed {
     .menu,
     .sidebar-v3-header__label,
     [class*="sidebarItemLink"],
@@ -427,6 +421,11 @@
 
   // Compress content area: override the doc-content-max-width variable
   // and constrain the entire main wrapper
+  // Back to top button: keep in main content area, not over AI panel
+  [class*="backToTopButton"] {
+    right: calc(50vw + 20px) !important;
+  }
+
   @include medium-up {
     --doc-content-max-width: 100% !important;
 
@@ -437,13 +436,29 @@
     .row,
     .col {
       max-width: 50vw !important;
-      overflow: hidden !important;
       transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    // Only article gets overflow hidden (not nav/pagination)
+    article {
+      overflow: hidden !important;
     }
 
     // Hide the TOC sidebar in AI mode (no room)
     .col--3 {
       display: none !important;
+    }
+
+    // Pagination: ensure it fits within 50vw
+    nav[class*="pagination"] {
+      max-width: 50vw !important;
+      overflow: hidden;
+
+      a {
+        min-width: 0 !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
 
@@ -457,8 +472,11 @@
     .row,
     .col {
       max-width: 60vw !important;
-      overflow: hidden !important;
       transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    article {
+      overflow: hidden !important;
     }
 
     .col--3 {

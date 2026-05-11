@@ -46,8 +46,7 @@ export default function DocSidebarWrapper(props) {
     return () => window.removeEventListener('view-mode-change', handler);
   }, [collapsed]);
 
-  // In AI mode, always show as collapsed regardless of actual state
-  const showCollapsed = aiMode || collapsed;
+  const showCollapsed = collapsed;
 
   return (
     <div

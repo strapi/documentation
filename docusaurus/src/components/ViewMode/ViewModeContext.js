@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 
 const STORAGE_KEY = 'strapi-view-mode';
 const VIEW_MODES = ['elegant', 'markdown', 'ai'];
@@ -22,17 +22,34 @@ const ViewModeContext = createContext({
 export function ViewModeProvider({ children }) {
   const [viewMode, setViewModeState] = useState(getInitialMode);
 
+  const viewModeRef = useRef(viewMode);
+  viewModeRef.current = viewMode;
+
   useEffect(() => {
     document.documentElement.dataset.viewMode = viewMode;
 
-    // In markdown mode, force all <details> elements open
-    if (viewMode === 'markdown') {
+    function forceOpenDetails() {
       document.querySelectorAll('article details:not([open])').forEach((el) => {
         el.setAttribute('open', '');
         el.dataset.forcedOpen = 'true';
       });
+    }
+
+    if (viewMode === 'markdown') {
+      forceOpenDetails();
+
+      // Watch for details elements that appear after initial render (lazy hydration)
+      const observer = new MutationObserver(() => {
+        if (viewModeRef.current === 'markdown') {
+          forceOpenDetails();
+        }
+      });
+      const article = document.querySelector('article');
+      if (article) {
+        observer.observe(article, { childList: true, subtree: true });
+      }
+      return () => observer.disconnect();
     } else {
-      // Restore closed state for elements we forced open
       document.querySelectorAll('article details[data-forced-open]').forEach((el) => {
         el.removeAttribute('open');
         delete el.dataset.forcedOpen;

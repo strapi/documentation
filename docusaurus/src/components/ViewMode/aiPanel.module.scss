@@ -194,13 +194,13 @@
   color: var(--strapi-primary-600);
   padding: var(--strapi-spacing-2) 0;
   font-family: var(--strapi-font-family-technical);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.5;
   word-wrap: break-word;
   text-align: right;
-  border-bottom: 1px solid var(--strapi-neutral-150);
 }
+
 
 .aiMessage {
   align-self: flex-start;
@@ -208,7 +208,7 @@
   background: transparent;
   border: none;
   padding: var(--strapi-spacing-2) 0;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -219,7 +219,7 @@
   :global {
     p {
       margin: 6px 0;
-      font-size: 13px;
+      font-size: 14px;
       &:first-child { margin-top: 0; }
       &:last-child { margin-bottom: 0; }
     }
@@ -237,7 +237,16 @@
 
     a {
       color: var(--strapi-primary-600);
-      text-decoration: underline;
+      text-decoration: none;
+      font-family: var(--strapi-font-family-technical);
+      font-size: 12px;
+      background: var(--strapi-neutral-100);
+      padding: 2px 5px;
+      border-radius: 3px;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     code {
@@ -254,7 +263,7 @@
       border-radius: 4px;
       padding: 10px;
       overflow-x: auto;
-      margin: 8px 0;
+      margin: 0;
       font-size: 12px;
 
       code {
@@ -289,7 +298,7 @@
     ul, ol {
       margin: 6px 0;
       padding-left: 20px;
-      font-size: 13px;
+      font-size: 14px;
     }
 
     li {
@@ -306,6 +315,42 @@
       margin: 8px 0;
     }
   }
+}
+
+.codeBlockWrapper {
+  position: relative;
+  margin: 8px 0;
+}
+
+.copyCodeButton {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 4px;
+  background: var(--strapi-neutral-200);
+  color: var(--strapi-neutral-600);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+  z-index: 1;
+
+  i {
+    font-size: 13px;
+  }
+
+  &:hover {
+    background: var(--strapi-neutral-300);
+  }
+}
+
+.codeBlockWrapper:hover .copyCodeButton {
+  opacity: 1;
 }
 
 .sources {
@@ -504,7 +549,7 @@
   }
 
   .summary p {
-    color: var(--strapi-neutral-300);
+    color: var(--strapi-neutral-800);
   }
 
   .divider {
@@ -528,7 +573,6 @@
   .userMessage {
     background: transparent;
     color: var(--strapi-primary-400);
-    border-bottom-color: var(--strapi-neutral-200);
   }
 
   .textInput {

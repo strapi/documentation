@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useLocation } from '@docusaurus/router';
 import { KapaProvider, useChat } from '@kapaai/react-sdk';
 import ReactMarkdown from 'react-markdown';
@@ -7,6 +8,34 @@ import { useViewMode } from './ViewModeContext';
 import styles from './aiPanel.module.scss';
 
 const KAPA_INTEGRATION_ID = 'e35b7c7b-7ec8-4c1a-8a39-0ab7b6d8db3a';
+
+function CodeBlock({ children, ...props }) {
+  const [copied, setCopied] = useState(false);
+  const codeText = typeof children === 'string'
+    ? children
+    : React.Children.toArray(children).map(c =>
+        typeof c === 'string' ? c : c?.props?.children || ''
+      ).join('');
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(codeText);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className={styles.codeBlockWrapper}>
+      <button
+        className={styles.copyCodeButton}
+        onClick={handleCopy}
+        aria-label="Copy code"
+      >
+        <i className={copied ? 'ph-bold ph-check' : 'ph-bold ph-copy'} />
+      </button>
+      <pre {...props}>{children}</pre>
+    </div>
+  );
+}
 
 /**
  * Finds page headings that are mentioned in an AI answer.
@@ -109,7 +138,10 @@ function ChatInterface({ pageContext }) {
                 {qa.answer ? (
                   <>
                     <div className={styles.answerText}>
-                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{qa.answer}</ReactMarkdown>
+                      <ReactMarkdown
+                          remarkPlugins={[remarkGfm]}
+                          components={{ pre: CodeBlock }}
+                        >{qa.answer}</ReactMarkdown>
                     </div>
                     {qa.sources && qa.sources.length > 0 && (
                       <div className={styles.sources}>
@@ -253,13 +285,17 @@ export default function AiPanel() {
 
         <hr className={styles.divider} />
 
-        <KapaProvider integrationId={KAPA_INTEGRATION_ID} callbacks={{ askAI: {} }}>
-          <ChatInterface pageContext={{
-            title: document.querySelector('article h1')?.textContent || '',
-            url: window.location.href,
-            summary: tldrText,
-          }} />
-        </KapaProvider>
+        <BrowserOnly>
+          {() => (
+            <KapaProvider integrationId={KAPA_INTEGRATION_ID} callbacks={{ askAI: {} }}>
+              <ChatInterface pageContext={{
+                title: document.querySelector('article h1')?.textContent || '',
+                url: window.location.href,
+                summary: tldrText,
+              }} />
+            </KapaProvider>
+          )}
+        </BrowserOnly>
       </div>
     </aside>
   );

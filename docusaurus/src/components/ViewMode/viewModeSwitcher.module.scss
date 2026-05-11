@@ -13,6 +13,11 @@
   flex-wrap: wrap;
   // Opaque background so it doesn't blend with content when scrolling
   background: var(--strapi-surface-0);
+  // Ensure background covers full width and hides content scrolling underneath
+  margin-left: -16px;
+  margin-right: -16px;
+  padding-left: 16px;
+  padding-right: 16px;
 
   @include small-down {
     position: static;
@@ -44,7 +49,7 @@
   transition: background-color 0.2s ease, color 0.2s ease;
   white-space: nowrap;
 
-  &:hover:not(.active) {
+  &:hover {
     color: var(--strapi-neutral-700);
     background: var(--strapi-neutral-100);
   }
@@ -60,6 +65,7 @@
   background: var(--strapi-primary-100);
 
   &:hover {
+    color: var(--strapi-primary-600);
     background: var(--strapi-primary-100);
   }
 }
@@ -80,7 +86,7 @@
   .button {
     color: var(--strapi-neutral-400);
 
-    &:hover:not(.active) {
+    &:hover {
       color: var(--strapi-neutral-300);
       background: var(--strapi-neutral-100);
     }
@@ -91,6 +97,7 @@
     background: rgba(73, 69, 255, 0.15);
 
     &:hover {
+      color: var(--strapi-primary-500);
       background: rgba(73, 69, 255, 0.15);
     }
   }
