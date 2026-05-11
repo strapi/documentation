@@ -58,12 +58,6 @@ build/
 
 The following `Dockerfile` can be used to build a non-production Docker image for a Strapi project.
 
-:::note
-When using Docker Compose, the variables defined in the `.env` file are automatically loaded into the containers, so there is no need to `export` them in your shell.
-:::
-
-<DockerEnvTable components={props.components} />
-
 ```dockerfile title="./Dockerfile"
 FROM node:22-alpine
 # Installing libvips-dev for sharp compatibility
@@ -94,12 +88,15 @@ FROM node:22-slim
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 ```
 
+<br/>
 This trades a slightly larger image for fewer build dependencies and fewer network requirements.
 :::
 
 ### Set up environment variables
 
-Create a `.env` file at the root of your Strapi project. Docker Compose reads this file automatically when starting containers.
+Create a `.env` file at the root of your Strapi project. Docker Compose reads this file automatically when starting containers, so there is no need to `export` them in your shell.
+
+<DockerEnvTable components={props.components} />
 
 The following example contains placeholder values. Replace them with your own values before starting the containers:
 
@@ -109,9 +106,9 @@ HOST=0.0.0.0
 PORT=1337
 
 # Database
-DATABASE_CLIENT=postgres
+DATABASE_CLIENT=postgres  # or 'mysql' for MySQL/MariaDB
 DATABASE_HOST=strapiDB
-DATABASE_PORT=5432
+DATABASE_PORT=5432  # use 3306 for MySQL/MariaDB
 DATABASE_NAME=strapi
 DATABASE_USERNAME=strapi
 DATABASE_PASSWORD=strapi
@@ -147,18 +144,7 @@ services:
     build: .
     image: strapi:latest
     restart: unless-stopped
-    env_file: .env
-    environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT}
-      DATABASE_HOST: strapiDB
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      APP_KEYS: ${APP_KEYS}
-      NODE_ENV: ${NODE_ENV}
+    env_file: .env  # All variables from .env are injected into the container
     volumes:
       - ./config:/opt/app/config
       - ./src:/opt/app/src
@@ -217,18 +203,7 @@ services:
     build: .
     image: strapi:latest
     restart: unless-stopped
-    env_file: .env
-    environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT}
-      DATABASE_HOST: strapiDB
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      APP_KEYS: ${APP_KEYS}
-      NODE_ENV: ${NODE_ENV}
+    env_file: .env  # All variables from .env are injected into the container
     volumes:
       - ./config:/opt/app/config
       - ./src:/opt/app/src
@@ -288,18 +263,7 @@ services:
     build: .
     image: strapi:latest
     restart: unless-stopped
-    env_file: .env
-    environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT}
-      DATABASE_HOST: strapiDB
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      APP_KEYS: ${APP_KEYS}
-      NODE_ENV: ${NODE_ENV}
+    env_file: .env  # All variables from .env are injected into the container
     volumes:
       - ./config:/opt/app/config
       - ./src:/opt/app/src
@@ -430,16 +394,7 @@ services:
     restart: always
     env_file: .env
     environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT}
-      DATABASE_HOST: strapiDB
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      APP_KEYS: ${APP_KEYS}
-      NODE_ENV: production
+      NODE_ENV: production  # Overrides the development value from .env
     ports:
       - "127.0.0.1:1337:1337"
     networks:
@@ -451,6 +406,7 @@ services:
   strapiDB:
     container_name: strapiDB
     restart: always
+    env_file: .env
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: ${DATABASE_USERNAME}
