@@ -530,7 +530,7 @@ These images are community-maintained and not officially supported by Strapi. Re
 
 ## Troubleshooting
 
-<br/>
+The following section details some common issues with Sharp and ARM builds on Apple Silicon-powered machines.
 
 ### Sharp and libvips errors
 
@@ -568,7 +568,7 @@ For native ARM performance:
 - Ensure Sharp dependencies are installed correctly (see [Sharp and libvips errors](#sharp-and-libvips-errors)).
 
 :::note
-The `platform: linux/amd64` flag is commented out in the docker-compose examples above. Uncomment it if your database image does not provide an ARM64 variant.
+The `platform: linux/amd64` flag is commented out in the [docker-compose examples](#add-docker-compose-for-the-database) above. Uncomment it if your database image does not provide an ARM64 variant.
 :::
 
 ### Database connection issues
