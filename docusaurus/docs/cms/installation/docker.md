@@ -83,7 +83,7 @@ CMD ["npm", "run", "develop"]
 You can add `RUN ["npm", "run", "build"]` before the `EXPOSE` line to pre-build the admin panel and speed up the first start. This is not required since `npm run develop` rebuilds it in watch mode.
 :::
 
-:::tip Alternative base image for restricted networks
+:::note Alternative base image for restricted networks
 If your CI environment has limited network access (e.g., DNS restrictions that prevent downloading Sharp prebuilt binaries from GitHub), consider using `node:22-slim` instead of `node:22-alpine`. The Debian-based slim image avoids the need to compile native dependencies like `libvips` from source, and Sharp's prebuilt binaries work out of the box:
 
 ```dockerfile
@@ -91,6 +91,7 @@ FROM node:22-slim
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 ```
 
+<br/>
 This trades a slightly larger image for fewer build dependencies and fewer network requirements.
 :::
 
@@ -372,10 +373,8 @@ COPY --from=build /opt/app ./
 RUN chown -R node:node /opt/app
 USER node
 EXPOSE 1337
-# highlight-start
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD wget --quiet --tries=1 --spider http://localhost:1337/_health || exit 1
-# highlight-end
 CMD ["npm", "run", "start"]
 ```
 
@@ -383,7 +382,7 @@ CMD ["npm", "run", "start"]
 The `COPY --from=build /opt/app ./` line copies the entire application directory, including source files. For a leaner image, you can replace it with selective copies (e.g., `dist/`, `build/`, `config/`, `public/`, `src/`). This is optional since Strapi needs most of these files at runtime.
 :::
 
-:::note Key difference from the development Dockerfile
+:::info Key difference from the development Dockerfile
 The build stage installs all dependencies (including devDependencies) because the `npm run build` step needs them to compile the admin panel. The production stage then installs only production dependencies, keeping the final image lean.
 :::
 
@@ -495,7 +494,7 @@ These images are community-maintained and not officially supported by Strapi. Re
 
 The following section details some common issues with Sharp and ARM builds on Apple Silicon-powered machines.
 
-:::note
+:::info
 The Dockerfiles on this page do not include `nasm` in the Alpine package list. It was previously included in older versions of this guide but is not required for Sharp or libvips compilation.
 :::
 
@@ -511,7 +510,7 @@ To resolve Sharp issues:
     RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git
     ```
 
-2. If the issue persists, switch to `node:22-slim` (Debian-based) to avoid native library compatibility problems: <Annotation>Alpine Linux uses a lightweight C library called **musl** instead of the standard **glibc** used by Debian and Ubuntu. Some npm packages ship pre-compiled binaries built for glibc that do not work on Alpine. Switching to a Debian-based image like `node:22-slim` avoids this issue entirely.</Annotation>
+2. If the issue persists, switch to `node:22-slim` (Debian-based) to avoid native library **compatibility problems** <Annotation>Alpine Linux uses a lightweight C library called **musl** instead of the standard **glibc** used by Debian and Ubuntu. Some npm packages ship pre-compiled binaries built for glibc that do not work on Alpine. Switching to a Debian-based image like `node:22-slim` avoids this issue entirely.</Annotation>:
 
     ```dockerfile
     FROM node:22-slim
