@@ -21,6 +21,13 @@ tags:
 On Strapi Cloud, middleware customizations must go in `config/env/production/middlewares.ts` — changes to the global config file are overwritten on deploy.
 </Tldr>
 
+:::prerequisites
+
+- A local Strapi project running on `v4.8.2+`.
+- A Strapi Cloud project (see [Getting Started](/cloud/getting-started/deployment)).
+
+:::
+
 On Strapi Cloud, `NODE_ENV` is always set to `production`. The platform injects its own middleware configuration at the production environment level, which means any customizations placed in the global `config/middlewares.ts` (or `.js`) file will be overwritten after deploy and will not take effect.
 
 To apply custom middleware configuration on Strapi Cloud, place your changes in:
@@ -214,3 +221,8 @@ Upload size limits on Strapi Cloud are enforced at the infrastructure level (Clo
 :::
 
 This behavior applies to all Strapi Cloud plans and to both Strapi v4 and v5.
+
+## See also
+
+- [Middlewares configuration](/cms/configurations/middlewares) — full reference for all available middleware options, including `strapi::security` and `strapi::cors` parameters.
+- [Upload Provider Configuration for Strapi Cloud](/cloud/advanced/upload) — configure an external upload provider and the associated CSP settings.

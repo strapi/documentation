@@ -237,9 +237,13 @@ export default ({ env }) => ({
 
 Due to the default settings in the Strapi Security Middleware you will need to modify the `contentSecurityPolicy` settings to properly see thumbnail previews in the Media Library.
 
+:::caution
+On Strapi Cloud, `NODE_ENV` is always set to `production`. Changes to the global `config/middlewares.ts` file are overwritten on each deploy and will not take effect. Place your Security Middleware customizations in `config/env/production/middlewares.ts` instead. See [Middleware Configuration for Strapi Cloud](/cloud/advanced/middlewares) for details.
+:::
+
 To do this in your Strapi project:
 
-1. Navigate to `./config/middlewares.js` or `./config/middlewares.ts` in your Strapi project.
+1. Navigate to `./config/env/production/middlewares.js` or `./config/env/production/middlewares.ts` in your Strapi project.
 2. Replace the default `strapi::security` string with the object provided by the upload provider.
 
 **Example:**
