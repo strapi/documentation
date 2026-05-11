@@ -745,6 +745,14 @@ const sidebars = {
             new: false,
           },
         },
+        {
+          type: 'doc',
+          id: 'cloud/advanced/middlewares',
+          label: 'Middleware configuration for Cloud',
+          customProps: {
+            new: false,
+          },
+        },
       ],
     },
   ],
