@@ -18,7 +18,7 @@ tags:
 # Middleware Configuration for Strapi Cloud
 
 <Tldr>
-On Strapi Cloud, middleware customizations must go in `config/env/production/middlewares.ts` — changes to the global config file are overwritten on deploy.
+On Strapi Cloud, middleware customizations must go in `config/env/production/middlewares.ts` (or `.js`) — changes to the global config file are overwritten on deploy.
 </Tldr>
 
 :::prerequisites
@@ -35,6 +35,8 @@ To apply custom middleware configuration on Strapi Cloud, place your changes in:
 ```
 config/env/production/middlewares.ts
 ```
+
+or `.js` if your project uses JavaScript.
 
 :::note
 You can keep your existing `config/middlewares.ts` file as-is — it will not cause conflicts. The production-specific file takes precedence on Strapi Cloud.
@@ -75,6 +77,7 @@ module.exports = [
             'market-assets.strapi.io',
             'your-custom-domain.com', // replace with your provider domain
           ],
+          upgradeInsecureRequests: null,
         },
       },
     },
@@ -117,6 +120,7 @@ export default [
             'market-assets.strapi.io',
             'your-custom-domain.com', // replace with your provider domain
           ],
+          upgradeInsecureRequests: null,
         },
       },
     },
@@ -147,14 +151,14 @@ If your frontend sends custom request headers (e.g. for authorization flows), yo
 <TabItem value="js" label="JavaScript">
 
 ```js title=./config/env/production/middlewares.js
-module.exports = [
+module.exports = ({ env }) => [
   'strapi::errors',
   'strapi::security',
   {
     name: 'strapi::cors',
     config: {
       enabled: true,
-      origin: [process.env.CLIENT_URL],
+      origin: [env('CLIENT_URL')],
       headers: [
         'Content-Type',
         'Authorization',
@@ -179,14 +183,14 @@ module.exports = [
 <TabItem value="ts" label="TypeScript">
 
 ```ts title=./config/env/production/middlewares.ts
-export default [
+export default ({ env }) => [
   'strapi::errors',
   'strapi::security',
   {
     name: 'strapi::cors',
     config: {
       enabled: true,
-      origin: [process.env.CLIENT_URL],
+      origin: [env('CLIENT_URL')],
       headers: [
         'Content-Type',
         'Authorization',
@@ -213,14 +217,14 @@ export default [
 ## Important notes
 
 :::caution
-Both CSP and CORS can be combined in a single `config/env/production/middlewares.ts` file. Make sure to include the full middleware array — partial configs may cause other middlewares to be dropped.
+The `config/env/production/middlewares.ts` (or `.js`) file **fully replaces** the global middleware array — it is not merged. Your file must always include the complete middleware list: `strapi::errors`, `strapi::security`, `strapi::cors`, `strapi::poweredBy`, `strapi::logger`, `strapi::query`, `strapi::body`, `strapi::session`, `strapi::favicon`, and `strapi::public`. Both CSP and CORS customizations can be combined in the same file.
 :::
 
 :::note
 Upload size limits on Strapi Cloud are enforced at the infrastructure level (Cloudflare gateway) and cannot be overridden via the `strapi::body` config. See [Upload Provider Configuration](/cloud/advanced/upload) for guidance on using external providers to handle larger file sizes.
 :::
 
-This behavior applies to all Strapi Cloud plans and to both Strapi v4 and v5.
+This behavior applies to all Strapi Cloud plans.
 
 ## See also
 
