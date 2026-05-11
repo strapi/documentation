@@ -31,7 +31,7 @@ Containerizing Strapi makes the runtime environment reproducible across machines
 - <ExternalLink to="https://docs.docker.com/compose/" text="Docker Compose"/> v2 or later
 - A [supported version of Node.js](/cms/installation/cli#preparing-the-installation)
 - An **existing Strapi 5 project**, or a new one created with the [Quick Start guide](/cms/quick-start)
-- npm as your package manager
+- npm as your package manager (the examples on this page use npm, but you can adapt the commands for yarn or pnpm)
 
 :::
 
@@ -75,10 +75,13 @@ WORKDIR /opt/app
 COPY . .
 RUN chown -R node:node /opt/app
 USER node
-# RUN ["npm", "run", "build"]  # Optional: pre-builds the admin panel to speed up the first start. Not required since npm run develop rebuilds it in watch mode.
 EXPOSE 1337
 CMD ["npm", "run", "develop"]
 ```
+
+:::tip Optional: pre-build the admin panel
+You can add `RUN ["npm", "run", "build"]` before the `EXPOSE` line to pre-build the admin panel and speed up the first start. This is not required since `npm run develop` rebuilds it in watch mode.
+:::
 
 :::tip Alternative base image for restricted networks
 If your CI environment has limited network access (e.g., DNS restrictions that prevent downloading Sharp prebuilt binaries from GitHub), consider using `node:22-slim` instead of `node:22-alpine`. The Debian-based slim image avoids the need to compile native dependencies like `libvips` from source, and Sharp's prebuilt binaries work out of the box:
@@ -88,7 +91,6 @@ FROM node:22-slim
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 ```
 
-<br/>
 This trades a slightly larger image for fewer build dependencies and fewer network requirements.
 :::
 
@@ -174,7 +176,7 @@ services:
       - strapi-data:/var/lib/postgresql/data/
       #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
     ports:
-      - "5432:5432"
+      - "5432:5432"  # Exposed for local debugging tools; remove if not needed
     networks:
       - strapi
     healthcheck:
@@ -233,7 +235,7 @@ services:
       - strapi-data:/var/lib/mysql
       #- ./data:/var/lib/mysql # if you want to use a bind folder
     ports:
-      - "3306:3306"
+      - "3306:3306"  # Exposed for local debugging tools; remove if not needed
     networks:
       - strapi
     healthcheck:
@@ -292,7 +294,7 @@ services:
       - strapi-data:/var/lib/mysql
       #- ./data:/var/lib/mysql # if you want to use a bind folder
     ports:
-      - "3306:3306"
+      - "3306:3306"  # Exposed for local debugging tools; remove if not needed
     networks:
       - strapi
     healthcheck:
@@ -347,6 +349,10 @@ ENV PATH=/opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
 COPY . .
+# Uncomment the following lines to set the admin panel URL at build time.
+# Without this, the admin panel defaults to localhost:1337.
+# ARG STRAPI_ADMIN_BACKEND_URL
+# ENV STRAPI_ADMIN_BACKEND_URL=${STRAPI_ADMIN_BACKEND_URL}
 ENV NODE_ENV=production
 RUN npm run build
 
@@ -372,6 +378,10 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 # highlight-end
 CMD ["npm", "run", "start"]
 ```
+
+:::tip Optimize image size
+The `COPY --from=build /opt/app ./` line copies the entire application directory, including source files. For a leaner image, you can replace it with selective copies (e.g., `dist/`, `build/`, `config/`, `public/`, `src/`). This is optional since Strapi needs most of these files at runtime.
+:::
 
 :::note Key difference from the development Dockerfile
 The build stage installs all dependencies (including devDependencies) because the `npm run build` step needs them to compile the admin panel. The production stage then installs only production dependencies, keeping the final image lean.
@@ -485,6 +495,10 @@ These images are community-maintained and not officially supported by Strapi. Re
 
 The following section details some common issues with Sharp and ARM builds on Apple Silicon-powered machines.
 
+:::note
+The Dockerfiles on this page do not include `nasm` in the Alpine package list. It was previously included in older versions of this guide but is not required for Sharp or libvips compilation.
+:::
+
 ### Sharp and libvips errors
 
 Sharp is the image processing library used by Strapi. It depends on `libvips`, which requires native compilation on Alpine-based images. Common error messages include `Cannot find module 'sharp'` or `Error: sharp: Installation error`.
@@ -535,8 +549,8 @@ If Strapi cannot connect to the database in Docker, check the following:
 1. Verify that `DATABASE_HOST` matches the service name in your docker-compose file (e.g., `strapiDB`), not `localhost` or `127.0.0.1`. Containers communicate over the Docker network using service names.
 
 2. Check for port conflicts with local database instances. If a database is already running locally on the same port:
-    - Stop the local database, **or**
-    - Change the host-side port mapping in your docker-compose file (e.g., `"5433:5432"`).
+    - Stop the local database,
+    - or change the host-side port mapping in your docker-compose file (e.g., `"5433:5432"`).
 
 3. Set the connection pool `min` value to `0` in your [database configuration](/cms/configurations/database), as Docker may kill idle connections:
 
@@ -578,7 +592,16 @@ If Strapi cannot connect to the database in Docker, check the following:
 
     </Tabs>
 
-4. Configure `pool.acquireTimeoutMillis` and `pool.idleTimeoutMillis` in your database configuration if the database container becomes unreachable after periods of inactivity.
+4. If the database container becomes unreachable after periods of inactivity, add timeout settings to the pool configuration in your [database configuration](/cms/configurations/database):
+
+    ```js
+    pool: {
+      min: 0,
+      max: 10,
+      acquireTimeoutMillis: 60000,
+      idleTimeoutMillis: 30000,
+    },
+    ```
 
 ## <Icon name="fast-forward" /> What to do next?
 

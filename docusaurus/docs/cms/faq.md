@@ -152,7 +152,11 @@ Strapi builds the admin panel with React and bundles it into the application dur
 - `STRAPI_ADMIN_BACKEND_URL`
 - `ADMIN_PATH` (if using a custom admin path)
 
-Because these values are baked in at build time, you must either pass them as `ARG` in your Dockerfile or rebuild the image when they change. Without this, the admin panel may point to `localhost:1337` instead of your production URL. Build different Docker images for development and production environments. The development environment does not optimize for performance and should not be exposed to the public internet. See the [Docker installation guide](/cms/installation/docker) for full Dockerfile examples.
+Because these values are baked in at build time, you must either pass them as `ARG` in your Dockerfile or rebuild the image when they change. Without this, the admin panel may point to `localhost:1337` instead of your production URL.
+
+Additionally, development images are not optimized for performance and should not be exposed to the public internet. Building separate Docker images for each environment ensures correct configuration and better security.
+
+See the [Docker installation guide](/cms/installation/docker) for full Dockerfile examples.
 
 ## Is there an MCP server for Strapi?
 
