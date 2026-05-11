@@ -404,6 +404,11 @@
     display: none !important;
   }
 
+  // Prevent sticky switcher from overlapping h1
+  article [class*="switcher"] {
+    position: static;
+  }
+
   // Sidebar in AI mode: start collapsed, show content when expanded
   .sidebar-v3-wrapper--collapsed {
     .menu,
