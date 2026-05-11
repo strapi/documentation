@@ -252,7 +252,7 @@ To do this in your Strapi project:
 <Tabs groupId="upload-examples" >
 <TabItem value="cloudinary" label="Cloudinary">
 
-```js title=./config/middleware.js
+```js title=./config/env/production/middlewares.js
 module.exports = [
   // ...
   {
@@ -288,7 +288,7 @@ module.exports = [
 </TabItem>
 <TabItem value="amazon-s3" label="Amazon S3">
 
-```js title=./config/middleware.js
+```js title=./config/env/production/middlewares.js
 module.exports = [
   // ...
   {
@@ -328,7 +328,7 @@ module.exports = [
 <Tabs groupId="upload-examples" >
 <TabItem value="cloudinary" label="Cloudinary">
 
-```ts title=./config/middleware.ts
+```ts title=./config/env/production/middlewares.ts
 export default [
   // ...
   {
@@ -364,7 +364,7 @@ export default [
 </TabItem>
 <TabItem value="amazon-s3" label="Amazon S3">
 
-```ts title=./config/middleware.ts
+```ts title=./config/env/production/middlewares.ts
 export default [
   // ...
   {
