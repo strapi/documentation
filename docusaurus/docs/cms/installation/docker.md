@@ -381,7 +381,7 @@ ENV NODE_ENV=production
 
 WORKDIR /opt/
 COPY --from=build /opt/package.json /opt/package-lock.json ./
-RUN npm ci --omit=dev && npm cache clean --force
+RUN npm ci --omit=dev && npm cache clean --force  # --omit=dev replaces the deprecated --only=production
 ENV PATH=/opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
