@@ -396,7 +396,7 @@ CMD ["npm", "run", "start"]
 ```
 
 :::tip Optimize image size
-The `COPY --from=build /opt/app ./` line copies the entire application directory, including source files. For a leaner image, you can replace it with selective copies (e.g., `dist/`, `build/`, `config/`, `public/`, `src/`). This is optional since Strapi needs most of these files at runtime.
+The `COPY --from=build /opt/app ./` line copies the entire application directory, including source files. For a leaner image, you can replace it with selective copies (e.g., `dist/build/`, `config/`, `public/`, `src/`). The Strapi 5 admin bundle lands in `dist/build/`, so make sure that path is included. This is optional since Strapi needs most of these files at runtime.
 :::
 
 :::info Key difference from the development Dockerfile
