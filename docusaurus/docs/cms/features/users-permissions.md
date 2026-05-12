@@ -2,7 +2,7 @@
 title: Users & Permissions
 description: Learn to use the Users & Permissions feature to manage end-user accounts, authentication, and role-based access.
 displayed_sidebar: cmsSidebar
-toc_max_heading_level: 5
+toc_max_heading_level: 4
 tags:
 - admin panel
 - users & permissions
@@ -95,7 +95,7 @@ When ticking an action or permission box, related bound routes of the API are di
 
 **Path:** <Icon name="gear-six" /> *Users & Permissions plugin > Roles*
 
-Although the 2 default end-user roles cannot be deleted, the other ones can, as long as no end user still has this role attributed to their account.
+Although the Public role cannot be deleted, other roles can be deleted as long as no end user still has the role attributed to their account.
 
 1. Click on the delete button <Icon name="trash" /> on the right side of the role's record.
 2. In the deletion window, click on the <Icon name="trash" /> **Confirm** button to confirm the deletion.
@@ -226,7 +226,7 @@ module.exports = ({ env }) => ({
     config: {
       jwtManagement: 'legacy-support',
       jwt: {
-        expiresIn: '7d', // Traditional JWT expiry
+        expiresIn: '30d', // Traditional JWT expiry
       },
     },
   },
@@ -257,9 +257,11 @@ module.exports = ({ env }) => ({
     config: {
       jwtManagement: 'refresh',
       sessions: {
-        accessTokenLifespan: 604800, // 1 week (default)
+        accessTokenLifespan: 600, // 10 minutes (default)
         maxRefreshTokenLifespan: 2592000, // 30 days
-        idleRefreshTokenLifespan: 604800, // 7 days
+        idleRefreshTokenLifespan: 1209600, // 14 days
+        maxSessionLifespan: 86400, // 1 day (default)
+        idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
         cookie: {
           name: 'strapi_up_refresh',
@@ -286,9 +288,11 @@ export default ({ env }) => ({
     config: {
       jwtManagement: 'refresh',
       sessions: {
-        accessTokenLifespan: 604800, // 1 week (default)
+        accessTokenLifespan: 600, // 10 minutes (default)
         maxRefreshTokenLifespan: 2592000, // 30 days
-        idleRefreshTokenLifespan: 604800, // 7 days
+        idleRefreshTokenLifespan: 1209600, // 14 days
+        maxSessionLifespan: 86400, // 1 day (default)
+        idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
         cookie: {
           name: 'strapi_up_refresh',
@@ -364,8 +368,8 @@ The following options are available in [the `/config/plugins` file](/cms/configu
 | --------- | ----------- | ---- | ------- |
 | `ratelimit` | Settings to customize the rate limiting of the authentications and registration endpoints | object | `{}` |
 | `ratelimit.enabled` | Enable or disable the rate limiter | boolean | `true` |
-| `ratelimit.interval` | Time window for requests to be considered as part of the same rate limiting bucket | object | `{ min: 5 }` |
-| `ratelimit.max` | Maximum number of requests allowed in the time window | integer | `5` |
+| `ratelimit.interval` | Time window for requests to be considered as part of the same rate limiting bucket (in milliseconds) | integer | `60000` (1 minute) |
+| `ratelimit.max` | Maximum number of requests allowed in the time window | integer | `10` |
 | `ratelimit.prefixKey` | Prefix for the rate limiting key | string | `${userIdentifier}:${requestPath}:${ctx.request.ip}` |
 
 
@@ -381,8 +385,8 @@ module.exports = ({ env }) => ({
     config: {
       ratelimit: {
         enabled: true,
-        interval: { min: 5 },
-        max: 5,
+        interval: 60000, // 1 minute
+        max: 10,
       },
     },
   },
@@ -402,8 +406,8 @@ export default ({ env }) => ({
     config: {
       ratelimit: {
         enabled: true,
-        interval: { min: 5 },
-        max: 5,
+        interval: 60000, // 1 minute
+        max: 10,
       },
     },
   },
@@ -452,11 +456,9 @@ The following variables can be used:
 
 ### Security configuration
 
-JWTs can be verified and trusted because the information is digitally signed. To sign a token a _secret_ is required. By default Strapi generates and stores it in `/src/extensions/users-permissions/config/jwt.js`.
+JWTs can be verified and trusted because the information is digitally signed. To sign a token a _secret_ is required. By default Strapi stores it as the `JWT_SECRET` environment variable in the `.env` file.
 
-This is useful during development but for security reasons it is recommended to set a custom token via an environment variable `JWT_SECRET` when deploying to production.
-
-By default you can set a `JWT_SECRET` environment variable and it will be used as secret. If you want to use another variable you can update the configuration file.
+If you want to use a different environment variable, you can update the configuration file.
 
 <Tabs groupId="js-ts">
 
@@ -573,362 +575,22 @@ If end users can register themselves on your front-end application (see "Enable 
 
 ### API usage
 
-
 Each time an API request is sent the server checks if an `Authorization` header is present and verifies if the user making the request has access to the resource.
 
 :::note
 When you create a user without a role, or if you use the `/api/auth/local/register` route, the `authenticated` role is given to the user.
 :::
 
-#### Authentication endpoints {#authentication-endpoints}
-
-The Users & Permissions feature provides the following authentication endpoints for user management and [Content API](/cms/api/rest) access:
-
-| Method | URL | Description |
-| ------ | --- | ----------- |
-| `POST` | `/api/auth/local` | User login with email/username and password<br/>(see [`identifier` parameter](#identifier)) |
-| `POST` | `/api/auth/local/register` | [User registration](#user-registration) |
-| `POST` | `/api/auth/forgot-password` | Request password reset |
-| `POST` | `/api/auth/reset-password` | Reset password using token |
-| `GET` | `/api/auth/email-confirmation` | Confirm user email address |
-| `POST` | `/api/auth/send-email-confirmation` | Resend confirmation email |
-| `POST` | `/api/auth/change-password` | Change password (requires authentication) |
-
-##### Session management endpoints
-
-When [session management](#jwt-management-modes) is enabled (`jwtManagement: 'refresh'`), additional endpoints are available:
-
-| Method | URL | Description |
-| ------ | --- | ----------- |
-| `POST` | `/api/auth/refresh` | Refresh access token using refresh token |
-| `POST` | `/api/auth/logout` | Revoke user sessions (supports device-specific logout) |
-
-To refresh your authentication token, send the following request:
-
-<ApiCall>
-<Request title="Request example: Using the refresh endpoint">
-```
-curl -X POST http://localhost:1337/api/auth/refresh \
-  -H "Content-Type: application/json" \
-  -d '{
-    "refreshToken": "your-refresh-token"
-  }'
-```
-</Request>
-
-<Response>
-```json
-{
-  "jwt": "your-new-access-token"
-}
-```
-</Response>
-</ApiCall>
-
-To log out of all sessions, send the following request:
-
-<ApiCall>
-<Request title="Request example: Using the logout endpoint">
-
-```bash
-curl -X POST http://localhost:1337/api/auth/logout \
-  -H "Authorization: Bearer your-access-token"
-```
-
-</Request>
-</ApiCall>
-
-#### User CRUD endpoints
-
-The Users & Permissions feature also exposes a set of endpoints for managing user records directly. These endpoints are separate from the authentication endpoints and allow you to create, read, update, and delete user entries:
-
-| Method | URL | Description |
-| ------ | --- | ----------- |
-| `GET` | `/api/users` | Find all users |
-| `GET` | `/api/users/me` | Get the currently authenticated user |
-| `GET` | `/api/users/:id` | Find a specific user by ID |
-| `GET` | `/api/users/count` | Get the total number of users |
-| `POST` | `/api/users` | Create a new user |
-| `PUT` | `/api/users/:id` | Update a user by ID |
-| `DELETE` | `/api/users/:id` | Delete a user by ID |
-
-:::note
-These endpoints are protected by the role-based permission system. To access them, enable the corresponding action (e.g., `find`, `findOne`, `create`, `update`, `destroy`, `me`, `count`) for the desired role in <Icon name="gear-six" /> *Users & Permissions plugin > Roles*.
-:::
-
-##### Get the authenticated user
-
-The `GET /api/users/me` endpoint returns the user associated with the current JWT. The endpoint is useful for front-end applications that need to display user profile information after login.
-
-<ApiCall>
-<Request title="Request example: Get the authenticated user">
-
-```bash
-curl -X GET http://localhost:1337/api/users/me \
-  -H "Authorization: Bearer your-access-token"
-```
-
-</Request>
-
-<Response>
-
-```json
-{
-  "id": 1,
-  "documentId": "abc123",
-  "username": "kai",
-  "email": "kai@strapi.io",
-  "provider": "local",
-  "confirmed": true,
-  "blocked": false,
-  "createdAt": "2024-01-15T09:00:00.000Z",
-  "updatedAt": "2024-01-15T09:00:00.000Z",
-  "publishedAt": "2024-01-15T09:00:00.000Z"
-}
-```
-
-</Response>
-</ApiCall>
-
-##### Find all users
-
-The `GET /api/users` endpoint returns a list of all users. [`populate` and `filters` parameters](/cms/api/rest/parameters) can be passed as query strings.
-
-<ApiCall>
-<Request title="Request example: Find all users with their role">
-
-```bash
-curl -X GET "http://localhost:1337/api/users?populate=role" \
-  -H "Authorization: Bearer your-access-token"
-```
-
-</Request>
-
-<Response>
-
-```json
-[
-  {
-    "id": 1,
-    "documentId": "abc123",
-    "username": "kai",
-    "email": "kai@strapi.io",
-    "provider": "local",
-    "confirmed": true,
-    "blocked": false,
-    "role": {
-      "id": 1,
-      "name": "Authenticated",
-      "description": "Default role given to authenticated user.",
-      "type": "authenticated",
-      "createdAt": "2024-01-01T00:00:00.000Z",
-      "updatedAt": "2024-01-01T00:00:00.000Z"
-    },
-    "createdAt": "2024-01-15T09:00:00.000Z",
-    "updatedAt": "2024-01-15T09:00:00.000Z",
-    "publishedAt": "2024-01-15T09:00:00.000Z"
-  }
-]
-```
-
-</Response>
-</ApiCall>
-
-##### Create a user
-
-The `POST /api/users` endpoint creates a new user. Unlike `/api/auth/local/register`, this endpoint requires `create` permission for the Users & Permissions plugin.
-
-<ApiCall>
-<Request title="Request example: Create a user">
-
-```bash
-curl -X POST http://localhost:1337/api/users \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-access-token" \
-  -d '{
-    "username": "newuser",
-    "email": "newuser@strapi.io",
-    "password": "Password123",
-    "role": 1,
-    "confirmed": true
-  }'
-```
-
-</Request>
-
-<Response>
-
-```json
-{
-  "id": 2,
-  "documentId": "def456",
-  "username": "newuser",
-  "email": "newuser@strapi.io",
-  "provider": "local",
-  "confirmed": true,
-  "blocked": false,
-  "createdAt": "2024-01-16T10:00:00.000Z",
-  "updatedAt": "2024-01-16T10:00:00.000Z",
-  "publishedAt": "2024-01-16T10:00:00.000Z"
-}
-```
-
-</Response>
-</ApiCall>
-
-##### Update a user
-
-The `PUT /api/users/:id` endpoint updates an existing user by ID.
-
-<ApiCall>
-<Request title="Request example: Update a user">
-
-```bash
-curl -X PUT http://localhost:1337/api/users/2 \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-access-token" \
-  -d '{
-    "username": "updateduser"
-  }'
-```
-
-</Request>
-
-<Response>
-
-```json
-{
-  "id": 2,
-  "documentId": "def456",
-  "username": "updateduser",
-  "email": "newuser@strapi.io",
-  "provider": "local",
-  "confirmed": true,
-  "blocked": false,
-  "createdAt": "2024-01-16T10:00:00.000Z",
-  "updatedAt": "2024-01-17T11:00:00.000Z",
-  "publishedAt": "2024-01-16T10:00:00.000Z"
-}
-```
-
-</Response>
-</ApiCall>
-
-##### Delete a user
-
-The `DELETE /api/users/:id` endpoint deletes a user by ID.
-
-<ApiCall>
-<Request title="Request example: Delete a user">
-
-```bash
-curl -X DELETE http://localhost:1337/api/users/2 \
-  -H "Authorization: Bearer your-access-token"
-```
-
-</Request>
-
-<Response>
-
-```json
-{
-  "id": 2,
-  "documentId": "def456",
-  "username": "updateduser",
-  "email": "newuser@strapi.io",
-  "provider": "local",
-  "confirmed": true,
-  "blocked": false,
-  "createdAt": "2024-01-16T10:00:00.000Z",
-  "updatedAt": "2024-01-17T11:00:00.000Z",
-  "publishedAt": "2024-01-16T10:00:00.000Z"
-}
-```
-
-</Response>
-</ApiCall>
-
-#### Identifier
-
-The `identifier` parameter sent with requests can be an email or username, as in the following examples:
-
-<Tabs>
-
-<TabItem value="Axios" title="Axios">
-
-```js
-import axios from 'axios';
-
-// Request API.
-axios
-  .post('http://localhost:1337/api/auth/local', {
-    identifier: 'user@strapi.io',
-    password: 'strapiPassword',
-  })
-  .then(response => {
-    // Handle success.
-    console.log('Well done!');
-    console.log('User profile', response.data.user);
-    console.log('User token', response.data.jwt);
-  })
-  .catch(error => {
-    // Handle error.
-    console.log('An error occurred:', error.response);
-  });
-```
-
-</TabItem>
-
-<TabItem value="Postman" title="Postman">
-
-If you use **Postman**, set the **body** to **raw** and select **JSON** as your data format:
-
-```json
-{
-  "identifier": "user@strapi.io",
-  "password": "strapiPassword"
-}
-```
-
-If the request is successful you will receive the **user's JWT** in the `jwt` key:
-
-**Legacy mode response:**
-```json
-{
-    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc2OTM4MTUwLCJleHAiOjE1Nzk1MzAxNTB9.UgsjjXkAZ-anD257BF7y1hbjuY3ogNceKfTAQtzDEsU",
-    "user": {
-        "id": 1,
-        "username": "user",
-        ...
-    }
-}
-```
-
-**Session management mode response:**
-```json
-{
-    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", // Short-lived access token
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", // Long-lived refresh token
-    "user": {
-        "id": 1,
-        "username": "user",
-        ...
-    }
-}
-```
-
-</TabItem>
-</Tabs>
+The Users & Permissions feature exposes authentication, user management, and role/permission endpoints through both the REST API and the GraphQL API. Full endpoint references with request and response examples are available on the dedicated sub-pages:
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="cube" title="REST API" description="Authentication endpoints, user CRUD, roles, and permissions for the Users & Permissions plugin." link="/cms/features/users-permissions/rest-api"/>
+<CustomDocCard icon="cube" title="GraphQL API" description="Authentication mutations, user queries, and role management via GraphQL." link="/cms/features/users-permissions/graphql-api"/>
+</CustomDocCardsWrapper>
 
 #### Token usage
 
-The `jwt` may then be used for making permission-restricted API requests. To make an API request as a user place the JWT into an `Authorization` header of the `GET` request.
-
-Any request without a token will assume the `public` role permissions by default. Modify the permissions of each user's role in the admin panel.
-
-Authentication failures return a `401 (unauthorized)` error.
-
-The `token` variable is the `data.jwt` received when logging in or registering.
+The `jwt` received when logging in or registering may then be used for making permission-restricted API requests. To make an API request as a user, place the JWT into an `Authorization` header of the request using the Bearer token pattern:
 
 ```js
 import axios from 'axios';
@@ -937,7 +599,7 @@ const token = 'YOUR_TOKEN_HERE';
 
 // Request API.
 axios
-  .get('http://localhost:1337/posts', {
+  .get('http://localhost:1337/api/posts', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -952,38 +614,13 @@ axios
   });
 ```
 
-#### User registration
-
-Creating a new user in the database with a default role as 'authenticated' can be done as in the following example:
-
-```js
-import axios from 'axios';
-
-// Request API.
-// Add your own code here to customize or restrict how the public can register new users.
-axios
-  .post('http://localhost:1337/api/auth/local/register', {
-    username: 'Strapi user',
-    email: 'user@strapi.io',
-    password: 'strapiPassword',
-  })
-  .then(response => {
-    // Handle success.
-    console.log('Well done!');
-    console.log('User profile', response.data.user);
-    console.log('User token', response.data.jwt);
-  })
-  .catch(error => {
-    // Handle error.
-    console.log('An error occurred:', error.response);
-  });
-```
+Any request without a token will assume the `public` role permissions by default. Modify the permissions of each user's role in the admin panel. Authentication failures return a `401 (unauthorized)` error.
 
 #### User object in Strapi context
 
 The `user` object is available to successfully authenticated requests.
 
-The authenticated `user` object is a property of `ctx.state`.
+The authenticated `user` object is a property of `ctx.state`, as shown in the following example:
 
 ```js
 create: async ctx => {
