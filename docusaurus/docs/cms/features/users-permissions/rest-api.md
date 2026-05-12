@@ -297,9 +297,7 @@ Possible errors:
 | 400 | `"Already confirmed"` | User already confirmed their email |
 | 400 | `"Your account has been blocked by an administrator"` | Account blocked |
 
-:::caution
-This endpoint is **not** rate limited.
-:::
+This endpoint is rate limited.
 
 ### Provider authentication
 
@@ -312,6 +310,8 @@ Redirects the user to a third-party provider's login page (e.g., Google, GitHub,
 `GET /api/auth/:provider/callback`
 
 Handles the OAuth callback after the user authenticates with a third-party provider. On success, returns the same response shape as [login](#login) (jwt + user).
+
+If the username derived from the provider profile already exists, a unique username is generated automatically to avoid conflicts.
 
 ## Session management endpoints
 
