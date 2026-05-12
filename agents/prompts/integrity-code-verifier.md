@@ -169,6 +169,18 @@ Run Pass 1 first, then Pass 2 within the fetch budget.
 
 Pass 1 (surface) should consume a small fraction of the budget (typically 1–5 fetches: entry-point index + a few re-export files). The remainder is allocated to Pass 2 (deep verification).
 
+**Early stop condition:** After each Pass 2 fetch, evaluate: "Can I already confirm or falsify every high-risk item in the inventory?" If yes, stop fetching and report. Do not spend remaining budget on low-risk items just because the budget allows it.
+
+**Conditional re-fetch rule:** Make an additional fetch only when:
+- A high-priority item (Drafter `<!-- unverified -->` annotation, code example without source annotation, or specific parameter/signature claim) cannot be resolved from files already fetched.
+- A falsified finding needs a second source file to confirm the scope of the error (e.g., checking if a deprecated method has a replacement).
+- The entry-point index references a re-export file that contains signatures needed for Pass 2.
+
+Do not fetch additional files to:
+- Verify low-risk items (general scope claims, version-specific claims) when high-risk items remain unchecked.
+- Double-check a finding that is already confirmed by a single authoritative source.
+- Improve the report's completeness ratio when all high-severity items are resolved.
+
 When the budget is exhausted, stop and report what was verified vs. what remains. Flag unfinished items with their risk level. The report must state the budget used and the budget limit.
 
 ### Step 4: Report
