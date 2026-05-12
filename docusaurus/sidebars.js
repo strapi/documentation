@@ -121,9 +121,22 @@ const sidebars = {
           id: 'cms/features/sso',
         },
         {
-          type: 'doc',
+          type: 'category',
           label: 'Users & Permissions',
-          id: 'cms/features/users-permissions',
+          link: { type: 'doc', id: 'cms/features/users-permissions' },
+          collapsed: true,
+          items: [
+            {
+              type: 'doc',
+              label: 'REST API',
+              id: 'cms/features/users-permissions/rest-api',
+            },
+            {
+              type: 'doc',
+              label: 'GraphQL API',
+              id: 'cms/features/users-permissions/graphql-api',
+            },
+          ],
         },
         {
           type: 'category',
