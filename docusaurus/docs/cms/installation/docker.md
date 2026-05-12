@@ -83,6 +83,19 @@ CMD ["npm", "run", "develop"]
 You can add `RUN ["npm", "run", "build"]` before the `EXPOSE` line to pre-build the admin panel and speed up the first start. This is not required since `npm run develop` rebuilds it in watch mode.
 :::
 
+:::tip Optional: reduce image size with virtual packages
+For single-stage Dockerfiles like this dev image, you can use the `--virtual` flag to clean up build dependencies after `npm ci`, producing a leaner image:
+
+```dockerfile
+RUN apk add --no-cache --virtual .build-deps \
+    build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git \
+    && npm ci \
+    && apk del .build-deps
+```
+
+This is not needed in the production Dockerfile, which already discards build dependencies through its multi-stage build.
+:::
+
 :::note Alternative base image for restricted networks
 If your CI environment has limited network access (e.g., DNS restrictions that prevent downloading Sharp prebuilt binaries from GitHub), consider using `node:22-slim` instead of `node:22-alpine`. The Debian-based slim image avoids the need to compile native dependencies like `libvips` from source, and Sharp's prebuilt binaries work out of the box:
 
