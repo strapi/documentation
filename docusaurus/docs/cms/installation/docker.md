@@ -521,20 +521,22 @@ Sharp is the image processing library used by Strapi. It depends on `libvips`, w
 
 To resolve Sharp issues:
 
-1. Verify that your Dockerfile installs the required Alpine packages:
+1. Run `docker exec <container> node -e "require('sharp')"`. If it errors with a missing library, the runtime stage is missing the Alpine packages above. If it errors with a glibc/musl mismatch, switch to `node:22-slim` (see step 2).
+
+2. Verify that your Dockerfile installs the required Alpine packages:
 
     ```dockerfile
     RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git
     ```
 
-2. If the issue persists, switch to `node:22-slim` (Debian-based) to avoid native library **compatibility problems** <Annotation>Alpine Linux uses a lightweight C library called **musl** instead of the standard **glibc** used by Debian and Ubuntu. Some npm packages ship pre-compiled binaries built for glibc that do not work on Alpine. Switching to a Debian-based image like `node:22-slim` avoids this issue entirely.</Annotation>:
+3. If the issue persists, switch to `node:22-slim` (Debian-based) to avoid native library **compatibility problems** <Annotation>Alpine Linux uses a lightweight C library called **musl** instead of the standard **glibc** used by Debian and Ubuntu. Some npm packages ship pre-compiled binaries built for glibc that do not work on Alpine. Switching to a Debian-based image like `node:22-slim` avoids this issue entirely.</Annotation>:
 
     ```dockerfile
     FROM node:22-slim
     RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
     ```
 
-3. For ARM builds (see [below](#apple-silicon-and-arm-builds)), add the following environment variable before installing dependencies:
+4. For ARM builds (see [below](#apple-silicon-and-arm-builds)), add the following environment variable before installing dependencies:
 
     ```dockerfile
     ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
