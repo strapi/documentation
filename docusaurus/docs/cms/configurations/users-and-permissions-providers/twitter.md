@@ -19,6 +19,10 @@ The present page explains how to setup the Twitter provider for the [Users & Per
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
 :::
 
+:::caution
+Twitter has rebranded to X. The developer portal has been significantly restructured, and free-tier API access is now limited. The setup steps and URLs below may be outdated.
+:::
+
 ## Twitter configuration
 
 :::note

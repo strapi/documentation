@@ -19,6 +19,10 @@ The present page explains how to setup the Instagram provider for the [Users & P
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
 :::
 
+:::caution
+The Instagram Basic Display API was deprecated and shut down by Meta on December 4, 2024. This provider may no longer work as documented below.
+:::
+
 ## Instagram configuration
 
 :::note

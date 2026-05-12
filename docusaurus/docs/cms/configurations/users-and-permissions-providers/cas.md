@@ -13,7 +13,7 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # CAS provider setup for Users & Permissions
 
-The present page explains how to setup the Auth0 provider for the [Users & Permissions feature](/cms/features/users-permissions).
+The present page explains how to setup the CAS provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
@@ -58,7 +58,7 @@ The use of `ngrok` is not needed.
 
 ## Strapi configuration
 
-1. Visit the User & Permissions provider settings page at <ExternalLink to="http://localhost:1337/admin/plugins/users-permissions/providers" text="http://localhost:1337/admin/plugins/users-permissions/providers"/>
+1. Visit the User & Permissions provider settings page at <ExternalLink to="http://localhost:1337/admin/settings/users-permissions/providers" text="http://localhost:1337/admin/settings/users-permissions/providers"/>
 2. Click on the **CAS** provider
 3. Fill the information:
    - **Enable**: `ON`

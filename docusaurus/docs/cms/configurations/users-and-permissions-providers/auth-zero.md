@@ -22,7 +22,7 @@ You have read the [Users & Permissions providers documentation](/cms/configurati
 ## Auth0 configuration
 
 :::note
-AWS Cognito accepts the `localhost` urls. <br/>
+Auth0 accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 :::
 
