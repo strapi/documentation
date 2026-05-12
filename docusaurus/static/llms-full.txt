@@ -9573,208 +9573,1004 @@ To access the admin panel using a specific provider instead of logging in with a
 
 
 
-# Users & Permissions
-Source: https://docs.strapi.io/cms/features/users-permissions
+# Users & Permissions GraphQL API
+Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api
 
-# Users & Permissions
+# Users & Permissions GraphQL API
 
-The Users & Permissions feature allows the management of the end-users  of a Strapi project. It provides a full authentication process based on JSON Web Tokens (JWT) to protect your API, and an access-control list (ACL) strategy that enables you to manage permissions between groups of users.
+This page documents all GraphQL queries and mutations provided by the Users & Permissions plugin. The [GraphQL plugin](/cms/plugins/graphql) must be installed. For configuration details, see the main [Users & Permissions page](/cms/features/users-permissions).
 
-</IdentityCard>
+## Authentication
 
-## Admin panel configuration
+Authentication mutations handle login, registration, and password management. Public mutations do not require an Authorization header.
 
-The Users & Permissions feature is configured from both the admin panel settings, and via the code base.
+### Login
 
-### Roles
+The `login` mutation authenticates a user and returns a JWT token:
 
-The Users & Permissions feature allows creating and managing roles for end users, to configure what they can have access to.
+```graphql
+mutation {
+  login(input: { identifier: "user@example.com", password: "yourPassword" }) {
+    jwt
+    user {
+      id
+      documentId
+      username
+      email
+      confirmed
+      blocked
+    }
+  }
+}
+```
 
-#### Creating a new role
+Input type `UsersPermissionsLoginInput`:
 
-**Path:** 
+- `identifier` (String!) -- email or username
+- `password` (String!)
+- `provider` (String, defaults to "local")
 
-<!---
-:::tip
-Click the search button 
+Returns `UsersPermissionsLoginPayload`: `jwt` (String), `user` (UsersPermissionsMe)
 
-</Tabs>
+Auth: Public
 
-### Registration configuration
+### Register
 
-If you have added any additional fields in your User **model**  that need to be accepted on registration, you need to add them to the list of allowed fields in the `config.register` object of [the `/config/plugins` file](/cms/configurations/plugins), otherwise they will not be accepted.
+The `register` mutation creates a new user account and returns a JWT token:
 
-The following example shows how to ensure a field called "nickname" is accepted by the API on user registration:
+```graphql
+mutation {
+  register(input: { username: "newuser", email: "new@example.com", password: "Password123!" }) {
+    jwt
+    user {
+      id
+      documentId
+      username
+      email
+    }
+  }
+}
+```
 
-</Tabs>
+Input type `UsersPermissionsRegisterInput`:
 
-### Rate limiting configuration
+- `username` (String!)
+- `email` (String!)
+- `password` (String!)
 
-Rate limiting is applied to authentication and registration endpoints to prevent abuse. The following parameters can be configured to change its behavior. Additional configuration options are provided by the 
+Returns `UsersPermissionsLoginPayload`
 
-</Tabs>
-
-### Email template configuration {#templating-emails}
-
-By default this plugin comes with two templates: reset password and email address confirmation. The templates use 
-
-</Tabs>
-
-### Security configuration
-
-JWTs can be verified and trusted because the information is digitally signed. To sign a token a _secret_ is required. By default Strapi generates and stores it in `/src/extensions/users-permissions/config/jwt.js`.
-
-This is useful during development but for security reasons it is recommended to set a custom token via an environment variable `JWT_SECRET` when deploying to production.
-
-By default you can set a `JWT_SECRET` environment variable and it will be used as secret. If you want to use another variable you can update the configuration file.
-
-</Tabs>
-
-#### Creating a custom callback validator {#creating-a-custom-password-validation}
-
-By default, Strapi SSO only redirects to the redirect URL that is exactly equal to the url in the configuration:
-
-## Usage
-
-The Users & Permissions feature can be used both via the admin panel, to create new end-user accounts, and via the APIs.
-
-### Admin panel usage
-
-**Path to use the feature:** 
-
-</ApiCall>
-
-To log out of all sessions, send the following request:
-
-</ApiCall>
-
-#### User CRUD endpoints
-
-The Users & Permissions feature also exposes a set of endpoints for managing user records directly. These endpoints are separate from the authentication endpoints and allow you to create, read, update, and delete user entries:
-
-| Method | URL | Description |
-| ------ | --- | ----------- |
-| `GET` | `/api/users` | Find all users |
-| `GET` | `/api/users/me` | Get the currently authenticated user |
-| `GET` | `/api/users/:id` | Find a specific user by ID |
-| `GET` | `/api/users/count` | Get the total number of users |
-| `POST` | `/api/users` | Create a new user |
-| `PUT` | `/api/users/:id` | Update a user by ID |
-| `DELETE` | `/api/users/:id` | Delete a user by ID |
+Auth: Public
 
 :::note
-These endpoints are protected by the role-based permission system. To access them, enable the corresponding action (e.g., `find`, `findOne`, `create`, `update`, `destroy`, `me`, `count`) for the desired role in 
+Only `username`, `email`, and `password` are accepted by default. Additional fields require `register.allowedFields` configuration.
+:::
 
-</ApiCall>
+### Forgot password
 
-##### Find all users
+The `forgotPassword` mutation sends a password reset email to the user:
 
-The `GET /api/users` endpoint returns a list of all users. [`populate` and `filters` parameters](/cms/api/rest/parameters) can be passed as query strings.
+```graphql
+mutation {
+  forgotPassword(email: "user@example.com") {
+    ok
+  }
+}
+```
 
-</ApiCall>
+Input: `email` (String!) -- direct argument, not wrapped in an input type.
 
-##### Create a user
+Returns `UsersPermissionsPasswordPayload`: `ok` (Boolean!)
 
-The `POST /api/users` endpoint creates a new user. Unlike `/api/auth/local/register`, this endpoint requires `create` permission for the Users & Permissions plugin.
+Auth: Public
 
-</ApiCall>
+### Reset password
 
-##### Update a user
+The `resetPassword` mutation sets a new password using the token received by email:
 
-The `PUT /api/users/:id` endpoint updates an existing user by ID.
+```graphql
+mutation {
+  resetPassword(code: "resetTokenFromEmail", password: "NewPassword123!", passwordConfirmation: "NewPassword123!") {
+    jwt
+    user {
+      id
+      username
+      email
+    }
+  }
+}
+```
 
-</ApiCall>
+Input (direct arguments):
 
-##### Delete a user
+- `code` (String!) -- reset token from email
+- `password` (String!)
+- `passwordConfirmation` (String!)
 
-The `DELETE /api/users/:id` endpoint deletes a user by ID.
+Returns `UsersPermissionsLoginPayload`
 
-</ApiCall>
+Auth: Public
 
-#### Identifier
+### Change password
 
-The `identifier` parameter sent with requests can be an email or username, as in the following examples:
+The `changePassword` mutation updates the password for the currently authenticated user:
 
-</Tabs>
+```graphql
+mutation {
+  changePassword(currentPassword: "OldPassword123!", password: "NewPassword456!", passwordConfirmation: "NewPassword456!") {
+    jwt
+    user {
+      id
+      username
+      email
+    }
+  }
+}
+```
 
-#### Token usage
+Requires an Authorization header with a Bearer token.
 
-The `jwt` may then be used for making permission-restricted API requests. To make an API request as a user place the JWT into an `Authorization` header of the `GET` request.
+Input (direct arguments):
 
-Any request without a token will assume the `public` role permissions by default. Modify the permissions of each user's role in the admin panel.
+- `currentPassword` (String!)
+- `password` (String!)
+- `passwordConfirmation` (String!)
 
-Authentication failures return a `401 (unauthorized)` error.
+Returns `UsersPermissionsLoginPayload`
 
-The `token` variable is the `data.jwt` received when logging in or registering.
+Auth: Authenticated
 
-```js
+### Email confirmation
 
-const token = 'YOUR_TOKEN_HERE';
+The `emailConfirmation` mutation confirms a user's email address using the token received by email:
 
-// Request API.
-axios
-  .get('http://localhost:1337/posts', {
-    headers: {
-      Authorization: `Bearer ${token}`,
+```graphql
+mutation {
+  emailConfirmation(confirmation: "confirmationTokenFromEmail") {
+    jwt
+    user {
+      id
+      username
+      email
+      confirmed
+    }
+  }
+}
+```
+
+Input: `confirmation` (String!)
+
+Returns `UsersPermissionsLoginPayload`
+
+Auth: Public
+
+:::note
+Unlike the REST equivalent (which redirects), the GraphQL mutation returns a JWT and user object directly.
+:::
+
+## User queries and mutations
+
+These operations retrieve and manage user records. They require the corresponding permission to be enabled for the requesting user's role.
+
+### Get authenticated user (me query)
+
+The `me` query returns the profile of the currently authenticated user:
+
+```graphql
+query {
+  me {
+    id
+    documentId
+    username
+    email
+    confirmed
+    blocked
+    role {
+      id
+      name
+      description
+      type
+    }
+  }
+}
+```
+
+Requires an Authorization header. Returns `UsersPermissionsMe` type.
+
+### Create a user
+
+The `createUsersPermissionsUser` mutation creates a new user record:
+
+```graphql
+mutation {
+  createUsersPermissionsUser(data: { username: "newuser", email: "new@example.com", password: "Password123!" }) {
+    data {
+      documentId
+      username
+      email
+    }
+  }
+}
+```
+
+Input: `UsersPermissionsUserInput` (auto-generated from User content-type schema, with `password` field added)
+
+Auth: Requires `plugin::users-permissions.user.create` permission
+
+### Update a user
+
+The `updateUsersPermissionsUser` mutation updates an existing user record:
+
+```graphql
+mutation {
+  updateUsersPermissionsUser(id: "documentId123", data: { username: "updatedname" }) {
+    data {
+      documentId
+      username
+      email
+    }
+  }
+}
+```
+
+Auth: Requires `plugin::users-permissions.user.update` permission
+
+### Delete a user
+
+The `deleteUsersPermissionsUser` mutation removes a user record:
+
+```graphql
+mutation {
+  deleteUsersPermissionsUser(id: "documentId123") {
+    data {
+      documentId
+      username
+    }
+  }
+}
+```
+
+Auth: Requires `plugin::users-permissions.user.destroy` permission
+
+## Role mutations
+
+Role mutations manage end-user roles. They return `{ ok: true }` on success (not the role data).
+
+### Create a role
+
+The `createUsersPermissionsRole` mutation creates a new role:
+
+```graphql
+mutation {
+  createUsersPermissionsRole(data: { name: "Editor", description: "Can edit content" }) {
+    ok
+  }
+}
+```
+
+Auth: Requires `plugin::users-permissions.role.createRole` permission
+
+### Update a role
+
+The `updateUsersPermissionsRole` mutation updates an existing role:
+
+```graphql
+mutation {
+  updateUsersPermissionsRole(id: "1", data: { name: "Senior Editor", description: "Can edit and publish" }) {
+    ok
+  }
+}
+```
+
+Auth: Requires `plugin::users-permissions.role.updateRole` permission
+
+### Delete a role
+
+The `deleteUsersPermissionsRole` mutation removes a role:
+
+```graphql
+mutation {
+  deleteUsersPermissionsRole(id: "3") {
+    ok
+  }
+}
+```
+
+Auth: Requires `plugin::users-permissions.role.deleteRole` permission
+
+:::note
+The Public role cannot be deleted.
+:::
+
+## Types reference
+
+This section lists the key GraphQL types used across Users & Permissions operations.
+
+### Input types
+
+| Type | Fields | Used by |
+|------|--------|---------|
+| `UsersPermissionsLoginInput` | `identifier` (String!), `password` (String!), `provider` (String) | `login` mutation |
+| `UsersPermissionsRegisterInput` | `username` (String!), `email` (String!), `password` (String!) | `register` mutation |
+
+### Response types
+
+| Type | Fields | Used by |
+|------|--------|---------|
+| `UsersPermissionsLoginPayload` | `jwt` (String), `user` (UsersPermissionsMe!) | `login`, `register`, `resetPassword`, `changePassword`, `emailConfirmation` |
+| `UsersPermissionsPasswordPayload` | `ok` (Boolean!) | `forgotPassword` |
+| `UsersPermissionsMe` | `id` (ID!), `documentId` (ID!), `username` (String!), `email` (String), `confirmed` (Boolean), `blocked` (Boolean), `role` (UsersPermissionsMeRole) | `me` query, nested in login payload |
+| `UsersPermissionsMeRole` | `id` (ID!), `name` (String!), `description` (String), `type` (String) | Nested in `UsersPermissionsMe` |
+
+
+
+# Users & Permissions REST API
+Source: https://docs.strapi.io/cms/features/users-permissions/rest-api
+
+# Users & Permissions REST API
+
+The Users & Permissions plugin exposes a set of REST API endpoints for authentication, user management, and role/permission management. These endpoints are separate from the standard content-type CRUD endpoints and have their own response shapes. For a general overview of the plugin's features and configuration, see the [Users & Permissions introduction](/cms/features/users-permissions).
+
+All endpoints use the `/api` prefix. For example, if your Strapi server runs at `http://localhost:1337`, the login endpoint is `http://localhost:1337/api/auth/local`.
+
+## Authentication
+
+Authentication endpoints handle login, registration, and password management. Most of these endpoints are public by default and do not require a Bearer token.
+
+### Login
+
+`POST /api/auth/local`
+
+Authenticates a user with their identifier (email or username) and password, returning a JWT and the user object.
+
+Request body:
+
+```json
+{
+  "identifier": "user@example.com",
+  "password": "yourPassword"
+}
+```
+
+Example request:
+
+```bash
+curl -X POST http://localhost:1337/api/auth/local \
+  -H "Content-Type: application/json" \
+  -d '{"identifier": "user@example.com", "password": "yourPassword"}'
+```
+
+Example response (200):
+
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "documentId": "x74detpqybxw0bn6ormua5g2",
+    "username": "testuser1",
+    "email": "user@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
+}
+```
+
+Possible errors:
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| 400 | `"Invalid identifier or password"` | Wrong credentials |
+| 400 | `"Your account email is not confirmed"` | Email confirmation required but not completed |
+| 400 | `"Your account has been blocked by an administrator"` | Account blocked |
+
+This endpoint is rate limited (default: 10 requests per 60 seconds).
+
+### Register
+
+`POST /api/auth/local/register`
+
+Creates a new user account and returns a JWT along with the user object.
+
+Request body:
+
+```json
+{
+  "username": "newuser",
+  "email": "newuser@example.com",
+  "password": "Password123!"
+}
+```
+
+Example request:
+
+```bash
+curl -X POST http://localhost:1337/api/auth/local/register \
+  -H "Content-Type: application/json" \
+  -d '{"username": "newuser", "email": "newuser@example.com", "password": "Password123!"}'
+```
+
+Example response (200):
+
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 2,
+    "documentId": "xjpaytstw1gm7wdfoc6c2k13",
+    "username": "newuser",
+    "email": "newuser@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
+}
+```
+
+:::note
+Only `username`, `email`, and `password` are accepted in the request body by default. To allow additional fields (e.g., a `fullName` field you added to the User content-type), you must explicitly list them in the `register.allowedFields` configuration. See [Registration configuration](/cms/features/users-permissions#registration-configuration) for details.
+
+When email confirmation is enabled, the response contains only the user object without a JWT -- the user must confirm their email before they can log in.
+
+The newly registered user is assigned the default role (typically "Authenticated").
+:::
+
+Possible errors:
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| 400 | `"Email or Username are already taken"` | Duplicate email or username |
+| 400 | `"Invalid parameters: fieldName"` | Extra fields not listed in `allowedFields` |
+| 400 | `"Register action is currently disabled"` | Registration disabled in admin settings |
+
+This endpoint is rate limited.
+
+### Forgot password
+
+`POST /api/auth/forgot-password`
+
+Sends a password reset email to the specified address. Requires an email provider to be configured.
+
+Request body:
+
+```json
+{
+  "email": "user@example.com"
+}
+```
+
+Example request:
+
+```bash
+curl -X POST http://localhost:1337/api/auth/forgot-password \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com"}'
+```
+
+Example response (200):
+
+```json
+{
+  "ok": true
+}
+```
+
+:::note
+This endpoint always returns `{ "ok": true }` regardless of whether the email address exists in the system. This is intentional to prevent user enumeration attacks.
+:::
+
+This endpoint is rate limited.
+
+### Reset password
+
+`POST /api/auth/reset-password`
+
+Resets a user's password using a token received by email. All three fields are required.
+
+Request body:
+
+```json
+{
+  "code": "resetTokenFromEmail",
+  "password": "NewPassword123!",
+  "passwordConfirmation": "NewPassword123!"
+}
+```
+
+Example request:
+
+```bash
+curl -X POST http://localhost:1337/api/auth/reset-password \
+  -H "Content-Type: application/json" \
+  -d '{"code": "resetTokenFromEmail", "password": "NewPassword123!", "passwordConfirmation": "NewPassword123!"}'
+```
+
+Example response (200): Same shape as the [login](#login) response (jwt + user).
+
+Possible errors:
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| 400 | `"passwordConfirmation is a required field"` | Missing `passwordConfirmation` |
+| 400 | `"Incorrect code provided"` | Invalid or expired reset token |
+
+This endpoint is rate limited.
+
+### Change password
+
+`POST /api/auth/change-password`
+
+Changes the password for the currently authenticated user. Requires a valid Bearer token. All three fields are required.
+
+Request body:
+
+```json
+{
+  "currentPassword": "OldPassword123!",
+  "password": "NewPassword456!",
+  "passwordConfirmation": "NewPassword456!"
+}
+```
+
+Example request:
+
+```bash
+curl -X POST http://localhost:1337/api/auth/change-password \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"currentPassword": "OldPassword123!", "password": "NewPassword456!", "passwordConfirmation": "NewPassword456!"}'
+```
+
+Example response (200): Same shape as the [login](#login) response (jwt + user).
+
+Possible errors:
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| 400 | `"passwordConfirmation is a required field"` | Missing `passwordConfirmation` |
+| 400 | `"The provided current password is invalid"` | Wrong current password |
+| 400 | New password must differ from current password | Same password reused |
+
+This endpoint is rate limited.
+
+### Email confirmation
+
+`GET /api/auth/email-confirmation`
+
+Confirms a user's email address using a token from the confirmation email.
+
+Query parameter: `confirmation` -- the token received in the confirmation email.
+
+Example request:
+
+```bash
+curl -G http://localhost:1337/api/auth/email-confirmation \
+  --data-urlencode "confirmation=confirmationTokenHere"
+```
+
+After confirming the email, Strapi redirects the user to the URL configured in the admin panel under Settings > Users & Permissions > Advanced Settings > "Redirection url".
+
+### Send email confirmation
+
+`POST /api/auth/send-email-confirmation`
+
+Resends the confirmation email to a user who has not yet confirmed their email address.
+
+Request body:
+
+```json
+{
+  "email": "user@example.com"
+}
+```
+
+Example request:
+
+```bash
+curl -X POST http://localhost:1337/api/auth/send-email-confirmation \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com"}'
+```
+
+Example response (200):
+
+```json
+{
+  "email": "user@example.com",
+  "sent": true
+}
+```
+
+Possible errors:
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| 400 | `"Already confirmed"` | User already confirmed their email |
+| 400 | `"Your account has been blocked by an administrator"` | Account blocked |
+
+:::caution
+This endpoint is **not** rate limited.
+:::
+
+### Provider authentication
+
+`GET /api/connect/:provider`
+
+Redirects the user to a third-party provider's login page (e.g., Google, GitHub, Discord). Replace `:provider` with the provider name. See [Setting up providers](/cms/configurations/users-and-permissions-providers) for configuration instructions.
+
+### Provider callback
+
+`GET /api/auth/:provider/callback`
+
+Handles the OAuth callback after the user authenticates with a third-party provider. On success, returns the same response shape as [login](#login) (jwt + user).
+
+## Session management endpoints
+
+When session management is enabled (`jwtManagement: 'refresh'` in the plugin configuration), these additional endpoints become available. They return 404 when the default legacy JWT mode is active.
+
+### Refresh token
+
+`POST /api/auth/refresh`
+
+Exchanges a refresh token for a new access token. The old refresh token is invalidated and a new one is returned (token rotation).
+
+Request body:
+
+```json
+{
+  "refreshToken": "yourRefreshToken"
+}
+```
+
+Example request:
+
+```bash
+curl -X POST http://localhost:1337/api/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d '{"refreshToken": "yourRefreshToken"}'
+```
+
+Example response (200):
+
+```json
+{
+  "jwt": "newAccessToken"
+}
+```
+
+### Logout
+
+`POST /api/auth/logout`
+
+Revokes all sessions for the authenticated user. Requires a valid Bearer token.
+
+Example request:
+
+```bash
+curl -X POST http://localhost:1337/api/auth/logout \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Example response (200):
+
+```json
+{
+  "ok": true
+}
+```
+
+## Users
+
+User management endpoints handle CRUD operations on end-user records. Each endpoint requires the corresponding permission to be enabled for the user's role in the admin panel (Settings > Users & Permissions > Roles).
+
+:::caution Response format
+User endpoints return bare JSON objects (not wrapped in a `data` key), unlike standard Strapi content-type endpoints.
+:::
+
+### Get current user
+
+`GET /api/users/me`
+
+Returns the user associated with the provided JWT. Requires authentication.
+
+Example request:
+
+```bash
+curl http://localhost:1337/api/users/me \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Example response (200):
+
+```json
+{
+  "id": 1,
+  "documentId": "x74detpqybxw0bn6ormua5g2",
+  "username": "testuser1",
+  "email": "user@example.com",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-03-15T10:00:00.000Z",
+  "updatedAt": "2024-03-15T10:00:00.000Z",
+  "publishedAt": "2024-03-15T10:00:00.000Z"
+}
+```
+
+### List users
+
+`GET /api/users`
+
+Returns a list of users. Supports `filters`, `sort`, and `pagination` query parameters.
+
+Example request:
+
+```bash
+curl http://localhost:1337/api/users \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Example response (200): An array of user objects.
+
+### Get a user
+
+`GET /api/users/:id`
+
+Returns a single user by their integer `id`.
+
+Example request:
+
+```bash
+curl http://localhost:1337/api/users/1 \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Example response (200): A user object.
+
+### Count users
+
+`GET /api/users/count`
+
+Returns the total number of users. Supports the `filters` query parameter.
+
+Example request:
+
+```bash
+curl http://localhost:1337/api/users/count \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Example response (200): A bare integer, for example:
+
+```json
+42
+```
+
+### Create a user
+
+`POST /api/users`
+
+Creates a new user. If `role` is omitted, the default role is assigned.
+
+Request body:
+
+```json
+{
+  "username": "newuser",
+  "email": "newuser@example.com",
+  "password": "Password123!",
+  "role": 1,
+  "confirmed": true
+}
+```
+
+Example request:
+
+```bash
+curl -X POST http://localhost:1337/api/users \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"username": "newuser", "email": "newuser@example.com", "password": "Password123!", "role": 1, "confirmed": true}'
+```
+
+Example response (201): A user object with the populated role.
+
+### Update a user
+
+`PUT /api/users/:id`
+
+Updates an existing user. Only include the fields you want to change.
+
+Example request:
+
+```bash
+curl -X PUT http://localhost:1337/api/users/1 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"username": "updateduser"}'
+```
+
+Example response (200): The updated user object.
+
+Possible errors:
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| 404 | `"User not found"` | No user with the given `id` |
+| 400 | `"Username already taken"` or `"Email already taken"` | Duplicate value |
+
+### Delete a user
+
+`DELETE /api/users/:id`
+
+Deletes a user by their integer `id`.
+
+Example request:
+
+```bash
+curl -X DELETE http://localhost:1337/api/users/1 \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Example response (200): The deleted user object.
+
+## Roles
+
+Role endpoints manage end-user roles and their associated permissions. These endpoints use the `/api/users-permissions/` prefix, not the standard `/api/` prefix used by content-type endpoints.
+
+### List roles
+
+`GET /api/users-permissions/roles`
+
+Returns all available roles with user counts.
+
+Example request:
+
+```bash
+curl http://localhost:1337/api/users-permissions/roles \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Example response (200):
+
+```json
+{
+  "roles": [
+    {
+      "id": 1,
+      "name": "Authenticated",
+      "description": "Default role given to authenticated user.",
+      "type": "authenticated",
+      "nb_users": 2
     },
-  })
-  .then(response => {
-    // Handle success.
-    console.log('Data: ', response.data);
-  })
-  .catch(error => {
-    // Handle error.
-    console.log('An error occurred:', error.response);
-  });
+    {
+      "id": 2,
+      "name": "Public",
+      "description": "Default role given to unauthenticated user.",
+      "type": "public",
+      "nb_users": 0
+    }
+  ]
+}
 ```
 
-#### User registration
+### Get a role
 
-Creating a new user in the database with a default role as 'authenticated' can be done as in the following example:
+`GET /api/users-permissions/roles/:id`
 
-```js
+Returns a single role by `id`, including its full permissions tree.
 
-// Request API.
-// Add your own code here to customize or restrict how the public can register new users.
-axios
-  .post('http://localhost:1337/api/auth/local/register', {
-    username: 'Strapi user',
-    email: 'user@strapi.io',
-    password: 'strapiPassword',
-  })
-  .then(response => {
-    // Handle success.
-    console.log('Well done!');
-    console.log('User profile', response.data.user);
-    console.log('User token', response.data.jwt);
-  })
-  .catch(error => {
-    // Handle error.
-    console.log('An error occurred:', error.response);
-  });
+Example request:
+
+```bash
+curl http://localhost:1337/api/users-permissions/roles/1 \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
-#### User object in Strapi context
+Example response (200): A role object with a nested `permissions` structure mapping plugins to controllers to actions.
 
-The `user` object is available to successfully authenticated requests.
+### Create a role
 
-The authenticated `user` object is a property of `ctx.state`.
+`POST /api/users-permissions/roles`
 
-```js
-create: async ctx => {
-  const { id } = ctx.state.user;
+Creates a new role.
 
-  const depositObj = {
-    ...ctx.request.body,
-    depositor: id,
-  };
+Request body:
 
-  const data = await strapi.services.deposit.add(depositObj);
-
-  // Send 201 `created`
-  ctx.created(data);
-};
+```json
+{
+  "name": "Editor",
+  "description": "Can edit content",
+  "type": "editor"
+}
 ```
+
+Example request:
+
+```bash
+curl -X POST http://localhost:1337/api/users-permissions/roles \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"name": "Editor", "description": "Can edit content", "type": "editor"}'
+```
+
+Example response (200):
+
+```json
+{
+  "ok": true
+}
+```
+
+### Update a role
+
+`PUT /api/users-permissions/roles/:id`
+
+Updates an existing role.
+
+Example request:
+
+```bash
+curl -X PUT http://localhost:1337/api/users-permissions/roles/1 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"description": "Updated description"}'
+```
+
+Example response (200):
+
+```json
+{
+  "ok": true
+}
+```
+
+### Delete a role
+
+`DELETE /api/users-permissions/roles/:id`
+
+Deletes a role by `id`. The Public role cannot be deleted. When a role is deleted, users assigned to it are reassigned to the Public role.
+
+Example request:
+
+```bash
+curl -X DELETE http://localhost:1337/api/users-permissions/roles/3 \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Example response (200):
+
+```json
+{
+  "ok": true
+}
+```
+
+## Permissions
+
+The permissions endpoint returns the complete permission tree, showing which actions are available across all plugins and content-types.
+
+### List permissions
+
+`GET /api/users-permissions/permissions`
+
+Returns a nested object mapping plugins to controllers to actions.
+
+Example request:
+
+```bash
+curl http://localhost:1337/api/users-permissions/permissions \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Example response (200): A nested `permissions` object where keys are plugin names, sub-keys are controller names, and values contain the available actions with their `enabled` status and `policy` information.
 
 
 
