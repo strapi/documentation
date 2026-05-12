@@ -337,6 +337,10 @@ Production images differ from development images in 3 key ways: they use multi-s
 
 The following `Dockerfile.prod` uses a multi-stage build. The first stage installs all dependencies, including devDependencies needed for the build step, and builds the admin panel. The second stage copies only production assets into the final image.
 
+:::caution
+Do not set `NODE_ENV=production` before `npm ci`. Doing so causes npm to skip `devDependencies`, which Strapi needs to compile the admin panel. The build may appear to succeed but produce a broken or incomplete admin bundle.
+:::
+
 ```dockerfile title="./Dockerfile.prod"
 # Build stage
 FROM node:22-alpine AS build
