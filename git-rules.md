@@ -86,7 +86,22 @@ Pushing and PRs
 - When pushing a new branch, set upstream: `git push -u origin <branch>` (this does not create a PR).
 - Open PRs only when explicitly requested and follow the title/description rules above.
 - Titles must not start with feat:/chore:/fix:; use action verbs or clear feature nouns.
-- PR descriptions must start with “This PR …” and remain minimal; bullets allowed; no sections.
+- PR descriptions must start with “This PR ...” and remain minimal; bullets allowed; no sections.
+- No headings (##), no “Test plan” section, no checklists. Flat text only.
+- Keep it short: 1-3 sentences or a short bullet list summarizing what changed and why.
+- Issue references go at the end: “Fixes #2143”.
+
+PR Description Examples (good)
+- This PR adds conditional retrieval rules to the Code Verifier and Coherence Checker agent prompts, and a new “separate facts from prose” behavioral note to the Drafter.
+- This PR documents the new `hasPublishedVersion` parameter added in strapi/strapi#2847.
+  - Adds parameter to the findMany() parameters table
+  - Updates the filtering description
+  - Adds usage tip
+
+PR Description Anti-examples (and why)
+- “## Summary\n\n## Test plan\n- [ ] Run tests” -- headings and test plan are not allowed
+- “Updated docs” -- too vague; say what changed
+- Empty description -- always include at least one sentence
 
 Optional Validation Hints
 - Disallow prefixes: `^(?:feat|chore|fix)\s*:`
