@@ -745,6 +745,10 @@ The `public` middleware is a static file serving middleware, based on <ExternalL
 |----------------|-----------------------------------------------------|-----------|---------------|
 | `maxAge`       | Cache-control max-age directive, in milliseconds    | `Integer` | `60000`       |
 
+:::note
+Use the camelCase `maxAge` key in `config`, matching the table. Strapi 5 reads only this field from your `strapi::public` middleware `config` and passes it to `koa-static` (see `packages/core/core/src/middlewares/public.ts`); `defer` is fixed inside the core middleware, so you do not set it here.
+:::
+
 :::tip
 You can customize the path of the public folder by editing the [server configuration file](/cms/configurations/server.md#available-options).
 :::
@@ -763,8 +767,7 @@ module.exports = [
   {
     name: 'strapi::public',
     config: {
-      defer: true,
-      index: env('INDEX_PATH', 'index-dev.html')
+      maxAge: 86400000, // 1 day in milliseconds
     },
   },
   // ...
@@ -782,8 +785,7 @@ export default [
   {
     name: 'strapi::public',
     config: {
-      defer: true,
-      index: env('INDEX_PATH', 'index-dev.html')
+      maxAge: 86400000, // 1 day in milliseconds
     },
   },
   // ...
