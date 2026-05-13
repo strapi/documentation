@@ -6107,7 +6107,7 @@ Generic implementation example:
 
 </Tabs>
 
-This only allows a `GET` request on the `/restaurants` path from the core `find` [controller](/cms/backend-customization/controllers) without authentication. When you reference custom controller actions in custom routers, prefer the fully‑qualified `api::<api-name>.<controllerName>.<actionName>` form for clarity (e.g., `api::restaurant.restaurant.review`).
+This only allows a `GET` request on the `/restaurants` path from the core `find` [controller](/cms/backend-customization/controllers) without authentication. When you reference custom controller actions in custom routers, prefer the fully-qualified `api::<api-name>.<controllerName>.<actionName>` form for clarity (e.g., `api::restaurant.restaurant.review`).
 
 ### Creating custom routers
 
@@ -6165,6 +6165,18 @@ Both [core routers](#configuring-core-routers) and [custom routers](#creating-cu
 </TabItem>
 
 </Tabs>
+
+<details>
+
+<summary>Applying middlewares to all core routes of a content-type</summary>
+
+`createCoreRouter` attaches `middlewares` per action. To run the same middleware on every default Content API action (`find`, `findOne`, `create`, `update`, `delete`), list it under each key in `config`, or build the object once:
+
+</Tabs>
+
+If you use `only` or `except`, build the `actions` array to match the routes you actually register so you do not attach middlewares to disabled handlers.
+
+</details>
 
 :::tip Centralizing population logic
 Route-level middlewares are the recommended place to enforce consistent population rules across your API. This prevents accidental over-fetching and ensures predictable response sizes. See 

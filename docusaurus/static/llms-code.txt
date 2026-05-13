@@ -14295,6 +14295,35 @@ export default  {
 };
 ```
 
+Language: JavaScript
+File path: ./src/api/restaurant/routes/restaurant.js
+
+```js
+const { createCoreRouter } = require('@strapi/strapi').factories;
+
+const audit = ['global::audit-log'];
+const actions = ['find', 'findOne', 'create', 'update', 'delete'];
+
+module.exports = createCoreRouter('api::restaurant.restaurant', {
+  config: Object.fromEntries(actions.map((action) => [action, { middlewares: audit }])),
+});
+```
+
+---
+Language: TypeScript
+File path: ./src/api/restaurant/routes/restaurant.ts
+
+```ts
+import { factories } from '@strapi/strapi';
+
+const audit = ['global::audit-log'] as const;
+const actions = ['find', 'findOne', 'create', 'update', 'delete'] as const;
+
+export default factories.createCoreRouter('api::restaurant.restaurant', {
+  config: Object.fromEntries(actions.map((action) => [action, { middlewares: [...audit] }])),
+});
+```
+
 
 ## Public routes
 Description: In some scenarios, it can be useful to have a route publicly available and control the access outside of the normal Strapi authentication system.
