@@ -6,6 +6,15 @@
 
 :root {
   --custom-selection-background-color: var(--strapi-primary-600);
+  --doc-content-max-width: 720px;
+}
+
+[data-content-width="wide"] {
+  --doc-content-max-width: 960px;
+}
+
+[data-content-width="max"] {
+  --doc-content-max-width: 100%;
 }
 
 ::selection {
@@ -35,11 +44,12 @@ body {
 main {
   article:first-child:not(.col):not(.custom-doc-card),
   article:first-child:not(.col) + nav {
-    max-width: 640px;
+    max-width: var(--doc-content-max-width);
     padding-left: 0 !important;
     padding-right: 0 !important;
     margin-left: auto;
     margin-right: auto;
+    transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
@@ -52,13 +62,13 @@ main {
   main {
     article:first-child:not(.col):not(.custom-doc-card),
     article:first-child:not(.col) + nav:not(.pagination-nav) {
-      max-width: 720px;
+      max-width: var(--doc-content-max-width);
       padding-left: 40px !important;
       padding-right: 40px !important;
     }
 
     article:first-child:not(.col) + nav.pagination-nav {
-      max-width: 720px;
+      max-width: var(--doc-content-max-width);
       padding-left: 0 !important;
       padding-right: 0 !important;
     }
@@ -74,6 +84,12 @@ main {
    */
   [class*="docMainContainer"] .row:not(:has(.col--3)) {
     padding-right: 280px;
+  }
+
+  /** When wide or max width, remove the TOC-placeholder padding */
+  [data-content-width="wide"] [class*="docMainContainer"] .row:not(:has(.col--3)),
+  [data-content-width="max"] [class*="docMainContainer"] .row:not(:has(.col--3)) {
+    padding-right: 0;
   }
 }
 
@@ -122,12 +138,36 @@ main:has(.api-endpoint-block) {
     > .tabs-container, > .tabs,
     > header {
       max-width: 50%;
+      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /** Endpoint blocks break out to full width */
     > .api-endpoint-block,
     > .api-call {
       max-width: 100% !important;
+    }
+  }
+
+  /** Width toggle overrides for API endpoint pages */
+  [data-content-width="wide"] main:has(.api-endpoint-block) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header {
+      max-width: 70%;
+    }
+  }
+
+  [data-content-width="max"] main:has(.api-endpoint-block) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header {
+      max-width: 100%;
     }
   }
 
@@ -138,7 +178,8 @@ main:has(.api-endpoint-block) {
     > [class*="admonition"], > nav,
     > .tabs-container, > .tabs,
     > header {
-      max-width: 720px;
+      max-width: var(--doc-content-max-width);
+      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     > .api-call {

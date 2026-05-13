@@ -90,10 +90,7 @@
   }
 
   :global(.docsearch-btn-keys) {
-    display: flex;
-    align-items: center;
-    gap: 1px;
-    flex-shrink: 0;
+    display: none;
   }
 
   :global(.docsearch-btn-key) {

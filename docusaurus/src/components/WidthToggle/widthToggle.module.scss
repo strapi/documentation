@@ -1,0 +1,58 @@
+@use '../../scss/mixins' as *;
+
+.widthToggle {
+  display: none;
+
+  @include medium-up {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0;
+    border-radius: 6px;
+    background: transparent;
+    position: sticky;
+    top: calc(var(--ifm-navbar-height, 3.75rem) + 12px);
+    z-index: 1;
+    float: right;
+    margin-top: 4px;
+    transition: opacity 0.3s ease;
+  }
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ifm-color-emphasis-600);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover:not(.active) {
+    background: var(--strapi-neutral-200);
+  }
+
+  i {
+    font-size: 16px;
+    line-height: 1;
+  }
+}
+
+.active {
+  background: var(--strapi-primary-600);
+  color: white;
+
+  &:hover {
+    background: var(--strapi-primary-600);
+  }
+}

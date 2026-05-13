@@ -31,6 +31,15 @@ const config = {
 
   themes: ['@docusaurus/theme-live-codeblock', '@docusaurus/theme-mermaid'],
 
+  headTags: [
+    {
+      // Anti-FOUC: apply saved content width before React hydrates
+      tagName: 'script',
+      attributes: {},
+      innerHTML: '(function(){try{var w=localStorage.getItem("strapi-content-width");if(w)document.documentElement.dataset.contentWidth=w}catch(e){}})();',
+    },
+  ],
+
   scripts: [
     {
       src: '/js/redirector.js',

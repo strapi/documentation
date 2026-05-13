@@ -324,6 +324,34 @@ const DARK_STYLES = `
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
     color: #FAFAFA !important;
   }
+  .mantine-Popover-dropdown * {
+    color: #D4D4D8 !important;
+  }
+  .mantine-Popover-dropdown h1,
+  .mantine-Popover-dropdown h2,
+  .mantine-Popover-dropdown h3,
+  .mantine-Popover-dropdown h4,
+  .mantine-Popover-dropdown strong {
+    color: #FAFAFA !important;
+  }
+  .mantine-Popover-dropdown a {
+    color: #7B79FF !important;
+  }
+  .mantine-Popover-dropdown a:hover {
+    color: #A5A3FF !important;
+  }
+  .mantine-Popover-dropdown svg {
+    color: #A1A1AA !important;
+  }
+  .mantine-Popover-dropdown .mantine-Paper-root {
+    background: #1F1F23 !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  }
+  .mantine-Popover-dropdown .mantine-Paper-root:hover {
+    background: #27272A !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
   /* Deep Thinking button — dark-mode base state (default variant + left section) */
   .mantine-Button-root[data-variant="default"][data-with-left-section] {
     background: #18181B !important;

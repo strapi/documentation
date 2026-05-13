@@ -38,11 +38,19 @@ function renderBreadcrumbs(container, pathname) {
   if (!container) return;
 
   const isDocPage = pathname.startsWith('/cms/') || pathname.startsWith('/cloud/');
+  container.style.display = '';
+
   if (!isDocPage) {
-    container.style.display = 'none';
+    // Homepage: show product links
+    let html = `<div class="${styles.separator}"></div>`;
+    html += `<nav class="${styles.crumbs}" aria-label="Breadcrumbs">`;
+    html += `<a href="/cms/intro" class="${styles.crumbLink}">cms</a>`;
+    html += `<span class="${styles.homeDash}">-</span>`;
+    html += `<a href="/cloud/intro" class="${styles.crumbLink}">cloud</a>`;
+    html += `</nav>`;
+    container.innerHTML = html;
     return;
   }
-  container.style.display = '';
 
   const rootSegment = pathname.split('/')[1]; // 'cms' or 'cloud'
   const product = PRODUCTS[rootSegment];
