@@ -55,6 +55,33 @@ export default function DocRootLayoutSidebar({
     return () => window.removeEventListener('sidebar-v3-toggle', handler);
   }, []);
 
+  // Store sidebar state before AI mode forces collapse
+  const preAiState = useRef(null);
+
+  // Listen for view-mode-change events
+  useEffect(() => {
+    const handler = (e) => {
+      const { mode } = e.detail;
+      if (mode === 'ai') {
+        // Save current state before collapsing
+        preAiState.current = v3Collapsed;
+        if (!v3Collapsed) {
+          setV3Collapsed(true);
+          setSkipTransition(false);
+          try { localStorage.setItem(STORAGE_KEY, 'true'); } catch {}
+        }
+      } else if (preAiState.current !== null) {
+        // Restore previous state
+        setV3Collapsed(preAiState.current);
+        setSkipTransition(false);
+        try { localStorage.setItem(STORAGE_KEY, String(preAiState.current)); } catch {}
+        preAiState.current = null;
+      }
+    };
+    window.addEventListener('view-mode-change', handler);
+    return () => window.removeEventListener('view-mode-change', handler);
+  }, [v3Collapsed]);
+
   // Enable transitions after first paint
   useEffect(() => {
     requestAnimationFrame(() => {

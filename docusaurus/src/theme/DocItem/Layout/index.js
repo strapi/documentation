@@ -18,6 +18,8 @@ import DocItemContent from '@theme/DocItem/Content';
 import DocBreadcrumbs from '@theme/DocBreadcrumbs';
 import ContentVisibility from '@theme/ContentVisibility';
 import WidthToggle from '@site/src/components/WidthToggle/WidthToggle';
+import ViewModeSwitcher from '@site/src/components/ViewMode/ViewModeSwitcher';
+import AiPanel from '@site/src/components/ViewMode/AiPanel';
 import styles from '@docusaurus/theme-classic/lib/theme/DocItem/Layout/styles.module.css';
 
 function useDocTOC() {
@@ -41,23 +43,27 @@ export default function DocItemLayout({children}) {
   const docTOC = useDocTOC();
   const {metadata} = useDoc();
   return (
-    <div className="row">
-      <div className={clsx('col', !docTOC.hidden && styles.docItemCol)}>
-        <WidthToggle />
-        <ContentVisibility metadata={metadata} />
-        <DocVersionBanner />
-        <div className={styles.docItemContainer}>
-          <article>
-            <DocBreadcrumbs />
-            <DocVersionBadge />
-            {docTOC.mobile}
-            <DocItemContent>{children}</DocItemContent>
-            <DocItemFooter />
-          </article>
-          <DocItemPaginator />
+    <>
+      <div className="row">
+        <div className={clsx('col', !docTOC.hidden && styles.docItemCol)}>
+          <WidthToggle />
+          <ContentVisibility metadata={metadata} />
+          <DocVersionBanner />
+          <div className={styles.docItemContainer}>
+            <article>
+              <DocBreadcrumbs />
+              <DocVersionBadge />
+              {docTOC.mobile}
+              <ViewModeSwitcher />
+              <DocItemContent>{children}</DocItemContent>
+              <DocItemFooter />
+            </article>
+            <DocItemPaginator />
+          </div>
         </div>
+        {docTOC.desktop && <div className="col col--3">{docTOC.desktop}</div>}
       </div>
-      {docTOC.desktop && <div className="col col--3">{docTOC.desktop}</div>}
-    </div>
+      <AiPanel />
+    </>
   );
 }

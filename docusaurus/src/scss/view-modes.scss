@@ -1,0 +1,544 @@
+/** View Modes: Markdown + AI mode overrides */
+@use './mixins' as *;
+
+// ============================================================
+// MARKDOWN MODE
+// ============================================================
+[data-view-mode="markdown"] {
+  // Typography: switch everything to monospace
+  article {
+    font-family: var(--strapi-font-family-technical);
+    font-size: 14px;
+    line-height: 1.7;
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--strapi-font-family-technical);
+      letter-spacing: 0;
+    }
+  }
+
+  // Secondary sidebar (TOC / "On this page") in monospace
+  [class*="tableOfContents"],
+  [class*="tocCollapsible"] {
+    font-family: var(--strapi-font-family-technical);
+    font-size: 12px;
+
+    a {
+      text-decoration: none !important;
+    }
+  }
+
+  // Flatten card grids into simple list (article only)
+  article [class*="docCardList"],
+  article [class*="customDocCardsWrapper"],
+  article [class*="CardGrid"],
+  article [class*="card-grid"],
+  article .row:has(.custom-doc-card) {
+    display: block !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    margin: 8px 0 !important;
+    width: 100% !important;
+  }
+
+  // === CARDS: Convert to simple bullet list ===
+  // Target both CustomDocCard and Docusaurus DocCard
+  article .custom-doc-card,
+  article [class*="docCardList"] article {
+    display: list-item !important;
+    list-style: disc !important;
+    margin: 0 0 4px 24px !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    float: none !important;
+    flex: none !important;
+
+    &:hover {
+      transform: none !important;
+    }
+
+    // The link wrapper inside: strip all card styling
+    a,
+    > a {
+      display: block !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      background: transparent !important;
+      text-decoration: none !important;
+      color: inherit !important;
+      width: 100% !important;
+
+      &:hover {
+        transform: none !important;
+        box-shadow: none !important;
+      }
+    }
+
+    // Title: clickable link
+    h2, h3,
+    .cardTitle,
+    [class*="card__title"] {
+      display: inline !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      font-family: var(--strapi-font-family-technical) !important;
+      color: var(--strapi-primary-600) !important;
+      text-decoration: underline !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      line-height: 1.5 !important;
+    }
+
+    // Description: plain text, not a link
+    p,
+    .cardDescription,
+    [class*="card__description"] {
+      display: block !important;
+      font-size: 13px !important;
+      font-family: var(--strapi-font-family-technical) !important;
+      color: var(--strapi-neutral-600) !important;
+      text-decoration: none !important;
+      padding: 0 !important;
+      margin: 2px 0 0 0 !important;
+      line-height: 1.5 !important;
+      max-width: none !important;
+      -webkit-line-clamp: unset !important;
+      overflow: visible !important;
+    }
+
+    // Hide icons
+    i[class*="ph-"],
+    .custom-doc-card__icon,
+    [class*="card-category-icon"],
+    [class*="card__img"],
+    [class*="card__title__arrow"],
+    svg {
+      display: none !important;
+    }
+  }
+
+  // Flatten card grid wrappers
+  article [class*="docCardList"],
+  article [class*="customDocCardsWrapper"],
+  article [class*="CardGrid"],
+  article [class*="card-grid"] {
+    display: block !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    margin: 8px 0 !important;
+    width: 100% !important;
+  }
+
+  // Columns wrapping cards: flatten to full width
+  article .col:has(.custom-doc-card),
+  article [class*="col"]:has(.custom-doc-card) {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  // Also handle cards used as direct links (Card component)
+  article [class*="card--cta"],
+  article .card {
+    display: list-item !important;
+    list-style: disc !important;
+    margin-left: 24px !important;
+    margin-bottom: 8px !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+
+    &:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  // Simplify admonitions: left border + colored title only
+  .theme-admonition {
+    border: none !important;
+    border-left: 3px solid var(--custom-admonition-heading-color, var(--strapi-neutral-400)) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 4px 0 4px 16px !important;
+    margin: 8px 0 !important;
+
+    // Title: colored, monospace
+    .theme-admonition__heading {
+      font-family: var(--strapi-font-family-technical);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      color: var(--custom-admonition-heading-color);
+    }
+
+    // Tighten content inside
+    [class*="admonitionContent"] {
+      > p, > ul, > ol {
+        margin: 4px 0;
+      }
+    }
+  }
+
+  // Details/accordion blocks (e.g. Prerequisites): strip all decoration
+  details.alert {
+    border: none !important;
+    border-left: 3px solid var(--details-accent-color, var(--strapi-primary-500)) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 8px 0 !important;
+    overflow: visible;
+
+    // Remove the pseudo-element left accent bar (we use border-left instead)
+    &::after {
+      display: none !important;
+    }
+
+    // Summary: no border, no arrow
+    summary {
+      padding: 4px 0 4px 16px !important;
+      border: none !important;
+      font-family: var(--strapi-font-family-technical);
+
+      &::before {
+        display: none !important;
+      }
+
+      &::after {
+        display: none !important;
+      }
+    }
+
+    &[open] summary {
+      border-bottom: none !important;
+    }
+
+    // Content
+    > div {
+      padding: 4px 0 4px 16px !important;
+    }
+  }
+
+  // ---- GLOBAL SPACING STRIP DOWN ----
+  // Tighten all vertical spacing to feel like raw markdown
+  article {
+    // Reduce margins on all block elements
+    p {
+      margin: 8px 0;
+    }
+
+    h1 { margin: 24px 0 8px; }
+    h2 { margin: 32px 0 8px; }
+    h3 { margin: 24px 0 6px; }
+    h4, h5, h6 { margin: 16px 0 4px; }
+
+    ul, ol {
+      margin: 4px 0;
+      padding-left: 24px;
+
+      li {
+        margin: 2px 0;
+      }
+    }
+
+    // Remove extra spacing from docusaurus containers
+    [class*="margin-top"],
+    [class*="margin-bottom"] {
+      margin-top: 8px !important;
+      margin-bottom: 8px !important;
+    }
+
+    // Tighten spacing around code blocks
+    pre {
+      margin: 8px 0;
+    }
+
+    // Tighten blockquotes
+    blockquote {
+      margin: 8px 0;
+      padding: 4px 0 4px 16px;
+    }
+
+    hr {
+      margin: 12px 0;
+    }
+
+    // Remove extra padding from section wrappers
+    > div, section {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  // Strip code blocks: remove custom styling, keep plain
+  [class*="codeBlockContainer"] {
+    border-radius: 0;
+    border: 1px solid var(--strapi-neutral-200) !important;
+    box-shadow: none !important;
+  }
+
+  [class*="codeBlockTitle"] {
+    border-radius: 0;
+    font-family: var(--strapi-font-family-technical);
+  }
+
+  // Enhanced terminal blocks: strip decoration
+  .code-block-enhanced {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+
+    .code-title-bar {
+      border-radius: 0 !important;
+    }
+  }
+
+  // Details/collapsible blocks: flatten completely (no toggle, always visible)
+  details {
+    display: contents !important;
+  }
+
+  details > summary {
+    display: block !important;
+    font-family: var(--strapi-font-family-technical);
+    font-weight: 700;
+    list-style: none;
+    cursor: default;
+    padding: 0;
+    border: none !important;
+    background: transparent !important;
+    margin: 12px 0 4px;
+
+    &::marker,
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before,
+    &::after {
+      display: none !important;
+    }
+  }
+
+  details > summary ~ * {
+    display: block !important;
+  }
+
+  // Subtle callouts: simplify
+  [class*="subtleCallout"] {
+    border-radius: 0;
+    border: 1px solid var(--strapi-neutral-200);
+    background: transparent !important;
+  }
+
+  // Side-by-side columns: stack vertically
+  [class*="sideBySide"] {
+    display: block !important;
+  }
+
+  // Remove hover effects on links (article only, not sidebar/tags)
+  article a {
+    text-decoration: underline !important;
+  }
+
+  // Remove film grain overlay
+  body::before {
+    display: none;
+  }
+
+  // Flat tabs styling (rendered by swizzled Tabs component)
+  .tabs-flat {
+    border-left: 2px solid var(--strapi-neutral-200);
+    padding-left: var(--strapi-spacing-4);
+    margin: var(--strapi-spacing-4) 0;
+
+    &__heading {
+      font-family: var(--strapi-font-family-technical);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--strapi-neutral-500);
+      margin-top: var(--strapi-spacing-4);
+      margin-bottom: var(--strapi-spacing-2);
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    &__content {
+      margin-bottom: var(--strapi-spacing-4);
+    }
+
+    &__section + &__section {
+      border-top: 1px dashed var(--strapi-neutral-150);
+      padding-top: var(--strapi-spacing-4);
+    }
+  }
+}
+
+// ============================================================
+// AI MODE
+// ============================================================
+[data-view-mode="ai"] {
+  // Hide WidthToggle
+  [class*="widthToggle"] {
+    display: none !important;
+  }
+
+  // Prevent sticky switcher from overlapping h1
+  article [class*="switcher"] {
+    position: static;
+  }
+
+  // Sidebar in AI mode: start collapsed, show content when expanded
+  .sidebar-v3-wrapper--collapsed {
+    .menu,
+    .sidebar-v3-header__label,
+    [class*="sidebarItemLink"],
+    [class*="sidebarItemList"] {
+      display: none !important;
+    }
+  }
+
+  // Hide Tldr in page (already shown in AI panel summary)
+  .tldr {
+    display: none;
+  }
+
+  // Compress content area: override the doc-content-max-width variable
+  // and constrain the entire main wrapper
+  // Back to top button: keep in main content area, not over AI panel
+  [class*="backToTopButton"] {
+    right: calc(50vw + 20px) !important;
+  }
+
+  @include medium-up {
+    --doc-content-max-width: 100% !important;
+
+    main,
+    [class*="docMainContainer"],
+    [class*="docRoot"] > div,
+    [class*="docItemWrapper"],
+    .row,
+    .col {
+      max-width: 50vw !important;
+      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    // Only article gets overflow hidden (not nav/pagination)
+    article {
+      overflow: hidden !important;
+    }
+
+    // Hide the TOC sidebar in AI mode (no room)
+    .col--3 {
+      display: none !important;
+    }
+
+    // Pagination: ensure it fits within 50vw
+    nav[class*="pagination"] {
+      max-width: 50vw !important;
+      overflow: hidden;
+
+      a {
+        min-width: 0 !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  @include small-to-medium {
+    --doc-content-max-width: 100% !important;
+
+    main,
+    [class*="docMainContainer"],
+    [class*="docRoot"] > div,
+    [class*="docItemWrapper"],
+    .row,
+    .col {
+      max-width: 60vw !important;
+      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    article {
+      overflow: hidden !important;
+    }
+
+    .col--3 {
+      display: none !important;
+    }
+  }
+
+  // Force all content inside article to fit
+  article {
+    max-width: 100% !important;
+    overflow: hidden !important;
+
+    // All media
+    img, video, picture, svg:not([class*="ph-"]),
+    [class*="themedImage"], [class*="themedImage"] img {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+
+    // Tables scroll horizontally
+    table {
+      max-width: 100% !important;
+      display: block;
+      overflow-x: auto;
+    }
+
+    // Code blocks scroll horizontally
+    pre, [class*="codeBlockContainer"] {
+      max-width: 100% !important;
+      overflow-x: auto !important;
+    }
+
+    // Wide layouts
+    [class*="sideBySide"],
+    [class*="apiDocLayout"],
+    [class*="Columns"] {
+      max-width: 100% !important;
+      overflow: hidden;
+    }
+  }
+}
+
+// ============================================================
+// DARK MODE OVERRIDES
+// ============================================================
+@include dark {
+  [data-view-mode="markdown"] {
+    .tabs-flat {
+      border-left-color: var(--strapi-neutral-200);
+
+      &__heading {
+        color: var(--strapi-neutral-400);
+      }
+
+      &__section + &__section {
+        border-top-color: var(--strapi-neutral-200);
+      }
+    }
+  }
+}
