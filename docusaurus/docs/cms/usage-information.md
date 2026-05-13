@@ -83,6 +83,20 @@ Data collection can later be re-enabled by deleting the flag or setting it to fa
 If you have any questions or concerns regarding data collection, please contact us at the following email address [privacy@strapi.io](mailto:privacy@strapi.io).
 :::
 
+## Documentation feedback widget {#documentation-feedback-widget}
+
+The documentation website at [docs.strapi.io](https://docs.strapi.io) includes a feedback widget at the bottom of each page. When you submit feedback, the following data is collected:
+
+- Your vote (positive or negative)
+- Your comment (if provided)
+- The page URL and title
+- Your browser's user agent string (for debugging purposes)
+- Your country (inferred from your IP address by Vercel; the IP address itself is not stored)
+
+This data is stored in a private Notion database accessible only to the Strapi documentation team. No email address, name, or other personally identifiable information is collected. Feedback is anonymous and cannot be traced back to individual users.
+
+For questions about feedback data collection, contact [privacy@strapi.io](mailto:privacy@strapi.io).
+
 ## Strapi AI data handling {#strapi-ai-data-handling}
 
 [Strapi AI features](/cms/ai/for-content-managers) process requests through Strapi-managed infrastructure. Temporary metadata and content snippets exist only for the duration of each request. Strapi never stores unpublished content or credentials outside your instance.

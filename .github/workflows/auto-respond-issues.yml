@@ -71,7 +71,15 @@ jobs:
               console.log('Issue from maintainer, skipping auto-response');
               return;
             }
-            
+
+            // Skip if issue has a label that should bypass auto-response
+            const skipLabels = ['feedback: from-docs-widget'];
+            const issueLabels = (issue.labels || []).map(l => typeof l === 'string' ? l : l.name);
+            if (issueLabels.some(label => skipLabels.includes(label))) {
+              console.log('Issue has skip label, skipping auto-response');
+              return;
+            }
+
             // Prepare the enhanced query for Kapa AI
             const cleanedBody = issueBody
               .replace(/<!--[\s\S]*?-->/g, '') // Remove HTML comments

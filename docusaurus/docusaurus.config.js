@@ -38,6 +38,12 @@ const config = {
       attributes: {},
       innerHTML: '(function(){try{var w=localStorage.getItem("strapi-content-width");if(w)document.documentElement.dataset.contentWidth=w}catch(e){}})();',
     },
+    {
+      // Anti-FOUC: apply saved view mode before React hydrates
+      tagName: 'script',
+      attributes: {},
+      innerHTML: '(function(){try{var m=localStorage.getItem("strapi-view-mode");if(m&&m!=="ai")document.documentElement.dataset.viewMode=m;else document.documentElement.dataset.viewMode="elegant"}catch(e){document.documentElement.dataset.viewMode="elegant"}})();',
+    },
   ],
 
   scripts: [
