@@ -568,5 +568,5 @@ This feature is currently experimental. Feel free to share <ExternalLink to="htt
 
 The current version of Live Preview comes with the following limitations:
 * Blocks fields are not detected, and changing them in the Side Editor won’t be reflected in the preview. Clicking on Save after updates should however still work.
-* Media assets and fields in dynamic zones are not handled.
+* Fields in dynamic zones are not handled.
 :::
