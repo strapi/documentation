@@ -159,6 +159,26 @@
       "number": 26032,
       "reason": "Router: Internal database query builder fix. Adds a stable sort order to paginated selects to prevent duplicate/skipped rows, but this is an implementation detail of the query builder. No user-facing API or behavior change that requires documentation; developers don't interact with this change directly.",
       "added": "2026-05-12"
+    },
+    {
+      "number": 26246,
+      "reason": "Router: Internal development tool fix for package manager detection. No user-facing API or documentation changes needed.",
+      "added": "2026-05-13"
+    },
+    {
+      "number": 26229,
+      "reason": "Router: Internal admin UI bug fix. No user-facing feature changes or documentation updates needed.",
+      "added": "2026-05-13"
+    },
+    {
+      "number": 26209,
+      "reason": "Router: Internal admin UI improvement fixing date picker max year constraint. The date picker is a technical implementation detail of the admin panel, not a user-facing content feature.",
+      "added": "2026-05-13"
+    },
+    {
+      "number": 26147,
+      "reason": "Router: Internal bug fix for transaction handling in Content Releases. Fixes serialization of concurrent publishes. No new features or API changes affecting documentation.",
+      "added": "2026-05-13"
     }
   ]
 }
