@@ -19680,8 +19680,7 @@ module.exports = [
   {
     name: 'strapi::public',
     config: {
-      defer: true,
-      index: env('INDEX_PATH', 'index-dev.html')
+      maxAge: 86400000, // 1 day in milliseconds
     },
   },
   // ...
@@ -19699,8 +19698,7 @@ export default [
   {
     name: 'strapi::public',
     config: {
-      defer: true,
-      index: env('INDEX_PATH', 'index-dev.html')
+      maxAge: 86400000, // 1 day in milliseconds
     },
   },
   // ...
@@ -25831,6 +25829,59 @@ import { Table } from '@strapi/strapi/admin';
 ## useCMEditViewDataManager
 Description: A lot of the internals have been reworked and split.
 (Source: https://docs.strapi.io/cms/migration/v4-to-v5/additional-resources/helper-plugin#usecmeditviewdatamanager)
+
+Language: JavaScript
+File path: plugins/my-plugin/admin/src/components/Preview.jsx
+
+```js
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
+
+export const Preview = () => {
+  const {
+    model,
+    collectionType,
+    id,
+    slug,
+    isCreatingEntry,
+    isSingleType,
+    hasDraftAndPublish,
+  } = useContentManagerContext();
+
+  return (
+    <section>
+      Editing <code>{slug}</code>
+      {isSingleType ? ' (single type)' : ' (collection type)'}
+    </section>
+  );
+};
+```
+
+---
+Language: TypeScript
+File path: plugins/my-plugin/admin/src/components/Preview.tsx
+
+```ts
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
+
+export const Preview = () => {
+  const {
+    model,
+    collectionType,
+    id,
+    slug,
+    isCreatingEntry,
+    isSingleType,
+    hasDraftAndPublish,
+  } = useContentManagerContext();
+
+  return (
+    <section>
+      Editing <code>{slug}</code>
+      {isSingleType ? ' (single type)' : ' (collection type)'}
+    </section>
+  );
+};
+```
 
 Language: JavaScript
 File path: N/A
