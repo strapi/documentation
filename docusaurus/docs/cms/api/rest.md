@@ -373,6 +373,10 @@ const data = await response.json();`,
 * While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations) for more details).
 :::
 
+:::info Dynamic zones
+Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynamic-zones) must include `__component` with the target component's UID (for example `shared.media`). Strapi uses that field to pick the component schema when you create or update items in the zone; without it, writes can fail validation or return success without changing data. Use the UID shown in the Content-Type Builder for each component in the zone.
+:::
+
 <Endpoint
   id="update-endpoint"
   method="PUT"
