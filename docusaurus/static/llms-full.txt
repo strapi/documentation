@@ -1846,6 +1846,10 @@ Source: https://docs.strapi.io/cms/admin-panel-customization/wysiwyg-editor
 
 # Change the default rich text editor
 
+:::note
+This page covers customization of the **WYSIWYG markdown editor** used for `richtext` fields. For the **Blocks** field (the JSON-based rich text editor), see [Content Manager APIs: addRichTextBlocks](/cms/plugins-development/content-manager-apis#addrichtextblocks).
+:::
+
 Strapi's [admin panel](/cms/admin-panel-customization) comes with a built-in rich text editor. To change the default editor, several options are at your disposal:
 
 - You can install a third-party plugin, such as one for CKEditor, by visiting .
@@ -9223,7 +9227,7 @@ This feature is currently experimental. Feel free to share  or  with the Strapi 
 
 The current version of Live Preview comes with the following limitations:
 * Blocks fields are not detected, and changing them in the Side Editor won’t be reflected in the preview. Clicking on Save after updates should however still work.
-* Media assets and fields in dynamic zones are not handled.
+* Fields in dynamic zones are not handled.
 :::
 
 
@@ -10837,174 +10841,92 @@ Use this to add new panels to the Edit view sidebar, just like in the following 
 ![addEditViewSidePanel](/img/assets/content-manager-apis/add-edit-view-side-panel.png)
 
 ```jsx
-addEditViewSidePanel(panels: DescriptionReducer<PanelComponent> | PanelComponent[])
+addEditViewSidePanel(panels: DescriptionReducer,
+          icon: Information,
+          label: { id: 'my-plugin.blocks.callout', defaultMessage: 'Callout' },
+          matchNode: (node) => node.type === 'callout',
+          isInBlocksSelector: true,
+          handleConvert(editor) { /* use Slate Transforms to set node type */ },
+          snippets: [':::callout'],
+        },
+      });
+    },
+  };
+  ```
+
+  </TabItem>
+  ,
+          icon: Information,
+          label: { id: 'my-plugin.blocks.callout', defaultMessage: 'Callout' },
+          matchNode: (node) => node.type === 'callout',
+          isInBlocksSelector: true,
+          handleConvert(editor) { /* use Slate Transforms to set node type */ },
+          snippets: [':::callout'],
+        },
+      });
+    },
+  };
+  ```
+
+  </TabItem>
+  </Tabs>
+
+- Passing a **function**: the function receives the current blocks store and must return the updated store. Use this form to remove or replace built-in blocks.
+
+  </Tabs>
+
+#### Block definition
+
+Each entry in the blocks object is a block definition with the following properties:
+
+| Property | Required | Type | Description |
+|---|---|---|---|
+| `renderElement` | Yes | `React.FC` | React render function. Spread `props.attributes` on the root element and render `props.children`. |
+| `matchNode` | Yes | `(node: Node) => boolean` | Returns `true` if a given  node belongs to this block type. |
+| `isInBlocksSelector` | No | `boolean` | Set to `true` to show the block in the toolbar dropdown. Defaults to `false`. |
+| `icon` | No | `React.ComponentType` | Icon component shown in the toolbar dropdown. Required when `isInBlocksSelector` is `true`. |
+| `label` | No | `{ id: string, defaultMessage: string }` | `MessageDescriptor` shown in the toolbar dropdown. Required when `isInBlocksSelector` is `true`. |
+| `handleConvert` | No | `(editor: Editor) => void \| (() => React.JSX.Element)` | Called when the user selects this block from the dropdown. Use Slate's `Transforms` to set the node type. Can return a React element factory to render a modal. |
+| `handleEnterKey` | No | `(editor: Editor) => void` | Custom Enter key behavior inside this block. |
+| `handleBackspaceKey` | No | `(editor: Editor, event: React.KeyboardEvent<HTMLElement>) => void` | Custom Backspace key behavior. |
+| `handleTab` | No | `(editor: Editor) => void` | Custom Tab key behavior (e.g., indentation). |
+| `handleShiftTab` | No | `(editor: Editor) => void` | Custom Shift+Tab key behavior. |
+| `snippets` | No | `string[]` | Typing one of these strings followed by Space triggers a conversion to this block type. |
+| `dragHandleTopMargin` | No | `string` | Adjusts the vertical position of the drag-to-reorder grip icon. |
+| `plugin` | No | `(editor: Editor) => Editor` | A  registered when the editor instance is created. Use this for custom normalizers or Slate-level behavior. |
+| `isDraggable` | No | `(element: Element) => boolean` | Function returning whether a given element is draggable. Defaults to `() => true`. |
+
+The built-in block keys are: `paragraph`, `heading-one`, `heading-two`, `heading-three`, `heading-four`, `heading-five`, `heading-six`, `list-ordered`, `list-unordered`, `image`, `quote`, `code`, `link`, `list-item`.
+
+**Key handler example**
+
+Key handlers each receive the Slate `editor` instance. Use Slate's `Transforms` API to modify the document:
+
+```js
+callout: {
+  // ...
+  handleEnterKey(editor) {
+    // Exit the block on Enter and insert a new paragraph below
+    Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] });
+  },
+  handleBackspaceKey(editor, event) {
+    // Convert back to paragraph when backspacing in an empty callout
+    Transforms.setNodes(editor, { type: 'paragraph' });
+  },
+  handleTab(editor) {
+    // Increase indentation level on Tab
+    Transforms.setNodes(editor, { indent: (editor.selection ? 1 : 0) });
+  },
+  handleShiftTab(editor) {
+    // Decrease indentation level on Shift+Tab
+    Transforms.setNodes(editor, { indent: 0 });
+  },
+},
 ```
 
-#### PanelComponent
-
-A `PanelComponent` receives the properties listed in [EditViewContext](#editviewcontext) and returns an object with the following shape:
-
-```tsx
-type PanelComponent = (props: PanelComponentProps) => {
-  title: string;
-  content: React.ReactNode;
-};
-```
-
-`PanelComponentProps` extends the [EditViewContext](#editviewcontext).
-
-### `addDocumentAction`
-
-Use this API to add more actions to the Edit view or the List View of the Content Manager. There are 3 positions available:
-
-- `header` of the Edit view:
-
-    ![Header of the Edit view](/img/assets/content-manager-apis/add-document-action-header.png)
-- `panel` of the Edit view:
-
-    ![Panel of the Edit View](/img/assets/content-manager-apis/add-document-action-panel.png)
-- `table-row` of the List view:
-
-    ![Table-row in the List View](/img/assets/content-manager-apis/add-document-action-tablerow.png)
-
-```jsx
-addDocumentAction(actions: DescriptionReducer<DocumentActionComponent> | DocumentActionComponent[])
-```
-
-#### DocumentActionDescription
-
-The interface and properties of the API look like the following: 
-
-```jsx
-interface DocumentActionDescription {
-    label: string;
-    onClick?: (event: React.SyntheticEvent) => Promise<boolean | void> | boolean | void;
-    icon?: React.ReactNode;
-    /**
-     * @default false
-     */
-    disabled?: boolean;
-    /**
-     * @default 'panel'
-     * @description Where the action should be rendered.
-     */
-    position?: DocumentActionPosition | DocumentActionPosition[];
-    dialog?: DialogOptions | NotificationOptions | ModalOptions;
-    /**
-     * @default 'secondary'
-     */
-    variant?: ButtonProps['variant'];
-    loading?: ButtonProps['loading'];
-}
-
-type DocumentActionPosition = 'panel' | 'header' | 'table-row' | 'preview' | 'relation-modal';
-
-interface DialogOptions {
-    type: 'dialog';
-    title: string;
-    content?: React.ReactNode;
-    variant?: ButtonProps['variant'];
-    onConfirm?: () => void | Promise<void>;
-    onCancel?: () => void | Promise<void>;
-}
-interface NotificationOptions {
-    type: 'notification';
-    title: string;
-    link?: {
-        label: string;
-        url: string;
-        target?: string;
-    };
-    content?: string;
-    onClose?: () => void;
-    status?: NotificationConfig['type'];
-    timeout?: number;
-}
-interface ModalOptions {
-    type: 'modal';
-    title: string;
-    content: React.ComponentType<{
-        onClose: () => void;
-    }> | React.ReactNode;
-    footer?: React.ComponentType<{
-        onClose: () => void;
-    }> | React.ReactNode;
-    onClose?: () => void;
-}
-```
-
-### `addDocumentHeaderAction`
-
-Use this API to add more actions to the header of the Edit view of the Content Manager:
-
-![addEditViewSidePanel](/img/assets/content-manager-apis/add-document-header-action.png)
-
-```jsx
-addDocumentHeaderAction(actions: DescriptionReducer<HeaderActionComponent> | HeaderActionComponent[])
-```
-
-#### HeaderActionDescription
-
-The interface and properties of the API look like the following:
-
-```jsx
-interface HeaderActionDescription {
-  disabled?: boolean;
-  label: string;
-  icon?: React.ReactNode;
-  type?: 'icon' | 'default';
-  onClick?: (event: React.SyntheticEvent) => Promise<boolean | void> | boolean | void;
-  dialog?: DialogOptions;
-  options?: Array<{
-    disabled?: boolean;
-    label: string;
-    startIcon?: React.ReactNode;
-    textValue?: string;
-    value: string;
-  }>;
-  onSelect?: (value: string) => void;
-  value?: string;
-}
-
-interface DialogOptions {
-  type: 'dialog';
-  title: string;
-  content?: React.ReactNode;
-  footer?: React.ReactNode;
-}
-```
-
-### `addBulkAction`
-
-Use this API to add buttons that show up when entries are selected on the List View of the Content Manager, just like the "Add to Release" button for instance:
-
-![addEditViewSidePanel](/img/assets/content-manager-apis/add-bulk-action.png)
-
-```jsx
-addBulkAction(actions: DescriptionReducer<BulkActionComponent> | BulkActionComponent[])
-```
-
-#### BulkActionDescription
-
-The interface and properties of the API look like the following: 
-
-```jsx
-interface BulkActionDescription {
-  dialog?: DialogOptions | NotificationOptions | ModalOptions;
-  disabled?: boolean;
-  icon?: React.ReactNode;
-  label: string;
-  onClick?: (event: React.SyntheticEvent) => void;
-  /**
-   * @default 'default'
-   */
-  type?: 'icon' | 'default';
-  /**
-   * @default 'secondary'
-   */
-  variant?: ButtonProps['variant'];
-}
-```
+:::tip
+More information about types can be found in .
+:::
 
 
 

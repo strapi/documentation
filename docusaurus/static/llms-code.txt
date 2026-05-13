@@ -23294,6 +23294,7 @@ module.exports = ({ env })=>({
         allowedTypes: ['image/*', 'application/*'],
         deniedTypes: ['application/x-sh', 'application/x-dosexec']
       },
+      concurrentUploadSize: 5,
     },
   },
 });
@@ -23328,6 +23329,7 @@ export default () => ({
         allowedTypes: ['image/*', 'application/*'],
         deniedTypes: ['application/x-sh', 'application/x-dosexec']
       },
+      concurrentUploadSize: 5,
     },
   },
 })
@@ -30311,6 +30313,134 @@ interface BulkActionDescription {
    */
   variant?: ButtonProps['variant'];
 }
+```
+
+
+## addRichTextBlocks
+Description: :::note addRichTextBlocks must be called in the register() lifecycle function, not bootstrap().
+(Source: https://docs.strapi.io/cms/plugins-development/content-manager-apis#addrichtextblocks)
+
+Language: JavaScript
+File path: src/admin/app.js
+
+```js
+  export default {
+    register(app) {
+      app.getPlugin('content-manager').apis.addRichTextBlocks({
+        callout: {
+          renderElement: (props) => <Callout {...props.attributes}>{props.children}</Callout>,
+          icon: Information,
+          label: { id: 'my-plugin.blocks.callout', defaultMessage: 'Callout' },
+          matchNode: (node) => node.type === 'callout',
+          isInBlocksSelector: true,
+          handleConvert(editor) { /* use Slate Transforms to set node type */ },
+          snippets: [':::callout'],
+        },
+      });
+    },
+  };
+```
+
+---
+Language: TypeScript
+File path: src/admin/app.ts
+
+```ts
+  import type { ContentManagerPlugin } from '@strapi/content-manager/strapi-admin';
+
+  export default {
+    register(app) {
+      const apis =
+        app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+      apis.addRichTextBlocks({
+        callout: {
+          renderElement: (props) => <Callout {...props.attributes}>{props.children}</Callout>,
+          icon: Information,
+          label: { id: 'my-plugin.blocks.callout', defaultMessage: 'Callout' },
+          matchNode: (node) => node.type === 'callout',
+          isInBlocksSelector: true,
+          handleConvert(editor) { /* use Slate Transforms to set node type */ },
+          snippets: [':::callout'],
+        },
+      });
+    },
+  };
+```
+
+Language: JavaScript
+File path: src/admin/app.js
+
+```js
+  export default {
+    register(app) {
+      app.getPlugin('content-manager').apis.addRichTextBlocks((currentBlocks) => {
+        // Remove the built-in code block
+        const { code: _removed, ...rest } = currentBlocks;
+        return rest;
+      });
+    },
+  };
+```
+
+---
+Language: TypeScript
+File path: src/admin/app.ts
+
+```ts
+  import type {
+    ContentManagerPlugin,
+    RichTextBlocksStore,
+  } from '@strapi/content-manager/strapi-admin';
+
+  export default {
+    register(app) {
+      const apis =
+        app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+      apis.addRichTextBlocks((currentBlocks: RichTextBlocksStore) => {
+        const { code: _removed, ...rest } = currentBlocks;
+        return rest;
+      });
+    },
+  };
+```
+
+Language: JSX
+File path: N/A
+
+```jsx
+addRichTextBlocks(blocks: RichTextBlocksStore | ((currentBlocks: RichTextBlocksStore) => RichTextBlocksStore))
+```
+
+
+## Block definition
+Description: Key handlers each receive the Slate editor instance.
+(Source: https://docs.strapi.io/cms/plugins-development/content-manager-apis#block-definition)
+
+Language: JavaScript
+File path: N/A
+
+```js
+callout: {
+  // ...
+  handleEnterKey(editor) {
+    // Exit the block on Enter and insert a new paragraph below
+    Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] });
+  },
+  handleBackspaceKey(editor, event) {
+    // Convert back to paragraph when backspacing in an empty callout
+    Transforms.setNodes(editor, { type: 'paragraph' });
+  },
+  handleTab(editor) {
+    // Increase indentation level on Tab
+    Transforms.setNodes(editor, { indent: (editor.selection ? 1 : 0) });
+  },
+  handleShiftTab(editor) {
+    // Decrease indentation level on Shift+Tab
+    Transforms.setNodes(editor, { indent: 0 });
+  },
+},
 ```
 
 
