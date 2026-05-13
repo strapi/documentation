@@ -227,6 +227,7 @@ Use the following table to find which function to use and where to declare it. C
 | Register a hook                          | [`registerHook()`](/cms/plugins-development/admin-hooks)                    | [`bootstrap()`](#bootstrap)   |
 | Provide translations for the plugin admin interface | [`registerTrads()`](/cms/plugins-development/admin-localization#registertrads) | `registerTrads()` |
 | Make authenticated HTTP requests | [`useFetchClient()`](/cms/plugins-development/admin-fetch-client) / [`getFetchClient()`](/cms/plugins-development/admin-fetch-client#outside-a-react-component) | Any |
+| Access Content Manager Edit View context from React | [`unstable_useContentManagerContext`](/cms/migration/v4-to-v5/additional-resources/helper-plugin#usecmeditviewdatamanager) | Any |
 
 <br/>
 Click on any of the following cards to get more details about a specific topic:
