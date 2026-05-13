@@ -27528,6 +27528,25 @@ File path: /github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resourc
 
 
 
+# Upgrading to Strapi 5 - Introduction and FAQ
+Source: https://docs.strapi.io/cms/migration/v4-to-v5/introduction-and-faq
+
+## Frequently asked questions
+Description: Copy the versions from a fresh Strapi v4 project that matches your target release (for example run the official generator in a throwaway folder), then install and rebuild.
+(Source: https://docs.strapi.io/cms/migration/v4-to-v5/introduction-and-faq#frequently-asked-questions)
+
+Language: JSON
+File path: N/A
+
+```json
+"react": "^18.0.0",
+"react-dom": "^18.0.0",
+"react-router-dom": "5.3.4",
+"styled-components": "5.3.3"
+```
+
+
+
 # Step-by-step guide to upgrade to Strapi 5
 Source: https://docs.strapi.io/cms/migration/v4-to-v5/step-by-step
 

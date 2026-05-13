@@ -9959,6 +9959,27 @@ Once every consumer reads the flattened format, remove the header so Strapi emit
 
 </details>
 
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Why does the admin build fail with <code>Cannot find module &apos;react&apos;</code> while my project is still on Strapi v4?</summary>
+
+<p>Patch upgrades across Strapi v4 minors can fail the admin build with <code>Cannot find module &apos;react&apos;</code> (or similar). Newer v4 lines expect <code>react</code>, <code>react-dom</code>, <code>react-router-dom</code>, and <code>styled-components</code> to be listed explicitly in your app <code>package.json</code> instead of relying only on transitive resolution.</p>
+
+<p>Copy the versions from a fresh Strapi v4 project that matches your target release (for example run the official generator in a throwaway folder), then install and rebuild. A typical set looks like this:</p>
+
+```json
+"react": "^18.0.0",
+"react-dom": "^18.0.0",
+"react-router-dom": "5.3.4",
+"styled-components": "5.3.3"
+```
+
+<p>Using a tilde or caret range on <code>@strapi/strapi</code> (for example <code>~4.25.22</code>) is fine for patch updates; when you skip several minors, read the release notes and migration notes for each jump.</p>
+
+<p>The archived v4 Developer Documentation still lives on .</p>
+<br/>
+
+</details>
+
 
 
 # Step-by-step guide to upgrade to Strapi 5
