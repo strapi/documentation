@@ -113,6 +113,7 @@ When using the default upload provider, the following specific configuration opt
 | `breakpoints`             | Allows to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
 | `sharp`             | Configures <ExternalLink to="https://sharp.pixelplumbing.com/" text="sharp"/> image processing options (see [sharp configuration](#sharp-configuration)) | Object | `{ cache: false, concurrency: 1 }` |
 | `security`             | Configures validation rules for uploaded files to enhance media security | Object | - |
+| `concurrentUploadSize` | Maximum number of files processed in parallel during a bulk upload. Increase for faster bulk uploads at the cost of higher memory usage. Must be an integer >= 1. | Integer | `1` |
 
 :::note
 The Upload request timeout is defined in the server options, not in the Upload plugin options, as it's not specific to the Upload plugin but is applied to the whole Strapi server instance (see [upload request timeout](#upload-request-timeout)).
@@ -155,6 +156,7 @@ module.exports = ({ env })=>({
         allowedTypes: ['image/*', 'application/*'],
         deniedTypes: ['application/x-sh', 'application/x-dosexec']
       },
+      concurrentUploadSize: 5,
     },
   },
 });
@@ -189,6 +191,7 @@ export default () => ({
         allowedTypes: ['image/*', 'application/*'],
         deniedTypes: ['application/x-sh', 'application/x-dosexec']
       },
+      concurrentUploadSize: 5,
     },
   },
 })
