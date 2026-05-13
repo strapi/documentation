@@ -302,7 +302,7 @@ You can add custom routes to the Users & Permissions plugin. For example, add an
 <TabItem value="js" label="JavaScript">
 
 ```js title="/src/extensions/users-permissions/strapi-server.js"
-module.exports = (plugin, { strapi }) => {
+module.exports = (plugin) => {
   // Add a new controller action
   plugin.controllers.user.deactivate = async (ctx) => {
     const { id } = ctx.params;
@@ -335,7 +335,7 @@ module.exports = (plugin, { strapi }) => {
 <TabItem value="ts" label="TypeScript">
 
 ```ts title="/src/extensions/users-permissions/strapi-server.ts"
-export default (plugin, { strapi }) => {
+export default (plugin) => {
   // Add a new controller action
   plugin.controllers.user.deactivate = async (ctx) => {
     const { id } = ctx.params;
@@ -557,7 +557,7 @@ The following example combines several customizations in a single file: it adds 
 <TabItem value="js" label="JavaScript">
 
 ```js title="/src/extensions/users-permissions/strapi-server.js"
-module.exports = (plugin, { strapi }) => {
+module.exports = (plugin) => {
   const routes = plugin.routes['content-api'].routes;
 
   // 1. Add 'is-own-user' policy to update and delete
@@ -616,7 +616,7 @@ module.exports = (plugin, { strapi }) => {
 <TabItem value="ts" label="TypeScript">
 
 ```ts title="/src/extensions/users-permissions/strapi-server.ts"
-export default (plugin, { strapi }) => {
+export default (plugin) => {
   const routes = plugin.routes['content-api'].routes;
 
   // 1. Add 'is-own-user' policy to update and delete

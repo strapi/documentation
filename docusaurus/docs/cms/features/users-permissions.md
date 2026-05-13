@@ -95,7 +95,7 @@ When ticking an action or permission box, related bound routes of the API are di
 
 **Path:** <Icon name="gear-six" /> *Users & Permissions plugin > Roles*
 
-Although the Public role cannot be deleted, other roles can be deleted as long as no end user still has the role attributed to their account.
+Although the Public role cannot be deleted, other roles can be deleted. Users currently assigned to a deleted role are automatically reassigned to the Public role.
 
 1. Click on the delete button <Icon name="trash" /> on the right side of the role's record.
 2. In the deletion window, click on the <Icon name="trash" /> **Confirm** button to confirm the deletion.
@@ -138,7 +138,7 @@ Click the search button <Icon name="search" classes="ph-bold" /> above the table
 :::note Username generation during provider registration
 When an end user registers via an authentication provider (such as Google or GitHub), Strapi automatically generates a username from the provider email address, using the part before the `@` symbol (e.g., `joe` from `joe@gmail.com`).
 
-If the generated username is already taken, Strapi appends an incrementing number to make it unique (e.g., `joe1`, then `joe2`, and so on). The existing account's username is not affected.
+If the generated username is already taken, Strapi appends a random number to make it unique (e.g., `joe1234`). The existing account's username is not affected.
 :::
 
 ### Email templates
@@ -456,7 +456,7 @@ The following variables can be used:
 
 ### Security configuration
 
-JWTs can be verified and trusted because the information is digitally signed. To sign a token a _secret_ is required. By default Strapi stores it as the `JWT_SECRET` environment variable in the `.env` file.
+JWTs can be verified and trusted because the information is digitally signed. To sign a token, a _secret_ is required. By default, Strapi stores it as the `JWT_SECRET` environment variable in the `.env` file.
 
 If you want to use a different environment variable, you can update the configuration file.
 

@@ -174,7 +174,7 @@ This endpoint is rate limited.
 
 `POST /api/auth/reset-password`
 
-Resets a user's password using a token received by email. All three fields are required.
+Resets a user's password using a token received by email. All 3 fields are required.
 
 Request body:
 
@@ -209,7 +209,7 @@ This endpoint is rate limited.
 
 `POST /api/auth/change-password`
 
-Changes the password for the currently authenticated user. Requires a valid Bearer token. All three fields are required.
+Changes the password for the currently authenticated user. Requires a valid Bearer token. All 3 fields are required.
 
 Request body:
 
@@ -343,9 +343,14 @@ Example response (200):
 
 ```json
 {
-  "jwt": "newAccessToken"
+  "jwt": "newAccessToken",
+  "refreshToken": "newRefreshToken"
 }
 ```
+
+:::note
+When `httpOnly` is enabled in the session configuration, the new refresh token is set as an HTTP-only cookie instead of being included in the response body. In that case, the response only contains `{ "jwt": "newAccessToken" }`.
+:::
 
 ### Logout
 

@@ -75,4 +75,4 @@ module.exports = {
 };
 ```
 
-If you were relying on the Strapi v4 behavior where all fields were accepted by default, list every extra field you need in `allowedFields`. Fields not listed will be silently dropped or rejected.
+If you relied on the Strapi v4 behavior (all fields accepted by default), list every extra field in `allowedFields`. Fields not listed will be silently dropped or rejected.
