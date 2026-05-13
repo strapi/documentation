@@ -16471,6 +16471,43 @@ module.exports = ({ env }) => ({
 ```
 
 ---
+Language: TypeScript
+File path: ./config/database.ts
+
+```ts
+import { Signer } from '@aws-sdk/rds-signer';
+
+export default ({ env }) => {
+  const signer = new Signer({
+    hostname: env('DATABASE_HOST', 'localhost'),
+    port: env.int('DATABASE_PORT', 5432),
+    username: env('DATABASE_USERNAME', 'strapi'),
+  });
+
+  return {
+    connection: {
+      client: 'postgres',
+      connection: async () => {
+        const token = await signer.getAuthToken();
+        const expiresAt = Date.now() + 15 * 60 * 1000;
+
+        return {
+          host: env('DATABASE_HOST', 'localhost'),
+          port: env.int('DATABASE_PORT', 5432),
+          database: env('DATABASE_NAME', 'strapi'),
+          user: env('DATABASE_USERNAME', 'strapi'),
+          password: token,
+          schema: env('DATABASE_SCHEMA', 'public'),
+          ssl: true,
+          expirationChecker: () => expiresAt - Date.now() <= 5 * 60 * 1000,
+        };
+      },
+    },
+  };
+};
+```
+
+---
 Language: DOCKERFILE
 File path: ./config/database.js
 
@@ -16537,7 +16574,7 @@ Description: environment (string): Sets the environment you want to store the da
 (Source: https://docs.strapi.io/cms/configurations/database#get-settings)
 
 Language: JavaScript
-File path: ./config/database.js
+File path: N/A
 
 ```js
 // strapi.store(object).get(object);
