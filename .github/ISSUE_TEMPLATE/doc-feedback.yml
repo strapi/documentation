@@ -1,0 +1,27 @@
+name: Documentation feedback
+description: Feedback submitted from the docs.strapi.io feedback widget
+labels: ["feedback: from-docs-widget"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to give us feedback!
+        The fields below are pre-filled from the widget. Edit them if needed.
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: Which doc page is this about?
+    validations:
+      required: true
+  - type: textarea
+    id: selection
+    attributes:
+      label: Selected text or section
+      description: The specific part of the page you selected (if any)
+  - type: textarea
+    id: comment
+    attributes:
+      label: Your feedback
+    validations:
+      required: true
