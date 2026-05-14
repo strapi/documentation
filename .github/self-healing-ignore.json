@@ -179,6 +179,11 @@
       "number": 26147,
       "reason": "Router: Internal bug fix for transaction handling in Content Releases. Fixes serialization of concurrent publishes. No new features or API changes affecting documentation.",
       "added": "2026-05-13"
+    },
+    {
+      "number": 26124,
+      "reason": "Router: Internal admin UI bug fix. Fixes a crash in component configuration layout conversion when handling nested components. No new public APIs, features, or user-facing behavior changes. Marked as internal refactor fixing issue #25509.",
+      "added": "2026-05-14"
     }
   ]
 }
