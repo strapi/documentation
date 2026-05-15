@@ -184,6 +184,21 @@
       "number": 26124,
       "reason": "Router: Internal admin UI bug fix. Fixes a crash in component configuration layout conversion when handling nested components. No new public APIs, features, or user-facing behavior changes. Marked as internal refactor fixing issue #25509.",
       "added": "2026-05-14"
+    },
+    {
+      "number": 26331,
+      "reason": "Triage: Internal migration code fix; doesn't change user-facing behavior, APIs, configuration, or features",
+      "added": "2026-05-15"
+    },
+    {
+      "number": 26248,
+      "reason": "Router: Internal utilities/upgrade package fix. Aligns devDependencies during the upgrade process. Does not affect any public-facing APIs or user-facing behavior that would require documentation updates.",
+      "added": "2026-05-15"
+    },
+    {
+      "number": 26242,
+      "reason": "Router: Enterprise Edition feature. Fixes a UX issue in the Admin panel when switching Review Workflows locales. The change is an internal error handling improvement (returning 200 with empty data instead of 404, showing a clearer message to users). This is a bug fix/UX improvement that doesn't require documentation changes—the feature behavior remains the same, just with better error messages.",
+      "added": "2026-05-15"
     }
   ]
 }
