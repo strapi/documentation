@@ -460,7 +460,7 @@ For a more detailed view of the props provided to the customFields and how they 
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
 | `base`            | Settings available in the _Base settings_ tab of the field in the Content-type Builder                                                    | `Object` or `Array of Objects` |
 | `advanced`        | Settings available in the _Advanced settings_ tab of the field in the Content-type Builder                                                | `Object` or `Array of Objects` |
-| `validator`       | Validator function returning an object, used to sanitize input. Uses a <ExternalLink to="https://github.com/jquense/yup/tree/pre-v1" text="`yup` schema object"/>. | `Function`                     |
+| `validator`       | Validator function returning an object, used to sanitize input. Uses a <ExternalLink to="https://github.com/jquense/yup" text="`yup` schema object"/>. | `Function`                     |
 
 Both `base` and `advanced` settings accept an object or an array of objects, each object being a settings section. Each settings section could include:
 
