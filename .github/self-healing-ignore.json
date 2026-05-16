@@ -199,6 +199,11 @@
       "number": 26242,
       "reason": "Router: Enterprise Edition feature. Fixes a UX issue in the Admin panel when switching Review Workflows locales. The change is an internal error handling improvement (returning 200 with empty data instead of 404, showing a clearer message to users). This is a bug fix/UX improvement that doesn't require documentation changes—the feature behavior remains the same, just with better error messages.",
       "added": "2026-05-15"
+    },
+    {
+      "number": 26326,
+      "reason": "Triage: dependency maintenance and security patches without behavior change",
+      "added": "2026-05-16"
     }
   ]
 }
