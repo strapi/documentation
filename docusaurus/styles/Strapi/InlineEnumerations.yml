@@ -1,0 +1,9 @@
+extends: existence
+# Item count is added by validate-content-style.js (Vale existence rules do not support %d).
+message: 'Long enumeration detected - use bullet list instead (Rule 8)'
+level: warning
+scope: raw
+link: https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04
+raw:
+  # Fixed vs legacy: require 5 list items (YAML max_inline_list_items). Old regex rarely fired.
+  - '(?i)(?:\w+\s+(?:include|are|consists?\s+of)\s+)?[A-Za-z]+(?:,\s*[A-Za-z]+){4}(?:,\s*(?:and\s+)?[A-Za-z]+)?'

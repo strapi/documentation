@@ -5,8 +5,8 @@ const path = require('path');
 
 // Dynamic path resolution
 const scriptDir = __dirname;
-const ruleParserPath = path.join(scriptDir, 'rule-parser');
-const styleRulesPath = path.join(scriptDir, 'style-rules.yml');
+const { DOCUSAURUS_DIR, validateFiles } = require('./lib/vale-runner');
+const { printResults } = require('./lib/console-report');
 
 /**
  * Flexible content tester for Strapi 12 Rules
@@ -17,14 +17,7 @@ const styleRulesPath = path.join(scriptDir, 'style-rules.yml');
  */
 class FlexibleContentTester {
   constructor() {
-    try {
-      const Strapi12RulesParser = require(ruleParserPath);
-      this.ruleParser = new Strapi12RulesParser(styleRulesPath);
-      console.log('✅ Strapi 12 Rules loaded successfully');
-    } catch (error) {
-      console.error('❌ Failed to load rules:', error.message);
-      process.exit(1);
-    }
+    console.log('✅ Strapi 12 Rules loaded successfully (Vale)');
   }
 
   async testFile(filePath) {
@@ -77,62 +70,41 @@ class FlexibleContentTester {
 
   async validateContent(content, source) {
     try {
-      const allRules = this.ruleParser.getAllRules();
-      console.log(`🔍 Applying ${allRules.length} validation rules...`);
+      const tempDir = path.join(DOCUSAURUS_DIR, '.tmp-style-test');
+      fs.mkdirSync(tempDir, { recursive: true });
+      const tempFile = path.join(tempDir, 'snippet.md');
+      fs.writeFileSync(tempFile, content, 'utf8');
+
+      const relativeTemp = path.relative(DOCUSAURUS_DIR, tempFile);
+      console.log('🔍 Running Vale validation rules...');
       console.log('');
 
-      let totalIssues = 0;
-      const issuesByRule = {};
-      const issuesBySeverity = { error: [], warning: [], suggestion: [] };
+      const results = validateFiles([relativeTemp], { cwd: DOCUSAURUS_DIR });
+      this.displayResults(results.summary.totalIssues, {
+        error: results.errors,
+        warning: results.warnings,
+        suggestion: results.suggestions,
+      }, {}, source);
 
-      // Apply all rules
-      allRules.forEach(rule => {
-        try {
-          const issues = rule.validator(content, source);
-          
-          if (issues.length > 0) {
-            issuesByRule[rule.id] = {
-              rule: rule,
-              issues: issues
-            };
-            
-            issues.forEach(issue => {
-              issue.ruleId = rule.id;
-              issue.ruleDescription = rule.description;
-              totalIssues++;
-              
-              if (issuesBySeverity[issue.severity]) {
-                issuesBySeverity[issue.severity].push(issue);
-              } else {
-                issuesBySeverity.warning.push(issue);
-              }
-            });
-          }
-        } catch (error) {
-          console.log(`⚠️  Rule ${rule.id} failed: ${error.message}`);
-        }
-      });
-
-      // Display results
-      this.displayResults(totalIssues, issuesBySeverity, issuesByRule, source);
-      
-      // Save results
-      const results = {
+      const report = {
         timestamp: new Date().toISOString(),
-        source: source,
+        source,
         contentLength: content.length,
-        totalIssues: totalIssues,
+        totalIssues: results.summary.totalIssues,
         issuesBySeverity: {
-          errors: issuesBySeverity.error.length,
-          warnings: issuesBySeverity.warning.length,
-          suggestions: issuesBySeverity.suggestion.length
+          errors: results.errors.length,
+          warnings: results.warnings.length,
+          suggestions: results.suggestions.length,
         },
-        issues: issuesBySeverity
+        issues: {
+          error: results.errors,
+          warning: results.warnings,
+          suggestion: results.suggestions,
+        },
       };
-      
-      fs.writeFileSync('content-validation-results.json', JSON.stringify(results, null, 2));
-      console.log('💾 Detailed results saved to: content-validation-results.json');
 
+      fs.writeFileSync('content-validation-results.json', JSON.stringify(report, null, 2));
+      console.log('💾 Detailed results saved to: content-validation-results.json');
     } catch (error) {
       console.error('❌ Validation failed:', error.message);
     }

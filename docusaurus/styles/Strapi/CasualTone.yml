@@ -1,0 +1,12 @@
+extends: existence
+message: 'CRITICAL: Maintain professional tone - avoid casual language (Rule 3)'
+level: error
+scope: raw
+link: https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04
+tokens:
+  - 😂
+  - lol
+  - haha
+  - funny
+  - joke
+  - kidding

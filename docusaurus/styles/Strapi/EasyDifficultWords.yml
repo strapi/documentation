@@ -1,0 +1,15 @@
+extends: existence
+message: 'CRITICAL: Never use "%s" - it can discourage readers (Rule 6)'
+level: error
+# Match legacy rule-parser: lint all lines after JSX is stripped (including fenced code).
+scope: raw
+link: https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04
+tokens:
+  - easy
+  - simple
+  - difficult
+  - hard
+  - straightforward
+  - trivial
+  - complex
+  - complicated

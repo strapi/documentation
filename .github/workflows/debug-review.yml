@@ -20,11 +20,6 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: |
-          cd docusaurus
-          yarn add --dev js-yaml glob
-
       - name: Debug - Check file structure in detail
         run: |
           echo "=== Current working directory ==="
@@ -47,13 +42,13 @@ jobs:
             echo "❌ Validation script NOT found"
           fi
 
-      - name: Test rule parser existence
+      - name: Test Vale runner
         run: |
-          echo "=== Checking rule parser ==="
-          if [ -f "docusaurus/scripts/style-validation/rule-parser.js" ]; then
-            echo "✅ Rule parser found"
+          echo "=== Checking Vale runner ==="
+          if [ -f "docusaurus/scripts/vale/run.sh" ]; then
+            echo "✅ Vale runner found"
           else
-            echo "❌ Rule parser NOT found"
+            echo "❌ Vale runner NOT found"
           fi
 
       - name: Test YAML config existence
@@ -75,13 +70,8 @@ jobs:
           echo "=== Looking for docs from here ==="
           ls -la docs/ | head -10 || echo "No docs/ directory here"
           
-          echo "=== Testing glob patterns ==="
-          echo "Pattern: docs/**/*.md"
-          node -e "const glob = require('glob'); console.log('Files found:', glob.sync('docs/**/*.{md,mdx}').slice(0, 10));"
-          
-          echo "=== Testing absolute patterns ==="
-          node -e "const glob = require('glob'); const path = require('path'); const pattern = path.join(process.cwd(), 'docs', '**/*.{md,mdx}'); console.log('Pattern:', pattern); console.log('Files found:', glob.sync(pattern).slice(0, 10));"
-          
+          chmod +x scripts/vale/run.sh
+
           echo "=== Manual test with specific files ==="
           if [ -f "docs/cms/intro.md" ]; then
             echo "Testing with specific file..."

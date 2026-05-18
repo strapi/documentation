@@ -1,0 +1,16 @@
+extends: existence
+message: 'Complex word detected: "%s" - stick to simple English (Rule 4)'
+level: suggestion
+scope: raw
+ignorecase: true
+link: https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04
+tokens:
+  - utilize
+  - facilitate
+  - demonstrate
+  - aforementioned
+  - subsequent
+  - therefore
+  - furthermore
+  - moreover
+  - consequently

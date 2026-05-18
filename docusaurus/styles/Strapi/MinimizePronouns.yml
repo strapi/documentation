@@ -1,0 +1,9 @@
+extends: existence
+message: 'Too many pronouns - avoid "you/we" in technical docs (Rule 11)'
+level: suggestion
+# Legacy rule-parser counted pronouns on every line of JSX-stripped text (incl. code blocks).
+scope: raw
+link: https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04
+raw:
+  # More than 3 pronouns on the same line (legacy counted per line on JSX-stripped text).
+  - '(?i)\b(?:you|we|us|our|your|yours)\b(?:[^\n]*\b(?:you|we|us|our|your|yours)\b){3,}'

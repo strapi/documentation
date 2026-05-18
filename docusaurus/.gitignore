@@ -2,6 +2,10 @@
 /node_modules
 **/node_modules
 
+# Vale CLI (downloaded by scripts/vale/run.sh)
+.tools/
+.tmp-style-test/
+
 # Production
 /build
 # /static
