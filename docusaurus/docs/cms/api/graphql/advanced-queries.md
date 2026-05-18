@@ -51,8 +51,7 @@ export default {
 
 In this example the parent resolver fetches restaurants using the [Document Service API](/cms/api/document-service), then delegates to the generated `Restaurant` resolver provided by the plugin so default behavior such as field selection still applies.
 
-## Aggregation drilldowns
 
-:::warning Not yet available
-GraphQL aggregations are not yet implemented in `@strapi/plugin-graphql`. See the [Aggregations section](/cms/api/graphql#aggregations) for details and workarounds.
+:::info Aggregations not yet available
+GraphQL aggregations are not yet implemented in `@strapi/plugin-graphql`. See the [GraphQL advanced use cases](/cms/api/graphql#advanced-use-cases) for details and workarounds.
 :::

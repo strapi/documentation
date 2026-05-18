@@ -425,13 +425,6 @@ query Query($status: PublicationStatus) {
 }
 ```
 
-## Aggregations
-
-:::warning Not yet available
-GraphQL aggregations (count, avg, sum, min, max, groupBy) are not yet implemented in `@strapi/plugin-graphql`. This section will be updated when the feature becomes available.
-
-In the meantime, you can get a total document count through the REST API (e.g., `GET /api/restaurants?pagination[pageSize]=1` returns `meta.pagination.total`), or write a [custom GraphQL resolver](/cms/api/graphql/advanced-queries#resolver-chains) that uses the [Document Service API](/cms/api/document-service) to compute aggregations.
-:::
 
 ## Mutations
 
@@ -1127,3 +1120,9 @@ Click on the following cards for short guides on more advanced use cases leverag
   <CustomDocCard emoji="🖼️" title="Advanced queries" description="View examples of multi-level queries and custom resolver chains for the GraphQL API." link="/cms/api/graphql/advanced-queries" />
   <CustomDocCard emoji="🖼️" title="Advanced policies" description="View examples of advanced policies such as conditional visibility and group membership for the GraphQL API." link="/cms/api/graphql/advanced-policies" />
 </CustomDocCardsWrapper>
+
+:::info Aggregations not yet available
+GraphQL aggregations (count, avg, sum, min, max, groupBy) are not yet implemented in `@strapi/plugin-graphql`. This section will be updated when the feature becomes available.
+
+In the meantime, you can get a total document count through the REST API (e.g., `GET /api/restaurants?pagination[pageSize]=1` returns `meta.pagination.total`), or write a [custom GraphQL resolver](/cms/api/graphql/advanced-queries#resolver-chains) that uses the [Document Service API](/cms/api/document-service) to compute aggregations.
+:::
