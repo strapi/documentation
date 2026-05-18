@@ -3777,7 +3777,13 @@ To fetch a documents
 
 ### Create a new localized document {#locale-create}
 
-The `locale` field can be passed to create a localized document
+The `locale` field can be passed to create a localized document 
+
+:::info Aggregations not yet available
+GraphQL aggregations (count, avg, sum, min, max, groupBy) are not yet implemented in `@strapi/plugin-graphql`. This section will be updated when the feature becomes available.
+
+In the meantime, you can get a total document count through the REST API (e.g., `GET /api/restaurants?pagination[pageSize]=1` returns `meta.pagination.total`), or write a [custom GraphQL resolver](/cms/api/graphql/advanced-queries#resolver-chains) that uses the [Document Service API](/cms/api/document-service) to compute aggregations.
+:::
 
 
 
