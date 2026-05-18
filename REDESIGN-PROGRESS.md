@@ -86,11 +86,31 @@
   - Responsive: sidebar becomes horizontal scrollable on mobile
   - Loading bar animation, method badge colors, JSON syntax classes
 
-### 9. Navbar & Footer Polish (Phase 7) — PARTIALLY COMPLETE
+### 9. View Modes: Elegant / Markdown / AI (Phase 4)
+- **Branch:** `feat/view-modes` -- PR #3156
+- **New file:** `src/components/ViewMode/ViewModeContext.js` -- React context provider, localStorage sync (elegant/markdown only, AI never persisted), CustomEvent dispatch
+- **New file:** `src/components/ViewMode/ViewModeSwitcher.js` -- 3-button switcher (Elegant/Markdown/AI) above H1, auto-hide on scroll, keyboard navigation
+- **New file:** `src/components/ViewMode/AiPanel.js` -- fixed 50vw panel with page summary (Tldr extraction), Kapa React SDK inline chat, markdown rendering, copy/clear actions, code block copy buttons
+- **New file:** `src/components/ViewMode/viewModeSwitcher.module.scss`
+- **New file:** `src/components/ViewMode/aiPanel.module.scss`
+- **New file:** `src/scss/view-modes.scss` -- CSS overrides for markdown mode (monospace, flattened tabs/cards/details, simplified admonitions) and AI mode (50vw split, sidebar/TOC hiding)
+- **Modified:** `src/theme/Root.js` -- wraps app with ViewModeProvider
+- **Modified:** `src/theme/DocItem/Layout/index.js` -- injects ViewModeSwitcher + AiPanel
+- **Modified:** `src/theme/DocSidebar/index.js` -- listens to view-mode-change events, auto-collapse/restore in AI mode
+- **Modified:** `src/theme/Tabs/index.js` -- renders flat sections in markdown mode
+- **Modified:** `src/components/CustomDocCard.js` + `CustomDocCardsWrapper.js` -- card flattening in markdown mode
+- **Modified:** `docusaurus.config.js` -- anti-FOUC headTag script + Kapa SDK
+- **Modified:** `package.json` / `yarn.lock` -- added Kapa React SDK, react-markdown, remark-gfm
+- Anti-FOUC inline script reads localStorage before hydration
+- Responsive: full-screen AI panel on mobile, 60/40 split on tablet, 50/50 on desktop
+- Dark mode fully supported
+- "Elegant" naming kept as final
+
+### 10. Navbar & Footer Polish (Phase 7) -- PARTIALLY COMPLETE
 - **File:** `src/scss/navbar.scss` — backdrop blur on scroll, semi-transparent background
 - Footer not yet touched
 
-### 10. Component Polish (Phase 8) — PARTIALLY COMPLETE
+### 11. Component Polish (Phase 8) -- PARTIALLY COMPLETE
 - **File:** `src/scss/admonition.scss` — `border-radius: 10px`, 3px left accent bar
 - **File:** `src/scss/code-block.scss` — `border-radius: 10px`, macOS-style dots, copy button fade-in on hover
 
@@ -185,6 +205,12 @@ src/components/NavbarSearchAI/NavbarSearchAI.jsx
 src/components/NavbarSearchAI/NavbarSearchAI.module.scss
 src/components/ApiExplorer/ApiExplorer.jsx
 src/components/ApiExplorer/ApiExplorer.module.scss
+src/components/ViewMode/ViewModeContext.js
+src/components/ViewMode/ViewModeSwitcher.js
+src/components/ViewMode/AiPanel.js
+src/components/ViewMode/viewModeSwitcher.module.scss
+src/components/ViewMode/aiPanel.module.scss
+src/scss/view-modes.scss
 ```
 
 ## FILE INVENTORY — MODIFIED FILES
@@ -203,8 +229,13 @@ src/scss/table-of-contents.scss
 src/theme/DocSidebar/index.js
 src/theme/TOC/index.js
 src/theme/Navbar/Content/index.js
+src/theme/DocItem/Layout/index.js
+src/theme/Tabs/index.js
 src/pages/home/Home.jsx
 src/pages/home/home.module.scss
+src/components/CustomDocCard.js
+src/components/CustomDocCardsWrapper.js
+docusaurus.config.js
 ```
 
 ---
