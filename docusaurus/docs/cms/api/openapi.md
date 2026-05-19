@@ -51,7 +51,7 @@ npm run strapi openapi generate
 </TabItem>
 </Tabs>
 
-You can also path an optional `--output` argument to specify the path and filename, as in the following example:
+You can also pass an optional `--output` argument to specify the path and filename, as in the following example:
 
 <Tabs groupId="yarn-npm">
 <TabItem value="yarn" label="Yarn">
@@ -156,7 +156,7 @@ The generated OpenAPI specification includes all available API endpoints in your
 
 ## Serving the specification over HTTP
 
-Strapi can serve the generated OpenAPI specification as a live HTTP endpoint. This removes the need to regenerate a static file after each content-type change. Both the Content API and Admin API specifications can be served independently.
+Strapi can serve the generated OpenAPI specification as a live HTTP endpoint. Serving specifications over HTTP removes the need to regenerate a static file after each content-type change. Both the Content API and Admin API specifications can be served independently.
 
 Both endpoints are disabled by default. Enable them in the [server configuration](/cms/configurations/server) file.
 
@@ -254,7 +254,7 @@ export default ({ env }) => ({
 </TabItem>
 </Tabs>
 
-The `content-api` endpoint is served under the REST API prefix (`/api` by default), so the full URL is `http://localhost:1337/api/openapi.json`. The `admin` endpoint is served under the admin path (`/admin` by default), so the full URL is `http://localhost:1337/admin/openapi.json`.
+The `content-api` endpoint is served under the REST API prefix (`/api` by default). The full URL is `http://localhost:1337/api/openapi.json`. The `admin` endpoint is served under the admin path (`/admin` by default). The full URL is `http://localhost:1337/admin/openapi.json`.
 
 :::caution
 Both endpoints must resolve to different full paths. If the `content-api` and `admin` endpoints resolve to the same URL, Strapi throws an error at startup.

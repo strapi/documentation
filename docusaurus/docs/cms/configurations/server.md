@@ -27,7 +27,7 @@ Changes to the `server.js` file require rebuilding the admin panel. After saving
 
 ## Available options
 
-The `./config/server.js` file can include the following parameters:
+The `/config/server.js` file can include the following parameters:
 
 <!-- TODO: add admin jwt config option -->
 <!-- TODO: sort options alphabetically in the table below  -->
@@ -55,7 +55,7 @@ The `./config/server.js` file can include the following parameters:
 | `http.serverOptions`                | Options passed to http `createServer`                                                                                                                                                                                                                                                                                                                                       | <ExternalLink to="https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener" text="http.serverOptions"/>    | {}                  |
 | `transfer.remote.enabled`           | Toggle the ability to use the [transfer feature](/cms/data-management/transfer)                                                                                                                                                                                                                                                                | boolean                                                                                           | `true`              |
 | `transfer.remote.assetIdleTimeoutMs` | Timeout in milliseconds without incoming data before an asset stream is considered stalled when using `strapi transfer --from` to pull from a remote instance. Increase this value when transferring large files or when working on slow connections. | integer | <!-- TODO: confirm default value from strapi/strapi codebase --> |
-| `logger.startup.enabled`            | Toggle the the startup message in the terminal                                                                                                                                                                                                                                                                                                                              | boolean                                                                                           | `true`              |
+| `logger.startup.enabled`            | Toggle the startup message in the terminal                                                                                                                                                                                                                                                                                                                              | boolean                                                                                           | `true`              |
 | `logger.updates.enabled`            | Toggle the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                                                                       | boolean                                                                                           | `true`              |
 | `openapi`                            | [OpenAPI](/cms/api/openapi) endpoint configuration. Both endpoints are disabled by default.                                                                                                                                                                                                                                                                                 | object                                                                                            |                     |
 | `openapi['content-api'].enabled`     | Enable the Content API OpenAPI endpoint.                                                                                                                                                                                                                                                                                                                                    | boolean                                                                                           | `false`             |
@@ -89,12 +89,12 @@ axios.get('https://example.com', { httpsAgent: agent });
 :::
 
 :::tip
-Strapi exposes a dedicated health check route to make uptime probes straightforward. Any request to `/_health` returns an empty response with a `204` status and a `strapi: You are so French!` response header, which is suitable for load balancers or monitoring tools that only need a simple liveness indicator.
+Strapi exposes a dedicated health check route for uptime probes. Any request to `/_health` returns an empty response with a `204` status and a `strapi: You are so French!` response header, which is suitable for load balancers or monitoring tools that only need a simple liveness indicator.
 :::
 
 ## Configurations
 
-The `./config/server.js` minimal configuration requires the `host` and `port` parameters for development. Additional parameters can be included for a full configuration.
+The `/config/server.js` minimal configuration requires the `host` and `port` parameters for development. Additional parameters can be included for a full configuration.
 
 :::note
 [Environmental configurations](/cms/configurations/environment.md) (i.e. using the `env()` helper) do not need to contain all the values so long as they exist in the default `./config/server.js`.
