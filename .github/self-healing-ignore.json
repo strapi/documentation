@@ -204,6 +204,11 @@
       "number": 26326,
       "reason": "Triage: dependency maintenance and security patches without behavior change",
       "added": "2026-05-16"
+    },
+    {
+      "number": 26298,
+      "reason": "Router: Internal deprecation warning fix. Users do not interact with this — it silences false positive warnings on existing projects. No user-facing behavior or configuration changes to document.",
+      "added": "2026-05-19"
     }
   ]
 }
