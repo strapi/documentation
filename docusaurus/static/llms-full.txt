@@ -3461,6 +3461,18 @@ To populate specific relations several levels deep, use the object format with `
 
 </ApiCall>
 
+### Sort populated relations
+
+Use the `sort` parameter inside a `populate` object to order related entries by an attribute. For many-to-many and other join-table relations, an explicit `sort` takes precedence over the default connect order.
+
+<!-- source: strapi/strapi#26361 packages/core/database/src/query/helpers/populate/apply.ts -->
+
+</ApiCall>
+
+:::note
+Omit `sort` from a `populate` object to preserve the default connect order (the order in which entries were associated).
+:::
+
 ## Components & Dynamic Zones
 
 Components are populated the same way as relations:
@@ -4318,6 +4330,10 @@ Top-level pagination parameters (e.g., `pagination[page]` and `pagination[pageSi
 `filters` and `populate` can be combined.
 
 </ApiCall>
+
+:::note
+For many-to-many and other join-table relations, an explicit `sort` within a `populate` object overrides the default connect order. Omit `sort` to preserve the connect order (the order in which entries were associated).
+:::
 
 :::tip Performance tip
 In production, always use explicit population instead of wildcards like `populate=*`. Limit population depth to 2-3 levels and consider centralizing population logic in route middlewares. See  on the Strapi blog.

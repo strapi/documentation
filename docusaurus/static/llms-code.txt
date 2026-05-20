@@ -4396,14 +4396,59 @@ File path: N/A
 ```
 
 
+## Sort populated relations
+Description: Code example from "Sort populated relations"
+(Source: https://docs.strapi.io/cms/api/document-service/populate#sort-populated-relations)
+
+Language: TypeScript
+File path: /core/database/src/query/helpers/populate/apply.ts
+
+```ts
+const documents = await strapi.documents("api::article.article").findMany({
+  populate: {
+    categories: {
+      sort: 'name:asc',
+    },
+  },
+});
+```
+
+---
+Language: JSON
+File path: /core/database/src/query/helpers/populate/apply.ts
+
+```json
+[
+  {
+    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "title": "Test Article",
+    // ...
+    "categories": [
+      {
+        "id": 1,
+        "name": "Architecture"
+        // ...
+      },
+      {
+        "id": 3,
+        "name": "Technology"
+        // ...
+      }
+    ]
+  }
+  // ...
+]
+```
+
+
 ## Components & Dynamic Zones
 Description: Code example from "Components & Dynamic Zones"
 (Source: https://docs.strapi.io/cms/api/document-service/populate#components-dynamic-zones)
 
-Language: JavaScript
-File path: N/A
+Language: TypeScript
+File path: /core/database/src/query/helpers/populate/apply.ts
 
-```js
+```ts
 const documents = await strapi.documents("api::article.article").findMany({
   populate: ["testComp"],
 });
@@ -4411,7 +4456,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 ---
 Language: JSON
-File path: N/A
+File path: /core/database/src/query/helpers/populate/apply.ts
 
 ```json
 [
@@ -4432,10 +4477,10 @@ File path: N/A
 ```
 
 ---
-Language: JavaScript
-File path: N/A
+Language: TypeScript
+File path: /core/database/src/query/helpers/populate/apply.ts
 
-```js
+```ts
 const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     testDZ: {
@@ -4452,7 +4497,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 ---
 Language: JSON
-File path: N/A
+File path: /core/database/src/query/helpers/populate/apply.ts
 
 ```json
 [
