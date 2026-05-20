@@ -17225,13 +17225,13 @@ Source: https://docs.strapi.io/cms/configurations/features
 Description: (optional) If the server is running, stop it with Ctrl-C.
 (Source: https://docs.strapi.io/cms/configurations/features#enabling-a-future-flag)
 
-Language: TypeScript
-File path: /config/features.ts
+Language: JavaScript
+File path: /config/features.js
 
-```ts
+```js
   module.exports = ({ env }) => ({
     future: {
-      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
+      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
     },
   })
 ```
@@ -17241,7 +17241,7 @@ Language: DOTENV
 File path: .env
 
 ```dotenv
-  STRAPI_FUTURE_ADMIN_TOKENS=true
+  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
 ```
 
 ---
@@ -17249,11 +17249,11 @@ Language: TypeScript
 File path: /config/features.ts
 
 ```ts
-  export default {
+  export default ({ env }) => ({
     future: {
-      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
+      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
     },
-  };
+  });
 ```
 
 ---
@@ -17261,7 +17261,7 @@ Language: DOTENV
 File path: .env
 
 ```dotenv
-  STRAPI_FUTURE_ADMIN_TOKENS=true
+  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
 ```
 
 Language: Bash
@@ -23929,9 +23929,9 @@ export default async function fetchContentType(
 # MCP server
 Source: https://docs.strapi.io/cms/features/strapi-mcp-server
 
-## Code-based configuration
+## Strapi code-based configuration
 Description: Enable the MCP server by adding the mcp key to the server configuration file:
-(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#code-based-configuration)
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#strapi-code-based-configuration)
 
 Language: JavaScript
 File path: config/server.js
@@ -23971,7 +23971,7 @@ export default config;
 
 
 ## Connecting Claude Desktop
-Description: Add the Strapi MCP server to the configuration:
+Description: Add the Strapi MCP server to the configuration, as in the following example, replacing YOURADMINTOKEN with the admin token value copied from the admin panel:
 (Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-claude-desktop)
 
 Language: JSON
@@ -23993,7 +23993,7 @@ File path: claude_desktop_config.json
 
 
 ## Connecting Claude Code
-Description: Run the following command, replacing YOURADMINTOKEN with the token created earlier:
+Description: Run the following command, replacing YOURADMINTOKEN with the admin token value copied from the admin panel:
 (Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-claude-code)
 
 Language: JavaScript

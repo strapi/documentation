@@ -96,6 +96,10 @@ Once the setting is in place, restart Strapi. The MCP endpoint becomes available
 
 Once you enabled and configured the MCP server through Strapi's admin panel (admin tokens) and configuration filters, you must connect your AI client to the Strapi MCP server.
 
+:::note
+`localhost:1337/` is used in configuration examples on this page. If your Strapi server is hosted on another URL or port, please update the code accordingly.
+:::
+
 #### Connecting Claude Desktop
 
 Open Claude Desktop's configuration file. The location varies depending on your system:
@@ -260,4 +264,3 @@ The MCP server has the following limitations:
 - **Components**: Component fields are passed as untyped (`any`) in tool schemas.
 - **Dynamic zones**: Dynamic zone fields are passed as untyped arrays in tool schemas.
 - **Nested population parameters**: The `list` and `get` tools do not support nested population parameters for relations.
-- **Stateless sessions**: Each MCP request creates a new server instance. There is no session persistence between requests.

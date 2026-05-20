@@ -28,7 +28,6 @@
 - [Logos](https://docs.strapi.io/cms/admin-panel-customization/logos): Update login and navigation logos by extending the admin app. Prefer SVG for crisp rendering; provide light/dark variants when possible for contrast.
 - [Theme extension](https://docs.strapi.io/cms/admin-panel-customization/theme-extension): Extend Strapi's admin panel theme.
 - [Customizing the rich text editor](https://docs.strapi.io/cms/admin-panel-customization/wysiwyg-editor): Learn more about the various strategies available to customize the WYSIWYG editor in Strapi's admin panel.
-- [Docs MCP server](https://docs.strapi.io/cms/ai/docs-mcp-server): Connect an MCP server for the Strapi documentation to your IDE for Strapi-aware code suggestions and answers.
 - [AI for content managers](https://docs.strapi.io/cms/ai/for-content-managers): Learn about AI-powered features in the Strapi admin panel and the built-in MCP server that lets AI clients manage your content.
 - [AI for developers](https://docs.strapi.io/cms/ai/for-developers): Use AI-powered tools on the Strapi documentation site. Chatbot, Copy Markdown, LLMs.txt files, Open with LLM, and MCP server for IDE integration.
 - [Strapi Client](https://docs.strapi.io/cms/api/client): The Strapi Client library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content.
