@@ -256,7 +256,7 @@ This means you can create tokens with fine-grained access:
 Create dedicated admin tokens for each AI client or use case. Use the most restrictive permissions that still allow the AI to accomplish its task.
 :::
 
-## Known limitations
+### Known limitations
 
 The MCP server has the following limitations:
 
