@@ -12,5 +12,8 @@ The following environment variables are required in order to run Strapi in a Doc
 | `JWT_SECRET` | The secret used to sign the JWT for the Users-Permissions plugin. |
 | `ADMIN_JWT_SECRET` | The secret used to sign the JWT for the Admin panel. |
 | `APP_KEYS` | The secret keys used to sign the session cookies. |
+| `API_TOKEN_SALT` | The salt used to generate API tokens. |
+| `TRANSFER_TOKEN_SALT` | The salt used to generate transfer tokens. |
+| `ENCRYPTION_KEY` | The key used to encrypt secrets stored in the database (e.g., provider credentials configured through the admin panel). |
 
 You can also set some [optional environment variables](/cms/configurations/environment#strapi).
