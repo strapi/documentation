@@ -94,6 +94,14 @@ const sidebars = {
         },
         {
           type: 'doc',
+          label: 'MCP server',
+          id: 'cms/features/strapi-mcp-server',
+          customProps: {
+            new: true,
+          },
+        },
+        {
+          type: 'doc',
           label: 'Preview',
           id: 'cms/features/preview',
           customProps: {
@@ -167,6 +175,14 @@ const sidebars = {
           type: 'doc',
           label: 'AI for developers and docs',
           id: 'cms/ai/for-developers',
+          customProps: {
+            new: true,
+          },
+        },
+        {
+          type: 'doc',
+          label: 'Docs MCP server',
+          id: 'cms/ai/docs-mcp-server',
           customProps: {
             new: true,
           },
