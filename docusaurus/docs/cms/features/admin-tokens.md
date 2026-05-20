@@ -12,7 +12,6 @@ tags:
 ---
 
 # Admin Tokens
-<FeatureFlagBadge feature="adminTokens" /> 
 
 <Tldr>
 Admin tokens authenticate programmatic access to the Strapi Admin API. Each token is scoped to a subset of its owner's permissions and is designed for automation workflows such as MCP agents, CI/CD pipelines, and scripts.
@@ -30,7 +29,7 @@ Admin tokens and API tokens are strictly separated: each is rejected on the othe
     Activated by default for Super Admin. Each lower-level role needs an explicit permission grant in Roles > Settings - Admin tokens.
   </IdentityCardItem>
   <IdentityCardItem icon="toggle-right" title="Activation">
-    Requires enabling the corresponding future flag,<br/>see [Features configuration](/cms/configurations/features)
+    Available and activated by default
   </IdentityCardItem>
   <IdentityCardItem icon="desktop" title="Environment">
     Available in both Development & Production environment
@@ -78,7 +77,6 @@ If you're not the Strapi instance's super admin, the super admin must have grant
     :::
 4. Click on the **Save** button. The new Admin token will be displayed at the top of the interface, along with a copy button <Icon name="copy" />.
 
-<!-- TODO: Update screenshot once admin tokens UI is finalized behind the feature flag -->
 <ThemedImage
 alt="Admin token permissions"
 sources={{
