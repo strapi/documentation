@@ -394,7 +394,7 @@ Clearing and deleting are permanent and only available to the project owner. You
 
 ##### Clearing an environment {#clearing-an-environment}
 
-:::caution Environment clearing is destructive
+:::warning Environment clearing is destructive
 Clearing an environment will permanently delete all its existing data and assets. Environment settings (such as variables and domains) are not affected by the clearing.
 :::
 
