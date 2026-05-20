@@ -48,7 +48,7 @@ The token's permissions determine which MCP tools are exposed to the AI client. 
 
 ### Strapi code-based configuration
 
-Enable the MCP server by adding the `mcp` key to the server configuration file:
+Enable the MCP server by adding the `mcp` object to the server configuration file:
 
 <Tabs groupId="js-ts">
 <TabItem value="javascript" label="JavaScript">
@@ -60,9 +60,11 @@ module.exports = ({ env }) => ({
   app: {
     keys: env.array('APP_KEYS'),
   },
+  // highlight-start
   mcp: {
     enabled: true,
   },
+  // highlight-end
 });
 ```
 
@@ -96,26 +98,31 @@ Once you enabled and configured the MCP server through Strapi's admin panel (adm
 
 #### Connecting Claude Desktop
 
-Open Claude Desktop's configuration file:
+Open Claude Desktop's configuration file. The location varies depending on your system:
 
-- on macOS, the file is accessible at `~/Library/Application Support/Claude/claude_desktop_config.json`
-- on Windows, the file is accessible at `%APPDATA%\Claude\claude_desktop_config.json`
+| OS | File location |
+|----|---------------|
+| macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
 
 :::tip
 You can also open the configuration file for Claude Desktop from Claude's settings: go to Settings > Desktop app > Developer, then click on the **Edit config** button.
 :::
 
-Add the Strapi MCP server to the configuration, as in the following example, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#admin-panel-configuration):
+Add the Strapi MCP server to Claude's configuration file, as in the following example, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#strapi-admin-panel-configuration):
 
 ```json title="claude_desktop_config.json"
 {
   "mcpServers": {
     "strapi-mcp": {
-      "type": "streamable-http",
-      "url": "http://localhost:1337/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
-      }
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://localhost:1337/mcp",
+        "--header",
+        "Authorization: Bearer YOUR_ADMIN_TOKEN"
+      ]
     }
   }
 }
@@ -125,7 +132,7 @@ Restart Claude Desktop for the changes to take effect.
 
 #### Connecting Claude Code
 
-Run the following command, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#admin-panel-configuration):
+Run the following command, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#strapi-admin-panel-configuration):
 
 ```bash
 claude mcp add strapi-mcp --transport http http://localhost:1337/mcp -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
