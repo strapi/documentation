@@ -179,14 +179,6 @@ const sidebars = {
             new: true,
           },
         },
-        {
-          type: 'doc',
-          label: 'Docs MCP server',
-          id: 'cms/ai/docs-mcp-server',
-          customProps: {
-            new: true,
-          },
-        },
       ],
     },
     { // APIs

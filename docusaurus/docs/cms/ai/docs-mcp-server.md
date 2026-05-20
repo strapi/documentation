@@ -21,7 +21,14 @@ A Docs MCP server exposes the Strapi documentation to AI coding tools. Connect i
 
 </Tldr>
 
-The Docs [MCP](https://modelcontextprotocol.io) server is powered by [Kapa](https://kapa.ai) and draws from the full Strapi documentation, including guides, API references, and code examples.
+The Docs [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server is powered by [Kapa](https://kapa.ai) and draws from the full Strapi documentation, including guides, API references, and code examples. The Docs MCP server is part of the [AI tools for developers](/cms/ai/for-developers) that Strapi offers.
+
+:::strapi MCP servers for Strapi
+Strapi offers 2 different MCP servers:
+
+- the Docs MCP server, covered on the present page,
+- and the Strapi MCP for content management, covered on its [dedicated feature page](/cms/features/strapi-mcp-server).
+:::
 
 ## Compatible tools
 
@@ -82,6 +89,25 @@ If manual MCP server configuration is required:
     ```
 
     </TabItem>
+    <TabItem value="windsurf" label="Windsurf">
+
+    Add to your `~/.codeium/windsurf/mcp_config.json` file:
+
+    ```json title="~/.codeium/windsurf/mcp_config.json"
+    {
+      "mcpServers": {
+        "strapi-docs": {
+          "serverUrl": "https://strapi-docs.mcp.kapa.ai"
+        }
+      }
+    }
+    ```
+
+    </TabItem>
     </Tabs>
 
 Once connected, your AI coding assistant can query the Strapi documentation directly to answer questions, suggest implementations, and verify API usage.
+
+:::tip
+For docs-related questions, start your prompts with `Use the strapi-docs MCP server to answer:`. This will ensure the tool queries docs.strapi.io instead of returning answers based on its training data, which can be outdated.
+:::
