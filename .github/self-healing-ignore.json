@@ -209,6 +209,11 @@
       "number": 26298,
       "reason": "Router: Internal deprecation warning fix. Users do not interact with this — it silences false positive warnings on existing projects. No user-facing behavior or configuration changes to document.",
       "added": "2026-05-19"
+    },
+    {
+      "number": 26165,
+      "reason": "Router: Internal admin panel bug fix that improves UX of existing session timeout feature. No new user-facing capabilities, configuration options, or APIs introduced. Session management should already be documented if needed.",
+      "added": "2026-05-20"
     }
   ]
 }
