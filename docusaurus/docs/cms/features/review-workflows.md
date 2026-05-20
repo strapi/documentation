@@ -131,3 +131,7 @@ Entries of a review workflow content type can be assigned to any admin user in S
     dark: '/img/assets/content-manager/review-assignee-dropdown_DARK.png',
   }}
 />
+
+:::tip
+You can filter entries in the Content Manager list view by **Assignee** and **Review Stage** to quickly find entries assigned to specific users or in specific review stages. Open the filters menu in the list view to access these filtering options.
+:::
