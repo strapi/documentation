@@ -15,7 +15,13 @@ import TabItem from '@theme/TabItem';
 
 # Docs MCP server
 
-A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the documentation is available. The Docs MCP server exposes the Strapi documentation to AI coding tools. Connect it to your IDE to get Strapi-aware code suggestions and answers directly in your development environment.
+<Tldr>
+
+A Docs MCP server exposes the Strapi documentation to AI coding tools. Connect it to your IDE to get Strapi-aware code suggestions and answers directly in your development environment.
+
+</Tldr>
+
+The Docs [MCP](https://modelcontextprotocol.io) server is powered by [Kapa](https://kapa.ai) and draws from the full Strapi documentation, including guides, API references, and code examples.
 
 ## Compatible tools
 
