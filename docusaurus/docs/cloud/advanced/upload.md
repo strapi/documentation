@@ -237,9 +237,13 @@ export default ({ env }) => ({
 
 Due to the default settings in the Strapi Security Middleware you will need to modify the `contentSecurityPolicy` settings to properly see thumbnail previews in the Media Library.
 
+:::caution
+On Strapi Cloud, `NODE_ENV` is always set to `production`. Changes to the global `config/middlewares.ts` file are overwritten on each deploy and will not take effect. Place your Security Middleware customizations in `config/env/production/middlewares.ts` instead. See [Middleware Configuration for Strapi Cloud](/cloud/advanced/middlewares) for details.
+:::
+
 To do this in your Strapi project:
 
-1. Navigate to `./config/middlewares.js` or `./config/middlewares.ts` in your Strapi project.
+1. Navigate to `./config/env/production/middlewares.js` or `./config/env/production/middlewares.ts` in your Strapi project.
 2. Replace the default `strapi::security` string with the object provided by the upload provider.
 
 **Example:**
@@ -248,7 +252,7 @@ To do this in your Strapi project:
 <Tabs groupId="upload-examples" >
 <TabItem value="cloudinary" label="Cloudinary">
 
-```js title=./config/middleware.js
+```js title=./config/env/production/middlewares.js
 module.exports = [
   // ...
   {
@@ -284,7 +288,7 @@ module.exports = [
 </TabItem>
 <TabItem value="amazon-s3" label="Amazon S3">
 
-```js title=./config/middleware.js
+```js title=./config/env/production/middlewares.js
 module.exports = [
   // ...
   {
@@ -324,7 +328,7 @@ module.exports = [
 <Tabs groupId="upload-examples" >
 <TabItem value="cloudinary" label="Cloudinary">
 
-```ts title=./config/middleware.ts
+```ts title=./config/env/production/middlewares.ts
 export default [
   // ...
   {
@@ -360,7 +364,7 @@ export default [
 </TabItem>
 <TabItem value="amazon-s3" label="Amazon S3">
 
-```ts title=./config/middleware.ts
+```ts title=./config/env/production/middlewares.ts
 export default [
   // ...
   {
