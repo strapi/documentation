@@ -104,15 +104,6 @@ This is particularly useful for understanding configuration examples, API respon
 - **`llms-full.txt`**: Use this when you need the AI to have access to the complete documentation content. This is a large file; make sure your model's context window can handle it.
 - **`llms-code.txt`**: Use this when you're working on code and want to give an AI all of Strapi's documented code examples. Each snippet includes the source page URL and anchor for traceability.
 
-## Tips for better results {#tips}
-
-The following tips will help you fine-tune your prompts to get the best results:
-- Use the [Docs MCP server](/cms/ai/docs-mcp-server) in your IDE for the fastest developer experience. For docs-related questions, start your prompts with `Use the strapi-docs MCP server to answer:`. This will ensure the tool queries docs.strapi.io instead of creating answers based on its training data.
-- Include the page URL so the assistant grounds its answer in the right context.
-- Mention your Strapi version (e.g., Strapi 5) to avoid outdated suggestions.
-- Pair code examples with their source page when sharing snippets from `llms-code.txt`.
-- Prefer documented APIs over private internals when asking for code generation.
-
 ## MCP servers {#mcp}
 
 The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open standard that lets AI tools interact with external services. 2 MCP servers are available for Strapi:
@@ -122,4 +113,11 @@ The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open s
 <CustomDocCard icon="book-open" title="Docs MCP server" description="Connect AI clients to the Strapi documentation to your IDE for up-to-date, reliable information." link="/cms/ai/docs-mcp-server" />
 </CustomDocCardsWrapper>
 
+## Tips for better results {#tips}
 
+The following tips will help you fine-tune your prompts to get the best results:
+- Use the [Docs MCP server](/cms/ai/docs-mcp-server) in your IDE for the fastest developer experience. For docs-related questions, start your prompts with `Use the strapi-docs MCP server to answer:`. This will ensure the tool queries docs.strapi.io instead of creating answers based on its training data.
+- Include the page URL so the assistant grounds its answer in the right context.
+- Mention your Strapi version (e.g., Strapi 5) to avoid outdated suggestions.
+- Pair code examples with their source page when sharing snippets from `llms-code.txt`.
+- Prefer documented APIs over private internals when asking for code generation.
