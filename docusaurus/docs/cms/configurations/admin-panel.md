@@ -106,7 +106,7 @@ module.exports = ({ env }) => ({
 </TabItem>
 <TabItem value="ts" label="TypeScript">
 
-```js title="/config/admin.ts"
+```ts title="/config/admin.ts"
 export default ({ env }) => ({
   host: "my-host.com",
   port: 3000,
@@ -208,7 +208,7 @@ module.exports = ({ env }) => ({
 </TabItem>
 <TabItem value="ts" label="TypeScript">
 
-```js title="/config/server.ts"
+```ts title="/config/server.ts"
 export default ({ env }) => ({
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
@@ -216,7 +216,7 @@ export default ({ env }) => ({
 });
 ```
 
-```js title="/config/admin.ts"
+```ts title="/config/admin.ts"
 export default ({ env }) => ({
   /**
    * Note: The administration will be accessible from the root of the domain 
@@ -239,10 +239,14 @@ With this configuration:
 
 The [API tokens](/cms/features/api-tokens) feature can be configured with the following parameters:
 
-| Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
-|-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| `apiToken.salt`                   | Salt used to generate API tokens                                                                                                                            | string        | Random string                                                                                                                       |
-| `apiToken.secrets.encryptionKey`   | Encryption key used to set API tokens visibility in the admin panel | string | Random string |
+| Parameter                          | Description                                                                                                                                                   | Type   | Default       |
+|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|---------------|
+| `apiToken.salt`                    | Salt used to generate API tokens (applies to both `content-api` and `admin` token kinds).                                                                     | string | Random string |
+| `apiToken.secrets.encryptionKey`   | Encryption key used to set API token visibility in the admin panel. When set, token keys remain viewable at any time by the token's owner.                    | string | Random string |
+
+:::tip
+Admin tokens, the new kind of API token for programmatic access to the Admin pane features, are configured entirely from the admin panel. No additional code-based configuration is required beyond the parameters above (see [Admin tokens](/cms/features/admin-tokens)).
+:::
 
 ## Audit logs
 

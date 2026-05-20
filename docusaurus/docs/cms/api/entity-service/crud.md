@@ -37,6 +37,7 @@ Syntax: `findOne(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 | ---------- | --------------- | --------------- |
 | `fields`   | Attributes to return | `String[]`  |
 | `populate` | Relations, components and dynamic zones to [populate](/cms/api/entity-service/populate) | [`PopulateParameter`](/cms/api/entity-service/populate) |
+| `locale` | Locale code (for example `fr-FR`) when the Internationalization plugin is enabled. Targets the localized variant instead of the default locale. | `string` |
 
 ### Example
 
@@ -64,6 +65,7 @@ Syntax: `findMany(uid: string, parameters: Params)` ⇒ `Entry[]`
 | `sort`   | [Order](/cms/api/entity-service/order-pagination) definition  | [`OrderByParameter`](/cms/api/entity-service/order-pagination) |
 | `populate`  | Relations, components and dynamic zones to [populate](/cms/api/entity-service/populate)  | [`PopulateParameter`](/cms/api/entity-service/populate)         |
 | `publicationState` | Publication state, can be:<ul><li>`live` to return only published entries</li><li>`preview` to return both draft entries & published entries (default)</li></ul>   | `PublicationStateParameter`  |
+| `locale` | Locale code when the Internationalization plugin is enabled. Restricts results to that locale (omit for the default locale). | `string` |
 
 ### Example
 
@@ -105,6 +107,7 @@ Syntax: `create(uid: string, parameters: Params)` ⇒ `Entry`
 | ---------- | ----------- | ---------- |
 | `fields`   | Attributes to return | `String[]`  |
 | `populate` | Relations, components and dynamic zones to [populate](/cms/api/entity-service/populate) | [`PopulateParameter`](/cms/api/entity-service/populate) |
+| `locale` | Locale code when the Internationalization plugin is enabled. Creates the entry for that locale. | `string` |
 | `data`     | Input data  | `Object` |
 
 <ManagingRelations components={props.components} />
@@ -137,6 +140,7 @@ Syntax: `update(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 | ---------- | ------------- | ---------- |
 | `fields`   | Attributes to return | `String[]`  |
 | `populate` | Relations, components and dynamic zones to [populate](/cms/api/entity-service/populate) | [`PopulateParameter`](/cms/api/entity-service/populate) |
+| `locale` | Locale code when the Internationalization plugin is enabled. Updates the matching localized variant. | `string` |
 | `data`     | Input data  | `object`  |
 
 ### Example
@@ -161,6 +165,7 @@ Syntax: `delete(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 | ---------- | --------- | -------- |
 | `fields`   | Attributes to return | `String[]`  |
 | `populate` | Relations, components and dynamic zones to [populate](/cms/api/entity-service/populate) | [`PopulateParameter`](/cms/api/entity-service/populate) |
+| `locale` | Locale code when the Internationalization plugin is enabled. Deletes the localized variant that matches this locale. | `string` |
 
 ### Example
 

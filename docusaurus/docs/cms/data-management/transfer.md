@@ -279,6 +279,29 @@ The `transfer` command is not intended for transferring data between two local i
    git clone <path to created git repository>.git/ <new-instance-name>
    ```
 
+5. Move into the cloned project and install its dependencies:
+
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="yarn">
+
+```bash
+cd <new-instance-name>
+yarn install
+```
+
+</TabItem>
+<TabItem value="npm" label="npm">
+
+```bash
+cd <new-instance-name>
+npm install
+```
+
+</TabItem>
+</Tabs>
+
+   Without this step, the next `build` and `start` commands fail because `strapi` is not yet on the project's local executable path.
+
 ### Add data to the first Strapi instance
 
 1. Return to the first Strapi instance and add data to the content type.

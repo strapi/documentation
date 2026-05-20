@@ -126,9 +126,9 @@ jobs:
           echo "After title filtering: $FILTERED candidates ($EXCLUDED excluded by title, $BOTS by bot author)"
 
           # Check idempotency: remove PRs that already have a doc PR
-          # Extract PR numbers already referenced in auto-doc-healing PR bodies
-          gh pr list --repo strapi/documentation --label auto-doc-healing --state all \
-            --json body --jq '[.[].body | scan("strapi/strapi/pull/([0-9]+)") | .[0] | tonumber] | unique' \
+          # Scan ALL doc PRs (not just auto-doc-healing labeled) to catch manual PRs too
+          gh pr list --repo strapi/documentation --state all --limit 200 \
+            --json body --jq '[.[].body // "" | scan("strapi/strapi/pull/([0-9]+)") | .[0] | tonumber] | unique' \
             > /tmp/existing-pr-numbers.json 2>/dev/null || echo "[]" > /tmp/existing-pr-numbers.json
 
           # Filter out PRs whose number appears in existing doc PRs
@@ -629,9 +629,11 @@ jobs:
           # Router results
           SONNET_DRAFTED=0
           ROUTER_SKIPPED=0
+          ASK_HUMANS=0
           if [ -f "/tmp/router-results.json" ]; then
             SONNET_DRAFTED=$(jq '[.prs[] | select(.decision == "has_targets" and .complexity == "full")] | length' /tmp/router-results.json 2>/dev/null || echo "0")
             ROUTER_SKIPPED=$(jq '[.prs[] | select(.decision == "skip")] | length' /tmp/router-results.json 2>/dev/null || echo "0")
+            ASK_HUMANS=$(jq '[.prs[] | select(.decision == "ask_user")] | length' /tmp/router-results.json 2>/dev/null || echo "0")
           fi
 
           # Drafter results
@@ -681,6 +683,7 @@ jobs:
             --argjson merged_as_is "$MERGED_AS_IS" \
             --argjson merged_with_edits "$MERGED_WITH_EDITS" \
             --argjson rejected "$REJECTED" \
+            --argjson ask_humans "$ASK_HUMANS" \
             '{
               parent: { database_id: $db },
               properties: {
@@ -696,6 +699,7 @@ jobs:
                 "Merged as-is": { number: $merged_as_is },
                 "Merged with edits": { number: $merged_with_edits },
                 "Rejected by Pierre": { number: $rejected },
+                "Ask humans": { number: $ask_humans },
                 "Status": { select: { name: $status } },
                 "Error": { rich_text: [{ text: { content: ($error | if length > 2000 then .[:2000] else . end) } }] },
                 "Run URL": { url: $run_url }

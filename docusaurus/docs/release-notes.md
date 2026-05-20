@@ -29,7 +29,137 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.44.0](https://github.com/strapi/strapi/releases/tag/v5.44.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.46.0](https://github.com/strapi/strapi/releases/tag/v5.46.0)._
+
+## 6.25.0
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document admin translation contribution path in FAQ](https://github.com/strapi/documentation/pull/3165)
+- [Explain middleware on every core route for one content-type](https://github.com/strapi/documentation/pull/3152)
+- [Document Content Manager Edit View context hook on Admin Panel API page](https://github.com/strapi/documentation/pull/3146)
+- [Document `tsconfig` setup for local TypeScript plugins](https://github.com/strapi/documentation/pull/3121)
+- [Add `addRichTextBlocks` to Content Manager API documentation](https://github.com/strapi/documentation/pull/3100)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Update sendmail provider description after Nodemailer switch](https://github.com/strapi/documentation/pull/3164)
+- [Update live preview to include support for media](https://github.com/strapi/documentation/pull/3158)
+- [Distinguish admin extensions from server plugin overrides](https://github.com/strapi/documentation/pull/3155)
+- [Document `__component` for dynamic zones on REST create](https://github.com/strapi/documentation/pull/3153)
+- [Document React admin dependencies for v4 upgrades](https://github.com/strapi/documentation/pull/3151)
+- [Document dynamic zone __component in REST update section](https://github.com/strapi/documentation/pull/3150)
+- [Align public middleware example with maxAge configuration](https://github.com/strapi/documentation/pull/3149)
+- [Document locale parameter for Entity Service CRUD](https://github.com/strapi/documentation/pull/3147)
+- [Note that REST filter examples need populate to surface traversed relations](https://github.com/strapi/documentation/pull/3144)
+- [Document ADMIN_PATH and STRAPI_ADMIN_BACKEND_URL environment variables](https://github.com/strapi/documentation/pull/3143)
+- [Document AWS RDS IAM auth with short-lived tokens](https://github.com/strapi/documentation/pull/3141)
+- [Document concurrentUploadSize upload plugin option](https://github.com/strapi/documentation/pull/3138)
+- [Update pnpm mention to warn about Strapi Cloud compatibility](https://github.com/strapi/documentation/pull/3135)
+- [Clarify nested component required metadata gap in OpenAPI guide](https://github.com/strapi/documentation/pull/3128)
+
+#### Repository
+- [Add conditional retrieval budgets and drafting guardrails to agent prompts](https://github.com/strapi/documentation/pull/3167)
+- [Track ask_user router decisions in Notion metrics for docs self-healing system](https://github.com/strapi/documentation/pull/3166)
+- [Add native Kapa dark mode support](https://github.com/strapi/documentation/pull/3159)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/butcherZ" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8189028?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="butcherZ"/>
+</a>
+<a href="https://github.com/cache-your-dreams" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/104358430?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="cache-your-dreams"/>
+</a>
+<a href="https://github.com/markkaylor" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/26598053?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="markkaylor"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/singhvishalkr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/107715446?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="singhvishalkr"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
+
+## 6.24.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Document the `/users` endpoints](https://github.com/strapi/documentation/pull/3027)
+- [Admin tokens](https://github.com/strapi/documentation/pull/2992)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Clarify TypeScript Jest entrypoint for harness](https://github.com/strapi/documentation/pull/3125)
+- [Add install step after clone in test-locally walkthrough for Data Transfer](https://github.com/strapi/documentation/pull/3122)
+- [Add sharp configuration details for Media Library](https://github.com/strapi/documentation/pull/3102)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Align Document Service note with connect payloads](https://github.com/strapi/documentation/pull/3129)
+- [Note that internal entity-validator is not public API](https://github.com/strapi/documentation/pull/3120)
+- [Add missing Draft & Publish availability note to methods overview](https://github.com/strapi/documentation/pull/3119)
+- [Add sanitization warning to Document Service API page](https://github.com/strapi/documentation/pull/3114)
+- [Mention sorting by publish status in Content Manager List View](https://github.com/strapi/documentation/pull/3113)
+- [Document polymorphic relations support in Document Service API populate](https://github.com/strapi/documentation/pull/3112)
+- [Update plugin Component examples to use non-deprecated import pattern](https://github.com/strapi/documentation/pull/3111)
+- [Fix OpenAPI example id type to string](https://github.com/strapi/documentation/pull/3107)
+- [Document Deploy widget on homepage](https://github.com/strapi/documentation/pull/3106)
+
+#### Repository
+- [Widen self-healing deduplication to scan all doc PRs](https://github.com/strapi/documentation/pull/3116)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/GorkyDemircn" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/110297297?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="GorkyDemircn"/>
+</a>
+<a href="https://github.com/butcherZ" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8189028?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="butcherZ"/>
+</a>
+<a href="https://github.com/jhoward1994" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/48524071?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="jhoward1994"/>
+</a>
+<a href="https://github.com/markkaylor" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/26598053?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="markkaylor"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/singhvishalkr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/107715446?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="singhvishalkr"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 6.23.0
 

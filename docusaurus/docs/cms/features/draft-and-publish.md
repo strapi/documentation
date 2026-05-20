@@ -64,7 +64,7 @@ With Draft & Publish enabled, the [Content Manager's edit view](/cms/features/co
 - <span style={{color:"#ac73e6"}}>Modified</span>: The content was previously published. You made some changes to the draft version and saved these changes, but the changes have not been published yet.
 - <span style={{color:"#7b79ff"}}>Draft</span>: The content has never been published yet.
 
-When Draft & Publish is eanbled, in the [Content Manager](/cms/features/content-manager) list view, you can filter entries by status using the **Filters** button.
+When Draft & Publish is eanbled, in the [Content Manager](/cms/features/content-manager) list view, you can filter entries by status using the **Filters** button. You can also sort entries by publication status by clicking the **Status** column header in the list view.
 
 ### Working with drafts
 

@@ -18,7 +18,7 @@ tags:
 # Controllers
 
 <Tldr>
-Controllers bundle actions that handle business logic for each route within Strapi’s MVC pattern. This documentation demonstrates generating controllers, extending core ones with `createCoreController`, and delegating heavy logic to services.
+Controllers bundle actions that handle business logic for each route within StrapiÃ¢â‚¬â„¢s MVC pattern. This documentation demonstrates generating controllers, extending core ones with `createCoreController`, and delegating heavy logic to services.
 </Tldr>
 
 Controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](/cms/backend-customization/routes). Whenever a client requests the route, the action performs the business logic code and sends back the [response](/cms/backend-customization/requests-responses). Controllers represent the C in the model-view-controller (MVC) pattern.
@@ -226,9 +226,13 @@ To see a possible advanced usage for custom controllers, read the [services and 
 
 ### Controllers & Routes: How routes reach controller actions
 
-- Core mapping is automatic: when you generate a content-type, Strapi creates the matching controller and a router file that already targets the standard actions (`find`, `findOne`, `create`, `update`, and `delete`). Overriding any of these actions inside the generated controller does not require touching the router — the route keeps the same handler string and executes your updated logic.
+- Core mapping is automatic: when you generate a content-type, Strapi creates the matching controller and a router file that already targets the standard actions (`find`, `findOne`, `create`, `update`, and `delete`). Overriding any of these actions inside the generated controller does not require touching the router - the route keeps the same handler string and executes your updated logic.
 - Adding a route should only be done for new actions or paths. If you introduce a brand-new method such as `exampleAction`, create or update a route entry whose `handler` points to the action so HTTP requests can reach it. Use the fully-qualified handler syntax `<scope>::<api-or-plugin-name>.<controllerName>.<actionName>` (e.g. `api::restaurant.restaurant.exampleAction` for an API controller or `plugin::menus.menu.exampleAction` for a plugin controller).
 - Regarding controller and route filenames: the default controller name comes from the filename inside `./src/api/[api-name]/controllers/`. Core routers created with `createCoreRouter` adopt the same name, so the generated handler string matches automatically. Custom routers can follow any file naming scheme, as long as the `handler` string references an exported controller action.
+
+:::note About core mapping
+The REST routes Strapi generates for a content-type point each HTTP method at a handler string (for example `api::restaurant.restaurant.find`). That string already identifies the controller file and the exported action name (`find`, `findOne`, `create`, `update`, or `delete`). When you change the implementation inside those exports but keep the names, the router still calls your code. Edit the route file only when you add a new action name or path outside that default CRUD set.
+:::
 
 The example below adds a new controller action and exposes it through a custom route without duplicating the existing CRUD route definitions:
 
@@ -261,7 +265,7 @@ module.exports = {
 It's strongly recommended you sanitize (v4.8.0+) and/or validate (v4.13.0+) your incoming request query utilizing the new `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
 :::
 
-Sanitization means that the object is “cleaned” and returned.
+Sanitization means that the object is Ã¢â‚¬Å“cleanedÃ¢â‚¬Â and returned.
 
 Validation means an assertion is made that the data is already clean and throws an error if something is found that shouldn't be there.
 
@@ -271,6 +275,10 @@ In Strapi 5, both query parameters and input data (i.e., create and update body 
 - unrecognized values that are not present on a schema
 - non-writable fields and internal timestamps like `createdAt` and `createdBy` fields
 - setting or updating an `id` field (except for connecting relations)
+
+:::note Internal `entity-validator` service
+Strapi exposes a low-level `entity-validator` service (accessible through `strapi.service('entity-validator')`) with `validateEntityCreation` and `validateEntityUpdate` methods that the document service uses internally. These are not part of the public API and their semantics can change between releases. From a custom controller, service, or middleware, use the documented `validateInput` factory helper or the [`strapi.contentAPI.validate.*` helpers](#sanitize-validate-custom-controllers) instead. They apply the same content-type schema rules and additionally account for permissions, non-writable fields, and the request authentication strategy.
+:::
 
 #### Sanitization when utilizing controller factories
 

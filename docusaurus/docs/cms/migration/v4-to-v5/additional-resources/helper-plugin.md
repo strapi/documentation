@@ -662,6 +662,69 @@ const { onPublish, onUnpublish } = useCMEditViewDataManager();
 const { publish, unpublish } = useDocumentActions();
 ```
 
+Plugins that render inside the Content Manager Edit View sometimes need the same context Strapi uses for built-in fields (slug, draft and publish flags, the record id). Strapi 5 removed `@strapi/helper-plugin`, so `useCMEditViewDataManager` is not available.
+
+Import `unstable_useContentManagerContext` from `@strapi/strapi/admin` and alias it locally. The `unstable_` prefix means the hook may change while plugin APIs finish stabilizing.
+
+:::note
+This hook only works inside the Content Manager Edit View React tree (including components injected through [injection zones](/cms/plugins-development/admin-injection-zones)).
+:::
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript" default>
+
+```jsx title="plugins/my-plugin/admin/src/components/Preview.jsx"
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
+
+export const Preview = () => {
+  const {
+    model,
+    collectionType,
+    id,
+    slug,
+    isCreatingEntry,
+    isSingleType,
+    hasDraftAndPublish,
+  } = useContentManagerContext();
+
+  return (
+    <section>
+      Editing <code>{slug}</code>
+      {isSingleType ? ' (single type)' : ' (collection type)'}
+    </section>
+  );
+};
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```tsx title="plugins/my-plugin/admin/src/components/Preview.tsx"
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
+
+export const Preview = () => {
+  const {
+    model,
+    collectionType,
+    id,
+    slug,
+    isCreatingEntry,
+    isSingleType,
+    hasDraftAndPublish,
+  } = useContentManagerContext();
+
+  return (
+    <section>
+      Editing <code>{slug}</code>
+      {isSingleType ? ' (single type)' : ' (collection type)'}
+    </section>
+  );
+};
+```
+
+</TabItem>
+</Tabs>
+
 ## Features
 
 <br/>

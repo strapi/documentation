@@ -168,7 +168,7 @@ export default factories.createCoreRouter('api::restaurant.restaurant', {
 </TabItem>
 </Tabs>
 
-This only allows a `GET` request on the `/restaurants` path from the core `find` [controller](/cms/backend-customization/controllers) without authentication. When you reference custom controller actions in custom routers, prefer the fully‑qualified `api::<api-name>.<controllerName>.<actionName>` form for clarity (e.g., `api::restaurant.restaurant.review`).
+This only allows a `GET` request on the `/restaurants` path from the core `find` [controller](/cms/backend-customization/controllers) without authentication. When you reference custom controller actions in custom routers, prefer the fully-qualified `api::<api-name>.<controllerName>.<actionName>` form for clarity (e.g., `api::restaurant.restaurant.review`).
 
 ### Creating custom routers
 
@@ -547,6 +547,47 @@ export default  {
 </TabItem>
 
 </Tabs>
+
+<details>
+
+<summary>Applying middlewares to all core routes of a content-type</summary>
+
+`createCoreRouter` attaches `middlewares` per action. To run the same middleware on every default Content API action (`find`, `findOne`, `create`, `update`, `delete`), list it under each key in `config`, or build the object once:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="./src/api/restaurant/routes/restaurant.js"
+const { createCoreRouter } = require('@strapi/strapi').factories;
+
+const audit = ['global::audit-log'];
+const actions = ['find', 'findOne', 'create', 'update', 'delete'];
+
+module.exports = createCoreRouter('api::restaurant.restaurant', {
+  config: Object.fromEntries(actions.map((action) => [action, { middlewares: audit }])),
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="./src/api/restaurant/routes/restaurant.ts"
+import { factories } from '@strapi/strapi';
+
+const audit = ['global::audit-log'] as const;
+const actions = ['find', 'findOne', 'create', 'update', 'delete'] as const;
+
+export default factories.createCoreRouter('api::restaurant.restaurant', {
+  config: Object.fromEntries(actions.map((action) => [action, { middlewares: [...audit] }])),
+});
+```
+
+</TabItem>
+</Tabs>
+
+If you use `only` or `except`, build the `actions` array to match the routes you actually register so you do not attach middlewares to disabled handlers.
+
+</details>
 
 :::tip Centralizing population logic
 Route-level middlewares are the recommended place to enforce consistent population rules across your API. This prevents accidental over-fetching and ensures predictable response sizes. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog.

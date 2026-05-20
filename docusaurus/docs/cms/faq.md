@@ -19,6 +19,8 @@ tags:
 - database
 - foreign keys
 - docker
+- i18n
+- translations
 
 ---
 
@@ -137,6 +139,14 @@ By default, most package managers enable hoisting, however, if it's not function
 - If you are using npm or pnpm: Add `hoist=true` to your project's `.npmrc` file. Learn more about this from the <ExternalLink to="https://pnpm.io/npmrc#hoist" text="official pnpm documentation"/>
 - If you are using Yarn: Set `nmHoistingLimits` in your `.yarnrc` file. More details can be found in the <ExternalLink to="https://yarnpkg.com/configuration/yarnrc#nmHoistingLimits" text="Yarn official documentation"/>
 
+## How can I contribute translations for the admin panel?
+
+The documentation you are reading is written and reviewed in English in the `strapi/documentation` repository. There is no separate community translation workflow for these Markdown pages here.
+
+If you want to fix **built-in admin interface** strings for a shipped locale (for example incomplete Simplified Chinese labels), open a pull request against the [Strapi monorepo](https://github.com/strapi/strapi). Core keys live in JSON files under [`packages/core/admin/admin/src/translations/`](https://github.com/strapi/strapi/tree/develop/packages/core/admin/admin/src/translations), and other packages or plugins with an admin UI ship sibling `translations` directories in their own folders. Follow that repository's [`CONTRIBUTING.md`](https://github.com/strapi/strapi/blob/develop/CONTRIBUTING.md) (CLA required) and keep each change scoped to the locale files you are improving so reviewers can verify the language.
+
+If you only need wording changes inside **one project** without upstreaming them, use [`config.translations` in `src/admin/app`](/cms/admin-panel-customization/locales-translations#extending-translations) as described in the admin customization guide.
+
 ## Is X feature available yet?
 
 You can see the <ExternalLink to="https://feedback.strapi.io/" text="public roadmap"/> to see which feature requests are currently being worked on and which have not been started yet, and to add new feature requests.
@@ -160,5 +170,5 @@ See the [Docker installation guide](/cms/installation/docker) for full Dockerfil
 
 ## Is there an MCP server for Strapi?
 
-There’s currently no MCP (<ExternalLink to="https://www.anthropic.com/news/model-context-protocol" text="Model Context Protocol" />) server available, but it’s in the works!
-First, an MCP server for Docs is already in development and should be available soon, and other AI-related tools, including additional MCP servers for various Strapi actions, are currently under discussion.
+A Strapi MCP (<ExternalLink to="https://www.anthropic.com/news/model-context-protocol" text="Model Context Protocol" />) server is in [development](https://github.com/strapi/strapi/discussions/25398) and will be available soon.
+Meanwhile, a different [MCP server for Strapi Docs](https://docs.strapi.io/cms/ai/for-developers#docs-mcp) is already available.

@@ -1179,10 +1179,7 @@ export default {
         id: `${PLUGIN_ID}.plugin.name`,
         defaultMessage: PLUGIN_ID,
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
     });
 
     app.registerPlugin({
@@ -1386,10 +1383,7 @@ export default {
         id: `${PLUGIN_ID}.plugin.name`,
         defaultMessage: PLUGIN_ID,
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
     });
 
     app.registerPlugin({
@@ -2309,8 +2303,8 @@ File path: N/A
 
 ```js
 await strapi.documents('api::restaurant.restaurant').findOne({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm'
-})
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', 
+});
 ```
 
 ---
@@ -2495,8 +2489,8 @@ Language: JavaScript
 File path: N/A
 
 ```js
-strapi.documents.discardDraft({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', 
+await strapi.documents('api::restaurant.restaurant').discardDraft({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
 });
 ```
 
@@ -4402,14 +4396,59 @@ File path: N/A
 ```
 
 
+## Sort populated relations
+Description: Code example from "Sort populated relations"
+(Source: https://docs.strapi.io/cms/api/document-service/populate#sort-populated-relations)
+
+Language: TypeScript
+File path: /core/database/src/query/helpers/populate/apply.ts
+
+```ts
+const documents = await strapi.documents("api::article.article").findMany({
+  populate: {
+    categories: {
+      sort: 'name:asc',
+    },
+  },
+});
+```
+
+---
+Language: JSON
+File path: /core/database/src/query/helpers/populate/apply.ts
+
+```json
+[
+  {
+    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "title": "Test Article",
+    // ...
+    "categories": [
+      {
+        "id": 1,
+        "name": "Architecture"
+        // ...
+      },
+      {
+        "id": 3,
+        "name": "Technology"
+        // ...
+      }
+    ]
+  }
+  // ...
+]
+```
+
+
 ## Components & Dynamic Zones
 Description: Code example from "Components & Dynamic Zones"
 (Source: https://docs.strapi.io/cms/api/document-service/populate#components-dynamic-zones)
 
-Language: JavaScript
-File path: N/A
+Language: TypeScript
+File path: /core/database/src/query/helpers/populate/apply.ts
 
-```js
+```ts
 const documents = await strapi.documents("api::article.article").findMany({
   populate: ["testComp"],
 });
@@ -4417,7 +4456,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 ---
 Language: JSON
-File path: N/A
+File path: /core/database/src/query/helpers/populate/apply.ts
 
 ```json
 [
@@ -4438,10 +4477,10 @@ File path: N/A
 ```
 
 ---
-Language: JavaScript
-File path: N/A
+Language: TypeScript
+File path: /core/database/src/query/helpers/populate/apply.ts
 
-```js
+```ts
 const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     testDZ: {
@@ -4458,7 +4497,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 ---
 Language: JSON
-File path: N/A
+File path: /core/database/src/query/helpers/populate/apply.ts
 
 ```json
 [
@@ -5042,7 +5081,7 @@ strapi.entityService.update('api::article.article', 1, {
 Source: https://docs.strapi.io/cms/api/entity-service/crud
 
 ## Example
-Description: | Parameter | Description | Type | | ---------- | --------------- | --------------- | | fields | Attributes to return | String[] | | populate | Relations, components and dynamic zones to populate | PopulateParameter |
+Description: | Parameter | Description | Type | | ---------- | --------------- | --------------- | | fields | Attributes to return | String[] | | populate | Relations, components and dynamic zones to populate | PopulateParameter | | locale | Locale code (for example fr-FR) when the Internationalization plugin is enabled.
 (Source: https://docs.strapi.io/cms/api/entity-service/crud#example)
 
 Language: JavaScript
@@ -5094,6 +5133,7 @@ Syntax: `create(uid: string, parameters: Params)` ⇒ `Entry`
 | ---------- | ----------- | ---------- |
 | `fields`   | Attributes to return | `String[]`  |
 | `populate` | Relations, components and dynamic zones to [populate](/cms/api/entity-service/populate) | [`PopulateParameter`](/cms/api/entity-service/populate) |
+| `locale` | Locale code when the Internationalization plugin is enabled. Creates the entry for that locale. | `string` |
 | `data`     | Input data  | `Object` |
 
 <ManagingRelations components={props.components} />
@@ -5124,6 +5164,7 @@ Syntax: `update(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 | ---------- | ------------- | ---------- |
 | `fields`   | Attributes to return | `String[]`  |
 | `populate` | Relations, components and dynamic zones to [populate](/cms/api/entity-service/populate) | [`PopulateParameter`](/cms/api/entity-service/populate) |
+| `locale` | Locale code when the Internationalization plugin is enabled. Updates the matching localized variant. | `string` |
 | `data`     | Input data  | `object`  |
 
 ### Example
@@ -5146,6 +5187,7 @@ Syntax: `delete(uid: string, id: ID, parameters: Params)` ⇒ `Entry`
 | ---------- | --------- | -------- |
 | `fields`   | Attributes to return | `String[]`  |
 | `populate` | Relations, components and dynamic zones to [populate](/cms/api/entity-service/populate) | [`PopulateParameter`](/cms/api/entity-service/populate) |
+| `locale` | Locale code when the Internationalization plugin is enabled. Deletes the localized variant that matches this locale. | `string` |
 
 ### Example
 ```
@@ -6143,112 +6185,6 @@ query Query($status: PublicationStatus) {
 ```
 
 
-## Aggregations
-Description: Aggregations can be used to compute metrics such as counts, sums, or grouped totals without fetching every document individually.
-(Source: https://docs.strapi.io/cms/api/graphql#aggregations)
-
-Language: JSON
-File path: Example:
-
-```json
-{
-  restaurants_connection(filters: { categories: { documentId: { eq: "food-trucks" } } }) {
-    aggregate {
-      count
-    }
-  }
-}
-```
-
-
-## Aggregate multiple metrics in one request
-Description: Aggregations can be combined so that one network round trip returns several metrics:
-(Source: https://docs.strapi.io/cms/api/graphql#aggregate-multiple-metrics-in-one-request)
-
-Language: JSON
-File path: Example:
-
-```json
-{
-  restaurants_connection(filters: { takeAway: { eq: true } }) {
-    aggregate {
-      avg {
-        delivery_time
-      }
-      min {
-        price_range
-      }
-      max {
-        price_range
-      }
-    }
-  }
-}
-```
-
-
-## Group results
-Description: Use groupBy to derive grouped metrics while optionally chaining further aggregations inside each group.
-(Source: https://docs.strapi.io/cms/api/graphql#group-results)
-
-Language: GRAPHQL
-File path: Example:
-
-```graphql
-{
-  restaurants_connection {
-    aggregate {
-      groupBy {
-        categories {
-          key
-          connection {
-            aggregate {
-              count
-            }
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-
-## Combine with pagination and sorting
-Description: Aggregations run on the entire result set that matches the query filters, not only on the current page.
-(Source: https://docs.strapi.io/cms/api/graphql#combine-with-pagination-and-sorting)
-
-Language: JSON
-File path: Example:
-
-```json
-{
-  restaurants_connection(
-    filters: { takeAway: { eq: true } }
-    pagination: { page: 2, pageSize: 5 }
-    sort: "name:asc"
-  ) {
-    nodes {
-      documentId
-      name
-      rating
-    }
-    pageInfo {
-      page
-      pageSize
-      total
-    }
-    aggregate {
-      count
-      avg {
-        rating
-      }
-    }
-  }
-}
-```
-
-
 ## Create a new document
 Description: The following example creates a new document for the "Restaurant" content-type and returns its name and documentId:
 (Source: https://docs.strapi.io/cms/api/graphql#create-a-new-document)
@@ -6959,37 +6895,6 @@ export default {
 ```
 
 
-## Aggregation drilldowns
-Description: connections expose an aggregate field.
-(Source: https://docs.strapi.io/cms/api/graphql/advanced-queries#aggregation-drilldowns)
-
-Language: GRAPHQL
-File path: N/A
-
-```graphql
-query RestaurantsByCity($first: Int, $after: String) {
-  restaurants_connection(pagination: { limit: $first, start: $after }) {
-    aggregate {
-      groupBy {
-        city {
-          key
-          connection(pagination: { limit: 5 }) {
-            aggregate {
-              count
-            }
-            nodes {
-              documentId
-              name
-            }
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-
 
 # Locale
 Source: https://docs.strapi.io/cms/api/graphql/locale
@@ -7231,7 +7136,7 @@ File path: N/A
       "Article": {
         "type": "object",
         "properties": {
-          "id": { "type": "integer" },
+          "id": { "type": "string" },
           "title": { "type": "string" },
           "content": { "type": "string" }
         }
@@ -12329,6 +12234,532 @@ module.exports = createCoreController('api::review.review', ({ strapi }) => ({
 
 
 
+# Customizing Users & Permissions plugin routes
+Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes
+
+## Route structure
+Description: Code example from "Route structure"
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#route-structure)
+
+Language: JSON
+File path: /plugins/users-permissions/server/routes/content-api/user.js
+
+```json
+{
+  method: 'GET',          // HTTP method
+  path: '/users',         // URL path (relative to /api)
+  handler: 'user.find',   // controller.action
+  config: {
+    prefix: '',           // path prefix (empty means /api)
+  },
+}
+```
+
+
+## The strapi-server extension file
+Description: All customizations to the Users & Permissions plugin go in a single file:
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#extend-routes)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  // Your customizations here
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  // Your customizations here
+
+  return plugin;
+};
+```
+
+
+## 1. Create the policy file
+Description: Create a global policy that checks whether the authenticated user matches the target user.
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#1-create-the-policy-file)
+
+Language: JavaScript
+File path: /src/policies/is-own-user.js
+
+```js
+"use strict";
+
+module.exports = (policyContext, config, { strapi }) => {
+  const currentUser = policyContext.state.user;
+
+  if (!currentUser) {
+    return false;
+  }
+
+  const targetUserId = Number(policyContext.params.id);
+
+  if (currentUser.id !== targetUserId) {
+    return false;
+  }
+
+  return true;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/policies/is-own-user.ts
+
+```ts
+export default (policyContext, config, { strapi }) => {
+  const currentUser = policyContext.state.user;
+
+  if (!currentUser) {
+    return false;
+  }
+
+  const targetUserId = Number(policyContext.params.id);
+
+  if (currentUser.id !== targetUserId) {
+    return false;
+  }
+
+  return true;
+};
+```
+
+
+## 2. Attach the policy to the user routes
+Description: In the plugin extension file, find the update and delete routes and add the policy:
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#2-attach-the-policy-to-the-user-routes)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  // Find the routes that need the policy
+  const routes = plugin.routes['content-api'].routes;
+
+  // Add the 'is-own-user' policy to the update route
+  const updateRoute = routes.find(
+    (route) => route.handler === 'user.update'
+  );
+
+  if (updateRoute) {
+    updateRoute.config = updateRoute.config || {};
+    updateRoute.config.policies = updateRoute.config.policies || [];
+    updateRoute.config.policies.push('global::is-own-user');
+  }
+
+  // Add the same policy to the delete route
+  const deleteRoute = routes.find(
+    (route) => route.handler === 'user.destroy'
+  );
+
+  if (deleteRoute) {
+    deleteRoute.config = deleteRoute.config || {};
+    deleteRoute.config.policies = deleteRoute.config.policies || [];
+    deleteRoute.config.policies.push('global::is-own-user');
+  }
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  // Find the routes that need the policy
+  const routes = plugin.routes['content-api'].routes;
+
+  // Add the 'is-own-user' policy to the update route
+  const updateRoute = routes.find(
+    (route) => route.handler === 'user.update'
+  );
+
+  if (updateRoute) {
+    updateRoute.config = updateRoute.config || {};
+    updateRoute.config.policies = updateRoute.config.policies || [];
+    updateRoute.config.policies.push('global::is-own-user');
+  }
+
+  // Add the same policy to the delete route
+  const deleteRoute = routes.find(
+    (route) => route.handler === 'user.destroy'
+  );
+
+  if (deleteRoute) {
+    deleteRoute.config = deleteRoute.config || {};
+    deleteRoute.config.policies = deleteRoute.config.policies || [];
+    deleteRoute.config.policies.push('global::is-own-user');
+  }
+
+  return plugin;
+};
+```
+
+Language: TypeScript
+File path: /core/core/src/loaders/policies.ts
+
+```ts
+const { errors } = require('@strapi/utils');
+const { PolicyError } = errors;
+
+// Inside the policy:
+throw new PolicyError('You can only modify your own account');
+```
+
+
+## Add a new route
+Description: Code example from "Add a new route"
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#add-new-route)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  // Add a new controller action
+  plugin.controllers.user.deactivate = async (ctx) => {
+    const { id } = ctx.params;
+
+    const user = await strapi
+      .plugin('users-permissions')
+      .service('user')
+      .edit(id, { blocked: true });
+
+    ctx.body = { message: `User ${user.username} has been deactivated` };
+  };
+
+  // Register the route
+  plugin.routes['content-api'].routes.push({
+    method: 'POST',
+    path: '/users/:id/deactivate',
+    handler: 'user.deactivate',
+    config: {
+      prefix: '',
+      policies: ['global::is-own-user'],
+    },
+  });
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  // Add a new controller action
+  plugin.controllers.user.deactivate = async (ctx) => {
+    const { id } = ctx.params;
+
+    const user = await strapi
+      .plugin('users-permissions')
+      .service('user')
+      .edit(id, { blocked: true });
+
+    ctx.body = { message: `User ${user.username} has been deactivated` };
+  };
+
+  // Register the route
+  plugin.routes['content-api'].routes.push({
+    method: 'POST',
+    path: '/users/:id/deactivate',
+    handler: 'user.deactivate',
+    config: {
+      prefix: '',
+      policies: ['global::is-own-user'],
+    },
+  });
+
+  return plugin;
+};
+```
+
+
+## Remove a route
+Description: You can disable a route by filtering it out of the routes array.
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#remove-route)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  plugin.routes['content-api'].routes = plugin.routes['content-api'].routes.filter(
+    (route) => route.handler !== 'user.count'
+  );
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  plugin.routes['content-api'].routes = plugin.routes['content-api'].routes.filter(
+    (route) => route.handler !== 'user.count'
+  );
+
+  return plugin;
+};
+```
+
+
+## Override a user controller action
+Description: The user controller is a plain object, so you can directly read and replace its methods in the extension file.
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#override-controller)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  const originalMe = plugin.controllers.user.me;
+
+  plugin.controllers.user.me = async (ctx) => {
+    // Call the original controller
+    await originalMe(ctx);
+
+    // Add extra data to the response
+    if (ctx.body) {
+      ctx.body.timestamp = new Date().toISOString();
+    }
+  };
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  const originalMe = plugin.controllers.user.me;
+
+  plugin.controllers.user.me = async (ctx) => {
+    // Call the original controller
+    await originalMe(ctx);
+
+    // Add extra data to the response
+    if (ctx.body) {
+      ctx.body.timestamp = new Date().toISOString();
+    }
+  };
+
+  return plugin;
+};
+```
+
+
+## Override an auth controller action
+Description: To override an auth action, wrap the factory itself:
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#override-auth-route)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  const originalAuthFactory = plugin.controllers.auth;
+
+  plugin.controllers.auth = ({ strapi }) => {
+    // Resolve the original factory to get the controller methods
+    const originalAuth = originalAuthFactory({ strapi });
+
+    // Override the register method
+    const originalRegister = originalAuth.register;
+
+    originalAuth.register = async (ctx) => {
+      // Call the original register logic
+      await originalRegister(ctx);
+
+      // Custom post-registration logic
+      if (ctx.body && ctx.body.user) {
+        strapi.log.info(`New user registered: ${ctx.body.user.email}`);
+      }
+    };
+
+    return originalAuth;
+  };
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  const originalAuthFactory = plugin.controllers.auth;
+
+  plugin.controllers.auth = ({ strapi }) => {
+    // Resolve the original factory to get the controller methods
+    const originalAuth = originalAuthFactory({ strapi });
+
+    // Override the register method
+    const originalRegister = originalAuth.register;
+
+    originalAuth.register = async (ctx) => {
+      // Call the original register logic
+      await originalRegister(ctx);
+
+      // Custom post-registration logic
+      if (ctx.body && ctx.body.user) {
+        strapi.log.info(`New user registered: ${ctx.body.user.email}`);
+      }
+    };
+
+    return originalAuth;
+  };
+
+  return plugin;
+};
+```
+
+
+## Full example
+Description: The following example combines several customizations in a single file: it adds a policy to update and delete, wraps the me controller, and adds a new profile route.
+(Source: https://docs.strapi.io/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#combine-customizations)
+
+Language: JavaScript
+File path: /src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  const routes = plugin.routes['content-api'].routes;
+
+  // 1. Add 'is-own-user' policy to update and delete
+  for (const route of routes) {
+    if (route.handler === 'user.update' || route.handler === 'user.destroy') {
+      route.config = route.config || {};
+      route.config.policies = route.config.policies || [];
+      route.config.policies.push('global::is-own-user');
+    }
+  }
+
+  // 2. Wrap the 'me' controller to include the user's role
+  const originalMe = plugin.controllers.user.me;
+
+  plugin.controllers.user.me = async (ctx) => {
+    await originalMe(ctx);
+
+    if (ctx.state.user && ctx.body) {
+      const user = await strapi
+        .plugin('users-permissions')
+        .service('user')
+        .fetch(ctx.state.user.id, { populate: ['role'] });
+
+      ctx.body.role = user.role;
+    }
+  };
+
+  // 3. Add a custom route
+  plugin.controllers.user.profile = async (ctx) => {
+    const user = await strapi
+      .plugin('users-permissions')
+      .service('user')
+      .fetch(ctx.state.user.id, { populate: ['role'] });
+
+    ctx.body = {
+      username: user.username,
+      email: user.email,
+      role: user.role?.name,
+      createdAt: user.createdAt,
+    };
+  };
+
+  routes.push({
+    method: 'GET',
+    path: '/users/profile',
+    handler: 'user.profile',
+    config: { prefix: '' },
+  });
+
+  return plugin;
+};
+```
+
+---
+Language: TypeScript
+File path: /src/extensions/users-permissions/strapi-server.ts
+
+```ts
+export default (plugin) => {
+  const routes = plugin.routes['content-api'].routes;
+
+  // 1. Add 'is-own-user' policy to update and delete
+  for (const route of routes) {
+    if (route.handler === 'user.update' || route.handler === 'user.destroy') {
+      route.config = route.config || {};
+      route.config.policies = route.config.policies || [];
+      route.config.policies.push('global::is-own-user');
+    }
+  }
+
+  // 2. Wrap the 'me' controller to include the user's role
+  const originalMe = plugin.controllers.user.me;
+
+  plugin.controllers.user.me = async (ctx) => {
+    await originalMe(ctx);
+
+    if (ctx.state.user && ctx.body) {
+      const user = await strapi
+        .plugin('users-permissions')
+        .service('user')
+        .fetch(ctx.state.user.id, { populate: ['role'] });
+
+      ctx.body.role = user.role;
+    }
+  };
+
+  // 3. Add a custom route
+  plugin.controllers.user.profile = async (ctx) => {
+    const user = await strapi
+      .plugin('users-permissions')
+      .service('user')
+      .fetch(ctx.state.user.id, { populate: ['role'] });
+
+    ctx.body = {
+      username: user.username,
+      email: user.email,
+      role: user.role?.name,
+      createdAt: user.createdAt,
+    };
+  };
+
+  routes.push({
+    method: 'GET',
+    path: '/users/profile',
+    handler: 'user.profile',
+    config: { prefix: '' },
+  });
+
+  return plugin;
+};
+```
+
+
+
 # Middlewares
 Source: https://docs.strapi.io/cms/backend-customization/middlewares
 
@@ -13770,6 +14201,35 @@ export default  {
     },
   ],
 };
+```
+
+Language: JavaScript
+File path: ./src/api/restaurant/routes/restaurant.js
+
+```js
+const { createCoreRouter } = require('@strapi/strapi').factories;
+
+const audit = ['global::audit-log'];
+const actions = ['find', 'findOne', 'create', 'update', 'delete'];
+
+module.exports = createCoreRouter('api::restaurant.restaurant', {
+  config: Object.fromEntries(actions.map((action) => [action, { middlewares: audit }])),
+});
+```
+
+---
+Language: TypeScript
+File path: ./src/api/restaurant/routes/restaurant.ts
+
+```ts
+import { factories } from '@strapi/strapi';
+
+const audit = ['global::audit-log'] as const;
+const actions = ['find', 'findOne', 'create', 'update', 'delete'] as const;
+
+export default factories.createCoreRouter('api::restaurant.restaurant', {
+  config: Object.fromEntries(actions.map((action) => [action, { middlewares: [...audit] }])),
+});
 ```
 
 
@@ -15948,6 +16408,43 @@ module.exports = ({ env }) => ({
 ```
 
 ---
+Language: TypeScript
+File path: ./config/database.ts
+
+```ts
+import { Signer } from '@aws-sdk/rds-signer';
+
+export default ({ env }) => {
+  const signer = new Signer({
+    hostname: env('DATABASE_HOST', 'localhost'),
+    port: env.int('DATABASE_PORT', 5432),
+    username: env('DATABASE_USERNAME', 'strapi'),
+  });
+
+  return {
+    connection: {
+      client: 'postgres',
+      connection: async () => {
+        const token = await signer.getAuthToken();
+        const expiresAt = Date.now() + 15 * 60 * 1000;
+
+        return {
+          host: env('DATABASE_HOST', 'localhost'),
+          port: env.int('DATABASE_PORT', 5432),
+          database: env('DATABASE_NAME', 'strapi'),
+          user: env('DATABASE_USERNAME', 'strapi'),
+          password: token,
+          schema: env('DATABASE_SCHEMA', 'public'),
+          ssl: true,
+          expirationChecker: () => expiresAt - Date.now() <= 5 * 60 * 1000,
+        };
+      },
+    },
+  };
+};
+```
+
+---
 Language: DOCKERFILE
 File path: ./config/database.js
 
@@ -16014,7 +16511,7 @@ Description: environment (string): Sets the environment you want to store the da
 (Source: https://docs.strapi.io/cms/configurations/database#get-settings)
 
 Language: JavaScript
-File path: ./config/database.js
+File path: N/A
 
 ```js
 // strapi.store(object).get(object);
@@ -16779,7 +17276,7 @@ File path: /config/features.ts
 ```ts
   module.exports = ({ env }) => ({
     future: {
-      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
+      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
     },
   })
 ```
@@ -16789,7 +17286,7 @@ Language: DOTENV
 File path: .env
 
 ```dotenv
-  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
+  STRAPI_FUTURE_ADMIN_TOKENS=true
 ```
 
 ---
@@ -16799,7 +17296,7 @@ File path: /config/features.ts
 ```ts
   export default {
     future: {
-      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
+      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
     },
   };
 ```
@@ -16809,7 +17306,7 @@ Language: DOTENV
 File path: .env
 
 ```dotenv
-  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
+  STRAPI_FUTURE_ADMIN_TOKENS=true
 ```
 
 Language: Bash
@@ -19120,8 +19617,7 @@ module.exports = [
   {
     name: 'strapi::public',
     config: {
-      defer: true,
-      index: env('INDEX_PATH', 'index-dev.html')
+      maxAge: 86400000, // 1 day in milliseconds
     },
   },
   // ...
@@ -19139,8 +19635,7 @@ export default [
   {
     name: 'strapi::public',
     config: {
-      defer: true,
-      index: env('INDEX_PATH', 'index-dev.html')
+      maxAge: 86400000, // 1 day in milliseconds
     },
   },
   // ...
@@ -21038,6 +21533,23 @@ Language: Bash
 File path: N/A
 
 ```bash
+cd <new-instance-name>
+yarn install
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+cd <new-instance-name>
+npm install
+```
+
+Language: Bash
+File path: N/A
+
+```bash
    npx create-strapi-app@latest <project-name> --quickstart
 ```
 
@@ -22682,10 +23194,15 @@ module.exports = ({ env })=>({
         small: 500,
         xsmall: 64
       },
+      sharp: {
+        cache: true,
+        concurrency: 4,
+      },
       security: {
         allowedTypes: ['image/*', 'application/*'],
         deniedTypes: ['application/x-sh', 'application/x-dosexec']
       },
+      concurrentUploadSize: 5,
     },
   },
 });
@@ -22712,10 +23229,15 @@ export default () => ({
         small: 500,
         xsmall: 64
       },
+      sharp: {
+        cache: true,
+        concurrency: 4,
+      },
       security: {
         allowedTypes: ['image/*', 'application/*'],
         deniedTypes: ['application/x-sh', 'application/x-dosexec']
       },
+      concurrentUploadSize: 5,
     },
   },
 })
@@ -22952,6 +23474,44 @@ export default ({ env }) => ({
         medium: 750,
         small: 500,
         xsmall: 64
+      },
+    },
+  },
+});
+```
+
+
+## Sharp configuration
+Description: The default values (cache: false, concurrency: 1) are optimized for low memory usage.
+(Source: https://docs.strapi.io/cms/features/media-library#sharp-configuration)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = ({ env }) => ({
+  upload: {
+    config: {
+      sharp: {
+        cache: true,
+        concurrency: 4,
+      },
+    },
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+export default ({ env }) => ({
+  upload: {
+    config: {
+      sharp: {
+        cache: true,
+        concurrency: 4,
       },
     },
   },
@@ -23415,7 +23975,7 @@ export default async function fetchContentType(
 Source: https://docs.strapi.io/cms/features/users-permissions
 
 ## JWT management modes
-Description: For backwards compatibility, the Users & Permission feature defaults to legacy mode:
+Description: For backwards compatibility, the Users & Permissions feature defaults to legacy mode:
 (Source: https://docs.strapi.io/cms/features/users-permissions#jwt-management-modes)
 
 Language: JavaScript
@@ -23583,7 +24143,7 @@ Description: By default you can set a JWT_SECRET environment variable and it wil
 (Source: https://docs.strapi.io/cms/features/users-permissions#security-configuration)
 
 Language: JavaScript
-File path: /extensions/users-permissions/config/jwt.js
+File path: /src/extensions/users-permissions/config/jwt.js
 
 ```js
 
@@ -23594,7 +24154,7 @@ module.exports = {
 
 ---
 Language: TypeScript
-File path: /extensions/users-permissions/config/jwt.ts
+File path: /src/extensions/users-permissions/config/jwt.ts
 
 ```ts
 
@@ -23672,6 +24232,188 @@ File path: N/A
 ```bash
 curl -X POST http://localhost:1337/api/auth/logout \
   -H "Authorization: Bearer your-access-token"
+```
+
+
+## Get the authenticated user
+Description: Code example from "Get the authenticated user"
+(Source: https://docs.strapi.io/cms/features/users-permissions#get-the-authenticated-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X GET http://localhost:1337/api/users/me \
+  -H "Authorization: Bearer your-access-token"
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "id": 1,
+  "documentId": "abc123",
+  "username": "kai",
+  "email": "kai@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-15T09:00:00.000Z",
+  "updatedAt": "2024-01-15T09:00:00.000Z",
+  "publishedAt": "2024-01-15T09:00:00.000Z"
+}
+```
+
+
+## Find all users
+Description: Code example from "Find all users"
+(Source: https://docs.strapi.io/cms/features/users-permissions#find-all-users)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X GET "http://localhost:1337/api/users?populate=role" \
+  -H "Authorization: Bearer your-access-token"
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+[
+  {
+    "id": 1,
+    "documentId": "abc123",
+    "username": "kai",
+    "email": "kai@strapi.io",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "role": {
+      "id": 1,
+      "name": "Authenticated",
+      "description": "Default role given to authenticated user.",
+      "type": "authenticated",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z"
+    },
+    "createdAt": "2024-01-15T09:00:00.000Z",
+    "updatedAt": "2024-01-15T09:00:00.000Z",
+    "publishedAt": "2024-01-15T09:00:00.000Z"
+  }
+]
+```
+
+
+## Create a user
+Description: Code example from "Create a user"
+(Source: https://docs.strapi.io/cms/features/users-permissions#create-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/users \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-access-token" \
+  -d '{
+    "username": "newuser",
+    "email": "newuser@strapi.io",
+    "password": "Password123",
+    "role": 1,
+    "confirmed": true
+  }'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "id": 2,
+  "documentId": "def456",
+  "username": "newuser",
+  "email": "newuser@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-16T10:00:00.000Z",
+  "updatedAt": "2024-01-16T10:00:00.000Z",
+  "publishedAt": "2024-01-16T10:00:00.000Z"
+}
+```
+
+
+## Update a user
+Description: Code example from "Update a user"
+(Source: https://docs.strapi.io/cms/features/users-permissions#update-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X PUT http://localhost:1337/api/users/2 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-access-token" \
+  -d '{
+    "username": "updateduser"
+  }'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "id": 2,
+  "documentId": "def456",
+  "username": "updateduser",
+  "email": "newuser@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-16T10:00:00.000Z",
+  "updatedAt": "2024-01-17T11:00:00.000Z",
+  "publishedAt": "2024-01-16T10:00:00.000Z"
+}
+```
+
+
+## Delete a user
+Description: Code example from "Delete a user"
+(Source: https://docs.strapi.io/cms/features/users-permissions#delete-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X DELETE http://localhost:1337/api/users/2 \
+  -H "Authorization: Bearer your-access-token"
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "id": 2,
+  "documentId": "def456",
+  "username": "updateduser",
+  "email": "newuser@strapi.io",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-01-16T10:00:00.000Z",
+  "updatedAt": "2024-01-17T11:00:00.000Z",
+  "publishedAt": "2024-01-16T10:00:00.000Z"
+}
 ```
 
 
@@ -23777,7 +24519,7 @@ axios
 
 
 ## User registration
-Description: Creating a new user in the database with a default role as 'registered' can be done like in the following example:
+Description: Creating a new user in the database with a default role as 'authenticated' can be done as in the following example:
 (Source: https://docs.strapi.io/cms/features/users-permissions#user-registration)
 
 Language: JavaScript
@@ -25225,6 +25967,59 @@ import { Table } from '@strapi/strapi/admin';
 ## useCMEditViewDataManager
 Description: A lot of the internals have been reworked and split.
 (Source: https://docs.strapi.io/cms/migration/v4-to-v5/additional-resources/helper-plugin#usecmeditviewdatamanager)
+
+Language: JavaScript
+File path: plugins/my-plugin/admin/src/components/Preview.jsx
+
+```js
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
+
+export const Preview = () => {
+  const {
+    model,
+    collectionType,
+    id,
+    slug,
+    isCreatingEntry,
+    isSingleType,
+    hasDraftAndPublish,
+  } = useContentManagerContext();
+
+  return (
+    <section>
+      Editing <code>{slug}</code>
+      {isSingleType ? ' (single type)' : ' (collection type)'}
+    </section>
+  );
+};
+```
+
+---
+Language: TypeScript
+File path: plugins/my-plugin/admin/src/components/Preview.tsx
+
+```ts
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
+
+export const Preview = () => {
+  const {
+    model,
+    collectionType,
+    id,
+    slug,
+    isCreatingEntry,
+    isSingleType,
+    hasDraftAndPublish,
+  } = useContentManagerContext();
+
+  return (
+    <section>
+      Editing <code>{slug}</code>
+      {isSingleType ? ' (single type)' : ' (collection type)'}
+    </section>
+  );
+};
+```
 
 Language: JavaScript
 File path: N/A
@@ -26871,6 +27666,25 @@ File path: /github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resourc
 
 
 
+# Upgrading to Strapi 5 - Introduction and FAQ
+Source: https://docs.strapi.io/cms/migration/v4-to-v5/introduction-and-faq
+
+## Frequently asked questions
+Description: Copy the versions from a fresh Strapi v4 project that matches your target release (for example run the official generator in a throwaway folder), then install and rebuild.
+(Source: https://docs.strapi.io/cms/migration/v4-to-v5/introduction-and-faq#frequently-asked-questions)
+
+Language: JSON
+File path: N/A
+
+```json
+"react": "^18.0.0",
+"react-dom": "^18.0.0",
+"react-router-dom": "5.3.4",
+"styled-components": "5.3.3"
+```
+
+
+
 # Step-by-step guide to upgrade to Strapi 5
 Source: https://docs.strapi.io/cms/migration/v4-to-v5/step-by-step
 
@@ -28277,10 +29091,7 @@ export default {
         id: 'my-plugin.plugin.name', // Prefixed translation key
         defaultMessage: 'My Plugin', // Fallback if translation missing
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
     });
   },
 };
@@ -28302,10 +29113,7 @@ export default {
         id: 'my-plugin.plugin.name', // Prefixed translation key
         defaultMessage: 'My Plugin', // Fallback if translation missing
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
     });
   },
 };
@@ -28336,10 +29144,7 @@ export default {
         id: 'my-plugin.plugin.name',
         defaultMessage: 'My Plugin',
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
       permissions: [], // Array of permission objects
       position: 3, // Position in the menu (lower numbers appear first)
       licenseOnly: false, // Set to true to show ⚡ icon for paid features
@@ -28372,10 +29177,7 @@ export default {
         id: 'my-plugin.plugin.name',
         defaultMessage: 'My Plugin',
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
       permissions: [], // Array of permission objects
       position: 3, // Position in the menu (lower numbers appear first)
       licenseOnly: false, // Set to true to show ⚡ icon for paid features
@@ -28418,11 +29220,7 @@ export default {
           },
           id: 'general',
           to: 'my-plugin/general',
-          Component: async () => {
-            const { GeneralSettings } =
-              await import('./pages/Settings/General');
-            return GeneralSettings;
-          },
+          Component: () => import('./pages/Settings/General'),
         },
         {
           intlLabel: {
@@ -28431,11 +29229,7 @@ export default {
           },
           id: 'advanced',
           to: 'my-plugin/advanced',
-          Component: async () => {
-            const { AdvancedSettings } =
-              await import('./pages/Settings/Advanced');
-            return AdvancedSettings;
-          },
+          Component: () => import('./pages/Settings/Advanced'),
         },
       ],
     );
@@ -28475,11 +29269,7 @@ export default {
           },
           id: 'general',
           to: 'my-plugin/general',
-          Component: async () => {
-            const { GeneralSettings } =
-              await import('./pages/Settings/General');
-            return GeneralSettings;
-          },
+          Component: () => import('./pages/Settings/General'),
         },
         {
           intlLabel: {
@@ -28488,11 +29278,7 @@ export default {
           },
           id: 'advanced',
           to: 'my-plugin/advanced',
-          Component: async () => {
-            const { AdvancedSettings } =
-              await import('./pages/Settings/Advanced');
-            return AdvancedSettings;
-          },
+          Component: () => import('./pages/Settings/Advanced'),
         },
       ],
     );
@@ -28532,11 +29318,7 @@ export default {
       },
       id: 'documentation',
       to: 'my-plugin/documentation',
-      Component: async () => {
-        const { DocumentationPage } =
-          await import('./pages/Settings/Documentation');
-        return DocumentationPage;
-      },
+      Component: () => import('./pages/Settings/Documentation'),
       permissions: [],
       licenseOnly: false,
     });
@@ -28552,11 +29334,7 @@ export default {
         },
         id: 'general',
         to: 'my-plugin/general',
-        Component: async () => {
-          const { GeneralSettings } =
-            await import('./pages/Settings/General');
-          return GeneralSettings;
-        },
+        Component: () => import('./pages/Settings/General'),
       },
       {
         intlLabel: {
@@ -28565,11 +29343,7 @@ export default {
         },
         id: 'advanced',
         to: 'my-plugin/advanced',
-        Component: async () => {
-          const { AdvancedSettings } =
-            await import('./pages/Settings/Advanced');
-          return AdvancedSettings;
-        },
+        Component: () => import('./pages/Settings/Advanced'),
       },
     ]);
     // highlight-end
@@ -28601,11 +29375,7 @@ export default {
       },
       id: 'documentation',
       to: 'my-plugin/documentation',
-      Component: async () => {
-        const { DocumentationPage } =
-          await import('./pages/Settings/Documentation');
-        return DocumentationPage;
-      },
+      Component: () => import('./pages/Settings/Documentation'),
       permissions: [],
       licenseOnly: false,
     });
@@ -28621,11 +29391,7 @@ export default {
         },
         id: 'general',
         to: 'my-plugin/general',
-        Component: async () => {
-          const { GeneralSettings } =
-            await import('./pages/Settings/General');
-          return GeneralSettings;
-        },
+        Component: () => import('./pages/Settings/General'),
       },
       {
         intlLabel: {
@@ -28634,11 +29400,7 @@ export default {
         },
         id: 'advanced',
         to: 'my-plugin/advanced',
-        Component: async () => {
-          const { AdvancedSettings } =
-            await import('./pages/Settings/Advanced');
-          return AdvancedSettings;
-        },
+        Component: () => import('./pages/Settings/Advanced'),
       },
     ]);
     // highlight-end
@@ -29661,6 +30423,134 @@ interface BulkActionDescription {
 ```
 
 
+## addRichTextBlocks
+Description: :::note addRichTextBlocks must be called in the register() lifecycle function, not bootstrap().
+(Source: https://docs.strapi.io/cms/plugins-development/content-manager-apis#addrichtextblocks)
+
+Language: JavaScript
+File path: src/admin/app.js
+
+```js
+  export default {
+    register(app) {
+      app.getPlugin('content-manager').apis.addRichTextBlocks({
+        callout: {
+          renderElement: (props) => <Callout {...props.attributes}>{props.children}</Callout>,
+          icon: Information,
+          label: { id: 'my-plugin.blocks.callout', defaultMessage: 'Callout' },
+          matchNode: (node) => node.type === 'callout',
+          isInBlocksSelector: true,
+          handleConvert(editor) { /* use Slate Transforms to set node type */ },
+          snippets: [':::callout'],
+        },
+      });
+    },
+  };
+```
+
+---
+Language: TypeScript
+File path: src/admin/app.ts
+
+```ts
+  import type { ContentManagerPlugin } from '@strapi/content-manager/strapi-admin';
+
+  export default {
+    register(app) {
+      const apis =
+        app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+      apis.addRichTextBlocks({
+        callout: {
+          renderElement: (props) => <Callout {...props.attributes}>{props.children}</Callout>,
+          icon: Information,
+          label: { id: 'my-plugin.blocks.callout', defaultMessage: 'Callout' },
+          matchNode: (node) => node.type === 'callout',
+          isInBlocksSelector: true,
+          handleConvert(editor) { /* use Slate Transforms to set node type */ },
+          snippets: [':::callout'],
+        },
+      });
+    },
+  };
+```
+
+Language: JavaScript
+File path: src/admin/app.js
+
+```js
+  export default {
+    register(app) {
+      app.getPlugin('content-manager').apis.addRichTextBlocks((currentBlocks) => {
+        // Remove the built-in code block
+        const { code: _removed, ...rest } = currentBlocks;
+        return rest;
+      });
+    },
+  };
+```
+
+---
+Language: TypeScript
+File path: src/admin/app.ts
+
+```ts
+  import type {
+    ContentManagerPlugin,
+    RichTextBlocksStore,
+  } from '@strapi/content-manager/strapi-admin';
+
+  export default {
+    register(app) {
+      const apis =
+        app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+      apis.addRichTextBlocks((currentBlocks: RichTextBlocksStore) => {
+        const { code: _removed, ...rest } = currentBlocks;
+        return rest;
+      });
+    },
+  };
+```
+
+Language: JSX
+File path: N/A
+
+```jsx
+addRichTextBlocks(blocks: RichTextBlocksStore | ((currentBlocks: RichTextBlocksStore) => RichTextBlocksStore))
+```
+
+
+## Block definition
+Description: Key handlers each receive the Slate editor instance.
+(Source: https://docs.strapi.io/cms/plugins-development/content-manager-apis#block-definition)
+
+Language: JavaScript
+File path: N/A
+
+```js
+callout: {
+  // ...
+  handleEnterKey(editor) {
+    // Exit the block on Enter and insert a new paragraph below
+    Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] });
+  },
+  handleBackspaceKey(editor, event) {
+    // Convert back to paragraph when backspacing in an empty callout
+    Transforms.setNodes(editor, { type: 'paragraph' });
+  },
+  handleTab(editor) {
+    // Increase indentation level on Tab
+    Transforms.setNodes(editor, { indent: (editor.selection ? 1 : 0) });
+  },
+  handleShiftTab(editor) {
+    // Decrease indentation level on Shift+Tab
+    Transforms.setNodes(editor, { indent: 0 });
+  },
+},
+```
+
+
 
 # Plugin creation & setup
 Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin
@@ -29958,11 +30848,7 @@ export default {
         id: `${PLUGIN_ID}.plugin.name`,
         defaultMessage: PLUGIN_ID,
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-
-        return App;
-      },
+      Component: () => import('./pages/App'),
       permissions: [
         pluginPermissions.accessOverview[0],
       ],
@@ -32276,7 +33162,7 @@ Description: To install the documentation plugin, run following command in your 
 (Source: https://docs.strapi.io/cms/plugins/documentation#installation)
 
 Language: Bash
-File path: />`<server-url>:<server-port>/documentation/<version>/openapi.js
+File path: `src/extensions/documentation/documentation/<version>/full_documentation.json`
 
 ```bash
 yarn add @strapi/plugin-documentation
@@ -32284,7 +33170,7 @@ yarn add @strapi/plugin-documentation
 
 ---
 Language: Bash
-File path: />`<server-url>:<server-port>/documentation/<version>/openapi.js
+File path: `src/extensions/documentation/documentation/<version>/full_documentation.json`
 
 ```bash
 npm install @strapi/plugin-documentation
@@ -34836,9 +35722,34 @@ File path: ./scripts/seed.js
 ```
 
 
-## Create smoke tests
-Description: With the harness in place you can confirm Strapi boots correctly by adding a minimal Jest suite with the following smoke tests Smoke tests are basic tests that verify the most critical functionality works.
-(Source: https://docs.strapi.io/cms/testing#create-smoke-tests)
+## TypeScript smoke tests must load tests/strapi.js first
+Description: The harness patches both the directory scan and the per-file loader so .ts, .cts, and .mts configs work under Jest.
+(Source: https://docs.strapi.io/cms/testing#typescript-smoke-tests-must-load-tests-strapi-js-first)
+
+Language: TypeScript
+File path: ./tests/app.test.ts
+
+```ts
+import type { Strapi } from '@strapi/strapi';
+
+const { setupStrapi, cleanupStrapi } = require('./strapi');
+
+declare global {
+  var strapi: Strapi;
+}
+
+beforeAll(async () => {
+  await setupStrapi();
+});
+
+afterAll(async () => {
+  await cleanupStrapi();
+});
+
+it('strapi is defined', () => {
+  expect(strapi).toBeDefined();
+});
+```
 
 Language: JavaScript
 File path: ./tests/app.test.js
@@ -34865,7 +35776,7 @@ require('./user');
 ```
 
 Language: YAML
-File path: /app.test.js
+File path: /strapi.js
 
 ```yaml
 PASS tests/create-service.test.js

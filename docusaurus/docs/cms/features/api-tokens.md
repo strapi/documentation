@@ -1,6 +1,7 @@
 ---
 title: API Tokens
-description: Learn how you can use API tokens to manage end-users authentication.
+description: Learn how to use content-api tokens to authenticate REST and GraphQL API requests in Strapi.
+displayed_sidebar: cmsSidebar
 sidebar_position: 2
 toc_max_heading_level: 5
 tags:
@@ -14,28 +15,27 @@ tags:
 # API Tokens
 
 <Tldr>
-API tokens provide scoped authentication for REST and GraphQL requests without exposing user credentials. This documentation explains token types, creation, expiration, and secure usage within the admin panel.
+API tokens authenticate external requests to the Strapi Content API without exposing user credentials. Each token is scoped to a set of permissions and expires after a configurable duration.
 </Tldr>
 
-API tokens allow users to authenticate REST and GraphQL API queries (see [APIs introduction](/cms/api/content-api)).
+API tokens allow external clients to authenticate requests to the Strapi [Content API](/cms/api/content-api). For programmatic access to the Admin panel features, see [Admin Tokens](/cms/features/admin-tokens).
+
+API tokens and Admin tokens are strictly separated: a Content API token is rejected on admin routes, and an admin token is rejected on Content API routes.
 
 :::caution Security
-Prefer read‑only tokens for public access, scope server tokens to only what you need, rotate long‑lived tokens, and store them in a secrets manager. Never expose admin tokens in client‑side code.
+Prefer read-only tokens for public access, scope tokens to only what you need, rotate long-lived tokens, and store them in a secrets manager.
 :::
 
 <IdentityCard>
   <IdentityCardItem icon="layout" title="Plan">
     Free feature
   </IdentityCardItem>
-  
-  <IdentityCardItem icon="user" title="Role and permission">
+  <IdentityCardItem icon="user" title="Role & permission">
     Minimum "Access the API tokens settings page" in Roles > Settings - API tokens
   </IdentityCardItem>
-  
   <IdentityCardItem icon="toggle-right" title="Activation">
     Available by default
   </IdentityCardItem>
-  
   <IdentityCardItem icon="desktop" title="Environment">
     Available in both Development & Production environment
   </IdentityCardItem>
@@ -57,12 +57,12 @@ Most configuration options for API tokens are available in the admin panel, and 
 
 **Path to configure the feature:** <Icon name="gear-six" /> _Settings > Global settings > API Tokens_
 
-The _API Tokens_ interface displays a table listing all of the created API tokens. More specifically, it displays each API token's name, description, date of creation, and date of last use.
+The _API Tokens_ interface displays a table listing all created content-api tokens.
 
 From there, you have the possibility to:
 
-- click on the <Icon name="pencil-simple" /> to edit an API token's name, description, type, duration or [regenerate the token](#regenerating-an-api-token).
-- click on the <Icon name="trash" /> to delete an API token.
+- click on the <Icon name="pencil-simple" /> to edit a token's name, description, type, duration or [regenerate the token](#regenerating-an-api-token).
+- click on the <Icon name="trash" /> to delete a token.
 
 :::note
 Strapi pre-generates 2 API tokens for you, a Full access one and a Read-only one. Since tokens can be only seen once without encryption configured, you may want to [regenerate](#regenerating-an-api-token) them after setting up an encryption key to make them permanently viewable.
@@ -72,6 +72,7 @@ Strapi pre-generates 2 API tokens for you, a Full access one and a Read-only one
 
 1. Click on the **Create new API Token** button.
 2. In the API token edition interface, configure the new API token:
+
    | Setting name | Instructions |
    | -------------- | ------------------------------------------------------------------------ |
    | Name | Write the name of the API token. |
@@ -135,7 +136,7 @@ module.exports = ({ env }) => ({
 
 <TabItem label="TypeScript" value="ts">
 
-```js title="/config/admin.ts"
+```ts title="/config/admin.ts"
 export default ({ env }) => ({
   // other config parameters
   secrets: {
@@ -148,6 +149,10 @@ export default ({ env }) => ({
 </Tabs>
 
 This key is used to encrypt and decrypt token values. Without this key, tokens remain usable, but will not be viewable after initial display. New Strapi projects will have this key automatically generated.
+
+:::tip
+For automation workflows that need to call the Admin panel features programmatically, use admin tokens instead. See [Admin Tokens](/cms/features/admin-tokens) for the full documentation.
+:::
 
 ## Usage
 

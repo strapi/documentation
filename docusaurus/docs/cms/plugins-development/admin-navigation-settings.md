@@ -45,7 +45,7 @@ A menu link accepts the following parameters:
 | `to` | `string` | ✅ | Path the link should point to (relative to the admin panel root) (see [additional information](#path-conventions-for-to)) |
 | `icon` | `React.Component` | ✅ | React component for the icon to display in the navigation |
 | `intlLabel` | `object` | ✅ | Label for the link, following the <ExternalLink to="https://formatjs.io/docs/react-intl" text="React Int'l"/> convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
-| `Component` | `async function` | ✅ | Async function that returns a dynamic import of the plugin's main page component |
+| `Component` | `function` | ✅ | Function that returns a dynamic `import()` of the plugin's main page component. The page module must export the component as `default`. |
 | `permissions` | `Array<object>` | ❌ | Array of permission objects that control access to the link |
 | `position` | `number` | ❌ | Numeric position in the menu (lower numbers appear first) |
 | `licenseOnly` | `boolean` | ❌ | If `true`, displays a ⚡ icon to indicate the feature requires a paid license (default: `false`) |
@@ -74,10 +74,7 @@ export default {
         id: 'my-plugin.plugin.name',
         defaultMessage: 'My Plugin',
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
       permissions: [], // Array of permission objects
       position: 3, // Position in the menu (lower numbers appear first)
       licenseOnly: false, // Set to true to show ⚡ icon for paid features
@@ -109,10 +106,7 @@ export default {
         id: 'my-plugin.plugin.name',
         defaultMessage: 'My Plugin',
       },
-      Component: async () => {
-        const { App } = await import('./pages/App');
-        return App;
-      },
+      Component: () => import('./pages/App'),
       permissions: [], // Array of permission objects
       position: 3, // Position in the menu (lower numbers appear first)
       licenseOnly: false, // Set to true to show ⚡ icon for paid features
@@ -129,6 +123,10 @@ export default {
 
 </TabItem>
 </Tabs>
+
+:::note
+The page module referenced by `Component` must export the component as the **default export** (e.g. `export default App;` in `admin/src/pages/App.tsx`). Earlier versions of Strapi accepted an `async` callback that returned a named export, but this pattern is deprecated and logs a warning at runtime. Use `Component: () => import(path)` so the dynamic import directly resolves to the module's default export.
+:::
 
 ## Settings
 
@@ -163,11 +161,7 @@ export default {
           },
           id: 'general',
           to: 'my-plugin/general',
-          Component: async () => {
-            const { GeneralSettings } =
-              await import('./pages/Settings/General');
-            return GeneralSettings;
-          },
+          Component: () => import('./pages/Settings/General'),
         },
         {
           intlLabel: {
@@ -176,11 +170,7 @@ export default {
           },
           id: 'advanced',
           to: 'my-plugin/advanced',
-          Component: async () => {
-            const { AdvancedSettings } =
-              await import('./pages/Settings/Advanced');
-            return AdvancedSettings;
-          },
+          Component: () => import('./pages/Settings/Advanced'),
         },
       ],
     );
@@ -219,11 +209,7 @@ export default {
           },
           id: 'general',
           to: 'my-plugin/general',
-          Component: async () => {
-            const { GeneralSettings } =
-              await import('./pages/Settings/General');
-            return GeneralSettings;
-          },
+          Component: () => import('./pages/Settings/General'),
         },
         {
           intlLabel: {
@@ -232,11 +218,7 @@ export default {
           },
           id: 'advanced',
           to: 'my-plugin/advanced',
-          Component: async () => {
-            const { AdvancedSettings } =
-              await import('./pages/Settings/Advanced');
-            return AdvancedSettings;
-          },
+          Component: () => import('./pages/Settings/Advanced'),
         },
       ],
     );
@@ -269,7 +251,7 @@ The `createSettingSection()` function accepts the following parameters:
   | `id` | `string` | ✅ | Unique identifier for the settings link |
   | `to` | `string` | ✅ | Path relative to the settings route (do not include `settings/` prefix) (see [additional information](#path-conventions-for-to)) |
   | `intlLabel` | `object` | ✅ | Localized label object with `id` and `defaultMessage` |
-  | `Component` | `async function` | ✅ | Async function that returns a dynamic import of the settings page component |
+  | `Component` | `function` | ✅ | Function that returns a dynamic `import()` of the settings page component. The page module must export the component as `default`. |
   | `permissions` | `Array<object>` | ❌ | Array of permission objects that control access to the link |
   | `licenseOnly` | `boolean` | ❌ | If `true`, displays a ⚡ icon (default: `false`) |
 
@@ -298,11 +280,7 @@ export default {
       },
       id: 'documentation',
       to: 'my-plugin/documentation',
-      Component: async () => {
-        const { DocumentationPage } =
-          await import('./pages/Settings/Documentation');
-        return DocumentationPage;
-      },
+      Component: () => import('./pages/Settings/Documentation'),
       permissions: [],
       licenseOnly: false,
     });
@@ -318,11 +296,7 @@ export default {
         },
         id: 'general',
         to: 'my-plugin/general',
-        Component: async () => {
-          const { GeneralSettings } =
-            await import('./pages/Settings/General');
-          return GeneralSettings;
-        },
+        Component: () => import('./pages/Settings/General'),
       },
       {
         intlLabel: {
@@ -331,11 +305,7 @@ export default {
         },
         id: 'advanced',
         to: 'my-plugin/advanced',
-        Component: async () => {
-          const { AdvancedSettings } =
-            await import('./pages/Settings/Advanced');
-          return AdvancedSettings;
-        },
+        Component: () => import('./pages/Settings/Advanced'),
       },
     ]);
     // highlight-end
@@ -366,11 +336,7 @@ export default {
       },
       id: 'documentation',
       to: 'my-plugin/documentation',
-      Component: async () => {
-        const { DocumentationPage } =
-          await import('./pages/Settings/Documentation');
-        return DocumentationPage;
-      },
+      Component: () => import('./pages/Settings/Documentation'),
       permissions: [],
       licenseOnly: false,
     });
@@ -386,11 +352,7 @@ export default {
         },
         id: 'general',
         to: 'my-plugin/general',
-        Component: async () => {
-          const { GeneralSettings } =
-            await import('./pages/Settings/General');
-          return GeneralSettings;
-        },
+        Component: () => import('./pages/Settings/General'),
       },
       {
         intlLabel: {
@@ -399,11 +361,7 @@ export default {
         },
         id: 'advanced',
         to: 'my-plugin/advanced',
-        Component: async () => {
-          const { AdvancedSettings } =
-            await import('./pages/Settings/Advanced');
-          return AdvancedSettings;
-        },
+        Component: () => import('./pages/Settings/Advanced'),
       },
     ]);
     // highlight-end

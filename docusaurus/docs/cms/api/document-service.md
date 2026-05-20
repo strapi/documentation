@@ -45,6 +45,12 @@ Additional information on how to migrate from the Entity Service API to the Docu
 Relations can also be connected, disconnected, and set through the Document Service API, just like with the REST API (see the [REST API relations documentation](/cms/api/rest/relations) for examples).
 :::
 
+:::caution Document Service returns unsanitized data
+The Document Service is a data-access layer: it interacts with the database and is not aware of user permissions or field visibility. Results may include private fields, passwords, and restricted relations.
+
+The built-in REST and GraphQL APIs automatically sanitize responses before sending them to the client. But if you build custom controllers or plugin routes that call Document Service methods directly, you must sanitize the output yourself before returning it. Use `strapi.contentAPI.sanitize.output()` in your controller (see [Sanitization and validation when building custom controllers](/cms/backend-customization/controllers#sanitize-validate-custom-controllers) for details and code examples).
+:::
+
 ## Configuration
 
 The `documents.strictParams` option enables strict validation of parameters passed to Document Service methods such as `findMany` and `findOne`. Configure it in the [API configuration](/cms/configurations/api) file (`./config/api.js` or `./config/api.ts`). See the [API configuration](/cms/configurations/api) table for details on `documents.strictParams`.
@@ -77,6 +83,10 @@ Each section below documents the parameters and examples for a specific method:
 | [`discardDraft()`](#discarddraft) | Drop draft data and keep only the published version. |
 | [`count()`](#count) | Count how many documents match the parameters. |
 
+:::note Draft & Publish method availability
+The [`publish()`](#publish), [`unpublish()`](#unpublish), and [`discardDraft()`](#discarddraft) methods are only available when the Draft & Publish feature is enabled on the content-type. Calling these methods on a content-type that does not have Draft & Publish enabled will throw an error. To enable Draft & Publish, see the [Draft & Publish documentation](/cms/features/draft-and-publish).
+:::
+
 ### `findOne()`
 
 Find a document matching the passed `documentId` and parameters.
@@ -103,8 +113,8 @@ If only a `documentId` is passed without any other parameters, `findOne()` retur
 
 ```js
 await strapi.documents('api::restaurant.restaurant').findOne({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm'
-})
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', 
+});
 ```
 
 </Request>
@@ -696,8 +706,8 @@ If no `locale` parameter is passed, `discardDraft()` discards draft data and ove
 <Request title="Discard draft for the default locale of a document">
 
 ```js
-strapi.documents.discardDraft({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', 
+await strapi.documents('api::restaurant.restaurant').discardDraft({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
 });
 ```
 

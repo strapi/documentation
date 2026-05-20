@@ -293,6 +293,11 @@ await request(`/api/books?${query}`);
 </Response>
 </ApiCall>
 
+:::note
+The response above only contains a book's own attributes. The `author` relation traversed by the `$and` filter is not returned unless requested through the [`populate` parameter](/cms/api/rest/populate-select#population), for example by adding `&populate=author` to the request.
+:::
+
+
 ## Deep filtering
 
 Deep filtering is filtering on a relation's fields.
@@ -369,3 +374,8 @@ await request(`/api/restaurants?${query}`);
 
 </Response>
 </ApiCall>
+
+:::note
+The response above mirrors the default REST output, which excludes the relations traversed by the filter. Add a [`populate` parameter](/cms/api/rest/populate-select#population) such as `&populate[chef][populate][restaurants]=true` to also return the `chef.restaurants` relation referenced in the filter.
+:::
+

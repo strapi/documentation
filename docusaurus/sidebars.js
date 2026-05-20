@@ -58,6 +58,7 @@ const sidebars = {
           label: 'API Tokens',
           id: 'cms/features/api-tokens',
         },
+        'cms/features/admin-tokens',
         {
           type: 'doc',
           label: 'Audit Logs',
@@ -383,6 +384,15 @@ const sidebars = {
             'cms/backend-customization/services',
             'cms/backend-customization/models',
             'cms/backend-customization/webhooks',
+            {
+              type: 'category',
+              label: 'Guides',
+              collapsible: true,
+              collapsed: true,
+              items: [
+                'cms/backend-customization/guides/customizing-users-permissions-plugin-routes',
+              ],
+            },
           ],
         },
         {
@@ -731,6 +741,14 @@ const sidebars = {
           type: 'doc',
           id: 'cloud/advanced/upload',
           label: 'Upload provider for Cloud',
+          customProps: {
+            new: false,
+          },
+        },
+        {
+          type: 'doc',
+          id: 'cloud/advanced/middlewares',
+          label: 'Middleware configuration for Cloud',
           customProps: {
             new: false,
           },

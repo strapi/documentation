@@ -59,6 +59,161 @@
       "number": 26133,
       "reason": "Router: Internal admin UI styling fix that addresses a rendering bug (double scrollbar in list view). This is an implementation detail of the OverflowingItem styled component and does not introduce new user-facing features, APIs, or behavior changes. Users do not interact with or configure this component directly. No documentation update needed.",
       "added": "2026-04-29"
+    },
+    {
+      "number": 26148,
+      "reason": "Router: Internal bug fix in content manager crash handling when viewing history of entries with deleted dynamic zone components. No public API change, no new user-facing behavior — just fixes an unexpected crash.",
+      "added": "2026-04-30"
+    },
+    {
+      "number": 25015,
+      "reason": "Triage: admin UI polish with no behavior change; removes spurious console warnings",
+      "added": "2026-05-01"
+    },
+    {
+      "number": 25574,
+      "reason": "Router: Internal framework migration from Yup to Zod for server-side validation schemas. This is implementation detail, not a user-facing API or configuration change.",
+      "added": "2026-05-01"
+    },
+    {
+      "number": 25900,
+      "reason": "Router: Internal bug fix in URL parameter serialization that prevents trailing ? in query strings. Fixes a side effect (duplicate history versions) but doesn't change public API surface.",
+      "added": "2026-05-01"
+    },
+    {
+      "number": 25967,
+      "reason": "Router: UI enhancement to the Review Workflows admin panel feature (incremental loading + search in assignee dropdown). No API change or configuration change.",
+      "added": "2026-05-01"
+    },
+    {
+      "number": 26198,
+      "reason": "Router: Internal TypeScript type fix for admin router component. No user-facing API or behavior change, no public documentation impact.",
+      "added": "2026-05-05"
+    },
+    {
+      "number": 26134,
+      "reason": "Router: Internal database optimization/fix for PostgreSQL deadlock prevention. No user-facing API or behavior change, no documentation needed.",
+      "added": "2026-05-05"
+    },
+    {
+      "number": 26211,
+      "reason": "Triage: internal refactoring — no behavior change expected",
+      "added": "2026-05-06"
+    },
+    {
+      "number": 26212,
+      "reason": "Triage: test infrastructure/flakiness fix",
+      "added": "2026-05-07"
+    },
+    {
+      "number": 26179,
+      "reason": "Router: Internal Document Service API bug fix for x-to-one relation handling with Draft & Publish. Fixes an internal behavior issue where draft and published entries weren't being linked correctly. No public API changes or user-facing behavior changes; users should not need to change their code.",
+      "added": "2026-05-07"
+    },
+    {
+      "number": 26010,
+      "reason": "Router: UI/CSS fix in Content Manager's Dynamic Zone component picker. Addresses a visual overflow issue where long component names without spaces would bleed into adjacent cards. This is a visual/UX improvement with no impact on documented behavior, features, or APIs.",
+      "added": "2026-05-07"
+    },
+    {
+      "number": 25660,
+      "reason": "Router: Internal admin UI bug fix for Prism.js library loading issue in Code block component. No public API or user-facing behavior change.",
+      "added": "2026-05-08"
+    },
+    {
+      "number": 26120,
+      "reason": "Router: Database query helper bug fix for morph relation population. Internal correctness fix ensuring morphTo relations return correct type discriminator; not a new feature or breaking change requiring user documentation.",
+      "added": "2026-05-08"
+    },
+    {
+      "number": 26240,
+      "reason": "Router: Admin UI bug fix for filter persistence in Content Manager. Fixes stale localStorage data after clearing filters. Internal UX improvement with no public API change.",
+      "added": "2026-05-08"
+    },
+    {
+      "number": 26202,
+      "reason": "Triage: internal schema hashing optimization",
+      "added": "2026-05-09"
+    },
+    {
+      "number": 25894,
+      "reason": "Router: Internal bug fix in query parameter validation. Throws correct HTTP status code (400 Bad Request instead of 500) for invalid user input — no public API surface change. Error messages remain unchanged and user-facing behavior is already documented.",
+      "added": "2026-05-09"
+    },
+    {
+      "number": 25416,
+      "reason": "Router: Bug fix in admin fetch client's response handling (Safari error on 204 No Content). No public API or user-facing behavior change — entirely internal to admin UI error handling.",
+      "added": "2026-05-09"
+    },
+    {
+      "number": 26049,
+      "reason": "Triage: performance optimization that skips expensive queries yielding identical results; no user-facing behavior, API, or feature changes",
+      "added": "2026-05-11"
+    },
+    {
+      "number": 24743,
+      "reason": "Triage: internal optimization to telemetry calls",
+      "added": "2026-05-12"
+    },
+    {
+      "number": 26032,
+      "reason": "Router: Internal database query builder fix. Adds a stable sort order to paginated selects to prevent duplicate/skipped rows, but this is an implementation detail of the query builder. No user-facing API or behavior change that requires documentation; developers don't interact with this change directly.",
+      "added": "2026-05-12"
+    },
+    {
+      "number": 26246,
+      "reason": "Router: Internal development tool fix for package manager detection. No user-facing API or documentation changes needed.",
+      "added": "2026-05-13"
+    },
+    {
+      "number": 26229,
+      "reason": "Router: Internal admin UI bug fix. No user-facing feature changes or documentation updates needed.",
+      "added": "2026-05-13"
+    },
+    {
+      "number": 26209,
+      "reason": "Router: Internal admin UI improvement fixing date picker max year constraint. The date picker is a technical implementation detail of the admin panel, not a user-facing content feature.",
+      "added": "2026-05-13"
+    },
+    {
+      "number": 26147,
+      "reason": "Router: Internal bug fix for transaction handling in Content Releases. Fixes serialization of concurrent publishes. No new features or API changes affecting documentation.",
+      "added": "2026-05-13"
+    },
+    {
+      "number": 26124,
+      "reason": "Router: Internal admin UI bug fix. Fixes a crash in component configuration layout conversion when handling nested components. No new public APIs, features, or user-facing behavior changes. Marked as internal refactor fixing issue #25509.",
+      "added": "2026-05-14"
+    },
+    {
+      "number": 26331,
+      "reason": "Triage: Internal migration code fix; doesn't change user-facing behavior, APIs, configuration, or features",
+      "added": "2026-05-15"
+    },
+    {
+      "number": 26248,
+      "reason": "Router: Internal utilities/upgrade package fix. Aligns devDependencies during the upgrade process. Does not affect any public-facing APIs or user-facing behavior that would require documentation updates.",
+      "added": "2026-05-15"
+    },
+    {
+      "number": 26242,
+      "reason": "Router: Enterprise Edition feature. Fixes a UX issue in the Admin panel when switching Review Workflows locales. The change is an internal error handling improvement (returning 200 with empty data instead of 404, showing a clearer message to users). This is a bug fix/UX improvement that doesn't require documentation changes—the feature behavior remains the same, just with better error messages.",
+      "added": "2026-05-15"
+    },
+    {
+      "number": 26326,
+      "reason": "Triage: dependency maintenance and security patches without behavior change",
+      "added": "2026-05-16"
+    },
+    {
+      "number": 26298,
+      "reason": "Router: Internal deprecation warning fix. Users do not interact with this — it silences false positive warnings on existing projects. No user-facing behavior or configuration changes to document.",
+      "added": "2026-05-19"
+    },
+    {
+      "number": 26165,
+      "reason": "Router: Internal admin panel bug fix that improves UX of existing session timeout feature. No new user-facing capabilities, configuration options, or APIs introduced. Session management should already be documented if needed.",
+      "added": "2026-05-20"
     }
   ]
 }
