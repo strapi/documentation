@@ -29,7 +29,65 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.46.0](https://github.com/strapi/strapi/releases/tag/v5.46.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.46.1](https://github.com/strapi/strapi/releases/tag/v5.46.1)._
+
+## 6.26.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Cloud
+- [Add middleware customization guide for Strapi Cloud production environment](https://github.com/strapi/documentation/pull/3148)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document nested sort within populate for join-table relations](https://github.com/strapi/documentation/pull/3186)
+- [Update Docker documentation with production setup and troubleshooting](https://github.com/strapi/documentation/pull/3109)
+
+#### Cloud
+- [Environment clearing for Strapi Cloud](https://github.com/strapi/documentation/pull/3180)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Add TypeScript workaround for Document Service relational operators](https://github.com/strapi/documentation/pull/3189)
+- [Replace unimplemented GraphQL aggregations docs with warning](https://github.com/strapi/documentation/pull/3183)
+- [Add tip about filtering by assignee and review stage in list view](https://github.com/strapi/documentation/pull/3170)
+
+#### Repository
+- [Prevent editors from running Prettier](https://github.com/strapi/documentation/pull/3182)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/GorkyDemircn" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/110297297?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="GorkyDemircn"/>
+</a>
+<a href="https://github.com/innerdvations" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/999278?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="innerdvations"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/raulbalestra" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63110244?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="raulbalestra"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 6.25.0
 
