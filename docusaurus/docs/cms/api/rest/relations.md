@@ -44,7 +44,25 @@ await strapi.documents('api::restaurant.restaurant').update({
     }
   }
 })
+
 ```
+
+:::tip TypeScript Workaround
+When using connect, disconnect, or set with the Document Service API in TypeScript, you may encounter a TS2353 error stating that these properties do not exist on type LongHandEntity.
+
+While the runtime engine fully supports this syntax, the current typings do not. You can safely bypass this validation by casting your data payload to any or a broader object type:
+
+```js
+await strapi.documents('api::cart.cart').update({
+  documentId: cart.documentId,
+  data: {
+    status: 'checked_out',
+    order: { connect: [order.documentId] } as any, // Temporary workaround
+  },
+});
+
+```
+
 
 If no locale is passed, the default locale will be assumed.
 :::
