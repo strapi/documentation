@@ -104,72 +104,14 @@ This is particularly useful for understanding configuration examples, API respon
 - **`llms-full.txt`**: Use this when you need the AI to have access to the complete documentation content. This is a large file; make sure your model's context window can handle it.
 - **`llms-code.txt`**: Use this when you're working on code and want to give an AI all of Strapi's documented code examples. Each snippet includes the source page URL and anchor for traceability.
 
-## Docs MCP server {#docs-mcp}
+## MCP servers {#mcp}
 
-A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the documentation is available. The Docs MCP server exposes the Strapi documentation to AI coding tools. Connect it to your IDE to get Strapi-aware code suggestions and answers directly in your development environment.
+The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open standard that lets AI tools interact with external services. Two MCP servers are available for Strapi:
 
-### Compatible tools
-
-The MCP server works with any tool that supports the MCP protocol, including:
-
-- [Cursor](https://cursor.com)
-- [VS Code](https://code.visualstudio.com) with GitHub Copilot
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
-- [Windsurf](https://codeium.com/windsurf)
-- Any other MCP-compatible IDE or tool
-
-### Connection details
-
-When opening the Ask AI window, you should see a **Use MCP** dropdown in the top right corner. Click on it and choose which tool you'd like to connect:
-
-<ThemedImage
-  alt="Ask AI modal with Use MCP options higlighted"
-  sources={{
-    light: '/img/assets/ai/use-mcp-button.png',
-    dark: '/img/assets/ai/use-mcp-button.png',
-  }}
-/>
-
-If manual MCP server configuration is required:
-
-1. Click the **Copy MCP URL** from the dropdown. The server URL should be: `https://strapi-docs.mcp.kapa.ai`
-2. Update the MCP server configuration in your IDE:
-
-    <Tabs>
-    <TabItem value="cursor" label="Cursor">
-
-    Add to your `.cursor/mcp.json` file:
-
-    ```json title=".cursor/mcp.json"
-    {
-      "mcpServers": {
-        "strapi-docs": {
-          "url": "https://strapi-docs.mcp.kapa.ai"
-        }
-      }
-    }
-    ```
-
-    </TabItem>
-    <TabItem value="vscode" label="VS Code">
-
-    Add to your `.vscode/mcp.json` file:
-
-    ```json title=".vscode/mcp.json"
-    {
-      "servers": {
-        "strapi-docs": {
-          "type": "http",
-          "url": "https://strapi-docs.mcp.kapa.ai"
-        }
-      }
-    }
-    ```
-
-    </TabItem>
-    </Tabs>
-
-Once connected, your AI coding assistant can query the Strapi documentation directly to answer questions, suggest implementations, and verify API usage.
+<CustomDocCardsWrapper>
+<CustomDocCard icon="server" title="Strapi MCP server" description="Connect AI clients to your Strapi instance to manage content through natural language. Create, read, update, delete, and publish entries directly from Claude, Cursor, or any MCP-compatible tool." link="/cms/features/mcp-server" />
+<CustomDocCard icon="book-open" title="Docs MCP server" description="Connect the Strapi documentation to your IDE for Strapi-aware code suggestions, API usage guidance, and contextual answers." link="/cms/ai/docs-mcp-server" />
+</CustomDocCardsWrapper>
 
 ## Tips for better results {#tips}
 
