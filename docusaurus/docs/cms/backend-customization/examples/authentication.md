@@ -99,7 +99,8 @@ const Login = () => {
         body: JSON.stringify(values),
       });
       /**
-       * Gets the JWT from the server response
+       * Gets the JWT from the server response.
+       * The actual response is { jwt, user }, but we only need the JWT here.
        */
       const { jwt } = await res.json();
       /**
@@ -159,9 +160,11 @@ module.exports = ({ env }) => ({
     config: {
       jwtManagement: 'refresh',
       sessions: {
-        accessTokenLifespan: 604800, // 1 week (default)
-        maxRefreshTokenLifespan: 2592000, // 30 days
-        idleRefreshTokenLifespan: 604800, // 7 days
+        accessTokenLifespan: 600, // 10 minutes (default)
+        maxRefreshTokenLifespan: 2592000, // 30 days (default)
+        idleRefreshTokenLifespan: 1209600, // 14 days (default)
+        maxSessionLifespan: 86400, // 1 day (default)
+        idleSessionLifespan: 7200, // 2 hours (default)
       },
     },
   },
@@ -256,7 +259,6 @@ const EnhancedLogin = () => {
 };
 
 export default EnhancedLogin;
-```
 ```
 
 <br />

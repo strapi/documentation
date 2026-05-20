@@ -19,6 +19,10 @@ The present page explains how to setup the LinkedIn provider for the [Users & Pe
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
 :::
 
+:::caution
+LinkedIn has migrated from "Sign In with LinkedIn" to "Sign In with LinkedIn using OpenID Connect." The `r_liteprofile` and `r_emailaddress` scopes have been deprecated. The setup steps below may need adjustments to match the new OpenID Connect product.
+:::
+
 ## LinkedIn configuration
 
 :::note
@@ -37,7 +41,7 @@ The use of `ngrok` is not needed.
 6. Fill the information:
    - **Authorized redirect URL**: `http://localhost:1337/api/connect/linkedin/callback`
 7. On the app page click on **Products** tab.
-8. Select `Sign In with LinkedIn` from the product list to enable it.
+8. Select `Sign In with LinkedIn using OpenID Connect` from the product list to enable it.
 
 ## Strapi configuration
 
