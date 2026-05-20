@@ -109,8 +109,8 @@ This is particularly useful for understanding configuration examples, API respon
 The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open standard that lets AI tools interact with external services. Two MCP servers are available for Strapi:
 
 <CustomDocCardsWrapper>
-<CustomDocCard small icon="server" title="Strapi MCP server" link="/cms/features/mcp-server" />
-<CustomDocCard small icon="book-open" title="Docs MCP server" link="/cms/ai/docs-mcp-server" />
+<CustomDocCard icon="feather" title="Strapi MCP server" description="Connect AI clients to your Strapi instance to manage content through natural language." link="/cms/features/mcp-server" />
+<CustomDocCard icon="book-open" title="Docs MCP server" description="Connect the Strapi documentation to your IDE for Strapi-aware code suggestions." link="/cms/ai/docs-mcp-server" />
 </CustomDocCardsWrapper>
 
 ## Tips for better results {#tips}
