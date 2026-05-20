@@ -2059,33 +2059,12 @@ export default {
 
 
 
-# Strapi AI for content managers
-Source: https://docs.strapi.io/cms/ai/for-content-managers
-
-## Activation and configuration
-Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
-(Source: https://docs.strapi.io/cms/ai/for-content-managers#activation)
-
-Language: JavaScript
-File path: /config/admin.js|ts
-
-```js
-module.exports = {
-  // ...
-  ai: {
-    enabled: true, // set to false to disable all Strapi AI features
-  },
-};
-```
-
-
-
-# AI for developers
-Source: https://docs.strapi.io/cms/ai/for-developers
+# Docs MCP server
+Source: https://docs.strapi.io/cms/ai/docs-mcp-server
 
 ## Connection details
 Description: Add to your .cursor/mcp.json file:
-(Source: https://docs.strapi.io/cms/ai/for-developers#connection-details)
+(Source: https://docs.strapi.io/cms/ai/docs-mcp-server#connection-details)
 
 Language: JSON
 File path: .cursor/mcp.json
@@ -2113,6 +2092,41 @@ File path: .vscode/mcp.json
         }
       }
     }
+```
+
+---
+Language: JSON
+File path: ~/.codeium/windsurf/mcp_config.json
+
+```json
+    {
+      "mcpServers": {
+        "strapi-docs": {
+          "serverUrl": "https://strapi-docs.mcp.kapa.ai"
+        }
+      }
+    }
+```
+
+
+
+# AI for content managers
+Source: https://docs.strapi.io/cms/ai/for-content-managers
+
+## Activation and configuration
+Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
+(Source: https://docs.strapi.io/cms/ai/for-content-managers#activation)
+
+Language: JavaScript
+File path: /config/admin.js|ts
+
+```js
+module.exports = {
+  // ...
+  ai: {
+    enabled: true, // set to false to disable all Strapi AI features
+  },
+};
 ```
 
 
@@ -17469,13 +17483,13 @@ Source: https://docs.strapi.io/cms/configurations/features
 Description: (optional) If the server is running, stop it with Ctrl-C.
 (Source: https://docs.strapi.io/cms/configurations/features#enabling-a-future-flag)
 
-Language: TypeScript
-File path: /config/features.ts
+Language: JavaScript
+File path: /config/features.js
 
-```ts
+```js
   module.exports = ({ env }) => ({
     future: {
-      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
+      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
     },
   })
 ```
@@ -17485,7 +17499,7 @@ Language: DOTENV
 File path: .env
 
 ```dotenv
-  STRAPI_FUTURE_ADMIN_TOKENS=true
+  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
 ```
 
 ---
@@ -17493,11 +17507,11 @@ Language: TypeScript
 File path: /config/features.ts
 
 ```ts
-  export default {
+  export default ({ env }) => ({
     future: {
-      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
+      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
     },
-  };
+  });
 ```
 
 ---
@@ -17505,7 +17519,7 @@ Language: DOTENV
 File path: .env
 
 ```dotenv
-  STRAPI_FUTURE_ADMIN_TOKENS=true
+  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
 ```
 
 Language: Bash
@@ -24164,6 +24178,133 @@ export default async function fetchContentType(
   } catch (error) {
     console.error("Error fetching content:", error);
     throw error;
+  }
+}
+```
+
+
+
+# MCP server
+Source: https://docs.strapi.io/cms/features/strapi-mcp-server
+
+## Strapi code-based configuration
+Description: Enable the MCP server by adding the mcp object to the server configuration file:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#strapi-code-based-configuration)
+
+Language: JavaScript
+File path: config/server.js
+
+```js
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+  // highlight-start
+  mcp: {
+    enabled: true,
+  },
+  // highlight-end
+});
+```
+
+---
+Language: TypeScript
+File path: config/server.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+  mcp: {
+    enabled: true,
+  },
+});
+export default config;
+```
+
+
+## Connecting Claude Desktop
+Description: Add the Strapi MCP server to Claude's configuration file, as in the following example, replacing YOURADMINTOKEN with the admin token value copied from the admin panel:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-claude-desktop)
+
+Language: JSON
+File path: claude_desktop_config.json
+
+```json
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://localhost:1337/mcp",
+        "--header",
+        "Authorization: Bearer YOUR_ADMIN_TOKEN"
+      ]
+    }
+  }
+}
+```
+
+
+## Connecting Claude Code
+Description: Run the following command, replacing YOURADMINTOKEN with the admin token value copied from the admin panel:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-claude-code)
+
+Language: JavaScript
+File path: /Claude/claude_desktop_config.js
+
+```js
+claude mcp add strapi-mcp --transport http http://localhost:1337/mcp -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
+```
+
+
+## Connecting Cursor
+Description: Add the server to your .cursor/mcp.json file:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-cursor)
+
+Language: JSON
+File path: .cursor/mcp.json
+
+```json
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "type": "streamable-http",
+      "url": "http://localhost:1337/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
+      }
+    }
+  }
+}
+```
+
+
+## Connecting Windsurf
+Description: Add the server to your ~/.codeium/windsurf/mcp_config.json file:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-windsurf)
+
+Language: JSON
+File path: ~/.codeium/windsurf/mcp_config.json
+
+```json
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "serverUrl": "http://localhost:1337/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
+      }
+    }
   }
 }
 ```

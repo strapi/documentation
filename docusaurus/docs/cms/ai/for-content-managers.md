@@ -1,11 +1,12 @@
 ---
-title: Strapi AI for content managers
-description: Learn about AI-powered features in the Strapi admin panel, such as content-type design, automatic translations, and media metadata generation.
+title: AI for content managers
+description: Learn about AI-powered features in the Strapi admin panel and the built-in MCP server that lets AI clients manage your content.
 sidebar_label: AI for content managers
 displayed_sidebar: cmsSidebar
 tags:
 - ai
 - features
+- MCP
 - Content-Type Builder
 - Internationalization (i18n)
 - Media Library
@@ -15,13 +16,17 @@ toc_max_heading_level: 3
 
 import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
 
-# Strapi AI for content management
+# AI for content managers
+
+This page covers the AI-powered capabilities available to content managers in Strapi: the Strapi AI features built into the admin panel, and the MCP server that lets AI clients manage your content.
+
+## Strapi AI
 
 <GrowthBadge /> <VersionBadge version="5.30+" />
 
 Some Strapi CMS features can be enhanced with Strapi AI, helping content managers and administrators design content structures, translate content automatically, and generate asset metadata, all from the admin panel.
 
-## Activation and configuration {#activation}
+### Activation and configuration {#activation}
 
 Strapi AI is available for Growth plan users since Strapi 5.30 and works with both Strapi Cloud and self-hosted deployments. To get started:
 
@@ -42,14 +47,15 @@ module.exports = {
 
 <Icon name="arrow-fat-right"/> See [Admin panel configuration > Strapi AI](/cms/configurations/admin-panel#strapi-ai) for all configuration options.
 
-## Available features {#features}
+### Available features {#features}
 
 | Feature | Description |
 |---------|-------------|
 | [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. |
 | [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. |
 | [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text, captions, and descriptions for uploaded images. |
-## Credits and data handling {#credits}
+
+### Credits and data handling {#credits}
 
 Strapi AI features consume AI credits.
 
@@ -58,3 +64,9 @@ Strapi AI features consume AI credits.
 All AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi AI follows the same GDPR-aligned framework as Strapi Cloud.
 
  <Icon name="arrow-fat-right" /> See [Usage information > Strapi AI data handling](/cms/usage-information#strapi-ai-data-handling) for more details.
+
+## Strapi MCP server
+
+Strapi includes a built-in [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that lets AI clients like Claude, Cursor, or any MCP-compatible tool manage your content through natural language. Once enabled and connected, an AI assistant can create, read, update, delete, publish, and unpublish entries directly through Strapi's Content Manager, all gated by admin token permissions.
+
+<CustomDocCard icon="feather" title="MCP server" description="Learn how to enable, configure, connect to, and use Strapi's built-in MCP server." link="/cms/features/strapi-mcp-server" />
