@@ -151,6 +151,23 @@ Add the server to your `.cursor/mcp.json` file:
 }
 ```
 
+#### Connecting Windsurf
+
+Add the server to your `~/.codeium/windsurf/mcp_config.json` file:
+
+```json title="~/.codeium/windsurf/mcp_config.json"
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "serverUrl": "http://localhost:1337/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
+      }
+    }
+  }
+}
+```
+
 #### Connecting other MCP clients
 
 Any client that supports the MCP Streamable HTTP transport can connect. The generic configuration is as follows:
