@@ -188,6 +188,192 @@ export default ({ env }) => ({
 
 
 
+# Middleware Configuration for Strapi Cloud
+Source: https://docs.strapi.io/cloud/advanced/middlewares
+
+## Middleware Configuration for Strapi Cloud
+Description: To apply custom middleware configuration on Strapi Cloud, place your changes in:
+(Source: https://docs.strapi.io/cloud/advanced/middlewares#middleware-configuration-for-strapi-cloud)
+
+Language: JavaScript
+File path: N/A
+
+```
+config/env/production/middlewares.js
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```
+config/env/production/middlewares.ts
+```
+
+
+## Custom Content Security Policy (CSP)
+Description: Create or update config/env/production/middlewares:
+(Source: https://docs.strapi.io/cloud/advanced/middlewares#custom-content-security-policy-csp)
+
+Language: JavaScript
+File path: config/env/production/middlewares.js
+
+```js
+module.exports = [
+  'strapi::errors',
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            'your-custom-domain.com', // replace with your provider domain
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            'your-custom-domain.com', // replace with your provider domain
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  'strapi::cors',
+  'strapi::poweredBy',
+  'strapi::logger',
+  'strapi::query',
+  'strapi::body',
+  'strapi::session',
+  'strapi::favicon',
+  'strapi::public',
+];
+```
+
+---
+Language: TypeScript
+File path: config/env/production/middlewares.ts
+
+```ts
+export default [
+  'strapi::errors',
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            'your-custom-domain.com', // replace with your provider domain
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            'your-custom-domain.com', // replace with your provider domain
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  'strapi::cors',
+  'strapi::poweredBy',
+  'strapi::logger',
+  'strapi::query',
+  'strapi::body',
+  'strapi::session',
+  'strapi::favicon',
+  'strapi::public',
+];
+```
+
+
+## Custom CORS headers
+Description: If your frontend sends custom request headers (e.g.
+(Source: https://docs.strapi.io/cloud/advanced/middlewares#custom-cors-headers)
+
+Language: JavaScript
+File path: config/env/production/middlewares.js
+
+```js
+module.exports = ({ env }) => [
+  'strapi::errors',
+  'strapi::security',
+  {
+    name: 'strapi::cors',
+    config: {
+      enabled: true,
+      origin: [env('CLIENT_URL')],
+      headers: [
+        'Content-Type',
+        'Authorization',
+        'Origin',
+        'Accept',
+        'X-Requested-With',
+        'your-custom-header', // add any custom headers your frontend sends
+      ],
+    },
+  },
+  'strapi::poweredBy',
+  'strapi::logger',
+  'strapi::query',
+  'strapi::body',
+  'strapi::session',
+  'strapi::favicon',
+  'strapi::public',
+];
+```
+
+---
+Language: TypeScript
+File path: config/env/production/middlewares.ts
+
+```ts
+export default ({ env }) => [
+  'strapi::errors',
+  'strapi::security',
+  {
+    name: 'strapi::cors',
+    config: {
+      enabled: true,
+      origin: [env('CLIENT_URL')],
+      headers: [
+        'Content-Type',
+        'Authorization',
+        'Origin',
+        'Accept',
+        'X-Requested-With',
+        'your-custom-header', // add any custom headers your frontend sends
+      ],
+    },
+  },
+  'strapi::poweredBy',
+  'strapi::logger',
+  'strapi::query',
+  'strapi::body',
+  'strapi::session',
+  'strapi::favicon',
+  'strapi::public',
+];
+```
+
+
+
 # Upload Provider Configuration for Strapi Cloud
 Source: https://docs.strapi.io/cloud/advanced/upload
 
@@ -362,7 +548,7 @@ Description: Example:
 (Source: https://docs.strapi.io/cloud/advanced/upload#configure-the-security-middleware)
 
 Language: JavaScript
-File path: ./config/middleware.js
+File path: ./config/env/production/middlewares.js
 
 ```js
 module.exports = [
@@ -399,7 +585,7 @@ module.exports = [
 
 ---
 Language: JavaScript
-File path: ./config/middleware.js
+File path: ./config/env/production/middlewares.js
 
 ```js
 module.exports = [
@@ -435,7 +621,7 @@ module.exports = [
 ```
 
 Language: TypeScript
-File path: ./config/middleware.ts
+File path: ./config/env/production/middlewares.ts
 
 ```ts
 export default [
@@ -472,7 +658,7 @@ export default [
 
 ---
 Language: TypeScript
-File path: ./config/middleware.ts
+File path: ./config/env/production/middlewares.ts
 
 ```ts
 export default [
@@ -10136,6 +10322,19 @@ await strapi.documents('api::restaurant.restaurant').update({
     }
   }
 })
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+await strapi.documents('api::cart.cart').update({
+  documentId: cart.documentId,
+  data: {
+    status: 'checked_out',
+    order: { connect: [order.documentId] } as any, // Temporary workaround
+  },
+});
 ```
 
 
@@ -24639,7 +24838,7 @@ build/
 
 
 ## Create the Dockerfile
-Description: :::tip Alternative base image for restricted networks If your CI environment has limited network access (e.g., DNS restrictions that prevent downloading Sharp prebuilt binaries from GitHub), consider using node:22-slim instead of node:22-alpine.
+Description: The following Dockerfile can be used to build a non-production Docker image for a Strapi project.
 (Source: https://docs.strapi.io/cms/installation/docker#create-the-dockerfile)
 
 Language: DOCKERFILE
@@ -24648,33 +24847,7 @@ File path: ./Dockerfile
 ```dockerfile
 FROM node:22-alpine
 # Installing libvips-dev for sharp compatibility
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
-ARG NODE_ENV=development
-ENV NODE_ENV=${NODE_ENV}
-
-WORKDIR /opt/
-COPY package.json yarn.lock ./
-RUN yarn global add node-gyp
-RUN yarn config set network-timeout 600000 -g && yarn install --frozen-lockfile
-ENV PATH=/opt/node_modules/.bin:$PATH
-
-WORKDIR /opt/app
-COPY . .
-RUN chown -R node:node /opt/app
-USER node
-RUN ["yarn", "build"]
-EXPOSE 1337
-CMD ["yarn", "develop"]
-```
-
----
-Language: DOCKERFILE
-File path: ./Dockerfile
-
-```dockerfile
-FROM node:22-alpine
-# Installing libvips-dev for sharp compatibility
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
 
@@ -24688,9 +24861,18 @@ WORKDIR /opt/app
 COPY . .
 RUN chown -R node:node /opt/app
 USER node
-RUN ["npm", "run", "build"]
 EXPOSE 1337
 CMD ["npm", "run", "develop"]
+```
+
+Language: DOCKERFILE
+File path: N/A
+
+```dockerfile
+RUN apk add --no-cache --virtual .build-deps \
+    build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git \
+    && npm ci \
+    && apk del .build-deps
 ```
 
 Language: DOCKERFILE
@@ -24703,7 +24885,7 @@ RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
 
 ## Set up environment variables
-Description: Code example from "Set up environment variables"
+Description: The following example contains placeholder values.
 (Source: https://docs.strapi.io/cms/installation/docker#set-up-environment-variables)
 
 Language: DOTENV
@@ -24715,6 +24897,7 @@ HOST=0.0.0.0
 PORT=1337
 
 # Database
+# Use 'mysql' for MySQL or MariaDB, and change DATABASE_PORT to 3306
 DATABASE_CLIENT=postgres
 DATABASE_HOST=strapiDB
 DATABASE_PORT=5432
@@ -24728,6 +24911,7 @@ API_TOKEN_SALT=tobemodified
 ADMIN_JWT_SECRET=tobemodified
 TRANSFER_TOKEN_SALT=tobemodified
 JWT_SECRET=tobemodified
+ENCRYPTION_KEY=tobemodified
 
 # Environment
 NODE_ENV=development
@@ -24735,7 +24919,7 @@ NODE_ENV=development
 
 
 ## Add Docker Compose for the database
-Description: Code example from "Add Docker Compose for the database"
+Description: :::note For more information about Docker Compose and its commands, see the .
 (Source: https://docs.strapi.io/cms/installation/docker#add-docker-compose-for-the-database)
 
 Language: YAML
@@ -24748,24 +24932,13 @@ services:
     build: .
     image: strapi:latest
     restart: unless-stopped
-    env_file: .env
-    environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT}
-      DATABASE_HOST: strapiDB
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      APP_KEYS: ${APP_KEYS}
-      NODE_ENV: ${NODE_ENV}
+    env_file: .env  # All variables from .env are injected into the container
     volumes:
       - ./config:/opt/app/config
       - ./src:/opt/app/src
       - ./package.json:/opt/package.json
-      - ./yarn.lock:/opt/yarn.lock
-      - ./.env:/opt/app/.env
+      - ./package-lock.json:/opt/package-lock.json
+      - ./.env:/opt/app/.env  # Needed because Strapi uses dotenv to read .env in development
       - ./public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
@@ -24777,9 +24950,66 @@ services:
 
   strapiDB:
     container_name: strapiDB
-    platform: linux/amd64 #for platform error on Apple M1 chips
+    # platform: linux/amd64  # Uncomment if you encounter platform errors on Apple Silicon
     restart: unless-stopped
-    env_file: .env
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - strapi-data:/var/lib/postgresql/data/
+      #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
+    ports:
+      - "5432:5432"  # Exposed for local debugging tools; remove if not needed
+    networks:
+      - strapi
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  strapi-data:
+
+networks:
+  strapi:
+    name: strapi
+    driver: bridge
+```
+
+---
+Language: YAML
+File path: ./docker-compose.yml
+
+```yaml
+services:
+  strapi:
+    container_name: strapi
+    build: .
+    image: strapi:latest
+    restart: unless-stopped
+    env_file: .env  # All variables from .env are injected into the container
+    volumes:
+      - ./config:/opt/app/config
+      - ./src:/opt/app/src
+      - ./package.json:/opt/package.json
+      - ./package-lock.json:/opt/package-lock.json
+      - ./.env:/opt/app/.env  # Needed because Strapi uses dotenv to read .env in development
+      - ./public/uploads:/opt/app/public/uploads
+    ports:
+      - "1337:1337"
+    networks:
+      - strapi
+    depends_on:
+      strapiDB:
+        condition: service_healthy
+
+  strapiDB:
+    container_name: strapiDB
+    # platform: linux/amd64  # Uncomment if you encounter platform errors on Apple Silicon
+    restart: unless-stopped
     image: mysql:8.4
     environment:
       MYSQL_USER: ${DATABASE_USERNAME}
@@ -24790,7 +25020,7 @@ services:
       - strapi-data:/var/lib/mysql
       #- ./data:/var/lib/mysql # if you want to use a bind folder
     ports:
-      - "3306:3306"
+      - "3306:3306"  # Exposed for local debugging tools; remove if not needed
     networks:
       - strapi
     healthcheck:
@@ -24819,24 +25049,13 @@ services:
     build: .
     image: strapi:latest
     restart: unless-stopped
-    env_file: .env
-    environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT}
-      DATABASE_HOST: strapiDB
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      APP_KEYS: ${APP_KEYS}
-      NODE_ENV: ${NODE_ENV}
+    env_file: .env  # All variables from .env are injected into the container
     volumes:
       - ./config:/opt/app/config
       - ./src:/opt/app/src
       - ./package.json:/opt/package.json
-      - ./yarn.lock:/opt/yarn.lock
-      - ./.env:/opt/app/.env
+      - ./package-lock.json:/opt/package-lock.json
+      - ./.env:/opt/app/.env  # Needed because Strapi uses dotenv to read .env in development
       - ./public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
@@ -24848,9 +25067,8 @@ services:
 
   strapiDB:
     container_name: strapiDB
-    platform: linux/amd64 #for platform error on Apple M1 chips
+    # platform: linux/amd64  # Uncomment if you encounter platform errors on Apple Silicon
     restart: unless-stopped
-    env_file: .env
     image: mariadb:11.4
     environment:
       MYSQL_USER: ${DATABASE_USERNAME}
@@ -24861,81 +25079,11 @@ services:
       - strapi-data:/var/lib/mysql
       #- ./data:/var/lib/mysql # if you want to use a bind folder
     ports:
-      - "3306:3306"
+      - "3306:3306"  # Exposed for local debugging tools; remove if not needed
     networks:
       - strapi
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-volumes:
-  strapi-data:
-
-networks:
-  strapi:
-    name: strapi
-    driver: bridge
-```
-
----
-Language: YAML
-File path: ./docker-compose.yml
-
-```yaml
-services:
-  strapi:
-    container_name: strapi
-    build: .
-    image: strapi:latest
-    restart: unless-stopped
-    env_file: .env
-    environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT}
-      DATABASE_HOST: strapiDB
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      APP_KEYS: ${APP_KEYS}
-      NODE_ENV: ${NODE_ENV}
-    volumes:
-      - ./config:/opt/app/config
-      - ./src:/opt/app/src
-      - ./package.json:/opt/package.json
-      - ./yarn.lock:/opt/yarn.lock
-      - ./.env:/opt/app/.env
-      - ./public/uploads:/opt/app/public/uploads
-    ports:
-      - "1337:1337"
-    networks:
-      - strapi
-    depends_on:
-      strapiDB:
-        condition: service_healthy
-
-  strapiDB:
-    container_name: strapiDB
-    platform: linux/amd64 #for platform error on Apple M1 chips
-    restart: unless-stopped
-    env_file: .env
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: ${DATABASE_USERNAME}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      POSTGRES_DB: ${DATABASE_NAME}
-    volumes:
-      - strapi-data:/var/lib/postgresql/data/
-      #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
-    ports:
-      - "5432:5432"
-    networks:
-      - strapi
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -24958,12 +25106,12 @@ Language: Bash
 File path: N/A
 
 ```bash
-  docker compose up --build
+    docker compose up --build
 ```
 
 
 ## Create the production Dockerfile
-Description: Code example from "Create the production Dockerfile"
+Description: :::caution Do not set NODE_ENV=production before npm ci.
 (Source: https://docs.strapi.io/cms/installation/docker#create-the-production-dockerfile)
 
 Language: DOCKERFILE
@@ -24972,50 +25120,7 @@ File path: ./Dockerfile.prod
 ```dockerfile
 # Build stage
 FROM node:22-alpine AS build
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
-
-WORKDIR /opt/
-COPY package.json yarn.lock ./
-RUN yarn global add node-gyp
-RUN yarn config set network-timeout 600000 -g && yarn install --frozen-lockfile
-ENV PATH=/opt/node_modules/.bin:$PATH
-
-WORKDIR /opt/app
-COPY . .
-ENV NODE_ENV=production
-RUN yarn build
-
-# Production stage
-FROM node:22-alpine
-RUN apk add --no-cache vips-dev
-ENV NODE_ENV=production
-
-WORKDIR /opt/
-COPY --from=build /opt/package.json /opt/yarn.lock ./
-RUN yarn install --frozen-lockfile --production && yarn cache clean
-ENV PATH=/opt/node_modules/.bin:$PATH
-
-WORKDIR /opt/app
-COPY --from=build /opt/app ./
-
-RUN chown -R node:node /opt/app
-USER node
-EXPOSE 1337
-# highlight-start
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost:1337/_health || exit 1
-# highlight-end
-CMD ["yarn", "start"]
-```
-
----
-Language: DOCKERFILE
-File path: ./Dockerfile.prod
-
-```dockerfile
-# Build stage
-FROM node:22-alpine AS build
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git > /dev/null 2>&1
 
 WORKDIR /opt/
 COPY package.json package-lock.json ./
@@ -25025,6 +25130,10 @@ ENV PATH=/opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
 COPY . .
+# Uncomment the following lines to set the admin panel URL at build time.
+# Without this, the admin panel defaults to localhost:1337.
+# ARG STRAPI_ADMIN_BACKEND_URL
+# ENV STRAPI_ADMIN_BACKEND_URL=${STRAPI_ADMIN_BACKEND_URL}
 ENV NODE_ENV=production
 RUN npm run build
 
@@ -25035,7 +25144,7 @@ ENV NODE_ENV=production
 
 WORKDIR /opt/
 COPY --from=build /opt/package.json /opt/package-lock.json ./
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --omit=dev && npm cache clean --force  # --omit=dev replaces the deprecated --only=production
 ENV PATH=/opt/node_modules/.bin:$PATH
 
 WORKDIR /opt/app
@@ -25044,16 +25153,14 @@ COPY --from=build /opt/app ./
 RUN chown -R node:node /opt/app
 USER node
 EXPOSE 1337
-# highlight-start
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD wget --quiet --tries=1 --spider http://localhost:1337/_health || exit 1
-# highlight-end
 CMD ["npm", "run", "start"]
 ```
 
 
 ## Add Docker Compose for production
-Description: Code example from "Add Docker Compose for production"
+Description: The following docker-compose.prod.yml is suitable for production deployments.
 (Source: https://docs.strapi.io/cms/installation/docker#add-docker-compose-for-production)
 
 Language: YAML
@@ -25070,16 +25177,7 @@ services:
     restart: always
     env_file: .env
     environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT}
-      DATABASE_HOST: strapiDB
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      APP_KEYS: ${APP_KEYS}
-      NODE_ENV: production
+      NODE_ENV: production  # Overrides the development value from .env
     ports:
       - "127.0.0.1:1337:1337"
     networks:
@@ -25135,46 +25233,75 @@ Description: Verify that your Dockerfile installs the required Alpine packages:
 (Source: https://docs.strapi.io/cms/installation/docker#sharp-and-libvips-errors)
 
 Language: DOCKERFILE
-File path: .prod.yml
+File path: N/A
 
 ```dockerfile
-  RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
+    RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git
 ```
 
 Language: DOCKERFILE
-File path: .prod.yml
+File path: N/A
 
 ```dockerfile
-  FROM node:22-slim
-  RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+    FROM node:22-slim
+    RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 ```
 
 Language: DOCKERFILE
-File path: .prod.yml
+File path: N/A
 
 ```dockerfile
-  ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
+    ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
 ```
 
 
 ## Database connection issues
-Description: Code example from "Database connection issues"
+Description: Set the connection pool min value to 0 in your database configuration, as Docker may kill idle connections:
 (Source: https://docs.strapi.io/cms/installation/docker#database-connection-issues)
 
 Language: JavaScript
 File path: ./config/database.js
 
 ```js
-  module.exports = ({ env }) => ({
-    connection: {
-      client: env('DATABASE_CLIENT'),
-      // ...
-      pool: {
-        min: 0,
-        max: 10,
+    module.exports = ({ env }) => ({
+      connection: {
+        client: env('DATABASE_CLIENT'),
+        // ...
+        pool: {
+          min: 0,
+          max: 10,
+        },
       },
+    });
+```
+
+---
+Language: TypeScript
+File path: ./config/database.ts
+
+```ts
+    export default ({ env }) => ({
+      connection: {
+        client: env('DATABASE_CLIENT'),
+        // ...
+        pool: {
+          min: 0,
+          max: 10,
+        },
+      },
+    });
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+    pool: {
+      min: 0,
+      max: 10,
+      acquireTimeoutMillis: 60000,
+      idleTimeoutMillis: 30000,
     },
-  });
 ```
 
 

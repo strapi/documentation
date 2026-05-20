@@ -206,6 +206,61 @@ If you want to create a custom email provider, please refer to the [Email provid
 
 
 
+# Middleware Configuration for Strapi Cloud
+Source: https://docs.strapi.io/cloud/advanced/middlewares
+
+# Middleware Configuration for Strapi Cloud
+
+:::prerequisites
+
+- A local Strapi project.
+- A Strapi Cloud project (see [Getting Started](/cloud/getting-started/deployment)).
+
+:::
+
+On Strapi Cloud, `NODE_ENV` is always set to `production`. The platform applies its own production-level middleware configuration on deploy. Any changes to the global `config/middlewares` file are overwritten and will not take effect. For available middleware options, see [Middlewares configuration](/cms/configurations/middlewares).
+
+To apply custom middleware configuration on Strapi Cloud, place your changes in:
+
+</Tabs>
+
+:::caution
+The `config/env/production/middlewares` file **fully replaces** the global middleware array. Your file must include the complete list:
+
+- `strapi::errors`
+- `strapi::security`
+- `strapi::cors`
+- `strapi::poweredBy`
+- `strapi::logger`
+- `strapi::query`
+- `strapi::body`
+- `strapi::session`
+- `strapi::favicon`
+- `strapi::public`
+
+Both CSP and CORS customizations can be combined in the same file.
+:::
+
+:::note
+- You can keep your existing `config/middlewares` file as-is as it will not cause conflicts. The production-specific file takes precedence on Strapi Cloud.
+- Upload size limits on Strapi Cloud are enforced at the infrastructure level (Cloudflare gateway) and cannot be overridden via the `strapi::body` config. For external storage options, see [Upload Provider Configuration](/cloud/advanced/upload).
+:::
+
+## Custom Content Security Policy (CSP)
+
+If you use an external upload provider, allow its domain in the CSP directives. Without this, the Strapi Admin panel will block images and media from those sources.
+
+Create or update `config/env/production/middlewares`:
+
+</Tabs>
+
+:::tip
+For a full list of upload providers and their required domains, see the 
+
+</Tabs>
+
+
+
 # Upload Provider Configuration for Strapi Cloud
 Source: https://docs.strapi.io/cloud/advanced/upload
 
@@ -240,9 +295,13 @@ Each provider will have different configuration settings available. Review the r
 
 Due to the default settings in the Strapi Security Middleware you will need to modify the `contentSecurityPolicy` settings to properly see thumbnail previews in the Media Library.
 
+:::caution
+On Strapi Cloud, `NODE_ENV` is always set to `production`. Changes to the global `config/middlewares.ts` file are overwritten on each deploy and will not take effect. Place your Security Middleware customizations in `config/env/production/middlewares.ts` instead. See [Middleware Configuration for Strapi Cloud](/cloud/advanced/middlewares) for details.
+:::
+
 To do this in your Strapi project:
 
-1. Navigate to `./config/middlewares.js` or `./config/middlewares.ts` in your Strapi project.
+1. Navigate to `./config/env/production/middlewares.js` or `./config/env/production/middlewares.ts` in your Strapi project.
 2. Replace the default `strapi::security` string with the object provided by the upload provider.
 
 **Example:**
@@ -1228,33 +1287,33 @@ The CMS of the target environment will be inaccessible whilst the transfer is on
 
 #### Clearing and deleting environments {#resetting--deleting-environment}
 
-You can clear database content and assets from any environment, including the production environment, or permanently delete **additional** environments. The default production environment cannot be deleted.
+You can clear database content and assets from any environment, including the production environment, or permanently delete additional environments. The default production environment cannot be deleted.
 
-Clearing and deleting are permanent. Only project owners can start an environment clear. You cannot start a clear while the project is suspended.
+:::note
+On the Scale plan, you cannot delete the included secondary environment. You can, however, clear its content.
+:::
+
+Clearing and deleting are permanent and only available to the project owner. You cannot initiate an environment clearing while the project is suspended.
 
 ##### Clearing an environment {#clearing-an-environment}
 
-Clearing an environment removes all of its database content and assets. Environment settings (variables, custom domains, Node version, and the connected Git branch) stay the same. When clearing finishes successfully, Strapi Cloud starts a new deployment. Past deployments remain listed on the dashboard.
-
-:::caution Clearing an environment cannot be undone
-You must type the environment name exactly as requested in the confirmation dialog. If the name does not match, an error is shown and the clear does not start.
+:::warning Environment clearing is destructive
+Clearing an environment will permanently delete all its existing data and assets. Environment settings (such as variables and domains) are not affected by the clearing.
 :::
 
 To clear an environment:
 
-1. Select the environment, then open the  *Configuration* tab.
+1. In the project settings, select the environment then open the  *Configuration* tab.
 2. In the *Environment data* section, click **Clear environment**.
-3. In the confirmation dialog, read the warning, type the environment name, then confirm to start clearing. You are redirected to the environment dashboard, where progress appears in steps (initialization, clearing existing data and assets, and deployment).
+3. In the confirmation dialog, type the environment name, then confirm to start clearing. You are redirected to the environment dashboard, where you can follow the progress.
 
 While clearing is in progress:
 
 - The environment CMS is not available.
-- You cannot trigger a deployment, use **Visit app**, or open the *Runtime logs* tab for that environment.
-- **Save & deploy** is disabled for settings that require a deployment (repository, Node version, branch, license, variables, and custom domains).
-- Plan upgrade, plan downgrade, and starting a data transfer are temporarily unavailable. On the production environment, restoring a backup is also temporarily unavailable.
-- A banner explains that settings are limited until the process completes: *Settings are limited during environment setup. Full access will be restored when the process is complete.*
+- You cannot trigger a deployment or view the logs for that environment.
+- Plan upgrade, plan downgrade and setting changes that require a deployment are temporarily unavailable.
 
-If clearing fails, use **Retry** on the environment dashboard to run the operation again.
+If clearing fails, click **Retry** on the environment dashboard to run the operation again.
 
 ##### Deleting an environment {#deleting-an-environment}
 
@@ -4385,6 +4444,23 @@ await strapi.documents('api::restaurant.restaurant').update({
     }
   }
 })
+
+```
+
+:::tip TypeScript Workaround
+When using connect, disconnect, or set with the Document Service API in TypeScript, you may encounter a TS2353 error stating that these properties do not exist on type LongHandEntity.
+
+While the runtime engine fully supports this syntax, the current typings do not. You can safely bypass this validation by casting your data payload to any or a broader object type:
+
+```js
+await strapi.documents('api::cart.cart').update({
+  documentId: cart.documentId,
+  data: {
+    status: 'checked_out',
+    order: { connect: [order.documentId] } as any, // Temporary workaround
+  },
+});
+
 ```
 
 If no locale is passed, the default locale will be assumed.
@@ -9602,6 +9678,10 @@ Entries of a review workflow content type can be assigned to any admin user in S
 2. In the *Review Workflows* box on the right side of the interface, click on the _Assignee_ drop-down list.
 3. Choose the new assignee of your entry. It is automatically saved.
 
+:::tip
+You can filter entries in the Content Manager list view by **Assignee** and **Review Stage** to quickly find entries assigned to specific users or in specific review stages. Open the filters menu in the list view to access these filtering options.
+:::
+
 
 
 # Single Sign-On (SSO)
@@ -9835,7 +9915,7 @@ Source: https://docs.strapi.io/cms/installation
 
 Strapi projects can be installed either locally on a computer or on a remote server. The following installation guide provides step-by-step instructions on how to install and create a new Strapi project on your local machine:
 
-If you already have an existing Strapi project on your local machine, the following guide provides step-by-step instructions on creating a custom Docker image for your project:
+If you already have an existing Strapi project on your local machine, the following guide covers running it in Docker containers for development and production:
 
 
 
