@@ -7,7 +7,7 @@ tags:
   - ai
   - MCP
   - content management
-toc_max_heading_level: 3
+toc_max_heading_level: 4
 ---
 
 import Tabs from '@theme/Tabs';
@@ -33,9 +33,20 @@ The MCP server exposes a set of content management tools to AI clients such as C
 
 ## Configuration
 
-The MCP server is configured through the server configuration file and authenticated with admin API tokens created in the admin panel.
+Before first use, the Strapi MCP server must be:
+- configured in Strapi through the server configuration file and authenticated with Admin tokens created in the admin panel
+- connected to your AI client.
 
-### Code-based configuration
+### Strapi admin panel configuration
+
+The MCP server authenticates requests using Admin tokens. Each MCP session is scoped to the permissions of the token used to connect:
+
+1. Create a new admin token (see [Creating an admin token](/cms/features/admin-tokens#creating-a-new-admin-token) on the Admin tokens feature page).
+2. Copy the token as you will need it 
+
+The token's permissions determine which MCP tools are exposed to the AI client. For instance, if the token only grants `read` on an `Article` content-type, the AI client will only see listing and reading tools for articles.
+
+### Strapi code-based configuration
 
 Enable the MCP server by adding the `mcp` key to the server configuration file:
 
@@ -79,38 +90,22 @@ export default config;
 
 Once the setting is in place, restart Strapi. The MCP endpoint becomes available at `/mcp` on your Strapi server (e.g., `http://localhost:1337/mcp`).
 
-### Admin panel configuration
+### AI client configuration
 
-The MCP server authenticates requests using admin API tokens. Each MCP session is scoped to the permissions of the token used to connect.
+Once you enabled and configured the MCP server through Strapi's admin panel (admin tokens) and configuration filters, you must connect your AI client to the Strapi MCP server.
 
-To create an admin token for MCP access:
-
-1. In the Strapi admin panel, go to *Settings > API Tokens*.
-2. Click **Create new API Token**.
-3. Choose **Admin** as the token type.
-4. Select the content types and actions (read, create, update, delete, publish) you want the AI client to access.
-5. Save the token and copy it. It will not be shown again.
-
-The token's permissions determine which MCP tools are exposed to the AI client. For instance, if the token only grants `read` on `Article`, the AI client will only see listing and reading tools for articles.
-
-:::caution
-Treat admin tokens like passwords. Do not commit them to version control or share them publicly. Use environment variables when possible.
-:::
-
-## Usage
-
-The MCP server uses the Streamable HTTP transport protocol. Any MCP-compatible client can connect by pointing to the `/mcp` endpoint with a `Bearer` token in the `Authorization` header. Once connected, the AI client can interact with your Strapi content using natural language prompts.
-
-### Connecting Claude Desktop
+#### Connecting Claude Desktop
 
 Open Claude Desktop's configuration file:
 
-- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+- on macOS, the file is accessible at `~/Library/Application Support/Claude/claude_desktop_config.json`
+- on Windows, the file is accessible at `%APPDATA%\Claude\claude_desktop_config.json`
 
-You can also open this file from Claude's Settings > Developer (click the Edit Config button).
+:::tip
+You can also open the configuration file for Claude Desktop from Claude's settings: go to Settings > Desktop app > Developer, then click on the **Edit config** button.
+:::
 
-Add the Strapi MCP server to the configuration:
+Add the Strapi MCP server to the configuration, as in the following example, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#admin-panel-configuration):
 
 ```json title="claude_desktop_config.json"
 {
@@ -128,9 +123,9 @@ Add the Strapi MCP server to the configuration:
 
 Restart Claude Desktop for the changes to take effect.
 
-### Connecting Claude Code
+#### Connecting Claude Code
 
-Run the following command, replacing `YOUR_ADMIN_TOKEN` with the token created earlier:
+Run the following command, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#admin-panel-configuration):
 
 ```bash
 claude mcp add strapi-mcp --transport http http://localhost:1337/mcp -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
@@ -138,7 +133,7 @@ claude mcp add strapi-mcp --transport http http://localhost:1337/mcp -H "Authori
 
 Restart Claude Code, then run `/mcp` to confirm `strapi-mcp` reports as connected.
 
-### Connecting Cursor
+#### Connecting Cursor
 
 Add the server to your `.cursor/mcp.json` file:
 
@@ -156,15 +151,19 @@ Add the server to your `.cursor/mcp.json` file:
 }
 ```
 
-### Connecting other MCP clients
+#### Connecting other MCP clients
 
-Any client that supports the MCP Streamable HTTP transport can connect. The generic configuration is:
+Any client that supports the MCP Streamable HTTP transport can connect. The generic configuration is as follows:
 
 | Setting | Value |
 |---------|-------|
 | Transport type | `streamable-http` |
 | URL | `http://localhost:1337/mcp` (adjust host and port to your Strapi instance) |
 | Authorization header | `Bearer YOUR_ADMIN_TOKEN` |
+
+## Usage
+
+The MCP server uses the Streamable HTTP transport protocol. Any MCP-compatible client can connect by pointing to the `/mcp` endpoint with a `Bearer` token in the `Authorization` header. Once connected, the AI client can interact with your Strapi content using natural language prompts.
 
 ### Available tools
 

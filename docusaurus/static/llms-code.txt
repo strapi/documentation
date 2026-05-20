@@ -1873,33 +1873,12 @@ export default {
 
 
 
-# Strapi AI for content managers
-Source: https://docs.strapi.io/cms/ai/for-content-managers
-
-## Activation and configuration
-Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
-(Source: https://docs.strapi.io/cms/ai/for-content-managers#activation)
-
-Language: JavaScript
-File path: /config/admin.js|ts
-
-```js
-module.exports = {
-  // ...
-  ai: {
-    enabled: true, // set to false to disable all Strapi AI features
-  },
-};
-```
-
-
-
-# AI for developers
-Source: https://docs.strapi.io/cms/ai/for-developers
+# Docs MCP server
+Source: https://docs.strapi.io/cms/ai/docs-mcp-server
 
 ## Connection details
 Description: Add to your .cursor/mcp.json file:
-(Source: https://docs.strapi.io/cms/ai/for-developers#connection-details)
+(Source: https://docs.strapi.io/cms/ai/docs-mcp-server#connection-details)
 
 Language: JSON
 File path: .cursor/mcp.json
@@ -1927,6 +1906,27 @@ File path: .vscode/mcp.json
         }
       }
     }
+```
+
+
+
+# AI for content managers
+Source: https://docs.strapi.io/cms/ai/for-content-managers
+
+## Activation and configuration
+Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
+(Source: https://docs.strapi.io/cms/ai/for-content-managers#activation)
+
+Language: JavaScript
+File path: /config/admin.js|ts
+
+```js
+module.exports = {
+  // ...
+  ai: {
+    enabled: true, // set to false to disable all Strapi AI features
+  },
+};
 ```
 
 
@@ -23920,6 +23920,107 @@ export default async function fetchContentType(
   } catch (error) {
     console.error("Error fetching content:", error);
     throw error;
+  }
+}
+```
+
+
+
+# MCP server
+Source: https://docs.strapi.io/cms/features/strapi-mcp-server
+
+## Code-based configuration
+Description: Enable the MCP server by adding the mcp key to the server configuration file:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#code-based-configuration)
+
+Language: JavaScript
+File path: config/server.js
+
+```js
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+  mcp: {
+    enabled: true,
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: config/server.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+  mcp: {
+    enabled: true,
+  },
+});
+export default config;
+```
+
+
+## Connecting Claude Desktop
+Description: Add the Strapi MCP server to the configuration:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-claude-desktop)
+
+Language: JSON
+File path: claude_desktop_config.json
+
+```json
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "type": "streamable-http",
+      "url": "http://localhost:1337/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
+      }
+    }
+  }
+}
+```
+
+
+## Connecting Claude Code
+Description: Run the following command, replacing YOURADMINTOKEN with the token created earlier:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-claude-code)
+
+Language: JavaScript
+File path: /Claude/claude_desktop_config.js
+
+```js
+claude mcp add strapi-mcp --transport http http://localhost:1337/mcp -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
+```
+
+
+## Connecting Cursor
+Description: Add the server to your .cursor/mcp.json file:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-cursor)
+
+Language: JSON
+File path: .cursor/mcp.json
+
+```json
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "type": "streamable-http",
+      "url": "http://localhost:1337/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
+      }
+    }
   }
 }
 ```
