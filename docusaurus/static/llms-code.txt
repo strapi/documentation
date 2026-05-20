@@ -1908,6 +1908,20 @@ File path: .vscode/mcp.json
     }
 ```
 
+---
+Language: JSON
+File path: ~/.codeium/windsurf/mcp_config.json
+
+```json
+    {
+      "mcpServers": {
+        "strapi-docs": {
+          "serverUrl": "https://strapi-docs.mcp.kapa.ai"
+        }
+      }
+    }
+```
+
 
 
 # AI for content managers
@@ -23930,7 +23944,7 @@ export default async function fetchContentType(
 Source: https://docs.strapi.io/cms/features/strapi-mcp-server
 
 ## Strapi code-based configuration
-Description: Enable the MCP server by adding the mcp key to the server configuration file:
+Description: Enable the MCP server by adding the mcp object to the server configuration file:
 (Source: https://docs.strapi.io/cms/features/strapi-mcp-server#strapi-code-based-configuration)
 
 Language: JavaScript
@@ -23943,9 +23957,11 @@ module.exports = ({ env }) => ({
   app: {
     keys: env.array('APP_KEYS'),
   },
+  // highlight-start
   mcp: {
     enabled: true,
   },
+  // highlight-end
 });
 ```
 
@@ -23971,7 +23987,7 @@ export default config;
 
 
 ## Connecting Claude Desktop
-Description: Add the Strapi MCP server to the configuration, as in the following example, replacing YOURADMINTOKEN with the admin token value copied from the admin panel:
+Description: Add the Strapi MCP server to Claude's configuration file, as in the following example, replacing YOURADMINTOKEN with the admin token value copied from the admin panel:
 (Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-claude-desktop)
 
 Language: JSON
@@ -23981,11 +23997,14 @@ File path: claude_desktop_config.json
 {
   "mcpServers": {
     "strapi-mcp": {
-      "type": "streamable-http",
-      "url": "http://localhost:1337/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
-      }
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://localhost:1337/mcp",
+        "--header",
+        "Authorization: Bearer YOUR_ADMIN_TOKEN"
+      ]
     }
   }
 }
@@ -24017,6 +24036,27 @@ File path: .cursor/mcp.json
     "strapi-mcp": {
       "type": "streamable-http",
       "url": "http://localhost:1337/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
+      }
+    }
+  }
+}
+```
+
+
+## Connecting Windsurf
+Description: Add the server to your ~/.codeium/windsurf/mcp_config.json file:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-windsurf)
+
+Language: JSON
+File path: ~/.codeium/windsurf/mcp_config.json
+
+```json
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "serverUrl": "http://localhost:1337/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_ADMIN_TOKEN"
       }

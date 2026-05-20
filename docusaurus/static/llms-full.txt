@@ -1925,6 +1925,15 @@ The Strapi documentation site includes AI-powered tools to help developers learn
 :::tip AGENTS.MD files
 In addition to docs and product features described on the present page, the <code>
 
+## Tips for better results {#tips}
+
+The following tips will help you fine-tune your prompts to get the best results:
+- Use the [Docs MCP server](/cms/ai/docs-mcp-server) in your IDE for the fastest developer experience. For docs-related questions, start your prompts with `Use the strapi-docs MCP server to answer:`. This will ensure the tool queries docs.strapi.io instead of creating answers based on its training data.
+- Include the page URL so the assistant grounds its answer in the right context.
+- Mention your Strapi version (e.g., Strapi 5) to avoid outdated suggestions.
+- Pair code examples with their source page when sharing snippets from `llms-code.txt`.
+- Prefer documented APIs over private internals when asking for code generation.
+
 
 
 # Strapi Client
@@ -9619,7 +9628,7 @@ The token's permissions determine which MCP tools are exposed to the AI client. 
 
 ### Strapi code-based configuration
 
-Enable the MCP server by adding the `mcp` key to the server configuration file:
+Enable the MCP server by adding the `mcp` object to the server configuration file:
 
 </Tabs>
 
@@ -9629,28 +9638,37 @@ Once the setting is in place, restart Strapi. The MCP endpoint becomes available
 
 Once you enabled and configured the MCP server through Strapi's admin panel (admin tokens) and configuration filters, you must connect your AI client to the Strapi MCP server.
 
+:::note
+`localhost:1337/` is used in configuration examples on this page. If your Strapi server is hosted on another URL or port, please update the code accordingly.
+:::
+
 #### Connecting Claude Desktop
 
-Open Claude Desktop's configuration file:
+Open Claude Desktop's configuration file. The location varies depending on your system:
 
-- on macOS, the file is accessible at `~/Library/Application Support/Claude/claude_desktop_config.json`
-- on Windows, the file is accessible at `%APPDATA%\Claude\claude_desktop_config.json`
+| OS | File location |
+|----|---------------|
+| macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
 
 :::tip
 You can also open the configuration file for Claude Desktop from Claude's settings: go to Settings > Desktop app > Developer, then click on the **Edit config** button.
 :::
 
-Add the Strapi MCP server to the configuration, as in the following example, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#admin-panel-configuration):
+Add the Strapi MCP server to Claude's configuration file, as in the following example, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#strapi-admin-panel-configuration):
 
 ```json title="claude_desktop_config.json"
 {
   "mcpServers": {
     "strapi-mcp": {
-      "type": "streamable-http",
-      "url": "http://localhost:1337/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
-      }
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://localhost:1337/mcp",
+        "--header",
+        "Authorization: Bearer YOUR_ADMIN_TOKEN"
+      ]
     }
   }
 }
@@ -9660,7 +9678,7 @@ Restart Claude Desktop for the changes to take effect.
 
 #### Connecting Claude Code
 
-Run the following command, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#admin-panel-configuration):
+Run the following command, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#strapi-admin-panel-configuration):
 
 ```bash
 claude mcp add strapi-mcp --transport http http://localhost:1337/mcp -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
@@ -9678,6 +9696,23 @@ Add the server to your `.cursor/mcp.json` file:
     "strapi-mcp": {
       "type": "streamable-http",
       "url": "http://localhost:1337/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
+      }
+    }
+  }
+}
+```
+
+#### Connecting Windsurf
+
+Add the server to your `~/.codeium/windsurf/mcp_config.json` file:
+
+```json title="~/.codeium/windsurf/mcp_config.json"
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "serverUrl": "http://localhost:1337/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_ADMIN_TOKEN"
       }
@@ -9771,7 +9806,6 @@ The MCP server has the following limitations:
 - **Components**: Component fields are passed as untyped (`any`) in tool schemas.
 - **Dynamic zones**: Dynamic zone fields are passed as untyped arrays in tool schemas.
 - **Nested population parameters**: The `list` and `get` tools do not support nested population parameters for relations.
-- **Stateless sessions**: Each MCP request creates a new server instance. There is no session persistence between requests.
 
 
 
