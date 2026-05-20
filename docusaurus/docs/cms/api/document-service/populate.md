@@ -178,6 +178,58 @@ const documents = await strapi.documents("api::article.article").findMany({
 </Response>
 </ApiCall>
 
+### Sort populated relations
+
+Use the `sort` parameter inside a `populate` object to order related entries by an attribute. For many-to-many and other join-table relations, an explicit `sort` takes precedence over the default connect order.
+
+<!-- source: strapi/strapi#26361 packages/core/database/src/query/helpers/populate/apply.ts -->
+<ApiCall noSideBySide>
+<Request title="Example request">
+
+```js
+const documents = await strapi.documents("api::article.article").findMany({
+  populate: {
+    categories: {
+      sort: 'name:asc',
+    },
+  },
+});
+```
+
+</Request>
+
+<Response title="Example response">
+
+```json
+[
+  {
+    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "title": "Test Article",
+    // ...
+    "categories": [
+      {
+        "id": 1,
+        "name": "Architecture"
+        // ...
+      },
+      {
+        "id": 3,
+        "name": "Technology"
+        // ...
+      }
+    ]
+  }
+  // ...
+]
+```
+
+</Response>
+</ApiCall>
+
+:::note
+Omit `sort` from a `populate` object to preserve the default connect order (the order in which entries were associated).
+:::
+
 ## Components & Dynamic Zones
 
 Components are populated the same way as relations:
