@@ -3,7 +3,7 @@ title: Auth0 provider setup for Users & Permissions
 description: Learn how to setup the Auth0 provider for the Users & Permissions feature.
 displayed_sidebar: cmsSidebar
 tags:
-- users and permissions
+- users & permissions
 - providers
 - configuration
 - customization

@@ -3,7 +3,7 @@ title: CAS provider setup for Users & Permissions
 description: Learn how to set up the CAS provider for the Users & Permissions feature.
 displayed_sidebar: cmsSidebar
 tags:
-- users and permissions
+- users & permissions
 - providers
 - configuration
 - customization
