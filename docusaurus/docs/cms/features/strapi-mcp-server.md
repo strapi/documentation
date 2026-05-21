@@ -260,7 +260,7 @@ Once connected, you can interact with your Strapi content using natural language
 | "List the 5 most recent articles." | Returns paginated list, newest first |
 | "Show me article with ID abc123." | Returns the full entry |
 | "Update article abc123, change the title to 'Hello Strapi'." | Updates the title, other fields untouched |
-| "Publish article abc123." | Flips the entry status to published |
+| "Publish article abc123." | Changes the entry status to published |
 | "Delete article abc123." | Removes the entry |
 
 ### Input schemas
