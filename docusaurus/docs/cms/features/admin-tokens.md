@@ -55,7 +55,7 @@ Admin tokens are configured entirely from the admin panel. No code-based configu
 :::prerequisites
 If you're not the Strapi instance's super admin, the super admin must have granted you the following permissions:
   * access the Admin tokens settings page
-  * create (generate) admin tokens
+  * create (generate) Admin tokens
   
   (see [RBAC > Configuring role's permissions](/cms/features/rbac#plugins-and-settings) for details).
 :::
@@ -99,7 +99,7 @@ Any user with access to the Admin Tokens settings page can view Admin tokens. A 
 
 When a super-admin views an Admin token owned by another user, a read-only **Owner** field appears in the token details panel. The permissions panel shows only the checkboxes within the token owner's permission scope, not the super-admin's unrestricted access.
 
-Removing a permission from a role causes admin tokens owned by users of that role to have the corresponding permission deleted automatically.
+Removing a permission from a role causes Admin tokens owned by users of that role to have the corresponding permission deleted automatically.
 
 :::caution Owner account deactivation and deletion
 
