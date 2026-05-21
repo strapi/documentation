@@ -11,7 +11,7 @@ tags:
 
 # Users & Permissions REST API
 
-<Tldr>REST API endpoints for authentication, user management, roles, and permissions with the Users & Permissions plugin.</Tldr>
+<Tldr>The Users & Permissions plugin provides REST API endpoints for authentication, user management, roles, and permissions.</Tldr>
 
 The Users & Permissions plugin exposes a set of REST API endpoints for authentication, user management, and role/permission management. These endpoints are separate from the standard content-type CRUD endpoints and have their own response shapes. For a general overview of the plugin's features and configuration, see the [Users & Permissions introduction](/cms/features/users-permissions).
 

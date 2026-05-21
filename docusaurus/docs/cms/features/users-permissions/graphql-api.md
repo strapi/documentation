@@ -11,7 +11,7 @@ tags:
 
 # Users & Permissions GraphQL API
 
-<Tldr>GraphQL queries and mutations for authentication, user management, and role-based access with the Users & Permissions plugin.</Tldr>
+<Tldr>The Users & Permissions plugin provides GraphQL queries and mutations for authentication, user management, and role-based access.</Tldr>
 
 This page documents all GraphQL queries and mutations provided by the Users & Permissions plugin. The [GraphQL plugin](/cms/plugins/graphql) must be installed. For configuration details, see the main [Users & Permissions page](/cms/features/users-permissions).
 
