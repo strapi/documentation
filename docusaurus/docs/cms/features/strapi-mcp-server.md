@@ -341,4 +341,4 @@ The MCP server has the following limitations:
 - **Relations**: Relation fields accept document IDs (e.g., `"z7v8zma53x01r6oceimv922b"`) as input. The advanced `connect`/`disconnect` relation syntax is not yet supported in MCP tool schemas.
 - **Nested population parameters**: The `list` and `get` tools do not support nested population parameters for relations.
 - **Media upload**: Media fields accept existing media asset references but the MCP server cannot upload new files. Use Strapi's media library or upload API to add files first, then reference them in MCP tool calls.
-- **Custom fields**: Custom fields registered via plugins are mapped to their underlying Strapi type. If the custom field registry is not populated when MCP tools are registered, the field falls back to `unknown`.
+- **Custom fields**: Custom fields registered via plugins are mapped to their underlying Strapi type. If the custom field registry is not populated when MCP tools are registered, the custom field falls back to an `unknown` type.
