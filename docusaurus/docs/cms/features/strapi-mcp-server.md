@@ -259,14 +259,6 @@ Once connected, you can interact with your Strapi content using natural language
 | "Publish article abc123." | Changes the entry status to published |
 | "Delete article abc123." | Removes the entry |
 
-### Input schemas
-
-Each tool has an input schema derived from your content type's attributes. The schema is dynamically generated per session based on the token's permissions:
-
-- **Field-level permissions**: If the token restricts access to certain fields, those fields are excluded from both input and output schemas. For instance, a token that can only read `title` and `slug` on an `Article` type will only see those 2 fields in sort, filter, and output schemas.
-- **Locale-level permissions**: If the [Internationalization (i18n)](/cms/features/internationalization) feature is enabled and the token restricts access to certain locales, the `locale` parameter only accepts the permitted locales for each action. Locale restrictions are evaluated per action: a token might allow reading in `en` and `fr` but only creating in `en`.
-- **Write operations**: The `data` object in `create` and `update` tools only includes fields the token has permission to write. Unknown fields are rejected (strict validation). System-managed fields (`id`, `documentId`, `createdAt`, `updatedAt`, `publishedAt`, `createdBy`, `updatedBy`) are excluded automatically. Private fields are also excluded.
-- **Attribute type mapping**: Field schemas carry constraints from your content-type definition, such as `required`, `minLength`, `maxLength`, `min`, `max`, and `enum` values. Enumeration fields expose their allowed values in the schema so the AI client can pick valid options.
 
 #### Sorting
 
