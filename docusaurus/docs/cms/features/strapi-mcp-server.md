@@ -258,7 +258,18 @@ Once connected, you can interact with your Strapi content using natural language
 | "Update article abc123, change the title to 'Hello Strapi'." | Updates the title, other fields untouched |
 | "Publish article abc123." | Changes the entry status to published |
 | "Delete article abc123." | Removes the entry |
+| "Create an article in French with the title 'Bonjour le monde'." | Creates a draft article with `locale` set to `fr` |
 
+
+#### Internationalization (i18n)
+
+When [Internationalization (i18n)](/cms/features/internationalization) is enabled on a content type, MCP tools accept an optional `locale` parameter (e.g., `"en"`, `"fr"`). If omitted, the default locale is used.
+
+The AI client sees which locales are available in each tool's schema, so you can ask it to create or update content in a specific language. For example, asking "Create an article in French titled 'Bonjour'" passes `locale: "fr"` to the `create` tool. Which locales are available depends on the Admin token's permissions (see [Permission boundaries](#permission-boundaries)).
+
+:::tip
+When working with localized content, explicitly mention the target language in your prompt so the AI client passes the correct `locale` value. For instance, prefer "Create an article **in French**" over "Create an article titled 'Bonjour'" to avoid ambiguity.
+:::
 
 #### Sorting
 
