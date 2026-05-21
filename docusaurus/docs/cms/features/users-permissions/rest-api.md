@@ -11,6 +11,8 @@ tags:
 
 # Users & Permissions REST API
 
+<Tldr>REST API endpoints for authentication, user management, roles, and permissions with the Users & Permissions plugin.</Tldr>
+
 The Users & Permissions plugin exposes a set of REST API endpoints for authentication, user management, and role/permission management. These endpoints are separate from the standard content-type CRUD endpoints and have their own response shapes. For a general overview of the plugin's features and configuration, see the [Users & Permissions introduction](/cms/features/users-permissions).
 
 All endpoints use the `/api` prefix. For example, if your Strapi server runs at `http://localhost:1337`, the login endpoint is `http://localhost:1337/api/auth/local`.
