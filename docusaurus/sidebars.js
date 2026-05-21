@@ -124,6 +124,9 @@ const sidebars = {
           type: 'doc',
           label: 'Users & Permissions',
           id: 'cms/features/users-permissions',
+          customProps: {
+            updated: true,
+          },
         },
         {
           type: 'category',
