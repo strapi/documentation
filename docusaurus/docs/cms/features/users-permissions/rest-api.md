@@ -13,7 +13,7 @@ tags:
 
 <Tldr>The Users & Permissions feature provides REST API endpoints for authentication, user management, roles, and permissions.</Tldr>
 
-The Users & Permissions feature exposes a set of REST API endpoints for authentication, user management, and role/permission management. These endpoints are separate from the standard content-type CRUD endpoints and have their own response shapes. For a general overview of the plugin's features and configuration, see the [Users & Permissions introduction](/cms/features/users-permissions).
+The Users & Permissions feature exposes a set of REST API endpoints for authentication, user management, and role/permission management. These endpoints are separate from the standard content-type CRUD endpoints and have their own response shapes. For a general overview and configuration options, see the [Users & Permissions introduction](/cms/features/users-permissions).
 
 All endpoints use the `/api` prefix. For example, if your Strapi server runs at `http://localhost:1337`, the login endpoint is `http://localhost:1337/api/auth/local`.
 
@@ -229,7 +229,7 @@ Possible errors:
 |--------|---------|-------|
 | 400 | `"passwordConfirmation is a required field"` | Missing `passwordConfirmation` |
 | 400 | `"The provided current password is invalid"` | Wrong current password |
-| 400 | `"New password must differ from current password"` | Same password reused |
+| 400 | `"Your new password must be different than your current password"` | Same password reused |
 
 This endpoint is rate limited.
 
