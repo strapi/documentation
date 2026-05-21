@@ -19,8 +19,8 @@ The present page explains how to setup the Twitter provider for the [Users & Per
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
 :::
 
-:::caution
-Twitter has rebranded to X. The developer portal has been significantly restructured, and free-tier API access is now limited. The setup steps and URLs below may be outdated.
+:::caution Paid API access required
+Twitter (now X) restructured its API access in 2023. Strapi's built-in Twitter provider uses the v1.1 API (`account/verify_credentials`), which is **no longer available on the free tier**. You need a [Basic or Pro plan](https://developer.x.com/en/portal/products) on the X Developer Portal to use this provider. The developer portal URLs and setup flow have also changed since the rebranding.
 :::
 
 ## Twitter configuration

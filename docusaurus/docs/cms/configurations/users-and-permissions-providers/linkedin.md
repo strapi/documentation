@@ -19,8 +19,8 @@ The present page explains how to setup the LinkedIn provider for the [Users & Pe
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
 :::
 
-:::caution
-LinkedIn has migrated from "Sign In with LinkedIn" to "Sign In with LinkedIn using OpenID Connect." The `r_liteprofile` and `r_emailaddress` scopes have been deprecated. The setup steps below may need adjustments to match the new OpenID Connect product.
+:::caution Deprecated scopes
+LinkedIn has migrated to "Sign In with LinkedIn using OpenID Connect," deprecating the `r_liteprofile` and `r_emailaddress` scopes. Strapi's built-in LinkedIn provider still uses these deprecated scopes and the legacy Profile API. The provider **may stop working** when LinkedIn fully removes legacy support. The setup steps below reflect the current Strapi implementation but the LinkedIn developer portal steps (product selection, scopes) should follow LinkedIn's [OpenID Connect documentation](https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin-v2).
 :::
 
 ## LinkedIn configuration

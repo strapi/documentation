@@ -19,8 +19,8 @@ The present page explains how to setup the Instagram provider for the [Users & P
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
 :::
 
-:::caution
-The Instagram Basic Display API was deprecated and shut down by Meta on December 4, 2024. This provider may no longer work as documented below.
+:::caution Deprecated provider
+The Instagram Basic Display API was shut down by Meta on December 4, 2024. Strapi's built-in Instagram provider relies on this API and **no longer works**. Meta's replacement is the [Instagram Business Login](https://developers.facebook.com/docs/instagram-business-login), which requires a different authentication flow. Until Strapi updates the provider implementation, Instagram authentication is not available out of the box. The setup steps below are kept for reference only.
 :::
 
 ## Instagram configuration
