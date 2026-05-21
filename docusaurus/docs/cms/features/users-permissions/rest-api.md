@@ -315,7 +315,7 @@ Handles the OAuth callback after the user authenticates with a third-party provi
 
 If the username derived from the provider profile already exists, a unique username is generated automatically to avoid conflicts.
 
-## Session management endpoints
+## Session management
 
 When session management is enabled (`jwtManagement: 'refresh'` in the plugin configuration), these additional endpoints become available. They return 404 when the default legacy JWT mode is active.
 
