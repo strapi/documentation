@@ -217,9 +217,11 @@ The MCP server uses the Streamable HTTP transport protocol. Any MCP-compatible c
 
 ### Available tools
 
+The MCP server exposes 2 categories of tools: content-type tools generated from your schema, and built-in utility tools.
+
 #### Content-type tools
 
-For each content type the token has access to, Strapi generates up to 8 tools:
+For each content type the token has access to, Strapi generates up to 8 tools: 5 for CRUD operations (list, get, create, update, delete) and 3 for [Draft & Publish](/cms/features/draft-and-publish) actions (publish, unpublish, discard draft):
 
 | Tool | Action | Permission required | Description |
 |------|--------|-------------------|-------------|
