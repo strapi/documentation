@@ -105,7 +105,7 @@ mcp: {
 The timeout options are read at runtime and are not yet included in Strapi's `Server` TypeScript configuration type. If you use TypeScript, the basic `mcp: { enabled: true }` object is fully typed, but adding timeout keys may require a type assertion.
 :::
 
-### Admin token configuration
+### Strapi admin panel configuration
 
 The MCP server authenticates requests using Admin tokens. Each MCP session is scoped to the permissions of the token used to connect:
 
@@ -135,7 +135,7 @@ Open Claude Desktop's configuration file. The location varies depending on your 
 You can also open the configuration file for Claude Desktop from Claude's settings: go to Settings > Desktop app > Developer, then click on the **Edit config** button.
 :::
 
-Add the Strapi MCP server to Claude's configuration file, as in the following example, replacing `YOUR_ADMIN_TOKEN` with the Admin token value copied from the [Admin token configuration](#admin-token-configuration):
+Add the Strapi MCP server to Claude's configuration file, as in the following example, replacing `YOUR_ADMIN_TOKEN` with the Admin token value copied from the [Strapi admin panel configuration](#strapi-admin-panel-configuration):
 
 ```json title="claude_desktop_config.json"
 {
@@ -158,7 +158,7 @@ Restart Claude Desktop for the changes to take effect.
 
 #### Connecting Claude Code
 
-Run the following command, replacing `YOUR_ADMIN_TOKEN` with the Admin token value copied from the [Admin token configuration](#admin-token-configuration):
+Run the following command, replacing `YOUR_ADMIN_TOKEN` with the Admin token value copied from the [Strapi admin panel configuration](#strapi-admin-panel-configuration):
 
 ```bash
 claude mcp add strapi-mcp --transport http http://localhost:1337/mcp -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
