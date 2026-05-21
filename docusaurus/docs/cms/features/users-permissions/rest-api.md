@@ -27,16 +27,9 @@ Authentication endpoints handle login, registration, and password management. Mo
 
 Authenticates a user with their identifier (email or username) and password, returning a JWT and the user object.
 
-Request body:
+<ApiCall>
 
-```json
-{
-  "identifier": "user@example.com",
-  "password": "yourPassword"
-}
-```
-
-Example request:
+<Request title="Example request: Login">
 
 ```bash
 curl -X POST http://localhost:1337/api/auth/local \
@@ -44,7 +37,9 @@ curl -X POST http://localhost:1337/api/auth/local \
   -d '{"identifier": "user@example.com", "password": "yourPassword"}'
 ```
 
-Example response (200):
+</Request>
+
+<Response>
 
 ```json
 {
@@ -64,6 +59,10 @@ Example response (200):
 }
 ```
 
+</Response>
+
+</ApiCall>
+
 Possible errors:
 
 | Status | Message | Cause |
@@ -80,17 +79,9 @@ This endpoint is rate limited (default: 10 requests per 60 seconds).
 
 Creates a new user account and returns a JWT along with the user object.
 
-Request body:
+<ApiCall>
 
-```json
-{
-  "username": "newuser",
-  "email": "newuser@example.com",
-  "password": "Password123!"
-}
-```
-
-Example request:
+<Request title="Example request: Register">
 
 ```bash
 curl -X POST http://localhost:1337/api/auth/local/register \
@@ -98,7 +89,9 @@ curl -X POST http://localhost:1337/api/auth/local/register \
   -d '{"username": "newuser", "email": "newuser@example.com", "password": "Password123!"}'
 ```
 
-Example response (200):
+</Request>
+
+<Response>
 
 ```json
 {
@@ -117,6 +110,10 @@ Example response (200):
   }
 }
 ```
+
+</Response>
+
+</ApiCall>
 
 :::note
 Only `username`, `email`, and `password` are accepted in the request body by default. To allow additional fields (e.g., a `fullName` field you added to the User content-type), you must explicitly list them in the `register.allowedFields` configuration. See [Registration configuration](/cms/features/users-permissions#registration-configuration) for details.
@@ -142,15 +139,9 @@ This endpoint is rate limited.
 
 Sends a password reset email to the specified address. Requires an email provider to be configured.
 
-Request body:
+<ApiCall>
 
-```json
-{
-  "email": "user@example.com"
-}
-```
-
-Example request:
+<Request title="Example request: Forgot password">
 
 ```bash
 curl -X POST http://localhost:1337/api/auth/forgot-password \
@@ -158,13 +149,19 @@ curl -X POST http://localhost:1337/api/auth/forgot-password \
   -d '{"email": "user@example.com"}'
 ```
 
-Example response (200):
+</Request>
+
+<Response>
 
 ```json
 {
   "ok": true
 }
 ```
+
+</Response>
+
+</ApiCall>
 
 :::note
 This endpoint always returns `{ "ok": true }` regardless of whether the email address exists in the system. This is intentional to prevent user enumeration attacks.
@@ -178,23 +175,19 @@ This endpoint is rate limited.
 
 Resets a user's password using a token received by email. All 3 fields are required.
 
-Request body:
+<ApiCall>
 
-```json
-{
-  "code": "resetTokenFromEmail",
-  "password": "NewPassword123!",
-  "passwordConfirmation": "NewPassword123!"
-}
-```
-
-Example request:
+<Request title="Example request: Reset password">
 
 ```bash
 curl -X POST http://localhost:1337/api/auth/reset-password \
   -H "Content-Type: application/json" \
   -d '{"code": "resetTokenFromEmail", "password": "NewPassword123!", "passwordConfirmation": "NewPassword123!"}'
 ```
+
+</Request>
+
+</ApiCall>
 
 Example response (200): Same shape as the [login](#login) response (jwt + user).
 
@@ -213,17 +206,9 @@ This endpoint is rate limited.
 
 Changes the password for the currently authenticated user. Requires a valid Bearer token. All 3 fields are required.
 
-Request body:
+<ApiCall>
 
-```json
-{
-  "currentPassword": "OldPassword123!",
-  "password": "NewPassword456!",
-  "passwordConfirmation": "NewPassword456!"
-}
-```
-
-Example request:
+<Request title="Example request: Change password">
 
 ```bash
 curl -X POST http://localhost:1337/api/auth/change-password \
@@ -231,6 +216,10 @@ curl -X POST http://localhost:1337/api/auth/change-password \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -d '{"currentPassword": "OldPassword123!", "password": "NewPassword456!", "passwordConfirmation": "NewPassword456!"}'
 ```
+
+</Request>
+
+</ApiCall>
 
 Example response (200): Same shape as the [login](#login) response (jwt + user).
 
@@ -252,12 +241,18 @@ Confirms a user's email address using a token from the confirmation email.
 
 Query parameter: `confirmation` -- the token received in the confirmation email.
 
-Example request:
+<ApiCall>
+
+<Request title="Example request: Email confirmation">
 
 ```bash
 curl -G http://localhost:1337/api/auth/email-confirmation \
   --data-urlencode "confirmation=confirmationTokenHere"
 ```
+
+</Request>
+
+</ApiCall>
 
 After confirming the email, Strapi redirects the user to the URL configured in the admin panel under Settings > Users & Permissions > Advanced Settings > "Redirection url".
 
@@ -267,15 +262,9 @@ After confirming the email, Strapi redirects the user to the URL configured in t
 
 Resends the confirmation email to a user who has not yet confirmed their email address.
 
-Request body:
+<ApiCall>
 
-```json
-{
-  "email": "user@example.com"
-}
-```
-
-Example request:
+<Request title="Example request: Send email confirmation">
 
 ```bash
 curl -X POST http://localhost:1337/api/auth/send-email-confirmation \
@@ -283,7 +272,9 @@ curl -X POST http://localhost:1337/api/auth/send-email-confirmation \
   -d '{"email": "user@example.com"}'
 ```
 
-Example response (200):
+</Request>
+
+<Response>
 
 ```json
 {
@@ -291,6 +282,10 @@ Example response (200):
   "sent": true
 }
 ```
+
+</Response>
+
+</ApiCall>
 
 Possible errors:
 
@@ -325,15 +320,9 @@ When session management is enabled (`jwtManagement: 'refresh'` in the plugin con
 
 Exchanges a refresh token for a new access token. The old refresh token is invalidated and a new one is returned (token rotation).
 
-Request body:
+<ApiCall>
 
-```json
-{
-  "refreshToken": "yourRefreshToken"
-}
-```
-
-Example request:
+<Request title="Example request: Refresh token">
 
 ```bash
 curl -X POST http://localhost:1337/api/auth/refresh \
@@ -341,7 +330,9 @@ curl -X POST http://localhost:1337/api/auth/refresh \
   -d '{"refreshToken": "yourRefreshToken"}'
 ```
 
-Example response (200):
+</Request>
+
+<Response>
 
 ```json
 {
@@ -349,6 +340,10 @@ Example response (200):
   "refreshToken": "newRefreshToken"
 }
 ```
+
+</Response>
+
+</ApiCall>
 
 :::note
 When `httpOnly` is enabled in the session configuration, the new refresh token is set as an HTTP-only cookie instead of being included in the response body. In that case, the response only contains `{ "jwt": "newAccessToken" }`.
@@ -360,20 +355,28 @@ When `httpOnly` is enabled in the session configuration, the new refresh token i
 
 Revokes all sessions for the authenticated user. Requires a valid Bearer token.
 
-Example request:
+<ApiCall>
+
+<Request title="Example request: Logout">
 
 ```bash
 curl -X POST http://localhost:1337/api/auth/logout \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
-Example response (200):
+</Request>
+
+<Response>
 
 ```json
 {
   "ok": true
 }
 ```
+
+</Response>
+
+</ApiCall>
 
 ## Users
 
@@ -389,14 +392,18 @@ User endpoints return bare JSON objects (not wrapped in a `data` key), unlike st
 
 Returns the user associated with the provided JWT. Requires authentication.
 
-Example request:
+<ApiCall>
+
+<Request title="Example request: Get current user">
 
 ```bash
 curl http://localhost:1337/api/users/me \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
-Example response (200):
+</Request>
+
+<Response>
 
 ```json
 {
@@ -413,18 +420,28 @@ Example response (200):
 }
 ```
 
+</Response>
+
+</ApiCall>
+
 ### List users
 
 `GET /api/users`
 
 Returns a list of users. Supports `filters`, `sort`, and `pagination` query parameters.
 
-Example request:
+<ApiCall>
+
+<Request title="Example request: List users">
 
 ```bash
 curl http://localhost:1337/api/users \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
+
+</Request>
+
+</ApiCall>
 
 Example response (200): An array of user objects.
 
@@ -434,12 +451,18 @@ Example response (200): An array of user objects.
 
 Returns a single user by their integer `id`.
 
-Example request:
+<ApiCall>
+
+<Request title="Example request: Get a user">
 
 ```bash
 curl http://localhost:1337/api/users/1 \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
+
+</Request>
+
+</ApiCall>
 
 Example response (200): A user object.
 
@@ -449,18 +472,26 @@ Example response (200): A user object.
 
 Returns the total number of users. Supports the `filters` query parameter.
 
-Example request:
+<ApiCall>
+
+<Request title="Example request: Count users">
 
 ```bash
 curl http://localhost:1337/api/users/count \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
-Example response (200): A bare integer, for example:
+</Request>
+
+<Response>
 
 ```json
 42
 ```
+
+</Response>
+
+</ApiCall>
 
 ### Create a user
 
@@ -468,19 +499,9 @@ Example response (200): A bare integer, for example:
 
 Creates a new user. If `role` is omitted, the default role is assigned.
 
-Request body:
+<ApiCall>
 
-```json
-{
-  "username": "newuser",
-  "email": "newuser@example.com",
-  "password": "Password123!",
-  "role": 1,
-  "confirmed": true
-}
-```
-
-Example request:
+<Request title="Example request: Create a user">
 
 ```bash
 curl -X POST http://localhost:1337/api/users \
@@ -488,6 +509,10 @@ curl -X POST http://localhost:1337/api/users \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -d '{"username": "newuser", "email": "newuser@example.com", "password": "Password123!", "role": 1, "confirmed": true}'
 ```
+
+</Request>
+
+</ApiCall>
 
 Example response (201): A user object with the populated role.
 
@@ -497,7 +522,9 @@ Example response (201): A user object with the populated role.
 
 Updates an existing user. Only include the fields you want to change.
 
-Example request:
+<ApiCall>
+
+<Request title="Example request: Update a user">
 
 ```bash
 curl -X PUT http://localhost:1337/api/users/1 \
@@ -505,6 +532,10 @@ curl -X PUT http://localhost:1337/api/users/1 \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -d '{"username": "updateduser"}'
 ```
+
+</Request>
+
+</ApiCall>
 
 Example response (200): The updated user object.
 
@@ -521,12 +552,18 @@ Possible errors:
 
 Deletes a user by their integer `id`.
 
-Example request:
+<ApiCall>
+
+<Request title="Example request: Delete a user">
 
 ```bash
 curl -X DELETE http://localhost:1337/api/users/1 \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
+
+</Request>
+
+</ApiCall>
 
 Example response (200): The deleted user object.
 
@@ -540,14 +577,18 @@ Role endpoints manage end-user roles and their associated permissions. These end
 
 Returns all available roles with user counts.
 
-Example request:
+<ApiCall>
+
+<Request title="Example request: List roles">
 
 ```bash
 curl http://localhost:1337/api/users-permissions/roles \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
-Example response (200):
+</Request>
+
+<Response>
 
 ```json
 {
@@ -570,18 +611,28 @@ Example response (200):
 }
 ```
 
+</Response>
+
+</ApiCall>
+
 ### Get a role
 
 `GET /api/users-permissions/roles/:id`
 
 Returns a single role by `id`, including its full permissions tree.
 
-Example request:
+<ApiCall>
+
+<Request title="Example request: Get a role">
 
 ```bash
 curl http://localhost:1337/api/users-permissions/roles/1 \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
+
+</Request>
+
+</ApiCall>
 
 Example response (200): A role object with a nested `permissions` structure mapping plugins to controllers to actions.
 
@@ -591,17 +642,9 @@ Example response (200): A role object with a nested `permissions` structure mapp
 
 Creates a new role.
 
-Request body:
+<ApiCall>
 
-```json
-{
-  "name": "Editor",
-  "description": "Can edit content",
-  "type": "editor"
-}
-```
-
-Example request:
+<Request title="Example request: Create a role">
 
 ```bash
 curl -X POST http://localhost:1337/api/users-permissions/roles \
@@ -610,7 +653,9 @@ curl -X POST http://localhost:1337/api/users-permissions/roles \
   -d '{"name": "Editor", "description": "Can edit content", "type": "editor"}'
 ```
 
-Example response (200):
+</Request>
+
+<Response>
 
 ```json
 {
@@ -618,13 +663,19 @@ Example response (200):
 }
 ```
 
+</Response>
+
+</ApiCall>
+
 ### Update a role
 
 `PUT /api/users-permissions/roles/:id`
 
 Updates an existing role.
 
-Example request:
+<ApiCall>
+
+<Request title="Example request: Update a role">
 
 ```bash
 curl -X PUT http://localhost:1337/api/users-permissions/roles/1 \
@@ -633,13 +684,19 @@ curl -X PUT http://localhost:1337/api/users-permissions/roles/1 \
   -d '{"description": "Updated description"}'
 ```
 
-Example response (200):
+</Request>
+
+<Response>
 
 ```json
 {
   "ok": true
 }
 ```
+
+</Response>
+
+</ApiCall>
 
 ### Delete a role
 
@@ -647,20 +704,28 @@ Example response (200):
 
 Deletes a role by `id`. The Public role cannot be deleted. When a role is deleted, users assigned to it are reassigned to the Public role.
 
-Example request:
+<ApiCall>
+
+<Request title="Example request: Delete a role">
 
 ```bash
 curl -X DELETE http://localhost:1337/api/users-permissions/roles/3 \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
-Example response (200):
+</Request>
+
+<Response>
 
 ```json
 {
   "ok": true
 }
 ```
+
+</Response>
+
+</ApiCall>
 
 ## Permissions
 
@@ -672,11 +737,17 @@ The permissions endpoint returns the complete permission tree, showing which act
 
 Returns a nested object mapping plugins to controllers to actions.
 
-Example request:
+<ApiCall>
+
+<Request title="Example request: List permissions">
 
 ```bash
 curl http://localhost:1337/api/users-permissions/permissions \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
+
+</Request>
+
+</ApiCall>
 
 Example response (200): A nested `permissions` object where keys are plugin names, sub-keys are controller names, and values contain the available actions with their `enabled` status and `policy` information.
