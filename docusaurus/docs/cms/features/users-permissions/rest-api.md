@@ -240,7 +240,7 @@ Possible errors:
 |--------|---------|-------|
 | 400 | `"passwordConfirmation is a required field"` | Missing `passwordConfirmation` |
 | 400 | `"The provided current password is invalid"` | Wrong current password |
-| 400 | New password must differ from current password | Same password reused |
+| 400 | `"New password must differ from current password"` | Same password reused |
 
 This endpoint is rate limited.
 
