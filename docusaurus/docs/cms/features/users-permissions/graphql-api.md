@@ -21,7 +21,7 @@ Authentication mutations handle login, registration, and password management. Pu
 
 ### Login
 
-The `login` mutation authenticates a user and returns a JWT token:
+The `login` mutation authenticates a user and returns a JWT:
 
 ```graphql
 mutation {
@@ -51,7 +51,7 @@ Auth: Public
 
 ### Register
 
-The `register` mutation creates a new user account and returns a JWT token:
+The `register` mutation creates a new user account and returns a JWT:
 
 ```graphql
 mutation {
