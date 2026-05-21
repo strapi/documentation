@@ -235,9 +235,6 @@ For each content type the token has access to, Strapi generates up to 8 tools: 5
 
 The last 3 tools (publish, unpublish, discard_draft) are only generated for content types that have [Draft & Publish](/cms/features/draft-and-publish) enabled.
 
-Tool names follow the pattern `cm_<namespace>_<model>_<action>`. For example, an `Article` content type with UID `api::article.article` generates tools named `cm_api_article_list`, `cm_api_article_get`, `cm_api_article_create`, etc.
-
-Single types follow a similar pattern but include `_single_` in the name (e.g., `cm_api_homepage_single_get`). Because single types represent a unique entry, they do not have a `list` tool and generate up to 7 tools instead of 8.
 
 #### Built-in utility tools
 
