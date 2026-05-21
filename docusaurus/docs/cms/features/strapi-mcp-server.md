@@ -311,7 +311,7 @@ The MCP server enforces the same permission model as the Strapi admin panel. Per
 
 2. **Field filtering**: Even within an exposed tool, input and output schemas are narrowed to the fields the token can access. If the token grants `read` on `Article` but excludes the `body` field, the AI client will not see or receive `body` content. Field restrictions are applied independently per action. Write schemas (`create`, `update`) only include fields permitted for the corresponding action.
 
-3. **Locale filtering**: When the [Internationalization (i18n)](/cms/features/internationalization) feature is enabled and locale-level permissions are configured, the `locale` parameter is narrowed per action. For example, a token might allow reading content in `en` and `fr` but only creating content in `en`. If the default locale is permitted for a given action, it is applied as the Zod schema default so the AI client does not need to specify it explicitly.
+3. **Locale filtering**: When the [Internationalization (i18n)](/cms/features/internationalization) feature is enabled and locale-level permissions are configured, the `locale` parameter is narrowed per action. For example, a token might allow reading content in `en` and `fr` but only creating content in `en`. If the default locale is permitted for a given action, that locale is applied as the Zod schema default, so the AI client does not need to specify a locale explicitly.
 
 4. **Runtime enforcement**: Beyond schema-level narrowing, each handler calls Strapi's permission checker at runtime to verify access on the specific document being read, written, or published. Condition-based permissions (e.g., "only update entries you own") are enforced at this level.
 
