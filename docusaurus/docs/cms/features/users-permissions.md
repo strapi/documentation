@@ -258,8 +258,8 @@ module.exports = ({ env }) => ({
       jwtManagement: 'refresh',
       sessions: {
         accessTokenLifespan: 600, // 10 minutes (default)
-        maxRefreshTokenLifespan: 2592000, // 30 days
-        idleRefreshTokenLifespan: 1209600, // 14 days
+        maxRefreshTokenLifespan: 2592000, // 30 days (default)
+        idleRefreshTokenLifespan: 1209600, // 14 days (default)
         maxSessionLifespan: 86400, // 1 day (default)
         idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
@@ -289,8 +289,8 @@ export default ({ env }) => ({
       jwtManagement: 'refresh',
       sessions: {
         accessTokenLifespan: 600, // 10 minutes (default)
-        maxRefreshTokenLifespan: 2592000, // 30 days
-        idleRefreshTokenLifespan: 1209600, // 14 days
+        maxRefreshTokenLifespan: 2592000, // 30 days (default)
+        idleRefreshTokenLifespan: 1209600, // 14 days (default)
         maxSessionLifespan: 86400, // 1 day (default)
         idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
@@ -530,7 +530,7 @@ If you need to configure a custom handler to accept other URLs, you can create a
 
 ### Route and policy customization {#customizing-routes-and-policies}
 
-The Users & Permissions plugin routes and controllers can be extended and overridden through the [plugin extension system](/cms/plugins-development/plugins-extension). This is useful for adding custom policies to user endpoints, overriding controller logic, or adding new routes.
+The Users & Permissions feature routes and controllers can be extended and overridden through the [plugin extension system](/cms/plugins-development/plugins-extension). This is useful for adding custom policies to user endpoints, overriding controller logic, or adding new routes.
 
 <CustomDocCardsWrapper>
 <CustomDocCard icon="code" title="Customizing Users & Permissions plugin routes" description="Add custom policies, override controllers, and add new routes to the User collection." link="/cms/backend-customization/guides/customizing-users-permissions-plugin-routes" />
