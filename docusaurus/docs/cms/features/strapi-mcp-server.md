@@ -18,11 +18,11 @@ import TabItem from '@theme/TabItem';
 
 <Tldr>
 
-Strapi includes a built-in [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server. Once enabled, it lets AI clients create, read, update, delete, publish, and unpublish content directly through Strapi's Content Manager. All operations are gated by admin token permissions.
+Strapi includes a built-in [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server. Once enabled, it lets AI clients create, read, update, delete, publish, and unpublish content directly through Strapi's Content Manager. All operations are gated by Admin token permissions.
 
 </Tldr>
 
-The MCP server exposes a set of content management tools to AI clients such as Claude Desktop, Claude Code, Cursor, or any MCP-compatible tool. An AI assistant connected to the MCP server can, for example, create a blog article, list recent entries, or publish a page. Which tools are available depends on the permissions granted to the admin token used for authentication.
+The MCP server exposes a set of content management tools to AI clients such as Claude Desktop, Claude Code, Cursor, or any MCP-compatible tool. An AI assistant connected to the MCP server can, for example, create a blog article, list recent entries, or publish a page. Which tools are available depends on the permissions granted to the Admin token used for authentication.
 
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>
@@ -34,17 +34,8 @@ The MCP server exposes a set of content management tools to AI clients such as C
 ## Configuration
 
 Before first use, the Strapi MCP server must be:
-- configured in Strapi through the server configuration file and authenticated with Admin tokens created in the admin panel
+- enabled through the server configuration file and authenticated with Admin tokens created in the admin panel
 - connected to your AI client.
-
-### Strapi admin panel configuration
-
-The MCP server authenticates requests using Admin tokens. Each MCP session is scoped to the permissions of the token used to connect:
-
-1. Create a new admin token (see [Creating an admin token](/cms/features/admin-tokens#creating-a-new-admin-token) on the Admin tokens feature page).
-2. Copy the token as you will need it 
-
-The token's permissions determine which MCP tools are exposed to the AI client. For instance, if the token only grants `read` on an `Article` content-type, the AI client will only see listing and reading tools for articles.
 
 ### Strapi code-based configuration
 
@@ -110,9 +101,22 @@ mcp: {
 },
 ```
 
+:::note
+The timeout options are read at runtime and are not yet included in Strapi's `Server` TypeScript configuration type. If you use TypeScript, the basic `mcp: { enabled: true }` object is fully typed, but adding timeout keys may require a type assertion.
+:::
+
+### Admin token configuration
+
+The MCP server authenticates requests using Admin tokens. Each MCP session is scoped to the permissions of the token used to connect:
+
+1. Create a new Admin token (see [Creating an Admin token](/cms/features/admin-tokens#creating-a-new-admin-token) on the Admin tokens feature page).
+2. Copy the token value. You will need it when configuring the AI client.
+
+The token's permissions determine which MCP tools are exposed to the AI client. For instance, if the token only grants `read` on an `Article` content-type, the AI client will only see listing and reading tools for articles.
+
 ### AI client configuration
 
-Once you enabled and configured the MCP server through Strapi's admin panel (admin tokens) and configuration filters, you must connect your AI client to the Strapi MCP server.
+Once you have enabled the MCP server through the server configuration file and created an Admin token in the admin panel, connect your AI client to the Strapi MCP server.
 
 :::note
 `localhost:1337/` is used in configuration examples on this page. If your Strapi server is hosted on another URL or port, please update the code accordingly.
@@ -131,7 +135,7 @@ Open Claude Desktop's configuration file. The location varies depending on your 
 You can also open the configuration file for Claude Desktop from Claude's settings: go to Settings > Desktop app > Developer, then click on the **Edit config** button.
 :::
 
-Add the Strapi MCP server to Claude's configuration file, as in the following example, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#strapi-admin-panel-configuration):
+Add the Strapi MCP server to Claude's configuration file, as in the following example, replacing `YOUR_ADMIN_TOKEN` with the Admin token value copied from the [Admin token configuration](#admin-token-configuration):
 
 ```json title="claude_desktop_config.json"
 {
@@ -154,7 +158,7 @@ Restart Claude Desktop for the changes to take effect.
 
 #### Connecting Claude Code
 
-Run the following command, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#strapi-admin-panel-configuration):
+Run the following command, replacing `YOUR_ADMIN_TOKEN` with the Admin token value copied from the [Admin token configuration](#admin-token-configuration):
 
 ```bash
 claude mcp add strapi-mcp --transport http http://localhost:1337/mcp -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
@@ -232,7 +236,7 @@ The last 3 tools (publish, unpublish, discard_draft) are only generated for cont
 
 Tool names follow the pattern `cm_<namespace>_<model>_<action>`. For example, an `Article` content type with UID `api::article.article` generates tools named `cm_api_article_list`, `cm_api_article_get`, `cm_api_article_create`, etc.
 
-Single types follow a similar pattern but include `_single_` in the name (e.g., `cm_api_homepage_single_get`).
+Single types follow a similar pattern but include `_single_` in the name (e.g., `cm_api_homepage_single_get`). Because single types represent a unique entry, they do not have a `list` tool and generate up to 7 tools instead of 8.
 
 #### Built-in utility tools
 
@@ -263,7 +267,7 @@ Each tool has an input schema derived from your content type's attributes. The s
 
 - **Field-level permissions**: If the token restricts access to certain fields, those fields are excluded from both input and output schemas. For instance, a token that can only read `title` and `slug` on an `Article` type will only see those two fields in sort, filter, and output schemas.
 - **Locale-level permissions**: If the [Internationalization (i18n)](/cms/features/internationalization) plugin is installed and the token restricts access to certain locales, the `locale` parameter only accepts the permitted locales for each action. Locale restrictions are evaluated per action: a token might allow reading in `en` and `fr` but only creating in `en`.
-- **Write operations**: The `data` object in `create` and `update` tools only includes fields the token has permission to write. Unknown fields are rejected (strict validation). System-managed fields (`id`, `documentId`, `createdAt`, `updatedAt`, `publishedAt`, `createdBy`, `updatedBy`) and private fields are excluded automatically.
+- **Write operations**: The `data` object in `create` and `update` tools only includes fields the token has permission to write. Unknown fields are rejected (strict validation). System-managed fields (`id`, `documentId`, `createdAt`, `updatedAt`, `publishedAt`, `createdBy`, `updatedBy`) are excluded automatically. Private fields are also excluded.
 - **Attribute type mapping**: Field schemas carry constraints from your content-type definition, such as `required`, `minLength`, `maxLength`, `min`, `max`, and `enum` values. Enumeration fields expose their allowed values in the schema so the AI client can pick valid options.
 
 #### Sorting
@@ -283,7 +287,7 @@ Sort field names are constrained to the content type's scalar attributes (string
 
 The `list` tool accepts a `filters` parameter using Strapi's filter syntax:
 
-- **Field operators**: `$eq`, `$ne`, `$in`, `$notIn`, `$lt`, `$lte`, `$gt`, `$gte`, `$contains`, `$notContains`, `$startsWith`, `$endsWith`, `$null`, `$notNull`, and their case-insensitive variants (`$eqi`, `$nei`, `$containsi`, etc.).
+- **Field operators**: `$eq`, `$ne`, `$in`, `$notIn`, `$lt`, `$lte`, `$gt`, `$gte`, `$between`, `$contains`, `$notContains`, `$startsWith`, `$endsWith`, `$null`, `$notNull`, and their case-insensitive variants (`$eqi`, `$nei`, `$containsi`, `$notContainsi`, `$startsWithi`, `$endsWithi`).
 - **Logical operators**: `$and`, `$or` (accept arrays of filter objects), `$not` (wraps a single filter object).
 - **Implicit equality**: Passing a value directly (e.g., `{ "title": "Hello" }`) is equivalent to `{ "title": { "$eq": "Hello" } }`.
 
@@ -301,9 +305,9 @@ Rich text fields using the [Blocks editor](/cms/features/content-type-builder#ri
 
 The MCP server enforces the same permission model as the Strapi admin panel. Permissions are checked at multiple levels:
 
-1. **Tool visibility**: When an AI client connects, Strapi checks the admin token's permissions and only exposes tools the token has access to. If the token does not grant `delete` on `Article`, the AI client will not see a delete tool for articles at all.
+1. **Tool visibility**: When an AI client connects, Strapi checks the Admin token's permissions and only exposes tools the token has access to. If the token does not grant `delete` on `Article`, the AI client will not see a delete tool for articles at all.
 
-2. **Field filtering**: Even within an exposed tool, input and output schemas are narrowed to the fields the token can access. If the token grants `read` on `Article` but excludes the `body` field, the AI client will not see or receive `body` content. Field restrictions are applied independently per action: write schemas (`create`, `update`) only include fields permitted for the corresponding action.
+2. **Field filtering**: Even within an exposed tool, input and output schemas are narrowed to the fields the token can access. If the token grants `read` on `Article` but excludes the `body` field, the AI client will not see or receive `body` content. Field restrictions are applied independently per action. Write schemas (`create`, `update`) only include fields permitted for the corresponding action.
 
 3. **Locale filtering**: When the [Internationalization (i18n)](/cms/features/internationalization) plugin is installed and locale-level permissions are configured, the `locale` parameter is narrowed per action. For example, a token might allow reading content in `en` and `fr` but only creating content in `en`. If the default locale is permitted for a given action, it is applied as the Zod schema default so the AI client does not need to specify it explicitly.
 
@@ -317,12 +321,12 @@ This means you can create tokens with fine-grained access:
 - A token with condition-based permissions (e.g., only update entries you own)
 
 :::tip
-Create dedicated admin tokens for each AI client or use case. Use the most restrictive permissions that still allow the AI to accomplish its task.
+Create dedicated Admin tokens for each AI client or use case. Use the most restrictive permissions that still allow the AI to accomplish its task.
 :::
 
 ### Stateless architecture
 
-The MCP server uses a stateless architecture. Each POST request to the `/mcp` endpoint creates a fresh, ephemeral MCP server instance scoped to the authenticated token's permissions. There is no session persistence between requests: every request is independently authenticated and authorized. This design means the AI client does not need to manage session IDs, and permission changes (such as revoking a token or updating its permissions) take effect on the next request.
+The MCP server uses a stateless architecture. Each POST request to the `/mcp` endpoint creates a fresh, ephemeral MCP server instance scoped to the authenticated token's permissions. There is no session persistence between requests: every request is independently authenticated and authorized. Because there is no session state, the AI client does not need to manage session IDs, and permission changes (such as revoking a token or updating its permissions) take effect on the next request.
 
 GET and DELETE HTTP methods on the `/mcp` endpoint return a `405 Method Not Allowed` JSON-RPC error, as the MCP server only accepts POST requests.
 

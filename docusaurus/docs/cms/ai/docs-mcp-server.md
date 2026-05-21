@@ -27,7 +27,7 @@ The Docs [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server 
 Strapi offers 2 different MCP servers:
 
 - the Docs MCP server, covered on the present page,
-- and the Strapi MCP for content management, covered on its [dedicated feature page](/cms/features/strapi-mcp-server).
+- and the Strapi MCP server for content management, covered on its [dedicated feature page](/cms/features/strapi-mcp-server).
 :::
 
 ## Compatible tools
@@ -55,7 +55,7 @@ When opening the Ask AI window, you should see a **Use MCP** dropdown in the top
 If manual MCP server configuration is required:
 
 1. Click the **Copy MCP URL** from the dropdown. The server URL should be: `https://strapi-docs.mcp.kapa.ai`
-2. Update the MCP server configuration in your IDE:
+2. Add the server to your IDE's MCP configuration file:
 
     <Tabs>
     <TabItem value="cursor" label="Cursor">

@@ -179,6 +179,11 @@ const sidebars = {
             updated: true,
           },
         },
+        {
+          type: 'doc',
+          label: 'Docs MCP server',
+          id: 'cms/ai/docs-mcp-server',
+        },
       ],
     },
     { // APIs
