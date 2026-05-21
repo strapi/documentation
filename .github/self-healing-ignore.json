@@ -214,6 +214,11 @@
       "number": 26165,
       "reason": "Router: Internal admin panel bug fix that improves UX of existing session timeout feature. No new user-facing capabilities, configuration options, or APIs introduced. Session management should already be documented if needed.",
       "added": "2026-05-20"
+    },
+    {
+      "number": 26392,
+      "reason": "Router: Internal bug fix aligning server-side validator with already-documented public API. No user-facing behavior or API contract changes. The documentation already correctly references 'language' as the code block field.",
+      "added": "2026-05-21"
     }
   ]
 }
