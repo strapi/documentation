@@ -118,7 +118,7 @@ The token's permissions determine which MCP tools are exposed to the AI client. 
 Once you have enabled the MCP server through the server configuration file and created an Admin token in the admin panel, connect your AI client to the Strapi MCP server.
 
 :::note
-`localhost:1337/` is used in configuration examples on this page. If your Strapi server is hosted on another URL or port, please update the code accordingly.
+`http://localhost:1337/` is used in configuration examples on this page. If your Strapi server is hosted on another URL or port, please update the code accordingly.
 :::
 
 #### Connecting Claude Desktop
