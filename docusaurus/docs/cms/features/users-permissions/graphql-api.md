@@ -317,6 +317,10 @@ Auth: Requires `plugin::users-permissions.role.deleteRole` permission
 The Public role cannot be deleted.
 :::
 
+## Session management
+
+Session management operations (token refresh and logout) are only available through the [REST API](/cms/features/users-permissions/rest-api#session-management). There are no GraphQL equivalents for these endpoints.
+
 ## Types reference
 
 This section lists the key GraphQL types used across Users & Permissions operations.
