@@ -250,7 +250,7 @@ In addition to content-type tools, Strapi registers the following built-in tools
 
 Built-in utility tools are only available in development mode (when `autoReload` is enabled) and do not require specific content-type permissions.
 
-### Managing content through prompts
+### Content management through prompts
 
 Once connected, you can interact with your Strapi content using natural language:
 
@@ -263,7 +263,7 @@ Once connected, you can interact with your Strapi content using natural language
 | "Publish article abc123." | Flips the entry status to published |
 | "Delete article abc123." | Removes the entry |
 
-### Understanding input schemas
+### Input schemas
 
 Each tool has an input schema derived from your content type's attributes. The schema is dynamically generated per session based on the token's permissions:
 
