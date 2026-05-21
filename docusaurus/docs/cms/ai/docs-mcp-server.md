@@ -21,7 +21,7 @@ A Docs MCP server exposes the Strapi documentation to AI coding tools. Connect i
 
 </Tldr>
 
-The Docs [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server is powered by [Kapa](https://kapa.ai) and draws from the full Strapi documentation, including guides, API references, and code examples. The Docs MCP server is part of the [AI tools for developers](/cms/ai/for-developers) that Strapi offers.
+The Docs [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server is powered by [Kapa](https://kapa.ai), the same service behind the **Ask AI** button on the documentation website. It draws from the full Strapi documentation, including guides, API references, and code examples. The Docs MCP server is part of the [AI tools for developers](/cms/ai/for-developers) that Strapi offers.
 
 :::strapi MCP servers for Strapi
 Strapi offers 2 different MCP servers:
