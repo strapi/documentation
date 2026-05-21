@@ -1,5 +1,5 @@
 ---
-title: Admin Tokens
+title: Admin tokens
 description: Learn how to use Admin tokens to authenticate programmatic access to the Strapi Admin API.
 toc_max_heading_level: 4
 displayed_sidebar: cmsSidebar
@@ -11,7 +11,7 @@ tags:
   - features
 ---
 
-# Admin Tokens
+# Admin tokens
 
 <Tldr>
 Admin tokens authenticate programmatic access to the Strapi Admin API. Each token is scoped to a subset of its owner's permissions and is designed for automation workflows such as MCP agents, CI/CD pipelines, and scripts.
