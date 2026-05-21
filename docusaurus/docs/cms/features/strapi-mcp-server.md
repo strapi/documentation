@@ -295,9 +295,6 @@ Like sort fields, filter fields are constrained to scalar attributes only.
 
 The `list` tool also accepts `page` (1-indexed, default: 1) and `pageSize` (default: 25, max: 100) parameters.
 
-#### Rich text (blocks)
-
-Rich text fields using the [Blocks editor](/cms/features/content-type-builder#rich-text-blocks) are represented with a structured schema in tool definitions. The schema covers all block types: paragraphs, headings (levels 1–6), quotes, code blocks (with optional language), ordered and unordered lists (including nested lists), images, and inline nodes (text with formatting marks, links).
 
 ### Permission boundaries
 
