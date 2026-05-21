@@ -152,6 +152,6 @@ You can see the <ExternalLink to="https://feedback.strapi.io/" text="public road
 
 ## Is there an MCP server for Strapi?
 
-Yes. Strapi includes a built-in MCP (<ExternalLink to="https://www.anthropic.com/news/model-context-protocol" text="Model Context Protocol" />) server that exposes content management tools to AI clients. See the [MCP server feature page](/cms/features/strapi-mcp-server) for configuration and usage details.
+Yes. Strapi includes a built-in [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that exposes content management tools to AI clients. See the [MCP server feature page](/cms/features/strapi-mcp-server) for configuration and usage details.
 
-A separate [MCP server for Strapi Docs](/cms/ai/for-developers#mcp) is also available for querying the Strapi documentation.
+A separate [Docs MCP server](/cms/ai/for-developers#mcp) is also available for querying the Strapi documentation.
