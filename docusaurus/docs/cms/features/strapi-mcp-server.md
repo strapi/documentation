@@ -244,7 +244,7 @@ In addition to content-type tools, Strapi registers the following built-in tools
 |------|-------------|-------------|
 | `log` | Development mode only | Logs a message to the Strapi server console at a specified level (`info`, `warn`, `error`, `http`, `log`). Useful for debugging MCP interactions. |
 
-Built-in utility tools are only available in development mode (when `autoReload` is enabled) and do not require specific content-type permissions.
+Built-in utility tools are only available in development mode (when `autoReload` is enabled) and do not require specific admin permissions.
 
 ### Content management through prompts
 
