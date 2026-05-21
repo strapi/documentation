@@ -554,7 +554,7 @@ With the Users & Permissions feature, the end users and their account informatio
   }}
 />
 
-Registering new end users in a front-end application with the Users & Permissions plugin consists of adding a new entry to the User collection type.
+Registering new end users in a front-end application with the Users & Permissions feature consists of adding a new entry to the User collection type.
 
 1. Go to the User collection type in the <Icon name="feather" /> Content Manager.
 2. Click on the **Create new entry** button in the top right corner.
@@ -584,7 +584,7 @@ When you create a user without a role, or if you use the `/api/auth/local/regist
 The Users & Permissions feature exposes authentication, user management, and role/permission endpoints through both the REST API and the GraphQL API. Full endpoint references with request and response examples are available on the dedicated sub-pages:
 
 <CustomDocCardsWrapper>
-<CustomDocCard icon="cube" title="REST API" description="Authentication endpoints, user CRUD, roles, and permissions for the Users & Permissions plugin." link="/cms/features/users-permissions/rest-api"/>
+<CustomDocCard icon="cube" title="REST API" description="Authentication endpoints, user CRUD, roles, and permissions for the Users & Permissions feature." link="/cms/features/users-permissions/rest-api"/>
 <CustomDocCard icon="cube" title="GraphQL API" description="Authentication mutations, user queries, and role management via GraphQL." link="/cms/features/users-permissions/graphql-api"/>
 </CustomDocCardsWrapper>
 
