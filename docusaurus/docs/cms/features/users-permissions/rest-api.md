@@ -118,7 +118,7 @@ curl -X POST http://localhost:1337/api/auth/local/register \
 :::note
 Only `username`, `email`, and `password` are accepted in the request body by default. To allow additional fields (e.g., a `fullName` field you added to the User content-type), you must explicitly list them in the `register.allowedFields` configuration. See [Registration configuration](/cms/features/users-permissions#registration-configuration) for details.
 
-When email confirmation is enabled, the response contains only the user object without a JWT -- the user must confirm their email before they can log in.
+When email confirmation is enabled, the response contains only the user object without a JWT. The user must confirm their email before they can log in.
 
 The newly registered user is assigned the default role (typically "Authenticated").
 :::
@@ -239,7 +239,7 @@ This endpoint is rate limited.
 
 Confirms a user's email address using a token from the confirmation email.
 
-Query parameter: `confirmation` -- the token received in the confirmation email.
+Query parameter: `confirmation` (the token received in the confirmation email).
 
 <ApiCall>
 

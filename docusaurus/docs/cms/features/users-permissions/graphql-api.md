@@ -45,7 +45,7 @@ mutation {
 
 Input type `UsersPermissionsLoginInput`:
 
-- `identifier` (String!) -- email or username
+- `identifier` (String!): email or username
 - `password` (String!)
 - `provider` (String, defaults to "local")
 
@@ -97,7 +97,7 @@ mutation {
 }
 ```
 
-Input: `email` (String!) -- direct argument, not wrapped in an input type.
+Input: `email` (String!), passed as a direct argument, not wrapped in an input type.
 
 Returns `UsersPermissionsPasswordPayload`: `ok` (Boolean!)
 
@@ -122,7 +122,7 @@ mutation {
 
 Input (direct arguments):
 
-- `code` (String!) -- reset token from email
+- `code` (String!): reset token from email
 - `password` (String!)
 - `passwordConfirmation` (String!)
 
