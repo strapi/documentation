@@ -23,7 +23,7 @@ tags:
 
 ---
 
-# Frequently Asked Questions
+# Frequently asked questions
 
 Below are answers and solutions to most common issues that you may experience when working with Strapi.
 
