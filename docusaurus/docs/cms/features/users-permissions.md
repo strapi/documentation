@@ -588,7 +588,7 @@ The Users & Permissions feature exposes authentication, user management, and rol
 <CustomDocCard icon="cube" title="GraphQL API" description="Authentication mutations, user queries, and role management via GraphQL." link="/cms/features/users-permissions/graphql-api"/>
 </CustomDocCardsWrapper>
 
-#### Token usage
+### Token usage
 
 The `jwt` received when logging in or registering may then be used for making permission-restricted API requests. To make an API request as a user, place the JWT into an `Authorization` header of the request using the Bearer token pattern:
 
@@ -616,7 +616,7 @@ axios
 
 Any request without a token will assume the `public` role permissions by default. Modify the permissions of each user's role in the admin panel. Authentication failures return a `401 (unauthorized)` error.
 
-#### User object in Strapi context
+### User object in Strapi context
 
 The `user` object is available to successfully authenticated requests.
 
