@@ -67,6 +67,6 @@ All AI requests are processed through Strapi-managed infrastructure. Content is 
 
 ## Strapi MCP server
 
-Strapi includes a built-in [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that lets AI clients like Claude, Cursor, or any MCP-compatible tool manage your content through natural language. Once enabled and connected, an AI assistant can create, read, update, delete, publish, and unpublish entries directly through Strapi's Content Manager, all gated by admin token permissions.
+Strapi includes a built-in [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that lets AI clients like Claude, Cursor, or any MCP-compatible tool manage your content through natural language. Once enabled and connected, an AI assistant can create, read, update, delete, publish, and unpublish entries directly through Strapi's Content Manager, all gated by Admin token permissions.
 
 <CustomDocCard icon="feather" title="MCP server" description="Learn how to enable, configure, connect to, and use Strapi's built-in MCP server." link="/cms/features/strapi-mcp-server" />
