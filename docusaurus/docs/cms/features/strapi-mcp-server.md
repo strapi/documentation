@@ -71,9 +71,11 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server =>
   app: {
     keys: env.array('APP_KEYS'),
   },
+  // highlight-start
   mcp: {
     enabled: true,
   },
+  // highlight-end
 });
 export default config;
 ```
