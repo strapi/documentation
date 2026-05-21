@@ -59,7 +59,7 @@ A codemod should handle this migration. If not, please refer to the documentatio
 
 #### How it works in Strapi 5
 
-The fields `username`, `email`, and `password` are always accepted by the registration endpoint -- they are hardcoded as `alwaysAllowedKeys` in the Users & Permissions plugin source. Any other field on the User content-type must be explicitly listed in `allowedFields` or the request will be rejected with a `400` status and an error message like `"Invalid parameters: fieldName"`.
+The fields `username`, `email`, and `password` are always accepted by the registration endpoint. They are hardcoded as `alwaysAllowedKeys` in the Users & Permissions feature source. Any other field on the User content-type must be explicitly listed in `allowedFields` or the request will be rejected with a `400` status and an error message like `"Invalid parameters: fieldName"`.
 
 To allow additional fields on registration, update your plugin configuration:
 
