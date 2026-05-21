@@ -103,9 +103,6 @@ mcp: {
 },
 ```
 
-:::note
-The timeout options are read at runtime and are not yet included in Strapi's `Server` TypeScript configuration type. If you use TypeScript, the basic `mcp: { enabled: true }` object is fully typed, but adding timeout keys may require a type assertion.
-:::
 
 ### Strapi admin panel configuration
 
