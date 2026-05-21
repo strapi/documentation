@@ -23986,6 +23986,22 @@ export default config;
 ```
 
 
+## Advanced options
+Description: | Option | Type | Default | Description | |--------|------|---------|-------------| | enabled | Boolean | false | Enable or disable the MCP server.
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#advanced-options)
+
+Language: JavaScript
+File path: config/server.js
+
+```js
+mcp: {
+  enabled: true,
+  connectTimeoutMs: 10000, // 10 seconds
+  requestTimeoutMs: 120000, // 2 minutes
+},
+```
+
+
 ## Connecting Claude Desktop
 Description: Add the Strapi MCP server to Claude's configuration file, as in the following example, replacing YOURADMINTOKEN with the admin token value copied from the admin panel:
 (Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-claude-desktop)
