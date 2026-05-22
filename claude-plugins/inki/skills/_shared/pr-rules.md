@@ -78,8 +78,8 @@ After creation, show the PR URL.
 
 ## Do not
 
-- Create a PR from `main`
-- Use feat:/chore:/fix: in the title
-- Start the description with anything other than "This PR ..."
-- Create a PR without showing the plan first
-- Force-push or rewrite history
+- Do not create a PR from `main`
+- Do not use feat:/chore:/fix: in the title
+- Do not start the description with anything other than "This PR ..."
+- Do not create a PR without showing the plan first
+- Do not force-push or rewrite history
