@@ -58,6 +58,7 @@ Branch and History Safety
 - Never delete local or remote branches unless explicitly instructed by the maintainer.
 - Get explicit consent before any history rewrite (rebase, squash, filter‑branch); propose the plan first.
 - Prefer creating a new branch over rewriting history unless asked otherwise.
+- When asked to stay low profile, do not open PRs; share progress in the chat only.
 
 Branch Naming
 - Every branch must be prefixed based on the documentation area it touches:
