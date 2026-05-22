@@ -11,9 +11,9 @@ user-invocable: true
 
 `$ARGUMENTS` is a relative path.
 
-## Step 2: Apply the migrated known-pitfalls prompt
+## Step 2: Load the known-pitfalls catalog
 
-Read `../../references/prompts/integrity-known-pitfalls.md` and use it as the system prompt over the target.
+Read `../../references/prompts/integrity-known-pitfalls.md`. This file is a reference catalog of documented hallucination patterns (organized by category, with tables mapping the wrong pattern to the correct one and a short context note). For each entry, check whether the target file matches the hallucinated pattern.
 
 ## Step 3: Report
 
