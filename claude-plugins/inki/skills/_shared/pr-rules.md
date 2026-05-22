@@ -78,7 +78,7 @@ After creation, show the PR URL.
 
 ## Do not
 
-- Do not create a PR from `main`
+- Do not open a PR from `main` as the source branch (a PR requires a feature branch; `main` is the merge target, never the source)
 - Do not use feat:/chore:/fix: in the title
 - Do not start the description with anything other than "This PR ..."
 - Do not create a PR without showing the plan first
