@@ -219,6 +219,16 @@
       "number": 26392,
       "reason": "Router: Internal bug fix aligning server-side validator with already-documented public API. No user-facing behavior or API contract changes. The documentation already correctly references 'language' as the code block field.",
       "added": "2026-05-21"
+    },
+    {
+      "number": 25988,
+      "reason": "Router: Internal database migration optimization (batching improvements). No public API, feature, or user-facing behavior changes. This is implementation-level performance tuning.",
+      "added": "2026-05-22"
+    },
+    {
+      "number": 26400,
+      "reason": "Router: Bug fix for PR #25793 regression. Once #25793 is documented, this fix is already covered by that documentation. This is implementation-level, no new user-facing behavior.",
+      "added": "2026-05-22"
     }
   ]
 }
