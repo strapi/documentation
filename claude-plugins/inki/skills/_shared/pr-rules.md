@@ -1,6 +1,6 @@
 # Shared PR Rules
 
-These rules apply to ALL pull requests the user creates, in any repo.
+These rules apply to all pull requests created on strapi/documentation.
 
 ## Gather context
 

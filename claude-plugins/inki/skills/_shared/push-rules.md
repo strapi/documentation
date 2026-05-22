@@ -1,6 +1,6 @@
 # Shared Push Rules
 
-These rules apply to ALL pushes the user makes, in any repo.
+These rules apply to all pushes made on strapi/documentation.
 
 ## Gather branch state
 
@@ -28,11 +28,7 @@ git rev-parse --abbrev-ref @{upstream} 2>/dev/null || echo "NO_UPSTREAM"
 
 ## Safety checks
 
-**If on `main` (or `master`, `develop`):**
-
-Check which repo you are in:
-- **PAWS (`ai-work-system`):** Pushing to `main` is the default. Continue normally.
-- **All other repos:** Refuse immediately.
+**If on `main` (or `master`, `develop`, `next`):** refuse immediately.
 
 > You are on `main`. Pushing directly to main is not allowed without explicit maintainer consent.
 

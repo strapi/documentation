@@ -1,6 +1,6 @@
 # Shared PR Title Rules
 
-These rules apply to every PR title the user creates, in any repo.
+These rules apply to every PR title created on strapi/documentation.
 
 ## Generate or rewrite a PR title
 

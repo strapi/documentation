@@ -1,6 +1,6 @@
 # Shared Commit Rules
 
-These rules apply to ALL commits the user makes, in any repo.
+These rules apply to all commits made on strapi/documentation.
 
 ## Gather context
 
