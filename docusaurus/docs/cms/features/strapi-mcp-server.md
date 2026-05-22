@@ -14,7 +14,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # MCP server
-<VersionBadge version="5.47.0"/>
+<BetaBadge /> <VersionBadge version="5.47.0"/> 
 
 <Tldr>
 
