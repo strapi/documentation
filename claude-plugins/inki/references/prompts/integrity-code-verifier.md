@@ -18,7 +18,7 @@ For the confidence model, risk assessment, and annotation format, see the parent
 
 - **content**: Markdown/MDX content to verify (documentation page, draft, or PR diff)
 - **codebase_access**: Ability to search and fetch files from the Strapi codebase. Methods, in order of preference:
-  1. Local filesystem access (fastest: `grep` and `cat` are near-instant). The codebase location varies by setup. Common paths: `strapi-codebase/` in the `strapi/strapi-docs-product-merger` repo, or a local clone of `strapi/strapi`. The agent should receive the path as input or detect it from context, never assume a hardcoded location.
+  1. Local filesystem access (fastest: `grep` and `cat` are near-instant). The codebase location varies by setup. Common path: a local clone of `strapi/strapi`. The agent should receive the path as input or detect it from context, never assume a hardcoded location.
   2. GitHub MCP tools (`github:get_file_contents`, `github:search_code`)
   3. Raw GitHub fetch (`https://raw.githubusercontent.com/strapi/strapi/develop/[path]`)
 

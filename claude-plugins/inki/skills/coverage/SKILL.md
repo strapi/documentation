@@ -12,10 +12,9 @@ user-invocable: true
 This skill compares a Strapi feature's public surface against the documentation. It needs access to the Strapi codebase, in one of these forms (by preference):
 
 1. **A local clone of `strapi/strapi`.** Fastest and most reliable. Pass the path as input or ask the user.
-2. **A local clone of `strapi/strapi-docs-product-merger`** (which contains a `strapi-codebase/` subdir). Acceptable fallback.
-3. **Raw GitHub fetch** (`https://raw.githubusercontent.com/strapi/strapi/develop/<path>`). Works offline-less but rate-limited and slower.
+2. **Raw GitHub fetch** (`https://raw.githubusercontent.com/strapi/strapi/develop/<path>`). Works without a local clone but rate-limited and slower.
 
-If none of the above is available, ask the user for a path or fall back to GitHub fetches.
+If neither is available, ask the user for a path or fall back to GitHub fetches.
 
 ## Step 1: Identify the feature
 
