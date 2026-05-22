@@ -36,7 +36,7 @@ The Router cannot make reliable placement decisions without these files. If neit
 
 When the user provides a GitHub PR as source material, use the GitHub MCP tools to fetch the PR content directly.
 
-👉 **See [GitHub MCP Usage Guide](agents/prompts/shared/github-mcp-usage.md)** for the full workflow.
+👉 **See [GitHub MCP Usage Guide](claude-plugins/inki/references/prompts/shared/github-mcp-usage.md)** for the full workflow.
 
 **Quick reference:**
 1. `github:get_pull_request(owner, repo, pull_number)` → PR title, description
@@ -74,7 +74,7 @@ A structured Markdown report containing:
 
 | Page | What to do |
 |------|------------|
-| `path/to/new-page.md` | **Create** new page — follow [Feature template](https://github.com/strapi/documentation/blob/main/agents/templates/feature-template.md) + [Features authoring guide](https://github.com/strapi/documentation/blob/main/agents/authoring/AGENTS.cms.features.md) |
+| `path/to/new-page.md` | **Create** new page — follow [Feature template](https://github.com/strapi/documentation/blob/main/claude-plugins/inki/references/templates/feature-template.md) + [Features authoring guide](https://github.com/strapi/documentation/blob/main/claude-plugins/inki/references/authoring/AGENTS.cms.features.md) |
 | `path/to/existing.md` | **Update** — add [description] to "[Section name]" section |
 | `path/to/other.md` | **Update** — add row to "[Table name]" table |
 | `path/to/conditional.md` | **Later** — [condition, e.g., "when X feature ships"] |
@@ -306,12 +306,12 @@ Set `ask_user` (as a top-level YAML field or as the placement decision) when:
 
 | Type | Path patterns | Template | Authoring guide |
 |------|--------------|----------|-----------------|
-| **Feature** | `cms/features/*` | `agents/templates/feature-template.md` | `agents/cms/features/AGENTS.md` |
-| **Plugin** | `cms/plugins/*` (not `plugins-development`) | `agents/templates/plugin-template.md` | `agents/cms/plugins/AGENTS.md` |
-| **Configuration** | `cms/configurations/*` | `agents/templates/configuration-template.md` | `agents/cms/configurations/AGENTS.md` |
-| **Guide** | `**/guides/*` or task-oriented "How to…" | `agents/templates/guide-template.md` | `agents/cms/AGENTS.guides.md` |
-| **API** | `cms/api/*` | `agents/templates/api-template.md` | `agents/cms/api/AGENTS.md` |
-| **Breaking Change** | `cms/migration/**/breaking-changes/*.md` | `agents/templates/breaking-change-template.md` | `agents/cms/migration/AGENTS.md` |
+| **Feature** | `cms/features/*` | `claude-plugins/inki/references/templates/feature-template.md` | `agents/cms/features/AGENTS.md` |
+| **Plugin** | `cms/plugins/*` (not `plugins-development`) | `claude-plugins/inki/references/templates/plugin-template.md` | `agents/cms/plugins/AGENTS.md` |
+| **Configuration** | `cms/configurations/*` | `claude-plugins/inki/references/templates/configuration-template.md` | `agents/cms/configurations/AGENTS.md` |
+| **Guide** | `**/guides/*` or task-oriented "How to…" | `claude-plugins/inki/references/templates/guide-template.md` | `agents/cms/AGENTS.guides.md` |
+| **API** | `cms/api/*` | `claude-plugins/inki/references/templates/api-template.md` | `agents/cms/api/AGENTS.md` |
+| **Breaking Change** | `cms/migration/**/breaking-changes/*.md` | `claude-plugins/inki/references/templates/breaking-change-template.md` | `agents/cms/migration/AGENTS.md` |
 | **Concept** | Introductions, overviews, conceptual pages | None | `agents/cms/AGENTS.concepts.md` |
 | **Cloud** | `cloud/*` | None | `agents/cloud/AGENTS.md` |
 | **Snippet** | `snippets/*` | None | `agents/snippets/AGENTS.md` |
@@ -404,7 +404,7 @@ For **each target** in the routing:
 1. **Determine document type** from the target's path (see Document Types table)
 2. **Locate the template** (if one exists for this type)
 3. **Locate the authoring guide** (if one exists for this type)
-4. If no template or guide exists for a target, note that the [12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04) and the [Style Checker](https://github.com/strapi/documentation/blob/main/agents/prompts/style-checker.md) are the minimum standards.
+4. If no template or guide exists for a target, note that the [12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04) and the [Style Checker](https://github.com/strapi/documentation/blob/main/claude-plugins/inki/references/prompts/style-checker.md) are the minimum standards.
 
 **Important:** Each target may have a different document type. For example, a routing with both `cms/features/mcp-server.md` and `cms/configurations/server.md` requires:
 - Feature template + Features authoring guide for the feature page
@@ -432,7 +432,7 @@ The "Existing pages found" table must show the correct template and authoring gu
 
 8. **Respect existing architecture.** Prefer fitting content into the existing structure over creating new categories. `create_category` should be rare and always confirmed with the user.
 
-9. **Use GitHub MCP when available.** When the source is a GitHub PR, use the GitHub MCP tools to fetch the PR content directly rather than asking the user to paste it. See [GitHub MCP Usage Guide](agents/prompts/shared/github-mcp-usage.md).
+9. **Use GitHub MCP when available.** When the source is a GitHub PR, use the GitHub MCP tools to fetch the PR content directly rather than asking the user to paste it. See [GitHub MCP Usage Guide](claude-plugins/inki/references/prompts/shared/github-mcp-usage.md).
 
 10. **Stay in scope.** The Router decides *where* content goes. It does NOT:
     - Extract detailed specifications from the source material (→ Outline Generator)
@@ -639,7 +639,7 @@ targets:
 
 **Source:** User says "Route PR #1542 from strapi/documentation"
 
-**Expected workflow:** See [GitHub MCP Usage Guide](agents/prompts/shared/github-mcp-usage.md)
+**Expected workflow:** See [GitHub MCP Usage Guide](claude-plugins/inki/references/prompts/shared/github-mcp-usage.md)
 
 1. Fetch PR metadata → Title: "Add MCP Server documentation"
 2. Fetch changed files → `docs/cms/features/mcp-server.md` (added), `docs/cms/configurations/server.md` (modified)

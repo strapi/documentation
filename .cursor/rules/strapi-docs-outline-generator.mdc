@@ -48,8 +48,8 @@ The machine-readable YAML from the Router, containing:
 
 ```yaml
 doc_type: feature | plugin | configuration | guide | api | breaking-change
-template: agents/templates/feature-template.md    # or null
-guide: agents/authoring/AGENTS.cms.features.md    # or null
+template: claude-plugins/inki/references/templates/feature-template.md    # or null
+guide: claude-plugins/inki/references/authoring/AGENTS.cms.features.md    # or null
 key_topics: [topic1, topic2, topic3]
 
 targets:
@@ -75,7 +75,7 @@ The raw input that describes what needs to be documented:
 
 **Not required when:** `action: create_page` — the page doesn't exist yet.
 
-**How to obtain it:** Use GitHub MCP tools to fetch the file from the repository (see `agents/prompts/shared/github-mcp-usage.md`).
+**How to obtain it:** Use GitHub MCP tools to fetch the file from the repository (see `claude-plugins/inki/references/prompts/shared/github-mcp-usage.md`).
 
 ---
 
@@ -95,8 +95,8 @@ If the Router output contains multiple `primary` targets (rare), generate a sepa
 
 **Before analyzing source material**, read the template and authoring guide specified in the Router output:
 
-1. **Read the template file** (e.g., `agents/templates/feature-template.md`). This is the Single Source of Truth (SSOT) for required sections, components, and structure.
-2. **Read the authoring guide** (e.g., `agents/authoring/AGENTS.cms.features.md`). This provides additional conventions, heading rules, and quality expectations.
+1. **Read the template file** (e.g., `claude-plugins/inki/references/templates/feature-template.md`). This is the Single Source of Truth (SSOT) for required sections, components, and structure.
+2. **Read the authoring guide** (e.g., `claude-plugins/inki/references/authoring/AGENTS.cms.features.md`). This provides additional conventions, heading rules, and quality expectations.
 
 If both `template` and `guide` are null (rare), fall back to the type-specific heuristics in the "Document type handling" section below plus the 12 Rules of Technical Writing.
 
@@ -151,8 +151,8 @@ Generate the structured YAML outline following the output format defined below.
 
 ### Feature (`doc_type: feature`)
 
-**Template:** `agents/templates/feature-template.md`
-**Guide:** `agents/authoring/AGENTS.cms.features.md`
+**Template:** `claude-plugins/inki/references/templates/feature-template.md`
+**Guide:** `claude-plugins/inki/references/authoring/AGENTS.cms.features.md`
 
 **Skeleton:** H1 → `<Tldr>` → Intro → `<IdentityCard>` → `## Configuration` → `## Usage`
 
@@ -164,8 +164,8 @@ Generate the structured YAML outline following the output format defined below.
 
 ### Plugin (`doc_type: plugin`)
 
-**Template:** `agents/templates/plugin-template.md`
-**Guide:** `agents/authoring/AGENTS.cms.plugins.md`
+**Template:** `claude-plugins/inki/references/templates/plugin-template.md`
+**Guide:** `claude-plugins/inki/references/authoring/AGENTS.cms.plugins.md`
 
 **Skeleton:** H1 → `<Tldr>` → `<IdentityCard isPlugin>` → `## Installation` → `## Configuration` → `## Usage`
 
@@ -182,8 +182,8 @@ Generate the structured YAML outline following the output format defined below.
 
 ### Configuration (`doc_type: configuration`)
 
-**Template:** `agents/templates/configuration-template.md`
-**Guide:** `agents/authoring/AGENTS.cms.configurations.md`
+**Template:** `claude-plugins/inki/references/templates/configuration-template.md`
+**Guide:** `claude-plugins/inki/references/authoring/AGENTS.cms.configurations.md`
 
 **Common core:** H1 → `<Tldr>` → `:::caution` (if applicable) → Intro paragraph (names file paths)
 
@@ -198,8 +198,8 @@ Generate the structured YAML outline following the output format defined below.
 
 ### Guide (`doc_type: guide`)
 
-**Template:** `agents/templates/guide-template.md`
-**Guide:** `agents/authoring/AGENTS.cms.guides.md`
+**Template:** `claude-plugins/inki/references/templates/guide-template.md`
+**Guide:** `claude-plugins/inki/references/authoring/AGENTS.cms.guides.md`
 
 **Skeleton:** H1 → `<Tldr>` → Intro → `:::prerequisites` → Steps → `## Troubleshooting` (optional)
 
@@ -212,8 +212,8 @@ Generate the structured YAML outline following the output format defined below.
 
 ### API (`doc_type: api`)
 
-**Template:** `agents/templates/api-template.md`
-**Guide:** `agents/authoring/AGENTS.cms.api.md`
+**Template:** `claude-plugins/inki/references/templates/api-template.md`
+**Guide:** `claude-plugins/inki/references/authoring/AGENTS.cms.api.md`
 
 API pages have **3 sub-types**. Determine from source material:
 
@@ -244,8 +244,8 @@ Each endpoint H2 has H3s: Path/query parameters, Request body, Responses, Exampl
 
 ### Breaking Change (`doc_type: breaking-change`)
 
-**Template:** `agents/templates/breaking-change-template.md`
-**Guide:** `agents/authoring/AGENTS.cms.breaking-changes.md`
+**Template:** `claude-plugins/inki/references/templates/breaking-change-template.md`
+**Guide:** `claude-plugins/inki/references/authoring/AGENTS.cms.breaking-changes.md`
 
 **Skeleton:** imports → H1 → Summary → `<Intro />` → `<BreakingChangeIdCard />` → `## Breaking change description` → `## Migration`
 
