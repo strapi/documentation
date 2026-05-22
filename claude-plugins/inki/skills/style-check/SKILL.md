@@ -17,13 +17,16 @@ git diff main...HEAD --name-only -- '*.md'
 
 ## Step 2: Run the deterministic style script
 
-If a `scripts/style-lint.sh` exists in the repo, run it on the target. Otherwise rely solely on the AI judgment pass below.
+The plugin ships a deterministic linter at `claude-plugins/inki/scripts/style-lint.sh`. It checks Markdown/MDX files against regex-based rules from the 12 Rules of Technical Writing (em dashes, casual language, simplification suggestions, bold prefixes that should be admonitions, etc.). Exit codes: `0` clean, `1` errors found, `2` warnings only.
+
+Resolve the script path from the skill's location and run it on the target:
 
 ```bash
-REPO_ROOT=$(git rev-parse --show-toplevel)
-[ -f "$REPO_ROOT/scripts/style-lint.sh" ] && \
-  "$REPO_ROOT/scripts/style-lint.sh" <target>
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")/../../scripts" && pwd)"
+"$SCRIPT_DIR/style-lint.sh" <target>
 ```
+
+If invoked from a Claude Code session, the equivalent is to read `../../scripts/style-lint.sh` relative to this SKILL.md and execute it on the target.
 
 ## Step 3: Apply the migrated style-checker prompt
 
