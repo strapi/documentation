@@ -1,0 +1,9 @@
+[
+  {
+    "name": "inki",
+    "source": {
+      "source": "local",
+      "path": "./claude-plugins/inki"
+    }
+  }
+]
