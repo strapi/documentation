@@ -86,7 +86,7 @@ Report success or failure.
 
 ## Do not
 
-- Push to `main`/`master`/`develop` without double confirmation from the user
-- Force-push under any circumstances
-- Push without showing the plan first, unless explicitly instructed so by the user for the current session
-- Delete any branches
+- Do not push to `main`/`master`/`develop` without double confirmation from the user
+- Do not force-push under any circumstances
+- Do not push without showing the plan first, unless explicitly instructed so by the user for the current session
+- Do not delete any branches
