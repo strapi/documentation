@@ -24,7 +24,7 @@ command -v gh >/dev/null || { echo "gh CLI required"; exit 1; }
 
 ## Step 1: Load the canonical rules
 
-Read `../_shared/pr-description-rules.md` and `git-rules.md` at the repo root (the description section). Layer the strict strapi/documentation overrides on top:
+Read `../_shared/pr-description-rules.md` and `../../references/git-rules.md` (the description section). Layer the strict strapi/documentation overrides on top:
 
 1. Must start with "This PR ..."
 2. No headings (no `##`, no `###`)
