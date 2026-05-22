@@ -13,6 +13,17 @@ After install, the skills are available at `/inki:<skill>`. The plugin is persis
 
 ## Skill families
 
+**Notation for skill arguments:**
+
+- `<arg>` = required argument.
+- `[arg]` = optional argument.
+- `<brief>` = a topic description, either as inline text (e.g., "MCP server feature, AI tools section, similar to existing AI pages") or as a path to a `.md` file containing the description.
+- `<outline>` = path to an outline file produced by `/inki:outline`.
+- `<path>` = path to a documentation file (under `docusaurus/docs/`).
+- `<topic>` = a keyword or short phrase to search for (e.g., "MCP server").
+- `[hint]` = an optional issue reference (e.g., `Fixes #2143`) or short topic hint passed through to the PR.
+- `[PR#]` = a pull request number (e.g., `2143`).
+
 ### Discover — before you write
 
 Find out what already exists, where to put new content, what's missing.
