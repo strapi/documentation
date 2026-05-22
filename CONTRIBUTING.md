@@ -109,6 +109,29 @@ That’s it! 🥳 Once the pull request is [reviewed and approved](#review-and-m
 
 If your contribution takes part in the [Docs Contribution Program](https://strapi.notion.site/Documentation-Contribution-Program-1d08f359807480d480fdde68bb7a5a71), as soon as your pull request is merged, you should receive an email with a link to the Strapi Shop where points you have earned will have been granted to your account.
 
+## 🤖 Working with the Inki Claude Code plugin
+
+This repository hosts the **Inki** Claude Code plugin under `claude-plugins/inki/`. Inki bundles skills, prompts, templates, and authoring guides used to maintain these docs.
+
+### Installing Inki
+
+If you use Claude Code, you can install Inki with two slash commands:
+
+```bash
+/plugin marketplace add strapi/documentation
+/plugin install inki@strapi-documentation
+```
+
+### Editing canonical rules
+
+`git-rules.md` and `12-rules-of-technical-writing.md` at the repository root are the **canonical** versions. Copies live in `claude-plugins/inki/references/` for the plugin's autonomy, and are auto-synced by a GitHub Action on every PR.
+
+Always edit the root file, never the copy inside `claude-plugins/inki/references/`. CI rejects PRs that modify only the plugin copies.
+
+### Editing agent prompts, templates, and authoring guides
+
+These now live inside the plugin at `claude-plugins/inki/references/prompts/`, `references/templates/`, and `references/authoring/`. The historical `agents/` folder contains only a pointer README.
+
 ## Review and management of pull requests
 
 The pull request review process and timeline are based on the availability of the Strapi Documentation team to handle community contributions. The workflow is as follows:
