@@ -30,11 +30,11 @@ Strapi is a community-oriented project with an emphasis on transparency. The Str
 Community members also take great part in providing the whole community a plethora of resources about Strapi. You can find <ExternalLink to="https://strapi.io/tutorials/" text="tutorials"/> on the Strapi website, where you can also create your own. Also, as an open-source project, the documentation of Strapi is open to contributions (see [Open-source & Contribution](#open-source--contribution)).
 
 :::strapi Want to join the community?
-You can join <ExternalLink to="https://github.com/strapi/strapi" text="GitHub"/>, the <ExternalLink to="https://forum.strapi.io/" text="Forum"/>, and the <ExternalLink to="https://discord.strapi.io" text="Discord"/> to share your ideas and opinions with other community members and members of the Strapi team. If you're looking for news and updates about Strapi, <ExternalLink to="https://twitter.com/strapijs" text="Twitter"/> and the <ExternalLink to="https://strapi.io/blog" text="blog"/> are pretty good places to start!
+You can join <ExternalLink to="https://github.com/strapi/strapi" text="GitHub"/>, <ExternalLink to="https://github.com/strapi/strapi/discussions" text="GitHub Discussions"/>, and the <ExternalLink to="https://discord.strapi.io" text="Discord"/> to share your ideas and opinions with other community members and members of the Strapi team. If you're looking for news and updates about Strapi, <ExternalLink to="https://twitter.com/strapijs" text="Twitter"/> and the <ExternalLink to="https://strapi.io/blog" text="blog"/> are pretty good places to start!
 :::
 
 ## Support
 
-Strapi's Community plan is a free and open-source option for users who wish to self-host the software. If you have an issue or a question, the <ExternalLink to="https://forum.strapi.io" text="forum"/> is great first place to reach out for help. Both the Strapi community and core developers often check this platform and answer posts.
+Strapi's Community plan is a free and open-source option for users who wish to self-host the software. If you have an issue or a question, <ExternalLink to="https://github.com/strapi/strapi/discussions" text="GitHub Discussions"/> and the community <ExternalLink to="https://discord.strapi.io" text="Discord"/> are great first places to reach out for help. Both the Strapi community and core developers often check these platforms and answer posts.
 
 For customers on our paid plans, you can reference our <ExternalLink to="https://support.strapi.io/support/home" text="Support platform"/> to determine your support level and check out our Support platform for more information. Please note that you must have an active <GrowthBadge /> or <EnterpriseBadge /> plan to submit a ticket.
