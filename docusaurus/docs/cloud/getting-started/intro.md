@@ -55,3 +55,7 @@ Strapi Cloud is built on top of Strapi, an open-source, community-oriented proje
 
 You can also join <ExternalLink to="https://github.com/strapi/strapi" text="GitHub"/>, the <ExternalLink to="https://forum.strapi.io/" text="Forum"/>, and the <ExternalLink to="https://discord.strapi.io" text="Discord"/> and benefit from the years of experience, knowledge, and contributions by the Strapi community as a whole.
 :::
+
+:::tip Need help?
+Strapi Cloud customers on eligible plans can contact the Strapi team through the <ExternalLink to="https://support.strapi.io/support/home" text="Strapi Support platform"/>. Support level depends on your plan (see the [Cloud fundamentals](/cloud/cloud-fundamentals) page).
+:::
