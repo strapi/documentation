@@ -72,11 +72,11 @@ Branch on response:
 
 ## Step 4: Vercel preview link handling
 
-If the original description had a `Direct preview link 👉 [here](https://...)` line as its last line, preserve that line at the end of the new description. Otherwise do not add one (this skill is for rewriting, not creation; that is `/doc-pr`'s job).
+If the original description had a `Direct preview link 👉 [here](https://...)` line as its last line, preserve that line at the end of the new description. Otherwise do not add one (this skill is for rewriting, not creation; that is `/inki:pr`'s job).
 
 ## Step 5: Final summary
 
-Same table format as `/doc-pr-title-fix`.
+Same table format as `/inki:pr-title-fix`.
 
 ## Rules
 

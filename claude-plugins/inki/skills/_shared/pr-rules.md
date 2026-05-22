@@ -39,11 +39,11 @@ Read the full diff and all commit messages to understand:
 
 ## Generate PR title
 
-Apply the rules in `_shared/pr-title-rules.md`. The same rules are used by `/doc-pr-title-fix` (rewrite mode), so a title produced here will pass the rewrite skill's check.
+Apply the rules in `_shared/pr-title-rules.md`. The same rules are used by `/inki:pr-title-fix` (rewrite mode), so a title produced here will pass the rewrite skill's check.
 
 ## Generate PR description
 
-Apply the rules in `_shared/pr-description-rules.md`. The same rules are used by `/doc-pr-description-fix` (rewrite mode). Repos with stricter requirements (e.g., strapi/documentation) layer extra rules on top inside their own SKILL.md.
+Apply the rules in `_shared/pr-description-rules.md`. The same rules are used by `/inki:pr-description-fix` (rewrite mode). Repos with stricter requirements (e.g., strapi/documentation) layer extra rules on top inside their own SKILL.md.
 
 ## Show PR plan for approval
 

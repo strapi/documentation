@@ -58,7 +58,7 @@ For example: `https://documentation-git-cms-mcp-server-strapijs.vercel.app/cms/f
 
 ## Step 4: Suggest push first if needed
 
-If no upstream exists, suggest running `/doc-push` first.
+If no upstream exists, suggest running `/inki:push` first.
 
 ## Good description examples
 
