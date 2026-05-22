@@ -1,13 +1,11 @@
 ---
 name: pr-description-fix
-description: "Rewrite the description of one or more open PRs on strapi/documentation to match git-rules.md. Tier 2 strict, one-by-one confirmation."
+description: "Rewrite the description of one or more open PRs on strapi/documentation to match git-rules.md. Strict one-by-one confirmation."
 argument-hint: "[PR#] [PR#] ... (no args = all open PRs on strapi/documentation)"
 user-invocable: true
 ---
 
 # Rewrite PR descriptions on strapi/documentation
-
-**Autonomy Tier: 2 (strict, one-by-one).** For each non-compliant description, show the proposal and wait for confirmation before editing.
 
 **Repo:** strapi/documentation only. Refuses elsewhere.
 

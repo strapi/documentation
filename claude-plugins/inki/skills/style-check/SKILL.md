@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:style-check — style lint for documentation files
 
-**Autonomy Tier: 1 (reports only) or 2 (with --fix flag).**
-
 ## Step 1: Determine target
 
 `$ARGUMENTS` is a relative path. If empty, use the diff between current branch and `main`:

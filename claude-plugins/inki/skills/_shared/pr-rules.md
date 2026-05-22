@@ -1,6 +1,6 @@
 # Shared PR Rules
 
-These rules apply to ALL pull requests Pierre creates, in any repo.
+These rules apply to ALL pull requests the user creates, in any repo.
 
 ## Gather context
 
@@ -47,7 +47,7 @@ Apply the rules in `_shared/pr-description-rules.md`. The same rules are used by
 
 ## Show PR plan for approval
 
-Present to Pierre:
+Present to the user:
 
 ```
 Repo: <repo-name>
@@ -63,7 +63,7 @@ Description:
 Command: gh pr create --title "..." --body "..."
 ```
 
-Wait for Pierre's approval. If Pierre edits title or description, re-validate.
+Wait for the user's approval. If the user edits title or description, re-validate.
 
 ## Create PR
 

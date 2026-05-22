@@ -1,6 +1,6 @@
 # Shared PR Description Rules
 
-These rules apply to every PR description Pierre creates, in any repo. Specific repos can layer stricter rules on top (see `doc-pr/SKILL.md` for the strapi/documentation overrides).
+These rules apply to every PR description the user creates, in any repo. Specific repos can layer stricter rules on top (see `doc-pr/SKILL.md` for the strapi/documentation overrides).
 
 ## Generate or rewrite a PR description
 

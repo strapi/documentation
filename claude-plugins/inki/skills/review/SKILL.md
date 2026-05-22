@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:review — full documentation review
 
-**Autonomy Tier: 1 (default) or 2 (with --fix).**
-
 ## Step 1: Resolve target
 
 `$ARGUMENTS`: either a path (file or directory under `docusaurus/docs/`) or empty (default to `git diff main...HEAD --name-only -- '*.md'`).

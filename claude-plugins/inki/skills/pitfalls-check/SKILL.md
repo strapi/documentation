@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:pitfalls-check — known pitfalls audit
 
-**Autonomy Tier: 1.**
-
 ## Step 1: Read the target file
 
 `$ARGUMENTS` is a relative path.

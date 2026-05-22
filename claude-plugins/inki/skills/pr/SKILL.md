@@ -7,8 +7,6 @@ user-invocable: true
 
 # Documentation Pull Request (strapi/documentation only)
 
-**Autonomy Tier: 2** -- drafts PR title and body, shows for approval before creating.
-
 **Repo:** strapi/documentation only. Refuses to run elsewhere.
 
 ## Input

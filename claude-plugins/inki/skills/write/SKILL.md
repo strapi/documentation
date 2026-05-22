@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:write — outline then draft
 
-**Autonomy Tier: 2.**
-
 ## Workflow
 
 1. Invoke `/inki:outline $ARGUMENTS`. Wait for user approval (handled inside the sub-skill).

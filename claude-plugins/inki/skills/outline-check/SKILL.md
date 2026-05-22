@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:outline-check — outline structure audit
 
-**Autonomy Tier: 1.**
-
 ## Step 1: Identify the target and its template
 
 `$ARGUMENTS` is a relative path to a documentation page. Identify which template this page should match (feature, plugin, guide, API, configuration, breaking-change) by reading the page's frontmatter and content.

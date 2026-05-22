@@ -1,6 +1,6 @@
 # Shared Push Rules
 
-These rules apply to ALL pushes Pierre makes, in any repo.
+These rules apply to ALL pushes the user makes, in any repo.
 
 ## Gather branch state
 
@@ -60,7 +60,7 @@ git log main..HEAD --oneline 2>/dev/null || git log master..HEAD --oneline 2>/de
 
 ## Show push plan for approval
 
-Present to Pierre:
+Present to the user:
 
 ```
 Repo: <repo-name>
@@ -74,9 +74,9 @@ Commits to push:
 Command: git push -u origin <branch-name>
 ```
 
-**Autonomy Tier: 2** -- wait for Pierre's approval before pushing.
+Wait for the user's approval before pushing.
 
-**Exception:** If Pierre said "commit and push" (or similar) in the current session, the push is pre-approved. Skip the confirmation and execute directly.
+**Exception:** If the user said "commit and push" (or similar) in the current session, the push is pre-approved. Skip the confirmation and execute directly.
 
 ## Execute push
 
@@ -90,7 +90,7 @@ Report success or failure.
 
 ## Do not
 
-- Push to `main`/`master`/`develop` without double confirmation from Pierre
+- Push to `main`/`master`/`develop` without double confirmation from the user
 - Force-push under any circumstances
-- Push without showing the plan first, unless explicitly instructed so by Pierre for the current session
+- Push without showing the plan first, unless explicitly instructed so by the user for the current session
 - Delete any branches

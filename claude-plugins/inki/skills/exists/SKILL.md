@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:exists — find existing coverage on a topic
 
-**Autonomy Tier: 1.** Read-only, no side effects.
-
 ## Input
 
 `$ARGUMENTS`: a topic or keyword (e.g. `MCP server`, `hasPublishedVersion`, `openapi.json route`).

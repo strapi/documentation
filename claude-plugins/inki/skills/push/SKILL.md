@@ -7,8 +7,6 @@ user-invocable: true
 
 # Documentation Push (strapi/documentation only)
 
-**Autonomy Tier: 2** -- shows what will be pushed, waits for approval.
-
 **Repo:** strapi/documentation only. Refuses to run elsewhere.
 
 ## Step 0: Validate working directory
@@ -30,7 +28,7 @@ Check the branch name follows git-rules.md conventions:
 - Must start with `/cms/`, `/cloud/`, or `/repo/`
 - No other prefixes (`/doc/`, `/docs/`, `/feat/`, `/fix/`, etc.)
 
-If non-compliant, warn Pierre but do not block (renaming an existing branch is disruptive). Suggest the correct prefix for future reference.
+If non-compliant, warn the user but do not block (renaming an existing branch is disruptive). Suggest the correct prefix for future reference.
 
 ## Step 3: Suggest branch creation if on main
 

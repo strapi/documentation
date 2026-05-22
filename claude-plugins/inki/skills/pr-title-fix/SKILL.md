@@ -1,13 +1,11 @@
 ---
 name: pr-title-fix
-description: "Rewrite the title of one or more open PRs on strapi/documentation to match git-rules.md. Tier 2 strict, one-by-one confirmation."
+description: "Rewrite the title of one or more open PRs on strapi/documentation to match git-rules.md. Strict one-by-one confirmation."
 argument-hint: "[PR#] [PR#] ... (no args = all open PRs on strapi/documentation)"
 user-invocable: true
 ---
 
 # Rewrite PR titles on strapi/documentation
-
-**Autonomy Tier: 2 (strict, one-by-one).** For each non-compliant title, show the proposal and wait for confirmation before editing.
 
 **Repo:** strapi/documentation only. Refuses elsewhere.
 
@@ -70,5 +68,5 @@ After all PRs are processed, print a table:
 
 - Never edit a title without explicit confirmation.
 - Never propose a title that itself fails the rules.
-- If the rewrite would change meaning (not just form), prefer to surface that in the Reason line so Pierre can intervene.
+- If the rewrite would change meaning (not just form), prefer to surface that in the Reason line so the user can intervene.
 - Do not touch the PR description.

@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:coverage — feature documentation gap audit
 
-**Autonomy Tier: 1.** Read-only.
-
 ## Step 1: Identify the feature
 
 `$ARGUMENTS` is a Strapi feature name (e.g., "Users & Permissions plugin", "Document Service API"). Resolve to a set of source files in `/Users/piwi/code/strapi` (or, if absent, in `/Users/piwi/code/strapi-docs-product-merger`).

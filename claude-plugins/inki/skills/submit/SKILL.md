@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:submit — branch + commit + push + PR
 
-**Autonomy Tier: 2.** Each sub-step shows its plan and asks for confirmation.
-
 ## Workflow
 
 1. **Branch**: if currently on `main`, invoke `/inki:branch` to create a properly prefixed branch.
@@ -16,9 +14,9 @@ user-invocable: true
 3. **Push**: invoke `/inki:push` (with explicit confirmation).
 4. **PR**: invoke `/inki:pr` to draft and open the PR.
 
-Pierre confirms at each gate.
+the user confirms at each gate.
 
 ## Rules
 
-- If any sub-step fails or Pierre cancels, stop immediately. Do not skip a step.
+- If any sub-step fails or the user cancels, stop immediately. Do not skip a step.
 - Pass through `$ARGUMENTS` (if any) as an issue reference hint to `/inki:pr`.

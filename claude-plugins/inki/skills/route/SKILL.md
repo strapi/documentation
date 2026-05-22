@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:route — route a code PR to its docs targets
 
-**Autonomy Tier: 1.** Read-only analysis.
-
 ## Step 1: Fetch the strapi/strapi PR
 
 `$ARGUMENTS` is a PR number or URL on `strapi/strapi`. Fetch with `gh pr view <num> --repo strapi/strapi --json title,body,files,labels`.

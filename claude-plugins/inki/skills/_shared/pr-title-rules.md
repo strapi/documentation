@@ -1,6 +1,6 @@
 # Shared PR Title Rules
 
-These rules apply to every PR title Pierre creates, in any repo.
+These rules apply to every PR title the user creates, in any repo.
 
 ## Generate or rewrite a PR title
 

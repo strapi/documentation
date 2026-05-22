@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:coherence-check — cross-page coherence
 
-**Autonomy Tier: 1.**
-
 ## Step 1: Read the target file and identify related pages
 
 For the target file, find related pages by:

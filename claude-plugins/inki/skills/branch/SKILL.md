@@ -7,8 +7,6 @@ user-invocable: true
 
 # Documentation Branch (strapi/documentation only)
 
-**Autonomy Tier: 3** -- create the branch directly.
-
 **Repo:** strapi/documentation only. Refuses to run elsewhere.
 
 ## Input

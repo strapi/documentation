@@ -1,6 +1,6 @@
 # Shared Commit Rules
 
-These rules apply to ALL commits Pierre makes, in any repo.
+These rules apply to ALL commits the user makes, in any repo.
 
 ## Gather context
 
@@ -45,7 +45,7 @@ When applying multiple fixes from a review, stash all changes and re-apply them 
 4. **Specificity**: Flag if it is 2 words or fewer, or uses vague terms like "update stuff", "small changes", "tweak things".
 5. **Capitalization**: First word must be capitalized.
 
-If validation fails, show the issue and suggest a corrected version. Do not proceed until Pierre approves.
+If validation fails, show the issue and suggest a corrected version. Do not proceed until the user approves.
 
 Optionally, a short "body" (2-3 sentences) explaining **why** the changes were made can be added.
 
@@ -56,7 +56,7 @@ Optionally, a short "body" (2-3 sentences) explaining **why** the changes were m
 
 ## Execute commit
 
-Tier 3: commit directly, no approval needed. The validation rules above are the safety net.
+Commit directly, no approval needed. The validation rules above are the safety net.
 
 ```bash
 git add <file1> <file2> ... && git commit -m "<validated-message>"

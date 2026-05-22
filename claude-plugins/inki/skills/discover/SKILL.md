@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:discover — pre-writing scout
 
-**Autonomy Tier: 1.**
-
 ## Workflow
 
 Given `$ARGUMENTS`, classify the input:

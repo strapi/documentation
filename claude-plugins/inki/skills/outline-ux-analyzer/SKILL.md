@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:outline-ux-analyzer — pedagogical UX audit
 
-**Autonomy Tier: 1.**
-
 ## Step 1: Read the target
 
 `$ARGUMENTS` is a relative path to a documentation page.

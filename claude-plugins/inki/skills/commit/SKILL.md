@@ -7,8 +7,6 @@ user-invocable: true
 
 # Documentation Commit (strapi/documentation only)
 
-**Autonomy Tier: 3** -- commit autonomously. Only pause for protected files.
-
 **Repo:** strapi/documentation only. Refuses to run elsewhere.
 
 ## Input
@@ -52,5 +50,5 @@ After a successful commit, push automatically if on a working branch:
 BRANCH=$(git branch --show-current)
 ```
 
-- If `$BRANCH` is `main` or `next`: do NOT push. Warn Pierre.
+- If `$BRANCH` is `main` or `next`: do NOT push. Warn the user.
 - Otherwise: `git push -u origin $BRANCH`

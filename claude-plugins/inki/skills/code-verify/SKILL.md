@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:code-verify — verify code blocks
 
-**Autonomy Tier: 1.** Read-only audit.
-
 ## Step 1: Read the target file
 
 `$ARGUMENTS` is a relative path to a `.md` or `.mdx` file under `docusaurus/docs/`.

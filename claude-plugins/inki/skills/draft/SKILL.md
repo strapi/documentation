@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:draft — draft a documentation page from an outline
 
-**Autonomy Tier: 2.** Drafts content; user reviews before commit.
-
 ## Step 1: Read the outline
 
 `$ARGUMENTS` is a path to an outline file produced by `/inki:outline`.

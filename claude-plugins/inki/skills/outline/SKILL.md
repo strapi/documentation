@@ -7,8 +7,6 @@ user-invocable: true
 
 # /inki:outline — generate a page outline
 
-**Autonomy Tier: 2.** Generates an outline; user approves before any draft.
-
 ## Step 1: Read the brief
 
 `$ARGUMENTS` is either inline text or a path to a `.md` file containing the brief.
