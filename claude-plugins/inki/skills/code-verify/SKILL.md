@@ -7,6 +7,16 @@ user-invocable: true
 
 # /inki:code-verify — verify code blocks
 
+## Prerequisites
+
+This skill compares the code blocks in a documentation page against the actual Strapi codebase. It needs access to the source, in one of these forms (by preference):
+
+1. **A local clone of `strapi/strapi`.** Fastest and most reliable. Pass the path as input or ask the user.
+2. **A local clone of `strapi/strapi-docs-product-merger`** (which contains a `strapi-codebase/` subdir). Acceptable fallback.
+3. **Raw GitHub fetch** (`https://raw.githubusercontent.com/strapi/strapi/develop/<path>`). Works offline-less but rate-limited and slower.
+
+If none of the above is available, ask the user for a path or fall back to GitHub fetches.
+
 ## Step 1: Read the target file
 
 `$ARGUMENTS` is a relative path to a `.md` or `.mdx` file under `docusaurus/docs/`.
