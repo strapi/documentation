@@ -640,7 +640,11 @@ The Strapi Cloud documentation is organised in topics in a order that should cor
 :::strapi Welcome to the Strapi community!
 Strapi Cloud is built on top of Strapi, an open-source, community-oriented project. The Strapi team has at heart to share their vision and build the future of Strapi with the Strapi community. This is why the  is open: as all insights are very important and will help steer the project in the right direction. Any community member is most welcome to share ideas and opinions there.
 
-You can also join , the , and the  and benefit from the years of experience, knowledge, and contributions by the Strapi community as a whole.
+You can also join , , and the  and benefit from the years of experience, knowledge, and contributions by the Strapi community as a whole.
+:::
+
+:::tip Need help?
+Strapi Cloud customers on eligible plans can contact the Strapi team through the . Community users can ask questions on  or . Support level depends on your plan (see the [Cloud fundamentals](/cloud/cloud-fundamentals) page).
 :::
 
 
@@ -760,7 +764,7 @@ If you do not resolve the issue within 30 days, your suspended project will be d
 
 #### Project suspension for other reasons
 
-If your project was suspended for reasons other than unpaid invoice leading to subscription cancellation, you may not have the possibility to reactivate your project yourself. You should receive an email with instructions on how to resolve the issue. If you do not receive the email notification, please contact [Strapi Support](mailto:support@strapi.io).
+If your project was suspended for reasons other than unpaid invoice leading to subscription cancellation, you may not have the possibility to reactivate your project yourself. You should receive an email with instructions on how to resolve the issue. If you do not receive the email notification, please contact the .
 
 ### Subscription cancellation
 
@@ -7964,7 +7968,7 @@ Source: https://docs.strapi.io/cms/database-migrations
 Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi application. These migrations are run automatically when the application starts and are executed before the automated schema migrations that Strapi also performs on boot.
 
 :::callout 🚧  Experimental feature
-Database migrations are experimental. This feature is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the 
+Database migrations are experimental. This feature is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on 
 
 </Tabs>
 
