@@ -113,6 +113,17 @@ If your contribution takes part in the [Docs Contribution Program](https://strap
 
 This repository hosts the **Inki** Claude Code plugin under `claude-plugins/inki/`. Inki bundles skills, prompts, templates, and authoring guides used to maintain these docs.
 
+### What Inki does
+
+Inki organizes 21 skills into four families: **Discover** (find what exists), **Write** (outline and draft new pages), **Review** (style, structure, code, coherence, pitfalls), and **Submit** (branch, commit, push, open or rewrite a PR).
+
+A few examples:
+- `/inki:exists <topic>` checks whether a topic is already covered before you write.
+- `/inki:review <path>` runs the full review pipeline on a documentation file.
+- `/inki:pr` opens a PR with a compliant title and description.
+
+For the full skill catalog, install instructions, and editing rules, see [`claude-plugins/inki/README.md`](claude-plugins/inki/README.md).
+
 ### Installing Inki
 
 If you use Claude Code, you can install Inki with two slash commands:
