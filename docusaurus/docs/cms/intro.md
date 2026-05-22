@@ -65,5 +65,5 @@ If you also make your first steps with JavaScript web development while discover
 :::
 
 :::tip Need help?
-Customers on paid plans can reach the Strapi team through the <ExternalLink to="https://support.strapi.io/support/home" text="Strapi Support platform"/>. Community users can ask questions on the <ExternalLink to="https://forum.strapi.io/" text="forum"/> or <ExternalLink to="https://discord.strapi.io" text="Discord"/>.
+Customers on paid plans can reach the Strapi team through the <ExternalLink to="https://support.strapi.io/support/home" text="Strapi Support platform"/>. Community users can ask questions on <ExternalLink to="https://github.com/strapi/strapi/discussions" text="GitHub Discussions"/> or <ExternalLink to="https://discord.strapi.io" text="Discord"/>.
 :::
