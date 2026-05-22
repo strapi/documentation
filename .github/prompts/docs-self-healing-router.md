@@ -14,7 +14,7 @@ You run on Haiku for cost efficiency. Do NOT draft content or create PRs.
 ## Instructions
 
 1. **Read these files once:**
-   - Router prompt: `$DOC_REPO/agents/prompts/router.md`
+   - Router prompt: `$DOC_REPO/claude-plugins/inki/references/prompts/router.md`
    - Sidebars: `$DOC_REPO/docusaurus/sidebars.js`
    - Page index: `$DOC_REPO/docusaurus/static/llms.txt`
 
@@ -36,7 +36,7 @@ You run on Haiku for cost efficiency. Do NOT draft content or create PRs.
       "decision": "has_targets",
       "complexity": "full",
       "reason": "",
-      "targets_yaml": "targets:\n  - path: cms/features/x.md\n    action: update_section\n    priority: primary\n    existing_section: \"Configuration\"\n    description: \"Add feature X config options\"\n\ndoc_type: feature\ntemplate: null\nguide: agents/authoring/AGENTS.cms.features.md\nconfidence: high"
+      "targets_yaml": "targets:\n  - path: cms/features/x.md\n    action: update_section\n    priority: primary\n    existing_section: \"Configuration\"\n    description: \"Add feature X config options\"\n\ndoc_type: feature\ntemplate: null\nguide: claude-plugins/inki/references/authoring/AGENTS.cms.features.md\nconfidence: high"
     },
     {
       "number": 12350,

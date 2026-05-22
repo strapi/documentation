@@ -22,11 +22,11 @@ containing `targets`, `doc_type`, `template`, `guide`, and `confidence`.
 ## Step 2 — Run the documentation pipeline (per PR with targets)
 
 **Load these agent prompts now:**
-- Orchestrator: `$DOC_REPO/agents/prompts/orchestrator.md`
-- Outline Generator: `$DOC_REPO/agents/prompts/outline-generator.md`
-- Drafter: `$DOC_REPO/agents/prompts/drafter.md`
-- Style Checker: `$DOC_REPO/agents/prompts/style-checker.md`
-- Integrity Checker: `$DOC_REPO/agents/prompts/integrity-checker.md`
+- Orchestrator: `$DOC_REPO/claude-plugins/inki/references/prompts/orchestrator.md`
+- Outline Generator: `$DOC_REPO/claude-plugins/inki/references/prompts/outline-generator.md`
+- Drafter: `$DOC_REPO/claude-plugins/inki/references/prompts/drafter.md`
+- Style Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/style-checker.md`
+- Integrity Checker: `$DOC_REPO/claude-plugins/inki/references/prompts/integrity-checker.md`
 
 For each PR, read the pre-fetched body and diff from `/tmp/pr-<NUMBER>-body.txt` and `/tmp/pr-<NUMBER>.diff`.
 
@@ -34,7 +34,7 @@ Follow the auto-chain execution from the Orchestrator:
 
 1. **For `create_page` targets:**
    - Run Outline Generator with Router YAML + source material
-   - Also load: `$DOC_REPO/agents/prompts/outline-checker.md`
+   - Also load: `$DOC_REPO/claude-plugins/inki/references/prompts/outline-checker.md`
    - Run Drafter in Compose mode with the outline
    - Self-review: run Style Checker and Outline Checker on output
    - If errors: re-run Drafter once with corrections (max 1 retry)
@@ -52,10 +52,10 @@ Follow the auto-chain execution from the Orchestrator:
    - Run Integrity Checker on the final output (links, paths, anchors, code block syntax)
    - Log any issues but do not block PR creation — Pierre will verify during review
 
-**Authoring guides:** For each target, load the relevant authoring guide from `$DOC_REPO/agents/authoring/`
+**Authoring guides:** For each target, load the relevant authoring guide from `$DOC_REPO/claude-plugins/inki/references/authoring/`
 based on the Router's `doc_type` and target path. Read per target, not upfront.
 
-**Templates:** For `create_page` targets, load the relevant template from `$DOC_REPO/agents/templates/`
+**Templates:** For `create_page` targets, load the relevant template from `$DOC_REPO/claude-plugins/inki/references/templates/`
 based on the Router's `doc_type`.
 
 ## Step 3 — Create branch and draft PR (per PR)
