@@ -20,8 +20,9 @@ git diff main...HEAD --name-only -- '*.md'
 If a `scripts/style-lint.sh` exists in the repo, run it on the target. Otherwise rely solely on the AI judgment pass below.
 
 ```bash
-[ -f /Users/piwi/code/documentation/scripts/style-lint.sh ] && \
-  /Users/piwi/code/documentation/scripts/style-lint.sh <target>
+REPO_ROOT=$(git rev-parse --show-toplevel)
+[ -f "$REPO_ROOT/scripts/style-lint.sh" ] && \
+  "$REPO_ROOT/scripts/style-lint.sh" <target>
 ```
 
 ## Step 3: Apply the migrated style-checker prompt

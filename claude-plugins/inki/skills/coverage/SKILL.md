@@ -9,7 +9,7 @@ user-invocable: true
 
 ## Step 1: Identify the feature
 
-`$ARGUMENTS` is a Strapi feature name (e.g., "Users & Permissions plugin", "Document Service API"). Resolve to a set of source files in `/Users/piwi/code/strapi` (or, if absent, in `/Users/piwi/code/strapi-docs-product-merger`).
+`$ARGUMENTS` is a Strapi feature name (e.g., "Users & Permissions plugin", "Document Service API"). Resolve to a set of source files in a local checkout of `strapi/strapi` (or, if absent, in a local checkout of `strapi/strapi-docs-product-merger`). Ask the user for the local path if neither is available.
 
 ## Step 2: Enumerate the public surface
 

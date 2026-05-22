@@ -19,28 +19,14 @@ user-invocable: true
 git rev-parse --show-toplevel 2>/dev/null
 ```
 
-Confirm output is `/Users/piwi/code/documentation`. If not, refuse with:
-> This skill only works in strapi/documentation. Use `/piwi-pr` for other repos.
+Confirm the working tree is a checkout of `strapi/documentation`. If not, refuse with:
+> This skill only works in strapi/documentation.
 
 ## Step 1: Apply shared PR rules
 
 Read and follow `../_shared/pr-rules.md` for: gathering context, analyzing changes, generating the title (delegates to `../_shared/pr-title-rules.md`), generating the description (delegates to `../_shared/pr-description-rules.md`), showing the plan, and creating the PR.
 
-## Step 2: Strict description rules (extra, doc-specific)
-
-The PR description MUST follow git-rules.md strictly:
-
-1. **Must start with "This PR ..."**
-2. Minimal: 1-3 sentences or a short bullet list
-3. **No headings** (no `##`, no `###`)
-4. **No "Test plan" section**
-5. **No checklists** (no `- [ ]`)
-6. **Flat text only**
-7. Issue references go at the very end: `Fixes #2143`
-
-These rules override the shared PR rules for description format.
-
-## Step 3: Add Vercel preview link
+## Step 2: Add Vercel preview link
 
 Append a Vercel preview link as the last line of the PR body. Build it from the branch name:
 
@@ -54,7 +40,7 @@ Direct preview link 👉 [here](https://documentation-git-<branch-slug>-strapijs
 
 For example: `https://documentation-git-cms-mcp-server-strapijs.vercel.app/cms/features/strapi-mcp-server`
 
-## Step 4: Suggest push first if needed
+## Step 3: Suggest push first if needed
 
 If no upstream exists, suggest running `/inki:push` first.
 

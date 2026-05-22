@@ -24,7 +24,7 @@ command -v gh >/dev/null || { echo "gh CLI required"; exit 1; }
 
 ## Step 1: Load the canonical rules
 
-Read `../_shared/pr-title-rules.md` and `/Users/piwi/code/documentation/git-rules.md` (section "Pull Request Titles"). Use both as the single source of truth for what counts as compliant.
+Read `../_shared/pr-title-rules.md` and `git-rules.md` at the repo root (section "Pull Request Titles"). Use both as the single source of truth for what counts as compliant.
 
 ## Step 2: Classify each PR
 

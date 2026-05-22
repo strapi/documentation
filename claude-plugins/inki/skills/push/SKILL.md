@@ -15,8 +15,8 @@ user-invocable: true
 git rev-parse --show-toplevel 2>/dev/null
 ```
 
-Confirm output is `/Users/piwi/code/documentation`. If not, refuse with:
-> This skill only works in strapi/documentation. Use `/piwi-push` for other repos.
+Confirm the working tree is a checkout of `strapi/documentation` (the remote URL ends with `strapi/documentation` or `strapi/documentation.git`). If not, refuse with:
+> This skill only works in strapi/documentation.
 
 ## Step 1: Apply shared push rules
 

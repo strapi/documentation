@@ -43,7 +43,7 @@ Apply the rules in `_shared/pr-title-rules.md`. The same rules are used by `/ink
 
 ## Generate PR description
 
-Apply the rules in `_shared/pr-description-rules.md`. The same rules are used by `/inki:pr-description-fix` (rewrite mode). Repos with stricter requirements (e.g., strapi/documentation) layer extra rules on top inside their own SKILL.md.
+Apply the rules in `_shared/pr-description-rules.md`. The same rules are used by `/inki:pr-description-fix` (rewrite mode).
 
 ## Show PR plan for approval
 

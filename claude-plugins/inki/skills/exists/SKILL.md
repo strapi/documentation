@@ -15,28 +15,31 @@ If no argument is provided and the conversation has context (e.g. a PR was just 
 
 ## Step 1: Search the page index
 
-Read `/Users/piwi/code/documentation/docusaurus/static/llms.txt` and find lines mentioning the topic (case-insensitive).
+Read `docusaurus/static/llms.txt` at the repo root and find lines mentioning the topic (case-insensitive).
 
 ```bash
-grep -i "<topic>" /Users/piwi/code/documentation/docusaurus/static/llms.txt | head -20
+REPO_ROOT=$(git rev-parse --show-toplevel)
+grep -i "<topic>" "$REPO_ROOT/docusaurus/static/llms.txt" | head -20
 ```
 
 ## Step 2: Search doc files
 
 ```bash
-grep -rli "<topic>" /Users/piwi/code/documentation/docusaurus/docs/cms /Users/piwi/code/documentation/docusaurus/docs/cloud 2>/dev/null | head -20
+REPO_ROOT=$(git rev-parse --show-toplevel)
+grep -rli "<topic>" "$REPO_ROOT/docusaurus/docs/cms" "$REPO_ROOT/docusaurus/docs/cloud" 2>/dev/null | head -20
 ```
 
 For each match, optionally check when it was last touched:
 
 ```bash
-git -C /Users/piwi/code/documentation log -1 --format="%ai" -- "<path>"
+git log -1 --format="%ai" -- "<path>"
 ```
 
 ## Step 3: Search sidebars
 
 ```bash
-grep -in "<topic>" /Users/piwi/code/documentation/docusaurus/sidebars.js | head -20
+REPO_ROOT=$(git rev-parse --show-toplevel)
+grep -in "<topic>" "$REPO_ROOT/docusaurus/sidebars.js" | head -20
 ```
 
 ## Step 4: Search GitHub PRs

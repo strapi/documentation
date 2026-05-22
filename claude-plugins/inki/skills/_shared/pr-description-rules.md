@@ -1,13 +1,13 @@
 # Shared PR Description Rules
 
-These rules apply to every PR description created on strapi/documentation. The `/inki:pr` skill layers stricter rules on top (no headings, "This PR ..." opener, no test plan).
+These rules apply to every PR description created on strapi/documentation.
 
 ## Generate or rewrite a PR description
 
-1. Start with "This PR ..."
-2. 1-5 sentences or a short bullet list summarizing what and why.
-3. No boilerplate sections (no "Summary", no "Test plan", no "Checklist").
-4. Issue references at the end if provided (e.g., `Fixes #2143`).
+1. Must start with "This PR ...".
+2. 1-3 sentences or a short bullet list summarizing what and why.
+3. Flat text only: no headings (no `##`, no `###`), no boilerplate sections (no "Summary", no "Test plan", no "Checklist").
+4. Issue references at the very end if provided, e.g., `Fixes #2143`.
 5. If documenting a `strapi/strapi` PR, add a `Documents` reference at the end with a markdown link, e.g., `Documents [#26847](https://github.com/strapi/strapi/pull/26847)`.
 
 ## Good descriptions (illustrative)
