@@ -11,5 +11,5 @@
 - Review family: `/inki:review`, `/inki:style-check`, `/inki:outline-check`, `/inki:outline-ux-analyzer`, `/inki:code-verify`, `/inki:coherence-check`, `/inki:pitfalls-check`.
 - Submit family: `/inki:submit`, `/inki:branch`, `/inki:commit`, `/inki:push`, `/inki:pr`, `/inki:pr-title-fix`, `/inki:pr-description-fix`, `/inki:pr-body-fix` (alias).
 - 1-way root → plugin sync GitHub Action with drift guard.
-- Migration of `agents/prompts/`, `agents/templates/`, `agents/authoring/` into `claude-plugins/inki/references/`.
-- Pointer README in `agents/` for backward discoverability.
+- Migration of prompts, templates, and authoring guides into `claude-plugins/inki/references/`.
+- Pointer README at the previous location for backward discoverability.
