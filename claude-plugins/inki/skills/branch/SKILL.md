@@ -5,24 +5,15 @@ argument-hint: [description of the work]
 user-invocable: true
 ---
 
-# Documentation Branch (strapi/documentation only)
+# Documentation Branch
 
-**Repo:** strapi/documentation only. Refuses to run elsewhere.
+**Scope:** designed for strapi/documentation (and its forks).
 
 ## Input
 
 `$ARGUMENTS`: description of the work (e.g., "add MCP server page", "fix deployment steps for cloud").
 
 If no arguments provided, ask what the branch is for.
-
-## Step 0: Validate working directory
-
-```bash
-git rev-parse --show-toplevel 2>/dev/null
-```
-
-Confirm the working tree is a checkout of `strapi/documentation` (the remote URL ends with `strapi/documentation` or `strapi/documentation.git`). If not, refuse with:
-> This skill only works in strapi/documentation.
 
 ## Step 1: Detect prefix
 

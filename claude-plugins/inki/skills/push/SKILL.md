@@ -5,18 +5,9 @@ argument-hint: (no arguments)
 user-invocable: true
 ---
 
-# Documentation Push (strapi/documentation only)
+# Documentation Push
 
-**Repo:** strapi/documentation only. Refuses to run elsewhere.
-
-## Step 0: Validate working directory
-
-```bash
-git rev-parse --show-toplevel 2>/dev/null
-```
-
-Confirm the working tree is a checkout of `strapi/documentation` (the remote URL ends with `strapi/documentation` or `strapi/documentation.git`). If not, refuse with:
-> This skill only works in strapi/documentation.
+**Scope:** designed for strapi/documentation (and its forks).
 
 ## Step 1: Apply shared push rules
 

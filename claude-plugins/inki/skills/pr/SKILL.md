@@ -5,22 +5,13 @@ argument-hint: [optional issue reference, e.g. "Fixes #2143"]
 user-invocable: true
 ---
 
-# Documentation Pull Request (strapi/documentation only)
+# Documentation Pull Request
 
-**Repo:** strapi/documentation only. Refuses to run elsewhere.
+**Scope:** designed for strapi/documentation (and its forks).
 
 ## Input
 
 `$ARGUMENTS`: optional issue reference (e.g., `Fixes #2143`, `#2143`) or additional context.
-
-## Step 0: Validate working directory
-
-```bash
-git rev-parse --show-toplevel 2>/dev/null
-```
-
-Confirm the working tree is a checkout of `strapi/documentation`. If not, refuse with:
-> This skill only works in strapi/documentation.
 
 ## Step 1: Apply shared PR rules
 
