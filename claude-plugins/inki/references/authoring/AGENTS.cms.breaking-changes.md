@@ -164,7 +164,7 @@ Summary paragraph (1 sentence)
 
 ## Template
 
-Start from `agents/templates/breaking-change-template.md` to get the correct skeleton with all required imports, components, and sections.
+Start from `claude-plugins/inki/references/templates/breaking-change-template.md` to get the correct skeleton with all required imports, components, and sections.
 
 ## Quality checklist (before commit)
 

@@ -287,10 +287,10 @@ When a prompt needs to run, search project knowledge for the file name (e.g., se
 
 ### Claude Code
 
-The prompt files live in the repository at `agents/prompts/`. Claude Code can read them directly from disk:
+The prompt files live in the repository at `claude-plugins/inki/references/prompts/`. Claude Code can read them directly from disk:
 
 ```
-cat agents/prompts/router.md
+cat claude-plugins/inki/references/prompts/router.md
 ```
 
 The `AGENTS.md` file at the repo root can serve as an alternative entry point, but this system prompt provides more detailed orchestration logic.
@@ -299,7 +299,7 @@ The `AGENTS.md` file at the repo root can serve as an alternative entry point, b
 
 Add the prompt files to the workspace context. Depending on the IDE:
 
-- **Cursor**: Reference prompt files with `@file` (e.g., `@agents/prompts/router.md`) or add them to `.cursor/rules/`. See [Cursor Rules Setup](#cursor-rules-setup) below.
+- **Cursor**: Reference prompt files with `@file` (e.g., `@claude-plugins/inki/references/prompts/router.md`) or add them to `.cursor/rules/`. See [Cursor Rules Setup](#cursor-rules-setup) below.
 - **Windsurf**: Add to `.windsurfrules` or reference in workspace context.
 - **Other IDE agents**: Add the prompt files to whatever context/knowledge mechanism the IDE provides.
 
@@ -493,8 +493,8 @@ The `shared/` folder contains guides used by multiple prompts:
 ## References
 
 - **12 Rules of Technical Writing:** https://github.com/strapi/documentation/blob/main/12-rules-of-technical-writing.md
-- **Templates:** [`agents/templates/` in the repository](https://github.com/strapi/documentation/tree/main/agents/templates)
-- **Authoring guides:** [`agents/authoring/AGENTS.*.md` in the repository](https://github.com/strapi/documentation/tree/main/agents/authoring)
+- **Templates:** [`claude-plugins/inki/references/templates/` in the repository](https://github.com/strapi/documentation/tree/main/claude-plugins/inki/references/templates)
+- **Authoring guides:** [`claude-plugins/inki/references/authoring/AGENTS.*.md` in the repository](https://github.com/strapi/documentation/tree/main/claude-plugins/inki/references/authoring)
 - **Root agent guide:** [`AGENTS.md` in the repository](https://github.com/strapi/documentation/blob/main/AGENTS.md)
 
 ---
@@ -648,12 +648,12 @@ Detected: **[Type]** (from path `[path]`)
 
 | Path pattern | Type | Template |
 |-------------|------|----------|
-| `cms/features/*` | Feature | `agents/templates/feature-template.md` |
-| `cms/plugins/*` | Plugin | `agents/templates/plugin-template.md` |
-| `cms/configurations/*` | Configuration | `agents/templates/configuration-template.md` |
-| `cms/api/*` | API | `agents/templates/api-template.md` |
-| `cms/migration/**/breaking-changes/*` | Breaking Change | `agents/templates/breaking-change-template.md` |
-| `**/guides/*` or "How to..." | Guide | `agents/templates/guide-template.md` |
+| `cms/features/*` | Feature | `claude-plugins/inki/references/templates/feature-template.md` |
+| `cms/plugins/*` | Plugin | `claude-plugins/inki/references/templates/plugin-template.md` |
+| `cms/configurations/*` | Configuration | `claude-plugins/inki/references/templates/configuration-template.md` |
+| `cms/api/*` | API | `claude-plugins/inki/references/templates/api-template.md` |
+| `cms/migration/**/breaking-changes/*` | Breaking Change | `claude-plugins/inki/references/templates/breaking-change-template.md` |
+| `**/guides/*` or "How to..." | Guide | `claude-plugins/inki/references/templates/guide-template.md` |
 
 ---
 

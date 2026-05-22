@@ -14,8 +14,8 @@ Frontmatter (mandatory)
 - Optional: `displayed_sidebar`, `sidebar_label` as needed by navigation.
 
 Templates
-- Start from `agents/templates/api-template.md` to align sections and example layout.
-- See `agents/templates/INDEX.md` for a quick catalog of available templates with paths and purposes.
+- Start from `claude-plugins/inki/references/templates/api-template.md` to align sections and example layout.
+- See `claude-plugins/inki/references/templates/INDEX.md` for a quick catalog of available templates with paths and purposes.
 
 API Overview Pages (e.g., Content API)
 1) H1 title — matches `title` frontmatter.

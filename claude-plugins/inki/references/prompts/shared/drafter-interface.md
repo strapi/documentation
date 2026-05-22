@@ -28,7 +28,7 @@ These fields are always present, regardless of mode:
 ```yaml
 # From the Router
 doc_type: feature | plugin | configuration | guide | api | ...
-template: agents/templates/feature-template.md    # or null
+template: claude-plugins/inki/references/templates/feature-template.md    # or null
 guide: agents/cms/features/AGENTS.md               # or null
 key_topics: [topic1, topic2]
 

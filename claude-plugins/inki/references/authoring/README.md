@@ -8,19 +8,19 @@ These guides are the reference that writers follow when creating or editing page
 
 1) Identify which area of the docs the page belongs to (features, plugins, configurations, etc.).
 2) Read the corresponding guide below for section order, required components, and area-specific conventions.
-3) Use the matching template from `agents/templates/` as a starting point for new pages.
+3) Use the matching template from `claude-plugins/inki/references/templates/` as a starting point for new pages.
 
 ## Catalog
 
 | Guide | Scope | Matching template |
 |-------|-------|-------------------|
 | `AGENTS.cms.md` | All CMS docs — shared rules, frontmatter, TL;DR, code blocks, Tabs | — (root rules, no template) |
-| `AGENTS.cms.api.md` | API reference pages under `docusaurus/docs/cms/api/` | `agents/templates/api-template.md` |
-| `AGENTS.cms.breaking-changes.md` | Breaking change pages under `docusaurus/docs/cms/migration/**/breaking-changes/` | `agents/templates/breaking-change-template.md` |
-| `AGENTS.cms.configurations.md` | Configuration pages under `docusaurus/docs/cms/configurations/` | `agents/templates/configuration-template.md` |
-| `AGENTS.cms.features.md` | Feature pages under `docusaurus/docs/cms/features/` | `agents/templates/feature-template.md` |
-| `AGENTS.cms.guides.md` | How-to guides across CMS docs | `agents/templates/guide-template.md` |
-| `AGENTS.cms.plugins.md` | Plugin pages under `docusaurus/docs/cms/plugins/` | `agents/templates/plugin-template.md` |
+| `AGENTS.cms.api.md` | API reference pages under `docusaurus/docs/cms/api/` | `claude-plugins/inki/references/templates/api-template.md` |
+| `AGENTS.cms.breaking-changes.md` | Breaking change pages under `docusaurus/docs/cms/migration/**/breaking-changes/` | `claude-plugins/inki/references/templates/breaking-change-template.md` |
+| `AGENTS.cms.configurations.md` | Configuration pages under `docusaurus/docs/cms/configurations/` | `claude-plugins/inki/references/templates/configuration-template.md` |
+| `AGENTS.cms.features.md` | Feature pages under `docusaurus/docs/cms/features/` | `claude-plugins/inki/references/templates/feature-template.md` |
+| `AGENTS.cms.guides.md` | How-to guides across CMS docs | `claude-plugins/inki/references/templates/guide-template.md` |
+| `AGENTS.cms.plugins.md` | Plugin pages under `docusaurus/docs/cms/plugins/` | `claude-plugins/inki/references/templates/plugin-template.md` |
 | `AGENTS.cloud.md` | Cloud documentation under `docusaurus/docs/cloud/` | — |
 | `AGENTS.snippets.md` | Shared snippets under `docusaurus/docs/snippets/` | — |
 
@@ -35,5 +35,5 @@ When rules conflict, the most specific guide wins.
 ## References
 
 - Root agent guide: `AGENTS.md`
-- Templates catalog: `agents/templates/README.md`
-- Prompts catalog: `agents/prompts/README.md`
+- Templates catalog: `claude-plugins/inki/references/templates/README.md`
+- Prompts catalog: `claude-plugins/inki/references/prompts/README.md`

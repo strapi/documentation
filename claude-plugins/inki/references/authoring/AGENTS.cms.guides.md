@@ -48,4 +48,4 @@ Tabs reminder
 - For install commands, use Tabs with `groupId="yarn-npm"` and values `yarn`/`npm` (labels `Yarn`/`NPM`).
 
 Templates
-- Start from `agents/templates/guide-template.md` to ensure frontmatter, H1/TL;DR placement, and step structure are consistent.
+- Start from `claude-plugins/inki/references/templates/guide-template.md` to ensure frontmatter, H1/TL;DR placement, and step structure are consistent.

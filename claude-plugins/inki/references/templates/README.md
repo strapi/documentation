@@ -19,11 +19,11 @@ How to use
 
 | Template | Target path | Purpose | Authoring guide |
 |----------|-------------|---------|-----------------|
-| `feature-template.md` | `docusaurus/docs/cms/features/` | Feature pages: TL;DR, intro, identity card, configuration, usage | `agents/authoring/AGENTS.cms.features.md` |
-| `plugin-template.md` | `docusaurus/docs/cms/plugins/` | Plugin pages: identity details, install steps, configuration (admin UI and code), usage tasks | `agents/authoring/AGENTS.cms.plugins.md` |
-| `configuration-template.md` | `docusaurus/docs/cms/configurations/` | Configuration pages: file location, available options, env variables, per‑environment overrides | `agents/authoring/AGENTS.cms.configurations.md` |
-| `guide-template.md` | `docusaurus/docs/cms/` (varies) | How‑to guides: prerequisites, numbered steps, validation, troubleshooting | `agents/authoring/AGENTS.cms.guides.md` |
-| `api-template.md` | `docusaurus/docs/cms/api/` | API reference pages: endpoints, auth, parameters, example requests/responses | `agents/authoring/AGENTS.cms.api.md` |
+| `feature-template.md` | `docusaurus/docs/cms/features/` | Feature pages: TL;DR, intro, identity card, configuration, usage | `claude-plugins/inki/references/authoring/AGENTS.cms.features.md` |
+| `plugin-template.md` | `docusaurus/docs/cms/plugins/` | Plugin pages: identity details, install steps, configuration (admin UI and code), usage tasks | `claude-plugins/inki/references/authoring/AGENTS.cms.plugins.md` |
+| `configuration-template.md` | `docusaurus/docs/cms/configurations/` | Configuration pages: file location, available options, env variables, per‑environment overrides | `claude-plugins/inki/references/authoring/AGENTS.cms.configurations.md` |
+| `guide-template.md` | `docusaurus/docs/cms/` (varies) | How‑to guides: prerequisites, numbered steps, validation, troubleshooting | `claude-plugins/inki/references/authoring/AGENTS.cms.guides.md` |
+| `api-template.md` | `docusaurus/docs/cms/api/` | API reference pages: endpoints, auth, parameters, example requests/responses | `claude-plugins/inki/references/authoring/AGENTS.cms.api.md` |
 | `breaking-change-template.md` | `docusaurus/docs/cms/migration/**/breaking-changes/` | Breaking‑change pages: BreakingChangeIdCard, v4/v5 comparison, migration notes | — |
 
 ## What every template provides
@@ -33,13 +33,13 @@ How to use
 - **`<Tldr>` component** at the top for the page summary.
 - **Standard section headings** in the expected order for that page type.
 - **Placeholder comments** (`<!-- ... -->`) explaining what content to write in each section.
-- **Multi‑language patterns** using Tabs where applicable (see `agents/templates/components/tabs.md` for Tabs/TabItem rules).
-- **Progressive disclosure** using ExpandableContent where applicable (see `agents/templates/components/expandable-content.md` for usage rules).
+- **Multi‑language patterns** using Tabs where applicable (see `claude-plugins/inki/references/templates/components/tabs.md` for Tabs/TabItem rules).
+- **Progressive disclosure** using ExpandableContent where applicable (see `claude-plugins/inki/references/templates/components/expandable-content.md` for usage rules).
 
 ## References
 
 - Root agent guide: `AGENTS.md`
-- Authoring area guides: `agents/authoring/AGENTS.*.md`
-- Tabs/TabItem rules: `agents/templates/components/tabs.md`
-- ExpandableContent rules: `agents/templates/components/expandable-content.md`
-- Annotation rules: `agents/templates/components/annotation.md`
+- Authoring area guides: `claude-plugins/inki/references/authoring/AGENTS.*.md`
+- Tabs/TabItem rules: `claude-plugins/inki/references/templates/components/tabs.md`
+- ExpandableContent rules: `claude-plugins/inki/references/templates/components/expandable-content.md`
+- Annotation rules: `claude-plugins/inki/references/templates/components/annotation.md`

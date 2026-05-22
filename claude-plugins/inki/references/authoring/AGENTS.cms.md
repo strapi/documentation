@@ -14,8 +14,8 @@ Frontmatter and structure
 - Include a <Tldr> section at the top summarizing the page.
 
 Templates
-- CMS authoring templates live in `agents/templates/` (guide, API, configuration, feature, migration, plugin). Start from a template to ensure structure and frontmatter are correct.
-- For a quick overview of available templates (paths and purposes), see `agents/templates/INDEX.md`.
+- CMS authoring templates live in `claude-plugins/inki/references/templates/` (guide, API, configuration, feature, migration, plugin). Start from a template to ensure structure and frontmatter are correct.
+- For a quick overview of available templates (paths and purposes), see `claude-plugins/inki/references/templates/INDEX.md`.
 
 MDX and code blocks
 - Use MDX Tabs for language variants (JS/TS) under the same example.
@@ -23,7 +23,7 @@ MDX and code blocks
 - Never place a code block, table, or other structured element immediately after a heading or another block without an introductory sentence. Every block must be preceded by a complete sentence (subject + verb) that tells the reader what the block contains or demonstrates. End the sentence with a colon when it directly introduces the block. Examples: "The function accepts the following parameters:", "The following example shows how to configure the server:".
 
 Annotations
-- Use the `<Annotation>` component for inline glossary tooltips. See `agents/templates/components/annotation.md` for full rules, props, and canonical examples.
+- Use the `<Annotation>` component for inline glossary tooltips. See `claude-plugins/inki/references/templates/components/annotation.md` for full rules, props, and canonical examples.
 
 Preflight checks before PR
 - `npm run generate:llms-code` (anchors + file checks by default)

@@ -68,4 +68,4 @@ Quality Checklist (before commit)
 - Links and references to related features/APIs are included where helpful.
 
 Templates
-- See `agents/templates/feature-template.md` for a ready‑to‑use skeleton aligned with these conventions.
+- See `claude-plugins/inki/references/templates/feature-template.md` for a ready‑to‑use skeleton aligned with these conventions.

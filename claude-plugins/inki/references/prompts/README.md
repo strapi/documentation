@@ -46,7 +46,7 @@ Router → Outline Generator → Drafter → Style Checker → Integrity Checker
 These prompts can be used in several ways:
 
 - **Claude Projects** — import the `.md` files as project knowledge. Use `claude-project-instructions.md` as the custom instructions (system prompt).
-- **Claude Code** — the prompt files live in `agents/prompts/`. Claude Code reads them directly from disk. `AGENTS.md` at the repo root serves as an alternative entry point.
+- **Claude Code** — the prompt files live in `claude-plugins/inki/references/prompts/`. Claude Code reads them directly from disk. `AGENTS.md` at the repo root serves as an alternative entry point.
 - **Cursor / Windsurf / IDE agents** — add prompt files to workspace context (e.g., `.cursor/rules/`, `@file` references, or equivalent). The agent must be able to read the full prompt spec before executing.
 - **ChatGPT / other LLMs** — upload prompt files to the conversation or copy the relevant prompt's content when needed.
 - **API integrations** — use as system prompts or tool definitions. For machine-only consumers, the Router can return only the YAML block.
@@ -61,5 +61,5 @@ Regardless of platform, the agent must **read the full prompt file before execut
 
 - Entry point (system prompt): `claude-project-instructions.md`
 - Root agent guide: `AGENTS.md`
-- Authoring area guides: `agents/authoring/AGENTS.*.md`
-- Templates catalog: `agents/templates/README.md`
+- Authoring area guides: `claude-plugins/inki/references/authoring/AGENTS.*.md`
+- Templates catalog: `claude-plugins/inki/references/templates/README.md`

@@ -50,7 +50,7 @@ The Drafter operates in one of 3 modes, determined by the target's `priority` an
 
 **Mode selection rule:** If an outline is provided → Compose. If a `micro_instruction` is provided → Micro-edit. Otherwise (existing page + edits needed) → Patch.
 
-See the interface specification (`agents/prompts/shared/drafter-interface.md`) for the full mode selection logic.
+See the interface specification (`claude-plugins/inki/references/prompts/shared/drafter-interface.md`) for the full mode selection logic.
 
 ---
 
@@ -60,8 +60,8 @@ See the interface specification (`agents/prompts/shared/drafter-interface.md`) f
 
 ```yaml
 doc_type: feature | plugin | configuration | guide | api | ...
-template: agents/templates/feature-template.md    # or null
-guide: agents/authoring/AGENTS.cms.features.md     # or null
+template: claude-plugins/inki/references/templates/feature-template.md    # or null
+guide: claude-plugins/inki/references/authoring/AGENTS.cms.features.md     # or null
 key_topics: [topic1, topic2]
 
 target:
@@ -82,7 +82,7 @@ The outline contains:
 - `sections` — the heading tree with `intent`, `content_hints`, `source_refs`, and `components` per node
 - `drafter_notes` — free-text notes about gaps, ambiguities, and cross-links
 
-See the interface specification (`agents/prompts/shared/drafter-interface.md`) for the full outline schema.
+See the interface specification (`claude-plugins/inki/references/prompts/shared/drafter-interface.md`) for the full outline schema.
 
 #### Source material
 

@@ -41,4 +41,4 @@ Quality Checklist (before commit)
 
 Templates
 - When a snippet evolves into a full page, prefer starting from a suitable CMS template:
-- For a compact overview of all templates with paths and purposes, see `agents/templates/INDEX.md`.
+- For a compact overview of all templates with paths and purposes, see `claude-plugins/inki/references/templates/INDEX.md`.

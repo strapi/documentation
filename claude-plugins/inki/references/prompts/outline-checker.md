@@ -52,12 +52,12 @@ The Outline Checker determines the document type using this priority:
 
 | Path pattern | Document type | Template path |
 |--------------|---------------|---------------|
-| `cms/features/*` | Feature | `agents/templates/feature-template.md` |
-| `cms/plugins/*` (not plugins-development) | Plugin | `agents/templates/plugin-template.md` |
-| `cms/configurations/*` | Configuration | `agents/templates/configuration-template.md` |
-| `cms/api/*` | API | `agents/templates/api-template.md` |
-| `cms/migration/**/breaking-changes/*.md` | Breaking Change | `agents/templates/breaking-change-template.md` |
-| `**/guides/*` or title starts with "How to" | Guide | `agents/templates/guide-template.md` |
+| `cms/features/*` | Feature | `claude-plugins/inki/references/templates/feature-template.md` |
+| `cms/plugins/*` (not plugins-development) | Plugin | `claude-plugins/inki/references/templates/plugin-template.md` |
+| `cms/configurations/*` | Configuration | `claude-plugins/inki/references/templates/configuration-template.md` |
+| `cms/api/*` | API | `claude-plugins/inki/references/templates/api-template.md` |
+| `cms/migration/**/breaking-changes/*.md` | Breaking Change | `claude-plugins/inki/references/templates/breaking-change-template.md` |
+| `**/guides/*` or title starts with "How to" | Guide | `claude-plugins/inki/references/templates/guide-template.md` |
 | No match | General | No specific template — apply general rules only |
 
 ### Outputs
@@ -185,7 +185,7 @@ When required, `<Tldr>` must appear immediately after the H1.
 
 > **IMPORTANT — Single Source of Truth (SSOT)**
 > 
-> The templates in `agents/templates/` are the authoritative source for required sections, components, and structure. Before checking a page against its template, **READ the corresponding template file** to get the exact requirements.
+> The templates in `claude-plugins/inki/references/templates/` are the authoritative source for required sections, components, and structure. Before checking a page against its template, **READ the corresponding template file** to get the exact requirements.
 > 
 > The fallback information below is provided only for cases where templates cannot be accessed. Always prefer the template file.
 
@@ -193,7 +193,7 @@ When required, `<Tldr>` must appear immediately after the H1.
 
 #### Feature Pages (`cms/features/*`)
 
-**Template (SSOT):** `agents/templates/feature-template.md`
+**Template (SSOT):** `claude-plugins/inki/references/templates/feature-template.md`
 
 **Fallback — Key components:**
 - `<Tldr>` — Required, immediately after H1
@@ -205,7 +205,7 @@ When required, `<Tldr>` must appear immediately after the H1.
 
 #### Plugin Pages (`cms/plugins/*`)
 
-**Template (SSOT):** `agents/templates/plugin-template.md`
+**Template (SSOT):** `claude-plugins/inki/references/templates/plugin-template.md`
 
 **Fallback — Key components:**
 - `<Tldr>` — Required
@@ -217,7 +217,7 @@ When required, `<Tldr>` must appear immediately after the H1.
 
 #### Guide Pages (`**/guides/*` or "How to..." titles)
 
-**Template (SSOT):** `agents/templates/guide-template.md`
+**Template (SSOT):** `claude-plugins/inki/references/templates/guide-template.md`
 
 **Fallback — Key components:**
 - `<Tldr>` — Required
@@ -230,7 +230,7 @@ When required, `<Tldr>` must appear immediately after the H1.
 
 #### Configuration Pages (`cms/configurations/*`)
 
-**Template (SSOT):** `agents/templates/configuration-template.md`
+**Template (SSOT):** `claude-plugins/inki/references/templates/configuration-template.md`
 
 **Fallback — Key components:**
 - `<Tldr>` — Required
@@ -241,7 +241,7 @@ When required, `<Tldr>` must appear immediately after the H1.
 
 #### API Pages (`cms/api/*`)
 
-**Template (SSOT):** `agents/templates/api-template.md`
+**Template (SSOT):** `claude-plugins/inki/references/templates/api-template.md`
 
 **Fallback — Key components:**
 - `<Tldr>` — Required
@@ -252,7 +252,7 @@ When required, `<Tldr>` must appear immediately after the H1.
 
 #### Breaking Change Pages (`cms/migration/**/breaking-changes/*.md`)
 
-**Template (SSOT):** `agents/templates/breaking-change-template.md`
+**Template (SSOT):** `claude-plugins/inki/references/templates/breaking-change-template.md`
 
 **Fallback — Key components:**
 - `import Intro from '/docs/snippets/breaking-change-page-intro.md'` — Required

@@ -50,8 +50,8 @@ Heading Conventions
 - Use sentence case for all headings.
 
 Templates
-- Start from `agents/templates/configuration-template.md` for frontmatter, H1/TL;DR placement, and building block examples.
-- Quick overview of all templates (paths and purposes): `agents/templates/README.md`.
+- Start from `claude-plugins/inki/references/templates/configuration-template.md` for frontmatter, H1/TL;DR placement, and building block examples.
+- Quick overview of all templates (paths and purposes): `claude-plugins/inki/references/templates/README.md`.
 
 Quality Checklist (before commit)
 - TL;DR present and precise about file paths and scope.
