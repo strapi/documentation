@@ -143,7 +143,7 @@ npx @strapi/upgrade to 5.1.2 --codemods-target 5.1.2
 ```
 
 :::note
-The `to` subcommand stays hidden from the top-level `npx @strapi/upgrade -h` output. Run `npx @strapi/upgrade to --help` to print its dedicated options.
+The `to` subcommand stays hidden from the top-level `npx @strapi/upgrade -h` output. Run `npx @strapi/upgrade to -h` or `npx @strapi/upgrade to --help` to print its dedicated options.
 :::
 
 :::caution
