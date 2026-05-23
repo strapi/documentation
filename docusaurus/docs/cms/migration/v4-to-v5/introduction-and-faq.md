@@ -89,3 +89,15 @@ Once every consumer reads the flattened format, remove the header so Strapi emit
 <br/>
 
 </details>
+
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Can I downgrade from Strapi 5 back to Strapi 4?</summary>
+
+<p>Strapi does not ship an automated downgrade from Strapi 5 to Strapi 4. Data migration scripts that run when Strapi 5 starts are not reversed by the product.</p>
+
+<p>If you must return to Strapi 4, restore the database backup you created before the upgrade and check out the git branch or tag that still matches Strapi 4. Reinstall dependencies so <code>package.json</code> and the lockfile match that snapshot.</p>
+
+<p>Plan backups and staging environments using the <a href="/cms/migration/v4-to-v5/step-by-step">step-by-step guide</a> before you upgrade production.</p>
+<br/>
+
+</details>
