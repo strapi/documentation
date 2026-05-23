@@ -126,6 +126,30 @@ intended.
 In the scenario where the major bump isn't the desired option, see [the minor upgrade](#upgrade-to-a-minor-version).
 :::
 
+### Upgrade to a specific version
+
+Run the upgrade tool with the `to` subcommand followed by a [semantic version](https://semver.org/) number to upgrade dependencies and run codemods up to that exact Strapi version:
+
+```bash
+npx @strapi/upgrade to 5.1.2
+```
+
+During the upgrade process, the project dependencies are updated and installed, and the related codemods are executed (if any).
+
+Pass `--codemods-target` when codemods must target a different semantic version than the one you upgrade to. Pre-releases are a typical use case:
+
+```bash
+npx @strapi/upgrade to 5.1.2 --codemods-target 5.1.2
+```
+
+:::note
+The `to` subcommand stays hidden from the top-level `npx @strapi/upgrade -h` output. Run `npx @strapi/upgrade to --help` to print its dedicated options.
+:::
+
+:::caution
+Package managers can honor `.npmrc` settings such as `min-release-age`. Confirm that the resolved Strapi version matches the one you intend before you upgrade production data.
+:::
+
 ## Run codemods only
 
 Run the upgrade tool with the `codemods` parameter to execute a utility that allows selecting the codemods to be executed. With this command, only the codemods are run, the dependencies are not updated nor installed.
@@ -150,7 +174,7 @@ npx @strapi/upgrade codemods run 5.0.0-strapi-codemod-uid
 
 ## Options
 
-The `npx @strapi/upgrade [major|minor|patch]` commands can accept the following options:
+The `major`, `minor`, `patch`, `latest`, and `to` upgrade commands can accept the following options:
 
 | Option                                                                                  | Description                                                                     | Default  |
 | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------|----------|
@@ -160,7 +184,13 @@ The `npx @strapi/upgrade [major|minor|patch]` commands can accept the following 
 | [`-p, --project-path <project-path>`](#select-a-path-for-the-strapi-application-folder) | [Path](#select-a-path-for-the-strapi-application-folder) to the Strapi project  | -        |
 | [`-y, --yes`](#answer-yes-to-every-prompt)                                              | Automatically [answer "yes"](#answer-yes-to-every-prompt) to every prompt       | false    |
 
-The following options can be run either with the `npx @strapi/upgrade` command alone or with the `npx @strapi/upgrade [major|minor|patch]` commands:
+The `to <target>` command accepts the same options and adds the following flag:
+
+| Option                                                                                  | Description                                                                                  | Default |
+| --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------|---------|
+| `-c, --codemods-target <version>`                                                      | Semantic version passed to codemods when it must differ from `<target>` (for example pre-releases). Expects `<major>.<minor>.<patch>`. | -       |
+
+The following options can be run either with the `npx @strapi/upgrade` command alone or with the upgrade commands listed in this section:
 
 | Option                                                                   | Description                                                      |
 | ------------------------------------------------------------------------ | ---------------------------------------------------------------- |
@@ -221,7 +251,7 @@ npx @strapi/upgrade --silent
 When passing the `--yes` option (or its `-y` shorthand), the tool automatically answers "yes" to every prompt:
 
 ```bash
-npx @strapi/upgrade --yes`
+npx @strapi/upgrade --yes
 ```
 
 ### Get help
