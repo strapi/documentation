@@ -19,6 +19,12 @@ The present page explains how to setup the Keycloak provider for the [Users & Pe
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
 :::
 
+## Custom Keycloak integrations after upgrading from Strapi v4
+
+:::note
+If you upgrade a project that registered Keycloak through a Users & Permissions extension and called `providersRegistry.register()`, update the integration for Strapi 5. Call `add()` on the `providers-registry` service from the application [`register()` function](/cms/configurations/functions#register) in `/src/index.js|ts`, following [Creating and adding a custom Users & Permissions provider](/cms/configurations/users-and-permissions-providers/new-provider-guide#creating-a-custom-provider). Using the old `register()` method on the registry object results in `TypeError: providersRegistry.register is not a function`.
+:::
+
 ## Keycloak configuration
 
 :::note
