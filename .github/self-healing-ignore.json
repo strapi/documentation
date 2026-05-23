@@ -229,6 +229,21 @@
       "number": 26400,
       "reason": "Router: Bug fix for PR #25793 regression. Once #25793 is documented, this fix is already covered by that documentation. This is implementation-level, no new user-facing behavior.",
       "added": "2026-05-22"
+    },
+    {
+      "number": 26054,
+      "reason": "Router: Already merged with documentation updates included in commit. The PR includes docs(provider-amazon-ses) commit that expands configuration examples for IAM and legacy support.",
+      "added": "2026-05-23"
+    },
+    {
+      "number": 26023,
+      "reason": "Router: Bug fix for existing Content Manager feature. Fixes relation search in nested components without introducing new user-facing behavior or API changes. Existing documentation for relations feature already covers this functionality.",
+      "added": "2026-05-23"
+    },
+    {
+      "number": 24101,
+      "reason": "Router: Bug fix for Content Manager accessibility. Resolves issue where private+required fields prevented page access without changing documented behavior or adding new features.",
+      "added": "2026-05-23"
     }
   ]
 }
