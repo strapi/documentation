@@ -20,7 +20,7 @@ import Prerequisite from '/docs/snippets/plugins-development-create-plugin-prere
 
 <Tldr>
 
-Use `addMenuLink` in `register` to add sidebar links, `createSettingSection` in `register` to create settings groups, and `addSettingsLink`/`addSettingsLinks` in `bootstrap` to extend existing settings sections.
+Use `addMenuLink` in `register` to add sidebar links. Use `addSettingsLink` to both create new settings sections (pass a section object as the first argument) and extend existing ones (pass a section id string). The legacy `createSettingSection` and `addSettingsLinks` methods are deprecated.
 
 </Tldr>
 
@@ -43,12 +43,15 @@ A menu link accepts the following parameters:
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `to` | `string` | ✅ | Path the link should point to (relative to the admin panel root) (see [additional information](#path-conventions-for-to)) |
-| `icon` | `React.Component` | ✅ | React component for the icon to display in the navigation |
+| `icon` | `React.ElementType` | ✅ | React component for the icon to display in the navigation |
 | `intlLabel` | `object` | ✅ | Label for the link, following the <ExternalLink to="https://formatjs.io/docs/react-intl" text="React Int'l"/> convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
-| `Component` | `function` | ✅ | Function that returns a dynamic `import()` of the plugin's main page component. The page module must export the component as `default`. |
-| `permissions` | `Array<object>` | ❌ | Array of permission objects that control access to the link |
+| `permissions` | `Array<Permission>` | ✅ | Array of permission objects that control link visibility. Pass `[]` for no restrictions. |
+| `Component` | `function` | ❌ | Function that returns a dynamic `import()` of the plugin's main page component. The page module must export the component as `default`. If omitted, no route is registered (label-only entry). |
 | `position` | `number` | ❌ | Numeric position in the menu (lower numbers appear first) |
 | `licenseOnly` | `boolean` | ❌ | If `true`, displays a ⚡ icon to indicate the feature requires a paid license (default: `false`) |
+| `target` | `string` | ❌ | Standard anchor `target` attribute (e.g. `_blank` for external links) |
+| `notificationsCount` | `number` | ❌ | Badge count shown next to the menu label |
+| `exact` | `boolean` | ❌ | Whether the active-link match should be exact |
 
 :::note
 The `intlLabel.id` values should correspond to keys in your translation files located at `admin/src/translations/[locale].json`. See [Admin localization](/cms/plugins-development/admin-localization) for details.
@@ -136,7 +139,7 @@ The Settings API allows plugins to create new settings sections or add links to 
 
 ### Creating a new settings section
 
-Use `createSettingSection()` in the `register` lifecycle function:
+To create a new settings section, call `addSettingsLink()` with a **section object** (`{ id, intlLabel }`) as the first argument and an array of link objects as the second argument. This can be done in either the `register` or `bootstrap` lifecycle function:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript" default>
@@ -145,7 +148,7 @@ Use `createSettingSection()` in the `register` lifecycle function:
 export default {
   register(app) {
     // highlight-start
-    app.createSettingSection(
+    app.addSettingsLink(
       {
         id: 'my-plugin',
         intlLabel: {
@@ -193,7 +196,7 @@ import type { StrapiApp } from '@strapi/admin/strapi-admin';
 export default {
   register(app: StrapiApp) {
     // highlight-start
-    app.createSettingSection(
+    app.addSettingsLink(
       {
         id: 'my-plugin',
         intlLabel: {
@@ -235,7 +238,7 @@ export default {
 </TabItem>
 </Tabs>
 
-The `createSettingSection()` function accepts the following parameters:
+When used to create a new section, `addSettingsLink()` accepts the following parameters:
 
 * the first argument is the section configuration:
 
@@ -251,13 +254,19 @@ The `createSettingSection()` function accepts the following parameters:
   | `id` | `string` | ✅ | Unique identifier for the settings link |
   | `to` | `string` | ✅ | Path relative to the settings route (do not include `settings/` prefix) (see [additional information](#path-conventions-for-to)) |
   | `intlLabel` | `object` | ✅ | Localized label object with `id` and `defaultMessage` |
-  | `Component` | `function` | ✅ | Function that returns a dynamic `import()` of the settings page component. The page module must export the component as `default`. |
-  | `permissions` | `Array<object>` | ❌ | Array of permission objects that control access to the link |
+  | `permissions` | `Array<Permission>` | ✅ | Array of permission objects that control link visibility. Pass `[]` for no restrictions. |
+  | `Component` | `function` | ❌ | Function that returns a dynamic `import()` of the settings page component. The page module must export the component as `default`. If omitted, no route is registered (label-only entry). |
+  | `position` | `number` | ❌ | Numeric position within the section (lower numbers appear first) |
   | `licenseOnly` | `boolean` | ❌ | If `true`, displays a ⚡ icon (default: `false`) |
+  | `exact` | `boolean` | ❌ | Whether the active-link match should be exact |
+
+:::caution Deprecated: `createSettingSection()`
+The dedicated `app.createSettingSection(section, links)` method is deprecated. It still works (it delegates to `addSettingsLink` internally) but new code should call `addSettingsLink(section, links)` directly. See [Deprecated methods](#deprecated-methods).
+:::
 
 ### Adding links to existing settings sections
 
-To add a single link to an existing settings section, use `addSettingsLink()` in the `bootstrap()` lifecycle function. To add multiple links at once, use `addSettingsLinks()`.
+To add links to an existing settings section, use `addSettingsLink()` in the `bootstrap()` lifecycle function with a **section id string** as the first argument. The second argument can be either a single link object or an array of link objects — both forms are supported by the same method.
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript" default>
@@ -288,7 +297,7 @@ export default {
 
     // Add multiple links at once to the global settings section
     // highlight-start
-    app.addSettingsLinks('global', [
+    app.addSettingsLink('global', [
       {
         intlLabel: {
           id: 'my-plugin.settings.general',
@@ -344,7 +353,7 @@ export default {
 
     // Add multiple links at once to the global settings section
     // highlight-start
-    app.addSettingsLinks('global', [
+    app.addSettingsLink('global', [
       {
         intlLabel: {
           id: 'my-plugin.settings.general',
@@ -372,7 +381,11 @@ export default {
 </TabItem>
 </Tabs>
 
-`addSettingsLink` and `addSettingsLinks` both take a `sectionId` string as the first argument (e.g., `'global'` or `'permissions'`). The second argument is a single link object for `addSettingsLink` or an array of link objects for `addSettingsLinks`, using the same properties as the `links` array in [`createSettingSection()` (see table above)](#creating-a-new-settings-section).
+`addSettingsLink` takes a `sectionId` string as the first argument (e.g., `'global'` or `'permissions'`). The second argument is either a single link object or an array of link objects, using the same properties as the `links` array in [Creating a new settings section](#creating-a-new-settings-section).
+
+:::caution Deprecated: `addSettingsLinks()`
+The plural `app.addSettingsLinks(sectionId, links)` method is deprecated. Call `addSettingsLink(sectionId, links)` (singular) with an array instead — it accepts both single links and arrays. See [Deprecated methods](#deprecated-methods).
+:::
 
 ### Available settings sections
 
@@ -382,7 +395,7 @@ Strapi provides built-in settings sections that plugins can extend:
 - `permissions`: Administration panel settings
 
 :::note
-Creating a new settings section must be done in the `register` lifecycle function. Adding links to existing settings sections must be done in the `bootstrap` lifecycle function.
+Creating a new settings section is typically done in the `register` lifecycle function, while adding links to existing settings sections is done in `bootstrap` (because the target section may be registered by another plugin). Both forms call the same `addSettingsLink()` method, which is exposed on the `app` argument of `register` and as `addSettingsLink` in the `bootstrap` argument bag.
 :::
 
 ### Path conventions for `to`
@@ -392,11 +405,57 @@ The `to` parameter behaves differently depending on the context:
 | Context | `to` value | Final URL |
 |---|---|---|
 | `addMenuLink` | `/plugins/my-plugin` | `http://localhost:1337/admin/plugins/my-plugin` |
-| `createSettingSection` link | `my-plugin/general` | `http://localhost:1337/admin/settings/my-plugin/general` |
-| `addSettingsLink` | `my-plugin/documentation` | `http://localhost:1337/admin/settings/my-plugin/documentation` |
+| `addSettingsLink` (with section object) | `my-plugin/general` | `http://localhost:1337/admin/settings/my-plugin/general` |
+| `addSettingsLink` (with section id) | `my-plugin/documentation` | `http://localhost:1337/admin/settings/my-plugin/documentation` |
 
 For menu links, the path is relative to the admin panel root (`/admin`). For settings links, the path is relative to the settings route (`/admin/settings`). Do not include the `settings/` prefix in settings link paths.
 
 :::strapi Securing plugin routes
 The `permissions` parameter on links only controls visibility in the navigation. To fully protect your plugin pages and register RBAC actions, see the [Admin permissions for plugins](/cms/plugins-development/guides/admin-permissions-for-plugins) guide.
+:::
+
+## Deprecated methods
+
+The following methods on the `StrapiApp` instance are deprecated. They still work for backwards compatibility — both delegate to `addSettingsLink()` internally — but new code should use `addSettingsLink()` directly.
+
+### `createSettingSection(section, links)`
+
+Previously used to register a new settings section and its initial links in one call.
+
+```js
+// ❌ Deprecated
+app.createSettingSection(
+  { id: 'my-plugin', intlLabel: { id: 'my-plugin.settings.section-label', defaultMessage: 'My Plugin Settings' } },
+  [{ id: 'general', to: 'my-plugin/general', intlLabel: { id: 'my-plugin.settings.general', defaultMessage: 'General' }, Component: () => import('./pages/Settings/General') }],
+);
+
+// ✅ Replacement: pass the section object as the first argument to addSettingsLink
+app.addSettingsLink(
+  { id: 'my-plugin', intlLabel: { id: 'my-plugin.settings.section-label', defaultMessage: 'My Plugin Settings' } },
+  [{ id: 'general', to: 'my-plugin/general', intlLabel: { id: 'my-plugin.settings.general', defaultMessage: 'General' }, Component: () => import('./pages/Settings/General') }],
+);
+```
+
+### `addSettingsLinks(sectionId, links)`
+
+Previously used to add multiple links to an existing section in one call. The singular `addSettingsLink()` now accepts either a single link object or an array.
+
+```js
+// ❌ Deprecated
+app.addSettingsLinks('global', [
+  { id: 'general', to: 'my-plugin/general', intlLabel: { id: 'my-plugin.settings.general', defaultMessage: 'General' }, Component: () => import('./pages/Settings/General') },
+  { id: 'advanced', to: 'my-plugin/advanced', intlLabel: { id: 'my-plugin.settings.advanced', defaultMessage: 'Advanced' }, Component: () => import('./pages/Settings/Advanced') },
+]);
+
+// ✅ Replacement: pass the array to addSettingsLink (singular)
+app.addSettingsLink('global', [
+  { id: 'general', to: 'my-plugin/general', intlLabel: { id: 'my-plugin.settings.general', defaultMessage: 'General' }, Component: () => import('./pages/Settings/General') },
+  { id: 'advanced', to: 'my-plugin/advanced', intlLabel: { id: 'my-plugin.settings.advanced', defaultMessage: 'Advanced' }, Component: () => import('./pages/Settings/Advanced') },
+]);
+```
+
+:::note
+- `addSettingsLinks` is still exposed on the `bootstrap` argument bag (alongside `addSettingsLink`, `getPlugin`, and `registerHook`) for backwards compatibility.
+- `createSettingSection` is only reachable via the full `app` instance passed to `register(app)` — it is not part of the `bootstrap` argument bag.
+- Both delegate to `addSettingsLink()` internally and may be removed in a future major version. Migrate when convenient.
 :::
