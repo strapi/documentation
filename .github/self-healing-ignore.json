@@ -244,6 +244,21 @@
       "number": 24101,
       "reason": "Router: Bug fix for Content Manager accessibility. Resolves issue where private+required fields prevented page access without changing documented behavior or adding new features.",
       "added": "2026-05-23"
+    },
+    {
+      "number": 26368,
+      "reason": "Router: Internal bug fix in admin static file serving middleware. Fixes broken behavior where root-level static files could be incorrectly served instead of admin API paths. No user-facing API changes or new capabilities.",
+      "added": "2026-05-27"
+    },
+    {
+      "number": 26245,
+      "reason": "Router: Bug fix for content history feature. Fixes crashes when accessing content history for entries with deleted relations, components, or dynamic zones. Restores existing functionality without adding new capabilities.",
+      "added": "2026-05-27"
+    },
+    {
+      "number": 25027,
+      "reason": "Router: Bug fix for @strapi/upgrade tool. Resolves compatibility issue with Yarn Classic (v1) where registry URL resolution was failing. No new features or API changes; fixes existing tool behavior.",
+      "added": "2026-05-27"
     }
   ]
 }
