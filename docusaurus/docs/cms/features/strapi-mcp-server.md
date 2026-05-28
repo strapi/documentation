@@ -220,7 +220,9 @@ The MCP server exposes 2 categories of tools: content-type tools generated from 
 
 #### Content-type tools
 
-For each content type the token has access to, Strapi generates up to 8 tools: 5 for CRUD operations (list, get, create, update, delete) and 3 for [Draft & Publish](/cms/features/draft-and-publish) actions (publish, unpublish, discard draft):
+The tools generated differ depending on whether the content type is a collection type or a single type.
+
+**Collection types** generate up to 8 tools — 5 for CRUD operations and 3 for [Draft & Publish](/cms/features/draft-and-publish) actions:
 
 | Tool | Action | Permission required | Description |
 |------|--------|-------------------|-------------|
@@ -233,7 +235,18 @@ For each content type the token has access to, Strapi generates up to 8 tools: 5
 | `unpublish` | Unpublish | `publish` | Unpublish a published entry |
 | `discard_draft` | Discard draft | `publish` | Discard draft changes and revert to the published version |
 
-The last 3 tools (publish, unpublish, discard_draft) are only generated for content types that have [Draft & Publish](/cms/features/draft-and-publish) enabled.
+**Single types** generate up to 6 tools. Because a single type always represents exactly one document, there is no `list` tool and create/update are merged into a single `write` tool:
+
+| Tool | Action | Permission required | Description |
+|------|--------|-------------------|-------------|
+| `get` | Read | `read` | Get the single-type document |
+| `write` | Create or update | `create` and/or `update` | Create the document if none exists; update the existing draft otherwise |
+| `delete` | Delete | `delete` | Delete the single-type document |
+| `publish` | Publish | `publish` | Publish the document |
+| `unpublish` | Unpublish | `publish` | Unpublish the published document |
+| `discard_draft` | Discard draft | `publish` | Discard draft changes and revert to the published version |
+
+The publish, unpublish, and discard_draft tools are only generated when [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content type.
 
 
 #### Built-in utility tools
@@ -298,6 +311,22 @@ Like sort fields, filter fields are constrained to scalar attributes only.
 
 The `list` tool also accepts `page` (1-indexed, default: 1) and `pageSize` (default: 25, max: 100) parameters.
 
+#### Relations
+
+Relation fields support both a shorthand document ID string and a full relation object.
+
+**To-one relations** (`oneToOne`, `manyToOne`) accept:
+- A document ID string: `"z7v8zma53x01r6oceimv922b"`
+- A relation object: `{ "documentId": "z7v8zma53x01r6oceimv922b", "locale": "en", "status": "draft" }` (`locale` and `status` are optional)
+- `null` to clear the relation
+
+**To-many relations** (`oneToMany`, `manyToMany`) accept a relation object with one or more of the following keys:
+
+| Key | Description |
+|-----|-------------|
+| `connect` | Add relations. Accepts an array of document ID strings or `{ documentId, locale?, status?, position? }` objects. The optional `position` key supports `{ before?, after?, start?, end? }` ordering hints (default: `{ end: true }`). |
+| `disconnect` | Remove relations. Accepts an array of document ID strings or `{ documentId, locale?, status? }` objects. |
+| `set` | Replace all existing relations with the provided array. Pass `null` to clear all relations. Mutually exclusive with `connect`/`disconnect`. |
 
 ### Permission boundaries
 
@@ -332,9 +361,109 @@ GET and DELETE HTTP methods on the `/mcp` endpoint return a `405 Method Not Allo
 
 The MCP server has the following limitations:
 
-- **Components**: Component fields are passed as untyped (`any`) in tool schemas. The AI client can read and write component data, but the schema does not describe the component's internal structure.
-- **Dynamic zones**: Dynamic zone fields are passed as untyped arrays in tool schemas.
-- **Relations**: Relation fields accept document IDs (e.g., `"z7v8zma53x01r6oceimv922b"`) as input. The advanced `connect`/`disconnect` relation syntax is not yet supported in MCP tool schemas.
+- **Dynamic zones**: Dynamic zone fields are passed as untyped arrays in tool schemas. The internal structure of each component within a dynamic zone is not described.
 - **Nested population parameters**: The `list` and `get` tools do not support nested population parameters for relations.
 - **Media upload**: Media fields accept existing media asset references but the MCP server cannot upload new files. Use Strapi's media library or upload API to add files first, then reference them in MCP tool calls.
 - **Custom fields**: Custom fields registered via plugins are mapped to their underlying Strapi type. If the custom field registry is not populated when MCP tools are registered, the custom field falls back to an `unknown` type.
+- **Circular component references**: Components that reference themselves (directly or indirectly) fall back to an open `record<string, unknown>` schema at the point of the cycle, rather than an infinite recursive structure.
+
+## Plugin API
+
+Strapi plugins can register additional MCP tools, prompts, and resources through the `strapi.ai.mcp` service. All registrations must happen during the plugin's `register()` lifecycle phase, before the MCP server starts.
+
+### Registering a custom tool
+
+Use `strapi.ai.mcp.registerTool()` to expose a custom tool to AI clients:
+
+<Tabs groupId="js-ts">
+<TabItem value="javascript" label="JavaScript">
+
+```js title="src/plugins/my-plugin/strapi-server.js"
+const { z } = require('@strapi/utils');
+
+module.exports = {
+  register({ strapi }) {
+    if (strapi.ai.mcp.isEnabled()) {
+      strapi.ai.mcp.registerTool({
+        name: 'my_custom_tool',
+        title: 'My Custom Tool',
+        description: 'A short description shown to the AI client.',
+        auth: {
+          // The session gate passes when the token satisfies ANY policy in the array.
+          policies: [{ action: 'plugin::my-plugin.my-action' }],
+        },
+        // resolveInputSchema and resolveOutputSchema are called per request,
+        // so they can narrow schemas based on the token's permissions.
+        resolveInputSchema: (context) =>
+          z.object({
+            message: z.string().describe('The message to echo.'),
+          }),
+        resolveOutputSchema: (context) =>
+          z.object({
+            result: z.string(),
+          }),
+        createHandler: (strapi, context) => async ({ args }) => ({
+          content: [{ type: 'text', text: args.message }],
+          structuredContent: { result: args.message },
+        }),
+      });
+    }
+  },
+};
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="src/plugins/my-plugin/strapi-server.ts"
+import { z } from '@strapi/utils';
+
+export default {
+  register({ strapi }) {
+    if (strapi.ai.mcp.isEnabled()) {
+      strapi.ai.mcp.registerTool({
+        name: 'my_custom_tool',
+        title: 'My Custom Tool',
+        description: 'A short description shown to the AI client.',
+        auth: {
+          // The session gate passes when the token satisfies ANY policy in the array.
+          policies: [{ action: 'plugin::my-plugin.my-action' }],
+        },
+        resolveInputSchema: (context) =>
+          z.object({
+            message: z.string().describe('The message to echo.'),
+          }),
+        resolveOutputSchema: (context) =>
+          z.object({
+            result: z.string(),
+          }),
+        createHandler: (strapi, context) => async ({ args }) => ({
+          content: [{ type: 'text', text: args.message }],
+          structuredContent: { result: args.message },
+        }),
+      });
+    }
+  },
+};
+```
+
+</TabItem>
+</Tabs>
+
+#### Tool definition options
+
+| Option | Type | Required | Description |
+|--------|------|----------|-------------|
+| `name` | String | Yes | Unique tool name. Must be unique across all registered MCP tools. |
+| `title` | String | Yes | Human-readable title shown to the AI client. |
+| `description` | String | Yes | Short description of what the tool does. |
+| `auth` | Object | Yes (or `devModeOnly`) | Auth requirement. The session gate passes when the token satisfies **any** policy in the `policies` array. Each policy is `{ action, subject? }`. |
+| `devModeOnly` | Boolean | Yes (or `auth`) | Set to `true` to restrict the tool to development mode only (equivalent to the built-in `log` tool). |
+| `resolveInputSchema` | Function | No | Returns a Zod schema for the tool's input arguments. Called per request so RBAC constraints can be applied dynamically. Omit for tools with no input. |
+| `resolveOutputSchema` | Function | Yes | Returns a Zod schema for the tool's structured output. Called per request. |
+| `createHandler` | Function | Yes | Factory that returns the async tool handler. Receives the Strapi instance and per-request context (including `userAbility` and `user`). |
+| `telemetry` | Object | No | Optional analytics metadata: `{ source?: string; name?: string }`. Use `source` to identify the plugin and `name` to override the raw tool name in analytics events. |
+
+:::note
+`resolveInputSchema` and `resolveOutputSchema` are called once per incoming MCP request, so you can narrow schemas dynamically based on the token's permissions (via `context.userAbility`).
+:::
