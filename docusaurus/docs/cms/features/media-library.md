@@ -702,6 +702,18 @@ Click on the edit <Icon name="pencil-simple" /> button of an asset to open up th
 - On the right, meta data for the asset is displayed at the top of the window <ScreenshotNumberReference number="2" /> and the fields below can be used to update the _File name_, _Alternative text_, _Caption_ and _Location_ (see [Organizing assets with folders](#organizing-assets-with-folders)) for the asset <ScreenshotNumberReference number="3" />.
 - At the bottom, the **Replace Media** button <ScreenshotNumberReference number="4" /> can be used to replace the asset file but keep the existing content of the other editable fields, and the **Finish** button is used to confirm any updates to the fields.
 
+##### Editing asset information
+
+You can edit asset metadata directly from the asset details drawer:
+
+1. Click on the edit <Icon name="pencil-simple" /> button for the asset to edit.
+2. In the details window, modify any of the following fields:
+   - _File name_: Update the displayed name of the asset.
+   - _Alternative text_: Provide alt text for accessibility and SEO (image and video assets).
+   - _Caption_: Add a caption to describe the asset (image and video assets).
+   - _Location_: Move the asset to a different folder by selecting from the location dropdown. The default location is "Media Library" (root folder).
+3. Click **Save** to confirm your changes. The asset is updated immediately and any changes are reflected across your content.
+
 #### Moving assets
 
 1. Click on the edit <Icon name="pencil-simple" /> button for the asset to be moved.
