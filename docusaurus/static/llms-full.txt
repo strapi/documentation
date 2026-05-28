@@ -1932,6 +1932,44 @@ When evaluating editors, start with a plugin from the Marketplace for a quick tr
 
 
 
+# Docs MCP server
+Source: https://docs.strapi.io/cms/ai/docs-mcp-server
+
+# Docs MCP server
+
+The Docs [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server is powered by [Kapa](https://kapa.ai), the same service behind the **Ask AI** button on the documentation website. It draws from the full Strapi documentation, including guides, API references, and code examples. The Docs MCP server is part of the [AI tools for developers](/cms/ai/for-developers) that Strapi offers.
+
+:::strapi MCP servers for Strapi
+Strapi offers 2 different MCP servers:
+
+- the Docs MCP server, covered on the present page,
+- and the Strapi MCP server for content management, covered on its [dedicated feature page](/cms/features/strapi-mcp-server).
+:::
+
+## Compatible tools
+
+The MCP server works with any tool that supports the MCP protocol, including:
+
+- [Cursor](https://cursor.com)
+- [VS Code](https://code.visualstudio.com) with GitHub Copilot
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+- [Windsurf](https://codeium.com/windsurf)
+- Any other MCP-compatible IDE or tool
+
+## Connection details
+
+When opening the Ask AI window, you should see a **Use MCP** dropdown in the top right corner. Click on it and choose which tool you'd like to connect:
+
+    </Tabs>
+
+Once connected, your AI coding assistant can query the Strapi documentation directly to answer questions, suggest implementations, and verify API usage.
+
+:::tip
+For docs-related questions, start your prompts with `Use the strapi-docs MCP server to answer:`. This will ensure the tool queries docs.strapi.io instead of returning answers based on its training data, which can be outdated.
+:::
+
+
+
 # AI for content managers
 Source: https://docs.strapi.io/cms/ai/for-content-managers
 
@@ -1982,7 +2020,7 @@ All AI requests are processed through Strapi-managed infrastructure. Content is 
 
 ## Strapi MCP server
 
-Strapi includes a built-in [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that lets AI clients like Claude, Cursor, or any MCP-compatible tool manage your content through natural language. Once enabled and connected, an AI assistant can create, read, update, delete, publish, and unpublish entries directly through Strapi's Content Manager, all gated by admin token permissions.
+Strapi includes a built-in [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that lets AI clients like Claude, Cursor, or any MCP-compatible tool manage your content through natural language. Once enabled and connected, an AI client can create, read, update, delete, publish, and unpublish entries directly through Strapi's Content Manager, all gated by Admin token permissions.
 
 
 
@@ -1999,7 +2037,7 @@ In addition to docs and product features described on the present page, the <cod
 ## Tips for better results {#tips}
 
 The following tips will help you fine-tune your prompts to get the best results:
-- Use the [Docs MCP server](/cms/ai/docs-mcp-server) in your IDE for the fastest developer experience. For docs-related questions, start your prompts with `Use the strapi-docs MCP server to answer:`. This will ensure the tool queries docs.strapi.io instead of creating answers based on its training data.
+- Use the [Docs MCP server](/cms/ai/docs-mcp-server) in your IDE for the fastest developer experience. For docs-related questions, prefix your prompt with `Use the strapi-docs MCP server to answer:` so the tool queries docs.strapi.io instead of using potentially outdated training data.
 - Include the page URL so the assistant grounds its answer in the right context.
 - Mention your Strapi version (e.g., Strapi 5) to avoid outdated suggestions.
 - Pair code examples with their source page when sharing snippets from `llms-code.txt`.
@@ -8382,10 +8420,10 @@ If you prefer or are required to log in via an SSO provider, please refer to the
 
 
 
-# Admin Tokens
+# Admin tokens
 Source: https://docs.strapi.io/cms/features/admin-tokens
 
-# Admin Tokens
+# Admin tokens
 
 Admin tokens allow automated clients to authenticate requests to the Strapi Admin API. For authenticating requests to the Content API, see [API Tokens](/cms/features/api-tokens).
 
@@ -8404,7 +8442,7 @@ Admin tokens are configured entirely from the admin panel. No code-based configu
 :::prerequisites
 If you're not the Strapi instance's super admin, the super admin must have granted you the following permissions:
   * access the Admin tokens settings page
-  * create (generate) admin tokens
+  * create (generate) Admin tokens
   
   (see [RBAC > Configuring role's permissions](/cms/features/rbac#plugins-and-settings) for details).
 :::
@@ -8440,7 +8478,7 @@ Any user with access to the Admin Tokens settings page can view Admin tokens. A 
 
 When a super-admin views an Admin token owned by another user, a read-only **Owner** field appears in the token details panel. The permissions panel shows only the checkboxes within the token owner's permission scope, not the super-admin's unrestricted access.
 
-Removing a permission from a role causes admin tokens owned by users of that role to have the corresponding permission deleted automatically.
+Removing a permission from a role causes Admin tokens owned by users of that role to have the corresponding permission deleted automatically.
 
 :::caution Owner account deactivation and deletion
 
@@ -9715,24 +9753,15 @@ Source: https://docs.strapi.io/cms/features/strapi-mcp-server
 
 # MCP server
 
-The MCP server exposes a set of content management tools to AI clients such as Claude Desktop, Claude Code, Cursor, or any MCP-compatible tool. An AI assistant connected to the MCP server can, for example, create a blog article, list recent entries, or publish a page. Which tools are available depends on the permissions granted to the admin token used for authentication.
+The MCP server exposes a set of content management tools to AI clients such as Claude Desktop, Claude Code, Cursor, or any MCP-compatible tool. An AI client connected to the MCP server can, for example, create a blog article, list recent entries, or publish a page. Which tools are available depends on the permissions granted to the Admin token used for authentication.
 
 </IdentityCard>
 
 ## Configuration
 
 Before first use, the Strapi MCP server must be:
-- configured in Strapi through the server configuration file and authenticated with Admin tokens created in the admin panel
+- enabled through the server configuration file and authenticated with Admin tokens created in the admin panel
 - connected to your AI client.
-
-### Strapi admin panel configuration
-
-The MCP server authenticates requests using Admin tokens. Each MCP session is scoped to the permissions of the token used to connect:
-
-1. Create a new admin token (see [Creating an admin token](/cms/features/admin-tokens#creating-a-new-admin-token) on the Admin tokens feature page).
-2. Copy the token as you will need it 
-
-The token's permissions determine which MCP tools are exposed to the AI client. For instance, if the token only grants `read` on an `Article` content-type, the AI client will only see listing and reading tools for articles.
 
 ### Strapi code-based configuration
 
@@ -9760,12 +9789,21 @@ mcp: {
 },
 ```
 
+### Strapi admin panel configuration
+
+The MCP server authenticates requests using Admin tokens. Each MCP session is scoped to the permissions of the token used to connect:
+
+1. Create a new Admin token (see [Creating an Admin token](/cms/features/admin-tokens#creating-a-new-admin-token) on the Admin tokens feature page).
+2. Copy the token value. You will need it when configuring the AI client.
+
+The token's permissions determine which MCP tools are exposed to the AI client. For instance, if the token only grants `read` on an `Article` content-type, the AI client will only see listing and reading tools for articles.
+
 ### AI client configuration
 
-Once you enabled and configured the MCP server through Strapi's admin panel (admin tokens) and configuration filters, you must connect your AI client to the Strapi MCP server.
+Once you have enabled the MCP server through the server configuration file and created an Admin token in the admin panel, connect your AI client to the Strapi MCP server.
 
 :::note
-`localhost:1337/` is used in configuration examples on this page. If your Strapi server is hosted on another URL or port, please update the code accordingly.
+`http://localhost:1337/` is used in configuration examples on this page. If your Strapi server is hosted on another URL or port, please update the code accordingly.
 :::
 
 #### Connecting Claude Desktop
@@ -9781,7 +9819,7 @@ Open Claude Desktop's configuration file. The location varies depending on your 
 You can also open the configuration file for Claude Desktop from Claude's settings: go to Settings > Desktop app > Developer, then click on the **Edit config** button.
 :::
 
-Add the Strapi MCP server to Claude's configuration file, as in the following example, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#strapi-admin-panel-configuration):
+Add the Strapi MCP server to Claude's configuration file, as in the following example, replacing `YOUR_ADMIN_TOKEN` with the Admin token value copied from the [Strapi admin panel configuration](#strapi-admin-panel-configuration):
 
 ```json title="claude_desktop_config.json"
 {
@@ -9804,7 +9842,7 @@ Restart Claude Desktop for the changes to take effect.
 
 #### Connecting Claude Code
 
-Run the following command, replacing `YOUR_ADMIN_TOKEN` with the admin token value copied from the [admin panel](#strapi-admin-panel-configuration):
+Run the following command, replacing `YOUR_ADMIN_TOKEN` with the Admin token value copied from the [Strapi admin panel configuration](#strapi-admin-panel-configuration):
 
 ```bash
 claude mcp add strapi-mcp --transport http http://localhost:1337/mcp -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
@@ -9863,9 +9901,13 @@ The MCP server uses the Streamable HTTP transport protocol. Any MCP-compatible c
 
 ### Available tools
 
+The MCP server exposes 2 categories of tools: content-type tools generated from your schema, and built-in utility tools.
+
 #### Content-type tools
 
-For each content type the token has access to, Strapi generates up to 8 tools:
+The tools generated differ depending on whether the content type is a collection type or a single type.
+
+**Collection types** generate up to 8 tools — 5 for CRUD operations and 3 for [Draft & Publish](/cms/features/draft-and-publish) actions:
 
 | Tool | Action | Permission required | Description |
 |------|--------|-------------------|-------------|
@@ -9878,11 +9920,18 @@ For each content type the token has access to, Strapi generates up to 8 tools:
 | `unpublish` | Unpublish | `publish` | Unpublish a published entry |
 | `discard_draft` | Discard draft | `publish` | Discard draft changes and revert to the published version |
 
-The last 3 tools (publish, unpublish, discard_draft) are only generated for content types that have [Draft & Publish](/cms/features/draft-and-publish) enabled.
+**Single types** generate up to 6 tools. Because a single type always represents exactly one document, there is no `list` tool and create/update are merged into a single `write` tool:
 
-Tool names follow the pattern `cm_<namespace>_<model>_<action>`. For example, an `Article` content type with UID `api::article.article` generates tools named `cm_api_article_list`, `cm_api_article_get`, `cm_api_article_create`, etc.
+| Tool | Action | Permission required | Description |
+|------|--------|-------------------|-------------|
+| `get` | Read | `read` | Get the single-type document |
+| `write` | Create or update | `create` and/or `update` | Create the document if none exists; update the existing draft otherwise |
+| `delete` | Delete | `delete` | Delete the single-type document |
+| `publish` | Publish | `publish` | Publish the document |
+| `unpublish` | Unpublish | `publish` | Unpublish the published document |
+| `discard_draft` | Discard draft | `publish` | Discard draft changes and revert to the published version |
 
-Single types follow a similar pattern but include `_single_` in the name (e.g., `cm_api_homepage_single_get`).
+The publish, unpublish, and discard_draft tools are only generated when [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content type.
 
 #### Built-in utility tools
 
@@ -9892,9 +9941,9 @@ In addition to content-type tools, Strapi registers the following built-in tools
 |------|-------------|-------------|
 | `log` | Development mode only | Logs a message to the Strapi server console at a specified level (`info`, `warn`, `error`, `http`, `log`). Useful for debugging MCP interactions. |
 
-Built-in utility tools are only available in development mode (when `autoReload` is enabled) and do not require specific content-type permissions.
+Built-in utility tools are only available in development mode (when `autoReload` is enabled) and do not require specific admin permissions.
 
-### Managing content through prompts
+### Content management through prompts
 
 Once connected, you can interact with your Strapi content using natural language:
 
@@ -9904,21 +9953,23 @@ Once connected, you can interact with your Strapi content using natural language
 | "List the 5 most recent articles." | Returns paginated list, newest first |
 | "Show me article with ID abc123." | Returns the full entry |
 | "Update article abc123, change the title to 'Hello Strapi'." | Updates the title, other fields untouched |
-| "Publish article abc123." | Flips the entry status to published |
+| "Publish article abc123." | Changes the entry status to published |
 | "Delete article abc123." | Removes the entry |
+| "Create an article in French with the title 'Bonjour le monde'." | Creates a draft article with `locale` set to `fr` |
 
-### Understanding input schemas
+#### Internationalization (i18n)
 
-Each tool has an input schema derived from your content type's attributes. The schema is dynamically generated per session based on the token's permissions:
+When [Internationalization (i18n)](/cms/features/internationalization) is enabled on a content type, MCP tools accept an optional `locale` parameter (e.g., `"en"`, `"fr"`). If omitted, the default locale is used.
 
-- **Field-level permissions**: If the token restricts access to certain fields, those fields are excluded from both input and output schemas. For instance, a token that can only read `title` and `slug` on an `Article` type will only see those two fields in sort, filter, and output schemas.
-- **Locale-level permissions**: If the [Internationalization (i18n)](/cms/features/internationalization) plugin is installed and the token restricts access to certain locales, the `locale` parameter only accepts the permitted locales for each action. Locale restrictions are evaluated per action: a token might allow reading in `en` and `fr` but only creating in `en`.
-- **Write operations**: The `data` object in `create` and `update` tools only includes fields the token has permission to write. Unknown fields are rejected (strict validation). System-managed fields (`id`, `documentId`, `createdAt`, `updatedAt`, `publishedAt`, `createdBy`, `updatedBy`) and private fields are excluded automatically.
-- **Attribute type mapping**: Field schemas carry constraints from your content-type definition, such as `required`, `minLength`, `maxLength`, `min`, `max`, and `enum` values. Enumeration fields expose their allowed values in the schema so the AI client can pick valid options.
+The AI client sees which locales are available in each tool's schema, so you can ask it to create or update content in a specific language. For example, asking "Create an article in French titled 'Bonjour'" passes `locale: "fr"` to the `create` tool. Which locales are available depends on the Admin token's permissions (see [Permission boundaries](#permission-boundaries)).
+
+:::tip
+When working with localized content, explicitly mention the target language in your prompt so the AI client passes the correct `locale` value. For instance, prefer "Create an article **in French**" over "Create an article titled 'Bonjour'" to avoid ambiguity.
+:::
 
 #### Sorting
 
-The `list` tool accepts a `sort` parameter that supports four notations:
+The `list` tool accepts a `sort` parameter that supports 4 notations:
 
 | Notation | Example |
 |----------|---------|
@@ -9933,7 +9984,7 @@ Sort field names are constrained to the content type's scalar attributes (string
 
 The `list` tool accepts a `filters` parameter using Strapi's filter syntax:
 
-- **Field operators**: `$eq`, `$ne`, `$in`, `$notIn`, `$lt`, `$lte`, `$gt`, `$gte`, `$contains`, `$notContains`, `$startsWith`, `$endsWith`, `$null`, `$notNull`, and their case-insensitive variants (`$eqi`, `$nei`, `$containsi`, etc.).
+- **Field operators**: `$eq`, `$ne`, `$in`, `$notIn`, `$lt`, `$lte`, `$gt`, `$gte`, `$between`, `$contains`, `$notContains`, `$startsWith`, `$endsWith`, `$null`, `$notNull`, and their case-insensitive variants (`$eqi`, `$nei`, `$containsi`, `$notContainsi`, `$startsWithi`, `$endsWithi`).
 - **Logical operators**: `$and`, `$or` (accept arrays of filter objects), `$not` (wraps a single filter object).
 - **Implicit equality**: Passing a value directly (e.g., `{ "title": "Hello" }`) is equivalent to `{ "title": { "$eq": "Hello" } }`.
 
@@ -9943,19 +9994,32 @@ Like sort fields, filter fields are constrained to scalar attributes only.
 
 The `list` tool also accepts `page` (1-indexed, default: 1) and `pageSize` (default: 25, max: 100) parameters.
 
-#### Rich text (blocks)
+#### Relations
 
-Rich text fields using the [Blocks editor](/cms/features/content-type-builder#rich-text-blocks) are represented with a structured schema in tool definitions. The schema covers all block types: paragraphs, headings (levels 1–6), quotes, code blocks (with optional language), ordered and unordered lists (including nested lists), images, and inline nodes (text with formatting marks, links).
+Relation fields support both a shorthand document ID string and a full relation object.
+
+**To-one relations** (`oneToOne`, `manyToOne`) accept:
+- A document ID string: `"z7v8zma53x01r6oceimv922b"`
+- A relation object: `{ "documentId": "z7v8zma53x01r6oceimv922b", "locale": "en", "status": "draft" }` (`locale` and `status` are optional)
+- `null` to clear the relation
+
+**To-many relations** (`oneToMany`, `manyToMany`) accept a relation object with one or more of the following keys:
+
+| Key | Description |
+|-----|-------------|
+| `connect` | Add relations. Accepts an array of document ID strings or `{ documentId, locale?, status?, position? }` objects. The optional `position` key supports `{ before?, after?, start?, end? }` ordering hints (default: `{ end: true }`). |
+| `disconnect` | Remove relations. Accepts an array of document ID strings or `{ documentId, locale?, status? }` objects. |
+| `set` | Replace all existing relations with the provided array. Pass `null` to clear all relations. Mutually exclusive with `connect`/`disconnect`. |
 
 ### Permission boundaries
 
 The MCP server enforces the same permission model as the Strapi admin panel. Permissions are checked at multiple levels:
 
-1. **Tool visibility**: When an AI client connects, Strapi checks the admin token's permissions and only exposes tools the token has access to. If the token does not grant `delete` on `Article`, the AI client will not see a delete tool for articles at all.
+1. **Tool visibility**: When an AI client connects, Strapi checks the Admin token's permissions and only exposes tools the token has access to. If the token does not grant `delete` on `Article`, the AI client will not see a delete tool for articles at all.
 
-2. **Field filtering**: Even within an exposed tool, input and output schemas are narrowed to the fields the token can access. If the token grants `read` on `Article` but excludes the `body` field, the AI client will not see or receive `body` content. Field restrictions are applied independently per action: write schemas (`create`, `update`) only include fields permitted for the corresponding action.
+2. **Field filtering**: Even within an exposed tool, input and output schemas are narrowed to the fields the token can access. If the token grants `read` on `Article` but excludes the `body` field, the AI client will not see or receive `body` content. Field restrictions are applied independently per action. Write schemas (`create`, `update`) only include fields permitted for the corresponding action.
 
-3. **Locale filtering**: When the [Internationalization (i18n)](/cms/features/internationalization) plugin is installed and locale-level permissions are configured, the `locale` parameter is narrowed per action. For example, a token might allow reading content in `en` and `fr` but only creating content in `en`. If the default locale is permitted for a given action, it is applied as the Zod schema default so the AI client does not need to specify it explicitly.
+3. **Locale filtering**: When the [Internationalization (i18n)](/cms/features/internationalization) feature is enabled and locale-level permissions are configured, the `locale` parameter is narrowed per action. For example, a token might allow reading content in `en` and `fr` but only creating content in `en`. If the default locale is permitted for a given action, that locale is applied as the Zod schema default, so the AI client does not need to specify a locale explicitly.
 
 4. **Runtime enforcement**: Beyond schema-level narrowing, each handler calls Strapi's permission checker at runtime to verify access on the specific document being read, written, or published. Condition-based permissions (e.g., "only update entries you own") are enforced at this level.
 
@@ -9967,12 +10031,12 @@ This means you can create tokens with fine-grained access:
 - A token with condition-based permissions (e.g., only update entries you own)
 
 :::tip
-Create dedicated admin tokens for each AI client or use case. Use the most restrictive permissions that still allow the AI to accomplish its task.
+Create dedicated Admin tokens for each AI client or use case. Use the most restrictive permissions that still allow the AI to accomplish its task.
 :::
 
 ### Stateless architecture
 
-The MCP server uses a stateless architecture. Each POST request to the `/mcp` endpoint creates a fresh, ephemeral MCP server instance scoped to the authenticated token's permissions. There is no session persistence between requests: every request is independently authenticated and authorized. This design means the AI client does not need to manage session IDs, and permission changes (such as revoking a token or updating its permissions) take effect on the next request.
+The MCP server uses a stateless architecture. Each POST request to the `/mcp` endpoint creates a fresh, ephemeral MCP server instance scoped to the authenticated token's permissions. There is no session persistence between requests: every request is independently authenticated and authorized. Because there is no session state, the AI client does not need to manage session IDs, and permission changes (such as revoking a token or updating its permissions) take effect on the next request.
 
 GET and DELETE HTTP methods on the `/mcp` endpoint return a `405 Method Not Allowed` JSON-RPC error, as the MCP server only accepts POST requests.
 
@@ -9980,12 +10044,39 @@ GET and DELETE HTTP methods on the `/mcp` endpoint return a `405 Method Not Allo
 
 The MCP server has the following limitations:
 
-- **Components**: Component fields are passed as untyped (`any`) in tool schemas. The AI client can read and write component data, but the schema does not describe the component's internal structure.
-- **Dynamic zones**: Dynamic zone fields are passed as untyped arrays in tool schemas.
-- **Relations**: Relation fields accept document IDs (e.g., `"z7v8zma53x01r6oceimv922b"`) as input. The advanced `connect`/`disconnect` relation syntax is not yet supported in MCP tool schemas.
+- **Dynamic zones**: Dynamic zone fields are passed as untyped arrays in tool schemas. The internal structure of each component within a dynamic zone is not described.
 - **Nested population parameters**: The `list` and `get` tools do not support nested population parameters for relations.
 - **Media upload**: Media fields accept existing media asset references but the MCP server cannot upload new files. Use Strapi's media library or upload API to add files first, then reference them in MCP tool calls.
-- **Custom fields**: Custom fields registered via plugins are mapped to their underlying Strapi type. If the custom field registry is not populated when MCP tools are registered, the field falls back to `unknown`.
+- **Custom fields**: Custom fields registered via plugins are mapped to their underlying Strapi type. If the custom field registry is not populated when MCP tools are registered, the custom field falls back to an `unknown` type.
+- **Circular component references**: Components that reference themselves (directly or indirectly) fall back to an open `record<string, unknown>` schema at the point of the cycle, rather than an infinite recursive structure.
+
+## Plugin API
+
+Strapi plugins can register additional MCP tools, prompts, and resources through the `strapi.ai.mcp` service. All registrations must happen during the plugin's `register()` lifecycle phase, before the MCP server starts.
+
+### Registering a custom tool
+
+Use `strapi.ai.mcp.registerTool()` to expose a custom tool to AI clients:
+
+</Tabs>
+
+#### Tool definition options
+
+| Option | Type | Required | Description |
+|--------|------|----------|-------------|
+| `name` | String | Yes | Unique tool name. Must be unique across all registered MCP tools. |
+| `title` | String | Yes | Human-readable title shown to the AI client. |
+| `description` | String | Yes | Short description of what the tool does. |
+| `auth` | Object | Yes (or `devModeOnly`) | Auth requirement. The session gate passes when the token satisfies **any** policy in the `policies` array. Each policy is `{ action, subject? }`. |
+| `devModeOnly` | Boolean | Yes (or `auth`) | Set to `true` to restrict the tool to development mode only (equivalent to the built-in `log` tool). |
+| `resolveInputSchema` | Function | No | Returns a Zod schema for the tool's input arguments. Called per request so RBAC constraints can be applied dynamically. Omit for tools with no input. |
+| `resolveOutputSchema` | Function | Yes | Returns a Zod schema for the tool's structured output. Called per request. |
+| `createHandler` | Function | Yes | Factory that returns the async tool handler. Receives the Strapi instance and per-request context (including `userAbility` and `user`). |
+| `telemetry` | Object | No | Optional analytics metadata: `{ source?: string; name?: string }`. Use `source` to identify the plugin and `name` to override the raw tool name in analytics events. |
+
+:::note
+`resolveInputSchema` and `resolveOutputSchema` are called once per incoming MCP request, so you can narrow schemas dynamically based on the token's permissions (via `context.userAbility`).
+:::
 
 
 
