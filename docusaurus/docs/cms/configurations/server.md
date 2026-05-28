@@ -56,6 +56,9 @@ The `./config/server.js` file can include the following parameters:
 | `transfer.remote.assetIdleTimeoutMs` | Timeout in milliseconds without incoming data before an asset stream is considered stalled when using `strapi transfer --from` to pull from a remote instance. Increase this value when transferring large files or when working on slow connections. | integer | <!-- TODO: confirm default value from strapi/strapi codebase --> |
 | `logger.startup.enabled`            | Toggle the the startup message in the terminal                                                                                                                                                                                                                                                                                                                              | boolean                                                                                           | `true`              |
 | `logger.updates.enabled`            | Toggle the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                                                                       | boolean                                                                                           | `true`              |
+| `mcp.enabled`                       | Enable the built-in [MCP server](/cms/features/mcp-server) at `POST /mcp`.                                                                                                                                                                                                                                                                                                  | boolean                                                                                           | `false`             |
+| `mcp.connectTimeoutMs`              | Maximum time in milliseconds allowed for an MCP connection to establish.                                                                                                                                                                                                                                                                                                    | integer                                                                                           | `5000`              |
+| `mcp.requestTimeoutMs`              | Maximum time in milliseconds allowed for a single MCP request to complete.                                                                                                                                                                                                                                                                                                  | integer                                                                                           | `60000`             |
 
 :::note
 There is no Strapi-specific keep alive configuration option, because Strapi uses Node's default one for incoming HTTP requests, keeping connections alive by default. 
@@ -154,6 +157,9 @@ module.exports = ({ env }) => ({
       enabled: false,
     },
   },
+  mcp: {
+    enabled: false,
+  },
 });
 ```
 
@@ -187,6 +193,9 @@ export default ({ env }) => ({
     startup: {
       enabled: false,
     },
+  },
+  mcp: {
+    enabled: false,
   },
 });
 ```

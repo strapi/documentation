@@ -171,6 +171,16 @@ If manual MCP server configuration is required:
 
 Once connected, your AI coding assistant can query the Strapi documentation directly to answer questions, suggest implementations, and verify API usage.
 
+## Strapi app MCP server {#strapi-mcp}
+
+Strapi also includes a built-in MCP server inside the Strapi application itself. Where the Docs MCP server described above connects AI tools to the documentation site, the Strapi app MCP server connects AI tools directly to your running Strapi instance so they can read and write your content.
+
+Enable it in your server configuration and connect any MCP-compatible IDE to perform CRUD operations on your content types, scoped by the permissions of an admin API token.
+
+<CustomDocCardsWrapper>
+<CustomDocCard title="MCP server" description="Enable the built-in MCP server in your Strapi application and connect AI coding agents to your content." link="/cms/features/mcp-server" />
+</CustomDocCardsWrapper>
+
 ## Tips for better results {#tips}
 
 - Include the page URL so the assistant grounds its answer in the right context.
