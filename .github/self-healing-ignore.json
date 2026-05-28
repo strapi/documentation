@@ -259,6 +259,11 @@
       "number": 25027,
       "reason": "Router: Bug fix for @strapi/upgrade tool. Resolves compatibility issue with Yarn Classic (v1) where registry URL resolution was failing. No new features or API changes; fixes existing tool behavior.",
       "added": "2026-05-27"
+    },
+    {
+      "number": 26370,
+      "reason": "Router: Internal backend optimization and correctness bug fix for admin homepage query performance. No user-facing API or behavior changes.",
+      "added": "2026-05-28"
     }
   ]
 }
