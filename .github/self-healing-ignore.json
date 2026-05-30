@@ -264,6 +264,61 @@
       "number": 26370,
       "reason": "Router: Internal backend optimization and correctness bug fix for admin homepage query performance. No user-facing API or behavior changes.",
       "added": "2026-05-28"
+    },
+    {
+      "number": 26270,
+      "reason": "Triage: internal boot performance optimization",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26269,
+      "reason": "Triage: internal dev-loop optimization and logging level change",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26268,
+      "reason": "Triage: internal boot performance optimization",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26267,
+      "reason": "Triage: internal boot performance optimization",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26266,
+      "reason": "Triage: internal boot performance optimization",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26264,
+      "reason": "Triage: internal TypeScript compilation performance optimization during dev",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26141,
+      "reason": "Triage: transitive dependency security fix",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26484,
+      "reason": "Router: Internal bug fix to data-transfer feature. The `--only content` flag behavior is fixed, but this is an edge case in internal tooling (transfer/restore operations). No user-facing API change or behavior modification that would require documentation updates. Release notes would mention the bug fix, but no configuration or feature documentation changes needed.",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26421,
+      "reason": "Router: Internal admin UI crash fix. A repeatable component field was crashing when a relation modal closed and set the field to null. This is a bug fix to internal form handling with no user-facing feature change or new capability. No documentation updates needed.",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26322,
+      "reason": "Router: Internal admin localization fix. Danish locale code corrected from non-standard 'dk' to correct ISO 639-1 'da', with backwards-compatibility mapping in code. This is an internal implementation detail with no user-facing feature or configuration change. No documentation updates needed.",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 25622,
+      "reason": "Router: Regression fix restoring v4 behavior in v5. Numeric fields can now be used as entry titles in relations, fixing a broken feature from v4→v5 migration. The existing Content Manager and Content-Type Builder documentation already mentions entry title configuration and should already cover this capability. This is a bug fix to existing functionality, not a new feature requiring new documentation.",
+      "added": "2026-05-30"
     }
   ]
 }
