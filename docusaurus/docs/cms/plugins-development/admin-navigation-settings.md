@@ -266,7 +266,7 @@ The dedicated `app.createSettingSection(section, links)` method is deprecated. I
 
 ### Adding links to existing settings sections
 
-To add links to an existing settings section, use `addSettingsLink()` in the `bootstrap()` lifecycle function with a **section id string** as the first argument. The second argument can be either a single link object or an array of link objects — both forms are supported by the same method.
+To add links to an existing settings section, use `addSettingsLink()` in the `bootstrap()` lifecycle function with a section id string as the first argument. The second argument can be either a single link object or an array of link objects — both forms are supported by the same method.
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript" default>
