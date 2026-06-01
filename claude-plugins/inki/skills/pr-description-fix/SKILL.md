@@ -69,17 +69,45 @@ Reasons for non-compliance: missing "This PR ..." opener, contains `##`/`###` he
 
 ### If `AUTO=true`
 
-For each non-compliant PR, write the proposed body to a tmpfile (to preserve line breaks reliably) and edit immediately without prompting:
+Behavior depends on whether the user explicitly listed PR identifiers:
+
+**Case A — PR identifiers were given explicitly** (e.g. `/inki:pr-description-fix --yes 3204 3202`)
+
+For each non-compliant PR, write the proposed body to a tmpfile (to preserve line breaks reliably) and edit immediately without further prompting:
 
 ```bash
 gh pr edit <num> --repo strapi/documentation --body-file <tmpfile>
 ```
 
-Announce inline:
+Announce each change inline:
 
 ```
 PR #<num>: edited (description rewritten)
 ```
+
+**Case B — No PR identifiers given** (e.g. `/inki:pr-description-fix --yes`, which targets all open PRs)
+
+A batch confirmation is required as a safety bracket. Do NOT edit yet. Display the full list of proposed edits first:
+
+```
+Review batch (--yes without PR IDs targets all open PRs):
+
+| PR# | Author | Reason | Preview of new description |
+|-----|--------|--------|----------------------------|
+| ... | ...    | ...    | (first line of proposed body) |
+
+Compliant (no changes needed): N PRs
+
+Type `y` to apply all, `n` to cancel, or `s <PR#> <PR#> ...` to skip specific PRs and apply the rest.
+```
+
+Then branch on the user's single response:
+
+- `y` → apply all listed edits with `gh pr edit ... --body-file <tmpfile>`, announcing each inline.
+- `n` → cancel entirely, edit nothing, exit.
+- `s <PR#> <PR#> ...` → remove those PRs from the batch, then apply the remaining edits.
+
+This safety bracket prevents accidentally mass-editing many PRs (e.g. on a repo with hundreds of open PRs). If a non-interactive script ever needs to bypass it, the caller should enumerate the PR IDs explicitly (Case A) rather than relying on the "all open PRs" fallback.
 
 ### If `AUTO=false`
 
