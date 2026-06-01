@@ -19,16 +19,6 @@ The present page explains how to setup the Keycloak provider for the [Users & Pe
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
 :::
 
-## Custom Keycloak integrations after upgrading from Strapi v4
-
-:::note
-Projects that registered Keycloak through a Users & Permissions extension in Strapi v4 often called `providersRegistry.register()`. That method is not available on the registry object in Strapi 5.
-
-Register the provider with `add()` on the `providers-registry` service from the application [`register()` function](/cms/configurations/functions#register) in `/src/index.js|ts`. Follow [Creating and adding a custom Users & Permissions provider](/cms/configurations/users-and-permissions-providers/new-provider-guide#creating-a-custom-provider).
-
-If you still call `register()` on the registry object, Strapi throws `TypeError: providersRegistry.register is not a function`.
-:::
-
 ## Keycloak configuration
 
 :::note
@@ -59,3 +49,15 @@ The use of `ngrok` is not needed.
    - (Optional) Set the JWKS URL if you have a custom JWKS URL, example is like `https://keycloak.example.com/auth/realms/strapitest/protocol/openid-connect/certs`
 
 <ConfigDone />
+
+## Migration from Strapi v4
+
+:::note
+Strapi v4 extensions often registered Keycloak through `providersRegistry.register()`. That method is no longer available in Strapi 5.
+
+In Strapi 5, call `add()` on the `providers-registry` service from the [`register()` function](/cms/configurations/functions#register) in `/src/index.js|ts`.
+
+See the [custom provider guide](/cms/configurations/users-and-permissions-providers/new-provider-guide#creating-a-custom-provider) for details.
+
+If you still call `register()` on the registry object, Strapi throws `TypeError: providersRegistry.register is not a function`.
+:::
