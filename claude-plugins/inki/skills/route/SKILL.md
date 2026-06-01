@@ -7,9 +7,20 @@ user-invocable: true
 
 # /inki:route — route a code PR to its docs targets
 
+## Step 0: Parse the input
+
+`$ARGUMENTS` can be one of:
+
+- A bare PR number: `26847`
+- A hashed PR number: `#26847`
+- A full URL: `https://github.com/strapi/strapi/pull/26847`
+- A URL with a sub-path: `https://github.com/strapi/strapi/pull/26847/files`
+
+Extract the trailing digits to obtain the PR number. A simple regex `[0-9]+$` (after stripping a trailing `/files`, `/commits`, etc. if present) is sufficient. If no numeric PR ID can be extracted, report the error and stop.
+
 ## Step 1: Fetch the strapi/strapi PR
 
-`$ARGUMENTS` is a PR number or URL on `strapi/strapi`. Fetch with `gh pr view <num> --repo strapi/strapi --json title,body,files,labels`.
+Fetch with `gh pr view <num> --repo strapi/strapi --json title,body,files,labels`.
 
 ## Step 2: Apply the migrated router prompt
 

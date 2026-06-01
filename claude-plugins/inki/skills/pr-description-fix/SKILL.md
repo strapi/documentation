@@ -1,7 +1,7 @@
 ---
 name: pr-description-fix
 description: "Rewrite the description of one or more open PRs on strapi/documentation to match git-rules.md. Strict one-by-one confirmation, or auto-edit with --yes."
-argument-hint: "[--yes|-y] [PR# or URL] [PR# or URL] ... (no PR args = all open PRs)"
+argument-hint: "[--yes|-y] [--include-old] [PR# or URL] [PR# or URL] ... (no PR args = all recent open PRs)"
 user-invocable: true
 ---
 
@@ -18,20 +18,27 @@ user-invocable: true
   - `--yes` (preferred form)
   - `-y` (short alias)
 
-If no PR identifiers are given (with or without the flag), list all open PRs via `gh pr list --repo strapi/documentation --state open --limit 100 --json number,body,title,author` and treat that list as the target set.
+If no PR identifiers are given:
+- By default, list **recent open PRs** (updated within the last 30 days) via `gh pr list --repo strapi/documentation --state open --search "updated:>=$(date -v-30d +%Y-%m-%d 2>/dev/null || date -d '30 days ago' +%Y-%m-%d)" --limit 100 --json number,body,title,author,updatedAt`.
+- If `--include-old` is set, list all open PRs (no recency filter): `gh pr list --repo strapi/documentation --state open --limit 100 --json number,body,title,author,updatedAt`.
+
+The 30-day cutoff avoids accidentally bumping stale PRs (especially community contributions) with a description rewrite notification.
 
 ## Step 0: Parse arguments
 
 From `$ARGUMENTS`:
 
 1. Detect whether `--yes` or `-y` appears anywhere. If yes, set `AUTO=true`; otherwise `AUTO=false`. Remove the flag from the argument list.
-2. For each remaining token, extract the trailing digits to obtain the PR number:
+2. Detect whether `--include-old` appears anywhere. If yes, set `INCLUDE_OLD=true`; otherwise `INCLUDE_OLD=false`. Remove the flag from the argument list.
+3. For each remaining token, extract the trailing digits to obtain the PR number:
    - `2143` → `2143`
    - `#2143` → `2143`
    - `https://github.com/strapi/documentation/pull/2143` → `2143`
    - `https://github.com/strapi/documentation/pull/2143/files` → `2143`
    A simple regex `[0-9]+$` (or strip everything up to the last `/` then drop a leading `#`) is sufficient.
-3. If any token does not yield a numeric PR ID, report it and skip that token.
+4. If any token does not yield a numeric PR ID, report it and skip that token.
+
+`INCLUDE_OLD` only affects the case where no PR identifiers were given (auto-targeting all open PRs). When PR IDs are listed explicitly, the recency filter does not apply — the user is targeting those PRs deliberately.
 
 ## Step 1: Validate environment
 
@@ -177,7 +184,12 @@ Auto on multiple PRs:
 /inki:pr-description-fix --yes 3204 3202 #3199
 ```
 
-Auto on all open PRs (e.g. for a chained skill call):
+Auto on all recent open PRs (last 30 days, with batch review):
 ```
 /inki:pr-description-fix --yes
+```
+
+Auto on all open PRs including stale ones (last 30 days filter bypassed):
+```
+/inki:pr-description-fix --yes --include-old
 ```

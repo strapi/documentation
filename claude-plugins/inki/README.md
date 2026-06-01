@@ -35,13 +35,13 @@ Find out what already exists, where to put new content, what's missing.
 
 ### Write — produce new content
 
-- `/inki:write <brief>` — orchestrator: outline then draft.
+- `/inki:write [--yes] <brief>` — orchestrator: outline then draft.
 - `/inki:outline <brief>` — generate an outline from a brief and template.
 - `/inki:draft <outline>` — draft a page from an outline + template + authoring guide.
 
 ### Review — check what you wrote
 
-- `/inki:review <path> [--fix]` — orchestrator: runs all 6 review sub-skills.
+- `/inki:review [--yes] [--fix] <path>` — orchestrator: runs all 6 review sub-skills.
 - `/inki:style-check <path>` — style lint (deterministic + AI).
 - `/inki:outline-check <path>` — verify outline matches template.
 - `/inki:outline-ux-analyzer <path>` — audit pedagogical UX.
@@ -51,14 +51,19 @@ Find out what already exists, where to put new content, what's missing.
 
 ### Submit — get it to GitHub
 
-- `/inki:submit [hint]` — orchestrator: branch + commit + push + PR.
+- `/inki:submit [--yes] [hint]` — orchestrator: branch + commit + push + PR.
 - `/inki:branch` — create a properly prefixed branch.
 - `/inki:commit` — stage + commit with a compliant message.
 - `/inki:push` — push with validation.
 - `/inki:pr [issue]` — open a PR with a compliant title and description.
-- `/inki:pr-title-fix [PR#...]` — rewrite the title of existing PRs.
-- `/inki:pr-description-fix [PR#...]` — rewrite the body of existing PRs.
-- `/inki:pr-body-fix [PR#...]` — alias of `/inki:pr-description-fix`.
+- `/inki:pr-title-fix [--yes] [--include-old] [PR# or URL...]` — rewrite the title of existing PRs.
+- `/inki:pr-description-fix [--yes] [--include-old] [PR# or URL...]` — rewrite the body of existing PRs.
+- `/inki:pr-body-fix [--yes] [--include-old] [PR# or URL...]` — alias of `/inki:pr-description-fix`.
+
+### Common flags
+
+- `--yes` / `-y` — non-interactive mode: skip confirmation prompts. Useful for chaining skills or scripting.
+- `--include-old` (only on `pr-title-fix`, `pr-description-fix`, `pr-body-fix`) — when no PR IDs are listed, include open PRs older than 30 days. By default, stale PRs are excluded to avoid bumping them with a title/description change notification.
 
 ## How it integrates with this repo
 

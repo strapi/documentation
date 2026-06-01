@@ -1,11 +1,15 @@
 ---
 name: submit
-description: "Top-level orchestrator: branch (if needed), commit, push, then open a PR. Each step asks for confirmation before continuing."
-argument-hint: "[optional: issue reference or topic hint, e.g. 'Fixes #2143']"
+description: "Top-level orchestrator: branch (if needed), commit, push, then open a PR. Each step asks for confirmation before continuing, unless --yes is passed."
+argument-hint: "[--yes|-y] [issue reference or topic hint, e.g. 'Fixes #2143']"
 user-invocable: true
 ---
 
 # /inki:submit — branch + commit + push + PR
+
+## Step 0: Parse arguments
+
+From `$ARGUMENTS`, detect `--yes` or `-y` anywhere in the list. If present, set `AUTO=true` and remove the flag. What remains is the optional issue reference passed through to `/inki:pr`.
 
 ## Workflow
 
@@ -14,9 +18,18 @@ user-invocable: true
 3. **Push**: invoke `/inki:push` (with explicit confirmation).
 4. **PR**: invoke `/inki:pr` to draft and open the PR.
 
-the user confirms at each gate.
+### Interactive (`AUTO=false`, default)
+
+The user confirms at each gate. If any sub-step fails or the user cancels, stop immediately.
+
+### Auto (`AUTO=true`)
+
+Pass `--yes` to each sub-skill that supports it. The chain runs without prompts. If any sub-skill genuinely needs a decision that isn't trivially auto-derivable (e.g., branch prefix is ambiguous and no hint was provided), it will still ask. `--yes` skips confirmations, not informed decisions.
+
+The safety bracket from `pr-title-fix` does NOT apply here, because `/inki:submit` operates only on the current branch (single PR scope by construction).
 
 ## Rules
 
-- If any sub-step fails or the user cancels, stop immediately. Do not skip a step.
-- Pass through `$ARGUMENTS` (if any) as an issue reference hint to `/inki:pr`.
+- If any sub-step fails, stop. Do not skip a step.
+- Pass through the issue reference (if any) to `/inki:pr`.
+- In `AUTO=true` mode, surface a summary at the end showing branch name, commit SHA, and PR URL.
