@@ -266,7 +266,7 @@ The dedicated `app.createSettingSection(section, links)` method is deprecated. I
 
 ### Adding links to existing settings sections
 
-To add links to an existing settings section, use `addSettingsLink()` in the `bootstrap()` lifecycle function with a section id string as the first argument. The second argument can be either a single link object or an array of link objects — both forms are supported by the same method.
+To add links to an existing settings section, use `addSettingsLink()` in the `bootstrap()` lifecycle function with a section id string as the first argument. The second argument can be either a single link object or an array of link objects. Both forms are supported by the same method.
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript" default>
@@ -384,7 +384,7 @@ export default {
 `addSettingsLink` takes a `sectionId` string as the first argument (e.g., `'global'` or `'permissions'`). The second argument is either a single link object or an array of link objects, using the same properties as the `links` array in [Creating a new settings section](#creating-a-new-settings-section).
 
 :::caution Deprecated: `addSettingsLinks()`
-The plural `app.addSettingsLinks(sectionId, links)` method is deprecated. Call `addSettingsLink(sectionId, links)` (singular) with an array instead — it accepts both single links and arrays. See [Deprecated methods](#deprecated-methods).
+The plural `app.addSettingsLinks(sectionId, links)` method is deprecated. Call `addSettingsLink(sectionId, links)` (singular) with an array instead; it accepts both single links and arrays. See [Deprecated methods](#deprecated-methods).
 :::
 
 ### Available settings sections
@@ -416,7 +416,7 @@ The `permissions` parameter on links only controls visibility in the navigation.
 
 ## Deprecated methods
 
-The following methods on the `StrapiApp` instance are deprecated. They still work for backwards compatibility — both delegate to `addSettingsLink()` internally — but new code should use `addSettingsLink()` directly.
+The following methods on the `StrapiApp` instance are deprecated. They still work for backwards compatibility (both delegate to `addSettingsLink()` internally), but new code should use `addSettingsLink()` directly.
 
 ### `createSettingSection(section, links)`
 
@@ -456,6 +456,6 @@ app.addSettingsLink('global', [
 
 :::note
 - `addSettingsLinks` is still exposed on the `bootstrap` argument bag (alongside `addSettingsLink`, `getPlugin`, and `registerHook`) for backwards compatibility.
-- `createSettingSection` is only reachable via the full `app` instance passed to `register(app)` — it is not part of the `bootstrap` argument bag.
+- `createSettingSection` is only reachable via the full `app` instance passed to `register(app)`; it is not part of the `bootstrap` argument bag.
 - Both delegate to `addSettingsLink()` internally and may be removed in a future major version. Migrate when convenient.
 :::
