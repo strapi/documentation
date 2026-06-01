@@ -139,7 +139,7 @@ The Settings API allows plugins to create new settings sections or add links to 
 
 ### Creating a new settings section
 
-To create a new settings section, call `addSettingsLink()` with a **section object** (`{ id, intlLabel }`) as the first argument and an array of link objects as the second argument. This can be done in either the `register` or `bootstrap` lifecycle function:
+To create a new settings section, call `addSettingsLink()` with a section object (`{ id, intlLabel }`) as the first argument and an array of link objects as the second argument. This can be done in either the `register` or `bootstrap` lifecycle function:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript" default>
