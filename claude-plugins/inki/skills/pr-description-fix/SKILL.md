@@ -19,10 +19,10 @@ user-invocable: true
   - `-y` (short alias)
 
 If no PR identifiers are given:
-- By default, list **recent open PRs** (updated within the last 30 days) via `gh pr list --repo strapi/documentation --state open --search "updated:>=$(date -v-30d +%Y-%m-%d 2>/dev/null || date -d '30 days ago' +%Y-%m-%d)" --limit 100 --json number,body,title,author,updatedAt`.
-- If `--include-old` is set, list all open PRs (no recency filter): `gh pr list --repo strapi/documentation --state open --limit 100 --json number,body,title,author,updatedAt`.
+- By default, list **recent open PRs** (created within the last 30 days) via `gh pr list --repo strapi/documentation --state open --search "created:>=$(date -v-30d +%Y-%m-%d 2>/dev/null || date -d '30 days ago' +%Y-%m-%d)" --limit 100 --json number,body,title,author,createdAt`.
+- If `--include-old` is set, list all open PRs (no recency filter): `gh pr list --repo strapi/documentation --state open --limit 100 --json number,body,title,author,createdAt`.
 
-The 30-day cutoff avoids accidentally bumping stale PRs (especially community contributions) with a description rewrite notification.
+The 30-day cutoff uses `createdAt` (not `updatedAt`) because bot activity (auto-sync, llms regeneration, self-healing) bumps `updatedAt` on otherwise stale PRs. Filtering on `createdAt` better captures the intent: "PRs recently opened that may not have been titled compliantly yet."
 
 ## Step 0: Parse arguments
 
