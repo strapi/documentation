@@ -1,7 +1,7 @@
 ---
 name: pr-body-fix
 description: "Alias for /inki:pr-description-fix. Rewrite the body/description of one or more open PRs on strapi/documentation."
-argument-hint: "[PR#] [PR#] ..."
+argument-hint: "[--yes|-y] [PR# or URL] [PR# or URL] ..."
 user-invocable: true
 ---
 
