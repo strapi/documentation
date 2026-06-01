@@ -1,5 +1,5 @@
 ---
-title: Admin Tokens
+title: Admin tokens
 description: Learn how to use Admin tokens to authenticate programmatic access to the Strapi Admin API.
 toc_max_heading_level: 4
 displayed_sidebar: cmsSidebar
@@ -11,8 +11,7 @@ tags:
   - features
 ---
 
-# Admin Tokens
-<FeatureFlagBadge feature="adminTokens" /> 
+# Admin tokens
 
 <Tldr>
 Admin tokens authenticate programmatic access to the Strapi Admin API. Each token is scoped to a subset of its owner's permissions and is designed for automation workflows such as MCP agents, CI/CD pipelines, and scripts.
@@ -30,7 +29,7 @@ Admin tokens and API tokens are strictly separated: each is rejected on the othe
     Activated by default for Super Admin. Each lower-level role needs an explicit permission grant in Roles > Settings - Admin tokens.
   </IdentityCardItem>
   <IdentityCardItem icon="toggle-right" title="Activation">
-    Requires enabling the corresponding future flag,<br/>see [Features configuration](/cms/configurations/features)
+    Available and activated by default
   </IdentityCardItem>
   <IdentityCardItem icon="desktop" title="Environment">
     Available in both Development & Production environment
@@ -56,7 +55,7 @@ Admin tokens are configured entirely from the admin panel. No code-based configu
 :::prerequisites
 If you're not the Strapi instance's super admin, the super admin must have granted you the following permissions:
   * access the Admin tokens settings page
-  * create (generate) admin tokens
+  * create (generate) Admin tokens
   
   (see [RBAC > Configuring role's permissions](/cms/features/rbac#plugins-and-settings) for details).
 :::
@@ -78,7 +77,6 @@ If you're not the Strapi instance's super admin, the super admin must have grant
     :::
 4. Click on the **Save** button. The new Admin token will be displayed at the top of the interface, along with a copy button <Icon name="copy" />.
 
-<!-- TODO: Update screenshot once admin tokens UI is finalized behind the feature flag -->
 <ThemedImage
 alt="Admin token permissions"
 sources={{
@@ -101,7 +99,7 @@ Any user with access to the Admin Tokens settings page can view Admin tokens. A 
 
 When a super-admin views an Admin token owned by another user, a read-only **Owner** field appears in the token details panel. The permissions panel shows only the checkboxes within the token owner's permission scope, not the super-admin's unrestricted access.
 
-Removing a permission from a role causes admin tokens owned by users of that role to have the corresponding permission deleted automatically.
+Removing a permission from a role causes Admin tokens owned by users of that role to have the corresponding permission deleted automatically.
 
 :::caution Owner account deactivation and deletion
 
