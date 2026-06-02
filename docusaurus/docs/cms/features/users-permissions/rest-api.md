@@ -644,7 +644,7 @@ curl http://localhost:1337/api/users-permissions/roles/1 \
 
 </ApiCall>
 
-Example response (200): A role object with a nested `permissions` structure mapping plugins to controllers to actions.
+Example response (200): An object of the form `{ "role": { ... } }`, where the role contains a nested `permissions` structure mapping plugins to controllers to actions.
 
 ### Create a role
 
