@@ -56,14 +56,12 @@ Find out what already exists, where to put new content, what's missing.
 - `/inki:commit` — stage + commit with a compliant message.
 - `/inki:push` — push with validation.
 - `/inki:pr [issue]` — open a PR with a compliant title and description.
-- `/inki:pr-title-fix [--yes] [--include-old] [PR# or URL...]` — rewrite the title of existing PRs.
-- `/inki:pr-description-fix [--yes] [--include-old] [PR# or URL...]` — rewrite the body of existing PRs.
-- `/inki:pr-body-fix [--yes] [--include-old] [PR# or URL...]` — alias of `/inki:pr-description-fix`.
+- `/inki:pr-fix <title|description|body> [--yes] [--include-old] [PR# or URL...]` — rewrite the title or body of existing PRs (`body` is an alias of `description`).
 
 ### Common flags
 
 - `--yes` / `-y` — non-interactive mode: skip confirmation prompts. Useful for chaining skills or scripting.
-- `--include-old` (only on `pr-title-fix`, `pr-description-fix`, `pr-body-fix`) — when no PR IDs are listed, include open PRs older than 30 days. By default, stale PRs are excluded to avoid bumping them with a title/description change notification.
+- `--include-old` (only on `pr-fix`) — when no PR IDs are listed, include open PRs older than 30 days. By default, stale PRs are excluded to avoid bumping them with a title/description change notification.
 
 ## How it integrates with this repo
 

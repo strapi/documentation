@@ -26,7 +26,7 @@ The user confirms at each gate. If any sub-step fails or the user cancels, stop 
 
 Pass `--yes` to each sub-skill that supports it. The chain runs without prompts. If any sub-skill genuinely needs a decision that isn't trivially auto-derivable (e.g., branch prefix is ambiguous and no hint was provided), it will still ask. `--yes` skips confirmations, not informed decisions.
 
-The safety bracket from `pr-title-fix` does NOT apply here, because `/inki:submit` operates only on the current branch (single PR scope by construction).
+The safety bracket from `pr-fix` does NOT apply here, because `/inki:submit` operates only on the current branch (single PR scope by construction).
 
 ## Rules
 
