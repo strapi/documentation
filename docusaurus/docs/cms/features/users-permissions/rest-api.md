@@ -509,7 +509,7 @@ Creates a new user. If `role` is omitted, the default role is assigned.
 curl -X POST http://localhost:1337/api/users \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -d '{"username": "newuser", "email": "newuser@example.com", "password": "Password123!", "role": 1, "confirmed": true}'
+  -d '{"username": "newuser", "email": "newuser@example.com", "password": "Password123!", "role": 1}'
 ```
 
 </Request>
