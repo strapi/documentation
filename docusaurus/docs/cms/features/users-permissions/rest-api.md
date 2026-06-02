@@ -302,7 +302,8 @@ Possible errors:
 
 | Status | Message | Cause |
 |--------|---------|-------|
-| 400 | `"Invalid token"` | Confirmation token missing, malformed, or already used |
+| 400 | `"confirmation is a required field"` | `confirmation` query parameter missing |
+| 400 | `"Invalid token"` | Confirmation token malformed, expired, or already used |
 
 ### Send email confirmation
 
