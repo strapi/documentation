@@ -258,6 +258,12 @@ curl -G http://localhost:1337/api/auth/email-confirmation \
 
 After confirming the email, Strapi redirects the user to the URL configured in the admin panel under Settings > Users & Permissions > Advanced Settings > "Redirection url".
 
+Possible errors:
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| 400 | `"Invalid token"` | Confirmation token missing, malformed, or already used |
+
 ### Send email confirmation
 
 `POST /api/auth/send-email-confirmation`
