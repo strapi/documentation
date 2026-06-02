@@ -78,6 +78,7 @@ Each section below documents the parameters and examples for a specific method:
 | [`create()`](#create) | Create a document, optionally targeting a locale. |
 | [`update()`](#update) | Update a document by `documentId`. |
 | [`delete()`](#delete) | Delete a document or a specific locale version. |
+| [`deleteMany()`](#deletemany) | Delete multiple documents matching filters and relation parameters. |
 | [`publish()`](#publish) | Publish the draft version of a document. |
 | [`unpublish()`](#unpublish) | Move a published document back to draft. |
 | [`discardDraft()`](#discarddraft) | Drop draft data and keep only the published version. |
@@ -412,6 +413,52 @@ Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }
     },
   ]}
 />
+
+### `deleteMany()`
+
+Delete multiple documents matching filters and relation parameters.
+
+Syntax: `deleteMany(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+
+#### Parameters
+
+| Parameter | Description | Default | Type |
+|-----------|-------------|---------|------|
+| [`locale`](/cms/api/document-service/locale#delete) | Locale version of documents to delete. | `null`<br/>(deletes only the default locale) | String, `'*'`, or `null` |
+| [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
+| [`fields`](/cms/api/document-service/fields#delete)   | [Select fields](/cms/api/document-service/fields#delete) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
+
+#### Example
+
+Delete multiple documents matching filters, including filters on related fields:
+
+<Request>
+
+```js
+await strapi.documents('api::restaurant.restaurant').deleteMany({
+  filters: {
+    city: {
+      name: {
+        $eq: 'New York'
+      }
+    }
+  }
+})
+```
+
+</Request>
+
+<Response>
+
+```js
+{
+  documentId: "multiple_documents",
+  entries: 3
+}
+```
+
+</Response>
 
 ### `publish()`
 
