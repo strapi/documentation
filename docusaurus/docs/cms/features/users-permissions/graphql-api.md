@@ -191,6 +191,10 @@ Unlike the REST equivalent (which redirects), the GraphQL mutation returns a JWT
 
 These operations retrieve and manage user records. They require the corresponding permission to be enabled for the requesting user's role.
 
+:::note Identifier convention
+GraphQL mutations on users (`updateUsersPermissionsUser`, `deleteUsersPermissionsUser`) accept the `documentId` (a string) as the `id` argument. This differs from the REST equivalents (`PUT/DELETE /api/users/:id`) which use the numeric database `id`. The Users & Permissions feature keeps this REST/GraphQL asymmetry for backward compatibility.
+:::
+
 ### Get authenticated user (me query)
 
 The `me` query returns the profile of the currently authenticated user:

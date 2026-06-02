@@ -49,6 +49,10 @@ An undefined `allowedFields` is treated as an empty array, and no fields are acc
 
 </SideBySideContainer>
 
+### How it works in Strapi 5
+
+The fields `username`, `email`, and `password` are always accepted by the registration endpoint. They are hardcoded as `alwaysAllowedKeys` in the Users & Permissions feature source. Any other field on the User content-type must be explicitly listed in `allowedFields` or the request will be rejected with a `400` status and an error message like `"Invalid parameters: fieldName"`.
+
 ## Migration
 
 <MigrationIntro />
@@ -56,10 +60,6 @@ An undefined `allowedFields` is treated as an empty array, and no fields are acc
 ### Manual procedure
 
 A codemod should handle this migration. If not, please refer to the documentation on how to [register allowed fields for the Users & Permissions plugin](/cms/features/users-permissions#registration-configuration).
-
-#### How it works in Strapi 5
-
-The fields `username`, `email`, and `password` are always accepted by the registration endpoint. They are hardcoded as `alwaysAllowedKeys` in the Users & Permissions feature source. Any other field on the User content-type must be explicitly listed in `allowedFields` or the request will be rejected with a `400` status and an error message like `"Invalid parameters: fieldName"`.
 
 To allow additional fields on registration, update your plugin configuration:
 
