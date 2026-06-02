@@ -182,28 +182,55 @@ The proposed description MUST end with a Vercel preview link line. If the origin
 
 ### How to build the Vercel preview link
 
-1. Read the PR's head branch from the `gh pr view` response (fetch with `--json number,title,body,author,headRefName` if needed).
-2. Convert the branch name to a Vercel-compatible slug by replacing `/` with `-`:
-   - `cms/mcp-server` → `cms-mcp-server`
-   - `repo/inki-plugin-init` → `repo-inki-plugin-init`
+The link has two parts: the **deployment host** (`https://documentation-git-<...>-strapijs.vercel.app`) and the **page path**.
+
+#### Deployment host: read it from the Vercel bot comment first
+
+Do NOT naively build the host from the branch name. Vercel truncates long branch slugs to a ~63-character DNS label and appends a short hash (e.g. branch `cms/move-mcp-plugin-api-to-plugins-dev` deploys to `documentation-git-cms-move-mcp-plugin-api-to-pl-704ff2-strapijs.vercel.app`, NOT `documentation-git-cms-move-mcp-plugin-api-to-plugins-dev-strapijs.vercel.app`). A slug-built host for a long branch will fail to resolve.
+
+1. **Primary method, extract the real host from the Vercel bot comment:**
+   ```bash
+   gh pr view <num> --repo strapi/documentation --json comments \
+     -q '.comments[] | select(.author.login | test("vercel"; "i")) | .body' \
+     | grep -oE 'https://documentation-git-[a-z0-9-]+\.vercel\.app' | sort -u | head -1
+   ```
+   This returns the exact deployed host, hash and all.
+
+2. **Fallback, build the slug from the branch name** (only when no Vercel comment exists yet, e.g. a brand-new PR whose deployment has not been posted):
+   - Read the head branch (`gh pr view <num> --repo strapi/documentation --json headRefName`).
+   - Replace `/` with `-`: `cms/mcp-server` → `cms-mcp-server`.
+   - Host: `https://documentation-git-<branch-slug>-strapijs.vercel.app`.
+   - This only works for short branch names. If the branch slug would exceed ~50 characters, the slug-built host is unreliable; note in the Reason line that the link should be verified once Vercel posts its comment.
+
+#### Page path
+
 3. Identify the primary page path to deep-link to:
    - Fetch the PR's changed files via `gh pr view <num> --repo strapi/documentation --json files --jq '.files[].path'`.
    - Filter to `.md`/`.mdx` files under `docusaurus/docs/`.
-   - Pick the **most representative page** (most central or most-modified). If multiple are equally central, prefer the hub/parent page (e.g., `cms/features/users-permissions.md` over its sub-pages).
-   - Strip the `docusaurus/docs/` prefix and the `.md`/`.mdx` extension: `docusaurus/docs/cms/features/users-permissions.md` → `cms/features/users-permissions`.
+   - Prefer the **newly added** page (a file added by the PR). If several added pages exist, take the first. If none were added, pick the most representative modified page; if several are equally central, prefer the hub/parent page (e.g., `cms/features/users-permissions.md` over its sub-pages).
+   - Strip the `docusaurus/docs/` prefix and the `.md`/`.mdx` extension: `docusaurus/docs/cms/features/users-permissions.md` → `/cms/features/users-permissions`.
    - If no `.md`/`.mdx` files are touched (rare for a docs PR), fall back to the root path (empty string).
-4. Assemble the line:
+
+#### Assemble and verify
+
+4. Assemble the line (`<host>` from step 1/2, `<page-path>` with its leading `/`):
 
    ```
-   Direct preview link 👉 [here](https://documentation-git-<branch-slug>-strapijs.vercel.app/<page-path>)
+   Direct preview link 👉 [here](<host><page-path>)
    ```
 
-5. Append it as the last line of the proposed description, separated from the body by a blank line.
+5. **Verify the URL resolves** before proposing it:
+   ```bash
+   curl -s -o /dev/null -w '%{http_code}' -L --max-time 25 "<url>"
+   ```
+   A non-200 (or `000` host-resolution failure) means the host is wrong; re-derive from the Vercel comment (step 1) rather than the slug. Surface the status in the Reason line.
+
+6. Append the line as the last line of the proposed description, separated from the body by a blank line.
 
 ### Examples
 
-- Branch `cms/update-users-permissions-docs` + primary page `cms/features/users-permissions` → `https://documentation-git-cms-update-users-permissions-docs-strapijs.vercel.app/cms/features/users-permissions`
-- Branch `repo/contact-support-mention` + primary page `cms/intro` → `https://documentation-git-repo-contact-support-mention-strapijs.vercel.app/cms/intro`
+- Long branch `cms/move-mcp-plugin-api-to-plugins-dev`: the Vercel comment yields host `https://documentation-git-cms-move-mcp-plugin-api-to-pl-704ff2-strapijs.vercel.app`; added page `cms/plugins-development/extend-mcp-server` → `https://documentation-git-cms-move-mcp-plugin-api-to-pl-704ff2-strapijs.vercel.app/cms/plugins-development/extend-mcp-server`
+- Short branch `repo/contact-support-mention` (slug fallback safe) + page `cms/intro` → `https://documentation-git-repo-contact-support-mention-strapijs.vercel.app/cms/intro`
 
 ### Edge cases
 
