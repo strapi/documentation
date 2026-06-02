@@ -13,9 +13,6 @@ tags:
   - AI
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Extending the MCP server
 
 <Tldr>

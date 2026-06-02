@@ -10,9 +10,6 @@ tags:
 toc_max_heading_level: 4
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # MCP server
 <BetaBadge /> <VersionBadge version="5.47.0"/> 
 
