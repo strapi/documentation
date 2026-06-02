@@ -24358,84 +24358,6 @@ File path: ~/.codeium/windsurf/mcp_config.json
 ```
 
 
-## Registering a custom tool
-Description: Use strapi.ai.mcp.registerTool() to expose a custom tool to AI clients:
-(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#registering-a-custom-tool)
-
-Language: JavaScript
-File path: src/plugins/my-plugin/strapi-server.js
-
-```js
-const { z } = require('@strapi/utils');
-
-module.exports = {
-  register({ strapi }) {
-    if (strapi.ai.mcp.isEnabled()) {
-      strapi.ai.mcp.registerTool({
-        name: 'my_custom_tool',
-        title: 'My Custom Tool',
-        description: 'A short description shown to the AI client.',
-        auth: {
-          // The session gate passes when the token satisfies ANY policy in the array.
-          policies: [{ action: 'plugin::my-plugin.my-action' }],
-        },
-        // resolveInputSchema and resolveOutputSchema are called per request,
-        // so they can narrow schemas based on the token's permissions.
-        resolveInputSchema: (context) =>
-          z.object({
-            message: z.string().describe('The message to echo.'),
-          }),
-        resolveOutputSchema: (context) =>
-          z.object({
-            result: z.string(),
-          }),
-        createHandler: (strapi, context) => async ({ args }) => ({
-          content: [{ type: 'text', text: args.message }],
-          structuredContent: { result: args.message },
-        }),
-      });
-    }
-  },
-};
-```
-
----
-Language: TypeScript
-File path: src/plugins/my-plugin/strapi-server.ts
-
-```ts
-import { z } from '@strapi/utils';
-
-export default {
-  register({ strapi }) {
-    if (strapi.ai.mcp.isEnabled()) {
-      strapi.ai.mcp.registerTool({
-        name: 'my_custom_tool',
-        title: 'My Custom Tool',
-        description: 'A short description shown to the AI client.',
-        auth: {
-          // The session gate passes when the token satisfies ANY policy in the array.
-          policies: [{ action: 'plugin::my-plugin.my-action' }],
-        },
-        resolveInputSchema: (context) =>
-          z.object({
-            message: z.string().describe('The message to echo.'),
-          }),
-        resolveOutputSchema: (context) =>
-          z.object({
-            result: z.string(),
-          }),
-        createHandler: (strapi, context) => async ({ args }) => ({
-          content: [{ type: 'text', text: args.message }],
-          structuredContent: { result: args.message },
-        }),
-      });
-    }
-  },
-};
-```
-
-
 
 # Users & Permissions
 Source: https://docs.strapi.io/cms/features/users-permissions
@@ -31596,6 +31518,90 @@ export default {
   register(app) {},
   bootstrap() {},
   registerTrads({ locales }) {},
+};
+```
+
+
+
+# Extending the MCP server with plugins
+Source: https://docs.strapi.io/cms/plugins-development/extend-mcp-server
+
+## Registering a custom tool
+Description: Use strapi.ai.mcp.registerTool() to expose a custom tool to AI clients:
+(Source: https://docs.strapi.io/cms/plugins-development/extend-mcp-server#registering-a-custom-tool)
+
+Language: JavaScript
+File path: src/plugins/my-plugin/strapi-server.js
+
+```js
+const { z } = require('@strapi/utils');
+
+module.exports = {
+  register({ strapi }) {
+    if (strapi.ai.mcp.isEnabled()) {
+      strapi.ai.mcp.registerTool({
+        name: 'my_custom_tool',
+        title: 'My Custom Tool',
+        description: 'A short description shown to the AI client.',
+        auth: {
+          // The session gate passes when the token satisfies ANY policy in the array.
+          policies: [{ action: 'plugin::my-plugin.my-action' }],
+        },
+        // resolveInputSchema and resolveOutputSchema are called per request,
+        // so they can narrow schemas based on the token's permissions.
+        resolveInputSchema: (context) =>
+          z.object({
+            message: z.string().describe('The message to echo.'),
+          }),
+        resolveOutputSchema: (context) =>
+          z.object({
+            result: z.string(),
+          }),
+        createHandler: (strapi, context) => async ({ args }) => ({
+          content: [{ type: 'text', text: args.message }],
+          structuredContent: { result: args.message },
+        }),
+      });
+    }
+  },
+};
+```
+
+---
+Language: TypeScript
+File path: src/plugins/my-plugin/strapi-server.ts
+
+```ts
+import { z } from '@strapi/utils';
+
+export default {
+  register({ strapi }) {
+    if (strapi.ai.mcp.isEnabled()) {
+      strapi.ai.mcp.registerTool({
+        name: 'my_custom_tool',
+        title: 'My Custom Tool',
+        description: 'A short description shown to the AI client.',
+        auth: {
+          // The session gate passes when the token satisfies ANY policy in the array.
+          policies: [{ action: 'plugin::my-plugin.my-action' }],
+        },
+        // resolveInputSchema and resolveOutputSchema are called per request,
+        // so they can narrow schemas based on the token's permissions.
+        resolveInputSchema: (context) =>
+          z.object({
+            message: z.string().describe('The message to echo.'),
+          }),
+        resolveOutputSchema: (context) =>
+          z.object({
+            result: z.string(),
+          }),
+        createHandler: (strapi, context) => async ({ args }) => ({
+          content: [{ type: 'text', text: args.message }],
+          structuredContent: { result: args.message },
+        }),
+      });
+    }
+  },
 };
 ```
 
