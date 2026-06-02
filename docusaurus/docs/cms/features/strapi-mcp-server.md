@@ -364,9 +364,9 @@ The MCP server has the following limitations:
 - **Custom fields**: Custom fields registered via plugins are mapped to their underlying Strapi type. If the custom field registry is not populated when MCP tools are registered, the custom field falls back to an `unknown` type.
 - **Circular component references**: Components that reference themselves (directly or indirectly) fall back to an open `record<string, unknown>` schema at the point of the cycle, rather than an infinite recursive structure.
 
-## Plugin API
+### Plugin API
 
-Strapi plugins can register additional MCP tools through the `strapi.ai.mcp` service, so AI clients can trigger plugin-specific actions.
+Strapi plugins can register additional MCP tools through the `strapi.ai.mcp` service, so AI clients can trigger plugin-specific actions. Click on the card below to read more details:
 
 <CustomDocCardsWrapper>
 <CustomDocCard icon="puzzle-piece" title="Extending the MCP server" description="Register custom MCP tools from a Strapi plugin through the strapi.ai.mcp service." link="/cms/plugins-development/extend-mcp-server" />
