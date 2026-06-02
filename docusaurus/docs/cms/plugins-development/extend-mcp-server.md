@@ -1,5 +1,5 @@
 ---
-title: Extending the MCP server
+title: Extending the MCP server with plugins
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
 pagination_prev: cms/plugins-development/server-getters-usage
@@ -13,7 +13,7 @@ tags:
   - AI
 ---
 
-# Extending the MCP server
+# Extending the MCP server with plugins
 
 <Tldr>
 Strapi plugins can register additional MCP tools through the `strapi.ai.mcp` service. Registrations must happen while the MCP server is idle (during the plugin's `register()` or `bootstrap()` lifecycle phase), before the server starts.
