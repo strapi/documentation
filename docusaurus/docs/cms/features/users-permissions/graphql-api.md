@@ -192,7 +192,7 @@ Unlike the REST equivalent (which redirects), the GraphQL mutation returns a JWT
 These operations retrieve and manage user records. They require the corresponding permission to be enabled for the requesting user's role.
 
 :::note Identifier convention
-GraphQL mutations on users (`updateUsersPermissionsUser`, `deleteUsersPermissionsUser`) accept the `documentId` (a string) as the `id` argument. This differs from the REST equivalents (`PUT/DELETE /api/users/:id`) which use the numeric database `id`. The Users & Permissions feature keeps this REST/GraphQL asymmetry for backward compatibility.
+User and role mutations (`updateUsersPermissionsUser`, `deleteUsersPermissionsUser`, `updateUsersPermissionsRole`, `deleteUsersPermissionsRole`) accept the numeric database `id` as the `id` argument, the same value used by their REST equivalents. The `documentId` is exposed in the response for reference but is not accepted as the mutation argument.
 :::
 
 ### Get authenticated user (me query)
@@ -246,7 +246,7 @@ The `updateUsersPermissionsUser` mutation updates an existing user record:
 
 ```graphql
 mutation {
-  updateUsersPermissionsUser(id: "documentId123", data: { username: "updatedname" }) {
+  updateUsersPermissionsUser(id: "1", data: { username: "updatedname" }) {
     data {
       documentId
       username
@@ -264,7 +264,7 @@ The `deleteUsersPermissionsUser` mutation removes a user record:
 
 ```graphql
 mutation {
-  deleteUsersPermissionsUser(id: "documentId123") {
+  deleteUsersPermissionsUser(id: "1") {
     data {
       documentId
       username
