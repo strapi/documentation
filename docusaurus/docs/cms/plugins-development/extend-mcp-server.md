@@ -123,5 +123,4 @@ export default {
 :::note
 `resolveInputSchema` and `resolveOutputSchema` are called once per incoming MCP request, so you can narrow schemas dynamically based on the token's permissions (via `context.userAbility`).
 :::
-</content>
-</invoke>
+
