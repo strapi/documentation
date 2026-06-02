@@ -41,7 +41,7 @@ Find out what already exists, where to put new content, what's missing.
 
 ### Review — check what you wrote
 
-- `/inki:review [--yes] [--fix] <path>` — orchestrator: runs all 6 review sub-skills.
+- `/inki:review [--yes] [--fix] <path | filename | PR | docs.strapi.io URL | pasted content>` — orchestrator: runs all 6 review sub-skills against any supported target.
 - `/inki:style-check <path>` — style lint (deterministic + AI).
 - `/inki:outline-check <path>` — verify outline matches template.
 - `/inki:outline-ux-analyzer <path>` — audit pedagogical UX.
