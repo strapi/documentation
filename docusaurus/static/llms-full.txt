@@ -9767,1004 +9767,453 @@ To access the admin panel using a specific provider instead of logging in with a
 
 
 
-# Users & Permissions GraphQL API
-Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api
+# MCP server
+Source: https://docs.strapi.io/cms/features/strapi-mcp-server
 
-# Users & Permissions GraphQL API
+# MCP server
 
-This page documents all GraphQL queries and mutations provided by the Users & Permissions plugin. The [GraphQL plugin](/cms/plugins/graphql) must be installed. For configuration details, see the main [Users & Permissions page](/cms/features/users-permissions).
+The MCP server exposes a set of content management tools to AI clients such as Claude Desktop, Claude Code, Cursor, or any MCP-compatible tool. An AI client connected to the MCP server can, for example, create a blog article, list recent entries, or publish a page. Which tools are available depends on the permissions granted to the Admin token used for authentication.
 
-## Authentication
+</IdentityCard>
 
-Authentication mutations handle login, registration, and password management. Public mutations do not require an Authorization header.
+## Configuration
 
-### Login
+Before first use, the Strapi MCP server must be:
+- enabled through the server configuration file and authenticated with Admin tokens created in the admin panel
+- connected to your AI client.
 
-The `login` mutation authenticates a user and returns a JWT token:
+### Strapi code-based configuration
 
-```graphql
-mutation {
-  login(input: { identifier: "user@example.com", password: "yourPassword" }) {
-    jwt
-    user {
-      id
-      documentId
-      username
-      email
-      confirmed
-      blocked
-    }
-  }
-}
+Enable the MCP server by adding the `mcp` object to the server configuration file:
+
+</Tabs>
+
+Once the setting is in place, restart Strapi. The MCP endpoint becomes available at `/mcp` on your Strapi server (e.g., `http://localhost:1337/mcp`).
+
+#### Advanced options
+
+The following optional keys can be added to the `mcp` configuration object:
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `enabled` | Boolean | `false` | Enable or disable the MCP server. |
+| `connectTimeoutMs` | Number | `5000` | Maximum time (in ms) for the internal MCP transport to connect before the request is aborted. |
+| `requestTimeoutMs` | Number | `60000` | Maximum time (in ms) for a single MCP request to complete before it times out. |
+
+```js title="config/server.js"
+mcp: {
+  enabled: true,
+  connectTimeoutMs: 10000, // 10 seconds
+  requestTimeoutMs: 120000, // 2 minutes
+},
 ```
 
-Input type `UsersPermissionsLoginInput`:
+### Strapi admin panel configuration
 
-- `identifier` (String!) -- email or username
-- `password` (String!)
-- `provider` (String, defaults to "local")
+The MCP server authenticates requests using Admin tokens. Each MCP session is scoped to the permissions of the token used to connect:
 
-Returns `UsersPermissionsLoginPayload`: `jwt` (String), `user` (UsersPermissionsMe)
+1. Create a new Admin token (see [Creating an Admin token](/cms/features/admin-tokens#creating-a-new-admin-token) on the Admin tokens feature page).
+2. Copy the token value. You will need it when configuring the AI client.
 
-Auth: Public
+The token's permissions determine which MCP tools are exposed to the AI client. For instance, if the token only grants `read` on an `Article` content-type, the AI client will only see listing and reading tools for articles.
 
-### Register
+### AI client configuration
 
-The `register` mutation creates a new user account and returns a JWT token:
-
-```graphql
-mutation {
-  register(input: { username: "newuser", email: "new@example.com", password: "Password123!" }) {
-    jwt
-    user {
-      id
-      documentId
-      username
-      email
-    }
-  }
-}
-```
-
-Input type `UsersPermissionsRegisterInput`:
-
-- `username` (String!)
-- `email` (String!)
-- `password` (String!)
-
-Returns `UsersPermissionsLoginPayload`
-
-Auth: Public
+Once you have enabled the MCP server through the server configuration file and created an Admin token in the admin panel, connect your AI client to the Strapi MCP server.
 
 :::note
-Only `username`, `email`, and `password` are accepted by default. Additional fields require `register.allowedFields` configuration.
+`http://localhost:1337/` is used in configuration examples on this page. If your Strapi server is hosted on another URL or port, please update the code accordingly.
 :::
 
-### Forgot password
+#### Connecting Claude Desktop
 
-The `forgotPassword` mutation sends a password reset email to the user:
+Open Claude Desktop's configuration file. The location varies depending on your system:
 
-```graphql
-mutation {
-  forgotPassword(email: "user@example.com") {
-    ok
-  }
-}
-```
+| OS | File location |
+|----|---------------|
+| macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
 
-Input: `email` (String!) -- direct argument, not wrapped in an input type.
+:::tip
+You can also open the configuration file for Claude Desktop from Claude's settings: go to Settings > Desktop app > Developer, then click on the **Edit config** button.
+:::
 
-Returns `UsersPermissionsPasswordPayload`: `ok` (Boolean!)
+Add the Strapi MCP server to Claude's configuration file, as in the following example, replacing `YOUR_ADMIN_TOKEN` with the Admin token value copied from the [Strapi admin panel configuration](#strapi-admin-panel-configuration):
 
-Auth: Public
-
-### Reset password
-
-The `resetPassword` mutation sets a new password using the token received by email:
-
-```graphql
-mutation {
-  resetPassword(code: "resetTokenFromEmail", password: "NewPassword123!", passwordConfirmation: "NewPassword123!") {
-    jwt
-    user {
-      id
-      username
-      email
+```json title="claude_desktop_config.json"
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://localhost:1337/mcp",
+        "--header",
+        "Authorization: Bearer YOUR_ADMIN_TOKEN"
+      ]
     }
   }
 }
 ```
 
-Input (direct arguments):
+Restart Claude Desktop for the changes to take effect.
 
-- `code` (String!) -- reset token from email
-- `password` (String!)
-- `passwordConfirmation` (String!)
+#### Connecting Claude Code
 
-Returns `UsersPermissionsLoginPayload`
+Run the following command, replacing `YOUR_ADMIN_TOKEN` with the Admin token value copied from the [Strapi admin panel configuration](#strapi-admin-panel-configuration):
 
-Auth: Public
+```bash
+claude mcp add strapi-mcp --transport http http://localhost:1337/mcp -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
+```
 
-### Change password
+Restart Claude Code, then run `/mcp` to confirm `strapi-mcp` reports as connected.
 
-The `changePassword` mutation updates the password for the currently authenticated user:
+#### Connecting Cursor
 
-```graphql
-mutation {
-  changePassword(currentPassword: "OldPassword123!", password: "NewPassword456!", passwordConfirmation: "NewPassword456!") {
-    jwt
-    user {
-      id
-      username
-      email
+Add the server to your `.cursor/mcp.json` file:
+
+```json title=".cursor/mcp.json"
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "type": "streamable-http",
+      "url": "http://localhost:1337/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
+      }
     }
   }
 }
 ```
 
-Requires an Authorization header with a Bearer token.
+#### Connecting Windsurf
 
-Input (direct arguments):
+Add the server to your `~/.codeium/windsurf/mcp_config.json` file:
 
-- `currentPassword` (String!)
-- `password` (String!)
-- `passwordConfirmation` (String!)
-
-Returns `UsersPermissionsLoginPayload`
-
-Auth: Authenticated
-
-### Email confirmation
-
-The `emailConfirmation` mutation confirms a user's email address using the token received by email:
-
-```graphql
-mutation {
-  emailConfirmation(confirmation: "confirmationTokenFromEmail") {
-    jwt
-    user {
-      id
-      username
-      email
-      confirmed
+```json title="~/.codeium/windsurf/mcp_config.json"
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "serverUrl": "http://localhost:1337/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
+      }
     }
   }
 }
 ```
 
-Input: `confirmation` (String!)
+#### Connecting other MCP clients
 
-Returns `UsersPermissionsLoginPayload`
+Any client that supports the MCP Streamable HTTP transport can connect. The generic configuration is as follows:
 
-Auth: Public
+| Setting | Value |
+|---------|-------|
+| Transport type | `streamable-http` |
+| URL | `http://localhost:1337/mcp` (adjust host and port to your Strapi instance) |
+| Authorization header | `Bearer YOUR_ADMIN_TOKEN` |
+
+## Usage
+
+The MCP server uses the Streamable HTTP transport protocol. Any MCP-compatible client can connect by pointing to the `/mcp` endpoint with a `Bearer` token in the `Authorization` header. Once connected, the AI client can interact with your Strapi content using natural language prompts.
+
+### Available tools
+
+The MCP server exposes 2 categories of tools: content-type tools generated from your schema, and built-in utility tools.
+
+#### Content-type tools
+
+The tools generated differ depending on whether the content type is a collection type or a single type.
+
+**Collection types** generate up to 8 tools — 5 for CRUD operations and 3 for [Draft & Publish](/cms/features/draft-and-publish) actions:
+
+| Tool | Action | Permission required | Description |
+|------|--------|-------------------|-------------|
+| `list` | Read | `read` | List entries with pagination, sorting, and filtering |
+| `get` | Read | `read` | Get a single entry by document ID |
+| `create` | Create | `create` | Create a new entry (created as draft if Draft & Publish is enabled) |
+| `update` | Update | `update` | Update an existing entry by document ID |
+| `delete` | Delete | `delete` | Delete an entry by document ID |
+| `publish` | Publish | `publish` | Publish a draft entry |
+| `unpublish` | Unpublish | `publish` | Unpublish a published entry |
+| `discard_draft` | Discard draft | `publish` | Discard draft changes and revert to the published version |
+
+**Single types** generate up to 6 tools. Because a single type always represents exactly one document, there is no `list` tool and create/update are merged into a single `write` tool:
+
+| Tool | Action | Permission required | Description |
+|------|--------|-------------------|-------------|
+| `get` | Read | `read` | Get the single-type document |
+| `write` | Create or update | `create` and/or `update` | Create the document if none exists; update the existing draft otherwise |
+| `delete` | Delete | `delete` | Delete the single-type document |
+| `publish` | Publish | `publish` | Publish the document |
+| `unpublish` | Unpublish | `publish` | Unpublish the published document |
+| `discard_draft` | Discard draft | `publish` | Discard draft changes and revert to the published version |
+
+The publish, unpublish, and discard_draft tools are only generated when [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content type.
+
+#### Built-in utility tools
+
+In addition to content-type tools, Strapi registers the following built-in tools:
+
+| Tool | Availability | Description |
+|------|-------------|-------------|
+| `log` | Development mode only | Logs a message to the Strapi server console at a specified level (`info`, `warn`, `error`, `http`, `log`). Useful for debugging MCP interactions. |
+
+Built-in utility tools are only available in development mode (when `autoReload` is enabled) and do not require specific admin permissions.
+
+### Content management through prompts
+
+Once connected, you can interact with your Strapi content using natural language:
+
+| Prompt | What happens |
+|--------|-------------|
+| "Create a new article titled 'Hello World' with body 'First post'." | Creates a draft article entry |
+| "List the 5 most recent articles." | Returns paginated list, newest first |
+| "Show me article with ID abc123." | Returns the full entry |
+| "Update article abc123, change the title to 'Hello Strapi'." | Updates the title, other fields untouched |
+| "Publish article abc123." | Changes the entry status to published |
+| "Delete article abc123." | Removes the entry |
+| "Create an article in French with the title 'Bonjour le monde'." | Creates a draft article with `locale` set to `fr` |
+
+#### Internationalization (i18n)
+
+When [Internationalization (i18n)](/cms/features/internationalization) is enabled on a content type, MCP tools accept an optional `locale` parameter (e.g., `"en"`, `"fr"`). If omitted, the default locale is used.
+
+The AI client sees which locales are available in each tool's schema, so you can ask it to create or update content in a specific language. For example, asking "Create an article in French titled 'Bonjour'" passes `locale: "fr"` to the `create` tool. Which locales are available depends on the Admin token's permissions (see [Permission boundaries](#permission-boundaries)).
+
+:::tip
+When working with localized content, explicitly mention the target language in your prompt so the AI client passes the correct `locale` value. For instance, prefer "Create an article **in French**" over "Create an article titled 'Bonjour'" to avoid ambiguity.
+:::
+
+#### Sorting
+
+The `list` tool accepts a `sort` parameter that supports 4 notations:
+
+| Notation | Example |
+|----------|---------|
+| String | `"title:asc"` |
+| Array of strings | `["title:asc", "createdAt:desc"]` |
+| Object | `{ "title": "asc" }` |
+| Array of objects | `[{ "title": "asc" }, { "createdAt": "desc" }]` |
+
+Sort field names are constrained to the content type's scalar attributes (strings, numbers, booleans, dates, enumerations). Relation, component, dynamic zone, media, and JSON fields cannot be sorted on.
+
+#### Filtering
+
+The `list` tool accepts a `filters` parameter using Strapi's filter syntax:
+
+- **Field operators**: `$eq`, `$ne`, `$in`, `$notIn`, `$lt`, `$lte`, `$gt`, `$gte`, `$between`, `$contains`, `$notContains`, `$startsWith`, `$endsWith`, `$null`, `$notNull`, and their case-insensitive variants (`$eqi`, `$nei`, `$containsi`, `$notContainsi`, `$startsWithi`, `$endsWithi`).
+- **Logical operators**: `$and`, `$or` (accept arrays of filter objects), `$not` (wraps a single filter object).
+- **Implicit equality**: Passing a value directly (e.g., `{ "title": "Hello" }`) is equivalent to `{ "title": { "$eq": "Hello" } }`.
+
+Like sort fields, filter fields are constrained to scalar attributes only.
+
+#### Pagination
+
+The `list` tool also accepts `page` (1-indexed, default: 1) and `pageSize` (default: 25, max: 100) parameters.
+
+#### Relations
+
+Relation fields support both a shorthand document ID string and a full relation object.
+
+**To-one relations** (`oneToOne`, `manyToOne`) accept:
+- A document ID string: `"z7v8zma53x01r6oceimv922b"`
+- A relation object: `{ "documentId": "z7v8zma53x01r6oceimv922b", "locale": "en", "status": "draft" }` (`locale` and `status` are optional)
+- `null` to clear the relation
+
+**To-many relations** (`oneToMany`, `manyToMany`) accept a relation object with one or more of the following keys:
+
+| Key | Description |
+|-----|-------------|
+| `connect` | Add relations. Accepts an array of document ID strings or `{ documentId, locale?, status?, position? }` objects. The optional `position` key supports `{ before?, after?, start?, end? }` ordering hints (default: `{ end: true }`). |
+| `disconnect` | Remove relations. Accepts an array of document ID strings or `{ documentId, locale?, status? }` objects. |
+| `set` | Replace all existing relations with the provided array. Pass `null` to clear all relations. Mutually exclusive with `connect`/`disconnect`. |
+
+### Permission boundaries
+
+The MCP server enforces the same permission model as the Strapi admin panel. Permissions are checked at multiple levels:
+
+1. **Tool visibility**: When an AI client connects, Strapi checks the Admin token's permissions and only exposes tools the token has access to. If the token does not grant `delete` on `Article`, the AI client will not see a delete tool for articles at all.
+
+2. **Field filtering**: Even within an exposed tool, input and output schemas are narrowed to the fields the token can access. If the token grants `read` on `Article` but excludes the `body` field, the AI client will not see or receive `body` content. Field restrictions are applied independently per action. Write schemas (`create`, `update`) only include fields permitted for the corresponding action.
+
+3. **Locale filtering**: When the [Internationalization (i18n)](/cms/features/internationalization) feature is enabled and locale-level permissions are configured, the `locale` parameter is narrowed per action. For example, a token might allow reading content in `en` and `fr` but only creating content in `en`. If the default locale is permitted for a given action, that locale is applied as the Zod schema default, so the AI client does not need to specify a locale explicitly.
+
+4. **Runtime enforcement**: Beyond schema-level narrowing, each handler calls Strapi's permission checker at runtime to verify access on the specific document being read, written, or published. Condition-based permissions (e.g., "only update entries you own") are enforced at this level.
+
+This means you can create tokens with fine-grained access:
+
+- A "read-only" token that only exposes listing and reading tools
+- A token scoped to specific content types (e.g., articles but not categories)
+- A token restricted to specific fields or locales
+- A token with condition-based permissions (e.g., only update entries you own)
+
+:::tip
+Create dedicated Admin tokens for each AI client or use case. Use the most restrictive permissions that still allow the AI to accomplish its task.
+:::
+
+### Stateless architecture
+
+The MCP server uses a stateless architecture. Each POST request to the `/mcp` endpoint creates a fresh, ephemeral MCP server instance scoped to the authenticated token's permissions. There is no session persistence between requests: every request is independently authenticated and authorized. Because there is no session state, the AI client does not need to manage session IDs, and permission changes (such as revoking a token or updating its permissions) take effect on the next request.
+
+GET and DELETE HTTP methods on the `/mcp` endpoint return a `405 Method Not Allowed` JSON-RPC error, as the MCP server only accepts POST requests.
+
+### Known limitations
+
+The MCP server has the following limitations:
+
+- **Dynamic zones**: Dynamic zone fields are passed as untyped arrays in tool schemas. The internal structure of each component within a dynamic zone is not described.
+- **Nested population parameters**: The `list` and `get` tools do not support nested population parameters for relations.
+- **Media upload**: Media fields accept existing media asset references but the MCP server cannot upload new files. Use Strapi's media library or upload API to add files first, then reference them in MCP tool calls.
+- **Custom fields**: Custom fields registered via plugins are mapped to their underlying Strapi type. If the custom field registry is not populated when MCP tools are registered, the custom field falls back to an `unknown` type.
+- **Circular component references**: Components that reference themselves (directly or indirectly) fall back to an open `record<string, unknown>` schema at the point of the cycle, rather than an infinite recursive structure.
+
+## Plugin API
+
+Strapi plugins can register additional MCP tools, prompts, and resources through the `strapi.ai.mcp` service. All registrations must happen during the plugin's `register()` lifecycle phase, before the MCP server starts.
+
+### Registering a custom tool
+
+Use `strapi.ai.mcp.registerTool()` to expose a custom tool to AI clients:
+
+</Tabs>
+
+#### Tool definition options
+
+| Option | Type | Required | Description |
+|--------|------|----------|-------------|
+| `name` | String | Yes | Unique tool name. Must be unique across all registered MCP tools. |
+| `title` | String | Yes | Human-readable title shown to the AI client. |
+| `description` | String | Yes | Short description of what the tool does. |
+| `auth` | Object | Yes (or `devModeOnly`) | Auth requirement. The session gate passes when the token satisfies **any** policy in the `policies` array. Each policy is `{ action, subject? }`. |
+| `devModeOnly` | Boolean | Yes (or `auth`) | Set to `true` to restrict the tool to development mode only (equivalent to the built-in `log` tool). |
+| `resolveInputSchema` | Function | No | Returns a Zod schema for the tool's input arguments. Called per request so RBAC constraints can be applied dynamically. Omit for tools with no input. |
+| `resolveOutputSchema` | Function | Yes | Returns a Zod schema for the tool's structured output. Called per request. |
+| `createHandler` | Function | Yes | Factory that returns the async tool handler. Receives the Strapi instance and per-request context (including `userAbility` and `user`). |
+| `telemetry` | Object | No | Optional analytics metadata: `{ source?: string; name?: string }`. Use `source` to identify the plugin and `name` to override the raw tool name in analytics events. |
 
 :::note
-Unlike the REST equivalent (which redirects), the GraphQL mutation returns a JWT and user object directly.
+`resolveInputSchema` and `resolveOutputSchema` are called once per incoming MCP request, so you can narrow schemas dynamically based on the token's permissions (via `context.userAbility`).
 :::
 
-## User queries and mutations
-
-These operations retrieve and manage user records. They require the corresponding permission to be enabled for the requesting user's role.
-
-### Get authenticated user (me query)
-
-The `me` query returns the profile of the currently authenticated user:
 
-```graphql
-query {
-  me {
-    id
-    documentId
-    username
-    email
-    confirmed
-    blocked
-    role {
-      id
-      name
-      description
-      type
-    }
-  }
-}
-```
-
-Requires an Authorization header. Returns `UsersPermissionsMe` type.
 
-### Create a user
+# Users & Permissions
+Source: https://docs.strapi.io/cms/features/users-permissions
 
-The `createUsersPermissionsUser` mutation creates a new user record:
+# Users & Permissions
 
-```graphql
-mutation {
-  createUsersPermissionsUser(data: { username: "newuser", email: "new@example.com", password: "Password123!" }) {
-    data {
-      documentId
-      username
-      email
-    }
-  }
-}
-```
+The Users & Permissions feature allows the management of the end-users  of a Strapi project. It provides a full authentication process based on JSON Web Tokens (JWT) to protect your API, and an access-control list (ACL) strategy that enables you to manage permissions between groups of users.
 
-Input: `UsersPermissionsUserInput` (auto-generated from User content-type schema, with `password` field added)
+</IdentityCard>
 
-Auth: Requires `plugin::users-permissions.user.create` permission
+## Admin panel configuration
 
-### Update a user
+The Users & Permissions feature is configured from both the admin panel settings, and via the code base.
 
-The `updateUsersPermissionsUser` mutation updates an existing user record:
+### Roles
 
-```graphql
-mutation {
-  updateUsersPermissionsUser(id: "documentId123", data: { username: "updatedname" }) {
-    data {
-      documentId
-      username
-      email
-    }
-  }
-}
-```
+The Users & Permissions feature allows creating and managing roles for end users, to configure what they can have access to.
 
-Auth: Requires `plugin::users-permissions.user.update` permission
+#### Creating a new role
 
-### Delete a user
+**Path:** 
 
-The `deleteUsersPermissionsUser` mutation removes a user record:
+<!---
+:::tip
+Click the search button 
 
-```graphql
-mutation {
-  deleteUsersPermissionsUser(id: "documentId123") {
-    data {
-      documentId
-      username
-    }
-  }
-}
-```
+</Tabs>
 
-Auth: Requires `plugin::users-permissions.user.destroy` permission
+### Registration configuration
 
-## Role mutations
+If you have added any additional fields in your User **model**  that need to be accepted on registration, you need to add them to the list of allowed fields in the `config.register` object of [the `/config/plugins` file](/cms/configurations/plugins), otherwise they will not be accepted.
 
-Role mutations manage end-user roles. They return `{ ok: true }` on success (not the role data).
+The following example shows how to ensure a field called "nickname" is accepted by the API on user registration:
 
-### Create a role
+</Tabs>
 
-The `createUsersPermissionsRole` mutation creates a new role:
+### Rate limiting configuration
 
-```graphql
-mutation {
-  createUsersPermissionsRole(data: { name: "Editor", description: "Can edit content" }) {
-    ok
-  }
-}
-```
+Rate limiting is applied to authentication and registration endpoints to prevent abuse. The following parameters can be configured to change its behavior. Additional configuration options are provided by the 
 
-Auth: Requires `plugin::users-permissions.role.createRole` permission
+</Tabs>
 
-### Update a role
+### Email template configuration {#templating-emails}
 
-The `updateUsersPermissionsRole` mutation updates an existing role:
+By default this plugin comes with two templates: reset password and email address confirmation. The templates use 
 
-```graphql
-mutation {
-  updateUsersPermissionsRole(id: "1", data: { name: "Senior Editor", description: "Can edit and publish" }) {
-    ok
-  }
-}
-```
+</Tabs>
 
-Auth: Requires `plugin::users-permissions.role.updateRole` permission
+### Security configuration
 
-### Delete a role
+JWTs can be verified and trusted because the information is digitally signed. To sign a token, a _secret_ is required. By default, Strapi stores it as the `JWT_SECRET` environment variable in the `.env` file.
 
-The `deleteUsersPermissionsRole` mutation removes a role:
+If you want to use a different environment variable, you can update the configuration file.
 
-```graphql
-mutation {
-  deleteUsersPermissionsRole(id: "3") {
-    ok
-  }
-}
-```
+</Tabs>
 
-Auth: Requires `plugin::users-permissions.role.deleteRole` permission
+#### Creating a custom callback validator {#creating-a-custom-password-validation}
 
-:::note
-The Public role cannot be deleted.
-:::
+By default, Strapi SSO only redirects to the redirect URL that is exactly equal to the url in the configuration:
 
-## Types reference
+## Usage
 
-This section lists the key GraphQL types used across Users & Permissions operations.
+The Users & Permissions feature can be used both via the admin panel, to create new end-user accounts, and via the APIs.
 
-### Input types
+### Admin panel usage
 
-| Type | Fields | Used by |
-|------|--------|---------|
-| `UsersPermissionsLoginInput` | `identifier` (String!), `password` (String!), `provider` (String) | `login` mutation |
-| `UsersPermissionsRegisterInput` | `username` (String!), `email` (String!), `password` (String!) | `register` mutation |
+**Path to use the feature:** 
 
-### Response types
+### Token usage
 
-| Type | Fields | Used by |
-|------|--------|---------|
-| `UsersPermissionsLoginPayload` | `jwt` (String), `user` (UsersPermissionsMe!) | `login`, `register`, `resetPassword`, `changePassword`, `emailConfirmation` |
-| `UsersPermissionsPasswordPayload` | `ok` (Boolean!) | `forgotPassword` |
-| `UsersPermissionsMe` | `id` (ID!), `documentId` (ID!), `username` (String!), `email` (String), `confirmed` (Boolean), `blocked` (Boolean), `role` (UsersPermissionsMeRole) | `me` query, nested in login payload |
-| `UsersPermissionsMeRole` | `id` (ID!), `name` (String!), `description` (String), `type` (String) | Nested in `UsersPermissionsMe` |
+The `jwt` received when logging in or registering may then be used for making permission-restricted API requests. To make an API request as a user, place the JWT into an `Authorization` header of the request using the Bearer token pattern:
 
+```js
 
+const token = 'YOUR_TOKEN_HERE';
 
-# Users & Permissions REST API
-Source: https://docs.strapi.io/cms/features/users-permissions/rest-api
-
-# Users & Permissions REST API
-
-The Users & Permissions plugin exposes a set of REST API endpoints for authentication, user management, and role/permission management. These endpoints are separate from the standard content-type CRUD endpoints and have their own response shapes. For a general overview of the plugin's features and configuration, see the [Users & Permissions introduction](/cms/features/users-permissions).
-
-All endpoints use the `/api` prefix. For example, if your Strapi server runs at `http://localhost:1337`, the login endpoint is `http://localhost:1337/api/auth/local`.
-
-## Authentication
-
-Authentication endpoints handle login, registration, and password management. Most of these endpoints are public by default and do not require a Bearer token.
-
-### Login
-
-`POST /api/auth/local`
-
-Authenticates a user with their identifier (email or username) and password, returning a JWT and the user object.
-
-Request body:
-
-```json
-{
-  "identifier": "user@example.com",
-  "password": "yourPassword"
-}
-```
-
-Example request:
-
-```bash
-curl -X POST http://localhost:1337/api/auth/local \
-  -H "Content-Type: application/json" \
-  -d '{"identifier": "user@example.com", "password": "yourPassword"}'
-```
-
-Example response (200):
-
-```json
-{
-  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "user": {
-    "id": 1,
-    "documentId": "x74detpqybxw0bn6ormua5g2",
-    "username": "testuser1",
-    "email": "user@example.com",
-    "provider": "local",
-    "confirmed": true,
-    "blocked": false,
-    "createdAt": "2024-03-15T10:00:00.000Z",
-    "updatedAt": "2024-03-15T10:00:00.000Z",
-    "publishedAt": "2024-03-15T10:00:00.000Z"
-  }
-}
-```
-
-Possible errors:
-
-| Status | Message | Cause |
-|--------|---------|-------|
-| 400 | `"Invalid identifier or password"` | Wrong credentials |
-| 400 | `"Your account email is not confirmed"` | Email confirmation required but not completed |
-| 400 | `"Your account has been blocked by an administrator"` | Account blocked |
-
-This endpoint is rate limited (default: 10 requests per 60 seconds).
-
-### Register
-
-`POST /api/auth/local/register`
-
-Creates a new user account and returns a JWT along with the user object.
-
-Request body:
-
-```json
-{
-  "username": "newuser",
-  "email": "newuser@example.com",
-  "password": "Password123!"
-}
-```
-
-Example request:
-
-```bash
-curl -X POST http://localhost:1337/api/auth/local/register \
-  -H "Content-Type: application/json" \
-  -d '{"username": "newuser", "email": "newuser@example.com", "password": "Password123!"}'
-```
-
-Example response (200):
-
-```json
-{
-  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "user": {
-    "id": 2,
-    "documentId": "xjpaytstw1gm7wdfoc6c2k13",
-    "username": "newuser",
-    "email": "newuser@example.com",
-    "provider": "local",
-    "confirmed": true,
-    "blocked": false,
-    "createdAt": "2024-03-15T10:00:00.000Z",
-    "updatedAt": "2024-03-15T10:00:00.000Z",
-    "publishedAt": "2024-03-15T10:00:00.000Z"
-  }
-}
-```
-
-:::note
-Only `username`, `email`, and `password` are accepted in the request body by default. To allow additional fields (e.g., a `fullName` field you added to the User content-type), you must explicitly list them in the `register.allowedFields` configuration. See [Registration configuration](/cms/features/users-permissions#registration-configuration) for details.
-
-When email confirmation is enabled, the response contains only the user object without a JWT -- the user must confirm their email before they can log in.
-
-The newly registered user is assigned the default role (typically "Authenticated").
-:::
-
-Possible errors:
-
-| Status | Message | Cause |
-|--------|---------|-------|
-| 400 | `"Email or Username are already taken"` | Duplicate email or username |
-| 400 | `"Invalid parameters: fieldName"` | Extra fields not listed in `allowedFields` |
-| 400 | `"Register action is currently disabled"` | Registration disabled in admin settings |
-
-This endpoint is rate limited.
-
-### Forgot password
-
-`POST /api/auth/forgot-password`
-
-Sends a password reset email to the specified address. Requires an email provider to be configured.
-
-Request body:
-
-```json
-{
-  "email": "user@example.com"
-}
-```
-
-Example request:
-
-```bash
-curl -X POST http://localhost:1337/api/auth/forgot-password \
-  -H "Content-Type: application/json" \
-  -d '{"email": "user@example.com"}'
-```
-
-Example response (200):
-
-```json
-{
-  "ok": true
-}
-```
-
-:::note
-This endpoint always returns `{ "ok": true }` regardless of whether the email address exists in the system. This is intentional to prevent user enumeration attacks.
-:::
-
-This endpoint is rate limited.
-
-### Reset password
-
-`POST /api/auth/reset-password`
-
-Resets a user's password using a token received by email. All three fields are required.
-
-Request body:
-
-```json
-{
-  "code": "resetTokenFromEmail",
-  "password": "NewPassword123!",
-  "passwordConfirmation": "NewPassword123!"
-}
-```
-
-Example request:
-
-```bash
-curl -X POST http://localhost:1337/api/auth/reset-password \
-  -H "Content-Type: application/json" \
-  -d '{"code": "resetTokenFromEmail", "password": "NewPassword123!", "passwordConfirmation": "NewPassword123!"}'
-```
-
-Example response (200): Same shape as the [login](#login) response (jwt + user).
-
-Possible errors:
-
-| Status | Message | Cause |
-|--------|---------|-------|
-| 400 | `"passwordConfirmation is a required field"` | Missing `passwordConfirmation` |
-| 400 | `"Incorrect code provided"` | Invalid or expired reset token |
-
-This endpoint is rate limited.
-
-### Change password
-
-`POST /api/auth/change-password`
-
-Changes the password for the currently authenticated user. Requires a valid Bearer token. All three fields are required.
-
-Request body:
-
-```json
-{
-  "currentPassword": "OldPassword123!",
-  "password": "NewPassword456!",
-  "passwordConfirmation": "NewPassword456!"
-}
-```
-
-Example request:
-
-```bash
-curl -X POST http://localhost:1337/api/auth/change-password \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -d '{"currentPassword": "OldPassword123!", "password": "NewPassword456!", "passwordConfirmation": "NewPassword456!"}'
-```
-
-Example response (200): Same shape as the [login](#login) response (jwt + user).
-
-Possible errors:
-
-| Status | Message | Cause |
-|--------|---------|-------|
-| 400 | `"passwordConfirmation is a required field"` | Missing `passwordConfirmation` |
-| 400 | `"The provided current password is invalid"` | Wrong current password |
-| 400 | New password must differ from current password | Same password reused |
-
-This endpoint is rate limited.
-
-### Email confirmation
-
-`GET /api/auth/email-confirmation`
-
-Confirms a user's email address using a token from the confirmation email.
-
-Query parameter: `confirmation` -- the token received in the confirmation email.
-
-Example request:
-
-```bash
-curl -G http://localhost:1337/api/auth/email-confirmation \
-  --data-urlencode "confirmation=confirmationTokenHere"
-```
-
-After confirming the email, Strapi redirects the user to the URL configured in the admin panel under Settings > Users & Permissions > Advanced Settings > "Redirection url".
-
-### Send email confirmation
-
-`POST /api/auth/send-email-confirmation`
-
-Resends the confirmation email to a user who has not yet confirmed their email address.
-
-Request body:
-
-```json
-{
-  "email": "user@example.com"
-}
-```
-
-Example request:
-
-```bash
-curl -X POST http://localhost:1337/api/auth/send-email-confirmation \
-  -H "Content-Type: application/json" \
-  -d '{"email": "user@example.com"}'
-```
-
-Example response (200):
-
-```json
-{
-  "email": "user@example.com",
-  "sent": true
-}
-```
-
-Possible errors:
-
-| Status | Message | Cause |
-|--------|---------|-------|
-| 400 | `"Already confirmed"` | User already confirmed their email |
-| 400 | `"Your account has been blocked by an administrator"` | Account blocked |
-
-:::caution
-This endpoint is **not** rate limited.
-:::
-
-### Provider authentication
-
-`GET /api/connect/:provider`
-
-Redirects the user to a third-party provider's login page (e.g., Google, GitHub, Discord). Replace `:provider` with the provider name. See [Setting up providers](/cms/configurations/users-and-permissions-providers) for configuration instructions.
-
-### Provider callback
-
-`GET /api/auth/:provider/callback`
-
-Handles the OAuth callback after the user authenticates with a third-party provider. On success, returns the same response shape as [login](#login) (jwt + user).
-
-## Session management endpoints
-
-When session management is enabled (`jwtManagement: 'refresh'` in the plugin configuration), these additional endpoints become available. They return 404 when the default legacy JWT mode is active.
-
-### Refresh token
-
-`POST /api/auth/refresh`
-
-Exchanges a refresh token for a new access token. The old refresh token is invalidated and a new one is returned (token rotation).
-
-Request body:
-
-```json
-{
-  "refreshToken": "yourRefreshToken"
-}
-```
-
-Example request:
-
-```bash
-curl -X POST http://localhost:1337/api/auth/refresh \
-  -H "Content-Type: application/json" \
-  -d '{"refreshToken": "yourRefreshToken"}'
-```
-
-Example response (200):
-
-```json
-{
-  "jwt": "newAccessToken"
-}
-```
-
-### Logout
-
-`POST /api/auth/logout`
-
-Revokes all sessions for the authenticated user. Requires a valid Bearer token.
-
-Example request:
-
-```bash
-curl -X POST http://localhost:1337/api/auth/logout \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-Example response (200):
-
-```json
-{
-  "ok": true
-}
-```
-
-## Users
-
-User management endpoints handle CRUD operations on end-user records. Each endpoint requires the corresponding permission to be enabled for the user's role in the admin panel (Settings > Users & Permissions > Roles).
-
-:::caution Response format
-User endpoints return bare JSON objects (not wrapped in a `data` key), unlike standard Strapi content-type endpoints.
-:::
-
-### Get current user
-
-`GET /api/users/me`
-
-Returns the user associated with the provided JWT. Requires authentication.
-
-Example request:
-
-```bash
-curl http://localhost:1337/api/users/me \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-Example response (200):
-
-```json
-{
-  "id": 1,
-  "documentId": "x74detpqybxw0bn6ormua5g2",
-  "username": "testuser1",
-  "email": "user@example.com",
-  "provider": "local",
-  "confirmed": true,
-  "blocked": false,
-  "createdAt": "2024-03-15T10:00:00.000Z",
-  "updatedAt": "2024-03-15T10:00:00.000Z",
-  "publishedAt": "2024-03-15T10:00:00.000Z"
-}
-```
-
-### List users
-
-`GET /api/users`
-
-Returns a list of users. Supports `filters`, `sort`, and `pagination` query parameters.
-
-Example request:
-
-```bash
-curl http://localhost:1337/api/users \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-Example response (200): An array of user objects.
-
-### Get a user
-
-`GET /api/users/:id`
-
-Returns a single user by their integer `id`.
-
-Example request:
-
-```bash
-curl http://localhost:1337/api/users/1 \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-Example response (200): A user object.
-
-### Count users
-
-`GET /api/users/count`
-
-Returns the total number of users. Supports the `filters` query parameter.
-
-Example request:
-
-```bash
-curl http://localhost:1337/api/users/count \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-Example response (200): A bare integer, for example:
-
-```json
-42
-```
-
-### Create a user
-
-`POST /api/users`
-
-Creates a new user. If `role` is omitted, the default role is assigned.
-
-Request body:
-
-```json
-{
-  "username": "newuser",
-  "email": "newuser@example.com",
-  "password": "Password123!",
-  "role": 1,
-  "confirmed": true
-}
-```
-
-Example request:
-
-```bash
-curl -X POST http://localhost:1337/api/users \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -d '{"username": "newuser", "email": "newuser@example.com", "password": "Password123!", "role": 1, "confirmed": true}'
-```
-
-Example response (201): A user object with the populated role.
-
-### Update a user
-
-`PUT /api/users/:id`
-
-Updates an existing user. Only include the fields you want to change.
-
-Example request:
-
-```bash
-curl -X PUT http://localhost:1337/api/users/1 \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -d '{"username": "updateduser"}'
-```
-
-Example response (200): The updated user object.
-
-Possible errors:
-
-| Status | Message | Cause |
-|--------|---------|-------|
-| 404 | `"User not found"` | No user with the given `id` |
-| 400 | `"Username already taken"` or `"Email already taken"` | Duplicate value |
-
-### Delete a user
-
-`DELETE /api/users/:id`
-
-Deletes a user by their integer `id`.
-
-Example request:
-
-```bash
-curl -X DELETE http://localhost:1337/api/users/1 \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-Example response (200): The deleted user object.
-
-## Roles
-
-Role endpoints manage end-user roles and their associated permissions. These endpoints use the `/api/users-permissions/` prefix, not the standard `/api/` prefix used by content-type endpoints.
-
-### List roles
-
-`GET /api/users-permissions/roles`
-
-Returns all available roles with user counts.
-
-Example request:
-
-```bash
-curl http://localhost:1337/api/users-permissions/roles \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-Example response (200):
-
-```json
-{
-  "roles": [
-    {
-      "id": 1,
-      "name": "Authenticated",
-      "description": "Default role given to authenticated user.",
-      "type": "authenticated",
-      "nb_users": 2
+// Request API.
+axios
+  .get('http://localhost:1337/api/posts', {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-    {
-      "id": 2,
-      "name": "Public",
-      "description": "Default role given to unauthenticated user.",
-      "type": "public",
-      "nb_users": 0
-    }
-  ]
-}
+  })
+  .then(response => {
+    // Handle success.
+    console.log('Data: ', response.data);
+  })
+  .catch(error => {
+    // Handle error.
+    console.log('An error occurred:', error.response);
+  });
 ```
 
-### Get a role
+Any request without a token will assume the `public` role permissions by default. Modify the permissions of each user's role in the admin panel. Authentication failures return a `401 (unauthorized)` error.
 
-`GET /api/users-permissions/roles/:id`
+### User object in Strapi context
 
-Returns a single role by `id`, including its full permissions tree.
+The `user` object is available to successfully authenticated requests.
 
-Example request:
+The authenticated `user` object is a property of `ctx.state`, as shown in the following example:
 
-```bash
-curl http://localhost:1337/api/users-permissions/roles/1 \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```js
+create: async ctx => {
+  const { id } = ctx.state.user;
+
+  const depositObj = {
+    ...ctx.request.body,
+    depositor: id,
+  };
+
+  const data = await strapi.services.deposit.add(depositObj);
+
+  // Send 201 `created`
+  ctx.created(data);
+};
 ```
-
-Example response (200): A role object with a nested `permissions` structure mapping plugins to controllers to actions.
-
-### Create a role
-
-`POST /api/users-permissions/roles`
-
-Creates a new role.
-
-Request body:
-
-```json
-{
-  "name": "Editor",
-  "description": "Can edit content",
-  "type": "editor"
-}
-```
-
-Example request:
-
-```bash
-curl -X POST http://localhost:1337/api/users-permissions/roles \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -d '{"name": "Editor", "description": "Can edit content", "type": "editor"}'
-```
-
-Example response (200):
-
-```json
-{
-  "ok": true
-}
-```
-
-### Update a role
-
-`PUT /api/users-permissions/roles/:id`
-
-Updates an existing role.
-
-Example request:
-
-```bash
-curl -X PUT http://localhost:1337/api/users-permissions/roles/1 \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -d '{"description": "Updated description"}'
-```
-
-Example response (200):
-
-```json
-{
-  "ok": true
-}
-```
-
-### Delete a role
-
-`DELETE /api/users-permissions/roles/:id`
-
-Deletes a role by `id`. The Public role cannot be deleted. When a role is deleted, users assigned to it are reassigned to the Public role.
-
-Example request:
-
-```bash
-curl -X DELETE http://localhost:1337/api/users-permissions/roles/3 \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-Example response (200):
-
-```json
-{
-  "ok": true
-}
-```
-
-## Permissions
-
-The permissions endpoint returns the complete permission tree, showing which actions are available across all plugins and content-types.
-
-### List permissions
-
-`GET /api/users-permissions/permissions`
-
-Returns a nested object mapping plugins to controllers to actions.
-
-Example request:
-
-```bash
-curl http://localhost:1337/api/users-permissions/permissions \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-Example response (200): A nested `permissions` object where keys are plugin names, sub-keys are controller names, and values contain the available actions with their `enabled` status and `policy` information.
 
 
 

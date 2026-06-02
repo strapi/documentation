@@ -11660,7 +11660,7 @@ module.exports = ({ env }) => ({
 ```
 
 
-## Enhanced Login Component
+## Enhanced login component
 Description: Here's an updated login component that handles both JWT and refresh tokens:
 (Source: https://docs.strapi.io/cms/backend-customization/examples/authentication#enhanced-login-component)
 
@@ -12670,7 +12670,7 @@ Language: JavaScript
 File path: /src/extensions/users-permissions/strapi-server.js
 
 ```js
-module.exports = (plugin, { strapi }) => {
+module.exports = (plugin) => {
   // Add a new controller action
   plugin.controllers.user.deactivate = async (ctx) => {
     const { id } = ctx.params;
@@ -12703,7 +12703,7 @@ Language: TypeScript
 File path: /src/extensions/users-permissions/strapi-server.ts
 
 ```ts
-export default (plugin, { strapi }) => {
+export default (plugin) => {
   // Add a new controller action
   plugin.controllers.user.deactivate = async (ctx) => {
     const { id } = ctx.params;
@@ -12888,7 +12888,7 @@ Language: JavaScript
 File path: /src/extensions/users-permissions/strapi-server.js
 
 ```js
-module.exports = (plugin, { strapi }) => {
+module.exports = (plugin) => {
   const routes = plugin.routes['content-api'].routes;
 
   // 1. Add 'is-own-user' policy to update and delete
@@ -12947,7 +12947,7 @@ Language: TypeScript
 File path: /src/extensions/users-permissions/strapi-server.ts
 
 ```ts
-export default (plugin, { strapi }) => {
+export default (plugin) => {
   const routes = plugin.routes['content-api'].routes;
 
   // 1. Add 'is-own-user' policy to update and delete
@@ -24456,8 +24456,8 @@ module.exports = ({ env }) => ({
       jwtManagement: 'refresh',
       sessions: {
         accessTokenLifespan: 600, // 10 minutes (default)
-        maxRefreshTokenLifespan: 2592000, // 30 days
-        idleRefreshTokenLifespan: 1209600, // 14 days
+        maxRefreshTokenLifespan: 2592000, // 30 days (default)
+        idleRefreshTokenLifespan: 1209600, // 14 days (default)
         maxSessionLifespan: 86400, // 1 day (default)
         idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
@@ -24487,8 +24487,8 @@ export default ({ env }) => ({
       jwtManagement: 'refresh',
       sessions: {
         accessTokenLifespan: 600, // 10 minutes (default)
-        maxRefreshTokenLifespan: 2592000, // 30 days
-        idleRefreshTokenLifespan: 1209600, // 14 days
+        maxRefreshTokenLifespan: 2592000, // 30 days (default)
+        idleRefreshTokenLifespan: 1209600, // 14 days (default)
         maxSessionLifespan: 86400, // 1 day (default)
         idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
@@ -24729,7 +24729,7 @@ create: async ctx => {
 Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api
 
 ## Login
-Description: The login mutation authenticates a user and returns a JWT token:
+Description: The login mutation authenticates a user and returns a JWT:
 (Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#login)
 
 Language: DOCKERFILE
@@ -24753,7 +24753,7 @@ mutation {
 
 
 ## Register
-Description: The register mutation creates a new user account and returns a JWT token:
+Description: The register mutation creates a new user account and returns a JWT:
 (Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#register)
 
 Language: DOCKERFILE
@@ -24910,7 +24910,7 @@ File path: N/A
 
 ```graphql
 mutation {
-  updateUsersPermissionsUser(id: "documentId123", data: { username: "updatedname" }) {
+  updateUsersPermissionsUser(id: "1", data: { username: "updatedname" }) {
     data {
       documentId
       username
@@ -24930,7 +24930,7 @@ File path: N/A
 
 ```graphql
 mutation {
-  deleteUsersPermissionsUser(id: "documentId123") {
+  deleteUsersPermissionsUser(id: "1") {
     data {
       documentId
       username
@@ -24993,18 +24993,8 @@ mutation {
 Source: https://docs.strapi.io/cms/features/users-permissions/rest-api
 
 ## Login
-Description: Request body:
+Description: Code example from "Login"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#login)
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "identifier": "user@example.com",
-  "password": "yourPassword"
-}
-```
 
 Language: Bash
 File path: N/A
@@ -25015,6 +25005,7 @@ curl -X POST http://localhost:1337/api/auth/local \
   -d '{"identifier": "user@example.com", "password": "yourPassword"}'
 ```
 
+---
 Language: JSON
 File path: N/A
 
@@ -25038,19 +25029,8 @@ File path: N/A
 
 
 ## Register
-Description: Request body:
+Description: Code example from "Register"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#register)
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "username": "newuser",
-  "email": "newuser@example.com",
-  "password": "Password123!"
-}
-```
 
 Language: Bash
 File path: N/A
@@ -25061,6 +25041,7 @@ curl -X POST http://localhost:1337/api/auth/local/register \
   -d '{"username": "newuser", "email": "newuser@example.com", "password": "Password123!"}'
 ```
 
+---
 Language: JSON
 File path: N/A
 
@@ -25084,17 +25065,8 @@ File path: N/A
 
 
 ## Forgot password
-Description: Request body:
+Description: Code example from "Forgot password"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#forgot-password)
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "email": "user@example.com"
-}
-```
 
 Language: Bash
 File path: N/A
@@ -25105,6 +25077,7 @@ curl -X POST http://localhost:1337/api/auth/forgot-password \
   -d '{"email": "user@example.com"}'
 ```
 
+---
 Language: JSON
 File path: N/A
 
@@ -25116,19 +25089,8 @@ File path: N/A
 
 
 ## Reset password
-Description: Request body:
+Description: Code example from "Reset password"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#reset-password)
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "code": "resetTokenFromEmail",
-  "password": "NewPassword123!",
-  "passwordConfirmation": "NewPassword123!"
-}
-```
 
 Language: Bash
 File path: N/A
@@ -25139,21 +25101,32 @@ curl -X POST http://localhost:1337/api/auth/reset-password \
   -d '{"code": "resetTokenFromEmail", "password": "NewPassword123!", "passwordConfirmation": "NewPassword123!"}'
 ```
 
-
-## Change password
-Description: Request body:
-(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#change-password)
-
+---
 Language: JSON
 File path: N/A
 
 ```json
 {
-  "currentPassword": "OldPassword123!",
-  "password": "NewPassword456!",
-  "passwordConfirmation": "NewPassword456!"
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "documentId": "x74detpqybxw0bn6ormua5g2",
+    "username": "testuser1",
+    "email": "user@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
 }
 ```
+
+
+## Change password
+Description: Code example from "Change password"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#change-password)
 
 Language: Bash
 File path: N/A
@@ -25165,9 +25138,31 @@ curl -X POST http://localhost:1337/api/auth/change-password \
   -d '{"currentPassword": "OldPassword123!", "password": "NewPassword456!", "passwordConfirmation": "NewPassword456!"}'
 ```
 
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "documentId": "x74detpqybxw0bn6ormua5g2",
+    "username": "testuser1",
+    "email": "user@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
+}
+```
+
 
 ## Email confirmation
-Description: Example request:
+Description: Code example from "Email confirmation"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#email-confirmation)
 
 Language: Bash
@@ -25180,17 +25175,8 @@ curl -G http://localhost:1337/api/auth/email-confirmation \
 
 
 ## Send email confirmation
-Description: Request body:
+Description: Code example from "Send email confirmation"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#send-email-confirmation)
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "email": "user@example.com"
-}
-```
 
 Language: Bash
 File path: N/A
@@ -25201,6 +25187,7 @@ curl -X POST http://localhost:1337/api/auth/send-email-confirmation \
   -d '{"email": "user@example.com"}'
 ```
 
+---
 Language: JSON
 File path: N/A
 
@@ -25213,17 +25200,8 @@ File path: N/A
 
 
 ## Refresh token
-Description: Request body:
+Description: Code example from "Refresh token"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#refresh-token)
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "refreshToken": "yourRefreshToken"
-}
-```
 
 Language: Bash
 File path: N/A
@@ -25234,18 +25212,20 @@ curl -X POST http://localhost:1337/api/auth/refresh \
   -d '{"refreshToken": "yourRefreshToken"}'
 ```
 
+---
 Language: JSON
 File path: N/A
 
 ```json
 {
-  "jwt": "newAccessToken"
+  "jwt": "newAccessToken",
+  "refreshToken": "newRefreshToken"
 }
 ```
 
 
 ## Logout
-Description: Example request:
+Description: Code example from "Logout"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#logout)
 
 Language: Bash
@@ -25256,6 +25236,7 @@ curl -X POST http://localhost:1337/api/auth/logout \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
+---
 Language: JSON
 File path: N/A
 
@@ -25267,7 +25248,7 @@ File path: N/A
 
 
 ## Get current user
-Description: Example request:
+Description: Code example from "Get current user"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#get-current-user)
 
 Language: Bash
@@ -25278,6 +25259,7 @@ curl http://localhost:1337/api/users/me \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
+---
 Language: JSON
 File path: N/A
 
@@ -25298,7 +25280,7 @@ File path: N/A
 
 
 ## List users
-Description: Example request:
+Description: Code example from "List users"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#list-users)
 
 Language: Bash
@@ -25311,7 +25293,7 @@ curl http://localhost:1337/api/users \
 
 
 ## Get a user
-Description: Example request:
+Description: Code example from "Get a user"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#get-a-user)
 
 Language: Bash
@@ -25324,7 +25306,7 @@ curl http://localhost:1337/api/users/1 \
 
 
 ## Count users
-Description: Example request:
+Description: Code example from "Count users"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#count-users)
 
 Language: Bash
@@ -25335,6 +25317,7 @@ curl http://localhost:1337/api/users/count \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
+---
 Language: JSON
 File path: N/A
 
@@ -25344,21 +25327,8 @@ File path: N/A
 
 
 ## Create a user
-Description: Request body:
+Description: Code example from "Create a user"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#create-a-user)
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "username": "newuser",
-  "email": "newuser@example.com",
-  "password": "Password123!",
-  "role": 1,
-  "confirmed": true
-}
-```
 
 Language: Bash
 File path: N/A
@@ -25372,7 +25342,7 @@ curl -X POST http://localhost:1337/api/users \
 
 
 ## Update a user
-Description: Example request:
+Description: Code example from "Update a user"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#update-a-user)
 
 Language: Bash
@@ -25387,7 +25357,7 @@ curl -X PUT http://localhost:1337/api/users/1 \
 
 
 ## Delete a user
-Description: Example request:
+Description: Code example from "Delete a user"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#delete-a-user)
 
 Language: Bash
@@ -25400,7 +25370,7 @@ curl -X DELETE http://localhost:1337/api/users/1 \
 
 
 ## List roles
-Description: Example request:
+Description: Code example from "List roles"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#list-roles)
 
 Language: Bash
@@ -25411,6 +25381,7 @@ curl http://localhost:1337/api/users-permissions/roles \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
+---
 Language: JSON
 File path: N/A
 
@@ -25419,16 +25390,24 @@ File path: N/A
   "roles": [
     {
       "id": 1,
+      "documentId": "abcdefghijklmnop12345678",
       "name": "Authenticated",
       "description": "Default role given to authenticated user.",
       "type": "authenticated",
+      "createdAt": "2024-03-15T10:00:00.000Z",
+      "updatedAt": "2024-03-15T10:00:00.000Z",
+      "publishedAt": "2024-03-15T10:00:00.000Z",
       "nb_users": 2
     },
     {
       "id": 2,
+      "documentId": "qrstuvwxyzabcdef98765432",
       "name": "Public",
       "description": "Default role given to unauthenticated user.",
       "type": "public",
+      "createdAt": "2024-03-15T10:00:00.000Z",
+      "updatedAt": "2024-03-15T10:00:00.000Z",
+      "publishedAt": "2024-03-15T10:00:00.000Z",
       "nb_users": 0
     }
   ]
@@ -25437,7 +25416,7 @@ File path: N/A
 
 
 ## Get a role
-Description: Example request:
+Description: Code example from "Get a role"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#get-a-role)
 
 Language: Bash
@@ -25450,19 +25429,8 @@ curl http://localhost:1337/api/users-permissions/roles/1 \
 
 
 ## Create a role
-Description: Request body:
+Description: Code example from "Create a role"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#create-a-role)
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "name": "Editor",
-  "description": "Can edit content",
-  "type": "editor"
-}
-```
 
 Language: Bash
 File path: N/A
@@ -25474,6 +25442,7 @@ curl -X POST http://localhost:1337/api/users-permissions/roles \
   -d '{"name": "Editor", "description": "Can edit content", "type": "editor"}'
 ```
 
+---
 Language: JSON
 File path: N/A
 
@@ -25485,7 +25454,7 @@ File path: N/A
 
 
 ## Update a role
-Description: Example request:
+Description: Code example from "Update a role"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#update-a-role)
 
 Language: Bash
@@ -25498,6 +25467,7 @@ curl -X PUT http://localhost:1337/api/users-permissions/roles/1 \
   -d '{"description": "Updated description"}'
 ```
 
+---
 Language: JSON
 File path: N/A
 
@@ -25509,7 +25479,7 @@ File path: N/A
 
 
 ## Delete a role
-Description: Example request:
+Description: Code example from "Delete a role"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#delete-a-role)
 
 Language: Bash
@@ -25520,6 +25490,7 @@ curl -X DELETE http://localhost:1337/api/users-permissions/roles/3 \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
+---
 Language: JSON
 File path: N/A
 
@@ -25531,7 +25502,7 @@ File path: N/A
 
 
 ## List permissions
-Description: Example request:
+Description: Code example from "List permissions"
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#list-permissions)
 
 Language: Bash
@@ -28280,9 +28251,9 @@ File path: N/A
 # The Users & Permissions plugin's register.allowedFields configuration option defaults to []
 Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/register-allowed-fields
 
-## How it works in Strapi 5
+## Manual procedure
 Description: To allow additional fields on registration, update your plugin configuration:
-(Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/register-allowed-fields#how-it-works-in-strapi-5)
+(Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/register-allowed-fields#manual-procedure)
 
 Language: JavaScript
 File path: config/plugins.js
