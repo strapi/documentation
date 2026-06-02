@@ -58,26 +58,25 @@ Operates on the current working tree. `CLEANUP` is empty.
 
 ### 3 — docs.strapi.io URL
 
-A `docs.strapi.io` URL points at the *published* page, so the review must run against the published source, not a possibly-stale working copy. Map the URL to its source file and read that file from `origin/main`:
+A `docs.strapi.io` URL points at the *published* page, so the review must run against the published source on `origin/main`, not a possibly-stale working copy. Check the page out in a temporary worktree on `origin/main` so the file sits at its real path under `docusaurus/docs/` — this keeps coherence-check and code-verify fully functional (relative links and sibling pages resolve), unlike a loose temp file:
 
 1. Strip the origin (`https://docs.strapi.io`) and any trailing slash, query string, or `#anchor`.
 2. The remaining path is the doc route, e.g. `/cms/features/strapi-mcp-server`.
-3. The source file is that route under `docusaurus/docs/`, trying `.md` then `.mdx`:
-   - `docusaurus/docs/cms/features/strapi-mcp-server.md`
-   - if absent, `…/strapi-mcp-server.mdx`
-   - if the route ends in a segment that is a directory, try `…/<segment>/index.md` / `index.mdx`.
-4. Refresh the remote ref, then pick the first of the `<path>` candidates from step 3 that exists on `origin/main` (`git cat-file -e origin/main:<path>`). Materialize that published version into a temp file, so the review matches what the URL shows regardless of the local branch or working-tree state. This never touches the working tree, so no stash or commit is needed first. `<slug>` is the route's last segment (e.g. `strapi-mcp-server`):
+3. Create the worktree (it fetches `origin/main` first); sub-skills see the published version, not the current branch. This never touches the working tree, so no stash or commit is needed first:
 
    ```bash
-   git fetch origin main
-   git show origin/main:<path> > /tmp/inki-review-url-<slug>.md
+   WORKTREE=$(./claude-plugins/inki/scripts/main-worktree.sh create)
    ```
 
-   `FILES` = that temp file. `CLEANUP` = `rm -f /tmp/inki-review-url-<slug>.md`.
-5. If the local working tree has uncommitted changes to `<path>` (`git diff --quiet -- <path>` fails, or the file differs from `origin/main`), note in the report header that the review ran against `origin/main` and that local uncommitted changes to this file were **not** included.
-6. If none of the candidates exist on `origin/main` (e.g. the page is generated, or the route uses a sidebar alias), fall back to fetching the rendered page with WebFetch and treat the result as **pasted content** (type 6), noting in the report that the review ran against the published HTML, not local source.
+4. The source file is that route under `$WORKTREE/docusaurus/docs/`, trying `.md` then `.mdx`:
+   - `$WORKTREE/docusaurus/docs/cms/features/strapi-mcp-server.md`
+   - if absent, `…/strapi-mcp-server.mdx`
+   - if the route ends in a segment that is a directory, try `…/<segment>/index.md` / `index.mdx`.
+5. `FILES` = the first candidate that exists. `CLEANUP` = `./claude-plugins/inki/scripts/main-worktree.sh destroy`.
+6. If the local working tree (in the main checkout) has uncommitted changes to the same path, note in the report header that the review ran against `origin/main` and that those local uncommitted changes were **not** included.
+7. If no candidate exists on `origin/main` (e.g. the page is generated, or the route uses a sidebar alias), destroy the worktree and fall back to fetching the rendered page with WebFetch, treating the result as **pasted content** (type 6) — note in the report that the review ran against the published HTML, not local source.
 
-`SCOPE` = `docs.strapi.io<route> (origin/main)`, or `docs.strapi.io<route> (fetched)` for the WebFetch fallback. `CLEANUP` removes any temp file written.
+`SCOPE` = `docs.strapi.io<route> (origin/main)`, or `docs.strapi.io<route> (fetched)` for the WebFetch fallback. `CLEANUP` tears down the worktree (or removes the WebFetch temp file in the fallback).
 
 ### 4 — Local path
 

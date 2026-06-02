@@ -60,7 +60,7 @@ Review of: <SCOPE>
 | pitfalls-check | ... | ... |
 ```
 
-Then list issues by file, ordered by severity. For PR-scope reviews, prefix file paths with `(PR #<num>)` so it's clear the issues are in the PR's version. For a `docs.strapi.io` URL review, note that the review ran against the published `origin/main` version (and flag any local uncommitted changes that were excluded, per the resolver). For a pasted-content or URL review, also note that coherence and code-verification findings may be incomplete because the file sits outside the docs tree (see the resolver's note).
+Then list issues by file, ordered by severity. For PR-scope reviews, prefix file paths with `(PR #<num>)` so it's clear the issues are in the PR's version. For a `docs.strapi.io` URL review, note that the review ran against the published `origin/main` version, and flag any local uncommitted changes that were excluded (per the resolver). For a pasted-content review, note that coherence and code-verification findings may be incomplete because the file sits outside the docs tree (see the resolver's note).
 
 ## Step 4: Cleanup
 
@@ -71,7 +71,8 @@ Run the `CLEANUP` command returned by the resolver (worktree teardown or temp-fi
 - Each sub-skill stays atomic. Do not duplicate their logic here.
 - If `--fix` is passed, only the auto-fixable findings from `style-check` are applied automatically. All others remain suggestions.
 - `--fix` on a PR-scope review applies fixes inside the temporary worktree only (the one created by the resolver). The PR itself is NOT modified by `/inki:review`. To push the fixes, the user must `gh pr checkout <num>` themselves and apply the suggestions manually (or use `/inki:commit` + `/inki:push` after a manual checkout).
-- `--fix` on a pasted-content or URL review applies fixes to the temp file only; there is no writable source file (the URL version is read from `origin/main`). Surface the corrected content in the report instead.
+- `--fix` on a `docs.strapi.io` URL review applies fixes inside the temporary `origin/main` worktree only (created by the resolver); that worktree is detached and torn down at cleanup, so nothing is written back. Surface the corrected content in the report, and tell the user to apply it on a real branch.
+- `--fix` on a pasted-content review applies fixes to the temp file only; there is no source file to write back to. Surface the corrected content in the report instead.
 - `--yes` only changes interaction behavior (no extra prompts). It does NOT change what gets auto-fixed — that stays controlled by `--fix`.
 - Never push, commit, or modify the PR directly. The review is read-only by default.
 
