@@ -7,8 +7,9 @@ These rules apply to every PR description created on strapi/documentation.
 1. Must start with "This PR ...".
 2. 1-3 sentences or a short bullet list summarizing what and why.
 3. Flat text only: no headings (no `##`, no `###`), no boilerplate sections (no "Summary", no "Test plan", no "Checklist").
-4. Issue references at the very end if provided, e.g., `Fixes #2143`.
-5. If documenting a `strapi/strapi` PR, add a `Documents` reference at the end with a markdown link, e.g., `Documents [#26847](https://github.com/strapi/strapi/pull/26847)`.
+4. Issue references near the end if provided, e.g., `Fixes #2143`.
+5. If documenting a `strapi/strapi` PR, add a `Documents` reference with a markdown link, e.g., `Documents [#26847](https://github.com/strapi/strapi/pull/26847)`.
+6. End with a Vercel preview link on its own last line: `Direct preview link 👉 [here](https://<deployment>.vercel.app/<page-path>)`. When references and a preview link both exist, references come first and the preview link is the very last line.
 
 ## Good descriptions (illustrative)
 

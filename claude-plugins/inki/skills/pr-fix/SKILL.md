@@ -94,7 +94,9 @@ Bucket each PR:
 
 ### Description non-compliance reasons
 
-Missing "This PR ..." opener, contains `##`/`###` heading, contains "Test plan" section, contains `- [ ]` checklist, contains boilerplate sections, empty body, body is just "Updated docs" type vagueness.
+Missing "This PR ..." opener, contains `##`/`###` heading, contains "Test plan" section, contains `- [ ]` checklist, contains boilerplate sections, empty body, body is just "Updated docs" type vagueness, or **missing the `Direct preview link 👉 [here](...)` last line** (handled in Step 5).
+
+A description whose only issue is the missing preview link is still non-compliant: surface it, and the fix is adding the link per Step 5 (the prose itself is left untouched).
 
 ## Step 4: Apply rewrites
 
@@ -178,7 +180,52 @@ Branch:
 
 ## Step 5: Vercel preview link handling (description action only)
 
-If the original description had a `Direct preview link 👉 [here](https://...)` line as its last line, preserve that line at the end of the new description. Otherwise do not add one (this skill is for rewriting, not creation; that is `/inki:pr`'s job).
+Every compliant strapi/documentation PR description ends with a Vercel preview link, where `<page-path>` begins with a leading `/` (e.g. `/cms/plugins-development/extend-mcp-server`):
+
+```
+Direct preview link 👉 [here](https://<deployment>.vercel.app<page-path>)
+```
+
+`pr-fix description` ensures this line exists. Behaviour:
+
+1. **Line already present** → preserve it verbatim as the last line of the rewritten description. Do not rebuild or re-point it.
+2. **Line missing** → treat its absence as a description non-compliance reason (see Step 3) and add it:
+
+   a. Fetch the PR's Vercel preview deployment URL:
+      ```bash
+      gh pr view <num> --repo strapi/documentation --json comments \
+        -q '.comments[] | select(.author.login | test("vercel"; "i")) | .body' \
+        | grep -oE 'https://[a-z0-9-]+\.vercel\.app' | head -1
+      ```
+      If no `*.vercel.app` URL is found (deployment not ready, no Vercel comment yet), skip the link for this PR, note it in the Reason line, and continue with the rest of the rewrite.
+
+   b. Determine the target page path. Prefer the **newly added** page:
+      ```bash
+      gh pr view <num> --repo strapi/documentation --json files \
+        -q '[.files[] | select(.path | test("^docusaurus/docs/.*\\.(md|mdx)$"))][0].path'
+      ```
+      Filter to **added** files when the API exposes file status; if several added pages exist, take the first. If no added page, fall back to the first modified `docs/*.md(x)` file. Convert the file path to a URL path by stripping the `docusaurus/docs` prefix and the `.md`/`.mdx` extension (e.g. `docusaurus/docs/cms/plugins-development/extend-mcp-server.md` → `/cms/plugins-development/extend-mcp-server`).
+
+   c. Build the candidate line:
+      ```
+      Direct preview link 👉 [here](https://<deployment>.vercel.app<page-path>)
+      ```
+
+   d. **Confirm the target before editing** (unless `AUTO=true`): show the user the candidate page path and ask whether to use it, target a different page, or use the deployment root. In `AUTO=true`, use the newly-added page without prompting.
+
+   e. Optionally verify the URL resolves (HTTP 200) with `curl -s -o /dev/null -w '%{http_code}' -L --max-time 25 <url>` and surface a non-200 in the Reason line, but still add the line (the deployment may finish building shortly after).
+
+**Line ordering.** The preview link is the **last line** of the description, matching `/inki:pr` ("append as the last line"). When `Fixes`/`Documents` references are also present, the order is:
+
+```
+<body paragraph or bullets>
+
+Fixes #<n>   /   Documents [#<n>](url)
+
+Direct preview link 👉 [here](https://<deployment>.vercel.app<page-path>)
+```
+
+References come first, the preview link last. This keeps a single, unambiguous tail order across both skills.
 
 ## Step 6: Final summary
 
