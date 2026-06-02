@@ -1,5 +1,11 @@
 # Inki Changelog
 
+## Unreleased
+
+### Changed
+
+- `/inki:review` now accepts more target types: a docs.strapi.io URL, a bare markdown filename, or pasted Markdown content, in addition to a path, a PR, or no argument. Target resolution is centralized in `references/target-resolver.md`.
+
 ## v0.1.0 — 2026-05-22
 
 ### Added
