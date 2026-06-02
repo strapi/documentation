@@ -1,3 +1,6 @@
 .claude/
+
+# Local artifacts from Anthropic superpowers skill plugin (brainstorm, plans, specs).
+# These are working notes from individual contributors and should never be tracked.
 .superpowers/
 docs/superpowers/
