@@ -597,16 +597,24 @@ curl http://localhost:1337/api/users-permissions/roles \
   "roles": [
     {
       "id": 1,
+      "documentId": "abcdefghijklmnop12345678",
       "name": "Authenticated",
       "description": "Default role given to authenticated user.",
       "type": "authenticated",
+      "createdAt": "2024-03-15T10:00:00.000Z",
+      "updatedAt": "2024-03-15T10:00:00.000Z",
+      "publishedAt": "2024-03-15T10:00:00.000Z",
       "nb_users": 2
     },
     {
       "id": 2,
+      "documentId": "qrstuvwxyzabcdef98765432",
       "name": "Public",
       "description": "Default role given to unauthenticated user.",
       "type": "public",
+      "createdAt": "2024-03-15T10:00:00.000Z",
+      "updatedAt": "2024-03-15T10:00:00.000Z",
+      "publishedAt": "2024-03-15T10:00:00.000Z",
       "nb_users": 0
     }
   ]
