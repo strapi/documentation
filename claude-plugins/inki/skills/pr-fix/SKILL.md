@@ -94,7 +94,7 @@ Bucket each PR:
 
 ### Description non-compliance reasons
 
-Missing "This PR ..." opener, contains `##`/`###` heading, contains "Test plan" section, contains `- [ ]` checklist, contains boilerplate sections, empty body, body is just "Updated docs" type vagueness.
+Missing "This PR ..." opener, contains `##`/`###` heading, contains "Test plan" section, contains `- [ ]` checklist, contains boilerplate sections, empty body, body is just "Updated docs" type vagueness, **missing the trailing "Direct preview link 👉 [here](...)" line** (see Step 5 for the construction logic).
 
 ## Step 4: Apply rewrites
 
@@ -178,7 +178,38 @@ Branch:
 
 ## Step 5: Vercel preview link handling (description action only)
 
-If the original description had a `Direct preview link 👉 [here](https://...)` line as its last line, preserve that line at the end of the new description. Otherwise do not add one (this skill is for rewriting, not creation; that is `/inki:pr`'s job).
+The proposed description MUST end with a Vercel preview link line. If the original description has one as its last line, preserve it. If it does not, build one and append it.
+
+### How to build the Vercel preview link
+
+1. Read the PR's head branch from the `gh pr view` response (fetch with `--json number,title,body,author,headRefName` if needed).
+2. Convert the branch name to a Vercel-compatible slug by replacing `/` with `-`:
+   - `cms/mcp-server` → `cms-mcp-server`
+   - `repo/inki-plugin-init` → `repo-inki-plugin-init`
+3. Identify the primary page path to deep-link to:
+   - Fetch the PR's changed files via `gh pr view <num> --repo strapi/documentation --json files --jq '.files[].path'`.
+   - Filter to `.md`/`.mdx` files under `docusaurus/docs/`.
+   - Pick the **most representative page** (most central or most-modified). If multiple are equally central, prefer the hub/parent page (e.g., `cms/features/users-permissions.md` over its sub-pages).
+   - Strip the `docusaurus/docs/` prefix and the `.md`/`.mdx` extension: `docusaurus/docs/cms/features/users-permissions.md` → `cms/features/users-permissions`.
+   - If no `.md`/`.mdx` files are touched (rare for a docs PR), fall back to the root path (empty string).
+4. Assemble the line:
+
+   ```
+   Direct preview link 👉 [here](https://documentation-git-<branch-slug>-strapijs.vercel.app/<page-path>)
+   ```
+
+5. Append it as the last line of the proposed description, separated from the body by a blank line.
+
+### Examples
+
+- Branch `cms/update-users-permissions-docs` + primary page `cms/features/users-permissions` → `https://documentation-git-cms-update-users-permissions-docs-strapijs.vercel.app/cms/features/users-permissions`
+- Branch `repo/contact-support-mention` + primary page `cms/intro` → `https://documentation-git-repo-contact-support-mention-strapijs.vercel.app/cms/intro`
+
+### Edge cases
+
+- If the description already has a preview link **but it points to a wrong/outdated page** (e.g., the branch was renamed, or a different page is now more representative), the skill MAY propose a corrected line and surface the reason. Do not silently replace — surface the proposed change in the `Reason` so the user can opt out.
+- For PRs from external forks, the standard `strapijs.vercel.app` pattern still works (Vercel deploys all branches under the strapijs subdomain), so no special handling needed.
+- If the description body is itself compliant but the Vercel link is the ONLY missing piece, classify the PR as non-compliant on the basis of the missing link alone, and propose the addition.
 
 ## Step 6: Final summary
 
