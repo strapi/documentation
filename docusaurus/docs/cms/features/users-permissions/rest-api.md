@@ -751,7 +751,7 @@ The permissions endpoint returns the complete permission tree, showing which act
 
 `GET /api/users-permissions/permissions`
 
-Returns a nested object mapping plugins to controllers to actions.
+Returns a nested object mapping each plugin name to a `controllers` object, which itself maps controller names to actions.
 
 <ApiCall>
 
@@ -766,4 +766,4 @@ curl http://localhost:1337/api/users-permissions/permissions \
 
 </ApiCall>
 
-Example response (200): A nested `permissions` object where keys are plugin names, sub-keys are controller names, and values contain the available actions with their `enabled` status and `policy` information.
+Example response (200): A nested `permissions` object where top-level keys are plugin names, each containing a `controllers` object whose keys are controller names, and each controller maps to actions with their `enabled` status and `policy` information.
