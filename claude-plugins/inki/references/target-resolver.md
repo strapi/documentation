@@ -18,7 +18,7 @@ The target is classified by inspecting its shape, in this order (first match win
 |---|-----------|---------------|-------------|
 | 1 | Empty | No argument left after stripping flags | Changed `.md` files on the current branch |
 | 2 | GitHub PR | URL `github.com/strapi/documentation/pull/<n>`, `#<n>`, or a bare integer | The PR's changed doc files, in a temporary worktree |
-| 3 | docs.strapi.io URL | Starts with `https://docs.strapi.io/` (or `http://`) | The matching local source file |
+| 3 | docs.strapi.io URL | Starts with `https://docs.strapi.io/` (or `http://`) | The published source file the URL maps to, read from `origin/main` |
 | 4 | Local path | Contains a `/` or ends in `.md`/`.mdx`, and exists on disk | That file, or all docs under it if a directory |
 | 5 | Bare filename | A `.md`/`.mdx` name with no directory part, not found as a literal path | The unique file of that name under `docusaurus/docs/` |
 | 6 | Pasted content | None of the above; the argument is multi-line or clearly Markdown body/frontmatter | A temp file written from the pasted text |
@@ -58,7 +58,7 @@ Operates on the current working tree. `CLEANUP` is empty.
 
 ### 3 — docs.strapi.io URL
 
-Map the public URL to a local source file:
+A `docs.strapi.io` URL points at the *published* page, so the review must run against the published source, not a possibly-stale working copy. Map the URL to its source file and read that file from `origin/main`:
 
 1. Strip the origin (`https://docs.strapi.io`) and any trailing slash, query string, or `#anchor`.
 2. The remaining path is the doc route, e.g. `/cms/features/strapi-mcp-server`.
@@ -66,9 +66,18 @@ Map the public URL to a local source file:
    - `docusaurus/docs/cms/features/strapi-mcp-server.md`
    - if absent, `…/strapi-mcp-server.mdx`
    - if the route ends in a segment that is a directory, try `…/<segment>/index.md` / `index.mdx`.
-4. If no local file matches (e.g. the page is generated, or the route uses a sidebar alias), fall back to fetching the rendered page with WebFetch and treat the result as **pasted content** (type 6), noting in the report that the review ran against the published HTML, not local source.
+4. Refresh the remote ref, then pick the first of the `<path>` candidates from step 3 that exists on `origin/main` (`git cat-file -e origin/main:<path>`). Materialize that published version into a temp file, so the review matches what the URL shows regardless of the local branch or working-tree state. This never touches the working tree, so no stash or commit is needed first. `<slug>` is the route's last segment (e.g. `strapi-mcp-server`):
 
-`SCOPE` = the resolved local path, or `docs.strapi.io<route> (fetched)` for the fallback. `CLEANUP` is empty unless the fallback wrote a temp file.
+   ```bash
+   git fetch origin main
+   git show origin/main:<path> > /tmp/inki-review-url-<slug>.md
+   ```
+
+   `FILES` = that temp file. `CLEANUP` = `rm -f /tmp/inki-review-url-<slug>.md`.
+5. If the local working tree has uncommitted changes to `<path>` (`git diff --quiet -- <path>` fails, or the file differs from `origin/main`), note in the report header that the review ran against `origin/main` and that local uncommitted changes to this file were **not** included.
+6. If none of the candidates exist on `origin/main` (e.g. the page is generated, or the route uses a sidebar alias), fall back to fetching the rendered page with WebFetch and treat the result as **pasted content** (type 6), noting in the report that the review ran against the published HTML, not local source.
+
+`SCOPE` = `docs.strapi.io<route> (origin/main)`, or `docs.strapi.io<route> (fetched)` for the WebFetch fallback. `CLEANUP` removes any temp file written.
 
 ### 4 — Local path
 
