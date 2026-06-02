@@ -319,6 +319,16 @@
       "number": 25622,
       "reason": "Router: Regression fix restoring v4 behavior in v5. Numeric fields can now be used as entry titles in relations, fixing a broken feature from v4→v5 migration. The existing Content Manager and Content-Type Builder documentation already mentions entry title configuration and should already cover this capability. This is a bug fix to existing functionality, not a new feature requiring new documentation.",
       "added": "2026-05-30"
+    },
+    {
+      "number": 26393,
+      "reason": "Triage: Documentation/policy update only, no product behavior or API changes",
+      "added": "2026-06-02"
+    },
+    {
+      "number": 25300,
+      "reason": "Router: Internal frontend validation bug fix. Improves validation behavior when draft and publish is disabled, but does not expose new features, APIs, or change documented user-facing behavior.",
+      "added": "2026-06-02"
     }
   ]
 }
