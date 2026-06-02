@@ -71,7 +71,7 @@ Possible errors:
 | 400 | `"Your account email is not confirmed"` | Email confirmation required but not completed |
 | 400 | `"Your account has been blocked by an administrator"` | Account blocked |
 
-This endpoint is rate limited (default: 10 requests per 60 seconds).
+This endpoint is rate limited (default: 5 requests per 5 minutes).
 
 ### Register
 
