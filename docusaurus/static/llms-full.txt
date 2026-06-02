@@ -2564,6 +2564,25 @@ If no `locale` parameter is passed, it will delete only the default locale versi
 
  -->
 
+### `deleteMany()`
+
+Delete multiple documents matching filters and relation parameters.
+
+Syntax: `deleteMany(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+
+#### Parameters
+
+| Parameter | Description | Default | Type |
+|-----------|-------------|---------|------|
+| [`locale`](/cms/api/document-service/locale#delete) | Locale version of documents to delete. | `null`<br/>(deletes only the default locale) | String, `'*'`, or `null` |
+| [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
+| [`fields`](/cms/api/document-service/fields#delete)   | [Select fields](/cms/api/document-service/fields#delete) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
+
+#### Example
+
+Delete multiple documents matching filters, including filters on related fields:
+
 ### `publish()`
 
 Publishes one or multiple locales of a document.
