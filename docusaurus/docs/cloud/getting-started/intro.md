@@ -53,5 +53,9 @@ The Strapi Cloud documentation is organised in topics in a order that should cor
 :::strapi Welcome to the Strapi community!
 Strapi Cloud is built on top of Strapi, an open-source, community-oriented project. The Strapi team has at heart to share their vision and build the future of Strapi with the Strapi community. This is why the <ExternalLink to="https://feedback.strapi.io" text="roadmap"/> is open: as all insights are very important and will help steer the project in the right direction. Any community member is most welcome to share ideas and opinions there.
 
-You can also join <ExternalLink to="https://github.com/strapi/strapi" text="GitHub"/>, the <ExternalLink to="https://forum.strapi.io/" text="Forum"/>, and the <ExternalLink to="https://discord.strapi.io" text="Discord"/> and benefit from the years of experience, knowledge, and contributions by the Strapi community as a whole.
+You can also join <ExternalLink to="https://github.com/strapi/strapi" text="GitHub"/>, <ExternalLink to="https://github.com/strapi/strapi/discussions" text="GitHub Discussions"/>, and the <ExternalLink to="https://discord.strapi.io" text="Discord"/> and benefit from the years of experience, knowledge, and contributions by the Strapi community as a whole.
+:::
+
+:::tip Need help?
+Strapi Cloud customers on eligible plans can contact the Strapi team through the <ExternalLink to="https://support.strapi.io/support/home" text="Strapi Support platform"/>. Community users can ask questions on <ExternalLink to="https://github.com/strapi/strapi/discussions" text="GitHub Discussions"/> or <ExternalLink to="https://discord.strapi.io" text="Discord"/>. Support level depends on your plan (see the [Cloud fundamentals](/cloud/cloud-fundamentals) page).
 :::

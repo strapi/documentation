@@ -131,7 +131,7 @@ If you do not resolve the issue within 30 days, your suspended project will be d
 
 #### Project suspension for other reasons
 
-If your project was suspended for reasons other than unpaid invoice leading to subscription cancellation, you may not have the possibility to reactivate your project yourself. You should receive an email with instructions on how to resolve the issue. If you do not receive the email notification, please contact [Strapi Support](mailto:support@strapi.io).
+If your project was suspended for reasons other than unpaid invoice leading to subscription cancellation, you may not have the possibility to reactivate your project yourself. You should receive an email with instructions on how to resolve the issue. If you do not receive the email notification, please contact the <ExternalLink to="https://support.strapi.io/support/home" text="Strapi Support platform"/>.
 
 ### Subscription cancellation
 

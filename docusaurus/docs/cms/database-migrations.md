@@ -12,7 +12,7 @@ Database migrations run one‑time scripts before schema sync to preserve data d
 Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi application. These migrations are run automatically when the application starts and are executed before the automated schema migrations that Strapi also performs on boot.
 
 :::callout 🚧  Experimental feature
-Database migrations are experimental. This feature is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the <ExternalLink to="https://forum.strapi.io/" text="forum"/> or on the community <ExternalLink to="https://discord.strapi.io" text="Discord"/>.
+Database migrations are experimental. This feature is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on <ExternalLink to="https://github.com/strapi/strapi/discussions" text="GitHub Discussions"/> or on the community <ExternalLink to="https://discord.strapi.io" text="Discord"/>.
 :::
 
 ## Understanding database migration files
