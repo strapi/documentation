@@ -191,13 +191,14 @@ Beyond the 12 rules, also check for:
 - **Severity:** warning
 - **Note:** Strapi documentation always uses absolute-style paths starting with `/`. The `./` relative prefix should not appear in documentation prose or code examples referencing project file paths.
 
-### Em dashes
-- **Detect:** Em dashes (—) anywhere in prose
+### Em dashes and double hyphens
+- **Detect:** Em dashes (—) and double hyphens used as dashes ( -- ) anywhere in prose
 - **Severity:** error
-- **Note:** Em dashes are not used in Strapi technical documentation. They are a common signal of AI-generated text. Replace with a colon, a period, or restructure the sentence.
+- **Note:** Neither em dashes nor double hyphens are used as dashes in Strapi technical documentation. They are a common signal of AI-generated text. Replace with a colon, a period, parentheses, or restructure the sentence.
   - `"Status — shows the current state"` → `"Status: shows the current state"`
   - `"The button — visible only to admins — opens the panel"` → `"The button opens the panel. It is only visible to admins."`
-- **Exception:** Em dashes inside HTML comments (`<!-- ... -->`) and inside hyperlink text that references an external page title should NOT be flagged.
+  - `"the token -- received by email"` → `"the token (received by email)"`
+- **Exception:** Em dashes and double hyphens inside HTML comments (`<!-- ... -->`), code fences, and inside hyperlink text that references an external page title should NOT be flagged.
 
 ### Consistency
 - **Detect:** Inconsistent terminology within the same document (e.g., "admin panel" vs "Admin Panel" vs "administration panel"); inconsistent heading capitalization
