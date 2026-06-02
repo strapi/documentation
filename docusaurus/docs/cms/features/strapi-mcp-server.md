@@ -222,7 +222,7 @@ The MCP server exposes 2 categories of tools: content-type tools generated from 
 
 The tools generated differ depending on whether the content type is a collection type or a single type.
 
-**Collection types** generate up to 8 tools — 5 for CRUD operations and 3 for [Draft & Publish](/cms/features/draft-and-publish) actions:
+**Collection types** generate up to 8 tools: 5 for CRUD operations and 3 for [Draft & Publish](/cms/features/draft-and-publish) actions:
 
 | Tool | Action | Permission required | Description |
 |------|--------|-------------------|-------------|
@@ -369,101 +369,8 @@ The MCP server has the following limitations:
 
 ## Plugin API
 
-Strapi plugins can register additional MCP tools, prompts, and resources through the `strapi.ai.mcp` service. All registrations must happen during the plugin's `register()` lifecycle phase, before the MCP server starts.
+Strapi plugins can register additional MCP tools through the `strapi.ai.mcp` service, so AI clients can trigger plugin-specific actions.
 
-### Registering a custom tool
-
-Use `strapi.ai.mcp.registerTool()` to expose a custom tool to AI clients:
-
-<Tabs groupId="js-ts">
-<TabItem value="javascript" label="JavaScript">
-
-```js title="src/plugins/my-plugin/strapi-server.js"
-const { z } = require('@strapi/utils');
-
-module.exports = {
-  register({ strapi }) {
-    if (strapi.ai.mcp.isEnabled()) {
-      strapi.ai.mcp.registerTool({
-        name: 'my_custom_tool',
-        title: 'My Custom Tool',
-        description: 'A short description shown to the AI client.',
-        auth: {
-          // The session gate passes when the token satisfies ANY policy in the array.
-          policies: [{ action: 'plugin::my-plugin.my-action' }],
-        },
-        // resolveInputSchema and resolveOutputSchema are called per request,
-        // so they can narrow schemas based on the token's permissions.
-        resolveInputSchema: (context) =>
-          z.object({
-            message: z.string().describe('The message to echo.'),
-          }),
-        resolveOutputSchema: (context) =>
-          z.object({
-            result: z.string(),
-          }),
-        createHandler: (strapi, context) => async ({ args }) => ({
-          content: [{ type: 'text', text: args.message }],
-          structuredContent: { result: args.message },
-        }),
-      });
-    }
-  },
-};
-```
-
-</TabItem>
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="src/plugins/my-plugin/strapi-server.ts"
-import { z } from '@strapi/utils';
-
-export default {
-  register({ strapi }) {
-    if (strapi.ai.mcp.isEnabled()) {
-      strapi.ai.mcp.registerTool({
-        name: 'my_custom_tool',
-        title: 'My Custom Tool',
-        description: 'A short description shown to the AI client.',
-        auth: {
-          // The session gate passes when the token satisfies ANY policy in the array.
-          policies: [{ action: 'plugin::my-plugin.my-action' }],
-        },
-        resolveInputSchema: (context) =>
-          z.object({
-            message: z.string().describe('The message to echo.'),
-          }),
-        resolveOutputSchema: (context) =>
-          z.object({
-            result: z.string(),
-          }),
-        createHandler: (strapi, context) => async ({ args }) => ({
-          content: [{ type: 'text', text: args.message }],
-          structuredContent: { result: args.message },
-        }),
-      });
-    }
-  },
-};
-```
-
-</TabItem>
-</Tabs>
-
-#### Tool definition options
-
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `name` | String | Yes | Unique tool name. Must be unique across all registered MCP tools. |
-| `title` | String | Yes | Human-readable title shown to the AI client. |
-| `description` | String | Yes | Short description of what the tool does. |
-| `auth` | Object | Yes (or `devModeOnly`) | Auth requirement. The session gate passes when the token satisfies **any** policy in the `policies` array. Each policy is `{ action, subject? }`. |
-| `devModeOnly` | Boolean | Yes (or `auth`) | Set to `true` to restrict the tool to development mode only (equivalent to the built-in `log` tool). |
-| `resolveInputSchema` | Function | No | Returns a Zod schema for the tool's input arguments. Called per request so RBAC constraints can be applied dynamically. Omit for tools with no input. |
-| `resolveOutputSchema` | Function | Yes | Returns a Zod schema for the tool's structured output. Called per request. |
-| `createHandler` | Function | Yes | Factory that returns the async tool handler. Receives the Strapi instance and per-request context (including `userAbility` and `user`). |
-| `telemetry` | Object | No | Optional analytics metadata: `{ source?: string; name?: string }`. Use `source` to identify the plugin and `name` to override the raw tool name in analytics events. |
-
-:::note
-`resolveInputSchema` and `resolveOutputSchema` are called once per incoming MCP request, so you can narrow schemas dynamically based on the token's permissions (via `context.userAbility`).
-:::
+<CustomDocCardsWrapper>
+<CustomDocCard icon="puzzle-piece" title="Extending the MCP server" description="Register custom MCP tools from a Strapi plugin through the strapi.ai.mcp service." link="/cms/plugins-development/extend-mcp-server" />
+</CustomDocCardsWrapper>
