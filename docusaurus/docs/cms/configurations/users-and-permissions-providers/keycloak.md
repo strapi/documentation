@@ -50,9 +50,7 @@ The use of `ngrok` is not needed.
 
 <ConfigDone />
 
-## Migration from Strapi v4
-
-:::note
+:::note Migration from Strapi v4
 Strapi v4 extensions often registered Keycloak through `providersRegistry.register()`. That method is no longer available in Strapi 5.
 
 In Strapi 5, call `add()` on the `providers-registry` service from the [`register()` function](/cms/configurations/functions#register) in `/src/index.js|ts`.
