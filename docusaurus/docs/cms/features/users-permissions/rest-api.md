@@ -173,7 +173,7 @@ This endpoint is rate limited.
 
 `POST /api/auth/reset-password`
 
-Resets a user's password using a token received by email. All 3 fields are required.
+Resets a user's password using a token received by email. The `code`, `password`, and `passwordConfirmation` fields are all required.
 
 <ApiCall>
 
@@ -205,7 +205,7 @@ This endpoint is rate limited.
 
 `POST /api/auth/change-password`
 
-Changes the password for the currently authenticated user. Requires a valid Bearer token. All 3 fields are required.
+Changes the password for the currently authenticated user. Requires a valid Bearer token. The `currentPassword`, `password`, and `passwordConfirmation` fields are all required.
 
 <ApiCall>
 
