@@ -196,6 +196,7 @@ Possible errors:
 | Status | Message | Cause |
 |--------|---------|-------|
 | 400 | `"passwordConfirmation is a required field"` | Missing `passwordConfirmation` |
+| 400 | `"Passwords do not match"` | `password` and `passwordConfirmation` differ |
 | 400 | `"Incorrect code provided"` | Invalid or expired reset token |
 
 This endpoint is rate limited.
@@ -228,6 +229,7 @@ Possible errors:
 | Status | Message | Cause |
 |--------|---------|-------|
 | 400 | `"passwordConfirmation is a required field"` | Missing `passwordConfirmation` |
+| 400 | `"Passwords do not match"` | `password` and `passwordConfirmation` differ |
 | 400 | `"The provided current password is invalid"` | Wrong current password |
 | 400 | `"Your new password must be different than your current password"` | Same password reused |
 
@@ -292,7 +294,7 @@ Possible errors:
 | Status | Message | Cause |
 |--------|---------|-------|
 | 400 | `"Already confirmed"` | User already confirmed their email |
-| 400 | `"Your account has been blocked by an administrator"` | Account blocked |
+| 400 | `"User blocked"` | Account blocked |
 
 This endpoint is rate limited.
 
@@ -726,6 +728,12 @@ curl -X DELETE http://localhost:1337/api/users-permissions/roles/3 \
 </Response>
 
 </ApiCall>
+
+Possible errors:
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| 400 | `"Cannot delete public role"` | Attempted to delete the Public role |
 
 ## Permissions
 
