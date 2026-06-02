@@ -120,7 +120,7 @@ Only `username`, `email`, and `password` are accepted in the request body by def
 
 When email confirmation is enabled, the response contains only the user object without a JWT. The user must confirm their email before they can log in.
 
-The newly registered user is assigned the default role (typically "Authenticated").
+The newly registered user is assigned the default role, which is "Authenticated" unless changed in Settings > Users & Permissions > Advanced Settings.
 :::
 
 Possible errors:
