@@ -54,6 +54,10 @@ Heading Conventions
 - Use H2 for major sections (Configuration, Usage); H3 for subsections.
 - Keep headings action‑oriented and specific (e.g., “Admin panel configuration”, not “Configuration details”).
 
+Sidebar
+- Feature pages use flat `type: 'doc'` entries in `sidebars.js`. Never create, replace, or convert them to `type: 'category'` entries.
+- If a feature has sub-pages (e.g., API references), link to them from the page content using `<CustomDocCardsWrapper>` and `<CustomDocCard>` components — not via sidebar nesting.
+
 Cross‑linking
 - Link to related features (e.g., Content‑type Builder, Content Manager) and relevant API references.
 - Prefer relative links within `/cms/` and use the consistent link text used across docs.
