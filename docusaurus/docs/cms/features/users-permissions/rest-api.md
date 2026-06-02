@@ -187,9 +187,29 @@ curl -X POST http://localhost:1337/api/auth/reset-password \
 
 </Request>
 
-</ApiCall>
+<Response>
 
-Example response (200): Same shape as the [login](#login) response (jwt + user).
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "documentId": "x74detpqybxw0bn6ormua5g2",
+    "username": "testuser1",
+    "email": "user@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
+}
+```
+
+</Response>
+
+</ApiCall>
 
 Possible errors:
 
@@ -220,9 +240,29 @@ curl -X POST http://localhost:1337/api/auth/change-password \
 
 </Request>
 
-</ApiCall>
+<Response>
 
-Example response (200): Same shape as the [login](#login) response (jwt + user).
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "documentId": "x74detpqybxw0bn6ormua5g2",
+    "username": "testuser1",
+    "email": "user@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
+}
+```
+
+</Response>
+
+</ApiCall>
 
 Possible errors:
 
