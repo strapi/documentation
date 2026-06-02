@@ -296,6 +296,10 @@ await request(`/api/articles?${query}`);
 </Response>
 </ApiCall>
 
+:::note
+For many-to-many and other join-table relations, an explicit `sort` within a `populate` object overrides the default connect order. Omit `sort` to preserve the connect order (the order in which entries were associated).
+:::
+
 :::tip Performance tip
 In production, always use explicit population instead of wildcards like `populate=*`. Limit population depth to 2-3 levels and consider centralizing population logic in route middlewares. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog.
 :::

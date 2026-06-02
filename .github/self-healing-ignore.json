@@ -159,6 +159,176 @@
       "number": 26032,
       "reason": "Router: Internal database query builder fix. Adds a stable sort order to paginated selects to prevent duplicate/skipped rows, but this is an implementation detail of the query builder. No user-facing API or behavior change that requires documentation; developers don't interact with this change directly.",
       "added": "2026-05-12"
+    },
+    {
+      "number": 26246,
+      "reason": "Router: Internal development tool fix for package manager detection. No user-facing API or documentation changes needed.",
+      "added": "2026-05-13"
+    },
+    {
+      "number": 26229,
+      "reason": "Router: Internal admin UI bug fix. No user-facing feature changes or documentation updates needed.",
+      "added": "2026-05-13"
+    },
+    {
+      "number": 26209,
+      "reason": "Router: Internal admin UI improvement fixing date picker max year constraint. The date picker is a technical implementation detail of the admin panel, not a user-facing content feature.",
+      "added": "2026-05-13"
+    },
+    {
+      "number": 26147,
+      "reason": "Router: Internal bug fix for transaction handling in Content Releases. Fixes serialization of concurrent publishes. No new features or API changes affecting documentation.",
+      "added": "2026-05-13"
+    },
+    {
+      "number": 26124,
+      "reason": "Router: Internal admin UI bug fix. Fixes a crash in component configuration layout conversion when handling nested components. No new public APIs, features, or user-facing behavior changes. Marked as internal refactor fixing issue #25509.",
+      "added": "2026-05-14"
+    },
+    {
+      "number": 26331,
+      "reason": "Triage: Internal migration code fix; doesn't change user-facing behavior, APIs, configuration, or features",
+      "added": "2026-05-15"
+    },
+    {
+      "number": 26248,
+      "reason": "Router: Internal utilities/upgrade package fix. Aligns devDependencies during the upgrade process. Does not affect any public-facing APIs or user-facing behavior that would require documentation updates.",
+      "added": "2026-05-15"
+    },
+    {
+      "number": 26242,
+      "reason": "Router: Enterprise Edition feature. Fixes a UX issue in the Admin panel when switching Review Workflows locales. The change is an internal error handling improvement (returning 200 with empty data instead of 404, showing a clearer message to users). This is a bug fix/UX improvement that doesn't require documentation changes—the feature behavior remains the same, just with better error messages.",
+      "added": "2026-05-15"
+    },
+    {
+      "number": 26326,
+      "reason": "Triage: dependency maintenance and security patches without behavior change",
+      "added": "2026-05-16"
+    },
+    {
+      "number": 26298,
+      "reason": "Router: Internal deprecation warning fix. Users do not interact with this — it silences false positive warnings on existing projects. No user-facing behavior or configuration changes to document.",
+      "added": "2026-05-19"
+    },
+    {
+      "number": 26165,
+      "reason": "Router: Internal admin panel bug fix that improves UX of existing session timeout feature. No new user-facing capabilities, configuration options, or APIs introduced. Session management should already be documented if needed.",
+      "added": "2026-05-20"
+    },
+    {
+      "number": 26392,
+      "reason": "Router: Internal bug fix aligning server-side validator with already-documented public API. No user-facing behavior or API contract changes. The documentation already correctly references 'language' as the code block field.",
+      "added": "2026-05-21"
+    },
+    {
+      "number": 25988,
+      "reason": "Router: Internal database migration optimization (batching improvements). No public API, feature, or user-facing behavior changes. This is implementation-level performance tuning.",
+      "added": "2026-05-22"
+    },
+    {
+      "number": 26400,
+      "reason": "Router: Bug fix for PR #25793 regression. Once #25793 is documented, this fix is already covered by that documentation. This is implementation-level, no new user-facing behavior.",
+      "added": "2026-05-22"
+    },
+    {
+      "number": 26054,
+      "reason": "Router: Already merged with documentation updates included in commit. The PR includes docs(provider-amazon-ses) commit that expands configuration examples for IAM and legacy support.",
+      "added": "2026-05-23"
+    },
+    {
+      "number": 26023,
+      "reason": "Router: Bug fix for existing Content Manager feature. Fixes relation search in nested components without introducing new user-facing behavior or API changes. Existing documentation for relations feature already covers this functionality.",
+      "added": "2026-05-23"
+    },
+    {
+      "number": 24101,
+      "reason": "Router: Bug fix for Content Manager accessibility. Resolves issue where private+required fields prevented page access without changing documented behavior or adding new features.",
+      "added": "2026-05-23"
+    },
+    {
+      "number": 26368,
+      "reason": "Router: Internal bug fix in admin static file serving middleware. Fixes broken behavior where root-level static files could be incorrectly served instead of admin API paths. No user-facing API changes or new capabilities.",
+      "added": "2026-05-27"
+    },
+    {
+      "number": 26245,
+      "reason": "Router: Bug fix for content history feature. Fixes crashes when accessing content history for entries with deleted relations, components, or dynamic zones. Restores existing functionality without adding new capabilities.",
+      "added": "2026-05-27"
+    },
+    {
+      "number": 25027,
+      "reason": "Router: Bug fix for @strapi/upgrade tool. Resolves compatibility issue with Yarn Classic (v1) where registry URL resolution was failing. No new features or API changes; fixes existing tool behavior.",
+      "added": "2026-05-27"
+    },
+    {
+      "number": 26370,
+      "reason": "Router: Internal backend optimization and correctness bug fix for admin homepage query performance. No user-facing API or behavior changes.",
+      "added": "2026-05-28"
+    },
+    {
+      "number": 26270,
+      "reason": "Triage: internal boot performance optimization",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26269,
+      "reason": "Triage: internal dev-loop optimization and logging level change",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26268,
+      "reason": "Triage: internal boot performance optimization",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26267,
+      "reason": "Triage: internal boot performance optimization",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26266,
+      "reason": "Triage: internal boot performance optimization",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26264,
+      "reason": "Triage: internal TypeScript compilation performance optimization during dev",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26141,
+      "reason": "Triage: transitive dependency security fix",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26484,
+      "reason": "Router: Internal bug fix to data-transfer feature. The `--only content` flag behavior is fixed, but this is an edge case in internal tooling (transfer/restore operations). No user-facing API change or behavior modification that would require documentation updates. Release notes would mention the bug fix, but no configuration or feature documentation changes needed.",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26421,
+      "reason": "Router: Internal admin UI crash fix. A repeatable component field was crashing when a relation modal closed and set the field to null. This is a bug fix to internal form handling with no user-facing feature change or new capability. No documentation updates needed.",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26322,
+      "reason": "Router: Internal admin localization fix. Danish locale code corrected from non-standard 'dk' to correct ISO 639-1 'da', with backwards-compatibility mapping in code. This is an internal implementation detail with no user-facing feature or configuration change. No documentation updates needed.",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 25622,
+      "reason": "Router: Regression fix restoring v4 behavior in v5. Numeric fields can now be used as entry titles in relations, fixing a broken feature from v4→v5 migration. The existing Content Manager and Content-Type Builder documentation already mentions entry title configuration and should already cover this capability. This is a bug fix to existing functionality, not a new feature requiring new documentation.",
+      "added": "2026-05-30"
+    },
+    {
+      "number": 26393,
+      "reason": "Triage: Documentation/policy update only, no product behavior or API changes",
+      "added": "2026-06-02"
+    },
+    {
+      "number": 25300,
+      "reason": "Router: Internal frontend validation bug fix. Improves validation behavior when draft and publish is disabled, but does not expose new features, APIs, or change documented user-facing behavior.",
+      "added": "2026-06-02"
     }
   ]
 }

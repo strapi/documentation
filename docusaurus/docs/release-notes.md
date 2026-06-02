@@ -29,7 +29,129 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.45.0](https://github.com/strapi/strapi/releases/tag/v5.45.0)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.46.1](https://github.com/strapi/strapi/releases/tag/v5.46.1)._
+
+## 6.26.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Cloud
+- [Add middleware customization guide for Strapi Cloud production environment](https://github.com/strapi/documentation/pull/3148)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document nested sort within populate for join-table relations](https://github.com/strapi/documentation/pull/3186)
+- [Update Docker documentation with production setup and troubleshooting](https://github.com/strapi/documentation/pull/3109)
+
+#### Cloud
+- [Environment clearing for Strapi Cloud](https://github.com/strapi/documentation/pull/3180)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Add TypeScript workaround for Document Service relational operators](https://github.com/strapi/documentation/pull/3189)
+- [Replace unimplemented GraphQL aggregations docs with warning](https://github.com/strapi/documentation/pull/3183)
+- [Add tip about filtering by assignee and review stage in list view](https://github.com/strapi/documentation/pull/3170)
+
+#### Repository
+- [Prevent editors from running Prettier](https://github.com/strapi/documentation/pull/3182)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/GorkyDemircn" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/110297297?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="GorkyDemircn"/>
+</a>
+<a href="https://github.com/innerdvations" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/999278?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="innerdvations"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/raulbalestra" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63110244?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="raulbalestra"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
+
+## 6.25.0
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document admin translation contribution path in FAQ](https://github.com/strapi/documentation/pull/3165)
+- [Explain middleware on every core route for one content-type](https://github.com/strapi/documentation/pull/3152)
+- [Document Content Manager Edit View context hook on Admin Panel API page](https://github.com/strapi/documentation/pull/3146)
+- [Document `tsconfig` setup for local TypeScript plugins](https://github.com/strapi/documentation/pull/3121)
+- [Add `addRichTextBlocks` to Content Manager API documentation](https://github.com/strapi/documentation/pull/3100)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Update sendmail provider description after Nodemailer switch](https://github.com/strapi/documentation/pull/3164)
+- [Update live preview to include support for media](https://github.com/strapi/documentation/pull/3158)
+- [Distinguish admin extensions from server plugin overrides](https://github.com/strapi/documentation/pull/3155)
+- [Document `__component` for dynamic zones on REST create](https://github.com/strapi/documentation/pull/3153)
+- [Document React admin dependencies for v4 upgrades](https://github.com/strapi/documentation/pull/3151)
+- [Document dynamic zone __component in REST update section](https://github.com/strapi/documentation/pull/3150)
+- [Align public middleware example with maxAge configuration](https://github.com/strapi/documentation/pull/3149)
+- [Document locale parameter for Entity Service CRUD](https://github.com/strapi/documentation/pull/3147)
+- [Note that REST filter examples need populate to surface traversed relations](https://github.com/strapi/documentation/pull/3144)
+- [Document ADMIN_PATH and STRAPI_ADMIN_BACKEND_URL environment variables](https://github.com/strapi/documentation/pull/3143)
+- [Document AWS RDS IAM auth with short-lived tokens](https://github.com/strapi/documentation/pull/3141)
+- [Document concurrentUploadSize upload plugin option](https://github.com/strapi/documentation/pull/3138)
+- [Update pnpm mention to warn about Strapi Cloud compatibility](https://github.com/strapi/documentation/pull/3135)
+- [Clarify nested component required metadata gap in OpenAPI guide](https://github.com/strapi/documentation/pull/3128)
+
+#### Repository
+- [Add conditional retrieval budgets and drafting guardrails to agent prompts](https://github.com/strapi/documentation/pull/3167)
+- [Track ask_user router decisions in Notion metrics for docs self-healing system](https://github.com/strapi/documentation/pull/3166)
+- [Add native Kapa dark mode support](https://github.com/strapi/documentation/pull/3159)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/butcherZ" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8189028?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="butcherZ"/>
+</a>
+<a href="https://github.com/cache-your-dreams" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/104358430?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="cache-your-dreams"/>
+</a>
+<a href="https://github.com/markkaylor" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/26598053?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="markkaylor"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/singhvishalkr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/107715446?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="singhvishalkr"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 6.24.0
 

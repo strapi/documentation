@@ -94,6 +94,14 @@ const sidebars = {
         },
         {
           type: 'doc',
+          label: 'MCP server',
+          id: 'cms/features/strapi-mcp-server',
+          customProps: {
+            new: true,
+          },
+        },
+        {
+          type: 'doc',
           label: 'Preview',
           id: 'cms/features/preview',
           customProps: {
@@ -163,7 +171,7 @@ const sidebars = {
           label: 'Strapi AI for content managers',
           id: 'cms/ai/for-content-managers',
           customProps: {
-            new: true,
+            updated: true,
           },
         },
         {
@@ -171,8 +179,13 @@ const sidebars = {
           label: 'AI for developers and docs',
           id: 'cms/ai/for-developers',
           customProps: {
-            new: true,
+            updated: true,
           },
+        },
+        {
+          type: 'doc',
+          label: 'Docs MCP server',
+          id: 'cms/ai/docs-mcp-server',
         },
       ],
     },
@@ -744,6 +757,14 @@ const sidebars = {
           type: 'doc',
           id: 'cloud/advanced/upload',
           label: 'Upload provider for Cloud',
+          customProps: {
+            new: false,
+          },
+        },
+        {
+          type: 'doc',
+          id: 'cloud/advanced/middlewares',
+          label: 'Middleware configuration for Cloud',
           customProps: {
             new: false,
           },

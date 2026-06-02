@@ -80,7 +80,13 @@ This page is only visible if the current role has the "Access the Email Settings
 
 The Email feature requires a provider and a provider configuration in the `config/plugins.js|ts` file. See [providers](#providers) for detailed installation and configuration instructions.
 
-<ExternalLink to="https://www.npmjs.com/package/sendmail" text="Sendmail"/> is the default email provider in the Strapi Email feature. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers.
+Sendmail is the default email provider in the Strapi Email feature. It uses <ExternalLink to="https://nodemailer.com/" text="Nodemailer"/> internally for mail delivery. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure Sendmail or change providers.
+
+:::tip
+For most production setups that use a dedicated SMTP relay, consider switching to `@strapi/provider-email-nodemailer` (set `provider` to `"nodemailer"` in your email plugin config). See the [dedicated Nodemailer configuration documentation](/cms/configurations/email-nodemailer) for details.
+
+In non-production environments, Strapi logs a one-time warning when the sendmail provider is active, suggesting this switch.
+:::
 
 #### Email configuration options
 

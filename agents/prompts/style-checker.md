@@ -210,6 +210,10 @@ Beyond the 12 rules, also check for:
   - In TabItems: `value` must be lowercase (`yarn`, `npm`), `label` must be `Yarn` or `NPM`
   - Do NOT flag these as inconsistencies when used correctly per context.
 
+### Strapi terminology
+- **Detect:** Internationalization (i18n) referred to as a "plugin" instead of a "feature". Since Strapi 5, i18n is a core feature, not a plugin. Also watch for other core features (Upload, Content Manager, Content-Type Builder) being called "plugins".
+- **Severity:** warning
+
 ### Cross-reference formatting
 - **Detect:** Standalone "See [link]." sentences that could be integrated as parentheticals into the preceding sentence (e.g., "Configure X. See [Y]." → "Configure X (see [Y]).")
 - **Severity:** warning

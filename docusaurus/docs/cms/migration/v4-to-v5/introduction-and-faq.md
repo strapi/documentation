@@ -68,3 +68,40 @@ Once every consumer reads the flattened format, remove the header so Strapi emit
 <br/>
 
 </details>
+
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Why does the admin build fail with <code>Cannot find module &apos;react&apos;</code> while my project is still on Strapi v4?</summary>
+
+<p>Patch upgrades across Strapi v4 minors can fail the admin build with <code>Cannot find module &apos;react&apos;</code> (or similar). Newer v4 lines expect <code>react</code>, <code>react-dom</code>, <code>react-router-dom</code>, and <code>styled-components</code> to be listed explicitly in your app <code>package.json</code> instead of relying only on transitive resolution.</p>
+
+<p>Copy the versions from a fresh Strapi v4 project that matches your target release (for example run the official generator in a throwaway folder), then install and rebuild. A typical set looks like this:</p>
+
+```json
+"react": "^18.0.0",
+"react-dom": "^18.0.0",
+"react-router-dom": "5.3.4",
+"styled-components": "5.3.3"
+```
+
+<p>Using a tilde or caret range on <code>@strapi/strapi</code> (for example <code>~4.25.22</code>) is fine for patch updates; when you skip several minors, read the release notes and migration notes for each jump.</p>
+
+<p>The archived v4 Developer Documentation still lives on <ExternalLink to="https://docs-v4.strapi.io/dev-docs/migration-guides" text="docs-v4.strapi.io" />.</p>
+<br/>
+
+</details>
+
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Can I downgrade from Strapi 5 back to Strapi 4?</summary>
+
+<p>Strapi does not ship an automated downgrade from Strapi 5 to Strapi 4.</p>
+
+<p>Data migration scripts that run when Strapi 5 starts are not reversed by the product.</p>
+
+<p>If you must return to Strapi 4, restore the database backup you created before the upgrade. Check out the Git branch or tag that still matches Strapi 4.</p>
+
+<p>Reinstall dependencies so <code>package.json</code> and the lockfile match that snapshot.</p>
+
+<p>Plan backups and staging environments using the <a href="/cms/migration/v4-to-v5/step-by-step">step-by-step guide</a> before you upgrade production.</p>
+<br/>
+
+</details>

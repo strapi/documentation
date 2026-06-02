@@ -252,7 +252,7 @@ Plan downgrades can be managed, for each project, via the project settings. Down
 :::caution
 Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for overages. You may also lose access to some features: for example, downgrading to the Essential plan would result in the loss of all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
 
-Note also that you cannot downgrade if you have additional paid environments. You will first need to delete all additional environments that were not included in the base price of you plan (see [Resetting & Deleting environment](#resetting--deleting-environment)) before you can schedule a downgrade. When downgrading from Scale to Pro, the additional included environment will automatically be deleted when the downgrade takes effect.
+Note also that you cannot downgrade if you have additional paid environments. You will first need to delete all additional environments that were not included in the base price of your plan (see [Clearing and deleting environments](#resetting--deleting-environment)) before you can schedule a downgrade. When downgrading from Scale to Pro, the additional included environment will automatically be deleted when the downgrade takes effect.
 
 You cannot downgrade to the Free plan if a GitHub organization repository is connected to the project. To downgrade, first switch to a personal repository in the [Connected Git repository](#modifying-git-repository--branch) settings.
 :::
@@ -319,11 +319,11 @@ The <Icon name="faders" /> *Configuration* tab for the environment-level setting
   - the Node version of the environment: to change the Node version of the project (see [Modifying Node version](#modifying-node-version)).
   - the app's internal name for the environment, which can be useful for debug & support purposes.
 - *Connected branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows to enable/disable the "deploy on push" option.
-- *Environment data*: to transfer data from another environment within the same project (see [Transferring data between environments](#transferring-data-between-environments)).
-- *Danger zone*: to reset or permanently delete your Strapi Cloud project's environment (see [Resetting & Deleting environment](#resetting--deleting-environment)).
+- *Environment data*: to transfer data from another environment within the same project (see [Transferring data between environments](#transferring-data-between-environments)) or to remove all data and assets from the current environment while keeping its settings (see [Clearing an environment](#clearing-an-environment)).
+- *Danger zone*: to permanently delete an additional environment (see [Deleting an environment](#deleting-an-environment)).
 
 <ThemedImage
-  alt="Project invoices"
+  alt="Environment configuration settings"
   sources={{
     light: '/img/assets/cloud/settings_env.png',
     dark: '/img/assets/cloud/settings_env_DARK.png',
@@ -382,29 +382,37 @@ To transfer data to a secondary environment:
 The CMS of the target environment will be inaccessible whilst the transfer is ongoing. You can cancel an ongoing transfer, but this will leave the target environment empty. If an error occurs during the transfer, you will have the option to retry or cancel.
 :::
 
-#### Resetting & Deleting environment
+#### Clearing and deleting environments {#resetting--deleting-environment}
 
-You can reset or delete any additional environment of your Strapi Cloud project, but it will be permanent and irreversible. The default, production environment, can however neither be reset nor deleted.
+You can clear database content and assets from any environment, including the production environment, or permanently delete additional environments. The default production environment cannot be deleted.
 
-##### Resetting an environment
+:::note
+On the Scale plan, you cannot delete the included secondary environment. You can, however, clear its content.
+:::
 
-Resetting an environment deletes all environments data and resets the variables to their default. To do so:
+Clearing and deleting are permanent and only available to the project owner. You cannot initiate an environment clearing while the project is suspended.
 
-1. In the *Danger zone* section of the <Icon name="faders" /> *Configuration* tab, click on the **Reset environment** button.
-2. In the dialog that opens, click on the **Continue** button to confirm the environment reset.
-3. Fill in the available fields to reset the environment:
+##### Clearing an environment {#clearing-an-environment}
 
-    | Setting name    | Instructions                                                             |
-    | --------------- | ------------------------------------------------------------------------ |
-    | Environment name | (mandatory) Write a name for your project's new environment.            |
-    | Git branch      | (mandatory) Choose a branch from the drop-down list.                     |
-    | Base directory  | Write the path of the base directory in the textbox.                     |
-    | Import variables | Tick the box to import variable names from an existing environment. Values will not be imported, and all variables will remain blank. |
-    | Auto-deploy     | Deploy the project on every commit pushed to this branch. Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
+:::warning Environment clearing is destructive
+Clearing an environment will permanently delete all its existing data and assets. Environment settings (such as variables and domains) are not affected by the clearing.
+:::
 
-4. Click on the **Reset** button.
+To clear an environment:
 
-##### Deleting an environment
+1. In the project settings, select the environment then open the <Icon name="faders" /> *Configuration* tab.
+2. In the *Environment data* section, click **Clear environment**.
+3. In the confirmation dialog, type the environment name, then confirm to start clearing. You are redirected to the environment dashboard, where you can follow the progress.
+
+While clearing is in progress:
+
+- The environment CMS is not available.
+- You cannot trigger a deployment or view the logs for that environment.
+- Plan upgrade, plan downgrade and setting changes that require a deployment are temporarily unavailable.
+
+If clearing fails, click **Retry** on the environment dashboard to run the operation again.
+
+##### Deleting an environment {#deleting-an-environment}
 
 1. In the *Danger zone* section of the <Icon name="faders" /> *Configuration* tab, click on the **Delete environment** button.
 2. Write in the textbox your *Environment name*.

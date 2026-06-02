@@ -80,7 +80,17 @@ From the cross-references, build a list of pages to fetch for **content comparis
 2. **Sidebar siblings** — pages in the same sidebar section often describe related features and share terminology
 3. **Pages covering the same API** — if the current page documents `findMany()`, find other pages that also mention `findMany()`
 
-**Fetch budget:** 10 page fetches (hard cap). This is intentionally lower than the Code Verifier's budget because each page fetch returns a large document. Prioritize explicitly linked pages. Note that the structural files (`sidebars.js`, `llms.txt`) do not count toward this budget — they are shared pipeline resources.
+**Fetch budget:** 10 page fetches (hard cap). This is intentionally lower than the Code Verifier's budget because each page fetch returns a large document. Prioritize explicitly linked pages. Note that the structural files (`sidebars.js`, `llms.txt`) do not count toward this budget -- they are shared pipeline resources.
+
+**Conditional fetch rule:** Make another page fetch only when:
+- An explicitly linked page has not been checked and the link includes an anchor that cannot be verified from `sidebars.js` or `llms.txt` alone.
+- A sidebar sibling covers the same API or feature and a terminology or behavioral inconsistency is suspected from the current page's content.
+- A contradiction has been found and a third page is needed to determine which of the two conflicting claims is canonical.
+
+Do not fetch additional pages to:
+- Verify links that were already confirmed via structural files (existence check without anchor).
+- Check pages that are only tangentially related (different API, different feature area).
+- Improve coverage when all explicit cross-references and high-priority siblings are already resolved.
 
 For anchor links on other pages (`/cms/path#section-name`), the target page must be fetched to confirm the heading exists. These fetches count toward the budget but also serve double duty: the fetched page can be used for content comparison in Step 4.
 

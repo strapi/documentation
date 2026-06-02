@@ -206,6 +206,61 @@ If you want to create a custom email provider, please refer to the [Email provid
 
 
 
+# Middleware Configuration for Strapi Cloud
+Source: https://docs.strapi.io/cloud/advanced/middlewares
+
+# Middleware Configuration for Strapi Cloud
+
+:::prerequisites
+
+- A local Strapi project.
+- A Strapi Cloud project (see [Getting Started](/cloud/getting-started/deployment)).
+
+:::
+
+On Strapi Cloud, `NODE_ENV` is always set to `production`. The platform applies its own production-level middleware configuration on deploy. Any changes to the global `config/middlewares` file are overwritten and will not take effect. For available middleware options, see [Middlewares configuration](/cms/configurations/middlewares).
+
+To apply custom middleware configuration on Strapi Cloud, place your changes in:
+
+</Tabs>
+
+:::caution
+The `config/env/production/middlewares` file **fully replaces** the global middleware array. Your file must include the complete list:
+
+- `strapi::errors`
+- `strapi::security`
+- `strapi::cors`
+- `strapi::poweredBy`
+- `strapi::logger`
+- `strapi::query`
+- `strapi::body`
+- `strapi::session`
+- `strapi::favicon`
+- `strapi::public`
+
+Both CSP and CORS customizations can be combined in the same file.
+:::
+
+:::note
+- You can keep your existing `config/middlewares` file as-is as it will not cause conflicts. The production-specific file takes precedence on Strapi Cloud.
+- Upload size limits on Strapi Cloud are enforced at the infrastructure level (Cloudflare gateway) and cannot be overridden via the `strapi::body` config. For external storage options, see [Upload Provider Configuration](/cloud/advanced/upload).
+:::
+
+## Custom Content Security Policy (CSP)
+
+If you use an external upload provider, allow its domain in the CSP directives. Without this, the Strapi Admin panel will block images and media from those sources.
+
+Create or update `config/env/production/middlewares`:
+
+</Tabs>
+
+:::tip
+For a full list of upload providers and their required domains, see the 
+
+</Tabs>
+
+
+
 # Upload Provider Configuration for Strapi Cloud
 Source: https://docs.strapi.io/cloud/advanced/upload
 
@@ -240,9 +295,13 @@ Each provider will have different configuration settings available. Review the r
 
 Due to the default settings in the Strapi Security Middleware you will need to modify the `contentSecurityPolicy` settings to properly see thumbnail previews in the Media Library.
 
+:::caution
+On Strapi Cloud, `NODE_ENV` is always set to `production`. Changes to the global `config/middlewares.ts` file are overwritten on each deploy and will not take effect. Place your Security Middleware customizations in `config/env/production/middlewares.ts` instead. See [Middleware Configuration for Strapi Cloud](/cloud/advanced/middlewares) for details.
+:::
+
 To do this in your Strapi project:
 
-1. Navigate to `./config/middlewares.js` or `./config/middlewares.ts` in your Strapi project.
+1. Navigate to `./config/env/production/middlewares.js` or `./config/env/production/middlewares.ts` in your Strapi project.
 2. Replace the default `strapi::security` string with the object provided by the upload provider.
 
 **Example:**
@@ -581,7 +640,11 @@ The Strapi Cloud documentation is organised in topics in a order that should cor
 :::strapi Welcome to the Strapi community!
 Strapi Cloud is built on top of Strapi, an open-source, community-oriented project. The Strapi team has at heart to share their vision and build the future of Strapi with the Strapi community. This is why the  is open: as all insights are very important and will help steer the project in the right direction. Any community member is most welcome to share ideas and opinions there.
 
-You can also join , the , and the  and benefit from the years of experience, knowledge, and contributions by the Strapi community as a whole.
+You can also join , , and the  and benefit from the years of experience, knowledge, and contributions by the Strapi community as a whole.
+:::
+
+:::tip Need help?
+Strapi Cloud customers on eligible plans can contact the Strapi team through the . Community users can ask questions on  or . Support level depends on your plan (see the [Cloud fundamentals](/cloud/cloud-fundamentals) page).
 :::
 
 
@@ -701,7 +764,7 @@ If you do not resolve the issue within 30 days, your suspended project will be d
 
 #### Project suspension for other reasons
 
-If your project was suspended for reasons other than unpaid invoice leading to subscription cancellation, you may not have the possibility to reactivate your project yourself. You should receive an email with instructions on how to resolve the issue. If you do not receive the email notification, please contact [Strapi Support](mailto:support@strapi.io).
+If your project was suspended for reasons other than unpaid invoice leading to subscription cancellation, you may not have the possibility to reactivate your project yourself. You should receive an email with instructions on how to resolve the issue. If you do not receive the email notification, please contact the .
 
 ### Subscription cancellation
 
@@ -1117,7 +1180,7 @@ Plan downgrades can be managed, for each project, via the project settings. Down
 :::caution
 Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for overages. You may also lose access to some features: for example, downgrading to the Essential plan would result in the loss of all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
 
-Note also that you cannot downgrade if you have additional paid environments. You will first need to delete all additional environments that were not included in the base price of you plan (see [Resetting & Deleting environment](#resetting--deleting-environment)) before you can schedule a downgrade. When downgrading from Scale to Pro, the additional included environment will automatically be deleted when the downgrade takes effect.
+Note also that you cannot downgrade if you have additional paid environments. You will first need to delete all additional environments that were not included in the base price of your plan (see [Clearing and deleting environments](#resetting--deleting-environment)) before you can schedule a downgrade. When downgrading from Scale to Pro, the additional included environment will automatically be deleted when the downgrade takes effect.
 
 You cannot downgrade to the Free plan if a GitHub organization repository is connected to the project. To downgrade, first switch to a personal repository in the [Connected Git repository](#modifying-git-repository--branch) settings.
 :::
@@ -1173,8 +1236,8 @@ The  *Configuration* tab for the environment-level settings enables you to check
   - the Node version of the environment: to change the Node version of the project (see [Modifying Node version](#modifying-node-version)).
   - the app's internal name for the environment, which can be useful for debug & support purposes.
 - *Connected branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows to enable/disable the "deploy on push" option.
-- *Environment data*: to transfer data from another environment within the same project (see [Transferring data between environments](#transferring-data-between-environments)).
-- *Danger zone*: to reset or permanently delete your Strapi Cloud project's environment (see [Resetting & Deleting environment](#resetting--deleting-environment)).
+- *Environment data*: to transfer data from another environment within the same project (see [Transferring data between environments](#transferring-data-between-environments)) or to remove all data and assets from the current environment while keeping its settings (see [Clearing an environment](#clearing-an-environment)).
+- *Danger zone*: to permanently delete an additional environment (see [Deleting an environment](#deleting-an-environment)).
 
 #### Modifying Node version
 
@@ -1226,29 +1289,37 @@ To transfer data to a secondary environment:
 The CMS of the target environment will be inaccessible whilst the transfer is ongoing. You can cancel an ongoing transfer, but this will leave the target environment empty. If an error occurs during the transfer, you will have the option to retry or cancel.
 :::
 
-#### Resetting & Deleting environment
+#### Clearing and deleting environments {#resetting--deleting-environment}
 
-You can reset or delete any additional environment of your Strapi Cloud project, but it will be permanent and irreversible. The default, production environment, can however neither be reset nor deleted.
+You can clear database content and assets from any environment, including the production environment, or permanently delete additional environments. The default production environment cannot be deleted.
 
-##### Resetting an environment
+:::note
+On the Scale plan, you cannot delete the included secondary environment. You can, however, clear its content.
+:::
 
-Resetting an environment deletes all environments data and resets the variables to their default. To do so:
+Clearing and deleting are permanent and only available to the project owner. You cannot initiate an environment clearing while the project is suspended.
 
-1. In the *Danger zone* section of the  *Configuration* tab, click on the **Reset environment** button.
-2. In the dialog that opens, click on the **Continue** button to confirm the environment reset.
-3. Fill in the available fields to reset the environment:
+##### Clearing an environment {#clearing-an-environment}
 
-    | Setting name    | Instructions                                                             |
-    | --------------- | ------------------------------------------------------------------------ |
-    | Environment name | (mandatory) Write a name for your project's new environment.            |
-    | Git branch      | (mandatory) Choose a branch from the drop-down list.                     |
-    | Base directory  | Write the path of the base directory in the textbox.                     |
-    | Import variables | Tick the box to import variable names from an existing environment. Values will not be imported, and all variables will remain blank. |
-    | Auto-deploy     | Deploy the project on every commit pushed to this branch. Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
+:::warning Environment clearing is destructive
+Clearing an environment will permanently delete all its existing data and assets. Environment settings (such as variables and domains) are not affected by the clearing.
+:::
 
-4. Click on the **Reset** button.
+To clear an environment:
 
-##### Deleting an environment
+1. In the project settings, select the environment then open the  *Configuration* tab.
+2. In the *Environment data* section, click **Clear environment**.
+3. In the confirmation dialog, type the environment name, then confirm to start clearing. You are redirected to the environment dashboard, where you can follow the progress.
+
+While clearing is in progress:
+
+- The environment CMS is not available.
+- You cannot trigger a deployment or view the logs for that environment.
+- Plan upgrade, plan downgrade and setting changes that require a deployment are temporarily unavailable.
+
+If clearing fails, click **Retry** on the environment dashboard to run the operation again.
+
+##### Deleting an environment {#deleting-an-environment}
 
 1. In the *Danger zone* section of the  *Configuration* tab, click on the **Delete environment** button.
 2. Write in the textbox your *Environment name*.
@@ -1846,6 +1917,10 @@ Source: https://docs.strapi.io/cms/admin-panel-customization/wysiwyg-editor
 
 # Change the default rich text editor
 
+:::note
+This page covers customization of the **WYSIWYG markdown editor** used for `richtext` fields. For the **Blocks** field (the JSON-based rich text editor), see [Content Manager APIs: addRichTextBlocks](/cms/plugins-development/content-manager-apis#addrichtextblocks).
+:::
+
 Strapi's [admin panel](/cms/admin-panel-customization) comes with a built-in rich text editor. To change the default editor, several options are at your disposal:
 
 - You can install a third-party plugin, such as one for CKEditor, by visiting .
@@ -1857,14 +1932,56 @@ When evaluating editors, start with a plugin from the Marketplace for a quick tr
 
 
 
-# Strapi AI for content managers
+# Docs MCP server
+Source: https://docs.strapi.io/cms/ai/docs-mcp-server
+
+# Docs MCP server
+
+The Docs [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server is powered by [Kapa](https://kapa.ai), the same service behind the **Ask AI** button on the documentation website. It draws from the full Strapi documentation, including guides, API references, and code examples. The Docs MCP server is part of the [AI tools for developers](/cms/ai/for-developers) that Strapi offers.
+
+:::strapi MCP servers for Strapi
+Strapi offers 2 different MCP servers:
+
+- the Docs MCP server, covered on the present page,
+- and the Strapi MCP server for content management, covered on its [dedicated feature page](/cms/features/strapi-mcp-server).
+:::
+
+## Compatible tools
+
+The MCP server works with any tool that supports the MCP protocol, including:
+
+- [Cursor](https://cursor.com)
+- [VS Code](https://code.visualstudio.com) with GitHub Copilot
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+- [Windsurf](https://codeium.com/windsurf)
+- Any other MCP-compatible IDE or tool
+
+## Connection details
+
+When opening the Ask AI window, you should see a **Use MCP** dropdown in the top right corner. Click on it and choose which tool you'd like to connect:
+
+    </Tabs>
+
+Once connected, your AI coding assistant can query the Strapi documentation directly to answer questions, suggest implementations, and verify API usage.
+
+:::tip
+For docs-related questions, start your prompts with `Use the strapi-docs MCP server to answer:`. This will ensure the tool queries docs.strapi.io instead of returning answers based on its training data, which can be outdated.
+:::
+
+
+
+# AI for content managers
 Source: https://docs.strapi.io/cms/ai/for-content-managers
 
-# Strapi AI for content management
+# AI for content managers
+
+This page covers the AI-powered capabilities available to content managers in Strapi: the Strapi AI features built into the admin panel, and the MCP server that lets AI clients manage your content.
+
+## Strapi AI
 
 Some Strapi CMS features can be enhanced with Strapi AI, helping content managers and administrators design content structures, translate content automatically, and generate asset metadata, all from the admin panel.
 
-## Activation and configuration {#activation}
+### Activation and configuration {#activation}
 
 Strapi AI is available for Growth plan users since Strapi 5.30 and works with both Strapi Cloud and self-hosted deployments. To get started:
 
@@ -1885,20 +2002,25 @@ module.exports = {
 
  See [Admin panel configuration > Strapi AI](/cms/configurations/admin-panel#strapi-ai) for all configuration options.
 
-## Available features {#features}
+### Available features {#features}
 
 | Feature | Description |
 |---------|-------------|
 | [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) | AI chat assistant that helps design content-type structures, explain existing schemas, and plan data models. Uses your existing content types as context. |
 | [Internationalization](/cms/features/internationalization#ai-powered-internationalization) | Automatically translates content from the default locale to all other configured locales when you save an entry. |
 | [Media Library](/cms/features/media-library#ai-powered-metadata-generation) | Generates alternative text, captions, and descriptions for uploaded images. |
-## Credits and data handling {#credits}
+
+### Credits and data handling {#credits}
 
 Strapi AI features consume AI credits.
 
 All AI requests are processed through Strapi-managed infrastructure. Content is only used temporarily during each request and is not stored outside your instance. Strapi AI follows the same GDPR-aligned framework as Strapi Cloud.
 
   See [Usage information > Strapi AI data handling](/cms/usage-information#strapi-ai-data-handling) for more details.
+
+## Strapi MCP server
+
+Strapi includes a built-in [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that lets AI clients like Claude, Cursor, or any MCP-compatible tool manage your content through natural language. Once enabled and connected, an AI client can create, read, update, delete, publish, and unpublish entries directly through Strapi's Content Manager, all gated by Admin token permissions.
 
 
 
@@ -1911,18 +2033,15 @@ The Strapi documentation site includes AI-powered tools to help developers learn
 
 :::tip AGENTS.MD files
 In addition to docs and product features described on the present page, the <code>
-    
-    </Tabs>
-
-Once connected, your AI coding assistant can query the Strapi documentation directly to answer questions, suggest implementations, and verify API usage.
 
 ## Tips for better results {#tips}
 
+The following tips will help you fine-tune your prompts to get the best results:
+- Use the [Docs MCP server](/cms/ai/docs-mcp-server) in your IDE for the fastest developer experience. For docs-related questions, prefix your prompt with `Use the strapi-docs MCP server to answer:` so the tool queries docs.strapi.io instead of using potentially outdated training data.
 - Include the page URL so the assistant grounds its answer in the right context.
 - Mention your Strapi version (e.g., Strapi 5) to avoid outdated suggestions.
 - Pair code examples with their source page when sharing snippets from `llms-code.txt`.
 - Prefer documented APIs over private internals when asking for code generation.
-- Use the MCP server in your IDE for the fastest developer experience.
 
 
 
@@ -2444,6 +2563,25 @@ To delete documents matching parameters, pass these parameters to `delete()`.
 If no `locale` parameter is passed, it will delete only the default locale version:
 
  -->
+
+### `deleteMany()`
+
+Delete multiple documents matching filters and relation parameters.
+
+Syntax: `deleteMany(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+
+#### Parameters
+
+| Parameter | Description | Default | Type |
+|-----------|-------------|---------|------|
+| [`locale`](/cms/api/document-service/locale#delete) | Locale version of documents to delete. | `null`<br/>(deletes only the default locale) | String, `'*'`, or `null` |
+| [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
+| [`fields`](/cms/api/document-service/fields#delete)   | [Select fields](/cms/api/document-service/fields#delete) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
+
+#### Example
+
+Delete multiple documents matching filters, including filters on related fields:
 
 ### `publish()`
 
@@ -3457,6 +3595,18 @@ To populate specific relations several levels deep, use the object format with `
 
 </ApiCall>
 
+### Sort populated relations
+
+Use the `sort` parameter inside a `populate` object to order related entries by an attribute. For many-to-many and other join-table relations, an explicit `sort` takes precedence over the default connect order.
+
+<!-- source: strapi/strapi#26361 packages/core/database/src/query/helpers/populate/apply.ts -->
+
+</ApiCall>
+
+:::note
+Omit `sort` from a `populate` object to preserve the default connect order (the order in which entries were associated).
+:::
+
 ## Components & Dynamic Zones
 
 Components are populated the same way as relations:
@@ -3773,7 +3923,13 @@ To fetch a documents
 
 ### Create a new localized document {#locale-create}
 
-The `locale` field can be passed to create a localized document
+The `locale` field can be passed to create a localized document 
+
+:::info Aggregations not yet available
+GraphQL aggregations (count, avg, sum, min, max, groupBy) are not yet implemented in `@strapi/plugin-graphql`. This section will be updated when the feature becomes available.
+
+In the meantime, you can get a total document count through the REST API (e.g., `GET /api/restaurants?pagination[pageSize]=1` returns `meta.pagination.total`), or write a [custom GraphQL resolver](/cms/api/graphql/advanced-queries#resolver-chains) that uses the [Document Service API](/cms/api/document-service) to compute aggregations.
+:::
 
 
 
@@ -4309,6 +4465,10 @@ Top-level pagination parameters (e.g., `pagination[page]` and `pagination[pageSi
 
 </ApiCall>
 
+:::note
+For many-to-many and other join-table relations, an explicit `sort` within a `populate` object overrides the default connect order. Omit `sort` to preserve the connect order (the order in which entries were associated).
+:::
+
 :::tip Performance tip
 In production, always use explicit population instead of wildcards like `populate=*`. Limit population depth to 2-3 levels and consider centralizing population logic in route middlewares. See  on the Strapi blog.
 :::
@@ -4351,6 +4511,23 @@ await strapi.documents('api::restaurant.restaurant').update({
     }
   }
 })
+
+```
+
+:::tip TypeScript Workaround
+When using connect, disconnect, or set with the Document Service API in TypeScript, you may encounter a TS2353 error stating that these properties do not exist on type LongHandEntity.
+
+While the runtime engine fully supports this syntax, the current typings do not. You can safely bypass this validation by casting your data payload to any or a broader object type:
+
+```js
+await strapi.documents('api::cart.cart').update({
+  documentId: cart.documentId,
+  data: {
+    status: 'checked_out',
+    order: { connect: [order.documentId] } as any, // Temporary workaround
+  },
+});
+
 ```
 
 If no locale is passed, the default locale will be assumed.
@@ -4887,9 +5064,13 @@ To see a possible advanced usage for custom controllers, read the [services and 
 
 ### Controllers & Routes: How routes reach controller actions
 
-- Core mapping is automatic: when you generate a content-type, Strapi creates the matching controller and a router file that already targets the standard actions (`find`, `findOne`, `create`, `update`, and `delete`). Overriding any of these actions inside the generated controller does not require touching the router — the route keeps the same handler string and executes your updated logic.
+- Core mapping is automatic: when you generate a content-type, Strapi creates the matching controller and a router file that already targets the standard actions (`find`, `findOne`, `create`, `update`, and `delete`). Overriding any of these actions inside the generated controller does not require touching the router - the route keeps the same handler string and executes your updated logic.
 - Adding a route should only be done for new actions or paths. If you introduce a brand-new method such as `exampleAction`, create or update a route entry whose `handler` points to the action so HTTP requests can reach it. Use the fully-qualified handler syntax `<scope>::<api-or-plugin-name>.<controllerName>.<actionName>` (e.g. `api::restaurant.restaurant.exampleAction` for an API controller or `plugin::menus.menu.exampleAction` for a plugin controller).
 - Regarding controller and route filenames: the default controller name comes from the filename inside `./src/api/[api-name]/controllers/`. Core routers created with `createCoreRouter` adopt the same name, so the generated handler string matches automatically. Custom routers can follow any file naming scheme, as long as the `handler` string references an exported controller action.
+
+:::note About core mapping
+The REST routes Strapi generates for a content-type point each HTTP method at a handler string (for example `api::restaurant.restaurant.find`). That string already identifies the controller file and the exported action name (`find`, `findOne`, `create`, `update`, or `delete`). When you change the implementation inside those exports but keep the names, the router still calls your code. Edit the route file only when you add a new action name or path outside that default CRUD set.
+:::
 
 The example below adds a new controller action and exposes it through a custom route without duplicating the existing CRUD route definitions:
 
@@ -4922,7 +5103,7 @@ module.exports = {
 It's strongly recommended you sanitize (v4.8.0+) and/or validate (v4.13.0+) your incoming request query utilizing the new `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
 :::
 
-Sanitization means that the object is “cleaned” and returned.
+Sanitization means that the object is Ã¢â‚¬Å“cleanedÃ¢â‚¬Â and returned.
 
 Validation means an assertion is made that the data is already clean and throws an error if something is found that shouldn't be there.
 
@@ -6103,7 +6284,7 @@ Generic implementation example:
 
 </Tabs>
 
-This only allows a `GET` request on the `/restaurants` path from the core `find` [controller](/cms/backend-customization/controllers) without authentication. When you reference custom controller actions in custom routers, prefer the fully‑qualified `api::<api-name>.<controllerName>.<actionName>` form for clarity (e.g., `api::restaurant.restaurant.review`).
+This only allows a `GET` request on the `/restaurants` path from the core `find` [controller](/cms/backend-customization/controllers) without authentication. When you reference custom controller actions in custom routers, prefer the fully-qualified `api::<api-name>.<controllerName>.<actionName>` form for clarity (e.g., `api::restaurant.restaurant.review`).
 
 ### Creating custom routers
 
@@ -6161,6 +6342,18 @@ Both [core routers](#configuring-core-routers) and [custom routers](#creating-cu
 </TabItem>
 
 </Tabs>
+
+<details>
+
+<summary>Applying middlewares to all core routes of a content-type</summary>
+
+`createCoreRouter` attaches `middlewares` per action. To run the same middleware on every default Content API action (`find`, `findOne`, `create`, `update`, `delete`), list it under each key in `config`, or build the object once:
+
+</Tabs>
+
+If you use `only` or `except`, build the `actions` array to match the routes you actually register so you do not attach middlewares to disabled handlers.
+
+</details>
 
 :::tip Centralizing population logic
 Route-level middlewares are the recommended place to enforce consistent population rules across your API. This prevents accidental over-fetching and ensures predictable response sizes. See 
@@ -7394,7 +7587,6 @@ Developers can use the following APIs to interact with future flags:
 | Property name | Related feature | Suggested environment variable name |
 | ------------- | --------------- | ---------------------------------- |
 | `experimental_firstPublishedAt` | [Draft & Publish](/cms/features/draft-and-publish#recording-the-first-publication-date) | `STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT` |
-| `adminTokens` | [Admin Tokens](/cms/features/admin-tokens) | `STRAPI_FUTURE_ADMIN_TOKENS` |
 
 
 
@@ -7838,7 +8030,7 @@ Source: https://docs.strapi.io/cms/database-migrations
 Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi application. These migrations are run automatically when the application starts and are executed before the automated schema migrations that Strapi also performs on boot.
 
 :::callout 🚧  Experimental feature
-Database migrations are experimental. This feature is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the 
+Database migrations are experimental. This feature is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on 
 
 </Tabs>
 
@@ -8247,10 +8439,10 @@ If you prefer or are required to log in via an SSO provider, please refer to the
 
 
 
-# Admin Tokens
+# Admin tokens
 Source: https://docs.strapi.io/cms/features/admin-tokens
 
-# Admin Tokens
+# Admin tokens
 
 Admin tokens allow automated clients to authenticate requests to the Strapi Admin API. For authenticating requests to the Content API, see [API Tokens](/cms/features/api-tokens).
 
@@ -8269,7 +8461,7 @@ Admin tokens are configured entirely from the admin panel. No code-based configu
 :::prerequisites
 If you're not the Strapi instance's super admin, the super admin must have granted you the following permissions:
   * access the Admin tokens settings page
-  * create (generate) admin tokens
+  * create (generate) Admin tokens
   
   (see [RBAC > Configuring role's permissions](/cms/features/rbac#plugins-and-settings) for details).
 :::
@@ -8291,8 +8483,6 @@ If you're not the Strapi instance's super admin, the super admin must have grant
     :::
 4. Click on the **Save** button. The new Admin token will be displayed at the top of the interface, along with a copy button .
 
-<!-- TODO: Update screenshot once admin tokens UI is finalized behind the feature flag -->
-
 :::caution
 The plaintext token key is shown only once, immediately after creation or regeneration. The `admin.secrets.encryptionKey` configuration that makes Content API token keys persistently viewable does not apply to Admin tokens. Admin token keys are always restricted to the token owner, regardless of encryption configuration.
 :::
@@ -8307,7 +8497,7 @@ Any user with access to the Admin Tokens settings page can view Admin tokens. A 
 
 When a super-admin views an Admin token owned by another user, a read-only **Owner** field appears in the token details panel. The permissions panel shows only the checkboxes within the token owner's permission scope, not the super-admin's unrestricted access.
 
-Removing a permission from a role causes admin tokens owned by users of that role to have the corresponding permission deleted automatically.
+Removing a permission from a role causes Admin tokens owned by users of that role to have the corresponding permission deleted automatically.
 
 :::caution Owner account deactivation and deletion
 
@@ -8726,7 +8916,7 @@ Custom fields extend Strapi’s capabilities by adding new types of fields to co
 
 ## Configuration
 
-Ready-made custom fields can be found on the [Marketplace](https://market.strapi.io/plugins?categories=Custom+fields). Once installed these, no other configuration is required, and you can start using them (see [usage](#usage)).
+Ready-made custom fields can be found on the [Marketplace](https://market.strapi.io/?categories=Custom+fields). Once installed these, no other configuration is required, and you can start using them (see [usage](#usage)).
 
 You can also develop your own custom field.
 
@@ -9207,7 +9397,7 @@ This feature is currently experimental. Feel free to share  or  with the Strapi 
 
 The current version of Live Preview comes with the following limitations:
 * Blocks fields are not detected, and changing them in the Side Editor won’t be reflected in the preview. Clicking on Save after updates should however still work.
-* Media assets and fields in dynamic zones are not handled.
+* Fields in dynamic zones are not handled.
 :::
 
 
@@ -9551,6 +9741,10 @@ Entries of a review workflow content type can be assigned to any admin user in S
 1. Access the edit view of your content-type.
 2. In the *Review Workflows* box on the right side of the interface, click on the _Assignee_ drop-down list.
 3. Choose the new assignee of your entry. It is automatically saved.
+
+:::tip
+You can filter entries in the Content Manager list view by **Assignee** and **Review Stage** to quickly find entries assigned to specific users or in specific review stages. Open the filters menu in the list view to access these filtering options.
+:::
 
 
 
@@ -10581,7 +10775,7 @@ Source: https://docs.strapi.io/cms/installation
 
 Strapi projects can be installed either locally on a computer or on a remote server. The following installation guide provides step-by-step instructions on how to install and create a new Strapi project on your local machine:
 
-If you already have an existing Strapi project on your local machine, the following guide provides step-by-step instructions on creating a custom Docker image for your project:
+If you already have an existing Strapi project on your local machine, the following guide covers running it in Docker containers for development and production:
 
 
 
@@ -10747,6 +10941,43 @@ Strapi Cloud will deploy the updated code in Strapi 5 and will automatically run
 - REST responses continue to expose both `id` (legacy) and [`documentId`](/cms/migration/v4-to-v5/breaking-changes/use-document-id) when the header is enabled. GraphQL never exposes numeric `id`, so update your queries to use `documentId` even before you turn compatibility mode off.
 
 Once every consumer reads the flattened format, remove the header so Strapi emits the Strapi 5 response shape by default.
+<br/>
+
+</details>
+
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Why does the admin build fail with <code>Cannot find module &apos;react&apos;</code> while my project is still on Strapi v4?</summary>
+
+<p>Patch upgrades across Strapi v4 minors can fail the admin build with <code>Cannot find module &apos;react&apos;</code> (or similar). Newer v4 lines expect <code>react</code>, <code>react-dom</code>, <code>react-router-dom</code>, and <code>styled-components</code> to be listed explicitly in your app <code>package.json</code> instead of relying only on transitive resolution.</p>
+
+<p>Copy the versions from a fresh Strapi v4 project that matches your target release (for example run the official generator in a throwaway folder), then install and rebuild. A typical set looks like this:</p>
+
+```json
+"react": "^18.0.0",
+"react-dom": "^18.0.0",
+"react-router-dom": "5.3.4",
+"styled-components": "5.3.3"
+```
+
+<p>Using a tilde or caret range on <code>@strapi/strapi</code> (for example <code>~4.25.22</code>) is fine for patch updates; when you skip several minors, read the release notes and migration notes for each jump.</p>
+
+<p>The archived v4 Developer Documentation still lives on .</p>
+<br/>
+
+</details>
+
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Can I downgrade from Strapi 5 back to Strapi 4?</summary>
+
+<p>Strapi does not ship an automated downgrade from Strapi 5 to Strapi 4.</p>
+
+<p>Data migration scripts that run when Strapi 5 starts are not reversed by the product.</p>
+
+<p>If you must return to Strapi 4, restore the database backup you created before the upgrade. Check out the Git branch or tag that still matches Strapi 4.</p>
+
+<p>Reinstall dependencies so <code>package.json</code> and the lockfile match that snapshot.</p>
+
+<p>Plan backups and staging environments using the <a href="/cms/migration/v4-to-v5/step-by-step">step-by-step guide</a> before you upgrade production.</p>
 <br/>
 
 </details>
@@ -11353,6 +11584,7 @@ Use the following table to find which function to use and where to declare it. C
 | Register a hook                          | [`registerHook()`](/cms/plugins-development/admin-hooks)                    | [`bootstrap()`](#bootstrap)   |
 | Provide translations for the plugin admin interface | [`registerTrads()`](/cms/plugins-development/admin-localization#registertrads) | `registerTrads()` |
 | Make authenticated HTTP requests | [`useFetchClient()`](/cms/plugins-development/admin-fetch-client) / [`getFetchClient()`](/cms/plugins-development/admin-fetch-client#outside-a-react-component) | Any |
+| Access Content Manager Edit View context from React | [`unstable_useContentManagerContext`](/cms/migration/v4-to-v5/additional-resources/helper-plugin#usecmeditviewdatamanager) | Any |
 
 <br/>
 Click on any of the following cards to get more details about a specific topic:
@@ -11595,174 +11827,92 @@ Use this to add new panels to the Edit view sidebar, just like in the following 
 ![addEditViewSidePanel](/img/assets/content-manager-apis/add-edit-view-side-panel.png)
 
 ```jsx
-addEditViewSidePanel(panels: DescriptionReducer<PanelComponent> | PanelComponent[])
+addEditViewSidePanel(panels: DescriptionReducer,
+          icon: Information,
+          label: { id: 'my-plugin.blocks.callout', defaultMessage: 'Callout' },
+          matchNode: (node) => node.type === 'callout',
+          isInBlocksSelector: true,
+          handleConvert(editor) { /* use Slate Transforms to set node type */ },
+          snippets: [':::callout'],
+        },
+      });
+    },
+  };
+  ```
+
+  </TabItem>
+  ,
+          icon: Information,
+          label: { id: 'my-plugin.blocks.callout', defaultMessage: 'Callout' },
+          matchNode: (node) => node.type === 'callout',
+          isInBlocksSelector: true,
+          handleConvert(editor) { /* use Slate Transforms to set node type */ },
+          snippets: [':::callout'],
+        },
+      });
+    },
+  };
+  ```
+
+  </TabItem>
+  </Tabs>
+
+- Passing a **function**: the function receives the current blocks store and must return the updated store. Use this form to remove or replace built-in blocks.
+
+  </Tabs>
+
+#### Block definition
+
+Each entry in the blocks object is a block definition with the following properties:
+
+| Property | Required | Type | Description |
+|---|---|---|---|
+| `renderElement` | Yes | `React.FC` | React render function. Spread `props.attributes` on the root element and render `props.children`. |
+| `matchNode` | Yes | `(node: Node) => boolean` | Returns `true` if a given  node belongs to this block type. |
+| `isInBlocksSelector` | No | `boolean` | Set to `true` to show the block in the toolbar dropdown. Defaults to `false`. |
+| `icon` | No | `React.ComponentType` | Icon component shown in the toolbar dropdown. Required when `isInBlocksSelector` is `true`. |
+| `label` | No | `{ id: string, defaultMessage: string }` | `MessageDescriptor` shown in the toolbar dropdown. Required when `isInBlocksSelector` is `true`. |
+| `handleConvert` | No | `(editor: Editor) => void \| (() => React.JSX.Element)` | Called when the user selects this block from the dropdown. Use Slate's `Transforms` to set the node type. Can return a React element factory to render a modal. |
+| `handleEnterKey` | No | `(editor: Editor) => void` | Custom Enter key behavior inside this block. |
+| `handleBackspaceKey` | No | `(editor: Editor, event: React.KeyboardEvent<HTMLElement>) => void` | Custom Backspace key behavior. |
+| `handleTab` | No | `(editor: Editor) => void` | Custom Tab key behavior (e.g., indentation). |
+| `handleShiftTab` | No | `(editor: Editor) => void` | Custom Shift+Tab key behavior. |
+| `snippets` | No | `string[]` | Typing one of these strings followed by Space triggers a conversion to this block type. |
+| `dragHandleTopMargin` | No | `string` | Adjusts the vertical position of the drag-to-reorder grip icon. |
+| `plugin` | No | `(editor: Editor) => Editor` | A  registered when the editor instance is created. Use this for custom normalizers or Slate-level behavior. |
+| `isDraggable` | No | `(element: Element) => boolean` | Function returning whether a given element is draggable. Defaults to `() => true`. |
+
+The built-in block keys are: `paragraph`, `heading-one`, `heading-two`, `heading-three`, `heading-four`, `heading-five`, `heading-six`, `list-ordered`, `list-unordered`, `image`, `quote`, `code`, `link`, `list-item`.
+
+**Key handler example**
+
+Key handlers each receive the Slate `editor` instance. Use Slate's `Transforms` API to modify the document:
+
+```js
+callout: {
+  // ...
+  handleEnterKey(editor) {
+    // Exit the block on Enter and insert a new paragraph below
+    Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] });
+  },
+  handleBackspaceKey(editor, event) {
+    // Convert back to paragraph when backspacing in an empty callout
+    Transforms.setNodes(editor, { type: 'paragraph' });
+  },
+  handleTab(editor) {
+    // Increase indentation level on Tab
+    Transforms.setNodes(editor, { indent: (editor.selection ? 1 : 0) });
+  },
+  handleShiftTab(editor) {
+    // Decrease indentation level on Shift+Tab
+    Transforms.setNodes(editor, { indent: 0 });
+  },
+},
 ```
 
-#### PanelComponent
-
-A `PanelComponent` receives the properties listed in [EditViewContext](#editviewcontext) and returns an object with the following shape:
-
-```tsx
-type PanelComponent = (props: PanelComponentProps) => {
-  title: string;
-  content: React.ReactNode;
-};
-```
-
-`PanelComponentProps` extends the [EditViewContext](#editviewcontext).
-
-### `addDocumentAction`
-
-Use this API to add more actions to the Edit view or the List View of the Content Manager. There are 3 positions available:
-
-- `header` of the Edit view:
-
-    ![Header of the Edit view](/img/assets/content-manager-apis/add-document-action-header.png)
-- `panel` of the Edit view:
-
-    ![Panel of the Edit View](/img/assets/content-manager-apis/add-document-action-panel.png)
-- `table-row` of the List view:
-
-    ![Table-row in the List View](/img/assets/content-manager-apis/add-document-action-tablerow.png)
-
-```jsx
-addDocumentAction(actions: DescriptionReducer<DocumentActionComponent> | DocumentActionComponent[])
-```
-
-#### DocumentActionDescription
-
-The interface and properties of the API look like the following: 
-
-```jsx
-interface DocumentActionDescription {
-    label: string;
-    onClick?: (event: React.SyntheticEvent) => Promise<boolean | void> | boolean | void;
-    icon?: React.ReactNode;
-    /**
-     * @default false
-     */
-    disabled?: boolean;
-    /**
-     * @default 'panel'
-     * @description Where the action should be rendered.
-     */
-    position?: DocumentActionPosition | DocumentActionPosition[];
-    dialog?: DialogOptions | NotificationOptions | ModalOptions;
-    /**
-     * @default 'secondary'
-     */
-    variant?: ButtonProps['variant'];
-    loading?: ButtonProps['loading'];
-}
-
-type DocumentActionPosition = 'panel' | 'header' | 'table-row' | 'preview' | 'relation-modal';
-
-interface DialogOptions {
-    type: 'dialog';
-    title: string;
-    content?: React.ReactNode;
-    variant?: ButtonProps['variant'];
-    onConfirm?: () => void | Promise<void>;
-    onCancel?: () => void | Promise<void>;
-}
-interface NotificationOptions {
-    type: 'notification';
-    title: string;
-    link?: {
-        label: string;
-        url: string;
-        target?: string;
-    };
-    content?: string;
-    onClose?: () => void;
-    status?: NotificationConfig['type'];
-    timeout?: number;
-}
-interface ModalOptions {
-    type: 'modal';
-    title: string;
-    content: React.ComponentType<{
-        onClose: () => void;
-    }> | React.ReactNode;
-    footer?: React.ComponentType<{
-        onClose: () => void;
-    }> | React.ReactNode;
-    onClose?: () => void;
-}
-```
-
-### `addDocumentHeaderAction`
-
-Use this API to add more actions to the header of the Edit view of the Content Manager:
-
-![addEditViewSidePanel](/img/assets/content-manager-apis/add-document-header-action.png)
-
-```jsx
-addDocumentHeaderAction(actions: DescriptionReducer<HeaderActionComponent> | HeaderActionComponent[])
-```
-
-#### HeaderActionDescription
-
-The interface and properties of the API look like the following:
-
-```jsx
-interface HeaderActionDescription {
-  disabled?: boolean;
-  label: string;
-  icon?: React.ReactNode;
-  type?: 'icon' | 'default';
-  onClick?: (event: React.SyntheticEvent) => Promise<boolean | void> | boolean | void;
-  dialog?: DialogOptions;
-  options?: Array<{
-    disabled?: boolean;
-    label: string;
-    startIcon?: React.ReactNode;
-    textValue?: string;
-    value: string;
-  }>;
-  onSelect?: (value: string) => void;
-  value?: string;
-}
-
-interface DialogOptions {
-  type: 'dialog';
-  title: string;
-  content?: React.ReactNode;
-  footer?: React.ReactNode;
-}
-```
-
-### `addBulkAction`
-
-Use this API to add buttons that show up when entries are selected on the List View of the Content Manager, just like the "Add to Release" button for instance:
-
-![addEditViewSidePanel](/img/assets/content-manager-apis/add-bulk-action.png)
-
-```jsx
-addBulkAction(actions: DescriptionReducer<BulkActionComponent> | BulkActionComponent[])
-```
-
-#### BulkActionDescription
-
-The interface and properties of the API look like the following: 
-
-```jsx
-interface BulkActionDescription {
-  dialog?: DialogOptions | NotificationOptions | ModalOptions;
-  disabled?: boolean;
-  icon?: React.ReactNode;
-  label: string;
-  onClick?: (event: React.SyntheticEvent) => void;
-  /**
-   * @default 'default'
-   */
-  type?: 'icon' | 'default';
-  /**
-   * @default 'secondary'
-   */
-  variant?: ButtonProps['variant'];
-}
-```
+:::tip
+More information about types can be found in .
+:::
 
 
 

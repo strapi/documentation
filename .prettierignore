@@ -1,0 +1,5 @@
+# Prettier (and editors using the Prettier extension) skip these paths.
+# Prettier reformats Markdown tables, list markers, and MDX — avoid on documentation.
+docusaurus/docs/**
+docs/**
+agents/**

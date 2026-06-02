@@ -188,6 +188,192 @@ export default ({ env }) => ({
 
 
 
+# Middleware Configuration for Strapi Cloud
+Source: https://docs.strapi.io/cloud/advanced/middlewares
+
+## Middleware Configuration for Strapi Cloud
+Description: To apply custom middleware configuration on Strapi Cloud, place your changes in:
+(Source: https://docs.strapi.io/cloud/advanced/middlewares#middleware-configuration-for-strapi-cloud)
+
+Language: JavaScript
+File path: N/A
+
+```
+config/env/production/middlewares.js
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```
+config/env/production/middlewares.ts
+```
+
+
+## Custom Content Security Policy (CSP)
+Description: Create or update config/env/production/middlewares:
+(Source: https://docs.strapi.io/cloud/advanced/middlewares#custom-content-security-policy-csp)
+
+Language: JavaScript
+File path: config/env/production/middlewares.js
+
+```js
+module.exports = [
+  'strapi::errors',
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            'your-custom-domain.com', // replace with your provider domain
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            'your-custom-domain.com', // replace with your provider domain
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  'strapi::cors',
+  'strapi::poweredBy',
+  'strapi::logger',
+  'strapi::query',
+  'strapi::body',
+  'strapi::session',
+  'strapi::favicon',
+  'strapi::public',
+];
+```
+
+---
+Language: TypeScript
+File path: config/env/production/middlewares.ts
+
+```ts
+export default [
+  'strapi::errors',
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            'your-custom-domain.com', // replace with your provider domain
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            'your-custom-domain.com', // replace with your provider domain
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  'strapi::cors',
+  'strapi::poweredBy',
+  'strapi::logger',
+  'strapi::query',
+  'strapi::body',
+  'strapi::session',
+  'strapi::favicon',
+  'strapi::public',
+];
+```
+
+
+## Custom CORS headers
+Description: If your frontend sends custom request headers (e.g.
+(Source: https://docs.strapi.io/cloud/advanced/middlewares#custom-cors-headers)
+
+Language: JavaScript
+File path: config/env/production/middlewares.js
+
+```js
+module.exports = ({ env }) => [
+  'strapi::errors',
+  'strapi::security',
+  {
+    name: 'strapi::cors',
+    config: {
+      enabled: true,
+      origin: [env('CLIENT_URL')],
+      headers: [
+        'Content-Type',
+        'Authorization',
+        'Origin',
+        'Accept',
+        'X-Requested-With',
+        'your-custom-header', // add any custom headers your frontend sends
+      ],
+    },
+  },
+  'strapi::poweredBy',
+  'strapi::logger',
+  'strapi::query',
+  'strapi::body',
+  'strapi::session',
+  'strapi::favicon',
+  'strapi::public',
+];
+```
+
+---
+Language: TypeScript
+File path: config/env/production/middlewares.ts
+
+```ts
+export default ({ env }) => [
+  'strapi::errors',
+  'strapi::security',
+  {
+    name: 'strapi::cors',
+    config: {
+      enabled: true,
+      origin: [env('CLIENT_URL')],
+      headers: [
+        'Content-Type',
+        'Authorization',
+        'Origin',
+        'Accept',
+        'X-Requested-With',
+        'your-custom-header', // add any custom headers your frontend sends
+      ],
+    },
+  },
+  'strapi::poweredBy',
+  'strapi::logger',
+  'strapi::query',
+  'strapi::body',
+  'strapi::session',
+  'strapi::favicon',
+  'strapi::public',
+];
+```
+
+
+
 # Upload Provider Configuration for Strapi Cloud
 Source: https://docs.strapi.io/cloud/advanced/upload
 
@@ -362,7 +548,7 @@ Description: Example:
 (Source: https://docs.strapi.io/cloud/advanced/upload#configure-the-security-middleware)
 
 Language: JavaScript
-File path: ./config/middleware.js
+File path: ./config/env/production/middlewares.js
 
 ```js
 module.exports = [
@@ -399,7 +585,7 @@ module.exports = [
 
 ---
 Language: JavaScript
-File path: ./config/middleware.js
+File path: ./config/env/production/middlewares.js
 
 ```js
 module.exports = [
@@ -435,7 +621,7 @@ module.exports = [
 ```
 
 Language: TypeScript
-File path: ./config/middleware.ts
+File path: ./config/env/production/middlewares.ts
 
 ```ts
 export default [
@@ -472,7 +658,7 @@ export default [
 
 ---
 Language: TypeScript
-File path: ./config/middleware.ts
+File path: ./config/env/production/middlewares.ts
 
 ```ts
 export default [
@@ -1873,33 +2059,12 @@ export default {
 
 
 
-# Strapi AI for content managers
-Source: https://docs.strapi.io/cms/ai/for-content-managers
-
-## Activation and configuration
-Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
-(Source: https://docs.strapi.io/cms/ai/for-content-managers#activation)
-
-Language: JavaScript
-File path: /config/admin.js|ts
-
-```js
-module.exports = {
-  // ...
-  ai: {
-    enabled: true, // set to false to disable all Strapi AI features
-  },
-};
-```
-
-
-
-# AI for developers
-Source: https://docs.strapi.io/cms/ai/for-developers
+# Docs MCP server
+Source: https://docs.strapi.io/cms/ai/docs-mcp-server
 
 ## Connection details
 Description: Add to your .cursor/mcp.json file:
-(Source: https://docs.strapi.io/cms/ai/for-developers#connection-details)
+(Source: https://docs.strapi.io/cms/ai/docs-mcp-server#connection-details)
 
 Language: JSON
 File path: .cursor/mcp.json
@@ -1927,6 +2092,41 @@ File path: .vscode/mcp.json
         }
       }
     }
+```
+
+---
+Language: JSON
+File path: ~/.codeium/windsurf/mcp_config.json
+
+```json
+    {
+      "mcpServers": {
+        "strapi-docs": {
+          "serverUrl": "https://strapi-docs.mcp.kapa.ai"
+        }
+      }
+    }
+```
+
+
+
+# AI for content managers
+Source: https://docs.strapi.io/cms/ai/for-content-managers
+
+## Activation and configuration
+Description: All Strapi AI features can be enabled or disabled globally through the admin panel configuration:
+(Source: https://docs.strapi.io/cms/ai/for-content-managers#activation)
+
+Language: JavaScript
+File path: /config/admin.js|ts
+
+```js
+module.exports = {
+  // ...
+  ai: {
+    enabled: true, // set to false to disable all Strapi AI features
+  },
+};
 ```
 
 
@@ -2415,6 +2615,33 @@ File path: N/A
 await strapi.documents('api::restaurant.restaurant').delete(
   { filters: { name: { $startsWith: 'Pizzeria' }}}
 )
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+await strapi.documents('api::restaurant.restaurant').deleteMany({
+  filters: {
+    city: {
+      name: {
+        $eq: 'New York'
+      }
+    }
+  }
+})
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  documentId: "multiple_documents",
+  entries: 3
+}
 ```
 
 ---
@@ -4396,14 +4623,59 @@ File path: N/A
 ```
 
 
+## Sort populated relations
+Description: Code example from "Sort populated relations"
+(Source: https://docs.strapi.io/cms/api/document-service/populate#sort-populated-relations)
+
+Language: TypeScript
+File path: /core/database/src/query/helpers/populate/apply.ts
+
+```ts
+const documents = await strapi.documents("api::article.article").findMany({
+  populate: {
+    categories: {
+      sort: 'name:asc',
+    },
+  },
+});
+```
+
+---
+Language: JSON
+File path: /core/database/src/query/helpers/populate/apply.ts
+
+```json
+[
+  {
+    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "title": "Test Article",
+    // ...
+    "categories": [
+      {
+        "id": 1,
+        "name": "Architecture"
+        // ...
+      },
+      {
+        "id": 3,
+        "name": "Technology"
+        // ...
+      }
+    ]
+  }
+  // ...
+]
+```
+
+
 ## Components & Dynamic Zones
 Description: Code example from "Components & Dynamic Zones"
 (Source: https://docs.strapi.io/cms/api/document-service/populate#components-dynamic-zones)
 
-Language: JavaScript
-File path: N/A
+Language: TypeScript
+File path: /core/database/src/query/helpers/populate/apply.ts
 
-```js
+```ts
 const documents = await strapi.documents("api::article.article").findMany({
   populate: ["testComp"],
 });
@@ -4411,7 +4683,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 ---
 Language: JSON
-File path: N/A
+File path: /core/database/src/query/helpers/populate/apply.ts
 
 ```json
 [
@@ -4432,10 +4704,10 @@ File path: N/A
 ```
 
 ---
-Language: JavaScript
-File path: N/A
+Language: TypeScript
+File path: /core/database/src/query/helpers/populate/apply.ts
 
-```js
+```ts
 const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     testDZ: {
@@ -4452,7 +4724,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 ---
 Language: JSON
-File path: N/A
+File path: /core/database/src/query/helpers/populate/apply.ts
 
 ```json
 [
@@ -6140,112 +6412,6 @@ query Query($status: PublicationStatus) {
 ```
 
 
-## Aggregations
-Description: Aggregations can be used to compute metrics such as counts, sums, or grouped totals without fetching every document individually.
-(Source: https://docs.strapi.io/cms/api/graphql#aggregations)
-
-Language: JSON
-File path: Example:
-
-```json
-{
-  restaurants_connection(filters: { categories: { documentId: { eq: "food-trucks" } } }) {
-    aggregate {
-      count
-    }
-  }
-}
-```
-
-
-## Aggregate multiple metrics in one request
-Description: Aggregations can be combined so that one network round trip returns several metrics:
-(Source: https://docs.strapi.io/cms/api/graphql#aggregate-multiple-metrics-in-one-request)
-
-Language: JSON
-File path: Example:
-
-```json
-{
-  restaurants_connection(filters: { takeAway: { eq: true } }) {
-    aggregate {
-      avg {
-        delivery_time
-      }
-      min {
-        price_range
-      }
-      max {
-        price_range
-      }
-    }
-  }
-}
-```
-
-
-## Group results
-Description: Use groupBy to derive grouped metrics while optionally chaining further aggregations inside each group.
-(Source: https://docs.strapi.io/cms/api/graphql#group-results)
-
-Language: GRAPHQL
-File path: Example:
-
-```graphql
-{
-  restaurants_connection {
-    aggregate {
-      groupBy {
-        categories {
-          key
-          connection {
-            aggregate {
-              count
-            }
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-
-## Combine with pagination and sorting
-Description: Aggregations run on the entire result set that matches the query filters, not only on the current page.
-(Source: https://docs.strapi.io/cms/api/graphql#combine-with-pagination-and-sorting)
-
-Language: JSON
-File path: Example:
-
-```json
-{
-  restaurants_connection(
-    filters: { takeAway: { eq: true } }
-    pagination: { page: 2, pageSize: 5 }
-    sort: "name:asc"
-  ) {
-    nodes {
-      documentId
-      name
-      rating
-    }
-    pageInfo {
-      page
-      pageSize
-      total
-    }
-    aggregate {
-      count
-      avg {
-        rating
-      }
-    }
-  }
-}
-```
-
-
 ## Create a new document
 Description: The following example creates a new document for the "Restaurant" content-type and returns its name and documentId:
 (Source: https://docs.strapi.io/cms/api/graphql#create-a-new-document)
@@ -6953,37 +7119,6 @@ export default {
     },
   },
 };
-```
-
-
-## Aggregation drilldowns
-Description: connections expose an aggregate field.
-(Source: https://docs.strapi.io/cms/api/graphql/advanced-queries#aggregation-drilldowns)
-
-Language: GRAPHQL
-File path: N/A
-
-```graphql
-query RestaurantsByCity($first: Int, $after: String) {
-  restaurants_connection(pagination: { limit: $first, start: $after }) {
-    aggregate {
-      groupBy {
-        city {
-          key
-          connection(pagination: { limit: 5 }) {
-            aggregate {
-              count
-            }
-            nodes {
-              documentId
-              name
-            }
-          }
-        }
-      }
-    }
-  }
-}
 ```
 
 
@@ -10228,6 +10363,19 @@ await strapi.documents('api::restaurant.restaurant').update({
     }
   }
 })
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+await strapi.documents('api::cart.cart').update({
+  documentId: cart.documentId,
+  data: {
+    status: 'checked_out',
+    order: { connect: [order.documentId] } as any, // Temporary workaround
+  },
+});
 ```
 
 
@@ -14298,6 +14446,35 @@ export default  {
 };
 ```
 
+Language: JavaScript
+File path: ./src/api/restaurant/routes/restaurant.js
+
+```js
+const { createCoreRouter } = require('@strapi/strapi').factories;
+
+const audit = ['global::audit-log'];
+const actions = ['find', 'findOne', 'create', 'update', 'delete'];
+
+module.exports = createCoreRouter('api::restaurant.restaurant', {
+  config: Object.fromEntries(actions.map((action) => [action, { middlewares: audit }])),
+});
+```
+
+---
+Language: TypeScript
+File path: ./src/api/restaurant/routes/restaurant.ts
+
+```ts
+import { factories } from '@strapi/strapi';
+
+const audit = ['global::audit-log'] as const;
+const actions = ['find', 'findOne', 'create', 'update', 'delete'] as const;
+
+export default factories.createCoreRouter('api::restaurant.restaurant', {
+  config: Object.fromEntries(actions.map((action) => [action, { middlewares: [...audit] }])),
+});
+```
+
 
 ## Public routes
 Description: In some scenarios, it can be useful to have a route publicly available and control the access outside of the normal Strapi authentication system.
@@ -16474,6 +16651,43 @@ module.exports = ({ env }) => ({
 ```
 
 ---
+Language: TypeScript
+File path: ./config/database.ts
+
+```ts
+import { Signer } from '@aws-sdk/rds-signer';
+
+export default ({ env }) => {
+  const signer = new Signer({
+    hostname: env('DATABASE_HOST', 'localhost'),
+    port: env.int('DATABASE_PORT', 5432),
+    username: env('DATABASE_USERNAME', 'strapi'),
+  });
+
+  return {
+    connection: {
+      client: 'postgres',
+      connection: async () => {
+        const token = await signer.getAuthToken();
+        const expiresAt = Date.now() + 15 * 60 * 1000;
+
+        return {
+          host: env('DATABASE_HOST', 'localhost'),
+          port: env.int('DATABASE_PORT', 5432),
+          database: env('DATABASE_NAME', 'strapi'),
+          user: env('DATABASE_USERNAME', 'strapi'),
+          password: token,
+          schema: env('DATABASE_SCHEMA', 'public'),
+          ssl: true,
+          expirationChecker: () => expiresAt - Date.now() <= 5 * 60 * 1000,
+        };
+      },
+    },
+  };
+};
+```
+
+---
 Language: DOCKERFILE
 File path: ./config/database.js
 
@@ -16540,7 +16754,7 @@ Description: environment (string): Sets the environment you want to store the da
 (Source: https://docs.strapi.io/cms/configurations/database#get-settings)
 
 Language: JavaScript
-File path: ./config/database.js
+File path: N/A
 
 ```js
 // strapi.store(object).get(object);
@@ -17299,13 +17513,13 @@ Source: https://docs.strapi.io/cms/configurations/features
 Description: (optional) If the server is running, stop it with Ctrl-C.
 (Source: https://docs.strapi.io/cms/configurations/features#enabling-a-future-flag)
 
-Language: TypeScript
-File path: /config/features.ts
+Language: JavaScript
+File path: /config/features.js
 
-```ts
+```js
   module.exports = ({ env }) => ({
     future: {
-      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
+      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
     },
   })
 ```
@@ -17315,7 +17529,7 @@ Language: DOTENV
 File path: .env
 
 ```dotenv
-  STRAPI_FUTURE_ADMIN_TOKENS=true
+  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
 ```
 
 ---
@@ -17323,11 +17537,11 @@ Language: TypeScript
 File path: /config/features.ts
 
 ```ts
-  export default {
+  export default ({ env }) => ({
     future: {
-      adminTokens: env.bool('STRAPI_FUTURE_ADMIN_TOKENS', false),
+      experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
     },
-  };
+  });
 ```
 
 ---
@@ -17335,7 +17549,7 @@ Language: DOTENV
 File path: .env
 
 ```dotenv
-  STRAPI_FUTURE_ADMIN_TOKENS=true
+  STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
 ```
 
 Language: Bash
@@ -19646,8 +19860,7 @@ module.exports = [
   {
     name: 'strapi::public',
     config: {
-      defer: true,
-      index: env('INDEX_PATH', 'index-dev.html')
+      maxAge: 86400000, // 1 day in milliseconds
     },
   },
   // ...
@@ -19665,8 +19878,7 @@ export default [
   {
     name: 'strapi::public',
     config: {
-      defer: true,
-      index: env('INDEX_PATH', 'index-dev.html')
+      maxAge: 86400000, // 1 day in milliseconds
     },
   },
   // ...
@@ -23233,6 +23445,7 @@ module.exports = ({ env })=>({
         allowedTypes: ['image/*', 'application/*'],
         deniedTypes: ['application/x-sh', 'application/x-dosexec']
       },
+      concurrentUploadSize: 5,
     },
   },
 });
@@ -23267,6 +23480,7 @@ export default () => ({
         allowedTypes: ['image/*', 'application/*'],
         deniedTypes: ['application/x-sh', 'application/x-dosexec']
       },
+      concurrentUploadSize: 5,
     },
   },
 })
@@ -23996,6 +24210,229 @@ export default async function fetchContentType(
     throw error;
   }
 }
+```
+
+
+
+# MCP server
+Source: https://docs.strapi.io/cms/features/strapi-mcp-server
+
+## Strapi code-based configuration
+Description: Enable the MCP server by adding the mcp object to the server configuration file:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#strapi-code-based-configuration)
+
+Language: JavaScript
+File path: config/server.js
+
+```js
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+  // highlight-start
+  mcp: {
+    enabled: true,
+  },
+  // highlight-end
+});
+```
+
+---
+Language: TypeScript
+File path: config/server.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+  // highlight-start
+  mcp: {
+    enabled: true,
+  },
+  // highlight-end
+});
+export default config;
+```
+
+
+## Advanced options
+Description: | Option | Type | Default | Description | |--------|------|---------|-------------| | enabled | Boolean | false | Enable or disable the MCP server.
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#advanced-options)
+
+Language: JavaScript
+File path: config/server.js
+
+```js
+mcp: {
+  enabled: true,
+  connectTimeoutMs: 10000, // 10 seconds
+  requestTimeoutMs: 120000, // 2 minutes
+},
+```
+
+
+## Connecting Claude Desktop
+Description: Add the Strapi MCP server to Claude's configuration file, as in the following example, replacing YOURADMINTOKEN with the Admin token value copied from the Strapi admin panel configuration:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-claude-desktop)
+
+Language: JSON
+File path: claude_desktop_config.json
+
+```json
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://localhost:1337/mcp",
+        "--header",
+        "Authorization: Bearer YOUR_ADMIN_TOKEN"
+      ]
+    }
+  }
+}
+```
+
+
+## Connecting Claude Code
+Description: Run the following command, replacing YOURADMINTOKEN with the Admin token value copied from the Strapi admin panel configuration:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-claude-code)
+
+Language: JavaScript
+File path: /Claude/claude_desktop_config.js
+
+```js
+claude mcp add strapi-mcp --transport http http://localhost:1337/mcp -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
+```
+
+
+## Connecting Cursor
+Description: Add the server to your .cursor/mcp.json file:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-cursor)
+
+Language: JSON
+File path: .cursor/mcp.json
+
+```json
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "type": "streamable-http",
+      "url": "http://localhost:1337/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
+      }
+    }
+  }
+}
+```
+
+
+## Connecting Windsurf
+Description: Add the server to your ~/.codeium/windsurf/mcp_config.json file:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#connecting-windsurf)
+
+Language: JSON
+File path: ~/.codeium/windsurf/mcp_config.json
+
+```json
+{
+  "mcpServers": {
+    "strapi-mcp": {
+      "serverUrl": "http://localhost:1337/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ADMIN_TOKEN"
+      }
+    }
+  }
+}
+```
+
+
+## Registering a custom tool
+Description: Use strapi.ai.mcp.registerTool() to expose a custom tool to AI clients:
+(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#registering-a-custom-tool)
+
+Language: JavaScript
+File path: src/plugins/my-plugin/strapi-server.js
+
+```js
+const { z } = require('@strapi/utils');
+
+module.exports = {
+  register({ strapi }) {
+    if (strapi.ai.mcp.isEnabled()) {
+      strapi.ai.mcp.registerTool({
+        name: 'my_custom_tool',
+        title: 'My Custom Tool',
+        description: 'A short description shown to the AI client.',
+        auth: {
+          // The session gate passes when the token satisfies ANY policy in the array.
+          policies: [{ action: 'plugin::my-plugin.my-action' }],
+        },
+        // resolveInputSchema and resolveOutputSchema are called per request,
+        // so they can narrow schemas based on the token's permissions.
+        resolveInputSchema: (context) =>
+          z.object({
+            message: z.string().describe('The message to echo.'),
+          }),
+        resolveOutputSchema: (context) =>
+          z.object({
+            result: z.string(),
+          }),
+        createHandler: (strapi, context) => async ({ args }) => ({
+          content: [{ type: 'text', text: args.message }],
+          structuredContent: { result: args.message },
+        }),
+      });
+    }
+  },
+};
+```
+
+---
+Language: TypeScript
+File path: src/plugins/my-plugin/strapi-server.ts
+
+```ts
+import { z } from '@strapi/utils';
+
+export default {
+  register({ strapi }) {
+    if (strapi.ai.mcp.isEnabled()) {
+      strapi.ai.mcp.registerTool({
+        name: 'my_custom_tool',
+        title: 'My Custom Tool',
+        description: 'A short description shown to the AI client.',
+        auth: {
+          // The session gate passes when the token satisfies ANY policy in the array.
+          policies: [{ action: 'plugin::my-plugin.my-action' }],
+        },
+        resolveInputSchema: (context) =>
+          z.object({
+            message: z.string().describe('The message to echo.'),
+          }),
+        resolveOutputSchema: (context) =>
+          z.object({
+            result: z.string(),
+          }),
+        createHandler: (strapi, context) => async ({ args }) => ({
+          content: [{ type: 'text', text: args.message }],
+          structuredContent: { result: args.message },
+        }),
+      });
+    }
+  },
+};
 ```
 
 
@@ -25154,43 +25591,34 @@ npm run develop
 # Docker
 Source: https://docs.strapi.io/cms/installation/docker
 
-## Development Dockerfile
-Description: Sample Dockerfile:
-(Source: https://docs.strapi.io/cms/installation/docker#development-dockerfile)
+## Create a .dockerignore file
+Description: Create a .dockerignore file at the root of your Strapi project:
+(Source: https://docs.strapi.io/cms/installation/docker#create-a-dockerignore-file)
 
-Language: DOCKERFILE
-File path: ./Dockerfile
+Language: TXT
+File path: ./.dockerignore
 
-```dockerfile
-FROM node:22-alpine
-# Installing libvips-dev for sharp Compatibility
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
-ARG NODE_ENV=development
-ENV NODE_ENV=${NODE_ENV}
-
-WORKDIR /opt/
-COPY package.json yarn.lock ./
-RUN yarn global add node-gyp
-RUN yarn config set network-timeout 600000 -g && yarn install --frozen-lockfile
-ENV PATH=/opt/node_modules/.bin:$PATH
-
-WORKDIR /opt/app
-COPY . .
-RUN chown -R node:node /opt/app
-USER node
-RUN ["yarn", "build"]
-EXPOSE 1337
-CMD ["yarn", "develop"]
+```txt
+node_modules/
+.tmp/
+.cache/
+.git/
+build/
+.env
 ```
 
----
+
+## Create the Dockerfile
+Description: The following Dockerfile can be used to build a non-production Docker image for a Strapi project.
+(Source: https://docs.strapi.io/cms/installation/docker#create-the-dockerfile)
+
 Language: DOCKERFILE
 File path: ./Dockerfile
 
 ```dockerfile
 FROM node:22-alpine
-# Installing libvips-dev for sharp Compatibility
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
+# Installing libvips-dev for sharp compatibility
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
 
@@ -25204,9 +25632,18 @@ WORKDIR /opt/app
 COPY . .
 RUN chown -R node:node /opt/app
 USER node
-RUN ["npm", "run", "build"]
 EXPOSE 1337
 CMD ["npm", "run", "develop"]
+```
+
+Language: DOCKERFILE
+File path: N/A
+
+```dockerfile
+RUN apk add --no-cache --virtual .build-deps \
+    build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git \
+    && npm ci \
+    && apk del .build-deps
 ```
 
 Language: DOCKERFILE
@@ -25218,197 +25655,209 @@ RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 ```
 
 
-## (Optional) Docker Compose
-Description: Sample docker-compose.yml:
-(Source: https://docs.strapi.io/cms/installation/docker#optional-docker-compose)
+## Set up environment variables
+Description: The following example contains placeholder values.
+(Source: https://docs.strapi.io/cms/installation/docker#set-up-environment-variables)
 
-Language: YAML
-File path: ./docker-compose.yml
+Language: DOTENV
+File path: ./.env
 
-```yaml
-services:
-  strapi:
-    container_name: strapi
-    build: .
-    image: strapi:latest
-    restart: unless-stopped
-    env_file: .env
-    environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT}
-      DATABASE_HOST: strapiDB
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      APP_KEYS: ${APP_KEYS}
-      NODE_ENV: ${NODE_ENV}
-    volumes:
-      - ./config:/opt/app/config
-      - ./src:/opt/app/src
-      - ./package.json:/opt/package.json
-      - ./yarn.lock:/opt/yarn.lock
-      - ./.env:/opt/app/.env
-      - ./public/uploads:/opt/app/public/uploads
-    ports:
-      - "1337:1337"
-    networks:
-      - strapi
-    depends_on:
-      - strapiDB
+```dotenv
+# Server
+HOST=0.0.0.0
+PORT=1337
 
-  strapiDB:
-    container_name: strapiDB
-    platform: linux/amd64 #for platform error on Apple M1 chips
-    restart: unless-stopped
-    env_file: .env
-    image: mysql:8.0
-    command: --default-authentication-plugin=mysql_native_password
-    environment:
-      MYSQL_USER: ${DATABASE_USERNAME}
-      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
-      MYSQL_DATABASE: ${DATABASE_NAME}
-    volumes:
-      - strapi-data:/var/lib/mysql
-      #- ./data:/var/lib/mysql # if you want to use a bind folder
-    ports:
-      - "3306:3306"
-    networks:
-      - strapi
+# Database
+# Use 'mysql' for MySQL or MariaDB, and change DATABASE_PORT to 3306
+DATABASE_CLIENT=postgres
+DATABASE_HOST=strapiDB
+DATABASE_PORT=5432
+DATABASE_NAME=strapi
+DATABASE_USERNAME=strapi
+DATABASE_PASSWORD=strapi
 
-volumes:
-  strapi-data:
+# Secrets
+APP_KEYS=toBeModified1,toBeModified2
+API_TOKEN_SALT=tobemodified
+ADMIN_JWT_SECRET=tobemodified
+TRANSFER_TOKEN_SALT=tobemodified
+JWT_SECRET=tobemodified
+ENCRYPTION_KEY=tobemodified
 
-networks:
-  strapi:
-    name: strapi
-    driver: bridge
+# Environment
+NODE_ENV=development
 ```
 
----
+
+## Add Docker Compose for the database
+Description: :::note For more information about Docker Compose and its commands, see the .
+(Source: https://docs.strapi.io/cms/installation/docker#add-docker-compose-for-the-database)
+
 Language: YAML
 File path: ./docker-compose.yml
 
 ```yaml
-version: "3"
 services:
   strapi:
     container_name: strapi
     build: .
     image: strapi:latest
     restart: unless-stopped
-    env_file: .env
-    environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT}
-      DATABASE_HOST: strapiDB
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      APP_KEYS: ${APP_KEYS}
-      NODE_ENV: ${NODE_ENV}
+    env_file: .env  # All variables from .env are injected into the container
     volumes:
       - ./config:/opt/app/config
       - ./src:/opt/app/src
       - ./package.json:/opt/package.json
-      - ./yarn.lock:/opt/yarn.lock
-      - ./.env:/opt/app/.env
+      - ./package-lock.json:/opt/package-lock.json
+      - ./.env:/opt/app/.env  # Needed because Strapi uses dotenv to read .env in development
       - ./public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
     networks:
       - strapi
     depends_on:
-      - strapiDB
+      strapiDB:
+        condition: service_healthy
 
   strapiDB:
     container_name: strapiDB
-    platform: linux/amd64 #for platform error on Apple M1 chips
+    # platform: linux/amd64  # Uncomment if you encounter platform errors on Apple Silicon
     restart: unless-stopped
-    env_file: .env
-    image: mariadb:latest
-    environment:
-      MYSQL_USER: ${DATABASE_USERNAME}
-      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
-      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
-      MYSQL_DATABASE: ${DATABASE_NAME}
-    volumes:
-      - strapi-data:/var/lib/mysql
-      #- ./data:/var/lib/mysql # if you want to use a bind folder
-    ports:
-      - "3306:3306"
-    networks:
-      - strapi
-
-volumes:
-  strapi-data:
-
-networks:
-  strapi:
-    name: strapi
-    driver: bridge
-```
-
----
-Language: YAML
-File path: ./docker-compose.yml
-
-```yaml
-version: "3"
-services:
-  strapi:
-    container_name: strapi
-    build: .
-    image: strapi:latest
-    restart: unless-stopped
-    env_file: .env
-    environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT}
-      DATABASE_HOST: strapiDB
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-      APP_KEYS: ${APP_KEYS}
-      NODE_ENV: ${NODE_ENV}
-    volumes:
-      - ./config:/opt/app/config
-      - ./src:/opt/app/src
-      - ./package.json:/opt/package.json
-      - ./yarn.lock:/opt/yarn.lock
-      - ./.env:/opt/app/.env
-      - ./public/uploads:/opt/app/public/uploads
-    ports:
-      - "1337:1337"
-    networks:
-      - strapi
-    depends_on:
-      - strapiDB
-
-  strapiDB:
-    container_name: strapiDB
-    platform: linux/amd64 #for platform error on Apple M1 chips
-    restart: unless-stopped
-    env_file: .env
-    image: postgres:16.0-alpine
+    image: postgres:16-alpine
     environment:
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
     volumes:
-      - strapi-data:/var/lib/postgresql/data/ #using a volume
+      - strapi-data:/var/lib/postgresql/data/
       #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
-
     ports:
-      - "5432:5432"
+      - "5432:5432"  # Exposed for local debugging tools; remove if not needed
     networks:
       - strapi
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  strapi-data:
+
+networks:
+  strapi:
+    name: strapi
+    driver: bridge
+```
+
+---
+Language: YAML
+File path: ./docker-compose.yml
+
+```yaml
+services:
+  strapi:
+    container_name: strapi
+    build: .
+    image: strapi:latest
+    restart: unless-stopped
+    env_file: .env  # All variables from .env are injected into the container
+    volumes:
+      - ./config:/opt/app/config
+      - ./src:/opt/app/src
+      - ./package.json:/opt/package.json
+      - ./package-lock.json:/opt/package-lock.json
+      - ./.env:/opt/app/.env  # Needed because Strapi uses dotenv to read .env in development
+      - ./public/uploads:/opt/app/public/uploads
+    ports:
+      - "1337:1337"
+    networks:
+      - strapi
+    depends_on:
+      strapiDB:
+        condition: service_healthy
+
+  strapiDB:
+    container_name: strapiDB
+    # platform: linux/amd64  # Uncomment if you encounter platform errors on Apple Silicon
+    restart: unless-stopped
+    image: mysql:8.4
+    environment:
+      MYSQL_USER: ${DATABASE_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - strapi-data:/var/lib/mysql
+      #- ./data:/var/lib/mysql # if you want to use a bind folder
+    ports:
+      - "3306:3306"  # Exposed for local debugging tools; remove if not needed
+    networks:
+      - strapi
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  strapi-data:
+
+networks:
+  strapi:
+    name: strapi
+    driver: bridge
+```
+
+---
+Language: YAML
+File path: ./docker-compose.yml
+
+```yaml
+services:
+  strapi:
+    container_name: strapi
+    build: .
+    image: strapi:latest
+    restart: unless-stopped
+    env_file: .env  # All variables from .env are injected into the container
+    volumes:
+      - ./config:/opt/app/config
+      - ./src:/opt/app/src
+      - ./package.json:/opt/package.json
+      - ./package-lock.json:/opt/package-lock.json
+      - ./.env:/opt/app/.env  # Needed because Strapi uses dotenv to read .env in development
+      - ./public/uploads:/opt/app/public/uploads
+    ports:
+      - "1337:1337"
+    networks:
+      - strapi
+    depends_on:
+      strapiDB:
+        condition: service_healthy
+
+  strapiDB:
+    container_name: strapiDB
+    # platform: linux/amd64  # Uncomment if you encounter platform errors on Apple Silicon
+    restart: unless-stopped
+    image: mariadb:11.4
+    environment:
+      MYSQL_USER: ${DATABASE_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - strapi-data:/var/lib/mysql
+      #- ./data:/var/lib/mysql # if you want to use a bind folder
+    ports:
+      - "3306:3306"  # Exposed for local debugging tools; remove if not needed
+    networks:
+      - strapi
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   strapi-data:
@@ -25420,95 +25869,210 @@ networks:
 ```
 
 
-## Production Dockerfile
-Description: The following Dockerfile can be used to build a production Docker image for a Strapi project.
-(Source: https://docs.strapi.io/cms/installation/docker#production-dockerfile)
-
-Language: DOCKERFILE
-File path: ./Dockerfile.prod
-
-```dockerfile
-# Creating multi-stage build for production
-FROM node:22-alpine AS build
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
-WORKDIR /opt/
-COPY package.json yarn.lock ./
-RUN yarn global add node-gyp
-RUN yarn config set network-timeout 600000 -g && yarn install --frozen-lockfile --production
-ENV PATH=/opt/node_modules/.bin:$PATH
-WORKDIR /opt/app
-COPY . .
-RUN yarn build
-
-# Creating final production image
-FROM node:22-alpine
-RUN apk add --no-cache vips-dev
-ENV NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-WORKDIR /opt/app
-COPY --from=build /opt/node_modules ./node_modules
-COPY --from=build /opt/app ./
-ENV PATH=/opt/node_modules/.bin:$PATH
-
-RUN chown -R node:node /opt/app
-USER node
-EXPOSE 1337
-CMD ["yarn", "start"]
-```
-
----
-Language: DOCKERFILE
-File path: ./Dockerfile.prod
-
-```dockerfile
-# Creating multi-stage build for production
-FROM node:22-alpine AS build
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
-WORKDIR /opt/
-COPY package.json package-lock.json ./
-RUN npm install -g node-gyp
-RUN npm config set fetch-retry-maxtimeout 600000 -g && npm ci --only=production
-ENV PATH=/opt/node_modules/.bin:$PATH
-WORKDIR /opt/app
-COPY . .
-RUN npm run build
-
-# Creating final production image
-FROM node:22-alpine
-RUN apk add --no-cache vips-dev
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-WORKDIR /opt/app
-COPY --from=build /opt/node_modules ./node_modules
-COPY --from=build /opt/app ./
-ENV PATH=/opt/node_modules/.bin:$PATH
-
-RUN chown -R node:node /opt/app
-USER node
-EXPOSE 1337
-CMD ["npm", "run", "start"]
-```
-
-
-## Building the production container
-Description: To build a production Docker image for a Strapi project, run the following command:
-(Source: https://docs.strapi.io/cms/installation/docker#building-the-production-container)
+## Build and run
+Description: Build and start all containers:
+(Source: https://docs.strapi.io/cms/installation/docker#build-and-run)
 
 Language: Bash
 File path: N/A
 
 ```bash
+    docker compose up --build
+```
+
+
+## Create the production Dockerfile
+Description: :::caution Do not set NODE_ENV=production before npm ci.
+(Source: https://docs.strapi.io/cms/installation/docker#create-the-production-dockerfile)
+
+Language: DOCKERFILE
+File path: ./Dockerfile.prod
+
+```dockerfile
+# Build stage
+FROM node:22-alpine AS build
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git > /dev/null 2>&1
+
+WORKDIR /opt/
+COPY package.json package-lock.json ./
+RUN npm install -g node-gyp
+RUN npm config set fetch-retry-maxtimeout 600000 -g && npm ci
+ENV PATH=/opt/node_modules/.bin:$PATH
+
+WORKDIR /opt/app
+COPY . .
+# Uncomment the following lines to set the admin panel URL at build time.
+# Without this, the admin panel defaults to localhost:1337.
+# ARG STRAPI_ADMIN_BACKEND_URL
+# ENV STRAPI_ADMIN_BACKEND_URL=${STRAPI_ADMIN_BACKEND_URL}
+ENV NODE_ENV=production
+RUN npm run build
+
+# Production stage
+FROM node:22-alpine
+RUN apk add --no-cache vips-dev
+ENV NODE_ENV=production
+
+WORKDIR /opt/
+COPY --from=build /opt/package.json /opt/package-lock.json ./
+RUN npm ci --omit=dev && npm cache clean --force  # --omit=dev replaces the deprecated --only=production
+ENV PATH=/opt/node_modules/.bin:$PATH
+
+WORKDIR /opt/app
+COPY --from=build /opt/app ./
+
+RUN chown -R node:node /opt/app
+USER node
+EXPOSE 1337
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:1337/_health || exit 1
+CMD ["npm", "run", "start"]
+```
+
+
+## Add Docker Compose for production
+Description: The following docker-compose.prod.yml is suitable for production deployments.
+(Source: https://docs.strapi.io/cms/installation/docker#add-docker-compose-for-production)
+
+Language: YAML
+File path: ./docker-compose.prod.yml
+
+```yaml
+services:
+  strapi:
+    container_name: strapi
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: strapi:latest
+    restart: always
+    env_file: .env
+    environment:
+      NODE_ENV: production  # Overrides the development value from .env
+    ports:
+      - "127.0.0.1:1337:1337"
+    networks:
+      - strapi
+    depends_on:
+      strapiDB:
+        condition: service_healthy
+
+  strapiDB:
+    container_name: strapiDB
+    restart: always
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - strapi-data:/var/lib/postgresql/data/
+    networks:
+      - strapi
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  strapi-data:
+
+networks:
+  strapi:
+    name: strapi
+    driver: bridge
+```
+
+
+## Build and publish
+Description: To build a production Docker image, run the following command:
+(Source: https://docs.strapi.io/cms/installation/docker#build-and-publish)
+
+Language: YAML
+File path: .prod.yml
+
+```yaml
 docker build \
-  --build-arg NODE_ENV=production \
-  # --build-arg STRAPI_URL=https://api.example.com \ # Uncomment to set the Strapi Server URL
-  -t mystrapiapp:latest \ # Replace with your image name
+  -t mystrapiapp:latest \
   -f Dockerfile.prod .
+```
+
+
+## Sharp and libvips errors
+Description: Verify that your Dockerfile installs the required Alpine packages:
+(Source: https://docs.strapi.io/cms/installation/docker#sharp-and-libvips-errors)
+
+Language: DOCKERFILE
+File path: N/A
+
+```dockerfile
+    RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev bash vips-dev git
+```
+
+Language: DOCKERFILE
+File path: N/A
+
+```dockerfile
+    FROM node:22-slim
+    RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+```
+
+Language: DOCKERFILE
+File path: N/A
+
+```dockerfile
+    ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
+```
+
+
+## Database connection issues
+Description: Set the connection pool min value to 0 in your database configuration, as Docker may kill idle connections:
+(Source: https://docs.strapi.io/cms/installation/docker#database-connection-issues)
+
+Language: JavaScript
+File path: ./config/database.js
+
+```js
+    module.exports = ({ env }) => ({
+      connection: {
+        client: env('DATABASE_CLIENT'),
+        // ...
+        pool: {
+          min: 0,
+          max: 10,
+        },
+      },
+    });
+```
+
+---
+Language: TypeScript
+File path: ./config/database.ts
+
+```ts
+    export default ({ env }) => ({
+      connection: {
+        client: env('DATABASE_CLIENT'),
+        // ...
+        pool: {
+          min: 0,
+          max: 10,
+        },
+      },
+    });
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+    pool: {
+      min: 0,
+      max: 10,
+      acquireTimeoutMillis: 60000,
+      idleTimeoutMillis: 30000,
+    },
 ```
 
 
@@ -26301,6 +26865,59 @@ import { Table } from '@strapi/strapi/admin';
 ## useCMEditViewDataManager
 Description: A lot of the internals have been reworked and split.
 (Source: https://docs.strapi.io/cms/migration/v4-to-v5/additional-resources/helper-plugin#usecmeditviewdatamanager)
+
+Language: JavaScript
+File path: plugins/my-plugin/admin/src/components/Preview.jsx
+
+```js
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
+
+export const Preview = () => {
+  const {
+    model,
+    collectionType,
+    id,
+    slug,
+    isCreatingEntry,
+    isSingleType,
+    hasDraftAndPublish,
+  } = useContentManagerContext();
+
+  return (
+    <section>
+      Editing <code>{slug}</code>
+      {isSingleType ? ' (single type)' : ' (collection type)'}
+    </section>
+  );
+};
+```
+
+---
+Language: TypeScript
+File path: plugins/my-plugin/admin/src/components/Preview.tsx
+
+```ts
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
+
+export const Preview = () => {
+  const {
+    model,
+    collectionType,
+    id,
+    slug,
+    isCreatingEntry,
+    isSingleType,
+    hasDraftAndPublish,
+  } = useContentManagerContext();
+
+  return (
+    <section>
+      Editing <code>{slug}</code>
+      {isSingleType ? ' (single type)' : ' (collection type)'}
+    </section>
+  );
+};
+```
 
 Language: JavaScript
 File path: N/A
@@ -27967,6 +28584,25 @@ File path: /github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resourc
     // …
   }
 }
+```
+
+
+
+# Upgrading to Strapi 5 - Introduction and FAQ
+Source: https://docs.strapi.io/cms/migration/v4-to-v5/introduction-and-faq
+
+## Frequently asked questions
+Description: Copy the versions from a fresh Strapi v4 project that matches your target release (for example run the official generator in a throwaway folder), then install and rebuild.
+(Source: https://docs.strapi.io/cms/migration/v4-to-v5/introduction-and-faq#frequently-asked-questions)
+
+Language: JSON
+File path: N/A
+
+```json
+"react": "^18.0.0",
+"react-dom": "^18.0.0",
+"react-router-dom": "5.3.4",
+"styled-components": "5.3.3"
 ```
 
 
@@ -30706,6 +31342,134 @@ interface BulkActionDescription {
    */
   variant?: ButtonProps['variant'];
 }
+```
+
+
+## addRichTextBlocks
+Description: :::note addRichTextBlocks must be called in the register() lifecycle function, not bootstrap().
+(Source: https://docs.strapi.io/cms/plugins-development/content-manager-apis#addrichtextblocks)
+
+Language: JavaScript
+File path: src/admin/app.js
+
+```js
+  export default {
+    register(app) {
+      app.getPlugin('content-manager').apis.addRichTextBlocks({
+        callout: {
+          renderElement: (props) => <Callout {...props.attributes}>{props.children}</Callout>,
+          icon: Information,
+          label: { id: 'my-plugin.blocks.callout', defaultMessage: 'Callout' },
+          matchNode: (node) => node.type === 'callout',
+          isInBlocksSelector: true,
+          handleConvert(editor) { /* use Slate Transforms to set node type */ },
+          snippets: [':::callout'],
+        },
+      });
+    },
+  };
+```
+
+---
+Language: TypeScript
+File path: src/admin/app.ts
+
+```ts
+  import type { ContentManagerPlugin } from '@strapi/content-manager/strapi-admin';
+
+  export default {
+    register(app) {
+      const apis =
+        app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+      apis.addRichTextBlocks({
+        callout: {
+          renderElement: (props) => <Callout {...props.attributes}>{props.children}</Callout>,
+          icon: Information,
+          label: { id: 'my-plugin.blocks.callout', defaultMessage: 'Callout' },
+          matchNode: (node) => node.type === 'callout',
+          isInBlocksSelector: true,
+          handleConvert(editor) { /* use Slate Transforms to set node type */ },
+          snippets: [':::callout'],
+        },
+      });
+    },
+  };
+```
+
+Language: JavaScript
+File path: src/admin/app.js
+
+```js
+  export default {
+    register(app) {
+      app.getPlugin('content-manager').apis.addRichTextBlocks((currentBlocks) => {
+        // Remove the built-in code block
+        const { code: _removed, ...rest } = currentBlocks;
+        return rest;
+      });
+    },
+  };
+```
+
+---
+Language: TypeScript
+File path: src/admin/app.ts
+
+```ts
+  import type {
+    ContentManagerPlugin,
+    RichTextBlocksStore,
+  } from '@strapi/content-manager/strapi-admin';
+
+  export default {
+    register(app) {
+      const apis =
+        app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+      apis.addRichTextBlocks((currentBlocks: RichTextBlocksStore) => {
+        const { code: _removed, ...rest } = currentBlocks;
+        return rest;
+      });
+    },
+  };
+```
+
+Language: JSX
+File path: N/A
+
+```jsx
+addRichTextBlocks(blocks: RichTextBlocksStore | ((currentBlocks: RichTextBlocksStore) => RichTextBlocksStore))
+```
+
+
+## Block definition
+Description: Key handlers each receive the Slate editor instance.
+(Source: https://docs.strapi.io/cms/plugins-development/content-manager-apis#block-definition)
+
+Language: JavaScript
+File path: N/A
+
+```js
+callout: {
+  // ...
+  handleEnterKey(editor) {
+    // Exit the block on Enter and insert a new paragraph below
+    Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] });
+  },
+  handleBackspaceKey(editor, event) {
+    // Convert back to paragraph when backspacing in an empty callout
+    Transforms.setNodes(editor, { type: 'paragraph' });
+  },
+  handleTab(editor) {
+    // Increase indentation level on Tab
+    Transforms.setNodes(editor, { indent: (editor.selection ? 1 : 0) });
+  },
+  handleShiftTab(editor) {
+    // Decrease indentation level on Shift+Tab
+    Transforms.setNodes(editor, { indent: 0 });
+  },
+},
 ```
 
 
