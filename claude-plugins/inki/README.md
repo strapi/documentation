@@ -77,6 +77,21 @@ Find out what already exists, where to put new content, what's missing.
 
 v0.1.0 — initial release. See `CHANGELOG.md` for details.
 
+## For plugin developers: refreshing changes
+
+When you edit a skill in this plugin and want to see your changes locally, the marketplace cache keeps the previously-installed version of each `SKILL.md` until you fully reinstall the plugin. `/plugin marketplace update` refreshes metadata (skill names and descriptions visible in the skill list) but does not refresh the content of skill files.
+
+To pick up local edits to skill files, run this 4-step cycle:
+
+```
+/plugin uninstall inki@strapi-documentation
+/plugin marketplace update strapi-documentation
+/plugin install inki@strapi-documentation
+/reload-plugins
+```
+
+This cycle is only needed during plugin development. End users running `/plugin install` get the latest version whenever they update the marketplace.
+
 ## License
 
 MIT (inherits from the strapi/documentation repository).
