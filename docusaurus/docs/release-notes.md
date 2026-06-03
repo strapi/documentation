@@ -45,11 +45,8 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 
 <br />
 
-#### CMS
-- [Add deleteMany method documentation to Document Service API](https://github.com/strapi/documentation/pull/3206)
-
-#### Repository
 - [Update Users & Permissions documentation](https://github.com/strapi/documentation/pull/3169)
+- [Add deleteMany method documentation to Document Service API](https://github.com/strapi/documentation/pull/3206)
 
 ### <Icon name='broom' /> Chore, fixes, typos, and other improvements
 
