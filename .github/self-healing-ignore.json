@@ -329,6 +329,21 @@
       "number": 25300,
       "reason": "Router: Internal frontend validation bug fix. Improves validation behavior when draft and publish is disabled, but does not expose new features, APIs, or change documented user-facing behavior.",
       "added": "2026-06-02"
+    },
+    {
+      "number": 26522,
+      "reason": "Router: Internal TypeScript type improvement. Changes EditFieldLayout[][] to ReadonlyArray<ReadonlyArray<EditFieldLayout>> and updates test fixtures. No user-facing API or behavior change. Affects only Content Manager component type definitions.",
+      "added": "2026-06-03"
+    },
+    {
+      "number": 26277,
+      "reason": "Router: Internal fetch client implementation fix. Aligns return type consistency between 204 no-content and SyntaxError fallback paths (both return { data: {} }). No user-facing API surface change.",
+      "added": "2026-06-03"
+    },
+    {
+      "number": 25913,
+      "reason": "Router: Internal GraphQL plugin refactor. Replaces unsafe 'as' type casting with discriminated unions for type safety. No user-facing feature or API change. Pure implementation improvement.",
+      "added": "2026-06-03"
     }
   ]
 }
