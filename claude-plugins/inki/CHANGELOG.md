@@ -20,3 +20,6 @@
 - 1-way root → plugin sync GitHub Action with drift guard.
 - Migration of prompts, templates, and authoring guides into `claude-plugins/inki/references/`.
 - Pointer README at the previous location for backward discoverability.
+
+<!-- smoke test 2026-06-03: validate /inki:commit /inki:push /inki:pr -->
+
