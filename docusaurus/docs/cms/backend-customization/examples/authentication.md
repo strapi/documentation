@@ -6,11 +6,7 @@ pagination_prev: cms/backend-customization/examples
 pagination_next: cms/backend-customization/examples/services-and-controllers
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Examples cookbook: Authentication flow with JWT
-
-<NotV5/>
 
 :::prerequisites
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/cms/backend-customization/examples).
@@ -99,7 +95,8 @@ const Login = () => {
         body: JSON.stringify(values),
       });
       /**
-       * Gets the JWT from the server response
+       * Gets the JWT from the server response.
+       * The actual response is { jwt, user }, but we only need the JWT here.
        */
       const { jwt } = await res.json();
       /**
@@ -145,7 +142,7 @@ const Login = () => {
 export default Login;
 ```
 
-## Enhanced Authentication with Session Management
+## Enhanced authentication with session management
 
 The above example uses the traditional JWT approach. For enhanced security, you can enable session management mode in your Users & Permissions configuration, which provides shorter-lived access tokens and refresh token functionality.
 
@@ -159,16 +156,18 @@ module.exports = ({ env }) => ({
     config: {
       jwtManagement: 'refresh',
       sessions: {
-        accessTokenLifespan: 604800, // 1 week (default)
-        maxRefreshTokenLifespan: 2592000, // 30 days
-        idleRefreshTokenLifespan: 604800, // 7 days
+        accessTokenLifespan: 600, // 10 minutes (default)
+        maxRefreshTokenLifespan: 2592000, // 30 days (default)
+        idleRefreshTokenLifespan: 1209600, // 14 days (default)
+        maxSessionLifespan: 86400, // 1 day (default)
+        idleSessionLifespan: 7200, // 2 hours (default)
       },
     },
   },
 });
 ```
 
-### Enhanced Login Component
+### Enhanced login component
 
 Here's an updated login component that handles both JWT and refresh tokens:
 
@@ -256,7 +255,6 @@ const EnhancedLogin = () => {
 };
 
 export default EnhancedLogin;
-```
 ```
 
 <br />

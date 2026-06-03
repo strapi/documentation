@@ -132,6 +132,9 @@ const sidebars = {
           type: 'doc',
           label: 'Users & Permissions',
           id: 'cms/features/users-permissions',
+          customProps: {
+            updated: true,
+          },
         },
         {
           type: 'category',
@@ -573,6 +576,7 @@ const sidebars = {
             'cms/plugins-development/server-controllers-services',
             'cms/plugins-development/server-policies-middlewares',
             'cms/plugins-development/server-getters-usage',
+            'cms/plugins-development/extend-mcp-server',
           ],
         },
         {

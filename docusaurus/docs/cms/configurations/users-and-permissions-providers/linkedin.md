@@ -3,7 +3,7 @@ title: LinkedIn provider setup for Users & Permissions
 description: Learn how to setup the LinkedIn provider for the Users & Permissions feature.
 displayed_sidebar: cmsSidebar
 tags:
-- users and permissions
+- users & permissions
 - providers
 - configuration
 - customization
@@ -17,6 +17,10 @@ The present page explains how to setup the LinkedIn provider for the [Users & Pe
 
 :::prerequisites
 You have read the [Users & Permissions providers documentation](/cms/configurations/users-and-permissions-providers).
+:::
+
+:::caution Deprecated scopes
+LinkedIn has migrated to "Sign In with LinkedIn using OpenID Connect," deprecating the `r_liteprofile` and `r_emailaddress` scopes. Strapi's built-in LinkedIn provider still uses these deprecated scopes and the legacy Profile API. The provider **may stop working** when LinkedIn fully removes legacy support. The setup steps below reflect the current Strapi implementation but the LinkedIn developer portal steps (product selection, scopes) should follow LinkedIn's [OpenID Connect documentation](https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin-v2).
 :::
 
 ## LinkedIn configuration
@@ -37,7 +41,7 @@ The use of `ngrok` is not needed.
 6. Fill the information:
    - **Authorized redirect URL**: `http://localhost:1337/api/connect/linkedin/callback`
 7. On the app page click on **Products** tab.
-8. Select `Sign In with LinkedIn` from the product list to enable it.
+8. Select `Sign In with LinkedIn using OpenID Connect` from the product list to enable it.
 
 ## Strapi configuration
 

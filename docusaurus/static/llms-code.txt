@@ -2622,6 +2622,33 @@ Language: JavaScript
 File path: N/A
 
 ```js
+await strapi.documents('api::restaurant.restaurant').deleteMany({
+  filters: {
+    city: {
+      name: {
+        $eq: 'New York'
+      }
+    }
+  }
+})
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  documentId: "multiple_documents",
+  entries: 3
+}
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
 await strapi.documents('api::restaurant.restaurant').publish({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
 });
@@ -11560,7 +11587,8 @@ const Login = () => {
         body: JSON.stringify(values),
       });
       /**
-       * Gets the JWT from the server response
+       * Gets the JWT from the server response.
+       * The actual response is { jwt, user }, but we only need the JWT here.
        */
       const { jwt } = await res.json();
       /**
@@ -11620,9 +11648,11 @@ module.exports = ({ env }) => ({
     config: {
       jwtManagement: 'refresh',
       sessions: {
-        accessTokenLifespan: 604800, // 1 week (default)
-        maxRefreshTokenLifespan: 2592000, // 30 days
-        idleRefreshTokenLifespan: 604800, // 7 days
+        accessTokenLifespan: 600, // 10 minutes (default)
+        maxRefreshTokenLifespan: 2592000, // 30 days (default)
+        idleRefreshTokenLifespan: 1209600, // 14 days (default)
+        maxSessionLifespan: 86400, // 1 day (default)
+        idleSessionLifespan: 7200, // 2 hours (default)
       },
     },
   },
@@ -11630,7 +11660,7 @@ module.exports = ({ env }) => ({
 ```
 
 
-## Enhanced Login Component
+## Enhanced login component
 Description: Here's an updated login component that handles both JWT and refresh tokens:
 (Source: https://docs.strapi.io/cms/backend-customization/examples/authentication#enhanced-login-component)
 
@@ -24328,84 +24358,6 @@ File path: ~/.codeium/windsurf/mcp_config.json
 ```
 
 
-## Registering a custom tool
-Description: Use strapi.ai.mcp.registerTool() to expose a custom tool to AI clients:
-(Source: https://docs.strapi.io/cms/features/strapi-mcp-server#registering-a-custom-tool)
-
-Language: JavaScript
-File path: src/plugins/my-plugin/strapi-server.js
-
-```js
-const { z } = require('@strapi/utils');
-
-module.exports = {
-  register({ strapi }) {
-    if (strapi.ai.mcp.isEnabled()) {
-      strapi.ai.mcp.registerTool({
-        name: 'my_custom_tool',
-        title: 'My Custom Tool',
-        description: 'A short description shown to the AI client.',
-        auth: {
-          // The session gate passes when the token satisfies ANY policy in the array.
-          policies: [{ action: 'plugin::my-plugin.my-action' }],
-        },
-        // resolveInputSchema and resolveOutputSchema are called per request,
-        // so they can narrow schemas based on the token's permissions.
-        resolveInputSchema: (context) =>
-          z.object({
-            message: z.string().describe('The message to echo.'),
-          }),
-        resolveOutputSchema: (context) =>
-          z.object({
-            result: z.string(),
-          }),
-        createHandler: (strapi, context) => async ({ args }) => ({
-          content: [{ type: 'text', text: args.message }],
-          structuredContent: { result: args.message },
-        }),
-      });
-    }
-  },
-};
-```
-
----
-Language: TypeScript
-File path: src/plugins/my-plugin/strapi-server.ts
-
-```ts
-import { z } from '@strapi/utils';
-
-export default {
-  register({ strapi }) {
-    if (strapi.ai.mcp.isEnabled()) {
-      strapi.ai.mcp.registerTool({
-        name: 'my_custom_tool',
-        title: 'My Custom Tool',
-        description: 'A short description shown to the AI client.',
-        auth: {
-          // The session gate passes when the token satisfies ANY policy in the array.
-          policies: [{ action: 'plugin::my-plugin.my-action' }],
-        },
-        resolveInputSchema: (context) =>
-          z.object({
-            message: z.string().describe('The message to echo.'),
-          }),
-        resolveOutputSchema: (context) =>
-          z.object({
-            result: z.string(),
-          }),
-        createHandler: (strapi, context) => async ({ args }) => ({
-          content: [{ type: 'text', text: args.message }],
-          structuredContent: { result: args.message },
-        }),
-      });
-    }
-  },
-};
-```
-
-
 
 # Users & Permissions
 Source: https://docs.strapi.io/cms/features/users-permissions
@@ -24425,9 +24377,11 @@ module.exports = ({ env }) => ({
     config: {
       jwtManagement: 'refresh',
       sessions: {
-        accessTokenLifespan: 604800, // 1 week (default)
-        maxRefreshTokenLifespan: 2592000, // 30 days
-        idleRefreshTokenLifespan: 604800, // 7 days
+        accessTokenLifespan: 600, // 10 minutes (default)
+        maxRefreshTokenLifespan: 2592000, // 30 days (default)
+        idleRefreshTokenLifespan: 1209600, // 14 days (default)
+        maxSessionLifespan: 86400, // 1 day (default)
+        idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
         cookie: {
           name: 'strapi_up_refresh',
@@ -24454,9 +24408,11 @@ export default ({ env }) => ({
     config: {
       jwtManagement: 'refresh',
       sessions: {
-        accessTokenLifespan: 604800, // 1 week (default)
-        maxRefreshTokenLifespan: 2592000, // 30 days
-        idleRefreshTokenLifespan: 604800, // 7 days
+        accessTokenLifespan: 600, // 10 minutes (default)
+        maxRefreshTokenLifespan: 2592000, // 30 days (default)
+        idleRefreshTokenLifespan: 1209600, // 14 days (default)
+        maxSessionLifespan: 86400, // 1 day (default)
+        idleSessionLifespan: 7200, // 2 hours (default)
         httpOnly: false, // Set to true for HTTP-only cookies
         cookie: {
           name: 'strapi_up_refresh',
@@ -24480,7 +24436,7 @@ module.exports = ({ env }) => ({
     config: {
       jwtManagement: 'legacy-support',
       jwt: {
-        expiresIn: '7d', // Traditional JWT expiry
+        expiresIn: '30d', // Traditional JWT expiry
       },
     },
   },
@@ -24529,7 +24485,7 @@ export default ({ env }) => ({
 
 
 ## Rate limiting configuration
-Description: | ratelimit | Settings to customize the rate limiting of the authentications and registration endpoints | object | {} | | ratelimit.enabled | Enable or disable the rate limiter | boolean | true | | ratelimit.interval | Time window for requests to be considered as part of the same rate limiting bucket | object | { min: 5 } | | ratelimit.max | Maximum number of requests allowed in the time window | integer | 5 | | ratelimit.prefixKey | Prefix for the rate limiting key | string | ${userIdentifier}:${requestPath}:${ctx.request.ip} |
+Description: | ratelimit | Settings to customize the rate limiting of the authentications and registration endpoints | object | {} | | ratelimit.enabled | Enable or disable the rate limiter | boolean | true | | ratelimit.interval | Time window for requests to be considered as part of the same rate limiting bucket (in milliseconds) | integer | 60000 (1 minute) | | ratelimit.max | Maximum number of requests allowed in the time window | integer | 10 | | ratelimit.prefixKey | Prefix for the rate limiting key | string | ${userIdentifier}:${requestPath}:${ctx.request.ip} |
 (Source: https://docs.strapi.io/cms/features/users-permissions#rate-limiting-configuration)
 
 Language: JavaScript
@@ -24543,8 +24499,8 @@ module.exports = ({ env }) => ({
     config: {
       ratelimit: {
         enabled: true,
-        interval: { min: 5 },
-        max: 5,
+        interval: 60000, // 1 minute
+        max: 10,
       },
     },
   },
@@ -24564,8 +24520,8 @@ export default ({ env }) => ({
     config: {
       ratelimit: {
         enabled: true,
-        interval: { min: 5 },
-        max: 5,
+        interval: 60000, // 1 minute
+        max: 10,
       },
     },
   },
@@ -24575,7 +24531,7 @@ export default ({ env }) => ({
 
 
 ## Security configuration
-Description: By default you can set a JWT_SECRET environment variable and it will be used as secret.
+Description: If you want to use a different environment variable, you can update the configuration file.
 (Source: https://docs.strapi.io/cms/features/users-permissions#security-configuration)
 
 Language: JavaScript
@@ -24636,296 +24592,8 @@ File path: /config/plugins.js|ts
 ```
 
 
-## Session management endpoints
-Description: Code example from "Session management endpoints"
-(Source: https://docs.strapi.io/cms/features/users-permissions#session-management-endpoints)
-
-Language: JavaScript
-File path: N/A
-
-```
-curl -X POST http://localhost:1337/api/auth/refresh \
-  -H "Content-Type: application/json" \
-  -d '{
-    "refreshToken": "your-refresh-token"
-  }'
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  "jwt": "your-new-access-token"
-}
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-curl -X POST http://localhost:1337/api/auth/logout \
-  -H "Authorization: Bearer your-access-token"
-```
-
-
-## Get the authenticated user
-Description: Code example from "Get the authenticated user"
-(Source: https://docs.strapi.io/cms/features/users-permissions#get-the-authenticated-user)
-
-Language: Bash
-File path: N/A
-
-```bash
-curl -X GET http://localhost:1337/api/users/me \
-  -H "Authorization: Bearer your-access-token"
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  "id": 1,
-  "documentId": "abc123",
-  "username": "kai",
-  "email": "kai@strapi.io",
-  "provider": "local",
-  "confirmed": true,
-  "blocked": false,
-  "createdAt": "2024-01-15T09:00:00.000Z",
-  "updatedAt": "2024-01-15T09:00:00.000Z",
-  "publishedAt": "2024-01-15T09:00:00.000Z"
-}
-```
-
-
-## Find all users
-Description: Code example from "Find all users"
-(Source: https://docs.strapi.io/cms/features/users-permissions#find-all-users)
-
-Language: Bash
-File path: N/A
-
-```bash
-curl -X GET "http://localhost:1337/api/users?populate=role" \
-  -H "Authorization: Bearer your-access-token"
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-[
-  {
-    "id": 1,
-    "documentId": "abc123",
-    "username": "kai",
-    "email": "kai@strapi.io",
-    "provider": "local",
-    "confirmed": true,
-    "blocked": false,
-    "role": {
-      "id": 1,
-      "name": "Authenticated",
-      "description": "Default role given to authenticated user.",
-      "type": "authenticated",
-      "createdAt": "2024-01-01T00:00:00.000Z",
-      "updatedAt": "2024-01-01T00:00:00.000Z"
-    },
-    "createdAt": "2024-01-15T09:00:00.000Z",
-    "updatedAt": "2024-01-15T09:00:00.000Z",
-    "publishedAt": "2024-01-15T09:00:00.000Z"
-  }
-]
-```
-
-
-## Create a user
-Description: Code example from "Create a user"
-(Source: https://docs.strapi.io/cms/features/users-permissions#create-a-user)
-
-Language: Bash
-File path: N/A
-
-```bash
-curl -X POST http://localhost:1337/api/users \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-access-token" \
-  -d '{
-    "username": "newuser",
-    "email": "newuser@strapi.io",
-    "password": "Password123",
-    "role": 1,
-    "confirmed": true
-  }'
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  "id": 2,
-  "documentId": "def456",
-  "username": "newuser",
-  "email": "newuser@strapi.io",
-  "provider": "local",
-  "confirmed": true,
-  "blocked": false,
-  "createdAt": "2024-01-16T10:00:00.000Z",
-  "updatedAt": "2024-01-16T10:00:00.000Z",
-  "publishedAt": "2024-01-16T10:00:00.000Z"
-}
-```
-
-
-## Update a user
-Description: Code example from "Update a user"
-(Source: https://docs.strapi.io/cms/features/users-permissions#update-a-user)
-
-Language: Bash
-File path: N/A
-
-```bash
-curl -X PUT http://localhost:1337/api/users/2 \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer your-access-token" \
-  -d '{
-    "username": "updateduser"
-  }'
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  "id": 2,
-  "documentId": "def456",
-  "username": "updateduser",
-  "email": "newuser@strapi.io",
-  "provider": "local",
-  "confirmed": true,
-  "blocked": false,
-  "createdAt": "2024-01-16T10:00:00.000Z",
-  "updatedAt": "2024-01-17T11:00:00.000Z",
-  "publishedAt": "2024-01-16T10:00:00.000Z"
-}
-```
-
-
-## Delete a user
-Description: Code example from "Delete a user"
-(Source: https://docs.strapi.io/cms/features/users-permissions#delete-a-user)
-
-Language: Bash
-File path: N/A
-
-```bash
-curl -X DELETE http://localhost:1337/api/users/2 \
-  -H "Authorization: Bearer your-access-token"
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  "id": 2,
-  "documentId": "def456",
-  "username": "updateduser",
-  "email": "newuser@strapi.io",
-  "provider": "local",
-  "confirmed": true,
-  "blocked": false,
-  "createdAt": "2024-01-16T10:00:00.000Z",
-  "updatedAt": "2024-01-17T11:00:00.000Z",
-  "publishedAt": "2024-01-16T10:00:00.000Z"
-}
-```
-
-
-## Identifier
-Description: The identifier parameter sent with requests can be an email or username, as in the following examples:
-(Source: https://docs.strapi.io/cms/features/users-permissions#identifier)
-
-Language: JavaScript
-File path: N/A
-
-```js
-import axios from 'axios';
-
-// Request API.
-axios
-  .post('http://localhost:1337/api/auth/local', {
-    identifier: 'user@strapi.io',
-    password: 'strapiPassword',
-  })
-  .then(response => {
-    // Handle success.
-    console.log('Well done!');
-    console.log('User profile', response.data.user);
-    console.log('User token', response.data.jwt);
-  })
-  .catch(error => {
-    // Handle error.
-    console.log('An error occurred:', error.response);
-  });
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  "identifier": "user@strapi.io",
-  "password": "strapiPassword"
-}
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc2OTM4MTUwLCJleHAiOjE1Nzk1MzAxNTB9.UgsjjXkAZ-anD257BF7y1hbjuY3ogNceKfTAQtzDEsU",
-    "user": {
-        "id": 1,
-        "username": "user",
-        ...
-    }
-}
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", // Short-lived access token
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", // Long-lived refresh token
-    "user": {
-        "id": 1,
-        "username": "user",
-        ...
-    }
-}
-```
-
-
 ## Token usage
-Description: The token variable is the data.jwt received when logging in or registering.
+Description: The jwt received when logging in or registering may then be used for making permission-restricted API requests.
 (Source: https://docs.strapi.io/cms/features/users-permissions#token-usage)
 
 Language: JavaScript
@@ -24938,7 +24606,7 @@ const token = 'YOUR_TOKEN_HERE';
 
 // Request API.
 axios
-  .get('http://localhost:1337/posts', {
+  .get('http://localhost:1337/api/posts', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -24954,39 +24622,8 @@ axios
 ```
 
 
-## User registration
-Description: Creating a new user in the database with a default role as 'authenticated' can be done as in the following example:
-(Source: https://docs.strapi.io/cms/features/users-permissions#user-registration)
-
-Language: JavaScript
-File path: N/A
-
-```js
-import axios from 'axios';
-
-// Request API.
-// Add your own code here to customize or restrict how the public can register new users.
-axios
-  .post('http://localhost:1337/api/auth/local/register', {
-    username: 'Strapi user',
-    email: 'user@strapi.io',
-    password: 'strapiPassword',
-  })
-  .then(response => {
-    // Handle success.
-    console.log('Well done!');
-    console.log('User profile', response.data.user);
-    console.log('User token', response.data.jwt);
-  })
-  .catch(error => {
-    // Handle error.
-    console.log('An error occurred:', error.response);
-  });
-```
-
-
 ## User object in Strapi context
-Description: The authenticated user object is a property of ctx.state.
+Description: The authenticated user object is a property of ctx.state, as shown in the following example:
 (Source: https://docs.strapi.io/cms/features/users-permissions#user-object-in-strapi-context)
 
 Language: JavaScript
@@ -25006,6 +24643,796 @@ create: async ctx => {
   // Send 201 `created`
   ctx.created(data);
 };
+```
+
+
+
+# Users & Permissions GraphQL API
+Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api
+
+## Login
+Description: The login mutation authenticates a user and returns a JWT:
+(Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#login)
+
+Language: DOCKERFILE
+File path: N/A
+
+```dockerfile
+mutation {
+  login(input: { identifier: "user@example.com", password: "yourPassword" }) {
+    jwt
+    user {
+      id
+      documentId
+      username
+      email
+      confirmed
+      blocked
+    }
+  }
+}
+```
+
+
+## Register
+Description: The register mutation creates a new user account and returns a JWT:
+(Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#register)
+
+Language: DOCKERFILE
+File path: N/A
+
+```dockerfile
+mutation {
+  register(input: { username: "newuser", email: "new@example.com", password: "Password123!" }) {
+    jwt
+    user {
+      id
+      documentId
+      username
+      email
+    }
+  }
+}
+```
+
+
+## Forgot password
+Description: The forgotPassword mutation sends a password reset email to the user:
+(Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#forgot-password)
+
+Language: GRAPHQL
+File path: N/A
+
+```graphql
+mutation {
+  forgotPassword(email: "user@example.com") {
+    ok
+  }
+}
+```
+
+
+## Reset password
+Description: The resetPassword mutation sets a new password using the token received by email:
+(Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#reset-password)
+
+Language: DOCKERFILE
+File path: N/A
+
+```dockerfile
+mutation {
+  resetPassword(code: "resetTokenFromEmail", password: "NewPassword123!", passwordConfirmation: "NewPassword123!") {
+    jwt
+    user {
+      id
+      username
+      email
+    }
+  }
+}
+```
+
+
+## Change password
+Description: The changePassword mutation updates the password for the currently authenticated user:
+(Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#change-password)
+
+Language: DOCKERFILE
+File path: N/A
+
+```dockerfile
+mutation {
+  changePassword(currentPassword: "OldPassword123!", password: "NewPassword456!", passwordConfirmation: "NewPassword456!") {
+    jwt
+    user {
+      id
+      username
+      email
+    }
+  }
+}
+```
+
+
+## Email confirmation
+Description: The emailConfirmation mutation confirms a user's email address using the token received by email:
+(Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#email-confirmation)
+
+Language: DOCKERFILE
+File path: N/A
+
+```dockerfile
+mutation {
+  emailConfirmation(confirmation: "confirmationTokenFromEmail") {
+    jwt
+    user {
+      id
+      username
+      email
+      confirmed
+    }
+  }
+}
+```
+
+
+## Get authenticated user (me query)
+Description: The me query returns the profile of the currently authenticated user:
+(Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#get-authenticated-user-me-query)
+
+Language: GRAPHQL
+File path: N/A
+
+```graphql
+query {
+  me {
+    id
+    documentId
+    username
+    email
+    confirmed
+    blocked
+    role {
+      id
+      name
+      description
+      type
+    }
+  }
+}
+```
+
+
+## Create a user
+Description: The createUsersPermissionsUser mutation creates a new user record:
+(Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#create-a-user)
+
+Language: GRAPHQL
+File path: N/A
+
+```graphql
+mutation {
+  createUsersPermissionsUser(data: { username: "newuser", email: "new@example.com", password: "Password123!" }) {
+    data {
+      documentId
+      username
+      email
+    }
+  }
+}
+```
+
+
+## Update a user
+Description: The updateUsersPermissionsUser mutation updates an existing user record:
+(Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#update-a-user)
+
+Language: GRAPHQL
+File path: N/A
+
+```graphql
+mutation {
+  updateUsersPermissionsUser(id: "1", data: { username: "updatedname" }) {
+    data {
+      documentId
+      username
+      email
+    }
+  }
+}
+```
+
+
+## Delete a user
+Description: The deleteUsersPermissionsUser mutation removes a user record:
+(Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#delete-a-user)
+
+Language: GRAPHQL
+File path: N/A
+
+```graphql
+mutation {
+  deleteUsersPermissionsUser(id: "1") {
+    data {
+      documentId
+      username
+    }
+  }
+}
+```
+
+
+## Create a role
+Description: The createUsersPermissionsRole mutation creates a new role:
+(Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#create-a-role)
+
+Language: GRAPHQL
+File path: N/A
+
+```graphql
+mutation {
+  createUsersPermissionsRole(data: { name: "Editor", description: "Can edit content" }) {
+    ok
+  }
+}
+```
+
+
+## Update a role
+Description: The updateUsersPermissionsRole mutation updates an existing role:
+(Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#update-a-role)
+
+Language: GRAPHQL
+File path: N/A
+
+```graphql
+mutation {
+  updateUsersPermissionsRole(id: "1", data: { name: "Senior Editor", description: "Can edit and publish" }) {
+    ok
+  }
+}
+```
+
+
+## Delete a role
+Description: The deleteUsersPermissionsRole mutation removes a role:
+(Source: https://docs.strapi.io/cms/features/users-permissions/graphql-api#delete-a-role)
+
+Language: GRAPHQL
+File path: N/A
+
+```graphql
+mutation {
+  deleteUsersPermissionsRole(id: "3") {
+    ok
+  }
+}
+```
+
+
+
+# Users & Permissions REST API
+Source: https://docs.strapi.io/cms/features/users-permissions/rest-api
+
+## Login
+Description: Code example from "Login"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#login)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/local \
+  -H "Content-Type: application/json" \
+  -d '{"identifier": "user@example.com", "password": "yourPassword"}'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "documentId": "x74detpqybxw0bn6ormua5g2",
+    "username": "testuser1",
+    "email": "user@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
+}
+```
+
+
+## Register
+Description: Code example from "Register"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#register)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/local/register \
+  -H "Content-Type: application/json" \
+  -d '{"username": "newuser", "email": "newuser@example.com", "password": "Password123!"}'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 2,
+    "documentId": "xjpaytstw1gm7wdfoc6c2k13",
+    "username": "newuser",
+    "email": "newuser@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
+}
+```
+
+
+## Forgot password
+Description: Code example from "Forgot password"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#forgot-password)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/forgot-password \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com"}'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "ok": true
+}
+```
+
+
+## Reset password
+Description: Code example from "Reset password"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#reset-password)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/reset-password \
+  -H "Content-Type: application/json" \
+  -d '{"code": "resetTokenFromEmail", "password": "NewPassword123!", "passwordConfirmation": "NewPassword123!"}'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "documentId": "x74detpqybxw0bn6ormua5g2",
+    "username": "testuser1",
+    "email": "user@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
+}
+```
+
+
+## Change password
+Description: Code example from "Change password"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#change-password)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/change-password \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"currentPassword": "OldPassword123!", "password": "NewPassword456!", "passwordConfirmation": "NewPassword456!"}'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "documentId": "x74detpqybxw0bn6ormua5g2",
+    "username": "testuser1",
+    "email": "user@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
+}
+```
+
+
+## Email confirmation
+Description: Code example from "Email confirmation"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#email-confirmation)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -G http://localhost:1337/api/auth/email-confirmation \
+  --data-urlencode "confirmation=confirmationTokenHere"
+```
+
+
+## Send email confirmation
+Description: Code example from "Send email confirmation"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#send-email-confirmation)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/send-email-confirmation \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com"}'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "email": "user@example.com",
+  "sent": true
+}
+```
+
+
+## Refresh token
+Description: Code example from "Refresh token"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#refresh-token)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d '{"refreshToken": "yourRefreshToken"}'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "jwt": "newAccessToken",
+  "refreshToken": "newRefreshToken"
+}
+```
+
+
+## Logout
+Description: Code example from "Logout"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#logout)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/logout \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "ok": true
+}
+```
+
+
+## Get current user
+Description: Code example from "Get current user"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#get-current-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users/me \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "id": 1,
+  "documentId": "x74detpqybxw0bn6ormua5g2",
+  "username": "testuser1",
+  "email": "user@example.com",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-03-15T10:00:00.000Z",
+  "updatedAt": "2024-03-15T10:00:00.000Z",
+  "publishedAt": "2024-03-15T10:00:00.000Z"
+}
+```
+
+
+## List users
+Description: Code example from "List users"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#list-users)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+
+## Get a user
+Description: Code example from "Get a user"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#get-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users/1 \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+
+## Count users
+Description: Code example from "Count users"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#count-users)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users/count \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+42
+```
+
+
+## Create a user
+Description: Code example from "Create a user"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#create-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/users \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"username": "newuser", "email": "newuser@example.com", "password": "Password123!", "role": 1, "confirmed": true}'
+```
+
+
+## Update a user
+Description: Code example from "Update a user"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#update-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X PUT http://localhost:1337/api/users/1 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"username": "updateduser"}'
+```
+
+
+## Delete a user
+Description: Code example from "Delete a user"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#delete-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X DELETE http://localhost:1337/api/users/1 \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+
+## List roles
+Description: Code example from "List roles"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#list-roles)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users-permissions/roles \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "roles": [
+    {
+      "id": 1,
+      "documentId": "abcdefghijklmnop12345678",
+      "name": "Authenticated",
+      "description": "Default role given to authenticated user.",
+      "type": "authenticated",
+      "createdAt": "2024-03-15T10:00:00.000Z",
+      "updatedAt": "2024-03-15T10:00:00.000Z",
+      "publishedAt": "2024-03-15T10:00:00.000Z",
+      "nb_users": 2
+    },
+    {
+      "id": 2,
+      "documentId": "qrstuvwxyzabcdef98765432",
+      "name": "Public",
+      "description": "Default role given to unauthenticated user.",
+      "type": "public",
+      "createdAt": "2024-03-15T10:00:00.000Z",
+      "updatedAt": "2024-03-15T10:00:00.000Z",
+      "publishedAt": "2024-03-15T10:00:00.000Z",
+      "nb_users": 0
+    }
+  ]
+}
+```
+
+
+## Get a role
+Description: Code example from "Get a role"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#get-a-role)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users-permissions/roles/1 \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+
+## Create a role
+Description: Code example from "Create a role"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#create-a-role)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/users-permissions/roles \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"name": "Editor", "description": "Can edit content", "type": "editor"}'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "ok": true
+}
+```
+
+
+## Update a role
+Description: Code example from "Update a role"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#update-a-role)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X PUT http://localhost:1337/api/users-permissions/roles/1 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"description": "Updated description"}'
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "ok": true
+}
+```
+
+
+## Delete a role
+Description: Code example from "Delete a role"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#delete-a-role)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X DELETE http://localhost:1337/api/users-permissions/roles/3 \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "ok": true
+}
+```
+
+
+## List permissions
+Description: Code example from "List permissions"
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#list-permissions)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users-permissions/permissions \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
 
@@ -27739,6 +28166,30 @@ File path: N/A
   contentTypeSchemas: ContentManagerAppState['models'];
   fieldSizes: ContentManagerAppState['fieldSizes'];
 }
+```
+
+
+
+# The Users & Permissions plugin's register.allowedFields configuration option defaults to []
+Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/register-allowed-fields
+
+## Manual procedure
+Description: To allow additional fields on registration, update your plugin configuration:
+(Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/register-allowed-fields#manual-procedure)
+
+Language: JavaScript
+File path: config/plugins.js
+
+```js
+module.exports = {
+  'users-permissions': {
+    config: {
+      register: {
+        allowedFields: ['firstName', 'lastName'],
+      },
+    },
+  },
+};
 ```
 
 
@@ -31067,6 +31518,90 @@ export default {
   register(app) {},
   bootstrap() {},
   registerTrads({ locales }) {},
+};
+```
+
+
+
+# Extending the MCP server with plugins
+Source: https://docs.strapi.io/cms/plugins-development/extend-mcp-server
+
+## Registering a custom tool
+Description: Use strapi.ai.mcp.registerTool() to expose a custom tool to AI clients:
+(Source: https://docs.strapi.io/cms/plugins-development/extend-mcp-server#registering-a-custom-tool)
+
+Language: JavaScript
+File path: src/plugins/my-plugin/strapi-server.js
+
+```js
+const { z } = require('@strapi/utils');
+
+module.exports = {
+  register({ strapi }) {
+    if (strapi.ai.mcp.isEnabled()) {
+      strapi.ai.mcp.registerTool({
+        name: 'my_custom_tool',
+        title: 'My Custom Tool',
+        description: 'A short description shown to the AI client.',
+        auth: {
+          // The session gate passes when the token satisfies ANY policy in the array.
+          policies: [{ action: 'plugin::my-plugin.my-action' }],
+        },
+        // resolveInputSchema and resolveOutputSchema are called per request,
+        // so they can narrow schemas based on the token's permissions.
+        resolveInputSchema: (context) =>
+          z.object({
+            message: z.string().describe('The message to echo.'),
+          }),
+        resolveOutputSchema: (context) =>
+          z.object({
+            result: z.string(),
+          }),
+        createHandler: (strapi, context) => async ({ args }) => ({
+          content: [{ type: 'text', text: args.message }],
+          structuredContent: { result: args.message },
+        }),
+      });
+    }
+  },
+};
+```
+
+---
+Language: TypeScript
+File path: src/plugins/my-plugin/strapi-server.ts
+
+```ts
+import { z } from '@strapi/utils';
+
+export default {
+  register({ strapi }) {
+    if (strapi.ai.mcp.isEnabled()) {
+      strapi.ai.mcp.registerTool({
+        name: 'my_custom_tool',
+        title: 'My Custom Tool',
+        description: 'A short description shown to the AI client.',
+        auth: {
+          // The session gate passes when the token satisfies ANY policy in the array.
+          policies: [{ action: 'plugin::my-plugin.my-action' }],
+        },
+        // resolveInputSchema and resolveOutputSchema are called per request,
+        // so they can narrow schemas based on the token's permissions.
+        resolveInputSchema: (context) =>
+          z.object({
+            message: z.string().describe('The message to echo.'),
+          }),
+        resolveOutputSchema: (context) =>
+          z.object({
+            result: z.string(),
+          }),
+        createHandler: (strapi, context) => async ({ args }) => ({
+          content: [{ type: 'text', text: args.message }],
+          structuredContent: { result: args.message },
+        }),
+      });
+    }
+  },
 };
 ```
 

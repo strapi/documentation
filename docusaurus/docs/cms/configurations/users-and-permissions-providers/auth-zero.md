@@ -3,7 +3,7 @@ title: Auth0 provider setup for Users & Permissions
 description: Learn how to setup the Auth0 provider for the Users & Permissions feature.
 displayed_sidebar: cmsSidebar
 tags:
-- users and permissions
+- users & permissions
 - providers
 - configuration
 - customization
@@ -22,7 +22,7 @@ You have read the [Users & Permissions providers documentation](/cms/configurati
 ## Auth0 configuration
 
 :::note
-AWS Cognito accepts the `localhost` urls. <br/>
+Auth0 accepts the `localhost` URLs. <br/>
 The use of `ngrok` is not needed.
 :::
 

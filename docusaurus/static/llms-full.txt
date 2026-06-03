@@ -2564,6 +2564,25 @@ If no `locale` parameter is passed, it will delete only the default locale versi
 
  -->
 
+### `deleteMany()`
+
+Delete multiple documents matching filters and relation parameters.
+
+Syntax: `deleteMany(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
+
+#### Parameters
+
+| Parameter | Description | Default | Type |
+|-----------|-------------|---------|------|
+| [`locale`](/cms/api/document-service/locale#delete) | Locale version of documents to delete. | `null`<br/>(deletes only the default locale) | String, `'*'`, or `null` |
+| [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
+| [`fields`](/cms/api/document-service/fields#delete)   | [Select fields](/cms/api/document-service/fields#delete) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
+
+#### Example
+
+Delete multiple documents matching filters, including filters on related fields:
+
 ### `publish()`
 
 Publishes one or multiple locales of a document.
@@ -8897,7 +8916,7 @@ Custom fields extend Strapi’s capabilities by adding new types of fields to co
 
 ## Configuration
 
-Ready-made custom fields can be found on the [Marketplace](https://market.strapi.io/plugins?categories=Custom+fields). Once installed these, no other configuration is required, and you can start using them (see [usage](#usage)).
+Ready-made custom fields can be found on the [Marketplace](https://market.strapi.io/?categories=Custom+fields). Once installed these, no other configuration is required, and you can start using them (see [usage](#usage)).
 
 You can also develop your own custom field.
 
@@ -9907,7 +9926,7 @@ The MCP server exposes 2 categories of tools: content-type tools generated from 
 
 The tools generated differ depending on whether the content type is a collection type or a single type.
 
-**Collection types** generate up to 8 tools — 5 for CRUD operations and 3 for [Draft & Publish](/cms/features/draft-and-publish) actions:
+**Collection types** generate up to 8 tools: 5 for CRUD operations and 3 for [Draft & Publish](/cms/features/draft-and-publish) actions:
 
 | Tool | Action | Permission required | Description |
 |------|--------|-------------------|-------------|
@@ -10050,33 +10069,9 @@ The MCP server has the following limitations:
 - **Custom fields**: Custom fields registered via plugins are mapped to their underlying Strapi type. If the custom field registry is not populated when MCP tools are registered, the custom field falls back to an `unknown` type.
 - **Circular component references**: Components that reference themselves (directly or indirectly) fall back to an open `record<string, unknown>` schema at the point of the cycle, rather than an infinite recursive structure.
 
-## Plugin API
+### Plugin API
 
-Strapi plugins can register additional MCP tools, prompts, and resources through the `strapi.ai.mcp` service. All registrations must happen during the plugin's `register()` lifecycle phase, before the MCP server starts.
-
-### Registering a custom tool
-
-Use `strapi.ai.mcp.registerTool()` to expose a custom tool to AI clients:
-
-</Tabs>
-
-#### Tool definition options
-
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `name` | String | Yes | Unique tool name. Must be unique across all registered MCP tools. |
-| `title` | String | Yes | Human-readable title shown to the AI client. |
-| `description` | String | Yes | Short description of what the tool does. |
-| `auth` | Object | Yes (or `devModeOnly`) | Auth requirement. The session gate passes when the token satisfies **any** policy in the `policies` array. Each policy is `{ action, subject? }`. |
-| `devModeOnly` | Boolean | Yes (or `auth`) | Set to `true` to restrict the tool to development mode only (equivalent to the built-in `log` tool). |
-| `resolveInputSchema` | Function | No | Returns a Zod schema for the tool's input arguments. Called per request so RBAC constraints can be applied dynamically. Omit for tools with no input. |
-| `resolveOutputSchema` | Function | Yes | Returns a Zod schema for the tool's structured output. Called per request. |
-| `createHandler` | Function | Yes | Factory that returns the async tool handler. Receives the Strapi instance and per-request context (including `userAbility` and `user`). |
-| `telemetry` | Object | No | Optional analytics metadata: `{ source?: string; name?: string }`. Use `source` to identify the plugin and `name` to override the raw tool name in analytics events. |
-
-:::note
-`resolveInputSchema` and `resolveOutputSchema` are called once per incoming MCP request, so you can narrow schemas dynamically based on the token's permissions (via `context.userAbility`).
-:::
+Strapi plugins can register additional MCP tools through the `strapi.ai.mcp` service, so AI clients can trigger plugin-specific actions. Click on the card below to read more details:
 
 
 
@@ -10129,11 +10124,9 @@ By default this plugin comes with two templates: reset password and email addres
 
 ### Security configuration
 
-JWTs can be verified and trusted because the information is digitally signed. To sign a token a _secret_ is required. By default Strapi generates and stores it in `/src/extensions/users-permissions/config/jwt.js`.
+JWTs can be verified and trusted because the information is digitally signed. To sign a token, a _secret_ is required. By default, Strapi stores it as the `JWT_SECRET` environment variable in the `.env` file.
 
-This is useful during development but for security reasons it is recommended to set a custom token via an environment variable `JWT_SECRET` when deploying to production.
-
-By default you can set a `JWT_SECRET` environment variable and it will be used as secret. If you want to use another variable you can update the configuration file.
+If you want to use a different environment variable, you can update the configuration file.
 
 </Tabs>
 
@@ -10149,70 +10142,9 @@ The Users & Permissions feature can be used both via the admin panel, to create 
 
 **Path to use the feature:** 
 
-</ApiCall>
+### Token usage
 
-To log out of all sessions, send the following request:
-
-</ApiCall>
-
-#### User CRUD endpoints
-
-The Users & Permissions feature also exposes a set of endpoints for managing user records directly. These endpoints are separate from the authentication endpoints and allow you to create, read, update, and delete user entries:
-
-| Method | URL | Description |
-| ------ | --- | ----------- |
-| `GET` | `/api/users` | Find all users |
-| `GET` | `/api/users/me` | Get the currently authenticated user |
-| `GET` | `/api/users/:id` | Find a specific user by ID |
-| `GET` | `/api/users/count` | Get the total number of users |
-| `POST` | `/api/users` | Create a new user |
-| `PUT` | `/api/users/:id` | Update a user by ID |
-| `DELETE` | `/api/users/:id` | Delete a user by ID |
-
-:::note
-These endpoints are protected by the role-based permission system. To access them, enable the corresponding action (e.g., `find`, `findOne`, `create`, `update`, `destroy`, `me`, `count`) for the desired role in 
-
-</ApiCall>
-
-##### Find all users
-
-The `GET /api/users` endpoint returns a list of all users. [`populate` and `filters` parameters](/cms/api/rest/parameters) can be passed as query strings.
-
-</ApiCall>
-
-##### Create a user
-
-The `POST /api/users` endpoint creates a new user. Unlike `/api/auth/local/register`, this endpoint requires `create` permission for the Users & Permissions plugin.
-
-</ApiCall>
-
-##### Update a user
-
-The `PUT /api/users/:id` endpoint updates an existing user by ID.
-
-</ApiCall>
-
-##### Delete a user
-
-The `DELETE /api/users/:id` endpoint deletes a user by ID.
-
-</ApiCall>
-
-#### Identifier
-
-The `identifier` parameter sent with requests can be an email or username, as in the following examples:
-
-</Tabs>
-
-#### Token usage
-
-The `jwt` may then be used for making permission-restricted API requests. To make an API request as a user place the JWT into an `Authorization` header of the `GET` request.
-
-Any request without a token will assume the `public` role permissions by default. Modify the permissions of each user's role in the admin panel.
-
-Authentication failures return a `401 (unauthorized)` error.
-
-The `token` variable is the `data.jwt` received when logging in or registering.
+The `jwt` received when logging in or registering may then be used for making permission-restricted API requests. To make an API request as a user, place the JWT into an `Authorization` header of the request using the Bearer token pattern:
 
 ```js
 
@@ -10220,7 +10152,7 @@ const token = 'YOUR_TOKEN_HERE';
 
 // Request API.
 axios
-  .get('http://localhost:1337/posts', {
+  .get('http://localhost:1337/api/posts', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -10235,37 +10167,13 @@ axios
   });
 ```
 
-#### User registration
+Any request without a token will assume the `public` role permissions by default. Modify the permissions of each user's role in the admin panel. Authentication failures return a `401 (unauthorized)` error.
 
-Creating a new user in the database with a default role as 'authenticated' can be done as in the following example:
-
-```js
-
-// Request API.
-// Add your own code here to customize or restrict how the public can register new users.
-axios
-  .post('http://localhost:1337/api/auth/local/register', {
-    username: 'Strapi user',
-    email: 'user@strapi.io',
-    password: 'strapiPassword',
-  })
-  .then(response => {
-    // Handle success.
-    console.log('Well done!');
-    console.log('User profile', response.data.user);
-    console.log('User token', response.data.jwt);
-  })
-  .catch(error => {
-    // Handle error.
-    console.log('An error occurred:', error.response);
-  });
-```
-
-#### User object in Strapi context
+### User object in Strapi context
 
 The `user` object is available to successfully authenticated requests.
 
-The authenticated `user` object is a property of `ctx.state`.
+The authenticated `user` object is a property of `ctx.state`, as shown in the following example:
 
 ```js
 create: async ctx => {
@@ -11609,6 +11517,40 @@ Plugins can also be used to add [custom fields](/cms/features/custom-fields) to 
 
 :::strapi Additional resources
 The  can also include additional information useful while developing a Strapi plugin.
+:::
+
+
+
+# Extending the MCP server with plugins
+Source: https://docs.strapi.io/cms/plugins-development/extend-mcp-server
+
+# Extending the MCP server with plugins
+
+Strapi includes a built-in [Model Context Protocol (MCP) server](/cms/features/strapi-mcp-server) that exposes content management tools to AI clients. In addition to the content-type tools generated from your schema, plugins can register their own custom tools so AI clients can trigger plugin-specific actions.
+
+Registrations must happen while the MCP server is idle, before it starts. In Strapi's load lifecycle, register a tool during the plugin's `register()` or `bootstrap()` phase. Prefer `bootstrap()` when a tool depends on synced content-types, permissions, or database state.
+
+## Registering a custom tool
+
+Use `strapi.ai.mcp.registerTool()` to expose a custom tool to AI clients:
+
+</Tabs>
+
+### Tool definition options
+
+| Option | Type | Required | Description |
+|--------|------|----------|-------------|
+| `name` | String | Yes | Unique tool name. Must be unique across all registered MCP tools. |
+| `title` | String | Yes | Human-readable title shown to the AI client. |
+| `description` | String | Yes | Short description of what the tool does. |
+| `auth` | Object | Yes (or `devModeOnly`) | Auth requirement. The session gate passes when the token satisfies **any** policy in the `policies` array. Each policy is `{ action, subject? }`. |
+| `devModeOnly` | Boolean | Yes (or `auth`) | Set to `true` to restrict the tool to development mode only (equivalent to the built-in `log` tool). |
+| `resolveInputSchema` | Function | No | Returns a Zod schema for the tool's input arguments. Called per request so RBAC constraints can be applied dynamically. Omit for tools with no input. |
+| `resolveOutputSchema` | Function | Yes | Returns a Zod schema for the tool's structured output. Called per request. |
+| `createHandler` | Function | Yes | Factory that returns the async tool handler. Receives the Strapi instance and per-request context (including `userAbility` and `user`). |
+
+:::note
+`resolveInputSchema` and `resolveOutputSchema` are called once per incoming MCP request, so you can narrow schemas dynamically based on the token's permissions (via `context.userAbility`).
 :::
 
 
