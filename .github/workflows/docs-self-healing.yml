@@ -662,12 +662,24 @@ jobs:
             DOC_PR_NUMBERS=$(jq -r '[.processed[] | (.doc_pr | capture("/pull/(?<n>[0-9]+)$") | .n)] | join(", ")' /tmp/self-healing-summary.json 2>/dev/null || echo "")
           fi
 
-          # Build Notion page payload.
-          # Fate counters (Merged as-is, Merged with edits, Rejected by Pierre) start at 0;
-          # they are updated retroactively by the "Update fate of past doc PRs" step below
-          # as Pierre reviews and merges the PRs over the following days.
-          PAYLOAD=$(jq -n \
-            --arg db "$NOTION_SELF_HEALING_DB" \
+          # Idempotence by date: if a row for today already exists (e.g. an earlier
+          # cron or manual dispatch on the same day), update it instead of creating
+          # a duplicate. Fate counters are intentionally preserved on update so a
+          # previous audit's work is not overwritten.
+          EXISTING_PAGE_ID=""
+          EXISTING_QUERY=$(jq -n --arg d "$DATE" '{
+            filter: { property: "Date", date: { equals: $d } },
+            page_size: 1
+          }')
+          EXISTING_RESPONSE=$(curl -s -X POST "https://api.notion.com/v1/databases/$NOTION_SELF_HEALING_DB/query" \
+            -H "Authorization: Bearer $NOTION_API_KEY" \
+            -H "Notion-Version: 2022-06-28" \
+            -H "Content-Type: application/json" \
+            -d "$EXISTING_QUERY")
+          EXISTING_PAGE_ID=$(echo "$EXISTING_RESPONSE" | jq -r '.results[0].id // ""')
+
+          # Build properties shared by create and update paths.
+          SHARED_PROPS=$(jq -n \
             --arg date "$DATE" \
             --arg run_url "$RUN_URL" \
             --arg status "$JOB_STATUS" \
@@ -682,40 +694,62 @@ jobs:
             --argjson prs_created "$DOC_PRS_CREATED" \
             --argjson ask_humans "$ASK_HUMANS" \
             '{
-              parent: { database_id: $db },
-              properties: {
-                "Run": { title: [{ text: { content: ("Self-healing " + $date) } }] },
-                "Date": { date: { start: $date } },
-                "PRs merged (strapi)": { number: $total },
-                "Filtered by bash": { number: $bash_filtered },
-                "Sent to Haiku": { number: $sent_haiku },
-                "Rejected by Haiku Triage": { number: $triage_rejected },
-                "Rejected by Haiku Router": { number: $router_skipped },
-                "Drafted by Sonnet": { number: $sonnet_drafted },
-                "Doc PRs created": { number: $prs_created },
-                "Doc PR numbers": { rich_text: [{ text: { content: $doc_pr_numbers } }] },
-                "Merged as-is": { number: 0 },
-                "Merged with edits": { number: 0 },
-                "Rejected by Pierre": { number: 0 },
-                "Ask humans": { number: $ask_humans },
-                "Status": { select: { name: $status } },
-                "Error": { rich_text: [{ text: { content: ($error | if length > 2000 then .[:2000] else . end) } }] },
-                "Run URL": { url: $run_url }
-              }
+              "Run": { title: [{ text: { content: ("Self-healing " + $date) } }] },
+              "Date": { date: { start: $date } },
+              "PRs merged (strapi)": { number: $total },
+              "Filtered by bash": { number: $bash_filtered },
+              "Sent to Haiku": { number: $sent_haiku },
+              "Rejected by Haiku Triage": { number: $triage_rejected },
+              "Rejected by Haiku Router": { number: $router_skipped },
+              "Drafted by Sonnet": { number: $sonnet_drafted },
+              "Doc PRs created": { number: $prs_created },
+              "Doc PR numbers": { rich_text: [{ text: { content: $doc_pr_numbers } }] },
+              "Ask humans": { number: $ask_humans },
+              "Status": { select: { name: $status } },
+              "Error": { rich_text: [{ text: { content: ($error | if length > 2000 then .[:2000] else . end) } }] },
+              "Run URL": { url: $run_url }
             }')
 
-          # Post to Notion
-          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-            -X POST "https://api.notion.com/v1/pages" \
-            -H "Authorization: Bearer $NOTION_API_KEY" \
-            -H "Notion-Version: 2022-06-28" \
-            -H "Content-Type: application/json" \
-            -d "$PAYLOAD")
+          if [ -n "$EXISTING_PAGE_ID" ]; then
+            # PATCH existing row. Do NOT include fate counters (Merged as-is /
+            # Merged with edits / Rejected by Pierre) — they may have been set
+            # by a previous audit run and must be preserved.
+            PATCH_PAYLOAD=$(jq -n --argjson props "$SHARED_PROPS" '{properties: $props}')
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              -X PATCH "https://api.notion.com/v1/pages/$EXISTING_PAGE_ID" \
+              -H "Authorization: Bearer $NOTION_API_KEY" \
+              -H "Notion-Version: 2022-06-28" \
+              -H "Content-Type: application/json" \
+              -d "$PATCH_PAYLOAD")
+            ACTION="updated existing row $EXISTING_PAGE_ID"
+          else
+            # POST new row. Fate counters initialized to 0; the "Update fate of
+            # past doc PRs" step will update them retroactively as Pierre
+            # reviews and merges the PRs over the following days.
+            CREATE_PAYLOAD=$(jq -n \
+              --arg db "$NOTION_SELF_HEALING_DB" \
+              --argjson shared "$SHARED_PROPS" \
+              '{
+                parent: { database_id: $db },
+                properties: ($shared + {
+                  "Merged as-is": { number: 0 },
+                  "Merged with edits": { number: 0 },
+                  "Rejected by Pierre": { number: 0 }
+                })
+              }')
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              -X POST "https://api.notion.com/v1/pages" \
+              -H "Authorization: Bearer $NOTION_API_KEY" \
+              -H "Notion-Version: 2022-06-28" \
+              -H "Content-Type: application/json" \
+              -d "$CREATE_PAYLOAD")
+            ACTION="created new row"
+          fi
 
           if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
-            echo "Metrics logged to Notion (HTTP $HTTP_STATUS)"
+            echo "Metrics logged to Notion ($ACTION, HTTP $HTTP_STATUS)"
           else
-            echo "Notion logging failed (HTTP $HTTP_STATUS) — non-blocking"
+            echo "Notion logging failed ($ACTION, HTTP $HTTP_STATUS) — non-blocking"
           fi
 
       - name: Update fate of past doc PRs in Notion
