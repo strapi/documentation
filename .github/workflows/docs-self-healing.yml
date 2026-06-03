@@ -10,6 +10,11 @@ on:
         required: false
         type: boolean
         default: false
+      audit_only:
+        description: 'Audit only — skip the AI pipeline, only update the fate of past doc PRs in Notion'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   docs-self-healing:
@@ -27,6 +32,7 @@ jobs:
           token: ${{ secrets.PAT_TOKEN_PIWI }}
 
       - name: Checkout strapi/strapi (read-only)
+        if: inputs.audit_only != true
         uses: actions/checkout@v4
         with:
           repository: strapi/strapi
@@ -36,6 +42,7 @@ jobs:
           fetch-depth: 50
 
       - name: List and filter merged PRs in last 24 hours
+        if: inputs.audit_only != true
         id: check-prs
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
@@ -485,7 +492,7 @@ jobs:
           ROUTER_RESULTS: ${{ steps.check-router.outputs.router_results }}
 
       - name: Summary
-        if: always()
+        if: always() && inputs.audit_only != true
         run: |
           echo "## Docs Self-Healing Run" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -547,7 +554,7 @@ jobs:
           fi
 
       - name: Notify Slack
-        if: always() && inputs.dry_run != true
+        if: always() && inputs.dry_run != true && inputs.audit_only != true
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
@@ -600,7 +607,7 @@ jobs:
             -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$MAIN_FORMATTED" '{channel: $channel, text: $text}')" > /dev/null || echo "Slack notification failed (non-blocking)"
 
       - name: Log metrics to Notion
-        if: always()
+        if: always() && inputs.audit_only != true
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
           NOTION_SELF_HEALING_DB: ${{ secrets.NOTION_SELF_HEALING_DB }}
@@ -649,30 +656,23 @@ jobs:
             ERROR_MSG="Job failed (likely: max turns reached or SDK error)"
           fi
 
-          # Retrospective: check previous doc PRs' fate (merged as-is, merged with edits, rejected)
-          MERGED_AS_IS=0
-          MERGED_WITH_EDITS=0
-          REJECTED=0
-          EXISTING_PRS=$(gh pr list --repo strapi/documentation --label auto-doc-healing --state all \
-            --json number,state,mergedAt,closedAt,commits \
-            --jq '[.[] | select(.mergedAt != null or .closedAt != null)]' 2>/dev/null || echo "[]")
-
-          if [ "$EXISTING_PRS" != "[]" ]; then
-            # Merged PRs with exactly 1 commit = merged as-is (no human edits)
-            MERGED_AS_IS=$(echo "$EXISTING_PRS" | jq '[.[] | select(.mergedAt != null and (.commits | length) <= 1)] | length' 2>/dev/null || echo "0")
-            # Merged PRs with >1 commit = merged with edits (Pierre made changes)
-            MERGED_WITH_EDITS=$(echo "$EXISTING_PRS" | jq '[.[] | select(.mergedAt != null and (.commits | length) > 1)] | length' 2>/dev/null || echo "0")
-            # Closed without merge = rejected
-            REJECTED=$(echo "$EXISTING_PRS" | jq '[.[] | select(.closedAt != null and .mergedAt == null)] | length' 2>/dev/null || echo "0")
+          # Extract doc PR numbers created by THIS run (for retroactive fate tracking)
+          DOC_PR_NUMBERS=""
+          if [ -f "/tmp/self-healing-summary.json" ]; then
+            DOC_PR_NUMBERS=$(jq -r '[.processed[] | (.doc_pr | capture("/pull/(?<n>[0-9]+)$") | .n)] | join(", ")' /tmp/self-healing-summary.json 2>/dev/null || echo "")
           fi
 
-          # Build Notion page payload
+          # Build Notion page payload.
+          # Fate counters (Merged as-is, Merged with edits, Rejected by Pierre) start at 0;
+          # they are updated retroactively by the "Update fate of past doc PRs" step below
+          # as Pierre reviews and merges the PRs over the following days.
           PAYLOAD=$(jq -n \
             --arg db "$NOTION_SELF_HEALING_DB" \
             --arg date "$DATE" \
             --arg run_url "$RUN_URL" \
             --arg status "$JOB_STATUS" \
             --arg error "$ERROR_MSG" \
+            --arg doc_pr_numbers "$DOC_PR_NUMBERS" \
             --argjson total "$TOTAL_MERGED" \
             --argjson bash_filtered "$FILTERED_BASH" \
             --argjson sent_haiku "$SENT_TO_HAIKU" \
@@ -680,9 +680,6 @@ jobs:
             --argjson router_skipped "$ROUTER_SKIPPED" \
             --argjson sonnet_drafted "$SONNET_DRAFTED" \
             --argjson prs_created "$DOC_PRS_CREATED" \
-            --argjson merged_as_is "$MERGED_AS_IS" \
-            --argjson merged_with_edits "$MERGED_WITH_EDITS" \
-            --argjson rejected "$REJECTED" \
             --argjson ask_humans "$ASK_HUMANS" \
             '{
               parent: { database_id: $db },
@@ -696,9 +693,10 @@ jobs:
                 "Rejected by Haiku Router": { number: $router_skipped },
                 "Drafted by Sonnet": { number: $sonnet_drafted },
                 "Doc PRs created": { number: $prs_created },
-                "Merged as-is": { number: $merged_as_is },
-                "Merged with edits": { number: $merged_with_edits },
-                "Rejected by Pierre": { number: $rejected },
+                "Doc PR numbers": { rich_text: [{ text: { content: $doc_pr_numbers } }] },
+                "Merged as-is": { number: 0 },
+                "Merged with edits": { number: 0 },
+                "Rejected by Pierre": { number: 0 },
                 "Ask humans": { number: $ask_humans },
                 "Status": { select: { name: $status } },
                 "Error": { rich_text: [{ text: { content: ($error | if length > 2000 then .[:2000] else . end) } }] },
@@ -719,3 +717,149 @@ jobs:
           else
             echo "Notion logging failed (HTTP $HTTP_STATUS) — non-blocking"
           fi
+
+      - name: Update fate of past doc PRs in Notion
+        if: always() && inputs.dry_run != true
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_SELF_HEALING_DB: ${{ secrets.NOTION_SELF_HEALING_DB }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+        run: |
+          if [ -z "$NOTION_API_KEY" ] || [ -z "$NOTION_SELF_HEALING_DB" ]; then
+            echo "Notion API key or database ID not configured, skipping fate update"
+            exit 0
+          fi
+
+          # Window: 25 days back (covers up to 3 weeks vacation + review buffer)
+          SINCE=$(date -u -d '25 days ago' '+%Y-%m-%d' 2>/dev/null || date -u -v-25d '+%Y-%m-%d')
+          echo "Scanning Notion rows with Date >= $SINCE and Doc PRs created > 0"
+
+          # Query Notion DB for candidate rows (paginated)
+          NEXT_CURSOR=""
+          HAS_MORE="true"
+          ALL_PAGES="[]"
+          while [ "$HAS_MORE" = "true" ]; do
+            if [ -n "$NEXT_CURSOR" ]; then
+              CURSOR_ARG=", \"start_cursor\": \"$NEXT_CURSOR\""
+            else
+              CURSOR_ARG=""
+            fi
+
+            FILTER_PAYLOAD=$(cat <<EOF
+          {
+            "filter": {
+              "and": [
+                { "property": "Date", "date": { "on_or_after": "$SINCE" } },
+                { "property": "Doc PRs created", "number": { "greater_than": 0 } }
+              ]
+            },
+            "page_size": 100$CURSOR_ARG
+          }
+          EOF
+          )
+
+            RESPONSE=$(curl -s -X POST "https://api.notion.com/v1/databases/$NOTION_SELF_HEALING_DB/query" \
+              -H "Authorization: Bearer $NOTION_API_KEY" \
+              -H "Notion-Version: 2022-06-28" \
+              -H "Content-Type: application/json" \
+              -d "$FILTER_PAYLOAD")
+
+            BATCH=$(echo "$RESPONSE" | jq '.results // []')
+            ALL_PAGES=$(jq -s '.[0] + .[1]' <(echo "$ALL_PAGES") <(echo "$BATCH"))
+            HAS_MORE=$(echo "$RESPONSE" | jq -r '.has_more // false')
+            NEXT_CURSOR=$(echo "$RESPONSE" | jq -r '.next_cursor // ""')
+          done
+
+          TOTAL_ROWS=$(echo "$ALL_PAGES" | jq 'length')
+          echo "Found $TOTAL_ROWS Notion rows to inspect"
+
+          UPDATED=0
+          SKIPPED=0
+          for ROW in $(echo "$ALL_PAGES" | jq -r '.[] | @base64'); do
+            PAGE=$(echo "$ROW" | base64 -d)
+            PAGE_ID=$(echo "$PAGE" | jq -r '.id')
+
+            # Extract Doc PR numbers (rich_text → plain string "3169, 3170")
+            PR_NUMBERS_STR=$(echo "$PAGE" | jq -r '.properties."Doc PR numbers".rich_text // [] | map(.plain_text) | join("")')
+            if [ -z "$PR_NUMBERS_STR" ]; then
+              SKIPPED=$((SKIPPED + 1))
+              continue
+            fi
+
+            CREATED=$(echo "$PAGE" | jq -r '.properties."Doc PRs created".number // 0')
+            CUR_AS_IS=$(echo "$PAGE" | jq -r '.properties."Merged as-is".number // 0')
+            CUR_WITH_EDITS=$(echo "$PAGE" | jq -r '.properties."Merged with edits".number // 0')
+            CUR_REJECTED=$(echo "$PAGE" | jq -r '.properties."Rejected by Pierre".number // 0')
+
+            # Already fully resolved? Skip.
+            RESOLVED_SUM=$((CUR_AS_IS + CUR_WITH_EDITS + CUR_REJECTED))
+            if [ "$RESOLVED_SUM" -ge "$CREATED" ]; then
+              SKIPPED=$((SKIPPED + 1))
+              continue
+            fi
+
+            # Recompute fate for each PR
+            AS_IS=0
+            WITH_EDITS=0
+            REJECTED_BY_PIERRE=0
+            IFS=',' read -ra NUMS <<< "$PR_NUMBERS_STR"
+            for N in "${NUMS[@]}"; do
+              N=$(echo "$N" | tr -d ' ')
+              [ -z "$N" ] && continue
+
+              PR_JSON=$(gh pr view "$N" --repo strapi/documentation --json state,mergedAt,commits 2>/dev/null || echo "")
+              if [ -z "$PR_JSON" ]; then
+                continue
+              fi
+
+              STATE=$(echo "$PR_JSON" | jq -r '.state')
+              MERGED_AT=$(echo "$PR_JSON" | jq -r '.mergedAt // ""')
+
+              if [ "$STATE" = "MERGED" ] && [ -n "$MERGED_AT" ]; then
+                # As-is if all commits have github-actions[bot] in authors list.
+                # Otherwise (a commit authored by a human or another bot), counted as with-edits.
+                NON_BOT_COMMITS=$(echo "$PR_JSON" | jq '[.commits[] | select((.authors | map(.login) | index("github-actions[bot]")) | not)] | length')
+                if [ "$NON_BOT_COMMITS" -eq 0 ]; then
+                  AS_IS=$((AS_IS + 1))
+                else
+                  WITH_EDITS=$((WITH_EDITS + 1))
+                fi
+              elif [ "$STATE" = "CLOSED" ]; then
+                REJECTED_BY_PIERRE=$((REJECTED_BY_PIERRE + 1))
+              fi
+            done
+
+            # Only PATCH if values changed
+            if [ "$AS_IS" = "$CUR_AS_IS" ] && [ "$WITH_EDITS" = "$CUR_WITH_EDITS" ] && [ "$REJECTED_BY_PIERRE" = "$CUR_REJECTED" ]; then
+              SKIPPED=$((SKIPPED + 1))
+              continue
+            fi
+
+            PATCH_PAYLOAD=$(jq -n \
+              --argjson as_is "$AS_IS" \
+              --argjson with_edits "$WITH_EDITS" \
+              --argjson rejected "$REJECTED_BY_PIERRE" \
+              '{
+                properties: {
+                  "Merged as-is": { number: $as_is },
+                  "Merged with edits": { number: $with_edits },
+                  "Rejected by Pierre": { number: $rejected }
+                }
+              }')
+
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              -X PATCH "https://api.notion.com/v1/pages/$PAGE_ID" \
+              -H "Authorization: Bearer $NOTION_API_KEY" \
+              -H "Notion-Version: 2022-06-28" \
+              -H "Content-Type: application/json" \
+              -d "$PATCH_PAYLOAD")
+
+            if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
+              echo "Updated $PAGE_ID: as-is=$AS_IS, with-edits=$WITH_EDITS, rejected=$REJECTED_BY_PIERRE"
+              UPDATED=$((UPDATED + 1))
+            else
+              echo "PATCH failed for $PAGE_ID (HTTP $HTTP_STATUS) — non-blocking"
+            fi
+          done
+
+          echo "Fate update complete: $UPDATED rows patched, $SKIPPED skipped (resolved or no PR numbers)"
