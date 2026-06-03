@@ -29,7 +29,62 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.46.1](https://github.com/strapi/strapi/releases/tag/v5.46.1)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.47.1](https://github.com/strapi/strapi/releases/tag/v5.47.1)._
+
+## 6.27.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Strapi MCP server for content management](https://github.com/strapi/documentation/pull/3194)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Add deleteMany method documentation to Document Service API](https://github.com/strapi/documentation/pull/3206)
+
+#### Repository
+- [Update Users & Permissions documentation](https://github.com/strapi/documentation/pull/3169)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Document optional admin JWT secret for API-only deployments](https://github.com/strapi/documentation/pull/3218)
+- [Fix Marketplace custom fields links in CMS feature docs](https://github.com/strapi/documentation/pull/3210)
+- [Add v5 to v4 rollback FAQ entry to migration documentation](https://github.com/strapi/documentation/pull/3202)
+
+#### Repository
+- [Make Notion logging idempotent by date for docs self-healing](https://github.com/strapi/documentation/pull/3217)
+- [Fix self-healing metrics: track Doc PR fate retroactively](https://github.com/strapi/documentation/pull/3216)
+- [Move the MCP server Plugin API reference to plugins-development](https://github.com/strapi/documentation/pull/3214)
+- [Ignore local superpowers artifacts in .gitignore](https://github.com/strapi/documentation/pull/3198)
+- [Add Need help admonition with support link on CMS and Cloud intros](https://github.com/strapi/documentation/pull/3197)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/andrii-bodnar" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/29282228?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="andrii-bodnar"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/singhvishalkr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/107715446?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="singhvishalkr"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 6.26.0
 
