@@ -17,6 +17,7 @@
 
 ### Changed
 
+- Renamed the first family from "Discover" to "Research" to align with the standard writer workflow (research → write → review → publish). The orchestrator slash command changed from `/inki:discover` to `/inki:research`. Sub-skills (`/inki:exists`, `/inki:coverage`, `/inki:route`) are unchanged.
 - `/inki:review` now accepts more target types (path, directory, bare filename, PR, docs.strapi.io URL, pasted content, or no argument). Target resolution is centralized in `references/target-resolver.md`.
 - `/inki:review` resolves a `docs.strapi.io` URL against the published `origin/main` source in a temporary worktree (never a stale working copy or a destructive pull), keeping coherence-check and code-verify fully functional, and flags local uncommitted changes that were excluded.
 - `/inki:pr-fix description` (PR description rewrite): build the Vercel preview link from the bot comment when available (real host, including hash for long branch names), with the branch slug as a fallback for brand-new PRs. Verify the link returns HTTP 200 before publishing.
@@ -38,7 +39,7 @@
 
 - Plugin scaffolding (`.claude-plugin/plugin.json`, README, CHANGELOG).
 - Self-hosted marketplace manifest at `.claude-plugin/marketplace.json`.
-- Discover family: `/inki:discover`, `/inki:exists`, `/inki:route`, `/inki:coverage`.
+- Research family: `/inki:research`, `/inki:exists`, `/inki:route`, `/inki:coverage`.
 - Write family: `/inki:write`, `/inki:outline`, `/inki:draft`.
 - Review family: `/inki:review`, `/inki:style-check`, `/inki:outline-check`, `/inki:outline-ux-analyzer`, `/inki:code-verify`, `/inki:coherence-check`, `/inki:pitfalls-check`.
 - Submit family: `/inki:submit`, `/inki:branch`, `/inki:commit`, `/inki:push`, `/inki:pr`, `/inki:pr-fix <title|description|body>`.

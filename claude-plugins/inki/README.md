@@ -1,4 +1,4 @@
-# Inki — discover, write, review, submit your docs
+# Inki — research, write, review, submit your docs
 
 Inki is a Claude Code plugin bundling the skills, prompts, templates, and rules used to author and maintain the Strapi documentation. It lives in this repository (`claude-plugins/inki/`) and is installable via the repo's self-hosted marketplace.
 
@@ -24,11 +24,11 @@ After install, the skills are available at `/inki:<skill>`. The plugin is persis
 - `[hint]` = an optional issue reference (e.g., `Fixes #2143`) or short topic hint passed through to the PR.
 - `[PR#]` = a pull request number (e.g., `2143`).
 
-### Discover — before you write
+### Research — before you write
 
 Find out what already exists, where to put new content, what's missing.
 
-- `/inki:discover <input>` — orchestrator: dispatches to the right sub-skill based on input shape.
+- `/inki:research <input>` — orchestrator: dispatches to the right sub-skill based on input shape.
 - `/inki:exists <topic>` — search docs + sidebars + open PRs for a topic.
 - `/inki:route <strapi/strapi PR>` — given a code PR, identify which docs to update.
 - `/inki:coverage <feature>` — audit documentation coverage of a Strapi feature.

@@ -1,7 +1,7 @@
 {
   "name": "inki",
   "version": "0.1.0",
-  "description": "Inki — discover, write, review, submit your docs. A Claude Code plugin encapsulating the Strapi documentation toolkit.",
+  "description": "Inki — research, write, review, submit your docs. A Claude Code plugin encapsulating the Strapi documentation toolkit.",
   "author": {
     "name": "Pierre Wizla"
   }

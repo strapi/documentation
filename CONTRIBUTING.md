@@ -115,7 +115,7 @@ This repository hosts the **Inki** Claude Code plugin under `claude-plugins/inki
 
 ### What Inki does
 
-Inki organizes 21 skills into four families: **Discover** (find what exists), **Write** (outline and draft new pages), **Review** (style, structure, code, coherence, pitfalls), and **Submit** (branch, commit, push, open or rewrite a PR).
+Inki organizes 21 skills into four families: **Research** (find what exists), **Write** (outline and draft new pages), **Review** (style, structure, code, coherence, pitfalls), and **Submit** (branch, commit, push, open or rewrite a PR).
 
 A few examples:
 - `/inki:exists <topic>` checks whether a topic is already covered before you write.

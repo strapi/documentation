@@ -1,11 +1,11 @@
 ---
-name: discover
-description: "Top-level discover orchestrator: combines exists, route, and coverage to give a complete picture before writing."
+name: research
+description: "Top-level research orchestrator: combines exists, route, and coverage to give a complete picture before writing."
 argument-hint: "<topic, feature name, or strapi/strapi PR>"
 user-invocable: true
 ---
 
-# /inki:discover — pre-writing scout
+# /inki:research — pre-writing research
 
 ## Workflow
 
