@@ -38,7 +38,7 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 
 <br />
 
-#### Repository
+#### CMS
 - [Strapi MCP server for content management](https://github.com/strapi/documentation/pull/3194)
 
 ### <Icon name='pen-nib' /> Updated content
