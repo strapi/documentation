@@ -730,8 +730,8 @@ jobs:
             exit 0
           fi
 
-          # Window: 25 days back (covers up to 3 weeks vacation + review buffer)
-          SINCE=$(date -u -d '25 days ago' '+%Y-%m-%d' 2>/dev/null || date -u -v-25d '+%Y-%m-%d')
+          # Window: 30 days back (covers up to 3 weeks vacation + review buffer)
+          SINCE=$(date -u -d '30 days ago' '+%Y-%m-%d' 2>/dev/null || date -u -v-30d '+%Y-%m-%d')
           echo "Scanning Notion rows with Date >= $SINCE and Doc PRs created > 0"
 
           # Query Notion DB for candidate rows (paginated)
