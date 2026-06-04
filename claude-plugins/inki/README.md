@@ -17,20 +17,44 @@ Inki encodes all of it into one plugin, so high-quality docs become the easy def
 
 After install, the skills are available at `/inki:<skill>`, persistent across Claude Code sessions.
 
-## Skill families
+## The four families: a docs workflow end to end
 
-Inki ships 20 skills organized into 4 families. Each family has a top-level **orchestrator** with the same name, plus **granular skills** you can call on their own for advanced use.
+Inki ships 20 skills organized into 4 families that mirror the life of a documentation change: figure out **where** the doc goes, **write** it, **review** it, then **submit** it. Each family has a top-level **orchestrator** with the same name that runs the whole stage, plus **granular skills** you can call on their own for finer control.
 
-| Family | Orchestrator | What it does | Granular skills |
-|--------|-------------|--------------|-----------------|
-| 🔍 Research | `/inki:research` | Before you write: what exists, where it goes, what's missing | `exists`, `route`, `coverage` |
-| ✍️ Write | `/inki:write` | Produce new content from a brief | `outline`, `draft` |
-| 🔬 Review | `/inki:review` | Check what you wrote, six ways at once | `style-check`, `outline-check`, `outline-ux-analyzer`, `code-verify`, `coherence-check`, `pitfalls-check` |
-| 🚀 Submit | `/inki:submit` | Get it to GitHub, following the git rules | `branch`, `commit`, `push`, `pr`, `pr-fix` |
+| Stage | Family | Orchestrator | Granular skills |
+|-------|--------|-------------|-----------------|
+| 1 | 🔍 Research | `/inki:research` | `exists`, `route`, `coverage` |
+| 2 | ✍️ Write | `/inki:write` | `outline`, `draft` |
+| 3 | 🔬 Review | `/inki:review` | `style-check`, `outline-check`, `outline-ux-analyzer`, `code-verify`, `coherence-check`, `pitfalls-check` |
+| 4 | 🚀 Submit | `/inki:submit` | `branch`, `commit`, `push`, `pr`, `pr-fix` |
 
-### Review, the flagship: `/inki:review`
+You can run the full chain for a new page, or jump straight to a single stage (e.g. just `/inki:review` on an existing file).
 
-One command runs six reviewers in parallel and returns a single report, sorted by severity.
+### 1. 🔍 Research — figure out where the doc goes
+
+Before writing a line, find out what already exists and where new content belongs, so you don't duplicate a page or put it in the wrong section.
+
+- Run `/inki:research` and let it dispatch based on what you give it, or call a sub-skill directly:
+  - `/inki:exists "MCP server"` — is this topic already documented? Searches the docs, the sidebars, and open PRs.
+  - `/inki:route <strapi/strapi PR>` — given a code PR, which doc pages and sections need to change to cover it.
+  - `/inki:coverage <feature>` — audit how well an existing feature is documented and what's missing.
+
+The output tells you whether to edit an existing page or create a new one, and exactly where it should live.
+
+### 2. ✍️ Write — do the actual writing
+
+Turn a topic brief into a drafted page, grounded in the right template and authoring guide so the structure and tone are correct from the start.
+
+- `/inki:write <brief>` runs the whole stage: it generates an outline, then drafts the page from it.
+- Or drive it in two steps:
+  - `/inki:outline <brief>` — produce an outline from the brief and the matching template. Review and tweak it.
+  - `/inki:draft <outline>` — draft the page from that outline, the template, and the relevant authoring guide.
+
+A `<brief>` can be inline text (e.g. "MCP server feature, AI tools section, similar to existing AI pages") or a path to a `.md` file describing what you want.
+
+### 3. 🔬 Review — check what you wrote
+
+One command runs six reviewers in parallel against your page and returns a single report, sorted by severity.
 
 ```
 /inki:review https://github.com/strapi/documentation/pull/1234
@@ -53,9 +77,9 @@ What makes it powerful:
 
 The standout sub-skill is **`/inki:code-verify`**: it reads every fenced code block in a page and checks it against the actual `strapi/strapi` source — syntax, whether referenced functions and types really exist, and consistency with the surrounding prose. It proves the code in the docs matches the code that ships.
 
-### Submit, skills calling skills: `/inki:submit`
+### 4. 🚀 Submit — get it to GitHub
 
-One command takes finished doc changes all the way to an open PR, delegating to four granular skills that each already know our conventions.
+Once the page passes review, one command takes it all the way to an open PR, delegating to four granular skills that each already know our conventions.
 
 ```
 /inki:submit
@@ -66,7 +90,7 @@ One command takes finished doc changes all the way to an open PR, delegating to 
    └─ /inki:pr ────── opens a PR with a compliant title + flat description (no headings, no test plan)
 ```
 
-Composition, not duplication: `submit` doesn't reinvent git logic. Each sub-skill encodes a slice of `git-rules.md` once and is reused everywhere.
+Composition, not duplication: `submit` doesn't reinvent git logic. Each sub-skill encodes a slice of `git-rules.md` once and is reused everywhere. Already opened a PR and need to fix its title or description? `/inki:pr-fix` rewrites them to match `git-rules.md`.
 
 ## Command reference
 
