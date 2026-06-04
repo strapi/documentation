@@ -807,7 +807,7 @@ This means that counting with the `status: 'draft'` parameter still returns the 
 
 ##### Generic example
 
-If no parameter is passed, the `count()` method the total number of documents for the default locale:
+If no parameter is passed, the `count()` method returns the total number of documents for the default locale:
 <ApiCall>
 
 <Request>
@@ -846,5 +846,5 @@ If no `locale` and no `status` parameter is passed, draft documents (which is th
  * in English (default locale) 
  * whose name starts with 'Pizzeria'
  */
-strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $startsWith: "Pizzeria" }}})`
+strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $startsWith: "Pizzeria" }}})
 ```
