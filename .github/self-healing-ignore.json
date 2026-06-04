@@ -344,6 +344,31 @@
       "number": 25913,
       "reason": "Router: Internal GraphQL plugin refactor. Replaces unsafe 'as' type casting with discriminated unions for type safety. No user-facing feature or API change. Pure implementation improvement.",
       "added": "2026-06-03"
+    },
+    {
+      "number": 26410,
+      "reason": "Triage: contributor documentation",
+      "added": "2026-06-04"
+    },
+    {
+      "number": 26538,
+      "reason": "Router: Release/merge management PR with no documentation impact",
+      "added": "2026-06-04"
+    },
+    {
+      "number": 26536,
+      "reason": "Router: Bug fix to existing Draft & Publish feature; fixes broken behavior without introducing new public API or user-facing capability",
+      "added": "2026-06-04"
+    },
+    {
+      "number": 26439,
+      "reason": "Router: Dependency security patches; no public API or behavior change",
+      "added": "2026-06-04"
+    },
+    {
+      "number": 26427,
+      "reason": "Router: GraphQL query handling fix that corrects behavior where empty sort arrays were incorrectly skipped. Fixes broken behavior to match user expectations without introducing new public API",
+      "added": "2026-06-04"
     }
   ]
 }
