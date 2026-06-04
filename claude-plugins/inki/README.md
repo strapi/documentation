@@ -33,7 +33,7 @@ Inki ships 20 skills organized into 4 families. Each family has a top-level **or
 One command runs six reviewers in parallel and returns a single report, sorted by severity.
 
 ```
-/inki:review https://github.com/strapi/documentation/pull/3204
+/inki:review https://github.com/strapi/documentation/pull/1234
    │
    ├─ style-check ──────── deterministic lint + AI judgment
    ├─ outline-check ─────── structure vs the official template
