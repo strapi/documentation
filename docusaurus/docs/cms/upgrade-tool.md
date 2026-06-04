@@ -266,7 +266,7 @@ Commands:
  major [options]   Upgrade to the next available major version of Strapi
  minor [options]   Upgrade to ...
  patch [options]   Upgrade to ...
- to <target>       Upgrade to a specific version of Strapi
+to [options] <target> Upgrade to a specific version of Strapi
  help [command]    Print options for a specific command
 
 ```
