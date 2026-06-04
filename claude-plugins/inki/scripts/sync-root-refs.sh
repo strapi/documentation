@@ -9,7 +9,7 @@ PLUGIN_REFS="$REPO_ROOT/claude-plugins/inki/references"
 
 mkdir -p "$PLUGIN_REFS"
 
-for f in git-rules.md 12-rules-of-technical-writing.md style-guide.md; do
+for f in git-rules.md 12-rules-of-technical-writing.md; do
   if [ -f "$REPO_ROOT/$f" ]; then
     cp "$REPO_ROOT/$f" "$PLUGIN_REFS/$f"
   fi

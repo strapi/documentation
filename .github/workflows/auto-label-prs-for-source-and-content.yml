@@ -101,7 +101,7 @@ jobs:
               // Site source (components, SCSS, theme) — not infra, can be significant changes
               if (f.includes('/src/') || f.startsWith('src/')) return 'static';
 
-              // Everything else (scripts, config, .github/, agents/, etc.)
+              // Everything else (scripts, config, .github/, claude-plugins/, etc.)
               return 'other';
             }
 
@@ -147,7 +147,7 @@ jobs:
             // -------------------------------------------------------
             // 5. Determine PR type label
             //
-            //    Infrastructure-only PRs (.github/, agents/, scripts/,
+            //    Infrastructure-only PRs (.github/, claude-plugins/, scripts/,
             //    config files, etc.) are always "pr: chore",
             //    regardless of size. src/ is NOT infra (SCSS, components).
             // -------------------------------------------------------

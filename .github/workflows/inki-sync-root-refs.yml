@@ -5,10 +5,8 @@ on:
     paths:
       - 'git-rules.md'
       - '12-rules-of-technical-writing.md'
-      - 'style-guide.md'
       - 'claude-plugins/inki/references/git-rules.md'
       - 'claude-plugins/inki/references/12-rules-of-technical-writing.md'
-      - 'claude-plugins/inki/references/style-guide.md'
 
 permissions:
   contents: write
@@ -30,7 +28,7 @@ jobs:
           CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
           echo "Changed files:"
           echo "$CHANGED"
-          for f in git-rules.md 12-rules-of-technical-writing.md style-guide.md; do
+          for f in git-rules.md 12-rules-of-technical-writing.md; do
             if echo "$CHANGED" | grep -q "^claude-plugins/inki/references/$f$"; then
               if ! echo "$CHANGED" | grep -q "^$f$"; then
                 echo "::error::You modified claude-plugins/inki/references/$f but not $f at the repo root."
