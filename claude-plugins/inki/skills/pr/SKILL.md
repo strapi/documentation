@@ -1,7 +1,7 @@
 ---
 name: pr
 description: "Create a pull request on strapi/documentation following git-rules.md. Strict flat-text description, no headings, no test plan."
-argument-hint: [optional issue reference, e.g. "Fixes #2143"]
+argument-hint: "[optional issue reference, e.g. 'Fixes #2143']"
 user-invocable: true
 ---
 
