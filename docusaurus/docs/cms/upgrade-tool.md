@@ -126,6 +126,26 @@ intended.
 In the scenario where the major bump isn't the desired option, see [the minor upgrade](#upgrade-to-a-minor-version).
 :::
 
+### Upgrade to a specific version
+
+Run the upgrade tool with the `to` parameter followed by a target version to upgrade the project to that specific published version of Strapi:
+
+```bash
+npx @strapi/upgrade to 5.42.0
+```
+
+Use `to` when `latest` resolves to a version blocked by your registry policies. For example, your `.npmrc` might set a `min-release-age` (a delay before newly published versions can be installed) to mitigate supply-chain risks. In that case, the latest published version is not yet installable, so you can target an older version instead.
+
+For pre-releases, pass the `--codemods-target` option to select which set of codemods to run. It defaults to the `major.minor.patch` portion of the target version:
+
+```bash
+npx @strapi/upgrade to 5.0.0-beta.951 --codemods-target 5.0.0
+```
+
+:::note
+The `to` command skips the safety check that requires the project to be on the latest patch of its current major version before a major upgrade. It is intended for users who know which version they want to target.
+:::
+
 ## Run codemods only
 
 Run the upgrade tool with the `codemods` parameter to execute a utility that allows selecting the codemods to be executed. With this command, only the codemods are run, the dependencies are not updated nor installed.
@@ -242,10 +262,12 @@ Options:
  -h, --help       Print command line options
 
 Commands:
- major [options]  Upgrade to the next available major version of Strapi
- minor [options]  Upgrade to ...
- patch [options]  Upgrade to ...
- help [command]   Print options for a specific command
+ latest [options]  Upgrade to the latest available version of Strapi
+ major [options]   Upgrade to the next available major version of Strapi
+ minor [options]   Upgrade to ...
+ patch [options]   Upgrade to ...
+ to <target>       Upgrade to a specific version of Strapi
+ help [command]    Print options for a specific command
 
 ```
 
