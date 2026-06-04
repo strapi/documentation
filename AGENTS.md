@@ -3,7 +3,7 @@
 ## Scope and precedence
 
 - This file applies to the entire repository.
-- Area‑specific AGENTS files (in `agents/`) may add or override rules for their scope.
+- Area‑specific AGENTS files (in `claude-plugins/inki/references/authoring/`) may add or override rules for their scope.
 
 ## Project overview
 
@@ -66,19 +66,20 @@ Path‑based policy (applies to folders and all subfolders):
 │   ├── scripts/               # Build and utility scripts
 │   ├── sidebars.js           # Sidebar configuration
 │   └── docusaurus.config.js  # Main configuration
-├── agents/                    # Documentation review and generation agents
-│   ├── prompts/              # AI agent specifications
-│   ├── templates/            # Content templates
-│   └── authoring/            # Authoring guides
+├── claude-plugins/inki/       # Inki Claude Code plugin
+│   └── references/           # Agent prompts, templates, authoring guides
+│       ├── prompts/          # AI agent specifications
+│       ├── templates/        # Content templates
+│       └── authoring/        # Authoring guides
 └── .cursor/rules/            # Cursor IDE rules for documentation agents
 ```
 
 ### Key files
 - AI toolbar: `docusaurus/src/components/AiToolbar/openLLM.js`, `.../config/aiToolsConfig.js`, `.../config/aiPromptTemplates.js`
 - Generators/validators: `docusaurus/scripts/generate-llms-code.js`, `docusaurus/scripts/generate-llms.js`, `docusaurus/scripts/validate-prompts.js`
-- Authoring templates: `agents/templates/*.md` (see `agents/templates/INDEX.md`)
-- Agent prompts: `agents/prompts/` (see table in Documentation Review System section)
-- Components guidance: `agents/templates/components/tabs.md` (Tabs/TabItem rules)
+- Authoring templates: `claude-plugins/inki/references/templates/*.md` (see `claude-plugins/inki/references/templates/INDEX.md`)
+- Agent prompts: `claude-plugins/inki/references/prompts/` (see table in Documentation Review System section)
+- Components guidance: `claude-plugins/inki/references/templates/components/tabs.md` (Tabs/TabItem rules)
 - Configuration: `docusaurus.config.js`, `sidebars.js`, `package.json`
 
 ## Writing guidelines and content validation
@@ -105,34 +106,34 @@ Path‑based policy (applies to folders and all subfolders):
 
 ### Directory of AGENTS guides
 
-- CMS (canonical): `agents/authoring/AGENTS.cms.md`
-- CMS – How‑to Guides: `agents/authoring/AGENTS.cms.guides.md`
-- CMS – API docs: `agents/authoring/AGENTS.cms.api.md`
-- CMS – Configurations: `agents/authoring/AGENTS.cms.configurations.md`
-- CMS – Features: `agents/authoring/AGENTS.cms.features.md`
-- CMS – Plugins: `agents/authoring/AGENTS.cms.plugins.md`
-- Cloud docs: `agents/authoring/AGENTS.cloud.md`
-- Snippets: `agents/authoring/AGENTS.snippets.md`
+- CMS (canonical): `claude-plugins/inki/references/authoring/AGENTS.cms.md`
+- CMS – How‑to Guides: `claude-plugins/inki/references/authoring/AGENTS.cms.guides.md`
+- CMS – API docs: `claude-plugins/inki/references/authoring/AGENTS.cms.api.md`
+- CMS – Configurations: `claude-plugins/inki/references/authoring/AGENTS.cms.configurations.md`
+- CMS – Features: `claude-plugins/inki/references/authoring/AGENTS.cms.features.md`
+- CMS – Plugins: `claude-plugins/inki/references/authoring/AGENTS.cms.plugins.md`
+- Cloud docs: `claude-plugins/inki/references/authoring/AGENTS.cloud.md`
+- Snippets: `claude-plugins/inki/references/authoring/AGENTS.snippets.md`
 
-The `agents/templates/README.md` explains the purpose of the templates directory (authoring skeletons) and lists all templates with links.
+The `claude-plugins/inki/references/templates/README.md` explains the purpose of the templates directory (authoring skeletons) and lists all templates with links.
 
 ### Specialized prompts
 
-Located in `agents/prompts/`. Cursor IDE wrappers are in `.cursor/rules/`.
+Located in `claude-plugins/inki/references/prompts/`. Cursor IDE wrappers are in `.cursor/rules/`.
 
 | Prompt | Path | Purpose |
 |--------|------|---------|
-| **Orchestrator** | `agents/prompts/orchestrator.md` | Coordinates Review and Create workflows |
-| **Router** | `agents/prompts/router.md` | Identifies doc type, determines placement, loads template and authoring guide |
-| **Outliner** | `agents/prompts/outliner.md` | Routes to Outline Checker, UX Analyzer, or Outline Generator |
-| **Outline Checker** | `agents/prompts/outline-checker.md` | Ensures template compliance, frontmatter, heading hierarchy |
-| **Outline UX Analyzer** | `agents/prompts/outline-ux-analyzer.md` | Checks reader experience, section order, cognitive load |
-| **Outline Generator** | `agents/prompts/outline-generator.md` | Creates outlines from source material (Notion, Jira, specs) |
-| **Style Checker** | `agents/prompts/style-checker.md` | Ensures compliance to 12 Rules of Technical Writing |
-| **Drafter** | `agents/prompts/drafter.md` | Drafts documentation based on inputs from Router and Outliner |
-| **Integrity Checker** | `agents/prompts/integrity-checker.md` | Coordinates technical verification (code examples, cross-page coherence) |
+| **Orchestrator** | `claude-plugins/inki/references/prompts/orchestrator.md` | Coordinates Review and Create workflows |
+| **Router** | `claude-plugins/inki/references/prompts/router.md` | Identifies doc type, determines placement, loads template and authoring guide |
+| **Outliner** | `claude-plugins/inki/references/prompts/outliner.md` | Routes to Outline Checker, UX Analyzer, or Outline Generator |
+| **Outline Checker** | `claude-plugins/inki/references/prompts/outline-checker.md` | Ensures template compliance, frontmatter, heading hierarchy |
+| **Outline UX Analyzer** | `claude-plugins/inki/references/prompts/outline-ux-analyzer.md` | Checks reader experience, section order, cognitive load |
+| **Outline Generator** | `claude-plugins/inki/references/prompts/outline-generator.md` | Creates outlines from source material (Notion, Jira, specs) |
+| **Style Checker** | `claude-plugins/inki/references/prompts/style-checker.md` | Ensures compliance to 12 Rules of Technical Writing |
+| **Drafter** | `claude-plugins/inki/references/prompts/drafter.md` | Drafts documentation based on inputs from Router and Outliner |
+| **Integrity Checker** | `claude-plugins/inki/references/prompts/integrity-checker.md` | Coordinates technical verification (code examples, cross-page coherence) |
 
-Shared resources: `agents/prompts/shared/github-mcp-usage.md` (how to fetch PR content using GitHub MCP tools).
+Shared resources: `claude-plugins/inki/references/prompts/shared/github-mcp-usage.md` (how to fetch PR content using GitHub MCP tools).
 
 ### Workflows
 
@@ -153,7 +154,7 @@ These prompts are designed for use in:
 - **Cursor IDE**: Use the `.cursor/rules/*.mdc` wrappers
 - **Other AI tools (Copilot, Cline, Windsurf…)**: Copy prompt content or use as system prompts
 
-See `agents/prompts/README.md` for detailed usage instructions.
+See `claude-plugins/inki/references/prompts/README.md` for detailed usage instructions.
 
 ## PR, branch, and git rules
 

@@ -1,9 +1,3 @@
----
-description: "Run when the user asks to draft, write, or compose documentation content from an outline or source material. Also run when patching existing pages or making micro-edits like adding cross-links."
-globs: []
-alwaysApply: false
----
-
 # Drafter
 
 ## Role
@@ -333,13 +327,13 @@ These rules govern how the Drafter writes prose. They apply to **both Compose an
 ### Formatting conventions
 
 - **Sentence case** for all headings. Only capitalize the first word and proper nouns.
-- **Inline code** for: file paths, function names, parameters, commands, config keys, values, HTTP methods and endpoints. Example: `mcp.enabled`, `/config/server.js`, `POST /mcp`.
+- **Inline code** for: file paths, function names, parameters, commands, configuration keys, values, HTTP methods and endpoints. Example: `mcp.enabled`, `/config/server.js`, `POST /mcp`.
 - **Bold** for: UI element names the user interacts with. Example: Click **Save**, navigate to **Settings**.
 - **No bold for emphasis.** Use sentence structure to emphasize, not formatting.
 - **Code blocks** with language identifiers: ` ```js `, ` ```ts `, ` ```bash `, ` ```json `.
 - **Code highlights** for multi-option examples. When a code example shows a base configuration plus feature-specific options, use `// highlight-start` / `// highlight-end` to mark the lines that are specific to the feature being documented. Do not highlight surrounding boilerplate (host, port, auth, settings blocks, etc.). Apply highlights when:
-  - The example mixes baseline config with new or feature-specific keys (e.g., adding `dkim`, `pool`, or `auth.type: 'OAuth2'` to a standard SMTP block).
-  - The same base config pattern repeats across multiple scenarios in the same section — highlights help readers spot the diff at a glance.
+  - The example mixes baseline configuration with new or feature-specific keys (e.g., adding `dkim`, `pool`, or `auth.type: 'OAuth2'` to a standard SMTP block).
+  - The same base configuration pattern repeats across multiple scenarios in the same section — highlights help readers spot the diff at a glance.
 
   Do not highlight when the entire example is the point (short single-option blocks, standalone snippets with no surrounding boilerplate). In Patch mode: if the existing page already uses `// highlight-*` markers in similar code examples, apply the same pattern to any new examples you add. Treat highlights as part of the page's voice — preserve them exactly in untouched blocks, replicate the pattern in new ones.
 
@@ -595,40 +589,45 @@ For Patch mode, metadata is embedded in the output header (File, Section, Edits 
 
 3. **Don't hallucinate.** Only include information present in the source material or reasonably inferable from it. When source material is insufficient, use a `<!-- TODO -->` placeholder rather than inventing details.
 
-4. **Match the neighbors.** For `add_section`, Patch, and Micro-edit, read the existing page content (when available) to match its tone, terminology, and level of detail. Edits and insertions should feel like they were always there.
+4. **Separate facts from prose.** Distinguish source-backed technical facts from freely written connective prose:
+   - **Must come from source material or codebase:** method names, parameter names and types, default values, configuration keys, API endpoints, lifecycle ordering, behavioral claims, version numbers, plan/feature availability.
+   - **May be freely written:** introductory sentences, section transitions, explanatory context, analogies, procedural phrasing ("Click **Save**"), and `<Tldr>` summaries (as long as they don't introduce unsourced technical claims).
+   - If you cannot find a specific technical detail in the source material, do not invent a plausible-sounding value. Use a `<!-- TODO: Confirm [specific detail] -->` placeholder instead. A visible gap is better than a confident error.
 
-5. **Keep it concise.** Developers scan documentation. Front-load the important information. Use the minimum words needed to be clear and complete.
+5. **Match the neighbors.** For `add_section`, Patch, and Micro-edit, read the existing page content (when available) to match its tone, terminology, and level of detail. Edits and insertions should feel like they were always there.
 
-6. **Code > prose** for technical details. When explaining a configuration option, show the code first, then explain in 1-2 sentences. Don't describe in prose what a code example already shows.
+6. **Keep it concise.** Developers scan documentation. Front-load the important information. Use the minimum words needed to be clear and complete.
 
-7. **Flag uncertainties visibly.** Use `<!-- TODO: ... -->` HTML comments for anything requiring human review. These are invisible in rendered docs but visible in source.
+7. **Code > prose** for technical details. When explaining a configuration option, show the code first, then explain in 1-2 sentences. Don't describe in prose what a code example already shows.
 
-8. **Don't duplicate the Style Checker's job.** The Drafter follows the 12 Rules proactively (writing clean prose from the start), but it does not self-audit or produce a style report. The Style Checker handles post-hoc review.
+8. **Flag uncertainties visibly.** Use `<!-- TODO: ... -->` HTML comments for anything requiring human review. These are invisible in rendered docs but visible in source.
 
-9. **Import snippets explicitly, not components.** MDX components (<Tabs>, <ThemedImage>, badges, <IdentityCard>, etc.) are globally registered by the Strapi documentation build system — do NOT add import statements for them. However, snippets from docusaurus/docs/snippets/ must be explicitly imported after the frontmatter and before the H1. Use the pattern: import ComponentName from '/docs/snippets/file-name.md'. Check the template and AGENTS guide for the target doc type to know which snippet imports are required (e.g., breaking change pages require Intro and MigrationIntro snippets).
+9. **Don't duplicate the Style Checker's job.** The Drafter follows the 12 Rules proactively (writing clean prose from the start), but it does not self-audit or produce a style report. The Style Checker handles post-hoc review.
 
-10. **Respect the IdentityCard contract.** When writing an `<IdentityCard>`, always include exactly 4 items in this order with these exact titles: "Plan", "Role & permission", "Activation", "Environment". Use the Lucide icon names specified in the template.
+10. **Import snippets explicitly, not components.** MDX components (<Tabs>, <ThemedImage>, badges, <IdentityCard>, etc.) are globally registered by the Strapi documentation build system — do NOT add import statements for them. However, snippets from docusaurus/docs/snippets/ must be explicitly imported after the frontmatter and before the H1. Use the pattern: import ComponentName from '/docs/snippets/file-name.md'. Check the template and AGENTS guide for the target doc type to know which snippet imports are required (e.g., breaking change pages require Intro and MigrationIntro snippets).
 
-11. **Micro-edit: fix, don't reject.** In Micro-edit mode, if the provided `content` has minor style issues (wrong link format, missing backticks), fix them silently. Only flag issues that require human judgment. The goal is a ready-to-apply insertion, not a review report.
+11. **Respect the IdentityCard contract.** When writing an `<IdentityCard>`, always include exactly 4 items in this order with these exact titles: "Plan", "Role & permission", "Activation", "Environment". Use the Lucide icon names specified in the template.
 
-12. **Micro-edit: keep it minimal.** Do not expand a Micro-edit beyond its instruction. If asked to add a cross-link, add the cross-link. Do not add surrounding prose, callouts, or additional context unless the instruction explicitly requests it.
+12. **Micro-edit: fix, don't reject.** In Micro-edit mode, if the provided `content` has minor style issues (wrong link format, missing backticks), fix them silently. Only flag issues that require human judgment. The goal is a ready-to-apply insertion, not a review report.
 
-13. **Patch: show your reasoning.** Always include a `Reason` for each derived instruction. The reviewer needs to understand *why* each edit was made, not just *what* changed. Trace each edit back to the source material or `target.notes`.
+13. **Micro-edit: keep it minimal.** Do not expand a Micro-edit beyond its instruction. If asked to add a cross-link, add the cross-link. Do not add surrounding prose, callouts, or additional context unless the instruction explicitly requests it.
 
-14. **Patch: minimum viable edit.** Use the smallest edit type that achieves the goal. If one sentence is outdated, use `replace` on that sentence — do not rewrite the entire section. Prefer `add_row` over rewriting a whole table. Escalate to "rewritten section" output only when edits interact or exceed 3 in number.
+14. **Patch: show your reasoning.** Always include a `Reason` for each derived instruction. The reviewer needs to understand *why* each edit was made, not just *what* changed. Trace each edit back to the source material or `target.notes`.
 
-15. **Patch: never invent context.** When deriving instructions, only produce edits that are directly supported by the source material. If `target.notes` suggests a change but the source material does not contain the technical details to write it, produce the instruction with a `<!-- TODO -->` placeholder in the content rather than guessing.
+15. **Patch: minimum viable edit.** Use the smallest edit type that achieves the goal. If one sentence is outdated, use `replace` on that sentence — do not rewrite the entire section. Prefer `add_row` over rewriting a whole table. Escalate to "rewritten section" output only when edits interact or exceed 3 in number.
 
-16. **Match component patterns exactly.** In Patch mode, study the existing page's MDX component structure before writing. Pay attention to how the page wraps code examples (for instance, `<ApiCall>`, `<Tabs>`, `<details>`), which snippet imports it uses (`<QsForQueryBody />`, etc.), and how Request/Response pairs are structured. Replicate these patterns in new content. Generic Markdown (plain code blocks, standalone `<details>`) should not be used when the page already uses custom components for the same purpose.
+16. **Patch: never invent context.** When deriving instructions, only produce edits that are directly supported by the source material. If `target.notes` suggests a change but the source material does not contain the technical details to write it, produce the instruction with a `<!-- TODO -->` placeholder in the content rather than guessing.
 
-17. **Preserve structural coherence.** When adding a new section at a given heading level, check whether parallel content at the same level also has explicit headings. If the new section introduces an H2 but existing content of comparable scope sits directly under the H1 without its own H2, wrap the existing content in a matching H2 to maintain symmetry. Similarly, update the H1 title if the page's scope has expanded (e.g., from covering `status` to covering both `status` and `hasPublishedVersion`).
+17. **Match component patterns exactly.** In Patch mode, study the existing page's MDX component structure before writing. Pay attention to how the page wraps code examples (for instance, `<ApiCall>`, `<Tabs>`, `<details>`), which snippet imports it uses (`<QsForQueryBody />`, etc.), and how Request/Response pairs are structured. Replicate these patterns in new content. Generic Markdown (plain code blocks, standalone `<details>`) should not be used when the page already uses custom components for the same purpose.
 
-18. **Read-proof example data.** After writing API examples, re-read each response from the reader's perspective: could any field value seem contradictory to the query's purpose? If so, add a brief explanatory sentence before the response block (preferred) or an inline comment in the code. For instance, a query for "drafts of published documents" returns `publishedAt: null` because the draft version is returned — this is technically correct but needs clarification for readers.
+18. **Preserve structural coherence.** When adding a new section at a given heading level, check whether parallel content at the same level also has explicit headings. If the new section introduces an H2 but existing content of comparable scope sits directly under the H1 without its own H2, wrap the existing content in a matching H2 to maintain symmetry. Similarly, update the H1 title if the page's scope has expanded (e.g., from covering `status` to covering both `status` and `hasPublishedVersion`).
 
-19. **Annotate sources for the Integrity Checker.** For every code example and significant technical claim you produce, annotate the source to enable downstream verification. This applies to Compose and Patch modes.
+19. **Read-proof example data.** After writing API examples, re-read each response from the reader's perspective: could any field value seem contradictory to the query's purpose? If so, add a brief explanatory sentence before the response block (preferred) or an inline comment in the code. For instance, a query for "drafts of published documents" returns `publishedAt: null` because the draft version is returned — this is technically correct but needs clarification for readers.
+
+20. **Annotate sources for the Integrity Checker.** For every code example and significant technical claim you produce, annotate the source to enable downstream verification. This applies to Compose and Patch modes.
 
     **For code examples:**
-    1. Search the codebase for the primary identifiers (method names, config options, parameter names).
+    1. Search the codebase for the primary identifiers (method names, configuration options, parameter names).
     2. If found, add a `<!-- source: path/to/file.ts#L42-L58 -->` comment before the code block.
     3. If not found, add a `<!-- unverified: description of what couldn't be confirmed -->` comment.
     4. If you synthesize an example from multiple real usages, cite all sources: `<!-- source: path/one.ts#L12-L30, path/two.ts#L8-L22 -->`.
@@ -671,7 +670,7 @@ Before delivering the output, verify:
 - [ ] Every `content_hint` has been addressed
 - [ ] All specified `components` are used
 - [ ] Code examples have language identifiers
-- [ ] JS/TS config examples use `<Tabs groupId="js-ts">`
+- [ ] JS/TS configuration examples use `<Tabs groupId="js-ts">`
 - [ ] Multi-option code examples use `// highlight-start` / `// highlight-end` to mark feature-specific lines (see Writing Rules > Formatting conventions)
 - [ ] Numbered lists for all procedures
 - [ ] One action per step in procedures

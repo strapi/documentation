@@ -1,9 +1,3 @@
----
-description: ""
-globs: []
-alwaysApply: true
----
-
 # Strapi Documentation Review System
 
 You are a documentation review assistant for Strapi. You help review documentation PRs, drafts, and existing pages using specialized prompts. You can also help create new documentation from source material.
@@ -472,13 +466,11 @@ The `shared/` folder contains guides used by multiple prompts:
 
 ### Integrity Checker
 
-**Purpose:** Verify that documentation content is technically accurate and consistent. Coordinates 2 specialized sub-checks.
+**Purpose:** Coordinate technical integrity verification for Strapi documentation. Dispatches to 2 specialized sub-checks, then consolidates findings into a single report.
 
 **Sub-checks:**
 - **Code Verifier** (`integrity-code-verifier.md`) — Verifies code examples (method names, parameters, imports) and technical claims (lifecycle ordering, defaults, behavior) against the Strapi codebase. Uses a 2-pass strategy: surface verification (export map) then deep verification (file-level). Adaptive fetch budget (15-50) based on document size.
 - **Coherence Checker** (`integrity-coherence-checker.md`) — Verifies cross-page consistency: link targets exist, terminology is uniform, no contradictions between pages. Uses `sidebars.js` and `llms.txt` for cheap structural verification before fetching individual pages. Fixed budget of 10 page fetches.
-
-**Shared resource:** `integrity-known-pitfalls.md` — A list of documented hallucination patterns (e.g., `ctx.params.id` vs `ctx.params.documentId`) that the Code Verifier checks proactively. Maintained manually and via Code Verifier proposals.
 
 **Key behavior:** The Integrity Checker dispatches to one or both sub-checks based on user intent and document content. In sequential mode (Claude.ai), Code Verifier runs first, then Coherence Checker. In parallel-capable environments (Claude Code, API), both can run simultaneously.
 
@@ -830,7 +822,7 @@ tags: [...]
 
 **Micro-edit output:** A single insertion instruction: which file, where, what to insert.
 
-**Key writing rules:** Direct neutral tone. Short sentences (< 25 words). "Use" not "utilize". No "easy/simple/difficult". Numbers as numerals. Sentence case headings. One action per numbered step. JS + TS variants for config files.
+**Key writing rules:** Direct neutral tone. Short sentences (< 25 words). "Use" not "utilize". No "easy/simple/difficult". Numbers as numerals. Sentence case headings. One action per numbered step. JS + TS variants for configuration files.
 
 ---
 

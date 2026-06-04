@@ -1,0 +1,56 @@
+name: Sync root refs to inki plugin
+
+on:
+  pull_request:
+    paths:
+      - 'git-rules.md'
+      - '12-rules-of-technical-writing.md'
+      - 'style-guide.md'
+      - 'claude-plugins/inki/references/git-rules.md'
+      - 'claude-plugins/inki/references/12-rules-of-technical-writing.md'
+      - 'claude-plugins/inki/references/style-guide.md'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-or-fail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Detect plugin-side-only edits (forbidden)
+        run: |
+          set -e
+          CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+          echo "Changed files:"
+          echo "$CHANGED"
+          for f in git-rules.md 12-rules-of-technical-writing.md style-guide.md; do
+            if echo "$CHANGED" | grep -q "^claude-plugins/inki/references/$f$"; then
+              if ! echo "$CHANGED" | grep -q "^$f$"; then
+                echo "::error::You modified claude-plugins/inki/references/$f but not $f at the repo root."
+                echo "::error::The repo root is canonical. Edit $f at the root; the plugin copy is auto-synced."
+                exit 1
+              fi
+            fi
+          done
+
+      - name: Run sync script
+        run: ./claude-plugins/inki/scripts/sync-root-refs.sh
+
+      - name: Commit and push if changed
+        run: |
+          git config user.email "github-actions@github.com"
+          git config user.name "GitHub Actions (inki sync)"
+          git add claude-plugins/inki/references/
+          if ! git diff --staged --quiet; then
+            git commit -m "Auto-sync root refs to inki plugin"
+            git push
+          else
+            echo "No changes to commit."
+          fi
