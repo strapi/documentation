@@ -23,7 +23,7 @@ The <Icon name="house" /> Homepage is the landing page of the Strapi admin panel
 - _Profile_: Displays a short summary of your profile, including your name, email address, and role.
 - _Entries_: Displays the total number of Draft & Published entries.
 - _Project statistics_: Displays statistics about your entries, content-types, locales, assets, and more.
-- _Deploy_: Displays a **Deploy Now** button that links to [Strapi Cloud](https://cloud.strapi.io/login) for deploying your project.
+- _Deploy_: Displays a **Deploy Now** button that links to [Strapi Cloud](https://cloud.strapi.io/login) for deploying your project. This widget is only displayed in local development and is hidden when the application runs in production.
 
 
 <ThemedImage
