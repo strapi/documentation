@@ -1,6 +1,12 @@
 # Inki — research, write, review, submit your docs
 
-Inki is a Claude Code plugin bundling the skills, prompts, templates, and rules used to author and maintain the Strapi documentation. It lives in this repository (`claude-plugins/inki/`) and is installable via the repo's self-hosted marketplace.
+Inki is a Claude Code plugin that turns the way we author Strapi docs into a toolkit anyone on the team can install in two commands. It bundles the skills, prompts, templates, and rules used to write and maintain the Strapi documentation. It lives in this repository (`claude-plugins/inki/`) and is installable via the repo's own self-hosted marketplace.
+
+## The problem it solves
+
+Writing good Strapi docs means juggling a lot of tribal knowledge: what's already documented, which pages a code change affects, the style guide and the 12 rules of technical writing, verifying code blocks against the real source, naming branches correctly, writing PR descriptions the way `git-rules.md` demands.
+
+Inki encodes all of it into one plugin, so high-quality docs become the easy default for the whole team.
 
 ## Install
 
@@ -9,9 +15,60 @@ Inki is a Claude Code plugin bundling the skills, prompts, templates, and rules 
 /plugin install inki@strapi-documentation
 ```
 
-After install, the skills are available at `/inki:<skill>`. The plugin is persistent across Claude Code sessions.
+After install, the skills are available at `/inki:<skill>`, persistent across Claude Code sessions.
 
 ## Skill families
+
+Inki ships 20 skills organized into 4 families. Each family has a top-level **orchestrator** with the same name, plus **granular skills** you can call on their own for advanced use.
+
+| Family | Orchestrator | What it does | Granular skills |
+|--------|-------------|--------------|-----------------|
+| 🔍 Research | `/inki:research` | Before you write: what exists, where it goes, what's missing | `exists`, `route`, `coverage` |
+| ✍️ Write | `/inki:write` | Produce new content from a brief | `outline`, `draft` |
+| 🔬 Review | `/inki:review` | Check what you wrote, six ways at once | `style-check`, `outline-check`, `outline-ux-analyzer`, `code-verify`, `coherence-check`, `pitfalls-check` |
+| 🚀 Submit | `/inki:submit` | Get it to GitHub, following the git rules | `branch`, `commit`, `push`, `pr`, `pr-fix` |
+
+### Review, the flagship: `/inki:review`
+
+One command runs six reviewers in parallel and returns a single report, sorted by severity.
+
+```
+/inki:review https://github.com/strapi/documentation/pull/3204
+   │
+   ├─ style-check ──────── deterministic lint + AI judgment
+   ├─ outline-check ─────── structure vs the official template
+   ├─ outline-ux-analyzer ─ pedagogical UX: beginner → advanced flow
+   ├─ code-verify ───────── every code block vs the real Strapi source  ⭐
+   ├─ coherence-check ───── terminology + links vs related pages
+   └─ pitfalls-check ────── deprecated patterns, known mistakes
+   │
+   └─ one report, issues sorted by severity
+```
+
+What makes it powerful:
+
+1. **It accepts anything.** A local file, a bare filename, a GitHub PR number or URL, a published `docs.strapi.io` URL, or pasted Markdown. It resolves the target itself (cloning a worktree for a PR if needed) and cleans up after.
+2. **Six reviewers in parallel, one verdict.** No human reviewer runs all six checks by hand, every time, consistently.
+3. **`--fix` closes the loop.** It can auto-apply the style fixes, not just flag them.
+
+The standout sub-skill is **`/inki:code-verify`**: it reads every fenced code block in a page and checks it against the actual `strapi/strapi` source — syntax, whether referenced functions and types really exist, and consistency with the surrounding prose. It proves the code in the docs matches the code that ships.
+
+### Submit, skills calling skills: `/inki:submit`
+
+One command takes finished doc changes all the way to an open PR, delegating to four granular skills that each already know our conventions.
+
+```
+/inki:submit
+   │
+   ├─ /inki:branch ── auto-detects the right prefix (cms/, cloud/, repo/) from the files touched
+   ├─ /inki:commit ── compliant message, respects protected paths
+   ├─ /inki:push ──── validates the branch name against git-rules.md
+   └─ /inki:pr ────── opens a PR with a compliant title + flat description (no headings, no test plan)
+```
+
+Composition, not duplication: `submit` doesn't reinvent git logic. Each sub-skill encodes a slice of `git-rules.md` once and is reused everywhere.
+
+## Command reference
 
 **Notation for skill arguments:**
 
