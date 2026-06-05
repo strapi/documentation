@@ -53,6 +53,15 @@ module.exports = {
 
 For additional information on parameters passed to `grantConfig`, please refer to the  <ExternalLink to="https://github.com/simov/grant" text="`grant` documentation"/>. For additional information about `purest` please refer to <ExternalLink to="https://github.com/simov/purest" text="`purest` documentation"/>.
 
+### How authentication flow works
+
+The object returned by the `authCallback` function must contain at least `username` and `email` properties. Strapi uses this returned email address to automatically resolve the authentication flow for both registration and login:
+
+* If the user does not exist: Strapi registers a new user under the returned `email` and `username` and then logs them in, returning the JWT and user object.
+* If the user already exists: Strapi retrieves the existing user matching that `email` and logs them in, returning the JWT and user object.
+
+Because of this design, you do not need to implement separate lookup or registration logic inside your custom provider. You only need to ensure your `authCallback` fetches the user's profile from the external provider and returns the user's `email` and `username`.
+
 ### Frontend setup
 
 Once you have configured Strapi and the provider, in your frontend application you must:
@@ -65,6 +74,9 @@ Now you can make authenticated requests, as described in [token usage](/cms/feat
 
 :::caution Troubleshooting
 
+- **Email not provided**: This error occurs when the `authCallback` fails to return a valid `email` address.
+  - Make sure that your provider application is configured with the correct OAuth scopes (e.g. `email` or `profile`) to request the user's email.
+  - Check that the identity provider actually returns the email in the payload. Note that some users may have their email address hidden or set to private on the identity provider side.
 - **Error 429**: It's most likely because your login flow fell into a loop. To make new requests to the backend, you need to wait a few minutes or restart the backend.
 - **Grant: missing session or misconfigured provider**: It may be due to many things.
   - **The redirect url can't be built**: Make sure you have set the backend url in `config/server.js`: [Setting up the server url](/cms/configurations/users-and-permissions-providers#setting-up-the-server-url)
