@@ -30786,6 +30786,34 @@ module.exports = (plugin) => {
 ```
 
 Language: JavaScript
+File path: ./src/extensions/users-permissions/strapi-server.js
+
+```js
+module.exports = (plugin) => {
+  const originalAuthFactory = plugin.controllers.auth;
+
+  plugin.controllers.auth = ({ strapi }) => {
+    // Resolve the original factory to get the controller methods
+    const originalAuth = originalAuthFactory({ strapi });
+
+    // Store the original action to avoid recursion
+    const originalCallback = originalAuth.callback;
+
+    // Override the action
+    originalAuth.callback = async (ctx) => {
+      // Custom pre-auth logic
+      await originalCallback(ctx);
+      // Custom post-auth logic
+    };
+
+    return originalAuth;
+  };
+
+  return plugin;
+};
+```
+
+Language: JavaScript
 File path: ./src/extensions/upload/strapi-server.js|ts
 
 ```js
