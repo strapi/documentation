@@ -1,6 +1,6 @@
 # Inki — research, write, review, submit your docs
 
-Inki, or In-Key Knowledge Interface, is a Claude Code plugin that keeps Strapi documentation _in key_ with the product, the documentation itself, and the conventions that tie them together.
+Inki, or **In**-key **K**nowledge **I**nterface, is a Claude Code plugin that keeps Strapi documentation _in key_ with the product, the documentation itself, and the conventions that tie them together.
 
 It turns the way we author Strapi documentation into a toolkit anyone can install in 2 commands. It bundles the skills, prompts, templates, workflows, and editorial rules used to write and maintain the Strapi docs. By capturing not only our writing process but also our conventions, terminology, and documentation patterns, Inki helps keep new content aligned with both the product and the documentation ecosystem it belongs to. It lives in this repository (`claude-plugins/inki/`) and is installable through the repo's self-hosted marketplace.
 
