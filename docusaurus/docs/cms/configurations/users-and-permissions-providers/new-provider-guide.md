@@ -57,7 +57,7 @@ For additional information on parameters passed to `grantConfig`, please refer t
 
 The object returned by the `authCallback` function must contain at least `username` and `email` properties. Strapi uses this returned email address to automatically resolve the authentication flow for both registration and login:
 
-* **If the user does not exist**: Strapi registers a new user under the returned `email` and `username` and then logs them in, returning the JWT and user object.
+* If the user does not exist: Strapi registers a new user under the returned `email` and `username` and then logs them in, returning the JWT and user object.
 * **If the user already exists**: Strapi retrieves the existing user matching that `email` and logs them in, returning the JWT and user object.
 
 Because of this design, you do not need to implement separate lookup or registration logic inside your custom provider. You only need to ensure your `authCallback` fetches the user's profile from the external provider and returns the user's `email` and `username`.
