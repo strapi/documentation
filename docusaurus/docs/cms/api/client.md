@@ -139,7 +139,7 @@ Collection types in Strapi are entities with multiple entries (e.g., a blog with
 | `findOne(documentID, queryParams?)`    | Retrieve a single document by its unique ID.        |
 | `create(data, queryParams?)`  | Create a new document in the collection. |
 | `update(documentID, data, queryParams?)`  | Update an existing document. |
-| `delete(documentID, queryParams?)`  | Update an existing document. |
+| `delete(documentID, queryParams?)`  | Delete an existing document. |
 
 **Usage examples:**
 <Tabs groupId="js-ts"> 
