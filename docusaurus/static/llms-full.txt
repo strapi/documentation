@@ -2119,7 +2119,7 @@ Collection types in Strapi are entities with multiple entries (e.g., a blog with
 | `findOne(documentID, queryParams?)`    | Retrieve a single document by its unique ID.        |
 | `create(data, queryParams?)`  | Create a new document in the collection. |
 | `update(documentID, data, queryParams?)`  | Update an existing document. |
-| `delete(documentID, queryParams?)`  | Update an existing document. |
+| `delete(documentID, queryParams?)`  | Delete an existing document. |
 
 **Usage examples:**
 
@@ -2691,7 +2691,7 @@ This means that counting with the `status: 'draft'` parameter still returns the 
 
 ##### Generic example
 
-If no parameter is passed, the `count()` method the total number of documents for the default locale:
+If no parameter is passed, the `count()` method returns the total number of documents for the default locale:
 
 </ApiCall>
 
@@ -2713,7 +2713,7 @@ If no `locale` and no `status` parameter is passed, draft documents (which is th
  * in English (default locale) 
  * whose name starts with 'Pizzeria'
  */
-strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $startsWith: "Pizzeria" }}})`
+strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $startsWith: "Pizzeria" }}})
 ```
 
 
@@ -12207,7 +12207,7 @@ module.exports = (plugin) => {
 ```
 </details>
 
-:::warning Factory-based controllers
+:::note Factory-based controllers
 Some plugin controllers, such as the `auth` controller in the Users & Permissions plugin, use a factory pattern (i.e. they are exported as functions: `({ strapi }) => ({ ... })`). 
 
 Trying to override actions on these controllers directly (e.g., `plugin.controllers.auth.callback = ...`) will not work because the factory has not yet been resolved when your extension code runs. 

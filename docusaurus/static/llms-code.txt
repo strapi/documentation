@@ -2938,7 +2938,7 @@ File path: N/A
  * in English (default locale) 
  * whose name starts with 'Pizzeria'
  */
-strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $startsWith: "Pizzeria" }}})`
+strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $startsWith: "Pizzeria" }}})
 ```
 
 
