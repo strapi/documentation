@@ -12207,6 +12207,40 @@ module.exports = (plugin) => {
 ```
 </details>
 
+:::warning Factory-based controllers
+Some plugin controllers, such as the `auth` controller in the Users & Permissions plugin, use a factory pattern (i.e. they are exported as functions: `({ strapi }) => ({ ... })`). 
+
+Trying to override actions on these controllers directly (e.g., `plugin.controllers.auth.callback = ...`) will not work because the factory has not yet been resolved when your extension code runs. 
+
+To override factory-based controller actions, wrap the factory function itself:
+
+```js title="./src/extensions/users-permissions/strapi-server.js"
+module.exports = (plugin) => {
+  const originalAuthFactory = plugin.controllers.auth;
+
+  plugin.controllers.auth = ({ strapi }) => {
+    // Resolve the original factory to get the controller methods
+    const originalAuth = originalAuthFactory({ strapi });
+
+    // Store the original action to avoid recursion
+    const originalCallback = originalAuth.callback;
+
+    // Override the action
+    originalAuth.callback = async (ctx) => {
+      // Custom pre-auth logic
+      await originalCallback(ctx);
+      // Custom post-auth logic
+    };
+
+    return originalAuth;
+  };
+
+  return plugin;
+};
+```
+For more information, see the [Customizing Users & Permissions plugin routes guide](/cms/backend-customization/guides/customizing-users-permissions-plugin-routes#override-auth-route).
+:::
+
 :::note
 The `strapi-server.js|ts` file is also where you can override the image function, by replacing the Upload plugin's `generateFileName()` function so that it generates custom image names.
 
