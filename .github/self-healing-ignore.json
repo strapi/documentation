@@ -369,6 +369,11 @@
       "number": 26427,
       "reason": "Router: GraphQL query handling fix that corrects behavior where empty sort arrays were incorrectly skipped. Fixes broken behavior to match user expectations without introducing new public API",
       "added": "2026-06-04"
+    },
+    {
+      "number": 26515,
+      "reason": "Router: Internal bug fix for Media Library folder navigation. Changes are implementation details (ID-based filtering) and fixes to broken behavior (folder path corruption, wrong defaults). No new user-facing features or API changes—users experience improved stability and correct defaults, not new capabilities.",
+      "added": "2026-06-05"
     }
   ]
 }
