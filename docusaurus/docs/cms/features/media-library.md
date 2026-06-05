@@ -744,6 +744,27 @@ To add a focal point to an image:
 Assets can also be deleted individually or in bulk from the main view of the Media Library. Select assets by clicking on their checkbox in the top left corner, then click the Delete icon <Icon name="trash" /> at the top of the window, below the filters and sorting options.
 :::
 
+#### Replacing and deleting assets in the new media library
+
+:::note
+The following actions are only available in the new (unstable) Media Library. To use them, start Strapi with the `UNSTABLE_MEDIA_LIBRARY=true` environment variable and navigate to `/admin/plugins/unstable-upload` in the admin panel.
+:::
+
+In the new Media Library, the asset details drawer includes 2 actions in its footer: replace and delete.
+
+To replace an asset:
+
+1. Click an asset to open the asset details drawer.
+2. Click the replace icon button in the drawer footer.
+3. Click **Confirm** in the confirmation dialog.
+4. Select a replacement file using the file chooser. The drawer refreshes with the updated asset details. A success notification appears above the asset preview.
+
+To delete an asset:
+
+1. Click an asset to open the asset details drawer.
+2. Click the trash icon button <Icon name="trash" /> in the drawer footer.
+3. Click **Confirm** in the confirmation dialog. The asset is deleted and the drawer closes.
+
 ### Organizing assets with folders
 
 Folders in the Media Library help you organize uploaded assets. Folders sit at the top of the Media Library view or are accessible from the Media field popup when using the [Content Manager](/cms/features/content-manager).
