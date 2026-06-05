@@ -114,7 +114,7 @@ module.exports = (plugin) => {
 ```
 </details>
 
-:::warning Factory-based controllers
+:::note Factory-based controllers
 Some plugin controllers, such as the `auth` controller in the Users & Permissions plugin, use a factory pattern (i.e. they are exported as functions: `({ strapi }) => ({ ... })`). 
 
 Trying to override actions on these controllers directly (e.g., `plugin.controllers.auth.callback = ...`) will not work because the factory has not yet been resolved when your extension code runs. 
