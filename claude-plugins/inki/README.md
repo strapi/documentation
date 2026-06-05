@@ -1,4 +1,4 @@
-# Inki — research, write, review, submit your docs
+# Inki — research, write, review, submit your Strapi docs
 
 Inki is a Claude Code plugin that keeps Strapi documentation _in key_ with the product, the documentation itself, and the conventions that tie them together.
 The name combines _ink_ ✍️ with _Strapi_, and also is an acronym for **In**-key **K**nowledge **I**nterface.
