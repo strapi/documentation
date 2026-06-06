@@ -268,7 +268,9 @@ const documents = await strapi.documents("api::article.article").findMany({
 </Response>
 </ApiCall>
 
-Dynamic zones are highly dynamic content structures by essence. To populate a dynamic zone, you must define per-component populate queries using the `on` property.
+Dynamic zones are highly dynamic content structures by essence. Standard populate queries (like `populate: '*'` or `populate: ['testDZ']`) will only retrieve the default, non-relational scalar fields (e.g., strings, numbers) of components within a dynamic zone. They will **not** automatically fetch nested relations, media fields, or nested components.
+
+To populate component-specific nested relations, media fields, or components within a dynamic zone, you must define per-component populate queries using the `on` property (fragment population syntax).
 
 <ApiCall noSideBySide>
 <Request title="Example request">
