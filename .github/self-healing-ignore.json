@@ -374,6 +374,26 @@
       "number": 26515,
       "reason": "Router: Internal bug fix for Media Library folder navigation. Changes are implementation details (ID-based filtering) and fixes to broken behavior (folder path corruption, wrong defaults). No new user-facing features or API changes—users experience improved stability and correct defaults, not new capabilities.",
       "added": "2026-06-05"
+    },
+    {
+      "number": 26556,
+      "reason": "Triage: CI build tooling / GitHub Actions workflow infrastructure",
+      "added": "2026-06-06"
+    },
+    {
+      "number": 26122,
+      "reason": "Triage: Internal database transaction race condition fix",
+      "added": "2026-06-06"
+    },
+    {
+      "number": 26553,
+      "reason": "Router: Bug fix for database query behavior. Restores functionality (drag-and-drop relation sort order in components) that was broken in v5.47.0. This is a regression fix, not a new feature. Existing documentation about relation sorting and API behavior already covers this functionality.",
+      "added": "2026-06-06"
+    },
+    {
+      "number": 26324,
+      "reason": "Router: Internal admin UI bug fix. Adds z-index to language selector dropdown in code block editor to fix visual stacking issue. No public API changes or new user-facing features—purely an internal UX improvement.",
+      "added": "2026-06-06"
     }
   ]
 }
