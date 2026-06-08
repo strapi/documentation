@@ -28,20 +28,26 @@ The resolver returns:
 
 If resolution fails (PR has no doc files, filename not found, URL maps to nothing), report why and stop.
 
-## Step 2: Run the 6 sub-skills in parallel where possible
+## Step 2: Dispatch the 6 checks as parallel subagents
 
-For each file in `FILES`, invoke:
+For each file in `FILES`, dispatch the six review checks as **parallel subagents** using the Agent tool. Issue all calls for a given file in a single batch so they run concurrently — do NOT run them inline in this skill's context, and do NOT run them one after another. Each subagent reads its target plus its own rubric prompt and returns ONLY a concise findings report; the file contents it reads stay out of this skill's context.
 
-- `/inki:style-check <target>` (with `--fix` if `FIX=true`)
-- `/inki:outline-check <target>`
-- `/inki:outline-ux-analyzer <target>`
-- `/inki:code-verify <target>`
-- `/inki:coherence-check <target>`
-- `/inki:pitfalls-check <target>`
+Map each check to its bundled agent (`agentType`):
 
-If `AUTO=true`, pass `--yes` to any sub-skill that supports it (so the whole pipeline runs without prompts). Read-only sub-skills ignore the flag gracefully.
+| Check | Agent (`inki:<name>`) | What it returns |
+|-------|------------------------|-----------------|
+| Style | `inki:style-checker` | deterministic + AI-judged style issues (pass `FIX` through) |
+| Outline structure | `inki:outline-checker` | template/hierarchy issues |
+| Pedagogical UX | `inki:ux-analyzer` | UX score + flow issues |
+| Code verification | `inki:code-verifier` | per-block ok/suspicious/broken |
+| Cross-page coherence | `inki:coherence-checker` | terminology/link/conflict issues |
+| Known pitfalls | `inki:pitfalls-checker` | cataloged hallucination matches |
 
-Collect each report.
+Pass each agent the absolute `TARGET` path. For the style check, pass `FIX=true` when `FIX` is set (the agent still does not edit files — it flags the auto-fixable subset for the caller to apply in Step 3b).
+
+The agents are read-only by construction (their `tools` allowlists exclude write/commit/push), so `AUTO` does not change their behavior. `AUTO` only governs whether *this* skill prompts before applying `--fix` results.
+
+Collect the six findings reports per file.
 
 ## Step 3: Synthesize
 
@@ -50,17 +56,25 @@ Output a combined table:
 ```
 Review of: <SCOPE>
 
-| Sub-skill | Issues found | Severity |
-|-----------|--------------|----------|
-| style-check | <N> | low/med/high |
-| outline-check | ... | ... |
-| outline-ux-analyzer | ... | ... |
-| code-verify | ... | ... |
-| coherence-check | ... | ... |
-| pitfalls-check | ... | ... |
+| Check | Agent | Issues found | Severity |
+|-------|-------|--------------|----------|
+| Style | inki:style-checker | <N> | low/med/high |
+| Outline structure | inki:outline-checker | ... | ... |
+| Pedagogical UX | inki:ux-analyzer | ... | ... |
+| Code verification | inki:code-verifier | ... | ... |
+| Cross-page coherence | inki:coherence-checker | ... | ... |
+| Known pitfalls | inki:pitfalls-checker | ... | ... |
 ```
 
 Then list issues by file, ordered by severity. For PR-scope reviews, prefix file paths with `(PR #<num>)` so it's clear the issues are in the PR's version. For a `docs.strapi.io` URL review, note that the review ran against the published `origin/main` version, and flag any local uncommitted changes that were excluded (per the resolver). For a pasted-content review, note that coherence and code-verification findings may be incomplete because the file sits outside the docs tree (see the resolver's note).
+
+## Step 3b: Apply fixes (only if `FIX=true`)
+
+The agents are read-only and never edit files; they only flag the auto-fixable subset. When `FIX=true`, this skill applies that subset itself:
+
+- Apply only the items the `inki:style-checker` agent marked **auto-fixable** (typos, formatting). Leave everything else as suggestions.
+- Honor the worktree/temp-file constraints in the Rules below (PR, URL, and pasted-content reviews write only to their temporary location, never to the live source).
+- If `AUTO` is not set, show the diff and confirm before writing. If `AUTO=true`, apply without prompting.
 
 ## Step 4: Cleanup
 
@@ -68,8 +82,8 @@ Run the `CLEANUP` command returned by the resolver (worktree teardown or temp-fi
 
 ## Rules
 
-- Each sub-skill stays atomic. Do not duplicate their logic here.
-- If `--fix` is passed, only the auto-fixable findings from `style-check` are applied automatically. All others remain suggestions.
+- Each check stays atomic inside its agent (`inki:<name>`). Do not duplicate their rubric logic here; this skill only dispatches, synthesizes, and applies the style auto-fixes.
+- If `--fix` is passed, only the auto-fixable findings flagged by `inki:style-checker` are applied automatically (in Step 3b). All others remain suggestions.
 - `--fix` on a PR-scope review applies fixes inside the temporary worktree only (the one created by the resolver). The PR itself is NOT modified by `/inki:review`. To push the fixes, the user must `gh pr checkout <num>` themselves and apply the suggestions manually (or use `/inki:commit` + `/inki:push` after a manual checkout).
 - `--fix` on a `docs.strapi.io` URL review applies fixes inside the temporary `origin/main` worktree only (created by the resolver); that worktree is detached and torn down at cleanup, so nothing is written back. Surface the corrected content in the report, and tell the user to apply it on a real branch.
 - `--fix` on a pasted-content review applies fixes to the temp file only; there is no source file to write back to. Surface the corrected content in the report instead.
