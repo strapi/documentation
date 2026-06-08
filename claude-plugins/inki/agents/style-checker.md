@@ -26,7 +26,10 @@ The dispatching skill passes you:
 
 2. Read `${CLAUDE_PLUGIN_ROOT}/references/prompts/style-checker.md` and apply it as your judgment rubric over the file's content. This is the canonical style-checker prompt and the core of your judgment — follow it exactly. It carries both the 12-Rules detection guidance and the Strapi-specific style rules (e.g. numbers always written as numerals, em-dash exceptions, cross-reference formatting).
 
-3. The two pillars of the style judgment are this prompt plus `${CLAUDE_PLUGIN_ROOT}/references/12-rules-of-technical-writing.md` (the canonical rule set). Read the 12-Rules file when a rule reference in the prompt needs its full definition. There is no separate `style-guide.md` file — the Strapi style guide is embodied by these two sources.
+3. The style judgment rests on three canonical sources:
+   - The style-checker prompt above (rubric).
+   - `${CLAUDE_PLUGIN_ROOT}/references/12-rules-of-technical-writing.md` — the canonical rule set. Read it when a rule in the prompt needs its full definition.
+   - **`STYLE_GUIDE.pdf`** — the authoritative Strapi style guide, especially for content formatting and capitalization/bold usage (Rule 12 of the 12 Rules points to it). Read it from `${CLAUDE_PLUGIN_ROOT}/references/STYLE_GUIDE.pdf` if synced there, otherwise from the repo root `STYLE_GUIDE.pdf`. Consult it for any formatting or capitalization judgment call.
 
 ## Output
 
