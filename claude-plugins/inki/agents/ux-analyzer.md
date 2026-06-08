@@ -2,7 +2,7 @@
 name: ux-analyzer
 description: "Read-only pedagogical UX reviewer for a single documentation page. Evaluates progression from beginner to advanced, signposting, and reading flow. Returns only a findings report with a UX score. Use when auditing the learning experience of a docs page."
 tools: Read, Grep, Glob
-model: sonnet
+model: opus
 ---
 
 # Inki outline UX analyzer
