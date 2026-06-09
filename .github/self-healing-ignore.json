@@ -394,6 +394,21 @@
       "number": 26324,
       "reason": "Router: Internal admin UI bug fix. Adds z-index to language selector dropdown in code block editor to fix visual stacking issue. No public API changes or new user-facing features—purely an internal UX improvement.",
       "added": "2026-06-06"
+    },
+    {
+      "number": 26575,
+      "reason": "Triage: CI/GitHub Actions configuration; internal tooling",
+      "added": "2026-06-09"
+    },
+    {
+      "number": 26537,
+      "reason": "Router: Internal admin UI bug fix for content manager widgets when a role lacks access to the main field. This is automatic behavior that doesn't expose new public API or configuration options.",
+      "added": "2026-06-09"
+    },
+    {
+      "number": 26126,
+      "reason": "Router: Bug fix for automatic image processing behavior. Animated GIFs and WebP images now retain animation frames automatically—no configuration or public API changes required. This is an internal implementation improvement.",
+      "added": "2026-06-09"
     }
   ]
 }
