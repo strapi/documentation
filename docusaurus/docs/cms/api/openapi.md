@@ -154,6 +154,63 @@ The generated OpenAPI specification includes all available API endpoints in your
 - File upload endpoints for media handling
 - Plugin endpoints from installed plugins
 
+## Configuration
+
+By default, Strapi does not expose HTTP endpoints for the generated OpenAPI specification. To opt in, add an `openapi` key to the `/config/server` file.
+
+### HTTP endpoint access
+
+The `openapi` configuration accepts 2 sub-keys, `content-api` and `admin`, each with an `access` property:
+
+| Sub-key | Endpoint | `access` value | Default | Behavior |
+|---------|----------|----------------|---------|----------|
+| `content-api` | `GET /api/openapi.json` | `disabled` | Yes | Endpoint not registered. |
+| `content-api` | `GET /api/openapi.json` | `public` | No | Endpoint accessible without authentication. |
+| `admin` | `GET /admin/openapi.json` | `disabled` | Yes | Endpoint not registered. |
+| `admin` | `GET /admin/openapi.json` | `authenticated` | No | Endpoint requires an authenticated admin user. |
+
+The following example exposes both endpoints:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/config/server.js"
+module.exports = {
+  openapi: {
+    'content-api': {
+      access: 'public',
+    },
+    admin: {
+      access: 'authenticated',
+    },
+  },
+};
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/config/server.ts"
+export default {
+  openapi: {
+    'content-api': {
+      access: 'public',
+    },
+    admin: {
+      access: 'authenticated',
+    },
+  },
+};
+```
+
+</TabItem>
+</Tabs>
+
+:::caution
+Setting `content-api.access` to `authenticated` or `admin.access` to `public` throws an error at startup.
+:::
+
 ## Integrating with Swagger UI
 
 With the following steps you can quickly generate a [Swagger UI](https://swagger.io/)-compatible page:
