@@ -409,6 +409,21 @@
       "number": 26126,
       "reason": "Router: Bug fix for automatic image processing behavior. Animated GIFs and WebP images now retain animation frames automatically—no configuration or public API changes required. This is an internal implementation improvement.",
       "added": "2026-06-09"
+    },
+    {
+      "number": 26531,
+      "reason": "Router: Internal fix to data-transfer service. Fixes database transaction handling for orphaned component links during data transfers. No public API changes or new user-facing behavior.",
+      "added": "2026-06-10"
+    },
+    {
+      "number": 26448,
+      "reason": "Router: Internal admin panel fix for plugin loading. No public API or feature changes.",
+      "added": "2026-06-10"
+    },
+    {
+      "number": 26055,
+      "reason": "Router: Internal bug fix to admin panel field-level permissions. Fixes an existing feature's behavior (multi-role permission union logic) but does not introduce new public APIs or user-facing features that require documentation.",
+      "added": "2026-06-10"
     }
   ]
 }
