@@ -7,21 +7,24 @@ tags:
 - upload
 - REST API
 - Media Library
+- pagination
 ---
 
 # REST API: Upload files
 
 The [Media Library feature](/cms/features/media-library) is powered in the back-end server of Strapi by the `upload` package. To upload files to Strapi, you can either use the Media Library directly from the admin panel, or use the [REST API](/cms/api/rest), with the following available endpoints :
 
-| Method | Path                    | Description         |
-| :----- | :---------------------- | :------------------ |
-| GET    | `/api/upload/files`     | Get a list of files |
-| GET    | `/api/upload/files/:id` | Get a specific file |
-| POST   | `/api/upload`           | Upload files        |
-| POST   | `/api/upload?id=x`      | Update fileInfo     |
-| DELETE | `/api/upload/files/:id` | Delete a file       |
+| Method | Path                       | Description                   |
+| :----- | :------------------------- | :---------------------------- |
+| GET    | `/api/upload/files`        | Get a list of files           |
+| GET    | `/api/upload/files/page`   | Get a paginated list of files |
+| GET    | `/api/upload/files/:id`    | Get a specific file           |
+| POST   | `/api/upload`              | Upload files                  |
+| POST   | `/api/upload?id=x`         | Update fileInfo               |
+| DELETE | `/api/upload/files/:id`    | Delete a file                 |
 
 :::note Notes
+- `GET /api/upload/files` returns a flat array of all files and ignores pagination parameters. To retrieve files in pages, use [`GET /api/upload/files/page`](#get-a-paginated-list-of-files) instead.
 - [Folders](/cms/features/media-library#organizing-assets-with-folders) are an admin panel-only feature and are not part of the Content API (REST or GraphQL). Files uploaded through REST are located in the automatically created "API Uploads" folder.
 - The GraphQL API does not support uploading media files. To upload files, use the REST API or directly add files from the [Media Library](/cms/features/media-library) in the admin panel. Some GraphQL mutations to update or delete uploaded media files are still possible (see [GraphQL API documentation](/cms/api/graphql#mutations-on-media-files) for details).
 :::
@@ -194,6 +197,107 @@ const response = await fetch(`http://localhost:1337/api/upload?id=${fileId}`, {
 });
 
 ```
+
+## Get a paginated list of files
+
+```
+GET /api/upload/files/page
+```
+
+`GET /api/upload/files/page` returns files using the standard [paginated response](/cms/api/rest/sort-pagination#pagination) envelope (`{ data, meta: { pagination } }`). The `GET /api/upload/files` endpoint returns a flat array of all files and ignores pagination parameters.
+
+Use `/api/upload/files/page` for any non-trivial Media Library. `GET /api/upload/files` remains available for backward compatibility.
+
+### Parameters
+
+The endpoint accepts the same query parameters as other REST collection endpoints:
+
+| Parameter | Description |
+| --------- | ----------- |
+| `pagination[page]` | Page number (1-based). Defaults to `1`. |
+| `pagination[pageSize]` | Number of files per page. Defaults to the `api.rest.defaultLimit` config value (`25`), and is capped by `api.rest.maxLimit` when set. |
+| `pagination[start]` | Offset-based pagination: the number of files to skip. |
+| `pagination[limit]` | Offset-based pagination: the maximum number of files to return. |
+| `pagination[withCount]` | Whether to run the count query and include `total` and `pageCount` in the response. Accepts `true` or `false`. Defaults to the `api.rest.withCount` config value (`true`). |
+| `filters` | Filter the results. See [Filters](/cms/api/rest/filters). |
+| `sort` | Sort the results. See [Sort](/cms/api/rest/sort-pagination#sorting). |
+| `fields` | Select which fields to return. See [Fields selection](/cms/api/rest/populate-select#field-selection). |
+| `populate` | Populate relations. See [Population](/cms/api/rest/populate-select#population). |
+
+Use the nested format for pagination parameters (`pagination[page]=2&pagination[pageSize]=10`), not the flat format (`page=2&pageSize=10`).
+
+:::caution
+Page-based pagination (`pagination[page]` and `pagination[pageSize]`) and offset-based pagination (`pagination[start]` and `pagination[limit]`) are mutually exclusive. Mixing the two returns a `400` error.
+:::
+
+### Example requests
+
+```bash title="Get the second page of 10 files"
+curl "http://localhost:1337/api/upload/files/page?pagination[page]=2&pagination[pageSize]=10"
+```
+
+```bash title="Get 5 images, skipping the first 20, without a total count"
+curl "http://localhost:1337/api/upload/files/page?pagination[start]=20&pagination[limit]=5&pagination[withCount]=false&filters[mime][\$startsWith]=image/"
+```
+
+### Response
+
+With page-based pagination, the `meta.pagination` object includes `page`, `pageSize`, `pageCount`, and `total`:
+
+```json title="Page-based response"
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "a1b2c3...",
+      "name": "photo.jpg",
+      "url": "/uploads/photo.jpg",
+      "mime": "image/jpeg",
+      "size": 12.34
+      // ...standard file fields
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 4,
+      "total": 100
+    }
+  }
+}
+```
+
+With offset-based pagination, the `meta.pagination` object includes `start`, `limit`, and `total`:
+
+```json title="Offset-based response"
+{
+  "data": [ /* ... */ ],
+  "meta": {
+    "pagination": {
+      "start": 0,
+      "limit": 10,
+      "total": 100
+    }
+  }
+}
+```
+
+When `pagination[withCount]` is `false`, the count query is skipped and `total` and `pageCount` are omitted:
+
+```json title="Response with withCount=false"
+{
+  "data": [ /* ... */ ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25
+    }
+  }
+}
+```
+
+The objects in the `data` array use the same file fields as the other Upload endpoints (see [Models definition](#models-definition)).
 
 ## Models definition
 
