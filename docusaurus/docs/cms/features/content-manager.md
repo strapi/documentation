@@ -370,6 +370,8 @@ By default, the combination of fields is not directly displayed in the edit view
 1. Click on the add button <Icon name="plus-circle" /> to add the component.
 2. Fill in the fields of the component.
 
+Alternatively, you can click on the **Copy from existing** button to copy the component data from another entry that has the same component. This opens a modal where you can search for and select an entry, then choose the component data to copy. The modal includes a **Recently copied** section that shows the last component copied for quick reuse.
+
 To delete the non-repeatable component, click on the delete button <Icon name="trash"/>, located in the top right corner of the component area.
 
 </TabItem>
@@ -392,6 +394,8 @@ To add a new entry and display its combination of fields:
 1. Click on the add button <Icon name="plus-circle" /> to add the component.
 2. Fill in the fields of the component.
 3. (optional) Click on the **Add an entry** button and fill in the fields again.
+
+You can also click on the **Copy from existing** button to copy component data from another entry that has the same component. This opens a modal where you can search for and select an entry, then choose the component data to copy. The modal includes a **Recently copied** section that shows the last component copied for quick reuse.
 
 The repeatable component entries can be reordered or deleted directly in the edit view, using buttons displayed on the right of the entry area.
 
@@ -429,6 +433,8 @@ Dynamic zones are a combination of components, which themselves are composed of 
 1. Click on the <Icon name="plus-circle" /> **Add a component to [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.
 3. Fill in the fields of the component.
+
+When adding a component to a dynamic zone, you can also click on the **Copy** button below a component to copy existing component data from another entry. This opens a modal where you can search for and select an entry that contains the same component. The modal includes a **Recently copied** section that shows the last component copied for quick reuse.
 
 Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
 
