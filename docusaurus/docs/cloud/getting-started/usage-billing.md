@@ -67,7 +67,7 @@ Billing is based on the usage of your Strapi Cloud projects. Project plans and a
 
 ### Taxes
 
-For billing addresses in the US, UK and EU, local taxes may be added to your invoices. Tax amounts are calculated based on your billing address and VAT/Tax ID status, and are displayed during checkout and on invoices.
+For billing addresses in the US, UK, Canada, India and EU, local taxes may be added to your invoices. Tax amounts are calculated based on your billing address and VAT/Tax ID status, and are displayed during checkout and on invoices.
 
 You can add or update your VAT/Tax ID from your [Account Billing](/cloud/account/account-billing) settings.
 
