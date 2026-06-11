@@ -13,17 +13,119 @@ tags:
 
 The [Media Library feature](/cms/features/media-library) is powered in the back-end server of Strapi by the `upload` package. To upload files to Strapi, you can either use the Media Library directly from the admin panel, or use the [REST API](/cms/api/rest), with the following available endpoints :
 
-| Method | Path                    | Description         |
-| :----- | :---------------------- | :------------------ |
-| GET    | `/api/upload/files`     | Get a list of files |
-| GET    | `/api/upload/files/:id` | Get a specific file |
-| POST   | `/api/upload`           | Upload files        |
-| POST   | `/api/upload?id=x`      | Update fileInfo     |
-| DELETE | `/api/upload/files/:id` | Delete a file       |
+| Method | Path                         | Description                         |
+| :----- | :--------------------------- | :---------------------------------- |
+| GET    | `/api/upload/files`          | Get a list of files                 |
+| GET    | `/api/upload/files/page`     | Get a paginated list of files       |
+| GET    | `/api/upload/files/:id`      | Get a specific file                 |
+| POST   | `/api/upload`                | Upload files                        |
+| POST   | `/api/upload?id=x`           | Update fileInfo                     |
+| DELETE | `/api/upload/files/:id`      | Delete a file                       |
 
 :::note Notes
 - [Folders](/cms/features/media-library#organizing-assets-with-folders) are an admin panel-only feature and are not part of the Content API (REST or GraphQL). Files uploaded through REST are located in the automatically created "API Uploads" folder.
 - The GraphQL API does not support uploading media files. To upload files, use the REST API or directly add files from the [Media Library](/cms/features/media-library) in the admin panel. Some GraphQL mutations to update or delete uploaded media files are still possible (see [GraphQL API documentation](/cms/api/graphql#mutations-on-media-files) for details).
+:::
+
+## Get a list of files
+
+You can retrieve a list of files using either the legacy flat-array endpoint or the paginated endpoint.
+
+### Get paginated files
+
+The `/api/upload/files/page` endpoint returns files in the standard Strapi paginated response format. This is the recommended endpoint when you need pagination support.
+
+**Example request:**
+
+```bash
+GET /api/upload/files/page?pagination[page]=1&pagination[pageSize]=10
+```
+
+**Example response:**
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "example.jpg",
+      "alternativeText": "An example image",
+      "caption": null,
+      "width": 1920,
+      "height": 1080,
+      "formats": { /* ... */ },
+      "hash": "example_abc123",
+      "ext": ".jpg",
+      "mime": "image/jpeg",
+      "size": 245.6,
+      "url": "/uploads/example_abc123.jpg",
+      "previewUrl": null,
+      "provider": "local",
+      "provider_metadata": null,
+      "createdAt": "2023-01-15T10:30:00.000Z",
+      "updatedAt": "2023-01-15T10:30:00.000Z"
+    }
+    // ... more files
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 10,
+      "pageCount": 4,
+      "total": 35
+    }
+  }
+}
+```
+
+The endpoint supports the following query parameters:
+
+| Parameter                      | Description                                                                                           |
+| :----------------------------- | :---------------------------------------------------------------------------------------------------- |
+| `pagination[page]`             | Page number (default: 1)                                                                              |
+| `pagination[pageSize]`         | Number of items per page (default: 25)                                                                |
+| `pagination[start]`            | Offset-based pagination: starting index                                                               |
+| `pagination[limit]`            | Offset-based pagination: number of items                                                              |
+| `pagination[withCount]`        | Include total count and page count (default: true). Set to `false` to skip count query for performance |
+| `filters`                      | Filter files (e.g., `filters[mime][$contains]=image`)                                                 |
+| `sort`                         | Sort files (e.g., `sort=createdAt:desc`)                                                              |
+| `fields`                       | Select specific fields (e.g., `fields=name,url`)                                                      |
+| `populate`                     | Populate relations                                                                                    |
+
+:::info
+The `/api/upload/files/page` endpoint respects the `api.rest.defaultLimit` and `api.rest.maxLimit` configuration options, just like other REST API endpoints.
+:::
+
+### Get all files (legacy)
+
+The `/api/upload/files` endpoint returns a flat array of all files without pagination support. This endpoint is maintained for backward compatibility.
+
+**Example request:**
+
+```bash
+GET /api/upload/files
+```
+
+**Example response:**
+
+```json
+[
+  {
+    "id": 1,
+    "name": "example.jpg",
+    // ... file properties
+  },
+  {
+    "id": 2,
+    "name": "another.png",
+    // ... file properties
+  }
+  // ... all files
+]
+```
+
+:::caution
+The `/api/upload/files` endpoint returns all files in a single flat array and ignores pagination parameters. For large media libraries, use `/api/upload/files/page` instead.
 :::
 
 ## Upload files
