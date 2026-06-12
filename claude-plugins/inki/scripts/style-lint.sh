@@ -176,6 +176,14 @@ lint_file() {
       fi
     fi
 
+    # Em dash written as an HTML entity: &mdash;, &#8212; (decimal), or &#x2014;
+    # (hex). MDX renders these as the em dash character, so they are the same
+    # violation as a literal em dash but slip past the literal-character match.
+    if echo "$line" | grep -qiE "&(mdash|#8212|#x2014);"; then
+      echo "error:${line_num}:em-dash-entity:Em dash HTML entity found -- replace with colon, period, or restructure"
+      has_errors=1
+    fi
+
     # Double hyphens used as dashes in prose (not in frontmatter or HTML comments)
     if echo "$line" | grep -qE " -- "; then
       # Exclude frontmatter separators (---) and HTML comments (<!--)
