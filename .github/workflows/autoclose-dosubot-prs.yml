@@ -1,0 +1,43 @@
+# TEMPORARY: auto-close PRs opened by dosubot.
+# Engineering cannot stop dosubot from opening PRs upstream, so this gate
+# closes them on arrival with a redirect to sanctioned tooling.
+# Remove this workflow once dosubot is blocked at the source.
+name: Auto-close dosubot PRs (temporary)
+
+on:
+  pull_request_target:
+    types: [opened, reopened]
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  autoclose:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event.pull_request.user.login == 'dosubot' ||
+      github.event.pull_request.user.login == 'dosubot[bot]'
+    steps:
+      - name: Comment and close
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = context.payload.pull_request.number;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: "Not accepting PRs by Dosubot. Please use tools that respect Strapi Docs conventions instead; for instance the Inki Claude Code plugin or the Cursor rules.",
+            });
+
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              state: "closed",
+            });
+
+            console.log(`Closed PR #${prNumber} opened by ${context.payload.pull_request.user.login}`);
