@@ -434,6 +434,11 @@
       "number": 26576,
       "reason": "Router: Internal security fix to prevent race condition in first-admin registration. No user-facing API changes, new features, or configuration options introduced. Rate limiting is an implementation detail, not a documented feature.",
       "added": "2026-06-11"
+    },
+    {
+      "number": 26591,
+      "reason": "Router: Internal security/correctness fix to admin panel email validation. No new user-facing features, APIs, or configurations introduced. The endpoint already existed; this PR fixes a missing validation check. Bug fixes and internal improvements to existing functionality do not require documentation updates.",
+      "added": "2026-06-12"
     }
   ]
 }
