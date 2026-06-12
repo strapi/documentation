@@ -352,7 +352,7 @@ When you POST a document, each object inside a dynamic zone array must include `
 
 ### Update a document {#update}
 
-Partially updates a document by `id` and returns its value.
+Partially updates a document by `documentId` and returns its value.
 
 Send a `null` value to clear fields.
 
