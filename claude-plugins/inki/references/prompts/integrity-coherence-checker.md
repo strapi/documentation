@@ -43,6 +43,8 @@ If these files are already loaded (e.g., the Router fetched them earlier in the 
 | Check | How to verify | Severity if wrong |
 |-------|---------------|-------------------|
 | Cross-reference targets exist | Fetch the linked page, verify the heading/anchor exists | **error** |
+| Inbound anchor links resolve | `grep` the docs tree for links to this page; verify each anchor still matches a heading here | **error** |
+| Section used as a shared destination | 2+ other pages deep-link to the same section of this page | **warning** |
 | Terminology consistency | Same concept uses the same term on both pages | **warning** |
 | Behavioral consistency | Same API/feature described identically on both pages | **error** |
 | No contradictions | Pages don't make conflicting claims about the same thing | **error** |
@@ -55,9 +57,17 @@ If these files are already loaded (e.g., the Router fetched them earlier in the 
 ### Step 1: Collect cross-references
 
 Scan the content and extract:
-- **Internal links**: All Markdown links to other doc pages (`/cms/...`, `#anchor`, relative paths)
+- **Outgoing links**: All Markdown links from this page to other doc pages (`/cms/...`, `#anchor`, relative paths)
 - **Component links**: `<CustomDocCard>` links, `<SideBySideColumn>` references
 - **Implicit references**: Mentions of features, APIs, or concepts that have their own doc pages (e.g., "the Content API" without a link could still create a coherence obligation)
+
+Then collect **inbound links** — pages elsewhere in the docs that link TO the page under review:
+
+- Search the other doc pages (via `grep` on the local docs tree, or the raw GitHub source) for links whose target is this page's route, including anchor links to a specific section (`/cloud/advanced/upload#strapi-cloud-upload-size-limits`).
+- For each inbound link, record the source page and the exact section anchor it points at.
+- This is cheap: a single `grep` across `docusaurus/docs/` finds them without per-page fetches.
+
+Inbound anchor links matter for coherence because they reveal how the rest of the docs treats this page. If two or more other pages deep-link to the SAME section of this page as a reference destination, that section is functioning as a standalone reference. Flag this (warning) and note it: the section may belong on its own page, and the Outline Checker's "title vs. content scope" rule should weight it accordingly. Always verify each inbound anchor still resolves to a real heading here — a renamed or moved heading silently breaks every inbound link.
 
 ### Step 2: Structure-first verification
 
