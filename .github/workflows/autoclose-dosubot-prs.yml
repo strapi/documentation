@@ -30,7 +30,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
-              body: "Not accepting PRs by Dosubot. Please use tools that respect Strapi Docs conventions instead; for instance the Inki Claude Code plugin or the Cursor rules.",
+              body: "Auto-closed for the following reason: Not accepting PRs by Dosubot. Please use tools that respect Strapi Docs conventions instead; for instance the Inki Claude Code plugin or the Cursor rules found at the root of the present repository.",
             });
 
             await github.rest.pulls.update({
