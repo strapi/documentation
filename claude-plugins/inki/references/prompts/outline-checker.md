@@ -179,6 +179,18 @@ Headings at the same level should use the same grammatical form:
 
 When required, `<Tldr>` must appear immediately after the H1.
 
+#### 5. Title vs. Content Scope (warning if broken)
+
+The H1/`title` must describe the WHOLE page, not just its first or largest section. A page should cover one topic.
+
+**Detect:** A top-level (H2) section whose topic is not covered by the H1/`title` or `<Tldr>`. Concretely, flag when:
+- An H2's subject is absent from both the title and the `<Tldr>` (e.g. title "Upload Provider Configuration" with an H2 "Upload size limits" about infrastructure caps), AND
+- That section is a separate reference topic rather than a step/prerequisite of the page's stated task.
+
+When detected, recommend, in order: (1) extract the off-scope section to its own page and cross-link to it; (2) move it below the page's primary content; (3) only if neither fits, broaden the H1 and `<Tldr>` so the title honestly covers every top-level section. Treat the first top section as especially significant: it sets the reader's expectation against the title.
+
+A strong signal that an off-scope section should be its own page: other pages deep-link to it by anchor as a reference destination. The Coherence Checker reports such inbound links; weight this finding higher when they exist.
+
 ---
 
 ### Template-Specific Rules
@@ -303,6 +315,7 @@ When no specific template applies, or as additional quality feedback, evaluate t
 | Missing frontmatter field (title, description, displayed_sidebar, tags) | error | Field absent from YAML frontmatter |
 | Missing required section | error | Expected H2 not present |
 | Section out of order | warning | H2 sequence doesn't match template |
+| Off-scope section (title/content mismatch) | warning | An H2's topic is not covered by the H1/title or `<Tldr>` and is a separate reference topic |
 | Missing required component | warning | `<Tldr>`, `<IdentityCard>`, etc. not found |
 | Component malformed | warning | `<IdentityCard>` missing items, wrong props |
 | H3 without H2 parent | warning | H3 appears before any H2 |
