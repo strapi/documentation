@@ -101,6 +101,10 @@ options: [--bundler | --open | --no-watch-admin | --no-build-admin | --polling |
   Enables debugging mode with verbose logs.
 - **strapi develop --silent**<br/>
   Suppresses logs.
+- **strapi develop --install-deps**<br/>
+  Auto-installs missing admin peer dependencies (`react`, `react-dom`, `react-router-dom`, `styled-components`). This is enabled by default.
+- **strapi develop --no-install-deps**<br/>
+  Skips auto-installation of missing admin peer dependencies and fails immediately if any are missing.
 
 :::warning
 You should never use this command to run a Strapi application in production.
@@ -123,12 +127,14 @@ strapi build
 
 | Option              | Type | Description                                              |
 | ------------------- | :--: | -------------------------------------------------------- |
-| `-d, --debug`       |  -   | Enable debugging mode with verbose logs (default: false) |
-| `--minify`          |  -   | Minify the output (default: true)                        |
-| `--no-optimization` |  -   | [DEPRECATED]: use minify instead                         |
-| `--silent`          |  -   | Don't log anything (default: false)                      |
-| `--sourcemaps`      |  -   | Produce sourcemaps (default: false)                      |
-| `--stats`           |  -   | Print build statistics to the console (default: false)   |
+| `-d, --debug`        |  -   | Enable debugging mode with verbose logs (default: false) |
+| `--minify`           |  -   | Minify the output (default: true)                        |
+| `--no-optimization`  |  -   | [DEPRECATED]: use minify instead                         |
+| `--silent`           |  -   | Don't log anything (default: false)                      |
+| `--sourcemaps`       |  -   | Produce sourcemaps (default: false)                      |
+| `--stats`            |  -   | Print build statistics to the console (default: false)   |
+| `--install-deps`     |  -   | Auto-installs missing admin peer dependencies (default: false) |
+| `--no-install-deps`  |  -   | Skips auto-installation and fails if dependencies are missing (default: true) |
 
 ### `strapi console`
 
