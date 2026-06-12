@@ -21,7 +21,7 @@ The [Strapi billing portal](https://billing.strapi.io) is where you view and man
 
 While you can view all subscriptions in the portal, only Growth subscriptions can be managed directly there. Cloud subscriptions are managed in the [Strapi Cloud dashboard](/cloud/projects/settings#plans). To change Enterprise contract terms, [contact sales](mailto:sales@strapi.io).
 
-## Signing in to the billing portal
+## Sign in
 
 To sign in:
 
