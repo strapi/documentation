@@ -187,9 +187,9 @@ If you chose the free plan, this billing step will be skipped as you will not be
 
 4. Review the *Invoice* section. When purchasing a monthly subscription, the subscription price will be prorated for the remaining days in the current billing cycle. Optionally, expand the *Discount code* section to enter a code.
 
-    :::note 
+    :::note
     Taxes may be added to your invoice based on your billing address:
-    - In the EU, UK, Canada and India, providing a valid VAT ID exempts you from VAT. If no valid VAT ID is provided, VAT will be added to your invoice.
+    - In the EU, UK, Canada, and India, providing a valid VAT ID exempts you from VAT. If no valid VAT ID is provided, VAT will be added to your invoice.
     - In the US, applicable sales taxes are calculated based on your state and address.
     :::
 

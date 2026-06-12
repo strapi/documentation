@@ -4,27 +4,30 @@ displayed_sidebar: cmsSidebar
 description: "Use the Strapi billing portal to manage your Growth subscription: seats, SSO, payment methods, invoices, cancellation, and reactivation."
 tags:
 - billing
-- Growth plan
+- Growth subscription
 - manage subscription
 ---
 
+import TaxesNote from '/docs/snippets/billing-taxes-note.md'
+
 # Billing portal
-<GrowthBadge /> <EnterpriseBadge/> 
+<GrowthBadge /> <EnterpriseBadge />
 
 <Tldr>
 The Strapi billing portal is where you can view all Strapi subscriptions and manage payment methods, billing details, and invoices. Only Growth subscriptions can be managed in the portal; Cloud and Enterprise subscriptions are view-only.
 </Tldr>
 
-The [Strapi billing portal](https://billing.strapi.io) is where you view and manage billing for your Strapi subscriptions. You can update payment methods, edit billing details and download invoices for all subscriptions. 
+The [Strapi billing portal](https://billing.strapi.io) is where you view and manage billing for your Strapi subscriptions. For all subscriptions, you can update payment methods, edit billing details, and download invoices.
 
 While you can view all subscriptions in the portal, only Growth subscriptions can be managed directly there. Cloud subscriptions are managed in the [Strapi Cloud dashboard](/cloud/projects/settings#plans). To change Enterprise contract terms, [contact sales](mailto:sales@strapi.io).
+
+## Signing in to the billing portal
 
 To sign in:
 
 1. Enter the email address you used at purchase or for CLI authentication.
 2. Enter the 6-digit code sent to your inbox.
 3. If your email is linked to multiple billing accounts, select the account you want to manage.
-
 
 ## Subscriptions
 
@@ -79,16 +82,16 @@ When you remove seats or disable the SSO add-on, the change takes effect at the 
 If you add seats and disable SSO in the same change, the seat increase applies immediately with a prorated charge. SSO removal is still deferred to the next renewal.
 :::
 
-### Cancelling a Growth subscription
+### Canceling a Growth subscription
 
 To cancel an active Growth subscription:
 
 1. Click **Cancel subscription**.
 2. In the *Cancel subscription* dialog, click **Confirm** to schedule the cancellation.
 
-Cancellations are effective at the end of the billing period. Whilst the change is pending, you can undo the scheduled cancellation and reactivate your subscription.
+Cancellations are effective at the end of the billing period. While the change is pending, you can undo the scheduled cancellation and reactivate your subscription.
 
-Similarly, you can also reactivate a canceled subscription even after the cancellation has taken effect. To reactivate, click **Reactivate** on the subscription card and follow the steps.
+You can also reactivate a canceled subscription even after the cancellation has taken effect. To reactivate, click **Reactivate** on the subscription card and follow the steps.
 
 ## Payment methods
 
@@ -117,15 +120,16 @@ The default card will be used for all subscription-related transactions, includi
 ### Updating or removing a card
 
 To update an existing payment card:
-1. Click on the <Icon name="dots-three-outline" /> icon of the payment card you wish to edit.
 
-        a. Click **Set as primary** to make this your default card. 
-
-        b. Click **Edit card** and enter the card number, expiration date, and CVV/CVC to change your card details. Click **Save**.
+1. Click the <Icon name="dots-three-outline" /> icon of the payment card you want to edit.
+2. Do one of the following:
+   - Click **Set as default** to make this your default card.
+   - Click **Edit card**, update the card number, expiration date, and CVV/CVC, then click **Save**.
 
 To remove an existing payment card:
-1. Click on the <Icon name="dots-three-outline" /> icon of the payment card you wish to delete.
-2. Click **Remove card**. 
+
+1. Click the <Icon name="dots-three-outline" /> icon of the payment card you want to delete.
+2. Click **Remove card**.
 3. Click **Confirm** in the *Remove payment method* dialog.
 
 :::caution
@@ -134,7 +138,7 @@ You cannot remove your default card. In cases where a secondary card is attached
 
 ## Billing details
 
-The *Billing details* tab lets you view and edit account billing information. Required fields in this section must be completed in order to activate a trial subscription.
+The *Billing details* tab lets you view and edit account billing information. Required fields in this section must be completed to activate a trial subscription.
 
 <ThemedImage
 alt="Billing portal screenshot: billing details"
@@ -144,10 +148,8 @@ sources={{
 }}
 />
 
-:::note 
-Taxes may be added to your invoice based on your billing address:
-- In the EU, UK, Canada and India, providing a valid VAT ID exempts you from VAT. If no valid VAT ID is provided, VAT will be added to your invoice.
-- In the US, applicable sales taxes are calculated based on your state and address.
+:::note
+<TaxesNote />
 :::
 
 ## Invoices
