@@ -21,7 +21,7 @@ While you can view all subscriptions in the portal, only Growth subscriptions ca
 
 ## Sign in
 
-To sign in:
+To sign in to the [billing portal](https://billing.strapi.io):
 
 1. Enter the email address you used at purchase or for CLI authentication.
 2. Enter the 6-digit code sent to your inbox.
