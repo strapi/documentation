@@ -37367,6 +37367,25 @@ npx @strapi/upgrade latest
 ```
 
 
+## Upgrade to a specific version
+Description: Run the upgrade tool with the to parameter followed by a target version to upgrade the project to that specific published version of Strapi:
+(Source: https://docs.strapi.io/cms/upgrade-tool#upgrade-to-a-specific-version)
+
+Language: Bash
+File path: N/A
+
+```bash
+npx @strapi/upgrade to 5.42.0
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+npx @strapi/upgrade to 5.0.0-beta.951 --codemods-target 5.0.0
+```
+
+
 ## Run codemods only
 Description: To view a list of the available codemods, use the ls command:
 (Source: https://docs.strapi.io/cms/upgrade-tool#run-codemods-only)
@@ -37484,10 +37503,12 @@ Options:
  -h, --help       Print command line options
 
 Commands:
- major [options]  Upgrade to the next available major version of Strapi
- minor [options]  Upgrade to ...
- patch [options]  Upgrade to ...
- help [command]   Print options for a specific command
+ latest [options]  Upgrade to the latest available version of Strapi
+ major [options]   Upgrade to the next available major version of Strapi
+ minor [options]   Upgrade to ...
+ patch [options]   Upgrade to ...
+to [options] <target> Upgrade to a specific version of Strapi
+ help [command]    Print options for a specific command
 ```
 
 ---
