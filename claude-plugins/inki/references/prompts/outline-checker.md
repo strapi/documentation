@@ -58,6 +58,7 @@ The Outline Checker determines the document type using this priority:
 | `cms/api/*` | API | `claude-plugins/inki/references/templates/api-template.md` |
 | `cms/migration/**/breaking-changes/*.md` | Breaking Change | `claude-plugins/inki/references/templates/breaking-change-template.md` |
 | `**/guides/*` or title starts with "How to" | Guide | `claude-plugins/inki/references/templates/guide-template.md` |
+| `cloud/advanced/*` | Cloud Advanced | `claude-plugins/inki/references/templates/cloud-advanced-template.md` |
 | No match | General | No specific template — apply general rules only |
 
 ### Outputs
@@ -236,6 +237,20 @@ When required, `<Tldr>` must appear immediately after the H1.
 - `<Tldr>` — Required
 
 **Fallback — Expected sections:** TL;DR → Location → Available options → Environment variables
+
+---
+
+#### Cloud Advanced Pages (`cloud/advanced/*`)
+
+**Template (SSOT):** `claude-plugins/inki/references/templates/cloud-advanced-template.md`
+
+**Fallback — Key components:**
+- `<Tldr>` — Required, immediately after H1
+- `displayed_sidebar: cloudSidebar` — Required in frontmatter
+
+**Fallback — Expected sections:** No fixed H2 skeleton. TL;DR → Intro naming the topic → thematic H2s scoped to the topic.
+
+**Key rule:** One page = one topic. The H1 title must describe ALL of the page's content. Flag (warning) any top-level section that broadens the page past what its title and `<Tldr>` promise — for example a size-limits reference section added to a page titled "Upload Provider Configuration". Such a section usually belongs on its own `cloud/advanced/*` page that this page links to, not inlined (especially if other pages deep-link to it as a destination).
 
 ---
 
