@@ -45,6 +45,7 @@ const sidebars = {
           label: 'Content Type Builder',
         },
         'cms/deployment',
+        'cms/billing-portal',
       ],
     },
     { // Features
