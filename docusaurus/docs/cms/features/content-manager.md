@@ -309,6 +309,15 @@ New entries are only considered created once some of their content has been writ
 While in the Edit view, click the <Icon name="dots-three-outline"/> in the top right corner of the page to view the published, updated, and created dates for the entry. Use the <Icon name="copy"/>&nbsp;**Copy document ID** button to copy the value to your clipboard. This is only available for collection type entries.
 :::
 
+#### Keyboard shortcuts
+
+When editing content, you can use the following keyboard shortcuts to save or publish entries quickly:
+
+- **Cmd/Ctrl + Enter** (or **Cmd/Ctrl + S**): Save a draft
+- **Cmd/Ctrl + Shift + Enter**: Publish content
+
+These shortcuts work when you're editing an entry in the edit view. The save shortcut saves the current entry as a draft, while the publish shortcut publishes the entry directly.
+
 <!-- MAY BE REMOVED - NOT SURE ABOUT RELEVANCE
 
 :::info
