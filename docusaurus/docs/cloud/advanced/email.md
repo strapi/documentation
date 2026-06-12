@@ -46,12 +46,12 @@ Using either `npm` or `yarn`, install the provider plugin in your local Strapi p
 
 ### Configure the Provider
 
-In your Strapi project, create a `./config/env/production/plugins.js` or `./config/env/production/plugins.ts` file with the following content:
+In your Strapi project, create a `/config/env/production/plugins.js` or `/config/env/production/plugins.ts` file with the following content:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js title=./config/env/production/plugins.js
+```js title=/config/env/production/plugins.js
 
 module.exports = ({ env }) => ({
   // … some unrelated plugins configuration options
@@ -69,7 +69,7 @@ module.exports = ({ env }) => ({
 </TabItem>
 <TabItem value="ts" label="TypeScript">
 
-```ts title=./config/env/production/plugins.ts
+```ts title=/config/env/production/plugins.ts
 
 export default ({ env }) => ({
   // … some unrelated plugins configuration options
@@ -100,7 +100,7 @@ Each provider will have different configuration settings available. Review the r
 <Tabs groupId="email-examples" >
 <TabItem value="sendgrid" label="Sendgrid">
 
-```js title=./config/env/production/plugins.js
+```js title=/config/env/production/plugins.js
 module.exports = ({ env }) => ({
   // ...
   email: {
@@ -122,7 +122,7 @@ module.exports = ({ env }) => ({
 </TabItem >
 <TabItem value="amazon-ses" label="Amazon SES">
 
-```js title=./config/env/production/plugins.js
+```js title=/config/env/production/plugins.js
 module.exports = ({ env }) => ({
   // ...
   email: {
@@ -146,7 +146,7 @@ module.exports = ({ env }) => ({
 </TabItem>
 <TabItem value="mailgun" label="Mailgun">
 
-```js title=./config/env/production/plugins.js
+```js title=/config/env/production/plugins.js
 module.exports = ({ env }) => ({
   // ...
   email: {
@@ -174,7 +174,7 @@ module.exports = ({ env }) => ({
 <Tabs groupId="email-examples" >
 <TabItem value="sendgrid" label="Sendgrid">
 
-```ts title=./config/env/production/plugins.ts
+```ts title=/config/env/production/plugins.ts
 export default ({ env }) => ({
   // ...
   email: {
@@ -196,7 +196,7 @@ export default ({ env }) => ({
 </TabItem >
 <TabItem value="amazon-ses" label="Amazon SES">
 
-```ts title=./config/env/production/plugins.ts
+```ts title=/config/env/production/plugins.ts
 export default ({ env }) => ({
   // ...
   email: {
@@ -220,7 +220,7 @@ export default ({ env }) => ({
 </TabItem>
 <TabItem value="mailgun" label="Mailgun">
 
-```ts title=./config/env/production/plugins.ts
+```ts title=/config/env/production/plugins.ts
 export default ({ env }) => ({
   // ...
   email: {
