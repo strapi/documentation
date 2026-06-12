@@ -309,6 +309,69 @@ lint_file() {
     fi
 
   done <<< "$stripped"
+
+  # Rule 12: overuse of bold -- more than 3 bolded terms in a single paragraph.
+  # Operates on the stripped content (code blocks and inline code already removed)
+  # so bold inside code is never counted. Paragraphs are blocks of consecutive
+  # non-blank lines; the finding is reported on the paragraph's first line.
+  check_bold_overuse "$file" "$stripped"
+}
+
+# Counts **bold** spans per paragraph and warns when a paragraph carries more
+# than 3. Admonition prefixes (**Note:**, **Warning:**, etc.) are excluded:
+# they are handled by the bold-admonition rule and are not prose emphasis.
+# Operates on the already-stripped content so bold inside code is never counted.
+check_bold_overuse() {
+  local file="$1"
+  local stripped="$2"
+
+  local findings
+  findings=$(awk '
+    BEGIN { para_start = 0; count = 0; in_frontmatter = 0; line_num = 0 }
+
+    {
+      line_num++
+
+      # Skip YAML frontmatter (--- delimited block at the top of the file).
+      if (line_num == 1 && $0 == "---") { in_frontmatter = 1; next }
+      if (in_frontmatter) { if ($0 == "---") in_frontmatter = 0; next }
+    }
+
+    # Blank line ends the current paragraph: emit a finding if over threshold.
+    /^[[:space:]]*$/ {
+      if (count > 3) {
+        print "warning:" para_start ":bold-overuse:" count " bolded terms in one paragraph -- Rule 12: overuse of bold, use structure (headings, lists, admonitions) instead"
+      }
+      para_start = 0
+      count = 0
+      next
+    }
+
+    {
+      if (para_start == 0) para_start = line_num
+
+      # Strip admonition-prefix bolds so they are not counted as emphasis.
+      work = $0
+      gsub(/\*\*(Note|Important|Warning|Tip|Caution):\*\*/, "", work)
+
+      # Count remaining **...** spans on this line.
+      while (match(work, /\*\*[^*]+\*\*/)) {
+        count++
+        work = substr(work, RSTART + RLENGTH)
+      }
+    }
+
+    END {
+      if (count > 3) {
+        print "warning:" para_start ":bold-overuse:" count " bolded terms in one paragraph -- Rule 12: overuse of bold, use structure (headings, lists, admonitions) instead"
+      }
+    }
+  ' <<< "$stripped")
+
+  if [[ -n "$findings" ]]; then
+    echo "$findings"
+    has_warnings=1
+  fi
 }
 
 # --- Main ---
