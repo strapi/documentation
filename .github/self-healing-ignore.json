@@ -439,6 +439,26 @@
       "number": 26591,
       "reason": "Router: Internal security/correctness fix to admin panel email validation. No new user-facing features, APIs, or configurations introduced. The endpoint already existed; this PR fixes a missing validation check. Bug fixes and internal improvements to existing functionality do not require documentation updates.",
       "added": "2026-06-12"
+    },
+    {
+      "number": 26627,
+      "reason": "Triage: Internal build tooling change to TypeScript configuration; no user-facing behavior change",
+      "added": "2026-06-13"
+    },
+    {
+      "number": 26279,
+      "reason": "Triage: Internal database query optimization (N+1 to bulk queries); user-facing behavior unchanged",
+      "added": "2026-06-13"
+    },
+    {
+      "number": 26086,
+      "reason": "Router: Internal implementation fix to the data-transfer module's asset streaming logic. This fixes a crash when pushing to Strapi Cloud but is not a public API change or user-facing feature change. The fix addresses a timeout/buffering issue in the stream handler—users are not expected to learn or configure anything new. This is transparent to end users.",
+      "added": "2026-06-13"
+    },
+    {
+      "number": 24997,
+      "reason": "Router: Bug fix to the Content Manager's BlocksInput component that restores broken IME (Input Method Editor) composition behavior. This fix allows users with Japanese, Chinese, and other IME-based input methods to properly compose text without unexpected block splitting. The fix restores correct functionality rather than adding new capability or requiring users to learn new steps. This is a transparent restoration of expected behavior.",
+      "added": "2026-06-13"
     }
   ]
 }
