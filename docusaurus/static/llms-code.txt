@@ -2,11 +2,11 @@
 Source: https://docs.strapi.io/cloud/advanced/email
 
 ## Configure the Provider
-Description: In your Strapi project, create a ./config/env/production/plugins.js or ./config/env/production/plugins.ts file with the following content:
+Description: In your Strapi project, create a /config/env/production/plugins.js or /config/env/production/plugins.ts file with the following content:
 (Source: https://docs.strapi.io/cloud/advanced/email#configure-the-provider)
 
 Language: JavaScript
-File path: ./config/env/production/plugins.js
+File path: /config/env/production/plugins.js
 
 ```js
 
@@ -25,7 +25,7 @@ module.exports = ({ env }) => ({
 
 ---
 Language: TypeScript
-File path: ./config/env/production/plugins.ts
+File path: /config/env/production/plugins.ts
 
 ```ts
 
@@ -43,7 +43,7 @@ export default ({ env }) => ({
 ```
 
 Language: JavaScript
-File path: ./config/env/production/plugins.js
+File path: /config/env/production/plugins.js
 
 ```js
 module.exports = ({ env }) => ({
@@ -66,7 +66,7 @@ module.exports = ({ env }) => ({
 
 ---
 Language: JavaScript
-File path: ./config/env/production/plugins.js
+File path: /config/env/production/plugins.js
 
 ```js
 module.exports = ({ env }) => ({
@@ -91,7 +91,7 @@ module.exports = ({ env }) => ({
 
 ---
 Language: JavaScript
-File path: ./config/env/production/plugins.js
+File path: /config/env/production/plugins.js
 
 ```js
 module.exports = ({ env }) => ({
@@ -115,7 +115,7 @@ module.exports = ({ env }) => ({
 ```
 
 Language: TypeScript
-File path: ./config/env/production/plugins.ts
+File path: /config/env/production/plugins.ts
 
 ```ts
 export default ({ env }) => ({
@@ -138,7 +138,7 @@ export default ({ env }) => ({
 
 ---
 Language: TypeScript
-File path: ./config/env/production/plugins.ts
+File path: /config/env/production/plugins.ts
 
 ```ts
 export default ({ env }) => ({
@@ -163,7 +163,7 @@ export default ({ env }) => ({
 
 ---
 Language: TypeScript
-File path: ./config/env/production/plugins.ts
+File path: /config/env/production/plugins.ts
 
 ```ts
 export default ({ env }) => ({
