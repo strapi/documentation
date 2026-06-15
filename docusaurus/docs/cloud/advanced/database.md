@@ -41,7 +41,7 @@ Any environment variable added to your project that starts with `DATABASE_` will
 
 ## Configuration
 
-The project `./config/database.js` or `./config/database.ts` file must match the configuration found in the [environment variables in database configurations](https://docs.strapi.io/cms/configurations/database#environment-variables-in-database-configurations) section.
+The project `/config/database.js` or `/config/database.ts` file must match the configuration found in the [environment variables in database configurations](https://docs.strapi.io/cms/configurations/database#environment-variables-in-database-configurations) section.
 
 Before pushing changes, add environment variables to the Strapi Cloud project:
 
