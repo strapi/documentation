@@ -33,3 +33,7 @@ Severity: low | medium | high
 ```
 
 If no cataloged pitfall is present, say so in one line.
+
+## Adding to the catalog
+
+You are read-only and never edit the catalog. If you spot a *new* recurring mistake worth catching automatically in future reviews, note it in your report and suggest the user run `/inki:pitfalls-add` to verify and add it. That skill is the only one allowed to write the catalog.
