@@ -1,7 +1,7 @@
 ---
 name: submit
-description: "Top-level orchestrator: branch (if needed), commit, push, then open a PR. Each step asks for confirmation before continuing, unless --auto is passed."
-argument-hint: "[--auto] [issue reference or topic hint, e.g. 'Fixes #2143']"
+description: "Top-level orchestrator: branch (if needed), commit, push, then open a PR. Each step asks for confirmation before continuing, unless --auto-approve is passed."
+argument-hint: "[--auto-approve] [issue reference or topic hint, e.g. 'Fixes #2143']"
 user-invocable: true
 ---
 
@@ -9,7 +9,7 @@ user-invocable: true
 
 ## Step 0: Parse arguments
 
-From `$ARGUMENTS`, detect the auto flag anywhere in the list: `--auto`, `--yes`, or `-y` (all equivalent; `--auto` is canonical). If present, set `AUTO=true` and remove the flag. What remains is the optional issue reference passed through to `/inki:pr`.
+From `$ARGUMENTS`, detect the auto-approve flag anywhere in the list: `--auto-approve` (canonical), or its aliases `--auto`, `--yes`, `-y` (all equivalent). If present, set `AUTO=true` and remove the flag. What remains is the optional issue reference passed through to `/inki:pr`.
 
 ## Workflow
 
@@ -24,7 +24,7 @@ The user confirms at each gate. If any sub-step fails or the user cancels, stop 
 
 ### Auto (`AUTO=true`)
 
-Pass `--auto` to each sub-skill that supports it. The chain runs without prompts. If any sub-skill genuinely needs a decision that isn't trivially auto-derivable (e.g., branch prefix is ambiguous and no hint was provided), it will still ask. `--auto` skips confirmations, not informed decisions.
+Pass `--auto-approve` to each sub-skill that supports it. The chain runs without prompts. If any sub-skill genuinely needs a decision that isn't trivially auto-derivable (e.g., branch prefix is ambiguous and no hint was provided), it will still ask. `--auto-approve` skips confirmations, not informed decisions.
 
 The safety bracket from `pr-fix` does NOT apply here, because `/inki:submit` operates only on the current branch (single PR scope by construction).
 

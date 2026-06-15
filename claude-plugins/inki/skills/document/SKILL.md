@@ -1,19 +1,19 @@
 ---
 name: document
-description: "End-to-end documentation orchestrator: chains all four inki phases (research, write, review, submit) for a single subject. Gates between each phase by default; --auto chains without pauses. The simplest way to document a subject from scratch."
-argument-hint: "[--auto] <subject: keywords | Notion URL | Linear issue | PDF path | pasted text>"
+description: "End-to-end documentation orchestrator: chains all four inki phases (research, write, review, submit) for a single subject. Gates between each phase by default; --auto-approve chains without pauses. The simplest way to document a subject from scratch."
+argument-hint: "[--auto-approve] <subject: keywords | Notion URL | Linear issue | PDF path | pasted text>"
 user-invocable: true
 ---
 
 # /inki:document — document a subject end to end
 
-`/inki:document` is the one-shot entry point to the whole inki workflow. Given a subject to document, it runs the four families in order — **research → write → review → submit** — pausing for your approval between each phase so you stay in control. Pass `--auto` to chain all four without stopping.
+`/inki:document` is the one-shot entry point to the whole inki workflow. Given a subject to document, it runs the four families in order — **research → write → review → submit** — pausing for your approval between each phase so you stay in control. Pass `--auto-approve` to chain all four without stopping.
 
 It is a thin orchestrator: each phase is delegated to its existing top-level skill (`/inki:research`, `/inki:write`, `/inki:review`, `/inki:submit`). This skill adds no review logic of its own; it resolves the subject, sequences the phases, and manages the gates.
 
 ## Step 0: Parse arguments
 
-From `$ARGUMENTS`, detect the auto flag anywhere in the list: `--auto`, `--yes`, or `-y` (all equivalent). If present, set `AUTO=true` and remove the flag. What remains is the **subject**.
+From `$ARGUMENTS`, detect the auto-approve flag anywhere in the list: `--auto-approve` (canonical), or its aliases `--auto`, `--yes`, `-y` (all equivalent). If present, set `AUTO=true` and remove the flag. What remains is the **subject**.
 
 If no subject remains, ask the user what they want to document and stop.
 
@@ -36,14 +36,14 @@ Invoke `/inki:research` on the subject (pass the brief's topic/keywords, or the 
 
 **Gate on the result before continuing:**
 
-- **If research concludes the subject is already documented** (an existing page covers it): **STOP.** Report the existing page path(s) from the research output and end the workflow. Do not chain into write. The user decides what to do next (they can run `/inki:review <path>` themselves to update the existing page). This stop happens even in `--auto` mode — documenting a duplicate is never the intended outcome.
+- **If research concludes the subject is already documented** (an existing page covers it): **STOP.** Report the existing page path(s) from the research output and end the workflow. Do not chain into write. The user decides what to do next (they can run `/inki:review <path>` themselves to update the existing page). This stop happens even in `--auto-approve` mode — documenting a duplicate is never the intended outcome.
 - **Otherwise:** the research output enriches the brief (gaps, related pages, routing). Carry the enriched brief forward.
 
 **Phase gate (skipped when `AUTO=true`):** show the research summary and ask whether to proceed to writing. On no, stop.
 
 ## Step 3: Phase 2 — Write
 
-Invoke `/inki:write` with the enriched brief. In interactive mode `/inki:write` already gates on outline approval before drafting; let it. In `AUTO=true` mode, pass `--auto` through so outline and draft are produced without an inner pause.
+Invoke `/inki:write` with the enriched brief. In interactive mode `/inki:write` already gates on outline approval before drafting; let it. In `AUTO=true` mode, pass `--auto-approve` through so outline and draft are produced without an inner pause.
 
 The output is a drafted page (and its outline file).
 
@@ -51,15 +51,15 @@ The output is a drafted page (and its outline file).
 
 ## Step 4: Phase 3 — Review
 
-Invoke `/inki:review` on the drafted page (the local path produced by Step 3). In `AUTO=true` mode, pass `--auto` so the review runs non-interactively.
+Invoke `/inki:review` on the drafted page (the local path produced by Step 3). In `AUTO=true` mode, pass `--auto-approve` so the review runs non-interactively.
 
-Surface the review report. Fixes are NOT applied automatically unless the user (or `--auto` plus an explicit `--fix` intent) asks for it — `/inki:document` does not pass `--fix` on its own, to avoid silently rewriting a fresh draft.
+Surface the review report. Fixes are NOT applied automatically unless the user (or `--auto-approve` plus an explicit `--fix` intent) asks for it — `/inki:document` does not pass `--fix` on its own, to avoid silently rewriting a fresh draft.
 
 **Phase gate (skipped when `AUTO=true`):** show the review summary and ask whether to proceed to submit. On no, stop (the draft and the review report are kept).
 
 ## Step 5: Phase 4 — Submit
 
-Invoke `/inki:submit` to branch (if on `main`), commit, push, and open the PR. In `AUTO=true` mode, pass `--auto` through.
+Invoke `/inki:submit` to branch (if on `main`), commit, push, and open the PR. In `AUTO=true` mode, pass `--auto-approve` through.
 
 `/inki:submit` retains its own safety behavior (branch prefix detection, push confirmation logic). If the original subject was a Linear issue, mention the issue ID in the PR body via the brief, but do NOT write `Fixes <ID>` — Linear issues are not GitHub issues and that syntax would not close anything.
 
@@ -84,7 +84,7 @@ In a workflow stopped at a gate, show the summary up to the phase reached and st
 ## Rules
 
 - This skill never duplicates phase logic. It only resolves the subject, sequences phases, gates, and summarizes.
-- Default is **gated**: pause between every phase (research→write, write→review, review→submit). `--auto` (alias `--yes`/`-y`) removes the pauses but never the "already documented → stop" guard.
+- Default is **gated**: pause between every phase (research→write, write→review, review→submit). `--auto-approve` (aliases `--auto`, `--yes`, `-y`) removes the pauses but never the "already documented → stop" guard.
 - If any phase fails, stop. Do not skip a phase.
 - Never pass `--fix` to `/inki:review` automatically. Reviewing a fresh draft should surface issues, not silently rewrite it.
 - Respect every downstream safety rule: `/inki:submit`'s push/PR behavior is unchanged; protected paths and git-rules.md still apply.
@@ -98,7 +98,7 @@ Document a topic from keywords, gating between each phase:
 
 Document from a Notion spec, fully automatic up to the draft PR:
 ```
-/inki:document --auto https://www.notion.so/strapi/Realtime-API-spec-abc123
+/inki:document --auto-approve https://www.notion.so/strapi/Realtime-API-spec-abc123
 ```
 
 Document from a Linear issue:

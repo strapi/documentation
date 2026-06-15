@@ -1,7 +1,7 @@
 ---
 name: outline
 description: "Generate an outline for a new documentation page from a topic brief and the appropriate template."
-argument-hint: "[--auto] <topic brief or path to a brief file>"
+argument-hint: "[--auto-approve] <topic brief or path to a brief file>"
 user-invocable: true
 ---
 
@@ -9,7 +9,7 @@ user-invocable: true
 
 ## Step 0: Parse arguments
 
-From `$ARGUMENTS`, detect the auto flag anywhere in the list: `--auto`, `--yes`, or `-y` (all equivalent; `--auto` is canonical). If present, set `AUTO=true` and remove the flag. What remains is the brief.
+From `$ARGUMENTS`, detect the auto-approve flag anywhere in the list: `--auto-approve` (canonical), or its aliases `--auto`, `--yes`, `-y` (all equivalent). If present, set `AUTO=true` and remove the flag. What remains is the brief.
 
 ## Step 1: Read the brief
 

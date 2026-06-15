@@ -1,7 +1,7 @@
 ---
 name: pr-fix
-description: "Rewrite the title or description/body of one or more open PRs on strapi/documentation to match git-rules.md. Strict one-by-one confirmation, or auto-edit with --auto."
-argument-hint: "<title|description|body> [--auto] [--include-old] [PR# or URL] [PR# or URL] ..."
+description: "Rewrite the title or description/body of one or more open PRs on strapi/documentation to match git-rules.md. Strict one-by-one confirmation, or auto-edit with --auto-approve."
+argument-hint: "<title|description|body> [--auto-approve] [--include-old] [PR# or URL] [PR# or URL] ..."
 user-invocable: true
 ---
 
@@ -25,7 +25,7 @@ If no action is given, or if the first token is not one of the above, report the
 
 ### Optional flags (anywhere after the action)
 
-- `--auto` (alias `--yes`, `-y`) → `AUTO=true` (non-interactive: skip confirmation prompts)
+- `--auto-approve` (aliases `--auto`, `--yes`, `-y`) → `AUTO=true` (non-interactive: skip confirmation prompts)
 - `--include-old` → `INCLUDE_OLD=true` (only meaningful when no PR identifiers are given; includes open PRs older than 30 days)
 
 ### Optional PR identifiers
@@ -46,7 +46,7 @@ The 30-day cutoff uses `createdAt` (not `updatedAt`) because bot activity bumps 
 ## Step 0: Parse arguments
 
 1. Read the first positional token as `ACTION` (must be `title`, `description`, or `body`). Normalize `body` → `description` internally.
-2. Detect `--auto` (alias `--yes`/`-y`) → `AUTO=true`. Remove from list.
+2. Detect `--auto-approve` (aliases `--auto`/`--yes`/`-y`) → `AUTO=true`. Remove from list.
 3. Detect `--include-old` → `INCLUDE_OLD=true`. Remove from list.
 4. For each remaining token, extract trailing digits to get the PR number:
    - `2143` → `2143`
@@ -119,7 +119,7 @@ PR #<num>: edited (description rewritten)   (for description)
 A batch confirmation is required as a safety bracket. Display the full list of proposed edits first:
 
 ```
-Review batch (--auto without PR IDs targets all recent open PRs):
+Review batch (--auto-approve without PR IDs targets all recent open PRs):
 
 | PR# | Author | Current | Proposed | Reason |     (for title)
 | PR# | Author | Reason | Preview of new description |  (for description)
@@ -278,15 +278,15 @@ Body alias (same behavior as description):
 
 Auto title rewrite on multiple PRs:
 ```
-/inki:pr-fix title --auto 3204 3202 #3199
+/inki:pr-fix title --auto-approve 3204 3202 #3199
 ```
 
 Auto title rewrite on all recent open PRs (with batch review):
 ```
-/inki:pr-fix title --auto
+/inki:pr-fix title --auto-approve
 ```
 
 Auto title rewrite on all open PRs including stale ones:
 ```
-/inki:pr-fix title --auto --include-old
+/inki:pr-fix title --auto-approve --include-old
 ```
