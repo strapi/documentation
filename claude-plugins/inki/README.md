@@ -115,7 +115,7 @@ Composition, not duplication: `submit` doesn't reinvent git logic. Each sub-skil
 
 ## Command reference
 
-The summary below covers the most common usage. For a generated, per-command reference of every skill and its argument signature, see [COMMANDS.md](./COMMANDS.md) (regenerated from each skill's frontmatter by `scripts/gen-commands.sh`). You can also type `/inki:<skill> --help` to print a single command's usage.
+The summary below covers the most common usage. For a per-command reference of every skill and its argument signature, see [COMMANDS.md](./COMMANDS.md) (maintained by hand; mirrors each skill's frontmatter). You can also type `/inki:<skill> --help` to print a single command's usage.
 
 **Notation for skill arguments:**
 

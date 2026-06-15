@@ -1,9 +1,8 @@
-<!-- GENERATED FILE — do not edit by hand.
-     Source: each skills/<name>/SKILL.md frontmatter. Regenerate with scripts/gen-commands.sh. -->
-
 # Inki command reference
 
 Every Inki skill is invoked as `/inki:<skill>`. This page lists each command, what it does, and its argument signature. For the shared flags (`--auto-approve`, `--no-log`, `--short-log`, `--log-dir`), see the "Common flags" section of the [README](./README.md). Typing `/inki:<skill> --help` also prints a command's usage.
+
+> Maintained by hand. When you add or change a command, update its entry here so the description and argument signature stay in sync with the skill's frontmatter. The command set changes rarely once stable.
 
 ## Document — the full chain in one command
 
