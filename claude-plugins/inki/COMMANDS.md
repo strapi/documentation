@@ -2,7 +2,7 @@
 
 Every Inki skill is invoked as `/inki:<skill>`. This page lists each command, what it does, its argument signature, and every flag it accepts. Typing `/inki:<skill> --help` prints a single command's usage. The shared flags are also summarized in the "Common flags" section of the [README](./README.md).
 
-> Maintained by hand. When you add or change a command (or its flags), update its entry here so the description, argument signature, and flag table stay in sync with the skill's frontmatter and its argument-parsing step. The command set changes rarely once stable.
+> This file is not auto-generated; it is curated. Whoever adds or changes a command (or its flags) — a human editor or an AI agent — should update its entry here so the description, argument signature, and flag table stay in sync with the skill's frontmatter and its argument-parsing step. The command set changes rarely once stable.
 
 ## Document — the full chain in one command
 
