@@ -1,7 +1,7 @@
 ---
 name: review
 description: "Top-level review orchestrator: runs style-check, outline-check, outline-ux-analyzer, code-verify, coherence-check, and pitfalls-check on a file, directory, or PR."
-argument-hint: "[--auto-approve] [--fix] <path | filename | PR# | PR URL | docs.strapi.io URL | pasted content>"
+argument-hint: "[--auto-approve] [--fix] [--no-log] <path | filename | PR# | PR URL | docs.strapi.io URL | pasted content>"
 user-invocable: true
 ---
 
@@ -13,8 +13,11 @@ From `$ARGUMENTS`, detect optional flags anywhere in the list:
 
 - `--auto-approve` (aliases `--auto`, `--yes`, `-y`) → `AUTO=true` (non-interactive: skip any confirmation gates inside sub-skills)
 - `--fix` → `FIX=true` (apply auto-fixable findings from `style-check`)
+- `--no-log`, `--log-dir <path>`, `--verbose-log` → logging flags, handled per `../../references/logging.md`.
 
 Remove the flags. What remains is the **target**.
+
+Unless `--no-log` is passed, write the consolidated report (Step 3) to the run log per `../../references/logging.md`, using the resolved `SCOPE` for the run slug. When `/inki:review` is invoked by `/inki:document`, it logs into that run's existing `review/` subdirectory (one file per fix-loop round) instead of creating its own run directory.
 
 ## Step 1: Resolve target to a set of files
 
