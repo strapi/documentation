@@ -11,7 +11,9 @@ The `pitfalls-checker` agent is read-only: it consults the catalog but never edi
 
 ## Step 0: Parse arguments
 
-From `$ARGUMENTS`, detect `--auto-approve` (aliases `--auto`, `--yes`, `-y`) → `AUTO=true`. What remains describes the pitfall: either free text, or a finding copied from a `pitfalls-check` / `code-verify` report.
+If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../../references/help.md`. Do not modify the catalog.
+
+Otherwise, from `$ARGUMENTS`, detect `--auto-approve` (aliases `--auto`, `--yes`, `-y`) → `AUTO=true`. What remains describes the pitfall: either free text, or a finding copied from a `pitfalls-check` / `code-verify` report.
 
 ## Step 1: Derive the three required fields
 

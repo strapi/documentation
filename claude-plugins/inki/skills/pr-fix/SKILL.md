@@ -45,6 +45,7 @@ The 30-day cutoff uses `createdAt` (not `updatedAt`) because bot activity bumps 
 
 ## Step 0: Parse arguments
 
+0. If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../../references/help.md`. Do not edit any PR.
 1. Read the first positional token as `ACTION` (must be `title`, `description`, or `body`). Normalize `body` → `description` internally.
 2. Detect `--auto-approve` (aliases `--auto`/`--yes`/`-y`) → `AUTO=true`. Remove from list.
 3. Detect `--include-old` → `INCLUDE_OLD=true`. Remove from list.

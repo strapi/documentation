@@ -9,7 +9,9 @@ user-invocable: true
 
 ## Step 0: Parse arguments
 
-From `$ARGUMENTS`, detect optional flags anywhere in the list:
+If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../../references/help.md`. Do not run the review.
+
+Otherwise, from `$ARGUMENTS`, detect optional flags anywhere in the list:
 
 - `--auto-approve` (aliases `--auto`, `--yes`, `-y`) → `AUTO=true` (non-interactive: skip any confirmation gates inside sub-skills)
 - `--fix` → `FIX=true` (apply auto-fixable findings from `style-check`)

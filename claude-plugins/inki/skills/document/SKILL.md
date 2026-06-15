@@ -13,7 +13,9 @@ It is a thin orchestrator: each phase is delegated to its existing top-level ski
 
 ## Step 0: Parse arguments
 
-From `$ARGUMENTS`, detect these flags anywhere in the list, then remove them:
+If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../../references/help.md`. Do not run the workflow.
+
+Otherwise, from `$ARGUMENTS`, detect these flags anywhere in the list, then remove them:
 
 - `--auto-approve` (canonical), or its aliases `--auto`, `--yes`, `-y` (all equivalent) → set `AUTO=true`. Chains all phases without pausing AND approves the review-fix loop in Step 4 (see below).
 - `--fix-rounds <N>` → set `MAX_FIX_ROUNDS=<N>`. Caps how many review→fix iterations Step 4 runs. Defaults to `3` if not given.
