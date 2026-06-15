@@ -1,15 +1,19 @@
 ---
 name: outline
 description: "Generate an outline for a new documentation page from a topic brief and the appropriate template."
-argument-hint: "<topic brief or path to a brief file>"
+argument-hint: "[--auto] <topic brief or path to a brief file>"
 user-invocable: true
 ---
 
 # /inki:outline — generate a page outline
 
+## Step 0: Parse arguments
+
+From `$ARGUMENTS`, detect the auto flag anywhere in the list: `--auto`, `--yes`, or `-y` (all equivalent; `--auto` is canonical). If present, set `AUTO=true` and remove the flag. What remains is the brief.
+
 ## Step 1: Read the brief
 
-`$ARGUMENTS` is either inline text or a path to a `.md` file containing the brief.
+The remaining `$ARGUMENTS` is either inline text or a path to a `.md` file containing the brief.
 
 ## Step 2: Pick the template
 
@@ -21,8 +25,10 @@ Read `../../references/prompts/outliner.md` and `../../references/prompts/outlin
 
 ## Step 4: Show the outline for approval
 
-Display the outline. Wait for `y` (accept) / `n` (discard) / `e` (edit inline).
+If `AUTO=true`, skip the approval gate and go straight to Step 5, saving to the default path.
+
+Otherwise, display the outline. Wait for `y` (accept) / `n` (discard) / `e` (edit inline).
 
 ## Step 5: Save
 
-On `y`, save the outline as a `.md` file at a path the user confirms (typically under `docusaurus/docs/<area>/<slug>.outline.md`).
+On `y` (or in `AUTO=true` mode), save the outline as a `.md` file. In interactive mode, confirm the path with the user (typically under `docusaurus/docs/<area>/<slug>.outline.md`); in auto mode, use that default path without prompting.

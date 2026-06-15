@@ -23,7 +23,7 @@ After install, the skills are available at `/inki:<skill>`, persistent across Cl
 
 ## The four families: a docs workflow end to end
 
-Inki ships 20 skills organized into 4 families that mirror the life of a documentation change: figure out **where** the doc goes, **write** it, **review** it, then **submit** it. Each family has a top-level **orchestrator** with the same name that runs the whole stage, plus **granular skills** you can call on their own for finer control.
+Inki ships 21 skills organized into 4 families that mirror the life of a documentation change: figure out **where** the doc goes, **write** it, **review** it, then **submit** it. Each family has a top-level **orchestrator** with the same name that runs the whole stage, plus **granular skills** you can call on their own for finer control.
 
 | Stage | Family | Orchestrator | Granular skills |
 |-------|--------|-------------|-----------------|
@@ -33,6 +33,23 @@ Inki ships 20 skills organized into 4 families that mirror the life of a documen
 | 4 | 🚀 Submit | `/inki:submit` | `branch`, `commit`, `push`, `pr`, `pr-fix` |
 
 You can run the full chain for a new page, or jump straight to a single stage (e.g. just `/inki:review` on an existing file).
+
+### The shortcut: `/inki:document` — all four stages, one command
+
+If you just want to document a subject from scratch, `/inki:document <subject>` chains all four stages for you:
+
+```
+/inki:document "MCP server configuration"
+   │
+   ├─ 1. research ── is it already documented? where does it belong?   → [gate]
+   ├─ 2. write ───── outline, then draft from the right template       → [gate]
+   ├─ 3. review ──── the six reviewers run against the fresh draft      → [gate]
+   └─ 4. submit ──── branch + commit + push + PR                        → [gate]
+```
+
+It pauses for your approval between each stage by default, so you stay in control. Add `--auto` to chain all four without stopping (you review the resulting PR at the end). The `<subject>` is flexible: keywords, a Notion page URL, a Linear issue, a PDF (spec/RFC), a local file, or pasted notes — `/inki:document` resolves it into a brief and runs from there.
+
+One guard always holds, even with `--auto`: if the research stage finds the subject is **already documented**, `/inki:document` stops and points you at the existing page rather than creating a duplicate.
 
 ### 1. 🔍 Research — figure out where the doc goes
 
@@ -109,6 +126,10 @@ Composition, not duplication: `submit` doesn't reinvent git logic. Each sub-skil
 - `[hint]` = an optional issue reference (e.g., `Fixes #2143`) or short topic hint passed through to the PR.
 - `[PR#]` = a pull request number (e.g., `2143`).
 
+### Document — the full chain in one command
+
+- `/inki:document [--auto] <subject>` — run all four stages (research → write → review → submit) for one subject. Gated between each stage by default; `--auto` chains without pauses. `<subject>` can be keywords, a Notion URL, a Linear issue, a PDF path/URL, a local file, or pasted text. Stops if research finds the subject is already documented.
+
 ### Research — before you write
 
 Find out what already exists, where to put new content, what's missing.
@@ -120,13 +141,13 @@ Find out what already exists, where to put new content, what's missing.
 
 ### Write — produce new content
 
-- `/inki:write [--yes] <brief>` — orchestrator: outline then draft.
+- `/inki:write [--auto] <brief>` — orchestrator: outline then draft.
 - `/inki:outline <brief>` — generate an outline from a brief and template.
 - `/inki:draft <outline>` — draft a page from an outline + template + authoring guide.
 
 ### Review — check what you wrote
 
-- `/inki:review [--yes] [--fix] <path | filename | PR | docs.strapi.io URL | pasted content>` — orchestrator: runs all 6 review sub-skills against any supported target.
+- `/inki:review [--auto] [--fix] <path | filename | PR | docs.strapi.io URL | pasted content>` — orchestrator: runs all 6 review sub-skills against any supported target.
 - `/inki:style-check <path>` — style lint (deterministic + AI).
 - `/inki:outline-check <path>` — verify outline matches template.
 - `/inki:outline-ux-analyzer <path>` — audit pedagogical UX.
@@ -136,16 +157,16 @@ Find out what already exists, where to put new content, what's missing.
 
 ### Submit — get it to GitHub
 
-- `/inki:submit [--yes] [hint]` — orchestrator: branch + commit + push + PR.
+- `/inki:submit [--auto] [hint]` — orchestrator: branch + commit + push + PR.
 - `/inki:branch` — create a properly prefixed branch.
 - `/inki:commit` — stage + commit with a compliant message.
 - `/inki:push` — push with validation.
 - `/inki:pr [issue]` — open a PR with a compliant title and description.
-- `/inki:pr-fix <title|description|body> [--yes] [--include-old] [PR# or URL...]` — rewrite the title or body of existing PRs (`body` is an alias of `description`).
+- `/inki:pr-fix <title|description|body> [--auto] [--include-old] [PR# or URL...]` — rewrite the title or body of existing PRs (`body` is an alias of `description`).
 
 ### Common flags
 
-- `--yes` / `-y` — non-interactive mode: skip confirmation prompts. Useful for chaining skills or scripting.
+- `--auto` (alias `--yes` / `-y`) — non-interactive mode: skip confirmation prompts. Useful for chaining skills or scripting. `--auto` is the canonical form; `--yes`/`-y` are kept as aliases.
 - `--include-old` (only on `pr-fix`) — when no PR IDs are listed, include open PRs older than 30 days. By default, stale PRs are excluded to avoid bumping them with a title/description change notification.
 
 ## How it integrates with this repo
