@@ -59,7 +59,7 @@ Document: <verbatim keywords>.
 
 ### 4 — PDF file
 
-1. Read the PDF with the Read tool (it extracts text; for PDFs over 10 pages, read in page ranges).
+1. Read the PDF with the Read tool, which extracts its text. The Read tool caps how many PDF pages it returns per call, so for a long PDF, read it across several calls (passing a page range each time) until you have the whole document.
 2. If it is a URL, fetch it first to a temp file: `/tmp/inki-document-<slug>.pdf`, then read it.
 3. Distill the extracted text into a brief: title, summary, and the facts/specs relevant to documentation. PDFs are often specs or RFCs — extract requirements, not formatting.
 

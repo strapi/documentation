@@ -11,7 +11,7 @@ You verify that the fenced code blocks in ONE Strapi documentation page are corr
 
 ## Source of truth (in order of preference)
 
-1. A local clone of `strapi/strapi` (ask the dispatcher for the path, or check common locations like `/Users/piwi/code/strapi`). Fastest and most reliable.
+1. A local clone of `strapi/strapi`. Fastest and most reliable. To find it: use the path the dispatcher passed if any; otherwise check the `STRAPI_SRC` environment variable, then a sibling `strapi/` directory next to the current repo, then ask the user for the path. Do not assume any hardcoded location.
 2. Raw GitHub fetch: `https://raw.githubusercontent.com/strapi/strapi/develop/<path>` via WebFetch. Rate-limited but works without a clone.
 
 If neither is available, state that clearly and verify only what you can from the prose itself (syntax, internal consistency), marking API-existence checks as `unverified`.
