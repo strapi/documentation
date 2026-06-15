@@ -169,7 +169,7 @@ Find out what already exists, where to put new content, what's missing.
 
 - `--auto-approve` (aliases `--auto` / `--yes` / `-y`) — non-interactive mode: skip confirmation prompts. Useful for chaining skills or scripting. `--auto-approve` is the canonical form; `--auto`, `--yes`, and `-y` are kept as aliases. On `/inki:document` it also runs the review-fix loop automatically.
 - `--fix-rounds <N>` (on `/inki:document`) — cap the number of review→fix→re-review iterations. Default 3.
-- `--no-log` / `--log-dir <path>` / `--verbose-log` — logging controls. By default, every run writes a report tree to `~/.inki/logs/<YYYY-MM-DD-slug>/` (override with `--log-dir` or the `INKI_LOG_DIR` env var; logs never go inside the worked-on repo). `--no-log` disables it; `--verbose-log` also saves each reviewer agent's raw report.
+- `--no-log` / `--log-dir <path>` / `--short-log` — logging controls. By default, every run writes a verbose Markdown report tree to `~/.inki/logs/<YYYY-MM-DD-slug>/` (override with `--log-dir` or the `INKI_LOG_DIR` env var; logs never go inside the worked-on repo). `--no-log` disables it; `--short-log` trims the verbose per-agent reports, keeping only the consolidated per-phase reports.
 - `--include-old` (only on `pr-fix`) — when no PR IDs are listed, include open PRs older than 30 days. By default, stale PRs are excluded to avoid bumping them with a title/description change notification.
 
 ## How it integrates with this repo

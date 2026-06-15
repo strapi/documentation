@@ -13,7 +13,7 @@ From `$ARGUMENTS`, detect optional flags anywhere in the list:
 
 - `--auto-approve` (aliases `--auto`, `--yes`, `-y`) → `AUTO=true` (non-interactive: skip any confirmation gates inside sub-skills)
 - `--fix` → `FIX=true` (apply auto-fixable findings from `style-check`)
-- `--no-log`, `--log-dir <path>`, `--verbose-log` → logging flags, handled per `../../references/logging.md`.
+- `--no-log`, `--log-dir <path>`, `--short-log` → logging flags, handled per `../../references/logging.md`.
 
 Remove the flags. What remains is the **target**.
 
