@@ -1,7 +1,7 @@
 ---
 name: review
 description: "Top-level review orchestrator: runs style-check, outline-check, outline-ux-analyzer, code-verify, coherence-check, and pitfalls-check on a file, directory, or PR."
-argument-hint: "[--yes|-y] [--fix] <path | filename | PR# | PR URL | docs.strapi.io URL | pasted content>"
+argument-hint: "[--auto] [--fix] <path | filename | PR# | PR URL | docs.strapi.io URL | pasted content>"
 user-invocable: true
 ---
 
@@ -11,7 +11,7 @@ user-invocable: true
 
 From `$ARGUMENTS`, detect optional flags anywhere in the list:
 
-- `--yes` or `-y` → `AUTO=true` (non-interactive: skip any confirmation gates inside sub-skills)
+- `--auto` (alias `--yes`, `-y`) → `AUTO=true` (non-interactive: skip any confirmation gates inside sub-skills)
 - `--fix` → `FIX=true` (apply auto-fixable findings from `style-check`)
 
 Remove the flags. What remains is the **target**.
@@ -87,7 +87,7 @@ Run the `CLEANUP` command returned by the resolver (worktree teardown or temp-fi
 - `--fix` on a PR-scope review applies fixes inside the temporary worktree only (the one created by the resolver). The PR itself is NOT modified by `/inki:review`. To push the fixes, the user must `gh pr checkout <num>` themselves and apply the suggestions manually (or use `/inki:commit` + `/inki:push` after a manual checkout).
 - `--fix` on a `docs.strapi.io` URL review applies fixes inside the temporary `origin/main` worktree only (created by the resolver); that worktree is detached and torn down at cleanup, so nothing is written back. Surface the corrected content in the report, and tell the user to apply it on a real branch.
 - `--fix` on a pasted-content review applies fixes to the temp file only; there is no source file to write back to. Surface the corrected content in the report instead.
-- `--yes` only changes interaction behavior (no extra prompts). It does NOT change what gets auto-fixed — that stays controlled by `--fix`.
+- `--auto` only changes interaction behavior (no extra prompts). It does NOT change what gets auto-fixed — that stays controlled by `--fix`.
 - Never push, commit, or modify the PR directly. The review is read-only by default.
 
 ## Examples
@@ -131,5 +131,5 @@ title: My page
 
 Non-interactive review with auto-fixes applied locally:
 ```
-/inki:review --yes --fix docusaurus/docs/cms/features/strapi-mcp-server.md
+/inki:review --auto --fix docusaurus/docs/cms/features/strapi-mcp-server.md
 ```
