@@ -17,7 +17,7 @@ From `$ARGUMENTS`, detect these flags anywhere in the list, then remove them:
 
 - `--auto-approve` (canonical), or its aliases `--auto`, `--yes`, `-y` (all equivalent) → set `AUTO=true`. Chains all phases without pausing AND approves the review-fix loop in Step 4 (see below).
 - `--fix-rounds <N>` → set `MAX_FIX_ROUNDS=<N>`. Caps how many review→fix iterations Step 4 runs. Defaults to `3` if not given.
-- `--no-log`, `--log-dir <path>`, `--verbose-log` → logging flags, handled per `../../references/logging.md`.
+- `--no-log`, `--log-dir <path>`, `--short-log` → logging flags, handled per `../../references/logging.md`.
 
 What remains is the **subject**. If no subject remains, ask the user what they want to document and stop.
 
@@ -92,7 +92,7 @@ Invoke `/inki:submit` to branch (if on `main`), commit, push, and open the PR. I
 
 `/inki:submit` retains its own safety behavior, which `--auto-approve` does NOT override. Concretely, even in auto mode:
 
-- **Protected paths are never touched.** `.github/workflows/`, `docusaurus.config.js`, and `sidebars.js` require explicit human confirmation; `/inki:document` never writes them and never auto-approves a commit that includes them.
+- **Deployment-infrastructure paths are never touched in auto mode.** `.github/workflows/` and `docusaurus.config.js` always require explicit human confirmation; `/inki:document` never writes them and never auto-approves a commit that includes them. (`sidebars.js` is NOT in this set: adding a new page legitimately requires a navigation entry, so `--auto-approve` may edit it. It stays visible in the diff and in the draft PR for human review.)
 - **Branch discipline holds.** Commits land on a properly prefixed feature branch (`cms/`, `cloud/`, `repo/`), never directly on `main` or `next`.
 - **git-rules.md governs the PR.** The commit message and PR title/description follow `git-rules.md` (imperative title, flat "This PR…" description, no headings, no test plan).
 - **The PR opens as a draft** for human review; auto mode does not merge it.
