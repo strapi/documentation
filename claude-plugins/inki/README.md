@@ -23,13 +23,13 @@ After install, the skills are available at `/inki:<skill>`, persistent across Cl
 
 ## The four families: a docs workflow end to end
 
-Inki ships 21 skills organized into 4 families that mirror the life of a documentation change: figure out **where** the doc goes, **write** it, **review** it, then **submit** it. Each family has a top-level **orchestrator** with the same name that runs the whole stage, plus **granular skills** you can call on their own for finer control.
+Inki ships 22 skills organized into 4 families that mirror the life of a documentation change: figure out **where** the doc goes, **write** it, **review** it, then **submit** it. Each family has a top-level **orchestrator** with the same name that runs the whole stage, plus **granular skills** you can call on their own for finer control.
 
 | Stage | Family | Orchestrator | Granular skills |
 |-------|--------|-------------|-----------------|
 | 1 | 🔍 Research | `/inki:research` | `exists`, `route`, `coverage` |
 | 2 | ✍️ Write | `/inki:write` | `outline`, `draft` |
-| 3 | 🔬 Review | `/inki:review` | `style-check`, `outline-check`, `outline-ux-analyzer`, `code-verify`, `coherence-check`, `pitfalls-check` |
+| 3 | 🔬 Review | `/inki:review` | `style-check`, `outline-check`, `outline-ux-analyzer`, `code-verify`, `coherence-check`, `pitfalls-check`, `pitfalls-add` |
 | 4 | 🚀 Submit | `/inki:submit` | `branch`, `commit`, `push`, `pr`, `pr-fix` |
 
 You can run the full chain for a new page, or jump straight to a single stage (e.g. just `/inki:review` on an existing file).
@@ -154,6 +154,7 @@ Find out what already exists, where to put new content, what's missing.
 - `/inki:code-verify <path>` — verify code blocks.
 - `/inki:coherence-check <path>` — check cross-page coherence.
 - `/inki:pitfalls-check <path>` — audit against known pitfalls.
+- `/inki:pitfalls-add [--auto-approve] <pitfall>` — add a new, source-verified entry to the known-pitfalls catalog (the writing counterpart to the read-only `pitfalls-check`).
 
 ### Submit — get it to GitHub
 
@@ -166,7 +167,9 @@ Find out what already exists, where to put new content, what's missing.
 
 ### Common flags
 
-- `--auto-approve` (aliases `--auto` / `--yes` / `-y`) — non-interactive mode: skip confirmation prompts. Useful for chaining skills or scripting. `--auto-approve` is the canonical form; `--auto`, `--yes`, and `-y` are kept as aliases.
+- `--auto-approve` (aliases `--auto` / `--yes` / `-y`) — non-interactive mode: skip confirmation prompts. Useful for chaining skills or scripting. `--auto-approve` is the canonical form; `--auto`, `--yes`, and `-y` are kept as aliases. On `/inki:document` it also runs the review-fix loop automatically.
+- `--fix-rounds <N>` (on `/inki:document`) — cap the number of review→fix→re-review iterations. Default 3.
+- `--no-log` / `--log-dir <path>` / `--verbose-log` — logging controls. By default, every run writes a report tree to `~/.inki/logs/<YYYY-MM-DD-slug>/` (override with `--log-dir` or the `INKI_LOG_DIR` env var; logs never go inside the worked-on repo). `--no-log` disables it; `--verbose-log` also saves each reviewer agent's raw report.
 - `--include-old` (only on `pr-fix`) — when no PR IDs are listed, include open PRs older than 30 days. By default, stale PRs are excluded to avoid bumping them with a title/description change notification.
 
 ## How it integrates with this repo
