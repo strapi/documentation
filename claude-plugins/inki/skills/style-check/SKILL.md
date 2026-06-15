@@ -1,7 +1,7 @@
 ---
 name: style-check
 description: "Run deterministic style checks on a documentation file or directory, then layer AI judgment on top using the migrated style-checker prompt."
-argument-hint: "<file or directory path>"
+argument-hint: "[--fix] <file or directory path>"
 user-invocable: true
 ---
 

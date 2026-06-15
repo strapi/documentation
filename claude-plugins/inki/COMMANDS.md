@@ -1,8 +1,8 @@
 # Inki command reference
 
-Every Inki skill is invoked as `/inki:<skill>`. This page lists each command, what it does, and its argument signature. For the shared flags (`--auto-approve`, `--no-log`, `--short-log`, `--log-dir`), see the "Common flags" section of the [README](./README.md). Typing `/inki:<skill> --help` also prints a command's usage.
+Every Inki skill is invoked as `/inki:<skill>`. This page lists each command, what it does, its argument signature, and every flag it accepts. Typing `/inki:<skill> --help` prints a single command's usage. The shared flags are also summarized in the "Common flags" section of the [README](./README.md).
 
-> Maintained by hand. When you add or change a command, update its entry here so the description and argument signature stay in sync with the skill's frontmatter. The command set changes rarely once stable.
+> Maintained by hand. When you add or change a command (or its flags), update its entry here so the description, argument signature, and flag table stay in sync with the skill's frontmatter and its argument-parsing step. The command set changes rarely once stable.
 
 ## Document — the full chain in one command
 
@@ -14,6 +14,15 @@ End-to-end documentation orchestrator: chains all four inki phases (research, wr
 /inki:document [--auto-approve] [--fix-rounds <N>] <subject: keywords | Notion URL | Linear issue | PDF path | pasted text>
 ```
 
+| Flag | Description |
+|------|-------------|
+| `--auto-approve` | Chain all phases without pausing, and approve the review-fix loop. Aliases: `--auto`, `--yes`, `-y`. |
+| `--fix-rounds <N>` | Cap the review→fix→re-review iterations. Default 3. |
+| `--no-log` | Disable run logging for this run. |
+| `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
+| `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
+| `--help`, `-h` | Print usage and stop. |
+
 ## Research — figure out where the doc goes
 
 ### `/inki:research`
@@ -24,6 +33,8 @@ Top-level research orchestrator: combines exists, route, and coverage to give a 
 /inki:research <topic, feature name, or strapi/strapi PR>
 ```
 
+No flags.
+
 ### `/inki:exists`
 
 Check whether a documentation topic is already covered on strapi/documentation: searches llms.txt, doc files, sidebars, and open GitHub PRs.
@@ -31,6 +42,8 @@ Check whether a documentation topic is already covered on strapi/documentation: 
 ```
 /inki:exists <topic or keyword>
 ```
+
+No flags.
 
 ### `/inki:route`
 
@@ -40,6 +53,8 @@ Given a strapi/strapi PR, identify which documentation pages and sections must b
 /inki:route <strapi/strapi PR number or URL>
 ```
 
+No flags.
+
 ### `/inki:coverage`
 
 Audit the documentation coverage of a Strapi feature or module: list what is documented vs missing.
@@ -47,6 +62,8 @@ Audit the documentation coverage of a Strapi feature or module: list what is doc
 ```
 /inki:coverage <feature or module name>
 ```
+
+No flags.
 
 ## Write — produce new content
 
@@ -58,6 +75,11 @@ Top-level write orchestrator: outline a new page, get user approval, then draft 
 /inki:write [--auto-approve] <topic brief or path to a brief file>
 ```
 
+| Flag | Description |
+|------|-------------|
+| `--auto-approve` | Generate the outline and draft without pausing at the outline approval gate. Aliases: `--auto`, `--yes`, `-y`. |
+| `--help`, `-h` | Print usage and stop. |
+
 ### `/inki:outline`
 
 Generate an outline for a new documentation page from a topic brief and the appropriate template.
@@ -66,6 +88,11 @@ Generate an outline for a new documentation page from a topic brief and the appr
 /inki:outline [--auto-approve] <topic brief or path to a brief file>
 ```
 
+| Flag | Description |
+|------|-------------|
+| `--auto-approve` | Skip the approval gate and save the outline to the default path. Aliases: `--auto`, `--yes`, `-y`. |
+| `--help`, `-h` | Print usage and stop. |
+
 ### `/inki:draft`
 
 Draft a documentation page from an approved outline, the matching template, and the relevant authoring guide.
@@ -73,6 +100,8 @@ Draft a documentation page from an approved outline, the matching template, and 
 ```
 /inki:draft <path to outline file>
 ```
+
+No flags.
 
 ## Review — check what you wrote
 
@@ -84,13 +113,26 @@ Top-level review orchestrator: runs style-check, outline-check, outline-ux-analy
 /inki:review [--auto-approve] [--fix] [--no-log] <path | filename | PR# | PR URL | docs.strapi.io URL | pasted content>
 ```
 
+| Flag | Description |
+|------|-------------|
+| `--auto-approve` | Non-interactive: skip confirmation gates inside the sub-skills. Aliases: `--auto`, `--yes`, `-y`. |
+| `--fix` | Apply the auto-fixable findings from `style-check` (others stay suggestions). |
+| `--no-log` | Disable run logging for this run. |
+| `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
+| `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
+| `--help`, `-h` | Print usage and stop. |
+
 ### `/inki:style-check`
 
 Run deterministic style checks on a documentation file or directory, then layer AI judgment on top using the migrated style-checker prompt.
 
 ```
-/inki:style-check <file or directory path>
+/inki:style-check [--fix] <file or directory path>
 ```
+
+| Flag | Description |
+|------|-------------|
+| `--fix` | Apply non-controversial fixes (typos, formatting); leave the rest as suggestions. |
 
 ### `/inki:outline-check`
 
@@ -100,6 +142,8 @@ Check the structural outline of a documentation page: heading hierarchy, section
 /inki:outline-check <file path>
 ```
 
+No flags.
+
 ### `/inki:outline-ux-analyzer`
 
 Analyze the pedagogical UX of a documentation outline: progression from beginner to advanced, signposting, and reading flow.
@@ -107,6 +151,8 @@ Analyze the pedagogical UX of a documentation outline: progression from beginner
 ```
 /inki:outline-ux-analyzer <file path>
 ```
+
+No flags.
 
 ### `/inki:code-verify`
 
@@ -116,6 +162,8 @@ Verify code blocks in a documentation file: check syntax, references, and consis
 /inki:code-verify <file path>
 ```
 
+No flags.
+
 ### `/inki:coherence-check`
 
 Check a documentation file for cross-page coherence: terminology, links, and consistency with related pages.
@@ -123,6 +171,8 @@ Check a documentation file for cross-page coherence: terminology, links, and con
 ```
 /inki:coherence-check <file path>
 ```
+
+No flags.
 
 ### `/inki:pitfalls-check`
 
@@ -132,6 +182,8 @@ Audit a documentation file against the known-pitfalls list: common mistakes, out
 /inki:pitfalls-check <file path>
 ```
 
+No flags.
+
 ### `/inki:pitfalls-add`
 
 Add a new entry to the known-pitfalls catalog that pitfalls-check audits against. Verifies the correct pattern against the Strapi source before adding, and confirms with the user. Use when you have found a documentation mistake worth catching automatically in future reviews.
@@ -139,6 +191,11 @@ Add a new entry to the known-pitfalls catalog that pitfalls-check audits against
 ```
 /inki:pitfalls-add [--auto-approve] <description of the pitfall, or a pitfalls-check / code-verify finding to promote>
 ```
+
+| Flag | Description |
+|------|-------------|
+| `--auto-approve` | Skip the confirmation prompt (the source verification still runs as the safety gate). Aliases: `--auto`, `--yes`, `-y`. |
+| `--help`, `-h` | Print usage and stop. |
 
 ## Submit — get it to GitHub
 
@@ -150,6 +207,11 @@ Top-level orchestrator: branch (if needed), commit, push, then open a PR. Each s
 /inki:submit [--auto-approve] [issue reference or topic hint, e.g. 'Fixes #2143']
 ```
 
+| Flag | Description |
+|------|-------------|
+| `--auto-approve` | Run branch + commit + push + PR without per-step prompts (informed decisions are still surfaced). Aliases: `--auto`, `--yes`, `-y`. |
+| `--help`, `-h` | Print usage and stop. |
+
 ### `/inki:branch`
 
 Create a new branch in strapi/documentation with auto-detected prefix (cms/, cloud/, repo/) based on the files that will be touched.
@@ -157,6 +219,8 @@ Create a new branch in strapi/documentation with auto-detected prefix (cms/, clo
 ```
 /inki:branch [description of the work]
 ```
+
+No flags.
 
 ### `/inki:commit`
 
@@ -166,13 +230,17 @@ Stage and commit documentation changes in strapi/documentation. Enforces git-rul
 /inki:commit [optional commit message]
 ```
 
+No flags.
+
 ### `/inki:push`
 
 Push the current branch in strapi/documentation to origin. Validates branch name against git-rules.md conventions.
 
 ```
-/inki:push (no arguments)
+/inki:push
 ```
+
+No flags.
 
 ### `/inki:pr`
 
@@ -182,6 +250,8 @@ Create a pull request on strapi/documentation following git-rules.md. Strict fla
 /inki:pr [optional issue reference, e.g. 'Fixes #2143']
 ```
 
+No flags.
+
 ### `/inki:pr-fix`
 
 Rewrite the title or description/body of one or more open PRs on strapi/documentation to match git-rules.md. Strict one-by-one confirmation, or auto-edit with --auto-approve.
@@ -190,3 +260,8 @@ Rewrite the title or description/body of one or more open PRs on strapi/document
 /inki:pr-fix <title|description|body> [--auto-approve] [--include-old] [PR# or URL] [PR# or URL] ...
 ```
 
+| Flag | Description |
+|------|-------------|
+| `--auto-approve` | Edit without per-PR confirmation (a batch-review gate still applies when no PR IDs are given). Aliases: `--auto`, `--yes`, `-y`. |
+| `--include-old` | When no PR IDs are given, include open PRs older than 30 days (excluded by default). |
+| `--help`, `-h` | Print usage and stop. |
