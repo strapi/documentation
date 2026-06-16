@@ -299,6 +299,19 @@ lint_file() {
       has_warnings=1
     fi
 
+    # Bold inside table cells. Per the Strapi style guide, bold is reserved for
+    # UI button names. A table row (a line starting with `|`) that carries a
+    # **bold** span is almost always emphasising a cell label, not a button, so
+    # it is flagged. The known false positive -- a button name legitimately
+    # mentioned in a cell -- is acceptable at warning level and noted in the message.
+    # Skip the header-separator row (| --- | --- |).
+    if echo "$line" | grep -qE '^[[:space:]]*\|' && ! echo "$line" | grep -qE '^[[:space:]]*\|[[:space:]:|-]+\|?[[:space:]]*$'; then
+      if echo "$line" | grep -qE '\*\*[^*]+\*\*'; then
+        echo "warning:${line_num}:bold-in-table:Bold inside a table cell -- bold is reserved for UI button names; remove emphasis from cell labels"
+        has_warnings=1
+      fi
+    fi
+
     # =====================
     # SUGGESTION-LEVEL
     # =====================
@@ -306,6 +319,18 @@ lint_file() {
     # Standalone cross-reference sentences
     if echo "$line" | grep -qE '^See \[.*\]\(.*\)\.[[:space:]]*$'; then
       echo "suggestion:${line_num}:standalone-xref:Standalone \"See [link].\" -- consider integrating into preceding sentence"
+    fi
+
+    # UI button name without a leading <Icon> component. The Strapi docs convention
+    # prefixes a button name with its Phosphor icon, e.g. `<Icon name="copy" /> **Copy**`.
+    # Heuristic: a **bold** span on the same line as the word "button" (the bold is
+    # the button label) that is NOT preceded by an <Icon .../> tag. Suggestion-level
+    # because not every "button" mention is a UI button and the author may add the
+    # icon deliberately elsewhere; keep it non-blocking but visible.
+    if echo "$line" | grep -qiE "${word_boundary_start}buttons?${word_boundary_end}" && echo "$line" | grep -qE '\*\*[^*]+\*\*'; then
+      if ! echo "$line" | grep -qE '<Icon[[:space:]]+name='; then
+        echo "suggestion:${line_num}:button-missing-icon:Button name without a leading <Icon name=\"...\" /> -- prefix UI button names with their Phosphor icon"
+      fi
     fi
 
   done <<< "$stripped"
