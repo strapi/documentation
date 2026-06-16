@@ -1,4 +1,4 @@
-# Inki — research, write, review, submit your Strapi docs
+# Inki: research, write, review, submit your Strapi docs
 
 Inki is a Claude Code plugin that keeps Strapi documentation _in key_ with the product, the documentation itself, and the conventions that tie them together.
 The name combines _ink_ ✍️ with _Strapi_, and also is an acronym for **In**-key **K**nowledge **I**nterface.
@@ -34,7 +34,9 @@ Inki ships 22 skills organized into 4 families that mirror the life of a documen
 
 You can run the full chain for a new page, or jump straight to a single stage (e.g. just `/inki:review` on an existing file).
 
-### The shortcut: `/inki:document` — all four stages, one command
+In the Review family, `/inki:review` runs the **six** read-only reviewers (`style-check`, `outline-check`, `outline-ux-analyzer`, `code-verify`, `coherence-check`, `pitfalls-check`). `pitfalls-add` belongs to the same family but is a separate writing skill (it adds an entry to the known-pitfalls catalog); `/inki:review` does not run it.
+
+### The shortcut: `/inki:document`, all four stages, one command
 
 If you just want to document a subject from scratch, `/inki:document <subject>` chains all four stages for you:
 
@@ -47,33 +49,33 @@ If you just want to document a subject from scratch, `/inki:document <subject>` 
    └─ 4. submit ──── branch + commit + push + PR                        → [gate]
 ```
 
-It pauses for your approval between each stage by default, so you stay in control. Add `--auto-approve` to chain all four without stopping (you review the resulting PR at the end). The `<subject>` is flexible: keywords, a Notion page URL, a Linear issue, a PDF (spec/RFC), a local file, or pasted notes — `/inki:document` resolves it into a brief and runs from there.
+It pauses for your approval between each stage by default, so you stay in control. Add `--auto-approve` to chain all four without stopping (you review the resulting PR at the end). The `<subject>` is flexible: keywords, a Notion page URL, a Linear issue, a PDF (spec/RFC), a local file, or pasted notes. `/inki:document` resolves it into a brief and runs from there.
 
-One guard always holds, even with `--auto-approve`: if the research stage finds the subject is **already documented**, `/inki:document` stops and points you at the existing page rather than creating a duplicate.
+One guard always holds, even with `--auto-approve`: if the research stage finds the subject is **already documented**, `/inki:document` stops and points you at the existing page rather than creating a duplicate. This detection is strongest for keyword or topic subjects (where research runs `exists` and gets a clear coverage verdict); for a feature name or a code PR it leans on the coverage and routing reports, which are less categorical.
 
-### 1. 🔍 Research — figure out where the doc goes
+### 1. 🔍 Research: figure out where the doc goes
 
 Before writing a line, find out what already exists and where new content belongs, so you don't duplicate a page or put it in the wrong section.
 
 - Run `/inki:research` and let it dispatch based on what you give it, or call a sub-skill directly:
-  - `/inki:exists "MCP server"` — is this topic already documented? Searches the docs, the sidebars, and open PRs.
-  - `/inki:route <strapi/strapi PR>` — given a code PR, which doc pages and sections need to change to cover it.
-  - `/inki:coverage <feature>` — audit how well an existing feature is documented and what's missing.
+  - `/inki:exists "MCP server"`: is this topic already documented? Searches the docs, the sidebars, and open PRs.
+  - `/inki:route <strapi/strapi PR>`: given a code PR, which doc pages and sections need to change to cover it.
+  - `/inki:coverage <feature>`: audit how well an existing feature is documented and what's missing.
 
 The output tells you whether to edit an existing page or create a new one, and exactly where it should live.
 
-### 2. ✍️ Write — do the actual writing
+### 2. ✍️ Write: do the actual writing
 
 Turn a topic brief into a drafted page, grounded in the right template and authoring guide so the structure and tone are correct from the start.
 
 - `/inki:write <brief>` runs the whole stage: it generates an outline, then drafts the page from it.
 - Or drive it in two steps:
-  - `/inki:outline <brief>` — produce an outline from the brief and the matching template. Review and tweak it.
-  - `/inki:draft <outline>` — draft the page from that outline, the template, and the relevant authoring guide.
+  - `/inki:outline <brief>`: produce an outline from the brief and the matching template. Review and tweak it.
+  - `/inki:draft <outline>`: draft the page from that outline, the template, and the relevant authoring guide.
 
 A `<brief>` can be inline text (e.g. "MCP server feature, AI tools section, similar to existing AI pages") or a path to a `.md` file describing what you want.
 
-### 3. 🔬 Review — check what you wrote
+### 3. 🔬 Review: check what you wrote
 
 One command runs six reviewers in parallel against your page and returns a single report, sorted by severity.
 
@@ -96,9 +98,9 @@ What makes it powerful:
 2. **Six reviewers in parallel, one verdict.** No human reviewer runs all six checks by hand, every time, consistently.
 3. **`--fix` closes the loop.** It can auto-apply the style fixes, not just flag them.
 
-The standout sub-skill is **`/inki:code-verify`**: it reads every fenced code block in a page and checks it against the actual `strapi/strapi` source — syntax, whether referenced functions and types really exist, and consistency with the surrounding prose. It proves the code in the docs matches the code that ships.
+The standout sub-skill is **`/inki:code-verify`**: it reads every fenced code block in a page and checks it against the actual `strapi/strapi` source: syntax, whether referenced functions and types really exist, and consistency with the surrounding prose. It proves the code in the docs matches the code that ships.
 
-### 4. 🚀 Submit — get it to GitHub
+### 4. 🚀 Submit: get it to GitHub
 
 Once the page passes review, one command takes it all the way to an open PR, delegating to four granular skills that each already know our conventions.
 
@@ -128,51 +130,51 @@ The summary below covers the most common usage. For a per-command reference of e
 - `[hint]` = an optional issue reference (e.g., `Fixes #2143`) or short topic hint passed through to the PR.
 - `[PR#]` = a pull request number (e.g., `2143`).
 
-### Document — the full chain in one command
+### Document: the full chain in one command
 
-- `/inki:document [--auto-approve] <subject>` — run all four stages (research → write → review → submit) for one subject. Gated between each stage by default; `--auto-approve` chains without pauses. `<subject>` can be keywords, a Notion URL, a Linear issue, a PDF path/URL, a local file, or pasted text. Stops if research finds the subject is already documented.
+- `/inki:document [--auto-approve] <subject>`: run all four stages (research → write → review → submit) for one subject. Gated between each stage by default; `--auto-approve` chains without pauses. `<subject>` can be keywords, a Notion URL, a Linear issue, a PDF path/URL, a local file, or pasted text. Stops if research finds the subject is already documented.
 
-### Research — before you write
+### Research: before you write
 
 Find out what already exists, where to put new content, what's missing.
 
-- `/inki:research <input>` — orchestrator: dispatches to the right sub-skill based on input shape.
-- `/inki:exists <topic>` — search docs + sidebars + open PRs for a topic.
-- `/inki:route <strapi/strapi PR>` — given a code PR, identify which docs to update.
-- `/inki:coverage <feature>` — audit documentation coverage of a Strapi feature.
+- `/inki:research <input>`: orchestrator: dispatches to the right sub-skill based on input shape.
+- `/inki:exists <topic>`: search docs + sidebars + open PRs for a topic.
+- `/inki:route <strapi/strapi PR>`: given a code PR, identify which docs to update.
+- `/inki:coverage <feature>`: audit documentation coverage of a Strapi feature.
 
-### Write — produce new content
+### Write: produce new content
 
-- `/inki:write [--auto-approve] <brief>` — orchestrator: outline then draft.
-- `/inki:outline <brief>` — generate an outline from a brief and template.
-- `/inki:draft <outline>` — draft a page from an outline + template + authoring guide.
+- `/inki:write [--auto-approve] <brief>`: orchestrator: outline then draft.
+- `/inki:outline <brief>`: generate an outline from a brief and template.
+- `/inki:draft <outline>`: draft a page from an outline + template + authoring guide.
 
-### Review — check what you wrote
+### Review: check what you wrote
 
-- `/inki:review [--auto-approve] [--fix] <path | filename | PR | docs.strapi.io URL | pasted content>` — orchestrator: runs all 6 review sub-skills against any supported target.
-- `/inki:style-check <path>` — style lint (deterministic + AI).
-- `/inki:outline-check <path>` — verify outline matches template.
-- `/inki:outline-ux-analyzer <path>` — audit pedagogical UX.
-- `/inki:code-verify <path>` — verify code blocks.
-- `/inki:coherence-check <path>` — check cross-page coherence.
-- `/inki:pitfalls-check <path>` — audit against known pitfalls.
-- `/inki:pitfalls-add [--auto-approve] <pitfall>` — add a new, source-verified entry to the known-pitfalls catalog (the writing counterpart to the read-only `pitfalls-check`).
+- `/inki:review [--auto-approve] [--fix] <path | filename | PR | docs.strapi.io URL | pasted content>`: orchestrator: runs all 6 review sub-skills against any supported target.
+- `/inki:style-check <path>`: style lint (deterministic + AI).
+- `/inki:outline-check <path>`: verify outline matches template.
+- `/inki:outline-ux-analyzer <path>`: audit pedagogical UX.
+- `/inki:code-verify <path>`: verify code blocks.
+- `/inki:coherence-check <path>`: check cross-page coherence.
+- `/inki:pitfalls-check <path>`: audit against known pitfalls.
+- `/inki:pitfalls-add [--auto-approve] <pitfall>`: add a new, source-verified entry to the known-pitfalls catalog (the writing counterpart to the read-only `pitfalls-check`).
 
-### Submit — get it to GitHub
+### Submit: get it to GitHub
 
-- `/inki:submit [--auto-approve] [hint]` — orchestrator: branch + commit + push + PR.
-- `/inki:branch` — create a properly prefixed branch.
-- `/inki:commit` — stage + commit with a compliant message.
-- `/inki:push` — push with validation.
-- `/inki:pr [issue]` — open a PR with a compliant title and description.
-- `/inki:pr-fix <title|description|body> [--auto-approve] [--include-old] [PR# or URL...]` — rewrite the title or body of existing PRs (`body` is an alias of `description`).
+- `/inki:submit [--auto-approve] [hint]`: orchestrator: branch + commit + push + PR.
+- `/inki:branch`: create a properly prefixed branch.
+- `/inki:commit`: stage + commit with a compliant message.
+- `/inki:push`: push with validation.
+- `/inki:pr [issue]`: open a PR with a compliant title and description.
+- `/inki:pr-fix <title|description|body> [--auto-approve] [--include-old] [PR# or URL...]`: rewrite the title or body of existing PRs (`body` is an alias of `description`).
 
 ### Common flags
 
-- `--auto-approve` (aliases `--auto` / `--yes` / `-y`) — non-interactive mode: skip confirmation prompts. Useful for chaining skills or scripting. `--auto-approve` is the canonical form; `--auto`, `--yes`, and `-y` are kept as aliases. On `/inki:document` it also runs the review-fix loop automatically.
-- `--fix-rounds <N>` (on `/inki:document`) — cap the number of review→fix→re-review iterations. Default 3.
-- `--no-log` / `--log-dir <path>` / `--short-log` — logging controls. By default, every run writes a verbose Markdown report tree to `~/.inki/logs/<YYYY-MM-DD-slug>/` (override with `--log-dir` or the `INKI_LOG_DIR` env var; logs never go inside the worked-on repo). `--no-log` disables it; `--short-log` trims the verbose per-agent reports, keeping only the consolidated per-phase reports.
-- `--include-old` (only on `pr-fix`) — when no PR IDs are listed, include open PRs older than 30 days. By default, stale PRs are excluded to avoid bumping them with a title/description change notification.
+- `--auto-approve` (aliases `--auto` / `--yes` / `-y`): non-interactive mode: skip confirmation prompts. Useful for chaining skills or scripting. `--auto-approve` is the canonical form; `--auto`, `--yes`, and `-y` are kept as aliases. On `/inki:document` it also runs the review-fix loop automatically.
+- `--fix-rounds <N>` (on `/inki:document`): cap the number of review→fix→re-review iterations. Default 3.
+- `--no-log` / `--log-dir <path>` / `--short-log`: logging controls. By default, every skill that produces a report or modifies files writes a verbose Markdown report tree to `~/.inki/logs/<YYYY-MM-DD-slug>/` (override with `--log-dir` or the `INKI_LOG_DIR` env var; logs never go inside the worked-on repo). `--no-log` disables it; `--short-log` trims the verbose per-agent reports, keeping only the consolidated per-phase reports. The git-plumbing skills (`branch`, `commit`, `push`, `pr`) do not take these flags: a single git step has no report of its own, and its work is captured in `submit`'s log.
+- `--include-old` (only on `pr-fix`): when no PR IDs are listed, include open PRs older than 30 days. By default, stale PRs are excluded to avoid bumping them with a title/description change notification.
 
 ## How it integrates with this repo
 
@@ -186,7 +188,7 @@ Find out what already exists, where to put new content, what's missing.
 
 ## Status
 
-v0.1.0 — initial release. See `CHANGELOG.md` for details.
+v0.1.0: initial release. See `CHANGELOG.md` for details.
 
 ## For plugin developers: refreshing changes
 
