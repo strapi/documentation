@@ -42,6 +42,7 @@ The resolver may stop the workflow before returning a brief, in which case relay
 
 - A bare PR number with no repo: the resolver asks which repo the PR belongs to. Stop until the user answers, then re-run.
 - A `strapi/documentation` PR: that is a documentation PR, not a subject to document. The resolver tells the user to run `/inki:review <PR>` instead. Stop; do not continue into research.
+- A PR on a repo that is not documented on docs.strapi.io (only `strapi/strapi` and `strapi/cloud` are): the resolver reports there is nothing to document. Stop.
 
 If resolution otherwise fails (e.g. a Notion/Linear MCP is unavailable and no fallback content is provided), report why and stop.
 
@@ -158,11 +159,11 @@ Document from a Linear issue:
 /inki:document DOC-412
 ```
 
-Document a strapi/strapi code PR (any of these forms work):
+Document a code PR from strapi/strapi (CMS) or strapi/cloud (Cloud), any of these forms work:
 ```
 /inki:document https://github.com/strapi/strapi/pull/26597
-/inki:document strapi/strapi 26597
-/inki:document "document PR 26597 from strapi/strapi"
+/inki:document strapi/cloud 1234
+/inki:document PR 26597 from strapi/strapi
 ```
 
 A bare PR number prompts for the repo first:
@@ -174,6 +175,12 @@ A strapi/documentation PR is redirected to review (it is not a subject to docume
 ```
 /inki:document https://github.com/strapi/documentation/pull/3234
 → "That is a documentation PR. Run /inki:review https://github.com/strapi/documentation/pull/3234 instead."
+```
+
+A PR on a repo not published to docs.strapi.io (e.g. strapi/design-system) stops with an explanation:
+```
+/inki:document https://github.com/strapi/design-system/pull/500
+→ "strapi/design-system is not documented on docs.strapi.io (only strapi/strapi and strapi/cloud are), so there is no doc to write from this PR."
 ```
 
 Document from a PDF RFC:

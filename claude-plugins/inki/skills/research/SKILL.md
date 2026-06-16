@@ -1,7 +1,7 @@
 ---
 name: research
 description: "Top-level research orchestrator: combines exists, route, and coverage to give a complete picture before writing."
-argument-hint: "[--no-log] <topic, feature name, or strapi/strapi PR>"
+argument-hint: "[--no-log] <topic, feature name, or strapi/strapi or strapi/cloud PR>"
 user-invocable: true
 ---
 
@@ -16,7 +16,7 @@ Logging: unless `--no-log` is passed, write this skill's report to the run log p
 Given `$ARGUMENTS`, classify the input:
 - Looks like a topic/keyword → invoke `/inki:exists $ARGUMENTS`
 - Looks like a feature/module name → invoke `/inki:coverage $ARGUMENTS`
-- Looks like a strapi/strapi PR (number or URL) → invoke `/inki:route $ARGUMENTS`
+- Looks like a strapi/strapi or strapi/cloud PR (number or URL) → invoke `/inki:route $ARGUMENTS`
 
 If the input is ambiguous, run more than one and label sections clearly.
 

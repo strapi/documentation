@@ -17,7 +17,7 @@ The subject is classified by inspecting its shape, in this order (first match wi
 
 | # | Source type | How to detect | Resolves to |
 |---|-------------|---------------|-------------|
-| 1 | Strapi PR | A GitHub PR on a Strapi repo, in any of these forms: a `github.com/<owner>/<repo>/pull/<n>` URL (with or without the `https://`), an `<owner>/<repo> <n>` pair, a bare PR number, or free text naming a PR and a repo (e.g. "document PR 26597 from strapi/strapi") | If the repo is NOT `strapi/documentation`: a brief describing what the code change should document, built via the routing logic of `/inki:route`. If the repo IS `strapi/documentation`: stop and tell the user to run `/inki:review` instead (see below). |
+| 1 | Strapi PR | A GitHub PR on a Strapi repo, in any of these forms: a `github.com/<owner>/<repo>/pull/<n>` URL (with or without the `https://`), an `<owner>/<repo> <n>` pair, a bare PR number, or free text naming a PR and a repo (e.g. "document PR 26597 from strapi/strapi") | `strapi/strapi` or `strapi/cloud`: a brief describing what the code change should document, built via `/inki:route`. `strapi/documentation`: stop, redirect to `/inki:review`. Any other repo: stop, not documented on docs.strapi.io (see below). |
 | 2 | Notion page | A `notion.so` / `notion.site` URL, or `notion:` prefix | The page content fetched via the Notion MCP, distilled into a brief |
 | 3 | Linear issue | A Linear issue ID (`ABC-123`) or a `linear.app/.../issue/...` URL | The issue title + description + relevant comments, via the Linear MCP |
 | 4 | PDF file | A local path ending in `.pdf`, or a PDF URL | The extracted PDF text, distilled into a brief |
@@ -38,25 +38,13 @@ The subject refers to a GitHub pull request on a Strapi repository. First, parse
 - Free text naming a repo and a PR (e.g. "document PR 26597 from strapi/strapi"): extract the `owner/repo` and the number from the prose.
 - Bare PR number (e.g. `26597`) with no repo anywhere: the repo is unknown. **Ask the user which repo the PR belongs to** (do not guess a default). Stop until they answer.
 
-Then branch on the repo:
+Then branch on the repo. Only two repos are documented on docs.strapi.io: `strapi/strapi` (the CMS) and `strapi/cloud` (Strapi Cloud).
 
+- **If `OWNER/REPO` is `strapi/strapi` or `strapi/cloud`:** this is a code change to be documented. Build the brief using the routing logic of `/inki:route`, which covers both repos and maps the change to its docs area (`docs/cms/` for `strapi/strapi`, `docs/cloud/` for `strapi/cloud`): identify, from the PR's diff and description, what changed and which documentation pages/sections it affects. The brief captures the feature/change and the doc targets, so the write phase knows what to produce. Keep the PR reference in the brief so `/inki:submit` can mention it in the eventual docs PR (a cross-repo reference, not a `Fixes` that would auto-close).
 - **If `OWNER/REPO` is `strapi/documentation`:** this is a documentation PR (content already written), not a subject to document. **Stop** and tell the user: "That is a documentation PR. To review it, run `/inki:review <PR url or number>` instead." Do not produce a brief.
-- **Otherwise** (any other Strapi repo: `strapi/strapi`, `strapi/cloud`, `strapi/design-system`, etc.): this is a code change to be documented. Build the brief using the routing logic of `/inki:route`: identify, from the PR's diff and description, what changed and which documentation pages/sections it affects. The brief captures the feature/change and the doc targets, so the write phase knows what to produce. Keep the PR reference in the brief so `/inki:submit` can mention it in the eventual docs PR (but it is a cross-repo reference, not a `Fixes` that would auto-close).
+- **Any other repo** (`strapi/design-system`, plugins, internal repos, etc.): that repo is not documented on docs.strapi.io, so there is nothing for inki to document. **Stop** and tell the user: "`<owner>/<repo>` is not documented on docs.strapi.io (only strapi/strapi and strapi/cloud are), so there is no doc to write from this PR." Do not produce a brief.
 
 `SOURCE_KIND` = `strapi-pr`. `SUBJECT_LABEL` = `<owner>/<repo> PR #<n>`. `CLEANUP` is empty.
-
-### 6. Keyword topic
-
-Use the keywords as the seed. The brief at this stage is thin on purpose: the research phase (`/inki:research`) is what fills it in. Produce:
-
-```
-# <topic, title-cased>
-
-Document: <verbatim keywords>.
-(Brief to be enriched by /inki:research.)
-```
-
-`SOURCE_KIND` = `keyword`. `CLEANUP` is empty.
 
 ### 2. Notion page
 
@@ -87,6 +75,19 @@ Document: <verbatim keywords>.
 Read the file. If it already reads like a brief (a topic description), use it verbatim as `BRIEF`. If it is raw notes, distill it into the brief shape. Do not confuse this with the *target* resolver: here the file describes what to document, it is not the page being reviewed.
 
 `SOURCE_KIND` = `file`. `SUBJECT_LABEL` = the path. `CLEANUP` is empty.
+
+### 6. Keyword topic
+
+Use the keywords as the seed. The brief at this stage is thin on purpose: the research phase (`/inki:research`) is what fills it in. Produce:
+
+```
+# <topic, title-cased>
+
+Document: <verbatim keywords>.
+(Brief to be enriched by /inki:research.)
+```
+
+`SOURCE_KIND` = `keyword`. `CLEANUP` is empty.
 
 ### 7. Pasted content
 

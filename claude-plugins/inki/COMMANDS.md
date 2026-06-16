@@ -32,7 +32,7 @@ The command accepts the following flags:
 Top-level research orchestrator: combines exists, route, and coverage to give a complete picture before writing.
 
 ```
-/inki:research [--no-log] <topic, feature name, or strapi/strapi PR>
+/inki:research [--no-log] <topic, feature name, or strapi/strapi or strapi/cloud PR>
 ```
 
 The command accepts the following flags:
@@ -61,10 +61,10 @@ The command accepts the following flags:
 
 ### `/inki:route`
 
-Given a strapi/strapi PR, identify which documentation pages and sections must be updated to cover the change.
+Given a strapi/strapi or strapi/cloud PR, identify which documentation pages and sections must be updated to cover the change.
 
 ```
-/inki:route [--no-log] <strapi/strapi PR number or URL>
+/inki:route [--no-log] <strapi/strapi or strapi/cloud PR: number or URL>
 ```
 
 The command accepts the following flags:

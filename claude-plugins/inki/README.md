@@ -49,7 +49,7 @@ If you just want to document a subject from scratch, `/inki:document <subject>` 
    └─ 4. submit ──── branch + commit + push + PR                        → [gate]
 ```
 
-It pauses for your approval between each stage by default, so you stay in control. Add `--auto-approve` to chain all four without stopping (you review the resulting PR at the end). The `<subject>` is flexible: keywords, a Strapi code PR (a `strapi/strapi` or other non-docs Strapi repo PR, by URL, `owner/repo number`, a bare number, or prose naming the PR), a Notion page URL, a Linear issue, a PDF (spec/RFC), a local file, or pasted notes. `/inki:document` resolves it into a brief and runs from there. A `strapi/documentation` PR is not a subject to document: `/inki:document` redirects you to `/inki:review` for that.
+It pauses for your approval between each stage by default, so you stay in control. Add `--auto-approve` to chain all four without stopping (you review the resulting PR at the end). The `<subject>` is flexible: keywords, a Strapi code PR (`strapi/strapi` or `strapi/cloud`, the two repos published to docs.strapi.io, given by URL, `owner/repo number`, a bare number, or prose naming the PR), a Notion page URL, a Linear issue, a PDF (spec/RFC), a local file, or pasted notes. `/inki:document` resolves it into a brief and runs from there. A `strapi/documentation` PR is not a subject to document: `/inki:document` redirects you to `/inki:review`. A PR on a repo that is not published to docs.strapi.io (e.g. `strapi/design-system`) stops with an explanation.
 
 One guard always holds, even with `--auto-approve`: if the research stage finds the subject is **already documented**, `/inki:document` stops and points you at the existing page rather than creating a duplicate. This detection is strongest for keyword or topic subjects (where research runs `exists` and gets a clear coverage verdict); for a feature name or a code PR it leans on the coverage and routing reports, which are less categorical.
 
@@ -59,7 +59,7 @@ Before writing a line, find out what already exists and where new content belong
 
 - Run `/inki:research` and let it dispatch based on what you give it, or call a sub-skill directly:
   - `/inki:exists "MCP server"`: is this topic already documented? Searches the docs, the sidebars, and open PRs.
-  - `/inki:route <strapi/strapi PR>`: given a code PR, which doc pages and sections need to change to cover it.
+  - `/inki:route <strapi/strapi or strapi/cloud PR>`: given a code PR, which doc pages and sections need to change to cover it.
   - `/inki:coverage <feature>`: audit how well an existing feature is documented and what's missing.
 
 The output tells you whether to edit an existing page or create a new one, and exactly where it should live.
@@ -132,7 +132,7 @@ The summary below covers the most common usage. For a per-command reference of e
 
 ### Document: the full chain in one command
 
-- `/inki:document [--auto-approve] <subject>`: run all four stages (research → write → review → submit) for one subject. Gated between each stage by default; `--auto-approve` chains without pauses. `<subject>` can be keywords, a Strapi code PR (URL, `owner/repo number`, bare number, or prose), a Notion URL, a Linear issue, a PDF path/URL, a local file, or pasted text. Stops if research finds the subject is already documented; a `strapi/documentation` PR is redirected to `/inki:review`.
+- `/inki:document [--auto-approve] <subject>`: run all four stages (research → write → review → submit) for one subject. Gated between each stage by default; `--auto-approve` chains without pauses. `<subject>` can be keywords, a Strapi code PR (`strapi/strapi` or `strapi/cloud`; URL, `owner/repo number`, bare number, or prose), a Notion URL, a Linear issue, a PDF path/URL, a local file, or pasted text. Stops if research finds the subject is already documented; a `strapi/documentation` PR is redirected to `/inki:review`, and a PR on any other repo stops (not on docs.strapi.io).
 
 ### Research: before you write
 
@@ -140,7 +140,7 @@ Find out what already exists, where to put new content, what's missing.
 
 - `/inki:research <input>`: orchestrator: dispatches to the right sub-skill based on input shape.
 - `/inki:exists <topic>`: search docs + sidebars + open PRs for a topic.
-- `/inki:route <strapi/strapi PR>`: given a code PR, identify which docs to update.
+- `/inki:route <strapi/strapi or strapi/cloud PR>`: given a code PR, identify which docs to update.
 - `/inki:coverage <feature>`: audit documentation coverage of a Strapi feature.
 
 ### Write: produce new content
