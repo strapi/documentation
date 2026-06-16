@@ -39,6 +39,17 @@ This file lists documented patterns where AI-generated documentation has produce
 | `const { primitives } = require('@strapi/utils')` | `const { strings, objects, arrays, dates } = require('@strapi/utils')` | `@strapi/utils` does `export * from './primitives'` (flattened), not `export * as primitives` |
 | `validateYupSchema` under the `yup` namespace | `validateYupSchema` is a top-level export from `@strapi/utils` | Exported from `./validators`, not from `./yup`. Import as `const { validateYupSchema } = require('@strapi/utils')`. |
 
+### Documentation formatting conventions
+
+These are not code hallucinations but recurring Strapi-docs formatting mistakes. Verified against `STYLE_GUIDE.pdf` and `docusaurus/src/components/Icon.js`.
+
+| Hallucinated pattern | Correct pattern | Context |
+|---------------------|-----------------|---------|
+| `**Copy**` (button name in bold, no icon) | `<Icon name="copy" /> **Copy**` | UI button names must be prefixed with their Phosphor icon (lowercase kebab-case name from phosphoricons.com). `<Icon>` is a global MDX component, no import needed. |
+| `**Timestamp**` in a table cell | `Timestamp` (plain text) | Bold is reserved for UI button names only. Table cell labels and headers must be plain text. |
+| `*Error*`, `*Warning*`, `*Info*` (log levels / values in italic) | `Error`, `Warning`, `Info` (plain text) | Italic is reserved for admin panel section, window, tab, and field names. Values, enum members, and log levels are not UI section names. |
+| `:::caution` for non-destructive informational content | `:::note` | `:::caution` is for mistake prevention / unstable behavior; `:::warning` for data loss or crashes. Neutral side information with nothing risky is a `:::note`. |
+
 ---
 
 ## How to add a new pitfall

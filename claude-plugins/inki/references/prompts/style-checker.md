@@ -176,6 +176,10 @@ For each of the 12 rules, here is how to detect violations and what severity to 
 ### Rule 12: Don't overuse capitals and bold
 - **Detect:** ALL CAPS used for emphasis (not acronyms); more than 3 bolded terms in a single paragraph; bold used for elements that should be inline code (file names, commands, parameters)
 - **Severity:** warning
+- **Strapi-specific (bold is reserved for UI button names):** Per the Strapi style guide, **bold** is used **only** for UI button names. Flag bold used for anything else:
+  - Bold inside table cells (e.g. `| **Timestamp** | ... |`). Table cell labels must be plain text. **Severity:** warning.
+  - Bold used for emphasis on regular prose words, field values, or log levels. **Severity:** warning.
+  - Do NOT flag a bold span that is an actual UI button name (it should additionally carry an `<Icon>` prefix, see "UI element formatting" below).
 
 ## Additional Style Checks
 
@@ -185,6 +189,34 @@ Beyond the 12 rules, also check for:
 - **Detect:** File paths, function names, commands, or parameters not wrapped in backticks
 - **Severity:** warning
 - **Strapi-specific exception:** Programming casing conventions (e.g., kebab-case, camelCase, PascalCase, snake_case, SCREAMING_SNAKE_CASE) do NOT require backticks. Do NOT flag these terms.
+
+### Text emphasis (bold and italic)
+Per the Strapi style guide, the two emphasis styles have a single allowed use each. Flag any other use.
+- **Bold (`**text**`)** is reserved for **UI button names** only. See Rule 12 above for the full detection list (bold in tables, bold on prose/values, bold on log levels).
+- **Italic (`*text*`)** is reserved for **admin panel section names, window names, tab names, and field/label names** (e.g. *Content Manager*, *Settings*, the *Logs* tab). Flag italic used for:
+  - Emphasis on ordinary prose words. **Severity:** warning.
+  - Values, enum members, or log levels presented as a list or in running text (e.g. log levels `*Error*`, `*Warning*`, `*Info*`). These are values, not UI section names, so they must be plain text (or inline code where appropriate), not italic. **Severity:** warning.
+- **Suggestion:** When in doubt whether an italicized term is a genuine UI section/tab name, check whether the exact string appears in the product UI (screenshots on the page often confirm it). If it is not a UI section/window/field/tab name, the italic is incorrect.
+
+### UI element formatting (button icons)
+- **Detect:** A UI button name (typically rendered in **bold**) that is not prefixed with its Phosphor icon component.
+- **Severity:** warning
+- **Strapi-specific rule:** UI button names must be prefixed with an `<Icon>` component naming the button's Phosphor icon, in the form:
+  - `<Icon name="copy" /> **Copy**` (icon name from https://phosphoricons.com, lowercase, kebab-case)
+  - The `<Icon>` component is a global MDX component in the docs; no import is needed.
+- **Note:** If you cannot determine the correct icon from the page or a screenshot, still flag the missing icon and tell the author to add `<Icon name="..." />` with the icon matching the button in the UI. Do not invent an icon name with false confidence; say which button needs one.
+
+### Admonition severity
+- **Detect:** An admonition whose type does not match the severity of its content.
+- **Severity:** warning
+- **Strapi-specific rule (lowest to highest importance):**
+  - `:::tip` — tips and tricks; useful but not required to understand Strapi.
+  - `:::note` — helpful, time-saving information. Use this for neutral side information with nothing destructive.
+  - `:::prerequisites` — conditions required to complete a procedure.
+  - `:::caution` — important information: mistake prevention, recommendations, unstable or unreliable behavior.
+  - `:::warning` — highly important: data loss, project crash, unsupported behavior.
+  - `:::strapi` — links to other Strapi resources, marketing-style; Strapi team only.
+- **Common error to flag:** `:::caution` (or `:::warning`) used for content that is merely informational with nothing destructive or risky. Suggest downgrading to `:::note`. Conversely, flag `:::note`/`:::tip` wrapping a genuine data-loss or crash warning and suggest upgrading.
 
 ### File paths
 - **Detect:** File paths using `./` prefix (e.g., `./config/server`) instead of `/` prefix (e.g., `/config/server`)
