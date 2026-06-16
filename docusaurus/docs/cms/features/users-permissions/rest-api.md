@@ -595,6 +595,26 @@ Possible errors:
 | 404 | `"User not found"` | No user with the given `id` |
 | 400 | `"Username already taken"` or `"Email already taken"` | Duplicate value |
 
+:::note Relation inputs support both `documentId` and numeric IDs
+When updating a user with custom relations, you can use either `documentId` (recommended for v5) or numeric `id` in relation payloads:
+```json
+{
+  "customRelation": {
+    "connect": ["x74detpqybxw0bn6ormua5g2"]  // documentId
+  }
+}
+```
+or
+```json
+{
+  "customRelation": {
+    "connect": [1]  // numeric ID (legacy)
+  }
+}
+```
+Both formats are accepted for backward compatibility.
+:::
+
 ### Delete a user
 
 `DELETE /api/users/:id`
