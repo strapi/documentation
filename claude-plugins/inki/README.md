@@ -188,7 +188,7 @@ Find out what already exists, where to put new content, what's missing.
 
 ## Status
 
-v0.2.0: review agents, the `/inki:document` orchestrator, run logging, and command tooling. See `CHANGELOG.md` for details.
+v0.2.1: orchestrators now always invoke their sub-skills (never raw git/gh), and `/inki:pr` omits the preview link when no docs page changed. v0.2.0 added review agents, the `/inki:document` orchestrator, run logging, and command tooling. See `CHANGELOG.md` for details.
 
 ## For plugin developers: refreshing changes
 

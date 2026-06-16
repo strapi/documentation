@@ -1,5 +1,12 @@
 # Inki Changelog
 
+## v0.2.1 (2026-06-16)
+
+### Changed
+
+- Orchestrator skills (`/inki:submit`, `/inki:document`, `/inki:review`) now state as a hard rule that they must run each step by **invoking the named sub-skill**, never by re-implementing it with raw `git` / `gh` commands or inline logic. Re-implementing a step by hand silently drops behavior the sub-skill owns (for example, the `/inki:pr` Vercel preview link). `--auto-approve` removes confirmation prompts but does not authorize bypassing a sub-skill.
+- `/inki:pr`: when a PR changes no page under `docusaurus/docs/` (for example a `repo/` PR touching only `claude-plugins/`, config, or tooling), the Vercel preview link is now omitted rather than pointing at a non-existent page.
+
 ## v0.2.0 (2026-06-16)
 
 ### Added

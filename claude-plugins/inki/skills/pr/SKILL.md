@@ -31,6 +31,8 @@ Direct preview link 👉 [here](https://documentation-git-<branch-slug>-strapijs
 
 For example: `https://documentation-git-cms-mcp-server-strapijs.vercel.app/cms/features/strapi-mcp-server`
 
+**When no page under `docusaurus/docs/` is changed** (for example a `repo/` PR touching only `claude-plugins/`, config, or tooling), there is no doc page to preview: **omit this line entirely** rather than building a link to a page that does not exist. Do not fall back to the preview root.
+
 ## Step 3: Suggest push first if needed
 
 If no upstream exists, suggest running `/inki:push` first.
