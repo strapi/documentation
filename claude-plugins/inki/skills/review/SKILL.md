@@ -87,7 +87,7 @@ Run the `CLEANUP` command returned by the resolver (worktree teardown or temp-fi
 
 ## Rules
 
-- Each check stays atomic inside its agent (`inki:<name>`). Do not duplicate their rubric logic here; this skill only dispatches, synthesizes, and applies the style auto-fixes.
+- Each check stays atomic inside its agent (`inki:<name>`). This skill only dispatches the checks, synthesizes their reports, and applies the style auto-fixes; it never re-implements a check's rubric inline. Always run a check by **dispatching its agent** (Step 2), never by performing the check yourself in this context. An orchestrator that quietly does a sub-step's work by hand drops behavior that sub-step owns and is a defect, even if the output looks equivalent.
 - If `--fix` is passed, only the auto-fixable findings flagged by `inki:style-checker` are applied automatically (in Step 3b). All others remain suggestions.
 - `--fix` on a PR-scope review applies fixes inside the temporary worktree only (the one created by the resolver). The PR itself is NOT modified by `/inki:review`. To push the fixes, the user must `gh pr checkout <num>` themselves and apply the suggestions manually (or use `/inki:commit` + `/inki:push` after a manual checkout).
 - `--fix` on a `docs.strapi.io` URL review applies fixes inside the temporary `origin/main` worktree only (created by the resolver); that worktree is detached and torn down at cleanup, so nothing is written back. Surface the corrected content in the report, and tell the user to apply it on a real branch.
