@@ -108,10 +108,10 @@ Once the page passes review, one command takes it all the way to an open PR, del
 ```
 /inki:submit
    │
-   ├─ /inki:branch ── auto-detects the right prefix (cms/, cloud/, repo/) from the files touched
-   ├─ /inki:commit ── compliant message, respects protected paths
-   ├─ /inki:push ──── validates the branch name against git-rules.md
-   └─ /inki:pr ────── opens a PR with a compliant title + flat description (no headings, no test plan)
+   ├─ /inki:branch ── create the branch, auto-detecting the right branch prefix (cms/, cloud/, repo/) from the files touched
+   ├─ /inki:commit ── create a compliant message, respects protected paths
+   ├─ /inki:push ──── validate the branch name against git-rules.md and push it
+   └─ /inki:pr ────── open a PR with a compliant title + flat description (no headings, no test plan) and a Vercel preview link
 ```
 
 Composition, not duplication: `submit` doesn't reinvent git logic. Each sub-skill encodes a slice of `git-rules.md` once and is reused everywhere. Already opened a PR and need to fix its title or description? `/inki:pr-fix` rewrites them to match `git-rules.md`.
