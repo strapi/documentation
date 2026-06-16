@@ -459,6 +459,36 @@
       "number": 24997,
       "reason": "Router: Bug fix to the Content Manager's BlocksInput component that restores broken IME (Input Method Editor) composition behavior. This fix allows users with Japanese, Chinese, and other IME-based input methods to properly compose text without unexpected block splitting. The fix restores correct functionality rather than adding new capability or requiring users to learn new steps. This is a transparent restoration of expected behavior.",
       "added": "2026-06-13"
+    },
+    {
+      "number": 26648,
+      "reason": "Triage: CI tooling and internal triage action",
+      "added": "2026-06-16"
+    },
+    {
+      "number": 26613,
+      "reason": "Triage: Race condition/dedup fix, internal optimization",
+      "added": "2026-06-16"
+    },
+    {
+      "number": 26660,
+      "reason": "Router: Internal admin UI implementation — hides a widget in production based on server environment. No public API or behavior change affects users or developers.",
+      "added": "2026-06-16"
+    },
+    {
+      "number": 26604,
+      "reason": "Router: Admin UI text/link change for EE — changes 'Manage Seats' label to 'Manage Subscription' and updates the billing portal link. No API or public behavior change.",
+      "added": "2026-06-16"
+    },
+    {
+      "number": 26249,
+      "reason": "Router: Internal upgrade tool fix — configures Vite bundling for Redux deps and updates the upgrade module to optionally clear cache. This is maintenance/infrastructure, not user-facing functionality.",
+      "added": "2026-06-16"
+    },
+    {
+      "number": 26150,
+      "reason": "Router: Internal library replacement — swaps sanitize-html for DOMPurify in the rich text editor preview with no public behavior change (scripts are still blocked). Fixes console warnings for developers but does not affect end users or APIs.",
+      "added": "2026-06-16"
     }
   ]
 }
