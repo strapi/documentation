@@ -1,7 +1,7 @@
 ---
 name: outline-check
 description: "Check the structural outline of a documentation page: heading hierarchy, section order, completeness against the template."
-argument-hint: "<file path>"
+argument-hint: "[--no-log] <file path>"
 user-invocable: true
 ---
 
@@ -10,6 +10,8 @@ user-invocable: true
 ## Step 1: Identify the target and its template
 
 `$ARGUMENTS` is a relative path to a documentation page. Identify which template this page should match (feature, plugin, guide, API, configuration, breaking-change) by reading the page's frontmatter and content.
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki:review`), write into that run's existing directory instead of creating a new one.
 
 ## Step 2: Apply the migrated outline-checker prompt
 

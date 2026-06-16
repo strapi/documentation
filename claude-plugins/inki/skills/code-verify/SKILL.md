@@ -1,7 +1,7 @@
 ---
 name: code-verify
 description: "Verify code blocks in a documentation file: check syntax, references, and consistency with the underlying Strapi APIs."
-argument-hint: "<file path>"
+argument-hint: "[--no-log] <file path>"
 user-invocable: true
 ---
 
@@ -19,6 +19,8 @@ If neither is available, ask the user for a path or fall back to GitHub fetches.
 ## Step 1: Read the target file
 
 `$ARGUMENTS` is a relative path to a `.md` or `.mdx` file under `docusaurus/docs/`.
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki:review`), write into that run's existing directory instead of creating a new one.
 
 ## Step 2: Extract all fenced code blocks
 

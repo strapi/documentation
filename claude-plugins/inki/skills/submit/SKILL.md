@@ -1,7 +1,7 @@
 ---
 name: submit
 description: "Top-level orchestrator: branch (if needed), commit, push, then open a PR. Each step asks for confirmation before continuing, unless --auto-approve is passed."
-argument-hint: "[--auto-approve] [issue reference or topic hint, e.g. 'Fixes #2143']"
+argument-hint: "[--auto-approve] [--no-log] [issue reference or topic hint, e.g. 'Fixes #2143']"
 user-invocable: true
 ---
 
@@ -12,6 +12,8 @@ user-invocable: true
 If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../../references/help.md`. Do not run the workflow.
 
 Otherwise, from `$ARGUMENTS`, detect the auto-approve flag anywhere in the list: `--auto-approve` (canonical), or its aliases `--auto`, `--yes`, `-y` (all equivalent). If present, set `AUTO=true` and remove the flag. What remains is the optional issue reference passed through to `/inki:pr`.
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki:document`), write into that run's existing directory instead of creating a new one.
 
 ## Workflow
 

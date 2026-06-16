@@ -1,7 +1,7 @@
 ---
 name: pitfalls-check
 description: "Audit a documentation file against the known-pitfalls list: common mistakes, outdated patterns, deprecated APIs."
-argument-hint: "<file path>"
+argument-hint: "[--no-log] <file path>"
 user-invocable: true
 ---
 
@@ -10,6 +10,8 @@ user-invocable: true
 ## Step 1: Read the target file
 
 `$ARGUMENTS` is a relative path.
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki:review`), write into that run's existing directory instead of creating a new one.
 
 ## Step 2: Load the known-pitfalls catalog
 

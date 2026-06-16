@@ -1,11 +1,15 @@
 ---
 name: research
 description: "Top-level research orchestrator: combines exists, route, and coverage to give a complete picture before writing."
-argument-hint: "<topic, feature name, or strapi/strapi PR>"
+argument-hint: "[--no-log] <topic, feature name, or strapi/strapi PR>"
 user-invocable: true
 ---
 
 # /inki:research — pre-writing research
+
+## Step 0: Logging
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki:document`), write into that run's existing directory instead of creating a new one.
 
 ## Workflow
 

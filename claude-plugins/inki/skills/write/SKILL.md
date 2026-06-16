@@ -1,7 +1,7 @@
 ---
 name: write
 description: "Top-level write orchestrator: outline a new page, get user approval, then draft from the outline."
-argument-hint: "[--auto-approve] <topic brief or path to a brief file>"
+argument-hint: "[--auto-approve] [--no-log] <topic brief or path to a brief file>"
 user-invocable: true
 ---
 
@@ -12,6 +12,8 @@ user-invocable: true
 If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../../references/help.md`. Do not run the workflow.
 
 Otherwise, from `$ARGUMENTS`, detect the auto-approve flag anywhere in the list: `--auto-approve` (canonical), or its aliases `--auto`, `--yes`, `-y` (all equivalent). If present, set `AUTO=true` and remove the flag. What remains is the topic brief (text or path to a `.md` file).
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki:document`), write into that run's existing directory instead of creating a new one.
 
 ## Workflow
 

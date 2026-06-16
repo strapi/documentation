@@ -1,8 +1,16 @@
 # Logging
 
-Shared logic for writing inki run reports to the user's machine, so any run can be reviewed later by the user or a teammate. Skills that produce a report or modify files reference this file instead of duplicating the rules.
+Shared logic for writing inki run reports to the user's machine, so any run can be reviewed later by the user or a teammate. Every skill that produces a report or modifies files references this file instead of duplicating the rules — in practice that is every inki skill except pure read-only lookups that return their answer inline. Each such skill parses the logging flags below in its argument-parsing step.
 
 Logging is **on by default**, and **verbose by default** (full detail, including each reviewer agent's raw report). It never writes inside the repository being worked on. All log files are **Markdown** (`.md`) so they are easy to read and diff.
+
+## Standalone vs chained runs
+
+A skill invoked **directly** by the user creates its own run directory `YYYY-MM-DD-<slug>` and writes its report there.
+
+A skill invoked **as part of an orchestrator** (`/inki:document` calling research/write/review/submit; `/inki:review` calling the six checks; `/inki:submit` calling branch/commit/push/pr) does NOT create its own run directory. It writes into the orchestrator's existing run directory, under the matching phase subfolder. The orchestrator owns the run directory and passes it (and the logging flags) down. This way one end-to-end run produces one coherent log tree, not a scatter of per-skill directories.
+
+The git-plumbing skills — `branch`, `commit`, `push`, `pr` — do **not** log on their own and take no logging flags: a single git step has no report to keep. Their work is captured in the `submit/` log when they run as part of `/inki:submit`.
 
 ## Flags (parsed by the calling skill)
 

@@ -1,7 +1,7 @@
 ---
 name: coherence-check
 description: "Check a documentation file for cross-page coherence: terminology, links, and consistency with related pages."
-argument-hint: "<file path>"
+argument-hint: "[--no-log] <file path>"
 user-invocable: true
 ---
 
@@ -12,6 +12,8 @@ user-invocable: true
 For the target file, find related pages by:
 - Walking links from the target file
 - Searching `docusaurus/static/llms.txt` for entries on the same topic
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki:review`), write into that run's existing directory instead of creating a new one.
 
 ## Step 2: Apply the migrated coherence-checker prompt
 

@@ -1,7 +1,7 @@
 ---
 name: pr-fix
 description: "Rewrite the title or description/body of one or more open PRs on strapi/documentation to match git-rules.md. Strict one-by-one confirmation, or auto-edit with --auto-approve."
-argument-hint: "<title|description|body> [--auto-approve] [--include-old] [PR# or URL] [PR# or URL] ..."
+argument-hint: "<title|description|body> [--auto-approve] [--include-old] [--no-log] [PR# or URL] [PR# or URL] ..."
 user-invocable: true
 ---
 
@@ -46,6 +46,8 @@ The 30-day cutoff uses `createdAt` (not `updatedAt`) because bot activity bumps 
 ## Step 0: Parse arguments
 
 0. If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../../references/help.md`. Do not edit any PR.
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). This skill normally runs standalone (it creates its own run directory); if ever invoked as part of an orchestrator, write into that run's existing directory instead of creating a new one.
 1. Read the first positional token as `ACTION` (must be `title`, `description`, or `body`). Normalize `body` → `description` internally.
 2. Detect `--auto-approve` (aliases `--auto`/`--yes`/`-y`) → `AUTO=true`. Remove from list.
 3. Detect `--include-old` → `INCLUDE_OLD=true`. Remove from list.

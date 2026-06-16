@@ -1,7 +1,7 @@
 ---
 name: pitfalls-add
 description: "Add a new entry to the known-pitfalls catalog that pitfalls-check audits against. Verifies the correct pattern against the Strapi source before adding, and confirms with the user. Use when you have found a documentation mistake worth catching automatically in future reviews."
-argument-hint: "[--auto-approve] <description of the pitfall, or a pitfalls-check / code-verify finding to promote>"
+argument-hint: "[--auto-approve] [--no-log] <description of the pitfall, or a pitfalls-check / code-verify finding to promote>"
 user-invocable: true
 ---
 
@@ -14,6 +14,8 @@ The `pitfalls-checker` agent is read-only: it consults the catalog but never edi
 If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../../references/help.md`. Do not modify the catalog.
 
 Otherwise, from `$ARGUMENTS`, detect `--auto-approve` (aliases `--auto`, `--yes`, `-y`) → `AUTO=true`. What remains describes the pitfall: either free text, or a finding copied from a `pitfalls-check` / `code-verify` report.
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). This skill normally runs standalone (it creates its own run directory); if ever invoked as part of an orchestrator, write into that run's existing directory instead of creating a new one.
 
 ## Step 1: Derive the three required fields
 
