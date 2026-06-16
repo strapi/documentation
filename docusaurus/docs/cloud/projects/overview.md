@@ -65,7 +65,7 @@ From the dashboard's header of a chosen project, you can:
 - trigger a new deployment (see [Deployments management](/cloud/projects/deploys)) and visit your application <ScreenshotNumberReference number="4" />.
 
 Your project's dashboard also displays:
-- the *Deployments* and *Runtime logs* tabs, to see the deployments history (more details in [Deploy history and logs](/cloud/projects/deploys-history)) and the runtime logs of the project (see [dedicated documentation page](/cloud/projects/runtime-logs)) <ScreenshotNumberReference number="5" />
+- the *Deployments* and *Logs* tabs, to see the deployments history (more details in [Deploy history and logs](/cloud/projects/deploys-history)) and the logs of the project (see [dedicated documentation page](/cloud/projects/logs)) <ScreenshotNumberReference number="5" />
 - the project and environment details in a box on the right of the interface <ScreenshotNumberReference number="6" />, including:
   - the number of API calls,
   - the current usage for asset bandwidth and storage,

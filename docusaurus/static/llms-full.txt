@@ -945,6 +945,99 @@ From the *Deployments* tab, you can hover a deployment card to make the ![See lo
 
 
 
+# Logs
+Source: https://docs.strapi.io/cloud/projects/logs
+
+# Logs
+
+From the project dashboard, the *Logs* tab streams the live logs of the project as structured entries you can search, filter, and inspect.
+
+:::note
+The *Logs* page is only accessible once the project has a successful deployment and is inaccessible during major environment operations, such as project creation, data transfer, or environment clearing.
+:::
+
+## The log viewer
+
+The viewer follows the live logs stream and auto-scrolls to keep the latest entries in view. Each row shows three columns:
+
+| Column | Description |
+| --- | --- |
+| **Timestamp** | When the log was emitted. |
+| **Type** | The log level, *Error*, *Warning*, *Info*, or *HTTP*, shown as a colored badge. For *HTTP* entries, the response status code is shown next to the badge. |
+| **Message** | The log message. Long messages are truncated in the table; click the entry to read the full text in the drawer. |
+
+You can copy a single log line by clicking the **Copy a single entry** button visible on row hover, or within the drawer. To copy every entry currently shown in the log viewer, use the **Copy all entries** button in the toolbar instead.
+
+:::caution
+The live log stream is currently limited to the last 15 minutes and capped at 100,000 rows. Historical log visibility is under development.
+:::
+
+## Inspecting a log entry
+
+Click any log row to open a detail drawer and display the full message and, when available, the *Metadata* of the log. The *Metadata* section shows the following information:
+
+| Field | Description |
+| --- | --- |
+| `method` | HTTP method (e.g. `GET`, `POST`). |
+| `path` | Requested path. |
+| `route` | Matched application route. |
+| `status_code` | HTTP response status code. |
+| `error_type` | Error classification, when the entry is an error. |
+| `duration_ms` | Time taken to handle the request, in milliseconds. |
+| `response_size` | Size of the response. |
+| `request_type` | Type of request (e.g. API, admin). |
+
+<!-- Future iteration
+## Viewing historical logs
+
+Use the timeframe selector in the toolbar to switch between live mode and a bounded historical range. The viewer defaults to the last **15 minutes**.
+
+The following ranges are available depending on your plan:
+
+| Timeframe        | Required plan |
+|------------------|---------------|
+| 15m, 1h, 4h, 24h | All plans     |
+| 2d, 7d           | Essential     |
+| 14d              | Pro           |
+| 30d              | Scale         |
+
+For all non-live timeframes, a Refresh button appears next to the picker to manually reload the range. In live mode, logs refresh happens automatically.
+-->
+
+## Searching and filtering
+
+You can use the search and filter tools to refine the logs displayed in the viewer. Filters and search combine, so you can, for example, show only *HTTP* entries with a *5xx* status that mention a specific route.
+
+:::note
+Projects deployed before the structured viewer was introduced display their logs as plain text, without search, filtering, or per-entry metadata. To access the new log viewer, trigger a manual redeployment of the project.
+:::
+
+### Search bar
+
+Type in the search field to keep only the entries whose message contains your text.
+
+### Type filter
+
+Filter by the following log levels:
+- *Error*
+- *Warning*
+- *Info*
+- *HTTP*
+
+Error logs are highlighted so they stand out as you scan.
+
+### HTTP status code filter
+
+Filter by the following status codes:
+- *2xx*
+- *3xx*
+- *4xx*
+- *5xx*
+
+Requests with a status code of *5xx* are marked with the same error red as *Error* level entries.
+
+
+
 # Notifications
 Source: https://docs.strapi.io/cloud/projects/notifications
 
@@ -1003,7 +1096,7 @@ From the dashboard's header of a chosen project, you can:
 - trigger a new deployment (see [Deployments management](/cloud/projects/deploys)) and visit your application .
 
 Your project's dashboard also displays:
-- the *Deployments* and *Runtime logs* tabs, to see the deployments history (more details in [Deploy history and logs](/cloud/projects/deploys-history)) and the runtime logs of the project (see [dedicated documentation page](/cloud/projects/runtime-logs)) 
+- the *Deployments* and *Logs* tabs, to see the deployments history (more details in [Deploy history and logs](/cloud/projects/deploys-history)) and the logs of the project (see [dedicated documentation page](/cloud/projects/logs)) 
 - the project and environment details in a box on the right of the interface , including:
   - the number of API calls,
   - the current usage for asset bandwidth and storage,
@@ -1011,21 +1104,6 @@ Your project's dashboard also displays:
   - the name of the base directory,
   - the Strapi version number,
   - the Strapi app's url.
-
-
-
-# Runtime logs
-Source: https://docs.strapi.io/cloud/projects/runtime-logs
-
-# Runtime logs
-
-From a chosen project's dashboard, the *Runtime logs* tab displays the live logs of the project.
-
-:::note
-
-- The *Runtime logs* are only accessible once the project is successfully deployed.
-- Runtime logs are not live for projects on the Free plan and are reset each time the application is scaled to zero due to inactivity.
-:::
 
 
 

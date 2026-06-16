@@ -2005,6 +2005,11 @@
 			"destination": "/cloud/intro"
 		},
     {
+      "source": "/cloud/projects/runtime-logs",
+      "destination": "/cloud/projects/logs",
+      "permanent": true
+    },
+    {
       "source": "/developer-docs/latest/getting-started/quick-start.html%23_1-install-strapi-and-create-a-new-project",
       "destination": "/dev-docs/quick-start"
     },
