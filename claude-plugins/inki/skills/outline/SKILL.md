@@ -1,7 +1,7 @@
 ---
 name: outline
 description: "Generate an outline for a new documentation page from a topic brief and the appropriate template."
-argument-hint: "[--auto-approve] [--no-log] <topic brief or path to a brief file>"
+argument-hint: "[--non-interactive] [--no-log] <topic brief or path to a brief file>"
 user-invocable: true
 ---
 
@@ -11,7 +11,7 @@ user-invocable: true
 
 If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../../references/help.md`. Do not run the skill.
 
-Otherwise, from `$ARGUMENTS`, detect the auto-approve flag anywhere in the list: `--auto-approve` (canonical), or its aliases `--auto`, `--yes`, `-y` (all equivalent). If present, set `AUTO=true` and remove the flag. What remains is the brief.
+Otherwise, from `$ARGUMENTS`, detect the autonomy flag anywhere in the list: `--non-interactive` (canonical), aliases `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked` (all equivalent). If present, set `AUTO=true` and remove the flag. What remains is the brief.
 
 Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki:write`), write into that run's existing directory instead of creating a new one.
 

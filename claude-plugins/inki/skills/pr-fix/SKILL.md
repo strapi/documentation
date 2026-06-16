@@ -1,7 +1,7 @@
 ---
 name: pr-fix
-description: "Rewrite the title or description/body of one or more open PRs on strapi/documentation to match git-rules.md. Strict one-by-one confirmation, or auto-edit with --auto-approve."
-argument-hint: "<title|description|body> [--auto-approve] [--include-old] [--no-log] [PR# or URL] [PR# or URL] ..."
+description: "Rewrite the title or description/body of one or more open PRs on strapi/documentation to match git-rules.md. Strict one-by-one confirmation, or auto-edit with --non-interactive."
+argument-hint: "<title|description|body> [--non-interactive] [--include-old] [--no-log] [PR# or URL] [PR# or URL] ..."
 user-invocable: true
 ---
 
@@ -25,7 +25,7 @@ If no action is given, or if the first token is not one of the above, report the
 
 ### Optional flags (anywhere after the action)
 
-- `--auto-approve` (aliases `--auto`, `--yes`, `-y`) → `AUTO=true` (non-interactive: skip confirmation prompts)
+- `--non-interactive` (canonical), aliases `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked` (all equivalent) → `AUTO=true` (skip confirmation prompts)
 - `--include-old` → `INCLUDE_OLD=true` (only meaningful when no PR identifiers are given; includes open PRs older than 30 days)
 
 ### Optional PR identifiers
@@ -49,7 +49,7 @@ The 30-day cutoff uses `createdAt` (not `updatedAt`) because bot activity bumps 
 
 Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). This skill normally runs standalone (it creates its own run directory); if ever invoked as part of an orchestrator, write into that run's existing directory instead of creating a new one.
 1. Read the first positional token as `ACTION` (must be `title`, `description`, or `body`). Normalize `body` → `description` internally.
-2. Detect `--auto-approve` (aliases `--auto`/`--yes`/`-y`) → `AUTO=true`. Remove from list.
+2. Detect `--non-interactive` (canonical), aliases `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked` (all equivalent) → `AUTO=true`. Remove from list.
 3. Detect `--include-old` → `INCLUDE_OLD=true`. Remove from list.
 4. For each remaining token, extract trailing digits to get the PR number:
    - `2143` → `2143`
@@ -122,7 +122,7 @@ PR #<num>: edited (description rewritten)   (for description)
 A batch confirmation is required as a safety bracket. Display the full list of proposed edits first:
 
 ```
-Review batch (--auto-approve without PR IDs targets all recent open PRs):
+Review batch (--non-interactive without PR IDs targets all recent open PRs):
 
 | PR# | Author | Current | Proposed | Reason |     (for title)
 | PR# | Author | Reason | Preview of new description |  (for description)
@@ -281,15 +281,15 @@ Body alias (same behavior as description):
 
 Auto title rewrite on multiple PRs:
 ```
-/inki:pr-fix title --auto-approve 3204 3202 #3199
+/inki:pr-fix title --non-interactive 3204 3202 #3199
 ```
 
 Auto title rewrite on all recent open PRs (with batch review):
 ```
-/inki:pr-fix title --auto-approve
+/inki:pr-fix title --non-interactive
 ```
 
 Auto title rewrite on all open PRs including stale ones:
 ```
-/inki:pr-fix title --auto-approve --include-old
+/inki:pr-fix title --non-interactive --include-old
 ```

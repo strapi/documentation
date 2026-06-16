@@ -93,7 +93,7 @@ find docusaurus/docs -type f \( -name '<name>' \) 2>/dev/null
 ```
 
 - Exactly one match: use it.
-- Multiple matches: list them and ask the user which one (or, with `--auto-approve`, review all of them).
+- Multiple matches: list them and ask the user which one (or, with `--non-interactive`, review all of them).
 - No match: report that the file was not found and stop.
 
 `SCOPE` = the resolved path.

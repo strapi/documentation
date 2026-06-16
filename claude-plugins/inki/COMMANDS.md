@@ -8,17 +8,17 @@ Every Inki skill is invoked as `/inki:<skill>`. This page lists each command, wh
 
 ### `/inki:document`
 
-End-to-end documentation orchestrator: chains all four inki phases (research, write, review, submit) for a single subject. Gates between each phase by default; --auto-approve chains without pauses and runs a review-fix loop. The simplest way to document a subject from scratch.
+End-to-end documentation orchestrator: chains all four inki phases (research, write, review, submit) for a single subject. Gates between each phase by default; --non-interactive chains without pauses and runs a review-fix loop. The simplest way to document a subject from scratch.
 
 ```
-/inki:document [--auto-approve] [--fix-rounds <N>] <subject: keywords | Strapi PR (url/number) | Notion URL | Linear issue | PDF path | pasted text>
+/inki:document [--non-interactive] [--fix-rounds <N>] <subject: keywords | Strapi PR (url/number) | Notion URL | Linear issue | PDF path | pasted text>
 ```
 
 The command accepts the following flags:
 
 | Flag | Description |
 |------|-------------|
-| `--auto-approve` | Chain all phases without pausing, and approve the review-fix loop. Aliases: `--auto`, `--yes`, `-y`. |
+| `--non-interactive` | Chain all phases without pausing, and approve the review-fix loop. Canonical; aliases: `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked`. |
 | `--fix-rounds <N>` | Cap the review→fix→re-review iterations. Default 3. |
 | `--no-log` | Disable run logging for this run. |
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
@@ -98,14 +98,14 @@ The command accepts the following flags:
 Top-level write orchestrator: outline a new page, get user approval, then draft from the outline.
 
 ```
-/inki:write [--auto-approve] [--no-log] <topic brief or path to a brief file>
+/inki:write [--non-interactive] [--no-log] <topic brief or path to a brief file>
 ```
 
 The command accepts the following flags:
 
 | Flag | Description |
 |------|-------------|
-| `--auto-approve` | Generate the outline and draft without pausing at the outline approval gate. Aliases: `--auto`, `--yes`, `-y`. |
+| `--non-interactive` | Generate the outline and draft without pausing at the outline approval gate. Canonical; aliases: `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked`. |
 | `--no-log` | Disable run logging for this run. |
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
@@ -116,14 +116,14 @@ The command accepts the following flags:
 Generate an outline for a new documentation page from a topic brief and the appropriate template.
 
 ```
-/inki:outline [--auto-approve] [--no-log] <topic brief or path to a brief file>
+/inki:outline [--non-interactive] [--no-log] <topic brief or path to a brief file>
 ```
 
 The command accepts the following flags:
 
 | Flag | Description |
 |------|-------------|
-| `--auto-approve` | Skip the approval gate and save the outline to the default path. Aliases: `--auto`, `--yes`, `-y`. |
+| `--non-interactive` | Skip the approval gate and save the outline to the default path. Canonical; aliases: `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked`. |
 | `--no-log` | Disable run logging for this run. |
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
@@ -152,14 +152,14 @@ The command accepts the following flags:
 Top-level review orchestrator: runs style-check, outline-check, outline-ux-analyzer, code-verify, coherence-check, and pitfalls-check on a file, directory, or PR.
 
 ```
-/inki:review [--auto-approve] [--fix] [--no-log] <path | filename | PR# | PR URL | docs.strapi.io URL | pasted content>
+/inki:review [--non-interactive] [--fix] [--no-log] <path | filename | PR# | PR URL | docs.strapi.io URL | pasted content>
 ```
 
 The command accepts the following flags:
 
 | Flag | Description |
 |------|-------------|
-| `--auto-approve` | Non-interactive: skip confirmation gates inside the sub-skills. Aliases: `--auto`, `--yes`, `-y`. |
+| `--non-interactive` | Skip confirmation gates inside the sub-skills. Canonical; aliases: `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked`. |
 | `--fix` | Apply the auto-fixable findings from `style-check` (others stay suggestions). |
 | `--no-log` | Disable run logging for this run. |
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
@@ -268,14 +268,14 @@ The command accepts the following flags:
 Add a new entry to the known-pitfalls catalog that pitfalls-check audits against. Verifies the correct pattern against the Strapi source before adding, and confirms with the user. Use when you have found a documentation mistake worth catching automatically in future reviews.
 
 ```
-/inki:pitfalls-add [--auto-approve] [--no-log] <description of the pitfall, or a pitfalls-check / code-verify finding to promote>
+/inki:pitfalls-add [--non-interactive] [--no-log] <description of the pitfall, or a pitfalls-check / code-verify finding to promote>
 ```
 
 The command accepts the following flags:
 
 | Flag | Description |
 |------|-------------|
-| `--auto-approve` | Skip the confirmation prompt (the source verification still runs as the safety gate). Aliases: `--auto`, `--yes`, `-y`. |
+| `--non-interactive` | Skip the confirmation prompt (the source verification still runs as the safety gate). Canonical; aliases: `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked`. |
 | `--no-log` | Disable run logging for this run. |
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
@@ -285,17 +285,17 @@ The command accepts the following flags:
 
 ### `/inki:submit`
 
-Top-level orchestrator: branch (if needed), commit, push, then open a PR. Each step asks for confirmation before continuing, unless --auto-approve is passed.
+Top-level orchestrator: branch (if needed), commit, push, then open a PR. Each step asks for confirmation before continuing, unless --non-interactive is passed.
 
 ```
-/inki:submit [--auto-approve] [--no-log] [issue reference or topic hint, e.g. 'Fixes #2143']
+/inki:submit [--non-interactive] [--no-log] [issue reference or topic hint, e.g. 'Fixes #2143']
 ```
 
 The command accepts the following flags:
 
 | Flag | Description |
 |------|-------------|
-| `--auto-approve` | Run branch + commit + push + PR without per-step prompts (informed decisions are still surfaced). Aliases: `--auto`, `--yes`, `-y`. |
+| `--non-interactive` | Run branch + commit + push + PR without per-step prompts (informed decisions are still surfaced). Canonical; aliases: `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked`. |
 | `--no-log` | Disable run logging for this run. |
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
@@ -335,17 +335,17 @@ Create a pull request on strapi/documentation following [git-rules.md](./referen
 
 ### `/inki:pr-fix`
 
-Rewrite the title or description/body of one or more open PRs on strapi/documentation to match [git-rules.md](./references/git-rules.md). Strict one-by-one confirmation, or auto-edit with --auto-approve.
+Rewrite the title or description/body of one or more open PRs on strapi/documentation to match [git-rules.md](./references/git-rules.md). Strict one-by-one confirmation, or auto-edit with --non-interactive.
 
 ```
-/inki:pr-fix <title|description|body> [--auto-approve] [--include-old] [--no-log] [PR# or URL] [PR# or URL] ...
+/inki:pr-fix <title|description|body> [--non-interactive] [--include-old] [--no-log] [PR# or URL] [PR# or URL] ...
 ```
 
 The command accepts the following flags:
 
 | Flag | Description |
 |------|-------------|
-| `--auto-approve` | Edit without per-PR confirmation (a batch-review gate still applies when no PR IDs are given). Aliases: `--auto`, `--yes`, `-y`. |
+| `--non-interactive` | Edit without per-PR confirmation (a batch-review gate still applies when no PR IDs are given). Canonical; aliases: `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked`. |
 | `--include-old` | When no PR IDs are given, include open PRs older than 30 days (excluded by default). |
 | `--no-log` | Disable run logging for this run. |
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
