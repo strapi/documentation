@@ -1,7 +1,7 @@
 ---
 name: review
 description: "Top-level review orchestrator: runs style-check, outline-check, outline-ux-analyzer, code-verify, coherence-check, and pitfalls-check on a file, directory, or PR."
-argument-hint: "[--auto-approve] [--fix] [--no-log] <path | filename | PR# | PR URL | docs.strapi.io URL | pasted content>"
+argument-hint: "[--non-interactive] [--fix] [--no-log] <path | filename | PR# | PR URL | docs.strapi.io URL | pasted content>"
 user-invocable: true
 ---
 
@@ -13,7 +13,7 @@ If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../../refe
 
 Otherwise, from `$ARGUMENTS`, detect optional flags anywhere in the list:
 
-- `--auto-approve` (aliases `--auto`, `--yes`, `-y`) → `AUTO=true` (non-interactive: skip any confirmation gates inside sub-skills)
+- `--non-interactive` (canonical), aliases `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked` (all equivalent) → `AUTO=true` (skip any confirmation gates inside sub-skills; no questions asked)
 - `--fix` → `FIX=true` (apply auto-fixable findings from `style-check`)
 - `--no-log`, `--log-dir <path>`, `--short-log` → logging flags, handled per `../../references/logging.md`.
 
@@ -92,7 +92,7 @@ Run the `CLEANUP` command returned by the resolver (worktree teardown or temp-fi
 - `--fix` on a PR-scope review applies fixes inside the temporary worktree only (the one created by the resolver). The PR itself is NOT modified by `/inki:review`. To push the fixes, the user must `gh pr checkout <num>` themselves and apply the suggestions manually (or use `/inki:commit` + `/inki:push` after a manual checkout).
 - `--fix` on a `docs.strapi.io` URL review applies fixes inside the temporary `origin/main` worktree only (created by the resolver); that worktree is detached and torn down at cleanup, so nothing is written back. Surface the corrected content in the report, and tell the user to apply it on a real branch.
 - `--fix` on a pasted-content review applies fixes to the temp file only; there is no source file to write back to. Surface the corrected content in the report instead.
-- `--auto-approve` only changes interaction behavior (no extra prompts). It does NOT change what gets auto-fixed; that stays controlled by `--fix`.
+- `--non-interactive` only changes interaction behavior (no extra prompts). It does NOT change what gets auto-fixed; that stays controlled by `--fix`. So `--non-interactive --fix` means "ask no questions AND apply the auto-fixable findings"; `--non-interactive` alone reviews silently but changes nothing.
 - Never push, commit, or modify the PR directly. The review is read-only by default.
 
 ## Examples
@@ -136,5 +136,5 @@ title: My page
 
 Non-interactive review with auto-fixes applied locally:
 ```
-/inki:review --auto-approve --fix docusaurus/docs/cms/features/strapi-mcp-server.md
+/inki:review --non-interactive --fix docusaurus/docs/cms/features/strapi-mcp-server.md
 ```
