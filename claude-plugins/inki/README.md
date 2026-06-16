@@ -144,20 +144,20 @@ The summary below covers the most common usage. For a per-command reference of e
 
 Find out what already exists, where to put new content, what's missing.
 
-- `/inki:research <input>`: orchestrator: dispatches to the right sub-skill based on input shape.
+👉  `/inki:research <input>`: orchestrator: dispatches to the right sub-skill based on input shape.
 - `/inki:exists <topic>`: search docs + sidebars + open PRs for a topic.
 - `/inki:route <strapi/strapi or strapi/cloud PR>`: given a code PR, identify which docs to update.
 - `/inki:coverage <feature>`: audit documentation coverage of a Strapi feature.
 
 ### Write: produce new content
 
-- `/inki:write [--auto-approve] <brief>`: orchestrator: outline then draft.
+👉 `/inki:write [--auto-approve] <brief>`: orchestrator: outline then draft.
 - `/inki:outline <brief>`: generate an outline from a brief and template.
 - `/inki:draft <outline>`: draft a page from an outline + template + authoring guide.
 
 ### Review: check what you wrote
 
-- `/inki:review [--auto-approve] [--fix] <path | filename | PR | docs.strapi.io URL | pasted content>`: orchestrator: runs all 6 review sub-skills against any supported target.
+👉 `/inki:review [--auto-approve] [--fix] <path | filename | PR | docs.strapi.io URL | pasted content>`: orchestrator: runs all 6 review sub-skills against any supported target.
 - `/inki:style-check <path>`: style lint (deterministic + AI).
 - `/inki:outline-check <path>`: verify outline matches template.
 - `/inki:outline-ux-analyzer <path>`: audit pedagogical UX.
@@ -168,7 +168,7 @@ Find out what already exists, where to put new content, what's missing.
 
 ### Submit: get it to GitHub
 
-- `/inki:submit [--auto-approve] [hint]`: orchestrator: branch + commit + push + PR.
+👉 `/inki:submit [--auto-approve] [hint]`: orchestrator: branch + commit + push + PR.
 - `/inki:branch`: create a properly prefixed branch.
 - `/inki:commit`: stage + commit with a compliant message.
 - `/inki:push`: push with validation.
