@@ -5,7 +5,7 @@ argument-hint: "[--no-log] <file path>"
 user-invocable: true
 ---
 
-# /inki:coherence-check — cross-page coherence
+# /inki:coherence-check: cross-page coherence
 
 ## Step 1: Read the target file and identify related pages
 

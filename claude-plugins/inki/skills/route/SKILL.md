@@ -5,7 +5,7 @@ argument-hint: "[--no-log] <strapi/strapi PR number or URL>"
 user-invocable: true
 ---
 
-# /inki:route — route a code PR to its docs targets
+# /inki:route: route a code PR to its docs targets
 
 ## Step 0: Parse the input
 

@@ -5,7 +5,7 @@ argument-hint: "[--no-log] <path to outline file>"
 user-invocable: true
 ---
 
-# /inki:draft — draft a documentation page from an outline
+# /inki:draft: draft a documentation page from an outline
 
 ## Step 1: Read the outline
 

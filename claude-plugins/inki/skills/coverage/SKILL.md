@@ -5,7 +5,7 @@ argument-hint: "[--no-log] <feature or module name>"
 user-invocable: true
 ---
 
-# /inki:coverage — feature documentation gap audit
+# /inki:coverage: feature documentation gap audit
 
 ## Prerequisites
 

@@ -5,7 +5,7 @@ argument-hint: "[--fix] [--no-log] <file or directory path>"
 user-invocable: true
 ---
 
-# /inki:style-check — style lint for documentation files
+# /inki:style-check: style lint for documentation files
 
 ## Step 1: Determine target
 

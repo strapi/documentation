@@ -1,6 +1,6 @@
 # Logging
 
-Shared logic for writing inki run reports to the user's machine, so any run can be reviewed later by the user or a teammate. Every skill that produces a report or modifies files references this file instead of duplicating the rules — in practice that is every inki skill except pure read-only lookups that return their answer inline. Each such skill parses the logging flags below in its argument-parsing step.
+Shared logic for writing inki run reports to the user's machine, so any run can be reviewed later by the user or a teammate. Every skill that produces a report or modifies files references this file instead of duplicating the rules: in practice that is every inki skill except pure read-only lookups that return their answer inline. Each such skill parses the logging flags below in its argument-parsing step.
 
 Logging is **on by default**, and **verbose by default** (full detail, including each reviewer agent's raw report). It never writes inside the repository being worked on. All log files are **Markdown** (`.md`) so they are easy to read and diff.
 
@@ -10,7 +10,7 @@ A skill invoked **directly** by the user creates its own run directory `YYYY-MM-
 
 A skill invoked **as part of an orchestrator** (`/inki:document` calling research/write/review/submit; `/inki:review` calling the six checks; `/inki:submit` calling branch/commit/push/pr) does NOT create its own run directory. It writes into the orchestrator's existing run directory, under the matching phase subfolder. The orchestrator owns the run directory and passes it (and the logging flags) down. This way one end-to-end run produces one coherent log tree, not a scatter of per-skill directories.
 
-The git-plumbing skills — `branch`, `commit`, `push`, `pr` — do **not** log on their own and take no logging flags: a single git step has no report to keep. Their work is captured in the `submit/` log when they run as part of `/inki:submit`.
+The git-plumbing skills (`branch`, `commit`, `push`, `pr`) do **not** log on their own and take no logging flags: a single git step has no report to keep. Their work is captured in the `submit/` log when they run as part of `/inki:submit`.
 
 ## Flags (parsed by the calling skill)
 
@@ -36,10 +36,10 @@ Create the base directory if it does not exist.
 
 Each run gets one directory named `YYYY-MM-DD-<slug>`:
 
-- `YYYY-MM-DD` — today's date.
-- `<slug>` — a short kebab-case label for what the run is about:
+- `YYYY-MM-DD`: today's date.
+- `<slug>`: a short kebab-case label for what the run is about:
   - For `/inki:document`: derived from the subject (`SUBJECT_LABEL` → a few words, e.g. `mcp-server-config`).
-  - For a standalone `/inki:review`: derived from the target (`SCOPE`) — the bare filename without extension (`strapi-mcp-server`), or `pr-<num>` for a PR, or `pasted` for pasted content.
+  - For a standalone `/inki:review`: derived from the target (`SCOPE`), namely the bare filename without extension (`strapi-mcp-server`), or `pr-<num>` for a PR, or `pasted` for pasted content.
   - For other standalone skills: the most descriptive token available (topic, filename, or PR).
 
 If a run directory of the same name already exists (a second run on the same subject the same day), append a short numeric suffix: `-2`, `-3`, …
@@ -66,11 +66,11 @@ All files above are Markdown (`.md`). A standalone skill (run outside `/inki:doc
 
 ## What each report contains
 
-- **research/report.md** — the research summary: existing coverage found, gaps, routing, and the recommended next step.
-- **write/report.md** — the brief used, the chosen template, and the paths of the outline and draft produced.
-- **review/round-N.md** — the consolidated review table (per-check issue counts + severity), the issues by file, and, for fix-loop rounds, what was fixed in that round.
-- **review/agents/round-N-<agent>.md** — (verbose default; omitted with `--short-log`) each reviewer agent's full raw report for that round.
-- **submit/report.md** — branch name, commit SHA(s), and the PR URL.
+- **research/report.md** contains the research summary: existing coverage found, gaps, routing, and the recommended next step.
+- **write/report.md**: the brief used, the chosen template, and the paths of the outline and draft produced.
+- **review/round-N.md**: the consolidated review table (per-check issue counts + severity), the issues by file, and, for fix-loop rounds, what was fixed in that round.
+- **review/agents/round-N-<agent>.md**: (verbose default; omitted with `--short-log`) each reviewer agent's full raw report for that round.
+- **submit/report.md**: branch name, commit SHA(s), and the PR URL.
 
 Each report is plain Markdown with a short YAML frontmatter for later querying:
 
@@ -85,6 +85,6 @@ subject: <SUBJECT_LABEL or SCOPE>
 ## Behaviour
 
 - Write reports as the corresponding phase completes, not all at the end, so a run that stops early still leaves a partial log.
-- Logging is best-effort: if a write fails (permissions, disk), warn once and continue the run — never abort the actual work because logging failed.
+- Logging is best-effort: if a write fails (permissions, disk), warn once and continue the run. Never abort the actual work because logging failed.
 - When logging is disabled (`--no-log`), state it once at the start so the user knows nothing is being persisted.
 - At the end of a run, print the run directory path so the user knows where to look.

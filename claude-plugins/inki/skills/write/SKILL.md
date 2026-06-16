@@ -5,7 +5,7 @@ argument-hint: "[--auto-approve] [--no-log] <topic brief or path to a brief file
 user-invocable: true
 ---
 
-# /inki:write — outline then draft
+# /inki:write: outline then draft
 
 ## Step 0: Parse arguments
 
@@ -29,7 +29,7 @@ If the user rejects the outline, stop. Do not draft.
 1. Invoke `/inki:outline --auto-approve $ARGUMENTS`. The outline is generated and saved without an approval gate.
 2. Immediately invoke `/inki:draft <outline-path>` on the resulting outline.
 
-In auto mode, the user sees the outline and the draft only after both are produced. They can still discard the outputs if they don't fit — nothing is committed automatically. `--auto-approve` here means "don't pause between outline and draft," not "trust the output blindly."
+In auto mode, the user sees the outline and the draft only after both are produced. They can still discard the outputs if they don't fit; nothing is committed automatically. `--auto-approve` here means "don't pause between outline and draft," not "trust the output blindly."
 
 ## Rules
 

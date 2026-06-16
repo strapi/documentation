@@ -5,7 +5,7 @@ argument-hint: "[--no-log] <topic, feature name, or strapi/strapi PR>"
 user-invocable: true
 ---
 
-# /inki:research — pre-writing research
+# /inki:research: pre-writing research
 
 ## Step 0: Logging
 
@@ -35,4 +35,4 @@ Combine sub-reports under labeled sections:
 <output of /inki:route, if invoked>
 ```
 
-Conclude with a single recommended next step (e.g., "Run /inki:write" or "Skip — already documented at <path>").
+Conclude with a single recommended next step (e.g., "Run /inki:write" or "Skip: already documented at <path>").

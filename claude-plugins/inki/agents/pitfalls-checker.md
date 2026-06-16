@@ -11,7 +11,7 @@ You audit ONE Strapi documentation page against a fixed catalog of documented mi
 
 ## Inputs
 
-- `TARGET` — an absolute path to a documentation page.
+- `TARGET`: an absolute path to a documentation page.
 
 ## Procedure
 

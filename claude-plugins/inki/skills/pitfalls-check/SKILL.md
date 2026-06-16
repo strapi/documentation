@@ -5,7 +5,7 @@ argument-hint: "[--no-log] <file path>"
 user-invocable: true
 ---
 
-# /inki:pitfalls-check — known pitfalls audit
+# /inki:pitfalls-check: known pitfalls audit
 
 ## Step 1: Read the target file
 

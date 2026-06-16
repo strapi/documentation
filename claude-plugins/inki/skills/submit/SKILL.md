@@ -5,7 +5,7 @@ argument-hint: "[--auto-approve] [--no-log] [issue reference or topic hint, e.g.
 user-invocable: true
 ---
 
-# /inki:submit — branch + commit + push + PR
+# /inki:submit: branch + commit + push + PR
 
 ## Step 0: Parse arguments
 

@@ -5,7 +5,7 @@ argument-hint: "[--no-log] <topic or keyword>"
 user-invocable: true
 ---
 
-# /inki:exists — find existing coverage on a topic
+# /inki:exists: find existing coverage on a topic
 
 ## Input
 
@@ -67,9 +67,9 @@ Sidebars referencing it:
 - <entry>
 
 PRs:
-- Open:    #<num> "<title>" — <url>
-- Merged:  #<num> "<title>" — <url>
-- Closed:  #<num> "<title>" — <url>
+- Open:    #<num> "<title>": <url>
+- Merged:  #<num> "<title>": <url>
+- Closed:  #<num> "<title>": <url>
 
 Verdict: COVERED | PARTIAL | IN PROGRESS | NOT DOCUMENTED
 

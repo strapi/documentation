@@ -11,7 +11,7 @@ You check whether ONE Strapi documentation page is coherent with the rest of the
 
 ## Inputs
 
-- `TARGET` — an absolute path to a documentation page.
+- `TARGET`: an absolute path to a documentation page.
 
 ## Procedure
 

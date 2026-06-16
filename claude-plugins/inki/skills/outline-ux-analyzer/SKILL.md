@@ -5,7 +5,7 @@ argument-hint: "[--no-log] <file path>"
 user-invocable: true
 ---
 
-# /inki:outline-ux-analyzer — pedagogical UX audit
+# /inki:outline-ux-analyzer: pedagogical UX audit
 
 ## Step 1: Read the target
 

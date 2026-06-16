@@ -2,9 +2,9 @@
 
 Every Inki skill is invoked as `/inki:<skill>`. This page lists each command, what it does, its argument signature, and every flag it accepts. Typing `/inki:<skill> --help` prints a single command's usage. The shared flags are also summarized in the "Common flags" section of the [README](./README.md).
 
-> This file is not auto-generated; it is curated. Whoever adds or changes a command (or its flags) — a human editor or an AI agent — should update its entry here so the description, argument signature, and flag table stay in sync with the skill's frontmatter and its argument-parsing step. The command set changes rarely once stable.
+> This file is not auto-generated; it is curated. Whoever adds or changes a command (or its flags), whether a human editor or an AI agent, should update its entry here so the description, argument signature, and flag table stay in sync with the skill's frontmatter and its argument-parsing step. The command set changes rarely once stable.
 
-## Document — the full chain in one command
+## Document: the full chain in one command
 
 ### `/inki:document`
 
@@ -25,7 +25,7 @@ The command accepts the following flags:
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 | `--help`, `-h` | Print usage and stop. |
 
-## Research — figure out where the doc goes
+## Research: figure out where the doc goes
 
 ### `/inki:research`
 
@@ -91,7 +91,7 @@ The command accepts the following flags:
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 
-## Write — produce new content
+## Write: produce new content
 
 ### `/inki:write`
 
@@ -145,7 +145,7 @@ The command accepts the following flags:
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 
-## Review — check what you wrote
+## Review: check what you wrote
 
 ### `/inki:review`
 
@@ -281,7 +281,7 @@ The command accepts the following flags:
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
 | `--help`, `-h` | Print usage and stop. |
 
-## Submit — get it to GitHub
+## Submit: get it to GitHub
 
 ### `/inki:submit`
 

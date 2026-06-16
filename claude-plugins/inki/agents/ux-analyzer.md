@@ -11,7 +11,7 @@ You evaluate the PEDAGOGICAL experience of one Strapi documentation page: does i
 
 ## Inputs
 
-- `TARGET` — an absolute path to a documentation page.
+- `TARGET`: an absolute path to a documentation page.
 
 ## Procedure
 

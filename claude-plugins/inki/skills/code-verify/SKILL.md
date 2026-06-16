@@ -5,7 +5,7 @@ argument-hint: "[--no-log] <file path>"
 user-invocable: true
 ---
 
-# /inki:code-verify — verify code blocks
+# /inki:code-verify: verify code blocks
 
 ## Prerequisites
 

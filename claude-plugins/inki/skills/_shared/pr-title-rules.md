@@ -10,7 +10,7 @@ These rules apply to every PR title created on strapi/documentation.
 4. No ticket IDs or emojis as the core content.
 5. Capitalize the first word.
 6. Keep it at most 80 characters.
-7. Be specific — name the area, page, or feature.
+7. Be specific: name the area, page, or feature.
 
 ## Good titles (illustrative)
 

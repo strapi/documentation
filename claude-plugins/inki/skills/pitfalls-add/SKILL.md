@@ -5,9 +5,9 @@ argument-hint: "[--auto-approve] [--no-log] <description of the pitfall, or a pi
 user-invocable: true
 ---
 
-# /inki:pitfalls-add — add an entry to the known-pitfalls catalog
+# /inki:pitfalls-add: add an entry to the known-pitfalls catalog
 
-The `pitfalls-checker` agent is read-only: it consults the catalog but never edits it. This skill is the writing counterpart — it adds a new, verified entry to `${CLAUDE_PLUGIN_ROOT}/references/prompts/integrity-known-pitfalls.md` so the mistake is caught automatically in every future review.
+The `pitfalls-checker` agent is read-only: it consults the catalog but never edits it. This skill is the writing counterpart: it adds a new, verified entry to `${CLAUDE_PLUGIN_ROOT}/references/prompts/integrity-known-pitfalls.md` so the mistake is caught automatically in every future review.
 
 ## Step 0: Parse arguments
 
@@ -21,15 +21,15 @@ Logging: unless `--no-log` is passed, write this skill's report to the run log p
 
 Every catalog entry needs:
 
-1. **Hallucinated pattern** — what the wrong content says (the version to catch).
-2. **Correct pattern** — what the code actually does.
-3. **Context** — why the mistake happens and when to watch for it.
+1. **Hallucinated pattern**: what the wrong content says (the version to catch).
+2. **Correct pattern**: what the code actually does.
+3. **Context**: why the mistake happens and when to watch for it.
 
 Extract these from the input. If any is missing or unclear, ask the user (do not invent the correct pattern).
 
 ## Step 2: Verify the correct pattern against the source
 
-Do NOT add an unverified pattern — a wrong catalog entry would generate false positives forever. Confirm the "correct pattern" against the actual `strapi/strapi` source (a local clone if available, otherwise a raw GitHub fetch), the same way `code-verify` does. If it cannot be verified, say so and stop; offer to add it as a clearly-marked `unverified` entry only if the user insists.
+Do NOT add an unverified pattern: a wrong catalog entry would generate false positives forever. Confirm the "correct pattern" against the actual `strapi/strapi` source (a local clone if available, otherwise a raw GitHub fetch), the same way `code-verify` does. If it cannot be verified, say so and stop; offer to add it as a clearly-marked `unverified` entry only if the user insists.
 
 ## Step 3: Choose the category
 

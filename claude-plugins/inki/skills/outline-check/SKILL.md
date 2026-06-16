@@ -5,7 +5,7 @@ argument-hint: "[--no-log] <file path>"
 user-invocable: true
 ---
 
-# /inki:outline-check — outline structure audit
+# /inki:outline-check: outline structure audit
 
 ## Step 1: Identify the target and its template
 

@@ -5,7 +5,7 @@ argument-hint: "[--auto-approve] [--no-log] <topic brief or path to a brief file
 user-invocable: true
 ---
 
-# /inki:outline — generate a page outline
+# /inki:outline: generate a page outline
 
 ## Step 0: Parse arguments
 

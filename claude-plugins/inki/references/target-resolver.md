@@ -27,7 +27,7 @@ When a target is ambiguous (e.g. a bare integer that is also a plausible filenam
 
 ## Resolution by type
 
-### 1 — Empty
+### 1. Empty
 
 ```bash
 git diff main...HEAD --name-only -- '*.md' '*.mdx'
@@ -35,7 +35,7 @@ git diff main...HEAD --name-only -- '*.md' '*.mdx'
 
 Operates on the current working tree. `CLEANUP` is empty.
 
-### 2 — GitHub PR
+### 2. GitHub PR
 
 1. Extract the PR number: strip a leading `#`, strip URL tails (`/files`, `/changes`), then take the trailing `[0-9]+`.
 2. Fetch the PR's changed files:
@@ -56,9 +56,9 @@ Operates on the current working tree. `CLEANUP` is empty.
 
 `SCOPE` = `PR #<num> (<count> doc file[s])`.
 
-### 3 — docs.strapi.io URL
+### 3. docs.strapi.io URL
 
-A `docs.strapi.io` URL points at the *published* page, so the review must run against the published source on `origin/main`, not a possibly-stale working copy. Check the page out in a temporary worktree on `origin/main` so the file sits at its real path under `docusaurus/docs/` — this keeps coherence-check and code-verify fully functional (relative links and sibling pages resolve), unlike a loose temp file:
+A `docs.strapi.io` URL points at the *published* page, so the review must run against the published source on `origin/main`, not a possibly-stale working copy. Check the page out in a temporary worktree on `origin/main` so the file sits at its real path under `docusaurus/docs/`. This keeps coherence-check and code-verify fully functional (relative links and sibling pages resolve), unlike a loose temp file:
 
 1. Strip the origin (`https://docs.strapi.io`) and any trailing slash, query string, or `#anchor`.
 2. The remaining path is the doc route, e.g. `/cms/features/strapi-mcp-server`.
@@ -74,17 +74,17 @@ A `docs.strapi.io` URL points at the *published* page, so the review must run ag
    - if the route ends in a segment that is a directory, try `…/<segment>/index.md` / `index.mdx`.
 5. `FILES` = the first candidate that exists. `CLEANUP` = `./claude-plugins/inki/scripts/main-worktree.sh destroy`.
 6. If the local working tree (in the main checkout) has uncommitted changes to the same path, note in the report header that the review ran against `origin/main` and that those local uncommitted changes were **not** included.
-7. If no candidate exists on `origin/main` (e.g. the page is generated, or the route uses a sidebar alias), destroy the worktree and fall back to fetching the rendered page with WebFetch, treating the result as **pasted content** (type 6) — note in the report that the review ran against the published HTML, not local source.
+7. If no candidate exists on `origin/main` (e.g. the page is generated, or the route uses a sidebar alias), destroy the worktree and fall back to fetching the rendered page with WebFetch, treating the result as **pasted content** (type 6). Note in the report that the review ran against the published HTML, not local source.
 
 `SCOPE` = `docs.strapi.io<route> (origin/main)`, or `docs.strapi.io<route> (fetched)` for the WebFetch fallback. `CLEANUP` tears down the worktree (or removes the WebFetch temp file in the fallback).
 
-### 4 — Local path
+### 4. Local path
 
 Use the path directly. If it is a directory, recursively collect `.md` and `.mdx` files under it. `CLEANUP` is empty.
 
 `SCOPE` = the path.
 
-### 5 — Bare filename
+### 5. Bare filename
 
 The user passed a filename with no directory, e.g. `strapi-mcp-server.md`:
 
@@ -98,7 +98,7 @@ find docusaurus/docs -type f \( -name '<name>' \) 2>/dev/null
 
 `SCOPE` = the resolved path.
 
-### 6 — Pasted content
+### 6. Pasted content
 
 The user pasted Markdown directly (frontmatter, headings, prose) instead of a reference:
 

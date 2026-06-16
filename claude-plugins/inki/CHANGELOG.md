@@ -38,10 +38,10 @@
 ### Fixed
 
 - `plugin.json` author field: expect object schema (`{ name }`), not string.
-- Pitfalls catalog clarification: `known-pitfalls.md` is a reference catalog, not a prompt — the `pitfalls-check` skill loads it as data.
+- Pitfalls catalog clarification: `known-pitfalls.md` is a reference catalog, not a prompt; the `pitfalls-check` skill loads it as data.
 - `code-verify` and `coverage` skills: document the Strapi codebase prerequisite (path to a local clone or fallback to GitHub fetch).
 
-## v0.1.0 — 2026-05-22
+## v0.1.0 (2026-05-22)
 
 ### Added
 

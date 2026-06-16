@@ -103,7 +103,7 @@ Missing "This PR ..." opener, contains `##`/`###` heading, contains "Test plan" 
 
 ### If `AUTO=true`
 
-**Case A — PR identifiers were given explicitly**
+**Case A: PR identifiers were given explicitly**
 
 Edit immediately without further prompting:
 
@@ -113,11 +113,11 @@ Edit immediately without further prompting:
 Announce each change inline:
 
 ```
-PR #<num>: edited — "<proposed title>"    (for title)
+PR #<num>: edited "<proposed title>"    (for title)
 PR #<num>: edited (description rewritten)   (for description)
 ```
 
-**Case B — No PR identifiers given** (targets all recent open PRs)
+**Case B: No PR identifiers given** (targets all recent open PRs)
 
 A batch confirmation is required as a safety bracket. Display the full list of proposed edits first:
 
@@ -146,7 +146,7 @@ For each non-compliant PR, display the proposal and wait for input.
 **For `ACTION=title`:**
 
 ```
-PR #<num> — author: @<login>
+PR #<num>, author: @<login>
   Current: <current title>
   Proposed: <proposed title>
   Reason: <short explanation>
@@ -161,7 +161,7 @@ Branch on response:
 **For `ACTION=description`:**
 
 ```
-PR #<num> — author: @<login>
+PR #<num>, author: @<login>
   Title: <current title (for context, not edited here)>
 
   --- Current description ---
@@ -237,7 +237,7 @@ Do NOT naively build the host from the branch name. Vercel truncates long branch
 
 ### Edge cases
 
-- If the description already has a preview link **but it points to a wrong/outdated page** (e.g., the branch was renamed, or a different page is now more representative), the skill MAY propose a corrected line and surface the reason. Do not silently replace — surface the proposed change in the `Reason` so the user can opt out.
+- If the description already has a preview link **but it points to a wrong/outdated page** (e.g., the branch was renamed, or a different page is now more representative), the skill MAY propose a corrected line and surface the reason. Do not silently replace; surface the proposed change in the `Reason` so the user can opt out.
 - For PRs from external forks, the standard `strapijs.vercel.app` pattern still works (Vercel deploys all branches under the strapijs subdomain), so no special handling needed.
 - If the description body is itself compliant but the Vercel link is the ONLY missing piece, classify the PR as non-compliant on the basis of the missing link alone, and propose the addition.
 
@@ -257,10 +257,10 @@ Include PRs classified as compliant in a separate count below the table (e.g., `
 ## Rules
 
 - In interactive mode (`AUTO=false`), never edit without explicit confirmation.
-- In auto mode (`AUTO=true`), still respect the compliant filter — never rewrite content that already passes the rules.
+- In auto mode (`AUTO=true`), still respect the compliant filter: never rewrite content that already passes the rules.
 - Never propose content that itself fails the rules.
 - `title` action only modifies the title. `description`/`body` action only modifies the body. Cross-pollination is not allowed.
-- If the rewrite would change meaning (not just form), surface that in the Reason line so the user can intervene. In auto mode, this is informational only — the edit still proceeds.
+- If the rewrite would change meaning (not just form), surface that in the Reason line so the user can intervene. In auto mode, this is informational only; the edit still proceeds.
 
 ## Examples
 

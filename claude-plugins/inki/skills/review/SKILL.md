@@ -5,7 +5,7 @@ argument-hint: "[--auto-approve] [--fix] [--no-log] <path | filename | PR# | PR 
 user-invocable: true
 ---
 
-# /inki:review — full documentation review
+# /inki:review: full documentation review
 
 ## Step 0: Parse arguments
 
@@ -27,15 +27,15 @@ Resolve the target by following `../../references/target-resolver.md`. It accept
 
 The resolver returns:
 
-- `FILES` — the list of local files the sub-skills operate on.
-- `SCOPE` — a short label for the report header.
-- `CLEANUP` — a command to run when the review finishes (worktree teardown or temp-file removal); may be empty.
+- `FILES`: the list of local files the sub-skills operate on.
+- `SCOPE`: a short label for the report header.
+- `CLEANUP`: a command to run when the review finishes (worktree teardown or temp-file removal); may be empty.
 
 If resolution fails (PR has no doc files, filename not found, URL maps to nothing), report why and stop.
 
 ## Step 2: Dispatch the 6 checks as parallel subagents
 
-For each file in `FILES`, dispatch the six review checks as **parallel subagents** using the Agent tool. Issue all calls for a given file in a single batch so they run concurrently — do NOT run them inline in this skill's context, and do NOT run them one after another. Each subagent reads its target plus its own rubric prompt and returns ONLY a concise findings report; the file contents it reads stay out of this skill's context.
+For each file in `FILES`, dispatch the six review checks as **parallel subagents** using the Agent tool. Issue all calls for a given file in a single batch so they run concurrently. Do NOT run them inline in this skill's context, and do NOT run them one after another. Each subagent reads its target plus its own rubric prompt and returns ONLY a concise findings report; the file contents it reads stay out of this skill's context.
 
 Map each check to its bundled agent (`agentType`):
 
@@ -48,7 +48,7 @@ Map each check to its bundled agent (`agentType`):
 | Cross-page coherence | `inki:coherence-checker` | terminology/link/conflict issues |
 | Known pitfalls | `inki:pitfalls-checker` | cataloged hallucination matches |
 
-Pass each agent the absolute `TARGET` path. For the style check, pass `FIX=true` when `FIX` is set (the agent still does not edit files — it flags the auto-fixable subset for the caller to apply in Step 3b).
+Pass each agent the absolute `TARGET` path. For the style check, pass `FIX=true` when `FIX` is set (the agent still does not edit files; it flags the auto-fixable subset for the caller to apply in Step 3b).
 
 The agents are read-only by construction (their `tools` allowlists exclude write/commit/push), so `AUTO` does not change their behavior. `AUTO` only governs whether *this* skill prompts before applying `--fix` results.
 
@@ -92,7 +92,7 @@ Run the `CLEANUP` command returned by the resolver (worktree teardown or temp-fi
 - `--fix` on a PR-scope review applies fixes inside the temporary worktree only (the one created by the resolver). The PR itself is NOT modified by `/inki:review`. To push the fixes, the user must `gh pr checkout <num>` themselves and apply the suggestions manually (or use `/inki:commit` + `/inki:push` after a manual checkout).
 - `--fix` on a `docs.strapi.io` URL review applies fixes inside the temporary `origin/main` worktree only (created by the resolver); that worktree is detached and torn down at cleanup, so nothing is written back. Surface the corrected content in the report, and tell the user to apply it on a real branch.
 - `--fix` on a pasted-content review applies fixes to the temp file only; there is no source file to write back to. Surface the corrected content in the report instead.
-- `--auto-approve` only changes interaction behavior (no extra prompts). It does NOT change what gets auto-fixed — that stays controlled by `--fix`.
+- `--auto-approve` only changes interaction behavior (no extra prompts). It does NOT change what gets auto-fixed; that stays controlled by `--fix`.
 - Never push, commit, or modify the PR directly. The review is read-only by default.
 
 ## Examples
