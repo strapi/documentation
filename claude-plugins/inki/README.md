@@ -157,7 +157,7 @@ Find out what already exists, where to put new content, what's missing.
 
 ### Review: check what you wrote
 
-👉 `/inki:review [--auto-approve] [--fix] <path | filename | PR | docs.strapi.io URL | pasted content>`: orchestrator: runs all 6 review sub-skills against any supported target.
+👉 `/inki:review [--auto-approve] [--fix] <path | filename | PR | docs.strapi.io URL | pasted content>`: orchestrator: runs all 6 review sub-skills against any supported target. When `--fix` is passed, the tool will auto-fix its finding; when omitted it will simply report them.
 - `/inki:style-check <path>`: style lint (deterministic + AI).
 - `/inki:outline-check <path>`: verify outline matches template.
 - `/inki:outline-ux-analyzer <path>`: audit pedagogical UX.
