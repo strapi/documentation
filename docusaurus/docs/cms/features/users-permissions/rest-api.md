@@ -596,7 +596,7 @@ Possible errors:
 | 400 | `"Username already taken"` or `"Email already taken"` | Duplicate value |
 
 :::note Relation inputs support both `documentId` and numeric IDs
-When updating a user with custom relations, you can use either `documentId` (recommended for v5) or numeric `id` in relation payloads:
+When updating a user with custom relations, you can use either `documentId` (recommended for Strapi 5) or numeric `id` in relation payloads:
 ```json
 {
   "customRelation": {
