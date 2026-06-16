@@ -109,7 +109,7 @@ When using the default upload provider, the following specific configuration opt
 | Parameter                                   | Description                                                                                                         | Type    | Default |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
 | `providerOptions.localServer`        | Options that will be passed to <ExternalLink to="https://github.com/koajs/static" text="koa-static"/> upon which the Upload server is build (see [local server configuration](#local-server)) | Object  | -       |
-| `sizeLimit`                                  | Maximum file size in bytes (see [max file size](#max-file-size)) | Integer | `209715200`<br/><br/>(200 MB in bytes, i.e., 200 x 1024 x 1024 bytes) |
+| `sizeLimit`                                  | Maximum file size in bytes (see [max file size](#max-file-size)) | Integer | `1000000000`<br/><br/>(1 GB in bytes) |
 | `breakpoints`             | Allows to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
 | `sharp`             | Configures <ExternalLink to="https://sharp.pixelplumbing.com/" text="sharp"/> image processing options (see [sharp configuration](#sharp-configuration)) | Object | `{ cache: false, concurrency: 1 }` |
 | `security`             | Configures validation rules for uploaded files to enhance media security | Object | - |
@@ -248,7 +248,11 @@ export default ({ env }) => ({
 
 #### Max file size
 
-The Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of 200MB. This must be done in addition to provider options passed to the Upload package for `sizeLimit`.
+:::note Strapi Cloud
+On Strapi Cloud, upload size limits are enforced at the infrastructure level. They cannot be raised via the `strapi::body` middleware config. See [Upload size limits for Strapi Cloud](/cloud/advanced/upload-size-limits) for per-plan values and the memory-based recommendation for image uploads.
+:::
+
+The Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of 1 GB. This must be done in addition to provider options passed to the Upload package for `sizeLimit`.
 
 :::caution
 You may also need to adjust any upstream proxies, load balancers, or firewalls to allow for larger file sizes. For instance, <ExternalLink to="http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size" text="Nginx"/> has a configuration setting called `client_max_body_size` that must be adjusted, since its default is only 1mb.
@@ -399,7 +403,7 @@ By default, the value of `strapi.server.httpServer.requestTimeout` is set to 330
 
 To make it possible for users with slow internet connection to upload large files, it might be required to increase this timeout limit. The recommended way to do it is by setting the `http.serverOptions.requestTimeout` parameter in [the `config/servers` file](/cms/configurations/server).
 
-An alternate method is to set the `requestTimeout` value in [the `bootstrap` function](/cms/configurations/functions#bootstrap) that runs before Strapi gets started. This is useful in cases where it needs to change programmatically—for example, to temporarily disable and re-enable it:
+An alternate method is to set the `requestTimeout` value in [the `bootstrap` function](/cms/configurations/functions#bootstrap) that runs before Strapi gets started. This is useful in cases where it needs to change programmatically, for example to temporarily disable and re-enable it:
 
 <Tabs groupId="js-ts">
 

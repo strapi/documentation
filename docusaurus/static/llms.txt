@@ -6,6 +6,7 @@
 - [Email Provider](https://docs.strapi.io/cloud/advanced/email): Third‑party email services integrate through plugins and environment variables to replace the default sender.
 - [Middleware Configuration for Strapi Cloud](https://docs.strapi.io/cloud/advanced/middlewares): On Strapi Cloud, middleware customizations must go in config/env/production/middlewares. Changes to the global config file are overwritten on deploy.
 - [Upload Provider Configuration for Strapi Cloud](https://docs.strapi.io/cloud/advanced/upload): External storage like S3 or Cloudinary requires plugin setup, security middleware, and Cloud variables.
+- [Upload size limits for Strapi Cloud](https://docs.strapi.io/cloud/advanced/upload-size-limits): Non-image files are capped at 200 MB on all plans. Image files have a memory-based recommended maximum that varies by format, plan, and Media Library settings. To upload larger images, disable Responsive friendly upload and Size optimization.
 - [Command Line Interface (CLI)](https://docs.strapi.io/cloud/cli/cloud-cli): CLI commands handle login, project deploy, linking, listing, and logout without needing a remote repository.
 - [Strapi Cloud fundamentals](https://docs.strapi.io/cloud/getting-started/cloud-fundamentals): Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understa...
 - [Strapi Cloud - Dashboard deployment](https://docs.strapi.io/cloud/getting-started/deployment): Learn how to deploy your Strapi application on Strapi Cloud.

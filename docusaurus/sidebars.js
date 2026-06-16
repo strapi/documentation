@@ -764,6 +764,14 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'cloud/advanced/upload-size-limits',
+          label: 'Upload size limits for Cloud',
+          customProps: {
+            new: true,
+          },
+        },
+        {
+          type: 'doc',
           id: 'cloud/advanced/middlewares',
           label: 'Middleware configuration for Cloud',
           customProps: {
