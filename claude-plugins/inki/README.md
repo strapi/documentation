@@ -133,7 +133,7 @@ The summary below covers the most common usage. For a per-command reference of e
 
 ### Document: the full chain in one command
 
-- `/inki:document [--auto-approve] <subject>`: run all four stages (research → write → review → submit) for one subject. Gated between each stage by default.
+👉 `/inki:document [--auto-approve] <subject>`: run all four stages (research → write → review → submit) for one subject. Gated between each stage by default.
 
 * `--auto-approve` chains without pauses. When omitted, the process will stop and ask for approval at each 4 stage.
 * `<subject>` can be keywords, a Strapi code PR (`strapi/strapi` or `strapi/cloud`; URL, `owner/repo number`, bare number, or prose), a Notion URL, a Linear issue, a PDF path/URL, a local file, or pasted text. 
