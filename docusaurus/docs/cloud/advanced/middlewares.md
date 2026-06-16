@@ -68,7 +68,8 @@ Both CSP and CORS customizations can be combined in the same file.
 
 :::note
 - You can keep your existing `config/middlewares` file as-is as it will not cause conflicts. The production-specific file takes precedence on Strapi Cloud.
-- Upload size limits on Strapi Cloud are enforced at the infrastructure level (Cloudflare gateway) and cannot be overridden via the `strapi::body` config. For external storage options, see [Upload Provider Configuration](/cloud/advanced/upload).
+- Upload size limits on Strapi Cloud are enforced at the infrastructure level and cannot be overridden via the `strapi::body` config.
+- For per-plan values and the memory-based recommendation for image uploads, see [Upload size limits for Strapi Cloud](/cloud/advanced/upload-size-limits). For external storage options, see [Upload Provider Configuration](/cloud/advanced/upload).
 :::
 
 ## Custom Content Security Policy (CSP)

@@ -243,7 +243,8 @@ Both CSP and CORS customizations can be combined in the same file.
 
 :::note
 - You can keep your existing `config/middlewares` file as-is as it will not cause conflicts. The production-specific file takes precedence on Strapi Cloud.
-- Upload size limits on Strapi Cloud are enforced at the infrastructure level (Cloudflare gateway) and cannot be overridden via the `strapi::body` config. For external storage options, see [Upload Provider Configuration](/cloud/advanced/upload).
+- Upload size limits on Strapi Cloud are enforced at the infrastructure level and cannot be overridden via the `strapi::body` config.
+- For per-plan values and the memory-based recommendation for image uploads, see [Upload size limits for Strapi Cloud](/cloud/advanced/upload-size-limits). For external storage options, see [Upload Provider Configuration](/cloud/advanced/upload).
 :::
 
 ## Custom Content Security Policy (CSP)
@@ -266,7 +267,13 @@ Source: https://docs.strapi.io/cloud/advanced/upload
 
 # Upload Provider Configuration for Strapi Cloud
 
-Strapi Cloud comes with a local upload provider out of the box. However, it can also be configured to utilize a third-party upload provider, if needed.
+Strapi Cloud comes with a local upload provider out of the box. However, it can also be configured to use a third-party upload provider, if needed.
+
+:::note
+For the file size and memory-based limits that apply to uploads, see [Upload size limits for Strapi Cloud](/cloud/advanced/upload-size-limits).
+:::
+
+## Configuring a third-party upload provider
 
 :::caution
 Please be advised that Strapi is unable to provide support for third-party upload providers.
@@ -291,9 +298,9 @@ Each provider will have different configuration settings available. Review the r
 </TabItem>
 </Tabs>
 
-### Configure the Security Middleware
+### Configure the security middleware
 
-Due to the default settings in the Strapi Security Middleware you will need to modify the `contentSecurityPolicy` settings to properly see thumbnail previews in the Media Library.
+Due to the default settings in the Strapi security middleware you will need to modify the `contentSecurityPolicy` settings to properly see thumbnail previews in the Media Library.
 
 :::caution
 On Strapi Cloud, `NODE_ENV` is always set to `production`. Changes to the global `config/middlewares.ts` file are overwritten on each deploy and will not take effect. Place your Security Middleware customizations in `config/env/production/middlewares.ts` instead. See [Middleware Configuration for Strapi Cloud](/cloud/advanced/middlewares) for details.
@@ -301,7 +308,7 @@ On Strapi Cloud, `NODE_ENV` is always set to `production`. Changes to the global
 
 To do this in your Strapi project:
 
-1. Navigate to `./config/env/production/middlewares.js` or `./config/env/production/middlewares.ts` in your Strapi project.
+1. Navigate to `/config/env/production/middlewares.js` or `/config/env/production/middlewares.ts` in your Strapi project.
 2. Replace the default `strapi::security` string with the object provided by the upload provider.
 
 **Example:**
@@ -317,7 +324,7 @@ To do this in your Strapi project:
 Before pushing the above changes to GitHub, add environment variables to the Strapi Cloud project to prevent triggering a rebuild and new deployment of the project before the changes are complete.
 :::
 
-### Strapi Cloud Configuration
+### Strapi Cloud configuration
 
 1. Log into Strapi Cloud and click on the corresponding project on the Projects page.
 2. Click on the **Settings** tab and choose **Variables** in the left menu.
@@ -328,14 +335,58 @@ Before pushing the above changes to GitHub, add environment variables to the Str
 
 </Tabs>
 
-## Deployment
+### Deployment
 
-To deploy the project and utilize the third-party upload provider, push the changes from earlier. This will trigger a rebuild and new deployment of the Strapi Cloud project.
+To deploy the project and use the third-party upload provider, push the changes from earlier. This will trigger a rebuild and new deployment of the Strapi Cloud project.
 
 Once the application finishes building, the project will use the new upload provider.
 
 :::strapi Custom Provider
 If you want to create a custom upload provider, please refer to the [Providers](/cms/features/media-library#providers) documentation in the CMS Documentation.
+:::
+
+
+
+# Upload size limits for Strapi Cloud
+Source: https://docs.strapi.io/cloud/advanced/upload-size-limits
+
+# Upload size limits for Strapi Cloud
+
+Strapi Cloud applies 2 distinct limits to uploads. The first is a hard maximum file size, enforced at the infrastructure level for non-image files. The second is a memory-based recommendation for image files that depends on your CMS settings.
+
+## Maximum upload file size for non-image files
+
+Non-image uploads are capped at 200 MB on all Strapi Cloud plans (Free, Essential, Pro, and Scale). The cap is enforced at the infrastructure level and cannot be overridden via the `strapi::body` middleware configuration.
+
+## Recommended maximum upload size for image files
+
+Image uploads are subject to an additional, memory-driven recommendation that is independent of the non-image cap and varies by image format.
+
+:::tip Uploading a large image?
+To upload an image larger than the recommended maximum, disable both Responsive friendly upload and Size optimization in the [Media Library settings](/cms/features/media-library#configuring-settings). The CMS then stores the source file as-is without in-process processing, which raises the recommended maximum (see the _Processing off_ values in the tables below).
+:::
+
+When Responsive friendly upload and Size optimization are both enabled in the [Media Library settings](/cms/features/media-library#configuring-settings), the CMS resizes the source image and generates a set of thumbnails (small, medium, large) in the instance's memory before persisting them. This processing happens in-process, regardless of the configured upload provider.
+
+Switching to a third-party provider (Amazon S3, Cloudinary, etc.) is not a workaround. The resize and thumbnail generation step still runs inside the Strapi Cloud instance and still requires memory proportional to the source image dimensions.
+
+Actual memory usage depends on the image dimensions, format, and your Media Library settings. The values in the following tables are a recommendation, not a hard limit. Uploads above the recommended size are likely to cause the instance to run out of memory and restart.
+
+The recommendation depends on whether Responsive friendly upload and Size optimization are enabled in the [Media Library settings](/cms/features/media-library#configuring-settings):
+
+- _Processing on_: both settings enabled, with the default `small`, `medium`, and `large` sizes. Strapi generates the thumbnails in memory, so the safe upload size is lower.
+- _Processing off_: both settings disabled. The source image is stored as-is with no in-process processing, so the safe upload size is higher.
+
+Recommended maximum image size, expressed in megapixels (MP), per format and plan:
+
+</Tabs>
+
+:::note Converting pixels to megapixels
+The number of megapixels of an image is its width multiplied by its height in pixels, divided by 1,000,000. The pixel dimensions that match a given megapixel count depend on the aspect ratio. For a square image, 1 MP is roughly 1000×1000 px, 4 MP is roughly 2000×2000 px, and 100 MP is roughly 10000×10000 px.
+:::
+
+:::strapi Configuring a provider
+To configure external storage such as Amazon S3 or Cloudinary, see [Upload Provider Configuration for Strapi Cloud](/cloud/advanced/upload).
 :::
 
 
@@ -9364,7 +9415,11 @@ By default Strapi accepts `localServer` configurations for locally uploaded file
 
 #### Max file size
 
-The Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of 200MB. This must be done in addition to provider options passed to the Upload package for `sizeLimit`.
+:::note Strapi Cloud
+On Strapi Cloud, upload size limits are enforced at the infrastructure level. They cannot be raised via the `strapi::body` middleware config. See [Upload size limits for Strapi Cloud](/cloud/advanced/upload-size-limits) for per-plan values and the memory-based recommendation for image uploads.
+:::
+
+The Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of 1 GB. This must be done in addition to provider options passed to the Upload package for `sizeLimit`.
 
 :::caution
 You may also need to adjust any upstream proxies, load balancers, or firewalls to allow for larger file sizes. For instance, 
@@ -9385,7 +9440,7 @@ By default, the value of `strapi.server.httpServer.requestTimeout` is set to 330
 
 To make it possible for users with slow internet connection to upload large files, it might be required to increase this timeout limit. The recommended way to do it is by setting the `http.serverOptions.requestTimeout` parameter in [the `config/servers` file](/cms/configurations/server).
 
-An alternate method is to set the `requestTimeout` value in [the `bootstrap` function](/cms/configurations/functions#bootstrap) that runs before Strapi gets started. This is useful in cases where it needs to change programmatically—for example, to temporarily disable and re-enable it:
+An alternate method is to set the `requestTimeout` value in [the `bootstrap` function](/cms/configurations/functions#bootstrap) that runs before Strapi gets started. This is useful in cases where it needs to change programmatically, for example to temporarily disable and re-enable it:
 
 </Tabs>
 
