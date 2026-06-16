@@ -11,7 +11,7 @@ Every Inki skill is invoked as `/inki:<skill>`. This page lists each command, wh
 End-to-end documentation orchestrator: chains all four inki phases (research, write, review, submit) for a single subject. Gates between each phase by default; --auto-approve chains without pauses and runs a review-fix loop. The simplest way to document a subject from scratch.
 
 ```
-/inki:document [--auto-approve] [--fix-rounds <N>] <subject: keywords | Notion URL | Linear issue | PDF path | pasted text>
+/inki:document [--auto-approve] [--fix-rounds <N>] <subject: keywords | Strapi PR (url/number) | Notion URL | Linear issue | PDF path | pasted text>
 ```
 
 The command accepts the following flags:

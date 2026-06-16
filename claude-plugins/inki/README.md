@@ -49,7 +49,7 @@ If you just want to document a subject from scratch, `/inki:document <subject>` 
    └─ 4. submit ──── branch + commit + push + PR                        → [gate]
 ```
 
-It pauses for your approval between each stage by default, so you stay in control. Add `--auto-approve` to chain all four without stopping (you review the resulting PR at the end). The `<subject>` is flexible: keywords, a Notion page URL, a Linear issue, a PDF (spec/RFC), a local file, or pasted notes. `/inki:document` resolves it into a brief and runs from there.
+It pauses for your approval between each stage by default, so you stay in control. Add `--auto-approve` to chain all four without stopping (you review the resulting PR at the end). The `<subject>` is flexible: keywords, a Strapi code PR (a `strapi/strapi` or other non-docs Strapi repo PR, by URL, `owner/repo number`, a bare number, or prose naming the PR), a Notion page URL, a Linear issue, a PDF (spec/RFC), a local file, or pasted notes. `/inki:document` resolves it into a brief and runs from there. A `strapi/documentation` PR is not a subject to document: `/inki:document` redirects you to `/inki:review` for that.
 
 One guard always holds, even with `--auto-approve`: if the research stage finds the subject is **already documented**, `/inki:document` stops and points you at the existing page rather than creating a duplicate. This detection is strongest for keyword or topic subjects (where research runs `exists` and gets a clear coverage verdict); for a feature name or a code PR it leans on the coverage and routing reports, which are less categorical.
 
@@ -132,7 +132,7 @@ The summary below covers the most common usage. For a per-command reference of e
 
 ### Document: the full chain in one command
 
-- `/inki:document [--auto-approve] <subject>`: run all four stages (research → write → review → submit) for one subject. Gated between each stage by default; `--auto-approve` chains without pauses. `<subject>` can be keywords, a Notion URL, a Linear issue, a PDF path/URL, a local file, or pasted text. Stops if research finds the subject is already documented.
+- `/inki:document [--auto-approve] <subject>`: run all four stages (research → write → review → submit) for one subject. Gated between each stage by default; `--auto-approve` chains without pauses. `<subject>` can be keywords, a Strapi code PR (URL, `owner/repo number`, bare number, or prose), a Notion URL, a Linear issue, a PDF path/URL, a local file, or pasted text. Stops if research finds the subject is already documented; a `strapi/documentation` PR is redirected to `/inki:review`.
 
 ### Research: before you write
 

@@ -17,18 +17,35 @@ The subject is classified by inspecting its shape, in this order (first match wi
 
 | # | Source type | How to detect | Resolves to |
 |---|-------------|---------------|-------------|
-| 1 | Keyword topic | Short free text, no URL, no path, not multi-line | A brief built from the keywords plus a research pass |
+| 1 | Strapi PR | A GitHub PR on a Strapi repo, in any of these forms: a `github.com/<owner>/<repo>/pull/<n>` URL (with or without the `https://`), an `<owner>/<repo> <n>` pair, a bare PR number, or free text naming a PR and a repo (e.g. "document PR 26597 from strapi/strapi") | If the repo is NOT `strapi/documentation`: a brief describing what the code change should document, built via the routing logic of `/inki:route`. If the repo IS `strapi/documentation`: stop and tell the user to run `/inki:review` instead (see below). |
 | 2 | Notion page | A `notion.so` / `notion.site` URL, or `notion:` prefix | The page content fetched via the Notion MCP, distilled into a brief |
 | 3 | Linear issue | A Linear issue ID (`ABC-123`) or a `linear.app/.../issue/...` URL | The issue title + description + relevant comments, via the Linear MCP |
 | 4 | PDF file | A local path ending in `.pdf`, or a PDF URL | The extracted PDF text, distilled into a brief |
 | 5 | Local text/markdown file | A path ending in `.md`/`.mdx`/`.txt` that exists on disk | The file content used directly as (or distilled into) the brief |
-| 6 | Pasted content | Multi-line free text, or clearly prose/spec content | The pasted text used directly as the brief |
+| 6 | Keyword topic | Short free text, no URL, no path, not multi-line, no PR reference | A brief built from the keywords plus a research pass |
+| 7 | Pasted content | Multi-line free text, or clearly prose/spec content | The pasted text used directly as the brief |
 
-When a subject is ambiguous (e.g. a short string that could be a keyword or a bare Linear ID), prefer the more specific interpretation (Linear ID over keyword) only when the value matches the exact `^[A-Z]+-[0-9]+$` shape; otherwise treat it as a keyword. State the chosen interpretation in the `SUBJECT_LABEL` so the user can correct it.
+Ordering matters (first match wins). A PR reference (type 1) is checked before Linear (a bare number is a PR candidate, not a Linear ID, which has the `ABC-123` shape) and before keyword/pasted. When a subject is ambiguous (e.g. a short string that could be a keyword or a bare Linear ID), prefer the more specific interpretation (Linear ID over keyword) only when the value matches the exact `^[A-Z]+-[0-9]+$` shape; otherwise treat it as a keyword. State the chosen interpretation in the `SUBJECT_LABEL` so the user can correct it.
 
 ## Resolution by type
 
-### 1. Keyword topic
+### 1. Strapi PR
+
+The subject refers to a GitHub pull request on a Strapi repository. First, parse the reference into `OWNER/REPO` and `PR_NUMBER`:
+
+- Full URL (`https://github.com/<owner>/<repo>/pull/<n>`, or the same without `https://`): take owner, repo, and the trailing number; strip any `/files`, `/commits`, `#anchor` tail.
+- `<owner>/<repo> <n>` pair (e.g. `strapi/strapi 26597`): owner/repo from the first token, number from the second.
+- Free text naming a repo and a PR (e.g. "document PR 26597 from strapi/strapi"): extract the `owner/repo` and the number from the prose.
+- Bare PR number (e.g. `26597`) with no repo anywhere: the repo is unknown. **Ask the user which repo the PR belongs to** (do not guess a default). Stop until they answer.
+
+Then branch on the repo:
+
+- **If `OWNER/REPO` is `strapi/documentation`:** this is a documentation PR (content already written), not a subject to document. **Stop** and tell the user: "That is a documentation PR. To review it, run `/inki:review <PR url or number>` instead." Do not produce a brief.
+- **Otherwise** (any other Strapi repo: `strapi/strapi`, `strapi/cloud`, `strapi/design-system`, etc.): this is a code change to be documented. Build the brief using the routing logic of `/inki:route`: identify, from the PR's diff and description, what changed and which documentation pages/sections it affects. The brief captures the feature/change and the doc targets, so the write phase knows what to produce. Keep the PR reference in the brief so `/inki:submit` can mention it in the eventual docs PR (but it is a cross-repo reference, not a `Fixes` that would auto-close).
+
+`SOURCE_KIND` = `strapi-pr`. `SUBJECT_LABEL` = `<owner>/<repo> PR #<n>`. `CLEANUP` is empty.
+
+### 6. Keyword topic
 
 Use the keywords as the seed. The brief at this stage is thin on purpose: the research phase (`/inki:research`) is what fills it in. Produce:
 
@@ -44,7 +61,7 @@ Document: <verbatim keywords>.
 ### 2. Notion page
 
 1. Fetch the page with the Notion MCP (`mcp__claude_ai_Notion__notion-fetch`) using the URL or page ID.
-2. If the fetch fails (auth, not shared), report it and ask the user to paste the content instead (fall back to type 6).
+2. If the fetch fails (auth, not shared), report it and ask the user to paste the content instead (fall back to type 7, pasted content).
 3. Distill the page into a brief: keep the title, the core explanation, any API/config details, and links. Drop Notion-specific chrome (comments, status props) unless they state requirements.
 
 `SOURCE_KIND` = `notion`. `SUBJECT_LABEL` = `Notion: <page title>`. `CLEANUP` is empty.
@@ -52,7 +69,7 @@ Document: <verbatim keywords>.
 ### 3. Linear issue
 
 1. Fetch the issue with the Linear MCP (`mcp__claude_ai_Linear__get_issue`) using the ID or URL.
-2. If the fetch fails, report it and fall back to asking for pasted content (type 6).
+2. If the fetch fails, report it and fall back to asking for pasted content (type 7).
 3. Build the brief from the issue title, description, and any comment that adds documentation-relevant facts. Note the issue ID so `/inki:submit` can later reference it (`Fixes <ID>` is NOT automatic: Linear issues are not GitHub issues; only mention it in the brief).
 
 `SOURCE_KIND` = `linear`. `SUBJECT_LABEL` = `Linear <issue-id>`. `CLEANUP` is empty.
@@ -71,7 +88,7 @@ Read the file. If it already reads like a brief (a topic description), use it ve
 
 `SOURCE_KIND` = `file`. `SUBJECT_LABEL` = the path. `CLEANUP` is empty.
 
-### 6. Pasted content
+### 7. Pasted content
 
 The user pasted a description, spec, or notes directly:
 

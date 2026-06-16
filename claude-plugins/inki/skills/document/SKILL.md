@@ -1,7 +1,7 @@
 ---
 name: document
 description: "End-to-end documentation orchestrator: chains all four inki phases (research, write, review, submit) for a single subject. Gates between each phase by default; --auto-approve chains without pauses and runs a review-fix loop. The simplest way to document a subject from scratch."
-argument-hint: "[--auto-approve] [--fix-rounds <N>] <subject: keywords | Notion URL | Linear issue | PDF path | pasted text>"
+argument-hint: "[--auto-approve] [--fix-rounds <N>] <subject: keywords | Strapi PR (url/number) | Notion URL | Linear issue | PDF path | pasted text>"
 user-invocable: true
 ---
 
@@ -29,7 +29,7 @@ Unless `--no-log` was passed, set up the run log by following `../../references/
 
 ## Step 1: Resolve the subject to a brief
 
-Resolve the subject by following `../../references/subject-resolver.md`. It accepts keywords, a Notion page URL, a Linear issue, a PDF (path or URL), a local text/markdown file, or pasted content.
+Resolve the subject by following `../../references/subject-resolver.md`. It accepts keywords, a Strapi PR (URL, `owner/repo number`, a bare number, or prose naming a PR and repo), a Notion page URL, a Linear issue, a PDF (path or URL), a local text/markdown file, or pasted content.
 
 The resolver returns:
 
@@ -38,7 +38,12 @@ The resolver returns:
 - `SOURCE_KIND`: the detected source type.
 - `CLEANUP`: a command to run when the workflow finishes (temp-file removal); may be empty.
 
-If resolution fails (e.g. a Notion/Linear MCP is unavailable and no fallback content is provided), report why and stop.
+The resolver may stop the workflow before returning a brief, in which case relay its message and end:
+
+- A bare PR number with no repo: the resolver asks which repo the PR belongs to. Stop until the user answers, then re-run.
+- A `strapi/documentation` PR: that is a documentation PR, not a subject to document. The resolver tells the user to run `/inki:review <PR>` instead. Stop; do not continue into research.
+
+If resolution otherwise fails (e.g. a Notion/Linear MCP is unavailable and no fallback content is provided), report why and stop.
 
 ## Step 2: Phase 1, Research
 
@@ -151,6 +156,24 @@ Fully automatic, allowing up to 5 review-fix rounds for a tricky page:
 Document from a Linear issue:
 ```
 /inki:document DOC-412
+```
+
+Document a strapi/strapi code PR (any of these forms work):
+```
+/inki:document https://github.com/strapi/strapi/pull/26597
+/inki:document strapi/strapi 26597
+/inki:document "document PR 26597 from strapi/strapi"
+```
+
+A bare PR number prompts for the repo first:
+```
+/inki:document 26597
+```
+
+A strapi/documentation PR is redirected to review (it is not a subject to document):
+```
+/inki:document https://github.com/strapi/documentation/pull/3234
+→ "That is a documentation PR. Run /inki:review https://github.com/strapi/documentation/pull/3234 instead."
 ```
 
 Document from a PDF RFC:
