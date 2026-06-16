@@ -204,7 +204,7 @@ const response = await fetch(`http://localhost:1337/api/upload?id=${fileId}`, {
 GET /api/upload/files/page
 ```
 
-`GET /api/upload/files/page` returns files using the standard [paginated response](/cms/api/rest/sort-pagination#pagination) envelope (`{ data, meta: { pagination } }`). The `GET /api/upload/files` endpoint returns a flat array of all files and ignores pagination parameters.
+`GET /api/upload/files/page` returns files using the standard [paginated response](/cms/api/rest/sort-pagination#pagination) envelope. The `GET /api/upload/files` endpoint returns a flat array of all files and ignores pagination parameters.
 
 Use `/api/upload/files/page` for any non-trivial Media Library. `GET /api/upload/files` remains available for backward compatibility.
 
@@ -227,7 +227,7 @@ The endpoint accepts the same query parameters as other REST collection endpoint
 Use the nested format for pagination parameters (`pagination[page]=2&pagination[pageSize]=10`), not the flat format (`page=2&pageSize=10`).
 
 :::caution
-Page-based pagination (`pagination[page]` and `pagination[pageSize]`) and offset-based pagination (`pagination[start]` and `pagination[limit]`) are mutually exclusive. Mixing the two returns a `400` error.
+Page-based pagination (`pagination[page]` and `pagination[pageSize]`) and offset-based pagination (`pagination[start]` and `pagination[limit]`) are mutually exclusive. Mixing both styles returns a `400` error.
 :::
 
 ### Example requests
