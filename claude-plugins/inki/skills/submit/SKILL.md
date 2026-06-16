@@ -17,6 +17,8 @@ Logging: unless `--no-log` is passed, write this skill's report to the run log p
 
 ## Workflow
 
+Each step below is performed by **invoking the named sub-skill**, never by running the equivalent `git` / `gh` commands directly. The sub-skills carry behavior that is not visible from `git-rules.md` alone (for example, `/inki:pr` appends the Vercel preview link as the last line of the PR body). Re-implementing a step by hand silently drops that behavior. This is a hard rule, see the Rules section.
+
 1. **Branch**: if currently on `main`, invoke `/inki:branch` to create a properly prefixed branch.
 2. **Commit**: invoke `/inki:commit` to stage and write a commit message.
 3. **Push**: invoke `/inki:push` (with explicit confirmation).
@@ -34,6 +36,7 @@ The safety bracket from `pr-fix` does NOT apply here, because `/inki:submit` ope
 
 ## Rules
 
+- **Always invoke the sub-skills; never substitute raw `git` / `gh` commands for them.** Each of branch, commit, push, and PR is delegated to `/inki:branch`, `/inki:commit`, `/inki:push`, `/inki:pr` respectively. Running `git commit`, `git push`, or `gh pr create` by hand instead is a defect, even when it appears to produce the same result: it bypasses checks and additions the sub-skills own (branch-prefix validation, commit-message rules, the `/inki:pr` Vercel preview link, draft-PR defaults). `--auto-approve` removes confirmation prompts; it does NOT authorize bypassing the sub-skills. The only direct git/gh allowed here is read-only inspection (`git status`, `git rev-parse`, `gh pr view`) to decide what to pass to a sub-skill.
 - If any sub-step fails, stop. Do not skip a step.
 - Pass through the issue reference (if any) to `/inki:pr`.
 - In `AUTO=true` mode, surface a summary at the end showing branch name, commit SHA, and PR URL.

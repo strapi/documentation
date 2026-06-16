@@ -130,7 +130,7 @@ In a workflow stopped at a gate, show the summary up to the phase reached and st
 
 ## Rules
 
-- This skill never duplicates phase logic. It only resolves the subject, sequences phases, runs the fix loop, gates, and summarizes.
+- This skill never duplicates phase logic. It only resolves the subject, sequences phases, runs the fix loop, gates, and summarizes. Each phase is run by **invoking its top-level skill** (`/inki:research`, `/inki:write`, `/inki:review`, `/inki:submit`), never by re-implementing that phase's steps inline. In particular, the submit phase MUST go through `/inki:submit` (which itself invokes `/inki:branch` / `/inki:commit` / `/inki:push` / `/inki:pr`); do NOT branch, commit, push, or open the PR with raw `git` / `gh` commands here, as that drops behavior the sub-skills own (e.g. the `/inki:pr` Vercel preview link). Read-only git/gh inspection is fine; mutating git/gh by hand in place of a phase skill is a defect.
 - Default is **gated**: pause between every phase (research→write, write→review, review→submit). `--auto-approve` (aliases `--auto`, `--yes`, `-y`) removes the pauses but never the "already documented → stop" guard, the protected-path guard, or the branch discipline.
 - `--auto-approve` approves the review fix loop too: it applies fixes, it does not just surface them. This is safe here only because the draft was generated within this same run. Outside `/inki:document` (e.g. a bare `/inki:review` on an existing human-authored page), fixes still require explicit `--fix`.
 - The fix loop runs at most `MAX_FIX_ROUNDS` times (default 3, `--fix-rounds <N>` to change). It never loops unbounded; remaining findings are reported, not forced.
