@@ -1,11 +1,11 @@
 ---
 name: style-check
 description: "Run deterministic style checks on a documentation file or directory, then layer AI judgment on top using the migrated style-checker prompt."
-argument-hint: "<file or directory path>"
+argument-hint: "[--fix] [--no-log] <file or directory path>"
 user-invocable: true
 ---
 
-# /inki:style-check — style lint for documentation files
+# /inki:style-check: style lint for documentation files
 
 ## Step 1: Determine target
 
@@ -14,6 +14,8 @@ user-invocable: true
 ```bash
 git diff main...HEAD --name-only -- '*.md'
 ```
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki:review`), write into that run's existing directory instead of creating a new one.
 
 ## Step 2: Run the deterministic style script
 

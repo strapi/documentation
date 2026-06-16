@@ -1,17 +1,19 @@
 ---
 name: exists
 description: "Check whether a documentation topic is already covered on strapi/documentation: searches llms.txt, doc files, sidebars, and open GitHub PRs."
-argument-hint: "<topic or keyword>"
+argument-hint: "[--no-log] <topic or keyword>"
 user-invocable: true
 ---
 
-# /inki:exists — find existing coverage on a topic
+# /inki:exists: find existing coverage on a topic
 
 ## Input
 
 `$ARGUMENTS`: a topic or keyword (e.g. `MCP server`, `hasPublishedVersion`, `openapi.json route`).
 
 If no argument is provided and the conversation has context (e.g. a PR was just discussed), extract the relevant keywords from context.
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki:research`), write into that run's existing directory instead of creating a new one.
 
 ## Step 1: Search the page index
 
@@ -65,9 +67,9 @@ Sidebars referencing it:
 - <entry>
 
 PRs:
-- Open:    #<num> "<title>" — <url>
-- Merged:  #<num> "<title>" — <url>
-- Closed:  #<num> "<title>" — <url>
+- Open:    #<num> "<title>": <url>
+- Merged:  #<num> "<title>": <url>
+- Closed:  #<num> "<title>": <url>
 
 Verdict: COVERED | PARTIAL | IN PROGRESS | NOT DOCUMENTED
 

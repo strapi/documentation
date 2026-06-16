@@ -1,7 +1,7 @@
 ---
 name: pr-fix
-description: "Rewrite the title or description/body of one or more open PRs on strapi/documentation to match git-rules.md. Strict one-by-one confirmation, or auto-edit with --yes."
-argument-hint: "<title|description|body> [--yes|-y] [--include-old] [PR# or URL] [PR# or URL] ..."
+description: "Rewrite the title or description/body of one or more open PRs on strapi/documentation to match git-rules.md. Strict one-by-one confirmation, or auto-edit with --auto-approve."
+argument-hint: "<title|description|body> [--auto-approve] [--include-old] [--no-log] [PR# or URL] [PR# or URL] ..."
 user-invocable: true
 ---
 
@@ -25,7 +25,7 @@ If no action is given, or if the first token is not one of the above, report the
 
 ### Optional flags (anywhere after the action)
 
-- `--yes` or `-y` → `AUTO=true` (non-interactive: skip confirmation prompts)
+- `--auto-approve` (aliases `--auto`, `--yes`, `-y`) → `AUTO=true` (non-interactive: skip confirmation prompts)
 - `--include-old` → `INCLUDE_OLD=true` (only meaningful when no PR identifiers are given; includes open PRs older than 30 days)
 
 ### Optional PR identifiers
@@ -45,8 +45,11 @@ The 30-day cutoff uses `createdAt` (not `updatedAt`) because bot activity bumps 
 
 ## Step 0: Parse arguments
 
+0. If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../../references/help.md`. Do not edit any PR.
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). This skill normally runs standalone (it creates its own run directory); if ever invoked as part of an orchestrator, write into that run's existing directory instead of creating a new one.
 1. Read the first positional token as `ACTION` (must be `title`, `description`, or `body`). Normalize `body` → `description` internally.
-2. Detect `--yes`/`-y` → `AUTO=true`. Remove from list.
+2. Detect `--auto-approve` (aliases `--auto`/`--yes`/`-y`) → `AUTO=true`. Remove from list.
 3. Detect `--include-old` → `INCLUDE_OLD=true`. Remove from list.
 4. For each remaining token, extract trailing digits to get the PR number:
    - `2143` → `2143`
@@ -100,7 +103,7 @@ Missing "This PR ..." opener, contains `##`/`###` heading, contains "Test plan" 
 
 ### If `AUTO=true`
 
-**Case A — PR identifiers were given explicitly**
+**Case A: PR identifiers were given explicitly**
 
 Edit immediately without further prompting:
 
@@ -110,16 +113,16 @@ Edit immediately without further prompting:
 Announce each change inline:
 
 ```
-PR #<num>: edited — "<proposed title>"    (for title)
+PR #<num>: edited "<proposed title>"    (for title)
 PR #<num>: edited (description rewritten)   (for description)
 ```
 
-**Case B — No PR identifiers given** (targets all recent open PRs)
+**Case B: No PR identifiers given** (targets all recent open PRs)
 
 A batch confirmation is required as a safety bracket. Display the full list of proposed edits first:
 
 ```
-Review batch (--yes without PR IDs targets all recent open PRs):
+Review batch (--auto-approve without PR IDs targets all recent open PRs):
 
 | PR# | Author | Current | Proposed | Reason |     (for title)
 | PR# | Author | Reason | Preview of new description |  (for description)
@@ -143,7 +146,7 @@ For each non-compliant PR, display the proposal and wait for input.
 **For `ACTION=title`:**
 
 ```
-PR #<num> — author: @<login>
+PR #<num>, author: @<login>
   Current: <current title>
   Proposed: <proposed title>
   Reason: <short explanation>
@@ -158,7 +161,7 @@ Branch on response:
 **For `ACTION=description`:**
 
 ```
-PR #<num> — author: @<login>
+PR #<num>, author: @<login>
   Title: <current title (for context, not edited here)>
 
   --- Current description ---
@@ -234,7 +237,7 @@ Do NOT naively build the host from the branch name. Vercel truncates long branch
 
 ### Edge cases
 
-- If the description already has a preview link **but it points to a wrong/outdated page** (e.g., the branch was renamed, or a different page is now more representative), the skill MAY propose a corrected line and surface the reason. Do not silently replace — surface the proposed change in the `Reason` so the user can opt out.
+- If the description already has a preview link **but it points to a wrong/outdated page** (e.g., the branch was renamed, or a different page is now more representative), the skill MAY propose a corrected line and surface the reason. Do not silently replace; surface the proposed change in the `Reason` so the user can opt out.
 - For PRs from external forks, the standard `strapijs.vercel.app` pattern still works (Vercel deploys all branches under the strapijs subdomain), so no special handling needed.
 - If the description body is itself compliant but the Vercel link is the ONLY missing piece, classify the PR as non-compliant on the basis of the missing link alone, and propose the addition.
 
@@ -254,10 +257,10 @@ Include PRs classified as compliant in a separate count below the table (e.g., `
 ## Rules
 
 - In interactive mode (`AUTO=false`), never edit without explicit confirmation.
-- In auto mode (`AUTO=true`), still respect the compliant filter — never rewrite content that already passes the rules.
+- In auto mode (`AUTO=true`), still respect the compliant filter: never rewrite content that already passes the rules.
 - Never propose content that itself fails the rules.
 - `title` action only modifies the title. `description`/`body` action only modifies the body. Cross-pollination is not allowed.
-- If the rewrite would change meaning (not just form), surface that in the Reason line so the user can intervene. In auto mode, this is informational only — the edit still proceeds.
+- If the rewrite would change meaning (not just form), surface that in the Reason line so the user can intervene. In auto mode, this is informational only; the edit still proceeds.
 
 ## Examples
 
@@ -278,15 +281,15 @@ Body alias (same behavior as description):
 
 Auto title rewrite on multiple PRs:
 ```
-/inki:pr-fix title --yes 3204 3202 #3199
+/inki:pr-fix title --auto-approve 3204 3202 #3199
 ```
 
 Auto title rewrite on all recent open PRs (with batch review):
 ```
-/inki:pr-fix title --yes
+/inki:pr-fix title --auto-approve
 ```
 
 Auto title rewrite on all open PRs including stale ones:
 ```
-/inki:pr-fix title --yes --include-old
+/inki:pr-fix title --auto-approve --include-old
 ```

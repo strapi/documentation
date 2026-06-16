@@ -1,15 +1,19 @@
 ---
 name: write
 description: "Top-level write orchestrator: outline a new page, get user approval, then draft from the outline."
-argument-hint: "[--yes|-y] <topic brief or path to a brief file>"
+argument-hint: "[--auto-approve] [--no-log] <topic brief or path to a brief file>"
 user-invocable: true
 ---
 
-# /inki:write — outline then draft
+# /inki:write: outline then draft
 
 ## Step 0: Parse arguments
 
-From `$ARGUMENTS`, detect `--yes` or `-y` anywhere in the list. If present, set `AUTO=true` and remove the flag. What remains is the topic brief (text or path to a `.md` file).
+If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../../references/help.md`. Do not run the workflow.
+
+Otherwise, from `$ARGUMENTS`, detect the auto-approve flag anywhere in the list: `--auto-approve` (canonical), or its aliases `--auto`, `--yes`, `-y` (all equivalent). If present, set `AUTO=true` and remove the flag. What remains is the topic brief (text or path to a `.md` file).
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki:document`), write into that run's existing directory instead of creating a new one.
 
 ## Workflow
 
@@ -22,10 +26,10 @@ If the user rejects the outline, stop. Do not draft.
 
 ### Auto (`AUTO=true`)
 
-1. Invoke `/inki:outline --yes $ARGUMENTS`. The outline is generated and saved without an approval gate.
+1. Invoke `/inki:outline --auto-approve $ARGUMENTS`. The outline is generated and saved without an approval gate.
 2. Immediately invoke `/inki:draft <outline-path>` on the resulting outline.
 
-In auto mode, the user sees the outline and the draft only after both are produced. They can still discard the outputs if they don't fit — nothing is committed automatically. `--yes` here means "don't pause between outline and draft," not "trust the output blindly."
+In auto mode, the user sees the outline and the draft only after both are produced. They can still discard the outputs if they don't fit; nothing is committed automatically. `--auto-approve` here means "don't pause between outline and draft," not "trust the output blindly."
 
 ## Rules
 

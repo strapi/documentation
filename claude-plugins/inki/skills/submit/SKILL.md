@@ -1,15 +1,19 @@
 ---
 name: submit
-description: "Top-level orchestrator: branch (if needed), commit, push, then open a PR. Each step asks for confirmation before continuing, unless --yes is passed."
-argument-hint: "[--yes|-y] [issue reference or topic hint, e.g. 'Fixes #2143']"
+description: "Top-level orchestrator: branch (if needed), commit, push, then open a PR. Each step asks for confirmation before continuing, unless --auto-approve is passed."
+argument-hint: "[--auto-approve] [--no-log] [issue reference or topic hint, e.g. 'Fixes #2143']"
 user-invocable: true
 ---
 
-# /inki:submit — branch + commit + push + PR
+# /inki:submit: branch + commit + push + PR
 
 ## Step 0: Parse arguments
 
-From `$ARGUMENTS`, detect `--yes` or `-y` anywhere in the list. If present, set `AUTO=true` and remove the flag. What remains is the optional issue reference passed through to `/inki:pr`.
+If `$ARGUMENTS` contains `--help` or `-h`, print usage and stop, per `../../references/help.md`. Do not run the workflow.
+
+Otherwise, from `$ARGUMENTS`, detect the auto-approve flag anywhere in the list: `--auto-approve` (canonical), or its aliases `--auto`, `--yes`, `-y` (all equivalent). If present, set `AUTO=true` and remove the flag. What remains is the optional issue reference passed through to `/inki:pr`.
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki:document`), write into that run's existing directory instead of creating a new one.
 
 ## Workflow
 
@@ -24,7 +28,7 @@ The user confirms at each gate. If any sub-step fails or the user cancels, stop 
 
 ### Auto (`AUTO=true`)
 
-Pass `--yes` to each sub-skill that supports it. The chain runs without prompts. If any sub-skill genuinely needs a decision that isn't trivially auto-derivable (e.g., branch prefix is ambiguous and no hint was provided), it will still ask. `--yes` skips confirmations, not informed decisions.
+Pass `--auto-approve` to each sub-skill that supports it. The chain runs without prompts. If any sub-skill genuinely needs a decision that isn't trivially auto-derivable (e.g., branch prefix is ambiguous and no hint was provided), it will still ask. `--auto-approve` skips confirmations, not informed decisions.
 
 The safety bracket from `pr-fix` does NOT apply here, because `/inki:submit` operates only on the current branch (single PR scope by construction).
 

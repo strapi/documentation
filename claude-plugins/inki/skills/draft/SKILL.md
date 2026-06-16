@@ -1,15 +1,17 @@
 ---
 name: draft
 description: "Draft a documentation page from an approved outline, the matching template, and the relevant authoring guide."
-argument-hint: "<path to outline file>"
+argument-hint: "[--no-log] <path to outline file>"
 user-invocable: true
 ---
 
-# /inki:draft — draft a documentation page from an outline
+# /inki:draft: draft a documentation page from an outline
 
 ## Step 1: Read the outline
 
 `$ARGUMENTS` is a path to an outline file produced by `/inki:outline`.
+
+Logging: unless `--no-log` is passed, write this skill's report to the run log per `../../references/logging.md` (`--log-dir <path>` and `--short-log` are also accepted). When invoked as part of an orchestrator (e.g. `/inki:write`), write into that run's existing directory instead of creating a new one.
 
 ## Step 2: Load supporting context
 
