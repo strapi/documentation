@@ -186,10 +186,6 @@ Find out what already exists, where to put new content, what's missing.
 - Edit the canonical rules at the **repo root**, not in `claude-plugins/inki/references/`. The plugin copies are synced automatically. CI fails if you edit only the plugin copies.
 - Edit agent prompts, templates, and authoring guides inside `claude-plugins/inki/references/`. These are now the canonical home.
 
-## Status
-
-v0.2.1: orchestrators now always invoke their sub-skills (never raw git/gh), and `/inki:pr` omits the preview link when no docs page changed. v0.2.0 added review agents, the `/inki:document` orchestrator, run logging, and command tooling. See `CHANGELOG.md` for details.
-
 ## For plugin developers: refreshing changes
 
 When you edit a skill in this plugin and want to see your changes locally, the marketplace cache keeps the previously-installed version of each `SKILL.md` until you fully reinstall the plugin. `/plugin marketplace update` refreshes metadata (skill names and descriptions visible in the skill list) but does not refresh the content of skill files.
