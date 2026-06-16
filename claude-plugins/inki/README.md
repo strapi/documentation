@@ -17,6 +17,7 @@ Inki encodes all of it into one plugin, so high-quality docs become the easy def
 ```bash
 /plugin marketplace add strapi/documentation
 /plugin install inki@strapi-documentation
+/reload-plugins
 ```
 
 After install, the skills are available at `/inki:<skill>`, persistent across Claude Code sessions.
