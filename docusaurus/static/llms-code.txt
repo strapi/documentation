@@ -25337,7 +25337,7 @@ curl -X POST http://localhost:1337/api/users \
 
 
 ## Update a user
-Description: Code example from "Update a user"
+Description: :::note Relation inputs support both documentId and numeric IDs When updating a user with custom relations, you can use either documentId (recommended for Strapi 5) or numeric id in relation payloads:
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#update-a-user)
 
 Language: Bash
@@ -25348,6 +25348,28 @@ curl -X PUT http://localhost:1337/api/users/1 \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -d '{"username": "updateduser"}'
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "customRelation": {
+    "connect": ["x74detpqybxw0bn6ormua5g2"]  // documentId
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "customRelation": {
+    "connect": [1]  // numeric ID (legacy)
+  }
+}
 ```
 
 
