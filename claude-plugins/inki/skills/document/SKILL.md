@@ -7,7 +7,7 @@ user-invocable: true
 
 # /inki:document: document a subject end to end
 
-`/inki:document` is the one-shot entry point to the whole inki workflow. Given a subject to document, it runs the four families in order (**research → write → review → submit**), pausing for your approval between each phase so you stay in control. Pass `--non-interactive` to chain all four without stopping; in that mode the review phase also runs a fix loop (review → fix → re-review) until the draft is clean or `--max-review-fix-rounds` is reached.
+`/inki:document` is the one-shot entry point to the whole inki workflow. Given a subject to document, it runs the four families in order (**research → write → review → submit**), pausing for your approval between each phase so you stay in control. Pass `--non-interactive` (or `--no-questions-asked`, same effect) to chain all four without stopping; in that mode the review phase also runs a fix loop (review → fix → re-review) until the draft is clean or `--max-review-fix-rounds` is reached (defaults to 3).
 
 It is a thin orchestrator: each phase is delegated to its existing top-level skill (`/inki:research`, `/inki:write`, `/inki:review`, `/inki:submit`). This skill adds no review logic of its own; it resolves the subject, sequences the phases, and manages the gates. The review fix loop is owned by `/inki:review`; this skill just invokes it with `--fix` and a round cap.
 
