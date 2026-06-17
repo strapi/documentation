@@ -41,7 +41,7 @@ The viewer follows the live logs stream and auto-scrolls to keep the latest entr
 
 You can copy a single log line by clicking the copy button <Icon name="copy" /> visible on row hover, or within the drawer. To copy every entry currently shown in the log viewer, use the copy button <Icon name="copy" /> in the toolbar instead.
 
-:::note
+:::caution
 The live log stream is currently limited to the last 15 minutes and capped at 100,000 rows. Historical log visibility is under development.
 :::
 
