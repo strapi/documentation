@@ -16,10 +16,10 @@
 - [Information on billing & usage](https://docs.strapi.io/cloud/getting-started/usage-billing): This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 - [Collaboration](https://docs.strapi.io/cloud/projects/collaboration): Project owners invite maintainers through the Share button, manage pending invitations, and revoke access.
 - [Deployments management](https://docs.strapi.io/cloud/projects/deploys): Deployment triggers can be manual or automatic on git pushes, with the ability to cancel active builds from dashboard or CLI.
-- [Deployment history & logs](https://docs.strapi.io/cloud/projects/deploys-history): Deployments tab lists every build with status and allows deep inspection of build and runtime logs.
+- [Deployment history & logs](https://docs.strapi.io/cloud/projects/deploys-history): Deployments tab lists every build with status and allows deep inspection of build and deployment logs.
+- [Logs](https://docs.strapi.io/cloud/projects/logs): The Logs tab streams your project's live logs in a searchable, filterable table. Click any entry to inspect its full message and metadata.
 - [Notifications](https://docs.strapi.io/cloud/projects/notifications): Bell icon opens a feed of recent deployment events, automatically purged after 30 days.
 - [Projects overview](https://docs.strapi.io/cloud/projects/overview): Projects page lists all apps with status and quick actions; selecting one opens a dashboard with metrics and controls.
-- [Runtime logs](https://docs.strapi.io/cloud/projects/runtime-logs): Runtime logs tab streams live server output, though Free plan logs reset when apps scale to zero.
 - [Project settings](https://docs.strapi.io/cloud/projects/settings): Settings area spans project-level controls (general, billing, plans, invoices) and per-environment configuration.
 - [Admin panel customization](https://docs.strapi.io/cms/admin-panel-customization): The admin panel can be tailored to match your branding, by editing src/admin/app and using an extensions folder to swap logos, favicon, locales, translations, themes, bundlers, or editors.
 - [Admin panel bundlers](https://docs.strapi.io/cms/admin-panel-customization/bundlers): Supported JavaScript bundlers influence builds and development flow.

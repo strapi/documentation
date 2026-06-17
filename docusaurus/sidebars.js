@@ -693,7 +693,7 @@ const sidebars = {
           },
         },
         'cloud/projects/collaboration',
-        'cloud/projects/runtime-logs',
+        'cloud/projects/logs',
       ],
     },
     { // Deployments

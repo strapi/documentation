@@ -15,7 +15,7 @@ tags:
 # Deployment history and logs {#deploy-history-and-logs}
 
 <Tldr>
-Deployments tab lists every build with status and allows deep inspection of build and runtime logs.
+Deployments tab lists every build with status and allows deep inspection of build and deployment logs.
 </Tldr>
 
 For each Strapi Cloud project, you can access the history of all deployments that occurred and their details including build and deployment logs. This information is available in the *Deployments* tab.
