@@ -29,7 +29,86 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.47.1](https://github.com/strapi/strapi/releases/tag/v5.47.1)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.48.1](https://github.com/strapi/strapi/releases/tag/v5.48.1)._
+
+## 6.28.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Document the Billing portal page and update tax guidance for Canada and India](https://github.com/strapi/documentation/pull/3239)
+- [Add "Inki" Claude Code plugin: research, write, review, submit Strapi Docs update](https://github.com/strapi/documentation/pull/3200)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document paginated upload files endpoint in the REST API](https://github.com/strapi/documentation/pull/3261)
+- [Document documentId support in Users & Permissions relation updates](https://github.com/strapi/documentation/pull/3252)
+- [Cms/document factory controller overrides](https://github.com/strapi/documentation/pull/3228)
+- [Document the upgrade to command for targeting a specific version](https://github.com/strapi/documentation/pull/3222)
+- [Document --install-deps and --no-install-deps CLI flags](https://github.com/strapi/documentation/pull/3221)
+
+#### Cloud
+- [Cloud logs revamp](https://github.com/strapi/documentation/pull/3253)
+
+#### Repository
+- [Document Strapi Cloud upload size limits](https://github.com/strapi/documentation/pull/3231)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Normalize Cloud configuration paths](https://github.com/strapi/documentation/pull/3250)
+- [Update parameter name from 'id' to 'documentId'](https://github.com/strapi/documentation/pull/3236)
+- [Clarify dynamic zone fragment populate syntax](https://github.com/strapi/documentation/pull/3233)
+- [Fix `delete()` row description in REST client API reference](https://github.com/strapi/documentation/pull/3226)
+- [Fix `count()` description and remove stray backtick in Document Service API](https://github.com/strapi/documentation/pull/3225)
+
+#### Repository
+- [Rename Inki autonomy flag to `--non-interactive`](https://github.com/strapi/documentation/pull/3257)
+- [Detect emphasis, button-icon, and admonition conventions in Inki style review](https://github.com/strapi/documentation/pull/3256)
+- [Require Inki orchestrators to invoke sub-skills and bump to 0.2.1](https://github.com/strapi/documentation/pull/3255)
+- [Detect title/content scope mismatch and inbound links in Inki review](https://github.com/strapi/documentation/pull/3244)
+- [Add Cloud Advanced page type and template to Inki outline-checker](https://github.com/strapi/documentation/pull/3243)
+- [Detect em dash HTML entities in Inki style-lint](https://github.com/strapi/documentation/pull/3242)
+- [Inki v0.2: end-to-end document workflow, review agents, run logging, and authoring tooling](https://github.com/strapi/documentation/pull/3234)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/Akash5908" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/111741062?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Akash5908"/>
+</a>
+<a href="https://github.com/emmayusufu" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/67486402?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="emmayusufu"/>
+</a>
+<a href="https://github.com/giu1io" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/6680957?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="giu1io"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/rezniqov" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/77934797?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="rezniqov"/>
+</a>
+<a href="https://github.com/singhvishalkr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/107715446?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="singhvishalkr"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 6.27.0
 
