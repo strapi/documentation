@@ -24,8 +24,8 @@ The *Logs* page is only accessible once the project has a successful deployment 
 <ThemedImage
   alt="Logs"
   sources={{
-    light: '/img/assets/cloud/logs.png',
-    dark: '/img/assets/cloud/logs_DARK.png',
+    light: '/img/assets/cloud/cloud-logs.gif',
+    dark: '/img/assets/cloud/cloud-logs_DARK.gif',
   }}
 />
 
