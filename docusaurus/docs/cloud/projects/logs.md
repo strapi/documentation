@@ -29,19 +29,19 @@ The *Logs* page is only accessible once the project has a successful deployment 
   }}
 />
 
-## The log viewer
+## Viewing logs
 
 The viewer follows the live logs stream and auto-scrolls to keep the latest entries in view. Each row shows three columns:
 
 | Column | Description |
 | --- | --- |
-| **Timestamp** | When the log was emitted. |
-| **Type** | The log level, *Error*, *Warning*, *Info*, or *HTTP*, shown as a colored badge. For *HTTP* entries, the response status code is shown next to the badge. |
-| **Message** | The log message. Long messages are truncated in the table; click the entry to read the full text in the drawer. |
+| Timestamp | When the log was emitted. |
+| Type | The log level, *Error*, *Warning*, *Info*, or *HTTP*, shown as a colored badge. For *HTTP* entries, the response status code is shown next to the badge. |
+| Message | The log message. Long messages are truncated in the table; click the entry to read the full text in the drawer. |
 
-You can copy a single log line by clicking the **Copy a single entry** button visible on row hover, or within the drawer. To copy every entry currently shown in the log viewer, use the **Copy all entries** button in the toolbar instead.
+You can copy a single log line by clicking the copy button <Icon name="copy" /> visible on row hover, or within the drawer. To copy every entry currently shown in the log viewer, use the copy button <Icon name="copy" /> in the toolbar instead.
 
-:::caution
+:::note
 The live log stream is currently limited to the last 15 minutes and capped at 100,000 rows. Historical log visibility is under development.
 :::
 
@@ -77,7 +77,7 @@ The following ranges are available depending on your plan:
 For all non-live timeframes, a Refresh button appears next to the picker to manually reload the range. In live mode, logs refresh happens automatically.
 -->
 
-## Searching and filtering
+## Searching and filtering logs
 
 You can use the search and filter tools to refine the logs displayed in the viewer. Filters and search combine, so you can, for example, show only *HTTP* entries with a *5xx* status that mention a specific route.
 
@@ -92,17 +92,17 @@ Type in the search field to keep only the entries whose message contains your te
 ### Type filter
 
 Filter by the following log levels:
-- *Error*
-- *Warning*
-- *Info*
-- *HTTP*
+- Error
+- Warning
+- Info
+- HTTP
 
 Error logs are highlighted in red so they stand out as you scan.
 
 ### HTTP status code filter
 
 Filter by the following status codes:
-- *2xx*
-- *3xx*
-- *4xx*
-- *5xx*
+- 2xx
+- 3xx
+- 4xx
+- 5xx
