@@ -366,8 +366,8 @@ The MCP server has the following limitations:
 
 ### Plugin API
 
-Strapi plugins can register additional MCP tools through the `strapi.ai.mcp` service, so AI clients can trigger plugin-specific actions. Click on the card below to read more details:
+Strapi plugins can register additional MCP tools, resources, and prompts through the `strapi.ai.mcp` service, so AI clients can trigger plugin-specific actions, read plugin-specific data, and reuse plugin-specific prompts. Click on the card below to read more details:
 
 <CustomDocCardsWrapper>
-<CustomDocCard icon="puzzle-piece" title="Extending the MCP server" description="Register custom MCP tools from a Strapi plugin through the strapi.ai.mcp service." link="/cms/plugins-development/extend-mcp-server" />
+<CustomDocCard icon="puzzle-piece" title="Extending the MCP server" description="Register custom MCP tools, resources, and prompts from a Strapi plugin through the strapi.ai.mcp service." link="/cms/plugins-development/extend-mcp-server" />
 </CustomDocCardsWrapper>

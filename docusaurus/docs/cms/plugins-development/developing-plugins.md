@@ -37,7 +37,7 @@ Strapi provides the following programmatic APIs for plugins to hook into some of
 <CustomDocCardsWrapper>
 <CustomDocCard emoji="" title="Admin Panel API" description="Use the Admin Panel API to have your plugin interact with the admin panel of Strapi." link="/cms/plugins-development/admin-panel-api" />
 <CustomDocCard emoji="" title="Server API" description="Use the Server API to have your plugin interact with the backend server of Strapi." link="/cms/plugins-development/server-api" />
-<CustomDocCard emoji="" title="Extending the MCP server" description="Use the strapi.ai.mcp service to register custom MCP tools so AI clients can trigger plugin-specific actions." link="/cms/plugins-development/extend-mcp-server" />
+<CustomDocCard emoji="" title="Extending the MCP server" description="Use the strapi.ai.mcp service to register custom MCP tools, resources, and prompts so AI clients can trigger plugin-specific actions." link="/cms/plugins-development/extend-mcp-server" />
 </CustomDocCardsWrapper>
 
 :::strapi Custom fields plugins
