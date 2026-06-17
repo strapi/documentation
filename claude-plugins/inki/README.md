@@ -97,7 +97,7 @@ What makes it powerful:
 
 1. **It accepts anything.** A local file, a bare filename, a GitHub PR number or URL, a published `docs.strapi.io` URL, or pasted Markdown. It resolves the target itself (cloning a worktree for a PR if needed) and cleans up after.
 2. **Six reviewers in parallel, one verdict.** No human reviewer runs all six checks by hand, every time, consistently.
-3. **`--fix` closes the loop.** It can auto-apply the style fixes, not just flag them.
+3. **`--fix` closes the loop.** It can auto-apply every actionable fix across all six checks (not just style), and with `--fix-rounds <N>` it re-reviews after each round to catch a fix that introduced a new issue.
 
 The standout sub-skill is **`/inki:code-verify`**: it reads every fenced code block in a page and checks it against the actual `strapi/strapi` source: syntax, whether referenced functions and types really exist, and consistency with the surrounding prose. It proves the code in the docs matches the code that ships.
 
@@ -157,11 +157,12 @@ Find out what already exists, where to put new content, what's missing.
 
 ### Review: check what you wrote
 
-👉 `/inki:review [--non-interactive] [--fix] <path | filename | PR | docs.strapi.io URL | pasted content>`: orchestrator: runs all 6 review sub-skills against any supported target. Two independent flags:
+👉 `/inki:review [--non-interactive] [--fix] [--fix-rounds <N>] <path | filename | PR | docs.strapi.io URL | pasted content>`: orchestrator: runs all 6 review sub-skills against any supported target. Flags:
 
 * `--non-interactive`: ask no questions (review runs silently). Alone, it still only produces a report.
-* `--fix`: apply the auto-fixable findings. Alone, it still prompts first.
-* Combine them (`--non-interactive --fix`) to fix silently; omit both for the default (prompts + report, no changes).
+* `--fix`: apply every actionable finding across all six checks (one unambiguous correction each); judgment calls stay suggestions. Alone, it shows the diff and prompts first (the human-content guard).
+* `--max-review-fix-rounds <N>` (alias `--fix-rounds <N>`): re-review after applying, up to N rounds, so a fix that introduces a new issue gets caught. Default 1 (single pass). Only meaningful with `--fix`.
+* Combine `--non-interactive --fix` to fix silently; omit both for the default (prompts + report, no changes).
 - `/inki:style-check <path>`: style lint (deterministic + AI).
 - `/inki:outline-check <path>`: verify outline matches template.
 - `/inki:outline-ux-analyzer <path>`: audit pedagogical UX.
@@ -182,7 +183,7 @@ Find out what already exists, where to put new content, what's missing.
 ### Common flags
 
 - `--non-interactive` (aliases `--auto-approve` / `--auto` / `--yes` / `-y` / `--no-questions-asked`): skip confirmation prompts; ask no questions. Useful for chaining skills or scripting. `--non-interactive` is the canonical form; the others are kept as aliases. On `/inki:document` it also runs the review-fix loop automatically.
-- `--fix-rounds <N>` (on `/inki:document`): cap the number of review→fix→re-review iterations. Default 3.
+- `--max-review-fix-rounds <N>` (alias `--fix-rounds <N>`): cap the number of review→fix→re-review iterations. On `/inki:review` it defaults to 1 (single pass); on `/inki:document` it defaults to 3. Only meaningful with `--fix`.
 - `--no-log` / `--log-dir <path>` / `--short-log`: logging controls. By default, every skill that produces a report or modifies files writes a verbose Markdown report tree to `~/.inki/logs/<YYYY-MM-DD-slug>/` (override with `--log-dir` or the `INKI_LOG_DIR` env var; logs never go inside the worked-on repo). `--no-log` disables it; `--short-log` trims the verbose per-agent reports, keeping only the consolidated per-phase reports. The git-plumbing skills (`branch`, `commit`, `push`, `pr`) do not take these flags: a single git step has no report of its own, and its work is captured in `submit`'s log.
 - `--include-old` (only on `pr-fix`): when no PR IDs are listed, include open PRs older than 30 days. By default, stale PRs are excluded to avoid bumping them with a title/description change notification.
 

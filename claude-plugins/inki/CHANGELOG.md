@@ -1,5 +1,13 @@
 # Inki Changelog
 
+## v0.2.3 (2026-06-17)
+
+### Changed
+
+- `/inki:review --fix` now applies every **actionable** finding across all six checks (code, coherence, pitfalls, outline, UX, and style), not only the style auto-fixes. A finding is applied only when it has a single unambiguous correction; judgment calls stay suggestions and are never force-applied. Without `--non-interactive`, review shows each round's diff and confirms before writing (the human-content guard, since a bare review often runs on pre-existing human-authored content).
+- The review→fix→re-review loop now lives in `/inki:review`, controlled by a new `--max-review-fix-rounds <N>` flag (alias `--fix-rounds <N>`), default 1 (single pass). `/inki:document` no longer implements its own loop: it delegates to `/inki:review`, passing the round cap through (its own default stays 3). This removes the previous double-loop and keeps the loop logic in one place.
+- On `/inki:document`, the round-cap flag `--fix-rounds` (its original name) is now an alias of the canonical `--max-review-fix-rounds`.
+
 ## v0.2.2 (2026-06-16)
 
 ### Changed
@@ -18,7 +26,7 @@
 
 ### Added
 
-- `/inki:document [--non-interactive] [--fix-rounds <N>] <subject>` skill: end-to-end orchestrator chaining all four families (research → write → review → submit) for a single subject. Gated between each phase by default; `--non-interactive` chains without pauses and runs a review-fix loop (review → apply fixes → re-review, up to `--fix-rounds` iterations, default 3). Stops if research finds the subject is already documented (no duplicate pages). The `<subject>` is flexible: keywords, a Notion page URL, a Linear issue, a PDF (path or URL), a local file, or pasted text.
+- `/inki:document [--non-interactive] [--max-review-fix-rounds <N>] <subject>` skill: end-to-end orchestrator chaining all four families (research → write → review → submit) for a single subject. Gated between each phase by default; `--non-interactive` chains without pauses and runs a review-fix loop (review → apply fixes → re-review, up to `--max-review-fix-rounds` iterations, default 3). Stops if research finds the subject is already documented (no duplicate pages). The `<subject>` is flexible: keywords, a Notion page URL, a Linear issue, a PDF (path or URL), a local file, or pasted text.
 - `references/subject-resolver.md`: centralized resolution of a *subject to document* into a normalized brief (keywords, a Strapi code PR, Notion, Linear, PDF, local file, pasted content). Distinct from `target-resolver.md`, which resolves an existing file *to review*. Consumed by `/inki:document`. A `strapi/strapi` or `strapi/cloud` PR (given as a URL, `owner/repo number`, a bare number, or prose) is routed through `/inki:route` into a brief; a bare number prompts for the repo; a `strapi/documentation` PR is redirected to `/inki:review`; a PR on any other repo stops (not documented on docs.strapi.io).
 - `/inki:pitfalls-add [--non-interactive] <pitfall>` skill: adds a new, source-verified entry to the known-pitfalls catalog. The writing counterpart to the read-only `pitfalls-checker` agent (which stays read-only and only suggests running this skill).
 - Run logging: every run writes a verbose Markdown report tree to `~/.inki/logs/<YYYY-MM-DD-slug>/` with one subdirectory per phase (research/write/review/submit), including each reviewer agent's raw report by default. Overridable with `--log-dir <path>` or the `INKI_LOG_DIR` env var; never written inside the worked-on repo (`.inki/` is also gitignored as a safety net). `--no-log` disables it; `--short-log` trims to the consolidated per-phase reports. Centralized in `references/logging.md`.
