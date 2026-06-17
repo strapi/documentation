@@ -11,7 +11,8 @@ Every Inki skill is invoked as `/inki:<skill>`. This page lists each command, wh
 End-to-end documentation orchestrator: chains all four inki phases (research, write, review, submit) for a single subject. Gates between each phase by default; --non-interactive chains without pauses and runs a review-fix loop. The simplest way to document a subject from scratch.
 
 ```
-/inki:document [--non-interactive] [--fix-rounds <N>] <subject: keywords | Strapi PR (url/number) | Notion URL | Linear issue | PDF path | pasted text>
+/inki:document [--non-interactive] [--max-review-fix-rounds <N>] <subject: keywords | Strapi PR (url/number) | Notion URL | Linear issue | PDF path | pasted text>
+# alias for --max-review-fix-rounds: --fix-rounds
 ```
 
 The command accepts the following flags:
@@ -19,7 +20,7 @@ The command accepts the following flags:
 | Flag | Description |
 |------|-------------|
 | `--non-interactive` | Chain all phases without pausing, and approve the review-fix loop. Canonical; aliases: `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked`. |
-| `--fix-rounds <N>` | Cap the review→fix→re-review iterations. Default 3. |
+| `--max-review-fix-rounds <N>` | Cap the review→fix→re-review iterations (passed through to `/inki:review`). Default 3. Alias: `--fix-rounds <N>`. |
 | `--no-log` | Disable run logging for this run. |
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
@@ -152,15 +153,17 @@ The command accepts the following flags:
 Top-level review orchestrator: runs style-check, outline-check, outline-ux-analyzer, code-verify, coherence-check, and pitfalls-check on a file, directory, or PR.
 
 ```
-/inki:review [--non-interactive] [--fix] [--no-log] <path | filename | PR# | PR URL | docs.strapi.io URL | pasted content>
+/inki:review [--non-interactive] [--fix] [--max-review-fix-rounds <N>] [--no-log] <path | filename | PR# | PR URL | docs.strapi.io URL | pasted content>
+# alias for --max-review-fix-rounds: --fix-rounds
 ```
 
 The command accepts the following flags:
 
 | Flag | Description |
 |------|-------------|
-| `--non-interactive` | Skip confirmation gates inside the sub-skills. Canonical; aliases: `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked`. |
-| `--fix` | Apply the auto-fixable findings from `style-check` (others stay suggestions). |
+| `--non-interactive` | Skip the per-round confirmation; apply fixes silently. Canonical; aliases: `--auto-approve`, `--auto`, `--yes`, `-y`, `--no-questions-asked`. |
+| `--fix` | Apply every actionable finding across all six checks (one unambiguous correction each); judgment calls stay suggestions. Without `--non-interactive`, shows the diff and confirms each round first. |
+| `--max-review-fix-rounds <N>` | Cap the review→fix→re-review iterations. Default 1 (single pass). Only meaningful with `--fix`. Alias: `--fix-rounds <N>`. |
 | `--no-log` | Disable run logging for this run. |
 | `--log-dir <path>` | Write logs under `<path>` instead of the default `~/.inki/logs/`. |
 | `--short-log` | Trim logs to the consolidated per-phase reports (omit per-agent raw reports). |
