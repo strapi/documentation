@@ -10935,6 +10935,79 @@ File path: N/A
 # Upload files
 Source: https://docs.strapi.io/cms/api/rest/upload
 
+## Get all files
+Description: GET /api/upload/files returns a flat array of all files in the Media Library:
+(Source: https://docs.strapi.io/cms/api/rest/upload#get-all-files)
+
+Language: JSON
+File path: N/A
+
+```json
+[
+  {
+    "id": 1,
+    "documentId": "a1b2c3...",
+    "name": "photo.jpg",
+    "url": "/uploads/photo.jpg",
+    "mime": "image/jpeg",
+    "size": 12.34
+    // ...other file fields
+  }
+  // ...
+]
+```
+
+
+## Get a paginated list of files
+Description: Code example from "Get a paginated list of files"
+(Source: https://docs.strapi.io/cms/api/rest/upload#get-a-paginated-list-of-files)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "a1b2c3...",
+      "name": "photo.jpg",
+      "url": "/uploads/photo.jpg",
+      "mime": "image/jpeg",
+      "size": 12.34
+      // ...other file fields
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 2,
+      "pageSize": 10,
+      "pageCount": 4,
+      "total": 100
+    }
+  }
+}
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    // ...
+  ],
+  "meta": {
+    "pagination": {
+      "start": 20,
+      "limit": 5
+    }
+  }
+}
+```
+
+
 ## Upload files
 Description: :::tip When uploading an image, include a fileInfo object to set the file name, alt text, and caption.
 (Source: https://docs.strapi.io/cms/api/rest/upload#upload-files)
