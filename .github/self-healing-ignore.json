@@ -489,6 +489,16 @@
       "number": 26150,
       "reason": "Router: Internal library replacement — swaps sanitize-html for DOMPurify in the rich text editor preview with no public behavior change (scripts are still blocked). Fixes console warnings for developers but does not affect end users or APIs.",
       "added": "2026-06-16"
+    },
+    {
+      "number": 26654,
+      "reason": "Router: Internal Document Service bug fix. The issue is correcting incorrect behavior in existing Draft & Publish relation filtering when updating from non-Draft & Publish sources. This is a robustness fix with no new public API surface, parameters, or configuration changes. The Document Service API itself remains unchanged from a user perspective.",
+      "added": "2026-06-17"
+    },
+    {
+      "number": 26625,
+      "reason": "Router: Internal admin UI hardening. This is a defensive programming fix that adds guards and normalization for stale/malformed admin configuration to prevent crashes. No new public features, APIs, or configuration options are introduced. The changes are purely internal robustness improvements to handle edge cases.",
+      "added": "2026-06-17"
     }
   ]
 }
