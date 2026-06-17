@@ -535,6 +535,10 @@ Media library queries over REST or GraphQL always return the project media domai
 
 Environment variables (more information in the [CMS Documentation](/cms/configurations/environment)) are used to configure the environment of your Strapi application, such as the database connection.
 
+:::note
+Custom variables are available to the Strapi server at runtime. Variables prefixed with `STRAPI_ADMIN_` are not exposed to the admin front end on Strapi Cloud.
+:::
+
 <ThemedImage
   alt="Project variables"
   sources={{
