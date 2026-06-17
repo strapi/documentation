@@ -151,7 +151,7 @@ The following cards link directly to each dedicated page:
 <CustomDocCard icon="layout" title="Controllers & services" description="Handle requests in controllers and organize reusable business logic in services." link="/cms/plugins-development/server-controllers-services" />
 <CustomDocCard icon="shield" title="Policies & middlewares" description="Enforce access rules with policies and intercept request flow with middlewares." link="/cms/plugins-development/server-policies-middlewares" />
 <CustomDocCard icon="database" title="Getters & usage" description="Access plugin controllers, services, content-types, and config through top-level and global getters." link="/cms/plugins-development/server-getters-usage" />
-<CustomDocCard icon="puzzle-piece" title="Extending the MCP server" description="Register custom MCP tools through the strapi.ai.mcp service so AI clients can trigger plugin-specific actions." link="/cms/plugins-development/extend-mcp-server" />
+<CustomDocCard icon="puzzle-piece" title="Extending the MCP server" description="Register custom MCP tools, resources, and prompts through the strapi.ai.mcp service so AI clients can trigger plugin-specific actions." link="/cms/plugins-development/extend-mcp-server" />
 </CustomDocCardsWrapper>
 
 :::strapi Backend customization
