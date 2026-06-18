@@ -499,6 +499,16 @@
       "number": 26625,
       "reason": "Router: Internal admin UI hardening. This is a defensive programming fix that adds guards and normalization for stale/malformed admin configuration to prevent crashes. No new public features, APIs, or configuration options are introduced. The changes are purely internal robustness improvements to handle edge cases.",
       "added": "2026-06-17"
+    },
+    {
+      "number": 26678,
+      "reason": "Router: Internal optimization fix for upload handling. No public API or user behavior change. Performance improvements to MIME detection are not user-facing documentation.",
+      "added": "2026-06-18"
+    },
+    {
+      "number": 25860,
+      "reason": "Router: Bug fix for internal admin panel behavior (dashboard deduplication). While user-facing, the fix resolves a bug rather than introducing new features or public API changes that require documentation.",
+      "added": "2026-06-18"
     }
   ]
 }
