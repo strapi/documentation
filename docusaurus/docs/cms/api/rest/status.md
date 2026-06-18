@@ -39,6 +39,8 @@ In the response data, the `publishedAt` field is `null` for drafts.
 Since published versions are returned by default, passing no status parameter is equivalent to passing `status=published`.
 :::
 
+For derived publication cohorts (never-published, modified, and others), see [REST API: `publicationFilter`](/cms/api/rest/publication-filter).
+
 <br /><br />
 
 <ApiCall>

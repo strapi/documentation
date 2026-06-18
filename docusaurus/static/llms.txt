@@ -42,6 +42,7 @@
 - [Using the locale parameter with the Document Service API](https://docs.strapi.io/cms/api/document-service/locale): Use Strapi's Document Service API to work with locale versions with your queries.
 - [Extending the Document Service behavior](https://docs.strapi.io/cms/api/document-service/middlewares): This document provides information about the middlewares in the Document Service API.
 - [Using Populate with the Document Service API](https://docs.strapi.io/cms/api/document-service/populate): Use Strapi's Document Service API to populate or select some fields.
+- [Using publicationFilter with the Document Service API](https://docs.strapi.io/cms/api/document-service/publication-filter): Use the publicationFilter parameter with Strapi's Document Service API to query derived Draft & Publish cohorts such as never-published or modified documents.
 - [Using Sort & Pagination with the Document Service API](https://docs.strapi.io/cms/api/document-service/sort-pagination): Use Strapi's Document Service API to sort and paginate query results
 - [Using Draft & Publish with the Document Service API](https://docs.strapi.io/cms/api/document-service/status): Use Strapi's Document Service API to return either the draft or the published version of a document
 - [GraphQL API](https://docs.strapi.io/cms/api/graphql): import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
@@ -53,6 +54,7 @@
 - [Locale](https://docs.strapi.io/cms/api/rest/locale): Browse the REST API reference for the locale parameter to take advantage of the Internationalization feature through REST.
 - [Parameters](https://docs.strapi.io/cms/api/rest/parameters): Use API parameters to refine your Strapi REST API queries.
 - [Populate and Select](https://docs.strapi.io/cms/api/rest/populate-select): Use the populate parameter to include relations, media fields, components, and dynamic zones in REST API responses. Use the fields parameter to return only specific fields.
+- [Publication filter](https://docs.strapi.io/cms/api/rest/publication-filter): Use the publicationFilter parameter with Strapi's REST API to query derived Draft & Publish cohorts such as never-published or modified documents.
 - [Relations](https://docs.strapi.io/cms/api/rest/relations): Use the REST API to manage the order of relations
 - [Sort and Pagination](https://docs.strapi.io/cms/api/rest/sort-pagination): Use Strapi's REST API to sort or paginate your data.
 - [Status](https://docs.strapi.io/cms/api/rest/status): Use Strapi's REST API to work with draft or published versions of your documents.

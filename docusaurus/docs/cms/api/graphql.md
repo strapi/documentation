@@ -425,6 +425,62 @@ query Query($status: PublicationStatus) {
 }
 ```
 
+### Filter by derived publication cohort {#publication-filter}
+
+If the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled, you can add a `publicationFilter` argument to built-in collection and single-type queries. The GraphQL plugin exposes the same cohorts as the REST API and Document Service API through the `PublicationFilter` enum.
+
+Combine `publicationFilter` with `status` the same way as for REST (see [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter#status-combination)).
+
+When `status` is omitted, GraphQL defaults to `PUBLISHED` before applying `publicationFilter` (same as REST). Example: `restaurants(publicationFilter: MODIFIED)` returns published rows in the modified cohort; use `status: DRAFT` to return draft rows instead.
+
+Built-in root queries (for example `restaurants`, `restaurants_connection`) pass `publicationFilter` down to populated draft & publish relations on nested fields so relation results match the parent query cohort.
+
+```graphql title="Example: Fetch never-published draft documents"
+query Query($status: PublicationStatus, $publicationFilter: PublicationFilter) {
+  restaurants(status: DRAFT, publicationFilter: NEVER_PUBLISHED) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+```graphql title="Example: Fetch published rows without a draft peer"
+query Query($status: PublicationStatus, $publicationFilter: PublicationFilter) {
+  restaurants(status: PUBLISHED, publicationFilter: PUBLISHED_WITHOUT_DRAFT) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+```graphql title="Example: Modified cohort with default PUBLISHED status"
+query Query {
+  restaurants(publicationFilter: MODIFIED) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+Available enum values:
+
+| GraphQL enum | Document Service / REST value |
+| ------------ | ----------------------------- |
+| `NEVER_PUBLISHED` | `never-published` |
+| `HAS_PUBLISHED_VERSION` | `has-published-version` |
+| `MODIFIED` | `modified` |
+| `UNMODIFIED` | `unmodified` |
+| `NEVER_PUBLISHED_DOCUMENT` | `never-published-document` |
+| `HAS_PUBLISHED_VERSION_DOCUMENT` | `has-published-version-document` |
+| `PUBLISHED_WITHOUT_DRAFT` | `published-without-draft` |
+| `PUBLISHED_WITH_DRAFT` | `published-with-draft` |
+
+:::note
+The deprecated `hasPublishedVersion` boolean argument is still accepted (`true` / `false`) and maps to `NEVER_PUBLISHED_DOCUMENT` / `HAS_PUBLISHED_VERSION_DOCUMENT`. If both `publicationFilter` and `hasPublishedVersion` are provided, `publicationFilter` takes precedence. Prefer `publicationFilter` for new queries.
+:::
 
 ## Mutations
 

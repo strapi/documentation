@@ -185,16 +185,19 @@ To unpublish several entries at the same time:
 
 ### Usage with APIs
 
-Draft or published content can be requested, created, updated, and deleted using the `status` parameter through the various front-end APIs accessible from [Strapi's Content API](/cms/api/content-api):
+Draft or published content can be requested, created, updated, and deleted using the `status` parameter through the various front-end APIs accessible from [Strapi's Content API](/cms/api/content-api). To query derived cohorts such as never-published or modified documents, use the `publicationFilter` parameter (REST and GraphQL) or the equivalent Document Service API option.
 
 <CustomDocCardsWrapper>
 <CustomDocCard icon="cube" title="REST API" description="Learn how to use the status parameter with the REST API." link="/cms/api/rest/status"/>
+<CustomDocCard icon="cube" title="REST API: publicationFilter" description="Query never-published, modified, and other derived publication cohorts." link="/cms/api/rest/publication-filter"/>
 <CustomDocCard icon="cube" title="GraphQL API" description="Learn how to use the status parameter with GraphQL API." link="/cms/api/graphql#status"/>
+<CustomDocCard icon="cube" title="GraphQL API: publicationFilter" description="Query derived publication cohorts with the PublicationFilter enum." link="/cms/api/graphql#publication-filter"/>
 </CustomDocCardsWrapper>
 
 On the back-end server of Strapi, the Document Service API can also be used to interact with localized content:
 
 <CustomDocCardsWrapper>
 <CustomDocCard icon="cube" title="Document Service API" description="Learn how to use the status parameter with the Document Service API." link="/cms/api/document-service/status"/>
+<CustomDocCard icon="cube" title="Document Service API: publicationFilter" description="Query derived publication cohorts from server-side code." link="/cms/api/document-service/publication-filter"/>
 </CustomDocCardsWrapper>
 
