@@ -16,12 +16,12 @@ tags:
 # Extending the MCP server with plugins
 
 <Tldr>
-Strapi plugins can register additional MCP tools through the `strapi.ai.mcp` service. Registrations must happen while the MCP server is idle (during the plugin's `register()` or `bootstrap()` lifecycle phase), before the server starts.
+Strapi plugins can register additional MCP tools through the `strapi.ai.mcp` service. Registrations must happen while the MCP server is idle (during the plugin's `register()` lifecycle phase), before the server starts.
 </Tldr>
 
 Strapi includes a built-in [Model Context Protocol (MCP) server](/cms/features/strapi-mcp-server) that exposes content management tools to AI clients. In addition to the tools generated from your schema, plugins can register their own MCP capabilities so AI clients can trigger plugin-specific actions. Plugins can register 3 capability types through the `strapi.ai.mcp` service: tools, resources, and prompts.
 
-Registrations must happen while the MCP server is idle, before it starts. In Strapi's load lifecycle, register a tool during the plugin's `register()` or `bootstrap()` phase. Prefer `bootstrap()` when a tool depends on synced content-types, permissions, or database state.
+Registrations must happen while the MCP server is idle, before it starts. In Strapi's load lifecycle, register a tool during the plugin's `register()` phase.
 
 ## Registering a custom tool
 
@@ -127,7 +127,7 @@ Passing the tool definition inline to [`registerTool()`](#registering-a-custom-t
 
 Strapi exports 3 builder helpers under the `ai.mcp` namespace on `@strapi/strapi`: `ai.mcp.defineTool`, `ai.mcp.defineResource`, and `ai.mcp.definePrompt`. Each one returns its definition unchanged at runtime. Their purpose is type inference. They infer the capability's `name`, schemas, and handler types. They also narrow the access variant (`devModeOnly` or `auth`) so the result is directly assignable to the matching `register` method. This is similar to the `factories` helpers used for content-manager APIs.
 
-Use the builders to keep capability definitions in their own modules, then register them during the plugin's `register()` or `bootstrap()` phase. Each definition takes either `devModeOnly: true` or an `auth` policy set, never both.
+Use the builders to keep capability definitions in their own modules, then register them during the plugin's `register()` phase. Each definition takes either `devModeOnly: true` or an `auth` policy set, never both.
 
 ### Defining a tool
 
@@ -157,7 +157,7 @@ Register the tool from the plugin's server entry file:
 import { greet } from './mcp/greet';
 
 export default {
-  bootstrap({ strapi }) {
+  register({ strapi }) {
     if (strapi.ai.mcp.isEnabled()) {
       strapi.ai.mcp.registerTool(greet);
     }
@@ -202,6 +202,6 @@ export const appContext = ai.mcp.definePrompt({
 ```
 
 :::note
-The builders are identity functions: they do not change the definition at runtime. Defining a capability does not register it. Pass the result to `strapi.ai.mcp.registerTool()`, `registerResource()`, or `registerPrompt()` during `register()` or `bootstrap()`, while the MCP server is still idle.
+The builders are identity functions: they do not change the definition at runtime. Defining a capability does not register it. Pass the result to `strapi.ai.mcp.registerTool()`, `registerResource()`, or `registerPrompt()` during `register()`, while the MCP server is still idle.
 :::
 
