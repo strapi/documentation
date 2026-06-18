@@ -172,8 +172,17 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
-```jsx title="/src/admin/app.ts"
-// Note: you may see some ts errors, don't worry about them
+If TypeScript reports missing module declarations for imported image files, include Vite's client types in `/src/admin/tsconfig.json`:
+
+```json title="/src/admin/tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["vite/client"]
+  }
+}
+```
+
+```ts title="/src/admin/app.ts"
 import AuthLogo from "./extensions/my-logo.png";
 import MenuLogo from "./extensions/logo.png";
 import favicon from "./extensions/favicon.png";
@@ -186,9 +195,7 @@ export default {
     },
     // Replace the favicon
     head: {
-      // Try to change the origin favicon.png file in the
-      // root of strapi project if this config don't work.
-      favicon: favicon, 
+      favicon: favicon,
     },
     // Add a new locale, other than 'en'
     locales: ["fr", "de"],
