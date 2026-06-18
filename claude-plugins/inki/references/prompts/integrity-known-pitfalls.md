@@ -24,6 +24,7 @@ This file lists documented patterns where AI-generated documentation has produce
 | Hallucinated pattern | Correct pattern | Context |
 |---------------------|-----------------|---------|
 | `actionProvider.registerMany()` in `register()` | `actionProvider.registerMany()` in `bootstrap()` | Services are not available during `register()`. RBAC actions must be registered in `bootstrap()`. |
+| Registering MCP capabilities (`strapi.ai.mcp.registerTool`/`registerResource`/`registerPrompt`) in `bootstrap()`, or describing `bootstrap()` as a supported or preferred phase | Register MCP capabilities only in the plugin's `register()` phase | Strapi docs convention (design decision): registration is gated to `serverStatus === 'idle'` (`packages/core/core/src/services/mcp/index.ts`), so `bootstrap()` is technically possible, but its edge cases are too narrow to recommend. Docs document `register()` only. strapi/strapi type comments may still mention `bootstrap()`: flag this as a docs-convention issue, not a code-vs-source error. The code may align to register-only later. |
 
 ### Scope and applicability
 
