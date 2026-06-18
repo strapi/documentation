@@ -16,12 +16,12 @@ tags:
 # Extending the MCP server with plugins
 
 <Tldr>
-Strapi plugins can register additional MCP tools through the `strapi.ai.mcp` service. Registrations must happen while the MCP server is idle (during the plugin's `register()` or `bootstrap()` lifecycle phase), before the server starts.
+Strapi plugins can register additional MCP tools through the `strapi.ai.mcp` service. Registrations must happen while the MCP server is idle (during the plugin's `register()` lifecycle phase), before the server starts.
 </Tldr>
 
 Strapi includes a built-in [Model Context Protocol (MCP) server](/cms/features/strapi-mcp-server) that exposes content management tools to AI clients. In addition to the content-type tools generated from your schema, plugins can register their own custom tools so AI clients can trigger plugin-specific actions.
 
-Registrations must happen while the MCP server is idle, before it starts. In Strapi's load lifecycle, register a tool during the plugin's `register()` or `bootstrap()` phase. Prefer `bootstrap()` when a tool depends on synced content-types, permissions, or database state.
+Registrations must happen while the MCP server is idle, before it starts. In Strapi's load lifecycle, register a tool during the plugin's `register()` phase.
 
 ## Registering a custom tool
 

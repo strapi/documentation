@@ -213,9 +213,9 @@ The MCP server uses the Streamable HTTP transport protocol. Any MCP-compatible c
 
 ### Available tools
 
-The MCP server exposes 2 categories of tools: content-type tools generated from your schema, and built-in utility tools.
+The MCP server exposes 2 categories of tools: content management tools generated from your schema, and built-in utility tools.
 
-#### Content-type tools
+#### Content management tools
 
 The tools generated differ depending on whether the content type is a collection type or a single type.
 
@@ -248,7 +248,7 @@ The publish, unpublish, and discard_draft tools are only generated when [Draft &
 
 #### Built-in utility tools
 
-In addition to content-type tools, Strapi registers the following built-in tools:
+In addition to content management tools, Strapi registers the following built-in tools:
 
 | Tool | Availability | Description |
 |------|-------------|-------------|
