@@ -123,7 +123,7 @@ export default {
 
 ## Defining capabilities with builder helpers
 
-The previous example built the tool definition inline. For larger plugins, you can define capabilities in their own modules and pass the result to the same `registerTool()` method.
+Passing the tool definition inline to [`registerTool()`](#registering-a-custom-tool) works well for simple cases. For larger plugins, you can define capabilities in their own modules and pass the result to the same `registerTool()` method.
 
 Strapi exports 3 builder helpers under the `ai.mcp` namespace on `@strapi/strapi`: `ai.mcp.defineTool`, `ai.mcp.defineResource`, and `ai.mcp.definePrompt`. Each one returns its definition unchanged at runtime. Their purpose is type inference. They infer the capability's `name`, schemas, and handler types. They also narrow the access variant (`devModeOnly` or `auth`) so the result is directly assignable to the matching `register` method. This is similar to the `factories` helpers used for content-manager APIs.
 
