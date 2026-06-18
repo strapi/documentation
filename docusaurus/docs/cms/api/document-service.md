@@ -25,7 +25,7 @@ In Strapi 5, documents are uniquely identified by their `documentId` at the API 
 
 In previous Strapi versions, the concept of `id` (used both in the Content API and as the database row identifier) was not always stable: a single entry could have multiple versions or localizations, and its numeric identifier `id` could change in cases such as duplication or import/export operations.
 
-To address this limitation, Strapi 5 introduced `documentId`, a 24-character alphanumeric string, as a unique and persistent identifier for a content entry, independent of its physical records.
+To address this limitation, Strapi 5 introduced `documentId`, a 25-character alphanumeric string, as a unique and persistent identifier for a content entry, independent of its physical records.
 
 This new identifier is used internally in Strapi 5 to manage relationships, publishing, localization, and version history, as all possible variations of a content entry are now grouped under a single [document](/cms/api/document) concept.
 
