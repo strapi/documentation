@@ -247,7 +247,9 @@ The WYSIWYG editor can be replaced by taking advantage of [custom fields](/cms/f
 :::
 
 :::info
-The admin panel supports dotenv variables.
+The admin panel supports dotenv variables in self-hosted projects.
 
 All variables defined in a `.env` file and prefixed by `STRAPI_ADMIN_` are available while customizing the admin panel through `process.env`.
+
+This dotenv exposure does not apply to Strapi Cloud projects.
 :::

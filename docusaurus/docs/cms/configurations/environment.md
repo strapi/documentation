@@ -52,6 +52,8 @@ Strapi provides the following environment variables:
 
 :::tip
 Prefixing an environment variable name with `STRAPI_ADMIN_` exposes the variable to the admin front end (e.g., `STRAPI_ADMIN_MY_PLUGIN_VARIABLE` is accessible through `process.env.STRAPI_ADMIN_MY_PLUGIN_VARIABLE`).
+
+This works when the admin panel is built from your project, for example in self-hosted deployments. Strapi Cloud does not expose `STRAPI_ADMIN_*` variables to the admin front end.
 :::
 
 ### Example `.env` file
