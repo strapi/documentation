@@ -3,6 +3,7 @@ title: Status
 description: Use Strapi's REST API to work with draft or published versions of your documents.
 sidebarDepth: 3
 sidebar_label:  Status
+next: ./publication-filter.md
 displayed_sidebar: cmsSidebar
 tags:
 - API

@@ -194,7 +194,7 @@ Draft or published content can be requested, created, updated, and deleted using
 <CustomDocCard icon="cube" title="GraphQL API: publicationFilter" description="Query derived publication cohorts with the PublicationFilter enum." link="/cms/api/graphql#publication-filter"/>
 </CustomDocCardsWrapper>
 
-On the back-end server of Strapi, the Document Service API can also be used to interact with localized content:
+On the back-end server of Strapi, the Document Service API can also query and manage draft and published content:
 
 <CustomDocCardsWrapper>
 <CustomDocCard icon="cube" title="Document Service API" description="Learn how to use the status parameter with the Document Service API." link="/cms/api/document-service/status"/>

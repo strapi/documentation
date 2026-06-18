@@ -3,6 +3,7 @@ title: Publication filter
 description: Use the publicationFilter parameter with Strapi's REST API to query derived Draft & Publish cohorts such as never-published or modified documents.
 sidebarDepth: 3
 sidebar_label: Publication filter
+next: ./populate-select.md
 displayed_sidebar: cmsSidebar
 tags:
 - API
@@ -16,11 +17,10 @@ tags:
 ---
 
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
-import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 
 # REST API: `publicationFilter`
 
-The [REST API](/cms/api/rest) accepts an optional `publicationFilter` query parameter when [Draft & Publish](/cms/features/draft-and-publish) is enabled. It selects derived publication cohorts while [`status`](/cms/api/rest/status) selects draft or published rows.
+The [REST API](/cms/api/rest) accepts an optional `publicationFilter` query parameter when [Draft & Publish](/cms/features/draft-and-publish) is enabled. Use it to query derived publication cohorts such as never-published or modified documents. The [`status`](/cms/api/rest/status) parameter still selects whether each matching document returns its draft or published row.
 
 :::prerequisites
 The [Draft & Publish](/cms/features/draft-and-publish) feature must be enabled on the content-type.
@@ -40,15 +40,15 @@ When `status` is omitted, the REST API defaults to `status=published` **before**
 
 The Document Service API defaults to `status=draft` instead. See [Document Service API: default `status`](/cms/api/document-service/publication-filter#default-status).
 
+:::note
 Cohort definitions, the full `status` × `publicationFilter` matrix, Content Manager mapping, and validation rules are documented on [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter).
+:::
 
-The REST API accepts the same kebab-case values: `never-published`, `has-published-version`, `modified`, `unmodified`, `never-published-document`, `has-published-version-document`, `published-without-draft`, `published-with-draft`.
-
-Invalid values return HTTP `400`.
+Accepted kebab-case values: `never-published`, `has-published-version`, `modified`, `unmodified`, `never-published-document`, `has-published-version-document`, `published-without-draft`, `published-with-draft`. Invalid values return HTTP `400`.
 
 ## Get never-published draft documents {#never-published}
 
-`GET /api/restaurants?status=draft&publicationFilter=never-published`
+Pair-scoped `never-published` only matches draft rows. Pass `status=draft` because REST defaults to `status=published`.
 
 <ApiCall>
 
@@ -107,15 +107,9 @@ await request(`/api/restaurants?${query}`);
 
 </ApiCall>
 
-## Get modified documents (default published slice) {#modified}
+## Get modified documents {#modified}
 
-With no `status` parameter, REST returns **published** rows in the modified cohort:
-
-`GET /api/restaurants?publicationFilter=modified`
-
-To get **draft** rows instead, add `status=draft`:
-
-`GET /api/restaurants?status=draft&publicationFilter=modified`
+The `modified` cohort includes pairs where the draft row is newer than its published peer. With no `status` parameter, REST returns **published** rows from that cohort. Pass `status=draft` to return the draft rows instead.
 
 <ApiCall>
 
@@ -146,13 +140,36 @@ await request(`/api/restaurants?${query}`);
 
 </details>
 
+<Response title="Example response">
+
+```json {6}
+{
+  "data": [
+    {
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "name": "Biscotte Restaurant",
+      "publishedAt": "2024-03-14T15:40:45.330Z",
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+</Response>
+
 </ApiCall>
 
 ## Get published rows without a draft peer {#published-without-draft}
 
-`GET /api/restaurants?status=published&publicationFilter=published-without-draft`
-
-Because REST defaults to `status=published`, `?publicationFilter=published-without-draft` alone is equivalent.
+The `published-without-draft` cohort matches published rows that have no draft sibling for the same `(documentId, locale)`. Because REST defaults to `status=published`, you can omit `status` in the query URL.
 
 <ApiCall>
 
@@ -183,6 +200,31 @@ await request(`/api/restaurants?${query}`);
 
 </details>
 
+<Response title="Example response">
+
+```json {6}
+{
+  "data": [
+    {
+      "documentId": "abcdefghijklmno456",
+      "name": "Legacy Restaurant",
+      "publishedAt": "2024-01-10T09:15:00.000Z",
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+</Response>
+
 </ApiCall>
 
 ## Combine with other parameters {#combine}
@@ -200,6 +242,6 @@ The boolean `hasPublishedVersion` query parameter is deprecated. Accepted values
 
 Example: `GET /api/restaurants?status=draft&hasPublishedVersion=false`
 
-If both `publicationFilter` and `hasPublishedVersion` are sent, `publicationFilter` wins.
+If both `publicationFilter` and `hasPublishedVersion` are sent, `publicationFilter` takes precedence.
 
 Prefer `publicationFilter` for new integrations.

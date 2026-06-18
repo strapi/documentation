@@ -38,7 +38,7 @@ The [Draft & Publish](/cms/features/draft-and-publish) feature must be enabled o
 | [REST API](/cms/api/rest/publication-filter) | `'published'` |
 | [GraphQL API](/cms/api/graphql#publication-filter) | `PUBLISHED` |
 
-Example with `publicationFilter: 'modified'` and no `status`:
+The following example compares Document Service and REST behavior when only `publicationFilter: 'modified'` is passed:
 
 ```js
 // Document Service API → draft rows in the modified cohort
@@ -74,7 +74,7 @@ For content-types without i18n, read `(documentId, locale)` as `documentId` only
 - **`modified` / `unmodified` require both slices**: Pairs with only a draft or only a published row are not included.
 - **`modified` ∪ `unmodified` = `has-published-version`** (for the same `status`): The two modes partition pairs that have both slices.
 - **Document-scoped modes**: Existence checks use `documentId` only. A document with draft EN + published NL qualifies for `has-published-version-document` even though EN is never published at the pair level.
-- **Published-slice diagnostics** (`published-without-draft`, `published-with-draft`): Only select published rows. They are degenerate (empty) with `status: 'draft'`.
+- **Published-slice diagnostics** (`published-without-draft`, `published-with-draft`): Only select published rows. They return no rows when `status` is `'draft'`.
 
 ### Content Manager list filters {#content-manager}
 
@@ -94,7 +94,7 @@ The **Draft (never published)** filter is document-scoped (`never-published-docu
 | `status` | `publicationFilter` | Rows returned |
 | -------- | ------------------- | ------------- |
 | `draft` | `never-published` | Draft rows for pairs never published in that locale |
-| `published` | `never-published` | Empty (degenerate) |
+| `published` | `never-published` | Empty |
 | `draft` | `has-published-version` | Draft rows for pairs that also have a published version |
 | `published` | `has-published-version` | Published rows for pairs that also have a draft version (excludes orphan published-only pairs) |
 | `draft` | `modified` | Draft rows newer than their published peer |
@@ -102,17 +102,21 @@ The **Draft (never published)** filter is document-scoped (`never-published-docu
 | `draft` | `unmodified` | Draft rows not newer than their published peer |
 | `published` | `unmodified` | Published rows whose draft peer is not newer |
 | `draft` | `never-published-document` | Draft rows whose document has no published row in any locale |
-| `published` | `never-published-document` | Empty (degenerate) |
+| `published` | `never-published-document` | Empty |
 | `draft` | `has-published-version-document` | Draft rows whose document has at least one published row (any locale) |
 | `published` | `has-published-version-document` | Published rows whose document has at least one draft row (any locale) |
 | `published` | `published-without-draft` | Published rows with no draft sibling for the same pair |
-| `draft` | `published-without-draft` | Empty (degenerate) |
+| `draft` | `published-without-draft` | Empty |
 | `published` | `published-with-draft` | Published rows that have a draft sibling for the same pair |
-| `draft` | `published-with-draft` | Empty (degenerate) |
+| `draft` | `published-with-draft` | Empty |
 
+:::note
 Valid but empty combinations do not return validation errors.
+:::
 
 ## Query never-published drafts {#never-published}
+
+Return draft rows for `(documentId, locale)` pairs with no published version for that locale:
 
 ```js
 const documents = await strapi.documents('api::restaurant.restaurant').findMany({
@@ -121,9 +125,9 @@ const documents = await strapi.documents('api::restaurant.restaurant').findMany(
 });
 ```
 
-Returns draft rows for `(documentId, locale)` pairs with no published version for that locale.
-
 ## Query has-published-version drafts {#has-published-version}
+
+Return draft rows where a published row also exists for the same `(documentId, locale)`. Orphan published-only pairs are excluded:
 
 ```js
 const documents = await strapi.documents('api::restaurant.restaurant').findMany({
@@ -132,9 +136,9 @@ const documents = await strapi.documents('api::restaurant.restaurant').findMany(
 });
 ```
 
-Returns draft rows where a published row also exists for the same `(documentId, locale)`. Does not return draft rows for pairs that only exist as orphan published rows.
-
 ## Query modified or unmodified documents {#modified-unmodified}
+
+Compare `updatedAt` on the draft and published rows for the same pair:
 
 ```js
 // Draft side of modified pairs
@@ -150,9 +154,9 @@ await strapi.documents('api::restaurant.restaurant').findMany({
 });
 ```
 
-Comparison uses `updatedAt` on the draft and published rows for the same pair.
-
 ## Query document-scoped cohorts {#document-scoped}
+
+Return draft rows for documents that have never been published in any locale:
 
 ```js
 await strapi.documents('api::restaurant.restaurant').findMany({
@@ -161,7 +165,9 @@ await strapi.documents('api::restaurant.restaurant').findMany({
 });
 ```
 
-Returns draft rows for documents that have **never** been published in any locale. A multi-locale document with one published locale is excluded entirely, including its draft-only locales.
+A multi-locale document with one published locale is excluded entirely, including its draft-only locales.
+
+Return draft rows for documents that have at least one published row in any locale:
 
 ```js
 await strapi.documents('api::restaurant.restaurant').findMany({
@@ -170,9 +176,11 @@ await strapi.documents('api::restaurant.restaurant').findMany({
 });
 ```
 
-Returns draft rows for documents that have at least one published row in any locale (broader than pair-scoped `has-published-version`).
+This is broader than pair-scoped `has-published-version`.
 
 ## Query published rows without or with a draft peer {#published-slice}
+
+`published-without-draft` and `published-with-draft` partition published rows per `(documentId, locale)` (excluding pairs with no published row):
 
 ```js
 // Orphan published rows (published row, no draft sibling for the same pair)
@@ -188,11 +196,9 @@ await strapi.documents('api::restaurant.restaurant').findMany({
 });
 ```
 
-`published-without-draft` and `published-with-draft` partition published rows per `(documentId, locale)` (excluding pairs with no published row).
-
 ## Use with `findOne()` and `findFirst()` {#find-one-find-first}
 
-`publicationFilter` applies the same cohort rules. If the requested document (and locale, when applicable) is not in the cohort, `findOne()` and `findFirst()` return `null` even when the `documentId` exists.
+`publicationFilter` applies the same cohort rules. If the requested document (and locale, when applicable) is not in the cohort, `findOne()` and `findFirst()` return `null` even when the `documentId` exists:
 
 ```js
 await strapi.documents('api::restaurant.restaurant').findOne({
@@ -207,6 +213,8 @@ await strapi.documents('api::restaurant.restaurant').findOne({
 `publicationFilter` is merged with other query filters (logical AND). When [populating relations](/cms/api/document-service/populate), nested queries on draft & publish content-types inherit the same cohort logic so populated results stay consistent with the parent query.
 
 ## Count documents in a cohort {#count}
+
+Count draft rows in the never-published cohort:
 
 ```js
 const neverPublishedCount = await strapi

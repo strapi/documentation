@@ -2,7 +2,7 @@
 title: Parameters
 description: Use API parameters to refine your Strapi REST API queries.
 sidebar_label: Parameters
-next: ./publication-filter.md
+next: ./filters.md
 tags:
 - API
 - Content API

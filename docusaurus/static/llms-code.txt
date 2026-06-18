@@ -4915,7 +4915,7 @@ File path: N/A
 Source: https://docs.strapi.io/cms/api/document-service/publication-filter
 
 ## Default status when publicationFilter is used
-Description: Example with publicationFilter: 'modified' and no status:
+Description: The following example compares Document Service and REST behavior when only publicationFilter: 'modified' is passed:
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#default-status)
 
 Language: JavaScript
@@ -4932,7 +4932,7 @@ await strapi.documents('api::restaurant.restaurant').findMany({
 
 
 ## Query never-published drafts
-Description: Valid but empty combinations do not return validation errors.
+Description: Return draft rows for (documentId, locale) pairs with no published version for that locale:
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#never-published)
 
 Language: JavaScript
@@ -4947,7 +4947,7 @@ const documents = await strapi.documents('api::restaurant.restaurant').findMany(
 
 
 ## Query has-published-version drafts
-Description: Returns draft rows for (documentId, locale) pairs with no published version for that locale.
+Description: Return draft rows where a published row also exists for the same (documentId, locale).
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#has-published-version)
 
 Language: JavaScript
@@ -4962,7 +4962,7 @@ const documents = await strapi.documents('api::restaurant.restaurant').findMany(
 
 
 ## Query modified or unmodified documents
-Description: Returns draft rows where a published row also exists for the same (documentId, locale).
+Description: Compare updatedAt on the draft and published rows for the same pair:
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#modified-unmodified)
 
 Language: JavaScript
@@ -4984,7 +4984,7 @@ await strapi.documents('api::restaurant.restaurant').findMany({
 
 
 ## Query document-scoped cohorts
-Description: Comparison uses updatedAt on the draft and published rows for the same pair.
+Description: Return draft rows for documents that have never been published in any locale:
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#document-scoped)
 
 Language: JavaScript
@@ -5009,7 +5009,7 @@ await strapi.documents('api::restaurant.restaurant').findMany({
 
 
 ## Query published rows without or with a draft peer
-Description: Returns draft rows for documents that have at least one published row in any locale (broader than pair-scoped has-published-version).
+Description: published-without-draft and published-with-draft partition published rows per (documentId, locale) (excluding pairs with no published row):
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#published-slice)
 
 Language: JavaScript
@@ -5047,7 +5047,7 @@ await strapi.documents('api::restaurant.restaurant').findOne({
 
 
 ## Count documents in a cohort
-Description: publicationFilter is merged with other query filters (logical AND).
+Description: Count draft rows in the never-published cohort:
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#count)
 
 Language: JavaScript
@@ -10602,8 +10602,8 @@ File path: N/A
 ```
 
 
-## Get modified documents (default published slice)
-Description: Code example from "Get modified documents (default published slice)"
+## Get modified documents
+Description: Code example from "Get modified documents"
 (Source: https://docs.strapi.io/cms/api/rest/publication-filter#modified)
 
 Language: JavaScript
@@ -10621,6 +10621,31 @@ const query = qs.stringify(
 );
 
 await request(`/api/restaurants?${query}`);
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "name": "Biscotte Restaurant",
+      "publishedAt": "2024-03-14T15:40:45.330Z",
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
 ```
 
 
@@ -10643,6 +10668,31 @@ const query = qs.stringify(
 );
 
 await request(`/api/restaurants?${query}`);
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "documentId": "abcdefghijklmno456",
+      "name": "Legacy Restaurant",
+      "publishedAt": "2024-01-10T09:15:00.000Z",
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
 ```
 
 
