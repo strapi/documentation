@@ -1,5 +1,6 @@
 ---
 title: Media Library
+displayed_sidebar: cmsSidebar
 sidebar_position: 1
 description: Learn to use the Media Library which allows to display and manage all assets uploaded in the application.
 toc_max_heading_level: 5
@@ -550,41 +551,6 @@ export default ({ env }) => ({
 
 </Tabs>
 
-## Using the Media Library component in custom components
-
-When developing custom admin components or plugins, you can access and use the Media Library dialog component directly. The `MediaLibraryDialog` component supports the `initiallySelectedAssets` prop, which allows you to pre-select assets when the dialog opens.
-
-### Example: Using MediaLibraryDialog with pre-selected assets
-
-To use the Media Library component with initially selected assets in a custom component:
-
-```jsx
-import { useStrapiApp } from '@strapi/admin/strapi-admin';
-
-export function MyCustomComponent() {
-  const components = useStrapiApp((state) => state.components);
-  const MediaLibraryDialog = components['media-library'];
-
-  // Assets to pre-select in the Media Library dialog
-  const initialAssets = [
-    { id: 1, name: 'image1.jpg' },
-    { id: 2, name: 'image2.png' },
-  ];
-
-  return (
-    <MediaLibraryDialog
-      initiallySelectedAssets={initialAssets}
-      onSelect={(assets) => {
-        // Handle selected assets
-        console.log('Selected assets:', assets);
-      }}
-    />
-  );
-}
-```
-
-This feature simplifies the development of custom upload components by ensuring that previously selected items are displayed when users open the Media Library dialog, improving the overall user experience.
-
 ## Usage
 
 **Path to use the feature:** <Icon name="images" /> Media Library
@@ -875,7 +841,7 @@ The Media Library feature has some endpoints that can accessed through Strapi's 
 
 Public assets are static files (e.g., images, video, CSS files, etc.) that you want to make accessible to the outside world.
 
-Because an API may need to serve static assets, every new Strapi project includes by default a folder named `/public`. Any file located in this directory is accessible if the request's path doesn't match any other defined route and if it matches a public file name (e.g. an image named `company-logo.png` in `./public/` is accessible through `/company-logo.png` URL).
+Because an API may need to serve static assets, every new Strapi project includes by default a folder named `/public`. Any file located in this directory is accessible if the request's path doesn't match any other defined route and if it matches a public file name (e.g. an image named `company-logo.png` in `/public/` is accessible through `/company-logo.png` URL).
 
 :::tip
 `index.html` files are served if the request corresponds to a folder name (`/pictures` url will try to serve `public/pictures/index.html` file).
