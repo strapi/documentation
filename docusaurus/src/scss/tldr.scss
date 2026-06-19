@@ -16,7 +16,9 @@
     margin: 0;
 
     strong {
-      display: none;
+      display: inline;
+      color: var(--strapi-fg-1);
+      font-weight: 600;
     }
 
     p {
@@ -25,7 +27,8 @@
   }
 
   i.strapi-icons {
-    display: none;
+    color: var(--strapi-accent, #4945FF);
+    margin-right: 4px;
   }
 }
 
