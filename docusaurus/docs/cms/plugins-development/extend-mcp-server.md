@@ -35,31 +35,29 @@ const { z } = require('@strapi/utils');
 
 module.exports = {
   register({ strapi }) {
-    if (strapi.ai.mcp.isEnabled()) {
-      strapi.ai.mcp.registerTool({
-        name: 'my_custom_tool',
-        title: 'My Custom Tool',
-        description: 'A short description shown to the AI client.',
-        auth: {
-          // The session gate passes when the token satisfies ANY policy in the array.
-          policies: [{ action: 'plugin::my-plugin.my-action' }],
-        },
-        // resolveInputSchema and resolveOutputSchema are called per request,
-        // so they can narrow schemas based on the token's permissions.
-        resolveInputSchema: (context) =>
-          z.object({
-            message: z.string().describe('The message to echo.'),
-          }),
-        resolveOutputSchema: (context) =>
-          z.object({
-            result: z.string(),
-          }),
-        createHandler: (strapi, context) => async ({ args }) => ({
-          content: [{ type: 'text', text: args.message }],
-          structuredContent: { result: args.message },
+    strapi.ai.mcp.registerTool({
+      name: 'my_custom_tool',
+      title: 'My Custom Tool',
+      description: 'A short description shown to the AI client.',
+      auth: {
+        // The session gate passes when the token satisfies ANY policy in the array.
+        policies: [{ action: 'plugin::my-plugin.my-action' }],
+      },
+      // resolveInputSchema and resolveOutputSchema are called per request,
+      // so they can narrow schemas based on the token's permissions.
+      resolveInputSchema: (context) =>
+        z.object({
+          message: z.string().describe('The message to echo.'),
         }),
-      });
-    }
+      resolveOutputSchema: (context) =>
+        z.object({
+          result: z.string(),
+        }),
+      createHandler: (strapi, context) => async ({ args }) => ({
+        content: [{ type: 'text', text: args.message }],
+        structuredContent: { result: args.message },
+      }),
+    });
   },
 };
 ```
@@ -72,31 +70,29 @@ import { z } from '@strapi/utils';
 
 export default {
   register({ strapi }) {
-    if (strapi.ai.mcp.isEnabled()) {
-      strapi.ai.mcp.registerTool({
-        name: 'my_custom_tool',
-        title: 'My Custom Tool',
-        description: 'A short description shown to the AI client.',
-        auth: {
-          // The session gate passes when the token satisfies ANY policy in the array.
-          policies: [{ action: 'plugin::my-plugin.my-action' }],
-        },
-        // resolveInputSchema and resolveOutputSchema are called per request,
-        // so they can narrow schemas based on the token's permissions.
-        resolveInputSchema: (context) =>
-          z.object({
-            message: z.string().describe('The message to echo.'),
-          }),
-        resolveOutputSchema: (context) =>
-          z.object({
-            result: z.string(),
-          }),
-        createHandler: (strapi, context) => async ({ args }) => ({
-          content: [{ type: 'text', text: args.message }],
-          structuredContent: { result: args.message },
+    strapi.ai.mcp.registerTool({
+      name: 'my_custom_tool',
+      title: 'My Custom Tool',
+      description: 'A short description shown to the AI client.',
+      auth: {
+        // The session gate passes when the token satisfies ANY policy in the array.
+        policies: [{ action: 'plugin::my-plugin.my-action' }],
+      },
+      // resolveInputSchema and resolveOutputSchema are called per request,
+      // so they can narrow schemas based on the token's permissions.
+      resolveInputSchema: (context) =>
+        z.object({
+          message: z.string().describe('The message to echo.'),
         }),
-      });
-    }
+      resolveOutputSchema: (context) =>
+        z.object({
+          result: z.string(),
+        }),
+      createHandler: (strapi, context) => async ({ args }) => ({
+        content: [{ type: 'text', text: args.message }],
+        structuredContent: { result: args.message },
+      }),
+    });
   },
 };
 ```
@@ -158,9 +154,7 @@ import { greet } from './mcp/greet';
 
 export default {
   register({ strapi }) {
-    if (strapi.ai.mcp.isEnabled()) {
-      strapi.ai.mcp.registerTool(greet);
-    }
+    strapi.ai.mcp.registerTool(greet);
   },
 };
 ```
