@@ -273,7 +273,7 @@ export default function PageHome() {
                   <i className="ph ph-puzzle-piece" />
                 </div>
                 <div className={styles.showcaseCardStat}>
-                  <AnimatedCounter target={274} suffix="+" />
+                  <AnimatedCounter target={300} suffix="+" />
                 </div>
                 <div className={styles.showcaseCardStatLabel}>plugins on the Marketplace</div>
                 <div className={styles.showcaseCardDesc}>
@@ -323,7 +323,7 @@ export default function PageHome() {
                   <i className="ph ph-github-logo" />
                 </div>
                 <div className={styles.showcaseCardStat}>
-                  <AnimatedCounter target={71} suffix="k+" />
+                  <AnimatedCounter target={72} suffix="k+" />
                 </div>
                 <div className={styles.showcaseCardStatLabel}>stars on GitHub</div>
                 <div className={styles.showcaseCardDesc}>
