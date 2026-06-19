@@ -17,6 +17,7 @@ tags:
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
+import Endpoint from '@site/src/components/ApiReference/Endpoint';
 
 # REST API: `status`
 
@@ -41,69 +42,61 @@ Since published versions are returned by default, passing no status parameter is
 
 <br /><br />
 
-<ApiCall>
-<Request title="Get draft versions of restaurants">
-
-`GET /api/articles?status=draft`
-
-</Request>
-
-<details>
-<summary>JavaScript query (built with the qs library):</summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
+<Endpoint
+  id="get-draft-versions"
+  method="GET"
+  path="/api/articles?status=draft"
+  title="Get draft versions of restaurants"
+  description="Returns draft versions of documents by passing the status=draft query parameter."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const qs = require('qs');
 const query = qs.stringify({
   status: 'draft',
 }, {
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(`/api/articles?${query}`);
-```
-
-</details>
-
-<Response title="Example response">
-
-```json {21}
-{
-  "data": [
-    // …
-    {
-      "id": 5,
-      "documentId": "znrlzntu9ei5onjvwfaalu2v",
-      "Name": "Biscotte Restaurant",
-      "Description": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "text": "This is the draft version."
-            }
-          ]
-        }
-      ],
-      "createdAt": "2024-03-06T13:43:30.172Z",
-      "updatedAt": "2024-03-06T21:38:46.353Z",
-      "publishedAt": null,
-      "locale": "en"
+await request(\`/api/articles?\${query}\`);`,
     },
-    // …
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
-</Response>
-</ApiCall>
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: JSON.stringify({
+        data: [
+          {
+            id: 5,
+            documentId: "znrlzntu9ei5onjvwfaalu2v",
+            Name: "Biscotte Restaurant",
+            Description: [
+              {
+                type: "paragraph",
+                children: [
+                  {
+                    type: "text",
+                    text: "This is the draft version."
+                  }
+                ]
+              }
+            ],
+            createdAt: "2024-03-06T13:43:30.172Z",
+            updatedAt: "2024-03-06T21:38:46.353Z",
+            publishedAt: null,
+            locale: "en"
+          }
+        ],
+        meta: {
+          pagination: {
+            page: 1,
+            pageSize: 25,
+            pageCount: 1,
+            total: 4
+          }
+        }
+      }, null, 2),
+    },
+  ]}
+/>
