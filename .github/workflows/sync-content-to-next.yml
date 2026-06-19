@@ -11,6 +11,9 @@ on:
   pull_request:
     types: [labeled, closed]
 
+env:
+  TARGET_BRANCH: repo/redesign-v7-cutover
+
 jobs:
   # Job for debugging purposes
   debug-event:
@@ -91,17 +94,17 @@ jobs:
           PR_TITLE="${{ github.event.pull_request.title }}"
           SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
           SOURCE_REPO="${{ github.event.pull_request.head.repo.full_name }}"
-          TARGET_BRANCH="next-port-pr$PR_NUMBER"
-          
+          HEAD_BRANCH="next-port-pr$PR_NUMBER"
+
           echo "Source Branch: $SOURCE_BRANCH"
           echo "Source Repo: $SOURCE_REPO"
-          echo "Target Branch: $TARGET_BRANCH"
-          
-          # Fetch next branch
-          git fetch origin next
-          
-          # Create new branch based on next
-          git checkout -b $TARGET_BRANCH origin/next
+          echo "Head Branch: $HEAD_BRANCH"
+
+          # Fetch sync target branch
+          git fetch origin "$TARGET_BRANCH"
+
+          # Create new branch based on the sync target branch
+          git checkout -b $HEAD_BRANCH "origin/$TARGET_BRANCH"
           
           # Fetch source branch
           if [ "$SOURCE_REPO" != "${{ github.repository }}" ]; then
@@ -162,15 +165,15 @@ jobs:
         run: |
           # Commit changes - force commit even if git thinks there are no changes
           git add .
-          git commit --allow-empty -m "Port PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }} to next branch"
+          git commit --allow-empty -m "Port PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }} to the redesign branch"
           
           # Push branch
           git push origin next-port-pr${{ github.event.pull_request.number }}
           
           # Create PR with a special tag in the body to identify it later
-          PR_CMD="gh pr create --base next --head next-port-pr${{ github.event.pull_request.number }} \
+          PR_CMD="gh pr create --base \"$TARGET_BRANCH\" --head next-port-pr${{ github.event.pull_request.number }} \
             --title \"${{ steps.load-config.outputs.title_prefix }} ${{ github.event.pull_request.title }}\" \
-            --body \"Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp - port to docs-next' label.\n\n<!-- SYNC_PR_MARKER -->\" \
+            --body \"Automatic port of PR #${{ github.event.pull_request.number }} to the redesign branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp - port to docs-next' label.\n\n<!-- SYNC_PR_MARKER -->\" \
             --assignee ${{ steps.load-config.outputs.assignee }}"
           
           # Add labels if configured
@@ -238,7 +241,7 @@ jobs:
           PR_NUMBER="${{ github.event.pull_request.number }}"
           
           # Check if there's an existing PR 
-          EXISTING_PR_NUMBER=$(gh pr list --base next --head "next-port-pr$PR_NUMBER" --state open --json number --jq '.[0].number')
+          EXISTING_PR_NUMBER=$(gh pr list --base "$TARGET_BRANCH" --head "next-port-pr$PR_NUMBER" --state open --json number --jq '.[0].number')
           
           if [ -n "$EXISTING_PR_NUMBER" ]; then
             echo "Existing PR found: #$EXISTING_PR_NUMBER"
@@ -287,15 +290,15 @@ jobs:
             echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
           fi
           
-          # Create branch from next
-          git fetch origin next
-          
+          # Create branch from the sync target branch
+          git fetch origin "$TARGET_BRANCH"
+
           if [ "${{ steps.check-existing.outputs.strategy }}" = "update" ]; then
             echo "Checking out existing branch $BRANCH_NAME"
-            git checkout $BRANCH_NAME || git checkout -b $BRANCH_NAME origin/next
+            git checkout $BRANCH_NAME || git checkout -b $BRANCH_NAME "origin/$TARGET_BRANCH"
           else
             echo "Creating new branch $BRANCH_NAME"
-            git checkout -b $BRANCH_NAME origin/next
+            git checkout -b $BRANCH_NAME "origin/$TARGET_BRANCH"
           fi
           
           # Try to cherry-pick
@@ -329,16 +332,16 @@ jobs:
           PR_TITLE="${{ github.event.pull_request.title }}"
           
           # Create the new PR first
-          PR_CMD="gh pr create --base next --head $BRANCH_NAME \
+          PR_CMD="gh pr create --base \"$TARGET_BRANCH\" --head $BRANCH_NAME \
             --title \"${{ steps.load-config.outputs.title_prefix }} $PR_TITLE\" \
-            --body \"Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch. This PR contains the final state of the changes as they were merged to main.\" \
+            --body \"Synchronization of merged PR #${{ github.event.pull_request.number }} to the redesign branch. This PR contains the final state of the changes as they were merged to main.\" \
             --assignee ${{ steps.load-config.outputs.assignee }}"
-          
+
           # Add labels if configured
           if [ -n "${{ steps.load-config.outputs.labels }}" ]; then
             PR_CMD="$PR_CMD --label ${{ steps.load-config.outputs.labels }}"
           fi
-          
+
           NEW_PR=$(eval "$PR_CMD --json number --jq '.number'")
             
           # Now close the existing PR with a reference to the new one
@@ -352,10 +355,10 @@ jobs:
           BRANCH_NAME="${{ steps.create-branch.outputs.branch_name }}"
           PR_TITLE="${{ github.event.pull_request.title }}"
           
-          # Create new PR 
-          PR_CMD="gh pr create --base next --head $BRANCH_NAME \
+          # Create new PR
+          PR_CMD="gh pr create --base \"$TARGET_BRANCH\" --head $BRANCH_NAME \
             --title \"${{ steps.load-config.outputs.title_prefix }} $PR_TITLE\" \
-            --body \"Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch. This PR contains the final state of the changes as they were merged to main.\" \
+            --body \"Synchronization of merged PR #${{ github.event.pull_request.number }} to the redesign branch. This PR contains the final state of the changes as they were merged to main.\" \
             --assignee ${{ steps.load-config.outputs.assignee }}"
           
           # Add labels if configured
@@ -430,18 +433,18 @@ jobs:
             exit 0
           fi
           
-          # Create branch from next
+          # Create branch from the sync target branch
           BRANCH_NAME="sync-push-$(date +%Y%m%d-%H%M%S)"
-          
-          git fetch origin next
-          git checkout -b $BRANCH_NAME origin/next
+
+          git fetch origin "$TARGET_BRANCH"
+          git checkout -b $BRANCH_NAME "origin/$TARGET_BRANCH"
           
           # Try to cherry-pick
           if git cherry-pick $COMMIT_HASH; then
             git push origin $BRANCH_NAME
             
             # Create PR
-            PR_CMD="gh pr create --base next --head $BRANCH_NAME \
+            PR_CMD="gh pr create --base \"$TARGET_BRANCH\" --head $BRANCH_NAME \
               --title \"${{ steps.load-config.outputs.title_prefix }} $COMMIT_MSG\" \
               --body \"Automatic sync of commit from main\" \
               --assignee ${{ steps.load-config.outputs.assignee }}"
