@@ -8,3 +8,7 @@ docs/superpowers/
 # Inki plugin run logs, in case a user points --log-dir at a local .inki/ folder.
 # By default logs go to ~/.inki/logs/ (outside any repo); this is a safety net.
 .inki/
+
+# Playwright MCP local artifacts (snapshots, screenshots, console logs) created
+# during local visual QA. Never tracked.
+.playwright-mcp/
