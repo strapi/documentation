@@ -97,17 +97,11 @@ const sidebars = {
           type: 'doc',
           label: 'MCP server',
           id: 'cms/features/strapi-mcp-server',
-          customProps: {
-            new: true,
-          },
         },
         {
           type: 'doc',
           label: 'Preview',
           id: 'cms/features/preview',
-          customProps: {
-            new: false,
-          },
         },
         {
           type: 'doc',
@@ -133,9 +127,6 @@ const sidebars = {
           type: 'doc',
           label: 'Users & Permissions',
           id: 'cms/features/users-permissions',
-          customProps: {
-            updated: true,
-          },
         },
         {
           type: 'category',
@@ -171,17 +162,11 @@ const sidebars = {
           type: 'doc',
           label: 'Strapi AI for content managers',
           id: 'cms/ai/for-content-managers',
-          customProps: {
-            updated: true,
-          },
         },
         {
           type: 'doc',
           label: 'AI for developers and docs',
           id: 'cms/ai/for-developers',
-          customProps: {
-            updated: true,
-          },
         },
         {
           type: 'doc',
@@ -226,9 +211,6 @@ const sidebars = {
           type: 'doc',
           label: 'Strapi Client',
           id: 'cms/api/client',
-          customProps: {
-            new: false,
-          },
         },
         'cms/api/openapi',
         'cms/api/graphql',
@@ -269,9 +251,6 @@ const sidebars = {
           type: 'category',
           label: 'Admin panel',
           collapsed: true,
-          customProps: {
-            updated: false,
-          },
           items: [
             {
               type: 'link',
@@ -322,9 +301,6 @@ const sidebars = {
               type: 'link',
               label: 'Strapi AI',
               href: '/cms/configurations/admin-panel#strapi-ai',
-              customProps: {
-                new: true,
-              },
             },
             {
               type: 'link',
@@ -342,9 +318,6 @@ const sidebars = {
         {
           type: 'doc',
           id: 'cms/configurations/cron',
-          customProps: {
-            updated: false,
-          },
         },
         {
           type: 'category',
@@ -417,10 +390,6 @@ const sidebars = {
           type: 'category',
           label: 'Admin panel customization',
           collapsed: true,
-          customProps: {
-            updated: false,
-            // tooltip: 'This section has been reorganized, see details below.',
-          },
           items: [
             // {
             //   type: 'html',
@@ -462,9 +431,6 @@ const sidebars = {
           type: 'doc',
           label: 'Homepage customization',
           id: 'cms/admin-panel-customization/homepage',
-          customProps: {
-            new: false,
-          },
         },
         'cms/error-handling',
         'cms/strapi-utils',
@@ -540,9 +506,6 @@ const sidebars = {
           type: 'category',
           label: 'Admin Panel API',
           collapsed: true,
-          customProps: {
-            new: true,
-          },
           items: [
             'cms/plugins-development/admin-panel-api',
             'cms/plugins-development/admin-navigation-settings',
@@ -555,9 +518,6 @@ const sidebars = {
               type: 'doc',
               id: 'cms/plugins-development/admin-fetch-client',
               label: 'Fetch client',
-              customProps: {
-                new: true,
-              },
             },
           ],
         },
@@ -565,9 +525,6 @@ const sidebars = {
           type: 'category',
           label: 'Server API',
           collapsed: true,
-          customProps: {
-            new: true,
-          },
           items: [
             'cms/plugins-development/server-api',
             'cms/plugins-development/server-lifecycle',
@@ -630,16 +587,10 @@ const sidebars = {
           type: 'doc',
           label: 'Cloud fundamentals',
           id: 'cloud/getting-started/cloud-fundamentals',
-          customProps: {
-            new: false,
-          },
         },
         {
           type: 'category',
           label: 'Project deployment',
-          customProps: {
-            updated: false,
-          },
           items: [
             {
               type: 'doc',
@@ -648,25 +599,16 @@ const sidebars = {
             {
               type: 'doc',
               id: 'cloud/getting-started/deployment',
-              customProps: {
-                updated: false,
-              },
             },
             {
               type: 'doc',
               id: 'cloud/getting-started/deployment-cli',
-              customProps: {
-                new: false,
-              },
             },
           ],
         },
         {
           type: 'doc',
           id: 'cloud/getting-started/usage-billing',
-          customProps: {
-            updated: false,
-          },
         },
         // 'cloud/getting-started/caching',
         {
@@ -688,9 +630,6 @@ const sidebars = {
           type: 'doc',
           label: 'Project settings',
           id: 'cloud/projects/settings',
-          customProps: {
-            updated: true,
-          },
         },
         'cloud/projects/collaboration',
         'cloud/projects/logs',
@@ -716,9 +655,6 @@ const sidebars = {
           type: 'doc',
           id: 'cloud/account/account-billing',
           label: 'Account billing & invoices',
-          customProps: {
-            updated: false,
-          },
         },
       ],
     },
@@ -733,9 +669,6 @@ const sidebars = {
           type: 'doc',
           id: 'cloud/cli/cloud-cli',
           label: 'Strapi Cloud CLI',
-          customProps: {
-            new: false,
-          },
         },
       ],
     },
@@ -751,33 +684,21 @@ const sidebars = {
           type: 'doc',
           id: 'cloud/advanced/email',
           label: 'Email provider for Cloud',
-          customProps: {
-            new: false,
-          },
         },
         {
           type: 'doc',
           id: 'cloud/advanced/upload',
           label: 'Upload provider for Cloud',
-          customProps: {
-            new: false,
-          },
         },
         {
           type: 'doc',
           id: 'cloud/advanced/upload-size-limits',
           label: 'Upload size limits for Cloud',
-          customProps: {
-            new: true,
-          },
         },
         {
           type: 'doc',
           id: 'cloud/advanced/middlewares',
           label: 'Middleware configuration for Cloud',
-          customProps: {
-            new: false,
-          },
         },
       ],
     },
