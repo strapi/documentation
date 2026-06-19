@@ -141,8 +141,8 @@ The following table lists populate use cases with example syntax. Each row links
 | Populate some relations, several levels deep | `populate[root-relation-name][populate][0]=nested-relation-name`| [Populate several levels deep for specific relations](/cms/api/rest/guides/understanding-populate#populate-several-levels-deep-for-specific-relations) |
 | Populate a component | `populate[0]=component-name`| [Populate components](/cms/api/rest/guides/understanding-populate#populate-components) |
 | Populate a component and one of its nested components | `populate[0]=component-name&populate[1]=component-name.nested-component-name`| [Populate components](/cms/api/rest/guides/understanding-populate#populate-components) |
-| Populate a dynamic zone (only its first-level elements) | `populate[0]=dynamic-zone-name`| [Populate dynamic zones](/cms/api/rest/guides/understanding-populate#populate-dynamic-zones) |
-| Populate a dynamic zone and its nested elements and relations, using a precisely defined, detailed population strategy | `populate[dynamic-zone-name][on][component-category.component-name][populate][relation-name][populate][0]=field-name`| [Populate dynamic zones](/cms/api/rest/guides/understanding-populate#populate-dynamic-zones) |
+| Populate a dynamic zone (only its first-level scalar fields) | `populate[0]=dynamic-zone-name`| [Populate dynamic zones](/cms/api/rest/guides/understanding-populate#populate-dynamic-zones) |
+| Populate a dynamic zone, including component-specific fields, nested components, and relations | `populate[dynamic-zone-name][on][component-category.component-name][populate][relation-name][populate][0]=field-name`| [Populate dynamic zones](/cms/api/rest/guides/understanding-populate#populate-dynamic-zones) |
 
 :::tip
 To build complex queries with multiple-level population, use the [interactive query builder](/cms/api/rest/interactive-query-builder) tool. For more detailed explanations and examples, see the [REST API guides](/cms/api/rest/guides/intro).
@@ -157,6 +157,8 @@ Top-level pagination parameters (e.g., `pagination[page]` and `pagination[pageSi
 :::
 
 #### Populate with field selection
+
+`fields` and `populate` can be combined.
 
 <Endpoint
   id="populate-with-field-selection"
@@ -215,6 +217,8 @@ await request(\`/api/articles?\${query}\`);`,
 />
 
 #### Populate with filtering
+
+`filters` and `populate` can be combined.
 
 <Endpoint
   id="populate-with-filtering"
@@ -277,3 +281,11 @@ await request(\`/api/articles?\${query}\`);`,
     },
   ]}
 />
+
+:::note
+For many-to-many and other join-table relations, an explicit `sort` within a `populate` object overrides the default connect order. Omit `sort` to preserve the connect order (the order in which entries were associated).
+:::
+
+:::tip Performance tip
+In production, always use explicit population instead of wildcards like `populate=*`. Limit population depth to 2-3 levels and consider centralizing population logic in route middlewares. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog.
+:::

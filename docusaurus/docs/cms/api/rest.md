@@ -21,11 +21,15 @@ The REST API allows accessing the [content-types](/cms/backend-customization/mod
 This section of the documentation is for the REST API reference for content-types. We also have [guides](/cms/api/rest/guides/intro) available for specific use cases.
 
 :::prerequisites
-All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions. See the [Quick Start Guide](/cms/quick-start), the user guide for the [Users & Permissions feature](/cms/features/users-permissions#roles), and [API tokens configuration documentation](/cms/features/api-tokens) for more details.
+All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions. See the [Quick Start Guide](/cms/quick-start#step-4-set-roles--permissions), the user guide for the [Users & Permissions feature](/cms/features/users-permissions#roles), and [API tokens configuration documentation](/cms/features/api-tokens) for more details.
 :::
 
 :::note
 By default, the REST API responses only include top-level fields and does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/cms/api/rest/populate-select) to populate specific fields. Ensure that the find permission is given to the field(s) for the relation(s) you populate.
+:::
+
+:::tip Performance best practices
+For production applications, be intentional about data fetching: use explicit population, limit population depth, and centralize population logic in route middlewares. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog for a comprehensive guide.
 :::
 
 :::strapi Strapi Client
@@ -279,8 +283,14 @@ const data = await response.json();`,
 
 ### Create a document {#create}
 
+If the [Internationalization (i18n) plugin](/cms/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/cms/api/rest/locale#rest-delete).
+
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations.md) for more details).
+:::
+
+:::info Dynamic zones
+When you POST a document, each object inside a dynamic zone array must include `__component` with that variant's UID (for example `shared.slider`). Put `__component` on the object that represents one row in the dynamic zone. Nested fields inside that object should mirror the JSON you get back when the same document is fetched with `populate` so you do not place `__component` on inner objects unless the schema treats that level as another discriminated structure.
 :::
 
 <Endpoint
