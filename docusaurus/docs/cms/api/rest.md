@@ -1,4 +1,4 @@
---- 
+---
 title: REST API reference
 description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
 displayed_sidebar: cmsSidebar
@@ -12,6 +12,8 @@ tags:
 - singular API ID
 ---
 
+import Endpoint from '@site/src/components/ApiReference/Endpoint';
+
 # REST API reference
 
 The REST API allows accessing the [content-types](/cms/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/cms/api/rest/parameters) can be used when querying API endpoints to refine the results.
@@ -19,15 +21,11 @@ The REST API allows accessing the [content-types](/cms/backend-customization/mod
 This section of the documentation is for the REST API reference for content-types. We also have [guides](/cms/api/rest/guides/intro) available for specific use cases.
 
 :::prerequisites
-All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions. See the [Quick Start Guide](/cms/quick-start#step-4-set-roles--permissions), the user guide for the [Users & Permissions feature](/cms/features/users-permissions#roles), and [API tokens configuration documentation](/cms/features/api-tokens) for more details.
+All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions. See the [Quick Start Guide](/cms/quick-start), the user guide for the [Users & Permissions feature](/cms/features/users-permissions#roles), and [API tokens configuration documentation](/cms/features/api-tokens) for more details.
 :::
 
 :::note
 By default, the REST API responses only include top-level fields and does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/cms/api/rest/populate-select) to populate specific fields. Ensure that the find permission is given to the field(s) for the relation(s) you populate.
-:::
-
-:::tip Performance best practices
-For production applications, be intentional about data fetching: use explicit population, limit population depth, and centralize population logic in route middlewares. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog for a comprehensive guide.
 :::
 
 :::strapi Strapi Client
@@ -39,7 +37,6 @@ The [Strapi Client](/cms/api/client) library simplifies interactions with your S
 For each Content-Type, the following endpoints are automatically generated:
 
 <details>
-
 <summary>Plural API ID vs. Singular API ID:</summary>
 
 In the following tables:
@@ -63,66 +60,27 @@ sources={{
 </details>
 
 <Tabs groupId="collection-single">
-
 <TabItem value="collection" label="Collection type">
 
 | Method   | URL                             | Description                           |
 | -------- | ------------------------------- | ------------------------------------- |
-| `GET`    | `/api/:pluralApiId`             | [Get a list of document](#get-all) |
-| `POST`   | `/api/:pluralApiId`             | [Create a document](#create)   |
-| `GET`    | `/api/:pluralApiId/:documentId` | [Get a document](#get)         |
-| `PUT`    | `/api/:pluralApiId/:documentId` | [Update a document](#update)   |
-| `DELETE` | `/api/:pluralApiId/:documentId` | [Delete a document](#delete)   |
+| `GET`    | `/api/:pluralApiId`             | [Get a list of documents](#get-all)   |
+| `POST`   | `/api/:pluralApiId`             | [Create a document](#create)          |
+| `GET`    | `/api/:pluralApiId/:documentId` | [Get a document](#get)                |
+| `PUT`    | `/api/:pluralApiId/:documentId` | [Update a document](#update)          |
+| `DELETE` | `/api/:pluralApiId/:documentId` | [Delete a document](#delete)          |
 
 </TabItem>
-
 <TabItem value="single" label="Single type">
 
 | Method   | URL                   | Description                                |
 | -------- | --------------------- | ------------------------------------------ |
-| `GET`    | `/api/:singularApiId` | [Get a document](#get)              |
-| `PUT`    | `/api/:singularApiId` | [Update/Create a document](#update) |
-| `DELETE` | `/api/:singularApiId` | [Delete a document](#delete)        |
-
-</TabItem>
-
-</Tabs>
-
-<details>
-
-<summary>Real-world examples of endpoints:</summary>
-
-The following endpoint examples are taken from the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application.
-
-<Tabs groupId="collection-single">
-
-<TabItem value="collection" label="Collection type">
-
-`Restaurant` **Content type**
-
-| Method | URL                      | Description               |
-| ------ | ------------------------ | ------------------------- |
-| GET    | `/api/restaurants`       | Get a list of restaurants |
-| POST   | `/api/restaurants`       | Create a restaurant       |
-| GET    | `/api/restaurants/:documentId`   | Get a specific restaurant |
-| DELETE | `/api/restaurants/:documentId`   | Delete a restaurant       |
-| PUT    | `/api/restaurants/:documentId`   | Update a restaurant       |
-
-</TabItem>
-
-<TabItem value="single" label="Single type">
-
-`Homepage` **Content type**
-
-| Method | URL             | Description                        |
-| ------ | --------------- | ---------------------------------- |
-| GET    | `/api/homepage` | Get the homepage content           |
-| PUT    | `/api/homepage` | Update/create the homepage content |
-| DELETE | `/api/homepage` | Delete the homepage content        |
+| `GET`    | `/api/:singularApiId` | [Get a document](#get)                     |
+| `PUT`    | `/api/:singularApiId` | [Update/Create a document](#update)        |
+| `DELETE` | `/api/:singularApiId` | [Delete a document](#delete)               |
 
 </TabItem>
 </Tabs>
-</details>
 
 :::strapi Upload API
 The Upload package (which powers the [Media Library feature](/cms/features/media-library)) has a specific API accessible through its [`/api/upload` endpoints](/cms/api/rest/upload).
@@ -162,199 +120,253 @@ Some plugins (including Users & Permissions and Upload) may not follow this resp
 
 ### Get documents {#get-all}
 
-Returns documents matching the query filters (see [API parameters](/cms/api/rest/parameters) documentation).
-
 :::tip Tip: Strapi 5 vs. Strapi 4
 In Strapi 5 the response format has been flattened, and attributes are directly accessible from the `data` object instead of being nested in `data.attributes`.
 
 You can pass an optional header while you're migrating to Strapi 5 (see the [related breaking change](/cms/migration/v4-to-v5/breaking-changes/new-response-format)).
 :::
 
-<ApiCall>
-
-<Request>
-
-`GET http://localhost:1337/api/restaurants`
-
-</Request>
-
-<Response>
-
-```json
-{
-  "data": [
+<Endpoint
+  id="get-all-endpoint"
+  method="GET"
+  path="/api/:pluralApiId"
+  title="List documents"
+  description="Returns a paginated list of documents. Supports filtering, sorting, field selection, and relation population."
+  paramTitle="Query Parameters"
+  params={[
+    { name: 'sort', type: 'string | string[]', required: false, description: 'Sort by field. Use <code>field:asc</code> or <code>field:desc</code>' },
+    { name: 'filters', type: 'object', required: false, description: 'Filter with operators: <code>$eq</code>, <code>$contains</code>, <code>$gt</code>, <code>$lt</code>. See <a href="/cms/api/rest/filters">filtering</a>.' },
+    { name: 'populate', type: 'string | object', required: false, description: 'Relations and components to include. Use <code>*</code> for all. See <a href="/cms/api/rest/populate-select">populate</a>.' },
+    { name: 'fields', type: 'string[]', required: false, description: 'Select specific fields to return. See <a href="/cms/api/rest/populate-select#field-selection">field selection</a>.' },
+    { name: 'pagination[page]', type: 'integer', required: false, description: 'Page number. Default: <code>1</code>' },
+    { name: 'pagination[pageSize]', type: 'integer', required: false, description: 'Items per page. Default <code>25</code>, max <code>100</code>' },
+    { name: 'locale', type: 'string', required: false, description: 'Locale of the documents to fetch. See <a href="/cms/api/rest/locale">locale</a>.' },
+    { name: 'status', type: 'string', required: false, description: '<code>published</code> or <code>draft</code>. See <a href="/cms/api/rest/status">status</a>.' },
+  ]}
+  codePath="/api/restaurants"
+  codePathHighlights={['restaurants']}
+  codeTabs={[
     {
-      "id": 2,
-      "documentId": "hgv1vny5cebq2l3czil1rpb3",
-      "Name": "BMK Paris Bamako",
-      "Description": null,
-      "createdAt": "2024-03-06T13:42:05.098Z",
-      "updatedAt": "2024-03-06T13:42:05.098Z",
-      "publishedAt": "2024-03-06T13:42:05.103Z",
-      "locale": "en"
+      label: 'cURL',
+      code: `curl 'http://localhost:1337/api/restaurants' \\
+  -H 'Authorization: Bearer <token>'`,
     },
     {
-      "id": 4,
-      "documentId": "znrlzntu9ei5onjvwfaalu2v",
-      "Name": "Biscotte Restaurant",
-      "Description": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
-            }
-          ]
-        }
-      ],
-      "createdAt": "2024-03-06T13:43:30.172Z",
-      "updatedAt": "2024-03-06T13:43:30.172Z",
-      "publishedAt": "2024-03-06T13:43:30.175Z",
-      "locale": "en"
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 2
-    }
+      label: 'JavaScript',
+      code: `const response = await fetch(
+  'http://localhost:1337/api/restaurants',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
   }
-}
-```
-
-</Response>
-
-</ApiCall>
+);
+const data = await response.json();`,
+    },
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      time: '23ms',
+      body: JSON.stringify({
+        data: [
+          {
+            id: 2,
+            documentId: "hgv1vny5cebq2l3czil1rpb3",
+            Name: "BMK Paris Bamako",
+            Description: null,
+            createdAt: "2024-03-06T13:42:05.098Z",
+            updatedAt: "2024-03-06T13:42:05.098Z",
+            publishedAt: "2024-03-06T13:42:05.103Z",
+            locale: "en"
+          },
+          {
+            id: 4,
+            documentId: "znrlzntu9ei5onjvwfaalu2v",
+            Name: "Biscotte Restaurant",
+            Description: [
+              {
+                type: "paragraph",
+                children: [{ type: "text", text: "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers." }]
+              }
+            ],
+            createdAt: "2024-03-06T13:43:30.172Z",
+            updatedAt: "2024-03-06T13:43:30.172Z",
+            publishedAt: "2024-03-06T13:43:30.175Z",
+            locale: "en"
+          }
+        ],
+        meta: {
+          pagination: { page: 1, pageSize: 25, pageCount: 1, total: 2 }
+        }
+      }, null, 2),
+    },
+  ]}
+/>
 
 ### Get a document {#get}
-
-Returns a document by `documentId`.
 
 :::strapi Strapi 5 vs. Strapi v4
 In Strapi 5, a specific document is reached by its `documentId`.
 :::
 
-<ApiCall>
-
-<Request title="Example request">
-
-`GET http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v`
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
-  "data": {
-    "id": 6,
-    "documentId": "znrlzntu9ei5onjvwfaalu2v",
-    "Name": "Biscotte Restaurant",
-    "Description": [
-      {
-        "type": "paragraph",
-        "children": [
-          {
-            "type": "text",
-            "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine bassics, such as 4 Formaggi or Calzone, and our original creations such as Do Luigi or Nduja."
-          }
-        ]
-      }
-    ],
-    "createdAt": "2024-02-27T10:19:04.953Z",
-    "updatedAt": "2024-03-05T15:52:05.591Z",
-    "publishedAt": "2024-03-05T15:52:05.600Z",
-    "locale": "en"
-  },
-  "meta": {}
-}
-
-```
-
-</Response>
-
-</ApiCall>
+<Endpoint
+  id="get-endpoint"
+  method="GET"
+  path="/api/:pluralApiId/:documentId"
+  title="Get a document"
+  description="Returns a single document by its documentId. Supports field selection and relation population."
+  paramTitle="Path Parameters"
+  params={[
+    { name: 'pluralApiId', type: 'string', required: true, description: 'Plural API ID of the content-type (e.g. <code>restaurants</code>)' },
+    { name: 'documentId', type: 'string', required: true, description: 'Unique document identifier' },
+  ]}
+  codePath="/api/restaurants/znrlzntu9ei5onjvwfaalu2v"
+  codePathHighlights={['restaurants', 'znrlzntu9ei5onjvwfaalu2v']}
+  codeTabs={[
+    {
+      label: 'cURL',
+      code: `curl 'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v' \\
+  -H 'Authorization: Bearer <token>'`,
+    },
+    {
+      label: 'JavaScript',
+      code: `const response = await fetch(
+  'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();`,
+    },
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      time: '12ms',
+      body: JSON.stringify({
+        data: {
+          id: 6,
+          documentId: "znrlzntu9ei5onjvwfaalu2v",
+          Name: "Biscotte Restaurant",
+          Description: [
+            {
+              type: "paragraph",
+              children: [{ type: "text", text: "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products." }]
+            }
+          ],
+          createdAt: "2024-02-27T10:19:04.953Z",
+          updatedAt: "2024-03-05T15:52:05.591Z",
+          publishedAt: "2024-03-05T15:52:05.600Z",
+          locale: "en"
+        },
+        meta: {}
+      }, null, 2),
+    },
+    {
+      status: 404,
+      statusText: 'Not Found',
+      body: JSON.stringify({
+        error: { status: 404, name: 'NotFoundError', message: 'Document not found' }
+      }, null, 2),
+    },
+  ]}
+/>
 
 ### Create a document {#create}
-
-Creates a document and returns its value.
-
-If the [Internationalization (i18n) plugin](/cms/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/cms/api/rest/locale#rest-delete).
 
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations.md) for more details).
 :::
 
-:::info Dynamic zones
-When you POST a document, each object inside a dynamic zone array must include `__component` with that variant's UID (for example `shared.slider`). Put `__component` on the object that represents one row in the dynamic zone. Nested fields inside that object should mirror the JSON you get back when the same document is fetched with `populate` so you do not place `__component` on inner objects unless the schema treats that level as another discriminated structure.
-:::
-
-<ApiCall>
-
-<Request title="Example request">
-
-`POST http://localhost:1337/api/restaurants`
-
-```json
-{ 
-  "data": {
-    "Name": "Restaurant D",
-    "Description": [ // uses the "Rich text (blocks)" field type
-      {
-        "type": "paragraph",
-        "children": [
+<Endpoint
+  id="create-endpoint"
+  method="POST"
+  path="/api/:pluralApiId"
+  title="Create a document"
+  description="Creates a new document and returns it. Send field values inside a data object in the request body."
+  paramTitle="Body Parameters"
+  params={[
+    { name: 'data', type: 'object', required: true, description: 'Object containing the field values for the new document' },
+  ]}
+  codePath="/api/restaurants"
+  codePathHighlights={['restaurants']}
+  codeTabs={[
+    {
+      label: 'cURL',
+      code: `curl -X POST \\
+  'http://localhost:1337/api/restaurants' \\
+  -H 'Authorization: Bearer <token>' \\
+  -H 'Content-Type: application/json' \\
+  -d '{
+    "data": {
+      "Name": "Restaurant D",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [{ "type": "text", "text": "A very short description goes here." }]
+        }
+      ]
+    }
+  }'`,
+    },
+    {
+      label: 'JavaScript',
+      code: `const response = await fetch(
+  'http://localhost:1337/api/restaurants',
+  {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {
+        Name: 'Restaurant D',
+        Description: [
           {
-            "type": "text",
-            "text": "A very short description goes here."
-          }
-        ]
-      }
-    ]
+            type: 'paragraph',
+            children: [{ type: 'text', text: 'A very short description goes here.' }],
+          },
+        ],
+      },
+    }),
   }
-}
-```
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
-  "data": {
-    "documentId": "bw64dnu97i56nq85106yt4du",
-    "Name": "Restaurant D",
-    "Description": [
-      {
-        "type": "paragraph",
-        "children": [
-          {
-            "type": "text",
-            "text": "A very short description goes here."
-          }
-        ]
-      }
-    ],
-    "createdAt": "2024-03-05T16:44:47.689Z",
-    "updatedAt": "2024-03-05T16:44:47.689Z",
-    "publishedAt": "2024-03-05T16:44:47.687Z",
-    "locale": "en"
-  },
-  "meta": {}
-}
-```
-
-</Response>
-
-</ApiCall>
+);
+const data = await response.json();`,
+    },
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      time: '45ms',
+      body: JSON.stringify({
+        data: {
+          documentId: "bw64dnu97i56nq85106yt4du",
+          Name: "Restaurant D",
+          Description: [
+            {
+              type: "paragraph",
+              children: [{ type: "text", text: "A very short description goes here." }]
+            }
+          ],
+          createdAt: "2024-03-05T16:44:47.689Z",
+          updatedAt: "2024-03-05T16:44:47.689Z",
+          publishedAt: "2024-03-05T16:44:47.687Z",
+          locale: "en"
+        },
+        meta: {}
+      }, null, 2),
+    },
+  ]}
+/>
 
 ### Update a document {#update}
-
-Partially updates a document by `documentId` and returns its value.
-
-Send a `null` value to clear fields.
 
 :::note NOTES
 * Even with the [Internationalization (i18n) plugin](/cms/features/internationalization) installed, it's currently not possible to [update the locale of a document](/cms/api/rest/locale#rest-update).
@@ -365,77 +377,125 @@ Send a `null` value to clear fields.
 Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynamic-zones) must include `__component` with the target component's UID (for example `shared.media`). Strapi uses that field to pick the component schema when you create or update items in the zone; without it, writes can fail validation or return success without changing data. Use the UID shown in the Content-Type Builder for each component in the zone.
 :::
 
-<ApiCall>
-
-<Request title="Example request">
-
-`PUT http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3`
-
-```json
-{ 
-  "data": {
-    "Name": "BMK Paris Bamako", // we didn't change this field but still need to include it
-    "Description": [ // uses the "Rich text (blocks)" field type
-      {
-        "type": "paragraph",
-        "children": [
+<Endpoint
+  id="update-endpoint"
+  method="PUT"
+  path="/api/:pluralApiId/:documentId"
+  title="Update a document"
+  description="Partially updates a document by documentId and returns its value. Send a null value to clear fields."
+  paramTitle="Body Parameters"
+  params={[
+    { name: 'data', type: 'object', required: true, description: 'Object containing the field values to update' },
+  ]}
+  codePath="/api/restaurants/hgv1vny5cebq2l3czil1rpb3"
+  codePathHighlights={['restaurants', 'hgv1vny5cebq2l3czil1rpb3']}
+  codeTabs={[
+    {
+      label: 'cURL',
+      code: `curl -X PUT \\
+  'http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3' \\
+  -H 'Authorization: Bearer <token>' \\
+  -H 'Content-Type: application/json' \\
+  -d '{
+    "data": {
+      "Name": "BMK Paris Bamako",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [{ "type": "text", "text": "A very short description goes here." }]
+        }
+      ]
+    }
+  }'`,
+    },
+    {
+      label: 'JavaScript',
+      code: `const response = await fetch(
+  'http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3',
+  {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {
+        Name: 'BMK Paris Bamako',
+        Description: [
           {
-            "type": "text",
-            "text": "A very short description goes here."
-          }
-        ]
-      }
-    ]
+            type: 'paragraph',
+            children: [{ type: 'text', text: 'A very short description goes here.' }],
+          },
+        ],
+      },
+    }),
   }
-}
-```
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
-  "data": {
-    "id": 9,
-    "documentId": "hgv1vny5cebq2l3czil1rpb3",
-    "Name": "BMK Paris Bamako",
-    "Description": [
-      {
-        "type": "paragraph",
-        "children": [
-          {
-            "type": "text",
-            "text": "A very short description goes here."
-          }
-        ]
-      }
-    ],
-    "createdAt": "2024-03-06T13:42:05.098Z",
-    "updatedAt": "2024-03-06T14:16:56.883Z",
-    "publishedAt": "2024-03-06T14:16:56.895Z",
-    "locale": "en"
-  },
-  "meta": {}
-}
-```
-
-</Response>
-
-</ApiCall>
+);
+const data = await response.json();`,
+    },
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      time: '34ms',
+      body: JSON.stringify({
+        data: {
+          id: 9,
+          documentId: "hgv1vny5cebq2l3czil1rpb3",
+          Name: "BMK Paris Bamako",
+          Description: [
+            {
+              type: "paragraph",
+              children: [{ type: "text", text: "A very short description goes here." }]
+            }
+          ],
+          createdAt: "2024-03-06T13:42:05.098Z",
+          updatedAt: "2024-03-06T14:16:56.883Z",
+          publishedAt: "2024-03-06T14:16:56.895Z",
+          locale: "en"
+        },
+        meta: {}
+      }, null, 2),
+    },
+  ]}
+/>
 
 ### Delete a document {#delete}
 
-Deletes a document.
-
-`DELETE` requests only send a 204 HTTP status code on success and do not return any data in the response body.
-
-<ApiCall>
-
-<Request title="Example request">
-
-`DELETE http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du`
-
-</Request>
-
-</ApiCall>
+<Endpoint
+  id="delete-endpoint"
+  method="DELETE"
+  path="/api/:pluralApiId/:documentId"
+  title="Delete a document"
+  description="Permanently deletes a document by documentId. This action is irreversible."
+  paramTitle="Path Parameters"
+  params={[
+    { name: 'pluralApiId', type: 'string', required: true, description: 'Plural API ID (e.g. <code>restaurants</code>)' },
+    { name: 'documentId', type: 'string', required: true, description: 'Document ID of the entry to delete' },
+  ]}
+  codePath="/api/restaurants/bw64dnu97i56nq85106yt4du"
+  codePathHighlights={['restaurants', 'bw64dnu97i56nq85106yt4du']}
+  codeTabs={[
+    {
+      label: 'cURL',
+      code: `curl -X DELETE \\
+  'http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du' \\
+  -H 'Authorization: Bearer <token>'`,
+    },
+    {
+      label: 'JavaScript',
+      code: `const response = await fetch(
+  'http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du',
+  {
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);`,
+    },
+  ]}
+  responses={[]}
+  isLast
+/>
