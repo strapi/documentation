@@ -780,6 +780,20 @@ To navigate back to the parent folder, one level up, use the **Back** button at 
 The breadcrumb navigation can also be used to go back to a parent folder: click on a folder name to directly jump to it or click on the 3 dots `/img.` and select a parent folder from the drop-down list.
 :::
 
+#### Navigating with the folder sidebar
+
+<!-- TODO: Confirm whether this feature requires a future flag to enable the revamped Media Library -->
+
+The Media Library includes a persistent folder sidebar on the left side of the interface. The sidebar displays the complete folder hierarchy, loaded from the `GET /upload/folder-structure` endpoint, so you can browse nested folders without clicking through each level in the main content area.
+
+The sidebar shows a **Home** entry at the top, followed by all nested folders. Clicking a folder in the sidebar updates the main content area to show that folder's assets. The selected folder is reflected in the `?folder=` URL parameter.
+
+Ancestors of the active folder expand automatically in the sidebar, giving you a visual indicator of your current location within the hierarchy.
+
+If the URL contains an invalid or missing folder ID, the Media Library redirects to the root folder.
+
+<!-- unverified: sidebar component behavior based on PR #26551 description; exact feature flag name unknown -->
+
 #### Adding folders
 
 1. Click on **Add new folder** in the upper right of the Media Library interface.
@@ -788,8 +802,9 @@ The breadcrumb navigation can also be used to go back to a parent folder: click 
 4. Click **Create**.
 
 :::note
-There is no limit to how deep your folders hierarchy can go, but bear in mind it might take some effort to reach a deeply nested subfolder, as the Media Library currently has no visual hierarchy indication. Searching for files using the <Icon name="magnifying-glass" classes="ph-bold" /> on the right side of the user interface might be a faster alternative to finding the asset you are looking for.
+There is no limit to how deep your folders hierarchy can go, but bear in mind it might take some effort to reach a deeply nested subfolder. Searching for files using the <Icon name="magnifying-glass" classes="ph-bold" /> on the right side of the user interface might be a faster alternative to finding the asset you are looking for.
 :::
+<!-- TODO: Update or remove this note once the folder sidebar (see "Navigating with the folder sidebar") is confirmed as generally available, since the sidebar does provide visual hierarchy indication -->
 
 #### Moving assets to a folder
 
