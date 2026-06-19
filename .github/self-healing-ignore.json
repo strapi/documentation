@@ -509,6 +509,16 @@
       "number": 25860,
       "reason": "Router: Bug fix for internal admin panel behavior (dashboard deduplication). While user-facing, the fix resolves a bug rather than introducing new features or public API changes that require documentation.",
       "added": "2026-06-18"
+    },
+    {
+      "number": 26681,
+      "reason": "Triage: Type definition cleanup and import consistency — no behavior change",
+      "added": "2026-06-19"
+    },
+    {
+      "number": 26598,
+      "reason": "Triage: Build tooling and CI infrastructure configuration",
+      "added": "2026-06-19"
     }
   ]
 }
