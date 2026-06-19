@@ -1,0 +1,74 @@
+/** StepDetails — Adds gamified progress tracking to standard details/accordion
+ * Inherits all styling from details.alert (details.scss)
+ * Only adds: checkmark icon + completed state border color
+ */
+@use '../../scss/mixins' as *;
+
+.stepDetails {
+  /* Let details.alert handle all base styling — we just layer on top */
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 28px !important;
+  }
+
+  > :not(summary) {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  &[open] {
+    padding-bottom: 24px;
+  }
+}
+
+.checkmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-left: 12px;
+  /* Position above the summary::after overlay so it's visible */
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  i {
+    margin-right: 0 !important;
+    color: var(--strapi-neutral-300, #D4D4D8);
+    transition: color 0.3s;
+  }
+}
+
+.checkmarkVisible {
+  background: rgba(34, 197, 94, 0.1);
+
+  i {
+    color: #22C55E !important;
+  }
+}
+
+.completed {
+  border-color: rgba(34, 197, 94, 0.2) !important;
+
+  /* Override the left accent bar color to green */
+  &::after {
+    background: #22C55E !important;
+  }
+}
+
+@include dark {
+  .completed {
+    border-color: rgba(34, 197, 94, 0.15) !important;
+  }
+
+  .checkmarkVisible {
+    background: rgba(34, 197, 94, 0.15);
+  }
+}

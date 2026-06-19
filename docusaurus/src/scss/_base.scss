@@ -1,4 +1,4 @@
-/** Base: General Styles */
+/** Base: General Styles — V3 Redesign */
 
 @use './tokens.scss' as *;
 @use './tokens-overrides' as *;
@@ -6,6 +6,15 @@
 
 :root {
   --custom-selection-background-color: var(--strapi-primary-600);
+  --doc-content-max-width: 720px;
+}
+
+[data-content-width="wide"] {
+  --doc-content-max-width: 960px;
+}
+
+[data-content-width="max"] {
+  --doc-content-max-width: 100%;
 }
 
 ::selection {
@@ -13,14 +22,34 @@
   color: var(--custom-selection-color, var(--strapi-neutral-0));
 }
 
+/** V3: Film grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.012;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px;
+}
+
+/** V3: Smooth background transition */
+body {
+  background: var(--strapi-surface-0);
+  transition: background var(--strapi-duration-slow) var(--strapi-ease);
+}
+
 main {
   article:first-child:not(.col):not(.custom-doc-card),
   article:first-child:not(.col) + nav {
-    max-width: 608px;
+    max-width: var(--doc-content-max-width);
     padding-left: 0 !important;
     padding-right: 0 !important;
     margin-left: auto;
     margin-right: auto;
+    transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
@@ -28,47 +57,184 @@ main {
     width: 0;
   }
 
-/**
- * Experimental: Different identity based on URL
- */
-// html[class*="docs-doc-id-dev-docs"] {
-//   .navbar {
-//     background-color: var(--strapi-primary-100);
-//   }
-// }
-
-// html[class*="docs-doc-id-cloud"] {
-//   .navbar {
-//     background-color: var(--strapi-secondary-100);
-//   }
-
-//   .markdown {
-//     a {
-//       color: var(--strapi-secondary-600);
-//     }
-//   }
-
-//   .theme-doc-sidebar-item-link:has(.menu__link--active) {
-//     background-color: var(--strapi-secondary-100);
-//   }
-// }
-
 /** Responsive */
 @include medium-up {
   main {
-    article:first-child:not(.col),
-    article:first-child:not(.col) + nav {
-      max-width: 672px;
-      padding-left: 32px !important;
-      padding-right: 32px !important;
+    article:first-child:not(.col):not(.custom-doc-card),
+    article:first-child:not(.col) + nav:not(.pagination-nav) {
+      max-width: var(--doc-content-max-width);
+      padding-left: 40px !important;
+      padding-right: 40px !important;
+    }
+
+    article:first-child:not(.col) + nav.pagination-nav {
+      max-width: var(--doc-content-max-width);
+      padding-left: 0 !important;
+      padding-right: 0 !important;
     }
   }
 
   [class*="docRoot"]:not(:has(main)) {
     width: 300px;
   }
+
+  /**
+   * Pages without a TOC column: reserve the same right-edge space
+   * so content stays aligned with pages that have a TOC.
+   */
+  [class*="docMainContainer"] .row:not(:has(.col--3)) {
+    padding-right: 280px;
+  }
+
+  /** When wide or max width, remove the TOC-placeholder padding */
+  [data-content-width="wide"] [class*="docMainContainer"] .row:not(:has(.col--3)),
+  [data-content-width="max"] [class*="docMainContainer"] .row:not(:has(.col--3)) {
+    padding-right: 0;
+  }
 }
 
+
+/**
+ * V3: Fluid-width API pages
+ *
+ * Strategy:
+ * - The article container is full-width (no max-width)
+ * - Endpoint blocks (.api-endpoint-block, .api-call) are full-width with 2-col grid
+ * - Regular content between endpoints is constrained to readable width via inner max-width
+ * - When sidebars collapse, the content area grows to fill available space (all flex-based)
+ */
+
+/** On API pages, lift the article max-width constraint */
+main:has(.api-call),
+main:has(.api-endpoint-block) {
+  article:first-child:not(.col):not(.custom-doc-card),
+  article:first-child:not(.col) + nav {
+    max-width: 100%;
+  }
+}
+
+@include medium-up {
+  main:has(.api-call),
+  main:has(.api-endpoint-block) {
+    article:first-child:not(.col),
+    article:first-child:not(.col) + nav {
+      max-width: 100%;
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+    }
+  }
+
+  /**
+   * Constrain regular prose content on API pages to a readable width.
+   * Endpoint blocks break out of this via their own full-width grid.
+   */
+  main:has(.api-endpoint-block) article .theme-doc-markdown {
+    /** Prose content constrained to half-width, left-aligned
+     *  to stay flush with the left column of endpoint blocks */
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header {
+      max-width: 50%;
+      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /** Endpoint blocks break out to full width */
+    > .api-endpoint-block,
+    > .api-call {
+      max-width: 100% !important;
+    }
+  }
+
+  /** Width toggle overrides for API endpoint pages */
+  [data-content-width="wide"] main:has(.api-endpoint-block) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header {
+      max-width: 70%;
+    }
+  }
+
+  [data-content-width="max"] main:has(.api-endpoint-block) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header {
+      max-width: 100%;
+    }
+  }
+
+  main:has(.api-call):not(:has(.api-endpoint-block)) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header {
+      max-width: var(--doc-content-max-width);
+      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    > .api-call {
+      max-width: 100% !important;
+    }
+  }
+}
+
+/**
+ * V3: Secondary sidebar (TOC) — flush to right edge of page.
+ * Override Docusaurus default col--3 (25% + padding) with a fixed-width
+ * column pinned to the right. Content column fills remaining space.
+ */
+@include medium-up {
+  [class*="docMainContainer"] {
+    /** Remove container max-width + right padding so layout fills available space */
+    > .container {
+      max-width: 100% !important;
+      padding-right: 0 !important;
+    }
+
+    .row {
+      flex-wrap: nowrap !important;
+      margin-right: 0 !important;
+    }
+
+    /** Content column: take all remaining space, smooth reflow on sidebar toggle */
+    [class*="docItemCol"] {
+      max-width: none !important;
+      flex: 1 1 0% !important;
+      min-width: 0;
+    }
+
+
+    /** TOC column: fixed width, flush right, no inner padding. */
+    .col--3 {
+      max-width: 280px !important;
+      flex: 0 0 auto !important;
+      width: 280px !important;
+      min-width: 280px !important;
+      padding-right: 0 !important;
+      padding-left: 0 !important;
+      transition: width var(--strapi-duration-slow) var(--strapi-ease),
+                  max-width var(--strapi-duration-slow) var(--strapi-ease),
+                  min-width var(--strapi-duration-slow) var(--strapi-ease);
+    }
+
+    /** Collapsed: shrink to just the toggle button */
+    .col--3:has(.toc-v3-wrapper--collapsed) {
+      width: 44px !important;
+      max-width: 44px !important;
+      min-width: 44px !important;
+    }
+  }
+}
 
 /** Dark mode */
 @include dark {

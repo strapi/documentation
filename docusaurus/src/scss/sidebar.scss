@@ -56,7 +56,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   --ifm-menu-link-padding-horizontal: 0;
 
   font-weight: var(--custom-sidebar-menu-font-weight);
-  padding-top: 4px;
+  padding-top: 10px;
   padding-left: 14px;
   padding-right: 2px;
 
@@ -125,8 +125,26 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
 
     .theme-doc-sidebar-item-link:has(.menu__link--active) {
-      background-color: var(--strapi-primary-100);
-      border-radius: 4px;
+      background-color: rgba(73, 69, 255, 0.1);
+      border-radius: 8px;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 18px;
+        border-radius: 2px;
+        background: var(--strapi-accent, #4945FF);
+      }
+
+      .menu__link--active {
+        color: var(--strapi-accent-light, #7B79FF) !important;
+        font-weight: 600;
+      }
     }
   }
 
@@ -253,10 +271,11 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         padding-left: 10px;
         background-color: transparent;
         text-transform: uppercase;
-        font-size: var(--strapi-font-size-xs);
-        color: var(--strapi-neutral-500);
-        font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        font-weight: 500;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        color: var(--strapi-neutral-400);
+        font-family: var(--strapi-font-family-technical, 'JetBrains Mono', monospace);
+        font-weight: 600;
 
         a::before {
           font-family: "Phosphor";
@@ -410,8 +429,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
 @include medium-up {
   .theme-doc-sidebar-container {
-    --docusaurus-collapse-button-bg: var(--strapi-neutral-0);
-    --docusaurus-collapse-button-bg-hover: var(--strapi-primary-100);
+    --docusaurus-collapse-button-bg: transparent;
+    --docusaurus-collapse-button-bg-hover: transparent;
     position: sticky;
     top: 12px;
     height: calc(100vh + 180px);
@@ -421,35 +440,11 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     margin-bottom: 80px;
   }
 
+  /** Hide default Docusaurus collapse/expand buttons — replaced by custom v3 toggle */
   @include medium-up {
-    [class*="collapseSidebar"]::after,
-    [class*="expandButton"]::after {
-        font-family: "Phosphor";
-        position: relative;
-        top: 0;
-        left: 0;
-        color: var(--strapi-neutral-600);
-        font-weight: 500;
-    }
-
-    [class*="collapseSidebar"] {
-      border-bottom: none;
-      min-height: 38px;
-
-      &::after {
-        content:'\E128';
-      }
-    }
-    [class*="collapseSidebarButtonIcon"] {
-      display: none;
-    }
+    [class*="collapseSidebar"],
     [class*="expandButton"] {
-      svg {
-        display: none;
-      }
-      &::after {
-        content:'\E12A';
-      }
+      display: none !important;
     }
   }
 }
@@ -887,5 +882,148 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         color: var(--strapi-neutral-500);
       }
     }
+  }
+}
+
+/** V3: Collapsible left sidebar wrapper — v2 mockup design */
+.sidebar-v3-wrapper {
+  position: relative;
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              min-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: width, min-width;
+
+  /* Thin scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--strapi-neutral-200) transparent;
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background-color: var(--strapi-neutral-200); border-radius: 4px; }
+
+  &--collapsed {
+    width: 52px !important;
+    min-width: 52px !important;
+    overflow: hidden;
+
+    .sidebar-v3-header__label,
+    .sidebar-v3-content > *:not(.sidebar-v3-header) {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .sidebar-v3-header {
+      justify-content: flex-end;
+      padding: 28px 12px 8px;
+    }
+  }
+
+  [class^="sidebar_"] {
+    padding-top: 0;
+  }
+}
+
+/**
+ * V3: Smooth sidebar collapse
+ *
+ * The swizzled DocRoot/Layout/Sidebar controls width + transition via
+ * inline styles. Main content uses flex:1 to fill freed space smoothly.
+ */
+
+/** Main content: flex: 1 fills remaining space, slides smoothly */
+[class*="docMainContainer"] {
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+
+/** V3: Sidebar header with monospace label + collapse button */
+.sidebar-v3-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 12px 8px;
+  min-height: 44px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--strapi-surface-0);
+  border-bottom: 1px solid var(--strapi-neutral-150);
+
+  .sidebar-v3-wrapper--collapsed & {
+    border-bottom: none;
+    background: transparent;
+  }
+
+  &__label {
+    font-family: var(--strapi-font-family-technical, 'JetBrains Mono', monospace);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--strapi-neutral-400);
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity 0.2s;
+  }
+
+  &__toggle {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--strapi-neutral-200);
+    background: transparent;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    color: var(--strapi-neutral-400);
+    font-size: 14px;
+    line-height: 1;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    flex-shrink: 0;
+    padding: 0;
+
+    &:hover {
+      background: var(--strapi-neutral-100);
+      color: var(--strapi-neutral-800);
+      border-color: var(--strapi-neutral-300);
+    }
+  }
+}
+
+.sidebar-v3-content {
+  opacity: 1;
+  transition: opacity 0.2s;
+
+  // ProductSwitcher — compact, aligned with search bar
+  > div:nth-child(2) {
+    margin: 0 12px 6px;
+  }
+
+  // Search bar — reduce gap before nav items
+  .my-custom-search-bar {
+    margin: 0 12px 8px;
+  }
+
+  // Remove Docusaurus default navbar-height padding on sidebar (our wrapper handles it)
+  [class*="sidebar_"][class*="theme-classic"] {
+    padding-top: 0 !important;
+  }
+}
+
+@include medium-down {
+  .sidebar-v3-wrapper--collapsed {
+    width: auto !important;
+    min-width: auto !important;
+    .sidebar-v3-header__label,
+    .sidebar-v3-content > *:not(.sidebar-v3-header) {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+  .sidebar-v3-header {
+    display: none;
   }
 }

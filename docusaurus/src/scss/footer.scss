@@ -4,15 +4,8 @@
 .footer {
   position: relative;
   padding: 40px 40px 0 40px;
-  border-top: solid 1px var(--strapi-neutral-200);
+  border-top: solid 1px var(--strapi-border);
 
-  &::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-  }
 
   &::after {
     content: '';
@@ -33,21 +26,23 @@
 
   a {
     color: var(--strapi-primary-600);
-    // @include transition;
-    font-size: var(--strapi-font-size-sm);
-    line-height: var(--strapi-line-height-sm);
+    font-family: var(--strapi-font-family-body);
+    font-size: 13px;
+    line-height: 1.5;
 
     &:hover {
-      // font-weight: 700;
+      color: var(--strapi-accent, #4945FF);
     }
   }
 
   &__title {
+    font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
     font-size: 11px;
     line-height: 16px;
     font-weight: 600;
     margin-bottom: 12px;
     text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--strapi-neutral-500);
   }
 
@@ -68,14 +63,6 @@
 
 @include medium-up {
   .footer {
-    &::before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 280px;
-      height: 100%;
-    }
-
     &::after {
       content: '';
       background: url('/img/logo-v5.png') no-repeat;
@@ -159,6 +146,7 @@
 @include dark {
   .footer {
     border-top-color: var(--strapi-neutral-150) !important;
+
   }
   .footer::after {
     content: '';

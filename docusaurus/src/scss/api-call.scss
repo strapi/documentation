@@ -1,20 +1,20 @@
-/** Component: API Call / Request / Response */
+/** Component: API Call / Request / Response — V3 2-Column Layout */
 @use './mixins' as *;
 
 :root {
-  --custom-api-call-color: var(--strapi-neutral-800);
-  --custom-api-call-gap: var(--strapi-spacing-4);
-  --custom-api-call-heading-font-size: var(--strapi-font-size-sm);
-  --custom-api-call-heading-font-weight: 500;
+  --custom-api-call-color: var(--strapi-fg-1);
+  --custom-api-call-gap: var(--strapi-spacing-6);
+  --custom-api-call-heading-font-size: var(--strapi-font-size-ssm);
+  --custom-api-call-heading-font-weight: 600;
   --custom-api-call-heading-py: var(--strapi-spacing-2);
   --custom-api-call-heading-px: var(--strapi-spacing-4);
-  --custom-api-call-radius: 4px;
-  --custom-api-call-response-heading-background-color: var(--strapi-neutral-100);
-  --custom-api-call-response-content-background-color: var(--strapi-neutral-0);
-  --custom-api-call-request-heading-background-color: var(--strapi-neutral-100);
-  --custom-api-call-request-content-background-color: var(--strapi-neutral-0);
-  --custom-api-call-border-color: var(--strapi-neutral-200);
-  --custom-code-block-background-color-highlighted: var(--strapi-neutral-200);
+  --custom-api-call-radius: var(--strapi-radius-md);
+  --custom-api-call-response-heading-background-color: var(--strapi-surface-1);
+  --custom-api-call-response-content-background-color: var(--strapi-surface-0);
+  --custom-api-call-request-heading-background-color: var(--strapi-surface-1);
+  --custom-api-call-request-content-background-color: var(--strapi-surface-0);
+  --custom-api-call-border-color: var(--strapi-border-strong);
+  --custom-code-block-background-color-highlighted: var(--strapi-surface-2);
 }
 
 .api-call {
@@ -22,7 +22,7 @@
   flex-direction: column;
   align-items: stretch;
   gap: var(--custom-api-call-gap);
-  margin-bottom: var(--custom-api-call-gap);
+  margin-bottom: var(--strapi-spacing-8);
 
   &__request__content,
   &__request__heading,
@@ -39,7 +39,6 @@
   &__request,
   &__response {
     border-radius: var(--custom-api-call-radius);
-    // border: solid 1px var(--custom-api-call-border-color);
 
     &__heading,
     &__content {
@@ -55,6 +54,9 @@
       border-bottom: none;
       font-size: var(--custom-api-call-heading-font-size);
       font-weight: var(--custom-api-call-heading-font-weight);
+      font-family: var(--strapi-font-family-mono);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
       padding: var(--custom-api-call-heading-py) var(--custom-api-call-heading-px);
     }
 
@@ -69,6 +71,7 @@
   &__request {
     &__heading {
       --custom-api-call-background-color: var(--custom-api-call-request-heading-background-color);
+      color: var(--strapi-accent);
     }
 
     &__content {
@@ -77,7 +80,6 @@
       --custom-api-call-content-px: var(--custom-api-call-heading-px);
 
       --custom-code-block-background-color: var(--custom-api-call-response-heading-background-color);
-
       --custom-code-background-color: var(--custom-api-call-response-heading-background-color);
       --custom-code-border-color: transparent;
       --custom-code-color: currentColor;
@@ -91,11 +93,11 @@
   &__response {
     &__heading {
       --custom-api-call-background-color: var(--custom-api-call-response-heading-background-color);
+      color: var(--strapi-green);
     }
 
     &__content {
       --custom-api-call-background-color: var(--custom-api-call-response-content-background-color);
-
       --custom-code-block-background-color: var(--custom-api-call-response-content-background-color);
     }
   }
@@ -104,21 +106,21 @@
     border-radius: var(--custom-api-call-radius);
 
     &-highlighted-line {
-      background-color: var(--strapi-neutral-150) !important;
+      background-color: var(--strapi-surface-2) !important;
     }
 
     .clean-btn {
-      background-color: white;
+      background-color: var(--strapi-surface-0);
       position: relative;
       top: -12px;
 
       svg,
       i::before {
-        color: black;
+        color: var(--strapi-fg-1);
       }
 
       span {
-        color: black;
+        color: var(--strapi-fg-1);
       }
     }
 
@@ -128,7 +130,6 @@
       }
     }
   }
-
 
   [class*="buttonGroup"],
   .ai-button-group {
@@ -140,10 +141,10 @@
     [class*="buttonGroup"],
     .ai-button-group {
       opacity: 1;
-      
+
       .clean-btn {
         opacity: 1 !important;
-        
+
         svg,
         i::before,
         span {
@@ -163,7 +164,32 @@
   }
 }
 
+/**
+ * V3: 2-Column layout on desktop
+ * Request on left, Response on right — side by side
+ */
 @include medium-up {
+  .api-call:not(.api-call--no-side-by-side) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--strapi-spacing-5);
+    align-items: start;
+  }
+
+  /** When there's only a Request (no Response), span full width */
+  .api-call:not(.api-call--no-side-by-side) > .api-call__request:only-child {
+    grid-column: 1 / -1;
+  }
+
+  .api-call__response {
+    position: sticky;
+    top: calc(var(--ifm-navbar-height) + 16px);
+    max-height: calc(100vh - var(--ifm-navbar-height) - 32px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--strapi-surface-3) transparent;
+  }
+
   .api-call__request {
     [class*="buttonGroup"] {
       right: -24px;
@@ -228,12 +254,13 @@
 
 /** Dark mode */
 @include dark {
-  --custom-api-call-color: var(--strapi-neutral-1000);
+  --custom-api-call-color: var(--strapi-fg-1);
+  --custom-api-call-border-color: var(--strapi-border);
 
-  --custom-api-call-request-heading-background-color: var(--strapi-neutral-100);
+  --custom-api-call-request-heading-background-color: var(--strapi-surface-2);
   --custom-api-call-request-content-background-color: transparent;
 
-  --custom-api-call-response-heading-background-color: var(--strapi-neutral-100);
+  --custom-api-call-response-heading-background-color: var(--strapi-surface-2);
   --custom-api-call-response-content-background-color: transparent;
 
   .api-call {
@@ -246,12 +273,12 @@
 
     .theme-code-block {
       .clean-btn {
-        background-color: var(--strapi-neutral-0);
+        background-color: var(--strapi-surface-2);
 
         svg,
         i::before,
         span {
-          color: var(--strapi-neutral-900);
+          color: var(--strapi-fg-1);
         }
       }
     }

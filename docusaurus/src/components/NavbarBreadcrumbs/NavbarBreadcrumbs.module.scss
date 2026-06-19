@@ -1,0 +1,127 @@
+@use '../../scss/mixins' as *;
+
+.navbarBreadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-left: 20px;
+}
+
+.separator {
+  width: 1px;
+  height: 20px;
+  background: var(--strapi-neutral-300);
+  flex-shrink: 0;
+}
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--strapi-font-family-technical, 'JetBrains Mono', monospace);
+  font-size: 13px;
+  color: var(--strapi-neutral-600);
+}
+
+.slash {
+  color: var(--strapi-neutral-400);
+  user-select: none;
+}
+
+.homeDash {
+  color: var(--strapi-neutral-400);
+  user-select: none;
+  margin: 0 2px;
+}
+
+.crumbLink {
+  color: var(--strapi-neutral-600);
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--strapi-primary-600);
+    text-decoration: none;
+  }
+}
+
+.current {
+  color: var(--strapi-primary-600);
+  font-weight: 500;
+}
+
+/* ── Root crumb with inline product switch ── */
+.rootCrumb {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+
+  &:hover .switchLink {
+    opacity: 1;
+    max-width: 80px;
+    margin-left: 8px;
+  }
+}
+
+.switchLink {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--strapi-font-family-technical, 'JetBrains Mono', monospace);
+  font-size: 12px;
+  color: var(--strapi-neutral-400);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 0;
+  opacity: 0;
+  margin-left: 0;
+  transition: opacity 0.2s ease, max-width 0.25s ease, margin-left 0.25s ease;
+
+  &:hover {
+    color: var(--strapi-primary-600);
+    text-decoration: none;
+  }
+}
+
+/* ── Dark mode ── */
+@include dark {
+  .separator {
+    background: var(--strapi-neutral-400);
+  }
+
+  .slash {
+    color: var(--strapi-neutral-500);
+  }
+
+  .crumbLink {
+    color: var(--strapi-neutral-500);
+
+    &:hover {
+      color: var(--strapi-primary-600);
+    }
+  }
+
+  .current {
+    color: var(--strapi-primary-600);
+  }
+
+  .switchLink {
+    color: var(--strapi-neutral-500);
+
+    &:hover {
+      color: var(--strapi-primary-600);
+    }
+  }
+
+  .homeDash {
+    color: var(--strapi-neutral-500);
+  }
+}
+
+// Hide on mobile — too cluttered
+@include medium-down {
+  .navbarBreadcrumbs {
+    display: none;
+  }
+}

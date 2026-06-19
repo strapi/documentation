@@ -9,3 +9,4 @@ export * from './SearchBar/SearchBar';
 export * from './SideBySide';
 export * from './IdentityCard';
 export { default as HomepageAIButton } from './HomepageAIButton/HomepageAIButton';
+export { default as NextSteps } from './NextSteps/NextSteps';
