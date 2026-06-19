@@ -748,6 +748,26 @@ To add a focal point to an image:
 Assets can also be deleted individually or in bulk from the main view of the Media Library. Select assets by clicking on their checkbox in the top left corner, then click the Delete icon <Icon name="trash" /> at the top of the window, below the filters and sorting options.
 :::
 
+#### Replacing assets
+
+When you need to update a media file without changing its filename or location, you can use the **Replace Media** button. This performs an atomic replacement of the asset file.
+
+To replace an asset:
+
+1. Click on the edit <Icon name="pencil-simple" /> button for the asset to be replaced.
+2. In the window that pops up, click the **Replace Media** button <ScreenshotNumberReference number="4" /> (at the bottom right).
+3. Choose whether you want to upload the new asset from your computer or from a URL:
+    - from the computer, either drag & drop the asset directly or browse files on your system,
+    - from a URL, type or paste a URL in the _URL_ field, then click **Next**.
+4. (optional) Edit the metadata (filename, alternative text, caption) if needed.
+5. Click **Upload** to confirm the replacement.
+
+:::info
+File replacement provides better performance than the traditional delete-then-upload workflow, especially with cloud storage providers like AWS S3 and Cloudinary. The file URL remains stable after replacement, so no updates are needed in your content.
+
+For image files with responsive variants (thumbnails, large, medium, small), the replacement automatically updates all associated format files. Old formats that no longer exist are removed, and new formats are generated as needed.
+:::
+
 ### Organizing assets with folders
 
 Folders in the Media Library help you organize uploaded assets. Folders sit at the top of the Media Library view or are accessible from the Media field popup when using the [Content Manager](/cms/features/content-manager).
