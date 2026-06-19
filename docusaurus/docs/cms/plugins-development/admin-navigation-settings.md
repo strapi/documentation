@@ -257,7 +257,7 @@ The `createSettingSection()` function accepts the following parameters:
 
 ### Adding links to existing settings sections
 
-To add a single link to an existing settings section, use `addSettingsLink()` in the `bootstrap()` lifecycle function. To add multiple links at once, use `addSettingsLinks()`.
+To add links to an existing settings section, use `addSettingsLink()` in the `bootstrap()` lifecycle function. The method accepts either a single link or an array of links.
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript" default>
@@ -288,7 +288,7 @@ export default {
 
     // Add multiple links at once to the global settings section
     // highlight-start
-    app.addSettingsLinks('global', [
+    app.addSettingsLink('global', [
       {
         intlLabel: {
           id: 'my-plugin.settings.general',
@@ -344,7 +344,7 @@ export default {
 
     // Add multiple links at once to the global settings section
     // highlight-start
-    app.addSettingsLinks('global', [
+    app.addSettingsLink('global', [
       {
         intlLabel: {
           id: 'my-plugin.settings.general',
@@ -372,7 +372,7 @@ export default {
 </TabItem>
 </Tabs>
 
-`addSettingsLink` and `addSettingsLinks` both take a `sectionId` string as the first argument (e.g., `'global'` or `'permissions'`). The second argument is a single link object for `addSettingsLink` or an array of link objects for `addSettingsLinks`, using the same properties as the `links` array in [`createSettingSection()` (see table above)](#creating-a-new-settings-section).
+`addSettingsLink` takes a `sectionId` string as the first argument (e.g., `'global'` or `'permissions'`). The second argument is either a single link object or an array of link objects, using the same properties as the `links` array in [`createSettingSection()` (see table above)](#creating-a-new-settings-section).
 
 ### Available settings sections
 
