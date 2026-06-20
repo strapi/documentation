@@ -25,7 +25,7 @@ In Strapi 5, documents are uniquely identified by their `documentId` at the API 
 
 In previous Strapi versions, the concept of `id` (used both in the Content API and as the database row identifier) was not always stable: a single entry could have multiple versions or localizations, and its numeric identifier `id` could change in cases such as duplication or import/export operations.
 
-To address this limitation, Strapi 5 introduced `documentId`, a 25-character alphanumeric string, as a unique and persistent identifier for a content entry, independent of its physical records.
+To address this limitation, Strapi 5 introduced `documentId`, a 24-character alphanumeric string, as a unique and persistent identifier for a content entry, independent of its physical records.
 
 This new identifier is used internally in Strapi 5 to manage relationships, publishing, localization, and version history, as all possible variations of a content entry are now grouped under a single [document](/cms/api/document) concept.
 
@@ -114,7 +114,7 @@ If only a `documentId` is passed without any other parameters, `findOne()` retur
 
 ```js
 await strapi.documents('api::restaurant.restaurant').findOne({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', 
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn', 
 });
 ```
 
@@ -124,7 +124,7 @@ await strapi.documents('api::restaurant.restaurant').findOne({
 
 ```js {4,5}
 {
-  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   name: "Biscotte Restaurant",
   publishedAt: null, // draft version (default)
   locale: "en", // default locale
@@ -176,7 +176,7 @@ await strapi.documents('api::restaurant.restaurant').findFirst()
 
 ```js
 {
-  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   name: "Restaurant Biscotte",
   publishedAt: null,
   locale: "en"
@@ -216,7 +216,7 @@ await strapi.documents('api::restaurant.restaurant').findFirst(
 
 ```js
 {
-  documentId: "j9k8l7m6n5o4p3q2r1s0tuv",
+  documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
   name: "Pizzeria Arrivederci",
   publishedAt: null,
   locale: "en"
@@ -269,14 +269,14 @@ await strapi.documents('api::restaurant.restaurant').findMany()
 ```js {5,6}
 [
   {
-    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+    documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
     name: "Biscotte Restaurant",
     publishedAt: null, // draft version (default)
     locale: "en" // default locale
     // …
   },
   {
-    documentId: "j9k8l7m6n5o4p3q2r1s0tuv",
+    documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
     name: "Pizzeria Arrivederci",
     publishedAt: null,
     locale: "en"
@@ -318,7 +318,7 @@ await strapi.documents('api::restaurant.restaurant').findMany(
 ```js
 [
   {
-    documentId: "j9k8l7m6n5o4p3q2r1s0tuv",
+    documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
     name: "Pizzeria Arrivederci",
     locale: "en", // default locale
     publishedAt: null, // draft version (default)
@@ -409,7 +409,7 @@ await strapi.documents('api::restaurant.restaurant').create({
 
 ```js
 {
-  documentId: "ln1gkzs6ojl9d707xn6v86mw",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   name: "Restaurant B",
   publishedAt: null,
   locale: "en",
@@ -462,7 +462,7 @@ If no `locale` parameter is passed, `update()` updates the document for the defa
 
 ```js
 await strapi.documents('api::restaurant.restaurant').update({ 
-    documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+    documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
     data: { name: "New restaurant name" }
 })
 ```
@@ -473,7 +473,7 @@ await strapi.documents('api::restaurant.restaurant').update({
 
 ```js {3}
 {
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
   name: "New restaurant name",
   locale: "en",
   publishedAt: null, // draft
@@ -517,7 +517,7 @@ If no `locale` parameter is passed, `delete()` only deletes the default locale v
 
 ```js
 await strapi.documents('api::restaurant.restaurant').delete({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn', // documentId,
 })
 ```
 
@@ -528,10 +528,10 @@ await strapi.documents('api::restaurant.restaurant').delete({
 
 ```js {6}
 {
-  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   entries: [
     {
-      "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
       "name": "Biscotte Restaurant",
       "publishedAt": "2024-03-14T18:30:48.870Z",
       "locale": "en"
@@ -634,7 +634,7 @@ If no `locale` parameter is passed, `publish()` only publishes the default local
 
 ```js
 await strapi.documents('api::restaurant.restaurant').publish({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
 });
 ```
 
@@ -644,10 +644,10 @@ await strapi.documents('api::restaurant.restaurant').publish({
 
 ```js {6}
 {
-  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   entries: [
     {
-      "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
       "name": "Biscotte Restaurant",
       "publishedAt": "2024-03-14T18:30:48.870Z",
       "locale": "en"
@@ -699,7 +699,7 @@ If no `locale` parameter is passed, `unpublish()` only unpublishes the default l
 
 ```js
 await strapi.documents('api::restaurant.restaurant').unpublish({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm' 
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn' 
 });
 ```
 
@@ -709,10 +709,10 @@ await strapi.documents('api::restaurant.restaurant').unpublish({
 
 ```js
 {
-  documentId: "lviw819d5htwvga8s3kovdij",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   entries: [
     {
-      documentId: "lviw819d5htwvga8s3kovdij",
+      documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
       name: "Biscotte Restaurant",
       publishedAt: null,
       locale: "en"
@@ -764,10 +764,10 @@ await strapi.documents('api::restaurant.restaurant').discardDraft({
 
 ```js
 {
-  documentId: "lviw819d5htwvga8s3kovdij",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   entries: [
     {
-      documentId: "lviw819d5htwvga8s3kovdij",
+      documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
       name: "Biscotte Restaurant",
       publishedAt: null,
       locale: "en"
