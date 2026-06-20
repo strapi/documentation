@@ -519,6 +519,26 @@
       "number": 26598,
       "reason": "Triage: Build tooling and CI infrastructure configuration",
       "added": "2026-06-19"
+    },
+    {
+      "number": 26704,
+      "reason": "Triage: Type annotations only, signature-only changes, no runtime behavior altered",
+      "added": "2026-06-20"
+    },
+    {
+      "number": 26700,
+      "reason": "Triage: Internal race condition fix in document service, no user-facing API or behavior change",
+      "added": "2026-06-20"
+    },
+    {
+      "number": 26675,
+      "reason": "Router: Internal scaffolding tooling fix. Adds pnpm configuration to allow native module builds. This is a fix to the scaffolder itself, not a user-facing feature or behavior change.",
+      "added": "2026-06-20"
+    },
+    {
+      "number": 26303,
+      "reason": "Router: Admin UI UX fix for guided tour tooltips. This is an internal implementation detail. Tooltips rendering in the correct position is not a feature or configuration change requiring documentation.",
+      "added": "2026-06-20"
     }
   ]
 }
