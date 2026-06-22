@@ -183,21 +183,30 @@ main:has(.api-endpoint-block) {
    * grid, but the regular prose has no left-column to align with, so it must be
    * CENTERED (like a normal doc page), not left-flushed like on Endpoint pages.
    *
-   * Strategy: center the whole markdown column at --doc-content-max-width, then
-   * let .api-call blocks break out to the full article width.
+   * Strategy: keep the markdown full-width (so .api-call can fill it for the
+   * 2-col grid), but give each prose child a fixed content width and auto side
+   * margins so it is centered. A fixed width (not max-width) is required so even
+   * short blocks like headings center instead of stretching/left-flushing.
    */
   main:has(.api-call):not(:has(.api-endpoint-block)) article .theme-doc-markdown {
-    max-width: var(--doc-content-max-width);
-    margin-left: auto;
-    margin-right: auto;
-    transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header,
+    > [class*="language-"], > div:not([class]),
+    > img, > [class*="themedComponent"] {
+      width: var(--doc-content-max-width);
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-    /** Legacy 2-col API blocks break out of the centered column to full width */
     > .api-call {
-      width: 100vw;
-      max-width: 100vw;
-      margin-left: 50%;
-      transform: translateX(-50%);
+      width: 100%;
+      max-width: 100% !important;
     }
   }
 }
