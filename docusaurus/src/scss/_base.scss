@@ -81,14 +81,17 @@ main {
   /**
    * Pages without a TOC column: reserve the same right-edge space
    * so content stays aligned with pages that have a TOC.
+   * Exclude the footer rows (tags row, edit-meta row): they are also .row
+   * elements but must use the full content width, otherwise long tag lists
+   * wrap onto a second line (the 280px placeholder steals their space).
    */
-  [class*="docMainContainer"] .row:not(:has(.col--3)) {
+  [class*="docMainContainer"] .row:not(:has(.col--3)):not([class*="theme-doc-footer"]) {
     padding-right: 280px;
   }
 
   /** When wide or max width, remove the TOC-placeholder padding */
-  [data-content-width="wide"] [class*="docMainContainer"] .row:not(:has(.col--3)),
-  [data-content-width="max"] [class*="docMainContainer"] .row:not(:has(.col--3)) {
+  [data-content-width="wide"] [class*="docMainContainer"] .row:not(:has(.col--3)):not([class*="theme-doc-footer"]),
+  [data-content-width="max"] [class*="docMainContainer"] .row:not(:has(.col--3)):not([class*="theme-doc-footer"]) {
     padding-right: 0;
   }
 }
