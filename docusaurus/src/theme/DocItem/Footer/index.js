@@ -3,6 +3,7 @@ import Footer from '@theme-original/DocItem/Footer';
 import PageFeedback from '@site/src/components/PageFeedback';
 import SelectionFeedback from '@site/src/components/PageFeedback/SelectionFeedback';
 import HeadingAnchor from '@site/src/components/PageFeedback/SelectionFeedback/HeadingAnchor';
+import StepProgress from '@site/src/components/StepProgress/StepProgress';
 import { useDoc } from '@docusaurus/plugin-content-docs/client';
 
 export default function FooterWrapper(props) {
@@ -24,6 +25,7 @@ export default function FooterWrapper(props) {
         pageTitle={metadata.title}
       />
       <Footer {...props} />
+      <StepProgress />
     </>
   );
 }

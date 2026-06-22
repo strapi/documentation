@@ -27,6 +27,8 @@ function persistCompleted(pageId, stepId, completed) {
     }
     steps[pageId] = list;
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(steps));
+    // Notify the progress widget (the storage event does not fire in the same tab).
+    window.dispatchEvent(new CustomEvent('strapi-steps-changed', { detail: { pageId } }));
   } catch {}
 }
 
@@ -77,6 +79,9 @@ export default function StepDetails({ title, children, defaultOpen = false }) {
       id={stepId}
       className={`alert alert--info ${styles.stepDetails} ${completed ? styles.completed : ''}`}
       open={defaultOpen || undefined}
+      data-step-details=""
+      data-step-title={title}
+      data-step-completed={completed ? 'true' : 'false'}
     >
       <summary>
         {title}
