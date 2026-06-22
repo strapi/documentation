@@ -14,11 +14,16 @@
     padding: 20px 32px !important;
   }
 
-  /* Generous, symmetric horizontal padding on the body content so nothing
-   * sits flush against the rounded border or the left accent bar. */
+  /* Generous, symmetric horizontal MARGIN on the body content so the whole box
+   * of each child (including framed blocks like code, images, and admonitions
+   * with their own background/border) is inset from the left accent bar and the
+   * rounded right border — not just the text inside them. */
   > :not(summary) {
-    padding-left: 40px !important;
-    padding-right: 40px !important;
+    margin-left: 40px !important;
+    margin-right: 40px !important;
+    /* Bound the width so children with an explicit width (e.g. images sized to
+     * the content column) cannot overflow past the right margin. */
+    max-width: calc(100% - 80px) !important;
   }
 
   /* Vertical breathing room: space the first content block below the summary
@@ -27,7 +32,7 @@
     padding-bottom: 28px;
 
     > :not(summary):first-of-type {
-      padding-top: 24px !important;
+      margin-top: 24px !important;
     }
   }
 }
