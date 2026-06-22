@@ -186,6 +186,57 @@
       margin-bottom: 4px;
       color: var(--custom-admonition-heading-color);
     }
+  }
+
+  // === <Endpoint> (API reference): linearize the 2-column block into a flat,
+  // single-column, monospace layout. Keep minimal structure (heading, params
+  // list, request, response) but strip the grid, colored pills, frames, and bg.
+  .api-endpoint-block {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 12px 0 !important;
+
+    // 2-column grid -> single column
+    [class*="endpoint__columns"] {
+      display: block !important;
+      grid-template-columns: none !important;
+      gap: 0 !important;
+    }
+
+    // Parameter rows: collapse the 3-column grid into a flat line
+    [class*="paramRow"],
+    [class*="param "] {
+      display: block !important;
+      grid-template-columns: none !important;
+      padding: 2px 0 !important;
+      border: none !important;
+    }
+
+    // Required/optional pills: plain text, no colored chip
+    [class*="methodPill"],
+    [class*="param"] [class*="badge"],
+    [class*="required"],
+    [class*="optional"] {
+      background: transparent !important;
+      border: none !important;
+      color: var(--strapi-neutral-600) !important;
+      padding: 0 4px 0 0 !important;
+      font-weight: 600;
+      text-transform: lowercase;
+    }
+
+    // Code + response panels: strip frame/background, keep the code text
+    [class*="codePanel"],
+    [class*="responsePanel"],
+    [class*="responseHeader"],
+    [class*="responseTabs"] {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
 
     // Tighten content inside
     [class*="admonitionContent"] {
