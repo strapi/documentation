@@ -754,7 +754,7 @@ If no `locale` parameter is passed, `discardDraft()` discards draft data and ove
 
 ```js
 await strapi.documents('api::restaurant.restaurant').discardDraft({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
 });
 ```
 
