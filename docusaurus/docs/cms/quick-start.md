@@ -18,6 +18,10 @@ import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and content structure from scratch, then deploy your project to Strapi Cloud to add data from there.
 
+:::tip Track your progress
+This guide is organized into collapsible steps. Click a step's title to expand or collapse it, and click the circle on the right of a step to mark it as completed once you're done. Completed steps turn green, and a progress summary at the bottom-right of the page keeps track of how far along you are.
+:::
+
 :::strapi 3 options to discover Strapi
 There are 3 options to discover Strapi. Choose what best suits you:
 
