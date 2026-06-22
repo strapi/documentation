@@ -110,7 +110,7 @@ Syntax: `findOne(parameters: Params) => Document`
     {
       label: 'Request',
       code: `await strapi.documents('api::restaurant.restaurant').findOne({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm'
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn'
 })`,
     },
   ]}
@@ -119,7 +119,7 @@ Syntax: `findOne(parameters: Params) => Document`
       status: 200,
       statusText: 'OK',
       body: JSON.stringify({
-        documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
         name: "Biscotte Restaurant",
         publishedAt: null,
         locale: "en",
@@ -169,7 +169,7 @@ Syntax:  `findFirst(parameters: Params) => Document`
       status: 200,
       statusText: 'Generic',
       body: JSON.stringify({
-        documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
         name: "Restaurant Biscotte",
         publishedAt: null,
         locale: "en",
@@ -179,7 +179,7 @@ Syntax:  `findFirst(parameters: Params) => Document`
       status: 200,
       statusText: 'With filters',
       body: JSON.stringify({
-        documentId: "j9k8l7m6n5o4p3q2r1s0tuv",
+        documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
         name: "Pizzeria Arrivederci",
         publishedAt: null,
         locale: "en",
@@ -236,13 +236,13 @@ Syntax: `findMany(parameters: Params) => Document[]`
       statusText: 'Generic',
       body: JSON.stringify([
         {
-          documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+          documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
           name: "Biscotte Restaurant",
           publishedAt: null,
           locale: "en",
         },
         {
-          documentId: "j9k8l7m6n5o4p3q2r1s0tuv",
+          documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
           name: "Pizzeria Arrivederci",
           publishedAt: null,
           locale: "en",
@@ -254,7 +254,7 @@ Syntax: `findMany(parameters: Params) => Document[]`
       statusText: 'With filters',
       body: JSON.stringify([
         {
-          documentId: "j9k8l7m6n5o4p3q2r1s0tuv",
+          documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
           name: "Pizzeria Arrivederci",
           locale: "en",
           publishedAt: null,
@@ -302,7 +302,7 @@ Syntax: `create(parameters: Params) => Document`
       status: 200,
       statusText: 'OK',
       body: JSON.stringify({
-        documentId: "ln1gkzs6ojl9d707xn6v86mw",
+        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
         name: "Restaurant B",
         publishedAt: null,
         locale: "en",
@@ -340,7 +340,7 @@ Syntax: `update(parameters: Params) => Promise<Document>`
     {
       label: 'Request',
       code: `await strapi.documents('api::restaurant.restaurant').update({
-    documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+    documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
     data: { name: "New restaurant name" }
 })`,
     },
@@ -350,7 +350,7 @@ Syntax: `update(parameters: Params) => Promise<Document>`
       status: 200,
       statusText: 'OK',
       body: JSON.stringify({
-        documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
         name: "New restaurant name",
         locale: "en",
         publishedAt: null,
@@ -395,7 +395,7 @@ Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }
     {
       label: 'Request',
       code: `await strapi.documents('api::restaurant.restaurant').delete({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
 })`,
     },
   ]}
@@ -404,10 +404,10 @@ Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }
       status: 200,
       statusText: 'OK',
       body: JSON.stringify({
-        documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
         entries: [
           {
-            documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+            documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
             name: "Biscotte Restaurant",
             publishedAt: "2024-03-14T18:30:48.870Z",
             locale: "en",
@@ -483,7 +483,7 @@ Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number 
     {
       label: 'Request',
       code: `await strapi.documents('api::restaurant.restaurant').publish({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
 });`,
     },
   ]}
@@ -492,10 +492,10 @@ Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number 
       status: 200,
       statusText: 'OK',
       body: JSON.stringify({
-        documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
         entries: [
           {
-            documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+            documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
             name: "Biscotte Restaurant",
             publishedAt: "2024-03-14T18:30:48.870Z",
             locale: "en",
@@ -528,7 +528,7 @@ Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Numbe
     {
       label: 'Request',
       code: `await strapi.documents('api::restaurant.restaurant').unpublish({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm'
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn'
 });`,
     },
   ]}
@@ -537,10 +537,10 @@ Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Numbe
       status: 200,
       statusText: 'OK',
       body: JSON.stringify({
-        documentId: "lviw819d5htwvga8s3kovdij",
+        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
         entries: [
           {
-            documentId: "lviw819d5htwvga8s3kovdij",
+            documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
             name: "Biscotte Restaurant",
             publishedAt: null,
             locale: "en",
@@ -582,10 +582,10 @@ Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Nu
       status: 200,
       statusText: 'OK',
       body: JSON.stringify({
-        documentId: "lviw819d5htwvga8s3kovdij",
+        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
         entries: [
           {
-            documentId: "lviw819d5htwvga8s3kovdij",
+            documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
             name: "Biscotte Restaurant",
             publishedAt: null,
             locale: "en",

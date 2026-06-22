@@ -46,7 +46,7 @@ Entries were identified by their `id`:
       "title": "Article A"
       "relation": {
         "data": {
-          "id": "clkgylw7d000108lc4rw1bb6s"
+          "id": 15
           "name": "Category A"
         }
       }
@@ -70,13 +70,13 @@ Documents are identified by their `documentId`:
 {
   "data": {
     // system fields
-    "documentId": "clkgylmcc000008lcdd868feh",
+    "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
     "locale": "en",
     // user fields
     "title": "Article A"
     "relation": {
       // system fields
-      "documentId": "clkgylw7d000108lc4rw1bb6s"
+      "documentId": "j9k8l7m6n5o4p3q2r1s0tuvw"
       // user fields
       "name": "Category A"
     }
