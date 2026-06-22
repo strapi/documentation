@@ -18,6 +18,17 @@ function stripStepPrefix(title) {
 export default function StepProgress() {
   const [steps, setSteps] = useState([]);
   const [expanded, setExpanded] = useState(false);
+  const [viewMode, setViewMode] = useState('elegant');
+
+  // Track the active view mode: the progress widget is interactive and makes no
+  // sense in raw-markdown view, so it is hidden there.
+  useEffect(() => {
+    const read = () => setViewMode(document.documentElement.dataset.viewMode || 'elegant');
+    read();
+    const onChange = (e) => setViewMode((e.detail && e.detail.mode) || document.documentElement.dataset.viewMode || 'elegant');
+    window.addEventListener('view-mode-change', onChange);
+    return () => window.removeEventListener('view-mode-change', onChange);
+  }, []);
 
   const readSteps = useCallback(() => {
     if (typeof document === 'undefined') return [];
@@ -52,6 +63,8 @@ export default function StepProgress() {
   }, [readSteps]);
 
   if (steps.length === 0) return null;
+  // Hide the interactive progress widget in raw-markdown view.
+  if (viewMode === 'markdown') return null;
 
   const done = steps.filter((s) => s.completed).length;
   const total = steps.length;

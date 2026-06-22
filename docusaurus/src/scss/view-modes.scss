@@ -338,6 +338,25 @@
     box-shadow: none !important;
   }
 
+  // Constrain ALL images to the content width (desktop included). Without this,
+  // images with no intrinsic max-width (e.g. ThemedImage = .themedComponent_*,
+  // and images nested in StepDetails) render at their natural size — up to
+  // thousands of px — and overflow. The small-screen block had a similar rule
+  // but targeted the wrong class (themedImage) and only applied on mobile.
+  article img,
+  article picture,
+  article [class*="themedComponent"],
+  article [class*="themedComponent"] img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  // StepDetails in markdown mode: the completion checkmark and the floating
+  // progress widget make no sense in raw-markdown view — hide them.
+  [data-step-details] > summary > button {
+    display: none !important;
+  }
+
   // ---- GLOBAL SPACING STRIP DOWN ----
   // Tighten all vertical spacing to feel like raw markdown
   article {
