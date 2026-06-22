@@ -117,7 +117,7 @@ export default {
 `resolveInputSchema` and `resolveOutputSchema` are called once per incoming MCP request, so you can narrow schemas dynamically based on the token's permissions (via `context.userAbility`).
 :::
 
-## (optional) Defining capabilities with builder helpers
+## Defining capabilities with builder helpers
 
 :::caution
 Builder helpers are an optional convenience for TypeScript users. The standard, recommended way to register a capability is to pass its definition inline to [`registerTool()`](#registering-a-custom-tool), as shown in the [previous section](#registering-a-custom-tool). You never need a builder helper to register a tool, resource, or prompt: skip this section unless you specifically want the extra TypeScript inference it provides.
