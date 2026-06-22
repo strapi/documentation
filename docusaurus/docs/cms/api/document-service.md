@@ -573,7 +573,7 @@ Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Nu
     {
       label: 'Request',
       code: `strapi.documents('api::restaurant.restaurant').discardDraft({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
 });`,
     },
   ]}
