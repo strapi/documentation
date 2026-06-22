@@ -19,7 +19,6 @@ tags:
 ---
 
 import IdsInResponse from '/docs/snippets/id-in-responses.md'
-import Endpoint from '@site/src/components/ApiReference/Endpoint';
 
 # Document Service API: Selecting fields
 

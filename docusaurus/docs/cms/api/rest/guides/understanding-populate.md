@@ -19,7 +19,6 @@ import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
-import Endpoint from '@site/src/components/ApiReference/Endpoint';
 
 # 🧠 Understanding the `populate` parameter for the REST API
 

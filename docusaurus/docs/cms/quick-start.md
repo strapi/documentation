@@ -13,7 +13,6 @@ tags:
 ---
 
 import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
-import StepDetails from '@site/src/components/StepDetails/StepDetails'
 
 # Quick Start Guide
 

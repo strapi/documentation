@@ -12,7 +12,6 @@ tags:
 ---
 
 import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
-import Endpoint from '@site/src/components/ApiReference/Endpoint';
 
 # Document Service API: Filters
 

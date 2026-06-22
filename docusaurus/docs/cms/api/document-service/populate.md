@@ -14,8 +14,6 @@ tags:
 - Populating with update()
 ---
 
-import Endpoint from '@site/src/components/ApiReference/Endpoint';
-
 # Document Service API: Populating fields
 
 By default the [Document Service API](/cms/api/document-service) does not populate any relations, media fields, components, or dynamic zones. This page describes how to use the `populate` parameter to populate specific fields.

@@ -12,8 +12,6 @@ tags:
 - singular API ID
 ---
 
-import Endpoint from '@site/src/components/ApiReference/Endpoint';
-
 # REST API reference
 
 The REST API allows accessing the [content-types](/cms/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/cms/api/rest/parameters) can be used when querying API endpoints to refine the results.

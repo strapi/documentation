@@ -17,8 +17,6 @@ tags:
 
 ---
 
-import Endpoint from '@site/src/components/ApiReference/Endpoint';
-
 # Document Service API: Usage with Draft & Publish
 
 By default the [Document Service API](/cms/api/document-service) returns the draft version of a document when the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled. This page describes how to use the `status` parameter to:

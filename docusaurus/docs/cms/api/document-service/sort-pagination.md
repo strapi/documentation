@@ -11,8 +11,6 @@ tags:
 - pagination
 ---
 
-import Endpoint from '@site/src/components/ApiReference/Endpoint';
-
 # Document Service API: Sorting and paginating results
 
 The [Document Service API](/cms/api/document-service) offers the ability to sort and paginate query results.

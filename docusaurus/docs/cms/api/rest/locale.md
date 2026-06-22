@@ -16,7 +16,6 @@ tags:
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
-import Endpoint from '@site/src/components/ApiReference/Endpoint';
 
 # REST API: `locale`
 
