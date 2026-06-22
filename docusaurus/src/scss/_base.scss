@@ -205,6 +205,13 @@ main:has(.api-endpoint-block) {
       transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
+    /** code.scss forces h1-h5 to display:inline-block !important (for the
+     *  inline heading background); override it here so margin:auto centers
+     *  them in the content column like every other prose block. */
+    > h1, > h2, > h3, > h4, > h5, > h6 {
+      display: block !important;
+    }
+
     > .api-call {
       display: flex;
       width: 100%;
