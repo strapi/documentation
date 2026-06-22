@@ -136,7 +136,8 @@ main:has(.api-endpoint-block) {
     > details, > .theme-admonition,
     > [class*="admonition"], > nav,
     > .tabs-container, > .tabs,
-    > header {
+    > header,
+    > [class*="language-"], > div:not([class]) {
       max-width: 50%;
       transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -155,7 +156,8 @@ main:has(.api-endpoint-block) {
     > details, > .theme-admonition,
     > [class*="admonition"], > nav,
     > .tabs-container, > .tabs,
-    > header {
+    > header,
+    > [class*="language-"], > div:not([class]) {
       max-width: 70%;
     }
   }
@@ -166,7 +168,8 @@ main:has(.api-endpoint-block) {
     > details, > .theme-admonition,
     > [class*="admonition"], > nav,
     > .tabs-container, > .tabs,
-    > header {
+    > header,
+    > [class*="language-"], > div:not([class]) {
       max-width: 100%;
     }
   }
@@ -177,7 +180,8 @@ main:has(.api-endpoint-block) {
     > details, > .theme-admonition,
     > [class*="admonition"], > nav,
     > .tabs-container, > .tabs,
-    > header {
+    > header,
+    > [class*="language-"], > div:not([class]) {
       max-width: var(--doc-content-max-width);
       transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
