@@ -11,16 +11,24 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 28px !important;
+    padding: 20px 32px !important;
   }
 
+  /* Generous, symmetric horizontal padding on the body content so nothing
+   * sits flush against the rounded border or the left accent bar. */
   > :not(summary) {
     padding-left: 40px !important;
-    padding-right: 28px !important;
+    padding-right: 40px !important;
   }
 
+  /* Vertical breathing room: space the first content block below the summary
+   * divider, and pad the bottom of the open block. */
   &[open] {
-    padding-bottom: 24px;
+    padding-bottom: 28px;
+
+    > :not(summary):first-of-type {
+      padding-top: 24px !important;
+    }
   }
 }
 
