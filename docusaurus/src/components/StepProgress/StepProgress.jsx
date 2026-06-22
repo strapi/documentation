@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styles from './StepProgress.module.scss';
 
+// Remove a leading "Step N:" / "Step N -" prefix from a step title. Each Part of
+// the quick-start restarts its numbering at Step 1, so the bare numbers repeat
+// and read as confusing in the flat progress list.
+function stripStepPrefix(title) {
+  return title.replace(/^\s*step\s+\d+\s*[:\-–.]\s*/i, '').trim() || title;
+}
+
 /**
  * Floating progress widget for pages that use <StepDetails>.
  * - Discovers steps from the DOM (elements with [data-step-details]).
@@ -24,7 +31,9 @@ export default function StepProgress() {
     } catch {}
     return [...document.querySelectorAll('[data-step-details]')].map((el) => ({
       id: el.id,
-      title: el.getAttribute('data-step-title') || el.id,
+      // Drop the "Step N:" prefix — each Part restarts at Step 1, so the numbers
+      // repeat and are confusing out of context. Keep the descriptive title.
+      title: stripStepPrefix(el.getAttribute('data-step-title') || el.id),
       completed: completedList.includes(el.id),
     }));
   }, []);
