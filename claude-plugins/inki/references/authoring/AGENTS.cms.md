@@ -15,7 +15,7 @@ Frontmatter and structure
 
 Templates
 - CMS authoring templates live in `claude-plugins/inki/references/templates/` (guide, API, configuration, feature, migration, plugin). Start from a template to ensure structure and frontmatter are correct.
-- For a quick overview of available templates (paths and purposes), see `claude-plugins/inki/references/templates/INDEX.md`.
+- For a quick overview of available templates (paths and purposes), see `claude-plugins/inki/references/templates/README.md`.
 
 MDX and code blocks
 - Use MDX Tabs for language variants (JS/TS) under the same example.

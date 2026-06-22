@@ -50,6 +50,7 @@ These are not code hallucinations but recurring Strapi-docs formatting mistakes.
 | `**Timestamp**` in a table cell | `Timestamp` (plain text) | Bold is reserved for UI button names only. Table cell labels and headers must be plain text. |
 | `*Error*`, `*Warning*`, `*Info*` (log levels / values in italic) | `Error`, `Warning`, `Info` (plain text) | Italic is reserved for admin panel section, window, tab, and field names. Values, enum members, and log levels are not UI section names. |
 | `:::caution` for non-destructive informational content | `:::note` | `:::caution` is for mistake prevention / unstable behavior; `:::warning` for data loss or crashes. Neutral side information with nothing risky is a `:::note`. |
+| `<ApiCall>`/`<Request>`/`<Response>` trio (or `noSideBySide`) on a REST or Document Service reference page | `<Endpoint>` (`kind="http"` for REST, `kind="js"` for Document Service) | The redesign replaced the legacy trio with `<Endpoint>`. The trio is valid ONLY on these not-yet-migrated pages: `docs/cms/api/graphql.md`, `docs/cms/api/graphql/**`, `docs/cms/api/rest/upload.md`, `docs/cms/api/rest/relations.md`, `docs/cms/features/users-permissions/rest-api.md`, `docs/cms/plugins/graphql.md`. Flag the trio anywhere else. Do NOT flag bare `QsForQueryBody` (it is still used alongside `<Endpoint>` on migrated REST pages). |
 
 ---
 
