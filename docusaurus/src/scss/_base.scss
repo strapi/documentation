@@ -197,6 +197,7 @@ main:has(.api-endpoint-block) {
     > header,
     > [class*="language-"], > div:not([class]),
     > img, > [class*="themedComponent"] {
+      display: block;
       width: var(--doc-content-max-width);
       max-width: 100%;
       margin-left: auto;
@@ -205,6 +206,7 @@ main:has(.api-endpoint-block) {
     }
 
     > .api-call {
+      display: flex;
       width: 100%;
       max-width: 100% !important;
     }
