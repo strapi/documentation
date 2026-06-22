@@ -42,7 +42,6 @@ import Checklist, { ChecklistItem } from '../components/Checklist';
 // Debug component for testing, for instance the AIToolbar configuration
 import DebugComponent from '../components/DebugComponent';
 // V3: API 2-column layout
-import ApiDocLayout from '../components/ApiDocLayout/ApiDocLayout';
 import Endpoint from '../components/ApiReference/Endpoint';
 import StepDetails from '../components/StepDetails/StepDetails';
 import NextSteps from '../components/NextSteps/NextSteps';
@@ -111,7 +110,6 @@ export default {
   DocumentDefinition,
   Codemods,
   NamingConventions,
-  ApiDocLayout,
   Endpoint,
   StepDetails,
   NextSteps,
