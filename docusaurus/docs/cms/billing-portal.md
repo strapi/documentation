@@ -77,7 +77,7 @@ When you add seats or enable the SSO add-on, you are charged a prorated amount i
 
 When you remove seats or disable the SSO add-on, the change takes effect at the next renewal. Your current seat count and add-ons stay active until then.
 
-If you add seats and disable SSO in the same change, the seat increase is charged immediately (with the sync delay above). SSO removal is still deferred to the next renewal.
+If you add seats and disable SSO in the same change, the seat increase is charged immediately. SSO removal is still deferred to the next renewal.
 :::
 
 ### Canceling a Growth subscription
