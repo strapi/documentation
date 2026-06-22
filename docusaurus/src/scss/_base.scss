@@ -177,21 +177,27 @@ main:has(.api-endpoint-block) {
     }
   }
 
+  /**
+   * API pages with legacy <ApiCall> blocks but no <Endpoint> (e.g. GraphQL):
+   * the .api-call blocks still need full width for their 2-col Request/Response
+   * grid, but the regular prose has no left-column to align with, so it must be
+   * CENTERED (like a normal doc page), not left-flushed like on Endpoint pages.
+   *
+   * Strategy: center the whole markdown column at --doc-content-max-width, then
+   * let .api-call blocks break out to the full article width.
+   */
   main:has(.api-call):not(:has(.api-endpoint-block)) article .theme-doc-markdown {
-    > h1, > h2, > h3, > h4, > h5, > h6,
-    > p, > ul, > ol, > blockquote, > table,
-    > details, > .theme-admonition,
-    > [class*="admonition"], > nav,
-    > .tabs-container, > .tabs,
-    > header,
-    > [class*="language-"], > div:not([class]),
-    > img, > [class*="themedComponent"] {
-      max-width: var(--doc-content-max-width);
-      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+    max-width: var(--doc-content-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 
+    /** Legacy 2-col API blocks break out of the centered column to full width */
     > .api-call {
-      max-width: 100% !important;
+      width: 100vw;
+      max-width: 100vw;
+      margin-left: 50%;
+      transform: translateX(-50%);
     }
   }
 }
