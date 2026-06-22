@@ -80,6 +80,10 @@ When you remove seats or disable the SSO add-on, the change takes effect at the 
 If you add seats and disable SSO in the same change, the seat increase applies immediately with a prorated charge. SSO removal is still deferred to the next renewal.
 :::
 
+:::tip
+Your Strapi CMS instance checks for license updates on startup and every 12 hours. After adding seats, new seats may take up to 12 hours to appear in the admin panel. To apply changes immediately, restart your Strapi instance.
+:::
+
 ### Canceling a Growth subscription
 
 To cancel an active Growth subscription:
