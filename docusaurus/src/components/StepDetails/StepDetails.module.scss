@@ -68,9 +68,24 @@
 .completed {
   border-color: rgba(34, 197, 94, 0.2) !important;
 
+  /* Recolor the whole step accent to green when completed. */
+  --details-accent-color: #22C55E;
+
   /* Override the left accent bar color to green */
   &::after {
     background: #22C55E !important;
+  }
+
+  /* Green title text + green disclosure arrow when completed.
+   * The arrow (summary::before) reads --details-accent-color, but details.alert
+   * sets that variable too, so we recolor the arrow borders explicitly. */
+  > summary {
+    color: #22C55E !important;
+
+    &::before {
+      border-right-color: #22C55E !important;
+      border-bottom-color: #22C55E !important;
+    }
   }
 }
 
