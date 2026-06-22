@@ -117,13 +117,17 @@ export default {
 `resolveInputSchema` and `resolveOutputSchema` are called once per incoming MCP request, so you can narrow schemas dynamically based on the token's permissions (via `context.userAbility`).
 :::
 
-## Defining capabilities with builder helpers
+## (optional) Defining capabilities with builder helpers
 
-Passing the tool definition inline to [`registerTool()`](#registering-a-custom-tool) works well for simple cases. For larger plugins, you can define capabilities in their own modules and pass the result to the same `registerTool()` method.
+:::caution
+Builder helpers are an optional convenience for TypeScript users. The standard, recommended way to register a capability is to pass its definition inline to [`registerTool()`](#registering-a-custom-tool), as shown in the [previous section](#registering-a-custom-tool). You never need a builder helper to register a tool, resource, or prompt: skip this section unless you specifically want the extra TypeScript inference it provides.
+:::
 
-Strapi exports 3 builder helpers under the `ai.mcp` namespace on `@strapi/strapi`: `ai.mcp.defineTool`, `ai.mcp.defineResource`, and `ai.mcp.definePrompt`. Each one returns its definition unchanged at runtime. Their purpose is type inference. They infer the capability's `name`, schemas, and handler types. They also narrow the access variant (`devModeOnly` or `auth`) so the result is directly assignable to the matching `register` method. This is similar to the `factories` helpers used for content-manager APIs.
+Passing the tool definition inline to [`registerTool()`](#registering-a-custom-tool) is the standard approach and works well for most cases. For larger plugins that keep capability definitions in their own modules, Strapi optionally exports a set of builder helpers that improve TypeScript inference when a definition is declared away from its `register` call.
 
-Use the builders to keep capability definitions in their own modules, then register them during the plugin's `register()` phase. Each definition takes either `devModeOnly: true` or an `auth` policy set, never both.
+These helpers are exported under the `ai.mcp` namespace on `@strapi/strapi`: `ai.mcp.defineTool`, `ai.mcp.defineResource`, and `ai.mcp.definePrompt`. Each one returns its definition unchanged at runtime: it is a pure type-inference helper, not a different way to register a capability. They infer the capability's `name`, schemas, and handler types, and narrow the access variant (`devModeOnly` or `auth`) so the result is directly assignable to the matching `register` method. This is similar to the `factories` helpers used for content-manager APIs.
+
+Whether or not you use a builder, registration still happens the same way: pass the definition to `registerTool()` (or `registerResource()` / `registerPrompt()`) during the plugin's `register()` phase. Each definition takes either `devModeOnly: true` or an `auth` policy set, never both.
 
 ### Defining a tool
 
