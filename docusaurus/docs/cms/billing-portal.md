@@ -73,7 +73,7 @@ To update the seat count or add-ons of an active Growth subscription:
 4. Click **Confirm** to apply the changes.
  
 :::note
-When you add seats or enable the SSO add-on, the change applies immediately and you are charged a prorated amount for the remainder of the current billing period. However, your Strapi CMS instance checks for license updates on startup and every 12 hours, so new seats may take up to 12 hours to appear in the admin panel. To apply the change sooner, restart your Strapi instance.
+When you add seats or enable the SSO add-on, the change applies immediately. You are charged a prorated amount for the remainder of the current billing period.
 
 When you remove seats or disable the SSO add-on, the change takes effect at the next renewal. Your current seat count and add-ons stay active until then.
 
