@@ -552,6 +552,21 @@
     right: calc(50vw + 20px) !important;
   }
 
+  // Step-progress widget: pin to the bottom-right of the docs content area
+  // (left of the AI panel), not over the AI panel itself. The panel is 50vw on
+  // desktop, 40vw on small-to-medium, and full-screen on small-down (hide there).
+  .step-progress-widget {
+    right: calc(50vw + 24px) !important;
+
+    @include small-to-medium {
+      right: calc(40vw + 16px) !important;
+    }
+
+    @include small-down {
+      display: none !important;
+    }
+  }
+
   @include medium-up {
     --doc-content-max-width: 100% !important;
 

@@ -80,7 +80,7 @@ export default function StepProgress() {
   };
 
   return (
-    <div className={`${styles.widget} ${expanded ? styles.expanded : ''} ${allDone ? styles.complete : ''}`}>
+    <div className={`step-progress-widget ${styles.widget} ${expanded ? styles.expanded : ''} ${allDone ? styles.complete : ''}`}>
       <button
         type="button"
         className={styles.header}
