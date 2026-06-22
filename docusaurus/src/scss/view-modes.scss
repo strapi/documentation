@@ -287,6 +287,57 @@
     }
   }
 
+  // StepDetails: it is a details.alert (already flattened above), but its
+  // component CSS adds large content margins (40px). In markdown mode, collapse
+  // the content indent to match other details/admonitions.
+  [data-step-details] > :not(summary) {
+    margin-left: 16px !important;
+    margin-right: 0 !important;
+    max-width: none !important;
+    padding-left: 0 !important;
+  }
+
+  // <Tldr>: it is a blockquote with a frame; flatten to a plain quote-style
+  // block (left border only), consistent with admonitions.
+  article .tldr {
+    border: none !important;
+    border-left: 3px solid var(--strapi-neutral-400) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 4px 0 4px 16px !important;
+    margin: 8px 0 !important;
+  }
+
+  // <IdentityCard>: strip the card frame/background; keep its items as text.
+  article .identity-card {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 8px 0 !important;
+
+    [class*="identity-card__header"],
+    [class*="identity-card__content"],
+    [class*="identity-card__item"] {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  // Badges (<AlphaBadge> etc.): inline plain text, no colored chip.
+  article .badge {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    color: var(--strapi-neutral-600) !important;
+    padding: 0 2px !important;
+    font-weight: 600;
+    box-shadow: none !important;
+  }
+
   // ---- GLOBAL SPACING STRIP DOWN ----
   // Tighten all vertical spacing to feel like raw markdown
   article {
