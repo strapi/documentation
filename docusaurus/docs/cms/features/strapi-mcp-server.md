@@ -11,7 +11,7 @@ toc_max_heading_level: 4
 ---
 
 # MCP server
-<BetaBadge /> <VersionBadge version="5.47.0"/> 
+<VersionBadge version="5.47.0"/>
 
 <Tldr>
 
