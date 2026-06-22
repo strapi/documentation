@@ -160,7 +160,6 @@ Top-level pagination parameters (e.g., `pagination[page]` and `pagination[pageSi
 `fields` and `populate` can be combined.
 
 <Endpoint
-  id="populate-with-field-selection"
   method="GET"
   path="/api/articles"
   title="Populate with field selection"
@@ -220,7 +219,6 @@ await request(\`/api/articles?\${query}\`);`,
 `filters` and `populate` can be combined.
 
 <Endpoint
-  id="populate-with-filtering"
   method="GET"
   path="/api/articles"
   title="Populate with filtering"

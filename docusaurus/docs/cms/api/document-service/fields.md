@@ -33,7 +33,6 @@ You can also use the `populate` parameter to populate relations, media fields, c
 ## Select fields with `findOne()` queries {#findone}
 
 <Endpoint
-  id="findone"
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").findOne()'
   title="Select fields with findOne()"
@@ -63,7 +62,6 @@ You can also use the `populate` parameter to populate relations, media fields, c
 ## Select fields with `findFirst()` queries {#findfirst}
 
 <Endpoint
-  id="findfirst"
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").findFirst()'
   title="Select fields with findFirst()"
@@ -92,7 +90,6 @@ You can also use the `populate` parameter to populate relations, media fields, c
 ## Select fields with `findMany()` queries {#findmany}
 
 <Endpoint
-  id="findmany"
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").findMany()'
   title="Select fields with findMany()"
@@ -124,7 +121,6 @@ You can also use the `populate` parameter to populate relations, media fields, c
 ## Select fields with `create()` queries {#create}
 
 <Endpoint
-  id="create"
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").create()'
   title="Select fields with create()"
@@ -158,7 +154,6 @@ You can also use the `populate` parameter to populate relations, media fields, c
 ## Select fields with `update()` queries {#update}
 
 <Endpoint
-  id="update"
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").update()'
   title="Select fields with update()"
@@ -190,7 +185,6 @@ You can also use the `populate` parameter to populate relations, media fields, c
 ## Select fields with `delete()` queries {#delete}
 
 <Endpoint
-  id="delete"
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").delete()'
   title="Select fields with delete()"
@@ -226,7 +220,6 @@ You can also use the `populate` parameter to populate relations, media fields, c
 ## Select fields with `publish()` queries {#publish}
 
 <Endpoint
-  id="publish"
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").publish()'
   title="Select fields with publish()"
@@ -261,7 +254,6 @@ You can also use the `populate` parameter to populate relations, media fields, c
 ## Select fields with `unpublish()` queries {#unpublish}
 
 <Endpoint
-  id="unpublish"
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").unpublish()'
   title="Select fields with unpublish()"
@@ -296,7 +288,6 @@ You can also use the `populate` parameter to populate relations, media fields, c
 ## Select fields with `discardDraft()` queries {#discarddraft}
 
 <Endpoint
-  id="discarddraft"
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").discardDraft()'
   title="Select fields with discardDraft()"

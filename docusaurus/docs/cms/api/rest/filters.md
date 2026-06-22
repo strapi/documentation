@@ -197,7 +197,6 @@ await request(\`/api/restaurants?\${query}\`);`,
 ## Complex filtering
 
 <Endpoint
-  id="complex-filtering"
   method="GET"
   path="/api/books"
   title="Find books with 2 possible dates and a specific author"
@@ -286,7 +285,6 @@ Querying your API with deep filters may cause performance issues.  If one of you
 <DeepFilteringBlogLink />
 
 <Endpoint
-  id="deep-filtering"
   method="GET"
   path="/api/restaurants"
   title="Find restaurants owned by a chef who belongs to a 5-star restaurant"

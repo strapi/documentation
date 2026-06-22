@@ -27,7 +27,6 @@ By default the [Document Service API](/cms/api/document-service) returns the def
 ## Get a locale version with `findOne()` {#find-one}
 
 <Endpoint
-  id="find-one"
   kind="js"
   path="strapi.documents().findOne()"
   title="Get a locale version with findOne()"
@@ -61,7 +60,6 @@ If no `status` parameter is passed, the `draft` version is returned by default.
 ## Get a locale version with `findFirst()` {#find-first}
 
 <Endpoint
-  id="find-first"
   kind="js"
   path="strapi.documents().findFirst()"
   title="Get a locale version with findFirst()"
@@ -94,7 +92,6 @@ If no `status` parameter is passed, the `draft` version is returned by default.
 If no `status` parameter is passed, the `draft` versions are returned by default.
 
 <Endpoint
-  id="find-many"
   kind="js"
   path="strapi.documents().findMany()"
   title="Get locale versions with findMany()"
@@ -149,7 +146,6 @@ Given the following 4 documents that have various locales:
 ## `create()` a document for a locale {#create}
 
 <Endpoint
-  id="create"
   kind="js"
   path="strapi.documents().create()"
   title="Create a document for a locale"
@@ -181,7 +177,6 @@ Given the following 4 documents that have various locales:
 ## `update()` a locale version {#update}
 
 <Endpoint
-  id="update"
   kind="js"
   path="strapi.documents().update()"
   title="Update a locale version"

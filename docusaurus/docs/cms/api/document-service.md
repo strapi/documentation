@@ -93,7 +93,6 @@ The [`publish()`](#publish), [`unpublish()`](#unpublish), and [`discardDraft()`]
 Syntax: `findOne(parameters: Params) => Document`
 
 <Endpoint
-  id="findone"
   kind="js"
   path="strapi.documents().findOne()"
   title="findOne()"
@@ -133,7 +132,6 @@ Syntax: `findOne(parameters: Params) => Document`
 Syntax:  `findFirst(parameters: Params) => Document`
 
 <Endpoint
-  id="findfirst"
   kind="js"
   path="strapi.documents().findFirst()"
   title="findFirst()"
@@ -197,7 +195,6 @@ If no `locale` or `status` parameters are passed, results return the draft versi
 Syntax: `findMany(parameters: Params) => Document[]`
 
 <Endpoint
-  id="findmany"
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany()"
@@ -275,7 +272,6 @@ If no `locale` or `status` parameters are passed, results return the draft versi
 Syntax: `create(parameters: Params) => Document`
 
 <Endpoint
-  id="create"
   kind="js"
   path="strapi.documents().create()"
   title="create()"
@@ -322,7 +318,6 @@ If the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled on 
 Syntax: `update(parameters: Params) => Promise<Document>`
 
 <Endpoint
-  id="update"
   kind="js"
   path="strapi.documents().update()"
   title="update()"
@@ -378,7 +373,6 @@ It's not recommended to update repeatable components with the Document Service A
 Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 <Endpoint
-  id="delete"
   kind="js"
   path="strapi.documents().delete()"
   title="delete()"
@@ -423,7 +417,6 @@ Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }
 Syntax: `deleteMany(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 <Endpoint
-  id="deletemany"
   kind="js"
   path="strapi.documents().deleteMany()"
   title="deleteMany()"
@@ -466,7 +459,6 @@ Syntax: `deleteMany(parameters: Params): Promise<{ documentId: ID, entries: Numb
 Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 <Endpoint
-  id="publish"
   kind="js"
   path="strapi.documents().publish()"
   title="publish()"
@@ -511,7 +503,6 @@ Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number 
 Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 <Endpoint
-  id="unpublish"
   kind="js"
   path="strapi.documents().unpublish()"
   title="unpublish()"
@@ -556,7 +547,6 @@ Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Numbe
 Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 <Endpoint
-  id="discarddraft"
   kind="js"
   path="strapi.documents().discardDraft()"
   title="discardDraft()"
@@ -601,7 +591,6 @@ Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Nu
 Syntax: `count(parameters: Params) => number`
 
 <Endpoint
-  id="count"
   kind="js"
   path="strapi.documents().count()"
   title="count()"

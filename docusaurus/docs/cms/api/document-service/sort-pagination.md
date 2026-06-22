@@ -98,7 +98,6 @@ To sort results returned by the Document Service API, include the `sort` paramet
 ## Pagination
 
 <Endpoint
-  id="pagination"
   kind="js"
   path="strapi.documents().findMany()"
   title="Pagination"

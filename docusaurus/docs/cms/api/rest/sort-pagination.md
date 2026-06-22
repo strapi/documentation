@@ -219,7 +219,6 @@ To paginate results by page, use the following parameters:
 | `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
 
 <Endpoint
-  id="pagination-by-page"
   method="GET"
   path="/api/articles"
   title="Pagination by page"
@@ -280,7 +279,6 @@ The default and maximum values for `pagination[limit]` can be [configured in the
 :::
 
 <Endpoint
-  id="pagination-by-offset"
   method="GET"
   path="/api/articles"
   title="Pagination by offset"

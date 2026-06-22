@@ -32,7 +32,6 @@ Passing `{ status: 'draft' }` to a Document Service API query returns the same r
 ## Get the published version with `findOne()` {#find-one}
 
 <Endpoint
-  id="find-one"
   kind="js"
   path="strapi.documents().findOne()"
   title="findOne() with status: 'published'"
@@ -64,7 +63,6 @@ Passing `{ status: 'draft' }` to a Document Service API query returns the same r
 ## Get the published version with `findFirst()` {#find-first}
 
 <Endpoint
-  id="find-first"
   kind="js"
   path="strapi.documents().findFirst()"
   title="findFirst() with status: 'published'"
@@ -95,7 +93,6 @@ Passing `{ status: 'draft' }` to a Document Service API query returns the same r
 ## Get the published version with `findMany()` {#find-many}
 
 <Endpoint
-  id="find-many"
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany() with status: 'published'"
@@ -153,7 +150,6 @@ This means that counting with the `status: 'draft'` parameter still returns the 
 ## Create a draft and publish it {#create}
 
 <Endpoint
-  id="create"
   kind="js"
   path="strapi.documents().create()"
   title="create() with status: 'published'"
@@ -187,7 +183,6 @@ This means that counting with the `status: 'draft'` parameter still returns the 
 ## Update a draft and publish it {#update}
 
 <Endpoint
-  id="update"
   kind="js"
   path="strapi.documents().update()"
   title="update() with status: 'published'"
