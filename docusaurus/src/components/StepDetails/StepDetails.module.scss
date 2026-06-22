@@ -96,8 +96,8 @@
     color: #22C55E !important;
 
     &::before {
-      border-right-color: #22C55E !important;
-      border-bottom-color: #22C55E !important;
+      border-right: 2px solid #22C55E !important;
+      border-bottom: 2px solid #22C55E !important;
     }
   }
 }
@@ -109,5 +109,13 @@
 
   .checkmarkVisible {
     background: rgba(34, 197, 94, 0.15);
+  }
+
+  /* In dark mode the disclosure arrow (summary::before) is invisible (its accent
+   * color resolves dark and its border width can collapse). Force a full white
+   * 2px arrow for steps that are NOT completed (completed steps keep green). */
+  .stepDetails:not(.completed) > summary::before {
+    border-right: 2px solid #ffffff !important;
+    border-bottom: 2px solid #ffffff !important;
   }
 }
