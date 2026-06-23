@@ -341,7 +341,14 @@ const DARK_STYLES = `
     color: #A5A3FF !important;
   }
   .mantine-Popover-dropdown svg {
-    color: #A1A1AA !important;
+    color: #D4D4D8 !important;
+  }
+  /* "Use MCP" popover — client logos (Cursor, VS Code, Claude Code) are
+     monochrome currentColor SVGs. The generic gray above rendered them as a
+     dull, barely-visible gray on the dark dropdown; show them in near-white so
+     they read clearly. (.mantine-b5sdit is the per-row icon wrapper.) */
+  .mantine-Popover-dropdown .mantine-b5sdit svg {
+    color: #FAFAFA !important;
   }
   .mantine-Popover-dropdown .mantine-Paper-root {
     background: #1F1F23 !important;
