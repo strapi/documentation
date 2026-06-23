@@ -281,7 +281,7 @@ export default function PageHome() {
                   Build your own or install from the Marketplace.
                 </div>
                 <div className={styles.showcaseCardCta}>
-                  Browse plugins <span>→</span>
+                  Learn more <span>→</span>
                 </div>
               </a>
             </Reveal>
