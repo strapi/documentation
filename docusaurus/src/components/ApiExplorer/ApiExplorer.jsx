@@ -184,6 +184,7 @@ const API_DATA = {
     pageInfo {
       page
       pageSize
+      pageCount
       total
     }
   }
@@ -201,7 +202,7 @@ const API_DATA = {
                     name: 'Biscotte Restaurant',
                   },
                 ],
-                pageInfo: { page: 1, pageSize: 10, total: 1 },
+                pageInfo: { page: 1, pageSize: 10, pageCount: 1, total: 1 },
               },
             },
           },
