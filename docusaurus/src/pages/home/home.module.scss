@@ -576,6 +576,10 @@
   color: var(--strapi-fg-3);
   border: 1px solid var(--strapi-border);
   margin-bottom: 16px;
+  // Preserve the leading indentation spaces in the inline code snippet so the
+  // example reads like real, properly nested code (collapsed whitespace made
+  // it look flat).
+  white-space: pre-wrap;
 }
 
 .showcaseCardCta {

@@ -302,7 +302,7 @@ export default function PageHome() {
                   <span className={styles.codeKw}>module.exports</span> = {'{'}<br />
                   {'  '}<span className={styles.codeFn}>beforeCreate</span>(event) {'{'}<br />
                   {'    '}event.params.data.price *= <span className={styles.codeStr}>0.8</span>;<br />
-                  {'  '}{'}'},{'\n'}
+                  {'  '}{'}'},<br />
                   {'}'};
                 </div>
                 <div className={styles.showcaseCardCta}>
