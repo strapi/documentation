@@ -39,9 +39,17 @@
   &__request,
   &__response {
     border-radius: var(--custom-api-call-radius);
+    // Flex/grid children default to min-width:auto and won't shrink below their
+    // content's min-content width, so a long code line makes the whole block
+    // grow past the viewport (horizontal page overflow) instead of scrolling
+    // inside its own code block. min-width:0 lets the block shrink to its track.
+    min-width: 0;
 
     &__heading,
     &__content {
+      min-width: 0;
+      max-width: 100%;
+
       *:last-child {
         margin-bottom: 0;
       }
