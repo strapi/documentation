@@ -9,6 +9,9 @@
   border-radius: 0;
   padding: 2px 0 2px 20px;
 
+  // .tldr__body is the wrapper (a <div>, not a <p>, so MDX prose children that
+  // compile to <p> nest validly and don't trigger a hydration mismatch).
+  .tldr__body,
   p {
     color: var(--strapi-fg-3);
     font-size: 15px;
@@ -23,6 +26,7 @@
 
     p {
       padding: 0;
+      margin: 0;
     }
   }
 
@@ -36,6 +40,7 @@
   .tldr {
     border-left-color: var(--strapi-accent-light, #7B79FF);
 
+    .tldr__body,
     p {
       color: rgba(255, 255, 255, 0.7);
     }
