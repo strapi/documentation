@@ -539,6 +539,21 @@
       "number": 26303,
       "reason": "Router: Admin UI UX fix for guided tour tooltips. This is an internal implementation detail. Tooltips rendering in the correct position is not a feature or configuration change requiring documentation.",
       "added": "2026-06-20"
+    },
+    {
+      "number": 26698,
+      "reason": "Triage: documentation-only change, no runtime behavior changes",
+      "added": "2026-06-23"
+    },
+    {
+      "number": 26734,
+      "reason": "Router: Internal database query optimization for dynamic zones. No public API change, no new features, no user-facing behavior change — only internal performance fix.",
+      "added": "2026-06-23"
+    },
+    {
+      "number": 26710,
+      "reason": "Router: Internal MCP tool name generation bug fix. Fixes broken behavior in tool name generation but doesn't introduce new user-facing features or API changes.",
+      "added": "2026-06-23"
     }
   ]
 }
