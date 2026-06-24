@@ -341,6 +341,17 @@ const sidebars = {
         'cms/configurations/middlewares',
         'cms/configurations/plugins',
         'cms/configurations/server',
+        {
+          type: 'category',
+          label: 'Guides',
+          link: { type: 'generated-index', slug: '/cms/configurations/guides' },
+          items: [
+            'cms/configurations/guides/access-cast-environment-variables',
+            'cms/configurations/guides/access-configuration-values',
+            'cms/configurations/guides/configure-sso',
+            'cms/configurations/guides/rbac',
+          ],
+        },
       ],
     },
     { // Development

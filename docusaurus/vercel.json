@@ -46,11 +46,6 @@
       "permanent": true
     },
     {
-      "source": "/cms/configurations/guides",
-      "destination": "/cms/configurations/guides/access-cast-environment-variables",
-      "permanent": true
-    },
-    {
       "source": "/cms/configurations/sso-providers",
       "destination": "/cms/features/sso",
       "permanent": true
