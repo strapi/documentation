@@ -52,11 +52,22 @@
     .tabs + .margin-top--md {
       margin-top: 0 !important; // Simplified, removed redundant line
     }
-    
+
+    // Inner padding on the tab panel so content is not flush against the
+    // container border (top, bottom, left, right).
+    [role="tabpanel"] {
+      padding: 16px 20px;
+    }
+
     // Remove border for nested tabs container
     [role="tabpanel"] .tabs-container {
       border: none;
       border-radius: 0;
+    }
+
+    // Nested tab panels already sit inside a padded panel; don't double it.
+    [role="tabpanel"] [role="tabpanel"] {
+      padding: 0;
     }
   }
   
