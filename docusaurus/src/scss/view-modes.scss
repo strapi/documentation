@@ -535,6 +535,20 @@
     }
   }
 
+  // Expandable "Show more / Show less" blocks: reveal everything in markdown
+  // mode. The collapsed wrapper sets max-height + overflow inline, so override
+  // with !important; hide the fade gradient and the toggle button.
+  .expandable-content__wrapper,
+  .expandable-content__wrapper--collapsed {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .expandable-content__gradient,
+  .expandable-content__toggle {
+    display: none !important;
+  }
+
   // Remove film grain overlay
   body::before {
     display: none;
