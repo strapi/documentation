@@ -53,6 +53,7 @@ const sidebars = {
       label: 'Features',
       collapsible: false,
       className: 'category-cms-features',
+      link: { type: 'generated-index', slug: '/cms/features' },
       items: [
         {
           type: 'doc',
@@ -157,6 +158,7 @@ const sidebars = {
       label: 'AI',
       collapsible: false,
       className: 'category-cms-ai',
+      link: { type: 'generated-index', slug: '/cms/ai' },
       items: [
         {
           type: 'doc',
@@ -479,6 +481,7 @@ const sidebars = {
       type: 'category',
       label: 'Plugins development',
       className: 'category-cms-plugins',
+      link: { type: 'generated-index', slug: '/cms/plugins-development' },
       collapsible: false,
       collapsed: false,
       items: [
@@ -649,6 +652,7 @@ const sidebars = {
       collapsible: false,
       className: 'category-cloud-account',
       label: 'Account management',
+      link: { type: 'generated-index', slug: '/cloud/account' },
       items: [
         'cloud/account/account-settings',
         {
@@ -678,6 +682,7 @@ const sidebars = {
       collapsible: false,
       className: 'category-cloud-configurations',
       label: 'Advanced configuration',
+      link: { type: 'generated-index', slug: '/cloud/advanced' },
       items: [
         'cloud/advanced/database',
         {

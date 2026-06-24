@@ -46,6 +46,46 @@
       "permanent": true
     },
     {
+      "source": "/cms/configurations/guides",
+      "destination": "/cms/configurations/guides/access-cast-environment-variables",
+      "permanent": true
+    },
+    {
+      "source": "/cms/configurations/sso-providers",
+      "destination": "/cms/features/sso",
+      "permanent": true
+    },
+    {
+      "source": "/cms/data-management",
+      "destination": "/cms/features/data-management",
+      "permanent": true
+    },
+    {
+      "source": "/cms/getting-started",
+      "destination": "/cms/quick-start",
+      "permanent": true
+    },
+    {
+      "source": "/cms/migration",
+      "destination": "/cms/migration/v4-to-v5/introduction-and-faq",
+      "permanent": true
+    },
+    {
+      "source": "/cms/plugins-development/guides",
+      "destination": "/cms/plugins-development/guides/store-and-access-data",
+      "permanent": true
+    },
+    {
+      "source": "/cms/backend-customization/guides",
+      "destination": "/cms/backend-customization/guides/customizing-users-permissions-plugin-routes",
+      "permanent": true
+    },
+    {
+      "source": "/cms/plugins",
+      "destination": "/cms/plugins/installing-plugins-via-marketplace",
+      "permanent": true
+    },
+    {
       "source": "/dev-docs/configurations/sso#setting-up-provider-configuration",
       "destination":"/cms/configurations/guides/configure-sso#setting-up-provider-configuration",
       "permanent": true
