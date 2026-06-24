@@ -18,4 +18,4 @@ We gave the Strapi documentation a fresh new look and a set of features designed
 
 <Icon name="code" /> **2-column layout for API references.** The [REST API](/cms/api/rest), [GraphQL API](/cms/api/graphql), and [Document Service API](/cms/api/document-service) reference pages now use a 2-column layout: the description and parameters on the left, and the request and response examples on the right, so you can read and try at the same time.
 
-<Icon name="chat-circle-dots" /> **Page feedback widget.** Tell us what works and what does not, directly from the docs. You can leave general feedback using the widget at the bottom of each page, or select some text and click the floating **Leave feedback** button to send specific feedback about that content. Your input goes straight to the docs team.
+<Icon name="chat-circle-dots" /> **Page feedback widget.** Tell us what works and what does not, directly from the docs. You can leave general feedback using the widget at the bottom of each page, or select some text or code and click the floating **Leave feedback** button to send specific feedback about that content. Your input goes straight to the docs team.
