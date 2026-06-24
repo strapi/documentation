@@ -464,6 +464,46 @@
     display: block !important;
   }
 
+  // Annotation (inline tooltip): flatten. No "+" toggle button / popover —
+  // mark the annotated word with an asterisk and show the content as a plain
+  // block right after it (which falls below the paragraph in raw-markdown flow).
+  .annotation {
+    position: static !important;
+  }
+
+  .annotation__toggle {
+    // Replace the round "+" button with a simple asterisk after the word.
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    &::before,
+    .annotation__toggle__icon {
+      display: none !important;
+    }
+
+    &::after {
+      content: "*";
+      font-weight: 700;
+      color: var(--strapi-fg-2, inherit);
+    }
+  }
+
+  // Any open popover is irrelevant here; the flat block is the source of truth.
+  .annotation__tooltip {
+    display: none !important;
+  }
+
+  .annotation__flat {
+    display: block !important;
+    position: static !important;
+    margin: 4px 0 8px 16px;
+    padding-left: 12px;
+    border-left: 2px solid var(--strapi-neutral-200);
+    font-size: 0.95em;
+    color: var(--strapi-fg-2, inherit);
+  }
+
   // Subtle callouts: simplify
   [class*="subtleCallout"] {
     border-radius: 0;
