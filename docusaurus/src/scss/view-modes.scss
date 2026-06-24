@@ -686,13 +686,16 @@
   @include medium-up {
     --doc-content-max-width: 100% !important;
 
+    // Cap at 50vw minus a margin: the content area starts ~52px from the left
+    // (sidebar offset), so a flat 50vw width pushed its right edge ~52px past
+    // the AI panel divider, tucking content and pagination under the panel.
     main,
     [class*="docMainContainer"],
     [class*="docRoot"] > div,
     [class*="docItemWrapper"],
     .row,
     .col {
-      max-width: 50vw !important;
+      max-width: calc(50vw - 60px) !important;
       transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -714,9 +717,10 @@
       display: none !important;
     }
 
-    // Pagination: ensure it fits within 50vw
+    // Pagination follows the same cap so the "next" title never tucks under
+    // the AI panel; ellipsis any title still too long.
     nav[class*="pagination"] {
-      max-width: 50vw !important;
+      max-width: calc(50vw - 60px) !important;
       overflow: hidden;
 
       a {
