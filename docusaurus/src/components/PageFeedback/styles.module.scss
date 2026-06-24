@@ -1,9 +1,8 @@
 @use '../../scss/_mixins.scss' as *;
 
 .pageFeedback {
-  // More breathing room above so the widget never reads as glued to the last
-  // paragraph (margin can collapse, so this is intentionally generous).
-  margin-top: 5.5rem;
+  // Enough separation from the last paragraph without feeling isolated.
+  margin-top: 2.25rem;
   margin-bottom: var(--strapi-spacing-4, 1rem);
   padding: var(--strapi-spacing-4, 1rem) var(--strapi-spacing-5, 1.5rem);
   border: 1px solid var(--ifm-toc-border-color);
