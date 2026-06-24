@@ -11,9 +11,9 @@
     border-radius: 6px;
     background: transparent;
     position: sticky;
-    // Stay detached from the navbar on scroll, aligned with the table of
-    // contents and the mode switcher (18px below the navbar).
-    top: calc(var(--ifm-navbar-height, 3.75rem) + 18px);
+    // Vertically aligned with the NAVIGATION / ON THIS PAGE sidebar labels and
+    // the mode switcher (top of all four kept in line).
+    top: calc(var(--ifm-navbar-height, 3.75rem) + 22px);
     z-index: 1;
     float: right;
     transition: opacity 0.3s ease;
