@@ -640,10 +640,16 @@
       margin-bottom: var(--strapi-spacing-4);
     }
 
-    &__section + &__section {
-      border-top: 1px dashed var(--strapi-neutral-150);
-      padding-top: var(--strapi-spacing-4);
-    }
+  }
+
+  // Separation between stacked tab variants (e.g. TypeScript after JavaScript).
+  // Written flat (not as `&__section + &__section`) so the parent selector is
+  // not duplicated onto the sibling, which would make the rule never match.
+  .tabs-flat__section + .tabs-flat__section {
+    border-top: 1px dashed var(--strapi-neutral-150);
+    // More room above the second variant so it is easy to tell where one
+    // example ends and the next begins.
+    padding-top: 32px;
   }
 }
 
@@ -814,10 +820,12 @@
       &__heading {
         color: var(--strapi-neutral-400);
       }
+    }
 
-      &__section + &__section {
-        border-top-color: var(--strapi-neutral-200);
-      }
+    // Flat selector (not `&__section + &__section`) so the parent prefix is not
+    // duplicated onto the sibling.
+    .tabs-flat__section + .tabs-flat__section {
+      border-top-color: var(--strapi-neutral-200);
     }
   }
 }
