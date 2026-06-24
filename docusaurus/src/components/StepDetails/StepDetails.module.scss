@@ -17,7 +17,10 @@
    * top-aligned for multi-line titles, which otherwise leaves the arrow too
    * high relative to the text baseline). */
   summary::before {
-    margin-top: 15px;
+    /* Center the arrow on the first line of the title: with 20px summary
+     * padding-top, the title's first line centers ~34px below the summary top;
+     * the arrow box is 7px tall, so margin-top 10px puts its center at ~33.5px. */
+    margin-top: 10px;
   }
 
   summary {
