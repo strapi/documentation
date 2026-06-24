@@ -138,7 +138,7 @@ You might also need to run `npm run build` prior to the `develop` command, espec
 
 The Content-Type Builder helps you create your content structure. When creating an empty project with Strapi, this is where to get the party started!
 
-<StepDetails title='Step 1: Create a "Restaurant" collection type'>
+<StepDetails title='Step 3: Create a "Restaurant" collection type'>
 
 Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
@@ -166,7 +166,7 @@ Once Strapi has restarted, "Restaurant" is listed under <Icon name="feather" /> 
 
 </StepDetails>
 
-<StepDetails title='Step 2: Create a "Category" collection type'>
+<StepDetails title='Step 4: Create a "Category" collection type'>
 
 It would help getting a bit more organized if our restaurants directory had some categories. Let's create a "Category" collection type:
 
@@ -252,7 +252,7 @@ Feel free to play with the Content-Type Builder even further and add more fields
 
 Now that we have created a basic content structure with 2 collection types, "Restaurant" and "Category", and deployed your project to Strapi Cloud, let's use the Cloud to actually add content by creating new entries.
 
-<StepDetails title="Step 1: Log in to the admin panel of your new Strapi Cloud project">
+<StepDetails title="Step 5: Log in to the admin panel of your new Strapi Cloud project">
 
 Now that your Strapi Cloud project is created, let's log in into the project:
 
@@ -285,7 +285,7 @@ Any project hosted on Strapi Cloud is accessible from its own URL, something lik
 
 </StepDetails>
 
-<StepDetails title="Step 2: Create an entry for the &quot;Restaurant&quot; collection type">
+<StepDetails title="Step 6: Create an entry for the &quot;Restaurant&quot; collection type">
 
 1. Go to <Icon name="feather" /> _Content Manager > Collection types - Restaurant_ in the navigation.
 2. Click on **Create new entry**.
@@ -305,7 +305,7 @@ The restaurant is now listed in the _Collection types - Restaurant_ view of the 
 <br/>
 </StepDetails>
 
-<StepDetails title="Step 3: Add Categories">
+<StepDetails title="Step 7: Add Categories">
 
 Let's go to <Icon name="feather" /> _Content Manager > Collection types - Category_ and create 2 categories:
 
@@ -331,7 +331,7 @@ Now, we will add a category to a restaurant:
 
 </StepDetails>
 
-<StepDetails title="Step 4: Set Roles & Permissions">
+<StepDetails title="Step 8: Set Roles & Permissions">
 
 We have just added a restaurant and 2 categories. We now have enough content to consume (pun intended). But first, we need to make sure that the content is publicly accessible through the API:
 
@@ -353,7 +353,7 @@ sources={{
 
 </StepDetails>
 
-<StepDetails title="Step 5: Publish the content">
+<StepDetails title="Step 9: Publish the content">
 
 By default, any content you create is saved as a draft. Let's publish our categories and restaurant.
 
@@ -376,7 +376,7 @@ sources={{
 
 </StepDetails>
 
-<StepDetails title="Step 6: Use the API">
+<StepDetails title="Step 10: Use the API">
 
 OK dear gourmet, we have just finished creating our content and making it accessible through the API. You can give yourself a pat on the back — but you have yet to see the final result of your hard work.
 
