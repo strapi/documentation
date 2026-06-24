@@ -52,6 +52,14 @@
     width: 100%;
   }
 
+  // Mode switcher: the markdown "tighten everything" rules zero its negative
+  // top margin, which dropped the toolbar ~13px lower than in elegant mode.
+  // Re-apply it so the toolbar stays at a fixed height below the navbar in
+  // both modes.
+  [class*="switcher"] {
+    margin-top: -13px !important;
+  }
+
   // Flatten card grids into simple list (article only)
   article [class*="docCardList"],
   article [class*="customDocCardsWrapper"],
