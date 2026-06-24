@@ -10,7 +10,9 @@
   summary {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    // Left-align the title instead of centering it, and place the completion
+    // pill just before the title (not at the far right of the row).
+    justify-content: flex-start;
     padding: 20px 32px !important;
   }
 
@@ -53,7 +55,11 @@
   border-radius: 50%;
   font-size: 20px;
   flex-shrink: 0;
-  margin-left: 12px;
+  // Sit just before the title (after the disclosure arrow), with a small gap
+  // on each side, instead of being pushed to the end of the row.
+  order: -1;
+  margin-left: 16px;
+  margin-right: 16px;
   /* Position above the summary::after overlay so it's visible */
   position: relative;
   z-index: 2;
