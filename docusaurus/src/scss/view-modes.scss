@@ -484,6 +484,12 @@
 
   details > summary ~ * {
     display: block !important;
+    // Docusaurus' collapsible animates the content wrapper with inline
+    // height:0 / overflow:hidden. When we force the details open via JS that
+    // inline state is never recomputed, so the content stays clipped. Override
+    // it so the content is fully revealed and flat.
+    height: auto !important;
+    overflow: visible !important;
   }
 
   // Annotation (inline tooltip): flatten. No "+" toggle button / popover —
