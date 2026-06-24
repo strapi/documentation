@@ -37,9 +37,12 @@
   color: var(--ifm-color-emphasis-600);
   cursor: pointer;
   padding: 0;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  // No background transition: it could leave the previously selected button
+  // briefly colored during a switch (e.g. after a sidebar collapse/expand
+  // re-layout), making two buttons look selected at once.
+  transition: color 0.2s ease;
 
-  &:hover:not(.active) {
+  &:hover:not([aria-checked='true']) {
     background: var(--strapi-neutral-200);
   }
 
@@ -49,7 +52,9 @@
   }
 }
 
-.active {
+// Active state keyed on aria-checked (always unique) rather than the .active
+// class, so only the genuinely selected button can ever show as selected.
+.button[aria-checked='true'] {
   background: var(--strapi-primary-600);
   color: white;
 

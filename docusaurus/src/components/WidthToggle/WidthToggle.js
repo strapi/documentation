@@ -89,7 +89,7 @@ export default function WidthToggle() {
         return (
           <button
             key={w.value}
-            className={`${styles.button} ${isActive ? styles.active : ''}`}
+            className={styles.button}
             role="radio"
             aria-checked={isActive}
             aria-label={w.label}
