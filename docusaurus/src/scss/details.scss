@@ -95,7 +95,9 @@ details.alert {
     margin-bottom: 0 !important;
   }
 
-  > div:first-of-type,
+  // Only neutralize the top spacing of the first inner element, NOT the
+  // content wrapper itself: the wrapper keeps its padding-top so the content
+  // is separated from the summary (and its bottom border when open).
   > div > *:first-child {
     padding-top: 0 !important;
     margin-top: 0 !important;
