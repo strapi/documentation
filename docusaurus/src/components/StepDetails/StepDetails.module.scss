@@ -10,6 +10,15 @@
    * removed); matches the border of regular details blocks. */
   border: 1px solid var(--strapi-neutral-150) !important;
   border-radius: var(--strapi-radius-md);
+  /* Vertical spacing between consecutive step blocks. */
+  margin: 0 0 16px !important;
+
+  /* Align the disclosure arrow with the first line of the title (the summary is
+   * top-aligned for multi-line titles, which otherwise leaves the arrow too
+   * high relative to the text baseline). */
+  summary::before {
+    margin-top: 5px;
+  }
 
   summary {
     display: flex;
