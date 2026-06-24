@@ -75,7 +75,17 @@ export default function StepProgress() {
     const el = document.getElementById(id);
     if (el) {
       el.open = true;
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // scrollIntoView({ block: 'start' }) aligns the element top with the
+      // viewport top, where the sticky navbar then hides the step title.
+      // Scroll manually with an offset equal to the navbar height (+ a little
+      // breathing room) so the title clears the navbar. Measure the navbar's
+      // real rendered height in px (the --ifm-navbar-height CSS var is in rem,
+      // so reading it directly would parse to ~3.75 and apply almost no offset).
+      const navbar = document.querySelector('.navbar');
+      const navbarHeight = navbar ? navbar.getBoundingClientRect().height : 70;
+      const offset = navbarHeight + 16;
+      const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 
