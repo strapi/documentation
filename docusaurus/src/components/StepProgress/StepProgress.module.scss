@@ -80,7 +80,9 @@
   list-style: none;
   margin: 12px 0 0;
   padding: 0;
-  max-height: 240px;
+  // Tall enough to show all steps without scrolling, capped to the viewport so
+  // it never overflows on short screens (then it scrolls as a fallback).
+  max-height: min(70vh, 640px);
   overflow-y: auto;
   scrollbar-width: thin;
 
