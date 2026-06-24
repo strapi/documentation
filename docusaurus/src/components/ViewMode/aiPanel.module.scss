@@ -36,7 +36,6 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--strapi-spacing-4) var(--strapi-spacing-5);
-  border-bottom: 1px solid var(--strapi-neutral-150);
   flex-shrink: 0;
 
   h3 {
@@ -47,6 +46,22 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--strapi-primary-600);
+  }
+}
+
+// Small hint under the panel title explaining how to leave AI mode.
+.headerHint {
+  margin: 0;
+  padding: 0 var(--strapi-spacing-5) var(--strapi-spacing-3);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--strapi-neutral-600);
+  border-bottom: 1px solid var(--strapi-neutral-150);
+  flex-shrink: 0;
+
+  i {
+    font-size: 12px;
+    vertical-align: middle;
   }
 }
 

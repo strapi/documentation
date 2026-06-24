@@ -272,6 +272,9 @@ export default function AiPanel() {
           <i className="ph-bold ph-x" />
         </button>
       </div>
+      <p className={styles.headerHint}>
+        To get back to elegant or markdown mode, click the <i className="ph-bold ph-x" aria-hidden="true" />
+      </p>
 
       <div className={styles.content}>
         {tldrText ? (
