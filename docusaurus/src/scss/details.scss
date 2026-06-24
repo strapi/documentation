@@ -28,19 +28,9 @@ details.alert {
   --ifm-alert-padding-horizontal: 20px;
   --ifm-alert-padding-vertical: 16px;
 
-  // Left accent bar via pseudo-element (avoids border specificity issues with infima)
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--details-accent-color);
-    border-radius: var(--strapi-radius-md) 0 0 var(--strapi-radius-md);
-    z-index: 1;
-    pointer-events: none;
-  }
+  // Restore a neutral left border (1px) matching the other three sides, instead
+  // of the colored accent bar that used to sit here.
+  --ifm-alert-border-left-width: 1px;
 
   &:hover {
     border-color: var(--strapi-neutral-200);
