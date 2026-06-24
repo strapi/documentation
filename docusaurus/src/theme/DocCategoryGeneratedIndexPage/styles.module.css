@@ -6,8 +6,11 @@
  */
 
 @media (min-width: 997px) {
+  /* Match the regular doc content width (which follows the content-width
+     selector) instead of the default 75%, which made these pages much wider
+     than every other page. */
   .generatedIndexPage {
-    max-width: 75% !important;
+    max-width: var(--doc-content-max-width, 720px) !important;
   }
 
   .list article:nth-last-child(-n + 2) {
