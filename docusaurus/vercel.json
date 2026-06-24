@@ -11,6 +11,41 @@
       "permanent": true
     },
     {
+      "source": "/cms/api",
+      "destination": "/cms/api/content-api",
+      "permanent": true
+    },
+    {
+      "source": "/cms/api/rest/guides",
+      "destination": "/cms/api/rest/guides/intro",
+      "permanent": true
+    },
+    {
+      "source": "/cms/migration/v4-to-v5",
+      "destination": "/cms/migration/v4-to-v5/introduction-and-faq",
+      "permanent": true
+    },
+    {
+      "source": "/cms/migration/v4-to-v5/additional-resources",
+      "destination": "/cms/migration/v4-to-v5/additional-resources/introduction",
+      "permanent": true
+    },
+    {
+      "source": "/cloud/cli",
+      "destination": "/cloud/cli/cloud-cli",
+      "permanent": true
+    },
+    {
+      "source": "/cloud/getting-started",
+      "destination": "/cloud/intro",
+      "permanent": true
+    },
+    {
+      "source": "/cloud/projects",
+      "destination": "/cloud/projects/overview",
+      "permanent": true
+    },
+    {
       "source": "/dev-docs/configurations/sso#setting-up-provider-configuration",
       "destination":"/cms/configurations/guides/configure-sso#setting-up-provider-configuration",
       "permanent": true
