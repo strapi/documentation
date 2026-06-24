@@ -160,4 +160,14 @@ details.alert {
       border-bottom-color: var(--strapi-neutral-200);
     }
   }
+
+  // Disclosure chevron: in dark mode follow the summary text color (light)
+  // instead of the accent color, which can be too dark to see on the dark
+  // background. Applies to every details type (alert and plain), so the
+  // open/close handle is always visible. currentColor inherits the summary
+  // color set just above / by the theme.
+  details > summary::before {
+    border-right-color: currentColor;
+    border-bottom-color: currentColor;
+  }
 }
