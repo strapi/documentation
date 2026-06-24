@@ -1,0 +1,26 @@
+/** Quick Start Guide — page-scoped tweaks.
+ *
+ * The "What's next?" section uses the markdown <h2> as its heading (the
+ * NextSteps component is rendered with an empty title), then the NextSteps
+ * wrapper adds its own large top margin (48px). Stacked with the h2 margin
+ * this left too much air between the heading and the cards.
+ *
+ * Scoped to this page only via the .qsg-whats-next wrapper added in
+ * docs/cms/quick-start.md.
+ */
+.qsg-whats-next {
+  // A bit more breathing room ABOVE "What's next?".
+  margin-top: 64px;
+
+  h2 {
+    // Halve the gap between the heading and the step cards: the NextSteps
+    // wrapper below adds the rest, so keep the heading's own bottom margin small.
+    margin-bottom: 0;
+  }
+
+  // The NextSteps component root (its only child block here). Halve its top
+  // margin (was 48px) so the cards sit closer to the heading.
+  > div {
+    margin-top: 24px;
+  }
+}

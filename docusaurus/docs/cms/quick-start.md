@@ -435,6 +435,8 @@ Keep on creating amazing content!
 The databases for your Strapi Cloud project and your local project are different. This means that data is not automatically synchronized between your Strapi Cloud and local projects. You can use the [data management system](/cms/features/data-management) to transfer data between projects.
 :::
 
+<div className="qsg-whats-next">
+
 ## What's next?
 
 <NextSteps title="">
@@ -454,3 +456,5 @@ The databases for your Strapi Cloud project and your local project are different
     link="/cloud/getting-started/deployment"
   />
 </NextSteps>
+
+</div>
