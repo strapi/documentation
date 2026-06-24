@@ -9,19 +9,55 @@ const WIDTHS = [
   { value: 'max', label: 'Full width', icon: 'arrows-out' },
 ];
 
-function getInitialWidth() {
+const VALID = ['default', 'wide', 'max'];
+
+function getStoredWidth() {
   if (typeof window === 'undefined') return 'default';
   try {
-    return localStorage.getItem(STORAGE_KEY) || 'default';
+    const v = localStorage.getItem(STORAGE_KEY);
+    return VALID.includes(v) ? v : 'default';
   } catch {
     return 'default';
   }
 }
 
+// The active width is read from the DOM (data-content-width on <html>), which
+// is the single shared source of truth. Reading it here (rather than from a
+// per-instance state seeded from localStorage) means every WidthToggle
+// instance always reflects the same value, even if several are mounted at once
+// or one is re-mounted on a layout change.
+function getDomWidth() {
+  if (typeof document === 'undefined') return 'default';
+  const v = document.documentElement.dataset.contentWidth;
+  return VALID.includes(v) ? v : 'default';
+}
+
 export default function WidthToggle() {
-  const [width, setWidth] = useState(getInitialWidth);
+  // SSR renders 'default'; the real value is synced from the DOM after mount.
+  const [width, setWidth] = useState('default');
   const [visible, setVisible] = useState(true);
   const lastScrollY = useRef(0);
+
+  // On mount: apply the stored width to the DOM (if not already set), then keep
+  // this instance's state in sync with the DOM attribute. A MutationObserver
+  // means any change — from this instance, another instance, or elsewhere —
+  // updates every toggle, so the active button is never stale.
+  useEffect(() => {
+    const stored = getStoredWidth();
+    if (stored === 'default') {
+      delete document.documentElement.dataset.contentWidth;
+    } else {
+      document.documentElement.dataset.contentWidth = stored;
+    }
+    setWidth(getDomWidth());
+
+    const observer = new MutationObserver(() => setWidth(getDomWidth()));
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-content-width'],
+    });
+    return () => observer.disconnect();
+  }, []);
 
   // Auto-hide on scroll down, show on scroll up
   useEffect(() => {
@@ -40,17 +76,14 @@ export default function WidthToggle() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Sync DOM attribute on mount and changes
-  useEffect(() => {
-    if (width === 'default') {
+  const handleChange = useCallback((value) => {
+    // Write the shared source of truth; the MutationObserver above syncs the
+    // state of this (and every other) toggle instance.
+    if (value === 'default') {
       delete document.documentElement.dataset.contentWidth;
     } else {
-      document.documentElement.dataset.contentWidth = width;
+      document.documentElement.dataset.contentWidth = value;
     }
-  }, [width]);
-
-  const handleChange = useCallback((value) => {
-    setWidth(value);
     try {
       if (value === 'default') {
         localStorage.removeItem(STORAGE_KEY);
