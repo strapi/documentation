@@ -525,6 +525,16 @@
     text-decoration: underline !important;
   }
 
+  // Footer tag pills: no underline (they are bordered pills), except on hover.
+  article a[class*="tag_"],
+  article a[class*="tagRegular"] {
+    text-decoration: none !important;
+
+    &:hover {
+      text-decoration: underline !important;
+    }
+  }
+
   // Remove film grain overlay
   body::before {
     display: none;
