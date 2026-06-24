@@ -340,7 +340,9 @@
     background: transparent !important;
     box-shadow: none !important;
     padding: 4px 0 4px 16px !important;
-    margin: 8px 0 !important;
+    // Extra space below so the page content is clearly separated from the
+    // "Page summary" block.
+    margin: 8px 0 28px !important;
   }
 
   // <IdentityCard>: strip the card frame/background; keep its items as text.
