@@ -6,33 +6,16 @@ custom_edit_url: null
 
 # What's new in Strapi docs?
 
-Strapi 5 brings many new features and improvements, and this page quickly highlights the most important documentation changes.
+We gave the Strapi documentation a fresh new look and a set of features designed to make reading, navigating, and reusing the docs easier. Here is a quick tour of what changed.
 
-<Icon name="newspaper" /> The **[Draft & Publish](/cms/features/draft-and-publish)** feature has been fully reworked. When Draft & Publish is enabled, the Content Manager edit view shows 2 different tabs, one for the draft version and one for the published version, and both can handle different content.
+<Icon name="sparkle" /> **3 reading modes.** Switch any page between **Elegant mode** (the default, fully styled reading experience), **Markdown mode** (a flat, raw-text view that is easy to copy), and **AI mode** (a summary-oriented view built for working with AI assistants). The switcher sits at the top of every documentation page.
 
-<Icon name="magic-wand"/> The new **[Content History](/cms/features/content-history)** feature allows you to view and restore previous versions of your content from the Content Manager.
+<Icon name="arrows-horizontal" /> **Content-width selector.** Prefer a narrower column for comfortable reading or a wider one to see more at once? A floating control lets you adjust the content width to your taste, and your choice is remembered as you browse.
 
-<Icon name="eye" /> The new **[Preview](/cms/features/preview)** feature allows you to preview your content in your front end application directly from Strapi's admin panel.
+<Icon name="sidebar" /> **Collapsible sidebars.** Both the left navigation and the right "On this page" table of contents can now be collapsed, so you can focus on the content and reclaim screen space whenever you need it.
 
-<Icon name="file"/> Strapi 5 now use **[documents](/cms/api/document)** and introduces a new **[Document Service API](/cms/api/document-service)** to replace the Entity Service API from v4, leveraging the new Draft & Publish system and paving the way for more upcoming features.
+<Icon name="house" /> **A brand-new homepage.** The [documentation homepage](/) was redesigned from scratch, with clearer entry points to the CMS and Cloud docs, an interactive API explorer, and quick links to the most popular sections.
 
-<Icon name="detective"/> The **[REST API](/cms/api/rest)** and **[GraphQL API](/cms/api/graphql)** have been updated, with a simplified response data format for both and partial support for Relay-style queries for GraphQL.
+<Icon name="code" /> **2-column layout for API references.** The [REST API](/cms/api/rest), [GraphQL API](/cms/api/graphql), and [Document Service API](/cms/api/document-service) reference pages now use a 2-column layout: the description and parameters on the left, and the request and response examples on the right, so you can read and try at the same time.
 
-<Icon name="plugs" /> The **[Strapi Client](/cms/api/client)** library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content.
-
-<Icon name="map-trifold" /> The **[OpenAPI package](/cms/api/openapi)** lets you programmatically generate a specification describing your Strapi APIs.
-
-<Icon name="puzzle-piece" /> The **[Plugin SDK](/cms/plugins-development/plugin-sdk)** is a new CLI tool that helps you develop and publish Strapi plugins.
-
-<Icon name="escalator-up" /> Another whole new CLI **[upgrade tool](/cms/upgrade-tool)** will help you migrate to any patch, minor, and major version of Strapi, automating most of the common tasks through codemods.
-
-<Icon name="hard-hat" /> Also, we have some resources ready to help you **[upgrade to Strapi 5](/cms/migration/v4-to-v5/introduction-and-faq)**, including a [step-by-step guide](/cms/migration/v4-to-v5/step-by-step), a list of [breaking changes](/cms/migration/v4-to-v5/breaking-changes) and [specific resources](/cms/migration/v4-to-v5/additional-resources/introduction) to read for when you will consider upgrading to Strapi 5.
-
-<Icon name="tag" /> We introduced a new **tagging system** to provide another layer of information architecture. Tags can be found at the bottom of each page. Clicking on a tag will point you to an index page listing all pages with the same tag. The list of all available tags is visible by visiting the [/tags](/tags) page.
-
-<Icon name="plus" /> You will also soon find more **official guides** and more references to **external resources** (contributor documentation, design system documentation, and blog articles) throughout the docs pages.
-
-<Icon name="call-bell" /> Also, last but not least, **Strapi Docs now work even better with AI**:
-
-* First, you might have noticed that the search bar now sits in the left sidebar and combines 2 buttons: the left button, **<Icon name="magnifying-glass" classes="ph-light" /> Search**, triggers a regular search, while the right part is our new AI-based chatbot! Click **<Icon name="sparkle"/> Ask AI** to ask your questions. The chatbot keeps the context of previous answers, so you can ask follow-up questions as long as you don't close the chatbot window. You can also use the Ask AI button on any code block to get detailed explanations.
-* You can also use the AI toolbar at the top of each page, which includes a **<Icon name="copy" /> Copy Markdown** button to copy raw Markdown content from the page into anything, and quick access to our [`llms.txt`](/llms.txt) and [`llms-full.txt`](/llms-full.txt) files, so you can better use Strapi Docs with your favorite LLM.
+<Icon name="chat-circle-dots" /> **Page feedback widget.** Every page now has a feedback control so you can quickly tell us whether it helped, and let us know what to improve. Your input goes straight to the docs team.
