@@ -17,8 +17,8 @@
    * top-aligned for multi-line titles, which otherwise leaves the arrow too
    * high relative to the text baseline). */
   summary::before {
-    /* Nudge the arrow ~2px below the exact center of the title's first line. */
-    margin-top: 12px;
+    /* Nudge the arrow ~1px below the exact center of the title's first line. */
+    margin-top: 11px;
   }
 
   summary {
