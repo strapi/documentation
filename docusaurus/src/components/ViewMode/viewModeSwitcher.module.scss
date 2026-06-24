@@ -5,9 +5,9 @@
   align-items: center;
   gap: 4px;
   position: sticky;
-  // Stay detached from the navbar on scroll, aligned with the sidebars
-  // and the table of contents (24px below the navbar).
-  top: calc(var(--ifm-navbar-height, 3.75rem) + 24px);
+  // Stay detached from the navbar on scroll, aligned with the table of
+  // contents and the content-width toggle (18px below the navbar).
+  top: calc(var(--ifm-navbar-height, 3.75rem) + 18px);
   z-index: 10;
   margin-bottom: 8px;
   padding: 6px 0;
