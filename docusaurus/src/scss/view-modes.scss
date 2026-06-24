@@ -32,11 +32,16 @@
   }
 
   // Page feedback widget ("Was this page helpful?"): UI chrome, not page
-  // content, so keep the regular body font in markdown mode too — and keep its
-  // top spacing (the markdown "tighten everything" rules zero it out, gluing it
-  // to the last paragraph).
+  // content, so keep the regular body font in markdown mode too.
   [class*="pageFeedback"] {
     font-family: var(--strapi-font-family-body, 'Inter', sans-serif);
+  }
+
+  // Keep the widget's top spacing in markdown (the "tighten everything" rules
+  // zero it out, gluing it to the last paragraph). Target ONLY the root
+  // (aria-label), not every pageFeedback__* sub-element, or their margins stack
+  // and balloon the box height.
+  [aria-label="Page feedback"] {
     margin-top: 5.5rem !important;
   }
 
