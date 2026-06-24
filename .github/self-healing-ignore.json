@@ -554,6 +554,21 @@
       "number": 26710,
       "reason": "Router: Internal MCP tool name generation bug fix. Fixes broken behavior in tool name generation but doesn't introduce new user-facing features or API changes.",
       "added": "2026-06-23"
+    },
+    {
+      "number": 26753,
+      "reason": "Triage: test infrastructure fix",
+      "added": "2026-06-24"
+    },
+    {
+      "number": 26265,
+      "reason": "Triage: internal performance optimization",
+      "added": "2026-06-24"
+    },
+    {
+      "number": 25954,
+      "reason": "Router: Internal admin UI improvements (chunk loading resilience and error UX). No public-facing API or behavior change that requires user documentation.",
+      "added": "2026-06-24"
     }
   ]
 }
