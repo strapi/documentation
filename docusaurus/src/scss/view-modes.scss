@@ -688,10 +688,16 @@
     }
 
     // Only article gets overflow hidden (not nav/pagination).
-    // Add right padding so content does not touch the edge next to the AI panel.
     article {
       overflow: hidden !important;
-      padding-right: 20px !important;
+    }
+
+    // The content wrapper (and thus its full-width children: tables, code
+    // blocks, admonitions) could run up to the AI panel divider. Add a right
+    // gutter on the markdown container so nothing touches the divider.
+    .theme-doc-markdown {
+      padding-right: 24px !important;
+      box-sizing: border-box;
     }
 
     // Hide the TOC sidebar in AI mode (no room)
