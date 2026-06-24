@@ -25,6 +25,12 @@
     &--next {
       border-left: 1px solid var(--strapi-border);
       text-align: right;
+
+      // Keep the divider neutral on hover (Infima otherwise recolors it with
+      // the hover text color, turning it near-black).
+      &:hover {
+        border-left-color: var(--strapi-border);
+      }
     }
   }
 
