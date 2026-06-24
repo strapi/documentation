@@ -52,6 +52,14 @@
     width: 100%;
   }
 
+  // Tables under a list item: markdown mode indents lists by 24px (not the 32px
+  // of elegant mode), so override the pull-back margin from table.scss to match.
+  .theme-doc-markdown li > table {
+    margin-left: -24px;
+    width: calc(100% + 24px);
+    max-width: calc(100% + 24px);
+  }
+
   // Mode switcher: the markdown "tighten everything" rules zero its negative
   // top margin, which dropped the toolbar ~13px lower than in elegant mode.
   // Re-apply it so the toolbar stays at a fixed height below the navbar in
