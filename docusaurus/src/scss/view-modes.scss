@@ -17,15 +17,24 @@
     }
   }
 
-  // Secondary sidebar (TOC / "On this page") in monospace
+  // Secondary sidebar (TOC / "On this page"): keep the regular font, like in
+  // elegant mode. Only raw page content switches to monospace, not the chrome.
+  // Force the body font explicitly (it otherwise inherits the monospace set on
+  // an ancestor).
   [class*="tableOfContents"],
   [class*="tocCollapsible"] {
-    font-family: var(--strapi-font-family-technical);
+    font-family: var(--strapi-font-family-body, 'Inter', sans-serif);
     font-size: 12px;
 
     a {
       text-decoration: none !important;
     }
+  }
+
+  // Page feedback widget ("Was this page helpful?"): UI chrome, not page
+  // content, so keep the regular body font in markdown mode too.
+  [class*="pageFeedback"] {
+    font-family: var(--strapi-font-family-body, 'Inter', sans-serif);
   }
 
   // Flatten card grids into simple list (article only)
