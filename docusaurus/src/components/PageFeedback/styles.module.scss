@@ -250,6 +250,13 @@
 
 /* L2: Floating selection bubble */
 :global {
+  /* Container holding one (prose) or two (code block) action buttons */
+  .selectionFeedback__bar {
+    display: inline-flex;
+    align-items: stretch;
+    gap: 4px;
+  }
+
   .selectionFeedback__bubble {
     display: inline-flex;
     align-items: center;

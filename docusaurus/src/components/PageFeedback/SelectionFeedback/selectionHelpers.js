@@ -44,15 +44,31 @@ export function findClosestAnchor(node) {
 }
 
 /**
+ * Check if a node is inside a code block (<pre>). Selections there get a
+ * dedicated floating bar with a "Copy code" action in addition to feedback.
+ */
+export function isInsideCodeBlock(node) {
+  let current = node;
+  while (current) {
+    if (current.nodeType === 1 && current.tagName === 'PRE') {
+      return true;
+    }
+    current = current.parentElement;
+  }
+  return false;
+}
+
+/**
  * Check if a node is inside an element that should not trigger selection feedback:
- * code blocks (<pre>), inputs, textareas, the search overlay, or the Kapa modal.
+ * inputs, textareas, the search overlay, or the Kapa modal. Code blocks (<pre>)
+ * are NOT excluded here: they get their own floating bar (see isInsideCodeBlock).
  */
 export function isInsideExcludedElement(node) {
   let current = node;
   while (current) {
     if (current.nodeType === 1) {
       const tag = current.tagName;
-      if (tag === 'PRE' || tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'CODE') {
+      if (tag === 'INPUT' || tag === 'TEXTAREA') {
         return true;
       }
       // Kapa modal or search overlay
