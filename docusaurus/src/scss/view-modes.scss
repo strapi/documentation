@@ -371,16 +371,10 @@
     }
   }
 
-  // Badges (<AlphaBadge> etc.): inline plain text, no colored chip.
-  article .badge {
-    background: transparent !important;
-    border: none !important;
-    border-radius: 0 !important;
-    color: var(--strapi-neutral-600) !important;
-    padding: 0 2px !important;
-    font-weight: 600;
-    box-shadow: none !important;
-  }
+  // Badges (Growth/Enterprise/version, <AlphaBadge>, etc.): keep their elegant
+  // appearance in markdown mode (colored chip + tooltip). Flattening them made
+  // the white label text invisible and the tooltip look broken, so we leave
+  // them untouched here.
 
   // Constrain ALL images to the content width (desktop included). Without this,
   // images with no intrinsic max-width (e.g. ThemedImage = .themedComponent_*,
