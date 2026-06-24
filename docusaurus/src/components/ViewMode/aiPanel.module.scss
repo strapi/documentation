@@ -35,8 +35,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  // Less bottom padding so the hint below sits closer to the title.
-  padding: var(--strapi-spacing-4) var(--strapi-spacing-5) var(--strapi-spacing-2);
+  // 24px top so the title aligns with the elegant/markdown/AI toolbar on the
+  // left; less bottom padding so the hint below sits closer to the title.
+  padding: 24px var(--strapi-spacing-5) var(--strapi-spacing-2);
   flex-shrink: 0;
 
   h3 {
