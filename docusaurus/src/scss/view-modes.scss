@@ -422,7 +422,9 @@
     font-family: var(--strapi-font-family-technical);
   }
 
-  // Enhanced terminal blocks: strip decoration
+  // Enhanced "macOS terminal" code blocks: strip the terminal chrome down to a
+  // plain code block. Drop the three window dots and the language badge, and
+  // flatten the title bar to a discreet filename label (kept when present).
   .code-block-enhanced {
     border: none !important;
     box-shadow: none !important;
@@ -430,6 +432,22 @@
 
     .code-title-bar {
       border-radius: 0 !important;
+      background: transparent !important;
+      border-bottom: none !important;
+      min-height: 0 !important;
+      padding: 0 0 4px 0 !important;
+    }
+
+    // Window dots and language badge: pure terminal decoration, remove them.
+    .code-title-bar__dots,
+    .code-title-bar__lang {
+      display: none !important;
+    }
+
+    // Filename label: plain, quiet text instead of a terminal caption.
+    .code-title-bar__label {
+      font-weight: 500;
+      color: var(--strapi-neutral-500);
     }
   }
 
