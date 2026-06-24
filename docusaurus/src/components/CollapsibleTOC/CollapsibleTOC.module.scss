@@ -2,9 +2,12 @@
 
 .wrapper {
   position: sticky;
-  top: var(--ifm-navbar-height, 56px);
+  // Keep a gap below the navbar when scrolled, matching the spacing the TOC
+  // has at the top of the page (the article starts ~28px below the navbar).
+  // Without this offset the sticky TOC pins flush against the navbar on scroll.
+  top: calc(var(--ifm-navbar-height, 56px) + 28px);
   width: 100%;
-  max-height: calc(100vh - var(--ifm-navbar-height, 56px));
+  max-height: calc(100vh - var(--ifm-navbar-height, 56px) - 28px);
   overflow-y: auto;
   border-left: none;
   padding: 0 8px 28px 20px;
