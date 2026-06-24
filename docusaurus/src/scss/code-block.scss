@@ -730,9 +730,11 @@ pre.prism-code {
       }
     }
 
+    // Highlighted line in dark mode: #11111B matched the code surface, so the
+    // highlight was invisible. Use a neutral token that clearly stands out.
     &-highlighted-line [class*="codeLineNumber"],
     &-highlighted-line {
-      background-color: #11111B !important;
+      background-color: var(--strapi-neutral-150) !important;
     }
   }
 

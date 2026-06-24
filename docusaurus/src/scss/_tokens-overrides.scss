@@ -51,7 +51,10 @@
 
 /* Dark mode */
 @include dark {
-  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.05);
+  // Highlighted code line: the previous 5%-white wash was nearly invisible on
+  // the dark code surface. Use a neutral token that reads clearly while staying
+  // subtle.
+  --docusaurus-highlighted-code-line-bg: var(--strapi-neutral-150);
 
   --ifm-background-color: var(--strapi-surface-0);
   --ifm-color-content: var(--strapi-fg-1);
