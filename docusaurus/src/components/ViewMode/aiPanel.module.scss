@@ -35,7 +35,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--strapi-spacing-4) var(--strapi-spacing-5);
+  // Less bottom padding so the hint below sits closer to the title.
+  padding: var(--strapi-spacing-4) var(--strapi-spacing-5) var(--strapi-spacing-2);
   flex-shrink: 0;
 
   h3 {
@@ -52,7 +53,9 @@
 // Small hint under the panel title explaining how to leave AI mode.
 .headerHint {
   margin: 0;
-  padding: 0 var(--strapi-spacing-5) var(--strapi-spacing-3);
+  // Closer to the title (small top), a bit more breathing room before the
+  // bottom border.
+  padding: 0 var(--strapi-spacing-5) var(--strapi-spacing-4);
   font-size: 12px;
   line-height: 1.5;
   color: var(--strapi-neutral-600);

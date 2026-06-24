@@ -273,7 +273,7 @@ export default function AiPanel() {
         </button>
       </div>
       <p className={styles.headerHint}>
-        To get back to elegant or markdown mode, click the <i className="ph-bold ph-x" aria-hidden="true" />
+        <em>To get back to elegant or markdown mode, click the <i className="ph-bold ph-x" aria-hidden="true" /> in the upper right corner.</em>
       </p>
 
       <div className={styles.content}>
