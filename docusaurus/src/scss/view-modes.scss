@@ -246,10 +246,12 @@
     }
   }
 
-  // Details/accordion blocks (e.g. Prerequisites): strip all decoration
-  details.alert {
+  // Details/accordion blocks (e.g. Prerequisites): strip all decoration.
+  // Fully flat in markdown mode — no left accent bar, no frame, no background;
+  // the 16px content indent is kept (below) to still set the block apart.
+  // StepDetails (Quick Start) are excluded: that page keeps its own treatment.
+  details.alert:not([data-step-details]) {
     border: none !important;
-    border-left: 3px solid var(--details-accent-color, var(--strapi-primary-500)) !important;
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
