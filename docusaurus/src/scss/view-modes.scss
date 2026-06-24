@@ -32,9 +32,12 @@
   }
 
   // Page feedback widget ("Was this page helpful?"): UI chrome, not page
-  // content, so keep the regular body font in markdown mode too.
+  // content, so keep the regular body font in markdown mode too — and keep its
+  // top spacing (the markdown "tighten everything" rules zero it out, gluing it
+  // to the last paragraph).
   [class*="pageFeedback"] {
     font-family: var(--strapi-font-family-body, 'Inter', sans-serif);
+    margin-top: 5.5rem !important;
   }
 
   // Flatten card grids into simple list (article only)
