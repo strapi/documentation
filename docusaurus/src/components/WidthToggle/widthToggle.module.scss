@@ -11,10 +11,11 @@
     border-radius: 6px;
     background: transparent;
     position: sticky;
-    top: calc(var(--ifm-navbar-height, 3.75rem) + 12px);
+    // Stay detached from the navbar on scroll, aligned with the sidebars
+    // and the table of contents (24px below the navbar).
+    top: calc(var(--ifm-navbar-height, 3.75rem) + 24px);
     z-index: 1;
     float: right;
-    margin-top: 4px;
     transition: opacity 0.3s ease;
   }
 }
