@@ -108,11 +108,14 @@
 
     &__label {
       color: var(--strapi-fg-1);
-
-      .pagination-nav__link:hover & {
-        color: var(--strapi-accent-light, #7B79FF);
-      }
     }
+  }
+
+  // Match the standard in-content link color on hover (was #4945FF, too
+  // dark/saturated compared to other links in dark mode). Written flat (not
+  // nested with `&`) so html[data-theme=dark] is only prefixed once.
+  .pagination-nav__link:hover .pagination-nav__label {
+    color: var(--ifm-link-color);
   }
 
   @media (max-width: 768px) {
