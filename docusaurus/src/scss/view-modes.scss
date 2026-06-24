@@ -449,6 +449,22 @@
       font-weight: 500;
       color: var(--strapi-neutral-500);
     }
+
+    // Tighten the generous terminal padding around the command line.
+    [class*="codeBlockContainer"] {
+      padding-top: 8px !important;
+      padding-bottom: 8px !important;
+    }
+
+    [class*="codeBlockLines"] {
+      padding-top: 8px !important;
+      padding-bottom: 8px !important;
+    }
+
+    // No blinking terminal cursor in raw-markdown view.
+    .terminal-cursor {
+      display: none !important;
+    }
   }
 
   // Details/collapsible blocks: flatten completely (no toggle, always visible)
@@ -674,9 +690,11 @@
       transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    // Only article gets overflow hidden (not nav/pagination)
+    // Only article gets overflow hidden (not nav/pagination).
+    // Add right padding so content does not touch the edge next to the AI panel.
     article {
       overflow: hidden !important;
+      padding-right: 20px !important;
     }
 
     // Hide the TOC sidebar in AI mode (no room)
