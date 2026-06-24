@@ -608,6 +608,13 @@
     text-decoration: none !important;
   }
 
+  // Feature badges (Growth/Enterprise/version): their label is a link, but it
+  // is shown inside a colored chip, so it should not be underlined.
+  .badge__link,
+  .badge .badge__link {
+    text-decoration: none !important;
+  }
+
   // Expandable "Show more / Show less" blocks: reveal everything in markdown
   // mode. The collapsed wrapper sets max-height + overflow inline, so override
   // with !important; hide the fade gradient and the toggle button.
