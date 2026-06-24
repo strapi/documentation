@@ -38,7 +38,9 @@ export function ViewModeProvider({ children }) {
     if (viewMode === 'markdown') {
       forceOpenDetails();
 
-      // Watch for details elements that appear after initial render (lazy hydration)
+      // Watch for details that appear after initial render (lazy hydration)
+      // AND for any details being collapsed again (open attribute removed),
+      // so a force-opened block can never end up closed in markdown mode.
       const observer = new MutationObserver(() => {
         if (viewModeRef.current === 'markdown') {
           forceOpenDetails();
@@ -46,7 +48,12 @@ export function ViewModeProvider({ children }) {
       });
       const article = document.querySelector('article');
       if (article) {
-        observer.observe(article, { childList: true, subtree: true });
+        observer.observe(article, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['open'],
+        });
       }
       return () => observer.disconnect();
     } else {

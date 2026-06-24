@@ -444,6 +444,10 @@
     font-weight: 700;
     list-style: none;
     cursor: default;
+    // Non-interactive in markdown mode: a native <details> stays toggleable
+    // even when force-opened, so clicking the summary could re-collapse it.
+    // Disabling pointer events keeps every details block flat and open.
+    pointer-events: none;
     padding: 0;
     border: none !important;
     background: transparent !important;
