@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import { PageMetadata } from '@docusaurus/theme-common';
-import { useCurrentSidebarCategory } from '@docusaurus/plugin-content-docs/client';
+import { useCurrentSidebarCategory, useDocById } from '@docusaurus/plugin-content-docs/client';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import DocPaginator from '@theme/DocPaginator';
 import DocVersionBanner from '@theme/DocVersionBanner';
@@ -30,15 +30,21 @@ function DocCategoryGeneratedIndexPageMetadata({ categoryGeneratedIndex }) {
   );
 }
 
-// Derive a CustomDocCard description from a sidebar item: explicit description
-// first, then a child count for sub-categories, else nothing.
-function itemDescription(item) {
-  if (item.description) return item.description;
-  if (item.type === 'category' && Array.isArray(item.items)) {
+// One card per sidebar item. Pulls the real page description from its
+// frontmatter (via useDocById) so the cards are not empty; falls back to the
+// item's own description, or a child count for sub-categories.
+function GeneratedIndexCard({ item }) {
+  // useDocById returns the doc metadata (incl. its frontmatter description)
+  // for a link item; undefined for categories or unknown ids.
+  const doc = useDocById(item.docId ?? undefined);
+  let description = doc?.description ?? item.description;
+  if (!description && item.type === 'category' && Array.isArray(item.items)) {
     const count = item.items.length;
-    return `${count} ${count === 1 ? 'item' : 'items'}`;
+    description = `${count} ${count === 1 ? 'item' : 'items'}`;
   }
-  return undefined;
+  return (
+    <CustomDocCard title={item.label} link={item.href} description={description} />
+  );
 }
 
 function DocCategoryGeneratedIndexPageContent({ categoryGeneratedIndex }) {
@@ -65,12 +71,7 @@ function DocCategoryGeneratedIndexPageContent({ categoryGeneratedIndex }) {
       <article className="margin-top--lg">
         <CustomDocCardsWrapper>
           {items.map((item, i) => (
-            <CustomDocCard
-              key={i}
-              title={item.label}
-              link={item.href}
-              description={itemDescription(item)}
-            />
+            <GeneratedIndexCard key={i} item={item} />
           ))}
         </CustomDocCardsWrapper>
       </article>
