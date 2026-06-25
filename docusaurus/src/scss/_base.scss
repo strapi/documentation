@@ -89,9 +89,13 @@ main {
     padding-right: 280px;
   }
 
-  /** When wide or max width, remove the TOC-placeholder padding */
+  /** When wide or max width, remove the TOC-placeholder padding. Also remove it
+   *  in AI mode: there the TOC is hidden (so the .col--3 selector matches) and
+   *  the content should fill the left half — the 280px placeholder otherwise
+   *  squeezed it, leaving the content narrow at default content-width. */
   [data-content-width="wide"] [class*="docMainContainer"] .row:not(:has(.col--3)):not([class*="theme-doc-footer"]),
-  [data-content-width="max"] [class*="docMainContainer"] .row:not(:has(.col--3)):not([class*="theme-doc-footer"]) {
+  [data-content-width="max"] [class*="docMainContainer"] .row:not(:has(.col--3)):not([class*="theme-doc-footer"]),
+  [data-view-mode="ai"] [class*="docMainContainer"] .row:not(:has(.col--3)):not([class*="theme-doc-footer"]) {
     padding-right: 0;
   }
 }

@@ -780,6 +780,18 @@
       display: none !important;
     }
 
+    // The TOC column is hidden, but the content column keeps its grid fraction
+    // (e.g. col--9 = 75%), so the content stayed narrow and didn't fill the
+    // left half — worse at narrow content-width. Force the content column to
+    // take the full available width (flex-basis + width) now that there's no
+    // TOC beside it.
+    [class*="docItemCol"],
+    .col:not(.col--3) {
+      flex: 0 0 100% !important;
+      max-width: calc(50vw - 60px) !important;
+      width: 100% !important;
+    }
+
     // Pagination follows the same cap so the "next" title never tucks under
     // the AI panel; ellipsis any title still too long.
     nav[class*="pagination"] {
