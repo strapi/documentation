@@ -931,13 +931,27 @@ class DocusaurusLlmsGenerator {
 
   generateLlmsTxt(pages) {
     const lines = [`# ${this.siteName}`, ''];
-    
+
     pages.forEach(page => {
       const description = page.description || 'No description available';
-      lines.push(`- [${page.title}](${page.url}): ${description}`);
+      // Point at the clean Markdown twin (<page>.md) rather than the HTML page,
+      // so agents following llms.txt fetch parseable Markdown directly. Pages
+      // without a path (e.g. the homepage) keep their original URL.
+      const mdUrl = this.toMarkdownUrl(page.url);
+      lines.push(`- [${page.title}](${mdUrl}): ${description}`);
     });
-    
+
     return lines.join('\n');
+  }
+
+  /** Map a page URL to its .md twin, leaving path-less URLs (homepage) as-is. */
+  toMarkdownUrl(url) {
+    if (!url) return url;
+    if (/\.md$/i.test(url)) return url;
+    // Has a path beyond the origin? (e.g. https://docs.strapi.io/cms/api/rest)
+    const m = url.match(/^(https?:\/\/[^/]+)(\/.+?)\/?$/);
+    if (!m) return url; // origin only → homepage, no .md
+    return `${m[1]}${m[2]}.md`;
   }
 
   generateLlmsFullTxt(pages) {
