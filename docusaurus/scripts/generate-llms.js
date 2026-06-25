@@ -263,6 +263,11 @@ class DocusaurusLlmsGenerator {
     // Markdown BEFORE the generic stripper deletes them along with their props.
     cleaned = this.transformInlineComponents(cleaned);
 
+    // Preserve the `title=` prop of title-bearing paired components (their
+    // children survive the stripper, but the title — a section/step heading —
+    // would otherwise be lost).
+    cleaned = this.transformTitledComponents(cleaned);
+
     // Remove remaining React/MDX components (balanced tag matching)
     cleaned = this.stripJsxComponents(cleaned);
 
@@ -677,6 +682,49 @@ class DocusaurusLlmsGenerator {
       if (info) lines.push(`- ${info}`);
       return lines.join('\n');
     });
+
+    return result;
+  }
+
+  /**
+   * For paired components that carry a heading/label in a `title=` prop
+   * (StepDetails, SubtleCallout, IdentityCardItem), surface that title as a
+   * bold line before the children. The generic stripper keeps the children but
+   * drops the title, losing the step/section heading. Uses the bracket-aware
+   * extractJsxBlock so nested components and braces in props are handled.
+   */
+  transformTitledComponents(content) {
+    const TITLED = ['StepDetails', 'SubtleCallout', 'IdentityCardItem'];
+    let result = content;
+
+    for (const name of TITLED) {
+      const out = [];
+      let remaining = result;
+      while (true) {
+        const startIdx = remaining.indexOf(`<${name}`);
+        if (startIdx === -1) { out.push(remaining); break; }
+        out.push(remaining.substring(0, startIdx));
+
+        const extracted = this.extractJsxBlock(remaining, startIdx, name);
+        if (!extracted) {
+          out.push(remaining.substring(startIdx, startIdx + name.length + 1));
+          remaining = remaining.substring(startIdx + name.length + 1);
+          continue;
+        }
+
+        const { propsString, children, fullMatch } = extracted;
+        const title = this.extractStringProp(propsString, 'title');
+        const body = (children || '').trim();
+        const pieces = [];
+        if (title) pieces.push(`**${title}**`);
+        if (body) pieces.push(body);
+        // Surround with blank lines so the title reads as its own block.
+        out.push(pieces.length ? `\n${pieces.join('\n\n')}\n` : body);
+
+        remaining = remaining.substring(startIdx + fullMatch.length);
+      }
+      result = out.join('');
+    }
 
     return result;
   }
