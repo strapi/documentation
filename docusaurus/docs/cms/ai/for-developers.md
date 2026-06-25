@@ -38,7 +38,7 @@ The toolbar includes the following actions:
 | Action | Description |
 |--------|-------------|
 | **Copy Markdown** | Copies the clean Markdown version of the current page to your clipboard. Available in Elegant and AI modes; in Markdown mode, use the **View this page as .md** button next to the toolbar instead. |
-| **View as Markdown** | Opens the clean Markdown version of the current page in a new tab. Available in Elegant and AI modes; in Markdown mode, it is replaced by the **View this page as .md** button shown next to the toolbar. |
+| **View as Markdown** | Opens the clean Markdown version of the current page in a new tab.<br/>Available in Elegant and AI modes; in Markdown mode, it is replaced by the "<Icon name="markdown-logo" /> View this page as .md" button shown next to the toolbar. |
 | **Open with ChatGPT** | Opens a new ChatGPT conversation prefilled with the current page URL |
 | **Open with Claude** | Opens a new Claude conversation and copies the prompt to your clipboard |
 | **View LLMs.txt** | Opens the lightweight page index for AI models |
