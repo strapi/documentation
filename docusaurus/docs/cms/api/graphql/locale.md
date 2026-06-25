@@ -1,3 +1,16 @@
+---
+title: Using the locale parameter with the GraphQL API
+description: Use the locale field and argument with Strapi's GraphQL API to query and mutate documents for a specific locale.
+displayed_sidebar: cmsSidebar
+sidebar_label: Locale
+tags:
+- API
+- GraphQL API
+- i18n
+- internationalization
+- locale
+---
+
 # Use `locale` with the GraphQL API {#graphql}
 
 The i18n feature adds new features to the [GraphQL API](/cms/api/graphql):
