@@ -228,6 +228,14 @@ main:has(.api-endpoint-block) {
       margin-left: auto;
       margin-right: auto;
     }
+
+    /** table.scss sets `min-width: 100%`, which is 100% of the full-width
+     *  markdown wrapper here and thus overrides the centered content width
+     *  above (the table stayed full-width and overflowed the prose column to
+     *  the left). Drop the min-width so the table honors the content width. */
+    > table {
+      min-width: 0;
+    }
   }
 }
 
