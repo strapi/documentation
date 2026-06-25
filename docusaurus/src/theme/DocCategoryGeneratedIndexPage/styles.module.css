@@ -18,6 +18,15 @@
     margin-inline: auto !important;
   }
 
+  /* In max width the grid would otherwise touch the right edge. These pages
+     have no right-hand TOC, so reserve a gutter equal to a collapsed TOC rail
+     (~52px on regular pages). Only in max width — in default/wide the centering
+     above already balances the gutters, and adding padding there would offset
+     the centered block. */
+  :global(html[data-content-width='max']) .generatedIndexPage {
+    padding-right: 52px;
+  }
+
   .list article:nth-last-child(-n + 2) {
     margin-bottom: 0 !important;
   }
