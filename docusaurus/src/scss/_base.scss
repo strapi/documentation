@@ -144,6 +144,7 @@ main:has(.api-endpoint-block) {
     > [class*="admonition"], > nav,
     > .tabs-container, > .tabs,
     > header,
+    > .expandable-content, > .custom-cards-wrapper,
     > [class*="language-"], > div:not([class]),
     > img, > [class*="themedComponent"] {
       max-width: 50%;
@@ -165,6 +166,7 @@ main:has(.api-endpoint-block) {
     > [class*="admonition"], > nav,
     > .tabs-container, > .tabs,
     > header,
+    > .expandable-content, > .custom-cards-wrapper,
     > [class*="language-"], > div:not([class]),
     > img, > [class*="themedComponent"] {
       max-width: 70%;
@@ -178,6 +180,7 @@ main:has(.api-endpoint-block) {
     > [class*="admonition"], > nav,
     > .tabs-container, > .tabs,
     > header,
+    > .expandable-content, > .custom-cards-wrapper,
     > [class*="language-"], > div:not([class]),
     > img, > [class*="themedComponent"] {
       max-width: 100%;
@@ -202,6 +205,7 @@ main:has(.api-endpoint-block) {
     > [class*="admonition"], > nav,
     > .tabs-container, > .tabs,
     > header,
+    > .expandable-content, > .custom-cards-wrapper,
     > [class*="language-"], > div:not([class]),
     > img, > [class*="themedComponent"] {
       display: block;
