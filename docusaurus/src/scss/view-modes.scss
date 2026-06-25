@@ -95,6 +95,11 @@
     padding: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
+    // Collapse the card's grid-cell height: in elegant mode the card and its
+    // inner link fill the grid row (height ~136px); as a bullet it must hug its
+    // content, otherwise each item leaves a large vertical gap.
+    height: auto !important;
+    min-height: 0 !important;
     float: none !important;
     flex: none !important;
 
@@ -106,6 +111,8 @@
     a,
     > a {
       display: block !important;
+      height: auto !important;
+      min-height: 0 !important;
       border: none !important;
       border-radius: 0 !important;
       box-shadow: none !important;
