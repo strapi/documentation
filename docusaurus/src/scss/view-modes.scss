@@ -615,6 +615,14 @@
     text-decoration: none !important;
   }
 
+  // "What's next?" NextSteps cards: the whole card is a link. Underlining the
+  // number, title, and description (all inside the <a>) just adds noise, so
+  // suppress it on the link and everything it wraps.
+  article a[class*="stepLink"],
+  article a[class*="stepLink"] * {
+    text-decoration: none !important;
+  }
+
   // Expandable "Show more / Show less" blocks: reveal everything in markdown
   // mode. The collapsed wrapper sets max-height + overflow inline, so override
   // with !important; hide the fade gradient and the toggle button.
