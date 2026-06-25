@@ -158,6 +158,27 @@ main:has(.api-endpoint-block) {
     }
   }
 
+  /** Code-only endpoint pages: when NO endpoint has the 2-column layout (no
+   *  params), the half-width prose + full-width code looked unbalanced (content
+   *  squeezed left, nothing on the right). Treat the page like a normal doc:
+   *  prose and endpoints follow the content width and are centered. */
+  main:has(.api-endpoint-block):not(:has(.api-endpoint-block--columns)) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header,
+    > .expandable-content, > .custom-cards-wrapper,
+    > [class*="language-"], > div:not([class]),
+    > img, > [class*="themedComponent"],
+    > .api-endpoint-block {
+      max-width: var(--doc-content-max-width) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+  }
+
   /** Width toggle overrides for API endpoint pages */
   [data-content-width="wide"] main:has(.api-endpoint-block) article .theme-doc-markdown {
     > h1, > h2, > h3, > h4, > h5, > h6,

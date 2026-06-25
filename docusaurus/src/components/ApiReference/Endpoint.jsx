@@ -57,7 +57,11 @@ export default function Endpoint({
   const isJs = kind === 'js';
 
   return (
-    <div className={`${styles.endpoint} api-endpoint-block`} id={id} style={isLast ? { borderBottom: 'none' } : undefined}>
+    <div
+      className={`${styles.endpoint} api-endpoint-block ${hasColumns ? 'api-endpoint-block--columns' : 'api-endpoint-block--codeonly'}`}
+      id={id}
+      style={isLast ? { borderBottom: 'none' } : undefined}
+    >
       {/* Header: full-width, above the 2-column grid */}
       <div className={styles.endpoint__header}>
         <div className={styles.endpoint__methodRow}>
