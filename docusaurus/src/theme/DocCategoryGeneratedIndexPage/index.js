@@ -17,6 +17,7 @@ import DocBreadcrumbs from '@theme/DocBreadcrumbs';
 import Heading from '@theme/Heading';
 import CustomDocCard from '@site/src/components/CustomDocCard';
 import CustomDocCardsWrapper from '@site/src/components/CustomDocCardsWrapper';
+import WidthToggle from '@site/src/components/WidthToggle/WidthToggle';
 import styles from './styles.module.css';
 
 function DocCategoryGeneratedIndexPageMetadata({ categoryGeneratedIndex }) {
@@ -53,6 +54,9 @@ function DocCategoryGeneratedIndexPageContent({ categoryGeneratedIndex }) {
 
   return (
     <div className={styles.generatedIndexPage}>
+      {/* Content-width selector, so these pages can be widened/narrowed like
+          regular doc pages (they follow --doc-content-max-width). */}
+      <WidthToggle />
       <DocVersionBanner />
       <DocBreadcrumbs />
       <DocVersionBadge />
