@@ -2,10 +2,10 @@
 .ai-toolbar {
   display: flex;
   // Copy/dropdown group, then the markdown-mode "View as .md" button sitting
-  // just to its right (36px gap), not pushed to the far edge of the line.
+  // just to its right (18px gap), not pushed to the far edge of the line.
   justify-content: flex-start;
   align-items: center;
-  gap: 36px;
+  gap: 18px;
   padding: 0 0 1rem 0;
   margin-bottom: 1rem;
 
@@ -217,8 +217,11 @@
       border-color: var(--strapi-neutral-200);
       color: var(--strapi-neutral-800);
 
+      // neutral-100 is DARKER than neutral-0 in dark mode (the scale inverts),
+      // so it gave almost no hover contrast. neutral-200 (#4A4A6A) is lighter
+      // than the #212134 background — a clear, on-palette hover.
       &:hover {
-        background-color: var(--strapi-neutral-100);
+        background-color: var(--strapi-neutral-200);
         color: var(--strapi-neutral-900);
         border-color: var(--strapi-neutral-200);
       }
@@ -228,9 +231,10 @@
       background-color: var(--strapi-neutral-0);
       border-right-color: var(--strapi-neutral-200);
       color: var(--strapi-neutral-800);
-      
+
+      // See note above: lighten toward neutral-200 for a visible hover.
       &:hover {
-        background-color: var(--strapi-neutral-100);
+        background-color: var(--strapi-neutral-200);
         color: var(--strapi-neutral-900);
       }
       
@@ -259,8 +263,10 @@
       background-color: var(--strapi-neutral-0);
       color: var(--strapi-neutral-800);
 
+      // Lighten toward neutral-200 so the caret hover matches the Copy button
+      // it's attached to (neutral-100 is darker than the background in dark).
       &:hover {
-        background-color: var(--strapi-neutral-100);
+        background-color: var(--strapi-neutral-200);
         color: var(--strapi-neutral-900);
       }
 
@@ -279,7 +285,7 @@
       color: var(--strapi-neutral-900);
 
       &:hover {
-        background-color: var(--strapi-neutral-100);
+        background-color: var(--strapi-neutral-200);
       }
 
       &:not(:last-child) {
