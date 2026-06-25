@@ -11,6 +11,11 @@
      than every other page. */
   .generatedIndexPage {
     max-width: var(--doc-content-max-width, 720px) !important;
+    /* Center the content in the available area instead of pinning it to the
+       left (these pages have no right-hand TOC, so a left-aligned max-width
+       block left a big empty gutter on the right). Matches the balanced
+       horizontal placement of regular doc pages. */
+    margin-inline: auto !important;
   }
 
   .list article:nth-last-child(-n + 2) {
