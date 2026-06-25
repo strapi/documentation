@@ -684,6 +684,13 @@
 // AI MODE
 // ============================================================
 [data-view-mode="ai"] {
+  // AI mode ignores the manual content-width selection and uses the full
+  // available width. Overriding the variable here (rather than touching the
+  // WidthToggle JS) means leaving AI mode automatically restores the user's
+  // chosen width, since data-content-width is untouched. !important beats the
+  // [data-content-width="…"] rules in _base.scss.
+  --doc-content-max-width: 100% !important;
+
   // Hide WidthToggle
   [class*="widthToggle"] {
     display: none !important;
