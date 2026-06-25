@@ -31,6 +31,10 @@ try {
   };
 }
 
+// Shared extractor for code carried inside API layout components
+// (<Endpoint>, <ApiCall>) whose code lives in props, not Markdown fences.
+const { extractApiComponentSnippets } = require('./lib/api-components');
+
 const DEFAULT_DOCS = [
   'cms/admin-panel-customization/bundlers',
   'cms/backend-customization/middlewares',
@@ -768,7 +772,30 @@ class DocusaurusLlmsCodeGenerator {
       }
     });
 
-    return { snippets: snippets.filter((snippet) => Boolean(snippet.code)), sectionAnchors };
+    // Code carried inside <Endpoint>/<ApiCall> components lives in props, so the
+    // fence scanner above never sees it. Pull it out via the shared extractor and
+    // append as regular snippets so API pages (REST, Document Service, Entity
+    // Service, GraphQL...) are no longer skipped.
+    const apiSnippets = extractApiComponentSnippets(content).map((s) => ({
+      section: s.section || title,
+      language: s.language || '',
+      options: {},
+      description: s.description || '',
+      useCase: null,
+      fallbackUsed: false,
+      code: s.code,
+      filePath: null,
+      variantGroupId: s.variantGroupId || null,
+      tabLabel: s.tabLabel || null,
+      tabValue: null,
+      context: [],
+      startLine: null,
+      endLine: null,
+    }));
+
+    const allSnippets = snippets.concat(apiSnippets);
+
+    return { snippets: allSnippets.filter((snippet) => Boolean(snippet.code)), sectionAnchors };
   }
 
   deriveSnippetTitle(snippet, index) {
