@@ -244,7 +244,82 @@ class DocusaurusLlmsGenerator {
       .trim();
   }
 
+  /**
+   * Inline components imported from /docs/snippets/*.md. These are used
+   * self-closing (e.g. <Intro/>, <Prerequisite/>, <MigrationIntro/>) and would
+   * otherwise be deleted by the generic stripper, dropping their snippet
+   * content (which never appears elsewhere since snippets aren't in the
+   * sidebar). Reads the import lines, resolves each snippet file, strips its
+   * frontmatter, and substitutes the Markdown wherever the component is used.
+   */
+  inlineSnippetComponents(content) {
+    // Build a map: ComponentName -> resolved snippet file path.
+    const importRe = /^import\s+([A-Za-z0-9_]+)\s+from\s+['"]([^'"]*snippets\/[^'"]+\.mdx?)['"]\s*;?\s*$/gm;
+    const snippetMap = {};
+    let m;
+    while ((m = importRe.exec(content)) !== null) {
+      snippetMap[m[1]] = m[2];
+    }
+    const names = Object.keys(snippetMap);
+    if (names.length === 0) return content;
+
+    let result = content;
+    for (const name of names) {
+      const importPath = snippetMap[name];
+      // Resolve: paths are like '/docs/snippets/foo.md' (root-absolute) or
+      // relative ('../snippets/foo.md'). Map to a real file under the repo.
+      let snippetContent = this.readSnippetFile(importPath);
+      if (snippetContent === null) continue;
+      // Strip the snippet's own frontmatter and import/export lines.
+      snippetContent = snippetContent
+        .replace(/^---[\s\S]*?---\n/, '')
+        .replace(/^import\s+.*$/gm, '')
+        .replace(/^export\s+.*$/gm, '')
+        .trim();
+
+      // Replace both self-closing (<Name ... />) and paired (<Name>...</Name>)
+      // usages with the snippet content. Props (e.g. components={...}) are
+      // dropped — the textual content is what matters for the LLM output.
+      const selfClosing = new RegExp(`<${name}\\b[^>]*?/>`, 'g');
+      const paired = new RegExp(`<${name}\\b[^>]*?>[\\s\\S]*?<\\/${name}>`, 'g');
+      result = result
+        .replace(paired, `\n\n${snippetContent}\n\n`)
+        .replace(selfClosing, `\n\n${snippetContent}\n\n`);
+    }
+
+    return result;
+  }
+
+  /** Read a snippet file referenced by an import path, or null if not found. */
+  readSnippetFile(importPath) {
+    // Candidate locations, in order of likelihood.
+    const idx = importPath.indexOf('snippets/');
+    const relFromSnippets = idx !== -1 ? importPath.slice(idx) : importPath; // snippets/foo.md
+    const candidates = [
+      // '/docs/snippets/foo.md' → docsDir/snippets/foo.md
+      path.join(this.docsDir, relFromSnippets),
+      // already-absolute-ish '/docs/...' resolved from repo root (docsDir parent)
+      path.join(this.docsDir, importPath.replace(/^\/?docs\//, '')),
+      importPath.replace(/^\//, ''),
+    ];
+    for (const c of candidates) {
+      try {
+        if (fs.existsSync(c)) {
+          return fs.readFileSync(c, 'utf-8');
+        }
+      } catch (e) { /* try next */ }
+    }
+    return null;
+  }
+
   cleanContent(content) {
+    // Inline snippet-backed components BEFORE imports are stripped: components
+    // imported from /docs/snippets/*.md are used self-closing (e.g. <Intro/>,
+    // <Prerequisite/>), so the stripper would delete them and their snippet
+    // content — which is never emitted otherwise, as snippets aren't in the
+    // sidebar. Resolve the imports and inline the snippet Markdown in place.
+    content = this.inlineSnippetComponents(content);
+
     let cleaned = content
       // Deletes frontmatter metadata
       .replace(/^---[\s\S]*?---\n/, '')
