@@ -20,7 +20,7 @@ The configuration of a Strapi project lives in the `/config` folder:
 
 <ProjectStructureConfigFiles />
 
-<em style={{fontSize: '12px'}}>The block above is an excerpt from the project structure. You can click on any file name in purple to read the corresponding documentation. Visit the <a href="/cms/project-structure">project structure page</a> for the full version.</em>
+<p style={{fontSize: '12px'}}><em>The block above is an excerpt from the project structure. You can click on any file name in purple to read the corresponding documentation. Visit the <a href="/cms/project-structure">project structure page</a> for the full version.</em></p>
 
 ## Base configurations
 
