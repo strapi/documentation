@@ -726,11 +726,10 @@
     margin-bottom: 24px;
     text-align: left;
   }
-  // The logo is an absolutely-positioned ::after (~140px tall from the top).
-  // Push the links container down so the first category clears it (the default
-  // 60px top margin wasn't enough once the columns stack).
+  // Push the links container below the absolutely-positioned logo, but keep the
+  // gap tight (120px left too much air between the logo and the first category).
   .footer .container {
-    margin-top: 120px !important;
+    margin-top: 60px !important;
   }
 
   // AI mode ignores the manual content-width selection and uses the full
