@@ -82,6 +82,17 @@
     width: 100% !important;
   }
 
+  // On API pages the markdown wrapper is full-width and prose is centered to the
+  // content column; width:100% above would make the cards wrapper overrun that
+  // column to the right. Keep it centered to the content width there.
+  main:has(.api-call) article .custom-cards-wrapper,
+  main:has(.api-endpoint-block) article .custom-cards-wrapper {
+    width: var(--doc-content-max-width) !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
   // === CARDS: Convert to simple bullet list ===
   // Target both CustomDocCard and Docusaurus DocCard
   article .custom-doc-card,
@@ -222,7 +233,11 @@
     background: transparent !important;
     box-shadow: none !important;
     padding: 4px 0 4px 16px !important;
-    margin: 8px 0 !important;
+    // Use `auto` side margins (not 0) so admonitions stay centered in the
+    // content column on API pages, where the base rule centers prose children
+    // with margin-left/right:auto (a `margin: 8px 0` shorthand would reset that
+    // and pin them flush-left). On normal pages auto is a no-op.
+    margin: 8px auto !important;
 
     // Title: colored, monospace
     .theme-admonition__heading {
@@ -654,7 +669,12 @@
   .tabs-flat {
     border-left: 2px solid var(--strapi-neutral-200);
     padding-left: var(--strapi-spacing-4);
-    margin: var(--strapi-spacing-4) 0;
+    // Center to the content column on API pages: the misaligned node is this
+    // tabs-flat wrapper (it carries a class, so the base centering selector
+    // doesn't match it). Constrain + auto side margins so it aligns with prose.
+    margin: var(--strapi-spacing-4) auto;
+    width: var(--doc-content-max-width);
+    max-width: 100%;
 
     &__heading {
       font-family: var(--strapi-font-family-technical);
@@ -706,8 +726,11 @@
     margin-bottom: 24px;
     text-align: left;
   }
-  .footer__title {
-    margin-top: 0;
+  // The logo is an absolutely-positioned ::after (~140px tall from the top).
+  // Push the links container down so the first category clears it (the default
+  // 60px top margin wasn't enough once the columns stack).
+  .footer .container {
+    margin-top: 120px !important;
   }
 
   // AI mode ignores the manual content-width selection and uses the full
