@@ -37,17 +37,57 @@ class DocusaurusLlmsGenerator {
 
   async extractAllPages() {
     const pages = [];
-    
+    // Track which docIds were already emitted so the filesystem sweep below
+    // doesn't duplicate pages already pulled in via the sidebar.
+    this.seenDocIds = new Set();
+
     // Load sidebar configuration
     const sidebarConfig = this.loadSidebarConfig();
-    
-    // Parses every sidebar
+
+    // Parses every sidebar (gives a sensible primary ordering/structure)
     for (const [sidebarName, sidebarItems] of Object.entries(sidebarConfig)) {
       await this.processItems(sidebarItems, pages);
     }
 
+    // The sidebar only lists a subset of pages: many docs are surfaced through
+    // generated-index categories or summary tables (e.g. the 52 v4→v5
+    // breaking-change pages), so they never appear in the sidebar tree and were
+    // missing from the output entirely. Sweep the filesystem and emit any page
+    // not already covered, so llms-full.txt reflects the whole docs set.
+    await this.processUncoveredFiles(pages);
+
     // Sort pages by URL for a consistent and clear order
     return pages.sort((a, b) => a.url.localeCompare(b.url));
+  }
+
+  /**
+   * Emit every cms/ and cloud/ doc file not already covered by the sidebar
+   * walk. Skips AGENTS guides and templates. Handles both .md and .mdx and
+   * index files (dir/index.md → docId = dir).
+   */
+  async processUncoveredFiles(pages) {
+    const docIds = await this.discoverAllDocIds();
+    for (const docId of docIds) {
+      if (this.seenDocIds.has(docId)) continue;
+      await this.processDocPage(docId, pages);
+    }
+  }
+
+  /** Recursively list docIds under cms/ and cloud/ (no extension, no /index). */
+  async discoverAllDocIds() {
+    const roots = ['cms', 'cloud'];
+    const ids = [];
+    for (const root of roots) {
+      const rootDir = path.join(this.docsDir, root);
+      if (!(await fs.pathExists(rootDir))) continue;
+      const files = await this.getAllMdFiles(rootDir, root);
+      for (const file of files) {
+        let id = file.replace(/\\/g, '/').replace(/\.mdx?$/i, '');
+        id = id.replace(/\/index$/i, '');
+        ids.push(id);
+      }
+    }
+    return ids;
   }
 
   loadSidebarConfig() {
@@ -78,10 +118,10 @@ class DocusaurusLlmsGenerator {
       if (stat.isDirectory()) {
         const subFiles = await this.getAllMdFiles(fullPath, path.join(prefix, item));
         files.push(...subFiles);
-      } else if (item.endsWith('.md')) {
+      } else if (/\.mdx?$/i.test(item)) {
         // Skip agent guides and templates
         const rel = path.join(prefix, item).replace(/\\/g, '/');
-        if (/(^|\/)AGENTS(\.|\.md$)/.test(rel) || /(^|\/)templates\//.test(rel)) {
+        if (/(^|\/)AGENTS(\.|\.mdx?$)/.test(rel) || /(^|\/)templates\//.test(rel)) {
           continue;
         }
         files.push(path.join(prefix, item));
@@ -134,7 +174,8 @@ class DocusaurusLlmsGenerator {
             content: this.cleanContent(content),
             frontmatter
           });
-          
+          if (this.seenDocIds) this.seenDocIds.add(docId);
+
           break; // Stops once a file is found
         } catch (error) {
           console.warn(`⚠️ Error while handling file ${filePath}:`, error.message);
@@ -600,6 +641,41 @@ class DocusaurusLlmsGenerator {
       const label = title || link;
       const linked = link ? `[${label}](${link})` : label;
       return description ? `- ${linked}: ${description}` : `- ${linked}`;
+    });
+
+    // <BreakingChangeIdCard plugins codemodName="..." codemodLink="..." info="..." />
+    // Carries the "affects plugins? / handled by a codemod?" facts in props (52
+    // uses on v4→v5 breaking-change pages). Render them as a short fact list.
+    result = result.replace(/<BreakingChangeIdCard\b([^>]*?)\/>/g, (match, props) => {
+      // Boolean props can appear bare (e.g. `plugins`) or as plugins={true}.
+      const hasFlag = (name) =>
+        new RegExp(`(?:^|\\s)${name}(?=\\s|$|=)`).test(props) &&
+        !new RegExp(`${name}=\\{?false`).test(props);
+      const plugins = hasFlag('plugins');
+      const codemodPartly = hasFlag('codemodPartly');
+      const codemod = hasFlag('codemod');
+      const codemodName = this.extractStringProp(props, 'codemodName');
+      const codemodLink = this.extractStringProp(props, 'codemodLink');
+      const info = this.extractStringProp(props, 'info');
+
+      const pluginsAnswer = plugins ? 'Yes' : 'No';
+      let codemodAnswer = 'No';
+      if (codemodPartly) codemodAnswer = 'Partly';
+      else if (codemod || codemodName) codemodAnswer = 'Yes';
+
+      const lines = [
+        `- Is this breaking change affecting plugins? ${pluginsAnswer}`,
+        `- Is this breaking change automatically handled by a codemod? ${codemodAnswer}`,
+      ];
+      if (codemodName && codemodLink) {
+        lines.push(`  - Codemod: [${codemodName}](${codemodLink})`);
+      } else if (codemodName) {
+        lines.push(`  - Codemod: \`${codemodName}\``);
+      } else if (codemodLink) {
+        lines.push(`  - Codemod: [the codemod's code](${codemodLink})`);
+      }
+      if (info) lines.push(`- ${info}`);
+      return lines.join('\n');
     });
 
     return result;
