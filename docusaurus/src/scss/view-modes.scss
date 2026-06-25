@@ -692,6 +692,24 @@
 // AI MODE
 // ============================================================
 [data-view-mode="ai"] {
+  // Footer: in the narrow left half the 4 footer columns wrap but keep full
+  // width, so categories and links collided. Stack them as one left-aligned
+  // column with clear spacing between each category.
+  .footer__links {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  .footer__col {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-basis: auto !important;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+  .footer__title {
+    margin-top: 0;
+  }
+
   // AI mode ignores the manual content-width selection and uses the full
   // available width. Overriding the variable here (rather than touching the
   // WidthToggle JS) means leaving AI mode automatically restores the user's
