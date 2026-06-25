@@ -14,6 +14,15 @@ export default function ViewModeSwitcher() {
   const [visible, setVisible] = useState(true);
   const lastScrollY = useRef(0);
 
+  // The active-tab highlight is decided client-side only. The component is
+  // server-rendered with viewMode='elegant', and React keeps that SSR markup on
+  // hydration even once the state is corrected — which left "Elegant" stuck as
+  // active while the page was actually in markdown (e.g. after breadcrumb nav).
+  // Gating the highlight on a post-mount flag forces it to reflect the real
+  // viewMode after hydration.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
   // Auto-hide on scroll down, show on scroll up
   useEffect(() => {
     const handleScroll = () => {
@@ -54,7 +63,7 @@ export default function ViewModeSwitcher() {
       onKeyDown={handleKeyDown}
     >
       {MODES.map((m) => {
-        const isActive = viewMode === m.value;
+        const isActive = mounted && viewMode === m.value;
         return (
           <button
             key={m.value}

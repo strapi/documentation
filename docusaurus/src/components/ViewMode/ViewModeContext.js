@@ -20,6 +20,8 @@ const ViewModeContext = createContext({
 });
 
 export function ViewModeProvider({ children }) {
+  // Initialize straight from storage so content-affecting components (cards,
+  // details) get the correct mode on the very first client render — no flash.
   const [viewMode, setViewModeState] = useState(getInitialMode);
 
   const viewModeRef = useRef(viewMode);
