@@ -220,7 +220,7 @@ class DocusaurusLlmsGenerator {
           const fileContent = await fs.readFile(filePath, 'utf-8');
           const { data: frontmatter, content } = matter(fileContent);
           
-          const pageUrl = this.generatePageUrl(docId);
+          const pageUrl = this.generatePageUrl(docId, frontmatter.slug);
           const tldr = this.extractTldr(content);
 
           pages.push({
@@ -242,8 +242,15 @@ class DocusaurusLlmsGenerator {
     }
   }
 
-  generatePageUrl(docId) {
-    // Deletes common prefixes and generates proper URL
+  generatePageUrl(docId, slug) {
+    // A `slug` in the front matter overrides the doc-id-based path (e.g.
+    // cloud/getting-started/cloud-fundamentals is served at /cloud/cloud-fundamentals).
+    // Honor it so the URL — and the per-page .md path / llms.txt link — match
+    // the real page location. An absolute slug starts with '/'.
+    if (slug) {
+      const cleanSlug = String(slug).replace(/^\/+/, '').replace(/\/+$/, '');
+      return `${this.baseUrl}/${cleanSlug}`;
+    }
     const cleanId = docId.replace(/^(docs\/|pages\/)/, '');
     return `${this.baseUrl}/${cleanId}`;
   }
