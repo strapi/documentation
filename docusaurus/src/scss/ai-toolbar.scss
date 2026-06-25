@@ -1,7 +1,10 @@
 @use './mixins' as *;
 .ai-toolbar {
   display: flex;
-  justify-content: flex-start;
+  // Copy/dropdown group on the left, the "View as .md" button on the right.
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
   padding: 0 0 1rem 0;
   margin-bottom: 1rem;
 
@@ -10,6 +13,30 @@
     display: flex;
     border: 1px solid var(--strapi-neutral-300);
     border-radius: 0.25rem;
+  }
+
+  // Standalone "View this page as .md" button (right-aligned).
+  &__view-md {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--strapi-neutral-300);
+    border-radius: 0.25rem;
+    background-color: var(--strapi-neutral-0);
+    color: var(--strapi-neutral-600);
+    font-size: var(--strapi-font-size-sm);
+    font-weight: 500;
+    font-family: var(--strapi-font-family-body);
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: var(--ifm-link-color);
+      border-color: var(--ifm-link-color);
+    }
   }
 
   &__button {
