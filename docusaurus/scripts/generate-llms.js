@@ -589,6 +589,19 @@ class DocusaurusLlmsGenerator {
       return '';
     });
 
+    // <CustomDocCard title="..." description="..." link="..." /> → a Markdown
+    // bullet linking to the page. These navigation cards (148 of them, all
+    // self-closing) are otherwise deleted, dropping the landing-page structure.
+    result = result.replace(/<CustomDocCard\b([^>]*?)\/>/g, (match, props) => {
+      const title = this.extractStringProp(props, 'title');
+      const description = this.extractStringProp(props, 'description');
+      const link = this.extractStringProp(props, 'link');
+      if (!title && !link) return '';
+      const label = title || link;
+      const linked = link ? `[${label}](${link})` : label;
+      return description ? `- ${linked}: ${description}` : `- ${linked}`;
+    });
+
     return result;
   }
 
