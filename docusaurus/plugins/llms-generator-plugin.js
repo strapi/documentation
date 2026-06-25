@@ -11,10 +11,17 @@ function llmsGeneratorPlugin(context, options) {
         // Dynamic import server-side with the right path
         const DocusaurusLlmsGenerator = require(path.resolve(__dirname, '../scripts/generate-llms'));
         
+        // Build an absolute site URL (e.g. https://docs.strapi.io) so page URLs
+        // and the Source: lines in the .md files are fully-qualified rather than
+        // `//cms/...`. siteConfig.url is the origin; baseUrl is the path prefix.
+        const origin = (context.siteConfig.url || '').replace(/\/$/, '');
+        const basePath = (baseUrl || '/').replace(/\/$/, '');
+        const absoluteBaseUrl = `${origin}${basePath}`;
+
         const generator = new DocusaurusLlmsGenerator({
           docsDir: options.docsDir || 'docs',
           sidebarPath: options.sidebarPath || 'sidebars.js',
-          baseUrl: baseUrl || context.siteConfig.url,
+          baseUrl: absoluteBaseUrl,
           outputDir: outDir,
           siteName: options.siteName || context.siteConfig.title
         });

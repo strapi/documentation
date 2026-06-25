@@ -30,13 +30,67 @@ class DocusaurusLlmsGenerator {
       const llmsFullTxt = this.generateLlmsFullTxt(pages);
       await fs.writeFile(path.join(this.outputDir, 'llms-full.txt'), llmsFullTxt);
 
+      console.log('📄 Generating per-page Markdown (.md)...');
+      const mdCount = await this.writePerPageMarkdown(pages);
+
       console.log('✅ LLMs files successfully generated !');
       console.log(`   - ${this.outputDir}/llms.txt`);
       console.log(`   - ${this.outputDir}/llms-full.txt`);
+      console.log(`   - ${mdCount} per-page .md files`);
     } catch (error) {
       console.error('❌ Error while trying to generate LLMs files:', error);
       throw error;
     }
+  }
+
+  /**
+   * Write one clean-Markdown file per page next to its HTML in the build, so
+   * agents can fetch e.g. /cms/api/rest.md. Reuses the same cleaned content as
+   * llms-full.txt (lots A–H), so there is a single Markdown source of truth.
+   *
+   * Only runs against a real build output dir — skipped when writing to
+   * `static/` (the dev/standalone path) to avoid polluting the source tree with
+   * hundreds of generated files. Returns the number of files written.
+   */
+  async writePerPageMarkdown(pages) {
+    // Guard: don't scatter .md files into the source `static/` folder (dev runs
+    // and `node scripts/generate-llms.js` default there). Only emit for builds.
+    const outName = path.basename(this.outputDir);
+    if (outName === 'static') {
+      console.log('   (skipped per-page .md: output dir is static/, not a build)');
+      return 0;
+    }
+
+    let count = 0;
+    for (const page of pages) {
+      const relPath = page.url
+        .replace(/^https?:\/\/[^/]+\//, '') // strip origin
+        .replace(/^\/+/, '')                // leading slashes
+        .replace(/\/+$/, '');               // trailing slash
+      if (!relPath) continue;               // homepage: handled by HTML only
+
+      const outFile = path.join(this.outputDir, `${relPath}.md`);
+      // The cleaned content often already starts with the page's H1 (kept from
+      // the markdown). Drop a leading H1 so we don't print the title twice.
+      const contentNoH1 = page.content.replace(/^\s*#\s+.+\n+/, '');
+      const body = [
+        `# ${page.title}`,
+        '',
+        `> Source: ${page.url}`,
+        '',
+        contentNoH1,
+        '',
+      ].join('\n');
+
+      try {
+        await fs.ensureDir(path.dirname(outFile));
+        await fs.writeFile(outFile, body, 'utf-8');
+        count++;
+      } catch (error) {
+        console.warn(`⚠️ Failed to write ${outFile}: ${error.message}`);
+      }
+    }
+    return count;
   }
 
   async extractAllPages() {
