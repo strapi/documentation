@@ -569,6 +569,16 @@
       "number": 25954,
       "reason": "Router: Internal admin UI improvements (chunk loading resilience and error UX). No public-facing API or behavior change that requires user documentation.",
       "added": "2026-06-24"
+    },
+    {
+      "number": 26768,
+      "reason": "Triage: CI workflow fix — internal infrastructure change",
+      "added": "2026-06-25"
+    },
+    {
+      "number": 26757,
+      "reason": "Router: Internal CLI scaffolding fix for pnpm 11 compatibility. No new user-facing APIs, flags, or configuration options exposed. The fix is transparent—users don't need to change their workflow or understand new behavior. This is a bug fix to prevent Cloud deploy failures, not a feature requiring documentation.",
+      "added": "2026-06-25"
     }
   ]
 }
