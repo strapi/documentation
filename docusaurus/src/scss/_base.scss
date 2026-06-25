@@ -177,6 +177,13 @@ main:has(.api-endpoint-block) {
       margin-left: auto !important;
       margin-right: auto !important;
     }
+
+    /** table.scss sets min-width:100% (of the full-width markdown wrapper),
+     *  which overrides the centered max-width above and pinned tables to the
+     *  left. Drop it so tables honor the content width and center too. */
+    > table {
+      min-width: 0 !important;
+    }
   }
 
   /** Width toggle overrides for API endpoint pages */

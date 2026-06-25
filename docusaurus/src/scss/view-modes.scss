@@ -774,10 +774,20 @@
     [class*="docMainContainer"],
     [class*="docRoot"] > div,
     [class*="docItemWrapper"],
-    .row,
-    .col {
+    .row:not(.footer__links):not(.footer *),
+    .col:not(.footer__col):not(.footer *) {
       max-width: calc(50vw - 60px) !important;
       transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    // The footer lives outside the article and should span the full page width
+    // (it sits below the content, not beside the AI panel). Undo the half-width
+    // cap and the TOC-placeholder margin/max-width that generic rules would
+    // otherwise impose on its .container/.row, so it starts at the left edge.
+    .footer .container {
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
     }
 
     // Only article gets overflow hidden (not nav/pagination).
