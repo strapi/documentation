@@ -215,14 +215,18 @@ main:has(.api-endpoint-block) {
       display: block !important;
     }
 
-    /** Fill the markdown column so the 2-col Request/Response grid (defined in
-     *  api-call.scss) has room. Do NOT set display here: forcing display:flex
-     *  overrode that grid and collapsed legacy <ApiCall> blocks to a single
-     *  full-width column, so a wide code line pushed the page into horizontal
-     *  overflow. Letting api-call.scss own the display keeps the 2-col grid. */
+    /** Keep <ApiCall> blocks aligned with the prose column: same width as every
+     *  other content block (follows the content-width selector) and centered,
+     *  instead of spanning the full article width — which made the 2-col
+     *  Request/Response grid overflow the content column at narrow/wide widths.
+     *  Do NOT set display here: api-call.scss owns the 2-col grid (forcing flex
+     *  here previously collapsed legacy blocks and caused horizontal overflow).
+     *  The grid simply lays out within this constrained width. */
     > .api-call {
-      width: 100%;
-      max-width: 100% !important;
+      width: var(--doc-content-max-width);
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 }
