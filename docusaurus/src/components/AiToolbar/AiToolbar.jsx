@@ -24,12 +24,14 @@ const AiToolbar = () => {
   }, []);
 
   const primaryAction = getPrimaryAction();
-  // The standalone "View as Markdown" button is shown on the right of the
-  // toolbar, so its dropdown entry is redundant — hide it from the dropdown
-  // when in markdown view mode (per UX decision).
+  // "View as Markdown" appears in exactly one place at a time:
+  // - in elegant/AI modes: as a dropdown entry in the toolbar;
+  // - in markdown mode: as the standalone button to the right of the toolbar
+  //   (and removed from the dropdown to avoid duplication).
   const viewMarkdownAction = getDropdownActions().find((a) => a.id === 'view-markdown');
+  const isMarkdownMode = viewMode === 'markdown';
   const dropdownActions = getDropdownActions().filter((a) => {
-    if (a.id === 'view-markdown' && viewMode === 'markdown') return false;
+    if (a.id === 'view-markdown' && isMarkdownMode) return false;
     return true;
   });
 
@@ -174,8 +176,10 @@ const AiToolbar = () => {
         )}
       </div>
 
-      {/* Standalone "View this page as .md" button, pinned to the right. */}
-      {viewMarkdownAction && (
+      {/* Standalone "View this page as .md" button — shown ONLY in markdown
+          mode (in other modes the action lives in the toolbar dropdown). Sits
+          just to the right of the toolbar group. */}
+      {viewMarkdownAction && isMarkdownMode && (
         <button
           onClick={handleViewMarkdown}
           className="ai-toolbar__view-md"

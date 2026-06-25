@@ -1,10 +1,11 @@
 @use './mixins' as *;
 .ai-toolbar {
   display: flex;
-  // Copy/dropdown group on the left, the "View as .md" button on the right.
-  justify-content: space-between;
+  // Copy/dropdown group, then the markdown-mode "View as .md" button sitting
+  // just to its right (36px gap), not pushed to the far edge of the line.
+  justify-content: flex-start;
   align-items: center;
-  gap: 0.75rem;
+  gap: 36px;
   padding: 0 0 1rem 0;
   margin-bottom: 1rem;
 
@@ -207,6 +208,20 @@
   .ai-toolbar {
     &__container {
       border-color: var(--strapi-neutral-200);
+    }
+
+    // Match the toolbar button's dark-mode colors so the standalone .md button
+    // looks like part of the toolbar (same background and text color).
+    &__view-md {
+      background-color: var(--strapi-neutral-0);
+      border-color: var(--strapi-neutral-200);
+      color: var(--strapi-neutral-800);
+
+      &:hover {
+        background-color: var(--strapi-neutral-100);
+        color: var(--strapi-neutral-900);
+        border-color: var(--strapi-neutral-200);
+      }
     }
 
     &__button {
