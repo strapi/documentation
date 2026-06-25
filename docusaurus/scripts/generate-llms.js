@@ -218,6 +218,10 @@ class DocusaurusLlmsGenerator {
     // Transform legacy <ApiCall>/<Request>/<Response> into readable text
     cleaned = this.transformApiCallComponents(cleaned);
 
+    // Transform inline content-bearing components (e.g. <ExternalLink>) into
+    // Markdown BEFORE the generic stripper deletes them along with their props.
+    cleaned = this.transformInlineComponents(cleaned);
+
     // Remove remaining React/MDX components (balanced tag matching)
     cleaned = this.stripJsxComponents(cleaned);
 
@@ -559,6 +563,31 @@ class DocusaurusLlmsGenerator {
 
     // Clean up any remaining bare closing tags
     result = result.replace(/<\/[A-Z][a-zA-Z]*>/g, '');
+
+    return result;
+  }
+
+  /**
+   * Transform inline content-bearing components into Markdown before the
+   * generic stripper removes them. Currently handles <ExternalLink>, whose
+   * label + URL live in props (so it is otherwise deleted wholesale, losing
+   * ~530 links across the docs).
+   */
+  transformInlineComponents(content) {
+    let result = content;
+
+    // <ExternalLink to="URL" text="LABEL" /> → [LABEL](URL). Props may appear in
+    // either order, with single or double quotes, optional trailing slash, and
+    // arbitrary whitespace/newlines. Match the whole self-closing tag, then pull
+    // `to` and `text` out individually.
+    result = result.replace(/<ExternalLink\b([^>]*?)\/>/g, (match, props) => {
+      const to = this.extractStringProp(props, 'to');
+      const text = this.extractStringProp(props, 'text');
+      if (to && text) return `[${text}](${to})`;
+      if (to) return `[${to}](${to})`;
+      if (text) return text;
+      return '';
+    });
 
     return result;
   }
