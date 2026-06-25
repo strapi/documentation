@@ -14,7 +14,7 @@ tags:
 - updatedBy
 ---
 
-# 🛠️ How to populate creator fields such as `createdBy` and `updatedBy`
+# <Icon name="wrench" /> How to populate creator fields such as `createdBy` and `updatedBy`
 
 The creator fields `createdBy` and `updatedBy` are removed from the [REST API](/cms/api/rest) response by default. These 2 fields can be returned in the REST API by activating the `populateCreatorFields` parameter at the content-type level.
 
