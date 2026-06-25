@@ -91,6 +91,14 @@ Hover over any code block on a documentation page to reveal an **Ask AI** button
 
 This is particularly useful for understanding configuration examples, API responses, or lifecycle hook patterns.
 
+### AI mode entry point
+
+Every documentation page can be switched to **AI mode** using the mode selector at the top of the page (next to **Elegant mode** and **Markdown mode**). AI mode splits the page into two columns: the documentation content on the left, and an AI assistant panel on the right.
+
+The panel shows an AI-generated summary of the current page and a question box, so you can read the page and ask questions about it side by side, without leaving the page or opening a separate window. Questions are answered with the same Kapa-powered chatbot, scoped to the page you are reading.
+
+To leave AI mode, switch back to **Elegant mode** or **Markdown mode** with the mode selector, or click the <Icon name="x"/> in the upper-right corner of the AI panel.
+
 ## LLMs text files {#llms-txt}
 
 3 text files are available for feeding Strapi documentation content directly to LLMs. These follow the [llms.txt](https://llmstxt.org/) convention and are designed for programmatic consumption by AI tools.
