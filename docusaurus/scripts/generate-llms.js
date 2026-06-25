@@ -1,6 +1,10 @@
 const fs = require('fs-extra');
 const path = require('path');
 const matter = require('gray-matter');
+// Shared JSX/prop scanners (single source of truth, also used by
+// generate-llms-code.js). These supersede the previously-duplicated helpers
+// and additionally fix a template-literal interpolation bug.
+const apiComponents = require('./lib/api-components');
 
 class DocusaurusLlmsGenerator {
   constructor(config = {}) {
@@ -433,114 +437,10 @@ class DocusaurusLlmsGenerator {
    * Returns { fullMatch, propsString, children } or null.
    */
   extractJsxBlock(text, startIdx, componentName) {
-    let i = startIdx + componentName.length + 1; // skip past `<ComponentName`
-    const len = text.length;
-
-    // Phase 1: Find the end of the opening tag (either `/>` or `>`)
-    let depth = { brace: 0, bracket: 0, paren: 0 };
-    let inString = null; // null, '"', "'", '`'
-    let propsStart = i;
-    let selfClosing = false;
-    let openTagEnd = -1;
-
-    while (i < len) {
-      const ch = text[i];
-      const prev = i > 0 ? text[i - 1] : '';
-
-      // Handle strings
-      if (inString) {
-        if (inString === '`') {
-          // Template literal: handle ${...}
-          if (ch === '$' && i + 1 < len && text[i + 1] === '{') {
-            depth.brace++;
-            i += 2;
-            continue;
-          }
-          if (ch === '`' && prev !== '\\') {
-            inString = null;
-          }
-        } else if (ch === inString && prev !== '\\') {
-          inString = null;
-        }
-        i++;
-        continue;
-      }
-
-      if (ch === '"' || ch === "'" || ch === '`') {
-        inString = ch;
-        i++;
-        continue;
-      }
-
-      // Track nesting
-      if (ch === '{') { depth.brace++; i++; continue; }
-      if (ch === '}') { depth.brace--; i++; continue; }
-      if (ch === '[') { depth.bracket++; i++; continue; }
-      if (ch === ']') { depth.bracket--; i++; continue; }
-      if (ch === '(') { depth.paren++; i++; continue; }
-      if (ch === ')') { depth.paren--; i++; continue; }
-
-      // Only look for tag end when we're at the top level (no nested braces/brackets)
-      if (depth.brace === 0 && depth.bracket === 0 && depth.paren === 0) {
-        if (ch === '/' && i + 1 < len && text[i + 1] === '>') {
-          // Self-closing tag />
-          selfClosing = true;
-          openTagEnd = i + 2;
-          break;
-        }
-        if (ch === '>') {
-          openTagEnd = i + 1;
-          break;
-        }
-      }
-
-      i++;
-    }
-
-    if (openTagEnd === -1) return null;
-
-    const propsString = text.substring(propsStart, selfClosing ? i : i).trim();
-
-    if (selfClosing) {
-      return {
-        fullMatch: text.substring(startIdx, openTagEnd),
-        propsString,
-        children: ''
-      };
-    }
-
-    // Phase 2: Find closing tag </ComponentName>
-    const closingTag = `</${componentName}>`;
-    let tagDepth = 1;
-    let j = openTagEnd;
-    const openTag = `<${componentName}`;
-
-    while (j < len && tagDepth > 0) {
-      // Check for nested opening tags of same component
-      if (text.substring(j, j + openTag.length) === openTag) {
-        tagDepth++;
-        j += openTag.length;
-        continue;
-      }
-      if (text.substring(j, j + closingTag.length) === closingTag) {
-        tagDepth--;
-        if (tagDepth === 0) break;
-        j += closingTag.length;
-        continue;
-      }
-      j++;
-    }
-
-    if (tagDepth !== 0) return null;
-
-    const children = text.substring(openTagEnd, j);
-    const fullEnd = j + closingTag.length;
-
-    return {
-      fullMatch: text.substring(startIdx, fullEnd),
-      propsString,
-      children
-    };
+    // Delegates to the shared module (single source of truth, also used by
+    // generate-llms-code.js). The shared scanner fixes a template-literal
+    // interpolation bug that left brace depth unbalanced on `${...}`.
+    return apiComponents.extractJsxBlock(text, startIdx, componentName);
   }
 
   /**
@@ -806,97 +706,23 @@ class DocusaurusLlmsGenerator {
 
   // ---- Prop extraction helpers ----
 
-  /** Extract a simple string prop: prop="value" */
+  // These prop scanners now delegate to the shared module (single source of
+  // truth, also used by generate-llms-code.js). The shared versions fix a
+  // template-literal interpolation bug present in the old inline copies.
   extractStringProp(propsString, propName) {
-    // Match prop="value" or prop='value'
-    const regex = new RegExp(`${propName}=["']([^"']*?)["']`);
-    const match = propsString.match(regex);
-    return match ? match[1] : null;
+    return apiComponents.extractStringProp(propsString, propName);
   }
 
-  /** Extract an array prop: prop={[...]} — returns the raw string inside [...] */
   extractArrayProp(propsString, propName) {
-    const marker = `${propName}={[`;
-    const idx = propsString.indexOf(marker);
-    if (idx === -1) return null;
-
-    let i = idx + marker.length;
-    let depth = 1;
-    let inString = null;
-    const len = propsString.length;
-
-    while (i < len && depth > 0) {
-      const ch = propsString[i];
-      const prev = i > 0 ? propsString[i - 1] : '';
-
-      if (inString) {
-        if (inString === '`') {
-          if (ch === '$' && i + 1 < len && propsString[i + 1] === '{') {
-            i += 2; continue;
-          }
-          if (ch === '`' && prev !== '\\') inString = null;
-        } else if (ch === inString && prev !== '\\') {
-          inString = null;
-        }
-        i++; continue;
-      }
-
-      if (ch === '"' || ch === "'" || ch === '`') { inString = ch; i++; continue; }
-      if (ch === '[' || ch === '{' || ch === '(') { depth++; i++; continue; }
-      if (ch === ']') { depth--; if (depth === 0) break; i++; continue; }
-      if (ch === '}' || ch === ')') { depth--; i++; continue; }
-      i++;
-    }
-
-    return propsString.substring(idx + marker.length, i);
+    return apiComponents.extractArrayProp(propsString, propName);
   }
 
-  /** Split an array string into individual object items (top-level { ... } blocks) */
   parseSimpleArray(arrayContent) {
-    const items = [];
-    let depth = 0;
-    let inString = null;
-    let start = -1;
-
-    for (let i = 0; i < arrayContent.length; i++) {
-      const ch = arrayContent[i];
-      const prev = i > 0 ? arrayContent[i - 1] : '';
-
-      if (inString) {
-        if (inString === '`') {
-          if (ch === '$' && i + 1 < arrayContent.length && arrayContent[i + 1] === '{') {
-            i++; continue;
-          }
-          if (ch === '`' && prev !== '\\') inString = null;
-        } else if (ch === inString && prev !== '\\') {
-          inString = null;
-        }
-        continue;
-      }
-
-      if (ch === '"' || ch === "'" || ch === '`') { inString = ch; continue; }
-
-      if (ch === '{') {
-        if (depth === 0) start = i;
-        depth++;
-      } else if (ch === '}') {
-        depth--;
-        if (depth === 0 && start !== -1) {
-          items.push(arrayContent.substring(start, i + 1));
-          start = -1;
-        }
-      }
-    }
-
-    return items;
+    return apiComponents.parseSimpleArray(arrayContent);
   }
 
-  /** Extract a simple field value from an object string: field: 'value' or field: "value" */
   getObjectField(objString, fieldName) {
-    // Match: fieldName: 'value' or fieldName: "value"
-    const regex = new RegExp(`${fieldName}:\\s*['"]([\\s\\S]*?)(?<!\\\\)['"]`);
-    const match = objString.match(regex);
-    return match ? match[1] : null;
+    return apiComponents.getObjectField(objString, fieldName);
   }
 
   /**
@@ -947,43 +773,9 @@ class DocusaurusLlmsGenerator {
       .trim();
   }
 
-  /** Extract a template literal field: field: `value` */
+  /** Extract a template literal field: field: `value` (delegates to shared module). */
   extractTemplateLiteral(objString, fieldName) {
-    const marker = `${fieldName}: \``;
-    let idx = objString.indexOf(marker);
-    if (idx === -1) {
-      // Try without space
-      const marker2 = `${fieldName}:\``;
-      idx = objString.indexOf(marker2);
-      if (idx === -1) return null;
-      idx += marker2.length;
-    } else {
-      idx += marker.length;
-    }
-
-    let i = idx;
-    let depth = 0;
-    const len = objString.length;
-
-    while (i < len) {
-      const ch = objString[i];
-      if (ch === '$' && i + 1 < len && objString[i + 1] === '{') {
-        depth++;
-        i += 2;
-        continue;
-      }
-      if (ch === '}' && depth > 0) {
-        depth--;
-        i++;
-        continue;
-      }
-      if (ch === '`' && depth === 0) {
-        return objString.substring(idx, i);
-      }
-      i++;
-    }
-
-    return objString.substring(idx);
+    return apiComponents.extractTemplateLiteral(objString, fieldName);
   }
 
   /** Extract response body — handles JSON.stringify(...) calls and template literals */
