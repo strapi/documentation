@@ -82,8 +82,11 @@ export default function DocRootLayoutSidebar({
     return () => window.removeEventListener('view-mode-change', handler);
   }, [v3Collapsed]);
 
-  // Enable transitions after first paint
+  // Enable transitions after first paint, and drop the anti-FOUC attribute so
+  // the head-script CSS stops forcing the collapsed look — from here React's
+  // inline width drives the sidebar (so re-expanding is not blocked).
   useEffect(() => {
+    try { delete document.documentElement.dataset.sidebarCollapsed; } catch {}
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         setSkipTransition(false);

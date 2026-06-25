@@ -44,6 +44,13 @@ const config = {
       attributes: {},
       innerHTML: '(function(){try{var m=localStorage.getItem("strapi-view-mode");if(m&&m!=="ai")document.documentElement.dataset.viewMode=m;else document.documentElement.dataset.viewMode="elegant"}catch(e){document.documentElement.dataset.viewMode="elegant"}})();',
     },
+    {
+      // Anti-FOUC: apply the saved left-sidebar collapsed state before React
+      // hydrates, so a collapsed sidebar doesn't flash open on every page load.
+      tagName: 'script',
+      attributes: {},
+      innerHTML: '(function(){try{if(localStorage.getItem("strapi-sidebar-collapsed")==="true")document.documentElement.dataset.sidebarCollapsed="true"}catch(e){}})();',
+    },
   ],
 
   scripts: [

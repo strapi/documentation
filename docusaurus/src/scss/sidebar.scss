@@ -8,6 +8,33 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   --doc-sidebar-width: 280px;
 }
 
+/* Anti-FOUC for the collapsed left sidebar.
+ * The <aside> is server-rendered with an inline width:280px, so before React
+ * hydrates a collapsed sidebar would briefly flash open on every page load.
+ * A head script sets html[data-sidebar-collapsed="true"] from localStorage
+ * BEFORE paint; these rules force the collapsed look until React takes over
+ * (React then removes the attribute, so this can't freeze a re-expanded
+ * sidebar). !important is needed to beat the inline SSR width. */
+html[data-sidebar-collapsed='true'] {
+  [class*='docSidebarContainer'] {
+    width: 52px !important;
+    min-width: 52px !important;
+    transition: none !important;
+  }
+
+  .sidebar-v3-wrapper {
+    .sidebar-v3-header__label,
+    .sidebar-v3-content > *:not(.sidebar-v3-header) {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .sidebar-v3-header {
+      border-bottom: none;
+      background: transparent;
+    }
+  }
+}
+
 .navbar-sidebar {
   --ifm-navbar-background-color: var(--strapi-neutral-0);
 
