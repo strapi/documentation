@@ -37,7 +37,8 @@ The toolbar includes the following actions:
 
 | Action | Description |
 |--------|-------------|
-| **Copy Markdown** | Copies the raw Markdown source of the current page to your clipboard |
+| **Copy Markdown** | Copies the clean Markdown version of the current page to your clipboard. Available in Elegant and AI modes; in Markdown mode, use the **View this page as .md** button next to the toolbar instead. |
+| **View as Markdown** | Opens the clean Markdown version of the current page in a new tab. Available in Elegant and AI modes; in Markdown mode, it is replaced by the **View this page as .md** button shown next to the toolbar. |
 | **Open with ChatGPT** | Opens a new ChatGPT conversation prefilled with the current page URL |
 | **Open with Claude** | Opens a new Claude conversation and copies the prompt to your clipboard |
 | **View LLMs.txt** | Opens the lightweight page index for AI models |
@@ -46,12 +47,14 @@ The toolbar includes the following actions:
 
 ### Copy Markdown
 
-The primary action in the toolbar. Clicking **Copy Markdown** fetches the raw Markdown source of the current page directly from the repository and copies it to your clipboard. You can then paste it into any AI assistant (ChatGPT, Claude, Gemini, etc.) for:
+The primary action in the toolbar. Clicking **Copy Markdown** fetches the clean Markdown version of the current page (the same content as the page's `.md` URL, with layout components resolved into plain Markdown) and copies it to your clipboard. You can then paste it into any AI assistant (ChatGPT, Claude, Gemini, etc.) for:
 
 - Asking questions about a specific page with full context
 - Summarizing or simplifying documentation content
 - Generating code based on documented APIs
 - Translating documentation into another language
+
+In Markdown mode, the toolbar's **Copy Markdown** and **View as Markdown** actions are replaced by a single **View this page as .md** button shown next to the toolbar, which opens the same clean Markdown. You can also reach it directly by adding `.md` to any page URL.
 
 ### Open with LLM
 
