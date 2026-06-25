@@ -43,6 +43,13 @@
   align-items: center;
   gap: 4px;
   padding: 4px 10px;
+
+  // The switcher row is inset (button padding) so the first tab sat to the
+  // right of the H1. Pull the first button left so its content lines up with
+  // the H1 (and the page body).
+  &:first-child {
+    margin-left: -16px;
+  }
   border: none;
   border-radius: 6px;
   background: transparent;
