@@ -105,6 +105,10 @@ After a draft is published:
 Before publishing a draft, make sure it doesn't have relations with other non-published content, otherwise some of the content may not be available through the API.
 :::
 
+:::note
+For many-to-many (M2M) relations, the order set in the draft version is correctly preserved in the published version when publishing or republishing the entry.
+:::
+
 When a document has both a draft and a published version available, the published version can be found in the _Published_ tab. If the document has only a draft version, you can not click on the _Published_ tab.
 
 <ThemedImage
