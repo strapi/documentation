@@ -579,6 +579,21 @@
       "number": 26757,
       "reason": "Router: Internal CLI scaffolding fix for pnpm 11 compatibility. No new user-facing APIs, flags, or configuration options exposed. The fix is transparent—users don't need to change their workflow or understand new behavior. This is a bug fix to prevent Cloud deploy failures, not a feature requiring documentation.",
       "added": "2026-06-25"
+    },
+    {
+      "number": 26787,
+      "reason": "Triage: type tightening and deprecation warnings, no runtime behavior change",
+      "added": "2026-06-26"
+    },
+    {
+      "number": 25424,
+      "reason": "Triage: TypeScript type improvements only, no runtime behavior change",
+      "added": "2026-06-26"
+    },
+    {
+      "number": 26732,
+      "reason": "Router: Internal implementation fix moving preview script injection mechanism. No public API or user-facing behavior change. Implementation detail about how the script is served.",
+      "added": "2026-06-26"
     }
   ]
 }
