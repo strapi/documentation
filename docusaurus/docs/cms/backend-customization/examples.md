@@ -6,11 +6,11 @@ pagination_prev: cms/backend-customization
 pagination_next: cms/backend-customization/examples/authentication
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import CookbookNote from '/docs/snippets/_cookbook-foodadvisor.md'
 
 # Backend customization: An examples cookbook using FoodAdvisor
 
-<NotV5/>
+<CookbookNote/>
 
 The present section of the documentation is intended for developers who would like to get a deeper understanding of the Strapi back end customization possibilities.
 

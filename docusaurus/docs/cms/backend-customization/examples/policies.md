@@ -6,11 +6,11 @@ pagination_prev: cms/backend-customization/examples/services-and-controllers
 pagination_next: cms/backend-customization/examples/routes
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import CookbookNote from '/docs/snippets/_cookbook-foodadvisor.md'
 
 # Examples cookbook: Custom policies
 
-<NotV5/>
+<CookbookNote/>
 
 :::prerequisites
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/cms/backend-customization/examples).
