@@ -132,12 +132,20 @@ main:has(.api-endpoint-block) {
   }
 
   /**
-   * Constrain regular prose content on API pages to a readable width.
-   * Endpoint blocks break out of this via their own full-width grid.
+   * Regular prose content on API pages.
+   *
+   * The 2-column endpoint layout (params left / code right) only reads well
+   * when there is room for it, i.e. at the wide and max content widths. At the
+   * default (narrow) width the endpoints collapse to a single centered column
+   * (see the grid rule near the bottom of this file), so the surrounding prose
+   * must NOT stay flush-left at half-width — it would look misaligned next to a
+   * centered endpoint. At narrow, treat the page like a normal doc: prose
+   * centered to the content width.
+   *
+   * The flush-left half-width treatment that pairs with the 2-column layout is
+   * applied only at wide/max further down.
    */
   main:has(.api-endpoint-block) article .theme-doc-markdown {
-    /** Prose content constrained to half-width, left-aligned
-     *  to stay flush with the left column of endpoint blocks */
     > h1, > h2, > h3, > h4, > h5, > h6,
     > p, > ul, > ol, > blockquote, > table,
     > details, > .theme-admonition,
@@ -146,15 +154,23 @@ main:has(.api-endpoint-block) {
     > header,
     > .expandable-content, > .custom-cards-wrapper,
     > [class*="language-"], > div:not([class]),
-    > img, > [class*="themedComponent"] {
-      max-width: 50%;
+    > img, > [class*="themedComponent"],
+    > .api-endpoint-block {
+      max-width: var(--doc-content-max-width);
+      margin-left: auto;
+      margin-right: auto;
       transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /** Endpoint blocks break out to full width */
-    > .api-endpoint-block,
+    /** <ApiCall> (legacy) blocks still break out to full width */
     > .api-call {
       max-width: 100% !important;
+    }
+
+    /** table.scss sets min-width:100%; drop it so tables honor the centered
+     *  content width instead of pinning left. */
+    > table {
+      min-width: 0;
     }
   }
 
@@ -186,8 +202,15 @@ main:has(.api-endpoint-block) {
     }
   }
 
-  /** Width toggle overrides for API endpoint pages */
-  [data-content-width="wide"] main:has(.api-endpoint-block) article .theme-doc-markdown {
+  /** Width toggle overrides for API endpoint pages.
+   *
+   * At wide/max the 2-column endpoint layout is active (params left / code
+   * right), so prose is flush-left at a reduced width to align with the left
+   * column — overriding the centered default above. Excluded in AI mode, which
+   * always linearizes endpoints to one column and keeps prose full-width
+   * centered (see view-modes.scss). The --codeonly override below still wins
+   * for pages with no 2-column endpoints. */
+  [data-content-width="wide"]:not([data-view-mode="ai"]) main:has(.api-endpoint-block--columns) article .theme-doc-markdown {
     > h1, > h2, > h3, > h4, > h5, > h6,
     > p, > ul, > ol, > blockquote, > table,
     > details, > .theme-admonition,
@@ -198,10 +221,12 @@ main:has(.api-endpoint-block) {
     > [class*="language-"], > div:not([class]),
     > img, > [class*="themedComponent"] {
       max-width: 70%;
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 
-  [data-content-width="max"] main:has(.api-endpoint-block) article .theme-doc-markdown {
+  [data-content-width="max"]:not([data-view-mode="ai"]) main:has(.api-endpoint-block--columns) article .theme-doc-markdown {
     > h1, > h2, > h3, > h4, > h5, > h6,
     > p, > ul, > ol, > blockquote, > table,
     > details, > .theme-admonition,
@@ -212,6 +237,8 @@ main:has(.api-endpoint-block) {
     > [class*="language-"], > div:not([class]),
     > img, > [class*="themedComponent"] {
       max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 
@@ -272,6 +299,35 @@ main:has(.api-endpoint-block) {
     > table {
       min-width: 0;
     }
+  }
+
+  /**
+   * Endpoint 2-column grid (params left / code right) responsiveness.
+   *
+   * The module default is `1fr 1fr` (always 2 columns on desktop). That reads
+   * poorly at the narrow content width — and in AI mode, where the content area
+   * is only ~half the viewport — because each column gets too little room.
+   *
+   * Collapse to a single column by default; restore the 2-column layout only at
+   * the wide/max content widths, and never in AI mode. When single-column, the
+   * left cell loses its dividing border and sits above the code cell.
+   */
+  .api-endpoint-block--columns [class*="endpoint__columns"] {
+    grid-template-columns: 1fr;
+  }
+  .api-endpoint-block--columns [class*="endpoint__desc"] {
+    border-right: none;
+    border-bottom: 1px solid var(--strapi-border);
+  }
+
+  [data-content-width="wide"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__columns"],
+  [data-content-width="max"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__columns"] {
+    grid-template-columns: 1fr 1fr;
+  }
+  [data-content-width="wide"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__desc"],
+  [data-content-width="max"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__desc"] {
+    border-right: 1px solid var(--strapi-border);
+    border-bottom: none;
   }
 }
 
