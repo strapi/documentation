@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useCallback } from 'react';
+import { useHistory } from '@docusaurus/router';
 import styles from './NavbarBreadcrumbs.module.scss';
 
 const PRODUCTS = {
@@ -90,6 +91,7 @@ function renderBreadcrumbs(container, pathname) {
 export default function NavbarBreadcrumbs() {
   const containerRef = useRef(null);
   const lastPathRef = useRef('');
+  const routerHistory = useHistory();
 
   const update = useCallback(() => {
     const current = window.location.pathname;
@@ -99,10 +101,27 @@ export default function NavbarBreadcrumbs() {
     }
   }, []);
 
+  // The crumbs are rendered as plain <a href> (imperative HTML), which would
+  // trigger a full page reload and reset the view mode (notably losing AI mode,
+  // which isn't persisted). Intercept same-origin clicks and navigate via the
+  // SPA router instead, so the React state — and the current view mode — is
+  // preserved across breadcrumb navigation.
+  const onClick = useCallback((e) => {
+    const a = e.target.closest && e.target.closest('a');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (!href || !href.startsWith('/')) return; // external/product-switch handled normally
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    routerHistory.push(href);
+  }, [routerHistory]);
+
   useEffect(() => {
     // Initial render
     lastPathRef.current = window.location.pathname;
     renderBreadcrumbs(containerRef.current, window.location.pathname);
+    const container = containerRef.current;
+    if (container) container.addEventListener('click', onClick);
 
     // Listen for all navigation types
     // 1. popstate (back/forward)
@@ -125,8 +144,9 @@ export default function NavbarBreadcrumbs() {
       window.removeEventListener('popstate', update);
       history.pushState = origPush;
       history.replaceState = origReplace;
+      if (container) container.removeEventListener('click', onClick);
     };
-  }, [update]);
+  }, [update, onClick]);
 
   return <div ref={containerRef} className={styles.navbarBreadcrumbs} />;
 }
