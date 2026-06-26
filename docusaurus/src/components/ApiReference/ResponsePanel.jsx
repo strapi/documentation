@@ -12,13 +12,21 @@ import clsx from 'clsx';
  *   { status: 400, statusText: 'Bad Request', body: `{ "error": {...} }` },
  * ]} />
  */
-export default function ResponsePanel({ kind = 'http', responses = [] }) {
+const COLLAPSE_LINE_THRESHOLD = 10;
+
+export default function ResponsePanel({ kind = 'http', responses = [], collapsible = false }) {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [expanded, setExpanded] = useState(false);
   if (!responses.length) return null;
 
   const isJs = kind === 'js';
   const active = responses[activeIdx];
   const isOk = active.status < 400;
+
+  // Opt-in: collapse long response bodies behind a "Show more" toggle.
+  const lineCount = active.body ? String(active.body).split('\n').length : 0;
+  const isCollapsible = collapsible && lineCount > COLLAPSE_LINE_THRESHOLD;
+  const collapsed = isCollapsible && !expanded;
 
   const getTabStyle = (status) => {
     if (status < 300) return 'response-tab--2xx';
@@ -66,10 +74,26 @@ export default function ResponsePanel({ kind = 'http', responses = [] }) {
       <div className={styles.codePanel}>
         <div className={styles.codePanel__codeWrap}>
           <CopyCodeButton code={active.body} />
-          <pre className={styles.codePanel__pre}>
+          <pre
+            className={clsx(
+              styles.codePanel__pre,
+              collapsed && styles['codePanel__pre--collapsed'],
+            )}
+          >
             <code>{active.body}</code>
           </pre>
+          {collapsed && <div className={styles.codePanel__fade} aria-hidden="true" />}
         </div>
+        {isCollapsible && (
+          <button
+            type="button"
+            className={styles.codePanel__showMore}
+            onClick={() => setExpanded((v) => !v)}
+            aria-expanded={expanded}
+          >
+            {expanded ? 'Show less' : 'Show more'}
+          </button>
+        )}
       </div>
     </div>
   );

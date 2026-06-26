@@ -49,6 +49,7 @@ export default function Endpoint({
   codePath,
   codePathHighlights = [],
   responses = [],
+  collapsibleResponse = false,
   isLast = false,
   children,
 }) {
@@ -96,7 +97,7 @@ export default function Endpoint({
                 tabs={codeTabs}
               />
             )}
-            {responses.length > 0 && <ResponsePanel kind={kind} responses={responses} />}
+            {responses.length > 0 && <ResponsePanel kind={kind} responses={responses} collapsible={collapsibleResponse} />}
           </div>
         </div>
       ) : (
@@ -112,7 +113,7 @@ export default function Endpoint({
                   tabs={codeTabs}
                 />
               )}
-              {responses.length > 0 && <ResponsePanel kind={kind} responses={responses} />}
+              {responses.length > 0 && <ResponsePanel kind={kind} responses={responses} collapsible={collapsibleResponse} />}
             </div>
           )}
           {children && <div className={styles.endpoint__desc}>{children}</div>}

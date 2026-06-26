@@ -505,6 +505,46 @@
       line-height: 1.65;
       color: var(--strapi-fg-2);
     }
+
+    // Collapsed state: clip to ~10 lines of code.
+    &--collapsed {
+      max-height: 220px;
+      overflow: hidden;
+    }
+  }
+
+  // Fade-out gradient over the bottom of a collapsed response.
+  &__fade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 48px;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent, var(--strapi-surface-0));
+  }
+
+  // "Show more / Show less" toggle for long responses.
+  &__showMore {
+    display: block;
+    width: 100%;
+    padding: 8px 14px;
+    border: none;
+    border-top: 1px solid var(--strapi-border);
+    background: var(--strapi-surface-2);
+    color: var(--strapi-fg-3);
+    font-family: var(--strapi-font-family-mono);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s;
+
+    &:hover {
+      color: var(--ifm-link-color);
+      background: var(--strapi-surface-3);
+    }
   }
 }
 

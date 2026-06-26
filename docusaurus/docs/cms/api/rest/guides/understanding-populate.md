@@ -78,6 +78,7 @@ The following example is the full response for all 4 entries from the `articles`
 Notice how the response only includes the `title`, `slug`, `createdAt`, `updatedAt`, `publishedAt`, and `locale` fields, and the field content of the article as handled by the CKEditor plugin (`ckeditor_content`, truncated for brevity):
 
 <Endpoint
+  collapsibleResponse
   method="GET"
   path="/api/articles"
   title="Without populate"
@@ -172,6 +173,7 @@ To populate deeply nested components, see the [populate components](#populate-co
 <br />
 
 <Endpoint
+  collapsibleResponse
   method="GET"
   path="/api/articles"
   title="With populate=*"
@@ -420,6 +422,7 @@ Notice that the response does not include any media fields, relations, component
 <br/>
 
 <Endpoint
+  collapsibleResponse
   method="GET"
   path="/api/articles"
   title="Without populate"
@@ -504,6 +507,7 @@ The following example is the full response for all 4 entries from the `articles`
 Notice that the response now includes additional data with the `category` field for each article (see highlighted lines):
 
 <Endpoint
+  collapsibleResponse
   method="GET"
   path="/api/articles"
   title="With populate[0]=category"
@@ -659,6 +663,7 @@ Let's compare and explain the responses returned with `populate[0]=category` (1 
 When we only populate 1 level deep, asking for the categories associated to articles, we can get the following example response (highlighted lines show the `category` relations field):
 
 <Endpoint
+  collapsibleResponse
   method="GET"
   path="/api/articles"
   title="With 1-level deep population"
@@ -780,6 +785,7 @@ When we populate 2 levels deep, asking for the categories associated to articles
 Notice that we now have the `restaurants` relation field included with the response inside the `category` relation (see highlighted lines):
 
 <Endpoint
+  collapsibleResponse
   method="GET"
   path="/api/articles"
   title="With 2-level deep population"
@@ -920,6 +926,7 @@ When we only populate the `seo` component, we go only 1 level deep, and we can g
 Notice there's no mention of the `metaSocial` component nested within the `seo` component:
 
 <Endpoint
+  collapsibleResponse
   method="GET"
   path="/api/articles"
   title="Only 1st level component"
@@ -992,6 +999,7 @@ When we populate 2 levels deep, asking both for the `seo` component and the `met
 Notice that we now have the `metaSocial` component-related data included with the response (see highlighted lines):
 
 <Endpoint
+  collapsibleResponse
   method="GET"
   path="/api/articles"
   title="1st level and 2nd level component"
@@ -1104,6 +1112,7 @@ Let's compare and explain the responses returned with `populate[0]=blocks` (only
 When we only populate the `blocks` dynamic zone, we go only 1 level deep, and we can get the following example response. Highlighted lines show the `blocks` dynamic zone and the 2 components it includes:
 
 <Endpoint
+  collapsibleResponse
   method="GET"
   path="/api/articles"
   title="Populating only the dynamic zone"
@@ -1179,6 +1188,7 @@ When we only populate the `blocks` dynamic zone, we go only 1 level deep, and we
 When we populate the `blocks` dynamic zone and apply a shared population strategy to all its components with `[populate]=*`, we not only include components fields but also their 1st-level relations, as shown in the highlighted lines of the following example response:
 
 <Endpoint
+  collapsibleResponse
   method="GET"
   path="/api/articles"
   title="Populating the dynamic zone with shared strategy"
@@ -1346,6 +1356,7 @@ In the following example response, highlighted lines show that:
 - But because we have only asked to populate everything for the `CtaCommandLine` component and have not defined anything for the `faq` component, no data from the `faq` component is returned.
 
 <Endpoint
+  collapsibleResponse
   method="GET"
   path="/api/articles"
   title="Detailed population strategy for dynamic zones"
