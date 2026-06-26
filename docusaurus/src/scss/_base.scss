@@ -111,12 +111,47 @@ main {
  * - When sidebars collapse, the content area grows to fill available space (all flex-based)
  */
 
-/** On API pages, lift the article max-width constraint */
+/** On API pages, lift the article max-width constraint.
+ *  Exclude the pagination nav: it is page chrome that must follow the content
+ *  width (centered, see the rule just below), not span the full article. */
 main:has(.api-call),
 main:has(.api-endpoint-block) {
   article:first-child:not(.col):not(.custom-doc-card),
-  article:first-child:not(.col) + nav {
+  article:first-child:not(.col) + nav:not(.pagination-nav) {
     max-width: 100%;
+  }
+}
+
+/**
+ * On API pages the article is full-width (above), so the page-level chrome that
+ * lives OUTSIDE .theme-doc-markdown — the feedback widget, the tags footer and
+ * the previous/next pagination — stayed full-width while the actual content was
+ * centered to the content width, leaving them visibly misaligned. Constrain
+ * them to the same content width and center them so they line up with the body.
+ * Capped by --doc-content-max-width: at narrow this is the readable width; at
+ * wide/max it resolves to the full column, matching the full-width endpoints.
+ */
+@include medium-up {
+  main:has(.api-call),
+  main:has(.api-endpoint-block) {
+    article > [class*="pageFeedback"],
+    article > footer.theme-doc-footer {
+      max-width: var(--doc-content-max-width) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    /** The pagination nav lives in the container OUTSIDE <article>, which has no
+     *  horizontal padding (article pads its content by 16px each side). To line
+     *  the pagination up with the feedback/tags (which sit inside that padding),
+     *  subtract the article padding from its cap. min() keeps the narrow width
+     *  ceiling (--doc-content-max-width) when it is the smaller of the two. */
+    article + nav.pagination-nav,
+    nav.pagination-nav {
+      max-width: min(var(--doc-content-max-width), calc(100% - 32px)) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
   }
 }
 
