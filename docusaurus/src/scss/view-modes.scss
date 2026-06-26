@@ -93,6 +93,36 @@
     margin-right: auto !important;
   }
 
+  // On <Endpoint> pages, _base.scss caps prose at max-width:50% (70% in wide,
+  // 100% in max) and left-flushes it so it aligns with the left column of the
+  // 2-column endpoint layout. In markdown mode that 2-column layout is
+  // linearized to a single full-width column, so the half-width cap no longer
+  // has anything to align with: prose (and especially admonitions, which keep
+  // `margin: auto`) ends up squeezed into the left/center half of the column.
+  // Restore normal centered content-width behavior here, like a regular page.
+  main:has(.api-endpoint-block) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header,
+    > .expandable-content, > .custom-cards-wrapper,
+    > [class*="language-"], > div:not([class]),
+    > img, > [class*="themedComponent"],
+    > .api-endpoint-block {
+      max-width: var(--doc-content-max-width) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    // table.scss sets min-width:100% of the full-width wrapper, which would
+    // override the centered max-width above and pin tables to the left.
+    > table {
+      min-width: 0 !important;
+    }
+  }
+
   // === CARDS: Convert to simple bullet list ===
   // Target both CustomDocCard and Docusaurus DocCard
   article .custom-doc-card,
