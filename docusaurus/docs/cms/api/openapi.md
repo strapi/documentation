@@ -2,8 +2,8 @@
 title: OpenAPI specification 
 description: Learn how to generate OpenAPI specifications for your Strapi applications using the @strapi/openapi package
 displayed_sidebar: cmsSidebar
-pagination_prev: cms/api/document
-pagination_next: cms/api/rest
+pagination_prev: cms/api/client
+pagination_next: cms/api/graphql
 tags:
   - OpenAPI
   - API
