@@ -204,12 +204,14 @@ main:has(.api-endpoint-block) {
 
   /** Width toggle overrides for API endpoint pages.
    *
-   * At wide/max the 2-column endpoint layout is active (params left / code
-   * right), so prose is flush-left at a reduced width to align with the left
-   * column — overriding the centered default above. Excluded in AI mode, which
-   * always linearizes endpoints to one column and keeps prose full-width
-   * centered (see view-modes.scss). The --codeonly override below still wins
-   * for pages with no 2-column endpoints. */
+   * At wide/max the 2-column endpoint layout is active and the endpoint blocks
+   * break out to the full column width. The surrounding prose, however, keeps a
+   * comfortable reading width and stays CENTERED in the column (equal left/right
+   * margins) — not flush-left, which looked like awkwardly off-center content.
+   * The endpoints (full width) and the prose (centered, narrower) thus share the
+   * same horizontal centerline. Excluded in AI mode, which linearizes endpoints
+   * and keeps prose full-width (see view-modes.scss). The --codeonly override
+   * below still wins for pages with no 2-column endpoints. */
   [data-content-width="wide"]:not([data-view-mode="ai"]) main:has(.api-endpoint-block--columns) article .theme-doc-markdown {
     > h1, > h2, > h3, > h4, > h5, > h6,
     > p, > ul, > ol, > blockquote, > table,
@@ -220,9 +222,14 @@ main:has(.api-endpoint-block) {
     > .expandable-content, > .custom-cards-wrapper,
     > [class*="language-"], > div:not([class]),
     > img, > [class*="themedComponent"] {
-      max-width: 70%;
-      margin-left: 0;
-      margin-right: 0;
+      max-width: 70% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    /** Endpoints break out to the full column width, centered. */
+    > .api-endpoint-block {
+      max-width: 100% !important;
     }
   }
 
@@ -236,9 +243,16 @@ main:has(.api-endpoint-block) {
     > .expandable-content, > .custom-cards-wrapper,
     > [class*="language-"], > div:not([class]),
     > img, > [class*="themedComponent"] {
-      max-width: 100%;
-      margin-left: 0;
-      margin-right: 0;
+      /** At max width the column can get very wide; keep prose to a readable
+       *  measure, centered, while endpoints fill the full width. */
+      max-width: 960px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    /** Endpoints break out to the full column width, centered. */
+    > .api-endpoint-block {
+      max-width: 100% !important;
     }
   }
 
