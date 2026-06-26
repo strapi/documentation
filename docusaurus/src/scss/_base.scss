@@ -239,14 +239,12 @@ main:has(.api-endpoint-block) {
 
   /** Width toggle overrides for API endpoint pages.
    *
-   * At wide/max the 2-column endpoint layout is active and the endpoint blocks
-   * break out to the full column width. The surrounding prose, however, keeps a
-   * comfortable reading width and stays CENTERED in the column (equal left/right
-   * margins) — not flush-left, which looked like awkwardly off-center content.
-   * The endpoints (full width) and the prose (centered, narrower) thus share the
-   * same horizontal centerline. Excluded in AI mode, which linearizes endpoints
-   * and keeps prose full-width (see view-modes.scss). The --codeonly override
-   * below still wins for pages with no 2-column endpoints. */
+   * At wide the 2-column endpoint layout is active. The endpoint blocks AND the
+   * surrounding prose share the SAME reduced reading width, centered — so the
+   * 2-column endpoints line up exactly with the text width instead of spilling
+   * wider than it. Excluded in AI mode, which linearizes endpoints and keeps
+   * prose full-width (see view-modes.scss). The --codeonly override below still
+   * wins for pages with no 2-column endpoints. */
   [data-content-width="wide"]:not([data-view-mode="ai"]) main:has(.api-endpoint-block--columns) article .theme-doc-markdown {
     > h1, > h2, > h3, > h4, > h5, > h6,
     > p, > ul, > ol, > blockquote, > table,
@@ -256,40 +254,19 @@ main:has(.api-endpoint-block) {
     > header,
     > .expandable-content, > .custom-cards-wrapper,
     > [class*="language-"], > div:not([class]),
-    > img, > [class*="themedComponent"] {
+    > img, > [class*="themedComponent"],
+    > .api-endpoint-block {
       max-width: 70% !important;
       margin-left: auto !important;
       margin-right: auto !important;
     }
-
-    /** Endpoints break out to the full column width, centered. */
-    > .api-endpoint-block {
-      max-width: 100% !important;
-    }
   }
 
-  [data-content-width="max"]:not([data-view-mode="ai"]) main:has(.api-endpoint-block--columns) article .theme-doc-markdown {
-    > h1, > h2, > h3, > h4, > h5, > h6,
-    > p, > ul, > ol, > blockquote, > table,
-    > details, > .theme-admonition,
-    > [class*="admonition"], > nav,
-    > .tabs-container, > .tabs,
-    > header,
-    > .expandable-content, > .custom-cards-wrapper,
-    > [class*="language-"], > div:not([class]),
-    > img, > [class*="themedComponent"] {
-      /** At max width the column can get very wide; keep prose to a readable
-       *  measure, centered, while endpoints fill the full width. */
-      max-width: 960px !important;
-      margin-left: auto !important;
-      margin-right: auto !important;
-    }
-
-    /** Endpoints break out to the full column width, centered. */
-    > .api-endpoint-block {
-      max-width: 100% !important;
-    }
-  }
+  /** No max-width override is needed for the max content width: the default
+   *  rule above already gives both prose and endpoints
+   *  max-width: var(--doc-content-max-width), which resolves to 100% at max —
+   *  i.e. everything fills the full column width. (wide is the only width that
+   *  reduces to a 70% reading measure.) */
 
   /**
    * API pages with legacy <ApiCall> blocks but no <Endpoint> (e.g. GraphQL):
