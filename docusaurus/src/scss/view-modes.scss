@@ -110,7 +110,12 @@
     > .expandable-content, > .custom-cards-wrapper,
     > [class*="language-"], > div:not([class]),
     > img, > [class*="themedComponent"],
-    > .api-endpoint-block {
+    > .api-endpoint-block,
+    // Flattened <details> uses `display: contents`, so the box itself has no
+    // size and `> details` above is a no-op. Its summary and content wrapper
+    // become direct flow children, so constrain THOSE to the content width.
+    > details > summary,
+    > details > summary ~ * {
       max-width: var(--doc-content-max-width) !important;
       margin-left: auto !important;
       margin-right: auto !important;
