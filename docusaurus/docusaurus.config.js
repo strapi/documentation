@@ -51,6 +51,13 @@ const config = {
       attributes: {},
       innerHTML: '(function(){try{if(localStorage.getItem("strapi-sidebar-collapsed")==="true")document.documentElement.dataset.sidebarCollapsed="true"}catch(e){}})();',
     },
+    {
+      // Anti-FOUC: apply the saved right-sidebar (TOC) collapsed state before
+      // React hydrates, so a collapsed TOC doesn't flash open on every page load.
+      tagName: 'script',
+      attributes: {},
+      innerHTML: '(function(){try{if(localStorage.getItem("strapi-toc-collapsed")==="true")document.documentElement.dataset.tocCollapsed="true"}catch(e){}})();',
+    },
   ],
 
   scripts: [

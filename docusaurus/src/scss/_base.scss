@@ -323,6 +323,28 @@ main:has(.api-endpoint-block) {
   }
 }
 
+/** Anti-FOUC for the collapsed right sidebar (TOC).
+ * The TOC is server-rendered expanded (React reads localStorage only on the
+ * client), so a collapsed TOC flashed open on every page load. A head script
+ * sets html[data-toc-collapsed="true"] from localStorage BEFORE paint; these
+ * rules shrink the column and hide the TOC content until React takes over and
+ * removes the attribute (so re-expanding still works). */
+@include medium-up {
+  html[data-toc-collapsed='true'] {
+    .col--3 {
+      width: 44px !important;
+      max-width: 44px !important;
+      min-width: 44px !important;
+    }
+
+    // Hide everything in the TOC except the toggle button until React re-renders
+    // the collapsed markup. .theme-doc-toc-desktop is the inner TOC list.
+    .toc-v3-wrapper .theme-doc-toc-desktop {
+      display: none !important;
+    }
+  }
+}
+
 /** Dark mode */
 @include dark {
   .container img[width="16"] {
