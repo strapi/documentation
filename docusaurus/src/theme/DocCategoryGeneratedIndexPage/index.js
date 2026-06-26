@@ -66,7 +66,8 @@ function DocCategoryGeneratedIndexPageContent({ categoryGeneratedIndex }) {
         </Heading>
         <p>
           This is an auto-generated page listing all the pages belonging to the
-          {' '}&quot;{categoryGeneratedIndex.title}&quot; topic.
+          {' '}&quot;{categoryGeneratedIndex.title}&quot; topic. Click on any item
+          {' '}to explore the topic.
         </p>
         {categoryGeneratedIndex.description && (
           <p>{categoryGeneratedIndex.description}</p>

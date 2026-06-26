@@ -133,6 +133,7 @@ const sidebars = {
           type: 'category',
           label: 'Strapi plugins',
           collapsed: true,
+          link: { type: 'generated-index', slug: '/cms/plugins' },
           items: [
             {
               type: 'doc',
