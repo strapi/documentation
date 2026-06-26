@@ -33,7 +33,7 @@ This page will teach about the following advanced topics:
 |------|---------|
 | Create a component that interacts with the backend of Strapi | [REST API queries from the front-end](#rest-api-queries-from-the-front-end) |
 | Understand how services and controllers can play together    | [Controllers vs. services](#controllers-vs-services)     |
-| Create custom services | <ul><li>A [custom service](#custom-service-creating-a-review) that only uses the Entity Service API</li><li>Another more [advanced custom service](#custom-service-sending-an-email-to-the-restaurant-owner) that uses both Entity Service API and a Strapi plugin</li></ul> |
+| Create custom services | <ul><li>A [custom service](#custom-service-creating-a-review) that only uses the Document Service API</li><li>Another more [advanced custom service](#custom-service-sending-an-email-to-the-restaurant-owner) that uses both the Document Service API and a Strapi plugin</li></ul> |
 | Use services in a controller | [Custom controller](#custom-controller) |
 
 <br/>
@@ -223,8 +223,8 @@ Let's update the existing `review.js` service file for the "Reviews" collection 
 
 - Declare a `create` method.
 - Grab context from the request.
-- Use the `findMany()` method from the EntityService API to find a restaurant.
-- Use the `create()` method from the EntityService API to append data to the restaurant, populating the restaurant owner.
+- Use the `findMany()` method from the Document Service API to find a restaurant.
+- Use the `create()` method from the Document Service API to append data to the restaurant, populating the restaurant owner.
 - Return the new review data.
     
 </SideBySideColumn>
@@ -233,7 +233,7 @@ Let's update the existing `review.js` service file for the "Reviews" collection 
 
 <SubtleCallout title="Related concepts">
 
-Additional information can be found in the [request context](/cms/backend-customization/requests-responses), [services](/cms/backend-customization/services) and [EntityService API](/cms/api/entity-service) documentation.
+Additional information can be found in the [request context](/cms/backend-customization/requests-responses), [services](/cms/backend-customization/services) and [Document Service API](/cms/api/document-service) documentation.
 
 </SubtleCallout>
 
@@ -255,28 +255,25 @@ module.exports = createCoreService('api::review.review', ({ strapi }) => ({
 
     /**
      * Queries the Restaurants collection type
-     * using the Entity Service API
+     * using the Document Service API
      * to retrieve information about the restaurant.
      */
-    const restaurants = await strapi.entityService.findMany(
-      'api::restaurant.restaurant',
-      {
-        filters: {
-          slug: body.restaurant,
-        },
-      }
-    );
+    const restaurants = await strapi.documents('api::restaurant.restaurant').findMany({
+      filters: {
+        slug: body.restaurant,
+      },
+    });
 
     /**
      * Creates a new entry for the Reviews collection type
      * and populates data with information about the restaurant's owner
-     * using the Entity Service API.
+     * using the Document Service API.
      */
-    const newReview = await strapi.entityService.create('api::review.review', {
+    const newReview = await strapi.documents('api::review.review').create({
       data: {
         note: body.note,
         content: body.content,
-        restaurant: restaurants[0].id,
+        restaurant: restaurants[0].documentId,
         author: user.id,
       },
       populate: ['restaurant.owner'],
@@ -334,7 +331,7 @@ This service is an advanced code example using the [Email](/cms/features/email) 
 
 - Create a new service file for the "Email" single type,
 - Declare a `send()` method for this service,
-- Grab the sender address stored in the Email single type using the Entity Service API,
+- Grab the sender address stored in the Email single type using the Document Service API,
 - Use email details (recipient's address, subject, and email body) passed when invoking the service's `send()` method to send an email using the Email plugin and a previously configured provider.
 
 </SideBySideColumn>
@@ -343,7 +340,7 @@ This service is an advanced code example using the [Email](/cms/features/email) 
 
 <SubtleCallout title="Related concepts">
 
-Additional information can be found in the [Services](/cms/backend-customization/services), [Entity Service API](/cms/api/entity-service) and [Email feature](/cms/features/email) documentation.
+Additional information can be found in the [Services](/cms/backend-customization/services), [Document Service API](/cms/api/document-service) and [Email feature](/cms/features/email) documentation.
 
 </SubtleCallout>
 
@@ -364,12 +361,10 @@ module.exports = createCoreService('api::email.email', ({ strapi }) => ({
     /**
      * Retrieves email configuration data
      * stored in the Email single type
-     * using the Entity Service API.
+     * using the Document Service API.
+     * For a single type, use findFirst() to get its document.
      */
-    const emailConfig = await strapi.entityService.findOne(
-      'api::email.email',
-      1
-    );
+    const emailConfig = await strapi.documents('api::email.email').findFirst();
 
     /**
      * Sends an email using:

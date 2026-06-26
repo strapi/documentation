@@ -39,7 +39,7 @@ Let's say we would like to customize the backend of <ExternalLink to="https://gi
 
 1. Create a new folder for policies to apply only to the "Reviews" collection type.
 2. Create a new policy file.
-3. Use the `findMany()` method from the Entity Service API to get information about the owner of a restaurant when the `/reviews` endpoint is reached.
+3. Use the `findMany()` method from the Document Service API to get information about the owner of a restaurant when the `/reviews` endpoint is reached.
 4. Return an error if the authenticated user is the restaurant's owner, or let the request pass in other cases.
 
 </SideBySideColumn>
@@ -48,7 +48,7 @@ Let's say we would like to customize the backend of <ExternalLink to="https://gi
 
 <SubtleCallout title="Related concepts">
 
-Additional information can be found in the [Policies](/cms/backend-customization/policies), [Routes](/cms/backend-customization/routes), and [Entity Service API](/cms/api/entity-service) documentation.
+Additional information can be found in the [Policies](/cms/backend-customization/policies), [Routes](/cms/backend-customization/routes), and [Document Service API](/cms/api/document-service) documentation.
 
 </SubtleCallout>
 
@@ -72,18 +72,15 @@ module.exports = async (policyContext, config, { strapi }) => {
   }
   /**
    * Queries the Restaurants collection type
-   * using the Entity Service API
+   * using the Document Service API
    * to retrieve information about the restaurant's owner.
    */ 
-  const [restaurant] = await strapi.entityService.findMany(
-    'api::restaurant.restaurant',
-    {
-      filters: {
-        slug: body.restaurant,
-      },
-      populate: ['owner'],
-    }
-  );
+  const [restaurant] = await strapi.documents('api::restaurant.restaurant').findMany({
+    filters: {
+      slug: body.restaurant,
+    },
+    populate: ['owner'],
+  });
   if (!restaurant) {
     return false;
   }
@@ -150,18 +147,15 @@ module.exports = async (policyContext, config, { strapi }) => {
   }
   /**
    * Queries the Restaurants collection type
-   * using the Entity Service API
+   * using the Document Service API
    * to retrieve information about the restaurant's owner.
    */ 
-  const filteredRestaurants = await strapi.entityService.findMany(
-    'api::restaurant.restaurant',
-    {
-      filters: {
-        slug: body.restaurant,
-      },
-      populate: ['owner'],
-    }
-  );
+  const filteredRestaurants = await strapi.documents('api::restaurant.restaurant').findMany({
+    filters: {
+      slug: body.restaurant,
+    },
+    populate: ['owner'],
+  });
 
   const restaurant = filteredRestaurants[0];
 

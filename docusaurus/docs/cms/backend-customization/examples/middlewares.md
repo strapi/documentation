@@ -196,12 +196,11 @@ Additional information can be found in the [middlewares customization](/cms/back
           tabName,
         });
       
-      // Get the restaurant ID from the params in the URL
+      // Get the restaurant documentId from the params in the URL
       const restaurantId = context.params.id;
-      const restaurant = await strapi.entityService.findOne(
-        'api::restaurant.restaurant',
-        restaurantId
-      );
+      const restaurant = await strapi.documents('api::restaurant.restaurant').findOne({
+        documentId: restaurantId,
+      });
 
       // Read the spreadsheet to get the current data
       const restaurantAnalytics = await readGoogleSheet();
