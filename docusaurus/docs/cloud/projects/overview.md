@@ -1,5 +1,5 @@
 ---
-title: Projects overview
+title: Cloud projects overview
 displayed_sidebar: cloudSidebar
 description: View and manage your projects on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/projects/overview.html
@@ -11,7 +11,7 @@ pagination_next: cloud/projects/settings
 
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
-# Projects overview
+# Cloud projects overview
 
 <Tldr>
 Projects page lists all apps with status and quick actions; selecting one opens a dashboard with metrics and controls.

@@ -1,5 +1,5 @@
 ---
-title: Database
+title: Cloud database configuration
 displayed_sidebar: cloudSidebar
 description: Configure your own database on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/advanced/database.html
@@ -13,7 +13,7 @@ tags:
 pagination_next: cloud/advanced/email
 ---
 
-# Database
+# Cloud database configuration
 
 <Tldr>
 Default PostgreSQL can be swapped for any supported SQL database by aligning configuration and environment variables.

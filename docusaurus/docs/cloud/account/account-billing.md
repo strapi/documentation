@@ -1,5 +1,5 @@
 ---
-title: Account billing details
+title: Cloud account billing details
 displayed_sidebar: cloudSidebar
 description: Manage billing details for Strapi Cloud account.
 canonicalUrl: https://docs.strapi.io/cloud/account/account-billing.html
@@ -14,7 +14,7 @@ tags:
 
 import InvoiceStatus from '/docs/snippets/invoices-statuses.md'
 
-# Account billing & invoices
+# Cloud account billing & invoices
 
 <Tldr>
 Billing details and invoices are managed on the Profile page, where payment methods are updated and invoice history is available.

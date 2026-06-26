@@ -1,5 +1,5 @@
 ---
-title: Deployments management
+title: Cloud deployments management
 displayed_sidebar: cloudSidebar
 description: Manage your projects's deployments.
 canonicalUrl: https://docs.strapi.io/cloud/projects/deploys.html
@@ -13,7 +13,7 @@ tags:
 pagination_next: cloud/projects/deploys-history
 ---
 
-# Deployments management
+# Cloud deployments management
 
 <Tldr>
 Deployment triggers can be manual or automatic on git pushes, with the ability to cancel active builds from dashboard or CLI.

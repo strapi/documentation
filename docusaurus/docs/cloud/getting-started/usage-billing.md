@@ -11,7 +11,7 @@ tags:
 - Strapi Cloud
 ---
 
-# Information on billing & usage
+# Cloud billing & usage
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
