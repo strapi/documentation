@@ -53,6 +53,23 @@ main {
   }
 }
 
+/**
+ * Anchor scroll offset.
+ *
+ * The navbar (64px) is sticky, and on doc pages the view-mode switcher toolbar
+ * (~34px) is sticky right below it. Jumping to a #hash (e.g. from the homepage
+ * API Explorer "Read the docs" link) landed the target heading flush under the
+ * navbar, hidden behind the toolbar. Give heading anchor targets a scroll
+ * margin so they come to rest just below both bars, fully visible. ~110px =
+ * navbar + toolbar + a little breathing room. (Only scroll-margin-top here, not
+ * scroll-padding-top on the root, or the two offsets would stack.)
+ */
+.markdown :is(h1, h2, h3, h4, h5, h6)[id],
+.api-endpoint-block[id],
+.api-call[id] {
+  scroll-margin-top: 110px;
+}
+
   [class*="docRoot"]:not(:has(main)) {
     width: 0;
   }
