@@ -810,6 +810,17 @@
     display: none;
   }
 
+  // Endpoint code/response cell: in AI mode the endpoints are linearized to a
+  // single column, but the cell kept its sticky viewport max-height + inner
+  // scrollbar, so long responses scrolled inside the cell instead of showing in
+  // full. Let it grow to its natural height like the rest of the page.
+  .api-endpoint-block [class*="endpoint__code"] {
+    position: static !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+    min-width: 0 !important;
+  }
+
   // Compress content area: override the doc-content-max-width variable
   // and constrain the entire main wrapper
   // Back to top button: keep in main content area, not over AI panel

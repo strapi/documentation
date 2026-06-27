@@ -244,7 +244,8 @@
 
   &__code {
     padding: 24px 32px 40px;
-    background: var(--strapi-surface-1);
+    // No background tint: the contrast on the code/response column added visual
+    // noise without purpose. The column blends with the page in light and dark.
     position: sticky;
     top: var(--ifm-navbar-height);
     align-self: start;
@@ -333,14 +334,9 @@
   padding: 12px 0;
   border-bottom: 1px solid var(--strapi-border);
   align-items: start;
-  transition: background 0.15s;
 
-  &:hover {
-    background: var(--strapi-surface-1);
-    margin: 0 -8px;
-    padding: 12px 8px;
-    border-radius: 8px;
-  }
+  // No hover state: parameter rows are not interactive (clicking does nothing),
+  // so a hover highlight wrongly suggested they were clickable.
 
   &:last-child {
     border-bottom: none;
@@ -758,9 +754,8 @@
 }
 
 /* ═══ LIGHT MODE specifics ═══ */
-.endpoint__code {
-  background: var(--strapi-surface-1);
-}
+/* .endpoint__code intentionally has no background tint (removed for a cleaner,
+   noise-free code/response column). */
 
 .codePanel {
   background: var(--strapi-surface-0);
@@ -772,20 +767,12 @@
 
 /* ═══ DARK MODE ═══ */
 @include dark {
-  .endpoint__code {
-    background: var(--strapi-surface-1);
-  }
-
   .codePanel {
     background: var(--strapi-surface-0);
   }
 
   .codePanel__tabs {
     background: var(--strapi-surface-2);
-  }
-
-  .paramRow:hover {
-    background: var(--strapi-surface-1);
   }
 }
 
