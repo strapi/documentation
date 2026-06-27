@@ -3,14 +3,27 @@
 
 .expandable-content {
   margin-bottom: var(--strapi-spacing-6);
+  // Stay within the content column on its own, without relying on the
+  // page-level :has() width rules (which may not match on the first paint,
+  // briefly letting the block span the full viewport on reload, seen at narrow).
+  max-width: 100%;
+  box-sizing: border-box;
 
   &__wrapper {
     position: relative;
-    transition: max-height 0.3s ease;
-    
+    // No max-height transition by default: on reload the collapse would animate
+    // from the full content height, flashing the whole block open before
+    // settling. The transition is enabled only after the user toggles (the
+    // component adds [data-interacted] for that), so clicks still animate.
+    transition: none;
+
     &--collapsed {
       position: relative;
     }
+  }
+
+  &[data-interacted="true"] &__wrapper {
+    transition: max-height 0.3s ease;
   }
 
   &__gradient {
