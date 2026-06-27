@@ -356,19 +356,51 @@
 @media (max-width: 768px) {
   .explorerBody {
     flex-direction: column;
+    min-width: 0;
+  }
+
+  /* Tabs scroll horizontally instead of overflowing the card on narrow screens. */
+  .tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .tab {
+    flex-shrink: 0;
   }
 
   .endpointList {
     width: 100%;
+    /* min-width:0 lets overflow-x:auto actually contain the row inside the
+       flex column, instead of the row stretching the card wider than the
+       viewport. */
+    min-width: 0;
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     flex-direction: row;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 8px;
     gap: 4px;
   }
 
   .endpointItem {
     white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* The request pane and its code blocks must not push the card wider; keep
+     them inside the column and let the code scroll within its own box. */
+  .requestPane {
+    min-width: 0;
+  }
+
+  .urlBar {
+    flex-wrap: wrap;
   }
 }
