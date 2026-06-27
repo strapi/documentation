@@ -13,6 +13,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # The Strapi Design System has been upgraded to v2
 
+<Tldr>
+
+The Strapi Design System has been upgraded to v2 in Strapi 5 with changes to import structure, component APIs, and styling, including root imports, Radix-UI migrations, a new Field API, and a new base font-size of 62.5%.
+
+</Tldr>
+
+
 The <ExternalLink text="Strapi Design System" to="https://design-system.strapi.io" /> has been completely updated in Strapi 5 with significant changes to component structure, APIs, and usage patterns.
 
 <Intro />

@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # `strapi.fetch` uses the native `fetch()` API
 
+<Tldr>
+
+In Strapi 5, `strapi.fetch` wraps the native `fetch()` API instead of node-fetch, requiring the `timeout` parameter to be replaced with `signal: AbortSignal.timeout()`.
+
+</Tldr>
+
+
 In Strapi 5, the `strapi.fetch` object is now wrapping node Fetch API instead of node-fetch.
 
 <Intro />

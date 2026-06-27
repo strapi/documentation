@@ -10,6 +10,13 @@ tags:
 
 # TypeScript guides
 
+<Tldr>
+
+Guides for leveraging TypeScript in Strapi projects, covering patterns for manipulating documents and entries, and adding TypeScript support to existing projects.
+
+</Tldr>
+
+
 The following guides will help you on specific aspects of a [Typescript-based](/cms/typescript) Strapi project.
 
 <CustomDocCardsWrapper>

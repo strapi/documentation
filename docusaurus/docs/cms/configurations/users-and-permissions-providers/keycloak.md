@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # Keycloak provider setup for Users & Permissions
 
+<Tldr>
+
+Set up Keycloak as an identity provider for Strapi's Users & Permissions feature by configuring a client in Keycloak, then enabling and filling in the Keycloak provider details in Strapi's admin settings.
+
+</Tldr>
+
+
 The present page explains how to setup the Keycloak provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

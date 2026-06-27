@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # Discord provider setup for Users & Permissions
 
+<Tldr>
+
+Discord provider setup allows you to authenticate users via Discord OAuth2 by configuring your Discord app credentials in Strapi's Users & Permissions provider settings.
+
+</Tldr>
+
+
 The present page explains how to setup the Discord provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

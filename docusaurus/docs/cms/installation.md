@@ -10,6 +10,13 @@ tags:
 
 # Installation
 
+<Tldr>
+
+Strapi projects can be installed locally via CLI or run in Docker containers for development and production.
+
+</Tldr>
+
+
 Strapi projects can be installed either locally on a computer or on a remote server. The following installation guide provides step-by-step instructions on how to install and create a new Strapi project on your local machine:
 
 <CustomDocCard title="CLI" description="Create a project on your local machine using the CLI." link="/cms/installation/cli" />

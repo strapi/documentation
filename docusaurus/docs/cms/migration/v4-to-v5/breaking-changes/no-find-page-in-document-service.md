@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # No `findPage()` in Document Service API
 
+<Tldr>
+
+Strapi 5 replaces the Entity Service API with the Document Service API, which does not include `findPage()`. Use the Document Service API's `findMany()` method instead.
+
+</Tldr>
+
+
 In Strapi 5, the [Document Service API](/cms/api/document-service) replaces the Entity Service API. There is no `findPage()` method available in the Document Service API and users should use the `findMany()` method instead.
 
 <Intro />

@@ -17,6 +17,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Components and dynamic zones do not return an `id`
 
+<Tldr>
+
+In Strapi 5, components and dynamic zones no longer return an `id` in REST API responses, preventing partial updates and requiring full component objects to be sent instead.
+
+</Tldr>
+
+
 In Strapi 5, components and dynamic zones do not return an `id` with REST API requests so it's not possible to partially update them.
 
 <Intro />

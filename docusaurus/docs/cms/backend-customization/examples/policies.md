@@ -10,6 +10,13 @@ import CookbookNote from '/docs/snippets/_cookbook-foodadvisor.md'
 
 # Examples cookbook: Custom policies
 
+<Tldr>
+
+Custom policies control access to content-type endpoints by allowing or blocking requests, and can throw custom errors using `PolicyError` for better error handling and front-end integration.
+
+</Tldr>
+
+
 <CookbookNote/>
 
 :::prerequisites

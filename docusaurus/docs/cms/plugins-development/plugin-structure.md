@@ -18,6 +18,13 @@ import InteractivePluginStructure from '@site/src/components/PluginStructure.js'
 
 # Plugin structure
 
+<Tldr>
+
+A Strapi plugin is divided into an `admin/` folder for admin panel UI components and a `server/` folder for backend logic like content-types and controllers, each with its own API.
+
+</Tldr>
+
+
 When [creating a plugin with Plugin SDK](/cms/plugins-development/create-a-plugin), Strapi generates the following boilerplate structure for you in the `/src/plugins/my-plugin` folder:
 
 <InteractivePluginStructure />

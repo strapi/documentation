@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # Patreon provider setup for Users & Permissions
 
+<Tldr>
+
+Set up Patreon as an OAuth provider for Users & Permissions by registering an OAuth client on Patreon and configuring it in Strapi with your Client ID and Client Secret.
+
+</Tldr>
+
+
 The present page explains how to setup the Patreon provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

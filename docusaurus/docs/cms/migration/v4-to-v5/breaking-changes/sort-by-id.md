@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Sorting by `id` is no longer possible to sort by chronological order in Strapi 5
 
+<Tldr>
+
+Sorting by `id` no longer works chronologically in Strapi 5 due to uuid-based documents; use `createdAt` with the Document Service API instead.
+
+</Tldr>
+
+
 In Strapi 5, sorting by `id` to sort by chronological order is no longer possible since [documents](/cms/api/document) use an uuid.
 
 <Intro />

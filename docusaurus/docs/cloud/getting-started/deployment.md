@@ -17,6 +17,13 @@ tags:
 
 # Project deployment with the Cloud dashboard
 
+<Tldr>
+
+Deploy your Strapi project on Strapi Cloud using the dashboard by choosing a plan, connecting a Git repository, configuring your project settings, and setting up billing details.
+
+</Tldr>
+
+
 This is a step-by-step guide for deploying your project on Strapi Cloud for the first time, using the Cloud dashboard.
 
 :::prerequisites

@@ -16,6 +16,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Strapi 5 uses `koa-body` v6
 
+<Tldr>
+
+Strapi 5 upgrades to `koa-body` v6 with `formidable` v2, changing uploaded file properties from `path`, `name`, `type` to `filepath`, `originalFilename`, `mimetype` in custom endpoints.
+
+</Tldr>
+
+
 Strapi 5 uses <ExternalLink to="https://github.com/koajs/koa-body" text="`koa-body`"/> v6, which updates `formidable` to v2. This means uploaded files have new properties.
 
  <Intro />

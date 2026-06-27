@@ -10,6 +10,13 @@ import CookbookNote from '/docs/snippets/_cookbook-foodadvisor.md'
 
 # Examples cookbook: Custom routes
 
+<Tldr>
+
+Custom routes let you explicitly configure routes for content-types to control authentication and apply policies, such as bypassing default Strapi authentication or restricting access based on custom conditions.
+
+</Tldr>
+
+
 <CookbookNote/>
 
 :::prerequisites

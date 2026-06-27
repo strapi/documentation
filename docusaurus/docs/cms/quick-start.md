@@ -16,6 +16,13 @@ import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
 # Quick Start Guide
 
+<Tldr>
+
+Build and deploy a Strapi project from scratch in 10 steps: create a local project with `create-strapi@latest`, define collection types using the Content-Type Builder, deploy to Strapi Cloud with `npm run strapi deploy`, and add content via the Content Manager.
+
+</Tldr>
+
+
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and content structure from scratch, then deploy your project to Strapi Cloud to add data from there.
 
 :::tip Track your progress

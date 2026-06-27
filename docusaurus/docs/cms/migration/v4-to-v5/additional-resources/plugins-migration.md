@@ -9,6 +9,13 @@ tags:
 
 # Plugins upgrade summary
 
+<Tldr>
+
+Plugin developers upgrading from Strapi v4 to Strapi 5 must migrate to the Plugin SDK, transition from the Entity Service API to the Document Service API, update front-end code to use Design System v2 and remove `helper-plugin` dependencies.
+
+</Tldr>
+
+
 The present page is intended to be used as a short summary of everything to consider if you are a plugin developer upgrading your plugin from Strapi v4 to Strapi 5. The page quickly describes the changes affecting plugins and links to additional resources where necessary.
 
 :::strapi Plugin SDK

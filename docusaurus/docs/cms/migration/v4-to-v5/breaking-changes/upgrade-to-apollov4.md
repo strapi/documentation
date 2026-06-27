@@ -18,6 +18,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Apollo Server v3 upgraded to Apollo Server v4
 
+<Tldr>
+
+Strapi 5 upgrades Apollo Server from v3 to v4 and GraphQL from v15 to v16, requiring migration updates to error handling, CSRF prevention, and plugin configuration.
+
+</Tldr>
+
+
 Strapi 5 has migrated to Apollo Server v4 and this might require some manual migration steps.
 
 <Intro />

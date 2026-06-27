@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # VK provider setup for Users & Permissions
 
+<Tldr>
+
+VK provider setup for Users & Permissions enables authentication via VK. Configure a VK app, then set the client ID, secret, and redirect URL in Strapi's provider settings to enable VK login.
+
+</Tldr>
+
+
 The present page explains how to setup the VK provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

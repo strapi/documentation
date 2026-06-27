@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # The admin panel RBAC system has been updated
 
+<Tldr>
+
+Strapi 5 removes the `content-manager_rbacManager` redux store section and uses the regular permissions system with an updated `useRBAC` hook instead.
+
+</Tldr>
+
+
 In Strapi 5, the `content-manager_rbacManager`, which is a section of Strapi's redux store for the admin panel, is removed and the regular permissions system is used instead. Additionally, the `useRBAC` hook is updated.
 
 <Intro/>

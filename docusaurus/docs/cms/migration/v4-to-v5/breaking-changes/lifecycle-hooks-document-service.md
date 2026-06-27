@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Database lifecycle hooks are triggered differently with the Document Service API methods
 
+<Tldr>
+
+In Strapi 5, database lifecycle hooks are triggered differently when using Document Service API methods, varying by operation type and status changes due to the new Draft & Publish system.
+
+</Tldr>
+
+
 In Strapi 5, database lifecycle hooks are triggered differently with the various [Document Service API](/cms/api/document-service) methods, mainly due to the new way the [Draft & Publish](/cms/features/draft-and-publish) feature works.
 
 The majority of use cases should only use the Document Service. The Document Service API handles Draft & Publish, i18n, and any underlying strapi logic.

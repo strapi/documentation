@@ -10,6 +10,13 @@ tags:
 
 # Microsoft provider SSO configuration
 
+<Tldr>
+
+Configure the Microsoft SSO provider using `passport-azure-ad-oauth2` to allow users to sign in and sign up to your Strapi admin panel via their Microsoft accounts.
+
+</Tldr>
+
+
 The present page explains how to setup the Microsoft provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites

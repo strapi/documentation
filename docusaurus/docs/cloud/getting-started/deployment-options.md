@@ -11,6 +11,13 @@ tags:
 
 # Project deployment with Strapi Cloud
 
+<Tldr>
+
+Deploy your Strapi application on Strapi Cloud using either the Cloud dashboard or the CLI, with step-by-step guides provided for both methods.
+
+</Tldr>
+
+
 You have 2 options to deploy your project with Strapi Cloud:
 
 - either with the user interface (UI), meaning that you will perform all the actions directly on the Strapi Cloud dashboard,

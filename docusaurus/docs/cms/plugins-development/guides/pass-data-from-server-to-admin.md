@@ -14,6 +14,13 @@ tags:
 
 # How to pass data from server to admin panel with a Strapi plugin
 
+<Tldr>
+
+Pass data from a Strapi plugin's server to the admin panel by creating a custom admin route and using the `getFetchClient` API to request data from admin components.
+
+</Tldr>
+
+
 Strapi is **headless** <HeadlessCms />. The admin panel is completely separate from the server.
 
 When [developing a Strapi plugin](/cms/plugins-development/developing-plugins) you might want to pass data from the `/server` to the `/admin` folder. Within the `/server` folder you have access to the Strapi object and can do database queries whereas in the `/admin` folder you can't.

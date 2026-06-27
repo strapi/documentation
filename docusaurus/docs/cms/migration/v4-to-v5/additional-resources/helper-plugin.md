@@ -10,6 +10,13 @@ tags:
 
 # `helper-plugin` migration reference
 
+<Tldr>
+
+Reference guide listing every export from the deprecated `helper-plugin` package with migration paths to replacement components and utilities in `@strapi/strapi/admin`, `@strapi/design-system`, and other packages.
+
+</Tldr>
+
+
 This document has been written to help developers migrate their Strapi plugins and applications to _not_ use the `helper-plugin` package.
 It lists every export that existed in the `helper-plugin` package, in alphabetical order and grouped by domain.
 

@@ -16,6 +16,13 @@ tags:
 
 # Customization
 
+<Tldr>
+
+Strapi contains a backend server and admin panel, both of which can be customized to extend functionality like routes, policies, middlewares, themes, and more.
+
+</Tldr>
+
+
 Strapi includes 2 main components:
 
 - The back-end part of Strapi is a **server** that receives requests and handles them to return responses that can surface the data you built and saved through the Content-Type Builder and Content Manager. The backend server is described in more details in the [Backend Customization introduction](/cms/backend-customization). Most of the parts of the backend server can be customized.

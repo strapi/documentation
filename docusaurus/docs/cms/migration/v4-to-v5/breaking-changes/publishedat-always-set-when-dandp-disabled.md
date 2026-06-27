@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Content types with Draft & Publish disabled always have the publishedAt value set to a date
 
+<Tldr>
+
+In Strapi 5, content-types with Draft & Publish disabled always have the `publishedAt` attribute set to a date, whereas in v4 the attribute did not exist.
+
+</Tldr>
+
+
 In Strapi 5, content-types with Draft & Publish disabled always have the publishedAt value set to a date.
 <Intro />
 <BreakingChangeIdCard plugins />

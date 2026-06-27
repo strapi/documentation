@@ -19,6 +19,13 @@ import CookbookNote from '/docs/snippets/_cookbook-foodadvisor.md'
 
 # Examples cookbook: Custom services and controllers
 
+<Tldr>
+
+Services encapsulate reusable business logic that controllers invoke to handle reviews and email notifications. This guide demonstrates creating custom services using the Document Service API and custom controllers that call them.
+
+</Tldr>
+
+
 <CookbookNote/>
 
 :::prerequisites

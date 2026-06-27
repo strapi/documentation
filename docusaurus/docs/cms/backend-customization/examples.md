@@ -10,6 +10,13 @@ import CookbookNote from '/docs/snippets/_cookbook-foodadvisor.md'
 
 # Backend customization: An examples cookbook using FoodAdvisor
 
+<Tldr>
+
+A cookbook of real-world backend customization examples using the FoodAdvisor demo application, demonstrating how to implement custom routes, controllers, services, policies, and middlewares in Strapi.
+
+</Tldr>
+
+
 <CookbookNote/>
 
 The present section of the documentation is intended for developers who would like to get a deeper understanding of the Strapi back end customization possibilities.

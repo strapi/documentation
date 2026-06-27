@@ -12,6 +12,13 @@ tags:
 
 # Community & Support 
 
+<Tldr>
+
+Strapi is an open-source, community-oriented project welcoming contributions to the core, documentation, and design system. Get support through GitHub Discussions and Discord for free, or access the Support platform with an active paid plan.
+
+</Tldr>
+
+
 Strapi is an open-source project (see <ExternalLink to="https://github.com/strapi/strapi/blob/main/LICENSE" text="LICENSE"/> file for more information). The core project, as well as the documentation and any related tool can be found in the <ExternalLink to="https://github.com/strapi" text="Strapi"/> GitHub organization.
 
 ## Open-source & Contribution

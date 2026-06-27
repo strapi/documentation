@@ -14,6 +14,13 @@ tags:
 
 # Developing Strapi plugins
 
+<Tldr>
+
+Strapi plugins extend core functionality using Admin Panel API, Server API, or MCP server tools. Plugins can be local or published to the Marketplace, and are created using the Plugin SDK.
+
+</Tldr>
+
+
 Strapi allows the development of plugins that work exactly like the built-in plugins or 3rd-party plugins available from the <ExternalLink to="https://market.strapi.io" text="Marketplace"/>. Once created, your plugin can be:
 
 - used as a local plugin, working only with a specific Strapi project,

@@ -8,6 +8,13 @@ pagination_next: cms/backend-customization/examples/services-and-controllers
 
 # Examples cookbook: Authentication flow with JWT
 
+<Tldr>
+
+Authenticate REST API requests using JWT by sending credentials to the `/auth/local` endpoint and storing the token in `localStorage`, with optional session management for refresh token support.
+
+</Tldr>
+
+
 :::prerequisites
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/cms/backend-customization/examples).
 :::

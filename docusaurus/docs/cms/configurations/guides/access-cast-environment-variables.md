@@ -12,6 +12,13 @@ tags:
 
 # How to access and cast environment variables
 
+<Tldr>
+
+The `env()` utility accesses environment variables from `.env` files and casts them to different types including `int`, `float`, `bool`, `json`, `array`, `date`, and `oneOf`.
+
+</Tldr>
+
+
 In most use cases there will be different configurations between environments (e.g. database credentials).
 
 Instead of writing those credentials into configuration files, variables can be defined in a `.env` file at the root of the application:

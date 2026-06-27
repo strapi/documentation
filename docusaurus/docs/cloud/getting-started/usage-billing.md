@@ -13,6 +13,13 @@ tags:
 
 # Cloud billing & usage
 
+<Tldr>
+
+Strapi Cloud offers four plans (Free, Essential, Pro, Scale) with usage-based pricing that varies by API requests, asset storage, and bandwidth, plus overages charged monthly; projects may be suspended for unpaid invoices or plan violations.
+
+</Tldr>
+
+
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
 Strapi Cloud offers 1 Free plan and 3 paid plans: Essential, Pro and Scale (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarizes Strapi Cloud usage-based pricing plans, for general features and usage:

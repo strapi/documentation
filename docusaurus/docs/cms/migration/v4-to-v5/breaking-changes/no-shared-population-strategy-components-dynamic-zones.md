@@ -16,6 +16,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Components and dynamic zones should be populated using the detailed population strategy (`on` fragments)
 
+<Tldr>
+
+In Strapi 5, components and dynamic zones must be explicitly populated using `on` fragments instead of the shared population strategy supported in v4.
+
+</Tldr>
+
+
 In Strapi 5, components and dynamic zones should be populated using the detailed population strategy, with `on` fragments. The shared population strategy possible in Strapi v4 is no longer supported.
 
 <Intro />

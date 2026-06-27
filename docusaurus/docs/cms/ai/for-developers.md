@@ -13,6 +13,13 @@ toc_max_heading_level: 3
 
 # AI for developers
 
+<Tldr>
+
+The Strapi documentation site includes free AI-powered tools including an AI toolbar, chatbot powered by Kapa, `llms.txt` files, and MCP servers to help developers learn and integrate Strapi more effectively.
+
+</Tldr>
+
+
 The Strapi documentation site includes AI-powered tools to help developers learn, explore, and integrate Strapi more effectively. These tools are free to use and available to everyone.
 
 :::tip AGENTS.MD files

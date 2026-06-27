@@ -10,6 +10,13 @@ tags:
 
 # Discord provider SSO configuration
 
+<Tldr>
+
+Discord SSO provider enables users to sign in and sign up to Strapi through their Discord account. Configure it in `config/admin` using `passport-discord` with client credentials and email scope.
+
+</Tldr>
+
+
 The present page explains how to setup the Discord provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites

@@ -9,6 +9,13 @@ import CookbookNote from '/docs/snippets/_cookbook-foodadvisor.md'
 
 # Examples cookbook: Custom global middlewares
 
+<Tldr>
+
+Custom global middlewares intercept incoming requests before controller execution, enabling you to add logic like analytics tracking. This example creates a middleware that logs restaurant page visits to a Google Sheet.
+
+</Tldr>
+
+
 <CookbookNote/>
 
 :::prerequisites

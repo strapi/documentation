@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Strapi factories import have been updated
 
+<Tldr>
+
+In Strapi 5, the import syntax for the application init function and factories has been updated; use `createStrapi` from `@strapi/strapi` instead of the v4 patterns, and some legacy import patterns are no longer supported.
+
+</Tldr>
+
+
 In Strapi 5, strapi factories import have been updated.
 
 <Intro />

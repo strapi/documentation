@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Strapi uses `react-router-dom` v6
 
+<Tldr>
+
+Strapi 5 upgrades to `react-router-dom` v6, requiring settings and menu links added via the Admin Panel API to use relative paths instead of absolute paths.
+
+</Tldr>
+
+
 Strapi 5 uses <ExternalLink to="https://www.npmjs.com/package/react-router-dom" text="`react-router-dom`"/> v6. This impacts the links added to [settings](/cms/plugins-development/admin-navigation-settings#settings) or to the [menu](/cms/plugins-development/admin-navigation-settings#navigation-sidebar-menu-links) using the Admin Panel API.
 
  <Intro />

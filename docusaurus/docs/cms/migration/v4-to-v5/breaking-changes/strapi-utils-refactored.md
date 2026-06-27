@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # `strapi-utils` refactored
 
+<Tldr>
+
+In Strapi 5, the `strapi-utils` package is refactored with utilities reorganized into `arrays`, `dates`, `strings`, `objects`, and `async` namespaces, and some utilities moved, replaced with service methods, or removed.
+
+</Tldr>
+
+
 In Strapi 5, the `strapi-utils` core package has been refactored. This page lists the additions, removals, and other updates.
 
 <Intro />

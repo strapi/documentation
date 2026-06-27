@@ -13,6 +13,13 @@ pagination_next: cloud/getting-started/cloud-fundamentals
 
 # Welcome to the Strapi Cloud Documentation!
 
+<Tldr>
+
+Strapi Cloud is a fully managed hosting platform for deploying Strapi applications, abstracting infrastructure complexity while enabling content management, collaboration, and compliance features.
+
+</Tldr>
+
+
 <!--
 <SubtleCallout title="Strapi Cloud & Strapi CMS docs" emoji="📍">
 

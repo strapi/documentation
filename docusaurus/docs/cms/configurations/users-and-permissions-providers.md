@@ -11,6 +11,13 @@ tags:
 
 # Users & Permissions providers
 
+<Tldr>
+
+Configure OAuth and OAuth2 providers for Strapi's Users & Permissions authentication feature, with setup guides for common providers like GitHub, Google, and Auth0, plus instructions for creating custom providers.
+
+</Tldr>
+
+
 Strapi comes with a predefined set of built-in providers for the [Users & Permissions feature](/cms/features/users-permissions). The present page explains how the login flow works, how to set up the server URL, and list many examples for common 3rd-party providers.
 
 If you're looking to create your own custom provider, please refer to the [dedicated guide](/cms/configurations/users-and-permissions-providers/new-provider-guide).

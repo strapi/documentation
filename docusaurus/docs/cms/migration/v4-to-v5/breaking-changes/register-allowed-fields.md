@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # The Users & Permissions plugin's `register.allowedFields` configuration option defaults to `[]`
 
+<Tldr>
+
+In Strapi 5, the Users & Permissions plugin's `register.allowedFields` defaults to an empty array, requiring explicit field allowlisting instead of accepting all fields by default.
+
+</Tldr>
+
+
 In Strapi 5, the Users & Permissions plugin's `register.allowedFields` configuration option defaults to `[]`.
 
 <Intro />

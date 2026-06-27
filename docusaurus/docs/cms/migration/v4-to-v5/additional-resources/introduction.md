@@ -9,6 +9,13 @@ tags:
 
 # Additional resources for upgrading to Strapi 5
 
+<Tldr>
+
+Additional resources provide dedicated guidance on specific Strapi 5 migration topics, including transitioning from the Entity Service API to Document Service API, upgrading plugins, and handling Design System v2 breaking changes.
+
+</Tldr>
+
+
 The following pages cover some dedicated topics for specific use cases when upgrading to Strapi 5. Please ensure you have read the [introduction to upgrading to Strapi 5](/cms/migration/v4-to-v5/introduction-and-faq) and [step-by-step guide](/cms/migration/v4-to-v5/step-by-step) before moving forward.
 
 <CustomDocCard emoji="📦" title="Entity Service API to Document Service API migration reference" description="Learn how to transition from the Entity Service API of Strapi v4, deprecated in Strapi 5, to the new Document Service API." link="/cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service" />

@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Server log level is `http`
 
+<Tldr>
+
+In Strapi 5, the server log level defaults to `http` instead of `silly`, reducing verbose logging by hiding `silly` and `debug` level logs. Configure the log level in your server configuration file to adjust output verbosity.
+
+</Tldr>
+
+
 You can adjust the server log level in the configuration to control how much detail you see in your server logs. If you want to see more or less verbose logs in your server logs, this feature allows you to customize it according to your needs.
 
 <Intro />
