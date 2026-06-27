@@ -579,6 +579,51 @@
       "number": 26757,
       "reason": "Router: Internal CLI scaffolding fix for pnpm 11 compatibility. No new user-facing APIs, flags, or configuration options exposed. The fix is transparent—users don't need to change their workflow or understand new behavior. This is a bug fix to prevent Cloud deploy failures, not a feature requiring documentation.",
       "added": "2026-06-25"
+    },
+    {
+      "number": 26511,
+      "reason": "Triage: test infrastructure improvement",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 25006,
+      "reason": "Triage: code style and type-safety improvement with no behavior change",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 26816,
+      "reason": "Router: Internal admin UI bug fix (DynamicZone component crash). No public API or behavior changes exposed to users. This is a regression test for an internal implementation detail.",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 26510,
+      "reason": "Router: Internal admin UI change (target attribute on a link in the admin panel). No public user-facing API or feature documentation needed.",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 26337,
+      "reason": "Router: Internal admin UI fix for consistency (DynamicZone component category label capitalization). No public API or feature behavior change.",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 26294,
+      "reason": "Router: Internal admin UI bug fix for form field behavior. No public API or user-facing feature change.",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 26127,
+      "reason": "Router: Internal admin UI behavior fix. Prevents opening the Edit Asset modal when a media field is disabled (published entries). No public API or feature documentation needed.",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 25455,
+      "reason": "Router: Internal admin panel UX improvement to error messages. This is a frontend validation message improvement with no public API or feature documentation impact.",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 25011,
+      "reason": "Router: Internal error handling fix. The error message shown to users ('The uploaded file exceeds the maximum allowed asset size') already exists in documentation; this fix just ensures it's properly displayed instead of a generic 500 error.",
+      "added": "2026-06-27"
     }
   ]
 }
