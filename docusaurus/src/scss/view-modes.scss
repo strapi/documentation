@@ -314,13 +314,24 @@
       gap: 0 !important;
     }
 
-    // Parameter rows: collapse the 3-column grid into a flat line
+    // Parameter rows: collapse the 3-column grid into a flat line, and give
+    // each one breathing room plus a bottom divider so it is clear where one
+    // parameter's info ends and the next begins (flattened rows otherwise run
+    // together).
     [class*="paramRow"],
     [class*="param "] {
       display: block !important;
       grid-template-columns: none !important;
-      padding: 2px 0 !important;
+      padding: 2px 0 16px !important;
+      margin-bottom: 16px !important;
       border: none !important;
+      border-bottom: 1px solid var(--strapi-neutral-150) !important;
+    }
+
+    // No trailing divider after the last parameter row in a group.
+    [class*="paramRow"]:last-child {
+      border-bottom: none !important;
+      margin-bottom: 0 !important;
     }
 
     // Required/optional pills: plain text, no colored chip
