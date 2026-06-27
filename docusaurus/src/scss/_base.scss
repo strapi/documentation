@@ -374,28 +374,36 @@ main:has(.api-endpoint-block) {
   }
 
   /**
-   * In the 2-column layout the code/response cell is sticky with a viewport
-   * max-height and its own scrollbar, so long responses scrolled inside the
-   * cell instead of showing in full. Only in the actual 2-column layout
-   * (wide/max, non-AI), let the cell grow to its full height so the whole
-   * response is visible without an inner scrollbar.
+   * The code/response cell is sticky with a viewport max-height and its own
+   * scrollbar, so long responses scrolled inside the cell instead of showing in
+   * full. That sticky behavior only ever made sense paired with a left params
+   * column, but it applied at every content width. Let the cell grow to its
+   * full height so the whole response is always visible without an inner
+   * scrollbar:
+   * - wide/max (non-AI): the actual 2-column layout.
+   * - narrow (non-AI, no data-content-width attribute): single column, where
+   *   the sticky scroll was a leftover that the user hit again. (On small
+   *   viewports a medium-down rule already neutralizes it.)
+   * AI mode is handled in view-modes.scss.
    *
-   * min-width: 0 on the grid cells is REQUIRED: the code cell holds a <pre>
-   * with long lines (overflow-x: auto). Without min-width:0 a grid item's
+   * min-width: 0 on the grid cells is REQUIRED at wide/max: the code cell holds
+   * a <pre> with long lines (overflow-x: auto). Without it, a grid item's
    * min-content width is its content, so once the cell is no longer height-
-   * constrained the long code pushed the column wider than its 1fr share and
-   * crushed the params column. min-width:0 lets the 1fr 1fr split hold while
-   * the <pre> scrolls horizontally within its own box.
-   *
-   * The 1-column layouts (narrow content width and mobile) keep the sticky
-   * scrolling behavior untouched.
+   * constrained the long code pushed the column past its 1fr share and crushed
+   * the params column. min-width:0 lets the 1fr 1fr split hold while the <pre>
+   * scrolls horizontally within its own box.
    */
-  [data-content-width="wide"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__columns"] > *,
-  [data-content-width="max"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__columns"] > * {
+  // min-width: 0 on the columns/cells at every content width: the code cell's
+  // <pre> has long lines (overflow-x: auto). Once the cell is no longer
+  // height-constrained, its min-content width would otherwise push the cell
+  // past its track and overflow the page (notably in narrow, single column).
+  .api-endpoint-block--columns [class*="endpoint__columns"],
+  .api-endpoint-block--columns [class*="endpoint__columns"] > * {
     min-width: 0;
   }
   [data-content-width="wide"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__code"],
-  [data-content-width="max"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__code"] {
+  [data-content-width="max"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__code"],
+  html:not([data-content-width="wide"]):not([data-content-width="max"]):not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__code"] {
     position: static;
     max-height: none;
     overflow-y: visible;
