@@ -16,6 +16,10 @@
     left: 40px;
     width: 152px;
     height: 100px;
+    // Decorative logo only: never let it intercept clicks. On mobile it overlaps
+    // the top of the first footer links, which made "What's new?" unclickable on
+    // its left half.
+    pointer-events: none;
   }
 
   .container {
@@ -163,12 +167,25 @@
     display: block;
     width: 100%;
     margin-bottom: 0;
-    padding: 8px 0;
+    // Comfortable but tighter tap target (was 8px, which spaced links too far).
+    padding: 4px 0;
     line-height: 1.4;
   }
 
-  // A touch more room between category groups.
+  // Align the link columns (and their category titles) with the footer logo,
+  // which sits at left:16px (the footer's padding). The Infima grid .row has a
+  // -8px gutter margin that pushed the columns out to left:8px — visible as a
+  // misalignment with the logo on Firefox. Cancel the gutter so the row matches
+  // the container (16px), and zero the .col padding so titles/links sit flush
+  // on that same left edge as the logo.
+  .footer .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .footer .col {
+    padding-left: 0;
+    padding-right: 0;
     margin-bottom: 16px;
   }
 }
