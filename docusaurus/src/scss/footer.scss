@@ -143,6 +143,36 @@
   }
 }
 
+/**
+ * Mobile footer links: at the base 13px size with only 4px between them, the
+ * links were small and crowded against the left edge, and each tap target was
+ * barely ~20px tall — easy to miss, so they felt unclickable. Make them larger
+ * and give each a full-width block with comfortable vertical padding so the
+ * whole row is an easy tap target.
+ */
+@include small-down {
+  .footer a {
+    font-size: 15px;
+  }
+
+  .footer__title {
+    font-size: 12px;
+  }
+
+  .footer__link-item {
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+    padding: 8px 0;
+    line-height: 1.4;
+  }
+
+  // A touch more room between category groups.
+  .footer .col {
+    margin-bottom: 16px;
+  }
+}
+
 @include dark {
   .footer {
     border-top-color: var(--strapi-neutral-150) !important;
