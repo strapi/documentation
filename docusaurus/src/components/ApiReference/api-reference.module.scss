@@ -503,6 +503,9 @@
       font-size: 12.5px;
       line-height: 1.65;
       color: var(--strapi-fg-2);
+      // Prism/Infima give the inner <code> a solid (white) background; strip it
+      // so the code block blends with the now-transparent panel.
+      background: transparent !important;
     }
 
     // Collapsed state: clip to ~10 lines of code.
