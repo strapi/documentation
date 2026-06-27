@@ -372,23 +372,6 @@ main:has(.api-endpoint-block) {
     border-right: 1px solid var(--strapi-border);
     border-bottom: none;
   }
-
-  /**
-   * In the 2-column layout the code/response cell is sticky with a viewport
-   * max-height and its own scrollbar, so it stays in view while you read the
-   * params on the left. That meant long responses scrolled inside the cell
-   * instead of showing in full. Only in the actual 2-column layout (wide/max,
-   * non-AI), let the cell grow to its full height and show the whole response
-   * without an inner scrollbar. The 1-column layouts (narrow content width and
-   * mobile, where params sit above the code) are untouched, so their existing
-   * behavior is preserved.
-   */
-  [data-content-width="wide"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__code"],
-  [data-content-width="max"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__code"] {
-    position: static;
-    max-height: none;
-    overflow-y: visible;
-  }
 }
 
 /**
