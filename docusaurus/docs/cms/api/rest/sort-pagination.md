@@ -22,6 +22,13 @@ import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 
 # REST API: Sort & Pagination
 
+<Tldr>
+
+Sort REST API results on one or multiple fields with `:asc` or `:desc` syntax, and paginate using either page-based or offset-based parameters.
+
+</Tldr>
+
+
 Entries that are returned by queries to the [REST API](/cms/api/rest) can be sorted and paginated.
 
 :::tip

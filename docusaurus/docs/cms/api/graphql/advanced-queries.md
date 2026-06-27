@@ -7,6 +7,13 @@ tags:
 
 # Advanced queries for the GraphQL API
 
+<Tldr>
+
+Advanced queries in Strapi's GraphQL API use nested selection sets to fetch multi-level relations and custom resolver chains to reuse logic across resolvers and apply context-specific behavior.
+
+</Tldr>
+
+
 Strapi's [GraphQL API](/cms/api/graphql) resolves many queries automatically, but complex data access can require deeper relation fetching or chaining resolvers. The present short guide explains how to handle such advanced scenarios.
 
 For additional information, please refer to the [GraphQL customization](/cms/plugins/graphql#extending-the-schema) documentation.

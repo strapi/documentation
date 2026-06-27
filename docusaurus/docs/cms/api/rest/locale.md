@@ -19,6 +19,13 @@ import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 
 # REST API: `locale`
 
+<Tldr>
+
+The `locale` REST API parameter retrieves and manages documents in specific languages, defaulting to the application's default locale. Use it to fetch, create, update, and delete locale-specific versions of documents in both collection and single types.
+
+</Tldr>
+
+
 The [Internationalization (i18n) feature](/cms/features/internationalization) adds new abilities to the [REST API](/cms/api/rest).
 
 :::prerequisites

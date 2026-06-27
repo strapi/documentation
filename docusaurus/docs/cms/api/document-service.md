@@ -13,6 +13,13 @@ toc_max_heading_level: 4
 
 # Document Service API
 
+<Tldr>
+
+The Document Service API is the recommended backend API for interacting with content, providing `findOne`, `findMany`, `create`, `update`, and `delete` methods that work with stable `documentId` identifiers and support Draft & Publish operations.
+
+</Tldr>
+
+
 The Document Service API is built on top of the **Query Engine API** <Annotation>2 different back-end APIs allow you to interact with your content: <ul><li>The [Query Engine API](/cms/api/query-engine) is the lower-level layer that offers unrestricted access to the database, but is not aware of complex Strapi content structures such as components and dynamic zones.</li><li>The Document Service API is built on top of the Query Engine and is the recommended way to interact with your content while you are customizing the back end server or developing plugins.</li></ul>More details can be found in the [Content API](/cms/api/content-api) and [backend customization](/cms/backend-customization) introductions.</Annotation> and is used to perform CRUD ([create](#create), [retrieve](#findone), [update](#update), and [delete](#delete)) operations on **documents** <DocumentDefinition />.
 
 The Document Service API also supports [counting](#count) documents and, if [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content-type, performing Strapi-specific operations such as [publishing](#publish), [unpublishing](#unpublish), and [discarding drafts](#discarddraft).

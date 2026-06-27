@@ -20,6 +20,13 @@ import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 
 # REST API: `status`
 
+<Tldr>
+
+The REST API's `status` parameter filters documents by their publication state, returning either published versions (default) or drafts by passing `status=draft`.
+
+</Tldr>
+
+
 The [REST API](/cms/api/rest) offers the ability to filter results based on their status, draft or published.
 
 :::prerequisites

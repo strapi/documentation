@@ -21,6 +21,13 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # <Icon name="brain" /> Understanding the `populate` parameter for the REST API
 
+<Tldr>
+
+The `populate` parameter in REST API queries includes additional fields, relations, components, and dynamic zones in responses beyond default attributes. Use `populate=*` for all 1-level-deep relations, or explicitly specify fields with nested arrays and fragment syntax for deeper or selective population.
+
+</Tldr>
+
+
 :::note Note: Example responses might differ from your experience
 
 The content of this page might not be fully up-to-date with Strapi 5 yet:

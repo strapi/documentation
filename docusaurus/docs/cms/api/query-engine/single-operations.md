@@ -20,6 +20,13 @@ import QueryEnginePrereqs from '/docs/snippets/query-engine-prereqs.md'
 
 # Single Operations with the Query Engine API
 
+<Tldr>
+
+The Query Engine API provides methods to find, create, update, and delete individual entries with filtering, selection, pagination, and relation population options.
+
+</Tldr>
+
+
 <ConsiderDocumentService />
 <QueryEnginePrereqs />
 

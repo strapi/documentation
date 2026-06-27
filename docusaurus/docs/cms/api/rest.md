@@ -14,6 +14,13 @@ tags:
 
 # REST API reference
 
+<Tldr>
+
+Strapi's REST API automatically generates endpoints for content-types to fetch, create, update, and delete documents using GET, POST, PUT, and DELETE methods, with support for filtering, sorting, field selection, and relation population.
+
+</Tldr>
+
+
 The REST API allows accessing the [content-types](/cms/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/cms/api/rest/parameters) can be used when querying API endpoints to refine the results.
 
 This section of the documentation is for the REST API reference for content-types. We also have [guides](/cms/api/rest/guides/intro) available for specific use cases.

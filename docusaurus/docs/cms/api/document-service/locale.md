@@ -22,6 +22,13 @@ tags:
 
 # Document Service API: Using the `locale` parameter
 
+<Tldr>
+
+The `locale` parameter in the Document Service API lets you query, create, update, delete, publish, and unpublish documents for specific language versions using methods like `findOne()`, `findMany()`, `update()`, and `delete()`.
+
+</Tldr>
+
+
 By default the [Document Service API](/cms/api/document-service) returns the default locale version of documents (which is 'en', i.e. the English version, unless another default locale has been set for the application, see [Internationalization (i18n) feature](/cms/features/internationalization)). This page describes how to use the `locale` parameter to get or manipulate data only for specific locales.
 
 ## Get a locale version with `findOne()` {#find-one}

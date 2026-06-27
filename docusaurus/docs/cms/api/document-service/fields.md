@@ -22,6 +22,13 @@ import IdsInResponse from '/docs/snippets/id-in-responses.md'
 
 # Document Service API: Selecting fields
 
+<Tldr>
+
+Use the `fields` parameter in Document Service API queries to select specific fields to return with your results, reducing data payload across `findOne()`, `findMany()`, `create()`, `update()`, `delete()`, `publish()`, and other document operations.
+
+</Tldr>
+
+
 By default the [Document Service API](/cms/api/document-service) returns all the fields of a document but does not populate any fields. This page describes how to use the `fields` parameter to return only specific fields with the query results.
 
 :::tip

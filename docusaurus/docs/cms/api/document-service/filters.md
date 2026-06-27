@@ -15,6 +15,13 @@ import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
 
 # Document Service API: Filters
 
+<Tldr>
+
+The Document Service API provides attribute operators (`$eq`, `$lt`, `$contains`, etc.) and logical operators (`$and`, `$or`, `$not`) to filter query results with support for case-sensitive and case-insensitive matching.
+
+</Tldr>
+
+
 The [Document Service API](/cms/api/document-service) offers the ability to filter results.
 
 The following operators are available:

@@ -8,6 +8,13 @@ tags:
 
 # Advanced policies for the GraphQL API
 
+<Tldr>
+
+Policies can be attached to GraphQL resolvers to implement complex authorization rules, such as limiting results for unauthenticated users or restricting access based on group membership.
+
+</Tldr>
+
+
 Requests sent to the [GraphQL API](/cms/api/graphql) pass through Strapi's [middlewares](/cms/backend-customization/middlewares.md) and [policies](/cms/backend-customization/policies.md) system. Policies can be attached to resolvers to implement complex authorization rules, as shown in the present short guide.
 
 For additional information on GraphQL policies, please refer to the [GraphQL plugin configuration](/cms/plugins/graphql#extending-the-schema) documentation.

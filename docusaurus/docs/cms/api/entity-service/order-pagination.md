@@ -9,6 +9,13 @@ import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'
 
 # Ordering and Paginating with the Entity Service API
 
+<Tldr>
+
+Order and paginate Entity Service API query results using `sort`, `start`/`limit`, or `page`/`pageSize` parameters to control result ordering and retrieve specific data subsets.
+
+</Tldr>
+
+
 <ESdeprecated />
 
 The [Entity Service API](/cms/api/entity-service) offers the ability to [order](#ordering) and [paginate](#pagination) results found with its [findMany()](/cms/api/entity-service/crud#findmany) method.

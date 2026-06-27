@@ -19,6 +19,13 @@ tags:
 
 # Document Service API: Usage with Draft & Publish
 
+<Tldr>
+
+Use the `status` parameter with the Document Service API to retrieve published or draft versions of documents, count documents by status, and directly publish documents during creation or updates.
+
+</Tldr>
+
+
 By default the [Document Service API](/cms/api/document-service) returns the draft version of a document when the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled. This page describes how to use the `status` parameter to:
 
 - return the published version of a document,

@@ -24,6 +24,13 @@ import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
 
 # REST API: Filters
 
+<Tldr>
+
+The REST API filters feature allows filtering query results using operators like `$eq`, `$contains`, and `$between`, with support for complex filtering using `$and`, `$or`, and `$not`, as well as deep filtering across related content.
+
+</Tldr>
+
+
 The [REST API](/cms/api/rest) offers the ability to filter results found with its ["Get entries"](/cms/api/rest#get-all) method.<br/>
 Using optional Strapi features can provide some more filters:
 

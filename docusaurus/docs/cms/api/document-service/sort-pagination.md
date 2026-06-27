@@ -13,6 +13,13 @@ tags:
 
 # Document Service API: Sorting and paginating results
 
+<Tldr>
+
+Use the Document Service API's `sort` and pagination parameters to order query results by single or multiple fields and control result limits with `limit` and `start`.
+
+</Tldr>
+
+
 The [Document Service API](/cms/api/document-service) offers the ability to sort and paginate query results.
 
 ## Sort

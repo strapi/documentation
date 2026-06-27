@@ -13,6 +13,13 @@ tags:
 
 # Use `locale` with the GraphQL API {#graphql}
 
+<Tldr>
+
+Use the `locale` argument with the GraphQL API to query, create, update, and delete documents for a specific locale.
+
+</Tldr>
+
+
 The i18n feature adds new features to the [GraphQL API](/cms/api/graphql):
 
 - The `locale` field is added to the GraphQL schema.

@@ -12,6 +12,13 @@ tags:
 
 # Strapi Client
 
+<Tldr>
+
+The Strapi Client is a JavaScript library that simplifies interactions with your Strapi back end for fetching, creating, updating, and deleting content through `collection()`, `single()`, and `files()` methods.
+
+</Tldr>
+
+
 The Strapi Client library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content. This guide walks you through setting up the Strapi Client, configuring authentication, and using its key features effectively.
 
 ## Getting Started

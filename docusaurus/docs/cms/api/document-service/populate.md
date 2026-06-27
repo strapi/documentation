@@ -16,6 +16,13 @@ tags:
 
 # Document Service API: Populating fields
 
+<Tldr>
+
+Use the `populate` parameter with the Document Service API to explicitly load relations, media fields, components, and dynamic zones at one or multiple levels deep, and within `create()`, `update()`, `publish()`, and `delete()` operations.
+
+</Tldr>
+
+
 By default the [Document Service API](/cms/api/document-service) does not populate any relations, media fields, components, or dynamic zones. This page describes how to use the `populate` parameter to populate specific fields.
 
 :::tip
