@@ -69,6 +69,22 @@
   }
 }
 
+// The hint has two variants matching the close affordance shown per device:
+// the ✕ (desktop, top right) vs the Back button (mobile, top left, where the ✕
+// is hidden). Show only the relevant one.
+.headerHintMobile {
+  display: none;
+}
+
+@include small-down {
+  .headerHintDesktop {
+    display: none;
+  }
+  .headerHintMobile {
+    display: inline;
+  }
+}
+
 .backButton {
   display: none;
 

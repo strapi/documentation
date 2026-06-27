@@ -403,4 +403,12 @@
   .urlBar {
     flex-wrap: wrap;
   }
+
+  /* Wrap the JSON instead of scrolling it horizontally on small screens, so the
+     response stays readable without sideways scrolling inside the card. */
+  .jsonPre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
 }

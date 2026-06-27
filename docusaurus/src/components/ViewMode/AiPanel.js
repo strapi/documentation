@@ -273,7 +273,14 @@ export default function AiPanel() {
         </button>
       </div>
       <p className={styles.headerHint}>
-        <em>To get back to elegant or markdown mode, click the <i className="ph-bold ph-x" aria-hidden="true" /> in the upper right corner.</em>
+        {/* Desktop closes with the ✕ (top right); mobile uses the "Back" button
+            (top left, the ✕ is hidden there). Show the matching hint per device. */}
+        <em className={styles.headerHintDesktop}>
+          To get back to elegant or markdown mode, click the <i className="ph-bold ph-x" aria-hidden="true" /> in the upper right corner.
+        </em>
+        <em className={styles.headerHintMobile}>
+          To get back to elegant or markdown mode, tap <i className="ph-bold ph-arrow-left" aria-hidden="true" /> Back in the upper left corner.
+        </em>
       </p>
 
       <div className={styles.content}>
