@@ -4107,6 +4107,8 @@ The following tips will help you fine-tune your prompts to get the best results:
 
 [Inki](https://github.com/strapi/documentation/tree/main/claude-plugins/inki) is a Claude Code plugin that makes contributing to the Strapi documentation easier. It bundles the skills, prompts, templates, and editorial rules the docs team uses to research where new content belongs, draft it from the right template, review it against the style guide and verify its code examples, then open a pull request. You can install it from this repository's marketplace and run the whole workflow, or any single step, from Claude Code.
 
+If you don't use Claude Code, you can still benefit from Inki: its prompts and authoring guides are LLM-agnostic, so you can point any AI agent (Cursor, GitHub Copilot, Cline, Windsurf, and others) at the plugin's folder and reuse its prompts, templates, authoring guides, and editorial rules. Most of these live under `references/`, and the skill and agent definitions are readable Markdown too.
+
 
 
 # Strapi Client
