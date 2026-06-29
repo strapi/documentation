@@ -1,6 +1,51 @@
 {
   "redirects": [
     {
+      "source": "/",
+      "destination": "/docs-next-parked.html",
+      "permanent": false
+    },
+    {
+      "source": "/cms/:path*",
+      "destination": "/docs-next-parked.html",
+      "permanent": false
+    },
+    {
+      "source": "/cloud/:path*",
+      "destination": "/docs-next-parked.html",
+      "permanent": false
+    },
+    {
+      "source": "/snippets/:path*",
+      "destination": "/docs-next-parked.html",
+      "permanent": false
+    },
+    {
+      "source": "/tags/:path*",
+      "destination": "/docs-next-parked.html",
+      "permanent": false
+    },
+    {
+      "source": "/tags",
+      "destination": "/docs-next-parked.html",
+      "permanent": false
+    },
+    {
+      "source": "/whats-new",
+      "destination": "/docs-next-parked.html",
+      "permanent": false
+    },
+    {
+      "source": "/release-notes",
+      "destination": "/docs-next-parked.html",
+      "permanent": false
+    },
+    {
+      "source": "/release-notes-archives",
+      "destination": "/docs-next-parked.html",
+      "permanent": false
+    },
+    {
       "source": "/cloud",
       "destination": "/cloud/intro",
       "permanent": true
@@ -3733,12 +3778,6 @@
       "source": "/cms/providers#configuring-providers",
       "destination": "/cms/features/media-library#providers",
       "permanent": true
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/docs-next-parked.html"
     }
   ]
 }
