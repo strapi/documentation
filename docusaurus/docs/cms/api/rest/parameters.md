@@ -16,6 +16,13 @@ tags:
 
 # REST API parameters
 
+<Tldr>
+
+REST API parameters filter, sort, paginate, and select fields and relations in Strapi queries. Use `filters`, `locale`, `populate`, `sort`, and `pagination` to refine your content requests.
+
+</Tldr>
+
+
 API parameters can be used with the [REST API](/cms/api/rest) to filter, sort, and paginate results and to select fields and relations to populate. Additionally, specific parameters related to optional Strapi features can be used, like the publication state and locale of a content-type.
 
 The following API parameters are available:

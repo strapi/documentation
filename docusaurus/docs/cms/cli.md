@@ -452,7 +452,7 @@ strapi admin:create-user --firstname=Kai --lastname=Doe --email=chef@strapi.io -
 | -l, --lastname  | string | The administrator's last name      | No       |
 | -e, --email     | string | The administrator's email          | Yes      |
 | -p, --password  | string | New password for the administrator | No       |
-| -h, --help      |        | display help for command           |          |
+| -h, --help      |        | display help for command           | No       |
 
 ### `strapi admin:reset-user-password`
 
@@ -504,7 +504,7 @@ strapi admin:active-user --email=chef@strapi.io --active=true
 | ------------ | ------ | -------------------------------------------- | -------- |
 | -e, --email  | string | The administrator's email                    | Yes      |
 | -a, --active | string | The active status to set (`true` or `false`) | Yes      |
-| -h, --help   |        | display help for command                     |          |
+| -h, --help   |        | display help for command                     | No       |
 
 ### `strapi admin:block-user`
 
@@ -524,7 +524,7 @@ strapi admin:block-user --email=chef@strapi.io --block=true
 | ----------- | ------ | --------------------------------------------- | -------- |
 | -e, --email | string | The administrator's email                     | Yes      |
 | -b, --block | string | The blocked status to set (`true` or `false`) | Yes      |
-| -h, --help  |        | display help for command                      |          |
+| -h, --help  |        | display help for command                      | No       |
 
 ### `strapi admin:delete-user`
 
@@ -543,7 +543,7 @@ strapi admin:delete-user --email=chef@strapi.io
 | Option          | Type   | Description                   | Required |
 | --------------- | ------ | ----------------------------- | -------- |
 | -e, --email     | string | The administrator's email     | Yes      |
-| -h, --help      |        | display help for command      |          |
+| -h, --help      |        | display help for command      | No       |
 
 ## Code generation
 

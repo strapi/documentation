@@ -9,6 +9,13 @@ import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'
 
 # Creating components and dynamic zones with the Entity Service API
 
+<Tldr>
+
+Use the Entity Service API to create and update components and dynamic zones while creating or updating entries. Components are single objects while dynamic zones are lists of components with a `__component` type identifier.
+
+</Tldr>
+
+
 <ESdeprecated />
 
 The [Entity Service](/cms/api/entity-service) is the layer that handles [components](/cms/backend-customization/models#components-json) and [dynamic zones](/cms/backend-customization/models#dynamic-zones) logic. With the Entity Service API, components and dynamic zones can be [created](#creation) and [updated](#update) while creating or updating entries.

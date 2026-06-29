@@ -9,6 +9,13 @@ tags:
 
 # Entity Service API to Document Service API migration reference
 
+<Tldr>
+
+The Document Service API replaces the Entity Service API in Strapi 5. The upgrade tool's codemod automatically converts function calls and `publicationState` to `status`, but manual intervention is required for `documentId` values and publication methods like `publish()` and `unpublish()`.
+
+</Tldr>
+
+
 In Strapi 5, the [Document Service API](/cms/api/document-service) replaces the Entity Service API from Strapi v4 (see [breaking change description](/cms/migration/v4-to-v5/breaking-changes/entity-service-deprecated)).
 
 The present page is intended to give developers an idea of how to migrate away from the Entity Service API, by describing which changes in custom code will be handled by codemods from the [upgrade tool](/cms/upgrade-tool) and which will have to be handled manually.

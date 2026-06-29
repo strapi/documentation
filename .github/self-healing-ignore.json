@@ -509,6 +509,121 @@
       "number": 25860,
       "reason": "Router: Bug fix for internal admin panel behavior (dashboard deduplication). While user-facing, the fix resolves a bug rather than introducing new features or public API changes that require documentation.",
       "added": "2026-06-18"
+    },
+    {
+      "number": 26681,
+      "reason": "Triage: Type definition cleanup and import consistency — no behavior change",
+      "added": "2026-06-19"
+    },
+    {
+      "number": 26598,
+      "reason": "Triage: Build tooling and CI infrastructure configuration",
+      "added": "2026-06-19"
+    },
+    {
+      "number": 26704,
+      "reason": "Triage: Type annotations only, signature-only changes, no runtime behavior altered",
+      "added": "2026-06-20"
+    },
+    {
+      "number": 26700,
+      "reason": "Triage: Internal race condition fix in document service, no user-facing API or behavior change",
+      "added": "2026-06-20"
+    },
+    {
+      "number": 26675,
+      "reason": "Router: Internal scaffolding tooling fix. Adds pnpm configuration to allow native module builds. This is a fix to the scaffolder itself, not a user-facing feature or behavior change.",
+      "added": "2026-06-20"
+    },
+    {
+      "number": 26303,
+      "reason": "Router: Admin UI UX fix for guided tour tooltips. This is an internal implementation detail. Tooltips rendering in the correct position is not a feature or configuration change requiring documentation.",
+      "added": "2026-06-20"
+    },
+    {
+      "number": 26698,
+      "reason": "Triage: documentation-only change, no runtime behavior changes",
+      "added": "2026-06-23"
+    },
+    {
+      "number": 26734,
+      "reason": "Router: Internal database query optimization for dynamic zones. No public API change, no new features, no user-facing behavior change — only internal performance fix.",
+      "added": "2026-06-23"
+    },
+    {
+      "number": 26710,
+      "reason": "Router: Internal MCP tool name generation bug fix. Fixes broken behavior in tool name generation but doesn't introduce new user-facing features or API changes.",
+      "added": "2026-06-23"
+    },
+    {
+      "number": 26753,
+      "reason": "Triage: test infrastructure fix",
+      "added": "2026-06-24"
+    },
+    {
+      "number": 26265,
+      "reason": "Triage: internal performance optimization",
+      "added": "2026-06-24"
+    },
+    {
+      "number": 25954,
+      "reason": "Router: Internal admin UI improvements (chunk loading resilience and error UX). No public-facing API or behavior change that requires user documentation.",
+      "added": "2026-06-24"
+    },
+    {
+      "number": 26768,
+      "reason": "Triage: CI workflow fix — internal infrastructure change",
+      "added": "2026-06-25"
+    },
+    {
+      "number": 26757,
+      "reason": "Router: Internal CLI scaffolding fix for pnpm 11 compatibility. No new user-facing APIs, flags, or configuration options exposed. The fix is transparent—users don't need to change their workflow or understand new behavior. This is a bug fix to prevent Cloud deploy failures, not a feature requiring documentation.",
+      "added": "2026-06-25"
+    },
+    {
+      "number": 26511,
+      "reason": "Triage: test infrastructure improvement",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 25006,
+      "reason": "Triage: code style and type-safety improvement with no behavior change",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 26816,
+      "reason": "Router: Internal admin UI bug fix (DynamicZone component crash). No public API or behavior changes exposed to users. This is a regression test for an internal implementation detail.",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 26510,
+      "reason": "Router: Internal admin UI change (target attribute on a link in the admin panel). No public user-facing API or feature documentation needed.",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 26337,
+      "reason": "Router: Internal admin UI fix for consistency (DynamicZone component category label capitalization). No public API or feature behavior change.",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 26294,
+      "reason": "Router: Internal admin UI bug fix for form field behavior. No public API or user-facing feature change.",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 26127,
+      "reason": "Router: Internal admin UI behavior fix. Prevents opening the Edit Asset modal when a media field is disabled (published entries). No public API or feature documentation needed.",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 25455,
+      "reason": "Router: Internal admin panel UX improvement to error messages. This is a frontend validation message improvement with no public API or feature documentation impact.",
+      "added": "2026-06-27"
+    },
+    {
+      "number": 25011,
+      "reason": "Router: Internal error handling fix. The error message shown to users ('The uploaded file exceeds the maximum allowed asset size') already exists in documentation; this fix just ensures it's properly displayed instead of a generic 500 error.",
+      "added": "2026-06-27"
     }
   ]
 }

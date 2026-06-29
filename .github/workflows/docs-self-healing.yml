@@ -273,7 +273,7 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
           prompt: ${{ steps.load-triage-prompt.outputs.prompt }}
-          claude_args: '--model claude-haiku-4-5-20251001 --max-turns 10 --allowedTools "Bash,Read"'
+          claude_args: '--model claude-haiku-4-5-20251001 --max-turns 20 --allowedTools "Bash,Read"'
           show_full_output: true
         env:
           FILTERED_PRS: ${{ steps.check-prs.outputs.pr_list }}
@@ -484,7 +484,7 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
           prompt: ${{ steps.load-drafter-prompt.outputs.prompt }}
-          claude_args: '--model claude-sonnet-4-6 --max-turns 25 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
+          claude_args: '--model claude-sonnet-4-6 --max-turns 50 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
           show_full_output: true
         env:
           DOC_REPO: ${{ github.workspace }}
@@ -643,11 +643,11 @@ jobs:
             ASK_HUMANS=$(jq '[.prs[] | select(.decision == "ask_user")] | length' /tmp/router-results.json 2>/dev/null || echo "0")
           fi
 
-          # Drafter results
-          DOC_PRS_CREATED=0
+          # Drafter results (Sonnet, full-complexity PRs)
+          SONNET_PRS_CREATED=0
           ERROR_MSG=""
           if [ -f "/tmp/self-healing-summary.json" ]; then
-            DOC_PRS_CREATED=$(jq '.processed | length' /tmp/self-healing-summary.json 2>/dev/null || echo "0")
+            SONNET_PRS_CREATED=$(jq '.processed | length' /tmp/self-healing-summary.json 2>/dev/null || echo "0")
             ERRORS=$(jq '.errors | length' /tmp/self-healing-summary.json 2>/dev/null || echo "0")
             if [ "$ERRORS" -gt 0 ]; then
               ERROR_MSG=$(jq -r '[.errors[] | "#\(.number): \(.error)"] | join("; ")' /tmp/self-healing-summary.json 2>/dev/null || echo "")
@@ -656,11 +656,29 @@ jobs:
             ERROR_MSG="Job failed (likely: max turns reached or SDK error)"
           fi
 
-          # Extract doc PR numbers created by THIS run (for retroactive fate tracking)
-          DOC_PR_NUMBERS=""
-          if [ -f "/tmp/self-healing-summary.json" ]; then
-            DOC_PR_NUMBERS=$(jq -r '[.processed[] | (.doc_pr | capture("/pull/(?<n>[0-9]+)$") | .n)] | join(", ")' /tmp/self-healing-summary.json 2>/dev/null || echo "")
+          # Micro-edit PRs handled directly by Haiku (Router) and recorded in
+          # router-results.json under .doc_pr. Counted here too, otherwise runs
+          # that only produce micro PRs would report 0 doc PRs created.
+          HAIKU_PRS_CREATED=0
+          if [ -f "/tmp/router-results.json" ]; then
+            HAIKU_PRS_CREATED=$(jq '[.prs[] | select(.decision == "has_targets" and .complexity == "micro" and (.doc_pr // "") != "")] | length' /tmp/router-results.json 2>/dev/null || echo "0")
           fi
+
+          # Total doc PRs created this run = Sonnet (full) + Haiku (micro)
+          DOC_PRS_CREATED=$((SONNET_PRS_CREATED + HAIKU_PRS_CREATED))
+
+          # Extract doc PR numbers created by THIS run (for retroactive fate
+          # tracking), from both Sonnet (summary) and Haiku micro-edits (router).
+          SONNET_PR_NUMBERS=""
+          if [ -f "/tmp/self-healing-summary.json" ]; then
+            SONNET_PR_NUMBERS=$(jq -r '[.processed[] | (.doc_pr | capture("/pull/(?<n>[0-9]+)$") | .n)] | join(", ")' /tmp/self-healing-summary.json 2>/dev/null || echo "")
+          fi
+          HAIKU_PR_NUMBERS=""
+          if [ -f "/tmp/router-results.json" ]; then
+            HAIKU_PR_NUMBERS=$(jq -r '[.prs[] | select(.decision == "has_targets" and .complexity == "micro" and (.doc_pr // "") != "") | (.doc_pr | capture("/pull/(?<n>[0-9]+)") | .n)] | join(", ")' /tmp/router-results.json 2>/dev/null || echo "")
+          fi
+          # Merge both number lists, dropping empties and stray separators.
+          DOC_PR_NUMBERS=$(printf '%s, %s' "$SONNET_PR_NUMBERS" "$HAIKU_PR_NUMBERS" | sed 's/^[, ]*//; s/[, ]*$//; s/, *, */, /g')
 
           # Idempotence by date: if a row for today already exists (e.g. an earlier
           # cron or manual dispatch on the same day), update it instead of creating
@@ -691,6 +709,7 @@ jobs:
             --argjson triage_rejected "$HAIKU_NO_DOCS" \
             --argjson router_skipped "$ROUTER_SKIPPED" \
             --argjson sonnet_drafted "$SONNET_DRAFTED" \
+            --argjson haiku_drafted "$HAIKU_PRS_CREATED" \
             --argjson prs_created "$DOC_PRS_CREATED" \
             --argjson ask_humans "$ASK_HUMANS" \
             '{
@@ -702,6 +721,7 @@ jobs:
               "Rejected by Haiku Triage": { number: $triage_rejected },
               "Rejected by Haiku Router": { number: $router_skipped },
               "Drafted by Sonnet": { number: $sonnet_drafted },
+              "Drafted by Haiku": { number: $haiku_drafted },
               "Doc PRs created": { number: $prs_created },
               "Doc PR numbers": { rich_text: [{ text: { content: $doc_pr_numbers } }] },
               "Ask humans": { number: $ask_humans },

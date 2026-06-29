@@ -1,7 +1,11 @@
 @use './mixins' as *;
 .ai-toolbar {
   display: flex;
+  // Copy/dropdown group, then the markdown-mode "View as .md" button sitting
+  // just to its right (18px gap), not pushed to the far edge of the line.
   justify-content: flex-start;
+  align-items: center;
+  gap: 18px;
   padding: 0 0 1rem 0;
   margin-bottom: 1rem;
 
@@ -10,6 +14,30 @@
     display: flex;
     border: 1px solid var(--strapi-neutral-300);
     border-radius: 0.25rem;
+  }
+
+  // Standalone "View this page as .md" button (right-aligned).
+  &__view-md {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--strapi-neutral-300);
+    border-radius: 0.25rem;
+    background-color: var(--strapi-neutral-0);
+    color: var(--strapi-neutral-600);
+    font-size: var(--strapi-font-size-sm);
+    font-weight: 500;
+    font-family: var(--strapi-font-family-body);
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: var(--ifm-link-color);
+      border-color: var(--ifm-link-color);
+    }
   }
 
   &__button {
@@ -24,7 +52,7 @@
     color: var(--strapi-neutral-600);
     font-size: var(--strapi-font-size-sm);
     font-weight: 500;
-    font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--strapi-font-family-body);
     cursor: pointer;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -182,13 +210,31 @@
       border-color: var(--strapi-neutral-200);
     }
 
+    // Match the toolbar button's dark-mode colors so the standalone .md button
+    // looks like part of the toolbar (same background and text color).
+    &__view-md {
+      background-color: var(--strapi-neutral-0);
+      border-color: var(--strapi-neutral-200);
+      color: var(--strapi-neutral-800);
+
+      // neutral-100 is DARKER than neutral-0 in dark mode (the scale inverts),
+      // so it gave almost no hover contrast. neutral-200 (#4A4A6A) is lighter
+      // than the #212134 background — a clear, on-palette hover.
+      &:hover {
+        background-color: var(--strapi-neutral-200);
+        color: var(--strapi-neutral-900);
+        border-color: var(--strapi-neutral-200);
+      }
+    }
+
     &__button {
       background-color: var(--strapi-neutral-0);
       border-right-color: var(--strapi-neutral-200);
       color: var(--strapi-neutral-800);
-      
+
+      // See note above: lighten toward neutral-200 for a visible hover.
       &:hover {
-        background-color: var(--strapi-neutral-100);
+        background-color: var(--strapi-neutral-200);
         color: var(--strapi-neutral-900);
       }
       
@@ -217,8 +263,10 @@
       background-color: var(--strapi-neutral-0);
       color: var(--strapi-neutral-800);
 
+      // Lighten toward neutral-200 so the caret hover matches the Copy button
+      // it's attached to (neutral-100 is darker than the background in dark).
       &:hover {
-        background-color: var(--strapi-neutral-100);
+        background-color: var(--strapi-neutral-200);
         color: var(--strapi-neutral-900);
       }
 
@@ -237,7 +285,7 @@
       color: var(--strapi-neutral-900);
 
       &:hover {
-        background-color: var(--strapi-neutral-100);
+        background-color: var(--strapi-neutral-200);
       }
 
       &:not(:last-child) {

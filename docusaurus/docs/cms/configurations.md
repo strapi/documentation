@@ -16,11 +16,18 @@ import ProjectStructureConfigFiles from '@site/src/components/ProjectStructureCo
 
 # Configuration
 
+<Tldr>
+
+Strapi applications are configured through files in the `/config` folder, including required base configurations for database, server, admin panel, middlewares, and API, plus optional configurations for plugins, TypeScript, API tokens, lifecycle functions, cron jobs, and environment variables.
+
+</Tldr>
+
+
 The configuration of a Strapi project lives in the `/config` folder:
 
 <ProjectStructureConfigFiles />
 
-<em style={{fontSize: '12px'}}>The block above is an excerpt from the project structure. You can click on any file name in purple to read the corresponding documentation. Visit the <a href="/cms/project-structure">project structure page</a> for the full version.</em>
+<p style={{fontSize: '12px'}}><em>The block above is an excerpt from the project structure. You can click on any file name in purple to read the corresponding documentation. Visit the <a href="/cms/project-structure">project structure page</a> for the full version.</em></p>
 
 ## Base configurations
 

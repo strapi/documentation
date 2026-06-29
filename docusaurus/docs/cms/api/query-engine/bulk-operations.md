@@ -18,6 +18,13 @@ import QueryEnginePrereqs from '/docs/snippets/query-engine-prereqs.md'
 
 # Bulk Operations with the Query Engine API
 
+<Tldr>
+
+Bulk Operations with the Query Engine API enable you to create, update, delete, and count multiple entries at once using `createMany()`, `updateMany()`, `deleteMany()`, and `count()` methods.
+
+</Tldr>
+
+
 <ConsiderDocumentService />
 <QueryEnginePrereqs />
 

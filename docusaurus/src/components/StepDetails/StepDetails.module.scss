@@ -1,0 +1,142 @@
+/** StepDetails — Adds gamified progress tracking to standard details/accordion
+ * Inherits all styling from details.alert (details.scss)
+ * Only adds: checkmark icon + completed state border color
+ */
+@use '../../scss/mixins' as *;
+
+.stepDetails {
+  /* Let details.alert handle most styling — we just layer on top. Ensure the
+   * full neutral frame is visible (it was lost when the left accent bar was
+   * removed); matches the border of regular details blocks. */
+  border: 1px solid var(--strapi-neutral-150) !important;
+  border-radius: var(--strapi-radius-md);
+  /* Vertical spacing between consecutive step blocks. */
+  margin: 0 0 16px !important;
+
+  /* Align the disclosure arrow with the first line of the title (the summary is
+   * top-aligned for multi-line titles, which otherwise leaves the arrow too
+   * high relative to the text baseline). */
+  summary::before {
+    /* Nudge the arrow ~1px below the exact center of the title's first line. */
+    margin-top: 11px;
+  }
+
+  summary {
+    display: flex;
+    // Align to the top so the arrow, multi-line title, and completion pill line
+    // up at the top instead of being centered (which looked off on wrapped
+    // titles). Title left-aligned; pill follows the title (DOM order).
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px 32px !important;
+  }
+
+  /* Generous, symmetric horizontal MARGIN on the body content so the whole box
+   * of each child (including framed blocks like code, images, and admonitions
+   * with their own background/border) is inset from the left accent bar and the
+   * rounded right border — not just the text inside them. */
+  > :not(summary) {
+    margin-left: 40px !important;
+    margin-right: 40px !important;
+    /* Bound the width so children with an explicit width (e.g. images sized to
+     * the content column) cannot overflow past the right margin. */
+    max-width: calc(100% - 80px) !important;
+  }
+
+  /* Vertical breathing room: space the first content block below the summary
+   * divider, and pad the bottom of the open block. */
+  &[open] {
+    padding-bottom: 28px;
+
+    > :not(summary):first-of-type {
+      margin-top: 24px !important;
+    }
+  }
+}
+
+.checkmark {
+  /* Button reset (this is a <button> so it can be toggled by click) */
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 20px;
+  flex-shrink: 0;
+  // Follows the title in the row (DOM order: title then pill), just after the
+  // title text with a small gap. The button is wider than its icon, so part of
+  // the visual gap comes from the button's own padding; 6px margin lands the
+  // visible title-to-checkbox space at ~10px.
+  margin-left: 6px;
+  /* Position above the summary::after overlay so it's visible */
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover i {
+    color: #22C55E;
+  }
+
+  i {
+    margin-right: 0 !important;
+    color: var(--strapi-neutral-300, #D4D4D8);
+    transition: color 0.3s;
+  }
+}
+
+.checkmarkVisible {
+  background: rgba(34, 197, 94, 0.1);
+
+  i {
+    color: #22C55E !important;
+  }
+}
+
+.completed {
+  border-color: rgba(34, 197, 94, 0.2) !important;
+
+  /* Recolor the whole step accent to green when completed. */
+  --details-accent-color: #22C55E;
+
+  /* Override the left accent bar color to green */
+  &::after {
+    background: #22C55E !important;
+  }
+
+  /* Green title text + green disclosure arrow when completed.
+   * The arrow (summary::before) reads --details-accent-color, but details.alert
+   * sets that variable too, so we recolor the arrow borders explicitly. */
+  > summary {
+    color: #22C55E !important;
+
+    &::before {
+      border-right: 2px solid #22C55E !important;
+      border-bottom: 2px solid #22C55E !important;
+    }
+  }
+}
+
+@include dark {
+  .completed {
+    border-color: rgba(34, 197, 94, 0.15) !important;
+  }
+
+  .checkmarkVisible {
+    background: rgba(34, 197, 94, 0.15);
+  }
+
+  /* In dark mode the disclosure arrow (summary::before) is invisible (its accent
+   * color resolves dark and its border width can collapse). Force a full white
+   * 2px arrow for steps that are NOT completed (completed steps keep green). */
+  .stepDetails:not(.completed) > summary::before {
+    border-right: 2px solid #ffffff !important;
+    border-bottom: 2px solid #ffffff !important;
+  }
+}

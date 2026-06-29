@@ -17,6 +17,13 @@ tags:
 
 # Data import
 
+<Tldr>
+
+The `strapi import` command restores project data from an encrypted or compressed archive, including content, configuration, files, and schemas. It supports importing from `.tar.gz.enc` files or unpacked directories, with options to exclude or include specific data types.
+
+</Tldr>
+
+
 <VersionBadge version="4.6.0" />
 
 The `strapi import` command is part of the [Data Management feature](/cms/features/data-management) and used to import data from a file or directory. By default, the `strapi import` command imports data from an encrypted and compressed `tar.gz.enc` file which includes:

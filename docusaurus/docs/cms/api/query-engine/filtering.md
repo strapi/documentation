@@ -17,6 +17,13 @@ import QueryEnginePrereqs from '/docs/snippets/query-engine-prereqs.md'
 
 # Filtering with the Query Engine API
 
+<Tldr>
+
+The Query Engine API filters query results using the `where` parameter with logical operators (`$and`, `$or`, `$not`) and attribute operators (comparison, string matching, range) prefixed with `$`.
+
+</Tldr>
+
+
 <ConsiderDocumentService />
 <QueryEnginePrereqs />
 

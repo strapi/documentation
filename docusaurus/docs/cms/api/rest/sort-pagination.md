@@ -22,6 +22,13 @@ import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 
 # REST API: Sort & Pagination
 
+<Tldr>
+
+Sort REST API results on one or multiple fields with `:asc` or `:desc` syntax, and paginate using either page-based or offset-based parameters.
+
+</Tldr>
+
+
 Entries that are returned by queries to the [REST API](/cms/api/rest) can be sorted and paginated.
 
 :::tip
@@ -47,37 +54,34 @@ The sorting order can be defined with:
 
 You can sort by multiple fields by passing fields in a `sort` array.
 
-<br />
-
-<ApiCall>
-<Request title="Example request: Sort using 2 fields">
-
-`GET /api/restaurants?sort[0]=Description&sort[1]=Name`
-
-</Request>
-
-<details>
-<summary>JavaScript query (built with the qs library):</summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
+<Endpoint
+  id="sort-using-2-fields"
+  method="GET"
+  path="/api/restaurants"
+  title="Sort using 2 fields"
+  description="Sort results by Description and Name fields."
+  codeTabs={[
+    {
+      label: "REST",
+      code: `GET /api/restaurants?sort[0]=Description&sort[1]=Name`
+    },
+    {
+      label: "JavaScript",
+      code: `const qs = require('qs');
 const query = qs.stringify({
   sort: ['Description', 'Name'],
 }, {
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(`/api/restaurants?${query}`);
-```
-
-</details>
-
-<Response title="Example response">
-
-```json
-{
+await request(\`/api/restaurants?\${query}\`);`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "id": 9,
@@ -93,7 +97,7 @@ await request(`/api/restaurants?${query}`);
             }
           ]
         }
-      ],
+      ]
       // …
     },
     {
@@ -110,55 +114,51 @@ await request(`/api/restaurants?${query}`);
             }
           ]
         }
-      ],
+      ]
       // …
-    },
-   // … 
+    }
+    // …
   ],
   "meta": {
     // …
   }
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ### Example: Sort using 2 fields and set the order
 
 Using the `sort` parameter and defining `:asc` or  `:desc` on sorted fields, you can get results sorted in a particular order.
 
-<br />
-
-<ApiCall>
-<Request title="Example request: Sort using 2 fields and set the order">
-
-`GET /api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc`
-
-</Request>
-
-<details>
-<summary>JavaScript query (built with the qs library):</summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
+<Endpoint
+  id="sort-using-2-fields-and-set-the-order"
+  method="GET"
+  path="/api/restaurants"
+  title="Sort using 2 fields and set the order"
+  description="Sort results by Description ascending and Name descending."
+  codeTabs={[
+    {
+      label: "REST",
+      code: `GET /api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc`
+    },
+    {
+      label: "JavaScript",
+      code: `const qs = require('qs');
 const query = qs.stringify({
   sort: ['Description:asc', 'Name:desc'],
 }, {
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(`/api/restaurants?${query}`);
-```
-
-</details>
-
-<Response title="Example response">
-
-```json
-{
+await request(\`/api/restaurants?\${query}\`);`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "id": 8,
@@ -174,7 +174,7 @@ await request(`/api/restaurants?${query}`);
             }
           ]
         }
-      ],
+      ]
       // …
     },
     {
@@ -191,20 +191,18 @@ await request(`/api/restaurants?${query}`);
             }
           ]
         }
-      ],
+      ]
       // …
-    },
+    }
     // …
   ],
   "meta": {
     // …
   }
-}
-```
-
-</Response>
-
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Pagination
 
@@ -227,20 +225,19 @@ To paginate results by page, use the following parameters:
 | `pagination[pageSize]`  | Integer | Page size                                                                 | 25      |
 | `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
 
-<ApiCall>
-<Request title="Example request: Return only 10 entries on page 1">
-
-`GET /api/articles?pagination[page]=1&pagination[pageSize]=10`
-
-</Request>
-
-<details>
-<summary>JavaScript query (built with the qs library):</summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
+<Endpoint
+  method="GET"
+  path="/api/articles"
+  title="Pagination by page"
+  description="Return only 10 entries on page 1."
+  codeTabs={[
+    {
+      label: "REST",
+      code: `GET /api/articles?pagination[page]=1&pagination[pageSize]=10`
+    },
+    {
+      label: "JavaScript",
+      code: `const qs = require('qs');
 const query = qs.stringify({
   pagination: {
     page: 1,
@@ -250,15 +247,14 @@ const query = qs.stringify({
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(`/api/articles?${query}`);
-```
-
-</details>
-
-<Response title="Example response">
-
-```json
-{
+await request(\`/api/articles?\${query}\`);`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     // ...
   ],
@@ -270,11 +266,10 @@ await request(`/api/articles?${query}`);
       "total": 48
     }
   }
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ### Pagination by offset
 
@@ -290,20 +285,19 @@ To paginate results by offset, use the following parameters:
 The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/cms/configurations/api) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
 :::
 
-<ApiCall>
-<Request title="Example request: Return only the first 10 entries using offset">
-
-`GET /api/articles?pagination[start]=0&pagination[limit]=10`
-
-</Request>
-
-<details>
-<summary>JavaScript query (built with the qs library):</summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
+<Endpoint
+  method="GET"
+  path="/api/articles"
+  title="Pagination by offset"
+  description="Return only the first 10 entries using offset."
+  codeTabs={[
+    {
+      label: "REST",
+      code: `GET /api/articles?pagination[start]=0&pagination[limit]=10`
+    },
+    {
+      label: "JavaScript",
+      code: `const qs = require('qs');
 const query = qs.stringify({
   pagination: {
     start: 0,
@@ -313,15 +307,14 @@ const query = qs.stringify({
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(`/api/articles?${query}`);
-```
-
-</details>
-
-<Response title="Example response">
-
-```json
-{
+await request(\`/api/articles?\${query}\`);`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     // ...
   ],
@@ -332,8 +325,7 @@ await request(`/api/articles?${query}`);
       "total": 42
     }
   }
-}
-```
-
-</Response>
-</ApiCall>
+}`
+    }
+  ]}
+/>

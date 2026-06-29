@@ -8,6 +8,13 @@ displayed_sidebar: cmsSidebar
 
 # Document Service API: Middlewares
 
+<Tldr>
+
+Document Service middlewares allow you to perform actions before and after Document Service methods run by registering middleware functions via `strapi.documents.use()` with access to content type context and method parameters.
+
+</Tldr>
+
+
 The [Document Service API](/cms/api/document-service) offers the ability to extend its behavior thanks to middlewares.
 
 Document Service middlewares allow you to perform actions before and/or after a method runs.

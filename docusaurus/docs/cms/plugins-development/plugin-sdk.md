@@ -14,6 +14,13 @@ import UsingSDKplugin5 from '/docs/snippets/sdk-plugin-v5-v6.md'
 
 # Plugin SDK reference
 
+<Tldr>
+
+The Plugin SDK is a set of commands from @strapi/sdk-plugin for creating, building, linking, and publishing Strapi plugins locally or to NPM and the Marketplace.
+
+</Tldr>
+
+
 The Plugin SDK is set of commands provided by the package <ExternalLink to="https://github.com/strapi/sdk-plugin" text="@strapi/sdk-plugin"/> orientated around developing plugins to use them as local plugins or to publish them on NPM and/or submit them to the Marketplace.
 
 The present documentation lists the available Plugin SDK commands. The [associated guide](/cms/plugins-development/create-a-plugin) illustrates how to use these commands to create a plugin from scratch, link it to an existing project, and publish it.

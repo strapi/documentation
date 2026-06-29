@@ -9,7 +9,7 @@ tags:
 - Strapi Cloud
 ---
 
-# Caching & Performance
+# Cloud caching & performance
 
 <Tldr>
 Edge caching via Cache-Control headers reduces latency and server load for heavy static content.

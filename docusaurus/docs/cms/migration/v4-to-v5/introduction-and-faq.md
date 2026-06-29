@@ -10,6 +10,13 @@ tags:
 
 # Upgrading to Strapi 5: Introduction and FAQ
 
+<Tldr>
+
+Upgrading to Strapi 5 from v4 uses an upgrade tool with codemods to handle code changes, while built-in data migration scripts automatically update the database on first startup.
+
+</Tldr>
+
+
 The latest major version of Strapi is Strapi 5. Strapi v4 is still supported until April 2026.
 
 Whenever you feel ready to upgrade to Strapi 5, the present page will help you. It lists all available resources for upgrading from Strapi 4 to Strapi 5 and answers general questions you might have.

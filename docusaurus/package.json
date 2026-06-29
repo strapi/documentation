@@ -1,6 +1,6 @@
 {
   "name": "strapi-docs",
-  "version": "6.28.0",
+  "version": "7.0.0",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
@@ -22,7 +22,8 @@
     "llms:generate-and-validate:verbose": "yarn generate-llms && node scripts/llms/generate-llms-code.js --anchors --all --verbose --output static/llms-code.txt && echo 'Skip log (if any): static/llms-code-skip.log' && node scripts/llms/validate-llms-code.js --path static/llms-code.txt --strict --verify-anchors --project-root ..",
     "validate:llms-code": "node scripts/llms/validate-llms-code.js --path static/llms-code.txt --strict --verify-anchors --project-root ..",
     "validate:llms-code:strict": "node scripts/llms/validate-llms-code.js --path static/llms-code.txt --strict --check-files --verify-anchors --project-root ..",
-    "meilisearch:update-order": "node -r dotenv/config scripts/meilisearch/add-category-order.js"
+    "meilisearch:update-order": "node -r dotenv/config scripts/meilisearch/add-category-order.js",
+    "meilisearch:backup": "node -r dotenv/config scripts/meilisearch/backup-index.js"
   },
   "dependencies": {
     "@docusaurus/core": "3.5.2",
@@ -31,6 +32,7 @@
     "@docusaurus/preset-classic": "3.5.2",
     "@docusaurus/theme-live-codeblock": "3.5.2",
     "@docusaurus/theme-mermaid": "3.5.2",
+    "@kapaai/react-sdk": "^0.9.9",
     "@mdx-js/react": "^3.0.0",
     "@octokit/rest": "^22.0.0",
     "axios": "1.13.5",
@@ -53,6 +55,8 @@
     "qs": "^6.11.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "sass": ">=1.58.3 <2.0.0"
   },
   "devDependencies": {

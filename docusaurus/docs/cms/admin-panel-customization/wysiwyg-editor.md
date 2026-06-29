@@ -11,6 +11,13 @@ tags:
 
 # Change the default rich text editor
 
+<Tldr>
+
+Strapi's admin panel includes a built-in WYSIWYG markdown editor for `richtext` fields. You can replace it by installing third-party editor plugins from the Marketplace or creating a custom field for deeper integration.
+
+</Tldr>
+
+
 :::note
 This page covers customization of the **WYSIWYG markdown editor** used for `richtext` fields. For the **Blocks** field (the JSON-based rich text editor), see [Content Manager APIs: addRichTextBlocks](/cms/plugins-development/content-manager-apis#addrichtextblocks).
 :::

@@ -12,6 +12,13 @@ tags:
 
 # Adding TypeScript support to existing Strapi projects
 
+<Tldr>
+
+Add TypeScript support to existing Strapi projects by creating root and admin `tsconfig.json` files with `allowJs: true` for incremental migration, then rebuild the admin panel.
+
+</Tldr>
+
+
 Adding [TypeScript](/cms/typescript) support to an existing project requires adding 2 `tsconfig.json` files and rebuilding the admin panel. Additionally, the `eslintrc` and `eslintignore` files can be optionally removed.
 
 The TypeScript flag `allowJs` should be set to `true` in the root `tsconfig.json` file to incrementally add TypeScript files to existing JavaScript projects. The `allowJs` flag allows `.ts` and `.tsx` files to coexist with JavaScript files.

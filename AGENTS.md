@@ -77,7 +77,7 @@ Path‑based policy (applies to folders and all subfolders):
 ### Key files
 - AI toolbar: `docusaurus/src/components/AiToolbar/openLLM.js`, `.../config/aiToolsConfig.js`, `.../config/aiPromptTemplates.js`
 - Generators/validators: `docusaurus/scripts/generate-llms-code.js`, `docusaurus/scripts/generate-llms.js`, `docusaurus/scripts/validate-prompts.js`
-- Authoring templates: `claude-plugins/inki/references/templates/*.md` (see `claude-plugins/inki/references/templates/INDEX.md`)
+- Authoring templates: `claude-plugins/inki/references/templates/*.md` (see `claude-plugins/inki/references/templates/README.md`)
 - Agent prompts: `claude-plugins/inki/references/prompts/` (see table in Documentation Review System section)
 - Components guidance: `claude-plugins/inki/references/templates/components/tabs.md` (Tabs/TabItem rules)
 - Configuration: `docusaurus.config.js`, `sidebars.js`, `package.json`

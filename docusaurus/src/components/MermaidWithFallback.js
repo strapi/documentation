@@ -235,30 +235,11 @@ export default function DocusaurusMermaidFileFallback({
     }
   }, [isLoading, chartContent, shouldRender, renderFailed, checkIfVisible]);
 
-  // Initialize zoom on the fallback image
-  useEffect(() => {
-    if (renderFailed && imgRef.current) {
-      import('medium-zoom').then((module) => {
-        const mediumZoom = module.default;
-        try {
-          const zoom = mediumZoom(imgRef.current, {
-            margin: 24,
-            background: 'rgba(0, 0, 0, 0.7)',
-            scrollOffset: 0,
-          });
-          
-          return () => {
-            zoom.detach();
-          };
-        } catch (error) {
-          console.error('Failed to apply zoom:', error);
-        }
-      }).catch(error => {
-        console.error('Failed to import medium-zoom:', error);
-      });
-    }
-  }, [renderFailed]);
-  
+  // Note: the Mermaid fallback image is intentionally NOT zoomable. It used to
+  // attach medium-zoom here AND opt into the site-wide zoom (via the
+  // medium-zoom-image class + data-zoomable), which double-bound the zoom and
+  // broke the layout. The fallback is now a plain, non-zoomable image.
+
   // Show loading state
   if (isLoading) {
     return (
@@ -274,13 +255,11 @@ export default function DocusaurusMermaidFileFallback({
   if (renderFailed) {
     return (
       <div className={className || 'mermaid-fallback-container'}>
-        <img 
+        <img
           ref={imgRef}
-          src={imageToShow} 
-          alt={alt || 'Diagram (fallback image)'} 
-          className="mermaid-fallback-image medium-zoom-image" 
-          data-zoomable="true"
-          style={{ cursor: 'zoom-in' }}
+          src={imageToShow}
+          alt={alt || 'Diagram (fallback image)'}
+          className="mermaid-fallback-image"
         />
         <div className="mermaid-fallback-notice">
           <em><small>Please note that the diagram couldn't be rendered, probably due to a <a href="https://mermaid.js.org/">Mermaid.js</a> issue. A static image is displayed instead.</small></em>

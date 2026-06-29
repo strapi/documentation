@@ -11,6 +11,13 @@ tags:
 
 # Theme extension
 
+<Tldr>
+
+Extend the Strapi admin panel theme for light and dark modes by customizing `config.theme.light` and `config.theme.dark` keys in `/src/admin/app.js` to override colors and other design system properties.
+
+</Tldr>
+
+
 Strapi's [admin panel](/cms/admin-panel-customization) can be displayed either in light or dark mode (see [profile setup](/cms/getting-started/setting-up-admin-panel#setting-up-your-administrator-profile)), and both can be extended through custom theme settings.
 
 To extend the theme, use either:

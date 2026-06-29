@@ -10,6 +10,13 @@ tags:
 
 # Okta provider SSO configuration
 
+<Tldr>
+
+Okta is an SSO provider that allows users to sign in and sign up to Strapi through their Okta account using OAuth2 credentials configured in the `auth.providers` array.
+
+</Tldr>
+
+
 The present page explains how to setup the Okta provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites

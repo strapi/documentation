@@ -12,6 +12,13 @@ tags:
 
 # Welcome to the Strapi CMS Documentation!
 
+<Tldr>
+
+Strapi 5 is an open-source headless CMS where developers can build custom applications and manage content through an extensible admin panel with built-in role-based access control.
+
+</Tldr>
+
+
 The Strapi CMS documentation focuses on Strapi 5 and will take you through the complete journey of your Strapi 5 project. From the technical information related to the setup, advanced usage, customization and update of your project, to the management of the admin panel and its content and users.
 
 <ThemedImage

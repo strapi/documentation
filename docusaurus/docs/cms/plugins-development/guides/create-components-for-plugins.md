@@ -14,6 +14,13 @@ tags:
 
 # How to create components for Strapi plugins
 
+<Tldr>
+
+Create reusable `component` data structures for Strapi plugins using the Content-Type Builder or manually by defining a schema file with attributes and metadata in your plugin's server directory.
+
+</Tldr>
+
+
 When [developing a Strapi plugin](/cms/plugins-development/developing-plugins), you might want to create reusable components for your plugin. Components in Strapi are reusable data structures that can be used across different content-types.
 
 To create components for your Strapi plugin, you'll need to follow a similar approach to creating content-types, but with some specific differences.

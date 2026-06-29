@@ -1,33 +1,39 @@
-/** Component: Card */
+/** Component: Card — V3 Redesign */
 @use './mixins' as *;
 
 :root body {
-  --custom-card-border-color: var(--strapi-neutral-200);
+  --custom-card-border-color: var(--strapi-neutral-150);
 
-  --ifm-card-background-color: var(--strapi-neutral-0);
-  --ifm-card-border-radius: var(--strapi-spacing-1);
+  --ifm-card-background-color: transparent;
+  --ifm-card-border-radius: var(--strapi-radius-lg);
 }
 
 .card {
   --ifm-color-emphasis-200: var(--custom-card-border-color);
 
   border: 1px solid var(--custom-card-border-color);
-  box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1) !important;
-  @include transition;
+  border-radius: var(--strapi-radius-lg);
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, color 0.2s ease;
 
   &[href] {
-    color: var(--strapi-neutral-600);
+    color: var(--strapi-fg-2);
 
     &:hover {
-      --ifm-color-primary: var(--strapi-neutral-300);
+      transform: translateY(-2px);
+      border-color: var(--strapi-primary-200);
+      box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1) !important;
 
-      box-shadow: 0px 2px 15px rgba(33, 33, 52, 0.1) !important;
+      h2, .cardTitle {
+        color: var(--strapi-primary-600);
+      }
     }
   }
 
   h2 {
     --ifm-h2-font-size: var(--strapi-font-size-md);
     margin-bottom: var(--strapi-spacing-2);
+    font-family: var(--strapi-font-family-display);
   }
 
   p {
@@ -39,13 +45,27 @@
       margin-bottom: 0;
     }
   }
+
+  img {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 }
 
 /** Dark mode */
 @include dark {
+  :root body {
+    --custom-card-border-color: var(--strapi-neutral-200);
+    --ifm-card-background-color: transparent;
+  }
+
   .card {
     &[href] {
-      color: var(--strapi-neutral-700);
+      color: var(--strapi-fg-2);
+
+      &:hover {
+        border-color: var(--strapi-primary-500);
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2) !important;
+      }
     }
   }
 }

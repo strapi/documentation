@@ -37,8 +37,18 @@ pre {
   }
 }
 
-h1, h2, h3, h4, h5 {
-  display: inline-block !important;
+/** Headings flow as normal text so inline <code> stays inline and the title
+ *  wraps as one phrase. The theme renders anchor headings as flex containers,
+ *  which turned each text run and each <code> into a separate flex item — so a
+ *  title like "Example: bypass the `transfer` … with `--force`" broke into
+ *  scattered, oversized chunks (worse at narrow widths and in markdown mode). */
+.markdown h1, .markdown h2, .markdown h3,
+.markdown h4, .markdown h5, .markdown h6 {
+  display: block !important;
+
+  code {
+    display: inline !important;
+  }
 }
 
 h1, h2, h3, li, p, table {

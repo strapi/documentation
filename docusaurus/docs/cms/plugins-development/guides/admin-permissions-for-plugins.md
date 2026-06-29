@@ -14,6 +14,13 @@ tags:
 
 # How to create admin permissions from plugins
 
+<Tldr>
+
+Plugins can register admin permissions server-side using `strapi.admin.services.permission.actionProvider.registerMany()`, then protect pages with `<Page.Protect>`, menu links, and components using the `useRBAC` hook to enforce role-based access control.
+
+</Tldr>
+
+
 When [developing a Strapi plugin](/cms/plugins-development/developing-plugins), you might want to create admin permissions for your plugin. By doing that you can hook in to the [RBAC system](/cms/features/rbac) of Strapi to selectively grant permissions to certain pieces of your plugin.
 
 To create admin permissions for your Strapi plugin, you'll need to register them on the server side before implementing them on the admin side.

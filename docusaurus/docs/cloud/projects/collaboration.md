@@ -1,5 +1,5 @@
 ---
-title: Collaboration
+title: Cloud project collaboration
 displayed_sidebar: cloudSidebar
 description: Share your projects on Strapi Cloud to collaborate with others.
 canonicalUrl: https://docs.strapi.io/cloud/projects/collaboration.md
@@ -10,7 +10,7 @@ tags:
 - Strapi Cloud project
 ---
 
-# Collaboration on projects
+# Cloud project collaboration
 
 <Tldr>
 Project owners invite maintainers through the Share button, manage pending invitations, and revoke access.

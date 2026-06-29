@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # `injectContentManagerComponent()` removed
 
+<Tldr>
+
+The `injectContentManagerComponent()` method is removed in Strapi 5 and replaced with `getPlugin('content-manager').injectComponent()` since the Content Manager is now a plugin.
+
+</Tldr>
+
+
 In Strapi 5, the `injectContentManagerComponent` method is removed because the Content Manager is now a plugin. The [Admin Panel API](/cms/plugins-development/admin-injection-zones) method is replaced by `getPlugin('content-manager').injectComponent()`.
 
 <Intro />

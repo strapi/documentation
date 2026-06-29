@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # LinkedIn provider setup for Users & Permissions
 
+<Tldr>
+
+Configure LinkedIn as a provider for Strapi's Users & Permissions feature by creating a LinkedIn app, registering the redirect URL, and entering your credentials in the Strapi admin panel.
+
+</Tldr>
+
+
 The present page explains how to setup the LinkedIn provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

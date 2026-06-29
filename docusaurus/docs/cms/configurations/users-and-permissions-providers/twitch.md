@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # Twitch provider setup for Users & Permissions
 
+<Tldr>
+
+Configure Twitch OAuth authentication for Strapi's Users & Permissions feature by registering your application on the Twitch developer console and adding your credentials to Strapi's provider settings.
+
+</Tldr>
+
+
 The present page explains how to setup the Twitch provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

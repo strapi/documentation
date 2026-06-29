@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # The `webhooks.populateRelations` server configuration is removed
 
+<Tldr>
+
+In Strapi 5, the `webhooks.populateRelations` server configuration is removed. Webhook refactoring eliminates the need for this option, but code relying on populated relations in create, update, and delete responses must be updated to fetch necessary data manually.
+
+</Tldr>
+
+
 In Strapi 5, webhooks have been refactored and the `webhook.populateRelations` option will become redundant. This might affect lifecycles expecting the returned relations of create, update and delete to be populated.
 
 <Intro />

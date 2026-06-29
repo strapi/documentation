@@ -1,12 +1,23 @@
-/** Fonts */
+/** Fonts — V3 Redesign (3-font system)
+ * Display/headings: Poppins (brand font, geometric rounds — strapi.io consistency)
+ * Body/content: Inter (optimized for readability in long-form text)
+ * Mono/technical: JetBrains Mono (code, breadcrumbs, sidebar categories, badges, labels)
+ */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --strapi-font-family-display: 'Poppins', sans-serif;
+  --strapi-font-family-body: 'Inter', sans-serif;
+  --strapi-font-family-technical: 'JetBrains Mono', monospace;
+  --strapi-font-family-mono: 'JetBrains Mono', monospace;
+}
 
 .font-poppins,
 .font-poppins button,
 .font-poppins input {
-  --custom-font-family: "Poppins", sans-serif;
-  --ifm-heading-font-family: "Poppins", sans-serif;
+  --custom-font-family: var(--strapi-font-family-body);
+  --ifm-heading-font-family: var(--strapi-font-family-display);
 
   font-family: var(--custom-font-family);
 }

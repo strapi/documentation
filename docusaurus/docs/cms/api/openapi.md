@@ -2,14 +2,21 @@
 title: OpenAPI specification 
 description: Learn how to generate OpenAPI specifications for your Strapi applications using the @strapi/openapi package
 displayed_sidebar: cmsSidebar
-pagination_prev: cms/api/document
-pagination_next: cms/api/rest
+pagination_prev: cms/api/client
+pagination_next: cms/api/graphql
 tags:
   - OpenAPI
   - API
 ---
 
 # OpenAPI specification generation
+
+<Tldr>
+
+Strapi provides a CLI tool to automatically generate OpenAPI 3.1.0 specifications documenting all API endpoints, parameters, and responses. The generated specification can be integrated with Swagger UI for interactive API documentation.
+
+</Tldr>
+
 
 Strapi provides a command-line tool to generate <ExternalLink to="https://www.openapis.org/" text="OpenAPI"/> specifications for your applications. 
 

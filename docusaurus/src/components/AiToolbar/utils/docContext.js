@@ -38,6 +38,21 @@ export const getRawMarkdownUrl = ({ docId, docPath }) => {
   return null;
 };
 
+/**
+ * URL of the clean, generated per-page Markdown (the same content as
+ * llms-full.txt — JSX resolved, snippets inlined, API code surfaced) served at
+ * `<origin>/<path>.md`. This is what agents should consume, as opposed to the
+ * raw MDX source on GitHub (getRawMarkdownUrl), which still contains <Tabs>,
+ * <Endpoint>, imports, etc. Returns null outside the browser or for the
+ * homepage.
+ */
+export const getCleanMarkdownUrl = () => {
+  if (!isBrowser()) return null;
+  const cleanPath = window.location.pathname.replace(/^\/|\/$/g, '');
+  if (!cleanPath) return null; // homepage: HTML only
+  return `${window.location.origin}/${cleanPath}.md`;
+};
+
 const TEMPLATE_PATTERN = /\{\{\s*(\w+)\s*\}\}/g;
 
 export const applyTemplate = (template, values) => {

@@ -139,20 +139,14 @@ html[data-theme='dark'] .mermaid-loading {
   max-width: 100%;
   height: auto;
   border-radius: 4px;
+  /* The fallback image is not zoomable (no medium-zoom), so no zoom-in cursor
+     or hover scale — those suggested interactivity and the zoom broke layout. */
+  cursor: default;
 }
 
 .mermaid-fallback-notice {
   font-style: italic;
   margin-bottom: 1rem;
-}
-
-/* Animation for the fallback image */
-.mermaid-fallback-image {
-  transition: transform 0.2s ease;
-}
-
-.mermaid-fallback-image:hover {
-  transform: scale(1.01);
 }
 
 .mermaid-download-link {

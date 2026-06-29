@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Core service methods use the Document Service API
 
+<Tldr>
+
+In Strapi 5, core service methods use the Document Service API instead of the Entity Service API, with methods like `findOne`, `update`, and `delete` receiving a `documentId` instead of `entityId`.
+
+</Tldr>
+
+
 In Strapi 5, core service methods use the Document Service API instead of the Entity Service API.
 
 <Intro/>

@@ -1,0 +1,43 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@media (min-width: 997px) {
+  /* Match the regular doc content width (which follows the content-width
+     selector) instead of the default 75%, which made these pages much wider
+     than every other page. */
+  .generatedIndexPage {
+    max-width: var(--doc-content-max-width, 720px) !important;
+    /* Center the content in the available area instead of pinning it to the
+       left (these pages have no right-hand TOC, so a left-aligned max-width
+       block left a big empty gutter on the right). Matches the balanced
+       horizontal placement of regular doc pages. */
+    margin-inline: auto !important;
+  }
+
+  /* In max width the grid would otherwise touch the right edge. These pages
+     have no right-hand TOC, so reserve a gutter equal to a collapsed TOC rail
+     (~52px on regular pages). Only in max width — in default/wide the centering
+     above already balances the gutters, and adding padding there would offset
+     the centered block. */
+  :global(html[data-content-width='max']) .generatedIndexPage {
+    padding-right: 52px;
+  }
+
+  .list article:nth-last-child(-n + 2) {
+    margin-bottom: 0 !important;
+  }
+}
+
+/* Duplicated from .markdown h1 */
+.title {
+  --ifm-h1-font-size: 3rem;
+  margin-bottom: calc(1.25 * var(--ifm-leading));
+}
+
+.list article:last-child {
+  margin-bottom: 0 !important;
+}

@@ -1,0 +1,118 @@
+@use '../../scss/mixins' as *;
+
+.switcher {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: sticky;
+  // Vertically aligned with the NAVIGATION / ON THIS PAGE sidebar labels and
+  // the content-width toggle. Lower offset than the toggle because this block
+  // sits in the article flow with its own top padding, which pushes it down.
+  top: calc(var(--ifm-navbar-height, 3.75rem) + 9px);
+  z-index: 10;
+  // The switcher sits at the very top of the article flow, which starts ~13px
+  // lower than the sidebar labels and the width toggle. Pull it up so the top
+  // of all four (NAVIGATION, switcher, width toggle, ON THIS PAGE) line up.
+  margin-top: -13px;
+  margin-bottom: 8px;
+  padding: 6px 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  flex-wrap: wrap;
+  // Opaque background so it doesn't blend with content when scrolling
+  background: var(--strapi-surface-0);
+  // Ensure background covers full width and hides content scrolling underneath
+  margin-left: -16px;
+  margin-right: -16px;
+  padding-left: 16px;
+  padding-right: 16px;
+
+  @include small-down {
+    position: static;
+    background: transparent;
+  }
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+
+  // The switcher row is inset (button padding) so the first tab sat to the
+  // right of the H1. Pull the first button left so its content lines up with
+  // the H1 (and the page body).
+  &:first-child {
+    margin-left: -16px;
+  }
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--strapi-neutral-500);
+  cursor: pointer;
+  font-family: var(--strapi-font-family-technical);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    color: var(--strapi-neutral-700);
+    background: var(--strapi-neutral-100);
+  }
+
+  i {
+    font-size: 14px;
+    line-height: 1;
+  }
+}
+
+.active {
+  color: var(--strapi-primary-600);
+  background: var(--strapi-primary-100);
+
+  &:hover {
+    color: var(--strapi-primary-600);
+    background: var(--strapi-primary-100);
+  }
+}
+
+@include small-down {
+  .button {
+    font-size: 10px;
+    padding: 4px 7px;
+    letter-spacing: 0.03em;
+  }
+}
+
+@include dark {
+  .switcher {
+    background: var(--strapi-surface-0);
+  }
+
+  .button {
+    color: var(--strapi-neutral-400);
+
+    &:hover {
+      color: var(--strapi-neutral-300);
+      background: var(--strapi-neutral-100);
+    }
+  }
+
+  .active {
+    color: var(--strapi-primary-500);
+    background: rgba(73, 69, 255, 0.15);
+
+    &:hover {
+      color: var(--strapi-primary-500);
+      background: rgba(73, 69, 255, 0.15);
+    }
+  }
+}

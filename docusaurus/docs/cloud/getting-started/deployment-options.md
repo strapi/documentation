@@ -1,5 +1,5 @@
 ---
-title: Project deployment
+title: Cloud project deployment
 displayed_sidebar: cloudSidebar
 description: Learn how to deploy your Strapi application on Strapi Cloud, via the Cloud dashboard or the CLI.
 canonicalUrl: https://docs.strapi.io/cloud/getting-started/deployment-options.html
@@ -10,6 +10,13 @@ tags:
 ---
 
 # Project deployment with Strapi Cloud
+
+<Tldr>
+
+Deploy your Strapi application on Strapi Cloud using either the Cloud dashboard or the CLI, with step-by-step guides provided for both methods.
+
+</Tldr>
+
 
 You have 2 options to deploy your project with Strapi Cloud:
 

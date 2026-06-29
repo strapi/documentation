@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # AWS Cognito provider setup for Users & Permissions
 
+<Tldr>
+
+AWS Cognito provider lets you set up OAuth 2.0 authentication for Users & Permissions by configuring a user pool in AWS and adding the client credentials and domain to Strapi's provider settings.
+
+</Tldr>
+
+
 The present page explains how to setup the AWS Cognito provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

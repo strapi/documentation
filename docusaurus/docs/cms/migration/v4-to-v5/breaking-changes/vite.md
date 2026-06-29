@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Vite is the default bundler in Strapi 5
 
+<Tldr>
+
+In Strapi 5, Vite replaces webpack as the default bundler. Users with custom webpack configurations can convert to Vite configurations or use `--bundler=webpack` to maintain v4 behavior.
+
+</Tldr>
+
+
 In Strapi 5, Vite is the default bundler.
 
 <Intro />

@@ -15,6 +15,13 @@ tags:
 
 # Upgrade tool
 
+<Tldr>
+
+The upgrade tool is a CLI command that automatically upgrades Strapi applications to a new version by updating dependencies and applying codemods to the codebase.
+
+</Tldr>
+
+
 The upgrade tool assists Strapi users in upgrading their Strapi application dependencies and code to a specific version.
 
 Running the upgrade tool triggers the update of the application dependencies, their installation, and the execution of a series of **codemods** <Codemods/> that automatically edit the application codebase according to the breaking changes introduced up until the targeted version.

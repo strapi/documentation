@@ -18,6 +18,13 @@ import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
 
 # AI for content managers
 
+<Tldr>
+
+Strapi AI helps content managers design content structures, translate content, and generate asset metadata from the admin panel. Strapi also includes a built-in MCP server that lets AI clients manage content through natural language.
+
+</Tldr>
+
+
 This page covers the AI-powered capabilities available to content managers in Strapi: the Strapi AI features built into the admin panel, and the MCP server that lets AI clients manage your content.
 
 ## Strapi AI

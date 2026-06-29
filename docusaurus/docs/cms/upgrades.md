@@ -17,6 +17,13 @@ import DevelopCommand from '/docs/snippets/develop-npm-yarn.md'
 
 # Upgrades
 
+<Tldr>
+
+Strapi periodically releases new versions with improvements. Find your current version in the admin panel or terminal, then follow the upgrade guide for Strapi v4 to v5 migration or use the upgrade tool for v5.x updates.
+
+</Tldr>
+
+
 Strapi periodically releases code improvements through new versions. New Strapi versions are announced in both the terminal and in the administration panel, and <ExternalLink to="https://github.com/strapi/strapi/releases" text="GitHub release notes"/> list what is new with each new version.
 
 The latest version number of Strapi that was released by the Strapi core team can be found on <ExternalLink to="https://www.npmjs.com/package/@strapi/strapi" text="npm"/> or on <ExternalLink to="https://github.com/strapi/strapi/releases" text="GitHub"/>.

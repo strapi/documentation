@@ -1,0 +1,91 @@
+/** V3: Collapsible Table of Contents — Sanity-inspired */
+
+.wrapper {
+  position: sticky;
+  // Keep a small gap below the navbar when scrolled (and at the top of the
+  // page), aligned with the other floating controls. Without this the sticky
+  // TOC pins flush against the navbar on scroll.
+  top: calc(var(--ifm-navbar-height, 56px) + 18px);
+  width: 100%;
+  max-height: calc(100vh - var(--ifm-navbar-height, 56px) - 18px);
+  overflow-y: auto;
+  border-left: none;
+  padding: 0 8px 28px 20px;
+
+  /* Thin scrollbar when TOC content overflows */
+  scrollbar-width: thin;
+  scrollbar-color: var(--strapi-neutral-200) transparent;
+  &::-webkit-scrollbar { width: 3px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background-color: var(--strapi-neutral-200); border-radius: 3px; }
+
+  // Hide on mobile/tablet — Docusaurus shows a "On this page" dropdown instead
+  @media (max-width: 996px) {
+    display: none;
+  }
+}
+
+.collapsed {
+  border-left: none;
+  padding: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/** Header: label + toggle button */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  min-height: 44px;
+}
+
+.collapsed .header {
+  padding-bottom: 0;
+  min-height: auto;
+  padding-top: 4px;
+}
+
+.label {
+  font-family: var(--strapi-font-family-technical, 'JetBrains Mono', monospace);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--strapi-neutral-400);
+  white-space: nowrap;
+}
+
+.toggle {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--strapi-neutral-200);
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: var(--strapi-neutral-400);
+  font-size: 14px;
+  line-height: 1;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  flex-shrink: 0;
+  padding: 0;
+
+  &:hover {
+    background: var(--strapi-neutral-100);
+    color: var(--strapi-neutral-800);
+    border-color: var(--strapi-neutral-300);
+  }
+}
+
+.content {
+  /* Override inner Docusaurus TOC sticky — our wrapper handles it */
+  :global(.theme-doc-toc-desktop) {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
+}

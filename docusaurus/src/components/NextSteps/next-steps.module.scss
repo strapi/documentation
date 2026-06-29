@@ -1,0 +1,127 @@
+/** NextSteps — "What's next?" numbered step list
+ * Design matching the v3 quick-start guide screenshot:
+ * - Numbered circles with accent background
+ * - Clean separators between steps
+ * - Generous vertical spacing
+ */
+@use '@site/src/scss/_mixins.scss' as *;
+
+.wrapper {
+  margin: 48px 0 32px;
+  padding: 0;
+}
+
+.title {
+  font-family: var(--strapi-font-family-display, 'Outfit', sans-serif);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--strapi-fg-1, var(--ifm-font-color-base));
+  margin: 0 0 32px;
+  border: none;
+  padding: 0;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.stepLink {
+  text-decoration: none !important;
+  color: inherit;
+
+  &:hover {
+    text-decoration: none !important;
+    color: inherit;
+  }
+
+  &:hover .step {
+    background: var(--strapi-surface-2, #F4F4F5);
+  }
+
+  &:hover .stepArrow {
+    opacity: 1;
+    transform: translateX(0);
+    color: var(--strapi-accent, #4945FF);
+  }
+
+  &:hover .stepTitle {
+    color: var(--strapi-accent, #4945FF);
+  }
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 24px;
+  border-bottom: 1px solid var(--strapi-border, rgba(0, 0, 0, 0.06));
+  transition: background 0.2s;
+  border-radius: 12px;
+  margin: 0 -24px;
+  width: calc(100% + 48px);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.stepNumber {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(73, 69, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  span {
+    font-family: var(--strapi-font-family-display, 'Outfit', sans-serif);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--strapi-accent, #4945FF);
+  }
+}
+
+.stepContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.stepTitle {
+  font-family: var(--strapi-font-family-display, 'Outfit', sans-serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--strapi-fg-1, var(--ifm-font-color-base));
+  margin-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.stepDesc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--strapi-fg-4, var(--ifm-font-color-secondary));
+}
+
+.stepArrow {
+  font-size: 18px;
+  color: var(--strapi-fg-5, #A1A1AA);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+/* Dark mode */
+@include dark {
+  .stepNumber {
+    background: rgba(73, 69, 255, 0.15);
+  }
+
+  .stepLink:hover .step {
+    background: var(--strapi-surface-2, #18181B);
+  }
+}

@@ -1,5 +1,5 @@
 ---
-title: Deployment history & logs
+title: Cloud deployment history & logs
 displayed_sidebar: cloudSidebar
 description: View projects' deployment history and logs.
 canonicalUrl: https://docs.strapi.io/cloud/deploys-history.html
@@ -12,7 +12,7 @@ tags:
 - Strapi Cloud project
 ---
 
-# Deployment history and logs {#deploy-history-and-logs}
+# Cloud deployment history and logs {#deploy-history-and-logs}
 
 <Tldr>
 Deployments tab lists every build with status and allows deep inspection of build and deployment logs.

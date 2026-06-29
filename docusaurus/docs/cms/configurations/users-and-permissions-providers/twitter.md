@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # Twitter provider setup for Users & Permissions
 
+<Tldr>
+
+Configure Twitter (now X) as an OAuth provider for Users & Permissions. Requires a paid X Developer Portal plan since the v1.1 API endpoint is no longer freely available.
+
+</Tldr>
+
+
 The present page explains how to setup the Twitter provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

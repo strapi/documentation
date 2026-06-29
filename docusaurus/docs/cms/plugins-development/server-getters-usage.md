@@ -55,10 +55,15 @@ The choice is a matter of context and readability:
 
 The following table lists all available getters for a plugin named `todo` with a resource named `task`:
 
-| | Service | Controller | Content-type | Policy | Middleware | Routes | Configuration |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| **Top-level** | `strapi.plugin('todo').service('task')` | `strapi.plugin('todo').controller('task')` | `strapi.plugin('todo').contentType('task')` | `strapi.plugin('todo').policy('is-owner')` | `strapi.plugin('todo').middleware('audit-log')` | `strapi.plugin('todo').routes` | `strapi.plugin('todo').config('featureFlag')` |
-| **Global** | `strapi.service('plugin::todo.task')` | `strapi.controller('plugin::todo.task')` | `strapi.contentType('plugin::todo.task')` | `strapi.policy('plugin::todo.is-owner')` | `strapi.middleware('plugin::todo.audit-log')` | — | `strapi.config.get('plugin::todo.featureFlag')` |
+| | Top-level | Global |
+| --- | --- | --- |
+| **Service** | `strapi.plugin('todo').service('task')` | `strapi.service('plugin::todo.task')` |
+| **Controller** | `strapi.plugin('todo').controller('task')` | `strapi.controller('plugin::todo.task')` |
+| **Content-type** | `strapi.plugin('todo').contentType('task')` | `strapi.contentType('plugin::todo.task')` |
+| **Policy** | `strapi.plugin('todo').policy('is-owner')` | `strapi.policy('plugin::todo.is-owner')` |
+| **Middleware** | `strapi.plugin('todo').middleware('audit-log')` | `strapi.middleware('plugin::todo.audit-log')` |
+| **Routes** | `strapi.plugin('todo').routes` | — |
+| **Configuration** | `strapi.plugin('todo').config('featureFlag')` | `strapi.config.get('plugin::todo.featureFlag')` |
 
 Both styles return the same underlying object. Routes have no global getter equivalent. Configuration uses dedicated config APIs rather than resource getters, both forms read the same merged value.
 
@@ -67,6 +72,8 @@ Run `yarn strapi console` or `npm run strapi console` to inspect the `strapi` ob
 :::
 
 ## Usage examples
+
+<br/>
 
 ### Calling a plugin service from a controller
 
