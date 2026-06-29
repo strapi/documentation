@@ -2512,7 +2512,7 @@ File path: N/A
 
 ```js
 await strapi.documents('api::restaurant.restaurant').findOne({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', 
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn', 
 });
 ```
 
@@ -2522,7 +2522,7 @@ File path: N/A
 
 ```json
 {
-  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   name: "Biscotte Restaurant",
   publishedAt: null, // draft version (default)
   locale: "en", // default locale
@@ -2548,7 +2548,7 @@ File path: N/A
 
 ```json
 {
-  documentId: "ln1gkzs6ojl9d707xn6v86mw",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   name: "Restaurant B",
   publishedAt: null,
   locale: "en",
@@ -2561,7 +2561,7 @@ File path: N/A
 
 ```js
 await strapi.documents('api::restaurant.restaurant').update({ 
-    documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+    documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
     data: { name: "New restaurant name" }
 })
 ```
@@ -2572,7 +2572,7 @@ File path: N/A
 
 ```json
 {
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
   name: "New restaurant name",
   locale: "en",
   publishedAt: null, // draft
@@ -2593,7 +2593,7 @@ File path: N/A
 
 ```js
 await strapi.documents('api::restaurant.restaurant').delete({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn', // documentId,
 })
 ```
 
@@ -2603,10 +2603,10 @@ File path: N/A
 
 ```json
 {
-  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   entries: [
     {
-      "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
       "name": "Biscotte Restaurant",
       "publishedAt": "2024-03-14T18:30:48.870Z",
       "locale": "en"
@@ -2659,7 +2659,7 @@ File path: N/A
 
 ```js
 await strapi.documents('api::restaurant.restaurant').publish({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
 });
 ```
 
@@ -2669,10 +2669,10 @@ File path: N/A
 
 ```json
 {
-  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   entries: [
     {
-      "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
       "name": "Biscotte Restaurant",
       "publishedAt": "2024-03-14T18:30:48.870Z",
       "locale": "en"
@@ -2697,7 +2697,7 @@ File path: N/A
 
 ```js
 await strapi.documents('api::restaurant.restaurant').unpublish({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm' 
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn' 
 });
 ```
 
@@ -2707,10 +2707,10 @@ File path: N/A
 
 ```json
 {
-  documentId: "lviw819d5htwvga8s3kovdij",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   entries: [
     {
-      documentId: "lviw819d5htwvga8s3kovdij",
+      documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
       name: "Biscotte Restaurant",
       publishedAt: null,
       locale: "en"
@@ -2726,7 +2726,7 @@ File path: N/A
 
 ```js
 await strapi.documents('api::restaurant.restaurant').discardDraft({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
 });
 ```
 
@@ -2736,10 +2736,10 @@ File path: N/A
 
 ```json
 {
-  documentId: "lviw819d5htwvga8s3kovdij",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   entries: [
     {
-      documentId: "lviw819d5htwvga8s3kovdij",
+      documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
       name: "Biscotte Restaurant",
       publishedAt: null,
       locale: "en"
@@ -2767,7 +2767,7 @@ File path: N/A
 
 ```json
 {
-  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
   name: "Restaurant Biscotte",
   publishedAt: null,
   locale: "en"
@@ -2790,14 +2790,14 @@ File path: N/A
 ```json
 [
   {
-    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+    documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
     name: "Biscotte Restaurant",
     publishedAt: null, // draft version (default)
     locale: "en" // default locale
     // …
   },
   {
-    documentId: "j9k8l7m6n5o4p3q2r1s0tuv",
+    documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
     name: "Pizzeria Arrivederci",
     publishedAt: null,
     locale: "en"
@@ -2840,7 +2840,7 @@ File path: N/A
 
 ```json
 {
-  documentId: "j9k8l7m6n5o4p3q2r1s0tuv",
+  documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
   name: "Pizzeria Arrivederci",
   publishedAt: null,
   locale: "en"
@@ -2875,7 +2875,7 @@ File path: N/A
 ```json
 [
   {
-    documentId: "j9k8l7m6n5o4p3q2r1s0tuv",
+    documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
     name: "Pizzeria Arrivederci",
     locale: "en", // default locale
     publishedAt: null, // draft version (default)
@@ -28547,7 +28547,7 @@ File path: /github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resourc
       "title": "Article A"
       "relation": {
         "data": {
-          "id": "clkgylw7d000108lc4rw1bb6s"
+          "id": 15
           "name": "Category A"
         }
       }
@@ -28566,13 +28566,13 @@ File path: /github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resourc
 {
   "data": {
     // system fields
-    "documentId": "clkgylmcc000008lcdd868feh",
+    "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
     "locale": "en",
     // user fields
     "title": "Article A"
     "relation": {
       // system fields
-      "documentId": "clkgylw7d000108lc4rw1bb6s"
+      "documentId": "j9k8l7m6n5o4p3q2r1s0tuvw"
       // user fields
       "name": "Category A"
     }
@@ -31642,31 +31642,29 @@ const { z } = require('@strapi/utils');
 
 module.exports = {
   register({ strapi }) {
-    if (strapi.ai.mcp.isEnabled()) {
-      strapi.ai.mcp.registerTool({
-        name: 'my_custom_tool',
-        title: 'My Custom Tool',
-        description: 'A short description shown to the AI client.',
-        auth: {
-          // The session gate passes when the token satisfies ANY policy in the array.
-          policies: [{ action: 'plugin::my-plugin.my-action' }],
-        },
-        // resolveInputSchema and resolveOutputSchema are called per request,
-        // so they can narrow schemas based on the token's permissions.
-        resolveInputSchema: (context) =>
-          z.object({
-            message: z.string().describe('The message to echo.'),
-          }),
-        resolveOutputSchema: (context) =>
-          z.object({
-            result: z.string(),
-          }),
-        createHandler: (strapi, context) => async ({ args }) => ({
-          content: [{ type: 'text', text: args.message }],
-          structuredContent: { result: args.message },
+    strapi.ai.mcp.registerTool({
+      name: 'my_custom_tool',
+      title: 'My Custom Tool',
+      description: 'A short description shown to the AI client.',
+      auth: {
+        // The session gate passes when the token satisfies ANY policy in the array.
+        policies: [{ action: 'plugin::my-plugin.my-action' }],
+      },
+      // resolveInputSchema and resolveOutputSchema are called per request,
+      // so they can narrow schemas based on the token's permissions.
+      resolveInputSchema: (context) =>
+        z.object({
+          message: z.string().describe('The message to echo.'),
         }),
-      });
-    }
+      resolveOutputSchema: (context) =>
+        z.object({
+          result: z.string(),
+        }),
+      createHandler: (strapi, context) => async ({ args }) => ({
+        content: [{ type: 'text', text: args.message }],
+        structuredContent: { result: args.message },
+      }),
+    });
   },
 };
 ```
@@ -31680,33 +31678,114 @@ import { z } from '@strapi/utils';
 
 export default {
   register({ strapi }) {
-    if (strapi.ai.mcp.isEnabled()) {
-      strapi.ai.mcp.registerTool({
-        name: 'my_custom_tool',
-        title: 'My Custom Tool',
-        description: 'A short description shown to the AI client.',
-        auth: {
-          // The session gate passes when the token satisfies ANY policy in the array.
-          policies: [{ action: 'plugin::my-plugin.my-action' }],
-        },
-        // resolveInputSchema and resolveOutputSchema are called per request,
-        // so they can narrow schemas based on the token's permissions.
-        resolveInputSchema: (context) =>
-          z.object({
-            message: z.string().describe('The message to echo.'),
-          }),
-        resolveOutputSchema: (context) =>
-          z.object({
-            result: z.string(),
-          }),
-        createHandler: (strapi, context) => async ({ args }) => ({
-          content: [{ type: 'text', text: args.message }],
-          structuredContent: { result: args.message },
+    strapi.ai.mcp.registerTool({
+      name: 'my_custom_tool',
+      title: 'My Custom Tool',
+      description: 'A short description shown to the AI client.',
+      auth: {
+        // The session gate passes when the token satisfies ANY policy in the array.
+        policies: [{ action: 'plugin::my-plugin.my-action' }],
+      },
+      // resolveInputSchema and resolveOutputSchema are called per request,
+      // so they can narrow schemas based on the token's permissions.
+      resolveInputSchema: (context) =>
+        z.object({
+          message: z.string().describe('The message to echo.'),
         }),
-      });
-    }
+      resolveOutputSchema: (context) =>
+        z.object({
+          result: z.string(),
+        }),
+      createHandler: (strapi, context) => async ({ args }) => ({
+        content: [{ type: 'text', text: args.message }],
+        structuredContent: { result: args.message },
+      }),
+    });
   },
 };
+```
+
+
+## Defining a tool
+Description: The following example uses devModeOnly for brevity.
+(Source: https://docs.strapi.io/cms/plugins-development/extend-mcp-server#defining-a-tool)
+
+Language: TypeScript
+File path: src/plugins/my-plugin/mcp/greet.ts
+
+```ts
+import { ai } from '@strapi/strapi';
+import { z } from '@strapi/utils';
+
+export const greet = ai.mcp.defineTool({
+  name: 'greet',
+  title: 'Greet',
+  description: 'Greets a user by name',
+  devModeOnly: true,
+  resolveInputSchema: () => z.object({ name: z.string() }),
+  resolveOutputSchema: () => z.object({ message: z.string() }),
+  createHandler: (strapi) => async ({ args }) => {
+    const message = `Hello, ${args.name}!`;
+    return { content: [{ type: 'text', text: message }], structuredContent: { message } };
+  },
+});
+```
+
+Language: TypeScript
+File path: src/plugins/my-plugin/strapi-server.ts
+
+```ts
+import { greet } from './mcp/greet';
+
+export default {
+  register({ strapi }) {
+    strapi.ai.mcp.registerTool(greet);
+  },
+};
+```
+
+
+## Defining a resource
+Description: A resource exposes read-only data to AI clients through a URI.
+(Source: https://docs.strapi.io/cms/plugins-development/extend-mcp-server#defining-a-resource)
+
+Language: TypeScript
+File path: src/plugins/my-plugin/mcp/app-info.ts
+
+```ts
+import { ai } from '@strapi/strapi';
+
+export const appInfo = ai.mcp.defineResource({
+  name: 'app-info',
+  uri: 'strapi://app/info',
+  metadata: { description: 'Metadata about the app', mimeType: 'application/json' },
+  devModeOnly: true,
+  createHandler: (strapi) => async (uri) => ({
+    contents: [{ uri: uri.href, mimeType: 'application/json', text: JSON.stringify({ ok: true }) }],
+  }),
+});
+```
+
+
+## Defining a prompt
+Description: A prompt exposes a reusable prompt template to AI clients.
+(Source: https://docs.strapi.io/cms/plugins-development/extend-mcp-server#defining-a-prompt)
+
+Language: TypeScript
+File path: src/plugins/my-plugin/mcp/app-context.ts
+
+```ts
+import { ai } from '@strapi/strapi';
+
+export const appContext = ai.mcp.definePrompt({
+  name: 'app-context',
+  title: 'App Context',
+  description: 'Provides context about the app',
+  devModeOnly: true,
+  createHandler: (strapi) => async () => ({
+    messages: [{ role: 'user', content: { type: 'text', text: 'You are connected to Strapi.' } }],
+  }),
+});
 ```
 
 
