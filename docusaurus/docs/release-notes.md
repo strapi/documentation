@@ -29,7 +29,65 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.48.1](https://github.com/strapi/strapi/releases/tag/v5.48.1)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.49.0](https://github.com/strapi/strapi/releases/tag/v5.49.0)._
+
+## 7.0.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Strapi Docs "v7" full redesign](https://github.com/strapi/documentation/pull/3281)
+- [Elegant/Markdown/AI mode selector](https://github.com/strapi/documentation/pull/3156)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Document MCP capability builder helpers for plugin development](https://github.com/strapi/documentation/pull/3263)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Document license sync delay when changing Growth plan seats](https://github.com/strapi/documentation/pull/3285)
+- [Fix documentId character count in documentation](https://github.com/strapi/documentation/pull/3275)
+- [Restrict MCP capability registration to register() and rename the tools group](https://github.com/strapi/documentation/pull/3268)
+- [Document Vite client types for admin image imports](https://github.com/strapi/documentation/pull/3266)
+- [Document that the Deploy widget only shows in local development](https://github.com/strapi/documentation/pull/3223)
+
+#### Cloud
+- [Document Strapi Cloud admin variable limitation](https://github.com/strapi/documentation/pull/3265)
+
+#### Repository
+- [Fix selection feedback failing on the n8n webhook](https://github.com/strapi/documentation/pull/3294)
+- [Raise self-healing workflow max-turns to prevent mid-run failures](https://github.com/strapi/documentation/pull/3291)
+- [Add inki pitfall: document MCP capability registration in register() only](https://github.com/strapi/documentation/pull/3270)
+- [Make `inki:pr` derive the Vercel preview host robustly for long branch names](https://github.com/strapi/documentation/pull/3269)
+- [Add review fix loop and max-review-fix-rounds flag to inki](https://github.com/strapi/documentation/pull/3264)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/singhvishalkr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/107715446?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="singhvishalkr"/>
+</a>
+<a href="https://github.com/x270" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/42441861?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="x270"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ---
 
