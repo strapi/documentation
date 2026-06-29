@@ -38,6 +38,12 @@ const PageFeedback = forwardRef(function PageFeedback({ pagePath, pageId, pageTi
       setLastComment(comment);
       setStage('submitting');
       try {
+        // The n8n webhook treats `selection` as a plain string (it calls
+        // .slice() on it). Sending the {text, sectionHeading, anchor} object
+        // here broke it with "(body.selection || '').slice is not a function".
+        // Send the selected text as a string, and pass the heading/anchor
+        // context in separate fields so nothing is lost.
+        const sel = selectionData?.selection;
         await submitFeedback({
           kind: selectionData?.kind || 'page',
           vote,
@@ -45,7 +51,9 @@ const PageFeedback = forwardRef(function PageFeedback({ pagePath, pageId, pageTi
           pagePath,
           pageId,
           pageTitle,
-          selection: selectionData?.selection || undefined,
+          selection: sel?.text || undefined,
+          selectionHeading: sel?.sectionHeading || undefined,
+          selectionAnchor: sel?.anchor || undefined,
           _hp: hp || undefined,
         });
         setStage('done');
