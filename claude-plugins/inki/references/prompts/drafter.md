@@ -391,7 +391,6 @@ Use components as specified in the outline's `components` field. Key components:
 - **`<SubtleCallout title="…">`**: Low-emphasis "good to know" aside (not an admonition directive). See `claude-plugins/inki/references/templates/components/subtle-callout.md`.
 - **`<Checklist title="…">` / `<ChecklistItem>`**: Interactive checkbox list for verification/best-practice items (not ordered procedures). See `claude-plugins/inki/references/templates/components/checklist.md`.
 - **`<MermaidWithFallback chartFile="…" fallbackImage="…" />`**: Live Mermaid diagram (fetched from a `.mmd` file) with a static image fallback. See `claude-plugins/inki/references/templates/components/mermaid-with-fallback.md`.
-- **`<MultiLanguageSwitcher>` / `<MultiLanguageSwitcherRequest language="…">`**: Same API request shown in several languages behind a persistent dropdown. See `claude-plugins/inki/references/templates/components/multi-language-switcher.md`.
 
 ---
 

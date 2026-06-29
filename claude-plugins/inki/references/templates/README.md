@@ -56,4 +56,3 @@ How to use
 - SubtleCallout (low-emphasis "good to know" aside) rules: `claude-plugins/inki/references/templates/components/subtle-callout.md`
 - Checklist / ChecklistItem (interactive checkbox lists) rules: `claude-plugins/inki/references/templates/components/checklist.md`
 - MermaidWithFallback (live Mermaid diagram with static fallback) rules: `claude-plugins/inki/references/templates/components/mermaid-with-fallback.md`
-- MultiLanguageSwitcher (language-switchable API request examples) rules: `claude-plugins/inki/references/templates/components/multi-language-switcher.md`
