@@ -3734,5 +3734,11 @@
       "destination": "/cms/features/media-library#providers",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/docs-next-parked.html"
+    }
   ]
 }

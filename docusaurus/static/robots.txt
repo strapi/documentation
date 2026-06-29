@@ -1,4 +1,5 @@
+# docs-next.strapi.io is a parked/experimental subdomain (served from the `next`
+# branch). Keep it fully out of search engines. Do NOT merge this file to main:
+# on main it must stay `Allow: /` so docs.strapi.io is indexed normally.
 User-agent: *
-Allow: /
-
-Sitemap: https://docs.strapi.io/sitemap.xml
+Disallow: /

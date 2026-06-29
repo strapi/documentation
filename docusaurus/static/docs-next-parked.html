@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strapi Documentation has moved</title>
+  <meta name="description" content="The Strapi documentation now lives at docs.strapi.io." />
+  <meta name="robots" content="noindex" />
+  <meta http-equiv="refresh" content="60;url=https://docs.strapi.io" />
+  <style>
+    :root {
+      --fg: #ffffff;
+      --fg-muted: #b6b6d6;
+      --accent: #4945ff;
+      --accent-light: #7b79ff;
+      --accent-pink: #c084fc;
+      --border: rgba(255, 255, 255, 0.12);
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    body {
+      color: var(--fg);
+      font-family: var(--font);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+      overflow: hidden;
+      background: #07070f;
+    }
+
+    /* Animated gradient backdrop */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: -30%;
+      z-index: 0;
+      background:
+        radial-gradient(40% 50% at 25% 30%, rgba(73, 69, 255, 0.45), transparent 70%),
+        radial-gradient(40% 50% at 75% 65%, rgba(192, 132, 252, 0.35), transparent 70%),
+        radial-gradient(45% 55% at 60% 20%, rgba(123, 121, 255, 0.30), transparent 70%);
+      filter: blur(20px);
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+    @keyframes drift {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(3%, -2%) scale(1.08); }
+      100% { transform: translate(-3%, 2%) scale(1.03); }
+    }
+
+    /* Film grain overlay (matches the docs site texture) */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px;
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      max-width: 580px;
+      width: 100%;
+      text-align: center;
+      padding: 48px 36px;
+      border-radius: 20px;
+      background: rgba(14, 14, 26, 0.55);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+    .logo svg { height: 30px; width: auto; }
+    .logo__badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 3px 7px;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.12;
+      margin-bottom: 18px;
+    }
+    h1 .accent {
+      background: linear-gradient(90deg, var(--accent-light), var(--accent-pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.lead {
+      font-size: clamp(15px, 2.5vw, 18px);
+      line-height: 1.6;
+      color: var(--fg-muted);
+      margin-bottom: 36px;
+    }
+    p.lead code {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.92em;
+      color: var(--fg);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 1px 6px;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 15px 28px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-pink));
+      background-size: 200% 100%;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-position 0.4s ease;
+      box-shadow: 0 10px 34px rgba(73, 69, 255, 0.4);
+    }
+    .cta:hover {
+      transform: translateY(-2px);
+      background-position: 100% 0;
+      box-shadow: 0 14px 42px rgba(123, 121, 255, 0.5);
+    }
+    .cta svg { width: 18px; height: 18px; }
+
+    .meta {
+      margin-top: 28px;
+      font-size: 13px;
+      color: var(--fg-muted);
+    }
+    .meta a { color: var(--accent-light); text-decoration: none; }
+    .meta a:hover { text-decoration: underline; }
+    #count { font-variant-numeric: tabular-nums; color: var(--fg); font-weight: 600; }
+
+    /* Respect reduced-motion: kill the drifting gradient animation */
+    @media (prefers-reduced-motion: reduce) {
+      body::before { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="logo">
+      <svg viewBox="0 0 120 32" aria-label="Strapi" role="img" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="4" width="24" height="24" rx="5" fill="#4945FF"/>
+        <path d="M6 10h12v4h-8v8h-4z" fill="#fff" opacity="0.95"/>
+        <text x="32" y="22" font-family="Inter, sans-serif" font-size="18" font-weight="800" fill="#ffffff">strapi</text>
+      </svg>
+      <span class="logo__badge">Docs</span>
+    </div>
+
+    <h1>The documentation has a <span class="accent">new design?</span></h1>
+
+    <p class="lead">
+      <code>docs-next.strapi.io</code> is not used for now, but might be for future
+      experiments. The Strapi documentation lives at <code>docs.strapi.io</code>.
+    </p>
+
+    <a class="cta" href="https://docs.strapi.io">
+      Go to the documentation
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14M13 6l6 6-6 6"/>
+      </svg>
+    </a>
+
+    <p class="meta">
+      Redirecting automatically in <span id="count">60</span>s…
+      <a href="#" id="stay">Stay on this page</a>
+    </p>
+  </main>
+
+  <script>
+    (function () {
+      var seconds = 60;
+      var countEl = document.getElementById('count');
+      var stayEl = document.getElementById('stay');
+      var timer = setInterval(function () {
+        seconds -= 1;
+        if (countEl) countEl.textContent = seconds;
+        if (seconds <= 0) {
+          clearInterval(timer);
+          window.location.href = 'https://docs.strapi.io';
+        }
+      }, 1000);
+      stayEl.addEventListener('click', function (e) {
+        e.preventDefault();
+        clearInterval(timer);
+        var meta = document.querySelector('meta[http-equiv="refresh"]');
+        if (meta) meta.parentNode.removeChild(meta);
+        document.querySelector('.meta').textContent = 'Auto-redirect cancelled. Use the button above when you are ready.';
+      });
+    })();
+  </script>
+</body>
+</html>
