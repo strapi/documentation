@@ -48,8 +48,8 @@ The typical workflow, which is recommended by the Strapi team, is:
 The Strapi Cloud documentation is organised in topics in a order that should correspond to your journey with the product. The following cards, on which you can click, will redirect you to the main topics and steps.
 
 <CustomDocCardsWrapper>
-  <CustomDocCard emoji="☁️" title="Project creation" description="Step-by-step guide to guide you through the creation and deployment of a Strapi Cloud project." link="/cloud/getting-started/deployment" />
-  <CustomDocCard emoji="💸" title="Information on billing & usage" description="All details on Strapi Cloud plans & billing, including overages and project suspension." link="/cloud/getting-started/usage-billing" />
+  <CustomDocCard emoji="☁️" title="Project creation" description="Step-by-step guide to creating and deploying a Strapi Cloud project." link="/cloud/getting-started/deployment" />
+  <CustomDocCard emoji="💸" title="Information on billing & usage" description="Strapi Cloud plans, billing, overages, and project suspension." link="/cloud/getting-started/usage-billing" />
   <CustomDocCard emoji="🗃️" title="Projects overview" description="Information on how to access Strapi Cloud projects to view their details & usage, and manage them." link="/cloud/projects/overview" />
   <CustomDocCard emoji="⚙️" title="Projects settings" description="Details on all the available settings for Strapi Cloud projects and how to configure them." link="/cloud/projects/settings"/>
   <CustomDocCard emoji="🤝" title="Collaboration" description="Documentation for the Collaboration feature to invite other users to access and manage a project." link="/cloud/projects/collaboration"/>
