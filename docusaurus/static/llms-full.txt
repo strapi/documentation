@@ -1592,8 +1592,8 @@ The typical workflow, which is recommended by the Strapi team, is:
 
 The Strapi Cloud documentation is organised in topics in a order that should correspond to your journey with the product. The following cards, on which you can click, will redirect you to the main topics and steps.
 
-- [Project creation](/cloud/getting-started/deployment): Step-by-step guide to guide you through the creation and deployment of a Strapi Cloud project.
-  - [Information on billing & usage](/cloud/getting-started/usage-billing): All details on Strapi Cloud plans & billing, including overages and project suspension.
+- [Project creation](/cloud/getting-started/deployment): Step-by-step guide to creating and deploying a Strapi Cloud project.
+  - [Information on billing & usage](/cloud/getting-started/usage-billing): Strapi Cloud plans, billing, overages, and project suspension.
   - [Projects overview](/cloud/projects/overview): Information on how to access Strapi Cloud projects to view their details & usage, and manage them.
   - [Projects settings](/cloud/projects/settings): Details on all the available settings for Strapi Cloud projects and how to configure them.
   - [Collaboration](/cloud/projects/collaboration): Documentation for the Collaboration feature to invite other users to access and manage a project.
