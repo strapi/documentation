@@ -1,4 +1,4 @@
-# Email Provider
+# Cloud email provider
 Source: https://docs.strapi.io/cloud/advanced/email
 
 ## Configure the Provider
@@ -2503,326 +2503,36 @@ console.log('Deleted file name:', deletedFile.name);
 # Document Service API
 Source: https://docs.strapi.io/cms/api/document-service
 
-## Example
-Description: <!-- #### Update many document locales
-(Source: https://docs.strapi.io/cms/api/document-service#example)
+## `findOne()`
+Description: GET strapi.documents().findOne() — findOne()
+(Source: https://docs.strapi.io/cms/api/document-service#findone)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 await strapi.documents('api::restaurant.restaurant').findOne({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn', 
-});
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-  name: "Biscotte Restaurant",
-  publishedAt: null, // draft version (default)
-  locale: "en", // default locale
-  // …
-}
-```
-
----
-Language: JavaScript
-File path: N/A
-
-```js
-await strapi.documents('api::restaurant.restaurant').create({
-  data: {
-    name: 'Restaurant B'
-  }
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn'
 })
 ```
 
----
-Language: JSON
-File path: N/A
 
-```json
-{
-  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-  name: "Restaurant B",
-  publishedAt: null,
-  locale: "en",
-}
-```
-
----
-Language: JavaScript
-File path: N/A
-
-```js
-await strapi.documents('api::restaurant.restaurant').update({ 
-    documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
-    data: { name: "New restaurant name" }
-})
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
-  name: "New restaurant name",
-  locale: "en",
-  publishedAt: null, // draft
-  // …
-}
-```
+## `findFirst()`
+Description: GET strapi.documents().findFirst() — findFirst()
+(Source: https://docs.strapi.io/cms/api/document-service#findfirst)
 
 Language: JavaScript
 File path: N/A
 
-```js
-// Updates the default locale by default
-await documents('api:restaurant.restaurant').update(documentId, {locale: ['es', 'en'], data: {name: "updatedName" }}
-```
-
-Language: JavaScript
-File path: N/A
-
-```js
-await strapi.documents('api::restaurant.restaurant').delete({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn', // documentId,
-})
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-  entries: [
-    {
-      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
-      "name": "Biscotte Restaurant",
-      "publishedAt": "2024-03-14T18:30:48.870Z",
-      "locale": "en"
-      // …
-    }
-  ]
-}
-```
-
----
-Language: JavaScript
-File path: N/A
-
-```js
-await strapi.documents('api::restaurant.restaurant').delete(
-  { filters: { name: { $startsWith: 'Pizzeria' }}}
-)
-```
-
----
-Language: JavaScript
-File path: N/A
-
-```js
-await strapi.documents('api::restaurant.restaurant').deleteMany({
-  filters: {
-    city: {
-      name: {
-        $eq: 'New York'
-      }
-    }
-  }
-})
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  documentId: "multiple_documents",
-  entries: 3
-}
-```
-
----
-Language: JavaScript
-File path: N/A
-
-```js
-await strapi.documents('api::restaurant.restaurant').publish({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
-});
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-  entries: [
-    {
-      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
-      "name": "Biscotte Restaurant",
-      "publishedAt": "2024-03-14T18:30:48.870Z",
-      "locale": "en"
-      // …
-    }
-  ]
-}
-```
-
-Language: JavaScript
-File path: N/A
-
-```js
-// Only publish locales with title is "Ready to publish"
-await strapi.documents('api::restaurant.restaurant').publish(
-  { filters: { title: 'Ready to publish' }}
-);
-```
-
-Language: JavaScript
-File path: N/A
-
-```js
-await strapi.documents('api::restaurant.restaurant').unpublish({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn' 
-});
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-  entries: [
-    {
-      documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-      name: "Biscotte Restaurant",
-      publishedAt: null,
-      locale: "en"
-      // …
-    }
-  ]
-}
-```
-
----
-Language: JavaScript
-File path: N/A
-
-```js
-await strapi.documents('api::restaurant.restaurant').discardDraft({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
-});
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-  entries: [
-    {
-      documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-      name: "Biscotte Restaurant",
-      publishedAt: null,
-      locale: "en"
-      // …
-    }
-  ]
-}
-```
-
-
-## Generic example
-Description: Code example from "Generic example"
-(Source: https://docs.strapi.io/cms/api/document-service#generic-example)
-
-Language: JavaScript
-File path: N/A
-
-```js
+```javascript
 await strapi.documents('api::restaurant.restaurant').findFirst()
 ```
 
 ---
-Language: JSON
-File path: N/A
-
-```json
-{
-  documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-  name: "Restaurant Biscotte",
-  publishedAt: null,
-  locale: "en"
-  // …
-}
-```
-
----
 Language: JavaScript
 File path: N/A
 
-```js
-await strapi.documents('api::restaurant.restaurant').findMany()
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-[
-  {
-    documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-    name: "Biscotte Restaurant",
-    publishedAt: null, // draft version (default)
-    locale: "en" // default locale
-    // …
-  },
-  {
-    documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
-    name: "Pizzeria Arrivederci",
-    publishedAt: null,
-    locale: "en"
-    // …
-  },
-]
-```
-
----
-Language: JavaScript
-File path: N/A
-
-```js
-await strapi.documents('api::restaurant.restaurant').count()
-```
-
-
-## Find the first document matching parameters
-Description: Code example from "Find the first document matching parameters"
-(Source: https://docs.strapi.io/cms/api/document-service#find-the-first-document-matching-parameters)
-
-Language: JavaScript
-File path: N/A
-
-```js
+```javascript
 await strapi.documents('api::restaurant.restaurant').findFirst(
   {
     filters: {
@@ -2834,32 +2544,26 @@ await strapi.documents('api::restaurant.restaurant').findFirst(
 )
 ```
 
----
-Language: JSON
-File path: N/A
 
-```json
-{
-  documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
-  name: "Pizzeria Arrivederci",
-  publishedAt: null,
-  locale: "en"
-  // …
-}
-```
-
-
-## Find documents matching parameters
-Description: <!-- #### Find ‘fr’ version of all documents with fallback on default (en)
-(Source: https://docs.strapi.io/cms/api/document-service#find-documents-matching-parameters)
+## `findMany()`
+Description: GET strapi.documents().findMany() — findMany()
+(Source: https://docs.strapi.io/cms/api/document-service#findmany)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
+await strapi.documents('api::restaurant.restaurant').findMany()
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```javascript
 await strapi.documents('api::restaurant.restaurant').findMany(
   {
-    filters: {  
+    filters: {
       name: {
         $startsWith: 'Pizzeria'
       }
@@ -2868,64 +2572,126 @@ await strapi.documents('api::restaurant.restaurant').findMany(
 )
 ```
 
+
+## `create()`
+Description: GET strapi.documents().create() — create()
+(Source: https://docs.strapi.io/cms/api/document-service#create)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').create({
+  data: {
+    name: 'Restaurant B'
+  }
+})
+```
+
+
+## `update()`
+Description: GET strapi.documents().update() — update()
+(Source: https://docs.strapi.io/cms/api/document-service#update)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').update({
+    documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
+    data: { name: "New restaurant name" }
+})
+```
+
+
+## `delete()`
+Description: GET strapi.documents().delete() — delete()
+(Source: https://docs.strapi.io/cms/api/document-service#delete)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').delete({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
+})
+```
+
+
+## `deleteMany()`
+Description: GET strapi.documents().deleteMany() — deleteMany()
+(Source: https://docs.strapi.io/cms/api/document-service#deletemany)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').deleteMany({
+  filters: {
+    city: {
+      name: {
+        $eq: 'New York'
+      }
+    }
+  }
+});
+```
+
+
+## `publish()`
+Description: GET strapi.documents().publish() — publish()
+(Source: https://docs.strapi.io/cms/api/document-service#publish)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').publish({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
+});
+```
+
+
+## `unpublish()`
+Description: GET strapi.documents().unpublish() — unpublish()
+(Source: https://docs.strapi.io/cms/api/document-service#unpublish)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').unpublish({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn'
+});
+```
+
+
+## `discardDraft()`
+Description: GET strapi.documents().discardDraft() — discardDraft()
+(Source: https://docs.strapi.io/cms/api/document-service#discarddraft)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+strapi.documents('api::restaurant.restaurant').discardDraft({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
+});
+```
+
+
+## `count()`
+Description: GET strapi.documents().count() — count()
+(Source: https://docs.strapi.io/cms/api/document-service#count)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').count()
+```
+
 ---
-Language: JSON
-File path: N/A
-
-```json
-[
-  {
-    documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
-    name: "Pizzeria Arrivederci",
-    locale: "en", // default locale
-    publishedAt: null, // draft version (default)
-    // …
-  }, 
-  // …
-]
-```
-
-Language: JavaScript
-File path: N/A
-
-```js
-await documents('api:restaurant.restaurant').findMany({ locale: 'fr', fallbackLocales: ['en'] } );
-```
-
-Language: JavaScript
-File path: N/A
-
-```js
-await documents('api:restaurant.restaurant').findMany({ locale: 'fr', populateLocales: ['en', 'it'] } );
-// Option of response forma for this case 
-{
-  data: {
-		title: { "Wonderful" }
-  },
-  localizations: [
-    { enLocaleData },
-    { itLocaleData }
-  ]
-}
-
-
-await documents('api:restaurant.restaurant').findMany({ locale: ['en', 'it'] } );
-// Option of response format for this case 
-{
-  data: {
-		title: {
-			"en": "Wonderful",
-			"it": "Bellissimo"
-		}
-  },
-}
-```
-
-
-## Count published documents
-Description: Code example from "Count published documents"
-(Source: https://docs.strapi.io/cms/api/document-service#count-published-documents)
-
 Language: Bash
 File path: N/A
 
@@ -2933,21 +2699,17 @@ File path: N/A
 strapi.documents('api::restaurant.restaurant').count({ status: 'published' })
 ```
 
-
-## Count documents with filters
-Description: If no locale and no status parameter is passed, draft documents (which is the total of available documents for the locale since even published documents are counted as having a draft version) are counted only for the default locale:
-(Source: https://docs.strapi.io/cms/api/document-service#count-documents-with-filters)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 /**
- * Count number of draft documents (default if status is omitted) 
- * in English (default locale) 
+ * Count number of draft documents (default if status is omitted)
+ * in English (default locale)
  * whose name starts with 'Pizzeria'
  */
-strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $startsWith: "Pizzeria" }}})
+strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $startsWith: "Pizzeria" }}})
 ```
 
 
@@ -2955,21 +2717,20 @@ strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $star
 # Using fields with the Document Service API
 Source: https://docs.strapi.io/cms/api/document-service/fields
 
-## Select fields with findOne() queries
-Description: Code example from "Select fields with findOne() queries"
-(Source: https://docs.strapi.io/cms/api/document-service/fields#findone)
+## Select fields with `findOne()` queries
+Description: GET strapi.documents( — Select fields with findOne()
+(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-findone-queries)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const document = await strapi.documents("api::restaurant.restaurant").findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   fields: ["name", "description"],
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -2982,20 +2743,19 @@ File path: N/A
 ```
 
 
-## Select fields with findFirst() queries
-Description: Code example from "Select fields with findFirst() queries"
-(Source: https://docs.strapi.io/cms/api/document-service/fields#findfirst)
+## Select fields with `findFirst()` queries
+Description: GET strapi.documents( — Select fields with findFirst()
+(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-findfirst-queries)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const document = await strapi.documents("api::restaurant.restaurant").findFirst({
   fields: ["name", "description"],
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3008,20 +2768,19 @@ File path: N/A
 ```
 
 
-## Select fields with findMany() queries
-Description: Code example from "Select fields with findMany() queries"
-(Source: https://docs.strapi.io/cms/api/document-service/fields#findmany)
+## Select fields with `findMany()` queries
+Description: GET strapi.documents( — Select fields with findMany()
+(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-findmany-queries)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const documents = await strapi.documents("api::restaurant.restaurant").findMany({
   fields: ["name", "description"],
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3037,14 +2796,14 @@ File path: N/A
 ```
 
 
-## Select fields with create() queries
-Description: Code example from "Select fields with create() queries"
-(Source: https://docs.strapi.io/cms/api/document-service/fields#create)
+## Select fields with `create()` queries
+Description: GET strapi.documents( — Select fields with create()
+(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-create-queries)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const document = await strapi.documents("api::restaurant.restaurant").create({
   data: {
     name: "Restaurant B",
@@ -3054,7 +2813,6 @@ const document = await strapi.documents("api::restaurant.restaurant").create({
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3068,14 +2826,14 @@ File path: N/A
 ```
 
 
-## Select fields with update() queries
-Description: Code example from "Select fields with update() queries"
-(Source: https://docs.strapi.io/cms/api/document-service/fields#update)
+## Select fields with `update()` queries
+Description: GET strapi.documents( — Select fields with update()
+(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-update-queries)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const document = await strapi.documents("api::restaurant.restaurant").update({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   data: {
@@ -3085,38 +2843,36 @@ const document = await strapi.documents("api::restaurant.restaurant").update({
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
 ```json
-{ 
+{
   documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   name: 'Restaurant C'
 }
 ```
 
 
-## Select fields with delete() queries
-Description: Code example from "Select fields with delete() queries"
-(Source: https://docs.strapi.io/cms/api/document-service/fields#delete)
+## Select fields with `delete()` queries
+Description: GET strapi.documents( — Select fields with delete()
+(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-delete-queries)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const document = await strapi.documents("api::restaurant.restaurant").delete({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
 });
 ```
 
----
-Language: JavaScript
+Language: JSON
 File path: N/A
 
-```js
-  documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
+```json
+documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   // All of the deleted document's versions are returned
   entries: [
     {
@@ -3130,21 +2886,20 @@ File path: N/A
 ```
 
 
-## Select fields with publish() queries
-Description: Code example from "Select fields with publish() queries"
-(Source: https://docs.strapi.io/cms/api/document-service/fields#publish)
+## Select fields with `publish()` queries
+Description: GET strapi.documents( — Select fields with publish()
+(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-publish-queries)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const document = await strapi.documents("api::restaurant.restaurant").publish({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3162,21 +2917,20 @@ File path: N/A
 ```
 
 
-## Select fields with unpublish() queries
-Description: Code example from "Select fields with unpublish() queries"
-(Source: https://docs.strapi.io/cms/api/document-service/fields#unpublish)
+## Select fields with `unpublish()` queries
+Description: GET strapi.documents( — Select fields with unpublish()
+(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-unpublish-queries)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const document = await strapi.documents("api::restaurant.restaurant").unpublish({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   fields: ["name"],
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3194,21 +2948,20 @@ File path: N/A
 ```
 
 
-## Select fields with discardDraft() queries
-Description: Code example from "Select fields with discardDraft() queries"
-(Source: https://docs.strapi.io/cms/api/document-service/fields#discarddraft)
+## Select fields with `discardDraft()` queries
+Description: GET strapi.documents( — Select fields with discardDraft()
+(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-discarddraft-queries)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const document = await strapi.documents("api::restaurant.restaurant").discardDraft({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3229,14 +2982,14 @@ File path: N/A
 # Using filters with the Document Service API
 Source: https://docs.strapi.io/cms/api/document-service/filters
 
-## $not
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#not)
+## Attribute operators
+Description: GET strapi.documents().findMany() — $not
+(Source: https://docs.strapi.io/cms/api/document-service/filters#attribute-operators)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3252,25 +3005,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 Language: JavaScript
 File path: N/A
 
-```js
-const entries = await strapi.documents('api::article.article').findMany({
-  filters: {
-    $not: {
-      title: 'Hello World',
-    },
-  },
-});
-```
-
-
-## $eq
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#eq)
-
-Language: JavaScript
-File path: N/A
-
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3280,10 +3015,12 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
+// $eq can be omitted:
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: 'Hello World',
@@ -3291,15 +3028,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $eqi
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#eqi)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3309,15 +3042,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $ne
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#ne)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3327,15 +3056,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $nei
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#nei)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3345,15 +3070,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $in
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#in)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3363,10 +3084,12 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
+// $in can be omitted when passing an array of values:
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: ['Hello', 'Hola', 'Bonjour'],
@@ -3374,15 +3097,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $notIn
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#notin)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3392,15 +3111,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $lt
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#lt)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -3410,15 +3125,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $lte
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#lte)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -3428,15 +3139,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $gt
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#gt)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -3446,15 +3153,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $gte
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#gte)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -3464,15 +3167,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $between
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#between)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -3482,15 +3181,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $contains
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#contains)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3500,15 +3195,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $notContains
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#notcontains)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3518,15 +3209,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $containsi
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#containsi)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3536,15 +3223,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $notContainsi
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#notcontainsi)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3554,15 +3237,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $startsWith
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#startswith)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3572,15 +3251,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $startsWithi
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#startswithi)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3590,15 +3265,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $endsWith
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#endswith)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3608,34 +3279,25 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $endsWithi
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#endswithi)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $endsWith: 'ABCD', // will return the same as filtering with 'abcd'
     },
-    },
   },
 });
 ```
 
-
-## $null
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#null)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3645,15 +3307,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $notNull
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#notnull)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3664,14 +3322,14 @@ const entries = await strapi.documents('api::article.article').findMany({
 ```
 
 
-## $and
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#and)
+## Logical operators
+Description: GET strapi.documents().findMany() — $and
+(Source: https://docs.strapi.io/cms/api/document-service/filters#logical-operators)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $and: [
@@ -3686,10 +3344,12 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
+// $and will be used implicitly when passing an object with nested conditions:
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: 'Hello World',
@@ -3698,15 +3358,11 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
-
-## $or
-Description: Example
-(Source: https://docs.strapi.io/cms/api/document-service/filters#or)
-
+---
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $or: [
@@ -3721,26 +3377,52 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
+---
+Language: JavaScript
+File path: N/A
+
+```javascript
+const entries = await strapi.documents('api::article.article').findMany({
+  filters: {
+    $not: {
+      title: 'Hello World',
+    },
+  },
+});
+```
+
 
 
 # Using the locale parameter with the Document Service API
 Source: https://docs.strapi.io/cms/api/document-service/locale
 
-## Get a locale version with findOne()
-Description: Code example from "Get a locale version with findOne()"
-(Source: https://docs.strapi.io/cms/api/document-service/locale#find-one)
+## count() documents for a locale
+Description: If no status parameter is passed, draft documents are counted (which is the total of available documents for the locale since even published documents are counted as having a draft version):
+(Source: https://docs.strapi.io/cms/api/document-service/locale#count)
 
 Language: JavaScript
 File path: N/A
 
 ```js
+// Count number of published documents in French
+strapi.documents('api::restaurant.restaurant').count({ locale: 'fr' });
+```
+
+
+## Get a locale version with `findOne()`
+Description: GET strapi.documents().findOne() — Get a locale version with findOne()
+(Source: https://docs.strapi.io/cms/api/document-service/locale#get-a-locale-version-with-findone)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
 await strapi.documents('api::restaurant.restaurant').findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'fr',
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3755,20 +3437,19 @@ File path: N/A
 ```
 
 
-## Get a locale version with findFirst()
-Description: Code example from "Get a locale version with findFirst()"
-(Source: https://docs.strapi.io/cms/api/document-service/locale#find-first)
+## Get a locale version with `findFirst()`
+Description: GET strapi.documents().findFirst() — Get a locale version with findFirst()
+(Source: https://docs.strapi.io/cms/api/document-service/locale#get-a-locale-version-with-findfirst)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const document = await strapi.documents('api::article.article').findFirst({
   locale: 'fr',
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3781,19 +3462,18 @@ File path: N/A
 ```
 
 
-## Get locale versions with findMany()
-Description: Code example from "Get locale versions with findMany()"
-(Source: https://docs.strapi.io/cms/api/document-service/locale#find-many)
+## Get locale versions with `findMany()`
+Description: GET strapi.documents().findMany() — Get locale versions with findMany()
+(Source: https://docs.strapi.io/cms/api/document-service/locale#get-locale-versions-with-findmany)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 // Defaults to status: draft
 await strapi.documents('api::restaurant.restaurant').findMany({ locale: 'fr' });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3807,25 +3487,24 @@ File path: N/A
     // …
   },
   // …
-];
+]
 ```
 
 
-## create() a document for a locale
-Description: Code example from "create() a document for a locale"
-(Source: https://docs.strapi.io/cms/api/document-service/locale#create)
+## `create()` a document for a locale
+Description: GET strapi.documents().create() — Create a document for a locale
+(Source: https://docs.strapi.io/cms/api/document-service/locale#create-a-document-for-a-locale)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 await strapi.documents('api::restaurant.restaurant').create({
   locale: 'es' // if not passed, the draft is created for the default locale
   data: { name: 'Restaurante B' }
 })
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3840,14 +3519,14 @@ File path: N/A
 ```
 
 
-## update() a locale version
-Description: Code example from "update() a locale version"
-(Source: https://docs.strapi.io/cms/api/document-service/locale#update)
+## `update()` a locale version
+Description: GET strapi.documents().update() — Update a locale version
+(Source: https://docs.strapi.io/cms/api/document-service/locale#update-a-locale-version)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 await strapi.documents('api::restaurant.restaurant').update({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'es',
@@ -3855,7 +3534,6 @@ await strapi.documents('api::restaurant.restaurant').update({
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3871,13 +3549,13 @@ File path: N/A
 
 
 ## Delete a locale version
-Description: Code example from "Delete a locale version"
+Description: GET strapi.documents().delete() — Delete a locale version
 (Source: https://docs.strapi.io/cms/api/document-service/locale#delete-a-locale-version)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 await strapi.documents('api::restaurant.restaurant').delete({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
   locale: 'es',
@@ -3886,20 +3564,19 @@ await strapi.documents('api::restaurant.restaurant').delete({
 
 
 ## Delete all locale versions
-Description: Code example from "Delete all locale versions"
+Description: GET strapi.documents().delete() — Delete all locale versions
 (Source: https://docs.strapi.io/cms/api/document-service/locale#delete-all-locale-versions)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 await strapi.documents('api::restaurant.restaurant').delete({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
   locale: '*',
 }); // for all existing locales
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3917,20 +3594,19 @@ File path: N/A
 
 
 ## Publish a locale version
-Description: Code example from "Publish a locale version"
+Description: GET strapi.documents().publish() — Publish a locale version
 (Source: https://docs.strapi.io/cms/api/document-service/locale#publish-a-locale-version)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 await strapi.documents('api::restaurant.restaurant').publish({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'fr',
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3944,25 +3620,24 @@ File path: N/A
       locale: 'fr',
       // …
     },
-  ];
+  ]
 }
 ```
 
 
 ## Publish all locale versions
-Description: Code example from "Publish all locale versions"
+Description: GET strapi.documents().publish() — Publish all locale versions
 (Source: https://docs.strapi.io/cms/api/document-service/locale#publish-all-locale-versions)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 await strapi
   .documents('api::restaurant.restaurant')
   .publish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3993,61 +3668,59 @@ File path: N/A
 
 
 ## Unpublish a locale version
-Description: Code example from "Unpublish a locale version"
+Description: GET strapi.documents().unpublish() — Unpublish a locale version
 (Source: https://docs.strapi.io/cms/api/document-service/locale#unpublish-a-locale-version)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 await strapi
   .documents('api::restaurant.restaurant')
   .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });
 ```
 
----
 Language: JSON
 File path: N/A
 
 ```json
 {
-  versions: 1;
+  versions: 1
 }
 ```
 
 
 ## Unpublish all locale versions
-Description: Code example from "Unpublish all locale versions"
+Description: GET strapi.documents().unpublish() — Unpublish all locale versions
 (Source: https://docs.strapi.io/cms/api/document-service/locale#unpublish-all-locale-versions)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 await strapi
   .documents('api::restaurant.restaurant')
   .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
 ```
 
 ---
+Language: JavaScript
+File path: N/A
+
+```javascript
+const document = await strapi.documents('api::article.article').unpublish({
+  documentId: 'cjld2cjxh0000qzrmn831i7rn',
+  fields: ['title'],
+});
+```
+
 Language: JSON
 File path: N/A
 
 ```json
 {
-  versions: 3;
+  versions: 3
 }
-```
-
----
-Language: JavaScript
-File path: N/A
-
-```js
-const document = await strapi.documents('api::article.article').unpublish({
-  documentId: 'cjld2cjxh0000qzrmn831i7rn',
-  fields: ['title'],
-});
 ```
 
 ---
@@ -4068,19 +3741,18 @@ File path: N/A
 
 
 ## Discard draft for a locale version
-Description: Code example from "Discard draft for a locale version"
+Description: GET strapi.documents().discardDraft() — Discard draft for a locale version
 (Source: https://docs.strapi.io/cms/api/document-service/locale#discard-draft-for-a-locale-version)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 await strapi
   .documents('api::restaurant.restaurant')
   .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4094,25 +3766,24 @@ File path: N/A
       locale: 'fr',
       // …
     },
-  ];
+  ]
 }
 ```
 
 
 ## Discard drafts for all locale versions
-Description: Code example from "Discard drafts for all locale versions"
+Description: GET strapi.documents().discardDraft() — Discard drafts for all locale versions
 (Source: https://docs.strapi.io/cms/api/document-service/locale#discard-drafts-for-all-locale-versions)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 await strapi
   .documents('api::restaurant.restaurant')
   .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4140,21 +3811,8 @@ File path: N/A
       locale: 'es',
       // …
     },
-  ];
+  ]
 }
-```
-
-
-## count() documents for a locale
-Description: If no status parameter is passed, draft documents are counted (which is the total of available documents for the locale since even published documents are counted as having a draft version):
-(Source: https://docs.strapi.io/cms/api/document-service/locale#count)
-
-Language: JavaScript
-File path: N/A
-
-```js
-// Count number of published documents in French
-strapi.documents('api::restaurant.restaurant').count({ locale: 'fr' });
 ```
 
 
@@ -4493,19 +4151,18 @@ strapi.documents.use((context, next) => {
 Source: https://docs.strapi.io/cms/api/document-service/populate
 
 ## Populate 1 level for all relations
-Description: Code example from "Populate 1 level for all relations"
+Description: GET strapi.documents( — Populate 1 level for all relations
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populate-1-level-for-all-relations)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const documents = await strapi.documents("api::article.article").findMany({
   populate: "*",
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4545,19 +4202,18 @@ File path: N/A
 
 
 ## Populate 1 level for specific relations
-Description: Code example from "Populate 1 level for specific relations"
+Description: GET strapi.documents( — Populate 1 level for specific relations
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populate-1-level-for-specific-relations)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const documents = await strapi.documents("api::article.article").findMany({
   populate: ["headerImage"],
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4581,13 +4237,13 @@ File path: N/A
 
 
 ## Populate several levels deep for specific relations
-Description: Code example from "Populate several levels deep for specific relations"
+Description: GET strapi.documents( — Populate several levels deep for specific relations
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populate-several-levels-deep-for-specific-relations)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     categories: {
@@ -4597,7 +4253,6 @@ const documents = await strapi.documents("api::article.article").findMany({
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4633,13 +4288,13 @@ File path: N/A
 
 
 ## Sort populated relations
-Description: Code example from "Sort populated relations"
+Description: GET strapi.documents( — Sort populated relations
 (Source: https://docs.strapi.io/cms/api/document-service/populate#sort-populated-relations)
 
-Language: TypeScript
-File path: /core/database/src/query/helpers/populate/apply.ts
+Language: JavaScript
+File path: N/A
 
-```ts
+```javascript
 const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     categories: {
@@ -4649,9 +4304,8 @@ const documents = await strapi.documents("api::article.article").findMany({
 });
 ```
 
----
 Language: JSON
-File path: /core/database/src/query/helpers/populate/apply.ts
+File path: N/A
 
 ```json
 [
@@ -4678,21 +4332,39 @@ File path: /core/database/src/query/helpers/populate/apply.ts
 
 
 ## Components & Dynamic Zones
-Description: Code example from "Components & Dynamic Zones"
+Description: GET strapi.documents( — Populate components
 (Source: https://docs.strapi.io/cms/api/document-service/populate#components-dynamic-zones)
 
-Language: TypeScript
-File path: /core/database/src/query/helpers/populate/apply.ts
+Language: JavaScript
+File path: N/A
 
-```ts
+```javascript
 const documents = await strapi.documents("api::article.article").findMany({
   populate: ["testComp"],
 });
 ```
 
 ---
+Language: JavaScript
+File path: N/A
+
+```javascript
+const documents = await strapi.documents("api::article.article").findMany({
+  populate: {
+    testDZ: {
+      on: {
+        "test.test-compo": {
+          fields: ["testString"],
+          populate: ["testNestedCompo"],
+        },
+      },
+    },
+  },
+});
+```
+
 Language: JSON
-File path: /core/database/src/query/helpers/populate/apply.ts
+File path: N/A
 
 ```json
 [
@@ -4713,27 +4385,8 @@ File path: /core/database/src/query/helpers/populate/apply.ts
 ```
 
 ---
-Language: TypeScript
-File path: /core/database/src/query/helpers/populate/apply.ts
-
-```ts
-const documents = await strapi.documents("api::article.article").findMany({
-  populate: {
-    testDZ: {
-      on: {
-        "test.test-compo": {
-          fields: ["testString"],
-          populate: ["testNestedCompo"],
-        },
-      },
-    },
-  },
-});
-```
-
----
 Language: JSON
-File path: /core/database/src/query/helpers/populate/apply.ts
+File path: N/A
 
 ```json
 [
@@ -4760,14 +4413,14 @@ File path: /core/database/src/query/helpers/populate/apply.ts
 ```
 
 
-## Populating with create()
-Description: Code example from "Populating with create()"
+## Populating with `create()`
+Description: GET strapi.documents( — Populate with create
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populating-with-create)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 strapi.documents("api::article.article").create({
   data: {
     title: "Test Article",
@@ -4779,7 +4432,6 @@ strapi.documents("api::article.article").create({
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4798,14 +4450,14 @@ File path: N/A
 ```
 
 
-## Populating with update()
-Description: Code example from "Populating with update()"
+## Populating with `update()`
+Description: GET strapi.documents( — Populate with update
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populating-with-update)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 strapi.documents("api::article.article").update({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   data: {
@@ -4815,7 +4467,6 @@ strapi.documents("api::article.article").update({
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4834,21 +4485,20 @@ File path: N/A
 ```
 
 
-## Populating with publish()
-Description: Code example from "Populating with publish()"
+## Populating with `publish()`
+Description: GET strapi.documents( — Populate with publish
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populating-with-publish)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 strapi.documents("api::article.article").publish({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   populate: ["headerImage"],
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4871,21 +4521,20 @@ File path: N/A
 ```
 
 
-## Populating with delete()
-Description: Code example from "Populating with delete()"
+## Populating with `delete()`
+Description: GET strapi.documents( — Populate with delete
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populating-with-delete)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 strapi.documents("api::article.article").delete({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   populate: ["headerImage"],
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4915,19 +4564,18 @@ File path: N/A
 Source: https://docs.strapi.io/cms/api/document-service/sort-pagination
 
 ## Sort on a single field
-Description: Code example from "Sort on a single field"
+Description: GET strapi.documents().findMany() — Sort on a single field
 (Source: https://docs.strapi.io/cms/api/document-service/sort-pagination#sort-on-a-single-field)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const documents = await strapi.documents("api::article.article").findMany({
   sort: "title:asc",
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4938,34 +4586,30 @@ File path: N/A
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1"
-    // ...
   },
   {
     "documentId": "cjld2cjxh0001qzrm5q1j5q7m",
     "title": "Test Article 2",
     "slug": "test-article-2",
     "body": "Test 2"
-    // ...
   }
-  // ...
 ]
 ```
 
 
 ## Sort on multiple fields
-Description: Code example from "Sort on multiple fields"
+Description: GET strapi.documents().findMany() — Sort on multiple fields
 (Source: https://docs.strapi.io/cms/api/document-service/sort-pagination#sort-on-multiple-fields)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const documents = await strapi.documents("api::article.article").findMany({
   sort: [{ title: "asc" }, { slug: "desc" }],
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4976,35 +4620,31 @@ File path: N/A
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1"
-    // ...
   },
   {
     "documentId": "cjld2cjxh0001qzrm5q1j5q7m",
     "title": "Test Article 2",
     "slug": "test-article-2",
     "body": "Test 2"
-    // ...
   }
-  // ...
 ]
 ```
 
 
 ## Pagination
-Description: Code example from "Pagination"
+Description: GET strapi.documents().findMany() — Pagination
 (Source: https://docs.strapi.io/cms/api/document-service/sort-pagination#pagination)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 const documents = await strapi.documents("api::article.article").findMany({
   limit: 10,
   start: 0,
 });
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -5015,16 +4655,13 @@ File path: N/A
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1"
-    // ...
   },
   {
     "documentId": "cjld2cjxh0001qzrm5q1j5q7m",
     "title": "Test Article 2",
     "slug": "test-article-2",
     "body": "Test 2"
-    // ...
   }
-  // ... (8 more)
 ]
 ```
 
@@ -5032,94 +4669,6 @@ File path: N/A
 
 # Using Draft & Publish with the Document Service API
 Source: https://docs.strapi.io/cms/api/document-service/status
-
-## Get the published version with findOne()
-Description: Code example from "Get the published version with findOne()"
-(Source: https://docs.strapi.io/cms/api/document-service/status#find-one)
-
-Language: JavaScript
-File path: N/A
-
-```js
-await strapi.documents('api::restaurant.restaurant').findOne({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
-  status: 'published'
-});
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
-  name: "Biscotte Restaurant",
-  publishedAt: "2024-03-14T15:40:45.330Z",
-  locale: "en", // default locale
-  // …
-}
-```
-
-
-## Get the published version with findFirst()
-Description: Code example from "Get the published version with findFirst()"
-(Source: https://docs.strapi.io/cms/api/document-service/status#find-first)
-
-Language: JavaScript
-File path: N/A
-
-```js
-const document = await strapi.documents("api::restaurant.restaurant").findFirst({
-  status: 'published',
-});
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
-  name: "Biscotte Restaurant",
-  publishedAt: "2024-03-14T15:40:45.330Z",
-  locale: "en", // default locale
-  // …
-}
-```
-
-
-## Get the published version with findMany()
-Description: Code example from "Get the published version with findMany()"
-(Source: https://docs.strapi.io/cms/api/document-service/status#find-many)
-
-Language: JavaScript
-File path: N/A
-
-```js
-const documents = await strapi.documents("api::restaurant.restaurant").findMany({
-  status: 'published'
-});
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-[
-  {
-    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
-    name: "Biscotte Restaurant",
-    publishedAt: "2024-03-14T15:40:45.330Z",
-    locale: "en", // default locale
-    // …
-  }
-  // …
-]
-```
-
 
 ## count() only draft or published versions
 Description: To take into account only draft or published versions of documents while counting documents with the Document Service API, pass the corresponding status parameter:
@@ -5147,14 +4696,99 @@ const publishedCount = await strapi.documents("api::restaurant.restaurant").coun
 ```
 
 
+## Get the published version with `findOne()`
+Description: GET strapi.documents().findOne() — findOne() with status:
+(Source: https://docs.strapi.io/cms/api/document-service/status#get-the-published-version-with-findone)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').findOne({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  status: 'published'
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  name: "Biscotte Restaurant",
+  publishedAt: "2024-03-14T15:40:45.330Z",
+  locale: "en", // default locale
+  // …
+}
+```
+
+
+## Get the published version with `findFirst()`
+Description: GET strapi.documents().findFirst() — findFirst() with status:
+(Source: https://docs.strapi.io/cms/api/document-service/status#get-the-published-version-with-findfirst)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+const document = await strapi.documents("api::restaurant.restaurant").findFirst({
+  status: 'published',
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  name: "Biscotte Restaurant",
+  publishedAt: "2024-03-14T15:40:45.330Z",
+  locale: "en", // default locale
+  // …
+}
+```
+
+
+## Get the published version with `findMany()`
+Description: GET strapi.documents().findMany() — findMany() with status:
+(Source: https://docs.strapi.io/cms/api/document-service/status#get-the-published-version-with-findmany)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+  status: 'published'
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+[
+  {
+    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+    name: "Biscotte Restaurant",
+    publishedAt: "2024-03-14T15:40:45.330Z",
+    locale: "en", // default locale
+    // …
+  }
+  // …
+]
+```
+
+
 ## Create a draft and publish it
-Description: Code example from "Create a draft and publish it"
+Description: GET strapi.documents().create() — create() with status:
 (Source: https://docs.strapi.io/cms/api/document-service/status#create)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 await strapi.documents('api::restaurant.restaurant').create({
   data: {
     name: "New Restaurant",
@@ -5163,7 +4797,6 @@ await strapi.documents('api::restaurant.restaurant').create({
 })
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -5179,13 +4812,13 @@ File path: N/A
 
 
 ## Update a draft and publish it
-Description: Code example from "Update a draft and publish it"
+Description: GET strapi.documents().update() — update() with status:
 (Source: https://docs.strapi.io/cms/api/document-service/status#update)
 
 Language: JavaScript
 File path: N/A
 
-```js
+```javascript
 await strapi.documents('api::restaurant.restaurant').update({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   data: {
@@ -5195,7 +4828,6 @@ await strapi.documents('api::restaurant.restaurant').update({
 })
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -6880,8 +6512,43 @@ File path: Example
 
 
 ## Fetch all documents in a specific locale
-Description: Code example from "Fetch all documents in a specific locale"
+Description: Request
 (Source: https://docs.strapi.io/cms/api/graphql#locale-fetch-all)
+
+Language: GRAPHQL
+File path: N/A
+
+```graphql
+query {
+  restaurants(locale: "fr") {
+    documentId
+    name
+    locale
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": {
+    "restaurants": [
+      {
+        "documentId": "a1b2c3d4e5d6f7g8h9i0jkl",
+        "name": "Restaurant Biscotte",
+        "locale": "fr"
+      },
+      {
+        "documentId": "m9n8o7p6q5r4s3t2u1v0wxyz",
+        "name": "Pizzeria Arrivederci",
+        "locale": "fr"
+      },
+    ]
+  }
+}
+```
 
 Language: GRAPHQL
 File path: ./config/plugins.js
@@ -6921,8 +6588,38 @@ File path: ./config/plugins.js
 
 
 ## Fetch a document in a specific locale
-Description: Code example from "Fetch a document in a specific locale"
+Description: Request
 (Source: https://docs.strapi.io/cms/api/graphql#locale-fetch)
+
+Language: GRAPHQL
+File path: N/A
+
+```graphql
+query Restaurant($documentId: ID!, $locale: I18NLocaleCode) {
+  restaurant(documentId: "a1b2c3d4e5d6f7g8h9i0jkl", locale: "fr") {
+    documentId
+    name
+    description
+    locale
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": {
+    "restaurant": {
+      "documentId": "lviw819d5htwvga8s3kovdij",
+      "name": "Restaurant Biscotte",
+      "description": "Bienvenue au restaurant Biscotte!",
+      "locale": "fr"
+    }
+  }
+}
+```
 
 Language: GRAPHQL
 File path: ./config/plugins.js
@@ -7132,12 +6829,47 @@ export default {
 
 
 
-# Locale
+# Using the locale parameter with the GraphQL API
 Source: https://docs.strapi.io/cms/api/graphql/locale
 
 ## Fetch all documents in a specific locale
-Description: Code example from "Fetch all documents in a specific locale"
+Description: Request
 (Source: https://docs.strapi.io/cms/api/graphql/locale#graphql-fetch-all)
+
+Language: GRAPHQL
+File path: N/A
+
+```graphql
+query {
+  restaurants(locale: "fr") {
+    documentId
+    name
+    locale
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": {
+    "restaurants": [
+      {
+        "documentId": "a1b2c3d4e5d6f7g8h9i0jkl",
+        "name": "Restaurant Biscotte",
+        "locale": "fr"
+      },
+      {
+        "documentId": "m9n8o7p6q5r4s3t2u1v0wxyz",
+        "name": "Pizzeria Arrivederci",
+        "locale": "fr"
+      },
+    ]
+  }
+}
+```
 
 Language: GRAPHQL
 File path: N/A
@@ -7177,8 +6909,38 @@ File path: N/A
 
 
 ## Fetch a document in a specific locale
-Description: Code example from "Fetch a document in a specific locale"
+Description: Request
 (Source: https://docs.strapi.io/cms/api/graphql/locale#graphql-fetch)
+
+Language: GRAPHQL
+File path: N/A
+
+```graphql
+query Restaurant($documentId: ID!, $locale: I18NLocaleCode) {
+  restaurant(documentId: "a1b2c3d4e5d6f7g8h9i0jkl", locale: "fr") {
+    documentId
+    name
+    description
+    locale
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": {
+    "restaurant": {
+      "documentId": "lviw819d5htwvga8s3kovdij",
+      "name": "Restaurant Biscotte",
+      "description": "Bienvenue au restaurant Biscotte!",
+      "locale": "fr"
+    }
+  }
+}
+```
 
 Language: GRAPHQL
 File path: N/A
@@ -8325,200 +8087,200 @@ const entry = await strapi.db.query('api::blog.article').delete({
 Source: https://docs.strapi.io/cms/api/rest
 
 ## Get documents
-Description: Code example from "Get documents"
+Description: GET /api/:pluralApiId — List documents
 (Source: https://docs.strapi.io/cms/api/rest#get-all)
 
-Language: JSON
+Language: Bash
 File path: N/A
 
-```json
-{
-  "data": [
-    {
-      "id": 2,
-      "documentId": "hgv1vny5cebq2l3czil1rpb3",
-      "Name": "BMK Paris Bamako",
-      "Description": null,
-      "createdAt": "2024-03-06T13:42:05.098Z",
-      "updatedAt": "2024-03-06T13:42:05.098Z",
-      "publishedAt": "2024-03-06T13:42:05.103Z",
-      "locale": "en"
+```bash
+curl 'http://localhost:1337/api/restaurants' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```javascript
+const response = await fetch(
+  'http://localhost:1337/api/restaurants',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
     },
-    {
-      "id": 4,
-      "documentId": "znrlzntu9ei5onjvwfaalu2v",
-      "Name": "Biscotte Restaurant",
-      "Description": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
-            }
-          ]
-        }
-      ],
-      "createdAt": "2024-03-06T13:43:30.172Z",
-      "updatedAt": "2024-03-06T13:43:30.172Z",
-      "publishedAt": "2024-03-06T13:43:30.175Z",
-      "locale": "en"
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 2
-    }
   }
-}
+);
+const data = await response.json();
 ```
 
 
 ## Get a document
-Description: Code example from "Get a document"
+Description: GET /api/:pluralApiId/:documentId — Get a document
 (Source: https://docs.strapi.io/cms/api/rest#get)
 
-Language: JSON
+Language: Bash
 File path: N/A
 
-```json
-{
-  "data": {
-    "id": 6,
-    "documentId": "znrlzntu9ei5onjvwfaalu2v",
-    "Name": "Biscotte Restaurant",
-    "Description": [
-      {
-        "type": "paragraph",
-        "children": [
-          {
-            "type": "text",
-            "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine bassics, such as 4 Formaggi or Calzone, and our original creations such as Do Luigi or Nduja."
-          }
-        ]
-      }
-    ],
-    "createdAt": "2024-02-27T10:19:04.953Z",
-    "updatedAt": "2024-03-05T15:52:05.591Z",
-    "publishedAt": "2024-03-05T15:52:05.600Z",
-    "locale": "en"
-  },
-  "meta": {}
-}
+```bash
+curl 'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```javascript
+const response = await fetch(
+  'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
 ```
 
 
 ## Create a document
-Description: POST http://localhost:1337/api/restaurants
+Description: POST /api/:pluralApiId — Create a document
 (Source: https://docs.strapi.io/cms/api/rest#create)
 
-Language: JSON
+Language: Bash
 File path: N/A
 
-```json
-{ 
-  "data": {
-    "Name": "Restaurant D",
-    "Description": [ // uses the "Rich text (blocks)" field type
-      {
-        "type": "paragraph",
-        "children": [
-          {
-            "type": "text",
-            "text": "A very short description goes here."
-          }
-        ]
-      }
-    ]
-  }
-}
+```bash
+curl -X POST \\
+  'http://localhost:1337/api/restaurants' \\
+  -H 'Authorization: Bearer <token>' \\
+  -H 'Content-Type: application/json' \\
+  -d '{
+    "data": {
+      "Name": "Restaurant D",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [{ "type": "text", "text": "A very short description goes here." }]
+        }
+      ]
+    }
+  }'
 ```
 
-Language: JSON
+---
+Language: JavaScript
 File path: N/A
 
-```json
-{
-  "data": {
-    "documentId": "bw64dnu97i56nq85106yt4du",
-    "Name": "Restaurant D",
-    "Description": [
-      {
-        "type": "paragraph",
-        "children": [
+```javascript
+const response = await fetch(
+  'http://localhost:1337/api/restaurants',
+  {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {
+        Name: 'Restaurant D',
+        Description: [
           {
-            "type": "text",
-            "text": "A very short description goes here."
-          }
-        ]
-      }
-    ],
-    "createdAt": "2024-03-05T16:44:47.689Z",
-    "updatedAt": "2024-03-05T16:44:47.689Z",
-    "publishedAt": "2024-03-05T16:44:47.687Z",
-    "locale": "en"
-  },
-  "meta": {}
-}
+            type: 'paragraph',
+            children: [{ type: 'text', text: 'A very short description goes here.' }],
+          },
+        ],
+      },
+    }),
+  }
+);
+const data = await response.json();
 ```
 
 
 ## Update a document
-Description: PUT http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3
+Description: PUT /api/:pluralApiId/:documentId — Update a document
 (Source: https://docs.strapi.io/cms/api/rest#update)
 
-Language: JSON
+Language: Bash
 File path: N/A
 
-```json
-{ 
-  "data": {
-    "Name": "BMK Paris Bamako", // we didn't change this field but still need to include it
-    "Description": [ // uses the "Rich text (blocks)" field type
-      {
-        "type": "paragraph",
-        "children": [
-          {
-            "type": "text",
-            "text": "A very short description goes here."
-          }
-        ]
-      }
-    ]
-  }
-}
+```bash
+curl -X PUT \\
+  'http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3' \\
+  -H 'Authorization: Bearer <token>' \\
+  -H 'Content-Type: application/json' \\
+  -d '{
+    "data": {
+      "Name": "BMK Paris Bamako",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [{ "type": "text", "text": "A very short description goes here." }]
+        }
+      ]
+    }
+  }'
 ```
 
-Language: JSON
+---
+Language: JavaScript
 File path: N/A
 
-```json
-{
-  "data": {
-    "id": 9,
-    "documentId": "hgv1vny5cebq2l3czil1rpb3",
-    "Name": "BMK Paris Bamako",
-    "Description": [
-      {
-        "type": "paragraph",
-        "children": [
+```javascript
+const response = await fetch(
+  'http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3',
+  {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {
+        Name: 'BMK Paris Bamako',
+        Description: [
           {
-            "type": "text",
-            "text": "A very short description goes here."
-          }
-        ]
-      }
-    ],
-    "createdAt": "2024-03-06T13:42:05.098Z",
-    "updatedAt": "2024-03-06T14:16:56.883Z",
-    "publishedAt": "2024-03-06T14:16:56.895Z",
-    "locale": "en"
-  },
-  "meta": {}
-}
+            type: 'paragraph',
+            children: [{ type: 'text', text: 'A very short description goes here.' }],
+          },
+        ],
+      },
+    }),
+  }
+);
+const data = await response.json();
+```
+
+
+## Delete a document
+Description: DELETE /api/:pluralApiId/:documentId — Delete a document
+(Source: https://docs.strapi.io/cms/api/rest#delete)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X DELETE \\
+  'http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```javascript
+const response = await fetch(
+  'http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du',
+  {
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
 ```
 
 
@@ -8527,9 +8289,17 @@ File path: N/A
 Source: https://docs.strapi.io/cms/api/rest/filters
 
 ## Example: Find users having 'John' as a first name
-Description: Code example from "Example: Find users having 'John' as a first name"
+Description: GET /api/users — Find users having
 (Source: https://docs.strapi.io/cms/api/rest/filters#example-find-users-having-john-as-a-first-name)
 
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/users?filters[username][$eq]=John
+```
+
+---
 Language: JavaScript
 File path: N/A
 
@@ -8548,7 +8318,6 @@ const query = qs.stringify({
 await request(`/api/users?${query}`);
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -8568,20 +8337,29 @@ File path: N/A
     }
   ],
   "meta": {
-  "pagination": {
-    "page": 1,
-    "pageSize": 25,
-    "pageCount": 1,
-    "total": 1
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
   }
 }
 ```
 
 
 ## Example: Find multiple restaurants with ids 3, 6,8
-Description: Code example from "Example: Find multiple restaurants with ids 3, 6,8"
+Description: GET /api/restaurants — Find multiple restaurants with ids 3, 6, 8
 (Source: https://docs.strapi.io/cms/api/rest/filters#example-find-multiple-restaurants-with-ids-3-6-8)
 
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8
+```
+
+---
 Language: JavaScript
 File path: N/A
 
@@ -8600,7 +8378,6 @@ const query = qs.stringify({
 await request(`/api/restaurants?${query}`);
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -8610,33 +8387,36 @@ File path: N/A
     {
       "id": 3,
       "documentId": "ethwxjxtvuxl89jq720e38uk",
-      "name": "test3",
-      // ...
+      "name": "test3"
     },
     {
       "id": 6,
       "documentId": "ethwxjxtvuxl89jq720e38uk",
-      "name": "test6",
-      // ...
+      "name": "test6"
     },
     {
       "id": 8,
       "documentId": "cf07g1dbusqr8mzmlbqvlegx",
-      "name": "test8",
-      // ...
-    },
+      "name": "test8"
+    }
   ],
-  "meta": {
-    // ...
-  }
+  "meta": {}
 }
 ```
 
 
 ## Complex filtering
-Description: Code example from "Complex filtering"
+Description: GET /api/books — Find books with 2 possible dates and a specific author
 (Source: https://docs.strapi.io/cms/api/rest/filters#complex-filtering)
 
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/books?filters[$and][0][$or][0][date][$eq]=2020-01-01&filters[$and][0][$or][1][date][$eq]=2020-01-02&filters[$and][1][author][name][$eq]=Kai%20doe
+```
+
+---
 Language: JavaScript
 File path: N/A
 
@@ -8675,7 +8455,6 @@ const query = qs.stringify({
 await request(`/api/books?${query}`);
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -8686,28 +8465,32 @@ File path: N/A
       "id": 1,
       "documentId": "rxngxzclq0zdaqtvz67hj38d",
       "name": "test1",
-      "date": "2020-01-01",
-      // ...
+      "date": "2020-01-01"
     },
     {
       "id": 2,
       "documentId": "kjkhff4e269a50b4vi16stst",
       "name": "test2",
-      "date": "2020-01-02",
-      // ...
+      "date": "2020-01-02"
     }
   ],
-  "meta": {
-    // ...
-  }
+  "meta": {}
 }
 ```
 
 
 ## Deep filtering
-Description: Code example from "Deep filtering"
+Description: GET /api/restaurants — Find restaurants owned by a chef who belongs to a 5-star restaurant
 (Source: https://docs.strapi.io/cms/api/rest/filters#deep-filtering)
 
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/restaurants?filters[chef][restaurants][stars][$eq]=5
+```
+
+---
 Language: JavaScript
 File path: N/A
 
@@ -8730,7 +8513,6 @@ const query = qs.stringify({
 await request(`/api/restaurants?${query}`);
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -8742,19 +8524,15 @@ File path: N/A
       "documentId": "cvsz61qg33rtyv1qljb1nrtg",
       "name": "GORDON RAMSAY STEAK",
       "stars": 5
-      // ...
     },
     {
       "id": 2,
       "documentId": "uh17h7ibw0g8thit6ivi71d8",
       "name": "GORDON RAMSAY BURGER",
       "stars": 5
-      // ...
     }
   ],
-  "meta": {
-    // ...
-  }
+  "meta": {}
 }
 ```
 
@@ -8763,7 +8541,7 @@ File path: N/A
 # How to populate creator fields
 Source: https://docs.strapi.io/cms/api/rest/guides/populate-creator-fields
 
-## 🛠️ How to populate creator fields such as createdBy and updatedBy
+## How to populate creator fields such as createdBy and updatedBy
 Description: Open the content-type schema.json file.
 (Source: https://docs.strapi.io/cms/api/rest/guides/populate-creator-fields#how-to-populate-creator-fields-such-as-createdby-and-updatedby)
 
@@ -8819,9 +8597,311 @@ File path: ./src/api/test/routes/test.js
 # Understanding populate
 Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate
 
-## Example: Without populate
-Description: Code example from "Example: Without populate"
+## Populate specific relations and fields
+Description: Populate as an object (to populate 1 relation several levels deep):
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#populate-specific-relations-and-fields)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  populate: {
+    category: {
+      populate: ['restaurants'],
+    },
+  },
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  populate: [
+    'articles',
+    'restaurants'
+  ],
+}
+```
+
+
+## Populate several levels deep for specific relations
+Description: :::tip The syntax for advanced query parameters can be quite complex to build manually.
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#populate-several-levels-deep-for-specific-relations)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  populate: {
+    category: {
+      populate: ['restaurants'],
+    },
+  },
+}
+```
+
+
+## Populate components
+Description: :::tip The syntax for advanced query parameters can be quite complex to build manually.
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#populate-components)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  populate: [
+    'seoData',
+    'seoData.sharedImage',
+    'seoData.sharedImage.media',
+  ],
+},
+```
+
+
+## Populate dynamic zones
+Description: :::tip The syntax for advanced query parameters can be quite complex to build manually.
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#populate-dynamic-zones)
+
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles?populate[0]=blocks
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles?populate[blocks][populate]=*
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "e8cnux5ejxyqrejd5addfv",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…",
+      "blocks": [
+        {
+          "id": 2,
+          "documentId": "it9bbhcgc6mcfsqas7h1dp",
+          "__component": "blocks.related-articles"
+        },
+        {
+          "id": 2,
+          "documentId": "ugagwkoce7uqb0k2yof4lz",
+          "__component": "blocks.cta-command-line",
+          "theme": "primary",
+          "title": "Want to give a try to a Strapi starter?",
+          "text": "❤️",
+          "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "// …": true
+    },
+    {
+      "id": 3,
+      "// …": true
+    },
+    {
+      "id": 4,
+      "// …": true
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "c14dwiff3b4os6gs4yyrag",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…",
+      "blocks": [
+        {
+          "id": 2,
+          "documentId": "lu16w9g4jri8ppiukg542j",
+          "__component": "blocks.related-articles",
+          "header": {
+            "id": 2,
+            "documentId": "c2imt19iywk27hl2ftph7s",
+            "theme": "primary",
+            "label": "More, I want more!",
+            "title": "Similar articles"
+          },
+          "articles": {
+            "data": [
+              {
+                "id": 2,
+                "documentId": "isn91s2bxk3jib97evvjni",
+                "title": "What are chinese hamburgers and why aren't you eating them?",
+                "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+                "createdAt": "2021-11-11T13:33:19.948Z",
+                "updatedAt": "2023-06-01T14:32:50.984Z",
+                "publishedAt": "2022-09-22T12:36:48.312Z",
+                "locale": "en",
+                "ckeditor_content": "…"
+              },
+              {
+                "id": 3,
+                "documentId": "yz6lg7tp5ph8dr79gidoyl",
+                "title": "7 Places worth visiting for the food alone",
+                "slug": "7-places-worth-visiting-for-the-food-alone",
+                "createdAt": "2021-11-12T13:33:19.948Z",
+                "updatedAt": "2023-06-02T11:30:00.075Z",
+                "publishedAt": "2023-06-02T11:30:00.075Z",
+                "locale": "en",
+                "ckeditor_content": "…"
+              },
+              {
+                "id": 4,
+                "documentId": "z5jnfvyuj07fogzh1kcbd3",
+                "title": "If you don't finish your plate in these countries, you might offend someone",
+                "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+                "createdAt": "2021-11-15T13:33:19.948Z",
+                "updatedAt": "2023-06-02T10:59:35.148Z",
+                "publishedAt": "2022-09-22T12:35:53.899Z",
+                "locale": "en",
+                "ckeditor_content": "…"
+              }
+            ]
+          }
+        },
+        {
+          "id": 2,
+          "documentId": "vpihrdqj5984k8ynrc39p0",
+          "__component": "blocks.cta-command-line",
+          "theme": "primary",
+          "title": "Want to give a try to a Strapi starter?",
+          "text": "❤️",
+          "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "// …": true
+    },
+    {
+      "id": 3,
+      "// …": true
+    },
+    {
+      "id": 4,
+      "// …": true
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  populate: {
+    blocks: { // asking to populate the blocks dynamic zone
+      populate: '*' // populating all first-level fields in all components
+    }
+  },
+}
+```
+
+
+## Example: Populating the dynamic zone and applying a shared strategy to its components
+Description: :::tip The syntax for advanced query parameters can be quite complex to build manually.
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-populating-the-dynamic-zone-and-applying-a-shared-strategy-to-its-components)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  populate: {
+    blocks: { // asking to populate the blocks dynamic zone
+      on: { // using a detailed population strategy to explicitly define what you want
+        'blocks.related-articles': {
+          populate: {
+           'articles': {
+             populate: ['image']
+           }
+         }
+        },
+        'blocks.cta-command-line': {
+          populate: '*'
+        }
+      },
+    },
+  },
+}
+```
+
+
+## Example: Without `populate`
+Description: GET /api/articles — Without populate
 (Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-without-populate)
+
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles
+```
 
 Language: JSON
 File path: N/A
@@ -8838,7 +8918,7 @@ File path: N/A
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": // truncated content
+      "ckeditor_content": "// truncated content"
     },
     {
       "id": 2,
@@ -8849,18 +8929,18 @@ File path: N/A
       "updatedAt": "2023-06-01T14:32:50.984Z",
       "publishedAt": "2022-09-22T12:36:48.312Z",
       "locale": "en",
-      "ckeditor_content": // truncated content
+      "ckeditor_content": "// truncated content"
     },
     {
       "id": 3,
-      "documentId": "k6m6l9q0n6v9z2m3i0z5jah"
+      "documentId": "k6m6l9q0n6v9z2m3i0z5jah",
       "title": "7 Places worth visiting for the food alone",
       "slug": "7-places-worth-visiting-for-the-food-alone",
       "createdAt": "2021-11-12T13:33:19.948Z",
       "updatedAt": "2023-06-02T11:30:00.075Z",
       "publishedAt": "2023-06-02T11:30:00.075Z",
       "locale": "en",
-      "ckeditor_content": // truncated content
+      "ckeditor_content": "// truncated content"
     },
     {
       "id": 4,
@@ -8871,7 +8951,7 @@ File path: N/A
       "updatedAt": "2023-06-02T10:59:35.148Z",
       "publishedAt": "2022-09-22T12:35:53.899Z",
       "locale": "en",
-      "ckeditor_content": // truncated content
+      "ckeditor_content": "// truncated content"
     }
   ],
   "meta": {
@@ -8901,7 +8981,7 @@ File path: N/A
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…"
     },
     {
       "id": 2,
@@ -8912,7 +8992,7 @@ File path: N/A
       "updatedAt": "2023-06-01T14:32:50.984Z",
       "publishedAt": "2022-09-22T12:36:48.312Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…"
     },
     {
       "id": 3,
@@ -8923,7 +9003,7 @@ File path: N/A
       "updatedAt": "2023-06-02T11:30:00.075Z",
       "publishedAt": "2023-06-02T11:30:00.075Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…"
     },
     {
       "id": 4,
@@ -8934,7 +9014,7 @@ File path: N/A
       "updatedAt": "2023-06-02T10:59:35.148Z",
       "publishedAt": "2022-09-22T12:35:53.899Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…"
     }
   ],
   "meta": {
@@ -8946,13 +9026,19 @@ File path: N/A
     }
   }
 }
-}
 ```
 
 
-## Example: With populate=*
-Description: Code example from "Example: With populate=*"
+## Example: With `populate=*`
+Description: GET /api/articles — With populate=*
 (Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-with-populate)
+
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles?populate=*
+```
 
 Language: JSON
 File path: N/A
@@ -8968,7 +9054,7 @@ File path: N/A
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": // truncated content
+      "ckeditor_content": "// truncated content",
       "image": {
         "data": {
             "id": 12,
@@ -9073,7 +9159,7 @@ File path: N/A
               "updatedAt": "2023-06-02T10:57:19.606Z",
               "publishedAt": "2022-09-22T13:00:00.069Z",
               "locale": "fr-FR",
-              "ckeditor_content": // truncated content
+              "ckeditor_content": "// truncated content"
             }
           ]
         }
@@ -9081,15 +9167,15 @@ File path: N/A
     },
     {
       "id": 2,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 3,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 4,
-      // truncated content
+      "// truncated content": true
     }
   ],
   "meta": {
@@ -9104,39 +9190,16 @@ File path: N/A
 ```
 
 
-## Populate specific relations and fields
-Description: Populate as an object (to populate 1 relation several levels deep):
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#populate-specific-relations-and-fields)
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  populate: {
-    category: {
-      populate: ['restaurants'],
-    },
-  },
-}
-```
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  populate: [ 
-    'articles',
-    'restaurants'
-  ],
-}
-```
-
-
-## Example: With populate[0]=category
-Description: Code example from "Example: With populate[0]=category"
+## Example: With `populate[0]=category`
+Description: GET /api/articles — With populate[0]=category
 (Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-with-populate-0-category)
+
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles?populate[0]=category
+```
 
 Language: JSON
 File path: N/A
@@ -9153,7 +9216,7 @@ File path: N/A
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 4,
@@ -9174,7 +9237,7 @@ File path: N/A
       "updatedAt": "2023-06-01T14:32:50.984Z",
       "publishedAt": "2022-09-22T12:36:48.312Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 13,
@@ -9194,7 +9257,7 @@ File path: N/A
       "updatedAt": "2023-06-02T11:30:00.075Z",
       "publishedAt": "2023-06-02T11:30:00.075Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 3,
@@ -9215,7 +9278,7 @@ File path: N/A
       "updatedAt": "2023-06-02T10:59:35.148Z",
       "publishedAt": "2022-09-22T12:35:53.899Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 3,
@@ -9240,27 +9303,16 @@ File path: N/A
 ```
 
 
-## Populate several levels deep for specific relations
-Description: :::tip The syntax for advanced query parameters can be quite complex to build manually.
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#populate-several-levels-deep-for-specific-relations)
+## Example: With 1-level deep population
+Description: GET /api/articles — With 1-level deep population
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-with-1-level-deep-population)
 
-Language: JSON
+Language: Bash
 File path: N/A
 
-```json
-{
-  populate: {
-    category: {
-      populate: ['restaurants'],
-    },
-  },
-}
+```bash
+GET /api/articles?populate[0]=category
 ```
-
-
-## Example: With 1-level deep population
-Description: Code example from "Example: With 1-level deep population"
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-with-1-level-deep-population)
 
 Language: JSON
 File path: N/A
@@ -9277,7 +9329,7 @@ File path: N/A
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 4,
@@ -9297,7 +9349,7 @@ File path: N/A
       "updatedAt": "2023-06-01T14:32:50.984Z",
       "publishedAt": "2022-09-22T12:36:48.312Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 13,
@@ -9318,7 +9370,7 @@ File path: N/A
       "updatedAt": "2023-06-02T11:30:00.075Z",
       "publishedAt": "2023-06-02T11:30:00.075Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 3,
@@ -9339,7 +9391,7 @@ File path: N/A
       "updatedAt": "2023-06-02T10:59:35.148Z",
       "publishedAt": "2022-09-22T12:35:53.899Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 3,
@@ -9365,14 +9417,21 @@ File path: N/A
 
 
 ## Example: With 2-level deep population
-Description: Code example from "Example: With 2-level deep population"
+Description: GET /api/articles — With 2-level deep population
 (Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-with-2-level-deep-population)
+
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles?populate[category][populate][0]=restaurants
+```
 
 Language: JSON
 File path: N/A
 
 ```json
-{{
+{
   "data": [
     {
       "id": 1,
@@ -9383,7 +9442,7 @@ File path: N/A
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "category": {
         "data": {
           "id": 4,
@@ -9406,23 +9465,23 @@ File path: N/A
               },
               {
                 "id": 9,
-                // truncated content
+                "// truncated content": true
               },
               {
                 "id": 10,
-                // truncated content
+                "// truncated content": true
               },
               {
                 "id": 12,
-                // truncated content
+                "// truncated content": true
               },
               {
                 "id": 21,
-                // truncated content
+                "// truncated content": true
               },
               {
                 "id": 26,
-                // truncated content
+                "// truncated content": true
               }
             ]
           }
@@ -9431,15 +9490,15 @@ File path: N/A
     },
     {
       "id": 2,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 3,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 4,
-      // truncated content
+      "// truncated content": true
     }
   ],
   "meta": {
@@ -9454,27 +9513,16 @@ File path: N/A
 ```
 
 
-## Populate components
-Description: :::tip The syntax for advanced query parameters can be quite complex to build manually.
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#populate-components)
+## Example: Only 1st level component
+Description: GET /api/articles — Only 1st level component
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-only-1st-level-component)
 
-Language: JSON
+Language: Bash
 File path: N/A
 
-```json
-{
-  populate: [
-    'seoData',
-    'seoData.sharedImage',
-    'seoData.sharedImage.media',
-  ],
-},
+```bash
+GET /api/articles?populate[0]=seo
 ```
-
-
-## Example: Only 1st level component
-Description: Code example from "Example: Only 1st level component"
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-only-1st-level-component)
 
 Language: JSON
 File path: N/A
@@ -9491,7 +9539,7 @@ File path: N/A
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "seo": {
         "id": 1,
         "documentId": "kqcwhq6hes25kt9ebj8x7j",
@@ -9506,16 +9554,16 @@ File path: N/A
     },
     {
       "id": 2,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 3,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 4,
-      // truncated content
-    },
+      "// truncated content": true
+    }
   ],
   "meta": {
     "pagination": {
@@ -9530,8 +9578,15 @@ File path: N/A
 
 
 ## Example: 1st level and 2nd level component
-Description: Code example from "Example: 1st level and 2nd level component"
+Description: GET /api/articles — 1st level and 2nd level component
 (Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-1st-level-and-2nd-level-component)
+
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles?populate[0]=seo&populate[1]=seo.metaSocial
+```
 
 Language: JSON
 File path: N/A
@@ -9548,7 +9603,7 @@ File path: N/A
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "…",
       "seo": {
         "id": 1,
         "documentId": "e8cnux5ejxyqrejd5addfv",
@@ -9572,95 +9627,15 @@ File path: N/A
     },
     {
       "id": 2,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 3,
-      // truncated content
+      "// truncated content": true
     },
     {
       "id": 4,
-      // truncated content
-    },
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
-
-## Populate dynamic zones
-Description: :::tip The syntax for advanced query parameters can be quite complex to build manually.
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#populate-dynamic-zones)
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  populate: {
-    blocks: { // asking to populate the blocks dynamic zone
-      populate: '*' // populating all first-level fields in all components
-    }
-  },
-}
-```
-
-
-## Example: Populating only the dynamic zone
-Description: Code example from "Example: Populating only the dynamic zone"
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-populating-only-the-dynamic-zone)
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "e8cnux5ejxyqrejd5addfv",
-      "title": "Here's why you have to try basque cuisine, according to a basque chef",
-      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-      "createdAt": "2021-11-09T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:57:19.584Z",
-      "publishedAt": "2022-09-22T09:30:00.208Z",
-      "locale": "en",
-      "ckeditor_content": "…" // truncated content
-      "blocks": [
-        {
-          "id": 2,
-          "documentId": "it9bbhcgc6mcfsqas7h1dp",
-          "__component": "blocks.related-articles"
-        },
-        {
-          "id": 2,
-          "documentId": "ugagwkoce7uqb0k2yof4lz",
-          "__component": "blocks.cta-command-line",
-          "theme": "primary",
-          "title": "Want to give a try to a Strapi starter?",
-          "text": "❤️",
-          "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      // …
-    },
-    {
-      "id": 3,
-      // …
-    },
-    {
-      "id": 4,
-      // …
+      "// truncated content": true
     }
   ],
   "meta": {
@@ -9671,143 +9646,20 @@ File path: N/A
       "total": 4
     }
   }
-}
-```
-
-
-## Example: Populating the dynamic zone and applying a shared strategy to its components
-Description: :::tip The syntax for advanced query parameters can be quite complex to build manually.
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-populating-the-dynamic-zone-and-applying-a-shared-strategy-to-its-components)
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "c14dwiff3b4os6gs4yyrag",
-      "title": "Here's why you have to try basque cuisine, according to a basque chef",
-      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-      "createdAt": "2021-11-09T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:57:19.584Z",
-      "publishedAt": "2022-09-22T09:30:00.208Z",
-      "locale": "en",
-      "ckeditor_content": "…", // truncated content
-      "blocks": [
-        {
-          "id": 2,
-          "documentId": "lu16w9g4jri8ppiukg542j",
-          "__component": "blocks.related-articles",
-          "header": {
-            "id": 2,
-            "documentId": "c2imt19iywk27hl2ftph7s",
-            "theme": "primary",
-            "label": "More, I want more!",
-            "title": "Similar articles"
-          },
-          "articles": {
-            "data": [
-              {
-                "id": 2,
-                "documentId": "isn91s2bxk3jib97evvjni",
-                "title": "What are chinese hamburgers and why aren't you eating them?",
-                "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-                "createdAt": "2021-11-11T13:33:19.948Z",
-                "updatedAt": "2023-06-01T14:32:50.984Z",
-                "publishedAt": "2022-09-22T12:36:48.312Z",
-                "locale": "en",
-                "ckeditor_content": "…", // truncated content
-              },
-              {
-                "id": 3,
-                "documentId": "yz6lg7tp5ph8dr79gidoyl",
-                "title": "7 Places worth visiting for the food alone",
-                "slug": "7-places-worth-visiting-for-the-food-alone",
-                "createdAt": "2021-11-12T13:33:19.948Z",
-                "updatedAt": "2023-06-02T11:30:00.075Z",
-                "publishedAt": "2023-06-02T11:30:00.075Z",
-                "locale": "en",
-                "ckeditor_content": "…", // truncated content
-              },
-              {
-                "id": 4,
-                "documentId": "z5jnfvyuj07fogzh1kcbd3",
-                "title": "If you don't finish your plate in these countries, you might offend someone",
-                "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
-                "createdAt": "2021-11-15T13:33:19.948Z",
-                "updatedAt": "2023-06-02T10:59:35.148Z",
-                "publishedAt": "2022-09-22T12:35:53.899Z",
-                "locale": "en",
-                "ckeditor_content": "…", // truncated content
-              }
-            ]
-          }
-        },
-        {
-          "id": 2,
-          "documentId": "vpihrdqj5984k8ynrc39p0",
-          "__component": "blocks.cta-command-line",
-          "theme": "primary",
-          "title": "Want to give a try to a Strapi starter?",
-          "text": "❤️",
-          "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      // …
-    },
-    {
-      "id": 3,
-      // … 
-    },
-    {
-      "id": 4,
-      // …
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  populate: {
-    blocks: { // asking to populate the blocks dynamic zone
-      on: { // using a detailed population strategy to explicitly define what you want
-        'blocks.related-articles': {
-          populate: {
-           'articles': {
-             populate: ['image']
-           }
-         }
-        },
-        'blocks.cta-command-line': {
-          populate: '*'
-        }
-      },
-    },
-  },
 }
 ```
 
 
 ## Example
-Description: Code example from "Example"
+Description: GET /api/articles — Detailed population strategy for dynamic zones
 (Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example)
+
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*
+```
 
 Language: JSON
 File path: N/A
@@ -9824,7 +9676,7 @@ File path: N/A
       "updatedAt": "2023-06-02T10:57:19.584Z",
       "publishedAt": "2022-09-22T09:30:00.208Z",
       "locale": "en",
-      "ckeditor_content": "…", // truncated content
+      "ckeditor_content": "// truncated content",
       "blocks": [
         {
           "id": 2,
@@ -9841,21 +9693,21 @@ File path: N/A
                 "updatedAt": "2023-06-01T14:32:50.984Z",
                 "publishedAt": "2022-09-22T12:36:48.312Z",
                 "locale": "en",
-                "ckeditor_content": "…", // truncated content
+                "ckeditor_content": "// truncated content",
                 "image": {
                   "data": {
-                      // …
+                      "// …": true
                     }
                   }
                 }
               },
               {
                 "id": 3,
-                // …
+                "// …": true
               },
               {
                 "id": 4,
-                // …
+                "// …": true
               }
             ]
           }
@@ -9872,7 +9724,7 @@ File path: N/A
     },
     {
       "id": 2,
-      // …
+      "// …": true
     },
     {
       "id": 3,
@@ -9883,14 +9735,14 @@ File path: N/A
       "updatedAt": "2023-06-02T11:30:00.075Z",
       "publishedAt": "2023-06-02T11:30:00.075Z",
       "locale": "en",
-      "ckeditor_content": "…", // … truncated content
+      "ckeditor_content": "// truncated content",
       "blocks": [
         {
           "id": 1,
           "documentId": "ks7xsp9fewoi0qljcz9qa0",
           "__component": "blocks.related-articles",
           "articles": {
-            // …
+            "// …": true
           }
         },
         {
@@ -9906,7 +9758,7 @@ File path: N/A
     },
     {
       "id": 4,
-      // …
+      "// …": true
     }
   ],
   "meta": {
@@ -9925,158 +9777,70 @@ File path: N/A
 # Locale
 Source: https://docs.strapi.io/cms/api/rest/locale
 
-## GET Get all documents in a specific locale
-Description: Code example from "GET Get all documents in a specific locale"
-(Source: https://docs.strapi.io/cms/api/rest/locale#rest-get-all)
+## `GET` Get all documents in a specific locale
+Description: GET /api/restaurants?locale=fr — Get all documents in a specific locale
+(Source: https://docs.strapi.io/cms/api/rest/locale#get-get-all-documents-in-a-specific-locale)
 
-Language: JSON
-File path: /github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.js
+Language: Bash
+File path: N/A
 
-```json
-{
-  "data": [
-    {
-      "id": 5,
-      "documentId": "h90lgohlzfpjf3bvan72mzll",
-      "Title": "Meilleures pizzas",
-      "Body": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "text": "On déguste les meilleures pizzas de la ville à la Pizzeria Arrivederci."
-            }
-          ]
-        }
-      ],
-      "createdAt": "2024-03-06T22:08:59.643Z",
-      "updatedAt": "2024-03-06T22:10:21.127Z",
-      "publishedAt": "2024-03-06T22:10:21.130Z",
-      "locale": "fr"
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 1
-    }
-  }
-}
+```bash
+GET http://localhost:1337/api/restaurants?locale=fr
 ```
 
 
 ## Collection types
-Description: Code example from "Collection types"
+Description: GET /api/restaurants/:documentId?locale=fr — Get a document in a specific locale (collection type)
 (Source: https://docs.strapi.io/cms/api/rest/locale#get-one-collection-type)
 
-Language: JSON
+Language: Bash
 File path: N/A
 
-```json
-{
-  "data": [
-    {
-      "id": 22,
-      "documentId": "lr5wju2og49bf820kj9kz8c3",
-      "Name": "Biscotte Restaurant",
-      "Description": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "text": "Bienvenue au restaurant Biscotte! Le Restaurant Biscotte propose une cuisine à base de produits frais et de qualité, souvent locaux, biologiques lorsque cela est possible, et toujours produits par des producteurs passionnés."
-            }
-          ]
-        }
-      ],
-      // …
-      "locale": "fr"
-    },
-    // …
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 3
-    }
-  }
-}
+```bash
+GET /api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr
 ```
 
 
 ## Single types
-Description: Code example from "Single types"
+Description: GET /api/homepage?locale=fr — Get a document in a specific locale (single type)
 (Source: https://docs.strapi.io/cms/api/rest/locale#get-one-single-type)
 
-Language: JSON
+Language: Bash
 File path: N/A
 
-```json
-{
-  "data": {
-    "id": 10,
-    "documentId": "ukbpbnu8kbutpn98rsanyi50",
-    "Title": "Page d'accueil",
-    "Body": null,
-    "createdAt": "2024-03-07T13:28:26.349Z",
-    "updatedAt": "2024-03-07T13:28:26.349Z",
-    "publishedAt": "2024-03-07T13:28:26.353Z",
-    "locale": "fr"
-  },
-  "meta": {}
-}
+```bash
+GET /api/homepage?locale=fr
 ```
 
 
 ## For the default locale
-Description: POST http://localhost:1337/api/restaurants
+Description: POST /api/restaurants — Create a document for the default locale
 (Source: https://docs.strapi.io/cms/api/rest/locale#rest-create-default-locale)
 
-Language: JSON
+Language: Bash
 File path: N/A
 
-```json
+```bash
+POST http://localhost:1337/api/restaurants
+
 {
   "data": {
-    "Name": "Oplato",
+    "Name": "Oplato"
   }
-}
-```
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": {
-    "id": 13,
-    "documentId": "jae8klabhuucbkgfe2xxc5dj",
-    "Name": "Oplato",
-    "Description": null,
-    "createdAt": "2024-03-06T22:19:54.646Z",
-    "updatedAt": "2024-03-06T22:19:54.646Z",
-    "publishedAt": "2024-03-06T22:19:54.649Z",
-    "locale": "en"
-  },
-  "meta": {}
 }
 ```
 
 
 ## For a specific locale
-Description: POST http://localhost:1337/api/restaurants?locale=fr
+Description: POST /api/restaurants?locale=fr — Create a document for a specific locale
 (Source: https://docs.strapi.io/cms/api/rest/locale#rest-create-specific-locale)
 
-Language: JSON
+Language: Bash
 File path: N/A
 
-```json
+```bash
+POST http://localhost:1337/api/restaurants?locale=fr
+
 {
   "data": {
     "Name": "She's Cake"
@@ -10084,34 +9848,17 @@ File path: N/A
 }
 ```
 
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": {
-    "id": 15,
-    "documentId": "ldcmn698iams5nuaehj69j5o",
-    "Name": "She's Cake",
-    "Description": null,
-    "createdAt": "2024-03-06T22:21:18.373Z",
-    "updatedAt": "2024-03-06T22:21:18.373Z",
-    "publishedAt": "2024-03-06T22:21:18.378Z",
-    "locale": "fr"
-  },
-  "meta": {}
-}
-```
-
 
 ## In a collection type
-Description: PUT http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr
+Description: PUT /api/restaurants/:documentId?locale=fr — Create or update a locale version (collection type)
 (Source: https://docs.strapi.io/cms/api/rest/locale#rest-delete-collection-type)
 
-Language: JSON
+Language: Bash
 File path: N/A
 
-```json
+```bash
+PUT http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr
+
 {
   "data": {
     "Name": "She's Cake in French"
@@ -10119,34 +9866,25 @@ File path: N/A
 }
 ```
 
-Language: JSON
+---
+Language: Bash
 File path: N/A
 
-```json
-{
-  "data": {
-    "id": 19,
-    "documentId": "lr5wju2og49bf820kj9kz8c3",
-    "Name": "She's Cake in French",
-    "Description": null,
-    "createdAt": "2024-03-07T12:13:09.551Z",
-    "updatedAt": "2024-03-07T12:13:09.551Z",
-    "publishedAt": "2024-03-07T12:13:09.554Z",
-    "locale": "fr"
-  },
-  "meta": {}
-}
+```bash
+DELETE /api/restaurants/abcdefghijklmno456?locale=fr
 ```
 
 
 ## In a single type
-Description: PUT http://localhost:1337/api/homepage?locale=fr
+Description: PUT /api/homepage?locale=fr — Create or update a locale version (single type)
 (Source: https://docs.strapi.io/cms/api/rest/locale#rest-delete-single-type)
 
-Language: JSON
+Language: Bash
 File path: N/A
 
-```json
+```bash
+PUT http://localhost:1337/api/homepage?locale=fr
+
 {
   "data": {
     "Title": "Page d'accueil"
@@ -10154,23 +9892,12 @@ File path: N/A
 }
 ```
 
-Language: JSON
+---
+Language: Bash
 File path: N/A
 
-```json
-{
-  "data": {
-    "id": 10,
-    "documentId": "ukbpbnu8kbutpn98rsanyi50",
-    "Title": "Page d'accueil",
-    "Body": null,
-    "createdAt": "2024-03-07T13:28:26.349Z",
-    "updatedAt": "2024-03-07T13:28:26.349Z",
-    "publishedAt": "2024-03-07T13:28:26.353Z",
-    "locale": "fr"
-  },
-  "meta": {}
-}
+```bash
+DELETE /api/homepage?locale=fr
 ```
 
 
@@ -10179,9 +9906,17 @@ File path: N/A
 Source: https://docs.strapi.io/cms/api/rest/populate-select
 
 ## Field selection
-Description: Code example from "Field selection"
+Description: GET /api/restaurants — Return only name and description fields
 (Source: https://docs.strapi.io/cms/api/rest/populate-select#field-selection)
 
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/restaurants?fields[0]=name&fields[1]=description
+```
+
+---
 Language: JavaScript
 File path: N/A
 
@@ -10199,47 +9934,19 @@ const query = qs.stringify(
 await request(`/api/users?${query}`);
 ```
 
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    {
-      "id": 4,
-      "Name": "Pizzeria Arrivederci",
-      "Description": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "text": "Specialized in pizza, we invite you to rediscover our classics, such as 4 Formaggi or Calzone, and our original creations such as Do Luigi or Nduja."
-            }
-          ]
-        }
-      ],
-      "documentId": "lr5wju2og49bf820kj9kz8c3"
-    },
-    // …
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
 
 ## Populate with field selection
-Description: Code example from "Populate with field selection"
+Description: GET /api/articles — Populate with field selection
 (Source: https://docs.strapi.io/cms/api/rest/populate-select#populate-with-field-selection)
 
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url
+```
+
+---
 Language: JavaScript
 File path: N/A
 
@@ -10262,37 +9969,19 @@ const query = qs.stringify(
 await request(`/api/articles?${query}`);
 ```
 
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "h90lgohlzfpjf3bvan72mzll",
-      "title": "Test Article",
-      "slug": "test-article",
-      "headerImage": {
-        "id": 1,
-        "documentId": "cf07g1dbusqr8mzmlbqvlegx",
-        "name": "17520.jpg",
-        "url": "/uploads/17520_73c601c014.jpg"
-      }
-    }
-  ],
-  "meta": {
-    // ...
-  }
-}
-```
-
 
 ## Populate with filtering
-Description: Code example from "Populate with filtering"
+Description: GET /api/articles — Populate with filtering
 (Source: https://docs.strapi.io/cms/api/rest/populate-select#populate-with-filtering)
 
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars
+```
+
+---
 Language: JavaScript
 File path: N/A
 
@@ -10317,37 +10006,6 @@ const query = qs.stringify(
 );
 
 await request(`/api/articles?${query}`);
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "a1b2c3d4e5d6f7g8h9i0jkl",
-      "title": "Test Article",
-      // ...
-      "categories": {
-        "data": [
-          {
-            "id": 2,
-            "documentId": "jKd8djla9ndalk98hflj3",
-            "name": "Cars"
-            // ...
-          }
-        ]
-        }
-      }
-    }
-  ],
-  "meta": {
-    // ...
-  }
-}
 ```
 
 
@@ -10658,9 +10316,17 @@ File path: N/A
 Source: https://docs.strapi.io/cms/api/rest/sort-pagination
 
 ## Example: Sort using 2 fields
-Description: Code example from "Example: Sort using 2 fields"
+Description: GET /api/restaurants — Sort using 2 fields
 (Source: https://docs.strapi.io/cms/api/rest/sort-pagination#example-sort-using-2-fields)
 
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/restaurants?sort[0]=Description&sort[1]=Name
+```
+
+---
 Language: JavaScript
 File path: N/A
 
@@ -10675,7 +10341,6 @@ const query = qs.stringify({
 await request(`/api/restaurants?${query}`);
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -10696,7 +10361,7 @@ File path: N/A
             }
           ]
         }
-      ],
+      ]
       // …
     },
     {
@@ -10713,10 +10378,10 @@ File path: N/A
             }
           ]
         }
-      ],
+      ]
       // …
-    },
-   // … 
+    }
+    // …
   ],
   "meta": {
     // …
@@ -10726,9 +10391,17 @@ File path: N/A
 
 
 ## Example: Sort using 2 fields and set the order
-Description: Code example from "Example: Sort using 2 fields and set the order"
+Description: GET /api/restaurants — Sort using 2 fields and set the order
 (Source: https://docs.strapi.io/cms/api/rest/sort-pagination#example-sort-using-2-fields-and-set-the-order)
 
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc
+```
+
+---
 Language: JavaScript
 File path: N/A
 
@@ -10743,7 +10416,6 @@ const query = qs.stringify({
 await request(`/api/restaurants?${query}`);
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -10764,7 +10436,7 @@ File path: N/A
             }
           ]
         }
-      ],
+      ]
       // …
     },
     {
@@ -10781,9 +10453,9 @@ File path: N/A
             }
           ]
         }
-      ],
+      ]
       // …
-    },
+    }
     // …
   ],
   "meta": {
@@ -10794,9 +10466,17 @@ File path: N/A
 
 
 ## Pagination by page
-Description: Code example from "Pagination by page"
+Description: GET /api/articles — Pagination by page
 (Source: https://docs.strapi.io/cms/api/rest/sort-pagination#pagination-by-page)
 
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles?pagination[page]=1&pagination[pageSize]=10
+```
+
+---
 Language: JavaScript
 File path: N/A
 
@@ -10814,7 +10494,6 @@ const query = qs.stringify({
 await request(`/api/articles?${query}`);
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -10836,11 +10515,19 @@ File path: N/A
 
 
 ## Pagination by offset
-Description: Code example from "Pagination by offset"
+Description: GET /api/articles — Pagination by offset
 (Source: https://docs.strapi.io/cms/api/rest/sort-pagination#pagination-by-offset)
 
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles?pagination[start]=0&pagination[limit]=10
+```
+
+---
 Language: JavaScript
-File path: ./config/api.js
+File path: N/A
 
 ```js
 const qs = require('qs');
@@ -10856,9 +10543,8 @@ const query = qs.stringify({
 await request(`/api/articles?${query}`);
 ```
 
----
 Language: JSON
-File path: ./config/api.js
+File path: N/A
 
 ```json
 {
@@ -10880,9 +10566,9 @@ File path: ./config/api.js
 # Status
 Source: https://docs.strapi.io/cms/api/rest/status
 
-## REST API: status
-Description: Code example from "REST API: status"
-(Source: https://docs.strapi.io/cms/api/rest/status#rest-api-status)
+## Status
+Description: GET /api/articles?status=draft — Get draft versions of restaurants
+(Source: https://docs.strapi.io/cms/api/rest/status#status)
 
 Language: JavaScript
 File path: N/A
@@ -10896,47 +10582,6 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    // …
-    {
-      "id": 5,
-      "documentId": "znrlzntu9ei5onjvwfaalu2v",
-      "Name": "Biscotte Restaurant",
-      "Description": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "text": "This is the draft version."
-            }
-          ]
-        }
-      ],
-      "createdAt": "2024-03-06T13:43:30.172Z",
-      "updatedAt": "2024-03-06T21:38:46.353Z",
-      "publishedAt": null,
-      "locale": "en"
-    },
-    // …
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
 ```
 
 
@@ -10968,8 +10613,53 @@ File path: N/A
 
 
 ## Get a paginated list of files
-Description: Code example from "Get a paginated list of files"
+Description: Response
 (Source: https://docs.strapi.io/cms/api/rest/upload#get-a-paginated-list-of-files)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "a1b2c3...",
+      "name": "photo.jpg",
+      "url": "/uploads/photo.jpg",
+      "mime": "image/jpeg",
+      "size": 12.34
+      // ...other file fields
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 2,
+      "pageSize": 10,
+      "pageCount": 4,
+      "total": 100
+    }
+  }
+}
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    // ...
+  ],
+  "meta": {
+    "pagination": {
+      "start": 20,
+      "limit": 5
+    }
+  }
+}
+```
 
 Language: JSON
 File path: N/A
@@ -11959,12 +11649,11 @@ File path: src/api/restaurant/middlewares/analytics.js
           tabName,
         });
       
-      // Get the restaurant ID from the params in the URL
+      // Get the restaurant documentId from the params in the URL
       const restaurantId = context.params.id;
-      const restaurant = await strapi.entityService.findOne(
-        'api::restaurant.restaurant',
-        restaurantId
-      );
+      const restaurant = await strapi.documents('api::restaurant.restaurant').findOne({
+        documentId: restaurantId,
+      });
 
       // Read the spreadsheet to get the current data
       const restaurantAnalytics = await readGoogleSheet();
@@ -12039,18 +11728,15 @@ module.exports = async (policyContext, config, { strapi }) => {
   }
   /**
    * Queries the Restaurants collection type
-   * using the Entity Service API
+   * using the Document Service API
    * to retrieve information about the restaurant's owner.
    */ 
-  const [restaurant] = await strapi.entityService.findMany(
-    'api::restaurant.restaurant',
-    {
-      filters: {
-        slug: body.restaurant,
-      },
-      populate: ['owner'],
-    }
-  );
+  const [restaurant] = await strapi.documents('api::restaurant.restaurant').findMany({
+    filters: {
+      slug: body.restaurant,
+    },
+    populate: ['owner'],
+  });
   if (!restaurant) {
     return false;
   }
@@ -12123,18 +11809,15 @@ module.exports = async (policyContext, config, { strapi }) => {
   }
   /**
    * Queries the Restaurants collection type
-   * using the Entity Service API
+   * using the Document Service API
    * to retrieve information about the restaurant's owner.
    */ 
-  const filteredRestaurants = await strapi.entityService.findMany(
-    'api::restaurant.restaurant',
-    {
-      filters: {
-        slug: body.restaurant,
-      },
-      populate: ['owner'],
-    }
-  );
+  const filteredRestaurants = await strapi.documents('api::restaurant.restaurant').findMany({
+    filters: {
+      slug: body.restaurant,
+    },
+    populate: ['owner'],
+  });
 
   const restaurant = filteredRestaurants[0];
 
@@ -12423,28 +12106,25 @@ module.exports = createCoreService('api::review.review', ({ strapi }) => ({
 
     /**
      * Queries the Restaurants collection type
-     * using the Entity Service API
+     * using the Document Service API
      * to retrieve information about the restaurant.
      */
-    const restaurants = await strapi.entityService.findMany(
-      'api::restaurant.restaurant',
-      {
-        filters: {
-          slug: body.restaurant,
-        },
-      }
-    );
+    const restaurants = await strapi.documents('api::restaurant.restaurant').findMany({
+      filters: {
+        slug: body.restaurant,
+      },
+    });
 
     /**
      * Creates a new entry for the Reviews collection type
      * and populates data with information about the restaurant's owner
-     * using the Entity Service API.
+     * using the Document Service API.
      */
-    const newReview = await strapi.entityService.create('api::review.review', {
+    const newReview = await strapi.documents('api::review.review').create({
       data: {
         note: body.note,
         content: body.content,
-        restaurant: restaurants[0].id,
+        restaurant: restaurants[0].documentId,
         author: user.id,
       },
       populate: ['restaurant.owner'],
@@ -12472,12 +12152,10 @@ module.exports = createCoreService('api::email.email', ({ strapi }) => ({
     /**
      * Retrieves email configuration data
      * stored in the Email single type
-     * using the Entity Service API.
+     * using the Document Service API.
+     * For a single type, use findFirst() to get its document.
      */
-    const emailConfig = await strapi.entityService.findOne(
-      'api::email.email',
-      1
-    );
+    const emailConfig = await strapi.documents('api::email.email').findFirst();
 
     /**
      * Sends an email using:
@@ -24997,8 +24675,38 @@ mutation {
 Source: https://docs.strapi.io/cms/features/users-permissions/rest-api
 
 ## Login
-Description: Code example from "Login"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#login)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/local \
+  -H "Content-Type: application/json" \
+  -d '{"identifier": "user@example.com", "password": "yourPassword"}'
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "documentId": "x74detpqybxw0bn6ormua5g2",
+    "username": "testuser1",
+    "email": "user@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
+}
+```
 
 Language: Bash
 File path: N/A
@@ -25033,8 +24741,38 @@ File path: N/A
 
 
 ## Register
-Description: Code example from "Register"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#register)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/local/register \
+  -H "Content-Type: application/json" \
+  -d '{"username": "newuser", "email": "newuser@example.com", "password": "Password123!"}'
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 2,
+    "documentId": "xjpaytstw1gm7wdfoc6c2k13",
+    "username": "newuser",
+    "email": "newuser@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
+}
+```
 
 Language: Bash
 File path: N/A
@@ -25069,8 +24807,26 @@ File path: N/A
 
 
 ## Forgot password
-Description: Code example from "Forgot password"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#forgot-password)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/forgot-password \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com"}'
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "ok": true
+}
+```
 
 Language: Bash
 File path: N/A
@@ -25093,8 +24849,38 @@ File path: N/A
 
 
 ## Reset password
-Description: Code example from "Reset password"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#reset-password)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/reset-password \
+  -H "Content-Type: application/json" \
+  -d '{"code": "resetTokenFromEmail", "password": "NewPassword123!", "passwordConfirmation": "NewPassword123!"}'
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "documentId": "x74detpqybxw0bn6ormua5g2",
+    "username": "testuser1",
+    "email": "user@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
+}
+```
 
 Language: Bash
 File path: N/A
@@ -25129,8 +24915,39 @@ File path: N/A
 
 
 ## Change password
-Description: Code example from "Change password"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#change-password)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/change-password \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"currentPassword": "OldPassword123!", "password": "NewPassword456!", "passwordConfirmation": "NewPassword456!"}'
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "documentId": "x74detpqybxw0bn6ormua5g2",
+    "username": "testuser1",
+    "email": "user@example.com",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2024-03-15T10:00:00.000Z",
+    "updatedAt": "2024-03-15T10:00:00.000Z",
+    "publishedAt": "2024-03-15T10:00:00.000Z"
+  }
+}
+```
 
 Language: Bash
 File path: N/A
@@ -25166,8 +24983,16 @@ File path: N/A
 
 
 ## Email confirmation
-Description: Code example from "Email confirmation"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#email-confirmation)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -G http://localhost:1337/api/auth/email-confirmation \
+  --data-urlencode "confirmation=confirmationTokenHere"
+```
 
 Language: Bash
 File path: N/A
@@ -25179,8 +25004,27 @@ curl -G http://localhost:1337/api/auth/email-confirmation \
 
 
 ## Send email confirmation
-Description: Code example from "Send email confirmation"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#send-email-confirmation)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/send-email-confirmation \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com"}'
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "email": "user@example.com",
+  "sent": true
+}
+```
 
 Language: Bash
 File path: N/A
@@ -25204,8 +25048,27 @@ File path: N/A
 
 
 ## Refresh token
-Description: Code example from "Refresh token"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#refresh-token)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d '{"refreshToken": "yourRefreshToken"}'
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "jwt": "newAccessToken",
+  "refreshToken": "newRefreshToken"
+}
+```
 
 Language: Bash
 File path: N/A
@@ -25229,8 +25092,25 @@ File path: N/A
 
 
 ## Logout
-Description: Code example from "Logout"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#logout)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/auth/logout \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "ok": true
+}
+```
 
 Language: Bash
 File path: N/A
@@ -25252,8 +25132,34 @@ File path: N/A
 
 
 ## Get current user
-Description: Code example from "Get current user"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#get-current-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users/me \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "id": 1,
+  "documentId": "x74detpqybxw0bn6ormua5g2",
+  "username": "testuser1",
+  "email": "user@example.com",
+  "provider": "local",
+  "confirmed": true,
+  "blocked": false,
+  "createdAt": "2024-03-15T10:00:00.000Z",
+  "updatedAt": "2024-03-15T10:00:00.000Z",
+  "publishedAt": "2024-03-15T10:00:00.000Z"
+}
+```
 
 Language: Bash
 File path: N/A
@@ -25284,8 +25190,16 @@ File path: N/A
 
 
 ## List users
-Description: Code example from "List users"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#list-users)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
 
 Language: Bash
 File path: N/A
@@ -25297,8 +25211,16 @@ curl http://localhost:1337/api/users \
 
 
 ## Get a user
-Description: Code example from "Get a user"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#get-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users/1 \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
 
 Language: Bash
 File path: N/A
@@ -25310,8 +25232,23 @@ curl http://localhost:1337/api/users/1 \
 
 
 ## Count users
-Description: Code example from "Count users"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#count-users)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users/count \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Language: JSON
+File path: N/A
+
+```json
+42
+```
 
 Language: Bash
 File path: N/A
@@ -25331,8 +25268,18 @@ File path: N/A
 
 
 ## Create a user
-Description: Code example from "Create a user"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#create-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/users \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"username": "newuser", "email": "newuser@example.com", "password": "Password123!", "role": 1, "confirmed": true}'
+```
 
 Language: Bash
 File path: N/A
@@ -25348,6 +25295,16 @@ curl -X POST http://localhost:1337/api/users \
 ## Update a user
 Description: :::note Relation inputs support both documentId and numeric IDs When updating a user with custom relations, you can use either documentId (recommended for Strapi 5) or numeric id in relation payloads:
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#update-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X PUT http://localhost:1337/api/users/1 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"username": "updateduser"}'
+```
 
 Language: Bash
 File path: N/A
@@ -25383,8 +25340,16 @@ File path: N/A
 
 
 ## Delete a user
-Description: Code example from "Delete a user"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#delete-a-user)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X DELETE http://localhost:1337/api/users/1 \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
 
 Language: Bash
 File path: N/A
@@ -25396,8 +25361,48 @@ curl -X DELETE http://localhost:1337/api/users/1 \
 
 
 ## List roles
-Description: Code example from "List roles"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#list-roles)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users-permissions/roles \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "roles": [
+    {
+      "id": 1,
+      "documentId": "abcdefghijklmnop12345678",
+      "name": "Authenticated",
+      "description": "Default role given to authenticated user.",
+      "type": "authenticated",
+      "createdAt": "2024-03-15T10:00:00.000Z",
+      "updatedAt": "2024-03-15T10:00:00.000Z",
+      "publishedAt": "2024-03-15T10:00:00.000Z",
+      "nb_users": 2
+    },
+    {
+      "id": 2,
+      "documentId": "qrstuvwxyzabcdef98765432",
+      "name": "Public",
+      "description": "Default role given to unauthenticated user.",
+      "type": "public",
+      "createdAt": "2024-03-15T10:00:00.000Z",
+      "updatedAt": "2024-03-15T10:00:00.000Z",
+      "publishedAt": "2024-03-15T10:00:00.000Z",
+      "nb_users": 0
+    }
+  ]
+}
+```
 
 Language: Bash
 File path: N/A
@@ -25442,8 +25447,16 @@ File path: N/A
 
 
 ## Get a role
-Description: Code example from "Get a role"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#get-a-role)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users-permissions/roles/1 \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
 
 Language: Bash
 File path: N/A
@@ -25455,8 +25468,27 @@ curl http://localhost:1337/api/users-permissions/roles/1 \
 
 
 ## Create a role
-Description: Code example from "Create a role"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#create-a-role)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X POST http://localhost:1337/api/users-permissions/roles \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"name": "Editor", "description": "Can edit content", "type": "editor"}'
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "ok": true
+}
+```
 
 Language: Bash
 File path: N/A
@@ -25480,8 +25512,27 @@ File path: N/A
 
 
 ## Update a role
-Description: Code example from "Update a role"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#update-a-role)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X PUT http://localhost:1337/api/users-permissions/roles/1 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"description": "Updated description"}'
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "ok": true
+}
+```
 
 Language: Bash
 File path: N/A
@@ -25505,8 +25556,25 @@ File path: N/A
 
 
 ## Delete a role
-Description: Code example from "Delete a role"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#delete-a-role)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X DELETE http://localhost:1337/api/users-permissions/roles/3 \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "ok": true
+}
+```
 
 Language: Bash
 File path: N/A
@@ -25528,8 +25596,16 @@ File path: N/A
 
 
 ## List permissions
-Description: Code example from "List permissions"
+Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#list-permissions)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/users-permissions/permissions \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
 
 Language: Bash
 File path: N/A
@@ -35512,9 +35588,9 @@ const sentryInstance = strapi
 # Quick Start Guide - Strapi Developer Docs
 Source: https://docs.strapi.io/cms/quick-start
 
-## Step 1: Run the installation script and create a Strapi Cloud account
+## Part A: Create a new project with Strapi
 Description: Run the following command in a terminal:
-(Source: https://docs.strapi.io/cms/quick-start#step-1-run-the-installation-script-and-create-a-strapi-cloud-account)
+(Source: https://docs.strapi.io/cms/quick-start#part-a-create-a-new-project-with-strapi)
 
 Language: Bash
 File path: N/A
@@ -35523,11 +35599,7 @@ File path: N/A
     npx create-strapi@latest my-strapi-project
 ```
 
-
-## Step 2: Register the first local administrator user
-Description: Once the installation is complete, you need to start the server.
-(Source: https://docs.strapi.io/cms/quick-start#step-2-register-the-first-local-administrator-user)
-
+---
 Language: Bash
 File path: .strapi-cloud.js
 
@@ -35548,9 +35620,9 @@ File path: N/A
 ```
 
 
-## Step 6: Use the API
+## Part D: Add content to your Strapi Cloud project with the Content Manager
 Description: Click me to view an example of API response:
-(Source: https://docs.strapi.io/cms/quick-start#step-6-use-the-api)
+(Source: https://docs.strapi.io/cms/quick-start#part-d-add-content-to-your-strapi-cloud-project-with-the-content-manager)
 
 Language: JSON
 File path: N/A
