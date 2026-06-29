@@ -49,3 +49,10 @@ How to use
 - Endpoint (2‑column API block, `kind` `http`/`js`) rules: `claude-plugins/inki/references/templates/components/endpoint.md`
 - StepDetails (tutorial step) rules: `claude-plugins/inki/references/templates/components/step-details.md`
 - NextSteps ("What's next?" block) rules: `claude-plugins/inki/references/templates/components/next-steps.md`
+- ExternalLink (outbound link with trailing icon) rules: `claude-plugins/inki/references/templates/components/external-link.md`
+- Icon (inline Phosphor icons in prose) rules: `claude-plugins/inki/references/templates/components/icon.md`
+- Badge (plan / status / version flags via named aliases like `<GrowthBadge>`, `<NewBadge>`) rules: `claude-plugins/inki/references/templates/components/badge.md`
+- Columns / ColumnLeft / ColumnRight (two-up side-by-side layout) rules: `claude-plugins/inki/references/templates/components/columns.md`
+- SubtleCallout (low-emphasis "good to know" aside) rules: `claude-plugins/inki/references/templates/components/subtle-callout.md`
+- Checklist / ChecklistItem (interactive checkbox lists) rules: `claude-plugins/inki/references/templates/components/checklist.md`
+- MermaidWithFallback (live Mermaid diagram with static fallback) rules: `claude-plugins/inki/references/templates/components/mermaid-with-fallback.md`

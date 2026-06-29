@@ -28,4 +28,4 @@ module.exports = {
 ```
 
 ## Usage
-Explain how to use it post-setup; add API sub-sections if relevant.
+Explain how to use it post-setup; add API sub-sections if relevant. For API sub-sections, use the `<Endpoint>` component (`kind="http"` for REST, `kind="js"` for the Document Service), not the deprecated `<ApiCall>`/`<Request>`/`<Response>` trio. See `components/endpoint.md`.

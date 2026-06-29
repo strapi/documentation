@@ -384,7 +384,13 @@ Use components as specified in the outline's `components` field. Key components:
 - **`<Tabs>` / `<TabItem>`**: Multi-variant content (JS/TS, Yarn/NPM). Follow groupId conventions.
 - **`<ThemedImage>`**: Screenshots with light/dark variants.
 - **`<CustomDocCardsWrapper>` / `<CustomDocCard>`**: Card links to related pages.
-- **Badges**: `<NewBadge />`, `<UpdatedBadge />` on the same line as headings. `<GrowthBadge />`, `<EnterpriseBadge />`, `<BetaBadge />`, etc. on a separate line after the heading.
+- **Badges**: `<NewBadge />`, `<UpdatedBadge />` on the same line as headings. `<GrowthBadge />`, `<EnterpriseBadge />`, `<BetaBadge />`, etc. on a separate line after the heading. Always use a named alias, never the raw `<Badge>`. Full alias list, props, and rules: `claude-plugins/inki/references/templates/components/badge.md`.
+- **`<ExternalLink to="…" text="…"/>`**: Outbound link with a trailing external-link icon. Self-closing, label passed via `text` (not children). See `claude-plugins/inki/references/templates/components/external-link.md`.
+- **`<Icon name="…" />`**: Inline Phosphor icon to mirror an admin-panel UI element. Phosphor name without the `ph-` prefix. See `claude-plugins/inki/references/templates/components/icon.md`.
+- **`<Columns>` / `<ColumnLeft>` / `<ColumnRight>`**: Two-up side-by-side layout for before/after or two-variant comparisons. See `claude-plugins/inki/references/templates/components/columns.md`.
+- **`<SubtleCallout title="…">`**: Low-emphasis "good to know" aside (not an admonition directive). See `claude-plugins/inki/references/templates/components/subtle-callout.md`.
+- **`<Checklist title="…">` / `<ChecklistItem>`**: Interactive checkbox list for verification/best-practice items (not ordered procedures). See `claude-plugins/inki/references/templates/components/checklist.md`.
+- **`<MermaidWithFallback chartFile="…" fallbackImage="…" />`**: Live Mermaid diagram (fetched from a `.mmd` file) with a static image fallback. See `claude-plugins/inki/references/templates/components/mermaid-with-fallback.md`.
 
 ---
 
