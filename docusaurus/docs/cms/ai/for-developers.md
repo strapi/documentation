@@ -131,7 +131,7 @@ The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is an open s
 <CustomDocCard icon="book-open" title="Docs MCP server" description="Connect the Strapi documentation to your IDE for up-to-date, reliable information." link="/cms/ai/docs-mcp-server" />
 </CustomDocCardsWrapper>
 
-## Tips for better results {#tips}
+### Tips for better results with the Docs MCP server {#tips}
 
 The following tips will help you fine-tune your prompts to get the best results:
 - Use the [Docs MCP server](/cms/ai/docs-mcp-server) in your IDE for the fastest developer experience. For docs-related questions, prefix your prompt with `Use the strapi-docs MCP server to answer:` so the tool queries docs.strapi.io instead of using potentially outdated training data.
@@ -139,3 +139,7 @@ The following tips will help you fine-tune your prompts to get the best results:
 - Mention your Strapi version (e.g., Strapi 5) to avoid outdated suggestions.
 - Pair code examples with their source page when sharing snippets from `llms-code.txt`.
 - Prefer documented APIs over private internals when asking for code generation.
+
+## Inki {#inki}
+
+[Inki](https://github.com/strapi/documentation/tree/main/claude-plugins/inki) is a Claude Code plugin that makes contributing to the Strapi documentation easier. It bundles the skills, prompts, templates, and editorial rules the docs team uses to research where new content belongs, draft it from the right template, review it against the style guide and verify its code examples, then open a pull request. You can install it from this repository's marketplace and run the whole workflow, or any single step, from Claude Code.
