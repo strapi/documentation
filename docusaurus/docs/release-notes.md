@@ -33,7 +33,7 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 
 ## 7.0.0
 
-The Strapi Documentation has a whole new design, complete with new reading modes, content width selector, redesigned API pages, a new feedback widget, and more! <Icon name="sparkle"/>. You can also contribute more easily to the documentation, with the [Inki plugin](https://github.com/strapi/documentation/tree/main/claude-plugins/inki) for Claude Code, specifically tailored to Strapi Docs. Check out all the [new docs features](/whats-new).
+The Strapi Documentation has a whole new design, complete with new reading modes, content width selector, redesigned API pages, a new feedback widget, and more! <Icon name="sparkle"/>. You can also contribute more easily to the documentation, with the [Inki plugin](https://github.com/strapi/documentation/tree/main/claude-plugins/inki) for Claude Code, specifically tailored to Strapi Docs. Check out all the new docs features on the [What's new?](/whats-new) page!
 
 <br />
 ### <Icon name='sparkle' /> New content
