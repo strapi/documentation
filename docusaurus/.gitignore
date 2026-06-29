@@ -29,6 +29,10 @@ docs/node_modules/**
 
 *.py
 
+# MeiliSearch index backups (local exports from scripts/meilisearch/backup-index.js)
+meilisearch-backups/
+**/meilisearch-backups/
+
 # LLMs.txt files and related
 llms*.txt
 **/llm*.txt
