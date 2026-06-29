@@ -42,6 +42,14 @@ export const aiToolsConfig = {
       openIn: '_blank',
     },
     {
+      id: 'install-mcp',
+      label: 'Install Strapi Docs MCP',
+      description: 'Connect your AI assistant to the Strapi docs MCP server',
+      icon: 'plugs',
+      actionType: 'navigate',
+      url: '/cms/ai/docs-mcp-server',
+    },
+    {
       id: 'view-llms',
       label: 'View LLMs.txt',
       description: 'Lightweight version for AI models',
