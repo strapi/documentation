@@ -16,6 +16,13 @@ import QueryEnginePrereqs from '/docs/snippets/query-engine-prereqs.md'
 
 # Ordering and Paginating with the Query Engine API
 
+<Tldr>
+
+The Query Engine API supports ordering results with the `orderBy` parameter on single or multiple attributes, including relational ordering, and pagination with `offset` and `limit` parameters.
+
+</Tldr>
+
+
 <ConsiderDocumentService />
 <QueryEnginePrereqs />
 

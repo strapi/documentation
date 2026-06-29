@@ -1,5 +1,5 @@
 ---
-title: Email Provider
+title: Cloud email provider
 displayed_sidebar: cloudSidebar
 description: Configure Strapi Cloud to use a third-party email provider.
 canonicalUrl: https://docs.strapi.io/cloud/advanced/email.html

@@ -2,15 +2,21 @@
 @use './mixins' as *;
 
 .custom-cards-wrapper {
-  display: flex;
-  flex-flow: row wrap;
-  max-width: 640px;
-  justify-content: space-between;
+  // Auto-fitting grid: cards fill the available width, so the layout grows
+  // from 2 columns at normal width to 3-4+ columns in max-width content mode
+  // instead of being capped at two columns / 640px.
+  display: grid;
+  // min(240px, 100%) guarantees a card never exceeds the container width, so
+  // narrow contexts (AI mode panel, mobile) collapse to one column cleanly
+  // instead of overflowing.
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+  gap: 16px;
+  align-items: stretch;
 
   .custom-doc-card {
-    margin-bottom: 16px;
-    flex: 0 0 312px;
-    flex: 0 0 calc(50% - 10px);
+    margin-bottom: 0;
+    flex: initial;
+    min-width: 0;
   }
 
   article.custom-doc-card:first-of-type {

@@ -13,6 +13,13 @@ tags:
 
 # Managing relations with API requests
 
+<Tldr>
+
+Use `connect`, `disconnect`, and `set` parameters in REST and GraphQL API requests to manage relations between content-types. Reorder relations using positional arguments like `before`, `after`, `start`, or `end`.
+
+</Tldr>
+
+
 Defining relations between content-types (that are designated as entities in the database layers) is connecting entities with each other.
 
 Relations between content-types can be managed through the [admin panel](/cms/features/content-manager#relational-fields) or through [REST API](/cms/api/rest) or [Document Service API](/cms/api/document-service) requests.

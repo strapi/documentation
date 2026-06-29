@@ -13,6 +13,13 @@ tags:
 
 # How to store and access data from a Strapi plugin
 
+<Tldr>
+
+Plugin content-types store and persist data like standard content-types. Use the CLI generator to create them, then interact with data via the Document Service API or Query Engine API.
+
+</Tldr>
+
+
 To store data with a Strapi [plugin](/cms/plugins-development/developing-plugins), use a plugin content-type. Plugin content-types work exactly like other [content-types](/cms/backend-customization/models). Once the content-type is [created](#create-a-content-type-for-your-plugin), you can start [interacting with the data](#interact-with-data-from-the-plugin).
 
 ## Create a content-type for your plugin

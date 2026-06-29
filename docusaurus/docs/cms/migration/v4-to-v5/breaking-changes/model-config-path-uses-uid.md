@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Model config path uses uid instead of dot notation
 
+<Tldr>
+
+In Strapi 5, configuration paths use `::` notation instead of dot notation to access models, changing `plugin.upload.somesetting` to `plugin::upload.somesetting`.
+
+</Tldr>
+
+
 In Strapi 5, to retrieve config values you will need to use `config.get('plugin::upload.myconfigval')` or `config.get('api::myapi.myconfigval')`
 
 <Intro />

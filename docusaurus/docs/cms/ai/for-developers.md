@@ -13,6 +13,13 @@ toc_max_heading_level: 3
 
 # AI for developers
 
+<Tldr>
+
+The Strapi documentation site includes free AI-powered tools including an AI toolbar, chatbot powered by Kapa, `llms.txt` files, and MCP servers to help developers learn and integrate Strapi more effectively.
+
+</Tldr>
+
+
 The Strapi documentation site includes AI-powered tools to help developers learn, explore, and integrate Strapi more effectively. These tools are free to use and available to everyone.
 
 :::tip AGENTS.MD files
@@ -37,7 +44,8 @@ The toolbar includes the following actions:
 
 | Action | Description |
 |--------|-------------|
-| **Copy Markdown** | Copies the raw Markdown source of the current page to your clipboard |
+| **Copy Markdown** | Copies the clean Markdown version of the current page to your clipboard. Available in Elegant and AI modes; in Markdown mode, use the **View this page as .md** button next to the toolbar instead. |
+| **View as Markdown** | Opens the clean Markdown version of the current page in a new tab.<br/>Available in Elegant and AI modes; in Markdown mode, it is replaced by the "<Icon name="markdown-logo" /> View this page as .md" button shown next to the toolbar. |
 | **Open with ChatGPT** | Opens a new ChatGPT conversation prefilled with the current page URL |
 | **Open with Claude** | Opens a new Claude conversation and copies the prompt to your clipboard |
 | **View LLMs.txt** | Opens the lightweight page index for AI models |
@@ -46,12 +54,14 @@ The toolbar includes the following actions:
 
 ### Copy Markdown
 
-The primary action in the toolbar. Clicking **Copy Markdown** fetches the raw Markdown source of the current page directly from the repository and copies it to your clipboard. You can then paste it into any AI assistant (ChatGPT, Claude, Gemini, etc.) for:
+The primary action in the toolbar. Clicking **Copy Markdown** fetches the clean Markdown version of the current page (the same content as the page's `.md` URL, with layout components resolved into plain Markdown) and copies it to your clipboard. You can then paste it into any AI assistant (ChatGPT, Claude, Gemini, etc.) for:
 
 - Asking questions about a specific page with full context
 - Summarizing or simplifying documentation content
 - Generating code based on documented APIs
 - Translating documentation into another language
+
+In Markdown mode, the toolbar's **Copy Markdown** and **View as Markdown** actions are replaced by a single **View this page as .md** button shown next to the toolbar, which opens the same clean Markdown. You can also reach it directly by adding `.md` to any page URL.
 
 ### Open with LLM
 
@@ -87,6 +97,14 @@ Hover over any code block on a documentation page to reveal an **Ask AI** button
 />
 
 This is particularly useful for understanding configuration examples, API responses, or lifecycle hook patterns.
+
+### AI mode entry point
+
+Every documentation page can be switched to **AI mode** using the mode selector at the top of the page (next to **Elegant mode** and **Markdown mode**). AI mode splits the page into two columns: the documentation content on the left, and an AI assistant panel on the right.
+
+The panel shows an AI-generated summary of the current page and a question box, so you can read the page and ask questions about it side by side, without leaving the page or opening a separate window. Questions are answered with the same Kapa-powered chatbot, scoped to the page you are reading.
+
+To leave AI mode, switch back to **Elegant mode** or **Markdown mode** with the mode selector, or click the <Icon name="x"/> in the upper-right corner of the AI panel.
 
 ## LLMs text files {#llms-txt}
 

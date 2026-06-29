@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # Facebook provider setup for Users & Permissions
 
+<Tldr>
+
+Facebook provider setup enables social login authentication in Strapi's Users & Permissions feature. Configure a Facebook app with OAuth credentials and update Strapi settings to enable the provider with your Client ID, Client Secret, and frontend redirect URL.
+
+</Tldr>
+
+
 The present page explains how to setup the Facebook provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

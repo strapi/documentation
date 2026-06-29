@@ -13,6 +13,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Upload a file at entry creation is no longer supported
 
+<Tldr>
+
+In Strapi 5, uploading a file while creating an entry is no longer supported. Users must upload the file first via the Upload API, then create the entry with the file id.
+
+</Tldr>
+
+
 In Strapi 5, it is not possible to upload a file while creating an entry, so this should be done in 2 steps.
 
 <Intro />

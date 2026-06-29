@@ -1,11 +1,8 @@
-/**
- * Styles for Kapa AI widget elements outside the Shadow DOM.
+/** Kapa AI — External element styling (outside Shadow DOM)
  *
- * Kapa renders its modal inside a Shadow DOM (#kapa-widget-container),
- * so color theming is handled natively via data-* attributes in
- * docusaurus.config.js (data-color-scheme, data-surface-color-dark, etc.).
+ * Kapa renders its modal inside a Shadow DOM, so Mantine class overrides
+ * must be injected via KapaThemeInjector component (see src/components/).
  *
- * This file only styles elements that leak outside the Shadow DOM
- * (e.g., the overlay, or any global Mantine classes).
+ * This file only styles elements Kapa places in the main document tree
+ * (e.g. the floating button, which we hide via data-button-hide anyway).
  */
-@use './mixins' as *;

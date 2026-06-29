@@ -11,6 +11,13 @@ tags:
 
 # Strapi v4 to Strapi 5 breaking changes
 
+<Tldr>
+
+A comprehensive index of breaking changes between Strapi v4 and v5, organized by category (database, dependencies, configuration, APIs) with information on plugin impact and codemod support.
+
+</Tldr>
+
+
 The present page lists all the breaking changes introduced in Strapi 5.
 Breaking changes are grouped into topic-related categories, and for each line in the following tables line you will find:
 

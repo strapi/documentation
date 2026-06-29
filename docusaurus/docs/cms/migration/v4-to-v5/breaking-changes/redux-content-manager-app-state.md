@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # The ContentManagerAppState redux is modified
 
+<Tldr>
+
+In Strapi 5, the ContentManagerAppState redux store removed RESET_INIT_DATA and GET_INIT_DATA actions, and changed SET_INIT_DATA payload structure to no longer nest attributes within a data object.
+
+</Tldr>
+
+
 In Strapi 5, the redux store for the Content Manager has been changed and some redux actions were removed. Notably, the `useContentManagerInitData` redux state for the Content Manager has been refactored to remove `ModelsContext`. Users might be relying on the original structure in a middleware or subscriber; doing so this will break their application.
 
 <Intro />

@@ -11,6 +11,76 @@
       "permanent": true
     },
     {
+      "source": "/cms/api",
+      "destination": "/cms/api/content-api",
+      "permanent": true
+    },
+    {
+      "source": "/cms/api/rest/guides",
+      "destination": "/cms/api/rest/guides/intro",
+      "permanent": true
+    },
+    {
+      "source": "/cms/migration/v4-to-v5",
+      "destination": "/cms/migration/v4-to-v5/introduction-and-faq",
+      "permanent": true
+    },
+    {
+      "source": "/cms/migration/v4-to-v5/additional-resources",
+      "destination": "/cms/migration/v4-to-v5/additional-resources/introduction",
+      "permanent": true
+    },
+    {
+      "source": "/cloud/cli",
+      "destination": "/cloud/cli/cloud-cli",
+      "permanent": true
+    },
+    {
+      "source": "/cloud/getting-started",
+      "destination": "/cloud/intro",
+      "permanent": true
+    },
+    {
+      "source": "/cloud/projects",
+      "destination": "/cloud/projects/overview",
+      "permanent": true
+    },
+    {
+      "source": "/cms/configurations/sso-providers",
+      "destination": "/cms/features/sso",
+      "permanent": true
+    },
+    {
+      "source": "/cms/data-management",
+      "destination": "/cms/features/data-management",
+      "permanent": true
+    },
+    {
+      "source": "/cms/getting-started",
+      "destination": "/cms/quick-start",
+      "permanent": true
+    },
+    {
+      "source": "/cms/migration",
+      "destination": "/cms/migration/v4-to-v5/introduction-and-faq",
+      "permanent": true
+    },
+    {
+      "source": "/cms/plugins-development/guides",
+      "destination": "/cms/plugins-development/guides/store-and-access-data",
+      "permanent": true
+    },
+    {
+      "source": "/cms/backend-customization/guides",
+      "destination": "/cms/backend-customization/guides/customizing-users-permissions-plugin-routes",
+      "permanent": true
+    },
+    {
+      "source": "/cms/plugins",
+      "destination": "/cms/plugins/installing-plugins-via-marketplace",
+      "permanent": true
+    },
+    {
       "source": "/dev-docs/configurations/sso#setting-up-provider-configuration",
       "destination":"/cms/configurations/guides/configure-sso#setting-up-provider-configuration",
       "permanent": true

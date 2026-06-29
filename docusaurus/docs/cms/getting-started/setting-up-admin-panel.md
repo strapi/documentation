@@ -8,6 +8,13 @@ tags:
 - password
 ---
 
+<Tldr>
+
+The admin panel is where you manage content-types, content, and users. Access it via the app URL, optionally using SSO, then configure your administrator profile including name, email, language, and password.
+
+</Tldr>
+
+
 
 Before going over individual features, we recommend the following steps to set up and configure your Strapi admin panel correctly. Once you complete the setup, you can access the admin panel through the provided URL.
 

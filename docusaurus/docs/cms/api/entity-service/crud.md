@@ -9,6 +9,13 @@ import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'
 
 # CRUD operations with the Entity Service API
 
+<Tldr>
+
+The Entity Service API performs CRUD operations on content through `findOne()`, `findMany()`, `create()`, `update()`, and `delete()` methods, supporting filtering, pagination, relations, and localization.
+
+</Tldr>
+
+
 <ESdeprecated />
 
 The [Entity Service API](/cms/api/entity-service) is built on top of the the [Query Engine API](/cms/api/query-engine) and uses it to perform CRUD operations on entities.

@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # `helper-plugin` deprecated
 
+<Tldr>
+
+In Strapi 5, the `helper-plugin` is removed and replaced with imports from `@strapi/strapi/admin` and `@strapi/design-system`. Codemods automatically handle most migration changes for plugin developers.
+
+</Tldr>
+
+
 In Strapi 5, the `helper-plugin` is removed. A whole migration reference is available for plugin developers, and codemods will automatically handle some changes.
 
  <Intro />

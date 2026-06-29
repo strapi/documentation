@@ -10,6 +10,13 @@ tags:
 
 # GitHub provider SSO configuration
 
+<Tldr>
+
+Configure GitHub as an SSO provider for Strapi admin sign-in using `passport-github2` in the `config/admin` file with your GitHub OAuth credentials and user email scope.
+
+</Tldr>
+
+
 The present page explains how to setup the GitHub provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites

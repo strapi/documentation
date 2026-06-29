@@ -12,6 +12,13 @@ tags:
 
 # Build your query URL with Strapi's interactive tool
 
+<Tldr>
+
+An interactive query builder tool that automatically generates REST API query URLs from your endpoint and parameters, powered by the `qs` library to handle complex nested queries.
+
+</Tldr>
+
+
 A wide range of parameters can be used and combined to query your content with the [REST API](/cms/api/rest), which can result in long and complex query URLs.
 
 Strapi's codebase uses <ExternalLink to="https://github.com/ljharb/qs" text="the `qs` library"/> to parse and stringify nested JavaScript objects. It's recommended to use `qs` directly to generate complex query URLs instead of creating them manually.

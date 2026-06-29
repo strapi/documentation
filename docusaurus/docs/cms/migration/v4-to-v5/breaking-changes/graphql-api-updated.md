@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # The GraphQL API has been updated
 
+<Tldr>
+
+The Strapi 5 GraphQL API supports a new flattened response format and Relay-style `*_connection` queries for pagination. Migrate gradually using `v4CompatibilityMode`, adopt `documentId`, rename fields to `*_connection`, and eventually drop the `attributes` wrapper.
+
+</Tldr>
+
+
 In Strapi 5, the GraphQL API has been updated. It handles the new, flattened response format (see [related breaking change](/cms/migration/v4-to-v5/breaking-changes/new-response-format.md)), and can also now accept <ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> queries.
 
 Flat queries still return a simple array of documents. You can also use Relay-style `*_connection` queries, which return `nodes` and a `pageInfo` object to handle pagination. Use these when you need metadata about pages or total counts.

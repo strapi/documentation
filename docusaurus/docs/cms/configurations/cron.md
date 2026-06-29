@@ -164,6 +164,7 @@ export default {
 
 <details>
 <summary>Advanced example #2: One-off cron jobs</summary>
+
 The following cron job is run only once at a given time:
 
 <Tabs groupId="js-ts">

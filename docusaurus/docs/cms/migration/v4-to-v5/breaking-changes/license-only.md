@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # `lockIcon` property replaced by `licenseOnly`
 
+<Tldr>
+
+In Strapi 5, the `lockIcon` property is replaced by `licenseOnly` in the Admin Panel API methods `addMenuLink()`, `addSettingsLink()`, and `addSettingsLinks()`, displaying a lightning icon to indicate paid features.
+
+</Tldr>
+
+
 Strapi 5 adds a new `licenseOnly` boolean property to pass in the `addMenuLink`, in the `addSettingsLink` and in the `addSettingsLinks` actions. Adding this property shows a lightning ⚡️ icon near the link, and indicates paid features.
 
 A similar result can be achieved in Strapi v4 by adding the `lockIcon` property.

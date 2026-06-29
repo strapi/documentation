@@ -6,11 +6,18 @@ pagination_prev: cms/backend-customization/examples/services-and-controllers
 pagination_next: cms/backend-customization/examples/routes
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import CookbookNote from '/docs/snippets/_cookbook-foodadvisor.md'
 
 # Examples cookbook: Custom policies
 
-<NotV5/>
+<Tldr>
+
+Custom policies control access to content-type endpoints by allowing or blocking requests, and can throw custom errors using `PolicyError` for better error handling and front-end integration.
+
+</Tldr>
+
+
+<CookbookNote/>
 
 :::prerequisites
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/cms/backend-customization/examples).
@@ -39,7 +46,7 @@ Let's say we would like to customize the backend of <ExternalLink to="https://gi
 
 1. Create a new folder for policies to apply only to the "Reviews" collection type.
 2. Create a new policy file.
-3. Use the `findMany()` method from the Entity Service API to get information about the owner of a restaurant when the `/reviews` endpoint is reached.
+3. Use the `findMany()` method from the Document Service API to get information about the owner of a restaurant when the `/reviews` endpoint is reached.
 4. Return an error if the authenticated user is the restaurant's owner, or let the request pass in other cases.
 
 </SideBySideColumn>
@@ -48,7 +55,7 @@ Let's say we would like to customize the backend of <ExternalLink to="https://gi
 
 <SubtleCallout title="Related concepts">
 
-Additional information can be found in the [Policies](/cms/backend-customization/policies), [Routes](/cms/backend-customization/routes), and [Entity Service API](/cms/api/entity-service) documentation.
+Additional information can be found in the [Policies](/cms/backend-customization/policies), [Routes](/cms/backend-customization/routes), and [Document Service API](/cms/api/document-service) documentation.
 
 </SubtleCallout>
 
@@ -72,18 +79,15 @@ module.exports = async (policyContext, config, { strapi }) => {
   }
   /**
    * Queries the Restaurants collection type
-   * using the Entity Service API
+   * using the Document Service API
    * to retrieve information about the restaurant's owner.
    */ 
-  const [restaurant] = await strapi.entityService.findMany(
-    'api::restaurant.restaurant',
-    {
-      filters: {
-        slug: body.restaurant,
-      },
-      populate: ['owner'],
-    }
-  );
+  const [restaurant] = await strapi.documents('api::restaurant.restaurant').findMany({
+    filters: {
+      slug: body.restaurant,
+    },
+    populate: ['owner'],
+  });
   if (!restaurant) {
     return false;
   }
@@ -150,18 +154,15 @@ module.exports = async (policyContext, config, { strapi }) => {
   }
   /**
    * Queries the Restaurants collection type
-   * using the Entity Service API
+   * using the Document Service API
    * to retrieve information about the restaurant's owner.
    */ 
-  const filteredRestaurants = await strapi.entityService.findMany(
-    'api::restaurant.restaurant',
-    {
-      filters: {
-        slug: body.restaurant,
-      },
-      populate: ['owner'],
-    }
-  );
+  const filteredRestaurants = await strapi.documents('api::restaurant.restaurant').findMany({
+    filters: {
+      slug: body.restaurant,
+    },
+    populate: ['owner'],
+  });
 
   const restaurant = filteredRestaurants[0];
 

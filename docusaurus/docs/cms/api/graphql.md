@@ -19,6 +19,13 @@ import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
 
 # GraphQL API
 
+<Tldr>
+
+The GraphQL API allows querying and mutating content-types with filtering, sorting, and pagination. It uses `documentId` as the unique identifier and provides singular and plural queries with support for relations, media fields, components, dynamic zones, and localization.
+
+</Tldr>
+
+
 The GraphQL API allows performing queries and mutations to interact with the [content-types](/cms/backend-customization/models#content-types) through Strapi's [GraphQL plugin](/cms/plugins/graphql). Results can be [filtered](#filters), [sorted](#sorting) and [paginated](#pagination).
 
 :::prerequisites

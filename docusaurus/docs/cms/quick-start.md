@@ -16,7 +16,18 @@ import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
 # Quick Start Guide
 
+<Tldr>
+
+Build and deploy a Strapi project from scratch in 10 steps: create a local project with `create-strapi@latest`, define collection types using the Content-Type Builder, deploy to Strapi Cloud with `npm run strapi deploy`, and add content via the Content Manager.
+
+</Tldr>
+
+
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and content structure from scratch, then deploy your project to Strapi Cloud to add data from there.
+
+:::tip Track your progress
+This guide is organized into collapsible steps. Click a step's title to expand or collapse it, and click the circle on the right of a step to mark it as completed once you're done. Completed steps turn green, and a progress summary at the bottom-right of the page keeps track of how far along you are.
+:::
 
 :::strapi 3 options to discover Strapi
 There are 3 options to discover Strapi. Choose what best suits you:
@@ -40,10 +51,7 @@ We will first create a new Strapi project on your machine by running a command i
 
 Follow the steps below by clicking on the togglable content to read more instructions.
 
-<details open>
-<summary>Step 1: Run the installation script and create a Strapi Cloud account</summary>
-
-### Step 1: Run the installation script and create a Strapi Cloud account
+<StepDetails title="Step 1: Run the installation script and create a Strapi Cloud account" defaultOpen>
 
 1. Run the following command in a terminal:
 
@@ -87,12 +95,9 @@ As you will see in the terminal, your project is now building locally.
 * Many more installation options are available. Please refer to the [installation documentation](/cms/installation) for details.
 :::
 
-</details>
+</StepDetails>
 
-<details>
-<summary>Step 2: Register the first local administrator user</summary>
-
-### Step 2: Register the first local administrator user
+<StepDetails title="Step 2: Register the first local administrator user">
 
 Once the installation is complete, you need to start the server. In the terminal, type or copy and paste the following:
 
@@ -116,9 +121,9 @@ sources={{
     light: '/img/assets/quick-start-guide/qsg-handson-part1-01-admin_panel-v5.png',
     dark: '/img/assets/quick-start-guide/qsg-handson-part1-01-admin_panel-v5_DARK.png',
 }}
-/> 
+/>
 
-</details>
+</StepDetails>
 
 :::callout <Icon name="confetti" /> Congratulations!
 You have just created a new Strapi project! You can start playing with Strapi and discover the [Content Manager](/cms/features/content-manager) by yourself, or proceed to part B below.
@@ -140,11 +145,7 @@ You might also need to run `npm run build` prior to the `develop` command, espec
 
 The Content-Type Builder helps you create your content structure. When creating an empty project with Strapi, this is where to get the party started!
 
-<details >
-
-<summary>Step 1: Create a "Restaurant" collection type</summary>
-
-### Step 1: Create a "Restaurant" collection type
+<StepDetails title='Step 3: Create a "Restaurant" collection type'>
 
 Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
@@ -170,12 +171,9 @@ sources={{
 Once Strapi has restarted, "Restaurant" is listed under <Icon name="feather" /> _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool, let's create another one right now, just for pleasure.
 <br/>
 
-</details>
+</StepDetails>
 
-<details>
-<summary>Step 2: Create a "Category" collection type</summary>
-
-### Step 2: Create a "Category" collection type
+<StepDetails title='Step 4: Create a "Category" collection type'>
 
 It would help getting a bit more organized if our restaurants directory had some categories. Let's create a "Category" collection type:
 
@@ -200,7 +198,7 @@ sources={{
 
 11. Finally, click **Finish**, then the **Save** button, and wait for Strapi to restart.
 
-</details>
+</StepDetails>
 
 :::callout <Icon name="confetti" /> Congratulations!
 You have just created a basic content structure for your Strapi project! You can keep on playing with the [Content-Type Builder](/cms/features/content-type-builder), or proceed to parts C and D below to discover Strapi Cloud and add actual content to your project.
@@ -261,10 +259,7 @@ Feel free to play with the Content-Type Builder even further and add more fields
 
 Now that we have created a basic content structure with 2 collection types, "Restaurant" and "Category", and deployed your project to Strapi Cloud, let's use the Cloud to actually add content by creating new entries.
 
-<details>
-<summary>Step 1: Log in to the admin panel of your new Strapi Cloud project</summary>
-
-### Step 1: Log in to the admin panel of your new Strapi Cloud project
+<StepDetails title="Step 5: Log in to the admin panel of your new Strapi Cloud project">
 
 Now that your Strapi Cloud project is created, let's log in into the project:
 
@@ -295,13 +290,9 @@ Any project hosted on Strapi Cloud is accessible from its own URL, something lik
 
 </details>
 
-</details>
+</StepDetails>
 
-<details>
-<summary>Step 2: Create an entry for the "Restaurant" collection type</summary>
-
-
-### Step 2: Create an entry for the "Restaurant" collection type
+<StepDetails title="Step 6: Create an entry for the &quot;Restaurant&quot; collection type">
 
 1. Go to <Icon name="feather" /> _Content Manager > Collection types - Restaurant_ in the navigation.
 2. Click on **Create new entry**.
@@ -319,12 +310,9 @@ sources={{
 
 The restaurant is now listed in the _Collection types - Restaurant_ view of the <Icon name="feather" /> _Content Manager_.
 <br/>
-</details>
+</StepDetails>
 
-<details>
-<summary>Step 3: Add Categories</summary>
-
-#### Step 3: Add Categories
+<StepDetails title="Step 7: Add Categories">
 
 Let's go to <Icon name="feather" /> _Content Manager > Collection types - Category_ and create 2 categories:
 
@@ -348,12 +336,9 @@ Now, we will add a category to a restaurant:
 1. Go to <Icon name="feather" /> _Content Manager > Collection types - Restaurant_ in the navigation, and click on "Biscotte Restaurant".
 2. In the **Categories** drop-down list at the bottom of the page, select "French Food". Scroll back to the top of the page and click **Save**.
 
-</details>
+</StepDetails>
 
-<details>
-<summary>Step 4: Set Roles & Permissions</summary>
-
-### Step 4: Set Roles & Permissions
+<StepDetails title="Step 8: Set Roles & Permissions">
 
 We have just added a restaurant and 2 categories. We now have enough content to consume (pun intended). But first, we need to make sure that the content is publicly accessible through the API:
 
@@ -373,12 +358,9 @@ sources={{
   dark: '/img/assets/quick-start-guide/qsg-handson-part2-04-roles-v5_DARK.png'
 }}/>
 
-</details>
+</StepDetails>
 
-<details>
-<summary>Step 5: Publish the content</summary>
-
-### Step 5: Publish the content
+<StepDetails title="Step 9: Publish the content">
 
 By default, any content you create is saved as a draft. Let's publish our categories and restaurant.
 
@@ -399,12 +381,9 @@ sources={{
 }}
 />
 
-</details>
+</StepDetails>
 
-<details>
-<summary>Step 6: Use the API</summary>
-
-### Step 6: Use the API
+<StepDetails title="Step 10: Use the API">
 
 OK dear gourmet, we have just finished creating our content and making it accessible through the API. You can give yourself a pat on the back — but you have yet to see the final result of your hard work.
 
@@ -452,7 +431,7 @@ Try it now! The result should be similar to the example response below 👇.
 
 </details>
 
-</details>
+</StepDetails>
 
 :::callout <Icon name="confetti"/> Congratulations!
 Now your content is created, published, and you have permissions to request it through the API.
@@ -463,11 +442,26 @@ Keep on creating amazing content!
 The databases for your Strapi Cloud project and your local project are different. This means that data is not automatically synchronized between your Strapi Cloud and local projects. You can use the [data management system](/cms/features/data-management) to transfer data between projects.
 :::
 
-## <Icon name="fast-forward"/> What to do next?
+<div className="qsg-whats-next">
 
-Now that you know the basics of creating and publishing content with Strapi, we encourage you to explore and dig deeper into some Strapi features:
+## What's next?
 
-<Icon name="arrow-fat-right"/> learn how to use Strapi's [REST](/cms/api/rest) API to query the content,<br/>
-<Icon name="arrow-fat-right"/> learn more about Strapi features by browsing the <Icon name="backpack" /> **Features** category,<br/>
-<Icon name="arrow-fat-right"/> learn more about Strapi Cloud projects by reading the [Cloud Documentation](/cloud/intro),<br/>
-<Icon name="arrow-fat-right"/> and [customize your Strapi back end](/cms/backend-customization) and [admin panel](/cms/admin-panel-customization) for advanced use cases.<br/>
+<NextSteps title="">
+  <NextSteps.Step
+    title="Explore the admin panel"
+    description="Create entries, set up roles, manage media files."
+    link="/cms/features/admin-panel"
+  />
+  <NextSteps.Step
+    title="Connect a frontend"
+    description="Use REST or GraphQL with Next.js, Nuxt, or any framework."
+    link="/cms/api/rest"
+  />
+  <NextSteps.Step
+    title="Deploy to production"
+    description="Strapi Cloud, Docker, or your own infrastructure."
+    link="/cloud/getting-started/deployment"
+  />
+</NextSteps>
+
+</div>

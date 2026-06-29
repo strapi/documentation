@@ -3,14 +3,27 @@
 
 .expandable-content {
   margin-bottom: var(--strapi-spacing-6);
+  // Stay within the content column on its own, without relying on the
+  // page-level :has() width rules (which may not match on the first paint,
+  // briefly letting the block span the full viewport on reload, seen at narrow).
+  max-width: 100%;
+  box-sizing: border-box;
 
   &__wrapper {
     position: relative;
-    transition: max-height 0.3s ease;
-    
+    // No max-height transition by default: on reload the collapse would animate
+    // from the full content height, flashing the whole block open before
+    // settling. The transition is enabled only after the user toggles (the
+    // component adds [data-interacted] for that), so clicks still animate.
+    transition: none;
+
     &--collapsed {
       position: relative;
     }
+  }
+
+  &[data-interacted="true"] &__wrapper {
+    transition: max-height 0.3s ease;
   }
 
   &__gradient {
@@ -19,13 +32,14 @@
     left: 0;
     right: 0;
     height: 80px;
+    // Fade to the actual page background (--strapi-surface-0), not hardcoded
+    // white. The page is #fafafa, so fading to pure white left a visible band.
+    // `transparent` is the same hue at 0 alpha, so the ramp stays clean.
     background: linear-gradient(
       to bottom,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.3) 30%,
-      rgba(255, 255, 255, 0.7) 60%,
-      rgba(255, 255, 255, 0.95) 85%,
-      rgba(255, 255, 255, 1) 100%
+      transparent 0%,
+      var(--strapi-surface-0) 90%,
+      var(--strapi-surface-0) 100%
     );
     pointer-events: none;
   }
@@ -85,17 +99,8 @@
 
 @include dark {
   .expandable-content {
-    &__gradient {
-      background: linear-gradient(
-        to bottom,
-        rgba(33, 33, 52, 0) 0%,
-        rgba(33, 33, 52, 0.2) 20%,
-        rgba(33, 33, 52, 0.5) 40%,
-        rgba(33, 33, 52, 0.8) 65%,
-        rgba(33, 33, 52, 0.95) 85%,
-        rgba(33, 33, 52, 1) 100%
-      );
-    }
+    // The gradient now fades to var(--strapi-surface-0), which is already
+    // theme-aware, so no dark-specific gradient override is needed here.
 
     &__button {
       background: rgba(33, 33, 52, 0.95);

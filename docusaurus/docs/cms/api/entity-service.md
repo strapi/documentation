@@ -11,6 +11,13 @@ import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'
 
 # Entity Service API
 
+<Tldr>
+
+The Entity Service API is a backend layer that handles complex content structures like components and dynamic zones, providing CRUD operations, filtering, populating relations, and pagination via `strapi.entityService`.
+
+</Tldr>
+
+
 <ESdeprecated />
 
 :::prerequisites

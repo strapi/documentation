@@ -12,6 +12,13 @@ tags:
 
 # Step-by-step guide to upgrade to Strapi 5
 
+<Tldr>
+
+Follow step-by-step instructions to upgrade your Strapi v4 application to Strapi 5, including database and code backups, running the automated upgrade tool, handling manual code updates, and gradually migrating your REST and GraphQL API calls using compatibility headers.
+
+</Tldr>
+
+
 The latest major version of Strapi is Strapi 5.
 
 The present page is meant to be used as step-by-step instructions for upgrading your Strapi v4 application to Strapi 5.

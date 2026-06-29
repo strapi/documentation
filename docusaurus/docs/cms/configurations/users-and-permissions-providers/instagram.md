@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # Instagram provider setup for Users & Permissions
 
+<Tldr>
+
+The Instagram Basic Display API is deprecated as of December 4, 2024. Strapi's built-in Instagram provider no longer works and requires updating to Meta's Instagram Business Login API instead.
+
+</Tldr>
+
+
 The present page explains how to setup the Instagram provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

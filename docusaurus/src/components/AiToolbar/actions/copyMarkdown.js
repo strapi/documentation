@@ -1,4 +1,4 @@
-import { resolveDocContext, getRawMarkdownUrl } from '../utils/docContext';
+import { resolveDocContext, getRawMarkdownUrl, getCleanMarkdownUrl } from '../utils/docContext';
 
 export const copyMarkdownAction = async (context) => {
   const { docId, docPath, updateActionState } = context;
@@ -9,19 +9,37 @@ export const copyMarkdownAction = async (context) => {
     }
 
     const { docId: resolvedDocId, docPath: resolvedDocPath } = resolveDocContext(docId, docPath);
-    const markdownUrl = getRawMarkdownUrl({ docId: resolvedDocId, docPath: resolvedDocPath });
 
-    if (!markdownUrl) {
+    // Prefer the clean, generated per-page .md (JSX resolved, snippets inlined,
+    // API code surfaced); fall back to the raw MDX on GitHub if the .md isn't
+    // available (older deploys, or a page not yet generated).
+    const cleanUrl = getCleanMarkdownUrl();
+    const rawUrl = getRawMarkdownUrl({ docId: resolvedDocId, docPath: resolvedDocPath });
+
+    if (!cleanUrl && !rawUrl) {
       throw new Error('Unable to determine document path');
     }
 
-    const response = await fetch(markdownUrl);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch markdown: ${response.status}`);
+    let markdownContent = null;
+    if (cleanUrl) {
+      try {
+        const res = await fetch(cleanUrl);
+        if (res.ok) markdownContent = await res.text();
+      } catch (e) {
+        // network/CORS issue — fall back to the raw source below
+      }
+    }
+    if (markdownContent === null) {
+      if (!rawUrl) {
+        throw new Error('Unable to determine document path');
+      }
+      const response = await fetch(rawUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch markdown: ${response.status}`);
+      }
+      markdownContent = await response.text();
     }
 
-    const markdownContent = await response.text();
     await navigator.clipboard.writeText(markdownContent);
 
     if (updateActionState) {

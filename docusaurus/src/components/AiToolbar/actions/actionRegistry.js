@@ -1,10 +1,12 @@
 import { copyMarkdownAction } from './copyMarkdown';
+import { viewMarkdownAction } from './viewMarkdown';
 import { navigateAction } from './navigate';
 import { openLLMAction } from './openLLM';
 
 // Central registry of all available actions
 export const actionHandlers = {
   'copy-markdown': copyMarkdownAction,
+  'view-markdown': viewMarkdownAction,
   navigate: navigateAction,
   'open-llm': openLLMAction,
 };

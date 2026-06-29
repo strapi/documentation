@@ -17,6 +17,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # `publicationState` is removed and replaced by `status`
 
+<Tldr>
+
+In Strapi 5, the `publicationState` parameter is replaced with `status`, which accepts `draft` and `published` values instead of `live` and `preview`.
+
+</Tldr>
+
+
 In Strapi 5, the [Draft & Publish feature](/cms/features/draft-and-publish) has been reworked, and the Content API, including REST, GraphQL, and Document Service APIs accept a new `status` parameter.
 
 <Intro />

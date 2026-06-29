@@ -4,14 +4,21 @@ description: Use Strapi's Document Service API to sort and paginate query result
 displayed_sidebar: cmsSidebar
 sidebar_label: Sort & Pagination
 tags:
-- API 
-- Content API 
-- Document Service API 
+- API
+- Content API
+- Document Service API
 - sort
 - pagination
 ---
 
 # Document Service API: Sorting and paginating results
+
+<Tldr>
+
+Use the Document Service API's `sort` and pagination parameters to order query results by single or multiple fields and control result limits with `limit` and `start`.
+
+</Tldr>
+
 
 The [Document Service API](/cms/api/document-service) offers the ability to sort and paginate query results.
 
@@ -21,121 +28,114 @@ To sort results returned by the Document Service API, include the `sort` paramet
 
 ### Sort on a single field
 
-To sort results based on a single field:
-
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const documents = await strapi.documents("api::article.article").findMany({
+<Endpoint
+  id="sort-single-field"
+  kind="js"
+  path="strapi.documents().findMany()"
+  title="Sort on a single field"
+  description="Sort results based on a single field using a string value."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const documents = await strapi.documents("api::article.article").findMany({
   sort: "title:asc",
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```json
-[
+});`,
+    },
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `[
   {
     "documentId": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1"
-    // ...
   },
   {
     "documentId": "cjld2cjxh0001qzrm5q1j5q7m",
     "title": "Test Article 2",
     "slug": "test-article-2",
     "body": "Test 2"
-    // ...
   }
-  // ...
-]
-```
-
-</Response>
-</ApiCall>
+]`,
+    },
+  ]}
+/>
 
 ### Sort on multiple fields
 
-To sort on multiple fields, pass them all in an array:
-
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const documents = await strapi.documents("api::article.article").findMany({
+<Endpoint
+  id="sort-multiple-fields"
+  kind="js"
+  path="strapi.documents().findMany()"
+  title="Sort on multiple fields"
+  description="Sort results on multiple fields by passing an array of sort objects."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const documents = await strapi.documents("api::article.article").findMany({
   sort: [{ title: "asc" }, { slug: "desc" }],
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```json
-[
+});`,
+    },
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `[
   {
     "documentId": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1"
-    // ...
   },
   {
     "documentId": "cjld2cjxh0001qzrm5q1j5q7m",
     "title": "Test Article 2",
     "slug": "test-article-2",
     "body": "Test 2"
-    // ...
   }
-  // ...
-]
-```
-
-</Response>
-</ApiCall>
+]`,
+    },
+  ]}
+/>
 
 ## Pagination
 
-To paginate results, pass the `limit` and `start` parameters:
-
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const documents = await strapi.documents("api::article.article").findMany({
+<Endpoint
+  kind="js"
+  path="strapi.documents().findMany()"
+  title="Pagination"
+  description="Paginate results using the limit and start parameters."
+  codeTabs={[
+    {
+      label: 'JavaScript',
+      code: `const documents = await strapi.documents("api::article.article").findMany({
   limit: 10,
   start: 0,
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```json
-[
+});`,
+    },
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: 'OK',
+      body: `[
   {
     "documentId": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1"
-    // ...
   },
   {
     "documentId": "cjld2cjxh0001qzrm5q1j5q7m",
     "title": "Test Article 2",
     "slug": "test-article-2",
     "body": "Test 2"
-    // ...
   }
-  // ... (8 more)
-]
-```
-
-</Response>
-</ApiCall>
+]`,
+    },
+  ]}
+/>

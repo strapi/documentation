@@ -16,6 +16,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Webpack Aliases are removed
 
+<Tldr>
+
+Strapi v5 removes most webpack aliases for better compatibility, keeping only essential dependencies like `react`, `react-dom`, `react-router-dom`, and `styled-components` aliased.
+
+</Tldr>
+
+
 In Strapi v5, webpack aliases are removed ensuring better compatibility and reduced dependency conflicts.
 
 <Intro />

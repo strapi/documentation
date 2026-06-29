@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # MySQL v5 is not supported in Strapi v5 anymore
 
+<Tldr>
+
+MySQL v5 is no longer supported in Strapi v5; MySQL v8 is now the minimum required version. Upgrade your MySQL database to v8.0 to use Strapi v5.
+
+</Tldr>
+
+
 In Strapi 5, MySQL version 5 is not supported.
 <Intro />
 

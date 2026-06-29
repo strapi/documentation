@@ -12,6 +12,13 @@ import MediaLibProvidersNotes from '/docs/snippets/media-library-providers-notes
 
 # Media Library providers
 
+<Tldr>
+
+Media Library providers extend Strapi's upload capabilities to store files in external services like AWS S3 or Cloudinary. You can install official providers, configure them in `/config/plugins`, create custom providers, or set up private providers with signed URLs for secure asset access.
+
+</Tldr>
+
+
 The [Media Library](/cms/features/media-library) feature is powered by a back-end server package called Upload which leverages the use of providers.
 
 By default Strapi provides a provider that uploads files to a local `public/uploads/` directory in your Strapi project. Additional providers are available and add an extension to the core capabilities of the plugin. Use them to upload your files to another location, such as AWS S3 or Cloudinary.

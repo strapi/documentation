@@ -11,6 +11,13 @@ tags:
 
 # Creating and adding a custom Users & Permissions provider
 
+<Tldr>
+
+Create custom OAuth providers for Strapi's Users & Permissions feature by registering them in `src/index.js` and implementing an `authCallback` that returns user `email` and `username` for automatic registration or login.
+
+</Tldr>
+
+
 Strapi provides a list of [built-in providers](/cms/configurations/users-and-permissions-providers#setting-up-the-provider---examples) for the [Users & Permissions feature](/cms/features/users-permissions). You can also create your own provider following this guide.
 
 :::prerequisites

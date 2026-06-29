@@ -6,11 +6,18 @@ pagination_prev: cms/backend-customization/examples/policies
 pagination_next: cms/backend-customization/examples/middlewares
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import CookbookNote from '/docs/snippets/_cookbook-foodadvisor.md'
 
 # Examples cookbook: Custom routes
 
-<NotV5/>
+<Tldr>
+
+Custom routes let you explicitly configure routes for content-types to control authentication and apply policies, such as bypassing default Strapi authentication or restricting access based on custom conditions.
+
+</Tldr>
+
+
+<CookbookNote/>
 
 :::prerequisites
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/cms/backend-customization/examples).

@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # GitHub provider setup for Users & Permissions
 
+<Tldr>
+
+GitHub provider setup enables OAuth authentication for Strapi's Users & Permissions feature, requiring GitHub OAuth app configuration and Strapi provider settings.
+
+</Tldr>
+
+
 The present page explains how to setup the GitHub provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

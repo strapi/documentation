@@ -15,6 +15,13 @@ tags:
 
 # Manipulating documents and entries with a TypeScript-based project
 
+<Tldr>
+
+Safely manipulate documents and entries in Strapi v5 TypeScript projects using the `UID` and `Data` namespaces for type safety, enabling both generic and known entity type operations with code completion.
+
+</Tldr>
+
+
 This guide will explore [TypeScript](/cms/typescript) patterns for manipulating documents and entries in a Strapi v5 application, including how to leverage Strapi's `UID` and `Data` namespaces to interact with both generic and known entity types safely. If you're working on a TypeScript-based Strapi project, mastering these approaches will help you take full advantage of type safety and code completion, ensuring robust, error-free interactions with your application’s content and components.
 
 :::prerequisites

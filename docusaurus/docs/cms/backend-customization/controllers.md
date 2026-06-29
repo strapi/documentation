@@ -18,7 +18,7 @@ tags:
 # Controllers
 
 <Tldr>
-Controllers bundle actions that handle business logic for each route within StrapiÃ¢â‚¬â„¢s MVC pattern. This documentation demonstrates generating controllers, extending core ones with `createCoreController`, and delegating heavy logic to services.
+Controllers bundle actions that handle business logic for each route within Strapi's MVC pattern. This documentation demonstrates generating controllers, extending core ones with `createCoreController`, and delegating heavy logic to services.
 </Tldr>
 
 Controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](/cms/backend-customization/routes). Whenever a client requests the route, the action performs the business logic code and sends back the [response](/cms/backend-customization/requests-responses). Controllers represent the C in the model-view-controller (MVC) pattern.
@@ -265,7 +265,7 @@ module.exports = {
 It's strongly recommended you sanitize (v4.8.0+) and/or validate (v4.13.0+) your incoming request query utilizing the new `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
 :::
 
-Sanitization means that the object is Ã¢â‚¬Å“cleanedÃ¢â‚¬Â and returned.
+Sanitization means that the object is “cleaned” and returned.
 
 Validation means an assertion is made that the data is already clean and throws an error if something is found that shouldn't be there.
 
@@ -409,12 +409,9 @@ export default {
 
 Default controllers and actions are created for each content-type. These default controllers are used to return responses to API requests (e.g. when `GET /api/articles/3` is accessed, the `findOne` action of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
 
-:::tip 
-An action from a core controller can be replaced entirely by [creating a custom action](#adding-a-new-controller) and naming the action the same as the original action (e.g. `find`, `findOne`, `create`, `update`, or `delete`).
-:::
-
-:::tip 
-When extending a core controller, you do not need to re-implement any sanitization as it will already be handled by the core controller you are extending. Where possible it's strongly recommended to extend the core controller instead of creating a custom controller.
+:::tip
+- An action from a core controller can be replaced entirely by [creating a custom action](#adding-a-new-controller) and naming the action the same as the original action (e.g. `find`, `findOne`, `create`, `update`, or `delete`).
+- When extending a core controller, you do not need to re-implement any sanitization as it will already be handled by the core controller you are extending. Where possible it's strongly recommended to extend the core controller instead of creating a custom controller.
 :::
 
 <details>
@@ -424,7 +421,7 @@ When extending a core controller, you do not need to re-implement any sanitizati
 The [backend customization examples cookbook](/cms/backend-customization/examples) shows how you can overwrite a default controller action, for instance for the [`create` action](/cms/backend-customization/examples/services-and-controllers#custom-controller).
 :::
 <Tabs>
-<TabItem value="find" label="`find()`">
+<TabItem value="find" label="find()">
 
 ```js
 async find(ctx) {

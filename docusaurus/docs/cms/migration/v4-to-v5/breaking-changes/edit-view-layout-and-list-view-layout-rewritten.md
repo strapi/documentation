@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # The `EditViewLayout` and `ListViewLayout` have been rewritten
 
+<Tldr>
+
+In Strapi 5, the `content-manager_editViewLayoutManager` and `content-manager_listViewLayoutManager` Redux hooks have been removed and replaced with a new `useDocumentLayout` hook for admin panel customization.
+
+</Tldr>
+
+
 In Strapi 5, some admin panel hooks have been removed from the Redux store and a new `useDocumentLayout` hook is introduced.
 
 <Intro />

@@ -5,8 +5,8 @@
   --custom-admonition-background-color: transparent;
   --custom-admonition-border-color: var(--strapi-neutral-200);
   --custom-admonition-border-radius: var(--strapi-spacing-1);
-  --custom-admonition-color: var(--strapi-neutral-800);
-  --custom-admonition-heading-color: var(--strapi-neutral-700);
+  --custom-admonition-color: var(--strapi-fg-2);
+  --custom-admonition-heading-color: var(--strapi-fg-1);
   --custom-admonition-heading-mb: var(--strapi-spacing-2);
   --custom-admonition-mb: var(--strapi-spacing-4);
   --custom-admonition-px: 1.375rem;
@@ -191,7 +191,7 @@
 @include dark {
   .theme-admonition {
     // --custom-admonition-color: var(--strapi-neutral-150);
-    --custom-admonition-background-color: var(--strapi-neutral-0);
+    --custom-admonition-background-color: transparent;
     --custom-admonition-code-background-color: var(--strapi-neutral-150);
     --custom-admonition-border-color: var(--strapi-neutral-200);
 

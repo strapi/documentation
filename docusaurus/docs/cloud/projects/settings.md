@@ -1,5 +1,5 @@
 ---
-title: Project settings
+title: Cloud project settings
 displayed_sidebar: cloudSidebar
 description: View and manage your projects settings on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/projects/settings.html
@@ -14,7 +14,7 @@ tags:
 
 import InvoiceStatus from '/docs/snippets/invoices-statuses.md'
 
-# Project settings
+# Cloud project settings
 
 <Tldr>
 Settings area spans project-level controls (general, billing, plans, invoices) and per-environment configuration.

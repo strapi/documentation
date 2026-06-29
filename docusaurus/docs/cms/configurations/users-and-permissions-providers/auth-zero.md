@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # Auth0 provider setup for Users & Permissions
 
+<Tldr>
+
+Auth0 provider setup enables OAuth 2.0 authentication for the Users & Permissions feature, requiring configuration in both Auth0 tenant and Strapi admin settings using Client ID, Client Secret, and subdomain credentials.
+
+</Tldr>
+
+
 The present page explains how to setup the Auth0 provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

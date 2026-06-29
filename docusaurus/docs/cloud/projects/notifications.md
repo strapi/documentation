@@ -1,5 +1,5 @@
 ---
-title: Notifications
+title: Cloud notifications
 displayed_sidebar: cloudSidebar
 description: View your notifications on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/projects/notifications
@@ -10,7 +10,7 @@ tags:
 - Strapi Cloud project
 ---
 
-# Notifications
+# Cloud notifications
 
 <Tldr>
 Bell icon opens a feed of recent deployment events, automatically purged after 30 days.

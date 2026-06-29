@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 #  Updating repeatable components with the Document Service API is not recommended
 
+<Tldr>
+
+In Strapi 5, updating repeatable components with the Document Service API is not recommended because draft and published components have different IDs, preventing successful updates using `documentId`.
+
+</Tldr>
+
+
 In Strapi 5, it's not recommended to update repeatable components with the API, due to some limitations of the new Document Service API.
 
  <Intro />

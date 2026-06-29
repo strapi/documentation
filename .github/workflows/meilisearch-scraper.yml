@@ -31,6 +31,34 @@ jobs:
           python3 -c "import json; json.load(open('.github/workflows/meilisearch-scraper-config.json'))"
           echo "JSON is valid!"
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install scraper helper deps
+        working-directory: docusaurus
+        run: yarn install --frozen-lockfile
+
+      # Back up the current index (settings + all documents) BEFORE the scrape
+      # replaces it, so a bad scrape can be rolled back. Saved as a downloadable
+      # GitHub artifact (retained 30 days).
+      - name: Back up index before scrape
+        working-directory: docusaurus
+        env:
+          MEILISEARCH_HOST: ${{ secrets.MEILISEARCH_HOST_URL }}
+          MEILISEARCH_MASTER_KEY: ${{ secrets.MEILISEARCH_MASTER_KEY }}
+          MEILISEARCH_BACKUP_DIR: ${{ github.workspace }}/meilisearch-backups
+        run: node scripts/meilisearch/backup-index.js
+
+      - name: Upload index backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: meilisearch-backup-${{ github.run_id }}
+          path: meilisearch-backups/
+          retention-days: 30
+          if-no-files-found: warn
+
       - name: Run Meilisearch Scraper
         env:
           MEILISEARCH_HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
@@ -42,6 +70,17 @@ jobs:
             -v ${{ github.workspace }}/.github/workflows:/config \
             getmeili/docs-scraper:v0.12.8 \
             pipenv run ./docs_scraper /config/meilisearch-scraper-config.json
+
+      # The scrape rewrites the index and its ranking rules from the scraper
+      # config, which has no category_order. Re-apply the category ordering so
+      # results stay grouped by section (otherwise this is silently lost on
+      # every run). Reads docusaurus/scripts/meilisearch/category-order-config.json.
+      - name: Apply category ordering
+        working-directory: docusaurus
+        env:
+          MEILISEARCH_HOST: ${{ secrets.MEILISEARCH_HOST_URL }}
+          MEILISEARCH_MASTER_KEY: ${{ secrets.MEILISEARCH_MASTER_KEY }}
+        run: node scripts/meilisearch/add-category-order.js
 
       - name: Test search index
         env:

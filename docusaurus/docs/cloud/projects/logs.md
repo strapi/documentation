@@ -1,5 +1,5 @@
 ---
-title: Logs
+title: Cloud project logs
 displayed_sidebar: cloudSidebar
 description: View logs for a Strapi Cloud project.
 canonicalUrl: https://docs.strapi.io/cloud/projects/logs.html
@@ -9,7 +9,7 @@ tags:
 - Strapi Cloud
 ---
 
-# Logs
+# Cloud project logs
 
 <Tldr>
 The Logs tab streams your project's live logs in a searchable, filterable table. Click any entry to inspect its full message and metadata.

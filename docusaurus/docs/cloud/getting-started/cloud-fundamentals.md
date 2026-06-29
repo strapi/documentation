@@ -10,6 +10,13 @@ tags:
 
 # Strapi Cloud fundamentals
 
+<Tldr>
+
+Strapi Cloud is a PaaS hosting platform for deploying Strapi CMS projects, offering four pricing plans with different features and support levels, two user roles (owners and maintainers), and REST/GraphQL APIs that behave identically to self-hosted servers.
+
+</Tldr>
+
+
 Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi Cloud works, and ensure a smooth Strapi Cloud experience.
 
 - **Hosting Platform** <br/> Strapi Cloud is a hosting platform that allows to deploy already existing Strapi projects created with Strapi CMS (Content Management System). Strapi Cloud is *not* the SaaS (<ExternalLink to="https://en.wikipedia.org/wiki/Software_as_a_service" text="Software-as-a-Service" />) version of Strapi CMS and should rather be considered as a PaaS (<ExternalLink to="https://en.wikipedia.org/wiki/Platform_as_a_service" text="Platform-as-a-Service" />). Feel free to refer to the [CMS documentation](https://docs.strapi.io/cms/intro) to learn more about Strapi CMS.

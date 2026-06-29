@@ -8,10 +8,32 @@ const AiToolbar = () => {
     'copy-markdown': 'idle'
   });
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [viewMode, setViewMode] = useState('elegant');
   const dropdownRef = useRef(null);
 
+  // Track the active view mode (read from the DOM + the view-mode-change event,
+  // to avoid depending on the React context being an ancestor here).
+  useEffect(() => {
+    const read = () =>
+      setViewMode(document.documentElement.dataset.viewMode || 'elegant');
+    read();
+    const onChange = (e) =>
+      setViewMode((e.detail && e.detail.mode) || document.documentElement.dataset.viewMode || 'elegant');
+    window.addEventListener('view-mode-change', onChange);
+    return () => window.removeEventListener('view-mode-change', onChange);
+  }, []);
+
   const primaryAction = getPrimaryAction();
-  const dropdownActions = getDropdownActions();
+  // "View as Markdown" appears in exactly one place at a time:
+  // - in elegant/AI modes: as a dropdown entry in the toolbar;
+  // - in markdown mode: as the standalone button to the right of the toolbar
+  //   (and removed from the dropdown to avoid duplication).
+  const viewMarkdownAction = getDropdownActions().find((a) => a.id === 'view-markdown');
+  const isMarkdownMode = viewMode === 'markdown';
+  const dropdownActions = getDropdownActions().filter((a) => {
+    if (a.id === 'view-markdown' && isMarkdownMode) return false;
+    return true;
+  });
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -66,6 +88,12 @@ const AiToolbar = () => {
     };
 
     await executeAction(action, context);
+  };
+
+  // Standalone "View as Markdown" button (right side of the toolbar).
+  const handleViewMarkdown = async () => {
+    if (!viewMarkdownAction) return;
+    await executeAction(viewMarkdownAction, { closeDropdown });
   };
 
   // Toggle dropdown
@@ -127,8 +155,8 @@ const AiToolbar = () => {
                 className={`ai-toolbar__dropdown-item ${action.description ? '' : 'ai-toolbar__dropdown-item--no-description'}`}
                 title={action.description}
               >
-                <Icon 
-                  name={action.icon} 
+                <Icon
+                  name={action.icon}
                   classes="ph-bold"
                   color="inherit"
                 />
@@ -147,6 +175,20 @@ const AiToolbar = () => {
           </div>
         )}
       </div>
+
+      {/* Standalone "View this page as .md" button — shown ONLY in markdown
+          mode (in other modes the action lives in the toolbar dropdown). Sits
+          just to the right of the toolbar group. */}
+      {viewMarkdownAction && isMarkdownMode && (
+        <button
+          onClick={handleViewMarkdown}
+          className="ai-toolbar__view-md"
+          title={viewMarkdownAction.description}
+        >
+          <Icon name="markdown-logo" classes="ph-bold" color="inherit" />
+          <span className="ai-toolbar__button-text">View this page as .md</span>
+        </button>
+      )}
     </div>
   );
 };

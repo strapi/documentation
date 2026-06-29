@@ -16,6 +16,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Only the `mysql2` package is supported for the MySQL client
 
+<Tldr>
+
+Strapi 5 only supports the `mysql2` package for MySQL databases and requires the `client` configuration option to be set to `mysql`.
+
+</Tldr>
+
+
 Strapi 5 can only use the `mysql2` package for MySQL databases, and the `client` value for it must be set to `mysql`.
 
 <Intro />
