@@ -17,6 +17,14 @@
     margin-bottom: 0;
     flex: initial;
     min-width: 0;
+    // The visible card border lives on the inner `<a.cardContainer>`, not on
+    // this `<article>` grid cell. `align-items: stretch` stretches the cell to
+    // the tallest card in the row, but the inner `<a>` would otherwise hug its
+    // own content height — leaving visible cards in a row at unequal heights
+    // when one title wraps to two lines. Making the cell a flex column lets the
+    // inner `<a>` (height: 100% below) fill the stretched cell, so every visible
+    // card in a row matches the tallest one.
+    display: flex;
   }
 
   article.custom-doc-card:first-of-type {
@@ -28,7 +36,13 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 136px;
+    // `min-height` (not a fixed `height`) so a card whose title wraps to two
+    // lines can grow to fit its clamped description instead of clipping the
+    // last line mid-text. `height: 100%` makes the visible card fill its
+    // stretched grid cell (see the `.custom-doc-card` flex rule above), so all
+    // visible cards in a row stay exactly the same height as the tallest one.
+    min-height: 136px;
+    height: 100%;
   }
 
   .cardDescription {
@@ -69,9 +83,18 @@
   }
 
   .text--truncate.cardDescription {
-    // cancel --truncate styles since we can't remove the' class
-    overflow: auto;
+    // Override the `.text--truncate` utility (single-line ellipsis) since we
+    // can't remove that class from the markup. Use a multi-line clamp instead:
+    // wrap the text, then clip to 3 lines with an ellipsis. `overflow: hidden`
+    // (NOT `auto`) is required for `-webkit-line-clamp` to truncate; `auto`
+    // produces a scrollbar when the title wraps to 2 lines or the text is long.
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: normal;
+    min-width: 0;
   }
 
   .cardDescription {
