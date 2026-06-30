@@ -24741,6 +24741,31 @@ baseUrl: `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_B
 Older Strapi guides and blog posts show `accessKeyId` and `secretAccessKey` placed directly in `s3Options`. This root-level format still works but triggers a deprecation warning. Pass credentials inside a `credentials` object instead (as shown in the examples above).
 :::
 
+:::info AWS credential provider functions
+Instead of a static `credentials` object, you can pass an AWS credential provider function (e.g., from `@aws-sdk/credential-providers`) to `s3Options.credentials`. This allows credentials to be resolved and refreshed at runtime without restarting the process, which is useful when credentials change during application lifetime (e.g., temporary credentials, credential rotation):
+
+```ts title="/config/plugins.ts"
+
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        s3Options: {
+          credentials: fromNodeProviderChain(), // AWS SDK resolves credentials dynamically
+          region: env('AWS_REGION'),
+          params: {
+            Bucket: env('AWS_BUCKET'),
+          },
+        },
+      },
+    },
+  },
+});
+```
+
+The provider function must return a promise that resolves to credentials with `accessKeyId` and `secretAccessKey` properties.
+:::
+
 :::caution
 To ensure the provider works correctly, you also need to configure IAM permissions, bucket CORS, and the Strapi security middleware (see [Required setup](#required-setup)).
 :::

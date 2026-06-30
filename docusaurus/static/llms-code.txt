@@ -18575,6 +18575,30 @@ File path: /config/env/${yourEnvironment}/plugins.js
 baseUrl: `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_BUCKET}`,
 ```
 
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+import { fromNodeProviderChain } from '@aws-sdk/credential-providers';
+
+export default ({ env }) => ({
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        s3Options: {
+          credentials: fromNodeProviderChain(), // AWS SDK resolves credentials dynamically
+          region: env('AWS_REGION'),
+          params: {
+            Bucket: env('AWS_BUCKET'),
+          },
+        },
+      },
+    },
+  },
+});
+```
+
 
 ## Private bucket and signed URLs
 Description: :::note If you are using a CDN, the URLs will not be signed.
