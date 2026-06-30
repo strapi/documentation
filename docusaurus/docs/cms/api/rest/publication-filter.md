@@ -16,8 +16,6 @@ tags:
 - status
 ---
 
-import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
-
 # REST API: `publicationFilter`
 
 The [REST API](/cms/api/rest) accepts an optional `publicationFilter` query parameter when [Draft & Publish](/cms/features/draft-and-publish) is enabled. Use it to query derived publication cohorts such as never-published or modified documents. The [`status`](/cms/api/rest/status) parameter still selects whether each matching document returns its draft or published row.
@@ -50,40 +48,33 @@ Accepted kebab-case values: `never-published`, `has-published-version`, `modifie
 
 Pair-scoped `never-published` only matches draft rows. Pass `status=draft` because REST defaults to `status=published`.
 
-<ApiCall>
+<Endpoint
+  method="GET"
+  path="/api/restaurants?status=draft&publicationFilter=never-published"
+  title="Get draft restaurants that have never been published for their locale"
+  codeTabs={[
+    {
+      label: "REST",
+      code: `GET /api/restaurants?status=draft&publicationFilter=never-published`
+    },
+    {
+      label: "JavaScript",
+      code: `const qs = require('qs');
+const query = qs.stringify({
+  status: 'draft',
+  publicationFilter: 'never-published',
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
 
-<Request title="Get draft restaurants that have never been published for their locale">
-
-`GET /api/restaurants?status=draft&publicationFilter=never-published`
-
-</Request>
-
-<details>
-<summary>JavaScript query (built with the qs library):</summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify(
-  {
-    status: 'draft',
-    publicationFilter: 'never-published',
-  },
-  {
-    encodeValuesOnly: true,
-  }
-);
-
-await request(`/api/restaurants?${query}`);
-```
-
-</details>
-
-<Response title="Example response">
-
-```json {6}
-{
+await request(\`/api/restaurants?\${query}\`);`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
@@ -100,50 +91,41 @@ await request(`/api/restaurants?${query}`);
       "total": 1
     }
   }
-}
-```
-
-</Response>
-
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Get modified documents {#modified}
 
 The `modified` cohort includes pairs where the draft row is newer than its published peer. With no `status` parameter, REST returns **published** rows from that cohort. Pass `status=draft` to return the draft rows instead.
 
-<ApiCall>
+<Endpoint
+  method="GET"
+  path="/api/restaurants?publicationFilter=modified"
+  title="Get published restaurants in the modified cohort (default status)"
+  codeTabs={[
+    {
+      label: "REST",
+      code: `GET /api/restaurants?publicationFilter=modified`
+    },
+    {
+      label: "JavaScript",
+      code: `const qs = require('qs');
+const query = qs.stringify({
+  publicationFilter: 'modified',
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
 
-<Request title="Get published restaurants in the modified cohort (default status)">
-
-`GET /api/restaurants?publicationFilter=modified`
-
-</Request>
-
-<details>
-<summary>JavaScript query (built with the qs library):</summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify(
-  {
-    publicationFilter: 'modified',
-  },
-  {
-    encodeValuesOnly: true,
-  }
-);
-
-await request(`/api/restaurants?${query}`);
-```
-
-</details>
-
-<Response title="Example response">
-
-```json {6}
-{
+await request(\`/api/restaurants?\${query}\`);`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "documentId": "znrlzntu9ei5onjvwfaalu2v",
@@ -160,50 +142,41 @@ await request(`/api/restaurants?${query}`);
       "total": 1
     }
   }
-}
-```
-
-</Response>
-
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Get published rows without a draft peer {#published-without-draft}
 
 The `published-without-draft` cohort matches published rows that have no draft sibling for the same `(documentId, locale)`. Because REST defaults to `status=published`, you can omit `status` in the query URL.
 
-<ApiCall>
+<Endpoint
+  method="GET"
+  path="/api/restaurants?publicationFilter=published-without-draft"
+  title="Get published restaurants with no draft row for the same locale"
+  codeTabs={[
+    {
+      label: "REST",
+      code: `GET /api/restaurants?publicationFilter=published-without-draft`
+    },
+    {
+      label: "JavaScript",
+      code: `const qs = require('qs');
+const query = qs.stringify({
+  publicationFilter: 'published-without-draft',
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
 
-<Request title="Get published restaurants with no draft row for the same locale">
-
-`GET /api/restaurants?publicationFilter=published-without-draft`
-
-</Request>
-
-<details>
-<summary>JavaScript query (built with the qs library):</summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify(
-  {
-    publicationFilter: 'published-without-draft',
-  },
-  {
-    encodeValuesOnly: true,
-  }
-);
-
-await request(`/api/restaurants?${query}`);
-```
-
-</details>
-
-<Response title="Example response">
-
-```json {6}
-{
+await request(\`/api/restaurants?\${query}\`);`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
   "data": [
     {
       "documentId": "abcdefghijklmno456",
@@ -220,12 +193,10 @@ await request(`/api/restaurants?${query}`);
       "total": 1
     }
   }
-}
-```
-
-</Response>
-
-</ApiCall>
+}`
+    }
+  ]}
+/>
 
 ## Combine with other parameters {#combine}
 
