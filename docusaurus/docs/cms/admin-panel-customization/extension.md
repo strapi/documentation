@@ -10,6 +10,13 @@ import HotReloading from '/docs/snippets/hot-reloading-admin-panel.md'
 
 # Admin panel extension
 
+<Tldr>
+
+Strapi's React-based admin panel can be extended locally via `/src/admin/app` for project-specific needs or through plugins for reusable, distributable extensions across multiple Strapi instances.
+
+</Tldr>
+
+
 Strapi's [admin panel](/cms/admin-panel-customization) is a React-based single-page application that encapsulates all the features and installed plugins of a Strapi application. If the [customization options](/cms/admin-panel-customization#available-customizations) provided by Strapi are not enough for your use case, you will need to extend Strapi's admin panel.
 
 Extending Strapi's admin panel means leveraging its React foundation to adapt and enhance the interface and features according to the specific needs of your project, which might imply creating new components or adding new types of fields.

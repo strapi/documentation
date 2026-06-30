@@ -13,6 +13,13 @@ tags:
 
 # Project deployment with the Command Line Interface (CLI)
 
+<Tldr>
+
+Deploy a Strapi project to Strapi Cloud using the `strapi login` and `strapi deploy` CLI commands, with optional automatic deployment on git repository commits.
+
+</Tldr>
+
+
 This is a step-by-step guide for deploying your project on Strapi Cloud for the first time, using the Command Line Interface.
 
 :::prerequisites
@@ -90,7 +97,7 @@ Another option is to enable automatic deployment through a git repository. To do
 Automatic deployment is compatible with all other deployment methods, so once a git repository is connected, you can trigger a new deployment to Strapi Cloud [from the Cloud dashboard](/cloud/projects/deploys), [from the CLI](/cloud/cli/cloud-cli#strapi-deploy), or by pushing new commits to your connected repository.
 :::
 
-## ⏩ What to do next?
+## <Icon name="fast-forward" /> What to do next?
 
 Now that you have deployed your project via the Command Line Interface, we encourage you to explore the following ideas to have an even more complete Strapi Cloud experience:
 

@@ -16,6 +16,13 @@ import QueryEnginePrereqs from '/docs/snippets/query-engine-prereqs.md'
 
 # Populating with the Query Engine API
 
+<Tldr>
+
+The Query Engine API's `populate` parameter loads related data in queries, supporting basic population, selective attributes, filtering nested relations, and polymorphic structures via populate fragments.
+
+</Tldr>
+
+
 <ConsiderDocumentService />
 <QueryEnginePrereqs />
 

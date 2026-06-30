@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Entity Service deprecated
 
+<Tldr>
+
+The Entity Service API is deprecated in Strapi 5 and replaced by the Document Service API, which uses `documentId`, returns arrays for all queries, and introduces new methods for draft and publish workflows.
+
+</Tldr>
+
+
 The Entity Service that was used in Strapi v4 is deprecated and replaced by the new [Document Service API](/cms/api/document-service) in Strapi 5. <MigrationIntro/>
 
 <BreakingChangeIdCard

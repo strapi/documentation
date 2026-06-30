@@ -15,7 +15,7 @@ Frontmatter (mandatory)
 
 Templates
 - Start from `claude-plugins/inki/references/templates/api-template.md` to align sections and example layout.
-- See `claude-plugins/inki/references/templates/INDEX.md` for a quick catalog of available templates with paths and purposes.
+- See `claude-plugins/inki/references/templates/README.md` for a quick catalog of available templates with paths and purposes.
 
 API Overview Pages (e.g., Content API)
 1) H1 title — matches `title` frontmatter.
@@ -50,13 +50,26 @@ Heading Conventions
 
 Component Patterns by Page Type
 
-API pages use custom MDX components that vary by sub-section. When editing an existing page, always match the page's established patterns:
+API pages use custom MDX components that vary by sub-section. When editing an existing page, always match the page's established patterns. `<Endpoint>` is the current component for all reference endpoints. See `claude-plugins/inki/references/templates/components/endpoint.md` for the full `<Endpoint>` contract and copy-pasteable examples.
 
-- **Document Service API pages** use `<ApiCall>` with `<Request>` / `<Response>` for code examples. The `noSideBySide` prop is used for longer examples. Response code blocks use JS object literal notation (not JSON).
-- **REST API pages** use `<ApiCall>` wrapping `<Request>`, a `<details>` block for the `qs.stringify` equivalent, and `<Response>`. Snippet imports (`QsForQueryBody`, `QsForQueryTitle`, `QsIntroFull`) are used inside the `<details>` blocks. Response code blocks use JSON.
+`<Endpoint>`, `<StepDetails>`, and `<NextSteps>` are registered as global MDX components in `docusaurus/src/theme/MDXComponents.js` (like `<Tabs>`, `<Annotation>`, and `<ApiCall>`), so they are used directly with no import line.
+
+- **Document Service API pages** use `<Endpoint kind="js">`. `path` is the JS method signature (e.g. `strapi.documents().findOne()`). `params={[{ name, type, required, description }]}`, where the `description` may contain inline HTML (`<code>`, `<a href>`). `codeTabs={[{ label: 'Request', code: \`...\` }]}` holds the example(s); multiple example tabs are idiomatic. `responses` render under a "Returns" label rather than an HTTP status. The final block on the page uses `isLast={true}`. Admonitions go INSIDE the block as children: use a closing `</Endpoint>` tag instead of self-closing `/>`, open with `>`, leave a blank line, write the `:::tip` / `:::note`, leave a blank line, then `</Endpoint>`.
+- **REST API pages** use `<Endpoint>` with `kind="http"` (the default, so it can be omitted): `method`, `path` with `:params` (e.g. `/api/:pluralApiId/:documentId`), `codePath` + `codePathHighlights` for the URL bar shown in the code panel, and `codeTabs` (e.g. cURL + JavaScript). `responses` take `{ status, statusText, time?, body: JSON.stringify(..., null, 2) }`; multiple responses render as colored status tabs (e.g. 200 + 404). A DELETE endpoint with no response body uses `responses={[]}` together with `isLast`. The snippet imports `QsForQueryBody`, `QsForQueryTitle`, and `QsIntroFull` remain valid and are used alongside `<Endpoint>` on migrated REST pages (they are NOT legacy).
 - **GraphQL API pages** use plain code blocks with `graphql` language identifier for query examples.
 
-Do not mix patterns across page types (e.g., do not use `<details>` on a Document Service page, or plain code blocks where `<ApiCall>` is expected).
+Do not mix patterns across page types: use `<Endpoint>` for all new, REST, and Document Service reference endpoints. The legacy `<ApiCall>`/`<Request>`/`<Response>` trio is an exception that applies ONLY to the not-yet-migrated pages listed below.
+
+Legacy (not-yet-migrated) pages
+- The legacy `<ApiCall>` / `<Request>` / `<Response>` trio (plus the `noSideBySide` prop and the `<details>` block wrapping the `qs.stringify` equivalent) is DEPRECATED for new content. Match it ONLY when patching these specific not-yet-migrated pages:
+  - `docs/cms/api/graphql.md`
+  - `docs/cms/api/graphql/**` (e.g. `graphql/locale.md`)
+  - `docs/cms/api/rest/upload.md`
+  - `docs/cms/api/rest/relations.md`
+  - `docs/cms/features/users-permissions/rest-api.md`
+  - `docs/cms/plugins/graphql.md`
+- Never introduce the `<ApiCall>`/`<Request>`/`<Response>` trio on new, REST, or Document Service reference pages.
+- NOTE: `QsForQueryBody` / `QsForQueryTitle` / `QsIntroFull` are NOT legacy: they are snippet imports still used alongside `<Endpoint>` on migrated REST pages.
 
 Cross‑linking
 - Link to neighboring APIs (Content API, Query Engine), relevant features, and migration notes.

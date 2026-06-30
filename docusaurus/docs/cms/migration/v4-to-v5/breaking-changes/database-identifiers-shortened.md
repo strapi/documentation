@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Database identifiers shortened in v5
 
+<Tldr>
+
+Database identifiers are limited to 55 characters in Strapi v5; longer identifiers are automatically shortened with a hash suffix to prevent conflicts.
+
+</Tldr>
+
+
 In Strapi 5, database identifiers can't be longer than 55 characters. <Intro />
 
 <BreakingChangeIdCard

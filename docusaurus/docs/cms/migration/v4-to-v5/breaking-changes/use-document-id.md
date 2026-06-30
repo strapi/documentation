@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # `documentId` should be used instead of `id` in Content API calls
 
+<Tldr>
+
+In Strapi 5, the `documentId` field replaces `id` for identifying documents in Content API calls (REST API and GraphQL) as part of the Document Service API transition.
+
+</Tldr>
+
+
 In Strapi 5, the underlying API handling content is the [Document Service API](/cms/api/document-service) and documents should be called by their `documentId` in Content API calls (REST API & GraphQL).
 
 <Intro />

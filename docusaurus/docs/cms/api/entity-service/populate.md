@@ -9,6 +9,13 @@ import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'
 
 # Populating with the Entity Service API
 
+<Tldr>
+
+The Entity Service API's `populate` parameter retrieves relations, components, and dynamic zones. Use `populate: '*'` for all root-level relations, arrays for specific fields, objects for advanced queries with filters and nested populating, or fragments for polymorphic content structures.
+
+</Tldr>
+
+
 <ESdeprecated />
 
 The [Entity Service API](/cms/api/entity-service) does not populate relations, components or dynamic zones by default, which means an Entity Service API query that does not use the `populate` parameter will not return information about relations, components, or dynamic zones.

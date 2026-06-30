@@ -55,6 +55,12 @@
     }
   }
 
+  // Flat content, only shown in Markdown view mode (see view-modes.scss).
+  // Hidden by default so elegant/AI modes are unchanged.
+  &__flat {
+    display: none;
+  }
+
   &__tooltip {
     display: block;
     position: var(--strapi-docs-annotation-tooltip-position, absolute);

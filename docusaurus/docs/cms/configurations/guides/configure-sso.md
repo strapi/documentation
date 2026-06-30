@@ -16,6 +16,13 @@ tags:
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # How to configure SSO providers
+
+<Tldr>
+
+Configure SSO providers in the Strapi admin panel by registering OAuth/OIDC applications, adding credentials to `auth.providers` in `/config/admin`, and setting up callback URLs to enable additional sign-in methods.
+
+</Tldr>
+
 <EnterpriseBadge/> <SsoBadge />
 
 [Single Sign-On (SSO)](/cms/features/sso) on Strapi allows you to configure additional sign-in and sign-up methods for the Strapi admin panel.

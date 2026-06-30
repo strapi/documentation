@@ -48,7 +48,7 @@ Required Section Order
 Optional Elements
 - Prerequisites callout if setup is required before configuration.
 - Guideflow embeds or ThemedImage diagrams when they improve clarity.
-- Feature flag badge note when the feature requires enabling a future flag.
+- Feature flag badge note when the feature requires enabling a future flag. Use the globally registered `<FeatureFlagBadge feature="flagName" />` (no import needed); see `claude-plugins/inki/references/templates/components/badge.md` for all badge variants, including the Cloud plan badges (`CloudEssentialBadge`/`CloudProBadge`/`CloudScaleBadge`).
 
 Heading Conventions
 - Use H2 for major sections (Configuration, Usage); H3 for subsections.

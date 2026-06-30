@@ -15,6 +15,13 @@ tags:
 
 # Installation, Configuration, and Deployment
 
+<Tldr>
+
+Strapi follows a three-step workflow: install on your local machine, configure the server and admin panel, then deploy to a remote environment like Strapi Cloud.
+
+</Tldr>
+
+
 Strapi is meant to be installed on your local machine, then configured, and finally deployed to a remote environment. This documentation section describes these topics, and clicking on any of the following cards will lead you to the corresponding section:
 
 <CustomDocCardsWrapper>

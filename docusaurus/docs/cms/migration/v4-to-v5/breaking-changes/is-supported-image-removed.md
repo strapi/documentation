@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # The `isSupportedImage` method is removed
 
+<Tldr>
+
+The `isSupportedImage` method is removed in Strapi 5. Developers must use `isImage` or `isOptimizableImage` instead.
+
+</Tldr>
+
+
 The `isSupportedImage` method has been issuing a deprecation warning ever since v4, and is finally being removed in Strapi 5.
 
  <Intro />

@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Some Mailgun provider legacy variables are not supported
 
+<Tldr>
+
+In Strapi 5, legacy Mailgun provider variables `apiKey` and `host` are no longer supported; use `key` and `url` instead.
+
+</Tldr>
+
+
 In Strapi 5, the support is dropped for some legacy variables deprecated in Strapi v4 for the Mailgun provider.
 
 <Intro />

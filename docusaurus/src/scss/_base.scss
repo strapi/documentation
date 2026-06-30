@@ -1,4 +1,4 @@
-/** Base: General Styles */
+/** Base: General Styles — V3 Redesign */
 
 @use './tokens.scss' as *;
 @use './tokens-overrides' as *;
@@ -6,6 +6,15 @@
 
 :root {
   --custom-selection-background-color: var(--strapi-primary-600);
+  --doc-content-max-width: 720px;
+}
+
+[data-content-width="wide"] {
+  --doc-content-max-width: 960px;
+}
+
+[data-content-width="max"] {
+  --doc-content-max-width: 100%;
 }
 
 ::selection {
@@ -13,62 +22,463 @@
   color: var(--custom-selection-color, var(--strapi-neutral-0));
 }
 
+/** V3: Film grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.012;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px;
+}
+
+/** V3: Smooth background transition */
+body {
+  background: var(--strapi-surface-0);
+  transition: background var(--strapi-duration-slow) var(--strapi-ease);
+}
+
 main {
   article:first-child:not(.col):not(.custom-doc-card),
   article:first-child:not(.col) + nav {
-    max-width: 608px;
+    max-width: var(--doc-content-max-width);
     padding-left: 0 !important;
     padding-right: 0 !important;
     margin-left: auto;
     margin-right: auto;
+    transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
+}
+
+/**
+ * Anchor scroll offset.
+ *
+ * The navbar (64px) is sticky, and on doc pages the view-mode switcher toolbar
+ * (~34px) is sticky right below it. Jumping to a #hash (e.g. from the homepage
+ * API Explorer "Read the docs" link) landed the target heading flush under the
+ * navbar, hidden behind the toolbar. Give heading anchor targets a scroll
+ * margin so they come to rest just below both bars, fully visible. ~110px =
+ * navbar + toolbar + a little breathing room. (Only scroll-margin-top here, not
+ * scroll-padding-top on the root, or the two offsets would stack.)
+ */
+.markdown :is(h1, h2, h3, h4, h5, h6)[id],
+.api-endpoint-block[id],
+.api-call[id] {
+  scroll-margin-top: 110px;
 }
 
   [class*="docRoot"]:not(:has(main)) {
     width: 0;
   }
 
-/**
- * Experimental: Different identity based on URL
- */
-// html[class*="docs-doc-id-dev-docs"] {
-//   .navbar {
-//     background-color: var(--strapi-primary-100);
-//   }
-// }
-
-// html[class*="docs-doc-id-cloud"] {
-//   .navbar {
-//     background-color: var(--strapi-secondary-100);
-//   }
-
-//   .markdown {
-//     a {
-//       color: var(--strapi-secondary-600);
-//     }
-//   }
-
-//   .theme-doc-sidebar-item-link:has(.menu__link--active) {
-//     background-color: var(--strapi-secondary-100);
-//   }
-// }
-
 /** Responsive */
 @include medium-up {
   main {
-    article:first-child:not(.col),
-    article:first-child:not(.col) + nav {
-      max-width: 672px;
-      padding-left: 32px !important;
-      padding-right: 32px !important;
+    article:first-child:not(.col):not(.custom-doc-card),
+    article:first-child:not(.col) + nav:not(.pagination-nav) {
+      max-width: var(--doc-content-max-width);
+      padding-left: 40px !important;
+      padding-right: 40px !important;
+    }
+
+    article:first-child:not(.col) + nav.pagination-nav {
+      max-width: var(--doc-content-max-width);
+      padding-left: 0 !important;
+      padding-right: 0 !important;
     }
   }
 
   [class*="docRoot"]:not(:has(main)) {
     width: 300px;
   }
+
+  /**
+   * Pages without a TOC column: reserve the same right-edge space
+   * so content stays aligned with pages that have a TOC.
+   * Exclude the footer rows (tags row, edit-meta row): they are also .row
+   * elements but must use the full content width, otherwise long tag lists
+   * wrap onto a second line (the 280px placeholder steals their space).
+   */
+  [class*="docMainContainer"] .row:not(:has(.col--3)):not([class*="theme-doc-footer"]) {
+    padding-right: 280px;
+  }
+
+  /** When wide or max width, remove the TOC-placeholder padding. Also remove it
+   *  in AI mode: there the TOC is hidden (so the .col--3 selector matches) and
+   *  the content should fill the left half — the 280px placeholder otherwise
+   *  squeezed it, leaving the content narrow at default content-width. */
+  [data-content-width="wide"] [class*="docMainContainer"] .row:not(:has(.col--3)):not([class*="theme-doc-footer"]),
+  [data-content-width="max"] [class*="docMainContainer"] .row:not(:has(.col--3)):not([class*="theme-doc-footer"]),
+  [data-view-mode="ai"] [class*="docMainContainer"] .row:not(:has(.col--3)):not([class*="theme-doc-footer"]) {
+    padding-right: 0;
+  }
 }
 
+
+/**
+ * V3: Fluid-width API pages
+ *
+ * Strategy:
+ * - The article container is full-width (no max-width)
+ * - Endpoint blocks (.api-endpoint-block, .api-call) are full-width with 2-col grid
+ * - Regular content between endpoints is constrained to readable width via inner max-width
+ * - When sidebars collapse, the content area grows to fill available space (all flex-based)
+ */
+
+/** On API pages, lift the article max-width constraint.
+ *  Exclude the pagination nav: it is page chrome that must follow the content
+ *  width (centered, see the rule just below), not span the full article. */
+main:has(.api-call),
+main:has(.api-endpoint-block) {
+  article:first-child:not(.col):not(.custom-doc-card),
+  article:first-child:not(.col) + nav:not(.pagination-nav) {
+    max-width: 100%;
+  }
+}
+
+/**
+ * On API pages the article is full-width (above), so the page-level chrome that
+ * lives OUTSIDE .theme-doc-markdown — the feedback widget, the tags footer and
+ * the previous/next pagination — stayed full-width while the actual content was
+ * centered to the content width, leaving them visibly misaligned. Constrain
+ * them to the same content width and center them so they line up with the body.
+ * Capped by --doc-content-max-width: at narrow this is the readable width; at
+ * wide/max it resolves to the full column, matching the full-width endpoints.
+ */
+@include medium-up {
+  main:has(.api-call),
+  main:has(.api-endpoint-block) {
+    article > [class*="pageFeedback"],
+    article > footer.theme-doc-footer {
+      max-width: var(--doc-content-max-width) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    /** The pagination nav lives in the container OUTSIDE <article>, which has no
+     *  horizontal padding (article pads its content by 16px each side). To line
+     *  the pagination up with the feedback/tags (which sit inside that padding),
+     *  subtract the article padding from its cap. min() keeps the narrow width
+     *  ceiling (--doc-content-max-width) when it is the smaller of the two. */
+    article + nav.pagination-nav,
+    nav.pagination-nav {
+      max-width: min(var(--doc-content-max-width), calc(100% - 32px)) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+  }
+}
+
+@include medium-up {
+  main:has(.api-call),
+  main:has(.api-endpoint-block) {
+    article:first-child:not(.col),
+    article:first-child:not(.col) + nav {
+      max-width: 100%;
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+    }
+  }
+
+  /**
+   * Regular prose content on API pages.
+   *
+   * The 2-column endpoint layout (params left / code right) only reads well
+   * when there is room for it, i.e. at the wide and max content widths. At the
+   * default (narrow) width the endpoints collapse to a single centered column
+   * (see the grid rule near the bottom of this file), so the surrounding prose
+   * must NOT stay flush-left at half-width — it would look misaligned next to a
+   * centered endpoint. At narrow, treat the page like a normal doc: prose
+   * centered to the content width.
+   *
+   * The flush-left half-width treatment that pairs with the 2-column layout is
+   * applied only at wide/max further down.
+   */
+  main:has(.api-endpoint-block) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header,
+    > .expandable-content, > .custom-cards-wrapper,
+    > [class*="language-"], > div:not([class]),
+    > img, > [class*="themedComponent"],
+    > .api-endpoint-block {
+      max-width: var(--doc-content-max-width);
+      margin-left: auto;
+      margin-right: auto;
+      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /** <ApiCall> (legacy) blocks still break out to full width */
+    > .api-call {
+      max-width: 100% !important;
+    }
+
+    /** table.scss sets min-width:100%; drop it so tables honor the centered
+     *  content width instead of pinning left. */
+    > table {
+      min-width: 0;
+    }
+  }
+
+  /** Code-only endpoint pages: when NO endpoint has the 2-column layout (no
+   *  params), the half-width prose + full-width code looked unbalanced (content
+   *  squeezed left, nothing on the right). Treat the page like a normal doc:
+   *  prose and endpoints follow the content width and are centered. */
+  main:has(.api-endpoint-block):not(:has(.api-endpoint-block--columns)) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header,
+    > .expandable-content, > .custom-cards-wrapper,
+    > [class*="language-"], > div:not([class]),
+    > img, > [class*="themedComponent"],
+    > .api-endpoint-block {
+      max-width: var(--doc-content-max-width) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    /** table.scss sets min-width:100% (of the full-width markdown wrapper),
+     *  which overrides the centered max-width above and pinned tables to the
+     *  left. Drop it so tables honor the content width and center too. */
+    > table {
+      min-width: 0 !important;
+    }
+  }
+
+  /** Width toggle overrides for API endpoint pages.
+   *
+   * At wide the 2-column endpoint layout is active. The endpoint blocks AND the
+   * surrounding prose share the SAME reduced reading width, centered — so the
+   * 2-column endpoints line up exactly with the text width instead of spilling
+   * wider than it. Excluded in AI mode, which linearizes endpoints and keeps
+   * prose full-width (see view-modes.scss). The --codeonly override below still
+   * wins for pages with no 2-column endpoints. */
+  [data-content-width="wide"]:not([data-view-mode="ai"]) main:has(.api-endpoint-block--columns) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header,
+    > .expandable-content, > .custom-cards-wrapper,
+    > [class*="language-"], > div:not([class]),
+    > img, > [class*="themedComponent"],
+    > .api-endpoint-block {
+      max-width: 70% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+  }
+
+  /** No max-width override is needed for the max content width: the default
+   *  rule above already gives both prose and endpoints
+   *  max-width: var(--doc-content-max-width), which resolves to 100% at max —
+   *  i.e. everything fills the full column width. (wide is the only width that
+   *  reduces to a 70% reading measure.) */
+
+  /**
+   * API pages with legacy <ApiCall> blocks but no <Endpoint> (e.g. GraphQL):
+   * the .api-call blocks still need full width for their 2-col Request/Response
+   * grid, but the regular prose has no left-column to align with, so it must be
+   * CENTERED (like a normal doc page), not left-flushed like on Endpoint pages.
+   *
+   * Strategy: keep the markdown full-width (so .api-call can fill it for the
+   * 2-col grid), but give each prose child a fixed content width and auto side
+   * margins so it is centered. A fixed width (not max-width) is required so even
+   * short blocks like headings center instead of stretching/left-flushing.
+   */
+  main:has(.api-call):not(:has(.api-endpoint-block)) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header,
+    > .expandable-content, > .custom-cards-wrapper,
+    > [class*="language-"], > div:not([class]),
+    > img, > [class*="themedComponent"] {
+      display: block;
+      width: var(--doc-content-max-width);
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /** code.scss forces h1-h5 to display:inline-block !important (for the
+     *  inline heading background); override it here so margin:auto centers
+     *  them in the content column like every other prose block. */
+    > h1, > h2, > h3, > h4, > h5, > h6 {
+      display: block !important;
+    }
+
+    /** Keep <ApiCall> blocks aligned with the prose column: same width as every
+     *  other content block (follows the content-width selector) and centered,
+     *  instead of spanning the full article width — which made the 2-col
+     *  Request/Response grid overflow the content column at narrow/wide widths.
+     *  Do NOT set display here: api-call.scss owns the 2-col grid (forcing flex
+     *  here previously collapsed legacy blocks and caused horizontal overflow).
+     *  The grid simply lays out within this constrained width. */
+    > .api-call {
+      width: var(--doc-content-max-width);
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /** table.scss sets `min-width: 100%`, which is 100% of the full-width
+     *  markdown wrapper here and thus overrides the centered content width
+     *  above (the table stayed full-width and overflowed the prose column to
+     *  the left). Drop the min-width so the table honors the content width. */
+    > table {
+      min-width: 0;
+    }
+  }
+
+  /**
+   * Endpoint 2-column grid (params left / code right) responsiveness.
+   *
+   * The module default is `1fr 1fr` (always 2 columns on desktop). That reads
+   * poorly at the narrow content width — and in AI mode, where the content area
+   * is only ~half the viewport — because each column gets too little room.
+   *
+   * Collapse to a single column by default; restore the 2-column layout only at
+   * the wide/max content widths, and never in AI mode. When single-column, the
+   * left cell loses its dividing border and sits above the code cell.
+   */
+  .api-endpoint-block--columns [class*="endpoint__columns"] {
+    grid-template-columns: 1fr;
+  }
+  .api-endpoint-block--columns [class*="endpoint__desc"] {
+    border-right: none;
+    border-bottom: 1px solid var(--strapi-border);
+  }
+
+  [data-content-width="wide"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__columns"],
+  [data-content-width="max"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__columns"] {
+    grid-template-columns: 1fr 1fr;
+  }
+  [data-content-width="wide"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__desc"],
+  [data-content-width="max"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__desc"] {
+    border-right: 1px solid var(--strapi-border);
+    border-bottom: none;
+  }
+
+  /**
+   * The code/response cell is sticky with a viewport max-height and its own
+   * scrollbar, so long responses scrolled inside the cell instead of showing in
+   * full. That sticky behavior only ever made sense paired with a left params
+   * column, but it applied at every content width. Let the cell grow to its
+   * full height so the whole response is always visible without an inner
+   * scrollbar:
+   * - wide/max (non-AI): the actual 2-column layout.
+   * - narrow (non-AI, no data-content-width attribute): single column, where
+   *   the sticky scroll was a leftover that the user hit again. (On small
+   *   viewports a medium-down rule already neutralizes it.)
+   * AI mode is handled in view-modes.scss.
+   *
+   * min-width: 0 on the grid cells is REQUIRED at wide/max: the code cell holds
+   * a <pre> with long lines (overflow-x: auto). Without it, a grid item's
+   * min-content width is its content, so once the cell is no longer height-
+   * constrained the long code pushed the column past its 1fr share and crushed
+   * the params column. min-width:0 lets the 1fr 1fr split hold while the <pre>
+   * scrolls horizontally within its own box.
+   */
+  // min-width: 0 on the columns/cells at every content width: the code cell's
+  // <pre> has long lines (overflow-x: auto). Once the cell is no longer
+  // height-constrained, its min-content width would otherwise push the cell
+  // past its track and overflow the page (notably in narrow, single column).
+  .api-endpoint-block--columns [class*="endpoint__columns"],
+  .api-endpoint-block--columns [class*="endpoint__columns"] > * {
+    min-width: 0;
+  }
+  [data-content-width="wide"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__code"],
+  [data-content-width="max"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__code"],
+  html:not([data-content-width="wide"]):not([data-content-width="max"]):not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__code"] {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+/**
+ * V3: Secondary sidebar (TOC) — flush to right edge of page.
+ * Override Docusaurus default col--3 (25% + padding) with a fixed-width
+ * column pinned to the right. Content column fills remaining space.
+ */
+@include medium-up {
+  [class*="docMainContainer"] {
+    /** Remove container max-width + right padding so layout fills available space */
+    > .container {
+      max-width: 100% !important;
+      padding-right: 0 !important;
+    }
+
+    .row {
+      flex-wrap: nowrap !important;
+      margin-right: 0 !important;
+    }
+
+    /** Content column: take all remaining space, smooth reflow on sidebar toggle */
+    [class*="docItemCol"] {
+      max-width: none !important;
+      flex: 1 1 0% !important;
+      min-width: 0;
+    }
+
+
+    /** TOC column: fixed width, flush right, no inner padding. */
+    .col--3 {
+      max-width: 280px !important;
+      flex: 0 0 auto !important;
+      width: 280px !important;
+      min-width: 280px !important;
+      padding-right: 0 !important;
+      padding-left: 0 !important;
+      transition: width var(--strapi-duration-slow) var(--strapi-ease),
+                  max-width var(--strapi-duration-slow) var(--strapi-ease),
+                  min-width var(--strapi-duration-slow) var(--strapi-ease);
+    }
+
+    /** Collapsed: shrink to just the toggle button */
+    .col--3:has(.toc-v3-wrapper--collapsed) {
+      width: 44px !important;
+      max-width: 44px !important;
+      min-width: 44px !important;
+    }
+  }
+}
+
+/** Anti-FOUC for the collapsed right sidebar (TOC).
+ * The TOC is server-rendered expanded (React reads localStorage only on the
+ * client), so a collapsed TOC flashed open on every page load. A head script
+ * sets html[data-toc-collapsed="true"] from localStorage BEFORE paint; these
+ * rules shrink the column and hide the TOC content until React takes over and
+ * removes the attribute (so re-expanding still works). */
+@include medium-up {
+  html[data-toc-collapsed='true'] {
+    .col--3 {
+      width: 44px !important;
+      max-width: 44px !important;
+      min-width: 44px !important;
+    }
+
+    // Hide everything in the TOC except the toggle button until React re-renders
+    // the collapsed markup. .theme-doc-toc-desktop is the inner TOC list.
+    .toc-v3-wrapper .theme-doc-toc-desktop {
+      display: none !important;
+    }
+  }
+}
 
 /** Dark mode */
 @include dark {

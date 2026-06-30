@@ -13,6 +13,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Templates are now standalone, regular Strapi applications
 
+<Tldr>
+
+Templates are now standalone Strapi 5 applications instead of npm packages with strict requirements, making them easier to create, distribute, and reuse.
+
+</Tldr>
+
+
 Templates have been fully rewritten in Strapi 5 and now are standalone, regular Strapi applications, making it easier to create, distribute, and reuse them.
 <Intro />
 <BreakingChangeIdCard />

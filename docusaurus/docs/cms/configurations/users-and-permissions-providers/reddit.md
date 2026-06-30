@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # Reddit provider setup for Users & Permissions
 
+<Tldr>
+
+Configure the Reddit provider for Users & Permissions by creating a Reddit app and inputting the Client ID and Secret in Strapi's provider settings.
+
+</Tldr>
+
+
 The present page explains how to setup the Reddit provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

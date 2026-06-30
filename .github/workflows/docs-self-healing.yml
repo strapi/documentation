@@ -75,11 +75,11 @@ jobs:
             IGNORED=0
           fi
 
-          # 2. Separate PRs with "flag: documentation" label (manually flagged, skip automation)
+          # 2. Separate PRs with "flag: requires manual documentation" label (manually flagged, skip automation)
           #    Also filter out PRs with "translations" label (i18n work, never needs docs)
-          jq '[.[] | select(.labels | index("flag: documentation"))]' /tmp/not-ignored-prs.json > /tmp/flagged-prs.json
+          jq '[.[] | select(.labels | index("flag: requires manual documentation"))]' /tmp/not-ignored-prs.json > /tmp/flagged-prs.json
           jq '[.[] | select(
-            (.labels | index("flag: documentation") | not) and
+            (.labels | index("flag: requires manual documentation") | not) and
             (.labels | index("translations") | not)
           )]' /tmp/not-ignored-prs.json > /tmp/unflagged-prs.json
           FLAGGED=$(jq 'length' /tmp/flagged-prs.json)
@@ -184,7 +184,7 @@ jobs:
           if [ "$FLAGGED" -gt 0 ]; then
             echo "**Manually flagged for docs ($FLAGGED):**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            jq -r '.[] | "- [strapi/strapi#\(.number) — \(.title)](https://github.com/strapi/strapi/pull/\(.number)) *(has `flag: documentation` label, skipping automation)*"' /tmp/flagged-prs.json >> $GITHUB_STEP_SUMMARY
+            jq -r '.[] | "- [strapi/strapi#\(.number) — \(.title)](https://github.com/strapi/strapi/pull/\(.number)) *(has `flag: requires manual documentation` label, skipping automation)*"' /tmp/flagged-prs.json >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
@@ -273,7 +273,7 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
           prompt: ${{ steps.load-triage-prompt.outputs.prompt }}
-          claude_args: '--model claude-haiku-4-5-20251001 --max-turns 10 --allowedTools "Bash,Read"'
+          claude_args: '--model claude-haiku-4-5-20251001 --max-turns 20 --allowedTools "Bash,Read"'
           show_full_output: true
         env:
           FILTERED_PRS: ${{ steps.check-prs.outputs.pr_list }}
@@ -484,7 +484,7 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
           prompt: ${{ steps.load-drafter-prompt.outputs.prompt }}
-          claude_args: '--model claude-sonnet-4-6 --max-turns 25 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
+          claude_args: '--model claude-sonnet-4-6 --max-turns 50 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
           show_full_output: true
         env:
           DOC_REPO: ${{ github.workspace }}

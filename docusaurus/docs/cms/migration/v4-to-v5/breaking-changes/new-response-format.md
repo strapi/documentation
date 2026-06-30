@@ -16,6 +16,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Strapi 5 has a new, flattened response format for REST API calls
 
+<Tldr>
+
+Strapi 5 flattens REST API responses by removing the `attributes` wrapper and using `documentId` instead of `id`. Use the `Strapi-Response-Format: v4` header during migration for backward compatibility.
+
+</Tldr>
+
+
 In Strapi 5, the REST API response format has been simplified and flattened. You can set the `Strapi-Response-Format: v4` header to use the old v4 format while you convert your code to fully take into account the new Strapi 5 response format.
 
 <Intro />

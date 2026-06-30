@@ -16,6 +16,13 @@ tags:
 
 # REST API Guides
 
+<Tldr>
+
+Explore detailed guides and step-by-step instructions on specific REST API topics, including populate parameters and custom controllers for accessing creator fields.
+
+</Tldr>
+
+
 The [REST API reference](/cms/api/rest) documentation is meant to provide a quick reference for all the endpoints and parameters available.
 
 ## Guides

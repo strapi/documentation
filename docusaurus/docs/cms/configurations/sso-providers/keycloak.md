@@ -10,6 +10,13 @@ tags:
 
 # Keycloak (OpenID Connect) provider SSO configuration
 
+<Tldr>
+
+Keycloak is an OpenID Connect SSO provider that lets users sign in to Strapi through Keycloak authentication using the `passport-keycloak-oauth2-oidc` strategy configured in `config/admin`.
+
+</Tldr>
+
+
 The present page explains how to setup the Keycloak provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites

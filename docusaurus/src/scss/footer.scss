@@ -4,15 +4,8 @@
 .footer {
   position: relative;
   padding: 40px 40px 0 40px;
-  border-top: solid 1px var(--strapi-neutral-200);
+  border-top: solid 1px var(--strapi-border);
 
-  &::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-  }
 
   &::after {
     content: '';
@@ -23,6 +16,10 @@
     left: 40px;
     width: 152px;
     height: 100px;
+    // Decorative logo only: never let it intercept clicks. On mobile it overlaps
+    // the top of the first footer links, which made "What's new?" unclickable on
+    // its left half.
+    pointer-events: none;
   }
 
   .container {
@@ -33,21 +30,23 @@
 
   a {
     color: var(--strapi-primary-600);
-    // @include transition;
-    font-size: var(--strapi-font-size-sm);
-    line-height: var(--strapi-line-height-sm);
+    font-family: var(--strapi-font-family-body);
+    font-size: 13px;
+    line-height: 1.5;
 
     &:hover {
-      // font-weight: 700;
+      color: var(--strapi-accent, #4945FF);
     }
   }
 
   &__title {
+    font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
     font-size: 11px;
     line-height: 16px;
     font-weight: 600;
     margin-bottom: 12px;
     text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--strapi-neutral-500);
   }
 
@@ -68,14 +67,6 @@
 
 @include medium-up {
   .footer {
-    &::before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 280px;
-      height: 100%;
-    }
-
     &::after {
       content: '';
       background: url('/img/logo-v5.png') no-repeat;
@@ -156,9 +147,53 @@
   }
 }
 
+/**
+ * Mobile footer links: at the base 13px size with only 4px between them, the
+ * links were small and crowded against the left edge, and each tap target was
+ * barely ~20px tall — easy to miss, so they felt unclickable. Make them larger
+ * and give each a full-width block with comfortable vertical padding so the
+ * whole row is an easy tap target.
+ */
+@include small-down {
+  .footer a {
+    font-size: 15px;
+  }
+
+  .footer__title {
+    font-size: 12px;
+  }
+
+  .footer__link-item {
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+    // Comfortable but tighter tap target (was 8px, which spaced links too far).
+    padding: 4px 0;
+    line-height: 1.4;
+  }
+
+  // Align the link columns (and their category titles) with the footer logo,
+  // which sits at left:16px (the footer's padding). The Infima grid .row has a
+  // -8px gutter margin that pushed the columns out to left:8px — visible as a
+  // misalignment with the logo on Firefox. Cancel the gutter so the row matches
+  // the container (16px), and zero the .col padding so titles/links sit flush
+  // on that same left edge as the logo.
+  .footer .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .footer .col {
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 16px;
+  }
+}
+
 @include dark {
   .footer {
     border-top-color: var(--strapi-neutral-150) !important;
+
   }
   .footer::after {
     content: '';

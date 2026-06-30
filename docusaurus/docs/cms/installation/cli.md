@@ -17,6 +17,13 @@ import SupportedDatabases from '/docs/snippets/supported-databases.md'
 
 # Installing from CLI
 
+<Tldr>
+
+The Strapi CLI is the fastest way to install Strapi locally using `npx create-strapi@latest`, with options to configure TypeScript, databases (`--dbclient`, `--dbhost`, etc.), and other setup preferences via command-line flags.
+
+</Tldr>
+
+
 Strapi CLI (Command Line Interface) installation scripts are the fastest way to get Strapi running locally. The following guide is the installation option most recommended by Strapi.
 
 ## Preparing the installation

@@ -7,9 +7,16 @@ export const aiToolsConfig = {
     {
       id: 'copy-markdown',
       label: 'Copy Markdown',
-      description: 'Copy the raw markdown content of this page',
+      description: 'Copy the clean markdown content of this page',
       icon: 'copy',
       actionType: 'copy-markdown',
+    },
+    {
+      id: 'view-markdown',
+      label: 'View as Markdown',
+      description: 'Open this page as clean Markdown (for agents and tools)',
+      icon: 'markdown-logo',
+      actionType: 'view-markdown',
     },
     {
       id: 'open-chatgpt',
@@ -33,6 +40,14 @@ export const aiToolsConfig = {
       copyPromptToClipboard: true,
       promptParam: 'q',
       openIn: '_blank',
+    },
+    {
+      id: 'install-mcp',
+      label: 'Install Strapi Docs MCP',
+      description: 'Connect your AI assistant to the Strapi docs MCP server',
+      icon: 'plugs',
+      actionType: 'navigate',
+      url: '/cms/ai/docs-mcp-server',
     },
     {
       id: 'view-llms',

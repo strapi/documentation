@@ -31,6 +31,35 @@ const config = {
 
   themes: ['@docusaurus/theme-live-codeblock', '@docusaurus/theme-mermaid'],
 
+  headTags: [
+    {
+      // Anti-FOUC: apply saved content width before React hydrates
+      tagName: 'script',
+      attributes: {},
+      innerHTML: '(function(){try{var w=localStorage.getItem("strapi-content-width");if(w)document.documentElement.dataset.contentWidth=w}catch(e){}})();',
+    },
+    {
+      // Anti-FOUC: apply saved view mode before React hydrates
+      tagName: 'script',
+      attributes: {},
+      innerHTML: '(function(){try{var m=localStorage.getItem("strapi-view-mode");if(m&&m!=="ai")document.documentElement.dataset.viewMode=m;else document.documentElement.dataset.viewMode="elegant"}catch(e){document.documentElement.dataset.viewMode="elegant"}})();',
+    },
+    {
+      // Anti-FOUC: apply the saved left-sidebar collapsed state before React
+      // hydrates, so a collapsed sidebar doesn't flash open on every page load.
+      tagName: 'script',
+      attributes: {},
+      innerHTML: '(function(){try{if(localStorage.getItem("strapi-sidebar-collapsed")==="true")document.documentElement.dataset.sidebarCollapsed="true"}catch(e){}})();',
+    },
+    {
+      // Anti-FOUC: apply the saved right-sidebar (TOC) collapsed state before
+      // React hydrates, so a collapsed TOC doesn't flash open on every page load.
+      tagName: 'script',
+      attributes: {},
+      innerHTML: '(function(){try{if(localStorage.getItem("strapi-toc-collapsed")==="true")document.documentElement.dataset.tocCollapsed="true"}catch(e){}})();',
+    },
+  ],
+
   scripts: [
     {
       src: '/js/redirector.js',
@@ -89,26 +118,7 @@ const config = {
       'data-modal-disclaimer':
         'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
       'data-project-color': '#4945FF',
-      'data-project-color-dark': '#7B79FF',
       'data-button-bg-color': '#32324D',
-      // Dark mode: sync with Docusaurus theme toggle
-      'data-color-scheme': 'auto',
-      'data-color-scheme-selector': "[data-theme='dark']",
-      // Light mode palette (defaults are fine, override only what we need)
-      'data-surface-color': '#ffffff',
-      'data-surface-elevated-color': '#f8f9fa',
-      'data-text-color': '#212529',
-      'data-text-muted-color': '#868e96',
-      'data-border-color': '#dee2e6',
-      'data-anchor-color': '#4945FF',
-      // Dark mode palette
-      'data-surface-color-dark': '#181826',
-      'data-surface-elevated-color-dark': '#212134',
-      'data-surface-hover-color-dark': '#2a2a3e',
-      'data-text-color-dark': '#e4e4e7',
-      'data-text-muted-color-dark': '#a1a1a9',
-      'data-border-color-dark': '#3f3f45',
-      'data-anchor-color-dark': '#7B79FF',
       'data-modal-example-questions': "How to create a Strapi project?,How does population work?,How to customize the admin panel?,Explain the Growth plan benefits",
       // 'data-modal-override-open-class-search': 'DocSearch-Button',
       // 'data-modal-title-search': 'Search Strapi Docs',
@@ -116,7 +126,7 @@ const config = {
       // 'data-search-mode-enabled': true,
       'data-modal-override-open-class': 'kapa-widget-button',
       'data-modal-title-ask-ai': 'Ask your question',
-      'data-modal-border-radius': '4px',
+      'data-modal-border-radius': '16px',
       'data-submit-query-button-bg-color': '#4945FF',
       'data-modal-body-padding-top': '20px',
       'data-user-analytics-cookie-enabled': true,

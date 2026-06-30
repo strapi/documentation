@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # CAS provider setup for Users & Permissions
 
+<Tldr>
+
+CAS is an SSO server that Strapi can use for authentication when deployed with OIDC support. Configure a CAS service definition and provide the client ID, secret, and provider subdomain in Strapi's Users & Permissions settings.
+
+</Tldr>
+
+
 The present page explains how to set up the CAS provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

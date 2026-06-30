@@ -17,6 +17,13 @@ tags:
 
 # Strapi APIs to access your content
 
+<Tldr>
+
+Strapi's Content API provides access to your content through REST and GraphQL APIs for front-end applications, plus lower-level Document Service and Query Engine APIs for backend and plugin development.
+
+</Tldr>
+
+
 Once you've created and configured a Strapi project, created a content structure with the [Content-Type Builder](/cms/features/content-type-builder) and started adding data through the [Content Manager](/cms/features/content-manager), you likely would like to access your content.
 
 From a front-end application, your content can be accessed through Strapi's Content API, which is exposed:
@@ -55,8 +62,8 @@ This documentation section includes reference information about the following St
 
 <CustomDocCard emoji="📋" title="OpenAPI Specification" description="Generate OpenAPI specifications for your Strapi applications." link="/cms/api/openapi" />
 
+</CustomDocCardsWrapper>
+
 :::strapi Integrations
 If you're looking for how to integrate Strapi with other platforms, such as <ExternalLink to="https://strapi.io/integrations/nextjs-cms" text="Next.js"/>, <ExternalLink to="https://strapi.io/integrations/astro" text="Astro"/>, <ExternalLink to="https://strapi.io/integrations/angular-cms" text="Angular"/>, and more, please refer to Strapi's <ExternalLink to="https://strapi.io/integrations" text="integrations pages"/>.
 :::
-
-</CustomDocCardsWrapper>

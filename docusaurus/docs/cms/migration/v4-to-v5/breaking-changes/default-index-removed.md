@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # `defaultIndex` is removed from the `public` middleware configuration
 
+<Tldr>
+
+In Strapi 5, the `defaultIndex` option is removed from the `public` middleware, and the root `/` URL automatically redirects to the admin panel login or homepage if connected.
+
+</Tldr>
+
+
 In Strapi 5, the 'defaultIndex' option does not exist anymore and the root `/` URL automatically redirects to the admin panel login or homepage if already connected.
 
  <Intro />

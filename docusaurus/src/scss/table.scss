@@ -4,11 +4,6 @@ table {
   overflow: auto;
   border-radius: 4px;
 
-  /* Allow annotation tooltips to overflow the table when open */
-  &:has(.annotation__tooltip) {
-    overflow: visible;
-  }
-
   thead {
     --ifm-table-background: transparent;
     --ifm-table-stripe-background: transparent;
@@ -29,4 +24,13 @@ table {
     line-height: var(--strapi-font-size-ssm);
     padding: 4px;
   }
+}
+
+/* A table written under a list item is indented by the list's padding-left
+   (32px), making it narrower than top-level tables. Pull it back to the full
+   content width so all tables on a page line up. */
+.theme-doc-markdown li > table {
+  margin-left: -32px;
+  width: calc(100% + 32px);
+  max-width: calc(100% + 32px);
 }

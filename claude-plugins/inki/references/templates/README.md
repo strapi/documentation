@@ -23,7 +23,7 @@ How to use
 | `plugin-template.md` | `docusaurus/docs/cms/plugins/` | Plugin pages: identity details, install steps, configuration (admin UI and code), usage tasks | `claude-plugins/inki/references/authoring/AGENTS.cms.plugins.md` |
 | `configuration-template.md` | `docusaurus/docs/cms/configurations/` | Configuration pages: file location, available options, env variables, per‑environment overrides | `claude-plugins/inki/references/authoring/AGENTS.cms.configurations.md` |
 | `guide-template.md` | `docusaurus/docs/cms/` (varies) | How‑to guides: prerequisites, numbered steps, validation, troubleshooting | `claude-plugins/inki/references/authoring/AGENTS.cms.guides.md` |
-| `api-template.md` | `docusaurus/docs/cms/api/` | API reference pages: endpoints, auth, parameters, example requests/responses | `claude-plugins/inki/references/authoring/AGENTS.cms.api.md` |
+| `api-template.md` | `docusaurus/docs/cms/api/` | API reference pages: endpoints, auth, parameters, and the `<Endpoint>` 2‑column API block (HTTP request on one side, response/JS client on the other) | `claude-plugins/inki/references/authoring/AGENTS.cms.api.md` |
 | `breaking-change-template.md` | `docusaurus/docs/cms/migration/**/breaking-changes/` | Breaking‑change pages: BreakingChangeIdCard, v4/v5 comparison, migration notes | — |
 
 ## What every template provides
@@ -35,6 +35,9 @@ How to use
 - **Placeholder comments** (`<!-- ... -->`) explaining what content to write in each section.
 - **Multi‑language patterns** using Tabs where applicable (see `claude-plugins/inki/references/templates/components/tabs.md` for Tabs/TabItem rules).
 - **Progressive disclosure** using ExpandableContent where applicable (see `claude-plugins/inki/references/templates/components/expandable-content.md` for usage rules).
+- **API request/response blocks** using the `<Endpoint>` 2‑column component where applicable (see `claude-plugins/inki/references/templates/components/endpoint.md` for `kind` `http`/`js` usage rules).
+- **Tutorial steps** using the `<StepDetails>` component where applicable (see `claude-plugins/inki/references/templates/components/step-details.md` for usage rules).
+- **"What's next?" navigation** using the `<NextSteps>` component where applicable (see `claude-plugins/inki/references/templates/components/next-steps.md` for usage rules).
 
 ## References
 
@@ -43,3 +46,13 @@ How to use
 - Tabs/TabItem rules: `claude-plugins/inki/references/templates/components/tabs.md`
 - ExpandableContent rules: `claude-plugins/inki/references/templates/components/expandable-content.md`
 - Annotation rules: `claude-plugins/inki/references/templates/components/annotation.md`
+- Endpoint (2‑column API block, `kind` `http`/`js`) rules: `claude-plugins/inki/references/templates/components/endpoint.md`
+- StepDetails (tutorial step) rules: `claude-plugins/inki/references/templates/components/step-details.md`
+- NextSteps ("What's next?" block) rules: `claude-plugins/inki/references/templates/components/next-steps.md`
+- ExternalLink (outbound link with trailing icon) rules: `claude-plugins/inki/references/templates/components/external-link.md`
+- Icon (inline Phosphor icons in prose) rules: `claude-plugins/inki/references/templates/components/icon.md`
+- Badge (plan / status / version flags via named aliases like `<GrowthBadge>`, `<NewBadge>`) rules: `claude-plugins/inki/references/templates/components/badge.md`
+- Columns / ColumnLeft / ColumnRight (two-up side-by-side layout) rules: `claude-plugins/inki/references/templates/components/columns.md`
+- SubtleCallout (low-emphasis "good to know" aside) rules: `claude-plugins/inki/references/templates/components/subtle-callout.md`
+- Checklist / ChecklistItem (interactive checkbox lists) rules: `claude-plugins/inki/references/templates/components/checklist.md`
+- MermaidWithFallback (live Mermaid diagram with static fallback) rules: `claude-plugins/inki/references/templates/components/mermaid-with-fallback.md`

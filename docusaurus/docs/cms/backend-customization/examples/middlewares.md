@@ -5,11 +5,18 @@ displayed_sidebar: cmsSidebar
 pagination_prev: cms/backend-customization/examples/routes
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import CookbookNote from '/docs/snippets/_cookbook-foodadvisor.md'
 
 # Examples cookbook: Custom global middlewares
 
-<NotV5/>
+<Tldr>
+
+Custom global middlewares intercept incoming requests before controller execution, enabling you to add logic like analytics tracking. This example creates a middleware that logs restaurant page visits to a Google Sheet.
+
+</Tldr>
+
+
+<CookbookNote/>
 
 :::prerequisites
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/cms/backend-customization/examples).
@@ -196,12 +203,11 @@ Additional information can be found in the [middlewares customization](/cms/back
           tabName,
         });
       
-      // Get the restaurant ID from the params in the URL
+      // Get the restaurant documentId from the params in the URL
       const restaurantId = context.params.id;
-      const restaurant = await strapi.entityService.findOne(
-        'api::restaurant.restaurant',
-        restaurantId
-      );
+      const restaurant = await strapi.documents('api::restaurant.restaurant').findOne({
+        documentId: restaurantId,
+      });
 
       // Read the spreadsheet to get the current data
       const restaurantAnalytics = await readGoogleSheet();

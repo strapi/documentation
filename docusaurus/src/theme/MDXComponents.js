@@ -41,6 +41,10 @@ import IdentityCard, { IdentityCardItem } from '../components/IdentityCard';
 import Checklist, { ChecklistItem } from '../components/Checklist';
 // Debug component for testing, for instance the AIToolbar configuration
 import DebugComponent from '../components/DebugComponent';
+// V3: API 2-column layout
+import Endpoint from '../components/ApiReference/Endpoint';
+import StepDetails from '../components/StepDetails/StepDetails';
+import NextSteps from '../components/NextSteps/NextSteps';
 
 export default {
   // Re-use the default mapping
@@ -106,4 +110,7 @@ export default {
   DocumentDefinition,
   Codemods,
   NamingConventions,
+  Endpoint,
+  StepDetails,
+  NextSteps,
 };

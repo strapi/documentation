@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # `Strapi` is a subclass of `Container`
 
+<Tldr>
+
+In Strapi 5, `Strapi` is a subclass of `Container`, allowing you to access container methods directly on the `strapi` object using `strapi.add()` and `strapi.get()` instead of `strapi.container.register()` and `strapi.container.get()`.
+
+</Tldr>
+
+
 In Strapi 5, `Strapi` is a subclass of the `Container` class to make it simpler to access services and unify the service access with one method.
 
 <Intro />

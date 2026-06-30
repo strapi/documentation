@@ -9,6 +9,13 @@ tags:
 
 # How to access to configuration values from the code
 
+<Tldr>
+
+Access configuration values loaded on startup using the `strapi.config.get()` method with dot notation for nested keys across all configuration files.
+
+</Tldr>
+
+
 All the [configuration files](/cms/configurations) are loaded on startup and can be accessed through the `strapi.config` configuration provider.
 
 If the `/config/server.ts|js` file has the following configuration:

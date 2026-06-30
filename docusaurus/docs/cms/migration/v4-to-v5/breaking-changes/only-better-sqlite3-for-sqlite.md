@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Only the `better-sqlite3` package is supported for the SQLite client
 
+<Tldr>
+
+In Strapi 5, SQLite databases must use the `better-sqlite3` package with the database client configuration set to `sqlite` instead of other options like `sqlite3` or `sqlite-legacy`.
+
+</Tldr>
+
+
 Strapi 5 can only use the `better-sqlite3` package for SQLite databases, and the `client` value for it must be set to `sqlite`.
 
 <Intro />

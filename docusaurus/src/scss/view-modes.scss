@@ -1,0 +1,1003 @@
+/** View Modes: Markdown + AI mode overrides */
+@use './mixins' as *;
+
+// ============================================================
+// MARKDOWN MODE
+// ============================================================
+[data-view-mode="markdown"] {
+  // Typography: switch everything to monospace
+  article {
+    font-family: var(--strapi-font-family-technical);
+    font-size: 14px;
+    line-height: 1.7;
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--strapi-font-family-technical);
+      letter-spacing: 0;
+    }
+  }
+
+  // Secondary sidebar (TOC / "On this page"): keep the regular font, like in
+  // elegant mode. Only raw page content switches to monospace, not the chrome.
+  // Force the body font explicitly (it otherwise inherits the monospace set on
+  // an ancestor).
+  [class*="tableOfContents"],
+  [class*="tocCollapsible"] {
+    font-family: var(--strapi-font-family-body, 'Inter', sans-serif);
+    font-size: 12px;
+
+    a {
+      text-decoration: none !important;
+    }
+  }
+
+  // Page feedback widget ("Was this page helpful?"): UI chrome, not page
+  // content, so keep the regular body font in markdown mode too.
+  [class*="pageFeedback"] {
+    font-family: var(--strapi-font-family-body, 'Inter', sans-serif);
+  }
+
+  // Keep the widget's top spacing in markdown (the "tighten everything" rules
+  // zero it out, gluing it to the last paragraph). Target ONLY the root
+  // (aria-label), not every pageFeedback__* sub-element, or their margins stack
+  // and balloon the box height.
+  [aria-label="Page feedback"] {
+    margin-top: 2.25rem !important;
+  }
+
+  // Tables: take the full available content width so every table lines up at
+  // the same width (which one the user picked via the content-width selector),
+  // instead of shrinking to their content.
+  article table {
+    width: 100%;
+  }
+
+  // Tables under a list item: markdown mode indents lists by 24px (not the 32px
+  // of elegant mode), so override the pull-back margin from table.scss to match.
+  .theme-doc-markdown li > table {
+    margin-left: -24px;
+    width: calc(100% + 24px);
+    max-width: calc(100% + 24px);
+  }
+
+  // Mode switcher: the markdown "tighten everything" rules zero its negative
+  // top margin, which dropped the toolbar ~13px lower than in elegant mode.
+  // Re-apply it so the toolbar stays at a fixed height below the navbar in
+  // both modes.
+  [class*="switcher"] {
+    margin-top: -13px !important;
+  }
+
+  // On mobile the negative margin above is calibrated for desktop, where the
+  // switcher follows the breadcrumb. On mobile the collapsible "On this page"
+  // TOC sits right above it (and markdown zeroes that TOC's bottom spacing), so
+  // -13px pulled the switcher flush against the TOC. Restore a small positive
+  // gap there so the mode bar isn't glued to the TOC.
+  @include medium-down {
+    [class*="switcher"] {
+      margin-top: 8px !important;
+    }
+  }
+
+  // Flatten card grids into simple list (article only)
+  article [class*="docCardList"],
+  article [class*="customDocCardsWrapper"],
+  article .custom-cards-wrapper,
+  article [class*="CardGrid"],
+  article [class*="card-grid"],
+  article .row:has(.custom-doc-card) {
+    display: block !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    margin: 8px 0 !important;
+    width: 100% !important;
+  }
+
+  // On API pages the markdown wrapper is full-width and prose is centered to the
+  // content column; width:100% above would make the cards wrapper overrun that
+  // column to the right. Keep it centered to the content width there.
+  main:has(.api-call) article .custom-cards-wrapper,
+  main:has(.api-endpoint-block) article .custom-cards-wrapper {
+    width: var(--doc-content-max-width) !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  // On <Endpoint> pages, _base.scss caps prose at max-width:50% (70% in wide,
+  // 100% in max) and left-flushes it so it aligns with the left column of the
+  // 2-column endpoint layout. In markdown mode that 2-column layout is
+  // linearized to a single full-width column, so the half-width cap no longer
+  // has anything to align with: prose (and especially admonitions, which keep
+  // `margin: auto`) ends up squeezed into the left/center half of the column.
+  // Restore normal centered content-width behavior here, like a regular page.
+  main:has(.api-endpoint-block) article .theme-doc-markdown {
+    > h1, > h2, > h3, > h4, > h5, > h6,
+    > p, > ul, > ol, > blockquote, > table,
+    > details, > .theme-admonition,
+    > [class*="admonition"], > nav,
+    > .tabs-container, > .tabs,
+    > header,
+    > .expandable-content, > .custom-cards-wrapper,
+    > [class*="language-"], > div:not([class]),
+    > img, > [class*="themedComponent"],
+    > .api-endpoint-block,
+    // Flattened <details> uses `display: contents`, so the box itself has no
+    // size and `> details` above is a no-op. Its summary and content wrapper
+    // become direct flow children, so constrain THOSE to the content width.
+    > details > summary,
+    > details > summary ~ * {
+      max-width: var(--doc-content-max-width) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    // table.scss sets min-width:100% of the full-width wrapper, which would
+    // override the centered max-width above and pin tables to the left.
+    > table {
+      min-width: 0 !important;
+    }
+  }
+
+  // === CARDS: Convert to simple bullet list ===
+  // Target both CustomDocCard and Docusaurus DocCard
+  article .custom-doc-card,
+  article [class*="docCardList"] article {
+    display: list-item !important;
+    list-style: disc !important;
+    margin: 0 0 4px 24px !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    // Collapse the card's grid-cell height: in elegant mode the card and its
+    // inner link fill the grid row (height ~136px); as a bullet it must hug its
+    // content, otherwise each item leaves a large vertical gap.
+    height: auto !important;
+    min-height: 0 !important;
+    float: none !important;
+    flex: none !important;
+
+    &:hover {
+      transform: none !important;
+    }
+
+    // The link wrapper inside: strip all card styling
+    a,
+    > a {
+      display: block !important;
+      height: auto !important;
+      min-height: 0 !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      background: transparent !important;
+      text-decoration: none !important;
+      color: inherit !important;
+      width: 100% !important;
+
+      &:hover {
+        transform: none !important;
+        box-shadow: none !important;
+      }
+    }
+
+    // Title: clickable link
+    h2, h3,
+    .cardTitle,
+    [class*="card__title"] {
+      display: inline !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      font-family: var(--strapi-font-family-technical) !important;
+      color: var(--strapi-primary-600) !important;
+      text-decoration: underline !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      line-height: 1.5 !important;
+    }
+
+    // Description: plain text, not a link
+    p,
+    .cardDescription,
+    [class*="card__description"] {
+      display: block !important;
+      font-size: 13px !important;
+      font-family: var(--strapi-font-family-technical) !important;
+      color: var(--strapi-neutral-600) !important;
+      text-decoration: none !important;
+      padding: 0 !important;
+      margin: 2px 0 0 0 !important;
+      line-height: 1.5 !important;
+      max-width: none !important;
+      -webkit-line-clamp: unset !important;
+      overflow: visible !important;
+    }
+
+    // Hide icons
+    i[class*="ph-"],
+    .custom-doc-card__icon,
+    [class*="card-category-icon"],
+    [class*="card__img"],
+    [class*="card__title__arrow"],
+    svg {
+      display: none !important;
+    }
+  }
+
+  // Flatten card grid wrappers
+  article [class*="docCardList"],
+  article [class*="customDocCardsWrapper"],
+  article [class*="CardGrid"],
+  article [class*="card-grid"] {
+    display: block !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    margin: 8px 0 !important;
+    width: 100% !important;
+  }
+
+  // Columns wrapping cards: flatten to full width
+  article .col:has(.custom-doc-card),
+  article [class*="col"]:has(.custom-doc-card) {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  // Also handle cards used as direct links (Card component)
+  article [class*="card--cta"],
+  article .card {
+    display: list-item !important;
+    list-style: disc !important;
+    margin-left: 24px !important;
+    margin-bottom: 8px !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+
+    &:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  // Simplify admonitions: left border + colored title only
+  .theme-admonition {
+    border: none !important;
+    border-left: 3px solid var(--custom-admonition-heading-color, var(--strapi-neutral-400)) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 4px 0 4px 16px !important;
+    // Use `auto` side margins (not 0) so admonitions stay centered in the
+    // content column on API pages, where the base rule centers prose children
+    // with margin-left/right:auto (a `margin: 8px 0` shorthand would reset that
+    // and pin them flush-left). On normal pages auto is a no-op.
+    margin: 8px auto !important;
+
+    // Title: colored, monospace
+    .theme-admonition__heading {
+      font-family: var(--strapi-font-family-technical);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      color: var(--custom-admonition-heading-color);
+    }
+  }
+
+  // === <Endpoint> (API reference): linearize the 2-column block into a flat,
+  // single-column, monospace layout. Keep minimal structure (heading, params
+  // list, request, response) but strip the grid, colored pills, frames, and bg.
+  .api-endpoint-block {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 12px 0 !important;
+
+    // 2-column grid -> single column
+    [class*="endpoint__columns"] {
+      display: block !important;
+      grid-template-columns: none !important;
+      gap: 0 !important;
+    }
+
+    // Parameter rows: collapse the 3-column grid into a flat line, and give
+    // each one breathing room plus a bottom divider so it is clear where one
+    // parameter's info ends and the next begins (flattened rows otherwise run
+    // together).
+    [class*="paramRow"],
+    [class*="param "] {
+      display: block !important;
+      grid-template-columns: none !important;
+      padding: 2px 0 16px !important;
+      margin-bottom: 16px !important;
+      border: none !important;
+      border-bottom: 1px solid var(--strapi-neutral-150) !important;
+    }
+
+    // No trailing divider after the last parameter row in a group.
+    [class*="paramRow"]:last-child {
+      border-bottom: none !important;
+      margin-bottom: 0 !important;
+    }
+
+    // Required/optional pills: plain text, no colored chip
+    [class*="methodPill"],
+    [class*="param"] [class*="badge"],
+    [class*="required"],
+    [class*="optional"] {
+      background: transparent !important;
+      border: none !important;
+      color: var(--strapi-neutral-600) !important;
+      padding: 0 4px 0 0 !important;
+      font-weight: 600;
+      text-transform: lowercase;
+    }
+
+    // Code + response panels: strip frame/background, keep the code text
+    [class*="codePanel"],
+    [class*="responsePanel"],
+    [class*="responseHeader"],
+    [class*="responseTabs"] {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+
+    // Tighten content inside
+    [class*="admonitionContent"] {
+      > p, > ul, > ol {
+        margin: 4px 0;
+      }
+    }
+  }
+
+  // Details/accordion blocks (e.g. Prerequisites): strip all decoration.
+  // Fully flat in markdown mode — no left accent bar, no frame, no background;
+  // the 16px content indent is kept (below) to still set the block apart.
+  // StepDetails (Quick Start) are excluded: that page keeps its own treatment.
+  details.alert:not([data-step-details]) {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 8px 0 !important;
+    overflow: visible;
+
+    // Remove the pseudo-element left accent bar (we use border-left instead)
+    &::after {
+      display: none !important;
+    }
+
+    // Summary: no border, no arrow
+    summary {
+      padding: 4px 0 4px 16px !important;
+      border: none !important;
+      font-family: var(--strapi-font-family-technical);
+
+      &::before {
+        display: none !important;
+      }
+
+      &::after {
+        display: none !important;
+      }
+    }
+
+    &[open] summary {
+      border-bottom: none !important;
+    }
+
+    // Content
+    > div {
+      padding: 4px 0 4px 16px !important;
+    }
+  }
+
+  // StepDetails: it is a details.alert (already flattened above), but its
+  // component CSS adds large content margins (40px). In markdown mode, collapse
+  // the content indent to match other details/admonitions.
+  [data-step-details] > :not(summary) {
+    margin-left: 16px !important;
+    margin-right: 0 !important;
+    max-width: none !important;
+    padding-left: 0 !important;
+  }
+
+  // <Tldr>: it is a blockquote with a frame; flatten to a plain quote-style
+  // block (left border only), consistent with admonitions.
+  article .tldr {
+    border: none !important;
+    border-left: 3px solid var(--strapi-neutral-400) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 4px 0 4px 16px !important;
+    // Extra space below so the page content is clearly separated from the
+    // "Page summary" block.
+    margin: 8px 0 28px !important;
+  }
+
+  // <IdentityCard>: strip the card frame/background; keep its items as text.
+  article .identity-card {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 8px 0 !important;
+
+    [class*="identity-card__header"],
+    [class*="identity-card__content"],
+    [class*="identity-card__item"] {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  // Badges (Growth/Enterprise/version, <AlphaBadge>, etc.): keep their elegant
+  // appearance in markdown mode (colored chip + tooltip). Flattening them made
+  // the white label text invisible and the tooltip look broken, so we leave
+  // them untouched here.
+
+  // Constrain ALL images to the content width (desktop included). Without this,
+  // images with no intrinsic max-width (e.g. ThemedImage = .themedComponent_*,
+  // and images nested in StepDetails) render at their natural size — up to
+  // thousands of px — and overflow. The small-screen block had a similar rule
+  // but targeted the wrong class (themedImage) and only applied on mobile.
+  article img,
+  article picture,
+  article [class*="themedComponent"],
+  article [class*="themedComponent"] img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  // StepDetails in markdown mode: the completion checkmark and the floating
+  // progress widget make no sense in raw-markdown view — hide them.
+  [data-step-details] > summary > button {
+    display: none !important;
+  }
+
+  // ---- GLOBAL SPACING STRIP DOWN ----
+  // Tighten all vertical spacing to feel like raw markdown
+  article {
+    // Reduce margins on all block elements
+    p {
+      margin: 8px 0;
+    }
+
+    h1 { margin: 24px 0 8px; }
+    h2 { margin: 32px 0 8px; }
+    h3 { margin: 24px 0 6px; }
+    h4, h5, h6 { margin: 16px 0 4px; }
+
+    ul, ol {
+      margin: 4px 0;
+      padding-left: 24px;
+
+      li {
+        margin: 2px 0;
+      }
+    }
+
+    // Remove extra spacing from docusaurus containers
+    [class*="margin-top"],
+    [class*="margin-bottom"] {
+      margin-top: 8px !important;
+      margin-bottom: 8px !important;
+    }
+
+    // Tighten spacing around code blocks
+    pre {
+      margin: 8px 0;
+    }
+
+    // Tighten blockquotes
+    blockquote {
+      margin: 8px 0;
+      padding: 4px 0 4px 16px;
+    }
+
+    hr {
+      margin: 12px 0;
+    }
+
+    // Remove extra padding from section wrappers
+    > div, section {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  // Strip code blocks: remove custom styling, keep plain
+  [class*="codeBlockContainer"] {
+    border-radius: 0;
+    border: 1px solid var(--strapi-neutral-200) !important;
+    box-shadow: none !important;
+  }
+
+  [class*="codeBlockTitle"] {
+    border-radius: 0;
+    font-family: var(--strapi-font-family-technical);
+  }
+
+  // Enhanced "macOS terminal" code blocks: strip the terminal chrome down to a
+  // plain code block. Drop the three window dots and the language badge, and
+  // flatten the title bar to a discreet filename label (kept when present).
+  .code-block-enhanced {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+
+    .code-title-bar {
+      border-radius: 0 !important;
+      background: transparent !important;
+      border-bottom: none !important;
+      min-height: 0 !important;
+      padding: 0 0 4px 0 !important;
+    }
+
+    // Window dots and language badge: pure terminal decoration, remove them.
+    .code-title-bar__dots,
+    .code-title-bar__lang {
+      display: none !important;
+    }
+
+    // Filename label: plain, quiet text instead of a terminal caption.
+    .code-title-bar__label {
+      font-weight: 500;
+      color: var(--strapi-neutral-500);
+    }
+
+    // Tighten the generous terminal padding around the command line.
+    [class*="codeBlockContainer"] {
+      padding-top: 8px !important;
+      padding-bottom: 8px !important;
+    }
+
+    [class*="codeBlockLines"] {
+      padding-top: 8px !important;
+      padding-bottom: 8px !important;
+    }
+
+    // No blinking terminal cursor in raw-markdown view.
+    .terminal-cursor {
+      display: none !important;
+    }
+  }
+
+  // Details/collapsible blocks: flatten completely (no toggle, always visible)
+  details {
+    display: contents !important;
+  }
+
+  details > summary {
+    display: block !important;
+    font-family: var(--strapi-font-family-technical);
+    font-weight: 700;
+    list-style: none;
+    cursor: default;
+    // Non-interactive in markdown mode: a native <details> stays toggleable
+    // even when force-opened, so clicking the summary could re-collapse it.
+    // Disabling pointer events keeps every details block flat and open.
+    pointer-events: none;
+    padding: 0;
+    border: none !important;
+    background: transparent !important;
+    margin: 12px 0 4px;
+
+    &::marker,
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before,
+    &::after {
+      display: none !important;
+    }
+  }
+
+  details > summary ~ * {
+    display: block !important;
+    // Docusaurus' collapsible animates the content wrapper with inline
+    // height:0 / overflow:hidden. When we force the details open via JS that
+    // inline state is never recomputed, so the content stays clipped. Override
+    // it so the content is fully revealed and flat.
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  // Annotation (inline tooltip): flatten. No "+" toggle button / popover —
+  // mark the annotated word with an asterisk and show the content as a plain
+  // block right after it (which falls below the paragraph in raw-markdown flow).
+  .annotation {
+    position: static !important;
+  }
+
+  .annotation__toggle {
+    // Replace the round "+" button with a simple asterisk after the word.
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    &::before,
+    .annotation__toggle__icon {
+      display: none !important;
+    }
+
+    &::after {
+      content: "*";
+      font-weight: 700;
+      color: var(--strapi-fg-2, inherit);
+    }
+  }
+
+  // Any open popover is irrelevant here; the flat block is the source of truth.
+  .annotation__tooltip {
+    display: none !important;
+  }
+
+  .annotation__flat {
+    display: block !important;
+    position: static !important;
+    margin: 4px 0 8px 16px;
+    padding-left: 12px;
+    border-left: 2px solid var(--strapi-neutral-200);
+    font-size: 0.95em;
+    color: var(--strapi-fg-2, inherit);
+  }
+
+  // Subtle callouts: simplify
+  [class*="subtleCallout"] {
+    border-radius: 0;
+    border: 1px solid var(--strapi-neutral-200);
+    background: transparent !important;
+  }
+
+  // Side-by-side columns: stack vertically
+  [class*="sideBySide"] {
+    display: block !important;
+  }
+
+  // Remove hover effects on links (article only, not sidebar/tags)
+  article a {
+    text-decoration: underline !important;
+  }
+
+  // Footer tag pills: no underline (they are bordered pills). See the global
+  // rule for the hover behavior (border color change, no underline).
+  article a[class*="tag_"],
+  article a[class*="tagRegular"] {
+    text-decoration: none !important;
+  }
+
+  // Feature badges (Growth/Enterprise/version): their label is a link, but it
+  // is shown inside a colored chip, so it should not be underlined.
+  .badge__link,
+  .badge .badge__link {
+    text-decoration: none !important;
+  }
+
+  // "What's next?" NextSteps cards: the whole card is a link. Underlining the
+  // number, title, and description (all inside the <a>) just adds noise, so
+  // suppress it on the link and everything it wraps.
+  article a[class*="stepLink"],
+  article a[class*="stepLink"] * {
+    text-decoration: none !important;
+  }
+
+  // Expandable "Show more / Show less" blocks: reveal everything in markdown
+  // mode. The collapsed wrapper sets max-height + overflow inline, so override
+  // with !important; hide the fade gradient and the toggle button.
+  .expandable-content__wrapper,
+  .expandable-content__wrapper--collapsed {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .expandable-content__gradient,
+  .expandable-content__toggle {
+    display: none !important;
+  }
+
+  // Remove film grain overlay
+  body::before {
+    display: none;
+  }
+
+  // Flat tabs styling (rendered by swizzled Tabs component)
+  .tabs-flat {
+    border-left: 2px solid var(--strapi-neutral-200);
+    padding-left: var(--strapi-spacing-4);
+    // Center to the content column on API pages: the misaligned node is this
+    // tabs-flat wrapper (it carries a class, so the base centering selector
+    // doesn't match it). Constrain + auto side margins so it aligns with prose.
+    margin: var(--strapi-spacing-4) auto;
+    width: var(--doc-content-max-width);
+    max-width: 100%;
+
+    &__heading {
+      font-family: var(--strapi-font-family-technical);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--strapi-neutral-500);
+      margin-top: var(--strapi-spacing-4);
+      margin-bottom: var(--strapi-spacing-2);
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    &__content {
+      margin-bottom: var(--strapi-spacing-4);
+    }
+
+  }
+
+  // Separation between stacked tab variants (e.g. TypeScript after JavaScript).
+  // Written flat (not as `&__section + &__section`) so the parent selector is
+  // not duplicated onto the sibling, which would make the rule never match.
+  .tabs-flat__section + .tabs-flat__section {
+    border-top: 1px dashed var(--strapi-neutral-150);
+    // More room above the second variant so it is easy to tell where one
+    // example ends and the next begins.
+    padding-top: 32px;
+  }
+}
+
+// ============================================================
+// AI MODE
+// ============================================================
+[data-view-mode="ai"] {
+  // Footer: in the narrow left half the 4 footer columns wrap but keep full
+  // width, so categories and links collided. Stack them as one left-aligned
+  // column with clear spacing between each category.
+  .footer__links {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  .footer__col {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-basis: auto !important;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+  // Push the links container below the absolutely-positioned logo, but keep the
+  // gap tight (120px left too much air between the logo and the first category).
+  .footer .container {
+    margin-top: 60px !important;
+  }
+
+  // AI mode ignores the manual content-width selection and uses the full
+  // available width. Overriding the variable here (rather than touching the
+  // WidthToggle JS) means leaving AI mode automatically restores the user's
+  // chosen width, since data-content-width is untouched. !important beats the
+  // [data-content-width="…"] rules in _base.scss.
+  --doc-content-max-width: 100% !important;
+
+  // Hide WidthToggle
+  [class*="widthToggle"] {
+    display: none !important;
+  }
+
+  // Prevent sticky switcher from overlapping h1
+  article [class*="switcher"] {
+    position: static;
+  }
+
+  // Sidebar in AI mode: start collapsed, show content when expanded
+  .sidebar-v3-wrapper--collapsed {
+    .menu,
+    .sidebar-v3-header__label,
+    [class*="sidebarItemLink"],
+    [class*="sidebarItemList"] {
+      display: none !important;
+    }
+  }
+
+  // Hide Tldr in page (already shown in AI panel summary)
+  .tldr {
+    display: none;
+  }
+
+  // Endpoint code/response cell: in AI mode the endpoints are linearized to a
+  // single column, but the cell kept its sticky viewport max-height + inner
+  // scrollbar, so long responses scrolled inside the cell instead of showing in
+  // full. Let it grow to its natural height like the rest of the page.
+  .api-endpoint-block [class*="endpoint__code"] {
+    position: static !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+    min-width: 0 !important;
+  }
+
+  // Compress content area: override the doc-content-max-width variable
+  // and constrain the entire main wrapper
+  // Back to top button: keep in main content area, not over AI panel
+  [class*="backToTopButton"] {
+    right: calc(50vw + 20px) !important;
+  }
+
+  // Step-progress widget: pin to the bottom-right of the docs content area
+  // (left of the AI panel), not over the AI panel itself. The panel is 50vw on
+  // desktop, 40vw on small-to-medium, and full-screen on small-down (hide there).
+  .step-progress-widget {
+    right: calc(50vw + 24px) !important;
+
+    @include small-to-medium {
+      right: calc(40vw + 16px) !important;
+    }
+
+    @include small-down {
+      display: none !important;
+    }
+  }
+
+  @include medium-up {
+    --doc-content-max-width: 100% !important;
+
+    // Cap at 50vw minus a margin: the content area starts ~52px from the left
+    // (sidebar offset), so a flat 50vw width pushed its right edge ~52px past
+    // the AI panel divider, tucking content and pagination under the panel.
+    main,
+    [class*="docMainContainer"],
+    [class*="docRoot"] > div,
+    [class*="docItemWrapper"],
+    .row:not(.footer__links):not(.footer *),
+    .col:not(.footer__col):not(.footer *) {
+      max-width: calc(50vw - 60px) !important;
+      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    // The footer lives outside the article and should span the full page width
+    // (it sits below the content, not beside the AI panel). Undo the half-width
+    // cap and the TOC-placeholder margin/max-width that generic rules would
+    // otherwise impose on its .container/.row, so it starts at the left edge.
+    .footer .container {
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    // Only article gets overflow hidden (not nav/pagination).
+    article {
+      overflow: hidden !important;
+    }
+
+    // The content wrapper (and thus its full-width children: tables, code
+    // blocks, admonitions) could run up to the AI panel divider. Add a right
+    // gutter on the markdown container so nothing touches the divider.
+    .theme-doc-markdown {
+      padding-right: 24px !important;
+      box-sizing: border-box;
+    }
+
+    // Hide the TOC sidebar in AI mode (no room)
+    .col--3 {
+      display: none !important;
+    }
+
+    // The TOC column is hidden, but the content column keeps its grid fraction
+    // (e.g. col--9 = 75%), so the content stayed narrow and didn't fill the
+    // left half — worse at narrow content-width. Force the content column to
+    // take the full available width (flex-basis + width) now that there's no
+    // TOC beside it.
+    [class*="docItemCol"],
+    .col:not(.col--3) {
+      flex: 0 0 100% !important;
+      max-width: calc(50vw - 60px) !important;
+      width: 100% !important;
+    }
+
+    // Pagination follows the same cap so the "next" title never tucks under
+    // the AI panel; ellipsis any title still too long.
+    nav[class*="pagination"] {
+      max-width: calc(50vw - 60px) !important;
+      overflow: hidden;
+
+      a {
+        min-width: 0 !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  @include small-to-medium {
+    --doc-content-max-width: 100% !important;
+
+    main,
+    [class*="docMainContainer"],
+    [class*="docRoot"] > div,
+    [class*="docItemWrapper"],
+    .row,
+    .col {
+      max-width: 60vw !important;
+      transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    article {
+      overflow: hidden !important;
+    }
+
+    .col--3 {
+      display: none !important;
+    }
+  }
+
+  // Force all content inside article to fit
+  article {
+    max-width: 100% !important;
+    overflow: hidden !important;
+
+    // All media
+    img, video, picture, svg:not([class*="ph-"]),
+    [class*="themedImage"], [class*="themedImage"] img {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+
+    // Tables scroll horizontally
+    table {
+      max-width: 100% !important;
+      display: block;
+      overflow-x: auto;
+    }
+
+    // Code blocks scroll horizontally
+    pre, [class*="codeBlockContainer"] {
+      max-width: 100% !important;
+      overflow-x: auto !important;
+    }
+
+    // Wide layouts
+    [class*="sideBySide"],
+    [class*="apiDocLayout"],
+    [class*="Columns"] {
+      max-width: 100% !important;
+      overflow: hidden;
+    }
+  }
+}
+
+// ============================================================
+// DARK MODE OVERRIDES
+// ============================================================
+@include dark {
+  [data-view-mode="markdown"] {
+    .tabs-flat {
+      border-left-color: var(--strapi-neutral-200);
+
+      &__heading {
+        color: var(--strapi-neutral-400);
+      }
+    }
+
+    // Flat selector (not `&__section + &__section`) so the parent prefix is not
+    // duplicated onto the sibling.
+    .tabs-flat__section + .tabs-flat__section {
+      border-top-color: var(--strapi-neutral-200);
+    }
+  }
+}

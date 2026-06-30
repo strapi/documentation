@@ -11,6 +11,13 @@ tags:
 
 # Collected Usage Information
 
+<Tldr>
+
+Strapi collects non-sensitive aggregated data like project ID, machine ID, environment state, and OS to improve the platform, with GDPR compliance and opt-out available via `telemetry:disable` command or `strapi.telemetryDisabled` flag.
+
+</Tldr>
+
+
 We are committed to providing a solution, with Strapi, that exceeds the expectations of the users and community. We are also committed to continuing to develop and make Strapi even better than it is today. To that end, Strapi contains a feature in which non-sensitive data is collected. This data is collectively aggregated for all our users, which when taken together give us a better global understanding of how users are interacting and using Strapi. We will never share the data collected in any way that would identify our Customers or their users; if shared, this data will always be anonymous.
 
 ## Context

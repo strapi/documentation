@@ -13,6 +13,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Content types always have feature columns
 
+<Tldr>
+
+In Strapi 5, all content types automatically include `document_id`, `published_at`, and `locale` database columns for document management, publication, and internationalization.
+
+</Tldr>
+
+
 In Strapi 5, Content types always have document, publication and internationalization columns created in database.
 
 <Intro />

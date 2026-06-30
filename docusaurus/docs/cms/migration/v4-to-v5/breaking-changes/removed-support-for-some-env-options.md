@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Some `env`-only configuration options are handled by the server configuration
 
+<Tldr>
+
+In Strapi 5, three environment variables (`STRAPI_DISABLE_REMOTE_DATA_TRANSFER`, `STRAPI_HIDE_STARTUP_MESSAGE`, `STRAPI_DISABLE_UPDATE_NOTIFICATION`) are now configured via the server configuration file instead of environment variables.
+
+</Tldr>
+
+
 In Strapi 5, some configuration options that were only handled by environment variables in Strapi v4 are now handled in the [server configuration](/cms/configurations/server) file.
 <Intro />
 <BreakingChangeIdCard />

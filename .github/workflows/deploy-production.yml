@@ -94,14 +94,8 @@ jobs:
           AWS_REGION: ${{ secrets.PROD_REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      
-      - name: Algolia crawler creation and crawl
-        uses: algolia/algoliasearch-crawler-github-actions@v1.1.9
-        id: update-algolia-index-prod
-        with:
-          crawler-user-id: ${{ secrets.CRAWLER_USER_ID }}
-          crawler-api-key: ${{ secrets.CRAWLER_API_KEY }}
-          algolia-app-id: ${{ secrets.ALGOLIA_APP_ID }}
-          algolia-api-key: ${{ secrets.ALGOLIA_API_KEY }}
-          site-url: 'https://docs.strapi.io'
-          crawler-name: 'cmsDocs'
+
+      # Search is served by MeiliSearch (see meilisearch-scraper.yml), which
+      # re-indexes the live site on its own after every merge to main. The old
+      # Algolia crawler step was removed: Algolia is no longer the runtime search
+      # provider, so crawling it on deploy was dead work.

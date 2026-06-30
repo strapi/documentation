@@ -203,12 +203,14 @@ If `existing_content` is not already provided:
 If `target.existing_section` is set, locate that section in the fetched content and focus on it. Keep the surrounding context available for reference.
 
 After fetching, analyze the page's **component patterns** before deriving edits:
-- What components wrap code examples? (`<ApiCall>`, `<Tabs>`, plain code blocks?)
-- What snippet imports does the page use? (e.g., `<QsForQueryBody />`)
-- How are Request/Response pairs structured? (side-by-side vs. stacked, with or without titles?)
-- Does the page use `<details>` blocks? If so, are they standalone or nested inside `<ApiCall>`?
+- What components wrap code examples? (`<Endpoint>` for API reference pages; `<Tabs>`; plain code blocks; the legacy `<ApiCall>`/`<Request>`/`<Response>` trio ONLY on not-yet-migrated GraphQL/upload/relations/users-permissions pages?)
+- What snippet imports does the page use? (e.g., `<QsForQueryBody />`, `<QsForQueryTitle />`, `<QsIntroFull />`; these are still current and are used alongside `<Endpoint>` on migrated REST pages.)
+- How are Request/Response pairs structured? On migrated pages they are expressed through `<Endpoint>`'s `codeTabs`/`responses` model; on legacy pages they may still appear as side-by-side or stacked `<Request>`/`<Response>` blocks (with or without titles).
+- Does the page use `<details>` blocks? If so, are they standalone, expressed as a `<details>` slot inside `<Endpoint>`, or nested inside a legacy `<ApiCall>` (for example, the `qs.stringify` block)?
 
 New content must replicate these patterns exactly. Do not introduce component patterns that the page does not already use, unless explicitly instructed otherwise by the user.
+
+**Always use `<Endpoint>` for new API reference content and for any REST or Document Service page** (`kind="http"` for REST, `kind="js"` for Document Service). Never introduce the legacy `<ApiCall>`/`<Request>`/`<Response>` trio on new, REST, or Document Service reference pages.
 
 ### Step 3: Read reference materials
 
@@ -382,7 +384,13 @@ Use components as specified in the outline's `components` field. Key components:
 - **`<Tabs>` / `<TabItem>`**: Multi-variant content (JS/TS, Yarn/NPM). Follow groupId conventions.
 - **`<ThemedImage>`**: Screenshots with light/dark variants.
 - **`<CustomDocCardsWrapper>` / `<CustomDocCard>`**: Card links to related pages.
-- **Badges**: `<NewBadge />`, `<UpdatedBadge />` on the same line as headings. `<GrowthBadge />`, `<EnterpriseBadge />`, `<BetaBadge />`, etc. on a separate line after the heading.
+- **Badges**: `<NewBadge />`, `<UpdatedBadge />` on the same line as headings. `<GrowthBadge />`, `<EnterpriseBadge />`, `<BetaBadge />`, etc. on a separate line after the heading. Always use a named alias, never the raw `<Badge>`. Full alias list, props, and rules: `claude-plugins/inki/references/templates/components/badge.md`.
+- **`<ExternalLink to="…" text="…"/>`**: Outbound link with a trailing external-link icon. Self-closing, label passed via `text` (not children). See `claude-plugins/inki/references/templates/components/external-link.md`.
+- **`<Icon name="…" />`**: Inline Phosphor icon to mirror an admin-panel UI element. Phosphor name without the `ph-` prefix. See `claude-plugins/inki/references/templates/components/icon.md`.
+- **`<Columns>` / `<ColumnLeft>` / `<ColumnRight>`**: Two-up side-by-side layout for before/after or two-variant comparisons. See `claude-plugins/inki/references/templates/components/columns.md`.
+- **`<SubtleCallout title="…">`**: Low-emphasis "good to know" aside (not an admonition directive). See `claude-plugins/inki/references/templates/components/subtle-callout.md`.
+- **`<Checklist title="…">` / `<ChecklistItem>`**: Interactive checkbox list for verification/best-practice items (not ordered procedures). See `claude-plugins/inki/references/templates/components/checklist.md`.
+- **`<MermaidWithFallback chartFile="…" fallbackImage="…" />`**: Live Mermaid diagram (fetched from a `.mmd` file) with a static image fallback. See `claude-plugins/inki/references/templates/components/mermaid-with-fallback.md`.
 
 ---
 
@@ -618,7 +626,7 @@ For Patch mode, metadata is embedded in the output header (File, Section, Edits 
 
 16. **Patch: never invent context.** When deriving instructions, only produce edits that are directly supported by the source material. If `target.notes` suggests a change but the source material does not contain the technical details to write it, produce the instruction with a `<!-- TODO -->` placeholder in the content rather than guessing.
 
-17. **Match component patterns exactly.** In Patch mode, study the existing page's MDX component structure before writing. Pay attention to how the page wraps code examples (for instance, `<ApiCall>`, `<Tabs>`, `<details>`), which snippet imports it uses (`<QsForQueryBody />`, etc.), and how Request/Response pairs are structured. Replicate these patterns in new content. Generic Markdown (plain code blocks, standalone `<details>`) should not be used when the page already uses custom components for the same purpose.
+17. **Match component patterns exactly.** In Patch mode, study the existing page's MDX component structure before writing. Pay attention to how the page wraps code examples (for instance, `<Endpoint>`, `<Tabs>`, `<details>`), which snippet imports it uses (`<QsForQueryBody />`, etc.), and how Request/Response pairs are structured. Replicate these patterns in new content. Generic Markdown (plain code blocks, standalone `<details>`) should not be used when the page already uses custom components for the same purpose. **Carve-out for deprecated API markup:** the legacy `<ApiCall>`/`<Request>`/`<Response>` trio (along with `noSideBySide` and the `<details>` `qs.stringify` block) is DEPRECATED. Do NOT replicate it when patching a migrated page or creating new content; use `<Endpoint>` instead. Replicate the trio ONLY when patching one of these specific not-yet-migrated pages: `docs/cms/api/graphql.md`, `docs/cms/api/graphql/**` (e.g. `graphql/locale.md`), `docs/cms/api/rest/upload.md`, `docs/cms/api/rest/relations.md`, `docs/cms/features/users-permissions/rest-api.md`, `docs/cms/plugins/graphql.md`. The `QsForQueryBody` / `QsForQueryTitle` / `QsIntroFull` snippet imports are NOT legacy and remain in use alongside `<Endpoint>` on migrated REST pages.
 
 18. **Preserve structural coherence.** When adding a new section at a given heading level, check whether parallel content at the same level also has explicit headings. If the new section introduces an H2 but existing content of comparable scope sits directly under the H1 without its own H2, wrap the existing content in a matching H2 to maintain symmetry. Similarly, update the H1 title if the page's scope has expanded (e.g., from covering `status` to covering both `status` and `hasPublishedVersion`).
 

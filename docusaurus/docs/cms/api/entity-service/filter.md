@@ -10,6 +10,13 @@ import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
 
 # Filtering with the Entity Service API
 
+<Tldr>
+
+Filter Entity Service API query results using logical operators (`$and`, `$or`, `$not`) and attribute operators (`$eq`, `$contains`, `$gt`, `$between`, etc.) with the `filters` parameter in `findMany()`.
+
+</Tldr>
+
+
 <ESdeprecated />
 
 The [Entity Service API](/cms/api/entity-service) offers the ability to filter results found with its [findMany()](/cms/api/entity-service/crud#findmany) method.

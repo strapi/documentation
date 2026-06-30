@@ -26,6 +26,13 @@ tags:
 
 # Frequently asked questions
 
+<Tldr>
+
+Frequently asked questions covering common Strapi topics including content-type management, deployment, authentication, database handling, serverless limitations, plugins, Docker, SSL configuration, TypeScript support, and feature availability.
+
+</Tldr>
+
+
 Below are answers and solutions to most common issues that you may experience when working with Strapi.
 
 ## Why can't I create or update content-types in production/staging?

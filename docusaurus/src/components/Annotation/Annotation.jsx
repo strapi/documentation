@@ -129,6 +129,18 @@ export function Annotation({ children, id, width = 320 }) {
           {children}
         </span>
       )}
+      {/* Flat rendering for Markdown view mode: the content is always in the
+          DOM (hidden in elegant/AI via CSS) so markdown mode can show it inline
+          below the paragraph, with the toggle button replaced by an asterisk. */}
+      <span
+        className={clsx(
+          'annotation__flat',
+          styles['annotation__flat'],
+        )}
+        aria-hidden={true}
+      >
+        {children}
+      </span>
     </span>
   );
 }

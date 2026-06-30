@@ -11,6 +11,13 @@ tags:
 
 # REST API: Upload files
 
+<Tldr>
+
+The `/api/upload` REST API endpoints enable you to upload files to the Media Library, retrieve paginated file lists, update file metadata, and delete files from your Strapi application.
+
+</Tldr>
+
+
 The [Media Library feature](/cms/features/media-library) is powered in the back-end server of Strapi by the `upload` package. To upload files to Strapi, you can either use the Media Library directly from the admin panel, or use the [REST API](/cms/api/rest), with the following available endpoints :
 
 | Method | Path                       | Description                  |

@@ -18,6 +18,13 @@ tags:
 
 # Documents
 
+<Tldr>
+
+A document is an API-only concept representing all content variations (locales, draft/published versions) for a single content-type entry. Use the Document Service API to manipulate documents on the back-end.
+
+</Tldr>
+
+
 A **document** in Strapi 5 is an API-only concept. A document represents all the different variations of content for a given entry of a content-type.
 
 A single type contains a unique document, and a collection type can contain several documents.

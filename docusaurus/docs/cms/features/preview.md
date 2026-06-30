@@ -33,9 +33,11 @@ With the Preview feature, you can preview your front end application directly fr
   }}
 />
 
-<!-- <div style={{position: 'relative', paddingBottom: 'calc(54.43121693121693% + 50px)', height: '0'}}>
+{/* Guideflow embed, kept for later re-enabling:
+<div style={{position: 'relative', paddingBottom: 'calc(54.43121693121693% + 50px)', height: '0'}}>
 <iframe id="zpen5g4t8p" src="https://app.guideflow.com/embed/zpen5g4t8p" width="100%" height="100%" style={{overflow:'hidden', position:'absolute', border:'none'}} scrolling="no" allow="clipboard-read; clipboard-write" webkitallowfullscreen mozallowfullscreen allowfullscreen allowtransparency="true"></iframe>
-</div> -->
+</div>
+*/}
 
 ## Configuration
 

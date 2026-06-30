@@ -17,6 +17,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # `locale=all` can not be used to get all entries in all locales
 
+<Tldr>
+
+In Strapi 5, the `locale=all` parameter no longer retrieves all localized versions; instead, specific locale values must be requested individually.
+
+</Tldr>
+
+
 In Strapi 5, it's no longer possible to get all localized versions of a content type with the `locale=all` parameter.
 
 <Intro />

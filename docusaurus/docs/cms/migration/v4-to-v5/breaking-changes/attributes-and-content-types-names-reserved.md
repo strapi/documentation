@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Some attributes and content types names are reserved
 
+<Tldr>
+
+In Strapi 5, certain attribute names like `meta`, `status`, `entryId`, and anything prefixed with `strapi` are now reserved and cannot be used. Fields and content types using these names in v4 must be renamed before migrating to Strapi 5.
+
+</Tldr>
+
+
 In Strapi 5, some attributes and content types names are reserved, and all fields or content types in Strapi v4 using these reserved names should be renamed before migrating to Strapi 5 to prevent data loss.
 
 <Intro />

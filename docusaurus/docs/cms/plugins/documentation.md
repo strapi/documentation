@@ -1,5 +1,6 @@
 ---
 title: Documentation plugin
+pagination_label: Documentation plugin
 displayed_sidebar: cmsSidebar
 description: By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
 toc_max_heading_level: 5

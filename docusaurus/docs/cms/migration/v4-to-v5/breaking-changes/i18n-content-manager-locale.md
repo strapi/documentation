@@ -9,6 +9,13 @@ tags:
  - upgrade to Strapi 5
 ---
 
+<Tldr>
+
+Internationalization (i18n) is now part of Strapi core instead of a plugin. The locale parameter sent to Content Manager changes from `plugins[i18n][locale]` in v4 to `locale` in v5.
+
+</Tldr>
+
+
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 

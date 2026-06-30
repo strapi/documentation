@@ -17,6 +17,13 @@ import QueryEnginePrereqs from '/docs/snippets/query-engine-prereqs.md'
 
 # Query Engine API
 
+<Tldr>
+
+The Query Engine API provides low-level, unrestricted backend access to Strapi's database layer through `strapi.db.query`, supporting single and bulk operations with filtering, populating, ordering, and pagination.
+
+</Tldr>
+
+
 The Strapi backend provides a Query Engine API to interact with the database layer at a lower level.
 
 <ConsiderDocumentService />

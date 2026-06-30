@@ -15,6 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # REST API input is validated by default in controllers
 
+<Tldr>
+
+In Strapi 5, REST API input is validated by default in controllers instead of being silently sanitized, throwing `400 Bad Request` errors for invalid data like unrecognized fields and unpermitted relations.
+
+</Tldr>
+
+
 Sanitization means that the object is “cleaned” and returned.
 
 Validation means an assertion is made that the data is already clean and throws an error if something is found that shouldn't be there.

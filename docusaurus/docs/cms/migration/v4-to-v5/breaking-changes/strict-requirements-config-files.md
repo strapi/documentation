@@ -13,6 +13,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Strict requirements for configuration files
 
+<Tldr>
+
+Strapi 5 enforces strict naming requirements for configuration files in the `/config/` folder: no case-insensitive duplicates, no duplicate base filenames, and certain reserved names are blocked; custom configurations should use files with names compliant to these rules.
+
+</Tldr>
+
+
 Strapi 5 has strict requirements on the configuration filenames allowed to be loaded.
 <Intro />
 <BreakingChangeIdCard />

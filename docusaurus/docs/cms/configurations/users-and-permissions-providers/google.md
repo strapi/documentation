@@ -13,6 +13,13 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
 # Google provider setup for Users & Permissions
 
+<Tldr>
+
+Configure Google OAuth authentication for Strapi Users & Permissions by creating credentials in Google Developer Console and adding them to the provider settings.
+
+</Tldr>
+
+
 The present page explains how to setup the Google provider for the [Users & Permissions feature](/cms/features/users-permissions).
 
 :::prerequisites

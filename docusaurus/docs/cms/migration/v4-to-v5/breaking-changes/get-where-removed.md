@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # The `getWhere()` method for permission provider instances has been removed
 
+<Tldr>
+
+The `getWhere()` method for permission provider instances has been removed in Strapi 5; use `provider.values().filter()` with a custom predicate instead to query and match provider items.
+
+</Tldr>
+
+
 In Strapi 5, the `getWhere()` method for permission provider instances has been removed, and users should first get the provider values, then filter them.
 
 <Intro />

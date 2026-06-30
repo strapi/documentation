@@ -19,6 +19,13 @@ tags:
 
 # Data export
 
+<Tldr>
+
+The `strapi export` command exports data from a Strapi instance as an encrypted and compressed archive containing entities, relations, assets, schemas, and configuration. Customize exports using options like `--no-encrypt`, `--no-compress`, `--only`, and `--exclude`.
+
+</Tldr>
+
+
 <VersionBadge version="4.6.0" />
 
 The `strapi export` command is part of the [Data Management feature](/cms/features/data-management) and used to export data from a local Strapi instance. By default, the `strapi export` command exports data as an encrypted and compressed `tar.gz.enc` file which includes:

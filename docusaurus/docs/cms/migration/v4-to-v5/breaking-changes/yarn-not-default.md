@@ -14,6 +14,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # The CLI default package manager is not yarn anymore
 
+<Tldr>
+
+In Strapi 5, the CLI detects your package manager and uses it to install dependencies instead of defaulting to `yarn`. Use the `--use-yarn` flag if you need to enforce yarn specifically.
+
+</Tldr>
+
+
 In Strapi v5, the command used to run dependencies installation is the one used to actually install them.
 
 <Intro />

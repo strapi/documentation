@@ -10,6 +10,13 @@ tags:
 
 # Google provider SSO configuration
 
+<Tldr>
+
+Configure Google as an SSO provider in your Strapi admin panel to allow users to sign in and sign up using their Google account credentials.
+
+</Tldr>
+
+
 The present page explains how to setup the Google provider for the [Single Sign-On (SSO) feature](/cms/features/sso).
 
 :::prerequisites

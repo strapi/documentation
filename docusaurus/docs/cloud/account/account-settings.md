@@ -1,5 +1,5 @@
 ---
-title: Profile settings
+title: Cloud profile settings
 displayed_sidebar: cloudSidebar
 description: Manage Strapi Cloud account settings.
 canonicalUrl: https://docs.strapi.io/cloud/account/account-settings.html
@@ -13,7 +13,7 @@ tags:
 pagination_next: cloud/account/account-billing
 ---
 
-# Profile settings
+# Cloud profile settings
 
 <Tldr>
 Settings of the Profile page include account details, connected accounts, and account deletion options.
