@@ -32131,6 +32131,10 @@ module.exports = ({ env }) => ({
 });
 ```
 
+:::info
+When exporting or transferring data, the admin panel configuration includes project settings such as logos (admin menu logo and authentication logo). These logo files are embedded in the export and re-uploaded to the destination instance during import. This ensures that transferred instances maintain their branding without additional manual setup.
+:::
+
 ## Usage
 
 The Data Management system is CLI-based only, meaning any import, export, or transfer command must be executed from the terminal. Exhaustive documentation for each command is accessible from the following pages:
