@@ -296,7 +296,7 @@ Since v5.24.0, Strapi stores admin authentication data in secure, HTTP-only cook
 Strapi's session management system supports both admin panel authentication and Content API authentication through the [Users & Permissions feature](/cms/features/users-permissions). The system provides:
 
 :::tip New projects
-Apps scaffolded with `create-strapi-app` have `jwtManagement: 'refresh'` and `sessions.httpOnly: true` set by default for the Users & Permissions plugin in the generated `config/plugins.*` file. This enables refresh-token-based authentication with HTTP-only session cookies for Content API users out of the box.
+Apps scaffolded with `create-strapi-app` have `jwtManagement: 'refresh'` and `sessions.httpOnly: true` set by default for the Users & Permissions feature in the generated `config/plugins.*` file. This enables refresh-token-based authentication with HTTP-only session cookies for Content API users out of the box.
 :::
 
 - Short-lived access tokens (typically 30 minutes) for API requests

@@ -75,8 +75,8 @@ Projects scaffolded with `create-strapi-app` include security-hardened defaults 
 | Default | Configuration location | Purpose |
 |---|---|---|
 | `rest.strictParams: true` and `documents.strictParams: true` | `config/api.*` | Rejects requests with unknown query or body parameters (see [API configuration](/cms/configurations/api)). |
-| `jwtManagement: 'refresh'` with `sessions.httpOnly: true` | `config/plugins.*` (users-permissions) | Enables refresh-token-based auth with HTTP-only session cookies for the Users & Permissions plugin (see [Admin panel configuration](/cms/configurations/admin-panel#session-management)). |
-| `upload.security.allowedTypes` and `upload.security.deniedTypes` | `config/plugins.*` (upload) | Restricts uploads to approved file types and blocks dangerous extensions (see [Media Library](/cms/features/media-library#available-options)). |
+| `jwtManagement: 'refresh'` with `sessions.httpOnly: true` | `config/plugins.*` (users-permissions) | Enables refresh-token-based auth with HTTP-only session cookies for the Users & Permissions feature (see [Users & Permissions](/cms/features/users-permissions#jwt-management-modes)). |
+| `upload.config.security.allowedTypes` and `upload.config.security.deniedTypes` | `config/plugins.*` (upload) | Restricts uploads to approved file types and blocks dangerous extensions (see [Media Library](/cms/features/media-library#available-options)). |
 | `webhooks.populateRelations: false` | `config/server.*` | Prevents relation data from being included in webhook payloads (see [Server configuration](/cms/configurations/server)). |
 | `JWT_SECRET` | `.env` | A randomly generated secret is included in the scaffolded `.env` file. |
 
