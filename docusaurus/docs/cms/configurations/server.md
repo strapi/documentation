@@ -9,6 +9,7 @@ tags:
   - configuration
   - cron job
   - host
+  - openapi
   - port
 ---
 
@@ -26,7 +27,7 @@ Changes to the `server.js` file require rebuilding the admin panel. After saving
 
 ## Available options
 
-The `./config/server.js` file can include the following parameters:
+The `/config/server.js` file can include the following parameters:
 
 <!-- TODO: add admin jwt config option -->
 <!-- TODO: sort options alphabetically in the table below  -->
@@ -54,8 +55,19 @@ The `./config/server.js` file can include the following parameters:
 | `http.serverOptions`                | Options passed to http `createServer`                                                                                                                                                                                                                                                                                                                                       | <ExternalLink to="https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener" text="http.serverOptions"/>    | {}                  |
 | `transfer.remote.enabled`           | Toggle the ability to use the [transfer feature](/cms/data-management/transfer)                                                                                                                                                                                                                                                                | boolean                                                                                           | `true`              |
 | `transfer.remote.assetIdleTimeoutMs` | Timeout in milliseconds without incoming data before an asset stream is considered stalled when using `strapi transfer --from` to pull from a remote instance. Increase this value when transferring large files or when working on slow connections. | integer | <!-- TODO: confirm default value from strapi/strapi codebase --> |
-| `logger.startup.enabled`            | Toggle the the startup message in the terminal                                                                                                                                                                                                                                                                                                                              | boolean                                                                                           | `true`              |
+| `logger.startup.enabled`            | Toggle the startup message in the terminal                                                                                                                                                                                                                                                                                                                              | boolean                                                                                           | `true`              |
 | `logger.updates.enabled`            | Toggle the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                                                                       | boolean                                                                                           | `true`              |
+| `openapi`                            | [OpenAPI](/cms/api/openapi) endpoint configuration. Both endpoints use `access: 'disabled'` by default and are not registered.                                                                                                                                                                                                                                                                                 | object                                                                                            |                     |
+| `openapi['content-api'].access`      | Access mode: `disabled` (not registered) or `public` (no authentication).                                                                                                                                                                                                                                                                                                                                    | string                                                                                            | `disabled`          |
+| `openapi['content-api'].route.path`  | Subpath for the Content API endpoint, resolved under the [REST API prefix](/cms/configurations/api).                                                                                                                                                                                                                                                                        | string                                                                                            | `/openapi.json`     |
+| `openapi['content-api'].cache.enabled` | Enable file-based caching of the generated specification.                                                                                                                                                                                                                                                                                                                  | boolean                                                                                           | `true`              |
+| `openapi['content-api'].cache.maxAgeMs` | Cache validity in milliseconds.                                                                                                                                                                                                                                                                                                                                           | integer                                                                                           | `60000`             |
+| `openapi['content-api'].cache.filePath` | File path for the cached specification. Relative paths resolve from the application root.                                                                                                                                                                                                                                                                                  | string                                                                                            | `.strapi/openapi/content-api.json` |
+| `openapi.admin.access`             | Access mode: `disabled` (not registered) or `authenticated` (requires admin session).                                                                                                                                                                                                                                                                                                                                      | string                                                                                            | `disabled`             |
+| `openapi.admin.route.path`          | Subpath for the Admin endpoint, resolved under the [admin path](/cms/configurations/admin-panel).                                                                                                                                                                                                                                                                           | string                                                                                            | `/openapi.json`     |
+| `openapi.admin.cache.enabled`       | Enable file-based caching of the generated specification.                                                                                                                                                                                                                                                                                                                   | boolean                                                                                           | `true`              |
+| `openapi.admin.cache.maxAgeMs`      | Cache validity in milliseconds.                                                                                                                                                                                                                                                                                                                                             | integer                                                                                           | `60000`             |
+| `openapi.admin.cache.filePath`      | File path for the cached specification. Relative paths resolve from the application root.                                                                                                                                                                                                                                                                                   | string                                                                                            | `.strapi/openapi/admin.json` |
 
 :::note
 There is no Strapi-specific keep alive configuration option, because Strapi uses Node's default one for incoming HTTP requests, keeping connections alive by default. 
@@ -73,12 +85,12 @@ axios.get('https://example.com', { httpsAgent: agent });
 :::
 
 :::tip
-Strapi exposes a dedicated health check route to make uptime probes straightforward. Any request to `/_health` returns an empty response with a `204` status and a `strapi: You are so French!` response header, which is suitable for load balancers or monitoring tools that only need a simple liveness indicator.
+Strapi exposes a dedicated health check route for uptime probes. Any request to `/_health` returns an empty response with a `204` status and a `strapi: You are so French!` response header, which is suitable for load balancers or monitoring tools that only need a simple liveness indicator.
 :::
 
 ## Configurations
 
-The `./config/server.js` minimal configuration requires the `host` and `port` parameters for development. Additional parameters can be included for a full configuration.
+The `/config/server.js` minimal configuration requires the `host` and `port` parameters for development. Additional parameters can be included for a full configuration.
 
 :::note
 [Environmental configurations](/cms/configurations/environment.md) (i.e. using the `env()` helper) do not need to contain all the values so long as they exist in the default `./config/server.js`.
@@ -154,6 +166,13 @@ module.exports = ({ env }) => ({
       enabled: false,
     },
   },
+  // highlight-start
+  openapi: {
+    'content-api': {
+      access: 'public',
+    },
+  },
+  // highlight-end
 });
 ```
 
@@ -188,6 +207,13 @@ export default ({ env }) => ({
       enabled: false,
     },
   },
+  // highlight-start
+  openapi: {
+    'content-api': {
+      access: 'public',
+    },
+  },
+  // highlight-end
 });
 ```
 
