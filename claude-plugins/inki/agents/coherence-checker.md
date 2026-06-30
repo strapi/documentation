@@ -12,6 +12,7 @@ You check whether ONE Strapi documentation page is coherent with the rest of the
 ## Inputs
 
 - `TARGET`: an absolute path to a documentation page.
+- `UPSTREAM_PRS` (optional): a list of upstream code PRs the page documents, each `{repo, number}`. The dispatcher passes this when the page comes from a `strapi/documentation` PR whose description references a code PR. Use it to distinguish a *real* contradiction from an *expected* one (see step 5).
 
 ## Procedure
 
@@ -25,6 +26,8 @@ You check whether ONE Strapi documentation page is coherent with the rest of the
 
 4. Compare the target against each related page: terminology drift, contradictory steps, links that point to moved/renamed pages, duplicated-but-divergent explanations.
 
+5. **Account for unmerged upstream changes.** When `UPSTREAM_PRS` is non-empty, the page may legitimately document behavior that the *currently published* sibling pages do not reflect yet (a new default, a re-introduced option, a renamed key). Before reporting a conflict with another page, consider whether the target is simply ahead of that page because of the referenced code PR. If so, do not report it as a flat contradiction: report it as a **coherence debt** — "the target documents <repo>#<number> (unmerged); page X still describes the old behavior and will need updating in the same release" — so the author syncs the pages together rather than reverting the new content. A genuine contradiction (the target disagrees with a page *and* with the upstream PR, or with a stable, unrelated page) is still reported normally. You may consult the PR with `gh pr diff <number> --repo <repo>` if you need to confirm which side is ahead.
+
 ## Output
 
 Return ONLY this report:
@@ -32,8 +35,9 @@ Return ONLY this report:
 ```
 Target: <path>
 Related pages compared: <list>
+Documents upstream: <repo>#<number>[, …] | none
 Coherence issues:
-- <description>: <where it conflicts (page + section)>
+- <description>: <where it conflicts (page + section)> [tag a conflict caused by an unmerged upstream change as "coherence debt", not a contradiction]
 Severity: low | medium | high
 ```
 

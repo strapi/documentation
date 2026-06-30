@@ -30,6 +30,7 @@ The resolver returns:
 
 - `FILES`: the list of local files the sub-skills operate on.
 - `SCOPE`: a short label for the report header.
+- `UPSTREAM_PRS`: any `strapi/strapi` / `strapi/cloud` code PRs the docs PR's description references (each `{repo, number}`); empty for non-PR targets or a PR that references none. The docs under review document *those* code changes, so they are the right source of truth even when unmerged.
 - `CLEANUP`: a command to run when the review finishes (worktree teardown or temp-file removal); may be empty.
 
 If resolution fails (PR has no doc files, filename not found, URL maps to nothing), report why and stop.
@@ -50,6 +51,8 @@ Map each check to its bundled agent (`agentType`):
 | Known pitfalls | `inki:pitfalls-checker` | cataloged hallucination matches |
 
 Pass each agent the absolute `TARGET` path. For the style check, pass `FIX=true` when `FIX` is set (the agent still does not edit files; it flags the auto-fixable subset). The other five agents always return their findings with enough detail (file, location, the precise correction) for the caller to judge in Step 3b whether each one has a single unambiguous fix.
+
+When `UPSTREAM_PRS` is non-empty, additionally pass it to the **code-verifier** and the **coherence-checker** in their prompts (e.g. "UPSTREAM_PRS: strapi/strapi#26737"). The code-verifier verifies against that PR's head as its primary source of truth instead of `develop`/a local clone; the coherence-checker uses it to tell a real contradiction apart from an expected gap with a not-yet-updated sibling page. This is what prevents the false "this config key/value does not exist" and "this contradicts page X" findings that occur when a docs PR documents an unmerged code change. The other four agents do not need it.
 
 The agents are read-only by construction (their `tools` allowlists exclude write/commit/push), so neither `AUTO` nor `FIX` changes their behavior. They never edit files. All edits happen in Step 3b, applied by *this* skill. `AUTO` only governs whether this skill prompts before applying those edits.
 
@@ -147,6 +150,11 @@ Review all `.md`/`.mdx` files modified by a PR:
 /inki:review https://github.com/strapi/documentation/pull/3204
 /inki:review 3204
 /inki:review #3204
+```
+
+When the PR's description references a code PR (e.g. `strapi/strapi#26737`), the review auto-detects it and verifies the docs against that code PR's head, not against `develop`. This is correct even when the code PR is unmerged — the docs are documenting *that* change:
+```
+/inki:review 3302
 ```
 
 Review a published page by its docs.strapi.io URL:
