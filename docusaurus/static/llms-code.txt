@@ -22963,6 +22963,7 @@ module.exports = ({ env }) => ({
       provider: 'sendgrid', // For community providers pass the full package name (e.g. provider: 'strapi-provider-email-mandrill')
       providerOptions: {
         apiKey: env('SENDGRID_API_KEY'),
+        // region: 'eu', // Optional: set to 'eu' for EU data residency (default: 'global')
       },
       settings: {
         defaultFrom: 'juliasedefdjian@strapi.io',
@@ -22987,6 +22988,7 @@ export default ({ env }) => ({
       provider: 'sendgrid', // For community providers pass the full package name (e.g. provider: 'strapi-provider-email-mandrill')
       providerOptions: {
         apiKey: env('SENDGRID_API_KEY'),
+        // region: 'eu', // Optional: set to 'eu' for EU data residency (default: 'global')
       },
       settings: {
         defaultFrom: 'juliasedefdjian@strapi.io',
