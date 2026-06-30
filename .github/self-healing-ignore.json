@@ -624,6 +624,21 @@
       "number": 25011,
       "reason": "Router: Internal error handling fix. The error message shown to users ('The uploaded file exceeds the maximum allowed asset size') already exists in documentation; this fix just ensures it's properly displayed instead of a generic 500 error.",
       "added": "2026-06-27"
+    },
+    {
+      "number": 26779,
+      "reason": "Router: Internal TypeScript configuration change for generated app scaffolds. This affects templates used by create-strapi-app CLI but not user-facing APIs or features. No public behavior or configuration changes that require documentation updates.",
+      "added": "2026-06-30"
+    },
+    {
+      "number": 26752,
+      "reason": "Router: Security fix to JWT algorithm validation in users-permissions plugin. This is a security hardening of internal behavior (defaults to HS256 when no algorithm is configured) that aligns legacy mode with session mode. No new configuration option exposed to users; existing undocumented behavior is made consistent.",
+      "added": "2026-06-30"
+    },
+    {
+      "number": 26354,
+      "reason": "Router: Internal bug fix in the CLI API generator (Plop templates). The generator now correctly places API files under named directories instead of at the wrong level. This is a developer experience fix with no impact on generated API functionality or public documentation.",
+      "added": "2026-06-30"
     }
   ]
 }
