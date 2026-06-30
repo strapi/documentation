@@ -710,18 +710,6 @@ strapi login
 ```
 
 
-## strapi deploy
-Description: Deploy a new local project (< 100MB) in Strapi Cloud.
-(Source: https://docs.strapi.io/cloud/cli/cloud-cli#strapi-deploy)
-
-Language: Bash
-File path: N/A
-
-```bash
-strapi deploy
-```
-
-
 ## strapi link
 Description: Links project in the current folder to an existing project in Strapi Cloud.
 (Source: https://docs.strapi.io/cloud/cli/cloud-cli#strapi-link)
@@ -731,6 +719,18 @@ File path: N/A
 
 ```bash
 strapi link
+```
+
+
+## strapi deploy
+Description: Deploy a linked local project (< 100MB) to Strapi Cloud.
+(Source: https://docs.strapi.io/cloud/cli/cloud-cli#strapi-deploy)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi deploy
 ```
 
 
@@ -815,6 +815,26 @@ File path: N/A
 
 ```bash
   npx run strapi login
+```
+
+
+## Linking your local project to Strapi Cloud
+Description: From your terminal, still from the folder of your Strapi project, enter the following command to link the local project to your existing Strapi Cloud project:
+(Source: https://docs.strapi.io/cloud/getting-started/deployment-cli#linking-your-local-project-to-strapi-cloud)
+
+Language: Bash
+File path: N/A
+
+```bash
+  yarn strapi link
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+  npx run strapi link
 ```
 
 
@@ -35733,15 +35753,15 @@ cd my-strapi-project && npm run develop
 ```
 
 
-## ️ Part C: Deploy to Strapi Cloud
-Description: If the server for your local Strapi project is running, which should be the case if you followed this tutorial so far, press Ctrl-C to stop the server.
-(Source: https://docs.strapi.io/cms/quick-start#part-c-deploy-to-strapi-cloud)
+## Push your project to GitHub
+Description: Run git init to initialize git for the project folder.
+(Source: https://docs.strapi.io/cms/quick-start#push-your-project-to-github)
 
 Language: Bash
 File path: N/A
 
 ```bash
-      npm run strapi deploy
+       git remote add origin git@github.com:yourname/my-strapi-project.git
 ```
 
 

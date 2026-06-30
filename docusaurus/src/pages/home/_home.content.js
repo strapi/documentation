@@ -58,7 +58,7 @@ export default {
       title: 'Strapi Cloud CLI',
       description: (
         <>
-          {'Learn how to deploy your project on '}
+          {'Learn how to link and deploy your project on '}
           <a href="https://strapi.io/cloud" target="_blank">Strapi Cloud</a>
           {' directly from the CLI!'}
         </>
