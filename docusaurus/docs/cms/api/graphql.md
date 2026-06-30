@@ -974,6 +974,10 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` or
 The default and maximum values for `pagination.limit` can be [configured in the `./config/plugins.js`](/cms/plugins/graphql#code-based-configuration) file with the `graphql.config.defaultLimit` and `graphql.config.maxLimit` keys.
 :::
 
+:::note Many-to-many relation ordering with pagination
+When querying many-to-many relations with pagination, the custom order set in the admin panel is preserved. If you sort relations in a query (e.g., `categories(sort: "name")`), the pagination respects your specified sort order rather than the custom order configured in the content manager.
+:::
+
 ## `locale` {#locale}
 
 The [Internationalization (i18n)](/cms/features/internationalization) feature adds new features to the GraphQL API:
