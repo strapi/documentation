@@ -34,6 +34,8 @@ If the `rest.maxLimit` value is less than the `rest.defaultLimit` value, `maxLim
 
 :::tip
 `rest.strictParams` applies to incoming REST Content API requests (query and body). `documents.strictParams` applies to parameters passed to `strapi.documents()` in server-side code. You can enable one or both in the same config file.
+
+Apps scaffolded with `create-strapi-app` have both `rest.strictParams` and `documents.strictParams` set to `true` by default in the generated `config/api.*` file.
 :::
 
 **Example:**

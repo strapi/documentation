@@ -68,6 +68,20 @@ The `strapi install`, `strapi uninstall`, `strapi new`, and `strapi watch-admin`
 
 
 
+## Security defaults for new projects
+
+Projects scaffolded with `create-strapi-app` include security-hardened defaults pre-configured in the generated `config/` files and `.env`:
+
+| Default | Configuration location | Purpose |
+|---|---|---|
+| `rest.strictParams: true` and `documents.strictParams: true` | `config/api.*` | Rejects requests with unknown query or body parameters (see [API configuration](/cms/configurations/api)). |
+| `jwtManagement: 'refresh'` with `sessions.httpOnly: true` | `config/plugins.*` (users-permissions) | Enables refresh-token-based auth with HTTP-only session cookies for the Users & Permissions plugin (see [Admin panel configuration](/cms/configurations/admin-panel#session-management)). |
+| `upload.security.allowedTypes` and `upload.security.deniedTypes` | `config/plugins.*` (upload) | Restricts uploads to approved file types and blocks dangerous extensions (see [Media Library](/cms/features/media-library#available-options)). |
+| `webhooks.populateRelations: false` | `config/server.*` | Prevents relation data from being included in webhook payloads (see [Server configuration](/cms/configurations/server)). |
+| `JWT_SECRET` | `.env` | A randomly generated secret is included in the scaffolded `.env` file. |
+
+All defaults can be adjusted in the corresponding configuration files to match your project's requirements.
+
 ## Development
 
 These commands start and build your Strapi application during development.

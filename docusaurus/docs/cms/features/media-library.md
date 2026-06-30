@@ -351,6 +351,10 @@ Only files matching the defined security rules are uploaded.
 
 The `security` configuration provides 2 options: `allowedTypes` or `deniedTypes`, which let you control which file types can or cannot be uploaded.
 
+:::tip New projects
+Apps scaffolded with `create-strapi-app` include a pre-configured `security` block in the generated `config/plugins.*` file, with `allowedTypes` covering common image, video, audio, and document formats, and `deniedTypes` blocking executable and shell script types.
+:::
+
 :::note
 You can use `allowedTypes` and `deniedTypes` separately or together to fine-tune which files are accepted. Files must match an allowed type and must not match any denied type. If you use a wildcard like `*` in `allowedTypes`, you can narrow down the validation by specifying exceptions in `deniedTypes`.
 :::
