@@ -24,6 +24,7 @@
 
 /* ═══ MAIN CONTAINER ═══ */
 .home {
+  font-family: var(--strapi-font-family-display);
   position: relative;
   display: flex;
   flex-direction: column;
