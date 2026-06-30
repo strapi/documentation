@@ -29,13 +29,13 @@
   }
 
   a {
-    color: var(--strapi-primary-600);
+    color: var(--strapi-neutral-600);
     font-family: var(--strapi-font-family-body);
     font-size: 13px;
     line-height: 1.5;
 
     &:hover {
-      color: var(--strapi-accent, #4945FF);
+      color: var(--strapi-neutral-600, #4945FF);
     }
   }
 
