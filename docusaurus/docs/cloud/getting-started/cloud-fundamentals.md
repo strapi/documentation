@@ -12,7 +12,7 @@ tags:
 
 <Tldr>
 
-Strapi Cloud is a PaaS hosting platform for deploying Strapi CMS projects, offering four pricing plans with different features and support levels, two user roles (owners and maintainers), and REST/GraphQL APIs that behave identically to self-hosted servers.
+Strapi Cloud is a PaaS hosting platform for deploying Strapi CMS projects, offering three pricing plans with different features and support levels, two user roles (owners and maintainers), and REST/GraphQL APIs that behave identically to self-hosted servers.
 
 </Tldr>
 
@@ -21,11 +21,11 @@ Before going any further into this Strapi Cloud documentation, we recommend you 
 
 - **Hosting Platform** <br/> Strapi Cloud is a hosting platform that allows to deploy already existing Strapi projects created with Strapi CMS (Content Management System). Strapi Cloud is *not* the SaaS (<ExternalLink to="https://en.wikipedia.org/wiki/Software_as_a_service" text="Software-as-a-Service" />) version of Strapi CMS and should rather be considered as a PaaS (<ExternalLink to="https://en.wikipedia.org/wiki/Platform_as_a_service" text="Platform-as-a-Service" />). Feel free to refer to the [CMS documentation](https://docs.strapi.io/cms/intro) to learn more about Strapi CMS.
 
-- **Strapi Cloud Pricing Plans** <br/> As a Strapi Cloud user you have the choice between 4 plans: Free, Essential, Pro and Scale. Depending on the plan, you have access to different functionalities, support and customization options (see [Pricing page](https://strapi.io/pricing-cloud) for more details). In this Strapi Cloud documentation, the <CloudEssentialBadge />, <CloudProBadge />, and <CloudScaleBadge /> badges can be displayed below a section's title to indicate that the feature is only available starting from the corresponding paid plan. If no badge is shown, the feature is available on the Free plan.
+- **Strapi Cloud Pricing Plans** <br/> As a Strapi Cloud user you have the choice between 3 plans: Essential, Pro, and Scale. Depending on the plan, you have access to different functionalities, support and customization options (see [Pricing page](https://strapi.io/pricing-cloud) for more details). In this Strapi Cloud documentation, the <CloudProBadge /> and <CloudScaleBadge /> badges can be displayed below a section's title to indicate that the feature is only available starting from the corresponding plan. If no badge is shown, the feature is available on the Essential plan. Only Pro and Scale badges are used in Cloud docs because Essential is the baseline plan; the <CloudEssentialBadge /> component exists for consistency with other Strapi documentation but is not displayed on Cloud pages.
 
 - **Types of Strapi Cloud users** <br/> There can be 2 types of users on a Strapi Cloud project: owners and maintainers. The owner is the one who has created the project and has therefore access to all features and options for the project. Maintainers are users who have been invited to contribute to an already created project by its owner. Maintainers, as documented in the [Collaboration](/cloud/projects/collaboration) page, cannot view and access all features and options from the Strapi Cloud dashboard.
 
-- **Support** <br/> The level of support provided by the Strapi Support team depends on the Strapi Cloud plan you subscribed for. The Free plan does not include access to support. The Essential and Pro plans include Basic support while the Scale plan includes Standard support. Please refer to the [dedicated support article](https://support.strapi.io/support/solutions/articles/67000680833-what-is-supported-by-the-strapi-team#Not-Supported) for all details regarding support levels.
+- **Support** <br/> The level of support provided by the Strapi Support team depends on the Strapi Cloud plan you subscribed for. The Essential and Pro plans include Basic support while the Scale plan includes Standard support. Please refer to the [dedicated support article](https://support.strapi.io/support/solutions/articles/67000680833-what-is-supported-by-the-strapi-team#Not-Supported) for all details regarding support levels.
 
 - **API access in Strapi Cloud vs self-hosted** <br/> The REST and GraphQL APIs behave the same on Strapi Cloud and on self-hosted servers. The only differences are the URLs:
     - Base API domain: On Strapi Cloud, your API uses the domain of the environment (e.g. `https://<project>.strapiapp.com/api/...`), or your custom domain if you set one (see [Domains documentation](/cloud/projects/settings#domains)). A self-hosted project would use whatever domain you expose.
