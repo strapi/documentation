@@ -9179,6 +9179,10 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` or
 The default and maximum values for `pagination.limit` can be [configured in the `./config/plugins.js`](/cms/plugins/graphql#code-based-configuration) file with the `graphql.config.defaultLimit` and `graphql.config.maxLimit` keys.
 :::
 
+:::note Many-to-many relation ordering with pagination
+When querying many-to-many relations with pagination, the custom order set in the admin panel is preserved. If you sort relations in a query (e.g., `categories(sort: "name")`), the pagination respects your specified sort order rather than the custom order configured in the content manager.
+:::
+
 ## `locale` {#locale}
 
 The [Internationalization (i18n)](/cms/features/internationalization) feature adds new features to the GraphQL API:
@@ -9579,7 +9583,7 @@ Strapi provides a CLI tool to automatically generate OpenAPI 3.1.0 specification
 
 Strapi provides a command-line tool to generate [OpenAPI](https://www.openapis.org/) specifications for your applications. 
 
-The CLI tool automatically creates comprehensive API documentation that describes all available endpoints, parameters, and response formats in your Strapi application's Content API. Among the possible use cases, the generated specification can then be easily integrated into documentation tools like [Swagger UI ](https://swagger.io/tools/swagger-ui/).
+The CLI tool automatically creates comprehensive API documentation that describes all available endpoints, parameters, and response formats in your Strapi application's Content API. Among the possible use cases, the generated specification can then be integrated into documentation tools like [Swagger UI ](https://swagger.io/tools/swagger-ui/).
 
 :::callout 🚧  Experimental feature
 The OpenAPI generation feature is currently experimental. Its behavior and output might change in future releases without following semantic versioning. For additional information and context, please refer to the [Strapi Contributor Docs ](https://contributor.strapi.io/openapi).
@@ -9607,7 +9611,7 @@ yarn strapi openapi generate
 npm run strapi openapi generate
 ```
 
-You can also path an optional `--output` argument to specify the path and filename, as in the following example:
+You can also pass an optional `--output` argument to specify the path and filename, as in the following example:
 
 ```bash
 yarn strapi openapi generate --output ./docs/api-spec.json
@@ -9698,7 +9702,131 @@ The generated OpenAPI specification includes all available API endpoints in your
 - File upload endpoints for media handling
 - Plugin endpoints from installed plugins
 
+## Serving the specification over HTTP
+
+Strapi can serve the generated OpenAPI specification as a live HTTP endpoint. Serving specifications over HTTP removes the need to regenerate a static file after each content-type change. Both the Content API and Admin API specifications can be served independently.
+
+Both endpoints use `access: 'disabled'` by default and are not registered. Set `access` on 1 or both endpoints in the [server configuration](/cms/configurations/server) file to expose them.
+
+### Configuration
+
+Add an `openapi` key to the `server` configuration:
+
+```js title="/config/server.js"
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  // highlight-start
+  openapi: {
+    'content-api': {
+      access: 'public',
+      route: {
+        path: '/openapi.json',
+      },
+      cache: {
+        enabled: true,
+        maxAgeMs: 60000,
+        filePath: '.strapi/openapi/content-api.json',
+      },
+    },
+    admin: {
+      access: 'authenticated',
+      route: {
+        path: '/openapi.json',
+      },
+      cache: {
+        enabled: true,
+        maxAgeMs: 60000,
+        filePath: '.strapi/openapi/admin.json',
+      },
+    },
+  },
+  // highlight-end
+});
+```
+
+```ts title="/config/server.ts"
+
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  // highlight-start
+  openapi: {
+    'content-api': {
+      access: 'public',
+      route: {
+        path: '/openapi.json',
+      },
+      cache: {
+        enabled: true,
+        maxAgeMs: 60000,
+        filePath: '.strapi/openapi/content-api.json',
+      },
+    },
+    admin: {
+      access: 'authenticated',
+      route: {
+        path: '/openapi.json',
+      },
+      cache: {
+        enabled: true,
+        maxAgeMs: 60000,
+        filePath: '.strapi/openapi/admin.json',
+      },
+    },
+  },
+  // highlight-end
+});
+```
+
+The `content-api` endpoint is served under the REST API prefix (`/api` by default). The full URL is `http://localhost:1337/api/openapi.json`. The `admin` endpoint is served under the admin path (`/admin` by default). The full URL is `http://localhost:1337/admin/openapi.json`.
+
+:::caution
+Both endpoints must resolve to different full paths. If the `content-api` and `admin` endpoints resolve to the same URL, Strapi throws an error at startup.
+:::
+
+### Available options
+
+Each endpoint (`content-api` and `admin`) accepts the following options:
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `access` | String | `'disabled'` | Controls whether the endpoint is registered and how it is protected. See [Access control](#access-control) for accepted values per endpoint. |
+| `route.path` | String | `'/openapi.json'` | Path where the specification is served. Appended to the endpoint prefix (`/api` for `content-api`, `/admin` for `admin`). |
+| `cache.enabled` | Boolean | `true` | Enables file-based caching of the generated specification. |
+| `cache.maxAgeMs` | Number | `60000` | Maximum age of the cache file in milliseconds before regeneration. |
+| `cache.filePath` | String | `'.strapi/openapi/<type>.json'` | File path for the cache file. Relative paths are resolved from the application root. |
+
+### Access control
+
+The `access` option controls whether each endpoint is registered and how it is protected. Each endpoint supports different values:
+
+**Content API** (`content-api`):
+
+| Value | Behavior |
+|-------|----------|
+| `'disabled'` (default) | The endpoint is not registered. |
+| `'public'` | The endpoint is registered without authentication. Anyone can fetch the specification. |
+
+**Admin** (`admin`):
+
+| Value | Behavior |
+|-------|----------|
+| `'disabled'` (default) | The endpoint is not registered. |
+| `'authenticated'` | The endpoint requires an authenticated admin session. Any authenticated admin user can access the specification. |
+
+:::note
+Role-based access control for OpenAPI endpoints is not supported yet. The admin endpoint uses the `admin::isAuthenticatedAdmin` policy and does not filter by admin role or permission.
+:::
+
+:::tip
+The Content API endpoint is always public when `access` is `'public'`. If you do not want to expose the specification without authentication, leave `content-api.access` at `'disabled'` and use the CLI to generate a static file instead.
+:::
+
 ## Integrating with Swagger UI
+
+:::tip
+If you [registered an HTTP endpoint](#serving-the-specification-over-http), you can point Swagger UI directly at the live URL (e.g., `http://localhost:1337/api/openapi.json`) instead of generating a static file. Skip step 1 below and use the endpoint URL as the `url` value in step 3.
+:::
 
 With the following steps you can quickly generate a [Swagger UI](https://swagger.io/)-compatible page:
 
@@ -26134,7 +26262,7 @@ Changes to the `server.js` file require rebuilding the admin panel. After saving
 
 ## Available options
 
-The `./config/server.js` file can include the following parameters:
+The `/config/server.js` file can include the following parameters:
 
 <!-- TODO: add admin jwt config option -->
 <!-- TODO: sort options alphabetically in the table below  -->
@@ -26162,8 +26290,19 @@ The `./config/server.js` file can include the following parameters:
 | `http.serverOptions`                | Options passed to http `createServer`                                                                                                                                                                                                                                                                                                                                       | [http.serverOptions](https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener)    | {}                  |
 | `transfer.remote.enabled`           | Toggle the ability to use the [transfer feature](/cms/data-management/transfer)                                                                                                                                                                                                                                                                | boolean                                                                                           | `true`              |
 | `transfer.remote.assetIdleTimeoutMs` | Timeout in milliseconds without incoming data before an asset stream is considered stalled when using `strapi transfer --from` to pull from a remote instance. Increase this value when transferring large files or when working on slow connections. | integer | <!-- TODO: confirm default value from strapi/strapi codebase --> |
-| `logger.startup.enabled`            | Toggle the the startup message in the terminal                                                                                                                                                                                                                                                                                                                              | boolean                                                                                           | `true`              |
+| `logger.startup.enabled`            | Toggle the startup message in the terminal                                                                                                                                                                                                                                                                                                                              | boolean                                                                                           | `true`              |
 | `logger.updates.enabled`            | Toggle the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                                                                       | boolean                                                                                           | `true`              |
+| `openapi`                            | [OpenAPI](/cms/api/openapi) endpoint configuration. Both endpoints use `access: 'disabled'` by default and are not registered.                                                                                                                                                                                                                                                                                 | object                                                                                            |                     |
+| `openapi['content-api'].access`      | Access mode: `disabled` (not registered) or `public` (no authentication).                                                                                                                                                                                                                                                                                                                                    | string                                                                                            | `disabled`          |
+| `openapi['content-api'].route.path`  | Subpath for the Content API endpoint, resolved under the [REST API prefix](/cms/configurations/api).                                                                                                                                                                                                                                                                        | string                                                                                            | `/openapi.json`     |
+| `openapi['content-api'].cache.enabled` | Enable file-based caching of the generated specification.                                                                                                                                                                                                                                                                                                                  | boolean                                                                                           | `true`              |
+| `openapi['content-api'].cache.maxAgeMs` | Cache validity in milliseconds.                                                                                                                                                                                                                                                                                                                                           | integer                                                                                           | `60000`             |
+| `openapi['content-api'].cache.filePath` | File path for the cached specification. Relative paths resolve from the application root.                                                                                                                                                                                                                                                                                  | string                                                                                            | `.strapi/openapi/content-api.json` |
+| `openapi.admin.access`             | Access mode: `disabled` (not registered) or `authenticated` (requires admin session).                                                                                                                                                                                                                                                                                                                                      | string                                                                                            | `disabled`             |
+| `openapi.admin.route.path`          | Subpath for the Admin endpoint, resolved under the [admin path](/cms/configurations/admin-panel).                                                                                                                                                                                                                                                                           | string                                                                                            | `/openapi.json`     |
+| `openapi.admin.cache.enabled`       | Enable file-based caching of the generated specification.                                                                                                                                                                                                                                                                                                                   | boolean                                                                                           | `true`              |
+| `openapi.admin.cache.maxAgeMs`      | Cache validity in milliseconds.                                                                                                                                                                                                                                                                                                                                             | integer                                                                                           | `60000`             |
+| `openapi.admin.cache.filePath`      | File path for the cached specification. Relative paths resolve from the application root.                                                                                                                                                                                                                                                                                   | string                                                                                            | `.strapi/openapi/admin.json` |
 
 :::note
 There is no Strapi-specific keep alive configuration option, because Strapi uses Node's default one for incoming HTTP requests, keeping connections alive by default. 
@@ -26181,12 +26320,12 @@ axios.get('https://example.com', { httpsAgent: agent });
 :::
 
 :::tip
-Strapi exposes a dedicated health check route to make uptime probes straightforward. Any request to `/_health` returns an empty response with a `204` status and a `strapi: You are so French!` response header, which is suitable for load balancers or monitoring tools that only need a simple liveness indicator.
+Strapi exposes a dedicated health check route for uptime probes. Any request to `/_health` returns an empty response with a `204` status and a `strapi: You are so French!` response header, which is suitable for load balancers or monitoring tools that only need a simple liveness indicator.
 :::
 
 ## Configurations
 
-The `./config/server.js` minimal configuration requires the `host` and `port` parameters for development. Additional parameters can be included for a full configuration.
+The `/config/server.js` minimal configuration requires the `host` and `port` parameters for development. Additional parameters can be included for a full configuration.
 
 :::note
 [Environmental configurations](/cms/configurations/environment.md) (i.e. using the `env()` helper) do not need to contain all the values so long as they exist in the default `./config/server.js`.
@@ -26242,6 +26381,13 @@ module.exports = ({ env }) => ({
       enabled: false,
     },
   },
+  // highlight-start
+  openapi: {
+    'content-api': {
+      access: 'public',
+    },
+  },
+  // highlight-end
 });
 ```
 
@@ -26272,6 +26418,13 @@ module.exports = ({ env }) => ({
       enabled: false,
     },
   },
+  // highlight-start
+  openapi: {
+    'content-api': {
+      access: 'public',
+    },
+  },
+  // highlight-end
 });
 ```
 
@@ -35971,6 +36124,12 @@ curl -X POST http://localhost:1337/api/users \
 
 Example response (201): A user object with the populated role.
 
+:::tip
+The `role` field accepts both numeric `id` (legacy) and `documentId` (Strapi v5 convention). Examples:
+- `"role": 1` — numeric ID
+- `"role": "x74detpqybxw0bn6ormua5g2"` — documentId
+:::
+
 ### Update a user
 
 `PUT /api/users/:id`
@@ -35995,23 +36154,27 @@ Possible errors:
 | 400 | `"Username already taken"` or `"Email already taken"` | Duplicate value |
 
 :::note Relation inputs support both `documentId` and numeric IDs
-When updating a user with custom relations, you can use either `documentId` (recommended for Strapi 5) or numeric `id` in relation payloads:
+When updating a user, including the `role` relation, you can use either `documentId` (recommended for Strapi 5) or numeric `id` in relation payloads:
 ```json
 {
-  "customRelation": {
-    "connect": ["x74detpqybxw0bn6ormua5g2"]  // documentId
+  "role": "x74detpqybxw0bn6ormua5g2"  // role documentId (shorthand)
+}
+```
+or
+```json
+{
+  "role": {
+    "connect": ["x74detpqybxw0bn6ormua5g2"]  // role documentId (longhand)
   }
 }
 ```
 or
 ```json
 {
-  "customRelation": {
-    "connect": [1]  // numeric ID (legacy)
-  }
+  "role": 1  // numeric ID (legacy)
 }
 ```
-Both formats are accepted for backward compatibility.
+For custom relations, you can also use the longhand format. Both formats are accepted for backward compatibility.
 :::
 
 ### Delete a user

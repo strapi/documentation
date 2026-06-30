@@ -7145,12 +7145,90 @@ File path: N/A
 ```
 
 
+## Configuration
+Description: Add an openapi key to the server configuration:
+(Source: https://docs.strapi.io/cms/api/openapi#configuration)
+
+Language: JavaScript
+File path: /config/server.js
+
+```js
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  // highlight-start
+  openapi: {
+    'content-api': {
+      access: 'public',
+      route: {
+        path: '/openapi.json',
+      },
+      cache: {
+        enabled: true,
+        maxAgeMs: 60000,
+        filePath: '.strapi/openapi/content-api.json',
+      },
+    },
+    admin: {
+      access: 'authenticated',
+      route: {
+        path: '/openapi.json',
+      },
+      cache: {
+        enabled: true,
+        maxAgeMs: 60000,
+        filePath: '.strapi/openapi/admin.json',
+      },
+    },
+  },
+  // highlight-end
+});
+```
+
+---
+Language: TypeScript
+File path: /config/server.ts
+
+```ts
+export default ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  // highlight-start
+  openapi: {
+    'content-api': {
+      access: 'public',
+      route: {
+        path: '/openapi.json',
+      },
+      cache: {
+        enabled: true,
+        maxAgeMs: 60000,
+        filePath: '.strapi/openapi/content-api.json',
+      },
+    },
+    admin: {
+      access: 'authenticated',
+      route: {
+        path: '/openapi.json',
+      },
+      cache: {
+        enabled: true,
+        maxAgeMs: 60000,
+        filePath: '.strapi/openapi/admin.json',
+      },
+    },
+  },
+  // highlight-end
+});
+```
+
+
 ## Integrating with Swagger UI
 Description: Generate a specification:
 (Source: https://docs.strapi.io/cms/api/openapi#integrating-with-swagger-ui)
 
 Language: Bash
-File path: /example-openapi-spec.js
+File path: /localhost:1337/api/openapi.js
 
 ```bash
     yarn strapi openapi generate --output ./public/swagger-spec.json
@@ -7158,7 +7236,7 @@ File path: /example-openapi-spec.js
 
 ---
 Language: Bash
-File path: /example-openapi-spec.js
+File path: /localhost:1337/api/openapi.js
 
 ```bash
     npm run strapi openapi generate -- --output ./public/swagger-spec.json
@@ -19838,10 +19916,10 @@ Source: https://docs.strapi.io/cms/configurations/server
 Description: For outgoing HTTP calls, you can pass a keep-alive agent to your HTTP client.
 (Source: https://docs.strapi.io/cms/configurations/server#available-options)
 
-Language: TypeScript
-File path: /github.com/nodejs/undici/blob/main/types/proxy-agent.d.ts
+Language: JavaScript
+File path: .strapi/openapi/admin.js
 
-```ts
+```js
 const { HttpsAgent } = require('agentkeepalive');
 const axios = require('axios');
 
@@ -19911,6 +19989,13 @@ module.exports = ({ env }) => ({
       enabled: false,
     },
   },
+  // highlight-start
+  openapi: {
+    'content-api': {
+      access: 'public',
+    },
+  },
+  // highlight-end
 });
 ```
 
@@ -19945,6 +20030,13 @@ export default ({ env }) => ({
       enabled: false,
     },
   },
+  // highlight-start
+  openapi: {
+    'content-api': {
+      access: 'public',
+    },
+  },
+  // highlight-end
 });
 ```
 
@@ -25295,7 +25387,7 @@ curl -X POST http://localhost:1337/api/users \
 
 
 ## Update a user
-Description: :::note Relation inputs support both documentId and numeric IDs When updating a user with custom relations, you can use either documentId (recommended for Strapi 5) or numeric id in relation payloads:
+Description: :::note Relation inputs support both documentId and numeric IDs When updating a user, including the role relation, you can use either documentId (recommended for Strapi 5) or numeric id in relation payloads:
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#update-a-user)
 
 Language: Bash
@@ -25323,8 +25415,17 @@ File path: N/A
 
 ```json
 {
-  "customRelation": {
-    "connect": ["x74detpqybxw0bn6ormua5g2"]  // documentId
+  "role": "x74detpqybxw0bn6ormua5g2"  // role documentId (shorthand)
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "role": {
+    "connect": ["x74detpqybxw0bn6ormua5g2"]  // role documentId (longhand)
   }
 }
 ```
@@ -25334,9 +25435,7 @@ File path: N/A
 
 ```json
 {
-  "customRelation": {
-    "connect": [1]  // numeric ID (legacy)
-  }
+  "role": 1  // numeric ID (legacy)
 }
 ```
 
