@@ -54,6 +54,7 @@ The `./config/server.js` file can include the following parameters:
 | `http.serverOptions`                | Options passed to http `createServer`                                                                                                                                                                                                                                                                                                                                       | <ExternalLink to="https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener" text="http.serverOptions"/>    | {}                  |
 | `transfer.remote.enabled`           | Toggle the ability to use the [transfer feature](/cms/data-management/transfer)                                                                                                                                                                                                                                                                | boolean                                                                                           | `true`              |
 | `transfer.remote.assetIdleTimeoutMs` | Timeout in milliseconds without incoming data before an asset stream is considered stalled when using `strapi transfer --from` to pull from a remote instance. Increase this value when transferring large files or when working on slow connections. | integer | <!-- TODO: confirm default value from strapi/strapi codebase --> |
+| `webhooks.populateRelations`        | When `true`, relation fields are included in webhook event payloads. Set to `false` to keep payloads lightweight and avoid exposing relational data in outgoing webhook requests. | boolean | `true` |
 | `logger.startup.enabled`            | Toggle the the startup message in the terminal                                                                                                                                                                                                                                                                                                                              | boolean                                                                                           | `true`              |
 | `logger.updates.enabled`            | Toggle the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                                                                       | boolean                                                                                           | `true`              |
 
@@ -146,6 +147,9 @@ module.exports = ({ env }) => ({
       enabled: false,
     },
   },
+  webhooks: {
+    populateRelations: false,
+  },
   logger: {
     updates: {
       enabled: false,
@@ -179,6 +183,9 @@ export default ({ env }) => ({
     remote: {
       enabled: false,
     },
+  },
+  webhooks: {
+    populateRelations: false,
   },
   logger: {
     updates: {
