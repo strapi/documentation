@@ -17,8 +17,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
  * sidebar). !important is needed to beat the inline SSR width. */
 html[data-sidebar-collapsed='true'] {
   [class*='docSidebarContainer'] {
-    width: 52px !important;
-    min-width: 52px !important;
     transition: none !important;
   }
 
@@ -931,8 +929,6 @@ html[data-sidebar-collapsed='true'] {
   &::-webkit-scrollbar-thumb { background-color: var(--strapi-neutral-200); border-radius: 4px; }
 
   &--collapsed {
-    width: 52px !important;
-    min-width: 52px !important;
     overflow: hidden;
 
     .sidebar-v3-header__label,
@@ -941,9 +937,14 @@ html[data-sidebar-collapsed='true'] {
       pointer-events: none;
     }
 
+    .sidebar-v3-header__label {
+      width: 0;
+      margin-left: 0;
+      display: none;
+    }
+
     .sidebar-v3-header {
       justify-content: flex-end;
-      padding: 28px 12px 8px;
     }
   }
 
@@ -971,8 +972,7 @@ html[data-sidebar-collapsed='true'] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 28px 12px 8px;
-  min-height: 44px;
+  padding: 8px;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -989,28 +989,24 @@ html[data-sidebar-collapsed='true'] {
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
     color: var(--strapi-neutral-400);
     white-space: nowrap;
     overflow: hidden;
     transition: opacity 0.2s;
+    margin-left: 8px;
   }
 
   &__toggle {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
     border: 1px solid var(--strapi-neutral-200);
     background: transparent;
     cursor: pointer;
     display: grid;
     place-items: center;
     color: var(--strapi-neutral-400);
-    font-size: 14px;
-    line-height: 1;
-    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
     flex-shrink: 0;
-    padding: 0;
 
     &:hover {
       background: var(--strapi-neutral-100);
