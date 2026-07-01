@@ -77,18 +77,11 @@ html[data-sidebar-collapsed='true'] {
 
   --ifm-menu-color-background-active: transparent;
   --ifm-menu-color-background-hover: transparent;
-  --ifm-menu-link-padding-vertical: var(--strapi-spacing-1);
   --ifm-menu-link-padding-horizontal: 0;
 
   font-weight: var(--custom-sidebar-menu-font-weight);
-  padding-top: 10px;
-  padding-left: 14px;
-  padding-right: 2px;
 
-  &.thin-scrollbar {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
+  padding: 8px;
 
   &__caret {
     margin: 0 0 0 3px;
@@ -122,15 +115,7 @@ html[data-sidebar-collapsed='true'] {
   &__list {
     padding-left: 0;
 
-    .menu__list,
-    .theme-doc-sidebar-item-link,
-    .theme-doc-sidebar-item-link a {
-      padding-left: 0;
-      padding-right: 4px;
-    }
-
     .theme-doc-sidebar-item-category {
-      padding-right: 4px;
 
       &-level-1 > .menu__list-item-collapsible > .menu__link {
         font-weight: bold;
@@ -140,7 +125,6 @@ html[data-sidebar-collapsed='true'] {
     &-item {
       font-size: var(--custom-sidebar-menu-list-item-font-size, --strapi-font-size-sm);
       line-height: var(--strapi-line-height-sm);
-      padding: 2px 10px 2px 0;
 
       &-collapsible {
         &:hover {
@@ -153,18 +137,6 @@ html[data-sidebar-collapsed='true'] {
       background-color: rgba(73, 69, 255, 0.1);
       border-radius: 8px;
       position: relative;
-
-      &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 3px;
-        height: 18px;
-        border-radius: 2px;
-        background: var(--strapi-accent, #4945FF);
-      }
 
       .menu__link--active {
         color: var(--strapi-accent-light, #7B79FF) !important;
@@ -210,7 +182,6 @@ html[data-sidebar-collapsed='true'] {
   }
 
   &__link__content {
-    padding-right: 10px;
     display: flex;
     align-items: center;
     flex: 1;
@@ -225,12 +196,6 @@ html[data-sidebar-collapsed='true'] {
     &-item {
       &-category {
         &-level-1 {
-          --custom-sidebar-menu-list-item-py: var(--strapi-spacing-1);
-
-          padding-top: var(--custom-sidebar-menu-list-item-py);
-          padding-bottom: var(--custom-sidebar-menu-list-item-py);
-          padding-bottom: 20px;
-
           > .menu__list-item-collapsible {
             // font-weight: 700;
             font-size: var(--strapi-font-size-sm);
@@ -293,11 +258,9 @@ html[data-sidebar-collapsed='true'] {
 
     &-menu {
       .theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible {
-        padding-left: 10px;
         background-color: transparent;
         text-transform: uppercase;
-        font-size: 12px;
-        letter-spacing: 0.06em;
+        font-size: var(--strapi-font-size-xs);
         color: var(--strapi-neutral-400);
         font-family: var(--strapi-font-family-technical, 'JetBrains Mono', monospace);
         font-weight: 600;
@@ -1019,11 +982,6 @@ html[data-sidebar-collapsed='true'] {
 .sidebar-v3-content {
   opacity: 1;
   transition: opacity 0.2s;
-
-  // ProductSwitcher — compact, aligned with search bar
-  > div:nth-child(2) {
-    margin: 0 12px 6px;
-  }
 
   // Search bar — reduce gap before nav items
   .my-custom-search-bar {
