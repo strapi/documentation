@@ -652,6 +652,11 @@
       "number": 26354,
       "reason": "Router: Internal bug fix in the CLI API generator (Plop templates). The generator now correctly places API files under named directories instead of at the wrong level. This is a developer experience fix with no impact on generated API functionality or public documentation.",
       "added": "2026-06-30"
+    },
+    {
+      "number": 26866,
+      "reason": "Reverting an API update we don't want to document.",
+      "added": "2026-07-01"
     }
   ]
 }
