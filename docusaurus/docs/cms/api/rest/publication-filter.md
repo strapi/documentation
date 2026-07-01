@@ -24,7 +24,9 @@ Add the optional `publicationFilter` query parameter to filter results by the re
 
 </Tldr>
 
-The [REST API](/cms/api/rest) accepts an optional `publicationFilter` query parameter when [Draft & Publish](/cms/features/draft-and-publish) is enabled. A *cohort* is a set of documents grouped by how their draft and published versions relate, for example documents never published, or documents whose draft was edited since it was last published. `publicationFilter` selects the cohort; [`status`](/cms/api/rest/status) then selects whether each result returns its draft or published row.
+The [REST API](/cms/api/rest) accepts an optional `publicationFilter` query parameter when [Draft & Publish](/cms/features/draft-and-publish) is enabled. With Draft & Publish, each entry can have up to 2 rows for a locale: a *draft row* (`publishedAt` is empty) and a *published row* (`publishedAt` is set).
+
+A *cohort* is a set of documents grouped by how their draft and published rows relate, for example documents never published, or documents whose draft was edited since it was last published. You cannot get these groups by filtering on `publishedAt` yourself: questions like "was this ever published?" or "is the draft newer than the live version?" compare the 2 rows, not one. `publicationFilter` selects the cohort; [`status`](/cms/api/rest/status) then selects whether each result returns its draft or published row.
 
 This page shows how to query the most common cohorts over REST. For the full list of values, their exact definitions, and every `status` combination, see [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter), which is the reference for the underlying model.
 
@@ -204,7 +206,7 @@ The Document Service API defaults to `status=draft` instead. See [Document Servi
 
 REST accepts these kebab-case values: `never-published`, `has-published-version`, `modified`, `unmodified`, `never-published-document`, `has-published-version-document`, `published-without-draft`, `published-with-draft`. Invalid values return HTTP `400`.
 
-Each value, its scope (pair or document), and its exact cohort definition are documented on [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter#values).
+Each value, its scope (pair, meaning one `documentId` and locale at a time, or document, meaning across all locales), and its exact cohort definition are documented on [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter#values).
 
 ## Combine with other parameters {#combine}
 
