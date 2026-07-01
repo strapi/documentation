@@ -28,6 +28,24 @@ The [`status`](/cms/api/document-service/status) parameter answers "draft or pub
 
 For example, you can ask for drafts that were never published, or for entries whose draft has unsaved changes compared to what is live. `publicationFilter` selects that group of documents first; `status` then decides which row (draft or published) is returned for each.
 
+:::note Key terms
+Strapi Draft & Publish stores each entry as up to 2 database rows for the same document and locale:
+
+- a *draft row* (`publishedAt` is empty)
+- a *published row* (`publishedAt` is set)
+
+The `status` parameter picks which of the 2 rows to read.
+
+`publicationFilter` instead selects a *cohort*: a group of documents defined by how their draft and published rows relate (for example, never published, or draft newer than published). Some of these questions compare the 2 rows, so they cannot be expressed by filtering on `publishedAt` alone. That is what `publicationFilter` is for.
+
+Each cohort has a *scope*, shown in the values table below:
+
+- a *pair-scoped* value looks at 1 locale at a time (a `documentId` + `locale` pair). For example, `never-published`.
+- a *document-scoped* value looks at the whole document across all locales. For example, `never-published-document`.
+
+Without i18n, both scopes behave the same.
+:::
+
 :::prerequisites
 The [Draft & Publish](/cms/features/draft-and-publish) feature must be enabled on the content-type. If Draft & Publish is disabled, `publicationFilter` has no effect.
 :::
@@ -62,7 +80,9 @@ The rest of this page lists [all available values](#values), explains [how these
 
 Unknown values raise a validation error (REST returns HTTP `400`; GraphQL fails at query validation).
 
-The `Scope (i18n)` column matters when [Internationalization (i18n)](/cms/features/internationalization) is enabled: a *Pair* value looks at 1 locale at a time, while a *Document* value looks at the document across all its locales. See [How cohorts work](#how-cohorts-work) for the precise definitions. Without i18n, the two scopes behave the same.
+The `Scope (i18n)` column matters when [Internationalization (i18n)](/cms/features/internationalization) is enabled: a *Pair* value looks at 1 locale at a time, while a *Document* value looks at the document across all its locales. See [How cohorts work](#how-cohorts-work) for the precise definitions. Without i18n, the 2 scopes behave the same.
+
+`published-without-draft` and `published-with-draft` describe published rows, so they only return results with `status: 'published'`.
 
 ## Default `status` per API surface {#default-status}
 
@@ -160,18 +180,11 @@ const neverPublishedCount = await strapi
 
 ## How cohorts work {#how-cohorts-work}
 
-This section explains the model behind the values above. You do not need it to use the common cohorts, but it is what lets you predict the result of any `status` × `publicationFilter` combination.
+This section gives the precise definitions behind the values above (the Key terms box near the top of the page introduces the same concepts in plain language). You do not need it to use the common cohorts, but it is what lets you predict the result of any `status` × `publicationFilter` combination.
 
 ### The model {#the-model}
 
-For any document, Strapi can store 2 rows for the same `(documentId, locale)` pair:
-
-- a *draft row*, with `publishedAt: null`
-- a *published row*, with a non-null `publishedAt`
-
-The [`status`](/cms/api/document-service/status) parameter picks which of these 2 rows to read.
-
-`publicationFilter` does something `status` alone cannot: it groups documents by *how the draft and published rows relate to each other*. A single row's `publishedAt` is not enough to answer questions like "is this draft newer than what is live?" or "was this document ever published?", because those questions compare 2 rows. That group of matching documents is called a *cohort*.
+A document can have up to 2 rows for the same `(documentId, locale)` pair: a *draft row* (`publishedAt: null`) and a *published row* (non-null `publishedAt`). The [`status`](/cms/api/document-service/status) parameter picks which of these 2 rows to read, while `publicationFilter` selects the *cohort* of documents first, based on how their draft and published rows relate.
 
 Strapi resolves the cohort first, then returns the row that matches the resolved `status`. Values ending in `-document` compare rows across every locale of a document; the others compare rows within a single `(documentId, locale)` pair (read this as `documentId` only when i18n is disabled).
 
