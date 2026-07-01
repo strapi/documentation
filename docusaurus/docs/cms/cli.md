@@ -28,7 +28,7 @@ Strapi CLI commands on the present page are grouped by category:
 | Category | Commands |
 |---|---|
 | [Development](#development) | `develop`, `start`, `build`, `console` |
-| [Cloud](#cloud) | `login`, `logout`, `deploy` |
+| [Cloud](#cloud) | `login`, `link`, `deploy`, `logout` |
 | [Data management](#data-management) | `export`, `import`, `transfer` |
 | [Project information](#project-information) | `report`, `telemetry:disable`, `telemetry:enable`, `version`, `help` |
 | [Configuration](#configuration) | `configuration:dump`, `configuration:restore` |
@@ -178,13 +178,17 @@ These commands interact with Strapi Cloud. See the [Cloud CLI](/cloud/cli/cloud-
 
 Logs in to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-login) documentation).
 
-### `strapi logout`
+### `strapi link`
 
-Logs out from Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-logout) documentation).
+Links the local project to an existing Strapi Cloud project (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-link) documentation).
 
 ### `strapi deploy`
 
-Deploys to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-deploy) documentation).
+Deploys a linked local project to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-deploy) documentation).
+
+### `strapi logout`
+
+Logs out from Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-logout) documentation).
 
 ## Data management
 

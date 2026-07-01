@@ -594,6 +594,8 @@
       "number": 26732,
       "reason": "Router: Internal implementation fix moving preview script injection mechanism. No public API or user-facing behavior change. Implementation detail about how the script is served.",
       "added": "2026-06-26"
+    },
+    {
       "number": 26511,
       "reason": "Triage: test infrastructure improvement",
       "added": "2026-06-27"
@@ -652,6 +654,21 @@
       "number": 26354,
       "reason": "Router: Internal bug fix in the CLI API generator (Plop templates). The generator now correctly places API files under named directories instead of at the wrong level. This is a developer experience fix with no impact on generated API functionality or public documentation.",
       "added": "2026-06-30"
+    },
+    {
+      "number": 26866,
+      "reason": "Reverting an API update we don't want to document.",
+      "added": "2026-07-01"
+    },
+    {
+      "number": 26830,
+      "reason": "Reverting an API update we don't want to document.",
+      "added": "2026-07-01"
+    },
+    {
+      "number": 26844,
+      "reason": "Router: Internal bug fix to permission system. Users previously saw a 'Policy Failed' warning when selecting roles for users; this fix removes that warning by allowing hidden content types to be read for relation targets. No public API or documented behavior changed.",
+      "added": "2026-07-01"
     }
   ]
 }

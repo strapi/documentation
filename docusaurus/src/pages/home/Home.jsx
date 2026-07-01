@@ -342,7 +342,7 @@ export default function PageHome() {
         <Reveal>
           <section className={styles.deploy}>
             <div className={styles.sectionLabel}>Deploy</div>
-            <a href="/cloud/getting-started/deployment" className={styles.deployCard}>
+            <a href="/cloud/getting-started/deployment-options" className={styles.deployCard}>
               <div className={styles.deployLeft}>
                 <div className={styles.deployIcon}>
                   <i className="ph ph-cloud-arrow-up" />
@@ -350,7 +350,7 @@ export default function PageHome() {
                 <div>
                   <div className={styles.deployTitle}>Deploy to Strapi Cloud</div>
                   <div className={styles.deployDesc}>
-                    Login and deploy from your terminal. Or push to GitHub for automatic deploys.
+                    Log in, link your local project, and deploy from your terminal. Or push to GitHub for automatic deploys.
                     Also supports AWS, Heroku, DigitalOcean, and any Node.js host.
                   </div>
                 </div>
@@ -360,6 +360,9 @@ export default function PageHome() {
                   <span className={styles.codeCm}>$</span>{' '}
                   <span className={styles.codeFn}>strapi</span> login<br />
                   <span className={styles.codeStr}>✓ Successfully logged in</span><br />
+                  <span className={styles.codeCm}>$</span>{' '}
+                  <span className={styles.codeFn}>strapi</span> link<br />
+                  <span className={styles.codeStr}>✓ Linked to my-project</span><br />
                   <span className={styles.codeCm}>$</span>{' '}
                   <span className={styles.codeFn}>strapi</span> deploy<br />
                   <span className={styles.codeStr}>✓ Project deployed to https://my-project.strapiapp.com</span>
