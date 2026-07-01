@@ -13,6 +13,7 @@ tags:
 ---
 
 import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
+import PushToGitHub from '/docs/snippets/push-to-github.md'
 
 # Quick Start Guide
 
@@ -212,12 +213,11 @@ We recommend deploying from the [Strapi Cloud dashboard](/cloud/getting-started/
 
 <StepDetails title="Step 5: Push your project to GitHub">
 
-Deploying from the dashboard requires your project to be hosted on a GitHub repository. Let's push your local project to GitHub:
+If your local Strapi server is still running, press `Ctrl-C` to stop it.
 
-1. If the server is still running, press `Ctrl-C` to stop it, and make sure you are in your project folder (if needed, run for instance `cd my-strapi-project`).
-2. Run `git init`, `git add .`, then `git commit -m "Initial commit"` to create your first commit.
-3. Log in to your GitHub account and <ExternalLink to="https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories" text="create a new repository"/>. Give it a name, for instance `my-strapi-project`.
-4. Connect your local repository to GitHub and push your project, replacing `yourname` with your GitHub profile name and `my-strapi-project` with your repository name.<br/>To do so, run `git remote add origin git@github.com:yourname/my-strapi-project.git`, then `git push --set-upstream origin main`.
+Deploying from the dashboard requires your project to be hosted on a GitHub repository. Push your local Strapi project to GitHub like you would do it for any other code repository (see additional instructions below if needed).
+
+<PushToGitHub />
 
 </StepDetails>
 
