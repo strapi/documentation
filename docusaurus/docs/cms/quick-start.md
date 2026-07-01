@@ -18,7 +18,7 @@ import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
 <Tldr>
 
-Build and deploy a Strapi project from scratch in 10 steps: create a local project with `create-strapi@latest`, define collection types using the Content-Type Builder, deploy to Strapi Cloud from the Cloud dashboard, and add content via the Content Manager.
+Build and deploy a Strapi project from scratch in 12 steps: create a local project with `create-strapi@latest`, define collection types using the Content-Type Builder, push your project to GitHub and deploy to Strapi Cloud from the Cloud dashboard, and add content via the Content Manager.
 
 </Tldr>
 
@@ -210,25 +210,29 @@ Now that your beautiful first Strapi project is working locally, it's time for t
 
 We recommend deploying from the [Strapi Cloud dashboard](/cloud/getting-started/deployment). This guide walks you through pushing your local project to GitHub, then creating and deploying a Strapi Cloud project from the dashboard.
 
-### Push your project to GitHub
+<StepDetails title="Step 5: Push your project to GitHub">
+
+Deploying from the dashboard requires your project to be hosted on a GitHub repository. Let's push your local project to GitHub:
 
 1. If the server for your local Strapi project is running, which should be the case if you followed this tutorial so far, press `Ctrl-C` to stop the server.
 2. Ensure you are in the folder of your Strapi project (if needed, run for instance `cd my-strapi-project` to reach this folder).
-3. Push your project to a GitHub repository:
+3. Run `git init` to initialize git for the project folder.
+4. Run `git add .` to stage all files.
+5. Run `git commit -m "Initial commit"` to create your first commit.
+6. Log in to your GitHub account and <ExternalLink to="https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories" text="create a new repository"/>. Give it a name, for instance `my-strapi-project`.
+7. Run a command similar to the following to connect your local repository to GitHub, replacing `yourname` with your GitHub profile name and `my-strapi-project` with your repository name:
 
-    1. Run `git init` to initialize git for the project folder.
-    2. Run `git add .` to stage all files.
-    3. Run `git commit -m "Initial commit"` to create your first commit.
-    4. Log in to your GitHub account and <ExternalLink to="https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories" text="create a new repository"/>. Give it a name, for instance `my-strapi-project`.
-    5. Run a command similar to the following to connect your local repository to GitHub, replacing `yourname` with your GitHub profile name and `my-strapi-project` with your repository name:
+   ```bash
+   git remote add origin git@github.com:yourname/my-strapi-project.git
+   ```
 
-       ```bash
-       git remote add origin git@github.com:yourname/my-strapi-project.git
-       ```
+8. Run `git push --set-upstream origin main` to push your commit to GitHub.
 
-    6. Run `git push --set-upstream origin main` to push your commit to GitHub.
+</StepDetails>
 
-### Create and deploy your Strapi Cloud project
+<StepDetails title="Step 6: Create and deploy your Strapi Cloud project">
+
+Now that your project is hosted on GitHub, let's create and deploy your Strapi Cloud project from the dashboard:
 
 1. Navigate to the <ExternalLink to="https://cloud.strapi.io" text="Strapi Cloud"/> login page and log in with GitHub, Google, GitLab, or a one-time password.
 2. From the *Projects* page, click **Create project**.
@@ -241,12 +245,14 @@ For detailed instructions and screenshots, see the [Project deployment with the 
 Once the deployment is complete, click the **Visit app** button in the top right corner to access your deployed Strapi project.
 
 <ThemedImage
-alt="Visit Strapi Cloud App GIF"
-sources={{
-  light: '/img/assets/quick-start-guide/qsg-visit-cloud-app.gif',
-  dark: '/img/assets/quick-start-guide/qsg-visit-cloud-app_DARK.gif',
-}}
+  alt="Visit Strapi Cloud App GIF"
+  sources={{
+    light: '/img/assets/quick-start-guide/qsg-visit-cloud-app.gif',
+    dark: '/img/assets/quick-start-guide/qsg-visit-cloud-app_DARK.gif',
+  }}
 />
+
+</StepDetails>
 
 :::callout <Icon name="confetti" /> Congratulations!
 Now your project is hosted on Strapi Cloud and accessible online. You can learn more about Strapi Cloud by reading [its dedicated documentation](/cloud/intro) or proceed to part D to log in into your online Strapi project and add your first data from there.
@@ -260,7 +266,7 @@ Feel free to play with the Content-Type Builder even further and add more fields
 
 Now that we have created a basic content structure with 2 collection types, "Restaurant" and "Category", and deployed your project to Strapi Cloud, let's use the Cloud to actually add content by creating new entries.
 
-<StepDetails title="Step 5: Log in to the admin panel of your new Strapi Cloud project">
+<StepDetails title="Step 7: Log in to the admin panel of your new Strapi Cloud project">
 
 Now that your Strapi Cloud project is created, let's log in into the project:
 
@@ -293,7 +299,7 @@ Any project hosted on Strapi Cloud is accessible from its own URL, something lik
 
 </StepDetails>
 
-<StepDetails title="Step 6: Create an entry for the &quot;Restaurant&quot; collection type">
+<StepDetails title="Step 8: Create an entry for the &quot;Restaurant&quot; collection type">
 
 1. Go to <Icon name="feather" /> _Content Manager > Collection types - Restaurant_ in the navigation.
 2. Click on **Create new entry**.
@@ -313,7 +319,7 @@ The restaurant is now listed in the _Collection types - Restaurant_ view of the 
 <br/>
 </StepDetails>
 
-<StepDetails title="Step 7: Add Categories">
+<StepDetails title="Step 9: Add Categories">
 
 Let's go to <Icon name="feather" /> _Content Manager > Collection types - Category_ and create 2 categories:
 
@@ -339,7 +345,7 @@ Now, we will add a category to a restaurant:
 
 </StepDetails>
 
-<StepDetails title="Step 8: Set Roles & Permissions">
+<StepDetails title="Step 10: Set Roles & Permissions">
 
 We have just added a restaurant and 2 categories. We now have enough content to consume (pun intended). But first, we need to make sure that the content is publicly accessible through the API:
 
@@ -361,7 +367,7 @@ sources={{
 
 </StepDetails>
 
-<StepDetails title="Step 9: Publish the content">
+<StepDetails title="Step 11: Publish the content">
 
 By default, any content you create is saved as a draft. Let's publish our categories and restaurant.
 
@@ -384,7 +390,7 @@ sources={{
 
 </StepDetails>
 
-<StepDetails title="Step 10: Use the API">
+<StepDetails title="Step 12: Use the API">
 
 OK dear gourmet, we have just finished creating our content and making it accessible through the API. You can give yourself a pat on the back — but you have yet to see the final result of your hard work.
 
