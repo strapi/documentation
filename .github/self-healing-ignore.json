@@ -594,6 +594,8 @@
       "number": 26732,
       "reason": "Router: Internal implementation fix moving preview script injection mechanism. No public API or user-facing behavior change. Implementation detail about how the script is served.",
       "added": "2026-06-26"
+    },
+    {
       "number": 26511,
       "reason": "Triage: test infrastructure improvement",
       "added": "2026-06-27"
