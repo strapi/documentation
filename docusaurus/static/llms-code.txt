@@ -35753,18 +35753,6 @@ cd my-strapi-project && npm run develop
 ```
 
 
-## Push your project to GitHub
-Description: Run git init to initialize git for the project folder.
-(Source: https://docs.strapi.io/cms/quick-start#push-your-project-to-github)
-
-Language: Bash
-File path: N/A
-
-```bash
-       git remote add origin git@github.com:yourname/my-strapi-project.git
-```
-
-
 ## Part D: Add content to your Strapi Cloud project with the Content Manager
 Description: Click me to view an example of API response:
 (Source: https://docs.strapi.io/cms/quick-start#part-d-add-content-to-your-strapi-cloud-project-with-the-content-manager)
