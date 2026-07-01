@@ -1,0 +1,4 @@
+# Generated at build time — keep in repo for discoverability but hide from PR diffs
+docusaurus/static/llms.txt linguist-generated=true
+docusaurus/static/llms-full.txt linguist-generated=true
+docusaurus/static/llms-code.txt linguist-generated=true
