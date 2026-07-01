@@ -242,19 +242,6 @@ Unknown `publicationFilter` values are rejected:
 - REST API: returns HTTP `400`.
 - GraphQL: invalid enum values fail at query validation.
 
-## Deprecated `hasPublishedVersion` parameter {#has-published-version-deprecated}
-
-The boolean `hasPublishedVersion` parameter is deprecated in favor of `publicationFilter`. Strapi still accepts it on the REST API, GraphQL, and Document Service API and maps it to **document-scoped** modes:
-
-| `hasPublishedVersion` | Maps to |
-| --------------------- | ------- |
-| `false` (or string `'false'`) | `never-published-document` |
-| `true` (or string `'true'`) | `has-published-version-document` |
-
-If both `publicationFilter` and `hasPublishedVersion` are passed, `publicationFilter` takes precedence.
-
-REST and GraphQL examples: [REST API: `publicationFilter`](/cms/api/rest/publication-filter#has-published-version-deprecated), [GraphQL API: `publicationFilter`](/cms/api/graphql#publication-filter).
-
 ## Why not filter on `publishedAt` alone? {#why-not-published-at}
 
 A single row's `publishedAt` only describes that row. Cohorts such as `never-published`, `has-published-version`, and `modified` require comparing or correlating **two rows** for the same `(documentId, locale)`. `publicationFilter` encodes those rules in one server-side query instead of multiple client round-trips.

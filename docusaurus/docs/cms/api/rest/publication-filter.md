@@ -201,18 +201,3 @@ await request(\`/api/restaurants?\${query}\`);`
 ## Combine with other parameters {#combine}
 
 `publicationFilter` can be combined with [`filters`](/cms/api/rest/filters), [`locale`](/cms/api/rest/locale), [`populate`](/cms/api/rest/populate-select), and other [REST parameters](/cms/api/rest/parameters). All conditions are applied together.
-
-## Deprecated `hasPublishedVersion` parameter {#has-published-version-deprecated}
-
-The boolean `hasPublishedVersion` query parameter is deprecated. Accepted values: `true`, `false`, `'true'`, or `'false'`. Strapi maps it to document-scoped `publicationFilter` values:
-
-| `hasPublishedVersion` | Maps to |
-| --------------------- | ------- |
-| `false` / `'false'` | `never-published-document` |
-| `true` / `'true'` | `has-published-version-document` |
-
-Example: `GET /api/restaurants?status=draft&hasPublishedVersion=false`
-
-If both `publicationFilter` and `hasPublishedVersion` are sent, `publicationFilter` takes precedence.
-
-Prefer `publicationFilter` for new integrations.

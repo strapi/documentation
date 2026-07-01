@@ -485,10 +485,6 @@ Available enum values:
 | `PUBLISHED_WITHOUT_DRAFT` | `published-without-draft` |
 | `PUBLISHED_WITH_DRAFT` | `published-with-draft` |
 
-:::note
-The deprecated `hasPublishedVersion` boolean argument is still accepted (`true` / `false`) and maps to `NEVER_PUBLISHED_DOCUMENT` / `HAS_PUBLISHED_VERSION_DOCUMENT`. If both `publicationFilter` and `hasPublishedVersion` are provided, `publicationFilter` takes precedence. Prefer `publicationFilter` for new queries.
-:::
-
 ## Mutations
 
 Mutations in GraphQL are used to modify data (e.g. create, update, and delete data).
