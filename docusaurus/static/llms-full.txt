@@ -1001,7 +1001,7 @@ Strapi Cloud applies 2 distinct limits to uploads. The first is a hard maximum f
 
 ## Maximum upload file size for non-image files
 
-Non-image uploads are capped at 200 MB on all Strapi Cloud plans (Free, Essential, Pro, and Scale). The cap is enforced at the infrastructure level and cannot be overridden via the `strapi::body` middleware configuration.
+Non-image uploads are capped at 200 MB on all Strapi Cloud plans. The cap is enforced at the infrastructure level and cannot be overridden via the `strapi::body` middleware configuration.
 
 ## Recommended maximum upload size for image files
 
@@ -1024,14 +1024,14 @@ The recommendation depends on whether Responsive friendly upload and Size optimi
 
 Recommended maximum image size, expressed in megapixels (MP), per format and plan:
 
-| Format | Free & Essential | Pro & Scale |
+| Format | Essential | Pro & Scale |
 |--------|------------------|-------------|
 | JPEG   | 24 MP            | 135 MP      |
 | PNG    | 8 MP             | 90 MP       |
 | WebP   | 4 MP             | 12 MP       |
 | TIFF   | 16 MP            | 125 MP      |
 | AVIF   | 66 MP            | 80 MP       |
-| Format | Free & Essential | Pro & Scale |
+| Format | Essential | Pro & Scale |
 |--------|------------------|-------------|
 | JPEG   | 200 MP           | 265 MP      |
 | PNG    | 20 MP            | 115 MP      |
@@ -1140,17 +1140,17 @@ Source: https://docs.strapi.io/cloud/cloud-fundamentals
 
 # Strapi Cloud fundamentals
 
-Strapi Cloud is a PaaS hosting platform for deploying Strapi CMS projects, offering four pricing plans with different features and support levels, two user roles (owners and maintainers), and REST/GraphQL APIs that behave identically to self-hosted servers.
+Strapi Cloud is a PaaS hosting platform for deploying Strapi CMS projects, offering three pricing plans with different features and support levels, two user roles (owners and maintainers), and REST/GraphQL APIs that behave identically to self-hosted servers.
 
 Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi Cloud works, and ensure a smooth Strapi Cloud experience.
 
 - **Hosting Platform** <br/> Strapi Cloud is a hosting platform that allows to deploy already existing Strapi projects created with Strapi CMS (Content Management System). Strapi Cloud is *not* the SaaS ([Software-as-a-Service](https://en.wikipedia.org/wiki/Software_as_a_service)) version of Strapi CMS and should rather be considered as a PaaS ([Platform-as-a-Service](https://en.wikipedia.org/wiki/Platform_as_a_service)). Feel free to refer to the [CMS documentation](https://docs.strapi.io/cms/intro) to learn more about Strapi CMS.
 
-- **Strapi Cloud Pricing Plans** <br/> As a Strapi Cloud user you have the choice between 4 plans: Free, Essential, Pro and Scale. Depending on the plan, you have access to different functionalities, support and customization options (see [Pricing page](https://strapi.io/pricing-cloud) for more details). In this Strapi Cloud documentation, the , , and  badges can be displayed below a section's title to indicate that the feature is only available starting from the corresponding paid plan. If no badge is shown, the feature is available on the Free plan.
+- **Strapi Cloud Pricing Plans** <br/> As a Strapi Cloud user you have the choice between 3 plans: Essential, Pro, and Scale. Depending on the plan, you have access to different functionalities, support and customization options (see [Pricing page](https://strapi.io/pricing-cloud) for more details). In this Strapi Cloud documentation, the  and  badges can be displayed below a section's title to indicate that the feature is only available starting from the corresponding plan. If no badge is shown, the feature is available on the Essential plan. Only Pro and Scale badges are used in Cloud docs because Essential is the baseline plan; the  component exists for consistency with other Strapi documentation but is not displayed on Cloud pages.
 
 - **Types of Strapi Cloud users** <br/> There can be 2 types of users on a Strapi Cloud project: owners and maintainers. The owner is the one who has created the project and has therefore access to all features and options for the project. Maintainers are users who have been invited to contribute to an already created project by its owner. Maintainers, as documented in the [Collaboration](/cloud/projects/collaboration) page, cannot view and access all features and options from the Strapi Cloud dashboard.
 
-- **Support** <br/> The level of support provided by the Strapi Support team depends on the Strapi Cloud plan you subscribed for. The Free plan does not include access to support. The Essential and Pro plans include Basic support while the Scale plan includes Standard support. Please refer to the [dedicated support article](https://support.strapi.io/support/solutions/articles/67000680833-what-is-supported-by-the-strapi-team#Not-Supported) for all details regarding support levels.
+- **Support** <br/> The level of support provided by the Strapi Support team depends on the Strapi Cloud plan you subscribed for. The Essential and Pro plans include Basic support while the Scale plan includes Standard support. Please refer to the [dedicated support article](https://support.strapi.io/support/solutions/articles/67000680833-what-is-supported-by-the-strapi-team#Not-Supported) for all details regarding support levels.
 
 - **API access in Strapi Cloud vs self-hosted** <br/> The REST and GraphQL APIs behave the same on Strapi Cloud and on self-hosted servers. The only differences are the URLs:
     - Base API domain: On Strapi Cloud, your API uses the domain of the environment (e.g. `https://<project>.strapiapp.com/api/...`), or your custom domain if you set one (see [Domains documentation](/cloud/projects/settings#domains)). A self-hosted project would use whatever domain you expose.
@@ -1253,10 +1253,6 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     :::tip
     Connect the GitHub or GitLab account that owns the repository you want to deploy. This can be different from the account you used to log into your Strapi Cloud account.
     :::
-    :::note
-
-    You can only connect a GitHub organization repository on a paid plans. On the free plan, you can only connect a personal repository.
-    :::
 
     4.a. If you have already given Strapi Cloud access to all repositories of your GitHub or GitLab account, go directly to the next step. If not, you will be redirected to a modal where you will have to allow Strapi Cloud permission to access some or all your repositories on GitHub/GitLab (more information in the [GitHub](https://docs.github.com/en/apps/overview) and [GitLab](https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications) documentation).
 
@@ -1292,12 +1288,6 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     :::
 
 ## Setting up billing details
-
-:::strapi No billing step for the Free plan
-If you chose the free plan, this billing step will be skipped as you will not be asked to share your credit card details at the creation of the project.
-
- Skip to step 5 of the section below to finalize the creation of your project.
-:::
 
 1. Click on the **Continue to billing** button. You will be redirected to the billing page where you can enter your payment details and review your invoice.
 
@@ -1446,23 +1436,23 @@ Source: https://docs.strapi.io/cloud/getting-started/usage-billing
 
 # Cloud billing & usage
 
-Strapi Cloud offers four plans (Free, Essential, Pro, Scale) with usage-based pricing that varies by API requests, asset storage, and bandwidth, plus overages charged monthly; projects may be suspended for unpaid invoices or plan violations.
+Strapi Cloud offers three plans (Essential, Pro, and Scale) with usage-based pricing that varies by API requests, asset storage, and bandwidth, plus overages charged monthly; projects may be suspended for unpaid invoices or plan violations.
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
-Strapi Cloud offers 1 Free plan and 3 paid plans: Essential, Pro and Scale (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarizes Strapi Cloud usage-based pricing plans, for general features and usage:
+Strapi Cloud offers 3 plans: Essential, Pro, and Scale (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarizes Strapi Cloud usage-based pricing plans, for general features and usage:
 
-| Feature                          | Free  | Essential | Pro | Scale |
-| -------------------------------- | ----- | --------- | --- | ----- |
-| **Database Entries**             | 500   | Unlimited* | Unlimited* | Unlimited* |
-| **Asset Storage**               | 10GB  | 50GB      | 250GB | 1,000GB |
-| **Asset Bandwidth (per month)** | 10GB  | 50GB      | 500GB | 1,000GB |
-| **API Requests (per month)**     | 2,500 | 50,000 | 1,000,000 | 10,000,000 |
-|  |  |  |  |  |
-| **Backups**                      | N/A | N/A | Weekly | Daily |
-| **Custom domains**               | N/A | Included | Included | Included | 
-| **Environments**                 | N/A | N/A | 0 included (up to 99 extra) | 1 included (up to 99 extra) |
-| **Emails (per month)**           | 100 | Unlimited* | Unlimited* | Unlimited* |
+| Feature                          | Essential | Pro | Scale |
+| -------------------------------- | --------- | --- | ----- |
+| **Database Entries**             | Unlimited* | Unlimited* | Unlimited* |
+| **Asset Storage**               | 50GB      | 250GB | 1,000GB |
+| **Asset Bandwidth (per month)** | 50GB      | 500GB | 1,000GB |
+| **API Requests (per month)**     | 50,000 | 1,000,000 | 10,000,000 |
+|  |  |  |  |
+| **Backups**                      | N/A | Weekly | Daily |
+| **Custom domains**               | Included | Included | Included | 
+| **Environments**                 | N/A | 0 included (up to 99 extra) | 1 included (up to 99 extra) |
+| **Emails (per month)**           | Unlimited* | Unlimited* | Unlimited* |
 
 :::strapi Additional information on usage and features
 - General features & usage:
@@ -1474,20 +1464,6 @@ Strapi Cloud offers 1 Free plan and 3 paid plans: Essential, Pro and Scale (see 
   - Backups refers to the automatic backups of Strapi Cloud projects (see [Backups documentation](/cloud/projects/settings#backups) for more information on the feature).
   - Custom domains refer to the ability to define a custom domain for your Strapi Cloud (see [Custom domains](/cloud/projects/settings#connecting-a-custom-domain)).
   - Environments refers to the number of environments included in the plan on top of the default production environment (see [Environments](/cloud/projects/settings#environments) documentation for more information on the feature). 
-:::
-
-:::caution The Free Plan is for personal, non-commercial use only
-Commercial use means any project made for financial gain, including:
-- Accepting or processing payments on your site
-- Accepting or receiving payment to create, update, or host the site
-- Advertising, promoting, or selling products or services
-- Hosting or serving advertisements for any 3rd party
-For more information, visit [Strapi Cloud-Legal](https://strapi.io/cloud-legal)
-:::
-
-:::info Scale-to-zero and cold start on the Free plan
-On the Free plan, projects automatically scale down to zero after a short period of inactivity. When the application is accessed again—either through the frontend or via an API request—it may take a few seconds (up to a minute) before a response is returned.
-Upgrading to a paid plan disables scaling to zero and cold starts, resulting in instant response times at all times.
 :::
 
 ## Environments management
@@ -1508,10 +1484,6 @@ You can add or update your VAT/Tax ID from your [Account Billing](/cloud/account
 
 ### Overages
 
-:::caution
-Overages are not allowed on the Free plan.
-:::
-
 If you exceed the limits of your plan for API Requests, Asset Bandwidth, or Asset Storage, you will be charged for the corresponding overages. 
 
 For example, if you exceed the 500GB limit in asset bandwidth of the Pro plan, you will be charged for the excess bandwidth at the end of the current billing period or on project deletion. Overages are not prorated and are charged in full.
@@ -1526,21 +1498,9 @@ Overages are charged monthly, according to the following rates:
 
 ### Project suspension
 
-Projects may end up in a **Suspended** state for various reasons, including: unpaid invoices, exceeding the limits of your free plan, or violating Strapi Cloud's [terms of service](https://strapi.io/cloud-legal). 
+Projects may end up in a **Suspended** state for various reasons, including unpaid invoices or violating Strapi Cloud's [terms of service](https://strapi.io/cloud-legal). 
 
 If your project is suspended, you will no longer be able to access the Strapi admin panel, nor trigger new deployments. A banner will appear in your project's dashboard, indicating the cause of the suspension. You will also be notified by email.
-
-#### Project suspension for exceeding the Free plan limits
-
-When a project hosted with the Free plan exceeds either the API requests or the Asset Bandwidth limits, it will be suspended until the monthly allowance resets at the beginning of the following month.
-
-While the project is suspended:
-
-- Users cannot trigger new deployments
-- Access to the application is blocked
-- Users cannot make changes to the project’s settings
-
-To reactivate the project immediately, users can upgrade to a paid plan.
 
 #### Project suspension due to billing issues
 
@@ -1564,8 +1524,8 @@ If your project was suspended for reasons other than unpaid invoice leading to s
 
 If you want to cancel your Strapi Cloud subscription, you have 2 options:
 
-- either change your project's subscription to the free plan (see [Downgrading to another plan](/cloud/projects/settings#downgrading-to-another-plan) documentation),
-- or completely delete your project (see [Deleting Strapi Cloud project](/cloud/projects/settings#deleting-a-strapi-cloud-project) documentation).
+- either delete your project (see [Deleting Strapi Cloud project](/cloud/projects/settings#deleting-a-strapi-cloud-project) documentation),
+- or completely delete your account (see [Deleting Strapi Cloud account](/cloud/account/account-settings#deleting-strapi-cloud-account) documentation).
 
 
 
@@ -2016,7 +1976,7 @@ The ownership of the Strapi Cloud project can be transferred to another user, as
 
 :::prerequisites
 For the ownership of a project to be transferred, the following requirements must be met:
-- The project must be on a paid plan, with no currently expired card and/or unpaid bills.
+- The project must not currently have expired card and/or unpaid bills.
 - The maintainer must have filled their billing information.
 - No already existing ownership transfer must be pending for the project.
 
@@ -2127,8 +2087,6 @@ Plan downgrades can be managed, for each project, via the project settings. Down
 Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for overages. You may also lose access to some features: for example, downgrading to the Essential plan would result in the loss of all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
 
 Note also that you cannot downgrade if you have additional paid environments. You will first need to delete all additional environments that were not included in the base price of your plan (see [Clearing and deleting environments](#resetting--deleting-environment)) before you can schedule a downgrade. When downgrading from Scale to Pro, the additional included environment will automatically be deleted when the downgrade takes effect.
-
-You cannot downgrade to the Free plan if a GitHub organization repository is connected to the project. To downgrade, first switch to a personal repository in the [Connected Git repository](#modifying-git-repository--branch) settings.
 :::
 
 To downgrade your current plan to a lower one:
@@ -2158,7 +2116,7 @@ When switching from yearly to monthly billing, your plan will remain on its year
 
 ### Invoices
 
-The  *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status. No invoice is issued for the Free plan.
+The  *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status.
 
 Invoices can have any of the following statuses:
 
@@ -2290,7 +2248,7 @@ The  *Backups* tab informs you of the status and date of the latest backup of yo
 
 :::note Notes
 
-- The backup feature is not available for Strapi Cloud projects on the Free or Essential plans. You will need to upgrade to the Pro or Scale plan to enable automatic backups and access the manual backup option.
+- The backup feature is not available for Strapi Cloud projects on the Essential plan. You will need to upgrade to the Pro or Scale plan to enable automatic backups and access the manual backup option.
 
 - Backups include only the database of your default Production environment. Assets uploaded to your project and databases from any secondary environments are not included.
 
@@ -2349,10 +2307,6 @@ All existing domains for your Strapi Cloud project are listed in the  *Domains* 
 #### Connecting a custom domain
 
 Default domain names are made of 2 randomly generated words followed by a hash. They can be replaced by any custom domain of your choice.
-
-:::note
-Custom domains are not available on the Free plan. Downgrading to the Free plan will result in the application domain's being restored to the default one.
-:::
 
 1. Click the **Connect new domain** button.
 2. In the window that opens, fill in the following fields:
@@ -29858,9 +29812,9 @@ If you used `--quickstart` to create your Strapi project, by default this uses t
 
 It is recommended you use a database add-on like Heroku's PostgreSQL. For file uploads, you will need to use one of the 3rd party providers such as Cloudinary or AWS S3.
 
-## How can I upgrade my free Strapi Cloud to a paid plan?
+## How can I change my Strapi Cloud plan?
 
-Strapi Cloud provides a free plan. Whenever you're ready to upgrade to one of the [paid plans](https://strapi.io/pricing-cloud), please use the _Plans_ section of your Strapi Cloud project's settings (see [Cloud documentation](/cloud/projects/settings#upgrading-to-another-plan) for more details).
+Use the _Plans_ section of your Strapi Cloud project's settings to upgrade or downgrade your plan (see [Upgrading to another plan](/cloud/projects/settings#upgrading-to-another-plan) and [Downgrading to another plan](/cloud/projects/settings#downgrading-to-another-plan) in the Cloud documentation).
 
 ## Can Strapi be run in serverless environments?
 
@@ -36551,7 +36505,7 @@ You will be able to purchase a CMS license later by checking out our [pricing pa
 
 ### Hosting your project
 
-You can create a free [Strapi Cloud](/cloud/intro) project. To deploy this project and host it online, you can choose to:
+You can deploy a project to [Strapi Cloud](/cloud/intro). To host it online, you can choose to:
 
 - host it yourself by pushing the project's code to a repository (e.g., on GitHub) before following the [deployment guide](/cms/deployment),
 - or use the [Cloud CLI](/cloud/cli/cloud-cli) commands to log in to Strapi Cloud, link your local project to an existing Strapi Cloud project, and deploy it there for free.
