@@ -217,7 +217,7 @@ Deploying from the dashboard requires your project to be hosted on a GitHub repo
 1. If the server is still running, press `Ctrl-C` to stop it, and make sure you are in your project folder (if needed, run for instance `cd my-strapi-project`).
 2. Run `git init`, `git add .`, then `git commit -m "Initial commit"` to create your first commit.
 3. Log in to your GitHub account and <ExternalLink to="https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories" text="create a new repository"/>. Give it a name, for instance `my-strapi-project`.
-4. Connect your local repository to GitHub and push your project, replacing `yourname` with your GitHub profile name and `my-strapi-project` with your repository name: run `git remote add origin git@github.com:yourname/my-strapi-project.git`, then `git push --set-upstream origin main`.
+4. Connect your local repository to GitHub and push your project, replacing `yourname` with your GitHub profile name and `my-strapi-project` with your repository name.<br/>To do so, run `git remote add origin git@github.com:yourname/my-strapi-project.git`, then `git push --set-upstream origin main`.
 
 </StepDetails>
 
