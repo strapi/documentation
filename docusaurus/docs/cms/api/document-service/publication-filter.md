@@ -49,7 +49,7 @@ The rest of this page lists [all available values](#values), explains [how these
 
 `publicationFilter` accepts one of the following kebab-case values. REST and the Document Service API use these strings directly; GraphQL exposes the same set through the [`PublicationFilter` enum](/cms/api/graphql#publication-filter).
 
-| Value | What it selects | Scope |
+| Value | What it selects | Scope (i18n) |
 | ----- | --------------- | ----- |
 | `never-published` | Documents never published in that locale | Pair |
 | `has-published-version` | Documents that have both a draft and a published version | Pair |
@@ -62,7 +62,7 @@ The rest of this page lists [all available values](#values), explains [how these
 
 Unknown values raise a validation error (REST returns HTTP `400`; GraphQL fails at query validation).
 
-The `Scope` column matters when [Internationalization (i18n)](/cms/features/internationalization) is enabled: a *Pair* value looks at 1 locale at a time, while a *Document* value looks at the document across all its locales. See [How cohorts work](#how-cohorts-work) for the precise definitions. Without i18n, the two scopes behave the same.
+The `Scope (i18n)` column matters when [Internationalization (i18n)](/cms/features/internationalization) is enabled: a *Pair* value looks at 1 locale at a time, while a *Document* value looks at the document across all its locales. See [How cohorts work](#how-cohorts-work) for the precise definitions. Without i18n, the two scopes behave the same.
 
 ## Default `status` per API surface {#default-status}
 
@@ -177,7 +177,7 @@ Strapi resolves the cohort first, then returns the row that matches the resolved
 
 ### Cohort definitions {#cohort-definitions}
 
-| Value | Scope | A `(documentId, locale)` pair matches when… |
+| Value | Scope (i18n) | A `(documentId, locale)` pair matches when… |
 | ----- | ----- | -------------------------------------------- |
 | `never-published` | Pair | no row with a non-null `publishedAt` exists for the pair |
 | `has-published-version` | Pair | both a draft row and a published row exist for the pair |
