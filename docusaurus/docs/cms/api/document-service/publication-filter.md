@@ -91,24 +91,31 @@ The **Draft (never published)** filter is document-scoped (`never-published-docu
 
 ## Combine `status` and `publicationFilter` {#status-combination}
 
-| `status` | `publicationFilter` | Rows returned |
-| -------- | ------------------- | ------------- |
-| `draft` | `never-published` | Draft rows for pairs never published in that locale |
-| `published` | `never-published` | Empty |
-| `draft` | `has-published-version` | Draft rows for pairs that also have a published version |
-| `published` | `has-published-version` | Published rows for pairs that also have a draft version (excludes orphan published-only pairs) |
-| `draft` | `modified` | Draft rows newer than their published peer |
-| `published` | `modified` | Published rows whose draft peer is newer |
-| `draft` | `unmodified` | Draft rows not newer than their published peer |
-| `published` | `unmodified` | Published rows whose draft peer is not newer |
-| `draft` | `never-published-document` | Draft rows whose document has no published row in any locale |
-| `published` | `never-published-document` | Empty |
-| `draft` | `has-published-version-document` | Draft rows whose document has at least one published row (any locale) |
-| `published` | `has-published-version-document` | Published rows whose document has at least one draft row (any locale) |
-| `published` | `published-without-draft` | Published rows with no draft sibling for the same pair |
-| `draft` | `published-without-draft` | Empty |
-| `published` | `published-with-draft` | Published rows that have a draft sibling for the same pair |
-| `draft` | `published-with-draft` | Empty |
+Pass `status` explicitly or rely on the [default for your API surface](#default-status). Each table lists which rows a `publicationFilter` returns for that `status`.
+
+### With `status: 'draft'`
+
+| `publicationFilter` | Rows returned |
+| ------------------- | ------------- |
+| `never-published` | Draft rows for pairs never published in that locale |
+| `has-published-version` | Draft rows for pairs that also have a published version |
+| `modified` | Draft rows newer than their published peer |
+| `unmodified` | Draft rows not newer than their published peer |
+| `never-published-document` | Draft rows whose document has no published row in any locale |
+| `has-published-version-document` | Draft rows whose document has at least one published row (any locale) |
+| `published-without-draft`, `published-with-draft` | No rows |
+
+### With `status: 'published'`
+
+| `publicationFilter` | Rows returned |
+| ------------------- | ------------- |
+| `has-published-version` | Published rows for pairs that also have a draft version (excludes orphan published-only pairs) |
+| `modified` | Published rows whose draft peer is newer |
+| `unmodified` | Published rows whose draft peer is not newer |
+| `has-published-version-document` | Published rows whose document has at least one draft row (any locale) |
+| `published-without-draft` | Published rows with no draft sibling for the same pair |
+| `published-with-draft` | Published rows that have a draft sibling for the same pair |
+| `never-published`, `never-published-document` | No rows |
 
 :::note
 Valid but empty combinations do not return validation errors.
