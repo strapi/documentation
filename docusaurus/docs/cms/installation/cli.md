@@ -14,6 +14,7 @@ tags:
 
 import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 import SupportedDatabases from '/docs/snippets/supported-databases.md'
+import PushToGitHub from '/docs/snippets/push-to-github.md'
 
 # Installing from CLI
 
@@ -146,27 +147,11 @@ You will be able to purchase a CMS license later by checking out our <ExternalLi
 You can create a free [Strapi Cloud](/cloud/intro) project. To deploy this project and host it online, you can choose to:
 
 - host it yourself by pushing the project's code to a repository (e.g., on GitHub) before following the [deployment guide](/cms/deployment),
-- or use the [Cloud CLI](/cloud/cli/cloud-cli#) commands to login to Strapi Cloud and deploy your project there for free.
+- or use the [Cloud CLI](/cloud/cli/cloud-cli) commands to log in to Strapi Cloud, link your local project to an existing Strapi Cloud project, and deploy it there for free.
 
 If you want to host your project yourself and are not already familiar with GitHub, the following togglable content should get you started👇.
 
-<details>
-<summary>Steps required to push your Strapi project code to GitHub:</summary>
-
-1. In the terminal, ensure you are still in the folder that hosts the Strapi project you created.
-2. Run the `git init` command to initialize git for this folder.
-3. Run the `git add .` command to add all modified files to the git index.
-4. Run the `git commit -m "Initial commit"` command to create a commit with all the added changes.
-5. Log in to your GitHub account and <ExternalLink to="https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories" text="create a new repository"/>. Give the new repository a name, for instance `my-first-strapi-project`, and remember this name.
-6. Go back to the terminal and push your local repository to GitHub:
-
-  a. Run a command similar to the following: `git remote add origin git@github.com:yourname/my-first-strapi-project.git`, ensuring you replace `yourname` by your own GitHub profile name, and `my-first-strapi-project` by the actual name you used at step 4.
-
-  b. Run the `git push --set-upstream origin main` command to finally push the commit to your GitHub repository.
-
-Additional information about using git with the command line interface can be found in the <ExternalLink to="https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-using-git" text="official GitHub documentation"/>.
-
-</details>
+<PushToGitHub />
 
 ## Running Strapi
 
