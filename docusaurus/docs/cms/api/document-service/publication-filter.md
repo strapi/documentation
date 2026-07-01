@@ -20,13 +20,15 @@ tags:
 
 The [`status`](/cms/api/document-service/status) parameter selects which **row slice** to read for each document: `draft` rows have `publishedAt: null`, and `published` rows have a non-null `publishedAt`.
 
-The optional `publicationFilter` parameter selects a **derived publication cohort** first: a set of `(documentId, locale)` pairs (or `documentId` only when [Internationalization (i18n)](/cms/features/internationalization) is disabled) defined by how draft and published rows relate. Strapi then returns the row that matches both the cohort and the resolved `status`.
+The optional `publicationFilter` parameter selects a **derived publication cohort** first: a set of `(documentId, locale)` pairs (or `documentId` only when [Internationalization (i18n)](/cms/features/internationalization) is disabled) defined by how draft and published rows relate. Cohorts compare draft and published rows for the same document; a single row's `publishedAt` is not enough. Strapi then returns the row that matches both the cohort and the resolved `status`.
 
 :::prerequisites
 The [Draft & Publish](/cms/features/draft-and-publish) feature must be enabled on the content-type. If Draft & Publish is disabled, `publicationFilter` has no effect.
 :::
 
-`publicationFilter` is supported on `findOne()`, `findFirst()`, `findMany()`, and `count()`. It can be combined with [`filters`](/cms/api/document-service/filters), [`populate`](/cms/api/document-service/populate), and other query parameters. Invalid values raise a validation error.
+`publicationFilter` is supported on `findOne()`, `findFirst()`, `findMany()`, and `count()`. It is combined with other query parameters as a logical AND, including [`filters`](/cms/api/document-service/filters) and [`populate`](/cms/api/document-service/populate). When populating draft & publish relations, nested queries inherit the same cohort logic. Unknown values raise a validation error (REST returns HTTP `400`; GraphQL fails at query validation).
+
+In the Content Manager, the **Draft (never published)** list filter maps to `status: 'draft'` and `publicationFilter: 'never-published-document'` (document-scoped, not pair-scoped `never-published`). Other Status filter options use internal APIs, not public `publicationFilter` parameters.
 
 ## Default `status` when `publicationFilter` is used {#default-status}
 
@@ -68,26 +70,9 @@ REST and the Document Service API use kebab-case strings. GraphQL exposes the sa
 
 For content-types without i18n, read `(documentId, locale)` as `documentId` only.
 
-### Semantics notes {#semantics}
-
-- **`has-published-version` excludes orphan published rows**: If only a published row exists for a pair (no draft sibling), that pair is **not** in the `has-published-version` cohort. Orphan published rows can appear under `published-without-draft` when querying with `status: 'published'`.
-- **`modified` / `unmodified` require both slices**: Pairs with only a draft or only a published row are not included.
-- **`modified` ∪ `unmodified` = `has-published-version`** (for the same `status`): The two modes partition pairs that have both slices.
-- **Document-scoped modes**: Existence checks use `documentId` only. A document with draft EN + published NL qualifies for `has-published-version-document` even though EN is never published at the pair level.
-- **Published-slice diagnostics** (`published-without-draft`, `published-with-draft`): Only select published rows. They return no rows when `status` is `'draft'`.
-
-### Content Manager list filters {#content-manager}
-
-The Content Manager **Status** filter (`__status`) is translated server-side. Only the **Draft (never published)** option uses `publicationFilter`:
-
-| Content Manager filter | Document Service query equivalent |
-| ---------------------- | --------------------------------- |
-| Draft (never published) | `status: 'draft'`, `publicationFilter: 'never-published-document'` |
-| Published (all) | `status: 'published'` (no `publicationFilter`) |
-| Published (modified) | Internal `publicationStatusFilter` (not a public REST/GraphQL parameter); similar intent to `status: 'published'` + `publicationFilter: 'modified'` but implemented separately in the Content Manager API |
-| Published (unmodified) | Internal `publicationStatusFilter` (not a public REST/GraphQL parameter) |
-
-The **Draft (never published)** filter is document-scoped (`never-published-document`), not pair-scoped `never-published`.
+:::note
+`has-published-version` excludes orphan published rows (published-only pairs with no draft sibling). Those pairs match `published-without-draft` when `status` is `'published'`.
+:::
 
 ## Combine `status` and `publicationFilter` {#status-combination}
 
@@ -121,51 +106,33 @@ Pass `status` explicitly or rely on the [default for your API surface](#default-
 Valid but empty combinations do not return validation errors.
 :::
 
-## Query never-published drafts {#never-published}
+## Examples {#examples}
 
-Return draft rows for `(documentId, locale)` pairs with no published version for that locale:
+### Never-published and modified cohorts {#never-published}
 
 ```js
-const documents = await strapi.documents('api::restaurant.restaurant').findMany({
+// Pair-scoped: drafts never published in this locale
+await strapi.documents('api::restaurant.restaurant').findMany({
   status: 'draft',
   publicationFilter: 'never-published',
 });
-```
 
-## Query has-published-version drafts {#has-published-version}
-
-Return draft rows where a published row also exists for the same `(documentId, locale)`. Orphan published-only pairs are excluded:
-
-```js
-const documents = await strapi.documents('api::restaurant.restaurant').findMany({
-  status: 'draft',
-  publicationFilter: 'has-published-version',
-});
-```
-
-## Query modified or unmodified documents {#modified-unmodified}
-
-Compare `updatedAt` on the draft and published rows for the same pair:
-
-```js
-// Draft side of modified pairs
+// Modified pairs: draft side vs published side
 await strapi.documents('api::restaurant.restaurant').findMany({
   status: 'draft',
   publicationFilter: 'modified',
 });
 
-// Published side of unmodified pairs
 await strapi.documents('api::restaurant.restaurant').findMany({
   status: 'published',
-  publicationFilter: 'unmodified',
+  publicationFilter: 'modified',
 });
 ```
 
-## Query document-scoped cohorts {#document-scoped}
-
-Return draft rows for documents that have never been published in any locale:
+### Document-scoped cohorts {#document-scoped}
 
 ```js
+// Documents with no published row in any locale
 await strapi.documents('api::restaurant.restaurant').findMany({
   status: 'draft',
   publicationFilter: 'never-published-document',
@@ -174,29 +141,16 @@ await strapi.documents('api::restaurant.restaurant').findMany({
 
 A multi-locale document with one published locale is excluded entirely, including its draft-only locales.
 
-Return draft rows for documents that have at least one published row in any locale:
+### Published rows with or without a draft peer {#published-slice}
+
+`published-without-draft` and `published-with-draft` require `status: 'published'`.
 
 ```js
-await strapi.documents('api::restaurant.restaurant').findMany({
-  status: 'draft',
-  publicationFilter: 'has-published-version-document',
-});
-```
-
-This is broader than pair-scoped `has-published-version`.
-
-## Query published rows without or with a draft peer {#published-slice}
-
-`published-without-draft` and `published-with-draft` partition published rows per `(documentId, locale)` (excluding pairs with no published row):
-
-```js
-// Orphan published rows (published row, no draft sibling for the same pair)
 await strapi.documents('api::restaurant.restaurant').findMany({
   status: 'published',
   publicationFilter: 'published-without-draft',
 });
 
-// Published rows that still have a draft sibling
 await strapi.documents('api::restaurant.restaurant').findMany({
   status: 'published',
   publicationFilter: 'published-with-draft',
@@ -205,7 +159,7 @@ await strapi.documents('api::restaurant.restaurant').findMany({
 
 ## Use with `findOne()` and `findFirst()` {#find-one-find-first}
 
-`publicationFilter` applies the same cohort rules. If the requested document (and locale, when applicable) is not in the cohort, `findOne()` and `findFirst()` return `null` even when the `documentId` exists:
+If the requested document (and locale, when applicable) is not in the cohort, `findOne()` and `findFirst()` return `null` even when the `documentId` exists:
 
 ```js
 await strapi.documents('api::restaurant.restaurant').findOne({
@@ -215,13 +169,9 @@ await strapi.documents('api::restaurant.restaurant').findOne({
 });
 ```
 
-## Combine with `filters` and `populate` {#filters-populate}
-
-`publicationFilter` is merged with other query filters (logical AND). When [populating relations](/cms/api/document-service/populate), nested queries on draft & publish content-types inherit the same cohort logic so populated results stay consistent with the parent query.
-
 ## Count documents in a cohort {#count}
 
-Count draft rows in the never-published cohort:
+Without `publicationFilter`, `count({ status: 'draft' })` still counts every draft row, including drafts whose document already has a published version. Use `publicationFilter: 'never-published'` or `'never-published-document'` to count only never-published cohorts (see [`status` documentation](/cms/api/document-service/status#count)).
 
 ```js
 const neverPublishedCount = await strapi
@@ -231,17 +181,3 @@ const neverPublishedCount = await strapi
     publicationFilter: 'never-published',
   });
 ```
-
-Without `publicationFilter`, `count({ status: 'draft' })` still counts every draft row, including drafts whose document already has a published version. Use `publicationFilter: 'never-published'` or `'never-published-document'` to count only never-published cohorts (see [`status` documentation](/cms/api/document-service/status#count)).
-
-## Validation {#validation}
-
-Unknown `publicationFilter` values are rejected:
-
-- Document Service API: throws a validation error.
-- REST API: returns HTTP `400`.
-- GraphQL: invalid enum values fail at query validation.
-
-## Why not filter on `publishedAt` alone? {#why-not-published-at}
-
-A single row's `publishedAt` only describes that row. Cohorts such as `never-published`, `has-published-version`, and `modified` require comparing or correlating **two rows** for the same `(documentId, locale)`. `publicationFilter` encodes those rules in one server-side query instead of multiple client round-trips.

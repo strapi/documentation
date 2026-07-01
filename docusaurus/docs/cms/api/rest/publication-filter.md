@@ -39,7 +39,7 @@ When `status` is omitted, the REST API defaults to `status=published` **before**
 The Document Service API defaults to `status=draft` instead. See [Document Service API: default `status`](/cms/api/document-service/publication-filter#default-status).
 
 :::note
-Cohort definitions, `status` and `publicationFilter` combination tables, Content Manager mapping, and validation rules are documented on [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter).
+Cohort definitions and `status` / `publicationFilter` combination tables are documented on [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter).
 :::
 
 Accepted kebab-case values: `never-published`, `has-published-version`, `modified`, `unmodified`, `never-published-document`, `has-published-version-document`, `published-without-draft`, `published-with-draft`. Invalid values return HTTP `400`.

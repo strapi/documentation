@@ -440,21 +440,9 @@ Combine `publicationFilter` with `status` the same way as for REST (see [Documen
 
 When `status` is omitted, GraphQL defaults to `PUBLISHED` before applying `publicationFilter` (same as REST). Example: `restaurants(publicationFilter: MODIFIED)` returns published rows in the modified cohort; use `status: DRAFT` to return draft rows instead.
 
-Built-in root queries (for example `restaurants`, `restaurants_connection`) pass `publicationFilter` down to populated draft & publish relations on nested fields so relation results match the parent query cohort.
-
 ```graphql title="Example: Fetch never-published draft documents"
 query Query($status: PublicationStatus, $publicationFilter: PublicationFilter) {
   restaurants(status: DRAFT, publicationFilter: NEVER_PUBLISHED) {
-    documentId
-    name
-    publishedAt
-  }
-}
-```
-
-```graphql title="Example: Fetch published rows without a draft peer"
-query Query($status: PublicationStatus, $publicationFilter: PublicationFilter) {
-  restaurants(status: PUBLISHED, publicationFilter: PUBLISHED_WITHOUT_DRAFT) {
     documentId
     name
     publishedAt
