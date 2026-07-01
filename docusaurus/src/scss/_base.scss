@@ -37,7 +37,6 @@ body::before {
 
 /** V3: Smooth background transition */
 body {
-  background: var(--strapi-surface-0);
   transition: background var(--strapi-duration-slow) var(--strapi-ease);
 }
 
