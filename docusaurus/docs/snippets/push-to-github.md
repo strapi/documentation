@@ -14,4 +14,6 @@
 
 Additional information about using git with the command line interface can be found in the <ExternalLink to="https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-using-git" text="official GitHub documentation"/>.
 
+<br/>
+
 </details>
