@@ -30314,7 +30314,7 @@ export default {
 
 
 ## Creating a new settings section
-Description: Use createSettingSection() in the register lifecycle function:
+Description: To create a new settings section, call addSettingsLink() with a section object ({ id, intlLabel }) as the first argument and an array of link objects as the second argument.
 (Source: https://docs.strapi.io/cms/plugins-development/admin-navigation-settings#creating-a-new-settings-section)
 
 Language: JavaScript
@@ -30324,7 +30324,7 @@ File path: admin/src/index.js
 export default {
   register(app) {
     // highlight-start
-    app.createSettingSection(
+    app.addSettingsLink(
       {
         id: 'my-plugin',
         intlLabel: {
@@ -30373,7 +30373,7 @@ import type { StrapiApp } from '@strapi/admin/strapi-admin';
 export default {
   register(app: StrapiApp) {
     // highlight-start
-    app.createSettingSection(
+    app.addSettingsLink(
       {
         id: 'my-plugin',
         intlLabel: {
@@ -30414,7 +30414,7 @@ export default {
 
 
 ## Adding links to existing settings sections
-Description: To add a single link to an existing settings section, use addSettingsLink() in the bootstrap() lifecycle function.
+Description: To add links to an existing settings section, use addSettingsLink() in the bootstrap() lifecycle function with a section id string as the first argument.
 (Source: https://docs.strapi.io/cms/plugins-development/admin-navigation-settings#adding-links-to-existing-settings-sections)
 
 Language: JavaScript
@@ -30446,7 +30446,7 @@ export default {
 
     // Add multiple links at once to the global settings section
     // highlight-start
-    app.addSettingsLinks('global', [
+    app.addSettingsLink('global', [
       {
         intlLabel: {
           id: 'my-plugin.settings.general',
@@ -30503,7 +30503,7 @@ export default {
 
     // Add multiple links at once to the global settings section
     // highlight-start
-    app.addSettingsLinks('global', [
+    app.addSettingsLink('global', [
       {
         intlLabel: {
           id: 'my-plugin.settings.general',
@@ -30526,6 +30526,50 @@ export default {
     // highlight-end
   },
 };
+```
+
+
+## createSettingSection(section, links)
+Description: Previously used to register a new settings section and its initial links in one call.
+(Source: https://docs.strapi.io/cms/plugins-development/admin-navigation-settings#createsettingsection-section-links)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// ❌ Deprecated
+app.createSettingSection(
+  { id: 'my-plugin', intlLabel: { id: 'my-plugin.settings.section-label', defaultMessage: 'My Plugin Settings' } },
+  [{ id: 'general', to: 'my-plugin/general', intlLabel: { id: 'my-plugin.settings.general', defaultMessage: 'General' }, Component: () => import('./pages/Settings/General') }],
+);
+
+// ✅ Replacement: pass the section object as the first argument to addSettingsLink
+app.addSettingsLink(
+  { id: 'my-plugin', intlLabel: { id: 'my-plugin.settings.section-label', defaultMessage: 'My Plugin Settings' } },
+  [{ id: 'general', to: 'my-plugin/general', intlLabel: { id: 'my-plugin.settings.general', defaultMessage: 'General' }, Component: () => import('./pages/Settings/General') }],
+);
+```
+
+
+## addSettingsLinks(sectionId, links)
+Description: Previously used to add multiple links to an existing section in one call.
+(Source: https://docs.strapi.io/cms/plugins-development/admin-navigation-settings#addsettingslinks-sectionid-links)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// ❌ Deprecated
+app.addSettingsLinks('global', [
+  { id: 'general', to: 'my-plugin/general', intlLabel: { id: 'my-plugin.settings.general', defaultMessage: 'General' }, Component: () => import('./pages/Settings/General') },
+  { id: 'advanced', to: 'my-plugin/advanced', intlLabel: { id: 'my-plugin.settings.advanced', defaultMessage: 'Advanced' }, Component: () => import('./pages/Settings/Advanced') },
+]);
+
+// ✅ Replacement: pass the array to addSettingsLink (singular)
+app.addSettingsLink('global', [
+  { id: 'general', to: 'my-plugin/general', intlLabel: { id: 'my-plugin.settings.general', defaultMessage: 'General' }, Component: () => import('./pages/Settings/General') },
+  { id: 'advanced', to: 'my-plugin/advanced', intlLabel: { id: 'my-plugin.settings.advanced', defaultMessage: 'Advanced' }, Component: () => import('./pages/Settings/Advanced') },
+]);
 ```
 
 
