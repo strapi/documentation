@@ -657,6 +657,11 @@
       "number": 26866,
       "reason": "Reverting an API update we don't want to document.",
       "added": "2026-07-01"
+    },
+    {
+      "number": 26830,
+      "reason": "Reverting an API update we don't want to document.",
+      "added": "2026-07-01"
     }
   ]
 }
