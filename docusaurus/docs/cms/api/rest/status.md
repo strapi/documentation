@@ -3,6 +3,7 @@ title: Status
 description: Use Strapi's REST API to work with draft or published versions of your documents.
 sidebarDepth: 3
 sidebar_label:  Status
+next: ./publication-filter.md
 displayed_sidebar: cmsSidebar
 tags:
 - API
@@ -45,6 +46,8 @@ In the response data, the `publishedAt` field is `null` for drafts.
 :::note
 Since published versions are returned by default, passing no status parameter is equivalent to passing `status=published`.
 :::
+
+For derived publication cohorts (never-published, modified, and others), see [REST API: `publicationFilter`](/cms/api/rest/publication-filter).
 
 <br /><br />
 

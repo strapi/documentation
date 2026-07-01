@@ -4646,6 +4646,7 @@ Find a document matching the passed documentId and parameters. If only a documen
 - `documentId` (ID, required): Document id
 - `locale` (String or undefined): Locale of the document to find. Defaults to the default locale. See locale docs (/cms/api/document-service/locale#find-one).
 - `status` (): If Draft & Publish (/cms/features/draft-and-publish) is enabled: publication status. Can be `published` or `draft`. Default: `draft`. See status docs (/cms/api/document-service/status#find-one).
+- `publicationFilter` (String): If Draft & Publish (/cms/features/draft-and-publish) is enabled: derived publication cohort to match before applying `status`. See publicationFilter docs (/cms/api/document-service/publication-filter).
 - `fields` (Object): Select fields (/cms/api/document-service/fields#findone) to return. Defaults to all fields (except those not populated by default).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
 
@@ -4677,6 +4678,7 @@ Find the first document matching the parameters. By default, findFirst() returns
 **Parameters:**
 - `locale` (String or undefined): Locale of the documents to find. Defaults to the default locale. See locale docs (/cms/api/document-service/locale#find-first).
 - `status` (): If Draft & Publish (/cms/features/draft-and-publish) is enabled: publication status. Can be `published` or `draft`. Default: `draft`. See status docs (/cms/api/document-service/status#find-first).
+- `publicationFilter` (String): If Draft & Publish (/cms/features/draft-and-publish) is enabled: derived publication cohort to match before applying `status`. See publicationFilter docs (/cms/api/document-service/publication-filter).
 - `filters` (Object): Filters (/cms/api/document-service/filters) to use. Default: `null`.
 - `fields` (Object): Select fields (/cms/api/document-service/fields#findfirst) to return. Defaults to all fields (except those not populated by default).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
@@ -4732,6 +4734,7 @@ Find documents matching the parameters. When no parameter is passed, findMany() 
 **Parameters:**
 - `locale` (String or undefined): Locale of the documents to find. Defaults to the default locale. See locale docs (/cms/api/document-service/locale#find-many).
 - `status` (): If Draft & Publish (/cms/features/draft-and-publish) is enabled: publication status. Can be `published` or `draft`. Default: `draft`. See status docs (/cms/api/document-service/status#find-many).
+- `publicationFilter` (String): If Draft & Publish (/cms/features/draft-and-publish) is enabled: derived publication cohort to match before applying `status`. See publicationFilter docs (/cms/api/document-service/publication-filter).
 - `filters` (Object): Filters (/cms/api/document-service/filters) to use. Default: `null`.
 - `fields` (Object): Select fields (/cms/api/document-service/fields#findmany) to return. Defaults to all fields (except those not populated by default).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
@@ -5067,6 +5070,7 @@ Count how many documents match the parameters. If no parameter is passed, the co
 **Parameters:**
 - `locale` (String or null): Locale of the documents to count. Defaults to the default locale. See locale docs (/cms/api/document-service/locale#count).
 - `status` (): If Draft & Publish (/cms/features/draft-and-publish) is enabled: publication status. `published` to count only published documents, `draft` to count draft documents (returns all documents). Default: `draft`. See status docs (/cms/api/document-service/status#count).
+- `publicationFilter` (String): If Draft & Publish (/cms/features/draft-and-publish) is enabled: derived publication cohort to match before applying `status`. See publicationFilter docs (/cms/api/document-service/publication-filter).
 - `filters` (Object): Filters (/cms/api/document-service/filters) to use. Default: `null`.
 
 **Generic example:**
@@ -5092,7 +5096,7 @@ strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $start
 :::note
 Since published documents necessarily also have a draft counterpart, a published document is still counted as having a draft version.
 
-This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. There currently is no way to prevent already published documents from being counted.
+This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. To count only never-published drafts, pass a [`publicationFilter`](/cms/api/document-service/publication-filter) value such as `'never-published'` or `'never-published-document'`.
 :::
 
 
@@ -7021,6 +7025,177 @@ strapi.documents("api::article.article").delete({
 
 
 
+# Using publicationFilter with the Document Service API
+Source: https://docs.strapi.io/cms/api/document-service/publication-filter
+
+# Document Service API: `publicationFilter`
+
+The [`status`](/cms/api/document-service/status) parameter selects which **row slice** to read for each document: `draft` rows have `publishedAt: null`, and `published` rows have a non-null `publishedAt`.
+
+The optional `publicationFilter` parameter selects a **derived publication cohort** first: a set of `(documentId, locale)` pairs (or `documentId` only when [Internationalization (i18n)](/cms/features/internationalization) is disabled) defined by how draft and published rows relate. Cohorts compare draft and published rows for the same document; a single row's `publishedAt` is not enough. Strapi then returns the row that matches both the cohort and the resolved `status`.
+
+:::prerequisites
+The [Draft & Publish](/cms/features/draft-and-publish) feature must be enabled on the content-type. If Draft & Publish is disabled, `publicationFilter` has no effect.
+:::
+
+`publicationFilter` is supported on `findOne()`, `findFirst()`, `findMany()`, and `count()`. It is combined with other query parameters as a logical AND, including [`filters`](/cms/api/document-service/filters) and [`populate`](/cms/api/document-service/populate). When populating draft & publish relations, nested queries inherit the same cohort logic. Unknown values raise a validation error (REST returns HTTP `400`; GraphQL fails at query validation).
+
+In the Content Manager, the **Draft (never published)** list filter maps to `status: 'draft'` and `publicationFilter: 'never-published-document'` (document-scoped, not pair-scoped `never-published`). Other Status filter options use internal APIs, not public `publicationFilter` parameters.
+
+## Default `status` when `publicationFilter` is used {#default-status}
+
+`publicationFilter` is applied **after** `status` is resolved (explicitly or by default). Defaults differ by API surface:
+
+| API surface | Default `status` when omitted |
+| ----------- | ----------------------------- |
+| Document Service API (direct) | `'draft'` |
+| [REST API](/cms/api/rest/publication-filter) | `'published'` |
+| [GraphQL API](/cms/api/graphql#publication-filter) | `PUBLISHED` |
+
+The following example compares Document Service and REST behavior when only `publicationFilter: 'modified'` is passed:
+
+```js
+// Document Service API → draft rows in the modified cohort
+await strapi.documents('api::restaurant.restaurant').findMany({
+  publicationFilter: 'modified',
+});
+
+// REST: GET /api/restaurants?publicationFilter=modified → published rows in the modified cohort
+```
+
+Pair-scoped modes such as `never-published` only include draft rows in the cohort. With REST or GraphQL defaults (`status=published`), those queries return an empty result set unless you pass `status=draft` / `status: DRAFT`.
+
+## Available values {#values}
+
+REST and the Document Service API use kebab-case strings. GraphQL exposes the same cohorts through the [`PublicationFilter` enum](/cms/api/graphql#publication-filter).
+
+| Value | Scope | Cohort definition (which `(documentId, locale)` pairs match) |
+| ----- | ----- | -------------------------------------------------------------- |
+| `never-published` | Pair | No row with non-null `publishedAt` exists for the same `(documentId, locale)` |
+| `has-published-version` | Pair | **Both** a draft row and a published row exist for the same `(documentId, locale)` |
+| `modified` | Pair | Both slices exist and `draft.updatedAt > published.updatedAt` |
+| `unmodified` | Pair | Both slices exist and `draft.updatedAt <= published.updatedAt` |
+| `never-published-document` | Document | No row with non-null `publishedAt` exists for the same `documentId` in **any** locale |
+| `has-published-version-document` | Document | At least one published row exists for the same `documentId` in **any** locale |
+| `published-without-draft` | Pair | A published row exists for the pair and **no** draft row exists for the same `(documentId, locale)` |
+| `published-with-draft` | Pair | A published row exists for the pair and a draft row **also** exists for the same `(documentId, locale)` |
+
+For content-types without i18n, read `(documentId, locale)` as `documentId` only.
+
+:::note
+`has-published-version` excludes orphan published rows (published-only pairs with no draft sibling). Those pairs match `published-without-draft` when `status` is `'published'`.
+:::
+
+## Combine `status` and `publicationFilter` {#status-combination}
+
+Pass `status` explicitly or rely on the [default for your API surface](#default-status). Each table lists which rows a `publicationFilter` returns for that `status`.
+
+### With `status: 'draft'`
+
+| `publicationFilter` | Rows returned |
+| ------------------- | ------------- |
+| `never-published` | Draft rows for pairs never published in that locale |
+| `has-published-version` | Draft rows for pairs that also have a published version |
+| `modified` | Draft rows newer than their published peer |
+| `unmodified` | Draft rows not newer than their published peer |
+| `never-published-document` | Draft rows whose document has no published row in any locale |
+| `has-published-version-document` | Draft rows whose document has at least one published row (any locale) |
+| `published-without-draft`, `published-with-draft` | No rows |
+
+### With `status: 'published'`
+
+| `publicationFilter` | Rows returned |
+| ------------------- | ------------- |
+| `has-published-version` | Published rows for pairs that also have a draft version (excludes orphan published-only pairs) |
+| `modified` | Published rows whose draft peer is newer |
+| `unmodified` | Published rows whose draft peer is not newer |
+| `has-published-version-document` | Published rows whose document has at least one draft row (any locale) |
+| `published-without-draft` | Published rows with no draft sibling for the same pair |
+| `published-with-draft` | Published rows that have a draft sibling for the same pair |
+| `never-published`, `never-published-document` | No rows |
+
+:::note
+Valid but empty combinations do not return validation errors.
+:::
+
+## Examples {#examples}
+
+### Never-published and modified cohorts {#never-published}
+
+```js
+// Pair-scoped: drafts never published in this locale
+await strapi.documents('api::restaurant.restaurant').findMany({
+  status: 'draft',
+  publicationFilter: 'never-published',
+});
+
+// Modified pairs: draft side vs published side
+await strapi.documents('api::restaurant.restaurant').findMany({
+  status: 'draft',
+  publicationFilter: 'modified',
+});
+
+await strapi.documents('api::restaurant.restaurant').findMany({
+  status: 'published',
+  publicationFilter: 'modified',
+});
+```
+
+### Document-scoped cohorts {#document-scoped}
+
+```js
+// Documents with no published row in any locale
+await strapi.documents('api::restaurant.restaurant').findMany({
+  status: 'draft',
+  publicationFilter: 'never-published-document',
+});
+```
+
+A multi-locale document with one published locale is excluded entirely, including its draft-only locales.
+
+### Published rows with or without a draft peer {#published-slice}
+
+`published-without-draft` and `published-with-draft` require `status: 'published'`.
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany({
+  status: 'published',
+  publicationFilter: 'published-without-draft',
+});
+
+await strapi.documents('api::restaurant.restaurant').findMany({
+  status: 'published',
+  publicationFilter: 'published-with-draft',
+});
+```
+
+## Use with `findOne()` and `findFirst()` {#find-one-find-first}
+
+If the requested document (and locale, when applicable) is not in the cohort, `findOne()` and `findFirst()` return `null` even when the `documentId` exists:
+
+```js
+await strapi.documents('api::restaurant.restaurant').findOne({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  status: 'draft',
+  publicationFilter: 'never-published',
+});
+```
+
+## Count documents in a cohort {#count}
+
+Without `publicationFilter`, `count({ status: 'draft' })` still counts every draft row, including drafts whose document already has a published version. Use `publicationFilter: 'never-published'` or `'never-published-document'` to count only never-published cohorts (see [`status` documentation](/cms/api/document-service/status#count)).
+
+```js
+const neverPublishedCount = await strapi
+  .documents('api::restaurant.restaurant')
+  .count({
+    status: 'draft',
+    publicationFilter: 'never-published',
+  });
+```
+
+
+
 # Using Sort & Pagination with the Document Service API
 Source: https://docs.strapi.io/cms/api/document-service/sort-pagination
 
@@ -7147,6 +7322,8 @@ By default the [Document Service API](/cms/api/document-service) returns the dra
 Passing `{ status: 'draft' }` to a Document Service API query returns the same results as not passing any `status` parameter.
 :::
 
+For derived publication cohorts (never-published, modified, and others), see [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter).
+
 ## Get the published version with `findOne()` {#find-one}
 
 #### GET strapi.documents().findOne() — findOne() with status: 
@@ -7244,7 +7421,7 @@ const publishedCount = await strapi.documents("api::restaurant.restaurant").coun
 :::note
 Since published documents necessarily also have a draft counterpart, a published document is still counted as having a draft version.
 
-This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. There currently is no way to prevent already published documents from being counted.
+This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. To count only never-published drafts, pass a [`publicationFilter`](/cms/api/document-service/publication-filter) value such as `'never-published'` or `'never-published-document'`.
 :::
 
 ## Create a draft and publish it {#create}
@@ -8616,6 +8793,47 @@ query Query($status: PublicationStatus) {
   }
 }
 ```
+
+### Filter by derived publication cohort {#publication-filter}
+
+If the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled, you can add a `publicationFilter` argument to built-in collection and single-type queries. The GraphQL plugin exposes the same cohorts as the REST API and Document Service API through the `PublicationFilter` enum.
+
+Combine `publicationFilter` with `status` the same way as for REST (see [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter#status-combination)).
+
+When `status` is omitted, GraphQL defaults to `PUBLISHED` before applying `publicationFilter` (same as REST). Example: `restaurants(publicationFilter: MODIFIED)` returns published rows in the modified cohort; use `status: DRAFT` to return draft rows instead.
+
+```graphql title="Example: Fetch never-published draft documents"
+query Query($status: PublicationStatus, $publicationFilter: PublicationFilter) {
+  restaurants(status: DRAFT, publicationFilter: NEVER_PUBLISHED) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+```graphql title="Example: Modified cohort with default PUBLISHED status"
+query Query {
+  restaurants(publicationFilter: MODIFIED) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+Available enum values:
+
+| GraphQL enum | Document Service / REST value |
+| ------------ | ----------------------------- |
+| `NEVER_PUBLISHED` | `never-published` |
+| `HAS_PUBLISHED_VERSION` | `has-published-version` |
+| `MODIFIED` | `modified` |
+| `UNMODIFIED` | `unmodified` |
+| `NEVER_PUBLISHED_DOCUMENT` | `never-published-document` |
+| `HAS_PUBLISHED_VERSION_DOCUMENT` | `has-published-version-document` |
+| `PUBLISHED_WITHOUT_DRAFT` | `published-without-draft` |
+| `PUBLISHED_WITH_DRAFT` | `published-with-draft` |
 
 ## Mutations
 
@@ -13663,6 +13881,7 @@ The following API parameters are available:
 | `filters`          | Object        | [Filter the response](/cms/api/rest/filters) |
 | `locale`           | String        | [Select a locale](/cms/api/rest/locale) |
 | `status`           | String        | [Select the Draft & Publish status](/cms/api/rest/status) |
+| `publicationFilter` | String       | [Select a derived Draft & Publish cohort](/cms/api/rest/publication-filter) |
 | `populate`         | String or Object | [Populate relations, components, or dynamic zones](/cms/api/rest/populate-select#population) |
 | `fields`           | Array         | [Select only specific fields to display](/cms/api/rest/populate-select#field-selection) |
 | `sort`             | String or Array  | [Sort the response](/cms/api/rest/sort-pagination.md#sorting) |
@@ -13937,6 +14156,179 @@ For many-to-many and other join-table relations, an explicit `sort` within a `po
 :::tip Performance tip
 In production, always use explicit population instead of wildcards like `populate=*`. Limit population depth to 2-3 levels and consider centralizing population logic in route middlewares. See [Building High-Performance Strapi Applications](https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices) on the Strapi blog.
 :::
+
+
+
+# Publication filter
+Source: https://docs.strapi.io/cms/api/rest/publication-filter
+
+# REST API: `publicationFilter`
+
+The [REST API](/cms/api/rest) accepts an optional `publicationFilter` query parameter when [Draft & Publish](/cms/features/draft-and-publish) is enabled. Use it to query derived publication cohorts such as never-published or modified documents. The [`status`](/cms/api/rest/status) parameter still selects whether each matching document returns its draft or published row.
+
+:::prerequisites
+The [Draft & Publish](/cms/features/draft-and-publish) feature must be enabled on the content-type.
+:::
+
+## Default `status` {#default-status}
+
+When `status` is omitted, the REST API defaults to `status=published` **before** applying `publicationFilter`.
+
+| Query | Effective behavior |
+| ----- | ------------------ |
+| `?publicationFilter=never-published` | Empty (cohort is draft-only; default status is `published`) |
+| `?status=draft&publicationFilter=never-published` | Never-published draft rows |
+| `?publicationFilter=modified` | Published rows in the modified cohort |
+| `?status=draft&publicationFilter=modified` | Draft rows in the modified cohort |
+| `?publicationFilter=published-without-draft` | Orphan published rows (default `status=published` is correct) |
+
+The Document Service API defaults to `status=draft` instead. See [Document Service API: default `status`](/cms/api/document-service/publication-filter#default-status).
+
+:::note
+Cohort definitions and `status` / `publicationFilter` combination tables are documented on [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter).
+:::
+
+Accepted kebab-case values: `never-published`, `has-published-version`, `modified`, `unmodified`, `never-published-document`, `has-published-version-document`, `published-without-draft`, `published-with-draft`. Invalid values return HTTP `400`.
+
+## Get never-published draft documents {#never-published}
+
+Pair-scoped `never-published` only matches draft rows. Pass `status=draft` because REST defaults to `status=published`.
+
+#### GET /api/restaurants?status=draft&publicationFilter=never-published — Get draft restaurants that have never been published for their locale
+
+**REST:**
+```
+GET /api/restaurants?status=draft&publicationFilter=never-published
+```
+
+**JavaScript:**
+```
+const qs = require('qs');
+const query = qs.stringify({
+  status: 'draft',
+  publicationFilter: 'never-published',
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(\`/api/restaurants?\${query}\`);
+```
+
+**Response 200 OK:**
+```json
+{
+  "data": [
+    {
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+      "name": "New Restaurant",
+      "publishedAt": null,
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+## Get modified documents {#modified}
+
+The `modified` cohort includes pairs where the draft row is newer than its published peer. With no `status` parameter, REST returns **published** rows from that cohort. Pass `status=draft` to return the draft rows instead.
+
+#### GET /api/restaurants?publicationFilter=modified — Get published restaurants in the modified cohort (default status)
+
+**REST:**
+```
+GET /api/restaurants?publicationFilter=modified
+```
+
+**JavaScript:**
+```
+const qs = require('qs');
+const query = qs.stringify({
+  publicationFilter: 'modified',
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(\`/api/restaurants?\${query}\`);
+```
+
+**Response 200 OK:**
+```json
+{
+  "data": [
+    {
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "name": "Biscotte Restaurant",
+      "publishedAt": "2024-03-14T15:40:45.330Z",
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+## Get published rows without a draft peer {#published-without-draft}
+
+The `published-without-draft` cohort matches published rows that have no draft sibling for the same `(documentId, locale)`. Because REST defaults to `status=published`, you can omit `status` in the query URL.
+
+#### GET /api/restaurants?publicationFilter=published-without-draft — Get published restaurants with no draft row for the same locale
+
+**REST:**
+```
+GET /api/restaurants?publicationFilter=published-without-draft
+```
+
+**JavaScript:**
+```
+const qs = require('qs');
+const query = qs.stringify({
+  publicationFilter: 'published-without-draft',
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(\`/api/restaurants?\${query}\`);
+```
+
+**Response 200 OK:**
+```json
+{
+  "data": [
+    {
+      "documentId": "abcdefghijklmno456",
+      "name": "Legacy Restaurant",
+      "publishedAt": "2024-01-10T09:15:00.000Z",
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+## Combine with other parameters {#combine}
+
+`publicationFilter` can be combined with [`filters`](/cms/api/rest/filters), [`locale`](/cms/api/rest/locale), [`populate`](/cms/api/rest/populate-select), and other [REST parameters](/cms/api/rest/parameters). All conditions are applied together.
 
 
 
@@ -14637,6 +15029,8 @@ In the response data, the `publishedAt` field is `null` for drafts.
 :::note
 Since published versions are returned by default, passing no status parameter is equivalent to passing `status=published`.
 :::
+
+For derived publication cohorts (never-published, modified, and others), see [REST API: `publicationFilter`](/cms/api/rest/publication-filter).
 
 <br /><br />
 
@@ -32256,14 +32650,17 @@ To unpublish several entries at the same time:
 
 ### Usage with APIs
 
-Draft or published content can be requested, created, updated, and deleted using the `status` parameter through the various front-end APIs accessible from [Strapi's Content API](/cms/api/content-api):
+Draft or published content can be requested, created, updated, and deleted using the `status` parameter through the various front-end APIs accessible from [Strapi's Content API](/cms/api/content-api). To query derived cohorts such as never-published or modified documents, use the `publicationFilter` parameter (REST and GraphQL) or the equivalent Document Service API option.
 
 - [REST API](/cms/api/rest/status): Learn how to use the status parameter with the REST API.
+- [REST API: publicationFilter](/cms/api/rest/publication-filter): Query never-published, modified, and other derived publication cohorts.
 - [GraphQL API](/cms/api/graphql#status): Learn how to use the status parameter with GraphQL API.
+- [GraphQL API: publicationFilter](/cms/api/graphql#publication-filter): Query derived publication cohorts with the PublicationFilter enum.
 
-On the back-end server of Strapi, the Document Service API can also be used to interact with localized content:
+On the back-end server of Strapi, the Document Service API can also query and manage draft and published content:
 
 - [Document Service API](/cms/api/document-service/status): Learn how to use the status parameter with the Document Service API.
+- [Document Service API: publicationFilter](/cms/api/document-service/publication-filter): Query derived publication cohorts from server-side code.
 
 
 

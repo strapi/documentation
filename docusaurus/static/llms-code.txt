@@ -4580,6 +4580,123 @@ File path: N/A
 
 
 
+# Using publicationFilter with the Document Service API
+Source: https://docs.strapi.io/cms/api/document-service/publication-filter
+
+## Default status when publicationFilter is used
+Description: The following example compares Document Service and REST behavior when only publicationFilter: 'modified' is passed:
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#default-status)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// Document Service API → draft rows in the modified cohort
+await strapi.documents('api::restaurant.restaurant').findMany({
+  publicationFilter: 'modified',
+});
+
+// REST: GET /api/restaurants?publicationFilter=modified → published rows in the modified cohort
+```
+
+
+## Never-published and modified cohorts
+Description: :::note Valid but empty combinations do not return validation errors.
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#never-published)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// Pair-scoped: drafts never published in this locale
+await strapi.documents('api::restaurant.restaurant').findMany({
+  status: 'draft',
+  publicationFilter: 'never-published',
+});
+
+// Modified pairs: draft side vs published side
+await strapi.documents('api::restaurant.restaurant').findMany({
+  status: 'draft',
+  publicationFilter: 'modified',
+});
+
+await strapi.documents('api::restaurant.restaurant').findMany({
+  status: 'published',
+  publicationFilter: 'modified',
+});
+```
+
+
+## Document-scoped cohorts
+Description: :::note Valid but empty combinations do not return validation errors.
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#document-scoped)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// Documents with no published row in any locale
+await strapi.documents('api::restaurant.restaurant').findMany({
+  status: 'draft',
+  publicationFilter: 'never-published-document',
+});
+```
+
+
+## Published rows with or without a draft peer
+Description: published-without-draft and published-with-draft require status: 'published'.
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#published-slice)
+
+Language: JavaScript
+File path: N/A
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany({
+  status: 'published',
+  publicationFilter: 'published-without-draft',
+});
+
+await strapi.documents('api::restaurant.restaurant').findMany({
+  status: 'published',
+  publicationFilter: 'published-with-draft',
+});
+```
+
+
+## Use with findOne() and findFirst()
+Description: If the requested document (and locale, when applicable) is not in the cohort, findOne() and findFirst() return null even when the documentId exists:
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#find-one-find-first)
+
+Language: JavaScript
+File path: N/A
+
+```js
+await strapi.documents('api::restaurant.restaurant').findOne({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  status: 'draft',
+  publicationFilter: 'never-published',
+});
+```
+
+
+## Count documents in a cohort
+Description: Without publicationFilter, count({ status: 'draft' }) still counts every draft row, including drafts whose document already has a published version.
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#count)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const neverPublishedCount = await strapi
+  .documents('api::restaurant.restaurant')
+  .count({
+    status: 'draft',
+    publicationFilter: 'never-published',
+  });
+```
+
+
+
 # Using Sort & Pagination with the Document Service API
 Source: https://docs.strapi.io/cms/api/document-service/sort-pagination
 
@@ -6065,6 +6182,38 @@ File path: Example:
 ```graphql
 query Query($status: PublicationStatus) {
   restaurants(status: PUBLISHED) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+
+## Filter by derived publication cohort
+Description: When status is omitted, GraphQL defaults to PUBLISHED before applying publicationFilter (same as REST).
+(Source: https://docs.strapi.io/cms/api/graphql#publication-filter)
+
+Language: GRAPHQL
+File path: Example:
+
+```graphql
+query Query($status: PublicationStatus, $publicationFilter: PublicationFilter) {
+  restaurants(status: DRAFT, publicationFilter: NEVER_PUBLISHED) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+---
+Language: GRAPHQL
+File path: Example:
+
+```graphql
+query Query {
+  restaurants(publicationFilter: MODIFIED) {
     documentId
     name
     publishedAt
@@ -10104,6 +10253,164 @@ const query = qs.stringify(
 );
 
 await request(`/api/articles?${query}`);
+```
+
+
+
+# Publication filter
+Source: https://docs.strapi.io/cms/api/rest/publication-filter
+
+## Get never-published draft documents
+Description: GET /api/restaurants?status=draft&publicationFilter=never-published — Get draft restaurants that have never been published for their locale
+(Source: https://docs.strapi.io/cms/api/rest/publication-filter#never-published)
+
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/restaurants?status=draft&publicationFilter=never-published
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  status: 'draft',
+  publicationFilter: 'never-published',
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+      "name": "New Restaurant",
+      "publishedAt": null,
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+
+## Get modified documents
+Description: GET /api/restaurants?publicationFilter=modified — Get published restaurants in the modified cohort (default status)
+(Source: https://docs.strapi.io/cms/api/rest/publication-filter#modified)
+
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/restaurants?publicationFilter=modified
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  publicationFilter: 'modified',
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "name": "Biscotte Restaurant",
+      "publishedAt": "2024-03-14T15:40:45.330Z",
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+
+## Get published rows without a draft peer
+Description: GET /api/restaurants?publicationFilter=published-without-draft — Get published restaurants with no draft row for the same locale
+(Source: https://docs.strapi.io/cms/api/rest/publication-filter#published-without-draft)
+
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/restaurants?publicationFilter=published-without-draft
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  publicationFilter: 'published-without-draft',
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "documentId": "abcdefghijklmno456",
+      "name": "Legacy Restaurant",
+      "publishedAt": "2024-01-10T09:15:00.000Z",
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
 ```
 
 
