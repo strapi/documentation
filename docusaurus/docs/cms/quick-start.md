@@ -238,8 +238,8 @@ Once the deployment is complete, click the **Visit app** button in the top right
 <ThemedImage
   alt="Visit Strapi Cloud App GIF"
   sources={{
-    light: '/img/assets/quick-start-guide/qsg-visit-cloud-app.gif',
-    dark: '/img/assets/quick-start-guide/qsg-visit-cloud-app_DARK.gif',
+    light: '/img/assets/quick-start-guide/qsg-visit-cloud-app-2.gif',
+    dark: '/img/assets/quick-start-guide/qsg-visit-cloud-app-2_DARK.gif',
   }}
 />
 
