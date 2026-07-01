@@ -24,7 +24,7 @@ Use the optional `publicationFilter` parameter to query documents by the relatio
 
 </Tldr>
 
-The [`status`](/cms/api/document-service/status) parameter answers "draft or published?". The `publicationFilter` parameter answers a different question: "which documents, based on how their draft and published versions relate?".
+The [`status`](/cms/api/document-service/status) parameter answers "do I want the draft or the published version?". The `publicationFilter` parameter answers a different question: "which documents do I want, based on how their draft and published versions relate?".
 
 For example, you can ask for drafts that were never published, or for entries whose draft has unsaved changes compared to what is live. `publicationFilter` selects that group of documents first; `status` then decides which row (draft or published) is returned for each.
 
