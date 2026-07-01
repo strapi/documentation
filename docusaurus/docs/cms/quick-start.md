@@ -214,19 +214,27 @@ We recommend deploying from the [Strapi Cloud dashboard](/cloud/getting-started/
 
 Deploying from the dashboard requires your project to be hosted on a GitHub repository. Let's push your local project to GitHub:
 
-1. If the server for your local Strapi project is running, which should be the case if you followed this tutorial so far, press `Ctrl-C` to stop the server.
-2. Ensure you are in the folder of your Strapi project (if needed, run for instance `cd my-strapi-project` to reach this folder).
-3. Run `git init` to initialize git for the project folder.
-4. Run `git add .` to stage all files.
-5. Run `git commit -m "Initial commit"` to create your first commit.
-6. Log in to your GitHub account and <ExternalLink to="https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories" text="create a new repository"/>. Give it a name, for instance `my-strapi-project`.
-7. Run a command similar to the following to connect your local repository to GitHub, replacing `yourname` with your GitHub profile name and `my-strapi-project` with your repository name:
+1. If the server is still running, press `Ctrl-C` to stop it, and make sure you are in your project folder (if needed, run for instance `cd my-strapi-project`).
+2. Initialize git and create your first commit:
+
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   ```
+
+3. Log in to your GitHub account and <ExternalLink to="https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories" text="create a new repository"/>. Give it a name, for instance `my-strapi-project`.
+4. Connect your local repository to GitHub, replacing `yourname` with your GitHub profile name and `my-strapi-project` with your repository name:
 
    ```bash
    git remote add origin git@github.com:yourname/my-strapi-project.git
    ```
 
-8. Run `git push --set-upstream origin main` to push your commit to GitHub.
+5. Push your commit to GitHub:
+
+   ```bash
+   git push --set-upstream origin main
+   ```
 
 </StepDetails>
 
