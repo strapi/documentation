@@ -22,7 +22,7 @@ Strapi Cloud applies 2 distinct limits to uploads. The first is a hard maximum f
 
 ## Maximum upload file size for non-image files
 
-Non-image uploads are capped at 200 MB on all Strapi Cloud plans (Free, Essential, Pro, and Scale). The cap is enforced at the infrastructure level and cannot be overridden via the `strapi::body` middleware configuration.
+Non-image uploads are capped at 200 MB on all Strapi Cloud plans. The cap is enforced at the infrastructure level and cannot be overridden via the `strapi::body` middleware configuration.
 
 ## Recommended maximum upload size for image files
 
@@ -48,7 +48,7 @@ Recommended maximum image size, expressed in megapixels (MP), per format and pla
 <Tabs groupId="processing">
 <TabItem value="on" label="Processing on">
 
-| Format | Free & Essential | Pro & Scale |
+| Format | Essential | Pro & Scale |
 |--------|------------------|-------------|
 | JPEG   | 24 MP            | 135 MP      |
 | PNG    | 8 MP             | 90 MP       |
@@ -59,7 +59,7 @@ Recommended maximum image size, expressed in megapixels (MP), per format and pla
 </TabItem>
 <TabItem value="off" label="Processing off">
 
-| Format | Free & Essential | Pro & Scale |
+| Format | Essential | Pro & Scale |
 |--------|------------------|-------------|
 | JPEG   | 200 MP           | 265 MP      |
 | PNG    | 20 MP            | 115 MP      |
