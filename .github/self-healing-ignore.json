@@ -664,6 +664,11 @@
       "number": 26830,
       "reason": "Reverting an API update we don't want to document.",
       "added": "2026-07-01"
+    },
+    {
+      "number": 26844,
+      "reason": "Router: Internal bug fix to permission system. Users previously saw a 'Policy Failed' warning when selecting roles for users; this fix removes that warning by allowing hidden content types to be read for relation targets. No public API or documented behavior changed.",
+      "added": "2026-07-01"
     }
   ]
 }
