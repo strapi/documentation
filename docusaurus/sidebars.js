@@ -561,6 +561,7 @@ const sidebars = {
             'cms/plugins-development/guides/admin-permissions-for-plugins',
             'cms/plugins-development/guides/store-and-access-data',
             'cms/plugins-development/guides/create-components-for-plugins',
+            'cms/plugins-development/guides/reuse-admin-panel-components',
           ],
         },
         'cms/plugins-development/plugins-extension',
