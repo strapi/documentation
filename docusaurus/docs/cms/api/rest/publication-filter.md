@@ -18,35 +18,23 @@ tags:
 
 # REST API: `publicationFilter`
 
-The [REST API](/cms/api/rest) accepts an optional `publicationFilter` query parameter when [Draft & Publish](/cms/features/draft-and-publish) is enabled. Use it to query derived publication cohorts such as never-published or modified documents. The [`status`](/cms/api/rest/status) parameter still selects whether each matching document returns its draft or published row.
+<Tldr>
+
+Add the optional `publicationFilter` query parameter to filter results by the relationship between a document's draft and published versions, for example never-published or modified entries. The [`status`](/cms/api/rest/status) parameter still selects whether each result returns its draft or published row. REST defaults to `status=published`, so pass `status=draft` for draft-only cohorts.
+
+</Tldr>
+
+The [REST API](/cms/api/rest) accepts an optional `publicationFilter` query parameter when [Draft & Publish](/cms/features/draft-and-publish) is enabled. A *cohort* is a set of documents grouped by how their draft and published versions relate, for example documents never published, or documents whose draft was edited since it was last published. `publicationFilter` selects the cohort; [`status`](/cms/api/rest/status) then selects whether each result returns its draft or published row.
+
+This page shows how to query the most common cohorts over REST. For the full list of values, their exact definitions, and every `status` combination, see [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter), which is the reference for the underlying model.
 
 :::prerequisites
 The [Draft & Publish](/cms/features/draft-and-publish) feature must be enabled on the content-type.
 :::
 
-## Default `status` {#default-status}
-
-When `status` is omitted, the REST API defaults to `status=published` **before** applying `publicationFilter`.
-
-| Query | Effective behavior |
-| ----- | ------------------ |
-| `?publicationFilter=never-published` | Empty (cohort is draft-only; default status is `published`) |
-| `?status=draft&publicationFilter=never-published` | Never-published draft rows |
-| `?publicationFilter=modified` | Published rows in the modified cohort |
-| `?status=draft&publicationFilter=modified` | Draft rows in the modified cohort |
-| `?publicationFilter=published-without-draft` | Orphan published rows (default `status=published` is correct) |
-
-The Document Service API defaults to `status=draft` instead. See [Document Service API: default `status`](/cms/api/document-service/publication-filter#default-status).
-
-:::note
-Cohort definitions and `status` / `publicationFilter` combination tables are documented on [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter).
-:::
-
-Accepted kebab-case values: `never-published`, `has-published-version`, `modified`, `unmodified`, `never-published-document`, `has-published-version-document`, `published-without-draft`, `published-with-draft`. Invalid values return HTTP `400`.
-
 ## Get never-published draft documents {#never-published}
 
-Pair-scoped `never-published` only matches draft rows. Pass `status=draft` because REST defaults to `status=published`.
+`never-published` matches documents with no published version for that locale, so only draft rows exist. Pass `status=draft`, because REST defaults to `status=published`:
 
 <Endpoint
   method="GET"
@@ -98,7 +86,7 @@ await request(\`/api/restaurants?\${query}\`);`
 
 ## Get modified documents {#modified}
 
-The `modified` cohort includes pairs where the draft row is newer than its published peer. With no `status` parameter, REST returns **published** rows from that cohort. Pass `status=draft` to return the draft rows instead.
+The `modified` cohort contains documents whose draft is newer than their published version. With no `status` parameter, REST returns the **published** rows of those documents. Pass `status=draft` to return the newer draft rows instead:
 
 <Endpoint
   method="GET"
@@ -147,9 +135,9 @@ await request(\`/api/restaurants?\${query}\`);`
   ]}
 />
 
-## Get published rows without a draft peer {#published-without-draft}
+## Get published documents without a draft {#published-without-draft}
 
-The `published-without-draft` cohort matches published rows that have no draft sibling for the same `(documentId, locale)`. Because REST defaults to `status=published`, you can omit `status` in the query URL.
+The `published-without-draft` cohort matches published rows that have no draft for the same `(documentId, locale)`. REST defaults to `status=published`, so you can omit `status`:
 
 <Endpoint
   method="GET"
@@ -197,6 +185,26 @@ await request(\`/api/restaurants?\${query}\`);`
     }
   ]}
 />
+
+## Understand the default `status` {#default-status}
+
+When `status` is omitted, REST defaults to `status=published` **before** applying `publicationFilter`. This is the most common source of unexpected empty results: a draft-only cohort such as `never-published` returns nothing under the default status. The table below shows the effect for the values used above:
+
+| Query | Result |
+| ----- | ------ |
+| `?publicationFilter=never-published` | Empty (this cohort has draft rows only, and the default status is `published`) |
+| `?status=draft&publicationFilter=never-published` | Never-published draft rows |
+| `?publicationFilter=modified` | Published rows of modified documents |
+| `?status=draft&publicationFilter=modified` | Draft rows of modified documents |
+| `?publicationFilter=published-without-draft` | Published rows with no draft (default `status=published` is correct) |
+
+The Document Service API defaults to `status=draft` instead. See [Document Service API: default `status`](/cms/api/document-service/publication-filter#default-status) for the full comparison across API surfaces.
+
+## Reference: accepted values {#values}
+
+REST accepts these kebab-case values: `never-published`, `has-published-version`, `modified`, `unmodified`, `never-published-document`, `has-published-version-document`, `published-without-draft`, `published-with-draft`. Invalid values return HTTP `400`.
+
+Each value, its scope (pair or document), and its exact cohort definition are documented on [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter#values).
 
 ## Combine with other parameters {#combine}
 
