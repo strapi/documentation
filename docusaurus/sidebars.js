@@ -133,7 +133,6 @@ const sidebars = {
           type: 'category',
           label: 'Strapi plugins',
           collapsed: true,
-          link: { type: 'generated-index', slug: '/cms/plugins' },
           items: [
             {
               type: 'doc',
@@ -345,7 +344,6 @@ const sidebars = {
         {
           type: 'category',
           label: 'Guides',
-          link: { type: 'generated-index', title: 'Configuration guides', slug: '/cms/configurations/guides' },
           items: [
             'cms/configurations/guides/access-cast-environment-variables',
             'cms/configurations/guides/access-configuration-values',
