@@ -15,7 +15,7 @@ Use a Badge to flag the availability or status of a feature next to a heading or
 ## When NOT to use
 
 - Do not use the raw default `<Badge>` element. It is not registered as a global MDX component (only the named alias functions are), so a bare `<Badge variant="..." />` will not resolve and the page will fail to build.
-- Do not invent variants that do not exist. There is no `FreeBadge` and no `CloudDevBadge`. The Strapi Cloud Free plan is represented by the absence of any badge: if no badge is shown, the feature is available on the Free plan.
+- Do not invent variants that do not exist. There is no `FreeBadge` and no `CloudDevBadge`. If no Cloud plan badge is shown, the feature is available on the Essential plan.
 - Do not place a badge where its tooltip would be cut off, or where the default tooltip is wrong without overriding it via the `tooltip` prop.
 - Do not use a badge in a context that needs plain text, such as inside a code block.
 

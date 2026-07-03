@@ -12,10 +12,10 @@ pagination_next: cloud/advanced/database
 # Command Line Interface (CLI)
 
 <Tldr>
-CLI commands handle login, project deploy, linking, listing, and logout without needing a remote repository.
+CLI commands handle login, project linking, deploying, listing, and logout without needing a remote repository.
 </Tldr>
 
-Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log in and out, and to deploy a local project without it having to be hosted on a remote git repository. The CLI works with both the `yarn` and `npm` package managers.
+Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log in and out, link a local project to an existing Strapi Cloud project, and deploy it without having to host it on a remote git repository. The CLI works with both the `yarn` and `npm` package managers.
 
 :::note
 It is recommended to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
@@ -35,30 +35,7 @@ This command automatically opens a browser window to first ask you to confirm th
 
 If the browser window doesn't automatically open, the terminal will display a clickable link as well as the code to enter manually.
 
-## strapi deploy
-
-**Alias:** `strapi cloud:deploy`
-
-Deploy a new local project (< 100MB) in Strapi Cloud.
-
-```bash
-strapi deploy
-```
-
-This command must be used after the `login` one. It deploys a local Strapi project on Strapi Cloud, without having to host it on a remote git repository beforehand. The terminal will inform you when the project is successfully deployed on Strapi Cloud.
-
-Deploying a Strapi project through the CLI creates a project on the Free plan.
-
-Once the project is first deployed on Strapi Cloud with the CLI, the `deploy` command can be reused to trigger a new deployment of the same project.
-
-:::note
-Once you deployed your project, if you visit the Strapi Cloud dashboard, you may see some limitations as well as impacts due to creating a Strapi Cloud project that is not in a remote repository and which was deployed with the CLI.
-
-- Some areas in the dashboard that are usually reserved to display information about the git provider will be blank.
-- Some buttons, such as the **Trigger deploy** button, will be greyed out and unclickable since, unless you have [connected a git repository to your Strapi Cloud project](/cloud/getting-started/deployment-cli#automatically-deploying-subsequent-changes).
-:::
-
-## strapi link <NewBadge />
+## strapi link <NewBadge /> {#strapi-link}
 
 **Alias:** `strapi cloud:link`
 
@@ -69,6 +46,27 @@ strapi link
 ```
 
 This command connects your local project in the current directory with an existing project on your Strapi Cloud account. You will be prompted to select the project you wish to link from a list of available projects hosted on Strapi Cloud.
+
+## strapi deploy
+
+**Alias:** `strapi cloud:deploy`
+
+Deploy a linked local project (< 100MB) to Strapi Cloud.
+
+```bash
+strapi deploy
+```
+
+This command must be used after the [`login`](#strapi-login) and [`link`](#strapi-link) commands. It deploys a local Strapi project to an existing Strapi Cloud project that is linked to the current folder. The terminal will inform you when the project is successfully deployed on Strapi Cloud.
+
+Once the project is first linked and deployed on Strapi Cloud with the CLI, the `deploy` command can be reused to trigger a new deployment of the same project.
+
+:::note
+Once you deployed your project, if you visit the Strapi Cloud dashboard, you may see some limitations as well as impacts due to creating a Strapi Cloud project that is not in a remote repository and which was deployed with the CLI.
+
+- Some areas in the dashboard that are usually reserved to display information about the git provider will be blank.
+- Some buttons, such as the **Trigger deploy** button, will be greyed out and unclickable since, unless you have [connected a git repository to your Strapi Cloud project](/cloud/getting-started/deployment-cli#automatically-deploying-subsequent-changes).
+:::
 
 ## strapi projects <NewBadge />
 

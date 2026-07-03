@@ -116,7 +116,7 @@ The ownership of the Strapi Cloud project can be transferred to another user, as
 
 :::prerequisites
 For the ownership of a project to be transferred, the following requirements must be met:
-- The project must be on a paid plan, with no currently expired card and/or unpaid bills.
+- The project must not currently have expired card and/or unpaid bills.
 - The maintainer must have filled their billing information.
 - No already existing ownership transfer must be pending for the project.
 
@@ -253,8 +253,6 @@ Plan downgrades can be managed, for each project, via the project settings. Down
 Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for overages. You may also lose access to some features: for example, downgrading to the Essential plan would result in the loss of all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
 
 Note also that you cannot downgrade if you have additional paid environments. You will first need to delete all additional environments that were not included in the base price of your plan (see [Clearing and deleting environments](#resetting--deleting-environment)) before you can schedule a downgrade. When downgrading from Scale to Pro, the additional included environment will automatically be deleted when the downgrade takes effect.
-
-You cannot downgrade to the Free plan if a GitHub organization repository is connected to the project. To downgrade, first switch to a personal repository in the [Connected Git repository](#modifying-git-repository--branch) settings.
 :::
 
 To downgrade your current plan to a lower one:
@@ -284,7 +282,7 @@ When switching from yearly to monthly billing, your plan will remain on its year
 
 ### Invoices
 
-The <Icon name="invoice" /> *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status. No invoice is issued for the Free plan.
+The <Icon name="invoice" /> *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status.
 
 
 <ThemedImage
@@ -425,7 +423,7 @@ The <Icon name="arrow-clockwise" /> *Backups* tab informs you of the status and 
 
 :::note Notes
 
-- The backup feature is not available for Strapi Cloud projects on the Free or Essential plans. You will need to upgrade to the Pro or Scale plan to enable automatic backups and access the manual backup option.
+- The backup feature is not available for Strapi Cloud projects on the Essential plan. You will need to upgrade to the Pro or Scale plan to enable automatic backups and access the manual backup option.
 
 - Backups include only the database of your default Production environment. Assets uploaded to your project and databases from any secondary environments are not included.
 
@@ -502,10 +500,6 @@ All existing domains for your Strapi Cloud project are listed in the <Icon name=
 #### Connecting a custom domain
 
 Default domain names are made of 2 randomly generated words followed by a hash. They can be replaced by any custom domain of your choice.
-
-:::note
-Custom domains are not available on the Free plan. Downgrading to the Free plan will result in the application domain's being restored to the default one.
-:::
 
 1. Click the **Connect new domain** button.
 2. In the window that opens, fill in the following fields:

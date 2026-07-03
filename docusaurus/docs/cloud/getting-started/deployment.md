@@ -111,10 +111,6 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     :::tip
     Connect the GitHub or GitLab account that owns the repository you want to deploy. This can be different from the account you used to log into your Strapi Cloud account.
     :::
-    :::note
-
-    You can only connect a GitHub organization repository on a paid plans. On the free plan, you can only connect a personal repository.
-    :::
 
     4.a. If you have already given Strapi Cloud access to all repositories of your GitHub or GitLab account, go directly to the next step. If not, you will be redirected to a modal where you will have to allow Strapi Cloud permission to access some or all your repositories on GitHub/GitLab (more information in the <ExternalLink to="https://docs.github.com/en/apps/overview" text="GitHub"/> and <ExternalLink to="https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications" text="GitLab"/> documentation).
 
@@ -171,14 +167,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 
 ## Setting up billing details
 
-:::strapi No billing step for the Free plan
-If you chose the free plan, this billing step will be skipped as you will not be asked to share your credit card details at the creation of the project.
-
-<Icon name="fast-forward" /> Skip to step 5 of the section below to finalize the creation of your project.
-:::
-
 1. Click on the **Continue to billing** button. You will be redirected to the billing page where you can enter your payment details and review your invoice.
-
 
     <ThemedImage
     alt="Payment & Billing"

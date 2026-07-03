@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "strapi-documentation": {
+      "source": {
+        "source": "github",
+        "repo": "strapi/documentation"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "inki@strapi-documentation": true
+  }
+}

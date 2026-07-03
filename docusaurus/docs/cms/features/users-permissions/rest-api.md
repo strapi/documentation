@@ -565,6 +565,12 @@ curl -X POST http://localhost:1337/api/users \
 
 Example response (201): A user object with the populated role.
 
+:::tip
+The `role` field accepts both numeric `id` (legacy) and `documentId` (Strapi v5 convention). Examples:
+- `"role": 1` — numeric ID
+- `"role": "x74detpqybxw0bn6ormua5g2"` — documentId
+:::
+
 ### Update a user
 
 `PUT /api/users/:id`
@@ -596,23 +602,27 @@ Possible errors:
 | 400 | `"Username already taken"` or `"Email already taken"` | Duplicate value |
 
 :::note Relation inputs support both `documentId` and numeric IDs
-When updating a user with custom relations, you can use either `documentId` (recommended for Strapi 5) or numeric `id` in relation payloads:
+When updating a user, including the `role` relation, you can use either `documentId` (recommended for Strapi 5) or numeric `id` in relation payloads:
 ```json
 {
-  "customRelation": {
-    "connect": ["x74detpqybxw0bn6ormua5g2"]  // documentId
+  "role": "x74detpqybxw0bn6ormua5g2"  // role documentId (shorthand)
+}
+```
+or
+```json
+{
+  "role": {
+    "connect": ["x74detpqybxw0bn6ormua5g2"]  // role documentId (longhand)
   }
 }
 ```
 or
 ```json
 {
-  "customRelation": {
-    "connect": [1]  // numeric ID (legacy)
-  }
+  "role": 1  // numeric ID (legacy)
 }
 ```
-Both formats are accepted for backward compatibility.
+For custom relations, you can also use the longhand format. Both formats are accepted for backward compatibility.
 :::
 
 ### Delete a user

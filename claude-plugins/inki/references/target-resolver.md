@@ -6,6 +6,7 @@ The resolver takes whatever the user passed (after flags are stripped) and retur
 
 - `FILES`: a list of local file paths the sub-skills operate on.
 - `SCOPE`: a short human label describing the target (used in report headers), e.g. `PR #3204 (1 doc file)`, `docusaurus/docs/cms/intro.md`, or `pasted content`.
+- `UPSTREAM_PRS`: a list of referenced upstream code PRs (in `strapi/strapi` or `strapi/cloud`) that the documentation under review is documenting. Each entry is `{repo, number}`. Empty unless the target is a `strapi/documentation` PR whose description references one (see "Detecting upstream code PRs" below). The code-verifier and coherence-checker use it as the primary source of truth, because a docs PR that documents an unmerged code change must be verified against *that change*, not against `develop` or a stale local clone.
 - `CLEANUP`: an optional command to run after the skill finishes (worktree teardown, temp-file removal). May be empty.
 
 The repo is always `strapi/documentation`. Docs live under `docusaurus/docs/`.
@@ -38,11 +39,13 @@ Operates on the current working tree. `CLEANUP` is empty.
 ### 2. GitHub PR
 
 1. Extract the PR number: strip a leading `#`, strip URL tails (`/files`, `/changes`), then take the trailing `[0-9]+`.
-2. Fetch the PR's changed files:
+2. Fetch the PR's changed files **and its title/body** (the body is needed to detect upstream code-PR references, see step 7):
 
    ```bash
-   gh pr view <num> --repo strapi/documentation --json files,headRefName --jq '.files[].path'
+   gh pr view <num> --repo strapi/documentation --json files,headRefName,title,body
    ```
+
+   Take the changed paths from `.files[].path`.
 
 3. Filter to `.md` and `.mdx` only. If the PR changes no documentation file, report that and stop.
 4. Check the PR out in a temporary worktree so sub-skills see the PR's version, not `main`:
@@ -53,8 +56,9 @@ Operates on the current working tree. `CLEANUP` is empty.
 
 5. `FILES` = each path from step 3, prefixed with `$WORKTREE/`.
 6. `CLEANUP` = `./claude-plugins/inki/scripts/pr-worktree.sh destroy <num>`.
+7. Detect upstream code PRs referenced in the title/body and populate `UPSTREAM_PRS` (see "Detecting upstream code PRs" below).
 
-`SCOPE` = `PR #<num> (<count> doc file[s])`.
+`SCOPE` = `PR #<num> (<count> doc file[s])`. When `UPSTREAM_PRS` is non-empty, append ` — documents <repo>#<number>[, …]` so the report header makes the source of truth explicit.
 
 ### 3. docs.strapi.io URL
 
@@ -110,6 +114,22 @@ The user pasted Markdown directly (frontmatter, headings, prose) instead of a re
 `SCOPE` = `pasted content (<slug>)`.
 
 Note: coherence-check and code-verify are less reliable on pasted content, because the file is outside the docs tree (relative links and sibling-page lookups will not resolve). Note this limitation in the report when the target is pasted content.
+
+## Detecting upstream code PRs
+
+A `strapi/documentation` PR usually documents a change that ships in a `strapi/strapi` (CMS) or `strapi/cloud` (Cloud) PR. When the docs PR is still open, that code PR is frequently **unmerged**, so neither `develop` nor a local clone reflects the behavior being documented yet. Verifying the docs against `develop` then produces false "this config key/value does not exist" findings (a real failure mode: a security-defaults PR was flagged as wrong because the scaffolding change lived in an unmerged upstream PR). Detecting the reference lets the code-verifier and coherence-checker target the right source.
+
+This runs **only for type 2 (a `strapi/documentation` GitHub PR)**; for all other target types `UPSTREAM_PRS` is empty.
+
+1. Take the PR `title` and `body` fetched in step 2.
+2. Scan for references to a code PR in either documented repo. Match all of these forms, case-insensitive:
+   - `strapi/strapi#<n>` and `strapi/cloud#<n>` (cross-repo shorthand)
+   - full URLs: `https://github.com/strapi/strapi/pull/<n>`, `https://github.com/strapi/cloud/pull/<n>` (ignore any `/files`, `/commits` tail)
+   - Do **not** match a bare `#<n>` with no `owner/repo` prefix: inside a `strapi/documentation` PR body, `#1234` refers to documentation, not code.
+3. Deduplicate by `(repo, number)`. For each unique hit, add `{repo, number}` to `UPSTREAM_PRS`, preserving the order they appear in the body.
+4. If nothing matches, `UPSTREAM_PRS` is empty — verification falls back to its normal source order (local clone, then `develop`).
+
+These references are passed through to the dispatched agents (the `review` skill hands `UPSTREAM_PRS` to the code-verifier and coherence-checker); the resolver only detects them, it does not fetch the code itself. Fetching the PR diff/files is the code-verifier's job, using `gh pr diff <number> --repo <repo>` or `gh pr view <number> --repo <repo> --json files`, or GitHub MCP per `references/prompts/shared/github-mcp-usage.md`.
 
 ## Cleanup contract
 

@@ -20,7 +20,8 @@ Inki encodes all of it into one plugin, so high-quality docs become the easy def
 /reload-plugins
 ```
 
-After install, the skills are available at `/inki:<skill>`, persistent across Claude Code sessions.
+We recommend you install Inki at the user scope, so it's available in all your Claude Code sessions.
+After install, the skills are available at `/inki:<skill>`.
 
 ## The four families: a docs workflow end to end
 

@@ -18,8 +18,8 @@
   padding: 6px 0;
   transition: opacity 0.3s ease, transform 0.3s ease;
   flex-wrap: wrap;
-  // Opaque background so it doesn't blend with content when scrolling
-  background: var(--strapi-surface-0);
+  // Opaque background so it doesn't blend with content when scrolling.
+  background: var(--strapi-surface-1);
   // Ensure background covers full width and hides content scrolling underneath
   margin-left: -16px;
   margin-right: -16px;
@@ -93,10 +93,7 @@
 }
 
 @include dark {
-  .switcher {
-    background: var(--strapi-surface-0);
-  }
-
+  // .switcher background comes from surface-1 (set above), which already adapts.
   .button {
     color: var(--strapi-neutral-400);
 

@@ -20,7 +20,7 @@ Strapi provides a CLI tool to automatically generate OpenAPI 3.1.0 specification
 
 Strapi provides a command-line tool to generate <ExternalLink to="https://www.openapis.org/" text="OpenAPI"/> specifications for your applications. 
 
-The CLI tool automatically creates comprehensive API documentation that describes all available endpoints, parameters, and response formats in your Strapi application's Content API. Among the possible use cases, the generated specification can then be easily integrated into documentation tools like <ExternalLink to="https://swagger.io/tools/swagger-ui/" text="Swagger UI "/>.
+The CLI tool automatically creates comprehensive API documentation that describes all available endpoints, parameters, and response formats in your Strapi application's Content API. Among the possible use cases, the generated specification can then be integrated into documentation tools like <ExternalLink to="https://swagger.io/tools/swagger-ui/" text="Swagger UI "/>.
 
 :::callout 🚧  Experimental feature
 The OpenAPI generation feature is currently experimental. Its behavior and output might change in future releases without following semantic versioning. For additional information and context, please refer to the <ExternalLink text="Strapi Contributor Docs " to="https://contributor.strapi.io/openapi" />.
@@ -58,7 +58,7 @@ npm run strapi openapi generate
 </TabItem>
 </Tabs>
 
-You can also path an optional `--output` argument to specify the path and filename, as in the following example:
+You can also pass an optional `--output` argument to specify the path and filename, as in the following example:
 
 <Tabs groupId="yarn-npm">
 <TabItem value="yarn" label="Yarn">
@@ -161,7 +161,141 @@ The generated OpenAPI specification includes all available API endpoints in your
 - File upload endpoints for media handling
 - Plugin endpoints from installed plugins
 
+## Serving the specification over HTTP
+
+Strapi can serve the generated OpenAPI specification as a live HTTP endpoint. Serving specifications over HTTP removes the need to regenerate a static file after each content-type change. Both the Content API and Admin API specifications can be served independently.
+
+Both endpoints use `access: 'disabled'` by default and are not registered. Set `access` on 1 or both endpoints in the [server configuration](/cms/configurations/server) file to expose them.
+
+### Configuration
+
+Add an `openapi` key to the `server` configuration:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/config/server.js"
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  // highlight-start
+  openapi: {
+    'content-api': {
+      access: 'public',
+      route: {
+        path: '/openapi.json',
+      },
+      cache: {
+        enabled: true,
+        maxAgeMs: 60000,
+        filePath: '.strapi/openapi/content-api.json',
+      },
+    },
+    admin: {
+      access: 'authenticated',
+      route: {
+        path: '/openapi.json',
+      },
+      cache: {
+        enabled: true,
+        maxAgeMs: 60000,
+        filePath: '.strapi/openapi/admin.json',
+      },
+    },
+  },
+  // highlight-end
+});
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/config/server.ts"
+export default ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  // highlight-start
+  openapi: {
+    'content-api': {
+      access: 'public',
+      route: {
+        path: '/openapi.json',
+      },
+      cache: {
+        enabled: true,
+        maxAgeMs: 60000,
+        filePath: '.strapi/openapi/content-api.json',
+      },
+    },
+    admin: {
+      access: 'authenticated',
+      route: {
+        path: '/openapi.json',
+      },
+      cache: {
+        enabled: true,
+        maxAgeMs: 60000,
+        filePath: '.strapi/openapi/admin.json',
+      },
+    },
+  },
+  // highlight-end
+});
+```
+
+</TabItem>
+</Tabs>
+
+The `content-api` endpoint is served under the REST API prefix (`/api` by default). The full URL is `http://localhost:1337/api/openapi.json`. The `admin` endpoint is served under the admin path (`/admin` by default). The full URL is `http://localhost:1337/admin/openapi.json`.
+
+:::caution
+Both endpoints must resolve to different full paths. If the `content-api` and `admin` endpoints resolve to the same URL, Strapi throws an error at startup.
+:::
+
+### Available options
+
+Each endpoint (`content-api` and `admin`) accepts the following options:
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `access` | String | `'disabled'` | Controls whether the endpoint is registered and how it is protected. See [Access control](#access-control) for accepted values per endpoint. |
+| `route.path` | String | `'/openapi.json'` | Path where the specification is served. Appended to the endpoint prefix (`/api` for `content-api`, `/admin` for `admin`). |
+| `cache.enabled` | Boolean | `true` | Enables file-based caching of the generated specification. |
+| `cache.maxAgeMs` | Number | `60000` | Maximum age of the cache file in milliseconds before regeneration. |
+| `cache.filePath` | String | `'.strapi/openapi/<type>.json'` | File path for the cache file. Relative paths are resolved from the application root. |
+
+### Access control
+
+The `access` option controls whether each endpoint is registered and how it is protected. Each endpoint supports different values:
+
+**Content API** (`content-api`):
+
+| Value | Behavior |
+|-------|----------|
+| `'disabled'` (default) | The endpoint is not registered. |
+| `'public'` | The endpoint is registered without authentication. Anyone can fetch the specification. |
+
+**Admin** (`admin`):
+
+| Value | Behavior |
+|-------|----------|
+| `'disabled'` (default) | The endpoint is not registered. |
+| `'authenticated'` | The endpoint requires an authenticated admin session. Any authenticated admin user can access the specification. |
+
+:::note
+Role-based access control for OpenAPI endpoints is not supported yet. The admin endpoint uses the `admin::isAuthenticatedAdmin` policy and does not filter by admin role or permission.
+:::
+
+:::tip
+The Content API endpoint is always public when `access` is `'public'`. If you do not want to expose the specification without authentication, leave `content-api.access` at `'disabled'` and use the CLI to generate a static file instead.
+:::
+
 ## Integrating with Swagger UI
+
+:::tip
+If you [registered an HTTP endpoint](#serving-the-specification-over-http), you can point Swagger UI directly at the live URL (e.g., `http://localhost:1337/api/openapi.json`) instead of generating a static file. Skip step 1 below and use the endpoint URL as the `url` value in step 3.
+:::
 
 With the following steps you can quickly generate a [Swagger UI](https://swagger.io/)-compatible page:
 

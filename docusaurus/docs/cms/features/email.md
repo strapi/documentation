@@ -169,6 +169,7 @@ module.exports = ({ env }) => ({
       provider: 'sendgrid', // For community providers pass the full package name (e.g. provider: 'strapi-provider-email-mandrill')
       providerOptions: {
         apiKey: env('SENDGRID_API_KEY'),
+        // region: 'eu', // Optional: set to 'eu' for EU data residency (default: 'global')
       },
       settings: {
         defaultFrom: 'juliasedefdjian@strapi.io',
@@ -193,6 +194,7 @@ export default ({ env }) => ({
       provider: 'sendgrid', // For community providers pass the full package name (e.g. provider: 'strapi-provider-email-mandrill')
       providerOptions: {
         apiKey: env('SENDGRID_API_KEY'),
+        // region: 'eu', // Optional: set to 'eu' for EU data residency (default: 'global')
       },
       settings: {
         defaultFrom: 'juliasedefdjian@strapi.io',
@@ -208,6 +210,10 @@ export default ({ env }) => ({
 </TabItem>
 
 </Tabs>
+
+:::tip EU data residency
+If you use a SendGrid API key created on the <ExternalLink to="https://app.eu.sendgrid.com" text="EU portal (app.eu.sendgrid.com)"/>, set `region: 'eu'` in `providerOptions`. EU API keys only work against the EU endpoint (`https://api.eu.sendgrid.com`); without this option, email delivery will fail with an `Unauthorized` error.
+:::
 
 :::note Notes
 

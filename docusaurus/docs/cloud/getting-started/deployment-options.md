@@ -27,5 +27,5 @@ The guides below will guide you through all the steps for each of the deployment
 
 <CustomDocCardsWrapper>
   <CustomDocCard emoji="🖼️" title="Via the Cloud dashboard" description="Step-by-step guide to create and deploy a project via the user interface." link="/cloud/getting-started/deployment" />
-  <CustomDocCard emoji="💻" title="Via the CLI" description="Step-by-step guide to create and deploy a project with the Cloud Command Line Interface." link="/cloud/getting-started/deployment-cli" />
+  <CustomDocCard emoji="💻" title="Via the CLI" description="Step-by-step guide to link and deploy a local project with the Cloud Command Line Interface." link="/cloud/getting-started/deployment-cli" />
 </CustomDocCardsWrapper>

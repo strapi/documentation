@@ -15,17 +15,18 @@ tags:
 
 <Tldr>
 
-Deploy a Strapi project to Strapi Cloud using the `strapi login` and `strapi deploy` CLI commands, with optional automatic deployment on git repository commits.
+Deploy a Strapi project to Strapi Cloud using the `strapi login`, `strapi link`, and `strapi deploy` CLI commands, with optional automatic deployment on git repository commits.
 
 </Tldr>
 
 
-This is a step-by-step guide for deploying your project on Strapi Cloud for the first time, using the Command Line Interface.
+This is a step-by-step guide for deploying your project on Strapi Cloud using the Command Line Interface.
 
 :::prerequisites
 Before you can deploy your Strapi application on Strapi Cloud using the Command Line Interface, you need to have the following prerequisites:
 
 - Have a Google, GitHub or GitLab account.
+- Have an already created Strapi Cloud project (see [Project deployment with the Cloud dashboard](/cloud/getting-started/deployment)).
 - Have an already created Strapi project (see [Installing from CLI in the CMS Documentation](/cms/installation/cli)), stored locally. The project must be less than 100MB.
 - Have available storage in your hard drive where the temporary folder of your operating system is stored.
 :::
@@ -59,6 +60,29 @@ Before you can deploy your Strapi application on Strapi Cloud using the Command 
 
 5. Still in the browser window, choose whether to login via Google, GitHub or GitLab. The window should confirm the successful login soon after.
 
+## Linking your local project to Strapi Cloud
+
+1. From your terminal, still from the folder of your Strapi project, enter the following command to link the local project to your existing Strapi Cloud project:
+
+  <Tabs groupId="yarn-npm">
+  <TabItem value="yarn" label="Yarn">
+
+  ```bash
+  yarn strapi link
+  ```
+
+  </TabItem>
+  <TabItem value="npm" label="NPM">
+
+  ```bash
+  npx run strapi link
+  ```
+
+  </TabItem>
+  </Tabs>
+
+2. Select the Strapi Cloud project you want to link from the list displayed in the terminal.
+
 ## Deploying your project
 
 1. From your terminal, still from the folder of your Strapi project, enter the following command to deploy the project:
@@ -81,11 +105,10 @@ Before you can deploy your Strapi application on Strapi Cloud using the Command 
   </Tabs>
 
 2. Follow the progression bar in the terminal until confirmation that the project was successfully deployed with Strapi Cloud.
-Deploying the project will create a new Strapi Cloud project on the Free plan.
 
 ### Automatically deploying subsequent changes
 
-By default, when creating and deploying a project with the Cloud CLI, you need to manually deploy again all subsequent changes by running the corresponding `deploy` command everytime you make a change.
+By default, when deploying a project with the Cloud CLI, you need to manually deploy again all subsequent changes by running the corresponding `deploy` command everytime you make a change.
 
 Another option is to enable automatic deployment through a git repository. To do so:
 

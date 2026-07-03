@@ -73,9 +73,9 @@ If you used `--quickstart` to create your Strapi project, by default this uses t
 
 It is recommended you use a database add-on like Heroku's PostgreSQL. For file uploads, you will need to use one of the 3rd party providers such as Cloudinary or AWS S3.
 
-## How can I upgrade my free Strapi Cloud to a paid plan?
+## How can I change my Strapi Cloud plan?
 
-Strapi Cloud provides a free plan. Whenever you're ready to upgrade to one of the <ExternalLink to="https://strapi.io/pricing-cloud" text="paid plans"/>, please use the _Plans_ section of your Strapi Cloud project's settings (see [Cloud documentation](/cloud/projects/settings#upgrading-to-another-plan) for more details).
+Use the _Plans_ section of your Strapi Cloud project's settings to upgrade or downgrade your plan (see [Upgrading to another plan](/cloud/projects/settings#upgrading-to-another-plan) and [Downgrading to another plan](/cloud/projects/settings#downgrading-to-another-plan) in the Cloud documentation).
 
 ## Can Strapi be run in serverless environments?
 
