@@ -10,7 +10,9 @@
   // show/hide. The top padding gives it breathing room under the navbar.
   position: sticky;
   top: var(--ifm-navbar-height, 3.75rem);
-  z-index: 10;
+  // Above in-content overlays (annotations use 20–22), below the fixed
+  // chrome (AI panel 100, navbar and step-progress widget 200).
+  z-index: 50;
   padding-top: 40px;
   // Height of the fade-out band below the bar; the bottom margin matches it
   // so the page title starts below the gradient instead of under it.
