@@ -66,7 +66,7 @@ main {
 .markdown :is(h1, h2, h3, h4, h5, h6)[id],
 .api-endpoint-block[id],
 .api-call[id] {
-  scroll-margin-top: 120px;
+  scroll-margin-top: 150px;
 }
 
   [class*="docRoot"]:not(:has(main)) {
