@@ -1,9 +1,30 @@
 .release-notes-page {
-  a {
-    // pointer-events: auto;
-  }
   img.no-zoom {
     pointer-events: none;
+  }
+
+  // Contributor avatars: each avatar is an <img> wrapped in an <a>. By default
+  // the links are inline and sit on the text baseline, so their clickable box
+  // collapses to the line box below the image instead of hugging the circle
+  // (the link hit-target ends up well below the visible avatar). Lay the row
+  // out as flex and make each link a flex box that wraps its image tightly, so
+  // the clickable area matches the visible avatar.
+  div:has(> a > img.no-zoom) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+
+    a {
+      display: flex;
+      line-height: 0;
+    }
+
+    // Drop the default markdown image bottom margin so the link box hugs the
+    // circle instead of extending below it.
+    img.no-zoom {
+      margin: 0;
+    }
   }
 }
 
