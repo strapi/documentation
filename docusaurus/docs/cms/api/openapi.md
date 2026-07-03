@@ -161,7 +161,7 @@ The generated OpenAPI specification includes all available API endpoints in your
 - File upload endpoints for media handling
 - Plugin endpoints from installed plugins
 
-## Configuration
+## Configuring 
 
 By default, Strapi does not expose HTTP endpoints for the generated OpenAPI specification. To opt in, add an `openapi` key to the `/config/server` file.
 
