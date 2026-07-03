@@ -50,22 +50,22 @@ Recommended maximum image size, expressed in megapixels (MP), per format and pla
 
 | Format | Essential | Pro & Scale |
 |--------|------------------|-------------|
-| JPEG   | 24 MP            | 135 MP      |
-| PNG    | 8 MP             | 90 MP       |
+| JPEG   | 26 MP            | 135 MP      |
+| PNG    | 10 MP            | 90 MP       |
 | WebP   | 4 MP             | 12 MP       |
-| TIFF   | 16 MP            | 125 MP      |
-| AVIF   | 66 MP            | 80 MP       |
+| TIFF   | 24 MP            | 125 MP      |
+| AVIF   | 92 MP            | 92 MP       |
 
 </TabItem>
 <TabItem value="off" label="Processing off">
 
 | Format | Essential | Pro & Scale |
 |--------|------------------|-------------|
-| JPEG   | 200 MP           | 265 MP      |
-| PNG    | 20 MP            | 115 MP      |
+| JPEG   | 224 MP           | 265 MP      |
+| PNG    | 24 MP            | 115 MP      |
 | WebP   | 15 MP            | 40 MP       |
-| TIFF   | 20 MP            | 125 MP      |
-| AVIF   | 74 MP            | 90 MP       |
+| TIFF   | 24 MP            | 125 MP      |
+| AVIF   | 96 MP            | 96 MP       |
 
 </TabItem>
 </Tabs>
