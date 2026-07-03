@@ -1,0 +1,90 @@
+name: Absence notice
+
+# Posts a friendly auto-reply comment on each new PR opened against `main`
+# while the maintainer is away, letting contributors know their PR will be
+# reviewed once the team is back.
+#
+# HOW TO CUSTOMIZE — edit the three values in the `env` block below:
+#   ABSENCE_START / ABSENCE_END : the absence period (inclusive, Europe/Paris time).
+#   IGNORED_AUTHORS             : comma-separated PR authors whose PRs are skipped.
+# The comment text lives in the `script:` block further down.
+# One period is active at a time: re-edit the dates between absences.
+
+on:
+  pull_request_target:
+    types: [opened]
+    branches: [main]
+
+permissions:
+  pull-requests: write
+
+env:
+  ABSENCE_START: '2026-07-04'          # first day away (inclusive, Europe/Paris)
+  ABSENCE_END:   '2026-07-14'          # last day away (inclusive, Europe/Paris)
+  IGNORED_AUTHORS: 'pwizla,claude'     # comma-separated PR authors to skip
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post absence notice if within the absence period
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const start = process.env.ABSENCE_START;
+            const end = process.env.ABSENCE_END;
+            const ignored = (process.env.IGNORED_AUTHORS || '')
+              .split(',')
+              .map((a) => a.trim().toLowerCase())
+              .filter(Boolean);
+
+            const author = context.payload.pull_request.user.login;
+
+            // Skip ignored authors (e.g. the maintainer and Claude).
+            if (ignored.includes(author.toLowerCase())) {
+              console.log(`Author "${author}" is in the ignore list — no comment.`);
+              return;
+            }
+
+            // Validate the configured dates. Fail-safe: never post on misconfiguration.
+            const isValidDate = (s) => /^\d{4}-\d{2}-\d{2}$/.test(s || '');
+            if (!isValidDate(start) || !isValidDate(end)) {
+              console.error(
+                `Invalid ABSENCE_START ("${start}") or ABSENCE_END ("${end}"). ` +
+                'Expected YYYY-MM-DD. No comment posted.'
+              );
+              return;
+            }
+
+            // Today's date in Europe/Paris. `en-CA` yields zero-padded YYYY-MM-DD,
+            // so lexicographic string comparison equals chronological comparison.
+            const today = new Intl.DateTimeFormat('en-CA', {
+              timeZone: 'Europe/Paris',
+            }).format(new Date());
+
+            // Bounds inclusive.
+            if (today < start || today > end) {
+              console.log(
+                `Today (${today}) is outside the absence period ` +
+                `(${start} → ${end}) — no comment.`
+              );
+              return;
+            }
+
+            const body = [
+              '👋 Thank you so much for contributing to the Strapi documentation!',
+              '',
+              "Our team is currently away and won't be able to review your pull request right away. Rest assured we'll get to it as soon as we're back. Thanks a lot for your patience! 🙏",
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body,
+            });
+
+            console.log(
+              `Posted absence notice on PR #${context.payload.pull_request.number} ` +
+              `by ${author} (within ${start} → ${end}).`
+            );
