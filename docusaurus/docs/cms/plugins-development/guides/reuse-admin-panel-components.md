@@ -15,6 +15,10 @@ tags:
 
 # How to reuse built-in admin panel components in plugins
 
+<Tldr>
+Built-in admin panel components are exposed through the component registry, which you read with the `useStrapiApp` hook. This guide uses the Media Library dialog (`MediaLibraryDialog`) as an example: access it from the registry, then render it to reuse Strapi's asset-selection dialog, optionally pre-selecting assets with the `initiallySelectedAssets` prop.
+</Tldr>
+
 When [developing a Strapi plugin](/cms/plugins-development/developing-plugins) or customizing the admin panel, you might want to reuse a React component that Strapi already ships in its admin panel instead of building your own. Built-in components are exposed through the admin panel's component registry, which you access with the `useStrapiApp` hook.
 
 This guide uses the Media Library dialog (`MediaLibraryDialog`) as an example, but the same approach works for any component registered in the admin panel.
