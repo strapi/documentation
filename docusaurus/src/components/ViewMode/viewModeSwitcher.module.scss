@@ -3,39 +3,52 @@
 .switcher {
   display: flex;
   align-items: center;
-  gap: 4px;
+  // Mode tabs on the left, width toggle on the right.
+  justify-content: space-between;
+  gap: 8px;
+  // Pinned right below the sticky navbar, always visible — no scroll-driven
+  // show/hide. The top padding gives it breathing room under the navbar.
   position: sticky;
-  // Vertically aligned with the NAVIGATION / ON THIS PAGE sidebar labels and
-  // the content-width toggle. Lower offset than the toggle because this block
-  // sits in the article flow with its own top padding, which pushes it down.
-  top: calc(var(--ifm-navbar-height, 3.75rem) + 9px);
+  top: var(--ifm-navbar-height, 3.75rem);
   z-index: 10;
-  // The switcher sits at the very top of the article flow, which starts ~13px
-  // lower than the sidebar labels and the width toggle. Pull it up so the top
-  // of all four (NAVIGATION, switcher, width toggle, ON THIS PAGE) line up.
-  margin-top: -13px;
-  margin-bottom: 8px;
-  padding: 6px 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  flex-wrap: wrap;
-  // Opaque background so it doesn't blend with content when scrolling.
+  padding-top: 40px;
+  // Height of the fade-out band below the bar; the bottom margin matches it
+  // so the page title starts below the gradient instead of under it.
+  --fade-height: 40px;
+  margin-bottom: var(--fade-height);
+  // Opaque background + side bleed so content doesn't show through or peek
+  // around the edges while scrolling underneath.
   background: var(--strapi-surface-1);
-  // Ensure background covers full width and hides content scrolling underneath
-  margin-left: -16px;
-  margin-right: -16px;
-  padding-left: 16px;
-  padding-right: 16px;
+
+  // Fade-out below the bar, so content scrolling underneath dissolves into
+  // the background instead of being cut on a hard edge.
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: var(--fade-height);
+    background: linear-gradient(to bottom, var(--strapi-surface-1), transparent);
+    pointer-events: none;
+  }
 
   @include small-down {
     position: static;
     background: transparent;
+    margin-bottom: 0;
+
+    &::after {
+      display: none;
+    }
   }
 }
 
-.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-10px);
+.modes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
 }
 
 .button {
@@ -43,13 +56,6 @@
   align-items: center;
   gap: 4px;
   padding: 4px 10px;
-
-  // The switcher row is inset (button padding) so the first tab sat to the
-  // right of the H1. Pull the first button left so its content lines up with
-  // the H1 (and the page body).
-  &:first-child {
-    margin-left: -16px;
-  }
   border: none;
   border-radius: 6px;
   background: transparent;
@@ -93,7 +99,6 @@
 }
 
 @include dark {
-  // .switcher background comes from surface-1 (set above), which already adapts.
   .button {
     color: var(--strapi-neutral-400);
 

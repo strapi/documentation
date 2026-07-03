@@ -9,6 +9,13 @@
   display: none !important;
 }
 
+// The margin actually sits on the wrapping <nav> (.theme-doc-breadcrumbs),
+// which stays in the DOM with the theme's own margin-bottom (0.8rem) even
+// though the list inside is hidden. Zero it out too.
+.theme-doc-breadcrumbs {
+  margin-bottom: 0 !important;
+}
+
 /* Original styles kept below for reference, but overridden by display:none above */
 .breadcrumbs--original {
   --ifm-breadcrumb-item-background-active: transparent;

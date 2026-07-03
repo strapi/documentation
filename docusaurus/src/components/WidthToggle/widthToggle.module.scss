@@ -1,5 +1,7 @@
 @use '../../scss/mixins' as *;
 
+// Rendered inside the ViewModeSwitcher sticky bar (right side); it carries no
+// positioning of its own.
 .widthToggle {
   display: none;
 
@@ -7,22 +9,7 @@
     display: inline-flex;
     align-items: center;
     gap: 2px;
-    padding: 0;
-    border-radius: 6px;
-    background: transparent;
-    position: sticky;
-    // Vertically aligned with the NAVIGATION / ON THIS PAGE sidebar labels and
-    // the mode switcher (top of all four kept in line).
-    top: calc(var(--ifm-navbar-height, 3.75rem) + 22px);
-    z-index: 1;
-    float: right;
-    transition: opacity 0.3s ease;
   }
-}
-
-.hidden {
-  opacity: 0;
-  pointer-events: none;
 }
 
 .button {

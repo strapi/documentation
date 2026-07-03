@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './widthToggle.module.scss';
 
 const STORAGE_KEY = 'strapi-content-width';
-const SCROLL_THRESHOLD = 50;
 const WIDTHS = [
   { value: 'default', label: 'Default width', icon: 'arrows-in-line-horizontal' },
   { value: 'wide', label: 'Wide width', icon: 'arrows-out-line-horizontal' },
@@ -35,8 +34,6 @@ function getDomWidth() {
 export default function WidthToggle() {
   // SSR renders 'default'; the real value is synced from the DOM after mount.
   const [width, setWidth] = useState('default');
-  const [visible, setVisible] = useState(true);
-  const lastScrollY = useRef(0);
 
   // On mount: apply the stored width to the DOM (if not already set), then keep
   // this instance's state in sync with the DOM attribute. A MutationObserver
@@ -57,23 +54,6 @@ export default function WidthToggle() {
       attributeFilter: ['data-content-width'],
     });
     return () => observer.disconnect();
-  }, []);
-
-  // Auto-hide on scroll down, show on scroll up
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      if (currentY < SCROLL_THRESHOLD) {
-        setVisible(true);
-      } else if (currentY > lastScrollY.current) {
-        setVisible(false);
-      } else {
-        setVisible(true);
-      }
-      lastScrollY.current = currentY;
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleChange = useCallback((value) => {
@@ -112,7 +92,7 @@ export default function WidthToggle() {
 
   return (
     <div
-      className={`${styles.widthToggle} ${visible ? '' : styles.hidden}`}
+      className={styles.widthToggle}
       role="radiogroup"
       aria-label="Content width"
       onKeyDown={handleKeyDown}

@@ -1,8 +1,8 @@
 /**
- * Swizzled DocItem/Layout — adds WidthToggle inside the article container.
+ * Swizzled DocItem/Layout — adds the view-mode switcher bar (mode tabs +
+ * WidthToggle) at the top of the article element.
  *
- * Based on the original Docusaurus DocItemLayout, with WidthToggle
- * inserted at the top of the article element.
+ * Based on the original Docusaurus DocItemLayout.
  */
 import React from 'react';
 import clsx from 'clsx';
@@ -17,7 +17,6 @@ import DocItemTOCDesktop from '@theme/DocItem/TOC/Desktop';
 import DocItemContent from '@theme/DocItem/Content';
 import DocBreadcrumbs from '@theme/DocBreadcrumbs';
 import ContentVisibility from '@theme/ContentVisibility';
-import WidthToggle from '@site/src/components/WidthToggle/WidthToggle';
 import ViewModeSwitcher from '@site/src/components/ViewMode/ViewModeSwitcher';
 import AiPanel from '@site/src/components/ViewMode/AiPanel';
 import styles from '@docusaurus/theme-classic/lib/theme/DocItem/Layout/styles.module.css';
@@ -46,15 +45,14 @@ export default function DocItemLayout({children}) {
     <>
       <div className="row">
         <div className={clsx('col', !docTOC.hidden && styles.docItemCol)}>
-          <WidthToggle />
           <ContentVisibility metadata={metadata} />
           <DocVersionBanner />
           <div className={styles.docItemContainer}>
             <article>
+              <ViewModeSwitcher />
               <DocBreadcrumbs />
               <DocVersionBadge />
               {docTOC.mobile}
-              <ViewModeSwitcher />
               <DocItemContent>{children}</DocItemContent>
               <DocItemFooter />
             </article>

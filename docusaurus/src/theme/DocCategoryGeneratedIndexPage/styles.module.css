@@ -41,3 +41,16 @@
 .list article:last-child {
   margin-bottom: 0 !important;
 }
+
+/* The WidthToggle carries no positioning of its own (on doc pages it lives in
+   the sticky view-mode bar). These pages have no view-mode bar, so give the
+   standalone toggle its own right-aligned sticky row below the navbar. */
+.widthToggleRow {
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
+  top: var(--ifm-navbar-height, 3.75rem);
+  z-index: 10;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}

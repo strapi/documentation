@@ -56,7 +56,9 @@ function DocCategoryGeneratedIndexPageContent({ categoryGeneratedIndex }) {
     <div className={styles.generatedIndexPage}>
       {/* Content-width selector, so these pages can be widened/narrowed like
           regular doc pages (they follow --doc-content-max-width). */}
-      <WidthToggle />
+      <div className={styles.widthToggleRow}>
+        <WidthToggle />
+      </div>
       <DocVersionBanner />
       <DocBreadcrumbs />
       <DocVersionBadge />

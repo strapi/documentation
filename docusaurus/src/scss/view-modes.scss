@@ -60,25 +60,6 @@
     max-width: calc(100% + 24px);
   }
 
-  // Mode switcher: the markdown "tighten everything" rules zero its negative
-  // top margin, which dropped the toolbar ~13px lower than in elegant mode.
-  // Re-apply it so the toolbar stays at a fixed height below the navbar in
-  // both modes.
-  [class*="switcher"] {
-    margin-top: -13px !important;
-  }
-
-  // On mobile the negative margin above is calibrated for desktop, where the
-  // switcher follows the breadcrumb. On mobile the collapsible "On this page"
-  // TOC sits right above it (and markdown zeroes that TOC's bottom spacing), so
-  // -13px pulled the switcher flush against the TOC. Restore a small positive
-  // gap there so the mode bar isn't glued to the TOC.
-  @include medium-down {
-    [class*="switcher"] {
-      margin-top: 8px !important;
-    }
-  }
-
   // Flatten card grids into simple list (article only)
   article [class*="docCardList"],
   article [class*="customDocCardsWrapper"],
@@ -801,9 +782,17 @@
     display: none !important;
   }
 
-  // Prevent sticky switcher from overlapping h1
+  // AI mode's split layout breaks sticky positioning and made the switcher
+  // overlap the h1. Keep it in the normal flow there, without the fade-out
+  // gradient (it only makes sense under a pinned bar) — and without the
+  // matching bottom margin that reserves space for it.
   article [class*="switcher"] {
     position: static;
+    margin-bottom: 8px;
+
+    &::after {
+      display: none;
+    }
   }
 
   // Sidebar in AI mode: start collapsed, show content when expanded
