@@ -218,6 +218,14 @@ export default {
 Setting `content-api.access` to `authenticated` or `admin.access` to `public` throws an error at startup.
 :::
 
+:::note
+Role-based access control for OpenAPI endpoints is not supported yet. The admin endpoint uses the `admin::isAuthenticatedAdmin` policy and does not filter by admin role or permission: any authenticated admin user can read the specification.
+:::
+
+:::tip
+A public Content API specification describes your entire Content API surface, including content types that are not publicly readable, to anyone who can reach the endpoint. If you do not want to expose the specification without authentication, leave `content-api.access` at `'disabled'` and use the CLI to generate a static file instead.
+:::
+
 ### Endpoint options
 
 Besides `access`, each endpoint (`content-api` and `admin`) accepts the following options:
