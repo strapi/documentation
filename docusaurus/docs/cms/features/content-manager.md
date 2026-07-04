@@ -282,6 +282,21 @@ Note also that the settings are defined for the component itself, which means th
 
 <br/>
 
+### Navigating from the list view
+
+From the list view, you can navigate to an entry's edit page in several ways:
+
+- **Primary column link**: Click on the primary (first text) column of any row to open the entry in the same tab. Standard browser shortcuts also work to open in a new tab:
+  - **Cmd/Ctrl+click** or **Middle-click** opens in a new tab or background tab
+  - **Right-click** → "Open in new tab" or "Copy link" enables native browser menu options
+  - Hovering over the primary column displays the entry's URL
+
+- **Three-dots menu**: Click the <Icon name="dots-three-outline" /> button at the end of a row and select **Open in new tab** to open the entry in a new browser tab. This provides an explicit, discoverable action for opening entries in external tabs.
+
+:::note
+The primary column link skips interactive columns (media, relations, components, dynamic zones) and synthetic columns (status, documentId, createdBy, updatedBy) to avoid nesting interactive elements inside anchor tags. If the first column is one of these types, use the three-dots menu action instead.
+:::
+
 ### Creating & Writing content
 
 In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media, etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/cms/features/content-type-builder).
