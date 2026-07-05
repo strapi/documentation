@@ -414,6 +414,10 @@ The `ForbiddenError` class is a specific error class used when a user either doe
 throw new errors.ForbiddenError('Ah ah ah, you didn\'t say the magic word');
 ```
 
+:::note
+The custom `message` passed to `ForbiddenError` is not included in the API response. Instead, the API returns the default message. If you need to return a custom error message indicating insufficient permissions, use [`PolicyError`](#policies) instead.
+:::
+
 </TabItem>
 
 <TabItem value="Unauthorized" label="Unauthorized">
