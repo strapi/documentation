@@ -694,6 +694,46 @@
       "number": 26358,
       "reason": "Router: Internal Documentation plugin fix for OpenAPI schema generation. Updates the Swagger schema metadata for the populate parameter but does not change user-facing API behavior or require user documentation updates.",
       "added": "2026-07-04"
+    },
+    {
+      "number": 26854,
+      "reason": "Triage: CI/build tooling configuration",
+      "added": "2026-07-07"
+    },
+    {
+      "number": 26800,
+      "reason": "Triage: ESLint config and build infrastructure",
+      "added": "2026-07-07"
+    },
+    {
+      "number": 26780,
+      "reason": "Triage: Example/template internal configuration",
+      "added": "2026-07-07"
+    },
+    {
+      "number": 26907,
+      "reason": "Router: Internal error handling fix. Changes REST API error responses for malformed sort parameters from 500 to 400 with proper ValidationError. This is a bug fix in error middleware that doesn't change the public API surface or introduce new features—it makes error messages more correct. No documentation updates needed.",
+      "added": "2026-07-07"
+    },
+    {
+      "number": 26867,
+      "reason": "Router: Admin panel UI improvement. Reorganizes sidebar layout in Content-Type Builder and Content Manager so primary actions stay fixed when scrolling. This is an internal UI/UX change affecting only the admin panel. No user-facing documentation needed.",
+      "added": "2026-07-07"
+    },
+    {
+      "number": 26838,
+      "reason": "Router: Internal database layer fix. Prevents self-referential relation order from being disrupted when a child entry is republished independently with Draft & Publish enabled. This is a correctness fix for internal relation handling. No public API change or feature documentation needed.",
+      "added": "2026-07-07"
+    },
+    {
+      "number": 26210,
+      "reason": "Router: Internal relation handling fix. Resolves a crash in the admin panel when drag-reordering and removing relations in the same save operation. This is an internal bug fix affecting admin panel stability, not a public API change. No documentation updates needed.",
+      "added": "2026-07-07"
+    },
+    {
+      "number": 26195,
+      "reason": "Router: TypeScript 6 compatibility fix in the type generator. Emits modern 'namespace' keyword instead of deprecated 'module' for internal declarations, updates JSDoc examples, and fixes phantom augmentation paths. This is a tooling/build fix ensuring type generation aligns with TypeScript 6. No user-facing documentation updates needed.",
+      "added": "2026-07-07"
     }
   ]
 }
