@@ -17,7 +17,7 @@ import InvoiceStatus from '/docs/snippets/invoices-statuses.md'
 # Cloud project settings
 
 <Tldr>
-Settings area spans project-level controls (general, billing, plans, invoices) and per-environment configuration.
+Settings area spans project-level controls (general, billing & invoices, plans) and per-environment configuration.
 </Tldr>
 
 From a chosen project's dashboard, the <Icon name="gear-six" /> **Settings** button, located in the header, enables you to manage the configurations and settings for your Strapi Cloud project and its environments.
@@ -26,12 +26,11 @@ The settings' menu on the left side of the interface is separated into 2 categor
 
 ## Project-level settings
 
-There are 5 tabs available for the project settings:
+There are 4 tabs available for the project settings:
 - <Icon name="faders" /> [*General*](#general),
 - <Icon name="stack" /> [*Environments*](#environments),
-- <Icon name="credit-card" /> [*Billing & Usage*](#billing--usage),
-- <Icon name="map-trifold" /> [Plans](#plans),
-- and <Icon name="invoice" /> [Invoices](#invoices).
+- <Icon name="credit-card" /> [*Billing & Invoices*](#billing--invoices),
+- and <Icon name="map-trifold" /> [*Plans*](#plans).
 
 ### General
 
@@ -188,31 +187,37 @@ To create a new environment:
 If an error occurs during the environment creation, the progress indicator will stop and display an error message. You will see a **Retry** button next to the failed step, allowing you to restart the creation process.
 :::
 
-### Billing & Usage
+### Billing & Invoices
 
-The <Icon name="credit-card" /> *Billing & Usage* tab displays your next estimated payment, all information on the current subscription plan and a detailed summary of the project's usage. It also allows you to add new environments (please [refer to the documentation in the Environments section](#environments)) for your project.
-
-Through this tab, you also have the possibility to:
-- click the **Change** button to be redirected to the <Icon name="map-trifold" /> *Plans* tab, where you can change your subscription plan or billing cycle ([see related documentation](#plans)),
-- click the **Edit** button in order to set a new payment method (see [related documentation](/cloud/account/account-billing)).
+The <Icon name="credit-card" /> *Billing & Invoices* tab displays your subscription details and the full list of invoices for your Strapi Cloud project.
 
 :::note
-You can attach a dedicated card to your project by choosing the payment method directly from this page. In that way, you can manage your subscriptions with different cards.
+Only project owners can access the *Billing & Invoices* tab. Maintainers do not have access to this tab.
 :::
 
-:::tip
-In the Usage section of the <Icon name="credit-card" /> *Billing & Usage* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the arrows in the top right corner to see the project's usage for any chosen month.
+Through this tab, you can:
+- click the **Change** button to be redirected to the <Icon name="map-trifold" /> *Plans* tab, where you can change your subscription plan or billing cycle (see [Plans](#plans)),
+- click the **Edit** button to set a new payment method (see [related documentation](/cloud/account/account-billing)).
 
-Note also that if your usage indicates that another subscription plan would fit better for your project, a message will be displayed in the <Icon name="credit-card" /> *Billing & Usage* tab to advise which plan you could switch to.
+:::note
+You can attach a dedicated card to your project by choosing the payment method directly from this page, allowing you to manage your subscriptions with different cards.
 :::
 
 <ThemedImage
-  alt="Project billing"
+  alt="Project billing and invoices"
   sources={{
     light: '/img/assets/cloud/settings_billing.png',
     dark: '/img/assets/cloud/settings_billing_DARK.png',
   }}
 />
+
+The tab also lists all invoices for your Strapi Cloud project and their status.
+
+<InvoiceStatus components={props.components} />
+
+:::strapi Invoices are also available in your profile settings.
+In the *Profile > Invoices* tab, you will find the complete list of invoices for all your projects. Feel free to check the [dedicated documentation](/cloud/account/account-billing#account-invoices).
+:::
 
 ### Plans
 
@@ -221,14 +226,6 @@ The <Icon name="map-trifold" /> *Plans* tab displays an overview of the availabl
 :::info
 If your current plan is labeled as *legacy*, you will be able to sidegrade to a new plan (see [downgrade section](#downgrading-to-another-plan)). Once you sidegrade, you will no longer have access to your previous plan.
 :::
-
-<ThemedImage
-  alt="Project plans"
-  sources={{
-    light: '/img/assets/cloud/settings_plans.png',
-    dark: '/img/assets/cloud/settings_plans_DARK.png',
-  }}
-/>
 
 #### Upgrading to another plan
 
@@ -278,25 +275,6 @@ To change your billing cycle:
 
 :::note
 When switching from yearly to monthly billing, your plan will remain on its yearly cycle until your next renewal date. Whilst the change is pending, you can cancel the scheduled change and stay on your current billing cycle. When switching from monthly to yearly, however, the change is immediate.
-:::
-
-### Invoices
-
-The <Icon name="invoice" /> *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status.
-
-
-<ThemedImage
-  alt="Project invoices"
-  sources={{
-    light: '/img/assets/cloud/settings_invoices.png',
-    dark: '/img/assets/cloud/settings_invoices_DARK.png',
-  }}
-/>
-
-<InvoiceStatus components={props.components} />
-
-:::strapi Invoices are also available in your profile settings.
-In the *Profile > Invoices* tab, you will find the complete list of invoices for all your projects. Feel free to check the [dedicated documentation](/cloud/account/account-billing#account-invoices).
 :::
 
 ## Environment-level settings

@@ -56,7 +56,7 @@ The usage limits of additional environments are the same as for the project's pr
  
 ## Billing
 
-Billing is based on the usage of your Strapi Cloud projects. Project plans and addons are either billed monthly or yearly, depending on your billing cycle, while overages are billed monthly. You can view your usage and billing information in the *Billing & Usage* section of your project settings.
+Billing is based on the usage of your Strapi Cloud projects. Project plans and addons are either billed monthly or yearly, depending on your billing cycle, while overages are billed monthly. You can view your billing information in the *Billing & Invoices* tab of your project settings.
 
 ### Taxes
 
@@ -90,7 +90,7 @@ If you have unpaid invoices, the subscription of your project will automatically
 
 To reactivate your project subscription:
 
-1. Click the **Pay now** button in the project banner, or in *Settings > Billing & Usage*
+1. Click the **Pay now** button in the project banner, or in *Settings > Billing & Invoices*
 2. Pay your overdue invoice(s) on the external payment page
 3. Wait up to 1 minute for your project to reactivate
 
