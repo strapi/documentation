@@ -1846,8 +1846,6 @@ The *Observability* tab is accessible from your project dashboard. It contains 4
 
 The *Summary* section displays a monthly overview of your resource consumption and any overage charges.
 
-<!-- TODO: Replace with production screenshot -->
-
 Use the month picker in the top-right corner of the section to view previous months.
 
 The section contains 4 metric cards:
@@ -1869,8 +1867,6 @@ For more information on usage billing and overage management, see [Usage & Billi
 
 The *Project consumption* section shows API requests and asset bandwidth usage over time, broken down by environment.
 
-<!-- TODO: Replace with production screenshot -->
-
 Use the time range selector in the top-right corner to adjust the period displayed:
 
 | Time range | Plan availability |
@@ -1891,8 +1887,6 @@ Each bar represents a time bucket (hourly or daily, depending on the selected ra
 ## Traffic insights
 
 The *Traffic insights* section shows which API endpoints and assets generate the most traffic for the selected environment and time range.
-
-<!-- TODO: Replace with production screenshot -->
 
 Use the *environment* dropdown and the time range selector to filter the data. The available time ranges are the same as in [Project consumption](#project-consumption).
 
@@ -1922,8 +1916,6 @@ The *Top assets by bandwidth usage* table lists the 5 assets that consumed the m
 ## CPU and Memory usage
 
 The *CPU and Memory over time* section shows your application's CPU and Memory consumption as a percentage of the available resources.
-
-<!-- TODO: Replace with production screenshot -->
 
 The section displays a single area chart with 2 series:
 
@@ -2158,8 +2150,6 @@ Through this tab, you can:
 :::note
 You can attach a dedicated card to your project by choosing the payment method directly from this page, allowing you to manage your subscriptions with different cards.
 :::
-
-<!-- TODO: Replace with production screenshot of the Billing & Invoices tab -->
 
 The tab also lists all invoices for your Strapi Cloud project and their status.
 
