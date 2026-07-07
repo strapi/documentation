@@ -48,11 +48,3 @@ If for any reason you want to cancel an ongoing and unfinished deployment:
 :::tip
 You can also cancel a deployment from the *Deployments* tab which lists the deployments history. The card of ongoing deployment with the *Building* status will display a ![Cancel button](/img/assets/icons/clear.svg) button for cancelling the deployment.
 :::
-
-<ThemedImage
-  alt="Cancelling deploy"
-  sources={{
-    light: '/img/assets/cloud/cancel-deploy.png',
-    dark: '/img/assets/cloud/cancel-deploy_DARK.png',
-  }}
-/>

@@ -79,5 +79,5 @@ The <Icon name="invoice" /> *Invoices* tab displays the complete list of invoice
 <InvoiceStatus components={props.components} />
 
 :::strapi Invoices are also available per project.
-In the *Settings > Invoices* tab of any project, you will find the invoices for that project only. Feel free to check the [dedicated documentation](/cloud/projects/settings#invoices).
+In the *Settings > Billing & Invoices* tab of any project, you will find the invoices for that project only. Feel free to check the [dedicated documentation](/cloud/projects/settings#billing--invoices).
 :::

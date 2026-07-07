@@ -649,6 +649,7 @@ const sidebars = {
         },
         'cloud/projects/collaboration',
         'cloud/projects/logs',
+        'cloud/projects/observability',
       ],
     },
     { // Deployments
