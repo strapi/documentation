@@ -734,6 +734,21 @@
       "number": 26195,
       "reason": "Router: TypeScript 6 compatibility fix in the type generator. Emits modern 'namespace' keyword instead of deprecated 'module' for internal declarations, updates JSDoc examples, and fixes phantom augmentation paths. This is a tooling/build fix ensuring type generation aligns with TypeScript 6. No user-facing documentation updates needed.",
       "added": "2026-07-07"
+    },
+    {
+      "number": 26893,
+      "reason": "Triage: test infrastructure - scopes warning to appropriate environment to reduce test noise",
+      "added": "2026-07-08"
+    },
+    {
+      "number": 26929,
+      "reason": "Router: Internal CLI upgrade tool behavior; does not affect user-facing CMS features or public APIs. This is a tooling improvement for developers running the upgrade command, not a change to the core Strapi CMS behavior that end users interact with.",
+      "added": "2026-07-08"
+    },
+    {
+      "number": 26751,
+      "reason": "Router: Internal database query builder fix for a PostgreSQL-specific edge case (DISTINCT + status sort). This is an implementation detail that does not change user-facing APIs or behaviors. Users experience only a bug fix: sorting by Status now works when a relation filter is applied.",
+      "added": "2026-07-08"
     }
   ]
 }
