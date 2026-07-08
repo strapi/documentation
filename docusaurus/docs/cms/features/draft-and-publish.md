@@ -56,6 +56,17 @@ When this future flag is enabled (see [features configuration](/cms/configuratio
 If the feature flag is disabled later, the `firstPublishedAt` attribute and its stored values are removed.
 :::
 
+### Reserved attribute names
+
+When Draft & Publish is enabled on a content type, the attribute name `status` is reserved by Strapi and cannot be used for a user-defined attribute. The Content-type Builder will block:
+
+- Adding an attribute named `status` to a Draft & Publish-enabled content type.
+- Enabling Draft & Publish on a content type that already has a `status` attribute.
+
+:::caution
+If a content type inherited a `status` attribute from a Strapi v4 project, Strapi 5 logs a warning at bootstrap. Rename the attribute before re-enabling Draft & Publish to avoid API conflicts. See the [migration guide](/cms/migration/v4-to-v5/breaking-changes/reserved-attributes-status) for the full procedure.
+:::
+
 ## Usage
 
 With Draft & Publish enabled, the [Content Manager's edit view](/cms/features/content-manager#overview) indicates the current status of your content type's entry at the top of the interface. Your content can have 3 statuses:
