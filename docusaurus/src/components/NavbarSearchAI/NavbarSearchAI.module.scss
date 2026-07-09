@@ -3,22 +3,12 @@
 .wrapper {
   display: flex;
   align-items: center;
-  border: 1px solid var(--strapi-neutral-200);
-  border-radius: 10px;
+  border: 1px solid var(--strapi-border);
+  border-radius: 8px;
   background: var(--strapi-neutral-0);
   height: 36px;
-  min-width: 310px;
   overflow: hidden;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-
-  &:hover {
-    border-color: var(--strapi-neutral-300);
-  }
-
-  &:focus-within {
-    border-color: var(--strapi-primary-500);
-    box-shadow: 0 0 0 3px rgba(73, 69, 255, 0.1);
-  }
+  box-shadow: var(--strapi-shadow-xs);
 }
 
 /** Search slot: override MeiliSearch defaults */
@@ -28,19 +18,11 @@
   flex: 1 1 50%;
   height: 100%;
   overflow: hidden;
-  border-radius: 9px 0 0 9px;
+  border-radius: 8px 0 0 8px;
   transition: background 0.15s ease;
 
   &:hover {
     background: var(--strapi-neutral-100);
-
-    :global(.docsearch-btn-placeholder) {
-      color: var(--strapi-neutral-600);
-    }
-
-    :global(.docsearch-btn-placeholder)::before {
-      color: var(--strapi-primary-500);
-    }
   }
 
   :global(.navbar__search) {
@@ -60,10 +42,8 @@
     min-width: 0;
     box-sizing: border-box;
     cursor: pointer;
-    padding: 0 10px;
     font-family: var(--strapi-font-family-body);
     font-size: 13px;
-    color: var(--strapi-neutral-500);
   }
 
   :global(.docsearch-btn-icon-container) {
@@ -71,20 +51,21 @@
   }
 
   :global(.docsearch-btn-placeholder) {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
     font-family: var(--strapi-font-family-body);
     font-size: 13px;
     font-weight: 500;
-    color: var(--strapi-neutral-400);
     transition: color 0.15s ease;
 
     &::before {
-      content: '\E30C';
-      font-family: "Phosphor";
-      color: var(--strapi-neutral-400);
-      margin-right: 8px;
+      content: '\E30C'; /* Phosphor magnifying-glass (same glyph as .ph-magnifying-glass) */
+      font-family: "Phosphor-Bold";
       font-size: 15px;
-      position: relative;
-      top: 2px;
+      line-height: 1;
       transition: color 0.15s ease;
     }
   }
@@ -101,7 +82,6 @@
     background: var(--strapi-neutral-100);
     border: none;
     border-radius: 4px;
-    padding: 1px 4px;
     box-shadow: none;
     line-height: 1.4;
     width: auto;
@@ -111,8 +91,8 @@
 
 .divider {
   width: 1px;
-  height: 20px;
-  background: var(--strapi-neutral-200);
+  height: 36px;
+  background: var(--strapi-border);
   flex-shrink: 0;
 }
 
@@ -123,12 +103,10 @@
   gap: 7px;
   flex: 1 1 50%;
   height: 100%;
-  padding: 0 12px;
   border: none;
   background: transparent;
   cursor: pointer;
   white-space: nowrap;
-  color: var(--strapi-neutral-400);
   font-family: var(--strapi-font-family-body);
   font-size: 13px;
   font-weight: 500;
@@ -137,7 +115,6 @@
 
   i {
     font-size: 15px;
-    color: var(--strapi-neutral-400);
     position: relative;
     top: 1px;
     transition: color 0.15s ease;
@@ -145,44 +122,42 @@
 
   &:hover {
     background: var(--strapi-neutral-100);
-    color: var(--strapi-neutral-600);
-
-    i {
-      color: var(--strapi-primary-500);
-    }
   }
+}
+
+/** Shared horizontal padding and text color for both buttons (search + Ask AI) */
+.wrapper :is(:global(.docsearch-btn), .askAI) {
+  padding: 0 16px 0  12px;
+  color: var(--strapi-neutral-800);
+}
+
+/** Shared icon color for both buttons (search + Ask AI) */
+.wrapper :global(.docsearch-btn-placeholder)::before,
+.wrapper .askAI i {
+  color: var(--strapi-neutral-500);
 }
 
 /** Dark mode */
 @include dark {
   .wrapper {
     background: var(--strapi-neutral-100);
-    border-color: var(--strapi-neutral-300);
-
-    &:hover {
-      border-color: var(--strapi-neutral-400);
-    }
   }
 
   .searchSlot:hover {
     background: rgba(255, 255, 255, 0.06);
-
-    :global(.docsearch-btn-placeholder) {
-      color: rgba(255, 255, 255, 0.8);
-    }
-  }
-
-  .divider {
-    background: var(--strapi-neutral-300);
   }
 
   .askAI:hover {
     background: rgba(255, 255, 255, 0.06);
-    color: rgba(255, 255, 255, 0.8);
+  }
 
-    i {
-      color: var(--strapi-primary-500);
-    }
+  .wrapper :is(:global(.docsearch-btn), .askAI) {
+    color: var(--strapi-neutral-800);
+  }
+
+  .wrapper :global(.docsearch-btn-placeholder)::before,
+  .wrapper .askAI i {
+    color: var(--strapi-neutral-500);
   }
 }
 
