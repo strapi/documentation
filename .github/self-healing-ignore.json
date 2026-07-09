@@ -749,6 +749,16 @@
       "number": 26751,
       "reason": "Router: Internal database query builder fix for a PostgreSQL-specific edge case (DISTINCT + status sort). This is an implementation detail that does not change user-facing APIs or behaviors. Users experience only a bug fix: sorting by Status now works when a relation filter is applied.",
       "added": "2026-07-08"
+    },
+    {
+      "number": 26935,
+      "reason": "Triage: internal hardening of license validation logic, no user-facing behavior change",
+      "added": "2026-07-09"
+    },
+    {
+      "number": 26819,
+      "reason": "Triage: build tooling/script organization change, no user-facing behavior change",
+      "added": "2026-07-09"
     }
   ]
 }
