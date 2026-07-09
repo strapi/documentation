@@ -219,6 +219,7 @@
   text-decoration: none !important;
   color: inherit;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--strapi-shadow-xs);
 
   &:hover {
     border-color: var(--strapi-accent-light);
@@ -254,7 +255,7 @@
 .quickstartTitle {
   font-family: var(--strapi-font-family-display);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--strapi-fg-1);
   margin-bottom: 4px;
@@ -316,6 +317,7 @@
   text-decoration: none !important;
   color: inherit;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--strapi-shadow-xs);
 
   &:hover {
     border-color: var(--strapi-accent-light);
@@ -413,7 +415,9 @@
   text-decoration: none;
   color: var(--strapi-neutral-800);
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.25s ease;
+  box-shadow: var(--strapi-shadow-xs);
 
   &:hover {
     transform: translateY(-2px);
@@ -439,9 +443,9 @@
 .featureCardTitle {
   font-family: var(--strapi-font-family-display);
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 8px;
-  color: var(--strapi-neutral-800);
+  color: var(--strapi-fg-1);
 }
 
 .featureCardDesc {
@@ -494,6 +498,7 @@
   display: flex;
   flex-direction: column;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--strapi-shadow-xs);
 
   &:hover {
     border-color: var(--strapi-accent-light);
@@ -545,7 +550,7 @@
 .showcaseCardTitle {
   font-family: var(--strapi-font-family-display);
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--strapi-fg-1);
   margin-bottom: 12px;
@@ -612,6 +617,7 @@
   text-decoration: none !important;
   color: inherit;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--strapi-shadow-xs);
 
   &:hover {
     border-color: var(--strapi-accent-light);
@@ -647,7 +653,7 @@
 .deployTitle {
   font-family: var(--strapi-font-family-display);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--strapi-fg-1);
   margin-bottom: 4px;
@@ -754,10 +760,6 @@
     &::after {
       background: rgba(255, 255, 255, 0.08);
     }
-  }
-
-  .featureCardTitle {
-    color: rgba(255, 255, 255, 0.95);
   }
 
   .featureCardDesc {
