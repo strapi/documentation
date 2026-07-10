@@ -759,6 +759,16 @@
       "number": 26819,
       "reason": "Triage: build tooling/script organization change, no user-facing behavior change",
       "added": "2026-07-09"
+    },
+    {
+      "number": 26958,
+      "reason": "Triage: Build tooling/pre-commit hook fix, no user-facing behavior change",
+      "added": "2026-07-10"
+    },
+    {
+      "number": 26947,
+      "reason": "Router: Internal build configuration fix for admin panel Vite setup. Changes how @vitejs/plugin-react-swc is loaded dynamically and moves dependency from @strapi/admin to @strapi/strapi. This is not a user-facing change (no public API, feature, or configuration change). The warning elimination is an internal implementation detail.",
+      "added": "2026-07-10"
     }
   ]
 }
