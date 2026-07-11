@@ -769,6 +769,46 @@
       "number": 26947,
       "reason": "Router: Internal build configuration fix for admin panel Vite setup. Changes how @vitejs/plugin-react-swc is loaded dynamically and moves dependency from @strapi/admin to @strapi/strapi. This is not a user-facing change (no public API, feature, or configuration change). The warning elimination is an internal implementation detail.",
       "added": "2026-07-10"
+    },
+    {
+      "number": 26976,
+      "reason": "Triage: CI/GitHub Actions workflow infrastructure",
+      "added": "2026-07-11"
+    },
+    {
+      "number": 26974,
+      "reason": "Triage: CI/tooling hotfix",
+      "added": "2026-07-11"
+    },
+    {
+      "number": 26955,
+      "reason": "Triage: CI/tooling validation improvement",
+      "added": "2026-07-11"
+    },
+    {
+      "number": 26959,
+      "reason": "Router: Internal admin UI bug fix in the Slate editor. No public API or user-facing behavior change. Fixes an editor crash when creating related entries with styled text, but this is internal implementation.",
+      "added": "2026-07-11"
+    },
+    {
+      "number": 26948,
+      "reason": "Router: Code generation improvement for OpenAPI specs. The fix addresses how Swagger UI parses pagination parameters and adds security scheme generation. This improves the generated spec output but does not change the actual API behavior that users interact with. The docs.strapi.io OpenAPI documentation page does not need updates for internal tooling improvements.",
+      "added": "2026-07-11"
+    },
+    {
+      "number": 26908,
+      "reason": "Router: Internal error handling fix. Changes how validation errors are classified internally (ValidationError vs Error) to improve HTTP semantics (400 vs 500). No public API change or user-facing behavior change. Error handling alignment is implementation detail.",
+      "added": "2026-07-11"
+    },
+    {
+      "number": 26891,
+      "reason": "Router: Admin panel UI labeling change. Replaces 'Edition' terminology with 'Plan' and shows Community/Growth/Enterprise instead of Community/Enterprise. This is cosmetic labeling in the admin panel (Settings → Application page and startup logs). No functional or API change, only terminology in the admin UI.",
+      "added": "2026-07-11"
+    },
+    {
+      "number": 26809,
+      "reason": "Router: Internal admin context helper fix. Adds missing runtime default behavior (ShouldThrow = true) to align with TypeScript contract. This is an internal admin implementation fix with no public API change. Fixes a helper that developers don't directly interact with in user-facing code.",
+      "added": "2026-07-11"
     }
   ]
 }
