@@ -68,9 +68,9 @@ Use the time range selector in the top-right corner to adjust the period display
 |------------|-------------------|
 | 24h | All plans |
 | 7d | All plans |
-| 14d | <CloudProBadge /> <CloudScaleBadge /> |
-| 30d | <CloudProBadge /> <CloudScaleBadge /> |
-| 60d | <CloudScaleBadge /> |
+| 14d | <CloudProBadge /> <CloudBusinessBadge /> |
+| 30d | <CloudProBadge /> <CloudBusinessBadge /> |
+| 60d | <CloudBusinessBadge /> |
 
 The section contains 2 charts:
 

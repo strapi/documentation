@@ -15,21 +15,21 @@ tags:
 
 <Tldr>
 
-Strapi Cloud offers three plans (Essential, Pro, and Scale) with usage-based pricing that varies by API requests, asset storage, and bandwidth, plus overages charged monthly; projects may be suspended for unpaid invoices or plan violations.
+Strapi Cloud offers three plans (Starter, Pro, and Business) with usage-based pricing that varies by API requests, asset storage, and bandwidth, plus overages charged monthly; projects may be suspended for unpaid invoices or plan violations.
 
 </Tldr>
 
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
-Strapi Cloud offers 3 plans: Essential, Pro, and Scale (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarizes Strapi Cloud usage-based pricing plans, for general features and usage:
+Strapi Cloud offers 3 plans: Starter, Pro, and Business (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarizes Strapi Cloud usage-based pricing plans, for general features and usage:
 
-| Feature                          | Essential | Pro | Scale |
+| Feature                          | Starter | Pro | Business |
 | -------------------------------- | --------- | --- | ----- |
 | **Database Entries**             | Unlimited* | Unlimited* | Unlimited* |
 | **Asset Storage**               | 50GB      | 250GB | 1,000GB |
 | **Asset Bandwidth (per month)** | 50GB      | 500GB | 1,000GB |
-| **API Requests (per month)**     | 50,000 | 1,000,000 | 10,000,000 |
+| **API Requests (per month)**     | 100,000 | 1,000,000 | 10,000,000 |
 |  |  |  |  |
 | **Backups**                      | N/A | Weekly | Daily |
 | **Custom domains**               | Included | Included | Included | 
@@ -50,7 +50,7 @@ Strapi Cloud offers 3 plans: Essential, Pro, and Scale (see [Pricing page](https
 
 ## Environments management
 
-Environments are isolated instances of your Strapi Cloud project. All projects have a default production environment, but other additional environments can be configured for projects on a Pro or Scale plan, from the *Environments* tab of the project settings (see [Environments](/cloud/projects/settings#environments)). There is no limit to the number of additional environments that can be configured for a Strapi Cloud project.
+Environments are isolated instances of your Strapi Cloud project. All projects have a default production environment, but other additional environments can be configured for projects on a Pro or Business plan, from the *Environments* tab of the project settings (see [Environments](/cloud/projects/settings#environments)). There is no limit to the number of additional environments that can be configured for a Strapi Cloud project.
 
 The usage limits of additional environments are the same as for the project's production environment (e.g. an additional environment on the Pro plan will be limited at 250GB for asset storage, and overages will be charged the same way as for the production environment). Note however that the asset bandwidth and API calls are project-based, not environment-based, so these usage limits do not change even with additional environments.
  

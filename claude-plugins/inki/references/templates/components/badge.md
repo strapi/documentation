@@ -4,7 +4,7 @@ Use a Badge to flag the availability or status of a feature next to a heading or
 
 ## When to use
 
-- Flagging the plan or pricing tier a feature requires: `<GrowthBadge />`, `<EnterpriseBadge />`, `<SsoBadge />` for self-hosted, and `<CloudEssentialBadge />`, `<CloudProBadge />`, `<CloudScaleBadge />` for Strapi Cloud.
+- Flagging the plan or pricing tier a feature requires: `<GrowthBadge />`, `<EnterpriseBadge />`, `<SsoBadge />` for self-hosted, and `<CloudStarterBadge />`, `<CloudProBadge />`, `<CloudBusinessBadge />` for Strapi Cloud.
 - Flagging the maturity of a feature: `<AlphaBadge />`, `<BetaBadge />`.
 - Flagging an experimental feature gated behind a future flag: `<FeatureFlagBadge feature="flagName" />`.
 - Flagging the minimum Strapi version a feature requires: `<VersionBadge version="5.42.0" />`.
@@ -15,14 +15,14 @@ Use a Badge to flag the availability or status of a feature next to a heading or
 ## When NOT to use
 
 - Do not use the raw default `<Badge>` element. It is not registered as a global MDX component (only the named alias functions are), so a bare `<Badge variant="..." />` will not resolve and the page will fail to build.
-- Do not invent variants that do not exist. There is no `FreeBadge` and no `CloudDevBadge`. If no Cloud plan badge is shown, the feature is available on the Essential plan.
+- Do not invent variants that do not exist. There is no `FreeBadge` and no `CloudDevBadge`. If no Cloud plan badge is shown, the feature is available on the Starter plan.
 - Do not place a badge where its tooltip would be cut off, or where the default tooltip is wrong without overriding it via the `tooltip` prop.
 - Do not use a badge in a context that needs plain text, such as inside a code block.
 
 ## No import
 
 - Do NOT add an import line for any badge. They are registered as global MDX components in `docusaurus/src/theme/MDXComponents.js` (alongside `<Tabs>`, `<Annotation>`, `<StepDetails>`), so they are available directly in any `.md`/`.mdx` page with no import.
-- The registered alias variants are: `AlphaBadge`, `BetaBadge`, `FeatureFlagBadge`, `EnterpriseBadge`, `GrowthBadge`, `SsoBadge`, `NewBadge`, `UpdatedBadge`, `CloudEssentialBadge`, `CloudProBadge`, `CloudScaleBadge`, and `VersionBadge`. Use these names; never write the raw `<Badge>` element.
+- The registered alias variants are: `AlphaBadge`, `BetaBadge`, `FeatureFlagBadge`, `EnterpriseBadge`, `GrowthBadge`, `SsoBadge`, `NewBadge`, `UpdatedBadge`, `CloudStarterBadge`, `CloudProBadge`, `CloudBusinessBadge`, and `VersionBadge`. Use these names; never write the raw `<Badge>` element.
 
 ## Props
 
@@ -30,7 +30,7 @@ These props belong to the underlying `<Badge>` component. The alias variants pre
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `string` | `''` | The badge label text and CSS modifier. Lowercased and stripped of non-word characters to build the `badge--{variant}` class (the outer span always also carries the base `badge` and `badge--feature` classes). Real values are supplied by the aliases: `Alpha`, `Beta`, `Enterprise`, `Growth`, `SSO`, `Pro`, `Scale`, `Essential`, `New`, `Updated`, a feature flag name, or a version string. `New` and `Updated` also add the `badge--content` class and render an icon plus a `badge__text` span. |
+| `variant` | `string` | `''` | The badge label text and CSS modifier. Lowercased and stripped of non-word characters to build the `badge--{variant}` class (the outer span always also carries the base `badge` and `badge--feature` classes). Real values are supplied by the aliases: `Alpha`, `Beta`, `Enterprise`, `Growth`, `SSO`, `Pro`, `Business`, `Starter`, `New`, `Updated`, a feature flag name, or a version string. `New` and `Updated` also add the `badge--content` class and render an icon plus a `badge__text` span. |
 | `feature` | `string` | (none) | When set, the badge gets the `badge--featureflag` class (overriding the variant-based class). Used by `FeatureFlagBadge`: the feature flag name becomes the variant and is interpolated into the tooltip text. Write e.g. `<FeatureFlagBadge feature="experimental_firstPublishedAt" />`. |
 | `version` | `string` | (none) | When set, the badge gets the `badge--version` class (overriding the variant-based class). Used by `VersionBadge`: the version string becomes the variant and is interpolated into a "requires Strapi version X or later" tooltip. Write e.g. `<VersionBadge version="5.42.0" />`. |
 | `tooltip` | `string` | (none) | Tooltip text rendered in a `badge__tooltip` span, unless `noTooltip` is true. Aliases pre-fill plan- and feature-specific tooltips; you can override them (e.g. `<GrowthBadge tooltip="The CMS Growth plan includes ..." />`). |
@@ -47,7 +47,7 @@ These props belong to the underlying `<Badge>` component. The alias variants pre
 
 1. **Never write the raw `<Badge>` element.** Only the named aliases are registered, so a bare `<Badge>` will not resolve. Always pick the alias that matches your intent.
 2. **Never add an import line.** All twelve aliases are global MDX components. Do not write `import Badge ...` or import any alias by name.
-3. **Do not invent variants.** Stick to the twelve registered aliases. There is no `FreeBadge` and no `CloudDevBadge`; the Cloud Essential alias is `CloudEssentialBadge`.
+3. **Do not invent variants.** Stick to the twelve registered aliases. There is no `FreeBadge` and no `CloudDevBadge`; the Cloud Starter alias is `CloudStarterBadge`.
 4. **Badges are self-closing JSX.** Write `<NewBadge />`. A space before `/>` is fine, and `<GrowthBadge/>` also works.
 5. **Inside a heading, place the badge before the `{#anchor}` token.** For example, `## Strapi AI <NewBadge /> {#strapi-ai}`.
 6. **Use `noTooltip` in tables and headings** where a hover tooltip would be awkward or cut off (e.g. `<FeatureFlagBadge feature="FeatureFlagName" noTooltip />`).
@@ -82,11 +82,11 @@ Flagging freshly added content:
 
 ### Cloud plan badges under a Beta heading
 
-A Strapi Cloud feature in beta, available on the Pro and Scale plans:
+A Strapi Cloud feature in beta, available on the Pro and Business plans:
 
 ```mdx
 #### Transferring data between environments <BetaBadge /> {#transferring-data-between-environments}
-<CloudProBadge /> <CloudScaleBadge />
+<CloudProBadge /> <CloudBusinessBadge />
 ```
 
 ### Feature flag badge with the tooltip suppressed

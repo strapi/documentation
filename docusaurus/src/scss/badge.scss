@@ -189,14 +189,14 @@
     --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
-  &--scale {
+  &--business {
     --custom-badge-background-color: rgb(154, 53, 242);
     --custom-badge-color: #fff;
     --custom-badge-tooltip-background-color: var(--strapi-alternative-100);
     --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
-  &--essential {
+  &--starter {
     --custom-badge-background-color: var(--strapi-success-600);
     --custom-badge-color: #fff;
     --custom-badge-tooltip-background-color: var(--strapi-success-100);
@@ -310,9 +310,9 @@ main h6 + .badge--content:hover .badge__tooltip {
 
 main .badge--featureflag,
 main .badge--developer,
-main .badge--essential,
+main .badge--starter,
 main .badge--team,
-main .badge--scale,
+main .badge--business,
 main .badge--pro,
 main .badge--enterprise,
 main .badge--growth,
