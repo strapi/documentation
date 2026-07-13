@@ -150,25 +150,25 @@ export function CloudProBadge(props) {
   );
 }
 
-export function CloudScaleBadge(props) {
+export function CloudBusinessBadge(props) {
   return (
     <Badge
-      variant="Scale"
+      variant="Business"
       link="https://strapi.io/pricing-cloud"
       icon="cloud"
-      tooltip="This feature is available with a Strapi Cloud Scale plan."
+      tooltip="This feature is available with a Strapi Cloud Business plan."
       {...props}
     />
   );
 }
 
-export function CloudEssentialBadge(props) {
+export function CloudStarterBadge(props) {
   return (
     <Badge
-      variant="Essential"
+      variant="Starter"
       link="https://strapi.io/pricing-cloud"
       icon="cloud"
-      tooltip="This feature is available with a Strapi Cloud Essential plan."
+      tooltip="This feature is available with a Strapi Cloud Starter plan."
       {...props}
     />
   );

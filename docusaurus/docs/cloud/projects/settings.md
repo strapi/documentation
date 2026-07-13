@@ -147,7 +147,7 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 3. Confirm the deletion of your project by clicking on the **Delete project** button.
 
 ### Environments {#environments}
-<CloudProBadge /> <CloudScaleBadge />
+<CloudProBadge /> <CloudBusinessBadge />
 
 The <Icon name="stack" /> *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
 
@@ -247,9 +247,9 @@ To upgrade your current plan to a higher one:
 Plan downgrades can be managed, for each project, via the project settings. Downgrades are, however, not immediately effective: the current plan will remain active until the end of the current billing period.
 
 :::caution
-Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for overages. You may also lose access to some features: for example, downgrading to the Essential plan would result in the loss of all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
+Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for overages. You may also lose access to some features: for example, downgrading to the Starter plan would result in the loss of all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
 
-Note also that you cannot downgrade if you have additional paid environments. You will first need to delete all additional environments that were not included in the base price of your plan (see [Clearing and deleting environments](#resetting--deleting-environment)) before you can schedule a downgrade. When downgrading from Scale to Pro, the additional included environment will automatically be deleted when the downgrade takes effect.
+Note also that you cannot downgrade if you have additional paid environments. You will first need to delete all additional environments that were not included in the base price of your plan (see [Clearing and deleting environments](#resetting--deleting-environment)) before you can schedule a downgrade. When downgrading from Business to Pro, the additional included environment will automatically be deleted when the downgrade takes effect.
 :::
 
 To downgrade your current plan to a lower one:
@@ -332,7 +332,7 @@ Ensure the Node version configured in your Strapi project matches the Node versi
 2. Click on the **Save & deploy** button for the changes to take effect.
 
 #### Transferring data between environments <BetaBadge /> {#transferring-data-between-environments}
-<CloudProBadge /> <CloudScaleBadge />
+<CloudProBadge /> <CloudBusinessBadge />
 
 The data transfer feature allows you to transfer the entire CMS content (database and assets) from one environment to another within the same Strapi Cloud project. This is useful for testing changes in a secondary environment with up-to-date production data, or for preparing and staging content in a secondary environment before taking it to production.
 
@@ -363,7 +363,7 @@ The CMS of the target environment will be inaccessible whilst the transfer is on
 You can clear database content and assets from any environment, including the production environment, or permanently delete additional environments. The default production environment cannot be deleted.
 
 :::note
-On the Scale plan, you cannot delete the included secondary environment. You can, however, clear its content.
+On the Business plan, you cannot delete the included secondary environment. You can, however, clear its content.
 :::
 
 Clearing and deleting are permanent and only available to the project owner. You cannot initiate an environment clearing while the project is suspended.
@@ -395,13 +395,13 @@ If clearing fails, click **Retry** on the environment dashboard to run the opera
 3. Click on the **Delete environment** button to confirm the deletion.
 
 ### Backups {#backups}
-<CloudProBadge /> <CloudScaleBadge />
+<CloudProBadge /> <CloudBusinessBadge />
 
-The <Icon name="arrow-clockwise" /> *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Scale plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
+The <Icon name="arrow-clockwise" /> *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Business plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
 
 :::note Notes
 
-- The backup feature is not available for Strapi Cloud projects on the Essential plan. You will need to upgrade to the Pro or Scale plan to enable automatic backups and access the manual backup option.
+- The backup feature is not available for Strapi Cloud projects on the Starter plan. You will need to upgrade to the Pro or Business plan to enable automatic backups and access the manual backup option.
 
 - Backups include only the database of your default Production environment. Assets uploaded to your project and databases from any secondary environments are not included.
 

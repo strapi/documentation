@@ -10,7 +10,7 @@ Technical writing rules
 Content specifics
 - Emphasize deployment, security, IAM, and operational runbooks.
 - For provider steps (e.g., AWS), keep screenshots current and add troubleshooting.
-- For Cloud plan availability, use the Cloud plan badges (`CloudEssentialBadge`, `CloudProBadge`, `CloudScaleBadge`); see `../../templates/components/badge.md`. There is no `FreeBadge`: if no badge is shown, the feature is available on the Essential plan.
+- For Cloud plan availability, use the Cloud plan badges (`CloudStarterBadge`, `CloudProBadge`, `CloudBusinessBadge`); see `../../templates/components/badge.md`. There is no `FreeBadge`: if no badge is shown, the feature is available on the Starter plan.
 
 Preflight checks before PR
 - Run generators; ensure anchors present; verify file paths for code snippets.

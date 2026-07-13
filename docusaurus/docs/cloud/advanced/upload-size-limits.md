@@ -48,7 +48,7 @@ Recommended maximum image size, expressed in megapixels (MP), per format and pla
 <Tabs groupId="processing">
 <TabItem value="on" label="Processing on">
 
-| Format | Essential | Pro & Scale |
+| Format | Starter | Pro & Business |
 |--------|------------------|-------------|
 | JPEG   | 26 MP            | 135 MP      |
 | PNG    | 10 MP            | 90 MP       |
@@ -59,7 +59,7 @@ Recommended maximum image size, expressed in megapixels (MP), per format and pla
 </TabItem>
 <TabItem value="off" label="Processing off">
 
-| Format | Essential | Pro & Scale |
+| Format | Starter | Pro & Business |
 |--------|------------------|-------------|
 | JPEG   | 224 MP           | 265 MP      |
 | PNG    | 24 MP            | 115 MP      |
