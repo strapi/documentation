@@ -809,6 +809,16 @@
       "number": 26809,
       "reason": "Router: Internal admin context helper fix. Adds missing runtime default behavior (ShouldThrow = true) to align with TypeScript contract. This is an internal admin implementation fix with no public API change. Fixes a helper that developers don't directly interact with in user-facing code.",
       "added": "2026-07-11"
+    },
+    {
+      "number": 26961,
+      "reason": "Router: Internal Document Service bug fix. Fixes data merging logic when duplicating entries with relation edits. No new user-facing features, no API changes, no configuration changes. This is an internal implementation detail fix that resolves issues #23680 and #25749.",
+      "added": "2026-07-14"
+    },
+    {
+      "number": 26901,
+      "reason": "Router: Internal Media Library/upload feature bug fix. Addresses CORS errors that occur when loading private/signed asset thumbnails in the admin panel. While this fixes a user-visible error, it's a bug fix (not a new feature) that doesn't introduce documented features or API changes. Users already had the ability to view asset thumbnails; this just fixes the error they were experiencing.",
+      "added": "2026-07-14"
     }
   ]
 }
