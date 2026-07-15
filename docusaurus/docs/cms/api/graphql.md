@@ -472,8 +472,8 @@ Available enum values:
 | `UNMODIFIED` | `unmodified` |
 | `NEVER_PUBLISHED_DOCUMENT` | `never-published-document` |
 | `HAS_PUBLISHED_VERSION_DOCUMENT` | `has-published-version-document` |
-| `PUBLISHED_WITHOUT_DRAFT` | `published-without-draft` |
-| `PUBLISHED_WITH_DRAFT` | `published-with-draft` |
+| `PUBLISHED_WITHOUT_DRAFT` | `published-without-draft` ([diagnostics only](/cms/api/document-service/publication-filter#diagnostics)) |
+| `PUBLISHED_WITH_DRAFT` | `published-with-draft` ([diagnostics only](/cms/api/document-service/publication-filter#diagnostics)) |
 
 To learn more, see the [use cases and accepted values](/cms/api/document-service/publication-filter#values) on the Document Service API page.
 

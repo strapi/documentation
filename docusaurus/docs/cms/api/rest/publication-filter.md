@@ -44,9 +44,9 @@ The [Draft & Publish](/cms/features/draft-and-publish) feature must be enabled o
 | `never-published-document` | Documents never published in any locale |
 | `modified` | Documents whose draft was edited since it was last published |
 | `unmodified` | Documents whose draft has not changed since it was last published |
-| `published-without-draft` | Published documents with no draft counterpart |
-| `published-with-draft` | Published documents that also have a draft |
 | `has-published-version` | Documents that have both a draft and a published version |
+| `published-without-draft` | Published documents with no draft counterpart<br/>([diagnostics only](#diagnostics)) |
+| `published-with-draft` | Published documents that also have a draft<br/>([diagnostics only](#diagnostics)) |
 | `has-published-version-document` | Documents published in at least one locale<br/>(useful when [i18n](/cms/features/internationalization) is enabled) |
 
 For detailed examples of how to use the `publicationFilter` values, including with the `status` parameter, see the [possible use cases](#use-cases) table.
@@ -70,10 +70,8 @@ The following table lists many possible use cases, illustrating how the `status`
 | [Find drafts never published in any locale](#never-published-document) | `draft` | `never-published-document` |
 | [Find modified documents](#modified) | `draft` or `published` | `modified` |
 | [Find unmodified documents](#unmodified) | `draft` or `published` | `unmodified` |
-| [Find published documents without a draft](#published-without-draft) | `published` | `published-without-draft` |
-| [Find published documents with a draft](#published-with-draft) | `published` | `published-with-draft` |
 | [Find documents with a published version](#has-published-version) | `draft` or `published` | `has-published-version` |
-| [Find documents published in at least one locale](#has-published-version-document) | `draft` or `published` | `has-published-version-document` |
+| [Find documents with a published version in at least one locale](#has-published-version-document) | `draft` or `published` | `has-published-version-document` |
 
 :::note
 Pairing a value with the opposite `status` from the table above is valid but returns nothing rather than an error: for example, `never-published` with `status=published` returns an empty result, because these documents have no published version yet.
@@ -417,117 +415,9 @@ await request(\`/api/restaurants?\${query}\`);`
   ]}
 />
 
-### Find published documents without a draft {#published-without-draft}
-
-`publicationFilter=published-without-draft` selects published documents that have no draft counterpart. It describes published rows, so REST returns them with the default `status=published`:
-
-<Endpoint
-  method="GET"
-  path="/api/restaurants?publicationFilter=published-without-draft"
-  codePath="/api/restaurants?publicationFilter=published-without-draft"
-  title="Get published restaurants with no draft for the same locale"
-  description="Return published documents with no matching draft version for the same locale."
-  codeTabs={[
-    {
-      label: "cURL",
-      code: `curl 'http://localhost:1337/api/restaurants?publicationFilter=published-without-draft' \\
-  -H 'Authorization: Bearer <token>'`
-    },
-    {
-      label: "JavaScript",
-      code: `const qs = require('qs');
-const query = qs.stringify({
-    publicationFilter: 'published-without-draft',
-}, {
-    encodeValuesOnly: true, // prettify URL
-});
-
-await request(\`/api/restaurants?\${query}\`);`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
-    "data": [
-      {
-        "documentId": "j0klm1n2o3p4q5r6s7t8u9v",
-        "name": "Legacy Restaurant",
-        "publishedAt": "2024-01-10T09:15:00.000Z",
-        "locale": "en"
-      }
-    ],
-    "meta": {
-      "pagination": {
-        "page": 1,
-        "pageSize": 25,
-        "pageCount": 1,
-        "total": 1
-      }
-    }
-}`
-    }
-  ]}
-/>
-
-### Find published documents with a draft {#published-with-draft}
-
-`publicationFilter=published-with-draft` selects published documents that also have a draft. It describes published rows, so REST returns them with the default `status=published`:
-
-<Endpoint
-  method="GET"
-  path="/api/restaurants?publicationFilter=published-with-draft"
-  codePath="/api/restaurants?publicationFilter=published-with-draft"
-  title="Get published restaurants that also have a draft for the same locale"
-  description="Return published documents that also have a matching draft version for the same locale."
-  codeTabs={[
-    {
-      label: "cURL",
-      code: `curl 'http://localhost:1337/api/restaurants?publicationFilter=published-with-draft' \\
-  -H 'Authorization: Bearer <token>'`
-    },
-    {
-      label: "JavaScript",
-      code: `const qs = require('qs');
-const query = qs.stringify({
-    publicationFilter: 'published-with-draft',
-}, {
-    encodeValuesOnly: true, // prettify URL
-});
-
-await request(\`/api/restaurants?\${query}\`);`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
-    "data": [
-      {
-        "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
-        "name": "Biscotte Restaurant",
-        "publishedAt": "2024-03-14T15:40:45.330Z",
-        "locale": "en"
-      }
-    ],
-    "meta": {
-      "pagination": {
-        "page": 1,
-        "pageSize": 25,
-        "pageCount": 1,
-        "total": 1
-      }
-    }
-}`
-    }
-  ]}
-/>
-
 ### Find documents with a published version {#has-published-version}
 
-`publicationFilter=has-published-version` selects documents that have both a draft and a published version for the same locale. `status` then decides which version of those documents you get back. Unlike `published-without-draft`, it excludes published documents that have no draft counterpart.
+`publicationFilter=has-published-version` selects documents that have both a draft and a published version for the same locale. `status` then decides which version of those documents you get back.
 
 For instance, with `status=draft`, the query returns the draft versions:
 
@@ -635,7 +525,7 @@ await request(\`/api/restaurants?\${query}\`);`
   ]}
 />
 
-### Find documents published in at least one locale {#has-published-version-document}
+### Find documents with a published version in at least one locale {#has-published-version-document}
 
 `publicationFilter=has-published-version-document` considers all locales, so it matches a document as soon as one of its locales is published. With `status=draft`, it returns the draft versions of every locale of those documents, including locales that were never published themselves:
 
@@ -689,6 +579,119 @@ await request(\`/api/restaurants?\${query}\`);`
     }
   ]}
 />
+
+## Diagnostic values {#diagnostics}
+
+The `published-without-draft` and `published-with-draft` values are meant for data-integrity checks only, not for everyday queries. In a healthy database, every published document also has a draft version, so these values are only useful to detect documents left in an inconsistent state by legacy data or manual database edits. They describe published rows, so REST returns them with the default `status=published`.
+
+<details>
+<summary>Show diagnostic values examples</summary>
+
+`publicationFilter=published-without-draft` selects published documents that have no draft counterpart. In normal operation this should return nothing:
+
+<Endpoint
+  method="GET"
+  path="/api/restaurants?publicationFilter=published-without-draft"
+  codePath="/api/restaurants?publicationFilter=published-without-draft"
+  title="Get published restaurants with no draft for the same locale"
+  description="Return published documents with no matching draft version for the same locale."
+  codeTabs={[
+    {
+      label: "cURL",
+      code: `curl 'http://localhost:1337/api/restaurants?publicationFilter=published-without-draft' \\
+  -H 'Authorization: Bearer <token>'`
+    },
+    {
+      label: "JavaScript",
+      code: `const qs = require('qs');
+const query = qs.stringify({
+    publicationFilter: 'published-without-draft',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(\`/api/restaurants?\${query}\`);`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
+    "data": [
+      {
+        "documentId": "j0klm1n2o3p4q5r6s7t8u9v",
+        "name": "Legacy Restaurant",
+        "publishedAt": "2024-01-10T09:15:00.000Z",
+        "locale": "en"
+      }
+    ],
+    "meta": {
+      "pagination": {
+        "page": 1,
+        "pageSize": 25,
+        "pageCount": 1,
+        "total": 1
+      }
+    }
+}`
+    }
+  ]}
+/>
+
+`publicationFilter=published-with-draft` selects published documents that also have a draft, which is every published document in a healthy database:
+
+<Endpoint
+  method="GET"
+  path="/api/restaurants?publicationFilter=published-with-draft"
+  codePath="/api/restaurants?publicationFilter=published-with-draft"
+  title="Get published restaurants that also have a draft for the same locale"
+  description="Return published documents that also have a matching draft version for the same locale."
+  codeTabs={[
+    {
+      label: "cURL",
+      code: `curl 'http://localhost:1337/api/restaurants?publicationFilter=published-with-draft' \\
+  -H 'Authorization: Bearer <token>'`
+    },
+    {
+      label: "JavaScript",
+      code: `const qs = require('qs');
+const query = qs.stringify({
+    publicationFilter: 'published-with-draft',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(\`/api/restaurants?\${query}\`);`
+    }
+  ]}
+  responses={[
+    {
+      status: 200,
+      statusText: "OK",
+      body: `{
+    "data": [
+      {
+        "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+        "name": "Biscotte Restaurant",
+        "publishedAt": "2024-03-14T15:40:45.330Z",
+        "locale": "en"
+      }
+    ],
+    "meta": {
+      "pagination": {
+        "page": 1,
+        "pageSize": 25,
+        "pageCount": 1,
+        "total": 1
+      }
+    }
+}`
+    }
+  ]}
+/>
+
+</details>
 
 ## Combine with other parameters {#combine}
 
