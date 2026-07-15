@@ -113,7 +113,10 @@
 /* ─── Body: sidebar + request pane ─── */
 .explorerBody {
   display: flex;
-  min-height: 520px;
+  // Fixed height (not min-height) so the card stays the same height across
+  // tabs (REST/GraphQL/Document Service), regardless of endpoint count or
+  // response length. The response body flexes and scrolls within it.
+  height: 520px;
 }
 
 /* ─── Endpoint sidebar ─── */
@@ -299,9 +302,12 @@
 
 .responseBody {
   flex: 1;
+  // No max-height: with the fixed-height .explorerBody, flex:1 + overflow lets
+  // the response fill the available space and scroll, keeping the card height
+  // constant across tabs whether the response is short or long.
+  min-height: 0;
   overflow: auto;
   padding: 16px;
-  max-height: 480px;
 
   /* Thin scrollbar */
   scrollbar-width: thin;
@@ -382,6 +388,10 @@
   .explorerBody {
     flex-direction: column;
     min-width: 0;
+    // On mobile the sidebar and request pane stack, so a fixed desktop height
+    // would be too cramped; fall back to a flexible min-height here.
+    height: auto;
+    min-height: 520px;
   }
 
   /* Tabs scroll horizontally instead of overflowing the card on narrow screens. */
