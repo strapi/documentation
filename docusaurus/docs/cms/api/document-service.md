@@ -109,6 +109,7 @@ Syntax: `findOne(parameters: Params) => Document`
     { name: 'documentId', type: 'ID', required: true, description: 'Document id' },
     { name: 'locale', type: 'String or undefined', required: false, description: 'Locale of the document to find. Defaults to the default locale. <a href="/cms/api/document-service/locale#find-one">See locale docs</a>.' },
     { name: 'status', type: "'published' | 'draft'", required: false, description: 'If <a href="/cms/features/draft-and-publish">Draft & Publish</a> is enabled: publication status. Can be <code>published</code> or <code>draft</code>. Default: <code>draft</code>. <a href="/cms/api/document-service/status#find-one">See status docs</a>.' },
+    { name: 'publicationFilter', type: 'String', required: false, description: 'If <a href="/cms/features/draft-and-publish">Draft & Publish</a> is enabled: select documents by how their draft and published versions relate, before applying <code>status</code>. <a href="/cms/api/document-service/publication-filter">See publicationFilter docs</a>.' },
     { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#findone">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
   ]}
@@ -147,6 +148,7 @@ Syntax:  `findFirst(parameters: Params) => Document`
   params={[
     { name: 'locale', type: 'String or undefined', required: false, description: 'Locale of the documents to find. Defaults to the default locale. <a href="/cms/api/document-service/locale#find-first">See locale docs</a>.' },
     { name: 'status', type: "'published' | 'draft'", required: false, description: 'If <a href="/cms/features/draft-and-publish">Draft & Publish</a> is enabled: publication status. Can be <code>published</code> or <code>draft</code>. Default: <code>draft</code>. <a href="/cms/api/document-service/status#find-first">See status docs</a>.' },
+    { name: 'publicationFilter', type: 'String', required: false, description: 'If <a href="/cms/features/draft-and-publish">Draft & Publish</a> is enabled: select documents by how their draft and published versions relate, before applying <code>status</code>. <a href="/cms/api/document-service/publication-filter">See publicationFilter docs</a>.' },
     { name: 'filters', type: 'Object', required: false, description: '<a href="/cms/api/document-service/filters">Filters</a> to use. Default: <code>null</code>.' },
     { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#findfirst">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
@@ -210,6 +212,7 @@ Syntax: `findMany(parameters: Params) => Document[]`
   params={[
     { name: 'locale', type: 'String or undefined', required: false, description: 'Locale of the documents to find. Defaults to the default locale. <a href="/cms/api/document-service/locale#find-many">See locale docs</a>.' },
     { name: 'status', type: "'published' | 'draft'", required: false, description: 'If <a href="/cms/features/draft-and-publish">Draft & Publish</a> is enabled: publication status. Can be <code>published</code> or <code>draft</code>. Default: <code>draft</code>. <a href="/cms/api/document-service/status#find-many">See status docs</a>.' },
+    { name: 'publicationFilter', type: 'String', required: false, description: 'If <a href="/cms/features/draft-and-publish">Draft & Publish</a> is enabled: select documents by how their draft and published versions relate, before applying <code>status</code>. <a href="/cms/api/document-service/publication-filter">See publicationFilter docs</a>.' },
     { name: 'filters', type: 'Object', required: false, description: '<a href="/cms/api/document-service/filters">Filters</a> to use. Default: <code>null</code>.' },
     { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#findmany">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
@@ -606,6 +609,7 @@ Syntax: `count(parameters: Params) => number`
   params={[
     { name: 'locale', type: 'String or null', required: false, description: 'Locale of the documents to count. Defaults to the default locale. <a href="/cms/api/document-service/locale#count">See locale docs</a>.' },
     { name: 'status', type: "'published' | 'draft'", required: false, description: 'If <a href="/cms/features/draft-and-publish">Draft & Publish</a> is enabled: publication status. <code>published</code> to count only published documents, <code>draft</code> to count draft documents (returns all documents). Default: <code>draft</code>. <a href="/cms/api/document-service/status#count">See status docs</a>.' },
+    { name: 'publicationFilter', type: 'String', required: false, description: 'If <a href="/cms/features/draft-and-publish">Draft & Publish</a> is enabled: select documents by how their draft and published versions relate, before applying <code>status</code>. <a href="/cms/api/document-service/publication-filter">See publicationFilter docs</a>.' },
     { name: 'filters', type: 'Object', required: false, description: '<a href="/cms/api/document-service/filters">Filters</a> to use. Default: <code>null</code>.' },
   ]}
   codeTabs={[
@@ -633,7 +637,7 @@ strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $start
 :::note
 Since published documents necessarily also have a draft counterpart, a published document is still counted as having a draft version.
 
-This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. There currently is no way to prevent already published documents from being counted.
+This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. To count only never-published drafts, pass a [`publicationFilter`](/cms/api/document-service/publication-filter) value such as `'never-published'` or `'never-published-document'`.
 :::
 
 </Endpoint>

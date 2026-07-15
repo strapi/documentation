@@ -3,6 +3,7 @@ title: Status
 description: Use Strapi's REST API to work with draft or published versions of your documents.
 sidebarDepth: 3
 sidebar_label:  Status
+next: ./publication-filter.md
 displayed_sidebar: cmsSidebar
 tags:
 - API
@@ -46,22 +47,30 @@ In the response data, the `publishedAt` field is `null` for drafts.
 Since published versions are returned by default, passing no status parameter is equivalent to passing `status=published`.
 :::
 
+To select documents by how their draft and published versions relate (never-published, modified, and others), see [REST API: `publicationFilter`](/cms/api/rest/publication-filter).
+
 <br /><br />
 
 <Endpoint
   id="get-draft-versions"
   method="GET"
   path="/api/articles?status=draft"
+  codePath="/api/articles?status=draft"
   title="Get draft versions of restaurants"
   description="Returns draft versions of documents by passing the status=draft query parameter."
   codeTabs={[
     {
+      label: 'cURL',
+      code: `curl 'http://localhost:1337/api/articles?status=draft' \\
+  -H 'Authorization: Bearer <token>'`,
+    },
+    {
       label: 'JavaScript',
       code: `const qs = require('qs');
 const query = qs.stringify({
-  status: 'draft',
+    status: 'draft',
 }, {
-  encodeValuesOnly: true, // prettify URL
+    encodeValuesOnly: true, // prettify URL
 });
 
 await request(\`/api/articles?\${query}\`);`,

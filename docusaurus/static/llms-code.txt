@@ -4580,6 +4580,389 @@ File path: N/A
 
 
 
+# Using publicationFilter with the Document Service API
+Source: https://docs.strapi.io/cms/api/document-service/publication-filter
+
+## Find never published drafts
+Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#never-published)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').findMany({
+    status: 'draft',
+    publicationFilter: 'never-published',
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+[
+    {
+      documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+      name: "New Restaurant",
+      publishedAt: null,
+      locale: "en", // default locale
+      // …
+    }
+  // …
+]
+```
+
+
+## Find drafts never published in any locale
+Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#never-published-document)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').findMany({
+    status: 'draft',
+    publicationFilter: 'never-published-document',
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+[
+    {
+      documentId: "d41r46wac4xix5vpba7561at",
+      name: "New Restaurant",
+      publishedAt: null,
+      locale: "en", // default locale
+      // …
+    }
+  // …
+]
+```
+
+
+## Find modified documents
+Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#modified)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').findMany({
+    status: 'draft',
+    publicationFilter: 'modified',
+});
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').findMany({
+    status: 'published',
+    publicationFilter: 'modified',
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+[
+    {
+      documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+      name: "Biscotte Restaurant (updated)",
+      publishedAt: null,
+      locale: "en", // default locale
+      // …
+    }
+  // …
+]
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+[
+    {
+      documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+      name: "Biscotte Restaurant",
+      publishedAt: "2024-03-14T15:40:45.330Z",
+      locale: "en", // default locale
+      // …
+    }
+  // …
+]
+```
+
+
+## Find unmodified documents
+Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#unmodified)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').findMany({
+    status: 'draft',
+    publicationFilter: 'unmodified',
+});
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').findMany({
+    status: 'published',
+    publicationFilter: 'unmodified',
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+[
+    {
+      documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+      name: "Biscotte Restaurant",
+      publishedAt: null,
+      locale: "en", // default locale
+      // …
+    }
+  // …
+]
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+[
+    {
+      documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+      name: "Biscotte Restaurant",
+      publishedAt: "2024-03-14T15:40:45.330Z",
+      locale: "en", // default locale
+      // …
+    }
+  // …
+]
+```
+
+
+## Find published documents without a draft
+Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#published-without-draft)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').findMany({
+    status: 'published',
+    publicationFilter: 'published-without-draft',
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+[
+  {
+    documentId: "j0klm1n2o3p4q5r6s7t8u9v",
+    name: "Legacy Restaurant",
+    publishedAt: "2024-01-10T09:15:00.000Z",
+    locale: "en", // default locale
+    // …
+  }
+  // …
+]
+```
+
+
+## Find published documents with a draft
+Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#published-with-draft)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').findMany({
+    status: 'published',
+    publicationFilter: 'published-with-draft',
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+[
+    {
+      documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+      name: "Biscotte Restaurant",
+      publishedAt: "2024-03-14T15:40:45.330Z",
+      locale: "en", // default locale
+      // …
+    }
+  // …
+]
+```
+
+
+## Find documents with a published version
+Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#has-published-version)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').findMany({
+    status: 'draft',
+    publicationFilter: 'has-published-version',
+});
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').findMany({
+    status: 'published',
+    publicationFilter: 'has-published-version',
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+[
+    {
+      documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+      name: "Biscotte Restaurant",
+      publishedAt: null,
+      locale: "en", // default locale
+      // …
+    }
+  // …
+]
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+[
+    {
+      documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+      name: "Biscotte Restaurant",
+      publishedAt: "2024-03-14T15:40:45.330Z",
+      locale: "en", // default locale
+      // …
+    }
+  // …
+]
+```
+
+
+## Find documents published in at least one locale
+Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#has-published-version-document)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').findMany({
+    status: 'draft',
+    publicationFilter: 'has-published-version-document',
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+[
+    {
+      documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+      name: "Biscotte Restaurant",
+      publishedAt: null,
+      locale: "en", // published in at least one locale
+      // …
+    }
+  // …
+]
+```
+
+
+## Use with `findOne()` and `findFirst()`
+Description: GET strapi.documents().findOne() — findOne() with publicationFilter:
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#use-with-findone-and-findfirst)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+await strapi.documents('api::restaurant.restaurant').findOne({
+    documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+    status: 'draft',
+    publicationFilter: 'never-published',
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+null // the documentId exists, but the document does not match never-published
+```
+
+
+## Count only matching documents
+Description: GET strapi.documents().count() — count() with publicationFilter:
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#count)
+
+Language: JavaScript
+File path: N/A
+
+```javascript
+const neverPublishedCount = await strapi
+    .documents('api::restaurant.restaurant')
+    .count({
+      status: 'draft',
+      publicationFilter: 'never-published',
+    });
+```
+
+Language: JSON
+File path: N/A
+
+```json
+12 // the number of never-published drafts
+```
+
+
+
 # Using Sort & Pagination with the Document Service API
 Source: https://docs.strapi.io/cms/api/document-service/sort-pagination
 
@@ -6065,6 +6448,38 @@ File path: Example:
 ```graphql
 query Query($status: PublicationStatus) {
   restaurants(status: PUBLISHED) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+
+## Filter with publicationFilter
+Description: :::caution When status is omitted, GraphQL defaults to PUBLISHED before applying publicationFilter (same as REST).
+(Source: https://docs.strapi.io/cms/api/graphql#publication-filter)
+
+Language: GRAPHQL
+File path: Example:
+
+```graphql
+query Query($status: PublicationStatus, $publicationFilter: PublicationFilter) {
+  restaurants(status: DRAFT, publicationFilter: NEVER_PUBLISHED) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+---
+Language: GRAPHQL
+File path: Example:
+
+```graphql
+query Query {
+  restaurants(publicationFilter: MODIFIED) {
     documentId
     name
     publishedAt
@@ -8347,7 +8762,7 @@ const response = await fetch(
 Source: https://docs.strapi.io/cms/api/rest/filters
 
 ## Example: Find users having 'John' as a first name
-Description: GET /api/users — Find users having
+Description: GET /api/users?filters[username][$eq]=John — Find users having
 (Source: https://docs.strapi.io/cms/api/rest/filters#example-find-users-having-john-as-a-first-name)
 
 Language: Bash
@@ -8407,7 +8822,7 @@ File path: N/A
 
 
 ## Example: Find multiple restaurants with ids 3, 6,8
-Description: GET /api/restaurants — Find multiple restaurants with ids 3, 6, 8
+Description: GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8 — Find multiple restaurants with ids 3, 6, 8
 (Source: https://docs.strapi.io/cms/api/rest/filters#example-find-multiple-restaurants-with-ids-3-6-8)
 
 Language: Bash
@@ -8464,7 +8879,7 @@ File path: N/A
 
 
 ## Complex filtering
-Description: GET /api/books — Find books with 2 possible dates and a specific author
+Description: GET /api/books?filters[$and][0][$or][0][date][$eq]=2020-01-01&filters[$and][0][$or][1][date][$eq]=2020-01-02&filters[$and][1][author][name][$eq]=Kai%20doe — Find books with 2 possible dates and a specific author
 (Source: https://docs.strapi.io/cms/api/rest/filters#complex-filtering)
 
 Language: Bash
@@ -8538,7 +8953,7 @@ File path: N/A
 
 
 ## Deep filtering
-Description: GET /api/restaurants — Find restaurants owned by a chef who belongs to a 5-star restaurant
+Description: GET /api/restaurants?filters[chef][restaurants][stars][$eq]=5 — Find restaurants owned by a chef who belongs to a 5-star restaurant
 (Source: https://docs.strapi.io/cms/api/rest/filters#deep-filtering)
 
 Language: Bash
@@ -9964,7 +10379,7 @@ DELETE /api/homepage?locale=fr
 Source: https://docs.strapi.io/cms/api/rest/populate-select
 
 ## Field selection
-Description: GET /api/restaurants — Return only name and description fields
+Description: GET /api/restaurants?fields[0]=name&fields[1]=description — Return only name and description fields
 (Source: https://docs.strapi.io/cms/api/rest/populate-select#field-selection)
 
 Language: Bash
@@ -9994,7 +10409,7 @@ await request(`/api/users?${query}`);
 
 
 ## Populate with field selection
-Description: GET /api/articles — Populate with field selection
+Description: GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url — Populate with field selection
 (Source: https://docs.strapi.io/cms/api/rest/populate-select#populate-with-field-selection)
 
 Language: Bash
@@ -10029,7 +10444,7 @@ await request(`/api/articles?${query}`);
 
 
 ## Populate with filtering
-Description: GET /api/articles — Populate with filtering
+Description: GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars — Populate with filtering
 (Source: https://docs.strapi.io/cms/api/rest/populate-select#populate-with-filtering)
 
 Language: Bash
@@ -10064,6 +10479,579 @@ const query = qs.stringify(
 );
 
 await request(`/api/articles?${query}`);
+```
+
+
+
+# REST API: publicationFilter
+Source: https://docs.strapi.io/cms/api/rest/publication-filter
+
+## Find never published drafts
+Description: GET /api/restaurants?status=draft&publicationFilter=never-published — Get draft restaurants that have never been published for their locale
+(Source: https://docs.strapi.io/cms/api/rest/publication-filter#never-published)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    status: 'draft',
+    publicationFilter: 'never-published',
+  }, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+    "data": [
+      {
+        "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+        "name": "New Restaurant",
+        "publishedAt": null,
+        "locale": "en"
+      }
+    ],
+    "meta": {
+      "pagination": {
+        "page": 1,
+        "pageSize": 25,
+        "pageCount": 1,
+        "total": 1
+      }
+    }
+}
+```
+
+
+## Find drafts never published in any locale
+Description: GET /api/restaurants?status=draft&publicationFilter=never-published-document — Get drafts of restaurants never published in any locale
+(Source: https://docs.strapi.io/cms/api/rest/publication-filter#never-published-document)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published-document' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    status: 'draft',
+    publicationFilter: 'never-published-document',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+    "data": [
+      {
+        "documentId": "d41r46wac4xix5vpba7561at",
+        "name": "New Restaurant",
+        "publishedAt": null,
+        "locale": "en"
+      }
+    ],
+    "meta": {
+      "pagination": {
+        "page": 1,
+        "pageSize": 25,
+        "pageCount": 1,
+        "total": 1
+      }
+    }
+}
+```
+
+
+## Find modified documents
+Description: GET /api/restaurants?status=draft&publicationFilter=modified — Get the draft versions of modified restaurants
+(Source: https://docs.strapi.io/cms/api/rest/publication-filter#modified)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=modified' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    status: 'draft',
+    publicationFilter: 'modified',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=modified' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    publicationFilter: 'modified',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+    "data": [
+      {
+        "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+        "name": "Biscotte Restaurant (updated)",
+        "publishedAt": null,
+        "locale": "en"
+      }
+    ],
+    "meta": {
+      "pagination": {
+        "page": 1,
+        "pageSize": 25,
+        "pageCount": 1,
+        "total": 1
+      }
+    }
+}
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+    "data": [
+      {
+        "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+        "name": "Biscotte Restaurant",
+        "publishedAt": "2024-03-14T15:40:45.330Z",
+        "locale": "en"
+      }
+    ],
+    "meta": {
+      "pagination": {
+        "page": 1,
+        "pageSize": 25,
+        "pageCount": 1,
+        "total": 1
+      }
+    }
+}
+```
+
+
+## Find unmodified documents
+Description: GET /api/restaurants?status=draft&publicationFilter=unmodified — Get the draft versions of unmodified restaurants
+(Source: https://docs.strapi.io/cms/api/rest/publication-filter#unmodified)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=unmodified' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    status: 'draft',
+    publicationFilter: 'unmodified',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=unmodified' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    publicationFilter: 'unmodified',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+    "data": [
+      {
+        "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+        "name": "Biscotte Restaurant",
+        "publishedAt": null,
+        "locale": "en"
+      }
+    ],
+    "meta": {
+      "pagination": {
+        "page": 1,
+        "pageSize": 25,
+        "pageCount": 1,
+        "total": 1
+      }
+    }
+}
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+    "data": [
+      {
+        "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+        "name": "Biscotte Restaurant",
+        "publishedAt": "2024-03-14T15:40:45.330Z",
+        "locale": "en"
+      }
+    ],
+    "meta": {
+      "pagination": {
+        "page": 1,
+        "pageSize": 25,
+        "pageCount": 1,
+        "total": 1
+      }
+    }
+}
+```
+
+
+## Find published documents without a draft
+Description: GET /api/restaurants?publicationFilter=published-without-draft — Get published restaurants with no draft for the same locale
+(Source: https://docs.strapi.io/cms/api/rest/publication-filter#published-without-draft)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=published-without-draft' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    publicationFilter: 'published-without-draft',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+    "data": [
+      {
+        "documentId": "j0klm1n2o3p4q5r6s7t8u9v",
+        "name": "Legacy Restaurant",
+        "publishedAt": "2024-01-10T09:15:00.000Z",
+        "locale": "en"
+      }
+    ],
+    "meta": {
+      "pagination": {
+        "page": 1,
+        "pageSize": 25,
+        "pageCount": 1,
+        "total": 1
+      }
+    }
+}
+```
+
+
+## Find published documents with a draft
+Description: GET /api/restaurants?publicationFilter=published-with-draft — Get published restaurants that also have a draft for the same locale
+(Source: https://docs.strapi.io/cms/api/rest/publication-filter#published-with-draft)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=published-with-draft' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    publicationFilter: 'published-with-draft',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+    "data": [
+      {
+        "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+        "name": "Biscotte Restaurant",
+        "publishedAt": "2024-03-14T15:40:45.330Z",
+        "locale": "en"
+      }
+    ],
+    "meta": {
+      "pagination": {
+        "page": 1,
+        "pageSize": 25,
+        "pageCount": 1,
+        "total": 1
+      }
+    }
+}
+```
+
+
+## Find documents with a published version
+Description: GET /api/restaurants?status=draft&publicationFilter=has-published-version — Get the draft versions of restaurants that also have a published version
+(Source: https://docs.strapi.io/cms/api/rest/publication-filter#has-published-version)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    status: 'draft',
+    publicationFilter: 'has-published-version',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=has-published-version' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    publicationFilter: 'has-published-version',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+    "data": [
+      {
+        "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+        "name": "Biscotte Restaurant",
+        "publishedAt": null,
+        "locale": "en"
+      }
+    ],
+    "meta": {
+      "pagination": {
+        "page": 1,
+        "pageSize": 25,
+        "pageCount": 1,
+        "total": 1
+      }
+    }
+}
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+    "data": [
+      {
+        "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+        "name": "Biscotte Restaurant",
+        "publishedAt": "2024-03-14T15:40:45.330Z",
+        "locale": "en"
+      }
+    ],
+    "meta": {
+      "pagination": {
+        "page": 1,
+        "pageSize": 25,
+        "pageCount": 1,
+        "total": 1
+      }
+    }
+}
+```
+
+
+## Find documents published in at least one locale
+Description: GET /api/restaurants?status=draft&publicationFilter=has-published-version-document — Get the drafts of restaurants published in at least one locale
+(Source: https://docs.strapi.io/cms/api/rest/publication-filter#has-published-version-document)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version-document' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+    status: 'draft',
+    publicationFilter: 'has-published-version-document',
+}, {
+    encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+    "data": [
+      {
+        "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+        "name": "Biscotte Restaurant",
+        "publishedAt": null,
+        "locale": "en"
+      }
+    ],
+    "meta": {
+      "pagination": {
+        "page": 1,
+        "pageSize": 25,
+        "pageCount": 1,
+        "total": 1
+      }
+    }
+}
 ```
 
 
@@ -10374,7 +11362,7 @@ File path: N/A
 Source: https://docs.strapi.io/cms/api/rest/sort-pagination
 
 ## Example: Sort using 2 fields
-Description: GET /api/restaurants — Sort using 2 fields
+Description: GET /api/restaurants?sort[0]=Description&sort[1]=Name — Sort using 2 fields
 (Source: https://docs.strapi.io/cms/api/rest/sort-pagination#example-sort-using-2-fields)
 
 Language: Bash
@@ -10449,7 +11437,7 @@ File path: N/A
 
 
 ## Example: Sort using 2 fields and set the order
-Description: GET /api/restaurants — Sort using 2 fields and set the order
+Description: GET /api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc — Sort using 2 fields and set the order
 (Source: https://docs.strapi.io/cms/api/rest/sort-pagination#example-sort-using-2-fields-and-set-the-order)
 
 Language: Bash
@@ -10524,7 +11512,7 @@ File path: N/A
 
 
 ## Pagination by page
-Description: GET /api/articles — Pagination by page
+Description: GET /api/articles?pagination[page]=1&pagination[pageSize]=10 — Pagination by page
 (Source: https://docs.strapi.io/cms/api/rest/sort-pagination#pagination-by-page)
 
 Language: Bash
@@ -10573,7 +11561,7 @@ File path: N/A
 
 
 ## Pagination by offset
-Description: GET /api/articles — Pagination by offset
+Description: GET /api/articles?pagination[start]=0&pagination[limit]=10 — Pagination by offset
 (Source: https://docs.strapi.io/cms/api/rest/sort-pagination#pagination-by-offset)
 
 Language: Bash
@@ -10628,15 +11616,24 @@ Source: https://docs.strapi.io/cms/api/rest/status
 Description: GET /api/articles?status=draft — Get draft versions of restaurants
 (Source: https://docs.strapi.io/cms/api/rest/status#status)
 
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/articles?status=draft' \\
+  -H 'Authorization: Bearer <token>'
+```
+
+---
 Language: JavaScript
 File path: N/A
 
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-  status: 'draft',
+    status: 'draft',
 }, {
-  encodeValuesOnly: true, // prettify URL
+    encodeValuesOnly: true, // prettify URL
 });
 
 await request(`/api/articles?${query}`);

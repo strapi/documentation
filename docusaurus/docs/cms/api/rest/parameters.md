@@ -2,7 +2,7 @@
 title: Parameters
 description: Use API parameters to refine your Strapi REST API queries.
 sidebar_label: Parameters
-next: ./filtering-locale-publication.md
+next: ./filters.md
 tags:
 - API
 - Content API
@@ -32,6 +32,7 @@ The following API parameters are available:
 | `filters`          | Object        | [Filter the response](/cms/api/rest/filters) |
 | `locale`           | String        | [Select a locale](/cms/api/rest/locale) |
 | `status`           | String        | [Select the Draft & Publish status](/cms/api/rest/status) |
+| `publicationFilter` | String       | [Select documents by how their draft and published versions relate](/cms/api/rest/publication-filter) |
 | `populate`         | String or Object | [Populate relations, components, or dynamic zones](/cms/api/rest/populate-select#population) |
 | `fields`           | Array         | [Select only specific fields to display](/cms/api/rest/populate-select#field-selection) |
 | `sort`             | String or Array  | [Sort the response](/cms/api/rest/sort-pagination.md#sorting) |

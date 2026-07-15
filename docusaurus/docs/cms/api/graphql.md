@@ -432,6 +432,50 @@ query Query($status: PublicationStatus) {
 }
 ```
 
+### Filter with `publicationFilter` {#publication-filter}
+
+If the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled, you can add a `publicationFilter` argument to built-in collection and single-type queries. It filters documents by the [relationship between their draft and published versions](/cms/api/document-service/publication-filter): for example, drafts that were never published, or entries modified since they were last published. GraphQL exposes the same values as the REST API and the Document Service API through the `PublicationFilter` enum.
+
+`publicationFilter` selects the group of documents first; the `status` argument then decides whether each result returns its draft or published row.
+
+:::caution
+When `status` is omitted, GraphQL defaults to `PUBLISHED` before applying `publicationFilter` (same as REST). Draft-only values such as `NEVER_PUBLISHED` return no results unless you pass `status: DRAFT`.
+:::
+
+```graphql title="Example: Fetch never-published draft documents"
+query Query($status: PublicationStatus, $publicationFilter: PublicationFilter) {
+  restaurants(status: DRAFT, publicationFilter: NEVER_PUBLISHED) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+```graphql title="Example: Modified documents with default PUBLISHED status"
+query Query {
+  restaurants(publicationFilter: MODIFIED) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+Available enum values:
+
+| GraphQL enum | Document Service / REST value |
+| ------------ | ----------------------------- |
+| `NEVER_PUBLISHED` | `never-published` |
+| `HAS_PUBLISHED_VERSION` | `has-published-version` |
+| `MODIFIED` | `modified` |
+| `UNMODIFIED` | `unmodified` |
+| `NEVER_PUBLISHED_DOCUMENT` | `never-published-document` |
+| `HAS_PUBLISHED_VERSION_DOCUMENT` | `has-published-version-document` |
+| `PUBLISHED_WITHOUT_DRAFT` | `published-without-draft` ([diagnostics only](/cms/api/document-service/publication-filter#diagnostics)) |
+| `PUBLISHED_WITH_DRAFT` | `published-with-draft` ([diagnostics only](/cms/api/document-service/publication-filter#diagnostics)) |
+
+To learn more, see the [use cases and accepted values](/cms/api/document-service/publication-filter#values) on the Document Service API page.
 
 ## Mutations
 
