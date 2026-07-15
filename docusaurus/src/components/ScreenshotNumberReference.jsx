@@ -4,16 +4,17 @@ const ScreenshotNumberReference = ({ number }) => {
   return (
     <span
       style={{
-        display: 'inline-block',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         width: '1.5rem',
         height: '1.5rem',
         borderRadius: '50%',
         backgroundColor: '#4743FF',
-        color: '#fff', 
-        textAlign: 'center',
+        color: '#fff',
         fontSize: '.8rem',
         fontWeight: 'bold',
-        padding: '0.1rem',
+        verticalAlign: 'middle',
       }}
     >
       {number}
