@@ -15,7 +15,7 @@ export default function NavbarSearchAI() {
         aria-label="Ask AI"
         title="Ask AI"
       >
-        <i className="ph ph-sparkle" />
+        <i className="ph-fill ph-sparkle" />
         <span className={styles.askAILabel}>Ask AI</span>
       </button>
     </div>
