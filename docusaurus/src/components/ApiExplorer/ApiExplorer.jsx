@@ -505,7 +505,7 @@ export default function ApiExplorer() {
 
       {/* Per-endpoint doc link */}
       <a href={docLink} className={styles.explorerDocLink}>
-        Read the {apiGroup.label} docs →
+        Read the {apiGroup.label} docs <span>→</span>
       </a>
     </div>
   );

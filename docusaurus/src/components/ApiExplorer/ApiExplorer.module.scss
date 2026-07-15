@@ -8,13 +8,15 @@
 }
 
 .explorerLabel {
-  font-family: var(--strapi-font-family-technical);
-  font-size: 12px;
+  // Match the homepage .sectionLabel style so this label is consistent with
+  // the other section labels ("Powerful Features", etc.), including in dark mode.
+  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--strapi-neutral-400);
-  margin-bottom: 16px;
+  letter-spacing: 0.1em;
+  color: var(--strapi-fg-4);
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -23,7 +25,19 @@
     content: '';
     flex: 1;
     height: 1px;
-    background: var(--strapi-neutral-200);
+    background: var(--strapi-border);
+  }
+}
+
+// Match the homepage .sectionLabel dark-mode override so the label color and
+// divider stay consistent with the other section labels in dark mode.
+@include dark {
+  .explorerLabel {
+    color: rgba(255, 255, 255, 0.5);
+
+    &::after {
+      background: rgba(255, 255, 255, 0.08);
+    }
   }
 }
 
@@ -99,7 +113,10 @@
 /* ─── Body: sidebar + request pane ─── */
 .explorerBody {
   display: flex;
-  min-height: 520px;
+  // Fixed height (not min-height) so the card stays the same height across
+  // tabs (REST/GraphQL/Document Service), regardless of endpoint count or
+  // response length. The response body flexes and scrolls within it.
+  height: 520px;
 }
 
 /* ─── Endpoint sidebar ─── */
@@ -285,9 +302,12 @@
 
 .responseBody {
   flex: 1;
+  // No max-height: with the fixed-height .explorerBody, flex:1 + overflow lets
+  // the response fill the available space and scroll, keeping the card height
+  // constant across tabs whether the response is short or long.
+  min-height: 0;
   overflow: auto;
   padding: 16px;
-  max-height: 480px;
 
   /* Thin scrollbar */
   scrollbar-width: thin;
@@ -336,19 +356,30 @@
 
 /* ─── Doc link ─── */
 .explorerDocLink {
+  // Match the homepage "Learn more" showcase CTAs (.showcaseCardCta): display
+  // font, 14px / 600, primary color, and the arrow that slides on hover.
   display: inline-flex;
   align-items: center;
-  margin-top: 12px;
-  font-family: var(--strapi-font-family-technical);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--strapi-neutral-400);
+  gap: 6px;
+  margin-top: 16px;
+  font-family: var(--strapi-font-family-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--strapi-primary-500);
   text-decoration: none;
-  transition: color 0.15s ease;
+
+  span {
+    display: inline-block;
+    transition: transform 0.2s;
+  }
 
   &:hover {
     color: var(--strapi-primary-500);
     text-decoration: none;
+
+    span {
+      transform: translateX(4px);
+    }
   }
 }
 
@@ -357,6 +388,10 @@
   .explorerBody {
     flex-direction: column;
     min-width: 0;
+    // On mobile the sidebar and request pane stack, so a fixed desktop height
+    // would be too cramped; fall back to a flexible min-height here.
+    height: auto;
+    min-height: 520px;
   }
 
   /* Tabs scroll horizontally instead of overflowing the card on narrow screens. */
