@@ -212,17 +212,16 @@
   align-items: center;
   gap: 24px;
   padding: 28px 32px;
-  border-radius: 16px;
-  border: 1px solid var(--strapi-border);
-  background: var(--strapi-surface-1);
+  border-radius: var(--strapi-radius-lg);
+  border: 1px solid var(--strapi-border-strong);
+  background: transparent;
   text-decoration: none !important;
   color: inherit;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--strapi-shadow-xs);
 
   &:hover {
     border-color: var(--strapi-accent-light);
-    box-shadow: 0 8px 32px rgba(73, 69, 255, 0.08);
     text-decoration: none !important;
     color: inherit;
     transform: translateY(-2px);
@@ -240,7 +239,7 @@
 .quickstartIcon {
   width: 48px;
   height: 48px;
-  border-radius: 14px;
+  border-radius: 12px;
   background: color-mix(in srgb, var(--strapi-primary-500) 10%, transparent);
   display: grid;
   place-items: center;
@@ -255,7 +254,7 @@
 .quickstartTitle {
   font-family: var(--strapi-font-family-display);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--strapi-fg-1);
   margin-bottom: 4px;
@@ -303,7 +302,7 @@
 .exploreGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 8px;
+  gap: 24px;
 }
 
 .exploreCard {
@@ -311,20 +310,18 @@
   align-items: flex-start;
   gap: 14px;
   padding: 16px 20px;
-  border-radius: 12px;
-  border: 1px solid var(--strapi-border);
-  background: var(--strapi-surface-1);
+  border-radius: var(--strapi-radius-lg);
+  border: 1px solid var(--strapi-border-strong);
+  background: transparent;
   text-decoration: none !important;
   color: inherit;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--strapi-shadow-xs);
 
   &:hover {
     border-color: var(--strapi-accent-light);
-    background: var(--strapi-surface-2);
     text-decoration: none !important;
     color: inherit;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     transform: translateY(-2px);
   }
 }
@@ -332,7 +329,7 @@
 .exploreCardIcon {
   width: 36px;
   height: 36px;
-  border-radius: 10px;
+  border-radius: 12px;
   background: color-mix(in srgb, var(--strapi-primary-500) 10%, transparent);
   display: grid;
   place-items: center;
@@ -400,7 +397,7 @@
 .featuresGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 24px;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -412,18 +409,18 @@
   flex-direction: column;
   padding: 28px;
   border-radius: var(--strapi-radius-lg);
-  border: 1px solid var(--strapi-neutral-150);
-  background: var(--strapi-surface-0);
+  border: 1px solid var(--strapi-border-strong);
+  background: transparent;
   text-decoration: none;
   color: var(--strapi-neutral-800);
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.25s ease;
+  box-shadow: var(--strapi-shadow-xs);
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-    border-color: var(--strapi-primary-500);
+    transform: translateY(-2px);
+    border-color: var(--strapi-accent-light);
     text-decoration: none;
     color: var(--strapi-neutral-800);
   }
@@ -443,10 +440,11 @@
 }
 
 .featureCardTitle {
+  font-family: var(--strapi-font-family-display);
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 8px;
-  color: var(--strapi-neutral-800);
+  color: var(--strapi-fg-1);
 }
 
 .featureCardDesc {
@@ -483,27 +481,26 @@
 .showcaseGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 24px;
 
   /* Equal height cards via inner stretch */
   > div { display: flex; }
 }
 
 .showcaseCard {
-  border-radius: 16px;
-  border: 1px solid var(--strapi-border);
-  background: var(--strapi-surface-1);
+  border-radius: var(--strapi-radius-lg);
+  border: 1px solid var(--strapi-border-strong);
+  background: transparent;
   padding: 32px;
   text-decoration: none !important;
   color: inherit;
   display: flex;
   flex-direction: column;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--strapi-shadow-xs);
 
   &:hover {
     border-color: var(--strapi-accent-light);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
     text-decoration: none !important;
     color: inherit;
     transform: translateY(-2px);
@@ -513,7 +510,7 @@
 .showcaseCardIcon {
   width: 48px;
   height: 48px;
-  border-radius: 14px;
+  border-radius: 12px;
   background: color-mix(in srgb, var(--strapi-primary-500) 10%, transparent);
   display: grid;
   place-items: center;
@@ -552,7 +549,7 @@
 .showcaseCardTitle {
   font-family: var(--strapi-font-family-display);
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--strapi-fg-1);
   margin-bottom: 12px;
@@ -613,17 +610,16 @@
   align-items: center;
   gap: 24px;
   padding: 28px 32px;
-  border-radius: 16px;
-  border: 1px solid var(--strapi-border);
-  background: var(--strapi-surface-1);
+  border-radius: var(--strapi-radius-lg);
+  border: 1px solid var(--strapi-border-strong);
+  background: transparent;
   text-decoration: none !important;
   color: inherit;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--strapi-shadow-xs);
 
   &:hover {
     border-color: var(--strapi-accent-light);
-    box-shadow: 0 8px 32px rgba(73, 69, 255, 0.08);
     text-decoration: none !important;
     color: inherit;
     transform: translateY(-2px);
@@ -641,7 +637,7 @@
 .deployIcon {
   width: 48px;
   height: 48px;
-  border-radius: 14px;
+  border-radius: 12px;
   background: color-mix(in srgb, var(--strapi-primary-500) 10%, transparent);
   display: grid;
   place-items: center;
@@ -656,7 +652,7 @@
 .deployTitle {
   font-family: var(--strapi-font-family-display);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--strapi-fg-1);
   margin-bottom: 4px;
@@ -718,43 +714,12 @@
     color: rgba(255, 255, 255, 0.5);
   }
 
-  .quickstartCard {
-    background: #1a1a2e;
-    border-color: rgba(255, 255, 255, 0.08);
-
-    &:hover {
-      border-color: rgba(73, 69, 255, 0.4);
-      box-shadow: 0 8px 32px rgba(73, 69, 255, 0.15);
-    }
-  }
-
   .quickstartIcon {
-    background: rgba(73, 69, 255, 0.2);
-  }
-
-  .exploreCard {
-    background: #1a1a2e;
-    border-color: rgba(255, 255, 255, 0.08);
-
-    &:hover {
-      background: #222240;
-      border-color: rgba(73, 69, 255, 0.4);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-    }
+    background: rgba(73, 69, 255, 0.15);
   }
 
   .exploreCardIcon {
     background: rgba(73, 69, 255, 0.15);
-  }
-
-  .showcaseCard {
-    background: #1a1a2e;
-    border-color: rgba(255, 255, 255, 0.08);
-
-    &:hover {
-      border-color: rgba(73, 69, 255, 0.4);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
   }
 
   .showcaseCardIcon {
@@ -766,18 +731,8 @@
     border-color: rgba(255, 255, 255, 0.06);
   }
 
-  .deployCard {
-    background: #1a1a2e;
-    border-color: rgba(255, 255, 255, 0.08);
-
-    &:hover {
-      border-color: rgba(73, 69, 255, 0.4);
-      box-shadow: 0 8px 32px rgba(73, 69, 255, 0.15);
-    }
-  }
-
   .deployIcon {
-    background: rgba(73, 69, 255, 0.2);
+    background: rgba(73, 69, 255, 0.15);
   }
 
   .codeBlock {
@@ -804,21 +759,6 @@
     &::after {
       background: rgba(255, 255, 255, 0.08);
     }
-  }
-
-  .featureCard {
-    background: #1a1a2e;
-    border-color: rgba(255, 255, 255, 0.08);
-
-    &:hover {
-      background: #222240;
-      border-color: rgba(73, 69, 255, 0.4);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-    }
-  }
-
-  .featureCardTitle {
-    color: rgba(255, 255, 255, 0.95);
   }
 
   .featureCardDesc {
