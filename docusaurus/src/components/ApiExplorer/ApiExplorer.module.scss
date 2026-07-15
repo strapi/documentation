@@ -350,15 +350,16 @@
 
 /* ─── Doc link ─── */
 .explorerDocLink {
+  // Match the homepage "Learn more" CTA (.featureCardCta): body font,
+  // 14px / 600, and the primary color instead of the monospace grey style.
   display: inline-flex;
   align-items: center;
-  margin-top: 12px;
-  font-family: var(--strapi-font-family-technical);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--strapi-neutral-400);
+  margin-top: 16px;
+  font-family: var(--strapi-font-family-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--strapi-primary-500);
   text-decoration: none;
-  transition: color 0.15s ease;
 
   &:hover {
     color: var(--strapi-primary-500);
