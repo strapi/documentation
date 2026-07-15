@@ -8,13 +8,15 @@
 }
 
 .explorerLabel {
-  font-family: var(--strapi-font-family-technical);
-  font-size: 12px;
+  // Match the homepage .sectionLabel style so this label is consistent with
+  // the other section labels ("Powerful Features", etc.), including in dark mode.
+  font-family: var(--strapi-font-family-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--strapi-neutral-400);
-  margin-bottom: 16px;
+  letter-spacing: 0.1em;
+  color: var(--strapi-fg-4);
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -23,7 +25,19 @@
     content: '';
     flex: 1;
     height: 1px;
-    background: var(--strapi-neutral-200);
+    background: var(--strapi-border);
+  }
+}
+
+// Match the homepage .sectionLabel dark-mode override so the label color and
+// divider stay consistent with the other section labels in dark mode.
+@include dark {
+  .explorerLabel {
+    color: rgba(255, 255, 255, 0.5);
+
+    &::after {
+      background: rgba(255, 255, 255, 0.08);
+    }
   }
 }
 
