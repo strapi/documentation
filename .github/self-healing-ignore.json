@@ -819,6 +819,11 @@
       "number": 26901,
       "reason": "Router: Internal Media Library/upload feature bug fix. Addresses CORS errors that occur when loading private/signed asset thumbnails in the admin panel. While this fixes a user-visible error, it's a bug fix (not a new feature) that doesn't introduce documented features or API changes. Users already had the ability to view asset thumbnails; this just fixes the error they were experiencing.",
       "added": "2026-07-14"
+    },
+    {
+      "number": 26978,
+      "reason": "Router: Internal admin panel build configuration fix. This resolves a Vite bundling issue that prevented Prism language plugins from loading in new Strapi apps — a runtime bug in the admin UI, not a user-facing feature or configuration change. Users do not directly configure Prism bundling or interact with this fix.",
+      "added": "2026-07-15"
     }
   ]
 }
