@@ -350,20 +350,30 @@
 
 /* ─── Doc link ─── */
 .explorerDocLink {
-  // Match the homepage "Learn more" CTA (.featureCardCta): body font,
-  // 14px / 600, and the primary color instead of the monospace grey style.
+  // Match the homepage "Learn more" showcase CTAs (.showcaseCardCta): display
+  // font, 14px / 600, primary color, and the arrow that slides on hover.
   display: inline-flex;
   align-items: center;
+  gap: 6px;
   margin-top: 16px;
-  font-family: var(--strapi-font-family-body);
+  font-family: var(--strapi-font-family-display);
   font-size: 14px;
   font-weight: 600;
   color: var(--strapi-primary-500);
   text-decoration: none;
 
+  span {
+    display: inline-block;
+    transition: transform 0.2s;
+  }
+
   &:hover {
     color: var(--strapi-primary-500);
     text-decoration: none;
+
+    span {
+      transform: translateX(4px);
+    }
   }
 }
 
