@@ -48872,18 +48872,25 @@ Plugins configuration are defined in [the `config/plugins.js` file](/cms/configu
 
 The GraphQL plugin has the following specific configuration options that should be declared in a `graphql.config` object within the `config/plugins` file. All parameters are optional:
 
-| Option             | Type                | Description                                                                                                                                                      | Default Value | Notes                                               |
-| ------------------ | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------------- |
-| `endpoint`         | String              | Sets the GraphQL endpoint path.                                                                                                                                  | `'/graphql'`  | Example: `/custom-graphql`                          |
-| `shadowCRUD`       | Boolean             | Enables or disables automatic schema generation for content types.                                                                                               | `true`        |                                                     |
-| `depthLimit`       | Number              | Limits the depth of GraphQL queries to prevent excessive nesting.                                                                                                | `10`          | Use this to mitigate potential DoS attacks.         |
-| `amountLimit`      | Number              | Limits the maximum number of items returned in a single response.                                                                                                | `100`         | Use cautiously to avoid performance issues.         |
-| `playgroundAlways` | Boolean             | [Deprecated] Enables GraphQL Playground in all environments (deprecated).                                                                                        | `false`       | Prefer using `landingPage` instead.                 |
-| `landingPage`      | Boolean \| Function | Enables or disables the landing page for GraphQL. Accepts a boolean or a function returning a boolean or an ApolloServerPlugin implementing `renderLandingPage`. |               | `false` in production, `true` in other environments |
-| `apolloServer`     | Object              | Passes configuration options directly to Apollo Server.                                                                                                          | `{}`          | Example: `{ tracing: true }`    
+| Option                | Type                          | Description                                                                                                                                                      | Default Value                                                | Notes                                                                                                            |
+| --------------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `endpoint`            | String                        | Sets the GraphQL endpoint path.                                                                                                                                  | `'/graphql'`                                                 | Example: `/custom-graphql`                                                                                        |
+| `shadowCRUD`          | Boolean                       | Enables or disables automatic schema generation for content types.                                                                                               | `true`                                                       |                                                                                                                   |
+| `depthLimit`          | Number                        | Limits the depth of GraphQL queries to prevent excessive nesting.                                                                                                | _none_ (unlimited)                                           | **No depth limit is applied unless this option is set.** Set it explicitly to mitigate potential DoS attacks.     |
+| `defaultLimit`        | Number                        | Page size applied when a query does not pass any pagination arguments.                                                                                           | `10`                                                         |                                                                                                                   |
+| `maxLimit`            | Number                        | Maximum `pagination.pageSize` / `pagination.limit` a client may request in a single query. Larger values are clamped down to `maxLimit`, not rejected.           | `-1` (unlimited)                                             | Set this in production to avoid performance issues. Also used as the resolved value when a client requests `limit: -1`. |
+| `landingPage`         | Boolean \| Function           | Enables or disables the landing page for GraphQL. Accepts a boolean or a function returning a boolean or an ApolloServerPlugin implementing `renderLandingPage`. | _none_                                                       | `false` in production, `true` in other environments                                                               |
+| `apolloServer`        | Object                        | Passes configuration options directly to Apollo Server.                                                                                                          | `{}`                                                         | Example: `{ introspection: false }`                                                                               |
+| `generateArtifacts`   | Boolean                       | Generates schema artifacts (GraphQL SDL file and TypeScript type definitions) when the schema is built.                                                          | `true` in development, `false` in other environments         | Output locations are configured with `artifacts`.                                                                 |
+| `artifacts.schema`    | Boolean \| String             | Output path for the generated GraphQL SDL file, or `false` to disable.                                                                                           | `false`                                                      | Only used when `generateArtifacts` is enabled.                                                                    |
+| `artifacts.typegen`   | Boolean \| String             | Output path for the generated TypeScript type definitions, or `false` to disable.                                                                                | `false`                                                      | Only used when `generateArtifacts` is enabled.                                                                    |
+| `v4CompatibilityMode` | Boolean                       | Enables the Strapi v4 GraphQL response format.                                                                                                                   | Value of the `STRAPI_GRAPHQL_V4_COMPATIBILITY_MODE` environment variable, otherwise `false` |                                                                                                                   |
+| `playgroundAlways`    | Boolean                       | [Deprecated] Enables GraphQL Playground in all environments (deprecated).                                                                                        | `false`                                                      | Has no effect other than logging a deprecation warning. Use `landingPage` instead.                                |
 
 :::caution
-The maximum number of items returned by the response is limited to 100 by default. This value can be changed using the `amountLimit` configuration option, but should only be changed after careful consideration: a large query can cause a DDoS (Distributed Denial of Service) and may cause abnormal load on your Strapi server, as well as your database server.
+The `amountLimit` option that existed in Strapi v3 **does not exist in Strapi 5** and is silently ignored if set. Response size is controlled by `defaultLimit` (page size when the query passes no pagination arguments) and `maxLimit` (cap on the page size a client may request).
+
+By default `maxLimit` is `-1`, meaning clients can request an **unlimited** number of items in a single query. Set `maxLimit` in production after careful consideration: a large query can cause a DDoS (Distributed Denial of Service) and may cause abnormal load on your Strapi server, as well as your database server.
 :::
 
 :::note
@@ -48900,7 +48907,8 @@ module.exports = {
       shadowCRUD: true,
       landingPage: false, // disable Sandbox everywhere
       depthLimit: 7,
-      amountLimit: 100,
+      defaultLimit: 25,
+      maxLimit: 100,
       apolloServer: {
         tracing: false,
       },
@@ -48917,7 +48925,8 @@ module.exports = {
       shadowCRUD: true,
       landingPage: false, // disable Sandbox everywhere
       depthLimit: 7,
-      amountLimit: 100,
+      defaultLimit: 25,
+      maxLimit: 100,
       apolloServer: {
         tracing: false,
       },
@@ -49744,7 +49753,7 @@ If you haven't edited the [configuration file](#available-options), it is alread
 
 ###### Limit max depth and complexity
 
-A malicious user could send a query with a very high depth, which could overload your server. Use the `depthLimit` [configuration parameter](/cms/plugins/graphql#code-based-configuration) to limit the maximum number of nested fields that can be queried in a single request. By default, `depthLimit` is set to 10 but can be set to a higher value during testing and development.
+A malicious user could send a query with a very high depth, which could overload your server. Use the `depthLimit` [configuration parameter](/cms/plugins/graphql#code-based-configuration) to limit the maximum number of nested fields that can be queried in a single request. **By default, no depth limit is applied** — set `depthLimit` explicitly (e.g. to `10`) in production. Similarly, set `maxLimit` to cap the number of items a single query can return, as the default (`-1`) allows unlimited results.
 
 :::tip
 To increase GraphQL security even further, 3rd-party tools can be used. See the guide about [using GraphQL Armor with Strapi on the forum](https://forum.strapi.io/t/use-graphql-armor-with-strapi/).

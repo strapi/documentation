@@ -34792,7 +34792,8 @@ module.exports = {
       shadowCRUD: true,
       landingPage: false, // disable Sandbox everywhere
       depthLimit: 7,
-      amountLimit: 100,
+      defaultLimit: 25,
+      maxLimit: 100,
       apolloServer: {
         tracing: false,
       },
@@ -34813,7 +34814,8 @@ export default () => ({
       shadowCRUD: true,
       landingPage: false, // disable Sandbox everywhere
       depthLimit: 7,
-      amountLimit: 100,
+      defaultLimit: 25,
+      maxLimit: 100,
       apolloServer: {
         tracing: false,
       },
