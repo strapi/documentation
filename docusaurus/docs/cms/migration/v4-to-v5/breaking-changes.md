@@ -105,6 +105,7 @@ You can click on the description of any breaking change in the following tables 
 | [Sorting by id is no longer possible to sort by chronological order](/cms/migration/v4-to-v5/breaking-changes/sort-by-id) | Yes | ✅ Yes |
 | [There is no `findPage()` method with the Document Service API](/cms/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service) | Yes | No |
 | [Some attributes and content-types names are reserved by Strapi](/cms/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved) | Yes | No |
+| [The `status` attribute name cannot be used when Draft & Publish is enabled](/cms/migration/v4-to-v5/breaking-changes/reserved-attributes-status) | Yes | No |
 | [Upload a file at entry creation is no longer possible](/cms/migration/v4-to-v5/breaking-changes/no-upload-at-entry-creation) | Yes | No |
 | [Components and dynamic zones should be populated using the detailed population strategy](/cms/migration/v4-to-v5/breaking-changes/no-shared-population-strategy-components-dynamic-zones) | Yes | No |
 | [Updating repeatable components with the Document Service API is not recommended](/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api) | Yes | No |
