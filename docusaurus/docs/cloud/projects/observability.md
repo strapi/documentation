@@ -109,7 +109,7 @@ The *Top endpoints by API traffic* table lists the 5 API endpoints that received
 
 ### Top assets by bandwidth usage
 
-The *Top assets by bandwidth usage* table lists the 5 assets that consumed the most bandwidth in the selected period.
+The *Top assets by bandwidth usage* table lists the 5 assets that consumed the most bandwidth in the selected period and displays the following metrics:
 
 | Column | Description |
 |--------|-------------|
