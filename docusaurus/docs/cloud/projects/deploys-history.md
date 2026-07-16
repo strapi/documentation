@@ -1,6 +1,7 @@
 ---
 title: Cloud deployment history & logs
 displayed_sidebar: cloudSidebar
+sidebar_label: Deployment history & logs
 description: View projects' deployment history and logs.
 canonicalUrl: https://docs.strapi.io/cloud/deploys-history.html
 sidebar_position: 1

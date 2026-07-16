@@ -1,6 +1,7 @@
 ---
 title: Cloud projects overview
 displayed_sidebar: cloudSidebar
+sidebar_label: Overview
 description: View and manage your projects on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/projects/overview.html
 sidebar_position: 1

@@ -1,6 +1,7 @@
 ---
 title: Cloud project observability
 displayed_sidebar: cloudSidebar
+sidebar_label: Observability
 description: Monitor API requests, bandwidth, asset storage, and CPU and Memory usage directly from your Strapi Cloud project dashboard.
 canonicalUrl: https://docs.strapi.io/cloud/projects/observability.html
 tags:

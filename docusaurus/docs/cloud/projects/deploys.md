@@ -1,6 +1,7 @@
 ---
 title: Cloud deployments management
 displayed_sidebar: cloudSidebar
+sidebar_label: Deployment management
 description: Manage your projects's deployments.
 canonicalUrl: https://docs.strapi.io/cloud/projects/deploys.html
 sidebar_position: 1
