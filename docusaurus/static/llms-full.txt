@@ -1919,9 +1919,9 @@ The section displays a single area chart with 2 series:
 - CPU: displayed as a blue dashed line
 - Memory: displayed as a green solid line
 
-Use the *environment* dropdown to select which environment's metrics to display and the time range selector to adjust the period. Hover over the chart to see a tooltip showing the CPU and Memory values at a specific point in time. Data is displayed hourly or daily, depending on the selected range.
+Use the *environment* dropdown at the top right of the view to select which environment's metrics to display and the time range selector to adjust the period. Hover over the chart to see a tooltip showing the CPU and Memory values at a specific point in time. Data is displayed hourly or daily, depending on the selected range.
 
-Click the refresh button () in the section toolbar to manually load the latest data. The section also refreshes automatically:
+Click the refresh button  in the section toolbar to manually load the latest data. The section also refreshes automatically:
 
 - Every 30 seconds for the 5m and 15m ranges
 - Every 5 minutes for the 1h, 24h and 7d ranges
