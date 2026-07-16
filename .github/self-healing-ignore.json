@@ -824,6 +824,21 @@
       "number": 26978,
       "reason": "Router: Internal admin panel build configuration fix. This resolves a Vite bundling issue that prevented Prism language plugins from loading in new Strapi apps — a runtime bug in the admin UI, not a user-facing feature or configuration change. Users do not directly configure Prism bundling or interact with this fix.",
       "added": "2026-07-15"
+    },
+    {
+      "number": 27023,
+      "reason": "Router: Release/chore PR - version bump with no public-facing feature or behavior changes that require user documentation updates",
+      "added": "2026-07-16"
+    },
+    {
+      "number": 27008,
+      "reason": "Router: Internal validation improvement for plugin developers. Error messages are enhanced but the plugin API surface (addBulkAction, addDocumentAction, addDocumentHeaderAction, addEditViewSidePanel) remains unchanged. Existing plugin API documentation does not require updates.",
+      "added": "2026-07-16"
+    },
+    {
+      "number": 26871,
+      "reason": "Router: Internal Content Manager UI state fix. Addresses draft relation warning accuracy in the relation-on-the-fly modal. No user-facing behavior changes that require documentation updates.",
+      "added": "2026-07-16"
     }
   ]
 }
