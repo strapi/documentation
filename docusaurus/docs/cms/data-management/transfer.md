@@ -44,8 +44,10 @@ The CLI command consists of the following arguments:
 | `--from`       | Full URL of the `/admin` endpoint of the remote Strapi instance to pull data from (e.g., `--from https://my-beautiful-strapi-website/admin`) |
 | `‑‑from‑token` | Transfer token from the Strapi source instance.                                                                                              |
 | `--force`      | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                            |
-| `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                    |
+| `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, `config`, and `media-library` (excludes both upload binaries and upload content type records). |
 | `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
+| `--exclude-content-types` | Comma-separated list of content-type UIDs to exclude. Both entity records and relation links touching an excluded type are skipped. |
+| `--only-content-types` | Comma-separated list of content-type UIDs to include. Only entity records and relation links for the listed types are transferred. |
 | `--throttle` | Time in milliseconds to inject an artificial delay between the "chunks" during a transfer. |
 | `--no-checksums` | Disable end-to-end SHA-256 checksum verification for assets. Checksum verification is enabled by default when both the source and destination instances support it. |
 | `--verbose` | Enable verbose logs. |
@@ -242,6 +244,65 @@ npm run strapi transfer -- --to https://example.com/admin --exclude files
 :::warning
 Any types excluded from the transfer will be deleted in your destination instance. For example, if you exclude `config` the project configuration in your destination instance will be deleted.
 :::
+
+## Filter content types during transfer
+
+<VersionBadge version="5.50.3" />
+
+The `--exclude-content-types` and `--only-content-types` options let you scope a transfer to specific content types. Both options accept a comma-separated list of content-type UIDs (for example, `api::article.article`). Unknown UIDs are validated against the Strapi schema at startup. Both entity records and any relation links touching an excluded type are skipped automatically.
+
+:::warning Restore behavior
+- When you use `--exclude-content-types`, data for the excluded types is **preserved** on the destination — they are not wiped before the transfer.
+- When you use `--only-content-types`, the pre-transfer wipe is scoped to only the listed UIDs, leaving all other content on the destination in place.
+:::
+
+### Exclude specific content types from transfer
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token \
+  --exclude-content-types api::article.article
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token \
+  --exclude-content-types api::article.article
+```
+
+</TabItem>
+
+</Tabs>
+
+### Transfer only specific content types
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token \
+  --only-content-types api::article.article,api::category.category
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token \
+  --only-content-types api::article.article,api::category.category
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Manage data transfer with environment variables
 

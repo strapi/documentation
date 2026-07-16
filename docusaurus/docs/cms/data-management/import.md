@@ -278,4 +278,59 @@ npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --only
 
 </Tabs>
 
+## Filter content types during import
+
+<VersionBadge version="5.50.3" />
+
+The `--exclude-content-types` and `--only-content-types` options let you scope an import to specific content types. Both options accept a comma-separated list of content-type UIDs (for example, `api::article.article`). Unknown UIDs are validated against the Strapi schema at startup.
+
+:::warning Restore behavior
+- When you use `--exclude-content-types`, data for the excluded types is **preserved** on the destination — the import does not wipe those records before restoring.
+- When you use `--only-content-types`, the pre-import wipe is scoped to only the listed UIDs, leaving all other content in place.
+:::
+
+### Exclude specific content types from import
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi import -f export_20221213105643.tar.gz.enc --exclude-content-types api::article.article
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi import -- -f export_20221213105643.tar.gz.enc --exclude-content-types api::article.article
+```
+
+</TabItem>
+
+</Tabs>
+
+### Import only specific content types
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi import -f export_20221213105643.tar.gz.enc --only-content-types api::article.article,api::category.category
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi import -- -f export_20221213105643.tar.gz.enc --only-content-types api::article.article,api::category.category
+```
+
+</TabItem>
+
+</Tabs>
+
 <FeedbackPlaceholder />
