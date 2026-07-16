@@ -1,7 +1,7 @@
 ---
 title: Cloud project logs
 displayed_sidebar: cloudSidebar
-sidebar_label: Logs
+sidebar_label: Project logs
 description: View logs for a Strapi Cloud project.
 canonicalUrl: https://docs.strapi.io/cloud/projects/logs.html
 sidebar_position: 1
