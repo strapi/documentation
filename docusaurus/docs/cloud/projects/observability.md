@@ -95,7 +95,7 @@ Use the *environment* dropdown and the time range selector to filter the data. T
 
 ### Top endpoints by API traffic
 
-The *Top endpoints by API traffic* table lists the 5 API endpoints that received the most requests in the selected period.
+The *Top endpoints by API traffic* table lists the 5 API endpoints that received the most requests in the selected period and displays the following metrics:
 
 | Column | Description |
 |--------|-------------|
