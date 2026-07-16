@@ -1,5 +1,5 @@
 ---
-title: Project logs
+title: Cloud project logs
 displayed_sidebar: cloudSidebar
 description: View logs for a Strapi Cloud project.
 canonicalUrl: https://docs.strapi.io/cloud/projects/logs.html

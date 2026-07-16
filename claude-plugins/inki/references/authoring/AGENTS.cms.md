@@ -12,6 +12,7 @@ Technical writing rules
 Frontmatter and structure
 - Always provide `title`, optional `description`, and meaningful headings (H2/H3).
 - Include a <Tldr> section at the top summarizing the page.
+- Never modify an existing page's frontmatter properties (`title`, `description`, `displayed_sidebar`, `sidebar_label`, `tags`, `canonicalUrl`, etc.) as a side effect of another edit. Changing these silently breaks page titles, SEO, and canonical URLs. Only touch a frontmatter value when the user explicitly asks for it, and confirm the exact before/after change with the user first.
 
 Templates
 - CMS authoring templates live in `claude-plugins/inki/references/templates/` (guide, API, configuration, feature, migration, plugin). Start from a template to ensure structure and frontmatter are correct.

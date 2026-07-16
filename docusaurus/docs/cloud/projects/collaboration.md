@@ -1,5 +1,5 @@
 ---
-title: Project collaboration
+title: Cloud project collaboration
 displayed_sidebar: cloudSidebar
 description: Share your projects on Strapi Cloud to collaborate with others.
 canonicalUrl: https://docs.strapi.io/cloud/projects/collaboration.md
