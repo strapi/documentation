@@ -1,6 +1,7 @@
 ---
 title: Cloud profile settings
 displayed_sidebar: cloudSidebar
+sidebar_label: Profile settings
 description: Manage Strapi Cloud account settings.
 canonicalUrl: https://docs.strapi.io/cloud/account/account-settings.html
 tags:
