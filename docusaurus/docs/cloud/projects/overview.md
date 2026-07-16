@@ -67,8 +67,8 @@ From the dashboard header of a chosen project, you can:
 - trigger a new deployment (see [Deployments management](/cloud/projects/deploys)) and visit your application <ScreenshotNumberReference number="5" />.
 
 Your project dashboard also displays:
-- the list of all the deployments of your environment (see [Deployments history](/cloud/projects/deploys-history)) <ScreenshotNumberReference number="5" />,
-- the project and environment details in a box on the right of the interface <ScreenshotNumberReference number="6" />, including:
+- the list of all the deployments of your environment (see [Deployments history](/cloud/projects/deploys-history)) <ScreenshotNumberReference number="6" />,
+- the project and environment details in a box on the right of the interface <ScreenshotNumberReference number="7" />, including:
   - a summary of API, bandwidth, and storage consumption (see [Project observability](/cloud/projects/observability) for the full breakdown),
   - the name of the branch and a **Manage** button to be redirect to the branch settings (see [Modifying git repository & branch](/cloud/projects/settings#modifying-git-repository--branch)),
   - the name of the base directory,
