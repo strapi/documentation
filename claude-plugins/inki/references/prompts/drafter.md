@@ -243,6 +243,8 @@ Analyze `source_material` + `target.notes` to determine what needs to change. Fo
 - When `target.notes` says something like "add X to the Y table", that maps directly to an `add_row` instruction. Follow the Router's guidance literally.
 - When the source material shows a code change (PR diff), trace it to the documentation impact: new parameter → `add_row` to the parameters table; changed behavior → `replace` the outdated description; new feature → `add_text` with a new paragraph or callout.
 
+**Never modify existing YAML frontmatter properties.** Do not change, rename, or remove any value already present in a page's frontmatter block (`title`, `description`, `displayed_sidebar`, `sidebar_label`, `tags`, `pagination_*`, `canonicalUrl`, etc.) as a side effect of a patch. These properties control the browser tab title, SEO metadata, sidebar labels, and canonical URLs; silently rewriting one (for example, shortening a `title` from `Cloud project collaboration` to `Project collaboration`) breaks the rendered page title and search results. If — and only if — the user's request is explicitly about a frontmatter property, propose the exact before/after change and get **explicit human confirmation** before applying it. When adding a brand-new section or page, set frontmatter from `outline.frontmatter` as usual; this rule concerns *existing* values on *existing* pages.
+
 ### Step 5: Apply edits and write the output
 
 Choose the output format based on complexity:
@@ -258,6 +260,7 @@ After producing the output, verify:
 - Edited text is consistent with the rest of the page (no contradictions introduced).
 - Table columns match the existing table structure.
 - New content references use the same terminology as the rest of the page.
+- Existing YAML frontmatter is byte-for-byte unchanged (unless the user explicitly asked to change a frontmatter property and confirmed the exact edit).
 
 ---
 
