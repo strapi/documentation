@@ -492,7 +492,7 @@ For instance, for a "Restaurant" content-type, the following mutations are gener
 | Delete an existing "Restaurant" restaurant  | `deleteRestaurant`  |
 
 :::note Private attributes in mutation inputs
-Attributes marked `private: true` in a content-type schema are **included** in the generated mutation input types (e.g., `RestaurantInput!`) so they can be set via create and update mutations. Private attributes remain hidden from GraphQL query response types and filter inputs — they are write-only from a GraphQL perspective.
+Attributes marked `private: true` in a content-type schema are **included** in the generated mutation input types (e.g., `RestaurantInput!`) so they can be set via create and update mutations. Private attributes remain hidden from GraphQL query response types and filter inputs, as they are write-only from a GraphQL perspective.
 :::
 
 ### Create a new document
