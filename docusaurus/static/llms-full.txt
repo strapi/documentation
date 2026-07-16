@@ -1583,7 +1583,7 @@ Strapi Cloud customers on eligible plans can contact the Strapi team through the
 
 
 
-# Project collaboration
+# Cloud project collaboration
 Source: https://docs.strapi.io/cloud/projects/collaboration
 
 # Cloud project collaboration
@@ -1716,7 +1716,7 @@ In the right side of the *Deployment details* page is also displayed the followi
 
 
 
-# Project logs
+# Cloud project logs
 Source: https://docs.strapi.io/cloud/projects/logs
 
 # Cloud project logs
@@ -1830,7 +1830,7 @@ All notifications older than 30 days are automatically removed from the Notifica
 
 
 
-# Project observability
+# Cloud project observability
 Source: https://docs.strapi.io/cloud/projects/observability
 
 # Cloud project observability
@@ -1928,7 +1928,7 @@ Click the refresh button  in the section toolbar to manually load the latest dat
 
 
 
-# Project overview
+# Cloud projects overview
 Source: https://docs.strapi.io/cloud/projects/overview
 
 # Cloud projects overview
