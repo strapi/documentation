@@ -135,7 +135,7 @@ The section displays a single area chart with 2 series:
 
 Use the *environment* dropdown to select which environment's metrics to display and the time range selector to adjust the period. Hover over the chart to see a tooltip showing the CPU and Memory values at a specific point in time. Data is displayed hourly or daily, depending on the selected range.
 
-Click the refresh button (<Icon name="arrows-clockwise" />) in the section toolbar to manually load the latest data. The section also refreshes automatically:
+Click the refresh button <Icon name="arrows-clockwise" /> in the section toolbar to manually load the latest data. The section also refreshes automatically:
 
 - Every 30 seconds for the 5m and 15m ranges
 - Every 5 minutes for the 1h, 24h and 7d ranges
