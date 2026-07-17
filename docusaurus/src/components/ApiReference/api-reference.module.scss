@@ -184,16 +184,15 @@
   &__columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    // Space between the two columns instead of large outer padding, so the
-    // block content spans the full available width.
-    gap: 40px;
+    // Only a COLUMN gap: when the layout linearizes to one column (narrow
+    // width), a plain `gap` would also add a large row gap between the stacked
+    // params and code, on top of their paddings. Keep the vertical spacing to
+    // the paddings alone.
+    column-gap: 40px;
   }
 
   &__desc {
-    padding: 24px 0 40px;
-    // An external rule adds a bottom border to direct markdown children; it
-    // draws an unwanted line under the parameter column. Suppress it here.
-    border-bottom: none !important;
+    padding: 24px 0 20px;
   }
 
   &__methodRow {
@@ -246,7 +245,7 @@
   }
 
   &__code {
-    padding: 24px 0 40px;
+    padding: 12px 0 40px;
     // No background tint: the contrast on the code/response column added visual
     // noise without purpose. The column blends with the page in light and dark.
     position: sticky;
