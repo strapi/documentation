@@ -839,6 +839,41 @@
       "number": 26871,
       "reason": "Router: Internal Content Manager UI state fix. Addresses draft relation warning accuracy in the relation-on-the-fly modal. No user-facing behavior changes that require documentation updates.",
       "added": "2026-07-16"
+    },
+    {
+      "number": 27042,
+      "reason": "Triage: race condition fix for test flakiness, admin UI reliability with no user-facing behavior change",
+      "added": "2026-07-17"
+    },
+    {
+      "number": 27039,
+      "reason": "Router: Internal admin implementation fix for SPA shell browser caching behavior. No public API or user-facing behavior change.",
+      "added": "2026-07-17"
+    },
+    {
+      "number": 27038,
+      "reason": "Router: Internal scaffolding/tooling fix. Removes --legacy-peer-deps flag to fix npm ci workflow. No user-facing behavior change.",
+      "added": "2026-07-17"
+    },
+    {
+      "number": 27027,
+      "reason": "Router: Bug fix to admin token creation UI. The admin token feature already exists and is documented. This is a minor checkbox behavior fix.",
+      "added": "2026-07-17"
+    },
+    {
+      "number": 26851,
+      "reason": "Router: Internal data migration fix for v4→v5 discard-drafts migration. Technical migration detail not requiring user documentation.",
+      "added": "2026-07-17"
+    },
+    {
+      "number": 26300,
+      "reason": "Router: Bug fix to make admin session cookies respect the existing auth.cookie.path configuration. Configuration already documented, this just fixes the admin to respect it properly.",
+      "added": "2026-07-17"
+    },
+    {
+      "number": 26112,
+      "reason": "Router: Bug fix to relation reordering in Content Manager. The relation ordering feature already exists and is documented. This is a fix to the existing functionality.",
+      "added": "2026-07-17"
     }
   ]
 }
