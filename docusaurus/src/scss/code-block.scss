@@ -326,10 +326,12 @@ pre.prism-code {
     border-color: var(--strapi-border-accent);
   }
 
-  // Leave room in the title bar so the wrap/copy button group (positioned into
-  // it below) doesn't overlap the "Ask AI" button.
+  // The title bar's content box is inset ~20px from the wrapper edge. Reserve
+  // room on the right of the actions row (Ask AI) for the absolutely-positioned
+  // copy/wrap group, which is anchored to the wrapper at right:20px (see below),
+  // so Ask AI stops just before it with a small gap.
   .code-title-bar__actions {
-    margin-right: 76px;
+    margin-right: 44px;
   }
 
   // The inner .theme-code-block should not have its own border
@@ -388,6 +390,8 @@ pre.prism-code {
     // center it over the entire block. Use a fixed offset that lands it inside
     // the ~50px title bar, vertically aligned with the Ask AI button.
     top: 12px;
+    // 20px = the wrapper→title-bar content inset, so the button's right edge
+    // aligns with the bar's inner right padding.
     right: 20px;
     z-index: 3;
     display: flex;
