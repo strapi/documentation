@@ -82,7 +82,6 @@ function useInjectAIButton(ref, language, codeContent, showAI) {
 
 // macOS-style title bar for terminal blocks
 function TerminalTitleBar({ language, title, showAI, codeContent }) {
-  const langLabel = LANG_LABELS[language] || (language ? language.toUpperCase() : '');
   const labelText = title || 'terminal';
 
   return (
@@ -108,9 +107,6 @@ function TerminalTitleBar({ language, title, showAI, codeContent }) {
             <i className="ph ph-sparkle" />
             <span>Ask AI</span>
           </button>
-        )}
-        {langLabel && (
-          <span className="code-title-bar__lang">{langLabel}</span>
         )}
       </div>
     </div>

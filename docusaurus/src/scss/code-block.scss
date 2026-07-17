@@ -314,6 +314,7 @@ pre.prism-code {
 
 .code-block-enhanced {
   // The wrapper provides the border, radius, and background
+  position: relative;
   border: solid 1px var(--custom-code-block-border-color);
   border-radius: var(--strapi-radius-md);
   overflow: hidden;
@@ -323,6 +324,12 @@ pre.prism-code {
 
   &:hover {
     border-color: var(--strapi-border-accent);
+  }
+
+  // Leave room in the title bar so the wrap/copy button group (positioned into
+  // it below) doesn't overlap the "Ask AI" button.
+  .code-title-bar__actions {
+    margin-right: 76px;
   }
 
   // The inner .theme-code-block should not have its own border
@@ -366,10 +373,23 @@ pre.prism-code {
     }
   }
 
-  // Docusaurus copy/wrap buttons — show on hover, positioned in code area
+  // Docusaurus copy/wrap buttons: pull them up into the title bar (top-right),
+  // next to the Ask AI button, instead of floating over the code. Anchor the
+  // absolute group to the wrapper (not the inner code content) by neutralizing
+  // the code container's positioning context.
+  [class*="codeBlockContent"],
+  [class*="codeBlockContainer"] {
+    position: static !important;
+  }
+
   [class*="buttonGroup"] {
-    opacity: 0;
-    transition: opacity var(--strapi-duration-fast) var(--strapi-ease);
+    position: absolute !important;
+    top: 9px;
+    right: 16px;
+    z-index: 3;
+    display: flex;
+    gap: 6px;
+    opacity: 1;
 
     .clean-btn {
       background: var(--code-title-bar-lang-bg) !important;
@@ -382,10 +402,6 @@ pre.prism-code {
         opacity: 1 !important;
       }
     }
-  }
-
-  &:hover [class*="buttonGroup"] {
-    opacity: 1;
   }
 }
 

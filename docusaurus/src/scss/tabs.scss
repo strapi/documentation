@@ -22,7 +22,11 @@
   &__item {
     border-top: 2px solid transparent;
     border-bottom-width: 2px;
-    padding-bottom: 18px !important;
+    // Center the label vertically: the fixed 34px item height plus the
+    // symmetric --tabs-item-padding already center the text. (A previous
+    // padding-bottom:18px pushed the label upward inside the active pill.)
+    display: inline-flex;
+    align-items: center;
     font-family: var(--strapi-font-family-technical);
     font-weight: 600;
     font-size: 13px;
