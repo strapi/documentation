@@ -329,9 +329,10 @@ pre.prism-code {
   // The title bar's content box is inset ~20px from the wrapper edge. Reserve
   // room on the right of the actions row (Ask AI) for the absolutely-positioned
   // copy/wrap group, which is anchored to the wrapper at right:20px (see below),
-  // so Ask AI stops just before it with a small gap.
+  // so Ask AI stops just before it with a small gap. Width fits up to two pill
+  // buttons (wrap + copy) plus gaps.
   .code-title-bar__actions {
-    margin-right: 44px;
+    margin-right: 96px;
   }
 
   // The inner .theme-code-block should not have its own border
@@ -387,39 +388,37 @@ pre.prism-code {
   [class*="buttonGroup"] {
     position: absolute !important;
     // The group is anchored to the whole wrapper, so a percentage top would
-    // center it over the entire block. Use a fixed offset that lands it inside
-    // the ~50px title bar, vertically aligned with the Ask AI button.
-    top: 12px;
-    // 20px = the wrapper→title-bar content inset, so the button's right edge
+    // center it over the entire block. Use a fixed offset that lands the ~34px
+    // pill buttons inside the ~50px title bar, aligned with the Ask AI button.
+    top: 8px;
+    // 20px = the wrapper→title-bar content inset, so the group's right edge
     // aligns with the bar's inner right padding.
     right: 20px;
     z-index: 3;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
     opacity: 1;
 
+    // Match the regular (non-terminal) code block buttons exactly: white pill
+    // with a neutral border, so terminal blocks are visually identical to the
+    // rest of the site. Only reset positioning + restore the pill chrome; leave
+    // the icon color to the default so it inverts correctly in dark mode.
     .clean-btn {
-      background: var(--code-title-bar-lang-bg) !important;
       position: static !important;
       top: auto !important;
-      // Match the Ask AI button's compact size so both align on one row.
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: auto;
-      height: 26px;
-      min-height: 0;
-      padding: 4px 6px;
-      border-radius: var(--strapi-radius-xs);
-
-      svg {
-        width: 15px;
-        height: 15px;
-      }
+      padding: 6.4px;
+      background: var(--strapi-neutral-0) !important;
+      border: 1px solid var(--strapi-neutral-200) !important;
+      border-radius: var(--strapi-radius-md) !important;
 
       svg, i::before, span {
-        color: var(--code-title-bar-lang-color) !important;
+        // Theme-aware icon color so it stays legible in dark mode (a legacy
+        // rule forces black, which vanishes on the dark pill).
+        color: var(--strapi-fg-1) !important;
         opacity: 1 !important;
       }
     }
