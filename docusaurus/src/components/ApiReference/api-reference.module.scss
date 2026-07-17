@@ -177,18 +177,23 @@
 .endpoint {
   /* Full-width header above the 2-column grid */
   &__header {
-    padding: 40px 44px 20px;
+    padding: 16px 0 20px;
   }
 
   /* 2-column grid: params left, code right */
   &__columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    // Space between the two columns instead of large outer padding, so the
+    // block content spans the full available width.
+    gap: 40px;
   }
 
   &__desc {
-    padding: 24px 44px 40px;
-    border-right: 1px solid var(--strapi-border);
+    padding: 24px 0 40px;
+    // An external rule adds a bottom border to direct markdown children; it
+    // draws an unwanted line under the parameter column. Suppress it here.
+    border-bottom: none !important;
   }
 
   &__methodRow {
@@ -241,7 +246,7 @@
   }
 
   &__code {
-    padding: 24px 32px 40px;
+    padding: 24px 0 40px;
     // No background tint: the contrast on the code/response column added visual
     // noise without purpose. The column blends with the page in light and dark.
     position: sticky;
@@ -255,8 +260,7 @@
 
   /* Fallback: code-only layout when there are no params */
   &__codeOnly {
-    padding: 24px 44px 40px;
-    max-width: 720px;
+    padding: 24px 0 40px;
   }
 }
 
