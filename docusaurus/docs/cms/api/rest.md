@@ -233,18 +233,21 @@ In Strapi 5, a specific document is reached by its `documentId`.
   params={[
     { name: 'pluralApiId', type: 'string', required: true, description: 'Plural API ID of the content-type (e.g. <code>restaurants</code>)' },
     { name: 'documentId', type: 'string', required: true, description: 'Unique document identifier' },
-  ]}
-  codePath="/api/restaurants/znrlzntu9ei5onjvwfaalu2v"
-  codePathHighlights={['restaurants', 'znrlzntu9ei5onjvwfaalu2v']}
-  codeTabs={[
-    {
-      label: 'cURL',
-      code: `curl 'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v' \\
-  -H 'Authorization: Bearer <token>'`,
-    },
-    {
-      label: 'JavaScript',
-      code: `const response = await fetch(
+  ]}>
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
   'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v',
   {
     headers: {
@@ -252,42 +255,54 @@ In Strapi 5, a specific document is reached by its `documentId`.
     },
   }
 );
-const data = await response.json();`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      time: '12ms',
-      body: JSON.stringify({
-        data: {
-          id: 6,
-          documentId: "znrlzntu9ei5onjvwfaalu2v",
-          Name: "Biscotte Restaurant",
-          Description: [
-            {
-              type: "paragraph",
-              children: [{ type: "text", text: "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products." }]
-            }
-          ],
-          createdAt: "2024-02-27T10:19:04.953Z",
-          updatedAt: "2024-03-05T15:52:05.591Z",
-          publishedAt: "2024-03-05T15:52:05.600Z",
-          locale: "en"
-        },
-        meta: {}
-      }, null, 2),
-    },
-    {
-      status: 404,
-      statusText: 'Not Found',
-      body: JSON.stringify({
-        error: { status: 404, name: 'NotFoundError', message: 'Document not found' }
-      }, null, 2),
-    },
-  ]}
-/>
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": {
+    "id": 6,
+    "documentId": "znrlzntu9ei5onjvwfaalu2v",
+    "Name": "Biscotte Restaurant",
+    "Description": [
+      {
+        "type": "paragraph",
+        "children": [{ "type": "text", "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products." }]
+      }
+    ],
+    "createdAt": "2024-02-27T10:19:04.953Z",
+    "updatedAt": "2024-03-05T15:52:05.591Z",
+    "publishedAt": "2024-03-05T15:52:05.600Z",
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+</ResponseTab>
+<ResponseTab status={404} statusText="Not Found">
+
+```json
+{
+  "data": null,
+  "error": {
+    "status": 404,
+    "name": "NotFoundError",
+    "message": "Document not found"
+  }
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Create a document {#create}
 
@@ -310,16 +325,16 @@ When you POST a document, each object inside a dynamic zone array must include `
   paramTitle="Body Parameters"
   params={[
     { name: 'data', type: 'object', required: true, description: 'Object containing the field values for the new document' },
-  ]}
-  codePath="/api/restaurants"
-  codePathHighlights={['restaurants']}
-  codeTabs={[
-    {
-      label: 'cURL',
-      code: `curl -X POST \\
-  'http://localhost:1337/api/restaurants' \\
-  -H 'Authorization: Bearer <token>' \\
-  -H 'Content-Type: application/json' \\
+  ]}>
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl -X POST \
+  'http://localhost:1337/api/restaurants' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
   -d '{
     "data": {
       "Name": "Restaurant D",
@@ -330,11 +345,14 @@ When you POST a document, each object inside a dynamic zone array must include `
         }
       ]
     }
-  }'`,
-    },
-    {
-      label: 'JavaScript',
-      code: `const response = await fetch(
+  }'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
   'http://localhost:1337/api/restaurants',
   {
     method: 'POST',
@@ -355,34 +373,39 @@ When you POST a document, each object inside a dynamic zone array must include `
     }),
   }
 );
-const data = await response.json();`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      time: '45ms',
-      body: JSON.stringify({
-        data: {
-          documentId: "bw64dnu97i56nq85106yt4du",
-          Name: "Restaurant D",
-          Description: [
-            {
-              type: "paragraph",
-              children: [{ type: "text", text: "A very short description goes here." }]
-            }
-          ],
-          createdAt: "2024-03-05T16:44:47.689Z",
-          updatedAt: "2024-03-05T16:44:47.689Z",
-          publishedAt: "2024-03-05T16:44:47.687Z",
-          locale: "en"
-        },
-        meta: {}
-      }, null, 2),
-    },
-  ]}
-/>
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": {
+    "documentId": "bw64dnu97i56nq85106yt4du",
+    "Name": "Restaurant D",
+    "Description": [
+      {
+        "type": "paragraph",
+        "children": [{ "type": "text", "text": "A very short description goes here." }]
+      }
+    ],
+    "createdAt": "2024-03-05T16:44:47.689Z",
+    "updatedAt": "2024-03-05T16:44:47.689Z",
+    "publishedAt": "2024-03-05T16:44:47.687Z",
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Update a document {#update}
 
@@ -404,16 +427,16 @@ Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynam
   paramTitle="Body Parameters"
   params={[
     { name: 'data', type: 'object', required: true, description: 'Object containing the field values to update' },
-  ]}
-  codePath="/api/restaurants/hgv1vny5cebq2l3czil1rpb3"
-  codePathHighlights={['restaurants', 'hgv1vny5cebq2l3czil1rpb3']}
-  codeTabs={[
-    {
-      label: 'cURL',
-      code: `curl -X PUT \\
-  'http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3' \\
-  -H 'Authorization: Bearer <token>' \\
-  -H 'Content-Type: application/json' \\
+  ]}>
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl -X PUT \
+  'http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
   -d '{
     "data": {
       "Name": "BMK Paris Bamako",
@@ -424,11 +447,14 @@ Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynam
         }
       ]
     }
-  }'`,
-    },
-    {
-      label: 'JavaScript',
-      code: `const response = await fetch(
+  }'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
   'http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3',
   {
     method: 'PUT',
@@ -449,35 +475,40 @@ Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynam
     }),
   }
 );
-const data = await response.json();`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      time: '34ms',
-      body: JSON.stringify({
-        data: {
-          id: 9,
-          documentId: "hgv1vny5cebq2l3czil1rpb3",
-          Name: "BMK Paris Bamako",
-          Description: [
-            {
-              type: "paragraph",
-              children: [{ type: "text", text: "A very short description goes here." }]
-            }
-          ],
-          createdAt: "2024-03-06T13:42:05.098Z",
-          updatedAt: "2024-03-06T14:16:56.883Z",
-          publishedAt: "2024-03-06T14:16:56.895Z",
-          locale: "en"
-        },
-        meta: {}
-      }, null, 2),
-    },
-  ]}
-/>
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": {
+    "id": 9,
+    "documentId": "hgv1vny5cebq2l3czil1rpb3",
+    "Name": "BMK Paris Bamako",
+    "Description": [
+      {
+        "type": "paragraph",
+        "children": [{ "type": "text", "text": "A very short description goes here." }]
+      }
+    ],
+    "createdAt": "2024-03-06T13:42:05.098Z",
+    "updatedAt": "2024-03-06T14:16:56.883Z",
+    "publishedAt": "2024-03-06T14:16:56.895Z",
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Delete a document {#delete}
 
@@ -491,19 +522,22 @@ const data = await response.json();`,
   params={[
     { name: 'pluralApiId', type: 'string', required: true, description: 'Plural API ID (e.g. <code>restaurants</code>)' },
     { name: 'documentId', type: 'string', required: true, description: 'Document ID of the entry to delete' },
-  ]}
-  codePath="/api/restaurants/bw64dnu97i56nq85106yt4du"
-  codePathHighlights={['restaurants', 'bw64dnu97i56nq85106yt4du']}
-  codeTabs={[
-    {
-      label: 'cURL',
-      code: `curl -X DELETE \\
-  'http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du' \\
-  -H 'Authorization: Bearer <token>'`,
-    },
-    {
-      label: 'JavaScript',
-      code: `const response = await fetch(
+  ]}>
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl -X DELETE \
+  'http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
   'http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du',
   {
     method: 'DELETE',
@@ -511,9 +545,10 @@ const data = await response.json();`,
       Authorization: 'Bearer <token>',
     },
   }
-);`,
-    },
-  ]}
-  responses={[]}
-  isLast
-/>
+);
+```
+
+</TabItem>
+</Tabs>
+
+</Endpoint>
