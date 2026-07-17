@@ -44,7 +44,6 @@ export default function Endpoint({
   description,
   params = [],
   paramTitle = 'Parameters',
-  isLast = false,
   children,
 }) {
   useBrokenLinks().collectAnchor(id);
@@ -55,7 +54,6 @@ export default function Endpoint({
     <div
       className={`${styles.endpoint} api-endpoint-block ${hasParams ? 'api-endpoint-block--columns' : 'api-endpoint-block--codeonly'}`}
       id={id}
-      style={isLast ? { borderBottom: 'none' } : undefined}
     >
       <div className={styles.endpoint__header}>
         <div className={styles.endpoint__methodRow}>
