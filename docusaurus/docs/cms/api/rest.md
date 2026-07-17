@@ -152,18 +152,21 @@ You can pass an optional header while you're migrating to Strapi 5 (see the [rel
     { name: 'locale', type: 'string', required: false, description: 'Locale of the documents to fetch. See <a href="/cms/api/rest/locale">locale</a>.' },
     { name: 'status', type: 'string', required: false, description: '<code>published</code> or <code>draft</code>. See <a href="/cms/api/rest/status">status</a>.' },
     { name: 'publicationFilter', type: 'string', required: false, description: 'Query documents by the relationship between their draft and published versions. See <a href="/cms/api/rest/publication-filter">publicationFilter</a>.' },
-  ]}
-  codePath="/api/restaurants"
-  codePathHighlights={['restaurants']}
-  codeTabs={[
-    {
-      label: 'cURL',
-      code: `curl 'http://localhost:1337/api/restaurants' \\
-  -H 'Authorization: Bearer <token>'`,
-    },
-    {
-      label: 'JavaScript',
-      code: `const response = await fetch(
+  ]}>
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
   'http://localhost:1337/api/restaurants',
   {
     headers: {
@@ -171,49 +174,48 @@ You can pass an optional header while you're migrating to Strapi 5 (see the [rel
     },
   }
 );
-const data = await response.json();`,
-    },
-  ]}
-  responses={[
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": [
     {
-      status: 200,
-      statusText: 'OK',
-      time: '23ms',
-      body: JSON.stringify({
-        data: [
-          {
-            id: 2,
-            documentId: "hgv1vny5cebq2l3czil1rpb3",
-            Name: "BMK Paris Bamako",
-            Description: null,
-            createdAt: "2024-03-06T13:42:05.098Z",
-            updatedAt: "2024-03-06T13:42:05.098Z",
-            publishedAt: "2024-03-06T13:42:05.103Z",
-            locale: "en"
-          },
-          {
-            id: 4,
-            documentId: "znrlzntu9ei5onjvwfaalu2v",
-            Name: "Biscotte Restaurant",
-            Description: [
-              {
-                type: "paragraph",
-                children: [{ type: "text", text: "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers." }]
-              }
-            ],
-            createdAt: "2024-03-06T13:43:30.172Z",
-            updatedAt: "2024-03-06T13:43:30.172Z",
-            publishedAt: "2024-03-06T13:43:30.175Z",
-            locale: "en"
-          }
-        ],
-        meta: {
-          pagination: { page: 1, pageSize: 25, pageCount: 1, total: 2 }
-        }
-      }, null, 2),
+      "id": 2,
+      "documentId": "hgv1vny5cebq2l3czil1rpb3",
+      "Name": "BMK Paris Bamako",
+      "Description": null,
+      "createdAt": "2024-03-06T13:42:05.098Z",
+      "updatedAt": "2024-03-06T13:42:05.098Z",
+      "publishedAt": "2024-03-06T13:42:05.103Z",
+      "locale": "en"
     },
-  ]}
-/>
+    {
+      "id": 4,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "Name": "Biscotte Restaurant",
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T13:43:30.172Z",
+      "publishedAt": "2024-03-06T13:43:30.175Z",
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": { "page": 1, "pageSize": 25, "pageCount": 1, "total": 2 }
+  }
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Get a document {#get}
 
