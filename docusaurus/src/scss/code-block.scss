@@ -384,18 +384,35 @@ pre.prism-code {
 
   [class*="buttonGroup"] {
     position: absolute !important;
-    top: 9px;
-    right: 16px;
+    // The group is anchored to the whole wrapper, so a percentage top would
+    // center it over the entire block. Use a fixed offset that lands it inside
+    // the ~50px title bar, vertically aligned with the Ask AI button.
+    top: 12px;
+    right: 20px;
     z-index: 3;
     display: flex;
-    gap: 6px;
+    align-items: center;
+    gap: 4px;
     opacity: 1;
 
     .clean-btn {
       background: var(--code-title-bar-lang-bg) !important;
       position: static !important;
       top: auto !important;
+      // Match the Ask AI button's compact size so both align on one row.
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+      height: 26px;
+      min-height: 0;
+      padding: 4px 6px;
       border-radius: var(--strapi-radius-xs);
+
+      svg {
+        width: 15px;
+        height: 15px;
+      }
 
       svg, i::before, span {
         color: var(--code-title-bar-lang-color) !important;
