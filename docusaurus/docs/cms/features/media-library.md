@@ -657,6 +657,12 @@ Just above the list of folders and assets and next to the !<Icon name="funnel-si
   }}
 />
 
+#### Upload progress
+
+While a file is uploading, the Media Library displays a progress bar showing the actual percentage of the file transferred. The progress updates in real time as bytes are sent to the server.
+
+If the admin session expires during an upload, Strapi automatically refreshes the access token and retries the upload once. The upload does not need to be restarted manually.
+
 #### Automatically generating metadata with Strapi AI {#ai-powered-metadata-generation}
 <GrowthBadge />
 
