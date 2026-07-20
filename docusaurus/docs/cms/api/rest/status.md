@@ -55,63 +55,73 @@ To select documents by how their draft and published versions relate (never-publ
   id="get-draft-versions"
   method="GET"
   path="/api/articles?status=draft"
-  codePath="/api/articles?status=draft"
   title="Get draft versions of restaurants"
-  description="Returns draft versions of documents by passing the status=draft query parameter."
-  codeTabs={[
-    {
-      label: 'cURL',
-      code: `curl 'http://localhost:1337/api/articles?status=draft' \\
-  -H 'Authorization: Bearer <token>'`,
-    },
-    {
-      label: 'JavaScript',
-      code: `const qs = require('qs');
+  description="Returns draft versions of documents by passing the status=draft query parameter.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/articles?status=draft' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
 }, {
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/articles?\${query}\`);`,
-    },
-  ]}
-  responses={[
+await request(`/api/articles?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": [
     {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        data: [
-          {
-            id: 5,
-            documentId: "znrlzntu9ei5onjvwfaalu2v",
-            Name: "Biscotte Restaurant",
-            Description: [
-              {
-                type: "paragraph",
-                children: [
-                  {
-                    type: "text",
-                    text: "This is the draft version."
-                  }
-                ]
-              }
-            ],
-            createdAt: "2024-03-06T13:43:30.172Z",
-            updatedAt: "2024-03-06T21:38:46.353Z",
-            publishedAt: null,
-            locale: "en"
-          }
-        ],
-        meta: {
-          pagination: {
-            page: 1,
-            pageSize: 25,
-            pageCount: 1,
-            total: 4
-          }
+      "id": 5,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "Name": "Biscotte Restaurant",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "This is the draft version."
+            }
+          ]
         }
-      }, null, 2),
-    },
-  ]}
-/>
+      ],
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T21:38:46.353Z",
+      "publishedAt": null,
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>

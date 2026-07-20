@@ -54,17 +54,21 @@ Field selection does not work on relational, media, component, or dynamic zone f
   id="field-selection-example"
   method="GET"
   path="/api/restaurants?fields[0]=name&fields[1]=description"
-  codePath="/api/restaurants?fields[0]=name&fields[1]=description"
   title="Return only name and description fields"
-  description="Use the fields parameter to select only specific fields in the response."
-  codeTabs={[
-    {
-      label: 'URL',
-      code: `GET /api/restaurants?fields[0]=name&fields[1]=description`,
-    },
-    {
-      label: 'JavaScript',
-      code: `const qs = require('qs');
+  description="Use the fields parameter to select only specific fields in the response.">
+
+<Tabs>
+<TabItem value="url" label="URL">
+
+```bash
+GET /api/restaurants?fields[0]=name&fields[1]=description
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify(
   {
     fields: ['name', 'description'],
@@ -74,44 +78,50 @@ const query = qs.stringify(
   }
 );
 
-await request(\`/api/users?\${query}\`);`,
-    },
-  ]}
-  responses={[
+await request(`/api/users?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": [
     {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        data: [
-          {
-            id: 4,
-            Name: "Pizzeria Arrivederci",
-            Description: [
-              {
-                type: "paragraph",
-                children: [
-                  {
-                    type: "text",
-                    text: "Specialized in pizza, we invite you to rediscover our classics, such as 4 Formaggi or Calzone, and our original creations such as Do Luigi or Nduja."
-                  }
-                ]
-              }
-            ],
-            documentId: "lr5wju2og49bf820kj9kz8c3"
-          }
-        ],
-        meta: {
-          pagination: {
-            page: 1,
-            pageSize: 25,
-            pageCount: 1,
-            total: 4
-          }
+      "id": 4,
+      "Name": "Pizzeria Arrivederci",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Specialized in pizza, we invite you to rediscover our classics, such as 4 Formaggi or Calzone, and our original creations such as Do Luigi or Nduja."
+            }
+          ]
         }
-      }, null, 2),
-    },
-  ]}
-/>
+      ],
+      "documentId": "lr5wju2og49bf820kj9kz8c3"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Population
 
@@ -163,17 +173,21 @@ Top-level pagination parameters (e.g., `pagination[page]` and `pagination[pageSi
 <Endpoint
   method="GET"
   path="/api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url"
-  codePath="/api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url"
   title="Populate with field selection"
-  description="Combine fields and populate parameters to select specific fields on both the main entry and its relations."
-  codeTabs={[
-    {
-      label: 'URL',
-      code: `GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url`,
-    },
-    {
-      label: 'JavaScript',
-      code: `const qs = require('qs');
+  description="Combine fields and populate parameters to select specific fields on both the main entry and its relations.">
+
+<Tabs>
+<TabItem value="url" label="URL">
+
+```bash
+GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify(
   {
     fields: ['title', 'slug'],
@@ -188,33 +202,39 @@ const query = qs.stringify(
   }
 );
 
-await request(\`/api/articles?\${query}\`);`,
-    },
-  ]}
-  responses={[
+await request(`/api/articles?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": [
     {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        data: [
-          {
-            id: 1,
-            documentId: "h90lgohlzfpjf3bvan72mzll",
-            title: "Test Article",
-            slug: "test-article",
-            headerImage: {
-              id: 1,
-              documentId: "cf07g1dbusqr8mzmlbqvlegx",
-              name: "17520.jpg",
-              url: "/uploads/17520_73c601c014.jpg"
-            }
-          }
-        ],
-        meta: {}
-      }, null, 2),
-    },
-  ]}
-/>
+      "id": 1,
+      "documentId": "h90lgohlzfpjf3bvan72mzll",
+      "title": "Test Article",
+      "slug": "test-article",
+      "headerImage": {
+        "id": 1,
+        "documentId": "cf07g1dbusqr8mzmlbqvlegx",
+        "name": "17520.jpg",
+        "url": "/uploads/17520_73c601c014.jpg"
+      }
+    }
+  ],
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 #### Populate with filtering
 
@@ -223,17 +243,21 @@ await request(\`/api/articles?\${query}\`);`,
 <Endpoint
   method="GET"
   path="/api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars"
-  codePath="/api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars"
   title="Populate with filtering"
-  description="Combine populate with sort and filter parameters to refine which related entries are returned."
-  codeTabs={[
-    {
-      label: 'URL',
-      code: `GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars`,
-    },
-    {
-      label: 'JavaScript',
-      code: `const qs = require('qs');
+  description="Combine populate with sort and filter parameters to refine which related entries are returned.">
+
+<Tabs>
+<TabItem value="url" label="URL">
+
+```bash
+GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify(
   {
     populate: {
@@ -252,35 +276,41 @@ const query = qs.stringify(
   }
 );
 
-await request(\`/api/articles?\${query}\`);`,
-    },
-  ]}
-  responses={[
+await request(`/api/articles?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": [
     {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        data: [
+      "id": 1,
+      "documentId": "a1b2c3d4e5d6f7g8h9i0jkl",
+      "title": "Test Article",
+      "categories": {
+        "data": [
           {
-            id: 1,
-            documentId: "a1b2c3d4e5d6f7g8h9i0jkl",
-            title: "Test Article",
-            categories: {
-              data: [
-                {
-                  id: 2,
-                  documentId: "jKd8djla9ndalk98hflj3",
-                  name: "Cars"
-                }
-              ]
-            }
+            "id": 2,
+            "documentId": "jKd8djla9ndalk98hflj3",
+            "name": "Cars"
           }
-        ],
-        meta: {}
-      }, null, 2),
-    },
-  ]}
-/>
+        ]
+      }
+    }
+  ],
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 :::note
 For many-to-many and other join-table relations, an explicit `sort` within a `populate` object overrides the default connect order. Omit `sort` to preserve the connect order (the order in which entries were associated).
