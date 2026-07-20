@@ -2,6 +2,7 @@ import React, { Children, isValidElement } from 'react';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import clsx from 'clsx';
+import ExpandableContent from '../ExpandableContent';
 import styles from './api-reference.module.scss';
 
 /**
@@ -23,7 +24,7 @@ function labelClass(status) {
   return status < 400 ? styles['responseStatus--ok'] : styles['responseStatus--err'];
 }
 
-export function ResponseTab({ status, statusText = '', children }) {
+export function ResponseTab({ status, statusText = '', collapsible = false, children }) {
   const s = Number(status);
   return (
     <>
@@ -33,7 +34,11 @@ export function ResponseTab({ status, statusText = '', children }) {
           {s} {statusText}
         </span>
       </div>
-      {children}
+      {collapsible ? (
+        <ExpandableContent maxHeight="320px">{children}</ExpandableContent>
+      ) : (
+        children
+      )}
     </>
   );
 }

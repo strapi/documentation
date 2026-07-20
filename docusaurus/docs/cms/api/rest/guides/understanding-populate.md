@@ -192,7 +192,7 @@ GET /api/articles?populate=*
 ```
 
 <Responses>
-<ResponseTab status={200} statusText="OK">
+<ResponseTab status={200} statusText="OK" collapsible>
 
 ```json
 {
@@ -528,7 +528,7 @@ GET /api/articles?populate[0]=category
 ```
 
 <Responses>
-<ResponseTab status={200} statusText="OK">
+<ResponseTab status={200} statusText="OK" collapsible>
 
 ```json
 {
@@ -685,7 +685,7 @@ GET /api/articles?populate[0]=category
 ```
 
 <Responses>
-<ResponseTab status={200} statusText="OK">
+<ResponseTab status={200} statusText="OK" collapsible>
 
 ```json
 {
@@ -808,7 +808,7 @@ GET /api/articles?populate[category][populate][0]=restaurants
 ```
 
 <Responses>
-<ResponseTab status={200} statusText="OK">
+<ResponseTab status={200} statusText="OK" collapsible>
 
 ```json
 {
@@ -950,7 +950,7 @@ GET /api/articles?populate[0]=seo
 ```
 
 <Responses>
-<ResponseTab status={200} statusText="OK">
+<ResponseTab status={200} statusText="OK" collapsible>
 
 ```json
 {
@@ -1024,7 +1024,7 @@ GET /api/articles?populate[0]=seo&populate[1]=seo.metaSocial
 ```
 
 <Responses>
-<ResponseTab status={200} statusText="OK">
+<ResponseTab status={200} statusText="OK" collapsible>
 
 ```json
 {
@@ -1382,7 +1382,7 @@ GET /api/articles?populate[blocks][on][blocks.related-articles][populate][articl
 ```
 
 <Responses>
-<ResponseTab status={200} statusText="OK">
+<ResponseTab status={200} statusText="OK" collapsible>
 
 ```json
 {
