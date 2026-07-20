@@ -273,10 +273,6 @@ pre.prism-code {
     background: var(--strapi-neutral-0) !important;
     border: 1px solid var(--strapi-neutral-200) !important;
 
-    &:hover {
-      border-color: var(--strapi-border-accent) !important;
-    }
-
     i {
       font-size: 12px;
       color: var(--strapi-primary-500);
@@ -284,6 +280,21 @@ pre.prism-code {
 
     span {
       color: var(--strapi-fg-1);
+    }
+
+    // On hover only darken the label + icon; keep background and border as-is.
+    // The button also carries the `clean-btn` class, whose legacy :hover would
+    // otherwise tint the background grey — override it explicitly.
+    &:hover {
+      background: var(--strapi-neutral-0) !important;
+
+      i {
+        color: var(--strapi-primary-700) !important;
+      }
+
+      span {
+        color: var(--strapi-neutral-800) !important;
+      }
     }
   }
 }
@@ -415,8 +426,18 @@ pre.prism-code {
       border: 1px solid var(--strapi-neutral-200) !important;
       border-radius: var(--strapi-radius-md) !important;
 
+      // Match the reference copy/wrap buttons: the icon is dimmed at rest
+      // (opacity 0.6) and goes full opacity on hover — this is what makes it
+      // look grey rather than solid black. !important beats the legacy
+      // opacity:1 rules on .clean-btn icons.
       svg, i::before, span {
         color: var(--strapi-fg-1) !important;
+        opacity: 0.6 !important;
+      }
+
+      &:hover svg,
+      &:hover i::before,
+      &:hover span {
         opacity: 1 !important;
       }
     }
@@ -618,11 +639,16 @@ pre.prism-code {
     font-weight: 600;
   }
 
+  // On hover only darken the label + icon; keep the background unchanged.
+  // !important overrides the more specific .theme-code-block .clean-btn color
+  // rules (these buttons also carry the clean-btn class).
   &:hover {
-    background: var(--strapi-primary-100);
+    i {
+      color: var(--strapi-primary-700) !important;
+    }
 
     span {
-      color: var(--strapi-primary-600);
+      color: var(--strapi-neutral-800) !important;
     }
   }
 }
