@@ -255,33 +255,33 @@ pre.prism-code {
     }
   }
 
-  // AI button inside the title bar
+  // AI button inside the title bar — same white pill as the copy/wrap buttons
+  // and the Ask AI button on regular code blocks, so all actions match.
   .ai-button {
-    padding: 4px 8px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
+    height: 34px;
+    padding: 0 10px;
     font-size: 11px;
     font-weight: 600;
-    border-radius: var(--strapi-radius-xs);
+    border-radius: var(--strapi-radius-md) !important;
     cursor: pointer;
     transition: all var(--strapi-duration-fast) var(--strapi-ease);
-    min-height: auto;
-    opacity: 0.6;
-    background: transparent;
+    background: var(--strapi-neutral-0) !important;
+    border: 1px solid var(--strapi-neutral-200) !important;
 
     &:hover {
-      opacity: 1;
-      background: var(--code-title-bar-lang-bg);
+      border-color: var(--strapi-border-accent) !important;
     }
 
     i {
       font-size: 12px;
-      color: var(--code-title-bar-lang-color);
+      color: var(--strapi-primary-500);
     }
 
     span {
-      color: var(--code-title-bar-lang-color);
+      color: var(--strapi-fg-1);
     }
   }
 }
@@ -326,13 +326,13 @@ pre.prism-code {
     border-color: var(--strapi-border-accent);
   }
 
-  // The title bar's content box is inset ~20px from the wrapper edge. Reserve
-  // room on the right of the actions row (Ask AI) for the absolutely-positioned
-  // copy/wrap group, which is anchored to the wrapper at right:20px (see below),
-  // so Ask AI stops just before it with a small gap. Width fits up to two pill
-  // buttons (wrap + copy) plus gaps.
+  // Ask AI + the relocated copy/wrap group share this one flex row, so they
+  // align naturally with no absolute positioning (the buttons are moved into
+  // here by CodeBlockWrapper's relocateButtons effect).
   .code-title-bar__actions {
-    margin-right: 96px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   // The inner .theme-code-block should not have its own border
@@ -376,25 +376,10 @@ pre.prism-code {
     }
   }
 
-  // Docusaurus copy/wrap buttons: pull them up into the title bar (top-right),
-  // next to the Ask AI button, instead of floating over the code. Anchor the
-  // absolute group to the wrapper (not the inner code content) by neutralizing
-  // the code container's positioning context.
-  [class*="codeBlockContent"],
-  [class*="codeBlockContainer"] {
-    position: static !important;
-  }
-
+  // The copy/wrap button group is moved into .code-title-bar__actions (see
+  // CodeBlockWrapper). It flows inline there — no absolute positioning.
   [class*="buttonGroup"] {
-    position: absolute !important;
-    // The group is anchored to the whole wrapper, so a percentage top would
-    // center it over the entire block. Use a fixed offset that lands the ~34px
-    // pill buttons inside the ~50px title bar, aligned with the Ask AI button.
-    top: 8px;
-    // 20px = the wrapper→title-bar content inset, so the group's right edge
-    // aligns with the bar's inner right padding.
-    right: 20px;
-    z-index: 3;
+    position: static !important;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -402,22 +387,22 @@ pre.prism-code {
 
     // Match the regular (non-terminal) code block buttons exactly: white pill
     // with a neutral border, so terminal blocks are visually identical to the
-    // rest of the site. Only reset positioning + restore the pill chrome; leave
-    // the icon color to the default so it inverts correctly in dark mode.
+    // rest of the site. Leave the icon color to the default so it inverts
+    // correctly in dark mode.
     .clean-btn {
       position: static !important;
       top: auto !important;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      width: 34px;
+      height: 34px;
       padding: 6.4px;
       background: var(--strapi-neutral-0) !important;
       border: 1px solid var(--strapi-neutral-200) !important;
       border-radius: var(--strapi-radius-md) !important;
 
       svg, i::before, span {
-        // Theme-aware icon color so it stays legible in dark mode (a legacy
-        // rule forces black, which vanishes on the dark pill).
         color: var(--strapi-fg-1) !important;
         opacity: 1 !important;
       }

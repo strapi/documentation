@@ -136,8 +136,28 @@ export default function CodeBlockWrapper(props) {
   // Inject a real DOM cursor element into terminal blocks
   // (CSS ::after pseudo-elements get their background overridden by parent rules)
   const terminalRef = useRef(null);
+
+  // Terminal blocks render their own title bar (with the Ask AI button) as a
+  // sibling of the Docusaurus code block, while the native copy/wrap buttons
+  // live deep inside the code block. Rather than align the two across separate
+  // DOM subtrees with brittle absolute positioning, physically MOVE the native
+  // button group into the title bar's actions container so Ask AI + wrap + copy
+  // sit in one flex row and align naturally.
+  const relocateButtons = useCallback((wrapper) => {
+    if (!wrapper) return;
+    const move = () => {
+      const actions = wrapper.querySelector('.code-title-bar__actions');
+      const group = wrapper.querySelector('[class*="buttonGroup"]');
+      if (!actions || !group) return;
+      if (group.parentElement === actions) return; // already moved
+      actions.appendChild(group);
+    };
+    requestAnimationFrame(() => requestAnimationFrame(move));
+  }, []);
+
   const injectCursor = useCallback((node) => {
     terminalRef.current = node;
+    if (node) relocateButtons(node);
     if (!node) return;
 
     // Find the last token line and append a real cursor span
