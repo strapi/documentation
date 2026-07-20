@@ -155,41 +155,12 @@ export default function CodeBlockWrapper(props) {
     requestAnimationFrame(() => requestAnimationFrame(move));
   }, []);
 
+  // Ref callback for the terminal wrapper. Only relocates the action buttons
+  // into the title bar; the blinking end-of-line cursor was removed.
   const injectCursor = useCallback((node) => {
     terminalRef.current = node;
     if (node) relocateButtons(node);
-    if (!node) return;
-
-    // Find the last token line and append a real cursor span
-    const injectCursorElement = () => {
-      // Remove any previously injected cursor
-      const existing = node.querySelector('.terminal-cursor');
-      if (existing) existing.remove();
-
-      const codeEl = node.querySelector('code');
-      if (!codeEl) return;
-
-      const lastLine = codeEl.querySelector('.token-line:last-child');
-      if (!lastLine) return;
-
-      const cursor = document.createElement('span');
-      cursor.className = 'terminal-cursor';
-
-      // Insert before the trailing <br> so the cursor stays on the same line
-      const lastBr = lastLine.querySelector('br:last-child');
-      if (lastBr) {
-        lastLine.insertBefore(cursor, lastBr);
-        lastBr.remove();
-      } else {
-        lastLine.appendChild(cursor);
-      }
-    };
-
-    // Run after Docusaurus finishes rendering the code block
-    requestAnimationFrame(() => {
-      requestAnimationFrame(injectCursorElement);
-    });
-  }, []);
+  }, [relocateButtons]);
 
   // Terminal blocks: macOS-style wrapper with title bar + blinking cursor
   if (isTerminal) {
