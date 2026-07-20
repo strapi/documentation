@@ -328,11 +328,19 @@ pre.prism-code {
 
   // Ask AI + the relocated copy/wrap group share this one flex row, so they
   // align naturally with no absolute positioning (the buttons are moved into
-  // here by CodeBlockWrapper's relocateButtons effect).
+  // here by CodeBlockWrapper's relocateButtons effect). Hidden at rest, shown
+  // on hover/focus of the block — same behavior as regular code blocks.
   .code-title-bar__actions {
     display: flex;
     align-items: center;
     gap: 8px;
+    opacity: 0;
+    transition: opacity var(--strapi-duration-fast) var(--strapi-ease);
+  }
+
+  &:hover .code-title-bar__actions,
+  &:focus-within .code-title-bar__actions {
+    opacity: 1;
   }
 
   // The inner .theme-code-block should not have its own border
@@ -383,7 +391,8 @@ pre.prism-code {
     display: flex;
     align-items: center;
     gap: 8px;
-    opacity: 1;
+    // Visibility is controlled by the parent .code-title-bar__actions
+    // (hidden at rest, shown on hover), so don't force opacity here.
 
     // Match the regular (non-terminal) code block buttons exactly: white pill
     // with a neutral border, so terminal blocks are visually identical to the
