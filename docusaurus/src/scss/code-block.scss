@@ -273,33 +273,23 @@ pre.prism-code {
     background: var(--strapi-neutral-0) !important;
     border: 1px solid var(--strapi-neutral-200) !important;
 
-    // Dimmed at rest (like the copy/wrap icons), full opacity on hover.
-    // !important beats the legacy .clean-btn opacity:1 rules (this button also
-    // carries the clean-btn class).
+    // Same color + opacity as the copy/wrap buttons (which use --strapi-fg-1
+    // at 0.6 opacity), so all three action buttons match at rest. !important
+    // beats the legacy .clean-btn rules (this button also carries clean-btn).
+    i, span {
+      color: var(--strapi-fg-1) !important;
+      opacity: 0.6 !important;
+    }
+
     i {
       font-size: 12px;
-      color: var(--strapi-primary-500);
-      opacity: 0.6 !important;
     }
 
-    span {
-      color: var(--strapi-fg-1);
-      opacity: 0.6 !important;
-    }
-
-    // On hover only darken the label + icon and bring them to full opacity;
-    // keep background and border as-is. The button also carries the `clean-btn`
-    // class, whose legacy :hover would otherwise tint the background grey.
+    // On hover: full opacity, matching the copy/wrap icons.
     &:hover {
       background: var(--strapi-neutral-0) !important;
 
-      i {
-        color: var(--strapi-primary-700) !important;
-        opacity: 1 !important;
-      }
-
-      span {
-        color: var(--strapi-neutral-800) !important;
+      i, span {
         opacity: 1 !important;
       }
     }

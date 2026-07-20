@@ -382,6 +382,9 @@
     font-size: 13px;
     line-height: 1.5;
     color: var(--strapi-fg-3);
+    // Nudge down to visually align the description text with the
+    // required/optional badge on the same row.
+    padding-top: 6px;
 
     code {
       font-family: var(--strapi-font-family-mono);
