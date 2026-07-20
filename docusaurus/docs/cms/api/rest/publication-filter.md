@@ -90,18 +90,22 @@ This parameter combination works only on a given locale; to find these documents
 <Endpoint
   method="GET"
   path="/api/restaurants?status=draft&publicationFilter=never-published"
-  codePath="/api/restaurants?status=draft&publicationFilter=never-published"
   title="Get draft restaurants that have never been published for their locale"
-  description="Return the drafts that have never been published for their locale."
-  codeTabs={[
-    {
-      label: "cURL",
-      code: `curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published' \\
-  -H 'Authorization: Bearer <token>'`
-    },
-    {
-      label: "JavaScript",
-      code: `const qs = require('qs');
+  description="Return the drafts that have never been published for their locale.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
     publicationFilter: 'never-published',
@@ -109,14 +113,17 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+await request(`/api/restaurants?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
     "data": [
       {
         "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
@@ -133,10 +140,13 @@ await request(\`/api/restaurants?\${query}\`);`
         "total": 1
       }
     }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Find drafts never published in any locale {#never-published-document}
 
@@ -147,18 +157,22 @@ A document counts as published as soon as one of its locales is published: the d
 <Endpoint
   method="GET"
   path="/api/restaurants?status=draft&publicationFilter=never-published-document"
-  codePath="/api/restaurants?status=draft&publicationFilter=never-published-document"
   title="Get drafts of restaurants never published in any locale"
-  description="Return the drafts of documents never published in any locale."
-  codeTabs={[
-    {
-      label: "cURL",
-      code: `curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published-document' \\
-  -H 'Authorization: Bearer <token>'`
-    },
-    {
-      label: "JavaScript",
-      code: `const qs = require('qs');
+  description="Return the drafts of documents never published in any locale.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published-document' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
     publicationFilter: 'never-published-document',
@@ -166,14 +180,17 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+await request(`/api/restaurants?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
     "data": [
       {
         "documentId": "d41r46wac4xix5vpba7561at",
@@ -190,10 +207,13 @@ await request(\`/api/restaurants?\${query}\`);`
         "total": 1
       }
     }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Find modified documents {#modified}
 
@@ -204,18 +224,22 @@ For instance, with `status=draft`, the query returns the draft versions:
 <Endpoint
   method="GET"
   path="/api/restaurants?status=draft&publicationFilter=modified"
-  codePath="/api/restaurants?status=draft&publicationFilter=modified"
   title="Get the draft versions of modified restaurants"
-  description="Return the draft versions of documents with unpublished changes."
-  codeTabs={[
-    {
-      label: "cURL",
-      code: `curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=modified' \\
-  -H 'Authorization: Bearer <token>'`
-    },
-    {
-      label: "JavaScript",
-      code: `const qs = require('qs');
+  description="Return the draft versions of documents with unpublished changes.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=modified' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
     publicationFilter: 'modified',
@@ -223,14 +247,17 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+await request(`/api/restaurants?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
     "data": [
       {
         "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
@@ -247,10 +274,13 @@ await request(\`/api/restaurants?\${query}\`);`
         "total": 1
       }
     }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 <br/>
 With `status=published` (the REST default), the same query returns the currently live version of those documents instead:
@@ -258,32 +288,39 @@ With `status=published` (the REST default), the same query returns the currently
 <Endpoint
   method="GET"
   path="/api/restaurants?publicationFilter=modified"
-  codePath="/api/restaurants?publicationFilter=modified"
   title="Get the currently live version of modified restaurants"
-  description="Return the currently live versions of documents with unpublished changes."
-  codeTabs={[
-    {
-      label: "cURL",
-      code: `curl 'http://localhost:1337/api/restaurants?publicationFilter=modified' \\
-  -H 'Authorization: Bearer <token>'`
-    },
-    {
-      label: "JavaScript",
-      code: `const qs = require('qs');
+  description="Return the currently live versions of documents with unpublished changes.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=modified' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify({
     publicationFilter: 'modified',
 }, {
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+await request(`/api/restaurants?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
     "data": [
       {
         "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
@@ -300,10 +337,13 @@ await request(\`/api/restaurants?\${query}\`);`
         "total": 1
       }
     }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Find unmodified documents {#unmodified}
 
@@ -314,18 +354,22 @@ For instance, with `status=draft`, the query returns the draft versions:
 <Endpoint
   method="GET"
   path="/api/restaurants?status=draft&publicationFilter=unmodified"
-  codePath="/api/restaurants?status=draft&publicationFilter=unmodified"
   title="Get the draft versions of unmodified restaurants"
-  description="Return the draft versions of documents unchanged since their last publication."
-  codeTabs={[
-    {
-      label: "cURL",
-      code: `curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=unmodified' \\
-  -H 'Authorization: Bearer <token>'`
-    },
-    {
-      label: "JavaScript",
-      code: `const qs = require('qs');
+  description="Return the draft versions of documents unchanged since their last publication.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=unmodified' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
     publicationFilter: 'unmodified',
@@ -333,14 +377,17 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+await request(`/api/restaurants?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
     "data": [
       {
         "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
@@ -357,10 +404,13 @@ await request(\`/api/restaurants?\${query}\`);`
         "total": 1
       }
     }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 <br/>
 With `status=published` (the REST default), the same query returns the currently live version of those documents instead:
@@ -368,32 +418,39 @@ With `status=published` (the REST default), the same query returns the currently
 <Endpoint
   method="GET"
   path="/api/restaurants?publicationFilter=unmodified"
-  codePath="/api/restaurants?publicationFilter=unmodified"
   title="Get the currently live version of unmodified restaurants"
-  description="Return the currently live versions of documents unchanged since their last publication."
-  codeTabs={[
-    {
-      label: "cURL",
-      code: `curl 'http://localhost:1337/api/restaurants?publicationFilter=unmodified' \\
-  -H 'Authorization: Bearer <token>'`
-    },
-    {
-      label: "JavaScript",
-      code: `const qs = require('qs');
+  description="Return the currently live versions of documents unchanged since their last publication.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=unmodified' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify({
     publicationFilter: 'unmodified',
 }, {
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+await request(`/api/restaurants?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
     "data": [
       {
         "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
@@ -410,10 +467,13 @@ await request(\`/api/restaurants?\${query}\`);`
         "total": 1
       }
     }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Find documents with a published version {#has-published-version}
 
@@ -424,18 +484,22 @@ For instance, with `status=draft`, the query returns the draft versions:
 <Endpoint
   method="GET"
   path="/api/restaurants?status=draft&publicationFilter=has-published-version"
-  codePath="/api/restaurants?status=draft&publicationFilter=has-published-version"
   title="Get the draft versions of restaurants that also have a published version"
-  description="Return the draft versions of documents that also have a published version for the same locale."
-  codeTabs={[
-    {
-      label: "cURL",
-      code: `curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version' \\
-  -H 'Authorization: Bearer <token>'`
-    },
-    {
-      label: "JavaScript",
-      code: `const qs = require('qs');
+  description="Return the draft versions of documents that also have a published version for the same locale.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
     publicationFilter: 'has-published-version',
@@ -443,14 +507,17 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+await request(`/api/restaurants?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
     "data": [
       {
         "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
@@ -467,10 +534,13 @@ await request(\`/api/restaurants?\${query}\`);`
         "total": 1
       }
     }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 <br/>
 With `status=published` (the REST default), the same query returns the currently live version of those documents instead:
@@ -478,32 +548,39 @@ With `status=published` (the REST default), the same query returns the currently
 <Endpoint
   method="GET"
   path="/api/restaurants?publicationFilter=has-published-version"
-  codePath="/api/restaurants?publicationFilter=has-published-version"
   title="Get the currently live version of restaurants that also have a draft"
-  description="Return the currently live versions of documents that also have a published version for the same locale."
-  codeTabs={[
-    {
-      label: "cURL",
-      code: `curl 'http://localhost:1337/api/restaurants?publicationFilter=has-published-version' \\
-  -H 'Authorization: Bearer <token>'`
-    },
-    {
-      label: "JavaScript",
-      code: `const qs = require('qs');
+  description="Return the currently live versions of documents that also have a published version for the same locale.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=has-published-version' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify({
     publicationFilter: 'has-published-version',
 }, {
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+await request(`/api/restaurants?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
     "data": [
       {
         "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
@@ -520,10 +597,13 @@ await request(\`/api/restaurants?\${query}\`);`
         "total": 1
       }
     }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Find documents with a published version in at least one locale {#has-published-version-document}
 
@@ -532,18 +612,22 @@ await request(\`/api/restaurants?\${query}\`);`
 <Endpoint
   method="GET"
   path="/api/restaurants?status=draft&publicationFilter=has-published-version-document"
-  codePath="/api/restaurants?status=draft&publicationFilter=has-published-version-document"
   title="Get the drafts of restaurants published in at least one locale"
-  description="Return the draft versions of documents published in at least one locale."
-  codeTabs={[
-    {
-      label: "cURL",
-      code: `curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version-document' \\
-  -H 'Authorization: Bearer <token>'`
-    },
-    {
-      label: "JavaScript",
-      code: `const qs = require('qs');
+  description="Return the draft versions of documents published in at least one locale.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version-document' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
     publicationFilter: 'has-published-version-document',
@@ -551,14 +635,17 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+await request(`/api/restaurants?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
     "data": [
       {
         "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
@@ -575,10 +662,13 @@ await request(\`/api/restaurants?\${query}\`);`
         "total": 1
       }
     }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Diagnostic values {#diagnostics}
 
@@ -592,32 +682,39 @@ The `published-without-draft` and `published-with-draft` values are meant for da
 <Endpoint
   method="GET"
   path="/api/restaurants?publicationFilter=published-without-draft"
-  codePath="/api/restaurants?publicationFilter=published-without-draft"
   title="Get published restaurants with no draft for the same locale"
-  description="Return published documents with no matching draft version for the same locale."
-  codeTabs={[
-    {
-      label: "cURL",
-      code: `curl 'http://localhost:1337/api/restaurants?publicationFilter=published-without-draft' \\
-  -H 'Authorization: Bearer <token>'`
-    },
-    {
-      label: "JavaScript",
-      code: `const qs = require('qs');
+  description="Return published documents with no matching draft version for the same locale.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=published-without-draft' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify({
     publicationFilter: 'published-without-draft',
 }, {
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+await request(`/api/restaurants?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
     "data": [
       {
         "documentId": "j0klm1n2o3p4q5r6s7t8u9v",
@@ -634,42 +731,52 @@ await request(\`/api/restaurants?\${query}\`);`
         "total": 1
       }
     }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 `publicationFilter=published-with-draft` selects published documents that also have a draft, which is every published document in a healthy database:
 
 <Endpoint
   method="GET"
   path="/api/restaurants?publicationFilter=published-with-draft"
-  codePath="/api/restaurants?publicationFilter=published-with-draft"
   title="Get published restaurants that also have a draft for the same locale"
-  description="Return published documents that also have a matching draft version for the same locale."
-  codeTabs={[
-    {
-      label: "cURL",
-      code: `curl 'http://localhost:1337/api/restaurants?publicationFilter=published-with-draft' \\
-  -H 'Authorization: Bearer <token>'`
-    },
-    {
-      label: "JavaScript",
-      code: `const qs = require('qs');
+  description="Return published documents that also have a matching draft version for the same locale.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=published-with-draft' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const qs = require('qs');
 const query = qs.stringify({
     publicationFilter: 'published-with-draft',
 }, {
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+await request(`/api/restaurants?${query}`);
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
     "data": [
       {
         "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
@@ -686,10 +793,13 @@ await request(\`/api/restaurants?\${query}\`);`
         "total": 1
       }
     }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 </details>
 
