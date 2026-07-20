@@ -268,6 +268,8 @@ pre.prism-code {
     border-radius: var(--strapi-radius-md) !important;
     cursor: pointer;
     transition: all var(--strapi-duration-fast) var(--strapi-ease);
+    // Stays opaque; the actions row handles the hover fade.
+    opacity: 1 !important;
     background: var(--strapi-neutral-0) !important;
     border: 1px solid var(--strapi-neutral-200) !important;
 
@@ -328,11 +330,19 @@ pre.prism-code {
 
   // Ask AI + the relocated copy/wrap group share this one flex row, so they
   // align naturally with no absolute positioning (the buttons are moved into
-  // here by CodeBlockWrapper's relocateButtons effect).
+  // here by CodeBlockWrapper's relocateButtons effect). Hidden at rest, shown
+  // when the whole block is hovered/focused — same as regular code blocks.
   .code-title-bar__actions {
     display: flex;
     align-items: center;
     gap: 8px;
+    opacity: 0;
+    transition: opacity var(--strapi-duration-fast) var(--strapi-ease);
+  }
+
+  &:hover .code-title-bar__actions,
+  &:focus-within .code-title-bar__actions {
+    opacity: 1;
   }
 
   // The inner .theme-code-block should not have its own border
@@ -398,6 +408,9 @@ pre.prism-code {
       width: 34px;
       height: 34px;
       padding: 6.4px;
+      // The button itself stays fully opaque; the whole actions row is what
+      // fades in/out on hover. Overrides the legacy .clean-btn opacity:0.6.
+      opacity: 1 !important;
       background: var(--strapi-neutral-0) !important;
       border: 1px solid var(--strapi-neutral-200) !important;
       border-radius: var(--strapi-radius-md) !important;
