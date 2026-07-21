@@ -227,7 +227,7 @@ pre.prism-code {
     background: var(--code-title-bar-lang-bg);
     padding: 3px 8px;
     border-radius: var(--strapi-radius-xs);
-    letter-spacing: 0.05em;
+    letter-spacing: var(--custom-strapi-monospace-letter-spacing);
     text-transform: uppercase;
     line-height: 1;
   }

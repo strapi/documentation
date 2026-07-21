@@ -46,7 +46,7 @@
     font-weight: 600;
     margin-bottom: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: var(--custom-strapi-monospace-letter-spacing);
     color: var(--strapi-neutral-500);
   }
 

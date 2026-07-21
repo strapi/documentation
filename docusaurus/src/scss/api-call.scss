@@ -63,7 +63,7 @@
       font-size: var(--custom-api-call-heading-font-size);
       font-weight: var(--custom-api-call-heading-font-weight);
       font-family: var(--strapi-font-family-mono);
-      letter-spacing: 0.02em;
+      letter-spacing: var(--custom-strapi-monospace-letter-spacing);
       text-transform: uppercase;
       padding: var(--custom-api-call-heading-py) var(--custom-api-call-heading-px);
     }

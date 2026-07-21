@@ -272,7 +272,7 @@
       font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: var(--custom-strapi-monospace-letter-spacing);
       margin-bottom: 4px;
       color: var(--custom-admonition-heading-color);
     }
@@ -719,7 +719,7 @@
       font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: var(--custom-strapi-monospace-letter-spacing);
       color: var(--strapi-neutral-500);
       margin-top: var(--strapi-spacing-4);
       margin-bottom: var(--strapi-spacing-2);
