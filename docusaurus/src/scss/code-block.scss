@@ -447,26 +447,35 @@ pre.prism-code {
       border: 1px solid var(--strapi-neutral-200) !important;
       border-radius: var(--strapi-radius-md) !important;
 
-      // Dim the whole BUTTON at rest so its icon reads grey rather than solid
-      // black, going full opacity on hover. Copy/wrap are thin stroke SVGs that
-      // look washed out next to Ask AI's filled glyph at the same opacity, so
-      // use 0.75 (not 0.6) to match their perceived weight.
-      //
-      // Dimming the button (not its icons) is deliberate: the copy button
-      // stacks two SVGs (copy icon + success check) and toggles which is visible
-      // by flipping their individual opacities. Touching the icon opacities here
-      // would override that toggle and leave the hidden icon bleeding through as
-      // a ghost. Dimming the button lets Docusaurus's 0/1 toggle work untouched.
-      opacity: 0.75 !important;
-      transition: opacity 0.2s ease;
+      // The button (and its border) stays fully opaque; only the ICON is dimmed
+      // to 0.6 at rest and goes to 1 when the button itself is hovered — the
+      // exact treatment of the Ask AI button, so all three match in light/dark.
+      opacity: 1 !important;
 
       // Color the icons so they invert correctly in dark mode.
       svg, i::before, span {
         color: var(--strapi-fg-1) !important;
       }
 
+      // Dim the ICON only (never the border). The copy button stacks two SVGs
+      // (copy icon + success check) inside a [class*="copyButtonIcons"] wrapper
+      // and toggles which is visible via each svg's own opacity, so dim the
+      // WRAPPER (0.6 × the inner 1/0 toggle preserves the toggle, no ghost)
+      // rather than the raw svgs. The wrap button has a plain svg, and Ask AI a
+      // glyph in i::before; dim those too.
+      [class*="copyButtonIcons"],
+      > svg,
+      i::before {
+        opacity: 0.6 !important;
+        transition: opacity 0.2s ease;
+      }
+
       &:hover {
-        opacity: 1 !important;
+        [class*="copyButtonIcons"],
+        > svg,
+        i::before {
+          opacity: 1 !important;
+        }
       }
     }
   }
