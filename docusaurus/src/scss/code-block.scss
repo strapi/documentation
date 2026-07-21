@@ -445,13 +445,14 @@ pre.prism-code {
       border: 1px solid var(--strapi-neutral-200) !important;
       border-radius: var(--strapi-radius-md) !important;
 
-      // Match the reference copy/wrap buttons: the icon is dimmed at rest
-      // (opacity 0.6) and goes full opacity on hover — this is what makes it
-      // look grey rather than solid black. !important beats the legacy
+      // Dim the icon at rest so it reads grey rather than solid black, going
+      // full opacity on hover. Copy/wrap are thin stroke SVGs, which look washed
+      // out next to Ask AI's filled glyph at the same opacity, so use 0.75 (not
+      // 0.6) to match their perceived weight. !important beats the legacy
       // opacity:1 rules on .clean-btn icons.
       svg, i::before, span {
         color: var(--strapi-fg-1) !important;
-        opacity: 0.6 !important;
+        opacity: 0.75 !important;
       }
 
       &:hover svg,
