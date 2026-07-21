@@ -2258,6 +2258,13 @@ The environment's Node version is based on the one chosen at the creation of the
 Ensure the Node version configured in your Strapi project matches the Node version shown in your project’s dashboard before deploying.
 :::
 
+:::note Package manager version
+The package manager version is not set in the project settings. During the build, Strapi Cloud detects which package manager to use from your project's lockfile, defaulting to npm.
+
+- For `yarn` and `pnpm`, [Corepack](https://github.com/nodejs/corepack#readme) is enabled in the build environment, so the version pinned in your `package.json` `packageManager` field is honored automatically. If no version is pinned, Corepack's bundled default version is used.
+- `npm` is not managed by Corepack: it uses the version bundled with the selected Node.js release.
+:::
+
 #### Editing Git branch
 
 1. In the *Edit branch* dialog, edit the available settings. Note that the branch can be edited for all environments at the same time via the project settings, see [General](#general).
@@ -30371,7 +30378,7 @@ Before installing Strapi, the following requirements must be installed on your c
 - [Node.js](https://nodejs.org): Only [Active LTS or Maintenance LTS versions](https://nodejs.org/en/about/previous-releases) are supported (currently `v22`, `v24`, and `v26`). Odd-number releases of Node, known as "current" versions of Node.js, are not supported (e.g. v23, v25).
 - Your preferred Node.js package manager:
     - [npm](https://docs.npmjs.com/cli/v6/commands/npm-install) (`v6` and above)
-    - [pnpm](https://pnpm.io/) (pnpm is fixed to v9 on Strapi Cloud)
+    - [pnpm](https://pnpm.io/) (on Strapi Cloud, [Corepack](https://nodejs.org/api/corepack.html) matches the pnpm version pinned in your project's `package.json` `packageManager` field, or uses Corepack's bundled default if none is pinned)
 - [Python](https://www.python.org/downloads/) (if using a SQLite database)
 - A supported web browser: The Admin panel targets browsers matching the default [Browserslist](https://github.com/browserslist/browserslist) query: `last 3 major versions`, `Firefox ESR`, `last 2 Opera versions`, and `not dead`. See [browsersl.ist](https://browsersl.ist/#q=last+3+major+versions%2C+Firefox+ESR%2C+last+2+Opera+versions%2C+not+dead) for the current coverage matrix. Projects can override these defaults with a Browserslist configuration at the project root.
 
@@ -37571,7 +37578,7 @@ Before installing Strapi, the following requirements must be installed on your c
 - [Node.js](https://nodejs.org): Only [Active LTS or Maintenance LTS versions](https://nodejs.org/en/about/previous-releases) are supported (currently `v22`, `v24`, and `v26`). Odd-number releases of Node, known as "current" versions of Node.js, are not supported (e.g. v23, v25).
 - Your preferred Node.js package manager:
     - [npm](https://docs.npmjs.com/cli/v6/commands/npm-install) (`v6` and above)
-    - [pnpm](https://pnpm.io/) (pnpm is fixed to v9 on Strapi Cloud)
+    - [pnpm](https://pnpm.io/) (on Strapi Cloud, [Corepack](https://nodejs.org/api/corepack.html) matches the pnpm version pinned in your project's `package.json` `packageManager` field, or uses Corepack's bundled default if none is pinned)
 - [Python](https://www.python.org/downloads/) (if using a SQLite database)
 - A supported web browser: The Admin panel targets browsers matching the default [Browserslist](https://github.com/browserslist/browserslist) query: `last 3 major versions`, `Firefox ESR`, `last 2 Opera versions`, and `not dead`. See [browsersl.ist](https://browsersl.ist/#q=last+3+major+versions%2C+Firefox+ESR%2C+last+2+Opera+versions%2C+not+dead) for the current coverage matrix. Projects can override these defaults with a Browserslist configuration at the project root.
 
@@ -37616,8 +37623,8 @@ Follow the steps below to create a new Strapi project, being sure to use the app
     Please note the additional dash between create and strapi when using npx: `npx create-strapi` vs. `npm create strapi`.
     </details>
 
-    :::caution
-    You might have issues with projects created with pnpm on Strapi Cloud. Strapi Cloud is fixed to pnpm v9, so it's recommended to use npm if you plan to eventually host your project on Strapi Cloud.
+    :::note
+    On Strapi Cloud, the pnpm version is managed by [Corepack](https://github.com/nodejs/corepack#readme): the version pinned in your project's `package.json` `packageManager` field is honored automatically, or Corepack's bundled default is used if none is pinned. For details, see [Package manager version](/cloud/projects/settings#modifying-node-version).
     :::
 
     ```bash
@@ -51278,7 +51285,7 @@ Before installing Strapi, the following requirements must be installed on your c
 - [Node.js](https://nodejs.org): Only [Active LTS or Maintenance LTS versions](https://nodejs.org/en/about/previous-releases) are supported (currently `v22`, `v24`, and `v26`). Odd-number releases of Node, known as "current" versions of Node.js, are not supported (e.g. v23, v25).
 - Your preferred Node.js package manager:
     - [npm](https://docs.npmjs.com/cli/v6/commands/npm-install) (`v6` and above)
-    - [pnpm](https://pnpm.io/) (pnpm is fixed to v9 on Strapi Cloud)
+    - [pnpm](https://pnpm.io/) (on Strapi Cloud, [Corepack](https://nodejs.org/api/corepack.html) matches the pnpm version pinned in your project's `package.json` `packageManager` field, or uses Corepack's bundled default if none is pinned)
 - [Python](https://www.python.org/downloads/) (if using a SQLite database)
 - A supported web browser: The Admin panel targets browsers matching the default [Browserslist](https://github.com/browserslist/browserslist) query: `last 3 major versions`, `Firefox ESR`, `last 2 Opera versions`, and `not dead`. See [browsersl.ist](https://browsersl.ist/#q=last+3+major+versions%2C+Firefox+ESR%2C+last+2+Opera+versions%2C+not+dead) for the current coverage matrix. Projects can override these defaults with a Browserslist configuration at the project root.
 
