@@ -340,7 +340,7 @@ pre.prism-code {
   // corner radius as admonitions (--strapi-radius-xs) for all terminal blocks.
   position: relative;
   border: solid 1px var(--custom-code-block-border-color);
-  border-radius: var(--strapi-radius-xs);
+  border-radius: var(--strapi-radius-md);
   overflow: hidden;
   transition: border-color var(--strapi-duration-fast) var(--strapi-ease);
   margin-bottom: var(--ifm-leading);
