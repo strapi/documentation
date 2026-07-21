@@ -722,6 +722,18 @@ pre.prism-code {
         padding-top: 48px;
       }
     }
+  }
+
+  // Terminal blocks keep their action buttons in the title bar even on mobile,
+  // so the 48px top padding (meant to clear floating buttons) just leaves a big
+  // empty gap above the code. Remove it here.
+  .code-block-enhanced .theme-code-block {
+    &[class*="codeBlockContainer"],
+    [class*="codeBlockContainer"] {
+      [class*="codeBlockContent"] {
+        padding-top: 0;
+      }
+    }
 
     // Reset button position on mobile (don't put them in title bar)
     &:has([class*="codeBlockTitle"]) {
