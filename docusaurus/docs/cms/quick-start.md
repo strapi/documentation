@@ -166,7 +166,6 @@ sources={{
 />
 
 Once Strapi has restarted, "Restaurant" is listed under <Icon name="feather" /> _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool, let's create another one right now, just for pleasure.
-<br/>
 
 </StepDetails>
 
