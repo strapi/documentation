@@ -197,7 +197,10 @@
 
   &__methodRow {
     display: flex;
-    align-items: center;
+    // Top-align so the method pill stays next to the FIRST line of a long URL
+    // that wraps onto several lines, instead of being vertically centered
+    // against the whole wrapped block.
+    align-items: flex-start;
     gap: 12px;
     margin-bottom: 20px;
   }
@@ -274,6 +277,10 @@
   letter-spacing: 0.02em;
   position: relative;
   overflow: hidden;
+  // Keep the pill a fixed, compact size next to long URLs: never shrink in the
+  // flex row and never let the verb ("GET") wrap onto a second line ("GE"/"T").
+  flex-shrink: 0;
+  white-space: nowrap;
 
   &::after {
     content: '';
