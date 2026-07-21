@@ -639,28 +639,18 @@ pre.prism-code {
   border: none;
   transition: all 0.2s ease;
 
+  // Match the copy/wrap buttons exactly: same neutral icon+label color and the
+  // same 0.6→1 opacity fade (applied by the shared .clean-btn rules below).
+  // This button also carries .clean-btn, so we only need to size the icon here
+  // and NOT recolor it — a colored (purple) icon made Ask AI stand out from the
+  // neutral copy/wrap icons sitting right next to it on hover.
   i {
     font-size: 13px;
-    color: var(--strapi-primary-500);
   }
 
   span {
-    color: var(--strapi-neutral-600);
     font-size: 11px;
     font-weight: 600;
-  }
-
-  // On hover only darken the label + icon; keep the background unchanged.
-  // !important overrides the more specific .theme-code-block .clean-btn color
-  // rules (these buttons also carry the clean-btn class).
-  &:hover {
-    i {
-      color: var(--strapi-primary-700) !important;
-    }
-
-    span {
-      color: var(--strapi-neutral-800) !important;
-    }
   }
 }
 
