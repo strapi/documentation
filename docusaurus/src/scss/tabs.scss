@@ -198,7 +198,7 @@
         // overlaps something: we let it overlap the code's right margin (bottom)
         // instead of the tab bar (top), which reads much cleaner.
         [class*="buttonGroup"] {
-          top: -7px;
+          top: 9px;
         }
       }
 
