@@ -67,8 +67,8 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
     <TabItem value="pnpm" label="pnpm">
 
-    :::caution
-    You might have issues with projects created with pnpm on Strapi Cloud. Strapi Cloud is fixed to pnpm v9, so it's recommended to use npm if you plan to eventually host your project on Strapi Cloud.
+    :::note
+    On Strapi Cloud, the pnpm version is managed by [Corepack](https://github.com/nodejs/corepack#readme): the version pinned in your project's `package.json` `packageManager` field is honored automatically, or Corepack's bundled default is used if none is pinned. For details, see [Package manager version](/cloud/projects/settings#modifying-node-version).
     :::
 
     ```bash
