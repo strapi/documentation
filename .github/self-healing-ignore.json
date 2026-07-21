@@ -874,6 +874,21 @@
       "number": 26112,
       "reason": "Router: Bug fix to relation reordering in Content Manager. The relation ordering feature already exists and is documented. This is a fix to the existing functionality.",
       "added": "2026-07-17"
+    },
+    {
+      "number": 27043,
+      "reason": "Router: Internal Content Manager UI bug fix. Modifies React component remount logic and e2e test helpers. No public API or user-facing behavior change.",
+      "added": "2026-07-21"
+    },
+    {
+      "number": 26872,
+      "reason": "Router: Internal SSO bug fix. Improves session metadata handling and logout revocation for SSO users, but these are implementation details that fix existing feature behavior rather than changing user-facing API or introducing new capabilities. No documentation needed.",
+      "added": "2026-07-21"
+    },
+    {
+      "number": 26525,
+      "reason": "Router: Internal backend fix for experimental_firstPublishedAt feature behavior. Bug fix that corrects timestamp handling in experimental feature. Does not warrant documentation since feature is experimental and fix is internal.",
+      "added": "2026-07-21"
     }
   ]
 }
