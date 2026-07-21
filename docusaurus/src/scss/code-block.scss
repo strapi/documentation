@@ -382,7 +382,11 @@ pre.prism-code {
       background-color: transparent !important;
 
       code {
-        padding: 16px 24px;
+        // Align the code's left edge with the title-bar content (traffic-light
+        // dots) instead of the deep default indent. The wrapper's .language-*
+        // container already provides the left margin, so the code itself only
+        // needs vertical padding + a small right pad for the scrollbar.
+        padding: 16px 24px 16px 0;
         background: transparent !important;
         background-color: transparent !important;
 
@@ -390,6 +394,12 @@ pre.prism-code {
         .terminal-cursor {
           background-color: var(--strapi-primary-500) !important;
         }
+      }
+
+      // Remove the default 24px left padding on the lines container (meant to
+      // make room for line numbers, which terminal blocks don't show).
+      [class*="codeBlockLines"] {
+        padding-left: 0 !important;
       }
     }
   }
