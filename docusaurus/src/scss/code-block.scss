@@ -859,3 +859,19 @@ pre.prism-code {
     }
   }
 }
+
+/* ──────────────────────────────────────────────────────
+   API endpoint code blocks: match the admonition corner radius
+   ────────────────────────────────────────────────────── */
+// The request (tabs), response, and terminal blocks used a 10px radius while
+// admonitions use 4px. Align them to the admonition radius (--strapi-radius-xs)
+// so all boxed content on the page shares the same corners. Scoped to endpoints.
+.api-endpoint-block {
+  .tabs-container,
+  [class*="responses"] [class*="codeBlockContainer"],
+  .code-block-enhanced {
+    border-radius: var(--strapi-radius-xs) !important;
+  }
+  // The terminal window's inner corners (title bar top / code block bottom)
+  // are set to --strapi-radius-xs directly in tabs.scss.
+}

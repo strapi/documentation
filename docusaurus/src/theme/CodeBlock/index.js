@@ -69,7 +69,7 @@ function useInjectAIButton(ref, language, codeContent, showAI) {
     btn.className = 'clean-btn ai-button-injected';
     btn.title = 'Ask AI to explain this code';
     btn.setAttribute('aria-label', 'Ask AI to explain this code example');
-    btn.innerHTML = '<i class="ph ph-sparkle"></i><span>Ask AI</span>';
+    btn.innerHTML = '<i class="ph-fill ph-sparkle"></i><span>Ask AI</span>';
     btn.addEventListener('click', () => handleAskAI(language, codeContent));
 
     container.prepend(btn);
@@ -104,7 +104,7 @@ function TerminalTitleBar({ language, title, showAI, codeContent }) {
             aria-label="Ask AI to explain this code example"
             onClick={() => handleAskAI(language, codeContent)}
           >
-            <i className="ph ph-sparkle" />
+            <i className="ph-fill ph-sparkle" />
             <span>Ask AI</span>
           </button>
         )}
