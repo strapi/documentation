@@ -80,15 +80,35 @@ details.alert {
     padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-horizontal);
   }
 
+  // A terminal code block (.code-block-enhanced) sitting as a direct child of a
+  // details/alert must keep its own zero padding: the rule above would push its
+  // title bar and code 20px inward, which detaches them from the terminal frame
+  // and draws a full-width divider line (the bug seen in Quick Start Step 2).
+  // Inside a TabItem the wrapper already has padding:0, so this restores parity.
+  > .code-block-enhanced {
+    padding: 0;
+  }
+
   > *:last-child {
-    padding-bottom: 0 !important;
     margin-bottom: 0 !important;
+  }
+
+  // Strip the bottom padding of a plain (unframed) last child so its text does
+  // not add space on top of the block's own bottom padding. Framed blocks
+  // (admonitions, code blocks, tab containers) are excluded: their internal
+  // padding is part of their box, and zeroing it collapses their content
+  // against their own border.
+  > *:last-child:not(.theme-admonition):not([class*="admonition"]):not([class*="codeBlock"]):not(.tabs-container):not(.code-block-enhanced) {
+    padding-bottom: 0 !important;
   }
 
   // Only neutralize the top spacing of the first inner element, NOT the
   // content wrapper itself: the wrapper keeps its padding-top so the content
   // is separated from the summary (and its bottom border when open).
-  > div > *:first-child {
+  // Exclude a terminal's title bar (.code-title-bar): it is the first child of
+  // the .code-block-enhanced wrapper and needs its own 10px top padding to keep
+  // the dots, "terminal" label, and copy button vertically centered.
+  > div > *:first-child:not(.code-title-bar) {
     padding-top: 0 !important;
     margin-top: 0 !important;
   }

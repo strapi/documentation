@@ -249,39 +249,62 @@ pre.prism-code {
       background: var(--code-title-bar-lang-bg) !important;
     }
 
-    svg, i::before, span {
+    // Do not force opacity here: the more specific rules inside
+    // .code-block-enhanced handle the rest/hover dimming. Forcing opacity:1 on
+    // every svg also lit up the copy button's stacked success (check) icon,
+    // which Docusaurus keeps at opacity 0 until a copy succeeds — leaving a
+    // ghost icon behind the visible one. Only set color, and never touch the
+    // success icon's opacity.
+    svg:not([class*="copyButtonSuccessIcon"]), i::before, span {
       color: var(--code-title-bar-lang-color) !important;
-      opacity: 1 !important;
     }
   }
 
-  // AI button inside the title bar
+  // AI button inside the title bar — same white pill as the copy/wrap buttons
+  // and the Ask AI button on regular code blocks, so all actions match.
   .ai-button {
-    padding: 4px 8px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
+    height: 34px;
+    padding: 0 10px;
     font-size: 11px;
     font-weight: 600;
-    border-radius: var(--strapi-radius-xs);
+    border-radius: var(--strapi-radius-md) !important;
     cursor: pointer;
     transition: all var(--strapi-duration-fast) var(--strapi-ease);
-    min-height: auto;
-    opacity: 0.6;
-    background: transparent;
+    // Stays opaque; the actions row handles the hover fade.
+    opacity: 1 !important;
+    background: var(--strapi-neutral-0) !important;
+    border: 1px solid var(--strapi-neutral-200) !important;
 
-    &:hover {
-      opacity: 1;
-      background: var(--code-title-bar-lang-bg);
+    // Same color + opacity as the copy/wrap buttons (which use --strapi-fg-1
+    // at 0.6 opacity), so all three action buttons match at rest. !important
+    // beats the legacy .clean-btn rules (this button also carries clean-btn).
+    // The sparkle is a Phosphor fill glyph rendered via ::before, which does
+    // not inherit the <i>'s color (it defaults to neutral-600, a purple-grey),
+    // so color the ::before explicitly to match the neutral copy/wrap icons.
+    i, span {
+      color: var(--strapi-fg-1) !important;
+      opacity: 0.6 !important;
+    }
+
+    i,
+    i::before {
+      color: var(--strapi-fg-1) !important;
     }
 
     i {
       font-size: 12px;
-      color: var(--code-title-bar-lang-color);
     }
 
-    span {
-      color: var(--code-title-bar-lang-color);
+    // On hover: full opacity, matching the copy/wrap icons.
+    &:hover {
+      background: var(--strapi-neutral-0) !important;
+
+      i, span {
+        opacity: 1 !important;
+      }
     }
   }
 }
@@ -313,9 +336,11 @@ pre.prism-code {
    ────────────────────────────────────────────────────── */
 
 .code-block-enhanced {
-  // The wrapper provides the border, radius, and background
+  // The wrapper provides the border, radius, and background. Use the same
+  // corner radius as admonitions (--strapi-radius-xs) for all terminal blocks.
+  position: relative;
   border: solid 1px var(--custom-code-block-border-color);
-  border-radius: var(--strapi-radius-md);
+  border-radius: var(--strapi-radius-xs);
   overflow: hidden;
   transition: border-color var(--strapi-duration-fast) var(--strapi-ease);
   margin-bottom: var(--ifm-leading);
@@ -323,6 +348,23 @@ pre.prism-code {
 
   &:hover {
     border-color: var(--strapi-border-accent);
+  }
+
+  // Ask AI + the relocated copy/wrap group share this one flex row, so they
+  // align naturally with no absolute positioning (the buttons are moved into
+  // here by CodeBlockWrapper's relocateButtons effect). Hidden at rest, shown
+  // when the whole block is hovered/focused — same as regular code blocks.
+  .code-title-bar__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity var(--strapi-duration-fast) var(--strapi-ease);
+  }
+
+  &:hover .code-title-bar__actions,
+  &:focus-within .code-title-bar__actions {
+    opacity: 1;
   }
 
   // The inner .theme-code-block should not have its own border
@@ -338,10 +380,15 @@ pre.prism-code {
   }
 
   // Code block container inside enhanced wrapper
-  // All backgrounds are transparent — the wrapper controls the bg
+  // All backgrounds are transparent — the wrapper controls the bg.
+  // The :not(:has(codeBlockTitle)) variants raise specificity to beat the
+  // generic `.theme-code-block[codeBlockContainer]:not(:has(title)) { padding:24px }`
+  // rule, so terminal code isn't pushed in by that 24px padding.
   .theme-code-block,
   .theme-code-block[class*="codeBlockContainer"],
-  .theme-code-block [class*="codeBlockContainer"] {
+  .theme-code-block[class*="codeBlockContainer"]:not(:has([class*="codeBlockTitle"])),
+  .theme-code-block [class*="codeBlockContainer"],
+  .theme-code-block [class*="codeBlockContainer"]:not(:has([class*="codeBlockTitle"])) {
     padding: 0 !important;
     box-shadow: none !important;
     background: transparent !important;
@@ -354,7 +401,9 @@ pre.prism-code {
       background-color: transparent !important;
 
       code {
-        padding: 16px 24px;
+        // Left inset is handled on the lines container below (18px); keep the
+        // code's own left padding at 0 to avoid stacking.
+        padding: 16px 24px 16px 0;
         background: transparent !important;
         background-color: transparent !important;
 
@@ -363,29 +412,80 @@ pre.prism-code {
           background-color: var(--strapi-primary-500) !important;
         }
       }
-    }
-  }
 
-  // Docusaurus copy/wrap buttons — show on hover, positioned in code area
-  [class*="buttonGroup"] {
-    opacity: 0;
-    transition: opacity var(--strapi-duration-fast) var(--strapi-ease);
-
-    .clean-btn {
-      background: var(--code-title-bar-lang-bg) !important;
-      position: static !important;
-      top: auto !important;
-      border-radius: var(--strapi-radius-xs);
-
-      svg, i::before, span {
-        color: var(--code-title-bar-lang-color) !important;
-        opacity: 1 !important;
+      // The default lines-container padding (for line numbers) is replaced by
+      // an 18px inset so the code lines up under the title bar's first dot.
+      [class*="codeBlockLines"] {
+        padding-left: 18px !important;
       }
     }
   }
 
-  &:hover [class*="buttonGroup"] {
+  // The copy/wrap button group is moved into .code-title-bar__actions (see
+  // CodeBlockWrapper). It flows inline there — no absolute positioning.
+  [class*="buttonGroup"] {
+    position: static !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     opacity: 1;
+
+    // Match the regular (non-terminal) code block buttons exactly: white pill
+    // with a neutral border, so terminal blocks are visually identical to the
+    // rest of the site. Leave the icon color to the default so it inverts
+    // correctly in dark mode.
+    .clean-btn {
+      position: static !important;
+      top: auto !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      padding: 6.4px;
+      background: var(--strapi-neutral-0) !important;
+      border: 1px solid var(--strapi-neutral-200) !important;
+      border-radius: var(--strapi-radius-md) !important;
+
+      // The button (and its border) stays fully opaque; only the ICON is dimmed
+      // to 0.6 at rest and goes to 1 when the button itself is hovered — the
+      // exact treatment of the Ask AI button, so all three match in light/dark.
+      opacity: 1 !important;
+
+      // Color the icons so they invert correctly in dark mode.
+      svg, i::before, span {
+        color: var(--strapi-fg-1) !important;
+      }
+
+      // Dim the ICON only (never the border). The copy button stacks two SVGs
+      // (copy icon + success check) inside a [class*="copyButtonIcons"] wrapper
+      // and toggles which is visible via each svg's own opacity, so dim the
+      // WRAPPER (0.6 × the inner 1/0 toggle preserves the toggle, no ghost)
+      // rather than the raw svgs. The wrap button has a plain svg, and Ask AI a
+      // glyph in i::before; dim those too.
+      [class*="copyButtonIcons"],
+      > svg,
+      i::before {
+        opacity: 0.6 !important;
+        transition: opacity 0.2s ease;
+      }
+
+      // The copy glyph is two thin overlapping outlined rectangles: far fewer
+      // inked pixels than Ask AI's solid star or the wrap button's thick bars,
+      // so at the same 0.6 opacity it READS lighter. Nudge just the copy icon
+      // up to ~0.78 so its perceived weight matches the other two.
+      [class*="copyButtonIcons"] {
+        opacity: 0.78 !important;
+      }
+
+      &:hover {
+        [class*="copyButtonIcons"],
+        > svg,
+        i::before {
+          opacity: 1 !important;
+        }
+      }
+    }
   }
 }
 
@@ -573,23 +673,18 @@ pre.prism-code {
   border: none;
   transition: all 0.2s ease;
 
+  // Match the copy/wrap buttons exactly: same neutral icon+label color and the
+  // same 0.6→1 opacity fade (applied by the shared .clean-btn rules below).
+  // This button also carries .clean-btn, so we only need to size the icon here
+  // and NOT recolor it — a colored (purple) icon made Ask AI stand out from the
+  // neutral copy/wrap icons sitting right next to it on hover.
   i {
     font-size: 13px;
-    color: var(--strapi-primary-500);
   }
 
   span {
-    color: var(--strapi-neutral-600);
     font-size: 11px;
     font-weight: 600;
-  }
-
-  &:hover {
-    background: var(--strapi-primary-100);
-
-    span {
-      color: var(--strapi-primary-600);
-    }
   }
 }
 
@@ -608,7 +703,10 @@ pre.prism-code {
     .clean-btn {
       opacity: 1 !important;
 
-      svg,
+      // Exclude the copy button's success (check) icon: Docusaurus keeps it at
+      // opacity 0 until a copy succeeds, so forcing an opacity here would make
+      // the check bleed through as a ghost behind the copy icon.
+      svg:not([class*="copyButtonSuccessIcon"]),
       i::before,
       span {
         opacity: 0.6;
@@ -619,7 +717,7 @@ pre.prism-code {
 }
 
 .clean-btn:hover {
-  svg,
+  svg:not([class*="copyButtonSuccessIcon"]),
   i::before,
   span {
     opacity: 1 !important;
@@ -663,6 +761,18 @@ pre.prism-code {
     [class*="codeBlockContainer"] {
       [class*="codeBlockContent"] {
         padding-top: 48px;
+      }
+    }
+  }
+
+  // Terminal blocks keep their action buttons in the title bar even on mobile,
+  // so the 48px top padding (meant to clear floating buttons) just leaves a big
+  // empty gap above the code. Remove it here.
+  .code-block-enhanced .theme-code-block {
+    &[class*="codeBlockContainer"],
+    [class*="codeBlockContainer"] {
+      [class*="codeBlockContent"] {
+        padding-top: 0;
       }
     }
 
@@ -781,4 +891,20 @@ pre.prism-code {
       background-color: var(--strapi-primary-400) !important;
     }
   }
+}
+
+/* ──────────────────────────────────────────────────────
+   API endpoint code blocks: match the admonition corner radius
+   ────────────────────────────────────────────────────── */
+// The request (tabs), response, and terminal blocks used a 10px radius while
+// admonitions use 4px. Align them to the admonition radius (--strapi-radius-xs)
+// so all boxed content on the page shares the same corners. Scoped to endpoints.
+.api-endpoint-block {
+  .tabs-container,
+  [class*="responses"] [class*="codeBlockContainer"],
+  .code-block-enhanced {
+    border-radius: var(--strapi-radius-xs) !important;
+  }
+  // The terminal window's inner corners (title bar top / code block bottom)
+  // are set to --strapi-radius-xs directly in tabs.scss.
 }

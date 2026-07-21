@@ -75,52 +75,55 @@ The following table lists the new possible use cases added by i18n to the REST A
   method="GET"
   path="/api/restaurants?locale=fr"
   title="Get all documents in a specific locale"
-  description="Returns all documents for a given locale."
-  codeTabs={[
+  description="Returns all documents for a given locale.">
+
+```bash
+curl 'http://localhost:1337/api/restaurants?locale=fr' \
+  -H 'Authorization: Bearer <token>'
+```
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": [
     {
-      label: 'Request',
-      code: `GET http://localhost:1337/api/restaurants?locale=fr`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        data: [
-          {
-            id: 5,
-            documentId: "h90lgohlzfpjf3bvan72mzll",
-            Title: "Meilleures pizzas",
-            Body: [
-              {
-                type: "paragraph",
-                children: [
-                  {
-                    type: "text",
-                    text: "On déguste les meilleures pizzas de la ville à la Pizzeria Arrivederci."
-                  }
-                ]
-              }
-            ],
-            createdAt: "2024-03-06T22:08:59.643Z",
-            updatedAt: "2024-03-06T22:10:21.127Z",
-            publishedAt: "2024-03-06T22:10:21.130Z",
-            locale: "fr"
-          }
-        ],
-        meta: {
-          pagination: {
-            page: 1,
-            pageSize: 25,
-            pageCount: 1,
-            total: 1
-          }
+      "id": 5,
+      "documentId": "h90lgohlzfpjf3bvan72mzll",
+      "Title": "Meilleures pizzas",
+      "Body": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "On déguste les meilleures pizzas de la ville à la Pizzeria Arrivederci."
+            }
+          ]
         }
-      }, null, 2),
-    },
-  ]}
-/>
+      ],
+      "createdAt": "2024-03-06T22:08:59.643Z",
+      "updatedAt": "2024-03-06T22:10:21.127Z",
+      "publishedAt": "2024-03-06T22:10:21.130Z",
+      "locale": "fr"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### `GET` Get a document in a specific locale {#rest-get}
 
@@ -140,49 +143,52 @@ To get a specific document in a collection type in a given locale, add the `loca
   method="GET"
   path="/api/restaurants/:documentId?locale=fr"
   title="Get a document in a specific locale (collection type)"
-  description="Returns a specific document in a collection type for a given locale."
-  codeTabs={[
+  description="Returns a specific document in a collection type for a given locale.">
+
+```bash
+curl 'http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr' \
+  -H 'Authorization: Bearer <token>'
+```
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": [
     {
-      label: 'Request',
-      code: `GET /api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        data: [
-          {
-            id: 22,
-            documentId: "lr5wju2og49bf820kj9kz8c3",
-            Name: "Biscotte Restaurant",
-            Description: [
-              {
-                type: "paragraph",
-                children: [
-                  {
-                    type: "text",
-                    text: "Bienvenue au restaurant Biscotte! Le Restaurant Biscotte propose une cuisine à base de produits frais et de qualité, souvent locaux, biologiques lorsque cela est possible, et toujours produits par des producteurs passionnés."
-                  }
-                ]
-              }
-            ],
-            locale: "fr"
-          }
-        ],
-        meta: {
-          pagination: {
-            page: 1,
-            pageSize: 25,
-            pageCount: 1,
-            total: 3
-          }
+      "id": 22,
+      "documentId": "lr5wju2og49bf820kj9kz8c3",
+      "Name": "Biscotte Restaurant",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Bienvenue au restaurant Biscotte! Le Restaurant Biscotte propose une cuisine à base de produits frais et de qualité, souvent locaux, biologiques lorsque cela est possible, et toujours produits par des producteurs passionnés."
+            }
+          ]
         }
-      }, null, 2),
-    },
-  ]}
-/>
+      ],
+      "locale": "fr"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 3
+    }
+  }
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 #### Single types {#get-one-single-type}
 
@@ -193,33 +199,36 @@ To get a specific single type document in a given locale, add the `locale` param
   method="GET"
   path="/api/homepage?locale=fr"
   title="Get a document in a specific locale (single type)"
-  description="Returns a specific single type document for a given locale."
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `GET /api/homepage?locale=fr`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        data: {
-          id: 10,
-          documentId: "ukbpbnu8kbutpn98rsanyi50",
-          Title: "Page d'accueil",
-          Body: null,
-          createdAt: "2024-03-07T13:28:26.349Z",
-          updatedAt: "2024-03-07T13:28:26.349Z",
-          publishedAt: "2024-03-07T13:28:26.353Z",
-          locale: "fr"
-        },
-        meta: {}
-      }, null, 2),
-    },
-  ]}
-/>
+  description="Returns a specific single type document for a given locale.">
+
+```bash
+curl 'http://localhost:1337/api/homepage?locale=fr' \
+  -H 'Authorization: Bearer <token>'
+```
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": {
+    "id": 10,
+    "documentId": "ukbpbnu8kbutpn98rsanyi50",
+    "Title": "Page d'accueil",
+    "Body": null,
+    "createdAt": "2024-03-07T13:28:26.349Z",
+    "updatedAt": "2024-03-07T13:28:26.349Z",
+    "publishedAt": "2024-03-07T13:28:26.353Z",
+    "locale": "fr"
+  },
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### `POST` Create a new localized document for a collection type {#rest-create}
 
@@ -239,39 +248,43 @@ If no locale has been passed in the request body, the document is created using 
   method="POST"
   path="/api/restaurants"
   title="Create a document for the default locale"
-  description="Creates a new document using the default locale."
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `POST http://localhost:1337/api/restaurants
+  description="Creates a new document using the default locale.">
 
+```bash
+curl -X POST \
+  'http://localhost:1337/api/restaurants' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "Oplato"
+    }
+  }'
+```
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
 {
   "data": {
-    "Name": "Oplato"
-  }
-}`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        data: {
-          id: 13,
-          documentId: "jae8klabhuucbkgfe2xxc5dj",
-          Name: "Oplato",
-          Description: null,
-          createdAt: "2024-03-06T22:19:54.646Z",
-          updatedAt: "2024-03-06T22:19:54.646Z",
-          publishedAt: "2024-03-06T22:19:54.649Z",
-          locale: "en"
-        },
-        meta: {}
-      }, null, 2),
-    },
-  ]}
-/>
+    "id": 13,
+    "documentId": "jae8klabhuucbkgfe2xxc5dj",
+    "Name": "Oplato",
+    "Description": null,
+    "createdAt": "2024-03-06T22:19:54.646Z",
+    "updatedAt": "2024-03-06T22:19:54.646Z",
+    "publishedAt": "2024-03-06T22:19:54.649Z",
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 #### For a specific locale {#rest-create-specific-locale}
 
@@ -282,39 +295,43 @@ To create a localized entry for a locale different from the default one, add the
   method="POST"
   path="/api/restaurants?locale=fr"
   title="Create a document for a specific locale"
-  description="Creates a new document for a specified locale."
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `POST http://localhost:1337/api/restaurants?locale=fr
+  description="Creates a new document for a specified locale.">
 
+```bash
+curl -X POST \
+  'http://localhost:1337/api/restaurants?locale=fr' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "She'\''s Cake"
+    }
+  }'
+```
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
 {
   "data": {
-    "Name": "She's Cake"
-  }
-}`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        data: {
-          id: 15,
-          documentId: "ldcmn698iams5nuaehj69j5o",
-          Name: "She's Cake",
-          Description: null,
-          createdAt: "2024-03-06T22:21:18.373Z",
-          updatedAt: "2024-03-06T22:21:18.373Z",
-          publishedAt: "2024-03-06T22:21:18.378Z",
-          locale: "fr"
-        },
-        meta: {}
-      }, null, 2),
-    },
-  ]}
-/>
+    "id": 15,
+    "documentId": "ldcmn698iams5nuaehj69j5o",
+    "Name": "She's Cake",
+    "Description": null,
+    "createdAt": "2024-03-06T22:21:18.373Z",
+    "updatedAt": "2024-03-06T22:21:18.373Z",
+    "publishedAt": "2024-03-06T22:21:18.378Z",
+    "locale": "fr"
+  },
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### `PUT` Create a new, or update an existing, locale version for an existing document {#rest-update}
 
@@ -351,39 +368,43 @@ To create a new locale for an existing document in a collection type, add the `l
   method="PUT"
   path="/api/restaurants/:documentId?locale=fr"
   title="Create or update a locale version (collection type)"
-  description="Creates a French locale for an existing restaurant, or updates it if it already exists."
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `PUT http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr
+  description="Creates a French locale for an existing restaurant, or updates it if it already exists.">
 
+```bash
+curl -X PUT \
+  'http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "She'\''s Cake in French"
+    }
+  }'
+```
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
 {
   "data": {
-    "Name": "She's Cake in French"
-  }
-}`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        data: {
-          id: 19,
-          documentId: "lr5wju2og49bf820kj9kz8c3",
-          Name: "She's Cake in French",
-          Description: null,
-          createdAt: "2024-03-07T12:13:09.551Z",
-          updatedAt: "2024-03-07T12:13:09.551Z",
-          publishedAt: "2024-03-07T12:13:09.554Z",
-          locale: "fr"
-        },
-        meta: {}
-      }, null, 2),
-    },
-  ]}
-/>
+    "id": 19,
+    "documentId": "lr5wju2og49bf820kj9kz8c3",
+    "Name": "She's Cake in French",
+    "Description": null,
+    "createdAt": "2024-03-07T12:13:09.551Z",
+    "updatedAt": "2024-03-07T12:13:09.551Z",
+    "publishedAt": "2024-03-07T12:13:09.554Z",
+    "locale": "fr"
+  },
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 #### In a single type {#rest-put-single-type}
 
@@ -394,39 +415,43 @@ To create a new locale for an existing single type document, add the `locale` pa
   method="PUT"
   path="/api/homepage?locale=fr"
   title="Create or update a locale version (single type)"
-  description="Creates a French locale for an existing Homepage single type, or updates it if it already exists."
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `PUT http://localhost:1337/api/homepage?locale=fr
+  description="Creates a French locale for an existing Homepage single type, or updates it if it already exists.">
 
+```bash
+curl -X PUT \
+  'http://localhost:1337/api/homepage?locale=fr' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Title": "Page d'\''accueil"
+    }
+  }'
+```
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
 {
   "data": {
-    "Title": "Page d'accueil"
-  }
-}`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        data: {
-          id: 10,
-          documentId: "ukbpbnu8kbutpn98rsanyi50",
-          Title: "Page d'accueil",
-          Body: null,
-          createdAt: "2024-03-07T13:28:26.349Z",
-          updatedAt: "2024-03-07T13:28:26.349Z",
-          publishedAt: "2024-03-07T13:28:26.353Z",
-          locale: "fr"
-        },
-        meta: {}
-      }, null, 2),
-    },
-  ]}
-/>
+    "id": 10,
+    "documentId": "ukbpbnu8kbutpn98rsanyi50",
+    "Title": "Page d'accueil",
+    "Body": null,
+    "createdAt": "2024-03-07T13:28:26.349Z",
+    "updatedAt": "2024-03-07T13:28:26.349Z",
+    "publishedAt": "2024-03-07T13:28:26.353Z",
+    "locale": "fr"
+  },
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 <br/>
 
@@ -445,21 +470,25 @@ To delete only a specific locale version of a document in a collection type, add
   method="DELETE"
   path="/api/restaurants/:documentId?locale=fr"
   title="Delete a locale version (collection type)"
-  description="Deletes a specific locale version of a document in a collection type."
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `DELETE /api/restaurants/abcdefghijklmno456?locale=fr`,
-    },
-  ]}
-  responses={[
-    {
-      status: 204,
-      statusText: 'No Content',
-      body: '',
-    },
-  ]}
-/>
+  description="Deletes a specific locale version of a document in a collection type.">
+
+```bash
+curl -X DELETE \
+  'http://localhost:1337/api/restaurants/abcdefghijklmno456?locale=fr' \
+  -H 'Authorization: Bearer <token>'
+```
+
+<Responses>
+<ResponseTab status={204} statusText="No Content">
+
+```json
+
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 #### In a single type {#rest-delete-single-type}
 
@@ -470,18 +499,22 @@ To delete only a specific locale version of a single type document, add the `loc
   method="DELETE"
   path="/api/homepage?locale=fr"
   title="Delete a locale version (single type)"
-  description="Deletes a specific locale version of a single type document."
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `DELETE /api/homepage?locale=fr`,
-    },
-  ]}
-  responses={[
-    {
-      status: 204,
-      statusText: 'No Content',
-      body: '',
-    },
-  ]}
-/>
+  description="Deletes a specific locale version of a single type document.">
+
+```bash
+curl -X DELETE \
+  'http://localhost:1337/api/homepage?locale=fr' \
+  -H 'Authorization: Bearer <token>'
+```
+
+<Responses>
+<ResponseTab status={204} statusText="No Content">
+
+```json
+
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>

@@ -43,6 +43,7 @@ import Checklist, { ChecklistItem } from '../components/Checklist';
 import DebugComponent from '../components/DebugComponent';
 // V3: API 2-column layout
 import Endpoint from '../components/ApiReference/Endpoint';
+import Responses, { ResponseTab } from '../components/ApiReference/Responses';
 import StepDetails from '../components/StepDetails/StepDetails';
 import NextSteps from '../components/NextSteps/NextSteps';
 
@@ -111,6 +112,8 @@ export default {
   Codemods,
   NamingConventions,
   Endpoint,
+  Responses,
+  ResponseTab,
   StepDetails,
   NextSteps,
 };

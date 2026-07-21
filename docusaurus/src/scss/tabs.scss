@@ -22,7 +22,11 @@
   &__item {
     border-top: 2px solid transparent;
     border-bottom-width: 2px;
-    padding-bottom: 18px !important;
+    // Center the label vertically: the fixed 34px item height plus the
+    // symmetric --tabs-item-padding already center the text. (A previous
+    // padding-bottom:18px pushed the label upward inside the active pill.)
+    display: inline-flex;
+    align-items: center;
     font-family: var(--strapi-font-family-technical);
     font-weight: 600;
     font-size: 13px;
@@ -44,6 +48,15 @@
     border-radius: var(--strapi-radius-md, 10px);
     border: solid 1px var(--strapi-neutral-150);
     overflow: hidden; // Prevents children from overflowing the border-radius
+
+    // In API endpoint blocks, match the response block's border color so the
+    // request (tabs) and response outer borders look identical in both light
+    // and dark. The response uses --custom-code-block-border-color, so reuse
+    // that exact variable here rather than --strapi-border-strong (which
+    // resolves to a different value in dark mode).
+    .api-endpoint-block & {
+      border-color: var(--custom-code-block-border-color);
+    }
     
     .margin-top--md {
       margin-top: 24px !important;
@@ -58,6 +71,38 @@
     [role="tabpanel"] {
       padding: 16px 20px;
     }
+
+    // In API endpoint blocks, use a symmetric 21px top and bottom padding: the
+    // top matches the gap above the active tab pill, and the bottom matches the
+    // top so the code sits evenly between the tab bar and the block's bottom
+    // border (the container's own 24px bottom padding is zeroed out below).
+    .api-endpoint-block & [role="tabpanel"] {
+      padding-top: 21px;
+      padding-bottom: 21px;
+    }
+
+    // Exception: when the tab panel holds a terminal block, drop the top
+    // padding to 0 — the terminal's own title bar already provides the spacing,
+    // so the 21px just left an empty gap between the tab bar and the window.
+    .api-endpoint-block & [role="tabpanel"]:has(.code-block-enhanced) {
+      padding-top: 0;
+    }
+
+    // Response blocks (200/404 status tabs): align the status header
+    // (● 200 OK) and the JSON code with the left edge of the active status
+    // pill's TEXT — the "200" label, not the pill box. The pill box sits at
+    // 24px and its inner padding is 14px, so the label starts at ~38px. Give
+    // the panel a 38px left padding so the header (a direct child) lines up
+    // with the label; the code container's own padding is neutralized below so
+    // it inherits the same 38px inset.
+    .api-endpoint-block [class*="responses"] & [role="tabpanel"] {
+      padding-left: 38px;
+
+      [class*="codeBlockContainer"]:not(:has([class*="codeBlockTitle"])) {
+        padding-left: 0 !important;
+      }
+    }
+
 
     // Remove border for nested tabs container
     [role="tabpanel"] .tabs-container {
@@ -86,6 +131,17 @@
     }
   }
   
+  // In API endpoint blocks, align the tab pills with the terminal window's
+  // left edge (24px) and give the tab bar a vertical padding of half that
+  // (12px) so the active pill isn't cramped against the block's top border.
+  .api-endpoint-block & {
+    padding: 12px 0;
+
+    [role="tab"]:nth-child(1) {
+      margin-left: 24px !important;
+    }
+  }
+
   // Active tab styles
   [aria-selected="true"] {
     border-bottom: none;
@@ -120,32 +176,67 @@
       // Remove borders from code blocks inside tabs
       [class*="codeBlockContainer"]:not(:has([class*="codeBlockTitle"])) {
         border: none !important;
+        // Drop the default bottom margin: it left more empty space below the
+        // code than above it, unbalancing the block inside the tab panel.
+        margin-bottom: 0 !important;
+        // Inset the code so its first character lines up with the left edge of
+        // the tab labels' TEXT (the "cURL" word), not the tab button box. The
+        // panel already provides 20px; add 18px so the code starts at ~38px,
+        // matching the tab label (button left 24px + its 14px inner padding).
+        padding-left: 18px !important;
+        // Drop the container's top AND bottom padding: the tab panel provides
+        // the space above and below the code. Without this the container's own
+        // 24px bottom padding stacked on the panel's bottom padding, leaving far
+        // more empty space below the code than above it.
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+
+        // A titleless code block inside a tab panel has no bar to host the
+        // action buttons. Sit the button group just below the tab bar's bottom
+        // border (in the gap above the code) rather than straddling that border.
+        // The group is ~33px tall and the gap is ~23px, so it necessarily
+        // overlaps something: we let it overlap the code's right margin (bottom)
+        // instead of the tab bar (top), which reads much cleaner.
+        [class*="buttonGroup"] {
+          top: 9px;
+        }
       }
+
 
       [class*="codeBlockContainer"]:has([class*="codeBlockTitle"]) {
         margin: 22px 20px;
       }
 
-      // Enhanced terminal blocks inside tabs: remove double border, add spacing
+      // Enhanced terminal blocks inside tabs: remove double border, add spacing.
+      // The tab panel adds 20px left padding; the terminal window (title bar +
+      // code) is inset another 4px via its margin so its left border sits at
+      // 24px from the code column — lined up with the response block's `{`.
       .code-block-enhanced {
         border: none !important;
         border-radius: 0 !important;
         margin: 0 !important;
         background: transparent !important;
 
+        // Undo the 18px left inset applied to titleless code containers above:
+        // a terminal aligns its code under the first title-bar dot via its own
+        // inner padding, so the extra 18px pushed the command too far right.
+        [class*="codeBlockContainer"]:not(:has([class*="codeBlockTitle"])) {
+          padding-left: 0 !important;
+        }
+
         .code-title-bar {
           border-radius: 0;
-          margin: 0 20px;
+          margin: 0 4px;
           border: 1px solid var(--custom-code-block-border-color);
           border-bottom: 1px solid var(--code-title-bar-border);
-          border-radius: var(--strapi-radius-md) var(--strapi-radius-md) 0 0;
+          border-radius: var(--strapi-radius-xs) var(--strapi-radius-xs) 0 0;
         }
 
         .theme-code-block {
-          margin: 0 20px 20px !important;
+          margin: 0 4px !important;
           border: 1px solid var(--custom-code-block-border-color) !important;
           border-top: none !important;
-          border-radius: 0 0 var(--strapi-radius-md) var(--strapi-radius-md) !important;
+          border-radius: 0 0 var(--strapi-radius-xs) var(--strapi-radius-xs) !important;
         }
       }
     }
@@ -201,7 +292,13 @@ details {
   :root body {
     --tabs-active-bg: rgba(73, 69, 255, 0.2); // Slightly different background in dark mode
   }
-  
+
+  // Match the response block's dark-mode border (which uses --strapi-neutral-200)
+  // so the request (tabs) and response outer borders stay identical in dark too.
+  .api-endpoint-block .tabs-container {
+    border-color: var(--strapi-neutral-200);
+  }
+
   .tabs__item:not(.tabs__item--active) {
     color: var(--strapi-neutral-400);
   }

@@ -175,27 +175,32 @@
 
 /* ═══ ENDPOINT — 2-column split ═══ */
 .endpoint {
-  border-bottom: 1px solid var(--strapi-border);
-
   /* Full-width header above the 2-column grid */
   &__header {
-    padding: 40px 44px 20px;
+    padding: 16px 0 20px;
   }
 
   /* 2-column grid: params left, code right */
   &__columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    // Only a COLUMN gap: when the layout linearizes to one column (narrow
+    // width), a plain `gap` would also add a large row gap between the stacked
+    // params and code, on top of their paddings. Keep the vertical spacing to
+    // the paddings alone.
+    column-gap: 60px;
   }
 
   &__desc {
-    padding: 24px 44px 40px;
-    border-right: 1px solid var(--strapi-border);
+    padding: 24px 0 20px;
   }
 
   &__methodRow {
     display: flex;
-    align-items: center;
+    // Top-align so the method pill stays next to the FIRST line of a long URL
+    // that wraps onto several lines, instead of being vertically centered
+    // against the whole wrapped block.
+    align-items: flex-start;
     gap: 12px;
     margin-bottom: 20px;
   }
@@ -204,6 +209,7 @@
     font-family: var(--strapi-font-family-mono);
     font-size: 14px;
     color: var(--strapi-fg-2);
+    padding-top: 2px;
   }
 
   // JS API signature (Document Service etc.): shown instead of a method pill +
@@ -243,7 +249,7 @@
   }
 
   &__code {
-    padding: 24px 32px 40px;
+    padding: 12px 0 40px;
     // No background tint: the contrast on the code/response column added visual
     // noise without purpose. The column blends with the page in light and dark.
     position: sticky;
@@ -257,8 +263,7 @@
 
   /* Fallback: code-only layout when there are no params */
   &__codeOnly {
-    padding: 24px 44px 40px;
-    max-width: 720px;
+    padding: 24px 0 40px;
   }
 }
 
@@ -273,6 +278,10 @@
   letter-spacing: 0.02em;
   position: relative;
   overflow: hidden;
+  // Keep the pill a fixed, compact size next to long URLs: never shrink in the
+  // flex row and never let the verb ("GET") wrap onto a second line ("GE"/"T").
+  flex-shrink: 0;
+  white-space: nowrap;
 
   &::after {
     content: '';
@@ -355,7 +364,6 @@
     font-family: var(--strapi-font-family-mono);
     font-size: 11px;
     color: var(--strapi-fg-4);
-    margin-top: 2px;
   }
 
   &__badge {
@@ -381,6 +389,9 @@
     font-size: 13px;
     line-height: 1.5;
     color: var(--strapi-fg-3);
+    // Nudge down to visually align the description text with the
+    // required/optional badge on the same row.
+    padding-top: 6px;
 
     code {
       font-family: var(--strapi-font-family-mono);
@@ -412,24 +423,35 @@
 
   &__tabs {
     display: flex;
+    align-items: center;
     border-bottom: 1px solid var(--strapi-border);
-    padding: 0 4px;
+    padding: 0 8px 0 4px;
     background: var(--strapi-surface-2);
   }
 
   &__tab {
+    appearance: none;
+    background: transparent;
+    border: none;
+    // These tabs are now real <button>s; reset UA chrome and keep only the
+    // underline indicator so they render identically in light and dark.
+    border-bottom: 2px solid transparent;
     font-family: var(--strapi-font-family-mono);
     font-size: 11px;
     font-weight: 500;
     padding: 9px 12px;
     color: var(--strapi-fg-4);
     cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.15s;
+    transition: color 0.15s, border-color 0.15s;
     user-select: none;
 
     &:hover {
       color: var(--strapi-fg-2);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--ifm-link-color);
+      outline-offset: -2px;
     }
 
     &--active {
@@ -442,7 +464,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 14px;
+    padding: 6px 8px 6px 14px;
     border-bottom: 1px solid var(--strapi-border);
     font-family: var(--strapi-font-family-mono);
     font-size: 12px;
@@ -481,14 +503,13 @@
     color: var(--strapi-fg-2);
   }
 
-  // Wraps the <pre> so the copy button can anchor to its top-right corner.
-  // Reveals the copy button on hover.
   &__codeWrap {
     position: relative;
 
-    &:hover .copyCodeBtn,
-    .copyCodeBtn:focus-visible {
-      opacity: 1;
+    // Collapsed state: clip to ~10 lines of code.
+    &--collapsed {
+      max-height: 240px;
+      overflow: hidden;
     }
   }
 
@@ -497,22 +518,28 @@
     margin: 0;
     overflow-x: auto;
     background: transparent;
+    font-family: var(--strapi-font-family-mono);
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--strapi-fg-2);
 
     code {
-      font-family: var(--strapi-font-family-mono);
-      font-size: 12.5px;
-      line-height: 1.65;
-      color: var(--strapi-fg-2);
+      font-family: inherit;
       // Prism/Infima give the inner <code> a solid (white) background; strip it
       // so the code block blends with the now-transparent panel.
       background: transparent !important;
     }
 
-    // Collapsed state: clip to ~10 lines of code.
-    &--collapsed {
-      max-height: 220px;
-      overflow: hidden;
+    // Soft-wrap toggle (the "wrap" action button).
+    &--wrap code {
+      white-space: pre-wrap;
+      word-break: break-word;
     }
+  }
+
+  // Each highlighted line is its own block so line breaks are preserved.
+  &__line {
+    display: block;
   }
 
   // Fade-out gradient over the bottom of a collapsed response.
@@ -554,39 +581,73 @@
   color: var(--strapi-accent-light);
 }
 
-/* ═══ COPY BUTTON (self-contained, used by CodePanel + ResponsePanel) ═══ */
-.copyCodeBtn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 2;
+/* ═══ CODE ACTIONS (Ask AI · wrap · copy) ═══ */
+// Inline action group sitting in the panel's top bar (URL bar / status header),
+// pushed to the right — the same placement and look as the title-bar buttons on
+// regular code blocks (see src/scss/code-block.scss .code-title-bar).
+.codeActions {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  border: 1px solid var(--strapi-border);
-  border-radius: 6px;
-  background: var(--strapi-surface-2);
-  color: var(--strapi-fg-2);
+  gap: 4px;
+  margin-left: auto;
+}
+
+// Shared button base for Ask AI / wrap / copy: transparent, low-opacity at
+// rest, solid on hover — matching .code-title-bar .clean-btn / .ai-button.
+%codeActionBase {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: var(--strapi-radius-xs, 4px);
+  background: transparent;
+  color: var(--strapi-fg-3);
+  font-family: var(--strapi-font-family-technical);
+  font-size: 11px;
+  font-weight: 600;
   cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.15s ease-in-out, color 0.15s, border-color 0.15s;
+  opacity: 0.6;
+  transition: opacity 0.15s, background 0.15s;
 
   &:hover {
-    color: var(--strapi-fg-1);
-    border-color: var(--strapi-border-strong);
+    opacity: 1;
+    background: var(--strapi-surface-3);
   }
+
+  &:focus-visible {
+    opacity: 1;
+    outline: 2px solid var(--ifm-link-color);
+    outline-offset: 1px;
+  }
+
+  svg { display: block; }
+  i { font-size: 13px; }
+}
+
+.codeActionBtn {
+  @extend %codeActionBase;
+
+  // The Ask AI star uses the primary accent, like elsewhere in the docs.
+  // `.ph-sparkle` is a global (Phosphor) class, so it must be escaped from the
+  // CSS-module local-scope hashing or the rule never matches.
+  :global(.ph-sparkle) {
+    color: var(--strapi-primary-500);
+  }
+
+  &--active {
+    opacity: 1;
+    color: var(--strapi-accent);
+  }
+}
+
+/* ═══ COPY BUTTON (self-contained, used inside .codeActions) ═══ */
+.copyCodeBtn {
+  @extend %codeActionBase;
 
   &--copied {
     opacity: 1;
     color: var(--strapi-green);
-    border-color: var(--strapi-green);
-  }
-
-  svg {
-    display: block;
   }
 }
 
@@ -595,47 +656,79 @@
   margin-top: 4px;
 }
 
-.responseTabs {
-  display: flex;
+/* ═══ STATUS TABS (accessible segmented control — fixes clickability) ═══ */
+// Rendered as a real role="tablist" of <button role="tab">. Styled as a
+// segmented control so the tabs read as clickable at rest, unlike the old
+// pills which looked like decorative badges.
+.statusTabs {
+  display: inline-flex;
   gap: 2px;
   margin-bottom: 8px;
+  padding: 3px;
+  border: 1px solid var(--strapi-border);
+  border-radius: 8px;
+  background: var(--strapi-surface-2);
 }
 
-.responseTab {
+.statusTab {
+  appearance: none;
+  // Per-status accent carried on a CSS var so the active-state rule doesn't
+  // depend on stacking two CSS-module classes (which hash independently and
+  // don't reliably match a `&.otherClass` selector).
+  --tab-color: var(--strapi-fg-3);
   font-family: var(--strapi-font-family-technical);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
-  padding: 3px 8px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.15s;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  padding: 4px 12px;
+  border-radius: 6px;
   border: 1px solid transparent;
-  user-select: none;
+  background: transparent;
+  color: var(--strapi-fg-3);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
 
-  &--2xx {
-    background: rgba(52, 211, 153, 0.1);
-    color: var(--strapi-green);
-  }
-  &--3xx {
-    background: rgba(96, 165, 250, 0.1);
-    color: #60a5fa;
-  }
-  &--4xx {
-    background: rgba(248, 113, 113, 0.1);
-    color: var(--strapi-red);
-  }
-  &--5xx {
-    background: rgba(251, 191, 36, 0.1);
-    color: var(--strapi-amber);
+  &--2xx { --tab-color: var(--strapi-green); }
+  &--3xx { --tab-color: #60a5fa; }
+  &--4xx { --tab-color: var(--strapi-red); }
+  &--5xx { --tab-color: var(--strapi-amber); }
+
+  &:hover {
+    background: var(--strapi-surface-3);
+    color: var(--strapi-fg-1);
   }
 
+  &:focus-visible {
+    outline: 2px solid var(--ifm-link-color);
+    outline-offset: 1px;
+  }
+
+  // Selected tab lifts onto a solid surface and takes its status accent for
+  // BOTH text and border, so light/dark stay consistent.
   &--active {
-    &.responseTab--2xx { border-color: var(--strapi-green); }
-    &.responseTab--4xx { border-color: var(--strapi-red); }
-    &.responseTab--5xx { border-color: var(--strapi-amber); }
+    background: var(--strapi-surface-0);
+    color: var(--tab-color);
+    border-color: var(--tab-color);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
   }
+}
+
+// The global design-system rule `html[data-theme="dark"] [aria-selected="true"]`
+// forces the label to the primary (blue) color and out-specifies a plain class.
+// Re-assert the status accent with matching-or-higher specificity in both themes
+// so the active status tab's text keeps its own color (no blue-text bug).
+:global(html[data-theme='light']),
+:global(html[data-theme='dark']) {
+  .statusTab--active[aria-selected='true'] {
+    color: var(--tab-color);
+  }
+}
+
+// Wraps the response status tabs + code. The status header sits inside each
+// tab, above the (standard) code block.
+.responses {
+  margin-top: 4px;
 }
 
 .responseHeader {
@@ -645,6 +738,15 @@
   margin-bottom: 8px;
   font-family: var(--strapi-font-family-mono);
   font-size: 11px;
+}
+
+// Single-status responses (no 200/404 tabs) render the header as a direct child
+// of .responses, flush at 0px while the JSON code sits at 24px. Inset the header
+// so the pulsing dot + "200 OK" line up with the code's opening `{`. In the
+// multi-status case the header lives inside a tab panel (not a direct child),
+// so this rule does not touch it — that alignment is handled in tabs.scss.
+.responses > .responseHeader {
+  padding-left: 24px;
 }
 
 .responseDot {
@@ -668,11 +770,6 @@
 
   &--ok { color: var(--strapi-green); }
   &--err { color: var(--strapi-red); }
-}
-
-.responseTime {
-  color: var(--strapi-fg-5);
-  margin-left: auto;
 }
 
 @keyframes apiPulse {

@@ -359,7 +359,7 @@ main:has(.api-endpoint-block) {
   }
   .api-endpoint-block--columns [class*="endpoint__desc"] {
     border-right: none;
-    border-bottom: 1px solid var(--strapi-border);
+    border-bottom: none;
   }
 
   [data-content-width="wide"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__columns"],
@@ -368,7 +368,7 @@ main:has(.api-endpoint-block) {
   }
   [data-content-width="wide"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__desc"],
   [data-content-width="max"]:not([data-view-mode="ai"]) .api-endpoint-block--columns [class*="endpoint__desc"] {
-    border-right: 1px solid var(--strapi-border);
+    border-right: none;
     border-bottom: none;
   }
 

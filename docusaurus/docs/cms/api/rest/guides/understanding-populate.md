@@ -85,23 +85,43 @@ The following example is the full response for all 4 entries from the `articles`
 Notice how the response only includes the `title`, `slug`, `createdAt`, `updatedAt`, `publishedAt`, and `locale` fields, and the field content of the article as handled by the CKEditor plugin (`ckeditor_content`, truncated for brevity):
 
 <Endpoint
-  collapsibleResponse
+  id="without-populate"
   method="GET"
   path="/api/articles"
   title="Without populate"
-  description="Returns only default attributes, without any media fields, relations, components, or dynamic zones."
-  id="without-populate"
-  codeTabs={[
-    {
-      label: "Request",
-      code: "GET /api/articles"
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+  description="Returns only default attributes, without any media fields, relations, components, or dynamic zones.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/articles' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   "data": [
     {
       "id": 1,
@@ -156,10 +176,13 @@ Notice how the response only includes the `title`, `slug`, `createdAt`, `updated
       "total": 4
     }
   }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Example: With `populate=*`
 
@@ -180,23 +203,43 @@ To populate deeply nested components, see the [populate components](#populate-co
 <br />
 
 <Endpoint
-  collapsibleResponse
+  id="with-populate-all"
   method="GET"
   path="/api/articles"
   title="With populate=*"
-  description="Returns all media fields, first-level relations, components, and dynamic zones."
-  id="with-populate-all"
-  codeTabs={[
-    {
-      label: "Request",
-      code: "GET /api/articles?populate=*"
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+  description="Returns all media fields, first-level relations, components, and dynamic zones.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/articles?populate=*' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate=*',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK" collapsible>
+
+```json
+{
   "data": [
     {
       "id": 1,
@@ -338,10 +381,13 @@ To populate deeply nested components, see the [populate components](#populate-co
       "total": 4
     }
   }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Populate specific relations and fields
 
@@ -429,23 +475,43 @@ Notice that the response does not include any media fields, relations, component
 <br/>
 
 <Endpoint
-  collapsibleResponse
+  id="specific-without-populate"
   method="GET"
   path="/api/articles"
   title="Without populate"
-  description="Returns only default attributes for all articles."
-  id="specific-without-populate"
-  codeTabs={[
-    {
-      label: "Request",
-      code: "GET /api/articles"
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+  description="Returns only default attributes for all articles.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/articles' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   "data": [
     {
       "id": 1,
@@ -500,10 +566,13 @@ Notice that the response does not include any media fields, relations, component
       "total": 4
     }
   }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 #### Example: With `populate[0]=category`
 
@@ -514,23 +583,43 @@ The following example is the full response for all 4 entries from the `articles`
 Notice that the response now includes additional data with the `category` field for each article (see highlighted lines):
 
 <Endpoint
-  collapsibleResponse
+  id="with-populate-category"
   method="GET"
   path="/api/articles"
   title="With populate[0]=category"
-  description="Returns articles with their related category data populated."
-  id="with-populate-category"
-  codeTabs={[
-    {
-      label: "Request",
-      code: "GET /api/articles?populate[0]=category"
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+  description="Returns articles with their related category data populated.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/articles?populate[0]=category' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=category',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK" collapsible>
+
+```json
+{
   "data": [
     {
       "id": 1,
@@ -624,10 +713,13 @@ Notice that the response now includes additional data with the `category` field 
       "total": 4
     }
   }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Populate several levels deep for specific relations
 
@@ -670,23 +762,43 @@ Let's compare and explain the responses returned with `populate[0]=category` (1 
 When we only populate 1 level deep, asking for the categories associated to articles, we can get the following example response (highlighted lines show the `category` relations field):
 
 <Endpoint
-  collapsibleResponse
+  id="with-1-level-deep-population"
   method="GET"
   path="/api/articles"
   title="With 1-level deep population"
-  description="Populates the category relation 1 level deep."
-  id="with-1-level-deep-population"
-  codeTabs={[
-    {
-      label: "Request",
-      code: "GET /api/articles?populate[0]=category"
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+  description="Populates the category relation 1 level deep.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/articles?populate[0]=category' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=category',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK" collapsible>
+
+```json
+{
   "data": [
     {
       "id": 1,
@@ -780,10 +892,13 @@ When we only populate 1 level deep, asking for the categories associated to arti
       "total": 4
     }
   }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 #### Example: With 2-level deep population
 
@@ -792,23 +907,43 @@ When we populate 2 levels deep, asking for the categories associated to articles
 Notice that we now have the `restaurants` relation field included with the response inside the `category` relation (see highlighted lines):
 
 <Endpoint
-  collapsibleResponse
+  id="with-2-level-deep-population"
   method="GET"
   path="/api/articles"
   title="With 2-level deep population"
-  description="Populates the category relation and the nested restaurants relation 2 levels deep."
-  id="with-2-level-deep-population"
-  codeTabs={[
-    {
-      label: "Request",
-      code: "GET /api/articles?populate[category][populate][0]=restaurants"
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+  description="Populates the category relation and the nested restaurants relation 2 levels deep.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/articles?populate[category][populate][0]=restaurants' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[category][populate][0]=restaurants',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK" collapsible>
+
+```json
+{
   "data": [
     {
       "id": 1,
@@ -886,10 +1021,13 @@ Notice that we now have the `restaurants` relation field included with the respo
       "total": 4
     }
   }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Populate components
 
@@ -933,23 +1071,43 @@ When we only populate the `seo` component, we go only 1 level deep, and we can g
 Notice there's no mention of the `metaSocial` component nested within the `seo` component:
 
 <Endpoint
-  collapsibleResponse
+  id="only-1st-level-component"
   method="GET"
   path="/api/articles"
   title="Only 1st level component"
-  description="Populates only the seo component, 1 level deep."
-  id="only-1st-level-component"
-  codeTabs={[
-    {
-      label: "Request",
-      code: "GET /api/articles?populate[0]=seo"
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+  description="Populates only the seo component, 1 level deep.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/articles?populate[0]=seo' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=seo',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK" collapsible>
+
+```json
+{
   "data": [
     {
       "id": 1,
@@ -994,10 +1152,13 @@ Notice there's no mention of the `metaSocial` component nested within the `seo` 
       "total": 4
     }
   }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 #### Example: 1st level and 2nd level component
 
@@ -1006,23 +1167,43 @@ When we populate 2 levels deep, asking both for the `seo` component and the `met
 Notice that we now have the `metaSocial` component-related data included with the response (see highlighted lines):
 
 <Endpoint
-  collapsibleResponse
+  id="1st-level-and-2nd-level-component"
   method="GET"
   path="/api/articles"
   title="1st level and 2nd level component"
-  description="Populates the seo component and the nested metaSocial component."
-  id="1st-level-and-2nd-level-component"
-  codeTabs={[
-    {
-      label: "Request",
-      code: "GET /api/articles?populate[0]=seo&populate[1]=seo.metaSocial"
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+  description="Populates the seo component and the nested metaSocial component.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/articles?populate[0]=seo&populate[1]=seo.metaSocial' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=seo&populate[1]=seo.metaSocial',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK" collapsible>
+
+```json
+{
   "data": [
     {
       "id": 1,
@@ -1076,10 +1257,13 @@ Notice that we now have the `metaSocial` component-related data included with th
       "total": 4
     }
   }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Populate dynamic zones
 
@@ -1363,23 +1547,43 @@ In the following example response, highlighted lines show that:
 - But because we have only asked to populate everything for the `CtaCommandLine` component and have not defined anything for the `faq` component, no data from the `faq` component is returned.
 
 <Endpoint
-  collapsibleResponse
+  id="detailed-population-dynamic-zones"
   method="GET"
   path="/api/articles"
   title="Detailed population strategy for dynamic zones"
-  description="Populates the blocks dynamic zone using a detailed per-component population strategy."
-  id="detailed-population-dynamic-zones"
-  codeTabs={[
-    {
-      label: "Request",
-      code: "GET /api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*"
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+  description="Populates the blocks dynamic zone using a detailed per-component population strategy.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl 'http://localhost:1337/api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*' \
+  -H 'Authorization: Bearer <token>'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK" collapsible>
+
+```json
+{
   "data": [
     {
       "id": 1,
@@ -1483,10 +1687,13 @@ In the following example response, highlighted lines show that:
       "total": 4
     }
   }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 :::tip Avoid over-populating in production
 Using `populate=*` or deep population plugins can create unpredictable, costly database queries. In production, always populate explicitly and limit depth to 2-3 levels. Consider using route-level middlewares to centralize population logic. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog.

@@ -69,7 +69,7 @@ function useInjectAIButton(ref, language, codeContent, showAI) {
     btn.className = 'clean-btn ai-button-injected';
     btn.title = 'Ask AI to explain this code';
     btn.setAttribute('aria-label', 'Ask AI to explain this code example');
-    btn.innerHTML = '<i class="ph ph-sparkle"></i><span>Ask AI</span>';
+    btn.innerHTML = '<i class="ph-fill ph-sparkle"></i><span>Ask AI</span>';
     btn.addEventListener('click', () => handleAskAI(language, codeContent));
 
     container.prepend(btn);
@@ -82,7 +82,6 @@ function useInjectAIButton(ref, language, codeContent, showAI) {
 
 // macOS-style title bar for terminal blocks
 function TerminalTitleBar({ language, title, showAI, codeContent }) {
-  const langLabel = LANG_LABELS[language] || (language ? language.toUpperCase() : '');
   const labelText = title || 'terminal';
 
   return (
@@ -105,12 +104,9 @@ function TerminalTitleBar({ language, title, showAI, codeContent }) {
             aria-label="Ask AI to explain this code example"
             onClick={() => handleAskAI(language, codeContent)}
           >
-            <i className="ph ph-sparkle" />
+            <i className="ph-fill ph-sparkle" />
             <span>Ask AI</span>
           </button>
-        )}
-        {langLabel && (
-          <span className="code-title-bar__lang">{langLabel}</span>
         )}
       </div>
     </div>
@@ -140,40 +136,50 @@ export default function CodeBlockWrapper(props) {
   // Inject a real DOM cursor element into terminal blocks
   // (CSS ::after pseudo-elements get their background overridden by parent rules)
   const terminalRef = useRef(null);
+
+  // Terminal blocks render their own title bar (with the Ask AI button) as a
+  // sibling of the Docusaurus code block, while the native copy/wrap buttons
+  // live deep inside the code block. Rather than align the two across separate
+  // DOM subtrees with brittle absolute positioning, physically MOVE the native
+  // button group into the title bar's actions container so Ask AI + wrap + copy
+  // sit in one flex row and align naturally.
+  const relocateButtons = useCallback((wrapper) => {
+    if (!wrapper) return;
+    const move = () => {
+      const actions = wrapper.querySelector('.code-title-bar__actions');
+      if (!actions) return;
+      // Relocate the native copy/wrap group into the title bar. React may
+      // re-render a FRESH group inside the code block after we move one; that
+      // fresh group is the live one (its click handlers are wired), while the
+      // one we moved earlier becomes a detached, dead clone. So whenever a group
+      // appears outside the bar, treat it as the live one: drop whatever stale
+      // group we previously parked in the bar and move the fresh one in. This
+      // keeps the working button (and fixes copy being dead inside StepDetails).
+      const groups = Array.from(wrapper.querySelectorAll('[class*="buttonGroup"]'));
+      const outside = groups.filter((g) => !g.closest('.code-title-bar__actions'));
+      if (outside.length === 0) return; // nothing new to relocate
+      // The last one in document order is the most recently rendered (live) one.
+      const live = outside[outside.length - 1];
+      // Remove any other groups (stale relocated one in the bar + extra dupes).
+      groups.forEach((g) => {
+        if (g !== live) g.remove();
+      });
+      actions.appendChild(live);
+    };
+    // Run now and keep watching: React may re-insert a group after our move.
+    requestAnimationFrame(() => requestAnimationFrame(move));
+    const observer = new MutationObserver(move);
+    observer.observe(wrapper, { childList: true, subtree: true });
+    // Stop observing shortly after mount once the DOM has settled.
+    setTimeout(() => observer.disconnect(), 2000);
+  }, []);
+
+  // Ref callback for the terminal wrapper. Only relocates the action buttons
+  // into the title bar; the blinking end-of-line cursor was removed.
   const injectCursor = useCallback((node) => {
     terminalRef.current = node;
-    if (!node) return;
-
-    // Find the last token line and append a real cursor span
-    const injectCursorElement = () => {
-      // Remove any previously injected cursor
-      const existing = node.querySelector('.terminal-cursor');
-      if (existing) existing.remove();
-
-      const codeEl = node.querySelector('code');
-      if (!codeEl) return;
-
-      const lastLine = codeEl.querySelector('.token-line:last-child');
-      if (!lastLine) return;
-
-      const cursor = document.createElement('span');
-      cursor.className = 'terminal-cursor';
-
-      // Insert before the trailing <br> so the cursor stays on the same line
-      const lastBr = lastLine.querySelector('br:last-child');
-      if (lastBr) {
-        lastLine.insertBefore(cursor, lastBr);
-        lastBr.remove();
-      } else {
-        lastLine.appendChild(cursor);
-      }
-    };
-
-    // Run after Docusaurus finishes rendering the code block
-    requestAnimationFrame(() => {
-      requestAnimationFrame(injectCursorElement);
-    });
-  }, []);
+    if (node) relocateButtons(node);
+  }, [relocateButtons]);
 
   // Terminal blocks: macOS-style wrapper with title bar + blinking cursor
   if (isTerminal) {
