@@ -81,8 +81,16 @@ details.alert {
   }
 
   > *:last-child {
-    padding-bottom: 0 !important;
     margin-bottom: 0 !important;
+  }
+
+  // Strip the bottom padding of a plain (unframed) last child so its text does
+  // not add space on top of the block's own bottom padding. Framed blocks
+  // (admonitions, code blocks, tab containers) are excluded: their internal
+  // padding is part of their box, and zeroing it collapses their content
+  // against their own border.
+  > *:last-child:not(.theme-admonition):not([class*="admonition"]):not([class*="codeBlock"]):not(.tabs-container):not(.code-block-enhanced) {
+    padding-bottom: 0 !important;
   }
 
   // Only neutralize the top spacing of the first inner element, NOT the
