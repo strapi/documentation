@@ -319,6 +319,13 @@ The environment's Node version is based on the one chosen at the creation of the
 Ensure the Node version configured in your Strapi project matches the Node version shown in your project’s dashboard before deploying.
 :::
 
+:::note Package manager version
+The package manager version is not set in the project settings. During the build, Strapi Cloud detects which package manager to use from your project's lockfile, defaulting to npm.
+
+- For **yarn** and **pnpm**, [Corepack](https://nodejs.org/api/corepack.html) is enabled in the build environment, so the version pinned in your `package.json` `packageManager` field is honored automatically. If no version is pinned, Corepack's bundled default version is used.
+- **npm** is not managed by Corepack: it uses the version bundled with the selected Node.js release.
+:::
+
 #### Editing Git branch
 
 
