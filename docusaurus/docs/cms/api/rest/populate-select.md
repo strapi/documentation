@@ -58,10 +58,11 @@ Field selection does not work on relational, media, component, or dynamic zone f
   description="Use the fields parameter to select only specific fields in the response.">
 
 <Tabs>
-<TabItem value="url" label="URL">
+<TabItem value="curl" label="cURL">
 
 ```bash
-GET /api/restaurants?fields[0]=name&fields[1]=description
+curl 'http://localhost:1337/api/restaurants?fields[0]=name&fields[1]=description' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 </TabItem>
@@ -177,10 +178,11 @@ Top-level pagination parameters (e.g., `pagination[page]` and `pagination[pageSi
   description="Combine fields and populate parameters to select specific fields on both the main entry and its relations.">
 
 <Tabs>
-<TabItem value="url" label="URL">
+<TabItem value="curl" label="cURL">
 
 ```bash
-GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url
+curl 'http://localhost:1337/api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 </TabItem>
@@ -247,10 +249,11 @@ await request(`/api/articles?${query}`);
   description="Combine populate with sort and filter parameters to refine which related entries are returned.">
 
 <Tabs>
-<TabItem value="url" label="URL">
+<TabItem value="curl" label="cURL">
 
 ```bash
-GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars
+curl 'http://localhost:1337/api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 </TabItem>

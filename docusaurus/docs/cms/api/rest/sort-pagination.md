@@ -62,10 +62,11 @@ You can sort by multiple fields by passing fields in a `sort` array.
   description="Sort results by Description and Name fields.">
 
 <Tabs>
-<TabItem value="rest" label="REST">
+<TabItem value="curl" label="cURL">
 
 ```bash
-GET /api/restaurants?sort[0]=Description&sort[1]=Name
+curl 'http://localhost:1337/api/restaurants?sort[0]=Description&sort[1]=Name' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 </TabItem>
@@ -150,10 +151,11 @@ Using the `sort` parameter and defining `:asc` or  `:desc` on sorted fields, you
   description="Sort results by Description ascending and Name descending.">
 
 <Tabs>
-<TabItem value="rest" label="REST">
+<TabItem value="curl" label="cURL">
 
 ```bash
-GET /api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc
+curl 'http://localhost:1337/api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 </TabItem>
@@ -254,10 +256,11 @@ To paginate results by page, use the following parameters:
   description="Return only 10 entries on page 1.">
 
 <Tabs>
-<TabItem value="rest" label="REST">
+<TabItem value="curl" label="cURL">
 
 ```bash
-GET /api/articles?pagination[page]=1&pagination[pageSize]=10
+curl 'http://localhost:1337/api/articles?pagination[page]=1&pagination[pageSize]=10' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 </TabItem>
@@ -325,10 +328,11 @@ The default and maximum values for `pagination[limit]` can be [configured in the
   description="Return only the first 10 entries using offset.">
 
 <Tabs>
-<TabItem value="rest" label="REST">
+<TabItem value="curl" label="cURL">
 
 ```bash
-GET /api/articles?pagination[start]=0&pagination[limit]=10
+curl 'http://localhost:1337/api/articles?pagination[start]=0&pagination[limit]=10' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 </TabItem>

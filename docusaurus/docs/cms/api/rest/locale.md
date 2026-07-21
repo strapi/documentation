@@ -78,7 +78,8 @@ The following table lists the new possible use cases added by i18n to the REST A
   description="Returns all documents for a given locale.">
 
 ```bash
-GET http://localhost:1337/api/restaurants?locale=fr
+curl 'http://localhost:1337/api/restaurants?locale=fr' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 <Responses>
@@ -145,7 +146,8 @@ To get a specific document in a collection type in a given locale, add the `loca
   description="Returns a specific document in a collection type for a given locale.">
 
 ```bash
-GET /api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr
+curl 'http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 <Responses>
@@ -200,7 +202,8 @@ To get a specific single type document in a given locale, add the `locale` param
   description="Returns a specific single type document for a given locale.">
 
 ```bash
-GET /api/homepage?locale=fr
+curl 'http://localhost:1337/api/homepage?locale=fr' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 <Responses>
@@ -248,13 +251,15 @@ If no locale has been passed in the request body, the document is created using 
   description="Creates a new document using the default locale.">
 
 ```bash
-POST http://localhost:1337/api/restaurants
-
-{
-  "data": {
-    "Name": "Oplato"
-  }
-}
+curl -X POST \
+  'http://localhost:1337/api/restaurants' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "Oplato"
+    }
+  }'
 ```
 
 <Responses>
@@ -293,13 +298,15 @@ To create a localized entry for a locale different from the default one, add the
   description="Creates a new document for a specified locale.">
 
 ```bash
-POST http://localhost:1337/api/restaurants?locale=fr
-
-{
-  "data": {
-    "Name": "She's Cake"
-  }
-}
+curl -X POST \
+  'http://localhost:1337/api/restaurants?locale=fr' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "She'\''s Cake"
+    }
+  }'
 ```
 
 <Responses>
@@ -364,13 +371,15 @@ To create a new locale for an existing document in a collection type, add the `l
   description="Creates a French locale for an existing restaurant, or updates it if it already exists.">
 
 ```bash
-PUT http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr
-
-{
-  "data": {
-    "Name": "She's Cake in French"
-  }
-}
+curl -X PUT \
+  'http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "She'\''s Cake in French"
+    }
+  }'
 ```
 
 <Responses>
@@ -409,13 +418,15 @@ To create a new locale for an existing single type document, add the `locale` pa
   description="Creates a French locale for an existing Homepage single type, or updates it if it already exists.">
 
 ```bash
-PUT http://localhost:1337/api/homepage?locale=fr
-
-{
-  "data": {
-    "Title": "Page d'accueil"
-  }
-}
+curl -X PUT \
+  'http://localhost:1337/api/homepage?locale=fr' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Title": "Page d'\''accueil"
+    }
+  }'
 ```
 
 <Responses>
@@ -462,7 +473,9 @@ To delete only a specific locale version of a document in a collection type, add
   description="Deletes a specific locale version of a document in a collection type.">
 
 ```bash
-DELETE /api/restaurants/abcdefghijklmno456?locale=fr
+curl -X DELETE \
+  'http://localhost:1337/api/restaurants/abcdefghijklmno456?locale=fr' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 <Responses>
@@ -489,7 +502,9 @@ To delete only a specific locale version of a single type document, add the `loc
   description="Deletes a specific locale version of a single type document.">
 
 ```bash
-DELETE /api/homepage?locale=fr
+curl -X DELETE \
+  'http://localhost:1337/api/homepage?locale=fr' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 <Responses>
