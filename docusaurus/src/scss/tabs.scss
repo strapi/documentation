@@ -127,6 +127,14 @@
         // Drop the default bottom margin: it left more empty space below the
         // code than above it, unbalancing the block inside the tab panel.
         margin-bottom: 0 !important;
+
+        // A titleless code block inside a tab panel has no bar to host the
+        // action buttons, so lift the button group up into the empty space
+        // above the code instead of overlapping the first lines. Scoped to tab
+        // panels only, so response blocks (outside any tab) keep top:0.
+        [class*="buttonGroup"] {
+          top: -32px;
+        }
       }
 
       [class*="codeBlockContainer"]:has([class*="codeBlockTitle"]) {
