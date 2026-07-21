@@ -276,9 +276,17 @@ pre.prism-code {
     // Same color + opacity as the copy/wrap buttons (which use --strapi-fg-1
     // at 0.6 opacity), so all three action buttons match at rest. !important
     // beats the legacy .clean-btn rules (this button also carries clean-btn).
+    // The sparkle is a Phosphor fill glyph rendered via ::before, which does
+    // not inherit the <i>'s color (it defaults to neutral-600, a purple-grey),
+    // so color the ::before explicitly to match the neutral copy/wrap icons.
     i, span {
       color: var(--strapi-fg-1) !important;
       opacity: 0.6 !important;
+    }
+
+    i,
+    i::before {
+      color: var(--strapi-fg-1) !important;
     }
 
     i {
