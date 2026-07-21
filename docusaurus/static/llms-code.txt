@@ -8557,14 +8557,14 @@ const entry = await strapi.db.query('api::blog.article').delete({
 Source: https://docs.strapi.io/cms/api/rest
 
 ## Get documents
-Description: GET /api/:pluralApiId — List documents
+Description: { name: 'pagination[pageSize]', type: 'integer', required: false, description: 'Items per page.
 (Source: https://docs.strapi.io/cms/api/rest#get-all)
 
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/restaurants' \\
+curl 'http://localhost:1337/api/restaurants' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -8572,7 +8572,7 @@ curl 'http://localhost:1337/api/restaurants' \\
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const response = await fetch(
   'http://localhost:1337/api/restaurants',
   {
@@ -8584,16 +8584,48 @@ const response = await fetch(
 const data = await response.json();
 ```
 
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 2,
+      "documentId": "hgv1vny5cebq2l3czil1rpb3",
+      "Name": "BMK Paris Bamako",
+      "Description": null,
+      "createdAt": "2024-03-06T13:42:05.098Z",
+      "updatedAt": "2024-03-06T13:42:05.098Z",
+      "publishedAt": "2024-03-06T13:42:05.103Z",
+      "locale": "en"
+    },
+    {
+      "id": 4,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "Name": "Biscotte Restaurant",
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T13:43:30.172Z",
+      "publishedAt": "2024-03-06T13:43:30.175Z",
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": { "page": 1, "pageSize": 25, "pageCount": 1, "total": 2 }
+  }
+}
+```
+
 
 ## Get a document
-Description: GET /api/:pluralApiId/:documentId — Get a document
+Description: paramTitle="Path Parameters" params={[ { name: 'pluralApiId', type: 'string', required: true, description: 'Plural API ID of the content-type (e.g.
 (Source: https://docs.strapi.io/cms/api/rest#get)
 
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v' \\
+curl 'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -8601,7 +8633,7 @@ curl 'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v' \\
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const response = await fetch(
   'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v',
   {
@@ -8613,19 +8645,58 @@ const response = await fetch(
 const data = await response.json();
 ```
 
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": {
+    "id": 6,
+    "documentId": "znrlzntu9ei5onjvwfaalu2v",
+    "Name": "Biscotte Restaurant",
+    "Description": [
+      {
+        "type": "paragraph",
+        "children": [{ "type": "text", "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products." }]
+      }
+    ],
+    "createdAt": "2024-02-27T10:19:04.953Z",
+    "updatedAt": "2024-03-05T15:52:05.591Z",
+    "publishedAt": "2024-03-05T15:52:05.600Z",
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": null,
+  "error": {
+    "status": 404,
+    "name": "NotFoundError",
+    "message": "Document not found"
+  }
+}
+```
+
 
 ## Create a document
-Description: POST /api/:pluralApiId — Create a document
+Description: description="Creates a new document and returns it.
 (Source: https://docs.strapi.io/cms/api/rest#create)
 
 Language: Bash
 File path: N/A
 
 ```bash
-curl -X POST \\
-  'http://localhost:1337/api/restaurants' \\
-  -H 'Authorization: Bearer <token>' \\
-  -H 'Content-Type: application/json' \\
+curl -X POST \
+  'http://localhost:1337/api/restaurants' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
   -d '{
     "data": {
       "Name": "Restaurant D",
@@ -8643,7 +8714,7 @@ curl -X POST \\
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const response = await fetch(
   'http://localhost:1337/api/restaurants',
   {
@@ -8668,19 +8739,42 @@ const response = await fetch(
 const data = await response.json();
 ```
 
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": {
+    "documentId": "bw64dnu97i56nq85106yt4du",
+    "Name": "Restaurant D",
+    "Description": [
+      {
+        "type": "paragraph",
+        "children": [{ "type": "text", "text": "A very short description goes here." }]
+      }
+    ],
+    "createdAt": "2024-03-05T16:44:47.689Z",
+    "updatedAt": "2024-03-05T16:44:47.689Z",
+    "publishedAt": "2024-03-05T16:44:47.687Z",
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
 
 ## Update a document
-Description: PUT /api/:pluralApiId/:documentId — Update a document
+Description: description="Partially updates a document by documentId and returns its value.
 (Source: https://docs.strapi.io/cms/api/rest#update)
 
 Language: Bash
 File path: N/A
 
 ```bash
-curl -X PUT \\
-  'http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3' \\
-  -H 'Authorization: Bearer <token>' \\
-  -H 'Content-Type: application/json' \\
+curl -X PUT \
+  'http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
   -d '{
     "data": {
       "Name": "BMK Paris Bamako",
@@ -8698,7 +8792,7 @@ curl -X PUT \\
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const response = await fetch(
   'http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3',
   {
@@ -8723,17 +8817,41 @@ const response = await fetch(
 const data = await response.json();
 ```
 
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": {
+    "id": 9,
+    "documentId": "hgv1vny5cebq2l3czil1rpb3",
+    "Name": "BMK Paris Bamako",
+    "Description": [
+      {
+        "type": "paragraph",
+        "children": [{ "type": "text", "text": "A very short description goes here." }]
+      }
+    ],
+    "createdAt": "2024-03-06T13:42:05.098Z",
+    "updatedAt": "2024-03-06T14:16:56.883Z",
+    "publishedAt": "2024-03-06T14:16:56.895Z",
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
 
 ## Delete a document
-Description: DELETE /api/:pluralApiId/:documentId — Delete a document
+Description: paramTitle="Path Parameters" params={[ { name: 'pluralApiId', type: 'string', required: true, description: 'Plural API ID (e.g.
 (Source: https://docs.strapi.io/cms/api/rest#delete)
 
 Language: Bash
 File path: N/A
 
 ```bash
-curl -X DELETE \\
-  'http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du' \\
+curl -X DELETE \
+  'http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -8741,7 +8859,7 @@ curl -X DELETE \\
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const response = await fetch(
   'http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du',
   {
@@ -8759,14 +8877,15 @@ const response = await fetch(
 Source: https://docs.strapi.io/cms/api/rest/filters
 
 ## Example: Find users having 'John' as a first name
-Description: GET /api/users?filters[username][$eq]=John — Find users having
+Description: id="find-users-eq" method="GET" path="/api/users?filters[username][$eq]=John" title="Find users having 'John' as first name" description="Use the $eq filter operator to find an exact match.">
 (Source: https://docs.strapi.io/cms/api/rest/filters#example-find-users-having-john-as-a-first-name)
 
 Language: Bash
 File path: N/A
 
 ```bash
-GET /api/users?filters[username][$eq]=John
+curl 'http://localhost:1337/api/users?filters[username][$eq]=John' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 ---
@@ -8819,14 +8938,15 @@ File path: N/A
 
 
 ## Example: Find multiple restaurants with ids 3, 6,8
-Description: GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8 — Find multiple restaurants with ids 3, 6, 8
+Description: id="find-restaurants-in" method="GET" path="/api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8" title="Find multiple restaurants with ids 3, 6, 8" description="Use the $in filter operator with an array of values to find multiple exact values.">
 (Source: https://docs.strapi.io/cms/api/rest/filters#example-find-multiple-restaurants-with-ids-3-6-8)
 
 Language: Bash
 File path: N/A
 
 ```bash
-GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8
+curl 'http://localhost:1337/api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 ---
@@ -8876,14 +8996,15 @@ File path: N/A
 
 
 ## Complex filtering
-Description: GET /api/books?filters[$and][0][$or][0][date][$eq]=2020-01-01&filters[$and][0][$or][1][date][$eq]=2020-01-02&filters[$and][1][author][name][$eq]=Kai%20doe — Find books with 2 possible dates and a specific author
+Description: Code example from "Complex filtering"
 (Source: https://docs.strapi.io/cms/api/rest/filters#complex-filtering)
 
 Language: Bash
 File path: N/A
 
 ```bash
-GET /api/books?filters[$and][0][$or][0][date][$eq]=2020-01-01&filters[$and][0][$or][1][date][$eq]=2020-01-02&filters[$and][1][author][name][$eq]=Kai%20doe
+curl 'http://localhost:1337/api/books?filters[$and][0][$or][0][date][$eq]=2020-01-01&filters[$and][0][$or][1][date][$eq]=2020-01-02&filters[$and][1][author][name][$eq]=Kai%20doe' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 ---
@@ -8950,14 +9071,15 @@ File path: N/A
 
 
 ## Deep filtering
-Description: GET /api/restaurants?filters[chef][restaurants][stars][$eq]=5 — Find restaurants owned by a chef who belongs to a 5-star restaurant
+Description: Code example from "Deep filtering"
 (Source: https://docs.strapi.io/cms/api/rest/filters#deep-filtering)
 
 Language: Bash
 File path: N/A
 
 ```bash
-GET /api/restaurants?filters[chef][restaurants][stars][$eq]=5
+curl 'http://localhost:1337/api/restaurants?filters[chef][restaurants][stars][$eq]=5' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 ---
@@ -9067,6 +9189,361 @@ File path: ./src/api/test/routes/test.js
 # Understanding populate
 Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate
 
+## Example: Without populate
+Description: id="without-populate" method="GET" path="/api/articles" title="Without populate" description="Returns only default attributes, without any media fields, relations, components, or dynamic zones.">
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-without-populate)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/articles' \
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/articles' \
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "t3q2i3v1z2j7o8p6d0o4xxg",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "// truncated content"
+    },
+    {
+      "id": 2,
+      "documentId": "k2r5l0i9g3u2j3b4p7f0sed",
+      "title": "What are chinese hamburgers and why aren't you eating them?",
+      "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+      "createdAt": "2021-11-11T13:33:19.948Z",
+      "updatedAt": "2023-06-01T14:32:50.984Z",
+      "publishedAt": "2022-09-22T12:36:48.312Z",
+      "locale": "en",
+      "ckeditor_content": "// truncated content"
+    },
+    {
+      "id": 3,
+      "documentId": "k6m6l9q0n6v9z2m3i0z5jah",
+      "title": "7 Places worth visiting for the food alone",
+      "slug": "7-places-worth-visiting-for-the-food-alone",
+      "createdAt": "2021-11-12T13:33:19.948Z",
+      "updatedAt": "2023-06-02T11:30:00.075Z",
+      "publishedAt": "2023-06-02T11:30:00.075Z",
+      "locale": "en",
+      "ckeditor_content": "// truncated content"
+    },
+    {
+      "id": 4,
+      "documentId": "d5m4b6z6g5d9e3v1k9n5gbn",
+      "title": "If you don't finish your plate in these countries, you might offend someone",
+      "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+      "createdAt": "2021-11-15T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:59:35.148Z",
+      "publishedAt": "2022-09-22T12:35:53.899Z",
+      "locale": "en",
+      "ckeditor_content": "// truncated content"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "x2m0d7d9o4m2z3u2r2l9yes",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…"
+    },
+    {
+      "id": 2,
+      "documentId": "k6m6l9q0n6v9z2m3i0z5jah",
+      "title": "What are chinese hamburgers and why aren't you eating them?",
+      "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+      "createdAt": "2021-11-11T13:33:19.948Z",
+      "updatedAt": "2023-06-01T14:32:50.984Z",
+      "publishedAt": "2022-09-22T12:36:48.312Z",
+      "locale": "en",
+      "ckeditor_content": "…"
+    },
+    {
+      "id": 3,
+      "documentId": "o5d4b0l4p8l4o4k5n1l3rxa",
+      "title": "7 Places worth visiting for the food alone",
+      "slug": "7-places-worth-visiting-for-the-food-alone",
+      "createdAt": "2021-11-12T13:33:19.948Z",
+      "updatedAt": "2023-06-02T11:30:00.075Z",
+      "publishedAt": "2023-06-02T11:30:00.075Z",
+      "locale": "en",
+      "ckeditor_content": "…"
+    },
+    {
+      "id": 4,
+      "documentId": "t3q2i3v1z2j7o8p6d0o4xxg",
+      "title": "If you don't finish your plate in these countries, you might offend someone",
+      "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+      "createdAt": "2021-11-15T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:59:35.148Z",
+      "publishedAt": "2022-09-22T12:35:53.899Z",
+      "locale": "en",
+      "ckeditor_content": "…"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+```
+
+
+## Example: With populate=*
+Description: id="with-populate-all" method="GET" path="/api/articles" title="With populate=*" description="Returns all media fields, first-level relations, components, and dynamic zones.">
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-with-populate)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/articles?populate=*' \
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate=*',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "// truncated content",
+      "image": {
+        "data": {
+            "id": 12,
+            "documentId": "o5d4b0l4p8l4o4k5n1l3rxa",
+            "name": "Basque dish",
+            "alternativeText": "Basque dish",
+            "caption": "Basque dish",
+            "width": 758,
+            "height": 506,
+            "formats": {
+              "thumbnail": {
+                "name": "thumbnail_https://4d40-2a01-cb00-c8b-1800-7cbb-7da-ea9d-2011.ngrok.io/uploads/basque_cuisine_17fa4567e0.jpeg",
+                "hash": "thumbnail_basque_cuisine_17fa4567e0_f033424240",
+                "ext": ".jpeg",
+                "mime": "image/jpeg",
+                "width": 234,
+                "height": 156,
+                "size": 11.31,
+                "path": null,
+                "url": "/uploads/thumbnail_basque_cuisine_17fa4567e0_f033424240.jpeg"
+              },
+              "medium": {
+                "name": "medium_https://4d40-2a01-cb00-c8b-1800-7cbb-7da-ea9d-2011.ngrok.io/uploads/basque_cuisine_17fa4567e0.jpeg",
+                "hash": "medium_basque_cuisine_17fa4567e0_f033424240",
+                "ext": ".jpeg",
+                "mime": "image/jpeg",
+                "width": 750,
+                "height": 501,
+                "size": 82.09,
+                "path": null,
+                "url": "/uploads/medium_basque_cuisine_17fa4567e0_f033424240.jpeg"
+              },
+              "small": {
+                "name": "small_https://4d40-2a01-cb00-c8b-1800-7cbb-7da-ea9d-2011.ngrok.io/uploads/basque_cuisine_17fa4567e0.jpeg",
+                "hash": "small_basque_cuisine_17fa4567e0_f033424240",
+                "ext": ".jpeg",
+                "mime": "image/jpeg",
+                "width": 500,
+                "height": 334,
+                "size": 41.03,
+                "path": null,
+                "url": "/uploads/small_basque_cuisine_17fa4567e0_f033424240.jpeg"
+              }
+            },
+            "hash": "basque_cuisine_17fa4567e0_f033424240",
+            "ext": ".jpeg",
+            "mime": "image/jpeg",
+            "size": 58.209999999999994,
+            "url": "/uploads/basque_cuisine_17fa4567e0_f033424240.jpeg",
+            "previewUrl": null,
+            "provider": "local",
+            "provider_metadata": null,
+            "createdAt": "2021-11-23T14:05:33.460Z",
+            "updatedAt": "2021-11-23T14:05:46.084Z"
+            }
+          }
+        },
+        "blocks": [
+          {
+            "id": 2,
+            "__component": "blocks.related-articles"
+          },
+          {
+            "id": 2,
+            "documentId": "w8r5k8o8v0t9l9e0d7y6vco",
+            "__component": "blocks.cta-command-line",
+            "theme": "primary",
+            "title": "Want to give a try to a Strapi starter?",
+            "text": "❤️",
+            "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
+          }
+        ],
+        "seo": {
+          "id": 1,
+          "documentId": "h7c8d0u3i3q5v1j3j3r4cxf",
+          "metaTitle": "Articles - FoodAdvisor",
+          "metaDescription": "Discover our articles about food, restaurants, bars and more! - FoodAdvisor",
+          "keywords": "food",
+          "metaRobots": null,
+          "structuredData": null,
+          "metaViewport": null,
+          "canonicalURL": null
+        },
+        "category": {
+          "data": {
+            "id": 4,
+            "documentId": "t1t3d9k6n1k5a6r8l7f8rox",
+            "name": "European",
+            "slug": "european",
+            "createdAt": "2021-11-09T13:33:20.123Z",
+            "updatedAt": "2021-11-09T13:33:20.123Z"
+          }
+        },
+        "localizations": {
+          "data": [
+            {
+              "id": 10,
+              "documentId": "h7c8d0u3i3q5v1j3j3r4cxf",
+              "title": "Voici pourquoi il faut essayer la cuisine basque, selon un chef basque",
+              "slug": "voici-pourquoi-il-faut-essayer-la-cuisine-basque-selon-un-chef-basque",
+              "createdAt": "2021-11-18T13:33:19.948Z",
+              "updatedAt": "2023-06-02T10:57:19.606Z",
+              "publishedAt": "2022-09-22T13:00:00.069Z",
+              "locale": "fr-FR",
+              "ckeditor_content": "// truncated content"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 2,
+      "// truncated content": true
+    },
+    {
+      "id": 3,
+      "// truncated content": true
+    },
+    {
+      "id": 4,
+      "// truncated content": true
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+```
+
+
 ## Populate specific relations and fields
 Description: Populate as an object (to populate 1 relation several levels deep):
 (Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#populate-specific-relations-and-fields)
@@ -9097,6 +9574,136 @@ File path: N/A
 ```
 
 
+## Example: With populate[0]=category
+Description: id="with-populate-category" method="GET" path="/api/articles" title="With populate[0]=category" description="Returns articles with their related category data populated.">
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-with-populate-0-category)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/articles?populate[0]=category' \
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=category',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "w8r5k8o8v0t9l9e0d7y6vco",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…",
+      "category": {
+        "data": {
+          "id": 4,
+          "documentId": "u6x8u7o7j5q1l5y3t8j9yxi",
+          "name": "European",
+          "slug": "european",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "documentId": "k6m6l9q0n6v9z2m3i0z5jah",
+      "title": "What are chinese hamburgers and why aren't you eating them?",
+      "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+      "createdAt": "2021-11-11T13:33:19.948Z",
+      "updatedAt": "2023-06-01T14:32:50.984Z",
+      "publishedAt": "2022-09-22T12:36:48.312Z",
+      "locale": "en",
+      "ckeditor_content": "…",
+      "category": {
+        "data": {
+          "id": 13,
+          "documentId": "x2m0d7d9o4m2z3u2r2l9yes",
+          "name": "Chinese",
+          "slug": "chinese",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "7 Places worth visiting for the food alone",
+      "slug": "7-places-worth-visiting-for-the-food-alone",
+      "createdAt": "2021-11-12T13:33:19.948Z",
+      "updatedAt": "2023-06-02T11:30:00.075Z",
+      "publishedAt": "2023-06-02T11:30:00.075Z",
+      "locale": "en",
+      "ckeditor_content": "…",
+      "category": {
+        "data": {
+          "id": 3,
+          "documentId": "h7c8d0u3i3q5v1j3j3r4cxf",
+          "name": "International",
+          "slug": "international",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "documentId": "t1t3d9k6n1k5a6r8l7f8rox",
+      "title": "If you don't finish your plate in these countries, you might offend someone",
+      "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+      "createdAt": "2021-11-15T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:59:35.148Z",
+      "publishedAt": "2022-09-22T12:35:53.899Z",
+      "locale": "en",
+      "ckeditor_content": "…",
+      "category": {
+        "data": {
+          "id": 3,
+          "documentId": "u6x8u7o7j5q1l5y3t8j9yxi",
+          "name": "International",
+          "slug": "international",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
+        }
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+```
+
+
 ## Populate several levels deep for specific relations
 Description: :::tip The syntax for advanced query parameters can be quite complex to build manually.
 (Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#populate-several-levels-deep-for-specific-relations)
@@ -9111,6 +9718,250 @@ File path: N/A
       populate: ['restaurants'],
     },
   },
+}
+```
+
+
+## Example: With 1-level deep population
+Description: id="with-1-level-deep-population" method="GET" path="/api/articles" title="With 1-level deep population" description="Populates the category relation 1 level deep.">
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-with-1-level-deep-population)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/articles?populate[0]=category' \
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=category',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "9ih6hy1bnma3q3066kdwt3",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…",
+      "category": {
+        "data": {
+          "id": 4,
+          "name": "European",
+          "slug": "european",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "documentId": "sen6qfgxcac13pwchf8xbu",
+      "title": "What are chinese hamburgers and why aren't you eating them?",
+      "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+      "createdAt": "2021-11-11T13:33:19.948Z",
+      "updatedAt": "2023-06-01T14:32:50.984Z",
+      "publishedAt": "2022-09-22T12:36:48.312Z",
+      "locale": "en",
+      "ckeditor_content": "…",
+      "category": {
+        "data": {
+          "id": 13,
+          "documentId": "r3rhzcxd7gjx07vkq3pia5",
+          "name": "Chinese",
+          "slug": "chinese",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "documentId": "s9uu7rkukhfcsmj2e60b67",
+      "title": "7 Places worth visiting for the food alone",
+      "slug": "7-places-worth-visiting-for-the-food-alone",
+      "createdAt": "2021-11-12T13:33:19.948Z",
+      "updatedAt": "2023-06-02T11:30:00.075Z",
+      "publishedAt": "2023-06-02T11:30:00.075Z",
+      "locale": "en",
+      "ckeditor_content": "…",
+      "category": {
+        "data": {
+          "id": 3,
+          "documentId": "4sevz15w6bdol6y4t8kblk",
+          "name": "International",
+          "slug": "international",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "documentId": "iy5ifm3xj8q0t8vlq6l23h",
+      "title": "If you don't finish your plate in these countries, you might offend someone",
+      "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+      "createdAt": "2021-11-15T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:59:35.148Z",
+      "publishedAt": "2022-09-22T12:35:53.899Z",
+      "locale": "en",
+      "ckeditor_content": "…",
+      "category": {
+        "data": {
+          "id": 3,
+          "documentId": "0eor603u8qej933maphdv3",
+          "name": "International",
+          "slug": "international",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
+        }
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+```
+
+
+## Example: With 2-level deep population
+Description: id="with-2-level-deep-population" method="GET" path="/api/articles" title="With 2-level deep population" description="Populates the category relation and the nested restaurants relation 2 levels deep.">
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-with-2-level-deep-population)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/articles?populate[category][populate][0]=restaurants' \
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[category][populate][0]=restaurants',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "iy5ifm3xj8q0t8vlq6l23h",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…",
+      "category": {
+        "data": {
+          "id": 4,
+          "name": "European",
+          "slug": "european",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z",
+          "restaurants": {
+            "data": [
+              {
+                "id": 1,
+                "documentId": "ozlqrdxpnjb7wtvf6lp74v",
+                "name": "Mint Lounge",
+                "slug": "mint-lounge",
+                "price": "p3",
+                "createdAt": "2021-11-09T14:07:47.125Z",
+                "updatedAt": "2021-11-23T16:41:30.504Z",
+                "publishedAt": "2021-11-23T16:41:30.501Z",
+                "locale": "en"
+              },
+              {
+                "id": 9,
+                "// truncated content": true
+              },
+              {
+                "id": 10,
+                "// truncated content": true
+              },
+              {
+                "id": 12,
+                "// truncated content": true
+              },
+              {
+                "id": 21,
+                "// truncated content": true
+              },
+              {
+                "id": 26,
+                "// truncated content": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "// truncated content": true
+    },
+    {
+      "id": 3,
+      "// truncated content": true
+    },
+    {
+      "id": 4,
+      "// truncated content": true
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
 }
 ```
 
@@ -9130,6 +9981,177 @@ File path: N/A
     'seoData.sharedImage.media',
   ],
 },
+```
+
+
+## Example: Only 1st level component
+Description: id="only-1st-level-component" method="GET" path="/api/articles" title="Only 1st level component" description="Populates only the seo component, 1 level deep.">
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-only-1st-level-component)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/articles?populate[0]=seo' \
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=seo',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "md60m5cy3dula5g87x1uar",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…",
+      "seo": {
+        "id": 1,
+        "documentId": "kqcwhq6hes25kt9ebj8x7j",
+        "metaTitle": "Articles - FoodAdvisor",
+        "metaDescription": "Discover our articles about food, restaurants, bars and more! - FoodAdvisor",
+        "keywords": "food",
+        "metaRobots": null,
+        "structuredData": null,
+        "metaViewport": null,
+        "canonicalURL": null
+      }
+    },
+    {
+      "id": 2,
+      "// truncated content": true
+    },
+    {
+      "id": 3,
+      "// truncated content": true
+    },
+    {
+      "id": 4,
+      "// truncated content": true
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+```
+
+
+## Example: 1st level and 2nd level component
+Description: id="1st-level-and-2nd-level-component" method="GET" path="/api/articles" title="1st level and 2nd level component" description="Populates the seo component and the nested metaSocial component.">
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-1st-level-and-2nd-level-component)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl 'http://localhost:1337/api/articles?populate[0]=seo&populate[1]=seo.metaSocial' \
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=seo&populate[1]=seo.metaSocial',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "c2imt19iywk27hl2ftph7s",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…",
+      "seo": {
+        "id": 1,
+        "documentId": "e8cnux5ejxyqrejd5addfv",
+        "metaTitle": "Articles - FoodAdvisor",
+        "metaDescription": "Discover our articles about food, restaurants, bars and more! - FoodAdvisor",
+        "keywords": "food",
+        "metaRobots": null,
+        "structuredData": null,
+        "metaViewport": null,
+        "canonicalURL": null,
+        "metaSocial": [
+          {
+            "id": 1,
+            "documentId": "ks7xsp9fewoi0qljcz9qa0",
+            "socialNetwork": "Facebook",
+            "title": "Browse our best articles about food and restaurants ",
+            "description": "Discover our articles about food, restaurants, bars and more!"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "// truncated content": true
+    },
+    {
+      "id": 3,
+      "// truncated content": true
+    },
+    {
+      "id": 4,
+      "// truncated content": true
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
 ```
 
 
@@ -9354,781 +10376,32 @@ File path: N/A
 ```
 
 
-## Example: Without `populate`
-Description: GET /api/articles — Without populate
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-without-populate)
-
-Language: Bash
-File path: N/A
-
-```bash
-GET /api/articles
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-GET /api/articles
-```
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "t3q2i3v1z2j7o8p6d0o4xxg",
-      "title": "Here's why you have to try basque cuisine, according to a basque chef",
-      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-      "createdAt": "2021-11-09T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:57:19.584Z",
-      "publishedAt": "2022-09-22T09:30:00.208Z",
-      "locale": "en",
-      "ckeditor_content": "// truncated content"
-    },
-    {
-      "id": 2,
-      "documentId": "k2r5l0i9g3u2j3b4p7f0sed",
-      "title": "What are chinese hamburgers and why aren't you eating them?",
-      "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-      "createdAt": "2021-11-11T13:33:19.948Z",
-      "updatedAt": "2023-06-01T14:32:50.984Z",
-      "publishedAt": "2022-09-22T12:36:48.312Z",
-      "locale": "en",
-      "ckeditor_content": "// truncated content"
-    },
-    {
-      "id": 3,
-      "documentId": "k6m6l9q0n6v9z2m3i0z5jah",
-      "title": "7 Places worth visiting for the food alone",
-      "slug": "7-places-worth-visiting-for-the-food-alone",
-      "createdAt": "2021-11-12T13:33:19.948Z",
-      "updatedAt": "2023-06-02T11:30:00.075Z",
-      "publishedAt": "2023-06-02T11:30:00.075Z",
-      "locale": "en",
-      "ckeditor_content": "// truncated content"
-    },
-    {
-      "id": 4,
-      "documentId": "d5m4b6z6g5d9e3v1k9n5gbn",
-      "title": "If you don't finish your plate in these countries, you might offend someone",
-      "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
-      "createdAt": "2021-11-15T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:59:35.148Z",
-      "publishedAt": "2022-09-22T12:35:53.899Z",
-      "locale": "en",
-      "ckeditor_content": "// truncated content"
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
----
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "x2m0d7d9o4m2z3u2r2l9yes",
-      "title": "Here's why you have to try basque cuisine, according to a basque chef",
-      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-      "createdAt": "2021-11-09T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:57:19.584Z",
-      "publishedAt": "2022-09-22T09:30:00.208Z",
-      "locale": "en",
-      "ckeditor_content": "…"
-    },
-    {
-      "id": 2,
-      "documentId": "k6m6l9q0n6v9z2m3i0z5jah",
-      "title": "What are chinese hamburgers and why aren't you eating them?",
-      "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-      "createdAt": "2021-11-11T13:33:19.948Z",
-      "updatedAt": "2023-06-01T14:32:50.984Z",
-      "publishedAt": "2022-09-22T12:36:48.312Z",
-      "locale": "en",
-      "ckeditor_content": "…"
-    },
-    {
-      "id": 3,
-      "documentId": "o5d4b0l4p8l4o4k5n1l3rxa",
-      "title": "7 Places worth visiting for the food alone",
-      "slug": "7-places-worth-visiting-for-the-food-alone",
-      "createdAt": "2021-11-12T13:33:19.948Z",
-      "updatedAt": "2023-06-02T11:30:00.075Z",
-      "publishedAt": "2023-06-02T11:30:00.075Z",
-      "locale": "en",
-      "ckeditor_content": "…"
-    },
-    {
-      "id": 4,
-      "documentId": "t3q2i3v1z2j7o8p6d0o4xxg",
-      "title": "If you don't finish your plate in these countries, you might offend someone",
-      "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
-      "createdAt": "2021-11-15T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:59:35.148Z",
-      "publishedAt": "2022-09-22T12:35:53.899Z",
-      "locale": "en",
-      "ckeditor_content": "…"
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
-
-## Example: With `populate=*`
-Description: GET /api/articles — With populate=*
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-with-populate)
-
-Language: Bash
-File path: N/A
-
-```bash
-GET /api/articles?populate=*
-```
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "title": "Here's why you have to try basque cuisine, according to a basque chef",
-      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-      "createdAt": "2021-11-09T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:57:19.584Z",
-      "publishedAt": "2022-09-22T09:30:00.208Z",
-      "locale": "en",
-      "ckeditor_content": "// truncated content",
-      "image": {
-        "data": {
-            "id": 12,
-            "documentId": "o5d4b0l4p8l4o4k5n1l3rxa",
-            "name": "Basque dish",
-            "alternativeText": "Basque dish",
-            "caption": "Basque dish",
-            "width": 758,
-            "height": 506,
-            "formats": {
-              "thumbnail": {
-                "name": "thumbnail_https://4d40-2a01-cb00-c8b-1800-7cbb-7da-ea9d-2011.ngrok.io/uploads/basque_cuisine_17fa4567e0.jpeg",
-                "hash": "thumbnail_basque_cuisine_17fa4567e0_f033424240",
-                "ext": ".jpeg",
-                "mime": "image/jpeg",
-                "width": 234,
-                "height": 156,
-                "size": 11.31,
-                "path": null,
-                "url": "/uploads/thumbnail_basque_cuisine_17fa4567e0_f033424240.jpeg"
-              },
-              "medium": {
-                "name": "medium_https://4d40-2a01-cb00-c8b-1800-7cbb-7da-ea9d-2011.ngrok.io/uploads/basque_cuisine_17fa4567e0.jpeg",
-                "hash": "medium_basque_cuisine_17fa4567e0_f033424240",
-                "ext": ".jpeg",
-                "mime": "image/jpeg",
-                "width": 750,
-                "height": 501,
-                "size": 82.09,
-                "path": null,
-                "url": "/uploads/medium_basque_cuisine_17fa4567e0_f033424240.jpeg"
-              },
-              "small": {
-                "name": "small_https://4d40-2a01-cb00-c8b-1800-7cbb-7da-ea9d-2011.ngrok.io/uploads/basque_cuisine_17fa4567e0.jpeg",
-                "hash": "small_basque_cuisine_17fa4567e0_f033424240",
-                "ext": ".jpeg",
-                "mime": "image/jpeg",
-                "width": 500,
-                "height": 334,
-                "size": 41.03,
-                "path": null,
-                "url": "/uploads/small_basque_cuisine_17fa4567e0_f033424240.jpeg"
-              }
-            },
-            "hash": "basque_cuisine_17fa4567e0_f033424240",
-            "ext": ".jpeg",
-            "mime": "image/jpeg",
-            "size": 58.209999999999994,
-            "url": "/uploads/basque_cuisine_17fa4567e0_f033424240.jpeg",
-            "previewUrl": null,
-            "provider": "local",
-            "provider_metadata": null,
-            "createdAt": "2021-11-23T14:05:33.460Z",
-            "updatedAt": "2021-11-23T14:05:46.084Z"
-            }
-          }
-        },
-        "blocks": [
-          {
-            "id": 2,
-            "__component": "blocks.related-articles"
-          },
-          {
-            "id": 2,
-            "documentId": "w8r5k8o8v0t9l9e0d7y6vco",
-            "__component": "blocks.cta-command-line",
-            "theme": "primary",
-            "title": "Want to give a try to a Strapi starter?",
-            "text": "❤️",
-            "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
-          }
-        ],
-        "seo": {
-          "id": 1,
-          "documentId": "h7c8d0u3i3q5v1j3j3r4cxf",
-          "metaTitle": "Articles - FoodAdvisor",
-          "metaDescription": "Discover our articles about food, restaurants, bars and more! - FoodAdvisor",
-          "keywords": "food",
-          "metaRobots": null,
-          "structuredData": null,
-          "metaViewport": null,
-          "canonicalURL": null
-        },
-        "category": {
-          "data": {
-            "id": 4,
-            "documentId": "t1t3d9k6n1k5a6r8l7f8rox",
-            "name": "European",
-            "slug": "european",
-            "createdAt": "2021-11-09T13:33:20.123Z",
-            "updatedAt": "2021-11-09T13:33:20.123Z"
-          }
-        },
-        "localizations": {
-          "data": [
-            {
-              "id": 10,
-              "documentId": "h7c8d0u3i3q5v1j3j3r4cxf",
-              "title": "Voici pourquoi il faut essayer la cuisine basque, selon un chef basque",
-              "slug": "voici-pourquoi-il-faut-essayer-la-cuisine-basque-selon-un-chef-basque",
-              "createdAt": "2021-11-18T13:33:19.948Z",
-              "updatedAt": "2023-06-02T10:57:19.606Z",
-              "publishedAt": "2022-09-22T13:00:00.069Z",
-              "locale": "fr-FR",
-              "ckeditor_content": "// truncated content"
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": 2,
-      "// truncated content": true
-    },
-    {
-      "id": 3,
-      "// truncated content": true
-    },
-    {
-      "id": 4,
-      "// truncated content": true
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
-
-## Example: With `populate[0]=category`
-Description: GET /api/articles — With populate[0]=category
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-with-populate-0-category)
-
-Language: Bash
-File path: N/A
-
-```bash
-GET /api/articles?populate[0]=category
-```
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "w8r5k8o8v0t9l9e0d7y6vco",
-      "title": "Here's why you have to try basque cuisine, according to a basque chef",
-      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-      "createdAt": "2021-11-09T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:57:19.584Z",
-      "publishedAt": "2022-09-22T09:30:00.208Z",
-      "locale": "en",
-      "ckeditor_content": "…",
-      "category": {
-        "data": {
-          "id": 4,
-          "documentId": "u6x8u7o7j5q1l5y3t8j9yxi",
-          "name": "European",
-          "slug": "european",
-          "createdAt": "2021-11-09T13:33:20.123Z",
-          "updatedAt": "2021-11-09T13:33:20.123Z"
-        }
-      }
-    },
-    {
-      "id": 2,
-      "documentId": "k6m6l9q0n6v9z2m3i0z5jah",
-      "title": "What are chinese hamburgers and why aren't you eating them?",
-      "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-      "createdAt": "2021-11-11T13:33:19.948Z",
-      "updatedAt": "2023-06-01T14:32:50.984Z",
-      "publishedAt": "2022-09-22T12:36:48.312Z",
-      "locale": "en",
-      "ckeditor_content": "…",
-      "category": {
-        "data": {
-          "id": 13,
-          "documentId": "x2m0d7d9o4m2z3u2r2l9yes",
-          "name": "Chinese",
-          "slug": "chinese",
-          "createdAt": "2021-11-09T13:33:20.123Z",
-          "updatedAt": "2021-11-09T13:33:20.123Z"
-        }
-      }
-    },
-    {
-      "id": 3,
-      "title": "7 Places worth visiting for the food alone",
-      "slug": "7-places-worth-visiting-for-the-food-alone",
-      "createdAt": "2021-11-12T13:33:19.948Z",
-      "updatedAt": "2023-06-02T11:30:00.075Z",
-      "publishedAt": "2023-06-02T11:30:00.075Z",
-      "locale": "en",
-      "ckeditor_content": "…",
-      "category": {
-        "data": {
-          "id": 3,
-          "documentId": "h7c8d0u3i3q5v1j3j3r4cxf",
-          "name": "International",
-          "slug": "international",
-          "createdAt": "2021-11-09T13:33:20.123Z",
-          "updatedAt": "2021-11-09T13:33:20.123Z"
-        }
-      }
-    },
-    {
-      "id": 4,
-      "documentId": "t1t3d9k6n1k5a6r8l7f8rox",
-      "title": "If you don't finish your plate in these countries, you might offend someone",
-      "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
-      "createdAt": "2021-11-15T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:59:35.148Z",
-      "publishedAt": "2022-09-22T12:35:53.899Z",
-      "locale": "en",
-      "ckeditor_content": "…",
-      "category": {
-        "data": {
-          "id": 3,
-          "documentId": "u6x8u7o7j5q1l5y3t8j9yxi",
-          "name": "International",
-          "slug": "international",
-          "createdAt": "2021-11-09T13:33:20.123Z",
-          "updatedAt": "2021-11-09T13:33:20.123Z"
-        }
-      }
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
-
-## Example: With 1-level deep population
-Description: GET /api/articles — With 1-level deep population
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-with-1-level-deep-population)
-
-Language: Bash
-File path: N/A
-
-```bash
-GET /api/articles?populate[0]=category
-```
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "9ih6hy1bnma3q3066kdwt3",
-      "title": "Here's why you have to try basque cuisine, according to a basque chef",
-      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-      "createdAt": "2021-11-09T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:57:19.584Z",
-      "publishedAt": "2022-09-22T09:30:00.208Z",
-      "locale": "en",
-      "ckeditor_content": "…",
-      "category": {
-        "data": {
-          "id": 4,
-          "name": "European",
-          "slug": "european",
-          "createdAt": "2021-11-09T13:33:20.123Z",
-          "updatedAt": "2021-11-09T13:33:20.123Z"
-        }
-      }
-    },
-    {
-      "id": 2,
-      "documentId": "sen6qfgxcac13pwchf8xbu",
-      "title": "What are chinese hamburgers and why aren't you eating them?",
-      "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-      "createdAt": "2021-11-11T13:33:19.948Z",
-      "updatedAt": "2023-06-01T14:32:50.984Z",
-      "publishedAt": "2022-09-22T12:36:48.312Z",
-      "locale": "en",
-      "ckeditor_content": "…",
-      "category": {
-        "data": {
-          "id": 13,
-          "documentId": "r3rhzcxd7gjx07vkq3pia5",
-          "name": "Chinese",
-          "slug": "chinese",
-          "createdAt": "2021-11-09T13:33:20.123Z",
-          "updatedAt": "2021-11-09T13:33:20.123Z"
-        }
-      }
-    },
-    {
-      "id": 3,
-      "documentId": "s9uu7rkukhfcsmj2e60b67",
-      "title": "7 Places worth visiting for the food alone",
-      "slug": "7-places-worth-visiting-for-the-food-alone",
-      "createdAt": "2021-11-12T13:33:19.948Z",
-      "updatedAt": "2023-06-02T11:30:00.075Z",
-      "publishedAt": "2023-06-02T11:30:00.075Z",
-      "locale": "en",
-      "ckeditor_content": "…",
-      "category": {
-        "data": {
-          "id": 3,
-          "documentId": "4sevz15w6bdol6y4t8kblk",
-          "name": "International",
-          "slug": "international",
-          "createdAt": "2021-11-09T13:33:20.123Z",
-          "updatedAt": "2021-11-09T13:33:20.123Z"
-        }
-      }
-    },
-    {
-      "id": 4,
-      "documentId": "iy5ifm3xj8q0t8vlq6l23h",
-      "title": "If you don't finish your plate in these countries, you might offend someone",
-      "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
-      "createdAt": "2021-11-15T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:59:35.148Z",
-      "publishedAt": "2022-09-22T12:35:53.899Z",
-      "locale": "en",
-      "ckeditor_content": "…",
-      "category": {
-        "data": {
-          "id": 3,
-          "documentId": "0eor603u8qej933maphdv3",
-          "name": "International",
-          "slug": "international",
-          "createdAt": "2021-11-09T13:33:20.123Z",
-          "updatedAt": "2021-11-09T13:33:20.123Z"
-        }
-      }
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
-
-## Example: With 2-level deep population
-Description: GET /api/articles — With 2-level deep population
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-with-2-level-deep-population)
-
-Language: Bash
-File path: N/A
-
-```bash
-GET /api/articles?populate[category][populate][0]=restaurants
-```
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "iy5ifm3xj8q0t8vlq6l23h",
-      "title": "Here's why you have to try basque cuisine, according to a basque chef",
-      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-      "createdAt": "2021-11-09T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:57:19.584Z",
-      "publishedAt": "2022-09-22T09:30:00.208Z",
-      "locale": "en",
-      "ckeditor_content": "…",
-      "category": {
-        "data": {
-          "id": 4,
-          "name": "European",
-          "slug": "european",
-          "createdAt": "2021-11-09T13:33:20.123Z",
-          "updatedAt": "2021-11-09T13:33:20.123Z",
-          "restaurants": {
-            "data": [
-              {
-                "id": 1,
-                "documentId": "ozlqrdxpnjb7wtvf6lp74v",
-                "name": "Mint Lounge",
-                "slug": "mint-lounge",
-                "price": "p3",
-                "createdAt": "2021-11-09T14:07:47.125Z",
-                "updatedAt": "2021-11-23T16:41:30.504Z",
-                "publishedAt": "2021-11-23T16:41:30.501Z",
-                "locale": "en"
-              },
-              {
-                "id": 9,
-                "// truncated content": true
-              },
-              {
-                "id": 10,
-                "// truncated content": true
-              },
-              {
-                "id": 12,
-                "// truncated content": true
-              },
-              {
-                "id": 21,
-                "// truncated content": true
-              },
-              {
-                "id": 26,
-                "// truncated content": true
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "id": 2,
-      "// truncated content": true
-    },
-    {
-      "id": 3,
-      "// truncated content": true
-    },
-    {
-      "id": 4,
-      "// truncated content": true
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
-
-## Example: Only 1st level component
-Description: GET /api/articles — Only 1st level component
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-only-1st-level-component)
-
-Language: Bash
-File path: N/A
-
-```bash
-GET /api/articles?populate[0]=seo
-```
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "md60m5cy3dula5g87x1uar",
-      "title": "Here's why you have to try basque cuisine, according to a basque chef",
-      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-      "createdAt": "2021-11-09T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:57:19.584Z",
-      "publishedAt": "2022-09-22T09:30:00.208Z",
-      "locale": "en",
-      "ckeditor_content": "…",
-      "seo": {
-        "id": 1,
-        "documentId": "kqcwhq6hes25kt9ebj8x7j",
-        "metaTitle": "Articles - FoodAdvisor",
-        "metaDescription": "Discover our articles about food, restaurants, bars and more! - FoodAdvisor",
-        "keywords": "food",
-        "metaRobots": null,
-        "structuredData": null,
-        "metaViewport": null,
-        "canonicalURL": null
-      }
-    },
-    {
-      "id": 2,
-      "// truncated content": true
-    },
-    {
-      "id": 3,
-      "// truncated content": true
-    },
-    {
-      "id": 4,
-      "// truncated content": true
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
-
-## Example: 1st level and 2nd level component
-Description: GET /api/articles — 1st level and 2nd level component
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-1st-level-and-2nd-level-component)
-
-Language: Bash
-File path: N/A
-
-```bash
-GET /api/articles?populate[0]=seo&populate[1]=seo.metaSocial
-```
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "c2imt19iywk27hl2ftph7s",
-      "title": "Here's why you have to try basque cuisine, according to a basque chef",
-      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-      "createdAt": "2021-11-09T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:57:19.584Z",
-      "publishedAt": "2022-09-22T09:30:00.208Z",
-      "locale": "en",
-      "ckeditor_content": "…",
-      "seo": {
-        "id": 1,
-        "documentId": "e8cnux5ejxyqrejd5addfv",
-        "metaTitle": "Articles - FoodAdvisor",
-        "metaDescription": "Discover our articles about food, restaurants, bars and more! - FoodAdvisor",
-        "keywords": "food",
-        "metaRobots": null,
-        "structuredData": null,
-        "metaViewport": null,
-        "canonicalURL": null,
-        "metaSocial": [
-          {
-            "id": 1,
-            "documentId": "ks7xsp9fewoi0qljcz9qa0",
-            "socialNetwork": "Facebook",
-            "title": "Browse our best articles about food and restaurants ",
-            "description": "Discover our articles about food, restaurants, bars and more!"
-          }
-        ]
-      }
-    },
-    {
-      "id": 2,
-      "// truncated content": true
-    },
-    {
-      "id": 3,
-      "// truncated content": true
-    },
-    {
-      "id": 4,
-      "// truncated content": true
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
-
 ## Example
-Description: GET /api/articles — Detailed population strategy for dynamic zones
+Description: id="detailed-population-dynamic-zones" method="GET" path="/api/articles" title="Detailed population strategy for dynamic zones" description="Populates the blocks dynamic zone using a detailed per-component population strategy.">
 (Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example)
 
 Language: Bash
 File path: N/A
 
 ```bash
-GET /api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*
+curl 'http://localhost:1337/api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*' \
+  -H 'Authorization: Bearer <token>'
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
 ```
 
 Language: JSON
@@ -10247,127 +10520,308 @@ File path: N/A
 # Locale
 Source: https://docs.strapi.io/cms/api/rest/locale
 
-## `GET` Get all documents in a specific locale
-Description: GET /api/restaurants?locale=fr — Get all documents in a specific locale
-(Source: https://docs.strapi.io/cms/api/rest/locale#get-get-all-documents-in-a-specific-locale)
+## GET Get all documents in a specific locale
+Description: id="rest-get-all-endpoint" method="GET" path="/api/restaurants?locale=fr" title="Get all documents in a specific locale" description="Returns all documents for a given locale.">
+(Source: https://docs.strapi.io/cms/api/rest/locale#rest-get-all)
 
-Language: Bash
-File path: N/A
+Language: JavaScript
+File path: /github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.js
 
-```bash
-GET http://localhost:1337/api/restaurants?locale=fr
+```js
+curl 'http://localhost:1337/api/restaurants?locale=fr' \
+  -H 'Authorization: Bearer <token>'
+```
+
+Language: JSON
+File path: /github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.js
+
+```json
+{
+  "data": [
+    {
+      "id": 5,
+      "documentId": "h90lgohlzfpjf3bvan72mzll",
+      "Title": "Meilleures pizzas",
+      "Body": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "On déguste les meilleures pizzas de la ville à la Pizzeria Arrivederci."
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-03-06T22:08:59.643Z",
+      "updatedAt": "2024-03-06T22:10:21.127Z",
+      "publishedAt": "2024-03-06T22:10:21.130Z",
+      "locale": "fr"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
 ```
 
 
 ## Collection types
-Description: GET /api/restaurants/:documentId?locale=fr — Get a document in a specific locale (collection type)
+Description: id="get-one-collection-type-endpoint" method="GET" path="/api/restaurants/:documentId?locale=fr" title="Get a document in a specific locale (collection type)" description="Returns a specific document in a collection type for a given locale.">
 (Source: https://docs.strapi.io/cms/api/rest/locale#get-one-collection-type)
 
 Language: Bash
 File path: N/A
 
 ```bash
-GET /api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr
+curl 'http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr' \
+  -H 'Authorization: Bearer <token>'
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 22,
+      "documentId": "lr5wju2og49bf820kj9kz8c3",
+      "Name": "Biscotte Restaurant",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Bienvenue au restaurant Biscotte! Le Restaurant Biscotte propose une cuisine à base de produits frais et de qualité, souvent locaux, biologiques lorsque cela est possible, et toujours produits par des producteurs passionnés."
+            }
+          ]
+        }
+      ],
+      "locale": "fr"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 3
+    }
+  }
+}
 ```
 
 
 ## Single types
-Description: GET /api/homepage?locale=fr — Get a document in a specific locale (single type)
+Description: id="get-one-single-type-endpoint" method="GET" path="/api/homepage?locale=fr" title="Get a document in a specific locale (single type)" description="Returns a specific single type document for a given locale.">
 (Source: https://docs.strapi.io/cms/api/rest/locale#get-one-single-type)
 
 Language: Bash
 File path: N/A
 
 ```bash
-GET /api/homepage?locale=fr
+curl 'http://localhost:1337/api/homepage?locale=fr' \
+  -H 'Authorization: Bearer <token>'
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": {
+    "id": 10,
+    "documentId": "ukbpbnu8kbutpn98rsanyi50",
+    "Title": "Page d'accueil",
+    "Body": null,
+    "createdAt": "2024-03-07T13:28:26.349Z",
+    "updatedAt": "2024-03-07T13:28:26.349Z",
+    "publishedAt": "2024-03-07T13:28:26.353Z",
+    "locale": "fr"
+  },
+  "meta": {}
+}
 ```
 
 
 ## For the default locale
-Description: POST /api/restaurants — Create a document for the default locale
+Description: id="rest-create-default-locale-endpoint" method="POST" path="/api/restaurants" title="Create a document for the default locale" description="Creates a new document using the default locale.">
 (Source: https://docs.strapi.io/cms/api/rest/locale#rest-create-default-locale)
 
 Language: Bash
 File path: N/A
 
 ```bash
-POST http://localhost:1337/api/restaurants
+curl -X POST \
+  'http://localhost:1337/api/restaurants' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "Oplato"
+    }
+  }'
+```
 
+Language: JSON
+File path: N/A
+
+```json
 {
   "data": {
-    "Name": "Oplato"
-  }
+    "id": 13,
+    "documentId": "jae8klabhuucbkgfe2xxc5dj",
+    "Name": "Oplato",
+    "Description": null,
+    "createdAt": "2024-03-06T22:19:54.646Z",
+    "updatedAt": "2024-03-06T22:19:54.646Z",
+    "publishedAt": "2024-03-06T22:19:54.649Z",
+    "locale": "en"
+  },
+  "meta": {}
 }
 ```
 
 
 ## For a specific locale
-Description: POST /api/restaurants?locale=fr — Create a document for a specific locale
+Description: id="rest-create-specific-locale-endpoint" method="POST" path="/api/restaurants?locale=fr" title="Create a document for a specific locale" description="Creates a new document for a specified locale.">
 (Source: https://docs.strapi.io/cms/api/rest/locale#rest-create-specific-locale)
 
 Language: Bash
 File path: N/A
 
 ```bash
-POST http://localhost:1337/api/restaurants?locale=fr
+curl -X POST \
+  'http://localhost:1337/api/restaurants?locale=fr' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "She'\''s Cake"
+    }
+  }'
+```
 
+Language: JSON
+File path: N/A
+
+```json
 {
   "data": {
-    "Name": "She's Cake"
-  }
+    "id": 15,
+    "documentId": "ldcmn698iams5nuaehj69j5o",
+    "Name": "She's Cake",
+    "Description": null,
+    "createdAt": "2024-03-06T22:21:18.373Z",
+    "updatedAt": "2024-03-06T22:21:18.373Z",
+    "publishedAt": "2024-03-06T22:21:18.378Z",
+    "locale": "fr"
+  },
+  "meta": {}
 }
 ```
 
 
 ## In a collection type
-Description: PUT /api/restaurants/:documentId?locale=fr — Create or update a locale version (collection type)
+Description: id="rest-put-collection-type-endpoint" method="PUT" path="/api/restaurants/:documentId?locale=fr" title="Create or update a locale version (collection type)" description="Creates a French locale for an existing restaurant, or updates it if it already exists.">
 (Source: https://docs.strapi.io/cms/api/rest/locale#rest-delete-collection-type)
 
 Language: Bash
 File path: N/A
 
 ```bash
-PUT http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr
+curl -X PUT \
+  'http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "She'\''s Cake in French"
+    }
+  }'
+```
 
+Language: JSON
+File path: N/A
+
+```json
 {
   "data": {
-    "Name": "She's Cake in French"
-  }
+    "id": 19,
+    "documentId": "lr5wju2og49bf820kj9kz8c3",
+    "Name": "She's Cake in French",
+    "Description": null,
+    "createdAt": "2024-03-07T12:13:09.551Z",
+    "updatedAt": "2024-03-07T12:13:09.551Z",
+    "publishedAt": "2024-03-07T12:13:09.554Z",
+    "locale": "fr"
+  },
+  "meta": {}
 }
 ```
 
----
 Language: Bash
 File path: N/A
 
 ```bash
-DELETE /api/restaurants/abcdefghijklmno456?locale=fr
+curl -X DELETE \
+  'http://localhost:1337/api/restaurants/abcdefghijklmno456?locale=fr' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 
 ## In a single type
-Description: PUT /api/homepage?locale=fr — Create or update a locale version (single type)
+Description: id="rest-put-single-type-endpoint" method="PUT" path="/api/homepage?locale=fr" title="Create or update a locale version (single type)" description="Creates a French locale for an existing Homepage single type, or updates it if it already exists.">
 (Source: https://docs.strapi.io/cms/api/rest/locale#rest-delete-single-type)
 
 Language: Bash
 File path: N/A
 
 ```bash
-PUT http://localhost:1337/api/homepage?locale=fr
+curl -X PUT \
+  'http://localhost:1337/api/homepage?locale=fr' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Title": "Page d'\''accueil"
+    }
+  }'
+```
 
+Language: JSON
+File path: N/A
+
+```json
 {
   "data": {
-    "Title": "Page d'accueil"
-  }
+    "id": 10,
+    "documentId": "ukbpbnu8kbutpn98rsanyi50",
+    "Title": "Page d'accueil",
+    "Body": null,
+    "createdAt": "2024-03-07T13:28:26.349Z",
+    "updatedAt": "2024-03-07T13:28:26.349Z",
+    "publishedAt": "2024-03-07T13:28:26.353Z",
+    "locale": "fr"
+  },
+  "meta": {}
 }
 ```
 
----
 Language: Bash
 File path: N/A
 
 ```bash
-DELETE /api/homepage?locale=fr
+curl -X DELETE \
+  'http://localhost:1337/api/homepage?locale=fr' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 
@@ -10376,14 +10830,15 @@ DELETE /api/homepage?locale=fr
 Source: https://docs.strapi.io/cms/api/rest/populate-select
 
 ## Field selection
-Description: GET /api/restaurants?fields[0]=name&fields[1]=description — Return only name and description fields
+Description: id="field-selection-example" method="GET" path="/api/restaurants?fields[0]=name&fields[1]=description" title="Return only name and description fields" description="Use the fields parameter to select only specific fields in the response.">
 (Source: https://docs.strapi.io/cms/api/rest/populate-select#field-selection)
 
 Language: Bash
 File path: N/A
 
 ```bash
-GET /api/restaurants?fields[0]=name&fields[1]=description
+curl 'http://localhost:1337/api/restaurants?fields[0]=name&fields[1]=description' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 ---
@@ -10404,16 +10859,51 @@ const query = qs.stringify(
 await request(`/api/users?${query}`);
 ```
 
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 4,
+      "Name": "Pizzeria Arrivederci",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Specialized in pizza, we invite you to rediscover our classics, such as 4 Formaggi or Calzone, and our original creations such as Do Luigi or Nduja."
+            }
+          ]
+        }
+      ],
+      "documentId": "lr5wju2og49bf820kj9kz8c3"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+```
+
 
 ## Populate with field selection
-Description: GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url — Populate with field selection
+Description: Code example from "Populate with field selection"
 (Source: https://docs.strapi.io/cms/api/rest/populate-select#populate-with-field-selection)
 
 Language: Bash
 File path: N/A
 
 ```bash
-GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url
+curl 'http://localhost:1337/api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 ---
@@ -10439,16 +10929,40 @@ const query = qs.stringify(
 await request(`/api/articles?${query}`);
 ```
 
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "h90lgohlzfpjf3bvan72mzll",
+      "title": "Test Article",
+      "slug": "test-article",
+      "headerImage": {
+        "id": 1,
+        "documentId": "cf07g1dbusqr8mzmlbqvlegx",
+        "name": "17520.jpg",
+        "url": "/uploads/17520_73c601c014.jpg"
+      }
+    }
+  ],
+  "meta": {}
+}
+```
+
 
 ## Populate with filtering
-Description: GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars — Populate with filtering
+Description: Code example from "Populate with filtering"
 (Source: https://docs.strapi.io/cms/api/rest/populate-select#populate-with-filtering)
 
 Language: Bash
 File path: N/A
 
 ```bash
-GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars
+curl 'http://localhost:1337/api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 ---
@@ -10478,20 +10992,45 @@ const query = qs.stringify(
 await request(`/api/articles?${query}`);
 ```
 
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "a1b2c3d4e5d6f7g8h9i0jkl",
+      "title": "Test Article",
+      "categories": {
+        "data": [
+          {
+            "id": 2,
+            "documentId": "jKd8djla9ndalk98hflj3",
+            "name": "Cars"
+          }
+        ]
+      }
+    }
+  ],
+  "meta": {}
+}
+```
+
 
 
 # REST API: publicationFilter
 Source: https://docs.strapi.io/cms/api/rest/publication-filter
 
 ## Find never published drafts
-Description: GET /api/restaurants?status=draft&publicationFilter=never-published — Get draft restaurants that have never been published for their locale
+Description: Code example from "Find never published drafts"
 (Source: https://docs.strapi.io/cms/api/rest/publication-filter#never-published)
 
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published' \\
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -10537,14 +11076,14 @@ File path: N/A
 
 
 ## Find drafts never published in any locale
-Description: GET /api/restaurants?status=draft&publicationFilter=never-published-document — Get drafts of restaurants never published in any locale
+Description: Code example from "Find drafts never published in any locale"
 (Source: https://docs.strapi.io/cms/api/rest/publication-filter#never-published-document)
 
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published-document' \\
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published-document' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -10590,14 +11129,14 @@ File path: N/A
 
 
 ## Find modified documents
-Description: GET /api/restaurants?status=draft&publicationFilter=modified — Get the draft versions of modified restaurants
+Description: Code example from "Find modified documents"
 (Source: https://docs.strapi.io/cms/api/rest/publication-filter#modified)
 
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=modified' \\
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=modified' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -10617,12 +11156,11 @@ const query = qs.stringify({
 await request(`/api/restaurants?${query}`);
 ```
 
----
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/restaurants?publicationFilter=modified' \\
+curl 'http://localhost:1337/api/restaurants?publicationFilter=modified' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -10665,7 +11203,6 @@ File path: N/A
 }
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -10692,14 +11229,14 @@ File path: N/A
 
 
 ## Find unmodified documents
-Description: GET /api/restaurants?status=draft&publicationFilter=unmodified — Get the draft versions of unmodified restaurants
+Description: Code example from "Find unmodified documents"
 (Source: https://docs.strapi.io/cms/api/rest/publication-filter#unmodified)
 
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=unmodified' \\
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=unmodified' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -10719,12 +11256,11 @@ const query = qs.stringify({
 await request(`/api/restaurants?${query}`);
 ```
 
----
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/restaurants?publicationFilter=unmodified' \\
+curl 'http://localhost:1337/api/restaurants?publicationFilter=unmodified' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -10767,7 +11303,6 @@ File path: N/A
 }
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -10794,14 +11329,14 @@ File path: N/A
 
 
 ## Find documents with a published version
-Description: GET /api/restaurants?status=draft&publicationFilter=has-published-version — Get the draft versions of restaurants that also have a published version
+Description: Code example from "Find documents with a published version"
 (Source: https://docs.strapi.io/cms/api/rest/publication-filter#has-published-version)
 
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version' \\
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -10821,12 +11356,11 @@ const query = qs.stringify({
 await request(`/api/restaurants?${query}`);
 ```
 
----
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/restaurants?publicationFilter=has-published-version' \\
+curl 'http://localhost:1337/api/restaurants?publicationFilter=has-published-version' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -10869,7 +11403,6 @@ File path: N/A
 }
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -10896,14 +11429,14 @@ File path: N/A
 
 
 ## Find documents with a published version in at least one locale
-Description: GET /api/restaurants?status=draft&publicationFilter=has-published-version-document — Get the drafts of restaurants published in at least one locale
+Description: Code example from "Find documents with a published version in at least one locale"
 (Source: https://docs.strapi.io/cms/api/rest/publication-filter#has-published-version-document)
 
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version-document' \\
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version-document' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -10949,14 +11482,14 @@ File path: N/A
 
 
 ## Diagnostic values
-Description: GET /api/restaurants?publicationFilter=published-without-draft — Get published restaurants with no draft for the same locale
+Description: Code example from "Diagnostic values"
 (Source: https://docs.strapi.io/cms/api/rest/publication-filter#diagnostics)
 
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/restaurants?publicationFilter=published-without-draft' \\
+curl 'http://localhost:1337/api/restaurants?publicationFilter=published-without-draft' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -10975,12 +11508,11 @@ const query = qs.stringify({
 await request(`/api/restaurants?${query}`);
 ```
 
----
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/restaurants?publicationFilter=published-with-draft' \\
+curl 'http://localhost:1337/api/restaurants?publicationFilter=published-with-draft' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -11023,7 +11555,6 @@ File path: N/A
 }
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -11356,14 +11887,15 @@ File path: N/A
 Source: https://docs.strapi.io/cms/api/rest/sort-pagination
 
 ## Example: Sort using 2 fields
-Description: GET /api/restaurants?sort[0]=Description&sort[1]=Name — Sort using 2 fields
+Description: id="sort-using-2-fields" method="GET" path="/api/restaurants?sort[0]=Description&sort[1]=Name" title="Sort using 2 fields" description="Sort results by Description and Name fields.">
 (Source: https://docs.strapi.io/cms/api/rest/sort-pagination#example-sort-using-2-fields)
 
 Language: Bash
 File path: N/A
 
 ```bash
-GET /api/restaurants?sort[0]=Description&sort[1]=Name
+curl 'http://localhost:1337/api/restaurants?sort[0]=Description&sort[1]=Name' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 ---
@@ -11431,14 +11963,15 @@ File path: N/A
 
 
 ## Example: Sort using 2 fields and set the order
-Description: GET /api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc — Sort using 2 fields and set the order
+Description: id="sort-using-2-fields-and-set-the-order" method="GET" path="/api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc" title="Sort using 2 fields and set the order" description="Sort results by Description ascending and Name descending.">
 (Source: https://docs.strapi.io/cms/api/rest/sort-pagination#example-sort-using-2-fields-and-set-the-order)
 
 Language: Bash
 File path: N/A
 
 ```bash
-GET /api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc
+curl 'http://localhost:1337/api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 ---
@@ -11506,14 +12039,15 @@ File path: N/A
 
 
 ## Pagination by page
-Description: GET /api/articles?pagination[page]=1&pagination[pageSize]=10 — Pagination by page
+Description: Code example from "Pagination by page"
 (Source: https://docs.strapi.io/cms/api/rest/sort-pagination#pagination-by-page)
 
 Language: Bash
 File path: N/A
 
 ```bash
-GET /api/articles?pagination[page]=1&pagination[pageSize]=10
+curl 'http://localhost:1337/api/articles?pagination[page]=1&pagination[pageSize]=10' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 ---
@@ -11555,19 +12089,20 @@ File path: N/A
 
 
 ## Pagination by offset
-Description: GET /api/articles?pagination[start]=0&pagination[limit]=10 — Pagination by offset
+Description: Code example from "Pagination by offset"
 (Source: https://docs.strapi.io/cms/api/rest/sort-pagination#pagination-by-offset)
 
-Language: Bash
-File path: N/A
+Language: JavaScript
+File path: ./config/api.js
 
-```bash
-GET /api/articles?pagination[start]=0&pagination[limit]=10
+```js
+curl 'http://localhost:1337/api/articles?pagination[start]=0&pagination[limit]=10' \
+  -H 'Authorization: Bearer <token>'
 ```
 
 ---
 Language: JavaScript
-File path: N/A
+File path: ./config/api.js
 
 ```js
 const qs = require('qs');
@@ -11584,7 +12119,7 @@ await request(`/api/articles?${query}`);
 ```
 
 Language: JSON
-File path: N/A
+File path: ./config/api.js
 
 ```json
 {
@@ -11606,15 +12141,15 @@ File path: N/A
 # Status
 Source: https://docs.strapi.io/cms/api/rest/status
 
-## Status
-Description: GET /api/articles?status=draft — Get draft versions of restaurants
-(Source: https://docs.strapi.io/cms/api/rest/status#status)
+## REST API: status
+Description: id="get-draft-versions" method="GET" path="/api/articles?status=draft" title="Get draft versions of restaurants" description="Returns draft versions of documents by passing the status=draft query parameter.">
+(Source: https://docs.strapi.io/cms/api/rest/status#rest-api-status)
 
 Language: Bash
 File path: N/A
 
 ```bash
-curl 'http://localhost:1337/api/articles?status=draft' \\
+curl 'http://localhost:1337/api/articles?status=draft' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -11631,6 +12166,44 @@ const query = qs.stringify({
 });
 
 await request(`/api/articles?${query}`);
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 5,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "Name": "Biscotte Restaurant",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "This is the draft version."
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T21:38:46.353Z",
+      "publishedAt": null,
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
 ```
 
 

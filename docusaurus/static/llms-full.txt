@@ -11627,14 +11627,11 @@ Returns a paginated list of documents. Supports filtering, sorting, field select
 - `status` (string): `published` or `draft`. See status (/cms/api/rest/status).
 - `publicationFilter` (string): Query documents by the relationship between their draft and published versions. See publicationFilter (/cms/api/rest/publication-filter).
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/restaurants' \\
+```bash
+curl 'http://localhost:1337/api/restaurants' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const response = await fetch(
   'http://localhost:1337/api/restaurants',
   {
@@ -11646,7 +11643,6 @@ const response = await fetch(
 const data = await response.json();
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -11664,17 +11660,6 @@ const data = await response.json();
       "id": 4,
       "documentId": "znrlzntu9ei5onjvwfaalu2v",
       "Name": "Biscotte Restaurant",
-      "Description": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
-            }
-          ]
-        }
-      ],
       "createdAt": "2024-03-06T13:43:30.172Z",
       "updatedAt": "2024-03-06T13:43:30.172Z",
       "publishedAt": "2024-03-06T13:43:30.175Z",
@@ -11682,12 +11667,7 @@ const data = await response.json();
     }
   ],
   "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 2
-    }
+    "pagination": { "page": 1, "pageSize": 25, "pageCount": 1, "total": 2 }
   }
 }
 ```
@@ -11706,14 +11686,11 @@ Returns a single document by its documentId. Supports field selection and relati
 - `pluralApiId` (string, required): Plural API ID of the content-type (e.g. `restaurants`)
 - `documentId` (string, required): Unique document identifier
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v' \\
+```bash
+curl 'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const response = await fetch(
   'http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v',
   {
@@ -11725,7 +11702,6 @@ const response = await fetch(
 const data = await response.json();
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": {
@@ -11735,12 +11711,7 @@ const data = await response.json();
     "Description": [
       {
         "type": "paragraph",
-        "children": [
-          {
-            "type": "text",
-            "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products."
-          }
-        ]
+        "children": [{ "type": "text", "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products." }]
       }
     ],
     "createdAt": "2024-02-27T10:19:04.953Z",
@@ -11751,10 +11722,9 @@ const data = await response.json();
   "meta": {}
 }
 ```
-
-**Response 200 Not Found:**
 ```json
 {
+  "data": null,
   "error": {
     "status": 404,
     "name": "NotFoundError",
@@ -11782,12 +11752,11 @@ Creates a new document and returns it. Send field values inside a data object in
 **Parameters:**
 - `data` (object, required): Object containing the field values for the new document
 
-**cURL:**
-```
-curl -X POST \\
-  'http://localhost:1337/api/restaurants' \\
-  -H 'Authorization: Bearer <token>' \\
-  -H 'Content-Type: application/json' \\
+```bash
+curl -X POST \
+  'http://localhost:1337/api/restaurants' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
   -d '{
     "data": {
       "Name": "Restaurant D",
@@ -11800,9 +11769,7 @@ curl -X POST \\
     }
   }'
 ```
-
-**JavaScript:**
-```
+```js
 const response = await fetch(
   'http://localhost:1337/api/restaurants',
   {
@@ -11827,7 +11794,6 @@ const response = await fetch(
 const data = await response.json();
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": {
@@ -11836,12 +11802,7 @@ const data = await response.json();
     "Description": [
       {
         "type": "paragraph",
-        "children": [
-          {
-            "type": "text",
-            "text": "A very short description goes here."
-          }
-        ]
+        "children": [{ "type": "text", "text": "A very short description goes here." }]
       }
     ],
     "createdAt": "2024-03-05T16:44:47.689Z",
@@ -11871,12 +11832,11 @@ Partially updates a document by documentId and returns its value. Send a null va
 **Parameters:**
 - `data` (object, required): Object containing the field values to update
 
-**cURL:**
-```
-curl -X PUT \\
-  'http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3' \\
-  -H 'Authorization: Bearer <token>' \\
-  -H 'Content-Type: application/json' \\
+```bash
+curl -X PUT \
+  'http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
   -d '{
     "data": {
       "Name": "BMK Paris Bamako",
@@ -11889,9 +11849,7 @@ curl -X PUT \\
     }
   }'
 ```
-
-**JavaScript:**
-```
+```js
 const response = await fetch(
   'http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3',
   {
@@ -11916,7 +11874,6 @@ const response = await fetch(
 const data = await response.json();
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": {
@@ -11926,12 +11883,7 @@ const data = await response.json();
     "Description": [
       {
         "type": "paragraph",
-        "children": [
-          {
-            "type": "text",
-            "text": "A very short description goes here."
-          }
-        ]
+        "children": [{ "type": "text", "text": "A very short description goes here." }]
       }
     ],
     "createdAt": "2024-03-06T13:42:05.098Z",
@@ -11953,15 +11905,12 @@ Permanently deletes a document by documentId. This action is irreversible.
 - `pluralApiId` (string, required): Plural API ID (e.g. `restaurants`)
 - `documentId` (string, required): Document ID of the entry to delete
 
-**cURL:**
-```
-curl -X DELETE \\
-  'http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du' \\
+```bash
+curl -X DELETE \
+  'http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const response = await fetch(
   'http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du',
   {
@@ -12047,13 +11996,11 @@ By default, the filters can only be used from `find` endpoints generated by the 
 
 Use the $eq filter operator to find an exact match.
 
-**cURL:**
+```bash
+curl 'http://localhost:1337/api/users?filters[username][$eq]=John' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/users?filters[username][$eq]=John
-```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
   filters: {
@@ -12065,10 +12012,9 @@ const query = qs.stringify({
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/users?\${query}\`);
+await request(`/api/users?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -12101,13 +12047,11 @@ await request(\`/api/users?\${query}\`);
 
 Use the $in filter operator with an array of values to find multiple exact values.
 
-**cURL:**
+```bash
+curl 'http://localhost:1337/api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8
-```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
   filters: {
@@ -12119,10 +12063,9 @@ const query = qs.stringify({
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -12152,13 +12095,11 @@ await request(\`/api/restaurants?\${query}\`);
 
 Combine $and and $or operators for complex filtering.
 
-**cURL:**
+```bash
+curl 'http://localhost:1337/api/books?filters[$and][0][$or][0][date][$eq]=2020-01-01&filters[$and][0][$or][1][date][$eq]=2020-01-02&filters[$and][1][author][name][$eq]=Kai%20doe' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/books?filters[$and][0][$or][0][date][$eq]=2020-01-01&filters[$and][0][$or][1][date][$eq]=2020-01-02&filters[$and][1][author][name][$eq]=Kai%20doe
-```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
   filters: {
@@ -12190,10 +12131,9 @@ const query = qs.stringify({
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/books?\${query}\`);
+await request(`/api/books?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -12237,13 +12177,11 @@ For examples of how to deep filter with the various APIs, please refer to [this 
 
 Use deep filtering to filter on a relation
 
-**cURL:**
+```bash
+curl 'http://localhost:1337/api/restaurants?filters[chef][restaurants][stars][$eq]=5' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/restaurants?filters[chef][restaurants][stars][$eq]=5
-```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
   filters: {
@@ -12259,10 +12197,9 @@ const query = qs.stringify({
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -12459,12 +12396,22 @@ Notice how the response only includes the `title`, `slug`, `createdAt`, `updated
 
 Returns only default attributes, without any media fields, relations, components, or dynamic zones.
 
-**Request:**
+```bash
+curl 'http://localhost:1337/api/articles' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/articles
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -12546,12 +12493,22 @@ To populate deeply nested components, see the [populate components](#populate-co
 
 Returns all media fields, first-level relations, components, and dynamic zones.
 
-**Request:**
+```bash
+curl 'http://localhost:1337/api/articles?populate=*' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/articles?populate=*
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate=*',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -12776,12 +12733,22 @@ Notice that the response does not include any media fields, relations, component
 
 Returns only default attributes for all articles.
 
-**Request:**
+```bash
+curl 'http://localhost:1337/api/articles' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/articles
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -12853,12 +12820,22 @@ Notice that the response now includes additional data with the `category` field 
 
 Returns articles with their related category data populated.
 
-**Request:**
+```bash
+curl 'http://localhost:1337/api/articles?populate[0]=category' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/articles?populate[0]=category
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=category',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -13001,12 +12978,22 @@ When we only populate 1 level deep, asking for the categories associated to arti
 
 Populates the category relation 1 level deep.
 
-**Request:**
+```bash
+curl 'http://localhost:1337/api/articles?populate[0]=category' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/articles?populate[0]=category
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=category',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -13115,12 +13102,22 @@ Notice that we now have the `restaurants` relation field included with the respo
 
 Populates the category relation and the nested restaurants relation 2 levels deep.
 
-**Request:**
+```bash
+curl 'http://localhost:1337/api/articles?populate[category][populate][0]=restaurants' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/articles?populate[category][populate][0]=restaurants
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[category][populate][0]=restaurants',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -13248,12 +13245,22 @@ Notice there's no mention of the `metaSocial` component nested within the `seo` 
 
 Populates only the seo component, 1 level deep.
 
-**Request:**
+```bash
+curl 'http://localhost:1337/api/articles?populate[0]=seo' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/articles?populate[0]=seo
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=seo',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -13313,12 +13320,22 @@ Notice that we now have the `metaSocial` component-related data included with th
 
 Populates the seo component and the nested metaSocial component.
 
-**Request:**
+```bash
+curl 'http://localhost:1337/api/articles?populate[0]=seo&populate[1]=seo.metaSocial' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/articles?populate[0]=seo&populate[1]=seo.metaSocial
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=seo&populate[1]=seo.metaSocial',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -13647,12 +13664,22 @@ In the following example response, highlighted lines show that:
 
 Populates the blocks dynamic zone using a detailed per-component population strategy.
 
-**Request:**
+```bash
+curl 'http://localhost:1337/api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -13852,12 +13879,11 @@ The following table lists the new possible use cases added by i18n to the REST A
 
 Returns all documents for a given locale.
 
-**Request:**
-```
-GET http://localhost:1337/api/restaurants?locale=fr
+```bash
+curl 'http://localhost:1337/api/restaurants?locale=fr' \
+  -H 'Authorization: Bearer <token>'
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -13910,12 +13936,11 @@ To get a specific document in a collection type in a given locale, add the `loca
 
 Returns a specific document in a collection type for a given locale.
 
-**Request:**
-```
-GET /api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr
+```bash
+curl 'http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr' \
+  -H 'Authorization: Bearer <token>'
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -13956,12 +13981,11 @@ To get a specific single type document in a given locale, add the `locale` param
 
 Returns a specific single type document for a given locale.
 
-**Request:**
-```
-GET /api/homepage?locale=fr
+```bash
+curl 'http://localhost:1337/api/homepage?locale=fr' \
+  -H 'Authorization: Bearer <token>'
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": {
@@ -13995,18 +14019,18 @@ If no locale has been passed in the request body, the document is created using 
 
 Creates a new document using the default locale.
 
-**Request:**
+```bash
+curl -X POST \
+  'http://localhost:1337/api/restaurants' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "Oplato"
+    }
+  }'
 ```
-POST http://localhost:1337/api/restaurants
 
-{
-  "data": {
-    "Name": "Oplato"
-  }
-}
-```
-
-**Response 200 OK:**
 ```json
 {
   "data": {
@@ -14031,18 +14055,18 @@ To create a localized entry for a locale different from the default one, add the
 
 Creates a new document for a specified locale.
 
-**Request:**
+```bash
+curl -X POST \
+  'http://localhost:1337/api/restaurants?locale=fr' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "She'\''s Cake"
+    }
+  }'
 ```
-POST http://localhost:1337/api/restaurants?locale=fr
 
-{
-  "data": {
-    "Name": "She's Cake"
-  }
-}
-```
-
-**Response 200 OK:**
 ```json
 {
   "data": {
@@ -14093,18 +14117,18 @@ To create a new locale for an existing document in a collection type, add the `l
 
 Creates a French locale for an existing restaurant, or updates it if it already exists.
 
-**Request:**
+```bash
+curl -X PUT \
+  'http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "She'\''s Cake in French"
+    }
+  }'
 ```
-PUT http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr
 
-{
-  "data": {
-    "Name": "She's Cake in French"
-  }
-}
-```
-
-**Response 200 OK:**
 ```json
 {
   "data": {
@@ -14129,18 +14153,18 @@ To create a new locale for an existing single type document, add the `locale` pa
 
 Creates a French locale for an existing Homepage single type, or updates it if it already exists.
 
-**Request:**
+```bash
+curl -X PUT \
+  'http://localhost:1337/api/homepage?locale=fr' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Title": "Page d'\''accueil"
+    }
+  }'
 ```
-PUT http://localhost:1337/api/homepage?locale=fr
 
-{
-  "data": {
-    "Title": "Page d'accueil"
-  }
-}
-```
-
-**Response 200 OK:**
 ```json
 {
   "data": {
@@ -14173,14 +14197,14 @@ To delete only a specific locale version of a document in a collection type, add
 
 Deletes a specific locale version of a document in a collection type.
 
-**Request:**
-```
-DELETE /api/restaurants/abcdefghijklmno456?locale=fr
+```bash
+curl -X DELETE \
+  'http://localhost:1337/api/restaurants/abcdefghijklmno456?locale=fr' \
+  -H 'Authorization: Bearer <token>'
 ```
 
-**Response 200 No Content:**
 ```json
-(response body)
+
 ```
 
 #### In a single type {#rest-delete-single-type}
@@ -14191,14 +14215,14 @@ To delete only a specific locale version of a single type document, add the `loc
 
 Deletes a specific locale version of a single type document.
 
-**Request:**
-```
-DELETE /api/homepage?locale=fr
+```bash
+curl -X DELETE \
+  'http://localhost:1337/api/homepage?locale=fr' \
+  -H 'Authorization: Bearer <token>'
 ```
 
-**Response 200 No Content:**
 ```json
-(response body)
+
 ```
 
 
@@ -14278,13 +14302,11 @@ Field selection does not work on relational, media, component, or dynamic zone f
 
 Use the fields parameter to select only specific fields in the response.
 
-**URL:**
+```bash
+curl 'http://localhost:1337/api/restaurants?fields[0]=name&fields[1]=description' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/restaurants?fields[0]=name&fields[1]=description
-```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify(
   {
@@ -14295,10 +14317,9 @@ const query = qs.stringify(
   }
 );
 
-await request(\`/api/users?\${query}\`);
+await request(`/api/users?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -14381,13 +14402,11 @@ Top-level pagination parameters (e.g., `pagination[page]` and `pagination[pageSi
 
 Combine fields and populate parameters to select specific fields on both the main entry and its relations.
 
-**URL:**
+```bash
+curl 'http://localhost:1337/api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url
-```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify(
   {
@@ -14403,10 +14422,9 @@ const query = qs.stringify(
   }
 );
 
-await request(\`/api/articles?\${query}\`);
+await request(`/api/articles?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -14435,13 +14453,11 @@ await request(\`/api/articles?\${query}\`);
 
 Combine populate with sort and filter parameters to refine which related entries are returned.
 
-**URL:**
+```bash
+curl 'http://localhost:1337/api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars
-```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify(
   {
@@ -14461,10 +14477,9 @@ const query = qs.stringify(
   }
 );
 
-await request(\`/api/articles?\${query}\`);
+await request(`/api/articles?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -14571,14 +14586,11 @@ This parameter combination works only on a given locale; to find these documents
 
 Return the drafts that have never been published for their locale.
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published' \\
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
@@ -14587,10 +14599,9 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
     "data": [
@@ -14622,14 +14633,11 @@ A document counts as published as soon as one of its locales is published: the d
 
 Return the drafts of documents never published in any locale.
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published-document' \\
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=never-published-document' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
@@ -14638,10 +14646,9 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
     "data": [
@@ -14673,14 +14680,11 @@ For instance, with `status=draft`, the query returns the draft versions:
 
 Return the draft versions of documents with unpublished changes.
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=modified' \\
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=modified' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
@@ -14689,10 +14693,9 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
     "data": [
@@ -14721,14 +14724,11 @@ With `status=published` (the REST default), the same query returns the currently
 
 Return the currently live versions of documents with unpublished changes.
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/restaurants?publicationFilter=modified' \\
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=modified' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
     publicationFilter: 'modified',
@@ -14736,10 +14736,9 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
     "data": [
@@ -14771,14 +14770,11 @@ For instance, with `status=draft`, the query returns the draft versions:
 
 Return the draft versions of documents unchanged since their last publication.
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=unmodified' \\
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=unmodified' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
@@ -14787,10 +14783,9 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
     "data": [
@@ -14819,14 +14814,11 @@ With `status=published` (the REST default), the same query returns the currently
 
 Return the currently live versions of documents unchanged since their last publication.
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/restaurants?publicationFilter=unmodified' \\
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=unmodified' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
     publicationFilter: 'unmodified',
@@ -14834,10 +14826,9 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
     "data": [
@@ -14869,14 +14860,11 @@ For instance, with `status=draft`, the query returns the draft versions:
 
 Return the draft versions of documents that also have a published version for the same locale.
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version' \\
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
@@ -14885,10 +14873,9 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
     "data": [
@@ -14917,14 +14904,11 @@ With `status=published` (the REST default), the same query returns the currently
 
 Return the currently live versions of documents that also have a published version for the same locale.
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/restaurants?publicationFilter=has-published-version' \\
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=has-published-version' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
     publicationFilter: 'has-published-version',
@@ -14932,10 +14916,9 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
     "data": [
@@ -14965,14 +14948,11 @@ await request(\`/api/restaurants?\${query}\`);
 
 Return the draft versions of documents published in at least one locale.
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version-document' \\
+```bash
+curl 'http://localhost:1337/api/restaurants?status=draft&publicationFilter=has-published-version-document' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
@@ -14981,10 +14961,9 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
     "data": [
@@ -15019,14 +14998,11 @@ The `published-without-draft` and `published-with-draft` values are meant for da
 
 Return published documents with no matching draft version for the same locale.
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/restaurants?publicationFilter=published-without-draft' \\
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=published-without-draft' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
     publicationFilter: 'published-without-draft',
@@ -15034,10 +15010,9 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
     "data": [
@@ -15065,14 +15040,11 @@ await request(\`/api/restaurants?\${query}\`);
 
 Return published documents that also have a matching draft version for the same locale.
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/restaurants?publicationFilter=published-with-draft' \\
+```bash
+curl 'http://localhost:1337/api/restaurants?publicationFilter=published-with-draft' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
     publicationFilter: 'published-with-draft',
@@ -15080,10 +15052,9 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
     "data": [
@@ -15533,13 +15504,11 @@ You can sort by multiple fields by passing fields in a `sort` array.
 
 Sort results by Description and Name fields.
 
-**REST:**
+```bash
+curl 'http://localhost:1337/api/restaurants?sort[0]=Description&sort[1]=Name' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/restaurants?sort[0]=Description&sort[1]=Name
-```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
   sort: ['Description', 'Name'],
@@ -15547,10 +15516,9 @@ const query = qs.stringify({
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -15604,13 +15572,11 @@ Using the `sort` parameter and defining `:asc` or  `:desc` on sorted fields, you
 
 Sort results by Description ascending and Name descending.
 
-**REST:**
+```bash
+curl 'http://localhost:1337/api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc
-```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
   sort: ['Description:asc', 'Name:desc'],
@@ -15618,10 +15584,9 @@ const query = qs.stringify({
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/restaurants?\${query}\`);
+await request(`/api/restaurants?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -15692,13 +15657,11 @@ To paginate results by page, use the following parameters:
 
 Return only 10 entries on page 1.
 
-**REST:**
+```bash
+curl 'http://localhost:1337/api/articles?pagination[page]=1&pagination[pageSize]=10' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/articles?pagination[page]=1&pagination[pageSize]=10
-```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
   pagination: {
@@ -15709,10 +15672,9 @@ const query = qs.stringify({
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/articles?\${query}\`);
+await request(`/api/articles?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -15747,13 +15709,11 @@ The default and maximum values for `pagination[limit]` can be [configured in the
 
 Return only the first 10 entries using offset.
 
-**REST:**
+```bash
+curl 'http://localhost:1337/api/articles?pagination[start]=0&pagination[limit]=10' \
+  -H 'Authorization: Bearer <token>'
 ```
-GET /api/articles?pagination[start]=0&pagination[limit]=10
-```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
   pagination: {
@@ -15764,10 +15724,9 @@ const query = qs.stringify({
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/articles?\${query}\`);
+await request(`/api/articles?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -15819,14 +15778,11 @@ To select documents by how their draft and published versions relate (never-publ
 
 Returns draft versions of documents by passing the status=draft query parameter.
 
-**cURL:**
-```
-curl 'http://localhost:1337/api/articles?status=draft' \\
+```bash
+curl 'http://localhost:1337/api/articles?status=draft' \
   -H 'Authorization: Bearer <token>'
 ```
-
-**JavaScript:**
-```
+```js
 const qs = require('qs');
 const query = qs.stringify({
     status: 'draft',
@@ -15834,10 +15790,9 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(\`/api/articles?\${query}\`);
+await request(`/api/articles?${query}`);
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -51418,7 +51373,6 @@ Your restaurants directory will eventually include many restaurants, so we need 
 10. Finally, click **Save** and wait for Strapi to restart.
 
 Once Strapi has restarted, "Restaurant" is listed under  _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool, let's create another one right now, just for pleasure.
-<br/>
 
 **Step 4: Create a **
 
