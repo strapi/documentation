@@ -323,10 +323,11 @@ pre.prism-code {
    ────────────────────────────────────────────────────── */
 
 .code-block-enhanced {
-  // The wrapper provides the border, radius, and background
+  // The wrapper provides the border, radius, and background. Use the same
+  // corner radius as admonitions (--strapi-radius-xs) for all terminal blocks.
   position: relative;
   border: solid 1px var(--custom-code-block-border-color);
-  border-radius: var(--strapi-radius-md);
+  border-radius: var(--strapi-radius-xs);
   overflow: hidden;
   transition: border-color var(--strapi-duration-fast) var(--strapi-ease);
   margin-bottom: var(--ifm-leading);
@@ -366,10 +367,15 @@ pre.prism-code {
   }
 
   // Code block container inside enhanced wrapper
-  // All backgrounds are transparent — the wrapper controls the bg
+  // All backgrounds are transparent — the wrapper controls the bg.
+  // The :not(:has(codeBlockTitle)) variants raise specificity to beat the
+  // generic `.theme-code-block[codeBlockContainer]:not(:has(title)) { padding:24px }`
+  // rule, so terminal code isn't pushed in by that 24px padding.
   .theme-code-block,
   .theme-code-block[class*="codeBlockContainer"],
-  .theme-code-block [class*="codeBlockContainer"] {
+  .theme-code-block[class*="codeBlockContainer"]:not(:has([class*="codeBlockTitle"])),
+  .theme-code-block [class*="codeBlockContainer"],
+  .theme-code-block [class*="codeBlockContainer"]:not(:has([class*="codeBlockTitle"])) {
     padding: 0 !important;
     box-shadow: none !important;
     background: transparent !important;
