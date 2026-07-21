@@ -26,7 +26,7 @@ h1, .markdown h1:first-child {
   font-size: var(--strapi-font-size-display-sm);
   line-height: 1.15;
   letter-spacing: -0.03em;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 h2, .markdown > h2 {
@@ -35,7 +35,7 @@ h2, .markdown > h2 {
   --ifm-heading-line-height: var(--strapi-line-height-xxl);
   line-height: var(--strapi-line-height-xxl);
   padding-top: 32px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 h2 + p, .markdown > h2 + p {
