@@ -472,6 +472,13 @@ pre.prism-code {
           padding: 0;
         }
       }
+
+      // No title bar to host the action buttons, so lift the button group up
+      // into the empty space above the code instead of letting it overlap the
+      // first lines. (Titled blocks are handled separately further down.)
+      [class*="buttonGroup"] {
+        top: -32px;
+      }
     }
 
     svg {

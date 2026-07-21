@@ -124,6 +124,9 @@
       // Remove borders from code blocks inside tabs
       [class*="codeBlockContainer"]:not(:has([class*="codeBlockTitle"])) {
         border: none !important;
+        // Drop the default bottom margin: it left more empty space below the
+        // code than above it, unbalancing the block inside the tab panel.
+        margin-bottom: 0 !important;
       }
 
       [class*="codeBlockContainer"]:has([class*="codeBlockTitle"]) {
@@ -146,7 +149,7 @@
         }
 
         .theme-code-block {
-          margin: 0 20px 20px !important;
+          margin: 0 20px !important;
           border: 1px solid var(--custom-code-block-border-color) !important;
           border-top: none !important;
           border-radius: 0 0 var(--strapi-radius-md) var(--strapi-radius-md) !important;
