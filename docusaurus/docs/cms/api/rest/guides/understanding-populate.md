@@ -91,9 +91,31 @@ Notice how the response only includes the `title`, `slug`, `createdAt`, `updated
   title="Without populate"
   description="Returns only default attributes, without any media fields, relations, components, or dynamic zones.">
 
+<Tabs>
+<TabItem value="curl" label="cURL">
+
 ```bash
-GET /api/articles
+curl 'http://localhost:1337/api/articles' \
+  -H 'Authorization: Bearer <token>'
 ```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
 
 <Responses>
 <ResponseTab status={200} statusText="OK">
@@ -187,9 +209,31 @@ To populate deeply nested components, see the [populate components](#populate-co
   title="With populate=*"
   description="Returns all media fields, first-level relations, components, and dynamic zones.">
 
+<Tabs>
+<TabItem value="curl" label="cURL">
+
 ```bash
-GET /api/articles?populate=*
+curl 'http://localhost:1337/api/articles?populate=*' \
+  -H 'Authorization: Bearer <token>'
 ```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate=*',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
 
 <Responses>
 <ResponseTab status={200} statusText="OK" collapsible>
@@ -437,9 +481,31 @@ Notice that the response does not include any media fields, relations, component
   title="Without populate"
   description="Returns only default attributes for all articles.">
 
+<Tabs>
+<TabItem value="curl" label="cURL">
+
 ```bash
-GET /api/articles
+curl 'http://localhost:1337/api/articles' \
+  -H 'Authorization: Bearer <token>'
 ```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
 
 <Responses>
 <ResponseTab status={200} statusText="OK">
@@ -523,9 +589,31 @@ Notice that the response now includes additional data with the `category` field 
   title="With populate[0]=category"
   description="Returns articles with their related category data populated.">
 
+<Tabs>
+<TabItem value="curl" label="cURL">
+
 ```bash
-GET /api/articles?populate[0]=category
+curl 'http://localhost:1337/api/articles?populate[0]=category' \
+  -H 'Authorization: Bearer <token>'
 ```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=category',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
 
 <Responses>
 <ResponseTab status={200} statusText="OK" collapsible>
@@ -680,9 +768,31 @@ When we only populate 1 level deep, asking for the categories associated to arti
   title="With 1-level deep population"
   description="Populates the category relation 1 level deep.">
 
+<Tabs>
+<TabItem value="curl" label="cURL">
+
 ```bash
-GET /api/articles?populate[0]=category
+curl 'http://localhost:1337/api/articles?populate[0]=category' \
+  -H 'Authorization: Bearer <token>'
 ```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=category',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
 
 <Responses>
 <ResponseTab status={200} statusText="OK" collapsible>
@@ -803,9 +913,31 @@ Notice that we now have the `restaurants` relation field included with the respo
   title="With 2-level deep population"
   description="Populates the category relation and the nested restaurants relation 2 levels deep.">
 
+<Tabs>
+<TabItem value="curl" label="cURL">
+
 ```bash
-GET /api/articles?populate[category][populate][0]=restaurants
+curl 'http://localhost:1337/api/articles?populate[category][populate][0]=restaurants' \
+  -H 'Authorization: Bearer <token>'
 ```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[category][populate][0]=restaurants',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
 
 <Responses>
 <ResponseTab status={200} statusText="OK" collapsible>
@@ -945,9 +1077,31 @@ Notice there's no mention of the `metaSocial` component nested within the `seo` 
   title="Only 1st level component"
   description="Populates only the seo component, 1 level deep.">
 
+<Tabs>
+<TabItem value="curl" label="cURL">
+
 ```bash
-GET /api/articles?populate[0]=seo
+curl 'http://localhost:1337/api/articles?populate[0]=seo' \
+  -H 'Authorization: Bearer <token>'
 ```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=seo',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
 
 <Responses>
 <ResponseTab status={200} statusText="OK" collapsible>
@@ -1019,9 +1173,31 @@ Notice that we now have the `metaSocial` component-related data included with th
   title="1st level and 2nd level component"
   description="Populates the seo component and the nested metaSocial component.">
 
+<Tabs>
+<TabItem value="curl" label="cURL">
+
 ```bash
-GET /api/articles?populate[0]=seo&populate[1]=seo.metaSocial
+curl 'http://localhost:1337/api/articles?populate[0]=seo&populate[1]=seo.metaSocial' \
+  -H 'Authorization: Bearer <token>'
 ```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[0]=seo&populate[1]=seo.metaSocial',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
 
 <Responses>
 <ResponseTab status={200} statusText="OK" collapsible>
@@ -1377,9 +1553,31 @@ In the following example response, highlighted lines show that:
   title="Detailed population strategy for dynamic zones"
   description="Populates the blocks dynamic zone using a detailed per-component population strategy.">
 
+<Tabs>
+<TabItem value="curl" label="cURL">
+
 ```bash
-GET /api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*
+curl 'http://localhost:1337/api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*' \
+  -H 'Authorization: Bearer <token>'
 ```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*',
+  {
+    headers: {
+      Authorization: 'Bearer <token>',
+    },
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
 
 <Responses>
 <ResponseTab status={200} statusText="OK" collapsible>
