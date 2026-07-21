@@ -48,6 +48,12 @@
     border-radius: var(--strapi-radius-md, 10px);
     border: solid 1px var(--strapi-neutral-150);
     overflow: hidden; // Prevents children from overflowing the border-radius
+
+    // In API endpoint blocks, match the response block's border color so the
+    // request (tabs) and response outer borders look identical.
+    .api-endpoint-block & {
+      border-color: var(--strapi-border-strong);
+    }
     
     .margin-top--md {
       margin-top: 24px !important;
@@ -91,6 +97,17 @@
     }
   }
   
+  // In API endpoint blocks, align the tab pills with the terminal window's
+  // left edge (24px) and give the tab bar a vertical padding of half that
+  // (12px) so the active pill isn't cramped against the block's top border.
+  .api-endpoint-block & {
+    padding: 12px 0;
+
+    [role="tab"]:nth-child(1) {
+      margin-left: 24px !important;
+    }
+  }
+
   // Active tab styles
   [aria-selected="true"] {
     border-bottom: none;
