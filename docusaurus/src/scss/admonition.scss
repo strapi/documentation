@@ -120,6 +120,12 @@
     --custom-admonition-code-color: var(--strapi-success-600);
     --custom-admonition-heading-color: var(--strapi-success-600);
 
+    // Links use a darker success shade than the heading so they stand out as
+    // interactive against the green tint (the base sets link color to the
+    // heading color, which was too light here).
+    --ifm-link-color: var(--strapi-success-800);
+    --ifm-link-hover-color: var(--strapi-success-800);
+
     --custom-selection-background-color: var(--strapi-success-700);
     --custom-selection-color: var(--strapi-success-100);
     border-color: var(--strapi-success-200);
