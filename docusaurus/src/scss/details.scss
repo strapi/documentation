@@ -80,6 +80,15 @@ details.alert {
     padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-horizontal);
   }
 
+  // A terminal code block (.code-block-enhanced) sitting as a direct child of a
+  // details/alert must keep its own zero padding: the rule above would push its
+  // title bar and code 20px inward, which detaches them from the terminal frame
+  // and draws a full-width divider line (the bug seen in Quick Start Step 2).
+  // Inside a TabItem the wrapper already has padding:0, so this restores parity.
+  > .code-block-enhanced {
+    padding: 0;
+  }
+
   > *:last-child {
     margin-bottom: 0 !important;
   }
