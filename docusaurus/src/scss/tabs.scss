@@ -73,10 +73,26 @@
     }
 
     // In API endpoint blocks, use a 21px top padding so the gap between the
-    // tab bar's bottom border and the terminal window matches the gap above
-    // the active tab pill (harmonized vertical spacing).
+    // tab bar's bottom border and the code matches the gap above the active
+    // tab pill (harmonized vertical spacing).
     .api-endpoint-block & [role="tabpanel"] {
       padding-top: 21px;
+    }
+
+    // Exception: when the tab panel holds a terminal block, drop the top
+    // padding to 0 — the terminal's own title bar already provides the spacing,
+    // so the 21px just left an empty gap between the tab bar and the window.
+    .api-endpoint-block & [role="tabpanel"]:has(.code-block-enhanced) {
+      padding-top: 0;
+    }
+
+    // Response blocks (200/404 status tabs): the active status pill sits at
+    // 24px (nth-child margin-left), but the panel's default 20px left padding
+    // left the status header (● 200 OK) and the JSON's opening `{` 4px to the
+    // left of the pill. Bump the response panel's left padding to 24px so the
+    // dot, the label, and the code all line up with the active pill's left edge.
+    .api-endpoint-block [class*="responses"] & [role="tabpanel"] {
+      padding-left: 24px;
     }
 
 
