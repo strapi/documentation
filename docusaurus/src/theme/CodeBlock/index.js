@@ -147,12 +147,28 @@ export default function CodeBlockWrapper(props) {
     if (!wrapper) return;
     const move = () => {
       const actions = wrapper.querySelector('.code-title-bar__actions');
-      const group = wrapper.querySelector('[class*="buttonGroup"]');
-      if (!actions || !group) return;
-      if (group.parentElement === actions) return; // already moved
-      actions.appendChild(group);
+      if (!actions) return;
+      // Move the native copy/wrap group into the title bar. React can re-render
+      // its own group inside the code block afterwards, so also remove any
+      // stray groups left outside the title bar to avoid a duplicate button.
+      const groups = wrapper.querySelectorAll('[class*="buttonGroup"]');
+      let kept = actions.querySelector('[class*="buttonGroup"]');
+      groups.forEach((group) => {
+        if (group.closest('.code-title-bar__actions')) return; // already in the bar
+        if (!kept) {
+          actions.appendChild(group); // move the first one into the bar
+          kept = group;
+        } else {
+          group.remove(); // drop duplicates left in the code area
+        }
+      });
     };
+    // Run now and keep watching: React may re-insert a group after our move.
     requestAnimationFrame(() => requestAnimationFrame(move));
+    const observer = new MutationObserver(move);
+    observer.observe(wrapper, { childList: true, subtree: true });
+    // Stop observing shortly after mount once the DOM has settled.
+    setTimeout(() => observer.disconnect(), 2000);
   }, []);
 
   // Ref callback for the terminal wrapper. Only relocates the action buttons
