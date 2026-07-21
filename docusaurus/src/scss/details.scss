@@ -105,7 +105,10 @@ details.alert {
   // Only neutralize the top spacing of the first inner element, NOT the
   // content wrapper itself: the wrapper keeps its padding-top so the content
   // is separated from the summary (and its bottom border when open).
-  > div > *:first-child {
+  // Exclude a terminal's title bar (.code-title-bar): it is the first child of
+  // the .code-block-enhanced wrapper and needs its own 10px top padding to keep
+  // the dots, "terminal" label, and copy button vertically centered.
+  > div > *:first-child:not(.code-title-bar) {
     padding-top: 0 !important;
     margin-top: 0 !important;
   }
