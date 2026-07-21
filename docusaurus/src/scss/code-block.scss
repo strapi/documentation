@@ -470,6 +470,14 @@ pre.prism-code {
         transition: opacity 0.2s ease;
       }
 
+      // The copy glyph is two thin overlapping outlined rectangles: far fewer
+      // inked pixels than Ask AI's solid star or the wrap button's thick bars,
+      // so at the same 0.6 opacity it READS lighter. Nudge just the copy icon
+      // up to ~0.78 so its perceived weight matches the other two.
+      [class*="copyButtonIcons"] {
+        opacity: 0.78 !important;
+      }
+
       &:hover {
         [class*="copyButtonIcons"],
         > svg,
