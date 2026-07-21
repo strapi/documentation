@@ -148,20 +148,23 @@ export default function CodeBlockWrapper(props) {
     const move = () => {
       const actions = wrapper.querySelector('.code-title-bar__actions');
       if (!actions) return;
-      // Move the native copy/wrap group into the title bar. React can re-render
-      // its own group inside the code block afterwards, so also remove any
-      // stray groups left outside the title bar to avoid a duplicate button.
-      const groups = wrapper.querySelectorAll('[class*="buttonGroup"]');
-      let kept = actions.querySelector('[class*="buttonGroup"]');
-      groups.forEach((group) => {
-        if (group.closest('.code-title-bar__actions')) return; // already in the bar
-        if (!kept) {
-          actions.appendChild(group); // move the first one into the bar
-          kept = group;
-        } else {
-          group.remove(); // drop duplicates left in the code area
-        }
+      // Relocate the native copy/wrap group into the title bar. React may
+      // re-render a FRESH group inside the code block after we move one; that
+      // fresh group is the live one (its click handlers are wired), while the
+      // one we moved earlier becomes a detached, dead clone. So whenever a group
+      // appears outside the bar, treat it as the live one: drop whatever stale
+      // group we previously parked in the bar and move the fresh one in. This
+      // keeps the working button (and fixes copy being dead inside StepDetails).
+      const groups = Array.from(wrapper.querySelectorAll('[class*="buttonGroup"]'));
+      const outside = groups.filter((g) => !g.closest('.code-title-bar__actions'));
+      if (outside.length === 0) return; // nothing new to relocate
+      // The last one in document order is the most recently rendered (live) one.
+      const live = outside[outside.length - 1];
+      // Remove any other groups (stale relocated one in the bar + extra dupes).
+      groups.forEach((g) => {
+        if (g !== live) g.remove();
       });
+      actions.appendChild(live);
     };
     // Run now and keep watching: React may re-insert a group after our move.
     requestAnimationFrame(() => requestAnimationFrame(move));

@@ -249,9 +249,14 @@ pre.prism-code {
       background: var(--code-title-bar-lang-bg) !important;
     }
 
-    svg, i::before, span {
+    // Do not force opacity here: the more specific rules inside
+    // .code-block-enhanced handle the rest/hover dimming. Forcing opacity:1 on
+    // every svg also lit up the copy button's stacked success (check) icon,
+    // which Docusaurus keeps at opacity 0 until a copy succeeds — leaving a
+    // ghost icon behind the visible one. Only set color, and never touch the
+    // success icon's opacity.
+    svg:not([class*="copyButtonSuccessIcon"]), i::before, span {
       color: var(--code-title-bar-lang-color) !important;
-      opacity: 1 !important;
     }
   }
 
@@ -438,26 +443,29 @@ pre.prism-code {
       width: 34px;
       height: 34px;
       padding: 6.4px;
-      // The button itself stays fully opaque; the whole actions row is what
-      // fades in/out on hover. Overrides the legacy .clean-btn opacity:0.6.
-      opacity: 1 !important;
       background: var(--strapi-neutral-0) !important;
       border: 1px solid var(--strapi-neutral-200) !important;
       border-radius: var(--strapi-radius-md) !important;
 
-      // Dim the icon at rest so it reads grey rather than solid black, going
-      // full opacity on hover. Copy/wrap are thin stroke SVGs, which look washed
-      // out next to Ask AI's filled glyph at the same opacity, so use 0.75 (not
-      // 0.6) to match their perceived weight. !important beats the legacy
-      // opacity:1 rules on .clean-btn icons.
+      // Dim the whole BUTTON at rest so its icon reads grey rather than solid
+      // black, going full opacity on hover. Copy/wrap are thin stroke SVGs that
+      // look washed out next to Ask AI's filled glyph at the same opacity, so
+      // use 0.75 (not 0.6) to match their perceived weight.
+      //
+      // Dimming the button (not its icons) is deliberate: the copy button
+      // stacks two SVGs (copy icon + success check) and toggles which is visible
+      // by flipping their individual opacities. Touching the icon opacities here
+      // would override that toggle and leave the hidden icon bleeding through as
+      // a ghost. Dimming the button lets Docusaurus's 0/1 toggle work untouched.
+      opacity: 0.75 !important;
+      transition: opacity 0.2s ease;
+
+      // Color the icons so they invert correctly in dark mode.
       svg, i::before, span {
         color: var(--strapi-fg-1) !important;
-        opacity: 0.75 !important;
       }
 
-      &:hover svg,
-      &:hover i::before,
-      &:hover span {
+      &:hover {
         opacity: 1 !important;
       }
     }
@@ -678,7 +686,10 @@ pre.prism-code {
     .clean-btn {
       opacity: 1 !important;
 
-      svg,
+      // Exclude the copy button's success (check) icon: Docusaurus keeps it at
+      // opacity 0 until a copy succeeds, so forcing an opacity here would make
+      // the check bleed through as a ghost behind the copy icon.
+      svg:not([class*="copyButtonSuccessIcon"]),
       i::before,
       span {
         opacity: 0.6;
@@ -689,7 +700,7 @@ pre.prism-code {
 }
 
 .clean-btn:hover {
-  svg,
+  svg:not([class*="copyButtonSuccessIcon"]),
   i::before,
   span {
     opacity: 1 !important;
