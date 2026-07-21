@@ -72,11 +72,13 @@
       padding: 16px 20px;
     }
 
-    // In API endpoint blocks, use a 21px top padding so the gap between the
-    // tab bar's bottom border and the code matches the gap above the active
-    // tab pill (harmonized vertical spacing).
+    // In API endpoint blocks, use a symmetric 21px top and bottom padding: the
+    // top matches the gap above the active tab pill, and the bottom matches the
+    // top so the code sits evenly between the tab bar and the block's bottom
+    // border (the container's own 24px bottom padding is zeroed out below).
     .api-endpoint-block & [role="tabpanel"] {
       padding-top: 21px;
+      padding-bottom: 21px;
     }
 
     // Exception: when the tab panel holds a terminal block, drop the top
@@ -182,9 +184,12 @@
         // panel already provides 20px; add 18px so the code starts at ~38px,
         // matching the tab label (button left 24px + its 14px inner padding).
         padding-left: 18px !important;
-        // Drop the container's top padding too: the tab panel already provides
-        // the space above the code, so the extra 24px just pushed it down.
+        // Drop the container's top AND bottom padding: the tab panel provides
+        // the space above and below the code. Without this the container's own
+        // 24px bottom padding stacked on the panel's bottom padding, leaving far
+        // more empty space below the code than above it.
         padding-top: 0 !important;
+        padding-bottom: 0 !important;
 
         // A titleless code block inside a tab panel has no bar to host the
         // action buttons. Sit the button group just below the tab bar's bottom
