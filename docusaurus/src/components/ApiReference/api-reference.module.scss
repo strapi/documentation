@@ -732,6 +732,15 @@
   font-size: 11px;
 }
 
+// Single-status responses (no 200/404 tabs) render the header as a direct child
+// of .responses, flush at 0px while the JSON code sits at 24px. Inset the header
+// so the pulsing dot + "200 OK" line up with the code's opening `{`. In the
+// multi-status case the header lives inside a tab panel (not a direct child),
+// so this rule does not touch it — that alignment is handled in tabs.scss.
+.responses > .responseHeader {
+  padding-left: 24px;
+}
+
 .responseDot {
   width: 6px;
   height: 6px;
