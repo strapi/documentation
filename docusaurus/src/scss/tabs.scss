@@ -217,6 +217,13 @@
         margin: 0 !important;
         background: transparent !important;
 
+        // Undo the 18px left inset applied to titleless code containers above:
+        // a terminal aligns its code under the first title-bar dot via its own
+        // inner padding, so the extra 18px pushed the command too far right.
+        [class*="codeBlockContainer"]:not(:has([class*="codeBlockTitle"])) {
+          padding-left: 0 !important;
+        }
+
         .code-title-bar {
           border-radius: 0;
           margin: 0 4px;
