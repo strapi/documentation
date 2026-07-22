@@ -38,7 +38,7 @@
   }
 
   &:hover .step {
-    background: var(--strapi-surface-2, #F4F4F5);
+    outline: 1px solid var(--strapi-border, rgba(0, 0, 0, 0.06));
   }
 
   &:hover .stepArrow {
@@ -122,6 +122,6 @@
   }
 
   .stepLink:hover .step {
-    background: var(--strapi-surface-2, #18181B);
+    outline: 1px solid var(--strapi-border, rgba(255, 255, 255, 0.1));
   }
 }
