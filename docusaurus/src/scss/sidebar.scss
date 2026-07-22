@@ -81,21 +81,38 @@ html[data-sidebar-collapsed='true'] {
   padding: 8px;
 
   &__caret {
-    margin: 0 0 0 3px;
+    // Match the chevron of non-linked categories (rendered via
+    // .menu__link--sublist-caret::after): same 8px inset from the row's right
+    // edge, so linked categories (generated-index, e.g. "Strapi plugins") look
+    // identical to plain ones (e.g. "REST API").
+    margin: 0 8px 0 3px;
     padding: 0;
 
     &:before {
       background-size: var(--custom-sidebar-caret-size);
     }
+
+    // The caret button gets its own hover background from Infima, which drew a
+    // separate colored rectangle behind just the chevron on linked categories.
+    // The whole row already shows one continuous hover background via
+    // .menu__list-item-collapsible:hover, so keep the caret itself transparent.
+    &:hover {
+      background: transparent;
+    }
   }
 
-  &__caret,
+  // Only the caret's ::before pseudo paints the chevron. Painting it on the
+  // bare &__caret element too stacked a second chevron on top for linked
+  // categories (those that render a separate caret button, e.g. "Strapi
+  // plugins" and the configuration "Guides"), so the element itself is left out.
+  // Use the same 20px glyph size as the non-linked chevron (::after) so both
+  // render identically.
   &__caret:before,
   &__link--sublist-caret::after,
   &__list-item-collapsible .menu__link--sublist-caret::after {
     background: var(--ifm-menu-link-sublist-icon) 50% / 1.25rem 1.25rem;;
     height: 16px;
-    width: 16px;
+    width: 20px;
   }
 
   .menu__list-item-collapsible {
@@ -111,7 +128,7 @@ html[data-sidebar-collapsed='true'] {
 
     button.clean-btn.menu__caret {
       position: inherit;
-      top: 5px;
+      top: 0;
     }
   }
 
