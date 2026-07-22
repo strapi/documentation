@@ -43,6 +43,11 @@
   --strapi-line-height-xxl: 2.25rem;  // 36px
   --strapi-line-height-xxxl: 2.5rem;  // 40px
 
+  /** Letter-spacing applied to all-caps labels set in the monospace font
+   *  (JetBrains Mono). Kept at `normal` on purpose — change it here once to
+   *  adjust every mono uppercase label (badges, title bars, footer, etc.). */
+  --custom-strapi-monospace-letter-spacing: normal;
+
   /** Color: Neutral */
   --strapi-neutral-1000: #181826;
   --strapi-neutral-900: #212134;
@@ -150,7 +155,7 @@
   /** V3: Border radius */
   --strapi-radius-xs: 4px;
   --strapi-radius-sm: 6px;
-  --strapi-radius-md: 10px;
+  --strapi-radius-md: 8px;
   --strapi-radius-lg: 16px;
   --strapi-radius-xl: 24px;
   --strapi-radius-full: 9999px;

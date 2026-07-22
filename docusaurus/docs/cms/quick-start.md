@@ -46,7 +46,7 @@ There are 3 options to discover Strapi. Choose what best suits you:
 You will also need to <ExternalLink to="https://github.com/git-guides/install-git" text="install git"/> and to have a <ExternalLink to="https://github.com" text="GitHub"/> account to deploy your project to Strapi Cloud.
 :::
 
-## <Icon name="rocket-launch"/> Part A: Create a new project with Strapi
+## Part A: Create a new project with Strapi
 
 We will first create a new Strapi project on your machine by running a command in the terminal, and then register our first local administrator user.
 
@@ -126,7 +126,7 @@ sources={{
 You have just created a new Strapi project! You can start playing with Strapi and discover the [Content Manager](/cms/features/content-manager) by yourself, or proceed to part B below.
 :::
 
-## <Icon name="wrench" /> Part B: Build your content structure with the Content-type Builder
+## Part B: Build your content structure with the Content-type Builder
 
 The installation script has just created an empty project. We will now guide you through creating a small restaurants directory.
 
@@ -204,7 +204,7 @@ You have just created a basic content structure for your Strapi project! You can
 While we showed here how to manually create a content structure, there are other options you can explore: you can import a Figma prototype, import some files from your computer, or even start prompting [Strapi AI](/cms/features/content-type-builder#strapi-ai) <GrowthBadge /> in natural language to let it create things for you. Feel free to try them out!
 :::
 
-## <Icon name="cloud" />️ Part C: Deploy to Strapi Cloud
+## Part C: Deploy to Strapi Cloud
 
 Now that your beautiful first Strapi project is working locally, it's time for the world to see it live! The most straightforward way to host your project is to use Strapi Cloud.
 
@@ -252,7 +252,7 @@ Now your project is hosted on Strapi Cloud and accessible online. You can learn 
 Feel free to play with the Content-Type Builder even further and add more fields to your content-types or create new content-types. Anytime you make such changes, push them to GitHub to trigger a new deployment on Strapi Cloud (if you enabled **Deploy on push** during project creation), or trigger a deployment manually from the [Cloud dashboard](/cloud/projects/deploys). You can also deploy from your terminal with the [Cloud CLI](/cloud/getting-started/deployment-cli).
 :::
 
-## <Icon name="note-pencil" /> Part D: Add content to your Strapi Cloud project with the Content Manager
+## Part D: Add content to your Strapi Cloud project with the Content Manager
 
 Now that we have created a basic content structure with 2 collection types, "Restaurant" and "Category", and deployed your project to Strapi Cloud, let's use the Cloud to actually add content by creating new entries.
 

@@ -227,7 +227,7 @@ pre.prism-code {
     background: var(--code-title-bar-lang-bg);
     padding: 3px 8px;
     border-radius: var(--strapi-radius-xs);
-    letter-spacing: 0.05em;
+    letter-spacing: var(--custom-strapi-monospace-letter-spacing);
     text-transform: uppercase;
     line-height: 1;
   }
@@ -340,7 +340,7 @@ pre.prism-code {
   // corner radius as admonitions (--strapi-radius-xs) for all terminal blocks.
   position: relative;
   border: solid 1px var(--custom-code-block-border-color);
-  border-radius: var(--strapi-radius-xs);
+  border-radius: var(--strapi-radius-md);
   overflow: hidden;
   transition: border-color var(--strapi-duration-fast) var(--strapi-ease);
   margin-bottom: var(--ifm-leading);
