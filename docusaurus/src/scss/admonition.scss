@@ -117,7 +117,7 @@
     --custom-admonition-background-color: var(--strapi-success-100);
     --custom-admonition-border-color: var(--strapi-success-500);
     --custom-admonition-code-background-color: var(--strapi-success-200);
-    --custom-admonition-code-color: var(--strapi-success-600);
+    --custom-admonition-code-color: var(--strapi-success-700);
     --custom-admonition-heading-color: var(--strapi-success-600);
 
     // Links use a darker success shade than the heading so they stand out as
@@ -129,6 +129,16 @@
     --custom-selection-background-color: var(--strapi-success-700);
     --custom-selection-color: var(--strapi-success-100);
     border-color: var(--strapi-success-200);
+
+    // Inline code uses the darker success-700 (via the code-color var) instead
+    // of the heading color that the base rule wires up, so it reads clearly
+    // against the green tint. Matches the base `h1..table code` selector's
+    // specificity so this override actually wins.
+    h1, h2, h3, li, p, table {
+      code {
+        --custom-code-color: var(--custom-admonition-code-color);
+      }
+    }
   }
 
   &--caution {
