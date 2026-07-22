@@ -29,13 +29,15 @@
   }
 
   a {
-    color: var(--strapi-primary-600);
+    // Match the left sidebar's link look: neutral grey at rest, darkening to
+    // the primary foreground on hover (instead of the previous accent blue).
+    color: var(--strapi-neutral-500);
     font-family: var(--strapi-font-family-body);
     font-size: 13px;
     line-height: 1.5;
 
     &:hover {
-      color: var(--strapi-accent, #4945FF);
+      color: var(--strapi-fg-1);
     }
   }
 
