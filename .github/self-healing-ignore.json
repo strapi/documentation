@@ -889,6 +889,11 @@
       "number": 26525,
       "reason": "Router: Internal backend fix for experimental_firstPublishedAt feature behavior. Bug fix that corrects timestamp handling in experimental feature. Does not warrant documentation since feature is experimental and fix is internal.",
       "added": "2026-07-21"
+    },
+    {
+      "number": 25298,
+      "reason": "Triage: Internal type definition update with no behavioral changes",
+      "added": "2026-07-22"
     }
   ]
 }
