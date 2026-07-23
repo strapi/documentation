@@ -17,7 +17,7 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 <Tldr>
 
-In Strapi 5, draft and published versions of a document use **different numeric component `id`s**. Reusing an `id` from a published response to update the draft usually fails. Prefer replacing the full component array (or editing against draft ids) until a durable component identity ships.
+In Strapi 5, draft and published versions of a document use different numeric component `id`s. Reusing an `id` from a published response to update the draft usually fails. Prefer replacing the full component array (or editing against draft ids) until a durable component identity ships.
 
 </Tldr>
 
@@ -45,7 +45,7 @@ You could partially update a repeatable component by passing its numeric `id`.
 
 **In Strapi 5**
 
-Documents use a stable [`documentId`](/cms/api/document-service), but **nested components still use status-local numeric `id`s**. Publishing creates new component rows, so the draft and published versions of the “same” block have different `id`s. You cannot treat a published component `id` like a document-level identifier.
+Documents use a stable [`documentId`](/cms/api/document-service), but nested components still use status-local numeric `id`s. Publishing creates new component rows, so the draft and published versions of the same block have different `id`s. You cannot treat a published component `id` like a document-level identifier.
 
 </SideBySideColumn>
 
@@ -60,7 +60,7 @@ Documents use a stable [`documentId`](/cms/api/document-service), but **nested c
 With Draft & Publish enabled, a typical Content API flow looks like this:
 
 ```js
-// Request — Content API returns the published version by default
+// Request: Content API returns the published version by default
 GET /api/articles
 
 // Response (published)
@@ -75,22 +75,22 @@ GET /api/articles
 }
 ```
 
-Updating with those published `id`s writes the **draft**, which has different component row ids:
+Updating with those published `id`s writes the draft, which has different component row ids:
 
 ```js
 PUT /api/articles/{documentId}
 {
   data: {
     components: [
-      { id: 2, name: 'component-1-updated' }, // published id — usually wrong for draft
+      { id: 2, name: 'component-1-updated' }, // published id, usually wrong for draft
     ],
   },
 }
 ```
 
-This often fails with an error such as `Some of the provided components in components are not related to the entity`, because `id: 2` is not linked to the draft entry.
+This often fails with an error such as `Some of the provided components in components are not related to the entity`, because `id: 2` is not linked to the draft entry. This is related to the fact that [components and dynamic zones do not return an `id`](/cms/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id) in REST API responses.
 
-The [Document Service](/cms/api/document-service) defaults to the **draft** on read/update, so in-place updates by `id` can work there (and in the Content Manager) when you use draft component ids. The trap is mixing **published** ids with **draft** writes.
+The [Document Service](/cms/api/document-service) defaults to the draft on read/update, so in-place updates by `id` can work there (and in the Content Manager) when you use draft component ids. The trap is mixing published ids with draft writes.
 
 ### Recommended workarounds
 
@@ -132,7 +132,7 @@ Include every component you want to keep. Entries omitted from the array are rem
 
 #### 2. Edit against draft component ids (Document Service / admin-style)
 
-If you control the backend (custom routes, scripts, Document Service), load the **draft**, then update using those ids:
+If you control the backend (custom routes, scripts, Document Service), load the draft, then update using those ids:
 
 ```js
 const draft = await strapi.documents('api::article.article').findOne({
@@ -153,14 +153,8 @@ await strapi.documents('api::article.article').update({
 });
 ```
 
-Do **not** reuse ids from a default Content API `GET` (published) for this pattern.
+Do not reuse ids from a default Content API `GET` (published) for this pattern.
 
 #### 3. Draft & Publish disabled
 
 If Draft & Publish is disabled on the content-type, there is only one component row set, so id-based updates are less problematic. Prefer the full-array replace pattern anyway for simpler client code.
-
-### Related
-
-- [Components and dynamic zones do not return an id](/cms/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id) (REST response shape)
-- [Document Service API](/cms/api/document-service)
-- [Draft & Publish](/cms/features/draft-and-publish)
