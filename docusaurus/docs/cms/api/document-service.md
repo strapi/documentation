@@ -420,7 +420,7 @@ To update a document and publish the new version right away, you can:
 :::
 
 :::caution
-It's not recommended to update repeatable components with the Document Service API (see the related [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api.md) for more details).
+It's not recommended to update repeatable components by reusing published component `id`s (see the related [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api.md) for details and workarounds). Prefer replacing the full component array without `id`s, or updating against draft component ids.
 :::
 
 </Endpoint>
