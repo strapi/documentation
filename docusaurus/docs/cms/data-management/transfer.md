@@ -251,7 +251,7 @@ Any types excluded from the transfer will be deleted in your destination instanc
 
 The `--exclude-content-types` and `--only-content-types` options let you scope a transfer to specific content types. Both options accept a comma-separated list of content-type UIDs (for example, `api::article.article`). Unknown UIDs are validated against the Strapi schema at startup. Both entity records and any relation links touching an excluded type are skipped automatically.
 
-:::warning Restore behavior
+:::warning Warning: Restore behavior
 - When you use `--exclude-content-types`, data for the excluded types is **preserved** on the destination — they are not wiped before the transfer.
 - When you use `--only-content-types`, the pre-transfer wipe is scoped to only the listed UIDs, leaving all other content on the destination in place.
 :::
