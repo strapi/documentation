@@ -58,8 +58,14 @@ export default function Responses({ children }) {
       <Tabs>
         {items.map((item, i) => {
           const status = Number(item.props.status);
+          const statusText = item.props.statusText || '';
+          // The tab value must be unique: several responses can share a status
+          // code (e.g. two 200s distinguished by statusText), so the index keeps
+          // it unique. The label shows the status and, when present, the
+          // statusText, so same-status tabs stay distinguishable.
+          const label = statusText ? `${status} ${statusText}` : String(status);
           return (
-            <TabItem key={i} value={String(status)} label={String(status)}>
+            <TabItem key={i} value={`${status}-${i}`} label={label}>
               {item}
             </TabItem>
           );

@@ -1303,23 +1303,27 @@ Let's compare and explain the responses returned with `populate[0]=blocks` (only
 When we only populate the `blocks` dynamic zone, we go only 1 level deep, and we can get the following example response. Highlighted lines show the `blocks` dynamic zone and the 2 components it includes:
 
 <Endpoint
-  collapsibleResponse
   method="GET"
   path="/api/articles"
   title="Populating only the dynamic zone"
   description="Populates the blocks dynamic zone 1 level deep."
-  id="populating-only-the-dynamic-zone"
-  codeTabs={[
-    {
-      label: "Request",
-      code: "GET /api/articles?populate[0]=blocks"
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+  id="populating-only-the-dynamic-zone">
+
+<Tabs>
+<TabItem value="request" label="Request">
+
+```bash
+GET /api/articles?populate[0]=blocks
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK" collapsible>
+
+```json
+{
   "data": [
     {
       "id": 1,
@@ -1369,33 +1373,40 @@ When we only populate the `blocks` dynamic zone, we go only 1 level deep, and we
       "total": 4
     }
   }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ##### Example: Populating the dynamic zone and applying a shared strategy to its components
 
 When we populate the `blocks` dynamic zone and apply a shared population strategy to all its components with `[populate]=*`, we not only include components fields but also their 1st-level relations, as shown in the highlighted lines of the following example response:
 
 <Endpoint
-  collapsibleResponse
   method="GET"
   path="/api/articles"
   title="Populating the dynamic zone with shared strategy"
   description="Populates the blocks dynamic zone and applies a shared population strategy to all its components."
-  id="populating-dynamic-zone-shared-strategy"
-  codeTabs={[
-    {
-      label: "Request",
-      code: "GET /api/articles?populate[blocks][populate]=*"
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+  id="populating-dynamic-zone-shared-strategy">
+
+<Tabs>
+<TabItem value="request" label="Request">
+
+```bash
+GET /api/articles?populate[blocks][populate]=*
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK" collapsible>
+
+```json
+{
   "data": [
     {
       "id": 1,
@@ -1489,10 +1500,13 @@ When we populate the `blocks` dynamic zone and apply a shared population strateg
       "total": 4
     }
   }
-}`
-    }
-  ]}
-/> -->
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint> -->
 
 Dynamic zones are highly dynamic content structures by essence. When querying dynamic zones, standard populate parameters (such as `populate[0]=dynamic-zone-name` or `populate=*`) will only fetch the default scalar fields (e.g., strings, numbers, booleans) of the components within the dynamic zone. By default, they will **not** populate nested relations, media fields, or nested components inside those components.
 

@@ -33,20 +33,25 @@ To sort results returned by the Document Service API, include the `sort` paramet
   kind="js"
   path="strapi.documents().findMany()"
   title="Sort on a single field"
-  description="Sort results based on a single field using a string value."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `const documents = await strapi.documents("api::article.article").findMany({
+  description="Sort results based on a single field using a string value.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const documents = await strapi.documents("api::article.article").findMany({
   sort: "title:asc",
-});`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
   {
     "documentId": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
@@ -59,10 +64,13 @@ To sort results returned by the Document Service API, include the `sort` paramet
     "slug": "test-article-2",
     "body": "Test 2"
   }
-]`,
-    },
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Sort on multiple fields
 
@@ -71,20 +79,25 @@ To sort results returned by the Document Service API, include the `sort` paramet
   kind="js"
   path="strapi.documents().findMany()"
   title="Sort on multiple fields"
-  description="Sort results on multiple fields by passing an array of sort objects."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `const documents = await strapi.documents("api::article.article").findMany({
+  description="Sort results on multiple fields by passing an array of sort objects.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const documents = await strapi.documents("api::article.article").findMany({
   sort: [{ title: "asc" }, { slug: "desc" }],
-});`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
   {
     "documentId": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
@@ -97,10 +110,13 @@ To sort results returned by the Document Service API, include the `sort` paramet
     "slug": "test-article-2",
     "body": "Test 2"
   }
-]`,
-    },
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Pagination
 
@@ -108,21 +124,26 @@ To sort results returned by the Document Service API, include the `sort` paramet
   kind="js"
   path="strapi.documents().findMany()"
   title="Pagination"
-  description="Paginate results using the limit and start parameters."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `const documents = await strapi.documents("api::article.article").findMany({
+  description="Paginate results using the limit and start parameters.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const documents = await strapi.documents("api::article.article").findMany({
   limit: 10,
   start: 0,
-});`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
   {
     "documentId": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
@@ -135,7 +156,10 @@ To sort results returned by the Document Service API, include the `sort` paramet
     "slug": "test-article-2",
     "body": "Test 2"
   }
-]`,
-    },
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>

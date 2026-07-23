@@ -91,21 +91,26 @@ This parameter combination works only on a given locale; to find these documents
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany() with publicationFilter: 'never-published'"
-  description="Return the drafts that have never been published for their locale."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findMany({
+  description="Return the drafts that have never been published for their locale.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'never-published',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
     {
       documentId: "a1b2c3d4e5f6g7h8i9j0klm",
       name: "New Restaurant",
@@ -114,10 +119,13 @@ This parameter combination works only on a given locale; to find these documents
       // …
     }
   // …
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Find drafts never published in any locale {#never-published-document}
 
@@ -129,21 +137,26 @@ A document counts as published as soon as one of its locales is published: the d
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany() with publicationFilter: 'never-published-document'"
-  description="Return the drafts of documents never published in any locale."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findMany({
+  description="Return the drafts of documents never published in any locale.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'never-published-document',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
     {
       documentId: "d41r46wac4xix5vpba7561at",
       name: "New Restaurant",
@@ -152,10 +165,13 @@ A document counts as published as soon as one of its locales is published: the d
       // …
     }
   // …
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Find modified documents {#modified}
 
@@ -167,21 +183,26 @@ For instance, with `status: 'draft'`, the query returns the draft versions:
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany() with publicationFilter: 'modified' and status: 'draft'"
-  description="Return the draft versions of documents with unpublished changes."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findMany({
+  description="Return the draft versions of documents with unpublished changes.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'modified',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
     {
       documentId: "a1b2c3d4e5f6g7h8i9j0klm",
       name: "Biscotte Restaurant (updated)",
@@ -190,10 +211,13 @@ For instance, with `status: 'draft'`, the query returns the draft versions:
       // …
     }
   // …
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 <br/>
 With `status: 'published'`, the same query returns the currently live version of those documents instead:
@@ -202,21 +226,26 @@ With `status: 'published'`, the same query returns the currently live version of
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany() with publicationFilter: 'modified' and status: 'published'"
-  description="Return the currently live versions of documents with unpublished changes."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findMany({
+  description="Return the currently live versions of documents with unpublished changes.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'modified',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
     {
       documentId: "a1b2c3d4e5f6g7h8i9j0klm",
       name: "Biscotte Restaurant",
@@ -225,10 +254,13 @@ With `status: 'published'`, the same query returns the currently live version of
       // …
     }
   // …
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Find unmodified documents {#unmodified}
 
@@ -240,21 +272,26 @@ For instance, with `status: 'draft'`, the query returns the draft versions:
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany() with publicationFilter: 'unmodified' and status: 'draft'"
-  description="Return the draft versions of documents unchanged since their last publication."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findMany({
+  description="Return the draft versions of documents unchanged since their last publication.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'unmodified',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
     {
       documentId: "a1b2c3d4e5f6g7h8i9j0klm",
       name: "Biscotte Restaurant",
@@ -263,10 +300,13 @@ For instance, with `status: 'draft'`, the query returns the draft versions:
       // …
     }
   // …
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 <br/>
 With `status: 'published'`, the same query returns the currently live version of those documents instead:
@@ -275,21 +315,26 @@ With `status: 'published'`, the same query returns the currently live version of
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany() with publicationFilter: 'unmodified' and status: 'published'"
-  description="Return the currently live versions of documents unchanged since their last publication."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findMany({
+  description="Return the currently live versions of documents unchanged since their last publication.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'unmodified',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
     {
       documentId: "a1b2c3d4e5f6g7h8i9j0klm",
       name: "Biscotte Restaurant",
@@ -298,10 +343,13 @@ With `status: 'published'`, the same query returns the currently live version of
       // …
     }
   // …
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Find documents with a published version {#has-published-version}
 
@@ -313,21 +361,26 @@ For instance, with `status: 'draft'`, the query returns the draft versions:
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany() with publicationFilter: 'has-published-version' and status: 'draft'"
-  description="Return the draft versions of documents that also have a published version for the same locale."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findMany({
+  description="Return the draft versions of documents that also have a published version for the same locale.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'has-published-version',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
     {
       documentId: "a1b2c3d4e5f6g7h8i9j0klm",
       name: "Biscotte Restaurant",
@@ -336,10 +389,13 @@ For instance, with `status: 'draft'`, the query returns the draft versions:
       // …
     }
   // …
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 <br/>
 With `status: 'published'`, the same query returns the currently live version of those documents instead:
@@ -348,21 +404,26 @@ With `status: 'published'`, the same query returns the currently live version of
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany() with publicationFilter: 'has-published-version' and status: 'published'"
-  description="Return the currently live versions of documents that also have a published version for the same locale."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findMany({
+  description="Return the currently live versions of documents that also have a published version for the same locale.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'has-published-version',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
     {
       documentId: "a1b2c3d4e5f6g7h8i9j0klm",
       name: "Biscotte Restaurant",
@@ -371,10 +432,13 @@ With `status: 'published'`, the same query returns the currently live version of
       // …
     }
   // …
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Find documents with a published version in at least one locale {#has-published-version-document}
 
@@ -384,21 +448,26 @@ With `status: 'published'`, the same query returns the currently live version of
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany() with publicationFilter: 'has-published-version-document'"
-  description="Return the draft versions of documents published in at least one locale."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findMany({
+  description="Return the draft versions of documents published in at least one locale.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'has-published-version-document',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
     {
       documentId: "a1b2c3d4e5f6g7h8i9j0klm",
       name: "Biscotte Restaurant",
@@ -407,10 +476,13 @@ With `status: 'published'`, the same query returns the currently live version of
       // …
     }
   // …
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Use with `findOne()` and `findFirst()` {#find-one-find-first}
 
@@ -420,25 +492,33 @@ If the requested document (and locale, when applicable) does not match the filte
   kind="js"
   path="strapi.documents().findOne()"
   title="findOne() with publicationFilter: 'never-published'"
-  description="Return the document only if it matches the filter, null otherwise."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findOne({
+  description="Return the document only if it matches the filter, null otherwise.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findOne({
     documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
     status: 'draft',
     publicationFilter: 'never-published',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `null // the documentId exists, but the document does not match never-published`
-    }
-  ]}
-/>
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+null // the documentId exists, but the document does not match never-published
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Count only matching documents {#count}
 
@@ -448,26 +528,34 @@ Without `publicationFilter`, `count({ status: 'draft' })` counts every draft ver
   kind="js"
   path="strapi.documents().count()"
   title="count() with publicationFilter: 'never-published'"
-  description="Count only the documents that match a given value."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `const neverPublishedCount = await strapi
+  description="Count only the documents that match a given value.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const neverPublishedCount = await strapi
     .documents('api::restaurant.restaurant')
     .count({
       status: 'draft',
       publicationFilter: 'never-published',
-    });`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `12 // the number of never-published drafts`
-    }
-  ]}
-/>
+    });
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+12 // the number of never-published drafts
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Diagnostic values {#diagnostics}
 
@@ -482,21 +570,26 @@ The `published-without-draft` and `published-with-draft` values are meant for da
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany() with publicationFilter: 'published-without-draft'"
-  description="Return published documents with no matching draft version for the same locale."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findMany({
+  description="Return published documents with no matching draft version for the same locale.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'published-without-draft',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
   {
     documentId: "j0klm1n2o3p4q5r6s7t8u9v",
     name: "Legacy Restaurant",
@@ -505,10 +598,13 @@ The `published-without-draft` and `published-with-draft` values are meant for da
     // …
   }
   // …
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 <br/>
 `publicationFilter: published-with-draft` selects published documents that also have a draft, which is every published document in a healthy database:
@@ -517,21 +613,26 @@ The `published-without-draft` and `published-with-draft` values are meant for da
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany() with publicationFilter: 'published-with-draft'"
-  description="Return published documents that also have a matching draft version for the same locale."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findMany({
+  description="Return published documents that also have a matching draft version for the same locale.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'published-with-draft',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
     {
       documentId: "a1b2c3d4e5f6g7h8i9j0klm",
       name: "Biscotte Restaurant",
@@ -540,10 +641,13 @@ The `published-without-draft` and `published-with-draft` values are meant for da
       // …
     }
   // …
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 </details>
 

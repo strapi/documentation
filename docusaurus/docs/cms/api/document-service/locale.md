@@ -37,30 +37,38 @@ By default the [Document Service API](/cms/api/document-service) returns the def
   kind="js"
   path="strapi.documents().findOne()"
   title="Get a locale version with findOne()"
-  description="Pass a locale to findOne() to get the version of the document for that locale."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findOne({
+  description="Pass a locale to findOne() to get the version of the document for that locale.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'fr',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Biscotte Restaurant",
   publishedAt: null, // draft version (default)
   locale: "fr", // as asked from the parameters
   // …
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 If no `status` parameter is passed, the `draft` version is returned by default.
 
@@ -70,27 +78,35 @@ If no `status` parameter is passed, the `draft` version is returned by default.
   kind="js"
   path="strapi.documents().findFirst()"
   title="Get a locale version with findFirst()"
-  description="Pass a locale to findFirst() to return documents matching that locale."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `const document = await strapi.documents('api::article.article').findFirst({
+  description="Pass a locale to findFirst() to return documents matching that locale.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const document = await strapi.documents('api::article.article').findFirst({
   locale: 'fr',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   "documentId": "cjld2cjxh0000qzrmn831i7rn",
   "title": "Test Article"
   // …
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 If no `status` parameter is passed, the `draft` version is returned by default.
 
@@ -102,19 +118,24 @@ If no `status` parameter is passed, the `draft` versions are returned by default
   kind="js"
   path="strapi.documents().findMany()"
   title="Get locale versions with findMany()"
-  description="Pass a locale to findMany() to return all documents that have this locale available."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `// Defaults to status: draft
-await strapi.documents('api::restaurant.restaurant').findMany({ locale: 'fr' });`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+  description="Pass a locale to findMany() to return all documents that have this locale available.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+// Defaults to status: draft
+await strapi.documents('api::restaurant.restaurant').findMany({ locale: 'fr' });
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
   {
     documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
     name: 'Restaurant Biscotte',
@@ -123,10 +144,13 @@ await strapi.documents('api::restaurant.restaurant').findMany({ locale: 'fr' });
     // …
   },
   // …
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 <details>
 <summary>Explanation:</summary>
@@ -156,30 +180,38 @@ Given the following 4 documents that have various locales:
   kind="js"
   path="strapi.documents().create()"
   title="Create a document for a locale"
-  description="Pass a locale to create() to create the document for that specific locale."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').create({
+  description="Pass a locale to create() to create the document for that specific locale.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').create({
   locale: 'es' // if not passed, the draft is created for the default locale
   data: { name: 'Restaurante B' }
-})`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+})
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   documentId: "pw2s0nh5ub1zmnk0d80vgqrh",
   name: "Restaurante B",
   publishedAt: null,
   locale: "es"
   // …
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## `update()` a locale version {#update}
 
@@ -187,31 +219,39 @@ Given the following 4 documents that have various locales:
   kind="js"
   path="strapi.documents().update()"
   title="Update a locale version"
-  description="Pass a locale to update() to update only that specific locale version of a document."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').update({
+  description="Pass a locale to update() to update only that specific locale version of a document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').update({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'es',
   data: { name: 'Nuevo nombre del restaurante' },
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Nuevo nombre del restaurante",
   locale: "es",
   publishedAt: null,
   // …
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## `delete()` locale versions {#delete}
 
@@ -224,17 +264,22 @@ Use the `locale` parameter with the [`delete()` method](/cms/api/document-servic
   kind="js"
   path="strapi.documents().delete()"
   title="Delete a locale version"
-  description="Pass a locale to delete() to delete only that specific locale version of a document."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').delete({
+  description="Pass a locale to delete() to delete only that specific locale version of a document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').delete({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
   locale: 'es',
-});`
-    }
-  ]}
-/>
+});
+```
+
+</TabItem>
+</Tabs>
+
+</Endpoint>
 
 ### Delete all locale versions
 
@@ -243,21 +288,26 @@ Use the `locale` parameter with the [`delete()` method](/cms/api/document-servic
   kind="js"
   path="strapi.documents().delete()"
   title="Delete all locale versions"
-  description="Use the * wildcard with the locale parameter to delete all locale versions of a document."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').delete({
+  description="Use the * wildcard with the locale parameter to delete all locale versions of a document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').delete({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
   locale: '*',
-}); // for all existing locales`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+}); // for all existing locales
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
   // All of the deleted locale versions are returned
   "versions": [
@@ -265,10 +315,13 @@ Use the `locale` parameter with the [`delete()` method](/cms/api/document-servic
       "title": "Test Article"
     }
   ]
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## `publish()` locale versions {#publish}
 
@@ -281,21 +334,26 @@ To publish only specific locale versions of a document with the [`publish()` met
   kind="js"
   path="strapi.documents().publish()"
   title="Publish a locale version"
-  description="Pass a locale to publish() to publish only that specific locale version of a document."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').publish({
+  description="Pass a locale to publish() to publish only that specific locale version of a document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').publish({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'fr',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   versions: [
     {
       documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
@@ -305,10 +363,13 @@ To publish only specific locale versions of a document with the [`publish()` met
       // …
     },
   ]
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Publish all locale versions
 
@@ -317,20 +378,25 @@ To publish only specific locale versions of a document with the [`publish()` met
   kind="js"
   path="strapi.documents().publish()"
   title="Publish all locale versions"
-  description="Use the * wildcard with the locale parameter to publish all locale versions of a document."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi
+  description="Use the * wildcard with the locale parameter to publish all locale versions of a document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi
   .documents('api::restaurant.restaurant')
-  .publish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+  .publish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   "versions": [
     {
       "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
@@ -351,10 +417,13 @@ To publish only specific locale versions of a document with the [`publish()` met
       // …
     }
   ]
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## `unpublish()` locale versions {#unpublish}
 
@@ -367,25 +436,33 @@ To publish only specific locale versions of a document with the [`unpublish()` m
   kind="js"
   path="strapi.documents().unpublish()"
   title="Unpublish a locale version"
-  description="Pass a locale to unpublish() to unpublish only that specific locale version of a document."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi
+  description="Pass a locale to unpublish() to unpublish only that specific locale version of a document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi
   .documents('api::restaurant.restaurant')
-  .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+  .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   versions: 1
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Unpublish all locale versions
 
@@ -394,46 +471,59 @@ To publish only specific locale versions of a document with the [`unpublish()` m
   kind="js"
   path="strapi.documents().unpublish()"
   title="Unpublish all locale versions"
-  description="Use the * wildcard with the locale parameter to unpublish all locale versions of a document."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi
+  description="Use the * wildcard with the locale parameter to unpublish all locale versions of a document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi
   .documents('api::restaurant.restaurant')
-  .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+  .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   versions: 3
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 <Endpoint
   id="unpublish-with-fields"
   kind="js"
   path="strapi.documents().unpublish()"
   title="Unpublish with fields selection"
-  description="Unpublish a document while selecting specific fields to return."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `const document = await strapi.documents('api::article.article').unpublish({
+  description="Unpublish a document while selecting specific fields to return.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const document = await strapi.documents('api::article.article').unpublish({
   documentId: 'cjld2cjxh0000qzrmn831i7rn',
   fields: ['title'],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   "documentId": "cjld2cjxh0000qzrmn831i7rn",
   // All of the unpublished locale versions are returned
   "versions": [
@@ -441,10 +531,13 @@ To publish only specific locale versions of a document with the [`unpublish()` m
       "title": "Test Article"
     }
   ]
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## `discardDraft()` for locale versions {#discard-draft}
 
@@ -457,20 +550,25 @@ To discard draft data only for some locales versions of a document with the [`di
   kind="js"
   path="strapi.documents().discardDraft()"
   title="Discard draft for a locale version"
-  description="Pass a locale to discardDraft() to discard draft data for that specific locale version."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi
+  description="Pass a locale to discardDraft() to discard draft data for that specific locale version.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi
   .documents('api::restaurant.restaurant')
-  .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+  .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   versions: [
     {
       documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
@@ -480,10 +578,13 @@ To discard draft data only for some locales versions of a document with the [`di
       // …
     },
   ]
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Discard drafts for all locale versions
 
@@ -492,20 +593,25 @@ To discard draft data only for some locales versions of a document with the [`di
   kind="js"
   path="strapi.documents().discardDraft()"
   title="Discard drafts for all locale versions"
-  description="Use the * wildcard with the locale parameter to discard drafts for all locale versions of a document."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi
+  description="Use the * wildcard with the locale parameter to discard drafts for all locale versions of a document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi
   .documents('api::restaurant.restaurant')
-  .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+  .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   versions: [
     {
       documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
@@ -529,10 +635,13 @@ To discard draft data only for some locales versions of a document with the [`di
       // …
     },
   ]
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## `count()` documents for a locale {#count}
 
