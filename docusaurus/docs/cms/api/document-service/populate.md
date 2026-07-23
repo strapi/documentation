@@ -246,6 +246,10 @@ Omit `sort` from a `populate` object to preserve the default connect order (the 
 
 ## Components & Dynamic Zones
 
+:::note
+When populated, empty `morphMany` relations (including `type: 'media', multiple: true` fields such as a gallery) return `[]` instead of `null`, consistent with `oneToMany` and `manyToMany`. See the [morphMany serialization breaking change](/cms/migration/v4-to-v5/breaking-changes/morph-many-serialization) for migration guidance.
+:::
+
 Components are populated the same way as relations:
 
 <Endpoint
