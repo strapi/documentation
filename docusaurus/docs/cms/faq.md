@@ -50,7 +50,7 @@ At this time and in the future there is no plan to allow model creating or updat
 
 ## Does Strapi handle deploying or migrating of content?
 
-Strapi does offer a feature known as [Data Transfer](/cms/data-management/transfer) that allows you to export and import content from one Strapi instance to another or exporting and importing from a file archive. This is useful for migrating content from one environment to another.
+Strapi does offer a feature known as [Data Transfer](/cms/features/data-management/transfer) that allows you to export and import content from one Strapi instance to another or exporting and importing from a file archive. This is useful for migrating content from one environment to another.
 
 ## User can't login to the admin panel
 

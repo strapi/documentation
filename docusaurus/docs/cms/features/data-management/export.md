@@ -2,9 +2,9 @@
 title: Data export
 description: Export data using the Strapi CLI
 displayed_sidebar: cmsSidebar
-canonicalUrl: https://docs.strapi.io/cms/data-management/export.html
-pagination_prev: cms/data-management/import
-pagination_next: cms/data-management/transfer
+canonicalUrl: https://docs.strapi.io/cms/features/data-management/export.html
+pagination_prev: cms/features/data-management/import
+pagination_next: cms/features/data-management/transfer
 tags:
 - configure data encryption
 - data management system

@@ -39,7 +39,7 @@ A `transfer.token.salt` should be defined in the `config/admin` configuration fi
 
 **Path to configure the feature:** <Icon name="gear-six" /> *Settings > Global settings > Transfer Tokens*
 
-Transfer tokens allow users to authorize the `strapi transfer` CLI command (see [Data transfer](/cms/data-management/transfer) documentation).
+Transfer tokens allow users to authorize the `strapi transfer` CLI command (see [Data transfer](/cms/features/data-management/transfer) documentation).
 
 <ThemedImage
   alt="Transfer tokens"
@@ -139,7 +139,7 @@ The `strapi transfer` command verifies asset integrity using SHA-256 checksums b
 :::
 
 <CustomDocCardsWrapper>
-<CustomDocCard icon="terminal" title="Import" description="Learn how to import data into a Strapi instance." link="/cms/data-management/import"/>
-<CustomDocCard icon="terminal" title="Export" description="Learn how to export data from a Strapi instance." link="/cms/data-management/export"/>
-<CustomDocCard icon="terminal" title="Transfer" description="Learn how to transfer data from a Strapi instance to another one." link="/cms/data-management/transfer"/>
+<CustomDocCard icon="terminal" title="Import" description="Learn how to import data into a Strapi instance." link="/cms/features/data-management/import"/>
+<CustomDocCard icon="terminal" title="Export" description="Learn how to export data from a Strapi instance." link="/cms/features/data-management/export"/>
+<CustomDocCard icon="terminal" title="Transfer" description="Learn how to transfer data from a Strapi instance to another one." link="/cms/features/data-management/transfer"/>
 </CustomDocCardsWrapper>

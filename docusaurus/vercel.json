@@ -56,6 +56,21 @@
       "permanent": true
     },
     {
+      "source": "/cms/data-management/transfer",
+      "destination": "/cms/features/data-management/transfer",
+      "permanent": true
+    },
+    {
+      "source": "/cms/data-management/import",
+      "destination": "/cms/features/data-management/import",
+      "permanent": true
+    },
+    {
+      "source": "/cms/data-management/export",
+      "destination": "/cms/features/data-management/export",
+      "permanent": true
+    },
+    {
       "source": "/cms/getting-started",
       "destination": "/cms/quick-start",
       "permanent": true
@@ -1067,17 +1082,17 @@
     },
     {
       "source": "/dev-docs/data-management/export",
-      "destination": "/cms/data-management/export",
+      "destination": "/cms/features/data-management/export",
       "permanent": true
     },
     {
       "source": "/dev-docs/data-management/import",
-      "destination": "/cms/data-management/import",
+      "destination": "/cms/features/data-management/import",
       "permanent": true
     },
     {
       "source": "/dev-docs/data-management/transfer",
-      "destination": "/cms/data-management/transfer",
+      "destination": "/cms/features/data-management/transfer",
       "permanent": true
     },
     {
