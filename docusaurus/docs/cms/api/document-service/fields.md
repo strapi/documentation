@@ -43,28 +43,36 @@ You can also use the `populate` parameter to populate relations, media fields, c
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").findOne()'
   title="Select fields with findOne()"
-  description="Select specific fields to return when finding a document by documentId."
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const document = await strapi.documents("api::restaurant.restaurant").findOne({
+  description="Select specific fields to return when finding a document by documentId.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const document = await strapi.documents("api::restaurant.restaurant").findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   fields: ["name", "description"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Biscotte Restaurant",
   description: "Welcome to Biscotte restaurant! …"
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Select fields with `findFirst()` queries {#findfirst}
 
@@ -72,27 +80,35 @@ You can also use the `populate` parameter to populate relations, media fields, c
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").findFirst()'
   title="Select fields with findFirst()"
-  description="Select specific fields to return when finding the first matching document."
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const document = await strapi.documents("api::restaurant.restaurant").findFirst({
+  description="Select specific fields to return when finding the first matching document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const document = await strapi.documents("api::restaurant.restaurant").findFirst({
   fields: ["name", "description"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Biscotte Restaurant",
   description: "Welcome to Biscotte restaurant! …"
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Select fields with `findMany()` queries {#findmany}
 
@@ -100,30 +116,38 @@ You can also use the `populate` parameter to populate relations, media fields, c
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").findMany()'
   title="Select fields with findMany()"
-  description="Select specific fields to return when finding multiple documents."
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+  description="Select specific fields to return when finding multiple documents.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const documents = await strapi.documents("api::restaurant.restaurant").findMany({
   fields: ["name", "description"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
   {
     documentId: "a1b2c3d4e5f6g7h8i9j0klm",
     name: "Biscotte Restaurant",
     description: "Welcome to Biscotte restaurant! …"
   }
   // ...
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Select fields with `create()` queries {#create}
 
@@ -131,32 +155,40 @@ You can also use the `populate` parameter to populate relations, media fields, c
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").create()'
   title="Select fields with create()"
-  description="Select specific fields to return when creating a new document."
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const document = await strapi.documents("api::restaurant.restaurant").create({
+  description="Select specific fields to return when creating a new document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const document = await strapi.documents("api::restaurant.restaurant").create({
   data: {
     name: "Restaurant B",
     description: "Description for the restaurant",
   },
   fields: ["name", "description"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   id: 4,
   documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   name: 'Restaurant B',
   description: 'Description for the restaurant'
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Select fields with `update()` queries {#update}
 
@@ -164,30 +196,38 @@ You can also use the `populate` parameter to populate relations, media fields, c
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").update()'
   title="Select fields with update()"
-  description="Select specific fields to return when updating a document."
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const document = await strapi.documents("api::restaurant.restaurant").update({
+  description="Select specific fields to return when updating a document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const document = await strapi.documents("api::restaurant.restaurant").update({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   data: {
     name: "Restaurant C",
   },
   fields: ["name"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   name: 'Restaurant C'
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Select fields with `delete()` queries {#delete}
 
@@ -195,21 +235,26 @@ You can also use the `populate` parameter to populate relations, media fields, c
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").delete()'
   title="Select fields with delete()"
-  description="Select specific fields to return when deleting a document."
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const document = await strapi.documents("api::restaurant.restaurant").delete({
+  description="Select specific fields to return when deleting a document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const document = await strapi.documents("api::restaurant.restaurant").delete({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `  documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+  documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   // All of the deleted document's versions are returned
   entries: [
     {
@@ -219,10 +264,13 @@ You can also use the `populate` parameter to populate relations, media fields, c
       // …
     }
   ]
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Select fields with `publish()` queries {#publish}
 
@@ -230,21 +278,26 @@ You can also use the `populate` parameter to populate relations, media fields, c
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").publish()'
   title="Select fields with publish()"
-  description="Select specific fields to return when publishing a document."
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const document = await strapi.documents("api::restaurant.restaurant").publish({
+  description="Select specific fields to return when publishing a document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const document = await strapi.documents("api::restaurant.restaurant").publish({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   // All of the published locale entries are returned
   entries: [
@@ -253,10 +306,13 @@ You can also use the `populate` parameter to populate relations, media fields, c
       name: 'Restaurant B'
     }
   ]
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Select fields with `unpublish()` queries {#unpublish}
 
@@ -264,21 +320,26 @@ You can also use the `populate` parameter to populate relations, media fields, c
   kind="js"
   path='strapi.documents("api::restaurant.restaurant").unpublish()'
   title="Select fields with unpublish()"
-  description="Select specific fields to return when unpublishing a document."
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const document = await strapi.documents("api::restaurant.restaurant").unpublish({
+  description="Select specific fields to return when unpublishing a document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const document = await strapi.documents("api::restaurant.restaurant").unpublish({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   fields: ["name"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   // All of the published locale entries are returned
   entries: [
@@ -287,10 +348,13 @@ You can also use the `populate` parameter to populate relations, media fields, c
       name: 'Restaurant B'
     }
   ]
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Select fields with `discardDraft()` queries {#discarddraft}
 
@@ -299,20 +363,26 @@ You can also use the `populate` parameter to populate relations, media fields, c
   path='strapi.documents("api::restaurant.restaurant").discardDraft()'
   title="Select fields with discardDraft()"
   description="Select specific fields to return when discarding a draft document."
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const document = await strapi.documents("api::restaurant.restaurant").discardDraft({
+  isLast>
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const document = await strapi.documents("api::restaurant.restaurant").discardDraft({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   // All of the discarded draft entries are returned
   entries: [
@@ -320,8 +390,10 @@ You can also use the `populate` parameter to populate relations, media fields, c
       "name": "Restaurant B"
     }
   ]
-}`
-    }
-  ]}
-  isLast
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>

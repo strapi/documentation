@@ -46,20 +46,25 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
   path='strapi.documents("api::article.article").findMany()'
   title="Populate 1 level for all relations"
   description="Populate one-level deep for all relations using the wildcard."
-  id="populate-1-level-all"
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const documents = await strapi.documents("api::article.article").findMany({
+  id="populate-1-level-all">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const documents = await strapi.documents("api::article.article").findMany({
   populate: "*",
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   [
     {
       "id": "cjld2cjxh0000qzrmn831i7rn",
@@ -89,10 +94,13 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
     }
     // ...
   ]
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Populate 1 level for specific relations
 
@@ -101,20 +109,25 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
   path='strapi.documents("api::article.article").findMany()'
   title="Populate 1 level for specific relations"
   description="Populate specific relations one-level deep using an array."
-  id="populate-1-level-specific"
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const documents = await strapi.documents("api::article.article").findMany({
+  id="populate-1-level-specific">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const documents = await strapi.documents("api::article.article").findMany({
   populate: ["headerImage"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
   {
     "id": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
@@ -128,10 +141,13 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
     }
   }
   // ...
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Populate several levels deep for specific relations
 
@@ -140,24 +156,29 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
   path='strapi.documents("api::article.article").findMany()'
   title="Populate several levels deep for specific relations"
   description="Populate specific relations several levels deep using nested populate."
-  id="populate-several-levels-deep"
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const documents = await strapi.documents("api::article.article").findMany({
+  id="populate-several-levels-deep">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     categories: {
       populate: ["articles"],
     },
   },
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
   {
     "id": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
@@ -183,10 +204,13 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
     }
   }
   // ...
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### Sort populated relations
 
@@ -199,24 +223,29 @@ Use the `sort` parameter inside a `populate` object to order related entries by 
   path='strapi.documents("api::article.article").findMany()'
   title="Sort populated relations"
   description="Order related entries by an attribute using the sort parameter inside a populate object."
-  id="populate-sort-relations"
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const documents = await strapi.documents("api::article.article").findMany({
+  id="populate-sort-relations">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     categories: {
       sort: 'name:asc',
     },
   },
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
   {
     "id": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
@@ -235,10 +264,13 @@ Use the `sort` parameter inside a `populate` object to order related entries by 
     ]
   }
   // ...
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 :::note
 Omit `sort` from a `populate` object to preserve the default connect order (the order in which entries were associated).
@@ -253,20 +285,25 @@ Components are populated the same way as relations:
   path='strapi.documents("api::article.article").findMany()'
   title="Populate components"
   description="Populate components using the same syntax as relations."
-  id="populate-components"
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const documents = await strapi.documents("api::article.article").findMany({
+  id="populate-components">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const documents = await strapi.documents("api::article.article").findMany({
   populate: ["testComp"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
   {
     "id": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
@@ -280,10 +317,13 @@ Components are populated the same way as relations:
     }
   }
   // ...
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 Dynamic zones are highly dynamic content structures by essence. Standard populate queries (like `populate: '*'` or `populate: ['testDZ']`) will only retrieve the default, non-relational scalar fields (e.g., strings, numbers) of components within a dynamic zone. They will **not** automatically fetch nested relations, media fields, or nested components.
 
@@ -294,11 +334,13 @@ To populate component-specific nested relations, media fields, or components wit
   path='strapi.documents("api::article.article").findMany()'
   title="Populate dynamic zones"
   description="Populate dynamic zones using per-component queries with the on property."
-  id="populate-dynamic-zones"
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `const documents = await strapi.documents("api::article.article").findMany({
+  id="populate-dynamic-zones">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     testDZ: {
       on: {
@@ -309,14 +351,17 @@ To populate component-specific nested relations, media fields, or components wit
       },
     },
   },
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
   {
     "id": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
@@ -336,10 +381,13 @@ To populate component-specific nested relations, media fields, or components wit
     ]
   }
   // ...
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Populating with `create()`
 
@@ -348,11 +396,13 @@ To populate component-specific nested relations, media fields, or components wit
   path='strapi.documents("api::article.article").create()'
   title="Populate with create"
   description="Populate relations in the response when creating a document."
-  id="populate-with-create"
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `strapi.documents("api::article.article").create({
+  id="populate-with-create">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+strapi.documents("api::article.article").create({
   data: {
     title: "Test Article",
     slug: "test-article",
@@ -360,14 +410,17 @@ To populate component-specific nested relations, media fields, or components wit
     headerImage: 2,
   },
   populate: ["headerImage"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   "id": "cjld2cjxh0000qzrmn831i7rn",
   "title": "Test Article",
   "slug": "test-article",
@@ -377,10 +430,13 @@ To populate component-specific nested relations, media fields, or components wit
     "name": "17520.jpg"
     // ...
   }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Populating with `update()`
 
@@ -389,24 +445,29 @@ To populate component-specific nested relations, media fields, or components wit
   path='strapi.documents("api::article.article").update()'
   title="Populate with update"
   description="Populate relations in the response when updating a document."
-  id="populate-with-update"
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `strapi.documents("api::article.article").update({
+  id="populate-with-update">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+strapi.documents("api::article.article").update({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   data: {
     title: "Test Article Update",
   },
   populate: ["headerImage"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   "id": "cjld2cjxh0000qzrmn831i7rn",
   "title": "Test Article Update",
   "slug": "test-article",
@@ -416,10 +477,13 @@ To populate component-specific nested relations, media fields, or components wit
     "name": "17520.jpg"
     // ...
   }
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Populating with `publish()`
 
@@ -430,21 +494,26 @@ Same behavior applies with `unpublish()` and `discardDraft()`.
   path='strapi.documents("api::article.article").publish()'
   title="Populate with publish"
   description="Populate relations in the response when publishing a document."
-  id="populate-with-publish"
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `strapi.documents("api::article.article").publish({
+  id="populate-with-publish">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+strapi.documents("api::article.article").publish({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   populate: ["headerImage"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   "id": "cjld2cjxh0000qzrmn831i7rn",
   "versions": [
     {
@@ -458,10 +527,13 @@ Same behavior applies with `unpublish()` and `discardDraft()`.
       }
     }
   ]
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Populating with `delete()`
 
@@ -472,21 +544,26 @@ To populate while deleting documents:
   path='strapi.documents("api::article.article").delete()'
   title="Populate with delete"
   description="Populate relations in the response when deleting a document."
-  id="populate-with-delete"
-  codeTabs={[
-    {
-      label: "JavaScript",
-      code: `strapi.documents("api::article.article").delete({
+  id="populate-with-delete">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+strapi.documents("api::article.article").delete({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   populate: ["headerImage"],
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: "OK",
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   "documentId": "cjld2cjxh0000qzrmn831i7rn",
   "entries": [
     {
@@ -502,7 +579,10 @@ To populate while deleting documents:
       // ...
     }
   ]
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>

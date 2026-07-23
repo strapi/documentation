@@ -113,27 +113,36 @@ Syntax: `findOne(parameters: Params) => Document`
     { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#findone">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
   ]}
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `await strapi.documents('api::restaurant.restaurant').findOne({
+>
+
+<Tabs>
+<TabItem value="request" label="Request">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn'
-})`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-        name: "Biscotte Restaurant",
-        publishedAt: null,
-        locale: "en",
-      }, null, 2),
-    },
-  ]}
-/>
+})
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "name": "Biscotte Restaurant",
+  "publishedAt": null,
+  "locale": "en"
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### `findFirst()`
 
@@ -153,14 +162,20 @@ Syntax:  `findFirst(parameters: Params) => Document`
     { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#findfirst">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
   ]}
-  codeTabs={[
-    {
-      label: 'Generic example',
-      code: `await strapi.documents('api::restaurant.restaurant').findFirst()`,
-    },
-    {
-      label: 'With filters',
-      code: `await strapi.documents('api::restaurant.restaurant').findFirst(
+>
+
+<Tabs>
+<TabItem value="generic-example" label="Generic example">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findFirst()
+```
+
+</TabItem>
+<TabItem value="with-filters" label="With filters">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findFirst(
   {
     filters: {
       name: {
@@ -168,32 +183,38 @@ Syntax:  `findFirst(parameters: Params) => Document`
       }
     }
   }
-)`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'Generic',
-      body: JSON.stringify({
-        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-        name: "Restaurant Biscotte",
-        publishedAt: null,
-        locale: "en",
-      }, null, 2),
-    },
-    {
-      status: 200,
-      statusText: 'With filters',
-      body: JSON.stringify({
-        documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
-        name: "Pizzeria Arrivederci",
-        publishedAt: null,
-        locale: "en",
-      }, null, 2),
-    },
-  ]}
->
+)
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="Generic">
+
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "name": "Restaurant Biscotte",
+  "publishedAt": null,
+  "locale": "en"
+}
+```
+
+</ResponseTab>
+<ResponseTab status={200} statusText="With filters">
+
+```json
+{
+  "documentId": "j9k8l7m6n5o4p3q2r1s0tuvw",
+  "name": "Pizzeria Arrivederci",
+  "publishedAt": null,
+  "locale": "en"
+}
+```
+
+</ResponseTab>
+</Responses>
 
 If no `locale` or `status` parameters are passed, results return the draft version for the default locale.
 
@@ -219,14 +240,20 @@ Syntax: `findMany(parameters: Params) => Document[]`
     { name: 'pagination', type: 'Object', required: false, description: '<a href="/cms/api/document-service/sort-pagination#pagination">Paginate</a> results.' },
     { name: 'sort', type: 'Object', required: false, description: '<a href="/cms/api/document-service/sort-pagination#sort">Sort</a> results.' },
   ]}
-  codeTabs={[
-    {
-      label: 'Generic example',
-      code: `await strapi.documents('api::restaurant.restaurant').findMany()`,
-    },
-    {
-      label: 'With filters',
-      code: `await strapi.documents('api::restaurant.restaurant').findMany(
+>
+
+<Tabs>
+<TabItem value="generic-example" label="Generic example">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany()
+```
+
+</TabItem>
+<TabItem value="with-filters" label="With filters">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany(
   {
     filters: {
       name: {
@@ -234,42 +261,48 @@ Syntax: `findMany(parameters: Params) => Document[]`
       }
     }
   }
-)`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'Generic',
-      body: JSON.stringify([
-        {
-          documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-          name: "Biscotte Restaurant",
-          publishedAt: null,
-          locale: "en",
-        },
-        {
-          documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
-          name: "Pizzeria Arrivederci",
-          publishedAt: null,
-          locale: "en",
-        },
-      ], null, 2),
-    },
-    {
-      status: 200,
-      statusText: 'With filters',
-      body: JSON.stringify([
-        {
-          documentId: "j9k8l7m6n5o4p3q2r1s0tuvw",
-          name: "Pizzeria Arrivederci",
-          locale: "en",
-          publishedAt: null,
-        },
-      ], null, 2),
-    },
-  ]}
->
+)
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="Generic">
+
+```json
+[
+  {
+    "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+    "name": "Biscotte Restaurant",
+    "publishedAt": null,
+    "locale": "en"
+  },
+  {
+    "documentId": "j9k8l7m6n5o4p3q2r1s0tuvw",
+    "name": "Pizzeria Arrivederci",
+    "publishedAt": null,
+    "locale": "en"
+  }
+]
+```
+
+</ResponseTab>
+<ResponseTab status={200} statusText="With filters">
+
+```json
+[
+  {
+    "documentId": "j9k8l7m6n5o4p3q2r1s0tuvw",
+    "name": "Pizzeria Arrivederci",
+    "locale": "en",
+    "publishedAt": null
+  }
+]
+```
+
+</ResponseTab>
+</Responses>
 
 Available filters are detailed in the [filters](/cms/api/document-service/filters) page of the Document Service API reference.
 
@@ -293,29 +326,36 @@ Syntax: `create(parameters: Params) => Document`
     { name: 'status', type: "'published'", required: false, description: 'If <a href="/cms/features/draft-and-publish">Draft & Publish</a> is enabled: can be set to <code>published</code> to automatically publish the draft version of a document while creating it. <a href="/cms/api/document-service/status#create">See status docs</a>.' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
   ]}
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `await strapi.documents('api::restaurant.restaurant').create({
+>
+
+<Tabs>
+<TabItem value="request" label="Request">
+
+```js
+await strapi.documents('api::restaurant.restaurant').create({
   data: {
     name: 'Restaurant B'
   }
-})`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-        name: "Restaurant B",
-        publishedAt: null,
-        locale: "en",
-      }, null, 2),
-    },
-  ]}
->
+})
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "name": "Restaurant B",
+  "publishedAt": null,
+  "locale": "en"
+}
+```
+
+</ResponseTab>
+</Responses>
 
 :::tip
 If the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled on the content-type, you can automatically publish a document while creating it (see [`status` documentation](/cms/api/document-service/status#create)).
@@ -341,28 +381,35 @@ Syntax: `update(parameters: Params) => Promise<Document>`
     { name: 'status', type: "'published'", required: false, description: 'If <a href="/cms/features/draft-and-publish">Draft & Publish</a> is enabled: can be set to <code>published</code> to automatically publish the draft version of a document while updating it. <a href="/cms/api/document-service/status#update">See status docs</a>.' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
   ]}
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `await strapi.documents('api::restaurant.restaurant').update({
+>
+
+<Tabs>
+<TabItem value="request" label="Request">
+
+```js
+await strapi.documents('api::restaurant.restaurant').update({
     documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
     data: { name: "New restaurant name" }
-})`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-        name: "New restaurant name",
-        locale: "en",
-        publishedAt: null,
-      }, null, 2),
-    },
-  ]}
->
+})
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "name": "New restaurant name",
+  "locale": "en",
+  "publishedAt": null
+}
+```
+
+</ResponseTab>
+</Responses>
 
 :::tip
 Published versions are read-only, so you can not technically update the published version of a document.
@@ -395,32 +442,41 @@ Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }
     { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#delete">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
   ]}
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `await strapi.documents('api::restaurant.restaurant').delete({
+>
+
+<Tabs>
+<TabItem value="request" label="Request">
+
+```js
+await strapi.documents('api::restaurant.restaurant').delete({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
-})`,
-    },
-  ]}
-  responses={[
+})
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "entries": [
     {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-        entries: [
-          {
-            documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-            name: "Biscotte Restaurant",
-            publishedAt: "2024-03-14T18:30:48.870Z",
-            locale: "en",
-          }
-        ]
-      }, null, 2),
-    },
-  ]}
-/>
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+      "name": "Biscotte Restaurant",
+      "publishedAt": "2024-03-14T18:30:48.870Z",
+      "locale": "en"
+    }
+  ]
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### `deleteMany()`
 
@@ -438,10 +494,13 @@ Syntax: `deleteMany(parameters: Params): Promise<{ documentId: ID, entries: Numb
     { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#delete">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
   ]}
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `await strapi.documents('api::restaurant.restaurant').deleteMany({
+>
+
+<Tabs>
+<TabItem value="request" label="Request">
+
+```js
+await strapi.documents('api::restaurant.restaurant').deleteMany({
   filters: {
     city: {
       name: {
@@ -449,20 +508,26 @@ Syntax: `deleteMany(parameters: Params): Promise<{ documentId: ID, entries: Numb
       }
     }
   }
-});`,
-    },
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        documentId: "multiple_documents",
-        entries: 3
-      }, null, 2),
-    },
-  ]}
-/>
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "documentId": "multiple_documents",
+  "entries": 3
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### `publish()`
 
@@ -481,32 +546,41 @@ Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number 
     { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#publish">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
   ]}
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `await strapi.documents('api::restaurant.restaurant').publish({
+>
+
+<Tabs>
+<TabItem value="request" label="Request">
+
+```js
+await strapi.documents('api::restaurant.restaurant').publish({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
-});`,
-    },
-  ]}
-  responses={[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "entries": [
     {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-        entries: [
-          {
-            documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-            name: "Biscotte Restaurant",
-            publishedAt: "2024-03-14T18:30:48.870Z",
-            locale: "en",
-          }
-        ]
-      }, null, 2),
-    },
-  ]}
-/>
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+      "name": "Biscotte Restaurant",
+      "publishedAt": "2024-03-14T18:30:48.870Z",
+      "locale": "en"
+    }
+  ]
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### `unpublish()`
 
@@ -525,32 +599,41 @@ Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Numbe
     { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#unpublish">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
   ]}
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `await strapi.documents('api::restaurant.restaurant').unpublish({
+>
+
+<Tabs>
+<TabItem value="request" label="Request">
+
+```js
+await strapi.documents('api::restaurant.restaurant').unpublish({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn'
-});`,
-    },
-  ]}
-  responses={[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "entries": [
     {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-        entries: [
-          {
-            documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-            name: "Biscotte Restaurant",
-            publishedAt: null,
-            locale: "en",
-          }
-        ]
-      }, null, 2),
-    },
-  ]}
-/>
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+      "name": "Biscotte Restaurant",
+      "publishedAt": null,
+      "locale": "en"
+    }
+  ]
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### `discardDraft()`
 
@@ -569,32 +652,41 @@ Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Nu
     { name: 'fields', type: 'Object', required: false, description: '<a href="/cms/api/document-service/fields#discarddraft">Select fields</a> to return. Defaults to all fields (except those not populated by default).' },
     { name: 'populate', type: 'Object', required: false, description: '<a href="/cms/api/document-service/populate">Populate</a> results with additional fields. Default: <code>null</code>.' },
   ]}
-  codeTabs={[
-    {
-      label: 'Request',
-      code: `strapi.documents('api::restaurant.restaurant').discardDraft({
+>
+
+<Tabs>
+<TabItem value="request" label="Request">
+
+```js
+strapi.documents('api::restaurant.restaurant').discardDraft({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
-});`,
-    },
-  ]}
-  responses={[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "entries": [
     {
-      status: 200,
-      statusText: 'OK',
-      body: JSON.stringify({
-        documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-        entries: [
-          {
-            documentId: "a1b2c3d4e5f6g7h8i9j0klmn",
-            name: "Biscotte Restaurant",
-            publishedAt: null,
-            locale: "en",
-          }
-        ]
-      }, null, 2),
-    },
-  ]}
-/>
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+      "name": "Biscotte Restaurant",
+      "publishedAt": null,
+      "locale": "en"
+    }
+  ]
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ### `count()`
 
@@ -612,27 +704,37 @@ Syntax: `count(parameters: Params) => number`
     { name: 'publicationFilter', type: 'String', required: false, description: 'If <a href="/cms/features/draft-and-publish">Draft & Publish</a> is enabled: select documents by how their draft and published versions relate, before applying <code>status</code>. <a href="/cms/api/document-service/publication-filter">See publicationFilter docs</a>.' },
     { name: 'filters', type: 'Object', required: false, description: '<a href="/cms/api/document-service/filters">Filters</a> to use. Default: <code>null</code>.' },
   ]}
-  codeTabs={[
-    {
-      label: 'Generic example',
-      code: `await strapi.documents('api::restaurant.restaurant').count()`,
-    },
-    {
-      label: 'Count published',
-      code: `strapi.documents('api::restaurant.restaurant').count({ status: 'published' })`,
-    },
-    {
-      label: 'With filters',
-      code: `/**
+  isLast={true}
+>
+
+<Tabs>
+<TabItem value="generic-example" label="Generic example">
+
+```js
+await strapi.documents('api::restaurant.restaurant').count()
+```
+
+</TabItem>
+<TabItem value="count-published" label="Count published">
+
+```js
+strapi.documents('api::restaurant.restaurant').count({ status: 'published' })
+```
+
+</TabItem>
+<TabItem value="with-filters" label="With filters">
+
+```js
+/**
  * Count number of draft documents (default if status is omitted)
  * in English (default locale)
  * whose name starts with 'Pizzeria'
  */
-strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $startsWith: "Pizzeria" }}})`,
-    },
-  ]}
-  isLast={true}
->
+strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $startsWith: "Pizzeria" }}})
+```
+
+</TabItem>
+</Tabs>
 
 :::note
 Since published documents necessarily also have a draft counterpart, a published document is still counted as having a draft version.
