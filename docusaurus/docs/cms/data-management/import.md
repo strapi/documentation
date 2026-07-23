@@ -284,7 +284,7 @@ npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --only
 
 The `--exclude-content-types` and `--only-content-types` options let you scope an import to specific content types. Both options accept a comma-separated list of content-type UIDs (for example, `api::article.article`). Unknown UIDs are validated against the Strapi schema at startup.
 
-:::warning Restore behavior
+:::warning Warning: Restore behavior
 - When you use `--exclude-content-types`, data for the excluded types is **preserved** on the destination — the import does not wipe those records before restoring.
 - When you use `--only-content-types`, the pre-import wipe is scoped to only the listed UIDs, leaving all other content in place.
 :::
