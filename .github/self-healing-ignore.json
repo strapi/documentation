@@ -894,6 +894,11 @@
       "number": 25298,
       "reason": "Triage: Internal type definition update with no behavioral changes",
       "added": "2026-07-22"
+    },
+    {
+      "number": 27066,
+      "reason": "Router: Internal content-manager fix for homepage widget date serialization. No public API changes; this is an implementation detail for the admin panel homepage. Does not warrant user-facing documentation.",
+      "added": "2026-07-23"
     }
   ]
 }
