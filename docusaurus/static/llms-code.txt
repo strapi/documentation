@@ -29414,27 +29414,29 @@ File path: N/A
 
 
 
-# defaultIndex removed
+# Updating repeatable components with the Document Service API
 Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api
 
 ## Notes
-Description: In Strapi 5, draft components and published components have different ids, and you could fetch data like follows:
+Description: With Draft & Publish enabled, a typical Content API flow looks like this:
 (Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api#notes)
 
 Language: JavaScript
 File path: N/A
 
 ```js
-// Request
-GET /articles // -> returns published article
+// Request: Content API returns the published version by default
+GET /api/articles
 
-// Response
+// Response (published)
 {
-   documentId …
-   component: [
-     { id: 2, name: 'component-1'  },
-     { id: 4, name: 'component-2'  },
-   ]
+  data: {
+    documentId: '…',
+    components: [
+      { id: 2, name: 'component-1' },
+      { id: 4, name: 'component-2' },
+    ],
+  },
 }
 ```
 
@@ -29442,13 +29444,79 @@ Language: JavaScript
 File path: N/A
 
 ```js
-PUT /articles/{documentId} // <== Update draft article
+PUT /api/articles/{documentId}
 {
-   documentId …
-   component: [
-     { id: 2, name: 'component-1-updated'  }, // <== Update component 1
-   ]
+  data: {
+    components: [
+      { id: 2, name: 'component-1-updated' }, // published id, usually wrong for draft
+    ],
+  },
 }
+```
+
+
+## 1. Replace the full component array (preferred for Content API)
+Description: Omit component ids and send the complete desired list.
+(Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api#1-replace-the-full-component-array-preferred-for-content-api)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// Document Service
+await strapi.documents('api::article.article').update({
+  documentId,
+  data: {
+    components: [
+      { name: 'component-1-updated' },
+      { name: 'component-2' },
+    ],
+  },
+});
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+// REST Content API
+PUT /api/articles/{documentId}
+{
+  "data": {
+    "components": [
+      { "name": "component-1-updated" },
+      { "name": "component-2" }
+    ]
+  }
+}
+```
+
+
+## 2. Edit against draft component ids (Document Service / admin-style)
+Description: If you control the backend (custom routes, scripts, Document Service), load the draft, then update using those ids:
+(Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api#2-edit-against-draft-component-ids-document-service-admin-style)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const draft = await strapi.documents('api::article.article').findOne({
+  documentId,
+  status: 'draft',
+  populate: ['components'],
+});
+
+await strapi.documents('api::article.article').update({
+  documentId,
+  data: {
+    components: draft.components.map((component) =>
+      component.id === targetDraftId
+        ? { id: component.id, name: 'component-1-updated' }
+        : { id: component.id, name: component.name }
+    ),
+  },
+});
 ```
 
 
