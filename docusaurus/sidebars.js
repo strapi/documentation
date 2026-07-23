@@ -590,6 +590,15 @@ const sidebars = {
         },
       ],
     },
+    { // Design showcase (temporary, for the redesign — remove after)
+      type: 'category',
+      label: 'Design showcase',
+      collapsed: false,
+      items: [
+        'cms/design-showcase/components',
+        'cms/design-showcase/api-components',
+      ],
+    },
   ],
 
   cloudSidebar: [

@@ -1,0 +1,234 @@
+---
+title: API components showcase
+description: A visual reference of every API-related MDX component (Endpoint, Responses, ApiCall, MultiLanguageSwitcher) used in the Strapi documentation, for the design team.
+displayed_sidebar: cmsSidebar
+pagination_next: null
+pagination_prev: null
+tags:
+- design
+- components
+- showcase
+- API
+---
+
+# API components showcase
+
+This page demonstrates the **API-specific components** used across the Strapi documentation. For general-purpose components (admonitions, tabs, cards, badges…), see the [components showcase](/cms/design-showcase/components).
+
+<Tldr>
+This is a demo page for designers. It renders the Endpoint layout, Responses/ResponseTab, and ApiCall with Request/Response, including nested cases with language tabs and side-by-side layout.
+</Tldr>
+
+## 1. Endpoint (HTTP)
+
+The two-column endpoint layout for an HTTP request, with parameters, a request example, and responses.
+
+<Endpoint
+  method="GET"
+  path="/api/:pluralApiId"
+  title="Get documents"
+  description="Returns a list of documents matching the query parameters."
+  params={[
+    { name: 'locale', type: 'String', required: false, description: 'Locale to fetch documents for.' },
+    { name: 'sort', type: 'String', required: false, description: 'Sort the results.' },
+    { name: 'pagination[page]', type: 'Integer', required: false, description: 'Page number.' },
+  ]}
+>
+  <Tabs>
+    <TabItem value="curl" label="cURL">
+
+```bash
+curl http://localhost:1337/api/restaurants?locale=en
+```
+
+    </TabItem>
+    <TabItem value="js" label="JavaScript">
+
+```js
+const res = await fetch('http://localhost:1337/api/restaurants?locale=en');
+const { data } = await res.json();
+```
+
+    </TabItem>
+  </Tabs>
+  <Responses>
+    <ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": [
+    { "id": 1, "documentId": "abc123", "name": "Biscotte Restaurant" }
+  ],
+  "meta": { "pagination": { "page": 1, "pageCount": 1, "total": 1 } }
+}
+```
+
+    </ResponseTab>
+    <ResponseTab status={404} statusText="Not Found" collapsible>
+
+```json
+{
+  "data": null,
+  "error": { "status": 404, "name": "NotFoundError", "message": "Not Found" }
+}
+```
+
+    </ResponseTab>
+  </Responses>
+</Endpoint>
+
+## 2. Endpoint (JavaScript / Document Service API)
+
+The same layout for a JavaScript API call.
+
+<Endpoint
+  kind="js"
+  path="strapi.documents('api::article.article').findOne()"
+  title="findOne()"
+  description="Find a single document by its documentId."
+  params={[
+    { name: 'documentId', type: 'String', required: true, description: 'The documentId of the document.' },
+    { name: 'populate', type: 'Object | String', required: false, description: 'Relations, media, and components to populate.' },
+  ]}
+>
+
+```js
+const article = await strapi.documents('api::article.article').findOne({
+  documentId: 'abc123',
+  populate: '*',
+});
+```
+
+  <Responses>
+    <ResponseTab status={200} statusText="OK">
+
+```json
+{ "documentId": "abc123", "title": "Hello world" }
+```
+
+    </ResponseTab>
+  </Responses>
+</Endpoint>
+
+## 3. Responses & ResponseTab (standalone)
+
+Multiple response tabs keyed by status code:
+
+<Responses>
+  <ResponseTab status={200} statusText="OK">
+
+```json
+{ "data": {} }
+```
+
+  </ResponseTab>
+  <ResponseTab status={400} statusText="Bad Request">
+
+```json
+{ "error": { "status": 400, "name": "ValidationError" } }
+```
+
+  </ResponseTab>
+  <ResponseTab status={500} statusText="Internal Server Error" collapsible>
+
+```json
+{ "error": { "status": 500, "name": "InternalServerError" } }
+```
+
+  </ResponseTab>
+</Responses>
+
+## 4. ApiCall with Request & Response
+
+The side-by-side request/response layout:
+
+<ApiCall>
+<Request title="Example request">
+
+```bash
+GET http://localhost:1337/api/restaurants
+```
+
+</Request>
+<Response title="Example response">
+
+```json
+{
+  "data": [
+    { "id": 1, "documentId": "abc123", "name": "Biscotte Restaurant" }
+  ],
+  "meta": {}
+}
+```
+
+</Response>
+</ApiCall>
+
+Stacked (not side-by-side) variant with `noSideBySide`:
+
+<ApiCall noSideBySide>
+<Request title="Mutation">
+
+```graphql
+mutation {
+  createRestaurant(data: { name: "Biscotte Restaurant" }) {
+    documentId
+    name
+  }
+}
+```
+
+</Request>
+<Response title="Response">
+
+```json
+{
+  "data": {
+    "createRestaurant": { "documentId": "abc123", "name": "Biscotte Restaurant" }
+  }
+}
+```
+
+</Response>
+</ApiCall>
+
+## 5. Nested API cases
+
+API request/response combined with language tabs inside a side-by-side layout:
+
+<SideBySideContainer>
+<SideBySideColumn>
+
+Fetch all restaurants for the current locale. Switch the tab to see the equivalent call in each client.
+
+:::tip
+The `documentId` replaces the numeric `id` from Strapi v4 as the primary way to reference a document.
+:::
+
+</SideBySideColumn>
+<SideBySideColumn>
+
+<Tabs groupId="client">
+<TabItem value="rest" label="REST">
+
+```bash
+curl http://localhost:1337/api/restaurants
+```
+
+</TabItem>
+<TabItem value="graphql" label="GraphQL">
+
+```graphql
+query {
+  restaurants {
+    documentId
+    name
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+</SideBySideColumn>
+</SideBySideContainer>
