@@ -2523,28 +2523,40 @@ console.log('Deleted file name:', deletedFile.name);
 # Document Service API
 Source: https://docs.strapi.io/cms/api/document-service
 
-## `findOne()`
-Description: GET strapi.documents().findOne() — findOne()
+## findOne()
+Description: { name: 'publicationFilter', type: 'String', required: false, description: 'If Draft & Publish is enabled: select documents by how their draft and published versions relate, before applying status .
 (Source: https://docs.strapi.io/cms/api/document-service#findone)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn'
 })
 ```
 
+Language: JSON
+File path: N/A
 
-## `findFirst()`
-Description: GET strapi.documents().findFirst() — findFirst()
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "name": "Biscotte Restaurant",
+  "publishedAt": null,
+  "locale": "en"
+}
+```
+
+
+## findFirst()
+Description: { name: 'filters', type: 'Object', required: false, description: ' Filters to use.
 (Source: https://docs.strapi.io/cms/api/document-service#findfirst)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findFirst()
 ```
 
@@ -2552,7 +2564,7 @@ await strapi.documents('api::restaurant.restaurant').findFirst()
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findFirst(
   {
     filters: {
@@ -2564,15 +2576,40 @@ await strapi.documents('api::restaurant.restaurant').findFirst(
 )
 ```
 
+Language: JSON
+File path: N/A
 
-## `findMany()`
-Description: GET strapi.documents().findMany() — findMany()
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "name": "Restaurant Biscotte",
+  "publishedAt": null,
+  "locale": "en"
+}
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "documentId": "j9k8l7m6n5o4p3q2r1s0tuvw",
+  "name": "Pizzeria Arrivederci",
+  "publishedAt": null,
+  "locale": "en"
+}
+```
+
+
+## findMany()
+Description: { name: 'populate', type: 'Object', required: false, description: ' Populate results with additional fields.
 (Source: https://docs.strapi.io/cms/api/document-service#findmany)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findMany()
 ```
 
@@ -2580,7 +2617,7 @@ await strapi.documents('api::restaurant.restaurant').findMany()
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findMany(
   {
     filters: {
@@ -2592,15 +2629,50 @@ await strapi.documents('api::restaurant.restaurant').findMany(
 )
 ```
 
+Language: JSON
+File path: N/A
 
-## `create()`
-Description: GET strapi.documents().create() — create()
+```json
+[
+  {
+    "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+    "name": "Biscotte Restaurant",
+    "publishedAt": null,
+    "locale": "en"
+  },
+  {
+    "documentId": "j9k8l7m6n5o4p3q2r1s0tuvw",
+    "name": "Pizzeria Arrivederci",
+    "publishedAt": null,
+    "locale": "en"
+  }
+]
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+[
+  {
+    "documentId": "j9k8l7m6n5o4p3q2r1s0tuvw",
+    "name": "Pizzeria Arrivederci",
+    "locale": "en",
+    "publishedAt": null
+  }
+]
+```
+
+
+## create()
+Description: { name: 'fields', type: 'Object', required: false, description: ' Select fields to return.
 (Source: https://docs.strapi.io/cms/api/document-service#create)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').create({
   data: {
     name: 'Restaurant B'
@@ -2608,44 +2680,85 @@ await strapi.documents('api::restaurant.restaurant').create({
 })
 ```
 
+Language: JSON
+File path: N/A
 
-## `update()`
-Description: GET strapi.documents().update() — update()
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "name": "Restaurant B",
+  "publishedAt": null,
+  "locale": "en"
+}
+```
+
+
+## update()
+Description: { name: 'fields', type: 'Object', required: false, description: ' Select fields to return.
 (Source: https://docs.strapi.io/cms/api/document-service#update)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').update({
     documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
     data: { name: "New restaurant name" }
 })
 ```
 
+Language: JSON
+File path: N/A
 
-## `delete()`
-Description: GET strapi.documents().delete() — delete()
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "name": "New restaurant name",
+  "locale": "en",
+  "publishedAt": null
+}
+```
+
+
+## delete()
+Description: { name: 'filters', type: 'Object', required: false, description: ' Filters to use.
 (Source: https://docs.strapi.io/cms/api/document-service#delete)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').delete({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
 })
 ```
 
+Language: JSON
+File path: N/A
 
-## `deleteMany()`
-Description: GET strapi.documents().deleteMany() — deleteMany()
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "entries": [
+    {
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+      "name": "Biscotte Restaurant",
+      "publishedAt": "2024-03-14T18:30:48.870Z",
+      "locale": "en"
+    }
+  ]
+}
+```
+
+
+## deleteMany()
+Description: { name: 'filters', type: 'Object', required: false, description: ' Filters to use.
 (Source: https://docs.strapi.io/cms/api/document-service#deletemany)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').deleteMany({
   filters: {
     city: {
@@ -2657,57 +2770,118 @@ await strapi.documents('api::restaurant.restaurant').deleteMany({
 });
 ```
 
+Language: JSON
+File path: N/A
 
-## `publish()`
-Description: GET strapi.documents().publish() — publish()
+```json
+{
+  "documentId": "multiple_documents",
+  "entries": 3
+}
+```
+
+
+## publish()
+Description: { name: 'filters', type: 'Object', required: false, description: ' Filters to use.
 (Source: https://docs.strapi.io/cms/api/document-service#publish)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').publish({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
 });
 ```
 
+Language: JSON
+File path: N/A
 
-## `unpublish()`
-Description: GET strapi.documents().unpublish() — unpublish()
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "entries": [
+    {
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+      "name": "Biscotte Restaurant",
+      "publishedAt": "2024-03-14T18:30:48.870Z",
+      "locale": "en"
+    }
+  ]
+}
+```
+
+
+## unpublish()
+Description: { name: 'filters', type: 'Object', required: false, description: ' Filters to use.
 (Source: https://docs.strapi.io/cms/api/document-service#unpublish)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').unpublish({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn'
 });
 ```
 
+Language: JSON
+File path: N/A
 
-## `discardDraft()`
-Description: GET strapi.documents().discardDraft() — discardDraft()
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "entries": [
+    {
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+      "name": "Biscotte Restaurant",
+      "publishedAt": null,
+      "locale": "en"
+    }
+  ]
+}
+```
+
+
+## discardDraft()
+Description: { name: 'filters', type: 'Object', required: false, description: ' Filters to use.
 (Source: https://docs.strapi.io/cms/api/document-service#discarddraft)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 strapi.documents('api::restaurant.restaurant').discardDraft({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
 });
 ```
 
+Language: JSON
+File path: N/A
 
-## `count()`
-Description: GET strapi.documents().count() — count()
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+  "entries": [
+    {
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
+      "name": "Biscotte Restaurant",
+      "publishedAt": null,
+      "locale": "en"
+    }
+  ]
+}
+```
+
+
+## count()
+Description: { name: 'publicationFilter', type: 'String', required: false, description: 'If Draft & Publish is enabled: select documents by how their draft and published versions relate, before applying status .
 (Source: https://docs.strapi.io/cms/api/document-service#count)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').count()
 ```
 
@@ -2723,7 +2897,7 @@ strapi.documents('api::restaurant.restaurant').count({ status: 'published' })
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 /**
  * Count number of draft documents (default if status is omitted)
  * in English (default locale)
@@ -2737,14 +2911,14 @@ strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $start
 # Using fields with the Document Service API
 Source: https://docs.strapi.io/cms/api/document-service/fields
 
-## Select fields with `findOne()` queries
-Description: GET strapi.documents( — Select fields with findOne()
-(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-findone-queries)
+## Select fields with findOne() queries
+Description: Code example from "Select fields with findOne() queries"
+(Source: https://docs.strapi.io/cms/api/document-service/fields#findone)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const document = await strapi.documents("api::restaurant.restaurant").findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   fields: ["name", "description"],
@@ -2763,14 +2937,14 @@ File path: N/A
 ```
 
 
-## Select fields with `findFirst()` queries
-Description: GET strapi.documents( — Select fields with findFirst()
-(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-findfirst-queries)
+## Select fields with findFirst() queries
+Description: Code example from "Select fields with findFirst() queries"
+(Source: https://docs.strapi.io/cms/api/document-service/fields#findfirst)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const document = await strapi.documents("api::restaurant.restaurant").findFirst({
   fields: ["name", "description"],
 });
@@ -2788,14 +2962,14 @@ File path: N/A
 ```
 
 
-## Select fields with `findMany()` queries
-Description: GET strapi.documents( — Select fields with findMany()
-(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-findmany-queries)
+## Select fields with findMany() queries
+Description: Code example from "Select fields with findMany() queries"
+(Source: https://docs.strapi.io/cms/api/document-service/fields#findmany)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const documents = await strapi.documents("api::restaurant.restaurant").findMany({
   fields: ["name", "description"],
 });
@@ -2816,14 +2990,14 @@ File path: N/A
 ```
 
 
-## Select fields with `create()` queries
-Description: GET strapi.documents( — Select fields with create()
-(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-create-queries)
+## Select fields with create() queries
+Description: Code example from "Select fields with create() queries"
+(Source: https://docs.strapi.io/cms/api/document-service/fields#create)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const document = await strapi.documents("api::restaurant.restaurant").create({
   data: {
     name: "Restaurant B",
@@ -2846,14 +3020,14 @@ File path: N/A
 ```
 
 
-## Select fields with `update()` queries
-Description: GET strapi.documents( — Select fields with update()
-(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-update-queries)
+## Select fields with update() queries
+Description: Code example from "Select fields with update() queries"
+(Source: https://docs.strapi.io/cms/api/document-service/fields#update)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const document = await strapi.documents("api::restaurant.restaurant").update({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   data: {
@@ -2874,14 +3048,14 @@ File path: N/A
 ```
 
 
-## Select fields with `delete()` queries
-Description: GET strapi.documents( — Select fields with delete()
-(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-delete-queries)
+## Select fields with delete() queries
+Description: Code example from "Select fields with delete() queries"
+(Source: https://docs.strapi.io/cms/api/document-service/fields#delete)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const document = await strapi.documents("api::restaurant.restaurant").delete({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
@@ -2892,7 +3066,7 @@ Language: JSON
 File path: N/A
 
 ```json
-documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
+  documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   // All of the deleted document's versions are returned
   entries: [
     {
@@ -2906,14 +3080,14 @@ documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
 ```
 
 
-## Select fields with `publish()` queries
-Description: GET strapi.documents( — Select fields with publish()
-(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-publish-queries)
+## Select fields with publish() queries
+Description: Code example from "Select fields with publish() queries"
+(Source: https://docs.strapi.io/cms/api/document-service/fields#publish)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const document = await strapi.documents("api::restaurant.restaurant").publish({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
@@ -2937,14 +3111,14 @@ File path: N/A
 ```
 
 
-## Select fields with `unpublish()` queries
-Description: GET strapi.documents( — Select fields with unpublish()
-(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-unpublish-queries)
+## Select fields with unpublish() queries
+Description: Code example from "Select fields with unpublish() queries"
+(Source: https://docs.strapi.io/cms/api/document-service/fields#unpublish)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const document = await strapi.documents("api::restaurant.restaurant").unpublish({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   fields: ["name"],
@@ -2968,14 +3142,14 @@ File path: N/A
 ```
 
 
-## Select fields with `discardDraft()` queries
-Description: GET strapi.documents( — Select fields with discardDraft()
-(Source: https://docs.strapi.io/cms/api/document-service/fields#select-fields-with-discarddraft-queries)
+## Select fields with discardDraft() queries
+Description: kind="js" path='strapi.documents("api::restaurant.restaurant").discardDraft()' title="Select fields with discardDraft()" description="Select specific fields to return when discarding a draft document." isLast>
+(Source: https://docs.strapi.io/cms/api/document-service/fields#discarddraft)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const document = await strapi.documents("api::restaurant.restaurant").discardDraft({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
@@ -3003,13 +3177,13 @@ File path: N/A
 Source: https://docs.strapi.io/cms/api/document-service/filters
 
 ## Attribute operators
-Description: GET strapi.documents().findMany() — $not
+Description: id="not" kind="js" path="strapi.documents().findMany()" title="$not" description="Negates the nested condition(s).">
 (Source: https://docs.strapi.io/cms/api/document-service/filters#attribute-operators)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3021,11 +3195,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3039,7 +3212,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 // $eq can be omitted:
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
@@ -3048,11 +3221,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3062,11 +3234,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3076,11 +3247,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3090,11 +3260,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3108,7 +3277,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 // $in can be omitted when passing an array of values:
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
@@ -3117,11 +3286,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3131,11 +3299,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -3145,11 +3312,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -3159,11 +3325,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -3173,11 +3338,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -3187,11 +3351,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -3201,11 +3364,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3215,11 +3377,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3229,11 +3390,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3243,11 +3403,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3257,11 +3416,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3271,11 +3429,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3285,11 +3442,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3299,11 +3455,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3313,11 +3468,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3327,11 +3481,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -3343,13 +3496,13 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 
 ## Logical operators
-Description: GET strapi.documents().findMany() — $and
+Description: id="and" kind="js" path="strapi.documents().findMany()" title="$and" description={<>All nested conditions must be true .
 (Source: https://docs.strapi.io/cms/api/document-service/filters#logical-operators)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $and: [
@@ -3368,7 +3521,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 // $and will be used implicitly when passing an object with nested conditions:
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
@@ -3378,11 +3531,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $or: [
@@ -3397,11 +3549,10 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $not: {
@@ -3416,27 +3567,14 @@ const entries = await strapi.documents('api::article.article').findMany({
 # Using the locale parameter with the Document Service API
 Source: https://docs.strapi.io/cms/api/document-service/locale
 
-## count() documents for a locale
-Description: If no status parameter is passed, draft documents are counted (which is the total of available documents for the locale since even published documents are counted as having a draft version):
-(Source: https://docs.strapi.io/cms/api/document-service/locale#count)
+## Get a locale version with findOne()
+Description: Code example from "Get a locale version with findOne()"
+(Source: https://docs.strapi.io/cms/api/document-service/locale#find-one)
 
 Language: JavaScript
 File path: N/A
 
 ```js
-// Count number of published documents in French
-strapi.documents('api::restaurant.restaurant').count({ locale: 'fr' });
-```
-
-
-## Get a locale version with `findOne()`
-Description: GET strapi.documents().findOne() — Get a locale version with findOne()
-(Source: https://docs.strapi.io/cms/api/document-service/locale#get-a-locale-version-with-findone)
-
-Language: JavaScript
-File path: N/A
-
-```javascript
 await strapi.documents('api::restaurant.restaurant').findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'fr',
@@ -3457,14 +3595,14 @@ File path: N/A
 ```
 
 
-## Get a locale version with `findFirst()`
-Description: GET strapi.documents().findFirst() — Get a locale version with findFirst()
-(Source: https://docs.strapi.io/cms/api/document-service/locale#get-a-locale-version-with-findfirst)
+## Get a locale version with findFirst()
+Description: Code example from "Get a locale version with findFirst()"
+(Source: https://docs.strapi.io/cms/api/document-service/locale#find-first)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const document = await strapi.documents('api::article.article').findFirst({
   locale: 'fr',
 });
@@ -3482,14 +3620,14 @@ File path: N/A
 ```
 
 
-## Get locale versions with `findMany()`
-Description: GET strapi.documents().findMany() — Get locale versions with findMany()
-(Source: https://docs.strapi.io/cms/api/document-service/locale#get-locale-versions-with-findmany)
+## Get locale versions with findMany()
+Description: Code example from "Get locale versions with findMany()"
+(Source: https://docs.strapi.io/cms/api/document-service/locale#find-many)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 // Defaults to status: draft
 await strapi.documents('api::restaurant.restaurant').findMany({ locale: 'fr' });
 ```
@@ -3511,14 +3649,14 @@ File path: N/A
 ```
 
 
-## `create()` a document for a locale
-Description: GET strapi.documents().create() — Create a document for a locale
-(Source: https://docs.strapi.io/cms/api/document-service/locale#create-a-document-for-a-locale)
+## create() a document for a locale
+Description: Code example from "create() a document for a locale"
+(Source: https://docs.strapi.io/cms/api/document-service/locale#create)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').create({
   locale: 'es' // if not passed, the draft is created for the default locale
   data: { name: 'Restaurante B' }
@@ -3539,14 +3677,14 @@ File path: N/A
 ```
 
 
-## `update()` a locale version
-Description: GET strapi.documents().update() — Update a locale version
-(Source: https://docs.strapi.io/cms/api/document-service/locale#update-a-locale-version)
+## update() a locale version
+Description: Code example from "update() a locale version"
+(Source: https://docs.strapi.io/cms/api/document-service/locale#update)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').update({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'es',
@@ -3569,13 +3707,13 @@ File path: N/A
 
 
 ## Delete a locale version
-Description: GET strapi.documents().delete() — Delete a locale version
+Description: id="delete-locale" kind="js" path="strapi.documents().delete()" title="Delete a locale version" description="Pass a locale to delete() to delete only that specific locale version of a document.">
 (Source: https://docs.strapi.io/cms/api/document-service/locale#delete-a-locale-version)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').delete({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
   locale: 'es',
@@ -3584,13 +3722,13 @@ await strapi.documents('api::restaurant.restaurant').delete({
 
 
 ## Delete all locale versions
-Description: GET strapi.documents().delete() — Delete all locale versions
+Description: id="delete-all-locales" kind="js" path="strapi.documents().delete()" title="Delete all locale versions" description="Use the * wildcard with the locale parameter to delete all locale versions of a document.">
 (Source: https://docs.strapi.io/cms/api/document-service/locale#delete-all-locale-versions)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').delete({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
   locale: '*',
@@ -3614,13 +3752,13 @@ File path: N/A
 
 
 ## Publish a locale version
-Description: GET strapi.documents().publish() — Publish a locale version
+Description: id="publish-locale" kind="js" path="strapi.documents().publish()" title="Publish a locale version" description="Pass a locale to publish() to publish only that specific locale version of a document.">
 (Source: https://docs.strapi.io/cms/api/document-service/locale#publish-a-locale-version)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').publish({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'fr',
@@ -3646,13 +3784,13 @@ File path: N/A
 
 
 ## Publish all locale versions
-Description: GET strapi.documents().publish() — Publish all locale versions
+Description: id="publish-all-locales" kind="js" path="strapi.documents().publish()" title="Publish all locale versions" description="Use the * wildcard with the locale parameter to publish all locale versions of a document.">
 (Source: https://docs.strapi.io/cms/api/document-service/locale#publish-all-locale-versions)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi
   .documents('api::restaurant.restaurant')
   .publish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
@@ -3688,13 +3826,13 @@ File path: N/A
 
 
 ## Unpublish a locale version
-Description: GET strapi.documents().unpublish() — Unpublish a locale version
+Description: id="unpublish-locale" kind="js" path="strapi.documents().unpublish()" title="Unpublish a locale version" description="Pass a locale to unpublish() to unpublish only that specific locale version of a document.">
 (Source: https://docs.strapi.io/cms/api/document-service/locale#unpublish-a-locale-version)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi
   .documents('api::restaurant.restaurant')
   .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });
@@ -3711,23 +3849,22 @@ File path: N/A
 
 
 ## Unpublish all locale versions
-Description: GET strapi.documents().unpublish() — Unpublish all locale versions
+Description: id="unpublish-all-locales" kind="js" path="strapi.documents().unpublish()" title="Unpublish all locale versions" description="Use the * wildcard with the locale parameter to unpublish all locale versions of a document.">
 (Source: https://docs.strapi.io/cms/api/document-service/locale#unpublish-all-locale-versions)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi
   .documents('api::restaurant.restaurant')
   .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const document = await strapi.documents('api::article.article').unpublish({
   documentId: 'cjld2cjxh0000qzrmn831i7rn',
   fields: ['title'],
@@ -3743,7 +3880,6 @@ File path: N/A
 }
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -3761,13 +3897,13 @@ File path: N/A
 
 
 ## Discard draft for a locale version
-Description: GET strapi.documents().discardDraft() — Discard draft for a locale version
+Description: id="discard-draft-locale" kind="js" path="strapi.documents().discardDraft()" title="Discard draft for a locale version" description="Pass a locale to discardDraft() to discard draft data for that specific locale version.">
 (Source: https://docs.strapi.io/cms/api/document-service/locale#discard-draft-for-a-locale-version)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi
   .documents('api::restaurant.restaurant')
   .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });
@@ -3792,13 +3928,13 @@ File path: N/A
 
 
 ## Discard drafts for all locale versions
-Description: GET strapi.documents().discardDraft() — Discard drafts for all locale versions
+Description: id="discard-draft-all-locales" kind="js" path="strapi.documents().discardDraft()" title="Discard drafts for all locale versions" description="Use the * wildcard with the locale parameter to discard drafts for all locale versions of a document.">
 (Source: https://docs.strapi.io/cms/api/document-service/locale#discard-drafts-for-all-locale-versions)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi
   .documents('api::restaurant.restaurant')
   .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
@@ -3833,6 +3969,19 @@ File path: N/A
     },
   ]
 }
+```
+
+
+## count() documents for a locale
+Description: If no status parameter is passed, draft documents are counted (which is the total of available documents for the locale since even published documents are counted as having a draft version):
+(Source: https://docs.strapi.io/cms/api/document-service/locale#count)
+
+Language: JavaScript
+File path: N/A
+
+```js
+// Count number of published documents in French
+strapi.documents('api::restaurant.restaurant').count({ locale: 'fr' });
 ```
 
 
@@ -4171,13 +4320,13 @@ strapi.documents.use((context, next) => {
 Source: https://docs.strapi.io/cms/api/document-service/populate
 
 ## Populate 1 level for all relations
-Description: GET strapi.documents( — Populate 1 level for all relations
+Description: kind="js" path='strapi.documents("api::article.article").findMany()' title="Populate 1 level for all relations" description="Populate one-level deep for all relations using the wildcard." id="populate-1-level-all">
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populate-1-level-for-all-relations)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   populate: "*",
 });
@@ -4222,13 +4371,13 @@ File path: N/A
 
 
 ## Populate 1 level for specific relations
-Description: GET strapi.documents( — Populate 1 level for specific relations
+Description: kind="js" path='strapi.documents("api::article.article").findMany()' title="Populate 1 level for specific relations" description="Populate specific relations one-level deep using an array." id="populate-1-level-specific">
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populate-1-level-for-specific-relations)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   populate: ["headerImage"],
 });
@@ -4257,13 +4406,13 @@ File path: N/A
 
 
 ## Populate several levels deep for specific relations
-Description: GET strapi.documents( — Populate several levels deep for specific relations
+Description: kind="js" path='strapi.documents("api::article.article").findMany()' title="Populate several levels deep for specific relations" description="Populate specific relations several levels deep using nested populate." id="populate-several-levels-deep">
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populate-several-levels-deep-for-specific-relations)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     categories: {
@@ -4308,13 +4457,13 @@ File path: N/A
 
 
 ## Sort populated relations
-Description: GET strapi.documents( — Sort populated relations
+Description: kind="js" path='strapi.documents("api::article.article").findMany()' title="Sort populated relations" description="Order related entries by an attribute using the sort parameter inside a populate object." id="populate-sort-relations">
 (Source: https://docs.strapi.io/cms/api/document-service/populate#sort-populated-relations)
 
-Language: JavaScript
-File path: N/A
+Language: TypeScript
+File path: /core/database/src/query/helpers/populate/apply.ts
 
-```javascript
+```ts
 const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     categories: {
@@ -4325,7 +4474,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 ```
 
 Language: JSON
-File path: N/A
+File path: /core/database/src/query/helpers/populate/apply.ts
 
 ```json
 [
@@ -4352,23 +4501,22 @@ File path: N/A
 
 
 ## Components & Dynamic Zones
-Description: GET strapi.documents( — Populate components
+Description: kind="js" path='strapi.documents("api::article.article").findMany()' title="Populate components" description="Populate components using the same syntax as relations." id="populate-components">
 (Source: https://docs.strapi.io/cms/api/document-service/populate#components-dynamic-zones)
 
-Language: JavaScript
-File path: N/A
+Language: TypeScript
+File path: /core/database/src/query/helpers/populate/apply.ts
 
-```javascript
+```ts
 const documents = await strapi.documents("api::article.article").findMany({
   populate: ["testComp"],
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     testDZ: {
@@ -4384,7 +4532,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 ```
 
 Language: JSON
-File path: N/A
+File path: /core/database/src/query/helpers/populate/apply.ts
 
 ```json
 [
@@ -4404,7 +4552,6 @@ File path: N/A
 ]
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4433,14 +4580,14 @@ File path: N/A
 ```
 
 
-## Populating with `create()`
-Description: GET strapi.documents( — Populate with create
+## Populating with create()
+Description: kind="js" path='strapi.documents("api::article.article").create()' title="Populate with create" description="Populate relations in the response when creating a document." id="populate-with-create">
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populating-with-create)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 strapi.documents("api::article.article").create({
   data: {
     title: "Test Article",
@@ -4470,14 +4617,14 @@ File path: N/A
 ```
 
 
-## Populating with `update()`
-Description: GET strapi.documents( — Populate with update
+## Populating with update()
+Description: kind="js" path='strapi.documents("api::article.article").update()' title="Populate with update" description="Populate relations in the response when updating a document." id="populate-with-update">
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populating-with-update)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 strapi.documents("api::article.article").update({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   data: {
@@ -4505,14 +4652,14 @@ File path: N/A
 ```
 
 
-## Populating with `publish()`
-Description: GET strapi.documents( — Populate with publish
+## Populating with publish()
+Description: kind="js" path='strapi.documents("api::article.article").publish()' title="Populate with publish" description="Populate relations in the response when publishing a document." id="populate-with-publish">
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populating-with-publish)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 strapi.documents("api::article.article").publish({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   populate: ["headerImage"],
@@ -4541,14 +4688,14 @@ File path: N/A
 ```
 
 
-## Populating with `delete()`
-Description: GET strapi.documents( — Populate with delete
+## Populating with delete()
+Description: kind="js" path='strapi.documents("api::article.article").delete()' title="Populate with delete" description="Populate relations in the response when deleting a document." id="populate-with-delete">
 (Source: https://docs.strapi.io/cms/api/document-service/populate#populating-with-delete)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 strapi.documents("api::article.article").delete({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   populate: ["headerImage"],
@@ -4584,13 +4731,13 @@ File path: N/A
 Source: https://docs.strapi.io/cms/api/document-service/publication-filter
 
 ## Find never published drafts
-Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+Description: Code example from "Find never published drafts"
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#never-published)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'never-published',
@@ -4615,13 +4762,13 @@ File path: N/A
 
 
 ## Find drafts never published in any locale
-Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+Description: Code example from "Find drafts never published in any locale"
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#never-published-document)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'never-published-document',
@@ -4646,24 +4793,23 @@ File path: N/A
 
 
 ## Find modified documents
-Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+Description: Code example from "Find modified documents"
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#modified)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'modified',
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'modified',
@@ -4686,7 +4832,6 @@ File path: N/A
 ]
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4705,24 +4850,23 @@ File path: N/A
 
 
 ## Find unmodified documents
-Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+Description: Code example from "Find unmodified documents"
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#unmodified)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'unmodified',
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'unmodified',
@@ -4745,7 +4889,6 @@ File path: N/A
 ]
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4764,24 +4907,23 @@ File path: N/A
 
 
 ## Find documents with a published version
-Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+Description: Code example from "Find documents with a published version"
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#has-published-version)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'has-published-version',
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'has-published-version',
@@ -4804,7 +4946,6 @@ File path: N/A
 ]
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4823,13 +4964,13 @@ File path: N/A
 
 
 ## Find documents with a published version in at least one locale
-Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+Description: Code example from "Find documents with a published version in at least one locale"
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#has-published-version-document)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'has-published-version-document',
@@ -4853,14 +4994,14 @@ File path: N/A
 ```
 
 
-## Use with `findOne()` and `findFirst()`
-Description: GET strapi.documents().findOne() — findOne() with publicationFilter:
-(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#use-with-findone-and-findfirst)
+## Use with findOne() and findFirst()
+Description: Code example from "Use with findOne() and findFirst()"
+(Source: https://docs.strapi.io/cms/api/document-service/publication-filter#find-one-find-first)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findOne({
     documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
     status: 'draft',
@@ -4877,13 +5018,13 @@ null // the documentId exists, but the document does not match never-published
 
 
 ## Count only matching documents
-Description: GET strapi.documents().count() — count() with publicationFilter:
+Description: Code example from "Count only matching documents"
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#count)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const neverPublishedCount = await strapi
     .documents('api::restaurant.restaurant')
     .count({
@@ -4901,24 +5042,23 @@ File path: N/A
 
 
 ## Diagnostic values
-Description: GET strapi.documents().findMany() — findMany() with publicationFilter:
+Description: Code example from "Diagnostic values"
 (Source: https://docs.strapi.io/cms/api/document-service/publication-filter#diagnostics)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'published-without-draft',
 });
 ```
 
----
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'published-with-draft',
@@ -4941,7 +5081,6 @@ File path: N/A
 ]
 ```
 
----
 Language: JSON
 File path: N/A
 
@@ -4964,13 +5103,13 @@ File path: N/A
 Source: https://docs.strapi.io/cms/api/document-service/sort-pagination
 
 ## Sort on a single field
-Description: GET strapi.documents().findMany() — Sort on a single field
+Description: id="sort-single-field" kind="js" path="strapi.documents().findMany()" title="Sort on a single field" description="Sort results based on a single field using a string value.">
 (Source: https://docs.strapi.io/cms/api/document-service/sort-pagination#sort-on-a-single-field)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   sort: "title:asc",
 });
@@ -4998,13 +5137,13 @@ File path: N/A
 
 
 ## Sort on multiple fields
-Description: GET strapi.documents().findMany() — Sort on multiple fields
+Description: id="sort-multiple-fields" kind="js" path="strapi.documents().findMany()" title="Sort on multiple fields" description="Sort results on multiple fields by passing an array of sort objects.">
 (Source: https://docs.strapi.io/cms/api/document-service/sort-pagination#sort-on-multiple-fields)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   sort: [{ title: "asc" }, { slug: "desc" }],
 });
@@ -5032,13 +5171,13 @@ File path: N/A
 
 
 ## Pagination
-Description: GET strapi.documents().findMany() — Pagination
+Description: Code example from "Pagination"
 (Source: https://docs.strapi.io/cms/api/document-service/sort-pagination#pagination)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   limit: 10,
   start: 0,
@@ -5070,6 +5209,91 @@ File path: N/A
 # Using Draft & Publish with the Document Service API
 Source: https://docs.strapi.io/cms/api/document-service/status
 
+## Get the published version with findOne()
+Description: Code example from "Get the published version with findOne()"
+(Source: https://docs.strapi.io/cms/api/document-service/status#find-one)
+
+Language: JavaScript
+File path: N/A
+
+```js
+await strapi.documents('api::restaurant.restaurant').findOne({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  status: 'published'
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  name: "Biscotte Restaurant",
+  publishedAt: "2024-03-14T15:40:45.330Z",
+  locale: "en", // default locale
+  // …
+}
+```
+
+
+## Get the published version with findFirst()
+Description: Code example from "Get the published version with findFirst()"
+(Source: https://docs.strapi.io/cms/api/document-service/status#find-first)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const document = await strapi.documents("api::restaurant.restaurant").findFirst({
+  status: 'published',
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  name: "Biscotte Restaurant",
+  publishedAt: "2024-03-14T15:40:45.330Z",
+  locale: "en", // default locale
+  // …
+}
+```
+
+
+## Get the published version with findMany()
+Description: Code example from "Get the published version with findMany()"
+(Source: https://docs.strapi.io/cms/api/document-service/status#find-many)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+  status: 'published'
+});
+```
+
+Language: JSON
+File path: N/A
+
+```json
+[
+  {
+    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+    name: "Biscotte Restaurant",
+    publishedAt: "2024-03-14T15:40:45.330Z",
+    locale: "en", // default locale
+    // …
+  }
+  // …
+]
+```
+
+
 ## count() only draft or published versions
 Description: To take into account only draft or published versions of documents while counting documents with the Document Service API, pass the corresponding status parameter:
 (Source: https://docs.strapi.io/cms/api/document-service/status#count)
@@ -5096,99 +5320,14 @@ const publishedCount = await strapi.documents("api::restaurant.restaurant").coun
 ```
 
 
-## Get the published version with `findOne()`
-Description: GET strapi.documents().findOne() — findOne() with status:
-(Source: https://docs.strapi.io/cms/api/document-service/status#get-the-published-version-with-findone)
-
-Language: JavaScript
-File path: N/A
-
-```javascript
-await strapi.documents('api::restaurant.restaurant').findOne({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
-  status: 'published'
-});
-```
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
-  name: "Biscotte Restaurant",
-  publishedAt: "2024-03-14T15:40:45.330Z",
-  locale: "en", // default locale
-  // …
-}
-```
-
-
-## Get the published version with `findFirst()`
-Description: GET strapi.documents().findFirst() — findFirst() with status:
-(Source: https://docs.strapi.io/cms/api/document-service/status#get-the-published-version-with-findfirst)
-
-Language: JavaScript
-File path: N/A
-
-```javascript
-const document = await strapi.documents("api::restaurant.restaurant").findFirst({
-  status: 'published',
-});
-```
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
-  name: "Biscotte Restaurant",
-  publishedAt: "2024-03-14T15:40:45.330Z",
-  locale: "en", // default locale
-  // …
-}
-```
-
-
-## Get the published version with `findMany()`
-Description: GET strapi.documents().findMany() — findMany() with status:
-(Source: https://docs.strapi.io/cms/api/document-service/status#get-the-published-version-with-findmany)
-
-Language: JavaScript
-File path: N/A
-
-```javascript
-const documents = await strapi.documents("api::restaurant.restaurant").findMany({
-  status: 'published'
-});
-```
-
-Language: JSON
-File path: N/A
-
-```json
-[
-  {
-    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
-    name: "Biscotte Restaurant",
-    publishedAt: "2024-03-14T15:40:45.330Z",
-    locale: "en", // default locale
-    // …
-  }
-  // …
-]
-```
-
-
 ## Create a draft and publish it
-Description: GET strapi.documents().create() — create() with status:
+Description: Code example from "Create a draft and publish it"
 (Source: https://docs.strapi.io/cms/api/document-service/status#create)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').create({
   data: {
     name: "New Restaurant",
@@ -5212,13 +5351,13 @@ File path: N/A
 
 
 ## Update a draft and publish it
-Description: GET strapi.documents().update() — update() with status:
+Description: Code example from "Update a draft and publish it"
 (Source: https://docs.strapi.io/cms/api/document-service/status#update)
 
 Language: JavaScript
 File path: N/A
 
-```javascript
+```js
 await strapi.documents('api::restaurant.restaurant').update({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   data: {
@@ -10159,19 +10298,29 @@ File path: N/A
 Description: :::tip The syntax for advanced query parameters can be quite complex to build manually.
 (Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#populate-dynamic-zones)
 
+Language: JSON
+File path: N/A
+
+```json
+{
+  populate: {
+    blocks: { // asking to populate the blocks dynamic zone
+      populate: '*' // populating all first-level fields in all components
+    }
+  },
+}
+```
+
+
+## Example: Populating only the dynamic zone
+Description: method="GET" path="/api/articles" title="Populating only the dynamic zone" description="Populates the blocks dynamic zone 1 level deep." id="populating-only-the-dynamic-zone">
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-populating-only-the-dynamic-zone)
+
 Language: Bash
 File path: N/A
 
 ```bash
 GET /api/articles?populate[0]=blocks
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-GET /api/articles?populate[blocks][populate]=*
 ```
 
 Language: JSON
@@ -10231,7 +10380,18 @@ File path: N/A
 }
 ```
 
----
+
+## Example: Populating the dynamic zone and applying a shared strategy to its components
+Description: method="GET" path="/api/articles" title="Populating the dynamic zone with shared strategy" description="Populates the blocks dynamic zone and applies a shared population strategy to all its components." id="populating-dynamic-zone-shared-strategy">
+(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-populating-the-dynamic-zone-and-applying-a-shared-strategy-to-its-components)
+
+Language: Bash
+File path: N/A
+
+```bash
+GET /api/articles?populate[blocks][populate]=*
+```
+
 Language: JSON
 File path: N/A
 
@@ -10332,24 +10492,6 @@ File path: N/A
   }
 }
 ```
-
-Language: JSON
-File path: N/A
-
-```json
-{
-  populate: {
-    blocks: { // asking to populate the blocks dynamic zone
-      populate: '*' // populating all first-level fields in all components
-    }
-  },
-}
-```
-
-
-## Example: Populating the dynamic zone and applying a shared strategy to its components
-Description: :::tip The syntax for advanced query parameters can be quite complex to build manually.
-(Source: https://docs.strapi.io/cms/api/rest/guides/understanding-populate#example-populating-the-dynamic-zone-and-applying-a-shared-strategy-to-its-components)
 
 Language: JSON
 File path: N/A

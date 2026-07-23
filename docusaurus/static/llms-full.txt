@@ -4747,14 +4747,12 @@ Find a document matching the passed documentId and parameters. If only a documen
 - `fields` (Object): Select fields (/cms/api/document-service/fields#findone) to return. Defaults to all fields (except those not populated by default).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
 
-**Request:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn'
 })
 ```
 
-**Response 200 OK:**
 ```json
 {
   "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
@@ -4780,13 +4778,10 @@ Find the first document matching the parameters. By default, findFirst() returns
 - `fields` (Object): Select fields (/cms/api/document-service/fields#findfirst) to return. Defaults to all fields (except those not populated by default).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
 
-**Generic example:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findFirst()
 ```
-
-**With filters:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findFirst(
   {
     filters: {
@@ -4798,7 +4793,6 @@ await strapi.documents('api::restaurant.restaurant').findFirst(
 )
 ```
 
-**Response 200 Generic:**
 ```json
 {
   "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
@@ -4807,8 +4801,6 @@ await strapi.documents('api::restaurant.restaurant').findFirst(
   "locale": "en"
 }
 ```
-
-**Response 200 With filters:**
 ```json
 {
   "documentId": "j9k8l7m6n5o4p3q2r1s0tuvw",
@@ -4838,13 +4830,10 @@ Find documents matching the parameters. When no parameter is passed, findMany() 
 - `pagination` (Object): Paginate (/cms/api/document-service/sort-pagination#pagination) results.
 - `sort` (Object): Sort (/cms/api/document-service/sort-pagination#sort) results.
 
-**Generic example:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findMany()
 ```
-
-**With filters:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findMany(
   {
     filters: {
@@ -4856,7 +4845,6 @@ await strapi.documents('api::restaurant.restaurant').findMany(
 )
 ```
 
-**Response 200 Generic:**
 ```json
 [
   {
@@ -4873,8 +4861,6 @@ await strapi.documents('api::restaurant.restaurant').findMany(
   }
 ]
 ```
-
-**Response 200 With filters:**
 ```json
 [
   {
@@ -4904,8 +4890,7 @@ Create a new document. If no locale parameter is passed, create() creates the dr
 - `status` (): If Draft & Publish (/cms/features/draft-and-publish) is enabled: can be set to `published` to automatically publish the draft version of a document while creating it. See status docs (/cms/api/document-service/status#create).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
 
-**Request:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').create({
   data: {
     name: 'Restaurant B'
@@ -4913,7 +4898,6 @@ await strapi.documents('api::restaurant.restaurant').create({
 })
 ```
 
-**Response 200 OK:**
 ```json
 {
   "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
@@ -4943,15 +4927,13 @@ Update a document by documentId. If no locale parameter is passed, update() upda
 - `status` (): If Draft & Publish (/cms/features/draft-and-publish) is enabled: can be set to `published` to automatically publish the draft version of a document while updating it. See status docs (/cms/api/document-service/status#update).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
 
-**Request:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').update({
     documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
     data: { name: "New restaurant name" }
 })
 ```
 
-**Response 200 OK:**
 ```json
 {
   "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
@@ -4988,14 +4970,12 @@ Delete a document or a specific locale version. If no locale parameter is passed
 - `fields` (Object): Select fields (/cms/api/document-service/fields#delete) to return. Defaults to all fields (except those not populated by default).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
 
-**Request:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').delete({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
 })
 ```
 
-**Response 200 OK:**
 ```json
 {
   "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
@@ -5024,8 +5004,7 @@ Delete multiple documents matching filters and relation parameters.
 - `fields` (Object): Select fields (/cms/api/document-service/fields#delete) to return. Defaults to all fields (except those not populated by default).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
 
-**Request:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').deleteMany({
   filters: {
     city: {
@@ -5037,7 +5016,6 @@ await strapi.documents('api::restaurant.restaurant').deleteMany({
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   "documentId": "multiple_documents",
@@ -5060,14 +5038,12 @@ Publish the draft version of a document. This method is only available if Draft 
 - `fields` (Object): Select fields (/cms/api/document-service/fields#publish) to return. Defaults to all fields (except those not populated by default).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
 
-**Request:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').publish({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
@@ -5097,14 +5073,12 @@ Move a published document back to draft. This method is only available if Draft 
 - `fields` (Object): Select fields (/cms/api/document-service/fields#unpublish) to return. Defaults to all fields (except those not populated by default).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
 
-**Request:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').unpublish({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn'
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
@@ -5134,14 +5108,12 @@ Drop draft data and keep only the published version. This method is only availab
 - `fields` (Object): Select fields (/cms/api/document-service/fields#discarddraft) to return. Defaults to all fields (except those not populated by default).
 - `populate` (Object): Populate (/cms/api/document-service/populate) results with additional fields. Default: `null`.
 
-**Request:**
-```
+```js
 strapi.documents('api::restaurant.restaurant').discardDraft({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klmn',
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   "documentId": "a1b2c3d4e5f6g7h8i9j0klmn",
@@ -5170,18 +5142,13 @@ Count how many documents match the parameters. If no parameter is passed, the co
 - `publicationFilter` (String): If Draft & Publish (/cms/features/draft-and-publish) is enabled: select documents by how their draft and published versions relate, before applying `status`. See publicationFilter docs (/cms/api/document-service/publication-filter).
 - `filters` (Object): Filters (/cms/api/document-service/filters) to use. Default: `null`.
 
-**Generic example:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').count()
 ```
-
-**Count published:**
-```
+```js
 strapi.documents('api::restaurant.restaurant').count({ status: 'published' })
 ```
-
-**With filters:**
-```
+```js
 /**
  * Count number of draft documents (default if status is omitted)
  * in English (default locale)
@@ -5221,15 +5188,13 @@ Though it's recommended to target entries by their `documentId` in Strapi 5, ent
 
 Select specific fields to return when finding a document by documentId.
 
-**JavaScript:**
-```
+```js
 const document = await strapi.documents("api::restaurant.restaurant").findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   fields: ["name", "description"],
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
@@ -5244,14 +5209,12 @@ const document = await strapi.documents("api::restaurant.restaurant").findOne({
 
 Select specific fields to return when finding the first matching document.
 
-**JavaScript:**
-```
+```js
 const document = await strapi.documents("api::restaurant.restaurant").findFirst({
   fields: ["name", "description"],
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
@@ -5266,14 +5229,12 @@ const document = await strapi.documents("api::restaurant.restaurant").findFirst(
 
 Select specific fields to return when finding multiple documents.
 
-**JavaScript:**
-```
+```js
 const documents = await strapi.documents("api::restaurant.restaurant").findMany({
   fields: ["name", "description"],
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
   {
@@ -5291,8 +5252,7 @@ const documents = await strapi.documents("api::restaurant.restaurant").findMany(
 
 Select specific fields to return when creating a new document.
 
-**JavaScript:**
-```
+```js
 const document = await strapi.documents("api::restaurant.restaurant").create({
   data: {
     name: "Restaurant B",
@@ -5302,7 +5262,6 @@ const document = await strapi.documents("api::restaurant.restaurant").create({
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   id: 4,
@@ -5318,8 +5277,7 @@ const document = await strapi.documents("api::restaurant.restaurant").create({
 
 Select specific fields to return when updating a document.
 
-**JavaScript:**
-```
+```js
 const document = await strapi.documents("api::restaurant.restaurant").update({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   data: {
@@ -5329,7 +5287,6 @@ const document = await strapi.documents("api::restaurant.restaurant").update({
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
@@ -5343,17 +5300,15 @@ const document = await strapi.documents("api::restaurant.restaurant").update({
 
 Select specific fields to return when deleting a document.
 
-**JavaScript:**
-```
+```js
 const document = await strapi.documents("api::restaurant.restaurant").delete({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
 });
 ```
 
-**Response 200 OK:**
 ```json
-documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
+  documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   // All of the deleted document's versions are returned
   entries: [
     {
@@ -5372,15 +5327,13 @@ documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
 
 Select specific fields to return when publishing a document.
 
-**JavaScript:**
-```
+```js
 const document = await strapi.documents("api::restaurant.restaurant").publish({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
@@ -5400,15 +5353,13 @@ const document = await strapi.documents("api::restaurant.restaurant").publish({
 
 Select specific fields to return when unpublishing a document.
 
-**JavaScript:**
-```
+```js
 const document = await strapi.documents("api::restaurant.restaurant").unpublish({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   fields: ["name"],
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
@@ -5428,15 +5379,13 @@ const document = await strapi.documents("api::restaurant.restaurant").unpublish(
 
 Select specific fields to return when discarding a draft document.
 
-**JavaScript:**
-```
+```js
 const document = await strapi.documents("api::restaurant.restaurant").discardDraft({
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   fields: ["name"],
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
@@ -5501,8 +5450,7 @@ For examples of how to deep filter with the various APIs, please refer to [this 
 
 Negates the nested condition(s).
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5518,8 +5466,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute equals input value.
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5528,9 +5475,7 @@ const entries = await strapi.documents('api::article.article').findMany({
   },
 });
 ```
-
-**Shorthand:**
-```
+```js
 // $eq can be omitted:
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
@@ -5543,8 +5488,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute equals input value (case-insensitive).
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5558,8 +5502,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute does not equal input value.
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5573,8 +5516,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute does not equal input value (case-insensitive).
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5588,8 +5530,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute is contained in the input list.
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5598,9 +5539,7 @@ const entries = await strapi.documents('api::article.article').findMany({
   },
 });
 ```
-
-**Shorthand:**
-```
+```js
 // $in can be omitted when passing an array of values:
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
@@ -5613,8 +5552,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute is not contained in the input list.
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5628,8 +5566,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute is less than the input value.
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -5643,8 +5580,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute is less than or equal to the input value.
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -5658,8 +5594,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute is greater than the input value.
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -5673,8 +5608,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute is greater than or equal to the input value.
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -5686,8 +5620,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 #### GET strapi.documents().findMany() — $between
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
@@ -5701,8 +5634,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute contains the input value (case-sensitive).
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5716,8 +5648,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute does not contain the input value (case-sensitive).
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5729,8 +5660,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 #### GET strapi.documents().findMany() — $containsi
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5742,8 +5672,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 #### GET strapi.documents().findMany() — $notContainsi
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5757,8 +5686,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute starts with input value (case-sensitive).
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5772,8 +5700,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute starts with input value (case-insensitive).
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5787,8 +5714,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute ends with input value (case-sensitive).
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5802,8 +5728,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Attribute ends with input value (case-insensitive).
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5815,8 +5740,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 #### GET strapi.documents().findMany() — $null
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5828,8 +5752,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 #### GET strapi.documents().findMany() — $notNull
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
@@ -5843,8 +5766,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 #### GET strapi.documents().findMany() — $and
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $and: [
@@ -5858,9 +5780,7 @@ const entries = await strapi.documents('api::article.article').findMany({
   },
 });
 ```
-
-**Implicit $and:**
-```
+```js
 // $and will be used implicitly when passing an object with nested conditions:
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
@@ -5872,8 +5792,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 #### GET strapi.documents().findMany() — $or
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $or: [
@@ -5892,8 +5811,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 Negates the nested conditions.
 
-**JavaScript:**
-```
+```js
 const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $not: {
@@ -5931,15 +5849,13 @@ By default the [Document Service API](/cms/api/document-service) returns the def
 
 Pass a locale to findOne() to get the version of the document for that locale.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'fr',
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
@@ -5958,14 +5874,12 @@ If no `status` parameter is passed, the `draft` version is returned by default.
 
 Pass a locale to findFirst() to return documents matching that locale.
 
-**JavaScript:**
-```
+```js
 const document = await strapi.documents('api::article.article').findFirst({
   locale: 'fr',
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   "documentId": "cjld2cjxh0000qzrmn831i7rn",
@@ -5984,13 +5898,11 @@ If no `status` parameter is passed, the `draft` versions are returned by default
 
 Pass a locale to findMany() to return all documents that have this locale available.
 
-**JavaScript:**
-```
+```js
 // Defaults to status: draft
 await strapi.documents('api::restaurant.restaurant').findMany({ locale: 'fr' });
 ```
 
-**Response 200 OK:**
 ```json
 [
   {
@@ -6032,15 +5944,13 @@ Given the following 4 documents that have various locales:
 
 Pass a locale to create() to create the document for that specific locale.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').create({
   locale: 'es' // if not passed, the draft is created for the default locale
   data: { name: 'Restaurante B' }
 })
 ```
 
-**Response 200 OK:**
 ```json
 {
   documentId: "pw2s0nh5ub1zmnk0d80vgqrh",
@@ -6057,8 +5967,7 @@ await strapi.documents('api::restaurant.restaurant').create({
 
 Pass a locale to update() to update only that specific locale version of a document.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').update({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'es',
@@ -6066,7 +5975,6 @@ await strapi.documents('api::restaurant.restaurant').update({
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
@@ -6087,8 +5995,7 @@ Use the `locale` parameter with the [`delete()` method](/cms/api/document-servic
 
 Pass a locale to delete() to delete only that specific locale version of a document.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').delete({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
   locale: 'es',
@@ -6101,15 +6008,13 @@ await strapi.documents('api::restaurant.restaurant').delete({
 
 Use the * wildcard with the locale parameter to delete all locale versions of a document.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').delete({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
   locale: '*',
 }); // for all existing locales
 ```
 
-**Response 200 OK:**
 ```json
 {
   "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
@@ -6132,15 +6037,13 @@ To publish only specific locale versions of a document with the [`publish()` met
 
 Pass a locale to publish() to publish only that specific locale version of a document.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').publish({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'fr',
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   versions: [
@@ -6161,14 +6064,12 @@ await strapi.documents('api::restaurant.restaurant').publish({
 
 Use the * wildcard with the locale parameter to publish all locale versions of a document.
 
-**JavaScript:**
-```
+```js
 await strapi
   .documents('api::restaurant.restaurant')
   .publish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
 ```
 
-**Response 200 OK:**
 ```json
 {
   "versions": [
@@ -6204,14 +6105,12 @@ To publish only specific locale versions of a document with the [`unpublish()` m
 
 Pass a locale to unpublish() to unpublish only that specific locale version of a document.
 
-**JavaScript:**
-```
+```js
 await strapi
   .documents('api::restaurant.restaurant')
   .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });
 ```
 
-**Response 200 OK:**
 ```json
 {
   versions: 1
@@ -6224,14 +6123,12 @@ await strapi
 
 Use the * wildcard with the locale parameter to unpublish all locale versions of a document.
 
-**JavaScript:**
-```
+```js
 await strapi
   .documents('api::restaurant.restaurant')
   .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
 ```
 
-**Response 200 OK:**
 ```json
 {
   versions: 3
@@ -6242,15 +6139,13 @@ await strapi
 
 Unpublish a document while selecting specific fields to return.
 
-**JavaScript:**
-```
+```js
 const document = await strapi.documents('api::article.article').unpublish({
   documentId: 'cjld2cjxh0000qzrmn831i7rn',
   fields: ['title'],
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   "documentId": "cjld2cjxh0000qzrmn831i7rn",
@@ -6273,14 +6168,12 @@ To discard draft data only for some locales versions of a document with the [`di
 
 Pass a locale to discardDraft() to discard draft data for that specific locale version.
 
-**JavaScript:**
-```
+```js
 await strapi
   .documents('api::restaurant.restaurant')
   .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });
 ```
 
-**Response 200 OK:**
 ```json
 {
   versions: [
@@ -6301,14 +6194,12 @@ await strapi
 
 Use the * wildcard with the locale parameter to discard drafts for all locale versions of a document.
 
-**JavaScript:**
-```
+```js
 await strapi
   .documents('api::restaurant.restaurant')
   .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
 ```
 
-**Response 200 OK:**
 ```json
 {
   versions: [
@@ -6728,14 +6619,12 @@ Queries can accept a `populate` parameter to explicitly define which fields to p
 
 Populate one-level deep for all relations using the wildcard.
 
-**JavaScript:**
-```
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   populate: "*",
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   [
@@ -6776,14 +6665,12 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 Populate specific relations one-level deep using an array.
 
-**JavaScript:**
-```
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   populate: ["headerImage"],
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
   {
@@ -6808,8 +6695,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 Populate specific relations several levels deep using nested populate.
 
-**JavaScript:**
-```
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     categories: {
@@ -6819,7 +6705,6 @@ const documents = await strapi.documents("api::article.article").findMany({
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
   {
@@ -6860,8 +6745,7 @@ Use the `sort` parameter inside a `populate` object to order related entries by 
 
 Order related entries by an attribute using the sort parameter inside a populate object.
 
-**JavaScript:**
-```
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     categories: {
@@ -6871,7 +6755,6 @@ const documents = await strapi.documents("api::article.article").findMany({
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
   {
@@ -6907,14 +6790,12 @@ Components are populated the same way as relations:
 
 Populate components using the same syntax as relations.
 
-**JavaScript:**
-```
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   populate: ["testComp"],
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
   {
@@ -6941,8 +6822,7 @@ To populate component-specific nested relations, media fields, or components wit
 
 Populate dynamic zones using per-component queries with the on property.
 
-**JavaScript:**
-```
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     testDZ: {
@@ -6957,7 +6837,6 @@ const documents = await strapi.documents("api::article.article").findMany({
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
   {
@@ -6988,8 +6867,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 Populate relations in the response when creating a document.
 
-**JavaScript:**
-```
+```js
 strapi.documents("api::article.article").create({
   data: {
     title: "Test Article",
@@ -7001,7 +6879,6 @@ strapi.documents("api::article.article").create({
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   "id": "cjld2cjxh0000qzrmn831i7rn",
@@ -7022,8 +6899,7 @@ strapi.documents("api::article.article").create({
 
 Populate relations in the response when updating a document.
 
-**JavaScript:**
-```
+```js
 strapi.documents("api::article.article").update({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   data: {
@@ -7033,7 +6909,6 @@ strapi.documents("api::article.article").update({
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   "id": "cjld2cjxh0000qzrmn831i7rn",
@@ -7056,15 +6931,13 @@ Same behavior applies with `unpublish()` and `discardDraft()`.
 
 Populate relations in the response when publishing a document.
 
-**JavaScript:**
-```
+```js
 strapi.documents("api::article.article").publish({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   populate: ["headerImage"],
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   "id": "cjld2cjxh0000qzrmn831i7rn",
@@ -7091,15 +6964,13 @@ To populate while deleting documents:
 
 Populate relations in the response when deleting a document.
 
-**JavaScript:**
-```
+```js
 strapi.documents("api::article.article").delete({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
   populate: ["headerImage"],
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   "documentId": "cjld2cjxh0000qzrmn831i7rn",
@@ -7196,15 +7067,13 @@ This parameter combination works only on a given locale; to find these documents
 
 Return the drafts that have never been published for their locale.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'never-published',
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
     {
@@ -7228,15 +7097,13 @@ A document counts as published as soon as one of its locales is published: the d
 
 Return the drafts of documents never published in any locale.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'never-published-document',
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
     {
@@ -7260,15 +7127,13 @@ For instance, with `status: 'draft'`, the query returns the draft versions:
 
 Return the draft versions of documents with unpublished changes.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'modified',
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
     {
@@ -7289,15 +7154,13 @@ With `status: 'published'`, the same query returns the currently live version of
 
 Return the currently live versions of documents with unpublished changes.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'modified',
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
     {
@@ -7321,15 +7184,13 @@ For instance, with `status: 'draft'`, the query returns the draft versions:
 
 Return the draft versions of documents unchanged since their last publication.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'unmodified',
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
     {
@@ -7350,15 +7211,13 @@ With `status: 'published'`, the same query returns the currently live version of
 
 Return the currently live versions of documents unchanged since their last publication.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'unmodified',
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
     {
@@ -7382,15 +7241,13 @@ For instance, with `status: 'draft'`, the query returns the draft versions:
 
 Return the draft versions of documents that also have a published version for the same locale.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'has-published-version',
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
     {
@@ -7411,15 +7268,13 @@ With `status: 'published'`, the same query returns the currently live version of
 
 Return the currently live versions of documents that also have a published version for the same locale.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'has-published-version',
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
     {
@@ -7441,15 +7296,13 @@ await strapi.documents('api::restaurant.restaurant').findMany({
 
 Return the draft versions of documents published in at least one locale.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'draft',
     publicationFilter: 'has-published-version-document',
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
     {
@@ -7471,8 +7324,7 @@ If the requested document (and locale, when applicable) does not match the filte
 
 Return the document only if it matches the filter, null otherwise.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findOne({
     documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
     status: 'draft',
@@ -7480,7 +7332,6 @@ await strapi.documents('api::restaurant.restaurant').findOne({
 });
 ```
 
-**Response 200 OK:**
 ```json
 null // the documentId exists, but the document does not match never-published
 ```
@@ -7493,8 +7344,7 @@ Without `publicationFilter`, `count({ status: 'draft' })` counts every draft ver
 
 Count only the documents that match a given value.
 
-**JavaScript:**
-```
+```js
 const neverPublishedCount = await strapi
     .documents('api::restaurant.restaurant')
     .count({
@@ -7503,7 +7353,6 @@ const neverPublishedCount = await strapi
     });
 ```
 
-**Response 200 OK:**
 ```json
 12 // the number of never-published drafts
 ```
@@ -7521,15 +7370,13 @@ The `published-without-draft` and `published-with-draft` values are meant for da
 
 Return published documents with no matching draft version for the same locale.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'published-without-draft',
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
   {
@@ -7550,15 +7397,13 @@ await strapi.documents('api::restaurant.restaurant').findMany({
 
 Return published documents that also have a matching draft version for the same locale.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findMany({
     status: 'published',
     publicationFilter: 'published-with-draft',
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
     {
@@ -7603,14 +7448,12 @@ To sort results returned by the Document Service API, include the `sort` paramet
 
 Sort results based on a single field using a string value.
 
-**JavaScript:**
-```
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   sort: "title:asc",
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
   {
@@ -7634,14 +7477,12 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 Sort results on multiple fields by passing an array of sort objects.
 
-**JavaScript:**
-```
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   sort: [{ title: "asc" }, { slug: "desc" }],
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
   {
@@ -7665,15 +7506,13 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 Paginate results using the limit and start parameters.
 
-**JavaScript:**
-```
+```js
 const documents = await strapi.documents("api::article.article").findMany({
   limit: 10,
   start: 0,
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
   {
@@ -7718,15 +7557,13 @@ To select documents by how their draft and published versions relate (never-publ
 
 Return the published version of a specific document.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   status: 'published'
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
@@ -7743,14 +7580,12 @@ await strapi.documents('api::restaurant.restaurant').findOne({
 
 Return the published version of the first matching document.
 
-**JavaScript:**
-```
+```js
 const document = await strapi.documents("api::restaurant.restaurant").findFirst({
   status: 'published',
 });
 ```
 
-**Response 200 OK:**
 ```json
 {
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
@@ -7767,14 +7602,12 @@ const document = await strapi.documents("api::restaurant.restaurant").findFirst(
 
 Return the published versions of all matching documents.
 
-**JavaScript:**
-```
+```js
 const documents = await strapi.documents("api::restaurant.restaurant").findMany({
   status: 'published'
 });
 ```
 
-**Response 200 OK:**
 ```json
 [
   {
@@ -7818,8 +7651,7 @@ This means that counting with the `status: 'draft'` parameter still returns the 
 
 Create a new document and immediately publish it.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').create({
   data: {
     name: "New Restaurant",
@@ -7828,7 +7660,6 @@ await strapi.documents('api::restaurant.restaurant').create({
 })
 ```
 
-**Response 200 OK:**
 ```json
 {
   documentId: "d41r46wac4xix5vpba7561at",
@@ -7845,8 +7676,7 @@ await strapi.documents('api::restaurant.restaurant').create({
 
 Update an existing document and immediately publish it.
 
-**JavaScript:**
-```
+```js
 await strapi.documents('api::restaurant.restaurant').update({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   data: {
@@ -7856,7 +7686,6 @@ await strapi.documents('api::restaurant.restaurant').update({
 })
 ```
 
-**Response 200 OK:**
 ```json
 {
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
@@ -13442,12 +13271,10 @@ When we only populate the `blocks` dynamic zone, we go only 1 level deep, and we
 
 Populates the blocks dynamic zone 1 level deep.
 
-**Request:**
-```
+```bash
 GET /api/articles?populate[0]=blocks
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
@@ -13510,12 +13337,10 @@ When we populate the `blocks` dynamic zone and apply a shared population strateg
 
 Populates the blocks dynamic zone and applies a shared population strategy to all its components.
 
-**Request:**
-```
+```bash
 GET /api/articles?populate[blocks][populate]=*
 ```
 
-**Response 200 OK:**
 ```json
 {
   "data": [
