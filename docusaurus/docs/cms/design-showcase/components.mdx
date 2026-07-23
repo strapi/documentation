@@ -12,31 +12,72 @@ tags:
 
 # Components showcase
 
-<Tldr>
-This is a demo page for designers. It renders every general-purpose component and rendering case used in the docs, grouped by category: text & inline, admonitions, code & tabs, steps, cards & navigation, layout, badges, callouts & cards, and media. For API-specific components, see the [API components showcase](/cms/design-showcase/api-components).
-</Tldr>
+<AlphaBadge /> <BetaBadge /> <EnterpriseBadge /> <GrowthBadge /> <SsoBadge /> <CloudStarterBadge /> <CloudProBadge /> <CloudBusinessBadge /> <FeatureFlagBadge feature="my_feature_flag" /> <VersionBadge version="5.0.0" />
 
-<AlphaBadge /> <BetaBadge /> <EnterpriseBadge /> <GrowthBadge /> <SsoBadge /> <CloudStarterBadge /> <CloudProBadge /> <CloudBusinessBadge /> <NewBadge /> <UpdatedBadge /> <FeatureFlagBadge feature="myFeature" /> <VersionBadge version="5.0.0" />
+<Tldr>
+This is a demo page for designers. It renders every general-purpose component and rendering case used in the docs, grouped by category. For API-specific components, see the [API components showcase](/cms/design-showcase/api-components).
+</Tldr>
 
 This page groups components by category, mirroring how the documentation is organized. Use the table of contents to jump to a section.
 
+## Identity cards
+
+The identity card summarizes the key facts about a feature or a plugin at the top of a page.
+
+Identity card for a **feature**:
+
+<IdentityCard>
+  <IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>
+  <IdentityCardItem icon="user" title="Role & permission">Requires the relevant permission in the admin panel</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available by default</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environments</IdentityCardItem>
+</IdentityCard>
+
+Identity card for a **plugin**:
+
+<IdentityCard isPlugin>
+  <IdentityCardItem icon="navigation-arrow" title="Location">Usable and configurable via the admin panel and server code</IdentityCardItem>
+  <IdentityCardItem icon="package" title="Package name">`@strapi/plugin-users-permissions`</IdentityCardItem>
+  <IdentityCardItem icon="plus-square" title="Additional resources"><ExternalLink to="https://market.strapi.io/" text="Strapi Marketplace page" /></IdentityCardItem>
+</IdentityCard>
+
+Breaking change ID card, with both answers set to "Yes" and an informational note:
+
+<BreakingChangeIdCard plugins codemodName="my-codemod" codemodLink="https://github.com/strapi/strapi" info="This change requires a manual migration step." />
+
+Breaking change ID card variant, with both answers set to "No" and no note:
+
+<BreakingChangeIdCard />
+
 ## Text & inline elements
+
+This category covers the plain Markdown primitives: text formatting, headings, lists, and tables.
 
 ### Text formatting
 
-Regular paragraph text with **bold**, _italic_, ***bold italic***, and `inline code`. Here is a [plain link](https://strapi.io), and here is a [link wrapping `inline code`](https://docs.strapi.io). You can also reference an internal page like the [REST API introduction](/cms/api/rest).
+The paragraph below mixes the inline styles most often used in the docs.
 
-An inline <Annotation>This is an Annotation: a short definition or note shown on hover or click, inline within a sentence.</Annotation> inside a sentence.
+Regular paragraph text with **bold** and `inline code`. Here is a [plain link](https://strapi.io), and here is a [link wrapping `inline code`](https://docs.strapi.io). You can also reference an internal page like the [REST API introduction](/cms/api/rest).
+
+To reference a button in the interface, use an icon followed by its bold label, like the <Icon name="funnel-simple" classes="ph-bold" /> **Filters** button or the <Icon name="list-plus" classes="ph-bold" /> **Configure the view** button.
+
+An inline <Annotation>This is an Annotation: a short definition or note shown on hover or click, inline within a sentence.</Annotation> annotation inside a sentence.
 
 ### Headings
 
-The headings below show levels 3 to 5 (levels 1 and 2 are used for the page title and section titles).
+Headings structure a page. The showcase shows levels 3 to 5, since levels 1 and 2 are reserved for the page title and section titles.
 
 #### Heading level 4
 
+This is the text that follows a level 4 heading.
+
 ##### Heading level 5
 
+This is the text that follows a level 5 heading.
+
 ### Lists
+
+Lists come in three flavors: unordered, ordered, and nested.
 
 Bullet list:
 
@@ -57,6 +98,8 @@ Numbered list (procedure):
 
 ### Tables
 
+Tables are used for reference information such as parameters or availability matrices.
+
 | Feature | Availability | Notes |
 |---------|:------------:|-------|
 | REST API | ✅ | Enabled by default |
@@ -68,7 +111,7 @@ Numbered list (procedure):
 Every admonition type is shown below, each containing text, a bullet list, a link, inline code, a link wrapping inline code, and a fenced code block, to demonstrate rich rendering inside.
 
 :::note
-This is a **note** admonition with text, `inline code`, a [link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
+This is a **note** admonition with `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
 
 - A bullet inside a note
 - Another bullet
@@ -80,7 +123,7 @@ const strapi = require('@strapi/strapi');
 :::
 
 :::tip Custom tip title
-This is a **tip** admonition. It can contain `inline code`, a [link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
+This is a **tip** admonition with `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
 
 - Bullet one
 - Bullet two
@@ -91,15 +134,15 @@ yarn strapi develop
 :::
 
 :::info
-This is an **info** admonition with `inline code` and a [link with `inline code`](https://docs.strapi.io).
+This is an **info** admonition with `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
 
 ```json
 { "enabled": true }
 ```
 :::
 
-:::caution Heads up
-This is a **caution** admonition.
+:::caution
+This is a **caution** admonition with `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
 
 - Watch out for this
 - And this
@@ -109,27 +152,19 @@ const x: number = 42;
 ```
 :::
 
-:::warning
-This is a **warning** admonition (custom keyword re-enabled in Strapi docs).
-
-```js
-console.warn('Be careful');
-```
-:::
-
 :::danger
-This is a **danger** admonition with a [link with `inline code`](https://docs.strapi.io).
+This is a **danger** admonition with `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
 
 ```bash
 rm -rf ./build
 ```
 :::
 
-:::strapi Strapi feature
-This is the custom **strapi**-branded admonition.
+:::strapi This is a "Strapi-special" callout
+This is the custom **strapi**-branded admonition with `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
 
 - Strapi-specific note
-- With a [link](https://strapi.io)
+- Another bullet
 
 ```js
 export default { /* config */ };
@@ -137,6 +172,8 @@ export default { /* config */ };
 :::
 
 :::prerequisites
+This prerequisites admonition contains `inline code`, a [plain link](https://strapi.io), and a [link with `inline code`](https://docs.strapi.io).
+
 - Node.js installed (see [requirements](/cms/installation))
 - A running Strapi project created with `npx create-strapi-app`
 - Basic knowledge of `REST` or `GraphQL`
@@ -144,23 +181,70 @@ export default { /* config */ };
 
 ## Code & tabs
 
+Code can be shown as standalone blocks or grouped inside tabs.
+
 ### Code blocks
 
-A code block without a title:
+A short code block without a title:
 
 ```js
-const entries = await strapi.documents('api::article.article').findMany();
+const port = env.int('PORT', 1337);
 ```
 
-A code block with a title and line highlighting:
+A code block with a title but no line highlighting:
 
-```js title="src/index.js" {2,4-5}
-module.exports = {
-  register() {}, // highlighted
-  bootstrap() {},
-  // highlighted
-  destroy() {}, // highlighted
-};
+```js title="src/api/article/controllers/article.js"
+'use strict';
+
+/**
+ * A custom `article` controller that extends the default core controller
+ * and overrides the `find` method to inject a default sort.
+ */
+const { createCoreController } = require('@strapi/strapi').factories;
+
+module.exports = createCoreController('api::article.article', ({ strapi }) => ({
+  async find(ctx) {
+    ctx.query = {
+      ...ctx.query,
+      sort: ctx.query.sort || 'publishedAt:desc',
+    };
+
+    const { data, meta } = await super.find(ctx);
+
+    return { data, meta };
+  },
+}));
+```
+
+The exact same block, now with highlighted lines (the injected sort and the call to the core controller):
+
+```js title="src/api/article/controllers/article.js" {12-15,17}
+'use strict';
+
+/**
+ * A custom `article` controller that extends the default core controller
+ * and overrides the `find` method to inject a default sort.
+ */
+const { createCoreController } = require('@strapi/strapi').factories;
+
+module.exports = createCoreController('api::article.article', ({ strapi }) => ({
+  async find(ctx) {
+    ctx.query = {
+      ...ctx.query,
+      sort: ctx.query.sort || 'publishedAt:desc',
+    };
+
+    const { data, meta } = await super.find(ctx);
+
+    return { data, meta };
+  },
+}));
+```
+
+A terminal block, used when the reader has commands to run in a terminal (a `bash`, `sh`, or `powershell` language renders as a terminal):
+
+```bash
+yarn strapi develop
 ```
 
 ### Tabs
@@ -176,12 +260,51 @@ Content of the GraphQL tab.
 </TabItem>
 </Tabs>
 
-JavaScript / TypeScript tabs (code without a title bar):
+Tabs containing different kinds of content, one per tab (a table, a list with an admonition, and a code block):
+
+<Tabs groupId="content-kind">
+<TabItem value="table" label="Table">
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `locale` | String | Locale to fetch documents for |
+| `status` | Enum | `published` or `draft` |
+| `sort` | String | Field and order, e.g. `title:asc` |
+
+</TabItem>
+<TabItem value="list" label="List & admonition">
+
+Steps to enable the feature:
+
+1. Open the admin panel
+2. Go to **Settings**
+3. Toggle the feature on
+
+:::note
+The feature is available on all plans.
+:::
+
+</TabItem>
+<TabItem value="code" label="Code">
+
+```js title="config/plugins.js"
+module.exports = {
+  'my-plugin': {
+    enabled: true,
+    config: { apiKey: process.env.MY_PLUGIN_API_KEY },
+  },
+};
+```
+
+</TabItem>
+</Tabs>
+
+JavaScript / TypeScript tabs, with a title bar on each code block:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js
+```js title="config/server.js"
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
@@ -191,7 +314,7 @@ module.exports = ({ env }) => ({
 </TabItem>
 <TabItem value="ts" label="TypeScript">
 
-```ts
+```ts title="config/server.ts"
 export default ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
@@ -201,7 +324,7 @@ export default ({ env }) => ({
 </TabItem>
 </Tabs>
 
-Tabs **nested inside tabs**, with admonitions and code inside:
+Tabs **nested inside tabs**, with admonitions and titled code blocks inside:
 
 <Tabs groupId="os">
 <TabItem value="unix" label="macOS / Linux">
@@ -215,14 +338,14 @@ Choose your package manager:
 Run the following in your project root:
 :::
 
-```bash
+```bash title="Terminal"
 yarn install && yarn develop
 ```
 
 </TabItem>
 <TabItem value="npm" label="npm">
 
-```bash
+```bash title="Terminal"
 npm install && npm run develop
 ```
 
@@ -235,14 +358,14 @@ npm install && npm run develop
 <Tabs groupId="pm">
 <TabItem value="yarn" label="yarn">
 
-```powershell
+```powershell title="PowerShell"
 yarn install; yarn develop
 ```
 
 </TabItem>
 <TabItem value="npm" label="npm">
 
-```powershell
+```powershell title="PowerShell"
 npm install; npm run develop
 ```
 
@@ -253,6 +376,8 @@ npm install; npm run develop
 </Tabs>
 
 ## Steps, progress & checklists
+
+Steps and checklists guide the reader through a procedure.
 
 StepDetails (collapsible steps):
 
@@ -282,6 +407,8 @@ Checklist:
 
 ## Cards & navigation
 
+Doc cards link to related pages. They can be shown in a static grid or in an expandable grid.
+
 Custom doc cards:
 
 <CustomDocCardsWrapper>
@@ -290,23 +417,21 @@ Custom doc cards:
 <CustomDocCard title="REST API" description="Interact with your content via REST." link="/cms/api/rest" icon="plugs-connected" small />
 </CustomDocCardsWrapper>
 
-Expandable doc cards (collapses after the first few):
+Expandable doc cards (collapses after the first few, then reveals the rest):
 
 <ExpandableDocCardsWrapper initialVisible={2}>
 <CustomDocCard title="Content Manager" description="Create and manage entries." link="/cms/features/content-manager" icon="pencil" />
 <CustomDocCard title="Content-Type Builder" description="Design your content structure." link="/cms/features/content-type-builder" icon="layout" />
 <CustomDocCard title="Media Library" description="Manage your assets." link="/cms/features/media-library" icon="images" />
 <CustomDocCard title="Releases" description="Group and publish content." link="/cms/features/releases" icon="rocket-launch" />
+<CustomDocCard title="Internationalization" description="Manage content in multiple locales." link="/cms/features/internationalization" icon="translate" />
+<CustomDocCard title="Review Workflows" description="Define review stages for your content." link="/cms/features/review-workflows" icon="git-branch" />
+<CustomDocCard title="Audit Logs" description="Track actions performed in the admin panel." link="/cms/features/audit-logs" icon="list-magnifying-glass" />
 </ExpandableDocCardsWrapper>
 
-"What's next?" navigation:
-
-<NextSteps>
-  <NextSteps.Step title="Explore the admin panel" description="Create entries, manage roles, and upload media." link="/cms/features/admin-panel" />
-  <NextSteps.Step title="Connect a frontend" description="Consume your content via REST or GraphQL." link="/cms/api/rest" />
-</NextSteps>
-
 ## Layout
+
+Layout components arrange content in columns.
 
 Two-column layout with `Columns`:
 
@@ -339,59 +464,9 @@ const entries = await strapi.documents('api::article.article').findMany();
 </SideBySideColumn>
 </SideBySideContainer>
 
-## Badges
+## Expandable content
 
-Availability and plan badges (also shown under the page title):
-
-- Alpha: <AlphaBadge />
-- Beta: <BetaBadge />
-- Enterprise: <EnterpriseBadge />
-- Growth: <GrowthBadge />
-- SSO: <SsoBadge />
-- Cloud Starter: <CloudStarterBadge />
-- Cloud Pro: <CloudProBadge />
-- Cloud Business: <CloudBusinessBadge />
-- New: <NewBadge />
-- Updated: <UpdatedBadge />
-- Feature flag: <FeatureFlagBadge feature="myFeature" />
-- Version: <VersionBadge version="5.0.0" />
-
-Badges also render inline within text, like this Beta feature <BetaBadge />.
-
-## Callouts, annotations & cards
-
-Subtle callout:
-
-<SubtleCallout title="Related concept">
-A short aside pointing to a related topic, with a [link](https://strapi.io).
-</SubtleCallout>
-
-Reusable annotations (inline tooltips):
-
-The <PluginsConfigurationFile /> holds plugin settings, a <HeadlessCms /> serves content over an API, a <DocumentDefinition /> describes a document, <Codemods /> automate migrations, and <NamingConventions /> keep code consistent.
-
-Identity card for a **feature**:
-
-<IdentityCard>
-  <IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>
-  <IdentityCardItem icon="user" title="Role & permission">Requires the relevant permission in the admin panel</IdentityCardItem>
-  <IdentityCardItem icon="toggle-right" title="Activation">Available by default</IdentityCardItem>
-  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environments</IdentityCardItem>
-</IdentityCard>
-
-Identity card for a **plugin**:
-
-<IdentityCard isPlugin>
-  <IdentityCardItem icon="navigation-arrow" title="Location">Usable and configurable via the admin panel and server code</IdentityCardItem>
-  <IdentityCardItem icon="package" title="Package name">`@strapi/plugin-users-permissions`</IdentityCardItem>
-  <IdentityCardItem icon="plus-square" title="Additional resources"><ExternalLink to="https://market.strapi.io/" text="Strapi Marketplace page" /></IdentityCardItem>
-</IdentityCard>
-
-Breaking change ID card:
-
-<BreakingChangeIdCard plugins codemodName="my-codemod" codemodLink="https://github.com/strapi/strapi" info="This change requires a manual migration step." />
-
-Expandable content:
+`ExpandableContent` collapses long content beyond a set height and lets the reader expand it with a "Show more" toggle.
 
 <ExpandableContent maxHeight="120px">
 This block is collapsed beyond a certain height and can be expanded by the reader. It can contain any content: paragraphs, `inline code`, [links](https://strapi.io), and lists.
@@ -403,15 +478,45 @@ This block is collapsed beyond a certain height and can be expanded by the reade
 - Item five
 </ExpandableContent>
 
+Wrapping a long code block, so the reader can expand it only if they need the full example:
+
+<ExpandableContent maxHeight="160px">
+
+```js title="config/middlewares.js"
+module.exports = [
+  'strapi::logger',
+  'strapi::errors',
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': ["'self'", 'data:', 'blob:', 'market-assets.strapi.io'],
+          'media-src': ["'self'", 'data:', 'blob:', 'market-assets.strapi.io'],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  'strapi::cors',
+  'strapi::poweredBy',
+  'strapi::query',
+  'strapi::body',
+  'strapi::session',
+  'strapi::favicon',
+  'strapi::public',
+];
+```
+
+</ExpandableContent>
+
 ## Media & miscellaneous
 
-Icons (Phosphor):
+Media components embed diagrams, walkthroughs, and interactive tools.
 
-<Icon name="rocket-launch" /> <Icon name="warning" classes="ph-bold" color="orange" /> <Icon name="copy" /> <Icon name="download" /> <Icon name="arrow-square-out" />
-
-External link:
-
-<ExternalLink to="https://strapi.io" text="Strapi website" />
+External link: <ExternalLink to="https://strapi.io" text="Strapi website" /> — it appends an icon to signal that the reader is leaving the documentation site.
 
 Mermaid diagram (via `MermaidWithFallback`, with a light/dark image fallback):
 
@@ -440,3 +545,10 @@ Interactive query builder:
 }
   `}
 />
+
+## What's next?
+
+<NextSteps>
+  <NextSteps.Step title="Explore the admin panel" description="Create entries, manage roles, and upload media." link="/cms/features/admin-panel" />
+  <NextSteps.Step title="Connect a frontend" description="Consume your content via REST or GraphQL." link="/cms/api/rest" />
+</NextSteps>
