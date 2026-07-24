@@ -22838,591 +22838,6 @@ ngrok http 1337
 
 
 
-# Data export
-Source: https://docs.strapi.io/cms/data-management/export
-
-## Understand the exported archive
-Description: The exported .tar archive contains a flat structure of numbered files arranged in folders for each exported resource:
-(Source: https://docs.strapi.io/cms/data-management/export#understand-the-exported-archive)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi export --no-encrypt --no-compress -f my-export
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi export -- --no-encrypt --no-compress -f my-export
-```
-
-Language: TEXT
-File path: N/A
-
-```text
-export_202401011230.tar
-├── metadata.json
-├── configuration/
-│   └── configuration_00001.jsonl
-├── entities/
-│   └── entities_00001.jsonl
-├── links/
-│   └── links_00001.jsonl
-└── schemas/
-    └── schemas_00001.jsonl
-```
-
-
-## Export to a directory
-Description: Directory exports do not support encryption or compression.
-(Source: https://docs.strapi.io/cms/data-management/export#export-to-a-directory)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi export --format dir --no-encrypt -f my-export
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi export -- --format dir --no-encrypt -f my-export
-```
-
-
-## Example: Export data with a custom filename
-Description: Exported data are contained in a .tar file (or a directory when using --format dir) that is automatically named using the format export_YYYYMMDDHHMMSS.
-(Source: https://docs.strapi.io/cms/data-management/export#example-export-data-with-a-custom-filename)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi export --file my-strapi-export
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi export -- --file my-strapi-export
-```
-
-
-## Configure data encryption
-Description: :::tip Encryption keys Strong encryption keys are encouraged to protect sensitive data in your project.
-(Source: https://docs.strapi.io/cms/data-management/export#configure-data-encryption)
-
-Language: Bash
-File path: N/A
-
-```bash
-openssl rand -base64 48
-```
-
----
-Language: JavaScript
-File path: N/A
-
-```js
-node -p "require('crypto').randomBytes(48).toString('base64');"
-```
-
-
-## Example: Export data without encryption
-Description: To disable encryption, pass the --no-encrypt option with the strapi export command.
-(Source: https://docs.strapi.io/cms/data-management/export#example-export-data-without-encryption)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi export --no-encrypt
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi export -- --no-encrypt
-```
-
-
-## Example: Export data with the encryption --key option
-Description: To disable encryption, pass the --no-encrypt option with the strapi export command.
-(Source: https://docs.strapi.io/cms/data-management/export#example-export-data-with-the-encryption-key-option)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi export --key my-encryption-key
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi export -- --key my-encryption-key
-```
-
-
-## Example: Export data without compression
-Description: To disable compression, pass the --no-compress option with the strapi export command.
-(Source: https://docs.strapi.io/cms/data-management/export#example-export-data-without-compression)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi export --no-compress
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi export -- --no-compress
-```
-
-
-## Example: Export only entities and relations
-Description: Code example from "Example: Export only entities and relations"
-(Source: https://docs.strapi.io/cms/data-management/export#example-export-only-entities-and-relations)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi export --only content
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi export -- --only content
-```
-
-
-## Example: Export data excluding assets, entities, and relations
-Description: :::note Media such as images consist of the file (asset) and the entity in the database.
-(Source: https://docs.strapi.io/cms/data-management/export#example-export-data-excluding-assets-entities-and-relations)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi export --exclude files,content
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi export -- --exclude files,content
-```
-
-
-
-# Data import
-Source: https://docs.strapi.io/cms/data-management/import
-
-## Understand the import archive
-Description: To prepare an archive for manual review or modification:
-(Source: https://docs.strapi.io/cms/data-management/import#understand-the-import-archive)
-
-Language: JavaScript
-File path: N/A
-
-```js
-yarn strapi export --no-encrypt --no-compress -f my-export
-tar -xf my-export.tar
-```
-
----
-Language: JavaScript
-File path: N/A
-
-```js
-npm run strapi export -- --no-encrypt --no-compress -f my-export
-tar -xf my-export.tar
-```
-
-
-## Import from a directory
-Description: Instead of a .tar archive, you can pass the path to an unpacked export directory.
-(Source: https://docs.strapi.io/cms/data-management/import#import-from-a-directory)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi import -f ./my-export
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi import -- -f ./my-export
-```
-
-
-## Example: Minimum command to import data from a file in the Strapi project root
-Description: To import data into a Strapi instance, use the strapi import command in the destination project root directory.
-(Source: https://docs.strapi.io/cms/data-management/import#example-minimum-command-to-import-data-from-a-file-in-the-strapi-project-root)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc
-```
-
-
-## Example: Import a plain .tar archive
-Description: To import data into a Strapi instance, use the strapi import command in the destination project root directory.
-(Source: https://docs.strapi.io/cms/data-management/import#example-import-a-plain-tar-archive)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi import -f /path/to/my/file/backup.tar
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi import -- -f /path/to/my/file/backup.tar
-```
-
-
-## Example: Pass the encryption key with the strapi import command
-Description: If you are importing data from an encrypted file the encryption key can be passed with the strapi import command by using the -k or --key option.
-(Source: https://docs.strapi.io/cms/data-management/import#example-pass-the-encryption-key-with-the-strapi-import-command)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --key my-encryption-key
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --key my-encryption-key
-```
-
-
-## Example of the --force option
-Description: When using the strapi import command, you are required to confirm that the import will delete the existing database contents.
-(Source: https://docs.strapi.io/cms/data-management/import#example-of-the-force-option)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --force --key my-encryption-key
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --force --key my-encryption-key
-```
-
-
-## Example: exclude assets from an import
-Description: :::note Media such as images consist of the file (asset) and the entity in the database.
-(Source: https://docs.strapi.io/cms/data-management/import#example-exclude-assets-from-an-import)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclude files
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclude files
-```
-
-
-## Example: import only the project configuration
-Description: :::note Media such as images consist of the file (asset) and the entity in the database.
-(Source: https://docs.strapi.io/cms/data-management/import#example-import-only-the-project-configuration)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --only config
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --only config
-```
-
-
-
-# Data transfer
-Source: https://docs.strapi.io/cms/data-management/transfer
-
-## Data transfer
-Description: :::warning When using nginx and a server that proxies requests into a localhost, issues might occur.
-(Source: https://docs.strapi.io/cms/data-management/transfer#data-transfer)
-
-Language: JavaScript
-File path: N/A
-
-```
-server {
-    listen 80;
-    server_name <yourdomain>;
-    location / {
-        proxy_pass http://localhost:1337;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "Upgrade";
-        proxy_set_header Host $host;
-        include proxy_params;
-    }
-}
-```
-
-
-## Setup and run the data transfer
-Description: Start the Strapi server for the destination instance.
-(Source: https://docs.strapi.io/cms/data-management/transfer#setup-and-run-the-data-transfer)
-
-Language: Bash
-File path: N/A
-
-```bash
-    yarn strapi transfer --to destinationURL
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-    npm run strapi transfer -- --to destinationURL
-```
-
-Language: Bash
-File path: N/A
-
-```bash
-  yarn strapi transfer --from remoteURL
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-  npm run strapi transfer -- --from remoteURL
-```
-
-
-## Example: bypass the transfer command line prompts with --force
-Description: :::caution The --force option bypasses all warnings about content deletion.
-(Source: https://docs.strapi.io/cms/data-management/transfer#example-bypass-the-transfer-command-line-prompts-with-force)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token --force
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token --force
-```
-
-
-## Example: only transfer files
-Description: The default strapi transfer command transfers your content (entities and relations), files (assets), project configuration, and schemas.
-(Source: https://docs.strapi.io/cms/data-management/transfer#example-only-transfer-files)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi transfer --to https://example.com/admin --only files
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi transfer -- --to https://example.com/admin --only files
-```
-
-
-## Example: exclude files from transfer
-Description: The default strapi transfer command transfers your content (entities and relations), files (assets), project configuration, and schemas.
-(Source: https://docs.strapi.io/cms/data-management/transfer#example-exclude-files-from-transfer)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi transfer --to https://example.com/admin --exclude files
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi transfer -- --to https://example.com/admin --exclude files
-```
-
-
-## Manage data transfer with environment variables
-Description: The environment variable STRAPIDISABLEREMOTEDATATRANSFER is available to disable remote data transfer.
-(Source: https://docs.strapi.io/cms/data-management/transfer#manage-data-transfer-with-environment-variables)
-
-Language: Bash
-File path: N/A
-
-```bash
-STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
-```
-
-
-## Create and clone a new Strapi project
-Description: Create a new Strapi project using the installation command:
-(Source: https://docs.strapi.io/cms/data-management/transfer#create-and-clone-a-new-strapi-project)
-
-Language: Bash
-File path: N/A
-
-```bash
-cd <new-instance-name>
-yarn install
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-cd <new-instance-name>
-npm install
-```
-
-Language: Bash
-File path: N/A
-
-```bash
-   npx create-strapi-app@latest <project-name> --quickstart
-```
-
-Language: Bash
-File path: N/A
-
-```bash
-   git init
-   git add .
-   git commit -m "first commit"
-```
-
-Language: Bash
-File path: N/A
-
-```bash
-   cd .. # move to the parent directory
-   git clone <path to created git repository>.git/ <new-instance-name>
-```
-
-
-## Create a transfer token
-Description: Navigate to the second Strapi instance and run the build and start commands in the root directory:
-(Source: https://docs.strapi.io/cms/data-management/transfer#create-a-transfer-token)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn build && yarn start
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run build && npm run start
-```
-
-
-## Transfer your data
-Description: Return the the first Strapi instance.
-(Source: https://docs.strapi.io/cms/data-management/transfer#transfer-your-data)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi transfer --to http://localhost:1337/admin
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi transfer -- --to http://localhost:1337/admin
-```
-
-
-
 # Database migrations
 Source: https://docs.strapi.io/cms/database-migrations
 
@@ -24733,6 +24148,591 @@ export default ({ env }) => ({
     } 
   },
 });
+```
+
+
+
+# Data export
+Source: https://docs.strapi.io/cms/features/data-management/export
+
+## Understand the exported archive
+Description: The exported .tar archive contains a flat structure of numbered files arranged in folders for each exported resource:
+(Source: https://docs.strapi.io/cms/features/data-management/export#understand-the-exported-archive)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi export --no-encrypt --no-compress -f my-export
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi export -- --no-encrypt --no-compress -f my-export
+```
+
+Language: TEXT
+File path: N/A
+
+```text
+export_202401011230.tar
+├── metadata.json
+├── configuration/
+│   └── configuration_00001.jsonl
+├── entities/
+│   └── entities_00001.jsonl
+├── links/
+│   └── links_00001.jsonl
+└── schemas/
+    └── schemas_00001.jsonl
+```
+
+
+## Export to a directory
+Description: Directory exports do not support encryption or compression.
+(Source: https://docs.strapi.io/cms/features/data-management/export#export-to-a-directory)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi export --format dir --no-encrypt -f my-export
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi export -- --format dir --no-encrypt -f my-export
+```
+
+
+## Example: Export data with a custom filename
+Description: Exported data are contained in a .tar file (or a directory when using --format dir) that is automatically named using the format export_YYYYMMDDHHMMSS.
+(Source: https://docs.strapi.io/cms/features/data-management/export#example-export-data-with-a-custom-filename)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi export --file my-strapi-export
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi export -- --file my-strapi-export
+```
+
+
+## Configure data encryption
+Description: :::tip Encryption keys Strong encryption keys are encouraged to protect sensitive data in your project.
+(Source: https://docs.strapi.io/cms/features/data-management/export#configure-data-encryption)
+
+Language: Bash
+File path: N/A
+
+```bash
+openssl rand -base64 48
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+node -p "require('crypto').randomBytes(48).toString('base64');"
+```
+
+
+## Example: Export data without encryption
+Description: To disable encryption, pass the --no-encrypt option with the strapi export command.
+(Source: https://docs.strapi.io/cms/features/data-management/export#example-export-data-without-encryption)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi export --no-encrypt
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi export -- --no-encrypt
+```
+
+
+## Example: Export data with the encryption --key option
+Description: To disable encryption, pass the --no-encrypt option with the strapi export command.
+(Source: https://docs.strapi.io/cms/features/data-management/export#example-export-data-with-the-encryption-key-option)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi export --key my-encryption-key
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi export -- --key my-encryption-key
+```
+
+
+## Example: Export data without compression
+Description: To disable compression, pass the --no-compress option with the strapi export command.
+(Source: https://docs.strapi.io/cms/features/data-management/export#example-export-data-without-compression)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi export --no-compress
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi export -- --no-compress
+```
+
+
+## Example: Export only entities and relations
+Description: Code example from "Example: Export only entities and relations"
+(Source: https://docs.strapi.io/cms/features/data-management/export#example-export-only-entities-and-relations)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi export --only content
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi export -- --only content
+```
+
+
+## Example: Export data excluding assets, entities, and relations
+Description: :::note Media such as images consist of the file (asset) and the entity in the database.
+(Source: https://docs.strapi.io/cms/features/data-management/export#example-export-data-excluding-assets-entities-and-relations)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi export --exclude files,content
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi export -- --exclude files,content
+```
+
+
+
+# Data import
+Source: https://docs.strapi.io/cms/features/data-management/import
+
+## Understand the import archive
+Description: To prepare an archive for manual review or modification:
+(Source: https://docs.strapi.io/cms/features/data-management/import#understand-the-import-archive)
+
+Language: JavaScript
+File path: N/A
+
+```js
+yarn strapi export --no-encrypt --no-compress -f my-export
+tar -xf my-export.tar
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+npm run strapi export -- --no-encrypt --no-compress -f my-export
+tar -xf my-export.tar
+```
+
+
+## Import from a directory
+Description: Instead of a .tar archive, you can pass the path to an unpacked export directory.
+(Source: https://docs.strapi.io/cms/features/data-management/import#import-from-a-directory)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi import -f ./my-export
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi import -- -f ./my-export
+```
+
+
+## Example: Minimum command to import data from a file in the Strapi project root
+Description: To import data into a Strapi instance, use the strapi import command in the destination project root directory.
+(Source: https://docs.strapi.io/cms/features/data-management/import#example-minimum-command-to-import-data-from-a-file-in-the-strapi-project-root)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc
+```
+
+
+## Example: Import a plain .tar archive
+Description: To import data into a Strapi instance, use the strapi import command in the destination project root directory.
+(Source: https://docs.strapi.io/cms/features/data-management/import#example-import-a-plain-tar-archive)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi import -f /path/to/my/file/backup.tar
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi import -- -f /path/to/my/file/backup.tar
+```
+
+
+## Example: Pass the encryption key with the strapi import command
+Description: If you are importing data from an encrypted file the encryption key can be passed with the strapi import command by using the -k or --key option.
+(Source: https://docs.strapi.io/cms/features/data-management/import#example-pass-the-encryption-key-with-the-strapi-import-command)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --key my-encryption-key
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --key my-encryption-key
+```
+
+
+## Example of the --force option
+Description: When using the strapi import command, you are required to confirm that the import will delete the existing database contents.
+(Source: https://docs.strapi.io/cms/features/data-management/import#example-of-the-force-option)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --force --key my-encryption-key
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --force --key my-encryption-key
+```
+
+
+## Example: exclude assets from an import
+Description: :::note Media such as images consist of the file (asset) and the entity in the database.
+(Source: https://docs.strapi.io/cms/features/data-management/import#example-exclude-assets-from-an-import)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclude files
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclude files
+```
+
+
+## Example: import only the project configuration
+Description: :::note Media such as images consist of the file (asset) and the entity in the database.
+(Source: https://docs.strapi.io/cms/features/data-management/import#example-import-only-the-project-configuration)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --only config
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --only config
+```
+
+
+
+# Data transfer
+Source: https://docs.strapi.io/cms/features/data-management/transfer
+
+## Data transfer
+Description: :::warning When using nginx and a server that proxies requests into a localhost, issues might occur.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#data-transfer)
+
+Language: JavaScript
+File path: N/A
+
+```
+server {
+    listen 80;
+    server_name <yourdomain>;
+    location / {
+        proxy_pass http://localhost:1337;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+        include proxy_params;
+    }
+}
+```
+
+
+## Setup and run the data transfer
+Description: Start the Strapi server for the destination instance.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#setup-and-run-the-data-transfer)
+
+Language: Bash
+File path: N/A
+
+```bash
+    yarn strapi transfer --to destinationURL
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+    npm run strapi transfer -- --to destinationURL
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+  yarn strapi transfer --from remoteURL
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+  npm run strapi transfer -- --from remoteURL
+```
+
+
+## Example: bypass the transfer command line prompts with --force
+Description: :::caution The --force option bypasses all warnings about content deletion.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#example-bypass-the-transfer-command-line-prompts-with-force)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token --force
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token --force
+```
+
+
+## Example: only transfer files
+Description: The default strapi transfer command transfers your content (entities and relations), files (assets), project configuration, and schemas.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#example-only-transfer-files)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi transfer --to https://example.com/admin --only files
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --only files
+```
+
+
+## Example: exclude files from transfer
+Description: The default strapi transfer command transfers your content (entities and relations), files (assets), project configuration, and schemas.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#example-exclude-files-from-transfer)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi transfer --to https://example.com/admin --exclude files
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --exclude files
+```
+
+
+## Manage data transfer with environment variables
+Description: The environment variable STRAPIDISABLEREMOTEDATATRANSFER is available to disable remote data transfer.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#manage-data-transfer-with-environment-variables)
+
+Language: Bash
+File path: N/A
+
+```bash
+STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
+```
+
+
+## Create and clone a new Strapi project
+Description: Create a new Strapi project using the installation command:
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#create-and-clone-a-new-strapi-project)
+
+Language: Bash
+File path: N/A
+
+```bash
+cd <new-instance-name>
+yarn install
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+cd <new-instance-name>
+npm install
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+   npx create-strapi-app@latest <project-name> --quickstart
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+   git init
+   git add .
+   git commit -m "first commit"
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+   cd .. # move to the parent directory
+   git clone <path to created git repository>.git/ <new-instance-name>
+```
+
+
+## Create a transfer token
+Description: Navigate to the second Strapi instance and run the build and start commands in the root directory:
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#create-a-transfer-token)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn build && yarn start
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run build && npm run start
+```
+
+
+## Transfer your data
+Description: Return the the first Strapi instance.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#transfer-your-data)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi transfer --to http://localhost:1337/admin
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi transfer -- --to http://localhost:1337/admin
 ```
 
 
