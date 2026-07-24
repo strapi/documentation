@@ -293,6 +293,48 @@ export default ({ env }) => ({
 </TabItem>
 </Tabs>
 
+## Configuration in database
+
+Configuration files are not multi-server friendly. To update configurations in production you can use a data store to get and set settings.
+
+### Get settings
+
+- `environment` (string): Sets the environment you want to store the data in. By default it's current environment (can be an empty string if your configuration is environment agnostic).
+- `type` (string): Sets if your configuration is for an `api`, `plugin` or `core`. By default it's `core`.
+- `name` (string): You have to set the plugin or api name if `type` is `api` or `plugin`.
+- `key` (string, required): The name of the key you want to store.
+
+```js
+// strapi.store(object).get(object);
+// create reusable plugin store variable
+const pluginStore = strapi.store({
+  environment: strapi.config.environment,
+  type: 'plugin',
+  name: 'users-permissions',
+});
+await pluginStore.get({ key: 'grant' });
+```
+
+### Set settings
+
+- `value` (any, required): The value you want to store.
+
+```js
+// strapi.store(object).set(object);
+// create reusable plugin store variable
+const pluginStore = strapi.store({
+  environment: strapi.config.environment,
+  type: 'plugin',
+  name: 'users-permissions'
+});
+await pluginStore.set({
+  key: 'grant',
+  value: {
+    ...
+  }
+});
+```
+
 ## Dynamic database credentials
 
 Some cloud providers issue short-lived database credentials that expire after a fixed period. For example, AWS RDS IAM tokens are valid for 15 minutes; GCP Cloud SQL IAM tokens expire similarly; HashiCorp Vault can rotate secrets on a schedule. Using a static password in `.env` causes intermittent connection failures when the connection pool recycles idle connections after the token has expired.
@@ -383,48 +425,6 @@ export default ({ env }) => {
 :::note
 AWS RDS IAM authentication requires SSL and IAM database authentication to be enabled on the RDS instance. Refer to the <ExternalLink to="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html" text="AWS documentation"/> for the required certificate bundle and setup instructions.
 :::
-
-## Configuration in database
-
-Configuration files are not multi-server friendly. To update configurations in production you can use a data store to get and set settings.
-
-### Get settings
-
-- `environment` (string): Sets the environment you want to store the data in. By default it's current environment (can be an empty string if your configuration is environment agnostic).
-- `type` (string): Sets if your configuration is for an `api`, `plugin` or `core`. By default it's `core`.
-- `name` (string): You have to set the plugin or api name if `type` is `api` or `plugin`.
-- `key` (string, required): The name of the key you want to store.
-
-```js
-// strapi.store(object).get(object);
-// create reusable plugin store variable
-const pluginStore = strapi.store({
-  environment: strapi.config.environment,
-  type: 'plugin',
-  name: 'users-permissions',
-});
-await pluginStore.get({ key: 'grant' });
-```
-
-### Set settings
-
-- `value` (any, required): The value you want to store.
-
-```js
-// strapi.store(object).set(object);
-// create reusable plugin store variable
-const pluginStore = strapi.store({
-  environment: strapi.config.environment,
-  type: 'plugin',
-  name: 'users-permissions'
-});
-await pluginStore.set({
-  key: 'grant',
-  value: {
-    ...
-  }
-});
-```
 
 ## Environment variables in database configurations
 
