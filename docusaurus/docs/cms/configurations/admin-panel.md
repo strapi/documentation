@@ -374,7 +374,7 @@ Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-t
 
 ## Transfer tokens
 
-Transfer tokens for the [Data transfer](/cms/data-management/transfer) feature can be configured with the following parameters:
+Transfer tokens for the [Data transfer](/cms/features/data-management/transfer) feature can be configured with the following parameters:
 
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|

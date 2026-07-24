@@ -2,9 +2,9 @@
 title: Data import 
 description: Import data using the Strapi CLI
 displayed_sidebar: cmsSidebar
-canonicalUrl: https://docs.strapi.io/cms/data-management/import.html
+canonicalUrl: https://docs.strapi.io/cms/features/data-management/import.html
 pagination_prev: cms/features/data-management
-pagination_next: cms/data-management/export
+pagination_next: cms/features/data-management/export
 tags:
 - data management system
 - data import
@@ -35,7 +35,7 @@ The `strapi import` command is part of the [Data Management feature](/cms/featur
 - schemas,
 - the `metadata.json` file.
 
-The archive follows the same structure as the one produced by [`strapi export`](/cms/data-management/export): a `.tar` containing `configuration`, `entities`, `links`, and `schemas` folders filled with numbered <ExternalLink to="https://jsonlines.org/" text="JSON lines" /> files. Compression (`.gz`) and encryption (`.enc`) are detected from the file extension, so a plain `.tar` can be imported as well. You can also point `-f` at an unpacked export directory (see [Import from a directory](#import-from-a-directory)).
+The archive follows the same structure as the one produced by [`strapi export`](/cms/features/data-management/export): a `.tar` containing `configuration`, `entities`, `links`, and `schemas` folders filled with numbered <ExternalLink to="https://jsonlines.org/" text="JSON lines" /> files. Compression (`.gz`) and encryption (`.enc`) are detected from the file extension, so a plain `.tar` can be imported as well. You can also point `-f` at an unpacked export directory (see [Import from a directory](#import-from-a-directory)).
 
 The following documentation details the available options to customize your data import. The import command and all of the available options are run using the [Strapi CLI](/cms/cli#strapi-import).
 
@@ -50,7 +50,7 @@ The following documentation details the available options to customize your data
 
 ## Understand the import archive
 
-`strapi import` expects an archive with the same flat structure produced by [the `strapi export` command](/cms/data-management/export#understand-the-exported-archive):
+`strapi import` expects an archive with the same flat structure produced by [the `strapi export` command](/cms/features/data-management/export#understand-the-exported-archive):
 
 - `configuration/`: project configuration files
 - `entities/`: entity records
@@ -90,7 +90,7 @@ After adjusting the `.jsonl` files, re‑create the archive (`tar -cf my-export.
 
 <VersionBadge version="5.42.0" />
 
-Instead of a `.tar` archive, you can pass the path to an unpacked export directory. The directory must contain the same layout produced by [`strapi export --format dir`](/cms/data-management/export#export-to-a-directory) (`metadata.json`, `schemas/`, `entities/`, `links/`, `configuration/`, and optionally `assets/`). Encryption and compression are skipped automatically when importing from a directory.
+Instead of a `.tar` archive, you can pass the path to an unpacked export directory. The directory must contain the same layout produced by [`strapi export --format dir`](/cms/features/data-management/export#export-to-a-directory) (`metadata.json`, `schemas/`, `entities/`, `links/`, `configuration/`, and optionally `assets/`). Encryption and compression are skipped automatically when importing from a directory.
 
 <Tabs groupId="yarn-npm">
 

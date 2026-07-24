@@ -2,8 +2,9 @@
 title: Data transfer
 description: Transfer data using the Strapi CLI
 displayed_sidebar: cmsSidebar
-canonicalUrl: https://docs.strapi.io/cms/data-management/transfer.html
-pagination_prev: cms/data-management/export
+canonicalUrl: https://docs.strapi.io/cms/features/data-management/transfer.html
+pagination_prev: cms/features/data-management/export
+pagination_next: cms/features/draft-and-publish
 tags:
 - data management system
 - data transfer
@@ -255,7 +256,7 @@ Additional details on using environment variables in Strapi are available in the
 
 ## Test the transfer command locally
 
-The `transfer` command is not intended for transferring data between two local instances. The [`export`](/cms/data-management/export) and [`import`](/cms/data-management/import) commands were designed for this purpose. However, you might want to test `transfer` locally on test instances to better understand the functionality before using it with a remote instance. The following documentation provides a fully-worked example of the `transfer` process.
+The `transfer` command is not intended for transferring data between two local instances. The [`export`](/cms/features/data-management/export) and [`import`](/cms/features/data-management/import) commands were designed for this purpose. However, you might want to test `transfer` locally on test instances to better understand the functionality before using it with a remote instance. The following documentation provides a fully-worked example of the `transfer` process.
 
 ### Create and clone a new Strapi project
 
