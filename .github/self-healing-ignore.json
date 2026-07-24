@@ -899,6 +899,11 @@
       "number": 27066,
       "reason": "Router: Internal content-manager fix for homepage widget date serialization. No public API changes; this is an implementation detail for the admin panel homepage. Does not warrant user-facing documentation.",
       "added": "2026-07-23"
+    },
+    {
+      "number": 27089,
+      "reason": "Triage: Build tooling optimization - doesn't change user-facing behavior",
+      "added": "2026-07-24"
     }
   ]
 }
