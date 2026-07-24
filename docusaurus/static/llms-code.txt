@@ -24351,6 +24351,66 @@ npm run strapi export -- --exclude files,content
 ```
 
 
+## Exclude specific content types
+Description: The --exclude-content-types and --only-content-types options let you scope an export to specific content types.
+(Source: https://docs.strapi.io/cms/features/data-management/export#exclude-specific-content-types)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi export --exclude-content-types api::article.article
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi export -- --exclude-content-types api::article.article
+```
+
+
+## Export only specific content types
+Description: The --exclude-content-types and --only-content-types options let you scope an export to specific content types.
+(Source: https://docs.strapi.io/cms/features/data-management/export#export-only-specific-content-types)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi export --only-content-types api::article.article,api::category.category
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi export -- --only-content-types api::article.article,api::category.category
+```
+
+
+## Exclude the entire media library
+Description: To exclude both the upload binaries and the upload content type records, pass media-library to the --exclude flag.
+(Source: https://docs.strapi.io/cms/features/data-management/export#exclude-the-entire-media-library)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi export --no-encrypt --exclude media-library
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi export -- --no-encrypt --exclude media-library
+```
+
+
 
 # Data import
 Source: https://docs.strapi.io/cms/features/data-management/import
@@ -24517,6 +24577,46 @@ npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --only
 ```
 
 
+## Exclude specific content types from import
+Description: :::warning Warning: Restore behavior - When you use --exclude-content-types, data for the excluded types is preserved on the destination — the import does not wipe those records before restoring.
+(Source: https://docs.strapi.io/cms/features/data-management/import#exclude-specific-content-types-from-import)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi import -f export_20221213105643.tar.gz.enc --exclude-content-types api::article.article
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi import -- -f export_20221213105643.tar.gz.enc --exclude-content-types api::article.article
+```
+
+
+## Import only specific content types
+Description: :::warning Warning: Restore behavior - When you use --exclude-content-types, data for the excluded types is preserved on the destination — the import does not wipe those records before restoring.
+(Source: https://docs.strapi.io/cms/features/data-management/import#import-only-specific-content-types)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi import -f export_20221213105643.tar.gz.enc --only-content-types api::article.article,api::category.category
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi import -- -f export_20221213105643.tar.gz.enc --only-content-types api::article.article,api::category.category
+```
+
+
 
 # Data transfer
 Source: https://docs.strapi.io/cms/features/data-management/transfer
@@ -24635,6 +24735,50 @@ File path: N/A
 
 ```bash
 npm run strapi transfer -- --to https://example.com/admin --exclude files
+```
+
+
+## Exclude specific content types from transfer
+Description: :::warning Warning: Restore behavior - When you use --exclude-content-types, data for the excluded types is preserved on the destination — they are not wiped before the transfer.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#exclude-specific-content-types-from-transfer)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token \
+  --exclude-content-types api::article.article
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token \
+  --exclude-content-types api::article.article
+```
+
+
+## Transfer only specific content types
+Description: :::warning Warning: Restore behavior - When you use --exclude-content-types, data for the excluded types is preserved on the destination — they are not wiped before the transfer.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#transfer-only-specific-content-types)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token \
+  --only-content-types api::article.article,api::category.category
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token \
+  --only-content-types api::article.article,api::category.category
 ```
 
 
