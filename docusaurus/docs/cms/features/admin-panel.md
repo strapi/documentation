@@ -167,7 +167,7 @@ If you prefer or are required to log in via an SSO provider, please refer to the
 <ThemedImage
 alt="Login page"
 sources={{
-    light: '/img/assets/getting-started/login-page-sso.png',
-    dark: '/img/assets/getting-started/login-page_DARK.png',
+    light: '/img/assets/getting-started/login-page-sso-light.png',
+    dark: '/img/assets/getting-started/login-page-sso-dark.png',
   }}
 />
