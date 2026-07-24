@@ -109,3 +109,4 @@ You can click on the description of any breaking change in the following tables 
 | [Upload a file at entry creation is no longer possible](/cms/migration/v4-to-v5/breaking-changes/no-upload-at-entry-creation) | Yes | No |
 | [Components and dynamic zones should be populated using the detailed population strategy](/cms/migration/v4-to-v5/breaking-changes/no-shared-population-strategy-components-dynamic-zones) | Yes | No |
 | [Updating repeatable components with the Document Service API is not recommended](/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api) | Yes | No |
+| [Empty `morphMany` relations return `[]` instead of `null` when populated](/cms/migration/v4-to-v5/breaking-changes/morph-many-serialization) | Yes | No |
