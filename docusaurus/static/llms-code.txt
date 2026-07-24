@@ -18316,6 +18316,82 @@ await pluginStore.set({
 ```
 
 
+## MySQL/MariaDB with AWS RDS IAM authentication
+Description: The following example mints a fresh IAM auth token from the AWS SDK each time the pool opens a new MySQL connection.
+(Source: https://docs.strapi.io/cms/configurations/database#mysql-mariadb-with-aws-rds-iam-authentication)
+
+Language: JavaScript
+File path: ./config/database.js
+
+```js
+const { Signer } = require('@aws-sdk/rds-signer');
+
+module.exports = ({ env }) => {
+  const signer = new Signer({
+    hostname: env('DATABASE_HOST', '127.0.0.1'),
+    port: env.int('DATABASE_PORT', 3306),
+    username: env('DATABASE_USERNAME', 'strapi'),
+  });
+
+  return {
+    connection: {
+      client: 'mysql',
+      connection: async () => {
+        const token = await signer.getAuthToken();
+        const expiresAt = Date.now() + 15 * 60 * 1000;
+
+        return {
+          host: env('DATABASE_HOST', '127.0.0.1'),
+          port: env.int('DATABASE_PORT', 3306),
+          database: env('DATABASE_NAME', 'strapi'),
+          user: env('DATABASE_USERNAME', 'strapi'),
+          password: token,
+          ssl: true,
+          expirationChecker: () => expiresAt - Date.now() <= 5 * 60 * 1000,
+        };
+      },
+    },
+  };
+};
+```
+
+---
+Language: TypeScript
+File path: ./config/database.ts
+
+```ts
+import { Signer } from '@aws-sdk/rds-signer';
+
+export default ({ env }) => {
+  const signer = new Signer({
+    hostname: env('DATABASE_HOST', '127.0.0.1'),
+    port: env.int('DATABASE_PORT', 3306),
+    username: env('DATABASE_USERNAME', 'strapi'),
+  });
+
+  return {
+    connection: {
+      client: 'mysql',
+      connection: async () => {
+        const token = await signer.getAuthToken();
+        const expiresAt = Date.now() + 15 * 60 * 1000;
+
+        return {
+          host: env('DATABASE_HOST', '127.0.0.1'),
+          port: env.int('DATABASE_PORT', 3306),
+          database: env('DATABASE_NAME', 'strapi'),
+          user: env('DATABASE_USERNAME', 'strapi'),
+          password: token,
+          ssl: true,
+          expirationChecker: () => expiresAt - Date.now() <= 5 * 60 * 1000,
+        };
+      },
+    },
+  };
+};
+```
+
+
 ## Environment variables in database configurations
 Description: Strapi version v4.6.2 and higher includes the database configuration options in the ./config/database.js or ./config/database.ts file.
 (Source: https://docs.strapi.io/cms/configurations/database#environment-variables-in-database-configurations)
