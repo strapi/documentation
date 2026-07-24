@@ -46433,6 +46433,10 @@ module.exports = () => {
 
 Here, you export a function that returns your plugin's core components such as controllers, routes, and configuration. For more details, please refer to the [Server API reference](/cms/plugins-development/server-api).
 
+:::caution
+Without the Plugin SDK, Strapi loads a local plugin's server entry point directly through Node.js, which only resolves `.js` and `.json` files. A `strapi-server.ts` entry point is not transpiled at load time and resolves to an empty plugin, so the server entry point of a local plugin configured this way must be JavaScript. The admin entry point can still use TypeScript because the admin panel build compiles it.
+:::
+
 ### Admin entry point
 
 The admin entry point file sets up your plugin within the Strapi admin panel. The expected structure for `strapi-admin.js` (or its TypeScript variant) is:
