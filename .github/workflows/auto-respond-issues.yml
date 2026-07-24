@@ -102,7 +102,7 @@ jobs:
               "2. **Technical Content:**",
               "   - Directly address the question or problem described",
               "   - Provide relevant code examples, configuration snippets, or step-by-step guidance when applicable",
-              "   - Include links to official Strapi documentation that can help",
+              "   - Include links to official Strapi documentation that can help, only providing maximum 5 links which are the most relevant ones",
               "   - If the issue involves a bug, acknowledge it and provide workarounds if possible",
               "   - If it's a feature request, explain current alternatives or suggest next steps",
               "",
