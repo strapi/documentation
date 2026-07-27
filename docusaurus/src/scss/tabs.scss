@@ -61,10 +61,6 @@
     .margin-top--md {
       margin-top: 24px !important;
     }
-    
-    .tabs + .margin-top--md {
-      margin-top: 0 !important; // Simplified, removed redundant line
-    }
 
     // Inner padding on the tab panel so content is not flush against the
     // container border (top, bottom, left, right).
