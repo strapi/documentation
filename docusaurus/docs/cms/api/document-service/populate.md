@@ -449,8 +449,8 @@ Same behavior applies with `unpublish()` and `discardDraft()`.
       status: 200,
       statusText: "OK",
       body: `{
-  "id": "cjld2cjxh0000qzrmn831i7rn",
-  "versions": [
+  "documentId": "cjld2cjxh0000qzrmn831i7rn",
+  "entries": [
     {
       "id": "cjld2cjxh0001qzrm1q1i7rn",
       "locale": "en",
