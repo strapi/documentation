@@ -909,6 +909,11 @@
       "number": 26559,
       "reason": "Triage: test infrastructure: E2E test coverage for existing functionality",
       "added": "2026-07-25"
+    },
+    {
+      "number": 27139,
+      "reason": "Router: Internal admin UI accessibility improvements (radio roles, aria attributes) in the upload component. No public-facing behavior or API changes require documentation updates.",
+      "added": "2026-07-29"
     }
   ]
 }
