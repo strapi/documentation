@@ -86,15 +86,3 @@ To use a custom provider without publishing it to npm:
 
 4. Update `/config/plugins.js|ts` to [configure the provider](/cms/features/email#configuring-providers).
 5. Run `yarn` or `npm install` to link the local package.
-
-## Private providers
-
-A provider can be marked as **private**, meaning every asset URL will be signed for secure access rather than exposed as a plain URL.
-
-To enable this, implement the `isPrivate()` method and return `true` in your provider module.
-
-When a provider is private, Strapi uses a `getSignedUrl(file)` method — also implemented in the provider — to generate a signed URL for each asset. The signed URL contains an encrypted signature that grants access for a limited time and with specific restrictions, depending on your implementation.
-
-:::note
-For security reasons, the Content API does not return signed URLs. Developers consuming the API must sign URLs themselves using the provider's signing logic.
-:::

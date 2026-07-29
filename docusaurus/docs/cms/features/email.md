@@ -296,7 +296,7 @@ If your provider gives you a single URL instead of host and port values, pass th
 To build your own provider, publish it to npm, or use it locally in your project, see the dedicated documentation:
 
 <CustomDocCardsWrapper>
-<CustomDocCard icon="wrench" title="Creating custom email providers" description="Implement the provider interface, use a local provider, or set up signed URLs for private assets." link="/cms/configurations/email-custom-providers"/>
+<CustomDocCard icon="wrench" title="Creating custom email providers" description="Implement the provider interface, then publish it to npm or use it locally in your project." link="/cms/configurations/email-custom-providers"/>
 </CustomDocCardsWrapper>
 
 ## Usage
