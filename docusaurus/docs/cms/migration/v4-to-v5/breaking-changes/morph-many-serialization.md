@@ -19,7 +19,7 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 <Tldr>
 
-In Strapi 5, populating an empty `morphMany` relation -- including `type: 'media', multiple: true` fields such as a gallery -- returns `[]` instead of `null`. Update client code that checks `field === null` to treat `[]` as the empty state.
+In Strapi 5, populating an empty `morphMany` relation (including `type: 'media', multiple: true` fields such as a gallery) returns `[]` instead of `null`. Update client code that checks `field === null` to treat `[]` as the empty state.
 
 </Tldr>
 
