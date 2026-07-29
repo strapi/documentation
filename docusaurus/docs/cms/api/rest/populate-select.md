@@ -79,7 +79,7 @@ const query = qs.stringify(
   }
 );
 
-await request(`/api/users?${query}`);
+await request(`/api/restaurants?${query}`);
 ```
 
 </TabItem>
