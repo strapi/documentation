@@ -19,8 +19,8 @@ permissions:
   pull-requests: write
 
 env:
-  ABSENCE_START: '2026-07-04'          # first day away (inclusive, Europe/Paris)
-  ABSENCE_END:   '2026-07-14'          # last day away (inclusive, Europe/Paris)
+  ABSENCE_START: '2026-07-28'          # first day away (inclusive, Europe/Paris)
+  ABSENCE_END:   '2026-08-20'          # last day away (inclusive, Europe/Paris)
   IGNORED_AUTHORS: 'pwizla,claude'     # comma-separated PR authors to skip
 
 jobs:

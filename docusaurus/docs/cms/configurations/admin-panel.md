@@ -347,6 +347,7 @@ The forgot password functionality, including [email templating](/cms/features/us
 | `forgotPassword.emailTemplate`    | Email template as defined in email plugin                                                                                         | object        | Default template |
 | `forgotPassword.from`             | Sender mail address                                                                                                                                                                                | string        | Default value defined in <br />your provider configuration                             |
 | `forgotPassword.replyTo`          | Default address or addresses the receiver is asked to reply to                                                                                                                                     | string        | Default value defined in <br />your provider configuration                             |
+| `forgotPassword.expiresIn`        | Time-to-live for password-reset tokens. Accepts a duration in seconds or a shorthand string (e.g., `'15m'`, `'1h'`). Tokens issued before this option was configured are treated as expired and rejected. | string \| number | `'1h'`                                                                             |
 
 ## Rate limiting
 
@@ -374,7 +375,7 @@ Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-t
 
 ## Transfer tokens
 
-Transfer tokens for the [Data transfer](/cms/data-management/transfer) feature can be configured with the following parameters:
+Transfer tokens for the [Data transfer](/cms/features/data-management/transfer) feature can be configured with the following parameters:
 
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|

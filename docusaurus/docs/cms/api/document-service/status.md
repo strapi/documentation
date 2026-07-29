@@ -44,30 +44,38 @@ To select documents by how their draft and published versions relate (never-publ
   kind="js"
   path="strapi.documents().findOne()"
   title="findOne() with status: 'published'"
-  description="Return the published version of a specific document."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').findOne({
+  description="Return the published version of a specific document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findOne({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   status: 'published'
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Biscotte Restaurant",
   publishedAt: "2024-03-14T15:40:45.330Z",
   locale: "en", // default locale
   // …
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Get the published version with `findFirst()` {#find-first}
 
@@ -75,29 +83,37 @@ To select documents by how their draft and published versions relate (never-publ
   kind="js"
   path="strapi.documents().findFirst()"
   title="findFirst() with status: 'published'"
-  description="Return the published version of the first matching document."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `const document = await strapi.documents("api::restaurant.restaurant").findFirst({
+  description="Return the published version of the first matching document.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const document = await strapi.documents("api::restaurant.restaurant").findFirst({
   status: 'published',
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Biscotte Restaurant",
   publishedAt: "2024-03-14T15:40:45.330Z",
   locale: "en", // default locale
   // …
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Get the published version with `findMany()` {#find-many}
 
@@ -105,20 +121,25 @@ To select documents by how their draft and published versions relate (never-publ
   kind="js"
   path="strapi.documents().findMany()"
   title="findMany() with status: 'published'"
-  description="Return the published versions of all matching documents."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+  description="Return the published versions of all matching documents.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+const documents = await strapi.documents("api::restaurant.restaurant").findMany({
   status: 'published'
-});`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `[
+});
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+[
   {
     documentId: "a1b2c3d4e5f6g7h8i9j0klm",
     name: "Biscotte Restaurant",
@@ -127,10 +148,13 @@ To select documents by how their draft and published versions relate (never-publ
     // …
   }
   // …
-]`
-    }
-  ]}
-/>
+]
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## `count()` only draft or published versions {#count}
 
@@ -162,32 +186,40 @@ This means that counting with the `status: 'draft'` parameter still returns the 
   kind="js"
   path="strapi.documents().create()"
   title="create() with status: 'published'"
-  description="Create a new document and immediately publish it."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').create({
+  description="Create a new document and immediately publish it.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').create({
   data: {
     name: "New Restaurant",
   },
   status: 'published',
-})`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+})
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   documentId: "d41r46wac4xix5vpba7561at",
   name: "New Restaurant",
   publishedAt: "2024-03-14T17:29:03.399Z",
   locale: "en" // default locale
   // …
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
 
 ## Update a draft and publish it {#update}
 
@@ -195,30 +227,38 @@ This means that counting with the `status: 'draft'` parameter still returns the 
   kind="js"
   path="strapi.documents().update()"
   title="update() with status: 'published'"
-  description="Update an existing document and immediately publish it."
-  codeTabs={[
-    {
-      label: 'JavaScript',
-      code: `await strapi.documents('api::restaurant.restaurant').update({
+  description="Update an existing document and immediately publish it.">
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript">
+
+```js
+await strapi.documents('api::restaurant.restaurant').update({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   data: {
     name: "Biscotte Restaurant (closed)",
   },
   status: 'published',
-})`
-    }
-  ]}
-  responses={[
-    {
-      status: 200,
-      statusText: 'OK',
-      body: `{
+})
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
   name: "Biscotte Restaurant (closed)",
   publishedAt: "2024-03-14T17:29:03.399Z",
   locale: "en" // default locale
   // …
-}`
-    }
-  ]}
-/>
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>

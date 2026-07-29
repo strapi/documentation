@@ -36,6 +36,16 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    // The `.custom-doc-card` grid cell is a flex ROW (default direction), so its
+    // main axis is horizontal. Without an explicit width the inner `<a>` sizes
+    // to its own text width on that axis, leaving cards with shorter titles or
+    // descriptions visibly narrower than their 312px grid cell (this is why
+    // cards inside `.expandable-cards-wrapper`, which tend to have shorter copy,
+    // looked narrower than standalone cards). `flex: 1` + `width: 100%` makes the
+    // visible card fill its cell horizontally, so every card is exactly as wide
+    // as its grid track regardless of text length.
+    flex: 1;
+    width: 100%;
     // `min-height` (not a fixed `height`) so a card whose title wraps to two
     // lines can grow to fit its clamped description instead of clipping the
     // last line mid-text. `height: 100%` makes the visible card fill its

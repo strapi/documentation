@@ -48,9 +48,17 @@ export default function Responses({ children }) {
     (c) => isValidElement(c) && c.type === ResponseTab,
   );
 
-  // Single response: no tabs needed, just render it.
+  // Single response: no tabs needed. Wrap the status header + code in a bordered
+  // box that mirrors the multi-status <Tabs> container (same border, radius and
+  // insets), minus the tab bar — so a lone 200 response reads as the same
+  // "content" block as a multi-status one. See `.responses--single` in
+  // api-reference.module.scss.
   if (items.length <= 1) {
-    return <div className={styles.responses}>{items}</div>;
+    return (
+      <div className={clsx(styles.responses, styles['responses--single'])}>
+        {items}
+      </div>
+    );
   }
 
   return (
@@ -58,8 +66,14 @@ export default function Responses({ children }) {
       <Tabs>
         {items.map((item, i) => {
           const status = Number(item.props.status);
+          const statusText = item.props.statusText || '';
+          // The tab value must be unique: several responses can share a status
+          // code (e.g. two 200s distinguished by statusText), so the index keeps
+          // it unique. The label shows the status and, when present, the
+          // statusText, so same-status tabs stay distinguishable.
+          const label = statusText ? `${status} ${statusText}` : String(status);
           return (
-            <TabItem key={i} value={String(status)} label={String(status)}>
+            <TabItem key={i} value={`${status}-${i}`} label={label}>
               {item}
             </TabItem>
           );

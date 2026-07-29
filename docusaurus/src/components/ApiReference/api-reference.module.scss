@@ -731,6 +731,50 @@
   margin-top: 4px;
 }
 
+// Single-status response: no <Tabs>, so there's no container border around the
+// block. Draw ONE bordered box around the status header + code — the "● 200 OK"
+// and the JSON share a single outer border, and the inner CodeBlock's own border
+// is stripped so it blends into the box (no nested double border). Border
+// color/radius mirror `.tabs-container` in api-endpoint blocks (tabs.scss); the
+// inner padding mirrors that container's tabpanel: 21px top/bottom and a 38px
+// left inset so the header and the JSON `{` line up like the tabbed case.
+.responses--single {
+  border: solid 1px var(--custom-code-block-border-color);
+  border-radius: var(--strapi-radius-md, 10px);
+  padding: 21px 20px 21px 38px;
+  // Neutralize the flush single-status inset from the `.responses >
+  // .responseHeader` rule above: inside the box the header aligns via this
+  // container's own 38px left padding. Compound `&.responses--single` so this
+  // wins on specificity over that equal-specificity sibling rule regardless of
+  // source order.
+  &.responses > .responseHeader {
+    padding-left: 0;
+  }
+
+  // Strip the inner CodeBlock's own border, radius and hover-border so it melts
+  // into the single outer box instead of stacking a second nested border.
+  // `:global` because .theme-code-block is a Docusaurus (non-module) class name.
+  :global(.theme-code-block) {
+    border: none !important;
+    border-radius: 0 !important;
+    // Drop the code block's own bottom margin: it stacked on top of the box's
+    // 21px bottom padding, leaving a double gap below the code.
+    margin-bottom: 0 !important;
+
+    &:hover {
+      border-color: transparent !important;
+    }
+  }
+
+  // The inner CodeBlock carries its own 24px padding (code-block.scss). Zero its
+  // LEFT padding so the JSON `{` inherits the box's 38px inset and lines up with
+  // the "● 200 OK" header — same neutralization the tabbed case does in
+  // tabs.scss. `:global` because these are Docusaurus (non-module) class names.
+  :global([class*='codeBlockContainer']):not(:has(:global([class*='codeBlockTitle']))) {
+    padding-left: 0 !important;
+  }
+}
+
 .responseHeader {
   display: flex;
   align-items: center;

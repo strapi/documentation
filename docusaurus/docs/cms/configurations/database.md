@@ -335,6 +335,97 @@ await pluginStore.set({
 });
 ```
 
+## Dynamic database credentials
+
+Some cloud providers issue short-lived database credentials that expire after a fixed period. For example, AWS RDS IAM tokens are valid for 15 minutes; GCP Cloud SQL IAM tokens expire similarly; HashiCorp Vault can rotate secrets on a schedule. Using a static password in `.env` causes intermittent connection failures when the connection pool recycles idle connections after the token has expired.
+
+Strapi supports dynamic credentials through Knex's connection function pattern. Instead of a plain connection object, you can pass a synchronous or asynchronous function to `connection.connection`. Knex calls this function whenever it needs to open a new database connection, ensuring the pool always receives fresh credentials. This pattern works for PostgreSQL and MySQL/MariaDB. TypeScript types officially accept sync and async functions for `connection.connection` as of Strapi v5.50.3.
+
+:::tip
+Include an `expirationChecker` property in the object returned by your function. Knex calls this before reusing a connection from the pool; if it returns `true`, Knex discards the existing connection and calls your function again to obtain fresh credentials.
+:::
+
+### MySQL/MariaDB with AWS RDS IAM authentication
+
+The following example mints a fresh IAM auth token from the AWS SDK each time the pool opens a new MySQL connection. For a PostgreSQL equivalent, see the [PostgreSQL + AWS RDS IAM authentication example](#configuration-examples) in the configuration examples above.
+
+<Tabs groupId="js-ts">
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/database.js"
+const { Signer } = require('@aws-sdk/rds-signer');
+
+module.exports = ({ env }) => {
+  const signer = new Signer({
+    hostname: env('DATABASE_HOST', '127.0.0.1'),
+    port: env.int('DATABASE_PORT', 3306),
+    username: env('DATABASE_USERNAME', 'strapi'),
+  });
+
+  return {
+    connection: {
+      client: 'mysql',
+      connection: async () => {
+        const token = await signer.getAuthToken();
+        const expiresAt = Date.now() + 15 * 60 * 1000;
+
+        return {
+          host: env('DATABASE_HOST', '127.0.0.1'),
+          port: env.int('DATABASE_PORT', 3306),
+          database: env('DATABASE_NAME', 'strapi'),
+          user: env('DATABASE_USERNAME', 'strapi'),
+          password: token,
+          ssl: true,
+          expirationChecker: () => expiresAt - Date.now() <= 5 * 60 * 1000,
+        };
+      },
+    },
+  };
+};
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/database.ts"
+import { Signer } from '@aws-sdk/rds-signer';
+
+export default ({ env }) => {
+  const signer = new Signer({
+    hostname: env('DATABASE_HOST', '127.0.0.1'),
+    port: env.int('DATABASE_PORT', 3306),
+    username: env('DATABASE_USERNAME', 'strapi'),
+  });
+
+  return {
+    connection: {
+      client: 'mysql',
+      connection: async () => {
+        const token = await signer.getAuthToken();
+        const expiresAt = Date.now() + 15 * 60 * 1000;
+
+        return {
+          host: env('DATABASE_HOST', '127.0.0.1'),
+          port: env.int('DATABASE_PORT', 3306),
+          database: env('DATABASE_NAME', 'strapi'),
+          user: env('DATABASE_USERNAME', 'strapi'),
+          password: token,
+          ssl: true,
+          expirationChecker: () => expiresAt - Date.now() <= 5 * 60 * 1000,
+        };
+      },
+    },
+  };
+};
+```
+
+</TabItem>
+</Tabs>
+
+:::note
+AWS RDS IAM authentication requires SSL and IAM database authentication to be enabled on the RDS instance. Refer to the <ExternalLink to="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html" text="AWS documentation"/> for the required certificate bundle and setup instructions.
+:::
+
 ## Environment variables in database configurations
 
 Strapi version `v4.6.2` and higher includes the database configuration options in the `./config/database.js` or `./config/database.ts` file. When a new project is created the environment variable `DATABASE_CLIENT` with the value `mysql`, `postgres`, or `sqlite` is automatically added to the `.env` file depending on which database you choose during project creation. Additionally, all of the environment variables necessary to connect to your local development database are also added to the `.env` file.  The following is an example of the generated configuration file:

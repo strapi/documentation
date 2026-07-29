@@ -2,9 +2,9 @@
 title: Data export
 description: Export data using the Strapi CLI
 displayed_sidebar: cmsSidebar
-canonicalUrl: https://docs.strapi.io/cms/data-management/export.html
-pagination_prev: cms/data-management/import
-pagination_next: cms/data-management/transfer
+canonicalUrl: https://docs.strapi.io/cms/features/data-management/export.html
+pagination_prev: cms/features/data-management/import
+pagination_next: cms/features/data-management/transfer
 tags:
 - configure data encryption
 - data management system
@@ -306,6 +306,80 @@ yarn strapi export --exclude files,content
 
 ```bash
 npm run strapi export -- --exclude files,content
+```
+
+</TabItem>
+
+</Tabs>
+
+## Filter content types during export
+
+<VersionBadge version="5.50.3" />
+
+The `--exclude-content-types` and `--only-content-types` options let you scope an export to specific content types. Both options accept a comma-separated list of content-type UIDs (for example, `api::article.article`). Unknown UIDs are validated against the Strapi schema at startup. Both entity records and any relation links touching an excluded type are skipped automatically.
+
+### Exclude specific content types
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi export --exclude-content-types api::article.article
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi export -- --exclude-content-types api::article.article
+```
+
+</TabItem>
+
+</Tabs>
+
+### Export only specific content types
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi export --only-content-types api::article.article,api::category.category
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi export -- --only-content-types api::article.article,api::category.category
+```
+
+</TabItem>
+
+</Tabs>
+
+### Exclude the entire media library
+
+To exclude both the upload binaries and the upload content type records, pass `media-library` to the `--exclude` flag. This is equivalent to combining `--exclude files` with `--exclude-content-types plugin::upload.file,plugin::upload.folder`:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi export --no-encrypt --exclude media-library
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi export -- --no-encrypt --exclude media-library
 ```
 
 </TabItem>
