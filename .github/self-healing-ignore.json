@@ -914,6 +914,21 @@
       "number": 27139,
       "reason": "Router: Internal admin UI accessibility improvements (radio roles, aria attributes) in the upload component. No public-facing behavior or API changes require documentation updates.",
       "added": "2026-07-29"
+    },
+    {
+      "number": 27143,
+      "reason": "Triage: Internal performance optimization; behavior and responses are byte-identical",
+      "added": "2026-07-31"
+    },
+    {
+      "number": 27172,
+      "reason": "Router: Internal admin implementation fix for validation message formatting. No public API or feature changes that require user-facing documentation.",
+      "added": "2026-07-31"
+    },
+    {
+      "number": 26476,
+      "reason": "Router: Bug fix that corrects operator behavior. The change makes $eqi/$nei use true equality instead of LIKE pattern matching, which is a correctness fix rather than a new feature requiring documentation.",
+      "added": "2026-07-31"
     }
   ]
 }
