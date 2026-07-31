@@ -833,6 +833,56 @@ Deleting a folder can be done either from the list of folders of the Media Libra
 A single folder can also be deleted when editing it: hover the folder, click on its edit icon <Icon name="pencil-simple" />, and in the window that pops up, click the **Delete folder** button and confirm the deletion.
 :::
 
+### Filtering assets
+
+<FeatureFlagBadge feature="UNSTABLE_MEDIA_LIBRARY" />
+
+<!-- unverified: feature is part of the experimental upload package (future flag) — derived from strapi/strapi#27124 -->
+
+The Media Library toolbar includes a **Filter** button to narrow the asset list by type or date. 3 filter fields are available:
+
+| Filter field | Options |
+|---|---|
+| **Type** | Folder, Picture, Audio, Video, Document |
+| **Creation date** | Relative presets (1 day to 1 year ago), or a custom date range |
+| **Last modified** | Relative presets (1 day to 1 year ago) |
+
+Applied filters appear as badges under the toolbar. Each badge displays the field name, condition, and value. Click a condition or value segment on a badge to open a popover and edit it in place. Click the remove button on a badge to remove that filter.
+
+Multiple filters combine with AND logic. If no assets match all active filters, the Media Library shows a "No items matched current filters" state with a **Clear filters** button.
+
+Filter state is stored in the URL. Filters are preserved on page reload and when sharing a URL. Relative date presets (for example, "within the last 1 week") resolve against the time the URL is opened.
+
+<!-- unverified: exact URL filter format and empty state text — derived from strapi/strapi#27124 description -->
+
+To filter the asset list:
+
+1. Click the **Filter** button in the Media Library toolbar.
+2. Select a filter field: **Type**, **Creation date**, or **Last modified**.
+3. Select a condition and a value. The badge appears under the toolbar and the asset list updates.
+4. To remove a filter, click the remove button on its badge.
+5. To remove all filters at once, click **Clear filters**.
+
+#### Filter conditions
+
+| Field | Condition | Description |
+|---|---|---|
+| **Type** | `is` | Show only the selected types |
+| **Type** | `is not` | Exclude the selected types |
+| **Creation date / Last modified** | `is exactly` | Match a specific calendar day |
+| **Creation date / Last modified** | `within the last` | Match assets from a past date until now |
+| **Creation date / Last modified** | `not within the last` | Match assets older than a past date |
+| **Creation date** (range) | `is` | Match a specific date range (inclusive) |
+| **Creation date** (range) | `is not` | Exclude a specific date range |
+
+#### Folder behavior with type filters
+
+When a **Type** filter is active:
+- Selecting any type other than **Folder** hides the folders section.
+- Selecting **Folder** shows only folders and hides all assets.
+
+Date filters apply to both the asset list and the folders query.
+
 ### Usage with the REST API
 
 The Media Library feature has some endpoints that can accessed through Strapi's REST API:
