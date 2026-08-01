@@ -929,6 +929,26 @@
       "number": 26476,
       "reason": "Router: Bug fix that corrects operator behavior. The change makes $eqi/$nei use true equality instead of LIKE pattern matching, which is a correctness fix rather than a new feature requiring documentation.",
       "added": "2026-07-31"
+    },
+    {
+      "number": 27176,
+      "reason": "Triage: internal optimization — memory performance improvement, no behavior change to the user's upload workflow or API",
+      "added": "2026-08-01"
+    },
+    {
+      "number": 27135,
+      "reason": "Router: Bug fix for relation ordering in dynamic-zone components. Internal behavior fix - the documented user-facing behavior remains the same, just now works correctly.",
+      "added": "2026-08-01"
+    },
+    {
+      "number": 27132,
+      "reason": "Router: Bug fix for pagination utility. This is a regression fix where documented default pageSize was being ignored - the fix restores intended behavior rather than introducing new documentation needs.",
+      "added": "2026-08-01"
+    },
+    {
+      "number": 27081,
+      "reason": "Router: Bug fix for relation creation modal. Fixes a regression where unsaved parent form changes were lost - internal behavior fix with no new user-facing features.",
+      "added": "2026-08-01"
     }
   ]
 }
