@@ -104,6 +104,10 @@ Since publishing an entry with a release means turning a draft entry into a publ
 - Adding content to a release requires the appropriate permissions for the Content-Releases plugin (see [configuring administrator roles](/cms/features/users-permissions)).
 :::
 
+:::caution
+A release stores a reference to an entry, not a copy of its content. If the draft is edited after being added to a release, the release will publish the latest saved version of the draft, not the version that existed when the entry was added. A release cannot be pinned to a specific version of an entry. To publish an earlier version, restore it as the draft using [Content History](/cms/features/content-history) before the release is published.
+:::
+
 #### One entry at a time
 
 **Path:** Edit view of the <Icon name="feather" /> Content Manager
