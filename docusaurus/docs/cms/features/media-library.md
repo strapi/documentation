@@ -115,6 +115,7 @@ When using the default upload provider, the following specific configuration opt
 | `sharp`             | Configures <ExternalLink to="https://sharp.pixelplumbing.com/" text="sharp"/> image processing options (see [sharp configuration](#sharp-configuration)) | Object | `{ cache: false, concurrency: 1 }` |
 | `security`             | Configures validation rules for uploaded files to enhance media security | Object | - |
 | `concurrentUploadSize` | Maximum number of files processed in parallel during a bulk upload. Increase for faster bulk uploads at the cost of higher memory usage. Must be an integer >= 1. | Integer | `1` |
+| `concurrentUploadRequests` | Maximum number of files uploaded in parallel from the client during a bulk upload (see [concurrent file uploads](#concurrent-file-uploads)). Must be an integer >= 1. | Integer | `1` |
 
 :::note
 The Upload request timeout is defined in the server options, not in the Upload plugin options, as it's not specific to the Upload plugin but is applied to the whole Strapi server instance (see [upload request timeout](#upload-request-timeout)).
@@ -546,6 +547,60 @@ export default ({ env }) => ({
         cache: true,
         concurrency: 4,
       },
+    },
+  },
+});
+```
+
+</TabItem>
+
+</Tabs>
+
+#### Concurrent file uploads {#concurrent-file-uploads}
+
+The `concurrentUploadRequests` option controls how many files the Media Library client uploads to the server simultaneously during a bulk upload. By default, files upload one at a time.
+
+When set to a value greater than 1, a new file upload begins as soon as a previous one completes, maintaining the configured number of concurrent uploads throughout the batch.
+
+| Parameter | Description | Type | Default |
+| --------- | ----------- | ---- | ------- |
+| `concurrentUploadRequests` | Number of files uploaded in parallel. Must be an integer >= 1. | Integer | `1` |
+
+:::note
+`concurrentUploadRequests` controls client-side upload parallelism and is separate from `concurrentUploadSize`, which controls how many uploaded files the server processes in parallel.
+:::
+
+:::caution
+Setting `concurrentUploadRequests` to `0` prevents the server from starting. If the value is absent or invalid, Strapi uploads files sequentially.
+:::
+
+<!-- source: PR strapi/strapi#27173 test instructions (examples/getstarted/config/plugins.js) -->
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  upload: {
+    config: {
+      // highlight-next-line
+      concurrentUploadRequests: 4,
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+<!-- unverified: TypeScript variant inferred from JavaScript example in PR strapi/strapi#27173 -->
+```ts title="/config/plugins.ts"
+export default ({ env }) => ({
+  upload: {
+    config: {
+      // highlight-next-line
+      concurrentUploadRequests: 4,
     },
   },
 });
