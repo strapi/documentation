@@ -102,14 +102,20 @@
   }
 
   &--note {
-    --custom-admonition-background-color: var(--strapi-primary-100);
+    --custom-admonition-background-color: rgba(240, 240, 255, 0.6); // primary-100 @ 60%
     --custom-admonition-border-color: var(--strapi-primary-200);
-    --custom-admonition-code-background-color: var(--strapi-primary-200);
+    --custom-admonition-code-background-color: var(--strapi-primary-100);
     --custom-admonition-code-color: var(--strapi-primary-600);
     --custom-admonition-heading-color: var(--strapi-primary-600);
 
     --custom-selection-background-color: var(--strapi-primary-700);
     --custom-selection-color: var(--strapi-secondary-100);
+
+    h1, h2, h3, li, p, table {
+      code, a code {
+        --custom-code-border-color: var(--strapi-primary-200);
+      }
+    }
   }
 
   &--tip,
@@ -223,8 +229,11 @@
     }
 
     &--note {
-      --custom-admonition-code-color: var(--strapi-secondary-500);
-      --custom-admonition-heading-color: var(--strapi-secondary-500);
+      --custom-admonition-background-color: rgba(39, 31, 224, 0.06); // primary-700 @ 6%
+      --custom-admonition-border-color: rgba(123, 121, 255, 0.12); // primary-500 @ 12%
+      --custom-admonition-code-background-color: rgba(123, 121, 255, 0.06); // primary-500 @ 6%
+      --custom-admonition-code-color: var(--strapi-primary-500);
+      --custom-admonition-heading-color: var(--strapi-primary-500);
     }
 
     &--tip,
@@ -266,6 +275,17 @@
       --custom-code-border-color: transparent;
       --custom-code-background-color: var(--custom-admonition-code-background-color);
       --custom-code-color: var(--custom-admonition-code-color);
+    }
+
+    // code.scss's dark-mode `pre code, code` rule forces a grey
+    // `neutral-600` border via `!important`, which otherwise beats every
+    // declaration above regardless of specificity/order. Match it with
+    // `!important` here, on a more specific selector, to actually apply
+    // this admonition's own border color to its inline code.
+    &--note {
+      code, a code {
+        --custom-code-border-color: rgba(123, 121, 255, 0.2) !important; // primary-500 @ 20%
+      }
     }
 
     .strapi-iqb {

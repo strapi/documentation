@@ -54,6 +54,10 @@ pre {
 h1, h2, h3, li, p, table {
   code {
     background-color: var(--custom-code-background-color);
+    // Infima's base `code` rule sets `border: 0.1rem solid ...` (1.6px at
+    // the default 16px root font size); override the width so inline code
+    // matches the 1px admonition border.
+    border-width: 1px;
     border-color: var(--custom-code-border-color);
     color: var(--custom-code-color);
     padding: 2px 4px;
@@ -64,7 +68,24 @@ h1, h2, h3, li, p, table {
     --custom-code-border-color: var(--strapi-primary-200);
     --custom-code-color: var(--ifm-link-color);
 
-    font-weight: var(--ifm-font-weight-bold);
+    font-weight: 400;
+
+    // Flags the inline code itself as a link. Uses the Phosphor "link"
+    // glyph directly (font already loaded site-wide) rather than the
+    // <Icon> component, since this needs to apply to every `a code`
+    // occurrence in existing content, not just newly authored pages.
+    // Inherits `color` from the code element, so it matches automatically
+    // in every admonition variant and in both light/dark mode.
+    &::before {
+      content: "\e2e2";
+      font-family: "Phosphor-Bold";
+      font-weight: normal;
+      margin-right: 4px;
+      // Nudges the glyph down without affecting layout: relative offsets
+      // don't take up space, so the code box's height stays unchanged.
+      position: relative;
+      top: 1px;
+    }
   }
 }
 
