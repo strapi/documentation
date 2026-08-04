@@ -949,6 +949,21 @@
       "number": 27081,
       "reason": "Router: Bug fix for relation creation modal. Fixes a regression where unsaved parent form changes were lost - internal behavior fix with no new user-facing features.",
       "added": "2026-08-01"
+    },
+    {
+      "number": 27203,
+      "reason": "Triage: Build configuration fix, no user-facing changes",
+      "added": "2026-08-04"
+    },
+    {
+      "number": 27144,
+      "reason": "Triage: Performance optimization with no behavior change, same output produced",
+      "added": "2026-08-04"
+    },
+    {
+      "number": 27174,
+      "reason": "Router: Internal admin UI bug fixes for Media Library (cursor jumping, touch interactions, mobile layout, permission reflection). These are UX improvements that don't change user-facing APIs or capabilities that require documentation updates. The Media Library feature is already documented.",
+      "added": "2026-08-04"
     }
   ]
 }
