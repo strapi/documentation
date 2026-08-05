@@ -964,6 +964,11 @@
       "number": 27174,
       "reason": "Router: Internal admin UI bug fixes for Media Library (cursor jumping, touch interactions, mobile layout, permission reflection). These are UX improvements that don't change user-facing APIs or capabilities that require documentation updates. The Media Library feature is already documented.",
       "added": "2026-08-04"
+    },
+    {
+      "number": 27226,
+      "reason": "Router: Internal admin UI bug fix. Fixes broken behavior in conditional visibility on bidirectional relations, but doesn't introduce new user-facing functionality or API changes that require documentation updates.",
+      "added": "2026-08-05"
     }
   ]
 }
