@@ -969,6 +969,41 @@
       "number": 27226,
       "reason": "Router: Internal admin UI bug fix. Fixes broken behavior in conditional visibility on bidirectional relations, but doesn't introduce new user-facing functionality or API changes that require documentation updates.",
       "added": "2026-08-05"
+    },
+    {
+      "number": 27236,
+      "reason": "Triage: internal query logic bug fix, no user-facing behavior change",
+      "added": "2026-08-06"
+    },
+    {
+      "number": 27140,
+      "reason": "Triage: internal performance optimization, no behavior change",
+      "added": "2026-08-06"
+    },
+    {
+      "number": 27231,
+      "reason": "Router: Internal bug fix to media library caching/invalidation. The new Media Library is still behind UNSTABLE_MEDIA_LIBRARY flag (not a user-facing release feature yet). Fixes stale folder counts internally without changing user-facing API.",
+      "added": "2026-08-06"
+    },
+    {
+      "number": 27228,
+      "reason": "Router: Internal bug fix for private-ACL S3 signed URLs in experimental media library. Only affects unreleased UNSTABLE_MEDIA_LIBRARY feature. No changes to public APIs or documented configuration.",
+      "added": "2026-08-06"
+    },
+    {
+      "number": 27222,
+      "reason": "Router: Internal admin panel bug fix. Fixes form state validation behavior in Content-Type Builder UI. No changes to user-facing APIs, content management, or configuration.",
+      "added": "2026-08-06"
+    },
+    {
+      "number": 27217,
+      "reason": "Router: Internal bundle deduplication fix to address dependency management issue. Does not change user-facing functionality or APIs. Purely an internal build/bundling concern.",
+      "added": "2026-08-06"
+    },
+    {
+      "number": 27171,
+      "reason": "Router: Internal fix for experimental media library (CMS-1535). Feature remains behind UNSTABLE_MEDIA_LIBRARY flag. No changes to stable, released features or documented behavior.",
+      "added": "2026-08-06"
     }
   ]
 }
