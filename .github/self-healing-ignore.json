@@ -1004,6 +1004,16 @@
       "number": 27171,
       "reason": "Router: Internal fix for experimental media library (CMS-1535). Feature remains behind UNSTABLE_MEDIA_LIBRARY flag. No changes to stable, released features or documented behavior.",
       "added": "2026-08-06"
+    },
+    {
+      "number": 27261,
+      "reason": "Router: Release chore PR with 47 changed files (version bumps, changelog, build artifacts). No user-facing API or behavior changes requiring documentation.",
+      "added": "2026-08-07"
+    },
+    {
+      "number": 27259,
+      "reason": "Router: Bug fix in Media Library asset details drawer (2 files changed). Fixes internal React state issue where delete/replace actions targeted wrong asset. The documented behavior (act on the shown asset) remains unchanged; this fix makes implementation match documentation. No doc updates needed.",
+      "added": "2026-08-07"
     }
   ]
 }
