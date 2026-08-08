@@ -1014,6 +1014,31 @@
       "number": 27259,
       "reason": "Router: Bug fix in Media Library asset details drawer (2 files changed). Fixes internal React state issue where delete/replace actions targeted wrong asset. The documented behavior (act on the shown asset) remains unchanged; this fix makes implementation match documentation. No doc updates needed.",
       "added": "2026-08-07"
+    },
+    {
+      "number": 27264,
+      "reason": "Triage: internal build optimization",
+      "added": "2026-08-08"
+    },
+    {
+      "number": 27234,
+      "reason": "Triage: internal performance optimization",
+      "added": "2026-08-08"
+    },
+    {
+      "number": 27145,
+      "reason": "Triage: internal performance optimization",
+      "added": "2026-08-08"
+    },
+    {
+      "number": 27230,
+      "reason": "Router: Internal bug fix for Media Library infinite scroll. Fixes loading behavior but does not introduce new user-facing functionality or change existing documented behavior.",
+      "added": "2026-08-08"
+    },
+    {
+      "number": 27188,
+      "reason": "Router: Internal bug fix in admin Filters component. Fixes behavior in Audit Logs, Content Manager, and Admin Users but does not introduce new functionality or change documented APIs.",
+      "added": "2026-08-08"
     }
   ]
 }
