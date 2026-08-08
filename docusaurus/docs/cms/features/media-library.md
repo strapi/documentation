@@ -690,6 +690,8 @@ The [Media Library settings](#configuring-settings) also allow generating metada
 
 The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped.
 
+Assets can be managed from the asset details window (by clicking the edit button) or quickly via the asset actions menu by clicking the "..." button next to an asset in the grid or table view.
+
 #### Editing assets
 
 Click on the edit <Icon name="pencil-simple" /> button of an asset to open up the "Details" window, where all the available asset management options are available.
@@ -820,6 +822,8 @@ Once created, a folder can be renamed, moved or deleted.
 1. In the Folders part of the Media library, hover the folder to be edited and click its edit button <Icon name="pencil-simple" />.
 2. In the window that pops up, update the name and location with the _Name_ field and _Location_ drop-down list, respectively.
 3. Click **Save**.
+
+Folders can also be quickly renamed from the folder actions menu: click the "..." button next to a folder in the grid or table view, then select "Rename folder" from the menu.
 
 #### Deleting folders
 
