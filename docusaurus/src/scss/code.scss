@@ -99,12 +99,14 @@ h2, h3 {
   }
 }
 
-/** Special styles when using the tag `code` inside a HTML table. */
+/** Special styles when using the tag `code` inside a HTML table.
+ *  Same neutral grey as `info`/`subtle`/`prerequisites` admonitions — one
+ *  grey inline-code, not two different ones. */
 table {
   code {
-    --custom-code-background-color: var(--custom-code-on-table-background-color, var(--strapi-neutral-150));
+    --custom-code-background-color: var(--custom-code-on-table-background-color, var(--strapi-neutral-100));
     --custom-code-border-color: var(--custom-code-on-table-border-color, var(--strapi-neutral-200));
-    --custom-code-color: var(--custom-code-on-table-color, var(--strapi-neutral-800));
+    --custom-code-color: var(--custom-code-on-table-color, var(--strapi-neutral-600));
   }
 }
 
@@ -116,11 +118,22 @@ table {
     --custom-code-color: var(--strapi-neutral-800);
   }
 
+  // Same primary values as the `note` admonition in dark mode — plain
+  // inline code (outside any admonition/table/link) was rendering white.
   pre code,
   code {
-    --custom-code-color: var(--strapi-neutral-1000);
-    --custom-code-background-color: var(--strapi-neutral-150);
-    --custom-code-border-color: var(--strapi-neutral-600) !important;
+    --custom-code-color: var(--strapi-primary-500);
+    --custom-code-background-color: rgba(123, 121, 255, 0.06); // primary-500 @ 6%
+    --custom-code-border-color: rgba(123, 121, 255, 0.2) !important; // primary-500 @ 20%
+  }
+
+  // Same neutral grey as `info`/`subtle`/`prerequisites` admonitions in dark
+  // mode — one grey inline-code, not two. More specific than the `code`
+  // rule above, so it wins despite the `!important` on border-color.
+  table code {
+    --custom-code-color: var(--strapi-neutral-500);
+    --custom-code-background-color: rgba(192, 192, 207, 0.06); // neutral-500 @ 6%
+    --custom-code-border-color: rgba(192, 192, 207, 0.2) !important; // neutral-500 @ 20%
   }
 
   h1, h2, h3, li, p, table {
