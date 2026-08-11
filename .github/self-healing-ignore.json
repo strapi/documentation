@@ -1039,6 +1039,11 @@
       "number": 27188,
       "reason": "Router: Internal bug fix in admin Filters component. Fixes behavior in Audit Logs, Content Manager, and Admin Users but does not introduce new functionality or change documented APIs.",
       "added": "2026-08-08"
+    },
+    {
+      "number": 27282,
+      "reason": "Triage: internal bug fix for permission evaluation crash; no user-facing API, configuration, feature, or CLI changes",
+      "added": "2026-08-11"
     }
   ]
 }
