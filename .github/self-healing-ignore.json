@@ -1044,6 +1044,26 @@
       "number": 27282,
       "reason": "Triage: internal bug fix for permission evaluation crash; no user-facing API, configuration, feature, or CLI changes",
       "added": "2026-08-11"
+    },
+    {
+      "number": 27334,
+      "reason": "Router: UI bug fix to sidebar layout (folder names truncation). Internal implementation detail, no user-facing documentation needed.",
+      "added": "2026-08-12"
+    },
+    {
+      "number": 27328,
+      "reason": "Router: Internal RBAC logic fix. Resolves a bug in permission condition evaluation without changing documented behavior or API surface.",
+      "added": "2026-08-12"
+    },
+    {
+      "number": 27305,
+      "reason": "Router: Internal analytics/tracking implementation. No user-facing functionality or API changes requiring documentation.",
+      "added": "2026-08-12"
+    },
+    {
+      "number": 27280,
+      "reason": "Router: Admin API endpoint renames and reorganization. Admin endpoints are not documented in user-facing Strapi documentation (which focuses on Content API: REST, GraphQL, Document Service). Changes are internal to the admin backend.",
+      "added": "2026-08-12"
     }
   ]
 }
