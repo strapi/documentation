@@ -1064,6 +1064,16 @@
       "number": 27280,
       "reason": "Router: Admin API endpoint renames and reorganization. Admin endpoints are not documented in user-facing Strapi documentation (which focuses on Content API: REST, GraphQL, Document Service). Changes are internal to the admin backend.",
       "added": "2026-08-12"
+    },
+    {
+      "number": 27357,
+      "reason": "Router: Internal implementation fix to MCP tool name generation. Corrects a crash condition when multiple content types exist in the same API. No public API changes or new user-facing features. The fix improves internal robustness without changing documented behavior of the MCP server feature.",
+      "added": "2026-08-15"
+    },
+    {
+      "number": 27340,
+      "reason": "Router: UX bug fix to Media Library tooltip display. Fixes tooltip appearance when folder/asset names are truncated. No new features added, no documented behavior changed. Improves existing documented feature without requiring documentation updates.",
+      "added": "2026-08-15"
     }
   ]
 }
