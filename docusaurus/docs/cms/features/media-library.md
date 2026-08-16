@@ -612,19 +612,34 @@ When active, filters are displayed next to the !<Icon name="funnel-simple" class
 :::
 -->
 
-<!--
 ### Sorting assets
 
-<ThemedImage
-  alt="Sort"
-  sources={{
-    light: '/img/assets/media-library/media-library_sort.png',
-    dark: '/img/assets/media-library/media-library_sort_DARK.png',
-  }}
-/>
+:::note
+This sorting feature is part of the future Media Library. To use it, run Strapi with `UNSTABLE_MEDIA_LIBRARY=true` and navigate to `/admin/plugins/unstable-upload`.
+:::
 
-Just above the list of folders and assets and next to the !<Icon name="funnel-simple" classes="ph-bold" /> **Filters** button, on the left side of the interface, a drop-down button is displayed. It allows to sort the assets by upload date, alphabetical order or date of update. Click on the drop-down button and select an option in the list to automatically display the sorted assets.
--->
+<!-- source: strapi/strapi#27105 — PR description and test steps -->
+
+The **Sort** button in the toolbar opens a dropdown with 3 mutually exclusive option groups. Exactly 1 option per group is active at a time, indicated by a checkmark. Clicking the active option resets it to that group's default. The dropdown stays open while you pick options.
+
+| Group | Options |
+|-------|---------|
+| **Sort by** | Oldest uploads · Most recent updates *(default)* |
+| **Sort direction** | A to Z · Z to A · File size increasingly · File size decreasingly |
+| **Folders** | On top *(default)* · Mixed with files |
+
+:::note
+The **Folders** group only appears in the table view. In the grid view, folders always display in a full-width band at the top and this group is hidden.
+:::
+
+The active sort is encoded in the URL (`?sort=<rule>` and `?folders=mixed`). This makes sort state shareable and preserved on page refresh and browser navigation. Changing the sort resets infinite scroll and clears the current bulk selection.
+
+When **Mixed with files** is active (table view), folders are interleaved with assets according to the active sort order. For size-based rules, folders sort as size 0. Folders that may still be preceded by not-yet-loaded assets remain deferred until their page loads.
+
+The future Media Library also includes these interface changes:
+
+- The view toggle between list and grid uses a redesigned appearance: a grey track with a white active segment.
+- Asset selection is checkbox-only. Clicking an asset row or card opens the asset details panel. To select assets for bulk actions, use the checkbox on the asset.
 
 ### Adding assets
 
