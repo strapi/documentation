@@ -688,7 +688,7 @@ The [Media Library settings](#configuring-settings) also allow generating metada
 
 ### Managing individual assets {#managing-assets}
 
-The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped.
+The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped and given a focal point to control how they are displayed when resized in different contexts.
 
 #### Editing assets
 
@@ -742,6 +742,38 @@ To add a focal point to an image:
 4. Click the check <Icon name="check" classes="ph-bold" /> button to validate the new focal point. Alternatively, click the cancel <Icon name="x" classes="ph-bold" /> button to abandon changes and exit focal point mode.
 5. Click the reset <Icon name="arrows-counter-clockwise" classes="ph-bold" /> button to reset the focal point to the center of the image.
 6. Click **Finish** to save changes to the file.
+
+#### Enhanced crop and focal-point editor
+
+:::note
+The enhanced crop and focal-point editor is available in the future (unstable) version of the Media Library. To enable it, start your Strapi project with the `UNSTABLE_MEDIA_LIBRARY=true` environment variable:
+
+```bash
+UNSTABLE_MEDIA_LIBRARY=true yarn develop
+```
+
+The stable Media Library crop and focal-point workflows are documented in [Cropping images](#cropping-images) and [Adding a focal point](#adding-a-focal-point).
+:::
+
+When the future Media Library is enabled, clicking **Crop** on an image asset opens a full-screen editor with the following controls:
+
+- A drag-resizable crop rectangle with corner and edge handles.
+- A draggable focal-point handle to set the area of interest.
+- Numeric **Width** and **Height** inputs to enter exact dimensions.
+- An aspect-ratio lock toggle to constrain proportions while resizing.
+
+To crop an image using the enhanced editor:
+
+1. Open an image asset in the Media Library.
+2. In the asset details drawer, click **Crop**.
+3. Adjust the crop rectangle by dragging the handles or entering values in the **Width** and **Height** fields.
+4. Drag the focal-point handle to the area of interest within the crop.
+5. Toggle the aspect-ratio lock icon to constrain or release the crop proportions.
+6. Choose how to save the result:
+   - Click **Apply** to replace the original asset with the cropped version.
+   - Click **Save as copy** to upload a new asset containing only the cropped region, leaving the original untouched.
+
+A confirmation toast appears when the operation completes: _File cropped._ for **Apply**, or _Copy created._ for **Save as copy**.
 
 #### Deleting assets
 
