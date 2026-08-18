@@ -1074,6 +1074,16 @@
       "number": 27340,
       "reason": "Router: UX bug fix to Media Library tooltip display. Fixes tooltip appearance when folder/asset names are truncated. No new features added, no documented behavior changed. Improves existing documented feature without requiring documentation updates.",
       "added": "2026-08-15"
+    },
+    {
+      "number": 26900,
+      "reason": "Router: Internal content-manager error handling fix. The PR fixes the countDraftRelations endpoint to return zero counts instead of throwing an error when a locale version doesn't exist. This is an implementation detail that improves the admin panel's error handling when switching locales—no new API, feature, or user-visible behavior change that requires documentation.",
+      "added": "2026-08-18"
+    },
+    {
+      "number": 25106,
+      "reason": "Router: Internal users-permissions bug fix. The PR aligns cookie options when clearing httpOnly refresh tokens on logout to match options used during login. This fixes a scenario where cookies with custom path/domain weren't being cleared—but the token was already being invalidated server-side. This is an implementation detail, not a new API or feature requiring documentation.",
+      "added": "2026-08-18"
     }
   ]
 }
