@@ -833,6 +833,21 @@ Deleting a folder can be done either from the list of folders of the Media Libra
 A single folder can also be deleted when editing it: hover the folder, click on its edit icon <Icon name="pencil-simple" />, and in the window that pops up, click the **Delete folder** button and confirm the deletion.
 :::
 
+### Empty state
+
+:::note Experimental feature
+The empty state described here is part of an experimental version of the Media Library, available when `UNSTABLE_MEDIA_LIBRARY=true` is set in your environment. This version is accessible at `/admin/plugins/unstable-upload` and is subject to change.
+:::
+
+When the Media Library or a folder contains no assets and no subfolders, an empty state screen replaces the normal asset list. The empty state includes:
+
+- an illustration,
+- a "No assets yet" title,
+- a "Get started by uploading items or creating the folder." description,
+- an **Add assets** button.
+
+Clicking **Add assets** opens the file picker. Drag-and-drop upload also works directly onto the empty state screen. Once assets are uploaded, the normal asset list replaces the empty state.
+
 ### Usage with the REST API
 
 The Media Library feature has some endpoints that can accessed through Strapi's REST API:
