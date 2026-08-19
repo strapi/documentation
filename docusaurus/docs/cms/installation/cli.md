@@ -147,7 +147,7 @@ You will be able to purchase a CMS license later by checking out our <ExternalLi
 You can deploy a project to [Strapi Cloud](/cloud/intro). To host it online, you can choose to:
 
 - host it yourself by pushing the project's code to a repository (e.g., on GitHub) before following the [deployment guide](/cms/deployment),
-- or use the [Cloud CLI](/cloud/cli/cloud-cli) commands to log in to Strapi Cloud, link your local project to an existing Strapi Cloud project, and deploy it there for free.
+- or use the [Cloud CLI](/cloud/cli/cloud-cli) commands to log in to Strapi Cloud, link your local project to an existing Strapi Cloud project, and deploy it there.
 
 If you want to host your project yourself and are not already familiar with GitHub, the following togglable content should get you started👇.
 
