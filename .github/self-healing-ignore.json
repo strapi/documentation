@@ -1084,6 +1084,11 @@
       "number": 25106,
       "reason": "Router: Internal users-permissions bug fix. The PR aligns cookie options when clearing httpOnly refresh tokens on logout to match options used during login. This fixes a scenario where cookies with custom path/domain weren't being cleared—but the token was already being invalidated server-side. This is an implementation detail, not a new API or feature requiring documentation.",
       "added": "2026-08-18"
+    },
+    {
+      "number": 27337,
+      "reason": "Router: Internal dependency fix for monorepo build setup. Fixes a Vite error under pnpm isolated node_modules without changing user-facing features, APIs, or documented behavior. No user-facing documentation updates required.",
+      "added": "2026-08-19"
     }
   ]
 }
