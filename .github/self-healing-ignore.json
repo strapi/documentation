@@ -1089,6 +1089,21 @@
       "number": 27337,
       "reason": "Router: Internal dependency fix for monorepo build setup. Fixes a Vite error under pnpm isolated node_modules without changing user-facing features, APIs, or documented behavior. No user-facing documentation updates required.",
       "added": "2026-08-19"
+    },
+    {
+      "number": 27413,
+      "reason": "Router: Internal admin panel bug fix (cross-origin fetch credentials). No new user-facing features or API changes. Bug fix does not require user documentation.",
+      "added": "2026-08-20"
+    },
+    {
+      "number": 27410,
+      "reason": "Router: Bug fix for MySQL sort buffer overflow in Audit Logs. No new functionality. Audit Logs feature page already exists; bug fix itself does not require doc updates.",
+      "added": "2026-08-20"
+    },
+    {
+      "number": 27324,
+      "reason": "Router: Minor logging level change for internal v4→v5 migrations. Not a primary feature or config change that requires documentation. Migration docs already exist.",
+      "added": "2026-08-20"
     }
   ]
 }
