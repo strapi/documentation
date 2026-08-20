@@ -111,5 +111,6 @@ Developers can use the following APIs to interact with future flags:
 
 | Property name | Related feature | Suggested environment variable name |
 | ------------- | --------------- | ---------------------------------- |
+| `betaMediaLibrary` | [Media Library](/cms/features/media-library) — next-generation Media Library | `STRAPI_FUTURE_BETA_MEDIA_LIBRARY` |
 | `experimental_firstPublishedAt` | [Draft & Publish](/cms/features/draft-and-publish#recording-the-first-publication-date) | `STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT` |
 
