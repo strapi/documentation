@@ -686,6 +686,30 @@ The [Media Library settings](#configuring-settings) also allow generating metada
 <StrapiAiCredits />
 :::
 
+##### Monitoring AI metadata status during upload
+
+:::note Future Media Library
+The per-file metadata status display described in this section requires the future (unstable) Media Library. Start your Strapi application with the `UNSTABLE_MEDIA_LIBRARY=true` environment variable to enable it.
+<!-- TODO: Confirm the exact feature flag name with the product team before publication -->
+:::
+
+When the future Media Library is enabled and AI metadata generation is turned on, metadata generation starts automatically after each file finishes uploading. Each row in the upload progress dialog shows the current metadata state for that file.
+
+| Status | Visual indicator | Description |
+|--------|-----------------|-------------|
+| Generating | Sparkle icon with animated progress bar | Metadata generation is in progress for this file |
+| Generated | Green check icon | Metadata was generated |
+| Skipped | Neutral icon | The file type is not supported (non-images such as PDFs return this status) |
+| Failed | Warning icon | Metadata generation encountered an error for this file |
+
+The dialog header shows a "Generating metadata with AI (n%)" line while files in the batch are still in the metadata phase. The percentage only increases and disappears once all files have completed.
+
+:::note
+Metadata generation runs in parallel with ongoing uploads and does not block the dialog. Closing the dialog while generation is running is safe: the request finishes server-side regardless.
+:::
+
+<!-- unverified: status labels (generating/generated/skipped/failed) and icon descriptions are based on PR #27162 description; verify against final implementation -->
+
 ### Managing individual assets {#managing-assets}
 
 The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped.
