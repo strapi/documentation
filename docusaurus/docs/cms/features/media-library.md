@@ -821,6 +821,44 @@ Once created, a folder can be renamed, moved or deleted.
 2. In the window that pops up, update the name and location with the _Name_ field and _Location_ drop-down list, respectively.
 3. Click **Save**.
 
+#### Using the folder actions menu
+
+<!-- TODO: Confirm if this feature requires enabling a future flag and add <FeatureFlagBadge feature="..." /> to the heading if needed -->
+<!-- TODO: Verify the exact Phosphor icon name for the "..." button in the UI -->
+
+<!-- source: strapi/strapi#27175 -->
+Each folder in the Media Library has a <Icon name="dots-three" /> button that opens a context menu. The menu provides 3 actions for that folder: **Copy link to folder**, **Move to folder**, and **Delete folder**.
+
+The context menu is available in both grid and list views. It always acts on the folder from which it was opened, regardless of any current multi-selection.
+
+To copy a folder link:
+
+1. Hover over a folder and click the <Icon name="dots-three" /> button.
+2. Click **Copy link to folder**.
+
+The folder URL is copied to your clipboard.
+
+To move a folder using the context menu:
+
+1. Hover over a folder and click the <Icon name="dots-three" /> button.
+2. Click **Move to folder**.
+3. Select the destination folder from the location list.
+4. Click **Move**.
+
+:::note
+The destination list excludes the folder itself, its subfolders, and its current parent folder.
+:::
+
+To delete a folder using the context menu:
+
+1. Hover over a folder and click the <Icon name="dots-three" /> button.
+2. Click **Delete folder**.
+3. In the confirmation dialog, click **Confirm**.
+
+:::warning
+Deleting a folder also deletes all its subfolders and assets.
+:::
+
 #### Deleting folders
 
 Deleting a folder can be done either from the list of folders of the Media Library, or when editing a single folder.
