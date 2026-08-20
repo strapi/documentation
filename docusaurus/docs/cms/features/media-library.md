@@ -833,6 +833,40 @@ Deleting a folder can be done either from the list of folders of the Media Libra
 A single folder can also be deleted when editing it: hover the folder, click on its edit icon <Icon name="pencil-simple" />, and in the window that pops up, click the **Delete folder** button and confirm the deletion.
 :::
 
+### Searching assets
+
+<FeatureFlagBadge feature="UNSTABLE_MEDIA_LIBRARY" />
+
+<!-- unverified: feature is part of the experimental upload package (future flag) — derived from strapi/strapi#27149 -->
+
+A search bar in the Media Library toolbar lets you find assets and folders across the entire library.
+
+Search is global: results include assets and folders from all library folders, regardless of the currently selected folder. The header displays `Search results for "…" (N items)` while a search is active.
+
+The search term is stored in the URL as the `_q` parameter. Navigating into a folder automatically clears the search.
+
+To search for assets:
+
+1. Click the search bar in the Media Library toolbar.
+2. Type a keyword. Results update after a short delay.
+3. Click **Clear search** to cancel the search.
+
+### Filtering the folder tree
+
+<FeatureFlagBadge feature="UNSTABLE_MEDIA_LIBRARY" />
+
+<!-- unverified: feature is part of the experimental upload package (future flag) — derived from strapi/strapi#27149 -->
+
+A search bar at the top of the folder tree sidebar filters which folders are displayed.
+
+Folder tree filtering is local: it does not affect the asset list and does not update the URL. Ancestor folders expand automatically to show matching results. Clearing the filter restores the folder expansion state from before filtering.
+
+To filter the folder tree:
+
+1. Click the search bar at the top of the folder tree sidebar.
+2. Type a folder name. The tree narrows to show only matching folders and their ancestors.
+3. Remove the text from the search bar to restore the full folder tree.
+
 ### Usage with the REST API
 
 The Media Library feature has some endpoints that can accessed through Strapi's REST API:
