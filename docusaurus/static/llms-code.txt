@@ -21754,6 +21754,8 @@ module.exports = ({ env }) => ({
   port: env.int('PORT', 1337),
   app: {
     keys: env.array('APP_KEYS'),
+    proxyIpHeader: env('PROXY_IP_HEADER', 'X-Forwarded-For'),
+    maxIpsCount: env.int('MAX_IPS_COUNT', 1),
   },
   socket: '/tmp/nginx.socket', // only use if absolutely required
   emitErrors: false,
@@ -21798,6 +21800,8 @@ export default ({ env }) => ({
   port: env.int('PORT', 1337),
   app: {
     keys: env.array('APP_KEYS'),
+    proxyIpHeader: env('PROXY_IP_HEADER', 'X-Forwarded-For'),
+    maxIpsCount: env.int('MAX_IPS_COUNT', 1),
   },
   socket: '/tmp/nginx.socket', // only use if absolutely required
   emitErrors: false,
