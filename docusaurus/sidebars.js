@@ -20,6 +20,15 @@ const sidebars = {
     //   value: '<i class="ph-fill ph-github-logo"></i> <a href="https://strapi.notion.site/Documentation-Contribution-Program-1d08f359807480d480fdde68bb7a5a71?pvs=74">Docs Contribution Program</a>', // The HTML to be rendered
     //   defaultStyle: true, // Use the default menu item styling
     // },
+    { // Design showcase (temporary, for the redesign — remove after)
+      type: 'category',
+      label: 'Design showcase',
+      collapsed: false,
+      items: [
+        'cms/design-showcase/components',
+        'cms/design-showcase/api-components',
+      ],
+    },
     { // Getting Started
       type: 'category',
       label: 'Getting Started',
