@@ -243,8 +243,58 @@ npm run strapi transfer -- --to https://example.com/admin --exclude files
 </Tabs>
 
 :::warning
-Any types excluded from the transfer will be deleted in your destination instance. For example, if you exclude `config` the project configuration in your destination instance will be deleted.
+When using `--exclude` or `--only` to filter which stages (content, files, config) are transferred, the stages you omit will **not be deleted** on the destination instance. Their data is preserved. However, if you transfer a stage without filters, that stage is fully replaced on the destination.
 :::
+
+## Understanding partial transfers and stage filtering
+
+When using `--only` or `--exclude` to transfer specific stages (content, files, config), the behavior differs based on whether you're filtering:
+
+- **Omitted stages are preserved**: When a stage is not transferred (either via `--only content` or `--exclude files`), the destination data for that stage is left untouched.
+- **Transferred stages are replaced**: Any stage you include in the transfer fully replaces the destination data for that stage.
+
+### Common workflows
+
+#### Content refresh while preserving destination config
+
+To refresh only content from a source instance while keeping the destination instance's configuration:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token --only content
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token --only content
+```
+
+</TabItem>
+
+</Tabs>
+
+In this workflow, the destination configuration is preserved while content is updated from the source.
+
+### Stage transfer behavior matrix
+
+| Scenario | Content transferred? | Files transferred? | Config transferred? | Destination untouched |
+|----------|:--------------------:|:------------------:|:-------------------:|:---------------------:|
+| Default `strapi transfer` | ✓ | ✓ | ✓ | None |
+| `--only content` | ✓ | ✗ | ✗ | Files, Config |
+| `--only files` | ✗ | ✓ | ✗ | Content, Config |
+| `--only config` | ✗ | ✗ | ✓ | Content, Files |
+| `--only content,files` | ✓ | ✓ | ✗ | Config |
+| `--exclude content` | ✗ | ✓ | ✓ | Content |
+| `--exclude files` | ✓ | ✗ | ✓ | Files |
+| `--exclude config` | ✓ | ✓ | ✗ | Config |
+
+When a stage is omitted (shown as ✗ in the "transferred" columns or listed under "Destination untouched"), the destination instance retains its existing data for that stage.
 
 ## Filter content types during transfer
 
