@@ -686,6 +686,35 @@ The [Media Library settings](#configuring-settings) also allow generating metada
 <StrapiAiCredits />
 :::
 
+##### Generating AI metadata for selected assets
+
+:::note Future Media Library
+The bulk action for generating AI metadata described in this section requires the future (unstable) Media Library. Start your Strapi application with the `UNSTABLE_MEDIA_LIBRARY=true` environment variable to enable it.
+<!-- TODO: Confirm the exact feature flag name with the product team before publication -->
+:::
+
+When the future Media Library is enabled, you can generate AI metadata for multiple assets at once using the bulk action bar.
+
+To generate metadata for selected assets:
+
+1. In the Media Library, select 1 or more image assets by clicking their checkboxes. The bulk action bar appears at the bottom of the page.
+2. Click **Create metadata** in the bulk action bar. The button shows a loading state and other bulk actions are disabled while the operation runs.
+3. Wait for the operation to complete.
+
+When the operation completes, a toast message reports the outcome:
+
+- **Success:** "Metadata generated for N assets" — all selected images were processed.
+- **Warning:** A breakdown of generated, skipped, and failed counts — results were mixed.
+- **Error:** The AI metadata service is disabled or unavailable.
+
+After the operation, the asset list refreshes automatically and updated alt text and captions are visible in each asset's details.
+
+:::note
+Only images are processed. Folders selected alongside assets are ignored, and the **Create metadata** button is disabled when only folders are selected. Images that already have alt text and captions keep their existing values.
+:::
+
+<!-- unverified: toast message wording and button behavior are based on PR #27153 description; verify against final implementation -->
+
 ### Managing individual assets {#managing-assets}
 
 The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped.
