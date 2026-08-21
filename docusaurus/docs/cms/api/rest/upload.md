@@ -413,7 +413,7 @@ export default {
 
 SVG files are denied despite matching the `image/*` wildcard because SVG can contain browser-active content such as scripts and event handlers. An explicit entry in `deniedTypes` always takes precedence over a wildcard in `allowedTypes`.
 
-This policy applies only to **new projects** created with `create-strapi-app`. Existing projects are not affected unless you add the same configuration manually.
+This policy applies only to new projects created with Strapi <VersionBadge version="5.52.2+" noTooltip />.. Existing projects are not affected unless you add the same configuration manually.
 
 To allow SVG uploads in a new project, remove `image/svg+xml` from the `deniedTypes` array in your `config/plugins.*` file. Be aware of the security implications before doing so.
 
