@@ -1,6 +1,6 @@
 ---
 title: Status
-description: Use Strapi's REST API to work with draft or published versions of your documents.
+description: Use Strapi's REST API to read, create, and update the draft or published versions of your documents.
 sidebarDepth: 3
 sidebar_label:  Status
 next: ./publication-filter.md
@@ -8,11 +8,14 @@ displayed_sidebar: cmsSidebar
 tags:
 - API
 - Content API
+- create
+- Draft & Publish
 - find
 - interactive query builder
 - REST API
 - qs library
 - status
+- update
 ---
 
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
@@ -23,21 +26,31 @@ import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 
 <Tldr>
 
-The REST API's `status` parameter filters documents by their publication state, returning either published versions (default) or drafts by passing `status=draft`.
+The REST API's `status` parameter returns either published versions (default) or drafts by passing `status=draft`.
+
+It also applies to write requests: a `POST` or `PUT` request publishes immediately unless you pass `status=draft`.
 
 </Tldr>
 
 
-The [REST API](/cms/api/rest) offers the ability to filter results based on their status, draft or published.
+The [REST API](/cms/api/rest) offers the ability to work with the draft or the published version of documents through the `status` parameter:
+
+- `published`: targets the published version of documents (default)
+- `draft`: targets the draft version of documents
 
 :::prerequisites
 The [Draft & Publish](/cms/features/draft-and-publish) feature should be enabled.
 :::
 
-Queries can accept a `status` parameter to fetch documents based on their status:
+:::note
+The REST API defaults to `published` for every request, including `POST` and `PUT` requests. This differs from the [Document Service API](/cms/api/document-service/status), which defaults to `draft`.
+:::
 
-- `published`: returns only the published version of documents (default)
-- `draft`: returns only the draft version of documents
+To select documents by how their draft and published versions relate (never-published, modified, and others), see [REST API: `publicationFilter`](/cms/api/rest/publication-filter).
+
+## Read draft or published versions {#read}
+
+Add the `status` parameter to a `GET` request to choose which version is returned.
 
 :::tip
 In the response data, the `publishedAt` field is `null` for drafts.
@@ -46,8 +59,6 @@ In the response data, the `publishedAt` field is `null` for drafts.
 :::note
 Since published versions are returned by default, passing no status parameter is equivalent to passing `status=published`.
 :::
-
-To select documents by how their draft and published versions relate (never-published, modified, and others), see [REST API: `publicationFilter`](/cms/api/rest/publication-filter).
 
 <br /><br />
 
@@ -125,3 +136,212 @@ await request(`/api/articles?${query}`);
 </Responses>
 
 </Endpoint>
+
+## Create or update as a draft or as published {#create-update}
+
+The `status` parameter also applies to `POST` and `PUT` requests, where it determines whether the document is left as a draft or published right away:
+
+| Request | Result |
+|---------|--------|
+| [`POST /api/content-type-plural-name?status=draft`](#create-draft) | Creates a draft document |
+| [`POST /api/content-type-plural-name`](#create-published) | Creates a document and publishes it immediately |
+| [`PUT /api/content-type-plural-name/document-id?status=draft`](#update-draft) | Updates the draft without publishing the changes |
+| [`PUT /api/content-type-plural-name/document-id`](#publish-later) | Publishes the existing draft |
+
+:::caution
+Since the REST API defaults to `status=published`, a `POST` or `PUT` request that does not include the `status` parameter publishes the document immediately. Pass `status=draft` explicitly to create or update content without publishing it.
+:::
+
+:::note
+Published documents always keep a draft counterpart. Creating or updating a document with `status=published` writes the draft first, then publishes it, so both versions hold the same data.
+:::
+
+### Create a draft {#create-draft}
+
+<Endpoint
+  id="create-draft-endpoint"
+  method="POST"
+  path="/api/articles?status=draft"
+  title="Create a draft document"
+  description="Creates a new document and leaves it as a draft by passing the status=draft query parameter.">
+
+```bash
+curl -X POST \
+  'http://localhost:1337/api/articles?status=draft' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "Biscotte Restaurant"
+    }
+  }'
+```
+
+<Responses>
+<ResponseTab status={201} statusText="Created">
+
+```json
+{
+  "data": {
+    "id": 13,
+    "documentId": "jae8klabhuucbkgfe2xxc5dj",
+    "Name": "Biscotte Restaurant",
+    "createdAt": "2024-03-06T22:19:54.646Z",
+    "updatedAt": "2024-03-06T22:19:54.646Z",
+    "publishedAt": null,
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
+
+The `publishedAt` field is `null`, which confirms the document was created as a draft.
+
+### Create and publish immediately {#create-published}
+
+Omitting the `status` parameter, or passing `status=published`, creates the document and publishes it in a single request:
+
+<Endpoint
+  id="create-published-endpoint"
+  method="POST"
+  path="/api/articles"
+  title="Create and publish a document"
+  description="Creates a new document and publishes it immediately, which is the default behavior of the REST API.">
+
+```bash
+curl -X POST \
+  'http://localhost:1337/api/articles' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "Biscotte Restaurant"
+    }
+  }'
+```
+
+<Responses>
+<ResponseTab status={201} statusText="Created">
+
+```json
+{
+  "data": {
+    "id": 13,
+    "documentId": "jae8klabhuucbkgfe2xxc5dj",
+    "Name": "Biscotte Restaurant",
+    "createdAt": "2024-03-06T22:19:54.646Z",
+    "updatedAt": "2024-03-06T22:19:54.646Z",
+    "publishedAt": "2024-03-06T22:19:54.649Z",
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
+
+Here `publishedAt` holds a timestamp instead of `null`, which confirms the document was published.
+
+### Update a draft without publishing it {#update-draft}
+
+Pass `status=draft` to a `PUT` request to modify the draft version and leave the published version untouched:
+
+<Endpoint
+  id="update-draft-endpoint"
+  method="PUT"
+  path="/api/articles/:documentId?status=draft"
+  title="Update a draft entry"
+  description="Updates the draft version of a document without publishing the changes.">
+
+```bash
+curl -X PUT \
+  'http://localhost:1337/api/articles/jae8klabhuucbkgfe2xxc5dj?status=draft' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "Biscotte Restaurant (closed)"
+    }
+  }'
+```
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": {
+    "id": 13,
+    "documentId": "jae8klabhuucbkgfe2xxc5dj",
+    "Name": "Biscotte Restaurant (closed)",
+    "createdAt": "2024-03-06T22:19:54.646Z",
+    "updatedAt": "2024-03-06T22:24:12.145Z",
+    "publishedAt": null,
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
+
+### Publish an existing draft {#publish-later}
+
+To publish a draft created earlier, send a `PUT` request without the `status` parameter, or with `status=published`:
+
+<Endpoint
+  id="publish-later-endpoint"
+  method="PUT"
+  path="/api/articles/:documentId"
+  title="Publish an existing draft"
+  description="Publishes the draft version of a document, which is the default behavior of PUT requests.">
+
+```bash
+curl -X PUT \
+  'http://localhost:1337/api/articles/jae8klabhuucbkgfe2xxc5dj' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "Biscotte Restaurant (closed)"
+    }
+  }'
+```
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": {
+    "id": 13,
+    "documentId": "jae8klabhuucbkgfe2xxc5dj",
+    "Name": "Biscotte Restaurant (closed)",
+    "createdAt": "2024-03-06T22:19:54.646Z",
+    "updatedAt": "2024-03-06T22:26:38.902Z",
+    "publishedAt": "2024-03-06T22:26:38.905Z",
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
+
+:::note
+A `PUT` request requires a `data` object in the body, so it updates and publishes in a single operation. To publish a document without changing its content, pass an empty `data` object.
+:::

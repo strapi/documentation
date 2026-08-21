@@ -312,6 +312,10 @@ If the [Internationalization (i18n) plugin](/cms/features/internationalization) 
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations.md) for more details).
 :::
 
+:::caution Draft & Publish
+With [Draft & Publish](/cms/features/draft-and-publish) enabled, a POST request without a `status` parameter creates the document and publishes it immediately. Pass `?status=draft` to create it as a draft (see [REST API: `status`](/cms/api/rest/status#create-update)).
+:::
+
 :::info Dynamic zones
 When you POST a document, each object inside a dynamic zone array must include `__component` with that variant's UID (for example `shared.slider`). Put `__component` on the object that represents one row in the dynamic zone. Nested fields inside that object should mirror the JSON you get back when the same document is fetched with `populate` so you do not place `__component` on inner objects unless the schema treats that level as another discriminated structure.
 :::
@@ -322,9 +326,10 @@ When you POST a document, each object inside a dynamic zone array must include `
   path="/api/:pluralApiId"
   title="Create a document"
   description="Creates a new document and returns it. Send field values inside a data object in the request body."
-  paramTitle="Body Parameters"
+  paramTitle="Parameters"
   params={[
-    { name: 'data', type: 'object', required: true, description: 'Object containing the field values for the new document' },
+    { name: 'data', type: 'object', required: true, description: 'Body parameter: object containing the field values for the new document' },
+    { name: 'status', type: 'string', required: false, description: 'Query parameter: <code>draft</code> to create the document as a draft, or <code>published</code> to publish it immediately. Default: <code>published</code>. See <a href="/cms/api/rest/status#create-update">status</a>.' },
   ]}>
 
 <Tabs>
@@ -414,6 +419,10 @@ const data = await response.json();
 * While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations) for more details).
 :::
 
+:::caution Draft & Publish
+With [Draft & Publish](/cms/features/draft-and-publish) enabled, a PUT request without a `status` parameter publishes the changes immediately. Pass `?status=draft` to update the draft only (see [REST API: `status`](/cms/api/rest/status#create-update)).
+:::
+
 :::info Dynamic zones
 Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynamic-zones) must include `__component` with the target component's UID (for example `shared.media`). Strapi uses that field to pick the component schema when you create or update items in the zone; without it, writes can fail validation or return success without changing data. Use the UID shown in the Content-Type Builder for each component in the zone.
 :::
@@ -424,9 +433,10 @@ Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynam
   path="/api/:pluralApiId/:documentId"
   title="Update a document"
   description="Partially updates a document by documentId and returns its value. Send a null value to clear fields."
-  paramTitle="Body Parameters"
+  paramTitle="Parameters"
   params={[
-    { name: 'data', type: 'object', required: true, description: 'Object containing the field values to update' },
+    { name: 'data', type: 'object', required: true, description: 'Body parameter: object containing the field values to update' },
+    { name: 'status', type: 'string', required: false, description: 'Query parameter: <code>draft</code> to update the draft only, or <code>published</code> to publish the changes immediately. Default: <code>published</code>. See <a href="/cms/api/rest/status#create-update">status</a>.' },
   ]}>
 
 <Tabs>
