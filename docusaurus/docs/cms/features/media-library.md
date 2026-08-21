@@ -753,6 +753,59 @@ To add a focal point to an image:
 Assets can also be deleted individually or in bulk from the main view of the Media Library. Select assets by clicking on their checkbox in the top left corner, then click the Delete icon <Icon name="trash" /> at the top of the window, below the filters and sorting options.
 :::
 
+### Bulk actions <FeatureFlagBadge feature="unstableMediaLibrary" />
+
+The future Media Library provides a bulk action bar for performing operations on multiple assets and folders simultaneously. Bulk actions are available in the table view of the future Media Library.
+
+<!-- unverified: Feature is behind the `unstableMediaLibrary` future flag, enabled via the features configuration. Confirm exact flag name in final release. -->
+
+#### Selecting assets and folders
+
+Each asset row in the table view has a leading checkbox. Select multiple items using the following methods:
+
+- Click a checkbox to select a single item. Clicking again deselects it.
+- Cmd/Ctrl+click toggles an item without clearing the current selection.
+- Shift+click selects a contiguous range from the last clicked item to the target.
+- Click the header checkbox to select all items on the current page. The header checkbox shows an indeterminate state when some items are selected.
+
+:::note
+Selection is page-scoped and resets when you navigate to a different folder.
+:::
+
+When 1 or more assets or folders are selected, a floating bulk action bar appears at the bottom of the interface. The bar shows the number of selected items and the available actions.
+
+<!-- source: packages/core/upload/admin/src/future/pages/Assets/hooks/useAssetSelection.ts, packages/core/upload/admin/src/future/pages/Assets/components/BulkActionsBar.tsx -->
+
+#### Bulk deleting assets and folders
+
+To delete multiple assets and folders at once:
+
+1. Select the assets and folders to delete using the checkboxes.
+2. In the bulk action bar, click the delete icon <Icon name="trash" />.
+3. In the confirmation dialog, review the item count and warning message.
+4. Click **Confirm**.
+
+:::warning
+Deleted items cannot be recovered. Deleting a folder also deletes all content inside it. Any content that links to deleted assets will break, and media containers will appear empty.
+:::
+
+<!-- source: packages/core/upload/admin/src/future/pages/Assets/components/BulkActionsBar.tsx -->
+
+#### Bulk moving assets and folders
+
+To move multiple assets and folders to a different location:
+
+1. Select the assets and folders to move using the checkboxes.
+2. In the bulk action bar, click the move icon <Icon name="arrow-right" />.
+3. In the **Move elements to** dialog, select a destination from the **Location** drop-down list.
+4. Click **Move**.
+
+:::note
+Folders in the current selection are excluded from the list of valid destinations. A folder cannot be moved into itself or into one of its descendants.
+:::
+
+<!-- source: packages/core/upload/admin/src/future/pages/Assets/components/BulkMoveDialog.tsx -->
+
 ### Organizing assets with folders
 
 Folders in the Media Library help you organize uploaded assets. Folders sit at the top of the Media Library view or are accessible from the Media field popup when using the [Content Manager](/cms/features/content-manager).
