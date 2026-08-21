@@ -314,7 +314,7 @@ npm run strapi export -- --exclude files,content
 
 ## Filter content types during export
 
-<VersionBadge version="5.50.3" />
+<VersionBadge version="5.51.0" />
 
 The `--exclude-content-types` and `--only-content-types` options let you scope an export to specific content types. Both options accept a comma-separated list of content-type UIDs (for example, `api::article.article`). Unknown UIDs are validated against the Strapi schema at startup. Both entity records and any relation links touching an excluded type are skipped automatically.
 

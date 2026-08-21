@@ -280,7 +280,7 @@ npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --only
 
 ## Filter content types during import
 
-<VersionBadge version="5.50.3" />
+<VersionBadge version="5.51.0" />
 
 The `--exclude-content-types` and `--only-content-types` options let you scope an import to specific content types. Both options accept a comma-separated list of content-type UIDs (for example, `api::article.article`). Unknown UIDs are validated against the Strapi schema at startup.
 
