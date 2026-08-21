@@ -41,15 +41,15 @@ The CLI command consists of the following arguments:
 | Option         | Description                                                                                                                                  |
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--to`         | Full URL of the `/admin` endpoint on the destination Strapi instance<br />(e.g. `--to https://my-beautiful-strapi-website/admin`)            |
-| `‑‑to‑token`   | Transfer token from the Strapi destination instance.                                                                                         |
+| `--to-token`   | Transfer token from the Strapi destination instance.                                                                                         |
 | `--from`       | Full URL of the `/admin` endpoint of the remote Strapi instance to pull data from (e.g., `--from https://my-beautiful-strapi-website/admin`) |
-| `‑‑from‑token` | Transfer token from the Strapi source instance.                                                                                              |
+| `--from-token` | Transfer token from the Strapi source instance.                                                                                              |
 | `--force`      | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                            |
 | `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, `config`, and `media-library` (excludes both upload binaries and upload content type records). |
 | `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
 | `--exclude-content-types` | Comma-separated list of content-type UIDs to exclude. Both entity records and relation links touching an excluded type are skipped. |
 | `--only-content-types` | Comma-separated list of content-type UIDs to include. Only entity records and relation links for the listed types are transferred. |
-| `--throttle` | Time in milliseconds to inject an artificial delay between the "chunks" during a transfer. |
+| `--throttle` | Time in milliseconds to inject an artificial delay between each transferred entity. |
 | `--no-checksums` | Disable end-to-end SHA-256 checksum verification for assets. Checksum verification is enabled by default when both the source and destination instances support it. |
 | `--verbose` | Enable verbose logs. |
 
@@ -122,7 +122,7 @@ Initiating a data transfer depends on whether you want to push data to a remote 
     </Tabs>
   
   4. Add the transfer token when prompted to do so.
-  5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all of the remote Strapi assets and its database. Are you sure you want to proceed?"
+  5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete existing data from the remote Strapi! Are you sure you want to proceed?"
 
 </TabItem>
 
@@ -153,7 +153,7 @@ Initiating a data transfer depends on whether you want to push data to a remote 
   </Tabs>
 
 4. Add the transfer token when prompted to do so.
-5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all of the local Strapi assets and its database. Are you sure you want to proceed?".
+5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all the local Strapi assets and its database. Are you sure you want to proceed?".
 
 </TabItem>
 </Tabs>
@@ -162,10 +162,10 @@ Once the transfer starts, the command reports live progress in the terminal, inc
 
 ## Bypass all `transfer` command line prompts
 
-When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is useful for implementing `strapi transfer` programmatically. You must pass the `to-token` option with the transfer token if you use the `--force` option.
+When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is useful for implementing `strapi transfer` programmatically. You must pass the `--to-token` option with the transfer token if you use the `--force` option.
 
 :::caution
-The `--force` option bypasses all warnings about content deletion.
+The `--force` option bypasses all warnings about content deletion. The deletion only covers the stages that are actually transferred: if you filter stages with `--only` or `--exclude`, the omitted stages are preserved. See [Understanding partial transfers and stage filtering](#understanding-partial-transfers-and-stage-filtering).
 :::
 
 ### Example: bypass the `transfer` command line prompts with `--force`
@@ -242,20 +242,16 @@ npm run strapi transfer -- --to https://example.com/admin --exclude files
 
 </Tabs>
 
-:::warning
-When using `--exclude` or `--only` to filter which stages (content, files, config) are transferred, the stages you omit will **not be deleted** on the destination instance. Their data is preserved. However, if you transfer a stage without filters, that stage is fully replaced on the destination.
-:::
-
 ## Understanding partial transfers and stage filtering
 
-When using `--only` or `--exclude` to transfer specific stages (content, files, config), the behavior differs based on whether you're filtering:
+When you use `--only` or `--exclude`, only the stages you name are affected on the destination:
 
-- **Omitted stages are preserved**: When a stage is not transferred (either via `--only content` or `--exclude files`), the destination data for that stage is left untouched.
-- **Transferred stages are replaced**: Any stage you include in the transfer fully replaces the destination data for that stage.
+- **Omitted stages are preserved.** When a stage is not transferred, the destination data for that stage is left untouched.
+- **Transferred stages are replaced.** Any stage you include in the transfer fully replaces the destination data for that stage.
 
-### Common workflows
+Stage filtering and content-type filtering are independent and can be combined. Stage filters (`--only` and `--exclude`) select which kinds of data move. Content-type filters (`--only-content-types` and `--exclude-content-types`) narrow which content types move within the content stage.
 
-#### Content refresh while preserving destination config
+### Example: refresh content while preserving destination config
 
 To refresh only content from a source instance while keeping the destination instance's configuration:
 
@@ -279,22 +275,35 @@ npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer
 
 </Tabs>
 
-In this workflow, the destination configuration is preserved while content is updated from the source.
+### Stage transfer behavior
 
-### Stage transfer behavior matrix
+Each stage preset covers a specific payload:
 
-| Scenario | Content transferred? | Files transferred? | Config transferred? | Destination untouched |
-|----------|:--------------------:|:------------------:|:-------------------:|:---------------------:|
-| Default `strapi transfer` | ✓ | ✓ | ✓ | None |
-| `--only content` | ✓ | ✗ | ✗ | Files, Config |
-| `--only files` | ✗ | ✓ | ✗ | Content, Config |
-| `--only config` | ✗ | ✗ | ✓ | Content, Files |
-| `--only content,files` | ✓ | ✓ | ✗ | Config |
-| `--exclude content` | ✗ | ✓ | ✓ | Content |
-| `--exclude files` | ✓ | ✗ | ✓ | Files |
-| `--exclude config` | ✓ | ✓ | ✗ | Config |
+| Preset | Stages | Payload |
+|--------|--------|---------|
+| `content` | entities, links | Content-type rows, including media library database records, and relations |
+| `files` | assets | Upload binaries under `public/uploads` |
+| `config` | configuration | Core store and webhooks |
 
-When a stage is omitted (shown as ✗ in the "transferred" columns or listed under "Destination untouched"), the destination instance retains its existing data for that stage.
+Schemas are always transferred, independently of these presets.
+
+| Flags | Transferred | Preserved on the destination |
+|-------|-------------|------------------------------|
+| Default `strapi transfer` | Content, files, config | Admin and ignored types only |
+| `--only content` | Content | Config and upload binaries |
+| `--only files` | Files | Content and config |
+| `--only config` | Config | Content and files |
+| `--only content,files` | Content and files | Config |
+| `--exclude content` | Files and config | Content |
+| `--exclude files` | Content and config | Upload binaries |
+| `--exclude config` | Content and files | Config |
+| `--exclude media-library` | Content without upload types, and config | Upload binaries, `plugin::upload.file`, and `plugin::upload.folder` |
+
+:::caution
+The `files` preset covers only the binaries under `public/uploads`. Media library database records (`plugin::upload.file` and `plugin::upload.folder`) are part of the `content` preset. This means `--exclude files` alone only skips the assets stage: the media library records still transfer with the rest of the content, so the destination can end up with records pointing to binaries that were never transferred. To preserve both the binaries and their records, use `--exclude media-library`.
+:::
+
+Content is never wiped entirely: admin types and ignored types, such as `plugin::content-releases.release`, are always preserved on the destination.
 
 ## Filter content types during transfer
 
@@ -303,7 +312,7 @@ When a stage is omitted (shown as ✗ in the "transferred" columns or listed und
 The `--exclude-content-types` and `--only-content-types` options let you scope a transfer to specific content types. Both options accept a comma-separated list of content-type UIDs (for example, `api::article.article`). Unknown UIDs are validated against the Strapi schema at startup. Both entity records and any relation links touching an excluded type are skipped automatically.
 
 :::warning Warning: Restore behavior
-- When you use `--exclude-content-types`, data for the excluded types is **preserved** on the destination — they are not wiped before the transfer.
+- When you use `--exclude-content-types`, data for the excluded types is **preserved** on the destination: they are not wiped before the transfer.
 - When you use `--only-content-types`, the pre-transfer wipe is scoped to only the listed UIDs, leaving all other content on the destination in place.
 :::
 
@@ -357,7 +366,7 @@ npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer
 
 ## Manage data transfer with environment variables
 
-The environment variable `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` is available to disable remote data transfer. In addition to the [RBAC permissions](/cms/features/rbac#plugins-and-settings) in the admin panel this can help you secure your Strapi application. To use `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` you can add it to your `.env` file or preface the `start` script. See the following example:
+The environment variable `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` is available to disable remote data transfer. In addition to the [RBAC permissions](/cms/features/rbac#configuring-roles-permissions) in the admin panel this can help you secure your Strapi application. To use `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` you can add it to your `.env` file or preface the `start` script. See the following example:
 
 ```bash
 STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
