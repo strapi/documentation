@@ -8,6 +8,7 @@ tags:
 - audit logs
 - admin panel
 - Enterprise feature
+- MCP
 - payload
 - features
 ---
@@ -53,6 +54,10 @@ The Audit Logs feature logs the following events:
 | Role / Permission | `create`, `update`, `delete` |
 | User | `create`, `update`, `delete` |
 
+<VersionBadge version="5.52.0" />
+
+Logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
+
 For each log item, the following information is displayed:
 
 - Action: type of action performed by the user (e.g.`create` or `update`).
@@ -80,6 +85,10 @@ By default, all logs are displayed in reverse chronological order. You can filte
 ### Accessing log details {#log-details}
 
 For any log item, click the <Icon name="eye" /> icon to access a modal with more details about that action. In the modal, the *Payload* section displays the details in an interactive JSON component, enabling you to expand and collapse the JSON object.
+
+<VersionBadge version="5.52.0" />
+
+In the payload, the `origin` key indicates where the action came from: `mcp` for the [MCP server](/cms/features/strapi-mcp-server), or `admin` for the admin panel.
 
 <ThemedImage
   alt="Log details modal"
