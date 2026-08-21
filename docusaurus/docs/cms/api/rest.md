@@ -306,7 +306,7 @@ const data = await response.json();
 
 ### Create a document {#create}
 
-If the [Internationalization (i18n) plugin](/cms/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/cms/api/rest/locale#rest-delete).
+If the [Internationalization (i18n) plugin](/cms/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/cms/api/rest/locale#rest-create).
 
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations.md) for more details).
@@ -385,7 +385,7 @@ const data = await response.json();
 </Tabs>
 
 <Responses>
-<ResponseTab status={200} statusText="OK">
+<ResponseTab status={201} statusText="Created">
 
 ```json
 {
