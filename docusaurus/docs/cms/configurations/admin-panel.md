@@ -327,6 +327,18 @@ To configure HTTP cookies for admin authentication, use the following parameters
 | `auth.cookie.path`                | Cookie path                                                                                                                                                                                        | string        | `'/admin'`                                                                                                                          |
 | `auth.cookie.sameSite`            | <ExternalLink to="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value" text="SameSite cookie attribute"/>                                                                                                                                                                          | string        | `'lax'`                                                                                                                             |
 
+## Content history {#content-history}
+
+The [Content History](/cms/features/content-history) feature can be configured with the following parameter:
+
+| Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
+|-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `history.retentionDays`           | How long history versions are kept, in days.<br /><br />_The value can only shorten the retention period, see the note under the table._                                                            | integer       | 90                                                                                                                                  |
+
+:::note Retention days for Content History
+The `history.retentionDays` value is only taken into account if it is _smaller_ than the value stored in the license information. It cannot be used to keep history versions for longer than the license allows, and versions are never kept for more than 90 days. There is no equivalent setting in the admin panel: the retention period can only be shortened from the `config/admin.js|ts` configuration file.
+:::
+
 ## Feature flags
 
 The feature flags can be configured with the following parameters:
@@ -380,10 +392,6 @@ Transfer tokens for the [Data transfer](/cms/features/data-management/transfer) 
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `transfer.token.salt`             | Salt used to generate Transfer tokens.<br/><br/>If no transfer token salt is defined, transfer features will be disabled.               | string        | a random string                                                                                                                       |
-
-:::note Retention days for self-hosted vs. Strapi Cloud users
-For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in the `config/admin.js|ts` configuration file.
-:::
 
 ## Configuration examples
 
@@ -499,6 +507,9 @@ module.exports = ({ env }) => ({
       sameSite: 'lax',
     },
   },
+  history: { // only accessible with a Growth or Enterprise plan
+    retentionDays: 30,
+  },
   url: env('PUBLIC_ADMIN_URL', '/dashboard'),
   autoOpen: false,
   watchIgnoreFiles: [
@@ -571,6 +582,9 @@ export default ({ env }) => ({
       path: '/admin',
       sameSite: 'lax',
     },
+  },
+  history: { // only accessible with a Growth or Enterprise plan
+    retentionDays: 30,
   },
   url: env('PUBLIC_ADMIN_URL', '/dashboard'),
   autoOpen: false,
