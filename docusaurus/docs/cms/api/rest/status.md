@@ -146,10 +146,10 @@ The `status` parameter also applies to `POST` and `PUT` requests, where it deter
 | [`POST /api/:pluralApiId?status=draft`](#create-draft) | Creates a draft document |
 | [`POST /api/:pluralApiId`](#create-published) | Creates a document and publishes it immediately |
 | [`PUT /api/:pluralApiId/:documentId?status=draft`](#update-draft) | Updates the draft without publishing the changes |
-| [`PUT /api/:pluralApiId/:documentId`](#publish-later) | Publishes the existing draft |
+| [`PUT /api/:pluralApiId/:documentId`](#publish-later) | Updates the draft and publishes it |
 
 :::caution
-Since the REST API defaults to `status=published`, a `POST` or `PUT` request that does not include the `status` parameter publishes the document immediately. Pass `status=draft` explicitly to create or update content without publishing it.
+With [Draft & Publish](/cms/features/draft-and-publish) enabled, the REST API defaults to `status=published`, so a `POST` or `PUT` request that does not include the `status` parameter publishes the document immediately. Pass `status=draft` explicitly to create or update content without publishing it.
 :::
 
 :::note

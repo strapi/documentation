@@ -306,10 +306,10 @@ const data = await response.json();
 
 ### Create a document {#create}
 
-If the [Internationalization (i18n) plugin](/cms/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/cms/api/rest/locale#rest-create).
+If the [Internationalization (i18n) feature](/cms/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/cms/api/rest/locale#rest-create).
 
 :::note
-While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations.md) for more details).
+While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations) for more details).
 :::
 
 :::caution Draft & Publish
@@ -317,7 +317,7 @@ With [Draft & Publish](/cms/features/draft-and-publish) enabled, a POST request 
 :::
 
 :::info Dynamic zones
-When you POST a document, each object inside a dynamic zone array must include `__component` with that variant's UID (for example `shared.slider`). Put `__component` on the object that represents one row in the dynamic zone. Nested fields inside that object should mirror the JSON you get back when the same document is fetched with `populate` so you do not place `__component` on inner objects unless the schema treats that level as another discriminated structure.
+Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynamic-zones) must include `__component` with the target component's UID (for example `shared.media`). Strapi uses that field to pick the component schema when you create or update items in the zone; without it, writes can fail validation or return success without changing data. Use the UID shown in the Content-Type Builder for each component in the zone.
 :::
 
 <Endpoint
@@ -415,7 +415,7 @@ const data = await response.json();
 ### Update a document {#update}
 
 :::note NOTES
-* Even with the [Internationalization (i18n) plugin](/cms/features/internationalization) installed, it's currently not possible to [update the locale of a document](/cms/api/rest/locale#rest-update).
+* Even with the [Internationalization (i18n) feature](/cms/features/internationalization) installed, it's currently not possible to [update the locale of a document](/cms/api/rest/locale#rest-update).
 * While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations) for more details).
 :::
 
