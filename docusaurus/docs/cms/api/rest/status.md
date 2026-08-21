@@ -51,7 +51,7 @@ To select documents by how their draft and published versions relate (never-publ
 Add the `status` parameter to a `GET` request to choose which version is returned.
 
 :::tip
-In the response data, the `publishedAt` field is `null` for drafts.
+In the response data, the `publishedAt` field is `null` in the returned draft, even when a published version exists.
 :::
 
 :::note
@@ -317,7 +317,7 @@ Pass `status=draft` to a `PUT` request to modify the draft version and leave the
   id="update-draft-endpoint"
   method="PUT"
   path="/api/restaurants/:documentId?status=draft"
-  title="Update a draft entry"
+  title="Update a draft document"
   description="Updates the draft version of a document without publishing the changes.">
 
 <Tabs>
