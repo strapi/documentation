@@ -393,10 +393,6 @@ Transfer tokens for the [Data transfer](/cms/features/data-management/transfer) 
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `transfer.token.salt`             | Salt used to generate Transfer tokens.<br/><br/>If no transfer token salt is defined, transfer features will be disabled.               | string        | a random string                                                                                                                       |
 
-:::note Retention days for self-hosted vs. Strapi Cloud users
-For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in the `config/admin.js|ts` configuration file.
-:::
-
 ## Configuration examples
 
 The `/config/admin` file should at least include a minimal configuration with required parameters for [authentication](#authentication) and [API tokens](#api-tokens). Additional parameters can be included for a full configuration.
