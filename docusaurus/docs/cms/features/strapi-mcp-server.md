@@ -355,8 +355,6 @@ Create dedicated Admin tokens for each AI client or use case. Use the most restr
 
 Entry actions performed through the MCP server are recorded in the [Audit Logs](/cms/features/audit-logs). Each log payload carries an `origin` key set to `mcp`, which distinguishes actions triggered by an AI client from actions performed in the admin panel. Operations that only read content are not recorded.
 
-Audit Logs requires the CMS Enterprise plan and is not included in the Growth plan.
-
 ### Stateless architecture
 
 The MCP server uses a stateless architecture. Each POST request to the `/mcp` endpoint creates a fresh, ephemeral MCP server instance scoped to the authenticated token's permissions. There is no session persistence between requests: every request is independently authenticated and authorized. Because there is no session state, the AI client does not need to manage session IDs, and permission changes (such as revoking a token or updating its permissions) take effect on the next request.
