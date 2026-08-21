@@ -148,7 +148,7 @@ You can pass an optional header while you're migrating to Strapi 5 (see the [rel
     { name: 'populate', type: 'string | object', required: false, description: 'Relations and components to include. Use <code>*</code> for all. See <a href="/cms/api/rest/populate-select">populate</a>.' },
     { name: 'fields', type: 'string[]', required: false, description: 'Select specific fields to return. See <a href="/cms/api/rest/populate-select#field-selection">field selection</a>.' },
     { name: 'pagination[page]', type: 'integer', required: false, description: 'Page number. Default: <code>1</code>' },
-    { name: 'pagination[pageSize]', type: 'integer', required: false, description: 'Items per page. Default <code>25</code>, max <code>100</code>' },
+    { name: 'pagination[pageSize]', type: 'integer', required: false, description: 'Items per page. Default: <code>25</code>. The maximum is set by <code>api.rest.maxLimit</code> (see <a href="/cms/api/rest/sort-pagination#pagination-by-page">pagination</a>).' },
     { name: 'locale', type: 'string', required: false, description: 'Locale of the documents to fetch. See <a href="/cms/api/rest/locale">locale</a>.' },
     { name: 'status', type: 'string', required: false, description: '<code>published</code> or <code>draft</code>. See <a href="/cms/api/rest/status">status</a>.' },
     { name: 'publicationFilter', type: 'string', required: false, description: 'Query documents by the relationship between their draft and published versions. See <a href="/cms/api/rest/publication-filter">publicationFilter</a>.' },
