@@ -33,10 +33,6 @@ All content types are private by default and need to be either made public or qu
 By default, the REST API responses only include top-level fields and does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/cms/api/rest/populate-select) to populate specific fields. Ensure that the find permission is given to the field(s) for the relation(s) you populate.
 :::
 
-:::tip Performance best practices
-For production applications, be intentional about data fetching: use explicit population, limit population depth, and centralize population logic in route middlewares. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog for a comprehensive guide.
-:::
-
 :::strapi Strapi Client
 The [Strapi Client](/cms/api/client) library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content.
 :::
@@ -99,7 +95,7 @@ The Upload package (which powers the [Media Library feature](/cms/features/media
 [Components](/cms/backend-customization/models#components-json) don't have API endpoints.
 :::
 
-## Requests
+## Requests and responses {#requests}
 
 :::strapi Strapi 5 vs. Strapi v4
 Strapi 5's Content API includes 2 major differences with Strapi v4:
@@ -127,6 +123,8 @@ Requests return a response as an object which usually includes the following key
 Some plugins (including Users & Permissions and Upload) may not follow this response format.
 :::
 
+The following sections detail each generated endpoint.
+
 ### Get documents {#get-all}
 
 :::tip Tip: Strapi 5 vs. Strapi 4
@@ -148,7 +146,7 @@ You can pass an optional header while you're migrating to Strapi 5 (see the [rel
     { name: 'populate', type: 'string | object', required: false, description: 'Relations and components to include. Use <code>*</code> for all. See <a href="/cms/api/rest/populate-select">populate</a>.' },
     { name: 'fields', type: 'string[]', required: false, description: 'Select specific fields to return. See <a href="/cms/api/rest/populate-select#field-selection">field selection</a>.' },
     { name: 'pagination[page]', type: 'integer', required: false, description: 'Page number. Default: <code>1</code>' },
-    { name: 'pagination[pageSize]', type: 'integer', required: false, description: 'Items per page. Default <code>25</code>, max <code>100</code>' },
+    { name: 'pagination[pageSize]', type: 'integer', required: false, description: 'Items per page. Default: <code>25</code>. The maximum is set by <code>api.rest.maxLimit</code> (see <a href="/cms/api/rest/sort-pagination#pagination-by-page">pagination</a>).' },
     { name: 'locale', type: 'string', required: false, description: 'Locale of the documents to fetch. See <a href="/cms/api/rest/locale">locale</a>.' },
     { name: 'status', type: 'string', required: false, description: '<code>published</code> or <code>draft</code>. See <a href="/cms/api/rest/status">status</a>.' },
     { name: 'publicationFilter', type: 'string', required: false, description: 'Query documents by the relationship between their draft and published versions. See <a href="/cms/api/rest/publication-filter">publicationFilter</a>.' },
@@ -294,7 +292,8 @@ const data = await response.json();
   "error": {
     "status": 404,
     "name": "NotFoundError",
-    "message": "Document not found"
+    "message": "Not Found",
+    "details": {}
   }
 }
 ```
@@ -306,14 +305,18 @@ const data = await response.json();
 
 ### Create a document {#create}
 
-If the [Internationalization (i18n) plugin](/cms/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/cms/api/rest/locale#rest-delete).
+If the [Internationalization (i18n) feature](/cms/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/cms/api/rest/locale#rest-create).
 
 :::note
-While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations.md) for more details).
+While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations) for more details).
+:::
+
+:::note Draft & Publish
+With [Draft & Publish](/cms/features/draft-and-publish) enabled, a POST request without a `status` parameter creates the document and publishes it immediately. Pass `?status=draft` to create it as a draft (see [REST API: `status`](/cms/api/rest/status#create-update)).
 :::
 
 :::info Dynamic zones
-When you POST a document, each object inside a dynamic zone array must include `__component` with that variant's UID (for example `shared.slider`). Put `__component` on the object that represents one row in the dynamic zone. Nested fields inside that object should mirror the JSON you get back when the same document is fetched with `populate` so you do not place `__component` on inner objects unless the schema treats that level as another discriminated structure.
+Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynamic-zones) must include `__component` with the target component's UID (for example `shared.media`). Strapi uses that field to pick the component schema when you create or update items in the zone; without it, writes can fail validation or return success without changing data. Use the UID shown in the Content-Type Builder for each component in the zone.
 :::
 
 <Endpoint
@@ -322,9 +325,10 @@ When you POST a document, each object inside a dynamic zone array must include `
   path="/api/:pluralApiId"
   title="Create a document"
   description="Creates a new document and returns it. Send field values inside a data object in the request body."
-  paramTitle="Body Parameters"
+  paramTitle="Parameters"
   params={[
-    { name: 'data', type: 'object', required: true, description: 'Object containing the field values for the new document' },
+    { name: 'data', type: 'object', required: true, description: 'Body parameter: object containing the field values for the new document' },
+    { name: 'status', type: 'string', required: false, description: 'Query parameter: <code>draft</code> to create the document as a draft, or <code>published</code> to publish it immediately. Default: <code>published</code>. See <a href="/cms/api/rest/status#create-update">status</a>.' },
   ]}>
 
 <Tabs>
@@ -380,7 +384,7 @@ const data = await response.json();
 </Tabs>
 
 <Responses>
-<ResponseTab status={200} statusText="OK">
+<ResponseTab status={201} statusText="Created">
 
 ```json
 {
@@ -409,9 +413,13 @@ const data = await response.json();
 
 ### Update a document {#update}
 
-:::note NOTES
-* Even with the [Internationalization (i18n) plugin](/cms/features/internationalization) installed, it's currently not possible to [update the locale of a document](/cms/api/rest/locale#rest-update).
+:::note
+* Even with the [Internationalization (i18n) feature](/cms/features/internationalization) installed, it's currently not possible to [update the locale of a document](/cms/api/rest/locale#rest-update).
 * While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations) for more details).
+:::
+
+:::note Draft & Publish
+With [Draft & Publish](/cms/features/draft-and-publish) enabled, a PUT request without a `status` parameter publishes the changes immediately. Pass `?status=draft` to update the draft only (see [REST API: `status`](/cms/api/rest/status#create-update)). This also applies to single types, where `PUT /api/:singularApiId` publishes the changes unless you pass `?status=draft`.
 :::
 
 :::info Dynamic zones
@@ -424,9 +432,10 @@ Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynam
   path="/api/:pluralApiId/:documentId"
   title="Update a document"
   description="Partially updates a document by documentId and returns its value. Send a null value to clear fields."
-  paramTitle="Body Parameters"
+  paramTitle="Parameters"
   params={[
-    { name: 'data', type: 'object', required: true, description: 'Object containing the field values to update' },
+    { name: 'data', type: 'object', required: true, description: 'Body parameter: object containing the field values to update' },
+    { name: 'status', type: 'string', required: false, description: 'Query parameter: <code>draft</code> to update the draft only, or <code>published</code> to publish the changes immediately. Default: <code>published</code>. See <a href="/cms/api/rest/status#create-update">status</a>.' },
   ]}>
 
 <Tabs>
@@ -551,4 +560,16 @@ const response = await fetch(
 </TabItem>
 </Tabs>
 
+<Responses>
+<ResponseTab status={204} statusText="No Content">
+
+`DELETE` requests only send a `204` HTTP status code on success and do not return any data in the response body.
+
+</ResponseTab>
+</Responses>
+
 </Endpoint>
+
+:::tip Performance best practices
+For production applications, be intentional about data fetching: use explicit population, limit population depth, and centralize population logic in route middlewares. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog for a comprehensive guide.
+:::
