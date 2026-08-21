@@ -25,7 +25,7 @@ The REST API allows accessing the [content-types](/cms/backend-customization/mod
 
 This section of the documentation is for the REST API reference for content-types. We also have [guides](/cms/api/rest/guides/intro) available for specific use cases.
 
-This page documents the [generated endpoints](#endpoints), the [request and response format](#requests), and one section per operation. Query parameters such as filtering, sorting, population, locale, and status are documented in [API parameters](/cms/api/rest/parameters). If you prefer a typed client over raw HTTP requests, see the [Strapi Client](/cms/api/client).
+This page documents the [generated endpoints](#endpoints), the [request and response format](#requests), and one section per operation. Filtering, sorting, population, locale, and status each have their own page under API parameters. If you prefer a typed client over raw HTTP requests, the [Strapi Client](/cms/api/client) library can fetch, create, update, and delete content for you.
 
 :::prerequisites
 All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions. See the [Quick Start Guide](/cms/quick-start#step-10-set-roles--permissions), the user guide for the [Users & Permissions feature](/cms/features/users-permissions#roles), and [API tokens configuration documentation](/cms/features/api-tokens) for more details.
