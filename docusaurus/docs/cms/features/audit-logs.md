@@ -8,6 +8,7 @@ tags:
 - audit logs
 - admin panel
 - Enterprise feature
+- MCP
 - payload
 - features
 ---
@@ -60,6 +61,8 @@ For each log item, the following information is displayed:
 - User: user who performed the action.
 - Details: displays a modal with more details about the action (e.g. the User IP address, the request body, or the response body).
 
+With Strapi <VersionBadge version="5.52.0+" noTooltip />  logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
+
 
 ### Filtering logs
 
@@ -88,3 +91,5 @@ For any log item, click the <Icon name="eye" /> icon to access a modal with more
     dark: '/img/assets/settings/settings_log-details_DARK.png',
   }}
 />
+
+With Strapi <VersionBadge version="5.52.0" noTooltip />, in the payload, the `origin` key indicates where the action came from: `mcp` for the [MCP server](/cms/features/strapi-mcp-server), or `admin` for the admin panel.
