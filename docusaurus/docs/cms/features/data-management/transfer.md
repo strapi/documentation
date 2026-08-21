@@ -4,12 +4,11 @@ description: Transfer data using the Strapi CLI
 displayed_sidebar: cmsSidebar
 canonicalUrl: https://docs.strapi.io/cms/features/data-management/transfer.html
 pagination_prev: cms/features/data-management/export
-pagination_next: cms/features/data-management/transfer-locally
+pagination_next: cms/features/draft-and-publish
 tags:
 - data management system
 - data transfer
 - strapi transfer
-- environment 
 ---
 
 # Data transfer
@@ -53,10 +52,11 @@ The CLI command consists of the following arguments:
 | `--no-checksums` | Disable end-to-end SHA-256 checksum verification for assets. Checksum verification is enabled by default when both the source and destination instances support it. |
 | `--verbose` | Enable verbose logs. |
 
-Either `--to` or `--from` is required.
+Either `--to` or `--from` is required, and you cannot pass both.
 
-:::tip
-It might be convenient to store your transfer tokens into [environment variables](/cms/configurations/environment) to avoid copying/pasting. Just ensure that these tokens are not pushed to public repositories.
+:::tip Tips
+* To get familiar with the command before running it against a remote instance, see [Test a data transfer locally](/cms/features/data-management/transfer-locally).
+* It might be convenient to store your transfer tokens into [environment variables](/cms/configurations/environment) to avoid copying/pasting. Just ensure that these tokens are not pushed to public repositories.
 :::
 
 ## Generate a transfer token
@@ -72,6 +72,10 @@ Transfer tokens are [managed from the admin panel](/cms/features/data-management
 ## Setup and run the data transfer
 
 Initiating a data transfer depends on whether you want to push data to a remote instance or to pull data from the remote:
+
+:::caution
+The remote Strapi instance must be running with the `start` command, not the `develop` command.
+:::
 
 <Tabs>
 
@@ -144,7 +148,9 @@ Once the transfer starts, the command reports live progress in the terminal, inc
 
 <VersionBadge version="5.52.2" tooltip="The preserve-versus-replace behavior described below is clarified and logged by the CLI since Strapi 5.52.2." />
 
-When you use `--only` or `--exclude`, only the stages you name are affected on the destination:
+`--only` and `--exclude` narrow the scope of a transfer. Both take a comma-separated string with no spaces between the types: `content`, `files`, and `config`, plus `media-library` for `--exclude` only. Schemas can never be excluded, as schema matching is used for `strapi transfer`.
+
+When you use either option, only the stages you name are affected on the destination:
 
 - **Omitted stages are preserved.** When a stage is not transferred, the destination data for that stage is left untouched.
 - **Transferred stages are replaced.** Any stage you include in the transfer fully replaces the destination data for that stage, except for admin types and ignored types such as `plugin::content-releases.release`, which are always preserved.
@@ -177,7 +183,7 @@ npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer
 
 Each preset maps to transfer stages: `content` covers entities and links, meaning content-type rows, including media library database records, and their relations. `files` covers the assets stage, meaning the upload binaries under `public/uploads`. `config` covers the core store and webhooks. Schemas are always transferred, independently of these presets.
 
-:::caution
+:::warning
 Media is split across two presets. The `files` preset covers only the binaries, while the media library database records (`plugin::upload.file` and `plugin::upload.folder`) belong to `content`. So `--exclude files` alone only skips the assets stage: the records still transfer, and the destination can end up with records pointing to binaries that were never transferred. To preserve both, use `--exclude media-library`.
 :::
 
@@ -191,15 +197,6 @@ Media is split across two presets. The `files` preset covers only the binaries, 
 | `--exclude content` | Files and config | Content |
 | `--exclude files` | Content and config | Upload binaries |
 | `--exclude media-library` | Content without upload types, and config | Upload binaries, `plugin::upload.file`, and `plugin::upload.folder` |
-
-## Transfer only or exclude data types
-
-The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. Two options let you narrow that scope by passing a comma-separated string with no spaces between the types:
-
-- `--only` transfers only the listed items. The available values are `content`, `files`, and `config`.
-- `--exclude` leaves out the listed items. The available values are `content`, `files`, `config`, and `media-library`, which excludes both the upload binaries and the upload content-type records.
-
-Schemas can never be excluded, as schema matching is used for `strapi transfer`.
 
 ### Example: only transfer files
 
@@ -247,7 +244,7 @@ npm run strapi transfer -- --to https://example.com/admin --exclude files
 
 ## Filter content types during transfer
 
-<VersionBadge version="5.50.3" />
+<VersionBadge version="5.51.0" />
 
 The `--exclude-content-types` and `--only-content-types` options let you scope a transfer to specific content types. Both options accept a comma-separated list of content-type UIDs (for example, `api::article.article`). Unknown UIDs are validated against the Strapi schema at startup. Both entity records and any relation links touching an excluded type are skipped automatically.
 
@@ -256,7 +253,7 @@ The `--exclude-content-types` and `--only-content-types` options let you scope a
 - When you use `--only-content-types`, the pre-transfer wipe is scoped to only the listed UIDs, leaving all other content on the destination in place.
 :::
 
-### Exclude specific content types from transfer
+### Example: exclude specific content types from transfer
 
 <Tabs groupId="yarn-npm">
 
@@ -280,7 +277,7 @@ npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer
 
 </Tabs>
 
-### Transfer only specific content types
+### Example: transfer only specific content types
 
 <Tabs groupId="yarn-npm">
 
@@ -336,15 +333,14 @@ npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer
 
 ## Tune transfer performance and verification
 
-Three options adjust how a transfer runs rather than what it carries:
+Two options adjust how a transfer runs rather than what it carries:
 
 - `--no-checksums` disables the end-to-end SHA-256 checksum verification applied to assets. Verification is enabled by default whenever both the source and the destination support it, and it is what guarantees that assets arrive intact, so disable it only when you are troubleshooting.
-- `--throttle` injects an artificial delay, in milliseconds, between each transferred entity. Use it to reduce the load a large transfer puts on the destination.
 - `--verbose` prints detailed logs, which is useful when a transfer fails without an obvious cause.
 
-Asset transfers also depend on the `transfer.remote.assetIdleTimeoutMs` server option, which sets how long an idle asset stream may stay open before the transfer aborts. See the [server configuration documentation](/cms/configurations/server).
+When pulling with `--from`, asset streaming also depends on the `transfer.remote.assetIdleTimeoutMs` server option, which caps how long an asset stream may go without forward progress before the transfer aborts. It defaults to `300000`, meaning 5 minutes. See the [server configuration documentation](/cms/configurations/server).
 
-### Example: throttle a transfer and disable checksum verification
+### Example: disable checksum verification
 
 <Tabs groupId="yarn-npm">
 
@@ -352,7 +348,7 @@ Asset transfers also depend on the `transfer.remote.assetIdleTimeoutMs` server o
 
 ```bash
 yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token \
-  --throttle 100 --no-checksums
+  --no-checksums
 ```
 
 </TabItem>
@@ -361,22 +357,31 @@ yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token
 
 ```bash
 npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token \
-  --throttle 100 --no-checksums
+  --no-checksums
 ```
 
 </TabItem>
 
 </Tabs>
 
-## Manage data transfer with environment variables
+## Disable remote data transfer
 
-The environment variable `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` is available to disable remote data transfer. In addition to the [RBAC permissions](/cms/features/rbac#configuring-roles-permissions) in the admin panel this can help you secure your Strapi application. To use `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` you can add it to your `.env` file or preface the `start` script. See the following example:
+Remote data transfer is disabled with the `transfer.remote.enabled` option in the [server configuration](/cms/configurations/server) file. Combined with the [RBAC permissions](/cms/features/rbac#configuring-roles-permissions) available in the admin panel, this can help you secure your Strapi application.
 
-```bash
-STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
+```js title="/config/server.js"
+module.exports = ({ env }) => ({
+  // …
+  transfer: {
+    remote: {
+      enabled: false,
+    },
+  },
+});
 ```
 
-Additional details on using environment variables in Strapi are available in the [Environment configurations documentation](/cms/configurations/environment).
+:::caution
+In Strapi v4 this was controlled by the `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` environment variable, which is no longer supported: setting it now logs a warning and has no effect. See [Removed support for some environment options](/cms/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options).
+:::
 
 ## Troubleshooting
 
@@ -399,10 +404,4 @@ server {
 **A connection is refused when targeting `localhost`.** Try changing the address to <ExternalLink to="http://127.0.0.1:1337/admin" text="http://127.0.0.1:1337/admin"/>.
 
 **The transfer fails and the project uses websockets.** The `transfer` command fails when websockets or Socket.io are in use. Temporarily disable them, or ensure the websocket server runs on a different port than the Strapi server, or on a specific route within Strapi.
-
-## Practice before transferring to a remote instance
-
-<CustomDocCardsWrapper>
-<CustomDocCard icon="terminal" title="Test a data transfer locally" description="Run through the whole transfer workflow between two local instances first." link="/cms/features/data-management/transfer-locally"/>
-</CustomDocCardsWrapper>
 

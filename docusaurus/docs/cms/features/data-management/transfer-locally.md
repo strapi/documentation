@@ -81,25 +81,25 @@ npm install
 
 1. Navigate to the second Strapi instance and run the `build` and `start` commands in the root directory:
 
-<Tabs groupId="yarn-npm">
+   <Tabs groupId="yarn-npm">
 
-<TabItem value="yarn" label="yarn">
+   <TabItem value="yarn" label="yarn">
 
-```bash
-yarn build && yarn start
-```
+   ```bash
+   yarn build && yarn start
+   ```
 
-</TabItem>
+   </TabItem>
 
-<TabItem value="npm" label="npm">
+   <TabItem value="npm" label="npm">
 
-```bash
-npm run build && npm run start
-```
+   ```bash
+   npm run build && npm run start
+   ```
 
-</TabItem>
+   </TabItem>
 
-</Tabs>
+   </Tabs>
 
 2. Register an admin user.
 3. [Create and copy a transfer token](/cms/features/data-management#admin-panel-settings).
