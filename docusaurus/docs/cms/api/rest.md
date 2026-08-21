@@ -33,10 +33,6 @@ All content types are private by default and need to be either made public or qu
 By default, the REST API responses only include top-level fields and does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/cms/api/rest/populate-select) to populate specific fields. Ensure that the find permission is given to the field(s) for the relation(s) you populate.
 :::
 
-:::tip Performance best practices
-For production applications, be intentional about data fetching: use explicit population, limit population depth, and centralize population logic in route middlewares. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog for a comprehensive guide.
-:::
-
 :::strapi Strapi Client
 The [Strapi Client](/cms/api/client) library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content.
 :::
@@ -99,7 +95,7 @@ The Upload package (which powers the [Media Library feature](/cms/features/media
 [Components](/cms/backend-customization/models#components-json) don't have API endpoints.
 :::
 
-## Requests
+## Requests and responses {#requests}
 
 :::strapi Strapi 5 vs. Strapi v4
 Strapi 5's Content API includes 2 major differences with Strapi v4:
@@ -127,6 +123,8 @@ Requests return a response as an object which usually includes the following key
 Some plugins (including Users & Permissions and Upload) may not follow this response format.
 :::
 
+The following sections detail each generated endpoint.
+
 ### Get documents {#get-all}
 
 :::tip Tip: Strapi 5 vs. Strapi 4
@@ -148,7 +146,7 @@ You can pass an optional header while you're migrating to Strapi 5 (see the [rel
     { name: 'populate', type: 'string | object', required: false, description: 'Relations and components to include. Use <code>*</code> for all. See <a href="/cms/api/rest/populate-select">populate</a>.' },
     { name: 'fields', type: 'string[]', required: false, description: 'Select specific fields to return. See <a href="/cms/api/rest/populate-select#field-selection">field selection</a>.' },
     { name: 'pagination[page]', type: 'integer', required: false, description: 'Page number. Default: <code>1</code>' },
-    { name: 'pagination[pageSize]', type: 'integer', required: false, description: 'Items per page. Default <code>25</code>, max <code>100</code>' },
+    { name: 'pagination[pageSize]', type: 'integer', required: false, description: 'Items per page. Default: <code>25</code>. The maximum is set by <code>api.rest.maxLimit</code> (see <a href="/cms/api/rest/sort-pagination#pagination-by-page">pagination</a>).' },
     { name: 'locale', type: 'string', required: false, description: 'Locale of the documents to fetch. See <a href="/cms/api/rest/locale">locale</a>.' },
     { name: 'status', type: 'string', required: false, description: '<code>published</code> or <code>draft</code>. See <a href="/cms/api/rest/status">status</a>.' },
     { name: 'publicationFilter', type: 'string', required: false, description: 'Query documents by the relationship between their draft and published versions. See <a href="/cms/api/rest/publication-filter">publicationFilter</a>.' },
@@ -562,4 +560,16 @@ const response = await fetch(
 </TabItem>
 </Tabs>
 
+<Responses>
+<ResponseTab status={204} statusText="No Content">
+
+`DELETE` requests only send a `204` HTTP status code on success and do not return any data in the response body.
+
+</ResponseTab>
+</Responses>
+
 </Endpoint>
+
+:::tip Performance best practices
+For production applications, be intentional about data fetching: use explicit population, limit population depth, and centralize population logic in route middlewares. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog for a comprehensive guide.
+:::

@@ -263,7 +263,7 @@ curl -X POST \
 ```
 
 <Responses>
-<ResponseTab status={200} statusText="OK">
+<ResponseTab status={201} statusText="Created">
 
 ```json
 {
@@ -310,7 +310,7 @@ curl -X POST \
 ```
 
 <Responses>
-<ResponseTab status={200} statusText="OK">
+<ResponseTab status={201} statusText="Created">
 
 ```json
 {
