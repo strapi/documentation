@@ -79,7 +79,7 @@ const query = qs.stringify(
   }
 );
 
-await request(`/api/users?${query}`);
+await request(`/api/restaurants?${query}`);
 ```
 
 </TabItem>
@@ -321,4 +321,8 @@ For many-to-many and other join-table relations, an explicit `sort` within a `po
 
 :::tip Performance tip
 In production, always use explicit population instead of wildcards like `populate=*`. Limit population depth to 2-3 levels and consider centralizing population logic in route middlewares. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog.
+:::
+
+:::note
+When populated, empty `morphMany` relations (including `type: 'media', multiple: true` fields such as a gallery) return `[]` instead of `null`, consistent with `oneToMany` and `manyToMany`. See the [morphMany serialization breaking change](/cms/migration/v4-to-v5/breaking-changes/morph-many-serialization) for migration guidance.
 :::

@@ -26,11 +26,11 @@ Use the `populate` parameter with the Document Service API to explicitly load re
 By default the [Document Service API](/cms/api/document-service) does not populate any relations, media fields, components, or dynamic zones. This page describes how to use the `populate` parameter to populate specific fields.
 
 :::tip
-You can also use the `select` parameter to return only specific fields with the query results (see the [`select` parameter](/cms/api/document-service/fields) documentation).
+You can also use the `fields` parameter to return only specific fields with the query results (see the [`fields` parameter](/cms/api/document-service/fields) documentation).
 :::
 
 :::caution
-If the Users & Permissions plugin is installed, the `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated.
+If the Users & Permissions feature is enabled, the `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated.
 :::
 
 <!-- TODO: add link to populate guides (even if REST API, the same logic still applies) -->
@@ -277,6 +277,10 @@ Omit `sort` from a `populate` object to preserve the default connect order (the 
 :::
 
 ## Components & Dynamic Zones
+
+:::note
+When populated, empty `morphMany` relations (including `type: 'media', multiple: true` fields such as a gallery) return `[]` instead of `null`, consistent with `oneToMany` and `manyToMany`. See the [morphMany serialization breaking change](/cms/migration/v4-to-v5/breaking-changes/morph-many-serialization) for migration guidance.
+:::
 
 Components are populated the same way as relations:
 
