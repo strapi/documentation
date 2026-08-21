@@ -88,10 +88,10 @@ Chain plan and version badges on that same line when several flags apply:
 
 ### Case 2: the badge qualifies one sentence, row, or option
 
-Put the badge **on the same line as the content it qualifies**, and add **`noTooltip`** — an inline tooltip overlaps the surrounding text and gets cut off. Carry the version information in the prose instead, since the tooltip is no longer there to hold it.
+Put the badge **on the same line as the content it qualifies**, and add **`noTooltip`**: an inline tooltip overlaps the surrounding text and gets cut off. Since the tooltip is no longer there to carry the meaning, weave the badge into the sentence so it reads as part of the prose, rather than parking it at the start of the line.
 
 ```mdx
-<VersionBadge version="5.42.1+" noTooltip /> For localizable relations, Strapi automatically fetches the corresponding entry in the target locale if it exists.
+With Strapi <VersionBadge version="5.42.1+" noTooltip />, for localizable relations, Strapi automatically fetches the corresponding entry in the target locale if it exists.
 ```
 
 Same rule inside a table cell:
