@@ -1171,6 +1171,61 @@ mutation DeleteRestaurant($documentId: ID!, $locale: I18NLocaleCode) {
 }
 ```
 
+## Operation limits and security {#operation-limits}
+
+Strapi emits a startup warning before Apollo starts when built-in GraphQL operation controls are not configured:
+
+- If `depthLimit` is not set or is set to an invalid value, the warning notes that queries can nest without bound.
+- If `maxLimit` is `-1` (the default), the warning notes that clients can request an unlimited number of items.
+
+The warning is informational — it does not block startup or change runtime behavior. Custom Apollo validation rules configured via `apolloServer` may independently enforce limits and are not reflected in the warning.
+
+To suppress the warning and limit exposure, configure the following options in your [GraphQL plugin configuration](/cms/plugins/graphql#code-based-configuration):
+
+| Option | Recommended value | Description |
+|--------|-------------------|-------------|
+| `defaultLimit` | `25` | Page size returned when a query omits pagination arguments. |
+| `maxLimit` | `100` | Maximum number of items a client may request in one query. |
+| `depthLimit` | `10` | Maximum nesting depth for a single GraphQL query. |
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = {
+  graphql: {
+    config: {
+      defaultLimit: 25,
+      maxLimit: 100,
+      depthLimit: 10,
+    },
+  },
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+export default {
+  graphql: {
+    config: {
+      defaultLimit: 25,
+      maxLimit: 100,
+      depthLimit: 10,
+    },
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+For the full list of GraphQL plugin configuration options, see the [GraphQL plugin documentation](/cms/plugins/graphql#code-based-configuration).
+
 ## Advanced use cases
 
 Click on the following cards for short guides on more advanced use cases leveraging the GraphQL API and Strapi features: 
