@@ -11372,10 +11372,6 @@ All content types are private by default and need to be either made public or qu
 By default, the REST API responses only include top-level fields and does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/cms/api/rest/populate-select) to populate specific fields. Ensure that the find permission is given to the field(s) for the relation(s) you populate.
 :::
 
-:::tip Performance best practices
-For production applications, be intentional about data fetching: use explicit population, limit population depth, and centralize population logic in route middlewares. See [Building High-Performance Strapi Applications](https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices) on the Strapi blog for a comprehensive guide.
-:::
-
 :::strapi Strapi Client
 The [Strapi Client](/cms/api/client) library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content.
 :::
@@ -11420,7 +11416,7 @@ The Upload package (which powers the [Media Library feature](/cms/features/media
 [Components](/cms/backend-customization/models#components-json) don't have API endpoints.
 :::
 
-## Requests
+## Requests and responses {#requests}
 
 :::strapi Strapi 5 vs. Strapi v4
 Strapi 5's Content API includes 2 major differences with Strapi v4:
@@ -11448,6 +11444,8 @@ Requests return a response as an object which usually includes the following key
 Some plugins (including Users & Permissions and Upload) may not follow this response format.
 :::
 
+The following sections detail each generated endpoint.
+
 ### Get documents {#get-all}
 
 :::tip Tip: Strapi 5 vs. Strapi 4
@@ -11466,7 +11464,7 @@ Returns a paginated list of documents. Supports filtering, sorting, field select
 - `populate` (string | object): Relations and components to include. Use `*` for all. See populate (/cms/api/rest/populate-select).
 - `fields` (string[]): Select specific fields to return. See field selection (/cms/api/rest/populate-select#field-selection).
 - `pagination[page]` (integer): Page number. Default: `1`
-- `pagination[pageSize]` (integer): Items per page. Default `25`, max `100`
+- `pagination[pageSize]` (integer): Items per page. Default: `25`. The maximum is set by `api.rest.maxLimit` (see pagination (/cms/api/rest/sort-pagination#pagination-by-page)).
 - `locale` (string): Locale of the documents to fetch. See locale (/cms/api/rest/locale).
 - `status` (string): `published` or `draft`. See status (/cms/api/rest/status).
 - `publicationFilter` (string): Query documents by the relationship between their draft and published versions. See publicationFilter (/cms/api/rest/publication-filter).
@@ -11572,21 +11570,26 @@ const data = await response.json();
   "error": {
     "status": 404,
     "name": "NotFoundError",
-    "message": "Document not found"
+    "message": "Not Found",
+    "details": {}
   }
 }
 ```
 
 ### Create a document {#create}
 
-If the [Internationalization (i18n) plugin](/cms/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/cms/api/rest/locale#rest-delete).
+If the [Internationalization (i18n) feature](/cms/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/cms/api/rest/locale#rest-create).
 
 :::note
-While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations.md) for more details).
+While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations) for more details).
+:::
+
+:::note Draft & Publish
+With [Draft & Publish](/cms/features/draft-and-publish) enabled, a POST request without a `status` parameter creates the document and publishes it immediately. Pass `?status=draft` to create it as a draft (see [REST API: `status`](/cms/api/rest/status#create-update)).
 :::
 
 :::info Dynamic zones
-When you POST a document, each object inside a dynamic zone array must include `__component` with that variant's UID (for example `shared.slider`). Put `__component` on the object that represents one row in the dynamic zone. Nested fields inside that object should mirror the JSON you get back when the same document is fetched with `populate` so you do not place `__component` on inner objects unless the schema treats that level as another discriminated structure.
+Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynamic-zones) must include `__component` with the target component's UID (for example `shared.media`). Strapi uses that field to pick the component schema when you create or update items in the zone; without it, writes can fail validation or return success without changing data. Use the UID shown in the Content-Type Builder for each component in the zone.
 :::
 
 #### POST /api/:pluralApiId — Create a document
@@ -11594,7 +11597,8 @@ When you POST a document, each object inside a dynamic zone array must include `
 Creates a new document and returns it. Send field values inside a data object in the request body.
 
 **Parameters:**
-- `data` (object, required): Object containing the field values for the new document
+- `data` (object, required): Body parameter: object containing the field values for the new document
+- `status` (string): Query parameter: `draft` to create the document as a draft, or `published` to publish it immediately. Default: `published`. See status (/cms/api/rest/status#create-update).
 
 ```bash
 curl -X POST \
@@ -11660,9 +11664,13 @@ const data = await response.json();
 
 ### Update a document {#update}
 
-:::note NOTES
-* Even with the [Internationalization (i18n) plugin](/cms/features/internationalization) installed, it's currently not possible to [update the locale of a document](/cms/api/rest/locale#rest-update).
+:::note
+* Even with the [Internationalization (i18n) feature](/cms/features/internationalization) installed, it's currently not possible to [update the locale of a document](/cms/api/rest/locale#rest-update).
 * While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations) for more details).
+:::
+
+:::note Draft & Publish
+With [Draft & Publish](/cms/features/draft-and-publish) enabled, a PUT request without a `status` parameter publishes the changes immediately. Pass `?status=draft` to update the draft only (see [REST API: `status`](/cms/api/rest/status#create-update)). This also applies to single types, where `PUT /api/:singularApiId` publishes the changes unless you pass `?status=draft`.
 :::
 
 :::info Dynamic zones
@@ -11674,7 +11682,8 @@ Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynam
 Partially updates a document by documentId and returns its value. Send a null value to clear fields.
 
 **Parameters:**
-- `data` (object, required): Object containing the field values to update
+- `data` (object, required): Body parameter: object containing the field values to update
+- `status` (string): Query parameter: `draft` to update the draft only, or `published` to publish the changes immediately. Default: `published`. See status (/cms/api/rest/status#create-update).
 
 ```bash
 curl -X PUT \
@@ -11765,6 +11774,12 @@ const response = await fetch(
   }
 );
 ```
+
+`DELETE` requests only send a `204` HTTP status code on success and do not return any data in the response body.
+
+:::tip Performance best practices
+For production applications, be intentional about data fetching: use explicit population, limit population depth, and centralize population logic in route middlewares. See [Building High-Performance Strapi Applications](https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices) on the Strapi blog for a comprehensive guide.
+:::
 
 
 
@@ -15593,37 +15608,45 @@ Source: https://docs.strapi.io/cms/api/rest/status
 
 # REST API: `status`
 
-The REST API's `status` parameter filters documents by their publication state, returning either published versions (default) or drafts by passing `status=draft`.
+The REST API's `status` parameter returns either published versions (default) or drafts by passing `status=draft`.
 
-The [REST API](/cms/api/rest) offers the ability to filter results based on their status, draft or published.
+It also applies to write requests: a `POST` or `PUT` request publishes immediately unless you pass `status=draft`.
+
+The [REST API](/cms/api/rest) offers the ability to work with the draft or the published version of documents through the `status` parameter:
+
+- `published`: targets the published version of documents (default)
+- `draft`: targets the draft version of documents
 
 :::prerequisites
 The [Draft & Publish](/cms/features/draft-and-publish) feature should be enabled.
 :::
 
-Queries can accept a `status` parameter to fetch documents based on their status:
+:::note
+The REST API defaults to `published` for every request, including `POST` and `PUT` requests. This differs from the [Document Service API](/cms/api/document-service/status), which defaults to `draft`.
+:::
 
-- `published`: returns only the published version of documents (default)
-- `draft`: returns only the draft version of documents
+To select documents by how their draft and published versions relate (never-published, modified, and others), see [REST API: `publicationFilter`](/cms/api/rest/publication-filter).
+
+## Read draft or published versions {#read}
+
+Add the `status` parameter to a `GET` request to choose which version is returned.
 
 :::tip
-In the response data, the `publishedAt` field is `null` for drafts.
+In the response data, the `publishedAt` field is `null` in the returned draft, even when a published version exists.
 :::
 
 :::note
 Since published versions are returned by default, passing no status parameter is equivalent to passing `status=published`.
 :::
 
-To select documents by how their draft and published versions relate (never-published, modified, and others), see [REST API: `publicationFilter`](/cms/api/rest/publication-filter).
-
 <br /><br />
 
-#### GET /api/articles?status=draft — Get draft versions of restaurants
+#### GET /api/restaurants?status=draft — Get draft versions of restaurants
 
 Returns draft versions of documents by passing the status=draft query parameter.
 
 ```bash
-curl 'http://localhost:1337/api/articles?status=draft' \
+curl 'http://localhost:1337/api/restaurants?status=draft' \
   -H 'Authorization: Bearer <token>'
 ```
 ```js
@@ -15634,7 +15657,7 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(`/api/articles?${query}`);
+await request(`/api/restaurants?${query}`);
 ```
 
 ```json
@@ -15666,11 +15689,305 @@ await request(`/api/articles?${query}`);
       "page": 1,
       "pageSize": 25,
       "pageCount": 1,
-      "total": 4
+      "total": 1
     }
   }
 }
 ```
+
+The query URL above was built using [the `qs` library](https://github.com/ljharb/qs).
+`qs` can be run locally on your machine, as shown in the following code example, or you can use our **[interactive query builder](/cms/api/rest/interactive-query-builder)** online tool.
+
+## Create or update as a draft or as published {#create-update}
+
+The `status` parameter also applies to `POST` and `PUT` requests, where it determines whether the document is left as a draft or published right away:
+
+| Request | Result |
+|---------|--------|
+| [`POST /api/:pluralApiId?status=draft`](#create-draft) | Creates a draft document |
+| [`POST /api/:pluralApiId`](#create-published) | Creates a document and publishes it immediately |
+| [`PUT /api/:pluralApiId/:documentId?status=draft`](#update-draft) | Updates the draft without publishing the changes |
+| [`PUT /api/:pluralApiId/:documentId`](#publish-later) | Updates the draft and publishes it |
+| [`PUT /api/:pluralApiId/:documentId` with an empty `data` object](#publish-unchanged) | Publishes the draft as-is, without changing its content |
+
+The same applies to single types, where the `status` parameter can be passed to `PUT /api/:singularApiId`.
+
+:::note
+With [Draft & Publish](/cms/features/draft-and-publish) enabled, the REST API defaults to `status=published`, so a `POST` or `PUT` request that does not include the `status` parameter publishes the document immediately. Pass `status=draft` explicitly to create or update content without publishing it.
+:::
+
+:::note
+Published documents always keep a draft counterpart. Creating or updating a document with `status=published` writes the draft first, then publishes it, so both versions hold the same data.
+:::
+
+### Create a draft {#create-draft}
+
+#### POST /api/restaurants?status=draft — Create a draft document
+
+Creates a new document and leaves it as a draft by passing the status=draft query parameter.
+
+```bash
+curl -X POST \
+  'http://localhost:1337/api/restaurants?status=draft' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "Biscotte Restaurant"
+    }
+  }'
+```
+```js
+const response = await fetch(
+  'http://localhost:1337/api/restaurants?status=draft',
+  {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {
+        Name: 'Biscotte Restaurant',
+      },
+    }),
+  }
+);
+const data = await response.json();
+```
+
+```json
+{
+  "data": {
+    "id": 13,
+    "documentId": "jae8klabhuucbkgfe2xxc5dj",
+    "Name": "Biscotte Restaurant",
+    "createdAt": "2024-03-06T22:19:54.646Z",
+    "updatedAt": "2024-03-06T22:19:54.646Z",
+    "publishedAt": null,
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+The `publishedAt` field is `null`, which confirms the document was created as a draft.
+
+### Create and publish immediately {#create-published}
+
+Omitting the `status` parameter, or passing `status=published`, creates the document and publishes it in a single request:
+
+#### POST /api/restaurants — Create and publish a document
+
+Creates a new document and publishes it immediately, which is the default behavior of the REST API.
+
+```bash
+curl -X POST \
+  'http://localhost:1337/api/restaurants' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "Biscotte Restaurant"
+    }
+  }'
+```
+```js
+const response = await fetch(
+  'http://localhost:1337/api/restaurants',
+  {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {
+        Name: 'Biscotte Restaurant',
+      },
+    }),
+  }
+);
+const data = await response.json();
+```
+
+```json
+{
+  "data": {
+    "id": 13,
+    "documentId": "jae8klabhuucbkgfe2xxc5dj",
+    "Name": "Biscotte Restaurant",
+    "createdAt": "2024-03-06T22:19:54.646Z",
+    "updatedAt": "2024-03-06T22:19:54.646Z",
+    "publishedAt": "2024-03-06T22:19:54.649Z",
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+Here `publishedAt` holds a timestamp instead of `null`, which confirms the document was published.
+
+### Update a draft without publishing it {#update-draft}
+
+Pass `status=draft` to a `PUT` request to modify the draft version and leave the published version untouched:
+
+#### PUT /api/restaurants/:documentId?status=draft — Update a draft document
+
+Updates the draft version of a document without publishing the changes.
+
+```bash
+curl -X PUT \
+  'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj?status=draft' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "Biscotte Restaurant (closed)"
+    }
+  }'
+```
+```js
+const response = await fetch(
+  'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj?status=draft',
+  {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {
+        Name: 'Biscotte Restaurant (closed)',
+      },
+    }),
+  }
+);
+const data = await response.json();
+```
+
+```json
+{
+  "data": {
+    "id": 13,
+    "documentId": "jae8klabhuucbkgfe2xxc5dj",
+    "Name": "Biscotte Restaurant (closed)",
+    "createdAt": "2024-03-06T22:19:54.646Z",
+    "updatedAt": "2024-03-06T22:24:12.145Z",
+    "publishedAt": null,
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+### Publish an existing draft {#publish-later}
+
+To publish a draft created earlier, send a `PUT` request without the `status` parameter, or with `status=published`:
+
+#### PUT /api/restaurants/:documentId — Publish an existing draft
+
+Publishes the draft version of a document, which is the default behavior of PUT requests.
+
+```bash
+curl -X PUT \
+  'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {
+      "Name": "Biscotte Restaurant (closed)"
+    }
+  }'
+```
+```js
+const response = await fetch(
+  'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj',
+  {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {
+        Name: 'Biscotte Restaurant (closed)',
+      },
+    }),
+  }
+);
+const data = await response.json();
+```
+
+```json
+{
+  "data": {
+    "id": 13,
+    "documentId": "jae8klabhuucbkgfe2xxc5dj",
+    "Name": "Biscotte Restaurant (closed)",
+    "createdAt": "2024-03-06T22:19:54.646Z",
+    "updatedAt": "2024-03-06T22:26:38.902Z",
+    "publishedAt": "2024-03-06T22:26:38.905Z",
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+A `PUT` request requires a `data` object in the body, so the request above updates and publishes in a single operation.
+
+### Publish a draft without changing its content {#publish-unchanged}
+
+To publish a draft as-is, send a `PUT` request with an empty `data` object:
+
+#### PUT /api/restaurants/:documentId — Publish a draft without changing its content
+
+Publishes the draft version of a document as-is by sending an empty data object.
+
+```bash
+curl -X PUT \
+  'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {}
+  }'
+```
+```js
+const response = await fetch(
+  'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj',
+  {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {},
+    }),
+  }
+);
+const data = await response.json();
+```
+
+```json
+{
+  "data": {
+    "id": 13,
+    "documentId": "jae8klabhuucbkgfe2xxc5dj",
+    "Name": "Biscotte Restaurant (closed)",
+    "createdAt": "2024-03-06T22:19:54.646Z",
+    "updatedAt": "2024-03-06T22:26:38.902Z",
+    "publishedAt": "2024-03-06T22:31:14.207Z",
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+:::note
+Omitting the `data` key entirely returns a `400` error, so send `"data": {}` rather than an empty body.
+:::
 
 
 
