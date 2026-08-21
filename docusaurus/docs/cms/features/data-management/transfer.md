@@ -4,7 +4,7 @@ description: Transfer data using the Strapi CLI
 displayed_sidebar: cmsSidebar
 canonicalUrl: https://docs.strapi.io/cms/features/data-management/transfer.html
 pagination_prev: cms/features/data-management/export
-pagination_next: cms/features/draft-and-publish
+pagination_next: cms/features/data-management/transfer-locally
 tags:
 - data management system
 - data transfer
@@ -32,7 +32,7 @@ The following documentation details the available options to customize your data
 
 * If you are using an SQLite database in the destination instance other database connections will be blocked while the `transfer` operation is running.
 * Admin users and API tokens are not transferred.
-* If you use websockets or Socket.io in your projects, the transfer command will fail. You will need to **temporarily disable websockets or Socket.io** or ensure that your websocket server is running on a different port than the Strapi server, or a on a specific route within Strapi to use the transfer command.
+* The command fails if your project uses websockets or Socket.io. See [Troubleshooting](#troubleshooting).
 
 :::
 
@@ -53,32 +53,10 @@ The CLI command consists of the following arguments:
 | `--no-checksums` | Disable end-to-end SHA-256 checksum verification for assets. Checksum verification is enabled by default when both the source and destination instances support it. |
 | `--verbose` | Enable verbose logs. |
 
-:::caution
 Either `--to` or `--from` is required.
-:::
 
-:::tip Tips
-* Data transfers are authorized by transfer tokens, which are [managed from the admin panel](/cms/features/data-management#admin-panel-settings). From the admin panel, you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`.
-* It might be convenient to store your transfer tokens into [environment variables](/cms/configurations/environment) to avoid copying/pasting. Just ensure that these tokens are not pushed to public repositories.
-:::
-
-:::warning
-When using nginx and a server that proxies requests into a localhost, issues might occur. To prevent them, ensure all the headers are forwarded correctly by changing the configuration file in `/etc/nginx/sites-available/yourdomain` as follows:
-
-```
-server {
-    listen 80;
-    server_name <yourdomain>;
-    location / {
-        proxy_pass http://localhost:1337;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "Upgrade";
-        proxy_set_header Host $host;
-        include proxy_params;
-    }
-}
-```
-
+:::tip
+It might be convenient to store your transfer tokens into [environment variables](/cms/configurations/environment) to avoid copying/pasting. Just ensure that these tokens are not pushed to public repositories.
 :::
 
 ## Generate a transfer token
@@ -160,94 +138,14 @@ Initiating a data transfer depends on whether you want to push data to a remote 
 
 Once the transfer starts, the command reports live progress in the terminal, including preparation steps, per-stage progress, and timing with an estimated time remaining.
 
-## Bypass all `transfer` command line prompts
+## What a transfer replaces and preserves
 
-When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is useful for implementing `strapi transfer` programmatically. You must pass the `--to-token` option with the transfer token if you use the `--force` option.
-
-:::caution
-The `--force` option bypasses all warnings about content deletion. The deletion only covers the stages that are actually transferred: if you filter stages with `--only` or `--exclude`, the omitted stages are preserved. See [Understanding partial transfers and stage filtering](#understanding-partial-transfers-and-stage-filtering).
-:::
-
-### Example: bypass the `transfer` command line prompts with `--force`
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="yarn">
-
-```bash
-yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token --force
-```
-
-</TabItem>
-
-<TabItem value="npm" label="npm">
-
-```bash
-npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token --force
-```
-
-</TabItem>
-
-</Tabs>
-
-## Include only specified data types during transfer
-
-The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--only` option allows you to transfer only the listed items by passing a comma-separated string with no spaces between the types. The available values are `content`, `files`, and `config`. Schemas are always transferred, as schema matching is used for `strapi transfer`.
-
-### Example: only transfer files
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="yarn">
-
-```bash
-yarn strapi transfer --to https://example.com/admin --only files
-```
-
-</TabItem>
-
-<TabItem value="npm" label="npm">
-
-```bash
-npm run strapi transfer -- --to https://example.com/admin --only files
-```
-
-</TabItem>
-
-</Tabs>
-
-## Exclude data types during transfer
-
-The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string with no spaces between the types. You can't exclude the schemas, as schema matching is used for `strapi transfer`.
-
-### Example: exclude files from transfer
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="yarn">
-
-```bash
-yarn strapi transfer --to https://example.com/admin --exclude files
-```
-
-</TabItem>
-
-<TabItem value="npm" label="npm">
-
-```bash
-npm run strapi transfer -- --to https://example.com/admin --exclude files
-```
-
-</TabItem>
-
-</Tabs>
-
-## Understanding partial transfers and stage filtering
+<VersionBadge version="5.52.2" tooltip="The preserve-versus-replace behavior described below is clarified and logged by the CLI since Strapi 5.52.2." />
 
 When you use `--only` or `--exclude`, only the stages you name are affected on the destination:
 
 - **Omitted stages are preserved.** When a stage is not transferred, the destination data for that stage is left untouched.
-- **Transferred stages are replaced.** Any stage you include in the transfer fully replaces the destination data for that stage.
+- **Transferred stages are replaced.** Any stage you include in the transfer fully replaces the destination data for that stage, except for admin types and ignored types such as `plugin::content-releases.release`, which are always preserved.
 
 Stage filtering and content-type filtering are independent and can be combined. Stage filters (`--only` and `--exclude`) select which kinds of data move. Content-type filters (`--only-content-types` and `--exclude-content-types`) narrow which content types move within the content stage.
 
@@ -275,17 +173,11 @@ npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer
 
 </Tabs>
 
-### Stage transfer behavior
+Each preset maps to transfer stages: `content` covers entities and links, meaning content-type rows, including media library database records, and their relations. `files` covers the assets stage, meaning the upload binaries under `public/uploads`. `config` covers the core store and webhooks. Schemas are always transferred, independently of these presets.
 
-Each stage preset covers a specific payload:
-
-| Preset | Stages | Payload |
-|--------|--------|---------|
-| `content` | entities, links | Content-type rows, including media library database records, and relations |
-| `files` | assets | Upload binaries under `public/uploads` |
-| `config` | configuration | Core store and webhooks |
-
-Schemas are always transferred, independently of these presets.
+:::caution
+Media is split across two presets. The `files` preset covers only the binaries, while the media library database records (`plugin::upload.file` and `plugin::upload.folder`) belong to `content`. So `--exclude files` alone only skips the assets stage: the records still transfer, and the destination can end up with records pointing to binaries that were never transferred. To preserve both, use `--exclude media-library`.
+:::
 
 | Flags | Transferred | Preserved on the destination |
 |-------|-------------|------------------------------|
@@ -296,14 +188,60 @@ Schemas are always transferred, independently of these presets.
 | `--only content,files` | Content and files | Config |
 | `--exclude content` | Files and config | Content |
 | `--exclude files` | Content and config | Upload binaries |
-| `--exclude config` | Content and files | Config |
 | `--exclude media-library` | Content without upload types, and config | Upload binaries, `plugin::upload.file`, and `plugin::upload.folder` |
 
-:::caution
-The `files` preset covers only the binaries under `public/uploads`. Media library database records (`plugin::upload.file` and `plugin::upload.folder`) are part of the `content` preset. This means `--exclude files` alone only skips the assets stage: the media library records still transfer with the rest of the content, so the destination can end up with records pointing to binaries that were never transferred. To preserve both the binaries and their records, use `--exclude media-library`.
-:::
+## Transfer only or exclude data types
 
-Content is never wiped entirely: admin types and ignored types, such as `plugin::content-releases.release`, are always preserved on the destination.
+The default `strapi transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. Two options let you narrow that scope by passing a comma-separated string with no spaces between the types:
+
+- `--only` transfers only the listed items. The available values are `content`, `files`, and `config`.
+- `--exclude` leaves out the listed items. The available values are `content`, `files`, `config`, and `media-library`, which excludes both the upload binaries and the upload content-type records.
+
+Schemas can never be excluded, as schema matching is used for `strapi transfer`.
+
+### Example: only transfer files
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi transfer --to https://example.com/admin --only files
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --only files
+```
+
+</TabItem>
+
+</Tabs>
+
+### Example: exclude files from transfer
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi transfer --to https://example.com/admin --exclude files
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --exclude files
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Filter content types during transfer
 
@@ -364,6 +302,70 @@ npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer
 
 </Tabs>
 
+## Bypass all `transfer` command line prompts
+
+When using the `strapi transfer` command, you are required to confirm that the transfer will delete the existing database contents. The `--force` flag allows you to bypass this prompt. This option is useful for implementing `strapi transfer` programmatically. You must pass the `--to-token` option with the transfer token if you use the `--force` option.
+
+:::caution
+The `--force` option bypasses all warnings about content deletion. The deletion only covers the stages that are actually transferred: if you filter stages with `--only` or `--exclude`, the omitted stages are preserved. See [What a transfer replaces and preserves](#what-a-transfer-replaces-and-preserves).
+:::
+
+### Example: bypass the `transfer` command line prompts with `--force`
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token --force
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token --force
+```
+
+</TabItem>
+
+</Tabs>
+
+## Tune transfer performance and verification
+
+Three options adjust how a transfer runs rather than what it carries:
+
+- `--no-checksums` disables the end-to-end SHA-256 checksum verification applied to assets. Verification is enabled by default whenever both the source and the destination support it, and it is what guarantees that assets arrive intact, so disable it only when you are troubleshooting.
+- `--throttle` injects an artificial delay, in milliseconds, between each transferred entity. Use it to reduce the load a large transfer puts on the destination.
+- `--verbose` prints detailed logs, which is useful when a transfer fails without an obvious cause.
+
+Asset transfers also depend on the `transfer.remote.assetIdleTimeoutMs` server option, which sets how long an idle asset stream may stay open before the transfer aborts. See the [server configuration documentation](/cms/configurations/server).
+
+### Example: throttle a transfer and disable checksum verification
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token \
+  --throttle 100 --no-checksums
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token \
+  --throttle 100 --no-checksums
+```
+
+</TabItem>
+
+</Tabs>
+
 ## Manage data transfer with environment variables
 
 The environment variable `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` is available to disable remote data transfer. In addition to the [RBAC permissions](/cms/features/rbac#configuring-roles-permissions) in the admin panel this can help you secure your Strapi application. To use `STRAPI_DISABLE_REMOTE_DATA_TRANSFER` you can add it to your `.env` file or preface the `start` script. See the following example:
@@ -374,125 +376,31 @@ STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
 
 Additional details on using environment variables in Strapi are available in the [Environment configurations documentation](/cms/configurations/environment).
 
-## Test the transfer command locally
+## Troubleshooting
 
-The `transfer` command is not intended for transferring data between two local instances. The [`export`](/cms/features/data-management/export) and [`import`](/cms/features/data-management/import) commands were designed for this purpose. However, you might want to test `transfer` locally on test instances to better understand the functionality before using it with a remote instance. The following documentation provides a fully-worked example of the `transfer` process.
+**A transfer behind an nginx reverse proxy fails.** When nginx proxies requests into a localhost, the transfer can fail if headers are not forwarded. Ensure all the headers are forwarded correctly by changing the configuration file in `/etc/nginx/sites-available/yourdomain` as follows:
 
-### Create and clone a new Strapi project
-
-1. Create a new Strapi project using the installation command:
-
-   ```bash
-   npx create-strapi-app@latest <project-name> --quickstart
-   ```
-
-2. Create at least 1 content type in the project. See the [Quick Start Guide](/cms/quick-start) if you need instructions on creating your first content type.
-
-   :::caution
-   Do not add any data to your project at this step.
-   :::
-
-3. Commit the project to a git repository:
-
-   ```bash
-   git init
-   git add .
-   git commit -m "first commit"
-   ```
-
-4. Clone the project repository:
-
-   ```bash
-   cd .. # move to the parent directory
-   git clone <path to created git repository>.git/ <new-instance-name>
-   ```
-
-5. Move into the cloned project and install its dependencies:
-
-<Tabs groupId="yarn-npm">
-<TabItem value="yarn" label="yarn">
-
-```bash
-cd <new-instance-name>
-yarn install
+```
+server {
+    listen 80;
+    server_name <yourdomain>;
+    location / {
+        proxy_pass http://localhost:1337;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+        include proxy_params;
+    }
+}
 ```
 
-</TabItem>
-<TabItem value="npm" label="npm">
+**A connection is refused when targeting `localhost`.** Try changing the address to <ExternalLink to="http://127.0.0.1:1337/admin" text="http://127.0.0.1:1337/admin"/>.
 
-```bash
-cd <new-instance-name>
-npm install
-```
+**The transfer fails and the project uses websockets.** The `transfer` command fails when websockets or Socket.io are in use. Temporarily disable them, or ensure the websocket server runs on a different port than the Strapi server, or on a specific route within Strapi.
 
-</TabItem>
-</Tabs>
+## Practice before transferring to a remote instance
 
-   Without this step, the next `build` and `start` commands fail because `strapi` is not yet on the project's local executable path.
+<CustomDocCardsWrapper>
+<CustomDocCard icon="terminal" title="Test a data transfer locally" description="Run through the whole transfer workflow between two local instances first." link="/cms/features/data-management/transfer-locally"/>
+</CustomDocCardsWrapper>
 
-### Add data to the first Strapi instance
-
-1. Return to the first Strapi instance and add data to the content type.
-2. Stop the server on the first instance.
-
-### Create a transfer token
-
-1. Navigate to the second Strapi instance and run the `build` and `start` commands in the root directory:
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="yarn">
-
-```bash
-yarn build && yarn start
-```
-
-</TabItem>
-
-<TabItem value="npm" label="npm">
-
-```bash
-npm run build && npm run start
-```
-
-</TabItem>
-
-</Tabs>
-
-2. Register an admin user.
-3. [Create and copy a transfer token](/cms/features/data-management#admin-panel-settings).
-4. Leave the server running.
-
-### Transfer your data
-
-1. Return the the first Strapi instance.
-2. In the terminal run the `strapi transfer` command:
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="yarn">
-
-```bash
-yarn strapi transfer --to http://localhost:1337/admin
-```
-
-</TabItem>
-
-<TabItem value="npm" label="npm">
-
-```bash
-npm run strapi transfer -- --to http://localhost:1337/admin
-```
-
-</TabItem>
-
-</Tabs>
-
-3. When prompted, apply the transfer token.
-4. When the transfer is complete you can return to the second Strapi instance and see that the content is successfully transferred.
-
-:::tip
-In some cases you might receive a connection refused error targeting `localhost`. Try changing the address to <ExternalLink to="http://127.0.0.1:1337/admin" text="http://127.0.0.1:1337/admin"/>.
-:::
-
-<FeedbackPlaceholder />
