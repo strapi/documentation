@@ -67,6 +67,8 @@ A salt transfer token should be defined in the [admin panel configuration](/cms/
 
 The `strapi transfer` command requires a transfer token issued by the destination instance. To generate a transfer token in the admin panel use the instructions in the [User Guide](/cms/features/data-management#admin-panel-settings).
 
+Transfer tokens are [managed from the admin panel](/cms/features/data-management#admin-panel-settings), where you can also manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate`, and `delete`.
+
 ## Setup and run the data transfer
 
 Initiating a data transfer depends on whether you want to push data to a remote instance or to pull data from the remote:
