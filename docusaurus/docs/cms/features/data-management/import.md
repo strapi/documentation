@@ -219,7 +219,7 @@ npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --
 The default `strapi import` command imports your content (entities and relations), files (assets), project configuration, and schemas. The `--exclude` option allows you to exclude content, files, and the project configuration by passing these items in a comma-separated string with no spaces between the types. You can't exclude the schemas, as schema matching is used for `strapi import`.
 
 :::warning
-Any types excluded from the import will be deleted in your target instance. For example, if you exclude `config` the project configuration in your target instance will be deleted.
+Stages omitted with `--exclude` or `--only` are not wiped in your target instance: their existing data is preserved. For example, if you exclude `config`, the project configuration already present in your target instance is left untouched. Stages that are imported fully replace the corresponding data in the target instance.
 :::
 
 :::note
