@@ -60,7 +60,9 @@ These props belong to the underlying `<Badge>` component. The alias variants pre
 
 ### Case 1: the badge qualifies a whole section or page
 
-Put the badge **on its own line, directly under the heading**, and **keep the tooltip**. The heading has room for it, and the tooltip is what tells the reader what the version actually gates.
+Put the badge on **a dedicated badge line directly under the heading** (`h1`, `h2`, `h3`, or deeper), and **keep the tooltip**. The line has room for it, and the tooltip is what tells the reader what the badge actually gates.
+
+That line is a shared slot, not one badge per line: put **every badge that qualifies the section on it**, space-separated, on a single line. Never stack them on consecutive lines.
 
 ```mdx
 ## Filter content types during transfer
@@ -70,20 +72,20 @@ Put the badge **on its own line, directly under the heading**, and **keep the to
 The `--exclude-content-types` and `--only-content-types` options let you …
 ```
 
+Several flags on the same heading, all on one line — typically plan badges, then maturity, then version:
+
+```mdx
+# Content History
+
+<GrowthBadge /> <EnterpriseBadge/> <VersionBadge version="5.0.0" />
+```
+
 When the heading introduces a *newly documented behavior* rather than a brand-new option, override the tooltip so readers do not conclude the whole feature is new:
 
 ```mdx
 ## What a transfer replaces and preserves
 
 <VersionBadge version="5.52.2" tooltip="The preserve-versus-replace behavior described below is clarified and logged by the CLI since Strapi 5.52.2." />
-```
-
-Chain plan and version badges on that same line when several flags apply:
-
-```mdx
-# Content History
-
-<GrowthBadge /> <EnterpriseBadge/> <VersionBadge version="5.0.0" />
 ```
 
 ### Case 2: the badge qualifies one sentence, row, or option
@@ -104,10 +106,10 @@ Same rule inside a table cell:
 
 | The badge applies to… | Placement | Tooltip |
 |---|---|---|
-| A heading's whole section or page | Own line, under the heading | Keep it; override the text when the version gates a clarified behavior rather than a new feature |
-| One sentence, list item, or table row | Same line as the content | `noTooltip`, and state the version in the prose |
+| A heading's whole section or page | Shared badge line under the heading, all badges space-separated on it | Keep it; override the text when the version gates a clarified behavior rather than a new feature |
+| One sentence, list item, or table row | Same line as the content, woven into the sentence | `noTooltip`, and state the version in the prose |
 
-Do not put a badge on its own line in the middle of prose: it reads as applying to everything that follows, which is exactly what Case 1 means.
+Do not put a badge on a line of its own in the middle of prose: it reads as applying to everything that follows, which is exactly what Case 1 means.
 
 ## Canonical examples
 
