@@ -27,6 +27,26 @@ The Content History feature, in the <Icon name="feather" /> Content Manager, giv
 
 <Guideflow lightId="9r2m2y1sok" darkId="er566mli6p"/>
 
+## How versions are created
+
+A history version is only created when a document is modified through the <Icon name="feather" /> Content Manager in the admin panel. Content modified in any other way does not appear in the Content History of the document.
+
+| Content is modified through | Version created |
+|-----------------------------|-----------------|
+| The [Content Manager](/cms/features/content-manager) in the admin panel | Yes |
+| The [REST API](/cms/api/rest) | No |
+| The [GraphQL API](/cms/api/graphql) | No |
+| The [Document Service API](/cms/api/document-service), for instance `strapi.documents()` called from application code | No |
+| [Lifecycle hooks](/cms/backend-customization/models#lifecycle-hooks) | No |
+| [Cron jobs](/cms/configurations/cron) | No |
+| The `strapi import` and `strapi transfer` commands (see [Data management](/cms/features/data-management)) | No |
+
+:::caution
+Content History is not a record of every change made to a document. Documents written programmatically, such as those created by a migration script or an integration calling the REST API, have no corresponding version, and a document can therefore differ from the most recent version listed in its Content History.
+
+To trace the actions performed by users of the admin panel, use [Audit Logs](/cms/features/audit-logs).
+:::
+
 ## Usage
 
 **Path to use the feature:** <Icon name="feather" /> Content Manager <br/> From the edit view of a content type: click <Icon name="dots-three-outline" /> (top right corner) then <Icon name="clock-counter-clockwise" /> **Content History**.
@@ -73,3 +93,11 @@ sources={{
   dark:'/img/assets/content-manager/restoring-content-history_DARK.png',
 }}
 />
+
+## Version retention
+
+Content History is not a permanent archive. Versions are deleted automatically: a job runs once a day, at midnight, and permanently deletes every version older than the retention period. Versions deleted by this job cannot be recovered from the Content History interface.
+
+Regardless of the plan, versions are kept for a maximum of 90 days. This period is counted from the creation date of each version.
+
+The retention period can be shortened, but never extended, with the [`history.retentionDays`](/cms/configurations/admin-panel#content-history) parameter of the `/config/admin` file. When both the license and the configuration file define a value, the lower of the two applies.
