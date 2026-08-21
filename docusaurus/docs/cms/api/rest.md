@@ -93,12 +93,12 @@ The Upload package (which powers the [Media Library feature](/cms/features/media
 [Components](/cms/backend-customization/models#components-json) don't have API endpoints.
 :::
 
-## Requests
+## Requests and responses {#requests}
 
 :::strapi Strapi 5 vs. Strapi v4
 Strapi 5's Content API includes 2 major differences with Strapi v4:
 
-- The response format has been flattened, which means attributes are no longer nested in a `data.attributes` object and are directly accessible at the first level of the `data` object (e.g., a content-type's "title" attribute is accessed with `data.title`).
+- The response format has been flattened, which means attributes are no longer nested in a `data.attributes` object and are directly accessible at the first level of the `data` object (e.g., a content-type's "title" attribute is accessed with `data.title`). While migrating, you can pass an optional header to keep the v4 format (see the [related breaking change](/cms/migration/v4-to-v5/breaking-changes/new-response-format)).
 - Strapi 5 now uses **documents** <DocumentDefinition/> and documents are accessed by their `documentId` (see [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/use-document-id) for details)
 :::
 
@@ -121,13 +121,9 @@ Requests return a response as an object which usually includes the following key
 Some plugins (including Users & Permissions and Upload) may not follow this response format.
 :::
 
+The following sections detail each generated endpoint.
+
 ### Get documents {#get-all}
-
-:::tip Tip: Strapi 5 vs. Strapi 4
-In Strapi 5 the response format has been flattened, and attributes are directly accessible from the `data` object instead of being nested in `data.attributes`.
-
-You can pass an optional header while you're migrating to Strapi 5 (see the [related breaking change](/cms/migration/v4-to-v5/breaking-changes/new-response-format)).
-:::
 
 <Endpoint
   id="get-all-endpoint"
@@ -556,4 +552,22 @@ const response = await fetch(
 </TabItem>
 </Tabs>
 
+<Responses>
+<ResponseTab status={204} statusText="No Content">
+
+`DELETE` requests only send a `204` HTTP status code on success and do not return any data in the response body.
+
+</ResponseTab>
+</Responses>
+
 </Endpoint>
+
+:::tip Performance best practices
+For production applications, be intentional about data fetching: use explicit population, limit population depth, and centralize population logic in route middlewares. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog for a comprehensive guide.
+:::
+
+## What's next?
+
+- Refine your queries with [API parameters](/cms/api/rest/parameters): [filters](/cms/api/rest/filters), [sorting and pagination](/cms/api/rest/sort-pagination), [populate and select](/cms/api/rest/populate-select), [locale](/cms/api/rest/locale), and [status](/cms/api/rest/status).
+- Manage relations through the API with [Managing relations](/cms/api/rest/relations).
+- Follow a use-case-driven walkthrough with the [REST API guides](/cms/api/rest/guides/intro).
