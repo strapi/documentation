@@ -147,6 +147,9 @@ The `status` parameter also applies to `POST` and `PUT` requests, where it deter
 | [`POST /api/:pluralApiId`](#create-published) | Creates a document and publishes it immediately |
 | [`PUT /api/:pluralApiId/:documentId?status=draft`](#update-draft) | Updates the draft without publishing the changes |
 | [`PUT /api/:pluralApiId/:documentId`](#publish-later) | Updates the draft and publishes it |
+| [`PUT /api/:pluralApiId/:documentId` with an empty `data` object](#publish-unchanged) | Publishes the draft as-is, without changing its content |
+
+The same applies to single types, where the `status` parameter can be passed to `PUT /api/:singularApiId`.
 
 :::note
 With [Draft & Publish](/cms/features/draft-and-publish) enabled, the REST API defaults to `status=published`, so a `POST` or `PUT` request that does not include the `status` parameter publishes the document immediately. Pass `status=draft` explicitly to create or update content without publishing it.
@@ -454,7 +457,11 @@ const data = await response.json();
 
 </Endpoint>
 
-A `PUT` request requires a `data` object in the body, so the request above updates and publishes in a single operation. To publish a document without changing its content, pass an empty `data` object:
+A `PUT` request requires a `data` object in the body, so the request above updates and publishes in a single operation.
+
+### Publish a draft without changing its content {#publish-unchanged}
+
+To publish a draft as-is, send a `PUT` request with an empty `data` object:
 
 <Endpoint
   id="publish-unchanged-endpoint"
