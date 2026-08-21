@@ -6600,11 +6600,11 @@ Use the `populate` parameter with the Document Service API to explicitly load re
 By default the [Document Service API](/cms/api/document-service) does not populate any relations, media fields, components, or dynamic zones. This page describes how to use the `populate` parameter to populate specific fields.
 
 :::tip
-You can also use the `select` parameter to return only specific fields with the query results (see the [`select` parameter](/cms/api/document-service/fields) documentation).
+You can also use the `fields` parameter to return only specific fields with the query results (see the [`fields` parameter](/cms/api/document-service/fields) documentation).
 :::
 
 :::caution
-If the Users & Permissions plugin is installed, the `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated.
+If the Users & Permissions feature is enabled, the `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated.
 :::
 
 <!-- TODO: add link to populate guides (even if REST API, the same logic still applies) -->
@@ -6783,6 +6783,10 @@ Omit `sort` from a `populate` object to preserve the default connect order (the 
 :::
 
 ## Components & Dynamic Zones
+
+:::note
+When populated, empty `morphMany` relations (including `type: 'media', multiple: true` fields such as a gallery) return `[]` instead of `null`, consistent with `oneToMany` and `manyToMany`. See the [morphMany serialization breaking change](/cms/migration/v4-to-v5/breaking-changes/morph-many-serialization) for migration guidance.
+:::
 
 Components are populated the same way as relations:
 
@@ -14153,7 +14157,7 @@ const query = qs.stringify(
   }
 );
 
-await request(`/api/users?${query}`);
+await request(`/api/restaurants?${query}`);
 ```
 
 ```json
@@ -14344,6 +14348,10 @@ For many-to-many and other join-table relations, an explicit `sort` within a `po
 
 :::tip Performance tip
 In production, always use explicit population instead of wildcards like `populate=*`. Limit population depth to 2-3 levels and consider centralizing population logic in route middlewares. See [Building High-Performance Strapi Applications](https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices) on the Strapi blog.
+:::
+
+:::note
+When populated, empty `morphMany` relations (including `type: 'media', multiple: true` fields such as a gallery) return `[]` instead of `null`, consistent with `oneToMany` and `manyToMany`. See the [morphMany serialization breaking change](/cms/migration/v4-to-v5/breaking-changes/morph-many-serialization) for migration guidance.
 :::
 
 
@@ -39773,6 +39781,7 @@ You can click on the description of any breaking change in the following tables 
 | [Upload a file at entry creation is no longer possible](/cms/migration/v4-to-v5/breaking-changes/no-upload-at-entry-creation) | Yes | No |
 | [Components and dynamic zones should be populated using the detailed population strategy](/cms/migration/v4-to-v5/breaking-changes/no-shared-population-strategy-components-dynamic-zones) | Yes | No |
 | [Updating repeatable components with the Document Service API is not recommended](/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api) | Yes | No |
+| [Empty `morphMany` relations return `[]` instead of `null` when populated](/cms/migration/v4-to-v5/breaking-changes/morph-many-serialization) | Yes | No |
 
 
 
@@ -41493,6 +41502,77 @@ This section regroups useful notes and procedures about the introduced breaking 
 A codemod will automatically handle the change in most cases.
 
 In cases were the codemod does not automatically handle the change, users will need to manually replace all their strings to target the new config paths.
+
+
+
+# Empty morphMany relations return [] instead of null when populated
+Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/morph-many-serialization
+
+# Empty morphMany relations return [] instead of null when populated
+
+In Strapi 5, populating an empty `morphMany` relation (including `type: 'media', multiple: true` fields such as a gallery) returns `[]` instead of `null`. Update client code that checks `field === null` to treat `[]` as the empty state.
+
+In Strapi 5, empty `morphMany` relations and `type: 'media', multiple: true` fields (such as a gallery) now serialize as an empty array when populated, consistent with `oneToMany` and `manyToMany` relations. Previously, these fields returned `null` when no related entries existed.
+
+This page is part of the [breaking changes database](/cms/migration/v4-to-v5/breaking-changes) and provides information about the breaking change and additional instructions to migrate from Strapi v4 to Strapi 5.
+
+- Is this breaking change affecting plugins? Yes
+- Is this breaking change automatically handled by a codemod? No
+
+## Breaking change description
+
+**In Strapi v4**
+
+Populating an empty `morphMany` relation or a multiple media field returned `null`:
+
+```json
+{
+  "gallery": null
+}
+```
+
+**In Strapi 5**
+
+Populating an empty `morphMany` relation or a multiple media field returns an empty array:
+
+```json
+{
+  "gallery": []
+}
+```
+
+## Migration
+
+This section regroups useful notes and procedures about the introduced breaking change.
+
+### Notes
+
+- This change applies to all `morphMany` relation types, including `type: 'media', multiple: true` fields (for example, gallery fields).
+- The change is unconditional and is not controlled by the `api.documents.strictRelations` setting.
+- See [Document Service API: Populating fields](/cms/api/document-service/populate) and [REST API: Population & Field Selection](/cms/api/rest/populate-select#population) for related information on populating relations.
+
+### Manual procedure
+
+Check client code, webhooks, and integrations that consume populated `morphMany` or multiple media fields.
+
+1. Search your codebase for code that branches on `field === null` or treats `null` as "no value" for populated `morphMany` or multiple media fields.
+2. Replace `null` checks with array checks, for example using `!field?.length`.
+
+**Before**
+
+```js
+if (entry.gallery === null) {
+  // handle empty gallery
+}
+```
+
+**After**
+
+```js
+if (!entry.gallery?.length) {
+  // handle empty gallery
+}
+```
 
 
 

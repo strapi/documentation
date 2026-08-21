@@ -10998,7 +10998,7 @@ const query = qs.stringify(
   }
 );
 
-await request(`/api/users?${query}`);
+await request(`/api/restaurants?${query}`);
 ```
 
 Language: JSON
@@ -30288,6 +30288,56 @@ File path: /github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resourc
 strapi.config.get('plugin::upload.somesetting');
 if ( strapi.config.has('plugin::upload.somesetting') ) {
   strapi.config.set('plugin::upload.somesetting', false);
+}
+```
+
+
+
+# Empty morphMany relations return [] instead of null when populated
+Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/morph-many-serialization
+
+## Breaking change description
+Description: Populating an empty morphMany relation or a multiple media field returned null:
+(Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/morph-many-serialization#breaking-change-description)
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "gallery": null
+}
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "gallery": []
+}
+```
+
+
+## Manual procedure
+Description: Before
+(Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/morph-many-serialization#manual-procedure)
+
+Language: JavaScript
+File path: N/A
+
+```js
+if (entry.gallery === null) {
+  // handle empty gallery
+}
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+if (!entry.gallery?.length) {
+  // handle empty gallery
 }
 ```
 
