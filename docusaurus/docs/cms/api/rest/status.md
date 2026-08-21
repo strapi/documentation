@@ -65,7 +65,7 @@ Since published versions are returned by default, passing no status parameter is
 <Endpoint
   id="get-draft-versions"
   method="GET"
-  path="/api/articles?status=draft"
+  path="/api/restaurants?status=draft"
   title="Get draft versions of restaurants"
   description="Returns draft versions of documents by passing the status=draft query parameter.">
 
@@ -73,7 +73,7 @@ Since published versions are returned by default, passing no status parameter is
 <TabItem value="curl" label="cURL">
 
 ```bash
-curl 'http://localhost:1337/api/articles?status=draft' \
+curl 'http://localhost:1337/api/restaurants?status=draft' \
   -H 'Authorization: Bearer <token>'
 ```
 
@@ -88,7 +88,7 @@ const query = qs.stringify({
     encodeValuesOnly: true, // prettify URL
 });
 
-await request(`/api/articles?${query}`);
+await request(`/api/restaurants?${query}`);
 ```
 
 </TabItem>
@@ -126,7 +126,7 @@ await request(`/api/articles?${query}`);
       "page": 1,
       "pageSize": 25,
       "pageCount": 1,
-      "total": 4
+      "total": 1
     }
   }
 }
@@ -143,10 +143,10 @@ The `status` parameter also applies to `POST` and `PUT` requests, where it deter
 
 | Request | Result |
 |---------|--------|
-| [`POST /api/content-type-plural-name?status=draft`](#create-draft) | Creates a draft document |
-| [`POST /api/content-type-plural-name`](#create-published) | Creates a document and publishes it immediately |
-| [`PUT /api/content-type-plural-name/document-id?status=draft`](#update-draft) | Updates the draft without publishing the changes |
-| [`PUT /api/content-type-plural-name/document-id`](#publish-later) | Publishes the existing draft |
+| [`POST /api/:pluralApiId?status=draft`](#create-draft) | Creates a draft document |
+| [`POST /api/:pluralApiId`](#create-published) | Creates a document and publishes it immediately |
+| [`PUT /api/:pluralApiId/:documentId?status=draft`](#update-draft) | Updates the draft without publishing the changes |
+| [`PUT /api/:pluralApiId/:documentId`](#publish-later) | Publishes the existing draft |
 
 :::caution
 Since the REST API defaults to `status=published`, a `POST` or `PUT` request that does not include the `status` parameter publishes the document immediately. Pass `status=draft` explicitly to create or update content without publishing it.
@@ -161,13 +161,13 @@ Published documents always keep a draft counterpart. Creating or updating a docu
 <Endpoint
   id="create-draft-endpoint"
   method="POST"
-  path="/api/articles?status=draft"
+  path="/api/restaurants?status=draft"
   title="Create a draft document"
   description="Creates a new document and leaves it as a draft by passing the status=draft query parameter.">
 
 ```bash
 curl -X POST \
-  'http://localhost:1337/api/articles?status=draft' \
+  'http://localhost:1337/api/restaurants?status=draft' \
   -H 'Authorization: Bearer <token>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -209,13 +209,13 @@ Omitting the `status` parameter, or passing `status=published`, creates the docu
 <Endpoint
   id="create-published-endpoint"
   method="POST"
-  path="/api/articles"
+  path="/api/restaurants"
   title="Create and publish a document"
   description="Creates a new document and publishes it immediately, which is the default behavior of the REST API.">
 
 ```bash
 curl -X POST \
-  'http://localhost:1337/api/articles' \
+  'http://localhost:1337/api/restaurants' \
   -H 'Authorization: Bearer <token>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -257,13 +257,13 @@ Pass `status=draft` to a `PUT` request to modify the draft version and leave the
 <Endpoint
   id="update-draft-endpoint"
   method="PUT"
-  path="/api/articles/:documentId?status=draft"
+  path="/api/restaurants/:documentId?status=draft"
   title="Update a draft entry"
   description="Updates the draft version of a document without publishing the changes.">
 
 ```bash
 curl -X PUT \
-  'http://localhost:1337/api/articles/jae8klabhuucbkgfe2xxc5dj?status=draft' \
+  'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj?status=draft' \
   -H 'Authorization: Bearer <token>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -303,13 +303,13 @@ To publish a draft created earlier, send a `PUT` request without the `status` pa
 <Endpoint
   id="publish-later-endpoint"
   method="PUT"
-  path="/api/articles/:documentId"
+  path="/api/restaurants/:documentId"
   title="Publish an existing draft"
   description="Publishes the draft version of a document, which is the default behavior of PUT requests.">
 
 ```bash
 curl -X PUT \
-  'http://localhost:1337/api/articles/jae8klabhuucbkgfe2xxc5dj' \
+  'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj' \
   -H 'Authorization: Bearer <token>' \
   -H 'Content-Type: application/json' \
   -d '{
