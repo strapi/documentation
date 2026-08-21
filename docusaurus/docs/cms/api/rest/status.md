@@ -18,9 +18,7 @@ tags:
 - update
 ---
 
-import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
-import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 
 # REST API: `status`
 
@@ -137,6 +135,8 @@ await request(`/api/restaurants?${query}`);
 
 </Endpoint>
 
+<QsForQueryBody />
+
 ## Create or update as a draft or as published {#create-update}
 
 The `status` parameter also applies to `POST` and `PUT` requests, where it determines whether the document is left as a draft or published right away:
@@ -165,6 +165,9 @@ Published documents always keep a draft counterpart. Creating or updating a docu
   title="Create a draft document"
   description="Creates a new document and leaves it as a draft by passing the status=draft query parameter.">
 
+<Tabs>
+<TabItem value="curl" label="cURL">
+
 ```bash
 curl -X POST \
   'http://localhost:1337/api/restaurants?status=draft' \
@@ -176,6 +179,31 @@ curl -X POST \
     }
   }'
 ```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/restaurants?status=draft',
+  {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {
+        Name: 'Biscotte Restaurant',
+      },
+    }),
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
 
 <Responses>
 <ResponseTab status={201} statusText="Created">
@@ -213,6 +241,9 @@ Omitting the `status` parameter, or passing `status=published`, creates the docu
   title="Create and publish a document"
   description="Creates a new document and publishes it immediately, which is the default behavior of the REST API.">
 
+<Tabs>
+<TabItem value="curl" label="cURL">
+
 ```bash
 curl -X POST \
   'http://localhost:1337/api/restaurants' \
@@ -224,6 +255,31 @@ curl -X POST \
     }
   }'
 ```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/restaurants',
+  {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {
+        Name: 'Biscotte Restaurant',
+      },
+    }),
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
 
 <Responses>
 <ResponseTab status={201} statusText="Created">
@@ -261,6 +317,9 @@ Pass `status=draft` to a `PUT` request to modify the draft version and leave the
   title="Update a draft entry"
   description="Updates the draft version of a document without publishing the changes.">
 
+<Tabs>
+<TabItem value="curl" label="cURL">
+
 ```bash
 curl -X PUT \
   'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj?status=draft' \
@@ -272,6 +331,31 @@ curl -X PUT \
     }
   }'
 ```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj?status=draft',
+  {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {
+        Name: 'Biscotte Restaurant (closed)',
+      },
+    }),
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
 
 <Responses>
 <ResponseTab status={200} statusText="OK">
@@ -307,6 +391,9 @@ To publish a draft created earlier, send a `PUT` request without the `status` pa
   title="Publish an existing draft"
   description="Publishes the draft version of a document, which is the default behavior of PUT requests.">
 
+<Tabs>
+<TabItem value="curl" label="cURL">
+
 ```bash
 curl -X PUT \
   'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj' \
@@ -318,6 +405,31 @@ curl -X PUT \
     }
   }'
 ```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj',
+  {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {
+        Name: 'Biscotte Restaurant (closed)',
+      },
+    }),
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
 
 <Responses>
 <ResponseTab status={200} statusText="OK">
@@ -342,6 +454,74 @@ curl -X PUT \
 
 </Endpoint>
 
+A `PUT` request requires a `data` object in the body, so the request above updates and publishes in a single operation. To publish a document without changing its content, pass an empty `data` object:
+
+<Endpoint
+  id="publish-unchanged-endpoint"
+  method="PUT"
+  path="/api/restaurants/:documentId"
+  title="Publish a draft without changing its content"
+  description="Publishes the draft version of a document as-is by sending an empty data object.">
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+curl -X PUT \
+  'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj' \
+  -H 'Authorization: Bearer <token>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "data": {}
+  }'
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch(
+  'http://localhost:1337/api/restaurants/jae8klabhuucbkgfe2xxc5dj',
+  {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer <token>',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: {},
+    }),
+  }
+);
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+<Responses>
+<ResponseTab status={200} statusText="OK">
+
+```json
+{
+  "data": {
+    "id": 13,
+    "documentId": "jae8klabhuucbkgfe2xxc5dj",
+    "Name": "Biscotte Restaurant (closed)",
+    "createdAt": "2024-03-06T22:19:54.646Z",
+    "updatedAt": "2024-03-06T22:26:38.902Z",
+    "publishedAt": "2024-03-06T22:31:14.207Z",
+    "locale": "en"
+  },
+  "meta": {}
+}
+```
+
+</ResponseTab>
+</Responses>
+
+</Endpoint>
+
 :::note
-A `PUT` request requires a `data` object in the body, so it updates and publishes in a single operation. To publish a document without changing its content, pass an empty `data` object.
+Omitting the `data` key entirely returns a `400` error, so send `"data": {}` rather than an empty body.
 :::
