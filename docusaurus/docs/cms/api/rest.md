@@ -565,9 +565,3 @@ const response = await fetch(
 :::tip Performance best practices
 For production applications, be intentional about data fetching: use explicit population, limit population depth, and centralize population logic in route middlewares. See <ExternalLink to="https://strapi.io/blog/building-high-performance-strapi-applications-common-pitfalls-and-best-practices" text="Building High-Performance Strapi Applications" /> on the Strapi blog for a comprehensive guide.
 :::
-
-## What's next?
-
-- Refine your queries with [API parameters](/cms/api/rest/parameters): [filters](/cms/api/rest/filters), [sorting and pagination](/cms/api/rest/sort-pagination), [populate and select](/cms/api/rest/populate-select), [locale](/cms/api/rest/locale), and [status](/cms/api/rest/status).
-- Manage relations through the API with [Managing relations](/cms/api/rest/relations).
-- Follow a use-case-driven walkthrough with the [REST API guides](/cms/api/rest/guides/intro).
