@@ -312,7 +312,7 @@ If the [Internationalization (i18n) feature](/cms/features/internationalization)
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations) for more details).
 :::
 
-:::caution Draft & Publish
+:::note Draft & Publish
 With [Draft & Publish](/cms/features/draft-and-publish) enabled, a POST request without a `status` parameter creates the document and publishes it immediately. Pass `?status=draft` to create it as a draft (see [REST API: `status`](/cms/api/rest/status#create-update)).
 :::
 
@@ -414,12 +414,12 @@ const data = await response.json();
 
 ### Update a document {#update}
 
-:::note NOTES
+:::note
 * Even with the [Internationalization (i18n) feature](/cms/features/internationalization) installed, it's currently not possible to [update the locale of a document](/cms/api/rest/locale#rest-update).
 * While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations) for more details).
 :::
 
-:::caution Draft & Publish
+:::note Draft & Publish
 With [Draft & Publish](/cms/features/draft-and-publish) enabled, a PUT request without a `status` parameter publishes the changes immediately. Pass `?status=draft` to update the draft only (see [REST API: `status`](/cms/api/rest/status#create-update)).
 :::
 
