@@ -294,7 +294,7 @@ const data = await response.json();
   "error": {
     "status": 404,
     "name": "NotFoundError",
-    "message": "Document not found"
+    "message": "Not Found"
   }
 }
 ```
