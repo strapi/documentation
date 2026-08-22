@@ -647,7 +647,10 @@ Just above the list of folders and assets and next to the !<Icon name="funnel-si
     - from an URL, type or copy and paste an URL(s) in the _URL_ field, making sure multiple URLs are separated by carriage returns, then click **Next**.
 3. (optional) Click the edit button <Icon name="pencil-simple" /> to view asset metadata and define a _File name_, _Alternative text_ and a _Caption_ for the asset (see [Managing individual assets](#managing-assets)).
 4. (optional) Add more assets by clicking **Add new assets** and going back to step 2.
-5. Click on **Upload assets to the library**.
+5. Click on **Upload assets to the library**. An upload progress dialog appears, showing:
+    - **Uploading** files with a progress bar for each
+    - **Queued** files waiting their turn in the upload queue (marked with a clock icon)
+    - **Completed** files and any that failed or were cancelled
 
 <ThemedImage
   alt="Add new assets window"
