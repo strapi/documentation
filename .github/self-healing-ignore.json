@@ -1104,6 +1104,26 @@
       "number": 27324,
       "reason": "Router: Minor logging level change for internal v4→v5 migrations. Not a primary feature or config change that requires documentation. Migration docs already exist.",
       "added": "2026-08-20"
+    },
+    {
+      "number": 27438,
+      "reason": "Triage: internal performance optimization; permission caching doesn't change user-facing behavior",
+      "added": "2026-08-22"
+    },
+    {
+      "number": 27311,
+      "reason": "Triage: build-time memory optimization; doesn't change user-facing behavior",
+      "added": "2026-08-22"
+    },
+    {
+      "number": 27425,
+      "reason": "Router: Internal admin panel UI refactoring. Moves an existing button and adds tooltips to icon buttons. No user-facing API, feature capability, or workflow changes — only admin UI layout changes.",
+      "added": "2026-08-22"
+    },
+    {
+      "number": 27394,
+      "reason": "Router: Internal database query optimization for Content History on MySQL. Optimization change does not affect user-facing behavior, API surface, or feature capabilities — it only improves performance for a specific scenario.",
+      "added": "2026-08-22"
     }
   ]
 }
