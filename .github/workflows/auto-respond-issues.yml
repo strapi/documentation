@@ -387,14 +387,38 @@ jobs:
           cat .github/prompts/issue-to-pr-triage.md >> $GITHUB_OUTPUT
           echo "PROMPT_EOF" >> $GITHUB_OUTPUT
 
+      # `allowed_non_write_users: '*'` disables the action's actor check, which
+      # otherwise aborts the run whenever the issue author lacks write access —
+      # i.e. on every community issue, which is the whole point of this workflow.
+      #
+      # This does NOT grant the issue author any write access. The task comes
+      # from `.github/prompts/issue-to-pr-triage.md`, a versioned file only
+      # maintainers can change; the author supplies data to classify, never
+      # instructions. The check guards the `@claude do X` usage pattern, where
+      # the actor dictates the task. That is not the shape of this workflow.
+      #
+      # The real exposure is prompt injection through the issue text. It is
+      # handled where it lives: the "Untrusted input" section of the prompt, and
+      # the deny-list below.
       - name: Run triage and act (Sonnet)
         if: steps.process-issue.outputs.kapa_succeeded == 'true'
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
           github_token: ${{ secrets.PAT_TOKEN_PIWI }}
+          allowed_non_write_users: '*'
           prompt: ${{ steps.load-triage-prompt.outputs.prompt }}
-          claude_args: '--model claude-sonnet-4-6 --max-turns 50 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
+          # Bash is required (git, gh, writing the result file), so the deny-list
+          # is what actually bounds the blast radius: no force-push, no pushing
+          # to main, no branch/tag deletion, no history rewrite, no workflow or
+          # prompt edits (an injected run must not be able to weaken the next one),
+          # and no reading the runner's env or the git credential store.
+          claude_args: >-
+            --model claude-sonnet-4-6
+            --max-turns 50
+            --allowedTools "Bash,Read,Write,Edit,Glob,Grep"
+            --disallowedTools
+            "Bash(git push*--force*),Bash(git push*-f *),Bash(git push*origin main*),Bash(git push*origin/main*),Bash(git push*:main*),Bash(git push*--delete*),Bash(git push*--mirror*),Bash(git rebase*),Bash(git filter-branch*),Bash(git branch*-D*),Bash(git branch*-d*),Bash(git tag*),Bash(git remote*),Bash(git config*),Bash(gh auth*),Bash(gh secret*),Bash(gh variable*),Bash(gh workflow*),Bash(gh api*-X DELETE*),Bash(gh api*--method DELETE*),Bash(gh repo delete*),Bash(gh release*),Bash(gh issue close*),Bash(gh pr merge*),Bash(gh pr close*),Bash(env),Bash(printenv*),Bash(set),Bash(export*),Edit(.github/**),Write(.github/**),Edit(**/.git/**),Write(**/.git/**),Read(**/.git/config),Read(**/.netrc)"
           show_full_output: true
         env:
           DOC_REPO: ${{ github.workspace }}
