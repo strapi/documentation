@@ -327,7 +327,7 @@ To configure HTTP cookies for admin authentication, use the following parameters
 | `auth.cookie.path`                | Cookie path                                                                                                                                                                                        | string        | `'/admin'`                                                                                                                          |
 | `auth.cookie.sameSite`            | <ExternalLink to="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value" text="SameSite cookie attribute"/>                                                                                                                                                                          | string        | `'lax'`                                                                                                                             |
 
-## Content history {#content-history}
+## Content history
 
 The [Content History](/cms/features/content-history) feature can be configured with the following parameter:
 
