@@ -336,7 +336,7 @@ The [Content History](/cms/features/content-history) feature can be configured w
 | `history.retentionDays`           | How long history versions are kept, in days.<br /><br />_The value can only shorten the retention period, see the note under the table._                                                            | integer       | 90                                                                                                                                  |
 
 :::note Retention days for Content History
-The `history.retentionDays` value is only taken into account if it is _smaller_ than the value stored in the license information. It cannot be used to keep history versions for longer than the license allows, and versions are never kept for more than 90 days. There is no equivalent setting in the admin panel: the retention period can only be shortened from the `config/admin.js|ts` configuration file.
+The `history.retentionDays` value is only taken into account if it is _smaller_ than the value stored in the license information. It cannot be used to keep history versions for longer than the license allows, and versions are never kept for more than 90 days.
 :::
 
 ## Feature flags
