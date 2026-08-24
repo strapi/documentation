@@ -289,6 +289,11 @@ const sidebars = {
             },
             {
               type: 'link',
+              label: 'Content History',
+              href: '/cms/configurations/admin-panel#content-history',
+            },
+            {
+              type: 'link',
               label: 'Feature flags',
               href: '/cms/configurations/admin-panel#feature-flags',
             },
