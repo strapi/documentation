@@ -8,5 +8,10 @@
     "assignee": "pwizla",
     "labels": ["auto-doc-healing"],
     "title_prefix": ""
+  },
+  "issue-to-pr": {
+    "assignee": "pwizla",
+    "labels": ["auto-doc-healing"],
+    "title_prefix": ""
   }
 }

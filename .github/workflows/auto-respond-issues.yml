@@ -9,10 +9,22 @@ on:
         description: 'Number of issue to handle'
         required: true
         type: string
+      force_branch:
+        description: 'Force a triage decision instead of letting the model decide'
+        required: false
+        type: choice
+        default: 'auto'
+        options:
+          - auto
+          - create-pr
+          - needs-writing
+          - not-docs
 
 permissions:
   issues: write
-  contents: read
+  contents: write
+  pull-requests: write
+  id-token: write
 
 jobs:
   auto-respond:
@@ -20,6 +32,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # PAT so the triage stage can push a branch and open a PR attributed
+          # to the maintainer (same approach as docs-self-healing.yml).
+          token: ${{ secrets.PAT_TOKEN_PIWI }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -62,16 +78,51 @@ jobs:
             }
             
             console.log(`Processing issue #${issueNumber}: ${issueTitle}`);
-            
+
             // Skip if issue is from a maintainer/collaborator
-            const collaborators = ['pwizla']; 
+            const collaborators = ['pwizla'];
             const isTesting = issueTitle.includes('[TEST]') || issueBody.includes('testing-auto-response');
-      
+
             if (collaborators.includes(issueAuthor) && !isTesting) {
               console.log('Issue from maintainer, skipping auto-response');
               return;
             }
-            
+
+            // On a manual re-run, reuse the Kapa answer already posted instead of
+            // posting a duplicate comment. Lets a dispatch (optionally with
+            // force_branch) re-trigger only the triage stage. Placed after the
+            // maintainer check so a maintainer-authored issue is still skipped.
+            const isManual = Boolean(context.payload.inputs?.issue_number);
+            if (isManual) {
+              const { data: existing } = await github.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                per_page: 100
+              });
+              const kapaComment = existing.find(c =>
+                c.user.login === 'github-actions[bot]' &&
+                c.body.includes("I've analyzed your question")
+              );
+              if (kapaComment) {
+                console.log('Existing Kapa comment found, reusing it (no new comment posted)');
+                const fs = require('fs');
+                const cleaned = (issueBody || '')
+                  .replace(/<!--[\s\S]*?-->/g, '')
+                  .replace(/\n_No response_\s*$/gm, '')
+                  .replace(/\n{3,}/g, '\n\n')
+                  .trim();
+                fs.writeFileSync('/tmp/issue-body.txt', cleaned);
+                fs.writeFileSync('/tmp/kapa-answer.txt', kapaComment.body);
+                fs.writeFileSync('/tmp/kapa-sources.json', '[]');
+                core.setOutput('kapa_succeeded', 'true');
+                core.setOutput('issue_number', String(issueNumber));
+                core.setOutput('issue_title', issueTitle);
+                return;
+              }
+              console.log('No existing Kapa comment, calling Kapa normally');
+            }
+
             // Prepare the enhanced query for Kapa AI
             const cleanedBody = issueBody
               .replace(/<!--[\s\S]*?-->/g, '') // Remove HTML comments
@@ -212,7 +263,23 @@ jobs:
                 issue_number: issueNumber,
                 body: responseBody
               });
-              
+
+              // Export context for the triage stage. Kapa succeeded, so the
+              // triage stage has both a technical analysis and the pages Kapa
+              // considered relevant — its main routing signal.
+              const fs = require('fs');
+              fs.writeFileSync('/tmp/issue-body.txt', finalBody);
+              fs.writeFileSync('/tmp/kapa-answer.txt', aiResponse);
+              fs.writeFileSync('/tmp/kapa-sources.json', JSON.stringify(
+                sources
+                  .filter(s => s.source_url && s.source_url.startsWith('http'))
+                  .map(s => ({ title: s.title || 'Documentation', url: s.source_url })),
+                null, 2
+              ));
+              core.setOutput('kapa_succeeded', 'true');
+              core.setOutput('issue_number', String(issueNumber));
+              core.setOutput('issue_title', issueTitle);
+
               // Add labels based on enhanced content analysis
               const labels = [];
               const titleLower = issueTitle.toLowerCase();
@@ -307,3 +374,173 @@ jobs:
         env:
           KAPA_API_TOKEN: ${{ secrets.KAPA_API_TOKEN }}
           KAPA_PROJECT_ID: ${{ secrets.KAPA_PROJECT_ID }}
+
+      # ── Triage & act (Sonnet) ──
+      # Only runs when Kapa succeeded: its answer and relevant_sources are the
+      # routing signal. On Kapa failure the fallback comment above is the whole
+      # response and the issue falls back to the manual path.
+      - name: Load triage prompt
+        if: steps.process-issue.outputs.kapa_succeeded == 'true'
+        id: load-triage-prompt
+        run: |
+          echo "prompt<<PROMPT_EOF" >> $GITHUB_OUTPUT
+          cat .github/prompts/issue-to-pr-triage.md >> $GITHUB_OUTPUT
+          echo "PROMPT_EOF" >> $GITHUB_OUTPUT
+
+      - name: Run triage and act (Sonnet)
+        if: steps.process-issue.outputs.kapa_succeeded == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_SELF_HEALING_DOCS_API_KEY }}
+          github_token: ${{ secrets.PAT_TOKEN_PIWI }}
+          prompt: ${{ steps.load-triage-prompt.outputs.prompt }}
+          claude_args: '--model claude-sonnet-4-6 --max-turns 50 --allowedTools "Bash,Read,Write,Edit,Glob,Grep"'
+          show_full_output: true
+        env:
+          DOC_REPO: ${{ github.workspace }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          ISSUE_NUMBER: ${{ steps.process-issue.outputs.issue_number }}
+          ISSUE_TITLE: ${{ steps.process-issue.outputs.issue_title }}
+          ISSUE_BODY_FILE: /tmp/issue-body.txt
+          KAPA_ANSWER_FILE: /tmp/kapa-answer.txt
+          KAPA_SOURCES_FILE: /tmp/kapa-sources.json
+          FORCE_DECISION: ${{ inputs.force_branch || 'auto' }}
+
+      - name: Report triage result
+        if: always() && steps.process-issue.outputs.kapa_succeeded == 'true'
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
+          ISSUE_NUMBER: ${{ steps.process-issue.outputs.issue_number }}
+          ISSUE_TITLE: ${{ steps.process-issue.outputs.issue_title }}
+        run: |
+          # Join arguments with real newlines. Avoids indented multi-line string
+          # literals, which would leak leading spaces into the Slack message.
+          # $(...) strips the trailing newline, so no extra trimming is needed.
+          slack_lines() { printf '%s\n' "$@" ; }
+
+          RESULT_FILE="/tmp/issue-triage-result.json"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          DATE=$(date -u '+%Y-%m-%d %H:%M UTC')
+          ISSUE_URL="${{ github.server_url }}/${{ github.repository }}/issues/${ISSUE_NUMBER}"
+
+          # Truncate the title for Slack readability
+          SHORT_TITLE=$(printf '%s' "$ISSUE_TITLE" | cut -c1-70)
+          if [ "${#ISSUE_TITLE}" -gt 70 ]; then SHORT_TITLE="${SHORT_TITLE}…"; fi
+          ISSUE_LINK="<${ISSUE_URL}|#${ISSUE_NUMBER} — ${SHORT_TITLE}>"
+
+          echo "## Issue triage" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ ! -f "$RESULT_FILE" ]; then
+            DECISION="error"
+            REASON="Triage produced no result file (check the run for max-turns, API or SDK errors)"
+          elif ! jq -e . "$RESULT_FILE" > /dev/null 2>&1; then
+            DECISION="error"
+            REASON="Triage wrote a result file that is not valid JSON"
+          else
+            DECISION=$(jq -r '.decision // "error"' "$RESULT_FILE")
+            REASON=$(jq -r '.reason // "no reason given"' "$RESULT_FILE")
+          fi
+
+          case "$DECISION" in
+            create-pr)
+              PR_URL=$(jq -r '.pr_url // ""' "$RESULT_FILE")
+              PR_TITLE=$(jq -r '.pr_title // ""' "$RESULT_FILE")
+              FILES=$(jq -r '(.files // []) | join(", ")' "$RESULT_FILE")
+              PR_NUMBER=$(printf '%s' "$PR_URL" | sed -n 's#.*/pull/\([0-9]*\).*#\1#p')
+              if [ -z "$PR_URL" ]; then
+                # Claimed create-pr but recorded no PR URL: the PR creation
+                # failed. Report an error rather than a broken Slack link.
+                MSG=$(slack_lines \
+                  ":pepe_alarm: *Docs issue triage FAILED* (${DATE})" \
+                  "Issue: ${ISSUE_LINK}" \
+                  "Decided \`create-pr\` but recorded no PR URL — the PR was probably not created." \
+                  "<${RUN_URL}|View run>")
+                {
+                  echo "**Decision:** \`create-pr\`, but no PR URL was recorded"
+                  echo ""
+                  echo "- Issue: [#${ISSUE_NUMBER}](${ISSUE_URL})"
+                  echo "- Reason: ${REASON}"
+                } >> $GITHUB_STEP_SUMMARY
+              else
+                MSG=$(slack_lines \
+                  ":noted: *Docs issue → PR* (${DATE})" \
+                  "Issue: ${ISSUE_LINK}" \
+                  "PR created: <${PR_URL}|#${PR_NUMBER} — ${PR_TITLE}>" \
+                  "Files: ${FILES}" \
+                  "<${RUN_URL}|View run>")
+                {
+                  echo "**Decision:** \`create-pr\`"
+                  echo ""
+                  echo "- Issue: [#${ISSUE_NUMBER}](${ISSUE_URL})"
+                  echo "- PR: [${PR_TITLE}](${PR_URL})"
+                  echo "- Files: ${FILES}"
+                  echo "- Reason: ${REASON}"
+                } >> $GITHUB_STEP_SUMMARY
+              fi
+              ;;
+            needs-writing)
+              PAGES=$(jq -r '(.suggested_pages // []) | join(", ")' "$RESULT_FILE")
+              MSG=$(slack_lines \
+                ":frog_detective: *Docs issue needs human writing* (${DATE})" \
+                "Issue: ${ISSUE_LINK}" \
+                "Reason: ${REASON}" \
+                "Suggested pages: ${PAGES:-none identified}" \
+                "<${RUN_URL}|View run>")
+              {
+                echo "**Decision:** \`needs-writing\`"
+                echo ""
+                echo "- Issue: [#${ISSUE_NUMBER}](${ISSUE_URL})"
+                echo "- Reason: ${REASON}"
+                echo "- Suggested pages: ${PAGES:-none identified}"
+              } >> $GITHUB_STEP_SUMMARY
+              ;;
+            not-docs)
+              CLOSE_DATE=$(date -u -d '+7 days' '+%Y-%m-%d' 2>/dev/null || date -u -v+7d '+%Y-%m-%d')
+              MSG=$(slack_lines \
+                ":frog_shrug: *Docs issue classified as not-docs* (${DATE})" \
+                "Issue: ${ISSUE_LINK}" \
+                "Reason: ${REASON}" \
+                "Redirected to strapi/strapi. Auto-closing on ${CLOSE_DATE} unless the \`issue: not docs\` label is removed." \
+                "<${RUN_URL}|View run>")
+              {
+                echo "**Decision:** \`not-docs\`"
+                echo ""
+                echo "- Issue: [#${ISSUE_NUMBER}](${ISSUE_URL})"
+                echo "- Reason: ${REASON}"
+                echo "- Auto-closing on ${CLOSE_DATE} unless the label is removed"
+              } >> $GITHUB_STEP_SUMMARY
+              ;;
+            already-handled)
+              echo "Issue #${ISSUE_NUMBER} already has an open PR — no action, no notification."
+              {
+                echo "**Decision:** \`already-handled\` — an open PR already references this issue."
+              } >> $GITHUB_STEP_SUMMARY
+              exit 0
+              ;;
+            *)
+              MSG=$(slack_lines \
+                ":pepe_alarm: *Docs issue triage FAILED* (${DATE})" \
+                "Issue: ${ISSUE_LINK}" \
+                "${REASON}" \
+                "<${RUN_URL}|View run>")
+              {
+                echo "**Decision:** failed"
+                echo ""
+                echo "- Issue: [#${ISSUE_NUMBER}](${ISSUE_URL})"
+                echo "- ${REASON}"
+              } >> $GITHUB_STEP_SUMMARY
+              ;;
+          esac
+
+          if [ -z "$SLACK_BOT_TOKEN" ] || [ -z "$SLACK_CHANNEL" ]; then
+            echo "Slack not configured, skipping notification"
+            exit 0
+          fi
+
+          curl -s -X POST "https://slack.com/api/chat.postMessage" \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-type: application/json; charset=utf-8" \
+            -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$MSG" '{channel: $channel, text: $text}')" \
+            > /dev/null || echo "Slack notification failed (non-blocking)"
