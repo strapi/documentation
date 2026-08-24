@@ -2,7 +2,6 @@
 title: Content History
 description: Learn how you can use the Content History feature of Strapi 5 to browse and restore previous versions of documents from the Content Manager.
 displayed_sidebar: cmsSidebar
-toc_max_heading_level: 5
 tags:
  - content manager
  - content history
@@ -27,9 +26,7 @@ The Content History feature, in the <Icon name="feather" /> Content Manager, giv
 
 <Guideflow lightId="9r2m2y1sok" darkId="er566mli6p"/>
 
-## How versions are created
-
-A history version is only created when a document is modified through the <Icon name="feather" /> Content Manager in the admin panel. Content modified in any other way does not appear in the Content History of the document.
+A version is only created when a document is modified through the <Icon name="feather" /> Content Manager in the admin panel. Content modified in any other way does not appear in the Content History of the document.
 
 | Content is modified through | Version created |
 |-----------------------------|-----------------|
@@ -46,6 +43,47 @@ Content History is not a record of every change made to a document. Documents wr
 
 To trace the actions performed by users of the admin panel, use [Audit Logs](/cms/features/audit-logs).
 :::
+
+## Configuration
+
+Content History is available by default with the required plan and needs no activation. The only configurable aspect is how long versions are kept before they are deleted.
+
+Content History is not a permanent archive. Versions are deleted automatically: a job runs once a day, at midnight, and permanently deletes every version older than the retention period. Versions deleted by this job cannot be recovered from the Content History interface.
+
+Regardless of the plan, versions are kept for a maximum of 90 days. This period is counted from the creation date of each version.
+
+### Code-based configuration
+
+The retention period can be shortened, but never extended, with the [`history.retentionDays`](/cms/configurations/admin-panel#content-history) parameter of the `/config/admin` file. When both the license and the configuration file define a value, the lower of the 2 applies.
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/config/admin.js"
+module.exports = ({ env }) => ({
+  // … other configuration properties
+  history: {
+    retentionDays: 30,
+  },
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/config/admin.ts"
+export default ({ env }) => ({
+  // … other configuration properties
+  history: {
+    retentionDays: 30,
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+There is no equivalent setting in the admin panel: the retention period can only be shortened from the `/config/admin` file.
 
 ## Usage
 
@@ -93,11 +131,3 @@ sources={{
   dark:'/img/assets/content-manager/restoring-content-history_DARK.png',
 }}
 />
-
-## Version retention
-
-Content History is not a permanent archive. Versions are deleted automatically: a job runs once a day, at midnight, and permanently deletes every version older than the retention period. Versions deleted by this job cannot be recovered from the Content History interface.
-
-Regardless of the plan, versions are kept for a maximum of 90 days. This period is counted from the creation date of each version.
-
-The retention period can be shortened, but never extended, with the [`history.retentionDays`](/cms/configurations/admin-panel#content-history) parameter of the `/config/admin` file. When both the license and the configuration file define a value, the lower of the two applies.
