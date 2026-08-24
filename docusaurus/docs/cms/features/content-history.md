@@ -38,7 +38,7 @@ A version is only created when a document is modified through the <Icon name="fe
 | [Cron jobs](/cms/configurations/cron) | No |
 | The `strapi import` and `strapi transfer` commands (see [Data management](/cms/features/data-management)) | No |
 
-:::caution
+:::note
 Content History is not a record of every change made to a document. Documents written programmatically, such as those created by a migration script or an integration calling the REST API, have no corresponding version, and a document can therefore differ from the most recent version listed in its Content History.
 
 To trace the actions performed by users of the admin panel, use [Audit Logs](/cms/features/audit-logs).
@@ -48,10 +48,10 @@ To trace the actions performed by users of the admin panel, use [Audit Logs](/cm
 
 The only configurable aspect is how long versions are kept before they are deleted.
 
-:::caution
-Content History is not a permanent archive. Versions are deleted automatically: a job runs once a day, at midnight, and permanently deletes every version older than the retention period. Versions deleted by this job cannot be recovered from the Content History interface.
+Content History is not a permanent archive. Versions are deleted automatically: a job runs once a day, at midnight, and deletes every version older than the retention period. Regardless of the plan, versions are kept for a maximum of 90 days, counted from the creation date of each version.
 
-Regardless of the plan, versions are kept for a maximum of 90 days. This period is counted from the creation date of each version.
+:::caution
+Versions deleted by the retention job cannot be recovered from the Content History interface.
 :::
 
 ### Code-based configuration
