@@ -26,17 +26,7 @@ The Content History feature, in the <Icon name="feather" /> Content Manager, giv
 
 <Guideflow lightId="9r2m2y1sok" darkId="er566mli6p"/>
 
-A version is only created when a document is modified through the <Icon name="feather" /> Content Manager in the admin panel. Content modified in any other way does not appear in the Content History of the document.
-
-| Content is modified through | Version created |
-|-----------------------------|-----------------|
-| The [Content Manager](/cms/features/content-manager) in the admin panel | Yes |
-| The [REST API](/cms/api/rest) | No |
-| The [GraphQL API](/cms/api/graphql) | No |
-| The [Document Service API](/cms/api/document-service), for instance `strapi.documents()` called from application code | No |
-| [Lifecycle hooks](/cms/backend-customization/models#lifecycle-hooks) | No |
-| [Cron jobs](/cms/configurations/cron) | No |
-| The `strapi import` and `strapi transfer` commands (see [Data management](/cms/features/data-management)) | No |
+A version is only created when a document is modified through the <Icon name="feather" /> Content Manager in the admin panel. Content modified in any other way does not appear in the Content History of the document: this includes the REST API, the GraphQL API, the Document Service API, lifecycle hooks, cron jobs, and the `strapi import` and `strapi transfer` commands.
 
 :::note
 Content History is not a record of every change made to a document. Documents written programmatically, such as those created by a migration script or an integration calling the REST API, have no corresponding version, and a document can therefore differ from the most recent version listed in its Content History.
