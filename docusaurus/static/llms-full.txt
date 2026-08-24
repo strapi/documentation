@@ -22917,6 +22917,18 @@ To configure HTTP cookies for admin authentication, use the following parameters
 | `auth.cookie.path`                | Cookie path                                                                                                                                                                                        | string        | `'/admin'`                                                                                                                          |
 | `auth.cookie.sameSite`            | [SameSite cookie attribute](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value)                                                                                                                                                                          | string        | `'lax'`                                                                                                                             |
 
+## Content history
+
+The [Content History](/cms/features/content-history) feature can be configured with the following parameter:
+
+| Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
+|-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `history.retentionDays`           | How long history versions are kept, in days.<br /><br />_The value can only shorten the retention period, see the note under the table._                                                            | integer       | 90                                                                                                                                  |
+
+:::note Retention days for Content History
+The `history.retentionDays` value is only taken into account if it is _smaller_ than the value stored in the license information. It cannot be used to keep history versions for longer than the license allows, and versions are never kept for more than 90 days.
+:::
+
 ## Feature flags
 
 The feature flags can be configured with the following parameters:
@@ -22970,10 +22982,6 @@ Transfer tokens for the [Data transfer](/cms/features/data-management/transfer) 
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `transfer.token.salt`             | Salt used to generate Transfer tokens.<br/><br/>If no transfer token salt is defined, transfer features will be disabled.               | string        | a random string                                                                                                                       |
-
-:::note Retention days for self-hosted vs. Strapi Cloud users
-For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in the `config/admin.js|ts` configuration file.
-:::
 
 ## Configuration examples
 
@@ -23066,6 +23074,9 @@ module.exports = ({ env }) => ({
       sameSite: 'lax',
     },
   },
+  history: { // only accessible with a Growth or Enterprise plan
+    retentionDays: 30,
+  },
   url: env('PUBLIC_ADMIN_URL', '/dashboard'),
   autoOpen: false,
   watchIgnoreFiles: [
@@ -23133,6 +23144,9 @@ module.exports = ({ env }) => ({
       path: '/admin',
       sameSite: 'lax',
     },
+  },
+  history: { // only accessible with a Growth or Enterprise plan
+    retentionDays: 30,
   },
   url: env('PUBLIC_ADMIN_URL', '/dashboard'),
   autoOpen: false,
@@ -31199,7 +31213,7 @@ Source: https://docs.strapi.io/cms/features/content-history
 
 # Content History
 
-Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes.
+Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes. Versions are only created for content edited in the Content Manager, and are kept for a maximum of 90 days.
 
 The Content History feature, in the  Content Manager, gives you the ability to browse and restore previous versions of documents created with the [Content Manager](/cms/features/content-manager).
 
@@ -31218,6 +31232,47 @@ Available by default, if required plan
 **Environment**
 
 Available in both Development & Production environment
+
+A version is only created when a document is modified through the  Content Manager in the admin panel. Content modified in any other way does not appear in the Content History of the document: this includes the REST API, the GraphQL API, the Document Service API, lifecycle hooks, cron jobs, and the `strapi import` and `strapi transfer` commands.
+
+:::note
+Content History is not a record of every change made to a document. Documents written programmatically, such as those created by a migration script or an integration calling the REST API, have no corresponding version, and a document can therefore differ from the most recent version listed in its Content History.
+
+To trace the actions performed by users of the admin panel, use [Audit Logs](/cms/features/audit-logs).
+:::
+
+## Configuration
+
+The only configurable aspect is how long versions are kept before they are deleted.
+
+Content History is not a permanent archive. Versions are deleted automatically: a job runs once a day, at midnight, and deletes every version older than the retention period. Regardless of the plan, versions are kept for a maximum of 90 days, counted from the creation date of each version.
+
+:::caution
+Versions deleted by the retention job cannot be recovered from the Content History interface.
+:::
+
+### Code-based configuration
+
+The retention period can be shortened, but never extended, with the [`history.retentionDays`](/cms/configurations/admin-panel#content-history) parameter of the `/config/admin` file. When both the license and the configuration file define a value, the lower of the 2 applies.
+
+```js title="/config/admin.js"
+module.exports = ({ env }) => ({
+  // … other configuration properties
+  history: {
+    retentionDays: 30,
+  },
+});
+```
+```ts title="/config/admin.ts"
+
+  // … other configuration properties
+  history: {
+    retentionDays: 30,
+  },
+});
+```
+
+There is no equivalent setting in the admin panel: the retention period can only be shortened from the `/config/admin` file.
 
 ## Usage
 

@@ -17943,6 +17943,9 @@ module.exports = ({ env }) => ({
       sameSite: 'lax',
     },
   },
+  history: { // only accessible with a Growth or Enterprise plan
+    retentionDays: 30,
+  },
   url: env('PUBLIC_ADMIN_URL', '/dashboard'),
   autoOpen: false,
   watchIgnoreFiles: [
@@ -18014,6 +18017,9 @@ export default ({ env }) => ({
       path: '/admin',
       sameSite: 'lax',
     },
+  },
+  history: { // only accessible with a Growth or Enterprise plan
+    retentionDays: 30,
   },
   url: env('PUBLIC_ADMIN_URL', '/dashboard'),
   autoOpen: false,
@@ -23967,6 +23973,40 @@ export default ({ env }) => ({
   secrets: {
     encryptionKey: env('ENCRYPTION_KEY'),
   }
+});
+```
+
+
+
+# Content History
+Source: https://docs.strapi.io/cms/features/content-history
+
+## Code-based configuration
+Description: The retention period can be shortened, but never extended, with the history.retentionDays parameter of the /config/admin file.
+(Source: https://docs.strapi.io/cms/features/content-history#code-based-configuration)
+
+Language: JavaScript
+File path: /config/admin.js
+
+```js
+module.exports = ({ env }) => ({
+  // … other configuration properties
+  history: {
+    retentionDays: 30,
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /config/admin.ts
+
+```ts
+export default ({ env }) => ({
+  // … other configuration properties
+  history: {
+    retentionDays: 30,
+  },
 });
 ```
 
