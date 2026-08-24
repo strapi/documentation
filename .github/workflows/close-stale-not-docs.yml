@@ -1,0 +1,112 @@
+name: Close stale not-docs issues
+
+# Companion to the triage stage of auto-respond-issues.yml.
+#
+# When an issue is classified `not-docs`, the triage stage posts a redirect
+# comment and adds the `issue: not docs` label but does NOT close the issue.
+# This workflow closes it 7 days later, which leaves a veto window: removing
+# the label (or closing/relabelling by hand) cancels the automatic close.
+#
+# A misclassification is publicly visible and unwelcoming to a contributor, so
+# no issue is ever closed in the same run that classified it.
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # 06:00 UTC daily
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'List what would be closed without closing anything'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  issues: write
+
+env:
+  STALE_LABEL: 'issue: not docs'
+  GRACE_DAYS: 7
+
+jobs:
+  close-stale:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close issues labeled not-docs for more than the grace period
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+
+          CUTOFF=$(date -u -d "${GRACE_DAYS} days ago" '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null \
+                || date -u -v-"${GRACE_DAYS}"d '+%Y-%m-%dT%H:%M:%SZ')
+          echo "Closing issues labeled '${STALE_LABEL}' on or before ${CUTOFF}"
+
+          echo "## Stale not-docs issues" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          NUMBERS=$(gh issue list --repo "$REPO" --state open \
+            --label "$STALE_LABEL" --limit 100 --json number --jq '.[].number')
+
+          if [ -z "$NUMBERS" ]; then
+            echo "No open issues carry the label."
+            echo "No open issues carry the \`${STALE_LABEL}\` label." >> $GITHUB_STEP_SUMMARY
+            exit 0
+          fi
+
+          CLOSED=0
+          WAITING=0
+
+          for N in $NUMBERS; do
+            # Use the timeline's most recent `labeled` event for this label, not
+            # the issue's updated_at: later comments must not reset the clock.
+            # --slurp combines the pages into one array before filtering.
+            # Without it, `gh --paginate --jq` applies the filter per page and
+            # would emit one `max` per page (a multi-line value). --slurp and
+            # --jq are mutually exclusive, hence the pipe to standalone jq.
+            # `|| true` so a transient API error on one issue does not abort the
+            # loop and silently skip every remaining issue (set -e is active).
+            LABELED_AT=$(gh api "repos/${REPO}/issues/${N}/timeline?per_page=100" \
+              --paginate --slurp -H "Accept: application/vnd.github+json" \
+              | jq -r --arg label "$STALE_LABEL" \
+                '[.[][] | select(.event == "labeled" and .label.name == $label) | .created_at] | max // empty' \
+              || true)
+
+            if [ -z "$LABELED_AT" ]; then
+              echo "#${N}: label present but no labeled event found, skipping"
+              continue
+            fi
+
+            if [[ "$LABELED_AT" > "$CUTOFF" ]]; then
+              echo "#${N}: labeled ${LABELED_AT}, still within grace period"
+              WAITING=$((WAITING + 1))
+              continue
+            fi
+
+            if [ "$DRY_RUN" = "true" ]; then
+              echo "#${N}: would be closed (labeled ${LABELED_AT})"
+              echo "- Would close [#${N}](https://github.com/${REPO}/issues/${N}) — labeled ${LABELED_AT}" >> $GITHUB_STEP_SUMMARY
+              CLOSED=$((CLOSED + 1))
+              continue
+            fi
+
+            if gh issue close "$N" --repo "$REPO" --reason "not planned" \
+              --comment "Closing automatically: this was identified as not being a documentation issue ${GRACE_DAYS} days ago and no one objected. If that was a mistake, comment here and a maintainer will reopen it."
+            then
+              echo "#${N}: closed (labeled ${LABELED_AT})"
+              echo "- Closed [#${N}](https://github.com/${REPO}/issues/${N}) — labeled ${LABELED_AT}" >> $GITHUB_STEP_SUMMARY
+              CLOSED=$((CLOSED + 1))
+            else
+              echo "#${N}: close failed, will retry on the next run"
+              echo "- ⚠️ Failed to close [#${N}](https://github.com/${REPO}/issues/${N})" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "**Dry run** — ${CLOSED} issue(s) would be closed, ${WAITING} still in the grace period." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "${CLOSED} issue(s) closed, ${WAITING} still in the grace period." >> $GITHUB_STEP_SUMMARY
+          fi
