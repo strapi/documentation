@@ -25705,7 +25705,6 @@ Query objects are useful to verify conditions on the entities you read, create, 
 - `$or`
 - `$and`
 - `$eq`
-- `$eqi`
 - `$ne`
 - `$in`
 - `$nin`
@@ -25715,6 +25714,10 @@ Query objects are useful to verify conditions on the entities you read, create, 
 - `$gte`
 - `$exists`
 - `$elemMatch`
+
+:::caution
+This list is exhaustive. Condition query objects are evaluated in-memory with `sift.js` whenever an administrator creates, updates, deletes, or publishes an entity, and only the operators listed above are registered. Other operators, including filter operators available in the [REST API](/cms/api/rest/filters) and [Query Engine API](/cms/api/query-engine/filtering) such as `$eqi`, `$contains`, `$startsWith`, or `$null`, are not supported here and throw an `Unsupported operation` error when the condition is evaluated.
+:::
 
 The condition `handler` can be a synchronous or asynchronous function that:
 
