@@ -46,11 +46,13 @@ To trace the actions performed by users of the admin panel, use [Audit Logs](/cm
 
 ## Configuration
 
-Content History is available by default with the required plan and needs no activation. The only configurable aspect is how long versions are kept before they are deleted.
+The only configurable aspect is how long versions are kept before they are deleted.
 
+:::caution
 Content History is not a permanent archive. Versions are deleted automatically: a job runs once a day, at midnight, and permanently deletes every version older than the retention period. Versions deleted by this job cannot be recovered from the Content History interface.
 
 Regardless of the plan, versions are kept for a maximum of 90 days. This period is counted from the creation date of each version.
+:::
 
 ### Code-based configuration
 
