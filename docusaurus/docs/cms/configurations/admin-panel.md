@@ -85,6 +85,23 @@ module.exports = ({ env }) => ({
 });
 ```
 
+:::caution Cookie path must match
+When you change `url`, you must also update [`auth.cookie.path`](#cookie-configuration) to the same value. The cookie path defaults to `'/admin'` regardless of `url`, so if they differ, the browser will not send the authentication cookie to the new path and logins will silently fail.
+
+```js title="/config/admin.js"
+module.exports = ({ env }) => ({
+  url: "/dashboard",
+  auth: {
+    cookie: {
+      path: "/dashboard", // must match url
+    },
+  },
+});
+```
+
+After changing `auth.cookie.path`, rebuild the admin panel before starting Strapi, as this value is inlined into the admin bundle at build time.
+:::
+
 Since by default the back-end server and the admin panel server run on the same host and port, only updating the `config/admin` file should work if you left the `host` and `port` property values untouched in the back-end [server configuration](/cms/configurations/server) file.
 
 ### Update the admin panel's host and port
