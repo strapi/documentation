@@ -10,6 +10,8 @@ tags:
 
 ---
 
+import AdminUrlCookiePath from '/docs/snippets/admin-url-cookie-path.md'
+
 # Admin panel customization: Host, port, and path configuration
 
 <Tldr>
@@ -36,6 +38,8 @@ module.exports = ({ env }) => ({
   url: "/dashboard",
 });
 ```
+
+<AdminUrlCookiePath />
 
 Since by default the back-end server and the admin panel server run on the same host and port, only updating the `config/admin.[ts|js]` file should work if you left the `host` and `port` property values untouched in the [server configuration](/cms/configurations/server) file, which should be as follows:
 
