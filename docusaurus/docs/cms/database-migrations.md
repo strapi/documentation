@@ -110,6 +110,17 @@ module.exports = {
 
 </details>
 
+## Migration progress heartbeats
+
+For long-running migrations, Strapi provides a progress heartbeat feature that logs periodic status updates without rewriting terminal output. This is useful when migrations process large datasets and need to show activity to the operator.
+
+The heartbeat logger is time-throttled (default 60 seconds) and reports progress in a format like:
+```
+… still running (120s) · files 12000/450000
+```
+
+This feature is automatically enabled for migrations that use the heartbeat logging capability, such as data backfill operations. The progress updates are append-only, making them suitable for long-running operations that don't produce frequent log output.
+
 ## Handling migrations with TypeScript code
 
 By default Strapi looks for migration files in the source directory rather than the build directory when using TypeScript. This means that TypeScript migrations won't be found and executed properly unless you configure Strapi to look in the right place.
