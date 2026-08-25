@@ -1144,6 +1144,11 @@
       "number": 25927,
       "reason": "Router: Internal migration bug fix for MySQL JSON column handling. Fixes a bug where the discard-drafts migration failed for JSON columns but does not introduce new documentation targets.",
       "added": "2026-08-25"
+    },
+    {
+      "number": 26320,
+      "reason": "Router: Internal bug fix to Content Manager's drag-and-drop UI behavior. No new features, APIs, or user-facing behaviors documented. This is an admin UI implementation improvement that does not require documentation updates.",
+      "added": "2026-08-25"
     }
   ]
 }
