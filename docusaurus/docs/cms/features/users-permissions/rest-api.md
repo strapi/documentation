@@ -503,7 +503,16 @@ Possible errors:
 
 `POST /api/auth/logout`
 
-Revokes all sessions for the authenticated user. Requires a valid Bearer token.
+Revokes the current session of the authenticated user. Requires a valid Bearer token.
+
+The optional request body widens the scope of the revocation:
+
+| Body | Revoked sessions |
+|------|------------------|
+| `{ "scope": "all" }` | All the sessions of the user. |
+| `{ "deviceId": "device-a" }` | All the sessions of the given device. |
+
+The current session is read from the request context, then from the refresh token found in the cookie or in the `refreshToken` property of the request body. If the current session cannot be identified, all the sessions of the user are revoked.
 
 <ApiCall>
 
@@ -527,6 +536,10 @@ curl -X POST http://localhost:1337/api/auth/logout \
 </Response>
 
 </ApiCall>
+
+::::note
+When `httpOnly` is enabled in the session configuration, the refresh token cookie is also cleared.
+::::
 
 ## Users
 
