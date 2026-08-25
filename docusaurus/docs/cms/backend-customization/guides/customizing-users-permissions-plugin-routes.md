@@ -119,6 +119,8 @@ The `auth` controller is a factory function `({ strapi }) => ({...})` that expos
 | `auth.emailConfirmation` | `GET` | `/auth/email-confirmation` | No |
 | `auth.sendEmailConfirmation` | `POST` | `/auth/send-email-confirmation` | No |
 | `auth.refresh` | `POST` | `/auth/refresh` | No |
+| `auth.getSessions` | `GET` | `/auth/sessions` | No |
+| `auth.revokeSession` | `DELETE` | `/auth/sessions/:sessionId` | No |
 | `auth.logout` | `POST` | `/auth/logout` | No |
 
 :::note

@@ -311,6 +311,8 @@ export default ({ env }) => ({
 
 </Tabs>
 
+In `refresh` mode, authenticated end users can [list their active sessions](/cms/features/users-permissions/rest-api#list-sessions) and [revoke a session](/cms/features/users-permissions/rest-api#revoke-a-session) through the REST API.
+
 ### Registration configuration
 
 If you have added any additional fields in your User **model** <Annotation>Models, also called content-types in Strapi, define a representation of the content structure.<br/>Users are a special type of built-in content-type found in any new Strapi application. You can customize the Users model, adding more fields for instance, like any other models.<br/>For more information, please refer to the [models](/cms/backend-customization/models) documentation.</Annotation> that need to be accepted on registration, you need to add them to the list of allowed fields in the `config.register` object of [the `/config/plugins` file](/cms/configurations/plugins), otherwise they will not be accepted.
