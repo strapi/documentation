@@ -1124,6 +1124,26 @@
       "number": 27394,
       "reason": "Router: Internal database query optimization for Content History on MySQL. Optimization change does not affect user-facing behavior, API surface, or feature capabilities — it only improves performance for a specific scenario.",
       "added": "2026-08-22"
+    },
+    {
+      "number": 27444,
+      "reason": "Router: Internal database bug fix. Fixes incorrect position calculation when reordering relations in Content Manager, but doesn't change user-facing API or capabilities.",
+      "added": "2026-08-25"
+    },
+    {
+      "number": 27415,
+      "reason": "Router: Minor UX improvement to upload batch handling. When multiple files are dropped while uploading, they now merge into the same batch. Does not change documented API or introduce new user-facing capabilities.",
+      "added": "2026-08-25"
+    },
+    {
+      "number": 27355,
+      "reason": "Router: Internal error handling improvement. Better error messages for developers when unsupported operators are used in RBAC conditions. Does not change documented behavior or APIs.",
+      "added": "2026-08-25"
+    },
+    {
+      "number": 25927,
+      "reason": "Router: Internal migration bug fix for MySQL JSON column handling. Fixes a bug where the discard-drafts migration failed for JSON columns but does not introduce new documentation targets.",
+      "added": "2026-08-25"
     }
   ]
 }
