@@ -336,7 +336,14 @@ jobs:
       #
       # `unflag-released-prs.yml` removes the label later, using the same script.
       - name: Resolve release state for each candidate PR
-        if: steps.check-triage.outputs.has_candidates == 'true'
+        # Runs on a normal run (after Triage) and on a dry run (where Triage is
+        # skipped). Release state is pure bash and costs no tokens, so a dry run
+        # can exercise it and report what it would label.
+        #
+        # Note: a dry run forces has_prs=false to gate every AI step, so this
+        # condition cannot test it. The step guards on the candidate file itself
+        # instead, and exits cleanly when there is none.
+        if: success() && (steps.check-triage.outputs.has_candidates == 'true' || inputs.dry_run == true)
         id: release-state
         # Labelling must never break drafting. If this step fails, /tmp/pr-labels.json
         # is absent or partial and both prompts fall back to config.json — the run
@@ -353,6 +360,19 @@ jobs:
           BASE_LABEL=$(jq -r '.["docs-self-healing"].labels[0]' .github/workflows/config.json)
           PENDING_LABEL="flag: merge pending release"
           OUT="/tmp/pr-labels.json"
+
+          # On a normal run, Triage has narrowed the list. On a dry run Triage is
+          # skipped, so fall back to the bash pre-filter output.
+          if [ -s /tmp/triaged-prs.json ]; then
+            CANDIDATES="/tmp/triaged-prs.json"
+          elif [ -s /tmp/new-prs.json ]; then
+            CANDIDATES="/tmp/new-prs.json"
+          else
+            echo "No candidate list found, nothing to resolve"
+            exit 0
+          fi
+
+          echo "Candidates from: $CANDIDATES"
 
           # Resolve the reference tag once so every PR in this run is judged
           # against the same release.
@@ -403,7 +423,7 @@ jobs:
 
             jq --arg k "$PR_NUMBER" --arg v "$LABELS" '. + {($k): $v}' "$OUT" > "$OUT.tmp"
             mv "$OUT.tmp" "$OUT"
-          done < <(jq -r '.[].number // empty' /tmp/triaged-prs.json)
+          done < <(jq -r '.[].number // empty' "$CANDIDATES")
 
           echo ""
           echo "Released: $RELEASED | pending release: $PENDING"
@@ -416,6 +436,12 @@ jobs:
             echo "- Already released: $RELEASED"
             echo "- Will be flagged \`$PENDING_LABEL\`: $PENDING"
             echo ""
+            if [ -s "$OUT" ]; then
+              echo "| strapi/strapi PR | Labels the doc PR will get |"
+              echo "| --- | --- |"
+              jq -r 'to_entries[] | "| [#\(.key)](https://github.com/strapi/strapi/pull/\(.key)) | `\(.value | gsub(",";"`, `"))` |"' "$OUT"
+              echo ""
+            fi
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Load Router prompt
