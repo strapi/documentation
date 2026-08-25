@@ -18157,6 +18157,8 @@ The `auth` controller is a factory function `({ strapi }) => ({...})` that expos
 | `auth.emailConfirmation` | `GET` | `/auth/email-confirmation` | No |
 | `auth.sendEmailConfirmation` | `POST` | `/auth/send-email-confirmation` | No |
 | `auth.refresh` | `POST` | `/auth/refresh` | No |
+| `auth.getSessions` | `GET` | `/auth/sessions` | No |
+| `auth.revokeSession` | `DELETE` | `/auth/sessions/:sessionId` | No |
 | `auth.logout` | `POST` | `/auth/logout` | No |
 
 :::note
@@ -36836,6 +36838,8 @@ module.exports = ({ env }) => ({
 });
 ```
 
+In `refresh` mode, authenticated end users can [list their active sessions](/cms/features/users-permissions/rest-api#list-sessions) and [revoke a session](/cms/features/users-permissions/rest-api#revoke-a-session) through the REST API.
+
 ### Registration configuration
 
 If you have added any additional fields in your User **model** Models, also called content-types in Strapi, define a representation of the content structure.<br/>Users are a special type of built-in content-type found in any new Strapi application. You can customize the Users model, adding more fields for instance, like any other models.<br/>For more information, please refer to the [models](/cms/backend-customization/models) documentation. that need to be accepted on registration, you need to add them to the list of allowed fields in the `config.register` object of [the `/config/plugins` file](/cms/configurations/plugins), otherwise they will not be accepted.
@@ -37655,17 +37659,80 @@ curl -X POST http://localhost:1337/api/auth/refresh \
 When `httpOnly` is enabled in the session configuration, the new refresh token is set as an HTTP-only cookie instead of being included in the response body. In that case, the response only contains `{ "jwt": "newAccessToken" }`.
 :::
 
+### List sessions
+
+`GET /api/auth/sessions`
+
+Returns the active sessions of the authenticated user, with the current session first and the other sessions from the most to the least recently used. Requires a valid Bearer token.
+
+**Example request: List sessions:**
+```bash
+curl http://localhost:1337/api/auth/sessions \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Each session of the response contains the following fields:
+
+| Field | Description |
+|-------|-------------|
+| `id` | Identifier of the session. |
+| `deviceId` | (optional) Identifier of the device associated with the session. |
+| `deviceName` | (optional) Device name, derived from the user agent sent at login. |
+| `current` | `true` for the session used to send the request. |
+| `loginAt` | (optional) Date of the login, in the ISO 8601 format. |
+| `lastActiveAt` | (optional) Date of the latest refresh token rotation, in the ISO 8601 format. It is not updated on every API request. |
+
+Sessions never include tokens, nor database identifiers other than the session and device identifiers.
+
+Possible errors:
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| 401 | `"Missing authentication"` | Missing or invalid Bearer token |
+
+### Revoke a session
+
+`DELETE /api/auth/sessions/:sessionId`
+
+Revokes a session of the authenticated user. Requires a valid Bearer token.
+
+**Example request: Revoke a session:**
+```bash
+curl -X DELETE http://localhost:1337/api/auth/sessions/session-other \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Possible errors:
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| 401 | `"Missing authentication"` | Missing or invalid Bearer token |
+| 404 | `"Session not found"` | The session does not exist or belongs to another user |
+
 ### Logout
 
 `POST /api/auth/logout`
 
-Revokes all sessions for the authenticated user. Requires a valid Bearer token.
+Revokes the current session of the authenticated user. Requires a valid Bearer token.
+
+The optional request body widens the scope of the revocation:
+
+| Body | Revoked sessions |
+|------|------------------|
+| `{ "scope": "all" }` | All the sessions of the user. |
+| `{ "deviceId": "device-a" }` | All the sessions of the given device. |
+
+The current session is read from the request context, then from the refresh token found in the cookie or in the `refreshToken` property of the request body. If the current session cannot be identified, all the sessions of the user are revoked.
 
 **Example request: Logout:**
 ```bash
 curl -X POST http://localhost:1337/api/auth/logout \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
+
+::::note
+When `httpOnly` is enabled in the session configuration, the refresh token cookie is also cleared.
+::::
 
 ## Users
 

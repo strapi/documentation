@@ -27471,6 +27471,120 @@ File path: N/A
 ```
 
 
+## List sessions
+Description: Request
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#list-sessions)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/auth/sessions \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": "session-current",
+      "deviceId": "device-a",
+      "deviceName": "Chrome",
+      "current": true,
+      "loginAt": "2026-06-10T08:00:00.000Z",
+      "lastActiveAt": "2026-06-11T10:00:00.000Z"
+    },
+    {
+      "id": "session-other",
+      "deviceId": "device-b",
+      "deviceName": "Safari",
+      "current": false,
+      "loginAt": "2026-06-09T08:00:00.000Z",
+      "lastActiveAt": "2026-06-10T09:00:00.000Z"
+    }
+  ]
+}
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+curl http://localhost:1337/api/auth/sessions \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": "session-current",
+      "deviceId": "device-a",
+      "deviceName": "Chrome",
+      "current": true,
+      "loginAt": "2026-06-10T08:00:00.000Z",
+      "lastActiveAt": "2026-06-11T10:00:00.000Z"
+    },
+    {
+      "id": "session-other",
+      "deviceId": "device-b",
+      "deviceName": "Safari",
+      "current": false,
+      "loginAt": "2026-06-09T08:00:00.000Z",
+      "lastActiveAt": "2026-06-10T09:00:00.000Z"
+    }
+  ]
+}
+```
+
+
+## Revoke a session
+Description: Request
+(Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#revoke-a-session)
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X DELETE http://localhost:1337/api/auth/sessions/session-other \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": {}
+}
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+curl -X DELETE http://localhost:1337/api/auth/sessions/session-other \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": {}
+}
+```
+
+
 ## Logout
 Description: Request
 (Source: https://docs.strapi.io/cms/features/users-permissions/rest-api#logout)
