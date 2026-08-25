@@ -96,7 +96,21 @@ git push -u origin "$BRANCH_NAME"
 CONFIG=".github/workflows/config.json"
 TITLE_PREFIX=$(jq -r '.["docs-self-healing"].title_prefix' "$CONFIG")
 ASSIGNEE=$(jq -r '.["docs-self-healing"].assignee' "$CONFIG")
-LABEL=$(jq -r '.["docs-self-healing"].labels[0]' "$CONFIG")
+
+# Labels are precomputed by the workflow, keyed by source PR number. Do NOT
+# decide them yourself: the file already accounts for whether the feature has
+# shipped. Fall back to config.json only if the entry is missing.
+#
+# Build one --label flag per label. A single comma-joined value is NOT
+# equivalent and must not be used here.
+LABEL_ARGS=()
+while IFS= read -r L; do
+  [ -n "$L" ] && LABEL_ARGS+=(--label "$L")
+done < <(jq -r --arg n "<NUMBER>" '(.[$n] // "") | split(",")[]' /tmp/pr-labels.json 2>/dev/null)
+
+if [ ${#LABEL_ARGS[@]} -eq 0 ]; then
+  LABEL_ARGS=(--label "$(jq -r '.["docs-self-healing"].labels[0]' "$CONFIG")")
+fi
 
 gh pr create \
   --repo strapi/documentation \
@@ -109,7 +123,7 @@ Review before merging.
 BODY
 )" \
   --draft \
-  --label "$LABEL" \
+  "${LABEL_ARGS[@]}" \
   --assignee "$ASSIGNEE"
 git checkout main
 git clean -fd
