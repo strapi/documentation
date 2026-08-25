@@ -398,11 +398,121 @@ curl -X POST http://localhost:1337/api/auth/refresh \
 When `httpOnly` is enabled in the session configuration, the new refresh token is set as an HTTP-only cookie instead of being included in the response body. In that case, the response only contains `{ "jwt": "newAccessToken" }`.
 :::
 
+### List sessions
+
+`GET /api/auth/sessions`
+
+Returns the active sessions of the authenticated user, with the current session first and the other sessions from the most to the least recently used. Requires a valid Bearer token.
+
+<ApiCall>
+
+<Request title="Example request: List sessions">
+
+```bash
+curl http://localhost:1337/api/auth/sessions \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+</Request>
+
+<Response>
+
+```json
+{
+  "data": [
+    {
+      "id": "session-current",
+      "deviceId": "device-a",
+      "deviceName": "Chrome",
+      "current": true,
+      "loginAt": "2026-06-10T08:00:00.000Z",
+      "lastActiveAt": "2026-06-11T10:00:00.000Z"
+    },
+    {
+      "id": "session-other",
+      "deviceId": "device-b",
+      "deviceName": "Safari",
+      "current": false,
+      "loginAt": "2026-06-09T08:00:00.000Z",
+      "lastActiveAt": "2026-06-10T09:00:00.000Z"
+    }
+  ]
+}
+```
+
+</Response>
+
+</ApiCall>
+
+Each session of the response contains the following fields:
+
+| Field | Description |
+|-------|-------------|
+| `id` | Identifier of the session. |
+| `deviceId` | (optional) Identifier of the device associated with the session. |
+| `deviceName` | (optional) Device name, derived from the user agent sent at login. |
+| `current` | `true` for the session used to send the request. |
+| `loginAt` | (optional) Date of the login, in the ISO 8601 format. |
+| `lastActiveAt` | (optional) Date of the latest refresh token rotation, in the ISO 8601 format. It is not updated on every API request. |
+
+Sessions never include tokens, nor database identifiers other than the session and device identifiers.
+
+Possible errors:
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| 401 | `"Missing authentication"` | Missing or invalid Bearer token |
+
+### Revoke a session
+
+`DELETE /api/auth/sessions/:sessionId`
+
+Revokes a session of the authenticated user. Requires a valid Bearer token.
+
+<ApiCall>
+
+<Request title="Example request: Revoke a session">
+
+```bash
+curl -X DELETE http://localhost:1337/api/auth/sessions/session-other \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+</Request>
+
+<Response>
+
+```json
+{
+  "data": {}
+}
+```
+
+</Response>
+
+</ApiCall>
+
+Possible errors:
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| 401 | `"Missing authentication"` | Missing or invalid Bearer token |
+| 404 | `"Session not found"` | The session does not exist or belongs to another user |
+
 ### Logout
 
 `POST /api/auth/logout`
 
-Revokes all sessions for the authenticated user. Requires a valid Bearer token.
+Revokes the current session of the authenticated user. Requires a valid Bearer token.
+
+The optional request body widens the scope of the revocation:
+
+| Body | Revoked sessions |
+|------|------------------|
+| `{ "scope": "all" }` | All the sessions of the user. |
+| `{ "deviceId": "device-a" }` | All the sessions of the given device. |
+
+The current session is read from the request context, then from the refresh token found in the cookie or in the `refreshToken` property of the request body. If the current session cannot be identified, all the sessions of the user are revoked.
 
 <ApiCall>
 
@@ -426,6 +536,10 @@ curl -X POST http://localhost:1337/api/auth/logout \
 </Response>
 
 </ApiCall>
+
+::::note
+When `httpOnly` is enabled in the session configuration, the refresh token cookie is also cleared.
+::::
 
 ## Users
 
