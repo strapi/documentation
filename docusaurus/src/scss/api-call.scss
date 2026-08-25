@@ -175,9 +175,16 @@
 /**
  * V3: 2-Column layout on desktop
  * Request on left, Response on right — side by side
+ *
+ * Only at the wide/max content widths (or in AI mode, which forces its own
+ * layout in view-modes.scss). At the default (narrow) content width there
+ * isn't enough room for two columns without squeezing the code — same
+ * reasoning as the <Endpoint> 2-column grid in the block below — so it stays
+ * single column there: request stacked above response.
  */
 @include medium-up {
-  .api-call:not(.api-call--no-side-by-side) {
+  [data-content-width="wide"]:not([data-view-mode="ai"]) .api-call:not(.api-call--no-side-by-side),
+  [data-content-width="max"]:not([data-view-mode="ai"]) .api-call:not(.api-call--no-side-by-side) {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: var(--strapi-spacing-5);
@@ -185,11 +192,13 @@
   }
 
   /** When there's only a Request (no Response), span full width */
-  .api-call:not(.api-call--no-side-by-side) > .api-call__request:only-child {
+  [data-content-width="wide"]:not([data-view-mode="ai"]) .api-call:not(.api-call--no-side-by-side) > .api-call__request:only-child,
+  [data-content-width="max"]:not([data-view-mode="ai"]) .api-call:not(.api-call--no-side-by-side) > .api-call__request:only-child {
     grid-column: 1 / -1;
   }
 
-  .api-call__response {
+  [data-content-width="wide"]:not([data-view-mode="ai"]) .api-call__response,
+  [data-content-width="max"]:not([data-view-mode="ai"]) .api-call__response {
     position: sticky;
     top: calc(var(--ifm-navbar-height) + 16px);
     max-height: calc(100vh - var(--ifm-navbar-height) - 32px);
@@ -198,14 +207,16 @@
     scrollbar-color: var(--strapi-surface-3) transparent;
   }
 
-  .api-call__request {
+  [data-content-width="wide"]:not([data-view-mode="ai"]) .api-call__request,
+  [data-content-width="max"]:not([data-view-mode="ai"]) .api-call__request {
     [class*="buttonGroup"] {
       right: -24px;
       top: -66px;
     }
   }
 
-  .api-call__response {
+  [data-content-width="wide"]:not([data-view-mode="ai"]) .api-call__response,
+  [data-content-width="max"]:not([data-view-mode="ai"]) .api-call__response {
     [class*="buttonGroup"] {
       right: 0;
       top: -51px;
