@@ -31,8 +31,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      # This job needs exactly one file: the release-detection script. A default
+      # checkout of this repository was observed taking minutes (it carries
+      # ~865 MB of history, mostly images under static/).
+      #
+      # Two settings matter, and both are needed:
+      #   sparse-checkout  — limits what is written to the working tree
+      #   filter: blob:none — limits what is transferred at all
+      #
+      # Sparse checkout alone still fetched 417 MB in 21s; adding the blob
+      # filter brings it to 392 KB in ~1s. The script stays a real file in the
+      # repository, so it remains runnable locally.
+      - name: Checkout the release-detection script
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/scripts
+          sparse-checkout-cone-mode: false
+          fetch-depth: 1
+          filter: blob:none
 
       - name: Remove the label from released PRs
         env:
