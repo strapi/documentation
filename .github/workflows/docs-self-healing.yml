@@ -324,6 +324,100 @@ jobs:
           } >> $GITHUB_OUTPUT
 
       # ── Step A: Haiku Router (only for triage "yes" PRs) ──
+      # ── Release state, computed before any agent runs ──
+      #
+      # A doc PR for a feature that has not shipped yet must carry
+      # `flag: merge pending release`. That label used to be applied by hand,
+      # days after the PR was opened.
+      #
+      # This is a deterministic fact, so it is resolved here in bash rather than
+      # delegated to the Router or the Drafter. Both agents read the resulting
+      # file and apply the labels it lists; neither decides anything.
+      #
+      # `unflag-released-prs.yml` removes the label later, using the same script.
+      - name: Resolve release state for each candidate PR
+        if: steps.check-triage.outputs.has_candidates == 'true'
+        id: release-state
+        # Labelling must never break drafting. If this step fails, /tmp/pr-labels.json
+        # is absent or partial and both prompts fall back to config.json — the run
+        # produces PRs exactly as it did before this step existed.
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+        run: |
+          set -euo pipefail
+
+          SCRIPT=".github/scripts/is-strapi-pr-released.sh"
+          chmod +x "$SCRIPT"
+
+          BASE_LABEL=$(jq -r '.["docs-self-healing"].labels[0]' .github/workflows/config.json)
+          PENDING_LABEL="flag: merge pending release"
+          OUT="/tmp/pr-labels.json"
+
+          # Resolve the reference tag once so every PR in this run is judged
+          # against the same release.
+          TAG=$(gh api "repos/strapi/strapi/releases?per_page=30" \
+            --jq '[.[] | select(.draft == false and .prerelease == false and (.tag_name | startswith("v5.")))]
+                  | sort_by(.published_at) | reverse | .[0].tag_name')
+
+          if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
+            # Fail open: without a reference tag we cannot tell released from
+            # unreleased. Label everything as pending — a PR wrongly held back
+            # costs a manual unflag, a PR wrongly released costs bad docs.
+            echo "::warning::Could not resolve a v5 release tag — flagging all PRs as pending release"
+            TAG=""
+          else
+            echo "Reference release: $TAG"
+          fi
+
+          echo '{}' > "$OUT"
+          PENDING=0
+          RELEASED=0
+
+          while read -r PR_NUMBER; do
+            [ -z "$PR_NUMBER" ] && continue
+
+            if [ -z "$TAG" ]; then
+              LABELS="$BASE_LABEL,$PENDING_LABEL"
+              PENDING=$((PENDING + 1))
+            else
+              set +e
+              "$SCRIPT" "$PR_NUMBER" "$TAG" > /dev/null 2>&1
+              CODE=$?
+              set -e
+
+              case "$CODE" in
+                0)
+                  LABELS="$BASE_LABEL"
+                  RELEASED=$((RELEASED + 1))
+                  echo "  strapi#$PR_NUMBER — released in $TAG"
+                  ;;
+                *)
+                  # Both "not released" (1) and "cannot tell" (2) flag the PR.
+                  LABELS="$BASE_LABEL,$PENDING_LABEL"
+                  PENDING=$((PENDING + 1))
+                  echo "  strapi#$PR_NUMBER — not in $TAG, will be flagged pending release"
+                  ;;
+              esac
+            fi
+
+            jq --arg k "$PR_NUMBER" --arg v "$LABELS" '. + {($k): $v}' "$OUT" > "$OUT.tmp"
+            mv "$OUT.tmp" "$OUT"
+          done < <(jq -r '.[].number // empty' /tmp/triaged-prs.json)
+
+          echo ""
+          echo "Released: $RELEASED | pending release: $PENDING"
+
+          {
+            echo "### Release state"
+            echo ""
+            echo "Reference release: \`${TAG:-unresolved}\`"
+            echo ""
+            echo "- Already released: $RELEASED"
+            echo "- Will be flagged \`$PENDING_LABEL\`: $PENDING"
+            echo ""
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Load Router prompt
         if: steps.check-triage.outputs.has_candidates == 'true'
         id: load-router-prompt
