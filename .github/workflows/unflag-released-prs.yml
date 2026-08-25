@@ -1,0 +1,208 @@
+name: Unflag released PRs
+
+# Removes `flag: merge pending release` from open documentation PRs once the
+# strapi/strapi PR they document has shipped in a published release.
+#
+# The label is applied when a doc PR is created for a feature that is not yet
+# released. Until now it was also removed by hand. This workflow does it from a
+# deterministic test: the source PR's merge commit is either an ancestor of the
+# newest published v5 tag, or it is not.
+#
+# Runs Wednesdays because that is when Strapi ships (10 of the last 12 releases),
+# and again on Thursday to catch releases that slip by a day.
+
+on:
+  schedule:
+    - cron: '0 15 * * 3,4' # 15:00 UTC Wed + Thu, after the usual release window
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Report what would be unflagged without changing anything'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  unflag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Remove the label from released PRs
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+
+          LABEL="flag: merge pending release"
+          SCRIPT=".github/scripts/is-strapi-pr-released.sh"
+          chmod +x "$SCRIPT"
+
+          # Labels that keep a PR flagged even once its source has shipped.
+          # A PR can be held back for reasons unrelated to the release: an area
+          # being reworked by hand (Media Library revamp), or an explicit veto.
+          # Removing the flag would make those PRs auto-merge candidates.
+          HOLD_LABELS=("temp - future media lib" "flag: don't merge")
+
+          # Resolve the reference tag once, so every PR in this run is judged
+          # against the same release and the log states which one.
+          TAG=$(gh api "repos/strapi/strapi/releases?per_page=30" \
+            --jq '[.[] | select(.draft == false and .prerelease == false and (.tag_name | startswith("v5.")))]
+                  | sort_by(.published_at) | reverse | .[0].tag_name')
+
+          if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
+            echo "::error::Could not resolve a published v5 release tag"
+            exit 1
+          fi
+
+          echo "Latest published v5 release: $TAG"
+          echo ""
+
+          gh pr list --repo strapi/documentation \
+            --state open --label "$LABEL" --limit 100 \
+            --json number,title,body,labels > /tmp/flagged.json
+
+          COUNT=$(jq 'length' /tmp/flagged.json)
+          echo "Open PRs carrying '$LABEL': $COUNT"
+
+          if [ "$COUNT" -eq 0 ]; then
+            echo "Nothing to do."
+            echo "no_changes=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          UNFLAGGED=0
+          STILL_WAITING=0
+          SKIPPED=0
+          HELD=0
+          SUMMARY=""
+
+          # Read the source PR number from the doc PR body. Same pattern the
+          # self-healing dedup already relies on.
+          while read -r DOC_PR; do
+            TITLE=$(jq -r --argjson n "$DOC_PR" '.[] | select(.number == $n) | .title' /tmp/flagged.json)
+
+            # A hold label wins over the release state: the PR is waiting on a
+            # human decision, not on a release.
+            HOLD=""
+            for H in "${HOLD_LABELS[@]}"; do
+              if jq -e --argjson n "$DOC_PR" --arg l "$H" \
+                '.[] | select(.number == $n) | .labels | map(.name) | index($l)' \
+                /tmp/flagged.json > /dev/null 2>&1; then
+                HOLD="$H"
+                break
+              fi
+            done
+
+            if [ -n "$HOLD" ]; then
+              echo "  #$DOC_PR — held by '$HOLD', leaving the flag in place"
+              HELD=$((HELD + 1))
+              continue
+            fi
+
+            SOURCE=$(jq -r --argjson n "$DOC_PR" '.[] | select(.number == $n) | .body' /tmp/flagged.json \
+              | grep -oE 'strapi/strapi/pull/[0-9]+' | head -1 | grep -oE '[0-9]+$' || true)
+
+            if [ -z "$SOURCE" ]; then
+              echo "  #$DOC_PR — no source PR in body, leaving untouched"
+              SKIPPED=$((SKIPPED + 1))
+              continue
+            fi
+
+            set +e
+            RESULT=$("$SCRIPT" "$SOURCE" "$TAG" 2>&1)
+            CODE=$?
+            set -e
+
+            case "$CODE" in
+              0)
+                echo "  #$DOC_PR — strapi#$SOURCE is in $TAG -> unflagging"
+                if [ "$DRY_RUN" = "true" ]; then
+                  echo "     (dry run, no change)"
+                else
+                  gh pr edit "$DOC_PR" --repo strapi/documentation --remove-label "$LABEL"
+                fi
+                UNFLAGGED=$((UNFLAGGED + 1))
+                SUMMARY="${SUMMARY}- [#${DOC_PR}](https://github.com/strapi/documentation/pull/${DOC_PR}) — ${TITLE}\n"
+                ;;
+              1)
+                echo "  #$DOC_PR — strapi#$SOURCE not yet released, keeping the label"
+                STILL_WAITING=$((STILL_WAITING + 1))
+                ;;
+              *)
+                # An API error must never be read as "not released" — leave the
+                # PR alone and make the failure visible.
+                echo "::warning::#$DOC_PR — could not determine release state of strapi#$SOURCE: $RESULT"
+                SKIPPED=$((SKIPPED + 1))
+                ;;
+            esac
+          done < <(jq -r '.[].number' /tmp/flagged.json)
+
+          echo ""
+          echo "Unflagged: $UNFLAGGED | still waiting: $STILL_WAITING | held: $HELD | skipped: $SKIPPED"
+
+          {
+            echo "## Unflag released PRs"
+            echo ""
+            echo "**Reference release:** \`$TAG\`"
+            echo ""
+            echo "| Result | Count |"
+            echo "| --- | --- |"
+            echo "| Unflagged | $UNFLAGGED |"
+            echo "| Still waiting for a release | $STILL_WAITING |"
+            echo "| Held by a label (manual handling) | $HELD |"
+            echo "| Skipped (no source PR or API error) | $SKIPPED |"
+            if [ "$UNFLAGGED" -gt 0 ]; then
+              echo ""
+              echo "**Unflagged:**"
+              echo ""
+              printf '%b' "$SUMMARY"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          {
+            echo "unflagged=$UNFLAGGED"
+            echo "tag=$TAG"
+            echo "summary<<SUMMARY_EOF"
+            printf '%b' "$SUMMARY"
+            echo "SUMMARY_EOF"
+          } >> "$GITHUB_OUTPUT"
+        id: unflag
+
+      - name: Notify Slack
+        if: steps.unflag.outputs.unflagged != '' && steps.unflag.outputs.unflagged != '0' && inputs.dry_run != true
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
+        run: |
+          if [ -z "$SLACK_BOT_TOKEN" ] || [ -z "$SLACK_CHANNEL" ]; then
+            echo "Slack not configured, skipping notification"
+            exit 0
+          fi
+
+          COUNT="${{ steps.unflag.outputs.unflagged }}"
+          TAG="${{ steps.unflag.outputs.tag }}"
+          DATE=$(date -u '+%Y-%m-%d')
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+          SUMMARY=$(cat <<'SUMMARY_EOF'
+          ${{ steps.unflag.outputs.summary }}
+          SUMMARY_EOF
+          )
+          SUMMARY=$(echo "$SUMMARY" | sed 's/^          //')
+
+          TEXT=$(printf ':noted: *Docs — released, ready to review* (%s)\n*%s PR(s)* no longer waiting on a release (now in `%s`):\n%s\n<%s|View run>' \
+            "$DATE" "$COUNT" "$TAG" "$SUMMARY" "$RUN_URL")
+
+          curl -s -X POST "https://slack.com/api/chat.postMessage" \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-type: application/json; charset=utf-8" \
+            -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$TEXT" '{channel: $channel, text: $text}')" \
+            > /dev/null || echo "Slack notification failed (non-blocking)"
