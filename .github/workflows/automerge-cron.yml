@@ -88,6 +88,8 @@ jobs:
           echo "Today ($TODAY) is outside the absence period ($START → $END)"
           echo "suspended=false" >> "$GITHUB_OUTPUT"
 
+          exit 0
+
       - name: Merge what is eligible and ripe
         id: merge
         env:
@@ -230,6 +232,11 @@ jobs:
             echo "failed_list<<EOF"; printf '%b' "$FAILED_LIST"; echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
+          # Explicit, so the step's result never depends on whichever command
+          # happens to be last. A merge that failed is reported through
+          # failed_list and the Slack alert, not by failing this step.
+          exit 0
+
       - name: Post the daily recap to Slack
         if: always() && inputs.dry_run != true
         env:
@@ -288,3 +295,5 @@ jobs:
             -H "Content-type: application/json; charset=utf-8" \
             -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$TEXT" '{channel: $channel, text: $text}')" \
             > /dev/null || echo "Slack notification failed (non-blocking)"
+
+          exit 0

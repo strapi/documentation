@@ -171,6 +171,15 @@ jobs:
             echo "**Eligible.** All checks passed." >> "$GITHUB_STEP_SUMMARY"
           fi
 
+          # The step's exit code is that of its last command, and the last one to
+          # run above is `[ -n "$UNKNOWN" ]`. When no check errored — the normal
+          # case — that test is false and returns 1, failing the step even though
+          # every check ran and the verdict was recorded.
+          #
+          # This step reports a verdict; it does not pass or fail on it. Whether
+          # the PR is eligible is carried by the `eligible` output.
+          exit 0
+
       - name: Update the eligibility label
         if: steps.scope.outputs.in_scope == 'true'
         id: label
@@ -207,6 +216,8 @@ jobs:
             echo "Label already correct, nothing to do"
             echo "newly_eligible=false" >> "$GITHUB_OUTPUT"
           fi
+
+          exit 0
 
       # The veto window. Posted once, when a PR first becomes eligible, roughly
       # 24 hours before the cron merges it.
@@ -261,3 +272,5 @@ jobs:
             -H "Content-type: application/json; charset=utf-8" \
             -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$TEXT" '{channel: $channel, text: $text}')" \
             > /dev/null || echo "Slack notification failed (non-blocking)"
+
+          exit 0
