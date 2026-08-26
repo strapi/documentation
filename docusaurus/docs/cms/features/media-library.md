@@ -32,7 +32,7 @@ The <Icon name="images" /> Media Library is the Strapi feature that displays all
 <Guideflow lightId="mk6z26zaqp" darkId="9r2m74otok"/>
 
 :::strapi New Media Library available in <BetaBadge/>
-Strapi has completely reworked the Media Library UI, which is now available as a beta feature for the next few weeks before it replaces the current UI. You can try the beta by configuring the `future.betaMediaLibrary` property in the `config/features` file as follows:
+Strapi has completely reworked the Media Library UI, which is now available as a beta feature for the next few weeks before it becomes the default UI. You can try the beta by configuring the `future.betaMediaLibrary` property in the `config/features` file as follows:
 
 <Tabs groupId="js-ts">
 
