@@ -27,7 +27,88 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.50.0](https://github.com/strapi/strapi/releases/tag/v5.50.0)._
+
+
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.52.2](https://github.com/strapi/strapi/releases/tag/v5.52.2)._
+
+## 7.1.0
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Add callout to mention the beta Media Library](https://github.com/strapi/documentation/pull/3402)
+- [Document Users & Permissions Content API session endpoints](https://github.com/strapi/documentation/pull/3395)
+- [Document auth.cookie.path requirement when customizing admin.url](https://github.com/strapi/documentation/pull/3390)
+- [Document Content History retention and version creation scope](https://github.com/strapi/documentation/pull/3386)
+- [Document the status parameter on REST create and update requests](https://github.com/strapi/documentation/pull/3382)
+- [Document SVG denial in generated project upload defaults](https://github.com/strapi/documentation/pull/3378)
+- [Document GraphQL operation limits startup warning and recommended security profile](https://github.com/strapi/documentation/pull/3377)
+- [Clarify partial data transfer stage filtering and preservation behavior](https://github.com/strapi/documentation/pull/3376)
+- [Document content-type filtering options for data management CLI](https://github.com/strapi/documentation/pull/3357)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Remove unsupported $eqi from RBAC condition operators](https://github.com/strapi/documentation/pull/3391)
+- [Clarify sizeLimit applies to file replacement operations](https://github.com/strapi/documentation/pull/3388)
+- [Improve the REST API reference structure and fix response inaccuracies](https://github.com/strapi/documentation/pull/3383)
+- [Clarify contact process for Enterprise plan changes](https://github.com/strapi/documentation/pull/3381)
+- [Document that MCP actions are recorded in audit logs](https://github.com/strapi/documentation/pull/3380)
+- [Correct dbclient value from 'sql' to 'sqlite'](https://github.com/strapi/documentation/pull/3379)
+- [Add proxy IP header configuration options to server config documentation](https://github.com/strapi/documentation/pull/3373)
+- [Clarify that a release publishes the latest draft, not a snapshot](https://github.com/strapi/documentation/pull/3370)
+- [Remove incorrect private-provider section from custom email providers doc](https://github.com/strapi/documentation/pull/3361)
+- [Use matching SSO login screenshot for dark mode](https://github.com/strapi/documentation/pull/3358)
+- [Fix Document Service API examples not rendering with the redesigned Endpoint](https://github.com/strapi/documentation/pull/3351)
+
+#### Repository
+- [Apply the merge pending release flag when the source has not shipped](https://github.com/strapi/documentation/pull/3399)
+- [Fetch only the release script in the unflag workflow](https://github.com/strapi/documentation/pull/3398)
+- [Automate the merge pending release flag on self-healing doc PRs](https://github.com/strapi/documentation/pull/3397)
+- [Fix ApiCall request/response layout at narrow content width](https://github.com/strapi/documentation/pull/3396)
+- [Automate docs issue triage into PR creation, Slack ping, or redirect](https://github.com/strapi/documentation/pull/3389)
+- [Fix note admonition and linked inline-code contrast/consistency](https://github.com/strapi/documentation/pull/3371)
+- [Wrap single-status API responses in one bordered content box](https://github.com/strapi/documentation/pull/3360)
+- [Fix content column width and alignment on API reference pages](https://github.com/strapi/documentation/pull/3359)
+- [Move data-management CLI pages under features to fix breadcrumbs](https://github.com/strapi/documentation/pull/3354)
+- [Fix doc card width so cards fill their grid cell](https://github.com/strapi/documentation/pull/3353)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/OcneanuVlad" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/102417094?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="OcneanuVlad"/>
+</a>
+<a href="https://github.com/annakudelska" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/140526342?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="annakudelska"/>
+</a>
+<a href="https://github.com/butcherZ" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8189028?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="butcherZ"/>
+</a>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/innerdvations" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/999278?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="innerdvations"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/singhvishalkr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/107715446?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="singhvishalkr"/>
+</a>
+<a href="https://github.com/unrevised6419" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/1881266?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="unrevised6419"/>
+</a>
+</div>
+<br/>
+<br/>
+
 
 ## 7.0.1
 
