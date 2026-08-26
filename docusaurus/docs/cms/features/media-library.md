@@ -345,7 +345,7 @@ export default {
 
 </Tabs>
 
-#### Security <NewBadge/>
+#### Security
 
 The Upload plugin validates files based on their actual MIME type rather than the declared file extension.
 Only files matching the defined security rules are uploaded.
