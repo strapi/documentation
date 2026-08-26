@@ -97,6 +97,11 @@ jobs:
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
           AUTOMERGE_REPO: ${{ github.repository }}
           PR: ${{ github.event.pull_request.number || inputs.pr_number }}
+        # GitHub runs `run:` blocks as `bash -e` unless told otherwise, and
+        # `set -uo pipefail` does not undo that. A check exiting 1 is this
+        # step's normal output — a criterion was violated — so -e would abort
+        # the run on the first failing check and report the job as broken.
+        shell: bash
         run: |
           set -uo pipefail
 
@@ -135,7 +140,7 @@ jobs:
           for CHECK in "${CHECKS[@]}"; do
             OUT=$("$DIR/$CHECK.sh" "$PR" 2>&1)
             CODE=$?
-            DETAIL=$(echo "$OUT" | head -1 | sed 's/^\(PASS\|FAIL\|UNKNOWN\): //' | cut -c1-90)
+            DETAIL=$(echo "$OUT" | head -1 | sed -E 's/^(PASS|FAIL|UNKNOWN): //' | cut -c1-90)
 
             case "$CODE" in
               0) ICON="✅" ;;
@@ -170,6 +175,7 @@ jobs:
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
           PR: ${{ github.event.pull_request.number || inputs.pr_number }}
           ELIGIBLE: ${{ steps.checks.outputs.eligible }}
+        shell: bash
         run: |
           set -uo pipefail
 
@@ -216,6 +222,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
           PR: ${{ github.event.pull_request.number || inputs.pr_number }}
+        shell: bash
         run: |
           set -uo pipefail
 

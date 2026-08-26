@@ -45,6 +45,7 @@ jobs:
 
       - name: Check the absence period
         id: absence
+        shell: bash
         run: |
           set -uo pipefail
 
@@ -94,6 +95,7 @@ jobs:
           DRY_RUN: ${{ inputs.dry_run }}
           SUSPENDED: ${{ steps.absence.outputs.suspended }}
           SUSPEND_REASON: ${{ steps.absence.outputs.reason }}
+        shell: bash
         run: |
           set -uo pipefail
 
@@ -244,6 +246,7 @@ jobs:
           HELD_LIST: ${{ steps.merge.outputs.held_list }}
           FAILED_LIST: ${{ steps.merge.outputs.failed_list }}
           JOB_STATUS: ${{ job.status }}
+        shell: bash
         run: |
           set -uo pipefail
 
