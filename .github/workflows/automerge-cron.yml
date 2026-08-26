@@ -1,4 +1,4 @@
-name: Auto-merge eligible PRs
+name: 'Auto-merge: merge eligible PRs'
 
 # Merges the self-healing documentation PRs that `automerge-eligibility.yml` has
 # marked eligible, once they have sat through the quarantine.

@@ -1,4 +1,4 @@
-name: Auto-merge eligibility
+name: 'Auto-merge: check eligibility'
 
 # Decides whether a self-healing documentation PR is constrained enough to merge
 # without review, and records the answer as the `automerge: eligible` label.
