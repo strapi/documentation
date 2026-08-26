@@ -60,7 +60,7 @@ export default () => ({
 </TabItem>
 </Tabs>
 
-Set the property to `false` to use the current stable version again.
+Restart your Strapi application after the configuration change. Set the property to `false` and restart Strapi to use the current stable version again.
 
 The current page still describes the stable version of the Media Library. Over the next few weeks, the documentation will be updated to reflect the new features. In the meantime, you can <ExternalLink text="read more about it here" to="https://strapi.notion.site/Media-Library-Beta-Release-3c78f3598074810dbad6f2addfa25b6f" />.
 :::
