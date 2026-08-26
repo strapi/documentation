@@ -46,6 +46,47 @@ gh_api_get() {
         "https://api.github.com/repos/$REPO/$endpoint"
 }
 
+# Function to make paginated GitHub API requests.
+# The GitHub API returns only 30 items per page by default, so any endpoint
+# that can return more than that must be walked page by page. Outputs a single
+# JSON array with the items of every page concatenated.
+gh_api_get_all() {
+    local endpoint="$1"
+    local page=1
+    local separator=""
+    local page_items
+
+    printf '['
+    while :; do
+        if [[ "$endpoint" == *"?"* ]]; then
+            page_items=$(gh_api_get "${endpoint}&per_page=100&page=${page}")
+        else
+            page_items=$(gh_api_get "${endpoint}?per_page=100&page=${page}")
+        fi
+
+        # Stop on anything that is not a JSON array (an API error object, for instance)
+        if ! echo "$page_items" | jq -e 'type == "array"' > /dev/null 2>&1; then
+            break
+        fi
+
+        if [ "$(echo "$page_items" | jq 'length')" -eq 0 ]; then
+            break
+        fi
+
+        printf '%s' "$separator"
+        echo "$page_items" | jq -c '.[]' | paste -sd, -
+        separator=","
+
+        # A short page means this was the last one
+        if [ "$(echo "$page_items" | jq 'length')" -lt 100 ]; then
+            break
+        fi
+
+        page=$((page + 1))
+    done
+    printf ']'
+}
+
 # Function to select a milestone
 select_milestone() {
     # Ask about including closed milestones
@@ -181,11 +222,11 @@ main() {
     echo "" >> "$OUTPUT_FILE"  # Empty line for readability in Markdown
     echo "<br />" >> "$OUTPUT_FILE"
 
-    # Fetch PRs
-    prs=$(gh_api_get "issues?milestone=$MILESTONE&state=closed&pull_request")
+    # Fetch PRs (paginated: a milestone can hold far more than one page of PRs)
+    prs=$(gh_api_get_all "issues?milestone=$MILESTONE&state=closed")
 
     # Process each PR
-    echo "$prs" | jq -c '.[]' | while read -r pr; do
+    echo "$prs" | jq -c '.[] | select(.pull_request)' | while read -r pr; do
         title=$(echo "$pr" | jq -r '.title')
         url=$(echo "$pr" | jq -r '.html_url')
         labels=$(echo "$pr" | jq -r '.labels[].name')
