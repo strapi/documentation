@@ -25619,7 +25619,7 @@ export default {
 Source: https://docs.strapi.io/cms/features/media-library
 
 ## Media Library
-Description: :::strapi New Media Library available in Strapi has completely reworked the Media Library UI, which is now available as a beta feature for the next few weeks before it replaces the current UI.
+Description: :::strapi New Media Library available in Strapi has completely reworked the Media Library UI, which is now available as a beta feature for the next few weeks before it becomes the default UI.
 (Source: https://docs.strapi.io/cms/features/media-library#media-library)
 
 Language: JavaScript

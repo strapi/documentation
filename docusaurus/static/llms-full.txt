@@ -26775,7 +26775,7 @@ Providers configuration is defined in [the `/config/plugins` file](/cms/configur
 * `provider` to define the provider name (i.e., `local`)
 * `providerOptions` to define options that are passed down during the construction of the provider.
 
-For the local Upload provider, `providerOptions` accepts only one parameter: `sizeLimit`, which must be a number. The unit is bytes, and the default value is 1000000000 (1 GB). When increasing this limit, also configure the body parser middleware `maxFileSize` so the file can be sent and processed (see [Media Library documentation](/cms/features/media-library#max-file-size) for details).
+For the local Upload provider, `providerOptions` accepts only one parameter: `sizeLimit`, which must be a number. The unit is bytes, and the default value is 1000000000 (1 GB). The `sizeLimit` is enforced for both file uploads and file replacements. When increasing this limit, also configure the body parser middleware `maxFileSize` so the file can be sent and processed (see [Media Library documentation](/cms/features/media-library#max-file-size) for details).
 
 The following is an example configuration:
 
@@ -34529,7 +34529,7 @@ Available and activated by default
 Available in both Development & Production environment
 
 :::strapi New Media Library available in 
-Strapi has completely reworked the Media Library UI, which is now available as a beta feature for the next few weeks before it replaces the current UI. You can try the beta by configuring the `future.betaMediaLibrary` property in the `config/features` file as follows:
+Strapi has completely reworked the Media Library UI, which is now available as a beta feature for the next few weeks before it becomes the default UI. You can try the beta by configuring the `future.betaMediaLibrary` property in the `config/features` file as follows:
 
 ```js
 module.exports = () => ({
