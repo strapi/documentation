@@ -34,6 +34,20 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 ## 7.1.0
 
 <br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Document morphMany empty-array serialization](https://github.com/strapi/documentation/pull/3349)
+- [Document publicationFilter for REST, GraphQL, and Document Service API](https://github.com/strapi/documentation/pull/3274)
+
+#### Cloud
+- [Document Cloud Observability dashboard and Billing & Invoices tab](https://github.com/strapi/documentation/pull/3323)
+
+#### Repository
+- [Tags UI improvements](https://github.com/strapi/documentation/pull/3320)
+
 ### <Icon name='pen-nib' /> Updated content
 
 <br />
@@ -48,6 +62,11 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 - [Document GraphQL operation limits startup warning and recommended security profile](https://github.com/strapi/documentation/pull/3377)
 - [Clarify partial data transfer stage filtering and preservation behavior](https://github.com/strapi/documentation/pull/3376)
 - [Document content-type filtering options for data management CLI](https://github.com/strapi/documentation/pull/3357)
+- [Clarify repeatable component update workarounds](https://github.com/strapi/documentation/pull/3345)
+- [Document dynamic database credentials with connection functions](https://github.com/strapi/documentation/pull/3333)
+
+#### Repository
+- [Top nav bar improvements](https://github.com/strapi/documentation/pull/3328)
 
 ### <Icon name='broom' /> Chore, fixes, typos, and other improvements
 
@@ -65,6 +84,16 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 - [Remove incorrect private-provider section from custom email providers doc](https://github.com/strapi/documentation/pull/3361)
 - [Use matching SSO login screenshot for dark mode](https://github.com/strapi/documentation/pull/3358)
 - [Fix Document Service API examples not rendering with the redesigned Endpoint](https://github.com/strapi/documentation/pull/3351)
+- [Mention that local plugin server entry must be JavaScript without SDK](https://github.com/strapi/documentation/pull/3350)
+- [General design improvements](https://github.com/strapi/documentation/pull/3347)
+- [Add forgotPassword.expiresIn option for admin password-reset tokens](https://github.com/strapi/documentation/pull/3344)
+- [Improve GraphQL configuration docs](https://github.com/strapi/documentation/pull/3332)
+- [Document auth.cookie.name option in admin panel configuration](https://github.com/strapi/documentation/pull/3327)
+- [Clarify that ForbiddenError custom messages are not included in API responses](https://github.com/strapi/documentation/pull/3322)
+
+#### Cloud
+- [Fix sidebar labels for many Cloud pages](https://github.com/strapi/documentation/pull/3340)
+- [Update recommended maximum image upload sizes for Strapi Cloud](https://github.com/strapi/documentation/pull/3318)
 
 #### Repository
 - [Apply the merge pending release flag when the source has not shipped](https://github.com/strapi/documentation/pull/3399)
@@ -77,6 +106,13 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 - [Fix content column width and alignment on API reference pages](https://github.com/strapi/documentation/pull/3359)
 - [Move data-management CLI pages under features to fix breadcrumbs](https://github.com/strapi/documentation/pull/3354)
 - [Fix doc card width so cards fill their grid cell](https://github.com/strapi/documentation/pull/3353)
+- [Fix inconsistent chevron on linked sidebar categories](https://github.com/strapi/documentation/pull/3348)
+- [Correct package manager version handling on Strapi Cloud](https://github.com/strapi/documentation/pull/3346)
+- [Restore Cloud qualifier in Cloud page titles and guard frontmatter edits](https://github.com/strapi/documentation/pull/3338)
+- [Fix API Explorer homepage label, doc link CTA, and card height](https://github.com/strapi/documentation/pull/3335)
+- [Fix vertical centering in homepage Quick start card](https://github.com/strapi/documentation/pull/3334)
+- [Fix ScreenshotNumberReference number centering](https://github.com/strapi/documentation/pull/3330)
+- [Unify homepage card styles and typography](https://github.com/strapi/documentation/pull/3329)
 
 ***
 This release was made possible thanks to the following contributors. Thank you! 🫶
@@ -93,8 +129,20 @@ This release was made possible thanks to the following contributors. Thank you! 
 <a href="https://github.com/derrickmehaffy" target="_blank">
     <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
 </a>
+<a href="https://github.com/dimasivan" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/42174681?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="dimasivan"/>
+</a>
+<a href="https://github.com/giu1io" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/6680957?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="giu1io"/>
+</a>
 <a href="https://github.com/innerdvations" target="_blank">
     <img className="no-zoom" src="https://avatars.githubusercontent.com/u/999278?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="innerdvations"/>
+</a>
+<a href="https://github.com/lucasboilly" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/45385696?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="lucasboilly"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
 </a>
 <a href="https://github.com/pwizla" target="_blank">
     <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
@@ -104,6 +152,9 @@ This release was made possible thanks to the following contributors. Thank you! 
 </a>
 <a href="https://github.com/unrevised6419" target="_blank">
     <img className="no-zoom" src="https://avatars.githubusercontent.com/u/1881266?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="unrevised6419"/>
+</a>
+<a href="https://github.com/ww24" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/695166?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="ww24"/>
 </a>
 </div>
 <br/>
