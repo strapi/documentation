@@ -25557,10 +25557,22 @@ Source: https://docs.strapi.io/cms/features/media-library
 Description: :::strapi New Media Library available in Strapi has completely reworked the Media Library UI, which is now available as a beta feature for the next few weeks before it replaces the current UI.
 (Source: https://docs.strapi.io/cms/features/media-library#media-library)
 
-Language: TypeScript
-File path: /features.ts
+Language: JavaScript
+File path: /src/components/ScreenshotNumberReference.js
 
-```ts
+```js
+module.exports = () => ({
+  future: {
+    betaMediaLibrary: true,
+  },
+});
+```
+
+---
+Language: JavaScript
+File path: /src/components/ScreenshotNumberReference.js
+
+```js
 export default () => ({
   future: {
     betaMediaLibrary: true,
