@@ -29873,6 +29873,17 @@ module.exports = {
 
 </details>
 
+## Using the migration progress heartbeats
+
+For long-running migrations, Strapi provides a progress heartbeat feature that logs periodic status updates without rewriting terminal output. This is useful when migrations process large datasets and need to show activity to the operator.
+
+The heartbeat logger is time-throttled (default 60 seconds) and reports progress in a format like:
+```
+… still running (120s) · files 12000/450000
+```
+
+This feature is automatically enabled for migrations that use the heartbeat logging capability, such as data backfill operations. The progress updates are append-only, making them suitable for long-running operations that don't produce frequent log output.
+
 ## Handling migrations with TypeScript code
 
 By default Strapi looks for migration files in the source directory rather than the build directory when using TypeScript. This means that TypeScript migrations won't be found and executed properly unless you configure Strapi to look in the right place.
@@ -31199,6 +31210,8 @@ For each log item, the following information is displayed:
 - User: user who performed the action.
 - Details: displays a modal with more details about the action (e.g. the User IP address, the request body, or the response body).
 
+With Strapi   logged actions can come from the admin panel or from the [MCP server](/cms/features/strapi-mcp-server). Entry actions performed through the MCP server are logged like their admin panel equivalents. Actions that only read content are not logged.
+
 ### Filtering logs
 
 By default, all logs are displayed in reverse chronological order. You can filter the logs by:
@@ -31210,6 +31223,8 @@ By default, all logs are displayed in reverse chronological order. You can filte
 ### Accessing log details {#log-details}
 
 For any log item, click the  icon to access a modal with more details about that action. In the modal, the *Payload* section displays the details in an interactive JSON component, enabling you to expand and collapse the JSON object.
+
+With Strapi , in the payload, the `origin` key indicates where the action came from: `mcp` for the [MCP server](/cms/features/strapi-mcp-server), or `admin` for the admin panel.
 
 
 
@@ -36656,6 +36671,10 @@ This means you can create tokens with fine-grained access:
 :::tip
 Create dedicated Admin tokens for each AI client or use case. Use the most restrictive permissions that still allow the AI to accomplish its task.
 :::
+
+### Audit logs
+
+Entry actions performed through the MCP server are recorded in the [Audit Logs](/cms/features/audit-logs). Each log payload carries an `origin` key set to `mcp`, which distinguishes actions triggered by an AI client from actions performed in the admin panel. Operations that only read content are not recorded.
 
 ### Stateless architecture
 

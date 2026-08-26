@@ -23296,6 +23296,18 @@ module.exports = {
 ```
 
 
+## Using the migration progress heartbeats
+Description: The heartbeat logger is time-throttled (default 60 seconds) and reports progress in a format like:
+(Source: https://docs.strapi.io/cms/database-migrations#using-the-migration-progress-heartbeats)
+
+Language: JavaScript
+File path: .05.10T00.00.00.name-of-my-migration.js
+
+```js
+… still running (120s) · files 12000/450000
+```
+
+
 ## Handling migrations with TypeScript code
 Description: Here's how to configure it in your database settings:
 (Source: https://docs.strapi.io/cms/database-migrations#handling-migrations-with-typescript-code)
