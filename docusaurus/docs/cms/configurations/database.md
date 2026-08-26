@@ -339,7 +339,7 @@ await pluginStore.set({
 
 Some cloud providers issue short-lived database credentials that expire after a fixed period. For example, AWS RDS IAM tokens are valid for 15 minutes; GCP Cloud SQL IAM tokens expire similarly; HashiCorp Vault can rotate secrets on a schedule. Using a static password in `.env` causes intermittent connection failures when the connection pool recycles idle connections after the token has expired.
 
-Strapi supports dynamic credentials through Knex's connection function pattern. Instead of a plain connection object, you can pass a synchronous or asynchronous function to `connection.connection`. Knex calls this function whenever it needs to open a new database connection, ensuring the pool always receives fresh credentials. This pattern works for PostgreSQL and MySQL/MariaDB. TypeScript types officially accept sync and async functions for `connection.connection` as of Strapi v5.50.3.
+Strapi supports dynamic credentials through Knex's connection function pattern. Instead of a plain connection object, you can pass a synchronous or asynchronous function to `connection.connection`. Knex calls this function whenever it needs to open a new database connection, ensuring the pool always receives fresh credentials. This pattern works for PostgreSQL and MySQL/MariaDB. TypeScript types officially accept sync and async functions for `connection.connection` as of Strapi v5.51.0.
 
 :::tip
 Include an `expirationChecker` property in the object returned by your function. Knex calls this before reusing a connection from the pool; if it returns `true`, Knex discards the existing connection and calls your function again to obtain fresh credentials.
