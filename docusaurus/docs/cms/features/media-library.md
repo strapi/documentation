@@ -287,7 +287,7 @@ module.exports = [
 
 <TabItem value="typescript" label="TypeScript">
 
-```js title="/config/middlewares.ts"
+```ts title="/config/middlewares.ts"
 export default [
   // ...
   {
@@ -330,7 +330,7 @@ module.exports = {
 
 <TabItem value="typescript" label="TypeScript">
 
-```js title="/config/plugins.ts"
+```ts title="/config/plugins.ts"
 export default {
   // ...
   upload: {
@@ -388,7 +388,7 @@ module.exports = {
 
 <TabItem value="typescript" label="TypeScript">
 
-```js title="/config/plugins.ts"
+```ts title="/config/plugins.ts"
 export default {
   // ...
   upload: {
@@ -583,7 +583,7 @@ module.exports = ({ env }) => ({
 
 <TabItem value="typescript" label="TypeScript">
 
-```js title="/config/plugins.ts"
+```ts title="/config/plugins.ts"
 export default ({ env }) => ({
   upload: {
     config: {
