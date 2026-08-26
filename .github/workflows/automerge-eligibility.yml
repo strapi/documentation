@@ -133,8 +133,32 @@ jobs:
           VIOLATED=""
           UNKNOWN=""
 
+          # Context first, so the report stands on its own: which PR, which page,
+          # how big. Reading the run should not require opening the PR.
+          META=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" \
+            --json title,url,additions,deletions,files,body 2>/dev/null || echo '{}')
+          TITLE=$(echo "$META" | jq -r '.title // "?"')
+          URL=$(echo "$META" | jq -r '.url // ""')
+          ADD=$(echo "$META" | jq -r '.additions // 0')
+          DEL=$(echo "$META" | jq -r '.deletions // 0')
+          PAGE=$(echo "$META" | jq -r '[.files[]?.path | select(test("llms.*\\.txt$") | not)] | .[0] // "?"')
+          SOURCE=$(echo "$META" | jq -r '.body // ""' \
+            | grep -oE 'strapi/strapi/pull/[0-9]+' | head -1 | grep -oE '[0-9]+$' || true)
+
           {
-            echo "## Auto-merge eligibility — PR #$PR"
+            echo "## Auto-merge eligibility — [#$PR]($URL)"
+            echo ""
+            echo "**$TITLE**"
+            echo ""
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| Page | \`$PAGE\` |"
+            echo "| Size | +$ADD / −$DEL |"
+            if [ -n "$SOURCE" ]; then
+              echo "| Source | [strapi/strapi#$SOURCE](https://github.com/strapi/strapi/pull/$SOURCE) |"
+            fi
+            echo ""
+            echo "### Checks"
             echo ""
             echo "| Check | Result | Detail |"
             echo "| --- | --- | --- |"
@@ -160,15 +184,34 @@ jobs:
           # A check that could not run is not a pass. Both states block, but they
           # are reported separately so a broken check is never mistaken for a
           # violated criterion.
+          # The verdict says what happens next, not just whether checks passed.
+          # Someone reading this run should not have to know the design to know
+          # what to expect.
           if [ -n "$VIOLATED" ] || [ -n "$UNKNOWN" ]; then
             echo "eligible=false" >> "$GITHUB_OUTPUT"
             {
-              [ -n "$VIOLATED" ] && echo "**Not eligible.** Failed: ${VIOLATED%, }"
-              [ -n "$UNKNOWN" ] && echo "**Could not evaluate:** ${UNKNOWN%, }"
+              echo "### Verdict"
+              echo ""
+              echo "**Not eligible — this PR needs a human review.**"
+              echo ""
+              [ -n "$VIOLATED" ] && echo "- Criteria violated: \`${VIOLATED%, }\`"
+              [ -n "$UNKNOWN" ] && echo "- Could not be evaluated: \`${UNKNOWN%, }\` (treated as blocking)"
+              echo ""
+              echo "The \`$ELIGIBLE_LABEL\` label is not applied, or is removed if it was there."
             } >> "$GITHUB_STEP_SUMMARY"
           else
             echo "eligible=true" >> "$GITHUB_OUTPUT"
-            echo "**Eligible.** All checks passed." >> "$GITHUB_STEP_SUMMARY"
+            {
+              echo "### Verdict"
+              echo ""
+              echo "**Eligible — all $((${#CHECKS[@]})) checks passed.**"
+              echo ""
+              echo "The \`$ELIGIBLE_LABEL\` label is applied. This PR will be merged"
+              echo "by the auto-merge cron once it is 24 hours old and its required"
+              echo "checks are green."
+              echo ""
+              echo "To stop it, add the \`flag: don't merge\` label."
+            } >> "$GITHUB_STEP_SUMMARY"
           fi
 
           # The step's exit code is that of its last command, and the last one to
@@ -194,8 +237,17 @@ jobs:
           # The label always reflects the most recent evaluation. That is what
           # lets the cron stay simple: it trusts the label for form and only
           # re-checks time and CI state.
-          HAS_LABEL=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json labels \
-            --jq --arg l "$ELIGIBLE_LABEL" '[.labels[].name] | index($l) != null')
+          # `gh pr view --jq` takes a single expression and no --arg: passing one
+          # fails with "accepts at most 1 arg(s), received 4", HAS_LABEL comes
+          # back empty, and the removal branch below can never be reached — a PR
+          # that stopped being eligible would keep its label and still merge.
+          # Listing the names and matching with grep sidesteps the limitation.
+          if gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json labels \
+            --jq '.labels[].name' | grep -Fxq "$ELIGIBLE_LABEL"; then
+            HAS_LABEL=true
+          else
+            HAS_LABEL=false
+          fi
 
           ENCODED=$(jq -rn --arg l "$ELIGIBLE_LABEL" '$l|@uri')
 
@@ -205,15 +257,18 @@ jobs:
             gh api --method POST "repos/$GITHUB_REPOSITORY/issues/$PR/labels" \
               -f "labels[]=$ELIGIBLE_LABEL" --silent
             echo "Added '$ELIGIBLE_LABEL'"
+            echo "- Label **added**: \`$ELIGIBLE_LABEL\`" >> "$GITHUB_STEP_SUMMARY"
             echo "newly_eligible=true" >> "$GITHUB_OUTPUT"
 
           elif [ "$ELIGIBLE" != "true" ] && [ "$HAS_LABEL" = "true" ]; then
             gh api --method DELETE "repos/$GITHUB_REPOSITORY/issues/$PR/labels/$ENCODED" --silent
             echo "Removed '$ELIGIBLE_LABEL'"
+            echo "- Label **removed**: \`$ELIGIBLE_LABEL\` (the PR is no longer eligible)" >> "$GITHUB_STEP_SUMMARY"
             echo "newly_eligible=false" >> "$GITHUB_OUTPUT"
 
           else
             echo "Label already correct, nothing to do"
+            echo "- Label unchanged (already correct)" >> "$GITHUB_STEP_SUMMARY"
             echo "newly_eligible=false" >> "$GITHUB_OUTPUT"
           fi
 
