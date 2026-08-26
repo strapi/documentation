@@ -45,9 +45,6 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 #### Cloud
 - [Document Cloud Observability dashboard and Billing & Invoices tab](https://github.com/strapi/documentation/pull/3323)
 
-#### Repository
-- [Tags UI improvements](https://github.com/strapi/documentation/pull/3320)
-
 ### <Icon name='pen-nib' /> Updated content
 
 <br />
@@ -113,6 +110,7 @@ _Reminder: Version numbers on this page are for the Strapi Docs package. The lat
 - [Fix vertical centering in homepage Quick start card](https://github.com/strapi/documentation/pull/3334)
 - [Fix ScreenshotNumberReference number centering](https://github.com/strapi/documentation/pull/3330)
 - [Unify homepage card styles and typography](https://github.com/strapi/documentation/pull/3329)
+- [Tags UI improvements](https://github.com/strapi/documentation/pull/3320)
 
 ***
 This release was made possible thanks to the following contributors. Thank you! 🫶
