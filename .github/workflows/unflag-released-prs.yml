@@ -102,6 +102,12 @@ jobs:
 
           # Read the source PR number from the doc PR body. Same pattern the
           # self-healing dedup already relies on.
+          # One PR must never take down the run. `set -e` is deliberately
+          # relaxed inside the loop: on 2026-08-26 a single failed label removal
+          # aborted the job before the other ten PRs were even looked at. Every
+          # step below reports its own failure and moves on.
+          set +e
+
           while read -r DOC_PR; do
             TITLE=$(jq -r --argjson n "$DOC_PR" '.[] | select(.number == $n) | .title' /tmp/flagged.json)
 
@@ -132,10 +138,8 @@ jobs:
               continue
             fi
 
-            set +e
             RESULT=$("$SCRIPT" "$SOURCE" "$TAG" 2>&1)
             CODE=$?
-            set -e
 
             case "$CODE" in
               0)
@@ -143,7 +147,24 @@ jobs:
                 if [ "$DRY_RUN" = "true" ]; then
                   echo "     (dry run, no change)"
                 else
-                  gh pr edit "$DOC_PR" --repo strapi/documentation --remove-label "$LABEL"
+                  # Use the REST labels endpoint, not `gh pr edit`.
+                  #
+                  # `gh pr edit` issues a GraphQL mutation that also reads
+                  # organisation fields (login, name, slug), so it demands the
+                  # `read:org` scope. PAT_TOKEN_PIWI only carries `repo`, and the
+                  # 2026-08-26 run failed on the first PR with:
+                  #   "The 'login' field requires one of the following scopes:
+                  #    ['read:org'], but your token has only been granted: ['repo']"
+                  #
+                  # DELETE /issues/{n}/labels/{label} needs `repo` alone.
+                  ENCODED=$(jq -rn --arg l "$LABEL" '$l|@uri')
+                  if ! gh api --method DELETE \
+                    "repos/strapi/documentation/issues/$DOC_PR/labels/$ENCODED" \
+                    --silent 2>/tmp/unflag-error; then
+                    echo "::warning::#$DOC_PR — could not remove the label: $(cat /tmp/unflag-error | head -1)"
+                    SKIPPED=$((SKIPPED + 1))
+                    continue
+                  fi
                 fi
                 UNFLAGGED=$((UNFLAGGED + 1))
                 SUMMARY="${SUMMARY}- [#${DOC_PR}](https://github.com/strapi/documentation/pull/${DOC_PR}) — ${TITLE}\n"
@@ -160,6 +181,8 @@ jobs:
                 ;;
             esac
           done < <(jq -r '.[].number' /tmp/flagged.json)
+
+          set -e
 
           echo ""
           echo "Unflagged: $UNFLAGGED | still waiting: $STILL_WAITING | held: $HELD | skipped: $SKIPPED"
