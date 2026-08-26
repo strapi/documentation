@@ -12968,6 +12968,44 @@ File path: /src/api/restaurant/content-types/restaurant/schema.json
 ```
 
 
+## SVG upload security
+Description: Projects generated with create-strapi-app deny image/svg+xml by default.
+(Source: https://docs.strapi.io/cms/api/rest/upload#svg-upload-security)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = {
+  upload: {
+    config: {
+      security: {
+        allowedTypes: ['image/*', 'video/*', 'audio/*', 'application/pdf'],
+        deniedTypes: ['image/svg+xml', 'application/x-sh', 'application/x-dosexec'],
+      },
+    },
+  },
+};
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+export default {
+  upload: {
+    config: {
+      security: {
+        allowedTypes: ['image/*', 'video/*', 'audio/*', 'application/pdf'],
+        deniedTypes: ['image/svg+xml', 'application/x-sh', 'application/x-dosexec'],
+      },
+    },
+  },
+};
+```
+
+
 
 # Controllers
 Source: https://docs.strapi.io/cms/backend-customization/controllers
