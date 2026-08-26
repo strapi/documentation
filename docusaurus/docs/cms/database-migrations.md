@@ -110,7 +110,7 @@ module.exports = {
 
 </details>
 
-## Migration progress heartbeats
+## Using the migration progress heartbeats
 
 For long-running migrations, Strapi provides a progress heartbeat feature that logs periodic status updates without rewriting terminal output. This is useful when migrations process large datasets and need to show activity to the operator.
 
