@@ -16338,44 +16338,6 @@ The following example lets you upload and attach multiple pictures to the `resta
 }
 ```
 
-## SVG upload security
-
-Projects generated with `create-strapi-app` deny `image/svg+xml` by default. The generated `config/plugins.*` file includes `image/*` in `allowedTypes` and `image/svg+xml` in `deniedTypes`:
-
-```js title="/config/plugins.js"
-module.exports = {
-  upload: {
-    config: {
-      security: {
-        allowedTypes: ['image/*', 'video/*', 'audio/*', 'application/pdf'],
-        deniedTypes: ['image/svg+xml', 'application/x-sh', 'application/x-dosexec'],
-      },
-    },
-  },
-};
-```
-
-```ts title="/config/plugins.ts"
-
-  upload: {
-    config: {
-      security: {
-        allowedTypes: ['image/*', 'video/*', 'audio/*', 'application/pdf'],
-        deniedTypes: ['image/svg+xml', 'application/x-sh', 'application/x-dosexec'],
-      },
-    },
-  },
-};
-```
-
-SVG files are denied despite matching the `image/*` wildcard because SVG can contain browser-active content such as scripts and event handlers. An explicit entry in `deniedTypes` always takes precedence over a wildcard in `allowedTypes`.
-
-This policy applies only to new projects created with Strapi .. Existing projects are not affected unless you add the same configuration manually.
-
-To allow SVG uploads in a new project, remove `image/svg+xml` from the `deniedTypes` array in your `config/plugins.*` file. Be aware of the security implications before doing so.
-
-For the full upload security configuration reference, including how to combine `allowedTypes` and `deniedTypes`, see [Media Library: Security](/cms/features/media-library#security).
-
 
 
 # Back-end customization
@@ -21831,7 +21793,7 @@ Projects scaffolded with `create-strapi-app` include security-hardened defaults 
 |---|---|---|
 | `rest.strictParams: true` and `documents.strictParams: true` | `config/api.*` | Rejects requests with unknown query or body parameters (see [API configuration](/cms/configurations/api)). |
 | `jwtManagement: 'refresh'` with `sessions.httpOnly: true` | `config/plugins.*` (users-permissions) | Enables refresh-token-based auth with HTTP-only session cookies for the Users & Permissions feature (see [Users & Permissions](/cms/features/users-permissions#jwt-management-modes)). |
-| `upload.config.security.allowedTypes` and `upload.config.security.deniedTypes` | `config/plugins.*` (upload) | Restricts uploads to approved file types and blocks dangerous extensions (see [Media Library](/cms/features/media-library#available-options)). |
+| `upload.config.security.allowedTypes` and `upload.config.security.deniedTypes` | `config/plugins.*` (upload) | Restricts uploads to approved file types and blocks dangerous MIME types (see [Media Library](/cms/features/media-library#security)). |
 | `webhooks.populateRelations: false` | `config/server.*` | Prevents relation data from being included in webhook payloads (see [Server configuration](/cms/configurations/server)). |
 | `JWT_SECRET` | `.env` | A randomly generated secret is included in the scaffolded `.env` file. |
 
@@ -34657,7 +34619,7 @@ When using the default upload provider, the following specific configuration opt
 | `sizeLimit`                                  | Maximum file size in bytes (see [max file size](#max-file-size)) | Integer | `1000000000`<br/><br/>(1 GB in bytes) |
 | `breakpoints`             | Allows to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
 | `sharp`             | Configures [sharp](https://sharp.pixelplumbing.com/) image processing options (see [sharp configuration](#sharp-configuration)) | Object | `{ cache: false, concurrency: 1 }` |
-| `security`             | Configures validation rules for uploaded files to enhance media security | Object | - |
+| `security`             | Configures validation rules for uploaded files to enhance media security (see [security](#security)) | Object | - |
 | `concurrentUploadSize` | Maximum number of files processed in parallel during a bulk upload. Increase for faster bulk uploads at the cost of higher memory usage. Must be an integer >= 1. | Integer | `1` |
 
 :::note
@@ -34800,7 +34762,7 @@ module.exports = [
 ];
 ```
 
-```js title="/config/middlewares.ts"
+```ts title="/config/middlewares.ts"
 
   // ...
   {
@@ -34831,7 +34793,7 @@ module.exports = {
 };
 ```
 
-```js title="/config/plugins.ts"
+```ts title="/config/plugins.ts"
 
   // ...
   upload: {
@@ -34850,8 +34812,16 @@ Only files matching the defined security rules are uploaded.
 The `security` configuration provides 2 options: `allowedTypes` or `deniedTypes`, which let you control which file types can or cannot be uploaded.
 
 :::tip New projects
-Apps scaffolded with `create-strapi-app` include a pre-configured `security` block in the generated `config/plugins.*` file, with `allowedTypes` covering common image, video, audio, and document formats, and `deniedTypes` blocking executable and shell script types.
+Apps scaffolded with `create-strapi-app` include a pre-configured `security` block in the generated `config/plugins.*` file. See the *Security defaults generated by `create-strapi-app`* details block below for the full lists.
 :::
+
+##### SVG uploads
+
+Since Strapi , `image/svg+xml` is part of the `deniedTypes` generated by `create-strapi-app`, so SVG uploads are refused even though they match the `image/*` wildcard in `allowedTypes`. An explicit `deniedTypes` entry always takes precedence over a wildcard in `allowedTypes`.
+
+SVG files can embed browser-active content such as scripts and event handlers, which is why they are denied by default. This affects newly generated projects only: existing projects keep their current configuration unless you add the same entry yourself.
+
+To accept SVG uploads, remove `image/svg+xml` from `deniedTypes` in your `config/plugins.*` file. Serve the resulting files from a domain that does not share cookies or local storage with your application, or with a `Content-Disposition: attachment` header, so an uploaded SVG cannot run scripts in the context of your site.
 
 :::note
 You can use `allowedTypes` and `deniedTypes` separately or together to fine-tune which files are accepted. Files must match an allowed type and must not match any denied type. If you use a wildcard like `*` in `allowedTypes`, you can narrow down the validation by specifying exceptions in `deniedTypes`.
@@ -34873,7 +34843,7 @@ module.exports = {
 };
 ```
 
-```js title="/config/plugins.ts"
+```ts title="/config/plugins.ts"
 
   // ...
   upload: {
@@ -34886,6 +34856,89 @@ module.exports = {
   }
 };
 ```
+
+<details>
+<summary>Security defaults generated by <code>create-strapi-app</code></summary>
+
+New projects declare the 2 lists as separate variables and pass them to the `upload` plugin, alongside the other generated plugin configuration:
+
+```js title="/config/plugins.js"
+const allowedMediaTypes = [
+  'image/*',
+  'video/*',
+  'audio/*',
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.*',
+  'text/plain',
+  'text/csv',
+];
+
+const deniedTypes = [
+  'image/svg+xml',
+  'application/vnd.microsoft.portable-executable',
+  'application/x-msdownload',
+  'application/x-msdos-program',
+  'application/x-executable',
+  'application/x-dosexec',
+  'application/x-sh',
+  'text/x-shellscript',
+  'application/x-mach-binary',
+];
+
+module.exports = ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: allowedMediaTypes,
+        deniedTypes,
+      },
+    },
+  },
+});
+```
+
+```ts title="/config/plugins.ts"
+
+const allowedMediaTypes = [
+  'image/*',
+  'video/*',
+  'audio/*',
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.*',
+  'text/plain',
+  'text/csv',
+];
+
+const deniedTypes = [
+  'image/svg+xml',
+  'application/vnd.microsoft.portable-executable',
+  'application/x-msdownload',
+  'application/x-msdos-program',
+  'application/x-executable',
+  'application/x-dosexec',
+  'application/x-sh',
+  'text/x-shellscript',
+  'application/x-mach-binary',
+];
+
+const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: allowedMediaTypes,
+        deniedTypes,
+      },
+    },
+  },
+});
+
+```
+
+</details>
 
 #### Upload request timeout
 
@@ -34946,7 +34999,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-```js title="/config/plugins.ts"
+```ts title="/config/plugins.ts"
 
   upload: {
     config: {
@@ -35062,6 +35115,8 @@ Just above the list of folders and assets and next to the ! **Filters** button, 
 | Audio      | - MP3<br />- WAV<br />- OGG                                         |
 | File       | - CSV<br />- ZIP<br />- PDF<br />- XLS, XLSX<br />- JSON                |
 <br/>
+
+SVG files are denied by default in projects generated with Strapi  and later, even though they match the supported image types (see [SVG uploads](#svg-uploads)).
 
 </details>
 
