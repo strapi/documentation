@@ -1,0 +1,287 @@
+name: Auto-merge eligible PRs
+
+# Merges the self-healing documentation PRs that `automerge-eligibility.yml` has
+# marked eligible, once they have sat through the quarantine.
+#
+# This workflow never re-evaluates form — the label already answers that. It
+# checks the three things a label cannot: enough time has passed, CI is green
+# right now, and the maintainer is not away.
+
+on:
+  schedule:
+    - cron: '0 8 * * 1-5' # 08:00 UTC, weekdays
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Report what would be merged without merging anything'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  ELIGIBLE_LABEL: 'automerge: eligible'
+  QUARANTINE_HOURS: 24
+  # Checks that must be green. Deliberately an allow-list, not "everything":
+  # `license/cla` is permanently pending on pipeline PRs because the CLA bot does
+  # not recognise the author, so an "all green" rule would never fire.
+  REQUIRED_CHECKS: 'Vercel,check-labels'
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the absence configuration
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github
+          sparse-checkout-cone-mode: false
+          fetch-depth: 1
+          filter: blob:none
+
+      - name: Check the absence period
+        id: absence
+        run: |
+          set -uo pipefail
+
+          FILE=".github/absence.json"
+
+          # Fail safe: if the file is missing or unreadable, suspend rather than
+          # merge. The risk being avoided is not a bad merge — it is nobody
+          # noticing one for two weeks.
+          if [ ! -f "$FILE" ]; then
+            echo "::warning::$FILE not found — suspending auto-merge"
+            echo "suspended=true" >> "$GITHUB_OUTPUT"
+            echo "reason=configuration missing" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          START=$(jq -r '.start // empty' "$FILE")
+          END=$(jq -r '.end // empty' "$FILE")
+
+          if ! echo "$START" | grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' \
+            || ! echo "$END" | grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'; then
+            echo "::warning::Invalid dates in $FILE (start='$START' end='$END') — suspending"
+            echo "suspended=true" >> "$GITHUB_OUTPUT"
+            echo "reason=configuration malformed" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Europe/Paris, zero-padded, so string comparison equals chronological
+          # comparison. Same convention as absence-notice.yml.
+          TODAY=$(TZ=Europe/Paris date '+%Y-%m-%d')
+
+          if [ "$TODAY" ">" "$START" ] || [ "$TODAY" = "$START" ]; then
+            if [ "$TODAY" "<" "$END" ] || [ "$TODAY" = "$END" ]; then
+              echo "Today ($TODAY) falls within the absence period ($START → $END)"
+              echo "suspended=true" >> "$GITHUB_OUTPUT"
+              echo "reason=maintainer away until $END" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+
+          echo "Today ($TODAY) is outside the absence period ($START → $END)"
+          echo "suspended=false" >> "$GITHUB_OUTPUT"
+
+      - name: Merge what is eligible and ripe
+        id: merge
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          SUSPENDED: ${{ steps.absence.outputs.suspended }}
+          SUSPEND_REASON: ${{ steps.absence.outputs.reason }}
+        run: |
+          set -uo pipefail
+
+          gh pr list --repo "$GITHUB_REPOSITORY" \
+            --state open --label "$ELIGIBLE_LABEL" --limit 100 \
+            --json number,title,url,createdAt,isDraft > /tmp/eligible.json
+
+          TOTAL=$(jq 'length' /tmp/eligible.json)
+          echo "PRs labelled '$ELIGIBLE_LABEL': $TOTAL"
+
+          if [ "$SUSPENDED" = "true" ]; then
+            echo "Auto-merge suspended: $SUSPEND_REASON"
+            {
+              echo "## Auto-merge suspended"
+              echo ""
+              echo "$SUSPEND_REASON — $TOTAL eligible PR(s) held."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "suspended_count=$TOTAL" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ "$TOTAL" -eq 0 ]; then
+            echo "Nothing eligible."
+            echo "merged=0" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          NOW=$(date -u +%s)
+          MERGED=0
+          WAITING=0
+          HELD=0
+          MERGED_LIST=""
+          WAITING_LIST=""
+          HELD_LIST=""
+          FAILED_LIST=""
+
+          # One PR must never take down the run.
+          while read -r PR; do
+            TITLE=$(jq -r --argjson n "$PR" '.[] | select(.number == $n) | .title' /tmp/eligible.json)
+            URL=$(jq -r --argjson n "$PR" '.[] | select(.number == $n) | .url' /tmp/eligible.json)
+            CREATED=$(jq -r --argjson n "$PR" '.[] | select(.number == $n) | .createdAt' /tmp/eligible.json)
+            IS_DRAFT=$(jq -r --argjson n "$PR" '.[] | select(.number == $n) | .isDraft' /tmp/eligible.json)
+
+            SHORT=$(printf '%s' "$TITLE" | cut -c1-70)
+            [ "${#TITLE}" -gt 70 ] && SHORT="${SHORT}…"
+            LINK="<${URL}|#${PR} — ${SHORT}>"
+
+            # Quarantine. It buys back the two collision cases the gate cannot
+            # see at open time: a duplicate opened seconds later, a PR superseded
+            # the next day.
+            CREATED_TS=$(date -u -d "$CREATED" +%s 2>/dev/null || date -u -jf '%Y-%m-%dT%H:%M:%SZ' "$CREATED" +%s)
+            AGE_H=$(( (NOW - CREATED_TS) / 3600 ))
+
+            if [ "$AGE_H" -lt "$QUARANTINE_HOURS" ]; then
+              REMAINING=$(( QUARANTINE_HOURS - AGE_H ))
+              echo "  #$PR — in quarantine for another ${REMAINING}h"
+              WAITING=$((WAITING + 1))
+              WAITING_LIST="${WAITING_LIST}• ${LINK} — eligible in ${REMAINING}h\n"
+              continue
+            fi
+
+            # Required checks, re-read now. CI can go green after the label was
+            # set, or break later from an unrelated change on main.
+            BLOCKING=""
+            IFS=',' read -ra NEEDED <<< "$REQUIRED_CHECKS"
+            CHECKS=$(gh pr checks "$PR" --repo "$GITHUB_REPOSITORY" 2>/dev/null || true)
+
+            for NAME in "${NEEDED[@]}"; do
+              STATE=$(echo "$CHECKS" | awk -F'\t' -v n="$NAME" '$1 == n { print $2; exit }')
+              if [ -z "$STATE" ]; then
+                BLOCKING="${BLOCKING}${NAME} (missing), "
+              elif [ "$STATE" != "pass" ]; then
+                BLOCKING="${BLOCKING}${NAME} ($STATE), "
+              fi
+            done
+
+            if [ -n "$BLOCKING" ]; then
+              echo "  #$PR — held: ${BLOCKING%, }"
+              HELD=$((HELD + 1))
+              HELD_LIST="${HELD_LIST}• ${LINK} — ${BLOCKING%, }\n"
+              continue
+            fi
+
+            if [ "$DRY_RUN" = "true" ]; then
+              echo "  #$PR — would merge (dry run)"
+              MERGED=$((MERGED + 1))
+              MERGED_LIST="${MERGED_LIST}• ${LINK}\n"
+              continue
+            fi
+
+            # Self-healing PRs are created as drafts, and a draft PR cannot be
+            # merged. Marking ready is the last action before merging, so a PR is
+            # only un-drafted at the moment it is about to go in.
+            if [ "$IS_DRAFT" = "true" ]; then
+              if ! gh pr ready "$PR" --repo "$GITHUB_REPOSITORY" 2>/tmp/err; then
+                echo "::warning::#$PR — could not mark ready: $(head -1 /tmp/err)"
+                FAILED_LIST="${FAILED_LIST}• ${LINK} — could not mark ready\n"
+                continue
+              fi
+            fi
+
+            if gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --delete-branch 2>/tmp/err; then
+              echo "  #$PR — merged"
+              MERGED=$((MERGED + 1))
+              MERGED_LIST="${MERGED_LIST}• ${LINK}\n"
+            else
+              echo "::warning::#$PR — merge failed: $(head -1 /tmp/err)"
+              FAILED_LIST="${FAILED_LIST}• ${LINK} — $(head -1 /tmp/err | cut -c1-60)\n"
+            fi
+          done < <(jq -r '.[].number' /tmp/eligible.json)
+
+          echo ""
+          echo "Merged: $MERGED | in quarantine: $WAITING | held: $HELD"
+
+          {
+            echo "## Auto-merge"
+            echo ""
+            echo "| Outcome | Count |"
+            echo "| --- | --- |"
+            echo "| Merged | $MERGED |"
+            echo "| In quarantine | $WAITING |"
+            echo "| Held by CI | $HELD |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          {
+            echo "merged=$MERGED"
+            echo "waiting=$WAITING"
+            echo "held=$HELD"
+            echo "merged_list<<EOF"; printf '%b' "$MERGED_LIST"; echo "EOF"
+            echo "waiting_list<<EOF"; printf '%b' "$WAITING_LIST"; echo "EOF"
+            echo "held_list<<EOF"; printf '%b' "$HELD_LIST"; echo "EOF"
+            echo "failed_list<<EOF"; printf '%b' "$FAILED_LIST"; echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Post the daily recap to Slack
+        if: always() && inputs.dry_run != true
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
+          SUSPENDED: ${{ steps.absence.outputs.suspended }}
+          SUSPEND_REASON: ${{ steps.absence.outputs.reason }}
+          SUSPENDED_COUNT: ${{ steps.merge.outputs.suspended_count }}
+          MERGED: ${{ steps.merge.outputs.merged }}
+          WAITING: ${{ steps.merge.outputs.waiting }}
+          HELD: ${{ steps.merge.outputs.held }}
+          MERGED_LIST: ${{ steps.merge.outputs.merged_list }}
+          WAITING_LIST: ${{ steps.merge.outputs.waiting_list }}
+          HELD_LIST: ${{ steps.merge.outputs.held_list }}
+          FAILED_LIST: ${{ steps.merge.outputs.failed_list }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          set -uo pipefail
+
+          if [ -z "$SLACK_BOT_TOKEN" ] || [ -z "$SLACK_CHANNEL" ]; then
+            echo "Slack not configured, skipping notification"
+            exit 0
+          fi
+
+          DATE=$(date -u '+%Y-%m-%d %H:%M UTC')
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+
+          if [ "$JOB_STATUS" = "failure" ]; then
+            TEXT=$(printf ':pepe_alarm: *Docs auto-merge FAILED* (%s)\nNo merges happened and no recap was produced.\n<%s|View run>' \
+              "$DATE" "$RUN_URL")
+
+          elif [ "$SUSPENDED" = "true" ]; then
+            TEXT=$(printf ':frog_shrug: *Docs auto-merge suspended* (%s)\n%s — %s PR(s) held.\n<%s|View run>' \
+              "$DATE" "$SUSPEND_REASON" "${SUSPENDED_COUNT:-0}" "$RUN_URL")
+
+          else
+            # Silence rule: an idle day leaves the channel untouched.
+            if [ "${MERGED:-0}" = "0" ] && [ "${WAITING:-0}" = "0" ] && [ "${HELD:-0}" = "0" ] && [ -z "$FAILED_LIST" ]; then
+              echo "Nothing happened, no message"
+              exit 0
+            fi
+
+            BODY=""
+            [ "${MERGED:-0}" != "0" ] && BODY="${BODY}\n*Merged (${MERGED}):*\n${MERGED_LIST}"
+            [ "${WAITING:-0}" != "0" ] && BODY="${BODY}\n*In quarantine (${WAITING}):*\n${WAITING_LIST}"
+            [ "${HELD:-0}" != "0" ] && BODY="${BODY}\n*Eligible but held (${HELD}):*\n${HELD_LIST}"
+            [ -n "$FAILED_LIST" ] && BODY="${BODY}\n:pepe_alarm: *Failed to merge:*\n${FAILED_LIST}"
+
+            TEXT=$(printf ':noted: *Docs auto-merge* (%s)\n%b\n<%s|View run>' \
+              "$DATE" "$BODY" "$RUN_URL")
+          fi
+
+          curl -s -X POST "https://slack.com/api/chat.postMessage" \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-type: application/json; charset=utf-8" \
+            -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$TEXT" '{channel: $channel, text: $text}')" \
+            > /dev/null || echo "Slack notification failed (non-blocking)"
