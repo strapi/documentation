@@ -155,7 +155,7 @@ jobs:
             echo "| Page | \`$PAGE\` |"
             echo "| Size | +$ADD / −$DEL |"
             if [ -n "$SOURCE" ]; then
-              echo "| Source | [strapi/strapi#$SOURCE](https://github.com/strapi/strapi/pull/$SOURCE) |"
+              echo "| Corresponding Strapi CMS PR | [strapi/strapi#$SOURCE](https://github.com/strapi/strapi/pull/$SOURCE) |"
             fi
             echo ""
             echo "### Checks"
@@ -317,10 +317,16 @@ jobs:
           # Slack link syntax is <url|text>, not Markdown.
           LINE="<${URL}|#${PR} — ${SHORT_TITLE}>"
           CONTEXT="${PAGE} · +${ADD}/−${DEL}"
-          [ -n "$SOURCE" ] && CONTEXT="${CONTEXT} · <https://github.com/strapi/strapi/pull/${SOURCE}|strapi#${SOURCE}>"
 
-          TEXT=$(printf ':hourglass_flowing_sand: *Will auto-merge tomorrow*\n%s\n%s\n\nStop it by adding the `flag: don'\''t merge` label.' \
-            "$LINE" "$CONTEXT")
+          # The upstream PR gets its own labelled line rather than a third item
+          # in the context line: "Corresponding Strapi CMS PR" is too long to sit
+          # between the page path and the diff size, and the label is what makes
+          # the link readable without opening it.
+          SOURCE_LINE=""
+          [ -n "$SOURCE" ] && SOURCE_LINE="\nCorresponding Strapi CMS PR: <https://github.com/strapi/strapi/pull/${SOURCE}|strapi/strapi#${SOURCE}>"
+
+          TEXT=$(printf ':hourglass_flowing_sand: *Will auto-merge tomorrow*\n%s\n%s%b\n\nStop it by adding the `flag: don'\''t merge` label.' \
+            "$LINE" "$CONTEXT" "$SOURCE_LINE")
 
           curl -s -X POST "https://slack.com/api/chat.postMessage" \
             -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
