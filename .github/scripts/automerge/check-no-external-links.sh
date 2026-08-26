@@ -14,7 +14,13 @@ set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
 # Extended regex of hosts that do not count as external.
-ALLOWED_HOSTS="${AUTOMERGE_ALLOWED_LINK_HOSTS:-strapi\.io|docs\.strapi\.io|github\.com/strapi|market\.strapi\.io|cloud\.strapi\.io}"
+#
+# Dots are written [.] rather than \. on purpose. This string reaches awk through
+# -v, where a backslash is a STRING escape, not a regex one: awk consumes it and
+# gawk warns "escape sequence \. treated as plain .". The dot then matches any
+# character, so `strapiXio.evil.com` would have been accepted as an allowed host.
+# [.] survives -v untouched and means exactly one literal dot.
+ALLOWED_HOSTS="${AUTOMERGE_ALLOWED_LINK_HOSTS:-strapi[.]io|docs[.]strapi[.]io|github[.]com/strapi|market[.]strapi[.]io|cloud[.]strapi[.]io}"
 
 PR="${1:-}"
 require_pr_number "$PR"
