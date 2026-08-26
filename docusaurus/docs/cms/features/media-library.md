@@ -31,6 +31,21 @@ The <Icon name="images" /> Media Library is the Strapi feature that displays all
 
 <Guideflow lightId="mk6z26zaqp" darkId="9r2m74otok"/>
 
+:::strapi New Media Library available in <BetaBadge/>
+Strapi has completely reworked the Media Library UI, which is now available as a beta feature for the next few weeks before it replaces the current UI. You can try the beta by adding the following to `config/features.ts|js`:
+
+```tsx
+export default () => ({
+  future: {
+    betaMediaLibrary: true,
+  },
+});
+```
+
+<br/>
+The current page still describes the stable version of the Media Library. Over the next few weeks, the documentation will be updated to reflect the new features. In the meantime, you can <ExternalLink text="read more about it here" to="https://strapi.notion.site/Media-Library-Beta-Release-3c78f3598074810dbad6f2addfa25b6f" />.
+:::
+
 ## Configuration
 
 Some configuration options for the Media Library are available in the admin panel, and some are handled via your Strapi project's code.

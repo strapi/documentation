@@ -34438,6 +34438,20 @@ Available and activated by default
 
 Available in both Development & Production environment
 
+:::strapi New Media Library available in beta 
+Strapi has completely reworked the Media Library UI, which is now available as a beta feature for a few weeks before replacing the current UI. You can try the beta by adding this to `config/features.ts|js`:
+
+```tsx
+
+  future: {
+    betaMediaLibrary: true,
+  },
+});
+```
+
+The current page is still describing the stable version of the Media Library. Over the next weeks, the documentation will be updated to reflect the new features. In the meantime, you can .
+:::
+
 ## Configuration
 
 Some configuration options for the Media Library are available in the admin panel, and some are handled via your Strapi project's code.
