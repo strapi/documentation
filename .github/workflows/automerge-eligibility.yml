@@ -15,11 +15,22 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, labeled, unlabeled]
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to evaluate'
+        required: true
+        type: string
+      skip_quiet_period:
+        description: 'Skip the quiet period (manual runs are already deliberate)'
+        required: false
+        type: boolean
+        default: true
 
 # One run per PR. A push during the quiet period cancels the pending run and
 # starts a fresh one, which is what makes the debounce below work.
 concurrency:
-  group: automerge-eligibility-${{ github.event.pull_request.number }}
+  group: automerge-eligibility-${{ github.event.pull_request.number || inputs.pr_number }}
   cancel-in-progress: true
 
 permissions:
@@ -40,7 +51,7 @@ jobs:
         id: scope
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ github.event.pull_request.number || inputs.pr_number }}
         run: |
           set -euo pipefail
 
@@ -61,8 +72,13 @@ jobs:
       # during this window kills the run and restarts the clock, so the checks
       # only run once the PR has been quiet for the full period. Without it,
       # every commit in a burst would trigger a full evaluation.
+      #
+      # Skipped by default on manual runs: someone who typed a PR number is not
+      # mid-burst, and waiting five minutes to see a result is just friction.
       - name: Wait for the quiet period
-        if: steps.scope.outputs.in_scope == 'true'
+        if: |
+          steps.scope.outputs.in_scope == 'true' &&
+          !(github.event_name == 'workflow_dispatch' && inputs.skip_quiet_period)
         run: sleep $(( QUIET_PERIOD_MINUTES * 60 ))
 
       - name: Checkout the check scripts
@@ -80,7 +96,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
           AUTOMERGE_REPO: ${{ github.repository }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ github.event.pull_request.number || inputs.pr_number }}
         run: |
           set -uo pipefail
 
@@ -152,7 +168,7 @@ jobs:
         id: label
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ github.event.pull_request.number || inputs.pr_number }}
           ELIGIBLE: ${{ steps.checks.outputs.eligible }}
         run: |
           set -uo pipefail
@@ -190,13 +206,16 @@ jobs:
       # maintainer, 5 pass every mechanical check. Four were wording touch-ups;
       # one (#3080) was a real miss whose diff was flawless. No criterion made of
       # paths, counts and regexes reaches that — but a human reading one line can.
+      # Not posted on manual runs: those are tests or re-evaluations, and a veto
+      # line for a PR the maintainer is already looking at is noise. The label is
+      # still set, so the cron behaves identically either way.
       - name: Post the veto window to Slack
-        if: steps.label.outputs.newly_eligible == 'true'
+        if: steps.label.outputs.newly_eligible == 'true' && github.event_name != 'workflow_dispatch'
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ github.event.pull_request.number || inputs.pr_number }}
         run: |
           set -uo pipefail
 
