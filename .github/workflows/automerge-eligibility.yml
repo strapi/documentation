@@ -97,11 +97,14 @@ jobs:
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
           AUTOMERGE_REPO: ${{ github.repository }}
           PR: ${{ github.event.pull_request.number || inputs.pr_number }}
-        # GitHub runs `run:` blocks as `bash -e` unless told otherwise, and
-        # `set -uo pipefail` does not undo that. A check exiting 1 is this
-        # step's normal output — a criterion was violated — so -e would abort
-        # the run on the first failing check and report the job as broken.
-        shell: bash
+        # A check exiting 1 is this step's normal output — it means a criterion
+        # was violated — so the shell must not treat it as a fatal error.
+        #
+        # `shell: bash {0}` is required, not `shell: bash`. The latter expands to
+        # `bash --noprofile --norc -e -o pipefail {0}`, which still carries -e:
+        # the run on 2026-08-26 stopped after 3 of 12 checks with that setting.
+        # Only the explicit `{0}` form drops it.
+        shell: bash {0}
         run: |
           set -uo pipefail
 
@@ -175,7 +178,7 @@ jobs:
           GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
           PR: ${{ github.event.pull_request.number || inputs.pr_number }}
           ELIGIBLE: ${{ steps.checks.outputs.eligible }}
-        shell: bash
+        shell: bash {0}
         run: |
           set -uo pipefail
 
@@ -222,7 +225,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
           PR: ${{ github.event.pull_request.number || inputs.pr_number }}
-        shell: bash
+        shell: bash {0}
         run: |
           set -uo pipefail
 
