@@ -155,7 +155,7 @@ jobs:
             echo "| Page | \`$PAGE\` |"
             echo "| Size | +$ADD / −$DEL |"
             if [ -n "$SOURCE" ]; then
-              echo "| Source | [strapi/strapi#$SOURCE](https://github.com/strapi/strapi/pull/$SOURCE) |"
+              echo "| Corresponding Strapi CMS PR | [strapi/strapi#$SOURCE](https://github.com/strapi/strapi/pull/$SOURCE) |"
             fi
             echo ""
             echo "### Checks"
