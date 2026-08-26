@@ -40,6 +40,17 @@ This file lists documented patterns where AI-generated documentation has produce
 | `const { primitives } = require('@strapi/utils')` | `const { strings, objects, arrays, dates } = require('@strapi/utils')` | `@strapi/utils` does `export * from './primitives'` (flattened), not `export * as primitives` |
 | `validateYupSchema` under the `yup` namespace | `validateYupSchema` is a top-level export from `@strapi/utils` | Exported from `./validators`, not from `./yup`. Import as `const { validateYupSchema } = require('@strapi/utils')`. |
 
+### Data transfer stage filtering
+
+Verified against `packages/core/strapi/src/cli/utils/data-transfer.ts` (`parseRestoreFromOptions`, `expandMediaLibraryPreset`), `packages/core/data-transfer/src/engine/index.ts` (`TransferGroupPresets`), and `packages/core/data-transfer/src/strapi/providers/local-destination/strategies/restore/index.ts` (`deleteEntitiesRecords`).
+
+| Hallucinated pattern | Correct pattern | Context |
+|---------------------|-----------------|---------|
+| `--exclude files` (or `--only content`) described as preserving "files" or "the media library" on the destination | It preserves only the **binaries** under `public/uploads`. Media library DB records (`plugin::upload.file`, `plugin::upload.folder`) are part of the `content` preset and still transfer. Only `--exclude media-library` preserves both. | `TransferGroupPresets.files` is `{assets: true}` only; upload records ride the `entities` stage with `content`. Data-loss-adjacent: the wrong claim leaves the destination with records pointing at binaries that were never transferred. Always state which of the two halves is preserved, never just "files". |
+| A stage-filtering matrix whose default-command row claims nothing is preserved on the destination | The default command always preserves `admin::*` types and `IGNORED_CONTENT_TYPES` (`plugin::content-releases.release`, `…release-action`) | `entitiesOptions.exclude` unconditionally contains the admin-prefixed and ignored types, so content is never wiped entirely. A "None preserved" row is always wrong. |
+| `--exclude` / `--only` described as **deleting** the omitted types on the target instance (any data-management page) | Omitted stages are **preserved**; only transferred stages are replaced | `strapi import` and `strapi transfer` both call the same `parseRestoreFromOptions`, so the semantics are identical across the two pages. When a stage is out of scope, `entities.include` is set to `[]`, which matches nothing and short-circuits deletion. Check `import.md`, `export.md`, `transfer.md`, and `cli.md` agree: they have contradicted each other before. |
+| A docs page quoting a `strapi transfer` confirmation prompt as "will delete all of the remote Strapi assets and its database" | The remote prompt is "The transfer will delete existing data from the remote Strapi!"; the local one is "…delete all **the** local Strapi assets and its database" | Reworded upstream precisely because `--only`/`--exclude` mean a transfer no longer always deletes everything. Verify quoted prompt strings against `packages/core/strapi/src/cli/commands/transfer/command.ts` rather than copying older docs. |
+
 ### Documentation formatting conventions
 
 These are not code hallucinations but recurring Strapi-docs formatting mistakes. Verified against `STYLE_GUIDE.pdf` and `docusaurus/src/components/Icon.js`.

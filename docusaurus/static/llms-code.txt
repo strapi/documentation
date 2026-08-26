@@ -23296,6 +23296,18 @@ module.exports = {
 ```
 
 
+## Using the migration progress heartbeats
+Description: The heartbeat logger is time-throttled (default 60 seconds) and reports progress in a format like:
+(Source: https://docs.strapi.io/cms/database-migrations#using-the-migration-progress-heartbeats)
+
+Language: JavaScript
+File path: .05.10T00.00.00.name-of-my-migration.js
+
+```js
+… still running (120s) · files 12000/450000
+```
+
+
 ## Handling migrations with TypeScript code
 Description: Here's how to configure it in your database settings:
 (Source: https://docs.strapi.io/cms/database-migrations#handling-migrations-with-typescript-code)
@@ -25043,28 +25055,6 @@ npm run strapi import -- -f export_20221213105643.tar.gz.enc --only-content-type
 # Data transfer
 Source: https://docs.strapi.io/cms/features/data-management/transfer
 
-## Data transfer
-Description: :::warning When using nginx and a server that proxies requests into a localhost, issues might occur.
-(Source: https://docs.strapi.io/cms/features/data-management/transfer#data-transfer)
-
-Language: JavaScript
-File path: N/A
-
-```
-server {
-    listen 80;
-    server_name <yourdomain>;
-    location / {
-        proxy_pass http://localhost:1337;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "Upgrade";
-        proxy_set_header Host $host;
-        include proxy_params;
-    }
-}
-```
-
-
 ## Setup and run the data transfer
 Description: Start the Strapi server for the destination instance.
 (Source: https://docs.strapi.io/cms/features/data-management/transfer#setup-and-run-the-data-transfer)
@@ -25100,6 +25090,110 @@ File path: N/A
 ```
 
 
+## Example: refresh content while preserving destination config
+Description: To refresh only content from a source instance while keeping the destination instance's configuration:
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#example-refresh-content-while-preserving-destination-config)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token --only content
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token --only content
+```
+
+
+## Example: only transfer files
+Description: | --only config | Config | Content and files | | --only content,files | Content and files | Config | | --exclude content | Files and config | Content | | --exclude files | Content and config | Upload binaries | | --exclude media-library | Content without upload types, and config | Upload binaries, plugin::upload.file, and plugin::upload.folder |
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#example-only-transfer-files)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi transfer --to https://example.com/admin --only files
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --only files
+```
+
+
+## Example: exclude files from transfer
+Description: | --only config | Config | Content and files | | --only content,files | Content and files | Config | | --exclude content | Files and config | Content | | --exclude files | Content and config | Upload binaries | | --exclude media-library | Content without upload types, and config | Upload binaries, plugin::upload.file, and plugin::upload.folder |
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#example-exclude-files-from-transfer)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi transfer --to https://example.com/admin --exclude files
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --exclude files
+```
+
+
+## Example: exclude specific content types from transfer
+Description: :::warning Warning: Restore behavior - When you use --exclude-content-types, data for the excluded types is preserved on the destination: they are not wiped before the transfer.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#example-exclude-specific-content-types-from-transfer)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token \
+  --exclude-content-types api::article.article
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token \
+  --exclude-content-types api::article.article
+```
+
+
+## Example: transfer only specific content types
+Description: :::warning Warning: Restore behavior - When you use --exclude-content-types, data for the excluded types is preserved on the destination: they are not wiped before the transfer.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#example-transfer-only-specific-content-types)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token \
+  --only-content-types api::article.article,api::category.category
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token \
+  --only-content-types api::article.article,api::category.category
+```
+
+
 ## Example: bypass the transfer command line prompts with --force
 Description: :::caution The --force option bypasses all warnings about content deletion.
 (Source: https://docs.strapi.io/cms/features/data-management/transfer#example-bypass-the-transfer-command-line-prompts-with-force)
@@ -25120,56 +25214,16 @@ npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer
 ```
 
 
-## Example: only transfer files
-Description: The default strapi transfer command transfers your content (entities and relations), files (assets), project configuration, and schemas.
-(Source: https://docs.strapi.io/cms/features/data-management/transfer#example-only-transfer-files)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi transfer --to https://example.com/admin --only files
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi transfer -- --to https://example.com/admin --only files
-```
-
-
-## Example: exclude files from transfer
-Description: The default strapi transfer command transfers your content (entities and relations), files (assets), project configuration, and schemas.
-(Source: https://docs.strapi.io/cms/features/data-management/transfer#example-exclude-files-from-transfer)
-
-Language: Bash
-File path: N/A
-
-```bash
-yarn strapi transfer --to https://example.com/admin --exclude files
-```
-
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi transfer -- --to https://example.com/admin --exclude files
-```
-
-
-## Exclude specific content types from transfer
-Description: :::warning Warning: Restore behavior - When you use --exclude-content-types, data for the excluded types is preserved on the destination — they are not wiped before the transfer.
-(Source: https://docs.strapi.io/cms/features/data-management/transfer#exclude-specific-content-types-from-transfer)
+## Example: disable checksum verification
+Description: When pulling with --from, asset streaming also depends on the transfer.remote.assetIdleTimeoutMs server option, which caps how long an asset stream may go without forward progress before the transfer aborts.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#example-disable-checksum-verification)
 
 Language: Bash
 File path: N/A
 
 ```bash
 yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token \
-  --exclude-content-types api::article.article
+  --no-checksums
 ```
 
 ---
@@ -25178,47 +25232,58 @@ File path: N/A
 
 ```bash
 npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token \
-  --exclude-content-types api::article.article
+  --no-checksums
 ```
 
 
-## Transfer only specific content types
-Description: :::warning Warning: Restore behavior - When you use --exclude-content-types, data for the excluded types is preserved on the destination — they are not wiped before the transfer.
-(Source: https://docs.strapi.io/cms/features/data-management/transfer#transfer-only-specific-content-types)
+## Disable remote data transfer
+Description: Remote data transfer is disabled with the transfer.remote.enabled option in the server configuration file.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#disable-remote-data-transfer)
 
-Language: Bash
+Language: JavaScript
+File path: /config/server.js
+
+```js
+module.exports = ({ env }) => ({
+  // …
+  transfer: {
+    remote: {
+      enabled: false,
+    },
+  },
+});
+```
+
+
+## Troubleshooting
+Description: A transfer behind an nginx reverse proxy fails.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer#troubleshooting)
+
+Language: JavaScript
 File path: N/A
 
-```bash
-yarn strapi transfer --to https://example.com/admin --to-token my-transfer-token \
-  --only-content-types api::article.article,api::category.category
+```
+server {
+    listen 80;
+    server_name <yourdomain>;
+    location / {
+        proxy_pass http://localhost:1337;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
+        include proxy_params;
+    }
+}
 ```
 
----
-Language: Bash
-File path: N/A
-
-```bash
-npm run strapi transfer -- --to https://example.com/admin --to-token my-transfer-token \
-  --only-content-types api::article.article,api::category.category
-```
 
 
-## Manage data transfer with environment variables
-Description: The environment variable STRAPIDISABLEREMOTEDATATRANSFER is available to disable remote data transfer.
-(Source: https://docs.strapi.io/cms/features/data-management/transfer#manage-data-transfer-with-environment-variables)
-
-Language: Bash
-File path: N/A
-
-```bash
-STRAPI_DISABLE_REMOTE_DATA_TRANSFER=true yarn start
-```
-
+# Test a data transfer locally
+Source: https://docs.strapi.io/cms/features/data-management/transfer-locally
 
 ## Create and clone a new Strapi project
 Description: Create a new Strapi project using the installation command:
-(Source: https://docs.strapi.io/cms/features/data-management/transfer#create-and-clone-a-new-strapi-project)
+(Source: https://docs.strapi.io/cms/features/data-management/transfer-locally#create-and-clone-a-new-strapi-project)
 
 Language: Bash
 File path: N/A
@@ -25264,13 +25329,13 @@ File path: N/A
 
 ## Create a transfer token
 Description: Navigate to the second Strapi instance and run the build and start commands in the root directory:
-(Source: https://docs.strapi.io/cms/features/data-management/transfer#create-a-transfer-token)
+(Source: https://docs.strapi.io/cms/features/data-management/transfer-locally#create-a-transfer-token)
 
 Language: Bash
 File path: N/A
 
 ```bash
-yarn build && yarn start
+   yarn build && yarn start
 ```
 
 ---
@@ -25278,13 +25343,13 @@ Language: Bash
 File path: N/A
 
 ```bash
-npm run build && npm run start
+   npm run build && npm run start
 ```
 
 
 ## Transfer your data
-Description: Return the the first Strapi instance.
-(Source: https://docs.strapi.io/cms/features/data-management/transfer#transfer-your-data)
+Description: Return to the first Strapi instance.
+(Source: https://docs.strapi.io/cms/features/data-management/transfer-locally#transfer-your-data)
 
 Language: Bash
 File path: N/A
@@ -25772,9 +25837,9 @@ export default {
 ```
 
 
-## Security
+## SVG uploads
 Description: You can provide them by creating or editing the /config/plugins file.
-(Source: https://docs.strapi.io/cms/features/media-library#security)
+(Source: https://docs.strapi.io/cms/features/media-library#svg-uploads)
 
 Language: JavaScript
 File path: /config/plugins.js
@@ -25809,6 +25874,91 @@ export default {
     }
   }
 };
+```
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+const allowedMediaTypes = [
+  'image/*',
+  'video/*',
+  'audio/*',
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.*',
+  'text/plain',
+  'text/csv',
+];
+
+const deniedTypes = [
+  'image/svg+xml',
+  'application/vnd.microsoft.portable-executable',
+  'application/x-msdownload',
+  'application/x-msdos-program',
+  'application/x-executable',
+  'application/x-dosexec',
+  'application/x-sh',
+  'text/x-shellscript',
+  'application/x-mach-binary',
+];
+
+module.exports = ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: allowedMediaTypes,
+        deniedTypes,
+      },
+    },
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+const allowedMediaTypes = [
+  'image/*',
+  'video/*',
+  'audio/*',
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.*',
+  'text/plain',
+  'text/csv',
+];
+
+const deniedTypes = [
+  'image/svg+xml',
+  'application/vnd.microsoft.portable-executable',
+  'application/x-msdownload',
+  'application/x-msdos-program',
+  'application/x-executable',
+  'application/x-dosexec',
+  'application/x-sh',
+  'text/x-shellscript',
+  'application/x-mach-binary',
+];
+
+const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: allowedMediaTypes,
+        deniedTypes,
+      },
+    },
+  },
+});
+
+export default config;
 ```
 
 

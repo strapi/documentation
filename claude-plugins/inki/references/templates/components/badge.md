@@ -50,9 +50,66 @@ These props belong to the underlying `<Badge>` component. The alias variants pre
 3. **Do not invent variants.** Stick to the twelve registered aliases. There is no `FreeBadge` and no `CloudDevBadge`; the Cloud Starter alias is `CloudStarterBadge`.
 4. **Badges are self-closing JSX.** Write `<NewBadge />`. A space before `/>` is fine, and `<GrowthBadge/>` also works.
 5. **Inside a heading, place the badge before the `{#anchor}` token.** For example, `## Strapi AI <NewBadge /> {#strapi-ai}`.
-6. **Use `noTooltip` in tables and headings** where a hover tooltip would be awkward or cut off (e.g. `<FeatureFlagBadge feature="FeatureFlagName" noTooltip />`).
+6. **Use `noTooltip` in tables and inline in prose**, where a hover tooltip would be awkward or cut off (e.g. `<FeatureFlagBadge feature="FeatureFlagName" noTooltip />`). Under a heading, keep the tooltip: see "Placement: heading versus inline" below.
 7. **`feature` and `version` override the variant-based class.** Setting `feature` forces `badge--featureflag` and setting `version` forces `badge--version`; these win over the `variant`-derived class.
 8. **Override the tooltip when the default is wrong.** Pass `tooltip="..."` to replace the pre-filled text rather than leaving an inaccurate default.
+
+## Placement: heading versus inline
+
+`VersionBadge` (and any badge) has two distinct placements. Picking the wrong one is a common mistake, so decide first which case you are in.
+
+### Case 1: the badge qualifies a whole section or page
+
+Put the badge on **a dedicated badge line directly under the heading** (`h1`, `h2`, `h3`, or deeper), and **keep the tooltip**. The line has room for it, and the tooltip is what tells the reader what the badge actually gates.
+
+That line is a shared slot, not one badge per line: put **every badge that qualifies the section on it**, space-separated, on a single line. Never stack them on consecutive lines.
+
+```mdx
+## Filter content types during transfer
+
+<VersionBadge version="5.50.3" />
+
+The `--exclude-content-types` and `--only-content-types` options let you …
+```
+
+Several flags on the same heading, all on one line — typically plan badges, then maturity, then version:
+
+```mdx
+# Content History
+
+<GrowthBadge /> <EnterpriseBadge/> <VersionBadge version="5.0.0" />
+```
+
+When the heading introduces a *newly documented behavior* rather than a brand-new option, override the tooltip so readers do not conclude the whole feature is new:
+
+```mdx
+## What a transfer replaces and preserves
+
+<VersionBadge version="5.52.2" tooltip="The preserve-versus-replace behavior described below is clarified and logged by the CLI since Strapi 5.52.2." />
+```
+
+### Case 2: the badge qualifies one sentence, row, or option
+
+Put the badge **on the same line as the content it qualifies**, and add **`noTooltip`**: an inline tooltip overlaps the surrounding text and gets cut off. Since the tooltip is no longer there to carry the meaning, weave the badge into the sentence so it reads as part of the prose, rather than parking it at the start of the line.
+
+```mdx
+With Strapi <VersionBadge version="5.42.1+" noTooltip />, for localizable relations, Strapi automatically fetches the corresponding entry in the target locale if it exists.
+```
+
+Same rule inside a table cell:
+
+```mdx
+| `--only-content-types` | <VersionBadge version="5.50.3" noTooltip /> Comma-separated list of content-type UIDs to include. |
+```
+
+### Quick decision
+
+| The badge applies to… | Placement | Tooltip |
+|---|---|---|
+| A heading's whole section or page | Shared badge line under the heading, all badges space-separated on it | Keep it; override the text when the version gates a clarified behavior rather than a new feature |
+| One sentence, list item, or table row | Same line as the content, woven into the sentence | `noTooltip`, and state the version in the prose |
+
+Do not put a badge on a line of its own in the middle of prose: it reads as applying to everything that follows, which is exactly what Case 1 means.
 
 ## Canonical examples
 
