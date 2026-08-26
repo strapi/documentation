@@ -98,7 +98,8 @@ jobs:
           STILL_WAITING=0
           SKIPPED=0
           HELD=0
-          SUMMARY=""
+          SUMMARY=""      # Markdown, for the GitHub step summary
+          SLACK_LIST=""   # <url|text>, for Slack
 
           # Read the source PR number from the doc PR body. Same pattern the
           # self-healing dedup already relies on.
@@ -167,7 +168,16 @@ jobs:
                   fi
                 fi
                 UNFLAGGED=$((UNFLAGGED + 1))
-                SUMMARY="${SUMMARY}- [#${DOC_PR}](https://github.com/strapi/documentation/pull/${DOC_PR}) — ${TITLE}\n"
+                # Two link syntaxes are needed and they are not interchangeable:
+                # the GitHub step summary renders Markdown, Slack renders
+                # <url|text>. Building one string for both is what made the
+                # 2026-08-26 message show raw [#3378](https://…) to readers.
+                PR_URL="https://github.com/strapi/documentation/pull/${DOC_PR}"
+                SHORT_TITLE=$(printf '%s' "$TITLE" | cut -c1-70)
+                if [ "${#TITLE}" -gt 70 ]; then SHORT_TITLE="${SHORT_TITLE}…"; fi
+
+                SUMMARY="${SUMMARY}- [#${DOC_PR}](${PR_URL}) — ${TITLE}\n"
+                SLACK_LIST="${SLACK_LIST}• <${PR_URL}|#${DOC_PR} — ${SHORT_TITLE}>\n"
                 ;;
               1)
                 echo "  #$DOC_PR — strapi#$SOURCE not yet released, keeping the label"
@@ -209,9 +219,9 @@ jobs:
           {
             echo "unflagged=$UNFLAGGED"
             echo "tag=$TAG"
-            echo "summary<<SUMMARY_EOF"
-            printf '%b' "$SUMMARY"
-            echo "SUMMARY_EOF"
+            echo "slack_list<<SLACK_EOF"
+            printf '%b' "$SLACK_LIST"
+            echo "SLACK_EOF"
           } >> "$GITHUB_OUTPUT"
         id: unflag
 
@@ -220,25 +230,25 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
+          # Passed through the environment rather than interpolated into the
+          # script: PR titles contain quotes, backticks and backslashes that
+          # would otherwise be re-parsed by the shell.
+          COUNT: ${{ steps.unflag.outputs.unflagged }}
+          TAG: ${{ steps.unflag.outputs.tag }}
+          SLACK_LIST: ${{ steps.unflag.outputs.slack_list }}
         run: |
           if [ -z "$SLACK_BOT_TOKEN" ] || [ -z "$SLACK_CHANNEL" ]; then
             echo "Slack not configured, skipping notification"
             exit 0
           fi
 
-          COUNT="${{ steps.unflag.outputs.unflagged }}"
-          TAG="${{ steps.unflag.outputs.tag }}"
           DATE=$(date -u '+%Y-%m-%d')
           RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
-          SUMMARY=$(cat <<'SUMMARY_EOF'
-          ${{ steps.unflag.outputs.summary }}
-          SUMMARY_EOF
-          )
-          SUMMARY=$(echo "$SUMMARY" | sed 's/^          //')
-
+          # Slack links are <url|text>, not Markdown. The list arrives already
+          # formatted; only the wrapper is built here.
           TEXT=$(printf ':noted: *Docs — released, ready to review* (%s)\n*%s PR(s)* no longer waiting on a release (now in `%s`):\n%s\n<%s|View run>' \
-            "$DATE" "$COUNT" "$TAG" "$SUMMARY" "$RUN_URL")
+            "$DATE" "$COUNT" "$TAG" "$SLACK_LIST" "$RUN_URL")
 
           curl -s -X POST "https://slack.com/api/chat.postMessage" \
             -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
