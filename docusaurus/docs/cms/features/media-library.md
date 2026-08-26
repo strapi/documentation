@@ -113,7 +113,7 @@ When using the default upload provider, the following specific configuration opt
 | `sizeLimit`                                  | Maximum file size in bytes (see [max file size](#max-file-size)) | Integer | `1000000000`<br/><br/>(1 GB in bytes) |
 | `breakpoints`             | Allows to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
 | `sharp`             | Configures <ExternalLink to="https://sharp.pixelplumbing.com/" text="sharp"/> image processing options (see [sharp configuration](#sharp-configuration)) | Object | `{ cache: false, concurrency: 1 }` |
-| `security`             | Configures validation rules for uploaded files to enhance media security | Object | - |
+| `security`             | Configures validation rules for uploaded files to enhance media security (see [security](#security)) | Object | - |
 | `concurrentUploadSize` | Maximum number of files processed in parallel during a bulk upload. Increase for faster bulk uploads at the cost of higher memory usage. Must be an integer >= 1. | Integer | `1` |
 
 :::note
@@ -739,6 +739,8 @@ Just above the list of folders and assets and next to the !<Icon name="funnel-si
 | Audio      | - MP3<br />- WAV<br />- OGG                                         |
 | File       | - CSV<br />- ZIP<br />- PDF<br />- XLS, XLSX<br />- JSON                |
 <br/>
+
+SVG files are denied by default in projects generated with Strapi <VersionBadge version="5.52.2+" noTooltip /> and later, even though they match the supported image types (see [Security](#security)).
 
 </details>
 
