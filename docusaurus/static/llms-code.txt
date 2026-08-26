@@ -25553,6 +25553,22 @@ export default {
 # Media Library
 Source: https://docs.strapi.io/cms/features/media-library
 
+## Media Library
+Description: :::strapi New Media Library available in beta Strapi has completely reworked the Media Library UI, which is now available as a beta feature for a few weeks before replacing the current UI.
+(Source: https://docs.strapi.io/cms/features/media-library#media-library)
+
+Language: TypeScript
+File path: /features.ts
+
+```ts
+export default () => ({
+  future: {
+    betaMediaLibrary: true,
+  },
+});
+```
+
+
 ## Example custom configuration
 Description: The following is an example of a custom configuration for the Upload plugin when using the default upload provider:
 (Source: https://docs.strapi.io/cms/features/media-library#example-custom-configuration)
