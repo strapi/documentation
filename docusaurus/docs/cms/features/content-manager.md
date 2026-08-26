@@ -430,6 +430,8 @@ Dynamic zones are a combination of components, which themselves are composed of 
 2. Choose a component available for the dynamic zone.
 3. Fill in the fields of the component.
 
+Components display an icon in the picker. A component that defines a [preview image](/cms/backend-customization/models#component-preview-images) displays it as a thumbnail instead. Hovering over the thumbnail shows an enlarged preview.
+
 Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
 
 - Use the drag & drop button <Icon name="dots-six-vertical" classes="ph-bold" /> to reorder components in your dynamic zone.
