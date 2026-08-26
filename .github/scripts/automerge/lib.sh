@@ -36,7 +36,7 @@ require_pr_number() {
 }
 
 # Fetch the list of changed files once and cache it per PR, so running all
-# eight checks on one PR costs one API call for files rather than eight.
+# checks on one PR costs one API call for files rather than one API call per check.
 #
 # Uses the REST endpoint rather than `gh pr view --json files`: the latter only
 # returns path/additions/deletions, while REST also returns `status`
