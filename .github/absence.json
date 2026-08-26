@@ -1,0 +1,5 @@
+{
+  "_comment": "Maintainer absence period, inclusive, Europe/Paris. Read by absence-notice.yml (auto-replies on new PRs) and automerge-cron.yml (suspends auto-merge). Edit the two dates between absences; one period is active at a time. A past period is inert, so there is no need to clear it.",
+  "start": "2026-07-28",
+  "end": "2026-08-20"
+}

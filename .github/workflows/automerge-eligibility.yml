@@ -1,0 +1,234 @@
+name: Auto-merge eligibility
+
+# Decides whether a self-healing documentation PR is constrained enough to merge
+# without review, and records the answer as the `automerge: eligible` label.
+#
+# This workflow judges FORM ONLY — which files, how many lines, what shape. It
+# never judges content. Whether a change should exist at all stays with the
+# maintainer, and the Slack message this posts is how they exercise that
+# judgment: one line, 24 hours before the merge, stoppable with a label.
+#
+# It does not merge anything. `automerge-cron.yml` does that, and only for PRs
+# carrying the label this workflow sets.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+    branches: [main]
+
+# One run per PR. A push during the quiet period cancels the pending run and
+# starts a fresh one, which is what makes the debounce below work.
+concurrency:
+  group: automerge-eligibility-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  ELIGIBLE_LABEL: 'automerge: eligible'
+  SCOPE_LABEL: auto-doc-healing
+  QUIET_PERIOD_MINUTES: 5
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check scope
+        id: scope
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+
+          # Only pipeline output is in scope. Community and contributor PRs are
+          # reviewed by a human, permanently — that is not a limitation of the
+          # gate, it is a decision about what should stay human.
+          LABELS=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json labels --jq '[.labels[].name] | join("\n")')
+
+          if ! echo "$LABELS" | grep -Fxq "$SCOPE_LABEL"; then
+            echo "PR #$PR does not carry '$SCOPE_LABEL' — out of scope"
+            echo "in_scope=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "in_scope=true" >> "$GITHUB_OUTPUT"
+
+      # Wait for the PR to stop moving. Combined with cancel-in-progress, a push
+      # during this window kills the run and restarts the clock, so the checks
+      # only run once the PR has been quiet for the full period. Without it,
+      # every commit in a burst would trigger a full evaluation.
+      - name: Wait for the quiet period
+        if: steps.scope.outputs.in_scope == 'true'
+        run: sleep $(( QUIET_PERIOD_MINUTES * 60 ))
+
+      - name: Checkout the check scripts
+        if: steps.scope.outputs.in_scope == 'true'
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/scripts
+          sparse-checkout-cone-mode: false
+          fetch-depth: 1
+          filter: blob:none
+
+      - name: Run the eligibility checks
+        if: steps.scope.outputs.in_scope == 'true'
+        id: checks
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          AUTOMERGE_REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -uo pipefail
+
+          DIR=".github/scripts/automerge"
+          chmod +x "$DIR"/*.sh
+
+          # Criterion 8 needs a yarn install and a full build to regenerate the
+          # llms files. It is only worth paying for when the PR actually touches
+          # them, and the script reports exit 2 ("cannot tell") when asked to
+          # verify without regenerating — which is correctly treated as blocking.
+          CHECKS=(
+            check-paths
+            check-single-file
+            check-file-exists
+            check-line-count
+            check-no-headings
+            check-no-admonitions
+            check-code-blocks
+            check-llms-consistency
+            check-no-frontmatter-change
+            check-no-external-links
+            check-no-content-removal
+            check-no-component-change
+          )
+
+          VIOLATED=""
+          UNKNOWN=""
+
+          {
+            echo "## Auto-merge eligibility — PR #$PR"
+            echo ""
+            echo "| Check | Result | Detail |"
+            echo "| --- | --- | --- |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          for CHECK in "${CHECKS[@]}"; do
+            OUT=$("$DIR/$CHECK.sh" "$PR" 2>&1)
+            CODE=$?
+            DETAIL=$(echo "$OUT" | head -1 | sed 's/^\(PASS\|FAIL\|UNKNOWN\): //' | cut -c1-90)
+
+            case "$CODE" in
+              0) ICON="✅" ;;
+              1) ICON="❌"; VIOLATED="${VIOLATED}${CHECK#check-}, " ;;
+              *) ICON="⚠️"; UNKNOWN="${UNKNOWN}${CHECK#check-}, " ;;
+            esac
+
+            echo "| \`${CHECK#check-}\` | $ICON | $DETAIL |" >> "$GITHUB_STEP_SUMMARY"
+            printf '%s %-28s %s\n' "$ICON" "${CHECK#check-}" "$DETAIL"
+          done
+
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+
+          # A check that could not run is not a pass. Both states block, but they
+          # are reported separately so a broken check is never mistaken for a
+          # violated criterion.
+          if [ -n "$VIOLATED" ] || [ -n "$UNKNOWN" ]; then
+            echo "eligible=false" >> "$GITHUB_OUTPUT"
+            {
+              [ -n "$VIOLATED" ] && echo "**Not eligible.** Failed: ${VIOLATED%, }"
+              [ -n "$UNKNOWN" ] && echo "**Could not evaluate:** ${UNKNOWN%, }"
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "eligible=true" >> "$GITHUB_OUTPUT"
+            echo "**Eligible.** All checks passed." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Update the eligibility label
+        if: steps.scope.outputs.in_scope == 'true'
+        id: label
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          PR: ${{ github.event.pull_request.number }}
+          ELIGIBLE: ${{ steps.checks.outputs.eligible }}
+        run: |
+          set -uo pipefail
+
+          # The label always reflects the most recent evaluation. That is what
+          # lets the cron stay simple: it trusts the label for form and only
+          # re-checks time and CI state.
+          HAS_LABEL=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json labels \
+            --jq --arg l "$ELIGIBLE_LABEL" '[.labels[].name] | index($l) != null')
+
+          ENCODED=$(jq -rn --arg l "$ELIGIBLE_LABEL" '$l|@uri')
+
+          # REST rather than `gh pr edit`: the latter goes through GraphQL and
+          # demands the read:org scope, which PAT_TOKEN_PIWI does not carry.
+          if [ "$ELIGIBLE" = "true" ] && [ "$HAS_LABEL" != "true" ]; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/issues/$PR/labels" \
+              -f "labels[]=$ELIGIBLE_LABEL" --silent
+            echo "Added '$ELIGIBLE_LABEL'"
+            echo "newly_eligible=true" >> "$GITHUB_OUTPUT"
+
+          elif [ "$ELIGIBLE" != "true" ] && [ "$HAS_LABEL" = "true" ]; then
+            gh api --method DELETE "repos/$GITHUB_REPOSITORY/issues/$PR/labels/$ENCODED" --silent
+            echo "Removed '$ELIGIBLE_LABEL'"
+            echo "newly_eligible=false" >> "$GITHUB_OUTPUT"
+
+          else
+            echo "Label already correct, nothing to do"
+            echo "newly_eligible=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # The veto window. Posted once, when a PR first becomes eligible, roughly
+      # 24 hours before the cron merges it.
+      #
+      # The backtest is the reason this exists: of 14 PRs that needed the
+      # maintainer, 5 pass every mechanical check. Four were wording touch-ups;
+      # one (#3080) was a real miss whose diff was flawless. No criterion made of
+      # paths, counts and regexes reaches that — but a human reading one line can.
+      - name: Post the veto window to Slack
+        if: steps.label.outputs.newly_eligible == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN_PIWI }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_DOCUMENTATION_OPS_CHANNEL_ID }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -uo pipefail
+
+          if [ -z "$SLACK_BOT_TOKEN" ] || [ -z "$SLACK_CHANNEL" ]; then
+            echo "Slack not configured, skipping notification"
+            exit 0
+          fi
+
+          META=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" \
+            --json title,url,additions,deletions,files,body)
+
+          TITLE=$(echo "$META" | jq -r '.title')
+          URL=$(echo "$META" | jq -r '.url')
+          ADD=$(echo "$META" | jq -r '.additions')
+          DEL=$(echo "$META" | jq -r '.deletions')
+          PAGE=$(echo "$META" | jq -r '[.files[].path | select(test("llms.*\\.txt$") | not)] | .[0] // "?"' \
+            | sed 's|^docusaurus/docs/||')
+          SOURCE=$(echo "$META" | jq -r '.body' | grep -oE 'strapi/strapi/pull/[0-9]+' | head -1 | grep -oE '[0-9]+$' || true)
+
+          SHORT_TITLE=$(printf '%s' "$TITLE" | cut -c1-70)
+          if [ "${#TITLE}" -gt 70 ]; then SHORT_TITLE="${SHORT_TITLE}…"; fi
+
+          # Slack link syntax is <url|text>, not Markdown.
+          LINE="<${URL}|#${PR} — ${SHORT_TITLE}>"
+          CONTEXT="${PAGE} · +${ADD}/−${DEL}"
+          [ -n "$SOURCE" ] && CONTEXT="${CONTEXT} · <https://github.com/strapi/strapi/pull/${SOURCE}|strapi#${SOURCE}>"
+
+          TEXT=$(printf ':hourglass_flowing_sand: *Will auto-merge tomorrow*\n%s\n%s\n\nStop it by adding the `flag: don'\''t merge` label.' \
+            "$LINE" "$CONTEXT")
+
+          curl -s -X POST "https://slack.com/api/chat.postMessage" \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-type: application/json; charset=utf-8" \
+            -d "$(jq -n --arg channel "$SLACK_CHANNEL" --arg text "$TEXT" '{channel: $channel, text: $text}')" \
+            > /dev/null || echo "Slack notification failed (non-blocking)"
