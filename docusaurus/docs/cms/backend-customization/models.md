@@ -57,6 +57,9 @@ Component models can't be created with CLI tools. Use the [Content-type Builder]
 
 Components models are stored in the `./src/components` folder. Every component has to be inside a subfolder, named after the category the component belongs to (see [project structure](/cms/project-structure)).
 
+Components also accept an optional preview image, displayed in the dynamic zone picker
+instead of their icon (see [Component preview images](#component-preview-images)).
+
 ## Model schema
 
 The `schema.json` file of a model consists of:
@@ -96,6 +99,13 @@ The `info` key in the model's schema describes information used to display the m
 | `singularName` | String | Singular form of the content-type name.<br />Used to generate the API routes and databases/tables collection.<br /><br />Should be kebab-case. |
 | `pluralName`   | String | Plural form of the content-type name.<br />Used to generate the API routes and databases/tables collection.<br /><br />Should be kebab-case.    |
 | `description`  | String | Description of the model                                                                                                                   |
+| `icon`         | String | Name of the [Strapi icon](https://github.com/strapi/design-system) used to represent the model in the admin panel                          |
+| `preview`      | String | Path or URL of an image used to represent a component in the admin panel.<br /><br />Components only. See [Component preview images](#component-preview-images). |
+
+:::note
+This `preview` parameter is unrelated to the [Preview feature](/cms/features/preview).
+That feature previews front-end content, and uses the `preview` object of `config/admin`.
+:::
 
 ```json title="./src/api/[api-name]/content-types/restaurant/schema.json"
 
@@ -106,6 +116,35 @@ The `info` key in the model's schema describes information used to display the m
     "description": ""
   },
 ```
+
+#### Component preview images
+
+Components accept an optional `preview` parameter in their `info` object. It points to an image representing the component in the [dynamic zone picker](/cms/features/content-manager#dynamic-zones).
+
+The `preview` parameter accepts:
+
+- A root-relative path to an image placed in the project's `public` directory, for instance `/_component-screenshots/hero-section.png`. The image is served by the [`public` middleware](/cms/configurations/middlewares#public), which does not serve paths starting with `/uploads/`.
+- An absolute URL pointing to an external image host.
+
+:::caution
+[Media Library](/cms/features/media-library) images are served from `/uploads/`, so they cannot be used as preview images. Commit the file to `public` instead.
+:::
+
+```json title="./src/components/sections/hero-section.json"
+{
+  "info": {
+    "displayName": "Hero Section",
+    "icon": "layout",
+    "preview": "/_component-screenshots/hero-section.png"
+  }
+}
+```
+
+When `preview` is omitted, or when the image fails to load, the admin panel falls back to the component's `icon`.
+
+:::note
+The `preview` parameter must be set manually in the component's schema file. The Content-type Builder cannot upload a preview image yet.
+:::
 
 ### Model attributes
 
@@ -571,6 +610,10 @@ Component fields create a relation between a content-type and a component struct
   }
 }
 ```
+
+These parameters are set on the attribute of the content-type using the component.
+Parameters set on the component itself, such as its preview image, belong to its own
+`info` object (see [Component preview images](#component-preview-images)).
 
 #### Dynamic zones
 
