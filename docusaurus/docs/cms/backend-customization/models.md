@@ -120,8 +120,12 @@ Components accept an optional `preview` parameter in their `info` object. It poi
 
 The `preview` parameter accepts:
 
-- A root-relative path to an image placed in the project's `public` directory, for instance `/_component-screenshots/hero-section.png`. The image is then served by the [`public` middleware](/cms/configurations/middlewares#public), which does not serve paths starting with `/uploads/`.
+- A root-relative path to an image placed in the project's `public` directory, for instance `/_component-screenshots/hero-section.png`. The image is served by the [`public` middleware](/cms/configurations/middlewares#public), which does not serve paths starting with `/uploads/`.
 - An absolute URL pointing to an external image host.
+
+:::caution
+[Media Library](/cms/features/media-library) images are served from `/uploads/`, so they cannot be used as preview images. Commit the file to `public` instead.
+:::
 
 ```json title="./src/components/sections/hero-section.json"
 {
