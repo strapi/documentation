@@ -57,6 +57,9 @@ Component models can't be created with CLI tools. Use the [Content-type Builder]
 
 Components models are stored in the `./src/components` folder. Every component has to be inside a subfolder, named after the category the component belongs to (see [project structure](/cms/project-structure)).
 
+Components also accept an optional preview image, displayed in the dynamic zone picker
+instead of their icon (see [Component preview images](#component-preview-images)).
+
 ## Model schema
 
 The `schema.json` file of a model consists of:
@@ -607,6 +610,10 @@ Component fields create a relation between a content-type and a component struct
   }
 }
 ```
+
+These parameters are set on the attribute of the content-type using the component.
+Parameters set on the component itself, such as its preview image, belong to its own
+`info` object (see [Component preview images](#component-preview-images)).
 
 #### Dynamic zones
 
