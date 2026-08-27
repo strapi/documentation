@@ -1149,6 +1149,16 @@
       "number": 26320,
       "reason": "Router: Internal bug fix to Content Manager's drag-and-drop UI behavior. No new features, APIs, or user-facing behaviors documented. This is an admin UI implementation improvement that does not require documentation updates.",
       "added": "2026-08-25"
+    },
+    {
+      "number": 27452,
+      "reason": "Triage: Internal dependency cleanup; removes hoisting-dependent import with no runtime code; no behavioral changes",
+      "added": "2026-08-27"
+    },
+    {
+      "number": 27471,
+      "reason": "Router: Release tag PR with no body content. Release notes generation is handled separately by the workflow (not documentation content changes). No user-facing feature changes that require documentation.",
+      "added": "2026-08-27"
     }
   ]
 }
