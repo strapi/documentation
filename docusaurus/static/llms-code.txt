@@ -38295,7 +38295,7 @@ mutation {
 
 
 ## Usage with API tokens
-Description: :::note Using API tokens in the the GraphQL Sandbox requires adding the authorization header with your token in the HTTP HEADERS tab:
+Description: :::note Using API tokens in the GraphQL Sandbox requires adding the authorization header with your token in the HTTP HEADERS tab:
 (Source: https://docs.strapi.io/cms/plugins/graphql#api-tokens)
 
 Language: JSON

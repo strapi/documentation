@@ -7870,7 +7870,7 @@ The Entity Service API performs CRUD operations on content through `findOne()`, 
 The Entity Service API is deprecated in Strapi v5. Please consider using the [Document Service API](/cms/api/document-service) instead.
 :::
 
-The [Entity Service API](/cms/api/entity-service) is built on top of the the [Query Engine API](/cms/api/query-engine) and uses it to perform CRUD operations on entities.
+The [Entity Service API](/cms/api/entity-service) is built on top of the [Query Engine API](/cms/api/query-engine) and uses it to perform CRUD operations on entities.
 
 The `uid` parameter used in function calls for this API is a `string` built with the following format: `[category]::[content-type]` where `category` is one of: `admin`, `plugin` or `api`.
 
@@ -40911,7 +40911,7 @@ This section regroups useful notes and procedures about the introduced breaking 
 
 ### Notes
 
-* A `400 Bad Request` error will be thrown if the request has invalid values such as in in the following cases:
+* A `400 Bad Request` error will be thrown if the request has invalid values such as in the following cases:
 
   - relations the user do not have permission to create
   - unrecognized values that are not present on a schema
@@ -51449,7 +51449,7 @@ With the Users & Permissions plugin, a GraphQL request is allowed if the appropr
 
 For instance, if a 'Category' content-type exists and is queried through GraphQL with the `Query.categories` handler, the request is allowed if the appropriate `find` permission for the 'Categories' content-type is given.
 
-To query a single category, which is done with the `Query.category` handler, the request is allowed if the the `findOne` permission is given.
+To query a single category, which is done with the `Query.category` handler, the request is allowed if the `findOne` permission is given.
 
 Please refer to the user guide on how to [define permissions with the Users & Permissions plugin](/cms/features/rbac#editing-a-role).
 </details>
@@ -51841,7 +51841,7 @@ Then on each request, send along an `Authorization` header in the form of `{ "Au
 To use API tokens for authentication, pass the token in the `Authorization` header using the format `Bearer your-api-token`.
 
 :::note
-Using API tokens in the the GraphQL Sandbox requires adding the authorization header with your token in the `HTTP HEADERS` tab:
+Using API tokens in the GraphQL Sandbox requires adding the authorization header with your token in the `HTTP HEADERS` tab:
 
 ```http
 {
