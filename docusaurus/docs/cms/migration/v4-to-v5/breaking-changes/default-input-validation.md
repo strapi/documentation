@@ -61,7 +61,7 @@ In v5, both query parameters and input data are validated.
 
 ### Notes
 
-* A `400 Bad Request` error will be thrown if the request has invalid values such as in in the following cases:
+* A `400 Bad Request` error will be thrown if the request has invalid values such as in the following cases:
 
   - relations the user do not have permission to create
   - unrecognized values that are not present on a schema

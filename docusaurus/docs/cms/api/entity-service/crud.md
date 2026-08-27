@@ -18,7 +18,7 @@ The Entity Service API performs CRUD operations on content through `findOne()`, 
 
 <ESdeprecated />
 
-The [Entity Service API](/cms/api/entity-service) is built on top of the the [Query Engine API](/cms/api/query-engine) and uses it to perform CRUD operations on entities.
+The [Entity Service API](/cms/api/entity-service) is built on top of the [Query Engine API](/cms/api/query-engine) and uses it to perform CRUD operations on entities.
 
 
 The `uid` parameter used in function calls for this API is a `string` built with the following format: `[category]::[content-type]` where `category` is one of: `admin`, `plugin` or `api`.

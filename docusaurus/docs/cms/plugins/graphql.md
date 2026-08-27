@@ -702,7 +702,7 @@ With the Users & Permissions plugin, a GraphQL request is allowed if the appropr
 
 For instance, if a 'Category' content-type exists and is queried through GraphQL with the `Query.categories` handler, the request is allowed if the appropriate `find` permission for the 'Categories' content-type is given.
 
-To query a single category, which is done with the `Query.category` handler, the request is allowed if the the `findOne` permission is given.
+To query a single category, which is done with the `Query.category` handler, the request is allowed if the `findOne` permission is given.
 
 Please refer to the user guide on how to [define permissions with the Users & Permissions plugin](/cms/features/rbac#editing-a-role).
 </details>
@@ -1145,7 +1145,7 @@ Then on each request, send along an `Authorization` header in the form of `{ "Au
 To use API tokens for authentication, pass the token in the `Authorization` header using the format `Bearer your-api-token`.
 
 :::note
-Using API tokens in the the GraphQL Sandbox requires adding the authorization header with your token in the `HTTP HEADERS` tab:
+Using API tokens in the GraphQL Sandbox requires adding the authorization header with your token in the `HTTP HEADERS` tab:
 
 ```http
 {
