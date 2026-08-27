@@ -426,11 +426,13 @@ Dynamic zones are a combination of components, which themselves are composed of 
   }}
 />
 
+In the component picker, each component displays an icon.
+A component whose schema defines a preview image displays that image as a thumbnail instead, and hovering over it shows an enlarged version.
+Developers set this image in the [component schema](/cms/backend-customization/models#component-preview-images).
+
 1. Click on the <Icon name="plus-circle" /> **Add a component to [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.
 3. Fill in the fields of the component.
-
-Components display an icon in the picker. A component that defines a [preview image](/cms/backend-customization/models#component-preview-images) displays it as a thumbnail instead. Hovering over the thumbnail shows an enlarged preview.
 
 Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
 
