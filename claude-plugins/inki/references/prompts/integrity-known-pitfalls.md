@@ -31,6 +31,7 @@ This file lists documented patterns where AI-generated documentation has produce
 | Hallucinated pattern | Correct pattern | Context |
 |---------------------|-----------------|---------|
 | "Always sanitize input/output" (universal) | Sanitization applies specifically to Content API routes | The `sanitize` utility is used in Content API controllers. Not all routes require it. |
+| A component `preview` image pointing at a Media Library upload, e.g. `"preview": "/uploads/hero_abc123.png"` | A path under the project's `public` directory, e.g. `"preview": "/_component-screenshots/hero.png"`, or an absolute URL | The `public` middleware route is `path: '/((?!uploads/).+)'` (`packages/core/core/src/middlewares/public.ts`), which explicitly excludes `/uploads/` because the upload middleware handles it. A preview pointing at `/uploads/` fails to load and silently falls back to the component's `icon`. |
 
 ### Import and export patterns
 
