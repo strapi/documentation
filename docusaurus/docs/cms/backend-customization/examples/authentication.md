@@ -151,7 +151,7 @@ export default Login;
 
 ## Enhanced authentication with session management
 
-The above example uses the traditional JWT approach. For enhanced security, you can enable session management mode in your Users & Permissions configuration, which provides shorter-lived access tokens and refresh token functionality.
+The above example uses the traditional JWT approach. You can enable session management mode in your Users & Permissions configuration to use shorter-lived access tokens and refresh tokens. Custom backend code can also call the [Session Manager API](/cms/api/session-manager) directly.
 
 ### Configuration
 

@@ -241,6 +241,7 @@ const sidebars = {
             'cms/api/document-service/publication-filter',
           ],
         },
+        'cms/api/session-manager',
       ],
     },
     { // Configurations

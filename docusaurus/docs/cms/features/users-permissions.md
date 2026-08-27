@@ -311,7 +311,7 @@ export default ({ env }) => ({
 
 </Tabs>
 
-In `refresh` mode, authenticated end users can [list their active sessions](/cms/features/users-permissions/rest-api#list-sessions) and [revoke a session](/cms/features/users-permissions/rest-api#revoke-a-session) through the REST API.
+In `refresh` mode, authenticated end users can [list their active sessions](/cms/features/users-permissions/rest-api#list-sessions) and [revoke a session](/cms/features/users-permissions/rest-api#revoke-a-session) through the REST API. Plugins and custom backend code can use the same origin through the [Session Manager API](/cms/api/session-manager) (`users-permissions`).
 
 ### Registration configuration
 

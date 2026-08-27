@@ -361,7 +361,7 @@ If the username derived from the provider profile already exists, a unique usern
 
 ## Session management
 
-When session management is enabled (`jwtManagement: 'refresh'` in the plugin configuration), these additional endpoints become available. They return 404 when the default legacy JWT mode is active.
+When session management is enabled (`jwtManagement: 'refresh'` in the plugin configuration), these additional endpoints become available. They return 404 when the default legacy JWT mode is active. The endpoints call the `users-permissions` origin of the [Session Manager API](/cms/api/session-manager).
 
 ### Refresh token
 
