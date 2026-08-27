@@ -106,13 +106,19 @@ jobs:
           # EXCLUDED (never user-facing):
           #   chore(*), test(*), docs:, doc:, security:,
           #   refactor(*), ci(*), build(*), style(*),
+          #   release PRs ("release: 5.52.2", "Release 5.23.5 main to develop"),
           #   translations/i18n/localization (any prefix),
           #   typo, Remove/Update yarn/README,
           #   dependency upgrades with patch/minor version bumps
           #
           # KEPT (Router decides): feat, fix, enhancement, perf, and anything else
+          #
+          # NOTE: the release pattern is anchored on a version number so it only
+          # catches version-bump PRs, never PRs about the Releases feature itself
+          # (e.g. "fix(content-releases): ..." or "feat: homepage releases widget").
           jq '[.[] | select(
             (.title | test("^chore"; "i") | not) and
+            (.title | test("^\\s*release[:\\s]+v?\\d+\\.\\d+"; "i") | not) and
             (.title | test("^test[:(\\s]"; "i") | not) and
             (.title | test("^docs?:"; "i") | not) and
             (.title | test("^security:"; "i") | not) and
