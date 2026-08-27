@@ -15004,7 +15004,7 @@ File path: N/A
 
 
 ## Model information
-Description: | -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------- | | displayName | String | Default name to use in the admin panel | | singularName | String | Singular form of the content-type name.
+Description: :::note This preview parameter is unrelated to the Preview feature.
 (Source: https://docs.strapi.io/cms/backend-customization/models#model-information)
 
 Language: JSON
@@ -15018,6 +15018,24 @@ File path: ./src/api/[api-name]/content-types/restaurant/schema.json
     "pluralName": "restaurants",
     "description": ""
   },
+```
+
+
+## Component preview images
+Description: :::caution Media Library images are served from /uploads/, so they cannot be used as preview images.
+(Source: https://docs.strapi.io/cms/backend-customization/models#component-preview-images)
+
+Language: JSON
+File path: ./src/components/sections/hero-section.json
+
+```json
+{
+  "info": {
+    "displayName": "Hero Section",
+    "icon": "layout",
+    "preview": "/_component-screenshots/hero-section.png"
+  }
+}
 ```
 
 
