@@ -99,6 +99,11 @@ The `info` key in the model's schema describes information used to display the m
 | `icon`         | String | Name of the [Strapi icon](https://github.com/strapi/design-system) used to represent the model in the admin panel                          |
 | `preview`      | String | Path or URL of an image used to represent a component in the admin panel.<br /><br />Components only. See [Component preview images](#component-preview-images). |
 
+:::note
+This `preview` parameter is unrelated to the [Preview feature](/cms/features/preview).
+That feature previews front-end content, and uses the `preview` object of `config/admin`.
+:::
+
 ```json title="./src/api/[api-name]/content-types/restaurant/schema.json"
 
   "info": {
