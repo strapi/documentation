@@ -137,16 +137,19 @@ module.exports = {
 
 </details>
 
-## Using the migration progress heartbeats
+## Reading the migration progress heartbeats
 
-For long-running migrations, Strapi provides a progress heartbeat feature that logs periodic status updates without rewriting terminal output. This is useful when migrations process large datasets and need to show activity to the operator.
+Some of Strapi's internal migrations process large amounts of data and can run for several minutes. To show that they are still working, they log a periodic progress line, throttled to one message every 60 seconds:
 
-The heartbeat logger is time-throttled (default 60 seconds) and reports progress in a format like:
 ```
-… still running (120s) · files 12000/450000
+[document-id] still running (120s) · articles 12000/450000
 ```
 
-This feature is automatically enabled for migrations that use the heartbeat logging capability, such as data backfill operations. The progress updates are append-only, making them suitable for long-running operations that don't produce frequent log output.
+The prefix identifies the internal migration that is running, and the counters show how many rows have been processed so far. These messages are appended rather than rewritten in place, so they remain readable in log files.
+
+:::note
+Progress heartbeats are emitted by Strapi's internal migrations only. They are not available in your own migration files.
+:::
 
 ## Handling migrations with TypeScript code
 
