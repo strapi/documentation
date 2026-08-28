@@ -481,6 +481,7 @@ jobs:
           if [ ! -f "$RESULTS_FILE" ]; then
             echo "Router did not produce results file"
             echo "has_targets=false" >> $GITHUB_OUTPUT
+            echo "micro_prs=0" >> $GITHUB_OUTPUT
             exit 0
           fi
 
@@ -525,12 +526,25 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
-          # Sonnet only needed for "full" complexity PRs
+          # `has_targets` answers one question only: does Sonnet need to run?
+          # Micro-edits are handled by the Router itself, so they never set it.
+          #
+          # Reporting must NOT reuse this output to mean "the Router found
+          # something" — a run that produced only micro PRs has has_targets=false
+          # and would be reported as an empty run. That was the 2026-08-28 bug:
+          # PR #3418 was created and Slack announced "no documentation targets".
+          # `micro_prs` below is what the Summary and Slack steps read instead.
           if [ "$FULL" -eq 0 ]; then
             echo "has_targets=false" >> $GITHUB_OUTPUT
           else
             echo "has_targets=true" >> $GITHUB_OUTPUT
           fi
+
+          # Micro PRs actually opened by the Router (a micro target that failed
+          # to produce a PR has no .doc_pr, and must not be counted as created).
+          MICRO_PRS=$(jq '[.prs[] | select(.decision == "has_targets" and .complexity == "micro" and (.doc_pr // "") != "")] | length' "$RESULTS_FILE")
+          echo "micro_prs=$MICRO_PRS" >> $GITHUB_OUTPUT
+          echo "Micro doc PRs created by the Router: $MICRO_PRS"
 
           # Pass router results to Sonnet (only full-complexity PRs)
           {
@@ -638,9 +652,29 @@ jobs:
             exit 0
           fi
 
-          # Case 3: Router ran but found no targets — Sonnet was NOT invoked
+          # Micro PRs are created by the Router itself, so they must be reported
+          # whether or not Sonnet ran afterwards.
+          MICRO_PRS="${{ steps.check-router.outputs.micro_prs }}"
+          MICRO_PRS="${MICRO_PRS:-0}"
+
+          if [ "$MICRO_PRS" -gt 0 ] && [ -f /tmp/router-results.json ]; then
+            echo "### Micro-edit doc PRs (Haiku Router)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Doc PRs created ($MICRO_PRS):**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            jq -r '.prs[] | select(.decision == "has_targets" and .complexity == "micro" and (.doc_pr // "") != "") | "- [strapi/strapi#\(.number) — \(.title)](\(.doc_pr))"' \
+              /tmp/router-results.json >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Case 3: Sonnet was NOT invoked. That is only an empty run if the
+          # Router did not create micro PRs of its own.
           if [ "${{ steps.check-router.outputs.has_targets }}" != "true" ]; then
-            echo "**Result:** Router (Haiku) found no documentation targets. Sonnet was not invoked." >> $GITHUB_STEP_SUMMARY
+            if [ "$MICRO_PRS" -eq 0 ]; then
+              echo "**Result:** Router (Haiku) found no documentation targets. Sonnet was not invoked." >> $GITHUB_STEP_SUMMARY
+            else
+              echo "**Result:** All targets were micro-edits, handled by the Router. Sonnet was not invoked." >> $GITHUB_STEP_SUMMARY
+            fi
             exit 0
           fi
 
@@ -694,35 +728,59 @@ jobs:
           DATE=$(date -u '+%Y-%m-%d %H:%M UTC')
           JOB_STATUS="${{ job.status }}"
 
+          SUMMARY_FILE="/tmp/self-healing-summary.json"
+          ROUTER_FILE="/tmp/router-results.json"
+
+          # Doc PRs come from two places: micro-edits opened by the Router
+          # itself, and full drafts opened by Sonnet. Reporting only the second
+          # is what made the 2026-08-28 run announce "no documentation targets"
+          # while PR #3418 had just been created. Both are collected here, the
+          # same way the Notion step already does it.
+          MICRO_COUNT="${{ steps.check-router.outputs.micro_prs }}"
+          MICRO_COUNT="${MICRO_COUNT:-0}"
+          MICRO_LIST=""
+          if [ "$MICRO_COUNT" -gt 0 ] && [ -f "$ROUTER_FILE" ]; then
+            MICRO_LIST=$(jq -r '.prs[] | select(.decision == "has_targets" and .complexity == "micro" and (.doc_pr // "") != "") | "• <\(.doc_pr)|strapi/strapi#\(.number) — \(.title)>"' "$ROUTER_FILE")
+          fi
+
+          SONNET_COUNT=0
+          SONNET_LIST=""
+          ERRORS=0
+          if [ -f "$SUMMARY_FILE" ]; then
+            SONNET_COUNT=$(jq -r '.processed | length' "$SUMMARY_FILE")
+            SONNET_LIST=$(jq -r '.processed[] | "• <\(.doc_pr)|strapi/strapi#\(.number) — \(.title)>"' "$SUMMARY_FILE")
+            ERRORS=$(jq -r '.errors | length' "$SUMMARY_FILE")
+          fi
+
+          TOTAL_PRS=$((MICRO_COUNT + SONNET_COUNT))
+          PR_LIST=$(printf '%s\n%s' "$MICRO_LIST" "$SONNET_LIST" | grep -v '^$' || true)
+
           # Build the main message (short summary)
           if [ "$JOB_STATUS" == "failure" ]; then
             MAIN=":pepe_alarm: *Docs Self-Healing FAILED* ($DATE)\nOne or more steps failed. Check the run for details.\n<${RUN_URL}|View run>"
+          elif [ "$TOTAL_PRS" -gt 0 ]; then
+            # Any run that produced a doc PR reports it, whichever model opened it.
+            MAIN=":noted: *Docs Self-Healing* ($DATE)\n*${TOTAL_PRS} doc PR(s) created:*\n${PR_LIST}\n<${RUN_URL}|View run>"
+
+            if [ "$ERRORS" -gt 0 ]; then
+              ERROR_LIST=$(jq -r '.errors[] | "• strapi/strapi#\(.number): \(.error)"' "$SUMMARY_FILE")
+              MAIN="${MAIN}\n\n:warning: *Errors:*\n${ERROR_LIST}"
+            fi
           elif [ "${{ steps.check-prs.outputs.has_prs }}" == "false" ]; then
             MAIN=":white_check_mark: *Docs Self-Healing* ($DATE)\nNo candidate PRs after pre-filtering. No AI invoked.\n<${RUN_URL}|View run>"
           elif [ "${{ steps.check-triage.outputs.has_candidates }}" != "true" ]; then
             MAIN=":white_check_mark: *Docs Self-Healing* ($DATE)\nTriage (Haiku) eliminated all PRs. Router and Sonnet were not invoked.\n<${RUN_URL}|View run>"
           elif [ "${{ steps.check-router.outputs.has_targets }}" != "true" ]; then
             MAIN=":frog_shrug: *Docs Self-Healing* ($DATE)\nRouter (Haiku) found no documentation targets. Sonnet was not invoked.\n<${RUN_URL}|View run>"
-          else
-            SUMMARY_FILE="/tmp/self-healing-summary.json"
-            if [ -f "$SUMMARY_FILE" ]; then
-              PROCESSED=$(jq -r '.processed | length' "$SUMMARY_FILE")
-              ERRORS=$(jq -r '.errors | length' "$SUMMARY_FILE")
+          elif [ -f "$SUMMARY_FILE" ]; then
+            MAIN=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but created no PRs.\n<${RUN_URL}|View run>"
 
-              if [ "$PROCESSED" -gt 0 ]; then
-                PR_LIST=$(jq -r '.processed[] | "• <\(.doc_pr)|strapi/strapi#\(.number) — \(.title)>"' "$SUMMARY_FILE")
-                MAIN=":noted: *Docs Self-Healing* ($DATE)\n*${PROCESSED} doc PR(s) created:*\n${PR_LIST}\n<${RUN_URL}|View run>"
-              else
-                MAIN=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but created no PRs.\n<${RUN_URL}|View run>"
-              fi
-
-              if [ "$ERRORS" -gt 0 ]; then
-                ERROR_LIST=$(jq -r '.errors[] | "• strapi/strapi#\(.number): \(.error)"' "$SUMMARY_FILE")
-                MAIN="${MAIN}\n\n:warning: *Errors:*\n${ERROR_LIST}"
-              fi
-            else
-              MAIN=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but no summary file was produced.\n<${RUN_URL}|View run>"
+            if [ "$ERRORS" -gt 0 ]; then
+              ERROR_LIST=$(jq -r '.errors[] | "• strapi/strapi#\(.number): \(.error)"' "$SUMMARY_FILE")
+              MAIN="${MAIN}\n\n:warning: *Errors:*\n${ERROR_LIST}"
             fi
+          else
+            MAIN=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but no summary file was produced.\n<${RUN_URL}|View run>"
           fi
 
           # Post message to Slack
