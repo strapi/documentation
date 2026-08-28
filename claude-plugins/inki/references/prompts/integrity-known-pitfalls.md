@@ -52,6 +52,15 @@ Verified against `packages/core/strapi/src/cli/utils/data-transfer.ts` (`parseRe
 | `--exclude` / `--only` described as **deleting** the omitted types on the target instance (any data-management page) | Omitted stages are **preserved**; only transferred stages are replaced | `strapi import` and `strapi transfer` both call the same `parseRestoreFromOptions`, so the semantics are identical across the two pages. When a stage is out of scope, `entities.include` is set to `[]`, which matches nothing and short-circuits deletion. Check `import.md`, `export.md`, `transfer.md`, and `cli.md` agree: they have contradicted each other before. |
 | A docs page quoting a `strapi transfer` confirmation prompt as "will delete all of the remote Strapi assets and its database" | The remote prompt is "The transfer will delete existing data from the remote Strapi!"; the local one is "…delete all **the** local Strapi assets and its database" | Reworded upstream precisely because `--only`/`--exclude` mean a transfer no longer always deletes everything. Verify quoted prompt strings against `packages/core/strapi/src/cli/commands/transfer/command.ts` rather than copying older docs. |
 
+### REST API response shapes
+
+Verified against `packages/core/core/src/core-api/controller/collection-type.ts` (`find`, `findOne`), `packages/core/core/src/core-api/controller/single-type.ts`, and `packages/core/core/src/core-api/controller/transform.ts` (`transformResponse`).
+
+| Hallucinated pattern | Correct pattern | Context |
+|---------------------|-----------------|---------|
+| A single-document response shown with `"data": [ … ]` (array) and `"meta": { "pagination": … }` | `"data": { … }` (single object) and `"meta": {}` | Applies to fetch-by-`documentId` (`GET`/`PUT` on `/api/:pluralApiId/:documentId`), every single-type response, and `POST` responses. `findOne` returns `this.transformResponse(sanitizedEntity)` with no `meta` argument, and `transformResponse` defaults `meta` to `{}`; only `find` passes `{ pagination }`. Easy copy-paste error because the neighboring "get all" example on the same page legitimately uses the array + pagination shape. Found in the wild in `docs/cms/api/rest/locale.md`. |
+| A single-document example omitting `createdAt` / `updatedAt` / `publishedAt` | Include all three, after the attributes and before `locale` | Nothing strips timestamps on a plain read; a request without a `fields` parameter returns them. Their absence makes an example inconsistent with every other response sample in the REST reference. |
+
 ### Documentation formatting conventions
 
 These are not code hallucinations but recurring Strapi-docs formatting mistakes. Verified against `STYLE_GUIDE.pdf` and `docusaurus/src/components/Icon.js`.
