@@ -201,6 +201,60 @@ Strapi exposes a lightweight health check route at `/_health` for uptime monitor
 
 If you want to host the administration on another server than the API, [please take a look at this dedicated section](/cms/configurations/admin-panel#deploy-on-different-servers).
 
+## Continuous deployment {#continuous-deployment}
+
+Strapi does not require a specific continuous integration tool. Any pipeline that can install dependencies, build the admin panel, and run the server works, whether it runs on GitHub Actions, GitLab CI, Jenkins, or your hosting provider's own build system.
+
+Whichever tool you use, a pipeline deploying Strapi should respect the following principles:
+
+- **Build the admin panel in the pipeline**, with `NODE_ENV` set to `production`. The admin panel is a static bundle that must be rebuilt whenever the code or the admin configuration changes.
+- **Inject secrets from the CI tool**, never from a committed `.env` file. At minimum, `APP_KEYS`, `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `TRANSFER_TOKEN_SALT`, and the database credentials must be available to the build and to the running server (see [environment configuration](/cms/configurations/environment)).
+- **Use the same secrets across deployments** of a given environment. Regenerating `APP_KEYS` or `ADMIN_JWT_SECRET` between two deployments invalidates existing sessions and API tokens.
+- **Keep environments isolated**: a staging pipeline should never point at the production database.
+- **Account for the schema sync**: starting Strapi with a modified content-types schema alters the database, and removing a content-type drops its table. Review the changes a deployment introduces before it reaches production (see [database migrations](/cms/database-migrations)).
+
+:::caution
+Content created through the Content-Type Builder in one environment is not transferred to another by the pipeline. The Content-Type Builder is disabled in production, so schema changes must come from the deployed code. To move data between environments, use the [Data Management](/cms/features/data-management) feature.
+:::
+
+The following example builds a Strapi project on every push to the `main` branch. It stops at the build step, as the deployment step depends entirely on your hosting provider:
+
+```yaml title=".github/workflows/deploy.yml"
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn build
+        env:
+          NODE_ENV: production
+          APP_KEYS: ${{ secrets.APP_KEYS }}
+          API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
+          ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
+          TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
+
+      # Add your provider's deployment step here, for instance uploading the
+      # build output, pushing a Docker image, or triggering a remote deploy.
+```
+
+:::tip
+[Strapi Cloud](/cloud/intro) handles this pipeline for you: it [builds and deploys](/cloud/getting-started/deployment) on every push to the tracked branch, so no workflow file is needed.
+:::
+
 ## Additional resources
 
 :::prerequisites
