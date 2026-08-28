@@ -18437,7 +18437,7 @@ strapi.cron.jobs
 Source: https://docs.strapi.io/cms/configurations/database
 
 ## Configuration examples
-Description: | Parameter | Description | Type | Default | | ---------------- | --------------------------------------------------------------- | --------- | ------- | | forceMigration | Enable or disable the forced database migration.
+Description: :::caution Despite its name, forceMigration does not control whether migrations run, which is what runMigrations does.
 (Source: https://docs.strapi.io/cms/configurations/database#configuration-examples)
 
 Language: DOCKERFILE
@@ -18758,7 +18758,7 @@ module.exports = ({ env }) => {
       connection: {
         connectionString: env('DATABASE_URL'),
         host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 3306),
+        port: env.int('DATABASE_PORT', 5432),
         database: env('DATABASE_NAME', 'strapi'),
         user: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
@@ -18806,7 +18806,7 @@ File path: ./config/database.js
 ```js
 import path from 'path';
 
-export default = ({ env }) => {
+export default ({ env }) => {
   const client = env('DATABASE_CLIENT', 'sqlite');
 
   const connections = {
@@ -18836,7 +18836,7 @@ export default = ({ env }) => {
       connection: {
         connectionString: env('DATABASE_URL'),
         host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 3306),
+        port: env.int('DATABASE_PORT', 5432),
         database: env('DATABASE_NAME', 'strapi'),
         user: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
@@ -23300,7 +23300,7 @@ module.exports = {
       // Your migration code here
 
       // Example: creating new entries
-      await strapi.entityService.create('api::article.article', {
+      await strapi.documents('api::article.article').create({
         data: {
           title: 'My Article',
         },
@@ -23314,15 +23314,15 @@ module.exports = {
 ```
 
 
-## Using the migration progress heartbeats
-Description: The heartbeat logger is time-throttled (default 60 seconds) and reports progress in a format like:
-(Source: https://docs.strapi.io/cms/database-migrations#using-the-migration-progress-heartbeats)
+## Reading the migration progress heartbeats
+Description: Some of Strapi's internal migrations process large amounts of data and can run for several minutes.
+(Source: https://docs.strapi.io/cms/database-migrations#reading-the-migration-progress-heartbeats)
 
 Language: JavaScript
 File path: .05.10T00.00.00.name-of-my-migration.js
 
 ```js
-… still running (120s) · files 12000/450000
+[document-id] still running (120s) · articles 12000/450000
 ```
 
 

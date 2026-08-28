@@ -23666,7 +23666,7 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 | `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. <br/> **Available in `v4.6.2`+**           | `String`                  |
 | `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
 | `port`     | Database port                                                                                                                 | `Integer`             |
-| `database` or `filename` | Database name or filename.   <ul><li>For MySQL or PostgreSQL, use the `database` key (with `host`, `port`, etc.).</li><li>For SQLite, only provide `filename`` which points to the database file.</li></ul> | `String`              |
+| `database` or `filename` | Database name or filename.   <ul><li>For MySQL or PostgreSQL, use the `database` key (with `host`, `port`, etc.).</li><li>For SQLite, only provide `filename` which points to the database file.</li></ul> | `String`              |
 | `user`     | Username used to establish the connection                                                                                     | `String`              |
 | `password` | Password used to establish the connection                                                                                     | `String`              |
 | `timezone` | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php) | `String`              |
@@ -23707,8 +23707,13 @@ The `settings` object found in `./config/database.js` (or `./config/database.ts`
 
 | Parameter        | Description                                                     | Type      | Default |
 | ---------------- | --------------------------------------------------------------- | --------- | ------- |
-| `forceMigration` | Enable or disable the forced database migration.                | `Boolean` | `true`  |
-| `runMigrations`  | Enable or disable database migrations from running on start up. | `Boolean` | `true`  |
+| `forceMigration` | Allow the schema sync to drop tables, columns, indexes, and foreign keys that are no longer part of the content-types schemas. Set to `false` to skip every drop operation. | `Boolean` | `true`  |
+| `runMigrations`  | Run the migration files found in `/database/migrations` on startup. Strapi's own internal migrations and the schema sync run regardless of this setting. | `Boolean` | `true`  |
+| `useTypescriptMigrations` | Look for migration files in the build directory instead of the source directory, so that TypeScript migrations are executed. See [handling migrations with TypeScript code](/cms/database-migrations#handling-migrations-with-typescript-code). | `Boolean` | `false` |
+
+:::caution
+Despite its name, `forceMigration` does not control whether migrations run, which is what `runMigrations` does. It controls whether the schema sync is allowed to drop database objects. Setting it to `false` prevents data loss, but the schema sync still records the new schema as the reference, so a table whose deletion was skipped is no longer tracked by Strapi and is not dropped if you later set the parameter back to `true`. See [database migrations](/cms/database-migrations#data-loss).
+:::
 
 ### Configuration examples
 
@@ -24019,7 +24024,7 @@ module.exports = ({ env }) => {
       connection: {
         connectionString: env('DATABASE_URL'),
         host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 3306),
+        port: env.int('DATABASE_PORT', 5432),
         database: env('DATABASE_NAME', 'strapi'),
         user: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
@@ -24091,7 +24096,7 @@ module.exports = ({ env }) => {
       connection: {
         connectionString: env('DATABASE_URL'),
         host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 3306),
+        port: env.int('DATABASE_PORT', 5432),
         database: env('DATABASE_NAME', 'strapi'),
         user: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
@@ -29813,9 +29818,9 @@ Source: https://docs.strapi.io/cms/database-migrations
 
 # Database migrations
 
-Database migrations run one‑time scripts before schema sync to preserve data during upgrades. The experimental API uses alphabetical `up()` files and warns about missing down migrations and potential table deletions.
+Database migrations run one-time scripts before the schema sync to preserve data during upgrades. Migration files export an `up()` function and run once, in alphabetical order. During the schema sync that follows, Strapi drops the tables, columns, indexes, and foreign keys it previously managed that are no longer in the content-types schemas.
 
-Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi application. These migrations are run automatically when the application starts and are executed before the automated schema migrations that Strapi also performs on boot.
+Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi application. These migrations are run automatically when the application starts and are executed before the automated schema sync that Strapi also performs on boot.
 
 :::callout 🚧  Experimental feature
 Database migrations are experimental. This feature is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on [GitHub Discussions](https://github.com/strapi/strapi/discussions) or on the community [Discord](https://discord.strapi.io).
@@ -29825,12 +29830,39 @@ Database migrations are experimental. This feature is still a work in progress a
 
 Migrations are run using JavaScript migration files stored in `./database/migrations`.
 
-Strapi automatically detects migration files and run them once at the next startup in alphabetical order. Every new file is executed once. Migrations are run before the database tables are synced with the content-types schemas.
+Strapi automatically detects migration files and run them once at the next startup in alphabetical order. Every new file is executed once.
+
+### What happens on startup {#startup-sequence}
+
+Understanding the order of operations helps predict what happens to your data. On every startup, Strapi performs the following steps:
+
+1. Strapi loads the schema: content-types and components are converted into database models, then relations are validated.
+2. Strapi runs the pending migrations: your migration files in `/database/migrations` run first, followed by Strapi's own internal migrations. Each migration runs in its own transaction, and applied migrations are tracked so they never run twice.
+3. Strapi syncs the database schema: it compares the content-types schemas with the database, then applies the differences. Tables and columns are created first, then the tables that are no longer part of the schemas are dropped, then the remaining tables are altered.
+4. Strapi persists the new schema: the resulting schema is stored in the database and becomes the reference for the next startup.
+
+:::note
+Migrations run before the schema sync, so an `up()` function still sees the database in its previous state. Write migrations against the old schema, not the one you are migrating to.
+:::
+
+:::note
+Steps 2 and 3 are skipped entirely when there is no pending migration and the schema has not changed since the last startup. Strapi detects changes by comparing the content-types schemas, not by inspecting the database, so manual changes made directly to the database are not detected or reverted.
+:::
+
+### Data loss during the schema sync {#data-loss}
+
+During the schema sync, Strapi drops the tables, columns, indexes, and foreign keys that it previously managed and that no longer match the content-types schemas. This happens automatically, without any warning or confirmation prompt, and identically in development and in production. Deleting a content-type from your code therefore deletes its table, and its data, on the next startup.
+
+Tables that Strapi has never managed, such as tables you created yourself directly in the database, are left untouched.
+
+Migrations are the way to preserve data across such changes: use them to copy or transform data before the schema sync removes the old structure.
 
 :::warning
-* Currently Strapi does not support down migrations. This means that if you need to revert a migration, you will have to do it manually. It is planned to implement down migrations in the future but no timeline is currently available.
+Strapi does not support down migrations. If you need to revert a migration, you have to do it manually. Down migrations are planned, but no timeline is currently available.
+:::
 
-* Strapi will delete any unknown tables without warning. This means that database migrations can only be used to keep data when changing the Strapi schema. The `forceMigration` and `runMigrations` [database configuration parameters](/cms/configurations/database#settings-configuration-object) can be used to fine-tune the database migrations behavior.
+:::tip
+The `forceMigration` [database configuration parameter](/cms/configurations/database#settings-configuration-object) controls this behavior. Setting it to `false` skips every drop operation. The new schema is still recorded as the reference, so an object whose deletion was skipped stops being tracked by Strapi and is not dropped if you later set the parameter back to `true`. The `runMigrations` parameter only controls whether your own files in `/database/migrations` run, and has no effect on the schema sync.
 :::
 
 Migration files should export the function `up()`, which is used when upgrading (e.g. adding a new table `my_new_table`).
@@ -29901,7 +29933,7 @@ module.exports = {
       // Your migration code here
 
       // Example: creating new entries
-      await strapi.entityService.create('api::article.article', {
+      await strapi.documents('api::article.article').create({
         data: {
           title: 'My Article',
         },
@@ -29916,16 +29948,19 @@ module.exports = {
 
 </details>
 
-## Using the migration progress heartbeats
+## Reading the migration progress heartbeats
 
-For long-running migrations, Strapi provides a progress heartbeat feature that logs periodic status updates without rewriting terminal output. This is useful when migrations process large datasets and need to show activity to the operator.
+Some of Strapi's internal migrations process large amounts of data and can run for several minutes. To show that they are still working, they log a periodic progress line, throttled to one message every 60 seconds:
 
-The heartbeat logger is time-throttled (default 60 seconds) and reports progress in a format like:
 ```
-… still running (120s) · files 12000/450000
+[document-id] still running (120s) · articles 12000/450000
 ```
 
-This feature is automatically enabled for migrations that use the heartbeat logging capability, such as data backfill operations. The progress updates are append-only, making them suitable for long-running operations that don't produce frequent log output.
+The prefix identifies the internal migration that is running, and the counters show how many rows have been processed so far. These messages are appended rather than rewritten in place, so they remain readable in log files.
+
+:::note
+Progress heartbeats are emitted by Strapi's internal migrations only. They are not available in your own migration files.
+:::
 
 ## Handling migrations with TypeScript code
 
