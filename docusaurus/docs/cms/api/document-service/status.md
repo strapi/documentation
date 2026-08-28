@@ -36,6 +36,10 @@ By default the [Document Service API](/cms/api/document-service) returns the dra
 Passing `{ status: 'draft' }` to a Document Service API query returns the same results as not passing any `status` parameter.
 :::
 
+:::note
+The Document Service API defaults to `draft`, but the [REST API](/cms/api/rest/status) defaults to `published`. A `POST` or `PUT` request sent to the REST API without a `status` parameter therefore publishes immediately, which is the opposite of the behavior described on this page.
+:::
+
 To select documents by how their draft and published versions relate (never-published, modified, and others), see [Document Service API: `publicationFilter`](/cms/api/document-service/publication-filter).
 
 ## Get the published version with `findOne()` {#find-one}
