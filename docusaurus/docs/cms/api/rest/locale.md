@@ -157,33 +157,24 @@ curl 'http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr' 
 
 ```json
 {
-  "data": [
-    {
-      "id": 22,
-      "documentId": "lr5wju2og49bf820kj9kz8c3",
-      "Name": "Biscotte Restaurant",
-      "Description": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "text": "Bienvenue au restaurant Biscotte! Le Restaurant Biscotte propose une cuisine à base de produits frais et de qualité, souvent locaux, biologiques lorsque cela est possible, et toujours produits par des producteurs passionnés."
-            }
-          ]
-        }
-      ],
-      "locale": "fr"
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 3
-    }
-  }
+  "data": {
+    "id": 22,
+    "documentId": "lr5wju2og49bf820kj9kz8c3",
+    "Name": "Biscotte Restaurant",
+    "Description": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "Bienvenue au restaurant Biscotte! Le Restaurant Biscotte propose une cuisine à base de produits frais et de qualité, souvent locaux, biologiques lorsque cela est possible, et toujours produits par des producteurs passionnés."
+          }
+        ]
+      }
+    ],
+    "locale": "fr"
+  },
+  "meta": {}
 }
 ```
 
