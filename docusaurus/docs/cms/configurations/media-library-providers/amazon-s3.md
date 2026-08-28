@@ -12,7 +12,7 @@ tags:
 
 <Tldr>
 
-The `@strapi/provider-upload-aws-s3` package lets you store Media Library assets on Amazon S3 or any S3-compatible service (Cloudflare R2, Scaleway, MinIO, etc.). This page covers provider configuration, required AWS setup (IAM, CORS, middleware), and extended options such as encryption, checksums, and signed URLs for private buckets.
+The `@strapi/provider-upload-aws-s3` package lets you store Media Library assets on Amazon S3 or any S3-compatible service (Cloudflare R2, Scaleway, MinIO, Tigris, etc.). This page covers provider configuration, required AWS setup (IAM, CORS, middleware), and extended options such as encryption, checksums, and signed URLs for private buckets.
 
 </Tldr>
 
@@ -325,6 +325,7 @@ The following table shows compatibility settings for each provider:
 | Vultr               | Not needed       | Supported         | -                                 |
 | Backblaze B2        | Not needed       | Supported         | Returns correct virtual-hosted URLs |
 | Cloudflare R2       | Not needed       | Not supported     | Omit `ACL` from parameters        |
+| Tigris              | Not needed       | Supported         | Single global endpoint; use `region: 'auto'` |
 
 ### Scaleway
 
@@ -414,6 +415,37 @@ module.exports = ({ env }) => ({
   },
 });
 ```
+
+### Tigris
+
+Tigris is globally distributed and serves all buckets from a single endpoint, so `region` is always set to `auto`.
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        // highlight-start
+        s3Options: {
+          credentials: {
+            accessKeyId: env('TIGRIS_ACCESS_KEY_ID'),
+            secretAccessKey: env('TIGRIS_ACCESS_SECRET'),
+          },
+          region: 'auto',
+          endpoint: 'https://t3.storage.dev',
+          params: {
+            Bucket: env('TIGRIS_BUCKET'),
+          },
+        },
+        // highlight-end
+      },
+    },
+  },
+});
+```
+
+Tigris buckets also support <ExternalLink to="https://www.tigrisdata.com/docs/buckets/snapshots-and-forks/" text="snapshots and forks"/> to stage or roll back assets without copying data.
 
 ## Extended provider options
 
