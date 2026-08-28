@@ -122,7 +122,7 @@ module.exports = {
       // Your migration code here
 
       // Example: creating new entries
-      await strapi.entityService.create('api::article.article', {
+      await strapi.documents('api::article.article').create({
         data: {
           title: 'My Article',
         },

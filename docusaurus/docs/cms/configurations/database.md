@@ -69,7 +69,7 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 | `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. <br/> **Available in `v4.6.2`+**           | `String`                  |
 | `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
 | `port`     | Database port                                                                                                                 | `Integer`             |
-| `database` or `filename` | Database name or filename.   <ul><li>For MySQL or PostgreSQL, use the `database` key (with `host`, `port`, etc.).</li><li>For SQLite, only provide `filename`` which points to the database file.</li></ul> | `String`              |
+| `database` or `filename` | Database name or filename.   <ul><li>For MySQL or PostgreSQL, use the `database` key (with `host`, `port`, etc.).</li><li>For SQLite, only provide `filename` which points to the database file.</li></ul> | `String`              |
 | `user`     | Username used to establish the connection                                                                                     | `String`              |
 | `password` | Password used to establish the connection                                                                                     | `String`              |
 | `timezone` | Set the default behavior for local time. Default value: `utc` <ExternalLink to="https://www.php.net/manual/en/timezones.php" text="Timezone options"/> | `String`              |
@@ -471,7 +471,7 @@ module.exports = ({ env }) => {
       connection: {
         connectionString: env('DATABASE_URL'),
         host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 3306),
+        port: env.int('DATABASE_PORT', 5432),
         database: env('DATABASE_NAME', 'strapi'),
         user: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
@@ -519,7 +519,7 @@ module.exports = ({ env }) => {
 ```ts
 import path from 'path';
 
-export default = ({ env }) => {
+export default ({ env }) => {
   const client = env('DATABASE_CLIENT', 'sqlite');
 
   const connections = {
@@ -549,7 +549,7 @@ export default = ({ env }) => {
       connection: {
         connectionString: env('DATABASE_URL'),
         host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 3306),
+        port: env.int('DATABASE_PORT', 5432),
         database: env('DATABASE_NAME', 'strapi'),
         user: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
