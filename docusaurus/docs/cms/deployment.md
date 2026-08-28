@@ -201,7 +201,7 @@ Strapi exposes a lightweight health check route at `/_health` for uptime monitor
 
 If you want to host the administration on another server than the API, [please take a look at this dedicated section](/cms/configurations/admin-panel#deploy-on-different-servers).
 
-## Continuous deployment {#continuous-deployment}
+## Continuous deployment
 
 Strapi does not require a specific continuous integration tool. Any pipeline that can install dependencies, build the admin panel, and run the server works, whether it runs on GitHub Actions, GitLab CI, Jenkins, or your hosting provider's own build system.
 
