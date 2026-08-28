@@ -364,7 +364,7 @@ It is not possible to change the locale of an existing localized entry. When upd
 :::
 
 :::note Draft & Publish
-With [Draft & Publish](/cms/features/draft-and-publish) enabled, a PUT request without a `status` parameter publishes the changes immediately. Pass `?status=draft` to update the draft only (see [REST API: `status`](/cms/api/rest/status#create-update)).
+With [Draft & Publish](/cms/features/draft-and-publish) enabled, a PUT request without a `status` parameter publishes the changes immediately. Pass `?status=draft` to update the draft only (see [REST API: `status`](/cms/api/rest/status#create-update)). This also applies to single types, where `PUT /api/:singularApiId?locale=locale-code` publishes the changes unless you pass `?status=draft`.
 :::
 
 #### In a collection type {#rest-put-collection-type}
