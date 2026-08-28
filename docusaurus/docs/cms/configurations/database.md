@@ -110,8 +110,13 @@ The `settings` object found in `./config/database.js` (or `./config/database.ts`
 
 | Parameter        | Description                                                     | Type      | Default |
 | ---------------- | --------------------------------------------------------------- | --------- | ------- |
-| `forceMigration` | Enable or disable the forced database migration.                | `Boolean` | `true`  |
-| `runMigrations`  | Enable or disable database migrations from running on start up. | `Boolean` | `true`  |
+| `forceMigration` | Allow the schema sync to drop tables, columns, indexes, and foreign keys that are no longer part of the content-types schemas. Set to `false` to skip every destructive operation. | `Boolean` | `true`  |
+| `runMigrations`  | Run the migration files found in `./database/migrations` on start up. Strapi's own internal migrations and the schema sync run regardless of this setting. | `Boolean` | `true`  |
+| `useTypescriptMigrations` | Look for migration files in the build directory instead of the source directory, so that TypeScript migrations are executed. See [handling migrations with TypeScript code](/cms/database-migrations#handling-migrations-with-typescript-code). | `Boolean` | `false` |
+
+:::caution
+Despite its name, `forceMigration` does not control whether migrations run, which is what `runMigrations` does. It controls whether the schema sync is allowed to drop database objects. Setting it to `false` prevents data loss, but the schema sync still records the new schema as the reference, so a table whose deletion was skipped is no longer tracked by Strapi and is not dropped if you later set the parameter back to `true`. See [database migrations](/cms/database-migrations#data-loss).
+:::
 
 ### Configuration examples
 
