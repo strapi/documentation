@@ -25,13 +25,13 @@ Strapi automatically detects migration files and run them once at the next start
 
 Understanding the order of operations helps predict what happens to your data. On every startup, Strapi performs the following steps:
 
-1. **Loads the schema**: content-types and components are converted into database models, then relations are validated.
-2. **Runs pending migrations**: your migration files in `./database/migrations` run first, followed by Strapi's own internal migrations. Each migration runs in its own transaction, and applied migrations are tracked so they never run twice.
-3. **Syncs the database schema**: Strapi compares the content-types schemas with the database and applies the differences, creating tables and columns, then dropping the ones that are no longer part of the schema, then altering the rest.
-4. **Persists the new schema**: the resulting schema is stored in the database and becomes the reference for the next startup.
+1. Strapi loads the schema: content-types and components are converted into database models, then relations are validated.
+2. Strapi runs the pending migrations: your migration files in `/database/migrations` run first, followed by Strapi's own internal migrations. Each migration runs in its own transaction, and applied migrations are tracked so they never run twice.
+3. Strapi syncs the database schema: it compares the content-types schemas with the database, then applies the differences. Tables and columns are created first, then the tables that are no longer part of the schemas are dropped, then the remaining tables are altered.
+4. Strapi persists the new schema: the resulting schema is stored in the database and becomes the reference for the next startup.
 
-:::caution
-Migrations run **before** the schema sync, so an `up()` function still sees the database in its previous state. Write migrations against the old schema, not the one you are migrating to.
+:::note
+Migrations run before the schema sync, so an `up()` function still sees the database in its previous state. Write migrations against the old schema, not the one you are migrating to.
 :::
 
 :::note
