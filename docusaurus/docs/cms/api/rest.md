@@ -12,6 +12,9 @@ tags:
 - singular API ID
 ---
 
+import RestPostPublishes from '/docs/snippets/rest-post-publishes-immediately.md'
+import RestPutPublishes from '/docs/snippets/rest-put-publishes-immediately.md'
+
 # REST API reference
 
 <Tldr>
@@ -311,9 +314,7 @@ If the [Internationalization (i18n) feature](/cms/features/internationalization)
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations) for more details).
 :::
 
-:::note Draft & Publish
-With [Draft & Publish](/cms/features/draft-and-publish) enabled, a POST request without a `status` parameter creates the document and publishes it immediately. Pass `?status=draft` to create it as a draft (see [REST API: `status`](/cms/api/rest/status#create-update)).
-:::
+<RestPostPublishes />
 
 :::info Dynamic zones
 Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynamic-zones) must include `__component` with the target component's UID (for example `shared.media`). Strapi uses that field to pick the component schema when you create or update items in the zone; without it, writes can fail validation or return success without changing data. Use the UID shown in the Content-Type Builder for each component in the zone.
@@ -418,9 +419,7 @@ const data = await response.json();
 * While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/cms/api/rest/relations) for more details).
 :::
 
-:::note Draft & Publish
-With [Draft & Publish](/cms/features/draft-and-publish) enabled, a PUT request without a `status` parameter publishes the changes immediately. Pass `?status=draft` to update the draft only (see [REST API: `status`](/cms/api/rest/status#create-update)). This also applies to single types, where `PUT /api/:singularApiId` publishes the changes unless you pass `?status=draft`.
-:::
+<RestPutPublishes singleTypePath="/api/:singularApiId" />
 
 :::info Dynamic zones
 Each entry you send for a [dynamic zone](/cms/backend-customization/models#dynamic-zones) must include `__component` with the target component's UID (for example `shared.media`). Strapi uses that field to pick the component schema when you create or update items in the zone; without it, writes can fail validation or return success without changing data. Use the UID shown in the Content-Type Builder for each component in the zone.

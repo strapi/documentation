@@ -16,6 +16,8 @@ tags:
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
+import RestPostPublishes from '/docs/snippets/rest-post-publishes-immediately.md'
+import RestPutPublishes from '/docs/snippets/rest-put-publishes-immediately.md'
 
 # REST API: `locale`
 
@@ -239,9 +241,7 @@ To create a localized document from scratch, send a POST request to the Content 
 | Create for the default locale | [`POST /api/content-type-plural-name`](#rest-create-default-locale) |
 | Create for a specific locale  | [`POST /api/content-type-plural-name?locale=fr`](#rest-create-specific-locale)
 
-:::note Draft & Publish
-With [Draft & Publish](/cms/features/draft-and-publish) enabled, a POST request without a `status` parameter creates the localized document and publishes it immediately. Pass `?status=draft` to create it as a draft (see [REST API: `status`](/cms/api/rest/status#create-update)).
-:::
+<RestPostPublishes documentLabel="localized document" />
 
 #### For the default locale {#rest-create-default-locale}
 
@@ -363,9 +363,7 @@ The Content-Type should have the [`createLocalization` permission](/cms/features
 It is not possible to change the locale of an existing localized entry. When updating a localized entry, if you set a `locale` attribute in the request body it will be ignored.
 :::
 
-:::note Draft & Publish
-With [Draft & Publish](/cms/features/draft-and-publish) enabled, a PUT request without a `status` parameter publishes the changes immediately. Pass `?status=draft` to update the draft only (see [REST API: `status`](/cms/api/rest/status#create-update)). This also applies to single types, where `PUT /api/:singularApiId?locale=locale-code` publishes the changes unless you pass `?status=draft`.
-:::
+<RestPutPublishes singleTypePath="/api/:singularApiId?locale=locale-code" />
 
 #### In a collection type {#rest-put-collection-type}
 
