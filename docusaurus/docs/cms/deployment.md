@@ -36,10 +36,12 @@ Another possible workflow is to first create the content structure locally, push
 :::
 
 :::caution
-For self-hosted Kubernetes deployments, we recommend using **npm** rather than **pnpm**. `pnpm` aggressive hoisting of dependencies can break native modules, such as `mysql2`— that your application may rely on. `npm` flatter, more predictable `node_modules` layout helps ensure native packages load correctly.
+For self-hosted Kubernetes deployments, we recommend using **npm** rather than **pnpm**. `pnpm` aggressive hoisting of dependencies can break native modules, such as `mysql2`, that your application may rely on. `npm` flatter, more predictable `node_modules` layout helps ensure native packages load correctly.
 :::
 
 ## General guidelines
+
+This section covers the hardware, software, and configuration requirements for deploying Strapi.
 
 ### Hardware and software requirements
 
@@ -65,7 +67,7 @@ Deploying databases along with Strapi is covered in the [databases guide](/cms/c
 
 ### Application Configuration
 
-<br/>
+Configuring a Strapi application for production takes 2 steps: setting the configuration through environment variables, then building the admin panel and launching the server.
 
 #### 1. Configure
 
@@ -115,12 +117,12 @@ NODE_ENV=production npm run build
 <TabItem value="windows" label="windows">
 
 ```bash
-npm install cross-env
+npm install --save-dev cross-env
 ```
 
 Then in your `package.json` scripts section:
 
-```bash
+```json
 "build:win": "cross-env NODE_ENV=production npm run build",
 ```
 
@@ -156,13 +158,13 @@ NODE_ENV=production npm run start
 <TabItem value="windows" label="windows">
 
 ```bash
-npm install cross-env
+npm install --save-dev cross-env
 ```
 
 Then in your `package.json` scripts section:
 
-```bash
-"start:win": "cross-env NODE_ENV=production npm start",
+```json
+"start:win": "cross-env NODE_ENV=production npm run start",
 ```
 
 And run:
@@ -262,6 +264,8 @@ Content-types created in one environment travel with your code, not with your da
 ## Additional resources
 
 :::prerequisites
+Before following any of the provider guides listed below:
+
 * Your Strapi project is [created](/cms/installation) and its code is hosted on GitHub.
 * You have read the [general deployment guidelines](/cms/deployment#general-guidelines).
 :::
