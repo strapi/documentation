@@ -172,6 +172,9 @@ curl 'http://localhost:1337/api/restaurants/lr5wju2og49bf820kj9kz8c3?locale=fr' 
         ]
       }
     ],
+    "createdAt": "2024-03-06T22:08:59.643Z",
+    "updatedAt": "2024-03-06T22:10:21.127Z",
+    "publishedAt": "2024-03-06T22:10:21.130Z",
     "locale": "fr"
   },
   "meta": {}
