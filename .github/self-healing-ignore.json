@@ -1159,6 +1159,16 @@
       "number": 27471,
       "reason": "Router: Release tag PR with no body content. Release notes generation is handled separately by the workflow (not documentation content changes). No user-facing feature changes that require documentation.",
       "added": "2026-08-27"
+    },
+    {
+      "number": 27456,
+      "reason": "Router: Internal admin UI optimization for Media Library upload progress. Changes how completed assets are merged into the local list view without modifying public APIs or user-facing content schema. This is a performance/UX improvement that does not require user-facing documentation.",
+      "added": "2026-08-28"
+    },
+    {
+      "number": 27158,
+      "reason": "Router: Internal backend bug fix for cross-platform path normalization. Fixes rate limiting route classification and path traversal sanitization on Windows. Does not change public APIs or user-visible behavior; Windows users will simply experience correct behavior they should have had. This is infrastructure/compatibility fix rather than feature documentation.",
+      "added": "2026-08-28"
     }
   ]
 }
