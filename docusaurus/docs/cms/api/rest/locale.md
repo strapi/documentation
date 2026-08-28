@@ -239,6 +239,10 @@ To create a localized document from scratch, send a POST request to the Content 
 | Create for the default locale | [`POST /api/content-type-plural-name`](#rest-create-default-locale) |
 | Create for a specific locale  | [`POST /api/content-type-plural-name?locale=fr`](#rest-create-specific-locale)
 
+:::note Draft & Publish
+With [Draft & Publish](/cms/features/draft-and-publish) enabled, a POST request without a `status` parameter creates the localized document and publishes it immediately. Pass `?status=draft` to create it as a draft (see [REST API: `status`](/cms/api/rest/status#create-update)).
+:::
+
 #### For the default locale {#rest-create-default-locale}
 
 If no locale has been passed in the request body, the document is created using the default locale for the application:
@@ -357,6 +361,10 @@ The Content-Type should have the [`createLocalization` permission](/cms/features
 
 :::note
 It is not possible to change the locale of an existing localized entry. When updating a localized entry, if you set a `locale` attribute in the request body it will be ignored.
+:::
+
+:::note Draft & Publish
+With [Draft & Publish](/cms/features/draft-and-publish) enabled, a PUT request without a `status` parameter publishes the changes immediately. Pass `?status=draft` to update the draft only (see [REST API: `status`](/cms/api/rest/status#create-update)).
 :::
 
 #### In a collection type {#rest-put-collection-type}
