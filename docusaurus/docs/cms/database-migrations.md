@@ -6,10 +6,10 @@ description: Strapi database migrations are ways to modify the database
 # Database migrations
 
 <Tldr>
-Database migrations run one-time scripts before the schema sync to preserve data during upgrades. Migration files export an `up()` function and run once, in alphabetical order. During the schema sync that follows, Strapi drops the tables and columns it previously managed that are no longer in the content-types schemas.
+Database migrations run one-time scripts before the schema sync to preserve data during upgrades. Migration files export an `up()` function and run once, in alphabetical order. During the schema sync that follows, Strapi drops the tables, columns, indexes, and foreign keys it previously managed that are no longer in the content-types schemas.
 </Tldr>
 
-Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi application. These migrations are run automatically when the application starts and are executed before the automated schema migrations that Strapi also performs on boot.
+Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi application. These migrations are run automatically when the application starts and are executed before the automated schema sync that Strapi also performs on boot.
 
 :::callout 🚧  Experimental feature
 Database migrations are experimental. This feature is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on <ExternalLink to="https://github.com/strapi/strapi/discussions" text="GitHub Discussions"/> or on the community <ExternalLink to="https://discord.strapi.io" text="Discord"/>.
@@ -40,7 +40,7 @@ Steps 2 and 3 are skipped entirely when there is no pending migration and the sc
 
 ### Data loss during the schema sync {#data-loss}
 
-During the schema sync, Strapi drops the tables and columns that it previously managed and that no longer match the content-types schemas. This happens automatically, without any warning or confirmation prompt, and identically in development and in production. Deleting a content-type from your code therefore deletes its table, and its data, on the next startup.
+During the schema sync, Strapi drops the tables, columns, indexes, and foreign keys that it previously managed and that no longer match the content-types schemas. This happens automatically, without any warning or confirmation prompt, and identically in development and in production. Deleting a content-type from your code therefore deletes its table, and its data, on the next startup.
 
 Tables that Strapi has never managed, such as tables you created yourself directly in the database, are left untouched.
 
@@ -51,7 +51,7 @@ Strapi does not support down migrations. If you need to revert a migration, you 
 :::
 
 :::tip
-The `forceMigration` and `runMigrations` [database configuration parameters](/cms/configurations/database#settings-configuration-object) fine-tune this behavior. Setting `forceMigration` to `false` skips all destructive operations, which is useful to inspect what would be dropped before letting Strapi apply it.
+The `forceMigration` [database configuration parameter](/cms/configurations/database#settings-configuration-object) controls this behavior. Setting it to `false` skips every drop operation. The new schema is still recorded as the reference, so an object whose deletion was skipped stops being tracked by Strapi and is not dropped if you later set the parameter back to `true`. The `runMigrations` parameter only controls whether your own files in `/database/migrations` run, and has no effect on the schema sync.
 :::
 
 Migration files should export the function `up()`, which is used when upgrading (e.g. adding a new table `my_new_table`).

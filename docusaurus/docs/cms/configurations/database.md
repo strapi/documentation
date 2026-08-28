@@ -110,8 +110,8 @@ The `settings` object found in `./config/database.js` (or `./config/database.ts`
 
 | Parameter        | Description                                                     | Type      | Default |
 | ---------------- | --------------------------------------------------------------- | --------- | ------- |
-| `forceMigration` | Allow the schema sync to drop tables, columns, indexes, and foreign keys that are no longer part of the content-types schemas. Set to `false` to skip every destructive operation. | `Boolean` | `true`  |
-| `runMigrations`  | Run the migration files found in `./database/migrations` on start up. Strapi's own internal migrations and the schema sync run regardless of this setting. | `Boolean` | `true`  |
+| `forceMigration` | Allow the schema sync to drop tables, columns, indexes, and foreign keys that are no longer part of the content-types schemas. Set to `false` to skip every drop operation. | `Boolean` | `true`  |
+| `runMigrations`  | Run the migration files found in `/database/migrations` on startup. Strapi's own internal migrations and the schema sync run regardless of this setting. | `Boolean` | `true`  |
 | `useTypescriptMigrations` | Look for migration files in the build directory instead of the source directory, so that TypeScript migrations are executed. See [handling migrations with TypeScript code](/cms/database-migrations#handling-migrations-with-typescript-code). | `Boolean` | `false` |
 
 :::caution
