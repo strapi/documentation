@@ -39,6 +39,18 @@ permissions:
 
 env:
   ELIGIBLE_LABEL: 'automerge: eligible'
+  # The maintainer's override. The mechanical checks judge form, and form is a
+  # proxy: a change can violate a criterion and still be right. When that
+  # happens, this label records that a human read the PR and vouched for it.
+  #
+  # It is the positive counterpart of `flag: don't merge`, and it is deliberately
+  # a label rather than a relaxed criterion — the decision stays visible on the
+  # PR, attributable, and reversible by removing it.
+  #
+  # It overrides FORM ONLY. The quarantine, the required checks and the absence
+  # period still apply, and `flag: don't merge` / `flag: merge pending release`
+  # still block the merge through block-labeled-prs.yml.
+  APPROVED_LABEL: 'automerge: approved by piwi'
   SCOPE_LABEL: auto-doc-healing
   QUIET_PERIOD_MINUTES: 5
 
@@ -66,7 +78,32 @@ jobs:
             exit 0
           fi
 
+          # A maintainer-approved PR is not re-judged. Without this, adding the
+          # approval label triggers this workflow through the `labeled` event,
+          # the checks fail again on the very criterion being overridden, and the
+          # "Update the eligibility label" step removes `automerge: eligible` —
+          # silently undoing the decision minutes after it was made.
+          if echo "$LABELS" | grep -Fxq "$APPROVED_LABEL"; then
+            echo "PR #$PR carries '$APPROVED_LABEL' — form checks skipped"
+            echo "in_scope=false" >> "$GITHUB_OUTPUT"
+            echo "approved=true" >> "$GITHUB_OUTPUT"
+            {
+              echo "## Auto-merge eligibility — #$PR"
+              echo ""
+              echo "**Approved by the maintainer — mechanical checks skipped.**"
+              echo ""
+              echo "This PR carries \`$APPROVED_LABEL\`, so its form is not judged:"
+              echo "a human read it and vouched for it."
+              echo ""
+              echo "The quarantine, the required CI checks and the absence period"
+              echo "still apply. To stop the merge, remove that label or add"
+              echo "\`flag: don't merge\`."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
           echo "in_scope=true" >> "$GITHUB_OUTPUT"
+          echo "approved=false" >> "$GITHUB_OUTPUT"
 
       # Wait for the PR to stop moving. Combined with cancel-in-progress, a push
       # during this window kills the run and restarts the clock, so the checks
@@ -198,6 +235,12 @@ jobs:
               [ -n "$UNKNOWN" ] && echo "- Could not be evaluated: \`${UNKNOWN%, }\` (treated as blocking)"
               echo ""
               echo "The \`$ELIGIBLE_LABEL\` label is not applied, or is removed if it was there."
+              echo ""
+              echo "These criteria judge form, not content. If you have read this PR"
+              echo "and it is fine as it stands, add \`$APPROVED_LABEL\`: the checks"
+              echo "are then skipped and the cron merges it after the usual"
+              echo "quarantine. Adding \`$ELIGIBLE_LABEL\` by hand does not work —"
+              echo "this workflow re-runs and removes it."
             } >> "$GITHUB_STEP_SUMMARY"
           else
             echo "eligible=true" >> "$GITHUB_OUTPUT"

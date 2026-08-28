@@ -24,6 +24,11 @@ permissions:
 
 env:
   ELIGIBLE_LABEL: 'automerge: eligible'
+  # Set by hand when the maintainer has read a PR and vouched for it despite a
+  # mechanical criterion being violated. It replaces the form verdict, nothing
+  # else: everything below this line still applies.
+  # See automerge-eligibility.yml for the rationale.
+  APPROVED_LABEL: 'automerge: approved by piwi'
   QUARANTINE_HOURS: 24
   # Checks that must be green. Deliberately an allow-list, not "everything":
   # `license/cla` is permanently pending on pipeline PRs because the CLA bot does
@@ -101,12 +106,27 @@ jobs:
         run: |
           set -uo pipefail
 
+          # Two ways in: the gate said the form is safe, or the maintainer said
+          # the content is. Passing both labels to a single `gh pr list` would
+          # AND them and match neither, so they are queried separately and the
+          # results merged on PR number.
           gh pr list --repo "$GITHUB_REPOSITORY" \
             --state open --label "$ELIGIBLE_LABEL" --limit 100 \
-            --json number,title,url,createdAt,isDraft > /tmp/eligible.json
+            --json number,title,url,createdAt,isDraft > /tmp/by-label.json
 
+          gh pr list --repo "$GITHUB_REPOSITORY" \
+            --state open --label "$APPROVED_LABEL" --limit 100 \
+            --json number,title,url,createdAt,isDraft > /tmp/by-approval.json
+
+          jq -s 'add | unique_by(.number)' /tmp/by-label.json /tmp/by-approval.json \
+            > /tmp/eligible.json
+
+          BY_LABEL=$(jq 'length' /tmp/by-label.json)
+          BY_APPROVAL=$(jq 'length' /tmp/by-approval.json)
           TOTAL=$(jq 'length' /tmp/eligible.json)
-          echo "PRs labelled '$ELIGIBLE_LABEL': $TOTAL"
+          echo "PRs labelled '$ELIGIBLE_LABEL': $BY_LABEL"
+          echo "PRs labelled '$APPROVED_LABEL': $BY_APPROVAL"
+          echo "Merge candidates after deduplication: $TOTAL"
 
           if [ "$SUSPENDED" = "true" ]; then
             echo "Auto-merge suspended: $SUSPEND_REASON"
@@ -144,6 +164,13 @@ jobs:
             SHORT=$(printf '%s' "$TITLE" | cut -c1-70)
             [ "${#TITLE}" -gt 70 ] && SHORT="${SHORT}…"
             LINK="<${URL}|#${PR} — ${SHORT}>"
+
+            # A PR merged on the maintainer's word rather than on the checks is
+            # marked as such, so the recap never presents an override as a clean
+            # pass through the gate.
+            if jq -e --argjson n "$PR" 'any(.[]; .number == $n)' /tmp/by-approval.json > /dev/null; then
+              LINK="${LINK} _(approved by piwi)_"
+            fi
 
             # Quarantine. It buys back the two collision cases the gate cannot
             # see at open time: a duplicate opened seconds later, a PR superseded
