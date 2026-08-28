@@ -546,6 +546,73 @@ jobs:
           echo "micro_prs=$MICRO_PRS" >> $GITHUB_OUTPUT
           echo "Micro doc PRs created by the Router: $MICRO_PRS"
 
+          # ── The dead zone ──
+          #
+          # A PR marked `micro` is handled by the Router itself; a PR marked
+          # `full` is handed to Sonnet. Nothing checks that the Router actually
+          # did the work it claimed, so a PR can fall between the two stages and
+          # the run still ends green and silent.
+          #
+          # Observed on 2026-06-20 (run 27857268241): Haiku stamped `micro` on two
+          # PRs whose targets were `update_section` — which its own prompt defines
+          # as `full` — and then did not execute them, because its prose reasoning
+          # had correctly concluded they were Sonnet's job. FULL=0 gated Sonnet
+          # out, so neither stage acted and both PRs were lost without a trace.
+          #
+          # Detected here rather than prevented: the Router keeps deciding, but a
+          # decision it did not honour is now reported instead of swallowed.
+
+          # 1. Claimed micro, no PR produced.
+          DROPPED=$(jq -r '[.prs[] | select(.decision == "has_targets" and .complexity == "micro" and (.doc_pr // "") == "")] | length' "$RESULTS_FILE")
+
+          # 2. Claimed micro, but the targets contain an action the prompt
+          #    reserves for Sonnet. This is the misclassification itself, caught
+          #    even when the PR was never dropped.
+          MISCLASSIFIED=$(jq -r '[.prs[]
+            | select(.decision == "has_targets" and .complexity == "micro")
+            | select((.targets_yaml // "") | test("action:[[:space:]]*(create_page|update_section|add_section|create_category)"))
+          ] | length' "$RESULTS_FILE")
+
+          echo "dead_zone_dropped=$DROPPED" >> $GITHUB_OUTPUT
+          echo "dead_zone_misclassified=$MISCLASSIFIED" >> $GITHUB_OUTPUT
+
+          if [ "$DROPPED" -gt 0 ] || [ "$MISCLASSIFIED" -gt 0 ]; then
+            echo "::warning::Router dead zone — $DROPPED micro target(s) produced no PR, $MISCLASSIFIED classified micro despite a full-only action"
+
+            {
+              echo "### ⚠️ Router dead zone"
+              echo ""
+              echo "A PR classified \`micro\` is the Router's own job, and one"
+              echo "classified \`full\` goes to Sonnet. The PRs below were claimed"
+              echo "but not delivered, so no stage handled them."
+              echo ""
+            } >> $GITHUB_STEP_SUMMARY
+
+            if [ "$DROPPED" -gt 0 ]; then
+              echo "**Claimed \`micro\`, no doc PR produced ($DROPPED):**" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              jq -r '.prs[] | select(.decision == "has_targets" and .complexity == "micro" and (.doc_pr // "") == "")
+                | "- [strapi/strapi#\(.number) — \(.title)](https://github.com/strapi/strapi/pull/\(.number))"' \
+                "$RESULTS_FILE" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+            fi
+
+            if [ "$MISCLASSIFIED" -gt 0 ]; then
+              echo "**Classified \`micro\` despite a full-only action ($MISCLASSIFIED):**" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              jq -r '.prs[]
+                | select(.decision == "has_targets" and .complexity == "micro")
+                | select((.targets_yaml // "") | test("action:[[:space:]]*(create_page|update_section|add_section|create_category)"))
+                | "- [strapi/strapi#\(.number) — \(.title)](https://github.com/strapi/strapi/pull/\(.number)) — actions: " +
+                  ([(.targets_yaml // "") | scan("action:[[:space:]]*([a-z_]+)") | .[0]] | unique | join(", "))' \
+                "$RESULTS_FILE" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+            fi
+
+            echo "These PRs are **not** added to the ignore list, so a later run can still pick them up — but only while they remain inside the 24-hour window." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
           # Pass router results to Sonnet (only full-complexity PRs)
           {
             echo "router_results<<ROUTER_EOF"
@@ -755,6 +822,29 @@ jobs:
           TOTAL_PRS=$((MICRO_COUNT + SONNET_COUNT))
           PR_LIST=$(printf '%s\n%s' "$MICRO_LIST" "$SONNET_LIST" | grep -v '^$' || true)
 
+          # The dead zone: targets the Router claimed and did not deliver. It is
+          # appended to whichever message the run produces, because it can happen
+          # on a run that otherwise looks perfectly normal — including a run that
+          # created other PRs. Left unreported it is invisible: green run, no
+          # error, no PR. See the comment in "Check Router results".
+          DROPPED="${{ steps.check-router.outputs.dead_zone_dropped }}"
+          MISCLASSIFIED="${{ steps.check-router.outputs.dead_zone_misclassified }}"
+          DROPPED="${DROPPED:-0}"
+          MISCLASSIFIED="${MISCLASSIFIED:-0}"
+
+          DEAD_ZONE=""
+          if [ "$DROPPED" -gt 0 ] || [ "$MISCLASSIFIED" -gt 0 ]; then
+            DEAD_ZONE_LIST=$(jq -r '.prs[]
+              | select(.decision == "has_targets" and .complexity == "micro")
+              | select((.doc_pr // "") == "" or ((.targets_yaml // "") | test("action:[[:space:]]*(create_page|update_section|add_section|create_category)")))
+              | "• <https://github.com/strapi/strapi/pull/\(.number)|strapi/strapi#\(.number) — \(.title)>"' \
+              "$ROUTER_FILE" 2>/dev/null || true)
+
+            if [ -n "$DEAD_ZONE_LIST" ]; then
+              DEAD_ZONE="\n\n:pepe_alarm: *Router dead zone — claimed but not delivered:*\n${DEAD_ZONE_LIST}\nNeither Haiku nor Sonnet handled these. They stay out of the ignore list, so a rerun within 24h can still catch them."
+            fi
+          fi
+
           # Build the main message (short summary)
           if [ "$JOB_STATUS" == "failure" ]; then
             MAIN=":pepe_alarm: *Docs Self-Healing FAILED* ($DATE)\nOne or more steps failed. Check the run for details.\n<${RUN_URL}|View run>"
@@ -771,7 +861,14 @@ jobs:
           elif [ "${{ steps.check-triage.outputs.has_candidates }}" != "true" ]; then
             MAIN=":white_check_mark: *Docs Self-Healing* ($DATE)\nTriage (Haiku) eliminated all PRs. Router and Sonnet were not invoked.\n<${RUN_URL}|View run>"
           elif [ "${{ steps.check-router.outputs.has_targets }}" != "true" ]; then
-            MAIN=":frog_shrug: *Docs Self-Healing* ($DATE)\nRouter (Haiku) found no documentation targets. Sonnet was not invoked.\n<${RUN_URL}|View run>"
+            # A dropped target is not "found nothing" — the Router found targets
+            # and failed to act on them. Saying otherwise is how 2026-06-20 went
+            # unnoticed.
+            if [ "$DROPPED" -gt 0 ] || [ "$MISCLASSIFIED" -gt 0 ]; then
+              MAIN=":pepe_alarm: *Docs Self-Healing* ($DATE)\nRouter (Haiku) found targets but produced no doc PR.\n<${RUN_URL}|View run>"
+            else
+              MAIN=":frog_shrug: *Docs Self-Healing* ($DATE)\nRouter (Haiku) found no documentation targets. Sonnet was not invoked.\n<${RUN_URL}|View run>"
+            fi
           elif [ -f "$SUMMARY_FILE" ]; then
             MAIN=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but created no PRs.\n<${RUN_URL}|View run>"
 
@@ -782,6 +879,10 @@ jobs:
           else
             MAIN=":warning: *Docs Self-Healing* ($DATE)\nSonnet ran but no summary file was produced.\n<${RUN_URL}|View run>"
           fi
+
+          # Appended after the branches so every outcome carries it, including a
+          # run that created PRs and dropped a target in the same pass.
+          MAIN="${MAIN}${DEAD_ZONE}"
 
           # Post message to Slack
           MAIN_FORMATTED=$(printf "$MAIN")
