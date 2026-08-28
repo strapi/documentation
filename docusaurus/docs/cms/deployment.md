@@ -18,7 +18,7 @@ import SupportedDatabases from '/docs/snippets/supported-databases.md'
 # Deployment
 
 <Tldr>
-Deployment options cover hardware/software prerequisites, environment variable setup, and building the admin panel before launch. In the documentation: links to provider‑specific and advanced guides to help pick the right hosting strategy.
+Deployment options cover hardware/software prerequisites, environment variable setup, and building the admin panel before launch, plus the principles a continuous deployment pipeline should respect. In the documentation: links to provider‑specific and advanced guides to help pick the right hosting strategy.
 </Tldr>
 
 Strapi provides many deployment options for your project or application. Your Strapi applications can be deployed on traditional hosting servers or your preferred hosting provider.
@@ -203,21 +203,9 @@ If you want to host the administration on another server than the API, [please t
 
 ## Continuous deployment
 
-Strapi does not require a specific continuous integration tool. Any pipeline that can install dependencies, build the admin panel, and run the server works, whether it runs on GitHub Actions, GitLab CI, Jenkins, or your hosting provider's own build system.
+The build and start commands described above are the steps a deployment pipeline automates. Strapi does not require a specific continuous integration tool. Any pipeline that can install dependencies, build the admin panel, and run the server works. This includes GitHub Actions, GitLab CI, Jenkins, and your hosting provider's own build system.
 
-Whichever tool you use, a pipeline deploying Strapi should respect the following principles:
-
-- **Build the admin panel in the pipeline**, with `NODE_ENV` set to `production`. The admin panel is a static bundle that must be rebuilt whenever the code or the admin configuration changes.
-- **Inject secrets from the CI tool**, never from a committed `.env` file. At minimum, `APP_KEYS`, `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `TRANSFER_TOKEN_SALT`, and the database credentials must be available to the build and to the running server (see [environment configuration](/cms/configurations/environment)).
-- **Use the same secrets across deployments** of a given environment. Regenerating `APP_KEYS` or `ADMIN_JWT_SECRET` between two deployments invalidates existing sessions and API tokens.
-- **Keep environments isolated**: a staging pipeline should never point at the production database.
-- **Account for the schema sync**: starting Strapi with a modified content-types schema alters the database, and removing a content-type drops its table. Review the changes a deployment introduces before it reaches production (see [database migrations](/cms/database-migrations)).
-
-:::caution
-Content created through the Content-Type Builder in one environment is not transferred to another by the pipeline. The Content-Type Builder is disabled in production, so schema changes must come from the deployed code. To move data between environments, use the [Data Management](/cms/features/data-management) feature.
-:::
-
-The following example builds a Strapi project on every push to the `main` branch. It stops at the build step, as the deployment step depends entirely on your hosting provider:
+The following example builds a Strapi project on every push to the `main` branch. It stops at the build step, as the deployment step depends on your hosting provider:
 
 ```yaml title=".github/workflows/deploy.yml"
 name: Deploy
@@ -239,17 +227,33 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
+      # NODE_ENV is set on the build step only: setting it at the job level
+      # would skip devDependencies during yarn install
       - run: yarn build
         env:
           NODE_ENV: production
           APP_KEYS: ${{ secrets.APP_KEYS }}
           API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
           ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
           TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
+          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
 
       # Add your provider's deployment step here, for instance uploading the
       # build output, pushing a Docker image, or triggering a remote deploy.
 ```
+
+The example above follows the principles any Strapi pipeline should respect, whichever tool you use:
+
+- Build the admin panel in the pipeline, with `NODE_ENV` set to `production`. The admin panel is a static bundle that must be rebuilt whenever the code or the admin configuration changes.
+- Inject secrets from the CI tool, never from a committed `.env` file. At minimum, `APP_KEYS`, `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `JWT_SECRET`, `TRANSFER_TOKEN_SALT`, `ENCRYPTION_KEY`, and the database credentials must be available to the build and to the running server (see [environment configuration](/cms/configurations/environment)).
+- Use the same secrets across deployments of a given environment. Regenerating `APP_KEYS`, `ADMIN_JWT_SECRET`, or `JWT_SECRET` between 2 deployments invalidates existing sessions and API tokens.
+- Keep environments isolated: a staging pipeline should never point at the production database.
+- Account for the schema sync: starting Strapi with a modified content-types schema alters the database, and removing a content-type drops its table. Review the changes a deployment introduces before it reaches production (see [database migrations](/cms/database-migrations)).
+
+:::caution
+Content-types created in one environment travel with your code, not with your data. Content-types cannot be created or updated in production (see [FAQ](/cms/faq#why-cant-i-create-or-update-content-types-in-productionstaging)), so schema changes must come from the deployed code. To move content between environments, use the [Data Management](/cms/features/data-management/transfer) feature.
+:::
 
 :::tip
 [Strapi Cloud](/cloud/intro) handles this pipeline for you: it [builds and deploys](/cloud/getting-started/deployment) on every push to the tracked branch, so no workflow file is needed.
