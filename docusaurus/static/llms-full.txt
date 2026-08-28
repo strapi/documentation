@@ -30122,7 +30122,7 @@ Source: https://docs.strapi.io/cms/deployment
 
 # Deployment
 
-Deployment options cover hardware/software prerequisites, environment variable setup, and building the admin panel before launch. In the documentation: links to provider‑specific and advanced guides to help pick the right hosting strategy.
+Deployment options cover hardware/software prerequisites, environment variable setup, and building the admin panel before launch, plus the principles a continuous deployment pipeline should respect. In the documentation: links to provider‑specific and advanced guides to help pick the right hosting strategy.
 
 Strapi provides many deployment options for your project or application. Your Strapi applications can be deployed on traditional hosting servers or your preferred hosting provider.
 
@@ -30139,10 +30139,12 @@ Another possible workflow is to first create the content structure locally, push
 :::
 
 :::caution
-For self-hosted Kubernetes deployments, we recommend using **npm** rather than **pnpm**. `pnpm` aggressive hoisting of dependencies can break native modules, such as `mysql2`— that your application may rely on. `npm` flatter, more predictable `node_modules` layout helps ensure native packages load correctly.
+For self-hosted Kubernetes deployments, we recommend using **npm** rather than **pnpm**. `pnpm` aggressive hoisting of dependencies can break native modules, such as `mysql2`, that your application may rely on. `npm` flatter, more predictable `node_modules` layout helps ensure native packages load correctly.
 :::
 
 ## General guidelines
+
+This section covers the hardware, software, and configuration requirements for deploying Strapi.
 
 ### Hardware and software requirements
 
@@ -30194,7 +30196,7 @@ Deploying databases along with Strapi is covered in the [databases guide](/cms/c
 
 ### Application Configuration
 
-<br/>
+Configuring a Strapi application for production takes 2 steps: setting the configuration through environment variables, then building the admin panel and launching the server.
 
 #### 1. Configure
 
@@ -30232,12 +30234,12 @@ NODE_ENV=production npm run build
 ```
 
 ```bash
-npm install cross-env
+npm install --save-dev cross-env
 ```
 
 Then in your `package.json` scripts section:
 
-```bash
+```json
 "build:win": "cross-env NODE_ENV=production npm run build",
 ```
 
@@ -30258,13 +30260,13 @@ NODE_ENV=production npm run start
 ```
 
 ```bash
-npm install cross-env
+npm install --save-dev cross-env
 ```
 
 Then in your `package.json` scripts section:
 
-```bash
-"start:win": "cross-env NODE_ENV=production npm start",
+```json
+"start:win": "cross-env NODE_ENV=production npm run start",
 ```
 
 And run:
@@ -30299,9 +30301,69 @@ Strapi exposes a lightweight health check route at `/_health` for uptime monitor
 
 If you want to host the administration on another server than the API, [please take a look at this dedicated section](/cms/configurations/admin-panel#deploy-on-different-servers).
 
+## Continuous deployment
+
+The build and start commands described above are the steps a deployment pipeline automates. Strapi does not require a specific continuous integration tool. Any pipeline that can install dependencies, build the admin panel, and run the server works. This includes GitHub Actions, GitLab CI, Jenkins, and your hosting provider's own build system.
+
+The following example builds a Strapi project on every push to the `main` branch. It stops at the build step, as the deployment step depends on your hosting provider:
+
+```yaml title=".github/workflows/deploy.yml"
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+
+      # NODE_ENV is set on the build step only: setting it at the job level
+      # would skip devDependencies during yarn install
+      - run: yarn build
+        env:
+          NODE_ENV: production
+          APP_KEYS: ${{ secrets.APP_KEYS }}
+          API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
+          ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
+          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+
+      # Add your provider's deployment step here, for instance uploading the
+      # build output, pushing a Docker image, or triggering a remote deploy.
+```
+
+The example above follows the principles any Strapi pipeline should respect, whichever tool you use:
+
+- Build the admin panel in the pipeline, with `NODE_ENV` set to `production`. The admin panel is a static bundle that must be rebuilt whenever the code or the admin configuration changes.
+- Inject secrets from the CI tool, never from a committed `.env` file. At minimum, `APP_KEYS`, `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `JWT_SECRET`, `TRANSFER_TOKEN_SALT`, `ENCRYPTION_KEY`, and the database credentials must be available to the build and to the running server (see [environment configuration](/cms/configurations/environment)).
+- Use the same secrets across deployments of a given environment. Regenerating `APP_KEYS`, `ADMIN_JWT_SECRET`, or `JWT_SECRET` between 2 deployments invalidates existing sessions and API tokens.
+- Keep environments isolated: a staging pipeline should never point at the production database.
+- Account for the schema sync: starting Strapi with a modified content-types schema alters the database, and removing a content-type drops its table. Review the changes a deployment introduces before it reaches production (see [database migrations](/cms/database-migrations)).
+
+:::caution
+Content-types created in one environment travel with your code, not with your data. Content-types cannot be created or updated in production (see [FAQ](/cms/faq#why-cant-i-create-or-update-content-types-in-productionstaging)), so schema changes must come from the deployed code. To move content between environments, use the [Data Management](/cms/features/data-management/transfer) feature.
+:::
+
+:::tip
+[Strapi Cloud](/cloud/intro) handles this pipeline for you: it [builds and deploys](/cloud/getting-started/deployment) on every push to the tracked branch, so no workflow file is needed.
+:::
+
 ## Additional resources
 
 :::prerequisites
+Before following any of the provider guides listed below:
+
 * Your Strapi project is [created](/cms/installation) and its code is hosted on GitHub.
 * You have read the [general deployment guidelines](/cms/deployment#general-guidelines).
 :::
@@ -54347,7 +54409,7 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install modules
         run: npm ci
       - name: Run Tests

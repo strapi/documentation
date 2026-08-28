@@ -23502,14 +23502,14 @@ Language: Bash
 File path: N/A
 
 ```bash
-npm install cross-env
+npm install --save-dev cross-env
 ```
 
 ---
-Language: Bash
+Language: JSON
 File path: N/A
 
-```bash
+```json
 "build:win": "cross-env NODE_ENV=production npm run build",
 ```
 
@@ -23541,15 +23541,15 @@ Language: Bash
 File path: N/A
 
 ```bash
-npm install cross-env
+npm install --save-dev cross-env
 ```
 
 ---
-Language: Bash
+Language: JSON
 File path: N/A
 
-```bash
-"start:win": "cross-env NODE_ENV=production npm start",
+```json
+"start:win": "cross-env NODE_ENV=production npm run start",
 ```
 
 ---
@@ -23567,6 +23567,50 @@ File path: ./server.js
 
 const strapi = require('@strapi/strapi');
 strapi.createStrapi(/* {...} */).start();
+```
+
+
+## Continuous deployment
+Description: The following example builds a Strapi project on every push to the main branch.
+(Source: https://docs.strapi.io/cms/deployment#continuous-deployment)
+
+Language: YAML
+File path: .github/workflows/deploy.yml
+
+```yaml
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+
+      # NODE_ENV is set on the build step only: setting it at the job level
+      # would skip devDependencies during yarn install
+      - run: yarn build
+        env:
+          NODE_ENV: production
+          APP_KEYS: ${{ secrets.APP_KEYS }}
+          API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
+          ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
+          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+
+      # Add your provider's deployment step here, for instance uploading the
+      # build output, pushing a Docker image, or triggering a remote deploy.
 ```
 
 
@@ -40057,7 +40101,7 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install modules
         run: npm ci
       - name: Run Tests
