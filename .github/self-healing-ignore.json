@@ -1169,6 +1169,11 @@
       "number": 27158,
       "reason": "Router: Internal backend bug fix for cross-platform path normalization. Fixes rate limiting route classification and path traversal sanitization on Windows. Does not change public APIs or user-visible behavior; Windows users will simply experience correct behavior they should have had. This is infrastructure/compatibility fix rather than feature documentation.",
       "added": "2026-08-28"
+    },
+    {
+      "number": 27463,
+      "reason": "Router: Internal admin UI enhancement to Media Library upload progress display. Changes internal store logic and component rendering to show indeterminate progress for URL uploads instead of frozen 0%. No new public API, configuration, or user-facing features exposed. UX improvement only — no new capabilities or breaking changes that warrant user documentation updates.",
+      "added": "2026-08-29"
     }
   ]
 }
