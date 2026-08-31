@@ -31514,6 +31514,29 @@ File path: /github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resourc
 
 
 
+# The watch-admin mode is enabled by default
+Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/watch-admin-enabled-by-default
+
+## Breaking change description
+Description: Watch-admin mode is disabled by default.
+(Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/watch-admin-enabled-by-default#breaking-change-description)
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi develop --watch-admin
+```
+
+Language: Bash
+File path: N/A
+
+```bash
+strapi develop --no-watch-admin
+```
+
+
+
 # Upgrading to Strapi 5 - Introduction and FAQ
 Source: https://docs.strapi.io/cms/migration/v4-to-v5/introduction-and-faq
 

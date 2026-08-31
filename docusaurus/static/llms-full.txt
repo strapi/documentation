@@ -40597,6 +40597,7 @@ You can click on the description of any breaking change in the following tables 
 | [The Admin Panel RBAC redux store has been updated](/cms/migration/v4-to-v5/breaking-changes/admin-panel-rbac-store-updated) | Yes | No |
 | [The `getWhere` method for permission provider instances has been removed](/cms/migration/v4-to-v5/breaking-changes/get-where-removed) | Yes | No |
 | [The Design System has been upgraded](/cms/migration/v4-to-v5/breaking-changes/design-system) | Yes | No |
+| [The watch-admin mode is enabled by default](/cms/migration/v4-to-v5/breaking-changes/watch-admin-enabled-by-default) | No | No |
 
 ## Content API
 
@@ -43913,6 +43914,67 @@ Users with custom webpack configurations need to convert to [Vite](https://vitej
 
 
 
+# The watch-admin mode is enabled by default
+Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/watch-admin-enabled-by-default
+
+# The watch-admin mode is enabled by default
+
+In Strapi 5, `strapi develop` starts in watch-admin mode by default, so the admin panel hot reloads without any additional flag. Use `--no-watch-admin` to disable it.
+
+Watch-admin mode reloads the admin panel automatically while you edit its source files. In Strapi v4 you had to ask for this behavior explicitly, while in Strapi 5 you get it by default and opt out instead.
+
+This page is part of the [breaking changes database](/cms/migration/v4-to-v5/breaking-changes) and provides information about the breaking change and additional instructions to migrate from Strapi v4 to Strapi 5.
+
+- Is this breaking change affecting plugins? No
+- Is this breaking change automatically handled by a codemod? No
+
+## Breaking change description
+
+**In Strapi v4**
+
+Watch-admin mode is disabled by default. You start it with the `--watch-admin` flag:
+
+```bash
+strapi develop --watch-admin
+```
+
+A separate `strapi watch-admin` command is also available.
+
+**In Strapi 5**
+
+Watch-admin mode is enabled by default, so `strapi develop` alone hot reloads the admin panel. The `--no-watch-admin` flag disables it:
+
+```bash
+strapi develop --no-watch-admin
+```
+
+The standalone `strapi watch-admin` command is removed.
+
+## Migration
+
+This section regroups useful notes and procedures about the introduced breaking change.
+
+### Notes
+
+Passing `--watch-admin` in Strapi 5 is not an error, since the flag still exists and already defaults to `true`. Scripts that use it keep working, but the flag is redundant.
+
+If watch-admin mode is disabled, you can also use `--no-build-admin` to prevent the admin panel from being built.
+
+### Manual migration
+
+To migrate to Strapi 5:
+
+1. Search your `package.json` scripts, Dockerfiles, and CI configuration files for `--watch-admin` and `strapi watch-admin`.
+2. Replace any `strapi watch-admin` command with `strapi develop`.
+3. Remove the now-redundant `--watch-admin` flags, or keep them if you prefer being explicit.
+4. Add `--no-watch-admin` to the commands that must *not* hot reload the admin panel, such as scripts that previously relied on watch-admin mode being off by default.
+
+:::note
+See the [CLI reference](/cms/cli#strapi-develop) for the full list of options accepted by the `strapi develop` command.
+:::
+
+
+
 # Webpack Aliases are removed
 Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/webpack-aliases-removed
 
@@ -44202,6 +44264,7 @@ For each of them, read the indicated breaking change entry and check if some man
     2. Custom configuration must meet specific requirements 👉 see [breaking change](/cms/migration/v4-to-v5/breaking-changes/strict-requirements-config-files)
 3. **Admin panel customization**:
     * The helper-plugin has been removed 👉 see [migration reference](/cms/migration/v4-to-v5/additional-resources/helper-plugin)
+    * The watch-admin mode is enabled by default 👉 see [breaking change](/cms/migration/v4-to-v5/breaking-changes/watch-admin-enabled-by-default)
 
 👉 Finally, go over the rest of the [breaking changes database](/cms/migration/v4-to-v5/breaking-changes) for any edge case you might be concerned about.
 
