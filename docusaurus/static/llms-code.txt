@@ -20803,7 +20803,7 @@ module.exports = [
 
 
 ## Scaleway
-Description: | Wasabi | Not needed | Supported | - | | Scaleway | Not needed | Supported | Returns correct virtual-hosted URLs | | Vultr | Not needed | Supported | - | | Backblaze B2 | Not needed | Supported | Returns correct virtual-hosted URLs | | Cloudflare R2 | Not needed | Not supported | Omit ACL from parameters |
+Description: | Scaleway | Not needed | Supported | Returns correct virtual-hosted URLs | | Vultr | Not needed | Supported | - | | Backblaze B2 | Not needed | Supported | Returns correct virtual-hosted URLs | | Cloudflare R2 | Not needed | Not supported | Omit ACL from parameters | | Tigris | Not needed | Supported | Single global endpoint; use region: 'auto' |
 (Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#scaleway)
 
 Language: JavaScript
@@ -20895,6 +20895,39 @@ module.exports = ({ env }) => ({
           params: {
             Bucket: env('R2_BUCKET'),
             // Do NOT set ACL - R2 does not support ACLs
+          },
+        },
+        // highlight-end
+      },
+    },
+  },
+});
+```
+
+
+## Tigris
+Description: Tigris is globally distributed and serves all buckets from a single endpoint, so region is always set to auto.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#tigris)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = ({ env }) => ({
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        // highlight-start
+        s3Options: {
+          credentials: {
+            accessKeyId: env('TIGRIS_ACCESS_KEY_ID'),
+            secretAccessKey: env('TIGRIS_ACCESS_SECRET'),
+          },
+          region: 'auto',
+          endpoint: 'https://t3.storage.dev',
+          params: {
+            Bucket: env('TIGRIS_BUCKET'),
           },
         },
         // highlight-end
