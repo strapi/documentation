@@ -22,6 +22,15 @@ Some incoming Strapi features are not yet ready to be shipped to all users, but 
 
 Such experimental features are indicated by a <FeatureFlagBadge /> badge throughout the documentation, where the name of the feature flag to use is included in the badge (e.g., <FeatureFlagBadge feature="FeatureFlagName" noTooltip />). Enabling these features requires enabling the corresponding future flags. Future flags differ from features that are in alpha in that future flags are disabled by default.
 
+The property name of a future flag indicates how far the feature has progressed:
+
+| Prefix | Meaning |
+| ------ | ------- |
+| `unstable` | The feature is not finished. It is likely to change or be removed, and some parts may still be under development or using mock data. |
+| `beta` | The feature is expected to work end to end, and its opt-in surface (property name, route, menu entry) is already the one it will ship with. It may still change before becoming generally available. |
+| `experimental_` | The feature is complete but its design is still being validated against real usage. |
+| `vX` | The flag enables a breaking change coming in version X, so that you can adopt it incrementally rather than in one large migration. |
+
 :::danger
 Enable future flags at your own risk. Experimental features may be subject to change or removal, may contain breaking changes, may be unstable or not fully ready for use, and some parts may still be under development or using mock data.
 :::
@@ -111,5 +120,6 @@ Developers can use the following APIs to interact with future flags:
 
 | Property name | Related feature | Suggested environment variable name |
 | ------------- | --------------- | ---------------------------------- |
+| `betaMediaLibrary` | [Media Library](/cms/features/media-library) | `STRAPI_FUTURE_BETA_MEDIA_LIBRARY` |
 | `experimental_firstPublishedAt` | [Draft & Publish](/cms/features/draft-and-publish#recording-the-first-publication-date) | `STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT` |
 
