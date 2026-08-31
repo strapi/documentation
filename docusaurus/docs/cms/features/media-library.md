@@ -32,26 +32,28 @@ The <Icon name="images" /> Media Library is the Strapi feature that displays all
 <Guideflow lightId="mk6z26zaqp" darkId="9r2m74otok"/>
 
 :::strapi New Media Library available in <BetaBadge/>
-Strapi has completely reworked the Media Library UI, which is now available as a beta feature for the next few weeks before it becomes the default UI. You can try the beta by configuring the `future.betaMediaLibrary` property in the `config/features` file as follows:
+Strapi has completely reworked the Media Library UI. It is available as a beta feature <VersionBadge version="5.52.2+" noTooltip /> for the next few weeks, before it becomes the default UI. Enable it by setting the `future.betaMediaLibrary` property to `true` in the `config/features` file:
 
 <Tabs groupId="js-ts">
 
-<TabItem value="js" label="JavaScript">
+<TabItem value="javascript" label="JavaScript">
 
-```js
+```js title="/config/features.js"
 module.exports = () => ({
   future: {
+    // highlight-next-line
     betaMediaLibrary: true,
   },
 });
 ```
 
 </TabItem>
-<TabItem value="ts" label="TypeScript">
+<TabItem value="typescript" label="TypeScript">
 
-```tsx
+```ts title="/config/features.ts"
 export default () => ({
   future: {
+    // highlight-next-line
     betaMediaLibrary: true,
   },
 });
@@ -60,9 +62,19 @@ export default () => ({
 </TabItem>
 </Tabs>
 
-Restart your Strapi application after the configuration change. Set the property to `false` and restart Strapi to use the current stable version again.
+Restart your Strapi application after the configuration change. Set the property to `false` and restart Strapi to go back to the previous UI: no asset, folder or setting is lost when you switch either way.
 
-The current page still describes the stable version of the Media Library. Over the next few weeks, the documentation will be updated to reflect the new features. In the meantime, you can <ExternalLink text="read more about it here" to="https://strapi.notion.site/Media-Library-Beta-Release-3c78f3598074810dbad6f2addfa25b6f" />.
+The [Usage](#usage) section of this page describes the new UI. The [Configuration](#configuration) section applies to both. The guided tour above still shows the previous UI.
+
+The flag changes the <Icon name="images" /> Media Library page of the admin panel, and adds the upload dialog described in [following upload progress](#upload-progress) to the whole admin panel. The following are not affected and still behave as documented:
+
+- the media field of the <Icon name="feather" /> Content Manager, which still opens the previous asset picker,
+- the <Icon name="gear-six" /> _Settings > Global Settings > Media Library_ page,
+- the [Upload REST API](/cms/api/rest/upload).
+
+The Media Library page displays a notice reminding you that this is a beta and that some features are still in progress. Read the [features configuration](/cms/configurations/features) documentation before enabling the flag, where the `STRAPI_FUTURE_BETA_MEDIA_LIBRARY` environment variable is also documented.
+
+You can <ExternalLink text="read more about the beta here" to="https://strapi.notion.site/Media-Library-Beta-Release-3c78f3598074810dbad6f2addfa25b6f" /> and report any issue you run into on the <ExternalLink text="strapi/strapi repository" to="https://github.com/strapi/strapi/issues" />.
 :::
 
 ## Configuration
@@ -88,6 +100,10 @@ In the admin panel, some Media Library settings are available via the Global Set
 
 2. Click on the **Save** button.
 
+:::tip
+When images in your library lack a caption or an alternative text, the AI metadata setting reports how many, and offers a **Generate metadata** button to generate the missing metadata in the background. Review the result: AI can make mistakes.
+:::
+
 <ThemedImage
   alt="Media Library settings"
   sources={{
@@ -100,6 +116,17 @@ In the admin panel, some Media Library settings are available via the Global Set
 
 **Path to configure the feature:** <Icon name="images" /> Media Library
 
+:::caution With the beta Media Library enabled
+The <Icon name="gear-six" /> button and the view configuration page described below are not available while the `betaMediaLibrary` future flag is enabled, because the beta Media Library replaces both settings:
+
+- assets load as you scroll instead of being paginated, so there is no page size to define,
+- the sort order is chosen from the toolbar and stored in the page URL (see [sorting assets](#sorting-assets)).
+
+A bookmarked link to `/admin/plugins/upload/configuration` displays a blank page rather than an error while the flag is enabled.
+
+Both settings still apply to the media field of the <Icon name="feather" /> Content Manager. To change them, set the flag back to `false` temporarily.
+:::
+
 1. Click on the <Icon name="gear-six" /> button just above the list of folders and assets, on the right side of the interface.
 2. Configure the Media Library view, following the instructions below:
     | Setting name              | Instructions                                                              |
@@ -108,11 +135,11 @@ In the admin panel, some Media Library settings are available via the Global Set
     | Default sort order        | Use the dropdown to define the default order in which assets are displayed. This can be overriden when sorting assets in the Media Library. |
 
 :::note
-Both settings are used as the defaults in the Media Library and in the Content Manager's media upload modal. These settings are global across the entire Strapi project for all users.
+With the beta Media Library disabled, both settings are used as the defaults in the Media Library and in the Content Manager's media upload modal. These settings are global across the entire Strapi project for all users.
 :::
 
 <ThemedImage
-  alt="Configure the view"
+  alt="Media Library view settings, with the entries per page and the default sort order"
   sources={{
     light: '/img/assets/media-library/media-library_configure-the-view.png',
     dark: '/img/assets/media-library/media-library_configure-the-view_DARK.png',
@@ -148,7 +175,8 @@ When using the default upload provider, the following specific configuration opt
 | `breakpoints`             | Allows to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
 | `sharp`             | Configures <ExternalLink to="https://sharp.pixelplumbing.com/" text="sharp"/> image processing options (see [sharp configuration](#sharp-configuration)) | Object | `{ cache: false, concurrency: 1 }` |
 | `security`             | Configures validation rules for uploaded files to enhance media security (see [security](#security)) | Object | - |
-| `concurrentUploadSize` | Maximum number of files processed in parallel during a bulk upload. Increase for faster bulk uploads at the cost of higher memory usage. Must be an integer >= 1. | Integer | `1` |
+| `concurrentUploadRequests` | Number of files the admin panel uploads to the server in parallel (see [concurrent file uploads](#concurrent-file-uploads)). Must be an integer >= 1. | Integer | `1` |
+| `concurrentUploadSize` | Number of files the server processes in parallel within a single upload request (see [concurrent file uploads](#concurrent-file-uploads)). Must be an integer >= 1. | Integer | `1` |
 
 :::note
 The Upload request timeout is defined in the server options, not in the Upload plugin options, as it's not specific to the Upload plugin but is applied to the whole Strapi server instance (see [upload request timeout](#upload-request-timeout)).
@@ -585,6 +613,61 @@ export default {
 
 </Tabs>
 
+#### Concurrent file uploads {#concurrent-file-uploads}
+
+Bulk uploads are controlled by 2 options that set how many files Strapi handles at the same time:
+
+| Parameter | Description | Type | Default |
+| --------- | ----------- | ---- | ------- |
+| `concurrentUploadRequests` | Number of files the admin panel uploads to the server in parallel. | Integer | `1` |
+| `concurrentUploadSize` | Number of files the server processes in parallel within a single upload request. | Integer | `1` |
+
+Both default to `1`, so files are uploaded and processed one at a time. Raising `concurrentUploadRequests` makes the admin panel send more upload requests at the same time, and raising `concurrentUploadSize` makes the server process more files at once within a single request. Both speed up bulk uploads at the cost of higher load on the server.
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = () => ({
+  upload: {
+    config: {
+      // highlight-start
+      concurrentUploadRequests: 4,
+      concurrentUploadSize: 2,
+      // highlight-end
+    },
+  },
+});
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+export default () => ({
+  upload: {
+    config: {
+      // highlight-start
+      concurrentUploadRequests: 4,
+      concurrentUploadSize: 2,
+      // highlight-end
+    },
+  },
+});
+```
+
+</TabItem>
+</Tabs>
+
+:::warning
+Both values must be integers greater than or equal to 1. Any other value, `0` included, prevents Strapi from starting.
+:::
+
+:::note
+`concurrentUploadRequests` is only read by the beta Media Library. With the `betaMediaLibrary` future flag disabled the option has no effect: the previous UI sends one request per asset and starts them all at the same time. `concurrentUploadSize` applies in both cases, because the server enforces it.
+:::
+
 #### Responsive Images
 
 When the [`Responsive friendly upload` admin panel setting](#admin-panel-configuration) is enabled, the plugin will generate the following responsive image sizes:
@@ -694,83 +777,129 @@ export default ({ env }) => ({
 
 </Tabs>
 
-## Usage
+## Usage <FeatureFlagBadge feature="betaMediaLibrary" /> {#usage}
 
 **Path to use the feature:** <Icon name="images" /> Media Library
-
-:::info
-Strapi supports uploading images from the admin panel or programmatically. From the API, you can send a multipart/form-data request to `/api/upload` with the image file and optional `fileInfo` metadata for captions and alt text (see [REST API documentation](/cms/api/rest/upload#upload-files) for more information).
-:::
 
 The Media Library displays all assets uploaded in the application, either via the <Icon name="images" /> Media Library itself or via the <Icon name="feather" /> Content Manager when managing a media field.
 
 Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/cms/features/content-manager#creating--writing-content).
 
-<ThemedImage
-  alt="Media Library overview, annotated"
-  sources={{
-    light: '/img/assets/media-library/media-library_overview2.png',
-    dark: '/img/assets/media-library/media-library_overview2_DARK.png',
-  }}
-/>
-
-From the Media Library, it is possible to:
-
-- upload a new asset (see [adding assets](/cms/features/media-library#adding-assets)) or create a new folder (see [organizing assets with folders](/cms/features/media-library#organizing-assets-with-folders)) <ScreenshotNumberReference number="1" />,
-- sort the assets and folders or set filters <ScreenshotNumberReference number="2" /> to find assets and folders more easily,
-- toggle between the list view <Icon name="list" classes="ph-bold"/> and the grid view <Icon name="squares-four"/> to display assets, access settings <Icon name="gear-six" /> to [configure the view](#configuring-the-view), and make a textual search <Icon name="magnifying-glass" classes="ph-bold" /> <ScreenshotNumberReference number="3" /> to find a specific asset or folder,
-- and view, navigate through, and manage folders <ScreenshotNumberReference number="4" />.
-
-:::tip
-Click the search icon <Icon name="magnifying-glass" classes="ph-bold" /> on the right side of the user interface to use a text search and find one of your assets or folders more quickly!
+:::note
+The Media Library hides what your role cannot do instead of displaying a disabled control. With the _Access the Media Library_ permission alone, the library is read-only: there is no **New** button, no selection checkbox and no bulk action, and the fields of the asset details panel cannot be edited. See [Users & Permissions](/cms/features/users-permissions) to grant the _Create_, _Update_, _Download_ and _Copy link_ permissions of the Upload plugin.
 :::
 
-<!--
-### Filtering assets
-
-Right above the list of folders and assets, on the left side of the interface, a !<Icon name="funnel-simple" classes="ph-bold" /> **Filters** button is displayed. It allows setting one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the assets that match all the conditions will be displayed).
+### Interface overview
 
 <ThemedImage
-  alt="Filters"
+  alt="Media Library interface, with its 5 areas numbered"
   sources={{
-    light: '/img/assets/media-library/media-library_filters.png',
-    dark: '/img/assets/media-library/media-library_filters_DARK.png',
+    light: '/img/assets/media-library/media-library_ui-overview.png',
+    dark: '/img/assets/media-library/media-library_ui-overview_DARK.png',
   }}
 />
 
-To set a new filter:
+The Media Library is organized in the following areas:
 
-1. Click on the !<Icon name="funnel-simple" classes="ph-bold" /> **Filters** button.
-2. Click on the 1st drop-down list to choose the field on which the condition will be applied.
-3. Click on the 2nd drop-down list to choose the type of condition to apply.
-4. For conditions based on the type of asset to filter, click on the 3rd drop-down list and choose a file type to include or exclude. For conditions based on date and time (i.e. _createdAt_ or _updatedAt_ fields), click on the left field to select a date and click on the right field to select a time.
-5. Click on the **Add filter** button.
+- The folder tree <ScreenshotNumberReference number="1" /> on the left lists _Home_ and the full folder hierarchy (see [navigating folders](#navigating-folders)).
+- The page title <ScreenshotNumberReference number="2" /> names the location you are currently browsing, either _Home_ or a folder name, followed by the number of files it holds directly, displayed as, for instance, 11 items. Subfolders and their content are not counted, and the number does not change when filters are active.
+- The **New** button <ScreenshotNumberReference number="3" /> creates a folder or uploads assets (see [adding assets](#adding-assets) and [adding folders](#adding-folders)).
+- The toolbar <ScreenshotNumberReference number="4" /> spans the row above the list. Use it to filter, search and sort the list (see [finding assets](#finding-assets)), and to switch between the grid view and the table view (see [switching views](#switching-views)).
+- The list <ScreenshotNumberReference number="5" /> displays the folders and assets of the current location. More assets load as you scroll.
+
+A _Beta_ notice sits above the list and reminds you that some features are still in progress. Click **Close** to dismiss it: it stays dismissed in that browser.
+
+Each folder and asset in the list has a checkbox to select it (see [selecting items](#selecting-items)) and a <Icon name="dots-three" classes="ph-bold" /> **More actions** button (see [using the item actions menu](#item-actions)). The Media Library calls a folder or an asset an _item_, and several controls use that word.
+
+<details>
+<summary>What changed from the previous Media Library</summary>
+
+| In the previous UI | In the Media Library beta |
+| --- | --- |
+| **Add new assets** and **Add new folder** buttons | A single **New** button that does both (see [adding assets](#adding-assets)) |
+| Breadcrumbs above the list | A folder tree on the left (see [navigating folders](#navigating-folders)) |
+| Folder cards displaying how many items they hold | Folder names only. To know how many assets a folder holds directly, open it and read the page title |
+| Pagination, with an _Entries per page_ setting | No pagination: more assets load as you scroll |
+| A <Icon name="gear-six" /> button to configure the view | No view configuration (see [configuring the view](#configuring-the-view)) |
+| A <Icon name="magnifying-glass" classes="ph-bold" /> button opening a search field | A search field always displayed in the toolbar (see [searching assets](#searching-assets)) |
+| A _Details_ window that covers the library | A details panel that leaves the list usable (see [managing individual assets](#managing-assets)) |
+| A crop mode and a focal point mode, opened separately | A single _Crop & Focus area_ editor (see [cropping images and setting a focus area](#cropping-images)) |
+
+</details>
 
 :::note
-When active, filters are displayed next to the !<Icon name="funnel-simple" classes="ph-bold" /> **Filters** button. They can be removed by clicking on the delete icon <Icon name="x" />.
+The Media Library stores what you are looking at in the page URL: the current folder, the search term, the filters, the sort order, where folders are displayed, and the open asset. Copying the URL and sharing it with another user of the same Strapi project gives them the same list. The grid or table choice is not part of the URL, and a filter set to a relative date is resolved again when the URL is opened.
 :::
--->
 
-<!--
-### Sorting assets
+#### Switching views
+
+The list displays either as a grid of cards or as a table. Click <Icon name="squares-four" classes="ph-bold" /> **Grid view** or <Icon name="list" classes="ph-bold" /> **Table view** in the toolbar to switch. Your choice is remembered in your browser for the next visit.
+
+The table view displays a _Name_, _Creation date_, _Last modified_ and _Size_ column for each item, along with a **Select all** checkbox in the header row. Assets missing a caption or an alternative text are flagged with a warning icon.
 
 <ThemedImage
-  alt="Sort"
+  alt="Media Library displaying folders and assets as a table"
   sources={{
-    light: '/img/assets/media-library/media-library_sort.png',
-    dark: '/img/assets/media-library/media-library_sort_DARK.png',
+    light: '/img/assets/media-library/media-library_table-view.png',
+    dark: '/img/assets/media-library/media-library_table-view_DARK.png',
   }}
 />
 
-Just above the list of folders and assets and next to the !<Icon name="funnel-simple" classes="ph-bold" /> **Filters** button, on the left side of the interface, a drop-down button is displayed. It allows to sort the assets by upload date, alphabetical order or date of update. Click on the drop-down button and select an option in the list to automatically display the sorted assets.
--->
+:::note
+Column headers in the table view are labels, not sort controls. Use the toolbar's _Sort_ menu to change the order (see [sorting assets](#sorting-assets)).
+:::
+
+#### Navigating folders {#navigating-folders}
+
+The folder tree on the left side of the interface lists the whole folder hierarchy. There is no breadcrumb: the tree and the page title tell you where you are.
+
+<ThemedImage
+  alt="Media Library displaying the content of a folder, with the folder tree expanded"
+  sources={{
+    light: '/img/assets/media-library/media-library_folder-navigation.png',
+    dark: '/img/assets/media-library/media-library_folder-navigation_DARK.png',
+  }}
+/>
+
+- Click a folder name, in the tree or in the list, to display its content.
+- Click the <Icon name="caret-right" classes="ph-bold" /> button next to a folder name to expand or collapse its subfolders.
+- Click <Icon name="house" /> **Home** to go back to the root of the library.
+
+Strapi does not enforce a maximum folder depth. The folder tree expands automatically to reveal the folder you are browsing.
+
+#### Using the item actions menu {#item-actions}
+
+The <Icon name="dots-three" classes="ph-bold" /> **More actions** button of an asset or a folder opens a menu that acts on that item only, whatever else is selected in the list.
+
+On an asset, the menu offers:
+
+- <Icon name="arrows-counter-clockwise" classes="ph-bold" /> **Replace media**
+- <Icon name="link" classes="ph-bold" /> **Copy link to media**
+- <Icon name="download-simple" /> **Download media**
+- <Icon name="arrow-right" classes="ph-bold" /> **Move to folder**
+- <Icon name="trash" /> **Delete**
+
+<ThemedImage
+  alt="Actions menu of an asset, opened from the grid view"
+  sources={{
+    light: '/img/assets/media-library/media-library_item-actions.png',
+    dark: '/img/assets/media-library/media-library_item-actions_DARK.png',
+  }}
+/>
+
+On a folder, it offers:
+
+- <Icon name="link" classes="ph-bold" /> **Copy link to folder**
+- <Icon name="pencil-simple" /> **Rename folder**
+- <Icon name="arrow-right" classes="ph-bold" /> **Move to folder**
+- <Icon name="trash" /> **Delete folder**
 
 ### Adding assets
 
 <details>
-<summary>List of media types and extensions supported by the Media Library</summary>
+<summary>Media types the Media Library previews</summary>
 
-| Media type | Supported extensions                                            |
+| Media type | Extensions |
 | ---------- | --------------------------------------------------------------- |
 | Image      | - JPEG<br />- PNG<br />- GIF<br />- SVG<br />- TIFF<br />- ICO<br />- DVU   |
 | Video      | - MPEG<br />- MP4<br />- MOV (Quicktime)<br />- WMV<br />- AVI<br />- FLV |
@@ -778,45 +907,94 @@ Just above the list of folders and assets and next to the !<Icon name="funnel-si
 | File       | - CSV<br />- ZIP<br />- PDF<br />- XLS, XLSX<br />- JSON                |
 <br/>
 
-SVG files are denied by default in projects generated with Strapi <VersionBadge version="5.52.2+" noTooltip /> and later, even though they match the supported image types (see [SVG uploads](#svg-uploads)).
+The Media Library itself does not restrict file types. Which files are accepted is decided by the `security.allowedTypes` and `security.deniedTypes` options (see [security](#security)) and by the maximum file size (see [max file size](#max-file-size)). SVG files are denied by default in projects generated with Strapi <VersionBadge version="5.52.2+" noTooltip /> and later (see [SVG uploads](#svg-uploads)).
 
 </details>
 
-1. Click the **Add new assets** button in the upper right corner of the Media Library.
-2. Choose whether you want to upload the new asset from your computer or from an URL:
-    - from the computer, either drag & drop the asset directly or browse files on your system,
-    - from an URL, type or copy and paste an URL(s) in the _URL_ field, making sure multiple URLs are separated by carriage returns, then click **Next**.
-3. (optional) Click the edit button <Icon name="pencil-simple" /> to view asset metadata and define a _File name_, _Alternative text_ and a _Caption_ for the asset (see [Managing individual assets](#managing-assets)).
-4. (optional) Add more assets by clicking **Add new assets** and going back to step 2.
-5. Click on **Upload assets to the library**.
+Assets are always uploaded to the location you are currently browsing. Navigate to the target folder before uploading, or move the assets afterwards (see [moving assets and folders](#moving-assets)).
+
+In an empty folder, and in a new project, the list is replaced by a _No assets yet_ message with an **Add assets** button that opens the same file browser as **New** > **File upload**.
+
+There are 3 ways to add assets.
+
+#### Uploading files from your computer
 
 <ThemedImage
-  alt="Add new assets window"
+  alt="New button menu, offering to create a folder or upload files"
   sources={{
-    light: '/img/assets/media-library/media-library_add-new-assets.png',
-    dark: '/img/assets/media-library/media-library_add-new-assets_DARK.png',
+    light: '/img/assets/media-library/media-library_new-menu.png',
+    dark: '/img/assets/media-library/media-library_new-menu_DARK.png',
   }}
 />
+
+1. Click the **New** button in the upper right corner of the Media Library.
+2. Click <Icon name="files" /> **File upload**.
+3. Select one or several files in your system's file browser and confirm.
+
+The upload starts immediately and its progress is reported in the upload dialog (see [following upload progress](#upload-progress)).
+
+#### Uploading files by drag and drop
+
+1. Drag one or several files from your computer onto the Media Library.
+2. Check the destination folder named in the _Drop here to upload to_ overlay.
+3. Release the files.
+
+<ThemedImage
+  alt="Media Library highlighted while files are dragged over it, naming the destination folder"
+  sources={{
+    light: '/img/assets/media-library/media-library_drag-drop-upload.png',
+    dark: '/img/assets/media-library/media-library_drag-drop-upload_DARK.png',
+  }}
+/>
+
+:::caution
+Files dropped from your computer always land in the folder you are currently browsing, whatever they are dropped on. Dropping a file on a folder card does not upload it into that folder: navigate into the folder first. Dragging an item that is already in the library onto a folder does move it (see [moving assets and folders](#moving-assets)).
+:::
+
+#### Uploading files from a URL
+
+1. Click the **New** button in the upper right corner of the Media Library.
+2. Click <Icon name="link" classes="ph-bold" /> **File upload from URL**.
+3. In the _URL(s)_ field of the _Import from URL_ dialog, type or paste up to 20 URLs, one per line.
+4. Click **Upload**.
+
+Strapi downloads each file server-side and adds it to the current folder. The server reports no incremental byte count for this flow, so the upload dialog displays a moving progress bar without a percentage.
+
+:::caution
+URLs must use the `http` or `https` protocol, and must resolve to a publicly reachable address. URLs that resolve to a private or internal address, such as `localhost` or an address on your own network, are rejected to prevent server-side request forgery.
+:::
+
+#### Following upload progress {#upload-progress}
+
+Uploads are reported in a dialog that lists every file of the batch with its own status, such as Queued, Uploading... or Uploaded. The dialog is available throughout the admin panel, not only in the Media Library, so you can navigate to another part of Strapi while a batch uploads.
+
+<ThemedImage
+  alt="Upload dialog listing the files of a batch with their status"
+  sources={{
+    light: '/img/assets/media-library/media-library_upload-progress.png',
+    dark: '/img/assets/media-library/media-library_upload-progress_DARK.png',
+  }}
+/>
+
+The dialog can be minimized to a summary line and maximized again. It offers a **Cancel all** button that stops the batch while keeping the files already uploaded, a **Retry** button that restarts the files you cancelled, and a **Close** button once the batch is finished. Dropping more files while a batch is running adds them to that batch.
+
+:::caution
+**Retry** is only displayed after a cancellation, and it only restarts cancelled files. A file that failed on its own cannot be retried from the dialog: read the reason on its row, fix the cause, and upload it again.
+:::
+
+By default, files are uploaded one at a time. Increase [`concurrentUploadRequests`](#concurrent-file-uploads) to upload several files in parallel.
 
 #### Automatically generating metadata with Strapi AI {#ai-powered-metadata-generation}
 <GrowthBadge />
 
-[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI automatically generates alternative text and captions for images uploaded to the Media Library, helping you improve content accessibility and SEO. A modal window displays the AI-generated alternative text and caption, allowing you to review the metadata and modify it if needed:
+[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
+
+AI metadata generation only works with PNG, JPEG, WebP, HEIC and HEIF images. Every other file, including GIF, SVG and TIFF images, is reported as skipped. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
+
+Metadata can also be generated for images that already exist in the library, either from the [Media Library settings](#configuring-settings) for every image that lacks one, or with the **Create metadata** bulk action for a specific selection (see [generating metadata in bulk](#bulk-metadata)).
 
 <ThemedImage
-  alt="AI metadata review modal"
-  sources={{
-    light: '/img/assets/media-library/media-library_ai-metadata.png',
-    dark: '/img/assets/media-library/media-library_ai-metadata_DARK.png',
-  }}
-/>
-
-AI metadata generation only works with images, not files or videos. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
-
-The [Media Library settings](#configuring-settings) also allow generating metadata for existing images that lack alternative text or captions. This feature is currently in <BetaBadge />.
-
-<ThemedImage
-  alt="AI metadata retroactive generation"
+  alt="Media Library settings offering to generate metadata for existing images"
   sources={{
     light: '/img/assets/media-library/media-library_ai-metadata-retroactive.png',
     dark: '/img/assets/media-library/media-library_ai-metadata-retroactive_DARK.png',
@@ -827,152 +1005,314 @@ The [Media Library settings](#configuring-settings) also allow generating metada
 <StrapiAiCredits />
 :::
 
-### Managing individual assets {#managing-assets}
+### Finding assets
 
-The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped.
+The toolbar offers a <Icon name="funnel-simple" classes="ph-bold" /> **Filter** button, a _Search_ field and a **Sort** button, in that order. Search looks across the whole library, while filters and sorting apply to the location you are browsing.
 
-#### Editing assets
+#### Searching assets
 
-Click on the edit <Icon name="pencil-simple" /> button of an asset to open up the "Details" window, where all the available asset management options are available.
+Type in the toolbar's _Search_ field to find assets and folders by name.
 
 <ThemedImage
-  alt="Annotated asset details window screenshot"
+  alt="Media Library displaying the results of a search, with the number of folders and assets found"
   sources={{
-    light: '/img/assets/media-library/media-library_asset-details.png',
-    dark: '/img/assets/media-library/media-library_asset-details_DARK.png',
+    light: '/img/assets/media-library/media-library_search-results.png',
+    dark: '/img/assets/media-library/media-library_search-results_DARK.png',
   }}
 />
 
-- On the left, above the preview of the asset, control buttons <ScreenshotNumberReference number="1" /> allow performing various actions:
-  - click on the delete button <Icon name="trash" /> to delete the asset,
-  - click on the download button <Icon name="download-simple"  /> to download the asset,
-  - click on the copy link button <Icon name="link" classes="ph-bold" /> to copy the asset's link to the clipboard,
-  - optionally, click on the crop button <Icon name="crop" classes="ph-bold" /> to enter cropping mode for the image (see [Cropping images](#cropping-images)).
-  - optionally, click on the pin button <Icon name="map-pin" classes="ph-bold" /> to enter focal point mode for the image (see [Adding a focal point](#adding-a-focal-point)).
-- On the right, meta data for the asset is displayed at the top of the window <ScreenshotNumberReference number="2" /> and the fields below can be used to update the _File name_, _Alternative text_, _Caption_ and _Location_ (see [Organizing assets with folders](#organizing-assets-with-folders)) for the asset <ScreenshotNumberReference number="3" />.
-- At the bottom, the **Replace Media** button <ScreenshotNumberReference number="4" /> can be used to replace the asset file but keep the existing content of the other editable fields, and the **Finish** button is used to confirm any updates to the fields.
+The search covers the whole library, not only the folder you are browsing, and it returns both folders and assets. The page title becomes _Search results for "your term"_ followed by the number of folders and assets found.
 
-#### Moving assets
+To leave the search, click the <Icon name="x" classes="ph-bold" /> **Clear** button inside the search field, or navigate to a folder in the folder tree.
 
-1. Click on the edit <Icon name="pencil-simple" /> button for the asset to be moved.
-2. In the window that pops up, click the _Location_ field and choose a different folder from the drop-down list.
-3. Click **Save** to confirm.
+When a search returns nothing, the list is replaced by a _No results found_ message with a <Icon name="x" classes="ph-bold" /> **Clear search** button.
+
+#### Filtering assets
+
+3 filter fields are available to narrow the list:
+
+| Filter field | Values | Conditions |
+| --- | --- | --- |
+| _Type_ | Folder, Picture, Audio, Video, Document | is, is not |
+| _Creation date_ | A relative preset, from 1 day ago to 1 year ago | is exactly, within the last, not within the last |
+| _Creation date_ | A custom date range | is, is not |
+| _Last modified_ | A relative preset, from 1 day ago to 1 year ago | is exactly, within the last, not within the last |
+
+<ThemedImage
+  alt="Filter menu of the Media Library, with a filter already applied below the toolbar"
+  sources={{
+    light: '/img/assets/media-library/media-library_filter-menu.png',
+    dark: '/img/assets/media-library/media-library_filter-menu_DARK.png',
+  }}
+/>
+
+To filter the list:
+
+1. Click the <Icon name="funnel-simple" classes="ph-bold" /> **Filter** button in the toolbar.
+2. Click a filter field.
+3. Click one or several values. The _Type_ list stays open so that you can check several types, and the badge lists them all, for instance _Type is Picture, Video_.
+4. (optional) Repeat for another field.
+
+Filters combine, so only the items matching every filter are displayed. Each applied filter is added below the toolbar as a badge. Click the condition or the value segment of a badge to change it, and the <Icon name="x" classes="ph-bold" /> button to remove that filter.
 
 :::note
-Assets can also be moved to other folders from the main view of the Media Library (see [Organizing assets with folders](#organizing-assets-with-folders)). This includes the ability to move several assets simultaneously.
+Filters apply to the location you are browsing, not to the whole library. Use the [search](#searching-assets) to look across all folders.
+
+A _Type_ badge also decides whether folders are displayed: folders are hidden unless Folder is one of its values, and assets are hidden when Folder is its only value.
 :::
 
-#### Cropping images
+When the active filters match nothing, the list is replaced by a _No items matched current filters_ message with a <Icon name="x" classes="ph-bold" /> **Clear filters** button that removes all of them. There is no clear-all control in the toolbar: as long as the filters match something, remove the badges one by one.
 
-1. Click on the edit <Icon name="pencil-simple" /> button for the asset to be cropped.
-2. In the window that pops up, click the crop button <Icon name="crop" classes="ph-bold" /> to enter cropping mode.
-3. Crop the image using handles in the corners to resize the frame. The frame can also be moved by drag & drop.
-4. Click the crop <Icon name="check" classes="ph-bold" /> button to validate the new dimensions, and choose either to **crop the original asset** or to **duplicate & crop the asset** (i.e. to create a copy with the new dimensions while keeping the original asset untouched). Alternatively, click the stop cropping <Icon name="x" classes="ph-bold" /> button to cancel and quit cropping mode.
-<!-- TODO: ask devs because there seems to be a bug/unintuitive behavior:  choosing crop the original asset does not quit cropping mode 😅  -->
-5. Click **Finish** to save changes to the file.
+#### Sorting assets
 
-#### Adding a focal point
+Click the **Sort** button in the toolbar to change the order of the list. The button label always names the active rule, for instance _Sort: Most recent updates_.
 
-A focal point ensures the most important part of an image remains visible when the image is cropped or resized in different contexts.
+<ThemedImage
+  alt="Sort menu of the Media Library, with a Sort section and a Folders section"
+  sources={{
+    light: '/img/assets/media-library/media-library_sort-menu.png',
+    dark: '/img/assets/media-library/media-library_sort-menu_DARK.png',
+  }}
+/>
 
-To add a focal point to an image:
+The _Sort_ section offers 6 mutually exclusive rules: Oldest uploads, Most recent updates (the default), A to Z, Z to A, File size ascending, and File size descending.
 
-1. Click on the edit <Icon name="pencil-simple" /> button.
-2. In the window that pops up, click on the pin <Icon name="map-pin" /> button to enter focal point mode.
-3. Move the crosshair to the desired location and click to set the focal point.
-4. Click the check <Icon name="check" classes="ph-bold" /> button to validate the new focal point. Alternatively, click the cancel <Icon name="x" classes="ph-bold" /> button to abandon changes and exit focal point mode.
-5. Click the reset <Icon name="arrows-counter-clockwise" classes="ph-bold" /> button to reset the focal point to the center of the image.
-6. Click **Finish** to save changes to the file.
+In the table view, an additional _Folders_ section decides whether folders are grouped On top, which is the default, or Mixed with files, in which case they follow the active sort rule. The grid view always groups folders on top, so it does not display that section.
+
+:::note
+Folders follow the active sort rule when it can apply to them: Oldest uploads orders them by their own creation date, and A to Z and Z to A by name. They stay in alphabetical order for the default Most recent updates rule, and for the 2 file size rules because folders have no size.
+:::
+
+### Managing individual assets {#managing-assets}
+
+Click an asset in the list to open its details panel on the right side of the interface. The list stays visible and usable behind the panel.
+
+<ThemedImage
+  alt="Details panel of an asset, displaying its preview, its file information and its editable fields"
+  sources={{
+    light: '/img/assets/media-library/media-library_asset-drawer.png',
+    dark: '/img/assets/media-library/media-library_asset-drawer_DARK.png',
+  }}
+/>
+
+The panel is organized as follows:
+
+- A preview of the asset. Images are displayed, videos and audio files can be played with the browser's own controls, and PDFs are rendered inline. Any other file type displays its icon and _No preview available_. Images also get a <Icon name="crop" classes="ph-bold" /> **Crop** button (see [cropping images and setting a focus area](#cropping-images)).
+- A read-only _File info_ section listing the _Creation date_, _Last updated_, _Created by_, _Size_, _Dimensions_ (images only), _Extension_ and _Asset ID_ of the asset.
+- The editable _File name_, _Location_, _Caption_ and _Alternative text_ fields. A caption and an alternative text can be set on any file type, not only images, and a warning is displayed next to each of the 2 fields when it is empty.
+- A row of icon-only buttons at the bottom: <Icon name="trash" /> **Delete this file**, <Icon name="link" classes="ph-bold" /> **Copy link**, <Icon name="download-simple" /> **Download** and <Icon name="arrows-counter-clockwise" classes="ph-bold" /> **Replace this file**, next to the **Save changes** button.
+
+#### Editing an asset name, caption and alternative text {#editing-assets}
+
+To rename an asset, or to add or change its caption and alternative text:
+
+1. Click the asset in the list.
+2. Update the _File name_, _Caption_ or _Alternative text_ fields.
+3. Click **Save changes**.
+
+:::note
+**Save changes** stays disabled until you change something, and an empty _File name_ prevents saving. If you close the panel with unsaved changes, Strapi asks you to confirm before discarding them.
+:::
+
+:::tip
+The _Location_ field of the same panel moves a single asset to another folder. See [moving assets and folders](#moving-assets) for the other options.
+:::
+
+#### Cropping images and setting a focus area {#cropping-images}
+
+One editor handles both cropping and the focus area. The focus area, also called focal point, keeps the most important part of an image visible when your front end crops or resizes it.
+
+<ThemedImage
+  alt="Crop and Focus area editor, with a crop rectangle and a circular focus handle on the image"
+  sources={{
+    light: '/img/assets/media-library/media-library_crop-focus.png',
+    dark: '/img/assets/media-library/media-library_crop-focus_DARK.png',
+  }}
+/>
+
+1. Click an image in the list to open its details panel.
+2. Click the <Icon name="crop" classes="ph-bold" /> **Crop** button on the preview. The _Crop & Focus area_ editor opens.
+3. Define the crop area by dragging the handles in the corners of the rectangle, or by typing exact values in the width and height fields of the editor panel.
+4. (optional) Click the <Icon name="link" classes="ph-bold" /> **Lock aspect ratio** button to resize both dimensions together.
+5. Define the focus area by dragging the circle inside the crop rectangle, or by typing exact values in the _X_ and _Y_ fields.
+6. Save your changes:
+    - Click **Apply** to crop the original asset. The asset keeps its ID, so content already using it is updated.
+    - Click **Save as copy** to keep the original untouched and create a new asset in the same folder. The copy inherits the caption and the alternative text of the original.
+
+To leave the editor without changing anything, click **Cancel**.
+
+:::note
+The focus area is stored on the asset and returned by the API as a `focalPoint` value, so your front end can use it when it crops or resizes the image.
+:::
+
+:::note
+The numeric fields are hidden on small screens. Set the crop and focus areas by dragging the rectangle and the circle directly on the image instead.
+:::
+
+#### Replacing an asset file
+
+Replacing swaps the file behind an asset while keeping the asset itself, so every content entry already pointing at it keeps working.
+
+1. Click the asset in the list to open its details panel.
+2. Click the <Icon name="arrows-counter-clockwise" classes="ph-bold" /> **Replace this file** button.
+3. Click **Continue** in the confirmation dialog.
+4. Select the new file in your system's file browser and confirm. The file browser only offers files whose type matches the current asset.
+
+:::warning
+The previous file is permanently replaced and cannot be recovered. If [AI metadata generation](#ai-powered-metadata-generation) is enabled, Strapi also generates a new caption and alternative text for the replacement file, overwriting the existing ones. The confirmation dialog says so before you continue.
+:::
+
+#### Downloading assets and copying links
+
+1. Click the asset in the list to open its details panel.
+2. Click the <Icon name="download-simple" /> **Download** button to save the file to your computer, or the <Icon name="link" classes="ph-bold" /> **Copy link** button to copy its URL to the clipboard.
+
+Both actions are also available from the asset's <Icon name="dots-three" classes="ph-bold" /> **More actions** menu, as **Download media** and **Copy link to media**.
+
+:::note
+**Copy link to media** copies the asset's own URL, the one your front end uses to serve the file. **Copy link to folder**, in a folder's <Icon name="dots-three" classes="ph-bold" /> **More actions** menu, copies a link to that folder in the admin panel, which only works for someone logged into Strapi.
+:::
 
 #### Deleting assets
 
-1. Click on the edit <Icon name="pencil-simple" /> button for the asset to be deleted.
-2. In the window that pops up, click the delete button <Icon name="trash" /> in the control buttons bar above the asset's preview.
+1. Click the asset in the list to open its details panel.
+2. Click the <Icon name="trash" /> **Delete this file** button.
 3. Click **Confirm**.
 
-:::tip
-Assets can also be deleted individually or in bulk from the main view of the Media Library. Select assets by clicking on their checkbox in the top left corner, then click the Delete icon <Icon name="trash" /> at the top of the window, below the filters and sorting options.
+:::warning
+Deleted files cannot be recovered. If a file is currently in use, the linked content breaks and image containers are left empty.
 :::
 
-### Organizing assets with folders
+Assets can also be deleted in bulk, together with folders (see [deleting items in bulk](#bulk-delete)).
 
-Folders in the Media Library help you organize uploaded assets. Folders sit at the top of the Media Library view or are accessible from the Media field popup when using the [Content Manager](/cms/features/content-manager).
+### Using bulk actions
 
-From the Media Library, it is possible to view the list of folders and browse a folder's content, create new folders, edit an existing folder, move assets to a folder, and delete a folder.
+Bulk actions apply to a selection of assets and folders. Select the items first, then pick an action in the bulk actions bar.
 
-:::note
-Folders follow the permission system of assets (see [Users & Permissions feature](/cms/features/users-permissions)). It is not yet possible to define specific permissions for a folder.
-:::
+#### Selecting items {#selecting-items}
 
-By default, the Media Library displays folders and assets created at the root level. Clicking a folder navigates to this folder, and displays the following elements:
+Click the checkbox of a folder or an asset to select it. Assets and folders can be selected together.
 
-- the folder title and breadcrumbs to navigate to a parent folder <ScreenshotNumberReference number="1" />
-- the subfolders <ScreenshotNumberReference number="2" /> the current folder contains
-- all assets <ScreenshotNumberReference number="3" /> from this folder
+The following shortcuts speed up selection:
+
+| Shortcut | Description |
+| --- | --- |
+| `Cmd`/`Ctrl` + click | Adds an item to the selection or removes it. |
+| `Shift` + click | Selects every item between the last selected item and the clicked one. |
+| `Space` | With a card or a row focused, adds it to the selection or removes it. |
+| `Enter` | With a card or a row focused, opens the asset details panel, or enters the folder. |
+
+Both modifier shortcuts work on the card or the row itself. Clicking the file name always opens the details panel, whatever modifier you hold.
+
+In the table view only, a **Select all** checkbox in the header row selects every item currently displayed. The grid view has no equivalent.
+
+Selecting an item displays the bulk actions bar at the bottom of the interface. The bar reports how many items are selected and offers the bulk actions. Click <Icon name="x" classes="ph-bold" /> **Clear selection** to empty the selection.
 
 <ThemedImage
-  alt="Media library one folder deep, with back button and updated folder title"
+  alt="Bulk actions bar at the bottom of the Media Library, with several items selected"
   sources={{
-    light: '/img/assets/media-library/media-library_folder-content.png',
-    dark: '/img/assets/media-library/media-library_folder-content_DARK.png',
+    light: '/img/assets/media-library/media-library_bulk-actions.png',
+    dark: '/img/assets/media-library/media-library_bulk-actions_DARK.png',
   }}
 />
 
-From this dedicated folder view, folders and assets can be managed, filtered, sorted and searched just like from the main Media Library.
+:::note
+The selection survives switching between the grid and the table view, but it is emptied when you navigate to another folder or change the search, the filters or the sort order.
 
-To navigate back to the parent folder, one level up, use the **Back** button at the top of the interface.
+Opening an asset details panel hides the bar while the panel is open. The selection is kept and the bar comes back when you close the panel.
+:::
 
-:::tip
-The breadcrumb navigation can also be used to go back to a parent folder: click on a folder name to directly jump to it or click on the 3 dots `/img.` and select a parent folder from the drop-down list.
+#### Moving items in bulk {#bulk-move}
+
+1. Select the assets and folders to move.
+2. Click the <Icon name="arrow-right" classes="ph-bold" /> **Move** button in the bulk actions bar.
+3. In the _Move elements to_ dialog, select the destination in the _Location_ list. The root of the library is listed there as _Media Library_, and folders carry their full path, for instance _Brand assets / Logos_. The folder the items already sit in, and any folder they cannot be moved into, are not listed.
+4. Click **Move**.
+
+Items can also be moved by drag and drop (see [moving assets and folders](#moving-assets)).
+
+#### Deleting items in bulk {#bulk-delete}
+
+1. Select the assets and folders to delete.
+2. Click the <Icon name="trash" /> **Delete** button in the bulk actions bar.
+3. Click **Confirm** in the dialog.
+
+:::warning
+Deleting a folder also deletes everything it contains, including its subfolders and their assets. None of it can be recovered.
+:::
+
+#### Generating metadata in bulk {#bulk-metadata}
+<GrowthBadge />
+
+When [Strapi AI](/cms/configurations/admin-panel#strapi-ai) is enabled, a <Icon name="sparkle" /> **Create metadata** button in the bulk actions bar generates a caption and an alternative text for the selected images.
+
+1. Select the images to describe.
+2. Click the <Icon name="sparkle" /> **Create metadata** button in the bulk actions bar.
+
+Metadata can be generated for up to 40 assets at a time. Only PNG, JPEG, WebP, HEIC and HEIF images are supported: selected folders are ignored, and selected files of any other type are reported as skipped.
+
+### Organizing assets with folders
+
+Folders in the Media Library help you organize uploaded assets. From the Media Library, it is possible to create new folders, move assets and folders, rename a folder, and delete folders. To browse them, see [navigating folders](#navigating-folders).
+
+:::note
+Folders follow the permission system of assets (see [Users & Permissions feature](/cms/features/users-permissions)). It is not yet possible to define specific permissions for a folder. Creating a folder requires the _Create_ permission on assets, and renaming, moving or deleting one requires the _Update_ permission.
+:::
+
+:::caution
+In this beta, **Rename folder**, **Move to folder** and **Delete folder** are displayed to every user who can see the folder, including users without the _Update_ permission on assets. The action is then refused by the server.
 :::
 
 #### Adding folders
 
-1. Click on **Add new folder** in the upper right of the Media Library interface.
-2. In the window that pops up, type a name for the new folder in the _Name_ field.
-3. (optional) In the _Location_ drop-down list, choose a location for the new folder. The default location is the active folder.
-4. Click **Create**.
+1. Navigate to the location where the folder must be created.
+2. Click the **New** button in the upper right corner of the Media Library.
+3. Click <Icon name="folder" /> **New folder**.
+4. Type a name in the _Folder name_ field.
+5. Click **Create folder**.
 
 :::note
-There is no limit to how deep your folders hierarchy can go, but bear in mind it might take some effort to reach a deeply nested subfolder, as the Media Library currently has no visual hierarchy indication. Searching for files using the <Icon name="magnifying-glass" classes="ph-bold" /> on the right side of the user interface might be a faster alternative to finding the asset you are looking for.
+The dialog title names the parent folder, for instance _New folder in Home_. To create the folder somewhere else, cancel, navigate to the intended parent, and start again.
 :::
 
-#### Moving assets to a folder
+#### Moving assets and folders {#moving-assets}
 
-Assets and folders can be moved to another folder from the root view of the Media Library or from any view for a dedicated folder.
+Assets and folders can be moved in 3 ways:
 
-1. Select assets and folder to be moved, by clicking the checkbox on the left of the folder name or clicking the asset itself.
-2. Click the <Icon name="folder" /> **Move** button at the top of the interface.
-3. In the _Move elements to_ pop-up window, select the new folder from the _Location_ drop-down list.
-4. Click **Move**.
+- By drag and drop, for a few items at a time. Drag an asset or a folder onto a folder in the list, or onto a folder of the folder tree, including <Icon name="house" /> **Home**. Hovering a folder of the tree for a moment expands it, so that you can drop items into a subfolder in one gesture. Dragging one item of a selection moves the whole selection.
+- With the _Move elements to_ dialog, for many items at once (see [moving items in bulk](#bulk-move)). It is also available for a single item, as **Move to folder** in its <Icon name="dots-three" classes="ph-bold" /> **More actions** menu.
+- From the details panel of an asset, by changing its _Location_ field (see [managing individual assets](#managing-assets)).
 
-<ThemedImage
-  alt="'Move elements to' popup"
-  sources={{
-    light: '/img/assets/media-library/media-library_move-assets.png',
-    dark: '/img/assets/media-library/media-library_move-assets_DARK.png',
-  }}
-/>
+:::note
+A folder cannot be moved into itself or into one of its own subfolders. Invalid destinations are refused while you drag.
+:::
 
-#### Editing folders
+:::tip
+Drag and drop uses the pointer. To move items with the keyboard, use the **Move to folder** action of the <Icon name="dots-three" classes="ph-bold" /> **More actions** menu instead.
+:::
 
-Once created, a folder can be renamed, moved or deleted.
+#### Renaming folders
 
-1. In the Folders part of the Media library, hover the folder to be edited and click its edit button <Icon name="pencil-simple" />.
-2. In the window that pops up, update the name and location with the _Name_ field and _Location_ drop-down list, respectively.
-3. Click **Save**.
+1. Click the <Icon name="dots-three" classes="ph-bold" /> **More actions** button of the folder.
+2. Click <Icon name="pencil-simple" /> **Rename folder**.
+3. Type the new name in the _Folder name_ field.
+4. Click **Save**.
+
+:::note
+A folder name must be unique among the folders sharing the same parent.
+:::
 
 #### Deleting folders
 
-Deleting a folder can be done either from the list of folders of the Media Library, or when editing a single folder.
+1. Click the <Icon name="dots-three" classes="ph-bold" /> **More actions** button of the folder.
+2. Click <Icon name="trash" /> **Delete folder**.
+3. Click **Confirm**.
 
-1. Click the checkbox on the left of the folder name. Multiple folders can be selected.
-2. Click the <Icon name="trash" /> **Delete** button above the Folders list.
-3. In the _Confirmation_ dialog, click **Confirm**.
-
-:::note
-A single folder can also be deleted when editing it: hover the folder, click on its edit icon <Icon name="pencil-simple" />, and in the window that pops up, click the **Delete folder** button and confirm the deletion.
+:::warning
+Deleting a folder also deletes everything it contains, including its subfolders and their assets. None of it can be recovered, and the confirmation dialog does not say so.
 :::
+
+Folders can also be deleted in bulk, together with assets (see [deleting items in bulk](#bulk-delete)).
 
 ### Usage with the REST API
 

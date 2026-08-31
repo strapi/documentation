@@ -109,7 +109,8 @@ Developers can use the following APIs to interact with future flags:
 
 ## Available future flags
 
-| Property name | Related feature | Suggested environment variable name |
-| ------------- | --------------- | ---------------------------------- |
-| `experimental_firstPublishedAt` | [Draft & Publish](/cms/features/draft-and-publish#recording-the-first-publication-date) | `STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT` |
+| Property name | Related feature | Suggested environment variable name | Maturity |
+| ------------- | --------------- | ---------------------------------- | -------- |
+| `betaMediaLibrary` | [Media Library](/cms/features/media-library) | `STRAPI_FUTURE_BETA_MEDIA_LIBRARY` | The feature works end to end, and its property name, route and menu entry are already the ones it will ship with. It may still change before it becomes generally available. |
+| `experimental_firstPublishedAt` | [Draft & Publish](/cms/features/draft-and-publish#recording-the-first-publication-date) | `STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT` | The feature works, but its design is still being validated against real usage. |
 
