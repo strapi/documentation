@@ -37,6 +37,17 @@ env:
   # `license/cla` is permanently pending on pipeline PRs because the CLA bot does
   # not recognise the author, so an "all green" rule would never fire.
   REQUIRED_CHECKS: 'Vercel,check-labels'
+  # Logins whose comments do not count as human feedback, whitespace-separated.
+  #
+  # `[bot]`-suffixed accounts are filtered separately and need no entry here.
+  # `strapi-cla` does: it is a service account of type "User", so nothing in the
+  # API marks it as automated, and it comments on every single PR — leaving it in
+  # would hold every PR forever.
+  #
+  # `pwizla` is here for a different reason: the maintainer already has the
+  # labels to stop a merge, and asking a question on a PR should not silently
+  # veto it.
+  IGNORED_COMMENTERS: 'strapi-cla pwizla'
 
 jobs:
   merge:
@@ -208,6 +219,42 @@ jobs:
               echo "  #$PR — held: ${BLOCKING%, }"
               HELD=$((HELD + 1))
               HELD_LIST="${HELD_LIST}• ${LINK} — ${BLOCKING%, }\n"
+              continue
+            fi
+
+            # Human feedback outranks the gate. The eligibility label judges form
+            # at open time and cannot see what arrives afterwards; a person
+            # taking the time to comment is the strongest signal the PR has, and
+            # merging past it is how a contested change reaches production.
+            #
+            # On #3428 a community member pointed out that the answer behind the
+            # PR was wrong about where something was documented. The gate had no
+            # way to know, and only the weekend delay kept it from merging.
+            #
+            # Review comments count too — feedback left on a diff line is still
+            # feedback. One login per line, so the filtering below is a plain
+            # line match rather than comma parsing.
+            COMMENTERS=$( { gh api \
+                "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --paginate \
+                --jq '.[].user.login' 2>/dev/null
+              gh api \
+                "repos/$GITHUB_REPOSITORY/pulls/$PR/comments" --paginate \
+                --jq '.[].user.login' 2>/dev/null
+              } | grep -vxF -f <(printf '%s\n' "$IGNORED_COMMENTERS" | tr ' ' '\n') \
+                | grep -v '\[bot\]$' \
+                | sort -u | paste -sd ', ' -)
+
+            if [ -n "$COMMENTERS" ]; then
+              echo "  #$PR — held: human feedback from ${COMMENTERS}"
+              HELD=$((HELD + 1))
+              HELD_LIST="${HELD_LIST}• ${LINK} — human feedback from ${COMMENTERS}\n"
+
+              # Recorded on the PR so the hold is visible there, not only in the
+              # Slack recap. Removing the label is what releases it.
+              if [ "$DRY_RUN" != "true" ]; then
+                gh pr edit "$PR" --repo "$GITHUB_REPOSITORY" \
+                  --add-label "needs-human-review" 2>/dev/null || true
+              fi
               continue
             fi
 
