@@ -372,23 +372,31 @@ jobs:
           SOURCE_LINE=""
           [ -n "$SOURCE" ] && SOURCE_LINE="\nCorresponding Strapi CMS PR: <https://github.com/strapi/strapi/pull/${SOURCE}|strapi/strapi#${SOURCE}>"
 
-          # The first cron run that merges this PR, named rather than guessed.
-          # "tomorrow" was wrong whenever the run happened before the 24h
-          # quarantine expired: a PR opened at 07:00 UTC is still 1h too young at
-          # the 08:00 run the next day, so it only goes in the day after. The
-          # cron is daily at 08:00 UTC, so the first eligible run is the first
-          # 08:00 that falls at least QUARANTINE_HOURS after the PR was opened.
+          # The cron run that will actually merge this PR, named rather than
+          # guessed. "tomorrow" was wrong in two ways, and both were visible on
+          # #3428: opened Friday 15:12 UTC, it announced Saturday, and the cron
+          # does not run at the weekend. It merged on the Monday.
+          #
+          # Two rules decide the day. The quarantine has to have expired by the
+          # time the run starts, and the run only happens on a weekday. So: take
+          # the moment the PR turns 24h old, pick that day's 08:00 run if it has
+          # not gone by yet, otherwise the next one, then walk forward to the
+          # first weekday.
           MERGE_AT=$(date -u -d "+$QUARANTINE_HOURS hours" '+%Y-%m-%dT%H:%M:%SZ')
           MERGE_DAY=$(date -u -d "$MERGE_AT" '+%Y-%m-%d')
           # Compared as HHMM against the 08:00 run, so 08:00:00 exactly counts as
           # ripe in time for that run rather than being pushed to the next day.
           MERGE_HHMM=$(date -u -d "$MERGE_AT" '+%H%M')
 
-          # Ripe only after that day's run has already gone by, so it waits for
-          # the next one.
           if [ "$((10#$MERGE_HHMM))" -gt 800 ]; then
             MERGE_DAY=$(date -u -d "$MERGE_DAY +1 day" '+%Y-%m-%d')
           fi
+
+          # 6 = Saturday, 7 = Sunday. At most two hops, but written as a loop so
+          # the cron schedule and this calculation cannot drift apart silently.
+          while [ "$(date -u -d "$MERGE_DAY" '+%u')" -gt 5 ]; do
+            MERGE_DAY=$(date -u -d "$MERGE_DAY +1 day" '+%Y-%m-%d')
+          done
 
           WHEN=$(date -u -d "$MERGE_DAY" '+%A %-d %B')
 
