@@ -89,6 +89,7 @@ You can click on the description of any breaking change in the following tables 
 | [The Admin Panel RBAC redux store has been updated](/cms/migration/v4-to-v5/breaking-changes/admin-panel-rbac-store-updated) | Yes | No |
 | [The `getWhere` method for permission provider instances has been removed](/cms/migration/v4-to-v5/breaking-changes/get-where-removed) | Yes | No |
 | [The Design System has been upgraded](/cms/migration/v4-to-v5/breaking-changes/design-system) | Yes | No |
+| [The watch-admin mode is enabled by default](/cms/migration/v4-to-v5/breaking-changes/watch-admin-enabled-by-default) | No | No |
 
 ## Content API
 

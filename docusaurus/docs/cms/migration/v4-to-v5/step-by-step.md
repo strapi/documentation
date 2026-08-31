@@ -99,7 +99,7 @@ For each of them, read the indicated breaking change entry and check if some man
     2. Custom configuration must meet specific requirements 👉 see [breaking change](/cms/migration/v4-to-v5/breaking-changes/strict-requirements-config-files)
 3. **Admin panel customization**:
     * The helper-plugin has been removed 👉 see [migration reference](/cms/migration/v4-to-v5/additional-resources/helper-plugin)
-    * `strapi develop` now starts in watch-admin mode by default (was opt-in via `--watch-admin` in v4); use `--no-watch-admin` to disable 👉 see [CLI reference](/cms/cli#strapi-develop)
+    * The watch-admin mode is enabled by default 👉 see [breaking change](/cms/migration/v4-to-v5/breaking-changes/watch-admin-enabled-by-default)
 
 👉 Finally, go over the rest of the [breaking changes database](/cms/migration/v4-to-v5/breaking-changes) for any edge case you might be concerned about.
 
