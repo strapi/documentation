@@ -34730,7 +34730,7 @@ module.exports = () => ({
 
 Restart your Strapi application after the configuration change. Set the property to `false` and restart Strapi to use the current stable version again.
 
-The current page still describes the stable version of the Media Library. Over the next few weeks, the documentation will be updated to reflect the new features. In the meantime, there is a work-in-progress documentation](https://documentation-git-cms-media-library-beta-ui-docs-strapijs.vercel.app/cms/features/media-library) available and you can [read more about the future features here](https://strapi.notion.site/Media-Library-Beta-Release-3c78f3598074810dbad6f2addfa25b6f).
+The current page still describes the stable version of the Media Library. Over the next few weeks, the documentation will be updated to reflect the new features. In the meantime, there is a [work-in-progress documentation](https://documentation-git-cms-media-library-beta-ui-docs-strapijs.vercel.app/cms/features/media-library) available and you can [read more about the future features here](https://strapi.notion.site/Media-Library-Beta-Release-3c78f3598074810dbad6f2addfa25b6f).
 :::
 
 ## Configuration
