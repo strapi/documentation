@@ -9,6 +9,9 @@ name: 'Auto-merge: merge eligible PRs'
 
 on:
   schedule:
+    # Weekdays only, deliberately. An unattended merge should land when someone
+    # is around to notice it went wrong — a Saturday merge sits unwatched until
+    # Monday either way, so the delay costs nothing and buys supervision.
     - cron: '0 8 * * 1-5' # 08:00 UTC, weekdays
   workflow_dispatch:
     inputs:
