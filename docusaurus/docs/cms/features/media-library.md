@@ -818,7 +818,7 @@ Each folder and asset in the list has a checkbox to select it (see [selecting it
 | --- | --- |
 | **Add new assets** and **Add new folder** buttons | A single **New** button that does both (see [adding assets](#adding-assets)) |
 | Breadcrumbs above the list | A folder tree on the left (see [navigating folders](#navigating-folders)) |
-| Folder cards displaying how many items they hold | Folder names only. To know the size of a folder, open it and read the page title |
+| Folder cards displaying how many items they hold | Folder names only. To know how many assets a folder holds directly, open it and read the page title |
 | Pagination, with an _Entries per page_ setting | No pagination: more assets load as you scroll |
 | A <Icon name="gear-six" /> button to configure the view | No view configuration (see [configuring the view](#configuring-the-view)) |
 | A <Icon name="magnifying-glass" classes="ph-bold" /> button opening a search field | A search field always displayed in the toolbar (see [searching assets](#searching-assets)) |
@@ -835,7 +835,7 @@ The Media Library stores what you are looking at in the page URL: the current fo
 
 The list displays either as a grid of cards or as a table. Click <Icon name="squares-four" classes="ph-bold" /> **Grid view** or <Icon name="list" classes="ph-bold" /> **Table view** in the toolbar to switch. Your choice is remembered in your browser for the next visit.
 
-The table view displays a _name_, _Creation Date_, _Last Modified_ and _size_ column for each item, along with a **Select all** checkbox in the header row. Assets missing a caption or an alternative text are flagged with a warning icon.
+The table view displays a _Name_, _Creation date_, _Last modified_ and _Size_ column for each item, along with a **Select all** checkbox in the header row. Assets missing a caption or an alternative text are flagged with a warning icon.
 
 <ThemedImage
   alt="Media Library displaying folders and assets as a table"
@@ -955,10 +955,10 @@ Files dropped from your computer always land in the folder you are currently bro
 
 1. Click the **New** button in the upper right corner of the Media Library.
 2. Click <Icon name="link" classes="ph-bold" /> **File upload from URL**.
-3. In the _URL(s)_ field, type or paste up to 20 URLs, one per line.
+3. In the _URL(s)_ field of the _Import from URL_ dialog, type or paste up to 20 URLs, one per line.
 4. Click **Upload**.
 
-Strapi downloads each file server-side and adds it to the current folder. The size of a file is only known once the server has fetched it, so the upload dialog displays a moving progress bar without a percentage for this flow.
+Strapi downloads each file server-side and adds it to the current folder. The server reports no incremental byte count for this flow, so the upload dialog displays a moving progress bar without a percentage.
 
 :::caution
 URLs must use the `http` or `https` protocol, and must resolve to a publicly reachable address. URLs that resolve to a private or internal address, such as `localhost` or an address on your own network, are rejected to prevent server-side request forgery.
@@ -1080,7 +1080,7 @@ The _Sort_ section offers 6 mutually exclusive rules: Oldest uploads, Most recen
 In the table view, an additional _Folders_ section decides whether folders are grouped On top, which is the default, or Mixed with files, in which case they follow the active sort rule. The grid view always groups folders on top, so it does not display that section.
 
 :::note
-The sort rule applies to the assets. Folders stay in alphabetical order unless you pick A to Z or Z to A, and the 2 file size rules never reorder them.
+Folders follow the active sort rule when it can apply to them: Oldest uploads orders them by their own creation date, and A to Z and Z to A by name. They stay in alphabetical order for the default Most recent updates rule, and for the 2 file size rules because folders have no size.
 :::
 
 ### Managing individual assets {#managing-assets}
@@ -1132,7 +1132,7 @@ One editor handles both cropping and the focus area. The focus area, also called
 
 1. Click an image in the list to open its details panel.
 2. Click the <Icon name="crop" classes="ph-bold" /> **Crop** button on the preview. The _Crop & Focus area_ editor opens.
-3. Define the crop area by dragging the handles in the corners of the rectangle, or by typing exact values in the _Width (px)_ and _Height (px)_ fields.
+3. Define the crop area by dragging the handles in the corners of the rectangle, or by typing exact values in the width and height fields of the editor panel.
 4. (optional) Click the <Icon name="link" classes="ph-bold" /> **Lock aspect ratio** button to resize both dimensions together.
 5. Define the focus area by dragging the circle inside the crop rectangle, or by typing exact values in the _X_ and _Y_ fields.
 6. Save your changes:
@@ -1201,6 +1201,8 @@ The following shortcuts speed up selection:
 | `Shift` + click | Selects every item between the last selected item and the clicked one. |
 | `Space` | With a card or a row focused, adds it to the selection or removes it. |
 | `Enter` | With a card or a row focused, opens the asset details panel, or enters the folder. |
+
+Both modifier shortcuts work on the card or the row itself. Clicking the file name always opens the details panel, whatever modifier you hold.
 
 In the table view only, a **Select all** checkbox in the header row selects every item currently displayed. The grid view has no equivalent.
 
@@ -1306,7 +1308,11 @@ A folder name must be unique among the folders sharing the same parent.
 2. Click <Icon name="trash" /> **Delete folder**.
 3. Click **Confirm**.
 
-Folders can also be deleted in bulk, together with assets (see [deleting items in bulk](#bulk-delete)), where the same warning about their content applies.
+:::warning
+Deleting a folder also deletes everything it contains, including its subfolders and their assets. None of it can be recovered, and the confirmation dialog does not say so.
+:::
+
+Folders can also be deleted in bulk, together with assets (see [deleting items in bulk](#bulk-delete)).
 
 ### Usage with the REST API
 

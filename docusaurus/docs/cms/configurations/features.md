@@ -22,13 +22,6 @@ Some incoming Strapi features are not yet ready to be shipped to all users, but 
 
 Such experimental features are indicated by a <FeatureFlagBadge /> badge throughout the documentation, where the name of the feature flag to use is included in the badge (e.g., <FeatureFlagBadge feature="FeatureFlagName" noTooltip />). Enabling these features requires enabling the corresponding future flags. Future flags differ from features that are in alpha in that future flags are disabled by default.
 
-The prefix of a future flag's property name indicates how far the feature has progressed:
-
-| Prefix | Example | Meaning |
-| ------ | ------- | ------- |
-| `beta` | `betaMediaLibrary` | The feature works end to end, and its property name, route and menu entry are already the ones it will ship with. It may still change before it becomes generally available. |
-| `experimental_` | `experimental_firstPublishedAt` | The feature works, but its design is still being validated against real usage. |
-
 :::danger
 Enable future flags at your own risk. Experimental features may be subject to change or removal, may contain breaking changes, may be unstable or not fully ready for use, and some parts may still be under development or using mock data.
 :::
@@ -116,8 +109,8 @@ Developers can use the following APIs to interact with future flags:
 
 ## Available future flags
 
-| Property name | Related feature | Suggested environment variable name |
-| ------------- | --------------- | ---------------------------------- |
-| `betaMediaLibrary` | [Media Library](/cms/features/media-library) | `STRAPI_FUTURE_BETA_MEDIA_LIBRARY` |
-| `experimental_firstPublishedAt` | [Draft & Publish](/cms/features/draft-and-publish#recording-the-first-publication-date) | `STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT` |
+| Property name | Related feature | Suggested environment variable name | Maturity |
+| ------------- | --------------- | ---------------------------------- | -------- |
+| `betaMediaLibrary` | [Media Library](/cms/features/media-library) | `STRAPI_FUTURE_BETA_MEDIA_LIBRARY` | The feature works end to end, and its property name, route and menu entry are already the ones it will ship with. It may still change before it becomes generally available. |
+| `experimental_firstPublishedAt` | [Draft & Publish](/cms/features/draft-and-publish#recording-the-first-publication-date) | `STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT` | The feature works, but its design is still being validated against real usage. |
 
