@@ -209,7 +209,70 @@ jobs:
               }
               
               responseBody += `${aiResponse}\n\n`;
-              
+
+              // Verify the answer's "this is already documented" claims against
+              // the actual docs before posting it.
+              //
+              // On issue #3427 the answer stated the watch-admin change was
+              // already referenced in the breaking changes list. It was not, and
+              // the mistake travelled all the way into a PR before a human
+              // spotted it. The check below cannot judge whether an answer is
+              // right, but it can tell whether the topic exists where the answer
+              // says it does.
+              let claimReport = null;
+              try {
+                const fs = require('fs');
+                const { execFileSync } = require('child_process');
+                // Distinct filenames: /tmp/issue-body.txt is written further
+                // down with finalBody, for the triage stage.
+                fs.writeFileSync('/tmp/claim-answer.txt', aiResponse);
+                fs.writeFileSync('/tmp/claim-issue-body.txt', issueBody || '');
+
+                const raw = execFileSync('node', [
+                  '.github/scripts/verify-doc-claims.js',
+                  '/tmp/claim-answer.txt',
+                  issueTitle,
+                  '/tmp/claim-issue-body.txt',
+                ], { encoding: 'utf8' });
+
+                claimReport = JSON.parse(raw);
+                console.log('Doc claim verification:', raw.trim());
+              } catch (err) {
+                // Never let verification block the answer: an unposted response
+                // is worse than an unverified one.
+                console.log(`Doc claim verification skipped: ${err.message}`);
+              }
+
+              const claimWarnings = [];
+
+              if (claimReport?.unverified?.length) {
+                for (const item of claimReport.unverified) {
+                  claimWarnings.push(
+                    `[${item.url}](${item.url}) does not mention ${item.terms.map(t => `\`${t}\``).join(' or ')}`
+                  );
+                }
+              }
+
+              if (claimReport?.coverage && !claimReport.coverage.found) {
+                claimWarnings.push(
+                  `this answer says the topic is already documented, but ` +
+                  `${claimReport.coverage.terms.map(t => `\`${t}\``).join(' / ')} ` +
+                  `could not be found anywhere in the docs`
+                );
+              }
+
+              if (claimWarnings.length > 0) {
+                responseBody += `> [!WARNING]\n`;
+                responseBody += `> **Some claims in this answer could not be verified against the docs:**\n`;
+                for (const warning of claimWarnings) {
+                  responseBody += `> - ${warning}\n`;
+                }
+                responseBody += `>\n`;
+                responseBody += `> A maintainer should confirm these before the answer is acted on.\n\n`;
+
+                core.setOutput('claims_unverified', 'true');
+              }
+
               if (sources.length > 0) {
                 responseBody += `📚 **Relevant documentation:**\n`;
                 
@@ -328,7 +391,14 @@ jobs:
               }
               
               labels.push('auto-responded');
-              
+
+              // Set when the answer asserted coverage that could not be found.
+              // The warning in the comment tells the reporter; the label is what
+              // makes the issue findable among the ones that need a second look.
+              if (claimWarnings.length > 0) {
+                labels.push('needs-human-review');
+              }
+
               if (labels.length > 0) {
                 await github.rest.issues.addLabels({
                   owner: context.repo.owner,
