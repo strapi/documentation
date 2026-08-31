@@ -53,6 +53,10 @@ env:
   APPROVED_LABEL: 'automerge: approved by piwi'
   SCOPE_LABEL: auto-doc-healing
   QUIET_PERIOD_MINUTES: 5
+  # Only used to tell the maintainer when the merge will happen. The cron owns
+  # the actual quarantine; this copy must be kept in step with the value in
+  # automerge-cron.yml, or the announced date drifts from the real one.
+  QUARANTINE_HOURS: 24
 
 jobs:
   evaluate:
@@ -368,8 +372,28 @@ jobs:
           SOURCE_LINE=""
           [ -n "$SOURCE" ] && SOURCE_LINE="\nCorresponding Strapi CMS PR: <https://github.com/strapi/strapi/pull/${SOURCE}|strapi/strapi#${SOURCE}>"
 
-          TEXT=$(printf ':hourglass_flowing_sand: *Will auto-merge tomorrow*\n%s\n%s%b\n\nStop it by adding the `flag: don'\''t merge` label.' \
-            "$LINE" "$CONTEXT" "$SOURCE_LINE")
+          # The first cron run that merges this PR, named rather than guessed.
+          # "tomorrow" was wrong whenever the run happened before the 24h
+          # quarantine expired: a PR opened at 07:00 UTC is still 1h too young at
+          # the 08:00 run the next day, so it only goes in the day after. The
+          # cron is daily at 08:00 UTC, so the first eligible run is the first
+          # 08:00 that falls at least QUARANTINE_HOURS after the PR was opened.
+          MERGE_AT=$(date -u -d "+$QUARANTINE_HOURS hours" '+%Y-%m-%dT%H:%M:%SZ')
+          MERGE_DAY=$(date -u -d "$MERGE_AT" '+%Y-%m-%d')
+          # Compared as HHMM against the 08:00 run, so 08:00:00 exactly counts as
+          # ripe in time for that run rather than being pushed to the next day.
+          MERGE_HHMM=$(date -u -d "$MERGE_AT" '+%H%M')
+
+          # Ripe only after that day's run has already gone by, so it waits for
+          # the next one.
+          if [ "$((10#$MERGE_HHMM))" -gt 800 ]; then
+            MERGE_DAY=$(date -u -d "$MERGE_DAY +1 day" '+%Y-%m-%d')
+          fi
+
+          WHEN=$(date -u -d "$MERGE_DAY" '+%A %-d %B')
+
+          TEXT=$(printf ':hourglass_flowing_sand: *Will auto-merge on %s* (08:00 UTC)\n%s\n%s%b\n\nStop it by adding the `flag: don'\''t merge` label.' \
+            "$WHEN" "$LINE" "$CONTEXT" "$SOURCE_LINE")
 
           curl -s -X POST "https://slack.com/api/chat.postMessage" \
             -H "Authorization: Bearer $SLACK_BOT_TOKEN" \

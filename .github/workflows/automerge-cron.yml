@@ -9,7 +9,11 @@ name: 'Auto-merge: merge eligible PRs'
 
 on:
   schedule:
-    - cron: '0 8 * * 1-5' # 08:00 UTC, weekdays
+    # Daily, not weekdays-only. The quarantine already decides when a PR is ripe;
+    # the schedule only decides how often that is checked. Skipping weekends made
+    # a PR opened after Friday's run wait until Monday — 72h instead of the 24h
+    # the eligibility comment promises.
+    - cron: '0 8 * * *' # 08:00 UTC, daily
   workflow_dispatch:
     inputs:
       dry_run:
