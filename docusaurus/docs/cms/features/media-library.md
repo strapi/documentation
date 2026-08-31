@@ -777,7 +777,7 @@ export default ({ env }) => ({
 
 </Tabs>
 
-## Usage <FeatureFlagBadge feature="betaMediaLibrary" />
+## Usage <FeatureFlagBadge feature="betaMediaLibrary" /> {#usage}
 
 **Path to use the feature:** <Icon name="images" /> Media Library
 
