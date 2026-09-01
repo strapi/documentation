@@ -77,6 +77,28 @@ export default function FeedbackForm({
           </button>
         </div>
       </div>
+      {required && (
+        <p className="pageFeedback__scopeNote">
+          Please report feedback about the documentation website only. For
+          the Strapi product, use{' '}
+          <a
+            href="https://feedback.strapi.io"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            feedback.strapi.io
+          </a>{' '}
+          (for feature requests) or{' '}
+          <a
+            href="https://github.com/strapi/strapi/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub issues
+          </a>{' '}
+          (for bugs).
+        </p>
+      )}
     </form>
   );
 }
