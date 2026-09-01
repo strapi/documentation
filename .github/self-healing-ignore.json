@@ -1174,6 +1174,16 @@
       "number": 27463,
       "reason": "Router: Internal admin UI enhancement to Media Library upload progress display. Changes internal store logic and component rendering to show indeterminate progress for URL uploads instead of frozen 0%. No new public API, configuration, or user-facing features exposed. UX improvement only — no new capabilities or breaking changes that warrant user documentation updates.",
       "added": "2026-08-29"
+    },
+    {
+      "number": 27497,
+      "reason": "Triage: Test infrastructure fix; adds missing required field to test calls after type change from another merged PR",
+      "added": "2026-09-01"
+    },
+    {
+      "number": 27477,
+      "reason": "Router: Internal admin UI improvements (layout, rendering, truncation) in the Media Library beta. These are visual/UX bug fixes with no new functionality, API changes, or changes to documented user-facing behavior. The existing Media Library documentation (cms/features/media-library.md) remains accurate.",
+      "added": "2026-09-01"
     }
   ]
 }
