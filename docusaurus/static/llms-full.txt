@@ -23374,7 +23374,7 @@ module.exports = {
    */
 
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
     },
     options: {
@@ -23418,7 +23418,7 @@ module.exports = {
    */
 
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       /* Add your own logic here */
     },
     options: {
@@ -23451,7 +23451,7 @@ module.exports = {
 ```ts title="./config/cron-tasks.ts"
 
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       /* Add your own logic here */
     },
     // only run once after 10 seconds
@@ -23487,7 +23487,7 @@ module.exports = {
 ```ts title="./config/cron-tasks.ts"
 
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       /* Add your own logic here */
     },
     // only run once after 10 seconds
@@ -23532,7 +23532,7 @@ module.exports = {
    * Every monday at 1am.
    */
 
-  "0 0 1 * * 1": ({ strapi }) => {
+  "0 0 1 * * 1": async ({ strapi }) => {
     // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
   },
 };
