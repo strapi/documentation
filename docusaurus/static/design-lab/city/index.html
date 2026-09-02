@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Strapi Documentation</title>
+<meta name="description" content="The Strapi documentation, laid out as a city at night: districts are sections, buildings are pages, roads are the links between them.">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="city.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2305070f'/%3E%3Crect x='4' y='14' width='6' height='14' fill='%23ffb454'/%3E%3Crect x='13' y='6' width='6' height='22' fill='%238f83ff'/%3E%3Crect x='22' y='18' width='6' height='10' fill='%237fd8ff'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<div id="boot">
+  <div>
+    <div class="bt">Strapi Docs</div>
+    <div class="bs">Building the city</div>
+    <div class="bar"><i></i></div>
+  </div>
+</div>
+
+<div id="scene" aria-hidden="true">
+  <div id="sky"></div>
+  <div id="plate">
+    <canvas id="ground"></canvas>
+    <canvas id="glow"></canvas>
+  </div>
+  <div id="cam">
+    <div id="seltip"><i class="beam"></i><div class="card"><div class="tt"></div><div class="tm"></div></div></div>
+    <div id="tip"><div class="card"><div class="tt"></div><div class="tm"></div></div></div>
+  </div>
+</div>
+
+<header id="topbar">
+  <a class="brand" href="#/cms/intro"><span class="bn">Strapi Docs</span><span class="bv" id="ver">5.x</span></a>
+  <button class="tbtn" id="btnIndex" aria-pressed="false" aria-controls="side">Index</button>
+  <div id="searchwrap">
+    <span class="si" aria-hidden="true">⌕</span>
+    <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search 290 pages…  (press /)" aria-label="Search the documentation" aria-expanded="false" role="combobox" aria-controls="results">
+    <div id="results" role="listbox" aria-label="Search results"></div>
+  </div>
+  <span class="spacer"></span>
+  <button class="tbtn" id="btnCity">City</button>
+</header>
+
+<nav id="side" aria-label="Documentation index"></nav>
+
+<div id="hud">
+  <div id="dhud"></div>
+  <div class="legend">
+    <span><b>Height</b> words</span>
+    <span><b>Lit windows</b> code blocks</span>
+    <span><b>Roads</b> links between pages</span>
+  </div>
+</div>
+
+<div id="compass">
+  <button class="cb" id="cRot" title="Rotate the view 45°" aria-label="Rotate the view">⟳</button>
+  <button class="cb" id="cIn" title="Zoom in" aria-label="Zoom in">＋</button>
+  <button class="cb" id="cOut" title="Zoom out" aria-label="Zoom out">－</button>
+  <button class="cb" id="cHome" title="Reset the view" aria-label="Reset the view">⌂</button>
+</div>
+
+<main id="reader" aria-label="Page content">
+  <div id="rhead">
+    <div id="crumb"></div>
+    <button class="tbtn" id="btnPrev" title="Previous page" aria-label="Previous page">←</button>
+    <button class="tbtn" id="btnNext" title="Next page" aria-label="Next page">→</button>
+    <button class="tbtn" id="btnClose" title="Close and return to the city" aria-label="Close">✕</button>
+  </div>
+  <div id="rbody" tabindex="-1"><div class="doc" id="doc"></div></div>
+</main>
+
+<script src="city.js"></script>
+</body>
+</html>
