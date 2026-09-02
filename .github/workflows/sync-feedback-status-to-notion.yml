@@ -1,0 +1,49 @@
+name: Sync Feedback Status to Notion
+
+# Keeps the Status of the "Docs website feedback items" Notion database in step
+# with the GitHub issues and PRs that address each feedback item:
+#   a linked PR is open   -> "in progress"
+#   a linked PR is merged -> "addressed"
+# The status ladder only moves forward, and "nothing to do" and "wontfix" are
+# never touched. See .github/scripts/sync-feedback-status-to-notion.mjs.
+
+on:
+  schedule:
+    - cron: '15 6 * * 1-5' # 06:15 UTC Mon-Fri, before the working day starts
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run — log the planned changes without writing to Notion'
+        required: false
+        type: boolean
+        default: false
+
+# A manual dispatch must never race the scheduled run over the same rows.
+concurrency:
+  group: sync-feedback-status-to-notion
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sync feedback status to Notion
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_FEEDBACK_DB: ${{ secrets.NOTION_FEEDBACK_DB }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: node .github/scripts/sync-feedback-status-to-notion.mjs
