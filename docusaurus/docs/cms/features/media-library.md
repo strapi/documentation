@@ -891,7 +891,7 @@ To add a focal point to an image:
 3. Click **Confirm**.
 
 :::tip
-Assets can also be deleted individually or in bulk from the main view of the Media Library. Select assets by clicking on their checkbox in the top left corner, then click the Delete icon <Icon name="trash" /> at the top of the window, below the filters and sorting options.
+Assets can also be deleted individually or in bulk from the main view of the Media Library. Select assets by clicking on their checkbox in the top left corner. You can also click the **Select all** button in the bulk actions bar to select all rendered items at once. Once selected, click the Delete icon <Icon name="trash" /> at the top of the window, below the filters and sorting options.
 :::
 
 ### Organizing assets with folders
