@@ -1204,9 +1204,11 @@ The following shortcuts speed up selection:
 
 Both modifier shortcuts work on the card or the row itself. Clicking the file name always opens the details panel, whatever modifier you hold.
 
-In the table view only, a **Select all** checkbox in the header row selects every item currently displayed. The grid view has no equivalent.
+In the table view, a **Select all** checkbox in the header row selects every item currently displayed, and empties the selection when everything is already selected.
 
 Selecting an item displays the bulk actions bar at the bottom of the interface. The bar reports how many items are selected and offers the bulk actions. Click <Icon name="x" classes="ph-bold" /> **Clear selection** to empty the selection.
+
+In the grid view as well as the table view, the bar also offers a **Select all** button <VersionBadge version="5.52.3+" noTooltip /> that selects every folder and asset currently displayed. Only the items already loaded are selected: scroll further down the list, then click **Select all** again to add the newly loaded items. Unlike the checkbox of the table view header, the button does not empty the selection when everything is already selected.
 
 <ThemedImage
   alt="Bulk actions bar at the bottom of the Media Library, with several items selected"
