@@ -29,7 +29,61 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 
 
-_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.52.2](https://github.com/strapi/strapi/releases/tag/v5.52.2)._
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [5.52.3](https://github.com/strapi/strapi/releases/tag/v5.52.3)._
+
+## 7.1.1
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Add Tigris to S3-compatible providers in Amazon S3 provider documenta…](https://github.com/strapi/documentation/pull/3426)
+- [Fix incorrect claim that Strapi deletes unknown database tables](https://github.com/strapi/documentation/pull/3421)
+- [Document the component preview field for the dynamic zone picker](https://github.com/strapi/documentation/pull/3366)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Add async to TypeScript cron task function examples](https://github.com/strapi/documentation/pull/3436)
+- [Document watch-admin default behavior change in the v4-to-v5 migration guide](https://github.com/strapi/documentation/pull/3428)
+- [Fix the response shape of the localized GET by documentId example](https://github.com/strapi/documentation/pull/3424)
+- [Document the publication behavior of localized POST and PUT requests](https://github.com/strapi/documentation/pull/3422)
+- [Document MIME type detection for ambiguous file types in Media Library](https://github.com/strapi/documentation/pull/3418)
+- [Remove duplicated words](https://github.com/strapi/documentation/pull/3414)
+
+#### Repository
+- [Add a scope note to the negative feedback form](https://github.com/strapi/documentation/pull/3434)
+- [Hold auto-merge on PRs a human has commented on](https://github.com/strapi/documentation/pull/3431)
+- [Verify the docs claims of AI issue answers before posting them](https://github.com/strapi/documentation/pull/3430)
+- [Add REST API response shapes to the known-pitfalls catalog](https://github.com/strapi/documentation/pull/3425)
+- [Make pitfalls-add write the canonical known-pitfalls catalog first](https://github.com/strapi/documentation/pull/3416)
+- [Use bash {0} so a failing check does not abort the auto-merge eligibility run](https://github.com/strapi/documentation/pull/3409)
+- [Stop the auto-merge eligibility run aborting on the first failing check](https://github.com/strapi/documentation/pull/3408)
+- [Allow evaluating a PR's eligibility manually](https://github.com/strapi/documentation/pull/3406)
+- [Add the ability to auto-merge self-healing documentation PRs](https://github.com/strapi/documentation/pull/3401)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/davidmyriel" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/62056091?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="davidmyriel"/>
+</a>
+<a href="https://github.com/eknathdj" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/180817810?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="eknathdj"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+
 
 ## 7.1.0
 
