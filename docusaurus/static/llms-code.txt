@@ -25926,9 +25926,9 @@ export default {
 ```
 
 
-## SVG uploads
+## File type detection for ambiguous MIME types
 Description: You can provide them by creating or editing the /config/plugins file.
-(Source: https://docs.strapi.io/cms/features/media-library#svg-uploads)
+(Source: https://docs.strapi.io/cms/features/media-library#file-type-detection-for-ambiguous-mime-types)
 
 Language: JavaScript
 File path: /config/plugins.js

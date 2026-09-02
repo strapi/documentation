@@ -35009,6 +35009,19 @@ To accept SVG uploads, remove `image/svg+xml` from `deniedTypes` in your `config
 You can use `allowedTypes` and `deniedTypes` separately or together to fine-tune which files are accepted. Files must match an allowed type and must not match any denied type. If you use a wildcard like `*` in `allowedTypes`, you can narrow down the validation by specifying exceptions in `deniedTypes`.
 :::
 
+##### File type detection for ambiguous MIME types
+
+When browsers report generic MIME types for files (such as `application/octet-stream`), Strapi's Media Library performs file-type detection by examining the file's actual content bytes. This ensures accurate file classification and filtering, particularly for formats like `.mov` files on Windows systems, which are often reported with generic MIME types by the browser.
+
+The file type detection is used for:
+
+- Classifying media in the Media Library preview and grid
+- Validating media field constraints (e.g., `allowedTypes: ['video/*']`) in the Content Manager
+
+:::note
+The server remains the security boundary. While the admin panel performs client-side file type detection for better UX, the backend validates the file's MIME type before storage. This means that even if the browser initially misidentifies a file type, the correct MIME type is detected and stored on the server.
+:::
+
 You can provide them by creating or editing [the `/config/plugins` file](/cms/configurations/plugins). The following is an example of how to combine `allowedTypes` and `deniedTypes`:
 
 ```js title="/config/plugins.js"
