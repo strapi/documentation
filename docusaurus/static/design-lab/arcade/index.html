@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strapi Docs — Arcade</title>
+<meta name="description" content="The Strapi documentation as a top-down map. Every page is a room; the citation graph is the corridor network.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="arcade.css">
+</head>
+<body>
+<div id="boot" class="boot">
+  <div class="boot-inner">
+    <pre class="boot-logo">STRAPI DOCS</pre>
+    <p class="boot-line" id="boot-line">LOADING CORPUS…</p>
+  </div>
+</div>
+
+<div class="shell" id="shell" hidden>
+
+  <header class="hud" id="hud">
+    <div class="hud-brand">
+      <button class="iconbtn only-narrow" id="btn-nav" aria-label="Toggle index" aria-expanded="false">INDEX</button>
+      <a class="brand" href="#/cms/intro">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-txt">STRAPI DOCS</span>
+        <span class="brand-sub" id="brand-ver">5.x</span>
+      </a>
+    </div>
+
+    <dl class="meters" id="meters" aria-label="Exploration counters">
+      <div class="meter" id="m-rooms"><dt>ROOMS</dt><dd><b>0</b><i>/290</i></dd><span class="bar"><span></span></span></div>
+      <div class="meter" id="m-words"><dt>WORDS</dt><dd><b>0</b><i>/0</i></dd><span class="bar"><span></span></span></div>
+      <div class="meter" id="m-code"><dt>CODE</dt><dd><b>0</b><i>/0</i></dd><span class="bar"><span></span></span></div>
+      <div class="meter" id="m-zones"><dt>ZONES</dt><dd><b>0</b><i>/18</i></dd><span class="bar"><span></span></span></div>
+    </dl>
+
+    <div class="hud-tools">
+      <div class="searchwrap">
+        <input id="search" type="search" placeholder="SEARCH DOCS" autocomplete="off" spellcheck="false" aria-label="Search the documentation">
+        <kbd>/</kbd>
+      </div>
+      <button class="iconbtn only-narrow" id="btn-map" aria-label="Toggle map" aria-expanded="false">MAP</button>
+      <button class="iconbtn" id="btn-motion" title="Toggle animation" aria-pressed="false">MOTION</button>
+    </div>
+    <div class="searchresults" id="searchresults" hidden role="listbox" aria-label="Search results"></div>
+  </header>
+
+  <nav class="rail rail-left" id="rail-left" aria-label="Documentation index">
+    <section class="quest" id="quest" aria-label="Quest chain"></section>
+    <div class="railhead">INDEX</div>
+    <div class="tree" id="tree"></div>
+  </nav>
+
+  <main class="codex" id="codex" tabindex="-1">
+    <article id="doc" class="doc"></article>
+    <nav class="pager" id="pager" aria-label="Previous and next page"></nav>
+    <footer class="colophon">
+      <span>STRAPI DOCUMENTATION <b id="colo-ver"></b></span>
+      <span>290 PAGES · 1231 CITATIONS · 18 ZONES</span>
+    </footer>
+  </main>
+
+  <aside class="rail rail-right" id="rail-right" aria-label="Map">
+    <div class="mapframe">
+      <div class="canvwrap">
+        <canvas id="map" width="600" height="440" tabindex="0" aria-label="Map of the documentation. Use W A S D to move between rooms."></canvas>
+        <div class="scanlines" aria-hidden="true"></div>
+      </div>
+      <div class="maplegend" id="maplegend">
+        <span><i class="sw sw-cleared"></i>READ</span>
+        <span><i class="sw sw-sighted"></i>CITED</span>
+        <span><i class="sw sw-mapped"></i>MAPPED</span>
+        <span><i class="sw sw-hazard"></i>HAZARD</span>
+      </div>
+      <div class="mapkeys">WASD MOVE · CLICK ENTER · M ZOOM · [ ] ORDER</div>
+    </div>
+    <div class="roomcard" id="roomcard"></div>
+  </aside>
+
+</div>
+<script src="arcade.js"></script>
+</body>
+</html>
