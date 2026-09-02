@@ -1184,6 +1184,36 @@
       "number": 27477,
       "reason": "Router: Internal admin UI improvements (layout, rendering, truncation) in the Media Library beta. These are visual/UX bug fixes with no new functionality, API changes, or changes to documented user-facing behavior. The existing Media Library documentation (cms/features/media-library.md) remains accurate.",
       "added": "2026-09-01"
+    },
+    {
+      "number": 27509,
+      "reason": "Router: Internal UI layout fix for Media Library. Improves scrolling UX but doesn't add new user-facing capabilities or change documented behavior. Bug fixes to internal components do not warrant user-facing documentation.",
+      "added": "2026-09-02"
+    },
+    {
+      "number": 27501,
+      "reason": "Router: Bug fix for client-side behavior parity with legacy Media Library. Fixes user expectation (name shouldn't change on file replace), but this is expected behavior correction, not new feature documentation needed.",
+      "added": "2026-09-02"
+    },
+    {
+      "number": 27495,
+      "reason": "Router: UX improvement to Media Library folder tree. Removes broken affordance (disabled empty chevron). This is a UI polish fix, not a new capability requiring documentation.",
+      "added": "2026-09-02"
+    },
+    {
+      "number": 27488,
+      "reason": "Router: Bug fix for Content Manager relation field rendering. Now shows localized 'Untitled' instead of internal IDs. This is a correctness fix, not a new feature or configuration requiring documentation.",
+      "added": "2026-09-02"
+    },
+    {
+      "number": 27487,
+      "reason": "Router: Regression fix for i18n locale handling in nested relation navigation. Fixes broken behavior (locale preservation), not a new feature. No new documentation needed.",
+      "added": "2026-09-02"
+    },
+    {
+      "number": 27312,
+      "reason": "Router: Internal bug fix for Review Workflows when enterprise cms-content-releases feature is disabled. Adds error handling via optional chaining. This is implementation-level safety fix, not user-facing documentation.",
+      "added": "2026-09-02"
     }
   ]
 }
