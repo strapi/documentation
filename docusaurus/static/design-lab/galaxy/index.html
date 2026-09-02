@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" data-boot="1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Strapi Documentation</title>
+<meta name="description" content="The Strapi documentation as a night sky: 290 pages, 1231 real citations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="galaxy.css">
+</head>
+<body>
+
+<canvas id="sky" aria-hidden="true"></canvas>
+<div id="skyveil" aria-hidden="true"></div>
+
+<header id="topbar">
+  <button id="navbtn" class="iconbtn" aria-expanded="false" aria-controls="drawer" title="Sections">
+    <span class="bars" aria-hidden="true"></span><span class="lbl">Sections</span>
+  </button>
+  <a class="brand" href="#/cms/intro">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span class="brand-txt">Strapi Documentation</span>
+    <span class="brand-ver" id="brandver"></span>
+  </a>
+  <div class="search">
+    <label class="sr-only" for="q">Search the documentation</label>
+    <input id="q" type="search" placeholder="Search 290 pages…" autocomplete="off" spellcheck="false">
+    <kbd id="slashhint">/</kbd>
+  </div>
+  <button id="skybtn" class="iconbtn right" aria-pressed="false" title="Show the sky in full">
+    <span class="lbl">Sky</span>
+  </button>
+</header>
+
+<nav id="drawer" aria-label="Documentation sections">
+  <div id="drawer-inner"></div>
+</nav>
+<div id="scrim" hidden></div>
+
+<div id="results" hidden role="listbox" aria-label="Search results"></div>
+
+<main id="reader" tabindex="-1">
+  <article id="page"></article>
+</main>
+
+<div id="tooltip" hidden aria-hidden="true"></div>
+
+<aside id="legend" aria-hidden="true">
+  <div class="legend-row"><b id="l-pages">290</b> pages</div>
+  <div class="legend-row"><b id="l-edges">1231</b> citations</div>
+  <div class="legend-row"><b id="l-orph">50</b> uncited, at the rim</div>
+  <div class="legend-row"><b id="l-sec">18</b> constellations</div>
+</aside>
+
+<div id="skyhelp" aria-hidden="true">drag to pan · scroll to zoom · click a star</div>
+
+<noscript><p style="padding:2rem;color:#dbe4f0">This documentation viewer needs JavaScript.</p></noscript>
+
+<script src="galaxy.js"></script>
+</body>
+</html>
