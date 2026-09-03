@@ -894,6 +894,22 @@ On a folder, it offers:
 - <Icon name="arrow-right" classes="ph-bold" /> **Move to folder**
 - <Icon name="trash" /> **Delete folder**
 
+#### Using the right-click menu {#right-click-menu}
+
+Right-clicking the empty parts of the Media Library opens a menu with the same creation actions as the **New** button. They act on the folder you are currently browsing:
+
+- <Icon name="folder" /> **New folder**
+- <Icon name="files" /> **File upload**
+- <Icon name="link" classes="ph-bold" /> **File upload from URL**
+
+The menu opens anywhere in the scrolling column: the list, the empty space below the last row, the page header band beside the title, and the padding around them. It behaves the same in the grid view and in the table view, and is dismissed with `Escape` or a click elsewhere.
+
+Anything you can interact with keeps your browser's own menu instead, so copying and pasting still works in the search field. This covers the **New** button, search, filters, sorting, the view toggle and the filter badges, as well as asset cards, folder cards, table rows and the column header row of the table view.
+
+:::note
+The menu requires the _Create_ permission of the Upload plugin. Without it, right-clicking the library falls through to your browser's menu with nothing offered. See [Users & Permissions](/cms/features/users-permissions).
+:::
+
 ### Adding assets
 
 <details>
