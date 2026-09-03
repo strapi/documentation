@@ -45,6 +45,7 @@ body{
 }
 
 button{font-family:var(--label)}
+img{max-width:100%; height:auto}
 
 /* ---------- faceplate header ---------- */
 .plate{
@@ -524,6 +525,15 @@ a.card:hover{border-color:var(--amber-dim); background:rgba(255,178,84,.1)}
   background:none; border:none; padding:0; cursor:pointer; color:var(--amber-dim);
   font:inherit; letter-spacing:inherit; text-decoration:underline;
 }
+
+/* hidden must win over the overlays' own display rules */
+.finder[hidden],.keymodal[hidden],.drawer[hidden],.scrim[hidden]{display:none}
+
+/* highlighted code lines */
+.codeblock .hl{background:rgba(255,178,84,.13); display:inline-block; min-width:100%}
+
+/* nested blocks inside list items */
+.blocks li > .li-blocks{margin-top:.4em}
 
 /* focus visibility everywhere */
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--amber); outline-offset:2px}
