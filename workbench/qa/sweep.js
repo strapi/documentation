@@ -3,8 +3,17 @@
 const path = require('path');
 const http = require('http');
 const fs = require('fs');
-const { chromium } = require('/tmp/claude-0/-home-user-documentation/0ba9397f-02f3-530f-a3f0-82e779baca0b/scratchpad/pw/node_modules/playwright-core');
-const LAUNCH = { executablePath: '/opt/pw-browsers/chromium' };
+/* playwright-core lives in a per-container scratchpad: take PWC_PATH when
+   set, else the first candidate that resolves, else a plain require. */
+const PWC_CANDIDATES = [
+  process.env.PWC_PATH,
+  '/tmp/claude-0/-home-user-documentation/4ca8fb09-0459-5b0c-a56a-cd287e8aecb3/scratchpad/pw/node_modules/playwright-core',
+  '/tmp/claude-0/-home-user-documentation/0ba9397f-02f3-530f-a3f0-82e779baca0b/scratchpad/pw/node_modules/playwright-core',
+  'playwright-core',
+].filter(Boolean);
+const { chromium } = require(PWC_CANDIDATES.find((p) => { try { require.resolve(p); return true; } catch (e) { return false; } }));
+const LAUNCH = fs.existsSync('/opt/pw-browsers/chromium')
+  ? { executablePath: process.env.PWC_EXE || '/opt/pw-browsers/chromium' } : {};
 
 const dir = process.argv[2];
 const port = Number(process.argv[3] || 8950);

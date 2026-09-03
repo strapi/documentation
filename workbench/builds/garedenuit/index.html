@@ -1,27 +1,28 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>La Gare de Nuit</title>
-<meta name="description" content="La documentation Strapi comme une gare de trains de nuit : 290 départs, 18 voies, 77 mains.">
+<title>The Night Station</title>
+<meta name="description" content="The Strapi documentation as a night sleeper-train station: 290 departures, 18 platforms, 77 hands.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="gare.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230c1220'/%3E%3Ccircle cx='16' cy='14' r='7' fill='%23f2a944'/%3E%3Crect x='6' y='24' width='20' height='2' fill='%233a486b'/%3E%3C/svg%3E">
 </head>
 <body>
 <div id="mist" aria-hidden="true"></div>
 
 <header id="topbar">
-  <a class="brand" href="#/gare" aria-label="Grand hall — tableau des départs">
-    <span class="brand-enamel">LA GARE DE NUIT</span>
-    <span class="brand-sub">documentation Strapi &middot; service de nuit</span>
+  <a class="brand" href="#/gare" aria-label="Main hall — departures board">
+    <span class="brand-enamel">THE NIGHT STATION</span>
+    <span class="brand-sub">Strapi documentation &middot; night service</span>
   </a>
-  <nav class="topnav" aria-label="Vues de la gare">
-    <a href="#/gare" data-route="gare">Départs</a>
-    <a href="#/quais" data-route="quais">Quais</a>
-    <a href="#/legende" data-route="legende">Légende</a>
+  <nav class="topnav" aria-label="Station views">
+    <a href="#/gare" data-route="gare">Departures</a>
+    <a href="#/quais" data-route="quais">Platforms</a>
+    <a href="#/legende" data-route="legende">Legend</a>
   </nav>
   <div class="clockbox" aria-hidden="true">
     <svg id="clock" viewBox="0 0 60 60" width="46" height="46">
@@ -35,16 +36,16 @@
     <span id="clock-digits">--:--</span>
   </div>
   <div class="searchbox">
-    <input id="search" type="search" placeholder="Chercher une destination…" autocomplete="off"
-           aria-label="Chercher une page parmi les 290 destinations">
+    <input id="search" type="search" placeholder="Find a destination…" autocomplete="off"
+           aria-label="Search the 290 destinations">
     <div id="search-results" role="listbox" hidden></div>
   </div>
 </header>
 
 <main id="app">
   <section class="boot" aria-live="polite">
-    <div class="boot-sign">LE TABLEAU S'ALLUME…</div>
-    <div class="boot-sub">la gare charge ses 290 départs</div>
+    <div class="boot-sign">THE BOARD IS LIGHTING UP…</div>
+    <div class="boot-sub">the station is loading its 290 departures</div>
   </section>
 </main>
 
