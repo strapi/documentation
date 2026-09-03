@@ -76,3 +76,20 @@ impact, all applied:
 Frame averages after: establishing 18.5 ms (budget 30), mid-zoom 27.4 ms,
 street 16.0 ms (budget 40), facade close-up ~38 ms (fill-rate at extreme
 close-up; no stated budget, kept under the 40 ms street bar).
+
+## Round 2 — fresh eyes vs the exhibition bar (2026-09-03)
+1. **Flat roofs washed to cream.** With the sun on the horizon a roof
+   catches sky, not sun: roofCol keeps more of the body colour (mix 0.66 ->
+   0.47, top lift 1.10 -> 1.03). The scaffolded quarter's rooftops now read
+   ochre, not overexposed.
+2. **A parapet return on every sizeable flat top**, independent of the
+   detail budget, so no roof anywhere reads as raw fill.
+3. **Paving joints on the district plate** once the camera is at street
+   level (screen radius > 700): the ground is slabs, not one pour.
+4. **Table banding.** The haze-stepped ground strips banded visibly at
+   grazing angles: 56 -> 88 strips, gentler packing exponent.
+5. **The pencil had bled behind the HUD** after the tighter establishing
+   crop: moved up beside the near deckle, fully in frame again.
+
+Frame averages after: establishing 18.5 ms, mid-zoom 29.8 ms, street
+12.5 ms, facade 37.6 ms.

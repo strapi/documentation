@@ -1658,7 +1658,7 @@
        sorted by its midpoint would land on top of a district at grazing
        angles. */
     tools = [
-      { k: 'pencil', x: paper.cx - W0 * 0.16, y: y0 - mx * 0.62,
+      { k: 'pencil', x: paper.cx - W0 * 0.24, y: y0 - mx * 0.34,
         yaw: 0.12, len: W0 * 0.155 },
       { k: 'ruler', x: x1 + mx * 0.80, y: paper.cy - H0 * 0.06,
         yaw: PI / 2 + 0.07, len: H0 * 0.17 },
@@ -1817,8 +1817,10 @@
     var s = palCache[key];
     if (s !== undefined) return s;
     var base = m < 7 ? MVARC[m][v] : lit(MBASE[m], VARF[v]);
-    var c = mix(mix(base, mix(C.sun, C.skyLo, 0.40), MK[m] * 0.66), C.shadow, 0.07);
-    if (part === 0) c = lit(c, 1.10);
+    /* the sun is nearly at the horizon: a flat roof catches sky, not sun,
+       so it keeps most of its own colour instead of washing to cream */
+    var c = mix(mix(base, mix(C.sun, C.skyLo, 0.40), MK[m] * 0.47), C.shadow, 0.07);
+    if (part === 0) c = lit(c, 1.03);
     else if (part === 1) c = lit(c, 0.82);
     else if (part === 3) c = lit(mix(c, C.shadow, 0.22), 0.72);
     c = mix(c, C.haze, (hB / 18) * HZ_MAX);
@@ -1960,10 +1962,10 @@
     if (y0 >= H) return;
     /* strips packed toward the horizon, where depth (and so the haze) moves
        fastest between scanlines: uniform strips step visibly there */
-    var NS = 56, spanY = H - y0, i;
+    var NS = 88, spanY = H - y0, i;
     for (i = 0; i < NS; i++) {
-      var ya = y0 + spanY * Math.pow(i / NS, 1.55);
-      var yb = y0 + spanY * Math.pow((i + 1) / NS, 1.55) + 1;
+      var ya = y0 + spanY * Math.pow(i / NS, 1.35);
+      var yb = y0 + spanY * Math.pow((i + 1) / NS, 1.35) + 1;
       var yc = (ya + yb) / 2;
       var den = SE + ((yc - PCY) / FOC) * CE;
       if (den <= 0.0006) continue;
@@ -2279,6 +2281,17 @@
       ctx.fillStyle = pave;
       for (k = 0; k < vx.length; k++) if (sgQuad(d, vx[k], ly0, vx[k] + SW, ly1)) ctx.fill();
       for (k = 0; k < vy.length; k++) if (sgQuad(d, lx0, vy[k], lx1, vy[k] + SW)) ctx.fill();
+      /* down at eye level the plate is slabs, not one pour: a sparse joint
+         grid, too faint to read from anywhere but the pavement */
+      if (scr > 700) {
+        ctx.beginPath();
+        var jstep = P / 2, jt;
+        for (jt = lx0 + jstep; jt < lx1; jt += jstep) sgLine(d, jt, ly0, jt, ly1);
+        for (jt = ly0 + jstep; jt < ly1; jt += jstep) sgLine(d, lx0, jt, lx1, jt);
+        ctx.strokeStyle = rgbas(mix(C.print, C.haze, hz), 0.11);
+        ctx.lineWidth = Math.max(0.4, 0.35 * (FOC / dq));
+        ctx.stroke();
+      }
       /* kerb lines along both edges of each street */
       if (scr > 170) {
         ctx.beginPath();
@@ -2688,6 +2701,22 @@
       ctx.fill();
       if (r.hit.length < 16 && pxW > 2.2) {
         r.hit.push([Q8X[4], Q8Y[4], Q8X[5], Q8Y[5], Q8X[6], Q8Y[6], Q8X[7], Q8Y[7]]);
+      }
+      /* the parapet return: an inset seam on every sizeable flat top, with
+         or without the quality budget, so no roof ever reads as raw fill */
+      if (pxW > 26 && b.hw > 6 && (b.z1 - b.z0) > 6) {
+        ctx.beginPath();
+        var pw2 = 0.90;
+        ctx.moveTo(Q8X[4] + (Q8X[6] - Q8X[4]) * (0.5 - pw2 / 2), Q8Y[4] + (Q8Y[6] - Q8Y[4]) * (0.5 - pw2 / 2));
+        ctx.lineTo(Q8X[5] + (Q8X[7] - Q8X[5]) * (0.5 - pw2 / 2), Q8Y[5] + (Q8Y[7] - Q8Y[5]) * (0.5 - pw2 / 2));
+        ctx.lineTo(Q8X[6] + (Q8X[4] - Q8X[6]) * (0.5 - pw2 / 2), Q8Y[6] + (Q8Y[4] - Q8Y[6]) * (0.5 - pw2 / 2));
+        ctx.lineTo(Q8X[7] + (Q8X[5] - Q8X[7]) * (0.5 - pw2 / 2), Q8Y[7] + (Q8Y[5] - Q8Y[7]) * (0.5 - pw2 / 2));
+        ctx.closePath();
+        ctx.strokeStyle = roofCol(m, v, hB, 3);
+        ctx.globalAlpha = 0.45;
+        ctx.lineWidth = Math.max(0.6, pxW * 0.012);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
       }
       /* a flat roof is never clean: gravel, a light well, the parapet return */
       if (lod && pxW > 30 && b.deco && b.deco !== 'plain' && b.hw > 8) {
