@@ -1723,7 +1723,7 @@
     FOC = (H / 2) / Math.tan(cam.fov / 2);
     HZ_NEAR = cam.dist * 0.22;
     HZ_FAR = clamp(cam.dist * 3.1, 900, 12000);
-    HZF = 1 - 0.55 * clamp((cam.el - 0.32) / 0.38, 0, 1);
+    HZF = 1 - 0.62 * clamp((cam.el - 0.32) / 0.38, 0, 1);
     PCX = W / 2;
     /* Where the look-at point sits in frame. Down low this is a street
        photograph and the subject rides low under a lot of sky; from above it
@@ -3920,6 +3920,12 @@
   function propAO(p, r, hz) {
     groundSprite(SPR.ao, p.x, p.y, r, 0.30 * (1 - hz));
   }
+  /* the low sun stretches a smudge of cast shadow away from every standing
+     figure; without it the inhabitants float at golden hour */
+  function propSun(p, r, h, hz) {
+    groundSprite(SPR.shadow, p.x - sunGnd[0] * h * 0.5, p.y - sunGnd[1] * h * 0.5,
+      r + h * 0.35, 0.20 * (1 - hz));
+  }
   function drawProp(p) {
     var d = p._d, hz = p._hz, s = FOC / d;
     if (p.k === 'bird') { drawBird(p, s, hz); return; }
@@ -4103,6 +4109,17 @@
     var q, m = M_STALL0 + (p.hue % 3);
     miniBox(p.x, p.y, p.s * 0.5, p.s * 0.35, 0, 3.2, p.yaw, M_WOOD, hB);
     var ca = cos(p.yaw), sa = sin(p.yaw);
+    /* the goods on the counter: crates of produce, up close */
+    if (s * p.s > 26) {
+      var hs = hash32('goods' + (p.x | 0) + (p.y | 0)), gq;
+      for (gq = 0; gq < 3; gq++) {
+        var gu = (gq - 1) * p.s * 0.28 + (rnd01(hs, gq * 3) - 0.5) * 1.2;
+        var gv = (rnd01(hs, gq * 3 + 1) - 0.5) * p.s * 0.30;
+        miniBox(p.x + gu * ca - gv * sa, p.y + gu * sa + gv * ca,
+          p.s * 0.11, p.s * 0.10, 3.2, 3.2 + 0.9 + rnd01(hs, gq * 3 + 2) * 0.7,
+          p.yaw, gq === 1 ? M_AWN : gq === 2 ? M_SHUT : M_WOOD, hB);
+      }
+    }
     for (q = 0; q < 4; q++) {
       var lx = (q < 2 ? -1 : 1) * p.s * 0.48, ly = (q % 2 ? -1 : 1) * p.s * 0.33;
       var wx = p.x + lx * ca - ly * sa, wy = p.y + lx * sa + ly * ca;
@@ -4171,6 +4188,21 @@
     ctx.closePath();
     ctx.fillStyle = faceCol(M_TRIM, 1, 6, hB, 0); ctx.fill();
     ctx.strokeStyle = faceCol(M_TRIM, 1, 2, hB, 6); ctx.lineWidth = 1; ctx.stroke();
+    /* the water in the basin, holding the low sun */
+    ctx.beginPath();
+    var ok2 = true;
+    for (q = 0; q <= 12; q++) {
+      var a2 = q / 12 * TAU;
+      if (!proj(p.x + cos(a2) * p.r * 0.74, p.y + sin(a2) * p.r * 0.74, 2.45)) { ok2 = false; break; }
+      if (q === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    if (!ok2) return;
+    ctx.closePath();
+    ctx.fillStyle = rgbas(mix(mix(C.water, C.shadow, 0.30), C.haze, hB / 18), 0.9);
+    ctx.fill();
+    if (proj(p.x + sunGnd[0] * p.r * 0.2, p.y + sunGnd[1] * p.r * 0.2, 2.5) && pS > 2) {
+      spriteAt(SPR.glint, px, py, p.r * pS * 0.5, p.r * pS * 0.3, 0.30);
+    }
   }
   function drawWash(p, s, hB) {
     var n = p.n, i;
@@ -4207,14 +4239,15 @@
     var x = p.x + cos(t) * 60, y = p.y + sin(t * 1.3) * 60;
     if (!proj(x, y, p.z)) return;
     var w = p.s * s * 3;
-    if (w < 1.2 || w > 40) return;
+    if (w < 1.2) return;
+    if (w > 24) w = 24;         /* a swift far overhead, never a pterosaur */
     var fl = sin(TNOW * 0.004 + p.ph) * 0.5 + 0.5;
     ctx.beginPath();
     ctx.moveTo(px - w, py + w * 0.2 * fl);
     ctx.lineTo(px, py - w * 0.30);
     ctx.lineTo(px + w, py + w * 0.2 * fl);
-    ctx.strokeStyle = rgbas(mix(C.ink, C.haze, hz * 0.7), 0.55 * (1 - hz));
-    ctx.lineWidth = Math.max(0.7, w * 0.18);
+    ctx.strokeStyle = rgbas(mix(C.ink, C.haze, hz * 0.7), 0.45 * (1 - hz));
+    ctx.lineWidth = Math.max(0.7, w * 0.15);
     ctx.lineJoin = 'round';
     ctx.stroke();
   }
@@ -4413,6 +4446,7 @@
   function drawWalker(p, s, hB) {
     if (s * 3.4 < 2.0) return;
     propAO(p, 1.4, p._hz);
+    if (s * 3.4 > 6) propSun(p, 1.0, 4.6, p._hz);
     var m = M_VAN0 + (p.hue % 4);
     if (p.hue === 4) m = M_AWN;
     var g = sin(p.gait);
@@ -4452,6 +4486,7 @@
   function drawCat(p, s, hB) {
     if (s * 3.4 < 2.2) return;
     propAO(p, 1.1, p._hz);
+    if (s * 3.4 > 6) propSun(p, 0.8, 1.2, p._hz);
     var ca = cos(p.yaw), sa = sin(p.yaw);
     miniBox(p.x, p.y, 1.02, 0.32, 0.26, 0.84, p.yaw, M_DARK, hB);
     miniBox(p.x + ca * 0.94, p.y + sa * 0.94, 0.29, 0.29, 0.60, 1.16, p.yaw, M_DARK, hB);
@@ -4469,6 +4504,7 @@
   function drawGard(p, s, hB) {
     if (s * 3.4 < 2.2) return;
     propAO(p, 1.7, p._hz);
+    if (s * 3.4 > 6) propSun(p, 1.0, 3.2, p._hz);
     var bob = sin(LT * 0.0021 + p.ph);
     var lean = 0.30 + 0.16 * bob;
     var ca = cos(p.yaw), sa = sin(p.yaw);

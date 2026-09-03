@@ -1,0 +1,9 @@
+# diorama — DONE (2026-09-03, cloud continuation)
+
+Confirmed the salvaged visual-bug purge held (sweep 290/290 clean), then built the living layer as one system on the existing rAF loop and depth sort: 84 lane pedestrians (density = district inbound citations / 16), 21 delivery vans on inter-district citation edges of weight >= 6 (fading at depots, never popping), 27 plaza pigeons, 12 gardeners kneeling at bed edges, one cat on a closed round of the derelict lots, and 15 moths — one per night commit in provenance (15 night edits across 12 pages; docker carries 4) — plus one shared wind driving laundry, awnings (whose quads were degenerate and invisible; mended) and chimney smoke.
+
+Ran the three critique rounds against the exhibition bar (log: builds/diorama/iterlog/CHANGELOG.md): round 1 fixed the detail budget that left landmark towers blank at mid-zoom, filled the establishing frame, keyed haze to camera elevation, dressed the maker's bench; round 2 toned the overexposed roofs, added parapet returns, plate joints, steadied the table strips; round 3 finished birds, well water, life cast-shadows, stall produce.
+
+Sweep: 290/290, zero errors, zero thin pages, zero overflow, zero content loss. Reduced motion holds a byte-identical posed tableau. Frame averages at 1440x900: establishing 18.5 ms (budget 30), street 14.2 ms (budget 40), facade close-up 32.9 ms. shot-world.jpg / shot-read.jpg committed beside the code.
+
+Honest caveats: walkers occasionally pass out of sight behind the buildings that line their lane (correct occlusion, but a still frame can catch a lane looking empty); the facade close-up runs ~33 ms, near the 40 ms bar, because extreme close-ups are fill-rate-bound; moths read at street zoom only (they are 4 px flecks by design); the brief said "15 night-edited pages" — provenance holds 12 night-edited pages carrying 15 night edits, so 15 moths across 12 lamps.

@@ -64,3 +64,15 @@ no prefixes, <= 80 chars. Push after each task so partial progress survives.
   reduced-motion renders byte-identical posed frames. shot-world.jpg, shot-street.jpg,
   shot-read.jpg committed beside the code. Caveats: palette holds 39 ramp entries (brief said
   roughly 32); queue scenes can be occluded by foreground towers in the densest quarters.
+- **diorama** (2026-09-03, cloud continuation): DONE. Baseline purge confirmed (sweep clean),
+  then the living layer: 84 lane walkers scaled by district inbound citations, 21 vans on
+  citation edges of weight >= 6, 27 plaza pigeons, 12 gardeners, one cat on the derelict lots,
+  15 moths (one per night commit, 12 lamps), and one shared wind over laundry, awnings and
+  smoke — the awning quads were degenerate (invisible since written) and were mended on the way,
+  as was a prop cap that silently dropped everything baked after the street furniture. Three
+  critique rounds applied and logged in iterlog/CHANGELOG.md (detail budget for landmark towers,
+  establishing crop, elevation-keyed haze, bench clutter, roof tone, parapet returns, plate
+  joints, bird size, well water, life cast-shadows, stall produce). Final sweep 290/290 clean;
+  reduced-motion tableau byte-identical; establishing 18.5 ms / street 14.2 ms at 1440x900
+  (budgets 30/40); shot-world.jpg, shot-read.jpg committed. Caveat: facade close-ups run
+  ~33 ms (fill-rate); moths read only at street zoom by design.

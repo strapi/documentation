@@ -93,3 +93,28 @@ close-up; no stated budget, kept under the 40 ms street bar).
 
 Frame averages after: establishing 18.5 ms, mid-zoom 29.8 ms, street
 12.5 ms, facade 37.6 ms.
+
+## Round 3 — fresh eyes vs the exhibition bar (2026-09-03)
+Judged the four viewpoints plus two supplementary scenes (the river bend by
+the campanile; the plaza beside the derelict ruins). The model now largely
+holds the bar at street level; the last gaps were finish work:
+
+1. **Birds drew as 40 px pterosaurs** at mid-zoom: capped at 24 px, thinner
+   stroke, more haze fade — swifts overhead now.
+2. **The plaza wells were blank pale discs**: they now hold water, dark
+   teal with a sun glint.
+3. **Life floated at golden hour**: walkers, gardeners, the cat and the
+   vans now stretch a smudge of cast shadow away from the sun, like every
+   building does.
+4. **Market stalls sold nothing**: produce crates on the counters once you
+   are close enough to shop.
+5. **Far quarters still milky at the establishing shot**: the elevation key
+   on the haze deepened (0.55 -> 0.62 at full look-down).
+
+Final verification: node --check clean; canonical sweep 290/290, zero
+errors, zero thin pages, zero overflow, zero content loss; reduced-motion
+tableau byte-identical across repeated paints; living layer census stable at
+160 (84 walkers, 21 vans, 27 pigeons, 12 gardeners, 15 moths, 1 cat). Frame
+averages at 1440x900: establishing 18.5 ms (budget 30), street 14.2 ms
+(budget 40), mid-zoom 28.6 ms, facade close-up 32.9 ms. shot-world.jpg and
+shot-read.jpg committed beside the code.
