@@ -72,7 +72,9 @@ no prefixes, <= 80 chars. Push after each task so partial progress survives.
   as was a prop cap that silently dropped everything baked after the street furniture. Three
   critique rounds applied and logged in iterlog/CHANGELOG.md (detail budget for landmark towers,
   establishing crop, elevation-keyed haze, bench clutter, roof tone, parapet returns, plate
-  joints, bird size, well water, life cast-shadows, stall produce). Final sweep 290/290 clean;
-  reduced-motion tableau byte-identical; establishing 18.5 ms / street 14.2 ms at 1440x900
-  (budgets 30/40); shot-world.jpg, shot-read.jpg committed. Caveat: facade close-ups run
-  ~33 ms (fill-rate); moths read only at street zoom by design.
+  joints, bird size, well water, life cast-shadows, stall produce). A wide street view the
+  parallel session flagged at 47-57 ms was root-caused (factory facades painted fixed 5x3 pane
+  grids at sub-pixel size on 64 fronts) and mip-fixed: every known camera now inside budget.
+  Final sweep 290/290 clean; reduced-motion tableau byte-identical; establishing 20.7 ms,
+  street 10.1 ms, wide-street 34.5 ms, facade 23.5 ms at 1440x900 (budgets 30/40);
+  shot-world.jpg, shot-read.jpg committed. Caveat: moths read only at street zoom by design.
