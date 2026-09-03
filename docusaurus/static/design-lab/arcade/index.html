@@ -3,84 +3,125 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Strapi Docs — Arcade</title>
-<meta name="description" content="The Strapi documentation as a top-down map. Every page is a room; the citation graph is the corridor network.">
+<title>Strapi Docs — Dusk Works</title>
+<meta name="description" content="The Strapi documentation as a playable pixel platformer. The character is the reading cursor: where it stands is where you are in the page, and every door is a real link standing where the link is written.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="arcade.css">
 </head>
 <body>
+
 <div id="boot" class="boot">
   <div class="boot-inner">
-    <pre class="boot-logo">STRAPI DOCS</pre>
-    <p class="boot-line" id="boot-line">LOADING CORPUS…</p>
+    <div class="boot-mark" aria-hidden="true"><i></i><b></b><s></s></div>
+    <p class="boot-title">DUSK&nbsp;WORKS</p>
+    <p class="boot-sub">THE STRAPI DOCUMENTATION, WALKED</p>
+    <p class="boot-line" id="boot-line">LOADING CORPUS</p>
   </div>
 </div>
 
 <div class="shell" id="shell" hidden>
 
-  <header class="hud" id="hud">
-    <div class="hud-brand">
-      <button class="iconbtn only-narrow" id="btn-nav" aria-label="Toggle index" aria-expanded="false">INDEX</button>
-      <a class="brand" href="#/cms/intro">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span class="brand-txt">STRAPI DOCS</span>
-        <span class="brand-sub" id="brand-ver">5.x</span>
-      </a>
+  <header class="hud-top">
+    <div class="hud-id">
+      <span class="hud-mark" aria-hidden="true"><i></i><b></b><s></s></span>
+      <span class="hud-idtxt">
+        <b id="hud-title">—</b>
+        <i id="hud-sec">—</i>
+      </span>
     </div>
 
-    <dl class="meters" id="meters" aria-label="Exploration counters">
-      <div class="meter" id="m-rooms"><dt>ROOMS</dt><dd><b>0</b><i>/290</i></dd><span class="bar"><span></span></span></div>
-      <div class="meter" id="m-words"><dt>WORDS</dt><dd><b>0</b><i>/0</i></dd><span class="bar"><span></span></span></div>
-      <div class="meter" id="m-code"><dt>CODE</dt><dd><b>0</b><i>/0</i></dd><span class="bar"><span></span></span></div>
-      <div class="meter" id="m-zones"><dt>ZONES</dt><dd><b>0</b><i>/18</i></dd><span class="bar"><span></span></span></div>
+    <div class="hud-progress" id="hud-progress" title="How far through this page you have walked">
+      <span class="hp-lab">READ THROUGH</span>
+      <span class="hp-track"><span class="hp-fill" id="hp-fill"></span><span class="hp-head" id="hp-head"></span></span>
+      <span class="hp-num"><b id="hp-cur">0</b><i>/</i><b id="hp-tot">0</b> BLOCKS</span>
+    </div>
+
+    <dl class="gauges" aria-label="Measured counters">
+      <div class="gauge"><dt>DOORS HERE</dt><dd id="g-doors">0</dd></div>
+      <div class="gauge"><dt>PICKED UP</dt><dd id="g-code">0</dd></div>
+      <div class="gauge"><dt>PAGES WALKED</dt><dd id="g-pages">0</dd></div>
     </dl>
 
-    <div class="hud-tools">
-      <div class="searchwrap">
-        <input id="search" type="search" placeholder="SEARCH DOCS" autocomplete="off" spellcheck="false" aria-label="Search the documentation">
-        <kbd>/</kbd>
-      </div>
-      <button class="iconbtn only-narrow" id="btn-map" aria-label="Toggle map" aria-expanded="false">MAP</button>
-      <button class="iconbtn" id="btn-motion" title="Toggle animation" aria-pressed="false">MOTION</button>
+    <div class="hud-act">
+      <button class="btn" id="btn-still" type="button" aria-pressed="false">STILL <kbd>M</kbd></button>
+      <button class="btn" id="btn-read" type="button">WHOLE PAGE <kbd>R</kbd></button>
+      <button class="btn" id="btn-index" type="button">INDEX <kbd>TAB</kbd></button>
     </div>
-    <div class="searchresults" id="searchresults" hidden role="listbox" aria-label="Search results"></div>
   </header>
 
-  <nav class="rail rail-left" id="rail-left" aria-label="Documentation index">
-    <section class="quest" id="quest" aria-label="Quest chain"></section>
-    <div class="railhead">INDEX</div>
-    <div class="tree" id="tree"></div>
-  </nav>
+  <div class="stage" id="stage">
+    <canvas id="screen" tabindex="0" aria-label="Playable level. The character is the reading cursor: arrow keys or A and D to walk through the page, space to jump, E to take a door, R to open the whole page."></canvas>
 
-  <main class="codex" id="codex" tabindex="-1">
-    <article id="doc" class="doc"></article>
-    <nav class="pager" id="pager" aria-label="Previous and next page"></nav>
-    <footer class="colophon">
-      <span>STRAPI DOCUMENTATION <b id="colo-ver"></b></span>
-      <span>290 PAGES · 1231 CITATIONS · 18 ZONES</span>
-    </footer>
+    <div class="trail" id="trail" aria-label="Where you have been"></div>
+
+    <div class="firstrun" id="firstrun">
+      <div class="fr-card">
+        <p class="fr-kick">HOW THIS READS</p>
+        <h2>The character is your reading cursor.</h2>
+        <p class="fr-body">Where it stands <b>is</b> where you are in the page. Walking right is scrolling down. The strip below always shows the block you are standing in.</p>
+        <ul class="fr-list">
+          <li><span class="fr-ic ic-door"></span><span class="fr-tx"><b>Doors are the links.</b> Each one stands at the point in the prose where the link is written. Walk to it and press <kbd>E</kbd> to follow it.</span></li>
+          <li><span class="fr-ic ic-plat"></span><span class="fr-tx"><b>Every object is a block.</b> Jade decking is a code block, a scaffold is a table, a terminal is an endpoint, a billboard is a screenshot.</span></li>
+          <li><span class="fr-ic ic-haz"></span><span class="fr-tx"><b>Warnings hit back.</b> A caution knocks you backwards. A tip or a note springs you up.</span></li>
+        </ul>
+        <p class="fr-go">PRESS <kbd>&rarr;</kbd> OR <kbd>D</kbd> TO START READING</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="strip" id="strip" aria-label="Reading strip: the block you are standing in">
+    <div class="strip-bar">
+      <span class="sb-idx" id="sb-idx">BLOCK 0 / 0</span>
+      <span class="sb-kind" id="sb-kind">—</span>
+      <span class="sb-crumb" id="sb-crumb"></span>
+      <span class="sb-doors" id="sb-doors"></span>
+      <span class="sb-hint"><kbd>&larr;</kbd><kbd>&rarr;</kbd> WALK &nbsp;<kbd>E</kbd> DOOR &nbsp;<kbd>R</kbd> WHOLE PAGE</span>
+    </div>
+    <div class="strip-body" id="strip-body">
+      <article class="doc" id="strip-doc"></article>
+    </div>
+  </section>
+
+  <p class="toast" id="toast" hidden></p>
+
+  <main class="codex" id="codex" aria-hidden="true">
+    <div class="codex-bar">
+      <span class="codex-crumb" id="codex-crumb"></span>
+      <div class="codex-tools">
+        <input id="search" type="search" placeholder="SEARCH 290 PAGES" autocomplete="off" spellcheck="false" aria-label="Search the documentation">
+        <button class="btn btn-close" id="codex-close" type="button">CLOSE <kbd>ESC</kbd></button>
+      </div>
+      <div class="searchres" id="searchres" hidden role="listbox" aria-label="Search results"></div>
+    </div>
+    <div class="codex-body">
+      <nav class="codex-side" id="codex-side" aria-label="Documentation index">
+        <div class="sidehead">CONTENTS</div>
+        <div class="toc" id="toc"></div>
+        <div class="sidehead">DOORS OUT</div>
+        <div class="cites" id="cites-out"></div>
+        <div class="sidehead">DOORS IN</div>
+        <div class="cites" id="cites-in"></div>
+      </nav>
+      <div class="codex-main" id="codex-main">
+        <article class="doc" id="doc"></article>
+        <nav class="pager" id="pager" aria-label="Previous and next page"></nav>
+        <footer class="colophon" id="colophon"></footer>
+      </div>
+    </div>
   </main>
 
-  <aside class="rail rail-right" id="rail-right" aria-label="Map">
-    <div class="mapframe">
-      <div class="canvwrap">
-        <canvas id="map" width="600" height="440" tabindex="0" aria-label="Map of the documentation. Use W A S D to move between rooms."></canvas>
-        <div class="scanlines" aria-hidden="true"></div>
-      </div>
-      <div class="maplegend" id="maplegend">
-        <span><i class="sw sw-cleared"></i>READ</span>
-        <span><i class="sw sw-sighted"></i>CITED</span>
-        <span><i class="sw sw-mapped"></i>MAPPED</span>
-        <span><i class="sw sw-hazard"></i>HAZARD</span>
-      </div>
-      <div class="mapkeys">WASD MOVE · CLICK ENTER · M ZOOM · [ ] ORDER</div>
+  <nav class="index" id="index" aria-hidden="true" aria-label="Full documentation index">
+    <div class="index-bar">
+      <b>ALL LEVELS</b>
+      <button class="btn btn-close" id="index-close" type="button">CLOSE</button>
     </div>
-    <div class="roomcard" id="roomcard"></div>
-  </aside>
+    <div class="index-body" id="index-body"></div>
+  </nav>
 
 </div>
+
 <script src="arcade.js"></script>
 </body>
 </html>

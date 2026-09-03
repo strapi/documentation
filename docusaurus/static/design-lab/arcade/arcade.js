@@ -1,84 +1,171 @@
-/* ============================================================
-   STRAPI DOCS — ARCADE
-   Every page is a room. The citation graph is the corridors.
-   ============================================================ */
+/* ==========================================================================
+   DUSK WORKS — the Strapi documentation as a real 2D pixel platformer.
+
+   THE ONE IDEA: the character is the reading cursor.
+   Horizontal position IS position in the document. The page is laid out
+   left to right in block order; the block you are standing in is the block
+   the docked reading strip renders. Walking right is scrolling down.
+   Links are doors, standing at the x of the block where the link is written,
+   labelled with the link's own anchor text. Walking through one follows it.
+
+   Five colours, no sixth. Everything is drawn into an integer-resolution
+   back buffer and blitted with smoothing off.
+   ========================================================================== */
 (function () {
   'use strict';
 
+  /* ---------------------------------------------------------------- palette */
+  var AUB = '#2A0F3D';   // deep aubergine  — terrain, silhouettes, type
+  var VIO = '#4945FF';   // Strapi violet   — doors, the head, far distance
+  var ROSE = '#FF3D6E';  // hot rose        — hazards, the cursor, warnings
+  var JADE = '#3FE0C8';  // electric jade   — decking, code, safe states
+  var BONE = '#FFE9C7';  // bone            — light, low sky, type
+
   var HOME = '/cms/intro';
-  var STORE = 'strapi-arcade-v1';
-  var HAZARD_PREFIX = '/cms/migration/v4-to-v5/breaking-changes';
-  var QUEST_SLUG = '/cms/quick-start';
+  var STORE = 'strapi-duskworks-v2';
 
-  var B = null;          // content bundle
-  var G = null;          // graph
-  var ZONES = [];        // {label, product, key, slugs[], x,y,w,h, cols}
-  var ROOM = {};         // slug -> {x,y,zone,i}
-  var ZONE_OF = {};      // slug -> zone index
-  var NEI = {};          // slug -> [slugs] (undirected citation adjacency)
-  var TOTAL = { words: 0, code: 0, pages: 0 };
-  var visited = new Set();
-  var steps = new Set();
-  var current = null;
-  var searchIndex = null;
-  var motion = true;
-  var reduced = false;
-  var worldView = false;
+  /* ---------------------------------------------------------------- world */
+  var TS = 8;            // tile size in logical pixels
+  var WALLH = 7;         // tiles of dark corridor wall above the terrain
+  var LEVEL_H = 48;      // tiles
+  var BASE_GY = 34;      // default ground row
 
-  var WORLD_W = 0, WORLD_H = 0;
-  var RW = 5, RH = 3, GX = 7, GY = 5, ZPAD = 2, ZHEAD = 6, GUT = 5, MAXROW = 200;
+  var GRAV = 780, FALL_MAX = 340;
+  var RUN_MAX = 150, RUN_ACC = 1100, GND_FRICTION = 1200, SPRINT = 1.95;
+  var AIR_ACC = 560, AIR_DRAG = 200;
+  var JUMP_V = 238, JUMP_CUT = 90;
+  var COYOTE = 0.10, BUFFER = 0.12;
+  var SPRING_V = 372;
+  var STEP = 1 / 120, MAXSTEPS = 8;
 
-  /* ---------------- utils ---------------- */
+  /* ---------------------------------------------------------------- state */
+  var B = null, G = null, COM = null;
+  var OUT = {}, IN_ = {}, TITLE = {}, ORDIDX = {};
+
+  var visited = new Set();     // pages entered
+  var finished = new Set();    // pages walked end to end
+  var taken = {};              // slug -> Set of collected code-block indices
+  var trail = [];              // slugs, most recent last
+
+  var slug = null, page = null, L = null;
+  var reduced = false, still = false, running = false;
+  var arrivedFrom = null;      // {slug, label} for the return door
+  var firstRun = true;
+
+  /* ---------------------------------------------------------------- utils */
+  function $(id) { return document.getElementById(id); }
   function esc(s) {
     return String(s == null ? '' : s)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
   function attr(s) { return esc(s); }
   function num(n) { return (n || 0).toLocaleString('en-US'); }
-  function $(id) { return document.getElementById(id); }
-  function el(tag, cls) { var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
   function stripTags(s) { return String(s || '').replace(/<[^>]*>/g, ' '); }
-  function plain(h) { return decode(stripTags(h)).replace(/\s+/g, ' ').trim(); }
   function decode(s) {
-    return String(s || '')
-      .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+    return String(s || '').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
       .replace(/&#39;/g, "'").replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&');
   }
+  function plain(h) { return decode(stripTags(h)).replace(/\s+/g, ' ').trim(); }
+  function cut(s, n) { s = String(s || ''); return s.length > n ? s.slice(0, n - 1) + '…' : s; }
+  function mul32(a) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function seedOf(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
 
   function load() {
     try {
-      var raw = localStorage.getItem(STORE);
-      if (!raw) return;
-      var d = JSON.parse(raw);
-      if (d && Array.isArray(d.v)) d.v.forEach(function (s) { visited.add(s); });
-      if (d && Array.isArray(d.s)) d.s.forEach(function (s) { steps.add(s); });
-      if (d && typeof d.m === 'boolean') motion = d.m;
-    } catch (e) { /* private mode, blocked storage: run stateless */ }
+      var d = JSON.parse(localStorage.getItem(STORE) || 'null');
+      if (!d) return;
+      if (Array.isArray(d.v)) d.v.forEach(function (s) { visited.add(s); });
+      if (Array.isArray(d.f)) d.f.forEach(function (s) { finished.add(s); });
+      if (Array.isArray(d.tr)) trail = d.tr.slice(-8);
+      if (d.tk) Object.keys(d.tk).forEach(function (k) { taken[k] = new Set(d.tk[k]); });
+      if (d.fr === false) firstRun = false;
+    } catch (e) { /* blocked storage: run stateless */ }
   }
+  var saveT = 0;
   function save() {
-    try {
-      localStorage.setItem(STORE, JSON.stringify({
-        v: Array.from(visited), s: Array.from(steps), m: motion
-      }));
-    } catch (e) { /* ignore */ }
+    if (saveT) return;
+    saveT = setTimeout(function () {
+      saveT = 0;
+      try {
+        var tk = {};
+        Object.keys(taken).forEach(function (k) { if (taken[k].size) tk[k] = Array.from(taken[k]); });
+        localStorage.setItem(STORE, JSON.stringify({
+          v: Array.from(visited), f: Array.from(finished), tr: trail.slice(-8), tk: tk, fr: firstRun
+        }));
+      } catch (e) { /* ignore */ }
+    }, 500);
   }
 
-  /* Inline <img> tags in prose point at root-absolute paths or remote avatars.
-     They are turned into text tokens so nothing off-origin is requested. */
-  function inl(h) {
-    h = String(h == null ? '' : h);
-    if (h.indexOf('<img') === -1) return h;
-    return h.replace(/<img\b[^>]*>/gi, function (tag) {
-      var a = /alt\s*=\s*"([^"]*)"/i.exec(tag);
-      var src = /src\s*=\s*"([^"]*)"/i.exec(tag);
-      var label = (a && a[1]) ? a[1] : 'image';
-      return '<span class="inlineimg"' + (src ? ' title="' + attr(src[1]) + '"' : '') + '>'
-        + esc(label) + '</span>';
-    });
+  /* ==========================================================================
+     PIXEL FONT — 3x5, drawn into cached label bitmaps so a frame never
+     costs more than a handful of drawImage calls.
+     ========================================================================== */
+  var FONT = {
+    A: '.#.,#.#,###,#.#,#.#', B: '##.,#.#,##.,#.#,##.', C: '.##,#..,#..,#..,.##',
+    D: '##.,#.#,#.#,#.#,##.', E: '###,#..,##.,#..,###', F: '###,#..,##.,#..,#..',
+    G: '.##,#..,#.#,#.#,.##', H: '#.#,#.#,###,#.#,#.#', I: '###,.#.,.#.,.#.,###',
+    J: '..#,..#,..#,#.#,.#.', K: '#.#,#.#,##.,#.#,#.#', L: '#..,#..,#..,#..,###',
+    M: '#.#,###,###,#.#,#.#', N: '#.#,##.,###,.##,#.#', O: '.#.,#.#,#.#,#.#,.#.',
+    P: '##.,#.#,##.,#..,#..', Q: '.#.,#.#,#.#,###,.##', R: '##.,#.#,##.,#.#,#.#',
+    S: '.##,#..,.#.,..#,##.', T: '###,.#.,.#.,.#.,.#.', U: '#.#,#.#,#.#,#.#,.#.',
+    V: '#.#,#.#,#.#,#.#,.#.', W: '#.#,#.#,###,###,#.#', X: '#.#,#.#,.#.,#.#,#.#',
+    Y: '#.#,#.#,.#.,.#.,.#.', Z: '###,..#,.#.,#..,###',
+    0: '###,#.#,#.#,#.#,###', 1: '.#.,##.,.#.,.#.,###', 2: '##.,..#,.#.,#..,###',
+    3: '###,..#,.##,..#,###', 4: '#.#,#.#,###,..#,..#', 5: '###,#..,###,..#,###',
+    6: '###,#..,###,#.#,###', 7: '###,..#,.#.,.#.,.#.', 8: '###,#.#,###,#.#,###',
+    9: '###,#.#,###,..#,###',
+    ' ': '...,...,...,...,...', '-': '...,...,###,...,...', '.': '...,...,...,...,.#.',
+    ',': '...,...,...,.#.,#..', '/': '..#,..#,.#.,#..,#..', ':': '...,.#.,...,.#.,...',
+    "'": '.#.,.#.,...,...,...', '"': '#.#,#.#,...,...,...', '&': '.#.,#.#,.#.,#.#,.##',
+    '+': '...,.#.,###,.#.,...', '!': '.#.,.#.,.#.,...,.#.', '?': '##.,..#,.#.,...,.#.',
+    '(': '..#,.#.,.#.,.#.,..#', ')': '#..,.#.,.#.,.#.,#..', '[': '.##,.#.,.#.,.#.,.##',
+    ']': '##.,.#.,.#.,.#.,##.', '{': '..#,.#.,##.,.#.,..#', '}': '#..,.#.,.##,.#.,#..',
+    '#': '#.#,###,#.#,###,#.#', '%': '#.#,..#,.#.,#..,#.#', '_': '...,...,...,...,###',
+    '*': '#.#,.#.,#.#,...,...', '=': '...,###,...,###,...', '>': '#..,.#.,..#,.#.,#..',
+    '<': '..#,.#.,#..,.#.,..#', '@': '###,#.#,###,#..,.##', '$': '.##,##.,.##,##.,.#.',
+    ';': '...,.#.,...,.#.,#..', '~': '...,.##,###,##.,...', '|': '.#.,.#.,.#.,.#.,.#.',
+    '→': '...,..#,###,..#,...', '←': '...,#..,###,#..,...', '…': '...,...,...,...,#.#',
+    '↑': '.#.,###,.#.,.#.,.#.', '↓': '.#.,.#.,.#.,###,.#.', '✓': '...,..#,..#,#.#,.#.',
+    '§': '.##,.#.,.#.,.#.,##.', '·': '...,...,.#.,...,...', '›': '#..,.#.,..#,.#.,#..'
+  };
+  function glyph(ch) { return FONT[ch] || FONT['-']; }
+  function textW(s) { return String(s).length * 4 - 1; }
+
+  var LC = Object.create(null), LCn = 0;
+  function label(text, color) {
+    var key = color + '|' + text;
+    var c = LC[key];
+    if (c) return c;
+    var s = String(text).toUpperCase();
+    var w = Math.max(1, textW(s)), h = 5;
+    var cv = document.createElement('canvas');
+    cv.width = w; cv.height = h;
+    var x = cv.getContext('2d');
+    x.fillStyle = color;
+    for (var i = 0; i < s.length; i++) {
+      var rows = glyph(s[i]).split(',');
+      for (var r = 0; r < 5; r++) {
+        var row = rows[r];
+        for (var cc = 0; cc < 3; cc++) if (row[cc] === '#') x.fillRect(i * 4 + cc, r, 1, 1);
+      }
+    }
+    if (LCn > 1200) { LC = Object.create(null); LCn = 0; }
+    LC[key] = cv; LCn++;
+    return cv;
   }
 
-  /* ---------------- syntax highlight ---------------- */
+  /* ==========================================================================
+     BLOCK RENDERER — the reading side. Real content, every kind.
+     The html fields arrive already escaped; they are never escaped again.
+     ========================================================================== */
   var LANGMAP = {
     js: 'js', javascript: 'js', jsx: 'js', ts: 'js', typescript: 'js', tsx: 'js',
     json: 'json', bash: 'sh', sh: 'sh', shell: 'sh', env: 'sh', dockerfile: 'sh',
@@ -89,20 +176,19 @@
   function rxFor(fam) {
     if (fam in RXC) return RXC[fam];
     var kw = {
-      js: 'await|async|break|case|catch|class|const|continue|default|delete|do|else|export|extends|finally|for|from|function|if|import|in|instanceof|let|new|of|return|static|super|switch|this|throw|try|typeof|var|void|while|yield|null|true|false|undefined|interface|type|enum|implements|public|private|protected|readonly|as|declare|namespace|module|require|satisfies|any|string|number|boolean',
+      js: 'await|async|break|case|catch|class|const|continue|default|delete|do|else|export|extends|finally|for|from|function|if|import|in|instanceof|let|new|of|return|static|super|switch|this|throw|try|typeof|var|void|while|yield|null|true|false|undefined|interface|type|enum|implements|public|private|protected|readonly|as|declare|namespace|module|require|satisfies',
       json: 'true|false|null',
       sh: 'if|then|else|fi|for|while|do|done|export|cd|echo|sudo|npm|npx|yarn|pnpm|docker|curl|git|set|source|function|return|case|esac',
       yml: 'true|false|null|on|off|yes|no',
       http: 'GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS|Authorization|Content-Type|Accept|Bearer',
       gql: 'query|mutation|subscription|fragment|on|type|input|enum|interface|schema|scalar|true|false|null',
-      xml: 'true|false|null',
-      diff: 'true|false'
+      xml: 'true|false|null', diff: 'true|false'
     }[fam] || '';
     var hash = (fam === 'sh' || fam === 'yml' || fam === 'gql');
     var slash = (fam === 'js' || fam === 'json' || fam === 'http' || fam === 'xml');
     var cmt = [];
     if (slash) cmt.push('\\/\\/[^\\n]*', '\\/\\*[\\s\\S]*?\\*\\/');
-    if (hash) cmt.push('(?<![\\w\\/:])#[^\\n]*');
+    if (hash) cmt.push('#[^\\n]*');
     if (fam === 'xml') cmt.push('<!--[\\s\\S]*?-->');
     var src = '(' + (cmt.length ? cmt.join('|') : '(?!)') + ')'
       + '|("(?:\\\\.|[^"\\\\\\n])*"|\'(?:\\\\.|[^\'\\\\\\n])*\'|`(?:\\\\.|[^`\\\\])*`)'
@@ -110,10 +196,7 @@
       + (kw ? '|\\b(' + kw + ')\\b' : '|((?!))')
       + '|(@[A-Za-z][\\w-]*|\\$[A-Za-z_][\\w]*)';
     var rx = null;
-    try { rx = new RegExp(src, 'g'); }
-    catch (e) {
-      try { rx = new RegExp(src.replace('(?<![\\w\\/:])', ''), 'g'); } catch (e2) { rx = null; }
-    }
+    try { rx = new RegExp(src, 'g'); } catch (e) { rx = null; }
     RXC[fam] = rx;
     return rx;
   }
@@ -136,141 +219,120 @@
     return out.join('');
   }
 
-  /* ---------------- block renderer ---------------- */
   var uid = 0;
+  var RS = null;   // reveal state for the block currently in the strip
 
-  function renderBlocks(blocks) {
+  function renderBlocks(bs) {
     var out = [];
-    for (var i = 0; i < (blocks || []).length; i++) out.push(renderBlock(blocks[i]));
+    for (var i = 0; i < (bs || []).length; i++) out.push(renderBlock(bs[i]));
     return out.join('');
   }
-
-  function renderItems(items, ordered) {
+  function renderItems(items, ordered, cursor) {
     var out = [];
     for (var i = 0; i < (items || []).length; i++) {
       var it = items[i];
-      if (typeof it === 'string') out.push('<li>' + inl(it) + '</li>');
-      else if (it && typeof it === 'object') {
-        out.push('<li>' + inl(it.html) + (it.blocks ? renderBlocks(it.blocks) : '') + '</li>');
-      }
+      var cls = (cursor != null && cursor === i) ? ' class="row-cursor"' : '';
+      if (typeof it === 'string') out.push('<li' + cls + '>' + it + '</li>');
+      else if (it && typeof it === 'object') out.push('<li' + cls + '>' + (it.html || '') + (it.blocks ? renderBlocks(it.blocks) : '') + '</li>');
     }
-    return '<' + (ordered ? 'ol' : 'ul') + '>' + out.join('') + '</' + (ordered ? 'ol' : 'ul') + '>';
+    var tag = ordered ? 'ol' : 'ul';
+    return '<' + tag + '>' + out.join('') + '</' + tag + '>';
   }
-
   function codeBlock(code, lang, title) {
-    var head = '';
-    if (title || lang) {
-      head = '<div class="code-h">' + (title ? '<span>' + esc(title) + '</span>' : '')
-        + '<span class="lang">' + esc(String(lang || 'text').toUpperCase()) + '</span>'
-        + '<button class="copybtn" type="button" data-copy>COPY</button></div>';
-    }
-    return '<div class="codeblock">' + head
-      + '<pre><code>' + highlight(code || '', lang) + '</code></pre></div>';
+    var head = '<div class="code-h">' + (title ? '<span>' + esc(title) + '</span>' : '<span></span>')
+      + '<span class="lang">' + esc(String(lang || 'text').toUpperCase()) + '</span>'
+      + '<button class="copybtn" type="button" data-copy>COPY</button></div>';
+    return '<div class="codeblock">' + head + '<pre><code>' + highlight(code || '', lang) + '</code></pre></div>';
   }
-
   function renderBlock(b) {
     if (!b || !b.t) return '';
     switch (b.t) {
-      case 'p': return '<p>' + inl(b.html) + '</p>';
+      case 'p': return '<p>' + (b.html || '') + '</p>';
       case 'h2': case 'h3': case 'h4': case 'h5': case 'h6':
         return '<' + b.t + (b.id ? ' id="' + attr(b.id) + '"' : '') + '>' + esc(b.text || '') + '</' + b.t + '>';
       case 'hr': return '<hr>';
-      case 'tldr': return '<div class="tldr"><p>' + inl(b.html) + '</p></div>';
-      case 'ul': return renderItems(b.items, false);
-      case 'ol': return renderItems(b.items, true);
+      case 'tldr': return '<div class="tldr"><p>' + (b.html || '') + '</p></div>';
+      case 'ul': return renderItems(b.items, false, RS && RS.item);
+      case 'ol': return renderItems(b.items, true, RS && RS.item);
       case 'code': return codeBlock(b.code, b.lang, b.title);
       case 'admonition': {
         var k = String(b.kind || 'note').toLowerCase();
-        return '<aside class="adm adm-' + esc(k) + '">'
-          + '<div class="adm-h"><span class="adm-k">' + esc(k.toUpperCase()) + '</span>'
+        return '<aside class="adm adm-' + esc(k) + '"><div class="adm-h"><span class="adm-k">' + esc(k.toUpperCase()) + '</span>'
           + (b.title ? '<span class="adm-t">' + esc(b.title) + '</span>' : '') + '</div>'
           + '<div class="adm-b">' + renderBlocks(b.blocks) + '</div></aside>';
       }
       case 'details': {
-        return '<details class="fold"' + (b.id ? ' id="' + attr(b.id) + '"' : '') + '>'
-          + '<summary><span>' + inl(b.summary || 'Details') + '</span></summary>'
-          + '<div class="fold-b">' + renderBlocks(b.blocks) + '</div></details>';
+        var open = RS && RS.open ? ' open' : '';
+        return '<details class="fold"' + open + (b.id ? ' id="' + attr(b.id) + '"' : '') + '><summary><span>'
+          + (b.summary || 'Details') + '</span></summary><div class="fold-b">' + renderBlocks(b.blocks) + '</div></details>';
       }
       case 'table': {
         var al = b.align || [];
+        var cur = RS && RS.row;
         var h = (b.head || []).map(function (c, i) {
-          return '<th' + (al[i] ? ' style="text-align:' + esc(al[i]) + '"' : '') + '>' + inl(c) + '</th>';
+          return '<th' + (al[i] ? ' style="text-align:' + esc(al[i]) + '"' : '') + '>' + (c || '') + '</th>';
         }).join('');
-        var rows = (b.rows || []).map(function (r) {
-          return '<tr>' + r.map(function (c, i) {
-            return '<td' + (al[i] ? ' style="text-align:' + esc(al[i]) + '"' : '') + '>' + inl(c) + '</td>';
+        var rows = (b.rows || []).map(function (r, ri) {
+          return '<tr' + (cur === ri ? ' class="row-cursor"' : '') + '>' + r.map(function (c, i) {
+            return '<td' + (al[i] ? ' style="text-align:' + esc(al[i]) + '"' : '') + '>' + (c || '') + '</td>';
           }).join('') + '</tr>';
         }).join('');
-        return '<div class="tablewrap"><table>'
-          + (h ? '<thead><tr>' + h + '</tr></thead>' : '') + '<tbody>' + rows + '</tbody></table></div>';
+        return '<div class="tablewrap"><table>' + (h ? '<thead><tr>' + h + '</tr></thead>' : '') + '<tbody>' + rows + '</tbody></table></div>';
       }
       case 'tabs': {
         var gid = 'tg' + (++uid);
+        var sel = clamp((RS && RS.tab) | 0, 0, Math.max(0, (b.tabs || []).length - 1));
         var strip = (b.tabs || []).map(function (t, i) {
-          return '<button type="button" role="tab" data-tab="' + i + '" aria-selected="' + (i === 0) + '">'
+          return '<button type="button" role="tab" data-tab="' + i + '" aria-selected="' + (i === sel) + '">'
             + esc(t.label || t.value || ('TAB ' + (i + 1))) + '</button>';
         }).join('');
         var panels = (b.tabs || []).map(function (t, i) {
-          return '<div class="tabs-panel" role="tabpanel" data-panel="' + i + '"'
-            + (i === 0 ? '' : ' hidden') + '>' + renderBlocks(t.blocks) + '</div>';
+          return '<div class="tabs-panel" role="tabpanel" data-panel="' + i + '"' + (i === sel ? '' : ' hidden') + '>'
+            + renderBlocks(t.blocks) + '</div>';
         }).join('');
         return '<div class="tabs" id="' + gid + '"><div class="tabs-strip" role="tablist">' + strip + '</div>' + panels + '</div>';
       }
       case 'img': {
-        // Image srcs are root-absolute (/img/...). They only resolve when this
-        // bundle is served from the documentation site root, so the plate is the
-        // default and the bitmap is fetched only on request.
         var src = b.light || b.dark || '';
         return '<figure class="figure">'
-          + '<div class="missing" data-shot="' + attr(src) + '" data-shotalt="' + attr(b.alt || '') + '">'
-          + '<b>SCREENSHOT</b><span>' + esc(b.alt || 'Untitled image') + '</span>'
-          + '<p class="shotpath"><code>' + esc(src) + '</code></p>'
-          + (src ? '<button class="copybtn" type="button" data-loadshot>LOAD IMAGE</button>' : '')
-          + '</div>'
-          + (b.caption ? '<figcaption>' + inl(b.caption) + '</figcaption>' : '')
-          + '</figure>';
+          + (src ? '<img src="' + attr(src) + '" alt="' + attr(b.alt || '') + '" loading="lazy" decoding="async">' : '')
+          + '<figcaption>' + (b.caption ? b.caption : esc(b.alt || 'Screenshot'))
+          + '<span class="shotpath">' + esc(src) + '</span></figcaption></figure>';
       }
       case 'cards': {
         var items = (b.items || []).map(function (c) {
-          var href = c.link || '#';
-          return '<a class="card" href="' + attr(href) + '"><b>' + inl(c.title) + '</b>'
-            + '<span>' + inl(c.desc) + '</span></a>';
+          return '<a class="card" href="' + attr(c.link || '#') + '"><b>' + (c.title || '') + '</b><span>' + (c.desc || '') + '</span></a>';
         }).join('');
         return '<div class="cards">' + items + '</div>';
       }
-      case 'badge': {
+      case 'badge':
         return '<p class="blockbadge"><span class="badge badge--' + esc(b.kind || 'version') + '"'
           + (b.tooltip ? ' title="' + attr(b.tooltip) + '"' : '') + '>' + esc(b.label || b.kind || '') + '</span></p>';
-      }
-      case 'columns': {
-        var cols = (b.cols || []).map(function (c) { return '<div>' + renderBlocks(c) + '</div>'; }).join('');
-        return '<div class="cols">' + cols + '</div>';
-      }
+      case 'columns':
+        return '<div class="cols">' + (b.cols || []).map(function (c) { return '<div>' + renderBlocks(c) + '</div>'; }).join('') + '</div>';
       case 'endpoint': return renderEndpoint(b);
       default: return '';
     }
   }
-
   function renderEndpoint(b) {
-    var out = ['<section class="endpoint"' + (b.id ? ' id="' + attr(b.id) + '"' : '') + '>'];
-    out.push('<div class="ep-h">');
+    var out = ['<section class="endpoint"' + (b.id ? ' id="' + attr(b.id) + '"' : '') + '><div class="ep-h">'];
     if (b.method) out.push('<span class="ep-m ' + esc(String(b.method).toLowerCase()) + '">' + esc(b.method) + '</span>');
     if (b.path) out.push('<span class="ep-p">' + esc(b.path) + '</span>');
-    if (b.title) out.push('<span class="ep-t">' + esc(b.title) + '</span>');
-    if (!b.method && !b.path && !b.title) out.push('<span class="ep-t">REQUEST</span>');
+    out.push('<span class="ep-t">' + esc(b.title || (String(b.kind || 'call').toUpperCase() + ' REQUEST')) + '</span>');
     out.push('</div><div class="ep-b">');
-    if (b.description) out.push('<p>' + inl(b.description) + '</p>');
+    if (b.description) out.push('<p>' + b.description + '</p>');
     if (b.params && b.params.length) {
       out.push('<p class="ep-sub">' + esc(b.paramTitle || 'PARAMETERS') + '</p><ul class="ep-params">');
       b.params.forEach(function (p) {
         out.push('<li><span class="pn">' + esc(p.name || '') + '</span>'
           + (p.type ? '<span class="pt">' + esc(p.type) + '</span>' : '')
           + (p.required ? '<span class="rq">REQUIRED</span>' : '')
-          + (p.desc ? '<span class="pd">' + inl(p.desc) + '</span>' : '') + '</li>');
+          + (p.desc ? '<span class="pd">' + p.desc + '</span>' : '') + '</li>');
       });
       out.push('</ul>');
     }
     if (b.codeTabs && b.codeTabs.length) {
+      out.push('<p class="ep-sub">REQUEST</p>');
       out.push(renderBlock({
         t: 'tabs', tabs: b.codeTabs.map(function (c) {
           return { label: c.label, blocks: [{ t: 'code', lang: c.lang, code: c.code, title: '' }] };
@@ -278,12 +340,11 @@
       }));
     }
     if (b.responses && b.responses.length) {
-      out.push('<div class="ep-res">');
+      out.push('<p class="ep-sub">RESPONSE</p><div class="ep-res">');
       b.responses.forEach(function (r) {
-        var errc = (Number(r.status) >= 400) ? ' err' : '';
-        out.push('<div class="ep-res-h"><span class="ep-status' + errc + '">' + esc(String(r.status || '')) + '</span>'
-          + '<span style="color:var(--dim)">' + esc(r.statusText || '') + '</span>'
-          + (r.time ? '<span style="color:var(--faint)">' + esc(r.time) + '</span>' : '') + '</div>');
+        out.push('<div class="ep-res-h"><span class="ep-status' + (Number(r.status) >= 400 ? ' err' : '') + '">'
+          + esc(String(r.status || '')) + '</span><span class="st">' + esc(r.statusText || '') + '</span>'
+          + (r.time ? '<span class="st">' + esc(r.time) + '</span>' : '') + '</div>');
         out.push(codeBlock(r.body || '', r.lang || 'json', ''));
       });
       out.push('</div>');
@@ -292,906 +353,1848 @@
     return out.join('');
   }
 
-  /* ---------------- world layout ---------------- */
-  function buildWorld() {
-    var i;
-    B.nav.forEach(function (sec, si) {
-      var slugs = [];
-      (function walk(items) {
-        for (var k = 0; k < (items || []).length; k++) {
-          var it = items[k];
-          if (it.slug && !(it.slug in ZONE_OF)) { ZONE_OF[it.slug] = si; slugs.push(it.slug); }
-          if (it.items) walk(it.items);
-        }
-      })(sec.items);
-      ZONES.push({ label: sec.label, product: sec.product, slugs: slugs, idx: si });
-    });
-    // orphan safety
-    B.order.forEach(function (s) {
-      if (!(s in ZONE_OF)) { ZONE_OF[s] = ZONES.length - 1; ZONES[ZONES.length - 1].slugs.push(s); }
-    });
-
-    ZONES.forEach(function (z) {
-      z.slugs.sort();
-      var n = z.slugs.length;
-      z.cols = Math.max(1, Math.ceil(Math.sqrt(n * 3.4)));
-      z.rows = Math.ceil(n / z.cols);
-      z.w = z.cols * GX - (GX - RW) + ZPAD * 2;
-      z.h = z.rows * GY - (GY - RH) + ZPAD * 2 + ZHEAD;
-      z.w = Math.max(z.w, 24);
-    });
-
-    // shelf pack
-    var x = 0, y = 0, shelfH = 0, maxW = 0;
-    ZONES.forEach(function (z) {
-      if (x > 0 && x + z.w > MAXROW) { x = 0; y += shelfH + GUT; shelfH = 0; }
-      z.x = x; z.y = y;
-      x += z.w + GUT;
-      if (z.h > shelfH) shelfH = z.h;
-      if (x > maxW) maxW = x;
-    });
-    WORLD_W = maxW - GUT + 2;
-    WORLD_H = y + shelfH + 2;
-
-    ZONES.forEach(function (z) {
-      z.slugs.forEach(function (s, k) {
-        var c = k % z.cols, r = Math.floor(k / z.cols);
-        ROOM[s] = {
-          x: z.x + ZPAD + c * GX,
-          y: z.y + ZPAD + ZHEAD + r * GY,
-          zone: z.idx
-        };
-      });
-    });
-
-    // undirected citation adjacency
-    G.edges.forEach(function (e) {
-      var a = e[0], b = e[1];
-      if (!(a in ROOM) || !(b in ROOM)) return;
-      (NEI[a] || (NEI[a] = [])).push(b);
-      (NEI[b] || (NEI[b] = [])).push(a);
-    });
-    Object.keys(NEI).forEach(function (k) {
-      NEI[k] = Array.from(new Set(NEI[k])).filter(function (s) { return s !== k; });
-    });
-
-    B.order.forEach(function (s) {
-      TOTAL.words += (G.words[s] || 0);
-      TOTAL.code += (G.code[s] || 0);
-      TOTAL.pages++;
-    });
-  }
-
-  function isHazard(s) { return s.indexOf(HAZARD_PREFIX) === 0; }
-
-  /* fog: 3 cleared (visited) | 2 sighted (cited by a visited room) | 1 mapped (zone entered) | 0 dark */
-  var fogCache = null;
-  function fog() {
-    if (fogCache) return fogCache;
-    var f = {};
-    var zoneSeen = {};
-    visited.forEach(function (s) {
-      f[s] = 3;
-      zoneSeen[ZONE_OF[s]] = 1;
-      (NEI[s] || []).forEach(function (n) { if ((f[n] || 0) < 2) f[n] = 2; });
-    });
-    B.order.forEach(function (s) {
-      if (!f[s] && zoneSeen[ZONE_OF[s]]) f[s] = 1;
-      if (!f[s]) f[s] = 0;
-    });
-    fogCache = f;
-    return f;
-  }
-
-  /* ---------------- 3x5 pixel font ---------------- */
-  var FONT = {
-    A: '.#.,#.#,###,#.#,#.#', B: '##.,#.#,##.,#.#,##.', C: '.##,#..,#..,#..,.##',
-    D: '##.,#.#,#.#,#.#,##.', E: '###,#..,##.,#..,###', F: '###,#..,##.,#..,#..',
-    G: '.##,#..,#.#,#.#,.##', H: '#.#,#.#,###,#.#,#.#', I: '###,.#.,.#.,.#.,###',
-    J: '..#,..#,..#,#.#,.#.', K: '#.#,#.#,##.,#.#,#.#', L: '#..,#..,#..,#..,###',
-    M: '#.#,###,###,#.#,#.#', N: '#.#,##.,###,.##,#.#', O: '.#.,#.#,#.#,#.#,.#.',
-    P: '##.,#.#,##.,#..,#..', Q: '.#.,#.#,#.#,###,.##', R: '##.,#.#,##.,#.#,#.#',
-    S: '.##,#..,.#.,..#,##.', T: '###,.#.,.#.,.#.,.#.', U: '#.#,#.#,#.#,#.#,.#.',
-    V: '#.#,#.#,#.#,#.#,.#.', W: '#.#,#.#,###,###,#.#', X: '#.#,#.#,.#.,#.#,#.#',
-    Y: '#.#,#.#,.#.,.#.,.#.', Z: '###,..#,.#.,#..,###',
-    0: '###,#.#,#.#,#.#,###', 1: '.#.,##.,.#.,.#.,###', 2: '##.,..#,.#.,#..,###',
-    3: '###,..#,.##,..#,###', 4: '#.#,#.#,###,..#,..#', 5: '###,#..,###,..#,###',
-    6: '###,#..,###,#.#,###', 7: '###,..#,.#.,.#.,.#.', 8: '###,#.#,###,#.#,###',
-    9: '###,#.#,###,..#,###',
-    ' ': '...,...,...,...,...', '-': '...,...,###,...,...', '.': '...,...,...,...,.#.',
-    '/': '..#,..#,.#.,#..,#..', ':': '...,.#.,...,.#.,...', "'": '.#.,.#.,...,...,...',
-    '&': '.#.,#.#,.#.,#.#,.##', '+': '...,.#.,###,.#.,...', '!': '.#.,.#.,.#.,...,.#.'
+  /* ==========================================================================
+     THE PAGE, READ AS A MAP
+     Two derived facts per block: a short arcade label, and the internal
+     links written inside it, in the order they occur.
+     ========================================================================== */
+  var KINDNAME = {
+    p: 'PARAGRAPH', h2: 'SECTION', h3: 'SUBSECTION', h4: 'HEADING', h5: 'HEADING', h6: 'HEADING',
+    ul: 'LIST', ol: 'STEPS', code: 'CODE', table: 'TABLE', tabs: 'TABS', details: 'FOLD',
+    admonition: 'CALLOUT', img: 'SCREENSHOT', endpoint: 'ENDPOINT', cards: 'CARDS',
+    badge: 'BADGE', tldr: 'TL;DR', columns: 'COLUMNS', hr: 'BREAK'
   };
-  var GCACHE = {};
-  function glyph(ch) {
-    if (GCACHE[ch]) return GCACHE[ch];
-    var g = FONT[ch] || FONT['-'];
-    var rows = g.split(',');
-    GCACHE[ch] = rows;
-    return rows;
+
+  function blockLabel(b) {
+    switch (b.t) {
+      case 'h2': case 'h3': case 'h4': case 'h5': case 'h6': return cut(b.text || 'SECTION', 30);
+      case 'code': return 'CODE · ' + String(b.lang || 'TEXT').toUpperCase();
+      case 'table': return 'TABLE · ' + (b.rows || []).length + ' ROWS';
+      case 'tabs': return 'TABS · ' + (b.tabs || []).length;
+      case 'details': return cut(plain(b.summary) || 'FOLD', 28);
+      case 'admonition': return String(b.kind || 'note').toUpperCase() + (b.title ? ' · ' + cut(plain(b.title), 22) : '');
+      case 'img': return cut(plain(b.alt) || 'SCREENSHOT', 30);
+      case 'endpoint': return (b.method ? b.method + ' ' : '') + cut(b.path || b.title || 'CALL', 30);
+      case 'cards': return 'CARDS · ' + (b.items || []).length;
+      case 'badge': return 'BADGE · ' + cut(b.label || b.kind || '', 20);
+      case 'tldr': return 'TL;DR';
+      case 'columns': return 'COLUMNS';
+      case 'hr': return 'BREAK';
+      case 'ul': return 'LIST · ' + (b.items || []).length;
+      case 'ol': return 'STEPS · ' + (b.items || []).length;
+      default: return cut(plain(b.html) || KINDNAME[b.t] || b.t.toUpperCase(), 26);
+    }
   }
-  function textW(s) { return s.length * 4 - 1; }
-  function drawText(ctx, s, x, y, color) {
-    ctx.fillStyle = color;
-    s = String(s).toUpperCase();
-    for (var i = 0; i < s.length; i++) {
-      var rows = glyph(s[i]);
-      for (var r = 0; r < 5; r++) {
-        var row = rows[r];
-        for (var c = 0; c < 3; c++) if (row[c] === '#') ctx.fillRect(x + i * 4 + c, y + r, 1, 1);
+
+  /* every html-bearing surface of a block, in reading order */
+  function blockHtmlParts(b, acc) {
+    if (!b || !b.t) return acc;
+    if (b.html) acc.push(b.html);
+    if (b.t === 'ul' || b.t === 'ol') {
+      (b.items || []).forEach(function (it) {
+        if (typeof it === 'string') acc.push(it);
+        else if (it) { if (it.html) acc.push(it.html); (it.blocks || []).forEach(function (s) { blockHtmlParts(s, acc); }); }
+      });
+    }
+    if (b.t === 'table') {
+      (b.head || []).forEach(function (c) { acc.push(c); });
+      (b.rows || []).forEach(function (r) { r.forEach(function (c) { acc.push(c); }); });
+    }
+    if (b.t === 'cards') {
+      (b.items || []).forEach(function (c) {
+        if (c && c.link) acc.push('<a href="' + c.link + '">' + (c.title || c.link) + '</a>');
+        if (c && c.desc) acc.push(c.desc);
+      });
+    }
+    if (b.t === 'details') { if (b.summary) acc.push(b.summary); }
+    if (b.t === 'img') { if (b.caption) acc.push(b.caption); }
+    if (b.t === 'endpoint') {
+      if (b.description) acc.push(b.description);
+      (b.params || []).forEach(function (p) { if (p && p.desc) acc.push(p.desc); });
+    }
+    (b.blocks || []).forEach(function (s) { blockHtmlParts(s, acc); });
+    if (b.t === 'tabs') (b.tabs || []).forEach(function (t) { (t.blocks || []).forEach(function (s) { blockHtmlParts(s, acc); }); });
+    if (b.t === 'columns') (b.cols || []).forEach(function (c) { (c || []).forEach(function (s) { blockHtmlParts(s, acc); }); });
+    return acc;
+  }
+
+  var LINKRX = /<a\b[^>]*href="#(\/[^"#]*)(?:#[^"]*)?"[^>]*>([\s\S]*?)<\/a>/gi;
+
+  /* the links written inside one block, in the order they are written */
+  function linksIn(b) {
+    var parts = blockHtmlParts(b, []);
+    var seen = Object.create(null), out = [], m;
+    var src = parts.join('\n');
+    LINKRX.lastIndex = 0;
+    while ((m = LINKRX.exec(src)) !== null) {
+      var to = m[1];
+      if (!B.pages[to]) continue;
+      if (seen[to]) continue;
+      seen[to] = 1;
+      var text = plain(m[2]) || (TITLE[to] || to);
+      out.push({ to: to, text: text });
+    }
+    return out;
+  }
+
+  function blockText(b) { return plain(blockHtmlParts(b, []).join(' ')); }
+
+  /* ==========================================================================
+     LEVEL BUILDER — the page laid out left to right in block order.
+     Block i owns the tile range [x0, x1). Standing anywhere in that range
+     means you are reading block i. That is the whole mechanic.
+     ========================================================================== */
+  var PAD_L = 7, PAD_R = 12;
+
+  function spanFor(b) {
+    switch (b.t) {
+      case 'h2': return 13;
+      case 'h3': return 11;
+      case 'h4': case 'h5': case 'h6': return 10;
+      case 'hr': return 7;
+      case 'p': return clamp(9 + Math.round(plain(b.html).length / 90), 9, 26);
+      case 'tldr': return 14;
+      case 'ul': case 'ol': return 8 + 4 * Math.min((b.items || []).length, 8);
+      case 'code': return clamp(14 + Math.round(String(b.code || '').split('\n').length / 2), 14, 30);
+      case 'admonition': return 14;
+      case 'table': return 12 + 3 * Math.min((b.rows || []).length, 8);
+      case 'tabs': return 10 + 7 * Math.min((b.tabs || []).length, 5);
+      case 'details': return 16;
+      case 'endpoint': return 24;
+      case 'img': return 22;
+      case 'cards': return 10;
+      case 'badge': return 10;
+      case 'columns': return 24;
+      default: return 10;
+    }
+  }
+
+  var HAZKIND = { caution: 1, danger: 1, warning: 1 };
+
+  function buildLevel(sl) {
+    var p = B.pages[sl];
+    var blocks = p.blocks || [];
+    var lv = {
+      slug: sl, seed: seedOf(sl),
+      ground: [], solid: new Set(), oneway: new Set(), hazard: new Set(),
+      ents: [], segs: [], doors: [], W: 0,
+      pickTotal: 0
+    };
+    function K(tx, ty) { return tx * 64 + ty; }
+    var col = 0;
+    function fill(n, y) { for (var i = 0; i < n; i++) { lv.ground[col] = y; col++; } }
+    function oneWay(x0, w, y) { if (y < 3) return; for (var i = 0; i < w; i++) lv.oneway.add(K(x0 + i, y)); }
+    function wall(x0, w, y0, y1) { for (var i = 0; i < w; i++) for (var j = y0; j <= y1; j++) if (j >= 0) lv.solid.add(K(x0 + i, j)); }
+    function haz(x0, w, y) { for (var i = 0; i < w; i++) lv.hazard.add(K(x0 + i, y)); }
+    function E(o) { lv.ents.push(o); return o; }
+
+    var gy = BASE_GY;
+    fill(PAD_L, gy);
+
+    for (var i = 0; i < blocks.length; i++) {
+      var b = blocks[i];
+      var links = linksIn(b);
+      var nd = Math.min(links.length, 6);
+
+      /* terraces: a section heading lifts the ground, so the shape of the
+         page is visible from a distance and h2 reads as a new plateau */
+      var want = gy;
+      if (b.t === 'h2') want = BASE_GY - 5;
+      else if (b.t === 'h3') want = BASE_GY - 3;
+      else if (b.t === 'h4' || b.t === 'h5' || b.t === 'h6') want = BASE_GY - 2;
+      else if (b.t === 'hr') want = BASE_GY;
+      if (want !== gy) {
+        var dir = want > gy ? 1 : -1;
+        while (gy !== want) { gy += dir; fill(2, gy); }   // one-tile stairs: walkable
+      }
+
+      var span = spanFor(b) + 6 * nd;
+      var x0 = col;
+      fill(span, gy);
+      var x1 = col;
+      var mainEnd = x1 - 6 * nd;
+      var cx = (x0 + mainEnd) >> 1;
+      var seg = { i: i, t: b.t, x0: x0, x1: x1, gy: gy, label: blockLabel(b), nd: nd };
+      lv.segs.push(seg);
+
+      /* ---- the object IS the block ---------------------------------- */
+      switch (b.t) {
+        case 'h2': case 'h3': case 'h4': case 'h5': case 'h6':
+          E({ t: 'gate', x: cx * TS, y: (gy - 9) * TS, w: 6 * TS, h: 9 * TS, bi: i, lv: +b.t[1], text: b.text || '' });
+          break;
+
+        case 'code': {
+          var cw = clamp(mainEnd - x0 - 5, 4, 18);
+          wall(x0 + 2, 1, gy - 1, gy - 1);
+          wall(x0 + 3, cw, gy - 2, gy - 1);
+          wall(x0 + 3 + cw, 1, gy - 1, gy - 1);
+          lv.pickTotal++;
+          E({ t: 'code', x: (x0 + 3) * TS, y: (gy - 2) * TS - 14, w: cw * TS, h: 14, bi: i, lang: String(b.lang || 'text'), act: 'stand' });
+          break;
+        }
+        case 'table': {
+          var nr = Math.min((b.rows || []).length, 8);
+          for (var r = 0; r < nr; r++) {
+            var rx = x0 + 2 + r * 3, ry = gy - 3 - r * 2;
+            oneWay(rx, 3, ry);
+            E({ t: 'rung', x: rx * TS, y: ry * TS - 14, w: 3 * TS, h: 14, bi: i, row: r, act: 'stand' });
+          }
+          break;
+        }
+        case 'tabs': {
+          var nt = Math.min((b.tabs || []).length, 5);
+          for (var k = 0; k < nt; k++) {
+            var px2 = x0 + 2 + k * 7, py2 = gy - 1 - k;
+            wall(px2, 5, py2, gy - 1);
+            E({ t: 'pylon', x: px2 * TS, y: py2 * TS - 14, w: 5 * TS, h: 14, bi: i, tab: k, text: (b.tabs[k].label || ('TAB ' + (k + 1))), act: 'stand' });
+          }
+          break;
+        }
+        case 'ul': case 'ol': {
+          var ni = Math.min((b.items || []).length, 8);
+          for (var s = 0; s < ni; s++) {
+            var sx = x0 + 2 + s * 4, sy = gy - 1 - (s % 3);
+            wall(sx, 3, sy, gy - 1);
+            E({ t: 'stone', x: sx * TS, y: sy * TS - 14, w: 3 * TS, h: 14, bi: i, item: s, ord: b.t === 'ol', act: 'stand' });
+          }
+          break;
+        }
+        case 'admonition': {
+          var kd = String(b.kind || 'note').toLowerCase();
+          if (HAZKIND[kd]) {
+            haz(cx - 1, 3, gy - 1);
+            E({ t: 'hazsign', x: (cx - 1) * TS, y: (gy - 1) * TS, w: 3 * TS, h: TS, bi: i, kind: kd, deco: true });
+          } else {
+            E({ t: 'spring', x: cx * TS, y: (gy - 1) * TS, w: 2 * TS, h: TS, bi: i, kind: kd, act: 'stand' });
+          }
+          break;
+        }
+        case 'details':
+          E({ t: 'chamber', x: (x0 + 3) * TS, y: (gy - 5) * TS, w: 3 * TS, h: 5 * TS, bi: i, act: 'press', text: cut(plain(b.summary) || 'FOLD', 30) });
+          break;
+
+        case 'endpoint':
+          wall(cx - 3, 7, gy - 2, gy - 1);
+          E({ t: 'term', x: (cx - 3) * TS, y: (gy - 2) * TS - 16, w: 7 * TS, h: 16, bi: i, act: 'press', text: (b.method ? b.method + ' ' : '') + cut(b.path || b.title || 'CALL', 26) });
+          break;
+
+        case 'img':
+          lv.pickTotal++;
+          wall(cx - 5, 11, gy - 10, gy - 5);
+          wall(cx - 4, 9, gy - 1, gy - 1);
+          E({ t: 'shot', x: (cx - 4) * TS, y: (gy - 1) * TS - 14, w: 9 * TS, h: 14, bi: i, act: 'stand', text: cut(plain(b.alt) || 'SCREENSHOT', 26) });
+          break;
+
+        case 'badge':
+          E({ t: 'sigil', x: cx * TS, y: (gy - 4) * TS, w: 2 * TS, h: 2 * TS, bi: i, act: 'touch', text: cut(b.label || b.kind || 'BADGE', 22) });
+          break;
+
+        case 'columns':
+          oneWay(x0 + 3, Math.max(4, mainEnd - x0 - 6), gy - 3);
+          E({ t: 'stele', x: (x0 + 1) * TS, y: (gy - 4) * TS, w: TS, h: 4 * TS, bi: i, text: seg.label });
+          break;
+
+        case 'hr':
+          E({ t: 'obelisk', x: cx * TS, y: (gy - 6) * TS, w: 2 * TS, h: 6 * TS, bi: i });
+          break;
+
+        default:
+          E({ t: 'stele', x: (x0 + 1) * TS, y: (gy - 4) * TS, w: TS, h: 4 * TS, bi: i, text: seg.label });
+      }
+
+      /* ---- doors: one per link, in the order the links are written ---- */
+      for (var d = 0; d < nd; d++) {
+        var dx = mainEnd + 1 + d * 6;
+        var door = {
+          t: 'door', kind: 'link', x: dx * TS, y: (gy - 5) * TS, w: 3 * TS, h: 5 * TS,
+          bi: i, to: links[d].to, text: links[d].text, act: 'press'
+        };
+        E(door); lv.doors.push(door);
+      }
+    }
+
+    /* ---- the tail: a return door where you arrived, and the next page --- */
+    fill(PAD_R, gy);
+    lv.W = col;
+
+    if (arrivedFrom && B.pages[arrivedFrom.slug]) {
+      var back = {
+        t: 'door', kind: 'back', x: 2 * TS, y: (BASE_GY - 5) * TS, w: 3 * TS, h: 5 * TS,
+        bi: 0, to: arrivedFrom.slug, text: 'BACK · ' + cut(TITLE[arrivedFrom.slug] || arrivedFrom.slug, 26), act: 'press'
+      };
+      lv.ents.push(back); lv.doors.push(back);
+    }
+    var nx = nextInOrder(sl);
+    if (nx) {
+      var fwd = {
+        t: 'door', kind: 'next', x: (lv.W - 8) * TS, y: (gy - 5) * TS, w: 3 * TS, h: 5 * TS,
+        bi: Math.max(0, blocks.length - 1), to: nx, text: 'NEXT PAGE · ' + cut(TITLE[nx] || nx, 24), act: 'press'
+      };
+      lv.ents.push(fwd); lv.doors.push(fwd);
+    }
+
+    /* ---- indexes: tile column -> block, and per-column draw lists ------ */
+    var segAt = new Int32Array(lv.W);
+    var cur = 0;
+    for (var t2 = 0; t2 < lv.W; t2++) segAt[t2] = -1;
+    for (var s2 = 0; s2 < lv.segs.length; s2++) {
+      var sg = lv.segs[s2];
+      for (var t3 = sg.x0; t3 < sg.x1 && t3 < lv.W; t3++) segAt[t3] = s2;
+    }
+    for (var t4 = 0; t4 < lv.W; t4++) { if (segAt[t4] < 0) segAt[t4] = cur; else cur = segAt[t4]; }
+    lv.segAt = segAt;
+
+    lv.colSolid = []; lv.colOne = []; lv.colHaz = [];
+    function spread(set, target) {
+      set.forEach(function (k) {
+        var tx = Math.floor(k / 64), ty = k - tx * 64;
+        (target[tx] || (target[tx] = [])).push(ty);
+      });
+    }
+    spread(lv.solid, lv.colSolid); spread(lv.oneway, lv.colOne); spread(lv.hazard, lv.colHaz);
+
+    lv.BK = 32 * TS;
+    lv.buckets = [];
+    lv.ents.forEach(function (e) {
+      var b0 = Math.max(0, Math.floor((e.x - 40) / lv.BK)), b1 = Math.floor((e.x + e.w + 40) / lv.BK);
+      for (var q = b0; q <= b1; q++) (lv.buckets[q] || (lv.buckets[q] = [])).push(e);
+    });
+
+    lv.startX = 4 * TS;
+    lv.startY = (lv.ground[4] - 2) * TS;
+    return lv;
+  }
+
+  function prevInOrder(s) { var i = ORDIDX[s]; return i > 0 ? B.order[i - 1] : null; }
+  function nextInOrder(s) { var i = ORDIDX[s]; return (i >= 0 && i < B.order.length - 1) ? B.order[i + 1] : null; }
+
+  /* ==========================================================================
+     RENDERER — one integer-resolution back buffer, blitted with smoothing off.
+     Zoom is chosen so the running figure is 48–64 device pixels tall.
+     ========================================================================== */
+  var dcv, dctx, buf, bx, VW = 360, VH = 200, SC = 4;
+  var camX = 0, camY = 0;   // float, physics
+  var RX = 0, RY = 0;       // integer, rendering (no subpixel = no anti-aliasing)
+
+  function sizeScreen() {
+    dcv = $('screen');
+    if (!dcv) return;
+    var r = dcv.parentElement.getBoundingClientRect();
+    var cw = Math.max(320, Math.floor(r.width)), ch = Math.max(180, Math.floor(r.height));
+    /* target ~360 logical px across: at SC 4 the 14px body reads 56px tall */
+    /* the 14px body must land between 48 and 64 device pixels, so the zoom
+       is capped at 4x: 14 * 4 = 56. Only a stage too small to hold the
+       corridor drops to 3x. */
+    SC = clamp(Math.round(Math.min(cw / 270, ch / 115)), 3, 4);
+    VW = Math.floor(cw / SC); VH = Math.floor(ch / SC);
+    dcv.width = VW * SC; dcv.height = VH * SC;
+    dcv.style.width = (VW * SC) + 'px'; dcv.style.height = (VH * SC) + 'px';
+    dctx = dcv.getContext('2d');
+    dctx.imageSmoothingEnabled = false;
+    if (!buf) buf = document.createElement('canvas');
+    SKY = null;
+    buf.width = VW; buf.height = VH;
+    bx = buf.getContext('2d');
+    bx.imageSmoothingEnabled = false;
+    if (L) makeBackdrops(L);
+  }
+
+  /* --- sky: a two colour dithered ramp, rose at altitude to bone at the
+     horizon. Bayer 4x4, no intermediate tone anywhere. --- */
+  var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+  var SKY = null, SKYKEY = '';
+  function makeSky() {
+    if (SKY && SKYKEY === VW + 'x' + VH) return SKY;
+    var c = document.createElement('canvas');
+    c.width = VW; c.height = VH;
+    var g2 = c.getContext('2d');
+    var im = g2.createImageData(VW, VH);
+    var d = im.data;
+    var A = [0x2A, 0x0F, 0x3D], Ro = [0xFF, 0x3D, 0x6E], Bo = [0xFF, 0xE9, 0xC7];
+    for (var y = 0; y < VH; y++) {
+      var t = y / Math.max(1, VH - 1);
+      for (var x = 0; x < VW; x++) {
+        var th = (BAYER[(y & 3) * 4 + (x & 3)] + 0.5) / 16;
+        var col;
+        if (t < 0.09) { col = ((t / 0.09) > th) ? Ro : A; }
+        else if (t < 0.20) { col = Ro; }
+        else if (t < 0.31) {
+          var v = (t - 0.20) / 0.11; v = v * v * (3 - 2 * v);
+          col = (v > th) ? Bo : Ro;
+        } else { col = Bo; }
+        var o = (y * VW + x) * 4;
+        d[o] = col[0]; d[o + 1] = col[1]; d[o + 2] = col[2]; d[o + 3] = 255;
+      }
+    }
+    g2.putImageData(im, 0, 0);
+    var cxp = Math.floor(VW * 0.76), cyp = Math.floor(VH * 0.145), rr = Math.max(9, Math.floor(VH * 0.095));
+    g2.fillStyle = BONE;
+    for (var yy = -rr; yy <= rr; yy++) {
+      var hw = Math.floor(Math.sqrt(rr * rr - yy * yy));
+      g2.fillRect(cxp - hw, cyp + yy, hw * 2, 1);
+    }
+    g2.fillStyle = ROSE;
+    for (var k = 0; k < 6; k++) {
+      var byy = cyp - Math.floor(rr * 0.1) + k * 3;
+      g2.fillRect(cxp - rr - 2, byy, rr * 2 + 4, 1 + Math.floor(k / 3));
+    }
+    g2.fillStyle = JADE;
+    g2.fillRect(0, Math.floor(VH * 0.312), VW, 1);
+    SKY = c; SKYKEY = VW + 'x' + VH;
+    return c;
+  }
+
+  function makeStrip(seed, color, opts) {
+    var rnd = mul32(seed);
+    var w = 512, h = opts.h;
+    var c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    var g2 = c.getContext('2d');
+    var x = 0;
+    while (x < w) {
+      var bw = opts.min + Math.floor(rnd() * (opts.max - opts.min));
+      var bh = Math.floor(h * (opts.lo + rnd() * (opts.hi - opts.lo)));
+      var top = h - bh;
+      g2.fillStyle = color;
+      g2.fillRect(x, top, bw, bh);
+      var f = rnd();
+      if (f < 0.30) g2.fillRect(x + Math.floor(bw / 3), top - 11 - Math.floor(rnd() * 10), 3, 14);
+      else if (f < 0.52) { g2.fillRect(x + 2, top - 5, bw - 4, 5); g2.fillRect(x + Math.floor(bw / 2) - 1, top - 13, 2, 9); }
+      else if (f < 0.70) { g2.fillRect(x, top - 3, bw, 3); g2.fillRect(x + 1, top - 10, 2, 7); g2.fillRect(x + bw - 3, top - 10, 2, 7); }
+      if (opts.crown) {
+        g2.fillStyle = opts.crown;
+        for (var cy = top; cy < top + 7 && cy < h; cy++) {
+          for (var cx2 = x; cx2 < x + bw; cx2++) {
+            if (BAYER[((cy - top) & 3) * 4 + (cx2 & 3)] / 16 > 0.45 + (cy - top) / 9) g2.fillRect(cx2, cy, 1, 1);
+          }
+        }
+      }
+      if (opts.win) {
+        g2.globalCompositeOperation = 'destination-out';
+        g2.fillStyle = AUB;   // destination-out: the value is ignored, the hole is the point
+        for (var wy = top + 6; wy < h - 5; wy += 7) {
+          for (var wx = x + 3; wx < x + bw - 4; wx += 6) if (rnd() < 0.5) g2.fillRect(wx, wy, 2, 3);
+        }
+        g2.globalCompositeOperation = 'source-over';
+      }
+      x += bw + (opts.gap ? Math.floor(rnd() * opts.gap) : 0);
+    }
+    return c;
+  }
+
+  function makeBackdrops(lv) {
+    makeSky();
+    var fh = Math.max(22, Math.round(VH * 0.20)), mh = Math.max(26, Math.round(VH * 0.26));
+    lv.far = makeStrip(lv.seed ^ 0x9E37, VIO, { h: fh, min: 10, max: 30, lo: 0.42, hi: 0.98, gap: 6, win: true });
+    lv.mid = makeStrip(lv.seed ^ 0x1234, AUB, { h: mh, min: 16, max: 44, lo: 0.44, hi: 0.98, gap: 5, win: true, crown: VIO });
+  }
+
+  function tileStrip(img, offset, top) {
+    if (!img) return;
+    var w = img.width;
+    var o = ((-offset % w) + w) % w;
+    for (var sx = -o; sx < VW; sx += w) bx.drawImage(img, Math.floor(sx), Math.floor(top));
+  }
+
+  /* ==========================================================================
+     THE CHARACTER — headless CMS, literally: the Strapi mark floats above
+     the shoulders on a jade tether, lags on the run, overshoots on landing.
+     ========================================================================== */
+  var P = {
+    x: 0, y: 0, w: 8, h: 14, vx: 0, vy: 0,
+    face: 1, onGround: false, coyote: 0, buffer: 0, jumping: false,
+    phase: 0, anim: 'idle', animT: 0, squash: 0, dropT: 0,
+    hx: 0, hy: 0, hvx: 0, hvy: 0, tilt: 0, hurt: 0
+  };
+
+  var HEAD = [
+    '.VVVVVVVV.',
+    'VVVVVVVVVV',
+    'VVAAABBBVV',
+    'VVAABBBBVV',
+    'VVABBBBBVV',
+    'VVBBBBBBVV',
+    'VVBBBBBAVV',
+    'VVBBBAAAVV',
+    'VVVVVVVVVV',
+    '.VVVVVVVV.'
+  ];
+  function drawHead(hx, hy, tilt) {
+    for (var r = 0; r < 10; r++) {
+      var sh = Math.round(tilt * (r - 4.5) * 0.42);
+      var row = HEAD[r];
+      var run = null, runS = 0;
+      for (var c = 0; c <= 10; c++) {
+        var ch = c < 10 ? row[c] : '.';
+        var col = ch === 'V' ? VIO : ch === 'A' ? AUB : ch === 'B' ? BONE : null;
+        if (col !== run) {
+          if (run) { bx.fillStyle = run; bx.fillRect(hx + runS + sh, hy + r, c - runS, 1); }
+          run = col; runS = c;
+        }
       }
     }
   }
 
-  /* ---------------- map ---------------- */
-  var cv, ctx, VW = 100, VH = 90, SC = 4, camX = 0, camY = 0, tick = 0, rafId = 0;
+  function limb(x0, y0, x1, y1, color, thick) {
+    bx.fillStyle = color;
+    var dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0);
+    var sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
+    var err = dx - dy, n = 0, cx = x0, cy = y0;
+    while (n++ < 48) {
+      bx.fillRect(cx, cy, thick, thick);
+      if (cx === x1 && cy === y1) break;
+      var e2 = err * 2;
+      if (e2 > -dy) { err -= dy; cx += sx; }
+      if (e2 < dx) { err += dx; cy += sy; }
+    }
+  }
 
-  function sizeMap() {
-    var frame = cv.parentElement;
-    var avail = Math.max(180, frame.clientWidth);
-    var targetH = window.innerHeight < 780 ? 258 : 336;
-    if (worldView) targetH = window.innerHeight < 780 ? 300 : 360;
-    if (worldView) {
-      SC = Math.max(1, Math.min(Math.floor(avail / WORLD_W), Math.floor(targetH / WORLD_H)));
-      VW = Math.min(WORLD_W, Math.floor(avail / SC));
-      VH = Math.min(WORLD_H, Math.floor(targetH / SC));
+  function drawPlayer() {
+    var sx = Math.round(P.x) - RX, sy = Math.round(P.y) - RY;
+    var f = P.face, ph = P.phase;
+    var bob = 0, lean = 0;
+    var thA = 0, thB = 0, shA = 0, shB = 0, arA = 0, arB = 0;
+    var body = P.hurt > 0 && (Math.floor(P.hurt * 24) & 1) ? ROSE : BONE;
+
+    if (P.anim === 'run') {
+      var th = ph * Math.PI * 2;
+      thA = Math.sin(th) * 1.0; thB = Math.sin(th + Math.PI) * 1.0;
+      shA = thA * 0.3 - Math.max(0, Math.sin(th + 1.3)) * 1.0;
+      shB = thB * 0.3 - Math.max(0, Math.sin(th + Math.PI + 1.3)) * 1.0;
+      arA = Math.sin(th + Math.PI) * 0.9; arB = Math.sin(th) * 0.9;
+      bob = -Math.abs(Math.sin(th * 2));
+      lean = f;
+    } else if (P.anim === 'jump') {
+      thA = 1.0; thB = 0.25; shA = -1.2; shB = -0.35; arA = -1.7; arB = -1.2; lean = f;
+    } else if (P.anim === 'fall') {
+      thA = 0.5; thB = -0.55; shA = -0.45; shB = 0.25; arA = -1.0; arB = 1.1; lean = f;
     } else {
-      SC = 3;
-      VW = Math.max(40, Math.floor(avail / SC));
-      VH = Math.max(40, Math.floor(targetH / SC));
-    }
-    cv.width = VW; cv.height = VH;
-    cv.style.width = (VW * SC) + 'px';
-    cv.style.height = (VH * SC) + 'px';
-    cv.style.margin = '0 auto';
-    ctx = cv.getContext('2d');
-    ctx.imageSmoothingEnabled = false;
-    centerCam(true);
-  }
-
-  function centerCam() {
-    var r = current && ROOM[current];
-    if (worldView || WORLD_W <= VW) camX = Math.round((WORLD_W - VW) / 2);
-    else if (r) camX = Math.max(0, Math.min(WORLD_W - VW, Math.round(r.x + RW / 2 - VW / 2)));
-    if (worldView || WORLD_H <= VH) camY = Math.round((WORLD_H - VH) / 2);
-    else if (r) camY = Math.max(0, Math.min(WORLD_H - VH, Math.round(r.y + RH / 2 - VH / 2)));
-  }
-
-  function drawMap() {
-    if (!ctx) return;
-    var f = fog();
-    ctx.fillStyle = '#030c07';
-    ctx.fillRect(0, 0, VW, VH);
-
-    // faint grid
-    ctx.fillStyle = '#061109';
-    for (var gx = -(camX % 20); gx < VW; gx += 20) ctx.fillRect(gx, 0, 1, VH);
-    for (var gy = -(camY % 20); gy < VH; gy += 20) ctx.fillRect(0, gy, VW, 1);
-
-    var ox = -camX, oy = -camY;
-
-    // zone frames + labels
-    ZONES.forEach(function (z) {
-      var any = false;
-      for (var i = 0; i < z.slugs.length; i++) { if (f[z.slugs[i]] > 0) { any = true; break; } }
-      if (!any) return;
-      var zx = z.x + ox, zy = z.y + oy;
-      if (zx > VW || zy > VH || zx + z.w < 0 || zy + z.h < 0) return;
-      ctx.fillStyle = z.product === 'cloud' ? '#0a2027' : '#0a1a12';
-      ctx.fillRect(zx, zy, z.w, z.h);
-      ctx.fillStyle = z.product === 'cloud' ? '#164450' : '#16382a';
-      // dashed frame
-      for (var x = 0; x < z.w; x += 2) { ctx.fillRect(zx + x, zy, 1, 1); ctx.fillRect(zx + x, zy + z.h - 1, 1, 1); }
-      for (var y = 0; y < z.h; y += 2) { ctx.fillRect(zx, zy + y, 1, 1); ctx.fillRect(zx + z.w - 1, zy + y, 1, 1); }
-      var lbl = z.label.toUpperCase();
-      while (textW(lbl) > z.w - 6 && lbl.length > 3) lbl = lbl.slice(0, -1);
-      drawText(ctx, lbl, zx + 3, zy + 2, z.product === 'cloud' ? '#4e9db0' : '#3f7d61');
-    });
-
-    // corridors (citation edges) — drawn once a room is cleared
-    ctx.fillStyle = '#164a33';
-    for (var e = 0; e < G.edges.length; e++) {
-      var a = G.edges[e][0], b = G.edges[e][1];
-      var ra = ROOM[a], rb = ROOM[b];
-      if (!ra || !rb) continue;
-      var fa = f[a] || 0, fb = f[b] || 0;
-      if (fa < 2 || fb < 2) continue;
-      if (fa < 3 && fb < 3) continue;
-      var live = (a === current || b === current);
-      ctx.fillStyle = live ? '#4fd694' : '#103826';
-      corridor(ra.x + (RW >> 1) + ox, ra.y + (RH >> 1) + oy, rb.x + (RW >> 1) + ox, rb.y + (RH >> 1) + oy, live);
+      bob = Math.sin(ph * Math.PI * 2) < -0.35 ? 1 : 0;
+      thA = 0.14; thB = -0.14; arA = 0.14; arB = -0.14;
     }
 
-    // rooms
-    B.order.forEach(function (s) {
-      var r = ROOM[s], st = f[s] || 0;
-      if (!r || st === 0) return;
-      var x = r.x + ox, y = r.y + oy;
-      if (x > VW || y > VH || x + RW < 0 || y + RH < 0) return;
-      var hz = isHazard(s);
-      var fill, line, core = null;
-      if (st === 3) { fill = hz ? '#4a1a15' : '#17583a'; line = hz ? '#ff7a68' : '#5ee89b'; core = hz ? '#ff9d8e' : '#8df2b8'; }
-      else if (st === 2) { fill = hz ? '#2a0f0c' : '#0c2418'; line = hz ? '#9c4036' : '#2f9c69'; core = hz ? '#5e211b' : '#1d6b47'; }
-      else { fill = '#081611'; line = hz ? '#4d211c' : '#163527'; }
-      ctx.fillStyle = fill; ctx.fillRect(x, y, RW, RH);
-      ctx.fillStyle = line;
-      ctx.fillRect(x, y, RW, 1); ctx.fillRect(x, y + RH - 1, RW, 1);
-      ctx.fillRect(x, y, 1, RH); ctx.fillRect(x + RW - 1, y, 1, RH);
-      var hub = (G.inbound[s] || 0) >= 20;
-      if (core) {
-        ctx.fillStyle = (hub && st === 3) ? '#f6b73f' : core;
-        ctx.fillRect(x + 1, y + 1, RW - 2, RH - 2);
-      } else if (hub) {
-        ctx.fillStyle = '#4a3a14';
-        ctx.fillRect(x + 1, y + 1, RW - 2, RH - 2);
+    var sq = Math.round(P.squash);
+    var cx = sx + 4, top = sy + Math.round(bob) + sq;
+    var torsoH = 7 - sq;
+    var hipY = top + torsoH;
+
+    function leg(t, k, side) {
+      var hx0 = cx + side * 2, hy0 = hipY;
+      var kx = Math.round(hx0 + Math.sin(t) * 4 * f), ky = Math.round(hy0 + Math.cos(t) * 4);
+      var fx = Math.round(kx + Math.sin(t + k) * 3 * f), fy = Math.round(ky + Math.cos(t + k) * 3);
+      limb(hx0, hy0, kx, ky, body, 2);
+      limb(kx, ky, fx, fy, body, 2);
+      bx.fillStyle = AUB; bx.fillRect(kx, ky, 1, 1);
+      bx.fillStyle = body; bx.fillRect(f > 0 ? fx : fx - 1, fy + 2, 3, 1);
+    }
+    function arm(a, side) {
+      var ax = cx + side * 3, ay = top + 2;
+      var ex = Math.round(ax + Math.sin(a) * 5 * f), ey = Math.round(ay + Math.cos(a) * 5);
+      limb(ax, ay, ex, ey, body, 2);
+      bx.fillStyle = AUB; bx.fillRect(ex, ey, 2, 1);
+    }
+
+    leg(thB, shB, -1);
+    arm(arB, -1);
+
+    bx.fillStyle = body;
+    bx.fillRect(cx - 4 + lean, top, 8, torsoH);
+    bx.fillRect(cx - 5 + lean, top + 1, 10, torsoH - 3);
+    bx.fillStyle = AUB;
+    bx.fillRect(cx - 1 + lean, top + 2, 2, torsoH - 3);
+    bx.fillRect(cx - 5 + lean, top + torsoH - 2, 3, 1);
+    bx.fillRect(cx + 3 + lean, top + torsoH - 2, 2, 1);
+
+    leg(thA, shA, 1);
+    arm(arA, 1);
+
+    bx.fillStyle = AUB;
+    bx.fillRect(cx - 1 + lean, top - 1, 3, 1);
+    bx.fillStyle = JADE;
+    bx.fillRect(cx + lean, top - 1, 1, 1);
+
+    var hpx = Math.round(P.hx) - RX, hpy = Math.round(P.hy) - RY;
+    var nx0 = cx + lean, ny0 = top - 2, nx1 = hpx + 5, ny1 = hpy + 10;
+    var steps = Math.max(1, Math.abs(ny0 - ny1));
+    bx.fillStyle = JADE;
+    for (var s2 = 0; s2 <= steps; s2 += 2) {
+      var t2 = s2 / steps;
+      bx.fillRect(Math.round(nx0 + (nx1 - nx0) * t2), Math.round(ny0 + (ny1 - ny0) * t2), 1, 1);
+    }
+    drawHead(hpx, hpy, P.tilt);
+  }
+
+  /* ==========================================================================
+     SIGNAGE — every plate goes through one queue so two signs never overlap
+     and truncate each other. Placed left to right, pushed up on collision.
+     ========================================================================== */
+  var PQ = [];
+  function queuePlate(text, tx, ty, fg, bgc, anchor, prio) {
+    if (!text) return;
+    var img = label(cut(String(text), 32), fg);
+    var w = img.width + 6, h = 9;
+    var x0 = anchor === 'center' ? Math.round(tx - w / 2) : Math.round(tx);
+    if (x0 + w < -12 || x0 > VW + 12) return;
+    PQ.push({ img: img, x: x0, y: Math.round(ty), w: w, h: h, bg: bgc,
+      ax: Math.round(tx), ay: Math.round(ty) + h, prio: prio || 0 });
+  }
+  /* one pass over every sign on screen: a sign is pushed up until it clears
+     the ones already placed, and then tethered back to the object it names,
+     so nothing overlaps and nothing floats free. */
+  function flushPlates() {
+    PQ.sort(function (a, b) { return (b.prio - a.prio) || (a.x - b.x); });
+    var placed = [];
+    for (var i = 0; i < PQ.length; i++) {
+      var p = PQ[i], guard = 0;
+      for (;;) {
+        var hit = false;
+        for (var j = 0; j < placed.length; j++) {
+          var q = placed[j];
+          if (p.x < q.x + q.w + 3 && p.x + p.w + 3 > q.x && Math.abs(p.y - q.y) < 11) { hit = true; break; }
+        }
+        if (!hit || guard++ > 9) break;
+        p.y -= 12;
       }
-    });
-
-    // player
-    var pr = current && ROOM[current];
-    if (pr) {
-      var px = pr.x + ox, py = pr.y + oy;
-      var blink = (!motion || reduced) ? 1 : (Math.floor(tick / 30) % 2);
-      ctx.fillStyle = '#f6b73f';
-      ctx.fillRect(px - 1, py - 1, 2, 1); ctx.fillRect(px - 1, py - 1, 1, 2);
-      ctx.fillRect(px + RW - 1, py - 1, 2, 1); ctx.fillRect(px + RW, py - 1, 1, 2);
-      ctx.fillRect(px - 1, py + RH, 2, 1); ctx.fillRect(px - 1, py + RH - 1, 1, 2);
-      ctx.fillRect(px + RW - 1, py + RH, 2, 1); ctx.fillRect(px + RW, py + RH - 1, 1, 2);
-      if (blink) {
-        ctx.fillStyle = '#ffe6a8';
-        ctx.fillRect(px + 2, py + 1, 3, 3);
-        ctx.fillStyle = '#f6b73f';
-        ctx.fillRect(px + 3, py + 2, 1, 1);
+      placed.push(p);
+      if (p.ay - (p.y + p.h) > 3) {
+        bx.fillStyle = p.bg;
+        var lx = clamp(p.ax, p.x + 1, p.x + p.w - 2);
+        for (var ly = p.y + p.h; ly < p.ay; ly += 2) bx.fillRect(lx, ly, 1, 1);
       }
+      bx.fillStyle = p.bg;
+      bx.fillRect(p.x, p.y, p.w, p.h);
+      bx.drawImage(p.img, p.x + 3, p.y + 2);
     }
-
-    // vignette edges
-    ctx.fillStyle = 'rgba(3,12,7,0.55)';
-    ctx.fillRect(0, 0, VW, 1); ctx.fillRect(0, VH - 1, VW, 1);
+    PQ.length = 0;
   }
 
-  function corridor(x1, y1, x2, y2, solid) {
-    var i;
-    var step = solid ? 1 : 3;
-    var mx = x2;
-    if (x1 < x2) { for (i = x1; i <= mx; i += step) ctx.fillRect(i, y1, 1, 1); }
-    else { for (i = x1; i >= mx; i -= step) ctx.fillRect(i, y1, 1, 1); }
-    if (y1 < y2) { for (i = y1; i <= y2; i += step) ctx.fillRect(mx, i, 1, 1); }
-    else { for (i = y1; i >= y2; i -= step) ctx.fillRect(mx, i, 1, 1); }
-  }
+  /* ==========================================================================
+     ENTITY DRAWING — each object is a piece of the page, drawn as itself.
+     ========================================================================== */
+  function isTaken(bi) { var s = taken[slug]; return !!(s && s.has(bi)); }
 
-  function loop() {
-    tick++;
-    if (tick % 6 === 0) drawMap();
-    rafId = requestAnimationFrame(loop);
-  }
-  function startLoop() {
-    if (rafId) cancelAnimationFrame(rafId);
-    rafId = 0;
-    drawMap();
-    if (motion && !reduced) rafId = requestAnimationFrame(loop);
-  }
+  function drawEnt(e, t) {
+    var x = Math.round(e.x) - RX, y = Math.round(e.y) - RY;
+    if (x + e.w < -60 || x > VW + 60) return;
+    var read = e.bi <= (L.maxBlock == null ? -1 : L.maxBlock);
+    var here = e.bi === L.cur;
 
-  /* ---------------- movement ---------------- */
-  var DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
-  function move(dir) {
-    if (!current || !ROOM[current]) return;
-    var d = DIRS[dir], f = fog();
-    var cx = ROOM[current].x + RW / 2, cy = ROOM[current].y + RH / 2;
-    var zone = ZONE_OF[current];
-    var nei = {};
-    (NEI[current] || []).forEach(function (n) { nei[n] = 1; });
-    var best = null, bestScore = Infinity, bestAny = null, bestAnyScore = Infinity;
-    B.order.forEach(function (s) {
-      if (s === current) return;
-      var r = ROOM[s];
-      var dx = (r.x + RW / 2) - cx, dy = (r.y + RH / 2) - cy;
-      var along = dx * d[0] + dy * d[1];
-      if (along <= 0) return;
-      var perp = Math.abs(dx * d[1] - dy * d[0]);
-      if (perp > along * 1.15 + 4) return;
-      var score = along + perp * 2.6;
-      // corridors first, then the same zone, then anything in that direction
-      if (nei[s]) score *= 0.45;
-      else if (ZONE_OF[s] === zone) score *= 0.8;
-      if (score < bestAnyScore) { bestAnyScore = score; bestAny = s; }
-      if ((f[s] || 0) >= 1 && score < bestScore) { bestScore = score; best = s; }
-    });
-    var target = best || bestAny;
-    if (target) go(target);
-  }
-
-  /* ---------------- routing ---------------- */
-  function parseHash() {
-    var h = location.hash || '';
-    if (h.charAt(0) === '#') h = h.slice(1);
-    if (!h || h === '/') return { slug: HOME, anchor: '' };
-    var i = h.indexOf('#');
-    var slug = i === -1 ? h : h.slice(0, i);
-    var anchor = i === -1 ? '' : h.slice(i + 1);
-    slug = slug.replace(/\/+$/, '');
-    if (slug && slug.charAt(0) !== '/') slug = '/' + slug;
-    return { slug: slug || HOME, anchor: anchor };
-  }
-
-  function go(slug, anchor) {
-    var h = '#' + slug + (anchor ? '#' + anchor : '');
-    if (location.hash === h) { route(); return; }
-    location.hash = h;
-  }
-
-  var pending = 0;
-  function route() {
-    var p = parseHash();
-    var page = B.pages[p.slug];
-    if (!page) {
-      var alt = B.pages[p.slug + '/'] || null;
-      if (!alt) { renderMissing(p.slug); return; }
-      page = alt;
-    }
-    current = page.slug;
-    if (!visited.has(page.slug)) { visited.add(page.slug); fogCache = null; save(); }
-    document.title = page.title + ' — Strapi Docs Arcade';
-    renderPage(page, p.anchor);
-    updateMeters();
-    updateTree();
-    renderRoomCard(page);
-    renderQuest();
-    centerCam();
-    drawMap();
-  }
-
-  function renderMissing(slug) {
-    current = null;
-    document.title = 'Room not found — Strapi Docs Arcade';
-    $('doc').innerHTML = '<div class="doc-head"><h1 class="doc-title">NO SUCH ROOM</h1>'
-      + '<p class="doc-desc">Nothing is mapped at <code>' + esc(slug) + '</code>. '
-      + 'The corpus holds ' + TOTAL.pages + ' rooms; use the index on the left or the search field above to find one.</p></div>'
-      + '<p>Return to <a href="#' + HOME + '">' + esc(B.pages[HOME] ? B.pages[HOME].title : HOME) + '</a>.</p>';
-    $('pager').innerHTML = '';
-    $('roomcard').innerHTML = '';
-    drawMap();
-  }
-
-  /* ---------------- page render ---------------- */
-  function renderPage(page, anchor) {
-    var slug = page.slug;
-    var w = G.words[slug] || 0, cb = G.code[slug] || 0;
-    var inb = G.inbound[slug] || 0, outb = G.outbound[slug] || 0;
-    var zone = ZONES[ZONE_OF[slug]];
-
-    var head = ['<header class="doc-head">'];
-    head.push('<p class="eyebrow">');
-    head.push('<span class="ey-prod' + (page.product === 'cloud' ? ' cloud' : '') + '">' + esc(page.product || 'cms') + '</span>');
-    head.push('<span>' + esc(zone ? zone.label : (page.section || '')) + '</span>');
-    if (page.tags && page.tags.length) {
-      page.tags.slice(0, 3).forEach(function (t) { head.push('<span>' + esc(t) + '</span>'); });
-    }
-    head.push('</p>');
-    head.push('<h1 class="doc-title">' + esc(page.title) + '</h1>');
-    if (page.description) head.push('<p class="doc-desc">' + esc(page.description) + '</p>');
-    head.push('<dl class="doc-stats">'
-      + '<div><dt>WORDS</dt><dd>' + num(w) + '</dd></div>'
-      + '<div><dt>CODE BLOCKS</dt><dd>' + num(cb) + '</dd></div>'
-      + '<div><dt>CITED BY</dt><dd>' + num(inb) + '</dd></div>'
-      + '<div><dt>EXITS</dt><dd>' + num(outb) + '</dd></div>'
-      + '<div><dt>HEADINGS</dt><dd>' + num((page.headings || []).length) + '</dd></div>'
-      + '</dl>');
-    head.push('</header>');
-
-    if (isHazard(slug)) {
-      head.push('<div class="hazard"><b>HAZARD ZONE — V4 TO V5 BREAKING CHANGE</b>'
-        + 'This room documents a change that breaks existing v4 code. '
-        + '56 rooms in the corpus carry this marker.</div>');
-    }
-
-    var body = renderBlocks(page.blocks);
-    $('doc').innerHTML = head.join('') + body;
-
-    // pager from bundle.order
-    var i = B.order.indexOf(slug);
-    var prev = i > 0 ? B.order[i - 1] : null;
-    var next = i >= 0 && i < B.order.length - 1 ? B.order[i + 1] : null;
-    var pg = [];
-    if (prev) pg.push('<a href="#' + attr(prev) + '" class="pv"><small>◀ PREVIOUS</small><b>' + esc(B.pages[prev].title) + '</b></a>');
-    if (next) pg.push('<a href="#' + attr(next) + '" class="nx"><small>NEXT ▶</small><b>' + esc(B.pages[next].title) + '</b></a>');
-    $('pager').innerHTML = pg.join('');
-
-    var cx = $('codex');
-    if (anchor) {
-      var t = document.getElementById(anchor);
-      if (t) {
-        var d = t.closest('details'); if (d) d.open = true;
-        t.scrollIntoView({ block: 'start', behavior: 'auto' });
-        return;
+    switch (e.t) {
+      case 'door': {
+        var lit = here || e.kind !== 'link';
+        var bh = e.h, bw = e.w;
+        var frame = e.kind === 'back' ? ROSE : VIO;
+        /* threshold: a bone mat on the floor, so the door reads as standing
+           on the ground and not painted on the back wall */
+        bx.fillStyle = BONE; bx.fillRect(x - 3, y + bh - 2, bw + 6, 2);
+        bx.fillStyle = AUB; bx.fillRect(x - 3, y + bh, bw + 6, 1);
+        /* jamb + lintel */
+        bx.fillStyle = BONE; bx.fillRect(x - 2, y - 2, bw + 4, bh);
+        bx.fillStyle = frame; bx.fillRect(x, y, bw, bh - 2);
+        /* the opening: jade, the one colour nothing in the background uses
+           as a field, so a door is never mistaken for a building */
+        var pulse = lit ? Math.round((Math.sin(t * 3.2 + e.x * 0.05) + 1) * 1.2) : 0;
+        bx.fillStyle = JADE;
+        bx.fillRect(x + 3, y + 5, bw - 6, bh - 8);
+        bx.fillStyle = AUB;
+        for (var sc = y + 6 + pulse; sc < y + bh - 4; sc += 4) bx.fillRect(x + 3, sc, bw - 6, 1);
+        /* a chevron in the opening: which way this door takes you */
+        var dirn = e.kind === 'back' ? -1 : 1;
+        var mxq = x + bw / 2 - dirn * 2, myq = y + Math.round(bh * 0.52);
+        bx.fillStyle = AUB;
+        for (var q = 0; q < 5; q++) bx.fillRect(mxq + dirn * q, myq - 4 + q, 2, 2), bx.fillRect(mxq + dirn * q, myq + 4 - q, 2, 2);
+        /* a bone tick above already-visited destinations */
+        if (visited.has(e.to)) { bx.fillStyle = BONE; bx.fillRect(x + bw - 6, y + 2, 4, 2); }
+        queuePlate(e.text, x + bw / 2, y - 14, e.kind === 'back' ? AUB : BONE,
+          e.kind === 'back' ? ROSE : VIO, 'center', here ? 3 : 2);
+        break;
+      }
+      case 'code': {
+        bx.fillStyle = JADE;
+        bx.fillRect(x, y + 12, e.w, 2);
+        if (isTaken(e.bi)) { bx.fillStyle = BONE; bx.fillRect(x, y + 14, e.w, 1); }
+        /* code rules floating over the deck: this slab is a listing */
+        bx.fillStyle = JADE;
+        bx.fillRect(x + 3, y + 2, Math.min(20, e.w - 8), 1);
+        bx.fillRect(x + 7, y + 6, Math.min(14, e.w - 14), 1);
+        queuePlate((isTaken(e.bi) ? '✓ ' : '') + e.lang.toUpperCase() + ' CODE', x + e.w / 2, y - 6, AUB, JADE, 'center', here ? 3 : 1);
+        break;
+      }
+      case 'rung': {
+        bx.fillStyle = read ? JADE : BONE;
+        bx.fillRect(x, y + 12, e.w, 2);
+        bx.fillStyle = AUB; bx.fillRect(x, y + 14, e.w, 1);
+        bx.fillStyle = VIO; bx.fillRect(x + e.w - 2, y + 14, 2, 16);
+        if (here) queuePlate('ROW ' + (e.row + 1), x + e.w / 2, y - 2, AUB, BONE, 'center', 2);
+        break;
+      }
+      case 'pylon': {
+        bx.fillStyle = (L.rev && L.rev.tab === e.tab && here) ? JADE : BONE;
+        bx.fillRect(x, y + 12, e.w, 2);
+        queuePlate(e.text, x + e.w / 2, y - 2, AUB, (L.rev && L.rev.tab === e.tab && here) ? JADE : BONE, 'center', here ? 2 : 0);
+        break;
+      }
+      case 'stone': {
+        bx.fillStyle = (here && L.rev && L.rev.item === e.item) ? JADE : BONE;
+        bx.fillRect(x, y + 12, e.w, 2);
+        if (here) queuePlate((e.ord ? 'STEP ' : 'ITEM ') + (e.item + 1), x + e.w / 2, y - 4, AUB, BONE, 'center', 2);
+        break;
+      }
+      case 'spring': {
+        var comp = e.t0 && (t - e.t0) < 0.2 ? 3 : 0;
+        bx.fillStyle = JADE;
+        bx.fillRect(x, y + comp, e.w, 3);
+        bx.fillStyle = AUB;
+        bx.fillRect(x + 1, y + 3 + comp, e.w - 2, 5 - comp);
+        bx.fillStyle = JADE;
+        bx.fillRect(x + 2, y + 4 + comp, e.w - 4, 1);
+        queuePlate(e.kind.toUpperCase() + ' ↑', x + e.w / 2, y - 12, AUB, JADE, 'center', here ? 3 : 1);
+        break;
+      }
+      case 'hazsign': {
+        bx.fillStyle = ROSE;
+        for (var h2 = 0; h2 < e.w; h2 += 8) {
+          bx.fillRect(x + h2, y + 4, 8, 4);
+          bx.fillRect(x + h2 + 1, y + 1, 2, 3);
+          bx.fillRect(x + h2 + 5, y + 1, 2, 3);
+        }
+        bx.fillStyle = AUB; bx.fillRect(x, y + 7, e.w, 1);
+        queuePlate(e.kind.toUpperCase() + ' — KNOCKS BACK', x + e.w / 2, y - 22, AUB, ROSE, 'center', here ? 3 : 1);
+        break;
+      }
+      case 'chamber': {
+        var open = here && L.rev && L.rev.open;
+        bx.fillStyle = AUB; bx.fillRect(x - 2, y - 2, e.w + 4, e.h + 2);
+        bx.fillStyle = ROSE; bx.fillRect(x, y, e.w, e.h);
+        bx.fillStyle = BONE; bx.fillRect(x, y, e.w, 2);
+        bx.fillStyle = open ? BONE : AUB;
+        bx.fillRect(x + 2, y + 5, e.w - 4, e.h - 6);
+        if (open) { bx.fillStyle = JADE; bx.fillRect(x + 3, y + 7, e.w - 6, 1); bx.fillRect(x + 3, y + 10, e.w - 8, 1); }
+        queuePlate((open ? 'OPEN · ' : 'FOLD · ') + e.text, x + e.w / 2, y - 12, AUB, ROSE, 'center', here ? 3 : 1);
+        break;
+      }
+      case 'term': {
+        bx.fillStyle = AUB; bx.fillRect(x, y, e.w, 16);
+        bx.fillStyle = BONE; bx.fillRect(x, y, e.w, 1);
+        bx.fillStyle = (here && L.rev && L.rev.term) ? JADE : VIO;
+        bx.fillRect(x + 2, y + 3, e.w - 4, 10);
+        bx.fillStyle = AUB;
+        for (var sl2 = y + 4; sl2 < y + 13; sl2 += 3) bx.fillRect(x + 3, sl2, e.w - 6, 1);
+        bx.fillStyle = ROSE; bx.fillRect(x + e.w - 5, y + 4, 2, 2);
+        queuePlate(e.text, x + e.w / 2, y - 12, BONE, VIO, 'center', here ? 3 : 1);
+        break;
+      }
+      case 'shot': {
+        /* the billboard body sits in the solid layer; here we draw its face */
+        var bwx = 11 * TS, bxx = x + e.w / 2 - bwx / 2, byy = y - 7 * TS + 6;
+        bx.fillStyle = BONE; bx.fillRect(bxx, byy, bwx, 6 * TS);
+        bx.fillStyle = VIO; bx.fillRect(bxx + 2, byy + 2, bwx - 4, 6 * TS - 4);
+        bx.fillStyle = BONE;
+        bx.fillRect(bxx + 5, byy + 6, bwx - 10, 3);
+        bx.fillRect(bxx + 5, byy + 12, Math.floor((bwx - 10) * 0.6), 3);
+        bx.fillStyle = JADE; bx.fillRect(bxx + 5, byy + 18, Math.floor((bwx - 10) * 0.8), 3);
+        bx.fillStyle = ROSE; bx.fillRect(bxx + 5, byy + 24, Math.floor((bwx - 10) * 0.35), 3);
+        bx.fillStyle = AUB; bx.fillRect(bxx + bwx / 2 - 2, byy + 6 * TS, 4, 2 * TS);
+        bx.fillStyle = isTaken(e.bi) ? JADE : BONE; bx.fillRect(x, y + 12, e.w, 2);
+        queuePlate('SCREENSHOT · ' + e.text, x + e.w / 2, y - 6, BONE, VIO, 'center', here ? 3 : 1);
+        break;
+      }
+      case 'sigil': {
+        var fl = Math.round(Math.sin(t * 3 + e.x) * 2);
+        bx.fillStyle = ROSE; bx.fillRect(x + 2, y + fl, e.w - 4, e.h - 4);
+        bx.fillStyle = BONE; bx.fillRect(x + 4, y + 2 + fl, e.w - 8, e.h - 8);
+        queuePlate(e.text, x + e.w / 2, y - 10 + fl, AUB, ROSE, 'center', here ? 2 : 0);
+        break;
+      }
+      case 'gate': {
+        var gw = e.w, gh = e.h;
+        var gx = x - gw / 2;
+        bx.fillStyle = VIO;
+        bx.fillRect(gx, y, 3, gh);
+        bx.fillRect(gx + gw - 3, y, 3, gh);
+        bx.fillRect(gx, y, gw, 4);
+        bx.fillStyle = BONE;
+        bx.fillRect(gx, y, gw, 1);
+        bx.fillRect(gx, y + 4, gw, 1);
+        bx.fillStyle = e.lv === 2 ? JADE : ROSE;
+        bx.fillRect(gx + 3, y + 6, gw - 6, 2);
+        queuePlate((e.lv === 2 ? '§ ' : '') + e.text, x, y - 12, e.lv === 2 ? BONE : AUB, e.lv === 2 ? VIO : BONE, 'center', here ? 3 : 1);
+        break;
+      }
+      case 'obelisk': {
+        bx.fillStyle = AUB; bx.fillRect(x, y, e.w, e.h);
+        bx.fillStyle = VIO; bx.fillRect(x, y + 2, e.w, 2);
+        bx.fillStyle = BONE; bx.fillRect(x, y, e.w, 1);
+        break;
+      }
+      case 'stele': {
+        bx.fillStyle = read ? JADE : VIO;
+        bx.fillRect(x, y, 2, e.h);
+        bx.fillStyle = BONE; bx.fillRect(x - 1, y, 4, 2);
+        queuePlate(e.text, x + 4, y - 10, AUB, BONE, 'left', here ? 2 : 0);
+        break;
       }
     }
-    cx.scrollTop = 0;
   }
 
-  /* ---------------- HUD ---------------- */
-  function updateMeters() {
-    var w = 0, c = 0, z = {};
-    visited.forEach(function (s) {
-      w += (G.words[s] || 0); c += (G.code[s] || 0);
-      if (s in ZONE_OF) z[ZONE_OF[s]] = 1;
-    });
-    var zc = Object.keys(z).length;
-    set('m-rooms', num(visited.size), '/' + TOTAL.pages, visited.size / TOTAL.pages);
-    set('m-words', num(w), '/' + num(TOTAL.words), TOTAL.words ? w / TOTAL.words : 0);
-    set('m-code', num(c), '/' + num(TOTAL.code), TOTAL.code ? c / TOTAL.code : 0);
-    set('m-zones', String(zc), '/' + ZONES.length, zc / ZONES.length);
-  }
-  function set(id, a, b, frac) {
-    var n = $(id);
-    n.querySelector('b').textContent = a;
-    n.querySelector('i').textContent = b;
-    n.querySelector('.bar>span').style.width = Math.round(Math.max(0, Math.min(1, frac)) * 100) + '%';
-  }
+  /* ==========================================================================
+     FRAME
+     ========================================================================== */
+  var focusEnt = null, tSec = 0;
 
-  /* ---------------- tree ---------------- */
-  var treeBuilt = false;
-  function buildTree() {
-    var root = $('tree');
-    var html = [];
-    ZONES.forEach(function (z, zi) {
-      var sec = B.nav[zi];
-      html.push('<details class="tree-sec" data-product="' + esc(z.product) + '" data-zone="' + zi + '">');
-      html.push('<summary><span class="caret">▸</span>' + esc(z.label)
-        + '<span class="pcount">' + z.slugs.length + '</span></summary>');
-      treeSeen = {};
-      html.push('<ul class="tree-list">' + navItems(sec.items) + '</ul>');
-      html.push('</details>');
-    });
-    root.innerHTML = html.join('');
-    root.addEventListener('toggle', function (e) {
-      var s = e.target.querySelector('summary .caret');
-      if (s) s.textContent = e.target.open ? '▾' : '▸';
-    }, true);
-    treeBuilt = true;
-  }
-  var treeSeen = null;
-  function navItems(items) {
+  function visibleEnts() {
+    if (!L.buckets) return L.ents;
+    var b0 = Math.max(0, Math.floor((RX - 200) / L.BK));
+    var b1 = Math.floor((RX + VW + 200) / L.BK);
     var out = [];
-    (items || []).forEach(function (it) {
-      if (it.slug && treeSeen) {
-        if (treeSeen[it.slug]) { if (it.items) out.push('<li><ul class="tree-list">' + navItems(it.items) + '</ul></li>'); return; }
-        treeSeen[it.slug] = 1;
+    for (var q = b0; q <= b1; q++) {
+      var arr = L.buckets[q];
+      if (!arr) continue;
+      for (var i = 0; i < arr.length; i++) if (out.indexOf(arr[i]) < 0) out.push(arr[i]);
+    }
+    return out;
+  }
+
+  function nextUnvisitedDoor() {
+    if (!L) return null;
+    var best = null;
+    for (var i = 0; i < L.doors.length; i++) {
+      var d = L.doors[i];
+      if (d.kind !== 'link') continue;
+      if (visited.has(d.to)) continue;
+      if (d.x + d.w < P.x) continue;
+      if (!best || d.x < best.x) best = d;
+    }
+    if (!best) for (var j = 0; j < L.doors.length; j++) { var e = L.doors[j]; if (e.kind === 'link' && e.x > P.x) { best = e; break; } }
+    return best;
+  }
+
+  function draw() {
+    if (!L || !bx) return;
+    RX = Math.round(camX); RY = Math.round(camY);
+
+    if (SKY) bx.drawImage(SKY, 0, 0);
+    else { bx.fillStyle = ROSE; bx.fillRect(0, 0, VW, VH); }
+
+    /* horizontal parallax is strong, vertical parallax is near unity: the
+       skyline stays welded to the terrain line instead of sliding off it */
+    var HW = (BASE_GY - WALLH + 1) * TS;
+    var fy = HW + 3 - RY * 0.93, my = HW + 6 - RY * 0.96;
+    tileStrip(L.far, Math.floor(RX * 0.10), Math.round(fy) - L.far.height);
+    tileStrip(L.mid, Math.floor(RX * 0.26), Math.round(my) - L.mid.height);
+
+    var x0 = Math.floor(RX / TS) - 1, x1 = Math.floor((RX + VW) / TS) + 1;
+    var i, j, colr, sxp, topY;
+
+    /* the corridor wall: aubergine, WALLH tiles above the terrain, tracing
+       it. The play field is always a dark band, so a bone character and a
+       bone sign can never fall on the bone sky and disappear. */
+    for (i = x0; i <= x1; i++) {
+      if (i < 0 || i >= L.W) continue;
+      var wt = (L.ground[i] - WALLH) * TS - RY;
+      var wb = L.ground[i] * TS - RY;
+      if (wb < 0 || wt > VH) continue;
+      sxp = i * TS - RX;
+      bx.fillStyle = AUB; bx.fillRect(sxp, wt, TS, wb - wt);
+      bx.fillStyle = VIO; bx.fillRect(sxp, wt + 1, TS, 1);
+      bx.fillStyle = BONE; bx.fillRect(sxp, wt, TS, 1);
+      if ((i & 3) === 0) { bx.fillStyle = VIO; bx.fillRect(sxp + 2, wt + 16, 4, 3); bx.fillRect(sxp + 2, wt + 40, 4, 3); }
+      if ((i & 15) === 7) { bx.fillStyle = ROSE; bx.fillRect(sxp + 3, wt + 8, 2, 2); }
+    }
+
+    /* ---- terrain: aubergine silhouette, bone rim light on every walkable
+       surface. The rim is the contract: if it has a bone edge you can stand
+       on it, if it does not it is scenery. */
+    bx.fillStyle = AUB;
+    for (i = x0; i <= x1; i++) {
+      if (i < 0 || i >= L.W) continue;
+      topY = L.ground[i] * TS - RY;
+      if (topY > VH) continue;
+      bx.fillRect(i * TS - RX, topY, TS, VH - topY + 8);
+    }
+    for (i = x0; i <= x1; i++) {
+      if (i < 0 || i >= L.W) continue;
+      var g2t = L.ground[i];
+      topY = g2t * TS - RY;
+      if (topY > VH) continue;
+      sxp = i * TS - RX;
+      var lt = (i > 0) ? L.ground[i - 1] : -1;
+      var rt2 = (i < L.W - 1) ? L.ground[i + 1] : -1;
+
+      bx.fillStyle = VIO;
+      bx.fillRect(sxp, topY + 4, TS, 1);
+      if ((i & 7) === 0) bx.fillRect(sxp + 3, topY + 9, 2, 26);
+      bx.fillStyle = ROSE;
+      bx.fillRect(sxp, topY + 14, TS, 2);
+      bx.fillStyle = BONE;
+      bx.fillRect(sxp, topY, TS, 2);
+      if (lt >= 0 && lt > g2t) bx.fillRect(sxp, topY, 1, (lt - g2t) * TS);
+      if (rt2 >= 0 && rt2 > g2t) bx.fillRect(sxp + TS - 1, topY, 1, (rt2 - g2t) * TS);
+    }
+
+    /* ---- the reading ruler: the current block's span is painted on the
+       ground, and every block boundary gets a tick. Position = paragraph. */
+    var sg = L.segs[L.cur];
+    for (i = x0; i <= x1; i++) {
+      if (i < 0 || i >= L.W) continue;
+      var si = L.segAt[i];
+      var isBound = (i > 0 && L.segAt[i - 1] !== si);
+      topY = L.ground[i] * TS - RY;
+      if (isBound) { bx.fillStyle = VIO; bx.fillRect(i * TS - RX, topY - 4, 1, 4); }
+      if (sg && i >= sg.x0 && i < sg.x1) {
+        bx.fillStyle = ROSE;
+        bx.fillRect(i * TS - RX, topY - 2, TS, 2);
+      } else if (si < L.cur) {
+        bx.fillStyle = JADE;
+        bx.fillRect(i * TS - RX, topY - 1, TS, 1);
       }
-      if (it.slug) {
-        out.push('<li><a class="tree-link" data-slug="' + attr(it.slug) + '" href="#' + attr(it.slug) + '">'
-          + esc(it.label || (B.pages[it.slug] ? B.pages[it.slug].sidebarLabel : it.slug))
-          + (isHazard(it.slug) ? ' <span class="hz">!</span>' : '') + '</a>');
+    }
+
+    /* ---- solid blocks (billboard bodies, terminals) */
+    bx.fillStyle = AUB;
+    for (i = x0; i <= x1; i++) {
+      colr = L.colSolid[i];
+      if (!colr) continue;
+      sxp = i * TS - RX;
+      for (j = 0; j < colr.length; j++) bx.fillRect(sxp, colr[j] * TS - RY, TS, TS);
+    }
+    /* their edges, so a slab reads as an object and not as more back wall:
+       bone on top where you can stand, violet down the exposed sides */
+    for (i = x0; i <= x1; i++) {
+      colr = L.colSolid[i];
+      if (!colr) continue;
+      sxp = i * TS - RX;
+      for (j = 0; j < colr.length; j++) {
+        var ty2 = colr[j], key = i * 64 + ty2;
+        var above = L.solid.has(key - 1) || (L.ground[i] != null && ty2 - 1 >= L.ground[i]);
+        var leftS = L.solid.has(key - 64) || (L.ground[i - 1] != null && ty2 >= L.ground[i - 1]);
+        var rightS = L.solid.has(key + 64) || (L.ground[i + 1] != null && ty2 >= L.ground[i + 1]);
+        var yy = ty2 * TS - RY;
+        if (!leftS) { bx.fillStyle = VIO; bx.fillRect(sxp, yy, 1, TS); }
+        if (!rightS) { bx.fillStyle = VIO; bx.fillRect(sxp + TS - 1, yy, 1, TS); }
+        if (!above) { bx.fillStyle = BONE; bx.fillRect(sxp, yy, TS, 2); }
+      }
+    }
+
+    /* ---- one-way decking: jade lip on an aubergine shadow */
+    for (i = x0; i <= x1; i++) {
+      colr = L.colOne[i];
+      if (!colr) continue;
+      sxp = i * TS - RX;
+      for (j = 0; j < colr.length; j++) {
+        topY = colr[j] * TS - RY;
+        bx.fillStyle = JADE; bx.fillRect(sxp, topY, TS, 2);
+        bx.fillStyle = AUB; bx.fillRect(sxp, topY + 2, TS, 1);
+      }
+    }
+
+    /* ---- hazards */
+    bx.fillStyle = ROSE;
+    for (i = x0; i <= x1; i++) {
+      colr = L.colHaz[i];
+      if (!colr) continue;
+      sxp = i * TS - RX;
+      for (j = 0; j < colr.length; j++) {
+        topY = colr[j] * TS - RY;
+        bx.fillRect(sxp, topY + 3, TS, 5);
+        bx.fillRect(sxp + 1, topY, 2, 3);
+        bx.fillRect(sxp + 5, topY, 2, 3);
+      }
+    }
+
+    var ve = visibleEnts();
+    for (i = 0; i < ve.length; i++) drawEnt(ve[i], tSec);
+
+    drawPlayer();
+
+    /* ---- the pointer to the next unvisited door */
+    var nd = nextUnvisitedDoor();
+    if (nd) {
+      var mx = clamp(Math.round(nd.x + nd.w / 2) - RX, 8, VW - 9);
+      var bobv = Math.round(Math.sin(tSec * 5) * 2);
+      var my2 = 12 + bobv;
+      bx.fillStyle = ROSE;
+      for (var a = 0; a < 6; a++) bx.fillRect(mx - a, my2 + a, 1 + a * 2, 1);
+      bx.fillStyle = BONE; bx.fillRect(mx - 1, my2 - 4, 3, 4);
+      var far = Math.round((nd.x - P.x) / TS);
+      if (Math.abs(far) > 6) queuePlate('NEXT DOOR ' + (far > 0 ? '→ ' : '← ') + Math.abs(far) + 'M', mx, my2 + 8, AUB, ROSE, 'center', 4);
+    }
+
+    /* ---- the contextual prompt, floating on the object itself */
+    if (focusEnt) {
+      var fx = Math.round(focusEnt.x + focusEnt.w / 2) - RX;
+      var fyq = Math.round(focusEnt.y) - RY - 24;
+      queuePlate(promptFor(focusEnt), fx, fyq, AUB, JADE, 'center', 5);
+      bx.fillStyle = JADE;
+      bx.fillRect(fx - 1, fyq + 10, 3, 4);
+    }
+
+    flushPlates();
+
+    dctx.drawImage(buf, 0, 0, VW, VH, 0, 0, VW * SC, VH * SC);
+  }
+
+  /* ==========================================================================
+     PHYSICS
+     ========================================================================== */
+  var keys = Object.create(null);
+  var jumpEdge = false;
+  function down(c) { return !!keys[c]; }
+  function K(tx, ty) { return tx * 64 + ty; }
+
+  function solidAt(tx, ty) {
+    if (tx < 0 || tx >= L.W) return true;
+    if (ty < 0 || ty >= LEVEL_H) return false;
+    var gt = L.ground[tx];
+    if (gt >= 0 && ty >= gt) return true;
+    return L.solid.has(K(tx, ty));
+  }
+  function overlapSolid(pxx, pyy) {
+    var x0 = Math.floor(pxx / TS), x1 = Math.floor((pxx + P.w - 1) / TS);
+    var y0 = Math.floor(pyy / TS), y1 = Math.floor((pyy + P.h - 1) / TS);
+    for (var a = x0; a <= x1; a++) for (var b = y0; b <= y1; b++) if (solidAt(a, b)) return true;
+    return false;
+  }
+  function onewayAt(tx, ty) { return L.oneway.has(K(tx, ty)); }
+  function hazardAt(tx, ty) { return L.hazard.has(K(tx, ty)); }
+
+  function step(dt) {
+    var left = down('ArrowLeft') || down('KeyA') || down('KeyQ');
+    var right = down('ArrowRight') || down('KeyD');
+    var wantJump = down('Space') || down('KeyW') || down('ArrowUp');
+    var wantDown = down('ArrowDown') || down('KeyS');
+
+    var ax = (right ? 1 : 0) - (left ? 1 : 0);
+    if (P.hurt > 0) { P.hurt -= dt; if (P.hurt > 0.25) ax = 0; }
+    if (ax) P.face = ax;
+
+    var acc = P.onGround ? RUN_ACC : AIR_ACC;
+    var top = RUN_MAX * ((down('ShiftLeft') || down('ShiftRight')) ? SPRINT : 1);
+    if (ax) {
+      P.vx += ax * acc * (down('ShiftLeft') || down('ShiftRight') ? 1.7 : 1) * dt;
+      P.vx = clamp(P.vx, -top, top);
+    } else {
+      var fr = (P.onGround ? GND_FRICTION : AIR_DRAG) * dt;
+      if (P.vx > fr) P.vx -= fr; else if (P.vx < -fr) P.vx += fr; else P.vx = 0;
+    }
+
+    P.coyote = P.onGround ? COYOTE : Math.max(0, P.coyote - dt);
+    if (jumpEdge) { P.buffer = BUFFER; jumpEdge = false; }
+    else P.buffer = Math.max(0, P.buffer - dt);
+
+    if (P.buffer > 0 && P.coyote > 0) {
+      P.vy = -JUMP_V; P.onGround = false; P.jumping = true;
+      P.buffer = 0; P.coyote = 0;
+      P.hvy -= 40;
+      if (wantDown) P.dropT = 0.18;
+    }
+    if (P.jumping && !wantJump && P.vy < -JUMP_CUT) { P.vy = -JUMP_CUT; P.jumping = false; }
+    if (P.vy >= 0) P.jumping = false;
+
+    P.vy += GRAV * dt;
+    if (P.vy > FALL_MAX) P.vy = FALL_MAX;
+    if (P.dropT > 0) P.dropT -= dt;
+
+    /* ---- X axis, with a one tile step assist so rolling ground is a
+       pleasure to run over instead of a wall to jump */
+    var prevBottom = P.y + P.h;
+    var nx = P.x + P.vx * dt;
+    if (overlapSolid(nx, P.y)) {
+      if ((P.onGround || P.coyote > 0) && !overlapSolid(nx, P.y - TS) && !overlapSolid(P.x, P.y - TS)) {
+        P.y -= TS; P.x = nx;
+      } else if (P.vx > 0) {
+        P.x = Math.floor((nx + P.w) / TS) * TS - P.w; P.vx = 0;
       } else {
-        out.push('<li><span class="tree-link" style="color:var(--faint)">' + esc(it.label || '') + '</span>');
+        P.x = Math.floor(nx / TS) * TS + TS; P.vx = 0;
       }
-      if (it.items) out.push('<ul class="tree-list">' + navItems(it.items) + '</ul>');
-      out.push('</li>');
-    });
+    } else P.x = nx;
+    if (P.x < 0) { P.x = 0; P.vx = 0; }
+    if (P.x > L.W * TS - P.w) { P.x = L.W * TS - P.w; P.vx = 0; }
+
+    /* ---- Y axis */
+    var wasGround = P.onGround;
+    var impact = P.vy;
+    P.onGround = false;
+    P.y += P.vy * dt;
+    var tx0 = Math.floor(P.x / TS), tx1 = Math.floor((P.x + P.w - 1) / TS);
+    if (P.vy > 0) {
+      var by = Math.floor((P.y + P.h) / TS);
+      for (var t3 = tx0; t3 <= tx1; t3++) {
+        var hit = solidAt(t3, by);
+        if (!hit && P.dropT <= 0 && onewayAt(t3, by) && prevBottom <= by * TS + 1) hit = true;
+        if (hit) { P.y = by * TS - P.h; P.vy = 0; P.onGround = true; break; }
+      }
+    } else if (P.vy < 0) {
+      var uy = Math.floor(P.y / TS);
+      for (var t4 = tx0; t4 <= tx1; t4++) if (solidAt(t4, uy)) { P.y = (uy + 1) * TS; P.vy = 0; break; }
+    }
+
+    if (P.onGround && !wasGround) {
+      P.squash = Math.min(3, Math.abs(impact) / 110);
+      P.hvy += Math.min(170, Math.abs(impact) * 0.6);
+      P.anim = 'land';
+    }
+    P.squash = Math.max(0, P.squash - dt * 14);
+
+    if (P.y > LEVEL_H * TS + 60) { P.x = clamp(P.x, 0, (L.W - 2) * TS); P.y = (L.ground[clamp(Math.floor(P.x / TS), 0, L.W - 1)] - 3) * TS; P.vy = 0; }
+
+    /* ---- the document's own warnings have consequences: a caution shoves
+       you back the way you came instead of killing you. */
+    if (P.hurt <= 0) {
+      var hx0 = Math.floor((P.x + 1) / TS), hx1 = Math.floor((P.x + P.w - 2) / TS);
+      var hy0 = Math.floor((P.y + 2) / TS), hy1 = Math.floor((P.y + P.h - 1) / TS);
+      for (var a2 = hx0; a2 <= hx1 && P.hurt <= 0; a2++) {
+        for (var b2 = hy0; b2 <= hy1; b2++) {
+          if (hazardAt(a2, b2)) {
+            P.hurt = 0.55;
+            P.vx = -P.face * 210; P.vy = -170; P.onGround = false;
+            knocks++;
+            var kb = page.blocks[L.segAt[clamp(Math.floor(P.x / TS), 0, L.W - 1)] ] ;
+            toast('KNOCKED BACK BY A ' + String((kb && kb.kind) || 'CAUTION').toUpperCase(), true);
+            break;
+          }
+        }
+      }
+    }
+
+    if (!P.onGround) P.anim = P.vy < 0 ? 'jump' : 'fall';
+    else if (Math.abs(P.vx) > 8) P.anim = 'run';
+    else if (P.anim !== 'land' || P.squash <= 0) P.anim = 'idle';
+    var rate = P.anim === 'run' ? Math.abs(P.vx) / 26 : 0.7;
+    P.phase = (P.phase + rate * dt) % 1;
+
+    /* ---- the detached head, spring damped */
+    var tgx = P.x - 1 - P.vx * 0.05;
+    var tgy = P.y - 17 - (P.onGround ? 0 : clamp(P.vy * 0.014, -2, 4));
+    var kSpring = 260, kDamp = 22;
+    P.hvx += (tgx - P.hx) * kSpring * dt;
+    P.hvy += (tgy - P.hy) * kSpring * dt;
+    P.hvx -= P.hvx * kDamp * dt;
+    P.hvy -= P.hvy * kDamp * dt;
+    P.hx += P.hvx * dt;
+    P.hy += P.hvy * dt;
+    P.tilt = clamp((P.x - 1 - P.hx) * 0.5, -2.6, 2.6);
+
+    interact(dt);
+    updateCursor();
+    updateCamera(dt);
+  }
+
+  function updateCamera(dt) {
+    var maxX = Math.max(0, L.W * TS - VW), maxY = Math.max(0, LEVEL_H * TS - VH);
+    /* a centred dead zone: the cursor stays in the middle of the screen so
+       what is left of it is what you have read and what is right is what
+       you have not. Never pinned to an edge. */
+    var focusX = P.x + P.w / 2;
+    var focusY = P.y + P.h / 2 - 10;
+    var dzx = Math.max(20, VW * 0.06), dzy = Math.max(14, VH * 0.11);
+
+    var ccx = camX + VW / 2;
+    if (focusX < ccx - dzx) ccx = focusX + dzx;
+    else if (focusX > ccx + dzx) ccx = focusX - dzx;
+
+    var ccy = camY + VH * 0.56;
+    if (focusY < ccy - dzy) ccy = focusY + dzy;
+    else if (focusY > ccy + dzy) ccy = focusY - dzy;
+
+    var wantX = clamp(ccx - VW / 2, 0, maxX);
+    var wantY = clamp(ccy - VH * 0.56, 0, maxY);
+    if (dt < 0) { camX = wantX; camY = wantY; return; }
+    camX += (wantX - camX) * (1 - Math.exp(-9 * dt));
+    camY += (wantY - camY) * (1 - Math.exp(-6 * dt));
+    camX = clamp(camX, 0, maxX);
+    camY = clamp(camY, 0, maxY);
+  }
+
+  function overlaps(e, pad) {
+    pad = pad || 0;
+    return P.x < e.x + e.w + pad && P.x + P.w > e.x - pad && P.y < e.y + e.h + pad && P.y + P.h > e.y - pad;
+  }
+  function nearEnts() {
+    if (!L.buckets) return L.ents;
+    var b = Math.floor(P.x / L.BK);
+    var out = [];
+    for (var q = b - 1; q <= b + 1; q++) { var a = L.buckets[q]; if (a) for (var i = 0; i < a.length; i++) if (out.indexOf(a[i]) < 0) out.push(a[i]); }
+    return out;
+  }
+
+  var knocks = 0;
+
+  function promptFor(e) {
+    switch (e.t) {
+      case 'door': return 'E · ' + (e.kind === 'back' ? 'GO BACK' : e.kind === 'next' ? 'NEXT PAGE' : 'FOLLOW LINK');
+      case 'chamber': return (L.rev && L.rev.open) ? 'E · CLOSE THE FOLD' : 'E · OPEN THE FOLD';
+      case 'term': return (L.rev && L.rev.term) ? 'E · HIDE THE RESPONSE' : 'E · RUN THE REQUEST';
+      case 'code': return isTaken(e.bi) ? 'CODE TAKEN' : 'STAND ON IT TO TAKE THE CODE';
+      case 'rung': return 'ROW ' + (e.row + 1) + ' — CLIMB FOR THE NEXT';
+      case 'stone': return (e.ord ? 'STEP ' : 'ITEM ') + (e.item + 1);
+      case 'pylon': return 'TAB · ' + cut(e.text, 22);
+      case 'shot': return 'SCREENSHOT SHOWN BELOW';
+      case 'spring': return String(e.kind).toUpperCase() + ' — SPRINGS YOU UP';
+      case 'sigil': return 'BADGE · ' + cut(e.text, 20);
+      default: return '';
+    }
+  }
+
+  function interact(dt) {
+    var arr = nearEnts();
+    var best = null, bestD = 1e9;
+    for (var i = 0; i < arr.length; i++) {
+      var e = arr[i];
+      if (e.deco) continue;
+      var on = overlaps(e, e.act === 'press' ? 10 : 2);
+      if (!on) continue;
+
+      if (e.act === 'stand') {
+        var standing = P.onGround && (P.y + P.h) <= e.y + e.h + 6 && (P.y + P.h) >= e.y - 2;
+        if (e.t === 'code' && standing) {
+          if (!isTaken(e.bi)) {
+            (taken[slug] || (taken[slug] = new Set())).add(e.bi);
+            toast('CODE TAKEN · ' + e.lang.toUpperCase());
+            save(); updateHud();
+          }
+        } else if (e.t === 'rung' && standing) {
+          if (!L.rev || L.rev.row !== e.row) { L.rev = L.rev || {}; L.rev.row = e.row; renderStrip(true); }
+        } else if (e.t === 'stone' && standing) {
+          if (!L.rev || L.rev.item !== e.item) { L.rev = L.rev || {}; L.rev.item = e.item; renderStrip(true); }
+        } else if (e.t === 'pylon' && standing) {
+          if (!L.rev || L.rev.tab !== e.tab) { L.rev = L.rev || {}; L.rev.tab = e.tab; renderStrip(true); }
+        } else if (e.t === 'spring' && P.vy >= 0 && (P.y + P.h) >= e.y - 4 && (P.y + P.h) <= e.y + e.h + 4
+            && (!e.t0 || tSec - e.t0 > 0.45)) {
+          P.vy = -SPRING_V; P.onGround = false; P.hvy -= 80; e.t0 = tSec;
+          toast(String(e.kind).toUpperCase() + ' GIVES YOU A LIFT');
+        } else if (e.t === 'shot' && standing) {
+          if (!isTaken(e.bi)) { (taken[slug] || (taken[slug] = new Set())).add(e.bi); save(); }
+        }
+      }
+
+      var cx = P.x + P.w / 2, ex = e.x + e.w / 2;
+      var d = Math.abs(cx - ex);
+      if (promptFor(e) && d < bestD) { bestD = d; best = e; }
+    }
+    focusEnt = best;
+  }
+
+  function doInteract() {
+    if (!focusEnt) return;
+    var e = focusEnt;
+    if (e.t === 'door') { enterDoor(e); return; }
+    if (e.t === 'chamber') { L.rev = L.rev || {}; L.rev.open = !L.rev.open; renderStrip(true); toast(L.rev.open ? 'FOLD OPENED' : 'FOLD CLOSED'); return; }
+    if (e.t === 'term') { L.rev = L.rev || {}; L.rev.term = !L.rev.term; renderStrip(true); toast(L.rev.term ? 'REQUEST SENT · RESPONSE SHOWN' : 'RESPONSE HIDDEN'); return; }
+  }
+
+  function enterDoor(e) {
+    if (e.kind === 'back') { arrivedFrom = null; navigate(e.to, null); return; }
+    navigate(e.to, { slug: slug, label: TITLE[slug] || slug });
+  }
+
+  /* ==========================================================================
+     THE READING STRIP — docked, always visible, and it is the answer to
+     "what is the character for". It renders the block you are standing in.
+     ========================================================================== */
+  function crumbFor(idx) {
+    var bs = page.blocks || [];
+    var h2 = '', h3 = '';
+    for (var i = 0; i <= idx && i < bs.length; i++) {
+      var t = bs[i].t;
+      if (t === 'h2') { h2 = bs[i].text || ''; h3 = ''; }
+      else if (t === 'h3') h3 = bs[i].text || '';
+    }
+    return [page.title, h2, h3].filter(Boolean).join('  ›  ');
+  }
+
+  function stripBlock(b) {
+    /* the endpoint terminal withholds the response until you run it */
+    if (b.t === 'endpoint' && !(L.rev && L.rev.term)) {
+      var c = {}; for (var k in b) c[k] = b[k];
+      c.responses = [];
+      return c;
+    }
+    return b;
+  }
+
+  var lastStripKey = '';
+  function renderStrip(force) {
+    if (!page || !L) return;
+    var bs = page.blocks || [];
+    var i = clamp(L.cur, 0, Math.max(0, bs.length - 1));
+    var b = bs[i];
+    var rev = L.rev || {};
+    var key = i + '|' + (rev.row | 0) + '|' + (rev.item | 0) + '|' + (rev.tab | 0) + '|' + (rev.open ? 1 : 0) + '|' + (rev.term ? 1 : 0);
+    if (!force && key === lastStripKey) return;
+    lastStripKey = key;
+
+    $('sb-idx').textContent = 'BLOCK ' + (i + 1) + ' / ' + bs.length;
+    $('sb-kind').textContent = b ? (KINDNAME[b.t] || String(b.t).toUpperCase()) : '—';
+    $('sb-crumb').textContent = crumbFor(i);
+
+    /* the doors written in this block, as chips, so the page is fully
+       navigable without playing */
+    var chips = [];
+    for (var d = 0; d < L.doors.length; d++) {
+      var dr = L.doors[d];
+      if (dr.kind === 'link' && dr.bi === i) chips.push(dr);
+    }
+    for (var d2 = 0; d2 < L.doors.length && chips.length < 6; d2++) {
+      if (L.doors[d2].kind !== 'link') chips.push(L.doors[d2]);
+    }
+    var sd = $('sb-doors');
+    sd.innerHTML = chips.slice(0, 6).map(function (dr, n) {
+      return '<button type="button" data-door="' + n + '">' + esc(cut(dr.text, 30)) + '</button>';
+    }).join('');
+    sd._doors = chips.slice(0, 6);
+
+    RS = rev;
+    var html = b ? renderBlock(stripBlock(b)) : '';
+    if (b && b.t === 'hr') html = '<hr><p class="ep-sub">SECTION BREAK</p>';
+    if (b && b.t === 'endpoint' && !rev.term) html += '<p class="ep-sub">PRESS E AT THE TERMINAL TO RUN THIS REQUEST AND SEE THE RESPONSE.</p>';
+    if (b && b.t === 'details' && !rev.open) html += '<p class="ep-sub">PRESS E AT THE FOLD DOOR TO OPEN THE SIDE CHAMBER.</p>';
+    if (b && b.t === 'details' && rev.open) html = '<div class="chamber"><p class="chamber-h">SIDE CHAMBER · OPENED</p>' + html + '</div>';
+    RS = null;
+
+    $('strip-doc').innerHTML = html;
+    $('strip-body').scrollTop = 0;
+  }
+
+  /* the cursor: where the character stands is where you are in the page */
+  function updateCursor() {
+    var tile = clamp(Math.floor((P.x + P.w / 2) / TS), 0, L.W - 1);
+    var si = L.segAt[tile];
+    if (si !== L.cur) {
+      L.cur = si;
+      L.rev = {};
+      renderStrip();
+      if (si > L.maxBlock) {
+        L.maxBlock = si;
+        if (si >= L.segs.length - 1 && L.segs.length > 1 && !finished.has(slug)) {
+          finished.add(slug); save();
+          toast('PAGE WALKED END TO END');
+        }
+      }
+      updateHud();
+    }
+  }
+
+  function updateHud() {
+    if (!L || !page) return;
+    var n = (page.blocks || []).length;
+    $('hp-cur').textContent = String(Math.min(n, L.cur + 1));
+    $('hp-tot').textContent = String(n);
+    var frac = n > 1 ? (L.maxBlock) / (n - 1) : 1;
+    var cf = n > 1 ? L.cur / (n - 1) : 1;
+    $('hp-fill').style.width = Math.round(clamp(frac, 0, 1) * 100) + '%';
+    $('hp-head').style.left = 'calc(' + Math.round(clamp(cf, 0, 1) * 100) + '% - 1px)';
+    var fin = finished.has(slug);
+    $('hud-progress').classList.toggle('done', fin);
+    $('hud-progress').firstElementChild.textContent = fin ? '✓ WALKED END TO END' : 'READ THROUGH';
+    $('g-doors').textContent = String(L.doors.filter(function (d) { return d.kind === 'link'; }).length);
+    $('g-code').textContent = (taken[slug] ? taken[slug].size : 0) + '/' + L.pickTotal;
+    $('g-pages').textContent = visited.size + '/' + B.order.length;
+  }
+
+  function renderTrail() {
+    var el = $('trail');
+    if (!el) return;
+    if (trail.length < 2) { el.innerHTML = ''; return; }
+    var last = trail.slice(-5);
+    el.innerHTML = '<span class="trail-lab">TRAIL</span>' + last.map(function (s) {
+      return '<button type="button" data-goto="' + attr(s) + '">' + esc(cut(TITLE[s] || s, 24)) + '</button>';
+    }).join('');
+  }
+
+  var toastT = 0;
+  function toast(t, bad) {
+    var el = $('toast');
+    if (!el) return;
+    el.textContent = String(t).toUpperCase();
+    el.className = 'toast' + (bad ? ' bad' : '');
+    el.hidden = false;
+    clearTimeout(toastT);
+    toastT = setTimeout(function () { el.hidden = true; }, 2200);
+  }
+
+  /* ==========================================================================
+     WHOLE PAGE OVERLAY — the secondary path, for anyone who just wants to
+     read the thing.
+     ========================================================================== */
+  function pageArticle(p) {
+    var out = [];
+    out.push('<div class="doc-head">');
+    out.push('<p class="doc-kicker">' + esc((p.product || '').toUpperCase()) + ' &nbsp;/&nbsp; ' + esc(p.section || '') + '</p>');
+    out.push('<h1>' + esc(p.title) + '</h1>');
+    if (p.description) out.push('<p class="lede">' + esc(p.description) + '</p>');
+    if (p.tags && p.tags.length) out.push('<ul class="tagrow">' + p.tags.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>');
+    out.push('</div>');
+    var bs = p.blocks || [];
+    RS = { open: true, term: true };
+    for (var i = 0; i < bs.length; i++) {
+      out.push('<div class="blk" id="blk-' + i + '">' + renderBlock(bs[i]) + '</div>');
+    }
+    RS = null;
+    var o = OUT[p.slug] || [], n = IN_[p.slug] || [];
+    if (o.length) {
+      out.push('<h2 id="doors-out">Doors out of this level</h2>');
+      out.push('<p>This page cites ' + o.length + ' other page' + (o.length === 1 ? '' : 's') + '. In the level each one is a door, standing at the point in the prose where the link is written.</p>');
+      out.push('<div class="cards">' + o.map(function (s) {
+        var q = B.pages[s];
+        return '<a class="card" href="#' + attr(s) + '"><b>' + esc(q ? q.title : s) + '</b><span>'
+          + esc(q && q.description ? q.description : s) + '</span></a>';
+      }).join('') + '</div>');
+    }
+    if (n.length) {
+      out.push('<h2 id="doors-in">Levels that lead here</h2>');
+      out.push('<ul>' + n.map(function (s) {
+        var q = B.pages[s];
+        return '<li><a href="#' + attr(s) + '">' + esc(q ? q.title : s) + '</a></li>';
+      }).join('') + '</ul>');
+    }
     return out.join('');
   }
-  function updateTree() {
-    if (!treeBuilt) buildTree();
-    var links = $('tree').querySelectorAll('.tree-link[data-slug]');
-    for (var i = 0; i < links.length; i++) {
-      var s = links[i].getAttribute('data-slug');
-      links[i].classList.toggle('visited', visited.has(s));
-      var cur = s === current;
-      links[i].classList.toggle('current', cur);
-      if (cur) {
-        var d = links[i].closest('details');
-        if (d && !d.open) { d.open = true; }
-        var host = $('rail-left');
-        var top = links[i].offsetTop;
-        if (top < host.scrollTop || top > host.scrollTop + host.clientHeight - 40) {
-          host.scrollTop = Math.max(0, top - host.clientHeight / 2);
-        }
-      }
+
+  var codexDirty = true;
+  function ensureCodex() {
+    if (!codexDirty) return;
+    codexDirty = false;
+    renderCodex(page);
+  }
+  function renderCodex(p) {
+    $('doc').innerHTML = pageArticle(p);
+    $('codex-crumb').textContent = (p.product || '').toUpperCase() + ' / ' + (p.section || '') + ' / ' + p.title;
+    var hs = p.headings || [];
+    $('toc').innerHTML = hs.length
+      ? hs.map(function (h) { return '<a href="#" class="lv' + h.level + '" data-anchor="' + attr(h.id) + '">' + esc(h.text) + '</a>'; }).join('')
+      : '<p class="none">No headings on this page.</p>';
+    function citeList(id, arr) {
+      $(id).innerHTML = arr.length ? arr.map(function (s) {
+        var q = B.pages[s];
+        return '<a href="#' + attr(s) + '">' + esc(q ? q.title : s) + '<span>' + esc(q ? q.section : '') + '</span></a>';
+      }).join('') : '<p class="none">None.</p>';
     }
+    citeList('cites-out', OUT[p.slug] || []);
+    citeList('cites-in', IN_[p.slug] || []);
+    var pv = prevInOrder(p.slug), nx = nextInOrder(p.slug);
+    $('pager').innerHTML =
+      (pv ? '<a class="prev" href="#' + attr(pv) + '"><span>&larr; PREVIOUS LEVEL</span><b>' + esc(TITLE[pv]) + '</b></a>' : '')
+      + (nx ? '<a class="next" href="#' + attr(nx) + '"><span>NEXT LEVEL &rarr;</span><b>' + esc(TITLE[nx]) + '</b></a>' : '');
+    $('colophon').innerHTML =
+      '<span>' + esc(p.file || p.slug) + '</span>'
+      + '<span>' + num(G.words[p.slug] || 0) + ' WORDS</span>'
+      + '<span>' + (G.code[p.slug] || 0) + ' CODE BLOCKS</span>'
+      + '<span>' + (p.blocks || []).length + ' BLOCKS = ' + (L ? L.W : 0) + ' TILES OF LEVEL</span>';
   }
 
-  /* ---------------- room card ---------------- */
-  function renderRoomCard(page) {
-    var slug = page.slug;
-    var f = fog();
-    var nb = (NEI[slug] || []).slice().sort(function (a, b) {
-      return (G.inbound[b] || 0) - (G.inbound[a] || 0);
-    });
-    var out = [];
-    out.push('<p class="rc-h">ROOM ' + (B.order.indexOf(slug) + 1) + ' / ' + TOTAL.pages + '</p>');
-    out.push('<h2 class="rc-title">' + esc(page.title) + '</h2>');
-    out.push('<p class="rc-path">' + esc(slug) + '</p>');
-    out.push('<dl class="rc-grid">'
-      + '<div><dt>WORDS</dt><dd>' + num(G.words[slug] || 0) + '</dd></div>'
-      + '<div><dt>CODE</dt><dd>' + num(G.code[slug] || 0) + '</dd></div>'
-      + '<div><dt>CITED BY</dt><dd>' + num(G.inbound[slug] || 0) + '</dd></div>'
-      + '<div><dt>EXITS</dt><dd>' + num(G.outbound[slug] || 0) + '</dd></div>'
-      + '</dl>');
-    out.push('<p class="rc-sub">CORRIDORS · ' + nb.length + '</p>');
-    if (!nb.length) {
-      out.push('<p class="rc-none">This room has no citation corridors. Reach it from the index, search, or the ordered walk below.</p>');
+  function openCodex(anchor) {
+    ensureCodex();
+    var c = $('codex');
+    c.classList.add('open');
+    c.setAttribute('aria-hidden', 'false');
+    var m = $('codex-main');
+    if (anchor) {
+      var t = document.getElementById(anchor);
+      m.scrollTop = t ? Math.max(0, t.offsetTop - 24) : 0;
     } else {
-      out.push('<ul class="rc-list">');
-      nb.slice(0, 24).forEach(function (s) {
-        var pg = B.pages[s];
-        if (!pg) return;
-        out.push('<li><a href="#' + attr(s) + '">'
-          + (visited.has(s) ? '<span style="color:var(--green)">·</span>' : '<span style="color:var(--faint)">·</span>')
-          + '<span>' + esc(pg.title) + '</span>'
-          + '<span class="n">' + (G.inbound[s] || 0) + '</span></a></li>');
-      });
-      if (nb.length > 24) out.push('<li><span class="rc-none">+ ' + (nb.length - 24) + ' more</span></li>');
-      out.push('</ul>');
+      var cb = document.getElementById('blk-' + L.cur);
+      m.scrollTop = cb ? Math.max(0, cb.offsetTop - 24) : 0;
     }
-    var hs = (page.headings || []).filter(function (h) { return h.level === 2; });
-    if (hs.length) {
-      out.push('<p class="rc-sub">SECTIONS · ' + hs.length + '</p><ul class="rc-list">');
-      hs.slice(0, 20).forEach(function (h) {
-        out.push('<li><a href="#' + attr(slug) + '#' + attr(h.id) + '"><span>' + esc(h.text) + '</span></a></li>');
-      });
-      out.push('</ul>');
-    }
-    $('roomcard').innerHTML = out.join('');
+    var cl = $('codex-close'); if (cl) cl.focus();
   }
+  function closeCodex() {
+    var c = $('codex');
+    c.classList.remove('open');
+    c.setAttribute('aria-hidden', 'true');
+    var s = $('screen'); if (s) s.focus();
+  }
+  function codexOpen() { return $('codex').classList.contains('open'); }
 
-  /* ---------------- quest ---------------- */
-  var QUEST = null;
-  function buildQuest() {
-    var p = B.pages[QUEST_SLUG];
-    if (!p) return;
-    var parts = [], cur = null;
-    p.blocks.forEach(function (b) {
-      if (b.t === 'h2') { cur = { title: b.text, id: b.id, steps: [] }; parts.push(cur); }
-      else if (b.t === 'details' && cur) cur.steps.push({ id: b.id, label: plain(b.summary) });
-    });
-    QUEST = { slug: QUEST_SLUG, title: p.title, parts: parts.filter(function (x) { return x.steps.length; }) };
-  }
-  function questTotal() {
-    var n = 0; QUEST.parts.forEach(function (p) { n += p.steps.length; }); return n;
-  }
-  function renderQuest() {
-    if (!QUEST) return;
-    var total = questTotal();
-    var done = 0;
-    QUEST.parts.forEach(function (p) { p.steps.forEach(function (s) { if (steps.has(s.id)) done++; }); });
-    var onQuest = current === QUEST.slug;
-    var out = [];
-    out.push('<div class="quest-head"><span class="quest-title">QUEST · QUICK START</span>'
-      + '<span class="quest-count">' + done + '/' + total + '</span></div>');
-    out.push('<div class="quest-bar"><span style="width:' + (total ? Math.round(done / total * 100) : 0) + '%"></span></div>');
-    if (onQuest) {
-      out.push('<ul class="quest-parts">');
-      QUEST.parts.forEach(function (p) {
-        out.push('<li class="quest-part"><b>' + esc(p.title) + '</b>');
-        p.steps.forEach(function (s) {
-          out.push('<button type="button" class="quest-step' + (steps.has(s.id) ? ' done' : '') + '" data-step="' + attr(s.id) + '">'
-            + '<span class="tick"></span><span>' + esc(s.label) + '</span></button>');
-        });
-        out.push('</li>');
-      });
-      out.push('</ul>');
-    } else {
-      out.push('<button class="quest-open" type="button" data-goquest>OPEN THE QUEST CHAIN</button>');
-    }
-    $('quest').innerHTML = out.join('');
-  }
-
-  /* ---------------- search ---------------- */
-  function pageText(p) {
-    var buf = [];
-    (function walk(bs) {
-      (bs || []).forEach(function (b) {
-        if (!b || !b.t) return;
-        if (b.html) buf.push(stripTags(b.html));
-        if (b.text) buf.push(b.text);
-        if (b.summary) buf.push(b.summary);
-        if (b.title && b.t !== 'code') buf.push(b.title);
-        if (b.description) buf.push(stripTags(b.description));
-        if (b.t === 'table') {
-          (b.head || []).forEach(function (h) { buf.push(stripTags(h)); });
-          (b.rows || []).forEach(function (r) { r.forEach(function (c) { buf.push(stripTags(c)); }); });
-        }
-        if (b.t === 'cards') (b.items || []).forEach(function (c) { buf.push(stripTags(c.title) + ' ' + stripTags(c.desc)); });
-        if (b.t === 'endpoint') {
-          buf.push(b.path || ''); buf.push(b.method || '');
-          (b.params || []).forEach(function (x) { buf.push(x.name + ' ' + stripTags(x.desc)); });
-        }
-        if (b.items) b.items.forEach(function (it) {
-          if (typeof it === 'string') buf.push(stripTags(it));
-          else if (it) { buf.push(stripTags(it.html)); if (it.blocks) walk(it.blocks); }
-        });
-        if (b.blocks) walk(b.blocks);
-        if (b.tabs) b.tabs.forEach(function (t) { walk(t.blocks); });
-        if (b.cols) b.cols.forEach(function (c) { walk(c); });
-      });
-    })(p.blocks);
-    return decode(buf.join(' ')).replace(/\s+/g, ' ');
-  }
-
+  /* ==========================================================================
+     INDEX DRAWER + SEARCH
+     ========================================================================== */
+  var indexBuilt = false;
   function buildIndex() {
-    if (searchIndex) return searchIndex;
-    searchIndex = B.order.map(function (s) {
-      var p = B.pages[s];
-      var body = pageText(p);
-      return {
-        slug: s,
-        title: p.title,
-        tl: p.title.toLowerCase(),
-        sec: (ZONES[ZONE_OF[s]] || {}).label || p.section || '',
-        heads: (p.headings || []).map(function (h) { return h.text; }).join(' · '),
-        hl: (p.headings || []).map(function (h) { return h.text; }).join(' · ').toLowerCase(),
-        desc: p.description || '',
-        body: body,
-        bl: body.toLowerCase()
-      };
+    if (indexBuilt) return;
+    indexBuilt = true;
+    var seen = Object.create(null);
+    var html = [];
+    B.nav.forEach(function (sec) {
+      var links = [];
+      (function walk(items) {
+        (items || []).forEach(function (it) {
+          if (it.slug && B.pages[it.slug] && !seen[it.slug]) {
+            seen[it.slug] = 1;
+            links.push('<a href="#' + attr(it.slug) + '" data-slug="' + attr(it.slug) + '">' + esc(it.label || TITLE[it.slug]) + '</a>');
+          }
+          if (it.items) walk(it.items);
+        });
+      })(sec.items);
+      if (links.length) {
+        html.push('<section class="index-sec"><h3>' + esc(sec.product.toUpperCase() + ' · ' + sec.label)
+          + ' (' + links.length + ')</h3>' + links.join('') + '</section>');
+      }
     });
-    return searchIndex;
+    var rest = B.order.filter(function (s) { return !seen[s]; });
+    if (rest.length) {
+      html.push('<section class="index-sec"><h3>UNFILED (' + rest.length + ')</h3>'
+        + rest.map(function (s) { return '<a href="#' + attr(s) + '" data-slug="' + attr(s) + '">' + esc(TITLE[s]) + '</a>'; }).join('')
+        + '</section>');
+    }
+    $('index-body').innerHTML = html.join('');
   }
-
+  function markIndex() {
+    if (!indexBuilt) return;
+    var as = $('index-body').querySelectorAll('a[data-slug]');
+    for (var i = 0; i < as.length; i++) {
+      var s = as[i].getAttribute('data-slug');
+      as[i].className = (s === slug ? 'here ' : '') + (finished.has(s) ? 'seen' : visited.has(s) ? 'seen' : '');
+    }
+  }
+  var SIDX = null;
+  function searchIndex() {
+    if (SIDX) return SIDX;
+    SIDX = B.order.map(function (s) {
+      var p = B.pages[s];
+      return { s: s, t: p.title, d: p.description || '', sec: p.section || '', k: (p.title + ' ' + (p.description || '') + ' ' + s + ' ' + (p.tags || []).join(' ')).toLowerCase() };
+    });
+    return SIDX;
+  }
   function runSearch(q) {
-    var box = $('searchresults');
-    q = q.trim();
+    var box = $('searchres');
+    q = String(q || '').trim().toLowerCase();
     if (q.length < 2) { box.hidden = true; box.innerHTML = ''; return; }
-    var idx = buildIndex();
-    var ql = q.toLowerCase();
-    var hits = [];
-    for (var i = 0; i < idx.length; i++) {
-      var e = idx[i], score = 0, where = '';
-      var ti = e.tl.indexOf(ql);
-      if (ti === 0) score += 240; else if (ti > 0) score += 150;
-      var hi = e.hl.indexOf(ql);
-      if (hi >= 0) { score += 60; where = 'heading'; }
-      var bi = e.bl.indexOf(ql);
-      if (bi >= 0) { score += 20; if (!where) where = 'body'; }
-      if (!score) continue;
-      score += Math.min(30, (G.inbound[e.slug] || 0));
-      hits.push({ e: e, score: score, bi: bi });
-      if (hits.length > 900) break;
+    var idx = searchIndex(), hits = [];
+    for (var i = 0; i < idx.length && hits.length < 40; i++) {
+      var r = idx[i];
+      var pos = r.k.indexOf(q);
+      if (pos >= 0) hits.push({ r: r, score: (r.t.toLowerCase().indexOf(q) === 0 ? 0 : 1) + pos / 1000 });
     }
-    hits.sort(function (a, b) { return b.score - a.score; });
-    hits = hits.slice(0, 40);
-    if (!hits.length) {
-      box.innerHTML = '<p class="sr-empty">No room matches “' + esc(q) + '”.</p>';
-      box.hidden = false; return;
-    }
-    var out = hits.map(function (h, i) {
-      var snip = '';
-      if (h.bi >= 0) {
-        var st = Math.max(0, h.bi - 60);
-        var raw = h.e.body.slice(st, h.bi + q.length + 90);
-        snip = (st > 0 ? '…' : '') + esc(raw) + '…';
-        var re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
-        snip = snip.replace(re, '<mark>$1</mark>');
-      } else if (h.e.desc) snip = esc(h.e.desc.slice(0, 150));
-      return '<a class="sr-item' + (i === 0 ? ' on' : '') + '" href="#' + attr(h.e.slug) + '" data-sr="' + i + '">'
-        + '<span class="sr-t">' + esc(h.e.title) + '</span>'
-        + '<span class="sr-p">' + esc(h.e.sec) + ' · ' + esc(h.e.slug) + ' · ' + num(G.words[h.e.slug] || 0) + ' WORDS</span>'
-        + (snip ? '<span class="sr-x">' + snip + '</span>' : '') + '</a>';
-    }).join('');
-    box.innerHTML = out;
+    hits.sort(function (a, b) { return a.score - b.score; });
+    box.innerHTML = hits.length
+      ? hits.slice(0, 24).map(function (h) {
+        return '<a href="#' + attr(h.r.s) + '"><b>' + esc(h.r.t) + '</b><span>' + esc(h.r.sec) + ' · '
+          + num(G.words[h.r.s] || 0) + ' WORDS · ' + ((OUT[h.r.s] || []).length) + ' DOORS OUT</span></a>';
+      }).join('')
+      : '<p>NO MATCH</p>';
     box.hidden = false;
   }
 
-  /* ---------------- events ---------------- */
+  /* ==========================================================================
+     ROUTING — the hash is the page, always.
+     ========================================================================== */
+  function parseHash() {
+    var h = decodeURIComponent(String(location.hash || '').replace(/^#/, ''));
+    if (!h || h === '/') return HOME;
+    h = h.split('#')[0];
+    if (h.charAt(0) !== '/') h = '/' + h;
+    return h;
+  }
+  function navigate(s, from) {
+    if (!B.pages[s]) return;
+    pendingFrom = from || null;
+    if (parseHash() === s) { route(); return; }
+    location.hash = '#' + s;
+  }
+  var pendingFrom = null;
+
+  function route() {
+    var s = parseHash();
+    if (!B.pages[s]) s = HOME;
+    arrivedFrom = pendingFrom; pendingFrom = null;
+    loadLevel(s);
+  }
+
+  function loadLevel(s) {
+    slug = s;
+    page = B.pages[s];
+    document.title = page.title + ' — Dusk Works · Strapi Docs';
+    visited.add(s);
+    if (trail[trail.length - 1] !== s) { trail.push(s); if (trail.length > 8) trail.shift(); }
+    save();
+
+    L = buildLevel(s);
+    L.cur = 0; L.maxBlock = 0; L.rev = {};
+    makeBackdrops(L);
+
+    P.x = L.startX; P.y = L.startY;
+    P.vx = P.vy = 0; P.onGround = false; P.face = 1; P.hurt = 0;
+    P.hx = P.x - 1; P.hy = P.y - 17; P.hvx = P.hvy = 0;
+    camX = 0; camY = 0;
+    updateCamera(-1);
+
+    $('hud-title').textContent = page.title;
+    $('hud-sec').textContent = ((page.product || '') + ' · ' + (page.section || '')).toUpperCase()
+      + ' · ' + (page.blocks || []).length + ' BLOCKS · ' + num(G.words[s] || 0) + ' WORDS';
+
+    lastStripKey = '';
+    renderStrip(true);
+    updateHud();
+    renderTrail();
+    codexDirty = true;
+    markIndex();
+    if (still) cursorTo(0);
+    draw();
+  }
+
+  /* ==========================================================================
+     STILL READING MODE — reduced motion, or anyone who does not want to
+     play. The cursor steps block by block; everything else is identical.
+     ========================================================================== */
+  function cursorTo(idx) {
+    if (!L) return;
+    idx = clamp(idx, 0, L.segs.length - 1);
+    var sg = L.segs[idx];
+    var tx = clamp((sg.x0 + sg.x1) >> 1, 0, L.W - 1);
+    P.x = tx * TS; P.y = (L.ground[tx] * TS) - P.h;
+    P.vx = P.vy = 0; P.onGround = true; P.anim = 'idle';
+    P.hx = P.x - 1; P.hy = P.y - 17; P.hvx = P.hvy = 0;
+    L.cur = idx;
+    L.rev = {};
+    if (idx > L.maxBlock) L.maxBlock = idx;
+    updateCamera(-1);
+    /* after a jump, focus the object that IS this block before any door in
+       it: pressing E should read the block, never teleport you by surprise */
+    focusEnt = null;
+    var arr = nearEnts(), cand = [];
+    for (var i = 0; i < arr.length; i++) {
+      var en = arr[i];
+      if (en.bi === idx && !en.deco && promptFor(en)) cand.push(en);
+    }
+    cand.sort(function (m, n) { return (m.t === 'door' ? 1 : 0) - (n.t === 'door' ? 1 : 0); });
+    focusEnt = cand[0] || null;
+    renderStrip(true);
+    updateHud();
+    draw();
+  }
+  function setStill(on) {
+    still = !!on;
+    $('btn-still').setAttribute('aria-pressed', still ? 'true' : 'false');
+    $('btn-still').firstChild.nodeValue = still ? 'PLAY ' : 'STILL ';
+    if (still) { running = false; cursorTo(L ? L.cur : 0); }
+    else { startLoop(); }
+  }
+
+  /* ==========================================================================
+     LOOP — fixed timestep accumulator.
+     ========================================================================== */
+  var acc = 0, last = 0, rafId = 0;
+  function frame(now) {
+    rafId = requestAnimationFrame(frame);
+    if (!running || still) return;
+    if (!last) last = now;
+    var dt = (now - last) / 1000; last = now;
+    if (dt > 0.25) dt = 0.25;
+    acc += dt; tSec = now / 1000;
+    var n = 0;
+    while (acc >= STEP && n < MAXSTEPS) { step(STEP); acc -= STEP; n++; }
+    if (n === MAXSTEPS) acc = 0;
+    draw();
+  }
+  function startLoop() {
+    running = true; last = 0; acc = 0;
+    if (!rafId) rafId = requestAnimationFrame(frame);
+  }
+
+  /* ==========================================================================
+     WIRING
+     ========================================================================== */
+  var MOVEKEYS = { ArrowLeft: 1, ArrowRight: 1, KeyA: 1, KeyD: 1, KeyQ: 1, ArrowUp: 1, ArrowDown: 1, KeyW: 1, KeyS: 1, Space: 1 };
+
+  function dismissFirstRun() {
+    if (!firstRun) return;
+    firstRun = false;
+    var f = $('firstrun'); if (f) f.hidden = true;
+    save();
+  }
+
   function wire() {
-    window.addEventListener('hashchange', route);
+    window.addEventListener('resize', function () { sizeScreen(); if (still) draw(); });
 
-    // delegated clicks in the document body
-    document.addEventListener('click', function (ev) {
-      var t = ev.target;
-
-      var copy = t.closest && t.closest('[data-copy]');
-      if (copy) {
-        var pre = copy.closest('.codeblock').querySelector('code');
-        try { navigator.clipboard.writeText(pre.textContent); copy.textContent = 'COPIED'; setTimeout(function () { copy.textContent = 'COPY'; }, 1200); }
-        catch (e) { copy.textContent = 'SELECT'; }
+    document.addEventListener('keydown', function (ev) {
+      var tag = (ev.target && ev.target.tagName) || '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA') {
+        if (ev.key === 'Escape') { ev.target.blur(); $('searchres').hidden = true; }
         return;
       }
-      var tab = t.closest && t.closest('.tabs-strip button');
-      if (tab) {
-        var wrap = tab.closest('.tabs');
-        var n = tab.getAttribute('data-tab');
-        wrap.querySelectorAll('.tabs-strip button').forEach(function (b) { b.setAttribute('aria-selected', b === tab); });
-        wrap.querySelectorAll('.tabs-panel').forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== n; });
-        return;
-      }
-      var qs = t.closest && t.closest('[data-step]');
-      if (qs) {
-        var id = qs.getAttribute('data-step');
-        if (steps.has(id)) steps.delete(id); else steps.add(id);
-        save(); renderQuest();
-        var d = document.getElementById(id);
-        if (d && !steps.has(id)) { /* keep */ } else if (d) { d.open = true; d.scrollIntoView({ block: 'start' }); }
-        return;
-      }
-      if (t.closest && t.closest('[data-goquest]')) { go(QUEST.slug); return; }
-
-      var a = t.closest && t.closest('a[href]');
-      if (a) {
-        var href = a.getAttribute('href');
-        if (href && href.charAt(0) === '#' && href.charAt(1) !== '/') {
-          // in-page anchor
-          ev.preventDefault();
-          var el2 = document.getElementById(href.slice(1));
-          if (el2) {
-            var dd = el2.closest('details'); if (dd) dd.open = true;
-            el2.scrollIntoView({ block: 'start' });
-          }
+      var c = ev.code;
+      if (MOVEKEYS[c]) {
+        ev.preventDefault();
+        dismissFirstRun();
+        if (still) {
+          if (c === 'ArrowRight' || c === 'KeyD') cursorTo(L.cur + 1);
+          else if (c === 'ArrowLeft' || c === 'KeyA' || c === 'KeyQ') cursorTo(L.cur - 1);
           return;
         }
-        if (href && href.charAt(0) === '#') {
-          closeOverlays();
-        }
-      }
-    });
-
-    // A screenshot plate loads its bitmap only when asked; if the path does not
-    // resolve, the plate comes back rather than leaving a broken frame.
-    document.addEventListener('click', function (ev) {
-      var btn = ev.target.closest && ev.target.closest('[data-loadshot]');
-      if (!btn) return;
-      var plate = btn.closest('.missing');
-      var src = plate.getAttribute('data-shot');
-      var alt = plate.getAttribute('data-shotalt') || '';
-      var img = new Image();
-      btn.textContent = 'LOADING';
-      img.onload = function () {
-        img.className = 'shot'; img.alt = alt;
-        plate.replaceWith(img);
-      };
-      img.onerror = function () { btn.textContent = 'NOT AT THIS ORIGIN'; btn.disabled = true; };
-      img.src = src;
-    });
-
-    // map interaction
-    cv.addEventListener('click', function (ev) {
-      var r = cv.getBoundingClientRect();
-      var vx = Math.floor((ev.clientX - r.left) / (r.width / VW)) + camX;
-      var vy = Math.floor((ev.clientY - r.top) / (r.height / VH)) + camY;
-      var hit = null, bd = 1e9;
-      B.order.forEach(function (s) {
-        var q = ROOM[s];
-        var dx = vx - (q.x + RW / 2), dy = vy - (q.y + RH / 2);
-        var d2 = dx * dx + dy * dy;
-        if (d2 < bd) { bd = d2; hit = s; }
-      });
-      if (hit && bd < 90) go(hit);
-    });
-    cv.addEventListener('mousedown', function () { cv.focus(); });
-
-    // keyboard
-    document.addEventListener('keydown', function (ev) {
-      var tag = (ev.target.tagName || '').toLowerCase();
-      var inField = tag === 'input' || tag === 'textarea' || ev.target.isContentEditable;
-
-      if (inField && ev.target.id === 'search') {
-        if (ev.key === 'Escape') { ev.target.blur(); $('searchresults').hidden = true; }
-        if (ev.key === 'Enter') {
-          var first = $('searchresults').querySelector('.sr-item.on') || $('searchresults').querySelector('.sr-item');
-          if (first) { ev.preventDefault(); location.hash = first.getAttribute('href'); ev.target.blur(); $('searchresults').hidden = true; }
-        }
-        if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
-          var items = Array.prototype.slice.call($('searchresults').querySelectorAll('.sr-item'));
-          if (items.length) {
-            ev.preventDefault();
-            var ci = items.findIndex(function (n) { return n.classList.contains('on'); });
-            items.forEach(function (n) { n.classList.remove('on'); });
-            var ni = Math.max(0, Math.min(items.length - 1, ci + (ev.key === 'ArrowDown' ? 1 : -1)));
-            items[ni].classList.add('on');
-            items[ni].scrollIntoView({ block: 'nearest' });
-          }
-        }
+        if (!keys[c] && (c === 'Space' || c === 'KeyW' || c === 'ArrowUp')) jumpEdge = true;
+        keys[c] = true;
         return;
       }
-      if (inField) return;
-
-      if (ev.key === '/') { ev.preventDefault(); $('search').focus(); $('search').select(); return; }
-      if (ev.key === 'Escape') { closeOverlays(); return; }
-
-      var k = ev.key.toLowerCase();
-      var mapFocused = document.activeElement === cv;
-      var arrow = { arrowup: 'up', arrowdown: 'down', arrowleft: 'left', arrowright: 'right' };
-      var wasd = { w: 'up', s: 'down', a: 'left', d: 'right' };
-
-      if (wasd[k] && !ev.metaKey && !ev.ctrlKey) { ev.preventDefault(); move(wasd[k]); return; }
-      if (arrow[k] && mapFocused) { ev.preventDefault(); move(arrow[k]); return; }
-      if (k === 'm') { worldView = !worldView; sizeMap(); drawMap(); return; }
-      if (k === '[' || k === ',') { step(-1); return; }
-      if (k === ']' || k === '.') { step(1); return; }
+      if (c === 'KeyE' || c === 'Enter') { ev.preventDefault(); dismissFirstRun(); doInteract(); return; }
+      if (c === 'KeyR') { ev.preventDefault(); codexOpen() ? closeCodex() : openCodex(null); return; }
+      if (c === 'KeyM') { ev.preventDefault(); setStill(!still); return; }
+      if (c === 'Tab' && !codexOpen() && !$('index').classList.contains('open')) {
+        ev.preventDefault();
+        var ix = $('index');
+        buildIndex(); markIndex();
+        var on = ix.classList.toggle('open');
+        ix.setAttribute('aria-hidden', on ? 'false' : 'true');
+        return;
+      }
+      if (c === 'Escape') {
+        if (codexOpen()) closeCodex();
+        var ix2 = $('index');
+        if (ix2.classList.contains('open')) { ix2.classList.remove('open'); ix2.setAttribute('aria-hidden', 'true'); }
+        return;
+      }
+      if (c === 'Period' || c === 'Comma') {
+        ev.preventDefault();
+        var dir = c === 'Period' ? 1 : -1;
+        var bs = page.blocks || [], j = L.cur + dir, found = -1;
+        while (j > 0 && j < bs.length) { if (bs[j].t === 'h2' || bs[j].t === 'h3') { found = j; break; } j += dir; }
+        if (found < 0) found = dir > 0 ? bs.length - 1 : 0;
+        cursorTo(found);
+        toast('SECTION · ' + cut(plain(bs[found] && bs[found].text) || 'START', 34));
+        return;
+      }
+      if (c === 'BracketLeft') { ev.preventDefault(); var pv = prevInOrder(slug); if (pv) navigate(pv, null); }
+      if (c === 'BracketRight') { ev.preventDefault(); var nx = nextInOrder(slug); if (nx) navigate(nx, null); }
     });
 
-    function step(dir) {
-      if (!current) return;
-      var i = B.order.indexOf(current);
-      var j = i + dir;
-      if (j >= 0 && j < B.order.length) go(B.order[j]);
-    }
+    document.addEventListener('keyup', function (ev) { keys[ev.code] = false; });
+    window.addEventListener('blur', function () { keys = Object.create(null); });
 
-    var sTimer = 0;
-    $('search').addEventListener('input', function (e) {
-      clearTimeout(sTimer);
-      var v = e.target.value;
-      sTimer = setTimeout(function () { runSearch(v); }, 110);
+    window.addEventListener('hashchange', route);
+
+    $('btn-read').addEventListener('click', function () { codexOpen() ? closeCodex() : openCodex(null); });
+    $('btn-still').addEventListener('click', function () { setStill(!still); });
+    $('btn-index').addEventListener('click', function () {
+      buildIndex(); markIndex();
+      var ix = $('index'); var on = ix.classList.toggle('open');
+      ix.setAttribute('aria-hidden', on ? 'false' : 'true');
     });
-    $('search').addEventListener('focus', function () { buildIndex(); });
+    $('codex-close').addEventListener('click', closeCodex);
+    $('index-close').addEventListener('click', function () {
+      var ix = $('index'); ix.classList.remove('open'); ix.setAttribute('aria-hidden', 'true');
+    });
+    $('search').addEventListener('input', function (e) { runSearch(e.target.value); });
+
+    $('firstrun').addEventListener('click', dismissFirstRun);
+
+    $('sb-doors').addEventListener('click', function (ev) {
+      var b = ev.target.closest('button[data-door]');
+      if (!b) return;
+      var arr = $('sb-doors')._doors || [];
+      var d = arr[+b.getAttribute('data-door')];
+      if (d) enterDoor(d);
+    });
+
+    $('trail').addEventListener('click', function (ev) {
+      var b = ev.target.closest('button[data-goto]');
+      if (b) navigate(b.getAttribute('data-goto'), null);
+    });
+
+    /* tabs, copy buttons and internal links inside any rendered document */
     document.addEventListener('click', function (ev) {
-      if (!ev.target.closest('.searchwrap') && !ev.target.closest('.searchresults')) $('searchresults').hidden = true;
+      var tb = ev.target.closest && ev.target.closest('.tabs-strip button');
+      if (tb) {
+        var host = tb.closest('.tabs');
+        var idx = tb.getAttribute('data-tab');
+        host.querySelectorAll('.tabs-strip button').forEach(function (x) { x.setAttribute('aria-selected', x === tb ? 'true' : 'false'); });
+        host.querySelectorAll('.tabs-panel').forEach(function (x) { x.hidden = x.getAttribute('data-panel') !== idx; });
+        return;
+      }
+      var cp = ev.target.closest && ev.target.closest('[data-copy]');
+      if (cp) {
+        var pre = cp.closest('.codeblock').querySelector('code');
+        try { navigator.clipboard.writeText(pre.textContent); cp.textContent = 'COPIED'; setTimeout(function () { cp.textContent = 'COPY'; }, 1200); }
+        catch (e) { cp.textContent = 'SELECT IT'; }
+        return;
+      }
+      var an = ev.target.closest && ev.target.closest('[data-anchor]');
+      if (an) { ev.preventDefault(); openCodex(an.getAttribute('data-anchor')); return; }
+      var a = ev.target.closest && ev.target.closest('a[href^="#/"]');
+      if (a) {
+        var to = a.getAttribute('href').slice(1).split('#')[0];
+        if (B.pages[to]) {
+          ev.preventDefault();
+          if (codexOpen()) closeCodex();
+          var ix3 = $('index');
+          if (ix3.classList.contains('open')) { ix3.classList.remove('open'); ix3.setAttribute('aria-hidden', 'true'); }
+          $('searchres').hidden = true;
+          navigate(to, { slug: slug, label: TITLE[slug] || slug });
+        }
+      }
     });
 
-    $('btn-motion').addEventListener('click', function () {
-      motion = !motion; save(); applyMotion();
-    });
-    $('btn-nav').addEventListener('click', function () {
-      var r = $('rail-left'); r.classList.toggle('open');
-      this.setAttribute('aria-expanded', r.classList.contains('open'));
-    });
-    $('btn-map').addEventListener('click', function () {
-      var r = $('rail-right'); r.classList.toggle('open');
-      this.setAttribute('aria-expanded', r.classList.contains('open'));
-      sizeMap(); drawMap();
-    });
-
-    var rt = 0;
-    window.addEventListener('resize', function () {
-      clearTimeout(rt); rt = setTimeout(function () { sizeMap(); drawMap(); }, 120);
-    });
-
-    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mq.addEventListener) mq.addEventListener('change', function () { reduced = mq.matches; applyMotion(); });
+    var cv = $('screen');
+    cv.addEventListener('pointerdown', function () { cv.focus(); dismissFirstRun(); });
   }
 
-  function closeOverlays() {
-    $('rail-left').classList.remove('open');
-    $('rail-right').classList.remove('open');
-    $('btn-nav').setAttribute('aria-expanded', 'false');
-    $('btn-map').setAttribute('aria-expanded', 'false');
-    $('searchresults').hidden = true;
-  }
+  /* ==========================================================================
+     BOOT
+     ========================================================================== */
+  function bootLine(t) { var e = $('boot-line'); if (e) e.textContent = t; }
 
-  function applyMotion() {
-    var on = motion && !reduced;
-    document.body.classList.toggle('motion', on);
-    $('btn-motion').setAttribute('aria-pressed', String(motion));
-    $('btn-motion').textContent = motion ? 'MOTION' : 'STILL';
-    startLoop();
-  }
+  function init(content, graph, com) {
+    B = content; G = graph; COM = com;
+    B.order.forEach(function (s, i) { ORDIDX[s] = i; });
+    Object.keys(B.pages).forEach(function (s) { TITLE[s] = B.pages[s].title; });
+    (G.edges || []).forEach(function (e) {
+      (OUT[e[0]] || (OUT[e[0]] = [])).push(e[1]);
+      (IN_[e[1]] || (IN_[e[1]] = [])).push(e[0]);
+    });
 
-  /* ---------------- boot ---------------- */
-  function fail(msg) {
-    var b = $('boot-line');
-    if (b) b.textContent = msg;
-  }
+    reduced = false;
+    try { reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { }
+    still = reduced;
 
-  Promise.all([
-    fetch('content.json').then(function (r) { return r.json(); }),
-    fetch('graph.json').then(function (r) { return r.json(); })
-  ]).then(function (res) {
-    B = res[0]; G = res[1];
-    reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     load();
-    buildWorld();
-    buildQuest();
-
-    $('brand-ver').textContent = B.version;
-    $('colo-ver').textContent = B.version;
-    $('m-zones').querySelector('i').textContent = '/' + ZONES.length;
-
-    $('boot').remove();
+    $('boot').hidden = true;
     $('shell').hidden = false;
+    $('firstrun').hidden = !firstRun;
+    $('btn-still').setAttribute('aria-pressed', still ? 'true' : 'false');
+    if (still) $('btn-still').firstChild.nodeValue = 'PLAY ';
 
-    cv = $('map');
-    sizeMap();
-    buildTree();
+    sizeScreen();
     wire();
-    applyMotion();
     route();
+    if (!still) startLoop();
+    $('screen').focus();
 
-    // build the search index once the first page is on screen
-    var idle = window.requestIdleCallback || function (f) { return setTimeout(f, 400); };
-    idle(function () { buildIndex(); });
+    /* a small, honest debug surface: the harness drives the real game */
+    window.__arcade = {
+      ready: true,
+      get slug() { return slug; },
+      get blockIndex() { return L ? L.cur : -1; },
+      get blockCount() { return page ? (page.blocks || []).length : 0; },
+      get maxBlock() { return L ? L.maxBlock : -1; },
+      get playerX() { return P.x; },
+      get tiles() { return L ? L.W : 0; },
+      get doors() { return L ? L.doors.map(function (d) { return { kind: d.kind, to: d.to, text: d.text, tile: Math.round(d.x / TS), block: d.bi }; }) : []; },
+      get still() { return still; },
+      stripText: function () { return ($('strip-doc').textContent || '').replace(/\s+/g, ' ').trim(); },
+      overlayText: function () { ensureCodex(); return ($('doc').textContent || '').replace(/\s+/g, ' ').trim(); },
+      kinds: function () { return L ? L.ents.map(function (e) { return e.t; }) : []; },
+      jump: function (i) { cursorTo(i); },
+      get prompt() { return focusEnt ? promptFor(focusEnt) : ''; },
+      get scale() { return SC; },
+      get figurePx() { return { body: P.h * SC, whole: 31 * SC, viewport: [VW, VH] }; },
+      go: function (s) { navigate(s, null); }
+    };
+  }
+
+  function fail(msg) {
+    bootLine(String(msg).toUpperCase());
+    var b = $('boot'); if (b) b.hidden = false;
+  }
+
+  bootLine('LOADING CORPUS');
+  Promise.all([
+    fetch('content.json').then(function (r) { if (!r.ok) throw new Error('content ' + r.status); return r.json(); }),
+    fetch('graph.json').then(function (r) { if (!r.ok) throw new Error('graph ' + r.status); return r.json(); }),
+    fetch('communities.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })
+  ]).then(function (a) {
+    bootLine('BUILDING LEVEL');
+    init(a[0], a[1], a[2]);
   }).catch(function (e) {
-    fail('FAILED TO LOAD CORPUS: ' + e.message);
-    if (window.console) console.warn('arcade: load failure', e);
+    fail('COULD NOT LOAD: ' + (e && e.message ? e.message : e));
   });
 
 })();
