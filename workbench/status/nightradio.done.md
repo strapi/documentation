@@ -1,0 +1,7 @@
+# nightradio: DONE
+
+Built radio.js from scratch against the existing HTML/CSS shell: weighted tuning dial with drag inertia and magnetic detent, 290 stations in reading order, 18 band segments printed on the glass, station names resolving out of jittered static as the needle approaches, spectrum-strip minimap (click to tune), VU needle and magic eye driven by inbound citations (max 57), log book with real operators/first broadcast/last transmission/careDays tenure, session listening log, band plan drawer that omits the 50 unlisted frequencies (with an honest note), station finder, plain-words key, and WebAudio static/whistle behind the OFF-by-default speaker toggle; everything works silent and reduced motion kills inertia and jitter.
+Sweep: 290/290 checked, 0 failed; node --check clean; shot-world.jpg and shot-read.jpg (1440x900) committed.
+Caveats: night-shift count from provenance is 12 pages (brief guessed 15); frequencies are the station's position on the dial (reading order mapped to 5.90-26.10 MHz), stated as such in THE KEY; /cms/api/content-api appears in two bands on the printed plan because it genuinely sits in two sidebar sections.
+Fixed along the way: an inline img in raw block HTML could overflow (global max-width rule added); instant tunes (arrow keys) now set the hash so the programme renders.
+Committed as "Finish the Night Radio shortwave receiver build" on repo/design-lab-workbench.
