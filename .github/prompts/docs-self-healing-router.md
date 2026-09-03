@@ -72,6 +72,13 @@ You run on Haiku for cost efficiency. Do NOT draft content or create PRs.
 - `"micro"` — ALL targets are micro-edits (`add_link`, `add_mention`, `add_tip`). Haiku can handle these.
 - `"full"` — at least one target is `create_page`, `update_section`, `add_section`, or `create_category`. Requires Sonnet.
 
+Classify from the `action:` values you just wrote, and from nothing else. This
+is a mechanical rule, not a judgement call: how small or obvious the change
+feels is irrelevant, and a single `add_section` among ten `add_link` targets
+still makes the whole PR `full`. The workflow re-checks this and overwrites a
+`micro` that carries a Sonnet-only action, so getting it wrong either loses the
+PR or produces a draft you were not equipped to write.
+
 **`targets_yaml`** is the full Router YAML output (as a string), only when `decision` is `has_targets`. Include `doc_type`, `template`, `guide`, `confidence`, and the full `targets` block.
 
 ## Step 5 — Execute micro-edits (if all targets are micro)
@@ -87,6 +94,16 @@ Then create the branch and PR:
 
 ```bash
 cd $DOC_REPO
+
+# Always branch from a clean origin/main. Resetting at the END of the previous
+# iteration was not enough: on 2026-09-03 you opened PR #3439, then ran
+# `git checkout -b` for the next PR while still on that branch, so PR #3440
+# carried #3439's commit too. Reset FIRST and each branch is independent
+# whatever the previous iteration did.
+git checkout main
+git clean -fd
+git reset --hard origin/main
+
 BRANCH_NAME="<prefix>/<short-kebab-description>"
 git checkout -b "$BRANCH_NAME"
 git add .
@@ -151,6 +168,7 @@ Update `/tmp/router-results.json` to include a `doc_pr` field for micro PRs you 
 - **Do NOT read any agent prompts except `router.md`**
 - **For micro-edits only:** you may read and modify documentation files and create branches/PRs
 - **For full complexity:** do NOT modify files or create PRs — leave that for Sonnet
+- **Never draft a section.** A micro-edit is a link, a mention, or a tip. If the change needs a new section, a rewritten section, a new page, or a new category, it is `full` and you stop at the routing decision.
 - **ONLY read diffs, the Router prompt, sidebars.js, llms.txt, and write the result file** (plus doc files for micro-edits)
 - **Max 5 PRs per run.** Log extras to stdout for the next run.
 - **NEVER run any write operation on strapi/strapi**
