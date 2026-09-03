@@ -4,42 +4,65 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Strapi Documentation</title>
-<meta name="description" content="The Strapi documentation as a night sky: 290 pages, 1231 real citations.">
+<meta name="description" content="Uranometria Strapiensis: an engraved atlas of the Strapi documentation. 290 pages, 1231 measured citations, two skies.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..600&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="galaxy.css">
 </head>
 <body>
 
 <canvas id="sky" aria-hidden="true"></canvas>
-<div id="skyveil" aria-hidden="true"></div>
+<div id="plate" aria-hidden="true"><i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i></div>
 
 <header id="topbar">
-  <button id="navbtn" class="iconbtn" aria-expanded="false" aria-controls="drawer" title="Sections">
-    <span class="bars" aria-hidden="true"></span><span class="lbl">Sections</span>
+  <button id="navbtn" class="btn" aria-expanded="false" aria-controls="drawer" title="Sections">
+    <span class="bars" aria-hidden="true"></span><span class="lbl">Index</span>
   </button>
+
   <a class="brand" href="#/cms/intro">
-    <span class="brand-mark" aria-hidden="true"></span>
-    <span class="brand-txt">Strapi Documentation</span>
+    <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+      <path d="M4 9.2A5.2 5.2 0 0 1 9.2 4H28v18.8A5.2 5.2 0 0 1 22.8 28H4V9.2Z" fill="currentColor"/>
+      <path d="M4 4h12v12H4V4Z" fill="#F4EFE2" opacity=".9"/>
+      <path d="M16 16h12v12H16V16Z" fill="#F4EFE2" opacity=".18"/>
+      <path d="M16 4v12H4" fill="none" stroke="#F4EFE2" stroke-width="1.4"/>
+    </svg>
+    <span class="brand-txt">
+      <b>Strapi</b><span class="brand-sub">Documentation</span>
+    </span>
     <span class="brand-ver" id="brandver"></span>
   </a>
+
+  <div class="skyswitch" role="group" aria-label="How the sky is arranged">
+    <button id="sw-filed"  class="sw is-on" data-mode="filed" aria-pressed="true">As&nbsp;filed</button>
+    <button id="sw-cited"  class="sw"       data-mode="cited" aria-pressed="false">As&nbsp;cited</button>
+  </div>
+
+  <button id="driftbtn" class="btn drift" aria-pressed="false" title="Show only the pages whose citations disagree with where they are filed">
+    <span class="dmark" aria-hidden="true"></span><span class="lbl">Drifters</span><b id="driftn">0</b>
+  </button>
+
   <div class="search">
     <label class="sr-only" for="q">Search the documentation</label>
     <input id="q" type="search" placeholder="Search 290 pages…" autocomplete="off" spellcheck="false">
     <kbd id="slashhint">/</kbd>
   </div>
-  <button id="skybtn" class="iconbtn right" aria-pressed="false" title="Show the sky in full">
-    <span class="lbl">Sky</span>
+
+  <button id="skybtn" class="btn right" aria-pressed="false" title="Show the whole plate">
+    <span class="lbl">Plate</span>
   </button>
+  <button id="helpbtn" class="btn" title="How to read this plate" aria-label="How to read this plate">?</button>
 </header>
 
-<nav id="drawer" aria-label="Documentation sections">
-  <div id="drawer-inner"></div>
-</nav>
+<nav id="drawer" aria-label="Documentation sections"><div id="drawer-inner"></div></nav>
 <div id="scrim" hidden></div>
 
 <div id="results" hidden role="listbox" aria-label="Search results"></div>
+
+<aside id="index" hidden aria-label="Cluster and tag index">
+  <button id="index-close" class="xbtn" title="Close">×</button>
+  <div id="index-inner"></div>
+</aside>
 
 <main id="reader" tabindex="-1">
   <article id="page"></article>
@@ -47,16 +70,59 @@
 
 <div id="tooltip" hidden aria-hidden="true"></div>
 
-<aside id="legend" aria-hidden="true">
-  <div class="legend-row"><b id="l-pages">290</b> pages</div>
-  <div class="legend-row"><b id="l-edges">1231</b> citations</div>
-  <div class="legend-row"><b id="l-orph">50</b> uncited, at the rim</div>
-  <div class="legend-row"><b id="l-sec">18</b> constellations</div>
-</aside>
 
-<div id="skyhelp" aria-hidden="true">drag to pan · scroll to zoom · click a star</div>
+<div id="howto" hidden>
+  <div class="howto-box" role="dialog" aria-modal="true" aria-labelledby="howto-t">
+    <div class="howto-rule"></div>
+    <h2 id="howto-t">How to read this plate</h2>
+    <p class="howto-lede">Every page of the Strapi documentation is engraved here as a star.
+      Nothing on the plate is decoration: each mark is a measurement.</p>
+    <ol class="howto-list">
+      <li><b>A dot is a page.</b> Its size is how many other pages cite it. The largest is
+        Breaking changes, cited 57 times.</li>
+      <li><b>A hairline is a real link</b> from one page to another. There are 1231 of them,
+        read out of the documentation itself.</li>
+      <li><b>Position means something.</b> Pages that cite each other are pulled together, so
+        two neighbouring dots are two related pages.</li>
+      <li><b>A coloured wash is a group.</b> Where two washes overlap, the inks mix.</li>
+      <li><b>The switch at the top is the point.</b> <em>As filed</em> arranges the pages the way
+        the sidebar files them. <em>As cited</em> arranges them by what actually links to what.
+        Flip between the two and watch the documentation rearrange itself: the pages that move
+        furthest are the ones filed in the wrong place.</li>
+    </ol>
+    <p class="howto-foot">Open circles at the fringe are the 50 pages nothing links to.</p>
+    <button id="howto-go" class="howto-btn" type="button">Open the plate</button>
+  </div>
+</div>
 
-<noscript><p style="padding:2rem;color:#dbe4f0">This documentation viewer needs JavaScript.</p></noscript>
+<figure id="cartouche" aria-hidden="true">
+  <div class="cart-rule"></div>
+  <div class="cart-t">Uranometria Strapiensis</div>
+  <div class="cart-s" id="cart-mode">Tabula&nbsp;I · the pages as they are filed</div>
+  <div class="cart-b">
+    <span><b id="l-pages">290</b> pages</span>
+    <span><b id="l-edges">1231</b> citations</span>
+    <span><b id="l-groups">18</b> <span id="l-groupw">constellations</span></span>
+    <span><b id="l-orph">50</b> uncited</span>
+  </div>
+  <div class="cart-key" id="cart-key" hidden><i></i>dashed outline · this group disagrees with how its pages are filed</div>
+  <dl class="cart-legend">
+    <dt><span class="mk"><i data-m="4"></i><i data-m="2"></i><i data-m="1"></i></span></dt>
+    <dd>one page. The bigger the dot, the more pages cite it</dd>
+    <dt><span class="mk open"><i data-m="0"></i></span></dt>
+    <dd>nothing links here: 50 of the 290</dd>
+    <dt><span class="swatch-line" aria-hidden="true"></span></dt>
+    <dd>one page citing another. 1231 of them</dd>
+    <dt><span class="swatch-wash" aria-hidden="true"></span></dt>
+    <dd>a group of pages. Overlapping washes share pages</dd>
+    <dt><span class="swatch-near" aria-hidden="true"></span></dt>
+    <dd>pages that cite each other are pulled together</dd>
+  </dl>
+</figure>
+
+<div id="skyhelp" aria-hidden="true">drag to pan · scroll to zoom · click a star · click a constellation name to open it</div>
+
+<noscript><p style="padding:2rem">This documentation viewer needs JavaScript.</p></noscript>
 
 <script src="galaxy.js"></script>
 </body>
