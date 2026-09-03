@@ -87,6 +87,16 @@ Then create the branch and PR:
 
 ```bash
 cd $DOC_REPO
+
+# Always branch from a clean origin/main. Resetting at the END of the previous
+# iteration was not enough: on 2026-09-03 you opened PR #3439, then ran
+# `git checkout -b` for the next PR while still on that branch, so PR #3440
+# carried #3439's commit too. Reset FIRST and each branch is independent
+# whatever the previous iteration did.
+git checkout main
+git clean -fd
+git reset --hard origin/main
+
 BRANCH_NAME="<prefix>/<short-kebab-description>"
 git checkout -b "$BRANCH_NAME"
 git add .
