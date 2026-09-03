@@ -50,3 +50,17 @@ overflow; two screenshots (shot-world.jpg, shot-read.jpg, 1440x900) committed al
 ## Delivery
 Commit results INTO THIS BRANCH under builds/, one commit per task, message style: imperative,
 no prefixes, <= 80 chars. Push after each task so partial progress survives.
+
+## Status
+- **pixelcity** (2026-09-03, cloud continuation): DONE. Fixed the details-summary escaping bug
+  (root cause of all 4 baseline sweep failures), then ran the two critique rounds against the
+  genre bar. Round 1 added the missing tiny scenes: stall queues (33 queuers), dogs by benches
+  (14), park fountains (30, three spray frames), harbour buoys (7), and a stippled deep-water
+  falloff at the diorama edge. Round 2 made the FOR LEASE signs readable (10 street placards in
+  3x5 pixel font, spread evenly across the 50 boarded shopfronts), seated the crane in an open
+  yard so the mast no longer hides, and dressed the derelict LOT tiles with cracks and weeds.
+  Verification: node --check clean; canonical sweep 290/290 pages, zero errors, zero thin pages,
+  zero overflow, zero content loss; establishing view 0.9 ms/frame at 1440x900 (budget 30 ms);
+  reduced-motion renders byte-identical posed frames. shot-world.jpg, shot-street.jpg,
+  shot-read.jpg committed beside the code. Caveats: palette holds 39 ramp entries (brief said
+  roughly 32); queue scenes can be occluded by foreground towers in the densest quarters.
