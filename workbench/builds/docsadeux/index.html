@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docs à Deux</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%8C%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,600&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="s9.css">
+</head>
+<body>
+<header id="topbar">
+  <a class="logo" href="#deck" title="Docs à Deux — home deck">Docs <span class="amp">à</span> Deux</a>
+  <nav id="tabs" aria-label="App sections">
+    <a href="#deck" data-tab="deck">Tonight</a>
+    <a href="#matches" data-tab="matches">Matches <span class="pill" id="matchCount"></span></a>
+    <a href="#singles" data-tab="singles">Singles</a>
+    <a href="#browse" data-tab="browse">Browse</a>
+  </nav>
+  <div id="searchbox">
+    <input id="search" type="search" placeholder="Search 290 profiles…" autocomplete="off" aria-label="Search pages">
+    <div id="searchResults" hidden></div>
+  </div>
+</header>
+<main id="view" tabindex="-1"></main>
+<div id="overlayRoot"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<script src="s9.js"></script>
+</body>
+</html>

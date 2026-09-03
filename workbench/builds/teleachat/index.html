@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SHOP·DOCS 24/7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Oswald:wght@500;700&family=Archivo:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="f1.css">
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <a class="logo" href="#/cms/intro" aria-label="SHOP·DOCS 24/7 home">
+      <span class="logo-tv">SHOP·DOCS</span><span class="logo-doc">24/7</span>
+    </a>
+    <span class="live-badge"><span class="live-dot" aria-hidden="true"></span>LIVE ON AIR</span>
+    <span id="clock" class="clock" aria-label="time"></span>
+    <div class="standard">
+      <label class="standard-label" for="search">☎ SWITCHBOARD</label>
+      <input id="search" type="search" autocomplete="off" spellcheck="false"
+             placeholder="Our 290 operators are standing by…" aria-label="Search for a product in the catalogue">
+      <div id="search-results" class="search-results" hidden></div>
+    </div>
+    <button id="notice-btn" class="notice-btn" type="button">THE MANUAL</button>
+  </header>
+
+  <div id="frame">
+    <nav id="programme" aria-label="Programme guide">
+      <div class="prog-head">THE PROGRAMME</div>
+      <div id="prog-body"></div>
+    </nav>
+    <main id="stage">
+      <div id="mire" class="mire" aria-hidden="true">
+        <div class="mire-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p class="mire-text">ONE MOMENT, ADJUSTING THE ANTENNA…</p>
+      </div>
+    </main>
+  </div>
+
+  <div id="chyron" aria-hidden="true">
+    <div class="chyron-call"><span class="blink">CALL&nbsp;NOW</span><span class="chyron-num">1-800-DOC-SHOP</span></div>
+    <div class="chyron-ticker"><div id="ticker-inner" class="ticker-inner"></div></div>
+  </div>
+
+  <div id="notice-modal" class="notice-modal" hidden>
+    <div class="notice-card" role="dialog" aria-modal="true" aria-labelledby="notice-title">
+      <button id="notice-close" class="notice-close" type="button" aria-label="Close the manual">✕</button>
+      <h2 id="notice-title">The manual <small>(the plain words, glitter removed)</small></h2>
+      <div id="notice-body"></div>
+    </div>
+  </div>
+</div>
+<script src="f1.js"></script>
+</body>
+</html>

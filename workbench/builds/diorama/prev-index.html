@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Strapi Documentation</title>
+<meta name="description" content="The Strapi documentation as a city at golden hour: districts are measured link communities, buildings are pages, the river is the reading order.">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="city.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2314464F'/%3E%3Cpath d='M0 20 L32 20 L32 32 L0 32 Z' fill='%23F2A66B'/%3E%3Ccircle cx='23' cy='19' r='5' fill='%23FFB25A'/%3E%3Cpath d='M4 32 L4 12 L11 12 L11 32 Z' fill='%232A2E63'/%3E%3Cpath d='M13 32 L13 18 L18 18 L18 32 Z' fill='%232A2E63'/%3E%3C/svg%3E">
+</head>
+<body class="booting">
+
+<div id="boot" role="status" aria-live="polite">
+  <div class="bx">
+    <div class="bsun" aria-hidden="true"></div>
+    <div class="bt">Strapi Documentation</div>
+    <div class="bs">290 pages, 1&nbsp;231 citations, 27 districts</div>
+    <div class="bar"><i></i></div>
+  </div>
+</div>
+
+<header id="topbar">
+  <a class="brand" href="#/cms/intro" aria-label="Strapi Documentation, home">
+    <svg class="mark" viewBox="0 0 48 48" aria-hidden="true">
+      <path d="M2 46 L46 46 L46 20 L30 20 L30 2 L2 2 Z" fill="currentColor"/>
+      <path d="M30 20 L46 20 L30 2 Z" fill="#FFB25A"/>
+    </svg>
+    <span class="bn">Strapi<em>Documentation</em></span>
+  </a>
+  <span class="rule" aria-hidden="true"></span>
+  <span class="sheet">PAGE <b id="sheetno">001</b> / 290</span>
+  <div id="searchwrap">
+    <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search 290 pages   ( / )" aria-label="Search the documentation" aria-expanded="false" role="combobox" aria-controls="results" aria-autocomplete="list">
+    <div id="results" role="listbox" aria-label="Search results"></div>
+  </div>
+  <span class="spacer"></span>
+  <button class="tbtn" id="btnIndex" aria-pressed="false" aria-controls="side">Index</button>
+  <button class="tbtn" id="btnWide" aria-pressed="false">Widen the view</button>
+  <span class="ver" id="ver">5.x</span>
+</header>
+
+<nav id="side" aria-label="Documentation index" hidden></nav>
+
+<main id="frame">
+
+  <section id="world" aria-label="The documentation, laid out as a city at golden hour">
+    <canvas id="city"></canvas>
+
+    <div id="tip" role="tooltip" aria-hidden="true"><b class="tt"></b><span class="tm"></span></div>
+
+    <div id="hud">
+      <div class="plaque" id="key">
+        <h4>Key</h4>
+        <ul id="keylist"></ul>
+        <div class="tiers"><span>Majesty</span><i class="t1"></i><i class="t2"></i><i class="t3"></i><i class="t4"></i><i class="t5"></i><span>pages that cite it</span></div>
+      </div>
+      <div class="plaque" id="note">
+        <h4>Field note</h4>
+        <p id="notetext"></p>
+        <div class="nbtns" id="notebtns"></div>
+      </div>
+    </div>
+
+    <div id="tools">
+      <button class="cb" id="cRotL" title="Orbit left" aria-label="Orbit left">&#8630;</button>
+      <button class="cb" id="cRotR" title="Orbit right" aria-label="Orbit right">&#8631;</button>
+      <button class="cb" id="cIn" title="Move closer" aria-label="Move closer">+</button>
+      <button class="cb" id="cOut" title="Pull back" aria-label="Pull back">&#8722;</button>
+      <button class="cb" id="cHome" title="Return to the establishing shot" aria-label="Return to the establishing shot">&#8962;</button>
+    </div>
+
+    <div id="stats"></div>
+  </section>
+
+  <article id="reader" aria-label="Page content">
+    <div id="spine" aria-hidden="true"><span id="spinetext"></span></div>
+    <div id="rhead">
+      <div id="crumb"></div>
+      <div class="racts">
+        <button class="tbtn" id="btnPrev" title="Previous page" aria-label="Previous page">&#8592;</button>
+        <button class="tbtn" id="btnNext" title="Next page" aria-label="Next page">&#8594;</button>
+        <button class="tbtn" id="btnLocate" title="Fly to this page in the city">Fly there</button>
+      </div>
+    </div>
+    <div id="rbody" tabindex="-1"><div class="doc" id="doc"></div></div>
+  </article>
+
+</main>
+
+<script src="city.js"></script>
+</body>
+</html>
