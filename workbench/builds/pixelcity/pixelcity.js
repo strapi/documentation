@@ -1692,7 +1692,7 @@ function renderBlock(b, host) {
     case 'details': {
       const d = el('details', 'dtl');
       if (b.id) d.id = b.id;
-      const su = el('summary', null, esc(b.summary || 'Details'));
+      const su = el('summary', null, b.summary || 'Details');
       d.appendChild(su);
       const body = el('div', 'dtl-body');
       renderBlocks(b.blocks, body);
