@@ -47,3 +47,32 @@ Verification: node --check clean; canonical sweep 290/290, zero errors, zero
 thin pages, zero overflow, zero content loss. Frame averages at 1440x900
 (24-frame prof): establishing 13.8 ms (budget 30), mid-zoom 12.2 ms, street
 9.4 ms (budget 40), facade close-up 14.8 ms.
+
+## Round 1 — fresh eyes vs the exhibition bar (2026-09-03)
+Judged the four fixed viewpoints (whole diorama / mid-zoom on the
+document-service district / street at the breaking-changes quarter / facade
+close-up) against a hand-built exhibition diorama. Gaps found, in order of
+impact, all applied:
+
+1. **The landmark tower of the mid-zoom stood blank.** The per-frame detail
+   budget (quota 1.05x screen area, 30 buildings) was spent by small near
+   buildings before the subject of the shot got its windows. Raised to 2.0x
+   and 44 while resting (drag budget unchanged). The document-service tower
+   now carries its full curtain-wall at the distance the shot is framed.
+2. **The establishing shot was half empty table.** The home fit now lets the
+   near deckle bleed behind the HUD (the printed name stays strict above it)
+   and allows real side bleed; the sheet fills the frame.
+3. **Atmospheric haze on a tabletop.** A model an arm's length away does not
+   fog: haze now fades with camera elevation (full in the streets, 45% of
+   itself looking down from above). Far quarters read crisp at the
+   establishing shot.
+4. **The maker's bench was bare.** Added a craft knife, a paint pot with
+   dropped lid and a wet brush, an eraser, and curled pencil shavings by the
+   pencil point, all beside the torn edge.
+5. **Near flat roofs read as raw fill** — gravel/lightwell dressing threshold
+   lowered (44px -> 30px face width) and strengthened.
+6. **Manhole covers** at street junctions once a quarter fills the frame.
+
+Frame averages after: establishing 18.5 ms (budget 30), mid-zoom 27.4 ms,
+street 16.0 ms (budget 40), facade close-up ~38 ms (fill-rate at extreme
+close-up; no stated budget, kept under the 40 ms street bar).

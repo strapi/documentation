@@ -1661,7 +1661,18 @@
       { k: 'pencil', x: paper.cx - W0 * 0.16, y: y0 - mx * 0.62,
         yaw: 0.12, len: W0 * 0.155 },
       { k: 'ruler', x: x1 + mx * 0.80, y: paper.cy - H0 * 0.06,
-        yaw: PI / 2 + 0.07, len: H0 * 0.17 }];
+        yaw: PI / 2 + 0.07, len: H0 * 0.17 },
+      /* the rest of the maker's bench: a craft knife by the near edge, a
+         paint pot with its brush laid across a rag, an eraser, and the
+         curled shavings the pencil left behind */
+      { k: 'knife', x: paper.cx + W0 * 0.235, y: y0 - mx * 0.50,
+        yaw: -0.34, len: W0 * 0.075 },
+      { k: 'pot', x: x0 - mx * 1.25, y: paper.cy + H0 * 0.22,
+        yaw: 0.6, len: W0 * 0.052 },
+      { k: 'eraser', x: x0 - mx * 1.05, y: y0 + H0 * 0.13,
+        yaw: 0.42, len: W0 * 0.045 },
+      { k: 'shavings', x: paper.cx - W0 * 0.16 + W0 * 0.10, y: y0 - mx * 0.36,
+        yaw: 0.9, len: W0 * 0.05 }];
   }
   function pushWrapped(out, text, n) {
     var words = String(text || '').split(/\s+/), line = '', i;
@@ -1712,6 +1723,7 @@
     FOC = (H / 2) / Math.tan(cam.fov / 2);
     HZ_NEAR = cam.dist * 0.22;
     HZ_FAR = clamp(cam.dist * 3.1, 900, 12000);
+    HZF = 1 - 0.55 * clamp((cam.el - 0.32) / 0.38, 0, 1);
     PCX = W / 2;
     /* Where the look-at point sits in frame. Down low this is a street
        photograph and the subject rides low under a lot of sky; from above it
@@ -1745,11 +1757,14 @@
   /* haze: the single effect that turns a diagram into a photograph */
   /* The haze is keyed to how far back the camera stands, the way a long lens
      compresses it: pulling out never dissolves the survey into fog. */
-  var HZ_NEAR = 210, HZ_FAR = 2500, HZ_MAX = 0.70;
+  var HZ_NEAR = 210, HZ_FAR = 2500, HZ_MAX = 0.70, HZF = 1;
   function hazeAt(d) {
     var t = (d - HZ_NEAR) / (HZ_FAR - HZ_NEAR);
     t = t < 0 ? 0 : t > 1 ? 1 : t;
-    return Math.pow(t, 1.45) * HZ_MAX;
+    /* HZF: down among the streets the haze is the golden-hour air; looking
+       down from above, this is a model on a table an arm's length away, and
+       a tabletop does not fog. The factor is set from camera elevation. */
+    return Math.pow(t, 1.45) * HZ_MAX * HZF;
   }
 
   /* ---------------------------------------------------- face palette */
@@ -2290,6 +2305,21 @@
           }
         }
       }
+      /* manhole covers where the streets cross, once you are down among them */
+      if (scr > 560 && vx.length && vy.length) {
+        ctx.fillStyle = rgbas(mix(mix(C.print, C.ink, 0.3), C.haze, hz), 0.5);
+        for (k = 0; k < vx.length; k++) for (j = 0; j < vy.length; j++) {
+          var mhx = vx[k] + SW * 0.5 + ((k * 7 + j * 3) % 3 - 1) * 1.6;
+          var mhy = vy[j] + SW * 0.5 + ((k * 5 + j * 11) % 3 - 1) * 1.6;
+          var wxm = d.x + mhx * d.ca - mhy * d.sa, wym = d.y + mhx * d.sa + mhy * d.ca;
+          if (!proj(wxm, wym, 0.1)) continue;
+          var rm = 1.15 * pS;
+          if (rm < 1.6) continue;
+          ctx.beginPath();
+          ctx.ellipse(px, py, rm, rm * Math.max(0.22, SE), 0, 0, TAU);
+          ctx.fill();
+        }
+      }
       /* the plaza is paved and tiled, never bare */
       if (d.plaza && d.plaza.r >= 1 && scr > 90) {
         var pr = d.plaza.r;
@@ -2660,8 +2690,8 @@
         r.hit.push([Q8X[4], Q8Y[4], Q8X[5], Q8Y[5], Q8X[6], Q8Y[6], Q8X[7], Q8Y[7]]);
       }
       /* a flat roof is never clean: gravel, a light well, the parapet return */
-      if (lod && pxW > 44 && b.deco && b.deco !== 'plain' && b.hw > 8) {
-        ctx.globalAlpha = 0.22;
+      if (lod && pxW > 30 && b.deco && b.deco !== 'plain' && b.hw > 8) {
+        ctx.globalAlpha = 0.30;
         ctx.fillStyle = roofCol(m, v, hB, 3);
         ctx.beginPath();
         var iw = 0.80;
@@ -3926,7 +3956,55 @@
         groundSprite(SPR.ao, t.x + ca * t.len * j * 0.4, t.y + sa * t.len * j * 0.4,
           t.len * 0.30, 0.22 * (1 - hz));
       }
-      if (t.k === 'pencil') drawPencil(t, hB); else drawRuler(t, hB);
+      if (t.k === 'pencil') drawPencil(t, hB);
+      else if (t.k === 'ruler') drawRuler(t, hB);
+      else if (t.k === 'knife') drawKnife(t, hB);
+      else if (t.k === 'pot') drawPot(t, hB);
+      else if (t.k === 'eraser') drawEraser(t, hB);
+      else if (t.k === 'shavings') drawShavings(t, hB);
+    }
+  }
+  /* the craft knife: a steel blade run out of a dark segmented handle */
+  function drawKnife(p, hB) {
+    var ca = cos(p.yaw), sa = sin(p.yaw), L = p.len;
+    miniBox(p.x - ca * L * 0.30, p.y - sa * L * 0.30, L * 0.72, L * 0.085, 0, L * 0.075, p.yaw, M_DARK, hB);
+    miniBox(p.x + ca * L * 0.72, p.y + sa * L * 0.72, L * 0.34, L * 0.055, 0, L * 0.045, p.yaw, M_TRIM, hB);
+    miniBox(p.x + ca * L * 1.10, p.y + sa * L * 1.10, L * 0.09, L * 0.035, 0, L * 0.035, p.yaw, M_STEEL, hB);
+  }
+  /* the paint pot, its lid beside it, the brush laid down still wet */
+  function drawPot(p, hB) {
+    var ca = cos(p.yaw), sa = sin(p.yaw), L = p.len;
+    var q;
+    /* the pot is round: twelve short faces stand in for the turn */
+    for (q = 0; q < 6; q++) {
+      var a = p.yaw + q * PI / 6;
+      miniBox(p.x, p.y, L * 0.34, L * 0.34, 0, L * 0.42, a, M_STALL0 + 1, hB);
+    }
+    miniBox(p.x, p.y, L * 0.24, L * 0.24, L * 0.42, L * 0.46, p.yaw, M_COPPER, hB);
+    /* the lid, dropped beside it */
+    miniBox(p.x - ca * L * 0.9, p.y - sa * L * 0.9, L * 0.30, L * 0.30, 0, L * 0.06, p.yaw + 0.5, M_TRIM, hB);
+    /* the brush: handle, ferrule, a tipped head resting off the rag */
+    var bx0 = p.x + ca * L * 1.1, by0 = p.y + sa * L * 1.1, by = p.yaw + 0.9;
+    miniBox(bx0, by0, L * 0.42, L * 0.05, 0, L * 0.05, by, M_WOOD, hB);
+    miniBox(bx0 + cos(by) * L * 0.5, by0 + sin(by) * L * 0.5, L * 0.10, L * 0.05, 0, L * 0.05, by, M_STEEL, hB);
+    miniBox(bx0 + cos(by) * L * 0.66, by0 + sin(by) * L * 0.66, L * 0.12, L * 0.055, 0, L * 0.055, by, M_STALL0 + 1, hB);
+  }
+  function drawEraser(p, hB) {
+    miniBox(p.x, p.y, p.len * 0.52, p.len * 0.26, 0, p.len * 0.16, p.yaw, M_AWN, hB);
+    miniBox(p.x + cos(p.yaw) * p.len * 0.3, p.y + sin(p.yaw) * p.len * 0.3,
+      p.len * 0.22, p.len * 0.26, 0, p.len * 0.165, p.yaw, M_TRIM, hB);
+  }
+  /* pencil shavings: a few small curls scattered where the point was cut */
+  function drawShavings(p, hB) {
+    var i;
+    for (i = 0; i < 5; i++) {
+      var h = hash32('shave' + i);
+      var a = rnd01(h, 1) * TAU, rr = p.len * (0.2 + rnd01(h, 2) * 1.4);
+      var sx2 = p.x + cos(a) * rr, sy2 = p.y + sin(a) * rr;
+      miniBox(sx2, sy2, p.len * (0.10 + rnd01(h, 3) * 0.08), p.len * 0.05,
+        0, p.len * (0.04 + rnd01(h, 4) * 0.05), rnd01(h, 5) * TAU, M_WOOD, hB);
+      miniBox(sx2 + p.len * 0.05, sy2, p.len * 0.05, p.len * 0.04,
+        0, p.len * 0.05, rnd01(h, 6) * TAU, M_STALL0 + 2, hB);
     }
   }
   /* the model-maker's pencil, lying just off the torn edge */
@@ -4632,7 +4710,10 @@
        built rather than left blank. The budget is spent in screen area, so a
        frame full of giants costs the same as a frame full of cottages. */
     var ranked = vis.slice().sort(function (a, b) { return b._scr - a._scr; });
-    var quota = W * H * (dragging ? 0.45 : 1.05), spent = 0, cnt = 0, capN = dragging ? 14 : 30;
+    /* generous when the camera rests: the old 1.05 quota left the landmark
+       tower of a mid-zoom shot as a blank slab while small near buildings
+       spent the budget. Measured headroom allows it. */
+    var quota = W * H * (dragging ? 0.45 : 2.0), spent = 0, cnt = 0, capN = dragging ? 14 : 44;
     for (i = 0; i < ranked.length; i++) {
       var q = ranked[i];
       q._q = (DBG === 2 ? false : (spent < quota && cnt < capN && q._scr > 16));
@@ -4756,8 +4837,10 @@
     var probe = [], i;
     if (paper) {
       for (i = 0; i < paper.edge.length; i += 8) probe.push(paper.edge[i]);
-      probe.push({ x: paper.tx, y: paper.ty });
-      probe.push({ x: paper.tx + paper.tsize * 8.6, y: paper.sy });
+      /* the printed name must stay clear of the HUD; the deckle may tuck
+         behind it, the way a photograph lets the foreground bleed */
+      probe.push({ x: paper.tx, y: paper.ty, strict: 1 });
+      probe.push({ x: paper.tx + paper.tsize * 8.6, y: paper.sy, strict: 1 });
     } else probe.push({ x: bounds.cx, y: bounds.cy });
 
     var save = { az: cam.az, el: cam.el, dist: cam.dist, tx: cam.tx, ty: cam.ty };
@@ -4767,14 +4850,18 @@
     for (tries = 0; tries < 40; tries++) {
       cam.az = az; cam.el = el; cam.dist = d; cam.tx = tx; cam.ty = ty;
       updateCam();
-      var ok = true, x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+      var ok = true, x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9, ys = -1e9;
       for (i = 0; i < probe.length; i++) {
         if (!proj(probe[i].x, probe[i].y, 0)) { ok = false; break; }
         if (px < x0) x0 = px; if (px > x1) x1 = px;
-        if (py < y0) y0 = py; if (py > y1) y1 = py;
+        if (py < y0) y0 = py;
+        if (probe[i].strict) { if (py > ys) ys = py; }
+        else if (py > y1) y1 = py;
       }
-      /* a hair of bleed left and right is a photograph, not a diagram */
-      if (ok && x0 > -W * 0.03 && x1 < W * 1.03 && y0 > H * 0.03 && y1 < H - BAR) break;
+      /* a real bleed left and right is a photograph, not a diagram: the
+         sheet fills the frame, the table is a border and not a subject */
+      if (ok && x0 > -W * 0.085 && x1 < W * 1.085 && y0 > H * 0.012 &&
+          ys < H - BAR - 14 && y1 < H + BAR * 0.9) break;
       d *= 1.06;
       if (d > span * 14) break;
     }
