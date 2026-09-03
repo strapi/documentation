@@ -78,3 +78,18 @@ no prefixes, <= 80 chars. Push after each task so partial progress survives.
   Final sweep 290/290 clean; reduced-motion tableau byte-identical; establishing 20.7 ms,
   street 10.1 ms, wide-street 34.5 ms, facade 23.5 ms at 1440x900 (budgets 30/40);
   shot-world.jpg, shot-read.jpg committed. Caveat: moths read only at street zoom by design.
+- **english pass** (2026-09-03, cloud continuation, second firing): DONE. teleachat was
+  already fully in SHOP·DOCS 24/7 English register — verified, and its details-summary
+  double-escaping fixed (markup leaking as text on 2 pages, one lost block probe).
+  garedenuit translated whole to sleeper-railway English: THE NIGHT STATION, DEPARTURES ·
+  MAIN LINES, "no service cancelled tonight", IN THE SIDINGS, platforms/carriages/driver/
+  crew, the full legend; accents dropped from the split-flap alphabet so no French letter
+  ever flickers through a flap. docsadeux rebranded to the English pun "Cite & Right",
+  "C'est un match !" -> "It's a match!", same summary-escaping fix plus real alt text on
+  profile photos. Mechanics and numbers untouched (routes, hashes, train numbers, widths).
+  Verification per build: node --check clean; sweep 290/290, zero errors, zero thin pages,
+  zero overflow; rendered-DOM French scan of home + one deep view: 0 accented characters,
+  0 of MAINTENANT/SEULEMENT/VOIE/DEPARTS/GARE/ACHAT/mots/conseilleres (English "departs"
+  reworded to "leaves" so the scan is unambiguous); shot-world.jpg + shot-read.jpg
+  (1440x900) committed beside each build. Caveat: helper scripts in the build dirs still
+  mention French words because grepping for them is their job.
