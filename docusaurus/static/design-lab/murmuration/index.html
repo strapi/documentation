@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Murmuration · Strapi Documentation</title>
+<meta name="description" content="290 documentation pages as a flock of starlings over a winter marsh at dusk.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,200;1,6..72,300;1,6..72,400&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="s8.css">
+</head>
+<body>
+
+<canvas id="marsh" aria-hidden="true"></canvas>
+
+<div id="veil" role="status" aria-live="polite">
+  <p class="veil-line">gathering two hundred and ninety starlings</p>
+</div>
+
+<header id="brand">
+  <h1>The Murmuration</h1>
+  <p class="brandsub"><span id="brand-count">290</span> pages of the Strapi documentation, in flight over a winter marsh</p>
+</header>
+
+<div id="tools">
+  <div class="searchwrap">
+    <input id="search" type="search" autocomplete="off" spellcheck="false" placeholder="call a bird by name" aria-label="Search the 290 pages">
+    <div id="results" role="listbox" aria-label="Search results"></div>
+  </div>
+  <button id="indexbtn" type="button" aria-expanded="false" aria-controls="index">The whole flock</button>
+</div>
+
+<section id="key" aria-label="How to read this">
+  <p class="key-lines">
+    <span>Each starling is a page.</span>
+    <span>Birds that cite each other fly together.</span>
+    <span>The flock never stops rearranging itself, and neither does the documentation.</span>
+  </p>
+  <p class="key-hint">Hover to hear a name. Click a bird and it lands on the wire with the pages it cites.</p>
+  <p class="key-stat" id="kinstat"></p>
+</section>
+
+<aside id="inscription" aria-label="What the git history says"></aside>
+
+<div id="tip" aria-hidden="true"></div>
+<div id="perches" aria-hidden="true"></div>
+
+<nav id="index" aria-label="All pages" hidden>
+  <div class="index-inner">
+    <div class="index-head">
+      <p class="index-title">The whole flock</p>
+      <p class="index-sub" id="index-sub"></p>
+      <button id="indexclose" type="button" aria-label="Close the index">close</button>
+    </div>
+    <div id="index-body"></div>
+  </div>
+</nav>
+
+<main id="panel" hidden aria-label="Reading">
+  <div class="panel-mist" aria-hidden="true"></div>
+  <div class="panel-bar">
+    <span class="panel-slug" id="panel-slug"></span>
+    <span class="panel-flow">
+      <button id="prevpage" type="button" title="Previous page">←</button>
+      <button id="nextpage" type="button" title="Next page">→</button>
+      <button id="panelclose" type="button" title="Let it go (Esc)">let it go</button>
+    </span>
+  </div>
+  <div class="panel-scroll" id="panel-scroll" tabindex="-1">
+    <article id="article"></article>
+  </div>
+</main>
+
+<script src="s8.js"></script>
+</body>
+</html>
