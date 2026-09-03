@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Herbarium of the Strapi Documentation</title>
+<meta name="description" content="Six years of documentation pressed and mounted as botanical specimens. 290 sheets, grown from their own git history.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..600&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="s7.css">
+</head>
+<body>
+
+<div id="boot" class="boot">
+  <svg class="boot-leaf" viewBox="0 0 120 160" aria-hidden="true">
+    <path d="M60 152 C60 100 60 60 60 12" />
+    <path d="M60 118 C34 112 20 96 18 74 C42 74 56 92 60 118 Z" />
+    <path d="M60 96 C86 90 100 74 102 52 C78 52 64 70 60 96 Z" />
+    <path d="M60 74 C36 68 24 54 22 34 C44 34 56 50 60 74 Z" />
+  </svg>
+  <p class="boot-t">Unlocking the cabinet</p>
+  <p class="boot-s">290 sheets, pressed between 2023 and 2026</p>
+</div>
+
+<div id="app" class="app" hidden>
+
+  <aside class="rail" id="rail">
+    <header class="rail-head">
+      <div class="crest" aria-hidden="true">
+        <svg viewBox="0 0 40 40"><path d="M20 36 V8 M20 26 C11 24 6 17 6 9 C15 10 19 18 20 26 Z M20 20 C29 18 34 11 34 3 C25 4 21 12 20 20 Z"/></svg>
+      </div>
+      <div>
+        <h1>Herbarium of the<br><em>Strapi Documentation</em></h1>
+        <p class="rail-sub" id="railSub"></p>
+      </div>
+    </header>
+
+    <form class="search" id="searchForm" role="search" onsubmit="return false">
+      <label class="vh" for="q">Search the collection</label>
+      <input id="q" type="search" placeholder="Search the sheets…" autocomplete="off" spellcheck="false">
+      <span class="search-glyph" aria-hidden="true">⌕</span>
+    </form>
+
+    <nav class="drawers" id="drawers" aria-label="Cabinet drawers"></nav>
+
+    <section class="plaque" id="plaque" aria-labelledby="plaqueH">
+      <h2 id="plaqueH">The gardeners</h2>
+      <ol class="hands" id="hands"></ol>
+      <button class="plaque-more" id="plaqueMore" type="button"></button>
+    </section>
+  </aside>
+
+  <main class="stage" id="stage">
+    <div class="topbar" id="topbar">
+      <button class="tb-btn" id="btnDrawer" type="button" title="Back to the drawer">
+        <span aria-hidden="true">▤</span> <span id="btnDrawerLabel">Drawer</span>
+      </button>
+      <div class="tb-mid" id="tbMid"></div>
+      <div class="tb-nav">
+        <button class="tb-btn" id="btnPrev" type="button" title="Previous sheet (←)"><span aria-hidden="true">←</span><span class="tb-long"> Prev</span></button>
+        <button class="tb-btn" id="btnNext" type="button" title="Next sheet (→)"><span class="tb-long">Next </span><span aria-hidden="true">→</span></button>
+        <button class="tb-btn tb-key" id="btnKey" type="button" aria-expanded="false">Key<span class="tb-long"> to the plates</span></button>
+      </div>
+    </div>
+    <div class="scroll" id="scroll" tabindex="-1"></div>
+  </main>
+
+  <div class="keycard" id="keycard" hidden></div>
+  <div class="lens" id="lens" hidden aria-hidden="true"></div>
+</div>
+
+<script src="s7.js"></script>
+</body>
+</html>
