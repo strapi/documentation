@@ -177,6 +177,11 @@
   var lanes = [], highways = [];
   var bounds = { cx: 0, cy: 0, r: 800 };
   var props = [], paper = null, tools = [];
+  var PROV = null;                /* per-page git history, for the night moths */
+  var folk = [];                  /* the living layer: everything that moves */
+  var lampOf = {};                /* the kerb lamp in front of each page */
+  var WINDV = 0;                  /* one wind over the whole model, -1..1 */
+  var LT = 0;                     /* life time: frozen to one pose under reduced motion */
 
   var P = 30;                 /* lot pitch, world units */
   var GAP = 4;                /* the sliver between neighbours on one block */
@@ -194,9 +199,10 @@
     Promise.all([
       fetch('content.json').then(function (r) { return r.json(); }),
       fetch('graph.json').then(function (r) { return r.json(); }),
-      fetch('communities.json').then(function (r) { return r.json(); })
+      fetch('communities.json').then(function (r) { return r.json(); }),
+      fetch('provenance.json').then(function (r) { return r.json(); })['catch'](function () { return null; })
     ]).then(function (res) {
-      B = res[0]; G = res[1]; COM = res[2];
+      B = res[0]; G = res[1]; COM = res[2]; PROV = res[3];
       pages = B.pages; order = B.order;
       order.forEach(function (s, i) { orderIx[s] = i; });
       $('#ver').textContent = B.version;
@@ -214,6 +220,7 @@
         bakeSprites();
         bakeCity();
         bakeProps();
+        bakeLife();
         bakePaper();
         resize();
         homeShot();
@@ -1283,7 +1290,9 @@
         var lx = offx + (side ? 0 : (rnd01(hl, 1) - 0.5) * w * 0.6);
         var ly = offy + (side ? (rnd01(hl, 1) - 0.5) * d * 0.6 : 0);
         var wl = toW(lot.x + lx, lot.y + ly);
-        add({ k: 'lamp', x: wl[0], y: wl[1], h: 13 + rnd01(hl, 2) * 3 });
+        var lampP = { k: 'lamp', x: wl[0], y: wl[1], h: 13 + rnd01(hl, 2) * 3 };
+        add(lampP);
+        lampOf[lot.slug] = lampP;
         if (rnd01(hl, 3) > 0.55) {
           var b0 = toW(lot.x + lx + (side ? 0 : 8), lot.y + ly + (side ? 8 : 0));
           add({ k: 'bench', x: b0[0], y: b0[1], yaw: dd.rot * PI / 180 + (side ? PI / 2 : 0) });
@@ -2532,6 +2541,16 @@
     if (!pfo(u0, w1, out)) return; ctx.lineTo(px, py);
     ctx.closePath();
   }
+  /* an awning: a canvas sloping from the wall down to its outer rail. The
+     old quad kept both edges at one height and had no area at all, so every
+     awning in the city was invisible. */
+  function fqa(u0, wTop, u1, wBot, out) {
+    if (!pfo(u0, wTop, 0.2)) return; ctx.moveTo(px, py);
+    if (!pfo(u1, wTop, 0.2)) return; ctx.lineTo(px, py);
+    if (!pfo(u1, wBot, out)) return; ctx.lineTo(px, py);
+    if (!pfo(u0, wBot, out)) return; ctx.lineTo(px, py);
+    ctx.closePath();
+  }
 
   function drawBuilding(r, quality) {
     var parts = r.parts, i, hz = r.hz;
@@ -2806,11 +2825,13 @@
       if (isFront) {
         ctx.beginPath(); fq(0.44, g0, 0.58, g1 * 0.94); ctx.fillStyle = faceCol(m, v, tB, hB, 7); ctx.fill();
         ctx.beginPath(); fq(0.455, g0 + 0.004, 0.565, g1 * 0.90); ctx.fillStyle = faceCol(M_WOOD, 1, tB, hB, 6); ctx.fill();
-        /* the awning over it */
-        ctx.beginPath(); fqo(0.34, g1 * 0.90, 0.68, g1 * 0.90, 3.4);
+        /* the awning over it, breathing on the shared wind */
+        var awTop = g1 * 0.86, awBot = awTop - 2.4 / fh;
+        var awOut = 3.4 + WINDV * 0.55;
+        ctx.beginPath(); fqa(0.34, awTop, 0.68, awBot, awOut);
         ctx.fillStyle = faceCol(M_AWN, 1, 6, hB, 0); ctx.fill();
         ctx.beginPath();
-        for (i = 0; i < 6; i += 2) fqo(0.34 + 0.34 * i / 6, g1 * 0.90, 0.34 + 0.34 * (i + 1) / 6, g1 * 0.90, 3.4);
+        for (i = 0; i < 6; i += 2) fqa(0.34 + 0.34 * i / 6, awTop, 0.34 + 0.34 * (i + 1) / 6, awBot, awOut);
         ctx.fillStyle = faceCol(M_TRIM, 1, 6, hB, 0); ctx.fill();
         /* and the fascia sign above */
         ctx.beginPath(); fq(0.10, g1 * 0.88, 0.90, g1 * 0.99);
@@ -2859,7 +2880,7 @@
       if (isFront) {
         ctx.beginPath(); fq(0.08, g1 * 0.86, 0.92, g1 * 0.99);
         ctx.fillStyle = faceCol(M_TRIM, 1, tB, hB, 2); ctx.fill();
-        ctx.beginPath(); fqo(0.05, g1 * 0.82, 0.30, g1 * 0.82, 3.0);
+        ctx.beginPath(); fqa(0.05, g1 * 0.80, 0.30, g1 * 0.80 - 2.0 / fh, 3.0 + WINDV * 0.45);
         ctx.fillStyle = faceCol(M_AWN, 1, 6, hB, 0); ctx.fill();
       }
     } else if (kind === 'hoard') {
@@ -3698,11 +3719,15 @@
     if (R < 0.7) return;
     if (R > 220) R = 220;
     if (p.kind === 'smoke') {
-      var i, t = TNOW * 0.00016;
+      /* the plume leans with the shared wind: it rises straighter in a lull
+         and streams out flatter in a gust, like every other soft thing */
+      var i, t = LT * 0.00016;
+      var lean = (0.9 + 1.5 * WINDV) * p.r;
       for (i = 0; i < 4; i++) {
         var ph = (t + i * 0.25) % 1;
         var rr = R * (0.6 + ph * 2.4);
-        if (!proj(p.cx + sunGnd[1] * ph * p.r * 2.2, p.cy - sunGnd[0] * ph * p.r * 2.2, p.z + ph * p.r * 7)) continue;
+        if (!proj(p.cx + sunGnd[1] * ph * lean, p.cy - sunGnd[0] * ph * lean,
+                  p.z + ph * p.r * (7 - 1.6 * WINDV))) continue;
         ctx.globalAlpha = (1 - ph) * 0.34 * (1 - hz * 0.7);
         ctx.drawImage(SPR.smoke, px - rr, py - rr, rr * 2, rr * 2);
       }
@@ -3822,7 +3847,10 @@
       var hz = hazeAt(d);
       if (hz > 0.82) continue;
       if (p.k !== 'bird' && (FOC / d) * 6 < 1.6) continue;
-      if (taken++ > 720) break;
+      /* no bake-order starvation: the living layer is appended after the
+         street furniture, so a hard cap here would silently drop it. The
+         size and haze gates above are the real cull; this is a safety. */
+      if (taken++ > 1800) break;
       p._d = d; p._hz = hz;
       propsVis.push(p);
     }
@@ -3849,6 +3877,12 @@
         case 'ped':   propAO(p, 1.5, hz); drawPed(p, s, hB); break;
         case 'cafe':  propAO(p, 3.6, hz); drawCafe(p, s, hB); break;
         case 'boat':  drawBoat(p, s, hB); break;
+        case 'walker': drawWalker(p, s, hB); break;
+        case 'dvan':  drawDvan(p, s, hB); break;
+        case 'pig':   drawPig(p, s, hB); break;
+        case 'cat':   drawCat(p, s, hB); break;
+        case 'gard':  drawGard(p, s, hB); break;
+        case 'moth':  drawMoth(p, s, hB); break;
     }
   }
 
@@ -4047,9 +4081,18 @@
       var t = (i + 0.7) / (n + 0.4);
       var mxp = x0 + (x1 - x0) * t, myp = y0 + (y1 - y0) * t + sag * 2 * t * (1 - t) * 2;
       var ww = Math.max(1.2, 2.2 * s), hh = Math.max(1.6, 3.4 * s);
+      /* the wind takes the hems: each garment blows through the shared
+         phase, staggered along the line so the wave travels down it */
+      var sway = (WINDV * 0.8 + 0.2 * sin(LT * 0.0021 + p.seed % 7 + i * 1.3)) * hh * 0.55;
       ctx.fillStyle = i % 3 === 0 ? faceCol(M_TRIM, 1, 7, hB, 5)
         : i % 3 === 1 ? faceCol(M_AWN, 1, 6, hB, 0) : faceCol(M_SHUT, 1, 6, hB, 0);
-      ctx.fillRect(mxp - ww / 2, myp, ww, hh);
+      ctx.beginPath();
+      ctx.moveTo(mxp - ww / 2, myp);
+      ctx.lineTo(mxp + ww / 2, myp);
+      ctx.lineTo(mxp + ww / 2 + sway, myp + hh);
+      ctx.lineTo(mxp - ww / 2 + sway * 0.85, myp + hh);
+      ctx.closePath();
+      ctx.fill();
     }
   }
   function drawBird(p, s, hz) {
@@ -4067,6 +4110,294 @@
     ctx.lineWidth = Math.max(0.7, w * 0.18);
     ctx.lineJoin = 'round';
     ctx.stroke();
+  }
+
+  /* ==================================================================
+     THE LIVING LAYER — one coherent system of inhabitants, moved by one
+     clock and one wind. Every agent is a prop: it enters the same
+     depth-sorted stream as everything else, so a walker behind a wall is
+     painted behind the wall. Nothing teleports: walkers pace their lane
+     and turn at its ends, vans fade out at the depot and fade back in,
+     everything else moves on a closed loop. Under prefers-reduced-motion
+     the clock is pinned, and the whole layer holds one posed tableau.
+     ================================================================== */
+  function polyBake(pts) {
+    var cum = [0], i, L = 0;
+    for (i = 1; i < pts.length; i++) {
+      L += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+      cum.push(L);
+    }
+    return { pts: pts, cum: cum, len: L };
+  }
+  var polyPos = [0, 0, 0];
+  function polyAt(pb, d) {
+    var pts = pb.pts, cum = pb.cum, i;
+    if (d <= 0) d = 0.001;
+    if (d >= pb.len) d = pb.len - 0.001;
+    for (i = 1; i < cum.length; i++) if (cum[i] >= d) break;
+    var t = (d - cum[i - 1]) / ((cum[i] - cum[i - 1]) || 1);
+    polyPos[0] = pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * t;
+    polyPos[1] = pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * t;
+    polyPos[2] = Math.atan2(pts[i][1] - pts[i - 1][1], pts[i][0] - pts[i - 1][0]);
+    return polyPos;
+  }
+
+  function bakeLife() {
+    folk = [];
+    var put = function (o) { folk.push(o); props.push(o); };
+    var i, j;
+
+    /* Pedestrians pace the citation lanes of their quarter. How many walk a
+       quarter is its measured standing: the citations its pages receive. */
+    dists.forEach(function (dd, di) {
+      var dlanes = [];
+      for (j = 0; j < lanes.length; j++) {
+        if (lanes[j].d === dd && lanes[j].pts.length > 1) dlanes.push(lanes[j]);
+      }
+      if (!dlanes.length) return;
+      var inb = 0;
+      dd.members.forEach(function (m) { inb += (G.inbound[m] || 0); });
+      var n = clamp(Math.round(inb / 16), 1, 12);
+      for (i = 0; i < n; i++) {
+        var h = hash32('walk' + di + '-' + i);
+        var lane = dlanes[Math.floor(rnd01(h, 1) * dlanes.length) % dlanes.length];
+        if (!lane._pb) lane._pb = polyBake(lane.pts);
+        /* a lane runs door to door, from inside one lot to inside the other;
+           the walker turns at the doorways, not in the living rooms */
+        var inset = Math.min(13, lane._pb.len * 0.22);
+        var span = lane._pb.len - inset * 2;
+        if (span < 10) continue;
+        put({ k: 'walker', x: 0, y: 0, yaw: 0, gait: 0,
+          pb: lane._pb, u0: inset, span: span, off: rnd01(h, 2) * span * 2,
+          sp: 3.2 + rnd01(h, 3) * 1.9,
+          hue: Math.floor(rnd01(h, 4) * 5), ph: rnd01(h, 5) * TAU });
+      }
+    });
+
+    /* Delivery vans travel the strong citation streets between quarters:
+       one van per inter-district edge carrying six or more citations. */
+    for (i = 0; i < highways.length; i++) {
+      var hw = highways[i];
+      if (hw.w < 6) continue;
+      var h2 = hash32('van' + hw.a.i + ':' + hw.b.i);
+      var rev = rnd01(h2, 1) > 0.5;
+      var A = rev ? hw.b : hw.a, Bv = rev ? hw.a : hw.b;
+      var dx = Bv.x - A.x, dy = Bv.y - A.y, L = Math.hypot(dx, dy) || 1;
+      /* keep to the right of the drawn road, like traffic */
+      var nx = -dy / L, ny = dx / L;
+      put({ k: 'dvan', x: A.x, y: A.y, yaw: 0, alpha: 0,
+        ax: A.x + nx * 2.6, ay: A.y + ny * 2.6, ux: dx / L, uy: dy / L, len: L,
+        sp: 11 + rnd01(h2, 2) * 5, off: rnd01(h2, 3) * (L + 90),
+        hue: Math.floor(rnd01(h2, 4) * 4) });
+    }
+
+    /* Pigeons work the monument plazas. */
+    dists.forEach(function (dd, di) {
+      if (!dd.plaza || dd.plaza.r < 1) return;
+      var h3 = hash32('pig' + di);
+      var n2 = 3 + Math.floor(rnd01(h3, 1) * 3);
+      for (i = 0; i < n2; i++) {
+        put({ k: 'pig', x: dd.x, y: dd.y, yaw: 0,
+          ax: dd.x + (rnd01(h3, i * 3 + 2) - 0.5) * P * 1.7,
+          ay: dd.y + (rnd01(h3, i * 3 + 3) - 0.5) * P * 1.7,
+          rx: 4 + rnd01(h3, i * 3 + 4) * 7, ry: 4 + rnd01(h3, i * 5 + 5) * 7,
+          w1: 0.10 + rnd01(h3, i * 7 + 6) * 0.12, w2: 0.07 + rnd01(h3, i * 7 + 7) * 0.11,
+          ph: rnd01(h3, i * 7 + 8) * TAU });
+      }
+    });
+
+    /* One cat wanders the derelict lots: a closed round through the empty
+       plots that stand nearest one another, walked slowly, forever. */
+    var dls = [];
+    for (i = 0; i < blds.length; i++) if (blds[i].derelict) dls.push(blds[i]);
+    if (dls.length > 2) {
+      var seed = dls[hash32('cat') % dls.length];
+      var tour = [seed], used = {}; used[seed.slug] = 1;
+      var curL = seed;
+      for (j = 0; j < 6; j++) {
+        var best = null, bd = 1e9;
+        for (i = 0; i < dls.length; i++) {
+          var c2 = dls[i];
+          if (used[c2.slug]) continue;
+          var dd2 = (c2.wx - curL.wx) * (c2.wx - curL.wx) + (c2.wy - curL.wy) * (c2.wy - curL.wy);
+          if (dd2 < bd) { bd = dd2; best = c2; }
+        }
+        if (!best || bd > 260 * 260) break;
+        tour.push(best); used[best.slug] = 1; curL = best;
+      }
+      if (tour.length >= 2) {
+        var way2 = tour.map(function (r2) { return { x: r2.wx, y: r2.wy }; });
+        way2.push({ x: seed.wx, y: seed.wy });
+        var sm = catmull(way2, 6).map(function (q2) { return [q2.x, q2.y]; });
+        put({ k: 'cat', x: seed.wx, y: seed.wy, yaw: 0,
+          pb: polyBake(sm), sp: 2.1, ph: 0.8 });
+      }
+    }
+
+    /* Gardeners kneel in the planted blocks, working the beds. */
+    var gard = 0;
+    for (i = 0; i < blds.length; i++) {
+      var r3 = blds[i];
+      if (r3.arch !== 'garden' || r3.derelict) continue;
+      var h4 = r3.h32;
+      if (rnd01(h4, 91) < 0.42 || gard >= 34) continue;
+      gard++;
+      /* kneel at the edge of the bed, on the path, working inward: a figure
+         inside the lot would be painted over by its own planting */
+      var gj = h4 % 4;
+      var gox = FNL[gj][0] * (r3.hw + 2.3), goy = FNL[gj][1] * (r3.hd + 2.3);
+      var gca = cos(r3.yaw), gsa = sin(r3.yaw);
+      var gx = r3.wx + gox * gca - goy * gsa, gy = r3.wy + gox * gsa + goy * gca;
+      put({ k: 'gard', x: gx, y: gy,
+        yaw: Math.atan2(r3.wy - gy, r3.wx - gx), m: M_VAN0 + (h4 % 4), ph: rnd01(h4, 94) * TAU });
+    }
+
+    /* The night shift: every commit made between midnight and six in the
+       morning left a moth at that page's lamp. 15 night edits on 12 pages. */
+    if (PROV) {
+      Object.keys(PROV).forEach(function (s) {
+        var nn = PROV[s] && PROV[s].night;
+        var lamp = lampOf[s];
+        if (!nn || !lamp) return;
+        for (i = 0; i < nn && i < 5; i++) {
+          var h5 = hash32('moth' + s + i);
+          put({ k: 'moth', x: lamp.x, y: lamp.y, z: lamp.h - 0.6,
+            sp: 0.9 + rnd01(h5, 1) * 0.7, ph: rnd01(h5, 2) * TAU, ph2: rnd01(h5, 3) * TAU });
+        }
+      });
+    }
+  }
+
+  function stepLife() {
+    LT = reduced() ? 60000 : TNOW;
+    WINDV = sin(LT * 0.00047) * 0.65 + sin(LT * 0.00131 + 2.1) * 0.35;
+    var t = LT / 1000, i;
+    for (i = 0; i < folk.length; i++) {
+      var f = folk[i];
+      if (f.k === 'walker') {
+        var per = f.span * 2;
+        var dd = (t * f.sp + f.off) % per;
+        var fwdW = dd < f.span;
+        var q = polyAt(f.pb, f.u0 + (fwdW ? dd : per - dd));
+        f.x = q[0]; f.y = q[1];
+        f.yaw = fwdW ? q[2] : q[2] + PI;
+        f.gait = t * f.sp * 1.9 + f.ph;
+      } else if (f.k === 'dvan') {
+        var per2 = f.len + 90;                      /* the pause at the depot */
+        var d2 = (t * f.sp + f.off) % per2;
+        if (d2 > f.len) { f.alpha = 0; continue; }
+        f.alpha = clamp(Math.min(d2 / 14, (f.len - d2) / 14), 0, 1);
+        f.x = f.ax + f.ux * d2; f.y = f.ay + f.uy * d2;
+        f.yaw = Math.atan2(f.uy, f.ux);
+      } else if (f.k === 'pig') {
+        var a1 = f.w1 * t * TAU + f.ph, a2 = f.w2 * t * TAU + f.ph * 1.7;
+        f.x = f.ax + cos(a1) * f.rx; f.y = f.ay + sin(a2) * f.ry;
+        f.yaw = Math.atan2(cos(a2) * f.w2 * f.ry, -sin(a1) * f.w1 * f.rx);
+      } else if (f.k === 'cat') {
+        var d3 = (t * f.sp) % f.pb.len;
+        var q2 = polyAt(f.pb, d3);
+        f.x = q2[0]; f.y = q2[1]; f.yaw = q2[2];
+      }
+    }
+  }
+
+  /* a walker is the parked pedestrian given a stride: two legs in
+     counterphase, a slight bob in the coat, facing where it is going */
+  function drawWalker(p, s, hB) {
+    if (s * 3.4 < 2.0) return;
+    propAO(p, 1.4, p._hz);
+    var m = M_VAN0 + (p.hue % 4);
+    if (p.hue === 4) m = M_AWN;
+    var g = sin(p.gait);
+    var ca = cos(p.yaw), sa = sin(p.yaw);
+    if (s * 3.4 > 7) {
+      miniBox(p.x + ca * g * 0.40, p.y + sa * g * 0.40, 0.26, 0.28, 0, 1.65, p.yaw, M_DARK, hB);
+      miniBox(p.x - ca * g * 0.40, p.y - sa * g * 0.40, 0.26, 0.28, 0, 1.65, p.yaw, M_DARK, hB);
+    } else {
+      miniBox(p.x, p.y, 0.5, 0.42, 0, 1.6, p.yaw, M_DARK, hB);
+    }
+    var bob = 0.12 * abs(g);
+    miniBox(p.x, p.y, 0.72, 0.55, 1.6 + bob, 3.6 + bob, p.yaw, m, hB);
+    miniBox(p.x, p.y, 0.36, 0.34, 3.6 + bob, 4.6 + bob, p.yaw, M_TRIM, hB);
+  }
+  /* a delivery van out on the citation street, fading in at one depot and
+     out at the other so it never pops */
+  function drawDvan(p, s, hB) {
+    if (p.alpha <= 0.02 || s * 4.6 < 2.2) return;
+    ctx.globalAlpha = p.alpha;
+    groundSprite(SPR.ao, p.x, p.y, 6.4, 0.30 * (1 - p._hz) * p.alpha);
+    drawVan(p, s, hB);
+    ctx.globalAlpha = 1;
+  }
+  /* a pigeon: a grey-blue crumb that walks its own wandering line and
+     pecks between steps */
+  function drawPig(p, s, hB) {
+    if (s * 3.4 < 1.5) return;
+    var peck = Math.max(0, sin(LT * 0.0052 + p.ph));
+    miniBox(p.x, p.y, 0.34, 0.24, 0.08, 0.52, p.yaw, M_GLASS, hB);
+    if (s * 3.4 > 4.2) {
+      var ca = cos(p.yaw), sa = sin(p.yaw);
+      var hz2 = 0.50 - peck * 0.30;
+      miniBox(p.x + ca * 0.32, p.y + sa * 0.32, 0.13, 0.12, hz2, hz2 + 0.22, p.yaw, M_GLASS, hB);
+    }
+  }
+  /* the cat: long, low, tail up, on its slow round of the empty plots */
+  function drawCat(p, s, hB) {
+    if (s * 3.4 < 2.2) return;
+    propAO(p, 1.1, p._hz);
+    var ca = cos(p.yaw), sa = sin(p.yaw);
+    miniBox(p.x, p.y, 1.02, 0.32, 0.26, 0.84, p.yaw, M_DARK, hB);
+    miniBox(p.x + ca * 0.94, p.y + sa * 0.94, 0.29, 0.29, 0.60, 1.16, p.yaw, M_DARK, hB);
+    var sw = sin(LT * 0.003 + p.ph) * 0.35 + WINDV * 0.10;
+    var tx0 = p.x - ca * 0.95, ty0 = p.y - sa * 0.95;
+    if (!proj(tx0, ty0, 0.75)) return;
+    var x0 = px, y0 = py;
+    if (!proj(tx0 - ca * 0.35 - sa * sw, ty0 - sa * 0.35 + ca * sw, 1.85)) return;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(px, py);
+    ctx.strokeStyle = faceCol(M_DARK, 1, 3, hB, 2);
+    ctx.lineWidth = Math.max(0.4, 0.12 * s); ctx.lineCap = 'round'; ctx.stroke();
+  }
+  /* a gardener kneels over the bed, torso rocking with the work, one arm
+     down in the planting */
+  function drawGard(p, s, hB) {
+    if (s * 3.4 < 2.2) return;
+    propAO(p, 1.7, p._hz);
+    var bob = sin(LT * 0.0021 + p.ph);
+    var lean = 0.30 + 0.16 * bob;
+    var ca = cos(p.yaw), sa = sin(p.yaw);
+    miniBox(p.x, p.y, 0.62, 0.50, 0, 0.85, p.yaw, M_DARK, hB);
+    miniBox(p.x + ca * lean, p.y + sa * lean, 0.60, 0.48, 0.85, 2.35, p.yaw, p.m, hB);
+    miniBox(p.x + ca * (lean + 0.22), p.y + sa * (lean + 0.22), 0.30, 0.30, 2.35, 3.05, p.yaw, M_TRIM, hB);
+    miniBox(p.x + ca * (lean + 0.22), p.y + sa * (lean + 0.22), 0.52, 0.52, 3.05, 3.24, p.yaw, M_STALL0 + 2, hB);
+    if (s * 3.4 > 6) {
+      var hx0 = p.x + ca * (lean + 0.50), hy0 = p.y + sa * (lean + 0.50);
+      if (!proj(hx0, hy0, 2.0)) return;
+      var x0 = px, y0 = py;
+      if (!proj(hx0 + ca * (0.55 + 0.18 * bob), hy0 + sa * (0.55 + 0.18 * bob), 0.25)) return;
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(px, py);
+      ctx.strokeStyle = faceCol(p.m, 1, 4, hB, 2);
+      ctx.lineWidth = Math.max(0.5, 0.22 * s); ctx.lineCap = 'round'; ctx.stroke();
+    }
+  }
+  /* a moth: a pale flicker on a restless orbit around its lamp */
+  function drawMoth(p, s, hB) {
+    if (s * 2.2 < 1.0) return;
+    var t = LT * 0.001 * p.sp + p.ph;
+    var rr = 1.7 + 0.8 * sin(t * 1.9 + p.ph2);
+    var wx = p.x + cos(t * 2.7) * rr, wy = p.y + sin(t * 2.7) * rr;
+    var wz = p.z + sin(t * 3.4 + p.ph2) * 0.9;
+    if (!proj(wx, wy, wz)) return;
+    var w = clamp(0.62 * pS, 0.9, 4.6);
+    var fl = 0.35 + 0.65 * abs(sin(LT * 0.03 + p.ph));
+    ctx.globalAlpha = 0.85 * (1 - p._hz);
+    ctx.fillStyle = 'rgba(255,240,210,0.92)';
+    ctx.beginPath();
+    ctx.moveTo(px, py);
+    ctx.lineTo(px - w, py - w * fl); ctx.lineTo(px - w * 0.3, py); ctx.closePath();
+    ctx.moveTo(px, py);
+    ctx.lineTo(px + w, py - w * fl); ctx.lineTo(px + w * 0.3, py); ctx.closePath();
+    ctx.fill();
+    ctx.globalAlpha = 1;
   }
 
   /* ---------------------------------------------------------- labels */
@@ -4220,6 +4551,7 @@
     var t0 = performance.now();
     TNOW = t0;
     FRAMEN++;
+    stepLife();
     updateCam();
     /* a tooltip is anchored to a screen point: once the camera has moved
        from where it was raised, what stands under the cursor is re-read,
@@ -5243,6 +5575,33 @@
     },
     strips: function () { return GSTRIPS; },
     counts: function () { return { parts: NPART, faces: NFILL, grads: NGRAD, vis: vis.length }; },
+    life: function () {
+      var by = {}, i;
+      for (i = 0; i < folk.length; i++) by[folk[i].k] = (by[folk[i].k] || 0) + 1;
+      return { n: folk.length, by: by, wind: +WINDV.toFixed(3) };
+    },
+    propTotal: function () { return props.length; },
+    projOf: function (x, y, z) {
+      if (!proj(x, y, z || 0)) return null;
+      return { x: Math.round(px), y: Math.round(py), s: +pS.toFixed(2) };
+    },
+    lifeSpots: function () {
+      var out = {}, i;
+      for (i = 0; i < folk.length; i++) {
+        var f = folk[i];
+        if (out[f.k]) continue;
+        if (f.k === 'dvan' && f.alpha < 0.5) continue;
+        out[f.k] = { k: f.k, x: +f.x.toFixed(1), y: +f.y.toFixed(1) };
+      }
+      return out;
+    },
+    moths: function () {
+      var out = [], i;
+      for (i = 0; i < folk.length; i++) {
+        if (folk[i].k === 'moth') out.push([+folk[i].x.toFixed(1), +folk[i].y.toFixed(1), +folk[i].z.toFixed(1)]);
+      }
+      return out;
+    },
     dbg: function (v) { DBG = v; paintNow(); },
     tile: function () { return SPR.paperTile ? SPR.paperTile.toDataURL() : null; },
     paint: function () { paintNow(); return lastFrameMs; },

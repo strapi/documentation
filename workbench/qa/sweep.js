@@ -3,7 +3,8 @@
 const path = require('path');
 const http = require('http');
 const fs = require('fs');
-const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_modules/playwright-core');
+const { chromium } = require('/tmp/claude-0/-home-user-documentation/0ba9397f-02f3-530f-a3f0-82e779baca0b/scratchpad/pw/node_modules/playwright-core');
+const LAUNCH = { executablePath: '/opt/pw-browsers/chromium' };
 
 const dir = process.argv[2];
 const port = Number(process.argv[3] || 8950);
@@ -88,7 +89,7 @@ function probeStrings(page) {
   let slugs = bundle.order && bundle.order.length ? bundle.order : Object.keys(bundle.pages);
   if (max) slugs = slugs.slice(0, max);
   const server = await serve();
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(LAUNCH);
   const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } });
 
   const fails = [];
