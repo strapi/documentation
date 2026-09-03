@@ -96,6 +96,7 @@ let worldW = 0, worldH = 0, OX = 0, OY = 0;
 let groundCv, waterCvs = [];
 let statics = [];           // sorted sprite instances {cv,wx,wy,depth,b?}
 let peds = [], cars = [], cyclists = [], pigeons = [], cats = [], smokes = [], flags = [], boat = null;
+let dogs = [], queuers = [], buoys = [];
 let crossTiles = new Set(); // 'x,y'
 let canalWaterYs = [];      // center y of each canal
 let SPR = {};               // sprite atlas
@@ -531,6 +532,33 @@ function bakeAtlas() {
     px(g, 4, 3, 3, 3, PAL.WH); px(g, 4, 8, 3, 2, PAL.RD);
   });
   bakeSprite('smoke', 3, 3, (g) => { px(g, 0, 0, 3, 3, 'rgba(210,206,220,0.8)'); px(g, 0, 2, 1, 1, 'rgba(160,158,175,0.8)'); }, true);
+  // sitting dog, tail at rest / tail up (wag)
+  bakeSprite('dog0', 7, 6, (g) => {
+    px(g, 1, 2, 3, 3, PAL.WD3); px(g, 3, 1, 2, 2, PAL.WD3); px(g, 4, 0, 1, 1, PAL.WD1);
+    px(g, 0, 4, 1, 1, PAL.WD1); px(g, 3, 2, 1, 1, PAL.OUT);
+  });
+  bakeSprite('dog1', 7, 6, (g) => {
+    px(g, 1, 2, 3, 3, PAL.WD3); px(g, 3, 1, 2, 2, PAL.WD3); px(g, 4, 0, 1, 1, PAL.WD1);
+    px(g, 0, 2, 1, 2, PAL.WD1); px(g, 3, 2, 1, 1, PAL.OUT);
+  });
+  // harbour buoy, lamp on / off
+  bakeSprite('buoy0', 5, 8, (g) => {
+    px(g, 1, 4, 3, 3, PAL.RD); px(g, 1, 5, 3, 1, PAL.WH); px(g, 2, 2, 1, 2, PAL.A1); px(g, 2, 1, 1, 1, PAL.L1);
+  });
+  bakeSprite('buoy1', 5, 8, (g) => {
+    px(g, 1, 4, 3, 3, PAL.RD); px(g, 1, 5, 3, 1, PAL.WH); px(g, 2, 2, 1, 2, PAL.A1); px(g, 2, 1, 1, 1, PAL.L2);
+  });
+  // park fountain: stone basin, column, three spray frames
+  for (let f = 0; f < 3; f++) {
+    bakeSprite('fount' + f, 14, 14, (g) => {
+      px(g, 1, 9, 12, 4, PAL.P3); px(g, 1, 12, 12, 1, PAL.P1);
+      px(g, 2, 10, 10, 2, PAL.W3); px(g, 3 + ((f * 3) % 5), 10, 2, 1, PAL.W4);
+      px(g, 6, 5, 2, 5, PAL.C2); px(g, 5, 4, 4, 1, PAL.C1);
+      const sp = [[6, 2, 1, 2], [7, 1, 1, 3], [5, 1, 1, 2]][f];
+      px(g, sp[0], sp[1], sp[2], sp[3], PAL.W4);
+      px(g, 4, 6 + f % 2, 1, 2, PAL.W3); px(g, 9, 7 - f % 2, 1, 2, PAL.W3);
+    });
+  }
 }
 
 /* ==========================================================================
@@ -869,6 +897,7 @@ function bakeLayers() {
     const t2 = grid[G(tx, ty)];
     const cx = isoX(tx, ty), cy = isoY(tx, ty);
     if (t2 === T.SEA || t2 === T.WATER) {
+      const edgeD = Math.min(tx, ty, Wt - 1 - tx, Ht - 1 - ty);
       for (let f = 0; f < 3; f++) {
         const wg = waterCvs[f][1];
         diamond(wg, cx, cy, t2 === T.SEA ? PAL.W1 : PAL.W2);
@@ -876,6 +905,18 @@ function bakeLayers() {
         const ph = (tx * 3 + ty * 5 + f * 2) % 6;
         if (ph < 2) { wg.fillStyle = PAL.W3; wg.fillRect(cx - 4 + ph * 2, cy + 3 + ph, 4, 1); }
         if ((tx + ty + f) % 7 === 0) { wg.fillStyle = PAL.W4; wg.fillRect(cx - 1, cy + 5, 2, 1); }
+        // deep-water falloff: stipple the outermost sea tiles into the page
+        // ground so the diorama edge fades instead of ending on a hard band
+        if (t2 === T.SEA && edgeD <= 1) {
+          wg.fillStyle = '#0e2b33';
+          const step = edgeD === 0 ? 2 : 4;
+          for (let yy = 0; yy < 8; yy++) {
+            const w2 = DROWS[yy];
+            for (let xx = -(w2 >> 1); xx < (w2 >> 1); xx++) {
+              if (h32(tx * 16 + xx + 8, ty * 8 + yy, 11) % step === 0) wg.fillRect(cx + xx, cy + yy, 1, 1);
+            }
+          }
+        }
       }
       continue;
     }
@@ -1014,6 +1055,16 @@ function placeStatics() {
       depth: tx + ty + dz
     });
   };
+  // a dog sits by some benches; a park fountain plays three spray frames
+  const maybeDog = (tx, ty) => {
+    if (dogs.length < 14 && h32(tx, ty, 6) % 4 === 0) dogs.push({ tx: tx + 0.85, ty: ty + 0.75, ph: rng() * 5 });
+  };
+  const addFount = (tx, ty) => {
+    statics.push({
+      anim3: [SPR.fount0, SPR.fount1, SPR.fount2], cv: SPR.fount0,
+      wx: isoX(tx, ty) - 7, wy: isoY(tx, ty) + HH - 12, depth: tx + ty + 0.3
+    });
+  };
 
   for (const q of quarters) {
     // ring perimeter walk
@@ -1027,7 +1078,7 @@ function placeStatics() {
       if (i % 6 === 1) addProp('lamp', tx, ty);
       else if (i % 7 === 3) addProp('tree', tx, ty);
       else if (i % 13 === 5) addProp('hydrant', tx, ty);
-      else if (i % 11 === 7) addProp('bench', tx, ty);
+      else if (i % 11 === 7) { addProp('bench', tx, ty); maybeDog(tx, ty); }
     });
     // interior plazas: stalls & benches & pigeon spawns
     let stallCount = 0;
@@ -1036,9 +1087,17 @@ function placeStatics() {
       const t2 = grid[G(tx, ty)];
       if (t2 === T.PLAZA) {
         const h2 = h32(tx, ty, 1) % 17;
-        if (h2 === 0 && stallCount < 3) { addProp('stall', tx, ty); stallCount++; }
-        else if (h2 === 4) addProp('bench', tx, ty);
+        if (h2 === 0 && stallCount < 3) {
+          addProp('stall', tx, ty); stallCount++;
+          // a short queue forms at the stall counter
+          const nQ = 2 + h32(tx, ty, 8) % 2;
+          for (let k = 0; k < nQ; k++) {
+            queuers.push({ x: tx + 0.35, y: ty + 1.05 + k * 0.55, theme: (q.themeIdx + k) % THEMES.length, ph: rng() * 10 });
+          }
+        }
+        else if (h2 === 4) { addProp('bench', tx, ty); maybeDog(tx, ty); }
         else if (h2 === 8) addProp('kioskstand', tx, ty);
+        else if (h2 === 2 && !q.fountainDone) { q.fountainDone = true; addFount(tx, ty); }
         else if (h2 === 12 && pigeons.length < 40) {
           for (let p2 = 0; p2 < 3; p2++) pigeons.push({ tx: tx + rng() * 0.8, ty: ty + rng() * 0.8, home: [tx, ty], st: 'peck', t: rng() * 3, vx: 0, vy: 0 });
         }
@@ -1075,11 +1134,15 @@ function placeStatics() {
     } else if (t2 === T.GRASS && quarterOf[G(tx, ty)] < 0) {
       const h2 = h32(tx, ty, 4) % 19;
       if (h2 === 0 || h2 === 7) addProp('tree', tx, ty);
-      else if (h2 === 3) addProp('bench', tx, ty);
+      else if (h2 === 3) { addProp('bench', tx, ty); maybeDog(tx, ty); }
       else if (h2 === 11) addProp('kioskstand', tx, ty);
       else if (h2 === 14 && pigeons.length < 52) {
         for (let p2 = 0; p2 < 3; p2++) pigeons.push({ tx: tx + rng() * 0.8, ty: ty + rng() * 0.8, home: [tx, ty], st: 'peck', t: rng() * 3, vx: 0, vy: 0 });
       }
+      else if (h2 === 5 && h32(tx, ty, 9) % 3 === 0) addFount(tx, ty);
+    } else if (t2 === T.SEA && buoys.length < 7) {
+      const d = Math.min(tx, ty, Wt - 1 - tx, Ht - 1 - ty);
+      if (d >= 2 && d <= 3 && h32(tx, ty, 5) % 37 === 0) buoys.push({ tx: tx + 0.5, ty: ty + 0.5, ph: rng() * 6 });
     }
   }
 
@@ -1339,6 +1402,25 @@ function draw() {
     if (wx < vx0 || wx > vx1 || wy < vy0 || wy > vy1) continue;
     dyn.push({ cv: SPR[Math.floor(animT * 1.5 + ct.ph) % 2 ? 'cat1' : 'cat0'], wx: Math.round(wx - 3), wy: Math.round(wy - 4), depth: ct.tx + ct.ty - 0.4 });
   }
+  for (const dg of dogs) {
+    const wx = OX + (dg.tx - dg.ty) * HW, wy = OY + (dg.tx + dg.ty) * HH;
+    if (wx < vx0 || wx > vx1 || wy < vy0 || wy > vy1) continue;
+    const wag = !REDUCED && Math.floor(animT * 2 + dg.ph) % 3 === 0;
+    dyn.push({ cv: SPR[wag ? 'dog1' : 'dog0'], wx: Math.round(wx - 3), wy: Math.round(wy - 5), depth: dg.tx + dg.ty - 0.4 });
+  }
+  for (const qp of queuers) {
+    const wx = OX + (qp.x - qp.y) * HW, wy = OY + (qp.x + qp.y) * HH;
+    if (wx < vx0 || wx > vx1 || wy < vy0 || wy > vy1) continue;
+    // patient shuffle: an occasional 1px weight shift, frozen under reduced motion
+    const nudge = !REDUCED && Math.floor(animT * 0.9 + qp.ph) % 6 === 0 ? 1 : 0;
+    dyn.push({ cv: SPR[`ped${qp.theme}_0`], wx: Math.round(wx - 2 + nudge), wy: Math.round(wy - 8), depth: qp.x + qp.y - 0.98 });
+  }
+  for (const bu of buoys) {
+    const wx = OX + (bu.tx - bu.ty) * HW, wy = OY + (bu.tx + bu.ty) * HH;
+    if (wx < vx0 || wx > vx1 || wy < vy0 || wy > vy1) continue;
+    const bob = REDUCED ? 0 : Math.floor(animT * 1.4 + bu.ph) % 2;
+    dyn.push({ cv: SPR[Math.floor(animT * 1.1 + bu.ph) % 2 && !REDUCED ? 'buoy1' : 'buoy0'], wx: Math.round(wx - 2), wy: Math.round(wy - 4 + bob), depth: bu.tx + bu.ty - 0.5 });
+  }
   if (boat) {
     const wx = OX + (boat.x - boat.y) * HW, wy = OY + (boat.x + boat.y) * HH;
     const cv2 = boat.horiz === false ? SPR.boatY : SPR.boatX;
@@ -1357,7 +1439,9 @@ function draw() {
     const wxs = st.wx, wys = st.wy;
     if (wxs + st.cv.width < vx0 || wxs > vx1 || wys + st.cv.height < vy0 || wys > vy1) continue;
     if (st.b && st.b === hoverB) drawHighlight(st);
-    const useCv = st.sway && !REDUCED && (Math.floor(animT * 2) % 2) ? st.cv2 : st.cv;
+    let useCv = st.cv;
+    if (st.anim3) useCv = REDUCED ? st.anim3[1] : st.anim3[Math.floor(animT * 3) % 3];
+    else if (st.sway && !REDUCED && (Math.floor(animT * 2) % 2)) useCv = st.cv2;
     ctx.drawImage(useCv, wxs, wys);
     // window twinkle
     if (st.b && st.b.twk && !REDUCED) {
