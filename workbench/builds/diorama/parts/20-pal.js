@@ -76,15 +76,17 @@
     { base: '#8FA3B4', k: 0.30 },   /* 12 glass                                */
     { base: '#9A7C55', k: 0.34 },   /* 13 timber, planks, hoardings            */
     { base: '#C3462F', k: 0.48 },   /* 14 awning red                           */
-    { base: '#3C3A44', k: 0.26 },   /* 15 tarmac, tarpaulin, dark tin          */
+    { base: '#453E42', k: 0.26 },   /* 15 tarmac, dark tin                     */
     { base: '#D8C49A', k: 0.44 },   /* 16 pale render                          */
     null, null, null, null,         /* 17-20 the paint on a parked van         */
     null, null, null,               /* 21-23 the stripes of a market canopy    */
     { base: '#A44C2E', k: 0.52 },   /* 24 pantile, weathered darker            */
-    { base: '#C96C3E', k: 0.52 }    /* 25 pantile, freshly laid                */
+    { base: '#C96C3E', k: 0.52 },   /* 25 pantile, freshly laid                */
+    { base: '#8A7A5E', k: 0.36 }    /* 26 weathered canvas tarpaulin           */
   ];
   var M_STEEL = 7, M_TILE = 8, M_TRIM = 9, M_COPPER = 10, M_SHUT = 11,
-      M_GLASS = 12, M_WOOD = 13, M_AWN = 14, M_DARK = 15, M_RENDER = 16;
+      M_GLASS = 12, M_WOOD = 13, M_AWN = 14, M_DARK = 15, M_RENDER = 16,
+      M_TARP = 26;
   var M_TILES = [8, 24, 25];
 
   /* ------------------------------------------------------------ state */
@@ -99,7 +101,7 @@
   var river = { pts: [], bridges: [], poly: null };
   var lanes = [], highways = [];
   var bounds = { cx: 0, cy: 0, r: 800 };
-  var props = [], paper = null;
+  var props = [], paper = null, tools = [];
 
   var P = 30;                 /* lot pitch, world units */
   var GAP = 4;                /* the sliver between neighbours on one block */

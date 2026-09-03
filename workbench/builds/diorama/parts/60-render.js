@@ -65,12 +65,15 @@
     s = rgbs(mix(C.lit, C.haze, (hB / 18) * HZ_MAX * 0.6));
     palCache[key] = s; return s;
   }
-  /* a window with nobody home: violet dusk behind the glass, never navy */
+  /* a window with nobody home: violet dusk behind the glass, never navy.
+     A breath of the sun's glow is mixed in so an unlit pane sits in the warm
+     scene instead of punching a cold hole in the facade. */
   function darkGlassCol(hB) {
     var key = 810000 + hB;
     var s = palCache[key];
     if (s !== undefined) return s;
-    s = rgbs(mix(mix(lit(C.shadow, 0.52), C.water, 0.10), C.haze, (hB / 18) * HZ_MAX));
+    s = rgbs(mix(mix(mix(lit(C.shadow, 0.60), C.water, 0.10), C.glow, 0.10),
+      C.haze, (hB / 18) * HZ_MAX));
     palCache[key] = s; return s;
   }
   /* the specular flash a sun-facing pane throws back */
@@ -88,7 +91,7 @@
   var shC = null, shX = null, SHS = 0.30;
   var skyKey = '', skyGrad = null, gndGrad = null, hazeGrad = null, vigGrad = null;
   var bloom = [];
-  var lastFrameMs = 0, frameSamples = [], PROF = null, GSTRIPS = 0, DBG = 0;
+  var lastFrameMs = 0, frameSamples = [], PROF = null, GSTRIPS = 0, DBG = 0, FRAMEN = 0;
   var NPART = 0, NFILL = 0, NGRAD = 0;
   var TNOW = 0;
 
@@ -199,6 +202,9 @@
       var d = eye[2] / den;
       if (d < 8 || d > 26000) continue;
       var a2 = (1 - hazeAt(d)) * alphaMul;
+      /* the pattern dissolves with distance: at long range the strip seams
+         beat against the plank tile and the table reads as scanlines */
+      if (d > 2400) a2 *= clamp(1 - (d - 2400) / 2400, 0, 1);
       if (a2 < 0.02) continue;
       var kf = FOC / d;
       var A = kf * rgt[0], Bc = -kf * upv[0], Cc = kf * rgt[1], Dc = -kf * upv[1];
@@ -338,7 +344,7 @@
      and it is the actual text of the docs, with the city standing on it. */
   function drawPrint() {
     if (!paper || !paper.lines.length) return;
-    var L = paper.lines, i, drawnText = 0, budget = 110, bars = 0;
+    var L = paper.lines, i, drawnText = 0, budget = 150, bars = 0;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
     ctx.beginPath();
@@ -374,7 +380,7 @@
       ctx.transform(uX, uY, vX, vY, sx, sy);
       var k = ln.size / 100;
       ctx.scale(k, k);
-      ctx.globalAlpha = clamp(1 - hazeAt(depthOf(ln.x, ln.y, 0)), 0.15, 1) * (ln.kind === 'h' ? 0.55 : 0.36);
+      ctx.globalAlpha = clamp(1 - hazeAt(depthOf(ln.x, ln.y, 0)), 0.15, 1) * (ln.kind === 'h' ? 0.62 : 0.40);
       ctx.fillStyle = rgbs(ln.kind === 'h' ? mix(C.print, C.ink, 0.5) : C.print);
       ctx.font = (ln.kind === 'h' ? '600 100px "Source Serif 4", Georgia, serif'
         : ln.kind === 's' ? '600 100px "Archivo Narrow", Arial, sans-serif'
@@ -385,7 +391,7 @@
       ctx.globalAlpha = 1;
     }
     if (bars) {
-      ctx.fillStyle = rgbas(C.print, 0.42);
+      ctx.fillStyle = rgbas(C.print, 0.50);
       ctx.fill();
     }
 
@@ -489,7 +495,8 @@
       var lx0 = gpos(d.gx0) - P * 0.35, lx1 = gpos(d.gx1 + 1) + P * 0.35;
       var ly0 = gpos(d.gy0) - P * 0.35, ly1 = gpos(d.gy1 + 1) + P * 0.35;
       /* the plate first: the whole built block is made ground, not paper */
-      ctx.fillStyle = rgbas(mix(mix(C.earthHi, C.paperLo, 0.5), C.haze, hz), 0.30 + 0.16 * av);
+      ctx.fillStyle = rgbas(mix(mix(C.earthHi, C.paperLo, 0.5), C.haze, hz),
+        (0.30 + 0.16 * av) * (1 - hz * 0.7));
       if (sgQuad(d, lx0 - 4, ly0 - 4, lx1 + 4, ly1 + 4)) ctx.fill();
       /* the street strips, on every 4th grid line both ways */
       var vx = [], vy = [];
@@ -913,14 +920,17 @@
     var jag = b.jag && deco === 'ruin';
 
     ctx.beginPath();
+    var jagX = null, jagY = null;
     if (jag) {
       var st = 6, s2;
+      jagX = []; jagY = [];
       if (!pf(0, 0)) return; ctx.moveTo(px, py);
       if (!pf(1, 0)) return; ctx.lineTo(px, py);
       for (s2 = st; s2 >= 0; s2--) {
         var u = s2 / st;
         var wj = 0.62 + rnd01(r.h32 + j * 71, s2) * 0.38;
         if (!pf(u, wj)) return; ctx.lineTo(px, py);
+        jagX.push(px); jagY.push(py);
       }
       ctx.closePath();
     } else {
@@ -938,6 +948,17 @@
       ctx.fillStyle = g;
     } else ctx.fillStyle = faceCol(m, v, tB, hB, 2);
     ctx.fill();
+    /* the broken lip of a ruined wall: a darker seam of snapped brick along
+       the torn top, so the wall reads as masonry and not a paper cutout */
+    if (jagX && jagX.length > 2 && hpx > 24) {
+      ctx.beginPath();
+      ctx.moveTo(jagX[0], jagY[0]);
+      for (var jj2 = 1; jj2 < jagX.length; jj2++) ctx.lineTo(jagX[jj2], jagY[jj2]);
+      ctx.strokeStyle = faceCol(m, v, Math.max(0, tB - 4), hB, 1);
+      ctx.lineWidth = Math.max(1, hpx * 0.030);
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+    }
     if (r.hit.length < 16 && wpx > 2.2 && hpx > 2.2) r.hit.push([ax, ay, bx, by, cx2, cy2, dx2, dy2]);
 
     if (!lod || hpx < 12 || wpx < 6 || deco === 'plain') return;
@@ -1749,43 +1770,47 @@
 
   /* ---------------------------------------------------------- domes */
   function drawDome(r, dm, hB, quality) {
-    var i, nb = quality ? 7 : 4;
     var m = dm.m, v = 1;
     var d = depthOf(dm.cx, dm.cy, dm.z0 + dm.h * 0.5);
     if (dm.r * (FOC / d) < 1.2) return;
-    /* stacked latitude bands: cheap, and it reads as a real hemisphere.
-       A band the near plane cuts is skipped on its own, never taking the
-       rest of the dome with it, so no cap is ever left floating. */
-    for (i = nb - 1; i >= 0; i--) {
-      var t0 = i / nb, t1 = (i + 1) / nb;
-      var r0 = dm.r * cos(t0 * PI / 2), r1 = dm.r * cos(t1 * PI / 2);
-      var z0 = dm.z0 + dm.h * sin(t0 * PI / 2), z1 = dm.z0 + dm.h * sin(t1 * PI / 2);
-      var seg = quality ? 14 : 8, q, okb = true;
-      ctx.beginPath();
-      for (q = 0; q <= seg && okb; q++) {
-        var a = q / seg * TAU;
-        if (!proj(dm.cx + cos(a) * r0, dm.cy + sin(a) * r0, z0)) { okb = false; break; }
-        if (q === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    /* A true quad mesh with backface culling. The old stacked-ellipse bands
+       looked right from above, but seen from the street each ring showed its
+       underside as a saucer around the dome and the wall leaked through in
+       stripes between the bands. */
+    var nb = quality ? 7 : 4;
+    var seg = quality ? 16 : 10;
+    var j, q;
+    for (j = 0; j < nb; j++) {
+      var t0 = j / nb * PI / 2, t1 = (j + 1) / nb * PI / 2;
+      var r0 = dm.r * cos(t0), r1 = dm.r * cos(t1);
+      var z0 = dm.z0 + dm.h * sin(t0), z1 = dm.z0 + dm.h * sin(t1);
+      var ctm = cos((t0 + t1) / 2), stm = sin((t0 + t1) / 2);
+      for (q = 0; q < seg; q++) {
+        var a0 = q / seg * TAU, a1 = (q + 1) / seg * TAU, am = (a0 + a1) / 2;
+        /* the outward normal at the middle of this quad */
+        var nx = cos(am) * ctm, ny = sin(am) * ctm, nz = stm;
+        /* backface: from the surface point toward the eye */
+        var sxw = dm.cx + nx * dm.r, syw = dm.cy + ny * dm.r;
+        var szw = dm.z0 + dm.h * stm;
+        if (nx * (eye[0] - sxw) + ny * (eye[1] - syw) + nz * (eye[2] - szw) <= 0) continue;
+        var c0 = cos(a0), s0 = sin(a0), c1 = cos(a1), s1 = sin(a1);
+        if (!proj(dm.cx + c0 * r0, dm.cy + s0 * r0, z0)) continue; var q0x = px, q0y = py;
+        if (!proj(dm.cx + c1 * r0, dm.cy + s1 * r0, z0)) continue; var q1x = px, q1y = py;
+        if (!proj(dm.cx + c1 * r1, dm.cy + s1 * r1, z1)) continue; var q2x = px, q2y = py;
+        if (!proj(dm.cx + c0 * r1, dm.cy + s0 * r1, z1)) continue; var q3x = px, q3y = py;
+        ctx.beginPath();
+        ctx.moveTo(q0x, q0y); ctx.lineTo(q1x, q1y); ctx.lineTo(q2x, q2y); ctx.lineTo(q3x, q3y);
+        ctx.closePath();
+        var dot = nx * sunGnd[0] + ny * sunGnd[1];
+        var tB = Math.round(clamp((dot * 0.5 + 0.42 + nz * 0.34), 0, 1) * 8);
+        var col = faceCol(m, v, tB, hB, nz > 0.80 ? 0 : 2);
+        ctx.fillStyle = col;
+        ctx.fill();
+        /* a hairline stroke of the same paint hides the antialiased seams */
+        ctx.strokeStyle = col;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
       }
-      if (okb) for (q = seg; q >= 0; q--) {
-        var a2 = q / seg * TAU;
-        if (!proj(dm.cx + cos(a2) * r1, dm.cy + sin(a2) * r1, z1)) { okb = false; break; }
-        ctx.lineTo(px, py);
-      }
-      if (!okb) continue;
-      ctx.closePath();
-      if (proj(dm.cx, dm.cy, z0)) {
-        var mx = px, my = py;
-        if (proj(dm.cx + sunGnd[0] * dm.r, dm.cy + sunGnd[1] * dm.r, z0)) {
-          var gx = px, gy = py;
-          var g = ctx.createLinearGradient(gx, gy - (dm.h * pS) * 0.5, mx * 2 - gx, my * 2 - gy);
-          g.addColorStop(0, faceCol(m, v, 8, hB, 5));
-          g.addColorStop(0.55, faceCol(m, v, 5, hB, 2));
-          g.addColorStop(1, faceCol(m, v, 1, hB, 6));
-          ctx.fillStyle = g;
-        } else ctx.fillStyle = faceCol(m, v, 5, hB, 2);
-      } else ctx.fillStyle = faceCol(m, v, 5, hB, 2);
-      ctx.fill();
     }
     /* meridian ribs */
     if (quality && dm.r * (FOC / d) > 14) {
@@ -1942,13 +1967,23 @@
     }
     var dsx = sunSX - sx, dsy = sunSY - sy;
     var dl = Math.hypot(dsx, dsy) || 1;
-    ctx.globalAlpha = 1 - hz * 0.55;
+    /* deep in the haze a canopy fades at the pace of the walls around it,
+       so a far quarter never reads as orphan trees on bare paper */
+    var fade = hz > 0.55 ? clamp(1 - (hz - 0.55) / 0.32, 0, 1) : 1;
+    if (fade < 0.04) return;
+    ctx.globalAlpha = (1 - hz * 0.55) * fade;
     ctx.drawImage(SPR.canopy, sx - R, sy - R * 0.90, R * 2, R * 1.80);
-    ctx.globalAlpha = (1 - hz * 0.7) * 0.92;
+    /* a big close canopy is three masses, not one blurred ball */
+    if (R > 64) {
+      ctx.globalAlpha = (1 - hz * 0.55) * fade * 0.9;
+      ctx.drawImage(SPR.canopy, sx - R * 0.42 - R * 0.62, sy - R * 0.30 - R * 0.55, R * 1.24, R * 1.10);
+      ctx.drawImage(SPR.canopy, sx + R * 0.38 - R * 0.55, sy - R * 0.16 - R * 0.50, R * 1.10, R * 1.00);
+    }
+    ctx.globalAlpha = (1 - hz * 0.7) * 0.92 * fade;
     ctx.drawImage(SPR.canopyLit, sx + (dsx / dl) * R * 0.26 - R * 0.56, sy - R * 0.36 - R * 0.50,
       R * 1.12, R * 1.00);
     ctx.globalAlpha = 1;
-    if (hz > 0.14) spriteAt(SPR.haze, sx, sy - R * 0.1, R * 1.02, R * 0.95, hz * 0.9);
+    if (hz > 0.14) spriteAt(SPR.haze, sx, sy - R * 0.1, R * 1.02, R * 0.95, hz * 0.9 * fade);
   }
 
   function drawScrub() {
@@ -1959,18 +1994,19 @@
       var d = depthOf(s.x, s.y, s.z);
       if (d < 20) continue;
       var hz = hazeAt(d);
-      if (hz > 0.9) continue;
+      if (hz > 0.82) continue;
+      var fade = hz > 0.55 ? clamp(1 - (hz - 0.55) / 0.32, 0, 1) : 1;
       if (!proj(s.x, s.y, s.z)) continue;
       var R = s.r * pS;
       if (R < 0.7) continue;
       if (R > 130) R = 130;
       drawn++;
-      ctx.globalAlpha = (1 - hz * 0.6) * 0.9;
+      ctx.globalAlpha = (1 - hz * 0.6) * 0.9 * fade;
       ctx.drawImage(SPR.canopy, px - R, py - R * 0.8, R * 2, R * 1.6);
-      ctx.globalAlpha = (1 - hz * 0.75) * 0.75;
+      ctx.globalAlpha = (1 - hz * 0.75) * 0.75 * fade;
       ctx.drawImage(SPR.canopyLit, px - R * 0.5, py - R * 0.85, R * 1.0, R * 0.85);
       ctx.globalAlpha = 1;
-      if (hz > 0.14) spriteAt(SPR.haze, px, py, R * 1.05, R * 0.9, hz * 0.85);
+      if (hz > 0.14) spriteAt(SPR.haze, px, py, R * 1.05, R * 0.9, hz * 0.85 * fade);
     }
   }
 
@@ -2041,12 +2077,17 @@
       if (!(d >= 12)) continue;
       var hz = hazeAt(d);
       if (hz > 0.82) continue;
-      if (p.k !== 'bird' && (FOC / d) * 6 < 1.6 && p.k !== 'pencil' && p.k !== 'ruler') continue;
+      if (p.k !== 'bird' && (FOC / d) * 6 < 1.6) continue;
       if (taken++ > 720) break;
       p._d = d; p._hz = hz;
       propsVis.push(p);
     }
     propsVis.sort(function (a, b) { return b._d - a._d; });
+  }
+  /* every standing prop takes the ground with a small contact shadow:
+     without it a van, a stall or a person floats over the pavement */
+  function propAO(p, r, hz) {
+    groundSprite(SPR.ao, p.x, p.y, r, 0.30 * (1 - hz));
   }
   function drawProp(p) {
     var d = p._d, hz = p._hz, s = FOC / d;
@@ -2054,18 +2095,16 @@
     var hB = Math.round(hz / HZ_MAX * 18); if (hB > 18) hB = 18; if (hB < 0) hB = 0;
     switch (p.k) {
         case 'lamp':  drawLamp(p, s, hz, hB); break;
-        case 'bench': drawBench(p, s, hB); break;
-        case 'boll':  miniBox(p.x, p.y, 0.55, 0.55, 0, 2.4, 0, M_DARK, hB); break;
-        case 'van':   drawVan(p, s, hB); break;
-        case 'stall': drawStall(p, s, hB); break;
+        case 'bench': propAO(p, 4.2, hz); drawBench(p, s, hB); break;
+        case 'boll':  propAO(p, 1.3, hz); miniBox(p.x, p.y, 0.55, 0.55, 0, 2.4, 0, M_DARK, hB); break;
+        case 'van':   propAO(p, 6.4, hz); drawVan(p, s, hB); break;
+        case 'stall': propAO(p, p.s * 0.85, hz); drawStall(p, s, hB); break;
         case 'tree':  drawPropTree(p, hz); break;
         case 'well':  drawWell(p, hB); break;
         case 'wash':  drawWash(p, s, hB); break;
-        case 'ped':   drawPed(p, s, hB); break;
-        case 'cafe':  drawCafe(p, s, hB); break;
+        case 'ped':   propAO(p, 1.5, hz); drawPed(p, s, hB); break;
+        case 'cafe':  propAO(p, 3.6, hz); drawCafe(p, s, hB); break;
         case 'boat':  drawBoat(p, s, hB); break;
-      case 'pencil': drawPencil(p, hB); break;
-      case 'ruler':  drawRuler(p, hB); break;
     }
   }
 
@@ -2091,6 +2130,26 @@
     miniBox(p.x, p.y, 3.6, 1.4, 0.3, 1.8, p.yaw, M_WOOD, hB);
     miniBox(p.x, p.y, 2.7, 0.9, 1.0, 1.8, p.yaw, M_DARK, hB);
     miniBox(p.x + cos(p.yaw) * 0.6, p.y + sin(p.yaw) * 0.6, 0.4, 0.4, 1.8, 3.2, p.yaw, M_SHUT, hB);
+  }
+  /* The model-maker's tools lie flat on the table, drawn right after the
+     sheet so they can never land on top of a district. Each takes the
+     table with a run of soft contact shadows along its length. */
+  function drawTools() {
+    var i, j;
+    for (i = 0; i < tools.length; i++) {
+      var t = tools[i];
+      var d = depthOf(t.x, t.y, 2);
+      if (d < 16) continue;
+      var hz = hazeAt(d);
+      if (hz > 0.85) continue;
+      var hB = Math.round(hz / HZ_MAX * 18); if (hB > 18) hB = 18; if (hB < 0) hB = 0;
+      var ca = cos(t.yaw), sa = sin(t.yaw);
+      for (j = -2; j <= 2; j++) {
+        groundSprite(SPR.ao, t.x + ca * t.len * j * 0.4, t.y + sa * t.len * j * 0.4,
+          t.len * 0.30, 0.22 * (1 - hz));
+      }
+      if (t.k === 'pencil') drawPencil(t, hB); else drawRuler(t, hB);
+    }
   }
   /* the model-maker's pencil, lying just off the torn edge */
   function drawPencil(p, hB) {
@@ -2119,16 +2178,18 @@
     if (!proj(p.x, p.y, p.h)) return; var x1 = px, y1 = py;
     ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1);
     ctx.strokeStyle = faceCol(M_STEEL, 1, 4, hB, 2);
-    ctx.lineWidth = Math.max(0.5, 0.75 * s * 1.4); ctx.lineCap = 'round';
+    ctx.lineWidth = Math.max(0.5, Math.min(0.75 * s * 1.4, 7)); ctx.lineCap = 'round';
     ctx.stroke();
-    var rr = Math.max(1.0, 1.5 * s);
+    /* the globe is a small glass lantern: its screen size is capped, or a
+       near lamp swells into a paper sun that dwarfs the street */
+    var rr = clamp(1.5 * s, 1.0, 9);
     ctx.beginPath(); ctx.arc(x1, y1 - rr * 0.5, rr, 0, TAU);
     ctx.fillStyle = litCol(hB); ctx.fill();
     /* the halo goes down with the lamp, not at the end of the frame, so a
        wall in front of the lamp also stands in front of its glow */
     if (rr > 1.4) {
       ctx.globalCompositeOperation = 'lighter';
-      spriteAt(SPR.glint, x1, y1 - rr * 0.5, rr * 5, rr * 5, 0.26 * (1 - hz));
+      spriteAt(SPR.glint, x1, y1 - rr * 0.5, Math.min(rr * 5, 42), Math.min(rr * 5, 42), 0.26 * (1 - hz));
       ctx.globalCompositeOperation = 'source-over';
     }
   }
@@ -2139,9 +2200,19 @@
   }
   function drawVan(p, s, hB) {
     var m = M_VAN0 + (p.hue % 4);
+    var ca = cos(p.yaw), sa = sin(p.yaw);
     miniBox(p.x, p.y, 4.6, 2.0, 0.7, 4.4, p.yaw, m, hB);
-    miniBox(p.x + cos(p.yaw) * 3.2, p.y + sin(p.yaw) * 3.2, 1.6, 2.0, 4.4, 5.6, p.yaw, m, hB);
+    miniBox(p.x + ca * 3.2, p.y + sa * 3.2, 1.6, 2.0, 4.4, 5.6, p.yaw, m, hB);
     miniBox(p.x, p.y, 4.7, 2.1, 0.0, 0.7, p.yaw, M_DARK, hB);
+    /* close enough to be a vehicle, not a crate: windscreen and wheels */
+    if (s * 4.6 > 26) {
+      miniBox(p.x + ca * 4.55, p.y + sa * 4.55, 0.35, 1.7, 4.5, 5.5, p.yaw, M_GLASS, hB);
+      var wi;
+      for (wi = -1; wi <= 1; wi += 2) {
+        miniBox(p.x + ca * 3.0 - sa * wi * 2.05, p.y + sa * 3.0 + ca * wi * 2.05, 0.85, 0.28, 0, 1.5, p.yaw, M_DARK, hB);
+        miniBox(p.x - ca * 3.0 - sa * wi * 2.05, p.y - sa * 3.0 + ca * wi * 2.05, 0.85, 0.28, 0, 1.5, p.yaw, M_DARK, hB);
+      }
+    }
   }
   function drawStall(p, s, hB) {
     var q, m = M_STALL0 + (p.hue % 3);
@@ -2178,18 +2249,29 @@
     }
   }
   function drawPropTree(p, hz) {
+    var fade = hz > 0.55 ? clamp(1 - (hz - 0.55) / 0.32, 0, 1) : 1;
+    if (fade < 0.04) return;
+    /* the tree takes the ground: a street tree without its shadow floats */
+    groundSprite(SPR.ao, p.x, p.y, p.r * 1.35, 0.26 * (1 - hz) * fade);
+    groundSprite(SPR.shadow, p.x - sunGnd[0] * p.r * 0.8, p.y - sunGnd[1] * p.r * 0.8,
+      p.r * 1.1, 0.20 * (1 - hz) * fade);
     if (!proj(p.x, p.y, 0)) return; var x0 = px, y0 = py;
     if (!proj(p.x, p.y, p.z)) return;
     var R = p.r * pS;
     if (R < 0.7) return;
     ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(px, py);
-    ctx.strokeStyle = rgbas(mix(mix(C.earth, C.shadow, 0.5), C.haze, hz), 0.9);
+    ctx.strokeStyle = rgbas(mix(mix(C.earth, C.ink, 0.45), C.haze, hz), 0.9 * fade);
     ctx.lineWidth = Math.max(0.7, R * 0.16); ctx.stroke();
     var sx = px, sy = py;
     var dsx = sunSX - sx, dsy = sunSY - sy, dl = Math.hypot(dsx, dsy) || 1;
-    ctx.globalAlpha = 1 - hz * 0.55;
+    ctx.globalAlpha = (1 - hz * 0.55) * fade;
     ctx.drawImage(SPR.canopy, sx - R, sy - R * 1.15, R * 2, R * 1.9);
-    ctx.globalAlpha = (1 - hz * 0.7) * 0.9;
+    if (R > 64) {
+      ctx.globalAlpha = (1 - hz * 0.55) * fade * 0.9;
+      ctx.drawImage(SPR.canopy, sx - R * 0.44 - R * 0.60, sy - R * 0.72 - R * 0.52, R * 1.2, R * 1.05);
+      ctx.drawImage(SPR.canopy, sx + R * 0.40 - R * 0.52, sy - R * 0.52 - R * 0.48, R * 1.04, R * 0.95);
+    }
+    ctx.globalAlpha = (1 - hz * 0.7) * 0.9 * fade;
     ctx.drawImage(SPR.canopyLit, sx + (dsx / dl) * R * 0.28 - R * 0.55, sy - R * 0.66 - R * 0.48, R * 1.1, R * 0.96);
     ctx.globalAlpha = 1;
   }
@@ -2244,9 +2326,13 @@
   }
 
   /* ---------------------------------------------------------- labels */
-  function drawLabels() {
-    var i, shown = 0;
-    var picks = [];
+  function rectsHit(a, b) {
+    return a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0;
+  }
+  function drawLabels(avoid) {
+    var i, j, shown = 0;
+    var picks = [], placed = [];
+    for (j = 0; j < (avoid ? avoid.length : 0); j++) placed.push(avoid[j]);
     for (i = 0; i < dists.length; i++) {
       var d = dists[i];
       var dd = depthOf(d.x, d.y, 0);
@@ -2259,16 +2345,18 @@
     }
     picks.sort(function (a, b) { return b.scr - a.scr; });
     ctx.textAlign = 'center';
+    ctx.font = '600 11px "Archivo Narrow", Arial Narrow, sans-serif';
     for (i = 0; i < picks.length && shown < 5; i++) {
-      var q = picks[i], ok = true;
-      for (var j = 0; j < i; j++) {
-        if (picks[j].used && abs(picks[j].x - q.x) < 150 && abs(picks[j].y - q.y) < 30) { ok = false; break; }
-      }
-      if (!ok) continue;
-      q.used = 1; shown++;
+      var q = picks[i];
       var name = q.d.name.length > 30 ? q.d.name.slice(0, 29) + '…' : q.d.name;
-      ctx.font = '600 11px "Archivo Narrow", Arial Narrow, sans-serif';
       var tw = ctx.measureText(name).width + 18;
+      /* the pill's real footprint decides collisions, with breathing room,
+         so two long names never sit shingled over one another */
+      var rect = { x0: q.x - tw / 2 - 8, y0: q.y - 13, x1: q.x + tw / 2 + 8, y1: q.y + 13 };
+      var ok = true;
+      for (j = 0; j < placed.length; j++) if (rectsHit(rect, placed[j])) { ok = false; break; }
+      if (!ok) continue;
+      placed.push(rect); shown++;
       var a = clamp(1 - hazeAt(q.dd) * 0.9, 0.45, 1);
       ctx.globalAlpha = a * 0.84;
       ctx.fillStyle = 'rgba(250,240,220,0.92)';
@@ -2290,29 +2378,43 @@
     ctx.closePath();
   }
 
-  function drawMarker(r, sel) {
-    if (!r || r.wx === undefined) return;
-    /* anchored on the roof itself, so the leader always touches the
-       building it names, at any zoom */
-    if (!proj(r.wx, r.wy, r.solidz)) return;
+  /* Where the marker pill would sit, or null when it should not be shown:
+     the building is off frame, too small in the frame to be the subject, or
+     walled off behind something nearer. Solved before the labels are laid,
+     so a district label never shingles under the pill. */
+  function markerRect(r, sel) {
+    if (!r || r.wx === undefined || r._vstamp !== FRAMEN) return null;
+    if (r._scr < 18) return null;
+    if (!proj(r.wx, r.wy, r.solidz)) return null;
     var ax2 = px, ay2 = py;
-    if (ax2 < -80 || ax2 > W + 80 || ay2 < -60 || ay2 > H + 60) return;
+    if (ax2 < -80 || ax2 > W + 80 || ay2 < -60 || ay2 > H + 60) return null;
+    /* what actually stands at the anchor: if a nearer building painted over
+       it, the subject is hidden and a pill would float on a stranger's wall */
+    var under = pick(ax2, Math.min(H - 2, ay2 + 2));
+    if (under && under !== r.slug) {
+      var o = rec[under];
+      if (o && o._vstamp === FRAMEN && o._d < r._d * 0.985) return null;
+    }
     var name = title(r.p);
     if (name.length > 34) name = name.slice(0, 33) + '…';
     ctx.font = '700 12.5px "Archivo", Arial, sans-serif';
     var tw = ctx.measureText(name).width + 22;
-    /* the pill floats above the roof and is clamped inside the canvas,
-       never under the header bar or off an edge */
     var x = clamp(ax2, tw / 2 + 8, W - tw / 2 - 8);
     var yc2 = clamp(ay2 - 27, 17, H - 24);
-    ctx.strokeStyle = sel ? rgbs(C.sun) : 'rgba(250,240,220,0.85)';
-    ctx.lineWidth = sel ? 2 : 1.4;
-    ctx.beginPath(); ctx.moveTo(x, yc2 + 10); ctx.lineTo(ax2, ay2); ctx.stroke();
-    ctx.fillStyle = sel ? rgbs(C.sun) : 'rgba(250,240,220,0.94)';
-    rrect(x - tw / 2, yc2 - 10.5, tw, 21, 10); ctx.fill();
+    return { x0: x - tw / 2, y0: yc2 - 10.5, x1: x + tw / 2, y1: yc2 + 10.5,
+             x: x, y: yc2, tw: tw, ax: ax2, ay: ay2, name: name, sel: sel };
+  }
+  function drawMarker(mr) {
+    if (!mr) return;
+    ctx.strokeStyle = mr.sel ? rgbs(C.sun) : 'rgba(250,240,220,0.85)';
+    ctx.lineWidth = mr.sel ? 2 : 1.4;
+    ctx.beginPath(); ctx.moveTo(mr.x, mr.y + 10); ctx.lineTo(mr.ax, mr.ay); ctx.stroke();
+    ctx.fillStyle = mr.sel ? rgbs(C.sun) : 'rgba(250,240,220,0.94)';
+    ctx.font = '700 12.5px "Archivo", Arial, sans-serif';
+    rrect(mr.x - mr.tw / 2, mr.y - 10.5, mr.tw, 21, 10); ctx.fill();
     ctx.fillStyle = rgbs(C.ink);
     ctx.textAlign = 'center';
-    ctx.fillText(name, x, yc2 + 4);
+    ctx.fillText(mr.name, mr.x, mr.y + 4);
     ctx.textAlign = 'left';
   }
 
@@ -2373,6 +2475,7 @@
   function render() {
     var t0 = performance.now();
     TNOW = t0;
+    FRAMEN++;
     updateCam();
     /* a tooltip is anchored to a screen point: once the camera has moved
        from where it was raised, what stands under the cursor is re-read,
@@ -2399,6 +2502,7 @@
       groundSprite(SPR.warm, paper.cx, paper.cy, (paper.x1 - paper.x0) * 0.85, 0.10, W * W * 6);
       ctx.globalCompositeOperation = 'source-over';
     }
+    drawTools();
     drawGroundDetail(); _m('ground');
     drawRoads(); _m('roads');
     drawWater(); _m('water');
@@ -2432,6 +2536,7 @@
       rv._sil = sil;
       if (occCovered(sil.x0 - 2, sil.y0 - 2, sil.x1 + 2, sil.y1 + 2)) continue;
       rv._keep = 1;
+      rv._vstamp = FRAMEN;
       keep.push(rv);
       if (rv.arch !== 'garden' && !rv.derelict &&
           (sil.ix1 - sil.ix0) > OCCS && (sil.iy1 - sil.iy0) > OCCS) {
@@ -2463,16 +2568,28 @@
     var pvi = 0;
     for (i = 0; i < vis.length; i++) {
       var rb2 = vis[i];
-      var dnear = rb2._d - Math.max(rb2.hw, rb2.hd) * 0.9;
+      /* the exact near bound of the building's volume along the view axis:
+         nothing with a depth beyond it can stand in front of any part of the
+         building, so everything beyond it is painted first. The old fudge
+         (0.9 of the widest half-extent) under-reached at glancing angles and
+         let plaza props paint on top of the wall that hides them. */
+      var caB = cos(rb2.yaw), saB = sin(rb2.yaw);
+      var fu = abs(fwd[0] * caB + fwd[1] * saB), fv = abs(fwd[1] * caB - fwd[0] * saB);
+      var dnear = rb2._d - rb2.hw * fu - rb2.hd * fv - Math.max(0, SE * rb2.topz * 0.6) - 2;
       while (pvi < propsVis.length && propsVis[pvi]._d > dnear) drawProp(propsVis[pvi++]);
       drawBuilding(rb2, rb2._q);
     }
     while (pvi < propsVis.length) drawProp(propsVis[pvi++]);
     _m('blds'); _m('props');
 
-    drawLabels();
-    if (cur && rec[cur] && rec[cur].parts) drawMarker(rec[cur], true);
-    if (hovered && hovered !== cur && rec[hovered]) drawMarker(rec[hovered], false);
+    var mrCur = (cur && rec[cur] && rec[cur].parts) ? markerRect(rec[cur], true) : null;
+    var mrHov = (hovered && hovered !== cur && rec[hovered]) ? markerRect(rec[hovered], false) : null;
+    var avoid = [];
+    if (mrCur) avoid.push(mrCur);
+    if (mrHov) avoid.push(mrHov);
+    drawLabels(avoid);
+    drawMarker(mrCur);
+    drawMarker(mrHov);
 
     if (bloom.length) {
       ctx.globalCompositeOperation = 'lighter';

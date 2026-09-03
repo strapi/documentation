@@ -347,10 +347,12 @@
     var pw = n[1] ? along * 1.02 : 9.6, pd = n[0] ? along * 1.02 : 9.6;
     slab(V, offx, offy, pw, pd, 5.1 + bh * 0.86, 5.1 + bh * 0.98, M_TRIM);
     gable(V, offx, offy, pw, pd, 5.1 + bh * 0.98, 0, Math.min(pw, pd) * 0.72, n[1] ? 0 : 1, M_TRIM);
-    /* the drum, the dome, the lantern */
+    /* the drum, the dome, the lantern. The drum cornice is turned round,
+       never square: a square slab seen corner-on reads as a saucer
+       slicing through the dome. */
     var dr = Math.min(bw, bd) * 0.34;
     cyl(V, 0, 0, dr, cz + 3.0, cz + 3.0 + dr * 0.95, mi, { pilaster: 1, lit: lf });
-    slab(V, 0, 0, dr * 2.2, dr * 2.2, cz + 3.0 + dr * 0.95, cz + 4.4 + dr * 0.95, M_TRIM);
+    cyl(V, 0, 0, dr * 1.12, cz + 3.0 + dr * 0.95, cz + 4.4 + dr * 0.95, M_TRIM);
     var dz = cz + 4.4 + dr * 0.95;
     dome(V, 0, 0, dr * 1.06, dz, dr * 1.22, M_COPPER);
     cyl(V, 0, 0, dr * 0.28, dz + dr * 1.18, dz + dr * 1.62, M_TRIM, { flute: 1 });
@@ -391,7 +393,7 @@
       }
     }
     /* the tarpaulin, lashed over a corner of the top deck */
-    box(V, -w * 0.20, d * 0.16, w * 0.34, d * 0.30, topZ, topZ + 1.2, M_DARK, { deco: 'plain' });
+    box(V, -w * 0.22, d * 0.18, w * 0.26, d * 0.22, topZ, topZ + 1.1, M_TARP, { deco: 'plain' });
     /* the ladder up the front face, ground to the finished storeys */
     var lfn = FN[fr], ldir = [-lfn[1], lfn[0]];
     var lox = lfn[0] * (w / 2 + 2.4) + ldir[0] * 6, loy = lfn[1] * (d / 2 + 2.4) + ldir[1] * 6;

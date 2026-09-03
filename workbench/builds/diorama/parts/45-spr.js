@@ -276,12 +276,15 @@
 
     /* the model-maker's tools, laid on the table beside the torn edge: an
        oversized pencil in the near foreground and a ruler along the far
-       side. First in the prop list, so the draw budget never drops them. */
-    props.unshift(
+       side. They lie flat on the table, so they are drawn right after the
+       sheet, never through the depth-sorted prop stream: a long flat stick
+       sorted by its midpoint would land on top of a district at grazing
+       angles. */
+    tools = [
       { k: 'pencil', x: paper.cx - W0 * 0.16, y: y0 - mx * 0.62,
         yaw: 0.12, len: W0 * 0.155 },
-      { k: 'ruler', x: x1 + mx * 0.60, y: paper.cy - H0 * 0.06,
-        yaw: PI / 2 + 0.07, len: H0 * 0.20 });
+      { k: 'ruler', x: x1 + mx * 0.80, y: paper.cy - H0 * 0.06,
+        yaw: PI / 2 + 0.07, len: H0 * 0.17 }];
   }
   function pushWrapped(out, text, n) {
     var words = String(text || '').split(/\s+/), line = '', i;
