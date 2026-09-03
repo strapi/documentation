@@ -676,10 +676,15 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
-          # Pass router results to Sonnet (only full-complexity PRs)
+          # Pass router results to Sonnet. The comment here used to claim "only
+          # full-complexity PRs" while handing over the whole file, and the
+          # Drafter prompt filters on `decision` alone — so a run with both micro
+          # and full targets would have had Sonnet redraft the micro PRs Haiku
+          # had just opened. Filter here rather than trusting the prompt, and
+          # exclude anything that already has a doc PR.
           {
             echo "router_results<<ROUTER_EOF"
-            cat "$RESULTS_FILE"
+            jq '{prs: [.prs[] | select(.decision == "has_targets" and .complexity == "full" and (.doc_pr // "") == "")]}' "$RESULTS_FILE"
             echo "ROUTER_EOF"
           } >> $GITHUB_OUTPUT
 
