@@ -532,6 +532,14 @@ function bakeAtlas() {
     px(g, 4, 3, 3, 3, PAL.WH); px(g, 4, 8, 3, 2, PAL.RD);
   });
   bakeSprite('smoke', 3, 3, (g) => { px(g, 0, 0, 3, 3, 'rgba(210,206,220,0.8)'); px(g, 0, 2, 1, 1, 'rgba(160,158,175,0.8)'); }, true);
+  // estate agent's placard: FOR LEASE on a post, planted by boarded shopfronts
+  bakeSprite('lease', 25, 20, (g) => {
+    px(g, 1, 1, 23, 14, PAL.WH);
+    px(g, 1, 1, 23, 1, PAL.RD); px(g, 1, 14, 23, 1, PAL.RD);
+    drawText3x5(g, 7, 3, 'FOR', PAL.RD);
+    drawText3x5(g, 3, 9, 'LEASE', PAL.RD);
+    px(g, 11, 15, 2, 5, PAL.WD1);
+  });
   // sitting dog, tail at rest / tail up (wag)
   bakeSprite('dog0', 7, 6, (g) => {
     px(g, 1, 2, 3, 3, PAL.WD3); px(g, 3, 1, 2, 2, PAL.WD3); px(g, 4, 0, 1, 1, PAL.WD1);
@@ -992,6 +1000,14 @@ function bakeLayers() {
       }
       case T.LOT: {
         diamond(gq, cx, cy, PAL.P1);
+        // derelict ground: cracks, weeds and the odd bit of rubble
+        for (let k = 0; k < 3; k++) {
+          const hh = h32(tx, ty, 20 + k);
+          const yy = hh % 6 + 1, xx = (hh >> 4) % DROWS[yy] - (DROWS[yy] >> 1);
+          const kind = hh % 5;
+          gq.fillStyle = kind < 2 ? PAL.G1 : kind === 2 ? PAL.G2 : kind === 3 ? PAL.A1 : PAL.S2;
+          gq.fillRect(cx + xx, cy + yy, kind < 3 ? 1 : 2, 1);
+        }
         break;
       }
     }
@@ -1036,7 +1052,15 @@ function placeStatics() {
       if (sp.flagPt) flags.push({ x: wx + sp.flagPt.lx, y: wy2 + sp.flagPt.ly - 9, ph: rng() * 7 });
       buildings.push(b);
       statics.push({ cv: baked.cv, wx, wy: wy2, depth: b.depth, b });
-      if (sp.style === 'boarded') catBudgetSlugs.push(b);
+      if (sp.style === 'boarded') {
+        catBudgetSlugs.push(b);
+        // estate agent's placard out front -- only every few shopfronts, or a
+        // dying block turns into a wall of boards
+        if (catBudgetSlugs.length % 4 === 1) {
+          const lx = lot.gx + sp.fw - 0.3, ly = lot.gy + sp.fd + 0.35;
+          statics.push({ cv: SPR.lease, wx: Math.round(isoX(lx, ly)) - 12, wy: Math.round(isoY(lx, ly)) + HH - 20, depth: lx + ly + 0.3 });
+        }
+      }
     }
   }
 
@@ -1105,10 +1129,16 @@ function placeStatics() {
     }
     // crane for migration quarters
     if (q.migration) {
+      const openish = (t2) => t2 === T.PAVE || t2 === T.PLAZA || t2 === T.GRASS;
       outer:
       for (let yy = 1; yy < q.qh - 1; yy++) for (let xx = 1; xx < q.qw - 1; xx++) {
         const tx = q.qx + xx, ty = q.qy + yy;
-        if (grid[G(tx, ty)] === T.PAVE || grid[G(tx, ty)] === T.PLAZA) { addProp('crane', tx, ty, 0.7); break outer; }
+        // the mast needs an open yard to its south-east or it hides behind a
+        // building and the jib reads as floating
+        if ((grid[G(tx, ty)] === T.PAVE || grid[G(tx, ty)] === T.PLAZA) &&
+            openish(grid[G(tx + 1, ty)]) && openish(grid[G(tx, ty + 1)]) && openish(grid[G(tx + 1, ty + 1)])) {
+          addProp('crane', tx, ty, 0.7); break outer;
+        }
       }
     }
     // laundry lines in the back lane
