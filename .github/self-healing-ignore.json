@@ -1214,6 +1214,26 @@
       "number": 27312,
       "reason": "Router: Internal bug fix for Review Workflows when enterprise cms-content-releases feature is disabled. Adds error handling via optional chaining. This is implementation-level safety fix, not user-facing documentation.",
       "added": "2026-09-02"
+    },
+    {
+      "number": 27430,
+      "reason": "Router: Internal security fix to the sendmail provider. The disableFileAccess and disableUrlAccess flags are automatically applied and not user-configurable. No public API or user-facing behavior changes that require documentation.",
+      "added": "2026-09-03"
+    },
+    {
+      "number": 27449,
+      "reason": "Router: UX improvement to Media Library that preserves scroll position when navigating between folders. This is an internal implementation detail that improves the user experience without changing any public APIs or requiring configuration. Users will notice the improvement but don't need new documentation to use the feature.",
+      "added": "2026-09-03"
+    },
+    {
+      "number": 27496,
+      "reason": "Router: Bug fix for Media Library focal point input fields. The fix improves field behavior (proper value binding and validation feedback) but doesn't change the user-facing API or introduce new capabilities. This is a correctness improvement for existing functionality.",
+      "added": "2026-09-03"
+    },
+    {
+      "number": 27508,
+      "reason": "Router: Bug fix for Media Library replace action. Adds MIME type filtering to the file picker to prevent uploading incompatible file types. This is an internal consistency fix that prevents invalid state without changing user-facing APIs.",
+      "added": "2026-09-03"
     }
   ]
 }
