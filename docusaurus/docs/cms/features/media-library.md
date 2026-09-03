@@ -840,6 +840,18 @@ The [Media Library settings](#configuring-settings) also allow generating metada
 <StrapiAiCredits />
 :::
 
+### Using the right-click context menu
+
+In addition to the **Add new assets** button and folder creation via the sidebar, you can use the right-click context menu to quickly create folders and upload files. Right-click in the empty space of the Media Library assets area (on the list, the empty space below the last row, the page header band, or the padding around them) to reveal the context menu with the following options:
+
+- **New folder** — Creates a new folder in the currently open folder
+- **File upload** — Opens the file upload dialog to select files from your computer
+- **File upload from URL** — Opens the URL input dialog to upload files from web URLs
+
+:::tip
+The context menu is only available if you have permission to create assets. Individual asset cards, folder cards, and table rows retain the browser's default right-click menu.
+:::
+
 ### Managing individual assets {#managing-assets}
 
 The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped.
