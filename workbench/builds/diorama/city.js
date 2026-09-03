@@ -2600,7 +2600,7 @@
     var hB = Math.round(hz / HZ_MAX * 18); if (hB > 18) hB = 18; if (hB < 0) hB = 0;
     var foot = Math.max(r.hw, r.hd);
     var scr = r.topz * (FOC / r._d);
-    var maxLvl = scr > 210 ? 2 : scr > 74 ? 1 : 0;
+    var maxLvl = scr > 280 ? 2 : scr > 74 ? 1 : 0;
     if (!quality && maxLvl > 1) maxLvl = 1;
 
     /* the ground takes the building. A big soft blit is expensive, so it is
@@ -2762,7 +2762,7 @@
     var topMy = (cy2 + dy2) / 2, botMy = (ay + by) / 2;
     var topMx = (cx2 + dx2) / 2, botMx = (ax + bx) / 2;
     var hpx = abs(botMy - topMy), wpx = Math.hypot(bx - ax, by - ay);
-    if (lod && hpx > 16) {
+    if (lod && hpx > 30 && wpx > 12) {
       var g = ctx.createLinearGradient(topMx, topMy, botMx, botMy);
       g.addColorStop(0, faceCol(m, v, tB, hB, 0));
       g.addColorStop(0.62, faceCol(m, v, tB, hB, 2));
@@ -2987,6 +2987,12 @@
     var nf = Math.max(1, Math.round((fh - g1 * fh) / STOREY));
     if (nf > 40) nf = 40;
     var bays = bayJit(r, fw), i, k;
+    /* windows are drawn at the size of the pixels, not of the world: past
+       the range where a storey is 14px the floors merge two into one, the
+       way a photograph of a model would resolve them. Cuts a giant tower's
+       face from ~500 rects to ~150 with no change the eye can catch. */
+    nf = Math.min(nf, Math.max(3, Math.round(hpx / 14)));
+    bays = Math.min(bays, Math.max(2, Math.round(wpx / 13)));
     var fs = (1 - g1) / nf, flr = fs * hpx;
     if (flr < 5) return;
 
@@ -3078,6 +3084,9 @@
     var nf = Math.max(1, b.floors || Math.round((fh - g1 * fh) / STOREY));
     if (nf > 30) nf = 30;
     var bays = bayJit(r, fw), i, k;
+    /* same pixel-sized merge as the curtain walls */
+    nf = Math.min(nf, Math.max(2, Math.round(hpx / 14)));
+    bays = Math.min(bays, Math.max(2, Math.round(wpx / 13)));
     var fs = (1 - g1) / nf, flr = fs * hpx;
     if (flr < 5) return;
     var wq = Math.min(0.40 / bays, 0.06);
@@ -3239,10 +3248,16 @@
     if (flr < 6) return;
     var bays = clamp(Math.round(fw / 9.5), 1, 10);
 
-    /* the openings */
+    /* Resolution follows the pixels, not the plan: a pane that would paint
+       under 4px collapses into its neighbours, and the arched heads are
+       drawn only where an arch could be seen. Sixty-four factory fronts of
+       blind 1px panes were the single largest cost of a wide street view. */
+    var bayWpx = wpx * 0.54 / bays, bayHpx = flr * 0.51;
+    var arches = flr >= 14;
     ctx.beginPath();
     for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
       fq((i + 0.20) / bays, g1 + k * fs + fs * 0.14, (i + 0.80) / bays, g1 + (k + 1) * fs - fs * 0.30);
+      if (!arches) continue;
       var t2, u0 = (i + 0.20) / bays, u1 = (i + 0.80) / bays, uc = (u0 + u1) / 2, hwd = (u1 - u0) / 2;
       for (t2 = 0; t2 < 4; t2++) {
         var tt = (t2 + 1) / 5, sh = hwd * sqrt(1 - tt * tt * 0.9);
@@ -3254,7 +3269,8 @@
 
     /* the glazing, in small panes; a few whole bays stand dark, and the
        sun-facing ones flash back at this hour */
-    var pr = 5, pc = 3, skyG = [], drkG = [];
+    var pr = clamp(Math.round(bayHpx / 4.5), 1, 5), pc = clamp(Math.round(bayWpx / 5), 1, 3);
+    var skyG = [], drkG = [];
     for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
       var a0 = (i + 0.23) / bays, a1 = (i + 0.77) / bays;
       var b0 = g1 + k * fs + fs * 0.17, b1 = g1 + (k + 1) * fs - fs * 0.32;
@@ -3674,7 +3690,29 @@
     var d = depthOf(f.cx, f.cy, f.zc);
     var scr = (f.z1 - f.z0) * (FOC / d);
     if (scr < 6) return;
+    /* a cage two streets away is a hint, not a drawing: sixty-four of them
+       at full stroke was most of a blown frame budget on wide street views */
+    if (scr < 30) {
+      ctx.strokeStyle = faceCol(M_STEEL, 1, 5, hB, 2);
+      ctx.lineWidth = Math.max(0.5, 1.1 * (FOC / d) * 0.7);
+      ctx.beginPath();
+      for (i = 0; i < 4; i++) {
+        var cxl = CXS[i] * f.hw, cyl = CYS[i] * f.hd;
+        var cwx = f.cx + cxl * ca - cyl * sa, cwy = f.cy + cxl * sa + cyl * ca;
+        if (!proj(cwx, cwy, f.z0)) continue; var cq = [px, py];
+        if (!proj(cwx, cwy, f.z1)) continue;
+        ctx.moveTo(cq[0], cq[1]); ctx.lineTo(px, py);
+        var ni = (i + 1) & 3;
+        var nwx = f.cx + CXS[ni] * f.hw * ca - CYS[ni] * f.hd * sa;
+        var nwy = f.cy + CXS[ni] * f.hw * sa + CYS[ni] * f.hd * ca;
+        ctx.moveTo(px, py);
+        if (proj(nwx, nwy, f.z1)) ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+      return;
+    }
     var cols = clamp(Math.round(f.hw * 2 / 9), 2, 6);
+    if (scr < 80) { cols = Math.min(cols, 3); lifts = Math.min(lifts, 2); quality = false; }
     var col = faceCol(M_STEEL, 1, 5, hB, 2);
     ctx.strokeStyle = col;
     ctx.lineWidth = Math.max(0.5, 1.1 * (FOC / d) * 0.7);
@@ -4778,10 +4816,14 @@
     /* generous when the camera rests: the old 1.05 quota left the landmark
        tower of a mid-zoom shot as a blank slab while small near buildings
        spent the budget. Measured headroom allows it. */
-    var quota = W * H * (dragging ? 0.45 : 2.0), spent = 0, cnt = 0, capN = dragging ? 14 : 44;
+    var quota = W * H * (dragging ? 0.45 : 2.0), spent = 0, cnt = 0, capN = dragging ? 14 : 26;
     for (i = 0; i < ranked.length; i++) {
       var q = ranked[i];
-      q._q = (DBG === 2 ? false : (spent < quota && cnt < capN && q._scr > 16));
+      /* the scale floor: full dressing goes only to buildings big enough in
+         the frame for a window to read. On a wide street view forty mid-size
+         facades were eating the whole frame budget without adding a thing
+         the eye could see at that size. */
+      q._q = (DBG === 2 ? false : (spent < quota && cnt < capN && q._scr > 95));
       if (q._q) { spent += q._area; cnt++; }
     }
     /* buildings and props interleave by the near face of each building,

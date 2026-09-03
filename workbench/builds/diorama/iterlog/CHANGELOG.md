@@ -118,3 +118,21 @@ tableau byte-identical across repeated paints; living layer census stable at
 averages at 1440x900: establishing 18.5 ms (budget 30), street 14.2 ms
 (budget 40), mid-zoom 28.6 ms, facade close-up 32.9 ms. shot-world.jpg and
 shot-read.jpg committed beside the code.
+
+## Round 3 addendum — the wide street view (2026-09-03)
+The parallel english-pass session measured a camera these rounds had not
+framed: the whole scaffolded quarter from across the street (dist 430,
+el 0.30) — 47 ms before the round-1 budget raise, 57 ms after it. Profiling
+attributed the cost precisely: facadeFactory painted a fixed 5x3 pane grid
+per bay per floor, so sixty-four factory fronts projected tens of thousands
+of sub-pixel rects. Resolution now follows the pixels: panes under ~4 px
+collapse into their neighbours, arched window heads draw only when a storey
+is 14 px or more, curtain/stone floors and bays merge mip-style past the
+range where a storey is 14 px, distant scaffold cages drop to posts and rim,
+and gradients need a 30 px face. The scale floor for full dressing rose to a
+95 px screen radius, and the fine-trim level now starts at 280.
+
+After: wide street view 34.5 ms, establishing 20.7 ms, mid-zoom 23.7 ms,
+street 10.1 ms, facade close-up 23.5 ms — every known camera inside the
+budgets, and the four fixed viewpoints visually unchanged (compared
+side-by-side before/after the mip work). Sweep re-run: 290/290 clean.
