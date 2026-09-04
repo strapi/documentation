@@ -1,4 +1,4 @@
-/* ================== LA GARE DE NUIT ==================
+/* ================== THE NIGHT STATION ==================
    The Strapi documentation as a night sleeper-train station.
    All facts on screen are measured from content.json, graph.json,
    provenance.json — nothing invented. */
@@ -81,8 +81,8 @@
       var t = (20 * 60 + 31 + m) % 1440;
       var time = pad2(Math.floor(t / 60)) + ":" + pad2(t % 60);
       var train = String(1000 + (hashCode(slug) % 9000));
-      var remark = LATE[slug] ? "RETARDÉ"
-        : (pv.night > 0 ? "TRAIN DE NUIT" : (SIDING[slug] ? "VOIE DE GARAGE" : ""));
+      var remark = LATE[slug] ? "DELAYED"
+        : (pv.night > 0 ? "NIGHT TRAIN" : (SIDING[slug] ? "IN THE SIDINGS" : ""));
       META[slug] = {
         idx: idx, voie: voie, time: time, train: train, remark: remark,
         night: pv.night > 0, siding: !!SIDING[slug], late: !!LATE[slug],
@@ -108,7 +108,7 @@
   }
 
   /* ---------------- split-flap engine ---------------- */
-  var FLAPSEQ = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ÉÈÊÀÇ:-&'()./·";
+  var FLAPSEQ = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:-&'()./·";
   var flapQueue = [];
   var flapRunning = false;
 
@@ -184,7 +184,7 @@
   function grandeLigneSVG() {
     var step = 7, r = 2.6, x0 = 14, y = 26;
     var w = x0 * 2 + (ORDER.length - 1) * step;
-    var s = '<svg width="' + w + '" height="52" viewBox="0 0 ' + w + ' 52" role="img" aria-label="La grande ligne : les 290 pages dans l’ordre de lecture">';
+    var s = '<svg width="' + w + '" height="52" viewBox="0 0 ' + w + ' 52" role="img" aria-label="The main line: the 290 pages in reading order">';
     s += '<line x1="' + x0 + '" y1="' + y + '" x2="' + (w - x0) + '" y2="' + y + '" stroke="#3a486b" stroke-width="2"/>';
     var lastVoie = -1;
     ORDER.forEach(function (slug, i) {
@@ -196,7 +196,7 @@
         s += '<line x1="' + x + '" y1="14" x2="' + x + '" y2="38" stroke="#26304a" stroke-width="1"/>';
         var segLen = 0;
         for (var k = i; k < ORDER.length && META[ORDER[k]].voie === m.voie; k++) segLen++;
-        if (segLen >= 4) s += '<text class="ligne-cap" x="' + (x + 3) + '" y="49">V' + m.voie + "</text>";
+        if (segLen >= 4) s += '<text class="ligne-cap" x="' + (x + 3) + '" y="49">P' + m.voie + "</text>";
       }
       s += '<a href="#' + esc(slug) + '"><circle class="ligne-dot" cx="' + x + '" cy="' + y + '" r="' + r +
         '" fill="' + col + '" stroke="#0c1220" stroke-width="1"><title>' + esc(m.label) + "</title></circle></a>";
@@ -206,25 +206,25 @@
 
   function viewHall() {
     setActiveNav("gare");
-    document.title = "La Gare de Nuit · Tableau des départs";
+    document.title = "The Night Station · Departures board";
     var lateCount = Object.keys(LATE).length;
-    var html = '<h2 class="hall-title">La grande ligne · ordre de lecture</h2>' +
+    var html = '<h2 class="hall-title">The main line · reading order</h2>' +
       '<div class="ligne-wrap">' + grandeLigneSVG() + "</div>" +
       '<div class="board-cabinet">' +
       '<div class="pigeon" aria-hidden="true"><svg viewBox="0 0 26 22"><path d="M4 20c2-1 4-2 5-4 1 1 3 1 4 0 2 1 5 0 6-2 1-2 0-4-1-5 1-1 2-1 3-1-1-1-2-1-3-1-1-2-3-3-5-2-2 1-3 3-3 5 0 3-2 6-6 8z" fill="#1d2536"/><circle cx="16.6" cy="7.2" r=".8" fill="#0a0d15"/></svg></div>' +
       '<div class="lampflicker" aria-hidden="true"></div>' +
       '<div class="board-glow" aria-hidden="true"></div>' +
-      '<div class="board-top"><span class="board-name">DÉPARTS · GRANDES LIGNES</span>' +
-      '<span class="board-note">' + ORDER.length + " départs · " + PLATFORMS.length + " voies · aucun train supprimé</span></div>" +
+      '<div class="board-top"><span class="board-name">DEPARTURES · MAIN LINES</span>' +
+      '<span class="board-note">' + ORDER.length + " departures · " + PLATFORMS.length + " platforms · no service cancelled tonight</span></div>" +
       '<div class="board-scroll"><div class="board-head">' +
-      '<span class="g-time">Heure</span><span class="g-dest">Destination</span>' +
-      '<span class="g-voie">Voie</span><span class="g-train">Train</span><span class="g-rem">Remarques</span>' +
+      '<span class="g-time">Time</span><span class="g-dest">Destination</span>' +
+      '<span class="g-voie">Pl.</span><span class="g-train">Train</span><span class="g-rem">Remarks</span>' +
       "</div><div id=\"board-rows\"></div></div>" +
       '<div class="board-foot"><span>' + (lateCount === 0
-        ? "aucun retard signalé ce soir"
-        : lateCount + " train(s) retardé(s) — plus d’un an sans retouche") + "</span>" +
-      '<span class="quote">« ' + esc(D.content.pages["/cms/quick-start"].description) +
-      ' » — Quick Start Guide</span></div>' +
+        ? "no delays reported tonight"
+        : lateCount + " delayed train(s) — over a year since their last fitting") + "</span>" +
+      '<span class="quote">“ ' + esc(D.content.pages["/cms/quick-start"].description) +
+      ' ” — Quick Start Guide</span></div>' +
       "</div>";
     app.innerHTML = html;
 
@@ -237,8 +237,8 @@
       row.dataset.slug = slug;
       row.setAttribute("role", "link");
       row.setAttribute("tabindex", "0");
-      row.setAttribute("aria-label", m.label + ", voie " + m.voie + ", départ " + m.time);
-      row.title = m.label + " — voie " + m.voie;
+      row.setAttribute("aria-label", m.label + ", platform " + m.voie + ", leaves " + m.time);
+      row.title = m.label + " — platform " + m.voie;
       row.innerHTML =
         buildGroup("g-time", flapText(m.time, 5)) +
         buildGroup("g-dest", flapText(m.label, 32)) +
@@ -271,21 +271,21 @@
 
   function viewQuais(focusVoie) {
     setActiveNav("quais");
-    document.title = "La Gare de Nuit · Les quais";
+    document.title = "The Night Station · The platforms";
     var lit = isNightNow();
-    var html = '<h2 class="hall-title">Les quais · ' + PLATFORMS.length + " voies sous les lampes au sodium</h2>";
+    var html = '<h2 class="hall-title">The platforms · ' + PLATFORMS.length + " of them, under the sodium lamps</h2>";
     PLATFORMS.forEach(function (pf) {
       html += '<section class="quai" id="quai-' + pf.num + '">' +
-        '<div class="quai-head"><span class="voie-badge">Voie ' + pf.num + "</span>" +
+        '<div class="quai-head"><span class="voie-badge">Platform ' + pf.num + "</span>" +
         '<span class="quai-label">' + esc(pf.label) + "</span>" +
-        '<span class="quai-meta">' + pf.slugs.length + " voiture(s) · " + esc(pf.product) + "</span></div>" +
+        '<span class="quai-meta">' + pf.slugs.length + " carriage(s) · " + esc(pf.product) + "</span></div>" +
         '<div class="quai-scene"><div class="train">';
       pf.slugs.forEach(function (slug) {
         var m = META[slug];
         if (!m) return;
         var cls = "carriage" + (m.night ? " night-mark" + (lit ? " night-lit" : "") : "") + (m.siding ? " siding" : "");
         html += '<button class="' + cls + '" style="width:' + carriageWidth(m.words) + 'px" data-slug="' + esc(slug) +
-          '" title="' + esc(m.label) + " · " + m.words + " mots · conducteur " + esc(m.prov.topAuthor || "?") + '">' +
+          '" title="' + esc(m.label) + " · " + m.words + " words · driver " + esc(m.prov.topAuthor || "?") + '">' +
           '<span class="car-label">' + esc(m.label) + "</span></button>";
       });
       html += "</div></div></section>";
@@ -293,12 +293,12 @@
     // the siding
     var sidingSlugs = ORDER.filter(function (s) { return META[s].siding; });
     html += '<section class="quai" id="quai-garage">' +
-      '<div class="quai-head"><span class="voie-badge">Voie de garage</span>' +
-      '<span class="quai-label">Les voitures que personne ne cite</span>' +
-      '<span class="quai-meta">' + sidingSlugs.length + " voiture(s), lumières éteintes, toujours visitables</span></div>" +
+      '<div class="quai-head"><span class="voie-badge">The sidings</span>' +
+      '<span class="quai-label">The carriages no page cites</span>' +
+      '<span class="quai-meta">' + sidingSlugs.length + " carriage(s), lights out, still open to visitors</span></div>" +
       '<div class="chef-de-gare"><div class="chef-lamp" aria-hidden="true"></div>' +
-      "<p>Le chef de gare laisse une lampe allumée pour elles : " + sidingSlugs.length +
-      " pages sans aucune citation entrante (graphe des " + D.graph.edges.length + " citations). Aucune n’est supprimée.</p></div>" +
+      "<p>The station master leaves a lamp burning for them: " + sidingSlugs.length +
+      " pages no other page cites (out of the graph's " + D.graph.edges.length + " citations). Not one is cancelled.</p></div>" +
       '<div class="quai-scene"><div class="train">';
     sidingSlugs.forEach(function (slug) {
       var m = META[slug];
@@ -315,9 +315,9 @@
 
   /* ---------------- block renderer ---------------- */
   var ADM = {
-    tip: ["✦", "Astuce"], note: ["✎", "Note"], info: ["ℹ", "Info"],
-    caution: ["⚠", "Prudence"], warning: ["⚠", "Attention"], danger: ["⛔", "Danger"],
-    strapi: ["✴", "Strapi"], prerequisites: ["☑", "Prérequis"], callout: ["➤", "Callout"]
+    tip: ["✦", "Tip"], note: ["✎", "Note"], info: ["ℹ", "Info"],
+    caution: ["⚠", "Caution"], warning: ["⚠", "Warning"], danger: ["⛔", "Danger"],
+    strapi: ["✴", "Strapi"], prerequisites: ["☑", "Prerequisites"], callout: ["➤", "Callout"]
   };
 
   function renderCode(b) {
@@ -361,7 +361,7 @@
     b.tabs.forEach(function (tb, i) {
       var sel = i === chosen;
       bar += '<button class="tab-btn" role="tab" aria-selected="' + sel + '" data-uid="' + uid +
-        '" data-idx="' + i + '" data-value="' + esc(tb.value || "") + '">' + esc(tb.label || tb.value || ("Onglet " + (i + 1))) + "</button>";
+        '" data-idx="' + i + '" data-value="' + esc(tb.value || "") + '">' + esc(tb.label || tb.value || ("Tab " + (i + 1))) + "</button>";
       panels += '<div class="tab-panel" role="tabpanel" data-uid="' + uid + '" data-idx="' + i + '"' + (sel ? "" : " hidden") + ">" +
         renderBlocks(tb.blocks || []) + "</div>";
     });
@@ -380,10 +380,10 @@
     h += '<div class="ep-body">';
     if (b.description) h += '<p class="ep-desc">' + b.description + "</p>";
     if (b.params && b.params.length) {
-      h += '<div class="ep-params"><h4>' + esc(b.paramTitle || "Paramètres") + "</h4>" +
-        '<div class="tablewrap"><table><thead><tr><th>Nom</th><th>Type</th><th>Description</th></tr></thead><tbody>';
+      h += '<div class="ep-params"><h4>' + esc(b.paramTitle || "Parameters") + "</h4>" +
+        '<div class="tablewrap"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>';
       b.params.forEach(function (p) {
-        h += "<tr><td><code>" + esc(p.name) + "</code>" + (p.required ? ' <span class="ep-req">requis</span>' : "") +
+        h += "<tr><td><code>" + esc(p.name) + "</code>" + (p.required ? ' <span class="ep-req">required</span>' : "") +
           "</td><td><code>" + esc(p.type || "") + "</code></td><td>" + (p.desc || "") + "</td></tr>";
       });
       h += "</tbody></table></div></div>";
@@ -414,7 +414,7 @@
     if (!b || typeof b !== "object") return "";
     switch (b.t) {
       case "tldr":
-        return '<aside class="tldr"><span class="tldr-tag">En deux mots</span>' + (b.html || "") + "</aside>";
+        return '<aside class="tldr"><span class="tldr-tag">In short</span>' + (b.html || "") + "</aside>";
       case "p": return "<p>" + (b.html || "") + "</p>";
       case "h2": case "h3": case "h4": case "h5": case "h6":
         return "<" + b.t + (b.id ? ' id="' + esc(b.id) + '"' : "") + ">" + esc(b.text || "") + "</" + b.t + ">";
@@ -459,7 +459,7 @@
         return '<span class="badge badge-' + esc(b.kind || "version") + '"' +
           (b.tooltip ? ' title="' + esc(b.tooltip) + '"' : "") + ">" + esc(b.label || "") + "</span>";
       case "details":
-        return "<details" + (b.id ? ' id="' + esc(b.id) + '"' : "") + "><summary>" + (b.summary || "Détails") +
+        return "<details" + (b.id ? ' id="' + esc(b.id) + '"' : "") + "><summary>" + (b.summary || "Details") +
           "</summary>" + renderBlocks(b.blocks || []) + "</details>";
       case "endpoint": return renderEndpoint(b);
       case "columns":
@@ -479,7 +479,7 @@
     var page = D.content.pages[slug];
     var m = META[slug];
     setActiveNav("");
-    document.title = m.label + " · La Gare de Nuit";
+    document.title = m.label + " · The Night Station";
 
     var prevSlug = m.idx > 0 ? ORDER[m.idx - 1] : null;
     var nextSlug = m.idx < ORDER.length - 1 ? ORDER[m.idx + 1] : null;
@@ -487,30 +487,30 @@
     var crew = (pv.authors || []).filter(function (a) { return a !== pv.topAuthor; });
 
     var kicker = '<div class="dest-kicker">' +
-      '<span class="k-voie">Voie ' + m.voie + "</span>" +
-      "<span>Train " + m.train + "</span><span>Départ " + m.time + "</span>" +
+      '<span class="k-voie">Platform ' + m.voie + "</span>" +
+      "<span>Train " + m.train + "</span><span>Leaves " + m.time + "</span>" +
       "<span>" + esc(page.section) + "</span>" +
-      (m.night ? "<span>☾ train de nuit</span>" : "") +
-      (m.siding ? "<span>voie de garage</span>" : "") +
-      (m.late ? "<span>retardé</span>" : "") +
+      (m.night ? "<span>☾ night train</span>" : "") +
+      (m.siding ? "<span>in the sidings</span>" : "") +
+      (m.late ? "<span>delayed</span>" : "") +
       "</div>";
 
-    var plaque = '<div class="plaque"><h3>Voiture ' + m.train + "</h3>" +
-      '<div class="cond">Conducteur · ' + esc(pv.topAuthor || "inconnu") + "</div>" +
-      (crew.length ? '<div class="crew">Équipage : ' + esc(crew.join(", ")) + "</div>" : "") +
+    var plaque = '<div class="plaque"><h3>Carriage ' + m.train + "</h3>" +
+      '<div class="cond">Driver · ' + esc(pv.topAuthor || "unknown") + "</div>" +
+      (crew.length ? '<div class="crew">Crew: ' + esc(crew.join(", ")) + "</div>" : "") +
       "<dl>" +
-      "<dt>En service depuis</dt><dd>" + esc(pv.first || "?") + "</dd>" +
-      "<dt>Dernier entretien</dt><dd>" + esc(pv.last || "?") + "</dd>" +
-      "<dt>Arrêts d’entretien</dt><dd>" + (pv.commits || 0) + " commits</dd>" +
-      "<dt>Longueur</dt><dd>" + m.words + " mots</dd>" +
-      "<dt>Correspondances</dt><dd>" + m.inb + " entrantes · " + m.out + " sortantes</dd>" +
-      (m.night ? "<dt>Éditions de nuit</dt><dd>" + pv.night + "</dd>" : "") +
+      "<dt>In service since</dt><dd>" + esc(pv.first || "?") + "</dd>" +
+      "<dt>Last serviced</dt><dd>" + esc(pv.last || "?") + "</dd>" +
+      "<dt>Maintenance stops</dt><dd>" + (pv.commits || 0) + " commits</dd>" +
+      "<dt>Length</dt><dd>" + m.words + " words</dd>" +
+      "<dt>Connections</dt><dd>" + m.inb + " inbound · " + m.out + " outbound</dd>" +
+      (m.night ? "<dt>Night edits</dt><dd>" + pv.night + "</dd>" : "") +
       "</dl></div>";
 
     var navHtml = '<nav class="voiture-nav">' +
-      (prevSlug ? '<a href="#' + esc(prevSlug) + '"><span class="vn-label">◀ voiture précédente</span>' +
+      (prevSlug ? '<a href="#' + esc(prevSlug) + '"><span class="vn-label">◀ previous carriage</span>' +
         esc(META[prevSlug].label) + "</a>" : "<span></span>") +
-      (nextSlug ? '<a href="#' + esc(nextSlug) + '" style="text-align:right"><span class="vn-label">voiture suivante ▶</span>' +
+      (nextSlug ? '<a href="#' + esc(nextSlug) + '" style="text-align:right"><span class="vn-label">next carriage ▶</span>' +
         esc(META[nextSlug].label) + "</a>" : "<span></span>") + "</nav>";
 
     app.innerHTML =
@@ -519,10 +519,10 @@
       '<div class="train-window" aria-hidden="true"><div class="passing"></div><div class="reflet"></div></div>' +
       plaque +
       '<div class="comp-links">' +
-      '<a href="#/gare">■ Tableau des départs</a>' +
-      '<a href="#/quai/' + m.voie + '">■ Voie ' + m.voie + " · " + esc(page.section) + "</a>" +
-      '<a href="#/legende">■ Légende</a>' +
-      '<span style="color:#6f7891">Grande ligne : voiture ' + (m.idx + 1) + "/" + ORDER.length + "</span>" +
+      '<a href="#/gare">■ Departures board</a>' +
+      '<a href="#/quai/' + m.voie + '">■ Platform ' + m.voie + " · " + esc(page.section) + "</a>" +
+      '<a href="#/legende">■ Legend</a>' +
+      '<span style="color:#6f7891">Main line: carriage ' + (m.idx + 1) + "/" + ORDER.length + "</span>" +
       "</div></div>" +
       '<article class="paper"><header class="dest-head">' + kicker +
       "<h1>" + esc(stripTitle(page.title)) + "</h1>" +
@@ -544,34 +544,34 @@
   /* ---------------- legend ---------------- */
   function viewLegende() {
     setActiveNav("legende");
-    document.title = "La Gare de Nuit · Légende";
+    document.title = "The Night Station · Legend";
     var nSiding = Object.keys(SIDING).length;
     var nLate = Object.keys(LATE).length;
     app.innerHTML = '<div class="legend">' +
-      "<h1>LÉGENDE, EN MOTS SIMPLES</h1>" +
-      "<p>Cette gare est la documentation de Strapi. Chaque page est un train de nuit. Rien ici n’est inventé : tout est mesuré dans le contenu réel des " + ORDER.length + " pages, leur historique git et le graphe de leurs liens.</p>" +
-      "<h2>L’heure de départ</h2><p>Calculée une fois pour toutes à partir de la date du premier commit de la page : cette date fixe le créneau d’une demi-heure, et les voitures entrées en service le même jour s’y répartissent. Elle ne changera plus.</p>" +
-      "<h2>La destination</h2><p>Le titre de la page. Cliquez une ligne du tableau (ou une porte de voiture) pour monter à bord et lire la page entière.</p>" +
-      "<h2>La voie</h2><p>La section de la documentation. Il y a " + PLATFORMS.length + " voies, une par section du sommaire.</p>" +
-      "<h2>Le numéro de train</h2><p>Dérivé de l’adresse de la page, stable pour toujours.</p>" +
-      "<h2>« Retardé »</h2><p>Une page sans retouche depuis plus d’un an. Ce soir : " + nLate + ". Aucun train n’est jamais « supprimé » : cette gare est gentille, les " + ORDER.length + " destinations restent desservies.</p>" +
-      "<h2>Le train de nuit</h2><p>" + NIGHT_SLUGS.length + " pages ont réellement été modifiées en pleine nuit (d’après l’horodatage des commits). Ce sont les seules voitures dont les fenêtres s’allument après 21 h, heure de votre horloge.</p>" +
-      "<h2>La voie de garage</h2><p>" + nSiding + " pages qu’aucune autre page ne cite (graphe de " + D.graph.edges.length + " citations). Lumières éteintes, mais toujours visitables ; le chef de gare leur laisse une lampe.</p>" +
-      "<h2>La longueur des voitures</h2><p>Proportionnelle au nombre de mots de la page (de " +
-      Math.min.apply(null, ORDER.map(function (s) { return META[s].words; })) + " à " +
-      Math.max.apply(null, ORDER.map(function (s) { return META[s].words; })) + " mots).</p>" +
-      "<h2>Le conducteur et l’équipage</h2><p>Sur la plaque de chaque voiture : l’auteur principal réel de la page, l’équipage complet, et « en service depuis » la date du premier commit. " + HANDS + " mains ont entretenu cette gare.</p>" +
-      "<h2>La grande ligne</h2><p>Le schéma au-dessus du tableau suit l’ordre de lecture officiel de la documentation ; « voiture précédente / suivante » au bas de chaque page le suit aussi.</p>" +
-      '<p class="src">Sources : contenu des pages (content.json), graphe des citations (graph.json), historique git réel — auteurs, dates, éditions nocturnes (provenance.json).</p>' +
+      "<h1>THE LEGEND, IN PLAIN WORDS</h1>" +
+      "<p>This station is the Strapi documentation. Every page is a night train. Nothing here is invented: everything is measured from the real content of the " + ORDER.length + " pages, their git history and the graph of their links.</p>" +
+      "<h2>The departure time</h2><p>Fixed once and for all from the date of the page's first commit: that date sets the half-hour slot, and carriages that entered service the same day fan out inside it. It will never change.</p>" +
+      "<h2>The destination</h2><p>The title of the page. Click a row of the board (or a carriage door) to step aboard and read the whole page.</p>" +
+      "<h2>The platform</h2><p>The section of the documentation. There are " + PLATFORMS.length + " platforms, one per section of the table of contents.</p>" +
+      "<h2>The train number</h2><p>Derived from the page's address, stable forever.</p>" +
+      "<h2>“Delayed”</h2><p>A page untouched for over a year. Tonight: " + nLate + ". No train is ever “cancelled”: this is a kind station, and all " + ORDER.length + " destinations stay served.</p>" +
+      "<h2>The night train</h2><p>" + NIGHT_SLUGS.length + " pages really were edited in the middle of the night (by the timestamps of their commits). They are the only carriages whose windows light up after 9 pm, by your clock.</p>" +
+      "<h2>The sidings</h2><p>" + nSiding + " pages no other page cites (out of the graph of " + D.graph.edges.length + " citations). Lights out, but still open to visitors; the station master leaves them a lamp.</p>" +
+      "<h2>The length of the carriages</h2><p>Proportional to the page's word count (from " +
+      Math.min.apply(null, ORDER.map(function (s) { return META[s].words; })) + " to " +
+      Math.max.apply(null, ORDER.map(function (s) { return META[s].words; })) + " words).</p>" +
+      "<h2>The driver and the crew</h2><p>On every carriage plaque: the page's real principal author, the full crew, and “in service since” the date of its first commit. " + HANDS + " hands have kept this station.</p>" +
+      "<h2>The main line</h2><p>The diagram above the board follows the documentation's official reading order; “previous / next carriage” at the foot of every page follows it too.</p>" +
+      '<p class="src">Sources: page content (content.json), citation graph (graph.json), real git history — authors, dates, night edits (provenance.json).</p>' +
       "</div>";
   }
 
   function viewLost(slug) {
     setActiveNav("");
-    document.title = "Voie sans issue · La Gare de Nuit";
-    app.innerHTML = '<div class="lost"><h1>VOIE SANS ISSUE</h1>' +
-      "<p>Aucun train ne dessert « " + esc(slug) + " » cette nuit.</p>" +
-      '<p><a href="#/gare">Retourner au tableau des départs</a></p></div>';
+    document.title = "Dead-end track · The Night Station";
+    app.innerHTML = '<div class="lost"><h1>DEAD-END TRACK</h1>' +
+      "<p>No train serves “" + esc(slug) + "” tonight.</p>" +
+      '<p><a href="#/gare">Back to the departures board</a></p></div>';
   }
 
   /* ---------------- router ---------------- */
@@ -667,13 +667,13 @@
       scored.sort(function (a, b) { return b[0] - a[0]; });
       current = scored.slice(0, 12).map(function (x) { return x[1]; });
       if (!current.length) {
-        box.innerHTML = '<div class="sr-empty">Aucune destination à ce nom cette nuit.</div>';
+        box.innerHTML = '<div class="sr-empty">No destination by that name tonight.</div>';
       } else {
         box.innerHTML = current.map(function (slug, i) {
           var m = META[slug];
           return '<button class="sr-item' + (i === sel ? " sel" : "") + '" data-slug="' + esc(slug) + '">' +
             '<span class="sr-dest">' + esc(m.label) + "</span>" +
-            '<span class="sr-meta">Voie ' + m.voie + " · départ " + m.time + " · " +
+            '<span class="sr-meta">Platform ' + m.voie + " · leaves " + m.time + " · " +
             esc(D.content.pages[slug].section) + "</span></button>";
         }).join("");
       }
@@ -732,11 +732,11 @@
   /* ---------------- footer facts ---------------- */
   function initFooter() {
     var f = document.getElementById("foot-facts");
-    f.innerHTML = ORDER.length + " départs · " + PLATFORMS.length + " voies · " +
-      HANDS + " mains ont entretenu cette gare · " + NIGHT_SLUGS.length +
-      " voitures s’allument la nuit · " + Object.keys(SIDING).length +
-      " voitures sur la voie de garage, aucune supprimée — chiffres relevés dans l’historique git et le graphe des " +
-      D.graph.edges.length + " citations de la documentation Strapi.";
+    f.innerHTML = ORDER.length + " departures · " + PLATFORMS.length + " platforms · " +
+      HANDS + " hands have kept this station · " + NIGHT_SLUGS.length +
+      " carriages light up at night · " + Object.keys(SIDING).length +
+      " carriages in the sidings, none cancelled — figures read from the git history and the graph of the " +
+      D.graph.edges.length + " citations of the Strapi documentation.";
   }
 
   /* ---------------- boot ---------------- */
@@ -754,6 +754,6 @@
     window.addEventListener("hashchange", route);
     route();
   }).catch(function (err) {
-    app.innerHTML = '<div class="lost"><h1>PANNE DE COURANT</h1><p>' + esc(err && err.message) + "</p></div>";
+    app.innerHTML = '<div class="lost"><h1>POWER FAILURE</h1><p>' + esc(err && err.message) + "</p></div>";
   });
 })();
