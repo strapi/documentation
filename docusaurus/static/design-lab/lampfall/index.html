@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lampfall — the Strapi documentation cave</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="lampfall.css">
+</head>
+<body>
+<canvas id="cave"></canvas>
+
+<div id="labels" aria-hidden="true"></div>
+
+<header id="hud">
+  <div id="hud-title">LAMPFALL</div>
+  <div id="hud-sub">the Strapi documentation as one cave</div>
+  <div id="hud-stats">
+    <span id="hud-surveyed">Surveyed 0 of 290</span>
+    <span id="hud-level"></span>
+  </div>
+</header>
+
+<div id="caption" hidden></div>
+<div id="nightcap" hidden></div>
+
+<nav id="controls" aria-label="Lampfall controls">
+  <button id="btn-index"  title="Plain-title index and search">Index <kbd>Tab</kbd></button>
+  <button id="btn-survey" title="Fully-lit survey view of the whole cave">Survey <kbd>S</kbd></button>
+  <button id="btn-sheet"  title="Your survey sheet">Sheet <kbd>P</kbd></button>
+  <button id="btn-lamp"   title="Kill the lamp and let the dark speak">Kill the lamp <kbd>L</kbd></button>
+  <button id="btn-read"   title="Open the expedition journal for this chamber">Read <kbd>R</kbd></button>
+  <button id="btn-sound"  title="Optional drips and echoes. Silent by default." aria-pressed="false">Sound: off</button>
+  <button id="btn-calm"   title="Render on demand, no continuous motion" aria-pressed="false">Calm: off</button>
+</nav>
+
+<aside id="sheet" hidden>
+  <canvas id="sheet-canvas" width="336" height="248"></canvas>
+  <div id="sheet-lines"></div>
+  <button id="btn-fullsurvey" hidden>Ink the full survey</button>
+</aside>
+
+<section id="journal" hidden aria-label="Expedition journal">
+  <div id="journal-bar">
+    <span id="journal-crumb"></span>
+    <button id="journal-close" title="Close journal (Esc)">Close</button>
+  </div>
+  <div id="journal-scroll"><div id="journal-body"></div></div>
+</section>
+
+<div id="index" hidden>
+  <div id="index-card">
+    <input id="index-search" type="search" placeholder="Search the chambers — title, path, tag. Enter jumps." autocomplete="off">
+    <div id="index-hint">Search auto-inks the survey route to wherever you land. Sealed pockets answer only to this.</div>
+    <div id="index-list"></div>
+  </div>
+</div>
+
+<div id="intro">
+  <div id="intro-card">
+    <h1>LAMPFALL</h1>
+    <p class="intro-lede">The Strapi documentation, turned over and entered from below: <b><span id="n-pages">…</span> chambers</b>, <b><span id="n-edges">…</span> passages</b>, one lamp — yours.</p>
+    <p>Every measurement down here is real. Floors are word counts, vaults are citations, dripstone is years of care, and every ochre hand on a wall is a person who kept a page.</p>
+    <ul>
+      <li><b>Click a dark mouth</b> (or press an arrow key) to walk a passage.</li>
+      <li><b>Tab</b> opens the index. <b>S</b> lights the full survey. <b>L</b> kills the lamp.</li>
+      <li>Your survey sheet inks itself only where you have actually been.</li>
+    </ul>
+    <button id="intro-go">Take the lamp</button>
+  </div>
+</div>
+<script src="lampfall.js"></script>
+</body>
+</html>
