@@ -228,6 +228,11 @@
         bakeLife();
         bakeTransit();
         bakePaper();
+        if (coldArrival) {
+          document.body.classList.add('wide');
+          var bw = document.querySelector('#btnWide');
+          if (bw) { bw.setAttribute('aria-pressed', 'true'); bw.textContent = 'Show the page'; }
+        }
         resize();
         homeShot();
         buildHud();
@@ -6910,9 +6915,16 @@
          the lower two thirds under a band of golden sky */
       tx -= cos(az) * span * 0.03; ty -= sin(az) * span * 0.03;
     }
-    var probe = [], i;
+    var probe = [], strictProbe = [], i;
     if (paper) {
       for (i = 0; i < paper.edge.length; i += 8) probe.push(paper.edge[i]);
+      /* the printed name is part of the picture: every glyph of it must
+         land inside the frame, above the HUD, whatever the bleed does */
+      var twid = (paper.title ? paper.title.length : 20) * paper.tsize * 0.62;
+      for (i = 0; i <= 4; i++) {
+        strictProbe.push({ x: paper.tx + twid * i / 4, y: paper.ty });
+        strictProbe.push({ x: paper.tx + twid * i / 4, y: paper.ty + paper.tsize * 1.4 });
+      }
     } else probe.push({ x: bounds.cx, y: bounds.cy });
 
     var save = { az: cam.az, el: cam.el, dist: cam.dist, tx: cam.tx, ty: cam.ty };
@@ -6931,6 +6943,13 @@
         /* only a point that is actually in the picture holds the top:
            a corner bled off the side may sit as high as it likes */
         if (px > -W * 0.04 && px < W * 1.04 && py < y0) y0 = py;
+      }
+      if (ok) {
+        var HUDY = H - 108; /* the bottom info strip */
+        for (i = 0; i < strictProbe.length; i++) {
+          if (!proj(strictProbe[i].x, strictProbe[i].y, 0)) { ok = false; break; }
+          if (px < W * 0.015 || px > W * 0.985 || py < 0 || py > HUDY - 6) { ok = false; break; }
+        }
       }
       /* generous side bleed: the width constraint was what held the camera
          out, leaving 40% of the hero frame to sky and bare table. The
