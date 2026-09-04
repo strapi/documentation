@@ -24093,7 +24093,7 @@ File path: /config/admin.js
 module.exports = ({ env }) => ({
   // … other configuration properties
   history: {
-    retentionDays: 30,
+    retentionDays: 7,
   },
 });
 ```
@@ -24106,7 +24106,7 @@ File path: /config/admin.ts
 export default ({ env }) => ({
   // … other configuration properties
   history: {
-    retentionDays: 30,
+    retentionDays: 7,
   },
 });
 ```
