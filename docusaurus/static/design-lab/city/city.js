@@ -7384,6 +7384,13 @@
     renderPage(slug);
     markNav(slug);
     if (!same) rbodyEl.scrollTop = 0;
+    /* asking for a page while the view is wide means: show me the page */
+    if (!holdCamera && document.body.classList.contains('wide')) {
+      document.body.classList.remove('wide');
+      var bw = document.querySelector('#btnWide');
+      if (bw) { bw.setAttribute('aria-pressed', 'false'); bw.textContent = 'Widen the view'; }
+      resize();
+    }
     /* a cold arrival keeps the establishing shot: the city on its torn page,
        whole, before any building asks for the camera */
     if (!document.body.classList.contains('booting') && !holdCamera) locate(false);
