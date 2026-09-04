@@ -161,16 +161,11 @@ if [ ${#LABEL_ARGS[@]} -eq 0 ]; then
   LABEL_ARGS=(--label "$(jq -r '.["docs-self-healing"].labels[0]' "$CONFIG")")
 fi
 
+# Body rules: see "PR description" below. Write $DESCRIPTION before this call.
 gh pr create \
   --repo strapi/documentation \
   --title "${TITLE_PREFIX:+$TITLE_PREFIX }<DOCS_CHANGE_DESCRIPTION>" \
-  --body "$(cat <<'BODY'
-This PR updates documentation based on https://github.com/strapi/strapi/pull/<NUMBER>.
-
-Generated automatically by the docs self-healing workflow (micro-edit, Haiku).
-Review before merging.
-BODY
-)" \
+  --body "$DESCRIPTION" \
   --draft \
   "${LABEL_ARGS[@]}" \
   --assignee "$ASSIGNEE"
@@ -180,6 +175,42 @@ git reset --hard origin/main
 ```
 
 **Title rules:** Imperative mood, no conventional prefix, describe the doc change. The `auto-doc-healing` label handles identification (no title prefix needed).
+
+### PR description
+
+Write `$DESCRIPTION` from what you actually changed. There is no template to paste. The
+rules are the ones every hand-written PR on this repo follows, defined in
+`$DOC_REPO/claude-plugins/inki/skills/_shared/pr-description-rules.md`:
+
+1. Start with `This PR ...`.
+2. One or two sentences saying **what changed and why**. Name the page and what you added
+   to it. "This PR updates documentation based on <URL>" says nothing and is not
+   acceptable.
+3. Flat text only: no headings, no `Summary`, no `Test plan`, no checklist.
+4. End with a `Documents` reference to the source PR, as a markdown link:
+   `Documents [#27436](https://github.com/strapi/strapi/pull/27436)`. The bare URL in the
+   opening sentence is not a substitute.
+5. Then, on its own final line, the Vercel preview link:
+   `Direct preview link 👉 [here](https://documentation-git-<slug>-strapijs.vercel.app<page-path>)`
+   where `<slug>` is `$BRANCH_NAME` with `/` replaced by `-`, and `<page-path>` is the
+   edited file under `docusaurus/docs/` stripped of that prefix and of its `.md`/`.mdx`
+   extension. If the slug exceeds 35 characters Vercel truncates the host, so add on the
+   next line: `⚠️ The branch slug for this preview URL is <N> characters long (over the
+   35-character limit), so the URL above is likely truncated and incorrect. It must be
+   fixed with `/inki:pr-fix` once Vercel has finished building the preview.`
+6. **No boilerplate about the workflow itself.** Do not write "Generated automatically by
+   the docs self-healing workflow" or "Review before merging". The `auto-doc-healing`
+   label, the assignee and the draft status already carry that, and repeating it in prose
+   breaks rule 3.
+7. No em dash in the description either.
+
+```bash
+DESCRIPTION="This PR adds a link to the Audit Logs page from the Releases feature page, so readers discover that release actions are logged.
+
+Documents [#27436](https://github.com/strapi/strapi/pull/27436)
+
+Direct preview link 👉 [here](https://documentation-git-cms-link-audit-logs-strapijs.vercel.app/cms/features/releases)"
+```
 
 After micro-edits, add the PR to the results file with `decision: "has_targets"` and record the doc PR URL.
 
@@ -203,4 +234,6 @@ Update `/tmp/router-results.json` to include a `doc_pr` field for micro PRs you 
 - **Never draft a section.** A micro-edit is a link, a mention, or a tip. If the change needs a new section, a rewritten section, a new page, or a new category, it is `full` and you stop at the routing decision.
 - **ONLY read diffs, the Router prompt, sidebars.js, llms.txt, and write the result file** (plus doc files for micro-edits)
 - **Max 5 PRs per run.** Log extras to stdout for the next run.
+- **Never commit a file that `style-lint.sh` exits 1 on:** the gate in Step 5 is not advisory
+- **Never paste a canned PR description:** write it from the actual edit
 - **NEVER run any write operation on strapi/strapi**

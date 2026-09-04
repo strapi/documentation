@@ -134,25 +134,71 @@ if [ ${#LABEL_ARGS[@]} -eq 0 ]; then
   LABEL_ARGS=(--label "$(jq -r '.["docs-self-healing"].labels[0]' "$CONFIG")")
 fi
 
+# Title rules:
+#   - Imperative mood, no conventional prefix (no fix:/feat:/chore:)
+#   - Describe what the DOC change does, not the source PR
+#   - The auto-doc-healing label handles identification (no title prefix needed)
+#   - Example: "Clarify admin panel redirect behavior"
+#   - NOT: "fix: use admin basename for 401 redirect path"
+#
+# Body rules: see "PR description" below. Write $DESCRIPTION before this call.
 gh pr create \
   --repo strapi/documentation \
-  --title "${TITLE_PREFIX:+$TITLE_PREFIX }<DOCS_CHANGE_DESCRIPTION>"
-  # Title rules:
-  #   - Imperative mood, no conventional prefix (no fix:/feat:/chore:)
-  #   - Describe what the DOC change does, not the source PR
-  #   - The auto-doc-healing label handles identification (no title prefix needed)
-  #   - Example: "Clarify admin panel redirect behavior"
-  #   - NOT: "fix: use admin basename for 401 redirect path" \
-  --body "$(cat <<'BODY'
-This PR updates documentation based on https://github.com/strapi/strapi/pull/<NUMBER>.
-
-Generated automatically by the docs self-healing workflow.
-Review before merging.
-BODY
-)" \
+  --title "${TITLE_PREFIX:+$TITLE_PREFIX }<DOCS_CHANGE_DESCRIPTION>" \
+  --body "$DESCRIPTION" \
   --draft \
   "${LABEL_ARGS[@]}" \
   --assignee "$ASSIGNEE"
+```
+
+### PR description
+
+The description is **written per PR, from what you actually changed**. There is no
+template to paste. It follows the same rules as every hand-written PR on this repo,
+defined in `$DOC_REPO/claude-plugins/inki/skills/_shared/pr-description-rules.md`:
+
+1. Start with `This PR ...`.
+2. 1-3 sentences, or a short bullet list, saying **what changed and why**. Name the
+   pages, the sections, the tables, the parameters. "This PR updates documentation
+   based on <URL>" says nothing and is not acceptable.
+3. Flat text only: no headings, no `Summary`, no `Test plan`, no checklist.
+4. End with a `Documents` reference to the source PR, as a markdown link:
+   `Documents [#27436](https://github.com/strapi/strapi/pull/27436)`. The bare URL
+   in the opening sentence is not a substitute.
+5. Then, on its own final line, the Vercel preview link (see below).
+6. **No boilerplate about the workflow itself.** Do not write "Generated
+   automatically by the docs self-healing workflow" or "Review before merging".
+   The `auto-doc-healing` label, the assignee and the draft status already carry
+   that information, and repeating it in prose breaks rule 3.
+7. No em dash anywhere in the description either.
+
+**Vercel preview link.** Append as the last line:
+
+```
+Direct preview link 👉 [here](https://documentation-git-<slug>-strapijs.vercel.app<page-path>)
+```
+
+`<slug>` is `$BRANCH_NAME` with `/` replaced by `-`. `<page-path>` is the primary
+changed file under `docusaurus/docs/`, stripped of that prefix and of the
+`.md`/`.mdx` extension, preferring a newly created page over a modified one. Two
+cases to respect:
+
+- **No page under `docusaurus/docs/` changed:** omit the preview line entirely. Do
+  not fall back to the preview root.
+- **Slug longer than 35 characters:** Vercel truncates the host and appends a hash,
+  so the slug-built URL will not resolve. Still include it, then append on the next
+  line: `⚠️ The branch slug for this preview URL is <N> characters long (over the
+  35-character limit), so the URL above is likely truncated and incorrect. It must be
+  fixed with `/inki:pr-fix` once Vercel has finished building the preview.`
+
+Build the whole body in a shell variable before the `gh pr create` call:
+
+```bash
+DESCRIPTION="This PR documents the audit logging of release actions: it adds the release events to the event table in the Audit Logs page, and a section to the Releases page describing what each action records and where to find it.
+
+Documents [#27436](https://github.com/strapi/strapi/pull/27436)
+
+Direct preview link 👉 [here](https://documentation-git-cms-document-release-audit-logs-strapijs.vercel.app/cms/features/releases)"
 ```
 
 Then reset the working copy before processing the next PR:
@@ -185,6 +231,8 @@ Write a JSON summary to `/tmp/self-healing-summary.json`:
 - **Only modify files in `$DOC_REPO/docusaurus/docs/`** and `$DOC_REPO/docusaurus/static/` (for images)
 - **Follow all conventions** in `$DOC_REPO/agents/` — the Router and authoring guides are the source of truth
 - **Follow git-rules.md** — branch naming (`/cms`, `/cloud`, `/repo`), commit messages (imperative, no prefix), PR titles
+- **Never commit a file that `style-lint.sh` exits 1 on:** the gate in Step 3 is not advisory
+- **Never paste a canned PR description:** write it from the actual diff, per the rules in Step 3
 - **If no PR has targets:** exit cleanly without creating anything
 - **Max 3000 lines per diff** — skip and log oversized diffs
 - **Never modify workflow files, configuration files, or sidebars.js**
