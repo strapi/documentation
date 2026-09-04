@@ -16,6 +16,11 @@
   </div>
   <div id="hudRight">
     <button id="btnTrailhead" type="button" title="Open the trailhead index (Tab)">TRAILHEAD &middot; TAB</button>
+    <button id="btnKey" type="button" title="The key: every ground rule of the trail (K)">KEY &middot; K</button>
+    <button id="btnDial" type="button" title="The hour. Click or press T to change the sky's pace.">
+      <canvas id="dialCv" width="40" height="40" aria-hidden="true"></canvas>
+      <span id="dialLabel">GOLDEN HOUR</span>
+    </button>
   </div>
 </header>
 
@@ -59,6 +64,25 @@
   </div>
 </div>
 
+<div id="terrace" hidden>
+  <div id="trPanel">
+    <div id="trHead">CARD TERRACE</div>
+    <div id="trPage">&nbsp;</div>
+    <ul id="trList" role="listbox"></ul>
+    <div id="trHint">&uarr;&darr; CHOOSE &middot; ENTER FOLLOW THE CARD &middot; ESC WALK ON</div>
+  </div>
+</div>
+
+<div id="keypanel" hidden>
+  <div id="keyPanelInner">
+    <div id="keyHead">
+      <span class="thLabel">THE KEY &mdash; HOW THIS GROUND SPEAKS</span>
+      <span class="thHint">K OR ESC CLOSE</span>
+    </div>
+    <ul id="keyList"></ul>
+  </div>
+</div>
+
 <div id="landing">
   <div id="landingCard">
     <div id="ldKicker">STRAPI DOCUMENTATION, WALKED WHOLE</div>
@@ -66,7 +90,8 @@
     <div id="ldStats"></div>
     <div id="ldKeys">
       <span>&larr; &rarr; WALK</span><span>SHIFT STRIDE</span><span>CLICK WALK THERE</span>
-      <span>ENTER OPEN GATES</span><span>TAB TRAILHEAD INDEX</span>
+      <span>SPACE JUMP</span><span>ENTER OPEN GATES &amp; TERRACES</span>
+      <span>TAB TRAILHEAD INDEX</span><span>T THE HOUR</span><span>K THE KEY</span>
     </div>
     <div id="ldGo">PRESS ANY KEY TO SET OUT</div>
   </div>
@@ -75,8 +100,8 @@
 <div id="wipe" hidden></div>
 
 <footer id="help">
-  <span>&larr;/&rarr; OR A/D WALK</span><span>SHIFT STRIDE</span><span>CLICK WALK-TO</span>
-  <span>ENTER GATE</span><span>TAB INDEX</span><span>ESC CLOSE</span>
+  <span>&larr;/&rarr; OR A/D WALK</span><span>SHIFT STRIDE</span><span>SPACE JUMP</span>
+  <span>ENTER GATE/TERRACE</span><span>TAB INDEX</span><span>T HOUR</span><span>K KEY</span><span>ESC CLOSE</span>
 </footer>
 
 <script src="longway.js"></script>
