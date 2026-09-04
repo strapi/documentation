@@ -1,0 +1,96 @@
+PIXEL DOCS CITY - SOUND CREDITS
+================================
+
+Every file in this directory was cut and re-encoded (ogg/Opus, mono, 48 kHz)
+from genuinely free recordings. Sources and licenses below. No file here is
+hotlinked; everything is bundled locally.
+
+Licenses used:
+- CC0 1.0 (Creative Commons Zero / public domain dedication)
+  https://creativecommons.org/publicdomain/zero/1.0/
+- Public domain (author dedication on Wikimedia Commons)
+
+--------------------------------------------------------------------
+From "Impact Sounds" by Kenney Vleugels (kenney.nl) - License: CC0
+Source page: https://kenney.nl/assets/impact-sounds
+Download:    https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip
+  step_pave_0.ogg   <- Audio/footstep_concrete_000.ogg
+  step_pave_1.ogg   <- Audio/footstep_concrete_002.ogg
+  step_grass_0.ogg  <- Audio/footstep_grass_000.ogg
+  step_grass_1.ogg  <- Audio/footstep_grass_002.ogg
+  step_snow_0.ogg   <- Audio/footstep_snow_000.ogg
+  step_snow_1.ogg   <- Audio/footstep_snow_002.ogg
+  step_wood_0.ogg   <- Audio/footstep_wood_000.ogg
+
+From "RPG Audio" by Kenney Vleugels (kenney.nl) - License: CC0
+Source page: https://kenney.nl/assets/rpg-audio
+Download:    https://kenney.nl/media/pages/assets/rpg-audio/8e99002d76-1677590336/kenney_rpg-audio.zip
+  door_open.ogg     <- Audio/doorOpen_1.ogg
+
+From "Digital Audio" by Kenney Vleugels (kenney.nl) - License: CC0
+Source page: https://kenney.nl/assets/digital-audio
+Download:    https://kenney.nl/media/pages/assets/digital-audio/216eac4753-1677590265/kenney_digital-audio.zip
+  teleport_out.ogg  <- Audio/phaserUp4.ogg
+  teleport_in.ogg   <- Audio/phaserDown1.ogg
+
+From "Sci-Fi Sounds" by Kenney Vleugels (kenney.nl) - License: CC0
+Source page: https://kenney.nl/assets/sci-fi-sounds
+Download:    https://kenney.nl/media/pages/assets/sci-fi-sounds/6b296f9ecf-1677589334/kenney_sci-fi-sounds.zip
+  van_putter.ogg    <- Audio/engineCircular_000.ogg (volume lowered)
+  lamp_hum.ogg      <- Audio/forceField_003.ogg (volume lowered)
+
+From "Interface Sounds" by Kenney Vleugels (kenney.nl) - License: CC0
+Source page: https://kenney.nl/assets/interface-sounds
+Download:    https://kenney.nl/media/pages/assets/interface-sounds/fa43c1dd4d-1677589452/kenney_interface-sounds.zip
+  wave_chirp.ogg    <- Audio/confirmation_001.ogg
+
+--------------------------------------------------------------------
+From "Rain (loopable)" by Q009 (opengameart.org) - License: CC0
+Entry: https://opengameart.org/content/rain-loopable
+File:  https://opengameart.org/sites/default/files/Rain%20OGG.zip (2.ogg)
+  rain_loop.ogg     (trimmed to 24 s, fades added)
+
+From "Wind" by Hansj (opengameart.org) - License: CC0
+Entry: https://opengameart.org/content/wind1
+File:  https://opengameart.org/sites/default/files/wind1.wav
+  wind_winter.ogg   (24 s cut, fades added)
+
+From "Crickets Ambient Noise (loopable)" (opengameart.org) - License: CC0
+Entry: https://opengameart.org/content/crickets-ambient-noise-loopable
+File:  https://opengameart.org/sites/default/files/crickets_1.mp3
+  crickets_night.ogg (fades added)
+
+From "Park Ambiences" (opengameart.org) - License: CC0
+Entry: https://opengameart.org/content/park-ambiences
+Files: https://opengameart.org/sites/default/files/park_ambience_birds.wav
+       https://opengameart.org/sites/default/files/park_ambience_wind.wav
+  birds_day.ogg     (28 s cut of park_ambience_birds.wav, level raised)
+  room_tone.ogg     (24 s cut of park_ambience_wind.wav, level lowered)
+
+From "20 Rustles (dry leaves)" by qubodup (opengameart.org) - License: CC0
+Entry: https://opengameart.org/content/20-rustles-dry-leaves
+File:  https://opengameart.org/sites/default/files/montageAudio-20120408%40143301.mp3
+  leaf_rustle_0.ogg (single rustle cut from the montage)
+  leaf_rustle_1.ogg (single rustle cut from the montage)
+
+From "Meow" (opengameart.org) - License: CC0
+Entry: https://opengameart.org/content/meow
+File:  https://opengameart.org/sites/default/files/Meow.ogg
+  cat_meow.ogg
+
+From "Large wings flap" (opengameart.org) - License: CC0
+Entry: https://opengameart.org/content/large-wings-flap
+File:  https://opengameart.org/sites/default/files/wings_flap_large.ogg
+  wing_flap.ogg     (pitched up ~1.5x to pigeon scale)
+
+From "Solo seagull sound effects" (opengameart.org) - License: CC0
+Entry: https://opengameart.org/content/solo-seagull-sound-effects
+File:  https://opengameart.org/sites/default/files/Seagull%20Ambient%201.wav
+  seagull.ogg
+
+--------------------------------------------------------------------
+From "Dove cooing.ogg" (Wikimedia Commons) - License: Public domain
+(author's own dedication, stated on the file page)
+Entry: https://commons.wikimedia.org/wiki/File:Dove_cooing.ogg
+File:  https://upload.wikimedia.org/wikipedia/commons/0/05/Dove_cooing.ogg
+  pigeon_coo.ogg    (2.6 s cut, fades added)

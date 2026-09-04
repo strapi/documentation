@@ -23,22 +23,38 @@
 </header>
 
 <div id="zoomctl">
-  <button id="zin" class="chip" title="Zoom in">+</button>
-  <button id="zout" class="chip" title="Zoom out">−</button>
+  <button id="zin" class="chip" title="Zoom in (+)">+</button>
+  <button id="zout" class="chip" title="Zoom out (−)">−</button>
   <button id="zfit" class="chip" title="Fit island">▣</button>
+  <button id="rotl" class="chip" title="Turn the town left (Q)">↺</button>
+  <button id="rotr" class="chip" title="Turn the town right (E)">↻</button>
 </div>
 <div id="timectl">
   <button id="btn-clock" class="chip" title="Time of day · click to cycle speed (T)"><canvas id="clockdial" width="22" height="22"></canvas><span id="speedlabel">1x</span></button>
   <button id="btn-season" class="chip" title="Season · click to advance (Y)"><canvas id="seasondial" width="22" height="22"></canvas><span id="seasonlabel">SUM</span></button>
+  <button id="btn-find" class="chip" title="Fly back to the courier (F)">&#9678; Find me</button>
+  <button id="btn-snd" class="chip" title="Sound on · click to mute">♪ on</button>
 </div>
 <div id="hud"></div>
 
 <div id="doorprompt" hidden><span class="dp-key">ENTER</span><span id="dp-title"></span></div>
 
+<div id="yah" hidden>YOU ARE HERE</div>
+<div id="spotbanner" hidden></div>
+
+<div id="introprompt" hidden>
+  <strong>You are here</strong>
+  <p>The courier is standing in <span id="ip-name"></span>.</p>
+  <div class="ip-row">
+    <button id="ip-look" class="chip">Look around</button>
+    <button id="ip-walk" class="chip">Start walking</button>
+  </div>
+</div>
+
 <div id="hintcard" hidden>
   <strong>Welcome to Pixel Docs City</strong>
-  <p>Arrow keys / WASD to explore · walk to a door and press Enter to read · or just click any building like before.<br>T changes the time of day · Y turns the season.</p>
-  <button id="hint-close" class="chip">Got it</button>
+  <p>Every arrow key follows one street: &#8594; walks the down-right avenue, &#8593; the up-right one (WASD too); hold two to cut between them. Shift to stride.<br>Walk to a door and press Enter to read · or click any building or spot · F finds you again.<br>T changes the time of day · Y turns the season · Q/E turn the town.</p>
+  <button id="hint-close" class="chip">Take me there</button>
 </div>
 
 <div id="loading">
