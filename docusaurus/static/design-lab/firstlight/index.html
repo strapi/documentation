@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-boot="1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FIRST LIGHT · Strapi Documentation</title>
+<meta name="description" content="FIRST LIGHT: the Strapi documentation as an unmapped system. 290 dark bodies, 1231 transmissions, and a chart that exists only where you have listened.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="firstlight.css">
+</head>
+<body>
+
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<header id="topbar">
+  <a class="brand" href="#/" title="Return to the sweep">
+    <span class="brand-t">FIRST LIGHT</span>
+    <span class="brand-s">STRAPI DOCUMENTATION SURVEY</span>
+  </a>
+
+  <div class="chartmeter" id="chartmeter" title="Bodies charted, of the whole corpus">
+    <span class="cm-k">CHART</span>
+    <span class="cm-v"><b id="cm-n">0</b>/<span id="cm-total">290</span></span>
+    <span class="cm-bar"><i id="cm-fill"></i></span>
+  </div>
+
+  <button id="fullbtn" class="btn" aria-pressed="false" title="Reveal the complete labeled chart instantly">FULL CHART</button>
+  <button id="almbtn" class="btn" aria-pressed="false" title="Overlay the onboard almanac: the old engraved atlas, with its ephemeris errors">ALMANAC</button>
+  <button id="darkbtn" class="btn" aria-pressed="false" title="Dim your instruments. Night work blooms.">DARK ADAPT</button>
+  <button id="ixbtn" class="btn" aria-pressed="false" title="Plain-title index of every page (Tab)">INDEX <kbd>Tab</kbd></button>
+
+  <div class="search">
+    <label class="sr-only" for="q">Search the documentation</label>
+    <input id="q" type="search" placeholder="Search 290 pages…" autocomplete="off" spellcheck="false">
+    <kbd id="slashhint">/</kbd>
+  </div>
+
+  <button id="audiobtn" class="btn right" aria-pressed="false" title="Optional: hear each body's commit history as pings. Silent by default.">SOUND OFF</button>
+  <button id="helpbtn" class="btn" title="Mission briefing" aria-label="Mission briefing">?</button>
+  <span class="clock" id="clock" title="Mission elapsed time">T+0:00</span>
+</header>
+
+<div id="results" hidden role="listbox" aria-label="Search results"></div>
+
+<div id="prompt" hidden>
+  <span class="p-main">SOMETHING IS TRANSMITTING<span class="cursor">_</span></span>
+  <span class="p-sub" id="prompt-sub"></span>
+</div>
+
+<aside id="inst" hidden aria-label="Instrument suite">
+  <div id="inst-inner"></div>
+</aside>
+
+<div id="photom" aria-label="Photometer" hidden>
+  <div class="ph-head"><span id="ph-k">PHOTOMETER</span><span id="ph-target"></span></div>
+  <canvas id="photcv" width="320" height="46"></canvas>
+</div>
+
+<div id="log" aria-label="Mission log" aria-live="polite"></div>
+
+<aside id="ixpanel" hidden aria-label="Page index">
+  <div class="ix-head">
+    <span>ONBOARD CATALOG · <b id="ix-count">290</b> ENTRIES</span>
+    <button id="ix-close" class="xbtn" title="Close">×</button>
+  </div>
+  <div id="ix-inner"></div>
+</aside>
+
+<main id="reader" tabindex="-1" hidden>
+  <div class="rd-head">
+    <span class="rd-k">SURFACE SURVEY · CAPTURED TELEMETRY</span>
+    <button id="rd-close" class="xbtn" title="Close and resume the sweep">×</button>
+  </div>
+  <article id="page"></article>
+</main>
+
+<div id="tooltip" hidden aria-hidden="true"></div>
+
+<div id="plaque" hidden>
+  <div class="pq-box" role="dialog" aria-label="First contact plaque">
+    <div class="pq-rule"></div>
+    <div class="pq-k">FIRST CONTACT</div>
+    <div class="pq-t" id="pq-title"></div>
+    <div class="pq-line" id="pq-line1"></div>
+    <div class="pq-line em">YOU ARE THE FIRST TO LOG THIS PAGE</div>
+    <div class="pq-line" id="pq-line2"></div>
+    <div class="pq-rule"></div>
+  </div>
+</div>
+
+<div id="plate" hidden>
+  <div class="cp-box" role="dialog" aria-label="Survey complete">
+    <div class="pq-rule"></div>
+    <div class="pq-k">SURVEY COMPLETE</div>
+    <div class="cp-big" id="cp-big">290/290</div>
+    <div class="pq-line" id="cp-sub"></div>
+    <div class="cp-hands" id="cp-hands"></div>
+    <div class="cp-names" id="cp-names"></div>
+    <div class="pq-rule"></div>
+    <button id="cp-close" class="howto-btn" type="button">RETURN TO THE CHART</button>
+  </div>
+</div>
+
+<div id="howto" hidden>
+  <div class="howto-box" role="dialog" aria-modal="true" aria-labelledby="howto-t">
+    <div class="pq-rule"></div>
+    <h2 id="howto-t">MISSION BRIEFING</h2>
+    <p class="howto-lede">You are the first probe in this system. Nothing is drawn until it is measured.
+      Every mark, number and rhythm on your instruments is read from the documentation itself.</p>
+    <ol class="howto-list">
+      <li><b>Listen.</b> One body is transmitting at launch. Its pulse trains are real citations:
+        one train per page that cites it.</li>
+      <li><b>Lock on.</b> Click a body (or search, or open the catalog with <kbd>Tab</kbd>) to run a
+        surface survey. The page itself is the captured telemetry. Surveying a body triangulates
+        its whole neighborhood onto your chart.</li>
+      <li><b>Watch the photometer.</b> Some bodies emit nothing: no page cites them. They are found
+        only in transit, when they dip the light of a beacon. Intercept the dotted ellipse to make
+        first contact.</li>
+      <li><b>Consult the almanac.</b> The old engraved atlas predicts where every body should sit,
+        filed by sidebar section. Measurement disagrees: the drifted positions are flagged as
+        ephemeris errors.</li>
+      <li><b>Dark adapt.</b> Dim your instruments and the commits made in the dead of night bloom
+        cold blue-green.</li>
+      <li><b>FULL CHART</b> reveals the complete labeled chart at any moment. No progress is lost;
+        your personal chart keeps only what you have actually measured.</li>
+    </ol>
+    <p class="howto-foot" id="howto-facts"></p>
+    <div class="howto-row">
+      <button id="howto-go" class="howto-btn" type="button">RESUME MISSION</button>
+      <button id="resetbtn" class="howto-btn ghost" type="button" title="Erase your personal chart and start the survey again">RESET SURVEY</button>
+    </div>
+  </div>
+</div>
+
+<noscript><p style="padding:2rem;color:#EDF2F0;background:#060809">This experience needs JavaScript.</p></noscript>
+
+<script src="firstlight.js"></script>
+</body>
+</html>
