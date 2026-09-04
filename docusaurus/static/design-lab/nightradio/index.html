@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Night Radio · Strapi documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Jura:wght@400;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="radio.css">
+</head>
+<body>
+
+<header class="plate" role="banner">
+  <div class="plate-brand">
+    <div class="brand-name">THE NIGHT RADIO</div>
+    <div class="brand-sub">STRAPI DOCUMENTATION · SHORTWAVE SERVICE · 290 STATIONS</div>
+  </div>
+  <nav class="plate-controls" aria-label="Receiver controls">
+    <button id="btn-bandplan" class="knob-btn" aria-haspopup="dialog">BAND PLAN</button>
+    <button id="btn-finder" class="knob-btn" aria-haspopup="dialog">STATION FINDER <kbd>/</kbd></button>
+    <button id="btn-key" class="knob-btn" aria-haspopup="dialog">THE KEY</button>
+    <button id="btn-audio" class="knob-btn speaker" aria-pressed="false" title="Radio static and tuning whistle. Off by default; everything works silent.">
+      <span class="spk-lamp" aria-hidden="true"></span> SPEAKER OFF
+    </button>
+  </nav>
+</header>
+
+<section class="radio" aria-label="Tuning dial">
+  <div class="spectrum-row">
+    <canvas id="spectrum" height="46" aria-label="Spectrum strip: all 290 carriers, line height equals inbound citations. Click to tune."></canvas>
+    <div class="spec-caption">ALL 290 CARRIERS · LINE HEIGHT = INBOUND CITATIONS · CLICK TO TUNE</div>
+  </div>
+
+  <div class="readout" id="readout" aria-live="polite">
+    <div class="readout-band" id="readout-band">—</div>
+    <div class="readout-name-wrap"><div class="readout-name" id="readout-name">warming up…</div></div>
+    <div class="readout-meta" id="readout-meta">—</div>
+    <div class="lock-lamp" id="lock-lamp"><span class="lamp"></span><span id="lock-text">SEEK</span></div>
+  </div>
+
+  <div class="dial-frame">
+    <canvas id="dial" aria-label="Tuning dial: drag to pan across all 290 documentation pages placed in reading order"></canvas>
+    <div class="dial-hint" id="dial-hint">drag the glass · scroll to sweep · ←/→ steps one station</div>
+  </div>
+
+  <div class="deck">
+    <div class="meterbox">
+      <div class="meter-title">SIGNAL · INBOUND CITATIONS</div>
+      <svg id="vu" viewBox="0 0 200 112" aria-label="Signal meter">
+        <path class="vu-arc" d="M 24 96 A 82 82 0 0 1 176 96" fill="none"/>
+        <g id="vu-ticks"></g>
+        <g id="vu-needle-g"><line id="vu-needle" x1="100" y1="100" x2="100" y2="26"/></g>
+        <circle cx="100" cy="100" r="6" class="vu-hub"/>
+      </svg>
+      <div class="vu-read" id="vu-read">—</div>
+      <div class="eye-row">
+        <svg id="eye" viewBox="0 0 44 44" aria-label="Magic eye tuning indicator">
+          <circle cx="22" cy="22" r="19" class="eye-glass"/>
+          <path id="eye-shadow" d=""/>
+          <circle cx="22" cy="22" r="4.5" class="eye-dot"/>
+        </svg>
+        <span class="eye-label">MAGIC EYE</span>
+      </div>
+    </div>
+
+    <div class="logcard" id="logcard" aria-label="Station log book card"></div>
+
+    <div class="sessionlog">
+      <div class="slog-title">YOUR LISTENING LOG · THIS SESSION</div>
+      <ol id="slog-list" class="slog-list" reversed></ol>
+    </div>
+  </div>
+</section>
+
+<main class="programme-wrap">
+  <article class="programme" id="prog" aria-live="polite"></article>
+</main>
+
+<footer class="colophon">
+  <p>Every line on this set restates measured data from the Strapi documentation repository: 290 pages, their reading order, 1,231 citations between pages, and the commit history of 77 real contributors. Nothing is invented. Open <button class="linklike" id="key-link">THE KEY</button> for plain words.</p>
+</footer>
+
+<!-- Band plan drawer -->
+<aside class="drawer" id="drawer" role="dialog" aria-label="Band plan" hidden>
+  <div class="drawer-inner">
+    <div class="drawer-head">
+      <span>PRINTED BAND PLAN</span>
+      <button class="close-x" id="drawer-close" aria-label="Close band plan">×</button>
+    </div>
+    <div id="drawer-body"></div>
+  </div>
+</aside>
+
+<!-- Station finder -->
+<div class="finder" id="finder" role="dialog" aria-label="Station finder" hidden>
+  <div class="finder-box">
+    <div class="finder-head">
+      <span>STATION FINDER · SEARCHES ALL 290</span>
+      <button class="close-x" id="finder-close" aria-label="Close finder">×</button>
+    </div>
+    <input id="finder-input" type="search" placeholder="type a station name, tag, or path…" autocomplete="off" spellcheck="false">
+    <div id="finder-results" class="finder-results" role="listbox"></div>
+  </div>
+</div>
+
+<!-- Plain-words key -->
+<div class="keymodal" id="keymodal" role="dialog" aria-label="Plain words key" hidden>
+  <div class="key-box">
+    <div class="finder-head">
+      <span>THE KEY · PLAIN WORDS</span>
+      <button class="close-x" id="key-close" aria-label="Close key">×</button>
+    </div>
+    <div id="key-body" class="key-body"></div>
+  </div>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+
+<script src="radio.js"></script>
+</body>
+</html>
