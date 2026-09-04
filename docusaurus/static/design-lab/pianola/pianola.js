@@ -222,7 +222,7 @@ function layoutTracks() {
     for (let i = start; i < idx; i++) M.bandOfTrack[i] = b;
   };
   M.comms.forEach((c, i) => pushBand(c.dominant || ('community ' + (i + 1)), c.members, inkFor(i, c.purity), c.hub));
-  if (unbound.length) pushBand('unbound', unbound, 'hsl(268 8% 46%)', null);
+  if (unbound.length) pushBand('unbound', unbound, 'hsl(35 8% 45%)', null);
 
   pressed = new Float64Array(M.tracks.length);
 
@@ -232,17 +232,21 @@ function layoutTracks() {
     (M.outboundTracks[from] = M.outboundTracks[from] || []).push(M.trackOf[to]);
   }
 }
-/* community ink: hue slides jade(172) -> violet(243) -> rose(344) across the
-   27 bands; saturation follows the community's Louvain purity. Dusk-mixed. */
+/* community ink: the only saturated colours anywhere, mixed dusk-adjacent —
+   hue walks a dusk wheel (teal dusk -> slate -> heather -> plum -> madder ->
+   brick -> umber gold) at a fixed engraving value, so the moving roll reads
+   as one engraved object, never a rainbow. Saturation follows the
+   community's Louvain purity. */
 function inkFor(i, purity) {
   const n = Math.max(1, M.comms.length - 1);
   const t = i / n;
-  const hue = t < 0.5 ? 172 + (243 - 172) * (t / 0.5) : 243 + (344 - 243) * ((t - 0.5) / 0.5);
-  const sat = Math.round(34 + 40 * (purity || 0.5));
-  return `hsl(${Math.round(hue)} ${sat}% 42%)`;
+  const hue = (185 + t * 220) % 360;
+  const sat = Math.round(26 + 34 * (purity || 0.5));
+  return `hsl(${Math.round(hue)} ${sat}% 40%)`;
 }
-const NIGHT_INK = '#21386F';
-const NIGHT_INK_HI = '#3E63C4';
+/* night holes in Prussian blue */
+const NIGHT_INK = '#16395C';
+const NIGHT_INK_HI = '#2F6292';
 
 /* ============================================================
    STATIC UI TEXT (all derived)
@@ -377,32 +381,33 @@ function drawFrame(wall) {
   const W = CV.W, H = CV.H;
   ctx.clearRect(0, 0, W, H);
 
-  /* parlour */
-  ctx.fillStyle = '#150720';
+  /* parlour: near-black aubergine */
+  ctx.fillStyle = '#17121A';
   ctx.fillRect(0, 0, W, H);
 
-  /* --- roll paper --- */
+  /* --- roll paper: cream --- */
   const paperTop = 0, paperBot = CV.barY + 8;
-  ctx.fillStyle = '#EFDCBB';
+  ctx.fillStyle = '#F0E6CE';
   ctx.fillRect(CV.x0 - 6, paperTop, CV.paperR - CV.x0 + 12, paperBot);
-  /* band tints + separators */
+  /* band tints + separators — a whisper of ink so the roll stays cream
+     and reads as one engraved object */
   for (const b of M.bands) {
     ctx.fillStyle = b.ink;
-    ctx.globalAlpha = 0.17;
+    ctx.globalAlpha = 0.06;
     ctx.fillRect(trackX(b.start), paperTop, b.count * CV.trackW, paperBot);
     ctx.globalAlpha = 1;
   }
-  ctx.fillStyle = 'rgba(42,15,61,.28)';
+  ctx.fillStyle = 'rgba(58,44,30,.26)';
   for (const b of M.bands) ctx.fillRect(trackX(b.start), paperTop, 1, paperBot);
   /* ghost lane */
-  ctx.fillStyle = '#D9C4A0';
+  ctx.fillStyle = '#DECFAF';
   ctx.fillRect(CV.ghostX, paperTop, CV.ghostW, paperBot);
-  ctx.fillStyle = 'rgba(42,15,61,.35)';
+  ctx.fillStyle = 'rgba(58,44,30,.35)';
   ctx.fillRect(CV.ghostX - 1, paperTop, 1, paperBot);
   ctx.save();
-  ctx.translate(CV.ghostX + CV.ghostW / 2 + 3, 8);
+  ctx.translate(CV.ghostX + CV.ghostW / 2 + 3, 20);
   ctx.rotate(Math.PI / 2);
-  ctx.fillStyle = 'rgba(42,15,61,.5)';
+  ctx.fillStyle = 'rgba(74,58,40,.55)';
   ctx.font = '8px "SF Mono", Menlo, monospace';
   ctx.fillText('GHOSTS — PAGES THAT NO LONGER EXIST', 0, 0);
   ctx.restore();
@@ -417,9 +422,9 @@ function drawFrame(wall) {
     if (md > topDay + 32) break;
     const y = yOfDay(md, now);
     if (y > -10 && y < paperBot) {
-      ctx.fillStyle = 'rgba(42,15,61,.10)';
+      ctx.fillStyle = 'rgba(58,44,30,.10)';
       ctx.fillRect(CV.x0 - 6, y, CV.paperR - CV.x0 + 12, 1);
-      ctx.fillStyle = 'rgba(42,15,61,.45)';
+      ctx.fillStyle = 'rgba(74,58,40,.5)';
       ctx.fillText(MON[mDate.getUTCMonth()] + ' ' + mDate.getUTCFullYear(), CV.x0, y - 3);
     }
     mDate = new Date(Date.UTC(mDate.getUTCFullYear(), mDate.getUTCMonth() + 1, 1));
@@ -428,13 +433,13 @@ function drawFrame(wall) {
   /* leader / run-off engravings */
   const leadY = yOfDay(T.epochDay, now);
   if (leadY < paperBot && leadY > -400) {
-    ctx.fillStyle = 'rgba(42,15,61,.55)';
+    ctx.fillStyle = 'rgba(74,52,32,.6)';
     ctx.font = '600 11px Copperplate, Optima, serif';
     ctx.fillText('THE PRESSING BEGINS — ' + M.stats.firstCommit.date, CV.x0 + 8, Math.min(paperBot - 60, leadY + 26));
   }
   const runY = yOfDay(T.lastDay, now);
   if (runY > -60) {
-    ctx.fillStyle = 'rgba(42,15,61,.5)';
+    ctx.fillStyle = 'rgba(74,52,32,.55)';
     ctx.font = 'italic 12px "Iowan Old Style", Palatino, serif';
     if (runY > 60) ctx.fillText('blank paper — the song is still being written', CV.x0 + 8, runY - 46);
   }
@@ -449,7 +454,8 @@ function drawFrame(wall) {
     if (c.day > hiD) break;
     const y = yOfDay(c.day, now);
     if (c.ghost) {
-      ctx.fillStyle = 'rgba(58,44,70,.78)';
+      /* felt-grey blind punch in the margin lane — pressed, never cut */
+      ctx.fillStyle = 'rgba(122,113,100,.85)';
       ctx.fillRect(CV.ghostX + 3, y - slotH / 2, CV.ghostW - 6, slotH);
     } else {
       const isNight = c.night;
@@ -458,7 +464,8 @@ function drawFrame(wall) {
         if (isNight) {
           ctx.fillStyle = y > CV.barY - 90 ? NIGHT_INK_HI : NIGHT_INK;
         } else {
-          ctx.fillStyle = '#2A1436';
+          /* clean die-cut void: the dark of the machine shows through */
+          ctx.fillStyle = '#151017';
         }
         ctx.fillRect(trackX(tr) + (CV.trackW - slotW) / 2, y - slotH / 2, slotW, slotH);
       }
@@ -474,14 +481,14 @@ function drawFrame(wall) {
     }
   }
 
-  /* --- harmony strings --- */
+  /* --- harmony strings: brass wire above the keybed --- */
   if (activeNotes.length) {
     ctx.lineWidth = 0.8;
     for (const n of activeNotes) {
       const life = clamp((n.until - wall) / (n.until - n.born), 0, 1);
       if (life <= 0) continue;
       const x1 = trackX(n.track) + CV.trackW / 2;
-      ctx.strokeStyle = `rgba(73,69,255,${0.38 * life})`;
+      ctx.strokeStyle = `rgba(201,165,103,${0.34 * life})`;
       for (const t2 of n.targets) {
         const x2 = trackX(t2) + CV.trackW / 2;
         ctx.beginPath();
@@ -492,36 +499,42 @@ function drawFrame(wall) {
     }
   }
 
-  /* --- tracker bar --- */
-  ctx.fillStyle = '#1D0B2C';
+  /* --- tracker bar: dark walnut rail, one felt-red hammer line --- */
+  ctx.fillStyle = '#241A11';
   ctx.fillRect(CV.x0 - 10, CV.barY - 3, CV.paperR - CV.x0 + 20, 12);
-  ctx.fillStyle = '#FF3D6E';
+  ctx.fillStyle = 'rgba(239,217,167,.25)'; /* engraved edge highlight */
+  ctx.fillRect(CV.x0 - 10, CV.barY - 3, CV.paperR - CV.x0 + 20, 1);
+  ctx.fillStyle = 'rgba(0,0,0,.45)';
+  ctx.fillRect(CV.x0 - 10, CV.barY + 8, CV.paperR - CV.x0 + 20, 1);
+  ctx.fillStyle = '#B8423A'; /* the single red element */
   ctx.fillRect(CV.x0 - 10, CV.barY, CV.paperR - CV.x0 + 20, 2);
-  /* retuning flare sweep */
+  /* retuning flare sweep: a brass flash along the bar */
   if (wall < T.flareUntil) {
     const k = 1 - (T.flareUntil - wall) / 1600;
-    ctx.fillStyle = `rgba(255,61,110,${0.35 * (1 - Math.abs(k * 2 - 1))})`;
+    ctx.fillStyle = `rgba(239,217,167,${0.35 * (1 - Math.abs(k * 2 - 1))})`;
     ctx.fillRect(CV.x0 - 10, CV.barY - 6, (CV.paperR - CV.x0 + 20), 18);
   }
   /* ghost thud pulse under the lane */
   if (wall < T.ghostPulseUntil) {
     const a = (T.ghostPulseUntil - wall) / 420;
-    ctx.fillStyle = `rgba(217,196,160,${0.55 * a})`;
+    ctx.fillStyle = `rgba(150,140,124,${0.55 * a})`;
     ctx.fillRect(CV.ghostX, CV.barY - 2, CV.ghostW, 6);
   }
 
-  /* --- keys --- */
+  /* --- keys on a walnut keybed --- */
   const kT = CV.keysTop, kH = CV.keysH - 8;
+  ctx.fillStyle = '#241A11';
+  ctx.fillRect(CV.x0 - 10, kT - 2, CV.paperR - CV.x0 + 20, H - kT + 2);
   for (let tr = 0; tr < M.tracks.length; tr++) {
     const down = pressed[tr] > wall;
     const x = trackX(tr);
     const b = M.bands[M.bandOfTrack[tr]];
-    ctx.fillStyle = down ? b.ink : '#E4D0A8';
+    ctx.fillStyle = down ? b.ink : '#EAE0C6';
     ctx.fillRect(x + 0.4, kT + (down ? 3 : 0), CV.trackW - 0.8, kH - (down ? 3 : 0));
     ctx.fillStyle = b.ink;
     ctx.fillRect(x + 0.4, kT + kH, CV.trackW - 0.8, 5);
     if (b.hub === M.tracks[tr]) {
-      ctx.fillStyle = '#4945FF';
+      ctx.fillStyle = '#C9A567'; /* brass tab marks the band's lead track */
       ctx.fillRect(x + 0.4, kT + kH + 5, CV.trackW - 0.8, 3);
     }
   }
@@ -529,11 +542,30 @@ function drawFrame(wall) {
   ctx.fillStyle = 'rgba(0,0,0,.4)';
   ctx.fillRect(CV.x0 - 10, kT - 1, CV.paperR - CV.x0 + 20, 1);
 
-  /* --- night veil --- */
+  /* --- casework: flat walnut planes, engraved edges, brass spool chucks --- */
+  const caseL = CV.x0 - 6, caseR = CV.paperR + 6;
+  ctx.fillStyle = '#241A11';
+  ctx.fillRect(0, 0, caseL, H);              /* left stile */
+  ctx.fillRect(caseR, 0, W - caseR, H);      /* right stile */
+  ctx.fillRect(caseL, 0, caseR - caseL, 11); /* top rail over the spool */
+  ctx.fillStyle = 'rgba(239,217,167,.16)';   /* edge highlights */
+  ctx.fillRect(caseL - 1, 0, 1, H);
+  ctx.fillRect(caseR, 0, 1, H);
+  ctx.fillRect(caseL, 11, caseR - caseL, 1);
+  ctx.fillStyle = 'rgba(0,0,0,.5)';          /* engraved shadow under the rail */
+  ctx.fillRect(caseL, 12, caseR - caseL, 1);
+  ctx.fillStyle = '#8A6C3C';                 /* spool chucks */
+  ctx.fillRect(caseL + 2, 2, 10, 7);
+  ctx.fillRect(caseR - 12, 2, 10, 7);
+  ctx.fillStyle = '#EFD9A7';
+  ctx.fillRect(caseL + 2, 2, 10, 1);
+  ctx.fillRect(caseR - 12, 2, 10, 1);
+
+  /* --- night veil: Prussian dusk --- */
   if (T.nightAmt > 0.005) {
-    ctx.fillStyle = `rgba(9,10,38,${0.52 * T.nightAmt})`;
+    ctx.fillStyle = `rgba(7,17,30,${0.52 * T.nightAmt})`;
     ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = `rgba(33,56,111,${0.22 * T.nightAmt})`;
+    ctx.fillStyle = `rgba(22,57,92,${0.22 * T.nightAmt})`;
     ctx.fillRect(CV.x0 - 6, paperTop, CV.paperR - CV.x0 + 12, paperBot);
   }
 }
@@ -844,13 +876,13 @@ function onCanvasMove(e) {
     if (c.ghost) {
       showTip(`<div class="t-title">Ghost hole</div>
         <div class="t-mono">${esc(c.hash.slice(0, 10))}</div>
-        <div>${esc(c.author)} · ${c.date} · ${hh}${c.night ? ' <span class="t-night">· night</span>' : ''}</div>
+        <div>${esc(c.author)} · <span class="t-mono">${c.date} · ${hh}</span>${c.night ? ' <span class="t-night">· night</span>' : ''}</div>
         <div class="t-dim">${c.files.length} file${c.files.length > 1 ? 's' : ''}, all to pages that no longer exist — a felt thud, never voiced.</div>`, mx, my);
     } else {
       const p = M.pages[hit.slug];
       showTip(`<div class="t-title">${esc(p.title)}</div>
         <div class="t-mono">${esc(c.hash.slice(0, 10))}</div>
-        <div>${esc(c.author)} · ${c.date} · ${hh}${c.night ? ' <span class="t-night">· night hole (22:00–06:00)</span>' : ''}</div>
+        <div>${esc(c.author)} · <span class="t-mono">${c.date} · ${hh}</span>${c.night ? ' <span class="t-night">· night hole (22:00–06:00)</span>' : ''}</div>
         <div class="t-dim">${c.pages.length > 1 ? 'a chord across ' + c.pages.length + ' pages · ' : ''}click to read the page</div>`, mx, my);
     }
     CV.el.style.cursor = c.ghost ? 'help' : 'pointer';
@@ -993,8 +1025,8 @@ function renderPage(slug, anchor) {
     html += `<div class="prov-plaque">
       <span><b>${fmtInt(pv.commits)}</b> commits</span>
       <span><b>${fmtInt(pv.authors.length)}</b> hand${pv.authors.length > 1 ? 's' : ''}</span>
-      <span>first <b>${pv.first}</b></span>
-      <span>last <b>${pv.last}</b></span>
+      <span>first <b class="pp-d">${pv.first}</b></span>
+      <span>last <b class="pp-d">${pv.last}</b></span>
       <span><b>${fmtInt(pv.careDays)}</b> care-days</span>
       <span><b>${fmtInt(pv.night)}</b> night edits</span>
       <span class="pp-authors">hands: ${pv.authors.map(esc).join(', ')} — engraved for ${esc(pv.topAuthor)}</span>
@@ -1295,17 +1327,28 @@ function wireEvents() {
     scrubbing = false;
   });
 
-  $('btn-voice').addEventListener('click', async (e) => {
-    if (!Snd.enabled) {
-      await Snd.enable();
-      e.currentTarget.textContent = 'Voice: sounding';
-      e.currentTarget.setAttribute('aria-pressed', 'true');
-      toast('felt piano awake — pitch is the page\'s key, loudness its citations, sustain its words');
-    } else {
-      Snd.disable();
-      e.currentTarget.textContent = 'Voice: silent';
-      e.currentTarget.setAttribute('aria-pressed', 'false');
-    }
+  /* the voice is armed by default; the context is born on the first gesture */
+  let voiceArmed = true;
+  const voiceLabel = () => {
+    const b = $('btn-voice');
+    b.textContent = voiceArmed ? (Snd.enabled ? 'Voice: sounding' : 'Voice: armed') : 'Voice: silent';
+    b.setAttribute('aria-pressed', String(voiceArmed));
+  };
+  const wakeVoice = async () => {
+    if (!voiceArmed || Snd.enabled) return;
+    await Snd.enable();
+    voiceLabel();
+    toast('felt piano awake — pitch is the page\'s key, loudness its citations, sustain its words');
+  };
+  document.addEventListener('pointerdown', wakeVoice, { capture: true });
+  document.addEventListener('keydown', wakeVoice, { capture: true });
+  voiceLabel();
+
+  $('btn-voice').addEventListener('click', async () => {
+    voiceArmed = !voiceArmed;
+    if (voiceArmed) { await Snd.enable(); }
+    else if (Snd.enabled) { Snd.disable(); }
+    voiceLabel();
   });
 
   $('btn-index').addEventListener('click', () => toggleIndex());
@@ -1413,7 +1456,7 @@ window.__pianola = {
 boot().catch(err => {
   console.error(err);
   const el = document.createElement('div');
-  el.style.cssText = 'position:fixed;inset:20px;color:#FF3D6E;font:14px monospace;z-index:999';
+  el.style.cssText = 'position:fixed;inset:20px;color:#EDE3CB;font:14px monospace;z-index:999';
   el.textContent = 'The pressing failed to load: ' + err.message;
   document.body.appendChild(el);
 });
