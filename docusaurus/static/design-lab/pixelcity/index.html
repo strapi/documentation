@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strapi Pixel City</title>
+<link rel="stylesheet" href="pixelcity.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="city"></canvas>
+  <div id="bubble" hidden></div>
+</div>
+
+<header id="chrome">
+  <button id="btn-nav" class="chip" title="Browse all pages">☰ Districts</button>
+  <div id="brand"><span class="brand-dot"></span>STRAPI&nbsp;PIXEL&nbsp;CITY</div>
+  <div id="searchbox">
+    <input id="search" type="search" placeholder="Search 290 pages…" autocomplete="off" spellcheck="false" aria-label="Search documentation">
+    <div id="search-results" hidden></div>
+  </div>
+  <button id="btn-key" class="chip" title="What am I looking at?">? Key</button>
+</header>
+
+<div id="zoomctl">
+  <button id="zin" class="chip" title="Zoom in">+</button>
+  <button id="zout" class="chip" title="Zoom out">−</button>
+  <button id="zfit" class="chip" title="Fit island">▣</button>
+</div>
+<div id="hud"></div>
+
+<div id="loading">
+  <div class="load-grid" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <p>Baking the sprite atlas…</p>
+</div>
+
+<nav id="drawer" hidden aria-label="All documentation pages">
+  <div class="drawer-head">
+    <strong>All 290 pages</strong>
+    <button class="chip" id="drawer-close">✕</button>
+  </div>
+  <div id="drawer-body"></div>
+</nav>
+
+<aside id="keypanel" hidden>
+  <div class="drawer-head"><strong>Plain-words key</strong><button class="chip" id="key-close">✕</button></div>
+  <div id="key-body"></div>
+</aside>
+
+<article id="panel" hidden aria-live="polite">
+  <div id="panel-inner">
+    <div id="panel-head">
+      <div id="panel-crumb"></div>
+      <button id="panel-close" class="chip" title="Back to the city">✕ City</button>
+    </div>
+    <div id="panel-meta"></div>
+    <h1 id="panel-title"></h1>
+    <div id="panel-content"></div>
+    <div id="panel-foot">
+      <a id="prev-link" href="#"></a>
+      <a id="next-link" href="#"></a>
+    </div>
+  </div>
+</article>
+
+<script src="pixelcity.js"></script>
+</body>
+</html>
