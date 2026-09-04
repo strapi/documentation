@@ -1234,6 +1234,11 @@
       "number": 27508,
       "reason": "Router: Bug fix for Media Library replace action. Adds MIME type filtering to the file picker to prevent uploading incompatible file types. This is an internal consistency fix that prevents invalid state without changing user-facing APIs.",
       "added": "2026-09-03"
+    },
+    {
+      "number": 27448,
+      "reason": "Router: Internal admin UI enhancement for drawer interaction behavior. The change modifies internal drawer component behavior (opt-in outside-click dismissal for the asset details drawer) but does not expose new user-facing APIs, configuration options, or public features. No documentation updates needed.",
+      "added": "2026-09-04"
     }
   ]
 }
