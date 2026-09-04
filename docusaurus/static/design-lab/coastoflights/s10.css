@@ -496,3 +496,81 @@ button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visibl
 /* keep chart controls clear of the open lamp room */
 body.reading #topnav { margin-right: min(720px, 62vw); }
 @media (max-width: 899px) { body.reading #topbar { display: none; } }
+
+/* ============ THE WORKING SEA ============ */
+
+/* tooltip: mail, fog and glow lines */
+#tooltip .tt-mail { color: #cbb98a; font-size: .78rem; margin-top: 4px; }
+#tooltip .tt-fog { color: #a9bccf; font-size: .78rem; font-style: italic; margin-top: 3px; }
+#tooltip .tt-glow { color: #7fd9c4; font-size: .78rem; font-style: italic; margin-top: 3px; }
+
+/* the Watch Book: six ruled lines, one provenance field per line */
+.logbook { margin-top: 2px; }
+.logbook .logline {
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 4px 2px 3px;
+  border-bottom: 1px dotted rgba(109, 81, 36, .45);
+}
+.logbook .logline:last-child { border-bottom: none; }
+.logbook dt {
+  flex: none; width: 8.2em;
+  font-style: italic; color: #6d5124; font-size: .8rem;
+}
+.logbook dd {
+  margin: 0; color: #3c2c10;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .8rem; line-height: 1.45;
+}
+
+/* chart index: fogbound pages carry a chip but stay undimmed */
+.idx-fog {
+  flex: none;
+  font-size: .62rem; letter-spacing: .08em; text-transform: uppercase;
+  color: #a9bccf; border: 1px solid rgba(169, 188, 207, .45);
+  border-radius: 8px; padding: 0 6px;
+  transform: translateY(-1px);
+}
+
+/* the key: running-light audition + refusal list */
+.key-toggle { display: flex; gap: 8px; margin-top: 9px; }
+.key-toggle button {
+  background: rgba(16, 27, 44, .9);
+  border: 1px solid rgba(170, 195, 225, .3);
+  border-radius: 6px; color: #d8e4f0;
+  padding: 5px 12px; font-size: .78rem;
+}
+.key-toggle button[aria-pressed="true"] {
+  border-color: #e9c477; color: #ffe2a8; background: rgba(46, 34, 14, .85);
+}
+.key-block.refusal {
+  border-left: 3px solid #5c6b7c;
+  padding: 8px 12px; background: rgba(92, 107, 124, .1);
+}
+.key-block.refusal h3 { color: #b9c9da; }
+
+/* keepers: three watches, the book opens on those who came once */
+.roll-group { margin-bottom: 12px; }
+.roll-group summary {
+  cursor: pointer;
+  font-size: .95rem; color: #e9d9b4; font-weight: 550; letter-spacing: .04em;
+  padding: 4px 2px;
+}
+.roll-group summary:hover { color: #ffe9c0; }
+.roll-group .roll-count {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .72rem; color: #9fb2c6; font-weight: 400; margin-left: 4px;
+}
+.roll-group .roll-note {
+  color: #8fa2b7; font-style: italic; font-size: .78rem;
+  margin: 2px 0 6px; padding-left: 2px;
+}
+
+/* the lamp room keeps the chart index one click away */
+#reader-index {
+  background: none; border: 1px solid #b39a6b; border-radius: 6px;
+  color: #5c451f; padding: 5px 12px; font-size: .82rem;
+}
+#reader-index:hover { background: #eadbb9; }
+
+/* keyboard watch focus */
+#scene:focus-visible { outline: none; box-shadow: inset 0 0 0 2px rgba(217, 180, 110, .5); }

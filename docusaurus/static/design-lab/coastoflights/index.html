@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Coast of Lights</title>
+<title>The Working Sea</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="s10.css">
 </head>
 <body>
-<canvas id="scene" aria-label="A night coastline of 290 lighthouses, one for each documentation page"></canvas>
+<canvas id="scene" tabindex="0" aria-label="A night coastline of 290 lighthouses, one for each documentation page, with night mail sailing the real citation lanes between them. Use the arrow keys to walk the coast, Enter to open a page."></canvas>
 
 <header id="topbar">
   <div id="brand">
     <h1>The Coast of Lights</h1>
-    <p class="sub">the Strapi documentation, drawn as 290 lighthouses</p>
+    <p class="sub">the Strapi documentation, drawn as 290 lighthouses on a working sea</p>
   </div>
   <nav id="topnav" aria-label="Chart controls">
     <button id="btn-index" type="button">Chart index</button>
@@ -34,9 +34,10 @@
 <div id="intro" role="note">
   <p><strong>This is the Strapi documentation, drawn as a night coast.</strong>
   Every tower is a page. Every light blinks its page&rsquo;s own true rhythm,
-  read from six years of history &mdash; nothing here is invented.</p>
+  read from three and a half years of history &mdash; nothing here is invented.</p>
   <p class="how">Drag to sail along the coast &middot; scroll to zoom &middot; hover a light to read its
-  characteristic &middot; click it to enter the lamp room and read the page.</p>
+  characteristic and raise its mail lanes &middot; click it to enter the lamp room and read the page.
+  Out on the black water the night mail is already sailing: every moving light is one real citation.</p>
   <button id="intro-close" type="button">Put to sea</button>
 </div>
 
@@ -52,6 +53,7 @@
   <div id="reader-glass" aria-hidden="true"><span id="lens"></span></div>
   <div class="reader-top">
     <button id="reader-close" type="button">&larr; Back to the chart</button>
+    <button id="reader-index" type="button">Chart index</button>
     <span id="reader-bay"></span>
   </div>
   <div id="reader-scroll">

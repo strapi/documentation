@@ -1,6 +1,10 @@
-/* THE COAST OF LIGHTS
-   The Strapi documentation as a night coastline of 290 lighthouses.
-   Every rhythm on this coast is the documentation's own history. Nothing blinks at random. */
+/* THE COAST OF LIGHTS · THE WORKING SEA
+   The Strapi documentation as a night coastline of 290 lighthouses, and a sea
+   that works: night mail on the 1,231 real citation lanes, fog resting only on
+   water that time forgot, bioluminescence where the corpus was edited by night.
+   Every rhythm on this coast is the documentation's own history. Nothing blinks,
+   sails, rests, or glows at random. The invented fog banks, the two decorative
+   ships and the dice-roll moon have been deleted; see the refusal list in The key. */
 (function () {
 'use strict';
 
@@ -39,17 +43,32 @@ let sections = [];          // 18 bays/headlands
 let coastPts = [];          // fractal coastline [x, y]
 let lanePts = [];           // shipping lane polyline
 let laneLen = 0, laneCum = [];
-let fogBanks = [], ships = [], stars = [];
+let stars = [];
 let outAdj = new Map(), inAdj = new Map(), mutual = new Set();
 const relit = new Set();    // dark lights relit this session
 let currentSlug = null;
 let readerOpen = false;
 
+/* the working sea */
+let lanes = [];             // one sea lane per real citation edge
+let laneCount = 0;
+let fogTowers = [];         // staleness resting as fog on the water
+let blooms = [];            // bioluminescence: one bloom per night edit
+let maxInboundLt = null;    // the busiest water on the coast (derived)
+let hoverLt = null, hoverT0 = 0, focusIdx = -1;
+let mailNav = false;        // false = amber masthead (default); true = red-green audition
+try { mailNav = localStorage.getItem('workingsea-navlights') === '1'; } catch (e) {}
+
+const NOW = Date.now();
+const DAY = 86400000;
+const LANE_CYCLE = 120;     // seconds per watch-cycle
+const LANE_DUTY = 0.075;    // ambient share of lanes under way (hard cap 8%)
+const GOLD = 0.6180339887498949; // golden-sequence phases: exact duty, no dice
+
 const CAPE = '/cms/migration/v4-to-v5/breaking-changes';
 const HORIZON_Y = 620;      // world y where sky meets sea
 const COAST_BASE = 1500;    // mean coastline y
 let WORLD_W = 10000, WORLD_H = 2400;
-let moonX = 0;
 
 /* camera */
 const cam = { x: 0, y: 0, s: 0.55 };
@@ -246,31 +265,125 @@ function buildWorld() {
   }
   laneLen = laneCum[laneCum.length - 1];
 
-  /* moon, fog, ships, stars — all seeded */
-  moonX = WORLD_W * (0.22 + rng() * 0.5);
-  const nFog = 7;
-  for (let i = 0; i < nFog; i++) {
-    fogBanks.push({
-      x: rng() * WORLD_W, y: COAST_BASE - 180 - rng() * 420,
-      rx: 380 + rng() * 620, ry: 70 + rng() * 120,
-      v: 3 + rng() * 6, a: 0.05 + rng() * 0.05
-    });
-  }
-  ships.push({ d: laneLen * rng(), v: 14 + rng() * 8 });
-  ships.push({ d: laneLen * rng(), v: 10 + rng() * 8 });
+  /* stars stay: the firmament frames the coast and pretends to be nothing else.
+     The seeded fog banks, the two decorative ships and the dice-roll moon are
+     deleted — every bank, boat and glow below is now read from a named field. */
   for (let i = 0; i < 260; i++) {
     stars.push({ x: rng(), y: rng() * 0.55, m: 0.35 + rng() * 0.65, tw: rng() * 6.28 });
   }
+
+  buildSea(coastY);
 }
 
-/* lane position at distance d */
-function lanePoint(d) {
-  d = ((d % laneLen) + laneLen) % laneLen;
-  let lo = 0, hi = laneCum.length - 1;
-  while (hi - lo > 1) { const m = (lo + hi) >> 1; if (laneCum[m] <= d) lo = m; else hi = m; }
-  const f = (d - laneCum[lo]) / ((laneCum[hi] - laneCum[lo]) || 1);
-  const a = lanePts[lo], b = lanePts[hi];
-  return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
+/* ============ THE WORKING SEA ============ */
+/* per-page deterministic streams: placement detail is seeded per slug,
+   the quantities themselves are the data */
+function pageRng(slug, salt) {
+  return mulberry32(xmur3(slug + '|' + salt)());
+}
+function staleDaysOf(slug) {
+  const pv = prov[slug];
+  if (!pv || !pv.last) return 0;
+  return Math.max(0, Math.floor((NOW - new Date(pv.last).getTime()) / DAY));
+}
+
+function buildSea(coastY) {
+  /* --- night mail lanes: one per real citation edge, offshore quadratic arcs --- */
+  for (let i = 0; i < graph.edges.length; i++) {
+    const aS = graph.edges[i][0], bS = graph.edges[i][1];
+    const a = bySlug.get(aS), b = bySlug.get(bS);
+    if (!a || !b) continue;
+    const x0 = a.x, y0 = a.y - 12;   /* off the citing page's jetty */
+    const x1 = b.x, y1 = b.y - 12;   /* to the cited page's water */
+    const dist = Math.abs(x1 - x0);
+    /* long-haul mail rides far offshore; a deterministic per-lane spread keeps
+       the great convoys from bundling into one corridor */
+    let cy = Math.min(y0, y1) - 60 - dist * 0.12 - ((i * 37) % 90);
+    const floor2 = HORIZON_Y + 40 + ((i * 29) % 130);
+    if (cy < floor2) cy = floor2;
+    const chord = Math.hypot(x1 - x0, y1 - y0) + Math.abs(cy - Math.min(y0, y1)) * 0.7;
+    const ln = {
+      i: lanes.length, a, b, x0, y0, cx: (x0 + x1) / 2, cy, x1, y1,
+      phase: (lanes.length * GOLD) % 1,
+      bx0: Math.min(x0, x1), bx1: Math.max(x0, x1),
+      wdu: Math.min(0.055, 44 / Math.max(60, chord)),   /* wake: ~40 world px, whatever the haul */
+      qdu: Math.min(0.02, 16 / Math.max(60, chord))
+    };
+    lanes.push(ln);
+    (b.inLanes || (b.inLanes = [])).push(ln);
+    (a.outLanes || (a.outLanes = [])).push(ln);
+  }
+  laneCount = lanes.length;
+  maxInboundLt = lights.reduce((m, lt) => {
+    const k = lt.inLanes ? lt.inLanes.length : 0;
+    return k > (m && m.inLanes ? m.inLanes.length : 0) ? lt : m;
+  }, null);
+
+  for (const lt of lights) {
+    lt.staleDays = staleDaysOf(lt.slug);
+
+    /* --- honest fog: >180 days untended lays banks on this stretch of water --- */
+    if (lt.staleDays > 180) {
+      const g = pageRng(lt.slug, 'fog');
+      const density = Math.min(1, (lt.staleDays - 180) / 200);
+      const nB = 2 + Math.min(3, Math.floor((lt.staleDays - 180) / 60));
+      const banks = [];
+      for (let k = 0; k < nB; k++) {
+        banks.push({
+          x: lt.x + (g() - 0.5) * 400,
+          y: lt.y - 36 - g() * 120,
+          rx: 150 + g() * 190,
+          ry: 16 + g() * 16,
+          a: (0.05 + 0.10 * density) * (0.65 + 0.35 * g()),
+          ph: g() * 6.28
+        });
+      }
+      fogTowers.push({ lt, d: lt.staleDays, banks });
+    }
+
+    /* --- bioluminescence: one bloom per night edit (midnight to 6 a.m.) --- */
+    const nNight = (prov[lt.slug] && prov[lt.slug].night) || 0;
+    if (nNight > 0) {
+      const g = pageRng(lt.slug, 'plankton');
+      for (let k = 0; k < nNight; k++) {
+        blooms.push({
+          lt, n: nNight,
+          x: lt.x + (g() - 0.5) * 150,
+          y: lt.y - 18 - g() * 52,
+          r: 24 + g() * 20, ph: g() * 6.28
+        });
+      }
+    }
+
+    /* --- sea state: glint positions off freshly tended water (<= 90 days) --- */
+    if (lt.staleDays <= 90) {
+      const g = pageRng(lt.slug, 'glint');
+      const nG = 2 + Math.round((90 - lt.staleDays) / 14);
+      lt.glints = [];
+      for (let j = 0; j < nG; j++) {
+        lt.glints.push([lt.x + (g() - 0.5) * 190, lt.y - 14 - g() * 52, g() * 6.28]);
+      }
+    }
+
+    /* --- keepers' tenders: one moored dinghy per hand, seen at close zoom --- */
+    const nA = (prov[lt.slug] && prov[lt.slug].authors) ? prov[lt.slug].authors.length : 0;
+    if (nA > 0) {
+      const g = pageRng(lt.slug, 'tender');
+      lt.tenders = [];
+      for (let k = 0; k < nA; k++) {
+        lt.tenders.push(18 + k * 11 + g() * 5);
+      }
+    }
+  }
+}
+
+/* quadratic bezier point on a lane */
+function laneAt(ln, u) {
+  const v = 1 - u;
+  return [
+    v * v * ln.x0 + 2 * v * u * ln.cx + u * u * ln.x1,
+    v * v * ln.y0 + 2 * v * u * ln.cy + u * u * ln.y1
+  ];
 }
 
 /* ============ glow sprites ============ */
@@ -292,6 +405,40 @@ function glowSprite(colorKey, r) {
   g.fillRect(0, 0, R * 2, R * 2);
   sprites[key] = { c, R };
   return sprites[key];
+}
+
+/* fog + plankton sprites (batched: one gradient each, ever) */
+let fogSpr = null;
+function fogSprite() {
+  if (fogSpr) return fogSpr;
+  const R = 128;
+  const c = document.createElement('canvas');
+  c.width = c.height = R * 2;
+  const g = c.getContext('2d');
+  const grad = g.createRadialGradient(R, R, 0, R, R, R);
+  grad.addColorStop(0, 'rgba(186,202,222,1)');
+  grad.addColorStop(0.55, 'rgba(186,202,222,0.55)');
+  grad.addColorStop(1, 'rgba(186,202,222,0)');
+  g.fillStyle = grad;
+  g.fillRect(0, 0, R * 2, R * 2);
+  fogSpr = c;
+  return c;
+}
+let plkSpr = null;
+function planktonSprite() {
+  if (plkSpr) return plkSpr;
+  const R = 64;
+  const c = document.createElement('canvas');
+  c.width = c.height = R * 2;
+  const g = c.getContext('2d');
+  const grad = g.createRadialGradient(R, R, 0, R, R, R);
+  grad.addColorStop(0, 'rgba(96,232,205,1)');
+  grad.addColorStop(0.5, 'rgba(80,210,190,0.4)');
+  grad.addColorStop(1, 'rgba(70,190,180,0)');
+  g.fillStyle = grad;
+  g.fillRect(0, 0, R * 2, R * 2);
+  plkSpr = c;
+  return c;
 }
 
 /* ============ camera ============ */
@@ -351,6 +498,35 @@ function stepCam(now) {
 let needsDraw = true;
 let skyGrad = null, seaGrad = null;
 
+/* one packet boat: 2px running lights and a fading wake.
+   Default is a single amber masthead; the Key auditions red-green nav lights. */
+function drawPacket(ln, u, boost) {
+  const p = laneAt(ln, u);
+  /* distance dimming: mail far from the viewport's centre rides dimmer */
+  const ccx = cam.x + (vw / 2) / cam.s;
+  const dim = Math.max(0.3, 1 - Math.abs(p[0] - ccx) / ((vw * 0.8) / cam.s + 400));
+  const a = Math.min(1, boost) * dim;
+  const px = 2 / cam.s;                      /* 2 screen px, always */
+  const q = laneAt(ln, Math.max(0, u - ln.qdu));
+  const q2 = laneAt(ln, Math.max(0, u - ln.wdu));
+  ctx.strokeStyle = 'rgba(190,210,230,' + (0.11 * a).toFixed(3) + ')';
+  ctx.lineWidth = px * 0.6;
+  ctx.beginPath(); ctx.moveTo(q2[0], q2[1]); ctx.lineTo(p[0], p[1]); ctx.stroke();
+  if (mailNav) {
+    const dx = p[0] - q[0], dy = p[1] - q[1];
+    const L = Math.hypot(dx, dy) || 1;
+    const nx = -dy / L, ny = dx / L;
+    const off = px * 0.9;
+    ctx.fillStyle = 'rgba(242,96,74,' + (0.85 * a).toFixed(3) + ')';
+    ctx.fillRect(p[0] + nx * off - px / 2, p[1] + ny * off - px / 2, px, px);
+    ctx.fillStyle = 'rgba(96,232,140,' + (0.85 * a).toFixed(3) + ')';
+    ctx.fillRect(p[0] - nx * off - px / 2, p[1] - ny * off - px / 2, px, px);
+  } else {
+    ctx.fillStyle = 'rgba(255,208,130,' + (0.9 * a).toFixed(3) + ')';
+    ctx.fillRect(p[0] - px / 2, p[1] - px / 2, px, px);
+  }
+}
+
 function drawScene(tSec, now) {
   stepCam(now);
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -395,29 +571,7 @@ function drawScene(tSec, now) {
   ctx.fillStyle = seaGrad;
   ctx.fillRect(wx0 - 1000, HORIZON_Y, (wx1 - wx0) + 2000, COAST_BASE + 400 - HORIZON_Y + 600);
 
-  /* moon + moonpath */
-  const moonY = HORIZON_Y - 260;
-  if (moonX > wx0 - 1200 && moonX < wx1 + 1200) {
-    const moonR = Math.max(46, 26 / cam.s);
-    ctx.fillStyle = '#e9edf3';
-    ctx.beginPath(); ctx.arc(moonX, moonY, moonR, 0, 6.2832); ctx.fill();
-    ctx.fillStyle = 'rgba(233,237,243,0.12)';
-    ctx.beginPath(); ctx.arc(moonX, moonY, moonR * 1.7, 0, 6.2832); ctx.fill();
-    /* the moonpath: broken shimmer down the swell */
-    const cyAtMoon = window.__coastY(moonX);
-    ctx.fillStyle = '#b9cbdd';
-    const rows = 34;
-    for (let i = 0; i < rows; i++) {
-      const f = i / rows;
-      const y = HORIZON_Y + 14 + f * (cyAtMoon - HORIZON_Y - 40);
-      const sway = Math.sin(i * 2.7 + (REDUCED ? 0 : tSec * 0.7)) * (6 + f * 26);
-      const wk = Math.max(1, 0.3 / cam.s);
-      const w = (10 + f * 90 * (0.6 + 0.4 * Math.sin(i * 1.9 + (REDUCED ? 1 : tSec * 0.9)))) * wk;
-      ctx.globalAlpha = Math.min(0.5, (0.09 + 0.15 * (1 - f)) * Math.max(1, 0.25 / cam.s)) * (0.6 + 0.4 * Math.sin(i * 3.3 + (REDUCED ? 2 : tSec * 1.3)));
-      ctx.fillRect(moonX + sway - w / 2, y, w, Math.max(2, 3 / cam.s > 6 ? 6 : 3));
-    }
-    ctx.globalAlpha = 1;
-  }
+  /* (no moon: no corpus field earns one — see the refusal list in The key) */
 
   /* slow rolling swell lines */
   ctx.strokeStyle = 'rgba(160,190,220,0.07)';
@@ -432,6 +586,34 @@ function drawScene(tSec, now) {
     }
     ctx.stroke();
   }
+
+  /* bioluminescence: the sea remembers its night watches — one bloom per edit
+     made between midnight and 6 a.m., at a tenth of lamp brightness */
+  ctx.globalCompositeOperation = 'lighter';
+  const plk = planktonSprite();
+  for (const bl of blooms) {
+    if (bl.x < wx0 - 120 || bl.x > wx1 + 120) continue;
+    const pulse = REDUCED ? 0.8 : 0.62 + 0.38 * Math.sin(tSec * 0.45 + bl.ph);
+    ctx.globalAlpha = 0.22 * pulse;
+    const r = Math.max(bl.r, 5 / cam.s);
+    ctx.drawImage(plk, bl.x - r, bl.y - r * 0.6, r * 2, r * 1.2);
+  }
+  ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
+
+  /* sea state: one batched shimmer band — glints on freshly tended stretches,
+     all drawn in a single pass, no particles */
+  ctx.fillStyle = '#d7e8f6';
+  for (const lt of lights) {
+    if (!lt.glints || lt.x < wx0 - 200 || lt.x > wx1 + 200) continue;
+    for (const gl of lt.glints) {
+      const tw = REDUCED ? 0.7 : Math.sin(tSec * 1.9 + gl[2] + gl[0] * 0.011);
+      if (tw <= 0.45) continue;
+      ctx.globalAlpha = (tw - 0.45) * 0.5;
+      ctx.fillRect(gl[0], gl[1], Math.max(2.5, 3 / cam.s), Math.max(1, 1.2 / cam.s));
+    }
+  }
+  ctx.globalAlpha = 1;
 
   /* the shipping lane: the reading order, dotted */
   ctx.strokeStyle = 'rgba(150,175,205,0.4)';
@@ -486,34 +668,88 @@ function drawScene(tSec, now) {
     }
   }
 
-  /* fog banks (beams are drawn after, so they cut through) */
-  for (const f of fogBanks) {
-    const fx = ((f.x + (REDUCED ? 0 : tSec * f.v)) % (WORLD_W + 2400)) - 1200;
-    if (fx + f.rx < wx0 || fx - f.rx > wx1) continue;
-    const fg = ctx.createRadialGradient(fx, f.y, 0, fx, f.y, f.rx);
-    fg.addColorStop(0, 'rgba(190,205,225,' + f.a + ')');
-    fg.addColorStop(1, 'rgba(190,205,225,0)');
-    ctx.fillStyle = fg;
-    ctx.save();
-    ctx.translate(fx, f.y); ctx.scale(1, f.ry / f.rx);
-    ctx.beginPath(); ctx.arc(0, 0, f.rx, 0, 6.2832); ctx.fill();
-    ctx.restore();
+  /* honest fog: staleness resting on the water. Towers, labels and lamps are
+     drawn after this pass, so fog can only ever dim the sea — never a name,
+     a silhouette, or a click. The banks rest; they do not wander. */
+  const fspr = fogSprite();
+  for (const ft of fogTowers) {
+    for (const f of ft.banks) {
+      if (f.x + f.rx < wx0 || f.x - f.rx > wx1) continue;
+      const breathe = REDUCED ? 1 : 1 + 0.04 * Math.sin(tSec * 0.09 + f.ph);
+      const rx = f.rx * breathe;
+      ctx.globalAlpha = f.a;
+      ctx.drawImage(fspr, f.x - rx, f.y - f.ry, rx * 2, f.ry * 2);
+    }
   }
+  ctx.globalAlpha = 1;
 
-  /* ships on the lane */
-  ctx.fillStyle = '#0a1220';
-  for (const sh of ships) {
-    const d = sh.d + (REDUCED ? 0 : tSec * sh.v);
-    const [sx, sy] = lanePoint(d);
-    if (sx < wx0 || sx > wx1) continue;
-    ctx.fillStyle = '#0d1524';
-    ctx.fillRect(sx - 14, sy - 4, 28, 6);
-    ctx.fillStyle = '#f5ead0';
-    ctx.fillRect(sx - 1.4, sy - 9, 2.8, 2.8);
-    ctx.globalAlpha = 0.14;
-    ctx.fillRect(sx - 46, sy + 2, 34, 1.6);
-    ctx.globalAlpha = 1;
+  /* ============ NIGHT MAIL ============
+     the real citation lanes carry packets: at most 8% of lanes under way at
+     any moment (golden-sequence phases make the duty exact), a calm sea while
+     reading, and the watched tower's inbound lanes rise as pale threads. */
+  const spot = readerOpen ? null : hoverLt;
+  const spotIn = spot && spot.inLanes ? spot.inLanes : null;
+  const spotK = spotIn ? spotIn.length : 0;
+  let duty = readerOpen ? 0.004 : LANE_DUTY;
+  if (spotK) duty = Math.max(0, Math.min(duty, (laneCount * LANE_DUTY - spotK - 4) / laneCount));
+  const cyc = tSec / LANE_CYCLE;
+  const rise = spot ? (REDUCED ? 1 : Math.min(1, (now - hoverT0) / 600)) : 0;
+
+  ctx.globalCompositeOperation = 'lighter';
+  if (spot && rise > 0.02) {
+    /* the related-pages map: every thread is a real inbound citation.
+       Alpha scales down with the convoy size so 57 stacked threads still read. */
+    const thA = Math.min(0.16, 5 / Math.max(1, spotK));
+    ctx.lineWidth = Math.max(0.7, 1.1 / cam.s);
+    if (spotIn && spotIn.length) {
+      ctx.strokeStyle = 'rgba(196,215,236,' + (thA * rise).toFixed(3) + ')';
+      ctx.beginPath();
+      for (const ln of spotIn) {
+        ctx.moveTo(ln.x0, ln.y0);
+        ctx.quadraticCurveTo(ln.cx, ln.cy, ln.x1, ln.y1);
+      }
+      ctx.stroke();
+    }
+    /* fainter: where this page's own mail goes */
+    if (spot.outLanes && spot.outLanes.length) {
+      ctx.strokeStyle = 'rgba(196,215,236,' + (thA * 0.45 * rise).toFixed(3) + ')';
+      ctx.beginPath();
+      for (const ln of spot.outLanes) {
+        ctx.moveTo(ln.x0, ln.y0);
+        ctx.quadraticCurveTo(ln.cx, ln.cy, ln.x1, ln.y1);
+      }
+      ctx.stroke();
+    }
+    if (spotIn) {
+      /* a ring marks every light that sends mail here: sail to any of them */
+      ctx.strokeStyle = 'rgba(196,215,236,' + (0.5 * rise).toFixed(3) + ')';
+      ctx.lineWidth = Math.max(0.8, 1.4 / cam.s);
+      for (const ln of spotIn) {
+        ctx.beginPath();
+        ctx.arc(ln.a.lampX, ln.a.lampY, 9 / Math.max(cam.s, 0.12), 0, 6.2832);
+        ctx.stroke();
+      }
+      /* every inbound thread carries a packet converging on the watched tower */
+      for (const ln of spotIn) {
+        drawPacket(ln, (tSec / 14 + ln.phase) % 1, rise);
+      }
+    }
   }
+  /* ambient mail on the rest of the coast */
+  let underWay = (spot && rise > 0.02) ? spotK : 0;
+  if (duty > 0) {
+    for (const ln of lanes) {
+      if (spot && ln.b === spot) continue;          /* already in the spotlight */
+      const local = (cyc + ln.phase) % 1;
+      if (local >= duty) continue;                  /* not under way this watch */
+      underWay++;
+      if (ln.bx1 < wx0 - 200 || ln.bx0 > wx1 + 200) continue;
+      drawPacket(ln, local / duty, 1);
+    }
+  }
+  window.__diag.lanesUnderWay = underWay;
+  window.__diag.laneCap = Math.floor(laneCount * 0.08);
+  ctx.globalCompositeOperation = 'source-over';
 
   /* towers */
   const labelOK = cam.s > 0.62;
@@ -544,6 +780,19 @@ function drawScene(tSec, now) {
         ctx.font = '400 10px "IBM Plex Mono", monospace';
         ctx.fillStyle = lt.ch.color === 'G' ? 'rgba(130,220,175,0.75)' : 'rgba(255,215,150,0.7)';
         ctx.fillText(charNotation(lt.ch), lt.x, lt.y + 36);
+      }
+    }
+  }
+
+  /* keepers' tenders: one moored dinghy per hand in the git record, at close zoom */
+  if (cam.s > 1.15) {
+    ctx.fillStyle = '#101a2b';
+    for (const lt of lights) {
+      if (!lt.tenders || lt.x < wx0 - 120 || lt.x > wx1 + 120) continue;
+      for (const off of lt.tenders) {
+        const tx = lt.x + off;
+        const ty = window.__coastY(tx) - 2;
+        ctx.fillRect(tx - 4, ty - 2.4, 8, 2.6);
       }
     }
   }
@@ -604,6 +853,29 @@ function drawScene(tSec, now) {
 
   ctx.restore();
 
+  /* the watch caption: the true count, stated under the watched tower */
+  if (spot && rise > 0.02) {
+    const sp2 = worldToScreen(spot.x, spot.y);
+    if (sp2[0] > -220 && sp2[0] < vw + 220) {
+      const k = spotK;
+      ctx.globalAlpha = rise;
+      ctx.textAlign = 'center';
+      ctx.font = 'italic 400 15px Fraunces, Georgia, serif';
+      ctx.fillStyle = '#ffd98f';
+      const line = k === 0
+        ? 'No mail inbound tonight — no page cites this one.'
+        : k + (k === 1 ? ' packet' : ' packets') + ' inbound tonight.';
+      const capY = Math.min(vh - 46, sp2[1] + Math.max(52, 40 * cam.s + 18));
+      ctx.fillText(line, sp2[0], capY);
+      if (spot === maxInboundLt) {
+        ctx.font = 'italic 300 13px Fraunces, Georgia, serif';
+        ctx.fillStyle = 'rgba(255,217,143,0.85)';
+        ctx.fillText('The busiest water on the coast.', sp2[0], capY + 20);
+      }
+      ctx.globalAlpha = 1;
+    }
+  }
+
   /* compass rose in the chart margin (screen space, only in chart mode) */
   if (!readerOpen && cam.s < 0.5) {
     const cxr = vw - 120, cyr = vh - 130, R = 52;
@@ -634,9 +906,19 @@ function drawScene(tSec, now) {
 
 /* ============ animation loop ============ */
 let rafId = null;
+let avgFrame = 8;
+window.__diag = { frameMs: 0, avgFrameMs: 0, state: 'boot' };
+function diagState() {
+  return REDUCED ? 'calm' : (readerOpen ? 'reading' : (hoverLt ? 'watch' : 'coast'));
+}
 function loop(now) {
-  const t = now / 1000;
-  drawScene(t, now);
+  const t0 = performance.now();
+  drawScene(now / 1000, now);
+  const dt = performance.now() - t0;
+  avgFrame += (dt - avgFrame) * 0.05;
+  window.__diag.frameMs = dt;
+  window.__diag.avgFrameMs = avgFrame;
+  window.__diag.state = diagState();
   rafId = requestAnimationFrame(loop);
 }
 function startLoop() {
@@ -644,7 +926,13 @@ function startLoop() {
   if (!rafId) rafId = requestAnimationFrame(loop);
 }
 function staticDraw() {
+  const t0 = performance.now();
   drawScene(4.2, performance.now());
+  const dt = performance.now() - t0;
+  avgFrame += (dt - avgFrame) * 0.05;
+  window.__diag.frameMs = dt;
+  window.__diag.avgFrameMs = avgFrame;
+  window.__diag.state = diagState();
   needsDraw = false;
 }
 
@@ -679,12 +967,76 @@ canvas.addEventListener('pointermove', e => {
     cam.x = dragStart.cx - dx / cam.s;
     cam.y = dragStart.cy - dy / cam.s;
     clampCam();
+    setHover(null);
     if (REDUCED) staticDraw();
     hideTooltip();
     return;
   }
   const lt = nearestLight(e.clientX, e.clientY);
-  if (lt) showTooltip(lt, e.clientX, e.clientY); else hideTooltip();
+  setHover(lt);
+  if (lt) { showTooltip(lt, e.clientX, e.clientY); return; }
+  const sea = seaThingAt(e.clientX, e.clientY);
+  if (sea) showSeaTooltip(sea, e.clientX, e.clientY); else hideTooltip();
+});
+
+function setHover(lt) {
+  if (lt === hoverLt) return;
+  hoverLt = lt;
+  hoverT0 = performance.now();
+  if (lt) focusIdx = lt.i;
+  if (REDUCED) staticDraw();
+}
+
+/* what rests on the water here? fog and plankton answer for themselves */
+function seaThingAt(sx, sy) {
+  const w = screenToWorld(sx, sy);
+  for (const bl of blooms) {
+    const dx = w[0] - bl.x, dy = w[1] - bl.y;
+    if (dx * dx + dy * dy < bl.r * bl.r * 2.6) return { kind: 'bloom', lt: bl.lt, n: bl.n };
+  }
+  for (const ft of fogTowers) {
+    for (const f of ft.banks) {
+      const dx = (w[0] - f.x) / f.rx, dy = (w[1] - f.y) / (f.ry * 1.6);
+      if (dx * dx + dy * dy < 1) return { kind: 'fog', lt: ft.lt, d: ft.d };
+    }
+  }
+  return null;
+}
+
+function showSeaTooltip(sea, x, y) {
+  const nm = escapeHtml(sea.lt.page.sidebarLabel || sea.lt.page.title);
+  if (sea.kind === 'fog') {
+    tooltip.innerHTML =
+      '<div class="tt-name">Fog off ' + nm + '</div>' +
+      '<div class="tt-plain">Last tended ' + sea.d + ' days ago. Only time lays this bank.</div>';
+  } else {
+    tooltip.innerHTML =
+      '<div class="tt-name">Bioluminescence off ' + nm + '</div>' +
+      '<div class="tt-plain">The sea remembers ' + sea.n + (sea.n === 1 ? ' night watch' : ' night watches') +
+      ' — one bloom per edit made between midnight and 6 a.m.</div>';
+  }
+  tooltip.hidden = false;
+  placeTooltip(x, y);
+  canvas.style.cursor = 'default';
+}
+
+/* keyboard watch: arrows walk the coast, Enter opens the lamp room */
+canvas.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    focusIdx = focusIdx < 0 ? 0
+      : (focusIdx + (e.key === 'ArrowRight' ? 1 : -1) + lights.length) % lights.length;
+    const lt = lights[focusIdx];
+    setHover(lt);
+    flyTo(lt.lampX, lt.lampY + 40, Math.max(cam.s, 0.4), 420);
+    showTooltip(lt, vw * 0.5, vh * 0.3);
+  } else if ((e.key === 'Enter' || e.key === ' ') && hoverLt) {
+    e.preventDefault();
+    location.hash = '#' + hoverLt.slug;
+  } else if (e.key === 'Escape') {
+    setHover(null);
+    hideTooltip();
+  }
 });
 canvas.addEventListener('pointerup', e => {
   dragging = false;
@@ -694,7 +1046,7 @@ canvas.addEventListener('pointerup', e => {
     if (lt) { location.hash = '#' + lt.slug; }
   }
 });
-canvas.addEventListener('pointerleave', hideTooltip);
+canvas.addEventListener('pointerleave', () => { setHover(null); hideTooltip(); });
 canvas.addEventListener('wheel', e => {
   e.preventDefault();
   const f = Math.exp(-e.deltaY * 0.0016);
@@ -717,20 +1069,37 @@ function showTooltip(lt, x, y) {
     keeper = 'Kept by ' + pv.topAuthor + ' since ' + monthName(pv.first) + ' · ' + pv.commits +
       (pv.commits === 1 ? ' visit' : ' visits');
   }
+  const inb = lt.inLanes ? lt.inLanes.length : 0;
+  const outb = lt.outLanes ? lt.outLanes.length : 0;
+  const mail = (inb || outb)
+    ? 'Night mail: ' + inb + ' inbound · ' + outb + ' outbound — each lit thread is a page citing this one'
+    : 'No mail calls here: no citations in or out';
+  const fog = lt.staleDays > 180
+    ? '<div class="tt-fog">Fog on this water: last tended ' + lt.staleDays + ' days ago.</div>' : '';
+  const nNight = pv ? (pv.night || 0) : 0;
+  const glow = nNight > 0
+    ? '<div class="tt-glow">The sea below remembers ' + nNight + (nNight === 1 ? ' night watch.' : ' night watches.') + '</div>' : '';
   tooltip.innerHTML =
     '<div class="tt-name">' + escapeHtml(lt.page.sidebarLabel || lt.page.title) + '</div>' +
     '<div class="tt-char ' + cls + '">' + charNotation(ch) + (ch.extinct ? ' (extinguished)' : '') + '</div>' +
     '<div class="tt-plain">' + charPlain(ch) + (ch.extinct && relit.has(lt.slug) ? ' — relit for your watch' : '') + '</div>' +
+    '<div class="tt-mail">' + mail + '</div>' + fog + glow +
     (keeper ? '<div class="tt-keeper">' + escapeHtml(keeper) + '</div>' : '') +
     '<div class="tt-go">click to sail to this light</div>';
   tooltip.hidden = false;
+  placeTooltip(x, y, true);
+  canvas.style.cursor = 'pointer';
+}
+function placeTooltip(x, y, above) {
   const tw = tooltip.offsetWidth, th = tooltip.offsetHeight;
-  let tx = x + 16, ty = y + 16;
+  let tx = x + 16;
+  /* for lights the tooltip sits above the cursor, clear of the watch caption below */
+  let ty = above ? y - th - 18 : y + 16;
   if (tx + tw > vw - 8) tx = x - tw - 12;
+  if (ty < 8) ty = y + 24;
   if (ty + th > vh - 8) ty = y - th - 12;
   tooltip.style.left = tx + 'px';
   tooltip.style.top = ty + 'px';
-  canvas.style.cursor = 'pointer';
 }
 function hideTooltip() {
   tooltip.hidden = true;
@@ -1087,16 +1456,21 @@ function openPage(slug, sail) {
     '<div class="light-plain">' + charPlain(ch) + (ch.extinct ? '; it burns again while you read' : '') + '</div>' +
     (page.description ? '<div class="light-desc">' + escapeHtml(page.description) + '</div>' : '');
 
-  /* keepers' plaque, every word from provenance */
+  /* the Watch Book: a six-line keeper's logbook, one provenance field per line */
   if (pv) {
     const others = (pv.authors || []).filter(a => a !== pv.topAuthor);
+    const hands = escapeHtml(pv.topAuthor) + ' (keeper)' +
+      (others.length ? ', ' + others.map(escapeHtml).join(', ') : '');
     plaque.innerHTML =
-      '<div class="plaque-title">Keepers&rsquo; plaque</div>' +
-      '<div class="plaque-main">Kept by ' + escapeHtml(pv.topAuthor) + ' since ' + monthName(pv.first) +
-      '. ' + pv.commits + (pv.commits === 1 ? ' visit' : ' visits') + '. ' +
-      pv.night + (pv.night === 1 ? ' night watch' : ' night watches') + '.</div>' +
-      '<div class="plaque-side">' + pv.careDays + ' days in care, last tended ' + monthName(pv.last) + '.' +
-      (others.length ? ' Also tended by ' + others.map(escapeHtml).join(', ').replace(/\.$/, '') + '.' : '') + '</div>';
+      '<div class="plaque-title">The Watch Book</div>' +
+      '<dl class="logbook">' +
+      '<div class="logline"><dt>First lit</dt><dd>' + monthName(pv.first) + '</dd></div>' +
+      '<div class="logline"><dt>Last tended</dt><dd>' + monthName(pv.last) + '</dd></div>' +
+      '<div class="logline"><dt>Days in care</dt><dd>' + pv.careDays + '</dd></div>' +
+      '<div class="logline"><dt>Visits logged</dt><dd>' + pv.commits + '</dd></div>' +
+      '<div class="logline"><dt>Night watches</dt><dd>' + pv.night + '</dd></div>' +
+      '<div class="logline"><dt>Hands</dt><dd>' + (pv.authors || []).length + ' — ' + hands + '</dd></div>' +
+      '</dl>';
   } else {
     plaque.innerHTML = '';
   }
@@ -1141,6 +1515,8 @@ function closeReaderPanel() {
   document.body.classList.remove('reading');
 }
 document.getElementById('reader-close').addEventListener('click', closeReaderPanel);
+/* the chart index stays one click away from every state, the lamp room included */
+document.getElementById('reader-index').addEventListener('click', () => toggleDrawer('index'));
 
 /* in-page anchors (#fragment) inside the reader must scroll, not route */
 reader.addEventListener('click', e => {
@@ -1214,8 +1590,10 @@ function buildIndex(filter) {
       const lt = bySlug.get(slug);
       const dark = lt.ch.extinct && !relit.has(slug);
       const dot = dark ? 'x' : (lt.ch.color === 'G' ? 'g' : 'w');
+      const fogChip = lt.staleDays > 180
+        ? '<span class="idx-fog" title="Fog on this water: last tended ' + lt.staleDays + ' days ago">fog</span>' : '';
       rows.push('<li><a data-slug href="#' + slug + '" class="' + (slug === currentSlug ? 'current' : '') + '">' +
-        '<span class="lampdot ' + dot + '"></span><span>' + escapeHtml(p.sidebarLabel || p.title) + '</span>' +
+        '<span class="lampdot ' + dot + '"></span><span>' + escapeHtml(p.sidebarLabel || p.title) + '</span>' + fogChip +
         '<span class="idx-char">' + (lt.ch.extinct ? '<span class="idx-ext">ext.</span>' : charNotation(lt.ch)) + '</span></a></li>');
     }
     if (!rows.length) continue;
@@ -1277,10 +1655,11 @@ function buildKey() {
     'The four lights cited 25 times or more sweep true rotating beams.</div>' +
     '<div class="key-block"><h3>Dark lights</h3>' + nExt + ' towers stand with their lamps out &mdash; pages no other page cites &mdash; ' +
     'marked <em>(extinguished)</em> on the chart. Visit one and it burns again for your whole watch.</div>' +
-    '<div class="key-block"><h3>The coast itself</h3>The 18 bays and headlands are the documentation&rsquo;s 18 chart sections, ' +
+    '<div class="key-block"><h3>The coast itself</h3>The ' + sections.length + ' bays and headlands are the documentation&rsquo;s chart sections, ' +
     'laid along one continuous coastline. The dotted shipping lane threads every light in reading order, the way a coastal ' +
-    'passage plan does. The fractal shore, the headlands&rsquo; placement, the swell&rsquo;s phase, the fog banks&rsquo; drift and ' +
+    'passage plan does. The fractal shore, the headlands&rsquo; placement, the swell&rsquo;s phase and ' +
     'each lamp&rsquo;s phase offset are drawn from one fixed seed; the rhythms themselves are the data.</div>' +
+    buildSeaKey() +
     '<div class="key-block"><h3>This coast in numbers</h3><ul class="key-counts">' +
     '<li><span class="n">' + lights.length + '</span> lighthouses, one per page</li>' +
     '<li><span class="n">' + sections.length + '</span> bays and headlands</li>' +
@@ -1290,6 +1669,61 @@ function buildKey() {
     '<li><span class="n">' + nKeepers + '</span> keepers on the roll of honour</li>' +
     '<li><span class="n">' + nNight + '</span> night watches stood (edits between midnight and 6 a.m.)</li>' +
     '</ul></div>';
+  wireKeyToggle();
+}
+
+/* the working sea's own key blocks, every number derived on the spot */
+function buildSeaKey() {
+  const nFog = fogTowers.length;
+  const fogMax = fogTowers.reduce((m, f) => (f.d > (m ? m.d : 0) ? f : m), null);
+  const nFresh = lights.filter(l => l.staleDays <= 90).length;
+  const bloomCoves = new Set(blooms.map(b => b.lt.slug)).size;
+  const brightest = blooms.reduce((m, b) => (b.n > (m ? m.n : 0) ? b : m), null);
+  const busiestName = maxInboundLt ? escapeHtml(maxInboundLt.page.sidebarLabel || maxInboundLt.page.title) : '';
+  const busiestK = maxInboundLt && maxInboundLt.inLanes ? maxInboundLt.inLanes.length : 0;
+  return (
+    '<div class="key-block"><h3>Night mail</h3>The ' + laneCount + ' sightlines are worked as sea lanes: every packet ' +
+    'under way is one real citation, sailing from the page that cites to the page cited. At most 8% of the lanes are ' +
+    'under way at any moment &mdash; their sailing times follow the golden sequence, so the share is exact, never a dice roll ' +
+    '&mdash; and the whole sea falls calm while you read. Hover or focus a tower and its true inbound lanes rise as pale ' +
+    'threads: that is the related-pages map. The busiest water on the coast lies off <em>' + busiestName + '</em>, ' +
+    busiestK + ' packets inbound tonight.</div>' +
+    '<div class="key-block"><h3>Running lights</h3>Mail rides under a single amber masthead by default. ' +
+    'An audition for the owner: true running lights, red to port and green to starboard &mdash; the only red on the ' +
+    'coast would belong to moving mail.<div class="key-toggle">' +
+    '<button type="button" id="lights-amber" aria-pressed="' + (!mailNav) + '">Amber masthead</button>' +
+    '<button type="button" id="lights-nav" aria-pressed="' + (!!mailNav) + '">Red-green audition</button>' +
+    '</div></div>' +
+    '<div class="key-block"><h3>Honest fog</h3>Fog rests only on the water &mdash; never on a tower, its name, or its lamp. ' +
+    nFog + ' stretches lie under banks tonight because more than 180 days have passed since their pages were last tended' +
+    (fogMax ? ', the thickest off <em>' + escapeHtml(fogMax.lt.page.sidebarLabel || fogMax.lt.page.title) + '</em>, last tended ' +
+    fogMax.d + ' days ago' : '') + '. Fog blames time, never keepers; the chart index lists fogbound pages undimmed.</div>' +
+    '<div class="key-block"><h3>Bioluminescence</h3>' + blooms.length + ' plankton blooms glow in ' + bloomCoves +
+    ' coves &mdash; one bloom per edit made between midnight and 6 a.m.' +
+    (brightest ? ' The brightest water lies below <em>' + escapeHtml(brightest.lt.page.sidebarLabel || brightest.lt.page.title) +
+    '</em>: the sea there remembers ' + brightest.n + ' night watches.' : '') + '</div>' +
+    '<div class="key-block"><h3>Sea state</h3>One batched shimmer band glints off the ' + nFresh +
+    ' towers tended within the last 90 days; stale water lies flat and matte. At close zoom, one moored tender waits ' +
+    'at each jetty for every hand in the page&rsquo;s git record.</div>' +
+    '<div class="key-block refusal"><h3>The refusal list</h3>This coast no longer shows: the seven seeded fog banks ' +
+    '(drawn for depth, answering no field), the two decorative ships that sailed the lane, and the dice-roll moon with ' +
+    'its moonpath. It will not show storms, gulls, or any weather the corpus did not earn. Every remaining light, lane, ' +
+    'bank, bloom and glint names the field it reads.</div>'
+  );
+}
+function wireKeyToggle() {
+  const bA = document.getElementById('lights-amber');
+  const bN = document.getElementById('lights-nav');
+  if (!bA || !bN) return;
+  function setMode(nav) {
+    mailNav = nav;
+    try { localStorage.setItem('workingsea-navlights', nav ? '1' : '0'); } catch (e) {}
+    bA.setAttribute('aria-pressed', String(!nav));
+    bN.setAttribute('aria-pressed', String(nav));
+    if (REDUCED) staticDraw();
+  }
+  bA.addEventListener('click', () => setMode(false));
+  bN.addEventListener('click', () => setMode(true));
 }
 
 function buildKeepers() {
@@ -1300,16 +1734,39 @@ function buildKeepers() {
     for (const a of (p.authors || [])) tends.set(a, (tends.get(a) || 0) + 1);
     if (p.topAuthor) keeps.set(p.topAuthor, (keeps.get(p.topAuthor) || 0) + 1);
   }
-  const names = [...tends.keys()].sort((a, b) => (tends.get(b) - tends.get(a)) || a.localeCompare(b));
-  let html = '<p class="roll-intro">The ' + names.length + ' keepers of this coast, and the lights each has tended, ' +
-    'from six years of the documentation&rsquo;s history. Every name is real.</p><ul class="roll">';
-  for (const n of names) {
-    const t = tends.get(n), k = keeps.get(n) || 0;
-    html += '<li><span class="keeper-name">' + escapeHtml(n) + '</span><span class="keeper-n">' +
-      t + (t === 1 ? ' light' : ' lights') + (k ? ' · principal keeper of ' + k : '') + '</span></li>';
+  const all = [...tends.keys()];
+  /* three disjoint watches, derived from the record itself:
+     principal = first name on at least one plaque; crew = more than one light,
+     never principal; came once = one light, one visit in the record */
+  const principal = all.filter(n => keeps.has(n))
+    .sort((a, b) => (keeps.get(b) - keeps.get(a)) || (tends.get(b) - tends.get(a)) || a.localeCompare(b));
+  const crew = all.filter(n => !keeps.has(n) && tends.get(n) > 1)
+    .sort((a, b) => (tends.get(b) - tends.get(a)) || a.localeCompare(b));
+  const once = all.filter(n => !keeps.has(n) && tends.get(n) === 1)
+    .sort((a, b) => a.localeCompare(b));
+
+  function rows(names) {
+    let h = '<ul class="roll">';
+    for (const n of names) {
+      const t = tends.get(n), k = keeps.get(n) || 0;
+      h += '<li><span class="keeper-name">' + escapeHtml(n) + '</span><span class="keeper-n">' +
+        t + (t === 1 ? ' light' : ' lights') + (k ? ' · principal keeper of ' + k : '') + '</span></li>';
+    }
+    return h + '</ul>';
   }
-  html += '</ul>';
-  drawerBody.innerHTML = html;
+  function group(label, names, open, note) {
+    return '<details class="roll-group"' + (open ? ' open' : '') + '><summary>' + label +
+      ' <span class="roll-count">' + names.length + (names.length === 1 ? ' hand' : ' hands') + '</span></summary>' +
+      '<p class="roll-note">' + note + '</p>' + rows(names) + '</details>';
+  }
+  drawerBody.innerHTML =
+    '<p class="roll-intro">' + all.length + ' hands have kept this coast across three and a half years of the ' +
+    'documentation&rsquo;s history: ' + principal.length + ' principal keepers, ' + crew.length +
+    ' crew, and ' + once.length + ' who came once. The book opens on those who came once &mdash; ' +
+    'one tower, one visit, and the name stays on the roll for good.</p>' +
+    group('Came once', once, true, 'Each climbed one tower, once. Every name is real.') +
+    group('Crew', crew, false, 'More than one light tended, though never as the first name on a plaque.') +
+    group('Principal keepers', principal, false, 'The first name on at least one lamp-room plaque.');
 }
 
 /* intro */
@@ -1334,8 +1791,20 @@ Promise.all([
   cam.y = first.y - (vh * 0.55) / cam.s;
   clampCam();
   startLoop();
-  route(false);
+  /* land on the open coast: the lamp room opens only when a page is asked for */
+  if (location.hash && location.hash !== '#' && location.hash !== '#/') route(false);
   window.addEventListener('resize', () => { resize(); clampCam(); if (REDUCED) staticDraw(); });
+  /* small read-only handle for verification scripts */
+  window.__coast = {
+    pos: function (slug) {
+      const lt = bySlug.get(slug);
+      if (!lt) return null;
+      const p = worldToScreen(lt.lampX, lt.lampY);
+      return { x: p[0], y: p[1], s: cam.s };
+    },
+    lights: function () { return lights.length; },
+    lanes: function () { return laneCount; }
+  };
 }).catch(err => {
   document.body.insertAdjacentHTML('beforeend',
     '<p style="position:fixed;inset:auto 16px 16px;color:#f0c4b4;font-family:serif">The chart could not be loaded: ' +
