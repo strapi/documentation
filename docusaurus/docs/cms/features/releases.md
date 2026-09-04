@@ -216,3 +216,28 @@ Once a release is published, the release itself cannot be updated. You can not r
     dark: '/img/assets/releases/publish-release_DARK.png',
   }}
 />
+
+### Audit logging of release actions
+
+<EnterpriseBadge />
+
+Release actions are automatically captured in [Audit Logs](/cms/features/audit-logs) for Enterprise plan users. Every significant change to a release, its entries, or its settings produces a log entry — regardless of whether the action came from the admin panel or a scheduled job.
+
+The following actions are recorded:
+
+| Action | What is logged |
+| --- | --- |
+| Create release | The new release name, and whether it was scheduled. |
+| Update release | The fields that changed (name, schedule date, timezone) and their previous and new values. No entry is created if nothing changed. |
+| Delete release | The deleted release identifier. |
+| Trigger release | The number of entries published or unpublished and the outcome: `success` or `failure` (error name only, no internal details). |
+| Add entry to release | One log entry per entry added, with the content type, document ID, locale, and action type (`publish` or `unpublish`). |
+| Change entry on release | The previous and new action type (`publish` ↔ `unpublish`). No entry is created if nothing changed. |
+| Remove entry from release | The entry that was explicitly removed from the release. |
+| Update release settings | The previous and new default timezone value. No entry is created if nothing changed. |
+
+Each log record includes the actor (user name, or `-` for scheduled triggers), the origin (`admin` for manual actions, `scheduler` for automatic ones), and the resource affected. To view release log entries, go to <Icon name="gear-six" /> **Settings > Audit Logs** and look for entries prefixed with *release*.
+
+:::note
+Deleting an entry or a locale that happens to be in a pending release does not create a "Remove entry from release" log. Only explicit removal is recorded. The delete action on the entry or locale itself is logged separately.
+:::

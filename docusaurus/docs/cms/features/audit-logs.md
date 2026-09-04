@@ -51,6 +51,9 @@ The Audit Logs feature logs the following events:
 | Entry (draft/publish) | `create`, `update`, `delete`, `publish`, `unpublish` |
 | Media | `create`, `update`, `delete` |
 | Login / Logout | `success`, `fail` |
+| Releases | `create`, `update`, `delete`, `trigger` |
+| Release entries | `add`, `update`, `remove` |
+| Release settings | `update` |
 | Role / Permission | `create`, `update`, `delete` |
 | User | `create`, `update`, `delete` |
 
