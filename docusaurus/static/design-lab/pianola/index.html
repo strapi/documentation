@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Pianola — the Strapi documentation performs its own history</title>
+<link rel="stylesheet" href="pianola.css">
+</head>
+<body>
+<div id="app">
+
+  <header class="masthead">
+    <h1>The Pianola</h1>
+    <span id="pressing-line">pressing the roll…</span>
+    <span class="spacer"></span>
+    <button class="mast-btn" id="btn-index" title="Index of all pages">Index<kbd class="hint">Tab</kbd></button>
+    <button class="mast-btn" id="btn-programme">Programme</button>
+    <button class="mast-btn" id="btn-voice" aria-pressed="false" title="Optional felt-piano voice. Silent by default.">Voice: silent</button>
+  </header>
+
+  <main class="hall">
+    <section id="stage" aria-label="The instrument">
+      <canvas id="roll-canvas"></canvas>
+      <div id="welcome-plate">
+        <div class="wp-title">Wind the crank</div>
+        <div class="wp-sub" id="welcome-sub">loading the pressing…</div>
+      </div>
+      <div id="tip" role="tooltip"></div>
+    </section>
+
+    <aside id="cabinet">
+      <h2>The hands <span class="sub" id="roster-sub"></span></h2>
+      <div id="roster"></div>
+      <div id="lead-hand"></div>
+      <div id="plaques">
+        <div class="plaque" id="retuning-plate">
+          <div class="rt-big" id="rt-text"></div>
+          <div class="q-mono" id="rt-mono"></div>
+        </div>
+        <div class="plaque night-plaque">
+          <div class="q-title">Night on this roll</div>
+          <div class="q-body" id="night-def"></div>
+        </div>
+        <div class="plaque">
+          <div class="q-title">Ghost holes</div>
+          <div class="q-body" id="ghost-def"></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer id="transport">
+    <button id="crank" title="Wind the crank (Space)">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+        <circle cx="14" cy="14" r="11" fill="none" stroke="#C9A567" stroke-width="2"/>
+        <g class="spokes" stroke="#C9A567" stroke-width="2">
+          <line x1="14" y1="4" x2="14" y2="24"/>
+          <line x1="4" y1="14" x2="24" y2="14"/>
+        </g>
+        <circle cx="14" cy="14" r="2.6" fill="#EFD9A7"/>
+      </svg>
+      <span id="crank-label">Wind</span>
+    </button>
+    <button class="t-btn" id="btn-speed" aria-pressed="false" title="Double time">2×</button>
+    <input type="range" id="scrub" min="0" max="10000" value="0" step="1" aria-label="Scrub the roll">
+    <div id="odometer">
+      <div id="odo-date">—</div>
+      <div id="odo-sub">—</div>
+    </div>
+  </footer>
+</div>
+
+<!-- Tab index -->
+<div class="overlay" id="index-overlay">
+  <div id="index-card" role="dialog" aria-label="Page index">
+    <header>
+      <span class="engraved">Index of pages</span>
+      <input id="index-q" type="text" placeholder="type a title… Enter opens" autocomplete="off" spellcheck="false">
+      <span id="index-count"></span>
+      <button class="corner-x" id="index-close" aria-label="Close">×</button>
+    </header>
+    <div id="index-list"></div>
+  </div>
+</div>
+
+<!-- Programme card -->
+<div class="overlay" id="programme-overlay">
+  <div id="programme-card" role="dialog" aria-label="Programme">
+    <h3>Programme</h3>
+    <div class="prog-sub" id="prog-sub"></div>
+    <div id="prog-movements"></div>
+    <p class="prog-note" id="prog-note1"></p>
+    <p class="prog-note" id="prog-note2"></p>
+    <p class="prog-note" id="prog-note3"></p>
+    <p style="text-align:center;margin-top:18px"><button class="cue" id="programme-close">Return to the parlour</button></p>
+  </div>
+</div>
+
+<!-- Reading Roll -->
+<div class="overlay" id="reading-overlay">
+  <div id="reading-bar">
+    <button class="t-btn" id="reading-back" title="Previous roll">⟵ Back</button>
+    <span class="rb-title" id="reading-title"></span>
+    <span class="engraved" style="font-size:10px">Esc returns to the performance</span>
+    <button class="corner-x" id="reading-close" aria-label="Close">×</button>
+  </div>
+  <div id="reading-scroll">
+    <div id="reading-roller-top"></div>
+    <div id="reading-paper"></div>
+    <div id="reading-roller-bottom"></div>
+  </div>
+</div>
+
+<!-- Credits -->
+<div class="overlay" id="credits-overlay">
+  <button class="corner-x" id="credits-close" aria-label="Close credits">×</button>
+  <div id="credits-scroll"><div id="credits-inner"></div></div>
+</div>
+
+<div id="cue-card"></div>
+<div id="toast"></div>
+
+<script src="pianola.js"></script>
+</body>
+</html>
