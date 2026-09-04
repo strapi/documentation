@@ -5575,18 +5575,20 @@
      of its two terminal quarters, easing back and forth forever.
      ================================================================== */
   var hwAdj = null;
+  function ensureHwAdj() {
+    if (hwAdj) return;
+    hwAdj = {};
+    for (var i = 0; i < highways.length; i++) {
+      var hw = highways[i];
+      if (hw.w < 2) continue;                 /* only roads that are drawn */
+      var L = Math.hypot(hw.b.x - hw.a.x, hw.b.y - hw.a.y);
+      (hwAdj[hw.a.i] || (hwAdj[hw.a.i] = [])).push([hw.b.i, L]);
+      (hwAdj[hw.b.i] || (hwAdj[hw.b.i] = [])).push([hw.a.i, L]);
+    }
+  }
   function distPath(A, Bd) {
     var i, j;
-    if (!hwAdj) {
-      hwAdj = {};
-      for (i = 0; i < highways.length; i++) {
-        var hw = highways[i];
-        if (hw.w < 2) continue;               /* only roads that are drawn */
-        var L = Math.hypot(hw.b.x - hw.a.x, hw.b.y - hw.a.y);
-        (hwAdj[hw.a.i] || (hwAdj[hw.a.i] = [])).push([hw.b.i, L]);
-        (hwAdj[hw.b.i] || (hwAdj[hw.b.i] = [])).push([hw.a.i, L]);
-      }
-    }
+    ensureHwAdj();
     var distv = {}, prev = {}, done = {}, n = dists.length;
     distv[A.i] = 0;
     for (i = 0; i < n; i++) {
@@ -6291,6 +6293,327 @@
     ctx.textAlign = 'left';
   }
 
+  /* ------------------------------------------- the convergence reveal
+     The one graft carried over from the Working Sea tribunal, the organ
+     no survivor carries: hover (or focus, via the index) a building and
+     its REAL inbound citations rise from the streets as pale threads
+     that run the street grid the way the tram rails do — out of the
+     source lot to its street line, along the plaza, down the drawn
+     highways, up the subject's own lane — and converge on it, with a
+     quiet caption stating the true count. The threads live on the
+     overlay: the cached world layer never repaints for a hover, and one
+     reveal at a time is the law. At FAR the threads would be spaghetti
+     over the establishing shot, so the whole chorus folds into a single
+     soft halo on the ground, scaled by how many routes end there. */
+  var reveal = null;                /* the one live reveal, never two */
+  var revealGeo = {}, revealGeoN = 0;
+  var RV_IN = 260, RV_GROW = 620, RV_OUT = 380, RV_STAG = 40, RV_RISE = 480;
+
+  /* single-source Dijkstra toward the subject's quarter, so every source
+     quarter knows its next hop along the drawn highways */
+  function revealPrev(ti) {
+    ensureHwAdj();
+    var distv = {}, prev = {}, done = {}, n = dists.length, i, j;
+    distv[ti] = 0;
+    for (i = 0; i < n; i++) {
+      var best = -1, bd = 1e18;
+      for (j = 0; j < n; j++) if (!done[j] && distv[j] !== undefined && distv[j] < bd) { bd = distv[j]; best = j; }
+      if (best < 0) break;
+      done[best] = 1;
+      var es = hwAdj[best] || [];
+      for (j = 0; j < es.length; j++) {
+        var nd = bd + es[j][1];
+        if (distv[es[j][0]] === undefined || nd < distv[es[j][0]]) { distv[es[j][0]] = nd; prev[es[j][0]] = best; }
+      }
+    }
+    return prev;
+  }
+  /* lot to plaza centre along the local grid: out to the lot's street
+     line, along it to the plaza row, in to the centre — the lane shape */
+  function rvLeg(lot) {
+    var sx = gpos(Math.round(lot.cx / 4) * 4) - SW / 2;
+    return [[lot.x, lot.y], [sx, lot.y], [sx, -SW / 2], [0, -SW / 2], [0, 0]];
+  }
+  /* lot to lot inside one quarter: exactly the shape buildStreets lays */
+  function rvLane(A, B) {
+    var sx = gpos(Math.round(((A.cx + B.cx) / 2) / 4) * 4) - SW / 2;
+    var sy = gpos(Math.round(((A.cy + B.cy) / 2) / 4) * 4) - SW / 2;
+    return [[A.x, A.y], [sx, A.y], [sx, sy], [B.x, sy], [B.x, B.y]];
+  }
+  function rvW(d, q) { return [d.x + q[0] * d.ca - q[1] * d.sa, d.y + q[0] * d.sa + q[1] * d.ca]; }
+  function rvRoute(rs, rt2, prev) {
+    var ds = rs.dist, dt2 = rt2.dist, pts = [], i;
+    if (ds === dt2) {
+      var lane = rvLane(rs.lot, rt2.lot);
+      for (i = 0; i < lane.length; i++) pts.push(rvW(ds, lane[i]));
+      return pts;
+    }
+    var lg = rvLeg(rs.lot);
+    for (i = 0; i < lg.length; i++) pts.push(rvW(ds, lg[i]));
+    var hop = ds.i, guard = 0, linked = true;
+    while (hop !== dt2.i) {
+      hop = prev[hop];
+      if (hop === undefined || guard++ > 64) { linked = false; break; }
+      pts.push([dists[hop].x, dists[hop].y]);
+    }
+    if (!linked) {
+      /* quarters no drawn highway joins: an honest gridded elbow, never
+         a straight air-line */
+      pts.push([dt2.x, ds.y]);
+      pts.push([dt2.x, dt2.y]);
+    }
+    var lgB = rvLeg(rt2.lot);
+    for (i = lgB.length - 2; i >= 0; i--) pts.push(rvW(dt2, lgB[i]));
+    return pts;
+  }
+  /* clean, subdivide (fine near the subject so the rise is a curve, not
+     a kink), lift the tail, and chunk for styling and occlusion */
+  function rvBake(pts, rt2) {
+    var cl = [pts[0]], i, j;
+    for (i = 1; i < pts.length; i++) {
+      var lp = cl[cl.length - 1];
+      if (Math.hypot(pts[i][0] - lp[0], pts[i][1] - lp[1]) > 0.9) cl.push(pts[i]);
+    }
+    if (cl.length < 2) return null;
+    var tot = 0;
+    for (i = 1; i < cl.length; i++) tot += Math.hypot(cl[i][0] - cl[i - 1][0], cl[i][1] - cl[i - 1][1]);
+    if (tot < 8) return null;
+    var LIFT = Math.min(46, tot * 0.4);
+    var zTop = clamp((rt2.solidz || 10) * 0.55, 4, 26);
+    var out = [], cum = [], acc = 0;
+    out.push([cl[0][0], cl[0][1], 1.1]); cum.push(0);
+    for (i = 1; i < cl.length; i++) {
+      var ax2 = cl[i - 1][0], ay2 = cl[i - 1][1], bx2 = cl[i][0], by2 = cl[i][1];
+      var L = Math.hypot(bx2 - ax2, by2 - ay2);
+      var step = (acc + L > tot - LIFT - 8) ? 8 : 60;
+      var n = Math.max(1, Math.ceil(L / step));
+      for (j = 1; j <= n; j++) {
+        var t = j / n, u = tot - (acc + L * t);      /* distance from the end */
+        var z = 1.1;
+        if (u < LIFT) { var k = 1 - u / LIFT; z = 1.1 + k * k * (3 - 2 * k) * zTop; }
+        out.push([ax2 + (bx2 - ax2) * t, ay2 + (by2 - ay2) * t, z]);
+        cum.push(acc + L * t);
+      }
+      acc += L;
+    }
+    var ch = [];
+    for (i = 0; i + 1 < out.length; i += 4) {
+      var i1 = Math.min(i + 4, out.length - 1);
+      var m = out[Math.min(i + 2, i1)];
+      ch.push({ i0: i, i1: i1, mx: m[0], my: m[1], mz: m[2], occ: 1, oa: 1 });
+    }
+    return { p: out, cum: cum, len: tot, ch: ch };
+  }
+  function revealThreads(rt2) {
+    var srcs = (adjIn[rt2.slug] || []).filter(function (s) {
+      var q = rec[s]; return q && q !== rt2 && q.lot && q.dist;
+    });
+    srcs.sort();
+    var prev = null, out = [], i;
+    for (i = 0; i < srcs.length && out.length < 80; i++) {
+      var rs = rec[srcs[i]];
+      if (!prev && rs.dist !== rt2.dist) prev = revealPrev(rt2.dist.i);
+      var pts = rvRoute(rs, rt2, prev);
+      if (!pts) continue;
+      var th = rvBake(pts, rt2);
+      if (th) out.push(th);
+    }
+    return out;
+  }
+  function revealLift(slug) {
+    var r = rec[slug];
+    if (!r || !r.lot || r.wx === undefined) { reveal = null; return; }
+    if (reveal && reveal.slug === slug) {
+      if (reveal.out) {          /* resumed mid-fade: rebase so alpha is continuous */
+        var aCur = reduced() ? 0 : 1 - smoothstep(clamp((performance.now() - reveal.outT) / RV_OUT, 0, 1));
+        reveal.out = false;
+        reveal.born = Math.min(reveal.born, performance.now() - RV_IN * aCur);
+      }
+      return;
+    }
+    var g = revealGeo[slug];
+    if (!g) {
+      if (revealGeoN >= 16) { revealGeo = {}; revealGeoN = 0; }
+      g = revealGeo[slug] = revealThreads(r);
+      revealGeoN++;
+    }
+    /* one reveal at a time: the incumbent yields instantly */
+    reveal = { slug: slug, r: r, th: g, born: performance.now(), out: false, outT: 0,
+               occCam: null, occT: 0 };
+  }
+  function revealDrop() {
+    if (!reveal) return;
+    if (reduced()) { reveal = null; return; }
+    if (!reveal.out) { reveal.out = true; reveal.outT = performance.now(); }
+  }
+  /* is this thread point walled off behind a nearer painted building —
+     the dynOcc test, on the chunk's midpoint */
+  function rvHidden(wx, wy, z) {
+    var pd = depthOf(wx, wy, z);
+    if (!proj(wx, wy, z)) return true;
+    var sx = px, sy = py, i, j;
+    for (i = vis.length - 1; i >= 0; i--) {
+      var r = vis[i];
+      if (r._d >= pd - 2) break;
+      var s = r._sil;
+      if (!s || sx < s.x0 || sx > s.x1 || sy < s.y0 || sy > s.y1) continue;
+      var hs = r.hit;
+      for (j = 0; j < hs.length; j++) if (inQuad(hs[j], sx, sy)) return true;
+    }
+    return false;
+  }
+  /* occlusion re-solved only when the camera truly moved, throttled to
+     ~11 Hz mid-pan, and eased per chunk — the pan p95 never carries it */
+  function rvOcc(rv, now) {
+    /* mid-drag the stale solve is invisible under the fade; the fresh one
+       lands with the snap, so a pan never carries the probe cost */
+    if ((dragging || fly) && rv.occCam) return;
+    var oc = rv.occCam;
+    var need = !oc || abs(cam.az - oc.az) > 0.0025 || abs(cam.el - oc.el) > 0.0025 ||
+      abs(cam.dist - oc.dist) > cam.dist * 0.004 ||
+      abs(cam.tx - oc.tx) > 2 || abs(cam.ty - oc.ty) > 2;
+    if (!need) return;
+    if (oc && now - rv.occT < 90) return;
+    rv.occT = now; rv.occCam = { az: cam.az, el: cam.el, dist: cam.dist, tx: cam.tx, ty: cam.ty };
+    var i, c;
+    for (i = 0; i < rv.th.length; i++) {
+      var ch = rv.th[i].ch;
+      for (c = 0; c < ch.length; c++) {
+        var ck = ch[c];
+        /* hidden chunks keep the tram trick: a faint spill, not a hole,
+           so the convergence stays readable without breaking depth */
+        ck.occ = rvHidden(ck.mx, ck.my, ck.mz) ? 0.32 : 1;
+      }
+    }
+  }
+  function rvThreadPass(rv, now, a, zi, glow) {
+    var thCol = glow ? mix(C.copper, C.sun, 0.35) : mix(C.copper, C.water, 0.4);
+    var i, c, j;
+    for (i = 0; i < rv.th.length; i++) {
+      var th = rv.th[i];
+      var gp;
+      if (reduced()) gp = th.len;
+      else {
+        var tt = (now - rv.born - (i % 6) * RV_STAG) / RV_GROW;
+        if (tt <= 0) continue;
+        gp = th.len * (tt >= 1 ? 1 : 1 - Math.pow(1 - tt, 3));
+      }
+      for (c = 0; c < th.ch.length; c++) {
+        var ck = th.ch[c];
+        if (th.cum[ck.i0] >= gp) break;
+        ck.oa += (ck.occ - ck.oa) * (reduced() ? 1 : 0.25);
+        var d = depthOf(ck.mx, ck.my, ck.mz);
+        if (d < 14) continue;
+        var hz = hazeAt(d);
+        var al = (glow ? 0.14 : 0.62) * (1 - hz) * a * ck.oa;
+        if (al < 0.02) continue;
+        if (!proj(ck.mx, ck.my, ck.mz)) continue;
+        if (px < -260 || px > W + 260 || py < -260 || py > H + 260) continue;
+        var lw = clamp(1.1 * (FOC / d), 0.75, 2.3);
+        ctx.strokeStyle = rgbas(mix(thCol, C.haze, hz), al.toFixed(3));
+        ctx.lineWidth = glow ? Math.min(lw * 2.6, 3.0) : lw;
+        ctx.beginPath();
+        var pen = false;
+        for (j = ck.i0; j <= ck.i1; j++) {
+          var q = th.p[j], qx = q[0], qy = q[1], qz = q[2], partial = false;
+          if (th.cum[j] > gp) {
+            var q0 = th.p[j - 1];
+            var f2 = (gp - th.cum[j - 1]) / (th.cum[j] - th.cum[j - 1]);
+            if (!(f2 > 0)) break;
+            qx = q0[0] + (qx - q0[0]) * f2; qy = q0[1] + (qy - q0[1]) * f2; qz = q0[2] + (qz - q0[2]) * f2;
+            partial = true;
+          }
+          if (!proj(qx, qy, 1.1 + (qz - 1.1) * zi)) { pen = false; if (partial) break; continue; }
+          if (pen) ctx.lineTo(px, py); else { ctx.moveTo(px, py); pen = true; }
+          if (partial) break;
+        }
+        if (pen) ctx.stroke();
+      }
+    }
+  }
+  function rvCaption(rv, a) {
+    var r = rv.r;
+    if (!proj(r.wx, r.wy, 0)) return;
+    var cx2 = px, cy2 = py + 20;
+    var txt = r.inb === 0 ? 'no routes end here yet' :
+      nfmt(r.inb) + (r.inb === 1 ? ' route ends here' : ' routes end here');
+    ctx.font = '600 11px "Archivo Narrow", Arial Narrow, sans-serif';
+    var tw = ctx.measureText(txt).width;
+    cx2 = clamp(cx2, tw / 2 + 10, W - tw / 2 - 10);
+    cy2 = clamp(cy2, 24, H - HUDH - 20);
+    ctx.globalAlpha = a * 0.8;
+    ctx.fillStyle = 'rgba(250,240,220,0.88)';
+    rrect(cx2 - tw / 2 - 7, cy2 - 9, tw + 14, 17, 8); ctx.fill();
+    ctx.globalAlpha = a;
+    ctx.fillStyle = rgbs(C.ink);
+    ctx.textAlign = 'center';
+    ctx.fillText(txt, cx2, cy2 + 3.5);
+    ctx.textAlign = 'left';
+    ctx.globalAlpha = 1;
+  }
+  function drawReveal(now) {
+    var rv = reveal;
+    if (!rv) return;
+    var a;
+    if (reduced()) a = rv.out ? 0 : 1;
+    else {
+      a = smoothstep(clamp((now - rv.born) / RV_IN, 0, 1));
+      if (rv.out) {
+        var f = 1 - smoothstep(clamp((now - rv.outT) / RV_OUT, 0, 1));
+        if (f <= 0.02) { reveal = null; return; }
+        a *= f;
+      }
+    }
+    if (a <= 0.02) { if (rv.out) reveal = null; return; }
+    var r = rv.r;
+    /* the far blend rides the true camera distance, not the LOD flip, so
+       a slow zoom never sees the reveal arrive as a step */
+    var tFar = smoothstep(clamp((cam.dist - 1280) / 340, 0, 1));
+    if (tFar > 0.01 && r.inb > 0) {
+      if (!SPR.rvHalo) {
+        SPR.rvHalo = blobSprite(mix(C.copper, C.water, 0.35), 0.85, 1.9);
+        /* the shoreline ring: transparent heart, verdigris rim, soft fade */
+        (function () {
+          var S2 = 128, c2 = document.createElement('canvas');
+          c2.width = S2; c2.height = S2;
+          var g2 = c2.getContext('2d');
+          var col2 = mix(mix(C.copper, C.water, 0.45), [255, 255, 255], 0.30);
+          var grd2 = g2.createRadialGradient(S2 / 2, S2 / 2, 0, S2 / 2, S2 / 2, S2 / 2);
+          grd2.addColorStop(0, rgbas(col2, 0));
+          grd2.addColorStop(0.52, rgbas(col2, 0));
+          grd2.addColorStop(0.74, rgbas(col2, 0.75));
+          grd2.addColorStop(0.88, rgbas(col2, 0.72));
+          grd2.addColorStop(1, rgbas(col2, 0));
+          g2.fillStyle = grd2; g2.fillRect(0, 0, S2, S2);
+          SPR.rvRing = c2;
+        })();
+      }
+      var rvR = 30 + Math.sqrt(r.inb) * 10;
+      /* the archived sea laps at the quarter: a multiplied verdigris
+         shoreline on the paper around it, and a soft additive heart on
+         the subject itself, both scaled by how many routes end here */
+      ctx.globalCompositeOperation = 'multiply';
+      groundSprite(SPR.rvRing, r.wx, r.wy, rvR, 0.9 * tFar * a, 0);
+      ctx.globalCompositeOperation = 'lighter';
+      groundSprite(SPR.rvHalo, r.wx, r.wy, rvR * 0.36, 0.5 * tFar * a, 0);
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    if (tFar < 0.99 && rv.th.length) {
+      rvOcc(rv, now);
+      var aTh = a * (1 - tFar);
+      var zi = reduced() ? 1 : smoothstep(clamp((now - rv.born) / RV_RISE, 0, 1));
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      if (!MQ || reduced()) {          /* the luminous underlay sits the pan out */
+        ctx.globalCompositeOperation = 'lighter';
+        rvThreadPass(rv, now, aTh, zi, true);
+        ctx.globalCompositeOperation = 'source-over';
+      }
+      rvThreadPass(rv, now, aTh, zi, false);
+    }
+    var aCap = reduced() ? a : a * smoothstep(clamp((now - rv.born - 350) / 300, 0, 1));
+    if (aCap > 0.03) rvCaption(rv, aCap);
+  }
+
   /* --------------------------------------------- coarse occlusion grid */
   var OCCS = 16, OCCW = 0, OCCH = 0, occ = null, occStamp = 0;
   function occReset() {
@@ -6818,6 +7141,9 @@
     CTS = DPR;
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     ctx.clearRect(0, 0, W, H);
+    var tr0 = performance.now();
+    drawReveal(t0);
+    DIAG.revealMs = performance.now() - tr0;
     drawDyn(t0);
     var tb2 = performance.now();
     DIAG.dynMs = tb2 - tb1;
@@ -7090,6 +7416,22 @@
     worldEl.addEventListener('pointerup', up);
     worldEl.addEventListener('pointercancel', function () { dragging = false; worldEl.classList.remove('drag'); });
     worldEl.addEventListener('pointerleave', function () { setHover(null); });
+    /* keyboard reach: focusing a page in the index is hovering its
+       building — the reveal and the tip follow the focus ring */
+    sideEl.addEventListener('focusin', function (e) {
+      var s2 = e.target && e.target.getAttribute ? e.target.getAttribute('data-s') : null;
+      if (!s2 || !rec[s2]) return;
+      setHover(s2);
+      var r2 = rec[s2];
+      if (r2.wx !== undefined && proj(r2.wx, r2.wy, (r2.solidz || 8) * 0.5)) {
+        tipEl.style.left = clamp(px, 100, W - 100) + 'px';
+        tipEl.style.top = clamp(py, 24, H - 24) + 'px';
+      }
+    });
+    sideEl.addEventListener('focusout', function (e) {
+      var s2 = e.target && e.target.getAttribute ? e.target.getAttribute('data-s') : null;
+      if (s2 && hovered === s2) setHover(null);
+    });
     worldEl.addEventListener('wheel', function (e) {
       e.preventDefault();
       fly = null;
@@ -7177,7 +7519,8 @@
   function setHover(slug, e) {
     if (hovered === slug) { if (slug && e) { placeTip(e); snapHovCam(); } return; }
     hovered = slug;
-    if (!slug) { hovCam = null; tipEl.classList.remove('on'); if (reduced()) paintNow(); return; }
+    if (!slug) { hovCam = null; tipEl.classList.remove('on'); revealDrop(); if (reduced()) paintNow(); return; }
+    revealLift(slug);
     var r = rec[slug];
     $('.tt', tipEl).textContent = title(r.p);
     $('.tm', tipEl).textContent = ARCH[r.arch].name + ' · ' + ARCH[r.arch].mat + ' · ' +
@@ -7820,6 +8163,23 @@
       });
     },
     lod: function () { return LOD_NAMES[LOD]; },
+    hover: function (s2) { setHover(s2 || null); paintNow(); return hovered; },
+    revealDump: function () {
+      if (!reveal) return null;
+      return reveal.th.map(function (t) {
+        var p0 = t.p[0], p1 = t.p[t.p.length - 1];
+        return { len: Math.round(t.len), n: t.p.length,
+                 a: [Math.round(p0[0]), Math.round(p0[1])], b: [Math.round(p1[0]), Math.round(p1[1])],
+                 occ: t.ch.map(function (c) { return c.occ < 1 ? 0 : 1; }).join('') };
+      });
+    },
+    reveal: function () {
+      if (!reveal) return null;
+      var segs = 0, i;
+      for (i = 0; i < reveal.th.length; i++) segs += reveal.th[i].p.length - 1;
+      return { slug: reveal.slug, threads: reveal.th.length, segs: segs, out: reveal.out,
+               inb: reveal.r.inb, revealMs: +(DIAG.revealMs || 0).toFixed(2) };
+    },
     extrasState: function () {
       return extras.map(function (e) {
         return { a: +e.homeA.toFixed(2), tgt: e.tgt, on: !!e.pb,
