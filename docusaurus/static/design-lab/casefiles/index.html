@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Case Files</title>
+<meta name="description" content="The Strapi documentation, filed as 290 open cases by a private detective agency that never sleeps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case.css">
+</head>
+<body>
+<header id="topbar">
+  <a id="brand" href="#/board" title="Back to the board">
+    <span class="brand-badge">S</span>
+    <span class="brand-text"><strong>THE CASE FILES</strong><em>Strapi Documentation Detective Agency</em></span>
+  </a>
+  <nav id="topnav" aria-label="Agency navigation">
+    <a href="#/board" data-nav="board">The Board</a>
+    <a href="#/cold-cases" data-nav="cold">Cold Cases</a>
+    <a href="#/cms/intro" data-nav="intro">Case No. 1</a>
+    <button id="key-btn" type="button">Plain Words</button>
+  </nav>
+  <div id="searchbox" role="search">
+    <input id="search" type="search" placeholder="Search the case index&hellip;" autocomplete="off"
+           aria-label="Search all 290 cases" />
+    <div id="search-results" hidden></div>
+  </div>
+</header>
+
+<main id="view">
+  <!-- THE BOARD -->
+  <section id="board-view" hidden aria-label="The corkboard">
+    <div id="board-stage">
+      <canvas id="string-canvas" aria-hidden="true"></canvas>
+      <div id="board-pan"><div id="board-world"></div></div>
+      <div id="lamp" aria-hidden="true"></div>
+    </div>
+    <div id="board-hint" aria-hidden="true">drag to pan &middot; scroll to zoom &middot; hover a pin to follow its string &middot; click to open the file</div>
+    <div id="caption-bar" aria-live="polite"></div>
+  </section>
+
+  <!-- THE READING DESK -->
+  <section id="case-view" hidden aria-label="Open case file"></section>
+
+  <!-- THE COLD CASE CABINET -->
+  <section id="cold-view" hidden aria-label="Cold case cabinet"></section>
+</main>
+
+<!-- PLAIN WORDS KEY -->
+<div id="key-overlay" hidden>
+  <div id="key-panel" role="dialog" aria-modal="true" aria-labelledby="key-title">
+    <button id="key-close" type="button" aria-label="Close the key">&times;</button>
+    <h2 id="key-title">Plain words, no fedora</h2>
+    <p>This is the real <strong>Strapi documentation</strong> (docs.strapi.io), dressed up as a
+       detective agency. Nothing on these walls is invented; every number is measured from the
+       actual docs and their git history.</p>
+    <table class="key-table">
+      <tbody>
+      <tr><th>A case file</th><td>One real documentation page, fully readable here. 290 in total.</td></tr>
+      <tr><th>The corkboard</th><td>A map of the whole documentation. Each pin is a page; districts (&ldquo;precincts&rdquo;) are the sidebar sections.</td></tr>
+      <tr><th>Red string</th><td>A real cross-reference: one page linking to another. There are 1,231 of them.</td></tr>
+      <tr><th>CASE No.</th><td>A stable number derived from the page&rsquo;s address. Same page, same number, always.</td></tr>
+      <tr><th>OPENED / LAST SEEN</th><td>The real dates of the page&rsquo;s first and most recent git commits.</td></tr>
+      <tr><th>WITNESSES</th><td>The real people who committed changes to that page. 77 across the whole network.</td></tr>
+      <tr><th>EVIDENCE</th><td>Measured facts: word count, the page&rsquo;s real code blocks (labelled Exhibit A, B, C&hellip;), and its real screenshots pinned as photos.</td></tr>
+      <tr><th>KNOWN ASSOCIATES</th><td>The pages this page links to, and the pages that link back to it.</td></tr>
+      <tr><th>COLD CASE</th><td>A page that no other page links to. There are 50 of them in the cabinet.</td></tr>
+      <tr><th>The outfits</th><td>Communities detected in the link graph: clusters of pages that cite each other more than anyone else. The percentage tells you how many members actually live in the outfit&rsquo;s dominant sidebar section.</td></tr>
+      <tr><th>The night shift</th><td>Pages with commits made after 22:00, straight from the git log.</td></tr>
+      </tbody>
+    </table>
+    <p class="key-footnote">Every line of narration restates measured data or quotes the pages themselves. The trench coat is decorative. The facts are not.</p>
+  </div>
+</div>
+
+<div id="boot" aria-hidden="true"><span class="boot-type">Opening the office&hellip;</span></div>
+
+<script src="case.js"></script>
+</body>
+</html>
