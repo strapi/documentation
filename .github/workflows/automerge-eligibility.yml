@@ -169,6 +169,7 @@ jobs:
             check-no-external-links
             check-no-content-removal
             check-no-component-change
+            check-no-em-dash
           )
 
           VIOLATED=""

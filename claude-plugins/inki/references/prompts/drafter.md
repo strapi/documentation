@@ -399,6 +399,19 @@ Use components as specified in the outline's `components` field. Key components:
 
 ## Output Format
 
+### Before you output: the em dash sweep
+
+Search the content you are about to return for the em dash character and for its HTML
+entities `&mdash;`, `&#8212;`, `&#x2014;`. Rewrite every sentence that contains one, using
+a colon, a period, parentheses, or a restructure. Do the same for a double hyphen used as
+a dash.
+
+Do this every time, in every mode, even when you are confident you wrote none. The rule is
+already stated under Writing Rules and is still the most frequently violated one in
+Drafter output: it is stated 300 lines before you write the first sentence, and the em
+dash is the punctuation mark that comes most naturally to a language model mid-paragraph.
+Checking at output time is what catches it.
+
 All modes produce Markdown content wrapped in a standardized envelope using HTML comments (invisible at render time).
 
 ### Compose: `create_page`
