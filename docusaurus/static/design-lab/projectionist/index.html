@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Projectionist</title>
+<link rel="stylesheet" href="projectionist.css">
+</head>
+<body>
+<header id="marquee" aria-label="Marquee">
+  <div id="marqueeText">LOADING THE ARCHIVE&hellip;</div>
+</header>
+
+<main id="booth">
+  <canvas id="boothCanvas" aria-hidden="true"></canvas>
+
+  <section id="auditorium">
+    <div id="screenWrap">
+      <div id="screen">
+        <div id="gate" tabindex="-1"></div>
+        <div id="titleCard" class="screenlayer" hidden></div>
+        <div id="creditsWrap" class="screenlayer" hidden><div id="creditsRoll"></div></div>
+        <div id="endCard" class="screenlayer" hidden></div>
+        <div id="intermission" class="screenlayer" hidden></div>
+        <div id="shortCard" class="screenlayer" hidden></div>
+        <canvas id="printCanvas" aria-hidden="true"></canvas>
+        <div id="stampBig" hidden></div>
+      </div>
+      <div id="underScreen">
+        <div id="plaque">THE PROJECTIONIST</div>
+        <div id="spliceChip" hidden></div>
+      </div>
+    </div>
+
+    <aside id="boothSide">
+      <div id="canisterPlate" class="plate" hidden></div>
+      <div id="brass" class="plate" hidden></div>
+      <div id="controls" class="plate">
+        <div class="ctl-row" id="speedRow" role="group" aria-label="Projection speed">
+          <span class="ctl-label">SPEED</span>
+          <button class="spd" data-spd="0.5">0.5&times;</button>
+          <button class="spd sel" data-spd="1">1&times;</button>
+          <button class="spd" data-spd="2">2&times;</button>
+          <button class="spd" data-spd="hold">HOLD</button>
+        </div>
+        <div class="ctl-row">
+          <button id="autoRideBtn" class="toggle" aria-pressed="false">LET THE PROJECTIONIST CUT &mdash; OFF</button>
+        </div>
+        <div class="ctl-row">
+          <button id="soundBtn" class="toggle" aria-pressed="false">SOUND &mdash; OFF (1 click per frame)</button>
+        </div>
+        <div class="ctl-row nav-row">
+          <button id="btnIndex">INDEX <kbd>Tab</kbd></button>
+          <button id="btnRack">RACK <kbd>R</kbd></button>
+          <button id="btnProg">PROGRAMME <kbd>P</kbd></button>
+        </div>
+        <div class="ctl-row nav-row">
+          <button id="btnCreditsAll">FULL-ARCHIVE CREDITS</button>
+          <button id="btnLobby">LOBBY</button>
+        </div>
+        <div class="ctl-hint">SPACE play/pause &middot; &larr;&rarr; frame-step &middot; &#9166; ride a cut &middot; drag the strip to scrub</div>
+      </div>
+    </aside>
+  </section>
+
+  <div id="stripWrap"><canvas id="strip"></canvas></div>
+</main>
+
+<div id="lobby" class="overlay" hidden></div>
+<div id="indexOverlay" class="overlay" hidden>
+  <div class="ov-inner">
+    <div class="ov-head">
+      <span class="ov-title">THE JOIN BOOK &mdash; PLAIN-TITLE INDEX</span>
+      <span class="ov-close" data-close>ESC to close</span>
+    </div>
+    <input id="searchBox" type="text" placeholder="Search 290 reels and every frame&hellip;" autocomplete="off" spellcheck="false">
+    <div id="searchResults" class="ov-scroll"></div>
+  </div>
+</div>
+<div id="rackOverlay" class="overlay" hidden>
+  <div class="ov-inner wide">
+    <div class="ov-head">
+      <span class="ov-title">THE BACK WALL &mdash; REELS RACKED BY COMMUNITY</span>
+      <span class="ov-close" data-close>ESC to close</span>
+    </div>
+    <div id="rackShelves" class="ov-scroll"></div>
+  </div>
+</div>
+<div id="programmeOverlay" class="overlay" hidden>
+  <div class="ov-inner wide">
+    <div class="ov-head">
+      <span class="ov-title">TONIGHT'S PROGRAMME &mdash; 27 SHORTS</span>
+      <span class="ov-close" data-close>ESC to close</span>
+    </div>
+    <div id="programmeGrid" class="ov-scroll"></div>
+  </div>
+</div>
+<div id="creditsAllOverlay" class="overlay" hidden>
+  <div class="ov-inner">
+    <div class="ov-head">
+      <span class="ov-title" id="creditsAllTitle">THE HANDS</span>
+      <span class="ov-close" data-close>ESC to close</span>
+    </div>
+    <div id="creditsAllList" class="ov-scroll"></div>
+  </div>
+</div>
+
+<div id="bootError" hidden></div>
+<script src="projectionist.js"></script>
+</body>
+</html>
