@@ -4,7 +4,6 @@
    digit-sum 67 · vowels 16
    ============================================================ */
 
-@property --x{syntax:"<length>";inherits:false;initial-value:0px}
 :root{
   --leafmark:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 68 26'><g fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round'><path d='M34 4v18'/><path d='M34 15c-7-1-11-5-12-11 6 0 10 4 12 11z'/><path d='M34 11c7-1 11-5 12-11-6 0-10 4-12 11z'/></g><circle cx='34' cy='23' r='2' fill='black'/></svg>");
   /* the workroom */
@@ -147,8 +146,14 @@ a{color:inherit}
   color:var(--brass);margin:0 0 .5rem;font-weight:500;text-align:center;
   border-bottom:1px solid rgba(201,165,94,.3);padding-bottom:.4rem;
 }
+.plaque .cap{font-family:"Courier Prime",monospace;font-size:.56rem;letter-spacing:.06em;color:#907c56;
+  text-align:center;margin:-.2rem 0 .5rem;line-height:1.5}
 .hands{list-style:none;margin:0;padding:0;font-family:"Courier Prime",monospace;font-size:.66rem;line-height:1.75;color:#d5c5a2}
-.hands li{display:flex;gap:.4rem;align-items:baseline}
+.hands li{display:block}
+.hands li button{display:flex;gap:.4rem;align-items:baseline;width:100%;text-align:left;
+  padding:.05rem .2rem;border-radius:2px;color:inherit;font:inherit}
+.hands li button:hover{background:rgba(201,165,94,.14);color:#f7ecd4}
+.hands li button:hover .nm{text-decoration:underline;text-underline-offset:2px}
 .hands .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hands .dots{flex:1;border-bottom:1px dotted rgba(201,165,94,.35);transform:translateY(-3px)}
 .hands .ct{color:var(--brass);font-variant-numeric:tabular-nums}
@@ -288,6 +293,14 @@ a{color:inherit}
   letter-spacing:.11em;color:#8b7a5c;text-transform:uppercase;
 }
 .recto-hint span{border-bottom:1px dotted #b09c76;padding-bottom:1px}
+.export-btn{
+  margin-left:2.4cqi;font:inherit;letter-spacing:inherit;text-transform:inherit;
+  background:none;border:none;padding:0 0 1px;color:#77653f;cursor:pointer;
+  border-bottom:1px solid #b09c76;
+}
+.export-btn:hover{color:#4a3b22;border-bottom-color:#8a7550}
+.export-btn:focus-visible{outline:1px dotted #8a7550;outline-offset:3px}
+.export-btn[disabled]{cursor:default;color:#9b8a67}
 
 /* --- the tray (a drawer pulled open) --- */
 .tray-head{max-width:1180px;margin:0 auto 1.1rem;display:flex;align-items:flex-end;gap:1rem;flex-wrap:wrap;
@@ -298,7 +311,6 @@ a{color:inherit}
 .tray-note{max-width:1180px;margin:0 auto 1.4rem}
 .tray-note p{max-width:74ch;margin:0;font-size:1.02rem;line-height:1.68;color:#b6a483}
 .tray-note p em{color:#dcccA6;font-style:italic}
-.tray-note em{color:#d8c8a4}
 
 .chips{display:flex;gap:.4rem;flex-wrap:wrap;margin-left:auto}
 .chip{font-family:"Courier Prime",monospace;font-size:.63rem;letter-spacing:.06em;color:#b3a07c;
@@ -401,9 +413,13 @@ a{color:inherit}
   .margin-idx{display:none}
 }
 
+.verso-stamp{position:absolute;right:clamp(1rem,3.4vw,3rem);bottom:1.6rem;width:132px;height:132px;
+  color:var(--violet);opacity:.13;pointer-events:none;transform:rotate(7.4deg)}
+.verso-stamp svg{width:100%;height:100%;display:block}
+@media (max-width:860px){.verso-stamp{display:none}}
+
 /* --- reading measure --- */
 .notes{max-width:var(--measure);font-size:1.115rem;line-height:1.74;color:var(--ink)}
-.notes.wide, .notes .wide{max-width:none}
 .notes > *{max-width:100%}
 .notes p{margin:0 0 1.05em}
 .notes a{color:#5a4a91;text-decoration:none;border-bottom:1px solid rgba(90,74,145,.36)}
@@ -642,7 +658,6 @@ a{color:inherit}
 /* ---------------- the engraved plate ---------------- */
 .glance{
   max-width:1180px;margin:0 auto 2.2rem;padding:1.3rem 1.5rem 1.15rem;
-  background:linear-gradient(158deg,#4e4029 0%,#3a2d1c 52%,#443venue 100%);
   background:linear-gradient(158deg,#4e4029 0%,#3a2d1c 52%,#443521 100%);
   border:1px solid #6d5734;border-radius:2px;
   box-shadow:inset 0 1px 0 rgba(255,228,175,.2), 0 6px 20px -10px rgba(0,0,0,.75);

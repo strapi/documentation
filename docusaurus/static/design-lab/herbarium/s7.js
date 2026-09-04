@@ -805,7 +805,7 @@ function rectoHTML(slug) {
   h += '<div class="fieldno">Field no. ' + esc(p.product.toUpperCase()) + '‑' + esc(String(pr.commits).padStart(3, '0')) + ' · ' + esc(sp.habit.n) + ' · ' + esc(sp.morph.n) + ' · ' + esc(sp.wash.n) + '</div>';
   h += cornerSlipHTML(slug);
   h += '<div class="label-stack">' + labelHTML(slug) + slipsHTML(slug) + '</div>';
-  h += '<div class="recto-hint"><span>Click the sheet to turn it over and read</span></div>';
+  h += '<div class="recto-hint"><span>Click the sheet to turn it over and read</span><button class="export-btn" type="button" data-export title="Download this sheet as a high-resolution PNG">Download plate \u00b7 PNG</button></div>';
   h += '</div>';
   return h;
 }
@@ -1218,6 +1218,7 @@ function versoHTML(slug) {
   h += '</div>';
 
   h += '<div class="verso-body">';
+  h += '<div class="verso-stamp" aria-hidden="true">' + stampSVG('vs-' + acc) + '</div>';
   h += '<div class="notes">' + renderBlocks(p.blocks) + '</div>';
   h += marginIndex(p);
   h += '</div>';
@@ -1302,6 +1303,14 @@ function buildIndex() {
     commits: slugs.reduce(function (a, s) { return a + D.prov[s].commits; }, 0),
     eldest: c.order.filter(function (s) { return D.prov[s] && D.prov[s].first < '2024-01-01'; }).length
   };
+  var wv = c.order.map(function (s) { return g.words[s] || 0; });
+  IDX.totals.wordsMin = Math.min.apply(null, wv);
+  IDX.totals.wordsMax = Math.max.apply(null, wv);
+  var top = c.order.slice().sort(function (a, b) { return (g.inbound[b] || 0) - (g.inbound[a] || 0); })[0];
+  IDX.totals.topCited = top;
+  IDX.totals.topCitedN = g.inbound[top] || 0;
+  IDX.totals.spanDays = days(IDX.totals.first, IDX.totals.last);
+  IDX.totals.spanYears = (IDX.totals.spanDays / 365.25).toFixed(1);
 }
 
 /* -------------------------------------------------------- special drawers */
@@ -1373,7 +1382,9 @@ function renderPlaque(open) {
   plaqueOpen = open;
   var list = open ? IDX.hands : IDX.hands.slice(0, 10);
   $('#hands').innerHTML = list.map(function (g) {
-    return '<li><span class="nm">' + esc(g.name) + '</span><span class="dots"></span><span class="ct">' + g.tended + '</span></li>';
+    return '<li><button type="button" data-hand="' + attr(g.name) + '" title="Pull the ' + g.tended
+      + ' sheets ' + attr(g.name) + ' tended"><span class="nm">' + esc(g.name) + '</span>'
+      + '<span class="dots"></span><span class="ct">' + g.tended + '</span></button></li>';
   }).join('');
   $('#plaqueMore').textContent = open
     ? 'Show the first ten only'
@@ -1423,7 +1434,7 @@ function glancePlate() {
       return '<div><dd>' + r[0] + '</dd><dt>' + esc(r[1]) + '</dt><small>' + esc(r[2]) + '</small></div>';
     }).join('')
     + '</dl><p class="glance-foot">Collected between ' + prettyDate(t.first) + ' and ' + prettyDate(t.last)
-    + '. Read from six years of git history, one page at a time.</p></div>';
+    + ' — ' + t.spanDays + ' days. Read out of the git history of these documents, one page at a time.</p></div>';
 }
 
 /* ------------------------------------------------------- key to the plates */
@@ -1449,9 +1460,10 @@ function keyGlyph(kind) {
     s += '<path d="' + mw.fill + '" fill="#efeaf6"/>'
       + '<path d="' + mw.ink + '" fill="none" stroke="#7d6ba0" stroke-width="0.9"/>';
   } else if (kind === 'pod') {
-    var p1 = podAt(20, 30, -Math.PI / 2 - 0.2, 8, r), p2 = podAt(14, 32, -Math.PI / 2 + 0.5, 6, r);
-    s += '<path d="' + p1.fill + p2.fill + '" fill="#b08a3a" opacity="0.4"/>'
-      + '<path d="' + p1.ink + p2.ink + '" fill="none" stroke="#6a5220" stroke-width="0.85"/>';
+    var p1 = podAt(21, 33, -Math.PI / 2 - 0.16, 11, r), p2 = podAt(12, 34, -Math.PI / 2 + 0.55, 8.5, r);
+    s += '<path d="M20 40 L20 30 M13 40 L13 33" stroke="#4a3b25" stroke-width="1.2" fill="none" stroke-linecap="round"/>'
+      + '<path d="' + p1.fill + p2.fill + '" fill="#b08a3a" opacity="0.45"/>'
+      + '<path d="' + p1.ink + p2.ink + '" fill="none" stroke="#6a5220" stroke-width="1"/>';
   } else if (kind === 'root') {
     s += '<path d="M20 4 L20 16" stroke="#4a3b25" stroke-width="2.4" fill="none" stroke-linecap="round"/>'
       + '<path d="M20 16 Q14 24 8 34 M20 16 Q20 26 19 36 M20 16 Q26 24 32 33 M12 26 l-4 3 M22 26 l4 4 M17 28 l-3 4"'
@@ -1474,7 +1486,7 @@ function renderKeycard() {
   h += '<ul class="keylist">';
   h += '<li>' + keyGlyph('wood') + '<span><b>Tall and woody</b> — the page is old. Height and thickness come from the date of its first commit.</span></li>';
   h += '<li>' + keyGlyph('branch') + '<span><b>Many branches</b> — the page has been revised often. One order of branching per handful of commits.</span></li>';
-  h += '<li>' + keyGlyph('leaf') + '<span><b>Heavy foliage</b> — a long page. Leaf mass follows the word count, ' + t.sheets + ' pages between 79 and 10,828 words.</span></li>';
+  h += '<li>' + keyGlyph('leaf') + '<span><b>Heavy foliage</b> — a long page. Leaf mass follows the word count: ' + t.sheets + ' pages between ' + t.wordsMin + ' and ' + t.wordsMax.toLocaleString('en') + ' words.</span></li>';
   h += '<li>' + keyGlyph('flower') + '<span><b>Flowers</b> — one for every other page that cites this one. ' + t.citations + ' citations in the collection.</span></li>';
   h += '<li>' + keyGlyph('moon') + '<span><b>Moon-pale flowers</b> — one for each edit made between 22h and 6h. There are ' + t.nights + ' in the whole cabinet.</span></li>';
   h += '<li>' + keyGlyph('pod') + '<span><b>Seed pods</b> — one for each code example on the page.</span></li>';
@@ -1581,7 +1593,7 @@ function render() {
   state.ctx = { kind: 'special', id: kind, label: SPECIALS[kind].title };
   var t = IDX.totals, note = '';
   if (kind === 'all') {
-    note = 'Six years of documentation, pressed. The oldest sheet was collected on <em>' + prettyDate(t.first)
+    note = t.spanYears + ' years of documentation, pressed. The oldest sheet was collected on <em>' + prettyDate(t.first)
       + '</em>; the newest touch is <em>' + prettyDate(t.last) + '</em>. A median sheet was tended for <em>'
       + t.medCare + ' days</em>, and one was tended for <em>' + t.maxCare + ' days</em>. Seventy-seven people did the tending, '
       + 'and fifteen times somebody did it between 22h and 6h.';
@@ -1591,7 +1603,8 @@ function render() {
   } else if (kind === 'winter') {
     note = 'Nothing in the collection links to these ' + t.winter + ' pages. They are pressed leafless, as a botanist presses a specimen collected out of season — and filed with exactly the same care as the rest.';
   } else if (kind === 'bloom') {
-    note = t.bloom + ' sheets are cited ten times or more. The most visited, <em>breaking changes</em>, flowers 57 times.';
+    note = t.bloom + ' sheets are cited ten times or more. The most visited of all, <em>'
+      + esc((IDX.bySlug[t.topCited] || {}).title || t.topCited) + '</em>, flowers ' + t.topCitedN + ' times.';
   } else if (kind === 'eldest') {
     note = 'These ' + t.eldest + ' sheets were collected before 2024. The first of all, on <em>' + prettyDate(t.first) + '</em>.';
   } else if (kind === 'tended') {
@@ -1697,14 +1710,32 @@ var lensEl, lensOn = false;
 function attachLens(el) {
   if (!el || !lensEl) return;
   if (window.matchMedia('(max-width:1080px)').matches || window.matchMedia('(pointer:coarse)').matches) return;
-  var slug = el.dataset.slug;
   var Z = 2.45;
-  var svg = plantSVG(specimen(slug, 'full'), 'plant');
   el.addEventListener('pointerenter', function () {
     var r = el.getBoundingClientRect();
-    lensEl.innerHTML = '<div class="li" style="width:' + (r.width * Z) + 'px;height:' + (r.height * Z) + 'px">' + svg + '</div>';
-    var s = $('.li svg', lensEl);
-    if (s) { s.style.width = (r.width * Z) + 'px'; s.style.height = (r.height * Z) + 'px'; }
+    /* magnify the whole sheet — plant, tape, stamps, every line of the labels —
+       by scaling a live clone of it, so the glass reads wherever it hovers */
+    var clone = el.cloneNode(true);
+    clone.removeAttribute('id');
+    var drop = clone.querySelectorAll('.recto-hint');
+    for (var i = 0; i < drop.length; i++) drop[i].parentNode.removeChild(drop[i]);
+    clone.style.width = r.width + 'px';
+    clone.style.height = r.height + 'px';
+    clone.style.margin = '0';
+    clone.style.cursor = 'default';
+    var li = document.createElement('div');
+    li.className = 'li';
+    li.style.width = (r.width * Z) + 'px';
+    li.style.height = (r.height * Z) + 'px';
+    var sc = document.createElement('div');
+    sc.style.width = r.width + 'px';
+    sc.style.height = r.height + 'px';
+    sc.style.transform = 'scale(' + Z + ')';
+    sc.style.transformOrigin = '0 0';
+    sc.appendChild(clone);
+    li.appendChild(sc);
+    lensEl.innerHTML = '';
+    lensEl.appendChild(li);
     lensEl.hidden = false; lensOn = true;
   });
   el.addEventListener('pointerleave', function () { lensEl.hidden = true; lensOn = false; });
@@ -1720,11 +1751,106 @@ function attachLens(el) {
   });
 }
 
+/* the press camera — a sheet leaves the cabinet as a high-resolution PNG.
+   The card is serialised into an SVG foreignObject with every font inlined
+   as a data URI, rasterised onto a canvas at 3\u20134\u00d7, and handed over
+   as a download named after its accession number. */
+var FONT_CSS = null;
+function inlineFonts() {
+  if (FONT_CSS !== null) return Promise.resolve(FONT_CSS);
+  var link = document.querySelector('link[href*="fonts.googleapis.com"]');
+  if (!link) { FONT_CSS = ''; return Promise.resolve(''); }
+  return fetch(link.href).then(function (r) { return r.text(); }).then(function (css) {
+    var urls = [];
+    css.replace(/url\((https:[^)]+)\)/g, function (m, u) { if (urls.indexOf(u) < 0) urls.push(u); return m; });
+    return Promise.all(urls.map(function (u) {
+      return fetch(u).then(function (r) { return r.arrayBuffer(); }).then(function (buf) {
+        var a = new Uint8Array(buf), b = '';
+        for (var i = 0; i < a.length; i += 0x8000) b += String.fromCharCode.apply(null, a.subarray(i, i + 0x8000));
+        return [u, 'data:font/woff2;base64,' + btoa(b)];
+      });
+    })).then(function (pairs) {
+      pairs.forEach(function (p) { css = css.split(p[0]).join(p[1]); });
+      FONT_CSS = css;
+      return css;
+    });
+  }).catch(function () { FONT_CSS = ''; return ''; });
+}
+
+function collectCSS() {
+  var out = '';
+  for (var i = 0; i < document.styleSheets.length; i++) {
+    var rules = null;
+    try { rules = document.styleSheets[i].cssRules; } catch (e) { continue; } /* the Google sheet is cross-origin; inlineFonts covers it */
+    if (!rules) continue;
+    for (var j = 0; j < rules.length; j++) out += rules[j].cssText + '\n';
+  }
+  return out;
+}
+
+function exportPlate(btn) {
+  var el = $('#recto');
+  if (!el || btn.disabled) return;
+  var oldLabel = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Preparing\u2026';
+  function done(label) {
+    btn.textContent = label;
+    setTimeout(function () { btn.textContent = oldLabel; btn.disabled = false; }, 2200);
+  }
+  var r = el.getBoundingClientRect();
+  var W = Math.round(r.width), H = Math.round(r.height);
+  var SCALE = Math.max(3, Math.ceil(2600 / W));
+  inlineFonts().then(function (fontCss) {
+    var clone = el.cloneNode(true);
+    clone.removeAttribute('id');
+    var drop = clone.querySelectorAll('.recto-hint');
+    for (var i = 0; i < drop.length; i++) drop[i].parentNode.removeChild(drop[i]);
+    clone.style.width = W + 'px'; clone.style.height = H + 'px';
+    clone.style.margin = '0'; clone.style.cursor = 'default';
+    var rootVars = document.documentElement.getAttribute('style') || '';
+    var xhtml = new XMLSerializer().serializeToString(clone);
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + (W * SCALE) + '" height="' + (H * SCALE) + '" viewBox="0 0 ' + W + ' ' + H + '">'
+      + '<foreignObject width="' + W + '" height="' + H + '">'
+      + '<div xmlns="http://www.w3.org/1999/xhtml" style="width:' + W + 'px;height:' + H + 'px;' + rootVars + '">'
+      + '<style><![CDATA[' + fontCss + '\n' + collectCSS() + ']]><\/style>'
+      + xhtml
+      + '</div></foreignObject></svg>';
+    var img = new Image();
+    img.onload = function () {
+      /* give the embedded faces a beat to rasterise before the draw */
+      setTimeout(function () {
+        try {
+          var c = document.createElement('canvas');
+          c.width = W * SCALE; c.height = H * SCALE;
+          var g = c.getContext('2d');
+          g.imageSmoothingEnabled = true;
+          g.imageSmoothingQuality = 'high';
+          g.drawImage(img, 0, 0, c.width, c.height);
+          var slug = el.dataset.slug || 'sheet';
+          var acc = String(IDX.accession[slug] || 'plate').replace(/[^A-Za-z0-9_-]+/g, '-');
+          c.toBlob(function (blob) {
+            if (!blob) { done('Export failed'); return; }
+            var a = document.createElement('a');
+            a.download = 'strapi-herbarium-' + acc + '-' + slug.split('/').pop() + '.png';
+            a.href = URL.createObjectURL(blob);
+            document.body.appendChild(a); a.click(); a.parentNode.removeChild(a);
+            setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+            done('Saved \u2713');
+          }, 'image/png');
+        } catch (err) { done('Export failed'); }
+      }, 120);
+    };
+    img.onerror = function () { done('Export failed'); };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  });
+}
 function wire() {
   lensEl = $('#lens');
 
   document.addEventListener('click', function (e) {
     var t = e.target;
+    var ex = t.closest ? t.closest('[data-export]') : null;
+    if (ex) { e.preventDefault(); e.stopPropagation(); exportPlate(ex); return; }
     var mi = t.closest ? t.closest('.margin-idx a') : null;
     if (mi) {
       e.preventDefault();
@@ -1741,6 +1867,8 @@ function wire() {
     if (recto) { location.hash = '#' + recto.dataset.slug; return; }
     var dr = t.closest ? t.closest('[data-drawer]') : null;
     if (dr) { location.hash = '#~d/' + encodeURIComponent(dr.dataset.drawer); return; }
+    var hd = t.closest ? t.closest('[data-hand]') : null;
+    if (hd) { $('#q').value = hd.dataset.hand; location.hash = '#~q/' + encodeURIComponent(hd.dataset.hand); return; }
     var sp = t.closest ? t.closest('[data-special]') : null;
     if (sp) { location.hash = '#~' + sp.dataset.special; return; }
     var tab = t.closest ? t.closest('.tabs .bar button') : null;
@@ -1844,6 +1972,12 @@ function boot() {
     wire();
     render();
     markRail();
+    var seen = false;
+    try { seen = localStorage.getItem('herb.seenkey') === '1'; } catch (e) { seen = false; }
+    if (!seen) {
+      toggleKey(true);
+      try { localStorage.setItem('herb.seenkey', '1'); } catch (e) { /* nothing to remember with */ }
+    }
     window.addEventListener('hashchange', markRail);
     $('#app').hidden = false;
     var b = $('#boot');
