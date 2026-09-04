@@ -1,6 +1,7 @@
 /* ============================================================================
    FIRST LIGHT — phosphor amber + signal white on near-black.
-   One-pixel instrument lines. Saturated color lives only in the spectrograph.
+   One-pixel instrument lines. Saturated color lives only inside instrument
+   readings: the spectrograph, and the ochre of the Hall of Hands deep scan.
    ========================================================================== */
 
 :root{
@@ -155,15 +156,18 @@ a.res mark{background:rgba(255,176,0,.3);color:var(--white)}
 #photcv{display:block;width:320px;height:46px;background:#04090A;border:1px solid rgba(237,242,240,.1)}
 
 /* ----------------------------------------------------------------- log -- */
+/* block flow, bottom-anchored by the fixed bottom edge: rows keep their
+   full line height no matter how many arrive; history scrolls, never squeezes */
 #log{
   position:fixed;z-index:24;left:10px;bottom:12px;width:min(430px,44vw);
-  max-height:172px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;
-  font-family:var(--f-mono);font-size:.66rem;line-height:1.75;color:var(--amber-dim);
-  pointer-events:none;transition:opacity .5s;
-  mask-image:linear-gradient(to bottom,transparent,#000 28%);
-  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 28%);
+  max-height:184px;overflow-y:auto;overflow-x:hidden;display:block;
+  scrollbar-width:thin;background:rgba(6,8,9,.85);border:var(--rule-soft);
+  padding:4px 8px;
+  font-family:var(--f-mono);font-size:.72rem;line-height:1.8;color:var(--amber-dim);
+  transition:opacity .5s;
 }
-#log .ll{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#log .ll{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+#log .ll.old{opacity:.55}
 #log .ll b{color:var(--amber);font-weight:500}
 #log .ll.ev{color:var(--white-dim)}
 #log .ll.ev b{color:var(--white)}
@@ -209,7 +213,7 @@ a.ix-a.cur{color:var(--amber-hi)}
 
 /* ------------------------------------------------------------- reader --- */
 #reader{
-  position:fixed;z-index:35;top:0;right:0;bottom:0;width:var(--reader-w);
+  position:fixed;z-index:35;top:var(--bar);right:0;bottom:0;width:var(--reader-w);
   background:rgba(10,13,15,.985);border-left:var(--rule);
   overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;
   transition:transform .35s ease;
@@ -396,6 +400,7 @@ a.acard .ic{color:var(--amber)}
 .pq-line{font-family:var(--f-mono);font-size:.7rem;color:var(--white-dim);line-height:2}
 .pq-line b{color:var(--white);font-weight:500}
 .pq-line.em{color:var(--amber-hi);letter-spacing:.18em;margin:.4rem 0}
+.pq-line .oe,.fc-plaque .l .oe{color:var(--amber-hi);letter-spacing:.14em}
 
 #plate{position:fixed;z-index:85;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(4,6,7,.7)}
 #plate[hidden]{display:none}
@@ -432,3 +437,55 @@ body.darkadapt #topbar:hover{opacity:.9}
   .cm-bar i{transition:none}
   #topbar,#log,#photom{transition:none}
 }
+
+/* ================== round 2: hands · annotate · guide · explain ========= */
+
+/* hover/focus explainer: name + one plain sentence for every control */
+#explain{position:fixed;z-index:110;pointer-events:none;max-width:290px;background:var(--bg-2);border:var(--rule);padding:7px 10px 8px;font-family:var(--f-mono);font-size:.64rem;line-height:1.6;color:var(--white-dim)}
+#explain b{display:block;color:var(--amber);font-size:.6rem;letter-spacing:.22em;margin-bottom:2px}
+#explain span{display:block}
+
+#log-tag{position:fixed;z-index:24;left:10px;bottom:200px;font-family:var(--f-cond);font-size:.6rem;letter-spacing:.3em;color:var(--white-faint);cursor:default;transition:opacity .5s}
+html[data-boot="1"] #log-tag{opacity:0}
+body.darkadapt #log-tag{opacity:.32}
+
+/* -------------------------------------------------- the Hall of Hands -- */
+/* starts below the topbar so the HANDS button stays clickable while the wall is up */
+#hands{position:fixed;z-index:87;top:var(--bar);left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;background:rgba(4,6,7,.72)}
+#hands[hidden]{display:none}
+.hh-box{width:min(1100px,95vw);height:min(860px,92vh);display:flex;flex-direction:column;background:#0B0907;border:1px solid var(--amber-dim);outline:1px solid rgba(255,176,0,.16);outline-offset:4px}
+.hh-head{display:flex;justify-content:space-between;align-items:flex-start;padding:14px 18px 10px;border-bottom:1px solid rgba(255,176,0,.2)}
+.hh-k{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.3em;color:var(--amber-dim)}
+.hh-t{font-family:var(--f-cond);font-weight:600;font-size:1.5rem;letter-spacing:.24em;color:var(--amber)}
+.hh-s{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.06em;color:var(--white-faint);margin-top:3px}
+.hh-wall{flex:1;overflow:auto;scrollbar-width:thin;display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px 4px;padding:18px 16px}
+.hh-tile{width:128px;text-align:center}
+.hh-tile canvas{display:block;width:128px;height:118px;margin:0 auto}
+.hh-name{font-family:var(--f-mono);font-size:.6rem;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hh-dates{font-family:var(--f-mono);font-size:.54rem;color:var(--amber-dim);letter-spacing:.04em}
+.hh-meta{font-family:var(--f-mono);font-size:.54rem;color:var(--white-faint)}
+.hh-foot{font-family:var(--f-cond);font-size:.88rem;letter-spacing:.34em;color:rgba(224,142,64,.9);text-align:center;padding:12px;border-top:1px solid rgba(255,176,0,.2)}
+
+/* ------------------------------------------- WHAT AM I LOOKING AT ------ */
+#annotate{position:fixed;z-index:95;inset:0;background:rgba(4,6,7,.78)}
+#annotate[hidden]{display:none}
+#an-lines{position:absolute;inset:0}
+#an-lines svg{display:block;width:100%;height:100%}
+#an-items{position:absolute;inset:0;pointer-events:none}
+.an-c{position:absolute;width:240px;background:var(--bg-2);border:var(--rule);padding:7px 10px 8px;font-family:var(--f-mono);font-size:.62rem;line-height:1.6;color:var(--white-dim)}
+.an-c b{display:block;color:var(--amber);font-size:.6rem;letter-spacing:.24em;margin-bottom:2px}
+.an-bar{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:12px;align-items:center;background:var(--bg-2);border:var(--rule);padding:8px 14px}
+.an-title{font-family:var(--f-cond);font-size:.8rem;letter-spacing:.3em;color:var(--amber)}
+
+/* -------------------------------------------------- three-step guide --- */
+#guide{position:fixed;z-index:55;left:50%;bottom:118px;transform:translateX(-50%);width:min(480px,92vw);background:rgba(8,10,12,.96);border:1px solid var(--amber-dim);padding:10px 14px 12px}
+#guide[hidden]{display:none}
+.gd-k{font-family:var(--f-mono);font-size:.58rem;letter-spacing:.24em;color:var(--amber-dim);display:flex;justify-content:space-between}
+.gd-body{font-size:.84rem;color:rgba(237,242,240,.88);margin:.45rem 0 .6rem;line-height:1.55}
+.gd-body b{display:block;font-family:var(--f-cond);letter-spacing:.2em;font-size:.78rem;color:var(--amber-hi);margin-bottom:2px}
+.gd-row{display:flex;justify-content:flex-end;gap:8px}
+.gd-row .howto-btn{padding:4px 12px;font-size:.72rem}
+
+/* the crew register's door to the wall */
+.crew-wall{display:block;width:100%;margin-top:7px;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.1em;color:var(--amber-hi);background:transparent;border:1px dashed rgba(255,176,0,.4);padding:4px 6px;cursor:pointer}
+.crew-wall:hover{border-style:solid;color:var(--amber)}

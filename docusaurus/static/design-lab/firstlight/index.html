@@ -15,31 +15,32 @@
 <canvas id="sky" aria-hidden="true"></canvas>
 
 <header id="topbar">
-  <a class="brand" href="#/" title="Return to the sweep">
+  <a class="brand" href="#/" data-name="FIRST LIGHT" data-explain="Return to the open sweep. Your chart keeps everything you have measured.">
     <span class="brand-t">FIRST LIGHT</span>
     <span class="brand-s">STRAPI DOCUMENTATION SURVEY</span>
   </a>
 
-  <div class="chartmeter" id="chartmeter" title="Bodies charted, of the whole corpus">
+  <div class="chartmeter" id="chartmeter" tabindex="0" data-name="THE CHART" data-explain="How many of the 290 pages you have fixed on your chart by surveying.">
     <span class="cm-k">CHART</span>
     <span class="cm-v"><b id="cm-n">0</b>/<span id="cm-total">290</span></span>
     <span class="cm-bar"><i id="cm-fill"></i></span>
   </div>
 
-  <button id="fullbtn" class="btn" aria-pressed="false" title="Reveal the complete labeled chart instantly">FULL CHART</button>
-  <button id="almbtn" class="btn" aria-pressed="false" title="Overlay the onboard almanac: the old engraved atlas, with its ephemeris errors">ALMANAC</button>
-  <button id="darkbtn" class="btn" aria-pressed="false" title="Dim your instruments. Night work blooms.">DARK ADAPT</button>
-  <button id="ixbtn" class="btn" aria-pressed="false" title="Plain-title index of every page (Tab)">INDEX <kbd>Tab</kbd></button>
+  <button id="fullbtn" class="btn" aria-pressed="false" data-name="FULL CHART" data-explain="Reveals every page and every link at once. Your own measured chart stays brighter, and nothing is lost.">FULL CHART</button>
+  <button id="almbtn" class="btn" aria-pressed="false" data-name="ALMANAC" data-explain="Overlays the old atlas: where each page is filed, versus where its citations put it. 86 disagree.">ALMANAC</button>
+  <button id="darkbtn" class="btn" aria-pressed="false" data-name="DARK ADAPT" data-explain="Dims the instruments so the commits made at night glow blue-green.">DARK ADAPT</button>
+  <button id="ixbtn" class="btn" aria-pressed="false" data-name="INDEX" data-explain="A plain-title catalog of all 290 pages; charted ones are marked. Key: Tab.">INDEX <kbd>Tab</kbd></button>
+  <button id="handsbtn" class="btn" aria-pressed="false" data-name="HALL OF HANDS" data-explain="The deep scan of the human stratum: all 77 people who ever committed to these pages, as ochre hand stencils. Key: H.">HANDS <kbd>H</kbd></button>
 
   <div class="search">
     <label class="sr-only" for="q">Search the documentation</label>
-    <input id="q" type="search" placeholder="Search 290 pages…" autocomplete="off" spellcheck="false">
+    <input id="q" type="search" placeholder="Search 290 pages…" autocomplete="off" spellcheck="false" data-name="THE SEARCH" data-explain="Instant search across all 290 pages; the chart leans toward the strongest return while you type. Key: /.">
     <kbd id="slashhint">/</kbd>
   </div>
 
-  <button id="audiobtn" class="btn right" aria-pressed="false" title="Optional: hear each body's commit history as pings. Silent by default.">SOUND OFF</button>
-  <button id="helpbtn" class="btn" title="Mission briefing" aria-label="Mission briefing">?</button>
-  <span class="clock" id="clock" title="Mission elapsed time">T+0:00</span>
+  <button id="audiobtn" class="btn right" aria-pressed="true" data-name="SOUND" data-explain="On by default. Every sound is a measurement: pings are commits, a falling two-note dip is a transit, the low thump is first contact. Click to silence for this visit.">SOUND ON</button>
+  <button id="helpbtn" class="btn" aria-label="What am I looking at" data-name="WHAT AM I LOOKING AT" data-explain="Annotates every element on screen with a plain-English callout. The full mission briefing lives inside. Key: ?.">?</button>
+  <span class="clock" id="clock" tabindex="0" data-name="MISSION CLOCK" data-explain="Elapsed time since your survey began.">T+0:00</span>
 </header>
 
 <div id="results" hidden role="listbox" aria-label="Search results"></div>
@@ -49,15 +50,16 @@
   <span class="p-sub" id="prompt-sub"></span>
 </div>
 
-<aside id="inst" hidden aria-label="Instrument suite">
+<aside id="inst" hidden aria-label="Instrument suite" data-name="SURVEY READINGS" data-explain="Measurements of the locked page: citations, spectral class, word mass, commit strata, crew.">
   <div id="inst-inner"></div>
 </aside>
 
-<div id="photom" aria-label="Photometer" hidden>
+<div id="photom" aria-label="Photometer" hidden data-name="PHOTOMETER" data-explain="The locked beacon's incoming light, six seconds at a time. Bumps are citations arriving; a deep notch is a transit.">
   <div class="ph-head"><span id="ph-k">PHOTOMETER</span><span id="ph-target"></span></div>
   <canvas id="photcv" width="320" height="46"></canvas>
 </div>
 
+<div id="log-tag" data-name="MISSION LOG" data-explain="Every event of the survey, written as it happens. Newest at the bottom.">MISSION LOG</div>
 <div id="log" aria-label="Mission log" aria-live="polite"></div>
 
 <aside id="ixpanel" hidden aria-label="Page index">
@@ -125,12 +127,50 @@
         cold blue-green.</li>
       <li><b>FULL CHART</b> reveals the complete labeled chart at any moment. No progress is lost;
         your personal chart keeps only what you have actually measured.</li>
+      <li><b>Meet the hands.</b> Press <kbd>H</kbd> for the Hall of Hands: all 77 people who ever
+        committed to these pages, as ochre stencils, oldest lowest. Press <kbd>?</kbd> and every
+        element on screen explains itself. Sound is on by default — every sound is a measurement —
+        and the SOUND control silences it.</li>
     </ol>
     <p class="howto-foot" id="howto-facts"></p>
     <div class="howto-row">
       <button id="howto-go" class="howto-btn" type="button">RESUME MISSION</button>
       <button id="resetbtn" class="howto-btn ghost" type="button" title="Erase your personal chart and start the survey again">RESET SURVEY</button>
     </div>
+  </div>
+</div>
+
+<div id="hands" hidden>
+  <div class="hh-box" role="dialog" aria-modal="true" aria-label="The Hall of Hands">
+    <div class="hh-head">
+      <div>
+        <div class="hh-k">DEEP SCAN · HUMAN STRATUM</div>
+        <div class="hh-t">THE HALL OF HANDS</div>
+        <div class="hh-s" id="hh-sub"></div>
+      </div>
+      <button id="hh-close" class="xbtn" aria-label="Close" data-name="CLOSE" data-explain="Close the wall and return to the sweep. Key: Esc.">×</button>
+    </div>
+    <div class="hh-wall" id="hh-wall"></div>
+    <div class="hh-foot">The stone remembers all of them.</div>
+  </div>
+</div>
+
+<div id="annotate" hidden aria-label="What am I looking at">
+  <div id="an-lines"></div>
+  <div id="an-items"></div>
+  <div class="an-bar">
+    <span class="an-title">WHAT AM I LOOKING AT</span>
+    <button id="an-brief" class="howto-btn ghost" type="button">OPEN MISSION BRIEFING</button>
+    <button id="an-close" class="howto-btn" type="button">CLOSE · ESC</button>
+  </div>
+</div>
+
+<div id="guide" hidden role="dialog" aria-label="Quick guide">
+  <div class="gd-k"><span>FIRST LOCK CONFIRMED · QUICK GUIDE</span><span id="gd-step">STEP 1/3</span></div>
+  <div class="gd-body" id="gd-body"></div>
+  <div class="gd-row">
+    <button id="gd-skip" class="howto-btn ghost" type="button">SKIP</button>
+    <button id="gd-next" class="howto-btn" type="button">NEXT →</button>
   </div>
 </div>
 

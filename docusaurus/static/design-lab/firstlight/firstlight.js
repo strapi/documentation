@@ -6,7 +6,8 @@
    Every number, rhythm and size on screen derives from a real field in
    content.json, graph.json, communities.json or provenance.json.
    No external libraries. Canvas 2D + DOM. Phosphor amber and signal white
-   on near-black; saturated color exists only inside the spectrograph.
+   on near-black; saturated color exists only inside instrument readings
+   (the spectrograph, and the ochre of the Hall of Hands deep scan).
    ============================================================================= */
 (function () {
   'use strict';
@@ -71,6 +72,10 @@
   var laidOut = false, filedReady = false, dirty = true;
   var fullChart = false, almanac = false, darkAdapt = false;
   var completeShown = false;
+  var HANDS = [], handsBuilt = false, maxHandPages = 1;
+  var pendingWarp = false;
+  var announced = Object.create(null);
+  var guideStep = 0, guideOn = false;
 
   var ghost = null;               /* {x,y,label} pencil-ghosted destination */
   var transitAnim = null;         /* {t0, di} a body crossing the beacon's light */
@@ -101,6 +106,7 @@
     wireSky();
     wireChrome();
     initSearch();
+    wireExtras();
     restore();
     laidOut = true;
     bootCamera();
@@ -112,6 +118,7 @@
     logLine('FIRST LIGHT · <b>' + stars.length + '</b> bodies predicted by the almanac · <b>1</b> contact', true);
     logLine('LOCK <b>' + stars[URS1].desig + '</b> ' + esc(stars[URS1].slug) + ' · <b>' + stars[URS1].m + '</b> inbound pulse trains · strongest emitter in system', true);
     if (visited.size === 0) showPrompt();
+    announceOnce('photom', 'INSTRUMENT ONLINE · PHOTOMETER (bottom center) — it graphs the locked beacon\u2019s incoming light · small bumps are citations arriving · a deep notch means an uncited page is crossing in front');
     /* the old atlas is computed while you listen; it is only consulted, never shown first */
     setTimeout(function () {
       computeLayout(sections, 'filed', 20260902);
@@ -247,6 +254,8 @@
         headLow: head.toLowerCase(), body: body, bodyLow: body.toLowerCase()
       });
     });
+
+    deriveHands();
 
     $('howto-facts').innerHTML =
       'MEASURED, NEVER GUESSED · ' + stars.length + ' bodies · ' + edges.length +
@@ -622,8 +631,12 @@
       if (s.fresh) logLine('SIGNAL FRESH · last transmission ' + s.freshDays + ' day' + (s.freshDays === 1 ? '' : 's') + ' before survey epoch');
       var tri = newly.length - (newly[0] === i ? 1 : 0);
       if (tri > 0) logLine('TRIANGULATED · <b>' + tri + '</b> new bod' + (tri === 1 ? 'y' : 'ies') + ' fixed from the transmissions heard at ' + s.desig);
+      if (tri > 0) sndTriangulated(s.dark ? 1.0 : 4.35);
+      if (s.slug === '/cloud/projects/settings') logLine('INVITATION · this page has been tended for <b>' + pv.careDays + '</b> days by ' + (pv.authors || []).length + ' hands · the wall remembers all ' + HANDS.length + ' · press <b>H</b> for THE HALL OF HANDS', true);
       if (s.dark) {
-        logLine('FIRST CONTACT · <b>' + s.desig + '</b> · 0 inbound citations · original surveyor ' + esc(pv.topAuthor || 'unknown'), true);
+        var fcNames = otherExplorers(pv, 4);
+        logLine('FIRST CONTACT · <b>' + s.desig + '</b> · 0 inbound citations · original surveyor ' + esc(pv.topAuthor || 'unknown') +
+          (fcNames ? ' · OTHER SPACE EXPLORERS · ' + fcNames : ''), true);
         showPlaque(i);
         audioContact();
       } else {
@@ -634,6 +647,7 @@
     }
 
     hidePrompt();
+    if (guideOn && visited.size >= 4) hideGuide();
     updateMeter();
     renderInstruments(i);
     save();
@@ -662,6 +676,7 @@
     var di = pool[0];
     if (REDUCED) { transitLand(di); return; }
     transitAnim = { t0: performance.now(), di: di, dur: 1800 };
+    safeSnd('transit');
     dirty = true;
   }
   function transitLand(di) {
@@ -671,7 +686,8 @@
     var b = stars[beaconIdx()];
     logLine('TRANSIT EVENT · non-emitting body crossed the line of sight to <b>' + b.desig +
       '</b> · no citation signature · est. mass ~' + fmtN(s.words) + ' words · designation <b>' + s.desig + '</b>', true);
-    audioThud();
+    safeSnd('thud');
+    announceOnce('transit', 'NEW MARK · a dotted ellipse is a page nothing cites, caught crossing the light of the beacon — click it to make first contact');
     save();
     dirty = true;
   }
@@ -711,6 +727,7 @@
     var D = window.__diag;
     D.frameMs = ft;
     D.avgFrameMs = D.avgFrameMs ? D.avgFrameMs * 0.95 + ft * 0.05 : ft;
+    D.audioOn = audioOn; D.audioUnlocked = audioUnlocked; D.bedOn = !!bedNodes;
     D.state = moving ? 'warp'
       : fullChart ? 'fullchart'
       : almanac ? 'almanac'
@@ -1185,6 +1202,7 @@
   /* --------------------------------------------- HUD: instrument suite -- */
 
   function renderInstruments(i) {
+    announceOnce('inst', 'INSTRUMENT ONLINE · SURVEY READINGS (left panel) — the locked page\u2019s citations in and out, topic class, word mass, commit strata, and crew');
     var s = stars[i];
     var p = s.prov;
     var cl = clusters[s.comIdx];
@@ -1195,10 +1213,10 @@
     o.push('<div class="in-title">' + esc(s.page.title) + '</div>');
 
     o.push('<div class="in-k">EMISSION <b>' + s.m + ' IN / ' + s.out + ' OUT</b></div>');
-    o.push('<canvas id="scopecv" width="264" height="56"></canvas>');
+    o.push('<canvas id="scopecv" width="264" height="56" data-name="EMISSION SCOPE" data-explain="One upward picket per page citing this one, one downward tick per page it links to. Flatline means nothing cites it."></canvas>');
 
     o.push('<div class="in-k">SPECTRUM <b>' + (cl.loose ? 'UNCLASSIFIED' : 'CLASS C' + pad2(s.comIdx + 1)) + '</b></div>');
-    o.push('<canvas id="speccv" width="264" height="46"></canvas>');
+    o.push('<canvas id="speccv" width="264" height="46" data-name="SPECTROGRAPH" data-explain="The one saturated reading: one emission line per member of this page&#39;s citation community; scattered grains measure impurity."></canvas>');
     o.push('<div class="in-row"><span>' + (cl.loose
       ? 'no citation community claimed this body'
       : 'purity <b>' + cl.purity.toFixed(2) + '</b> · ' + cl.members.length + ' members · hub ' + esc(cl.label)) + '</span></div>');
@@ -1215,7 +1233,7 @@
     o.push('<div class="in-k">CORE SAMPLE <b>' + p.commits + ' STRATA</b></div>');
     var layers = Math.min(p.commits, 64);
     var nightLayers = Math.min(p.night || 0, layers);
-    var strata = '<div class="strata">';
+    var strata = '<div class="strata" data-name="CORE SAMPLE" data-explain="One stratum per commit; mint strata are the commits made at night (00:00-06:00 UTC)">';
     for (var L = 0; L < layers; L++) {
       var h = 30 + ((L * 2654435761 >>> 0) % 70);
       strata += '<i' + (L >= layers - nightLayers ? ' class="n"' : '') + ' style="height:' + h + '%"></i>';
@@ -1227,13 +1245,14 @@
     if (p.night) o.push('<div class="in-row"><span class="fresh">' + p.night + ' commit' + (p.night === 1 ? '' : 's') + ' made at night</span></div>');
 
     o.push('<div class="in-k">CREW REGISTER <b>' + (p.authors || []).length + ' HAND' + ((p.authors || []).length === 1 ? '' : 'S') + '</b></div>');
-    o.push('<div class="crew">');
+    o.push('<div class="crew" data-name="CREW REGISTER" data-explain="Everyone who ever committed to this page, from provenance; the chief surveyor made the most commits">');
     (p.authors || []).forEach(function (a) {
       o.push('<div class="crew-row"><b>' + esc(a) + '</b>' +
         (a === p.topAuthor ? '<span class="ca">CHIEF SURVEYOR</span>' : '') + '</div>');
     });
     o.push('<div class="crew-row"><span>active</span><span>' + esc(p.first || '—') + ' → ' + esc(p.last || '—') + '</span></div>');
     o.push('</div>');
+    o.push('<button type="button" class="crew-wall" id="crewhall" data-name="HALL OF HANDS" data-explain="The deep scan of the human stratum: every documentation author as an ochre stencil">ALL ' + HANDS.length + ' HANDS · SEE THE WALL <kbd>H</kbd></button>');
 
     if (audioOn) o.push('<button class="btn in-listen" id="listenbtn">PLAY CORE SAMPLE · ' + p.commits + ' PINGS / 4 S</button>');
 
@@ -1245,6 +1264,8 @@
     drawSpectrograph(i);
     var lb = $('listenbtn');
     if (lb) lb.addEventListener('click', function () { audioCore(i, true); });
+    var chh = $('crewhall');
+    if (chh) chh.addEventListener('click', function () { toggleHands(true); });
     needPhot = true;
   }
 
@@ -1332,6 +1353,8 @@
   var logN = 0;
   function logLine(html, ev) {
     var el = $('log');
+    /* follow the newest line unless the visitor has scrolled up to read history */
+    var stick = el.scrollHeight - el.scrollTop - el.clientHeight < 30;
     var t = Math.floor((performance.now() - BOOT_T) / 1000);
     var div = document.createElement('div');
     div.className = 'll' + (ev ? ' ev' : '');
@@ -1339,6 +1362,10 @@
     el.appendChild(div);
     logN++;
     while (el.children.length > 40) el.removeChild(el.firstChild);
+    /* older lines dim; every line keeps its full height, nothing ever stacks */
+    var kids = el.children;
+    for (var k = 0; k < kids.length; k++) kids[k].classList.toggle('old', k < kids.length - 8);
+    if (stick) el.scrollTop = el.scrollHeight;
   }
 
   function updateMeter() {
@@ -1355,14 +1382,28 @@
 
   /* ------------------------------------------------------ plaque + plate */
 
+  /* the other hands on a page, named: provenance.authors minus the chief
+     surveyor. cap limits the list to cap names then "+ n more" where
+     space is tight; the crew register keeps the full list. */
+  function otherExplorers(p, cap) {
+    var top = (p && p.topAuthor) || '';
+    var rest = ((p && p.authors) || []).filter(function (a) { return a !== top; });
+    if (!rest.length) return '';
+    var shown = (cap && rest.length > cap) ? rest.slice(0, cap) : rest;
+    var out = shown.map(esc).join(', ');
+    if (shown.length < rest.length) out += ' +' + (rest.length - shown.length) + ' more';
+    return out;
+  }
+
   var plaqueTimer = null;
   function showPlaque(i) {
     var s = stars[i], p = s.prov;
     $('pq-title').textContent = s.page.title;
     $('pq-line1').innerHTML = esc(s.desig) + ' · ' + esc(s.slug) + '<br>est. mass <b>' + fmtN(s.words) +
       '</b> words · <b>0</b> inbound citations · ' + p.commits + ' commits · ' + p.careDays + ' days of care';
+    var oe = otherExplorers(p, 4);
     $('pq-line2').innerHTML = 'ORIGINAL SURVEYOR · <b>' + esc(p.topAuthor || 'unknown') + '</b>' +
-      ((p.authors || []).length > 1 ? ' · with ' + ((p.authors || []).length - 1) + ' other hand' + ((p.authors || []).length > 2 ? 's' : '') : '');
+      (oe ? '<br><span class="oe">OTHER SPACE EXPLORERS</span> · ' + oe : '');
     $('plaque').hidden = false;
     clearTimeout(plaqueTimer);
     plaqueTimer = setTimeout(function () { $('plaque').hidden = true; }, REDUCED ? 6000 : 5200);
@@ -1377,49 +1418,441 @@
     $('cp-hands').textContent = 'AFTER ' + ALL_AUTHORS.length + ' HANDS';
     $('cp-names').innerHTML = ALL_AUTHORS.map(function (a) { return '<span>' + esc(a) + '</span>'; }).join('');
     $('plate').hidden = false;
+    safeSnd('plate');
     logLine('SURVEY COMPLETE · <b>' + chartN + '/' + stars.length + '</b> · after ' + ALL_AUTHORS.length + ' hands', true);
     save();
   }
 
   /* --------------------------------------------------------------- audio */
-  /* Optional garnish. Silent by default; nothing depends on it.
-     Every ping is one commit; night commits ring one octave lower. */
+  /* ON by default. The AudioContext is created and resumed by a one-time
+     capture listener on the first pointerdown/keydown; until then every
+     sound function returns silently. One small analog-style rack — detuned
+     oscillators through a feedback tape echo with wow; the only noise
+     source is the bed's seeded room tone, no noise-wash event voices —
+     and every sound in it maps to a countable, measured event:
+       room bed        the observatory itself: breathing filtered noise,
+                       the original room tone at half its first volume
+                       (runs while sound is on)
+       lock            a page becomes the locked beacon
+       ping            one commit (night commits one octave lower)
+       transit         a dark body starts dipping the beacon's light
+       thud            the transit lands: a body is detected
+       contact         first contact with an uncited page
+       triang          a survey triangulated new bodies onto the chart
+       chart           FULL CHART revealed
+       warp            a search selection warps the probe
+       almanac         the old atlas is opened
+       hall pad        the Hall of Hands is open
+       plate           the survey completes at 290/290
+       zoom in / out   one mirrored sine glide per zoom gesture:
+                       rising when you zoom in, the same shape falling
+                       when you zoom out — gentle, below every event voice
+     Toggling SOUND off silences everything for the visit. */
 
-  var AC = null, audioOn = false;
+  var AC = null, audioOn = true, audioUnlocked = false, rack = null;
+  var bedNodes = null, hallNodes = null;
+
   function ensureAC() {
     if (AC) return true;
     try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { AC = null; }
     return !!AC;
   }
-  function ping(freq, when, vol) {
-    if (!AC) return;
-    var o = AC.createOscillator(), g = AC.createGain();
-    o.type = 'sine'; o.frequency.value = freq;
-    g.gain.setValueAtTime(0.0001, when);
-    g.gain.exponentialRampToValueAtTime(vol, when + 0.012);
-    g.gain.exponentialRampToValueAtTime(0.0001, when + 0.16);
-    o.connect(g); g.connect(AC.destination);
-    o.start(when); o.stop(when + 0.2);
+
+  /* seeded noise: the same hiss every visit, never random garnish */
+  function noiseBuf(c, secs) {
+    var n = Math.max(1, Math.floor(c.sampleRate * secs));
+    var b = c.createBuffer(1, n, c.sampleRate);
+    var d = b.getChannelData(0);
+    var rnd = mulberry32(29761);
+    for (var i = 0; i < n; i++) d[i] = rnd() * 2 - 1;
+    return b;
   }
-  function audioCore(i, force) {
-    if (!audioOn || !AC) return;
+
+  /* the rack: master -> gentle compressor -> out, plus a feedback tape
+     echo (lowpassed loop, slow wow on the delay line) fed by R.send */
+  function makeRack(c) {
+    var master = c.createGain(); master.gain.value = 1;
+    var comp = c.createDynamicsCompressor();
+    try {
+      comp.threshold.value = -22; comp.knee.value = 18; comp.ratio.value = 5;
+      comp.attack.value = 0.01; comp.release.value = 0.32;
+    } catch (e) {}
+    master.connect(comp); comp.connect(c.destination);
+    var echo = c.createDelay(1.5); echo.delayTime.value = 0.21;
+    var fb = c.createGain(); fb.gain.value = 0.26;
+    var damp = c.createBiquadFilter(); damp.type = 'lowpass'; damp.frequency.value = 1200; damp.Q.value = 0.4;
+    echo.connect(damp); damp.connect(fb); fb.connect(echo);
+    var wet = c.createGain(); wet.gain.value = 0.3; damp.connect(wet); wet.connect(master);
+    var send = c.createGain(); send.gain.value = 1; send.connect(echo);
+    try {
+      var wow = c.createOscillator(); wow.frequency.value = 0.4;
+      var wowG = c.createGain(); wowG.gain.value = 0.002;
+      wow.connect(wowG); wowG.connect(echo.delayTime); wow.start();
+    } catch (e) {}
+    return { ctx: c, dry: master, send: send };
+  }
+
+  /* the observatory bed, FINAL FORM by owner order: the ORIGINAL
+     noise-based room tone — breathing lowpassed seeded noise plus the
+     mission-loop hiss, exactly as first shipped — at HALF its previous
+     gain (-6 dB: every noise gain halved), and with every tonal drone
+     component removed (no detuned 55/55.35 pair, no bed-level hum;
+     no partials below 100 Hz). Same breathing LFO, same toggle. */
+  function buildBed(R, t) {
+    var c = R.ctx;
+    var out = c.createGain();
+    out.gain.setValueAtTime(0.0001, t);
+    out.gain.exponentialRampToValueAtTime(1, t + 1.6);
+    out.connect(R.dry);
+    var buf = noiseBuf(c, 3);
+    var src = c.createBufferSource(); src.buffer = buf; src.loop = true;
+    var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 230; lp.Q.value = 0.8;
+    var ng = c.createGain(); ng.gain.value = 0.01;                   /* was 0.02: -6 dB */
+    src.connect(lp); lp.connect(ng); ng.connect(out);
+    var lfo = c.createOscillator(); lfo.frequency.value = 0.05;      /* one breath per 20 s */
+    var lg = c.createGain(); lg.gain.value = 95;
+    lfo.connect(lg); lg.connect(lp.frequency);
+    var hs = c.createBufferSource(); hs.buffer = buf; hs.loop = true;
+    var hp = c.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 4300;
+    var hg = c.createGain(); hg.gain.value = 0.0014;                 /* was 0.0028: -6 dB */
+    var hlfo = c.createOscillator(); hlfo.frequency.value = 0.08;
+    var hlg = c.createGain(); hlg.gain.value = 0.00065;              /* was 0.0013: -6 dB */
+    hlfo.connect(hlg); hlg.connect(hg.gain);
+    hs.connect(hp); hp.connect(hg); hg.connect(out);
+    src.start(t); hs.start(t); lfo.start(t); hlfo.start(t);
+    return { out: out, stops: [src, hs, lfo, hlfo] };
+  }
+
+  /* the Hall of Hands: a hushed sustained pad while the wall is open */
+  function buildHallPad(R, t) {
+    var c = R.ctx;
+    var out = c.createGain();
+    out.gain.setValueAtTime(0.0001, t);
+    out.gain.exponentialRampToValueAtTime(0.010, t + 1.4);
+    var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 520; lp.Q.value = 0.6;
+    lp.connect(out); out.connect(R.dry);
+    var sg = c.createGain(); sg.gain.value = 0.15; out.connect(sg); sg.connect(R.send);
+    var stops = [];
+    [110, 110.6, 164.8, 220.9].forEach(function (f) {
+      var o = c.createOscillator(); o.type = 'triangle'; o.frequency.value = f;
+      var g = c.createGain(); g.gain.value = f > 200 ? 0.35 : 1;
+      o.connect(g); g.connect(lp); o.start(t); stops.push(o);
+    });
+    var lfo = c.createOscillator(); lfo.frequency.value = 0.11;
+    var lg = c.createGain(); lg.gain.value = 140;
+    lfo.connect(lg); lg.connect(lp.frequency); lfo.start(t); stops.push(lfo);
+    return { out: out, stops: stops };
+  }
+
+  function releaseNodes(nodes, secs) {
+    if (!nodes || !AC) return;
+    try {
+      var t = AC.currentTime;
+      nodes.out.gain.cancelScheduledValues(t);
+      nodes.out.gain.setValueAtTime(Math.max(nodes.out.gain.value, 0.0001), t);
+      nodes.out.gain.exponentialRampToValueAtTime(0.0001, t + secs);
+      nodes.stops.forEach(function (n) { try { n.stop(t + secs + 0.1); } catch (e) {} });
+    } catch (e) {}
+  }
+
+  function startBed() {
+    if (!rack || bedNodes || !audioOn) return;
+    try { bedNodes = buildBed(rack, AC.currentTime + 0.02); } catch (e) { bedNodes = null; }
+  }
+  function stopBed() {
+    if (bedNodes) { releaseNodes(bedNodes, 0.5); bedNodes = null; }
+  }
+
+  /* --- the event voices ------------------------------------------------ */
+  var SND = {
+    /* one commit = one ping; night commits ring one octave lower */
+    ping: function (R, t, night) {
+      var c = R.ctx;
+      var o = c.createOscillator(), g = c.createGain();
+      o.type = 'sine'; o.frequency.value = night ? 330 : 660;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.045, t + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.16);
+      o.connect(g); g.connect(R.dry);
+      var s = c.createGain(); s.gain.value = 0.22; g.connect(s); s.connect(R.send);
+      o.start(t); o.stop(t + 0.2);
+    },
+    /* the receiver latches: one warm wooden knock, one tiny confirmation tick.
+       Short, dry, no sweep — it fires on every page-open. */
+    lock: function (R, t) {
+      var c = R.ctx;
+      var o = c.createOscillator(), g = c.createGain();
+      var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; lp.Q.value = 1.1;
+      o.type = 'triangle'; o.frequency.value = 392;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.058, t + 0.008);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.13);
+      o.connect(lp); lp.connect(g); g.connect(R.dry);
+      o.start(t); o.stop(t + 0.15);
+      var o2 = c.createOscillator(), g2 = c.createGain();
+      o2.type = 'sine'; o2.frequency.value = 1568;
+      g2.gain.setValueAtTime(0.0001, t + 0.09);
+      g2.gain.exponentialRampToValueAtTime(0.02, t + 0.098);
+      g2.gain.exponentialRampToValueAtTime(0.0001, t + 0.19);
+      o2.connect(g2); g2.connect(R.dry);
+      o2.start(t + 0.09); o2.stop(t + 0.21);
+    },
+    /* photometric dip: two soft falling plucks, the meter reading the dimming.
+       Short, dry, no noise — it fires on every ambient transit. */
+    transit: function (R, t) {
+      var c = R.ctx;
+      [587.33, 440].forEach(function (f, k) {
+        var o = c.createOscillator(), g = c.createGain();
+        var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1100; lp.Q.value = 0.7;
+        o.type = 'sine'; o.frequency.value = f;
+        var tt = t + k * 0.13;
+        g.gain.setValueAtTime(0.0001, tt);
+        g.gain.exponentialRampToValueAtTime(0.042, tt + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.0001, tt + 0.16);
+        o.connect(lp); lp.connect(g); g.connect(R.dry);
+        o.start(tt); o.stop(tt + 0.2);
+      });
+    },
+    /* the transit lands: a body is on the chart */
+    thud: function (R, t) {
+      var c = R.ctx;
+      var o = c.createOscillator(), g = c.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(96, t);
+      o.frequency.exponentialRampToValueAtTime(44, t + 0.3);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.085, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.5);
+      o.connect(g); g.connect(R.dry);
+      o.start(t); o.stop(t + 0.55);
+    },
+    /* first contact: one low reverent thump and a single sparse chime */
+    contact: function (R, t) {
+      var c = R.ctx;
+      var o = c.createOscillator(), g = c.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(82, t);
+      o.frequency.exponentialRampToValueAtTime(44, t + 0.26);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.09, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.48);
+      o.connect(g); g.connect(R.dry);
+      o.start(t); o.stop(t + 0.5);
+      var co = c.createOscillator(), cg = c.createGain();
+      co.type = 'sine'; co.frequency.value = 1174.66;
+      cg.gain.setValueAtTime(0.0001, t + 0.2);
+      cg.gain.exponentialRampToValueAtTime(0.022, t + 0.215);
+      cg.gain.exponentialRampToValueAtTime(0.0001, t + 0.58);
+      co.connect(cg); cg.connect(R.dry);
+      co.start(t + 0.2); co.stop(t + 0.6);
+    },
+    /* triangulation complete: two short filtered confirmation blips */
+    triang: function (R, t) {
+      var c = R.ctx;
+      [880, 1174.66].forEach(function (f, k) {
+        var o = c.createOscillator(), g = c.createGain();
+        var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1300;
+        o.type = 'square'; o.frequency.value = f;
+        var tt = t + k * 0.15;
+        g.gain.setValueAtTime(0.0001, tt);
+        g.gain.exponentialRampToValueAtTime(0.026, tt + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.0001, tt + 0.11);
+        o.connect(lp); lp.connect(g); g.connect(R.dry);
+        o.start(tt); o.stop(tt + 0.16);
+      });
+    },
+    /* the full chart opens: three fixed plucks climbing the staff */
+    chart: function (R, t) {
+      var c = R.ctx;
+      [220, 329.63, 440].forEach(function (f, k) {
+        var o = c.createOscillator(), g = c.createGain();
+        var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1600;
+        o.type = 'triangle'; o.frequency.value = f;
+        var tt = t + k * 0.11;
+        g.gain.setValueAtTime(0.0001, tt);
+        g.gain.exponentialRampToValueAtTime(0.036, tt + 0.012);
+        g.gain.exponentialRampToValueAtTime(0.0001, tt + 0.28);
+        o.connect(lp); lp.connect(g); g.connect(R.dry);
+        o.start(tt); o.stop(tt + 0.3);
+      });
+    },
+    /* search warp: the one theremin glide in the rack — brief, with vibrato */
+    warp: function (R, t) {
+      var c = R.ctx;
+      var o = c.createOscillator(); o.type = 'sine';
+      o.frequency.setValueAtTime(310, t);
+      o.frequency.exponentialRampToValueAtTime(740, t + 0.3);
+      o.frequency.exponentialRampToValueAtTime(620, t + 0.5);
+      var vib = c.createOscillator(); vib.frequency.value = 5.6;
+      var vg = c.createGain(); vg.gain.value = 7;
+      vib.connect(vg); vg.connect(o.frequency);
+      var g = c.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.04, t + 0.06);
+      g.gain.setValueAtTime(0.04, t + 0.36);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.56);
+      o.connect(g); g.connect(R.dry);
+      o.start(t); vib.start(t); o.stop(t + 0.6); vib.stop(t + 0.6);
+    },
+    /* mirrored zoom pair: IN is a short rising sine glide, OUT the exact
+       same shape falling — same timbre family, inverse pitch trajectory,
+       sine through the tape echo, no noise, under every event voice. */
+    zoomIn: function (R, t) { zoomGlide(R, t, true); },
+    zoomOut: function (R, t) { zoomGlide(R, t, false); },
+    /* the almanac opens: a short burst of tape flutter and one reel click */
+    almanac: function (R, t) {
+      var c = R.ctx;
+      var o = c.createOscillator(); o.type = 'triangle'; o.frequency.value = 294;
+      var fl = c.createOscillator(); fl.frequency.value = 6.3;
+      var fg = c.createGain(); fg.gain.value = 22;
+      fl.connect(fg); fg.connect(o.frequency);
+      var g = c.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.026, t + 0.04);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.56);
+      o.connect(g); g.connect(R.dry);
+      var ck = c.createOscillator(), kg = c.createGain();
+      var klp = c.createBiquadFilter(); klp.type = 'lowpass'; klp.frequency.value = 3200;
+      ck.type = 'square'; ck.frequency.value = 2200;
+      kg.gain.setValueAtTime(0.0001, t);
+      kg.gain.exponentialRampToValueAtTime(0.011, t + 0.004);
+      kg.gain.exponentialRampToValueAtTime(0.0001, t + 0.03);
+      ck.connect(klp); klp.connect(kg); kg.connect(R.dry);
+      o.start(t); fl.start(t); ck.start(t);
+      o.stop(t + 0.6); fl.stop(t + 0.6); ck.stop(t + 0.05);
+    },
+    /* 290/290: a compact low chord stamp, gone inside the second */
+    plate: function (R, t) {
+      var c = R.ctx;
+      [174.61, 220, 261.63].forEach(function (f, k) {
+        var o = c.createOscillator(); o.type = 'triangle'; o.frequency.value = f;
+        var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 800;
+        var g = c.createGain();
+        var tt = t + k * 0.06;
+        g.gain.setValueAtTime(0.0001, tt);
+        g.gain.exponentialRampToValueAtTime(0.028, tt + 0.03);
+        g.gain.exponentialRampToValueAtTime(0.0001, tt + 0.5);
+        o.connect(lp); lp.connect(g); g.connect(R.dry);
+        o.start(tt); o.stop(tt + 0.55);
+      });
+    }
+  };
+
+  /* one shared builder so IN and OUT are exact mirrors of each other:
+     G4 (392 Hz) to D5 (587.33 Hz) rising, D5 to G4 falling, ~0.3 s. */
+  function zoomGlide(R, t, up) {
+    var c = R.ctx;
+    var o = c.createOscillator(); o.type = 'sine';
+    o.frequency.setValueAtTime(up ? 392 : 587.33, t);
+    o.frequency.exponentialRampToValueAtTime(up ? 587.33 : 392, t + 0.22);
+    var g = c.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.018, t + 0.025);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+    o.connect(g); g.connect(R.dry);
+    var s = c.createGain(); s.gain.value = 0.18; g.connect(s); s.connect(R.send);
+    o.start(t); o.stop(t + 0.32);
+  }
+
+  /* zoom voices fire once per zoom gesture (a burst of wheel steps one
+     way); re-armed by a direction flip or a quiet gap. Only the human
+     wheel calls this — the cold open and programmatic camera moves
+     never do, and the search warp keeps its own voice. */
+  var zoomSndDir = 0, zoomSndAt = -1e9;
+  function zoomSound(zin) {
+    if (!audioUnlocked || !audioOn || !rack) return;
+    if (document.documentElement.hasAttribute('data-boot') || performance.now() - BOOT_T < 1200) return;
+    var now = performance.now(), dir = zin ? 1 : -1;
+    if (dir === zoomSndDir && now - zoomSndAt < 300) { zoomSndAt = now; return; }
+    zoomSndDir = dir; zoomSndAt = now;
+    safeSnd(zin ? 'zoomIn' : 'zoomOut');
+  }
+
+  function safeSnd(name) {
+    if (!audioOn || !rack || !AC) return;
+    try { SND[name](rack, AC.currentTime + 0.02); } catch (e) { /* silence, never errors */ }
+  }
+  function sndTriangulated(delay) {
+    if (!audioOn || !rack || !AC) return;
+    try { SND.triang(rack, AC.currentTime + (delay || 0.1)); } catch (e) {}
+  }
+  function audioCore(i) {
+    if (!audioOn || !rack || !AC) return;
     var p = stars[i].prov;
-    var n = Math.max(1, p.commits);
-    var shown = Math.min(n, 64);
+    var shown = Math.min(Math.max(1, p.commits), 64);
     var nightShown = Math.min(p.night || 0, shown);
     var t0 = AC.currentTime + 0.05;
-    for (var k = 0; k < shown; k++) {
-      var frac = shown <= 1 ? 0 : k / (shown - 1);
-      var isNight = k >= shown - nightShown;
-      ping(isNight ? 330 : 660, t0 + frac * 4, 0.05);
+    try {
+      for (var k = 0; k < shown; k++) {
+        var frac = shown <= 1 ? 0 : k / (shown - 1);
+        SND.ping(rack, t0 + frac * 4, k >= shown - nightShown);
+      }
+    } catch (e) {}
+  }
+  function audioContact() { safeSnd('contact'); }
+
+  /* one-time unlock on the first human gesture */
+  function unlockAudio() {
+    if (audioUnlocked) return;
+    audioUnlocked = true;
+    document.removeEventListener('pointerdown', unlockAudio, true);
+    document.removeEventListener('keydown', unlockAudio, true);
+    if (!ensureAC()) return;
+    try { if (AC.state === 'suspended') AC.resume(); } catch (e) {}
+    try { rack = makeRack(AC); } catch (e) { rack = null; return; }
+    if (audioOn) {
+      startBed();
+      safeSnd('lock');
+      announceOnce('sound', 'SOUND ON · every sound is a measurement: the room tone is the observatory, pings are commits, a falling two-note dip is a transit, the low thump is first contact · the SOUND control silences it');
     }
   }
-  function audioThud() { if (audioOn && AC) ping(110, AC.currentTime + 0.02, 0.09); }
-  function audioContact() {
-    if (!audioOn || !AC) return;
-    ping(523, AC.currentTime + 0.02, 0.07);
-    ping(660, AC.currentTime + 0.3, 0.07);
-  }
+  document.addEventListener('pointerdown', unlockAudio, true);
+  document.addEventListener('keydown', unlockAudio, true);
+
+  /* headless self-test: render the first-contact plaque for any slug
+     (real provenance), so the crediting layout — names, then "+ n more"
+     where the crew outgrows the plaque — can be photographed */
+  window.__probePlaque = function (slug) {
+    var i = byId[slug];
+    if (i === undefined) return false;
+    showPlaque(i);
+    return true;
+  };
+
+  /* headless self-test: render one event offline, report its signature */
+  window.__probeSound = function (name, secs) {
+    try {
+      var durs = { bed: 4, hall: 2.5, plate: 2, contact: 2, transit: 1.5, chart: 1.5, warp: 1.5, lock: 1.2, almanac: 1.5, zoomIn: 0.6, zoomOut: 0.6 };
+      var dur = secs || durs[name] || 1.2;
+      var OC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      var o = new OC(1, Math.ceil(44100 * dur), 44100);
+      var R = makeRack(o);
+      if (name === 'bed') buildBed(R, 0);
+      else if (name === 'hall') buildHallPad(R, 0);
+      else if (name === 'ping') SND.ping(R, 0.02, false);
+      else if (name === 'pingNight') SND.ping(R, 0.02, true);
+      else SND[name](R, 0.02);
+      return o.startRendering().then(function (buf) {
+        var d = buf.getChannelData(0), n = d.length, sr = buf.sampleRate;
+        var rms = 0, peak = 0, zc = 0, e1 = 0, e2 = 0, half = n >> 1;
+        var TH = 0.004; /* ~ -48 dBFS: the audible-envelope floor */
+        var a0 = -1, a1 = -1;
+        for (var i = 0; i < n; i++) {
+          var v = d[i], av = v < 0 ? -v : v;
+          rms += v * v; if (av > peak) peak = av;
+          if (av > TH) { if (a0 < 0) a0 = i; a1 = i; }
+          if (i && ((d[i - 1] < 0 && v >= 0) || (d[i - 1] >= 0 && v < 0))) zc++;
+          if (i < half) e1 += v * v; else e2 += v * v;
+        }
+        rms = Math.sqrt(rms / n);
+        return { name: name, dur: dur, rms: rms, peak: peak,
+                 audDur: a0 < 0 ? 0 : (a1 - a0) / sr,
+                 zcrHz: zc / (2 * dur), split: (e1 + e2) > 0 ? e2 / (e1 + e2) : 0 };
+      });
+    } catch (e) {
+      return Promise.resolve({ name: name, error: String(e && e.message) });
+    }
+  };
 
   /* -------------------------------------------------- sky interaction */
 
@@ -1504,7 +1937,9 @@
       e.preventDefault();
       var before = s2w(e.clientX, e.clientY);
       var f = Math.exp(-e.deltaY * (e.deltaMode === 1 ? 0.05 : 0.0016));
-      cam.s = clamp(cam.s * f, 0.06, 8); cam.ts = cam.s;
+      var ns = clamp(cam.s * f, 0.06, 8);
+      if (ns !== cam.s) zoomSound(ns > cam.s);
+      cam.s = ns; cam.ts = cam.s;
       var after = s2w(e.clientX, e.clientY);
       cam.x += before[0] - after[0]; cam.y += before[1] - after[1];
       cam.tx = cam.x; cam.ty = cam.y;
@@ -1518,6 +1953,8 @@
       $('fullbtn').setAttribute('aria-pressed', fullChart ? 'true' : 'false');
       if (fullChart) {
         logLine('FULL CHART · all <b>' + stars.length + '</b> bodies and <b>' + edges.length + '</b> transmissions revealed · your own chart holds ' + chartN);
+        safeSnd('chart');
+        announceOnce('fullchart', 'NEW VIEW · FULL CHART shows every page and every link at once · your own measurements keep a small underline tick · switching back loses nothing');
         fitVisible(false);
       } else {
         logLine('FULL CHART OFF · back to what you have measured: <b>' + chartN + '</b>/' + stars.length);
@@ -1533,25 +1970,40 @@
       }
       almanac = !almanac;
       $('almbtn').setAttribute('aria-pressed', almanac ? 'true' : 'false');
-      if (almanac) logLine('ALMANAC OVERLAY · ' + sections.length + ' sections as catalogued · <b>' + DRIFT_N + '</b> bodies off ephemeris');
+      if (almanac) {
+        logLine('ALMANAC OVERLAY · ' + sections.length + ' sections as catalogued · <b>' + DRIFT_N + '</b> bodies off ephemeris');
+        safeSnd('almanac');
+        announceOnce('almanac', 'NEW OVERLAY · the ALMANAC draws where the sidebar files each page (dotted) against where its citations put it · dashed vectors flag the ' + DRIFT_N + ' disagreements');
+      }
       dirty = true;
     });
     $('darkbtn').addEventListener('click', function () {
       darkAdapt = !darkAdapt;
       $('darkbtn').setAttribute('aria-pressed', darkAdapt ? 'true' : 'false');
       document.body.classList.toggle('darkadapt', darkAdapt);
-      if (darkAdapt) logLine('DARK ADAPTATION · instruments dimmed · <b>' + NIGHT_EDITS + '</b> night edits on ' + NIGHT_PAGES + ' pages bloom blue-green');
+      if (darkAdapt) {
+        logLine('DARK ADAPTATION · instruments dimmed · <b>' + NIGHT_EDITS + '</b> night edits on ' + NIGHT_PAGES + ' pages bloom blue-green');
+        announceOnce('darkadapt', 'NEW VIEW · DARK ADAPT dims the chrome so the ' + NIGHT_EDITS + ' commits made between midnight and 06:00 glow blue-green on their pages');
+      }
       dirty = true;
     });
     $('ixbtn').addEventListener('click', function () { toggleIndex(); });
     $('ix-close').addEventListener('click', function () { toggleIndex(false); });
     $('audiobtn').addEventListener('click', function () {
       audioOn = !audioOn;
-      if (audioOn && !ensureAC()) audioOn = false;
-      if (audioOn && AC && AC.state === 'suspended') AC.resume();
       $('audiobtn').textContent = audioOn ? 'SOUND ON' : 'SOUND OFF';
       $('audiobtn').setAttribute('aria-pressed', audioOn ? 'true' : 'false');
-      if (audioOn) logLine('AUDIO · each ping is one commit · night commits ring one octave lower');
+      if (audioOn) {
+        if (audioUnlocked && rack) {
+          startBed();
+          if (!$('hands').hidden && !hallNodes) { try { hallNodes = buildHallPad(rack, AC.currentTime + 0.02); } catch (e) { hallNodes = null; } }
+        }
+        logLine('SOUND ON · every sound is a measurement · pings are commits, night commits one octave lower');
+      } else {
+        stopBed();
+        if (hallNodes) { releaseNodes(hallNodes, 0.4); hallNodes = null; }
+        logLine('SOUND OFF · silenced for this visit');
+      }
       if (current != null) renderInstruments(current);
     });
     $('rd-close').addEventListener('click', function () { location.hash = '#/'; });
@@ -1567,9 +2019,15 @@
     document.addEventListener('keydown', function (e) {
       var tag = document.activeElement ? document.activeElement.tagName : '';
       var inField = /^(INPUT|TEXTAREA|SELECT)$/.test(tag);
-      if (e.key === 'Tab' && !inField && $('howto').hidden && $('plate').hidden) {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key === 'Tab' && !inField && $('howto').hidden && $('plate').hidden && $('hands').hidden && $('annotate').hidden) {
         e.preventDefault();
         toggleIndex();
+      } else if ((e.key === 'h' || e.key === 'H') && !inField) {
+        toggleHands();
+      } else if (e.key === '?' && !inField) {
+        e.preventDefault();
+        toggleAnnotate();
       }
     });
   }
@@ -1649,6 +2107,7 @@
     var page = bundle.pages[r.slug];
     if (!page) { renderMissing(r.slug); return; }
     var i = byId[r.slug];
+    var prevCur = current;
     current = i;
     document.title = page.title + ' · FIRST LIGHT';
     /* content first, always: the telemetry theatre happens around it */
@@ -1664,8 +2123,11 @@
     cam.tx = s.pos.cited[0]; cam.ty = s.pos.cited[1];
     if (cam.ts < 0.55) cam.ts = 0.8;
     if (REDUCED) { cam.x = cam.tx; cam.y = cam.ty; cam.s = cam.ts; ghost = null; }
+    if (pendingWarp) { safeSnd('warp'); pendingWarp = false; }
+    else if (prevCur !== i) safeSnd('lock');
     survey(i);
     refreshIndexMarks();
+    maybeGuide();
     dirty = true;
   }
   function scrollToAnchor(a) {
@@ -1710,10 +2172,12 @@
       '</div>');
 
     if (st.dark) {
+      var fcOE = otherExplorers(pv, 4);
       o.push('<div class="fc-plaque"><div class="k">FIRST CONTACT</div>' +
         '<div class="l">No page in this documentation cites this one. You are the first to log this page.<br>' +
         'ORIGINAL SURVEYOR · <b>' + esc(pv.topAuthor || 'unknown') + '</b> · first worked ' + esc(pv.first || '—') +
-        ' · last worked ' + esc(pv.last || '—') + '</div></div>');
+        ' · last worked ' + esc(pv.last || '—') +
+        (fcOE ? '<br><span class="oe">OTHER SPACE EXPLORERS</span> · ' + fcOE : '') + '</div></div>');
     }
 
     if (st.drift && !cl.loose) {
@@ -2024,7 +2488,7 @@
       if (e.key === 'Escape') { qEl.value = ''; runSearch(); qEl.blur(); }
       if (e.key === 'Enter') {
         var first = resEl.querySelector('.res');
-        if (first) { location.hash = first.getAttribute('href'); qEl.blur(); }
+        if (first) { pendingWarp = true; location.hash = first.getAttribute('href'); qEl.blur(); }
       }
     });
     document.addEventListener('keydown', function (e) {
@@ -2032,18 +2496,22 @@
       if (e.key === '/' && document.activeElement !== qEl && !/^(INPUT|TEXTAREA)$/.test(tag)) {
         e.preventDefault(); qEl.focus(); qEl.select();
       } else if (e.key === 'Escape') {
-        if (!$('howto').hidden) { $('howto').hidden = true; }
+        if (!$('annotate').hidden) toggleAnnotate(false);
+        else if (!$('howto').hidden) { $('howto').hidden = true; }
+        else if (!$('hands').hidden) toggleHands(false);
+        else if (guideOn) hideGuide();
         else if (resEl && !resEl.hidden) closeResults();
         else if (!$('ixpanel').hidden) toggleIndex(false);
         else if (!$('plaque').hidden) $('plaque').hidden = true;
+        else if (!$('plate').hidden) $('plate').hidden = true;
+        else if (!$('reader').hidden) location.hash = '#/';
       }
     });
     document.addEventListener('click', function (e) {
       if (resEl && !resEl.hidden && !e.target.closest('#results') && !e.target.closest('.search')) closeResults();
     });
-    $('helpbtn').addEventListener('click', function () {
-      $('howto').hidden = !$('howto').hidden;
-    });
+    resEl.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a.res')) pendingWarp = true; });
+    $('helpbtn').addEventListener('click', function () { toggleAnnotate(); });
     $('howto-go').addEventListener('click', function () { $('howto').hidden = true; });
     $('howto').addEventListener('click', function (e) { if (e.target === $('howto')) $('howto').hidden = true; });
   }
@@ -2099,5 +2567,331 @@
     if (matched) { matched = null; dirty = true; }
     if (ghost && ghost.hold) { ghost = null; dirty = true; }
   }
+
+
+  /* ------------------------------------------------- announcements ----- */
+  /* New instruments introduce themselves once, in plain English. */
+
+  function announceOnce(key, html) {
+    if (announced[key]) return;
+    announced[key] = 1;
+    logLine(html, true);
+  }
+
+  /* ------------------------------------------------ THE HALL OF HANDS -- */
+  /* The probe's deep scan of the system's human stratum: the 77 real
+     hands (union of provenance.authors) as ochre stencils on a dark wall.
+     Stencil size = pages touched; row = first-active date, oldest lowest;
+     left/right, tilt and splay are seeded from the name itself. */
+
+  function hashStr(s) {
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return h >>> 0;
+  }
+
+  function deriveHands() {
+    var map = Object.create(null);
+    stars.forEach(function (s) {
+      var pv = s.prov;
+      (pv.authors || []).forEach(function (a) {
+        var h = map[a] || (map[a] = { name: a, first: Infinity, last: -Infinity, pages: 0, chief: 0 });
+        h.pages++;
+        var f = Date.parse(pv.first || ''), l = Date.parse(pv.last || '');
+        if (isFinite(f) && f < h.first) h.first = f;
+        if (isFinite(l) && l > h.last) h.last = l;
+        if (pv.topAuthor === a) h.chief++;
+      });
+    });
+    HANDS = Object.keys(map).map(function (k) { return map[k]; });
+    HANDS.forEach(function (h) { if (!isFinite(h.first)) { h.first = EPOCH; h.last = EPOCH; } });
+    /* newest strata read first; the oldest hands settle to the lowest row */
+    HANDS.sort(function (a, b) { return b.first - a.first || (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1); });
+    maxHandPages = 1;
+    HANDS.forEach(function (h) { if (h.pages > maxHandPages) maxHandPages = h.pages; });
+  }
+
+  function ym(t) { var d = new Date(t); return d.getUTCFullYear() + '-' + pad2(d.getUTCMonth() + 1); }
+
+  /* a negative stencil: ochre pigment blown over the hand, cave-wall style.
+     Two passes — a loose cloud, then dense pigment hugging the hand's
+     contour — and the hand itself carved back out to bare wall. */
+  function drawHandStencil(cv, h) {
+    var g = cv.getContext('2d');
+    var Wc = cv.width, Hc = cv.height;
+    var rnd = mulberry32(hashStr(h.name));
+    var scale = 0.8 + 0.38 * Math.sqrt(h.pages / maxHandPages);
+    var flip = rnd() < 0.5 ? -1 : 1;
+    var rot = (rnd() - 0.5) * 0.3;
+    var cx = Wc / 2 + (rnd() - 0.5) * 8, cy = Hc / 2 + 8;
+    var cosr = Math.cos(rot), sinr = Math.sin(rot);
+    function toCanvas(hx, hy) {
+      var x = hx * flip * scale, y = hy * scale;
+      return [cx + x * cosr - y * sinr, cy + x * sinr + y * cosr];
+    }
+    function dot(x, y, alpha) {
+      var p = rnd();
+      g.fillStyle = 'rgba(' + (p < 0.6 ? '196,110,42' : p < 0.85 ? '169,82,31' : '224,142,64') + ',' + alpha.toFixed(3) + ')';
+      var sz = rnd() < 0.62 ? 1 : rnd() < 0.85 ? 2 : 3;
+      g.fillRect(x, y, sz, sz);
+    }
+    /* the skeleton, in hand space (y up the fingers) */
+    var splay = 0.9 + rnd() * 0.5;
+    var tips = [[-11, -30, 5.6], [-3.7, -36, 6], [3.7, -33, 5.6], [11, -24, 5]];
+    var segs = [];
+    for (var f = 0; f < 4; f++) {
+      segs.push([tips[f][0] * 0.9, 2, tips[f][0] * (1.15 + splay * 0.35), tips[f][1], tips[f][2] / 2]);
+    }
+    segs.push([-9, 17, -26.5, 1, 3.5]);   /* thumb */
+    segs.push([0, 30, 0, 52, 9]);         /* wrist */
+
+    /* pass 1: the loose cloud, seeded by pages touched */
+    var R = 48 * scale + 11;
+    var dots = Math.min(2400, 700 + h.pages * 7);
+    for (var k = 0; k < dots; k++) {
+      var a = rnd() * Math.PI * 2, rr;
+      if (rnd() < 0.8) rr = R * (0.18 + 0.82 * Math.sqrt(rnd()));
+      else rr = R * (1 + rnd() * 0.45);
+      var fade = rr > R ? 0.4 : 1;
+      dot(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr * 1.08, (0.08 + rnd() * 0.22) * fade);
+    }
+    /* pass 2: pigment hugging the contour — the breath aimed at the hand */
+    for (var si = 0; si < segs.length; si++) {
+      var sgm = segs[si];
+      var dx = sgm[2] - sgm[0], dy = sgm[3] - sgm[1];
+      var len = Math.sqrt(dx * dx + dy * dy) || 1;
+      var nx = -dy / len, ny = dx / len;
+      var n = Math.round(len * 9);
+      for (k = 0; k < n; k++) {
+        var t = rnd(), side = rnd() < 0.5 ? -1 : 1;
+        var off = sgm[4] + 1 + Math.pow(rnd(), 0.8) * 8.5;
+        var hx = sgm[0] + dx * t + nx * side * off;
+        var hy = sgm[1] + dy * t + ny * side * off;
+        var p2 = toCanvas(hx, hy);
+        dot(p2[0], p2[1], 0.14 + rnd() * 0.3);
+      }
+    }
+    /* palm halo */
+    for (k = 0; k < 340; k++) {
+      var pa = rnd() * Math.PI * 2;
+      var pr = 1.05 + Math.pow(rnd(), 0.8) * 0.55;
+      var p3 = toCanvas(Math.cos(pa) * 13.5 * pr, 15 + Math.sin(pa) * 18 * pr);
+      dot(p3[0], p3[1], 0.13 + rnd() * 0.28);
+    }
+    /* carve the hand back to bare wall */
+    g.save();
+    g.translate(cx, cy);
+    g.rotate(rot);
+    g.scale(flip * scale, scale);
+    g.globalCompositeOperation = 'destination-out';
+    g.fillStyle = '#000'; g.strokeStyle = '#000'; g.lineCap = 'round';
+    g.beginPath(); g.ellipse(0, 15, 13.5, 18, 0, 0, 6.2832); g.fill();
+    g.fillRect(-9, 28, 18, 24);
+    for (f = 0; f < 4; f++) {
+      g.lineWidth = tips[f][2];
+      g.beginPath();
+      g.moveTo(tips[f][0] * 0.9, 2);
+      g.lineTo(tips[f][0] * (1.15 + splay * 0.35), tips[f][1]);
+      g.stroke();
+    }
+    g.lineWidth = 7;
+    g.beginPath(); g.moveTo(-9, 17); g.lineTo(-26.5, 1); g.stroke();
+    g.restore();
+  }
+
+  function buildHandsWall() {
+    if (handsBuilt) return;
+    handsBuilt = true;
+    var wall = $('hh-wall');
+    var frag = document.createDocumentFragment();
+    HANDS.forEach(function (h) {
+      var tile = document.createElement('div');
+      tile.className = 'hh-tile';
+      tile.setAttribute('data-name', h.name);
+      tile.setAttribute('data-explain', 'Active ' + ym(h.first) + ' to ' + ym(h.last) + ' · touched ' +
+        h.pages + ' of ' + stars.length + ' pages' + (h.chief ? ' · chief surveyor on ' + h.chief : ''));
+      var cv = document.createElement('canvas');
+      cv.width = 128; cv.height = 118;
+      drawHandStencil(cv, h);
+      tile.appendChild(cv);
+      var nm = document.createElement('div'); nm.className = 'hh-name'; nm.textContent = h.name;
+      var dt = document.createElement('div'); dt.className = 'hh-dates'; dt.textContent = ym(h.first) + ' → ' + ym(h.last);
+      var mt = document.createElement('div'); mt.className = 'hh-meta';
+      mt.textContent = h.pages + (h.pages === 1 ? ' page' : ' pages') + (h.chief ? ' · chief on ' + h.chief : '');
+      tile.appendChild(nm); tile.appendChild(dt); tile.appendChild(mt);
+      frag.appendChild(tile);
+    });
+    wall.appendChild(frag);
+    var oldest = HANDS.length ? HANDS[HANDS.length - 1] : null;
+    $('hh-sub').textContent = 'ALL ' + HANDS.length + ' HANDS · UNION OF EVERY COMMIT AUTHOR ACROSS ' +
+      stars.length + ' PAGES · STENCIL SIZE = PAGES TOUCHED · OLDEST HANDS LOWEST' +
+      (oldest ? ' (SINCE ' + ym(oldest.first) + ')' : '');
+  }
+
+  function toggleHands(force) {
+    var el = $('hands');
+    var open = force === undefined ? el.hidden : force;
+    if (open === !el.hidden) return;
+    if (open) {
+      buildHandsWall();
+      el.hidden = false;
+      $('handsbtn').setAttribute('aria-pressed', 'true');
+      var wall = $('hh-wall');
+      wall.scrollTop = wall.scrollHeight;   /* the scan reads the oldest stratum first */
+      announceOnce('hall', 'THE HALL OF HANDS · all <b>' + HANDS.length + '</b> people who ever committed to these pages, as ochre stencils · stencil size = pages touched · oldest hands lowest · key H');
+      if (audioOn && rack && !hallNodes) { try { hallNodes = buildHallPad(rack, AC.currentTime + 0.02); } catch (e) { hallNodes = null; } }
+    } else {
+      el.hidden = true;
+      $('handsbtn').setAttribute('aria-pressed', 'false');
+      if (hallNodes) { releaseNodes(hallNodes, 1.6); hallNodes = null; }
+    }
+  }
+
+  /* --------------------------------------- name + one-liner on hover --- */
+  /* Anything carrying data-explain introduces itself on hover or focus. */
+
+  var exEl = null;
+  function initExplain() {
+    exEl = document.createElement('div');
+    exEl.id = 'explain';
+    exEl.hidden = true;
+    document.body.appendChild(exEl);
+    function target(e) { return e.target && e.target.closest ? e.target.closest('[data-explain]') : null; }
+    function show(t) {
+      var name = t.getAttribute('data-name') || (t.textContent || '').trim().slice(0, 26);
+      exEl.innerHTML = '<b>' + esc(name) + '</b><span>' + esc(t.getAttribute('data-explain')) + '</span>';
+      exEl.hidden = false;
+      var r = t.getBoundingClientRect(), er = exEl.getBoundingClientRect();
+      var x = clamp(r.left + r.width / 2 - er.width / 2, 6, W - er.width - 6);
+      var y = r.bottom + 8;
+      if (y + er.height > H - 6) y = r.top - er.height - 8;
+      exEl.style.left = x + 'px';
+      exEl.style.top = Math.max(6, y) + 'px';
+    }
+    document.addEventListener('mouseover', function (e) {
+      var t = target(e);
+      if (t) show(t); else if (!exEl.hidden) exEl.hidden = true;
+    });
+    document.addEventListener('focusin', function (e) { var t = target(e); if (t) show(t); });
+    document.addEventListener('focusout', function () { exEl.hidden = true; });
+  }
+
+  /* ------------------------------------- WHAT AM I LOOKING AT (key ?) -- */
+  /* An annotated overlay: one callout per on-screen element, a line to
+     each. Rebuilt at open and on resize; Escape closes; gates nothing. */
+
+  function anRect(id) {
+    var el = $(id);
+    if (!el || el.hidden) return null;
+    var r = el.getBoundingClientRect();
+    return (r.width || r.height) ? r : null;
+  }
+
+  function buildAnnotate() {
+    var items = [];
+    function add(name, text, tx, ty, bx, by) {
+      items.push({ n: name, t: text, tx: tx, ty: ty, bx: clamp(bx, 8, W - 248), by: clamp(by, 54, H - 200) });
+    }
+    var b = stars[beaconIdx()];
+    var px = clamp(b.sx || W / 2, 160, W - 430);
+    var py = clamp(b.sy || H / 2, 330, H - 290);
+    add('THE WATERFALL', 'Each faint ray into the bright body is a real page citing it; each traveling dot is one citation arriving. ' + b.m + ' pages cite the current beacon, ' + b.desig + '.', px, py, px + 70, py - 140);
+    add('THE LOCK', current != null
+      ? 'The white reticle marks the locked page. Opening a page locks it, and every instrument on screen reads that page.'
+      : 'Click any lit body to lock on: a white reticle will mark it and every instrument will read that page.', px, py, px + 70, py + 36);
+    var r = anRect('photom');
+    if (r) add('PHOTOMETER', 'The locked beacon’s incoming light, six seconds at a time. Bumps are citations arriving; a deep notch means an uncited page is crossing in front.', r.left + r.width / 2, r.top + 8, r.left + r.width / 2 - 270, r.top - 132);
+    r = anRect('log');
+    if (r) add('MISSION LOG', 'Every event of the survey, written as it happens: locks, surveys, transits, first contacts, new instruments. Newest at the bottom.', r.left + 150, r.top + r.height - 34, r.left + 34, r.top - 132);
+    r = anRect('inst');
+    if (r) add('SURVEY READINGS', 'The locked page’s measurements: citations in and out, spectral class, word mass, commit strata, and the crew who wrote it.', r.right - 10, r.top + 130, r.right + 30, r.top + 240);
+    r = anRect('chartmeter');
+    if (r) add('THE CHART', stars.length + ' pages exist; the counter is how many you have fixed by surveying. FULL CHART reveals all of them at once without losing your own chart.', r.left + r.width / 2, r.bottom - 6, r.left + r.width / 2 - 60, 66);
+    r = anRect('almbtn');
+    if (r) add('THE ALMANAC', 'The old engraved atlas: dotted ghosts where each page is filed, dashed vectors to where its citations actually put it. ' + DRIFT_N + ' bodies disagree.', r.left + r.width / 2, r.bottom - 6, r.left + r.width / 2 - 118, 176);
+    r = anRect('handsbtn');
+    if (r) add('THE HANDS', 'The Hall of Hands: all ' + HANDS.length + ' people who ever committed to these pages, as ochre stencils, oldest lowest. Key: H.', r.left + r.width / 2, r.bottom - 6, r.left + r.width / 2 - 100, 66);
+    r = anRect('audiobtn');
+    if (r) add('THE SOUND', 'On by default. Every sound is a measurement: pings are commits, a falling two-note dip is a transit, the low thump is first contact. SOUND silences it.', r.left + r.width / 2, r.bottom - 6, r.left + r.width / 2 - 20, 66);
+    r = anRect('q');
+    if (r) add('THE SEARCH', 'Instant search across all ' + stars.length + ' pages; the chart leans toward the strongest return while you type. Key: /.', r.left + r.width / 2, r.bottom - 4, r.left + r.width / 2 - 200, 176);
+
+    var svg = ['<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">'];
+    var html = [];
+    items.forEach(function (it) {
+      svg.push('<line x1="' + it.tx.toFixed(1) + '" y1="' + it.ty.toFixed(1) + '" x2="' + (it.bx + 120) + '" y2="' + (it.by + 34) + '" stroke="rgba(237,242,240,.4)" stroke-width="1"/>');
+      svg.push('<circle cx="' + it.tx.toFixed(1) + '" cy="' + it.ty.toFixed(1) + '" r="3.5" fill="none" stroke="rgba(255,176,0,.9)" stroke-width="1"/>');
+      html.push('<div class="an-c" style="left:' + it.bx + 'px;top:' + it.by + 'px"><b>' + esc(it.n) + '</b>' + esc(it.t) + '</div>');
+    });
+    svg.push('</svg>');
+    $('an-lines').innerHTML = svg.join('');
+    $('an-items').innerHTML = html.join('');
+  }
+
+  function toggleAnnotate(force) {
+    var el = $('annotate');
+    var open = force === undefined ? el.hidden : force;
+    if (open === !el.hidden) return;
+    if (open) {
+      buildAnnotate();
+      el.hidden = false;
+      announceOnce('annotate', 'WHAT AM I LOOKING AT · press <b>?</b> anytime · every element on screen explained in place · hovering any control also explains it');
+    } else {
+      el.hidden = true;
+    }
+  }
+
+  /* ------------------------------------------- the three-step guide ---- */
+  /* Shown once per visit, right after the first lock-on. Skippable,
+     non-modal, never gates content; it steps aside on Escape and
+     dismisses itself once you have surveyed a few bodies. */
+
+  var GUIDE_KEY = 'firstlight.guide.v1';
+  var GUIDE_STEPS = [
+    ['LOCK ON & SURVEY', 'Click any lit body to lock on and open its page. Opening the page IS the survey: the instruments on the left read the locked page, and the log narrates every measurement.'],
+    ['HOW THE MAP GROWS', 'Each survey fixes the page and every page it exchanges citations with. Faint rings are contacts heard one ring further out. Dotted ellipses are silent pages caught in transit — click one for first contact.'],
+    ['FULL CHART, SEARCH & HELP', 'FULL CHART (top bar) reveals all 290 pages anytime; your own chart is kept. Press / to search, Tab for the plain catalog, H for the Hall of Hands, ? to have the whole screen explained.']
+  ];
+  function maybeGuide() {
+    if (guideOn) return;
+    var seen = false;
+    try { seen = sessionStorage.getItem(GUIDE_KEY) === '1'; } catch (e) {}
+    if (seen) return;
+    try { sessionStorage.setItem(GUIDE_KEY, '1'); } catch (e) {}
+    guideOn = true;
+    guideStep = 0;
+    renderGuideStep();
+    $('guide').hidden = false;
+  }
+  function renderGuideStep() {
+    $('gd-step').textContent = 'STEP ' + (guideStep + 1) + '/' + GUIDE_STEPS.length;
+    $('gd-body').innerHTML = '<b>' + GUIDE_STEPS[guideStep][0] + '</b>' + GUIDE_STEPS[guideStep][1];
+    $('gd-next').textContent = guideStep === GUIDE_STEPS.length - 1 ? 'GOT IT' : 'NEXT →';
+  }
+  function hideGuide() {
+    guideOn = false;
+    $('guide').hidden = true;
+  }
+
+  /* ------------------------------------------------- round-2 wiring ---- */
+
+  function wireExtras() {
+    initExplain();
+    $('handsbtn').addEventListener('click', function () { toggleHands(); });
+    $('hh-close').addEventListener('click', function () { toggleHands(false); });
+    $('hands').addEventListener('click', function (e) { if (e.target === $('hands')) toggleHands(false); });
+    $('an-close').addEventListener('click', function () { toggleAnnotate(false); });
+    $('an-brief').addEventListener('click', function () { toggleAnnotate(false); $('howto').hidden = false; });
+    $('annotate').addEventListener('click', function (e) {
+      if (e.target === $('annotate') || e.target.id === 'an-lines' || (e.target.tagName || '').toLowerCase() === 'svg') toggleAnnotate(false);
+    });
+    $('gd-next').addEventListener('click', function () {
+      if (guideStep >= GUIDE_STEPS.length - 1) hideGuide();
+      else { guideStep++; renderGuideStep(); }
+    });
+    $('gd-skip').addEventListener('click', hideGuide);
+    window.addEventListener('resize', function () { if (!$('annotate').hidden) buildAnnotate(); });
+  }
+
 
 })();
