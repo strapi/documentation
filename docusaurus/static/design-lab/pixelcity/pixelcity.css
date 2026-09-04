@@ -1,4 +1,4 @@
-/* Strapi Pixel City — UI chrome (not the scene). */
+/* Pixel Docs City - UI chrome (not the scene). */
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; overflow: hidden; }
 body {
@@ -119,9 +119,14 @@ body {
   font-size: 12px; text-transform: uppercase; letter-spacing: .8px; color: #8a7d5e;
   margin: 16px 14px 4px; font-family: ui-monospace, monospace;
 }
+#drawer-body h4 {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #a4977a;
+  margin: 10px 14px 2px 22px; font-family: ui-monospace, monospace; font-weight: 700;
+}
 #drawer-body a {
   display: block; padding: 5px 14px 5px 22px; color: #2b2418; text-decoration: none; font-size: 13.5px;
 }
+#drawer-body a.d-sub { padding-left: 32px; }
 #drawer-body a:hover { background: #4945ff; color: #fff; }
 #key-body { padding: 14px 16px 40px; font-size: 13.5px; color: #2b2418; }
 #key-body h3 { margin: 18px 0 6px; font-size: 13px; font-family: ui-monospace, monospace; letter-spacing: .5px; }
@@ -146,6 +151,7 @@ body {
 #panel-meta .keeper { color: #3d39cf; }
 #panel-title { font-size: 30px; line-height: 1.2; margin: 6px 0 14px; color: #22201a; letter-spacing: -.3px; }
 #panel-content { color: #2b2820; font-size: 15.5px; }
+#panel-content h2, #panel-content h3, #panel-content h4, #panel-content h5, #panel-content h6 { scroll-margin-top: 16px; } /* anchored arrivals get breathing room */
 #panel-content h2 { font-size: 22px; margin: 30px 0 8px; color: #22201a; border-bottom: 2px solid #e5dcc4; padding-bottom: 5px; }
 #panel-content h3 { font-size: 18px; margin: 24px 0 6px; color: #22201a; }
 #panel-content h4 { font-size: 15.5px; margin: 20px 0 5px; color: #22201a; }
@@ -268,3 +274,40 @@ details.dtl .dtl-body { padding: 0 14px 10px; }
   #brand { display: none; }
   #chrome { flex-wrap: wrap; }
 }
+
+/* ---- time + season controls ---- */
+#timectl { position: fixed; left: 60px; bottom: 12px; z-index: 40; display: flex; gap: 8px; }
+#timectl .chip { display: flex; align-items: center; gap: 6px; height: 34px; padding: 0 8px; }
+#timectl canvas { width: 22px; height: 22px; image-rendering: pixelated; display: block; }
+#speedlabel, #seasonlabel { font: 700 11px/1 "Courier New", ui-monospace, monospace; letter-spacing: .5px; }
+
+/* ---- door prompt ---- */
+#doorprompt {
+  position: fixed; z-index: 45; pointer-events: none;
+  transform: translate(-50%, -100%);
+  background: #241f2e; color: #fdf8ea; border: 2px solid #fdf8ea;
+  box-shadow: 3px 3px 0 rgba(10, 8, 20, .55);
+  font: 700 12px/1 "Courier New", ui-monospace, monospace;
+  padding: 6px 9px 5px; white-space: nowrap; max-width: 340px;
+  overflow: hidden; text-overflow: ellipsis; letter-spacing: .4px;
+}
+#doorprompt .dp-key {
+  background: #4945ff; color: #fff; padding: 3px 6px 2px; margin-right: 7px;
+  border: 1px solid #8582ff; display: inline-block;
+}
+
+/* ---- first-visit hint card ---- */
+#hintcard {
+  position: fixed; left: 50%; bottom: 58px; transform: translateX(-50%);
+  z-index: 46; width: min(520px, 92vw);
+  background: #fdf8ea; color: #241f2e; border: 2px solid #241f2e;
+  box-shadow: 5px 5px 0 rgba(10, 8, 20, .5);
+  font-family: "Courier New", ui-monospace, monospace;
+  padding: 12px 14px 12px; text-align: center;
+}
+#hintcard strong { display: block; font-size: 13px; letter-spacing: .8px; margin-bottom: 6px; text-transform: uppercase; }
+#hintcard strong::before { content: ""; display: inline-block; width: 8px; height: 8px; background: #4945ff; margin-right: 8px; }
+#hintcard p { margin: 0 0 10px; font-size: 12px; line-height: 1.6; }
+#hintcard .chip { box-shadow: 2px 2px 0 rgba(10, 8, 20, .4); }
+
+@media (max-width: 640px) { #hintcard { bottom: 96px; } }

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Strapi Pixel City</title>
+<title>Pixel Docs City</title>
 <link rel="stylesheet" href="pixelcity.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
 
 <header id="chrome">
   <button id="btn-nav" class="chip" title="Browse all pages">☰ Districts</button>
-  <div id="brand"><span class="brand-dot"></span>STRAPI&nbsp;PIXEL&nbsp;CITY</div>
+  <div id="brand"><span class="brand-dot"></span>PIXEL&nbsp;DOCS&nbsp;CITY</div>
   <div id="searchbox">
     <input id="search" type="search" placeholder="Search 290 pages…" autocomplete="off" spellcheck="false" aria-label="Search documentation">
     <div id="search-results" hidden></div>
@@ -27,14 +27,26 @@
   <button id="zout" class="chip" title="Zoom out">−</button>
   <button id="zfit" class="chip" title="Fit island">▣</button>
 </div>
+<div id="timectl">
+  <button id="btn-clock" class="chip" title="Time of day · click to cycle speed (T)"><canvas id="clockdial" width="22" height="22"></canvas><span id="speedlabel">1x</span></button>
+  <button id="btn-season" class="chip" title="Season · click to advance (Y)"><canvas id="seasondial" width="22" height="22"></canvas><span id="seasonlabel">SUM</span></button>
+</div>
 <div id="hud"></div>
+
+<div id="doorprompt" hidden><span class="dp-key">ENTER</span><span id="dp-title"></span></div>
+
+<div id="hintcard" hidden>
+  <strong>Welcome to Pixel Docs City</strong>
+  <p>Arrow keys / WASD to explore · walk to a door and press Enter to read · or just click any building like before.<br>T changes the time of day · Y turns the season.</p>
+  <button id="hint-close" class="chip">Got it</button>
+</div>
 
 <div id="loading">
   <div class="load-grid" aria-hidden="true">
     <span></span><span></span><span></span><span></span><span></span>
     <span></span><span></span><span></span><span></span>
   </div>
-  <p>Baking the sprite atlas…</p>
+  <p>Building Pixel Docs City…</p>
 </div>
 
 <nav id="drawer" hidden aria-label="All documentation pages">
@@ -46,7 +58,7 @@
 </nav>
 
 <aside id="keypanel" hidden>
-  <div class="drawer-head"><strong>Plain-words key</strong><button class="chip" id="key-close">✕</button></div>
+  <div class="drawer-head"><strong>Pixel Docs City · plain-words key</strong><button class="chip" id="key-close">✕</button></div>
   <div id="key-body"></div>
 </aside>
 
