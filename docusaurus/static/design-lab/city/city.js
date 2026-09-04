@@ -1036,28 +1036,35 @@
      the bottom, an open cage above, netting on one face, hoardings at street
      level, and a crane over the tallest of them. */
   function composeScaffold(r, lot, w, d, h, mi, fr, rn, lf) {
-    var V = [], mh = Math.max(GFH + STOREY, h * 0.52);
+    /* how far the masonry has risen, and how far the cage overshoots it,
+       are the site's own numbers: a street of sites at the same page-height
+       used to share one silhouette a dozen times over */
+    var V = [], mh = Math.max(GFH + 2.4,
+      Math.min(Math.max(GFH + STOREY, h * 0.52) * (0.78 + rn(75) * 0.46), h - 5));
+    var ct = h + 2.5 + rn(76) * 3.5;
     slab(V, 0, 0, w + 2.6, d + 2.6, 0, 1.8, M_TRIM);
     box(V, 0, 0, w, d, 1.8, mh, mi, {
       deco: 'stone', gf: 'hoard', front: fr, lit: lf * 0.5, board: 1,
       floors: Math.max(1, Math.round((mh - GFH) / STOREY))
     });
     /* the cage: standards, ledgers, planks */
-    V.push({ k: 'f', x: 0, y: 0, w: w + 3.6, d: d + 3.6, z0: mh, z1: h + 4, m: M_STEEL,
-      lifts: Math.max(2, Math.round((h + 4 - mh) / 8)) });
+    V.push({ k: 'f', x: 0, y: 0, w: w + 3.6, d: d + 3.6, z0: mh, z1: ct, m: M_STEEL,
+      lifts: Math.max(2, Math.round((ct - mh) / 8)) });
     /* the unfinished slabs inside the cage, and the mess of a working site
        on each: pallet stacks, plank piles, one draped tarpaulin */
     /* every site is its own mess: decks vary in reach and material, one is
        sometimes missing whole, tarps drape where the hash says the weather
        came in — so a row of scaffolds reads as a working street, not as a
        press of identical cages */
-    var lifts = Math.max(1, Math.round((h + 4 - mh) / 9)), i, topZ = mh;
+    var lifts = Math.max(1, Math.round((ct - mh) / 9)), i, topZ = mh;
     for (i = 1; i <= lifts; i++) {
-      var z = mh + (h + 4 - mh) * (i / (lifts + 1));
+      var z = mh + (ct - mh) * (i / (lifts + 1));
       if (lifts > 2 && rn(26 + i * 7) > 0.86) continue;   /* a bay not yet poured */
-      var din = 0.84 + rn(23 + i * 5) * 0.13;
+      var din = 0.70 + rn(23 + i * 5) * 0.27;
+      var dm = rn(24 + i * 3);
       slab(V, (rn(27 + i) - 0.5) * w * 0.05, (rn(28 + i) - 0.5) * d * 0.05,
-        w * din, d * din, z, z + 1.3, rn(24 + i * 3) > 0.62 ? M_WOOD : M_RENDER);
+        w * din, d * din, z, z + 1.3,
+        dm < 0.36 ? M_WOOD : dm < 0.74 ? M_RENDER : M_TARP);
       var zt = z + 1.3; topZ = zt;
       if (rn(20 + i) > 0.42) {
         var qx = (rn(21 + i) - 0.5) * w * 0.56, qy = (rn(22 + i) - 0.5) * d * 0.56;
@@ -1077,9 +1084,25 @@
         gable(V, tx3, ty3, tw3 + 1.2, td3 + 1.2, zt + 1.0, 0, 1.6, rn(64 + i) > 0.5 ? 0 : 1, tm);
       }
     }
-    /* the tarpaulin, lashed over a corner of the top deck */
-    box(V, -w * 0.22, d * 0.18, w * 0.26, d * 0.22, topZ, topZ + 1.1,
-      rn(65) > 0.5 ? M_AWN : M_TARP, { deco: 'plain' });
+    /* what the top deck holds is the site's own affair: a tarp lashed over
+       a hash-picked corner, a painted site hut, a stack of blocks waiting
+       for the crane, or nothing but the bare deck — so a row of sites
+       reads as a working street, not one frame stamped a dozen times */
+    var tv = rn(66);
+    var tcx2 = (rn(67) > 0.5 ? 1 : -1) * w * (0.10 + rn(68) * 0.16);
+    var tcy2 = (rn(69) > 0.5 ? 1 : -1) * d * (0.08 + rn(70) * 0.16);
+    if (tv < 0.36) {
+      box(V, tcx2, tcy2, w * (0.16 + rn(71) * 0.15), d * (0.13 + rn(72) * 0.14),
+        topZ, topZ + 1.1, rn(65) > 0.5 ? M_AWN : M_TARP, { deco: 'plain' });
+    } else if (tv < 0.60) {
+      box(V, tcx2, tcy2, Math.min(6.2, w * 0.30), Math.min(4.4, d * 0.24),
+        topZ, topZ + 3.4, rn(71) > 0.55 ? M_STALL0 + 1 : M_WOOD, { deco: 'plain' });
+      gable(V, tcx2, tcy2, Math.min(6.8, w * 0.33), Math.min(5.0, d * 0.27),
+        topZ + 3.4, 0, 1.4, rn(72) > 0.5 ? 0 : 1, M_DARK);
+    } else if (tv < 0.80) {
+      box(V, tcx2, tcy2, 4.8, 3.4, topZ, topZ + 1.2, M_RENDER, { deco: 'plain' });
+      box(V, tcx2 + 0.5, tcy2 - 0.4, 3.8, 2.8, topZ + 1.2, topZ + 2.2, M_RENDER, { deco: 'plain' });
+    }
     /* the ladder up the front face, ground to the finished storeys */
     var lfn = FN[fr], ldir = [-lfn[1], lfn[0]];
     var lox = lfn[0] * (w / 2 + 2.4) + ldir[0] * 6, loy = lfn[1] * (d / 2 + 2.4) + ldir[1] * 6;
@@ -1093,10 +1116,10 @@
        big pale (or canvas-brown) planes are what break the cage rhythm in
        a wide street of scaffolds */
     var wrap = rn(41) > 0.62;
-    V.push({ k: 'n', x: 0, y: 0, w: w + 3.6, d: d + 3.6, z0: mh, z1: h + 3, m: M_DARK,
+    V.push({ k: 'n', x: 0, y: 0, w: w + 3.6, d: d + 3.6, z0: mh, z1: ct - 1, m: M_DARK,
       front: (fr + 1) & 3, sheet: wrap ? (rn(42) > 0.5 ? 1 : 2) : 0 });
     if (wrap && rn(43) > 0.45) {
-      V.push({ k: 'n', x: 0, y: 0, w: w + 3.6, d: d + 3.6, z0: mh, z1: h + 3, m: M_DARK,
+      V.push({ k: 'n', x: 0, y: 0, w: w + 3.6, d: d + 3.6, z0: mh, z1: ct - 1, m: M_DARK,
         front: (fr + 3) & 3, sheet: rn(44) > 0.5 ? 1 : 2 });
     }
     if (r.tier >= 3) {
@@ -1354,6 +1377,12 @@
           add({ k: 'tree', x: w1[0], y: w1[1], r: 4.8 + rnd01(hd, i + 40) * 1.8, z: 11 + rnd01(hd, i + 50) * 3.5 });
         }
         add({ k: 'well', x: dd.x, y: dd.y, r: 4.6 });
+        /* service lids out where the carts cross the square */
+        for (i = 0; i < 3; i++) {
+          var ma4 = rnd01(hd, i + 90) * TAU, mr4 = P * (0.8 + rnd01(hd, i + 95) * 0.9);
+          var mwp4 = toW(cos(ma4) * mr4, sin(ma4) * mr4);
+          add({ k: 'mh', x: mwp4[0], y: mwp4[1], r: 1.5 + rnd01(hd, i + 99) * 0.5, seed: (hd + i * 7919) >>> 0 });
+        }
         /* market-goers crossing the square */
         for (i = 0; i < 5; i++) {
           if (rnd01(hd, i + 60) > 0.8) continue;
@@ -1405,6 +1434,23 @@
           }
           got++;
         }
+        /* service lids scattered over the esplanade and the roadway: the
+           pavement's punctuation, one every few lots, so no open apron in
+           a close-up is ever an unbroken pour of sand */
+        var hmn = hash32('mnh' + di), gm = 0, am;
+        for (am = 0; am < 26 && gm < 5; am++) {
+          var mlx = elx0 + rnd01(hmn, am * 2) * (elx1 - elx0);
+          var mly = ely0 + rnd01(hmn, am * 2 + 1) * (ely1 - ely0);
+          var mhit = false, mi2;
+          for (mi2 = 0; mi2 < dd.lots.length; mi2++) {
+            var ml2 = dd.lots[mi2];
+            if (abs(mlx - ml2.x) < ml2.sw * P / 2 + 4 && abs(mly - ml2.y) < ml2.sd * P / 2 + 4) { mhit = true; break; }
+          }
+          if (mhit) continue;
+          var mwp3 = toW(mlx, mly);
+          add({ k: 'mh', x: mwp3[0], y: mwp3[1], r: 1.45 + rnd01(hmn, am + 61) * 0.55, seed: (hmn + am * 7919) >>> 0 });
+          gm++;
+        }
       }
 
       /* street furniture around every lot that fronts a street */
@@ -1426,10 +1472,23 @@
           var b0 = toW(lot.x + lx + (side ? 0 : 8), lot.y + ly + (side ? 8 : 0));
           add({ k: 'bench', x: b0[0], y: b0[1], yaw: dd.rot * PI / 180 + (side ? PI / 2 : 0) });
         }
-        if (rnd01(hl, 4) > 0.72 && !r.derelict) {
+        /* the pages half the city cites get deliveries: a van is near-certain
+           outside a landmark, occasional outside a house */
+        if (rnd01(hl, 4) > (r.tier >= 4 ? 0.30 : 0.72) && !r.derelict) {
           var v0 = toW(lot.x + offx * 1.25 + (side ? 0 : 11), lot.y + offy * 1.25 + (side ? 11 : 0));
-          add({ k: 'van', x: v0[0], y: v0[1], yaw: dd.rot * PI / 180 + (side ? PI / 2 : 0),
-                hue: Math.floor(rnd01(hl, 5) * 4) });
+          var vyaw = dd.rot * PI / 180 + (side ? PI / 2 : 0);
+          /* half the parked vans are mid-delivery: doors open, the load set
+             down behind them, the carrier standing over it */
+          var unload = rnd01(hl, 49) > 0.5;
+          add({ k: 'van', x: v0[0], y: v0[1], yaw: vyaw,
+                hue: Math.floor(rnd01(hl, 5) * 4), open: unload ? 1 : 0 });
+          if (unload) {
+            var vca = cos(vyaw), vsa = sin(vyaw);
+            add({ k: 'crate', x: v0[0] - vca * 7.8, y: v0[1] - vsa * 7.8,
+                  yaw: vyaw + 0.35, seed: hl });
+            add({ k: 'ped', x: v0[0] - vca * 10.6, y: v0[1] - vsa * 10.6,
+                  hue: Math.floor(rnd01(hl, 51) * 5), yaw: vyaw + PI });
+          }
         }
         if (rnd01(hl, 6) > 0.62) {
           var t0 = toW(lot.x + offx * 1.05 - (side ? 0 : 12), lot.y + offy * 1.05 - (side ? 12 : 0));
@@ -1440,6 +1499,26 @@
           if (rnd01(hl, 9 + bi) < 0.5) continue;
           var q0 = toW(lot.x + offx * 0.92 + (side ? 0 : bi * w * 0.34), lot.y + offy * 0.92 + (side ? bi * d * 0.34 : 0));
           add({ k: 'boll', x: q0[0], y: q0[1] });
+        }
+        /* the pavement's ironmongery: a manhole lid out on the apron, a
+           kerb drain by the lamp — the small hardware that anchors a
+           close-up's empty foreground to the street it belongs to */
+        if (rnd01(hl, 40) > 0.42) {
+          var mhu = (rnd01(hl, 41) - 0.5) * (side ? d : w) * 0.7;
+          var mhv = 8 + rnd01(hl, 42) * 8;
+          var mwp = toW(lot.x + (side ? f[0] * (w / 2 + mhv) : mhu),
+                        lot.y + (side ? mhu : f[1] * (d / 2 + mhv)));
+          add({ k: 'mh', x: mwp[0], y: mwp[1], r: 1.5 + rnd01(hl, 43) * 0.5, seed: hl });
+        }
+        if (rnd01(hl, 45) > 0.5) {
+          var dwp = toW(lot.x + lx + (side ? 0 : 4.5), lot.y + ly + (side ? 4.5 : 0));
+          add({ k: 'drain', x: dwp[0], y: dwp[1],
+                yaw: dd.rot * PI / 180 + (side ? PI / 2 : 0) });
+        }
+        if (rnd01(hl, 47) > 0.68 && !r.derelict) {
+          var cwp = toW(lot.x + offx * 1.18 - (side ? 0 : 7), lot.y + offy * 1.18 - (side ? 7 : 0));
+          add({ k: 'crate', x: cwp[0], y: cwp[1],
+                yaw: dd.rot * PI / 180 + rnd01(hl, 48) * 0.8, seed: hl });
         }
         /* people on the pavement: a knot of two or three near the front */
         if (!r.derelict && rnd01(hl, 12) > 0.42) {
@@ -1856,8 +1935,10 @@
         yaw: -0.34, len: W0 * 0.075 },
       { k: 'pot', x: x0 - mx * 1.25, y: paper.cy + H0 * 0.22,
         yaw: 0.6, len: W0 * 0.052 },
-      { k: 'eraser', x: x0 - mx * 1.05, y: y0 + H0 * 0.13,
-        yaw: 0.42, len: W0 * 0.045 },
+      /* the eraser lies half under the torn sheet: the page edge crossing
+         it is what pins the whole bench to the table */
+      { k: 'eraser', x: x0 - W0 * 0.009, y: y0 + H0 * 0.13,
+        yaw: 0.42, len: W0 * 0.045, under: 1 },
       { k: 'shavings', x: paper.cx - W0 * 0.16 + W0 * 0.10, y: y0 - mx * 0.36,
         yaw: 0.9, len: W0 * 0.05 }];
   }
@@ -3220,6 +3301,23 @@
     ctx.beginPath();
     if (dot >= 0) fq(0, 0, 0.035, 1); else fq(0.965, 0, 1, 1);
     ctx.globalAlpha = 0.17 * k; ctx.fill();
+    /* the coursing: at arm's length masonry is a rhythm the light rakes
+       across — fine brick courses on the industrial walls, wider ashlar
+       on stone. A shadow seam and, just above it, the lit brick edge. */
+    var dk2 = b.deco;
+    if ((dk2 === 'factory' || dk2 === 'rustic' || dk2 === 'brick' || dk2 === 'stone') &&
+        r._d < 430 && (gy1 - gy0) > 90) {
+      var pitchW = dk2 === 'stone' ? 3.4 : 1.8;
+      var nco = clamp(Math.round(Fo.hz / pitchW), 4, 34), kc;
+      ctx.beginPath();
+      for (kc = 1; kc < nco; kc++) fq(0, kc / nco - 0.0022, 1, kc / nco + 0.0022);
+      ctx.fillStyle = shadeC;
+      ctx.globalAlpha = (dk2 === 'stone' ? 0.09 : 0.12) * k; ctx.fill();
+      ctx.beginPath();
+      for (kc = 1; kc < nco; kc++) fq(0, kc / nco + 0.0024, 1, kc / nco + 0.0058);
+      ctx.fillStyle = faceCol(m, v, Math.min(8, tB + 3), hB, 5);
+      ctx.globalAlpha = 0.11 * k; ctx.fill();
+    }
     ctx.globalAlpha = 1;
     ctx.restore();
   }
@@ -3291,15 +3389,26 @@
     if (kind === 'shop') {
       ctx.beginPath(); fq(0.04, g0 + 0.012, 0.96, g1 * 0.86); ctx.fillStyle = faceCol(m, v, tB, hB, 4); ctx.fill();
       var panes = Math.max(2, Math.round(fw / 5.2));
-      var shopR = [];
+      var shopR = [], litR = [], dimR = [];
       ctx.beginPath();
       for (i = 0; i < panes; i++) {
         var u0 = 0.04 + (0.92) * (i + 0.10) / panes, u1 = 0.04 + (0.92) * (i + 0.90) / panes;
         fq(u0, g0 + 0.03, u1, g1 * 0.80);
         shopR.push(u0, g0 + 0.03, u1, g1 * 0.80);
+        /* each pane keeps its own interior: one glows with a shop lamp, a
+           couple sit shaded behind their displays, the rest hold the street */
+        var pq = rnd01(r.h32, i + 301);
+        if (pq < 0.16) litR.push(u0, g0 + 0.05, u1, g1 * 0.56);
+        else if (pq < 0.42) dimR.push(u0, g0 + 0.03, u1, g1 * 0.66);
       }
       ctx.fillStyle = glassCol(m, v, tB, hB, 0.30); ctx.fill();
+      fillRects(dimR, darkGlassCol(hB), 0.55);
+      fillRects(litR, litCol(hB), 0.42);
       glassSheen(shopR, r.h32, hpx, r._d, 0);
+      /* the fascia's bruise of shade across the top of the glazing */
+      ctx.beginPath(); fq(0.04, g1 * 0.72, 0.96, g1 * 0.80);
+      ctx.fillStyle = faceCol(m, v, tB, hB, 7);
+      ctx.globalAlpha = 0.30; ctx.fill(); ctx.globalAlpha = 1;
       /* the doorway, on the side that faces the plaza */
       if (isFront) {
         ctx.beginPath(); fq(0.44, g0, 0.58, g1 * 0.94); ctx.fillStyle = faceCol(m, v, tB, hB, 7); ctx.fill();
@@ -3312,6 +3421,10 @@
         ctx.beginPath();
         for (i = 0; i < 6; i += 2) fqa(0.34 + 0.34 * i / 6, awTop, 0.34 + 0.34 * (i + 1) / 6, awBot, awOut);
         ctx.fillStyle = faceCol(M_TRIM, 1, 6, hB, 0); ctx.fill();
+        /* the low sun rakes the outer rail of the canvas */
+        ctx.beginPath(); fqa(0.34, awBot + 0.9 / fh, 0.68, awBot, awOut);
+        ctx.fillStyle = faceCol(M_TRIM, 1, 8, hB, 5);
+        ctx.globalAlpha = 0.5; ctx.fill(); ctx.globalAlpha = 1;
         /* and the fascia sign above */
         ctx.beginPath(); fq(0.10, g1 * 0.88, 0.90, g1 * 0.99);
         ctx.fillStyle = faceCol(M_DARK, 1, tB, hB, 2); ctx.fill();
@@ -3366,6 +3479,19 @@
       /* a site hoarding with posters pasted on it */
       ctx.beginPath(); fqo(0, 0, 1, g1 * 0.72, 1.6);
       ctx.fillStyle = faceCol(M_WOOD, 1, tB, hB, 2); ctx.fill();
+      /* the boards themselves: alternate planks weather a shade apart,
+         seams between them, a capping rail along the top */
+      var np3 = clamp(Math.round(fw / 2.3), 4, 26);
+      ctx.beginPath();
+      for (i = 0; i < np3; i += 2) fqo(i / np3, 0, (i + 1) / np3, g1 * 0.72, 1.62);
+      ctx.fillStyle = faceCol(M_WOOD, 1, tB, hB, 1);
+      ctx.globalAlpha = 0.20; ctx.fill();
+      ctx.beginPath();
+      for (i = 1; i < np3; i++) fqo(i / np3 - 0.006, 0, i / np3 + 0.006, g1 * 0.72, 1.64);
+      ctx.fillStyle = faceCol(M_WOOD, 1, tB, hB, 6);
+      ctx.globalAlpha = 0.5; ctx.fill(); ctx.globalAlpha = 1;
+      ctx.beginPath(); fqo(0, g1 * 0.685, 1, g1 * 0.72, 1.8);
+      ctx.fillStyle = faceCol(M_WOOD, 1, tB, hB, 5); ctx.fill();
       ctx.beginPath();
       var pn = Math.max(2, Math.round(fw / 8));
       for (i = 0; i < pn; i++) {
@@ -3446,8 +3572,35 @@
         ctx.beginPath(); fq(u0, w0, u1, w1); ctx.fill();
       }
     }
+    /* at arm's length the pane holds the street it faces: a warm dark band
+       of the facades opposite under a reflection horizon, a few tower
+       silhouettes breaking above it, and a bright sky lip. This is what
+       stops a tall shopfront reading as matte card in the macro shot. */
+    if (bandPx > 56) {
+      var wh = w0 + (w1 - w0) * (0.36 + rnd01(h32, 175) * 0.14);
+      ctx.beginPath(); fq(u0, w0, u1, wh);
+      ctx.fillStyle = rgbas(mix(mix(C.shadow, hx('#7A4A33'), 0.42), C.sun, 0.14), 1);
+      ctx.globalAlpha = 0.24 * kk; ctx.fill();
+      /* the reflected skyline: parapets and a tower or two over the horizon */
+      ctx.beginPath();
+      var nsk = 3 + (rnd01(h32, 176) > 0.5 ? 1 : 0), sku = u0;
+      for (i = 0; i < nsk; i++) {
+        var skw = (0.10 + rnd01(h32, 181 + i * 3) * 0.16) * (u1 - u0);
+        var skh = (0.05 + rnd01(h32, 182 + i * 3) * 0.13) * (w1 - w0);
+        if (sku + skw > u1) break;
+        fq(sku, wh, sku + skw, wh + skh);
+        sku += skw + (0.03 + rnd01(h32, 183 + i * 3) * 0.08) * (u1 - u0);
+      }
+      ctx.fillStyle = rgbas(mix(C.shadow, hx('#5A4438'), 0.5), 1);
+      ctx.globalAlpha = 0.17 * kk; ctx.fill();
+      /* the bright lip of sky right on the horizon line */
+      ctx.beginPath(); fq(u0, wh, u1, wh + (w1 - w0) * 0.020);
+      ctx.fillStyle = rgbas(mix(C.skyLo, C.sun, 0.35), 1);
+      ctx.globalAlpha = 0.30 * kk; ctx.fill();
+      ctx.globalAlpha = 1;
+    }
     /* the sheen streaks, hash-anchored so every shopfront leans its own way */
-    var ns = bandPx > 90 ? 2 : 1;
+    var ns = bandPx > 140 ? 3 : bandPx > 90 ? 2 : 1;
     ctx.beginPath();
     for (i = 0; i < ns; i++) {
       var us = u0 + (0.08 + rnd01(h32, 141 + i * 7) * 0.58) * (u1 - u0);
@@ -3460,7 +3613,7 @@
       ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.lineTo(x3, y3); ctx.lineTo(px, py); ctx.closePath();
     }
     ctx.fillStyle = 'rgba(255,248,232,1)';
-    ctx.globalAlpha = 0.22 * kk;
+    ctx.globalAlpha = (bandPx > 56 ? 0.30 : 0.22) * kk;
     ctx.fill();
     ctx.globalAlpha = 1;
     ctx.restore();
@@ -3591,6 +3744,29 @@
        or holding the sky, with a sun-side glint on a few */
     var liteEff = Math.max(lite, 0.10);
     var wl = [], dl = [], gl = [], gl2 = [];
+    if (b.board) {
+      /* a construction shell: most openings are boarded with ply, a couple
+         still gape dark, none holds glass yet */
+      var bo = [];
+      for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
+        var bu0 = (i + 0.31) / bays, bu1 = (i + 0.69) / bays;
+        var bw0 = g1 + k * fs + fs * 0.25, bw1 = g1 + (k + 1) * fs - fs * 0.25;
+        if (rnd01(r.h32 + k * 97, i + 13) < 0.74) bo.push(bu0, bw0, bu1, bw1);
+        else dl.push(bu0, bw0, bu1, bw1);
+      }
+      fillRects(bo, faceCol(M_WOOD, 1, tB, hB, 2), 0.96);
+      fillRects(dl, faceCol(m, v, tB, hB, 7), 0.95);
+      /* the ply seam across each board */
+      if (flr >= 12 && bo.length <= 80) {
+        ctx.beginPath();
+        for (i = 0; i < bo.length; i += 4) {
+          var bwm = (bo[i + 1] + bo[i + 3]) / 2;
+          fq(bo[i], bwm - 0.004, bo[i + 2], bwm + 0.004);
+        }
+        ctx.fillStyle = faceCol(M_WOOD, 1, tB, hB, 6);
+        ctx.globalAlpha = 0.7; ctx.fill(); ctx.globalAlpha = 1;
+      }
+    } else {
     for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
       var u0 = (i + 0.31) / bays, u1 = (i + 0.69) / bays;
       var w0 = g1 + k * fs + fs * 0.25, w1 = g1 + (k + 1) * fs - fs * 0.25;
@@ -3606,6 +3782,7 @@
     fillRects(dl, darkGlassCol(hB), 0.9);
     fillRects(wl, litCol(hB), 0.85);
     fillRects(gl2, glintPaneCol(hB), 0.5);
+    }
     if (flr >= 30 && gl.length <= 140) panes(gl, 2, 3, faceCol(m, v, tB, hB, 5));
     if (wl.length > 12 && hpx > 50) {
       bloom.push([(Q8X[0] + Q8X[6]) / 2, (Q8Y[0] + Q8Y[6]) / 2,
@@ -4482,7 +4659,7 @@
       /* no bake-order starvation: the living layer is appended after the
          street furniture, so a hard cap here would silently drop it. The
          size and haze gates above are the real cull; this is a safety. */
-      if (taken++ > 1800) break;
+      if (taken++ > 2600) break;   /* prop census grew with the pavement ironmongery */
       p._d = d; p._hz = hz;
       propsVis.push(p);
     }
@@ -4511,6 +4688,9 @@
         case 'lamp':  drawLamp(p, s, hz, hB); break;
         case 'bench': propAO(p, 4.2, hz); drawBench(p, s, hB); break;
         case 'boll':  propAO(p, 1.3, hz); miniBox(p.x, p.y, 0.55, 0.55, 0, 2.4, 0, M_DARK, hB); break;
+        case 'mh':    drawManhole(p, s, hB); break;
+        case 'drain': drawDrain(p, s, hB); break;
+        case 'crate': propAO(p, 2.6, hz); drawCrate(p, s, hB); break;
         case 'van':   propAO(p, 6.4, hz); drawVan(p, s, hB); break;
         case 'stall': propAO(p, p.s * 0.85, hz); drawStall(p, s, hB); break;
         case 'tree':  drawPropTree(p, hz); break;
@@ -4556,6 +4736,29 @@
       var cca = cos(p.yaw), csa = sin(p.yaw);
       miniBox(p.x + cca * hl * 0.86, p.y + csa * hl * 0.86, hl * 0.14, 1.02, 0.9, 3.3, p.yaw, p.m, hB);
       miniBox(p.x - cca * hl * 0.86, p.y - csa * hl * 0.86, hl * 0.14, 1.02, 0.9, 3.3, p.yaw, p.m, hB);
+      /* seen end-on a car is a face, not a crate: a windscreen up front, a
+         rear window band, and running lights either end */
+      miniBox(p.x + cca * hl * 1.01, p.y + csa * hl * 1.01, 0.055, 0.82, 1.95, 2.95, p.yaw, M_DARK, hB);
+      miniBox(p.x - cca * hl * 1.01, p.y - csa * hl * 1.01, 0.055, 0.82, 2.05, 2.95, p.yaw, M_DARK, hB);
+      if (s * 5.0 > 11) {
+        miniBox(p.x - cca * hl * 1.02 - csa * 0.62, p.y - csa * hl * 1.02 + cca * 0.62,
+          0.05, 0.16, 1.15, 1.45, p.yaw, M_AWN, hB);
+        miniBox(p.x - cca * hl * 1.02 + csa * 0.62, p.y - csa * hl * 1.02 - cca * 0.62,
+          0.05, 0.16, 1.15, 1.45, p.yaw, M_AWN, hB);
+        /* the headlamp, a warm point on the nose */
+        if (LOD <= 1 && proj(p.x + cca * hl * 1.04, p.y + csa * hl * 1.04, 1.5)) {
+          ctx.globalCompositeOperation = 'lighter';
+          spriteAt(SPR.glint, px, py, clamp(s * 1.5, 1.2, 5), clamp(s * 1.5, 1.2, 5), 0.5 * (1 - p._hz));
+          ctx.globalCompositeOperation = 'source-over';
+        }
+        /* and the tail lamps' red spill */
+        if (LOD === 0 && proj(p.x - cca * hl * 1.05, p.y - csa * hl * 1.05, 1.3)) {
+          ctx.globalAlpha = 0.5 * (1 - p._hz) * OA;
+          ctx.fillStyle = 'rgb(224,74,48)';
+          ctx.beginPath(); ctx.arc(px, py, clamp(s * 0.5, 0.6, 2.2), 0, TAU); ctx.fill();
+          ctx.globalAlpha = OA;
+        }
+      }
     }
     miniBox(p.x, p.y, hl * 0.92, 0.95, 3.3, 3.7, p.yaw, M_TRIM, hB);
     if (!p.bus && s * 5.0 > 10) {
@@ -4623,19 +4826,37 @@
   /* The model-maker's tools lie flat on the table, drawn right after the
      sheet so they can never land on top of a district. Each takes the
      table with a run of soft contact shadows along its length. */
-  function drawTools() {
+  function drawTools(underPass) {
     var i, j;
     for (i = 0; i < tools.length; i++) {
       var t = tools[i];
+      if (!!t.under !== !!underPass) continue;
       var d = depthOf(t.x, t.y, 2);
       if (d < 16) continue;
       var hz = hazeAt(d);
       if (hz > 0.85) continue;
       var hB = Math.round(hz / HZ_MAX * 18); if (hB > 18) hB = 18; if (hB < 0) hB = 0;
       var ca = cos(t.yaw), sa = sin(t.yaw);
+      /* the work lamp finds the bench too: a soft catch of light under each
+         tool, so the dark walnut can actually show a shadow against it */
+      ctx.globalCompositeOperation = 'lighter';
+      groundSprite(SPR.warm, t.x - ca * t.len * 0.1, t.y - sa * t.len * 0.1,
+        t.len * 2.0, 0.45 * (1 - hz * 0.5));
+      ctx.globalCompositeOperation = 'source-over';
+      /* the contact run along the length, then the cast the low sun throws
+         off the tool's own height — at the same slope the buildings use, so
+         the paint pot lies in the same evening as the city beside it */
+      var hgt = t.k === 'pot' ? t.len * 0.46 : t.len * 0.07;
       for (j = -2; j <= 2; j++) {
-        groundSprite(SPR.ao, t.x + ca * t.len * j * 0.4, t.y + sa * t.len * j * 0.4,
-          t.len * 0.30, 0.22 * (1 - hz));
+        var tjx = t.x + ca * t.len * j * 0.5, tjy = t.y + sa * t.len * j * 0.5;
+        groundSprite(SPR.ao, tjx, tjy, t.len * 0.36, 0.34 * (1 - hz * 0.5));
+      }
+      var Lsh = hgt / SHADOW_SLOPE * 0.75;
+      var nsh = Lsh > t.len * 0.5 ? 3 : 1;
+      for (j = 0; j < nsh; j++) {
+        var st2 = (j + 0.6) / (nsh + 0.4);
+        groundSprite(SPR.shadow, t.x - sunGnd[0] * Lsh * st2, t.y - sunGnd[1] * Lsh * st2,
+          t.len * (0.44 - 0.07 * j) + hgt * 0.45, (0.38 - 0.08 * j) * (1 - hz * 0.5));
       }
       if (t.k === 'pencil') drawPencil(t, hB);
       else if (t.k === 'ruler') drawRuler(t, hB);
@@ -4656,16 +4877,32 @@
   function drawPot(p, hB) {
     var ca = cos(p.yaw), sa = sin(p.yaw), L = p.len;
     var q;
-    /* the pot is round: twelve short faces stand in for the turn */
-    for (q = 0; q < 6; q++) {
-      var a = p.yaw + q * PI / 6;
-      miniBox(p.x, p.y, L * 0.34, L * 0.34, 0, L * 0.42, a, M_STALL0 + 1, hB);
-    }
-    miniBox(p.x, p.y, L * 0.24, L * 0.24, L * 0.42, L * 0.46, p.yaw, M_COPPER, hB);
-    /* the lid, dropped beside it */
+    /* the lid first: it lies flat on the table, so the pot paints over it
+       where they overlap, never the other way round */
     miniBox(p.x - ca * L * 0.9, p.y - sa * L * 0.9, L * 0.30, L * 0.30, 0, L * 0.06, p.yaw + 0.5, M_TRIM, hB);
+    /* the pot is round: two nested octagons stand in for the turn, and the
+       open top shows the skin of paint inside a metal rim */
+    for (q = 0; q < 2; q++) {
+      miniBox(p.x, p.y, L * 0.31, L * 0.31, 0, L * 0.42, p.yaw + q * PI / 4, M_STALL0 + 1, hB);
+    }
+    var rim = [], skin = [];
+    for (q = 0; q < 10; q++) {
+      var a2 = (q / 10) * TAU;
+      rim.push([p.x + cos(a2) * L * 0.325, p.y + sin(a2) * L * 0.325]);
+      skin.push([p.x + cos(a2) * L * 0.26, p.y + sin(a2) * L * 0.26]);
+    }
+    wpoly(rim, L * 0.425, faceCol(M_COPPER, 1, 5, hB, 2));
+    wpoly(skin, L * 0.43, faceCol(M_STALL0 + 1, 1, 4, hB, 6));
+    /* a dried drip where the brush crossed to the rag */
+    var dpx = p.x + ca * L * 0.74, dpy = p.y + sa * L * 0.74;
+    wpoly([[dpx - L * 0.08, dpy - L * 0.05], [dpx + L * 0.05, dpy - L * 0.08],
+           [dpx + L * 0.10, dpy + L * 0.02], [dpx + L * 0.02, dpy + L * 0.08],
+           [dpx - L * 0.07, dpy + L * 0.04]], 0.03, faceCol(M_STALL0 + 1, 1, 2, hB, 6));
     /* the brush: handle, ferrule, a tipped head resting off the rag */
     var bx0 = p.x + ca * L * 1.1, by0 = p.y + sa * L * 1.1, by = p.yaw + 0.9;
+    /* the rag it rests on, folded twice */
+    miniBox(bx0 + cos(by) * L * 0.45, by0 + sin(by) * L * 0.45,
+      L * 0.34, L * 0.22, 0, L * 0.018, by + 0.35, M_TRIM, hB);
     miniBox(bx0, by0, L * 0.42, L * 0.05, 0, L * 0.05, by, M_WOOD, hB);
     miniBox(bx0 + cos(by) * L * 0.5, by0 + sin(by) * L * 0.5, L * 0.10, L * 0.05, 0, L * 0.05, by, M_STEEL, hB);
     miniBox(bx0 + cos(by) * L * 0.66, by0 + sin(by) * L * 0.66, L * 0.12, L * 0.055, 0, L * 0.055, by, M_STALL0 + 1, hB);
@@ -4730,6 +4967,68 @@
       ctx.globalCompositeOperation = 'source-over';
     }
   }
+  /* a manhole lid, flat in the street: a dark iron ring, the lid a shade
+     lighter, a pick slot once the camera is close enough to care */
+  function drawManhole(p, s, hB) {
+    if (LOD === 2 || s * p.r < 1.5) return;
+    var i, n = 10, ring = [], lid = [];
+    for (i = 0; i < n; i++) {
+      var a = (i / n) * TAU + 0.3;
+      ring.push([p.x + cos(a) * p.r, p.y + sin(a) * p.r]);
+      lid.push([p.x + cos(a) * p.r * 0.76, p.y + sin(a) * p.r * 0.76]);
+    }
+    if (!wpoly(ring, 0.05, faceCol(M_DARK, 1, 2, hB, 2))) return;
+    wpoly(lid, 0.07, faceCol(M_STEEL, 1, 3, hB, 6));
+    if (s * p.r > 5) {
+      wpoly([[p.x - p.r * 0.28, p.y - p.r * 0.09], [p.x + p.r * 0.02, p.y - p.r * 0.09],
+             [p.x + p.r * 0.02, p.y + p.r * 0.09], [p.x - p.r * 0.28, p.y + p.r * 0.09]],
+        0.08, faceCol(M_DARK, 1, 1, hB, 7));
+      /* a third of the lids keep a pigeon or two pecking at the rim */
+      if ((p.seed || 0) % 2 === 0) {
+        var pgn = 1 + ((p.seed >>> 4) % 2), pg2;
+        for (pg2 = 0; pg2 < pgn; pg2++) {
+          var pa = ((p.seed >>> (6 + pg2 * 5)) % 100) / 100 * TAU;
+          var pxg = p.x + cos(pa) * p.r * 1.5, pyg = p.y + sin(pa) * p.r * 1.5;
+          miniBox(pxg, pyg, 0.40, 0.28, 0.08, 0.58, pa + 1.2, M_GLASS, hB);
+          miniBox(pxg + cos(pa + 1.2) * 0.32, pyg + sin(pa + 1.2) * 0.32,
+            0.13, 0.12, 0.30, 0.52, pa + 1.2, M_GLASS, hB);
+        }
+      }
+    }
+  }
+  /* the kerb drain: a dark slot under the lamp, three cast bars across it */
+  function drawDrain(p, s, hB) {
+    if (LOD === 2 || s * 3 < 2.4) return;
+    var ca = cos(p.yaw), sa = sin(p.yaw);
+    var hl2 = 1.9, hw2 = 0.55;
+    if (!wpoly([[p.x - ca * hl2 - sa * hw2, p.y - sa * hl2 + ca * hw2],
+                [p.x + ca * hl2 - sa * hw2, p.y + sa * hl2 + ca * hw2],
+                [p.x + ca * hl2 + sa * hw2, p.y + sa * hl2 - ca * hw2],
+                [p.x - ca * hl2 + sa * hw2, p.y - sa * hl2 - ca * hw2]],
+        0.04, faceCol(M_DARK, 1, 2, hB, 7))) return;
+    if (s * 3 > 6) {
+      var i;
+      for (i = -1; i <= 1; i++) {
+        var bx2 = p.x + ca * hl2 * 0.5 * i, by2 = p.y + sa * hl2 * 0.5 * i;
+        wpoly([[bx2 - ca * 0.14 - sa * hw2 * 0.9, by2 - sa * 0.14 + ca * hw2 * 0.9],
+               [bx2 + ca * 0.14 - sa * hw2 * 0.9, by2 + sa * 0.14 + ca * hw2 * 0.9],
+               [bx2 + ca * 0.14 + sa * hw2 * 0.9, by2 + sa * 0.14 - ca * hw2 * 0.9],
+               [bx2 - ca * 0.14 + sa * hw2 * 0.9, by2 - sa * 0.14 - ca * hw2 * 0.9]],
+          0.06, faceCol(M_STEEL, 1, 2, hB, 6));
+      }
+    }
+  }
+  /* freight set down on the kerb: two crates, a paler third askew on top */
+  function drawCrate(p, s, hB) {
+    if (s * 3.4 < 2.0) return;
+    var ca = cos(p.yaw), sa = sin(p.yaw);
+    miniBox(p.x, p.y, 1.7, 1.3, 0, 1.5, p.yaw, M_WOOD, hB);
+    miniBox(p.x + ca * 2.9, p.y + sa * 2.9, 1.35, 1.15, 0, 1.25, p.yaw + 0.18, M_WOOD, hB);
+    if (s * 3.4 > 9) {
+      miniBox(p.x + ca * 0.4 - sa * 0.3, p.y + sa * 0.4 + ca * 0.3,
+        1.25, 1.0, 1.5, 2.6, p.yaw - 0.3, M_TRIM, hB);
+    }
+  }
   function drawBench(p, s, hB) {
     var ca = cos(p.yaw), sa = sin(p.yaw);
     miniBox(p.x, p.y, ca > 0.5 || ca < -0.5 ? 3.4 : 0.9, ca > 0.5 || ca < -0.5 ? 0.9 : 3.4, 1.4, 2.1, p.yaw, M_WOOD, hB);
@@ -4741,6 +5040,16 @@
     miniBox(p.x, p.y, 4.6, 2.0, 0.7, 4.4, p.yaw, m, hB);
     miniBox(p.x + ca * 3.2, p.y + sa * 3.2, 1.6, 2.0, 4.4, 5.6, p.yaw, m, hB);
     miniBox(p.x, p.y, 4.7, 2.1, 0.0, 0.7, p.yaw, M_DARK, hB);
+    /* mid-delivery: the rear doors stand open on the dark of the hold */
+    if (p.open && s * 4.6 > 14) {
+      var rx = p.x - ca * 4.62, ry = p.y - sa * 4.62;
+      miniBox(rx, ry, 0.08, 1.72, 0.9, 4.2, p.yaw, M_DARK, hB);
+      var o1 = p.yaw + 2.45, o2 = p.yaw - 2.45;
+      var d1x = rx - sa * 1.95, d1y = ry + ca * 1.95;
+      var d2x = rx + sa * 1.95, d2y = ry - ca * 1.95;
+      miniBox(d1x + cos(o1) * 1.0, d1y + sin(o1) * 1.0, 1.05, 0.12, 0.9, 4.3, o1, m, hB);
+      miniBox(d2x + cos(o2) * 1.0, d2y + sin(o2) * 1.0, 1.05, 0.12, 0.9, 4.3, o2, m, hB);
+    }
     /* close enough to be a vehicle, not a crate: windscreen and wheels */
     if (s * 4.6 > 26) {
       miniBox(p.x + ca * 4.55, p.y + sa * 4.55, 0.35, 1.7, 4.5, 5.5, p.yaw, M_GLASS, hB);
@@ -5026,6 +5335,20 @@
       ctx.lineTo(mxp - ww / 2 + sway * 0.85, myp + hh);
       ctx.closePath();
       ctx.fill();
+    }
+    /* on some lines a pigeon or two sit out between the garments */
+    if (s * 3 > 2.2 && (p.seed % 5) < 2) {
+      var ngp = 1 + (p.seed % 2), gpi;
+      ctx.fillStyle = rgbas(mix(C.ink, C.haze, 0.35), 0.85);
+      for (gpi = 0; gpi < ngp; gpi++) {
+        var gt = 0.16 + (((p.seed >>> (3 + gpi * 5)) % 100) / 100) * 0.6;
+        var gx = x0 + (x1 - x0) * gt, gy = y0 + (y1 - y0) * gt + sag * 2 * gt * (1 - gt) * 2;
+        var gr = Math.max(1.1, 1.9 * s);
+        ctx.beginPath();
+        ctx.ellipse(gx, gy - gr * 0.55, gr * 0.62, gr * 0.5, 0, 0, TAU); ctx.fill();
+        ctx.beginPath();
+        ctx.arc(gx + gr * 0.5, gy - gr * 0.92, gr * 0.28, 0, TAU); ctx.fill();
+      }
     }
   }
   function drawBird(p, s, hz) {
@@ -5868,11 +6191,25 @@
     ctx.font = '600 11px "Archivo Narrow", Arial Narrow, sans-serif';
     for (i = 0; i < picks.length && shown < 5; i++) {
       var q = picks[i];
-      var name = q.d.name.length > 30 ? q.d.name.slice(0, 29) + '…' : q.d.name;
-      var tw = ctx.measureText(name).width + 18;
+      /* a long district name wraps at the space nearest its middle: the
+         pill grows a second line rather than trailing off in an ellipsis */
+      var name = q.d.name, l1 = name, l2 = null;
+      if (name.length > 22) {
+        var midc = name.length / 2, bestSp = -1, bd2 = 1e9, sp;
+        for (sp = name.indexOf(' '); sp !== -1; sp = name.indexOf(' ', sp + 1)) {
+          var dd2 = abs(sp - midc);
+          if (dd2 < bd2) { bd2 = dd2; bestSp = sp; }
+        }
+        if (bestSp > 0) { l1 = name.slice(0, bestSp); l2 = name.slice(bestSp + 1); }
+        if (l1.length > 26) l1 = l1.slice(0, 25) + '…';
+        if (l2 && l2.length > 26) l2 = l2.slice(0, 25) + '…';
+      }
+      var tw = (l2 ? Math.max(ctx.measureText(l1).width, ctx.measureText(l2).width)
+                   : ctx.measureText(l1).width) + 18;
+      var ph2 = l2 ? 30 : 18;
       /* the pill's real footprint decides collisions, with breathing room,
          so two long names never sit shingled over one another */
-      var rect = { x0: q.x - tw / 2 - 8, y0: q.y - 13, x1: q.x + tw / 2 + 8, y1: q.y + 13 };
+      var rect = { x0: q.x - tw / 2 - 8, y0: q.y - ph2 / 2 - 4, x1: q.x + tw / 2 + 8, y1: q.y + ph2 / 2 + 4 };
       var ok = true;
       for (j = 0; j < placed.length; j++) if (rectsHit(rect, placed[j])) { ok = false; break; }
       if (!ok) continue;
@@ -5886,10 +6223,15 @@
       if (a < 0.03) continue;
       ctx.globalAlpha = a * 0.84;
       ctx.fillStyle = 'rgba(250,240,220,0.92)';
-      rrect(q.x - tw / 2, q.y - 9, tw, 18, 9); ctx.fill();
+      rrect(q.x - tw / 2, q.y - ph2 / 2, tw, ph2, 9); ctx.fill();
       ctx.globalAlpha = a;
       ctx.fillStyle = rgbs(C.ink);
-      ctx.fillText(name, q.x, q.y + 4);
+      if (l2) {
+        ctx.fillText(l1, q.x, q.y - 2.5);
+        ctx.fillText(l2, q.x, q.y + 9.5);
+      } else {
+        ctx.fillText(l1, q.x, q.y + 4);
+      }
       ctx.globalAlpha = 1;
     }
     ctx.textAlign = 'left';
@@ -6064,7 +6406,7 @@
   function dofPass() {
     if (LOD === 0) return;                       /* the street stays crisp */
     var pw2 = cv.width, ph2 = cv.height;
-    var yBotCss = HORY > -50 ? HORY + (H - HORY) * 0.12 : H * 0.30;
+    var yBotCss = HORY > -50 ? HORY + (H - HORY) * 0.17 : H * 0.30;
     yBotCss = clamp(yBotCss, H * 0.10, H * 0.55);
     var bandPx = Math.round(yBotCss * CTS);
     if (bandPx < 8) return;
@@ -6085,7 +6427,7 @@
     /* far band: the blur, then the mask that feathers it away */
     dofBX.clearRect(0, 0, pw2, bandPx);
     dofBX.drawImage(dofS, 0, 0, sw3, Math.max(1, Math.round(bandPx / ph2 * sh3)), 0, 0, pw2, bandPx);
-    dofBX.globalAlpha = 0.6;
+    dofBX.globalAlpha = 0.68;
     dofBX.drawImage(dofT, 0, 0, sw4, Math.max(1, Math.round(bandPx / ph2 * sh4)), 0, 0, pw2, bandPx);
     dofBX.globalAlpha = 1;
     var g = dofBX.createLinearGradient(0, 0, 0, bandPx);
@@ -6126,7 +6468,7 @@
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.drawImage(dofB, 0, 0, pw2, bandPx, 0, 0, pw2, bandPx);
     /* near band: a mild foreground fall-off along the bottom edge */
-    var nb0 = Math.round(ph2 * 0.90), nbh = ph2 - nb0;
+    var nb0 = Math.round(ph2 * 0.88), nbh = ph2 - nb0;
     if (nbh > 4) {
       dofBX.clearRect(0, nb0, pw2, nbh);
       dofBX.drawImage(dofS, 0, Math.floor(nb0 / ph2 * sh3), sw3, Math.max(1, sh3 - Math.floor(nb0 / ph2 * sh3)),
@@ -6162,6 +6504,9 @@
     var _p = PROF, _t = performance.now(), _m = _p ? function (k) { var n = performance.now(); _p[k] = (_p[k] || 0) + (n - _t); _t = n; } : function () { };
     drawSky(); _m('sky');
     planeStrips(SPR.tablePat, null, 0.75); _m('table');
+    /* whatever the maker slid half under the sheet goes down first, so the
+       torn edge itself lies over it: contact the eye believes at once */
+    drawTools(true);
     drawPaper(); _m('paper');
     /* the work lamp: a warm pool centred on the page, falling off onto the
        table, so the establishing shot reads as a lit workbench */
@@ -6170,7 +6515,7 @@
       groundSprite(SPR.warm, paper.cx, paper.cy, (paper.x1 - paper.x0) * 0.85, 0.10, W * W * 6);
       ctx.globalCompositeOperation = 'source-over';
     }
-    drawTools();
+    drawTools(false);
     drawGroundDetail(); _m('ground');
     drawRoads(); _m('roads');
     drawWater(); _m('water');
@@ -6231,8 +6576,13 @@
     /* generous when the camera rests: the old 1.05 quota left the landmark
        tower of a mid-zoom shot as a blank slab while small near buildings
        spent the budget. Measured headroom allows it. */
-    var quota = W * H * (motion ? 0.45 : 2.0), spent = 0, cnt = 0,
-        capN = motion ? (ADAPT ? 8 : 14) : 26;
+    var quota = W * H * (motion ? 0.45 : 2.4), spent = 0, cnt = 0,
+        capN = motion ? (ADAPT ? 8 : 14) : 34;
+    /* at rest, one frame-filling giant is charged a third of the frame at
+       most: two towers at arm's length used to drain the whole pool and
+       leave the mid-ground slabs of a street shot blank card (the API
+       TOKENS podium of round 4). Motion paints keep the strict charge. */
+    var chargeCap = W * H * 0.30;
     for (i = 0; i < ranked.length; i++) {
       var q = ranked[i];
       /* the scale floor: full dressing goes only to buildings big enough in
@@ -6240,7 +6590,7 @@
          facades were eating the whole frame budget without adding a thing
          the eye could see at that size. */
       q._q = (DBG === 2 ? false : (spent < quota && cnt < capN && q._scr > 95));
-      if (q._q) { spent += q._area; cnt++; }
+      if (q._q) { spent += motion ? q._area : Math.min(q._area, chargeCap); cnt++; }
     }
     /* buildings and props interleave by the near face of each building,
        so whatever stands behind a wall is painted before the wall */
@@ -7387,7 +7737,8 @@
       var s2 = pick(x, y);
       if (!s2) return null;
       var r = rec[s2];
-      return { slug: s2, d: Math.round(r._d || 0), solidz: Math.round(r.solidz), hw: Math.round(Math.max(r.hw, r.hd)) };
+      return { slug: s2, d: Math.round(r._d || 0), solidz: Math.round(r.solidz), hw: Math.round(Math.max(r.hw, r.hd)),
+               q: r._q ? 1 : 0, scr: Math.round(r._scr || 0) };
     },
     strips: function () { return GSTRIPS; },
     counts: function () { return { parts: NPART, faces: NFILL, grads: NGRAD, vis: vis.length }; },
