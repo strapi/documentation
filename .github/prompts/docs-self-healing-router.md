@@ -109,6 +109,13 @@ Now, for each micro target (`add_link`, `add_mention`, `add_tip`):
 2. Apply the edit (add the link, mention, or tip)
 3. Write the modified file back
 
+**Never write an em dash.** Not the character, not `&mdash;`, `&#8212;` or `&#x2014;`, and
+not a double hyphen used as a dash. Strapi documentation does not use them, and they are a
+reliable tell of unedited machine-written prose. Use a colon, a period, parentheses, or
+restructure the sentence. You are the only agent on this path: you never load
+`drafter.md`, so its Writing Rules never reach you, and this is the only place the rule is
+stated for micro-edits.
+
 Then run the style-lint gate, commit, and push:
 
 ```bash
