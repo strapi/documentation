@@ -12,7 +12,7 @@ tags:
 <GrowthBadge /> <EnterpriseBadge/> <VersionBadge version="5.0.0" />
 
 <Tldr>
-Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes. Versions are only created for content edited in the Content Manager, and are kept for a maximum of 90 days.
+Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes. Versions are only created for content edited in the Content Manager, and are kept for a default of 14 days.
 </Tldr>
 
 The Content History feature, in the <Icon name="feather" /> Content Manager, gives you the ability to browse and restore previous versions of documents created with the [Content Manager](/cms/features/content-manager).
@@ -55,7 +55,7 @@ The retention period can be shortened, but never extended, with the [`history.re
 module.exports = ({ env }) => ({
   // … other configuration properties
   history: {
-    retentionDays: 30,
+    retentionDays: 7,
   },
 });
 ```
@@ -67,7 +67,7 @@ module.exports = ({ env }) => ({
 export default ({ env }) => ({
   // … other configuration properties
   history: {
-    retentionDays: 30,
+    retentionDays: 7,
   },
 });
 ```
