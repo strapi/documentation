@@ -62,6 +62,13 @@ based on the Router's `doc_type`.
 
 After the Drafter has produced output for all targets:
 
+**Before committing, run the deterministic style linter and fix what it reports.**
+`style-lint.sh` is the source of truth for the mechanical style rules: it catches em
+dashes (literal and as the HTML entities `&mdash;` / `&#8212;` / `&#x2014;`), double
+hyphens used as dashes, and the rest of the catalog. The Style Checker prompt states
+the same rules, but a prompt is a probabilistic filter and this script is not: on
+2026-09-04 an em dash reached PR #3443 and Pierre had to strip it by hand.
+
 ```bash
 cd $DOC_REPO
 
@@ -72,6 +79,36 @@ cd $DOC_REPO
 BRANCH_NAME="<prefix>/<short-kebab-description>"
 
 git checkout -b "$BRANCH_NAME"
+
+# Style-lint gate. Every doc file you touched, before staging anything.
+# `git status --porcelain` rather than `git diff`, so a newly created page
+# (untracked, and the whole point of a create_page target) is linted too.
+chmod +x claude-plugins/inki/scripts/style-lint.sh
+LINT_FILES=$(git status --porcelain | awk '{print $NF}' \
+  | grep -E '^docusaurus/docs/.*\.mdx?$' || true)
+
+LINT_STATUS=0
+if [ -n "$LINT_FILES" ]; then
+  # shellcheck disable=SC2086
+  claude-plugins/inki/scripts/style-lint.sh $LINT_FILES || LINT_STATUS=$?
+fi
+# 0 = clean, 1 = errors (blocking), 2 = warnings only (not blocking)
+echo "style-lint exit: $LINT_STATUS"
+```
+
+**Exit 1 blocks the commit.** Rewrite the offending lines yourself and re-run the gate,
+up to 3 times. Exit 2 is warnings only: log them, they do not block. Exit 0 means you can
+commit.
+
+For em dashes, apply the replacement the rule prescribes: a colon, a period, parentheses,
+or a restructured sentence. Never swap an em dash for a double hyphen, which the same
+linter also rejects on the next line of its own rule catalog. If a file still exits 1
+after 3 passes, drop that PR from the run and record it in the `errors` array of the run
+summary rather than opening a PR that Pierre has to clean up by hand.
+
+Once the gate is clean, commit and push:
+
+```bash
 git add .
 git commit -m "<DOCS_CHANGE_DESCRIPTION>
 # Imperative mood, no prefix, describe the doc change. Max 80 chars."

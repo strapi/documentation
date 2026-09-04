@@ -85,12 +85,8 @@ PR or produces a draft you were not equipped to write.
 
 If a PR has `complexity: "micro"`, you handle the full pipeline yourself — no Sonnet needed.
 
-For each micro target (`add_link`, `add_mention`, `add_tip`):
-1. Read the target file from `$DOC_REPO/docusaurus/docs/<path>`
-2. Apply the edit (add the link, mention, or tip)
-3. Write the modified file back
-
-Then create the branch and PR:
+**Create the branch first, then edit.** `git clean -fd` and `git reset --hard` destroy
+uncommitted work, so any file you wrote before this block would be wiped:
 
 ```bash
 cd $DOC_REPO
@@ -106,6 +102,42 @@ git reset --hard origin/main
 
 BRANCH_NAME="<prefix>/<short-kebab-description>"
 git checkout -b "$BRANCH_NAME"
+```
+
+Now, for each micro target (`add_link`, `add_mention`, `add_tip`):
+1. Read the target file from `$DOC_REPO/docusaurus/docs/<path>`
+2. Apply the edit (add the link, mention, or tip)
+3. Write the modified file back
+
+Then run the style-lint gate, commit, and push:
+
+```bash
+# Style-lint gate. Deterministic, and the only reliable guard against the
+# mechanical style violations: em dashes (literal, and the HTML entities
+# &mdash; / &#8212; / &#x2014;), double hyphens used as dashes, and the rest of
+# the catalog. On 2026-09-04 an em dash reached PR #3443 and Pierre had to strip
+# it by hand. Micro-edits skip the Style Checker prompt, so this script is their
+# only style guard: it is not optional here.
+chmod +x claude-plugins/inki/scripts/style-lint.sh
+LINT_FILES=$(git status --porcelain | awk '{print $NF}' \
+  | grep -E '^docusaurus/docs/.*\.mdx?$' || true)
+
+LINT_STATUS=0
+if [ -n "$LINT_FILES" ]; then
+  # shellcheck disable=SC2086
+  claude-plugins/inki/scripts/style-lint.sh $LINT_FILES || LINT_STATUS=$?
+fi
+# 0 = clean, 1 = errors (blocking), 2 = warnings only (not blocking)
+echo "style-lint exit: $LINT_STATUS"
+```
+
+**Exit 1 blocks the commit.** Rewrite the offending lines and re-run the gate, up to 3
+times. For an em dash, use a colon, a period, parentheses, or restructure the sentence.
+Never replace it with a double hyphen, which the same linter also rejects. If the gate
+still exits 1 after 3 passes, abandon that PR and log it rather than opening one Pierre
+has to clean up. Exit 2 is warnings only and does not block.
+
+```bash
 git add .
 git commit -m "<DOCS_CHANGE_DESCRIPTION>"
 git push -u origin "$BRANCH_NAME"
