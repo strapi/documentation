@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Long Way Through</title>
+<link rel="stylesheet" href="longway.css">
+</head>
+<body>
+<canvas id="world" aria-hidden="true"></canvas>
+
+<header id="hud">
+  <div id="hudLeft">
+    <div id="hudTitle">&nbsp;</div>
+    <div id="hudBiome">&nbsp;</div>
+  </div>
+  <div id="hudRight">
+    <button id="btnTrailhead" type="button" title="Open the trailhead index (Tab)">TRAILHEAD &middot; TAB</button>
+  </div>
+</header>
+
+<div id="hudTrail">
+  <span id="odometer">WORD 0 OF 0</span>
+  <span id="nextdoor">&nbsp;</span>
+  <span id="walked">&nbsp;</span>
+</div>
+
+<div id="gatePrompt" hidden></div>
+
+<section id="dock" aria-label="Reading strip">
+  <div id="dockBar">
+    <span id="dockTitle">&nbsp;</span>
+    <span id="blockchip">BLOCK &ndash; / &ndash;</span>
+  </div>
+  <div id="dockScroll">
+    <article id="dockContent"></article>
+  </div>
+</section>
+
+<div id="trailhead" hidden>
+  <div id="thPanel">
+    <div id="thHead">
+      <span class="thLabel">TRAILHEAD INDEX &mdash; ALL PAGES</span>
+      <span class="thHint">TYPE TO SEARCH &middot; &uarr;&darr; SELECT &middot; ENTER GO &middot; ESC CLOSE</span>
+    </div>
+    <input id="thSearch" type="text" autocomplete="off" spellcheck="false" placeholder="Search a page title&hellip;">
+    <ul id="thList" role="listbox"></ul>
+  </div>
+</div>
+
+<div id="gatemap" hidden>
+  <div id="gmPanel">
+    <div id="gmHead">TRAIL GATE</div>
+    <canvas id="gmCanvas" width="720" height="220"></canvas>
+    <div id="gmFrom">&nbsp;</div>
+    <div id="gmTo">&nbsp;</div>
+    <div id="gmDist">&nbsp;</div>
+    <div id="gmHint">ENTER &mdash; WALK THROUGH &middot; ESC &mdash; STAY</div>
+  </div>
+</div>
+
+<div id="landing">
+  <div id="landingCard">
+    <div id="ldKicker">STRAPI DOCUMENTATION, WALKED WHOLE</div>
+    <h1 id="ldTitle">THE LONG<br>WAY THROUGH</h1>
+    <div id="ldStats"></div>
+    <div id="ldKeys">
+      <span>&larr; &rarr; WALK</span><span>SHIFT STRIDE</span><span>CLICK WALK THERE</span>
+      <span>ENTER OPEN GATES</span><span>TAB TRAILHEAD INDEX</span>
+    </div>
+    <div id="ldGo">PRESS ANY KEY TO SET OUT</div>
+  </div>
+</div>
+
+<div id="wipe" hidden></div>
+
+<footer id="help">
+  <span>&larr;/&rarr; OR A/D WALK</span><span>SHIFT STRIDE</span><span>CLICK WALK-TO</span>
+  <span>ENTER GATE</span><span>TAB INDEX</span><span>ESC CLOSE</span>
+</footer>
+
+<script src="longway.js"></script>
+</body>
+</html>
