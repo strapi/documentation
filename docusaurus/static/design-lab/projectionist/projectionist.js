@@ -52,7 +52,7 @@
     titleT: 0, credT: 0, credH: 0, interT: 0,
     lastStamp: null, stampT: 0,
     scrub: null, dust: [], dustN: 0,
-    suppressHash: false, lastTs: 0, sound: false, audio: null
+    suppressHash: false, lastTs: 0, sound: true /* owner: sound on by default; context still starts on first gesture */, audio: null
   };
   if (REDUCED) S.speedMode = 'hold';
 
@@ -1250,12 +1250,20 @@
     arLabel();
     ar.onclick = () => { S.autoRide = !S.autoRide; store.set('autoride', S.autoRide); arLabel(); };
 
+    const sndLabel = () => { $('soundBtn').textContent = 'SOUND — ' + (S.sound ? 'ON (1 click per frame, 1 thump per splice)' : 'OFF (1 click per frame)'); $('soundBtn').setAttribute('aria-pressed', String(S.sound)); };
+    sndLabel();
+    /* sound defaults ON: the context is born on the first gesture the browser allows */
+    const wakeAudio = () => {
+      if (S.sound && !S.audio) { try { S.audio = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { } }
+      if (S.audio && S.audio.state === 'suspended') { try { S.audio.resume(); } catch (e) { } }
+    };
+    document.addEventListener('pointerdown', wakeAudio, { capture: true });
+    document.addEventListener('keydown', wakeAudio, { capture: true });
     $('soundBtn').onclick = () => {
       S.sound = !S.sound;
       if (S.sound && !S.audio) { try { S.audio = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { S.sound = false; } }
       if (S.audio && S.audio.state === 'suspended') { try { S.audio.resume(); } catch (e) { } }
-      $('soundBtn').textContent = 'SOUND — ' + (S.sound ? 'ON (1 click per frame, 1 thump per splice)' : 'OFF (1 click per frame)');
-      $('soundBtn').setAttribute('aria-pressed', String(S.sound));
+      sndLabel();
     };
 
     // scrub: drag the strip
