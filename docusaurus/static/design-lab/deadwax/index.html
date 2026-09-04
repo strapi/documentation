@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dead Wax — the Strapi docs pressed to vinyl</title>
+<link rel="stylesheet" href="deadwax.css">
+</head>
+<body>
+<header id="topbar">
+  <div id="wordmark"><span class="reg">&#9678;</span> DEAD WAX <span class="sub">A PRESSING OF THE STRAPI DOCS</span></div>
+  <div id="plaque" title="Computed from the collection"></div>
+  <div id="searchwrap">
+    <input id="search" type="text" placeholder="Search 290 records&hellip;" autocomplete="off" spellcheck="false">
+    <div id="searchresults" hidden></div>
+  </div>
+  <nav id="topnav">
+    <button id="btn-crates" title="Back to the crate wall">CRATES</button>
+    <button id="btn-index" title="Plain-title index (Tab)">INDEX <kbd>Tab</kbd></button>
+    <button id="btn-setlist" title="Your session setlist">SETLIST</button>
+    <button id="btn-print" title="Print the session setlist">PRINT</button>
+    <button id="btn-sound" title="Optional crackle: one pop per commit">SOUND OFF</button>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- CRATE WALL -->
+  <section id="crateview">
+    <canvas id="cratecanvas"></canvas>
+    <div id="cratetip" hidden></div>
+    <div id="inkbar" title="Ink specification — the five flat inks of this pressing">
+      <span class="mark">&#10012;</span>
+      <span class="sw" style="background:#F5EBDB" data-hex="#F5EBDB PAPER"></span>
+      <span class="sw" style="background:#2A0F3D" data-hex="#2A0F3D AUBERGINE"></span>
+      <span class="sw" style="background:#4945FF" data-hex="#4945FF VIOLET"></span>
+      <span class="sw" style="background:#FF3D6E" data-hex="#FF3D6E ROSE"></span>
+      <span class="sw" style="background:#FFA45E" data-hex="#FFA45E APRICOT"></span>
+      <span class="mark">&#9678;</span>
+    </div>
+  </section>
+
+  <!-- TURNTABLE -->
+  <section id="deckview" hidden>
+    <div id="decks">
+      <div class="deckcol" id="deckcolA">
+        <canvas id="deckA"></canvas>
+        <div id="deadwaxline" title="Etched in the run-out groove: who cut this record"></div>
+        <div id="transport">
+          <button id="btn-play" title="Play at 200 words per minute (Space)">PLAY</button>
+          <div id="blockreadout">BLOCK <b id="blocknow">1</b> / <span id="blocktotal">1</span></div>
+          <div id="timereadout">0:00 / 0:00</div>
+          <div id="crackleline" hidden></div>
+        </div>
+        <div id="chalkboard" title="Your session so far — click for the full setlist">
+          <div class="cbtag">THE SET SO FAR</div>
+          <div id="chalklines"></div>
+        </div>
+        <div id="keyhints">SPACE play/pause &middot; &larr;&rarr; blocks &middot; X cut &middot; TAB index &middot; / search &middot; drag the arm or drop the needle</div>
+        <div id="bincard" hidden>
+          <div class="bctag" id="bincardtag"></div>
+          <div id="bincardrows"></div>
+        </div>
+      </div>
+      <div id="fadercol">
+        <div id="crossfader" title="Crossfade to the pre-cued record (X)">
+          <div class="faderlbl">A</div>
+          <div class="rail"><div class="handle" id="faderhandle"></div></div>
+          <div class="faderlbl">B</div>
+        </div>
+        <div id="faderkey">CUT <kbd>X</kbd></div>
+      </div>
+      <div class="deckcol b" id="deckcolB">
+        <canvas id="deckB"></canvas>
+        <div id="nextup" class="idle">
+          <div class="nu-tag">DECK B</div>
+          <div class="nu-body">No record racked.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- READING STRIP (docked, crisp DOM) -->
+  <aside id="strip" hidden>
+    <div id="striphead">
+      <div id="striptitle"></div>
+      <div id="stripmeta"></div>
+    </div>
+    <div id="stripbody"></div>
+  </aside>
+</main>
+
+<!-- PLAIN-TITLE INDEX (Tab) -->
+<div id="indexoverlay" hidden>
+  <div class="ovhead">
+    <div class="ovtitle">CATALOGUE — 290 TITLES <span class="ovhint">Tab or Esc closes &middot; type to filter &middot; Enter opens</span></div>
+    <input id="indexfilter" type="text" placeholder="Filter titles&hellip;" autocomplete="off" spellcheck="false">
+  </div>
+  <div id="indexlist"></div>
+</div>
+
+<!-- SETLIST PANEL -->
+<div id="setlistpanel" hidden>
+  <div class="slhead">SESSION SETLIST <button id="btn-setlist-close" title="Close">&times;</button></div>
+  <div id="setlistbody"></div>
+  <div class="slfoot">
+    <div id="setlistsummary"></div>
+    <button id="btn-print2">PRINT SETLIST</button>
+  </div>
+</div>
+
+<!-- PRINT SHEET (only visible in @media print) -->
+<div id="printsheet"></div>
+
+<div id="rmchip" hidden>REDUCED MOTION &middot; render on demand</div>
+
+<script src="deadwax.js"></script>
+</body>
+</html>
