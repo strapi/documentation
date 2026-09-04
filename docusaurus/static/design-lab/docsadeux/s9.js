@@ -1,4 +1,4 @@
-/* Docs à Deux — 290 documentation pages looking for love.
+/* Cite Right — 290 documentation pages looking for love.
    Every number, name and quote on screen comes from content.json, graph.json,
    communities.json or provenance.json. The only fiction is the premise. */
 'use strict';
@@ -98,7 +98,7 @@ function monogramHTML(slug,extraCls){
 }
 function faceHTML(slug){
   const img=firstImg(slug);
-  if(img)return '<img src="'+esc(img)+'" alt="" loading="lazy">';
+  if(img)return '<img src="'+esc(img)+'" alt="Profile photo: '+esc(label(slug))+'" loading="lazy">';
   return monogramHTML(slug);
 }
 function navDistance(a,b){
@@ -296,7 +296,9 @@ function renderBlock(b,ctx){
     case 'details':{
       const d=el('details','doc-details');d.open=true;
       if(b.id)d.id=b.id;
-      d.appendChild(el('summary',null,esc(b.summary||'Details')));
+      /* the summary is authored HTML from content.json (inline code, icons,
+         entities): render it, don't escape it into visible markup */
+      d.appendChild(el('summary',null,b.summary||'Details'));
       const body=el('div','dbody');body.appendChild(renderBlocks(b.blocks,ctx));
       d.appendChild(body);return d;
     }
@@ -392,10 +394,10 @@ function route(){
   const raw=(location.hash||'#').slice(1);
   const view=$('#view');
   if(!raw){renderRead('/cms/intro');return;}
-  if(raw==='deck'){renderDeck();setTab('deck');document.title='Tonight · Docs à Deux';return;}
-  if(raw==='matches'){renderMatches();setTab('matches');document.title='Matches · Docs à Deux';return;}
-  if(raw==='singles'){renderSingles();setTab('singles');document.title='Singles · Docs à Deux';return;}
-  if(raw==='browse'){renderBrowse();setTab('browse');document.title='Browse · Docs à Deux';return;}
+  if(raw==='deck'){renderDeck();setTab('deck');document.title='Tonight · Cite Right';return;}
+  if(raw==='matches'){renderMatches();setTab('matches');document.title='Matches · Cite Right';return;}
+  if(raw==='singles'){renderSingles();setTab('singles');document.title='Singles · Cite Right';return;}
+  if(raw==='browse'){renderBrowse();setTab('browse');document.title='Browse · Cite Right';return;}
   const hashPos=raw.indexOf('#',1);
   const slug=hashPos>0?raw.slice(0,hashPos):raw;
   const anchor=hashPos>0?raw.slice(hashPos+1):null;
@@ -403,7 +405,7 @@ function route(){
     if(slug===currentSlug&&anchor){scrollToAnchor(anchor);return;}
     renderRead(slug,anchor);
   }else{
-    setTab(null);document.title='Not found · Docs à Deux';
+    setTab(null);document.title='Not found · Cite Right';
     view.innerHTML='<div class="wrap"><div class="pagehead"><h1>No profile at <em>'+esc(slug)+'</em></h1><p class="lead">They may have moved on. Try <a href="#browse">browsing all 290 profiles</a>.</p></div></div>';
   }
 }
@@ -419,14 +421,14 @@ function scrollToAnchor(id){
 function renderRead(slug,anchor){
   const p=pages[slug];currentSlug=slug;lastRead=slug;
   setTab(null);
-  document.title=label(slug)+' · Docs à Deux';
+  document.title=label(slug)+' · Cite Right';
   const view=$('#view');view.innerHTML='';
   const grid=el('div','readgrid');
 
   // profile rail
   const card=el('aside','profilecard');
   const img=firstImg(slug);
-  card.innerHTML='<div class="photo">'+(img?'<img src="'+esc(img)+'" alt="" loading="lazy">':monogramHTML(slug))+'</div>';
+  card.innerHTML='<div class="photo">'+(img?'<img src="'+esc(img)+'" alt="Profile photo: '+esc(label(slug))+'" loading="lazy">':monogramHTML(slug))+'</div>';
   const body=el('div','body');
   const age=ageDays(slug);
   body.innerHTML='<h2>'+esc(label(slug))+(age!=null?' <span class="age">'+age+' days</span>':'')+'</h2>'
@@ -627,7 +629,7 @@ function openMatch(a,b){
   const spotA=citeSpot(a,b),spotB=citeSpot(b,a);
   const sheet=openOverlay();
   sheet.innerHTML=
-    '<h2 class="matchtitle">C’est un match&nbsp;!</h2>'
+    '<h2 class="matchtitle">It’s a match!</h2>'
     +'<div class="matchsub">A mutual citation. The realest kind of love in a link graph.</div>'
     +'<div class="matchfaces"><div class="face">'+faceHTML(a)+'</div><div class="face">'+faceHTML(b)+'</div></div>'
     +'<div style="font-family:var(--serif);font-weight:700">'+esc(label(a))+' <span style="color:var(--terra);font-style:italic">&amp;</span> '+esc(label(b))+'</div>'
