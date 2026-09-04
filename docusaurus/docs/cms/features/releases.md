@@ -221,7 +221,7 @@ Once a release is published, the release itself cannot be updated. You can not r
 
 <EnterpriseBadge />
 
-Release actions are automatically captured in [Audit Logs](/cms/features/audit-logs) for Enterprise plan users. Every significant change to a release, its entries, or its settings produces a log entry — regardless of whether the action came from the admin panel or a scheduled job.
+Release actions are automatically captured in [Audit Logs](/cms/features/audit-logs) for Enterprise plan users. Every significant change to a release, its entries, or its settings produces a log entry, regardless of whether the action came from the admin panel or a scheduled job.
 
 The following actions are recorded:
 
