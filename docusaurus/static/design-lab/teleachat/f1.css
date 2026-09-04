@@ -1,7 +1,7 @@
 /* ============================================================
-   TÉLÉ·ACHAT DOC — la documentation Strapi en chaîne de téléachat 1990
-   Palette: plateau surexposé bleu-violet, or promo, rouge urgence,
-   fiche produit blanche (la doc elle-même, lisible et intacte).
+   SHOP·DOCS 24/7 — the Strapi documentation as a 1990s home-shopping channel
+   Palette: overexposed blue-violet studio floor, promo gold, urgency red,
+   white product sheet (the doc itself, readable and intact).
    ============================================================ */
 
 :root{
@@ -41,7 +41,7 @@ body{
   min-height:100vh;
   overflow-x:clip;
 }
-/* léger balayage cathodique sur tout le plateau */
+/* light CRT scanline sweep over the whole studio */
 body::after{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:5;
   background:repeating-linear-gradient(0deg, rgba(255,255,255,.022) 0 1px, transparent 1px 4px);
@@ -49,7 +49,7 @@ body::after{
 img{max-width:100%;height:auto}
 a{color:inherit}
 
-/* ---------------- header / bandeau chaîne ---------------- */
+/* ---------------- header / channel banner ---------------- */
 #topbar{
   position:sticky;top:0;z-index:40;
   display:flex;align-items:center;gap:14px;
@@ -108,7 +108,7 @@ a{color:inherit}
 }
 .notice-btn:hover{transform:translateY(-1px)}
 
-/* ---------------- cadre général ---------------- */
+/* ---------------- general frame ---------------- */
 #frame{display:flex;align-items:flex-start;gap:0;max-width:1600px;margin:0 auto;min-width:0}
 
 /* ---------------- programme (sidebar) ---------------- */
@@ -151,7 +151,7 @@ a{color:inherit}
 .prog-link.current .prog-price{color:#8a2b00}
 .prog-price{margin-left:auto;font-family:var(--font-label);font-size:.68rem;color:var(--gold);white-space:nowrap;flex:0 0 auto}
 
-/* ---------------- scène / plateau ---------------- */
+/* ---------------- stage / studio floor ---------------- */
 #stage{flex:1;min-width:0;padding:22px 26px 120px}
 
 .mire{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:24px}
@@ -163,14 +163,14 @@ a{color:inherit}
 .mire-bars i:nth-child(7){background:#1414d4}
 .mire-text{font-family:var(--font-label);font-weight:700;letter-spacing:.2em;color:var(--panel-dim)}
 
-/* ---- fil d'ariane émission ---- */
+/* ---- show breadcrumb ---- */
 .seg-crumb{
   font-family:var(--font-label);font-weight:500;font-size:.8rem;letter-spacing:.16em;
   color:var(--panel-dim);text-transform:uppercase;margin:0 0 14px;
 }
 .seg-crumb b{color:var(--cyan);font-weight:700}
 
-/* ---- vitrine produit ---- */
+/* ---- product showcase ---- */
 .showcase{
   position:relative;border-radius:var(--radius);
   background:
@@ -180,7 +180,7 @@ a{color:inherit}
   padding:30px 34px 26px;
   overflow:hidden;
 }
-/* faisceaux de projecteurs */
+/* spotlight beams */
 .showcase::before{
   content:"";position:absolute;inset:-40% -10% auto;height:140%;pointer-events:none;
   background:
@@ -209,7 +209,7 @@ a{color:inherit}
 }
 .product-desc{color:var(--panel-ink);font-size:.98rem;line-height:1.55;max-width:62ch;margin:0 0 16px}
 
-/* piédestal tournant */
+/* rotating pedestal */
 .pedestal{position:relative;height:46px;margin:6px 0 20px;max-width:420px}
 .pedestal .disc{
   position:absolute;inset:auto 0 0;height:34px;border-radius:50%;
@@ -228,7 +228,7 @@ a{color:inherit}
 }
 @keyframes sheen{0%{transform:translateX(-110%)}55%,100%{transform:translateX(110%)}}
 
-/* la liste d'arguments massue */
+/* the knockout selling-point list */
 .pitch-list{list-style:none;margin:0 0 4px;padding:0;display:grid;gap:7px}
 .pitch-list li{
   display:flex;gap:10px;align-items:baseline;
@@ -237,7 +237,7 @@ a{color:inherit}
 .pitch-list li::before{content:"✔";color:var(--gold);font-weight:900;flex:0 0 auto;text-shadow:0 0 8px rgba(255,212,0,.6)}
 .pitch-list b{color:var(--gold)}
 
-/* étoile prix */
+/* price starburst */
 .price-burst{
   position:relative;width:210px;height:210px;margin:-6px auto 0;flex:0 0 auto;
   display:flex;align-items:center;justify-content:center;text-align:center;
@@ -257,7 +257,7 @@ a{color:inherit}
 .price-note{font-size:.68rem;font-weight:600;color:#5c4a00;margin-top:4px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* tampon PRIX CHOC */
+/* PRICE SHOCK stamp */
 .stamp{
   position:absolute;top:16px;right:24px;z-index:2;
   font-family:var(--font-display);font-size:1.15rem;color:var(--red-hot);
@@ -269,7 +269,7 @@ a{color:inherit}
 }
 @keyframes stamp-in{to{transform:rotate(9deg) scale(1)}}
 
-/* badges mérites */
+/* merit badges */
 .merit-row{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
 .merit{
   font-family:var(--font-label);font-weight:700;font-size:.72rem;letter-spacing:.1em;
@@ -280,7 +280,7 @@ a{color:inherit}
 .merit.white{background:#fff;color:var(--tv-deep)}
 .merit.red{background:var(--red);color:#fff}
 
-/* compte à rebours + stock */
+/* countdown + stock */
 .urgency-box{
   background:linear-gradient(180deg,#e4002b,#a30020);
   border-radius:12px;padding:14px 16px;color:#fff;
@@ -306,7 +306,7 @@ a{color:inherit}
 .social-proof .sp-num{font-family:var(--font-display);font-size:1.7rem;color:var(--cyan)}
 .social-proof p{margin:2px 0 0;font-size:.8rem;line-height:1.4;color:var(--panel-dim)}
 
-/* présentateur */
+/* presenter */
 .presenter{
   display:flex;align-items:center;gap:14px;margin-top:22px;
   background:rgba(0,0,0,.28);border-radius:12px;padding:12px 16px;
@@ -323,7 +323,7 @@ a{color:inherit}
 .presenter-line{font-size:.8rem;color:var(--panel-dim);line-height:1.45;margin-top:2px}
 .presenter-line b{color:var(--gold)}
 
-/* ---- témoignages ---- */
+/* ---- testimonials ---- */
 .testimonials{margin:26px 0 0}
 .testi-head{
   font-family:var(--font-display);font-size:1.4rem;color:var(--gold);
@@ -351,7 +351,7 @@ a{color:inherit}
 .testi-note{font-size:.72rem;color:var(--ink-soft);margin-top:2px}
 .testi-stars{color:var(--gold-dark);letter-spacing:2px;font-size:.8rem;margin-top:6px}
 
-/* ---------------- LA DÉMONSTRATION (contenu doc) ---------------- */
+/* ---------------- THE DEMONSTRATION (doc content) ---------------- */
 .demo-wrap{margin-top:30px}
 .demo-bar{
   display:flex;align-items:center;gap:14px;margin-bottom:-2px;position:relative;z-index:1;
@@ -398,7 +398,7 @@ a{color:inherit}
 .doc-panel figure img{border-radius:10px;box-shadow:0 4px 16px rgba(30,20,60,.18);border:1px solid #e5ddc4}
 .doc-panel figcaption{font-size:.82rem;color:var(--ink-soft);margin-top:.5em;font-style:italic}
 
-/* tldr = l'argumentaire */
+/* tldr = the pitch */
 .tldr-box{
   background:linear-gradient(180deg,#fff6d6,#ffedad);
   border:2px solid var(--gold-dark);border-radius:12px;
@@ -437,7 +437,7 @@ a{color:inherit}
 .doc-panel td{padding:9px 14px;border-top:1px solid #eee6cd;vertical-align:top}
 .doc-panel tr:nth-child(even) td{background:#fbf7ea}
 
-/* admonitions — les 9 familles, en encart mode d'emploi */
+/* admonitions — the 9 families, as instruction-leaflet boxes */
 .admo{border-radius:10px;margin:0 0 1.4em;overflow:hidden;border:1px solid;box-shadow:0 3px 10px rgba(30,20,60,.08)}
 .admo-head{
   display:flex;align-items:center;gap:8px;padding:8px 14px;
@@ -533,7 +533,7 @@ a{color:inherit}
 .colgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:0 0 1.4em;min-width:0}
 .colgrid > div{min-width:0}
 
-/* ---- garanties bas de fiche ---- */
+/* ---- bottom-of-sheet warranties ---- */
 .warranty-strip{
   display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 0;
 }
@@ -593,7 +593,7 @@ a{color:inherit}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes blink{50%{opacity:.15}}
 
-/* ---------------- notice modal ---------------- */
+/* ---------------- manual modal ---------------- */
 .notice-modal{
   position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;
   background:rgba(10,4,40,.75);padding:20px;
@@ -616,7 +616,7 @@ a{color:inherit}
 }
 .notice-foot{margin-top:18px;font-size:.8rem;color:var(--ink-soft);font-style:italic;border-top:1px dashed #d8cfae;padding-top:12px}
 
-/* page introuvable */
+/* page not found */
 .lost-call{max-width:560px;margin:8vh auto;text-align:center}
 .lost-call .product-name{font-size:2rem}
 
@@ -628,7 +628,7 @@ a{color:inherit}
   .chyron-call{padding:4px 12px}
 }
 
-/* ---------------- reduced motion : le plateau se calme ---------------- */
+/* ---------------- reduced motion: the studio calms down ---------------- */
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
   .live-dot,.chyron-call .blink,.scarcity-stock{animation:none}
