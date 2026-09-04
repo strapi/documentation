@@ -154,6 +154,7 @@ body:not(.booting) #boot { display: none; }
 }
 #world.drag { cursor: grabbing; }
 #city { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#cityfx { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
 #reader {
   flex: 0 0 min(760px, 44%); min-width: 0; background: var(--paper);
   border-left: 1px solid var(--hair-2); display: flex; flex-direction: column;

@@ -179,6 +179,10 @@
   var props = [], paper = null, tools = [];
   var PROV = null;                /* per-page git history, for the night moths */
   var folk = [];                  /* the living layer: everything that moves */
+  var extras = [];                /* passers-by who re-home to the camera cell */
+  var birds = [];                 /* swifts and gulls: airborne, always in motion */
+  var trams = [];                 /* the transit cars, one per route */
+  var transitRoutes = [];         /* rails between strongly-linked quarters */
   var lampOf = {};                /* the kerb lamp in front of each page */
   var WINDV = 0;                  /* one wind over the whole model, -1..1 */
   var LT = 0;                     /* life time: frozen to one pose under reduced motion */
@@ -189,12 +193,13 @@
   var STOREY = 9.2;           /* one floor */
   var GFH = 14.5;             /* the ground floor is always taller */
 
-  var docEl, worldEl, sideEl, rbodyEl, tipEl, cv, ctx;
+  var docEl, worldEl, sideEl, rbodyEl, tipEl, cv, ctx, ovCv, ovCtx;
 
   /* ------------------------------------------------------------- boot */
   function boot() {
     docEl = $('#doc'); worldEl = $('#world'); sideEl = $('#side'); rbodyEl = $('#rbody');
     tipEl = $('#tip'); cv = $('#city'); ctx = cv.getContext('2d', { alpha: false });
+    ovCv = $('#cityfx'); ovCtx = ovCv.getContext('2d');
 
     Promise.all([
       fetch('content.json').then(function (r) { return r.json(); }),
@@ -221,12 +226,13 @@
         bakeCity();
         bakeProps();
         bakeLife();
+        bakeTransit();
         bakePaper();
         resize();
         homeShot();
         buildHud();
         startLoop();
-        if (cur) locate(false);
+        if (cur && !coldArrival) locate(false);
         idle(buildSearchIndex);
       });
     })['catch'](function (e) {
@@ -252,13 +258,25 @@
      Archetype is read from the blocks a page actually contains. Tier is read
      from how many other pages cite it. Neither is hashed or invented. */
   function blockCensus(p) {
-    var c = { code: 0, endpoint: 0, table: 0, ol: 0, ul: 0, img: 0, adm: 0, tabs: 0, h: 0 };
+    var c = { code: 0, endpoint: 0, epc: 0, table: 0, ol: 0, ul: 0, img: 0, adm: 0, tabs: 0, h: 0 };
     (function walk(bs) {
       if (!bs) return;
       for (var i = 0; i < bs.length; i++) {
         var b = bs[i];
         if (b.t === 'code') c.code++;
-        else if (b.t === 'endpoint') c.endpoint++;
+        else if (b.t === 'endpoint') {
+          c.endpoint++;
+          /* the code an endpoint carries inside itself: request tabs and
+             code-shaped response bodies, counted the way the reader sees
+             them rendered, so the stat chip never contradicts the page */
+          if (b.codeTabs && b.codeTabs.length) c.epc++;
+          if (b.responses) {
+            for (var re = 0; re < b.responses.length; re++) {
+              var rb = b.responses[re].body || '';
+              if (rb && (/^\s*[[{"]/.test(rb) || !/<[a-zA-Z]/.test(rb))) c.epc++;
+            }
+          }
+        }
         else if (b.t === 'table') c.table++;
         else if (b.t === 'ol') { c.ol++; walkItems(b.items); }
         else if (b.t === 'ul') { c.ul++; walkItems(b.items); }
@@ -297,6 +315,9 @@
       var code = G.code[s] || 0, words = G.words[s] || 0;
       rec[s] = {
         slug: s, p: p, cen: c, inb: inb, outb: outb, code: code, words: words,
+        /* what the reader actually sees: fenced blocks plus the code the
+           endpoint blocks carry (request tabs, JSON responses) */
+        codeAll: Math.max(code, c.code) + c.epc,
         arch: archetypeOf(s, p, c, inb, code, words),
         tier: tierOf(inb),
         derelict: inb === 0,
@@ -636,7 +657,7 @@
     return GFH + floorsOf(r) * STOREY;
   }
   /* how many of the windows carry a warm light: the page's code blocks */
-  function litOf(r) { return clamp(r.code / 14, 0, 0.7); }
+  function litOf(r) { return clamp((r.codeAll != null ? r.codeAll : r.code) / 14, 0, 0.7); }
 
   /* which side faces the plaza — the entrance, the awning and the sign go
      there, so a quarter reads as a quarter and not as a warehouse estate */
@@ -701,8 +722,12 @@
      water tank on legs, an aerial or two */
   function roofClutter(V, x, y, w, d, z, rn, k0) {
     var hw = w / 2, hd = d / 2;
+    /* the stair head wears a coping and the plant reads as louvred steel,
+       so the roof machinery is finished work, not raw grey fill */
     box(V, x - hw * 0.42, y - hd * 0.30, w * 0.24, d * 0.26, z, z + 7.5, M_RENDER, { deco: 'plain' });
-    box(V, x + hw * 0.34, y + hd * 0.26, w * 0.28, d * 0.22, z, z + 4.6, M_DARK, { deco: 'vent' });
+    slab(V, x - hw * 0.42, y - hd * 0.30, w * 0.24 + 1.4, d * 0.26 + 1.4, z + 7.5, z + 8.2, M_TRIM);
+    box(V, x + hw * 0.34, y + hd * 0.26, w * 0.28, d * 0.22, z, z + 4.6, M_STEEL, { deco: 'vent' });
+    slab(V, x + hw * 0.34, y + hd * 0.26, Math.max(1.2, w * 0.28 - 1.0), Math.max(1.2, d * 0.22 - 1.0), z + 4.6, z + 5.1, M_DARK);
     var tr = Math.min(w, d) * 0.10 + 1.4;
     var tx = x + hw * 0.10, ty = y - hd * 0.40;
     var lz = z + 3.4;
@@ -714,10 +739,25 @@
     var ax = x - hw * 0.20 + rn(k0) * w * 0.2;
     strut(V, ax, y + hd * 0.5, z, ax, y + hd * 0.5, z + 11 + rn(k0 + 1) * 7, 0.35, M_STEEL);
     strut(V, ax - 2.2, y + hd * 0.5, z + 9, ax + 2.2, y + hd * 0.5, z + 9, 0.3, M_STEEL);
-    /* half of these roofs also keep a garden in planters */
-    if (rn(k0 + 2) > 0.55) {
+    /* most of these roofs keep a garden now: a planter run along the
+       parapet with a row of clipped green, a small tree, and on the
+       larger decks a glasshouse whose panes catch the low sun — the
+       garden layer the nadir always had, made to register obliquely */
+    if (rn(k0 + 2) > 0.35) {
       box(V, x - hw * 0.36, y + hd * 0.36, w * 0.20, d * 0.14, z, z + 1.5, M_WOOD, { deco: 'plain' });
       plant(V, x - hw * 0.36, y + hd * 0.36, z + 3.2, Math.min(w, d) * 0.12 + 1.4, 'tree');
+      var pr, prn = Math.max(2, Math.round(w * 0.16));
+      box(V, x, y - hd * 0.44, w * 0.52, 1.6, z, z + 1.3, M_SHUT, { deco: 'plain' });
+      for (pr = 0; pr < prn; pr++) {
+        plant(V, x - w * 0.24 + (w * 0.48) * (pr / Math.max(1, prn - 1)),
+          y - hd * 0.44, z + 2.0, 1.5 + rn(k0 + 30 + pr) * 0.9, 'shrub');
+      }
+    }
+    if (rn(k0 + 20) > 0.62 && w > 13 && d > 11) {
+      var gw = Math.min(8.5, w * 0.30), gd = Math.min(6.0, d * 0.26);
+      var gx = x - hw * 0.02, gy = y - hd * 0.02;
+      box(V, gx, gy, gw, gd, z, z + 3.1, M_GLASS, { deco: 'plain' });
+      gable(V, gx, gy, gw + 0.8, gd + 0.8, z + 3.1, 0, 1.5, gw >= gd ? 0 : 1, M_TRIM);
     }
   }
 
@@ -750,6 +790,22 @@
       box(V, 0, 0, w2, d2, h + 2.4, h + 2.4 + h2, mi, {
         deco: 'curtain', lit: lf, glass: 1, floors: Math.max(1, Math.round(h2 / STOREY))
       });
+      /* the setback ring is a terrace, and a terrace is planted: timber
+         troughs with a run of clipped green along two parapets — this is
+         the roof-garden layer at the heights the oblique shots look at */
+      if (rn(11) > 0.25) {
+        var tz = h + 2.4, sgn = rn(12) > 0.5 ? 1 : -1, pg;
+        box(V, 0, sgn * (d2 / 2 + (d - d2) * 0.24), w2 * 0.78, 1.5, tz, tz + 1.2, M_WOOD, { deco: 'plain' });
+        var pgn = Math.max(2, Math.round(w2 * 0.16));
+        for (pg = 0; pg < pgn; pg++) {
+          plant(V, -w2 * 0.34 + (w2 * 0.68) * (pg / Math.max(1, pgn - 1)),
+            sgn * (d2 / 2 + (d - d2) * 0.24), tz + 1.9, 1.4 + rn(13 + pg) * 0.8, 'shrub');
+        }
+        var sgn2 = rn(14) > 0.5 ? 1 : -1;
+        box(V, sgn2 * (w2 / 2 + (w - w2) * 0.24), 0, 1.5, d2 * 0.62, tz, tz + 1.2, M_WOOD, { deco: 'plain' });
+        plant(V, sgn2 * (w2 / 2 + (w - w2) * 0.24), -d2 * 0.2, tz + 2.4, 1.9 + rn(15) * 1.1, 'shrub');
+        plant(V, sgn2 * (w2 / 2 + (w - w2) * 0.24), d2 * 0.2, tz + 2.4, 1.7 + rn(16) * 1.0, 'shrub');
+      }
       slab(V, 0, 0, w2 + 2, d2 + 2, h + 2.4 + h2, h + 4.6 + h2, M_TRIM);
       top = h + 4.6 + h2;
       if (t >= 4) {
@@ -991,10 +1047,17 @@
       lifts: Math.max(2, Math.round((h + 4 - mh) / 8)) });
     /* the unfinished slabs inside the cage, and the mess of a working site
        on each: pallet stacks, plank piles, one draped tarpaulin */
+    /* every site is its own mess: decks vary in reach and material, one is
+       sometimes missing whole, tarps drape where the hash says the weather
+       came in — so a row of scaffolds reads as a working street, not as a
+       press of identical cages */
     var lifts = Math.max(1, Math.round((h + 4 - mh) / 9)), i, topZ = mh;
     for (i = 1; i <= lifts; i++) {
       var z = mh + (h + 4 - mh) * (i / (lifts + 1));
-      slab(V, 0, 0, w * 0.94, d * 0.94, z, z + 1.3, M_RENDER);
+      if (lifts > 2 && rn(26 + i * 7) > 0.86) continue;   /* a bay not yet poured */
+      var din = 0.84 + rn(23 + i * 5) * 0.13;
+      slab(V, (rn(27 + i) - 0.5) * w * 0.05, (rn(28 + i) - 0.5) * d * 0.05,
+        w * din, d * din, z, z + 1.3, rn(24 + i * 3) > 0.62 ? M_WOOD : M_RENDER);
       var zt = z + 1.3; topZ = zt;
       if (rn(20 + i) > 0.42) {
         var qx = (rn(21 + i) - 0.5) * w * 0.56, qy = (rn(22 + i) - 0.5) * d * 0.56;
@@ -1005,9 +1068,18 @@
         box(V, (rn(31 + i) - 0.5) * w * 0.5, (rn(32 + i) - 0.5) * d * 0.5,
           Math.min(9, w * 0.36), 2.2, zt, zt + 1.0, M_WOOD, { deco: 'plain' });
       }
+      /* a tarp lashed over a mid-deck corner, red or weathered canvas */
+      if (rn(60 + i) > 0.68) {
+        var tm = rn(61 + i) > 0.55 ? M_AWN : M_TARP;
+        var tx3 = (rn(62 + i) - 0.5) * w * 0.5, ty3 = (rn(63 + i) - 0.5) * d * 0.5;
+        var tw3 = Math.min(10, w * 0.34), td3 = Math.min(8, d * 0.30);
+        box(V, tx3, ty3, tw3, td3, zt, zt + 1.0, tm, { deco: 'plain' });
+        gable(V, tx3, ty3, tw3 + 1.2, td3 + 1.2, zt + 1.0, 0, 1.6, rn(64 + i) > 0.5 ? 0 : 1, tm);
+      }
     }
     /* the tarpaulin, lashed over a corner of the top deck */
-    box(V, -w * 0.22, d * 0.18, w * 0.26, d * 0.22, topZ, topZ + 1.1, M_TARP, { deco: 'plain' });
+    box(V, -w * 0.22, d * 0.18, w * 0.26, d * 0.22, topZ, topZ + 1.1,
+      rn(65) > 0.5 ? M_AWN : M_TARP, { deco: 'plain' });
     /* the ladder up the front face, ground to the finished storeys */
     var lfn = FN[fr], ldir = [-lfn[1], lfn[0]];
     var lox = lfn[0] * (w / 2 + 2.4) + ldir[0] * 6, loy = lfn[1] * (d / 2 + 2.4) + ldir[1] * 6;
@@ -1017,10 +1089,23 @@
     for (rz2 = 2.4; rz2 < mh + 1.6; rz2 += 3.1) {
       strut(V, lox - ldir[0] * 0.9, loy - ldir[1] * 0.9, rz2, lox + ldir[0] * 0.9, loy + ldir[1] * 0.9, rz2, 0.22, M_WOOD);
     }
-    /* netting over the face that catches the light */
-    V.push({ k: 'n', x: 0, y: 0, w: w + 3.6, d: d + 3.6, z0: mh, z1: h + 3, m: M_DARK, front: (fr + 1) & 3 });
+    /* a third of the sites are wrapped in sheeting instead of netting: the
+       big pale (or canvas-brown) planes are what break the cage rhythm in
+       a wide street of scaffolds */
+    var wrap = rn(41) > 0.62;
+    V.push({ k: 'n', x: 0, y: 0, w: w + 3.6, d: d + 3.6, z0: mh, z1: h + 3, m: M_DARK,
+      front: (fr + 1) & 3, sheet: wrap ? (rn(42) > 0.5 ? 1 : 2) : 0 });
+    if (wrap && rn(43) > 0.45) {
+      V.push({ k: 'n', x: 0, y: 0, w: w + 3.6, d: d + 3.6, z0: mh, z1: h + 3, m: M_DARK,
+        front: (fr + 3) & 3, sheet: rn(44) > 0.5 ? 1 : 2 });
+    }
     if (r.tier >= 3) {
-      var cx = w / 2 + 6, cy = -d / 2 - 6, ch = h + 34 + rn(7) * 16;
+      /* the crane stands on a hash-picked corner and swings a hash-picked
+         way, half-height on the smaller sites: no two skylines of jibs match */
+      var ccs = rn(45) > 0.5 ? 1 : -1, csn = rn(46) > 0.5 ? 1 : -1;
+      var cx = (w / 2 + 6) * ccs, cy = (-d / 2 - 6) * csn, ch = h + 22 + rn(7) * 28;
+      var ja = rn(47) * TAU;
+      var jux = cos(ja), juy = sin(ja);
       strut(V, cx - 2, cy - 2, 0, cx - 2, cy - 2, ch, 0.75, M_STEEL);
       strut(V, cx + 2, cy - 2, 0, cx + 2, cy - 2, ch, 0.75, M_STEEL);
       strut(V, cx - 2, cy + 2, 0, cx - 2, cy + 2, ch, 0.75, M_STEEL);
@@ -1032,12 +1117,13 @@
       }
       /* the jib overhangs the site by a few lots, never a whole district */
       var jl = Math.min(w * 0.9 + 16, 44);
-      strut(V, cx, cy, ch, cx - jl, cy + jl * 0.35, ch + 2, 0.85, M_AWN);
-      strut(V, cx, cy, ch, cx + 14, cy - 5, ch + 1, 0.75, M_AWN);
-      box(V, cx + 15, cy - 5.4, 5, 4, ch - 2.6, ch + 1.6, M_DARK, { deco: 'plain' });
-      strut(V, cx, cy, ch + 9, cx - jl * 0.9, cy + jl * 0.32, ch + 2, 0.28, M_STEEL);
-      strut(V, cx - jl * 0.62, cy + jl * 0.22, ch + 1.5, cx - jl * 0.62, cy + jl * 0.22, mh + 6, 0.22, M_STEEL);
-      box(V, cx - jl * 0.62, cy + jl * 0.22, 3.4, 2.6, mh + 2.4, mh + 6, M_STEEL, { deco: 'plain' });
+      strut(V, cx, cy, ch, cx + jux * jl, cy + juy * jl, ch + 2, 0.85, M_AWN);
+      strut(V, cx, cy, ch, cx - jux * 14.8, cy - juy * 14.8, ch + 1, 0.75, M_AWN);
+      box(V, cx - jux * 15.6, cy - juy * 15.6, 5, 4, ch - 2.6, ch + 1.6, M_DARK, { deco: 'plain' });
+      strut(V, cx, cy, ch + 9, cx + jux * jl * 0.9, cy + juy * jl * 0.9, ch + 2, 0.28, M_STEEL);
+      strut(V, cx + jux * jl * 0.62, cy + juy * jl * 0.62, ch + 1.5,
+        cx + jux * jl * 0.62, cy + juy * jl * 0.62, mh + 6, 0.22, M_STEEL);
+      box(V, cx + jux * jl * 0.62, cy + juy * jl * 0.62, 3.4, 2.6, mh + 2.4, mh + 6, M_STEEL, { deco: 'plain' });
       strut(V, cx, cy, ch + 9, cx, cy, ch + 11.5, 0.5, M_STEEL);
     }
     return V;
@@ -1181,7 +1267,7 @@
           }
           /* how essential this piece is, so distance can drop the fine work */
           if (p.k === 'm') p.lvl = 2;
-          else if (p.k === 't') p.lvl = v.kind === 'tree' ? 0 : 2;
+          else if (p.k === 't') p.lvl = v.kind === 'tree' ? 0 : v.kind === 'shrub' ? 1 : 2;
           else if (p.k === 'c') p.lvl = v.r > 3 ? 1 : 2;
           else if (p.k === 'f' || p.k === 'n') p.lvl = 1;
           else if (p.k === 'b') {
@@ -1278,6 +1364,49 @@
         }
       }
 
+      /* planters and the odd bench out on the open esplanade, so the
+         pavement between the cores is furnished, never a bare pour */
+      if (dd.gx0 !== undefined) {
+        var elx0 = gpos(dd.gx0) - P * 0.2, elx1 = gpos(dd.gx1 + 1) + P * 0.2;
+        var ely0 = gpos(dd.gy0) - P * 0.2, ely1 = gpos(dd.gy1 + 1) + P * 0.2;
+        var inStreetE = function (v, g0, g1) {
+          var kk;
+          for (kk = Math.ceil(g0 / 4); kk * 4 <= g1 + 1; kk++) {
+            var s0 = gpos(4 * kk) - SW;
+            if (v > s0 - 3.4 && v < s0 + SW + 3.4) return true;
+          }
+          return false;
+        };
+        var prE = dd.plaza && dd.plaza.r >= 1 ? dd.plaza.r : 0;
+        var pz0 = prE ? gpos(-prE) - 4 : 0, pz1 = prE ? gpos(prE) + P + 4 : 0;
+        var hpd = hash32('plnt' + di), got = 0, at2, keptE = [];
+        for (at2 = 0; at2 < 30 && got < 7; at2++) {
+          var lxp = elx0 + rnd01(hpd, at2 * 2) * (elx1 - elx0);
+          var lyp = ely0 + rnd01(hpd, at2 * 2 + 1) * (ely1 - ely0);
+          if (inStreetE(lxp, dd.gx0, dd.gx1) || inStreetE(lyp, dd.gy0, dd.gy1)) continue;
+          if (prE && lxp > pz0 && lxp < pz1 && lyp > pz0 && lyp < pz1) continue;
+          var hitE = false, li2;
+          for (li2 = 0; li2 < dd.lots.length; li2++) {
+            var lo2 = dd.lots[li2];
+            if (abs(lxp - lo2.x) < lo2.sw * P / 2 + 6 && abs(lyp - lo2.y) < lo2.sd * P / 2 + 6) { hitE = true; break; }
+          }
+          if (hitE) continue;
+          for (li2 = 0; li2 < keptE.length; li2++) {
+            if (abs(lxp - keptE[li2][0]) < 16 && abs(lyp - keptE[li2][1]) < 16) { hitE = true; break; }
+          }
+          if (hitE) continue;
+          keptE.push([lxp, lyp]);
+          var wpE = toW(lxp, lyp);
+          add({ k: 'plnt', x: wpE[0], y: wpE[1], yaw: dd.rot * PI / 180 + (at2 % 2) * PI / 2,
+                v: at2 % 3 === 0 ? 1 : 0 });
+          if (rnd01(hpd, at2 + 61) > 0.6) {
+            var bwE = toW(lxp + (at2 % 2 ? 7 : 0), lyp + (at2 % 2 ? 0 : 7));
+            add({ k: 'bench', x: bwE[0], y: bwE[1], yaw: dd.rot * PI / 180 + (at2 % 2 ? PI / 2 : 0) });
+          }
+          got++;
+        }
+      }
+
       /* street furniture around every lot that fronts a street */
       dd.lots.forEach(function (lot, li) {
         var r = rec[lot.slug];
@@ -1357,7 +1486,7 @@
     for (bi2 = 0; bi2 < 14; bi2++) {
       var hb = hash32('bird' + bi2);
       var ang = rnd01(hb, 1) * TAU, rad = bounds.r * (0.15 + rnd01(hb, 2) * 0.6);
-      props.push({ k: 'bird', x: bounds.cx + cos(ang) * rad, y: bounds.cy + sin(ang) * rad,
+      birds.push({ k: 'bird', x: bounds.cx + cos(ang) * rad, y: bounds.cy + sin(ang) * rad,
         z: 120 + rnd01(hb, 3) * 190, s: 3.4 + rnd01(hb, 4) * 3, ph: rnd01(hb, 5) * TAU });
     }
     /* gulls low over the river, and one rowboat drifting on it */
@@ -1366,7 +1495,7 @@
       for (gi = 0; gi < 10; gi++) {
         var hg = hash32('gull' + gi);
         var rp = river.pts[Math.floor(rnd01(hg, 1) * (river.pts.length - 1))];
-        props.push({ k: 'bird', x: rp.x + (rnd01(hg, 2) - 0.5) * 44, y: rp.y + (rnd01(hg, 3) - 0.5) * 44,
+        birds.push({ k: 'bird', x: rp.x + (rnd01(hg, 2) - 0.5) * 44, y: rp.y + (rnd01(hg, 3) - 0.5) * 44,
           z: 16 + rnd01(hg, 4) * 42, s: 2.0 + rnd01(hg, 5) * 1.5, ph: rnd01(hg, 6) * TAU });
       }
       var bmid = river.pts[river.pts.length >> 1];
@@ -1391,6 +1520,55 @@
       grd.addColorStop(t, rgbas(col, (a0 * Math.pow(1 - t, pow || 2)).toFixed(4)));
     }
     g.fillStyle = grd; g.fillRect(0, 0, S, S);
+    return c;
+  }
+  /* the tooth of a rendered wall for the macro lens: fine per-pixel grain
+     with slower blotches riding under it, neutral grey so it works as an
+     overlay on any material. Screen-space, repainted with the world. */
+  function stuccoTile() {
+    var S = 144, c = document.createElement('canvas');
+    c.width = S; c.height = S;
+    var g = c.getContext('2d'), im = g.createImageData(S, S), dt = im.data, i;
+    var seed = 4133, x, y;
+    var coarse = [];
+    for (i = 0; i < 19 * 19; i++) {
+      seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+      coarse.push(((seed >> 11) % 100) / 100 - 0.5);
+    }
+    for (y = 0; y < S; y++) for (x = 0; x < S; x++) {
+      seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+      var fine = ((seed >> 12) % 100) / 100 - 0.5;
+      /* bilinear read of the coarse lattice, wrapped, so the tile seams */
+      var cx = (x / S) * 18, cy = (y / S) * 18;
+      var x0 = cx | 0, y0 = cy | 0, fx = cx - x0, fy = cy - y0;
+      var c00 = coarse[(y0 % 18) * 19 + (x0 % 18)], c10 = coarse[(y0 % 18) * 19 + ((x0 + 1) % 18)];
+      var c01 = coarse[((y0 + 1) % 18) * 19 + (x0 % 18)], c11 = coarse[((y0 + 1) % 18) * 19 + ((x0 + 1) % 18)];
+      var blotch = (c00 * (1 - fx) + c10 * fx) * (1 - fy) + (c01 * (1 - fx) + c11 * fx) * fy;
+      var v = Math.round(128 + fine * 34 + blotch * 30);
+      i = (y * S + x) * 4;
+      dt[i] = v; dt[i + 1] = v; dt[i + 2] = v; dt[i + 3] = 255;
+    }
+    g.putImageData(im, 0, 0);
+    return c;
+  }
+  /* a copy of a sprite with a checkerboard of holes: the screen-door
+     dissolve a near-camera canopy takes instead of going ghost */
+  function ditherize(src, cell, keep) {
+    var c = document.createElement('canvas');
+    c.width = src.width; c.height = src.height;
+    var g = c.getContext('2d');
+    g.drawImage(src, 0, 0);
+    g.globalCompositeOperation = 'destination-out';
+    g.fillStyle = '#000';
+    var x, y, k = 0;
+    for (y = 0; y < c.height; y += cell) {
+      for (x = 0; x < c.width; x += cell) {
+        k = ((x / cell) + (y / cell)) & 3;
+        /* keep=2 drops half the cells, keep=1 drops three quarters */
+        if (k >= keep) g.fillRect(x, y, cell, cell);
+      }
+    }
+    g.globalCompositeOperation = 'source-over';
     return c;
   }
   function grainTile() {
@@ -1521,6 +1699,13 @@
     SPR.smoke     = smokeSprite();
     SPR.grain     = grainTile();
     SPR.grainPat  = ctx.createPattern(SPR.grain, 'repeat');
+    SPR.stucco    = stuccoTile();
+    SPR.stuccoPat = ctx.createPattern(SPR.stucco, 'repeat');
+    /* the two steps of the near-tree screen-door dissolve */
+    SPR.canopyD2    = ditherize(SPR.canopy, 3, 2);
+    SPR.canopyD1    = ditherize(SPR.canopy, 3, 1);
+    SPR.canopyLitD2 = ditherize(SPR.canopyLit, 3, 2);
+    SPR.canopyLitD1 = ditherize(SPR.canopyLit, 3, 1);
 
     SPR.paperTile = planeTile(C.paper, mix(C.paper, [255, 255, 255], 0.5),
       mix(C.paperLo, C.print, 0.25), 0.7, 0.28);
@@ -1557,7 +1742,9 @@
     if (bx0 > bx1) { bx0 = bounds.cx - bounds.r; bx1 = bounds.cx + bounds.r; by0 = bounds.cy - bounds.r; by1 = bounds.cy + bounds.r; }
     var r = Math.max(bx1 - bx0, by1 - by0) / 2, mx = r * 0.26;
     var x0 = bx0 - mx * 0.62, x1 = bx1 + mx * 0.62;
-    var y0 = by0 - mx * 1.85, y1 = by1 + mx * 0.55;
+    /* the title band is a margin, not a second subject: keep it tight so
+       the city, not blank paper, fills the home frame */
+    var y0 = by0 - mx * 1.32, y1 = by1 + mx * 0.55;
     var W0 = x1 - x0, H0 = y1 - y0;
 
     /* the deckle: a torn edge, coarse waves under a fine tooth, with two
@@ -1647,8 +1834,8 @@
       title: 'Strapi Documentation',
       sub: order.length + ' pages · ' + nfmt(G.edges.length) + ' citations · ' +
         COM.length + ' measured districts · v' + B.version,
-      tx: x0 + marg, ty: y0 + mx * 0.60, tsize: mx * 0.50,
-      sx: x0 + marg + 2, sy: y0 + mx * 0.30, ssize: mx * 0.105
+      tx: x0 + marg, ty: y0 + mx * 1.12, tsize: mx * 0.46,
+      sx: x0 + marg + 2, sy: y0 + mx * 0.82, ssize: mx * 0.105
     };
 
     /* the model-maker's tools, laid on the table beside the torn edge: an
@@ -1695,18 +1882,32 @@
   var cam = { az: 0.7, el: 0.227, dist: 900, tx: 0, ty: 0, fov: 0.78 };
   var camT = { az: 0.7, el: 0.227, dist: 900, tx: 0, ty: 0 };
   var HOME = null;
+  var coldArrival = false;      /* true when the visitor arrived with no hash */
   var fly = null;
   var W = 0, H = 0, DPR = 1, FOC = 1, PCX = 0, PCY = 0, HORY = 0;
+  var CTS = 1;   /* transform scale of whichever canvas is being painted */
+  var OA = 1;    /* alpha of the sprite being painted: occlusion fade on agents */
+  var wRS = 1;   /* backing resolution of the world canvas (reduced while moving) */
+  var MQ = false; /* motion quality: the world is being painted mid-pan */
+  var INWORLD = false; /* true while the world pass is painting */
   var eye = [0, 0, 0], fwd = [0, 0, 0], rgt = [0, 0, 0], upv = [0, 0, 0];
   var sunSX = 0, sunSY = 0, sunAhead = false, SE = 0, CE = 1;
 
+  var HUDH = 0;   /* height of the info band overlaying the canvas foot */
   function resize() {
     var r = worldEl.getBoundingClientRect();
+    var hudEl = $('#hud');
+    HUDH = hudEl ? hudEl.offsetHeight : 0;
     DPR = Math.min(window.devicePixelRatio || 1, 1.4);
     W = Math.max(2, Math.round(r.width)); H = Math.max(2, Math.round(r.height));
-    cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+    /* the world canvas backing store carries the current LOD resolution;
+       the overlay (the living layer) is always full resolution */
+    cv.width = Math.round(W * DPR * wRS); cv.height = Math.round(H * DPR * wRS);
     cv.style.width = W + 'px'; cv.style.height = H + 'px';
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    if (ovCv) {
+      ovCv.width = Math.round(W * DPR); ovCv.height = Math.round(H * DPR);
+      ovCv.style.width = W + 'px'; ovCv.style.height = H + 'px';
+    }
     skyKey = '';
     if (paper && typeof fitHome === 'function') fitHome();
   }
@@ -1721,8 +1922,13 @@
     rgt[0] = -sa; rgt[1] = ca; rgt[2] = 0;
     upv[0] = -ca * se; upv[1] = -sa * se; upv[2] = ce;
     FOC = (H / 2) / Math.tan(cam.fov / 2);
-    HZ_NEAR = cam.dist * 0.22;
-    HZ_FAR = clamp(cam.dist * 3.1, 900, 12000);
+    /* Down among the streets this is a macro photograph: the near and mid
+       field stay crisp and only the true distance takes the golden air.
+       The lower the camera, the further out the haze begins. */
+    var elL = 1 - clamp((cam.el - 0.30) / 0.25, 0, 1);   /* 1 at street level */
+    elL *= clamp((840 - cam.dist) / 320, 0, 1);          /* a street effect only */
+    HZ_NEAR = cam.dist * (0.22 + 0.55 * elL);
+    HZ_FAR = clamp(cam.dist * (3.1 + 2.3 * elL), 900, 14000);
     HZF = 1 - 0.62 * clamp((cam.el - 0.32) / 0.38, 0, 1);
     PCX = W / 2;
     /* Where the look-at point sits in frame. Down low this is a street
@@ -1775,6 +1981,14 @@
   [ '#C3462F', '#3F7F86', '#D89A3C' ].forEach(function (h, i) {
     MX[M_STALL0 + i] = { base: h, k: 0.50 };
   });
+  /* skin, for the citizens' heads once the camera is close enough to see
+     that a person is not a crate with a lid */
+  var M_SKIN = MX.length;
+  MX.push({ base: '#C9A183', k: 0.34 });
+  /* the transit livery: one saturated viridian for every car on the network,
+     a colour no wall in the city wears, so a tram is findable at a glance */
+  var M_LIV = MX.length;
+  MX.push({ base: '#17696B', k: 0.14 });   /* lacquer keeps its hue in the sun */
   var MBASE = MX.map(function (m) { return hx(m.base); });
   var MK = MX.map(function (m) { return m.k; });
   /* six colourways of each archetype: the three swatches, plus a sunned, a
@@ -1873,7 +2087,13 @@
 
   var skyC = null, skyX = null;
   function drawSky() {
-    var key = Math.round(HORY / 5) + '|' + Math.round(sunSX / 9) + '|' + Math.round(sunSY / 9) + '|' + W + 'x' + H;
+    /* mid-pan the cached sky refreshes on a coarser quantum: the horizon
+       band is soft, so a stale boundary of ~20px hides inside it, and the
+       full-screen gradient repaint stops eating the motion budget */
+    /* with the horizon far above the frame only the gradient anchor moves,
+       and a stale anchor is invisible: the refresh can be far coarser */
+    var qh = MQ ? (HORY < -40 ? 220 : 30) : 5, qs = MQ ? Math.max(60, W * 0.25) : 9;
+    var key = Math.round(HORY / qh) + '|' + Math.round(sunSX / qs) + '|' + Math.round(sunSY / qs) + '|' + W + 'x' + H;
     if (key !== skyKey) {
       skyKey = key;
       var top = Math.min(HORY, H);
@@ -1885,13 +2105,16 @@
       g.addColorStop(1.00, rgbs(mix(C.skyLo, C.sun, 0.30)));
       skyGrad = g;
 
-      /* below the horizon is not more city: it is the table the page lies on */
+      /* below the horizon is not more city: it is the table the page lies
+         on — and near the horizon it swims in the same golden air as the
+         sky, so the far tabletop reads as warm bokeh, never as a band of
+         dark chocolate under the picture */
       var g2 = ctx.createLinearGradient(0, top, 0, H);
-      g2.addColorStop(0.00, rgbs(mix(C.haze, C.tableHi, 0.40)));
-      g2.addColorStop(0.12, rgbs(mix(C.tableHi, C.haze, 0.44)));
-      g2.addColorStop(0.32, rgbs(mix(C.tableHi, C.sun, 0.06)));
-      g2.addColorStop(0.62, rgbs(mix(C.table, C.tableHi, 0.34)));
-      g2.addColorStop(1.00, rgbs(mix(C.table, C.ink, 0.42)));
+      g2.addColorStop(0.00, rgbs(mix(C.haze, C.tableHi, 0.26)));
+      g2.addColorStop(0.14, rgbs(mix(mix(C.tableHi, C.haze, 0.52), C.sun, 0.10)));
+      g2.addColorStop(0.34, rgbs(mix(mix(C.tableHi, C.sun, 0.13), C.haze, 0.18)));
+      g2.addColorStop(0.62, rgbs(mix(C.table, C.tableHi, 0.52)));
+      g2.addColorStop(1.00, rgbs(mix(C.table, C.ink, 0.24)));
       gndGrad = g2;
 
       var hb0 = top - H * 0.11, hb1 = top + H * 0.16;
@@ -1909,9 +2132,13 @@
       vigGrad = g4;
 
       if (!skyC) { skyC = document.createElement('canvas'); skyX = skyC.getContext('2d', { alpha: false }); }
-      if (skyC.width !== W || skyC.height !== H) { skyC.width = W; skyC.height = H; }
+      /* the cache is half resolution: it holds nothing but smooth gradients
+         and one soft sun, so the upscale is invisible and the refresh that
+         used to spike the pan budget costs a quarter of what it did */
+      var sw2 = Math.max(2, Math.ceil(W / 2)), sh2 = Math.max(2, Math.ceil(H / 2));
+      if (skyC.width !== sw2 || skyC.height !== sh2) { skyC.width = sw2; skyC.height = sh2; }
       var x = skyX;
-      x.setTransform(1, 0, 0, 1, 0, 0);
+      x.setTransform(0.5, 0, 0, 0.5, 0, 0);
       x.globalCompositeOperation = 'source-over'; x.globalAlpha = 1;
       x.fillStyle = skyGrad; x.fillRect(0, 0, W, Math.max(0, Math.min(HORY, H)));
       if (HORY < H) { x.fillStyle = gndGrad; x.fillRect(0, Math.max(0, HORY), W, H - Math.max(0, HORY)); }
@@ -1927,14 +2154,14 @@
       }
       x.fillStyle = hazeGrad; x.fillRect(0, 0, W, H);
     }
-    ctx.drawImage(skyC, 0, 0);
+    ctx.drawImage(skyC, 0, 0, W, H);
   }
 
   function spriteAt(spr, x, y, rx, ry, a) {
     if (rx < 0.4 || ry < 0.4) return;
-    ctx.globalAlpha = a;
+    ctx.globalAlpha = a * OA;
     ctx.drawImage(spr, x - rx, y - ry, rx * 2, ry * 2);
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha = OA;
   }
   function groundSprite(spr, wx, wy, r, a, cap) {
     if (!proj(wx, wy, 0)) return;
@@ -1945,12 +2172,12 @@
     var area = abs(ux * vy - uy * vx);
     if (area < 0.8) return;
     if (cap && area > cap) return;
-    ctx.globalAlpha = a;
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.globalAlpha = a * OA;
+    ctx.setTransform(CTS, 0, 0, CTS, 0, 0);
     ctx.transform(ux, uy, vx, vy, ox, oy);
     ctx.drawImage(spr, -1, -1, 2, 2);
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    ctx.globalAlpha = 1;
+    ctx.setTransform(CTS, 0, 0, CTS, 0, 0);
+    ctx.globalAlpha = OA;
   }
 
   /* the ground plane, textured in true perspective: on a horizontal plane a
@@ -1975,6 +2202,12 @@
       /* the pattern dissolves with distance: at long range the strip seams
          beat against the plank tile and the table reads as scanlines */
       if (d > 2400) a2 *= clamp(1 - (d - 2400) / 2400, 0, 1);
+      /* and it dissolves with grazing-angle compression: when one screen
+         pixel row spans more than a grain streak's width of table, the
+         plank seams alias into hard horizontal banding. A camera cannot
+         resolve texture there; neither should we. */
+      var dpp = d * CE / (FOC * den);                /* world units per px row */
+      if (dpp > 0.8) a2 *= clamp(1 - (dpp - 0.8) / 1.6, 0, 1);
       if (a2 < 0.02) continue;
       var kf = FOC / d;
       var A = kf * rgt[0], Bc = -kf * upv[0], Cc = kf * rgt[1], Dc = -kf * upv[1];
@@ -1986,7 +2219,7 @@
       var span = d * (W / FOC) * 1.1 + d * ((yb - ya) / FOC) * 2 + 40;
       ctx.save();
       ctx.beginPath(); ctx.rect(0, ya, W, yb - ya); ctx.clip();
-      ctx.setTransform(DPR * A, DPR * Bc, DPR * Cc, DPR * Dc, DPR * E, DPR * F2);
+      ctx.setTransform(CTS * A, CTS * Bc, CTS * Cc, CTS * Dc, CTS * E, CTS * F2);
       ctx.globalAlpha = a2;
       ctx.fillStyle = pat;
       ctx.fillRect(gx - span, gy - span, span * 2, span * 2);
@@ -1998,7 +2231,7 @@
       ctx.restore();
       GSTRIPS++;
     }
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.setTransform(CTS, 0, 0, CTS, 0, 0);
     ctx.globalAlpha = 1;
   }
 
@@ -2146,7 +2379,7 @@
       if (ln.kind === 'rule') continue;
       drawnText++;
       ctx.save();
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      ctx.setTransform(CTS, 0, 0, CTS, 0, 0);
       ctx.transform(uX, uY, vX, vY, sx, sy);
       var k = ln.size / 100;
       ctx.scale(k, k);
@@ -2157,7 +2390,7 @@
         : '100px "Source Serif 4", Georgia, serif');
       ctx.fillText(ln.s, 0, 0);
       ctx.restore();
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      ctx.setTransform(CTS, 0, 0, CTS, 0, 0);
       ctx.globalAlpha = 1;
     }
     if (bars) {
@@ -2191,14 +2424,14 @@
               if (proj(wx + adv, wy - 100, 0)) {
                 var vX = (px - ox) / 100, vY = (py - oy) / 100;
                 ctx.save();
-                ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+                ctx.setTransform(CTS, 0, 0, CTS, 0, 0);
                 ctx.transform(uX, uY, vX, vY, ox, oy);
                 ctx.scale(scale, scale);
                 ctx.fillStyle = col;
                 ctx.font = font;
                 ctx.fillText(ch, 0, 0);
                 ctx.restore();
-                ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+                ctx.setTransform(CTS, 0, 0, CTS, 0, 0);
               }
             }
           }
@@ -2209,12 +2442,24 @@
   }
 
   function drawGroundDetail() {
-    var i;
+    var i, j;
     for (i = 0; i < dists.length; i++) {
       var q = dists[i];
       var dq = depthOf(q.x, q.y, 0);
       if (dq < 20) continue;
-      groundSprite(SPR.paving, q.x, q.y, q.r * 1.02, 0.30 * (1 - hazeAt(dq)));
+      var hzq = hazeAt(dq);
+      groundSprite(SPR.paving, q.x, q.y, q.r * 1.02, 0.30 * (1 - hzq));
+      /* wear blotches off-centre, so the big pavements are not one pour;
+         they sit the pans out like the other soft blits */
+      if (!softSkip() && (FOC / dq) * q.r > 130) {
+        var hq = hash32('blot' + i);
+        for (j = 0; j < 4; j++) {
+          var bx3 = q.x + (rnd01(hq, j * 2) - 0.5) * q.r * 1.3;
+          var by3 = q.y + (rnd01(hq, j * 2 + 1) - 0.5) * q.r * 1.3;
+          groundSprite(SPR.paving, bx3, by3, q.r * (0.22 + rnd01(hq, j + 9) * 0.2),
+            (j % 2 ? 0.10 : 0.14) * (1 - hzq));
+        }
+      }
     }
   }
 
@@ -2281,15 +2526,27 @@
       ctx.fillStyle = pave;
       for (k = 0; k < vx.length; k++) if (sgQuad(d, vx[k], ly0, vx[k] + SW, ly1)) ctx.fill();
       for (k = 0; k < vy.length; k++) if (sgQuad(d, lx0, vy[k], lx1, vy[k] + SW)) ctx.fill();
-      /* down at eye level the plate is slabs, not one pour: a sparse joint
-         grid, too faint to read from anywhere but the pavement */
-      if (scr > 700) {
+      /* the plate is slabs, not one pour: the joint grid arrives with the
+         mid zoom and firms up at eye level, so the esplanades between the
+         cores never read as a bare paper pour */
+      if (scr > 380) {
         ctx.beginPath();
         var jstep = P / 2, jt;
         for (jt = lx0 + jstep; jt < lx1; jt += jstep) sgLine(d, jt, ly0, jt, ly1);
         for (jt = ly0 + jstep; jt < ly1; jt += jstep) sgLine(d, lx0, jt, lx1, jt);
-        ctx.strokeStyle = rgbas(mix(C.print, C.haze, hz), 0.11);
+        ctx.strokeStyle = rgbas(mix(C.print, C.haze, hz), scr > 1300 ? 0.22 : scr > 700 ? 0.17 : 0.10);
         ctx.lineWidth = Math.max(0.4, 0.35 * (FOC / dq));
+        ctx.stroke();
+      }
+      /* and a fine cross-joint once the pavement fills the frame: every
+         slab quartered, the way street pavers actually run */
+      if (scr > 900) {
+        ctx.beginPath();
+        var fstep = P / 4, ft;
+        for (ft = lx0 + fstep; ft < lx1; ft += fstep * 2) sgLine(d, ft, ly0, ft, ly1);
+        for (ft = ly0 + fstep; ft < ly1; ft += fstep * 2) sgLine(d, lx0, ft, lx1, ft);
+        ctx.strokeStyle = rgbas(mix(C.print, C.haze, hz), scr > 1600 ? 0.11 : 0.07);
+        ctx.lineWidth = Math.max(0.4, 0.22 * (FOC / dq));
         ctx.stroke();
       }
       /* kerb lines along both edges of each street */
@@ -2351,6 +2608,42 @@
           ctx.stroke();
         }
       }
+    }
+  }
+
+  /* NEAR ground tooth: down at eye level the apron in front of the camera
+     is macro subject matter, not margin. The paper grain doubles over the
+     near ground band, and hash-anchored wear blotches pool around the
+     camera cell, so the foreground reads as pavement with tooth rather
+     than one clean pour. Full-quality street paints only. */
+  function drawNearTooth() {
+    if (LOD !== 0 || MQ) return;
+    if (SPR.grainPat) {
+      var gy = Math.max(HORY + (H - HORY) * 0.30, H * 0.26);
+      ctx.globalCompositeOperation = 'overlay';
+      ctx.globalAlpha = 0.12;
+      ctx.fillStyle = SPR.grainPat;
+      ctx.fillRect(0, gy, W, H - gy);
+      var gy2 = Math.max(gy, H * 0.60);
+      ctx.globalAlpha = 0.17;
+      ctx.fillRect(0, gy2, W, H - gy2);
+      /* and a coarser mottle, the render coat of the pavement itself */
+      ctx.fillStyle = SPR.stuccoPat;
+      ctx.globalAlpha = 0.16;
+      ctx.fillRect(0, gy2, W, H - gy2);
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    /* wear pools, stable while the camera stands in its cell */
+    var hq2 = hash32('apron' + Math.round(cam.tx / 48) + ':' + Math.round(cam.ty / 48));
+    var j2;
+    for (j2 = 0; j2 < 9; j2++) {
+      var wx2 = cam.tx + (rnd01(hq2, j2 * 2) - 0.5) * 170;
+      var wy2 = cam.ty + (rnd01(hq2, j2 * 2 + 1) - 0.5) * 170;
+      var dq2 = depthOf(wx2, wy2, 0);
+      if (dq2 < 24) continue;
+      groundSprite(SPR.paving, wx2, wy2, 14 + rnd01(hq2, j2 + 20) * 26,
+        (j2 % 2 ? 0.10 : 0.15) * (1 - hazeAt(dq2)));
     }
   }
 
@@ -2426,7 +2719,7 @@
       if (dq < 20) continue;
       var w2 = 15 + 26 * (q.t || 0);
       /* the sparkle breathes: each bend catches the sun in its own phase */
-      var tw = 0.72 + 0.28 * sin(TNOW * 0.0016 + i * 1.7);
+      var tw = 0.72 + 0.28 * sin(LT * 0.0016 + i * 1.7);
       groundSprite(SPR.glow, q.x, q.y, w2 * 1.7, 0.20 * (1 - hazeAt(dq) * 0.7));
       groundSprite(SPR.glint, q.x + sunGnd[0] * 3, q.y + sunGnd[1] * 3, w2 * 0.5,
         0.15 * tw * (1 - hazeAt(dq)));
@@ -2606,7 +2899,7 @@
     /* the ground takes the building. A big soft blit is expensive, so it is
        only worth it where the contact actually reads. */
     var fsz = foot * (FOC / r._d);
-    if (fsz > 2.6 && fsz < 420) {
+    if (fsz > 2.6 && fsz < 420 && !softSkip()) {
       groundSprite(SPR.ao, r.wx, r.wy, foot * 1.5, 0.30 * (1 - hz));
       if (fsz < 120) {
         groundSprite(SPR.shadow, r.wx - sunGnd[0] * foot * 0.5, r.wy - sunGnd[1] * foot * 0.5,
@@ -2783,6 +3076,19 @@
     }
     if (r.hit.length < 16 && wpx > 2.2 && hpx > 2.2) r.hit.push([ax, ay, bx, by, cx2, cy2, dx2, dy2]);
 
+    /* the macro-lens pass: at street range a wall is a material, not a
+       colour. Grain, weathering streaks, rising damp and corner shade go
+       under the joinery; only full-quality paints ever pay for it. */
+    if (lod && !MQ && !jag && hpx > 46 && wpx > 20 && r._d < 760) {
+      faceDetail(r, b, m, v, tB, hB, j, ax, ay, bx, by, cx2, cy2, dx2, dy2, dot);
+    }
+    /* a glazed volume (shopfront box, glasshouse, pavilion) is a sheet of
+       glass the size of a wall: at macro range it takes the same sky-fall
+       and sheen the pane bands take, or it reads as blank card */
+    if (lod && !MQ && m === M_GLASS && !jag && hpx > 26 && wpx > 18 && r._d < 700) {
+      glassFaceSheen(r, j, ax, ay, bx, by, cx2, cy2, dx2, dy2);
+    }
+
     if (!lod || hpx < 12 || wpx < 6 || deco === 'plain') return;
     var fh = Fo.hz, fw = Fo.fw;
     var lite = b.lit || 0;
@@ -2806,6 +3112,117 @@
     if (b.clock === j && hpx > 40) drawClock(r, b, hB, fw, fh);
   }
 
+
+  /* the sky falling down a glass face, and the low sun's sheen streak:
+     applied straight onto M_GLASS quads, clipped to the face */
+  function glassFaceSheen(r, j, ax, ay, bx, by, cx2, cy2, dx2, dy2) {
+    var kk = clamp(1 - (r._d - 150) / 550, 0, 1);
+    if (kk < 0.08) return;
+    DIAG.gfN = (DIAG.gfN || 0) + 1;
+    var h32 = (r.h32 ^ (j * 40503)) >>> 0;
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.lineTo(cx2, cy2); ctx.lineTo(dx2, dy2);
+    ctx.closePath();
+    ctx.clip();
+    var tmx = (cx2 + dx2) / 2, tmy = (cy2 + dy2) / 2;
+    var bmx = (ax + bx) / 2, bmy = (ay + by) / 2;
+    var g2 = ctx.createLinearGradient(tmx, tmy, bmx, bmy);
+    g2.addColorStop(0, rgbas(mix(mix(C.skyLo, [255, 255, 255], 0.5), C.sun, 0.22), 0.44 * kk));
+    g2.addColorStop(0.5, 'rgba(255,255,255,0)');
+    g2.addColorStop(1, rgbas(mix(C.shadow, hx('#39555C'), 0.5), 0.3 * kk));
+    ctx.fillStyle = g2;
+    ctx.fillRect(Math.min(ax, bx, cx2, dx2), Math.min(ay, by, cy2, dy2),
+      Math.abs(Math.max(ax, bx, cx2, dx2) - Math.min(ax, bx, cx2, dx2)),
+      Math.abs(Math.max(ay, by, cy2, dy2) - Math.min(ay, by, cy2, dy2)));
+    /* the sheen: one or two bright diagonals, bilinear in the quad */
+    var qx = function (u, w) { return (1 - w) * ((1 - u) * ax + u * bx) + w * ((1 - u) * dx2 + u * cx2); };
+    var qy = function (u, w) { return (1 - w) * ((1 - u) * ay + u * by) + w * ((1 - u) * dy2 + u * cy2); };
+    var wpx2 = Math.hypot(bx - ax, by - ay);
+    var ns = wpx2 > 150 ? 2 : 1, i;
+    ctx.beginPath();
+    for (i = 0; i < ns; i++) {
+      var us = 0.08 + rnd01(h32, 161 + i * 9) * 0.55;
+      var wd = 0.06 + rnd01(h32, 166 + i * 9) * 0.08;
+      var sl2 = 0.14 + rnd01(h32, 171 + i * 9) * 0.18;
+      ctx.moveTo(qx(us, 0), qy(us, 0));
+      ctx.lineTo(qx(us + wd, 0), qy(us + wd, 0));
+      ctx.lineTo(qx(us + wd + sl2, 1), qy(us + wd + sl2, 1));
+      ctx.lineTo(qx(us + sl2, 1), qy(us + sl2, 1));
+      ctx.closePath();
+    }
+    ctx.fillStyle = 'rgba(255,248,232,1)';
+    ctx.globalAlpha = 0.2 * kk;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
+  /* The tactile skin of a near wall: stucco tooth, streaks bleeding down
+     from the weather line, damp rising off the pavement, shade pooling in
+     the corner away from the sun and under the eaves. All deterministic
+     from the building hash; strength fades out by dist 760 so the mid
+     field keeps its clean painted read. */
+  function faceDetail(r, b, m, v, tB, hB, j, ax, ay, bx, by, cx2, cy2, dx2, dy2, dot) {
+    var k = clamp(1 - (r._d - 190) / 570, 0, 1);
+    if (k < 0.05) return;
+    var h32 = (r.h32 ^ (j * 2654435761)) >>> 0;
+    var i, n;
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.lineTo(cx2, cy2); ctx.lineTo(dx2, dy2);
+    ctx.closePath();
+    ctx.clip();
+    /* the grain of the render coat */
+    var gx0 = Math.min(ax, bx, cx2, dx2), gx1 = Math.max(ax, bx, cx2, dx2);
+    var gy0 = Math.min(ay, by, cy2, dy2), gy1 = Math.max(ay, by, cy2, dy2);
+    ctx.globalCompositeOperation = 'overlay';
+    ctx.globalAlpha = 0.34 * k;
+    ctx.fillStyle = SPR.stuccoPat;
+    ctx.fillRect(gx0, gy0, gx1 - gx0, gy1 - gy0);
+    ctx.globalCompositeOperation = 'source-over';
+    /* weather streaks walking down the face from high anchors */
+    var shadeC = faceCol(m, v, Math.max(0, tB - 2), hB, 7);
+    n = clamp(Math.round(Fo.fw / 9), 2, 7);
+    ctx.beginPath();
+    for (i = 0; i < n; i++) {
+      var su = 0.06 + rnd01(h32, 11 + i) * 0.88;
+      var swd = 0.006 + rnd01(h32, 31 + i) * 0.014;
+      var st = 0.52 + rnd01(h32, 51 + i) * 0.42;
+      var sb = Math.max(0.04, st - 0.16 - rnd01(h32, 71 + i) * 0.34);
+      fq(su - swd, sb, su + swd, st);
+    }
+    ctx.fillStyle = shadeC;
+    ctx.globalAlpha = 0.15 * k; ctx.fill();
+    /* two pale lime bleeds among them */
+    ctx.beginPath();
+    for (i = 0; i < 2; i++) {
+      var pu = 0.12 + rnd01(h32, 91 + i) * 0.76;
+      var pw = 0.008 + rnd01(h32, 96 + i) * 0.012;
+      var pt = 0.42 + rnd01(h32, 101 + i) * 0.4;
+      fq(pu - pw, Math.max(0.03, pt - 0.3), pu + pw, pt);
+    }
+    ctx.fillStyle = faceCol(m, v, Math.min(8, tB + 3), hB, 5);
+    ctx.globalAlpha = 0.12 * k; ctx.fill();
+    /* rising damp: a low band, then two deeper blotches */
+    ctx.beginPath(); fq(0, 0, 1, 0.035 + rnd01(h32, 5) * 0.02);
+    ctx.fillStyle = shadeC; ctx.globalAlpha = 0.22 * k; ctx.fill();
+    ctx.beginPath();
+    for (i = 0; i < 2; i++) {
+      var bu = rnd01(h32, 121 + i) * 0.8;
+      fq(bu, 0, bu + 0.10 + rnd01(h32, 126 + i) * 0.14, 0.05 + rnd01(h32, 131 + i) * 0.045);
+    }
+    ctx.globalAlpha = 0.12 * k; ctx.fill();
+    /* the eaves keep a bruise of shade under the cornice */
+    ctx.beginPath(); fq(0, 0.955, 1, 1);
+    ctx.globalAlpha = 0.18 * k; ctx.fill();
+    /* corner shade on the jamb away from the sun */
+    ctx.beginPath();
+    if (dot >= 0) fq(0, 0, 0.035, 1); else fq(0.965, 0, 1, 1);
+    ctx.globalAlpha = 0.17 * k; ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
 
   /* A window is a hole in a wall: the jamb the sun crosses catches light, the
      other one is in shade, and there is a head shadow under the lintel. These
@@ -2874,12 +3291,15 @@
     if (kind === 'shop') {
       ctx.beginPath(); fq(0.04, g0 + 0.012, 0.96, g1 * 0.86); ctx.fillStyle = faceCol(m, v, tB, hB, 4); ctx.fill();
       var panes = Math.max(2, Math.round(fw / 5.2));
+      var shopR = [];
       ctx.beginPath();
       for (i = 0; i < panes; i++) {
         var u0 = 0.04 + (0.92) * (i + 0.10) / panes, u1 = 0.04 + (0.92) * (i + 0.90) / panes;
         fq(u0, g0 + 0.03, u1, g1 * 0.80);
+        shopR.push(u0, g0 + 0.03, u1, g1 * 0.80);
       }
       ctx.fillStyle = glassCol(m, v, tB, hB, 0.30); ctx.fill();
+      glassSheen(shopR, r.h32, hpx, r._d, 0);
       /* the doorway, on the side that faces the plaza */
       if (isFront) {
         ctx.beginPath(); fq(0.44, g0, 0.58, g1 * 0.94); ctx.fillStyle = faceCol(m, v, tB, hB, 7); ctx.fill();
@@ -2981,6 +3401,71 @@
     s = rgbs(g); palCache[key] = s; return s;
   }
 
+  /* At macro range a sheet of glass is never one flat tone: the peach sky
+     falls down the pane, the ground's shade rises to meet it, and the low
+     sun drags a bright sheen streak diagonally across the whole band.
+     Clipped to the glazing, full-quality paints on near faces only. */
+  function glassSheen(rects, h32, hpx, d, pitch) {
+    if (MQ || !rects.length) return;
+    var kk = clamp(1 - (d - 160) / 560, 0, 1);
+    if (kk < 0.08) return;
+    var u0 = 1e9, w0 = 1e9, u1 = -1e9, w1 = -1e9, i;
+    for (i = 0; i < rects.length; i += 4) {
+      if (rects[i] < u0) u0 = rects[i];
+      if (rects[i + 1] < w0) w0 = rects[i + 1];
+      if (rects[i + 2] > u1) u1 = rects[i + 2];
+      if (rects[i + 3] > w1) w1 = rects[i + 3];
+    }
+    var bandPx = (w1 - w0) * hpx;
+    DIAG.gsTry = (DIAG.gsTry || 0) + 1;
+    if (bandPx < 24) return;
+    DIAG.gsN = (DIAG.gsN || 0) + 1;
+    ctx.save();
+    ctx.beginPath();
+    for (i = 0; i < rects.length; i += 4) fq(rects[i], rects[i + 1], rects[i + 2], rects[i + 3]);
+    ctx.clip();
+    /* the sky falling down the pane, the shade rising off the street —
+       cycling per storey, so every glazed floor holds its own sky and a
+       single tall shopfront band still reads top-lit */
+    var um = (u0 + u1) / 2;
+    if (pf(um, w1)) {
+      var tx2 = px, ty2 = py;
+      if (pf(um, w0)) {
+        var g2 = ctx.createLinearGradient(tx2, ty2, px, py);
+        var nc = pitch > 0.004 ? clamp(Math.round((w1 - w0) / pitch), 1, 12) : 1;
+        var cLite = rgbas(mix(mix(C.skyLo, [255, 255, 255], 0.5), C.sun, 0.22), 0.5 * kk);
+        var cDark = rgbas(mix(C.shadow, hx('#39555C'), 0.5), 0.34 * kk);
+        var kq;
+        for (kq = 0; kq < nc; kq++) {
+          var t0 = kq / nc, t1 = (kq + 1) / nc;
+          g2.addColorStop(t0, cLite);
+          g2.addColorStop(t0 + (t1 - t0) * 0.5, 'rgba(255,255,255,0)');
+          g2.addColorStop(Math.min(1, t1 - 0.0001), cDark);
+        }
+        ctx.fillStyle = g2;
+        ctx.beginPath(); fq(u0, w0, u1, w1); ctx.fill();
+      }
+    }
+    /* the sheen streaks, hash-anchored so every shopfront leans its own way */
+    var ns = bandPx > 90 ? 2 : 1;
+    ctx.beginPath();
+    for (i = 0; i < ns; i++) {
+      var us = u0 + (0.08 + rnd01(h32, 141 + i * 7) * 0.58) * (u1 - u0);
+      var wd = (0.05 + rnd01(h32, 146 + i * 7) * 0.07) * (u1 - u0);
+      var sl2 = (0.14 + rnd01(h32, 151 + i * 7) * 0.16) * (u1 - u0);
+      if (!pf(us, w0)) continue; var x1 = px, y1 = py;
+      if (!pf(us + wd, w0)) continue; var x2 = px, y2 = py;
+      if (!pf(us + wd + sl2, w1)) continue; var x3 = px, y3 = py;
+      if (!pf(us + sl2, w1)) continue;
+      ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.lineTo(x3, y3); ctx.lineTo(px, py); ctx.closePath();
+    }
+    ctx.fillStyle = 'rgba(255,248,232,1)';
+    ctx.globalAlpha = 0.22 * kk;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
   /* modern block: shopfront, spandrels, ribbon glazing, balconies */
   function facadeCurtain(r, b, m, v, tB, hB, fw, fh, wpx, hpx, isFront, lite, dot, maxLvl) {
     var g1 = b.gf ? groundFloor(r, b, m, v, tB, hB, fw, fh, b.gf, isFront, hpx) : 0;
@@ -3028,6 +3513,7 @@
       }
     }
     fillRects(sl, glassCol(m, v, tB, hB, 0.3), 0.94);
+    if (hpx > 120) glassSheen(sl, r.h32, hpx, r._d, fs);
     fillRects(dl, darkGlassCol(hB), 0.92);
     fillRects(wl, litCol(hB), 0.88);
     fillRects(gl2, glintPaneCol(hB), 0.55);
@@ -3253,7 +3739,7 @@
        drawn only where an arch could be seen. Sixty-four factory fronts of
        blind 1px panes were the single largest cost of a wide street view. */
     var bayWpx = wpx * 0.54 / bays, bayHpx = flr * 0.51;
-    var arches = flr >= 14;
+    var arches = flr >= 14 && !MQ;
     ctx.beginPath();
     for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
       fq((i + 0.20) / bays, g1 + k * fs + fs * 0.14, (i + 0.80) / bays, g1 + (k + 1) * fs - fs * 0.30);
@@ -3269,7 +3755,8 @@
 
     /* the glazing, in small panes; a few whole bays stand dark, and the
        sun-facing ones flash back at this hour */
-    var pr = clamp(Math.round(bayHpx / 4.5), 1, 5), pc = clamp(Math.round(bayWpx / 5), 1, 3);
+    var pr = clamp(Math.round(bayHpx / (MQ ? 9 : 4.5)), 1, MQ ? 2 : 5),
+        pc = clamp(Math.round(bayWpx / (MQ ? 10 : 5)), 1, MQ ? 2 : 3);
     var skyG = [], drkG = [];
     for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
       var a0 = (i + 0.23) / bays, a1 = (i + 0.77) / bays;
@@ -3281,6 +3768,7 @@
       }
     }
     fillRects(skyG, glassCol(m, v, tB, hB, 0), 1);
+    if (hpx > 110) glassSheen(skyG, r.h32, hpx, r._d, fs);
     fillRects(drkG, darkGlassCol(hB), 0.9);
 
     var lite2 = Math.max(lite, 0.08);
@@ -3691,8 +4179,9 @@
     var scr = (f.z1 - f.z0) * (FOC / d);
     if (scr < 6) return;
     /* a cage two streets away is a hint, not a drawing: sixty-four of them
-       at full stroke was most of a blown frame budget on wide street views */
-    if (scr < 30) {
+       at full stroke was most of a blown frame budget on wide street views.
+       Mid-pan, or out of the detail budget, the hint reaches much closer. */
+    if (scr < (MQ ? 80 : quality ? 30 : 64)) {
       ctx.strokeStyle = faceCol(M_STEEL, 1, 5, hB, 2);
       ctx.lineWidth = Math.max(0.5, 1.1 * (FOC / d) * 0.7);
       ctx.beginPath();
@@ -3712,7 +4201,8 @@
       return;
     }
     var cols = clamp(Math.round(f.hw * 2 / 9), 2, 6);
-    if (scr < 80) { cols = Math.min(cols, 3); lifts = Math.min(lifts, 2); quality = false; }
+    if (scr < 110 || !quality) { cols = Math.min(cols, 3); lifts = Math.min(lifts, 2); quality = false; }
+    if (MQ) { cols = Math.min(cols, 2); lifts = Math.min(lifts, 2); quality = false; }
     var col = faceCol(M_STEEL, 1, 5, hB, 2);
     ctx.strokeStyle = col;
     ctx.lineWidth = Math.max(0.5, 1.1 * (FOC / d) * 0.7);
@@ -3800,6 +4290,27 @@
       }
       ctx.strokeStyle = faceCol(M_WOOD, 1, 2, hB, 3);
       ctx.lineWidth = 0.8; ctx.stroke();
+    } else if (nn.sheet) {
+      /* site sheeting: a near-opaque plane of canvas or pale membrane,
+         sagging tie lines across it, so a wrapped site reads as cloth */
+      ctx.fillStyle = nn.sheet === 1 ? faceCol(M_TARP, 1, 5, hB, 2)
+                                     : faceCol(M_RENDER, 1, 4, hB, 2);
+      ctx.globalAlpha = 0.86; ctx.fill();
+      ctx.globalAlpha = 1;
+      var k2, n2 = 4;
+      ctx.beginPath();
+      for (k2 = 1; k2 < n2; k2++) {
+        var t2 = k2 / n2, sag = (p1[1] - p0[1]) * 0.012 + 2.2;
+        ctx.moveTo(p0[0] + (p3[0] - p0[0]) * t2, p0[1] + (p3[1] - p0[1]) * t2);
+        ctx.quadraticCurveTo(
+          (p0[0] + p1[0]) / 2 + ((p3[0] + p2[0]) / 2 - (p0[0] + p1[0]) / 2) * t2,
+          p0[1] + (p3[1] - p0[1]) * t2 + sag,
+          p1[0] + (p2[0] - p1[0]) * t2, p1[1] + (p2[1] - p1[1]) * t2);
+      }
+      ctx.strokeStyle = faceCol(nn.sheet === 1 ? M_TARP : M_RENDER, 1, 2, hB, 6);
+      ctx.globalAlpha = 0.55;
+      ctx.lineWidth = 0.9; ctx.stroke();
+      ctx.globalAlpha = 1;
     } else {
       ctx.fillStyle = faceCol(M_DARK, 1, 5, hB, 2);
       ctx.globalAlpha = 0.34; ctx.fill();
@@ -3809,12 +4320,32 @@
     }
   }
 
+  /* Which sprites a canopy draws with. A foreground tree is a solid
+     subject, exactly as a macro photograph would hold it; one the camera
+     has walked into (or one that would swallow half the frame) is cut
+     away like a museum model, never left as a ghost. A slim screen-door
+     band between the two keeps a slow zoom from popping. */
+  function canopySet(d, R) {
+    if (!CANO_FULL[0]) canopyBind();
+    if (d < 55 || R > H * 0.52) return null;
+    if (d < 72 || R > H * 0.42) return CANO_D2;
+    return CANO_FULL;
+  }
+  var CANO_FULL = [null, null], CANO_D1 = [null, null], CANO_D2 = [null, null];
+  function canopyBind() {
+    CANO_FULL[0] = SPR.canopy; CANO_FULL[1] = SPR.canopyLit;
+    CANO_D1[0] = SPR.canopyD1; CANO_D1[1] = SPR.canopyLitD1;
+    CANO_D2[0] = SPR.canopyD2; CANO_D2[1] = SPR.canopyLitD2;
+  }
   function drawPlant(r, p, hz, quality) {
     if (!proj(p.cx, p.cy, p.z)) return;
     var sx = px, sy = py, s = pS;
     var R = p.r * s;
     if (R < 0.7) return;
     if (R > 220) R = 220;
+    /* mid-pan at reduced backing res the small soft blits lose their fast
+       path: little rooftop greens sit the pan out and return at the snap */
+    if (INWORLD && softSkip() && R < 4.6 && p.kind !== 'smoke') return;
     if (p.kind === 'smoke') {
       /* the plume leans with the shared wind: it rises straighter in a lull
          and streams out flatter in a gust, like every other soft thing */
@@ -3837,16 +4368,18 @@
        so a far quarter never reads as orphan trees on bare paper */
     var fade = hz > 0.55 ? clamp(1 - (hz - 0.55) / 0.32, 0, 1) : 1;
     if (fade < 0.04) return;
+    var cs = canopySet(p._d != null ? p._d : 999, R);
+    if (!cs) return;                    /* the camera is inside it: cut away */
     ctx.globalAlpha = (1 - hz * 0.55) * fade;
-    ctx.drawImage(SPR.canopy, sx - R, sy - R * 0.90, R * 2, R * 1.80);
+    ctx.drawImage(cs[0], sx - R, sy - R * 0.90, R * 2, R * 1.80);
     /* a big close canopy is three masses, not one blurred ball */
     if (R > 64) {
       ctx.globalAlpha = (1 - hz * 0.55) * fade * 0.9;
-      ctx.drawImage(SPR.canopy, sx - R * 0.42 - R * 0.62, sy - R * 0.30 - R * 0.55, R * 1.24, R * 1.10);
-      ctx.drawImage(SPR.canopy, sx + R * 0.38 - R * 0.55, sy - R * 0.16 - R * 0.50, R * 1.10, R * 1.00);
+      ctx.drawImage(cs[0], sx - R * 0.42 - R * 0.62, sy - R * 0.30 - R * 0.55, R * 1.24, R * 1.10);
+      ctx.drawImage(cs[0], sx + R * 0.38 - R * 0.55, sy - R * 0.16 - R * 0.50, R * 1.10, R * 1.00);
     }
     ctx.globalAlpha = (1 - hz * 0.7) * 0.92 * fade;
-    ctx.drawImage(SPR.canopyLit, sx + (dsx / dl) * R * 0.26 - R * 0.56, sy - R * 0.36 - R * 0.50,
+    ctx.drawImage(cs[1], sx + (dsx / dl) * R * 0.26 - R * 0.56, sy - R * 0.36 - R * 0.50,
       R * 1.12, R * 1.00);
     ctx.globalAlpha = 1;
     if (hz > 0.14) spriteAt(SPR.haze, sx, sy - R * 0.1, R * 1.02, R * 0.95, hz * 0.9 * fade);
@@ -3866,11 +4399,13 @@
       var R = s.r * pS;
       if (R < 0.7) continue;
       if (R > 130) R = 130;
+      var cs2 = canopySet(d, R);
+      if (!cs2) continue;
       drawn++;
       ctx.globalAlpha = (1 - hz * 0.6) * 0.9 * fade;
-      ctx.drawImage(SPR.canopy, px - R, py - R * 0.8, R * 2, R * 1.6);
+      ctx.drawImage(cs2[0], px - R, py - R * 0.8, R * 2, R * 1.6);
       ctx.globalAlpha = (1 - hz * 0.75) * 0.75 * fade;
-      ctx.drawImage(SPR.canopyLit, px - R * 0.5, py - R * 0.85, R * 1.0, R * 0.85);
+      ctx.drawImage(cs2[1], px - R * 0.5, py - R * 0.85, R * 1.0, R * 0.85);
       ctx.globalAlpha = 1;
       if (hz > 0.14) spriteAt(SPR.haze, px, py, R * 1.05, R * 0.9, hz * 0.85 * fade);
     }
@@ -3956,11 +4491,15 @@
   /* every standing prop takes the ground with a small contact shadow:
      without it a van, a stall or a person floats over the pavement */
   function propAO(p, r, hz) {
+    /* at half-res mid-pan the soft blits lose their fast path: contact
+       shadows sit the pan out and return at the snap */
+    if (INWORLD && softSkip()) return;
     groundSprite(SPR.ao, p.x, p.y, r, 0.30 * (1 - hz));
   }
   /* the low sun stretches a smudge of cast shadow away from every standing
      figure; without it the inhabitants float at golden hour */
   function propSun(p, r, h, hz) {
+    if (INWORLD && softSkip()) return;
     groundSprite(SPR.shadow, p.x - sunGnd[0] * h * 0.5, p.y - sunGnd[1] * h * 0.5,
       r + h * 0.35, 0.20 * (1 - hz));
   }
@@ -3975,7 +4514,9 @@
         case 'van':   propAO(p, 6.4, hz); drawVan(p, s, hB); break;
         case 'stall': propAO(p, p.s * 0.85, hz); drawStall(p, s, hB); break;
         case 'tree':  drawPropTree(p, hz); break;
+        case 'plnt':  drawPlanter(p, s, hB); break;
         case 'well':  drawWell(p, hB); break;
+        case 'tpole': drawTPole(p, s, hB); break;
         case 'wash':  drawWash(p, s, hB); break;
         case 'ped':   propAO(p, 1.5, hz); drawPed(p, s, hB); break;
         case 'cafe':  propAO(p, 3.6, hz); drawCafe(p, s, hB); break;
@@ -3986,7 +4527,62 @@
         case 'cat':   drawCat(p, s, hB); break;
         case 'gard':  drawGard(p, s, hB); break;
         case 'moth':  drawMoth(p, s, hB); break;
+        case 'tram':
+          if (LOD === 2 || s * 5.0 < 3.4) { drawTramDot(p, s); break; }
+          propAO(p, p.bus ? 4.0 : 5.4, hz);
+          drawTram(p, s, hB);
+          /* small in frame, the car still announces itself with a glint */
+          if (s * 5.0 < 9 && proj(p.x, p.y, 2.2)) {
+            ctx.globalCompositeOperation = 'lighter';
+            spriteAt(SPR.glint, px, py, clamp(10 * s, 2, 7), clamp(10 * s, 2, 7), 0.28 * (1 - hz));
+            ctx.globalCompositeOperation = 'source-over';
+          }
+          break;
     }
+  }
+
+  /* a tram (or a bus on the short routes) tinted by the palettes of the two
+     quarters it links; at FAR it is only a light-dot on a faint line */
+  function drawTram(p, s, hB) {
+    if (s * 5.0 < 2.0) return;
+    var hl = p.bus ? 3.1 : 4.6;
+    miniBox(p.x, p.y, hl, 1.16, 0.0, 0.9, p.yaw, M_DARK, hB);
+    /* the network livery, not the district's stucco: a car has to be
+       findable against the walls it passes */
+    miniBox(p.x, p.y, hl, 1.05, 0.9, 3.3, p.yaw, M_LIV, hB);
+    miniBox(p.x, p.y, hl * 0.88, 1.07, 1.9, 2.9, p.yaw, M_GLASS, hB);
+    /* the route keeps its district tint as the nose cap either end */
+    if (s * 5.0 > 6) {
+      var cca = cos(p.yaw), csa = sin(p.yaw);
+      miniBox(p.x + cca * hl * 0.86, p.y + csa * hl * 0.86, hl * 0.14, 1.02, 0.9, 3.3, p.yaw, p.m, hB);
+      miniBox(p.x - cca * hl * 0.86, p.y - csa * hl * 0.86, hl * 0.14, 1.02, 0.9, 3.3, p.yaw, p.m, hB);
+    }
+    miniBox(p.x, p.y, hl * 0.92, 0.95, 3.3, 3.7, p.yaw, M_TRIM, hB);
+    if (!p.bus && s * 5.0 > 10) {
+      miniBox(p.x, p.y, 0.10, 0.10, 3.7, 4.9, p.yaw, M_STEEL, hB);
+    }
+    /* a permanent soft glint rides the roof at street and mid range: the
+       glass-and-lacquer flash that gives a hunted car away in one scan */
+    if (LOD <= 1 && proj(p.x, p.y, 3.8)) {
+      ctx.globalCompositeOperation = 'lighter';
+      spriteAt(SPR.glint, px, py, clamp(s * 3.4, 3, 16), clamp(s * 2.4, 2.4, 12), 0.24 * (1 - p._hz));
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    /* down at street level the lamps are lit, and so is the car */
+    if (LOD === 0 && s * 5.0 > 14 && proj(p.x, p.y, 2.3)) {
+      ctx.globalCompositeOperation = 'lighter';
+      spriteAt(SPR.warm, px, py, s * hl * 0.85, s * 1.7, 0.15 * (1 - p._hz));
+      ctx.globalCompositeOperation = 'source-over';
+    }
+  }
+  function drawTramDot(p, s) {
+    if (!proj(p.x, p.y, 2)) return;
+    var rr = clamp(14 * s, 1.2, 3.0);
+    ctx.globalCompositeOperation = 'lighter';
+    spriteAt(SPR.glint, px, py, rr * 3.4, rr * 3.4, 0.60 * (1 - p._hz * 0.6));
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.beginPath(); ctx.arc(px, py, rr * 0.6, 0, TAU);
+    ctx.fillStyle = 'rgba(255,241,206,0.9)'; ctx.fill();
   }
 
   /* a person is three stacked boxes: legs in shade, a coat, a head */
@@ -3994,9 +4590,21 @@
     if (s * 3.4 < 2.0) return;
     var m = M_VAN0 + (p.hue % 4);
     if (p.hue === 4) m = M_AWN;
-    miniBox(p.x, p.y, 0.5, 0.42, 0, 1.6, p.yaw, M_DARK, hB);
-    miniBox(p.x, p.y, 0.72, 0.55, 1.6, 3.6, p.yaw, m, hB);
-    miniBox(p.x, p.y, 0.36, 0.34, 3.6, 4.6, p.yaw, M_TRIM, hB);
+    if (s * 3.4 > 12) {
+      /* close enough to be a person, not a crate: parted legs, a coat
+         that narrows at the shoulders, a skin-toned head and a cap */
+      var ca = cos(p.yaw), sa = sin(p.yaw);
+      miniBox(p.x - sa * 0.22, p.y + ca * 0.22, 0.24, 0.26, 0, 1.55, p.yaw, M_DARK, hB);
+      miniBox(p.x + sa * 0.22, p.y - ca * 0.22, 0.24, 0.26, 0, 1.55, p.yaw, M_DARK, hB);
+      miniBox(p.x, p.y, 0.66, 0.52, 1.5, 2.9, p.yaw, m, hB);
+      miniBox(p.x, p.y, 0.52, 0.44, 2.9, 3.7, p.yaw, m, hB);
+      miniBox(p.x, p.y, 0.27, 0.27, 3.7, 4.5, p.yaw, M_SKIN, hB);
+      if (p.hue % 2) miniBox(p.x, p.y, 0.31, 0.31, 4.5, 4.75, p.yaw, M_DARK, hB);
+    } else {
+      miniBox(p.x, p.y, 0.5, 0.42, 0, 1.6, p.yaw, M_DARK, hB);
+      miniBox(p.x, p.y, 0.72, 0.55, 1.6, 3.6, p.yaw, m, hB);
+      miniBox(p.x, p.y, 0.36, 0.34, 3.6, 4.6, p.yaw, M_TRIM, hB);
+    }
   }
   /* a cafe table with two stools, out on the pavement */
   function drawCafe(p, s, hB) {
@@ -4187,36 +4795,141 @@
       ctx.fillStyle = k % 2 ? faceCol(M_TRIM, 1, 7, hB, 0) : faceCol(m, 1, 7, hB, 0);
       ctx.fill();
     }
+    /* seen from the pavement the stall must read as one thing, not a
+       counter and a floating roof: a canvas back wall ties them, and a
+       short valance hangs from the front eave */
+    if (s * p.s > 18) {
+      var VXL = [-0.5, 0.5, 0.5, -0.5], VYL = [0.335, 0.335, 0.40, 0.40], VZL = [3.2, 3.2, 5.4, 5.4];
+      ctx.beginPath();
+      var okb = true, e2;
+      for (e2 = 0; e2 < 4; e2++) {
+        var cxb = VXL[e2] * p.s, cyb = VYL[e2] * p.s;
+        var wxb = p.x + cxb * ca - cyb * sa, wyb = p.y + cxb * sa + cyb * ca;
+        if (!proj(wxb, wyb, VZL[e2])) { okb = false; break; }
+        if (e2 === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      if (okb) {
+        ctx.closePath();
+        ctx.fillStyle = faceCol(m, 1, 3, hB, 6);
+        ctx.fill();
+      }
+      var vk;
+      for (vk = 0; vk < stripes; vk++) {
+        var v0 = (vk / stripes - 0.5) * p.s * 1.1, v1 = ((vk + 1) / stripes - 0.5) * p.s * 1.1;
+        ctx.beginPath();
+        var okv = true;
+        var VVX = [v0, v1, v1, v0], VVZ = [5.4, 5.4, 4.85, 4.85];
+        for (e2 = 0; e2 < 4; e2++) {
+          var wxv = p.x + VVX[e2] * ca - (-p.s * 0.42) * sa, wyv = p.y + VVX[e2] * sa + (-p.s * 0.42) * ca;
+          if (!proj(wxv, wyv, VVZ[e2])) { okv = false; break; }
+          if (e2 === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+        }
+        if (!okv) continue;
+        ctx.closePath();
+        ctx.fillStyle = vk % 2 ? faceCol(M_TRIM, 1, 5, hB, 1) : faceCol(m, 1, 5, hB, 1);
+        ctx.fill();
+      }
+    }
+  }
+  /* a public planter: a low stone or timber box with a clipped shrub */
+  function drawPlanter(p, s, hB) {
+    if (s * 3 < 2.0) return;
+    propAO(p, 2.4, p._hz);
+    miniBox(p.x, p.y, 1.55, 0.75, 0, 1.35, p.yaw, p.v ? M_TRIM : M_WOOD, hB);
+    /* the shrub is a soft blit: it sits the pans out like the shadows */
+    if (INWORLD && softSkip()) return;
+    if (!proj(p.x, p.y, 1.7)) return;
+    var R = 1.6 * s;
+    if (R < 1) return;
+    ctx.globalAlpha = (1 - p._hz * 0.55) * OA;
+    ctx.drawImage(SPR.canopy, px - R, py - R * 0.95, R * 2, R * 1.7);
+    ctx.globalAlpha = (1 - p._hz * 0.7) * 0.85 * OA;
+    ctx.drawImage(SPR.canopyLit, px - R * 0.35, py - R * 0.9, R * 1.15, R * 1.0);
+    ctx.globalAlpha = OA;
   }
   function drawPropTree(p, hz) {
     var fade = hz > 0.55 ? clamp(1 - (hz - 0.55) / 0.32, 0, 1) : 1;
     if (fade < 0.04) return;
-    /* the tree takes the ground: a street tree without its shadow floats */
-    groundSprite(SPR.ao, p.x, p.y, p.r * 1.35, 0.26 * (1 - hz) * fade);
-    groundSprite(SPR.shadow, p.x - sunGnd[0] * p.r * 0.8, p.y - sunGnd[1] * p.r * 0.8,
-      p.r * 1.1, 0.20 * (1 - hz) * fade);
     if (!proj(p.x, p.y, 0)) return; var x0 = px, y0 = py;
     if (!proj(p.x, p.y, p.z)) return;
     var R = p.r * pS;
     if (R < 0.7) return;
+    var cs = canopySet(p._d != null ? p._d : 999, R);
+    if (!cs) return;                    /* the camera is inside it: cut away */
+    /* the tree takes the ground: a street tree without its shadow floats */
+    groundSprite(SPR.ao, p.x, p.y, p.r * 1.35, 0.26 * (1 - hz) * fade);
+    groundSprite(SPR.shadow, p.x - sunGnd[0] * p.r * 0.8, p.y - sunGnd[1] * p.r * 0.8,
+      p.r * 1.1, 0.20 * (1 - hz) * fade);
+    if (!proj(p.x, p.y, p.z)) return;
+    /* mid-pan at reduced backing res the small soft canopies lose their
+       fast path: distant trees sit the pan out and return at the snap */
+    if (INWORLD && softSkip() && R < 4.2) return;
     ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(px, py);
     ctx.strokeStyle = rgbas(mix(mix(C.earth, C.ink, 0.45), C.haze, hz), 0.9 * fade);
     ctx.lineWidth = Math.max(0.7, R * 0.16); ctx.stroke();
     var sx = px, sy = py;
     var dsx = sunSX - sx, dsy = sunSY - sy, dl = Math.hypot(dsx, dsy) || 1;
     ctx.globalAlpha = (1 - hz * 0.55) * fade;
-    ctx.drawImage(SPR.canopy, sx - R, sy - R * 1.15, R * 2, R * 1.9);
+    ctx.drawImage(cs[0], sx - R, sy - R * 1.15, R * 2, R * 1.9);
     if (R > 64) {
       ctx.globalAlpha = (1 - hz * 0.55) * fade * 0.9;
-      ctx.drawImage(SPR.canopy, sx - R * 0.44 - R * 0.60, sy - R * 0.72 - R * 0.52, R * 1.2, R * 1.05);
-      ctx.drawImage(SPR.canopy, sx + R * 0.40 - R * 0.52, sy - R * 0.52 - R * 0.48, R * 1.04, R * 0.95);
+      ctx.drawImage(cs[0], sx - R * 0.44 - R * 0.60, sy - R * 0.72 - R * 0.52, R * 1.2, R * 1.05);
+      ctx.drawImage(cs[0], sx + R * 0.40 - R * 0.52, sy - R * 0.52 - R * 0.48, R * 1.04, R * 0.95);
     }
     ctx.globalAlpha = (1 - hz * 0.7) * 0.9 * fade;
-    ctx.drawImage(SPR.canopyLit, sx + (dsx / dl) * R * 0.28 - R * 0.55, sy - R * 0.66 - R * 0.48, R * 1.1, R * 0.96);
+    ctx.drawImage(cs[1], sx + (dsx / dl) * R * 0.28 - R * 0.55, sy - R * 0.66 - R * 0.48, R * 1.1, R * 0.96);
     ctx.globalAlpha = 1;
   }
   function drawWell(p, hB) {
-    var q;
+    var q, i;
+    /* the basin takes the ground before it takes the water */
+    propAO(p, p.r * 1.35, p._hz);
+    /* the wall: a real short cylinder, so the basin never reads as a
+       floating disk when the camera comes down to the water line. The
+       camera-facing arc is filled from the pavement up to the coping. */
+    var aC = Math.atan2(eye[1] - p.y, eye[0] - p.x);
+    var N = 9, TXw = [], TYw = [], BXw = [], BYw = [], okW = true;
+    for (i = 0; i <= N; i++) {
+      var aw = aC - 1.62 + (i / N) * 3.24;
+      var wxw = p.x + cos(aw) * p.r, wyw = p.y + sin(aw) * p.r;
+      if (!proj(wxw, wyw, 2.4)) { okW = false; break; }
+      TXw.push(px); TYw.push(py);
+      if (!proj(wxw, wyw, 0.04)) { okW = false; break; }
+      BXw.push(px); BYw.push(py);
+    }
+    if (okW) {
+      ctx.beginPath();
+      ctx.moveTo(TXw[0], TYw[0]);
+      for (i = 1; i <= N; i++) ctx.lineTo(TXw[i], TYw[i]);
+      for (i = N; i >= 0; i--) ctx.lineTo(BXw[i], BYw[i]);
+      ctx.closePath();
+      ctx.fillStyle = faceCol(M_TRIM, 1, 3, hB, 6); ctx.fill();
+      /* the sun catches one shoulder of the drum */
+      var aS = Math.atan2(sunGnd[1], sunGnd[0]);
+      var rel = Math.atan2(sin(aS - aC), cos(aS - aC));
+      if (abs(rel) < 1.5) {
+        var s0 = clamp(rel - 0.6, -1.6, 1.6), s1 = clamp(rel + 0.6, -1.6, 1.6);
+        var okL = true, LX = [], LY = [], MXl = [], MYl = [];
+        for (i = 0; i <= 4; i++) {
+          var al = aC + s0 + (i / 4) * (s1 - s0);
+          var wxl = p.x + cos(al) * p.r, wyl = p.y + sin(al) * p.r;
+          if (!proj(wxl, wyl, 2.4)) { okL = false; break; }
+          LX.push(px); LY.push(py);
+          if (!proj(wxl, wyl, 0.04)) { okL = false; break; }
+          MXl.push(px); MYl.push(py);
+        }
+        if (okL) {
+          ctx.beginPath();
+          ctx.moveTo(LX[0], LY[0]);
+          for (i = 1; i <= 4; i++) ctx.lineTo(LX[i], LY[i]);
+          for (i = 4; i >= 0; i--) ctx.lineTo(MXl[i], MYl[i]);
+          ctx.closePath();
+          ctx.fillStyle = faceCol(M_TRIM, 1, 6, hB, 5);
+          ctx.globalAlpha = 0.55; ctx.fill(); ctx.globalAlpha = 1;
+        }
+      }
+    }
+    /* the coping ring seen from above */
     ctx.beginPath();
     for (q = 0; q <= 12; q++) {
       var a = q / 12 * TAU;
@@ -4238,8 +4951,51 @@
     ctx.closePath();
     ctx.fillStyle = rgbas(mix(mix(C.water, C.shadow, 0.30), C.haze, hB / 18), 0.9);
     ctx.fill();
+    /* the inner lip of the coping, shaded, so the rim carries thickness */
+    ctx.beginPath();
+    var okL2 = true;
+    for (i = 0; i <= N; i++) {
+      var a3 = aC + PI - 1.5 + (i / N) * 3.0;
+      if (!proj(p.x + cos(a3) * p.r * 0.74, p.y + sin(a3) * p.r * 0.74, 2.42)) { okL2 = false; break; }
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    if (okL2) {
+      ctx.strokeStyle = faceCol(M_TRIM, 1, 1, hB, 7);
+      ctx.globalAlpha = 0.6;
+      ctx.lineWidth = Math.max(0.7, p.r * pS * 0.05);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
     if (proj(p.x + sunGnd[0] * p.r * 0.2, p.y + sunGnd[1] * p.r * 0.2, 2.5) && pS > 2) {
       spriteAt(SPR.glint, px, py, p.r * pS * 0.5, p.r * pS * 0.3, 0.30);
+    }
+  }
+  /* a catenary mast: pole, bracket arm reaching over the track, and the
+     contact wire on to the next mast. Street tier only; a true hairline. */
+  function drawTPole(p, s, hB) {
+    if (LOD !== 0) return;
+    if (s * 7 < 3.4) return;
+    var a = (1 - p._hz) * 0.9;
+    if (a < 0.08) return;
+    if (!proj(p.x, p.y, 0)) return;
+    var x0 = px, y0 = py;
+    if (!proj(p.x, p.y, 7.2)) return;
+    var x1 = px, y1 = py;
+    propAO(p, 0.8, p._hz);
+    ctx.strokeStyle = rgbas(mix(C.ink, C.paperLo, 0.30), a * 0.85);
+    ctx.lineWidth = Math.max(0.6, 0.20 * s);
+    ctx.beginPath();
+    ctx.moveTo(x0, y0); ctx.lineTo(x1, y1);
+    if (proj(p.cx, p.cy, 6.85)) { ctx.moveTo(x1, y1); ctx.lineTo(px, py); }
+    ctx.stroke();
+    /* the contact wire to the next mast */
+    if (p.nx2 != null && !MQ && proj(p.cx, p.cy, 6.85)) {
+      var wx0 = px, wy0 = py;
+      if (proj(p.nx2, p.ny2, 6.85)) {
+        ctx.strokeStyle = rgbas(mix(C.ink, C.paperLo, 0.45), a * 0.5);
+        ctx.lineWidth = 0.55;
+        ctx.beginPath(); ctx.moveTo(wx0, wy0); ctx.lineTo(px, py); ctx.stroke();
+      }
     }
   }
   function drawWash(p, s, hB) {
@@ -4273,21 +5029,35 @@
     }
   }
   function drawBird(p, s, hz) {
-    var t = TNOW * 0.00008 + p.ph;
+    var t = LT * 0.00008 + p.ph;
     var x = p.x + cos(t) * 60, y = p.y + sin(t * 1.3) * 60;
     if (!proj(x, y, p.z)) return;
     var w = p.s * s * 3;
     if (w < 1.2) return;
     if (w > 24) w = 24;         /* a swift far overhead, never a pterosaur */
-    var fl = sin(TNOW * 0.004 + p.ph) * 0.5 + 0.5;
+    /* a bird is not a chevron glyph: a small body, and two wings that beat
+       as arcs — curved down on the downstroke, lifted on the up — banked
+       into the turn it is flying, with a wingtip flick of asymmetry */
+    var fl = sin(LT * 0.004 + p.ph);                 /* -1 up ... 1 down */
+    var bank = sin(t * 1.3) * 0.35;                  /* lean into the orbit */
+    var a = 0.40 * (1 - hz);
+    if (a < 0.03) return;
+    var bx = px, by = py + fl * w * 0.06;            /* the beat bobs the body */
+    var dy = w * 0.26 * fl, cy2 = -w * 0.34 * fl;    /* tip drop / shoulder arch */
+    ctx.strokeStyle = rgbas(mix(C.ink, C.haze, hz * 0.7), a);
+    ctx.lineWidth = Math.max(0.7, w * 0.13);
+    ctx.lineCap = 'round';
     ctx.beginPath();
-    ctx.moveTo(px - w, py + w * 0.2 * fl);
-    ctx.lineTo(px, py - w * 0.30);
-    ctx.lineTo(px + w, py + w * 0.2 * fl);
-    ctx.strokeStyle = rgbas(mix(C.ink, C.haze, hz * 0.7), 0.45 * (1 - hz));
-    ctx.lineWidth = Math.max(0.7, w * 0.15);
-    ctx.lineJoin = 'round';
+    ctx.moveTo(bx - w, by + dy + bank * w * 0.5);
+    ctx.quadraticCurveTo(bx - w * 0.45, by + cy2 * 0.9 + bank * w * 0.22, bx, by);
+    ctx.quadraticCurveTo(bx + w * 0.45, by + cy2 - bank * w * 0.22, bx + w * 0.96, by + dy * 1.15 - bank * w * 0.5);
     ctx.stroke();
+    if (w > 3.5) {                                   /* the body, close enough */
+      ctx.beginPath();
+      ctx.ellipse(bx, by + w * 0.03, w * 0.16, w * 0.09, bank * 0.6, 0, TAU);
+      ctx.fillStyle = rgbas(mix(C.ink, C.haze, hz * 0.6), Math.min(1, a * 1.5));
+      ctx.fill();
+    }
   }
 
   /* ==================================================================
@@ -4322,7 +5092,9 @@
 
   function bakeLife() {
     folk = [];
-    var put = function (o) { folk.push(o); props.push(o); };
+    /* the living layer is its own draw pass now (over the cached world), so
+       an agent must NOT also sit in the static prop stream */
+    var put = function (o) { folk.push(o); };
     var i, j;
 
     /* Pedestrians pace the citation lanes of their quarter. How many walk a
@@ -4351,6 +5123,27 @@
           hue: Math.floor(rnd01(h, 4) * 5), ph: rnd01(h, 5) * TAU });
       }
     });
+
+    /* A small cast of passers-by with no fixed address: they re-home to
+       whichever lanes run nearest the camera once it stands in a street,
+       fading in from nothing and out again, so a close frame is never
+       empty while the 84 residents keep their own quarters honest. */
+    extras = [];
+    for (i = 0; i < 10; i++) {
+      var he = hash32('extra' + i);
+      /* a crowd is not a bead-row: everyone keeps their own distance from
+         the kerb line, a third of them are standing rather than walking,
+         and two walk as pairs a step apart */
+      var mate = (i === 1 || i === 6) ? i - 1 : null;
+      extras.push({ k: 'walker', extra: 1, homeA: 0, tgt: 0, pb: null, pend: null,
+        x: 0, y: 0, yaw: 0, gait: 0, u0: 0, span: 1,
+        off: rnd01(he, 1) * 500, sp: 3.0 + rnd01(he, 2) * 2.1,
+        hue: Math.floor(rnd01(he, 3) * 5), ph: rnd01(he, 4) * TAU,
+        side: (rnd01(he, 6) - 0.5) * 2.6,
+        idle: mate == null && rnd01(he, 7) < 0.3,
+        iu: 0.15 + rnd01(he, 8) * 0.7, iyaw: (rnd01(he, 9) - 0.5) * 2.6,
+        mate: mate });
+    }
 
     /* Delivery vans travel the strong citation streets between quarters:
        one van per inter-district edge carrying six or more citations. */
@@ -4446,11 +5239,456 @@
     }
   }
 
+  /* ==================================================================
+     TRANSIT — the pages that cite each other hardest across district
+     lines are joined by a quiet tram or bus route. The rails follow the
+     drawn citation roads between quarters (never straight through the
+     buildings), and each route carries one car, tinted by the palettes
+     of its two terminal quarters, easing back and forth forever.
+     ================================================================== */
+  var hwAdj = null;
+  function distPath(A, Bd) {
+    var i, j;
+    if (!hwAdj) {
+      hwAdj = {};
+      for (i = 0; i < highways.length; i++) {
+        var hw = highways[i];
+        if (hw.w < 2) continue;               /* only roads that are drawn */
+        var L = Math.hypot(hw.b.x - hw.a.x, hw.b.y - hw.a.y);
+        (hwAdj[hw.a.i] || (hwAdj[hw.a.i] = [])).push([hw.b.i, L]);
+        (hwAdj[hw.b.i] || (hwAdj[hw.b.i] = [])).push([hw.a.i, L]);
+      }
+    }
+    var distv = {}, prev = {}, done = {}, n = dists.length;
+    distv[A.i] = 0;
+    for (i = 0; i < n; i++) {
+      var best = -1, bd = 1e18;
+      for (j = 0; j < n; j++) if (!done[j] && distv[j] !== undefined && distv[j] < bd) { bd = distv[j]; best = j; }
+      if (best < 0) break;
+      if (best === Bd.i) {
+        var path = [Bd.i];
+        while (path[0] !== A.i) path.unshift(prev[path[0]]);
+        return path;
+      }
+      done[best] = 1;
+      var es = hwAdj[best] || [];
+      for (j = 0; j < es.length; j++) {
+        var nd = bd + es[j][1];
+        if (distv[es[j][0]] === undefined || nd < distv[es[j][0]]) { distv[es[j][0]] = nd; prev[es[j][0]] = best; }
+      }
+    }
+    return null;
+  }
+  function offsetPoly(pts, off) {
+    var out = [], i, n = pts.length;
+    for (i = 0; i < n; i++) {
+      var p0 = pts[Math.max(0, i - 1)], p1 = pts[Math.min(n - 1, i + 1)];
+      var dx = p1[0] - p0[0], dy = p1[1] - p0[1], L = Math.hypot(dx, dy) || 1;
+      out.push([pts[i][0] - dy / L * off, pts[i][1] + dx / L * off]);
+    }
+    return out;
+  }
+  function bakeTransit() {
+    var cnt = {}, i, e;
+    for (i = 0; i < G.edges.length; i++) {
+      e = G.edges[i];
+      cnt[e[0] + '>' + e[1]] = (cnt[e[0] + '>' + e[1]] || 0) + 1;
+    }
+    var seen = {}, mutual = [];
+    for (i = 0; i < G.edges.length; i++) {
+      e = G.edges[i];
+      var a = e[0], b = e[1];
+      if (a === b) continue;
+      var kk = a < b ? a + '|' + b : b + '|' + a;
+      if (seen[kk]) continue; seen[kk] = 1;
+      var w1 = cnt[a + '>' + b] || 0, w2 = cnt[b + '>' + a] || 0;
+      if (!w1 || !w2) continue;                       /* mutual citation only */
+      var ra = rec[a], rb = rec[b];
+      if (!ra || !rb || !ra.dist || !rb.dist || ra.dist === rb.dist) continue;
+      mutual.push({ a: a, b: b, s: Math.min(w1, w2),
+        t: w1 + w2 + (G.inbound[a] || 0) + (G.inbound[b] || 0) });
+    }
+    mutual.sort(function (x, y) { return y.s - x.s || y.t - x.t; });
+
+    var chosen = [], usedCorridor = {}, touched = {};
+    function take(pr) {
+      var ra = rec[pr.a], rb = rec[pr.b];
+      var ck = Math.min(ra.dist.i, rb.dist.i) + ':' + Math.max(ra.dist.i, rb.dist.i);
+      if (usedCorridor[ck]) return false;
+      var path = distPath(ra.dist, rb.dist);
+      if (!path || path.length < 2) return false;
+      usedCorridor[ck] = 1; touched[pr.a] = 1; touched[pr.b] = 1;
+      chosen.push({ pr: pr, path: path });
+      return true;
+    }
+    /* the four owner-named hubs board first, each on its strongest line */
+    var hubs = ['/cms/migration/v4-to-v5/breaking-changes', '/cms/api/document-service',
+                '/cms/api/rest', '/cms/features/users-permissions'];
+    hubs.forEach(function (h) {
+      if (!rec[h]) return;
+      for (var k = 0; k < mutual.length; k++) {
+        if (mutual[k].a !== h && mutual[k].b !== h) continue;
+        if (take(mutual[k])) return;
+      }
+    });
+    for (i = 0; i < mutual.length && chosen.length < 10; i++) {
+      if (touched[mutual[i].a] && touched[mutual[i].b]) continue;
+      take(mutual[i]);
+    }
+
+    /* a terminus under a hub block is a dead route: the side-offset can
+       land the line's end inside a footprint, where the car spends its
+       whole layover occlusion-faded to nothing. Walk each end of the line
+       out of any building before laying the rails. */
+    function clearOfBlds(x, y, m) {
+      var bi;
+      for (bi = 0; bi < blds.length; bi++) {
+        var bb = blds[bi];
+        var dx = x - bb.wx, dy = y - bb.wy;
+        var rr = bb.hw + bb.hd + m;
+        if (dx * dx + dy * dy > rr * rr) continue;
+        var cb = cos(bb.yaw), sb = sin(bb.yaw);
+        var u = dx * cb + dy * sb, v = dy * cb - dx * sb;
+        if (abs(u) < bb.hw + m && abs(v) < bb.hd + m) return false;
+      }
+      return true;
+    }
+    function trimEnds(op0) {
+      var pb0 = polyBake(op0);
+      var lim = Math.min(70, pb0.len * 0.3), u0 = 0, u1 = pb0.len, q, k2;
+      while (u0 < lim) { q = polyAt(pb0, u0); if (clearOfBlds(q[0], q[1], 2.6)) break; u0 += 1.5; }
+      while (pb0.len - u1 < lim) { q = polyAt(pb0, u1); if (clearOfBlds(q[0], q[1], 2.6)) break; u1 -= 1.5; }
+      if (u0 < 0.5 && u1 > pb0.len - 0.5) return op0;
+      if (u1 - u0 < 40) return op0;
+      q = polyAt(pb0, u0);
+      var out = [[q[0], q[1]]];
+      for (k2 = 0; k2 < op0.length; k2++) {
+        if (pb0.cum[k2] > u0 + 0.5 && pb0.cum[k2] < u1 - 0.5) out.push(op0[k2]);
+      }
+      q = polyAt(pb0, u1);
+      out.push([q[0], q[1]]);
+      return out;
+    }
+    /* long straights subdivided, so the drawn rail can taper with depth */
+    function subdiv(pts2) {
+      var out = [pts2[0]], k3, m3;
+      for (k3 = 1; k3 < pts2.length; k3++) {
+        var xa = pts2[k3 - 1][0], ya2 = pts2[k3 - 1][1], xb = pts2[k3][0], yb2 = pts2[k3][1];
+        var L2 = Math.hypot(xb - xa, yb2 - ya2), nn2 = Math.max(1, Math.ceil(L2 / 90));
+        for (m3 = 1; m3 <= nn2; m3++) out.push([xa + (xb - xa) * m3 / nn2, ya2 + (yb2 - ya2) * m3 / nn2]);
+      }
+      return out;
+    }
+    /* the side-offset can drag the line through a block's corner anywhere
+       along the run, where the car spends the passage occlusion-faded to
+       nothing. Densify, push every trespassing sample out of the footprint,
+       smooth the ride, and keep the endpoints pinned. */
+    function pushOut(x, y, m) {
+      var bi;
+      for (bi = 0; bi < blds.length; bi++) {
+        var bb = blds[bi];
+        var dx = x - bb.wx, dy = y - bb.wy;
+        var rr = bb.hw + bb.hd + m;
+        if (dx * dx + dy * dy > rr * rr) continue;
+        var cb = cos(bb.yaw), sb = sin(bb.yaw);
+        var u = dx * cb + dy * sb, v = dy * cb - dx * sb;
+        if (abs(u) >= bb.hw + m || abs(v) >= bb.hd + m) continue;
+        var pu = (bb.hw + m - abs(u) + 0.4) * (u >= 0 ? 1 : -1);
+        var pv = (bb.hd + m - abs(v) + 0.4) * (v >= 0 ? 1 : -1);
+        if (abs(pu) <= abs(pv)) return [pu * cb, pu * sb];
+        return [-pv * sb, pv * cb];
+      }
+      return null;
+    }
+    function shoveClear(pts2) {
+      var out = [], k4, m4, pass;
+      for (k4 = 1; k4 < pts2.length; k4++) {
+        var xa2 = pts2[k4 - 1][0], ya3 = pts2[k4 - 1][1], xb2 = pts2[k4][0], yb3 = pts2[k4][1];
+        var L3 = Math.hypot(xb2 - xa2, yb3 - ya3), nn3 = Math.max(1, Math.ceil(L3 / 12));
+        if (k4 === 1) out.push([xa2, ya3]);
+        for (m4 = 1; m4 <= nn3; m4++) out.push([xa2 + (xb2 - xa2) * m4 / nn3, ya3 + (yb3 - ya3) * m4 / nn3]);
+      }
+      for (pass = 0; pass < 4; pass++) {
+        var moved = false;
+        for (k4 = 1; k4 < out.length - 1; k4++) {
+          out[k4][0] = out[k4][0] * 0.6 + (out[k4 - 1][0] + out[k4 + 1][0]) * 0.2;
+          out[k4][1] = out[k4][1] * 0.6 + (out[k4 - 1][1] + out[k4 + 1][1]) * 0.2;
+        }
+        for (k4 = 0; k4 < out.length; k4++) {
+          var pv2 = pushOut(out[k4][0], out[k4][1], 2.4);
+          if (pv2) { out[k4][0] += pv2[0]; out[k4][1] += pv2[1]; moved = true; }
+        }
+        if (!moved && pass > 0) break;
+      }
+      return out;
+    }
+    /* the drawn line does not need the dense samples: keep the corners */
+    function decimate(pts2) {
+      var out = [pts2[0]], k5, run = 0;
+      for (k5 = 1; k5 < pts2.length - 1; k5++) {
+        var ax2 = pts2[k5][0] - out[out.length - 1][0], ay2 = pts2[k5][1] - out[out.length - 1][1];
+        var bx3 = pts2[k5 + 1][0] - pts2[k5][0], by3 = pts2[k5 + 1][1] - pts2[k5][1];
+        var cross = ax2 * by3 - ay2 * bx3, dot2 = ax2 * bx3 + ay2 * by3;
+        run += Math.hypot(bx3, by3);
+        if (abs(Math.atan2(cross, dot2)) > 0.035 || run > 80) { out.push(pts2[k5]); run = 0; }
+      }
+      out.push(pts2[pts2.length - 1]);
+      return out;
+    }
+    for (i = 0; i < chosen.length; i++) {
+      var ch = chosen[i];
+      var rA = rec[ch.pr.a], rB = rec[ch.pr.b];
+      var cA = hx(ARCH[rec[rA.dist.hub].arch].chip);
+      var cB = hx(ARCH[rec[rB.dist.hub].arch].chip);
+      /* the centreline keeps to one side of the road, clear of the vans */
+      var off = -3.2 - (i % 3) * 1.4;
+      var op = shoveClear(trimEnds(offsetPoly(ch.path.map(function (di) { return [dists[di].x, dists[di].y]; }), off)));
+      var opDraw = decimate(op);
+      var pb = polyBake(op);
+      if (pb.len < 60) continue;
+      var mi = MBASE.length;
+      MBASE.push(mix(mix(cA, cB, 0.5), hx('#5A5364'), 0.18));
+      MK.push(0.46);
+      var bus = pb.len < 420;
+      var hph = hash32('tram' + ch.pr.a + '|' + ch.pr.b);
+      /* the sleepers under the rails, baked once: position and normal */
+      var ties = [], ut;
+      for (ut = 3; ut < pb.len - 3; ut += 4.5) {
+        var qt = polyAt(pb, ut);
+        ties.push([qt[0], qt[1], -sin(qt[2]), cos(qt[2])]);
+      }
+      var qe0 = polyAt(pb, 2), a0 = qe0[2];
+      var qe1 = polyAt(pb, pb.len - 2), a1 = qe1[2];
+      var sub = subdiv(opDraw);
+      transitRoutes.push({ pts: sub, r1: subdiv(offsetPoly(opDraw, 0.7)), r2: subdiv(offsetPoly(opDraw, -0.7)),
+        colA: cA, colB: cB, ties: ties,
+        t0: [op[0][0], op[0][1], a0], t1: [op[op.length - 1][0], op[op.length - 1][1], a1] });
+      trams.push({ k: 'tram', x: op[0][0], y: op[0][1], yaw: 0, m: mi, bus: bus,
+        pb: pb, sp: bus ? 15 : 21, pause: 2.6 + rnd01(hph, 2) * 1.6,
+        ph: rnd01(hph, 1) * 300 });
+      /* the catenary: a mast every ~38u beside the rails, a bracket over
+         the track, and a contact wire strung mast to mast. Down in the
+         streets the wires announce the tramway even when every car
+         happens to be behind a block. The bus route strings nothing. */
+      if (!bus) {
+        var pu, prevPole = null;
+        for (pu = 14; pu < pb.len - 14; pu += 38) {
+          var qp2 = polyAt(pb, pu);
+          var pole = { k: 'tpole', x: qp2[0] - sin(qp2[2]) * 2.7, y: qp2[1] + cos(qp2[2]) * 2.7,
+            z: 7, cx: qp2[0], cy: qp2[1], nx2: null, ny2: null };
+          if (prevPole) { prevPole.nx2 = qp2[0]; prevPole.ny2 = qp2[1]; }
+          props.push(pole);
+          prevPole = pole;
+        }
+      }
+    }
+  }
+  /* the rails live on the static world layer: quiet from the air, a real
+     tramway once you are down among the streets — segment by segment, so
+     the line tapers with depth and never dissolves at a near terminus */
+  function transitSeg(pts, wWorld, baseCol, aBase, wMaxPx) {
+    var i;
+    ctx.lineCap = 'round';
+    for (i = 1; i < pts.length; i++) {
+      var x0 = pts[i - 1][0], y0 = pts[i - 1][1], x1 = pts[i][0], y1 = pts[i][1];
+      var d = depthOf((x0 + x1) / 2, (y0 + y1) / 2, 0);
+      if (d < 16) continue;
+      var lw = wWorld * (FOC / d);
+      if (lw < (MQ ? 0.55 : 0.3)) continue;
+      if (lw > wMaxPx) lw = wMaxPx;
+      var hz = hazeAt(d);
+      var a = aBase * (1 - hz);
+      if (a < 0.02) continue;
+      if (!proj(x0, y0, 0)) continue;
+      var sx0 = px, sy0 = py;
+      if (!proj(x1, y1, 0)) continue;
+      if ((sx0 < -60 && px < -60) || (sx0 > W + 60 && px > W + 60) ||
+          (sy0 < -60 && py < -60) || (sy0 > H + 60 && py > H + 60)) continue;
+      ctx.beginPath();
+      ctx.moveTo(sx0, sy0); ctx.lineTo(px, py);
+      ctx.strokeStyle = rgbas(mix(baseCol, C.haze, hz), a);
+      ctx.lineWidth = lw;
+      ctx.stroke();
+    }
+  }
+  /* the sleepers, only at street level and never mid-pan */
+  function drawTies(rt) {
+    var t = rt.ties, i, b, drawn;
+    var tieCol = rgbas(mix(C.ink, C.paperLo, 0.35), 0.20);
+    for (b = 0; b < 2; b++) {
+      var dLo = b ? 340 : 16, dHi = b ? 950 : 340;
+      drawn = 0;
+      ctx.beginPath();
+      for (i = 0; i < t.length; i++) {
+        var d = depthOf(t[i][0], t[i][1], 0);
+        if (d < dLo || d >= dHi) continue;
+        if ((FOC / d) * 4.5 < 3.4) continue;          /* resolve or vanish */
+        if (!proj(t[i][0] - t[i][2] * 1.05, t[i][1] - t[i][3] * 1.05, 0.05)) continue;
+        var ax = px, ay = py;
+        if (ax < -20 || ax > W + 20 || ay < -20 || ay > H + 20) continue;
+        if (!proj(t[i][0] + t[i][2] * 1.05, t[i][1] + t[i][3] * 1.05, 0.05)) continue;
+        ctx.moveTo(ax, ay); ctx.lineTo(px, py);
+        drawn++;
+      }
+      if (!drawn) continue;
+      ctx.strokeStyle = tieCol;
+      ctx.lineWidth = clamp(0.5 * (FOC / (b ? 600 : 190)), 0.5, 3.2);
+      ctx.stroke();
+    }
+  }
+  /* a terminus is a place: a small pale platform beside the rails and a
+     slim stop with a route-tinted head, so a line ends somewhere real */
+  var TQX = [0, 0, 0, 0], TQY = [0, 0, 0, 0];
+  function drawTerminus(rt, e) {
+    var d = depthOf(e[0], e[1], 0);
+    if (d < 16) return;
+    var s = FOC / d;
+    if (s * 7 < 3.0) return;
+    var hz = hazeAt(d);
+    if (hz > 0.8) return;
+    var ca = cos(e[2]), sa = sin(e[2]), nx2 = -sa, ny2 = ca, k;
+    var U = [-3.6, 3.6, 3.6, -3.6], V2 = [1.5, 1.5, 3.3, 3.3];
+    for (k = 0; k < 4; k++) {
+      if (!proj(e[0] + ca * U[k] + nx2 * V2[k], e[1] + sa * U[k] + ny2 * V2[k], 0.35)) return;
+      TQX[k] = px; TQY[k] = py;
+    }
+    ctx.beginPath();
+    ctx.moveTo(TQX[0], TQY[0]); ctx.lineTo(TQX[1], TQY[1]);
+    ctx.lineTo(TQX[2], TQY[2]); ctx.lineTo(TQX[3], TQY[3]);
+    ctx.closePath();
+    ctx.fillStyle = rgbas(mix(mix(C.paper, C.sun, 0.22), C.haze, hz), 0.55 * (1 - hz));
+    ctx.fill();
+    if (LOD < 2 && s * 7 > 8) {
+      var bx2 = e[0] + nx2 * 3.0, by2 = e[1] + ny2 * 3.0;
+      if (!proj(bx2, by2, 0)) return;
+      var g0x = px, g0y = py;
+      if (!proj(bx2, by2, 6.2)) return;
+      ctx.beginPath(); ctx.moveTo(g0x, g0y); ctx.lineTo(px, py);
+      ctx.strokeStyle = rgbas(mix(mix(C.ink, C.paperLo, 0.3), C.haze, hz), 0.8);
+      ctx.lineWidth = Math.max(0.5, Math.min(0.28 * s, 3)); ctx.stroke();
+      ctx.beginPath(); ctx.arc(px, py - 0.4 * s * 0.5, clamp(0.55 * s, 1.1, 4.5), 0, TAU);
+      ctx.fillStyle = rgbas(mix(mix(rt.colA, rt.colB, 0.5), C.haze, hz * 0.7), 0.9);
+      ctx.fill();
+    }
+  }
+  function drawTransitLines() {
+    var i;
+    var railCol = mix(C.ink, C.paperLo, 0.4);
+    var aRoad = LOD === 0 ? 0.30 : LOD === 1 ? 0.20 : 0.13;
+    var aRail = LOD === 0 ? 0.55 : 0.34;
+    for (i = 0; i < transitRoutes.length; i++) {
+      var rt = transitRoutes[i];
+      var col = mix(rt.colA, rt.colB, 0.5);
+      transitSeg(rt.pts, 2.6, mix(col, C.haze, 0.35), aRoad, 26);
+      transitSeg(rt.r1, 0.4, railCol, aRail, 3.4);
+      transitSeg(rt.r2, 0.4, railCol, aRail, 3.4);
+      if (LOD === 0 && !MQ) drawTies(rt);
+      if (!MQ || LOD < 2) { drawTerminus(rt, rt.t0); drawTerminus(rt, rt.t1); }
+    }
+  }
+
+  /* the passers-by re-home when the camera settles in a new street */
+  var exState = { tx: 9e9, ty: 9e9, lod: -1 };
+  /* is this world point actually in the picture: on screen, in front of
+     the camera, and not walled off behind a building painted nearer */
+  function ptInPicture(wx, wy, z) {
+    var pd = depthOf(wx, wy, z);
+    if (pd < 30) return false;
+    if (!proj(wx, wy, z)) return false;
+    var sx = px, sy = py, i, j;
+    if (sx < W * 0.05 || sx > W * 0.95 || sy < 10 || sy > H - 10) return false;
+    for (i = vis.length - 1; i >= 0; i--) {
+      var r = vis[i];
+      if (r._d >= pd - 2) break;
+      var s = r._sil;
+      if (!s || sx < s.x0 || sx > s.x1 || sy < s.y0 || sy > s.y1) continue;
+      var hs = r.hit;
+      for (j = 0; j < hs.length; j++) if (inQuad(hs[j], sx, sy)) return false;
+    }
+    return true;
+  }
+  function retargetExtras() {
+    exState.tx = cam.tx; exState.ty = cam.ty; exState.lod = LOD;
+    var i, j, cand = [];
+    if (LOD === 0) {
+      for (j = 0; j < lanes.length; j++) {
+        var ln = lanes[j];
+        if (!ln.pts || ln.pts.length < 2) continue;
+        var mp = ln.pts[ln.pts.length >> 1];
+        var dx = mp[0] - cam.tx, dy = mp[1] - cam.ty;
+        var dd = dx * dx + dy * dy;
+        if (dd > 360 * 360) continue;
+        if (!ln._pb) ln._pb = polyBake(ln.pts);
+        if (ln._pb.len < 34) continue;
+        /* walk the lane and keep its longest stretch the camera can truly
+           see: the passers-by will pace that stretch and no other, so a
+           street frame gets its people on the pavement in the picture,
+           not on the far side of the subject */
+        var step = Math.max(9, ln._pb.len / 16);
+        var runA = -1, runB = -1, bestA = -1, bestB = -1, u3;
+        for (u3 = 4; u3 <= ln._pb.len - 4; u3 += step) {
+          var qp = polyAt(ln._pb, u3);
+          if (ptInPicture(qp[0], qp[1], 2.0)) {
+            if (runA < 0) runA = u3;
+            runB = u3;
+            if (runB - runA > bestB - bestA) { bestA = runA; bestB = runB; }
+          } else runA = -1;
+        }
+        if (bestA < 0 || bestB - bestA < 22) continue;
+        cand.push([dd - (bestB - bestA) * 3000, ln._pb, bestA, bestB]);
+      }
+      cand.sort(function (a, b) { return a[0] - b[0]; });
+    }
+    for (i = 0; i < extras.length; i++) {
+      var e = extras[i];
+      if (!cand.length) { e.tgt = 0; e.pend = null; continue; }
+      var c4 = cand[(e.mate != null ? e.mate : i) % Math.min(cand.length, 6)];
+      var u0 = c4[2] + 3, span = (c4[3] - c4[2]) - 6;
+      if (span < 12) { e.tgt = 0; e.pend = null; continue; }
+      if (e.pb === c4[1] && Math.abs(e.u0 - u0) < 18) { e.tgt = 1; e.pend = null; continue; }
+      if (e.homeA > 0.05) { e.pend = { pb: c4[1], u0: u0, span: span }; e.tgt = 0; }
+      else { e.pb = c4[1]; e.u0 = u0; e.span = span; e.pend = null; e.tgt = 1; }
+    }
+  }
+  function stepExtras(t) {
+    var i;
+    for (i = 0; i < extras.length; i++) {
+      var e = extras[i];
+      if (reduced()) e.homeA = e.tgt;
+      else e.homeA += (e.tgt - e.homeA) * 0.05;
+      if (e.pend && e.homeA < 0.05) {
+        e.pb = e.pend.pb; e.u0 = e.pend.u0; e.span = e.pend.span;
+        e.pend = null; e.tgt = 1;
+      }
+      if (!e.pb || e.homeA < 0.02) continue;
+      if (e.idle) {
+        /* the idlers stand off the kerb line, turned their own way */
+        var qi = polyAt(e.pb, e.u0 + e.iu * e.span);
+        e.x = qi[0] - sin(qi[2]) * e.side; e.y = qi[1] + cos(qi[2]) * e.side;
+        e.yaw = qi[2] + e.iyaw;
+        e.gait = 0;
+        continue;
+      }
+      var mm = e.mate != null ? extras[e.mate] : null;
+      var sp3 = mm ? mm.sp : e.sp, off3 = mm ? mm.off + 4.6 : e.off;
+      var per = e.span * 2;
+      var dd = (t * sp3 + off3) % per;
+      var fw2 = dd < e.span;
+      var q = polyAt(e.pb, e.u0 + (fw2 ? dd : per - dd));
+      e.x = q[0] - sin(q[2]) * e.side; e.y = q[1] + cos(q[2]) * e.side;
+      e.yaw = fw2 ? q[2] : q[2] + PI;
+      e.gait = t * sp3 * 1.9 + e.ph;
+    }
+  }
   function stepLife() {
     LT = reduced() ? 60000 : TNOW;
     WINDV = sin(LT * 0.00047) * 0.65 + sin(LT * 0.00131 + 2.1) * 0.35;
     var t = LT / 1000, i;
-    for (i = 0; i < folk.length; i++) {
+    if (extras.length && LOD < 2) stepExtras(t);
+    /* the establishing shot is calm: at FAR the street life is not stepped
+       (it is not drawn either); positions are functions of absolute time,
+       so everyone is exactly where they should be when the camera returns */
+    for (i = 0; i < (LOD < 2 ? folk.length : 0); i++) {
       var f = folk[i];
       if (f.k === 'walker') {
         var per = f.span * 2;
@@ -4477,6 +5715,24 @@
         f.x = q2[0]; f.y = q2[1]; f.yaw = q2[2];
       }
     }
+    /* the transit cars ease back and forth along their route at every zoom:
+       at FAR they are the moving light-dots on the faint lines */
+    for (i = 0; i < trams.length; i++) {
+      var tr = trams[i];
+      var Ttr = tr.pb.len / tr.sp, Ctr = Ttr + tr.pause;
+      var cyc = (t + tr.ph) % (2 * Ctr);
+      var leg = cyc >= Ctr ? 1 : 0;
+      var lt2 = cyc - leg * Ctr;
+      var u;
+      if (lt2 >= Ttr) u = leg ? 0.001 : tr.pb.len - 0.001;  /* resting at the terminus */
+      else {
+        var q3 = lt2 / Ttr;
+        q3 = q3 * q3 * (3 - 2 * q3);                 /* gentle pull-away, gentle stop */
+        u = tr.pb.len * (leg ? 1 - q3 : q3);
+      }
+      var qq = polyAt(tr.pb, u);
+      tr.x = qq[0]; tr.y = qq[1]; tr.yaw = qq[2] + (leg ? PI : 0);
+    }
   }
 
   /* a walker is the parked pedestrian given a stride: two legs in
@@ -4496,17 +5752,25 @@
       miniBox(p.x, p.y, 0.5, 0.42, 0, 1.6, p.yaw, M_DARK, hB);
     }
     var bob = 0.12 * abs(g);
-    miniBox(p.x, p.y, 0.72, 0.55, 1.6 + bob, 3.6 + bob, p.yaw, m, hB);
-    miniBox(p.x, p.y, 0.36, 0.34, 3.6 + bob, 4.6 + bob, p.yaw, M_TRIM, hB);
+    if (s * 3.4 > 12) {
+      miniBox(p.x, p.y, 0.66, 0.52, 1.5 + bob, 2.9 + bob, p.yaw, m, hB);
+      miniBox(p.x, p.y, 0.52, 0.44, 2.9 + bob, 3.7 + bob, p.yaw, m, hB);
+      miniBox(p.x, p.y, 0.27, 0.27, 3.7 + bob, 4.5 + bob, p.yaw, M_SKIN, hB);
+      if (p.hue % 2) miniBox(p.x, p.y, 0.31, 0.31, 4.5 + bob, 4.75 + bob, p.yaw, M_DARK, hB);
+    } else {
+      miniBox(p.x, p.y, 0.72, 0.55, 1.6 + bob, 3.6 + bob, p.yaw, m, hB);
+      miniBox(p.x, p.y, 0.36, 0.34, 3.6 + bob, 4.6 + bob, p.yaw, M_TRIM, hB);
+    }
   }
   /* a delivery van out on the citation street, fading in at one depot and
      out at the other so it never pops */
   function drawDvan(p, s, hB) {
     if (p.alpha <= 0.02 || s * 4.6 < 2.2) return;
-    ctx.globalAlpha = p.alpha;
+    ctx.globalAlpha = p.alpha * OA;
     groundSprite(SPR.ao, p.x, p.y, 6.4, 0.30 * (1 - p._hz) * p.alpha);
+    ctx.globalAlpha = p.alpha * OA;
     drawVan(p, s, hB);
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha = OA;
   }
   /* a pigeon: a grey-blue crumb that walks its own wandering line and
      pecks between steps */
@@ -4570,7 +5834,7 @@
     if (!proj(wx, wy, wz)) return;
     var w = clamp(0.62 * pS, 0.9, 4.6);
     var fl = 0.35 + 0.65 * abs(sin(LT * 0.03 + p.ph));
-    ctx.globalAlpha = 0.85 * (1 - p._hz);
+    ctx.globalAlpha = 0.85 * (1 - p._hz) * OA;
     ctx.fillStyle = 'rgba(255,240,210,0.92)';
     ctx.beginPath();
     ctx.moveTo(px, py);
@@ -4596,7 +5860,7 @@
       var scr = d.r * (FOC / dd);
       if (scr < 90 || scr > 760) continue;
       if (!proj(d.x, d.y, 26)) continue;
-      if (px < 60 || px > W - 60 || py < HORY + 6 || py > H - 30) continue;
+      if (px < 60 || px > W - 60 || py < HORY + 6 || py > H - HUDH - 14) continue;
       picks.push({ d: d, x: px, y: py, dd: dd, scr: scr });
     }
     picks.sort(function (a, b) { return b.scr - a.scr; });
@@ -4614,6 +5878,12 @@
       if (!ok) continue;
       placed.push(rect); shown++;
       var a = clamp(1 - hazeAt(q.dd) * 0.9, 0.45, 1);
+      /* pills breathe in over a long ramp of apparent size, so a slow zoom
+         never sees the wayfinding arrive as a step */
+      a *= smoothstep(clamp((q.scr - 90) / 85, 0, 1)) * smoothstep(clamp((760 - q.scr) / 130, 0, 1));
+      /* a pill melts away before the info band can swallow it */
+      a *= smoothstep(clamp((H - HUDH - 16 - q.y) / 34, 0, 1));
+      if (a < 0.03) continue;
       ctx.globalAlpha = a * 0.84;
       ctx.fillStyle = 'rgba(250,240,220,0.92)';
       rrect(q.x - tw / 2, q.y - 9, tw, 18, 9); ctx.fill();
@@ -4656,7 +5926,7 @@
     ctx.font = '700 12.5px "Archivo", Arial, sans-serif';
     var tw = ctx.measureText(name).width + 22;
     var x = clamp(ax2, tw / 2 + 8, W - tw / 2 - 8);
-    var yc2 = clamp(ay2 - 27, 17, H - 24);
+    var yc2 = clamp(ay2 - 27, 17, H - HUDH - 16);
     return { x0: x - tw / 2, y0: yc2 - 10.5, x1: x + tw / 2, y1: yc2 + 10.5,
              x: x, y: yc2, tw: tw, ax: ax2, ay: ay2, name: name, sel: sel };
   }
@@ -4687,9 +5957,14 @@
     if (a < 0) a = 0; if (b2 < 0) b2 = 0;
     if (c >= OCCW) c = OCCW - 1; if (d >= OCCH) d = OCCH - 1;
     if (c < a || d < b2) return true;
+    /* mid-pan a building whose box is nearly all behind others is dropped
+       whole: the sliver it would contribute returns at the snap */
+    var miss = 0, allow = MQ ? (((c - a + 1) * (d - b2 + 1) * 0.12) | 0) : 0;
     for (var j = b2; j <= d; j++) {
       var row = j * OCCW;
-      for (var i = a; i <= c; i++) if (occ[row + i] !== occStamp) return false;
+      for (var i = a; i <= c; i++) {
+        if (occ[row + i] !== occStamp && ++miss > allow) return false;
+      }
     }
     return true;
   }
@@ -4728,24 +6003,160 @@
 
   /* ---------------------------------------------------------- frame */
   var vis = [];
-  function render() {
-    var t0 = performance.now();
-    TNOW = t0;
-    FRAMEN++;
-    stepLife();
-    updateCam();
-    /* a tooltip is anchored to a screen point: once the camera has moved
-       from where it was raised, what stands under the cursor is re-read,
-       and the tip is re-anchored to it or dismissed, never left frozen */
-    if (hovered && hovCam &&
-        (abs(cam.az - hovCam.az) > 0.004 || abs(cam.el - hovCam.el) > 0.004 ||
-         abs(cam.dist - hovCam.dist) > hovCam.dist * 0.012 ||
-         abs(cam.tx - hovCam.tx) > 3 || abs(cam.ty - hovCam.ty) > 3)) {
-      var reSlug = (lastHx != null && !dragging) ? pick(lastHx, lastHy) : null;
-      if (reSlug === hovered) snapHovCam();
-      else setHover(reSlug);
+  /* ==================================================================
+     LAYERED RENDERING — the world (paper, streets, buildings, trees,
+     lamps, shadows) is painted into an offscreen canvas only when the
+     camera or the frame actually changes; every animation frame is then
+     one blit plus the living layer. While the camera moves the world is
+     painted at reduced internal resolution and snaps back to full
+     resolution shortly after the move ends, the city-builder way.
+     ================================================================== */
+  var wState = { az: 9e9, el: 9e9, dist: 9e9, tx: 9e9, ty: 9e9, w: 0, h: 0, dpr: 0, rs: 1, dbg: -1, t: 0, q: false };
+  var worldRedraws = 0;
+  /* Measured on this renderer, the classic mid-pan resolution drop cuts two
+     ways. Down among the buildings the cost is wall fill-rate, and half
+     resolution halves it; but the establishing shot is dominated by sprite
+     blits whose identity-transform fast path ANY scale (even 0.9999)
+     destroys — there, full resolution is several times faster. So the world
+     paints at half resolution mid-pan at street and mid zoom, and at full
+     resolution at the far tier; 0.5 exactly, because 0.62 measured ~5x
+     slower than 0.5 on the sprite path. Sprites sample nearest mid-pan. */
+  var ADAPT = false;           /* dynamic resolution: a hot pan drops further */
+  function moveRS() { return LOD === 2 ? 1 : ADAPT ? 0.35 : 0.5; }
+  /* Mid-move, the soft ground blits (AO pools, cast shadows, small
+     canopies, bloom) sit the pan out and return at the snap. At street
+     and mid zoom the reduced backing store (wRS < 1) already implies it;
+     the far tier pans at full resolution, so it opts in by LOD — profiled
+     at dist 1680, this is the difference between 33 ms and 8 ms a frame. */
+  function softSkip() { return MQ && (wRS < 1 || LOD === 2); }
+  var SNAP_MS = 120;           /* full-res snap this long after the move ends */
+  var LOD = 2;                 /* 0 near (street), 1 mid, 2 far (establishing) */
+  var LOD_NAMES = ['near', 'mid', 'far'];
+  var LOD_T1 = 620, LOD_T2 = 1500;
+  /* rafGapMs / avgRafGapMs: the true wall-clock spacing of the rAF ticks,
+     so compositing cost the frameMs timer cannot see still shows up in the
+     hook. On headless software rasterisation these run well above frameMs;
+     the fluidity verdict there belongs to real GPU hardware. */
+  var DIAG = { camAz: 0, camEl: 0, camDist: 0, frameMs: 0, avgFrameMs: 0, worldRedraws: 0, lod: 'far',
+    rafGapMs: 0, avgRafGapMs: 0 };
+  window.__dioramaDiag = DIAG;
+  var fr60 = [], fr60i = 0, fr60sum = 0;
+  var rg60 = [], rg60i = 0, rg60sum = 0, lastRafT = 0;
+  var lastDynT = 0;
+
+  function lodUpdate() {
+    /* hysteresis on the tier thresholds, so the boundary never flickers */
+    var d = cam.dist, i;
+    for (i = 0; i < 2; i++) {
+      if (LOD === 0) { if (d > LOD_T1 * 1.10) LOD = 1; }
+      else if (LOD === 1) { if (d > LOD_T2 * 1.08) LOD = 2; else if (d < LOD_T1 * 0.90) LOD = 0; }
+      else { if (d < LOD_T2 * 0.92) LOD = 1; }
     }
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+
+  /* ------------------------------------------------- tilt-shift bands
+     The macro-lens signature the brief names: at establishing and mid
+     range the far field (and a sliver of foreground) fall softly out of
+     focus. Two cheap down-up resamples of the finished world frame,
+     masked with a gradient — run only on full-quality paints, never
+     mid-pan, so the fluidity budgets never see it. */
+  var dofS = null, dofSX = null, dofT = null, dofTX = null, dofB = null, dofBX = null;
+  function dofPass() {
+    if (LOD === 0) return;                       /* the street stays crisp */
+    var pw2 = cv.width, ph2 = cv.height;
+    var yBotCss = HORY > -50 ? HORY + (H - HORY) * 0.12 : H * 0.30;
+    yBotCss = clamp(yBotCss, H * 0.10, H * 0.55);
+    var bandPx = Math.round(yBotCss * CTS);
+    if (bandPx < 8) return;
+    var sw3 = Math.max(2, pw2 >> 2), sh3 = Math.max(2, ph2 >> 2);
+    if (!dofS) {
+      dofS = document.createElement('canvas'); dofSX = dofS.getContext('2d');
+      dofT = document.createElement('canvas'); dofTX = dofT.getContext('2d');
+      dofB = document.createElement('canvas'); dofBX = dofB.getContext('2d');
+    }
+    if (dofS.width !== sw3 || dofS.height !== sh3) { dofS.width = sw3; dofS.height = sh3; }
+    var sw4 = Math.max(2, sw3 >> 1), sh4 = Math.max(2, sh3 >> 1);
+    if (dofT.width !== sw4 || dofT.height !== sh4) { dofT.width = sw4; dofT.height = sh4; }
+    dofSX.imageSmoothingEnabled = true; dofTX.imageSmoothingEnabled = true;
+    dofSX.drawImage(cv, 0, 0, pw2, ph2, 0, 0, sw3, sh3);
+    dofTX.drawImage(dofS, 0, 0, sw3, sh3, 0, 0, sw4, sh4);
+    if (dofB.width !== pw2 || dofB.height !== ph2) { dofB.width = pw2; dofB.height = ph2; }
+    dofBX.imageSmoothingEnabled = true;
+    /* far band: the blur, then the mask that feathers it away */
+    dofBX.clearRect(0, 0, pw2, bandPx);
+    dofBX.drawImage(dofS, 0, 0, sw3, Math.max(1, Math.round(bandPx / ph2 * sh3)), 0, 0, pw2, bandPx);
+    dofBX.globalAlpha = 0.6;
+    dofBX.drawImage(dofT, 0, 0, sw4, Math.max(1, Math.round(bandPx / ph2 * sh4)), 0, 0, pw2, bandPx);
+    dofBX.globalAlpha = 1;
+    var g = dofBX.createLinearGradient(0, 0, 0, bandPx);
+    g.addColorStop(0, 'rgba(0,0,0,1)');
+    g.addColorStop(0.5, 'rgba(0,0,0,0.85)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    dofBX.globalCompositeOperation = 'destination-in';
+    dofBX.fillStyle = g; dofBX.fillRect(0, 0, pw2, bandPx);
+    /* the mask is world distance, not screen height: a NEAR tower rising
+       into the far band is on the focal plane, and a real tilt-shift lens
+       keeps the whole subject sharp however tall it stands in the frame.
+       Its painted quads are punched back out of the blur, soft-edged. */
+    var dofFar = cam.dist * 1.45 + 120;
+    dofBX.globalCompositeOperation = 'destination-out';
+    var hasF = typeof dofBX.filter === 'string';
+    if (hasF) dofBX.filter = 'blur(' + Math.max(2, Math.round(bandPx * 0.02)) + 'px)';
+    dofBX.fillStyle = '#000';
+    for (var vi2 = 0; vi2 < vis.length; vi2++) {
+      var vr = vis[vi2];
+      if (vr._d > dofFar) continue;
+      var vs = vr._sil;
+      if (!vs || vs.y0 * CTS > bandPx) continue;
+      var va = clamp((dofFar - vr._d) / (cam.dist * 0.5 + 60), 0, 1);
+      if (va < 0.05) continue;
+      dofBX.globalAlpha = va;
+      dofBX.beginPath();
+      for (var hq = 0; hq < vr.hit.length; hq++) {
+        var q5 = vr.hit[hq];
+        dofBX.moveTo(q5[0] * CTS, q5[1] * CTS); dofBX.lineTo(q5[2] * CTS, q5[3] * CTS);
+        dofBX.lineTo(q5[4] * CTS, q5[5] * CTS); dofBX.lineTo(q5[6] * CTS, q5[7] * CTS);
+        dofBX.closePath();
+      }
+      dofBX.fill();
+    }
+    if (hasF) dofBX.filter = 'none';
+    dofBX.globalAlpha = 1;
+    dofBX.globalCompositeOperation = 'source-over';
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(dofB, 0, 0, pw2, bandPx, 0, 0, pw2, bandPx);
+    /* near band: a mild foreground fall-off along the bottom edge */
+    var nb0 = Math.round(ph2 * 0.90), nbh = ph2 - nb0;
+    if (nbh > 4) {
+      dofBX.clearRect(0, nb0, pw2, nbh);
+      dofBX.drawImage(dofS, 0, Math.floor(nb0 / ph2 * sh3), sw3, Math.max(1, sh3 - Math.floor(nb0 / ph2 * sh3)),
+        0, nb0, pw2, nbh);
+      var g2 = dofBX.createLinearGradient(0, nb0, 0, ph2);
+      g2.addColorStop(0, 'rgba(0,0,0,0)');
+      g2.addColorStop(1, 'rgba(0,0,0,0.75)');
+      dofBX.globalCompositeOperation = 'destination-in';
+      dofBX.fillStyle = g2; dofBX.fillRect(0, nb0, pw2, nbh);
+      dofBX.globalCompositeOperation = 'source-over';
+      ctx.drawImage(dofB, 0, nb0, pw2, nbh, 0, nb0, pw2, nbh);
+    }
+    ctx.setTransform(CTS, 0, 0, CTS, 0, 0);
+  }
+
+  function renderWorld(rs, motion, now) {
+    var wt0 = performance.now();
+    /* the world draws straight into the visible bottom canvas; while the
+       camera moves its backing store is smaller and the compositor scales
+       it up for free — the classic city-builder resolution drop */
+    var pw = Math.max(2, Math.round(W * DPR * rs)), ph = Math.max(2, Math.round(H * DPR * rs));
+    if (cv.width !== pw || cv.height !== ph) { cv.width = pw; cv.height = ph; }
+    wRS = rs;
+    MQ = !!motion;
+    INWORLD = true;
+    CTS = DPR * rs;
+    ctx.setTransform(CTS, 0, 0, CTS, 0, 0);
+    /* mid-pan the sprites sample nearest-neighbour: filtering them through
+       a fractional scale is what made the reduced-res trick lose before */
+    ctx.imageSmoothingEnabled = !motion;
     bloom.length = 0; GSTRIPS = 0; NPART = 0; NFILL = 0; NGRAD = 0;
 
     var _p = PROF, _t = performance.now(), _m = _p ? function (k) { var n = performance.now(); _p[k] = (_p[k] || 0) + (n - _t); _t = n; } : function () { };
@@ -4764,6 +6175,8 @@
     drawRoads(); _m('roads');
     drawWater(); _m('water');
     drawDistrictGround(); _m('sgrid');
+    drawNearTooth(); _m('tooth');
+    drawTransitLines(); _m('transit');
 
     vis = [];
     var i, n = blds.length;
@@ -4773,7 +6186,8 @@
       var d = depthOf(r.wx, r.wy, r.topz * 0.4);
       if (d < 14) continue;
       var scr = (Math.max(r.hw, r.hd) * 2 + r.topz) * (FOC / d);
-      if (scr < 2.6) continue;
+      /* mid-pan, a building under ~5px is pure cost: it returns at the snap */
+      if (scr < (motion ? 5.2 : 2.6)) continue;
       if (!proj(r.wx, r.wy, r.topz * 0.5)) continue;
       var pad = scr + 60;
       if (px < -pad || px > W + pad || py < -pad || py > H + pad) continue;
@@ -4782,7 +6196,8 @@
       vis.push(r);
     }
     vis.sort(function (a, b) { return b._d - a._d; });
-    if (vis.length > 180) vis.splice(0, vis.length - 180);
+    var vcap = motion ? (ADAPT ? 84 : 110) : 180;
+    if (vis.length > vcap) vis.splice(0, vis.length - vcap);
 
     occReset();
     var keep = [];
@@ -4816,7 +6231,8 @@
     /* generous when the camera rests: the old 1.05 quota left the landmark
        tower of a mid-zoom shot as a blank slab while small near buildings
        spent the budget. Measured headroom allows it. */
-    var quota = W * H * (dragging ? 0.45 : 2.0), spent = 0, cnt = 0, capN = dragging ? 14 : 26;
+    var quota = W * H * (motion ? 0.45 : 2.0), spent = 0, cnt = 0,
+        capN = motion ? (ADAPT ? 8 : 14) : 26;
     for (i = 0; i < ranked.length; i++) {
       var q = ranked[i];
       /* the scale floor: full dressing goes only to buildings big enough in
@@ -4846,16 +6262,7 @@
     while (pvi < propsVis.length) drawProp(propsVis[pvi++]);
     _m('blds'); _m('props');
 
-    var mrCur = (cur && rec[cur] && rec[cur].parts) ? markerRect(rec[cur], true) : null;
-    var mrHov = (hovered && hovered !== cur && rec[hovered]) ? markerRect(rec[hovered], false) : null;
-    var avoid = [];
-    if (mrCur) avoid.push(mrCur);
-    if (mrHov) avoid.push(mrHov);
-    drawLabels(avoid);
-    drawMarker(mrCur);
-    drawMarker(mrHov);
-
-    if (bloom.length) {
+    if (bloom.length && !softSkip()) {
       ctx.globalCompositeOperation = 'lighter';
       for (i = 0; i < bloom.length; i++) {
         var bl = bloom[i];
@@ -4879,9 +6286,205 @@
       ctx.globalAlpha = 1;
       ctx.globalCompositeOperation = 'source-over';
     }
+    if (!motion) dofPass();
     _m('grade');
+
+    worldRedraws++;
+    wState.az = cam.az; wState.el = cam.el; wState.dist = cam.dist;
+    wState.tx = cam.tx; wState.ty = cam.ty;
+    wState.w = W; wState.h = H; wState.dpr = DPR; wState.rs = rs;
+    wState.dbg = DBG; wState.t = now; wState.q = motion;
+    INWORLD = false;
+    DIAG.worldMs = performance.now() - wt0;
+  }
+
+  /* ------------------------- the living layer, over the cached world */
+  var dynVis = [];
+  function pushDyn(p) {
+    var d = depthOf(p.x, p.y, p.z || 4);
+    if (!(d >= 12)) return;
+    var hz = hazeAt(d);
+    /* the transit cars are the pulse of the model: haze may dim them but
+       never cull them, or half the network reads dead from the home shot */
+    if (hz > 0.82 && p.k !== 'tram') return;
+    if (p.k === 'tram') hz = Math.min(hz, 0.72);
+    if (p.k !== 'bird' && p.k !== 'tram' && (FOC / d) * 6 < 1.6) return;
+    p._d = d; p._hz = hz;
+    dynVis.push(p);
+  }
+  function gatherDyn() {
+    dynVis.length = 0;
+    var i, p;
+    if (LOD < 2) {
+      for (i = 0; i < folk.length; i++) {
+        p = folk[i];
+        /* MID keeps the pedestrians, vans and pigeons; the fine grain —
+           the cat, the gardeners, the moths — belongs to the street */
+        if (LOD === 1 && (p.k === 'cat' || p.k === 'gard' || p.k === 'moth')) continue;
+        pushDyn(p);
+      }
+      for (i = 0; i < birds.length; i++) pushDyn(birds[i]);
+      for (i = 0; i < extras.length; i++) {
+        if (extras[i].pb && extras[i].homeA > 0.03) pushDyn(extras[i]);
+      }
+    }
+    for (i = 0; i < trams.length; i++) pushDyn(trams[i]);
+    dynVis.sort(function (a, b) { return b._d - a._d; });
+  }
+  /* The world is one painting now, so an agent cannot be slotted between
+     the walls; one that walks behind a building (or a stall, or a tree)
+     fades out instead, and fades back on the other side. */
+  function dynOcc(p) {
+    if (p.k === 'bird') {
+      /* overhead, but not through the towers: a bird whose screen point
+         falls on a nearer building's wall fades behind it. Probe where the
+         bird is actually drawn — its orbit, not its anchor. */
+      var bt = LT * 0.00008 + p.ph;
+      if (!proj(p.x + cos(bt) * 60, p.y + sin(bt * 1.3) * 60, p.z)) return true;
+      var bsx = px, bsy = py, bpd = p._d, bi, bj;
+      for (bi = vis.length - 1; bi >= 0; bi--) {
+        var br = vis[bi];
+        if (br._d >= bpd - 2) break;
+        var bs = br._sil;
+        if (!bs || bsx < bs.x0 || bsx > bs.x1 || bsy < bs.y0 || bsy > bs.y1) continue;
+        var bhs = br.hit;
+        for (bj = 0; bj < bhs.length; bj++) if (inQuad(bhs[bj], bsx, bsy)) return true;
+      }
+      return false;
+    }
+    var zc = p.z != null ? p.z : 2.4;
+    if (!proj(p.x, p.y, zc)) return true;
+    var sx = px, sy = py, pd = p._d, i, j;
+    for (i = vis.length - 1; i >= 0; i--) {              /* near to far */
+      var r = vis[i];
+      if (r._d >= pd - 2) break;
+      var s = r._sil;
+      if (!s || sx < s.x0 || sx > s.x1 || sy < s.y0 || sy > s.y1) continue;
+      var hs = r.hit;
+      for (j = 0; j < hs.length; j++) if (inQuad(hs[j], sx, sy)) return true;
+    }
+    /* the chunky street furniture: a walker does not stride through a
+       market stall, a canopy tree or a parked van */
+    for (i = propsVis.length - 1; i >= 0; i--) {
+      var q = propsVis[i];
+      if (q._d >= pd - 3) break;
+      var rr2;
+      if (q.k === 'stall') rr2 = q.s * 0.8;
+      else if (q.k === 'tree') rr2 = (q.r || 4) * 0.7;
+      else if (q.k === 'van') rr2 = 3.6;
+      else continue;
+      var dx = q.x - p.x, dy = q.y - p.y;
+      if (dx * dx + dy * dy > (rr2 + 14) * (rr2 + 14)) continue;
+      if (!proj(q.x, q.y, 2.5)) continue;
+      var pr = rr2 * (FOC / q._d);
+      if ((sx - px) * (sx - px) + (sy - py) * (sy - py) < pr * pr) return true;
+    }
+    return false;
+  }
+  function drawDyn(now) {
+    gatherDyn();
+    var dt = Math.min(120, now - lastDynT); lastDynT = now;
+    var ease = reduced() ? 1 : 1 - Math.pow(1e-5, dt / 1000);
+    for (var i = 0; i < dynVis.length; i++) {
+      var p = dynVis[i];
+      var tgt = dynOcc(p) ? 0 : 1;
+      /* seen from a distance, a hidden transit car still spills a little
+         light past the block that hides it: the network reads alive from
+         the home shot without breaking depth down in the streets */
+      if (tgt === 0 && p.k === 'tram' && LOD > 0) tgt = 0.28;
+      /* an agent's first frame eases in from nothing (birds crossing the
+         tier boundary used to arrive as a step); reduced motion keeps its
+         byte-identical instant pose */
+      var oa = p._oa == null ? (reduced() ? tgt : tgt * 0.06) : p._oa + (tgt - p._oa) * ease;
+      p._oa = oa;
+      if (p.extra) oa *= p.homeA;      /* the passers-by carry their own arrival */
+      if (oa < 0.05) continue;
+      OA = oa;
+      ctx.globalAlpha = oa;
+      drawProp(p);
+      OA = 1;
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function render() {
+    var t0 = performance.now();
+    TNOW = t0;
+    FRAMEN++;
+    lodUpdate();
+    stepLife();
+    updateCam();
+    /* a tooltip is anchored to a screen point: once the camera has moved
+       from where it was raised, what stands under the cursor is re-read,
+       and the tip is re-anchored to it or dismissed, never left frozen */
+    if (hovered && hovCam &&
+        (abs(cam.az - hovCam.az) > 0.004 || abs(cam.el - hovCam.el) > 0.004 ||
+         abs(cam.dist - hovCam.dist) > hovCam.dist * 0.012 ||
+         abs(cam.tx - hovCam.tx) > 3 || abs(cam.ty - hovCam.ty) > 3)) {
+      var reSlug = (lastHx != null && !dragging) ? pick(lastHx, lastHy) : null;
+      if (reSlug === hovered) snapHovCam();
+      else setHover(reSlug);
+    }
+    /* the world layer, only when the camera or the frame truly changed */
+    var moving = dragging || !!fly ||
+      cam.az !== camT.az || cam.el !== camT.el || cam.dist !== camT.dist ||
+      cam.tx !== camT.tx || cam.ty !== camT.ty;
+    var changed = abs(cam.az - wState.az) > 2e-5 || abs(cam.el - wState.el) > 2e-5 ||
+      abs(cam.dist - wState.dist) > cam.dist * 5e-5 ||
+      abs(cam.tx - wState.tx) > 0.01 || abs(cam.ty - wState.ty) > 0.01 ||
+      W !== wState.w || H !== wState.h || DPR !== wState.dpr || DBG !== wState.dbg;
+    if (changed) {
+      renderWorld(moving && !reduced() ? moveRS() : 1, moving && !reduced(), t0);
+      /* dynamic resolution, with hysteresis: a pan that runs hot drops the
+         backing store further; a cool one climbs back */
+      if (moving) {
+        if (DIAG.worldMs > 17) ADAPT = true;
+        else if (DIAG.worldMs < 6.5) ADAPT = false;
+      }
+    } else if (!moving && (wState.rs < 1 || wState.q) && t0 - wState.t > SNAP_MS) {
+      renderWorld(1, false, t0);       /* the full-quality snap after a move */
+      ADAPT = false;
+    }
+
+    /* the passers-by re-home only now, with this frame's matrices and the
+       freshly kept silhouettes, so "visible from here" means this camera,
+       not the one the last shot was framed with */
+    if (extras.length) {
+      var exm2 = Math.hypot(cam.tx - exState.tx, cam.ty - exState.ty);
+      if (LOD !== exState.lod || exm2 > 60) retargetExtras();
+    }
+
+    /* the living layer and the wayfinding, on the overlay canvas: the
+       browser composites the two layers, so a frame at rest costs only
+       a clear and the agents */
+    var tb1 = performance.now();
+    var mainC = ctx;
+    ctx = ovCtx;
+    CTS = DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    drawDyn(t0);
+    var tb2 = performance.now();
+    DIAG.dynMs = tb2 - tb1;
+
+    var mrCur = (cur && rec[cur] && rec[cur].parts) ? markerRect(rec[cur], true) : null;
+    var mrHov = (hovered && hovered !== cur && rec[hovered]) ? markerRect(rec[hovered], false) : null;
+    var avoid = [];
+    if (mrCur) avoid.push(mrCur);
+    if (mrHov) avoid.push(mrHov);
+    drawLabels(avoid);
+    drawMarker(mrCur);
+    drawMarker(mrHov);
+    ctx = mainC;
+    CTS = DPR * wRS;
+
     lastFrameMs = performance.now() - t0;
     if (frameSamples.length < 400) frameSamples.push(lastFrameMs);
+    if (fr60.length < 60) { fr60.push(lastFrameMs); fr60sum += lastFrameMs; }
+    else { fr60sum += lastFrameMs - fr60[fr60i]; fr60[fr60i] = lastFrameMs; fr60i = (fr60i + 1) % 60; }
+    DIAG.camAz = cam.az; DIAG.camEl = cam.el; DIAG.camDist = cam.dist;
+    DIAG.frameMs = lastFrameMs; DIAG.avgFrameMs = fr60sum / fr60.length;
+    DIAG.worldRedraws = worldRedraws; DIAG.lod = LOD_NAMES[LOD];
   }
   /* ------------------------------------------------------ camera run */
   var running = false, lastT = 0, lastAct = 0, needs = true;
@@ -4893,6 +6496,14 @@
   }
   function loop(now) {
     if (!running) return;
+    if (lastRafT) {
+      var gap = now - lastRafT;
+      DIAG.rafGapMs = gap;
+      if (rg60.length < 60) { rg60.push(gap); rg60sum += gap; }
+      else { rg60sum += gap - rg60[rg60i]; rg60[rg60i] = gap; rg60i = (rg60i + 1) % 60; }
+      DIAG.avgRafGapMs = rg60sum / rg60.length;
+    }
+    lastRafT = now;
     var dt = Math.min(64, now - lastT); lastT = now;
     stepCam(now, dt);
     render();
@@ -4911,19 +6522,19 @@
       if (t >= 1) fly = null;
       return;
     }
-    /* the scene breathes when nobody is touching it */
-    if (now - lastAct > 3200) {
-      var k = (now - lastAct - 3200) / 2600;
-      var amp = clamp(k, 0, 1);
-      camT.az += 0.000035 * dt * amp;
-      camT.el = camT.el + (0.222 + 0.016 * sin(now / 7400) - camT.el) * 0.004 * amp;
-    }
+    /* when nobody is touching it, the camera stands dead still */
     var f = 1 - Math.pow(0.0016, dt / 1000);
     cam.az += (camT.az - cam.az) * f;
     cam.el += (camT.el - cam.el) * f;
     cam.dist += (camT.dist - cam.dist) * f;
     cam.tx += (camT.tx - cam.tx) * f;
     cam.ty += (camT.ty - cam.ty) * f;
+    /* the ease is asymptotic; snap the last sub-pixel so rest is exact */
+    if (abs(camT.az - cam.az) < 1e-5) cam.az = camT.az;
+    if (abs(camT.el - cam.el) < 1e-5) cam.el = camT.el;
+    if (abs(camT.dist - cam.dist) < camT.dist * 1e-5 + 1e-4) cam.dist = camT.dist;
+    if (abs(camT.tx - cam.tx) < 5e-3) cam.tx = camT.tx;
+    if (abs(camT.ty - cam.ty) < 5e-3) cam.ty = camT.ty;
   }
   function paintNow() { updateCam(); render(); }
   function touch() { lastAct = performance.now(); if (reduced()) paintNow(); }
@@ -4934,42 +6545,48 @@
      solved rather than guessed, and re-solved whenever the frame changes
      shape, so widening the view actually shows more model. */
   function fitHome() {
-    var el = 0.58, az = -PI / 2 + 0.26;
+    /* The home shot is the hero photograph, not the survey: a lower, closer
+       camera that fills the frame with the model and leaves the horizon a
+       narrow band of golden sky, the way the reference dioramas are shot.
+       The old el 0.58 spent the top third of the frame on bare table. */
+    var el = 0.37, az = -PI / 2 + 0.26;
     var tx = bounds.cx, ty = bounds.cy;
     var span = bounds.r * 3;
     if (paper) {
       tx = (paper.x0 + paper.x1) / 2; ty = (paper.y0 + paper.y1) / 2;
       span = Math.max(paper.x1 - paper.x0, paper.y1 - paper.y0);
+      /* the frame centre sits a touch beyond the sheet centre, toward the
+         far side: the near deckle bleeds past the HUD and the city rides
+         the lower two thirds under a band of golden sky */
+      tx -= cos(az) * span * 0.03; ty -= sin(az) * span * 0.03;
     }
     var probe = [], i;
     if (paper) {
       for (i = 0; i < paper.edge.length; i += 8) probe.push(paper.edge[i]);
-      /* the printed name must stay clear of the HUD; the deckle may tuck
-         behind it, the way a photograph lets the foreground bleed */
-      probe.push({ x: paper.tx, y: paper.ty, strict: 1 });
-      probe.push({ x: paper.tx + paper.tsize * 8.6, y: paper.sy, strict: 1 });
     } else probe.push({ x: bounds.cx, y: bounds.cy });
 
     var save = { az: cam.az, el: cam.el, dist: cam.dist, tx: cam.tx, ty: cam.ty };
-    var hudEl = document.getElementById('hud');
-    var BAR = (hudEl ? hudEl.offsetHeight : 100) + 6;
-    var d = span * 0.36, tries;
-    for (tries = 0; tries < 40; tries++) {
+    /* the distance is solved for a photograph, not a survey: pull in until
+       the sheet bleeds off both sides of the frame and the far deckle
+       still clears the top — the model fills the picture and the table is
+       a border, never a subject */
+    var d = span * 0.30, tries;
+    for (tries = 0; tries < 90; tries++) {
       cam.az = az; cam.el = el; cam.dist = d; cam.tx = tx; cam.ty = ty;
       updateCam();
-      var ok = true, x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9, ys = -1e9;
+      var ok = true, x0 = 1e9, x1 = -1e9, y0 = 1e9;
       for (i = 0; i < probe.length; i++) {
         if (!proj(probe[i].x, probe[i].y, 0)) { ok = false; break; }
         if (px < x0) x0 = px; if (px > x1) x1 = px;
-        if (py < y0) y0 = py;
-        if (probe[i].strict) { if (py > ys) ys = py; }
-        else if (py > y1) y1 = py;
+        /* only a point that is actually in the picture holds the top:
+           a corner bled off the side may sit as high as it likes */
+        if (px > -W * 0.04 && px < W * 1.04 && py < y0) y0 = py;
       }
-      /* a real bleed left and right is a photograph, not a diagram: the
-         sheet fills the frame, the table is a border and not a subject */
-      if (ok && x0 > -W * 0.085 && x1 < W * 1.085 && y0 > H * 0.012 &&
-          ys < H - BAR - 14 && y1 < H + BAR * 0.9) break;
-      d *= 1.06;
+      /* generous side bleed: the width constraint was what held the camera
+         out, leaving 40% of the hero frame to sky and bare table. The
+         sheet may run 2.6 frames wide; the far deckle guard keeps the top. */
+      if (ok && x1 - x0 <= W * 2.60 && y0 > H * 0.045) break;
+      d *= 1.05;
       if (d > span * 14) break;
     }
     HOME = { az: az, el: el, dist: d, tx: tx, ty: ty };
@@ -5133,7 +6750,7 @@
     $('#btnNext').onclick = function () { step(1); };
     $('#btnLocate').onclick = function () { locate(true); };
 
-    window.addEventListener('hashchange', route);
+  window.addEventListener('hashchange', route);
     var rt = null;
     window.addEventListener('resize', function () {
       if (rt) clearTimeout(rt);
@@ -5371,8 +6988,10 @@
     setHover(null);
     var h = location.hash || '';
     var slug = h.charAt(0) === '#' ? h.slice(1) : h;
+    coldArrival = false;
     if (!slug || slug === '/') {
       slug = pages['/cms/intro'] ? '/cms/intro' : order[0];
+      coldArrival = true;   /* no destination asked: let the whole model be admired */
       try { history.replaceState(null, '', '#' + slug); } catch (err) { }
     }
     if (!pages[slug]) {
@@ -5387,16 +7006,18 @@
       rbodyEl.scrollTop = 0;
       return;
     }
-    openPage(slug);
+    openPage(slug, coldArrival);
   }
 
-  function openPage(slug) {
+  function openPage(slug, holdCamera) {
     var same = cur === slug;
     cur = slug;
     renderPage(slug);
     markNav(slug);
     if (!same) rbodyEl.scrollTop = 0;
-    if (!document.body.classList.contains('booting')) locate(false);
+    /* a cold arrival keeps the establishing shot: the city on its torn page,
+       whole, before any building asks for the camera */
+    if (!document.body.classList.contains('booting') && !holdCamera) locate(false);
   }
 
   /* the sun-side azimuth whose sight line to the lot is least walled off
@@ -5502,7 +7123,8 @@
     h.push('<div class="meta">');
     h.push('<span class="chip arch">' + esc(A.name) + ' · ' + esc(A.mat) + '</span>');
     h.push('<span class="chip"><b>' + nfmt(r.words) + '</b> words</span>');
-    h.push('<span class="chip"><b>' + r.code + '</b> code block' + (r.code === 1 ? '' : 's') + '</span>');
+    var codeN = r.codeAll != null ? r.codeAll : r.code;
+    h.push('<span class="chip"><b>' + codeN + '</b> code block' + (codeN === 1 ? '' : 's') + '</span>');
     h.push('<span class="chip"><b>' + r.inb + '</b> page' + (r.inb === 1 ? '' : 's') + ' cite this</span>');
     h.push('<span class="chip"><b>' + r.outb + '</b> link' + (r.outb === 1 ? '' : 's') + ' out</span>');
     (p.tags || []).forEach(function (t) { h.push('<span class="chip tag">' + esc(t) + '</span>'); });
@@ -5797,6 +7419,36 @@
       return out;
     },
     dbg: function (v) { DBG = v; paintNow(); },
+    profLive: function (on) { PROF = on ? {} : null; },
+    profRead: function () { var o = {}, k; if (PROF) for (k in PROF) o[k] = +PROF[k].toFixed(1); return o; },
+    profWorld: function (n, rs, motion) {
+      PROF = {};
+      var i;
+      for (i = 0; i < (n || 10); i++) renderWorld(rs || 1, motion != null ? !!motion : (rs != null && rs < 1), performance.now());
+      var o = PROF, k; PROF = null;
+      for (k in o) o[k] = +(o[k] / (n || 10)).toFixed(2);
+      return o;
+    },
+    transit: function () {
+      return trams.map(function (tr) {
+        return { len: Math.round(tr.pb.len), bus: !!tr.bus, x: +tr.x.toFixed(1), y: +tr.y.toFixed(1), sp: tr.sp };
+      });
+    },
+    tramState: function () {
+      return trams.map(function (tr) {
+        return { x: +tr.x.toFixed(1), y: +tr.y.toFixed(1),
+          oa: tr._oa == null ? null : +tr._oa.toFixed(2),
+          d: tr._d == null ? null : Math.round(tr._d),
+          hz: tr._hz == null ? null : +tr._hz.toFixed(2) };
+      });
+    },
+    lod: function () { return LOD_NAMES[LOD]; },
+    extrasState: function () {
+      return extras.map(function (e) {
+        return { a: +e.homeA.toFixed(2), tgt: e.tgt, on: !!e.pb,
+          x: +e.x.toFixed(0), y: +e.y.toFixed(0) };
+      });
+    },
     tile: function () { return SPR.paperTile ? SPR.paperTile.toDataURL() : null; },
     paint: function () { paintNow(); return lastFrameMs; },
     cam: function () { return { az: cam.az, el: cam.el, dist: cam.dist, tx: cam.tx, ty: cam.ty }; },
