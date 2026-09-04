@@ -151,15 +151,17 @@
     { base: '#8FA3B4', k: 0.30 },   /* 12 glass                                */
     { base: '#9A7C55', k: 0.34 },   /* 13 timber, planks, hoardings            */
     { base: '#C3462F', k: 0.48 },   /* 14 awning red                           */
-    { base: '#3C3A44', k: 0.26 },   /* 15 tarmac, tarpaulin, dark tin          */
+    { base: '#453E42', k: 0.26 },   /* 15 tarmac, dark tin                     */
     { base: '#D8C49A', k: 0.44 },   /* 16 pale render                          */
     null, null, null, null,         /* 17-20 the paint on a parked van         */
     null, null, null,               /* 21-23 the stripes of a market canopy    */
     { base: '#A44C2E', k: 0.52 },   /* 24 pantile, weathered darker            */
-    { base: '#C96C3E', k: 0.52 }    /* 25 pantile, freshly laid                */
+    { base: '#C96C3E', k: 0.52 },   /* 25 pantile, freshly laid                */
+    { base: '#8A7A5E', k: 0.36 }    /* 26 weathered canvas tarpaulin           */
   ];
   var M_STEEL = 7, M_TILE = 8, M_TRIM = 9, M_COPPER = 10, M_SHUT = 11,
-      M_GLASS = 12, M_WOOD = 13, M_AWN = 14, M_DARK = 15, M_RENDER = 16;
+      M_GLASS = 12, M_WOOD = 13, M_AWN = 14, M_DARK = 15, M_RENDER = 16,
+      M_TARP = 26;
   var M_TILES = [8, 24, 25];
 
   /* ------------------------------------------------------------ state */
@@ -174,7 +176,12 @@
   var river = { pts: [], bridges: [], poly: null };
   var lanes = [], highways = [];
   var bounds = { cx: 0, cy: 0, r: 800 };
-  var props = [], paper = null;
+  var props = [], paper = null, tools = [];
+  var PROV = null;                /* per-page git history, for the night moths */
+  var folk = [];                  /* the living layer: everything that moves */
+  var lampOf = {};                /* the kerb lamp in front of each page */
+  var WINDV = 0;                  /* one wind over the whole model, -1..1 */
+  var LT = 0;                     /* life time: frozen to one pose under reduced motion */
 
   var P = 30;                 /* lot pitch, world units */
   var GAP = 4;                /* the sliver between neighbours on one block */
@@ -192,9 +199,10 @@
     Promise.all([
       fetch('content.json').then(function (r) { return r.json(); }),
       fetch('graph.json').then(function (r) { return r.json(); }),
-      fetch('communities.json').then(function (r) { return r.json(); })
+      fetch('communities.json').then(function (r) { return r.json(); }),
+      fetch('provenance.json').then(function (r) { return r.json(); })['catch'](function () { return null; })
     ]).then(function (res) {
-      B = res[0]; G = res[1]; COM = res[2];
+      B = res[0]; G = res[1]; COM = res[2]; PROV = res[3];
       pages = B.pages; order = B.order;
       order.forEach(function (s, i) { orderIx[s] = i; });
       $('#ver').textContent = B.version;
@@ -212,6 +220,7 @@
         bakeSprites();
         bakeCity();
         bakeProps();
+        bakeLife();
         bakePaper();
         resize();
         homeShot();
@@ -525,6 +534,42 @@
         way[m].y = way[m].y * 0.86 + (way[m - 1].y + way[m + 1].y) * 0.07;
       }
     }
+    /* the reading order can double back on itself; a river must not. Any
+       place the course crosses itself, the loop between the two crossings is
+       cut out, then the course is relaxed once more so the splice is smooth. */
+    function segX(a, b, c2, e2) {
+      var d1 = (b.x - a.x) * (c2.y - a.y) - (b.y - a.y) * (c2.x - a.x);
+      var d5 = (b.x - a.x) * (e2.y - a.y) - (b.y - a.y) * (e2.x - a.x);
+      var d3 = (e2.x - c2.x) * (a.y - c2.y) - (e2.y - c2.y) * (a.x - c2.x);
+      var d4 = (e2.x - c2.x) * (b.y - c2.y) - (e2.y - c2.y) * (b.x - c2.x);
+      return ((d1 > 0) !== (d5 > 0)) && ((d3 > 0) !== (d4 > 0));
+    }
+    var cutg = 0, cut = true;
+    while (cut && cutg++ < 24 && way.length > 3) {
+      cut = false;
+      for (var ii = 0; ii < way.length - 3 && !cut; ii++) {
+        for (var jj = ii + 2; jj < way.length - 1; jj++) {
+          if (segX(way[ii], way[ii + 1], way[jj], way[jj + 1])) {
+            way.splice(ii + 1, jj - ii);
+            cut = true; break;
+          }
+        }
+      }
+    }
+    for (it = 0; it < 30; it++) {
+      for (k = 0; k < way.length; k++) {
+        for (q = 0; q < dists.length; q++) {
+          var d6 = dists[q];
+          var dx6 = way[k].x - d6.x, dy6 = way[k].y - d6.y, dd6 = sqrt(dx6 * dx6 + dy6 * dy6) || 1;
+          var need6 = d6.r + 18;
+          if (dd6 < need6) { way[k].x += dx6 / dd6 * (need6 - dd6) * 0.5; way[k].y += dy6 / dd6 * (need6 - dd6) * 0.5; }
+        }
+      }
+      for (m = 1; m < way.length - 1; m++) {
+        way[m].x = way[m].x * 0.86 + (way[m - 1].x + way[m + 1].x) * 0.07;
+        way[m].y = way[m].y * 0.86 + (way[m - 1].y + way[m + 1].y) * 0.07;
+      }
+    }
     river.way = way;
     river.pts = catmull(way, 12);
     river.bridges = way.map(function (w) { return { x: w.x, y: w.y, t: w.t }; });
@@ -535,13 +580,17 @@
       var p0 = river.pts[Math.max(0, n - 1)], p1 = river.pts[Math.min(L - 1, n + 1)];
       var tx = p1.x - p0.x, ty = p1.y - p0.y, tl = sqrt(tx * tx + ty * ty) || 1;
       var nx = -ty / tl, ny = tx / tl;
-      var tp = Math.min(n, L - 1 - n) / (L * 0.10);
-      if (tp > 1) tp = 1;
+      /* the source narrows to a trickle over a long reach, so the upstream
+         end fades out instead of stopping in a rounded blob */
+      var tpA = n / (L * 0.18), tpB = (L - 1 - n) / (L * 0.08);
+      var tp = Math.min(tpA < 1 ? tpA : 1, tpB < 1 ? tpB : 1);
       tp = tp * tp * (3 - 2 * tp);
-      var w = (13 + 27 * (river.pts[n].t || 0)) * (0.06 + 0.94 * tp);
+      var w = (13 + 27 * (river.pts[n].t || 0)) * (0.015 + 0.985 * tp);
       left.push([river.pts[n].x + nx * w, river.pts[n].y + ny * w]);
       right.push([river.pts[n].x - nx * w, river.pts[n].y - ny * w]);
     }
+    river.qL = left.slice();                     /* the quays, one per bank */
+    river.qR = right.slice();
     river.poly = left.concat(right.reverse());
   }
 
@@ -578,7 +627,9 @@
     var base = [1, 2, 4, 6, 9, 12][r.tier];
     if (r.tier >= 5) base = 12 + Math.round((r.inb - 25) / 9);
     var wf = 0.72 + 0.58 * Math.min(1, r.words / 2600);
-    return Math.max(1, Math.round(base * wf));
+    /* a deterministic storey of jitter, so two equal pages are not twins */
+    var jit = ((r.h32 >>> 7) % 3) - 1;
+    return Math.max(1, Math.round(base * wf) + jit);
   }
   function heightOf(r) {
     if (r.derelict) return GFH * (0.55 + Math.min(r.words, 1800) / 2600);
@@ -663,6 +714,11 @@
     var ax = x - hw * 0.20 + rn(k0) * w * 0.2;
     strut(V, ax, y + hd * 0.5, z, ax, y + hd * 0.5, z + 11 + rn(k0 + 1) * 7, 0.35, M_STEEL);
     strut(V, ax - 2.2, y + hd * 0.5, z + 9, ax + 2.2, y + hd * 0.5, z + 9, 0.3, M_STEEL);
+    /* half of these roofs also keep a garden in planters */
+    if (rn(k0 + 2) > 0.55) {
+      box(V, x - hw * 0.36, y + hd * 0.36, w * 0.20, d * 0.14, z, z + 1.5, M_WOOD, { deco: 'plain' });
+      plant(V, x - hw * 0.36, y + hd * 0.36, z + 3.2, Math.min(w, d) * 0.12 + 1.4, 'tree');
+    }
   }
 
   /* a chimney stack, with a cap and its smoke */
@@ -722,14 +778,28 @@
   function composeTownhouse(r, lot, w, d, h, mi, fr, rn, lf) {
     var V = [], nf = Math.max(1, Math.round((h - GFH) / STOREY));
     var bh = GFH + nf * STOREY;
+    var gfk = rn(2) > 0.45 ? 'shop' : 'arch';
     slab(V, 0, 0, w + 2.6, d + 2.6, 0, 1.7, M_TRIM);
     box(V, 0, 0, w, d, 1.7, bh, mi, {
-      deco: 'stone', gf: rn(2) > 0.45 ? 'shop' : 'arch', front: fr, lit: lf,
+      deco: 'stone', gf: gfk, front: fr, lit: lf,
       floors: nf, shut: 1, course: nf >= 3 ? 1 : 0, bal: nf >= 2 ? 1 : 0,
       quoin: rn(3) > 0.55 ? 1 : 0
     });
+    /* a hanging sign on a bracket, beside the shop door */
+    if (gfk === 'shop' && rn(12) > 0.42) {
+      var sn = FN[fr], su = Math.min(6.5, (sn[0] ? d : w) * 0.28);
+      var sxp = sn[0] * (w / 2 + 0.2) + (sn[1] ? su : 0);
+      var syp = sn[1] * (d / 2 + 0.2) + (sn[0] ? su : 0);
+      var sxe = sn[0] * (w / 2 + 3.2) + (sn[1] ? su : 0);
+      var sye = sn[1] * (d / 2 + 3.2) + (sn[0] ? su : 0);
+      strut(V, sxp, syp, GFH + 1.0, sxe, sye, GFH + 1.0, 0.35, M_STEEL);
+      box(V, (sxp + sxe) / 2 + sn[0] * 0.4, (syp + sye) / 2 + sn[1] * 0.4,
+        sn[0] ? 2.4 : 0.5, sn[0] ? 0.5 : 2.4, GFH - 2.2, GFH + 0.8, M_AWN, { deco: 'plain' });
+    }
     slab(V, 0, 0, w + 3.2, d + 3.2, bh, bh + 1.7, M_TRIM);       /* eaves */
-    var ax = w >= d ? 0 : 1;
+    /* a square house takes its ridge from a hash, so a terrace of equals
+       does not repeat one roofline */
+    var ax = abs(w - d) < 1.5 ? ((r.h32 >>> 3) & 1) : (w >= d ? 0 : 1);
     var rise = Math.max(5.5, Math.min(w, d) * 0.30);
     gable(V, 0, 0, w + 4.6, d + 4.6, bh + 1.7, 0, rise, ax, M_TILE);
     var cw = Math.max(2.4, Math.min(w, d) * 0.10);
@@ -774,6 +844,12 @@
     var n = FN[fr];
     box(V, n[0] * (w / 2 + 5), n[1] * (d / 2 + 5), 4.4, 3.6, 0, 3.4, M_WOOD, { deco: 'plain' });
     cyl(V, n[0] * (w / 2 + 5) + (n[1] ? 6 : 0), n[1] * (d / 2 + 5) + (n[0] ? 6 : 0), 1.5, 0, 3.6, M_AWN);
+    /* the trade sign, hanging from a bracket beside the loading door */
+    var su2 = Math.min(7, (n[0] ? d : w) * 0.30);
+    strut(V, n[0] * (w / 2 + 0.2) + (n[1] ? su2 : 0), n[1] * (d / 2 + 0.2) + (n[0] ? su2 : 0), GFH + 1.6,
+             n[0] * (w / 2 + 3.4) + (n[1] ? su2 : 0), n[1] * (d / 2 + 3.4) + (n[0] ? su2 : 0), GFH + 1.6, 0.4, M_STEEL);
+    box(V, n[0] * (w / 2 + 1.9) + (n[1] ? su2 : 0), n[1] * (d / 2 + 1.9) + (n[0] ? su2 : 0),
+      n[0] ? 2.6 : 0.5, n[0] ? 0.5 : 2.6, GFH - 1.8, GFH + 1.3, M_SHUT, { deco: 'plain' });
     return V;
   }
 
@@ -804,6 +880,24 @@
       box(V, 0, 0, lw, ld, cz + 8.4, cz + 8.4 + h * 0.22, mi, { deco: 'stone', floors: 2, lit: lf });
       slab(V, 0, 0, lw + 2.4, ld + 2.4, cz + 8.4 + h * 0.22, cz + 11.4 + h * 0.22, M_TRIM);
       pyr(V, 0, 0, lw + 2.4, ld + 2.4, cz + 11.4 + h * 0.22, cz + 11.4 + h * 0.22 + lw * 0.5, M_COPPER);
+    } else {
+      /* half of the flat archive roofs carry furniture: a tank on legs, a
+         plant box, a stack with smoke, or a roof garden in planters */
+      var rz = cz + 8.4;
+      if (rn(15) > 0.5) {
+        box(V, w * 0.20, -d * 0.16, Math.min(6, w * 0.24), Math.min(5, d * 0.22), rz, rz + 3.6, M_DARK, { deco: 'vent' });
+        var tr2 = Math.min(w, d) * 0.11 + 1.2, tx2 = -w * 0.22, ty2 = d * 0.18, lz2 = rz + 3.0;
+        strut(V, tx2 - tr2, ty2 - tr2, rz, tx2 - tr2, ty2 - tr2, lz2, 0.6, M_STEEL);
+        strut(V, tx2 + tr2, ty2 - tr2, rz, tx2 + tr2, ty2 - tr2, lz2, 0.6, M_STEEL);
+        strut(V, tx2 - tr2, ty2 + tr2, rz, tx2 - tr2, ty2 + tr2, lz2, 0.6, M_STEEL);
+        strut(V, tx2 + tr2, ty2 + tr2, rz, tx2 + tr2, ty2 + tr2, lz2, 0.6, M_STEEL);
+        cyl(V, tx2, ty2, tr2, lz2, lz2 + tr2 * 1.6, M_STEEL);
+      }
+      if (rn(16) > 0.55) chimney(V, -w * 0.30, -d * 0.28, 2.6, cz, rz + 5.5 + rn(17) * 3, mi, rn(18) > 0.5 ? 1 : 0);
+      if (rn(19) > 0.6) {
+        box(V, w * 0.16, d * 0.22, 5.4, 2.4, rz, rz + 1.6, M_WOOD, { deco: 'plain' });
+        plant(V, w * 0.16, d * 0.22, rz + 3.4, Math.min(w, d) * 0.14 + 1.6, 'tree');
+      }
     }
     return V;
   }
@@ -867,10 +961,12 @@
     var pw = n[1] ? along * 1.02 : 9.6, pd = n[0] ? along * 1.02 : 9.6;
     slab(V, offx, offy, pw, pd, 5.1 + bh * 0.86, 5.1 + bh * 0.98, M_TRIM);
     gable(V, offx, offy, pw, pd, 5.1 + bh * 0.98, 0, Math.min(pw, pd) * 0.72, n[1] ? 0 : 1, M_TRIM);
-    /* the drum, the dome, the lantern */
+    /* the drum, the dome, the lantern. The drum cornice is turned round,
+       never square: a square slab seen corner-on reads as a saucer
+       slicing through the dome. */
     var dr = Math.min(bw, bd) * 0.34;
     cyl(V, 0, 0, dr, cz + 3.0, cz + 3.0 + dr * 0.95, mi, { pilaster: 1, lit: lf });
-    slab(V, 0, 0, dr * 2.2, dr * 2.2, cz + 3.0 + dr * 0.95, cz + 4.4 + dr * 0.95, M_TRIM);
+    cyl(V, 0, 0, dr * 1.12, cz + 3.0 + dr * 0.95, cz + 4.4 + dr * 0.95, M_TRIM);
     var dz = cz + 4.4 + dr * 0.95;
     dome(V, 0, 0, dr * 1.06, dz, dr * 1.22, M_COPPER);
     cyl(V, 0, 0, dr * 0.28, dz + dr * 1.18, dz + dr * 1.62, M_TRIM, { flute: 1 });
@@ -893,11 +989,33 @@
     /* the cage: standards, ledgers, planks */
     V.push({ k: 'f', x: 0, y: 0, w: w + 3.6, d: d + 3.6, z0: mh, z1: h + 4, m: M_STEEL,
       lifts: Math.max(2, Math.round((h + 4 - mh) / 8)) });
-    /* the unfinished slabs inside the cage */
-    var lifts = Math.max(1, Math.round((h + 4 - mh) / 9)), i;
+    /* the unfinished slabs inside the cage, and the mess of a working site
+       on each: pallet stacks, plank piles, one draped tarpaulin */
+    var lifts = Math.max(1, Math.round((h + 4 - mh) / 9)), i, topZ = mh;
     for (i = 1; i <= lifts; i++) {
       var z = mh + (h + 4 - mh) * (i / (lifts + 1));
       slab(V, 0, 0, w * 0.94, d * 0.94, z, z + 1.3, M_RENDER);
+      var zt = z + 1.3; topZ = zt;
+      if (rn(20 + i) > 0.42) {
+        var qx = (rn(21 + i) - 0.5) * w * 0.56, qy = (rn(22 + i) - 0.5) * d * 0.56;
+        box(V, qx, qy, 4.6, 3.6, zt, zt + 0.8, M_WOOD, { deco: 'plain' });
+        box(V, qx + 0.3, qy - 0.2, 4.2, 3.2, zt + 0.8, zt + 1.7, M_WOOD, { deco: 'plain' });
+      }
+      if (rn(30 + i) > 0.5) {
+        box(V, (rn(31 + i) - 0.5) * w * 0.5, (rn(32 + i) - 0.5) * d * 0.5,
+          Math.min(9, w * 0.36), 2.2, zt, zt + 1.0, M_WOOD, { deco: 'plain' });
+      }
+    }
+    /* the tarpaulin, lashed over a corner of the top deck */
+    box(V, -w * 0.22, d * 0.18, w * 0.26, d * 0.22, topZ, topZ + 1.1, M_TARP, { deco: 'plain' });
+    /* the ladder up the front face, ground to the finished storeys */
+    var lfn = FN[fr], ldir = [-lfn[1], lfn[0]];
+    var lox = lfn[0] * (w / 2 + 2.4) + ldir[0] * 6, loy = lfn[1] * (d / 2 + 2.4) + ldir[1] * 6;
+    strut(V, lox - ldir[0] * 0.9, loy - ldir[1] * 0.9, 0, lox - ldir[0] * 0.9, loy - ldir[1] * 0.9, mh + 2.5, 0.3, M_WOOD);
+    strut(V, lox + ldir[0] * 0.9, loy + ldir[1] * 0.9, 0, lox + ldir[0] * 0.9, loy + ldir[1] * 0.9, mh + 2.5, 0.3, M_WOOD);
+    var rz2;
+    for (rz2 = 2.4; rz2 < mh + 1.6; rz2 += 3.1) {
+      strut(V, lox - ldir[0] * 0.9, loy - ldir[1] * 0.9, rz2, lox + ldir[0] * 0.9, loy + ldir[1] * 0.9, rz2, 0.22, M_WOOD);
     }
     /* netting over the face that catches the light */
     V.push({ k: 'n', x: 0, y: 0, w: w + 3.6, d: d + 3.6, z0: mh, z1: h + 3, m: M_DARK, front: (fr + 1) & 3 });
@@ -912,7 +1030,8 @@
         strut(V, cx - 2, cy - 2, lz, cx + 2, cy + 2, lz + 7, 0.34, M_STEEL);
         strut(V, cx - 2, cy - 2, lz, cx + 2, cy - 2, lz, 0.34, M_STEEL);
       }
-      var jl = w * 1.5 + 26;
+      /* the jib overhangs the site by a few lots, never a whole district */
+      var jl = Math.min(w * 0.9 + 16, 44);
       strut(V, cx, cy, ch, cx - jl, cy + jl * 0.35, ch + 2, 0.85, M_AWN);
       strut(V, cx, cy, ch, cx + 14, cy - 5, ch + 1, 0.75, M_AWN);
       box(V, cx + 15, cy - 5.4, 5, 4, ch - 2.6, ch + 1.6, M_DARK, { deco: 'plain' });
@@ -932,7 +1051,7 @@
     var bh = Math.max(GFH * 0.92, h * 0.78);
     slab(V, 0, 0, sw + 2.2, sd + 2.2, 0, 1.4, M_TRIM);
     box(V, 0, 0, sw, sd, 1.4, bh, mi, { deco: 'plank', gf: 'door', front: fr, lit: lf, floors: 1 });
-    var ax = sw >= sd ? 0 : 1;
+    var ax = abs(sw - sd) < 1.5 ? ((r.h32 >>> 3) & 1) : (sw >= sd ? 0 : 1);
     gable(V, 0, 0, sw + 3.4, sd + 3.4, bh, 0, Math.min(sw, sd) * 0.30, ax, M_DARK);
     /* a lean-to against the shaded flank */
     var lo = (fr + 2) & 3, n = FN[lo];
@@ -1083,9 +1202,19 @@
         r.hw = lw / 2; r.hd = ld / 2; r.yaw = yaw;
         r.topz = top; r.solidz = solid || top;
         r.matIx = MATIX[r.arch];
-        r.varIx = (r.h32 % 3);
+        r.varIx = (r.h32 % 6);
         r.hit = [];
       });
+    });
+
+    /* the grid extents of each quarter, for the painted street network */
+    dists.forEach(function (dd) {
+      var gx0 = 1e9, gy0 = 1e9, gx1 = -1e9, gy1 = -1e9;
+      dd.lots.forEach(function (l) {
+        if (l.cx < gx0) gx0 = l.cx; if (l.cx + l.sw - 1 > gx1) gx1 = l.cx + l.sw - 1;
+        if (l.cy < gy0) gy0 = l.cy; if (l.cy + l.sd - 1 > gy1) gy1 = l.cy + l.sd - 1;
+      });
+      dd.gx0 = gx0; dd.gx1 = gx1; dd.gy0 = gy0; dd.gy1 = gy1;
     });
 
     scrub = [];
@@ -1139,6 +1268,14 @@
           add({ k: 'tree', x: w1[0], y: w1[1], r: 4.8 + rnd01(hd, i + 40) * 1.8, z: 11 + rnd01(hd, i + 50) * 3.5 });
         }
         add({ k: 'well', x: dd.x, y: dd.y, r: 4.6 });
+        /* market-goers crossing the square */
+        for (i = 0; i < 5; i++) {
+          if (rnd01(hd, i + 60) > 0.8) continue;
+          var a3 = rnd01(hd, i + 66) * TAU, r3 = P * (0.3 + rnd01(hd, i + 72) * 1.1);
+          var w2p = toW(cos(a3) * r3, sin(a3) * r3);
+          add({ k: 'ped', x: w2p[0], y: w2p[1], hue: Math.floor(rnd01(hd, i + 80) * 5),
+                yaw: rnd01(hd, i + 84) * TAU });
+        }
       }
 
       /* street furniture around every lot that fronts a street */
@@ -1153,7 +1290,9 @@
         var lx = offx + (side ? 0 : (rnd01(hl, 1) - 0.5) * w * 0.6);
         var ly = offy + (side ? (rnd01(hl, 1) - 0.5) * d * 0.6 : 0);
         var wl = toW(lot.x + lx, lot.y + ly);
-        add({ k: 'lamp', x: wl[0], y: wl[1], h: 13 + rnd01(hl, 2) * 3 });
+        var lampP = { k: 'lamp', x: wl[0], y: wl[1], h: 13 + rnd01(hl, 2) * 3 };
+        add(lampP);
+        lampOf[lot.slug] = lampP;
         if (rnd01(hl, 3) > 0.55) {
           var b0 = toW(lot.x + lx + (side ? 0 : 8), lot.y + ly + (side ? 8 : 0));
           add({ k: 'bench', x: b0[0], y: b0[1], yaw: dd.rot * PI / 180 + (side ? PI / 2 : 0) });
@@ -1172,6 +1311,23 @@
           if (rnd01(hl, 9 + bi) < 0.5) continue;
           var q0 = toW(lot.x + offx * 0.92 + (side ? 0 : bi * w * 0.34), lot.y + offy * 0.92 + (side ? bi * d * 0.34 : 0));
           add({ k: 'boll', x: q0[0], y: q0[1] });
+        }
+        /* people on the pavement: a knot of two or three near the front */
+        if (!r.derelict && rnd01(hl, 12) > 0.42) {
+          var np2 = 1 + (rnd01(hl, 13) > 0.6 ? 1 : 0), pi;
+          for (pi = 0; pi <= np2; pi++) {
+            var pu = (rnd01(hl, 14 + pi) - 0.5) * (side ? d : w) * 0.8;
+            var pv = 6 + rnd01(hl, 18 + pi) * 5.5;
+            var pw2 = toW(lot.x + (side ? f[0] * (w / 2 + pv) : pu),
+                          lot.y + (side ? pu : f[1] * (d / 2 + pv)));
+            add({ k: 'ped', x: pw2[0], y: pw2[1], hue: Math.floor(rnd01(hl, 22 + pi) * 5),
+                  yaw: rnd01(hl, 26 + pi) * TAU });
+          }
+        }
+        /* cafe furniture outside the workshops: a table and two stools */
+        if (r.arch === 'workshop' && rnd01(hl, 33) > 0.55) {
+          var cw2 = toW(lot.x + offx * 1.1 + (side ? 0 : -9), lot.y + offy * 1.1 + (side ? -9 : 0));
+          add({ k: 'cafe', x: cw2[0], y: cw2[1], yaw: dd.rot * PI / 180 });
         }
       });
 
@@ -1203,6 +1359,20 @@
       var ang = rnd01(hb, 1) * TAU, rad = bounds.r * (0.15 + rnd01(hb, 2) * 0.6);
       props.push({ k: 'bird', x: bounds.cx + cos(ang) * rad, y: bounds.cy + sin(ang) * rad,
         z: 120 + rnd01(hb, 3) * 190, s: 3.4 + rnd01(hb, 4) * 3, ph: rnd01(hb, 5) * TAU });
+    }
+    /* gulls low over the river, and one rowboat drifting on it */
+    if (river.pts.length) {
+      var gi;
+      for (gi = 0; gi < 10; gi++) {
+        var hg = hash32('gull' + gi);
+        var rp = river.pts[Math.floor(rnd01(hg, 1) * (river.pts.length - 1))];
+        props.push({ k: 'bird', x: rp.x + (rnd01(hg, 2) - 0.5) * 44, y: rp.y + (rnd01(hg, 3) - 0.5) * 44,
+          z: 16 + rnd01(hg, 4) * 42, s: 2.0 + rnd01(hg, 5) * 1.5, ph: rnd01(hg, 6) * TAU });
+      }
+      var bmid = river.pts[river.pts.length >> 1];
+      var bnext = river.pts[(river.pts.length >> 1) + 1] || bmid;
+      props.push({ k: 'boat', x: bmid.x, y: bmid.y,
+        yaw: Math.atan2(bnext.y - bmid.y, bnext.x - bmid.x) });
     }
   }
 
@@ -1238,11 +1408,34 @@
   }
   /* a seamless patch of surface, painted once, laid on the plane in true
      perspective. Two of them: the cream of the paper, the dark of the table. */
-  function planeTile(baseC, warmC, coolC, amp, tooth) {
+  function planeTile(baseC, warmC, coolC, amp, tooth, plank) {
     var S = 512, c = document.createElement('canvas');
     c.width = S; c.height = S;
     var g = c.getContext('2d'), i, o, j, k;
     g.fillStyle = rgbs(baseC); g.fillRect(0, 0, S, S);
+    if (plank) {
+      /* the table is boards, not a void: four planks per tile, each with a
+         dark seam, a lit arris beside it and its own slight cast */
+      var bw = S / 4;
+      for (i = 0; i < 4; i++) {
+        var bx = i * bw;
+        g.fillStyle = rgbas(i % 2 ? warmC : coolC, 0.07);
+        g.fillRect(bx, 0, bw, S);
+        g.fillStyle = rgbas(hx('#150D09'), 0.62);
+        g.fillRect(bx, 0, 2.4, S);
+        g.fillStyle = rgbas(warmC, 0.20);
+        g.fillRect(bx + 2.4, 0, 2.6, S);
+      }
+      /* long grain streaks running with the boards */
+      var seed0 = 313;
+      function rg() { seed0 = (seed0 * 1103515245 + 12345) & 0x7fffffff; return ((seed0 >> 9) & 0xffff) / 65536; }
+      for (i = 0; i < 46; i++) {
+        var gx = rg() * S, gl = 40 + rg() * 200, gy = rg() * S;
+        g.fillStyle = rgbas(rg() > 0.5 ? warmC : hx('#150D09'), 0.05 + rg() * 0.07);
+        g.fillRect(gx, gy, 1 + rg() * 1.6, gl);
+        if (gy + gl > S) g.fillRect(gx, gy - S, 1.4, gl);
+      }
+    }
     var octs = [{ n: 16, r: 170, a: 0.40 * amp }, { n: 56, r: 66, a: 0.30 * amp }, { n: 190, r: 22, a: 0.22 * amp }];
     var seed = 7;
     function rf() { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return ((seed >> 9) & 0xffff) / 65536; }
@@ -1331,7 +1524,7 @@
 
     SPR.paperTile = planeTile(C.paper, mix(C.paper, [255, 255, 255], 0.5),
       mix(C.paperLo, C.print, 0.25), 0.7, 0.28);
-    SPR.tableTile = planeTile(C.table, C.tableHi, hx('#1B120E'), 1.0, 0.5);
+    SPR.tableTile = planeTile(C.table, C.tableHi, hx('#1B120E'), 1.0, 0.5, 1);
     SPR.paperPat = ctx.createPattern(SPR.paperTile, 'repeat');
     SPR.paperPat2 = ctx.createPattern(SPR.paperTile, 'repeat');
     SPR.tablePat = ctx.createPattern(SPR.tableTile, 'repeat');
@@ -1457,6 +1650,29 @@
       tx: x0 + marg, ty: y0 + mx * 0.60, tsize: mx * 0.50,
       sx: x0 + marg + 2, sy: y0 + mx * 0.30, ssize: mx * 0.105
     };
+
+    /* the model-maker's tools, laid on the table beside the torn edge: an
+       oversized pencil in the near foreground and a ruler along the far
+       side. They lie flat on the table, so they are drawn right after the
+       sheet, never through the depth-sorted prop stream: a long flat stick
+       sorted by its midpoint would land on top of a district at grazing
+       angles. */
+    tools = [
+      { k: 'pencil', x: paper.cx - W0 * 0.24, y: y0 - mx * 0.34,
+        yaw: 0.12, len: W0 * 0.155 },
+      { k: 'ruler', x: x1 + mx * 0.80, y: paper.cy - H0 * 0.06,
+        yaw: PI / 2 + 0.07, len: H0 * 0.17 },
+      /* the rest of the maker's bench: a craft knife by the near edge, a
+         paint pot with its brush laid across a rag, an eraser, and the
+         curled shavings the pencil left behind */
+      { k: 'knife', x: paper.cx + W0 * 0.235, y: y0 - mx * 0.50,
+        yaw: -0.34, len: W0 * 0.075 },
+      { k: 'pot', x: x0 - mx * 1.25, y: paper.cy + H0 * 0.22,
+        yaw: 0.6, len: W0 * 0.052 },
+      { k: 'eraser', x: x0 - mx * 1.05, y: y0 + H0 * 0.13,
+        yaw: 0.42, len: W0 * 0.045 },
+      { k: 'shavings', x: paper.cx - W0 * 0.16 + W0 * 0.10, y: y0 - mx * 0.36,
+        yaw: 0.9, len: W0 * 0.05 }];
   }
   function pushWrapped(out, text, n) {
     var words = String(text || '').split(/\s+/), line = '', i;
@@ -1507,6 +1723,7 @@
     FOC = (H / 2) / Math.tan(cam.fov / 2);
     HZ_NEAR = cam.dist * 0.22;
     HZ_FAR = clamp(cam.dist * 3.1, 900, 12000);
+    HZF = 1 - 0.62 * clamp((cam.el - 0.32) / 0.38, 0, 1);
     PCX = W / 2;
     /* Where the look-at point sits in frame. Down low this is a street
        photograph and the subject rides low under a lot of sky; from above it
@@ -1540,11 +1757,14 @@
   /* haze: the single effect that turns a diagram into a photograph */
   /* The haze is keyed to how far back the camera stands, the way a long lens
      compresses it: pulling out never dissolves the survey into fog. */
-  var HZ_NEAR = 210, HZ_FAR = 2500, HZ_MAX = 0.70;
+  var HZ_NEAR = 210, HZ_FAR = 2500, HZ_MAX = 0.70, HZF = 1;
   function hazeAt(d) {
     var t = (d - HZ_NEAR) / (HZ_FAR - HZ_NEAR);
     t = t < 0 ? 0 : t > 1 ? 1 : t;
-    return Math.pow(t, 1.45) * HZ_MAX;
+    /* HZF: down among the streets the haze is the golden-hour air; looking
+       down from above, this is a model on a table an arm's length away, and
+       a tabletop does not fog. The factor is set from camera elevation. */
+    return Math.pow(t, 1.45) * HZ_MAX * HZF;
   }
 
   /* ---------------------------------------------------- face palette */
@@ -1557,11 +1777,14 @@
   });
   var MBASE = MX.map(function (m) { return hx(m.base); });
   var MK = MX.map(function (m) { return m.k; });
-  /* the three colourways of each archetype, in the same index order */
+  /* six colourways of each archetype: the three swatches, plus a sunned, a
+     shaded and a lightened cut of them, so neighbours never match exactly */
   var MVARC = ARCH_ORDER.map(function (a) {
-    return MVAR[a].map(function (h) { return hx(h); });
+    var v3 = MVAR[a].map(function (h) { return hx(h); });
+    return [v3[0], v3[1], v3[2],
+      mix(v3[0], C.sun, 0.10), mix(v3[1], C.shadow, 0.07), lit(v3[2], 1.06)];
   });
-  var VARF = [0.92, 1.0, 1.09];
+  var VARF = [0.92, 1.0, 1.09, 0.96, 1.04, 0.88];
   /* 0 face top, 1 face bottom, 2 flat, 3 recess, 4 deep recess,
      5 highlight, 6 mid shade, 7 the dark of an opening */
   var MULS = [1.08, 0.86, 0.97, 0.70, 0.55, 1.20, 0.80, 0.34];
@@ -1569,7 +1792,7 @@
   function smoothstep(t) { return t * t * (3 - 2 * t); }
 
   function faceCol(m, v, tB, hB, part) {
-    var key = (((m * 3 + v) * 9 + tB) * 19 + hB) * 8 + part;
+    var key = (((m * 6 + v) * 9 + tB) * 19 + hB) * 8 + part;
     var s = palCache[key];
     if (s !== undefined) return s;
     var base = m < 7 ? MVARC[m][v] : lit(MBASE[m], VARF[v]);
@@ -1590,12 +1813,14 @@
     return s;
   }
   function roofCol(m, v, hB, part) {
-    var key = 900000 + ((m * 3 + v) * 19 + hB) * 4 + part;
+    var key = 900000 + ((m * 6 + v) * 19 + hB) * 4 + part;
     var s = palCache[key];
     if (s !== undefined) return s;
     var base = m < 7 ? MVARC[m][v] : lit(MBASE[m], VARF[v]);
-    var c = mix(mix(base, mix(C.sun, C.skyLo, 0.40), MK[m] * 0.66), C.shadow, 0.07);
-    if (part === 0) c = lit(c, 1.10);
+    /* the sun is nearly at the horizon: a flat roof catches sky, not sun,
+       so it keeps most of its own colour instead of washing to cream */
+    var c = mix(mix(base, mix(C.sun, C.skyLo, 0.40), MK[m] * 0.47), C.shadow, 0.07);
+    if (part === 0) c = lit(c, 1.03);
     else if (part === 1) c = lit(c, 0.82);
     else if (part === 3) c = lit(mix(c, C.shadow, 0.22), 0.72);
     c = mix(c, C.haze, (hB / 18) * HZ_MAX);
@@ -1610,6 +1835,25 @@
     s = rgbs(mix(C.lit, C.haze, (hB / 18) * HZ_MAX * 0.6));
     palCache[key] = s; return s;
   }
+  /* a window with nobody home: violet dusk behind the glass, never navy.
+     A breath of the sun's glow is mixed in so an unlit pane sits in the warm
+     scene instead of punching a cold hole in the facade. */
+  function darkGlassCol(hB) {
+    var key = 810000 + hB;
+    var s = palCache[key];
+    if (s !== undefined) return s;
+    s = rgbs(mix(mix(mix(lit(C.shadow, 0.60), C.water, 0.10), C.glow, 0.10),
+      C.haze, (hB / 18) * HZ_MAX));
+    palCache[key] = s; return s;
+  }
+  /* the specular flash a sun-facing pane throws back */
+  function glintPaneCol(hB) {
+    var key = 820000 + hB;
+    var s = palCache[key];
+    if (s !== undefined) return s;
+    s = rgbs(mix(mix(C.lit, [255, 255, 255], 0.55), C.haze, (hB / 18) * HZ_MAX * 0.5));
+    palCache[key] = s; return s;
+  }
 
   /* ==================================================================
      RENDER
@@ -1617,7 +1861,7 @@
   var shC = null, shX = null, SHS = 0.30;
   var skyKey = '', skyGrad = null, gndGrad = null, hazeGrad = null, vigGrad = null;
   var bloom = [];
-  var lastFrameMs = 0, frameSamples = [], PROF = null, GSTRIPS = 0, DBG = 0;
+  var lastFrameMs = 0, frameSamples = [], PROF = null, GSTRIPS = 0, DBG = 0, FRAMEN = 0;
   var NPART = 0, NFILL = 0, NGRAD = 0;
   var TNOW = 0;
 
@@ -1643,9 +1887,9 @@
 
       /* below the horizon is not more city: it is the table the page lies on */
       var g2 = ctx.createLinearGradient(0, top, 0, H);
-      g2.addColorStop(0.00, rgbs(mix(C.haze, C.tableHi, 0.55)));
-      g2.addColorStop(0.06, rgbs(mix(C.tableHi, C.haze, 0.30)));
-      g2.addColorStop(0.26, rgbs(mix(C.tableHi, C.sun, 0.06)));
+      g2.addColorStop(0.00, rgbs(mix(C.haze, C.tableHi, 0.40)));
+      g2.addColorStop(0.12, rgbs(mix(C.tableHi, C.haze, 0.44)));
+      g2.addColorStop(0.32, rgbs(mix(C.tableHi, C.sun, 0.06)));
       g2.addColorStop(0.62, rgbs(mix(C.table, C.tableHi, 0.34)));
       g2.addColorStop(1.00, rgbs(mix(C.table, C.ink, 0.42)));
       gndGrad = g2;
@@ -1653,8 +1897,9 @@
       var hb0 = top - H * 0.11, hb1 = top + H * 0.16;
       var g3 = ctx.createLinearGradient(0, hb0, 0, hb1);
       g3.addColorStop(0, rgbas(C.haze, 0));
-      g3.addColorStop(0.42, rgbas(mix(C.haze, C.skyLo, 0.4), 0.52));
-      g3.addColorStop(0.52, rgbas(mix(C.haze, C.skyLo, 0.3), 0.42));
+      g3.addColorStop(0.30, rgbas(mix(C.haze, C.skyLo, 0.40), 0.30));
+      g3.addColorStop(0.50, rgbas(mix(C.haze, C.skyLo, 0.36), 0.48));
+      g3.addColorStop(0.72, rgbas(mix(C.haze, C.skyLo, 0.32), 0.26));
       g3.addColorStop(1, rgbas(C.haze, 0));
       hazeGrad = g3;
 
@@ -1715,14 +1960,21 @@
     if (!pat || CE <= 0.0001) return;
     var y0 = Math.max(0, Math.floor(HORY) + 2);
     if (y0 >= H) return;
-    var NS = 40, hstep = (H - y0) / NS, i;
+    /* strips packed toward the horizon, where depth (and so the haze) moves
+       fastest between scanlines: uniform strips step visibly there */
+    var NS = 88, spanY = H - y0, i;
     for (i = 0; i < NS; i++) {
-      var ya = y0 + i * hstep, yb = ya + hstep + 1, yc = (ya + yb) / 2;
+      var ya = y0 + spanY * Math.pow(i / NS, 1.35);
+      var yb = y0 + spanY * Math.pow((i + 1) / NS, 1.35) + 1;
+      var yc = (ya + yb) / 2;
       var den = SE + ((yc - PCY) / FOC) * CE;
       if (den <= 0.0006) continue;
       var d = eye[2] / den;
       if (d < 8 || d > 26000) continue;
       var a2 = (1 - hazeAt(d)) * alphaMul;
+      /* the pattern dissolves with distance: at long range the strip seams
+         beat against the plank tile and the table reads as scanlines */
+      if (d > 2400) a2 *= clamp(1 - (d - 2400) / 2400, 0, 1);
       if (a2 < 0.02) continue;
       var kf = FOC / d;
       var A = kf * rgt[0], Bc = -kf * upv[0], Cc = kf * rgt[1], Dc = -kf * upv[1];
@@ -1731,7 +1983,7 @@
       var vv = -(yc - PCY) / FOC;
       var gx = eye[0] + d * (fwd[0] + vv * upv[0]);
       var gy = eye[1] + d * (fwd[1] + vv * upv[1]);
-      var span = d * (W / FOC) * 1.1 + d * (hstep / FOC) * 2 + 40;
+      var span = d * (W / FOC) * 1.1 + d * ((yb - ya) / FOC) * 2 + 40;
       ctx.save();
       ctx.beginPath(); ctx.rect(0, ya, W, yb - ya); ctx.clip();
       ctx.setTransform(DPR * A, DPR * Bc, DPR * Cc, DPR * Dc, DPR * E, DPR * F2);
@@ -1849,7 +2101,7 @@
     ctx.closePath();
     var lg = ctx.createLinearGradient(0, Math.max(0, HORY), 0, H);
     lg.addColorStop(0, rgbs(mix(C.paper, C.haze, 0.40)));
-    lg.addColorStop(1, rgbs(mix(C.paper, [255, 255, 255], 0.34)));
+    lg.addColorStop(1, rgbs(mix(C.paper, [255, 255, 255], 0.16)));
     ctx.fillStyle = lg;
     ctx.fill();
     ctx.strokeStyle = rgbas(mix(C.paperLo, C.shadow, 0.34), 0.5);
@@ -1862,7 +2114,7 @@
      and it is the actual text of the docs, with the city standing on it. */
   function drawPrint() {
     if (!paper || !paper.lines.length) return;
-    var L = paper.lines, i, drawnText = 0, budget = 110, bars = 0;
+    var L = paper.lines, i, drawnText = 0, budget = 150, bars = 0;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'alphabetic';
     ctx.beginPath();
@@ -1898,7 +2150,7 @@
       ctx.transform(uX, uY, vX, vY, sx, sy);
       var k = ln.size / 100;
       ctx.scale(k, k);
-      ctx.globalAlpha = clamp(1 - hazeAt(depthOf(ln.x, ln.y, 0)), 0.15, 1) * (ln.kind === 'h' ? 0.55 : 0.36);
+      ctx.globalAlpha = clamp(1 - hazeAt(depthOf(ln.x, ln.y, 0)), 0.15, 1) * (ln.kind === 'h' ? 0.62 : 0.40);
       ctx.fillStyle = rgbs(ln.kind === 'h' ? mix(C.print, C.ink, 0.5) : C.print);
       ctx.font = (ln.kind === 'h' ? '600 100px "Source Serif 4", Georgia, serif'
         : ln.kind === 's' ? '600 100px "Archivo Narrow", Arial, sans-serif'
@@ -1909,7 +2161,7 @@
       ctx.globalAlpha = 1;
     }
     if (bars) {
-      ctx.fillStyle = rgbas(C.print, 0.42);
+      ctx.fillStyle = rgbas(C.print, 0.50);
       ctx.fill();
     }
 
@@ -1963,6 +2215,142 @@
       var dq = depthOf(q.x, q.y, 0);
       if (dq < 20) continue;
       groundSprite(SPR.paving, q.x, q.y, q.r * 1.02, 0.30 * (1 - hazeAt(dq)));
+    }
+  }
+
+  /* ------------------------------------------------- the street plan
+     Each quarter carries its own paved network on the ground: the streets
+     between its superblocks, kerb lines when you come down among them, zebra
+     crossings at the junctions, and a tiled plaza around the monument. All
+     of it is gated by the quarter's size on screen, so the establishing shot
+     pays for none of the fine work. */
+  var SG4 = new Float64Array(8);
+  function sgQuad(d, lx0, ly0, lx1, ly1) {
+    var xs = [lx0, lx1, lx1, lx0], ys = [ly0, ly0, ly1, ly1], i;
+    for (i = 0; i < 4; i++) {
+      var wx = d.x + xs[i] * d.ca - ys[i] * d.sa;
+      var wy = d.y + xs[i] * d.sa + ys[i] * d.ca;
+      if (!proj(wx, wy, 0)) return false;
+      SG4[i * 2] = px; SG4[i * 2 + 1] = py;
+    }
+    ctx.beginPath();
+    ctx.moveTo(SG4[0], SG4[1]); ctx.lineTo(SG4[2], SG4[3]);
+    ctx.lineTo(SG4[4], SG4[5]); ctx.lineTo(SG4[6], SG4[7]);
+    ctx.closePath();
+    return true;
+  }
+  function sgLine(d, x0, y0, x1, y1) {
+    var wx0 = d.x + x0 * d.ca - y0 * d.sa, wy0 = d.y + x0 * d.sa + y0 * d.ca;
+    var wx1 = d.x + x1 * d.ca - y1 * d.sa, wy1 = d.y + x1 * d.sa + y1 * d.ca;
+    if (!proj(wx0, wy0, 0)) return false;
+    var sx = px, sy = py;
+    if (!proj(wx1, wy1, 0)) return false;
+    ctx.moveTo(sx, sy); ctx.lineTo(px, py);
+    return true;
+  }
+  function drawDistrictGround() {
+    var i, k, j;
+    for (i = 0; i < dists.length; i++) {
+      var d = dists[i];
+      if (d.gx0 === undefined) continue;
+      var dq = depthOf(d.x, d.y, 0);
+      if (dq < 20) continue;
+      var scr = d.r * (FOC / dq);
+      if (scr < 46) continue;
+      var hz = hazeAt(dq);
+      if (hz > 0.86) continue;
+      var av = clamp((scr - 46) / 80, 0, 1);
+      var pave = rgbas(mix(mix(C.paperLo, C.print, 0.72), C.haze, hz), 0.40 + 0.32 * av);
+      var kerbC = rgbas(mix(mix(C.paper, C.sun, 0.30), C.haze, hz), 0.85);
+      var lx0 = gpos(d.gx0) - P * 0.35, lx1 = gpos(d.gx1 + 1) + P * 0.35;
+      var ly0 = gpos(d.gy0) - P * 0.35, ly1 = gpos(d.gy1 + 1) + P * 0.35;
+      /* the plate first: the whole built block is made ground, not paper */
+      ctx.fillStyle = rgbas(mix(mix(C.earthHi, C.paperLo, 0.5), C.haze, hz),
+        (0.30 + 0.16 * av) * (1 - hz * 0.7));
+      if (sgQuad(d, lx0 - 4, ly0 - 4, lx1 + 4, ly1 + 4)) ctx.fill();
+      /* the street strips, on every 4th grid line both ways */
+      var vx = [], vy = [];
+      for (k = Math.ceil(d.gx0 / 4); k * 4 <= d.gx1 + 1; k++) {
+        var sx0 = gpos(4 * k) - SW;
+        if (sx0 >= lx0 - SW && sx0 <= lx1) vx.push(sx0);
+      }
+      for (k = Math.ceil(d.gy0 / 4); k * 4 <= d.gy1 + 1; k++) {
+        var sy0 = gpos(4 * k) - SW;
+        if (sy0 >= ly0 - SW && sy0 <= ly1) vy.push(sy0);
+      }
+      ctx.fillStyle = pave;
+      for (k = 0; k < vx.length; k++) if (sgQuad(d, vx[k], ly0, vx[k] + SW, ly1)) ctx.fill();
+      for (k = 0; k < vy.length; k++) if (sgQuad(d, lx0, vy[k], lx1, vy[k] + SW)) ctx.fill();
+      /* down at eye level the plate is slabs, not one pour: a sparse joint
+         grid, too faint to read from anywhere but the pavement */
+      if (scr > 700) {
+        ctx.beginPath();
+        var jstep = P / 2, jt;
+        for (jt = lx0 + jstep; jt < lx1; jt += jstep) sgLine(d, jt, ly0, jt, ly1);
+        for (jt = ly0 + jstep; jt < ly1; jt += jstep) sgLine(d, lx0, jt, lx1, jt);
+        ctx.strokeStyle = rgbas(mix(C.print, C.haze, hz), 0.11);
+        ctx.lineWidth = Math.max(0.4, 0.35 * (FOC / dq));
+        ctx.stroke();
+      }
+      /* kerb lines along both edges of each street */
+      if (scr > 170) {
+        ctx.beginPath();
+        for (k = 0; k < vx.length; k++) {
+          sgLine(d, vx[k], ly0, vx[k], ly1);
+          sgLine(d, vx[k] + SW, ly0, vx[k] + SW, ly1);
+        }
+        for (k = 0; k < vy.length; k++) {
+          sgLine(d, lx0, vy[k], lx1, vy[k]);
+          sgLine(d, lx0, vy[k] + SW, lx1, vy[k] + SW);
+        }
+        ctx.strokeStyle = kerbC;
+        ctx.lineWidth = Math.max(0.5, 0.65 * (FOC / dq));
+        ctx.stroke();
+      }
+      /* zebra crossings at the junctions */
+      if (scr > 420) {
+        ctx.fillStyle = rgbas(mix(C.paper, [255, 255, 255], 0.4), 0.8);
+        for (k = 0; k < vx.length; k++) for (j = 0; j < vy.length; j++) {
+          var zx = vx[k], zy = vy[j], b2;
+          for (b2 = 0; b2 < 4; b2++) {
+            if (sgQuad(d, zx + 0.9 + b2 * (SW - 1.8) / 4, zy - 5.2,
+                          zx + 0.9 + (b2 + 0.55) * (SW - 1.8) / 4, zy - 1.6)) ctx.fill();
+          }
+        }
+      }
+      /* manhole covers where the streets cross, once you are down among them */
+      if (scr > 560 && vx.length && vy.length) {
+        ctx.fillStyle = rgbas(mix(mix(C.print, C.ink, 0.3), C.haze, hz), 0.5);
+        for (k = 0; k < vx.length; k++) for (j = 0; j < vy.length; j++) {
+          var mhx = vx[k] + SW * 0.5 + ((k * 7 + j * 3) % 3 - 1) * 1.6;
+          var mhy = vy[j] + SW * 0.5 + ((k * 5 + j * 11) % 3 - 1) * 1.6;
+          var wxm = d.x + mhx * d.ca - mhy * d.sa, wym = d.y + mhx * d.sa + mhy * d.ca;
+          if (!proj(wxm, wym, 0.1)) continue;
+          var rm = 1.15 * pS;
+          if (rm < 1.6) continue;
+          ctx.beginPath();
+          ctx.ellipse(px, py, rm, rm * Math.max(0.22, SE), 0, 0, TAU);
+          ctx.fill();
+        }
+      }
+      /* the plaza is paved and tiled, never bare */
+      if (d.plaza && d.plaza.r >= 1 && scr > 90) {
+        var pr = d.plaza.r;
+        var px0 = gpos(-pr) - 2, px1 = gpos(pr) + P + 2;
+        ctx.fillStyle = rgbas(mix(mix(C.earthHi, C.sun, 0.16), C.haze, hz), 0.34);
+        if (sgQuad(d, px0, px0, px1, px1)) ctx.fill();
+        if (scr > 240) {
+          ctx.beginPath();
+          var step = P / 2, t2;
+          for (t2 = px0 + step; t2 < px1; t2 += step) {
+            sgLine(d, t2, px0, t2, px1);
+            sgLine(d, px0, t2, px1, t2);
+          }
+          ctx.strokeStyle = rgbas(mix(C.print, C.haze, hz), 0.22);
+          ctx.lineWidth = Math.max(0.4, 0.4 * (FOC / dq));
+          ctx.stroke();
+        }
+      }
     }
   }
 
@@ -2037,10 +2425,64 @@
       var dq = depthOf(q.x, q.y, 0);
       if (dq < 20) continue;
       var w2 = 15 + 26 * (q.t || 0);
+      /* the sparkle breathes: each bend catches the sun in its own phase */
+      var tw = 0.72 + 0.28 * sin(TNOW * 0.0016 + i * 1.7);
       groundSprite(SPR.glow, q.x, q.y, w2 * 1.7, 0.20 * (1 - hazeAt(dq) * 0.7));
-      groundSprite(SPR.glint, q.x + sunGnd[0] * 3, q.y + sunGnd[1] * 3, w2 * 0.5, 0.15 * (1 - hazeAt(dq)));
+      groundSprite(SPR.glint, q.x + sunGnd[0] * 3, q.y + sunGnd[1] * 3, w2 * 0.5,
+        0.15 * tw * (1 - hazeAt(dq)));
     }
     ctx.globalCompositeOperation = 'source-over';
+    /* low quay walls along both banks */
+    if (river.qL && d0 < 2600) {
+      var qc = rgbs(mix(mix(C.paperLo, C.sun, 0.20), C.haze, hz));
+      strokeWorldLine(river.qL, 1.5, qc, 0.42 * (1 - hz));
+      strokeWorldLine(river.qR, 1.5, qc, 0.42 * (1 - hz));
+    }
+    drawBridges();
+  }
+
+  /* two arched footbridges, where the reading order crosses its own river */
+  function drawBridges() {
+    if (!river.way || river.way.length < 3) return;
+    var picks = [Math.floor(river.way.length * 0.30), Math.floor(river.way.length * 0.68)];
+    var b, i;
+    for (b = 0; b < picks.length; b++) {
+      var wpt = river.way[picks[b]];
+      if (!wpt) continue;
+      var dq = depthOf(wpt.x, wpt.y, 0);
+      if (dq < 30) continue;
+      var hz2 = hazeAt(dq);
+      if (hz2 > 0.8) continue;
+      var wp0 = river.way[Math.max(0, picks[b] - 1)], wp1 = river.way[Math.min(river.way.length - 1, picks[b] + 1)];
+      var tx = wp1.x - wp0.x, ty = wp1.y - wp0.y, tl = sqrt(tx * tx + ty * ty) || 1;
+      var nx = -ty / tl, ny = tx / tl;
+      var span = (13 + 27 * (wpt.t || 0)) + 13;
+      if (span * (FOC / dq) < 14) continue;
+      var rise = span * 0.16, SEG = 8, sxp = 0, syp = 0, ok = true;
+      ctx.beginPath();
+      for (i = 0; i <= SEG; i++) {
+        var u = i / SEG * 2 - 1;
+        if (!proj(wpt.x + nx * u * span, wpt.y + ny * u * span, 1.6 + (1 - u * u) * rise)) { ok = false; break; }
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      if (!ok) continue;
+      ctx.strokeStyle = rgbs(mix(mix(C.earthHi, C.sun, 0.14), C.haze, hz2));
+      ctx.lineWidth = Math.max(1.1, 2.6 * (FOC / dq));
+      ctx.lineCap = 'round';
+      ctx.stroke();
+      /* the parapet, a thinner line lifted above the deck */
+      ctx.beginPath();
+      ok = true;
+      for (i = 0; i <= SEG; i++) {
+        var u2 = i / SEG * 2 - 1;
+        if (!proj(wpt.x + nx * u2 * span, wpt.y + ny * u2 * span, 3.6 + (1 - u2 * u2) * rise)) { ok = false; break; }
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      if (!ok) continue;
+      ctx.strokeStyle = rgbas(mix(C.print, C.haze, hz2), 0.7);
+      ctx.lineWidth = Math.max(0.5, 0.7 * (FOC / dq));
+      ctx.stroke();
+    }
   }
 
   /* -------------------------------------------------------- shadows */
@@ -2142,19 +2584,29 @@
     if (!pfo(u0, w1, out)) return; ctx.lineTo(px, py);
     ctx.closePath();
   }
+  /* an awning: a canvas sloping from the wall down to its outer rail. The
+     old quad kept both edges at one height and had no area at all, so every
+     awning in the city was invisible. */
+  function fqa(u0, wTop, u1, wBot, out) {
+    if (!pfo(u0, wTop, 0.2)) return; ctx.moveTo(px, py);
+    if (!pfo(u1, wTop, 0.2)) return; ctx.lineTo(px, py);
+    if (!pfo(u1, wBot, out)) return; ctx.lineTo(px, py);
+    if (!pfo(u0, wBot, out)) return; ctx.lineTo(px, py);
+    ctx.closePath();
+  }
 
   function drawBuilding(r, quality) {
     var parts = r.parts, i, hz = r.hz;
     var hB = Math.round(hz / HZ_MAX * 18); if (hB > 18) hB = 18; if (hB < 0) hB = 0;
     var foot = Math.max(r.hw, r.hd);
     var scr = r.topz * (FOC / r._d);
-    var maxLvl = scr > 210 ? 2 : scr > 74 ? 1 : 0;
+    var maxLvl = scr > 280 ? 2 : scr > 74 ? 1 : 0;
     if (!quality && maxLvl > 1) maxLvl = 1;
 
     /* the ground takes the building. A big soft blit is expensive, so it is
        only worth it where the contact actually reads. */
     var fsz = foot * (FOC / r._d);
-    if (fsz > 8 && fsz < 190) {
+    if (fsz > 2.6 && fsz < 420) {
       groundSprite(SPR.ao, r.wx, r.wy, foot * 1.5, 0.30 * (1 - hz));
       if (fsz < 120) {
         groundSprite(SPR.shadow, r.wx - sunGnd[0] * foot * 0.5, r.wy - sunGnd[1] * foot * 0.5,
@@ -2250,9 +2702,25 @@
       if (r.hit.length < 16 && pxW > 2.2) {
         r.hit.push([Q8X[4], Q8Y[4], Q8X[5], Q8Y[5], Q8X[6], Q8Y[6], Q8X[7], Q8Y[7]]);
       }
+      /* the parapet return: an inset seam on every sizeable flat top, with
+         or without the quality budget, so no roof ever reads as raw fill */
+      if (pxW > 26 && b.hw > 6 && (b.z1 - b.z0) > 6) {
+        ctx.beginPath();
+        var pw2 = 0.90;
+        ctx.moveTo(Q8X[4] + (Q8X[6] - Q8X[4]) * (0.5 - pw2 / 2), Q8Y[4] + (Q8Y[6] - Q8Y[4]) * (0.5 - pw2 / 2));
+        ctx.lineTo(Q8X[5] + (Q8X[7] - Q8X[5]) * (0.5 - pw2 / 2), Q8Y[5] + (Q8Y[7] - Q8Y[5]) * (0.5 - pw2 / 2));
+        ctx.lineTo(Q8X[6] + (Q8X[4] - Q8X[6]) * (0.5 - pw2 / 2), Q8Y[6] + (Q8Y[4] - Q8Y[6]) * (0.5 - pw2 / 2));
+        ctx.lineTo(Q8X[7] + (Q8X[5] - Q8X[7]) * (0.5 - pw2 / 2), Q8Y[7] + (Q8Y[5] - Q8Y[7]) * (0.5 - pw2 / 2));
+        ctx.closePath();
+        ctx.strokeStyle = roofCol(m, v, hB, 3);
+        ctx.globalAlpha = 0.45;
+        ctx.lineWidth = Math.max(0.6, pxW * 0.012);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
       /* a flat roof is never clean: gravel, a light well, the parapet return */
-      if (lod && pxW > 44 && b.deco && b.deco !== 'plain' && b.hw > 8) {
-        ctx.globalAlpha = 0.22;
+      if (lod && pxW > 30 && b.deco && b.deco !== 'plain' && b.hw > 8) {
+        ctx.globalAlpha = 0.30;
         ctx.fillStyle = roofCol(m, v, hB, 3);
         ctx.beginPath();
         var iw = 0.80;
@@ -2274,14 +2742,17 @@
     var jag = b.jag && deco === 'ruin';
 
     ctx.beginPath();
+    var jagX = null, jagY = null;
     if (jag) {
       var st = 6, s2;
+      jagX = []; jagY = [];
       if (!pf(0, 0)) return; ctx.moveTo(px, py);
       if (!pf(1, 0)) return; ctx.lineTo(px, py);
       for (s2 = st; s2 >= 0; s2--) {
         var u = s2 / st;
         var wj = 0.62 + rnd01(r.h32 + j * 71, s2) * 0.38;
         if (!pf(u, wj)) return; ctx.lineTo(px, py);
+        jagX.push(px); jagY.push(py);
       }
       ctx.closePath();
     } else {
@@ -2291,7 +2762,7 @@
     var topMy = (cy2 + dy2) / 2, botMy = (ay + by) / 2;
     var topMx = (cx2 + dx2) / 2, botMx = (ax + bx) / 2;
     var hpx = abs(botMy - topMy), wpx = Math.hypot(bx - ax, by - ay);
-    if (lod && hpx > 16) {
+    if (lod && hpx > 30 && wpx > 12) {
       var g = ctx.createLinearGradient(topMx, topMy, botMx, botMy);
       g.addColorStop(0, faceCol(m, v, tB, hB, 0));
       g.addColorStop(0.62, faceCol(m, v, tB, hB, 2));
@@ -2299,6 +2770,17 @@
       ctx.fillStyle = g;
     } else ctx.fillStyle = faceCol(m, v, tB, hB, 2);
     ctx.fill();
+    /* the broken lip of a ruined wall: a darker seam of snapped brick along
+       the torn top, so the wall reads as masonry and not a paper cutout */
+    if (jagX && jagX.length > 2 && hpx > 24) {
+      ctx.beginPath();
+      ctx.moveTo(jagX[0], jagY[0]);
+      for (var jj2 = 1; jj2 < jagX.length; jj2++) ctx.lineTo(jagX[jj2], jagY[jj2]);
+      ctx.strokeStyle = faceCol(m, v, Math.max(0, tB - 4), hB, 1);
+      ctx.lineWidth = Math.max(1, hpx * 0.030);
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+    }
     if (r.hit.length < 16 && wpx > 2.2 && hpx > 2.2) r.hit.push([ax, ay, bx, by, cx2, cy2, dx2, dy2]);
 
     if (!lod || hpx < 12 || wpx < 6 || deco === 'plain') return;
@@ -2371,6 +2853,16 @@
   }
 
   function bayCount(fw) { return clamp(Math.round(fw / 7.4), 1, 14); }
+  /* every building sets its own fenestration rhythm from its hash */
+  function bayJit(r, fw) { return clamp(bayCount(fw) + (((r.h32 >>> 9) % 3) - 1), 1, 14); }
+  function fillRects(rects, col, alpha) {
+    if (!rects.length) return;
+    var i;
+    ctx.beginPath();
+    for (i = 0; i < rects.length; i += 4) fq(rects[i], rects[i + 1], rects[i + 2], rects[i + 3]);
+    ctx.fillStyle = col;
+    ctx.globalAlpha = alpha; ctx.fill(); ctx.globalAlpha = 1;
+  }
 
   /* ground floors, one per family. Always a taller storey, always different
      from what stands on it. */
@@ -2392,11 +2884,13 @@
       if (isFront) {
         ctx.beginPath(); fq(0.44, g0, 0.58, g1 * 0.94); ctx.fillStyle = faceCol(m, v, tB, hB, 7); ctx.fill();
         ctx.beginPath(); fq(0.455, g0 + 0.004, 0.565, g1 * 0.90); ctx.fillStyle = faceCol(M_WOOD, 1, tB, hB, 6); ctx.fill();
-        /* the awning over it */
-        ctx.beginPath(); fqo(0.34, g1 * 0.90, 0.68, g1 * 0.90, 3.4);
+        /* the awning over it, breathing on the shared wind */
+        var awTop = g1 * 0.86, awBot = awTop - 2.4 / fh;
+        var awOut = 3.4 + WINDV * 0.55;
+        ctx.beginPath(); fqa(0.34, awTop, 0.68, awBot, awOut);
         ctx.fillStyle = faceCol(M_AWN, 1, 6, hB, 0); ctx.fill();
         ctx.beginPath();
-        for (i = 0; i < 6; i += 2) fqo(0.34 + 0.34 * i / 6, g1 * 0.90, 0.34 + 0.34 * (i + 1) / 6, g1 * 0.90, 3.4);
+        for (i = 0; i < 6; i += 2) fqa(0.34 + 0.34 * i / 6, awTop, 0.34 + 0.34 * (i + 1) / 6, awBot, awOut);
         ctx.fillStyle = faceCol(M_TRIM, 1, 6, hB, 0); ctx.fill();
         /* and the fascia sign above */
         ctx.beginPath(); fq(0.10, g1 * 0.88, 0.90, g1 * 0.99);
@@ -2445,7 +2939,7 @@
       if (isFront) {
         ctx.beginPath(); fq(0.08, g1 * 0.86, 0.92, g1 * 0.99);
         ctx.fillStyle = faceCol(M_TRIM, 1, tB, hB, 2); ctx.fill();
-        ctx.beginPath(); fqo(0.05, g1 * 0.82, 0.30, g1 * 0.82, 3.0);
+        ctx.beginPath(); fqa(0.05, g1 * 0.80, 0.30, g1 * 0.80 - 2.0 / fh, 3.0 + WINDV * 0.45);
         ctx.fillStyle = faceCol(M_AWN, 1, 6, hB, 0); ctx.fill();
       }
     } else if (kind === 'hoard') {
@@ -2492,7 +2986,13 @@
     var g1 = b.gf ? groundFloor(r, b, m, v, tB, hB, fw, fh, b.gf, isFront, hpx) : 0;
     var nf = Math.max(1, Math.round((fh - g1 * fh) / STOREY));
     if (nf > 40) nf = 40;
-    var bays = bayCount(fw), i, k;
+    var bays = bayJit(r, fw), i, k;
+    /* windows are drawn at the size of the pixels, not of the world: past
+       the range where a storey is 14px the floors merge two into one, the
+       way a photograph of a model would resolve them. Cuts a giant tower's
+       face from ~500 rects to ~150 with no change the eye can catch. */
+    nf = Math.min(nf, Math.max(3, Math.round(hpx / 14)));
+    bays = Math.min(bays, Math.max(2, Math.round(wpx / 13)));
     var fs = (1 - g1) / nf, flr = fs * hpx;
     if (flr < 5) return;
 
@@ -2511,40 +3011,44 @@
     ctx.fillStyle = faceCol(m, v, tB, hB, 4); ctx.fill();
     if (flr >= 15 && op.length <= 220) reveals(m, v, tB, hB, op, dot);
 
-    ctx.beginPath();
+    /* every pane carries a state: a fifth or so warm-lit at this hour, some
+       dark, the rest holding the peach sky — and on the sun side a scatter
+       of them flash the low sun straight back */
+    var liteEff = Math.max(lite, 0.10);
+    var wl = [], dl = [], sl = [], gl2 = [];
     for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
-      fq((i + 0.17) / bays, g1 + k * fs + fs * 0.38, (i + 0.83) / bays, g1 + (k + 1) * fs - fs * 0.10);
-    }
-    ctx.fillStyle = glassCol(m, v, tB, hB, 0.3);
-    ctx.globalAlpha = 0.94; ctx.fill(); ctx.globalAlpha = 1;
-    if (flr >= 28 && op.length <= 140) {
-      var gp = [];
-      for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
-        gp.push((i + 0.17) / bays, g1 + k * fs + fs * 0.38, (i + 0.83) / bays, g1 + (k + 1) * fs - fs * 0.10);
+      var u0 = (i + 0.17) / bays, u1 = (i + 0.83) / bays;
+      var w0 = g1 + k * fs + fs * 0.38, w1 = g1 + (k + 1) * fs - fs * 0.10;
+      var q = rnd01(r.h32 + k * 131, i + 11);
+      if (q < liteEff && dot < 0.55) wl.push(u0, w0, u1, w1);
+      else if (q < liteEff + 0.15) dl.push(u0, w0, u1, w1);
+      else {
+        sl.push(u0, w0, u1, w1);
+        if (dot > 0.30 && rnd01(r.h32 + k * 29, i + 41) < 0.22) gl2.push(u0, w0, u1, w1);
       }
-      panes(gp, 2, 2, faceCol(m, v, tB, hB, 5));
+    }
+    fillRects(sl, glassCol(m, v, tB, hB, 0.3), 0.94);
+    fillRects(dl, darkGlassCol(hB), 0.92);
+    fillRects(wl, litCol(hB), 0.88);
+    fillRects(gl2, glintPaneCol(hB), 0.55);
+    if (flr >= 28 && sl.length <= 140) panes(sl, 2, 2, faceCol(m, v, tB, hB, 5));
+
+    /* a projecting sill under every opening, and a lintel bar, up close */
+    if (maxLvl >= 2 && flr >= 16 && op.length <= 180) {
+      ctx.beginPath();
+      for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
+        fqo((i + 0.10) / bays, g1 + k * fs + fs * 0.335, (i + 0.90) / bays, g1 + k * fs + fs * 0.375, 0.8);
+      }
+      ctx.fillStyle = faceCol(M_TRIM, 1, tB, hB, 5); ctx.fill();
+      ctx.beginPath();
+      for (k = 0; k < nf; k++) fq(0.02, g1 + (k + 1) * fs - fs * 0.075, 0.98, g1 + (k + 1) * fs - fs * 0.045);
+      ctx.fillStyle = faceCol(m, v, tB, hB, 5);
+      ctx.globalAlpha = 0.6; ctx.fill(); ctx.globalAlpha = 1;
     }
 
-    /* warm light in some of them, and not the same warmth in each */
-    if (lite > 0.001 && dot < 0.55) {
-      var n2 = 0;
-      for (k = 0; k < nf; k++) {
-        for (i = 0; i < bays; i++) {
-          var q = rnd01(r.h32 + k * 131, i + 11);
-          if (q > lite) continue;
-          ctx.beginPath();
-          fq((i + 0.19) / bays, g1 + k * fs + fs * 0.40, (i + 0.81) / bays, g1 + (k + 1) * fs - fs * 0.12);
-          ctx.globalAlpha = 0.55 + rnd01(r.h32 + k * 17, i + 5) * 0.45;
-          ctx.fillStyle = litCol(hB); ctx.fill();
-          if (++n2 > 130) break;
-        }
-        if (n2 > 130) break;
-      }
-      ctx.globalAlpha = 1;
-      if (n2 > 5 && hpx > 40) {
-        bloom.push([(Q8X[0] + Q8X[6]) / 2, (Q8Y[0] + Q8Y[6]) / 2,
-          Math.min(wpx, hpx) * 0.5, 0.14 * (1 - r.hz)]);
-      }
+    if (wl.length > 20 && hpx > 40) {
+      bloom.push([(Q8X[0] + Q8X[6]) / 2, (Q8Y[0] + Q8Y[6]) / 2,
+        Math.min(wpx, hpx) * 0.5, 0.14 * (1 - r.hz)]);
     }
 
     /* mullions */
@@ -2579,7 +3083,10 @@
     var g1 = b.gf ? groundFloor(r, b, m, v, tB, hB, fw, fh, b.gf, isFront, hpx) : 0;
     var nf = Math.max(1, b.floors || Math.round((fh - g1 * fh) / STOREY));
     if (nf > 30) nf = 30;
-    var bays = bayCount(fw), i, k;
+    var bays = bayJit(r, fw), i, k;
+    /* same pixel-sized merge as the curtain walls */
+    nf = Math.min(nf, Math.max(2, Math.round(hpx / 14)));
+    bays = Math.min(bays, Math.max(2, Math.round(wpx / 13)));
     var fs = (1 - g1) / nf, flr = fs * hpx;
     if (flr < 5) return;
     var wq = Math.min(0.40 / bays, 0.06);
@@ -2594,29 +3101,29 @@
     ctx.fillStyle = faceCol(m, v, tB, hB, 4); ctx.fill();
     if (flr >= 15 && op.length <= 220) reveals(m, v, tB, hB, op, dot);
 
-    /* the glass inside them */
-    var gl = [];
+    /* the glass inside them, each pane in its own state: warm-lit, dark,
+       or holding the sky, with a sun-side glint on a few */
+    var liteEff = Math.max(lite, 0.10);
+    var wl = [], dl = [], gl = [], gl2 = [];
     for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
-      gl.push((i + 0.31) / bays, g1 + k * fs + fs * 0.25, (i + 0.69) / bays, g1 + (k + 1) * fs - fs * 0.25);
-    }
-    ctx.beginPath();
-    for (i = 0; i < gl.length; i += 4) fq(gl[i], gl[i + 1], gl[i + 2], gl[i + 3]);
-    ctx.fillStyle = glassCol(m, v, tB, hB, 0);
-    ctx.fill();
-    if (flr >= 30 && gl.length <= 140) panes(gl, 2, 3, faceCol(m, v, tB, hB, 5));
-
-    if (lite > 0.001) {
-      var n2 = 0;
-      ctx.fillStyle = litCol(hB);
-      for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
-        if (rnd01(r.h32 + k * 97, i + 13) > lite) continue;
-        ctx.beginPath();
-        fq((i + 0.32) / bays, g1 + k * fs + fs * 0.26, (i + 0.68) / bays, g1 + (k + 1) * fs - fs * 0.26);
-        ctx.globalAlpha = 0.5 + rnd01(r.h32 + k * 7, i) * 0.5;
-        ctx.fill();
-        if (++n2 > 120) break;
+      var u0 = (i + 0.31) / bays, u1 = (i + 0.69) / bays;
+      var w0 = g1 + k * fs + fs * 0.25, w1 = g1 + (k + 1) * fs - fs * 0.25;
+      var q = rnd01(r.h32 + k * 97, i + 13);
+      if (q < liteEff && dot < 0.55) wl.push(u0, w0, u1, w1);
+      else if (q < liteEff + 0.15) dl.push(u0, w0, u1, w1);
+      else {
+        gl.push(u0, w0, u1, w1);
+        if (dot > 0.30 && rnd01(r.h32 + k * 23, i + 47) < 0.20) gl2.push(u0, w0, u1, w1);
       }
-      ctx.globalAlpha = 1;
+    }
+    fillRects(gl, glassCol(m, v, tB, hB, 0), 1);
+    fillRects(dl, darkGlassCol(hB), 0.9);
+    fillRects(wl, litCol(hB), 0.85);
+    fillRects(gl2, glintPaneCol(hB), 0.5);
+    if (flr >= 30 && gl.length <= 140) panes(gl, 2, 3, faceCol(m, v, tB, hB, 5));
+    if (wl.length > 12 && hpx > 50) {
+      bloom.push([(Q8X[0] + Q8X[6]) / 2, (Q8Y[0] + Q8Y[6]) / 2,
+        Math.min(wpx, hpx) * 0.45, 0.10 * (1 - r.hz)]);
     }
 
     /* sills below and lintels above, cut from the pale trim stone */
@@ -2741,10 +3248,16 @@
     if (flr < 6) return;
     var bays = clamp(Math.round(fw / 9.5), 1, 10);
 
-    /* the openings */
+    /* Resolution follows the pixels, not the plan: a pane that would paint
+       under 4px collapses into its neighbours, and the arched heads are
+       drawn only where an arch could be seen. Sixty-four factory fronts of
+       blind 1px panes were the single largest cost of a wide street view. */
+    var bayWpx = wpx * 0.54 / bays, bayHpx = flr * 0.51;
+    var arches = flr >= 14;
     ctx.beginPath();
     for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
       fq((i + 0.20) / bays, g1 + k * fs + fs * 0.14, (i + 0.80) / bays, g1 + (k + 1) * fs - fs * 0.30);
+      if (!arches) continue;
       var t2, u0 = (i + 0.20) / bays, u1 = (i + 0.80) / bays, uc = (u0 + u1) / 2, hwd = (u1 - u0) / 2;
       for (t2 = 0; t2 < 4; t2++) {
         var tt = (t2 + 1) / 5, sh = hwd * sqrt(1 - tt * tt * 0.9);
@@ -2754,25 +3267,28 @@
     }
     ctx.fillStyle = faceCol(m, v, tB, hB, 4); ctx.fill();
 
-    /* the glazing, in small panes */
-    ctx.beginPath();
-    var pr = 5, pc = 3;
+    /* the glazing, in small panes; a few whole bays stand dark, and the
+       sun-facing ones flash back at this hour */
+    var pr = clamp(Math.round(bayHpx / 4.5), 1, 5), pc = clamp(Math.round(bayWpx / 5), 1, 3);
+    var skyG = [], drkG = [];
     for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
       var a0 = (i + 0.23) / bays, a1 = (i + 0.77) / bays;
       var b0 = g1 + k * fs + fs * 0.17, b1 = g1 + (k + 1) * fs - fs * 0.32;
+      var bucket = rnd01(r.h32 + k * 61, i + 131) < 0.15 ? drkG : skyG;
       for (q = 0; q < pc; q++) for (var s = 0; s < pr; s++) {
-        fq(a0 + (a1 - a0) * (q + 0.08) / pc, b0 + (b1 - b0) * (s + 0.08) / pr,
+        bucket.push(a0 + (a1 - a0) * (q + 0.08) / pc, b0 + (b1 - b0) * (s + 0.08) / pr,
            a0 + (a1 - a0) * (q + 0.92) / pc, b0 + (b1 - b0) * (s + 0.92) / pr);
       }
     }
-    ctx.fillStyle = glassCol(m, v, tB, hB, 0);
-    ctx.fill();
+    fillRects(skyG, glassCol(m, v, tB, hB, 0), 1);
+    fillRects(drkG, darkGlassCol(hB), 0.9);
 
-    if (lite > 0.001) {
+    var lite2 = Math.max(lite, 0.08);
+    if (lite2 > 0.001) {
       var n2 = 0;
       ctx.fillStyle = litCol(hB);
       for (k = 0; k < nf; k++) for (i = 0; i < bays; i++) {
-        if (rnd01(r.h32 + k * 61, i + 31) > lite) continue;
+        if (rnd01(r.h32 + k * 61, i + 31) > lite2) continue;
         var c0 = (i + 0.23) / bays, c1 = (i + 0.77) / bays;
         var d0 = g1 + k * fs + fs * 0.17, d1 = g1 + (k + 1) * fs - fs * 0.32;
         ctx.beginPath();
@@ -3067,10 +3583,10 @@
       if (nx * ex + ny * ey <= 0.02) continue;
       var x0 = c.cx + a0[0] * c.r, y0 = c.cy + a0[1] * c.r;
       var x1 = c.cx + a1[0] * c.r, y1 = c.cy + a1[1] * c.r;
-      if (!proj(x0, y0, c.z0)) return; var p0x = px, p0y = py;
-      if (!proj(x1, y1, c.z0)) return; var p1x = px, p1y = py;
-      if (!proj(x1, y1, c.z1)) return; var p2x = px, p2y = py;
-      if (!proj(x0, y0, c.z1)) return; var p3x = px, p3y = py;
+      if (!proj(x0, y0, c.z0)) continue; var p0x = px, p0y = py;
+      if (!proj(x1, y1, c.z0)) continue; var p1x = px, p1y = py;
+      if (!proj(x1, y1, c.z1)) continue; var p2x = px, p2y = py;
+      if (!proj(x0, y0, c.z1)) continue; var p3x = px, p3y = py;
       var dot = nx * sunGnd[0] + ny * sunGnd[1];
       var tB = Math.round(clamp((dot + 0.30) / 1.30, 0, 1) * 8);
       ctx.beginPath();
@@ -3094,38 +3610,47 @@
 
   /* ---------------------------------------------------------- domes */
   function drawDome(r, dm, hB, quality) {
-    var i, nb = quality ? 7 : 4;
     var m = dm.m, v = 1;
     var d = depthOf(dm.cx, dm.cy, dm.z0 + dm.h * 0.5);
     if (dm.r * (FOC / d) < 1.2) return;
-    /* stacked latitude bands: cheap, and it reads as a real hemisphere */
-    for (i = nb - 1; i >= 0; i--) {
-      var t0 = i / nb, t1 = (i + 1) / nb;
-      var r0 = dm.r * cos(t0 * PI / 2), r1 = dm.r * cos(t1 * PI / 2);
-      var z0 = dm.z0 + dm.h * sin(t0 * PI / 2), z1 = dm.z0 + dm.h * sin(t1 * PI / 2);
-      var seg = quality ? 14 : 8, q;
-      ctx.beginPath();
-      for (q = 0; q <= seg; q++) {
-        var a = q / seg * TAU;
-        if (!proj(dm.cx + cos(a) * r0, dm.cy + sin(a) * r0, z0)) return;
-        if (q === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    /* A true quad mesh with backface culling. The old stacked-ellipse bands
+       looked right from above, but seen from the street each ring showed its
+       underside as a saucer around the dome and the wall leaked through in
+       stripes between the bands. */
+    var nb = quality ? 7 : 4;
+    var seg = quality ? 16 : 10;
+    var j, q;
+    for (j = 0; j < nb; j++) {
+      var t0 = j / nb * PI / 2, t1 = (j + 1) / nb * PI / 2;
+      var r0 = dm.r * cos(t0), r1 = dm.r * cos(t1);
+      var z0 = dm.z0 + dm.h * sin(t0), z1 = dm.z0 + dm.h * sin(t1);
+      var ctm = cos((t0 + t1) / 2), stm = sin((t0 + t1) / 2);
+      for (q = 0; q < seg; q++) {
+        var a0 = q / seg * TAU, a1 = (q + 1) / seg * TAU, am = (a0 + a1) / 2;
+        /* the outward normal at the middle of this quad */
+        var nx = cos(am) * ctm, ny = sin(am) * ctm, nz = stm;
+        /* backface: from the surface point toward the eye */
+        var sxw = dm.cx + nx * dm.r, syw = dm.cy + ny * dm.r;
+        var szw = dm.z0 + dm.h * stm;
+        if (nx * (eye[0] - sxw) + ny * (eye[1] - syw) + nz * (eye[2] - szw) <= 0) continue;
+        var c0 = cos(a0), s0 = sin(a0), c1 = cos(a1), s1 = sin(a1);
+        if (!proj(dm.cx + c0 * r0, dm.cy + s0 * r0, z0)) continue; var q0x = px, q0y = py;
+        if (!proj(dm.cx + c1 * r0, dm.cy + s1 * r0, z0)) continue; var q1x = px, q1y = py;
+        if (!proj(dm.cx + c1 * r1, dm.cy + s1 * r1, z1)) continue; var q2x = px, q2y = py;
+        if (!proj(dm.cx + c0 * r1, dm.cy + s0 * r1, z1)) continue; var q3x = px, q3y = py;
+        ctx.beginPath();
+        ctx.moveTo(q0x, q0y); ctx.lineTo(q1x, q1y); ctx.lineTo(q2x, q2y); ctx.lineTo(q3x, q3y);
+        ctx.closePath();
+        var dot = nx * sunGnd[0] + ny * sunGnd[1];
+        var tB = Math.round(clamp((dot * 0.5 + 0.42 + nz * 0.34), 0, 1) * 8);
+        var col = faceCol(m, v, tB, hB, nz > 0.80 ? 0 : 2);
+        ctx.fillStyle = col;
+        ctx.fill();
+        /* a hairline stroke of the same paint hides the antialiased seams */
+        ctx.strokeStyle = col;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
       }
-      for (q = seg; q >= 0; q--) {
-        var a2 = q / seg * TAU;
-        if (!proj(dm.cx + cos(a2) * r1, dm.cy + sin(a2) * r1, z1)) return;
-        ctx.lineTo(px, py);
-      }
-      ctx.closePath();
-      if (!proj(dm.cx, dm.cy, z0)) return;
-      var mx = px, my = py;
-      if (!proj(dm.cx + sunGnd[0] * dm.r, dm.cy + sunGnd[1] * dm.r, z0)) return;
-      var gx = px, gy = py;
-      var g = ctx.createLinearGradient(gx, gy - (dm.h * pS) * 0.5, mx * 2 - gx, my * 2 - gy);
-      g.addColorStop(0, faceCol(m, v, 8, hB, 5));
-      g.addColorStop(0.55, faceCol(m, v, 5, hB, 2));
-      g.addColorStop(1, faceCol(m, v, 1, hB, 6));
-      ctx.fillStyle = g;
-      ctx.fill();
     }
     /* meridian ribs */
     if (quality && dm.r * (FOC / d) > 14) {
@@ -3165,7 +3690,29 @@
     var d = depthOf(f.cx, f.cy, f.zc);
     var scr = (f.z1 - f.z0) * (FOC / d);
     if (scr < 6) return;
+    /* a cage two streets away is a hint, not a drawing: sixty-four of them
+       at full stroke was most of a blown frame budget on wide street views */
+    if (scr < 30) {
+      ctx.strokeStyle = faceCol(M_STEEL, 1, 5, hB, 2);
+      ctx.lineWidth = Math.max(0.5, 1.1 * (FOC / d) * 0.7);
+      ctx.beginPath();
+      for (i = 0; i < 4; i++) {
+        var cxl = CXS[i] * f.hw, cyl = CYS[i] * f.hd;
+        var cwx = f.cx + cxl * ca - cyl * sa, cwy = f.cy + cxl * sa + cyl * ca;
+        if (!proj(cwx, cwy, f.z0)) continue; var cq = [px, py];
+        if (!proj(cwx, cwy, f.z1)) continue;
+        ctx.moveTo(cq[0], cq[1]); ctx.lineTo(px, py);
+        var ni = (i + 1) & 3;
+        var nwx = f.cx + CXS[ni] * f.hw * ca - CYS[ni] * f.hd * sa;
+        var nwy = f.cy + CXS[ni] * f.hw * sa + CYS[ni] * f.hd * ca;
+        ctx.moveTo(px, py);
+        if (proj(nwx, nwy, f.z1)) ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+      return;
+    }
     var cols = clamp(Math.round(f.hw * 2 / 9), 2, 6);
+    if (scr < 80) { cols = Math.min(cols, 3); lifts = Math.min(lifts, 2); quality = false; }
     var col = faceCol(M_STEEL, 1, 5, hB, 2);
     ctx.strokeStyle = col;
     ctx.lineWidth = Math.max(0.5, 1.1 * (FOC / d) * 0.7);
@@ -3189,8 +3736,15 @@
         if (!proj(wx1, wy1, z)) continue;
         ctx.moveTo(qx0, qy0); ctx.lineTo(px, py);
         if (k < lifts && quality) {
-          if (!proj(wx1, wy1, f.z0 + (f.z1 - f.z0) * (k + 1) / lifts)) continue;
+          /* the cross-bracing: a diagonal each way per lift, so the cage
+             reads as tied scaffold and not as a bare grid */
+          var zn = f.z0 + (f.z1 - f.z0) * (k + 1) / lifts;
+          if (!proj(wx1, wy1, zn)) continue;
           ctx.moveTo(qx0, qy0); ctx.lineTo(px, py);
+          if (!proj(wx0, wy0, zn)) continue;
+          ctx.moveTo(px, py);
+          if (!proj(wx1, wy1, z)) continue;
+          ctx.lineTo(px, py);
         }
       }
     }
@@ -3262,11 +3816,15 @@
     if (R < 0.7) return;
     if (R > 220) R = 220;
     if (p.kind === 'smoke') {
-      var i, t = TNOW * 0.00016;
+      /* the plume leans with the shared wind: it rises straighter in a lull
+         and streams out flatter in a gust, like every other soft thing */
+      var i, t = LT * 0.00016;
+      var lean = (0.9 + 1.5 * WINDV) * p.r;
       for (i = 0; i < 4; i++) {
         var ph = (t + i * 0.25) % 1;
         var rr = R * (0.6 + ph * 2.4);
-        if (!proj(p.cx + sunGnd[1] * ph * p.r * 2.2, p.cy - sunGnd[0] * ph * p.r * 2.2, p.z + ph * p.r * 7)) continue;
+        if (!proj(p.cx + sunGnd[1] * ph * lean, p.cy - sunGnd[0] * ph * lean,
+                  p.z + ph * p.r * (7 - 1.6 * WINDV))) continue;
         ctx.globalAlpha = (1 - ph) * 0.34 * (1 - hz * 0.7);
         ctx.drawImage(SPR.smoke, px - rr, py - rr, rr * 2, rr * 2);
       }
@@ -3275,13 +3833,23 @@
     }
     var dsx = sunSX - sx, dsy = sunSY - sy;
     var dl = Math.hypot(dsx, dsy) || 1;
-    ctx.globalAlpha = 1 - hz * 0.55;
+    /* deep in the haze a canopy fades at the pace of the walls around it,
+       so a far quarter never reads as orphan trees on bare paper */
+    var fade = hz > 0.55 ? clamp(1 - (hz - 0.55) / 0.32, 0, 1) : 1;
+    if (fade < 0.04) return;
+    ctx.globalAlpha = (1 - hz * 0.55) * fade;
     ctx.drawImage(SPR.canopy, sx - R, sy - R * 0.90, R * 2, R * 1.80);
-    ctx.globalAlpha = (1 - hz * 0.7) * 0.92;
+    /* a big close canopy is three masses, not one blurred ball */
+    if (R > 64) {
+      ctx.globalAlpha = (1 - hz * 0.55) * fade * 0.9;
+      ctx.drawImage(SPR.canopy, sx - R * 0.42 - R * 0.62, sy - R * 0.30 - R * 0.55, R * 1.24, R * 1.10);
+      ctx.drawImage(SPR.canopy, sx + R * 0.38 - R * 0.55, sy - R * 0.16 - R * 0.50, R * 1.10, R * 1.00);
+    }
+    ctx.globalAlpha = (1 - hz * 0.7) * 0.92 * fade;
     ctx.drawImage(SPR.canopyLit, sx + (dsx / dl) * R * 0.26 - R * 0.56, sy - R * 0.36 - R * 0.50,
       R * 1.12, R * 1.00);
     ctx.globalAlpha = 1;
-    if (hz > 0.14) spriteAt(SPR.haze, sx, sy - R * 0.1, R * 1.02, R * 0.95, hz * 0.9);
+    if (hz > 0.14) spriteAt(SPR.haze, sx, sy - R * 0.1, R * 1.02, R * 0.95, hz * 0.9 * fade);
   }
 
   function drawScrub() {
@@ -3292,18 +3860,19 @@
       var d = depthOf(s.x, s.y, s.z);
       if (d < 20) continue;
       var hz = hazeAt(d);
-      if (hz > 0.9) continue;
+      if (hz > 0.82) continue;
+      var fade = hz > 0.55 ? clamp(1 - (hz - 0.55) / 0.32, 0, 1) : 1;
       if (!proj(s.x, s.y, s.z)) continue;
       var R = s.r * pS;
       if (R < 0.7) continue;
       if (R > 130) R = 130;
       drawn++;
-      ctx.globalAlpha = (1 - hz * 0.6) * 0.9;
+      ctx.globalAlpha = (1 - hz * 0.6) * 0.9 * fade;
       ctx.drawImage(SPR.canopy, px - R, py - R * 0.8, R * 2, R * 1.6);
-      ctx.globalAlpha = (1 - hz * 0.75) * 0.75;
+      ctx.globalAlpha = (1 - hz * 0.75) * 0.75 * fade;
       ctx.drawImage(SPR.canopyLit, px - R * 0.5, py - R * 0.85, R * 1.0, R * 0.85);
       ctx.globalAlpha = 1;
-      if (hz > 0.14) spriteAt(SPR.haze, px, py, R * 1.05, R * 0.9, hz * 0.85);
+      if (hz > 0.14) spriteAt(SPR.haze, px, py, R * 1.05, R * 0.9, hz * 0.85 * fade);
     }
   }
 
@@ -3335,10 +3904,12 @@
       var a1x = x + CXS[i1] * hw * ca - CYS[i1] * hd * sa, a1y = y + CXS[i1] * hw * sa + CYS[i1] * hd * ca;
       var dot = nx * sunGnd[0] + ny * sunGnd[1];
       var tB = Math.round(clamp((dot + 0.30) / 1.30, 0, 1) * 8);
-      if (!proj(a0x, a0y, z0)) return; var q0 = [px, py];
-      if (!proj(a1x, a1y, z0)) return; var q1 = [px, py];
-      if (!proj(a1x, a1y, z1)) return; var q2 = [px, py];
-      if (!proj(a0x, a0y, z1)) return; var q3 = [px, py];
+      /* a face the near plane cuts is skipped on its own; the rest of the
+         box still draws, so a long prop never breaks apart mid-shaft */
+      if (!proj(a0x, a0y, z0)) continue; var q0 = [px, py];
+      if (!proj(a1x, a1y, z0)) continue; var q1 = [px, py];
+      if (!proj(a1x, a1y, z1)) continue; var q2 = [px, py];
+      if (!proj(a0x, a0y, z1)) continue; var q3 = [px, py];
       ctx.beginPath();
       ctx.moveTo(q0[0], q0[1]); ctx.lineTo(q1[0], q1[1]); ctx.lineTo(q2[0], q2[1]); ctx.lineTo(q3[0], q3[1]);
       ctx.closePath();
@@ -3356,30 +3927,178 @@
     }
   }
 
-  function drawProps() {
-    var i, n = props.length, drawn = 0;
+  /* Props are gathered with their depth each frame and drawn interleaved
+     with the buildings, far to near, so a lamp behind a house stays behind
+     the house and a market square never paints over the wall in front. */
+  var propsVis = [];
+  function gatherProps() {
+    propsVis.length = 0;
+    var i, n = props.length, taken = 0;
     for (i = 0; i < n; i++) {
       var p = props[i];
-      var d = depthOf(p.x, p.y, p.z || 4);
-      if (d < 12) continue;
+      /* a washing line has no centre of its own: it is measured at midspan */
+      var pcx = p.x != null ? p.x : (p.ax + p.bx) / 2;
+      var pcy = p.y != null ? p.y : (p.ay + p.by) / 2;
+      var d = depthOf(pcx, pcy, p.z || 4);
+      if (!(d >= 12)) continue;
       var hz = hazeAt(d);
       if (hz > 0.82) continue;
-      var s = FOC / d;
-      if (p.k === 'bird') { drawBird(p, s, hz); continue; }
-      if (s * 6 < 1.6) continue;
-      if (drawn++ > 520) break;
-      var hB = Math.round(hz / HZ_MAX * 18); if (hB > 18) hB = 18; if (hB < 0) hB = 0;
-      switch (p.k) {
+      if (p.k !== 'bird' && (FOC / d) * 6 < 1.6) continue;
+      /* no bake-order starvation: the living layer is appended after the
+         street furniture, so a hard cap here would silently drop it. The
+         size and haze gates above are the real cull; this is a safety. */
+      if (taken++ > 1800) break;
+      p._d = d; p._hz = hz;
+      propsVis.push(p);
+    }
+    propsVis.sort(function (a, b) { return b._d - a._d; });
+  }
+  /* every standing prop takes the ground with a small contact shadow:
+     without it a van, a stall or a person floats over the pavement */
+  function propAO(p, r, hz) {
+    groundSprite(SPR.ao, p.x, p.y, r, 0.30 * (1 - hz));
+  }
+  /* the low sun stretches a smudge of cast shadow away from every standing
+     figure; without it the inhabitants float at golden hour */
+  function propSun(p, r, h, hz) {
+    groundSprite(SPR.shadow, p.x - sunGnd[0] * h * 0.5, p.y - sunGnd[1] * h * 0.5,
+      r + h * 0.35, 0.20 * (1 - hz));
+  }
+  function drawProp(p) {
+    var d = p._d, hz = p._hz, s = FOC / d;
+    if (p.k === 'bird') { drawBird(p, s, hz); return; }
+    var hB = Math.round(hz / HZ_MAX * 18); if (hB > 18) hB = 18; if (hB < 0) hB = 0;
+    switch (p.k) {
         case 'lamp':  drawLamp(p, s, hz, hB); break;
-        case 'bench': drawBench(p, s, hB); break;
-        case 'boll':  miniBox(p.x, p.y, 0.55, 0.55, 0, 2.4, 0, M_DARK, hB); break;
-        case 'van':   drawVan(p, s, hB); break;
-        case 'stall': drawStall(p, s, hB); break;
+        case 'bench': propAO(p, 4.2, hz); drawBench(p, s, hB); break;
+        case 'boll':  propAO(p, 1.3, hz); miniBox(p.x, p.y, 0.55, 0.55, 0, 2.4, 0, M_DARK, hB); break;
+        case 'van':   propAO(p, 6.4, hz); drawVan(p, s, hB); break;
+        case 'stall': propAO(p, p.s * 0.85, hz); drawStall(p, s, hB); break;
         case 'tree':  drawPropTree(p, hz); break;
         case 'well':  drawWell(p, hB); break;
         case 'wash':  drawWash(p, s, hB); break;
-      }
+        case 'ped':   propAO(p, 1.5, hz); drawPed(p, s, hB); break;
+        case 'cafe':  propAO(p, 3.6, hz); drawCafe(p, s, hB); break;
+        case 'boat':  drawBoat(p, s, hB); break;
+        case 'walker': drawWalker(p, s, hB); break;
+        case 'dvan':  drawDvan(p, s, hB); break;
+        case 'pig':   drawPig(p, s, hB); break;
+        case 'cat':   drawCat(p, s, hB); break;
+        case 'gard':  drawGard(p, s, hB); break;
+        case 'moth':  drawMoth(p, s, hB); break;
     }
+  }
+
+  /* a person is three stacked boxes: legs in shade, a coat, a head */
+  function drawPed(p, s, hB) {
+    if (s * 3.4 < 2.0) return;
+    var m = M_VAN0 + (p.hue % 4);
+    if (p.hue === 4) m = M_AWN;
+    miniBox(p.x, p.y, 0.5, 0.42, 0, 1.6, p.yaw, M_DARK, hB);
+    miniBox(p.x, p.y, 0.72, 0.55, 1.6, 3.6, p.yaw, m, hB);
+    miniBox(p.x, p.y, 0.36, 0.34, 3.6, 4.6, p.yaw, M_TRIM, hB);
+  }
+  /* a cafe table with two stools, out on the pavement */
+  function drawCafe(p, s, hB) {
+    if (s * 3.4 < 2.0) return;
+    miniBox(p.x, p.y, 0.22, 0.22, 0, 2.6, p.yaw, M_STEEL, hB);
+    miniBox(p.x, p.y, 1.5, 1.5, 2.6, 3.1, p.yaw, M_TRIM, hB);
+    miniBox(p.x + cos(p.yaw) * 2.8, p.y + sin(p.yaw) * 2.8, 0.7, 0.7, 0, 1.7, p.yaw, M_WOOD, hB);
+    miniBox(p.x - cos(p.yaw) * 2.8, p.y - sin(p.yaw) * 2.8, 0.7, 0.7, 0, 1.7, p.yaw, M_WOOD, hB);
+  }
+  /* the rowboat, riding low on the reading order */
+  function drawBoat(p, s, hB) {
+    miniBox(p.x, p.y, 3.6, 1.4, 0.3, 1.8, p.yaw, M_WOOD, hB);
+    miniBox(p.x, p.y, 2.7, 0.9, 1.0, 1.8, p.yaw, M_DARK, hB);
+    miniBox(p.x + cos(p.yaw) * 0.6, p.y + sin(p.yaw) * 0.6, 0.4, 0.4, 1.8, 3.2, p.yaw, M_SHUT, hB);
+  }
+  /* The model-maker's tools lie flat on the table, drawn right after the
+     sheet so they can never land on top of a district. Each takes the
+     table with a run of soft contact shadows along its length. */
+  function drawTools() {
+    var i, j;
+    for (i = 0; i < tools.length; i++) {
+      var t = tools[i];
+      var d = depthOf(t.x, t.y, 2);
+      if (d < 16) continue;
+      var hz = hazeAt(d);
+      if (hz > 0.85) continue;
+      var hB = Math.round(hz / HZ_MAX * 18); if (hB > 18) hB = 18; if (hB < 0) hB = 0;
+      var ca = cos(t.yaw), sa = sin(t.yaw);
+      for (j = -2; j <= 2; j++) {
+        groundSprite(SPR.ao, t.x + ca * t.len * j * 0.4, t.y + sa * t.len * j * 0.4,
+          t.len * 0.30, 0.22 * (1 - hz));
+      }
+      if (t.k === 'pencil') drawPencil(t, hB);
+      else if (t.k === 'ruler') drawRuler(t, hB);
+      else if (t.k === 'knife') drawKnife(t, hB);
+      else if (t.k === 'pot') drawPot(t, hB);
+      else if (t.k === 'eraser') drawEraser(t, hB);
+      else if (t.k === 'shavings') drawShavings(t, hB);
+    }
+  }
+  /* the craft knife: a steel blade run out of a dark segmented handle */
+  function drawKnife(p, hB) {
+    var ca = cos(p.yaw), sa = sin(p.yaw), L = p.len;
+    miniBox(p.x - ca * L * 0.30, p.y - sa * L * 0.30, L * 0.72, L * 0.085, 0, L * 0.075, p.yaw, M_DARK, hB);
+    miniBox(p.x + ca * L * 0.72, p.y + sa * L * 0.72, L * 0.34, L * 0.055, 0, L * 0.045, p.yaw, M_TRIM, hB);
+    miniBox(p.x + ca * L * 1.10, p.y + sa * L * 1.10, L * 0.09, L * 0.035, 0, L * 0.035, p.yaw, M_STEEL, hB);
+  }
+  /* the paint pot, its lid beside it, the brush laid down still wet */
+  function drawPot(p, hB) {
+    var ca = cos(p.yaw), sa = sin(p.yaw), L = p.len;
+    var q;
+    /* the pot is round: twelve short faces stand in for the turn */
+    for (q = 0; q < 6; q++) {
+      var a = p.yaw + q * PI / 6;
+      miniBox(p.x, p.y, L * 0.34, L * 0.34, 0, L * 0.42, a, M_STALL0 + 1, hB);
+    }
+    miniBox(p.x, p.y, L * 0.24, L * 0.24, L * 0.42, L * 0.46, p.yaw, M_COPPER, hB);
+    /* the lid, dropped beside it */
+    miniBox(p.x - ca * L * 0.9, p.y - sa * L * 0.9, L * 0.30, L * 0.30, 0, L * 0.06, p.yaw + 0.5, M_TRIM, hB);
+    /* the brush: handle, ferrule, a tipped head resting off the rag */
+    var bx0 = p.x + ca * L * 1.1, by0 = p.y + sa * L * 1.1, by = p.yaw + 0.9;
+    miniBox(bx0, by0, L * 0.42, L * 0.05, 0, L * 0.05, by, M_WOOD, hB);
+    miniBox(bx0 + cos(by) * L * 0.5, by0 + sin(by) * L * 0.5, L * 0.10, L * 0.05, 0, L * 0.05, by, M_STEEL, hB);
+    miniBox(bx0 + cos(by) * L * 0.66, by0 + sin(by) * L * 0.66, L * 0.12, L * 0.055, 0, L * 0.055, by, M_STALL0 + 1, hB);
+  }
+  function drawEraser(p, hB) {
+    miniBox(p.x, p.y, p.len * 0.52, p.len * 0.26, 0, p.len * 0.16, p.yaw, M_AWN, hB);
+    miniBox(p.x + cos(p.yaw) * p.len * 0.3, p.y + sin(p.yaw) * p.len * 0.3,
+      p.len * 0.22, p.len * 0.26, 0, p.len * 0.165, p.yaw, M_TRIM, hB);
+  }
+  /* pencil shavings: a few small curls scattered where the point was cut */
+  function drawShavings(p, hB) {
+    var i;
+    for (i = 0; i < 5; i++) {
+      var h = hash32('shave' + i);
+      var a = rnd01(h, 1) * TAU, rr = p.len * (0.2 + rnd01(h, 2) * 1.4);
+      var sx2 = p.x + cos(a) * rr, sy2 = p.y + sin(a) * rr;
+      miniBox(sx2, sy2, p.len * (0.10 + rnd01(h, 3) * 0.08), p.len * 0.05,
+        0, p.len * (0.04 + rnd01(h, 4) * 0.05), rnd01(h, 5) * TAU, M_WOOD, hB);
+      miniBox(sx2 + p.len * 0.05, sy2, p.len * 0.05, p.len * 0.04,
+        0, p.len * 0.05, rnd01(h, 6) * TAU, M_STALL0 + 2, hB);
+    }
+  }
+  /* the model-maker's pencil, lying just off the torn edge */
+  function drawPencil(p, hB) {
+    var ca = cos(p.yaw), sa = sin(p.yaw), L = p.len;
+    /* the shaft in short lengths, so the near plane can only ever take the
+       piece that is actually out of frame, never snap the whole shaft */
+    var SEGS = 6, si2;
+    for (si2 = 0; si2 < SEGS; si2++) {
+      var c0 = -1 + 2 * (si2 + 0.5) / SEGS;
+      miniBox(p.x + ca * L * c0, p.y + sa * L * c0, L / SEGS + 0.3, L * 0.032, 0, L * 0.055, p.yaw, M_STALL0 + 2, hB);
+    }
+    miniBox(p.x + ca * L * 1.075, p.y + sa * L * 1.075, L * 0.085, L * 0.028, 0, L * 0.048, p.yaw, M_WOOD, hB);
+    miniBox(p.x + ca * L * 1.175, p.y + sa * L * 1.175, L * 0.022, L * 0.016, 0, L * 0.030, p.yaw, M_DARK, hB);
+    miniBox(p.x - ca * L * 1.035, p.y - sa * L * 1.035, L * 0.045, L * 0.030, 0, L * 0.052, p.yaw, M_AWN, hB);
+  }
+  /* the ruler along the far edge of the sheet */
+  function drawRuler(p, hB) {
+    var L = p.len;
+    miniBox(p.x, p.y, L, L * 0.075, 0, L * 0.014, p.yaw, M_TRIM, hB);
+    miniBox(p.x - sin(p.yaw) * L * 0.055, p.y + cos(p.yaw) * L * 0.055, L, L * 0.016, L * 0.013, L * 0.020, p.yaw, M_WOOD, hB);
   }
 
   function drawLamp(p, s, hz, hB) {
@@ -3388,12 +4107,20 @@
     if (!proj(p.x, p.y, p.h)) return; var x1 = px, y1 = py;
     ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1);
     ctx.strokeStyle = faceCol(M_STEEL, 1, 4, hB, 2);
-    ctx.lineWidth = Math.max(0.5, 0.75 * s * 1.4); ctx.lineCap = 'round';
+    ctx.lineWidth = Math.max(0.5, Math.min(0.75 * s * 1.4, 7)); ctx.lineCap = 'round';
     ctx.stroke();
-    var rr = Math.max(1.0, 1.5 * s);
+    /* the globe is a small glass lantern: its screen size is capped, or a
+       near lamp swells into a paper sun that dwarfs the street */
+    var rr = clamp(1.5 * s, 1.0, 9);
     ctx.beginPath(); ctx.arc(x1, y1 - rr * 0.5, rr, 0, TAU);
     ctx.fillStyle = litCol(hB); ctx.fill();
-    if (rr > 1.4) bloom.push([x1, y1 - rr * 0.5, rr * 5, 0.26 * (1 - hz)]);
+    /* the halo goes down with the lamp, not at the end of the frame, so a
+       wall in front of the lamp also stands in front of its glow */
+    if (rr > 1.4) {
+      ctx.globalCompositeOperation = 'lighter';
+      spriteAt(SPR.glint, x1, y1 - rr * 0.5, Math.min(rr * 5, 42), Math.min(rr * 5, 42), 0.26 * (1 - hz));
+      ctx.globalCompositeOperation = 'source-over';
+    }
   }
   function drawBench(p, s, hB) {
     var ca = cos(p.yaw), sa = sin(p.yaw);
@@ -3402,14 +4129,35 @@
   }
   function drawVan(p, s, hB) {
     var m = M_VAN0 + (p.hue % 4);
+    var ca = cos(p.yaw), sa = sin(p.yaw);
     miniBox(p.x, p.y, 4.6, 2.0, 0.7, 4.4, p.yaw, m, hB);
-    miniBox(p.x + cos(p.yaw) * 3.2, p.y + sin(p.yaw) * 3.2, 1.6, 2.0, 4.4, 5.6, p.yaw, m, hB);
+    miniBox(p.x + ca * 3.2, p.y + sa * 3.2, 1.6, 2.0, 4.4, 5.6, p.yaw, m, hB);
     miniBox(p.x, p.y, 4.7, 2.1, 0.0, 0.7, p.yaw, M_DARK, hB);
+    /* close enough to be a vehicle, not a crate: windscreen and wheels */
+    if (s * 4.6 > 26) {
+      miniBox(p.x + ca * 4.55, p.y + sa * 4.55, 0.35, 1.7, 4.5, 5.5, p.yaw, M_GLASS, hB);
+      var wi;
+      for (wi = -1; wi <= 1; wi += 2) {
+        miniBox(p.x + ca * 3.0 - sa * wi * 2.05, p.y + sa * 3.0 + ca * wi * 2.05, 0.85, 0.28, 0, 1.5, p.yaw, M_DARK, hB);
+        miniBox(p.x - ca * 3.0 - sa * wi * 2.05, p.y - sa * 3.0 + ca * wi * 2.05, 0.85, 0.28, 0, 1.5, p.yaw, M_DARK, hB);
+      }
+    }
   }
   function drawStall(p, s, hB) {
     var q, m = M_STALL0 + (p.hue % 3);
     miniBox(p.x, p.y, p.s * 0.5, p.s * 0.35, 0, 3.2, p.yaw, M_WOOD, hB);
     var ca = cos(p.yaw), sa = sin(p.yaw);
+    /* the goods on the counter: crates of produce, up close */
+    if (s * p.s > 26) {
+      var hs = hash32('goods' + (p.x | 0) + (p.y | 0)), gq;
+      for (gq = 0; gq < 3; gq++) {
+        var gu = (gq - 1) * p.s * 0.28 + (rnd01(hs, gq * 3) - 0.5) * 1.2;
+        var gv = (rnd01(hs, gq * 3 + 1) - 0.5) * p.s * 0.30;
+        miniBox(p.x + gu * ca - gv * sa, p.y + gu * sa + gv * ca,
+          p.s * 0.11, p.s * 0.10, 3.2, 3.2 + 0.9 + rnd01(hs, gq * 3 + 2) * 0.7,
+          p.yaw, gq === 1 ? M_AWN : gq === 2 ? M_SHUT : M_WOOD, hB);
+      }
+    }
     for (q = 0; q < 4; q++) {
       var lx = (q < 2 ? -1 : 1) * p.s * 0.48, ly = (q % 2 ? -1 : 1) * p.s * 0.33;
       var wx = p.x + lx * ca - ly * sa, wy = p.y + lx * sa + ly * ca;
@@ -3441,18 +4189,29 @@
     }
   }
   function drawPropTree(p, hz) {
+    var fade = hz > 0.55 ? clamp(1 - (hz - 0.55) / 0.32, 0, 1) : 1;
+    if (fade < 0.04) return;
+    /* the tree takes the ground: a street tree without its shadow floats */
+    groundSprite(SPR.ao, p.x, p.y, p.r * 1.35, 0.26 * (1 - hz) * fade);
+    groundSprite(SPR.shadow, p.x - sunGnd[0] * p.r * 0.8, p.y - sunGnd[1] * p.r * 0.8,
+      p.r * 1.1, 0.20 * (1 - hz) * fade);
     if (!proj(p.x, p.y, 0)) return; var x0 = px, y0 = py;
     if (!proj(p.x, p.y, p.z)) return;
     var R = p.r * pS;
     if (R < 0.7) return;
     ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(px, py);
-    ctx.strokeStyle = rgbas(mix(mix(C.earth, C.shadow, 0.5), C.haze, hz), 0.9);
+    ctx.strokeStyle = rgbas(mix(mix(C.earth, C.ink, 0.45), C.haze, hz), 0.9 * fade);
     ctx.lineWidth = Math.max(0.7, R * 0.16); ctx.stroke();
     var sx = px, sy = py;
     var dsx = sunSX - sx, dsy = sunSY - sy, dl = Math.hypot(dsx, dsy) || 1;
-    ctx.globalAlpha = 1 - hz * 0.55;
+    ctx.globalAlpha = (1 - hz * 0.55) * fade;
     ctx.drawImage(SPR.canopy, sx - R, sy - R * 1.15, R * 2, R * 1.9);
-    ctx.globalAlpha = (1 - hz * 0.7) * 0.9;
+    if (R > 64) {
+      ctx.globalAlpha = (1 - hz * 0.55) * fade * 0.9;
+      ctx.drawImage(SPR.canopy, sx - R * 0.44 - R * 0.60, sy - R * 0.72 - R * 0.52, R * 1.2, R * 1.05);
+      ctx.drawImage(SPR.canopy, sx + R * 0.40 - R * 0.52, sy - R * 0.52 - R * 0.48, R * 1.04, R * 0.95);
+    }
+    ctx.globalAlpha = (1 - hz * 0.7) * 0.9 * fade;
     ctx.drawImage(SPR.canopyLit, sx + (dsx / dl) * R * 0.28 - R * 0.55, sy - R * 0.66 - R * 0.48, R * 1.1, R * 0.96);
     ctx.globalAlpha = 1;
   }
@@ -3467,6 +4226,21 @@
     ctx.closePath();
     ctx.fillStyle = faceCol(M_TRIM, 1, 6, hB, 0); ctx.fill();
     ctx.strokeStyle = faceCol(M_TRIM, 1, 2, hB, 6); ctx.lineWidth = 1; ctx.stroke();
+    /* the water in the basin, holding the low sun */
+    ctx.beginPath();
+    var ok2 = true;
+    for (q = 0; q <= 12; q++) {
+      var a2 = q / 12 * TAU;
+      if (!proj(p.x + cos(a2) * p.r * 0.74, p.y + sin(a2) * p.r * 0.74, 2.45)) { ok2 = false; break; }
+      if (q === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    if (!ok2) return;
+    ctx.closePath();
+    ctx.fillStyle = rgbas(mix(mix(C.water, C.shadow, 0.30), C.haze, hB / 18), 0.9);
+    ctx.fill();
+    if (proj(p.x + sunGnd[0] * p.r * 0.2, p.y + sunGnd[1] * p.r * 0.2, 2.5) && pS > 2) {
+      spriteAt(SPR.glint, px, py, p.r * pS * 0.5, p.r * pS * 0.3, 0.30);
+    }
   }
   function drawWash(p, s, hB) {
     var n = p.n, i;
@@ -3484,9 +4258,18 @@
       var t = (i + 0.7) / (n + 0.4);
       var mxp = x0 + (x1 - x0) * t, myp = y0 + (y1 - y0) * t + sag * 2 * t * (1 - t) * 2;
       var ww = Math.max(1.2, 2.2 * s), hh = Math.max(1.6, 3.4 * s);
+      /* the wind takes the hems: each garment blows through the shared
+         phase, staggered along the line so the wave travels down it */
+      var sway = (WINDV * 0.8 + 0.2 * sin(LT * 0.0021 + p.seed % 7 + i * 1.3)) * hh * 0.55;
       ctx.fillStyle = i % 3 === 0 ? faceCol(M_TRIM, 1, 7, hB, 5)
         : i % 3 === 1 ? faceCol(M_AWN, 1, 6, hB, 0) : faceCol(M_SHUT, 1, 6, hB, 0);
-      ctx.fillRect(mxp - ww / 2, myp, ww, hh);
+      ctx.beginPath();
+      ctx.moveTo(mxp - ww / 2, myp);
+      ctx.lineTo(mxp + ww / 2, myp);
+      ctx.lineTo(mxp + ww / 2 + sway, myp + hh);
+      ctx.lineTo(mxp - ww / 2 + sway * 0.85, myp + hh);
+      ctx.closePath();
+      ctx.fill();
     }
   }
   function drawBird(p, s, hz) {
@@ -3494,22 +4277,318 @@
     var x = p.x + cos(t) * 60, y = p.y + sin(t * 1.3) * 60;
     if (!proj(x, y, p.z)) return;
     var w = p.s * s * 3;
-    if (w < 1.2 || w > 40) return;
+    if (w < 1.2) return;
+    if (w > 24) w = 24;         /* a swift far overhead, never a pterosaur */
     var fl = sin(TNOW * 0.004 + p.ph) * 0.5 + 0.5;
     ctx.beginPath();
     ctx.moveTo(px - w, py + w * 0.2 * fl);
     ctx.lineTo(px, py - w * 0.30);
     ctx.lineTo(px + w, py + w * 0.2 * fl);
-    ctx.strokeStyle = rgbas(mix(C.ink, C.haze, hz * 0.7), 0.55 * (1 - hz));
-    ctx.lineWidth = Math.max(0.7, w * 0.18);
+    ctx.strokeStyle = rgbas(mix(C.ink, C.haze, hz * 0.7), 0.45 * (1 - hz));
+    ctx.lineWidth = Math.max(0.7, w * 0.15);
     ctx.lineJoin = 'round';
     ctx.stroke();
   }
 
+  /* ==================================================================
+     THE LIVING LAYER — one coherent system of inhabitants, moved by one
+     clock and one wind. Every agent is a prop: it enters the same
+     depth-sorted stream as everything else, so a walker behind a wall is
+     painted behind the wall. Nothing teleports: walkers pace their lane
+     and turn at its ends, vans fade out at the depot and fade back in,
+     everything else moves on a closed loop. Under prefers-reduced-motion
+     the clock is pinned, and the whole layer holds one posed tableau.
+     ================================================================== */
+  function polyBake(pts) {
+    var cum = [0], i, L = 0;
+    for (i = 1; i < pts.length; i++) {
+      L += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+      cum.push(L);
+    }
+    return { pts: pts, cum: cum, len: L };
+  }
+  var polyPos = [0, 0, 0];
+  function polyAt(pb, d) {
+    var pts = pb.pts, cum = pb.cum, i;
+    if (d <= 0) d = 0.001;
+    if (d >= pb.len) d = pb.len - 0.001;
+    for (i = 1; i < cum.length; i++) if (cum[i] >= d) break;
+    var t = (d - cum[i - 1]) / ((cum[i] - cum[i - 1]) || 1);
+    polyPos[0] = pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * t;
+    polyPos[1] = pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * t;
+    polyPos[2] = Math.atan2(pts[i][1] - pts[i - 1][1], pts[i][0] - pts[i - 1][0]);
+    return polyPos;
+  }
+
+  function bakeLife() {
+    folk = [];
+    var put = function (o) { folk.push(o); props.push(o); };
+    var i, j;
+
+    /* Pedestrians pace the citation lanes of their quarter. How many walk a
+       quarter is its measured standing: the citations its pages receive. */
+    dists.forEach(function (dd, di) {
+      var dlanes = [];
+      for (j = 0; j < lanes.length; j++) {
+        if (lanes[j].d === dd && lanes[j].pts.length > 1) dlanes.push(lanes[j]);
+      }
+      if (!dlanes.length) return;
+      var inb = 0;
+      dd.members.forEach(function (m) { inb += (G.inbound[m] || 0); });
+      var n = clamp(Math.round(inb / 16), 1, 12);
+      for (i = 0; i < n; i++) {
+        var h = hash32('walk' + di + '-' + i);
+        var lane = dlanes[Math.floor(rnd01(h, 1) * dlanes.length) % dlanes.length];
+        if (!lane._pb) lane._pb = polyBake(lane.pts);
+        /* a lane runs door to door, from inside one lot to inside the other;
+           the walker turns at the doorways, not in the living rooms */
+        var inset = Math.min(13, lane._pb.len * 0.22);
+        var span = lane._pb.len - inset * 2;
+        if (span < 10) continue;
+        put({ k: 'walker', x: 0, y: 0, yaw: 0, gait: 0,
+          pb: lane._pb, u0: inset, span: span, off: rnd01(h, 2) * span * 2,
+          sp: 3.2 + rnd01(h, 3) * 1.9,
+          hue: Math.floor(rnd01(h, 4) * 5), ph: rnd01(h, 5) * TAU });
+      }
+    });
+
+    /* Delivery vans travel the strong citation streets between quarters:
+       one van per inter-district edge carrying six or more citations. */
+    for (i = 0; i < highways.length; i++) {
+      var hw = highways[i];
+      if (hw.w < 6) continue;
+      var h2 = hash32('van' + hw.a.i + ':' + hw.b.i);
+      var rev = rnd01(h2, 1) > 0.5;
+      var A = rev ? hw.b : hw.a, Bv = rev ? hw.a : hw.b;
+      var dx = Bv.x - A.x, dy = Bv.y - A.y, L = Math.hypot(dx, dy) || 1;
+      /* keep to the right of the drawn road, like traffic */
+      var nx = -dy / L, ny = dx / L;
+      put({ k: 'dvan', x: A.x, y: A.y, yaw: 0, alpha: 0,
+        ax: A.x + nx * 2.6, ay: A.y + ny * 2.6, ux: dx / L, uy: dy / L, len: L,
+        sp: 11 + rnd01(h2, 2) * 5, off: rnd01(h2, 3) * (L + 90),
+        hue: Math.floor(rnd01(h2, 4) * 4) });
+    }
+
+    /* Pigeons work the monument plazas. */
+    dists.forEach(function (dd, di) {
+      if (!dd.plaza || dd.plaza.r < 1) return;
+      var h3 = hash32('pig' + di);
+      var n2 = 3 + Math.floor(rnd01(h3, 1) * 3);
+      for (i = 0; i < n2; i++) {
+        put({ k: 'pig', x: dd.x, y: dd.y, yaw: 0,
+          ax: dd.x + (rnd01(h3, i * 3 + 2) - 0.5) * P * 1.7,
+          ay: dd.y + (rnd01(h3, i * 3 + 3) - 0.5) * P * 1.7,
+          rx: 4 + rnd01(h3, i * 3 + 4) * 7, ry: 4 + rnd01(h3, i * 5 + 5) * 7,
+          w1: 0.10 + rnd01(h3, i * 7 + 6) * 0.12, w2: 0.07 + rnd01(h3, i * 7 + 7) * 0.11,
+          ph: rnd01(h3, i * 7 + 8) * TAU });
+      }
+    });
+
+    /* One cat wanders the derelict lots: a closed round through the empty
+       plots that stand nearest one another, walked slowly, forever. */
+    var dls = [];
+    for (i = 0; i < blds.length; i++) if (blds[i].derelict) dls.push(blds[i]);
+    if (dls.length > 2) {
+      var seed = dls[hash32('cat') % dls.length];
+      var tour = [seed], used = {}; used[seed.slug] = 1;
+      var curL = seed;
+      for (j = 0; j < 6; j++) {
+        var best = null, bd = 1e9;
+        for (i = 0; i < dls.length; i++) {
+          var c2 = dls[i];
+          if (used[c2.slug]) continue;
+          var dd2 = (c2.wx - curL.wx) * (c2.wx - curL.wx) + (c2.wy - curL.wy) * (c2.wy - curL.wy);
+          if (dd2 < bd) { bd = dd2; best = c2; }
+        }
+        if (!best || bd > 260 * 260) break;
+        tour.push(best); used[best.slug] = 1; curL = best;
+      }
+      if (tour.length >= 2) {
+        var way2 = tour.map(function (r2) { return { x: r2.wx, y: r2.wy }; });
+        way2.push({ x: seed.wx, y: seed.wy });
+        var sm = catmull(way2, 6).map(function (q2) { return [q2.x, q2.y]; });
+        put({ k: 'cat', x: seed.wx, y: seed.wy, yaw: 0,
+          pb: polyBake(sm), sp: 2.1, ph: 0.8 });
+      }
+    }
+
+    /* Gardeners kneel in the planted blocks, working the beds. */
+    var gard = 0;
+    for (i = 0; i < blds.length; i++) {
+      var r3 = blds[i];
+      if (r3.arch !== 'garden' || r3.derelict) continue;
+      var h4 = r3.h32;
+      if (rnd01(h4, 91) < 0.42 || gard >= 34) continue;
+      gard++;
+      /* kneel at the edge of the bed, on the path, working inward: a figure
+         inside the lot would be painted over by its own planting */
+      var gj = h4 % 4;
+      var gox = FNL[gj][0] * (r3.hw + 2.3), goy = FNL[gj][1] * (r3.hd + 2.3);
+      var gca = cos(r3.yaw), gsa = sin(r3.yaw);
+      var gx = r3.wx + gox * gca - goy * gsa, gy = r3.wy + gox * gsa + goy * gca;
+      put({ k: 'gard', x: gx, y: gy,
+        yaw: Math.atan2(r3.wy - gy, r3.wx - gx), m: M_VAN0 + (h4 % 4), ph: rnd01(h4, 94) * TAU });
+    }
+
+    /* The night shift: every commit made between midnight and six in the
+       morning left a moth at that page's lamp. 15 night edits on 12 pages. */
+    if (PROV) {
+      Object.keys(PROV).forEach(function (s) {
+        var nn = PROV[s] && PROV[s].night;
+        var lamp = lampOf[s];
+        if (!nn || !lamp) return;
+        for (i = 0; i < nn && i < 5; i++) {
+          var h5 = hash32('moth' + s + i);
+          put({ k: 'moth', x: lamp.x, y: lamp.y, z: lamp.h - 0.6,
+            sp: 0.9 + rnd01(h5, 1) * 0.7, ph: rnd01(h5, 2) * TAU, ph2: rnd01(h5, 3) * TAU });
+        }
+      });
+    }
+  }
+
+  function stepLife() {
+    LT = reduced() ? 60000 : TNOW;
+    WINDV = sin(LT * 0.00047) * 0.65 + sin(LT * 0.00131 + 2.1) * 0.35;
+    var t = LT / 1000, i;
+    for (i = 0; i < folk.length; i++) {
+      var f = folk[i];
+      if (f.k === 'walker') {
+        var per = f.span * 2;
+        var dd = (t * f.sp + f.off) % per;
+        var fwdW = dd < f.span;
+        var q = polyAt(f.pb, f.u0 + (fwdW ? dd : per - dd));
+        f.x = q[0]; f.y = q[1];
+        f.yaw = fwdW ? q[2] : q[2] + PI;
+        f.gait = t * f.sp * 1.9 + f.ph;
+      } else if (f.k === 'dvan') {
+        var per2 = f.len + 90;                      /* the pause at the depot */
+        var d2 = (t * f.sp + f.off) % per2;
+        if (d2 > f.len) { f.alpha = 0; continue; }
+        f.alpha = clamp(Math.min(d2 / 14, (f.len - d2) / 14), 0, 1);
+        f.x = f.ax + f.ux * d2; f.y = f.ay + f.uy * d2;
+        f.yaw = Math.atan2(f.uy, f.ux);
+      } else if (f.k === 'pig') {
+        var a1 = f.w1 * t * TAU + f.ph, a2 = f.w2 * t * TAU + f.ph * 1.7;
+        f.x = f.ax + cos(a1) * f.rx; f.y = f.ay + sin(a2) * f.ry;
+        f.yaw = Math.atan2(cos(a2) * f.w2 * f.ry, -sin(a1) * f.w1 * f.rx);
+      } else if (f.k === 'cat') {
+        var d3 = (t * f.sp) % f.pb.len;
+        var q2 = polyAt(f.pb, d3);
+        f.x = q2[0]; f.y = q2[1]; f.yaw = q2[2];
+      }
+    }
+  }
+
+  /* a walker is the parked pedestrian given a stride: two legs in
+     counterphase, a slight bob in the coat, facing where it is going */
+  function drawWalker(p, s, hB) {
+    if (s * 3.4 < 2.0) return;
+    propAO(p, 1.4, p._hz);
+    if (s * 3.4 > 6) propSun(p, 1.0, 4.6, p._hz);
+    var m = M_VAN0 + (p.hue % 4);
+    if (p.hue === 4) m = M_AWN;
+    var g = sin(p.gait);
+    var ca = cos(p.yaw), sa = sin(p.yaw);
+    if (s * 3.4 > 7) {
+      miniBox(p.x + ca * g * 0.40, p.y + sa * g * 0.40, 0.26, 0.28, 0, 1.65, p.yaw, M_DARK, hB);
+      miniBox(p.x - ca * g * 0.40, p.y - sa * g * 0.40, 0.26, 0.28, 0, 1.65, p.yaw, M_DARK, hB);
+    } else {
+      miniBox(p.x, p.y, 0.5, 0.42, 0, 1.6, p.yaw, M_DARK, hB);
+    }
+    var bob = 0.12 * abs(g);
+    miniBox(p.x, p.y, 0.72, 0.55, 1.6 + bob, 3.6 + bob, p.yaw, m, hB);
+    miniBox(p.x, p.y, 0.36, 0.34, 3.6 + bob, 4.6 + bob, p.yaw, M_TRIM, hB);
+  }
+  /* a delivery van out on the citation street, fading in at one depot and
+     out at the other so it never pops */
+  function drawDvan(p, s, hB) {
+    if (p.alpha <= 0.02 || s * 4.6 < 2.2) return;
+    ctx.globalAlpha = p.alpha;
+    groundSprite(SPR.ao, p.x, p.y, 6.4, 0.30 * (1 - p._hz) * p.alpha);
+    drawVan(p, s, hB);
+    ctx.globalAlpha = 1;
+  }
+  /* a pigeon: a grey-blue crumb that walks its own wandering line and
+     pecks between steps */
+  function drawPig(p, s, hB) {
+    if (s * 3.4 < 1.5) return;
+    var peck = Math.max(0, sin(LT * 0.0052 + p.ph));
+    miniBox(p.x, p.y, 0.34, 0.24, 0.08, 0.52, p.yaw, M_GLASS, hB);
+    if (s * 3.4 > 4.2) {
+      var ca = cos(p.yaw), sa = sin(p.yaw);
+      var hz2 = 0.50 - peck * 0.30;
+      miniBox(p.x + ca * 0.32, p.y + sa * 0.32, 0.13, 0.12, hz2, hz2 + 0.22, p.yaw, M_GLASS, hB);
+    }
+  }
+  /* the cat: long, low, tail up, on its slow round of the empty plots */
+  function drawCat(p, s, hB) {
+    if (s * 3.4 < 2.2) return;
+    propAO(p, 1.1, p._hz);
+    if (s * 3.4 > 6) propSun(p, 0.8, 1.2, p._hz);
+    var ca = cos(p.yaw), sa = sin(p.yaw);
+    miniBox(p.x, p.y, 1.02, 0.32, 0.26, 0.84, p.yaw, M_DARK, hB);
+    miniBox(p.x + ca * 0.94, p.y + sa * 0.94, 0.29, 0.29, 0.60, 1.16, p.yaw, M_DARK, hB);
+    var sw = sin(LT * 0.003 + p.ph) * 0.35 + WINDV * 0.10;
+    var tx0 = p.x - ca * 0.95, ty0 = p.y - sa * 0.95;
+    if (!proj(tx0, ty0, 0.75)) return;
+    var x0 = px, y0 = py;
+    if (!proj(tx0 - ca * 0.35 - sa * sw, ty0 - sa * 0.35 + ca * sw, 1.85)) return;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(px, py);
+    ctx.strokeStyle = faceCol(M_DARK, 1, 3, hB, 2);
+    ctx.lineWidth = Math.max(0.4, 0.12 * s); ctx.lineCap = 'round'; ctx.stroke();
+  }
+  /* a gardener kneels over the bed, torso rocking with the work, one arm
+     down in the planting */
+  function drawGard(p, s, hB) {
+    if (s * 3.4 < 2.2) return;
+    propAO(p, 1.7, p._hz);
+    if (s * 3.4 > 6) propSun(p, 1.0, 3.2, p._hz);
+    var bob = sin(LT * 0.0021 + p.ph);
+    var lean = 0.30 + 0.16 * bob;
+    var ca = cos(p.yaw), sa = sin(p.yaw);
+    miniBox(p.x, p.y, 0.62, 0.50, 0, 0.85, p.yaw, M_DARK, hB);
+    miniBox(p.x + ca * lean, p.y + sa * lean, 0.60, 0.48, 0.85, 2.35, p.yaw, p.m, hB);
+    miniBox(p.x + ca * (lean + 0.22), p.y + sa * (lean + 0.22), 0.30, 0.30, 2.35, 3.05, p.yaw, M_TRIM, hB);
+    miniBox(p.x + ca * (lean + 0.22), p.y + sa * (lean + 0.22), 0.52, 0.52, 3.05, 3.24, p.yaw, M_STALL0 + 2, hB);
+    if (s * 3.4 > 6) {
+      var hx0 = p.x + ca * (lean + 0.50), hy0 = p.y + sa * (lean + 0.50);
+      if (!proj(hx0, hy0, 2.0)) return;
+      var x0 = px, y0 = py;
+      if (!proj(hx0 + ca * (0.55 + 0.18 * bob), hy0 + sa * (0.55 + 0.18 * bob), 0.25)) return;
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(px, py);
+      ctx.strokeStyle = faceCol(p.m, 1, 4, hB, 2);
+      ctx.lineWidth = Math.max(0.5, 0.22 * s); ctx.lineCap = 'round'; ctx.stroke();
+    }
+  }
+  /* a moth: a pale flicker on a restless orbit around its lamp */
+  function drawMoth(p, s, hB) {
+    if (s * 2.2 < 1.0) return;
+    var t = LT * 0.001 * p.sp + p.ph;
+    var rr = 1.7 + 0.8 * sin(t * 1.9 + p.ph2);
+    var wx = p.x + cos(t * 2.7) * rr, wy = p.y + sin(t * 2.7) * rr;
+    var wz = p.z + sin(t * 3.4 + p.ph2) * 0.9;
+    if (!proj(wx, wy, wz)) return;
+    var w = clamp(0.62 * pS, 0.9, 4.6);
+    var fl = 0.35 + 0.65 * abs(sin(LT * 0.03 + p.ph));
+    ctx.globalAlpha = 0.85 * (1 - p._hz);
+    ctx.fillStyle = 'rgba(255,240,210,0.92)';
+    ctx.beginPath();
+    ctx.moveTo(px, py);
+    ctx.lineTo(px - w, py - w * fl); ctx.lineTo(px - w * 0.3, py); ctx.closePath();
+    ctx.moveTo(px, py);
+    ctx.lineTo(px + w, py - w * fl); ctx.lineTo(px + w * 0.3, py); ctx.closePath();
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+
   /* ---------------------------------------------------------- labels */
-  function drawLabels() {
-    var i, shown = 0;
-    var picks = [];
+  function rectsHit(a, b) {
+    return a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0;
+  }
+  function drawLabels(avoid) {
+    var i, j, shown = 0;
+    var picks = [], placed = [];
+    for (j = 0; j < (avoid ? avoid.length : 0); j++) placed.push(avoid[j]);
     for (i = 0; i < dists.length; i++) {
       var d = dists[i];
       var dd = depthOf(d.x, d.y, 0);
@@ -3522,16 +4601,18 @@
     }
     picks.sort(function (a, b) { return b.scr - a.scr; });
     ctx.textAlign = 'center';
+    ctx.font = '600 11px "Archivo Narrow", Arial Narrow, sans-serif';
     for (i = 0; i < picks.length && shown < 5; i++) {
-      var q = picks[i], ok = true;
-      for (var j = 0; j < i; j++) {
-        if (picks[j].used && abs(picks[j].x - q.x) < 150 && abs(picks[j].y - q.y) < 30) { ok = false; break; }
-      }
-      if (!ok) continue;
-      q.used = 1; shown++;
+      var q = picks[i];
       var name = q.d.name.length > 30 ? q.d.name.slice(0, 29) + '…' : q.d.name;
-      ctx.font = '600 11px "Archivo Narrow", Arial Narrow, sans-serif';
       var tw = ctx.measureText(name).width + 18;
+      /* the pill's real footprint decides collisions, with breathing room,
+         so two long names never sit shingled over one another */
+      var rect = { x0: q.x - tw / 2 - 8, y0: q.y - 13, x1: q.x + tw / 2 + 8, y1: q.y + 13 };
+      var ok = true;
+      for (j = 0; j < placed.length; j++) if (rectsHit(rect, placed[j])) { ok = false; break; }
+      if (!ok) continue;
+      placed.push(rect); shown++;
       var a = clamp(1 - hazeAt(q.dd) * 0.9, 0.45, 1);
       ctx.globalAlpha = a * 0.84;
       ctx.fillStyle = 'rgba(250,240,220,0.92)';
@@ -3553,24 +4634,43 @@
     ctx.closePath();
   }
 
-  function drawMarker(r, sel) {
-    if (!r || r.wx === undefined) return;
-    if (!proj(r.wx, r.wy, r.solidz + 16)) return;
-    var x = px, y = py;
-    if (x < -80 || x > W + 80 || y < -60 || y > H + 60) return;
+  /* Where the marker pill would sit, or null when it should not be shown:
+     the building is off frame, too small in the frame to be the subject, or
+     walled off behind something nearer. Solved before the labels are laid,
+     so a district label never shingles under the pill. */
+  function markerRect(r, sel) {
+    if (!r || r.wx === undefined || r._vstamp !== FRAMEN) return null;
+    if (r._scr < 18) return null;
+    if (!proj(r.wx, r.wy, r.solidz)) return null;
+    var ax2 = px, ay2 = py;
+    if (ax2 < -80 || ax2 > W + 80 || ay2 < -60 || ay2 > H + 60) return null;
+    /* what actually stands at the anchor: if a nearer building painted over
+       it, the subject is hidden and a pill would float on a stranger's wall */
+    var under = pick(ax2, Math.min(H - 2, ay2 + 2));
+    if (under && under !== r.slug) {
+      var o = rec[under];
+      if (o && o._vstamp === FRAMEN && o._d < r._d * 0.985) return null;
+    }
     var name = title(r.p);
     if (name.length > 34) name = name.slice(0, 33) + '…';
     ctx.font = '700 12.5px "Archivo", Arial, sans-serif';
     var tw = ctx.measureText(name).width + 22;
-    x = clamp(x, tw / 2 + 8, W - tw / 2 - 8);
-    ctx.strokeStyle = sel ? rgbs(C.sun) : 'rgba(250,240,220,0.85)';
-    ctx.lineWidth = sel ? 2 : 1.4;
-    ctx.beginPath(); ctx.moveTo(x, y + 4); ctx.lineTo(x, y + 24); ctx.stroke();
-    ctx.fillStyle = sel ? rgbs(C.sun) : 'rgba(250,240,220,0.94)';
-    rrect(x - tw / 2, y - 13, tw, 21, 10); ctx.fill();
+    var x = clamp(ax2, tw / 2 + 8, W - tw / 2 - 8);
+    var yc2 = clamp(ay2 - 27, 17, H - 24);
+    return { x0: x - tw / 2, y0: yc2 - 10.5, x1: x + tw / 2, y1: yc2 + 10.5,
+             x: x, y: yc2, tw: tw, ax: ax2, ay: ay2, name: name, sel: sel };
+  }
+  function drawMarker(mr) {
+    if (!mr) return;
+    ctx.strokeStyle = mr.sel ? rgbs(C.sun) : 'rgba(250,240,220,0.85)';
+    ctx.lineWidth = mr.sel ? 2 : 1.4;
+    ctx.beginPath(); ctx.moveTo(mr.x, mr.y + 10); ctx.lineTo(mr.ax, mr.ay); ctx.stroke();
+    ctx.fillStyle = mr.sel ? rgbs(C.sun) : 'rgba(250,240,220,0.94)';
+    ctx.font = '700 12.5px "Archivo", Arial, sans-serif';
+    rrect(mr.x - mr.tw / 2, mr.y - 10.5, mr.tw, 21, 10); ctx.fill();
     ctx.fillStyle = rgbs(C.ink);
     ctx.textAlign = 'center';
-    ctx.fillText(name, x, y + 2);
+    ctx.fillText(mr.name, mr.x, mr.y + 4);
     ctx.textAlign = 'left';
   }
 
@@ -3631,7 +4731,20 @@
   function render() {
     var t0 = performance.now();
     TNOW = t0;
+    FRAMEN++;
+    stepLife();
     updateCam();
+    /* a tooltip is anchored to a screen point: once the camera has moved
+       from where it was raised, what stands under the cursor is re-read,
+       and the tip is re-anchored to it or dismissed, never left frozen */
+    if (hovered && hovCam &&
+        (abs(cam.az - hovCam.az) > 0.004 || abs(cam.el - hovCam.el) > 0.004 ||
+         abs(cam.dist - hovCam.dist) > hovCam.dist * 0.012 ||
+         abs(cam.tx - hovCam.tx) > 3 || abs(cam.ty - hovCam.ty) > 3)) {
+      var reSlug = (lastHx != null && !dragging) ? pick(lastHx, lastHy) : null;
+      if (reSlug === hovered) snapHovCam();
+      else setHover(reSlug);
+    }
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     bloom.length = 0; GSTRIPS = 0; NPART = 0; NFILL = 0; NGRAD = 0;
 
@@ -3639,9 +4752,18 @@
     drawSky(); _m('sky');
     planeStrips(SPR.tablePat, null, 0.75); _m('table');
     drawPaper(); _m('paper');
+    /* the work lamp: a warm pool centred on the page, falling off onto the
+       table, so the establishing shot reads as a lit workbench */
+    if (paper) {
+      ctx.globalCompositeOperation = 'lighter';
+      groundSprite(SPR.warm, paper.cx, paper.cy, (paper.x1 - paper.x0) * 0.85, 0.10, W * W * 6);
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    drawTools();
     drawGroundDetail(); _m('ground');
     drawRoads(); _m('roads');
     drawWater(); _m('water');
+    drawDistrictGround(); _m('sgrid');
 
     vis = [];
     var i, n = blds.length;
@@ -3671,6 +4793,7 @@
       rv._sil = sil;
       if (occCovered(sil.x0 - 2, sil.y0 - 2, sil.x1 + 2, sil.y1 + 2)) continue;
       rv._keep = 1;
+      rv._vstamp = FRAMEN;
       keep.push(rv);
       if (rv.arch !== 'garden' && !rv.derelict &&
           (sil.ix1 - sil.ix0) > OCCS && (sil.iy1 - sil.iy0) > OCCS) {
@@ -3690,20 +4813,47 @@
        built rather than left blank. The budget is spent in screen area, so a
        frame full of giants costs the same as a frame full of cottages. */
     var ranked = vis.slice().sort(function (a, b) { return b._scr - a._scr; });
-    var quota = W * H * (dragging ? 0.45 : 1.05), spent = 0, cnt = 0, capN = dragging ? 14 : 30;
+    /* generous when the camera rests: the old 1.05 quota left the landmark
+       tower of a mid-zoom shot as a blank slab while small near buildings
+       spent the budget. Measured headroom allows it. */
+    var quota = W * H * (dragging ? 0.45 : 2.0), spent = 0, cnt = 0, capN = dragging ? 14 : 26;
     for (i = 0; i < ranked.length; i++) {
       var q = ranked[i];
-      q._q = (DBG === 2 ? false : (spent < quota && cnt < capN && q._scr > 16));
+      /* the scale floor: full dressing goes only to buildings big enough in
+         the frame for a window to read. On a wide street view forty mid-size
+         facades were eating the whole frame budget without adding a thing
+         the eye could see at that size. */
+      q._q = (DBG === 2 ? false : (spent < quota && cnt < capN && q._scr > 95));
       if (q._q) { spent += q._area; cnt++; }
     }
-    for (i = 0; i < vis.length; i++) drawBuilding(vis[i], vis[i]._q);
-    _m('blds');
+    /* buildings and props interleave by the near face of each building,
+       so whatever stands behind a wall is painted before the wall */
+    gatherProps();
+    var pvi = 0;
+    for (i = 0; i < vis.length; i++) {
+      var rb2 = vis[i];
+      /* the exact near bound of the building's volume along the view axis:
+         nothing with a depth beyond it can stand in front of any part of the
+         building, so everything beyond it is painted first. The old fudge
+         (0.9 of the widest half-extent) under-reached at glancing angles and
+         let plaza props paint on top of the wall that hides them. */
+      var caB = cos(rb2.yaw), saB = sin(rb2.yaw);
+      var fu = abs(fwd[0] * caB + fwd[1] * saB), fv = abs(fwd[1] * caB - fwd[0] * saB);
+      var dnear = rb2._d - rb2.hw * fu - rb2.hd * fv - Math.max(0, SE * rb2.topz * 0.6) - 2;
+      while (pvi < propsVis.length && propsVis[pvi]._d > dnear) drawProp(propsVis[pvi++]);
+      drawBuilding(rb2, rb2._q);
+    }
+    while (pvi < propsVis.length) drawProp(propsVis[pvi++]);
+    _m('blds'); _m('props');
 
-    drawProps(); _m('props');
-
-    drawLabels();
-    if (cur && rec[cur] && rec[cur].parts) drawMarker(rec[cur], true);
-    if (hovered && hovered !== cur && rec[hovered]) drawMarker(rec[hovered], false);
+    var mrCur = (cur && rec[cur] && rec[cur].parts) ? markerRect(rec[cur], true) : null;
+    var mrHov = (hovered && hovered !== cur && rec[hovered]) ? markerRect(rec[hovered], false) : null;
+    var avoid = [];
+    if (mrCur) avoid.push(mrCur);
+    if (mrHov) avoid.push(mrHov);
+    drawLabels(avoid);
+    drawMarker(mrCur);
+    drawMarker(mrHov);
 
     if (bloom.length) {
       ctx.globalCompositeOperation = 'lighter';
@@ -3794,8 +4944,10 @@
     var probe = [], i;
     if (paper) {
       for (i = 0; i < paper.edge.length; i += 8) probe.push(paper.edge[i]);
-      probe.push({ x: paper.tx, y: paper.ty });
-      probe.push({ x: paper.tx + paper.tsize * 8.6, y: paper.sy });
+      /* the printed name must stay clear of the HUD; the deckle may tuck
+         behind it, the way a photograph lets the foreground bleed */
+      probe.push({ x: paper.tx, y: paper.ty, strict: 1 });
+      probe.push({ x: paper.tx + paper.tsize * 8.6, y: paper.sy, strict: 1 });
     } else probe.push({ x: bounds.cx, y: bounds.cy });
 
     var save = { az: cam.az, el: cam.el, dist: cam.dist, tx: cam.tx, ty: cam.ty };
@@ -3805,14 +4957,18 @@
     for (tries = 0; tries < 40; tries++) {
       cam.az = az; cam.el = el; cam.dist = d; cam.tx = tx; cam.ty = ty;
       updateCam();
-      var ok = true, x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+      var ok = true, x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9, ys = -1e9;
       for (i = 0; i < probe.length; i++) {
         if (!proj(probe[i].x, probe[i].y, 0)) { ok = false; break; }
         if (px < x0) x0 = px; if (px > x1) x1 = px;
-        if (py < y0) y0 = py; if (py > y1) y1 = py;
+        if (py < y0) y0 = py;
+        if (probe[i].strict) { if (py > ys) ys = py; }
+        else if (py > y1) y1 = py;
       }
-      /* a hair of bleed left and right is a photograph, not a diagram */
-      if (ok && x0 > -W * 0.03 && x1 < W * 1.03 && y0 > H * 0.03 && y1 < H - BAR) break;
+      /* a real bleed left and right is a photograph, not a diagram: the
+         sheet fills the frame, the table is a border and not a subject */
+      if (ok && x0 > -W * 0.085 && x1 < W * 1.085 && y0 > H * 0.012 &&
+          ys < H - BAR - 14 && y1 < H + BAR * 0.9) break;
       d *= 1.06;
       if (d > span * 14) break;
     }
@@ -4022,19 +5178,26 @@
     if (n !== i) location.hash = '#' + order[n];
   }
 
+  var lastHx = null, lastHy = null;
   function hoverAt(e) {
     var r = cv.getBoundingClientRect();
-    setHover(pick(e.clientX - r.left, e.clientY - r.top), e);
+    lastHx = e.clientX - r.left; lastHy = e.clientY - r.top;
+    setHover(pick(lastHx, lastHy), e);
+  }
+  var hovCam = null;
+  function snapHovCam() {
+    hovCam = { az: cam.az, el: cam.el, dist: cam.dist, tx: cam.tx, ty: cam.ty };
   }
   function setHover(slug, e) {
-    if (hovered === slug) { if (slug && e) placeTip(e); return; }
+    if (hovered === slug) { if (slug && e) { placeTip(e); snapHovCam(); } return; }
     hovered = slug;
-    if (!slug) { tipEl.classList.remove('on'); if (reduced()) paintNow(); return; }
+    if (!slug) { hovCam = null; tipEl.classList.remove('on'); if (reduced()) paintNow(); return; }
     var r = rec[slug];
     $('.tt', tipEl).textContent = title(r.p);
     $('.tm', tipEl).textContent = ARCH[r.arch].name + ' · ' + ARCH[r.arch].mat + ' · ' +
       r.inb + ' in, ' + r.outb + ' out';
     tipEl.classList.add('on');
+    snapHovCam();
     if (e) placeTip(e);
     if (reduced()) paintNow();
   }
@@ -4204,6 +5367,8 @@
 
   /* ------------------------------------------------------------ route */
   function route() {
+    /* whatever was hovered belongs to the view being left behind */
+    setHover(null);
     var h = location.hash || '';
     var slug = h.charAt(0) === '#' ? h.slice(1) : h;
     if (!slug || slug === '/') {
@@ -4234,23 +5399,58 @@
     if (!document.body.classList.contains('booting')) locate(false);
   }
 
+  /* the sun-side azimuth whose sight line to the lot is least walled off
+     by the neighbours: the camera must never park behind another building */
+  function clearAz(r, dd2, el2) {
+    var base = SUN_AZ + (rnd01(r.h32, 9) > 0.5 ? 0.72 : -0.72) + (rnd01(r.h32, 21) - 0.5) * 0.30;
+    var cands = [base, base + 0.55, base - 0.55, base + 1.1, base - 1.1, base + 1.8, base - 1.8, base + PI];
+    var ce2 = cos(el2), ez = dd2 * sin(el2);
+    var sz0 = r.solidz * 0.5;
+    var best = base, bestPen = Infinity, i, j, k2;
+    /* judged from the far stand AND from close in, so zooming down the same
+       ray never runs the camera into a neighbour that only blocks up close */
+    var stands = [dd2, Math.min(150, dd2)];
+    for (i = 0; i < cands.length; i++) {
+      var az = cands[i];
+      var pen = i * 30;                      /* all else equal, keep the sun side */
+      for (k2 = 0; k2 < stands.length; k2++) {
+        var ds = stands[k2];
+        var ex2 = r.wx + cos(az) * ds * ce2, ey2 = r.wy + sin(az) * ds * ce2;
+        var vx = ex2 - r.wx, vy = ey2 - r.wy, vl2 = vx * vx + vy * vy;
+        var ezs = ds * sin(el2);
+        for (j = 0; j < blds.length; j++) {
+          var b = blds[j];
+          if (b === r || b.wx === undefined) continue;
+          var u = ((b.wx - r.wx) * vx + (b.wy - r.wy) * vy) / vl2;
+          if (u < 0.03 || u > 0.98) continue;
+          var qx = r.wx + vx * u - b.wx, qy = r.wy + vy * u - b.wy;
+          /* not a thin ray but the middle of the frame: a neighbour a little
+             off axis still walls off the picture when it is near the eye */
+          var rad = Math.max(b.hw, b.hd) + 5 + u * ds * 0.22;
+          var lat = sqrt(qx * qx + qy * qy);
+          if (lat > rad) continue;
+          var sightZ = sz0 + (ezs - sz0) * u;
+          if (b.solidz + 2 < sightZ) continue;
+          pen += (rad - lat) * (b.solidz - sightZ + 8);
+        }
+      }
+      if (pen < bestPen) { bestPen = pen; best = az; }
+      if (pen <= i * 30 + 0.001) break;      /* this line of sight is clear */
+    }
+    return best;
+  }
   function locate(force) {
     var r = rec[cur];
     if (!r || !r.boxes) return;
     /* stand outside the lot and look back across the city, so the page is in
-       the foreground and its neighbours fill the frame behind it */
-    /* stand on the sun's side of the lot, so the page opens in the light and
-       not against its own shadow */
-    var az = SUN_AZ + (rnd01(r.h32, 9) > 0.5 ? 0.72 : -0.72) + (rnd01(r.h32, 21) - 0.5) * 0.30;
-    /* stand a block away, at the height of a low drone, so the page looms and
-       its quarter fills the frame behind it */
-    /* far enough back that the whole building is in frame, ground floor to
-       crown, and no further */
+       the foreground and its neighbours fill the frame behind it; among the
+       candidate stands, take the one nothing taller is standing in front of */
     var dd2 = clamp(r.solidz * 2.1 + 72, 165, 720);
     var el2 = 0.30;
-    /* nudge the target off centre and a little into the air: a photograph,
-       not a passport picture */
-    var tx2 = r.wx - cos(az) * dd2 * 0.16, ty2 = r.wy - sin(az) * dd2 * 0.16;
+    var az = clearAz(r, dd2, el2);
+    /* a whisper off centre: a photograph, not a passport picture, but the
+       building must stay the subject at every distance of the zoom ladder */
+    var tx2 = r.wx - cos(az) * dd2 * 0.06, ty2 = r.wy - sin(az) * dd2 * 0.06;
     if (force) { flyTo(tx2, ty2, dd2, az, el2, 1250); touch(); return; }
     if (fly) return;
     var d = depthOf(r.wx, r.wy, r.solidz * 0.5);
@@ -4551,8 +5751,51 @@
     count: function () { return blds.length; },
     visible: function () { return vis.length; },
     pickAt: function (x, y) { return pick(x, y); },
+    propAt: function (x, y) {
+      var best = null, bd = 1e9, i;
+      for (i = 0; i < propsVis.length; i++) {
+        var p = propsVis[i];
+        if (!proj(p.x, p.y, p.z || 4)) continue;
+        var dd = (px - x) * (px - x) + (py - y) * (py - y);
+        if (dd < bd) { bd = dd; best = { k: p.k, d: Math.round(p._d), sx: Math.round(px), sy: Math.round(py) }; }
+      }
+      return best;
+    },
+    bldAt: function (x, y) {
+      var s2 = pick(x, y);
+      if (!s2) return null;
+      var r = rec[s2];
+      return { slug: s2, d: Math.round(r._d || 0), solidz: Math.round(r.solidz), hw: Math.round(Math.max(r.hw, r.hd)) };
+    },
     strips: function () { return GSTRIPS; },
     counts: function () { return { parts: NPART, faces: NFILL, grads: NGRAD, vis: vis.length }; },
+    life: function () {
+      var by = {}, i;
+      for (i = 0; i < folk.length; i++) by[folk[i].k] = (by[folk[i].k] || 0) + 1;
+      return { n: folk.length, by: by, wind: +WINDV.toFixed(3) };
+    },
+    propTotal: function () { return props.length; },
+    projOf: function (x, y, z) {
+      if (!proj(x, y, z || 0)) return null;
+      return { x: Math.round(px), y: Math.round(py), s: +pS.toFixed(2) };
+    },
+    lifeSpots: function () {
+      var out = {}, i;
+      for (i = 0; i < folk.length; i++) {
+        var f = folk[i];
+        if (out[f.k]) continue;
+        if (f.k === 'dvan' && f.alpha < 0.5) continue;
+        out[f.k] = { k: f.k, x: +f.x.toFixed(1), y: +f.y.toFixed(1) };
+      }
+      return out;
+    },
+    moths: function () {
+      var out = [], i;
+      for (i = 0; i < folk.length; i++) {
+        if (folk[i].k === 'moth') out.push([+folk[i].x.toFixed(1), +folk[i].y.toFixed(1), +folk[i].z.toFixed(1)]);
+      }
+      return out;
+    },
     dbg: function (v) { DBG = v; paintNow(); },
     tile: function () { return SPR.paperTile ? SPR.paperTile.toDataURL() : null; },
     paint: function () { paintNow(); return lastFrameMs; },
