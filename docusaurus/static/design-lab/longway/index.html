@@ -17,6 +17,10 @@
   <div id="hudRight">
     <button id="btnTrailhead" type="button" title="Open the trailhead index (Tab)">TRAILHEAD &middot; TAB</button>
     <button id="btnKey" type="button" title="The key: every ground rule of the trail (K)">KEY &middot; K</button>
+    <div id="hudSmall">
+      <button id="btnPack" type="button" title="The pack: your walk passport (B)">PACK &middot; B</button>
+      <button id="btnGuide" type="button" title="The field guide of trail furniture (G)">GUIDE &middot; G</button>
+    </div>
     <button id="btnDial" type="button" title="The hour. Click or press T to change the sky's pace.">
       <canvas id="dialCv" width="40" height="40" aria-hidden="true"></canvas>
       <span id="dialLabel">GOLDEN HOUR</span>
@@ -92,16 +96,106 @@
       <span>&larr; &rarr; WALK</span><span>SHIFT STRIDE</span><span>CLICK WALK THERE</span>
       <span>SPACE JUMP</span><span>ENTER OPEN GATES &amp; TERRACES</span>
       <span>TAB TRAILHEAD INDEX</span><span>T THE HOUR</span><span>K THE KEY</span>
+      <span>R SIGN THE REGISTER</span><span>E REPORT TRAIL DAMAGE</span><span>B THE PACK</span><span>G FIELD GUIDE</span>
+    </div>
+    <div id="ldChips">
+      <button id="ldDog" type="button">TRAIL DOG &mdash; ON</button>
+      <button id="ldWalker" type="button">CHOOSE YOUR WALKER</button>
     </div>
     <div id="ldGo">PRESS ANY KEY TO SET OUT</div>
   </div>
 </div>
 
+
+<div id="register" hidden>
+  <div id="regPanel">
+    <div id="regHead">
+      <span class="thLabel">THE TRAIL REGISTER</span>
+      <span class="thHint">ESC CLOSE</span>
+    </div>
+    <div id="regPage">&nbsp;</div>
+    <div id="regPrior" hidden></div>
+    <textarea id="regNote" maxlength="2000" rows="4" spellcheck="false"
+      placeholder="Leave a line in the register &mdash; what this stretch was like to walk&hellip;"></textarea>
+    <div id="regFoot">
+      <span id="regCount">0 / 2000</span>
+      <button id="regSign" type="button">SIGN THE REGISTER</button>
+    </div>
+    <div id="regStatus">&nbsp;</div>
+  </div>
+</div>
+
+<div id="ticket" hidden>
+  <div id="tkPanel">
+    <div id="tkHead">
+      <span class="thLabel">RANGER MAINTENANCE TICKET</span>
+      <span class="thHint">ESC CLOSE</span>
+    </div>
+    <div id="tkStub">
+      <div id="tkPunch"></div>
+      <div id="tkTitle">&nbsp;</div>
+      <div id="tkMeta">&nbsp;</div>
+    </div>
+    <a id="tkEdit" target="_blank" rel="noopener">MEND THE PAGE &mdash; OPEN THE GITHUB EDIT FORM</a>
+    <a id="tkIssue" target="_blank" rel="noopener">FILE THE DAMAGE &mdash; OPEN A PREFILLED ISSUE</a>
+    <div id="tkHint">BOTH OPEN IN A NEW TAB, ON THE REAL strapi/documentation REPOSITORY</div>
+  </div>
+</div>
+
+<div id="packpanel" hidden>
+  <div id="pkPanel">
+    <div id="pkHead">
+      <span class="thLabel">THE PACK &mdash; WALK PASSPORT</span>
+      <span class="thHint">B OR ESC CLOSE</span>
+    </div>
+    <div id="pkGrid"></div>
+    <div id="pkStamps"></div>
+    <div id="pkCerts"></div>
+  </div>
+</div>
+
+<div id="guidepanel" hidden>
+  <div id="gdPanel">
+    <div id="gdHead">
+      <span class="thLabel">THE FIELD GUIDE &mdash; TRAIL FURNITURE</span>
+      <span class="thHint">G OR ESC CLOSE</span>
+    </div>
+    <div id="gdSub">&nbsp;</div>
+    <div id="gdGrid"></div>
+  </div>
+</div>
+
+<div id="overlook" hidden>
+  <div id="lkPanel">
+    <div id="lkHead">
+      <span class="thLabel">THE OVERLOOK &mdash; ORIENTATION TABLE</span>
+      <span class="thHint">&uarr;&darr; CHOOSE &middot; ENTER SWEEP THERE &middot; ESC CLOSE</span>
+    </div>
+    <canvas id="lkCanvas" width="720" height="240"></canvas>
+    <div id="lkSub">&nbsp;</div>
+    <ul id="lkList" role="listbox"></ul>
+  </div>
+</div>
+
+<div id="walkerpick" hidden>
+  <div id="wpPanel">
+    <div id="wpHead">
+      <span class="thLabel">CHOOSE YOUR WALKER</span>
+      <span class="thHint">1 2 3 SILHOUETTE &middot; 4&ndash;7 ACCESSORIES &middot; ENTER SET OUT &middot; ESC SKIP</span>
+    </div>
+    <div id="wpRow"></div>
+    <div id="wpAcc"></div>
+    <div id="wpHint">ANY MIX GOES WITH ANY SILHOUETTE. YOUR CHOICE DRESSES THE WALKING SPRITE EVERYWHERE.</div>
+  </div>
+</div>
+
+<div id="toast" hidden></div>
+
 <div id="wipe" hidden></div>
 
 <footer id="help">
   <span>&larr;/&rarr; OR A/D WALK</span><span>SHIFT STRIDE</span><span>SPACE JUMP</span>
-  <span>ENTER GATE/TERRACE</span><span>TAB INDEX</span><span>T HOUR</span><span>K KEY</span><span>ESC CLOSE</span>
+  <span>ENTER GATE/TERRACE/TABLE</span><span>R REGISTER</span><span>E DAMAGE</span><span>B PACK</span><span>G GUIDE</span><span>TAB INDEX</span><span>T HOUR</span><span>K KEY</span><span>ESC CLOSE</span>
 </footer>
 
 <script src="longway.js"></script>

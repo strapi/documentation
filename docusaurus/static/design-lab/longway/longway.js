@@ -39,6 +39,25 @@ const SEASON_DAYS = [31, 92, 240];   /* spring | summer | autumn | winter */
 const SEASON_NAMES = ['SPRING', 'SUMMER', 'AUTUMN', 'WINTER'];
 const BUBBLE_RANGE = 110, BUBBLE_LIFE = 4.6, BUBBLE_PAIR_CD = 75, BUBBLE_GAP = 7;
 
+/* the living-trail wave, round 4 */
+const REG_RANGE = 78;          /* px to stand at a register box */
+const TICKET_RANGE = 96;       /* px to stand at a signpost's ranger ticket */
+const LOOK_RANGE = 90;         /* px to stand at an orientation table */
+const MILE_WORDS = 10000;      /* one carved stone per 10,000 words */
+const MOON_FULL_DAYS = 7;      /* tended this week = full moon */
+const MOON_NEW_DAYS = 240;     /* untended this long = new moon (winter's own edge) */
+const GH_EDIT = 'https://github.com/strapi/documentation/edit/main/docusaurus/';
+const GH_ISSUE = 'https://github.com/strapi/documentation/issues/new';
+const FEEDBACK_URL = 'https://n8n.tools.strapi.team/webhook/docs-feedback';
+const CAIRN_KINDS = ['note', 'info', 'callout', 'strapi', 'prerequisites'];
+const SIL_NAMES = { A: 'A', B: 'B', C: 'C' };
+const ACC_LIST = [
+  { id: 'crown', label: 'FLOWER CROWN' },
+  { id: 'glasses', label: 'GLASSES' },
+  { id: 'hat', label: 'HAT' },
+  { id: 'scarf', label: 'SCARF' }
+];
+
 const REDUCED = (typeof matchMedia === 'function') &&
   matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -109,8 +128,39 @@ const M = {
   sprTotal: 0,          /* tip admonitions — the springs */
   terrTotal: 0,         /* cards blocks — the terraces */
   cardTotal: 0,         /* actual cards served across all terraces */
+  maxOut: 1,            /* most outward-linking page — the windiest stretch */
+  zeroIn: 0,            /* stretches no page cites — where the mist rests */
+  edgeCount: 0,         /* citation doors on the whole trail */
+  furnCounts: { boardwalk: 0, picnic: 0, cairn: 0, milepost: 0, frame: 0 },
+  waymarks: [],
+  mileStones: 0,
+  borderStones: 0,
+  commEdges: [],        /* per community: its internal citation edges (index pairs) */
+  sniffMin: 9e9,        /* inbound count that makes a door worth the dog's nose */
+  overlooks: 0,
   now: Date.now()
 };
+
+/* which piece of quiet furniture a top-level block earns (one per block) */
+function furnKindOf(b) {
+  if (!b || typeof b === 'string') return null;
+  if (b.t === 'endpoint') return 'milepost';
+  if (b.t === 'admonition') return CAIRN_KINDS.includes(b.kind || 'note') ? 'cairn' : null;
+  if (b.t === 'cards') return null;
+  const has = (bb, t, d) => {
+    if (!bb || typeof bb === 'string' || d > 4) return false;
+    if (bb.t === t) return true;
+    if (bb.t === 'admonition') return false;
+    for (const c of bb.blocks || []) if (has(c, t, d + 1)) return true;
+    for (const tb of bb.tabs || []) for (const c of tb.blocks || []) if (has(c, t, d + 1)) return true;
+    for (const col of bb.cols || []) for (const c of col) if (has(c, t, d + 1)) return true;
+    return false;
+  };
+  if (has(b, 'code', 0)) return 'boardwalk';
+  if (has(b, 'table', 0)) return 'picnic';
+  if (has(b, 'img', 0)) return 'frame';
+  return null;
+}
 
 function blockWords(b) {
   if (b == null) return 0;
@@ -156,6 +206,10 @@ function buildModel(content, graph, communities, provenance) {
   for (const s of Object.keys(graph.inbound)) {
     if (graph.inbound[s] > M.maxIn) M.maxIn = graph.inbound[s];
   }
+  for (const s of Object.keys(graph.outbound)) {
+    if (graph.outbound[s] > M.maxOut) M.maxOut = graph.outbound[s];
+  }
+  M.edgeCount = graph.edges.length;
 
   for (const [src, tgt] of graph.edges) {
     if (!M.inboundSrc.has(tgt)) M.inboundSrc.set(tgt, []);
@@ -211,8 +265,19 @@ function buildModel(content, graph, communities, provenance) {
       }
     });
 
+    /* quiet furniture: each top-level block earns at most one piece */
+    const furn = [];
+    pg.blocks.forEach((b, bi) => {
+      const kind = furnKindOf(b);
+      if (!kind) return;
+      const fx = x + clamp((fracs[bi] + fracs[bi + 1]) / 2 * len, 200, len - 90);
+      furn.push({ x: fx, kind, label: kind === 'milepost' ? String(b.method || 'API').toUpperCase() : '' });
+      M.furnCounts[kind]++;
+    });
+
     const page = {
       slug, title: cleanTitle, label: pg.sidebarLabel || cleanTitle,
+      file: pg.file || '',
       description: pg.description || '', section: pg.section || '', product: pg.product || '',
       blocks: pg.blocks, fracs,
       words, start: x, len, cumWords: cw,
@@ -221,7 +286,10 @@ function buildModel(content, graph, communities, provenance) {
       inCount: inC,
       outCount: (graph.outbound[slug] | 0),
       elev, ageDays, season,
-      hazards, springs, terraces,
+      hazards, springs, terraces, furn,
+      stones: [],
+      signX: 0, regX: 0,
+      overlook: null,
       isHub: false, gates: null /* lazy */
     };
     M.pages.push(page);
@@ -269,6 +337,91 @@ function buildModel(content, graph, communities, provenance) {
       }
     }
   }
+
+  /* signposts and register boxes: fixed places, no lazy terrain needed */
+  M.autumnPages = 0;
+  for (const p of M.pages) {
+    p.signX = p === M.staged ? p.start + 210 : p.start + 26;
+    p.regX = p.signX + 118;
+    if (p.inCount === 0) M.zeroIn++;
+    if (p.season === 2) M.autumnPages++;
+  }
+
+  /* the waymarkers: carved stones at real corpus milestones */
+  const xAtWord = (wq) => {
+    let lo = 0, hi = M.pages.length - 1;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (M.pages[mid].cumWords <= wq) lo = mid; else hi = mid - 1;
+    }
+    const p = M.pages[lo];
+    return p.start + clamp((wq - p.cumWords) / p.words, 0, 1) * p.len;
+  };
+  for (let k = MILE_WORDS; k < M.totalWords; k += MILE_WORDS) {
+    M.waymarks.push({ x: xAtWord(k), kind: 'mile', l1: fmt(k), l2: 'WORDS OF TRAIL' });
+    M.mileStones++;
+  }
+  let prevComm = null;
+  for (const p of M.pages) {
+    if (p.comm !== prevComm) {
+      if (p.comm >= 0) {
+        const c = M.communities[p.comm];
+        M.waymarks.push({
+          x: Math.max(8, p.start - 34), kind: 'border',
+          l1: 'ENTERING ' + String(c.dominant || '').toUpperCase(),
+          l2: 'POP. ' + fmt(c.size) + ' PAGES'
+        });
+        M.borderStones++;
+      }
+      prevComm = p.comm;
+    }
+  }
+  const halfWords = Math.floor(M.totalWords / 2);
+  M.halfWords = halfWords;
+  M.waymarks.push({
+    x: xAtWord(M.totalWords / 2), kind: 'half',
+    l1: 'THE HALFWAY STONE',
+    l2: fmt(halfWords) + ' WORDS BEHIND · ' + fmt(M.totalWords - halfWords) + ' AHEAD'
+  });
+  M.waymarks.push({
+    x: M.totalPx - 52, kind: 'end',
+    l1: 'THE END CAIRN',
+    l2: fmt(M.pages.length) + ' PAGES · ' + fmt(M.totalWords) + ' WORDS WALKED WHOLE'
+  });
+  M.waymarks.sort((a, b) => a.x - b.x);
+  for (const st of M.waymarks) pageAt(clamp(st.x, 0, M.totalPx - 1)).stones.push(st);
+
+  /* the overlooks: each hub keeps a bench and an orientation table
+     naming the real pages it cites, at most seven landmarks a table */
+  for (const c of M.communities) {
+    const hp = M.bySlug.get(c.hub);
+    if (!hp) continue;
+    const seen = new Set();
+    const lm = [];
+    for (const g of hp.gates) {
+      if (seen.has(g.tgt)) continue;
+      seen.add(g.tgt);
+      const tp = M.bySlug.get(g.tgt);
+      if (tp) lm.push(tp.slug);
+    }
+    lm.sort((a, b) => M.bySlug.get(b).inCount - M.bySlug.get(a).inCount);
+    hp.overlook = { x: hp.start + hp.len * 0.55, comm: c.idx, landmarks: lm.slice(0, 7) };
+    M.overlooks++;
+  }
+
+  /* constellations: each community's internal citation edges, kept by index */
+  const memberIdx = M.communities.map(c => new Map(c.members.map((m, i) => [m, i])));
+  M.commEdges = M.communities.map(() => []);
+  for (const [src, tgt] of graph.edges) {
+    const ci = M.commOf.has(src) ? M.commOf.get(src) : -1;
+    if (ci < 0 || M.commOf.get(tgt) !== ci) continue;
+    const mi = memberIdx[ci];
+    if (mi.has(src) && mi.has(tgt)) M.commEdges[ci].push([mi.get(src), mi.get(tgt)]);
+  }
+
+  /* what smells important to a dog: the top decile of cited pages */
+  const ins = M.pages.map(p => p.inCount).filter(v => v > 0).sort((a, b) => a - b);
+  M.sniffMin = ins.length ? ins[Math.floor(ins.length * 0.9)] : 9e9;
 }
 
 function pageAt(x) {
@@ -521,6 +674,9 @@ function elevAt(x) {
 }
 function gYAt(x) { return groundY + camE * CAM_K - elevAt(x); }
 
+/* wind: the stretch's outbound links lean the grass and raise gusts */
+let WIND = 0;
+
 /* ---------------- terrain (chunked per page, LRU) ---------------- */
 const FLORA_TYPES = ['pine', 'cypress', 'bush', 'grass', 'reed', 'boulder', 'palm'];
 const terrainCache = new Map();
@@ -674,7 +830,17 @@ const S = {
   bubbleGapT: -1,      /* global quiet time between bubbles */
   nearTerrace: null,
   tr: null,            /* open terrace {page, terrace} */
-  trSel: 0
+  trSel: 0,
+  wind: 0,             /* eased wind strength (outbound links of this stretch) */
+  moonK: 1,            /* eased moon phase (freshness of this stretch) */
+  nearReg: null,
+  nearTicket: null,
+  nearLook: null,
+  enterAct: null,      /* what ENTER does here: gate | terrace | overlook */
+  sweep: null,         /* scenic sweep from an overlook */
+  idleT: 0,
+  lk: null,            /* open overlook */
+  lkSel: 0
 };
 const bubbleCD = new Map();    /* 'slug|name' -> earliest next greeting (S.t) */
 const ambientCD = new Map();   /* walker×walker crossing cooldowns */
@@ -691,6 +857,136 @@ function noteFrame(ms, state) {
   window.__diag.avgFrameMs = frameHist.reduce((a, b) => a + b, 0) / frameHist.length;
   window.__diag.state = state;
 }
+
+/* ---------------- the pack, the guide, the register, the walker -------- */
+function lsJSON(k, d) {
+  const raw = lsGet(k);
+  if (!raw) return d;
+  try { return JSON.parse(raw); } catch (e) { return d; }
+}
+const PACK = Object.assign(
+  { leaves: {}, hollows: {}, stamps: {}, biomes: {}, visited: {}, certs: {},
+    greeted: 0, walked: 0, days: 0 },
+  lsJSON('longway.pack.v1', {}));
+const GUIDE = Object.assign({ found: {} }, lsJSON('longway.guide.v1', {}));
+const WALKER = Object.assign({ sil: 'C', acc: [] }, lsJSON('longway.walker.v1', {}));
+WALKER.accSet = new Set(WALKER.acc);
+WALKER.stored = !!lsGet('longway.walker.v1');
+const REGBOOK = lsJSON('longway.register.v1', {});
+const DOG = {
+  on: lsGet('longway.dog') !== '0',
+  x: 40, face: 1, moving: false, pose: 'stand',
+  state: 'follow', stateT: 0, shookOn: '', sleepX: null,
+  sniffCD: new Map()
+};
+let saveTimer = null;
+function saveAll() {
+  lsSet('longway.pack.v1', JSON.stringify({
+    leaves: PACK.leaves, hollows: PACK.hollows, stamps: PACK.stamps,
+    biomes: PACK.biomes, visited: PACK.visited, certs: PACK.certs,
+    greeted: PACK.greeted, walked: Math.round(PACK.walked), days: PACK.days
+  }));
+  lsSet('longway.guide.v1', JSON.stringify({ found: GUIDE.found }));
+  lsSet('longway.register.v1', JSON.stringify(REGBOOK));
+}
+function queueSave() {
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveAll, 700);
+}
+window.addEventListener('beforeunload', saveAll);
+
+/* one quiet toast at a time — never a wall */
+const toastEl = document.getElementById('toast');
+const toastQ = [];
+let toastBusy = false;
+function toast(txt) {
+  if (toastQ.length > 3) return;
+  toastQ.push(txt);
+  if (!toastBusy) nextToast();
+}
+function nextToast() {
+  const txt = toastQ.shift();
+  if (!txt) { toastBusy = false; toastEl.hidden = true; return; }
+  toastBusy = true;
+  toastEl.textContent = txt;
+  toastEl.hidden = false;
+  setTimeout(nextToast, 2900);
+}
+
+/* the field guide's species — counts derived at build, never typed in */
+const SPECIES = [
+  { id: 'boardwalk', name: 'CODE BOARDWALK', what: 'Planks laid over a stretch of code — every block that carries code gets one, so your boots never touch the brackets.', count: () => M.furnCounts.boardwalk },
+  { id: 'picnic', name: 'TABLE PICNIC', what: 'A picnic table wherever the page sets a table — rows and columns served flat, in the open air.', count: () => M.furnCounts.picnic },
+  { id: 'cairn', name: 'NOTE CAIRN', what: 'Stacked stones marking a calm admonition: a note, an aside, a prerequisite. Read it or walk on; it asks nothing.', count: () => M.furnCounts.cairn },
+  { id: 'warnpost', name: 'WARNING POST', what: 'A low barrier with hard chevrons at every caution, warning and danger. Jump it clean or stumble a beat.', count: () => M.hazTotal },
+  { id: 'spring', name: 'TIP SPRING', what: 'A rose spring pad at every tip — step on and it bounces you a few honest metres down the trail.', count: () => M.sprTotal },
+  { id: 'milepost', name: 'ENDPOINT MILE-POST', what: 'A short post with the method carved on the cap, one per documented API endpoint on the trail.', count: () => M.furnCounts.milepost },
+  { id: 'frame', name: 'IMAGE FRAME', what: 'An easel holding a framed print wherever the page hangs a picture or a screenshot.', count: () => M.furnCounts.frame },
+  { id: 'terrace', name: 'CARD TERRACE', what: 'A kiosk with a striped awning wherever a page serves a cards block — step up and order a card.', count: () => M.terrTotal },
+  { id: 'door', name: 'CITATION DOOR', what: 'A cream door standing wherever this page cites another. Walk through and it carries you there.', count: () => M.edgeCount },
+  { id: 'lantern', name: 'NIGHT LANTERN', what: 'One lantern per commit made long after midnight — they pool warm light on the night-dark ground.', count: () => M.lanternsTotal }
+];
+function unlockSpecies(id) {
+  if (GUIDE.found[id]) return;
+  const sp = SPECIES.find(x => x.id === id);
+  if (!sp) return;
+  GUIDE.found[id] = { at: S.page.slug, word: Math.round(wordsAt(S.x)) };
+  toast('FIELD GUIDE — ' + sp.name + ' · ' + fmt(sp.count()) + ' ACROSS THE TRAIL · PRESS G');
+  queueSave();
+}
+function checkGuide() {
+  if (S.sweep) return;
+  const p = S.page;
+  const NEAR = 34;
+  for (const f of p.furn) {
+    if (GUIDE.found[f.kind]) continue;
+    if (Math.abs(f.x - S.x) < NEAR) unlockSpecies(f.kind);
+  }
+  if (!GUIDE.found.warnpost) for (const hz of p.hazards) if (Math.abs(hz.x - S.x) < NEAR + 16) unlockSpecies('warnpost');
+  if (!GUIDE.found.spring) for (const sp of p.springs) if (Math.abs(sp.x - S.x) < NEAR + 16) unlockSpecies('spring');
+  if (!GUIDE.found.terrace) for (const tr of p.terraces) if (Math.abs(tr.x - S.x) < NEAR + 26) unlockSpecies('terrace');
+  if (!GUIDE.found.door) for (const g of p.gates) if (Math.abs(g.x - S.x) < NEAR + 16) unlockSpecies('door');
+  if (!GUIDE.found.lantern && p.prov.night > 0) {
+    const T = terrainFor(p.idx);
+    for (const ln of T.lanterns) if (Math.abs(ln.x - S.x) < NEAR + 16) unlockSpecies('lantern');
+  }
+}
+
+/* what the pack picks up when a stretch is entered */
+function collectPage(p) {
+  if (S.sweep) return;   /* a scenic sweep flies over; only arrival collects */
+  if (!PACK.visited[p.slug]) PACK.visited[p.slug] = 1;
+  if (p.comm >= 0) PACK.biomes[p.comm] = 1;
+  if (p.season === 2 && !PACK.leaves[p.slug]) {
+    PACK.leaves[p.slug] = 1;
+    toast('A PRESSED LEAF FROM ' + p.label.toUpperCase() + ' — IN THE PACK (B)');
+  }
+  if (p.prov.night > 0 && !PACK.hollows[p.slug]) {
+    PACK.hollows[p.slug] = 1;
+    toast('LANTERN LIGHT FROM ' + p.label.toUpperCase() + ' — IN THE PACK (B)');
+  }
+  if (p.isHub && !PACK.stamps[p.slug]) {
+    PACK.stamps[p.slug] = 1;
+    toast('HUB STAMP — ' + p.label.toUpperCase() + ' — IN THE PACK (B)');
+  }
+  if (p.comm >= 0 && !PACK.certs['c' + p.comm]) {
+    const c = M.communities[p.comm];
+    if (c.members.every(m => PACK.visited[m] || !M.bySlug.has(m))) {
+      PACK.certs['c' + p.comm] = 1;
+      toast('EVERY PAGE OF ' + String(c.dominant || '').toUpperCase() + ' WALKED — CERTIFICATE IN THE PACK (B)');
+    }
+  }
+  if (!PACK.certs.trail && M.pages.every(pp => PACK.visited[pp.slug])) {
+    PACK.certs.trail = 1;
+    toast('THE WHOLE TRAIL WALKED — CERTIFICATE IN THE PACK (B)');
+  }
+  queueSave();
+}
+function commComplete(ci) {
+  const c = M.communities[ci];
+  return c.members.every(m => PACK.visited[m] || !M.bySlug.has(m));
+}
+function trailComplete() { return M.pages.every(pp => PACK.visited[pp.slug]); }
 
 /* ---------------- drawing helpers ---------------- */
 function w2s(x, f) { return (x - S.x) * (f === undefined ? 1 : f) + AVX; }
@@ -755,16 +1051,16 @@ function drawFlora(fl, pal, season) {
       for (let i = -1; i <= 1; i++) {
         cx.beginPath();
         cx.moveTo(sx + i * 4 * s, gy);
-        cx.lineTo(sx + i * 7 * s, gy - (16 + 8 * Math.abs(i)) * s);
+        cx.lineTo(sx + i * 7 * s + WIND * 9 * s, gy - (16 + 8 * Math.abs(i)) * s);
         cx.stroke();
       }
       break;
     }
     case 'reed': {
       cx.strokeStyle = ink; cx.lineWidth = 1.8;
-      cx.beginPath(); cx.moveTo(sx, gy); cx.lineTo(sx, gy - 44 * s); cx.stroke();
+      cx.beginPath(); cx.moveTo(sx, gy); cx.lineTo(sx + WIND * 8 * s, gy - 44 * s); cx.stroke();
       cx.fillStyle = ink;
-      cx.fillRect(sx - 2.5, gy - 58 * s, 5, 15 * s);
+      cx.fillRect(sx - 2.5 + WIND * 8 * s, gy - 58 * s, 5, 15 * s);
       break;
     }
     case 'boulder': {
@@ -861,8 +1157,64 @@ function drawFigure(sx, sy, h, phase, ink, accent, moving, opts) {
   /* neck + head */
   cx.fillRect(sx - 1.9 * h + lean, shY - 5.5 * h, 3.8 * h, 6 * h);
   cx.beginPath(); cx.arc(sx + lean * 1.4, shY - 10.5 * h, 5.8 * h, 0, 7); cx.fill();
+  /* the chosen walker: silhouette and accessories, punched from the sheet */
+  if (o && o.dress) drawDress(sx, sy, h, lean, shY, hipY, ink, o.dress, o.face || 1);
   cx.lineCap = 'butt';
   if (pitched) cx.restore();
+}
+
+function drawDress(sx, sy, h, lean, shY, hipY, ink, dress, face) {
+  const hx = sx + lean * 1.4, hy = shY - 10.5 * h;
+  if (dress.sil === 'A') {
+    /* flared skirt over the hips, longer hair behind the head */
+    drawPoly([
+      [sx - 4.8 * h + lean * 0.4, hipY - 4 * h], [sx + 4.8 * h + lean * 0.4, hipY - 4 * h],
+      [sx + 9.4 * h, hipY + 12 * h], [sx - 9.4 * h, hipY + 12 * h]
+    ], ink);
+    drawPoly([
+      [hx - 2 * h, hy - 5 * h], [hx - 7.2 * h, hy + 0.5 * h],
+      [hx - 6.2 * h, shY + 4 * h], [hx - 2.2 * h, shY + 0.5 * h]
+    ], ink);
+  } else if (dress.sil === 'B') {
+    /* broader shoulders — a wider plate across the top of the torso */
+    drawPoly([
+      [sx - 9.4 * h + lean, shY], [sx + 9.4 * h + lean, shY],
+      [sx + 6.4 * h + lean * 0.5, shY + 7 * h], [sx - 6.4 * h + lean * 0.5, shY + 7 * h]
+    ], ink);
+  }
+  const acc = dress.accSet || dress.acc;
+  if (!acc || !acc.size) return;
+  if (acc.has('hat')) {
+    cx.fillStyle = ink;
+    cx.fillRect(hx - 8.4 * h, hy - 4.8 * h, 16.8 * h, 2 * h);
+    cx.fillRect(hx - 4.6 * h, hy - 11.6 * h, 9.2 * h, 7.2 * h);
+    cx.fillStyle = INKS.cream;
+    cx.fillRect(hx - 4.6 * h, hy - 6.4 * h, 9.2 * h, 1.5 * h);
+  }
+  if (acc.has('crown')) {
+    for (let i = -2; i <= 2; i++) {
+      cx.fillStyle = (i % 2 === 0) ? INKS.rose : INKS.apricot;
+      cx.fillRect(hx + i * 2.5 * h - 1.1 * h,
+        hy - 5.0 * h - (2 - Math.abs(i)) * 1.1 * h - (acc.has('hat') ? 7.2 * h : 0), 2.2 * h, 2.2 * h);
+    }
+  }
+  if (acc.has('glasses')) {
+    cx.strokeStyle = INKS.cream; cx.lineWidth = 1.2 * h;
+    cx.beginPath(); cx.arc(hx - 2.6 * h, hy - 0.4 * h, 2.1 * h, 0, 7); cx.stroke();
+    cx.beginPath(); cx.arc(hx + 2.6 * h, hy - 0.4 * h, 2.1 * h, 0, 7); cx.stroke();
+    cx.beginPath(); cx.moveTo(hx - 0.6 * h, hy - 0.4 * h); cx.lineTo(hx + 0.6 * h, hy - 0.4 * h); cx.stroke();
+  }
+  if (acc.has('scarf')) {
+    cx.fillStyle = INKS.rose;
+    cx.fillRect(hx - 3.4 * h, shY - 5.4 * h, 6.8 * h, 2.6 * h);
+    const wob = (!REDUCED && (Math.floor(S.t * 5) % 2)) ? 1.4 * h : 0;
+    drawPoly([
+      [hx - 2.6 * h * face, shY - 3.6 * h],
+      [hx - (10.5 + WIND * 4) * h * face, shY - 2 * h + wob],
+      [hx - (11.5 + WIND * 4) * h * face, shY + 0.8 * h + wob],
+      [hx - 2.2 * h * face, shY - 1 * h]
+    ], INKS.rose);
+  }
 }
 
 function label(txt, sx, sy, size, color, align, ls) {
@@ -892,6 +1244,12 @@ function draw(dt) {
   S.lastWN = wN;
   camE = elevAt(S.x);
   frameWalkers.length = 0;
+
+  /* wind eases toward this stretch's outbound-link strength */
+  const windTgt = Math.log(1 + page.outCount) / Math.log(1 + M.maxOut);
+  if (REDUCED) S.wind = windTgt;
+  else S.wind += (windTgt - S.wind) * Math.min(1, dt * 1.1);
+  WIND = S.wind;
 
   /* sky — hard bands, no gradients */
   let y = 0;
@@ -924,15 +1282,28 @@ function draw(dt) {
     cx.beginPath(); cx.arc(sxx, syy, pal.sun.rr * 2.3, 0, 7); cx.fill();
     cx.globalAlpha = 1;
   }
-  /* moon: cream disc, violet ring — it eases up as the night settles */
+  /* moon: its phase is this stretch's freshness — full when tended this
+     week, thinning as the last commit ages, new past 240 untended days */
   const mAl = nightRamp(wN);
+  const moonTgt = 1 - clamp((page.ageDays - MOON_FULL_DAYS) / (MOON_NEW_DAYS - MOON_FULL_DAYS), 0, 1);
+  if (REDUCED) S.moonK = moonTgt;
+  else S.moonK += (moonTgt - S.moonK) * Math.min(1, (dt || 0.016) * 1.6);
   if (mAl > 0.004) {
+    const R = 19;
     const mx = W * 0.71, my = horizonY * (0.30 + (1 - mAl) * 0.10);
     cx.globalAlpha = mAl;
     cx.fillStyle = INKS.violet;
-    cx.beginPath(); cx.arc(mx + 4, my + 3, 19, 0, 7); cx.fill();
+    cx.beginPath(); cx.arc(mx + 4, my + 3, R, 0, 7); cx.fill();
     cx.fillStyle = INKS.cream;
-    cx.beginPath(); cx.arc(mx, my, 19, 0, 7); cx.fill();
+    cx.beginPath(); cx.arc(mx, my, R, 0, 7); cx.fill();
+    if (S.moonK < 0.985) {
+      /* the dark bite: a flat disc of the sky, slid across by freshness */
+      cx.save();
+      cx.beginPath(); cx.arc(mx, my, R + 0.5, 0, 7); cx.clip();
+      cx.fillStyle = skyColAt(pal, clamp(my / horizonY, 0, 1));
+      cx.beginPath(); cx.arc(mx - S.moonK * (2 * R + 5), my, R + 2, 0, 7); cx.fill();
+      cx.restore();
+    }
     cx.globalAlpha = 1;
   }
   /* night: seeded stars, printed like grain — everywhere the sky darkens */
@@ -947,6 +1318,10 @@ function draw(dt) {
       cx.fillRect(px, sty, tw > 0.85 ? 2 : 1, tw > 0.85 ? 2 : 1);
     }
     cx.globalAlpha = 1;
+  }
+  /* the constellations overhead are this biome's own citation graph */
+  if (wN > 0.35 && page.comm >= 0) {
+    drawConstellation(page.comm, smoothT(clamp((wN - 0.35) / 0.5, 0, 1)));
   }
 
   /* ridges, far to near — faceted polylines in layer space, seamless.
@@ -983,8 +1358,14 @@ function draw(dt) {
   for (let pi = pi0; pi < pi1; pi++) drawBorderComb(pi);
   for (let pi = pi0; pi <= pi1; pi++) drawStretch(pi, pal, dt, wN);
 
+  /* gust layer: soft cream streaks riding the stretch's own wind */
+  if (!REDUCED && S.wind > 0.06) drawGusts();
+
   /* greetings: one bubble at a time, ambient crossings, never a wall */
   updateGreetings(dt, wN);
+
+  /* the trail dog — one small silhouette, never in the way */
+  if (DOG.on) { updateDog(dt); drawDog(pal); }
 
   /* avatar — cream backlight rim so the ink reads on dark ground */
   const moving = Math.abs(S.vx) > 1;
@@ -997,7 +1378,9 @@ function draw(dt) {
     stride: clamp(1 - eff * 1.5, 0.62, 1.3),                  /* honest gait */
     leanX: clamp(eff * 6, -3, 4.5) * Math.sign(S.vx || S.face),
     pitch: S.stumbleT !== null ? Math.sin(Math.PI * S.stumbleT) * 0.5 * S.face : 0,
-    armUp: S.wave > 0 ? (S.wave > 0.45 ? 2 : 1) : 0
+    armUp: S.wave > 0 ? (S.wave > 0.45 ? 2 : 1) : 0,
+    dress: WALKER,
+    face: S.face
   };
   const ay = gYAt(S.x) - airY;
   drawFigure(AVX - 2.6, ay - 1.8, 1, S.x / 26, 'rgba(255,243,224,0.9)', null, moving && !REDUCED, opts);
@@ -1265,10 +1648,25 @@ function drawStretch(pi, basePal, dt, wNsky) {
   /* the season's drift — capped, culled, and absent under reduced motion */
   if (!REDUCED && (p.season === 2 || p.season === 0)) drawDrift(p, T, x0, x1);
 
+  /* morning mist rests where no page cites this stretch */
+  if (p.inCount === 0) drawMist(p, x0, x1);
+
   /* page signpost, kept in repair by careDays */
   drawSign(T.sign, p, pal, wN);
 
   for (const b of T.benches) drawBench(b, pal);
+
+  /* quiet furniture: boardwalks, picnics, cairns, mile-posts, frames */
+  for (const f of p.furn) drawFurn(f, pal);
+
+  /* carved waymarkers standing on this stretch */
+  for (const st of p.stones) drawStone(st, pal);
+
+  /* the trail register box, past the signpost */
+  drawRegister(p, pal, wN);
+
+  /* the hub's overlook: bench and orientation table at the high point */
+  if (p.overlook) drawLookTable(p, pal);
 
   if (T.nightAhead) drawWarnSign(T.nightAhead.x, 'NIGHT GROUND AHEAD', pal);
 
@@ -1325,6 +1723,366 @@ function drawStretch(pi, basePal, dt, wNsky) {
   }
 }
 
+/* ---------------- round-4 furniture & weathers ---------------- */
+const constCache = new Map();
+function constellationFor(ci) {
+  if (constCache.has(ci)) return constCache.get(ci);
+  const c = M.communities[ci];
+  const stars = c.members.map((m) => {
+    const r = rngFor('star:' + m);
+    const pg = M.bySlug.get(m);
+    return { slug: m, fx: 0.05 + 0.90 * r(), fy: 0.05 + 0.55 * r(), hub: m === c.hub, w: pg ? pg.inCount : 0 };
+  });
+  const o = { stars, edges: M.commEdges[ci] || [] };
+  constCache.set(ci, o);
+  return o;
+}
+function drawConstellation(ci, a) {
+  const K = constellationFor(ci);
+  cx.strokeStyle = INKS.cream;
+  cx.lineWidth = 1;
+  cx.globalAlpha = 0.09 * a;
+  cx.beginPath();
+  for (const [i, j] of K.edges) {
+    const A = K.stars[i], B = K.stars[j];
+    if (!A || !B) continue;
+    cx.moveTo(A.fx * W, A.fy * horizonY);
+    cx.lineTo(B.fx * W, B.fy * horizonY);
+  }
+  cx.stroke();
+  cx.fillStyle = INKS.cream;
+  for (const st of K.stars) {
+    const sz = st.hub ? 3.6 : st.w > 8 ? 2.5 : 1.8;
+    cx.globalAlpha = (st.hub ? 0.95 : 0.5 + Math.min(0.35, st.w * 0.03)) * a;
+    cx.fillRect(st.fx * W - sz / 2, st.fy * horizonY - sz / 2, sz, sz);
+    if (st.hub) {
+      cx.globalAlpha = 0.5 * a;
+      cx.strokeStyle = INKS.violet;
+      cx.strokeRect(st.fx * W - 4.6, st.fy * horizonY - 4.6, 9.2, 9.2);
+      cx.strokeStyle = INKS.cream;
+    }
+  }
+  cx.globalAlpha = 1;
+}
+
+function drawGusts() {
+  const n = 2 + Math.round(S.wind * 5);
+  cx.fillStyle = INKS.cream;
+  for (let i = 0; i < n; i++) {
+    const r = rngFor('gust:' + i);
+    const lane = horizonY * 0.98 + r() * (groundY - horizonY * 0.98) - 8;
+    const speed = 120 + S.wind * 300 + i * 23;
+    const span = W + 320;
+    const xx = ((S.t * speed + r() * 4096) % span) - 160;
+    const len = (30 + r() * 40) * (0.5 + S.wind);
+    cx.globalAlpha = (0.05 + 0.10 * S.wind) * (0.6 + 0.4 * r());
+    cx.fillRect(xx, lane, len, 1.6);
+    cx.fillRect(xx + len + 10, lane + 2.6, len * 0.45, 1.4);
+  }
+  cx.globalAlpha = 1;
+}
+
+function drawMist(p, x0, x1) {
+  /* flat cream shreds, eased at the stretch edges and by the morning */
+  const mBase = 0.55 + 0.45 * DAY.wts.m;
+  const EDGE = 240;
+  cx.fillStyle = INKS.cream;
+  /* three shred bands, low over the ground — the path line stays clear */
+  const bands = [[10, 11, 0.24], [27, 8, 0.16], [46, 6, 0.10]];
+  for (let xs = Math.floor(x0 / 88) * 88; xs < x1; xs += 88) {
+    const cxm = xs + 44;
+    const edge = smoothT(clamp(Math.min(cxm - p.start, p.start + p.len - cxm) / EDGE, 0, 1));
+    if (edge <= 0.01) continue;
+    const gy = gYAt(cxm);
+    const hsh = hashStr(p.slug + ':' + xs);
+    const jig = (hsh % 10) - 5;
+    for (let bi = 0; bi < bands.length; bi++) {
+      const dy = bands[bi][0], hh = bands[bi][1], al = bands[bi][2];
+      /* shred: every few slices a band breathes out — hard gaps, no wash */
+      if (((hsh >> (bi * 3)) & 7) === 0) continue;
+      cx.globalAlpha = al * mBase * edge;
+      cx.fillRect(w2s(xs) - 2, gy - dy + jig * 0.5 + bi, 94, hh);
+    }
+  }
+  cx.globalAlpha = 1;
+}
+
+function drawFurn(f, pal) {
+  const sx = w2s(f.x);
+  if (sx < -140 || sx > W + 140) return;
+  const gy = gYAt(f.x), ink = pal.ink;
+  switch (f.kind) {
+    case 'boardwalk': {
+      cx.fillStyle = 'rgba(255,243,224,0.62)';
+      for (let i = -4; i <= 4; i++) cx.fillRect(sx + i * 12 - 4, gy + 3, 9, 5);
+      cx.fillStyle = ink;
+      cx.fillRect(sx - 52, gy + 2, 104, 1.6);
+      cx.fillRect(sx - 52, gy + 8.6, 104, 1.6);
+      break;
+    }
+    case 'picnic': {
+      cx.fillStyle = ink;
+      cx.fillRect(sx - 19, gy - 24, 38, 4);
+      cx.strokeStyle = ink; cx.lineWidth = 2.6;
+      cx.beginPath(); cx.moveTo(sx - 12, gy - 20); cx.lineTo(sx - 20, gy); cx.stroke();
+      cx.beginPath(); cx.moveTo(sx + 12, gy - 20); cx.lineTo(sx + 20, gy); cx.stroke();
+      cx.fillRect(sx - 30, gy - 12, 14, 3.2);
+      cx.fillRect(sx + 16, gy - 12, 14, 3.2);
+      break;
+    }
+    case 'cairn': {
+      drawPoly([[sx - 13, gy], [sx + 13, gy], [sx + 10, gy - 7], [sx - 10, gy - 7]], ink, pal.accent);
+      drawPoly([[sx - 10, gy - 7], [sx + 10, gy - 7], [sx + 7, gy - 13], [sx - 7, gy - 13]], ink);
+      drawPoly([[sx - 7, gy - 13], [sx + 7, gy - 13], [sx + 4.4, gy - 18.4], [sx - 4.4, gy - 18.4]], ink);
+      cx.fillStyle = INKS.cream;
+      cx.fillRect(sx - 2.6, gy - 22, 5.2, 3.6);
+      break;
+    }
+    case 'milepost': {
+      cx.strokeStyle = ink; cx.lineWidth = 3.4;
+      cx.beginPath(); cx.moveTo(sx, gy); cx.lineTo(sx, gy - 46); cx.stroke();
+      cx.fillStyle = INKS.cream;
+      cx.fillRect(sx - 14, gy - 58, 28, 13);
+      cx.strokeStyle = ink; cx.lineWidth = 1.5;
+      cx.strokeRect(sx - 14, gy - 58, 28, 13);
+      label(f.label, sx, gy - 48.6, 6.5, INK_DARK, 'center', 0.8);
+      break;
+    }
+    case 'frame': {
+      cx.strokeStyle = ink; cx.lineWidth = 2.4;
+      cx.beginPath(); cx.moveTo(sx - 10, gy); cx.lineTo(sx, gy - 40); cx.stroke();
+      cx.beginPath(); cx.moveTo(sx + 10, gy); cx.lineTo(sx, gy - 40); cx.stroke();
+      cx.fillStyle = INKS.cream;
+      cx.fillRect(sx - 14, gy - 58, 28, 22);
+      cx.strokeStyle = ink; cx.lineWidth = 2;
+      cx.strokeRect(sx - 14, gy - 58, 28, 22);
+      cx.fillStyle = pal.accent;
+      cx.fillRect(sx - 10, gy - 54, 20, 14);
+      break;
+    }
+  }
+}
+
+function drawStone(st, pal) {
+  const sx = w2s(st.x);
+  if (sx < -180 || sx > W + 180) return;
+  const gy = gYAt(st.x), ink = pal.ink;
+  const near = Math.abs(sx - AVX) < (st.kind === 'border' ? 400 : 560);
+  if (st.kind === 'end') {
+    drawPoly([[sx - 26, gy], [sx + 26, gy], [sx + 20, gy - 12], [sx - 20, gy - 12]], ink, pal.accent);
+    drawPoly([[sx - 20, gy - 12], [sx + 20, gy - 12], [sx + 15, gy - 23], [sx - 15, gy - 23]], ink);
+    drawPoly([[sx - 15, gy - 23], [sx + 15, gy - 23], [sx + 10, gy - 33], [sx - 10, gy - 33]], ink);
+    drawPoly([[sx - 10, gy - 33], [sx + 10, gy - 33], [sx + 6, gy - 42], [sx - 6, gy - 42]], ink);
+    cx.fillStyle = INKS.cream;
+    cx.fillRect(sx - 4, gy - 47, 8, 5);
+  } else if (st.kind === 'half') {
+    drawPoly([[sx - 17, gy], [sx - 14, gy - 40], [sx, gy - 47], [sx + 14, gy - 40], [sx + 17, gy]], ink, pal.accent);
+    cx.fillStyle = INKS.cream;
+    cx.fillRect(sx - 12, gy - 30, 24, 3);
+  } else if (st.kind === 'border') {
+    drawPoly([[sx - 15, gy], [sx - 12, gy - 44], [sx + 2, gy - 50], [sx + 13, gy - 41], [sx + 15, gy]], ink, pal.accent);
+    cx.fillStyle = INKS.cream; cx.globalAlpha = 0.5;
+    cx.fillRect(sx - 8, gy - 38, 16, 2);
+    cx.fillRect(sx - 8, gy - 33, 16, 2);
+    cx.globalAlpha = 1;
+  } else {
+    drawPoly([[sx - 13, gy], [sx - 10, gy - 22], [sx, gy - 27], [sx + 10, gy - 21], [sx + 13, gy]], ink, pal.accent);
+  }
+  if (near) {
+    const top = st.kind === 'mile' ? 40 : 62;
+    label(st.l1, sx, gy - top, st.kind === 'mile' ? 8.5 : 9.5, 'rgba(255,243,224,0.9)', 'center', 1.4);
+    label(st.l2, sx, gy - top + 11, 7.5, 'rgba(255,162,107,0.85)', 'center', 0.8);
+  }
+}
+
+function drawRegister(p, pal, wN) {
+  const sx = w2s(p.regX);
+  if (sx < -80 || sx > W + 80) return;
+  const gy = gYAt(p.regX), ink = pal.ink;
+  cx.strokeStyle = ink; cx.lineWidth = 3;
+  cx.beginPath(); cx.moveTo(sx, gy); cx.lineTo(sx, gy - 30); cx.stroke();
+  drawPoly([[sx - 15, gy - 30], [sx + 15, gy - 30], [sx + 15, gy - 48], [sx - 15, gy - 48]], ink, pal.accent);
+  drawPoly([[sx - 18, gy - 48], [sx + 18, gy - 48], [sx + 13, gy - 55], [sx - 13, gy - 55]], ink);
+  cx.fillStyle = 'rgba(255,243,224,0.85)';
+  cx.fillRect(sx - 10, gy - 44, 20, 3);
+  if (REGBOOK[p.slug]) {
+    cx.fillStyle = INKS.cream;
+    cx.fillRect(sx - 6, gy - 53, 12, 5);
+    cx.fillStyle = INKS.rose;
+    cx.fillRect(sx + 2, gy - 52, 3, 3);
+  }
+  if (Math.abs(sx - AVX) < 210) {
+    label('TRAIL REGISTER', sx, gy - 66, 7.5, 'rgba(255,243,224,0.8)', 'center', 1);
+    if (REGBOOK[p.slug]) label('YOUR LINE IS INSIDE', sx, gy - 57.5, 6.5, 'rgba(255,162,107,0.8)', 'center', 0.6);
+  }
+}
+
+function drawLookTable(p, pal) {
+  const o = p.overlook;
+  const sx = w2s(o.x);
+  if (sx < -120 || sx > W + 120) return;
+  const gy = gYAt(o.x), ink = pal.ink;
+  cx.fillStyle = ink;
+  cx.fillRect(sx - 58, gy - 20, 40, 4.5);
+  cx.fillRect(sx - 54, gy - 15, 5, 15);
+  cx.fillRect(sx - 27, gy - 15, 5, 15);
+  cx.fillRect(sx - 58, gy - 34, 4, 15);
+  cx.fillRect(sx - 58, gy - 36, 40, 4);
+  drawPoly([[sx + 6, gy], [sx + 26, gy], [sx + 23, gy - 26], [sx + 9, gy - 26]], ink, pal.accent);
+  drawPoly([[sx - 2, gy - 26], [sx + 34, gy - 26], [sx + 30, gy - 36], [sx + 2, gy - 33]], INKS.cream);
+  cx.strokeStyle = ink; cx.lineWidth = 1.6;
+  cx.beginPath(); cx.moveTo(sx - 2, gy - 26); cx.lineTo(sx + 34, gy - 26); cx.stroke();
+  cx.lineWidth = 1;
+  cx.beginPath(); cx.moveTo(sx + 8, gy - 28.5); cx.lineTo(sx + 22, gy - 33); cx.stroke();
+  cx.beginPath(); cx.moveTo(sx + 12, gy - 28); cx.lineTo(sx + 28, gy - 32); cx.stroke();
+  if (Math.abs(sx - AVX) < 240) {
+    label('OVERLOOK', sx, gy - 54, 8, 'rgba(255,243,224,0.85)', 'center', 1.2);
+    label(o.landmarks.length ? o.landmarks.length + ' LANDMARKS IN VIEW' : 'ALL SKY — THIS HUB CITES NO PAGES',
+      sx, gy - 44, 7, 'rgba(255,162,107,0.8)', 'center', 0.7);
+  }
+}
+
+/* ---------------- the trail dog ---------------- */
+function updateDog(dt) {
+  const p = S.page;
+  if (REDUCED) {
+    /* the calm variant: she simply keeps pace at your side */
+    DOG.x = clamp(S.x - 54, 10, M.totalPx - 10);
+    DOG.pose = 'stand'; DOG.face = 1;
+    return;
+  }
+  DOG.stateT += dt;
+  if (S.sweep) { DOG.x = S.x - 60; DOG.pose = 'run'; DOG.moving = true; DOG.face = S.face; return; }
+  if (p.inCount === 0 && DOG.shookOn !== p.slug && DOG.state !== 'shake' && Math.abs(DOG.x - S.x) < 420) {
+    DOG.state = 'shake'; DOG.stateT = 0; DOG.shookOn = p.slug;
+  }
+  if (DOG.state === 'shake') {
+    DOG.pose = 'shake'; DOG.moving = false;
+    if (DOG.stateT > 1.0) { DOG.state = 'follow'; DOG.stateT = 0; }
+    return;
+  }
+  if (DOG.state === 'sniff') {
+    DOG.pose = 'sniff'; DOG.moving = false;
+    if (DOG.stateT > 1.8) { DOG.state = 'follow'; DOG.stateT = 0; }
+    return;
+  }
+  const idle = Math.abs(S.vx) < 1 && !S.overlay && S.target == null;
+  /* a well-cited door within nose range pulls her — the nose always wins */
+  let sniffPull = null;
+  if (DOG.sleepX == null) {
+    const dogPage = pageAt(clamp(DOG.x, 0, M.totalPx - 1));
+    for (const g of dogPage.gates) {
+      const tp = M.bySlug.get(g.tgt);
+      if (!tp || tp.inCount < M.sniffMin) continue;
+      if ((DOG.sniffCD.get(g.x) || 0) > S.t) continue;
+      if (Math.abs(g.x - DOG.x) < 130) { sniffPull = g; break; }
+    }
+  }
+  let tx;
+  if (sniffPull) {
+    tx = sniffPull.x - 14;
+    if (Math.abs(DOG.x - tx) < 7) {
+      DOG.state = 'sniff'; DOG.stateT = 0;
+      DOG.sniffCD.set(sniffPull.x, S.t + 45);
+    }
+  } else if (idle && S.idleT > 17) {
+    if (DOG.sleepX == null) {
+      const T = terrainFor(p.idx);
+      let bb = null;
+      for (const b of T.benches) {
+        if (!b.broken && Math.abs(b.x - S.x) < 420 && (!bb || Math.abs(b.x - S.x) < Math.abs(bb.x - S.x))) bb = b;
+      }
+      DOG.sleepX = bb ? bb.x + 34 : S.x - 44;
+    }
+    tx = DOG.sleepX;
+  } else {
+    DOG.sleepX = null;
+    tx = idle ? S.x - 44 : S.x + (S.face || 1) * 150;
+  }
+  const dx = tx - DOG.x;
+  const cap = Math.abs(S.vx) > 1 ? Math.abs(S.vx) * 1.6 : 430;
+  const sp = clamp(Math.abs(dx) * 2.6, 0, cap);
+  if (Math.abs(dx) > 3) {
+    DOG.x += Math.sign(dx) * sp * dt;
+    DOG.face = Math.sign(dx) || DOG.face;
+    DOG.moving = sp > 26;
+  } else DOG.moving = false;
+  DOG.x = clamp(DOG.x, 10, M.totalPx - 10);
+  if (DOG.sleepX != null && Math.abs(DOG.x - DOG.sleepX) < 8) DOG.pose = 'sleep';
+  else if (idle && S.idleT > 1.1 && Math.abs(dx) <= 8) DOG.pose = 'sit';
+  else DOG.pose = DOG.moving ? 'run' : 'stand';
+}
+
+function drawDog(pal) {
+  const sx = w2s(DOG.x);
+  if (sx < -90 || sx > W + 90) return;
+  const gy = gYAt(DOG.x);
+  dogSil(sx - 2.2, gy - 1.4, 'rgba(255,243,224,0.55)', null);
+  dogSil(sx, gy, pal.ink, INKS.rose);
+}
+function dogSil(px, py, ink, collar) {
+  const frame = REDUCED ? 1 : Math.floor(S.t * 9) % 3;
+  cx.save();
+  cx.translate(px, py);
+  cx.scale(DOG.face || 1, 1);
+  if (DOG.pose === 'shake' && !REDUCED) cx.rotate((Math.floor(S.t * 13) % 2 ? 1 : -1) * 0.15);
+  cx.fillStyle = ink; cx.strokeStyle = ink;
+  cx.lineWidth = 2.6; cx.lineCap = 'round';
+  if (DOG.pose === 'sleep') {
+    cx.fillRect(-14, -7, 27, 7);
+    cx.beginPath(); cx.arc(13, -6, 5, 0, 7); cx.fill();
+    cx.fillRect(14, -4, 6, 3);
+    cx.beginPath(); cx.moveTo(-14, -5); cx.lineTo(-20, -2); cx.stroke();
+    if (collar && !REDUCED && Math.floor(S.t * 1.4) % 2) {
+      cx.fillStyle = INKS.cream; cx.globalAlpha = 0.7;
+      cx.font = '9px Georgia, serif'; cx.textAlign = 'center';
+      cx.fillText('z', 8, -14);
+      cx.globalAlpha = 1; cx.fillStyle = ink;
+    }
+  } else if (DOG.pose === 'sit') {
+    drawPoly([[-8, 0], [-7, -14], [0, -15], [3, 0]], ink);
+    cx.beginPath(); cx.moveTo(4, -13); cx.lineTo(6, 0); cx.stroke();
+    cx.beginPath(); cx.arc(6, -18, 5.4, 0, 7); cx.fill();
+    cx.fillRect(6, -20.5, 9, 4);
+    drawPoly([[2, -22], [5, -28], [7, -21]], ink);
+    cx.beginPath(); cx.moveTo(-8, -3); cx.lineTo(-15, -8); cx.stroke();
+    if (collar) { cx.fillStyle = collar; cx.fillRect(2, -16, 6, 2.2); cx.fillStyle = ink; }
+  } else if (DOG.pose === 'sniff') {
+    const bob = REDUCED ? 0 : [0, 1.6, 0.8][Math.floor(S.t * 7) % 3];
+    cx.fillRect(-11, -13, 22, 8);
+    cx.beginPath(); cx.moveTo(-11, -11); cx.lineTo(-17, -18); cx.stroke();
+    cx.beginPath(); cx.moveTo(-8, -6); cx.lineTo(-8, 0); cx.stroke();
+    cx.beginPath(); cx.moveTo(8, -6); cx.lineTo(8, 0); cx.stroke();
+    cx.beginPath(); cx.arc(13, -6 + bob, 4.8, 0, 7); cx.fill();
+    cx.fillRect(13, -4 + bob, 7, 3);
+    drawPoly([[10, -10 + bob], [12, -15 + bob], [15, -9 + bob]], ink);
+    if (collar) { cx.fillStyle = collar; cx.fillRect(9, -9 + bob, 5.5, 2.2); cx.fillStyle = ink; }
+    if (collar && !REDUCED && frame === 2) {
+      cx.fillStyle = INKS.cream; cx.globalAlpha = 0.6;
+      cx.fillRect(20, -2 + bob, 2.5, 2.5); cx.fillRect(24, -5 + bob, 2, 2);
+      cx.globalAlpha = 1; cx.fillStyle = ink;
+    }
+  } else {
+    cx.fillRect(-11, -16, 22, 8);
+    const legs = (DOG.pose === 'run' && !REDUCED) ? [[-8, 4], [8, -4], [0, 0]][frame] : [0, 0];
+    cx.beginPath(); cx.moveTo(-8, -9); cx.lineTo(-8 + legs[0] * 0.5, 0); cx.stroke();
+    cx.beginPath(); cx.moveTo(8, -9); cx.lineTo(8 + legs[1] * 0.5, 0); cx.stroke();
+    cx.beginPath(); cx.moveTo(-11, -14); cx.lineTo(-17, DOG.pose === 'run' ? -22 + (frame === 1 ? 1.5 : 0) : -20); cx.stroke();
+    cx.beginPath(); cx.arc(13, -18, 5.2, 0, 7); cx.fill();
+    cx.fillRect(13, -19.5, 8, 3.6);
+    drawPoly([[9, -22], [11, -28], [14, -21]], ink);
+    if (collar) { cx.fillStyle = collar; cx.fillRect(9, -16.5, 6, 2.4); cx.fillStyle = ink; }
+    if (DOG.pose === 'shake' && collar && !REDUCED) {
+      cx.fillStyle = INKS.cream; cx.globalAlpha = 0.7;
+      cx.fillRect(-16, -24, 2.5, 2.5); cx.fillRect(14, -27, 2.5, 2.5);
+      cx.fillRect(-2, -29, 2, 2); cx.fillRect(20, -12, 2, 2);
+      cx.globalAlpha = 1; cx.fillStyle = ink;
+    }
+  }
+  cx.lineCap = 'butt';
+  cx.restore();
+}
+
 /* falling leaves (autumn) and petals (spring) — flat flecks, capped */
 function drawDrift(p, T, x0, x1) {
   const n = Math.min(12, 3 + Math.floor(p.len / 900));
@@ -1337,7 +2095,7 @@ function drawDrift(p, T, x0, x1) {
     if (bx < x0 - 40 || bx > x1 + 40) continue;
     const spd = autumn ? 0.10 + r() * 0.08 : 0.06 + r() * 0.05;
     const ph = ((S.t * spd + r()) % 1);
-    const wx = bx + Math.sin(ph * 6.28 * 2 + i) * 26 + ph * 24;
+    const wx = bx + Math.sin(ph * 6.28 * 2 + i) * 26 + ph * (24 + WIND * 46);
     const sx = w2s(wx);
     if (sx < -20 || sx > W + 20) continue;
     const gy = gYAt(wx);
@@ -1367,6 +2125,21 @@ function drawSign(sg, p, pal, wN) {
     cx.lineWidth = 1;
     cx.beginPath(); cx.moveTo(-wdt / 2 + 18, -86 - hgt); cx.lineTo(-wdt / 2 + 30, -86 - hgt + hgt * 0.6); cx.stroke();
   }
+  /* the ranger maintenance ticket, tacked to the post below the plate */
+  cx.save();
+  cx.translate(6, -60); cx.rotate(0.05);
+  cx.fillStyle = pal.accent; cx.globalAlpha = 0.5;
+  cx.fillRect(2, 2, 15, 20);
+  cx.globalAlpha = 1;
+  cx.fillStyle = INKS.cream;
+  cx.fillRect(0, 0, 15, 20);
+  cx.strokeStyle = pal.ink; cx.lineWidth = 1.2;
+  cx.strokeRect(0, 0, 15, 20);
+  cx.fillStyle = INKS.rose;
+  cx.fillRect(6, 2.4, 3, 3);
+  cx.fillStyle = pal.ink;
+  cx.fillRect(2.5, 8, 10, 1.2); cx.fillRect(2.5, 11, 10, 1.2); cx.fillRect(2.5, 14, 7, 1.2);
+  cx.restore();
   let name = p.label.toUpperCase();
   if (name.length > 24) name = name.slice(0, 23) + '…';
   label(name, 0, -86 - hgt + 15, 9, INK_DARK, 'center', 1);
@@ -1640,6 +2413,8 @@ function spawnBubble(fw, wN) {
   const gesture = (wN > 0.5 && r() < 0.5) ? 'lantern' : (gid === 0 ? 'hand' : 'hat');
   S.bubble = { wk: fw.wk, page: fw.page, text, gesture, t0: S.t };
   S.wave = 1;   /* the player waves back */
+  PACK.greeted++;
+  queueSave();
   bubbleCD.set(fw.page.slug + '|' + fw.wk.name, S.t + BUBBLE_PAIR_CD);
 }
 
@@ -1658,7 +2433,7 @@ function updateGreetings(dt, wN) {
     if (gone || S.t - b.t0 > BUBBLE_LIFE) endBubble();
     else { b.sx = fw.sx; b.gy = fw.gy; b.h = fw.wk.h; }
   }
-  if (!S.bubble && S.t > S.bubbleGapT && !S.overlay) {
+  if (!S.bubble && S.t > S.bubbleGapT && !S.overlay && !S.sweep) {
     let best = null, bd = 1e9;
     for (const fw of frameWalkers) {
       const d = Math.abs(fw.wx - S.x);
@@ -2066,15 +2841,44 @@ function updateHUD() {
   }
   S.nearTerrace = nearT;
 
-  let txt = null;
-  if (nearT && (!near || nearT.d < near.d)) {
-    txt = 'ENTER — TERRACE MENU · ' + nearT.tr.items.length +
-      (nearT.tr.items.length === 1 ? ' CARD FROM THIS PAGE' : ' CARDS FROM THIS PAGE');
-  } else if (near) {
+  /* register box, ranger ticket, orientation table — quiet furniture */
+  S.nearReg = Math.abs(p.regX - S.x) < REG_RANGE ? p : null;
+  S.nearTicket = Math.abs(p.signX - S.x) < TICKET_RANGE ? p : null;
+  S.nearLook = (p.overlook && Math.abs(p.overlook.x - S.x) < LOOK_RANGE) ? p : null;
+
+  /* ENTER does the nearest thing; one floating label at a time */
+  const acts = [];
+  if (nearT) {
+    acts.push({
+      d: nearT.d, kind: 'terrace', nt: nearT,
+      txt: 'ENTER — TERRACE MENU · ' + nearT.tr.items.length +
+        (nearT.tr.items.length === 1 ? ' CARD FROM THIS PAGE' : ' CARDS FROM THIS PAGE')
+    });
+  }
+  if (near) {
     const tp = M.bySlug.get(near.g.tgt);
     const dw = wordsAt(tp.start) - wNow;
     const dir = dw >= 0 ? 'EAST' : 'WEST';
-    txt = 'ENTER — GATE TO ' + tp.label.toUpperCase() + ' · CARRIES YOU ' + fmt(Math.abs(dw)) + 'M ' + dir;
+    acts.push({
+      d: near.d, kind: 'gate', g: near.g,
+      txt: 'ENTER — GATE TO ' + tp.label.toUpperCase() + ' · CARRIES YOU ' + fmt(Math.abs(dw)) + 'M ' + dir
+    });
+  }
+  if (S.nearLook) {
+    const o = p.overlook;
+    acts.push({
+      d: Math.abs(o.x - S.x), kind: 'look', p,
+      txt: 'ENTER — ORIENTATION TABLE · ' + (o.landmarks.length ?
+        o.landmarks.length + ' LANDMARKS THIS HUB CITES' : 'ALL SKY, NO LANDMARKS')
+    });
+  }
+  acts.sort((a, b) => a.d - b.d);
+  S.enterAct = acts[0] || null;
+  let txt = S.enterAct ? S.enterAct.txt : null;
+  if (!txt) {
+    if (S.nearReg && S.nearTicket) txt = 'R — SIGN THE REGISTER · E — REPORT TRAIL DAMAGE';
+    else if (S.nearReg) txt = REGBOOK[p.slug] ? 'R — THE REGISTER · YOUR LINE IS INSIDE' : 'R — SIGN THE TRAIL REGISTER';
+    else if (S.nearTicket) txt = 'E — REPORT TRAIL DAMAGE · A RANGER TICKET FOR ' + p.label.toUpperCase();
   }
   if (txt) {
     if (gatePrompt.hidden || hudCache.gp !== txt) { gatePrompt.hidden = false; gatePrompt.textContent = txt; hudCache.gp = txt; }
@@ -2095,13 +2899,21 @@ function openTrailhead() {
   thSearch.focus();
 }
 function closeOverlays() {
+  if (S.overlay === 'walker') saveWalker();
   S.overlay = null;
   trailhead.hidden = true;
   document.getElementById('gatemap').hidden = true;
   document.getElementById('terrace').hidden = true;
   document.getElementById('keypanel').hidden = true;
+  document.getElementById('register').hidden = true;
+  document.getElementById('ticket').hidden = true;
+  document.getElementById('packpanel').hidden = true;
+  document.getElementById('guidepanel').hidden = true;
+  document.getElementById('overlook').hidden = true;
+  document.getElementById('walkerpick').hidden = true;
   S.gm = null;
   S.tr = null;
+  S.lk = null;
   needsDraw = true;
 }
 function buildThList(q) {
@@ -2282,7 +3094,18 @@ const KEY_SWATCHES = {
   'sw-wear': [INKS.cream, INKS.aubergine, INKS.cream, INKS.aubergine],
   'sw-haz': [INKS.apricot, INK_DARK, INKS.apricot, INK_DARK],
   'sw-terr': [INKS.cream, INKS.rose, INKS.cream, INKS.rose],
-  'sw-walk': [INKS.violet]
+  'sw-walk': [INKS.violet],
+  'sw-stone': [INKS.aubergine, INKS.cream, INKS.aubergine],
+  'sw-reg': [INKS.aubergine, INKS.cream],
+  'sw-ticket': [INKS.cream, INKS.rose],
+  'sw-pack': [INKS.apricot, INKS.aubergine],
+  'sw-look': [INKS.cream, INKS.violet, INKS.cream],
+  'sw-sky': ['#0D0718', INKS.cream, '#0D0718'],
+  'sw-wind': [INKS.cream, INKS.apricot],
+  'sw-dog': [INK_DARK, INKS.rose],
+  'sw-guide': [INKS.cream, INKS.apricot, INKS.cream],
+  'sw-cert': [INKS.rose, INKS.cream],
+  'sw-wp': [INKS.violet, INKS.rose, INKS.apricot]
 };
 function fillKey() {
   const rows = [
@@ -2311,7 +3134,48 @@ function fillKey() {
       fmt(M.cardTotal) + ' cards); step up, ENTER, and choose a card to follow its real link.'],
     ['sw-walk',
       'FELLOW WALKERS — the ' + fmt(M.authorsTotal) + ' real authors walk their own stretches; near one, ' +
-      'they will tell you — in their commits\' own numbers — why they are on this ground.']
+      'they will tell you — in their commits\' own numbers — why they are on this ground.'],
+    ['sw-stone',
+      'WAYMARKERS — carved stones stand at every ' + fmt(MILE_WORDS) + 'th word (' + fmt(M.mileStones) +
+      ' stones), at each biome border (' + fmt(M.borderStones) + ' crossings, population carved from real counts), ' +
+      'at the halfway stone (word ' + fmt(M.halfWords) + '), and the end cairn.'],
+    ['sw-reg',
+      'THE TRAIL REGISTER — a register box waits past every signpost (R). A signed line posts to the real ' +
+      'docs feedback book; when the trail cannot reach it, the ink dries when this trail opens to the ' +
+      'public — your words are kept either way, for the visit.'],
+    ['sw-ticket',
+      'RANGER TICKETS — every signpost carries a maintenance ticket (E): it opens this page\u2019s real edit ' +
+      'form on GitHub, or a damage issue prefilled with the page\u2019s title and path.'],
+    ['sw-pack',
+      'THE PACK (B) — the walk passport: a pressed leaf the first time you cross each of the ' + fmt(M.autumnPages || 0) +
+      ' autumn stretches, lantern light from each of the ' + fmt(M.nightPages) + ' night hollows, a stamp at each ' +
+      'of the ' + fmt(M.overlooks) + ' hubs, and honest tallies. It keeps for the visit.'],
+    ['sw-look',
+      'THE OVERLOOKS — each hub keeps a bench and an orientation table at its high point: the landmarks ' +
+      'are the real pages the hub cites (at most seven), distances in words. Choosing one sweeps you ' +
+      'there on an eased scenic curve.'],
+    ['sw-sky',
+      'THE NIGHT SKY — after dark, the constellation overhead is the citation graph of the biome you walk: ' +
+      'its pages as stars, its internal citations as faint lines. The moon is the stretch\u2019s freshness — ' +
+      'full when tended within ' + MOON_FULL_DAYS + ' days, thinning as the last commit ages, new past ' +
+      fmt(MOON_NEW_DAYS) + ' untended days.'],
+    ['sw-wind',
+      'WEATHER — the wind of a stretch is its outbound links (the windiest page carries ' + fmt(M.maxOut) +
+      '); grass leans and gusts ride it. Morning mist rests on the ' + fmt(M.zeroIn) + ' stretches no page ' +
+      'cites — gentle, and never over the path or the prompts.'],
+    ['sw-dog',
+      'THE TRAIL DOG — she runs ahead, sniffs at doors that ' + fmt(M.sniffMin) + ' or more pages cite, sits ' +
+      'beside you while you read, shakes off the mist, and sleeps at a bench if you linger. Under reduced ' +
+      'motion she simply keeps pace. Toggle her below or at the trailhead.'],
+    ['sw-guide',
+      'THE FIELD GUIDE (G) — the first crossing of each species of trail furniture presses a card into the ' +
+      'guide: ten species, from code boardwalks to night lanterns, every count the corpus\u2019s own.'],
+    ['sw-cert',
+      'CERTIFICATES — walk every page of a biome (or the whole trail) and the pack offers a downloadable ' +
+      'flat-ink certificate carrying the walk\u2019s real numbers and the day\u2019s date.'],
+    ['sw-wp',
+      'YOUR WALKER — three silhouettes and four accessories, any mix; the choice dresses the walking ' +
+      'sprite everywhere and keeps for the visit. Change it below.']
   ];
   const ul = document.getElementById('keyList');
   ul.innerHTML = '';
@@ -2327,9 +3191,686 @@ function fillKey() {
     li.appendChild(el('span', null, esc(txt)));
     ul.appendChild(li);
   }
+  /* the key's two controls: the dog, and the walker */
+  const ctl = el('li');
+  const sw2 = el('span', 'keysw');
+  [INK_DARK, INKS.rose, INKS.violet].forEach(c => {
+    const st = el('span'); st.style.background = c; sw2.appendChild(st);
+  });
+  ctl.appendChild(sw2);
+  const wrap = el('span', 'keyctl');
+  const bDog = el('button', 'keybtn'); bDog.type = 'button'; bDog.id = 'keyDog';
+  const bWp = el('button', 'keybtn', 'CHOOSE YOUR WALKER'); bWp.type = 'button'; bWp.id = 'keyWalker';
+  bDog.addEventListener('click', toggleDog);
+  bWp.addEventListener('click', () => openWalkerPick());
+  wrap.appendChild(bDog);
+  wrap.appendChild(bWp);
+  ctl.appendChild(wrap);
+  ul.appendChild(ctl);
+  refreshDogUI();
 }
 document.getElementById('btnKey').addEventListener('click', () => {
   if (S.overlay === 'key') closeOverlays(); else openKey();
+});
+
+/* ---------------- the trail register (feedback — real) ---------------- */
+const regNoteEl = document.getElementById('regNote');
+const regSignEl = document.getElementById('regSign');
+const regStatusEl = document.getElementById('regStatus');
+let regPageRef = null;
+
+function updateRegCount() {
+  document.getElementById('regCount').textContent = regNoteEl.value.length + ' / 2000';
+  regSignEl.disabled = regNoteEl.value.trim().length === 0;
+}
+regNoteEl.addEventListener('input', updateRegCount);
+
+function openRegister(pg) {
+  closeOverlays();
+  S.overlay = 'register';
+  regPageRef = pg;
+  document.getElementById('register').hidden = false;
+  document.getElementById('regPage').textContent =
+    pg.title.toUpperCase() + ' · ' + fmt(pg.words) + ' WORDS · YOUR LINE POSTS TO THE REAL DOCS FEEDBACK BOOK';
+  const prior = REGBOOK[pg.slug];
+  const pr = document.getElementById('regPrior');
+  if (prior) {
+    pr.hidden = false;
+    pr.innerHTML = '<b>YOUR LINE — SIGNED ' + esc(prior.when) +
+      (prior.sent ? ' · THE INK IS DRY' : ' · THE INK IS STILL DRYING') + '</b>' + esc(prior.note);
+  } else pr.hidden = true;
+  regNoteEl.value = prior && !prior.sent ? prior.note : '';
+  updateRegCount();
+  regStatusEl.textContent = '\u00a0';
+  setTimeout(() => regNoteEl.focus(), 0);
+}
+
+async function signRegister() {
+  const pg = regPageRef;
+  if (!pg) return;
+  const note = regNoteEl.value.trim();
+  if (!note || note.length > 2000) return;
+  regSignEl.disabled = true;
+  regStatusEl.textContent = 'SIGNING\u2026';
+  let sent = false;
+  try {
+    const res = await fetch(FEEDBACK_URL, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-feedback-source': 'docs-widget' },
+      body: JSON.stringify({
+        vote: 'up',
+        kind: 'element',
+        comment: note,
+        pagePath: pg.slug,
+        pageTitle: pg.title,
+        selectionHeading: 'Design Lab - The Long Way Through'
+      })
+    });
+    sent = res.ok;
+  } catch (e) { sent = false; }
+  /* the line goes into the box for the visit either way; the text is never lost */
+  REGBOOK[pg.slug] = { note, when: new Date().toISOString().slice(0, 10), sent };
+  queueSave();
+  const pr = document.getElementById('regPrior');
+  pr.hidden = false;
+  pr.innerHTML = '<b>YOUR LINE — SIGNED ' + esc(REGBOOK[pg.slug].when) +
+    (sent ? ' · THE INK IS DRY' : ' · THE INK IS STILL DRYING') + '</b>' + esc(note);
+  if (sent) {
+    regStatusEl.textContent = 'SIGNED — THANK YOU, WALKER.';
+    regNoteEl.value = '';
+  } else {
+    regStatusEl.textContent = 'THE INK WILL DRY WHEN THIS TRAIL OPENS TO THE PUBLIC';
+  }
+  updateRegCount();
+  needsDraw = true;
+  if (REDUCED) renderStep();
+}
+regSignEl.addEventListener('click', signRegister);
+
+/* ---------------- the ranger ticket (contribute — real) ---------------- */
+function ticketEditUrl(pg) { return GH_EDIT + pg.file; }
+function ticketIssueUrl(pg) {
+  return GH_ISSUE + '?title=' + encodeURIComponent('Trail damage: ' + pg.title) +
+    '&body=' + encodeURIComponent(
+      'Page: ' + pg.slug + '\nSource file: docusaurus/' + pg.file +
+      '\n\nDamage observed:\n\n---\nFiled from the Design Lab trail \u201cThe Long Way Through\u201d.');
+}
+function openTicket(pg) {
+  closeOverlays();
+  S.overlay = 'ticket';
+  document.getElementById('ticket').hidden = false;
+  document.getElementById('tkTitle').textContent = pg.title;
+  document.getElementById('tkMeta').textContent =
+    pg.slug + ' · docusaurus/' + pg.file + ' · TENDED ' + fmt(pg.ageDays) + ' DAYS AGO';
+  document.getElementById('tkEdit').href = ticketEditUrl(pg);
+  document.getElementById('tkIssue').href = ticketIssueUrl(pg);
+}
+
+/* ---------------- the pack (B): the walk passport ---------------- */
+function openPack() {
+  if (S.overlay === 'pack') { closeOverlays(); return; }
+  closeOverlays();
+  S.overlay = 'pack';
+  document.getElementById('packpanel').hidden = false;
+  const visitedN = Object.keys(PACK.visited).length;
+  const cells = [
+    [fmt(Math.round(PACK.walked)), 'WORDS WALKED'],
+    [fmt(visitedN) + ' / ' + fmt(M.pages.length), 'PAGES READ'],
+    [Object.keys(PACK.biomes).length + ' / ' + M.communities.length, 'BIOMES CROSSED'],
+    [fmt(PACK.greeted), 'WALKERS GREETED'],
+    [Object.keys(PACK.hollows).length + ' / ' + fmt(M.nightPages), 'HOLLOWS LIT'],
+    [Object.keys(PACK.leaves).length + ' / ' + fmt(M.autumnPages || 0), 'PRESSED LEAVES'],
+    [Object.keys(PACK.stamps).length + ' / ' + M.overlooks, 'HUB STAMPS'],
+    [fmt(PACK.days), 'DAYS-NIGHTS CROSSED']
+  ];
+  const grid = document.getElementById('pkGrid');
+  grid.innerHTML = '';
+  for (const [v, l] of cells) {
+    const c = el('div', 'pkCell');
+    c.appendChild(el('b', null, esc(v)));
+    c.appendChild(el('span', null, esc(l)));
+    grid.appendChild(c);
+  }
+  const stamps = document.getElementById('pkStamps');
+  stamps.innerHTML = '';
+  const chip = (cls, txt) => stamps.appendChild(el('span', 'pkStamp ' + cls, esc(txt)));
+  Object.keys(PACK.stamps).forEach(sl => {
+    const hp = M.bySlug.get(sl);
+    chip('', 'HUB · ' + (hp ? hp.label.toUpperCase() : sl));
+  });
+  const leaves = Object.keys(PACK.leaves);
+  leaves.slice(0, 8).forEach(sl => {
+    const lp = M.bySlug.get(sl);
+    chip('leaf', 'LEAF · ' + (lp ? lp.label.toUpperCase() : sl));
+  });
+  if (leaves.length > 8) chip('leaf', '+' + (leaves.length - 8) + ' MORE LEAVES');
+  const hollows = Object.keys(PACK.hollows);
+  hollows.slice(0, 8).forEach(sl => {
+    const lp = M.bySlug.get(sl);
+    chip('lantern', 'LANTERN · ' + (lp ? lp.label.toUpperCase() : sl));
+  });
+  if (hollows.length > 8) chip('lantern', '+' + (hollows.length - 8) + ' MORE LANTERNS');
+
+  const certs = document.getElementById('pkCerts');
+  certs.innerHTML = '';
+  certs.appendChild(el('div', 'pkCertHead', 'TRAIL CERTIFICATES'));
+  let any = false;
+  M.communities.forEach((c, ci) => {
+    if (!commComplete(ci)) return;
+    any = true;
+    const b = el('button', null,
+      'CERTIFICATE — ' + esc(String(c.dominant || '').toUpperCase()) + ' · ' + c.size + ' PAGES · DOWNLOAD PNG');
+    b.dataset.cert = ci;
+    certs.appendChild(b);
+  });
+  if (trailComplete()) {
+    any = true;
+    const b = el('button', null, 'CERTIFICATE — THE WHOLE TRAIL · ' + fmt(M.pages.length) + ' PAGES · DOWNLOAD PNG');
+    b.dataset.cert = 'trail';
+    certs.appendChild(b);
+  }
+  if (!any) {
+    let bi = -1, bv = -1;
+    M.communities.forEach((c, ci) => {
+      const v = c.members.filter(m => PACK.visited[m]).length;
+      if (v < c.members.length && v / c.members.length > bv) { bv = v / c.members.length; bi = ci; }
+    });
+    const c = bi >= 0 ? M.communities[bi] : null;
+    certs.appendChild(el('div', 'pkCertNote', c
+      ? 'Walk every page of a biome to earn its certificate. Nearest: ' +
+        esc(String(c.dominant || '')) + ' — ' +
+        c.members.filter(m => PACK.visited[m]).length + ' of ' + c.size + ' pages walked.'
+      : 'Walk every page of a biome to earn its certificate.'));
+  }
+}
+document.getElementById('pkCerts').addEventListener('click', (e) => {
+  const b = e.target.closest('button');
+  if (b && b.dataset.cert !== undefined) downloadCert(b.dataset.cert === 'trail' ? 'trail' : +b.dataset.cert);
+});
+document.getElementById('btnPack').addEventListener('click', openPack);
+
+/* ---------------- the trail certificate (flat-ink PNG, 2.5×) ----------- */
+function certCanvas(which) {
+  const SCALE = 2.5, w = 800, h = 560;
+  const c = document.createElement('canvas');
+  c.width = w * SCALE; c.height = h * SCALE;
+  const g = c.getContext('2d');
+  g.scale(SCALE, SCALE);
+  const sp = (txt, x, y, size, color, ls, align) => {
+    g.font = size + 'px Georgia, serif';
+    g.textAlign = align || 'center';
+    try { g.letterSpacing = (ls === undefined ? 2 : ls) + 'px'; } catch (e) { }
+    g.fillStyle = color;
+    g.fillText(txt, x, y);
+    try { g.letterSpacing = '0px'; } catch (e) { }
+  };
+  g.fillStyle = INK_DARK; g.fillRect(0, 0, w, h);
+  /* riso double border, misregistered */
+  g.strokeStyle = INKS.violet; g.lineWidth = 2.5; g.strokeRect(21, 21, w - 42, h - 42);
+  g.strokeStyle = INKS.cream; g.lineWidth = 2.5; g.strokeRect(18, 18, w - 36, h - 36);
+  /* scene: ridges, sun, walker and dog */
+  const gy = h - 88;
+  /* a low riso sun sinking behind the far ridge */
+  g.fillStyle = INKS.rose; g.beginPath(); g.arc(w * 0.82 + 4, gy - 78 + 3, 26, 0, 7); g.fill();
+  g.fillStyle = INKS.cream; g.beginPath(); g.arc(w * 0.82, gy - 78, 26, 0, 7); g.fill();
+  g.fillStyle = mix(INK_DARK, INKS.violet, 0.42);
+  g.beginPath(); g.moveTo(24, gy - 52);
+  for (let i = 0; i <= 12; i++) g.lineTo(24 + (w - 48) * i / 12, gy - 52 - Math.sin(i * 2.1) * 16 - (i % 3) * 7);
+  g.lineTo(w - 24, gy); g.lineTo(24, gy); g.closePath(); g.fill();
+  g.fillStyle = mix(INK_DARK, INKS.rose, 0.30);
+  g.beginPath(); g.moveTo(24, gy - 24);
+  for (let i = 0; i <= 9; i++) g.lineTo(24 + (w - 48) * i / 9, gy - 24 - Math.sin(i * 3.3 + 1) * 11);
+  g.lineTo(w - 24, gy); g.lineTo(24, gy); g.closePath(); g.fill();
+  g.fillStyle = mix(INK_DARK, INKS.aubergine, 0.6);
+  g.fillRect(24, gy, w - 48, 76);
+  g.fillStyle = 'rgba(255,243,224,0.5)';
+  g.fillRect(24, gy + 26, w - 48, 2);
+  /* the walker (simple flat figure) and the dog beside */
+  const fx = w * 0.30, fy = gy + 27;
+  g.fillStyle = INKS.cream;
+  g.fillRect(fx - 1.6, fy - 34, 3.2, 14);
+  g.beginPath(); g.arc(fx, fy - 38, 4.6, 0, 7); g.fill();
+  g.strokeStyle = INKS.cream; g.lineWidth = 3;
+  g.beginPath(); g.moveTo(fx, fy - 21); g.lineTo(fx - 6, fy); g.stroke();
+  g.beginPath(); g.moveTo(fx, fy - 21); g.lineTo(fx + 6, fy); g.stroke();
+  if (DOG.on) {
+    g.fillStyle = INKS.cream;
+    g.fillRect(fx - 34, fy - 10, 15, 5.5);
+    g.beginPath(); g.arc(fx - 18, fy - 11, 3.6, 0, 7); g.fill();
+    g.strokeStyle = INKS.cream; g.lineWidth = 1.8;
+    g.beginPath(); g.moveTo(fx - 31, fy - 5); g.lineTo(fx - 31, fy); g.stroke();
+    g.beginPath(); g.moveTo(fx - 22, fy - 5); g.lineTo(fx - 22, fy); g.stroke();
+    g.beginPath(); g.moveTo(fx - 34, fy - 9); g.lineTo(fx - 38, fy - 14); g.stroke();
+  }
+  /* the words */
+  sp('STRAPI DOCUMENTATION, WALKED WHOLE', w / 2, 64, 10, '#C1226E', 4);
+  g.fillStyle = INKS.apricot;
+  sp('TRAIL CERTIFICATE', w / 2 + 3, 118 + 2, 46, INKS.apricot, 2);
+  sp('TRAIL CERTIFICATE', w / 2, 118, 46, INKS.cream, 2);
+  sp('THIS CERTIFIES THAT A WALKER TOOK THE LONG WAY THROUGH', w / 2, 152, 11, 'rgba(255,243,224,0.75)', 2);
+  let name, pagesLine;
+  if (which === 'trail') {
+    name = 'THE WHOLE TRAIL';
+    pagesLine = fmt(M.pages.length) + ' PAGES · ' + fmt(M.totalWords) + ' WORDS OF TRAIL';
+  } else {
+    const c2 = M.communities[which];
+    name = String(c2.dominant || '').toUpperCase();
+    const hp = M.bySlug.get(c2.hub);
+    pagesLine = c2.size + ' PAGES · HUB: ' + (hp ? hp.label.toUpperCase() : c2.hub);
+  }
+  g.fillStyle = INKS.cream;
+  const nw = Math.min(w - 120, Math.max(320, name.length * 22 + 80));
+  g.fillRect(w / 2 - nw / 2 + 4, 176 + 4, nw, 54);
+  g.fillStyle = INKS.rose;
+  g.globalAlpha = 0.45;
+  g.fillRect(w / 2 - nw / 2 + 8, 180 + 6, nw, 54);
+  g.globalAlpha = 1;
+  g.fillStyle = INKS.cream;
+  g.fillRect(w / 2 - nw / 2, 176, nw, 54);
+  sp(name, w / 2, 210, 26, INK_DARK, 2);
+  sp(pagesLine, w / 2, 246, 10.5, INKS.apricot, 2.5);
+  const scopeRead = which === 'trail'
+    ? Object.keys(PACK.visited).length + ' OF ' + M.pages.length
+    : M.communities[which].members.filter(m => PACK.visited[m]).length + ' OF ' + M.communities[which].size;
+  const rows = [
+    ['PAGES READ', scopeRead],
+    ['WORDS WALKED', fmt(Math.round(PACK.walked))],
+    ['FELLOW WALKERS GREETED', fmt(PACK.greeted)],
+    ['NIGHT HOLLOWS LIT', fmt(Object.keys(PACK.hollows).length)],
+    ['DAYS AND NIGHTS CROSSED', fmt(PACK.days)],
+    ['HUB STAMPS IN THE PACK', fmt(Object.keys(PACK.stamps).length)]
+  ];
+  rows.forEach((r, i) => {
+    const col = i % 2, row = (i / 2) | 0;
+    const cxx = w / 2 + (col === 0 ? -170 : 170);
+    sp(r[0], cxx, 282 + row * 40, 9.5, 'rgba(255,243,224,0.65)', 2.5);
+    sp(r[1], cxx, 300 + row * 40, 17, INKS.cream, 1);
+  });
+  const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase();
+  sp(today, w / 2, h - 52, 11, INKS.apricot, 3);
+  sp('DESIGN LAB — THE LONG WAY THROUGH · EVERY NUMBER IS THE WALK\u2019S OWN', w / 2, h - 32, 8.5, 'rgba(255,243,224,0.55)', 2);
+  return c;
+}
+function downloadCert(which) {
+  try {
+    const c = certCanvas(which);
+    const nm = which === 'trail' ? 'whole-trail'
+      : String(M.communities[which].dominant || 'biome').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const a = document.createElement('a');
+    a.download = 'the-long-way-through-' + nm + '.png';
+    a.href = c.toDataURL('image/png');
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  } catch (e) { /* canvas export can be blocked in odd sandboxes */ }
+}
+
+/* ---------------- the field guide (G) ---------------- */
+function drawGuideIcon(cv2, id) {
+  const g = cv2.getContext('2d');
+  const wI = cv2.width, hI = cv2.height, gy = hI - 12;
+  g.clearRect(0, 0, wI, hI);
+  g.fillStyle = 'rgba(255,243,224,0.35)';
+  g.fillRect(6, gy + 4, wI - 12, 1.6);
+  const ink = INKS.cream, acc = INKS.rose;
+  const poly = (pts, col) => { g.fillStyle = col; g.beginPath(); g.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]); g.closePath(); g.fill(); };
+  const mid = wI / 2;
+  g.strokeStyle = ink; g.fillStyle = ink; g.lineWidth = 2;
+  switch (id) {
+    case 'boardwalk':
+      g.fillStyle = 'rgba(255,243,224,0.8)';
+      for (let i = -3; i <= 3; i++) g.fillRect(mid + i * 9 - 3, gy - 3, 6.5, 5);
+      g.fillStyle = ink;
+      g.fillRect(mid - 31, gy - 4.5, 62, 1.4); g.fillRect(mid - 31, gy + 2.6, 62, 1.4);
+      break;
+    case 'picnic':
+      g.fillRect(mid - 15, gy - 19, 30, 3.4);
+      g.beginPath(); g.moveTo(mid - 9, gy - 16); g.lineTo(mid - 16, gy); g.stroke();
+      g.beginPath(); g.moveTo(mid + 9, gy - 16); g.lineTo(mid + 16, gy); g.stroke();
+      g.fillRect(mid - 24, gy - 9, 11, 2.6); g.fillRect(mid + 13, gy - 9, 11, 2.6);
+      break;
+    case 'cairn':
+      poly([[mid - 11, gy], [mid + 11, gy], [mid + 8, gy - 6], [mid - 8, gy - 6]], ink);
+      poly([[mid - 8, gy - 6], [mid + 8, gy - 6], [mid + 6, gy - 11], [mid - 6, gy - 11]], ink);
+      poly([[mid - 6, gy - 11], [mid + 6, gy - 11], [mid + 3.6, gy - 15.4], [mid - 3.6, gy - 15.4]], ink);
+      g.fillStyle = acc; g.fillRect(mid - 2.2, gy - 18.4, 4.4, 3);
+      break;
+    case 'warnpost':
+      g.fillStyle = INKS.apricot; g.fillRect(mid - 14, gy - 11, 28, 11);
+      g.fillStyle = INK_DARK;
+      poly([[mid - 12, gy], [mid - 8, gy - 11], [mid - 4, gy - 11], [mid - 8, gy]], INK_DARK);
+      poly([[mid, gy], [mid + 4, gy - 11], [mid + 8, gy - 11], [mid + 4, gy]], INK_DARK);
+      g.strokeStyle = ink; g.lineWidth = 1.4; g.strokeRect(mid - 14, gy - 11, 28, 11);
+      break;
+    case 'spring':
+      poly([[mid - 12, gy], [mid + 12, gy], [mid + 8, gy - 8], [mid - 8, gy - 8]], acc);
+      g.strokeStyle = ink; g.lineWidth = 1.4;
+      g.beginPath(); g.moveTo(mid - 7, gy - 5.5); g.lineTo(mid + 7, gy - 5.5); g.stroke();
+      g.beginPath(); g.moveTo(mid - 9, gy - 2); g.lineTo(mid + 9, gy - 2); g.stroke();
+      break;
+    case 'milepost':
+      g.beginPath(); g.moveTo(mid, gy); g.lineTo(mid, gy - 22); g.stroke();
+      g.fillStyle = 'rgba(255,243,224,0.9)'; g.fillRect(mid - 11, gy - 32, 22, 10);
+      g.fillStyle = INK_DARK; g.font = '6.5px Georgia'; g.textAlign = 'center';
+      g.fillText('API', mid, gy - 24.6);
+      break;
+    case 'frame':
+      g.beginPath(); g.moveTo(mid - 7, gy); g.lineTo(mid, gy - 20); g.stroke();
+      g.beginPath(); g.moveTo(mid + 7, gy); g.lineTo(mid, gy - 20); g.stroke();
+      g.fillStyle = 'rgba(255,243,224,0.9)'; g.fillRect(mid - 11, gy - 34, 22, 16);
+      g.fillStyle = acc; g.fillRect(mid - 8, gy - 31, 16, 10);
+      break;
+    case 'terrace':
+      for (let i = 0; i < 5; i++) { g.fillStyle = i % 2 ? acc : ink; g.fillRect(mid - 20 + i * 8, gy - 26, 8, 6); }
+      g.fillStyle = ink;
+      g.fillRect(mid - 21, gy - 20, 2, 20); g.fillRect(mid + 19, gy - 20, 2, 20);
+      g.fillRect(mid - 12, gy - 12, 24, 12);
+      break;
+    case 'door':
+      poly([[mid - 9, gy], [mid - 9, gy - 24], [mid - 5, gy - 24], [mid - 5, gy]], ink);
+      poly([[mid + 5, gy], [mid + 5, gy - 24], [mid + 9, gy - 24], [mid + 9, gy]], ink);
+      g.fillRect(mid - 11, gy - 27, 22, 3.4);
+      g.fillStyle = 'rgba(255,243,224,0.55)'; g.fillRect(mid - 5, gy - 24, 10, 24);
+      g.fillStyle = acc; g.fillRect(mid - 3.6, gy - 22, 7.2, 3);
+      break;
+    case 'lantern':
+      g.beginPath(); g.moveTo(mid - 4, gy); g.lineTo(mid - 4, gy - 26); g.stroke();
+      g.beginPath(); g.moveTo(mid - 4, gy - 26); g.lineTo(mid + 5, gy - 24); g.stroke();
+      g.fillRect(mid + 2, gy - 24, 7, 9);
+      g.fillStyle = INKS.apricot; g.fillRect(mid + 3.6, gy - 22, 3.8, 5.4);
+      break;
+  }
+}
+function openGuide() {
+  if (S.overlay === 'guide') { closeOverlays(); return; }
+  closeOverlays();
+  S.overlay = 'guide';
+  document.getElementById('guidepanel').hidden = false;
+  const found = Object.keys(GUIDE.found).length;
+  document.getElementById('gdSub').textContent =
+    found + ' OF ' + SPECIES.length + ' SPECIES CROSSED · EVERY COUNT IS THE CORPUS\u2019S OWN';
+  const grid = document.getElementById('gdGrid');
+  grid.innerHTML = '';
+  for (const spc of SPECIES) {
+    const got = GUIDE.found[spc.id];
+    const card = el('div', 'gdCard' + (got ? '' : ' locked'));
+    const cv2 = document.createElement('canvas');
+    cv2.width = 84; cv2.height = 64;
+    card.appendChild(cv2);
+    const tx = el('div');
+    tx.appendChild(el('b', null, esc(got ? spc.name : 'NOT YET CROSSED')));
+    tx.appendChild(el('span', 'gdWhat', esc(got ? spc.what : 'Cross one on the trail to press its card into the guide.')));
+    if (got) {
+      tx.appendChild(el('span', 'gdCount', esc(fmt(spc.count()) + ' ACROSS THE TRAIL')));
+      const ap = M.bySlug.get(got.at);
+      tx.appendChild(el('span', 'gdFirst', esc('FIRST CROSSED AT WORD ' + fmt(got.word) + (ap ? ' · ON ' + ap.label.toUpperCase() : ''))));
+    }
+    card.appendChild(tx);
+    grid.appendChild(card);
+    if (got) drawGuideIcon(cv2, spc.id);
+    else {
+      const g = cv2.getContext('2d');
+      g.fillStyle = 'rgba(255,243,224,0.4)';
+      g.font = '26px Georgia, serif'; g.textAlign = 'center';
+      g.fillText('?', 42, 42);
+    }
+  }
+}
+document.getElementById('btnGuide').addEventListener('click', openGuide);
+
+/* ---------------- the overlook (orientation table) ---------------- */
+function lkLandmarks(p) {
+  const o = p.overlook;
+  const here = wordsAt(o.x);
+  return o.landmarks.map(sl => {
+    const tp = M.bySlug.get(sl);
+    const dw = wordsAt(tp.start) - here;
+    return { slug: sl, tp, dw };
+  }).sort((a, b) => a.dw - b.dw);
+}
+function lkDraw() {
+  if (!S.lk) return;
+  const { p, marks } = S.lk;
+  const g = document.getElementById('lkCanvas').getContext('2d');
+  const wC = 720, hC = 240;
+  g.clearRect(0, 0, wC, hC);
+  const pal = paletteFor(p.comm, false);
+  /* the biome's own dusk bands, flat */
+  let yy = 0;
+  const hsum = pal.bands.reduce((a2, b2) => a2 + b2.h, 0);
+  for (const b of pal.bands) {
+    const bh = hC * 0.72 * (b.h / hsum);
+    g.fillStyle = b.c;
+    g.fillRect(0, Math.floor(yy), wC, Math.ceil(bh) + 1);
+    yy += bh;
+  }
+  g.fillStyle = pal.ridgeNear;
+  g.fillRect(0, hC * 0.72, wC, hC * 0.28);
+  g.fillStyle = pal.ridgeMid;
+  g.beginPath(); g.moveTo(0, hC * 0.72);
+  for (let i = 0; i <= 16; i++) g.lineTo(wC * i / 16, hC * 0.72 - 10 - Math.sin(i * 1.8 + p.idx) * 9);
+  g.lineTo(wC, hC * 0.72); g.closePath(); g.fill();
+  if (!marks.length) {
+    g.fillStyle = INKS.cream; g.font = '12px Georgia, serif'; g.textAlign = 'center';
+    g.fillText('ALL SKY — THIS HUB CITES NO PAGES', wC / 2, hC * 0.4);
+    return;
+  }
+  const baseY = hC * 0.72;
+  marks.forEach((m, i) => {
+    const lx = wC * (0.5 + (i + 0.5 - marks.length / 2) / Math.max(4, marks.length) * 0.92);
+    const hgt2 = 26 + Math.min(54, m.tp.inCount * 2.2);
+    const sel = i === S.lkSel;
+    const ink = sel ? INKS.apricot : mix(pal.ridgeFar, INK_DARK, 0.25);
+    const v = (m.tp.comm < 0 ? 3 : m.tp.comm) % 5;
+    const poly = (pts) => { g.fillStyle = ink; g.beginPath(); g.moveTo(pts[0][0], pts[0][1]); for (let j = 1; j < pts.length; j++) g.lineTo(pts[j][0], pts[j][1]); g.closePath(); g.fill(); };
+    if (v === 0) {
+      poly([[lx - 6, baseY], [lx - 4, baseY - hgt2], [lx + 4, baseY - hgt2], [lx + 6, baseY]]);
+      poly([[lx - 9, baseY - hgt2], [lx + 9, baseY - hgt2], [lx + 6, baseY - hgt2 - 9], [lx - 6, baseY - hgt2 - 9]]);
+    } else if (v === 1) {
+      poly([[lx - 10, baseY], [lx - 10, baseY - hgt2], [lx - 4, baseY - hgt2], [lx - 4, baseY]]);
+      poly([[lx + 4, baseY], [lx + 4, baseY - hgt2], [lx + 10, baseY - hgt2], [lx + 10, baseY]]);
+      poly([[lx - 13, baseY - hgt2], [lx + 13, baseY - hgt2], [lx + 13, baseY - hgt2 - 6], [lx - 13, baseY - hgt2 - 6]]);
+    } else if (v === 2) {
+      poly([[lx, baseY - hgt2 - 12], [lx - 7, baseY], [lx + 7, baseY]]);
+    } else if (v === 3) {
+      poly([[lx - 8, baseY], [lx - 8, baseY - hgt2 * 0.85], [lx - 2, baseY - hgt2 * 0.85], [lx - 2, baseY]]);
+      poly([[lx + 2, baseY], [lx + 2, baseY - hgt2], [lx + 8, baseY - hgt2], [lx + 8, baseY]]);
+    } else {
+      poly([[lx - 9, baseY - hgt2 * 0.7], [lx + 9, baseY - hgt2 * 0.7], [lx + 6, baseY - hgt2], [lx - 6, baseY - hgt2]]);
+      g.strokeStyle = ink; g.lineWidth = 2;
+      g.beginPath(); g.moveTo(lx - 6, baseY); g.lineTo(lx - 3, baseY - hgt2 * 0.7); g.stroke();
+      g.beginPath(); g.moveTo(lx + 6, baseY); g.lineTo(lx + 3, baseY - hgt2 * 0.7); g.stroke();
+    }
+    g.font = '9px Georgia, serif';
+    g.textAlign = 'center';
+    g.fillStyle = sel ? INKS.cream : 'rgba(255,243,224,0.7)';
+    let nm = m.tp.label.toUpperCase();
+    if (nm.length > 18) nm = nm.slice(0, 17) + '\u2026';
+    g.fillText(nm, lx, baseY - hgt2 - 16);
+    g.fillStyle = sel ? INKS.apricot : 'rgba(255,162,107,0.7)';
+    g.font = '8px Georgia, serif';
+    g.fillText(fmt(Math.abs(m.dw)) + (m.dw >= 0 ? ' WORDS EAST' : ' WORDS WEST'), lx, baseY + 14);
+  });
+}
+function openLook(p) {
+  closeOverlays();
+  S.overlay = 'overlook';
+  const marks = lkLandmarks(p);
+  S.lk = { p, marks };
+  S.lkSel = 0;
+  document.getElementById('overlook').hidden = false;
+  const c = p.comm >= 0 ? M.communities[p.comm] : null;
+  document.getElementById('lkSub').textContent = c
+    ? String(c.dominant || '').toUpperCase() + ' · THE ' + (marks.length ? marks.length : 'ZERO') +
+      ' LANDMARKS ARE THE REAL PAGES THIS HUB CITES · DISTANCES IN WORDS OF TRAIL'
+    : 'OPEN COUNTRY';
+  const ul = document.getElementById('lkList');
+  ul.innerHTML = '';
+  marks.forEach((m, i) => {
+    const li = el('li', i === 0 ? 'sel' : '');
+    li.dataset.i = i;
+    li.appendChild(el('span', null, esc(m.tp.title)));
+    li.appendChild(el('span', 'lkDist',
+      esc(fmt(Math.abs(m.dw)) + (m.dw >= 0 ? ' WORDS EAST' : ' WORDS WEST') + ' · CITED BY ' + fmt(m.tp.inCount) + ' PAGES')));
+    ul.appendChild(li);
+  });
+  lkDraw();
+}
+function lkMove(d) {
+  if (!S.lk || !S.lk.marks.length) return;
+  const lis = document.getElementById('lkList').children;
+  if (lis[S.lkSel]) lis[S.lkSel].classList.remove('sel');
+  S.lkSel = clamp(S.lkSel + d, 0, S.lk.marks.length - 1);
+  lis[S.lkSel].classList.add('sel');
+  lis[S.lkSel].scrollIntoView({ block: 'nearest' });
+  lkDraw();
+}
+function lkGo(i) {
+  if (!S.lk) return;
+  const m = S.lk.marks[i];
+  closeOverlays();
+  if (m) sweepTo(m.slug);
+}
+document.getElementById('lkList').addEventListener('click', (e) => {
+  const li = e.target.closest('li');
+  if (li) lkGo(+li.dataset.i);
+});
+
+function sweepTo(slug) {
+  const p = M.bySlug.get(slug);
+  if (!p) return;
+  if (REDUCED) { teleport(p.start + 6); renderStep(); return; }
+  S.sweep = {
+    from: S.x, to: p.start + 6, t: 0,
+    dur: clamp(Math.abs(p.start + 6 - S.x) / 9000, 1.2, 2.6)
+  };
+  S.target = null; S.vx = 0;
+}
+
+/* ---------------- choose your walker ---------------- */
+function drawWalkerPreview(cv2, sil, accSet) {
+  const g = cv2.getContext('2d');
+  g.clearRect(0, 0, cv2.width, cv2.height);
+  g.fillStyle = 'rgba(255,243,224,0.25)';
+  g.fillRect(14, 130, cv2.width - 28, 2);
+  const h = 2.0, sx = cv2.width / 2, sy = 129;
+  const hipY = sy - 26 * h, shY = sy - 46 * h;
+  const hx = sx, hy = shY - 10.5 * h;
+  const ink = INKS.cream;
+  const poly = (pts, col) => { g.fillStyle = col; g.beginPath(); g.moveTo(pts[0][0], pts[0][1]); for (let i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]); g.closePath(); g.fill(); };
+  /* rose registration shadow */
+  g.save(); g.translate(2.5, 1.5); g.globalAlpha = 0.4;
+  g.fillStyle = INKS.rose;
+  g.fillRect(sx - 7 * h, shY, 14 * h, 26 * h);
+  g.beginPath(); g.arc(hx, hy, 5.8 * h, 0, 7); g.fill();
+  g.restore(); g.globalAlpha = 1;
+  g.strokeStyle = ink; g.lineCap = 'round';
+  g.lineWidth = 4.6 * h;
+  g.beginPath(); g.moveTo(sx, hipY); g.lineTo(sx + 4 * h, sy); g.stroke();
+  g.beginPath(); g.moveTo(sx, hipY); g.lineTo(sx - 4 * h, sy); g.stroke();
+  poly([[sx - 7 * h, shY], [sx + 7 * h, shY], [sx + 4.6 * h, hipY + 2 * h], [sx - 4.6 * h, hipY + 2 * h]], ink);
+  g.lineWidth = 3.2 * h;
+  g.beginPath(); g.moveTo(sx, shY + 3 * h); g.lineTo(sx + 3 * h, hipY + 3 * h); g.stroke();
+  g.beginPath(); g.moveTo(sx, shY + 3 * h); g.lineTo(sx - 3 * h, hipY + 3 * h); g.stroke();
+  g.fillStyle = ink;
+  g.fillRect(sx - 1.9 * h, shY - 5.5 * h, 3.8 * h, 6 * h);
+  g.beginPath(); g.arc(hx, hy, 5.8 * h, 0, 7); g.fill();
+  if (sil === 'A') {
+    poly([[sx - 4.8 * h, hipY - 4 * h], [sx + 4.8 * h, hipY - 4 * h], [sx + 9.4 * h, hipY + 12 * h], [sx - 9.4 * h, hipY + 12 * h]], ink);
+    poly([[hx - 2 * h, hy - 5 * h], [hx - 7.2 * h, hy + 0.5 * h], [hx - 6.2 * h, shY + 4 * h], [hx - 2.2 * h, shY + 0.5 * h]], ink);
+  } else if (sil === 'B') {
+    poly([[sx - 9.4 * h, shY], [sx + 9.4 * h, shY], [sx + 6.4 * h, shY + 7 * h], [sx - 6.4 * h, shY + 7 * h]], ink);
+  }
+  if (accSet.has('hat')) {
+    g.fillStyle = ink;
+    g.fillRect(hx - 8.4 * h, hy - 4.8 * h, 16.8 * h, 2 * h);
+    g.fillRect(hx - 4.6 * h, hy - 11.6 * h, 9.2 * h, 7.2 * h);
+    g.fillStyle = INK_DARK;
+    g.fillRect(hx - 4.6 * h, hy - 6.4 * h, 9.2 * h, 1.5 * h);
+  }
+  if (accSet.has('crown')) {
+    for (let i = -2; i <= 2; i++) {
+      g.fillStyle = (i % 2 === 0) ? INKS.rose : INKS.apricot;
+      g.fillRect(hx + i * 2.5 * h - 1.1 * h, hy - 5 * h - (2 - Math.abs(i)) * 1.1 * h - (accSet.has('hat') ? 7.2 * h : 0), 2.2 * h, 2.2 * h);
+    }
+  }
+  if (accSet.has('glasses')) {
+    g.strokeStyle = INK_DARK; g.lineWidth = 1.2 * h;
+    g.beginPath(); g.arc(hx - 2.6 * h, hy - 0.4 * h, 2.1 * h, 0, 7); g.stroke();
+    g.beginPath(); g.arc(hx + 2.6 * h, hy - 0.4 * h, 2.1 * h, 0, 7); g.stroke();
+    g.beginPath(); g.moveTo(hx - 0.6 * h, hy - 0.4 * h); g.lineTo(hx + 0.6 * h, hy - 0.4 * h); g.stroke();
+  }
+  if (accSet.has('scarf')) {
+    g.fillStyle = INKS.rose;
+    g.fillRect(hx - 3.4 * h, shY - 5.4 * h, 6.8 * h, 2.6 * h);
+    poly([[hx - 2.6 * h, shY - 3.6 * h], [hx - 10.5 * h, shY - 2 * h], [hx - 11.5 * h, shY + 0.8 * h], [hx - 2.2 * h, shY - 1 * h]], INKS.rose);
+  }
+}
+function saveWalker() {
+  WALKER.acc = [...WALKER.accSet];
+  lsSet('longway.walker.v1', JSON.stringify({ sil: WALKER.sil, acc: WALKER.acc }));
+  needsDraw = true;
+}
+function refreshWalkerUI() {
+  const row = document.getElementById('wpRow');
+  [...row.children].forEach(btn => btn.classList.toggle('sel', btn.dataset.sil === WALKER.sil));
+  [...row.children].forEach(btn => drawWalkerPreview(btn.firstChild, btn.dataset.sil, btn.dataset.sil === WALKER.sil ? WALKER.accSet : new Set()));
+  const accWrap = document.getElementById('wpAcc');
+  [...accWrap.children].forEach(btn => btn.classList.toggle('on', WALKER.accSet.has(btn.dataset.acc)));
+}
+function setWalkerSil(sil) { WALKER.sil = sil; refreshWalkerUI(); saveWalker(); }
+function toggleWalkerAcc(id) {
+  if (WALKER.accSet.has(id)) WALKER.accSet.delete(id); else WALKER.accSet.add(id);
+  refreshWalkerUI(); saveWalker();
+}
+function openWalkerPick() {
+  closeOverlays();
+  S.overlay = 'walker';
+  document.getElementById('walkerpick').hidden = false;
+  const row = document.getElementById('wpRow');
+  if (!row.children.length) {
+    for (const sil of ['A', 'B', 'C']) {
+      const btn = el('button', 'wpFig');
+      btn.type = 'button';
+      btn.dataset.sil = sil;
+      const cv2 = document.createElement('canvas');
+      cv2.width = 110; cv2.height = 150;
+      btn.appendChild(cv2);
+      btn.addEventListener('click', () => setWalkerSil(sil));
+      row.appendChild(btn);
+    }
+    const accWrap = document.getElementById('wpAcc');
+    ACC_LIST.forEach((a, i) => {
+      const btn = el('button', null, (i + 4) + ' — ' + a.label);
+      btn.type = 'button';
+      btn.dataset.acc = a.id;
+      btn.addEventListener('click', () => toggleWalkerAcc(a.id));
+      accWrap.appendChild(btn);
+    });
+  }
+  refreshWalkerUI();
+}
+
+/* ---------------- the dog toggle ---------------- */
+function refreshDogUI() {
+  const t = 'TRAIL DOG — ' + (DOG.on ? 'ON' : 'OFF');
+  const a = document.getElementById('ldDog');
+  const b = document.getElementById('keyDog');
+  if (a) { a.textContent = t; a.classList.toggle('off', !DOG.on); }
+  if (b) { b.textContent = t; b.classList.toggle('off', !DOG.on); }
+}
+function toggleDog() {
+  DOG.on = !DOG.on;
+  lsSet('longway.dog', DOG.on ? '1' : '0');
+  refreshDogUI();
+  needsDraw = true;
+  if (REDUCED) renderStep();
+}
+document.getElementById('ldDog').addEventListener('click', (e) => { e.stopPropagation(); toggleDog(); });
+document.getElementById('ldWalker').addEventListener('click', (e) => {
+  e.stopPropagation();
+  dismissLanding();
+  openWalkerPick();
 });
 
 /* ---------------- routing & travel ---------------- */
@@ -2338,6 +3879,8 @@ let suppressHash = false;
 function teleport(x) {
   S.x = clamp(x, 10, M.totalPx - 10);
   S.target = null; S.vx = 0;
+  DOG.x = clamp(S.x - 54, 10, M.totalPx - 10);
+  DOG.sleepX = null;
   needsDraw = true;
   syncPage(true);
 }
@@ -2375,6 +3918,7 @@ function syncPage(force) {
   if (p !== S.page || force) {
     S.page = p;
     renderDock(p);
+    collectPage(p);
     const key = p.comm + ':' + (p.prov.night > 0 ? 'n' : 'd');
     if (key !== S.palKey) {
       const had = S.palKey !== '';
@@ -2395,6 +3939,41 @@ function syncPage(force) {
 /* ---------------- input ---------------- */
 window.addEventListener('keydown', (e) => {
   if (S.overlay === 'landing') { dismissLanding(); e.preventDefault(); return; }
+  if (S.overlay === 'register') {
+    /* a form: typing stays typing; only ESC leaves */
+    if (e.key === 'Escape') { closeOverlays(); e.preventDefault(); }
+    return;
+  }
+  if (S.overlay === 'ticket') {
+    if (e.key === 'Escape' || e.key.toLowerCase() === 'e') { closeOverlays(); e.preventDefault(); }
+    return;
+  }
+  if (S.overlay === 'pack') {
+    if (e.key === 'Escape' || e.key.toLowerCase() === 'b') { closeOverlays(); e.preventDefault(); }
+    return;
+  }
+  if (S.overlay === 'guide') {
+    if (e.key === 'Escape' || e.key.toLowerCase() === 'g') { closeOverlays(); e.preventDefault(); }
+    return;
+  }
+  if (S.overlay === 'overlook') {
+    if (e.key === 'Escape') closeOverlays();
+    else if (e.key === 'ArrowDown') lkMove(1);
+    else if (e.key === 'ArrowUp') lkMove(-1);
+    else if (e.key === 'Enter') lkGo(S.lkSel);
+    e.preventDefault();
+    return;
+  }
+  if (S.overlay === 'walker') {
+    const k2 = e.key;
+    if (k2 === 'Escape' || k2 === 'Enter') closeOverlays();
+    else if (k2 === '1') setWalkerSil('A');
+    else if (k2 === '2') setWalkerSil('B');
+    else if (k2 === '3') setWalkerSil('C');
+    else if (k2 >= '4' && k2 <= '7') toggleWalkerAcc(ACC_LIST[+k2 - 4].id);
+    e.preventDefault();
+    return;
+  }
   if (e.key === 'Tab') {
     e.preventDefault();
     if (S.overlay === 'index') closeOverlays(); else openTrailhead();
@@ -2432,10 +4011,18 @@ window.addEventListener('keydown', (e) => {
   }
   const k = e.key.toLowerCase();
   if (k === 'enter') {
-    if (S.nearTerrace && (!S.nearGate || S.nearTerrace.d < S.nearGate.d)) openTerrace(S.nearTerrace);
-    else if (S.nearGate) openGate(S.nearGate.g);
+    const a = S.enterAct;
+    if (a) {
+      if (a.kind === 'terrace') openTerrace(a.nt);
+      else if (a.kind === 'gate') openGate(a.g);
+      else if (a.kind === 'look') openLook(a.p);
+    }
     return;
   }
+  if (k === 'r') { if (S.nearReg) openRegister(S.nearReg); e.preventDefault(); return; }
+  if (k === 'e') { if (S.nearTicket) openTicket(S.nearTicket); e.preventDefault(); return; }
+  if (k === 'b') { openPack(); e.preventDefault(); return; }
+  if (k === 'g') { openGuide(); e.preventDefault(); return; }
   if (k === 'k') { openKey(); e.preventDefault(); return; }
   if (k === 't') { cycleDaySpeed(); e.preventDefault(); return; }
   if (k === ' ' || k === 'arrowup' || k === 'w') {
@@ -2500,7 +4087,9 @@ function fillLanding() {
     '<span><b>' + fmt(M.authorsTotal) + '</b> FELLOW WALKERS</span>' +
     '<span><b>' + fmt(M.lanternsTotal) + '</b> LANTERNS IN ' + fmt(M.nightPages) + ' NIGHT HOLLOWS</span>' +
     '<span><b>' + fmt(M.hazTotal) + '</b> HAZARDS · <b>' + fmt(M.sprTotal) + '</b> SPRINGS · <b>' +
-    fmt(M.terrTotal) + '</b> TERRACES</span>';
+    fmt(M.terrTotal) + '</b> TERRACES</span>' +
+    '<span><b>' + fmt(M.waymarks.length) + '</b> WAYMARKED STONES</span>' +
+    '<span><b>' + fmt(M.overlooks) + '</b> OVERLOOKS · <b>1</b> TRAIL DOG</span>';
 }
 function dismissLanding() {
   if (S.overlay !== 'landing') return;
@@ -2508,6 +4097,11 @@ function dismissLanding() {
   S.overlay = null;
   lsSet('longway.seen', '1');
   needsDraw = true;
+  /* first arrival: choose your walker — one keypress skips to silhouette C */
+  if (!WALKER.stored && !WALKER.pickShown) {
+    WALKER.pickShown = true;
+    openWalkerPick();
+  }
 }
 landingEl.addEventListener('click', dismissLanding);
 
@@ -2519,6 +4113,7 @@ function cycleDaySpeed() {
     /* held frames: T steps the hour plate by plate, nothing glides */
     const stops = [0.05, 0.32, 0.60, 0.87];
     const cur = stops.findIndex(s => Math.abs(s - DAY.t) < 0.01);
+    if ((cur + 1) % stops.length === 0 && cur >= 0) { PACK.days++; queueSave(); }
     DAY.t = stops[(cur + 1) % stops.length];
     tickDay(0);
     renderStep();
@@ -2528,7 +4123,11 @@ function cycleDaySpeed() {
   drawDial(true);
 }
 function tickDay(dt) {
-  if (!REDUCED) DAY.t = (DAY.t + dt * DAY_SPEEDS[DAY.speed] / CYCLE_S) % 1;
+  if (!REDUCED) {
+    const t0 = DAY.t;
+    DAY.t = (DAY.t + dt * DAY_SPEEDS[DAY.speed] / CYCLE_S) % 1;
+    if (DAY.t < t0 && DAY_SPEEDS[DAY.speed] > 0) { PACK.days++; queueSave(); }
+  }
   /* the sky grades from the continuous hour — no plates, no ticks */
   const w = dayWeights(DAY.t);
   const sig = (Math.round(w.m / DAY_EPS) + ',' + Math.round(w.d / DAY_EPS) + ',' +
@@ -2625,6 +4224,22 @@ function frame(now) {
     if (S.stumbleT !== null) { S.stumbleT += dt / STUMBLE_DUR; if (S.stumbleT >= 1) S.stumbleT = null; }
     if (S.puff && S.puff.t < 1) S.puff.t += dt / 0.4;
 
+    /* the scenic sweep from an overlook rides its own eased curve */
+    if (S.sweep) {
+      S.sweep.t += dt / S.sweep.dur;
+      const k = smoothT(clamp(S.sweep.t, 0, 1));
+      S.x = lerp(S.sweep.from, S.sweep.to, k);
+      S.face = S.sweep.to >= S.sweep.from ? 1 : -1;
+      S.vx = 0;
+      syncPage();
+      if (S.sweep.t >= 1) {
+        const to = S.sweep.to;
+        S.sweep = null;
+        teleport(to);
+        suppressHash = true;
+        location.hash = '#' + S.page.slug;
+      }
+    } else {
     /* movement */
     let dir = 0;
     if (!S.overlay) {
@@ -2652,10 +4267,15 @@ function frame(now) {
     if (nx !== S.x) {
       const before = wordsAt(S.x);
       S.x = clamp(nx, 10, M.totalPx - 10);
-      S.walkedWords += Math.abs(wordsAt(S.x) - before);
+      const dw = Math.abs(wordsAt(S.x) - before);
+      S.walkedWords += dw;
+      PACK.walked += dw;
       syncPage();
     }
     collideTrail(prevX);
+    }
+    S.idleT = (Math.abs(S.vx) < 1 && !S.overlay && S.target == null && !S.sweep) ? S.idleT + dt : 0;
+    checkGuide();
     if (S.front < 1) S.front = Math.min(1, S.front + dt / FRONT_DUR);
 
     draw(dt);
@@ -2672,6 +4292,7 @@ function renderStep() {
   const t0 = performance.now();
   S.t += 0.5;   /* held frames: the clock steps when you do */
   syncPage();
+  checkGuide();
   draw(0);
   updateHUD();
   noteFrame(performance.now() - t0, 'reduced-step');
@@ -2701,8 +4322,18 @@ async function boot() {
     teleport(12);
   }
 
+  refreshDogUI();
+
   window.__lw = {
     M, S, DAY, ambientCD, bubbleCD, bubbleFacts, terrainFor,
+    PACK, GUIDE, WALKER, DOG, REGBOOK, SPECIES,
+    certDataURL(which) { return certCanvas(which).toDataURL('image/png'); },
+    markVisited(slugs) { for (const sl of slugs) PACK.visited[sl] = 1; queueSave(); },
+    openRegister(slug) { const p2 = slug ? M.bySlug.get(slug) : S.page; if (p2) openRegister(p2); },
+    openTicket(slug) { const p2 = slug ? M.bySlug.get(slug) : S.page; if (p2) openTicket(p2); },
+    openLook(slug) { const p2 = slug ? M.bySlug.get(slug) : S.page; if (p2 && p2.overlook) openLook(p2); },
+    openPack, openGuide, openWalkerPick, sweepTo, toggleDog,
+    ticketEditUrl, ticketIssueUrl, unlockSpecies,
     setX(x) { teleport(x); if (REDUCED) renderStep(); },
     goto(s) { const p = M.bySlug.get(s); if (p) { teleport(p.start + 6); if (REDUCED) renderStep(); } },
     setHour(t) { DAY.t = ((t % 1) + 1) % 1; DAY.sig = ''; DAY.dialSig = ''; DAY.dialT = -9; tickDay(0); needsDraw = true; if (REDUCED) renderStep(); },

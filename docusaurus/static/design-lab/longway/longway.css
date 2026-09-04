@@ -29,7 +29,7 @@ html, body {
 }
 
 /* ---------- paper grain (inline SVG turbulence, riso stock) ---------- */
-.grain, #dock, #thPanel, #gmPanel, #landingCard {
+.grain, #dock, #thPanel, #gmPanel, #landingCard, #regPanel, #tkPanel, #pkPanel, #gdPanel, #lkPanel, #wpPanel {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.18 0 0 0 0 0.10 0 0 0 0 0.28 0 0 0 0.16 0'/></filter><rect width='220' height='220' filter='url(%23n)'/></svg>");
 }
 
@@ -645,13 +645,320 @@ html, body {
   right: 18px;
   bottom: calc(var(--dock-h) + 12px);
   display: flex;
-  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 44vw;
+  gap: 4px 14px;
   font-size: 9.5px;
   letter-spacing: 0.18em;
+  text-align: right;
   color: rgba(255, 243, 224, 0.55);
   z-index: 25;
   pointer-events: none;
 }
 @media (max-width: 1000px) { #help { display: none; } }
 
+
+
+/* ---------- hud small buttons (pack, guide) ---------- */
+#hudSmall { display: flex; gap: 8px; pointer-events: none; }
+#hudSmall button {
+  pointer-events: auto;
+  font-family: var(--serif);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  color: var(--ink);
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--apricot);
+  padding: 5px 10px;
+  cursor: pointer;
+}
+#hudSmall button:hover { background: var(--apricot); }
+#hudSmall button:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--apricot); }
+
+/* ---------- landing chips ---------- */
+#ldChips { display: flex; justify-content: center; gap: 14px; margin-top: 18px; }
+#ldChips button {
+  font-family: var(--serif);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--ink);
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--violet);
+  padding: 7px 12px;
+  cursor: pointer;
+}
+#ldChips button:hover { background: var(--apricot); }
+#ldChips button.off { background: #d9c6b5; color: #6b5a49; box-shadow: 3px 3px 0 #8a6a50; }
+
+/* ---------- shared overlay scrim ---------- */
+#register, #ticket, #packpanel, #guidepanel, #overlook, #walkerpick {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 15, 46, 0.82);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- the trail register ---------- */
+#regPanel {
+  width: min(560px, 92vw);
+  background-color: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--apricot);
+  color: #241536;
+  padding-bottom: 10px;
+}
+#regHead { display: flex; justify-content: space-between; padding: 14px 18px 8px; font-size: 10px; letter-spacing: 0.22em; }
+#regPage { font-size: 11px; letter-spacing: 0.16em; color: #8a5a2e; padding: 0 18px 10px; border-bottom: 2px solid var(--ink); }
+#regPrior {
+  margin: 10px 18px 0;
+  font-size: 12.5px;
+  padding: 8px 12px;
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--rose);
+}
+#regPrior b { letter-spacing: 0.18em; font-size: 9.5px; color: #C1226E; display: block; margin-bottom: 3px; }
+#regNote {
+  display: block;
+  width: calc(100% - 36px);
+  margin: 12px 18px 0;
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.45;
+  padding: 10px 12px;
+  border: 2px solid var(--ink);
+  background: var(--cream);
+  color: var(--ink);
+  outline: none;
+  box-shadow: 3px 3px 0 var(--violet);
+  resize: vertical;
+  min-height: 74px;
+  max-height: 34vh;
+}
+#regFoot { display: flex; justify-content: space-between; align-items: center; margin: 10px 18px 0; }
+#regCount { font-size: 9.5px; letter-spacing: 0.18em; color: #8a5a2e; }
+#regSign {
+  font-family: var(--serif);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--cream);
+  background: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--rose);
+  padding: 8px 16px;
+  cursor: pointer;
+}
+#regSign:hover { background: #3d2760; }
+#regSign:disabled { opacity: 0.45; cursor: default; }
+#regStatus { font-size: 10px; letter-spacing: 0.2em; color: #B05A1E; padding: 9px 18px 0; min-height: 14px; }
+
+/* ---------- ranger ticket ---------- */
+#tkPanel {
+  width: min(520px, 92vw);
+  background-color: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--rose);
+  color: #241536;
+  padding-bottom: 14px;
+}
+#tkHead { display: flex; justify-content: space-between; padding: 14px 18px 10px; font-size: 10px; letter-spacing: 0.22em; border-bottom: 2px solid var(--ink); }
+#tkStub {
+  position: relative;
+  margin: 14px 18px;
+  border: 2px dashed var(--ink);
+  background: var(--cream);
+  padding: 12px 16px 12px 34px;
+  transform: rotate(-0.7deg);
+  box-shadow: 3px 3px 0 var(--apricot);
+}
+#tkPunch { position: absolute; left: 12px; top: 50%; width: 10px; height: 10px; margin-top: -5px; background: var(--rose); border: 2px solid var(--ink); border-radius: 50%; }
+#tkTitle { font-size: 15px; color: var(--ink); }
+#tkMeta { font-size: 10px; letter-spacing: 0.14em; color: #8a5a2e; margin-top: 4px; }
+#tkPanel a {
+  display: block;
+  margin: 10px 18px 0;
+  padding: 10px 14px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--violet);
+}
+#tkPanel a:hover { background: var(--apricot); }
+#tkHint { font-size: 9px; letter-spacing: 0.18em; color: #8a5a2e; padding: 12px 18px 0; }
+
+/* ---------- the pack ---------- */
+#pkPanel {
+  width: min(680px, 94vw);
+  max-height: 82vh;
+  overflow-y: auto;
+  background-color: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--violet);
+  color: #241536;
+  padding-bottom: 14px;
+  scrollbar-width: thin;
+}
+#pkHead { display: flex; justify-content: space-between; padding: 14px 18px 10px; font-size: 10px; letter-spacing: 0.22em; border-bottom: 2px solid var(--ink); }
+#pkGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 14px 18px 4px;
+}
+.pkCell { border: 2px solid var(--ink); background: var(--cream); padding: 9px 10px 7px; box-shadow: 3px 3px 0 var(--apricot); }
+.pkCell b { display: block; font-size: 19px; color: #C1226E; }
+.pkCell span { font-size: 8.5px; letter-spacing: 0.16em; color: #6b4a2e; }
+#pkStamps { padding: 10px 18px 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.pkStamp {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+  border: 2px dashed var(--ink);
+  padding: 5px 9px;
+  transform: rotate(-1.4deg);
+  background: var(--cream);
+}
+.pkStamp:nth-child(even) { transform: rotate(1.2deg); box-shadow: 2px 2px 0 var(--rose); }
+.pkStamp:nth-child(odd) { box-shadow: 2px 2px 0 var(--violet); }
+.pkStamp.leaf { border-style: solid; color: #8a4a10; }
+.pkStamp.lantern { border-style: solid; color: #5a3a90; }
+#pkCerts { padding: 14px 18px 0; }
+#pkCerts .pkCertHead { font-size: 10px; letter-spacing: 0.24em; color: #C1226E; border-top: 2px solid var(--ink); padding-top: 12px; }
+#pkCerts .pkCertNote { font-size: 11px; color: #6b4a2e; margin-top: 6px; }
+#pkCerts button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-top: 8px;
+  font-family: var(--serif);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--rose);
+  padding: 9px 14px;
+  cursor: pointer;
+}
+#pkCerts button:hover { background: var(--apricot); }
+
+/* ---------- the field guide ---------- */
+#gdPanel {
+  width: min(760px, 94vw);
+  max-height: 84vh;
+  overflow-y: auto;
+  background-color: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--apricot);
+  color: #241536;
+  padding-bottom: 14px;
+  scrollbar-width: thin;
+}
+#gdHead { display: flex; justify-content: space-between; padding: 14px 18px 8px; font-size: 10px; letter-spacing: 0.22em; }
+#gdSub { font-size: 10.5px; letter-spacing: 0.16em; color: #8a5a2e; padding: 0 18px 10px; border-bottom: 2px solid var(--ink); }
+#gdGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 14px 18px 0; }
+.gdCard { border: 2px solid var(--ink); background: var(--cream); box-shadow: 3px 3px 0 var(--violet); padding: 10px 12px 14px; display: flex; gap: 12px; align-items: flex-start; }
+.gdCard canvas { flex: 0 0 auto; border: 2px solid var(--ink); background: var(--aubergine); }
+.gdCard b { display: block; font-size: 12.5px; letter-spacing: 0.1em; color: var(--ink); }
+.gdCard .gdWhat { display: block; font-size: 11px; line-height: 1.4; margin-top: 3px; }
+.gdCard .gdCount { display: block; font-size: 9px; letter-spacing: 0.18em; color: #C1226E; margin-top: 5px; }
+.gdCard .gdFirst { display: block; font-size: 9px; letter-spacing: 0.1em; color: #8a5a2e; margin-top: 2px; }
+.gdCard.locked { opacity: 0.55; box-shadow: 3px 3px 0 #8a6a50; }
+.gdCard.locked b { color: #6b5a49; }
+
+/* ---------- the overlook ---------- */
+#lkPanel {
+  width: min(760px, 94vw);
+  max-height: 84vh;
+  background-color: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--rose);
+  color: #241536;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 4px;
+}
+#lkHead { display: flex; justify-content: space-between; gap: 12px; padding: 14px 18px 10px; font-size: 10px; letter-spacing: 0.22em; }
+#lkCanvas { display: block; margin: 0 18px; border: 2px solid var(--ink); background: var(--ink); width: calc(100% - 36px); }
+#lkSub { font-size: 10.5px; letter-spacing: 0.16em; color: #8a5a2e; padding: 8px 18px; border-bottom: 2px solid var(--ink); }
+#lkList { list-style: none; overflow-y: auto; scrollbar-width: thin; }
+#lkList li { display: flex; justify-content: space-between; gap: 14px; padding: 8px 18px; cursor: pointer; font-size: 13.5px; border-bottom: 1px solid rgba(46,26,71,0.15); }
+#lkList li .lkDist { font-size: 9.5px; letter-spacing: 0.18em; color: #B05A1E; white-space: nowrap; }
+#lkList li.sel, #lkList li:hover { background: var(--ink); color: var(--cream); }
+#lkList li.sel .lkDist, #lkList li:hover .lkDist { color: var(--apricot); }
+
+/* ---------- choose your walker ---------- */
+#wpPanel {
+  width: min(620px, 94vw);
+  background-color: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--violet);
+  color: #241536;
+  padding-bottom: 16px;
+}
+#wpHead { display: flex; justify-content: space-between; gap: 12px; padding: 14px 18px 10px; font-size: 10px; letter-spacing: 0.22em; border-bottom: 2px solid var(--ink); }
+#wpRow { display: flex; justify-content: center; gap: 18px; padding: 16px 18px 6px; }
+.wpFig { border: 3px solid var(--ink); background: var(--aubergine); cursor: pointer; padding: 0; box-shadow: 3px 3px 0 var(--apricot); }
+.wpFig.sel { box-shadow: 0 0 0 3px var(--rose), 5px 5px 0 var(--apricot); }
+.wpFig canvas { display: block; }
+#wpAcc { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 12px 18px 0; }
+#wpAcc button {
+  font-family: var(--serif);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--ink);
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--violet);
+  padding: 6px 10px;
+  cursor: pointer;
+}
+#wpAcc button.on { background: var(--rose); color: var(--cream); box-shadow: 2px 2px 0 var(--ink); }
+#wpHint { font-size: 9px; letter-spacing: 0.16em; color: #8a5a2e; text-align: center; padding: 12px 18px 0; }
+
+/* ---------- toast (one quiet chip at a time) ---------- */
+#toast {
+  position: fixed;
+  left: 50%;
+  top: 76px;
+  transform: translateX(-50%);
+  background: var(--cream);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--rose);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  padding: 8px 16px;
+  z-index: 45;
+  max-width: 72vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 [hidden] { display: none !important; }
+
+/* key panel control buttons */
+.keyctl { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.keybtn {
+  font-family: var(--serif);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink);
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--rose);
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.keybtn:hover { background: var(--apricot); }
+.keybtn.off { background: #d9c6b5; color: #6b5a49; box-shadow: 2px 2px 0 #8a6a50; }
