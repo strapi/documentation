@@ -221,7 +221,7 @@ a{color:inherit}
 
 /* --- recto: the mounted specimen --- */
 .recto{
-  width:min(660px, calc((100vh - 190px) * var(--sheet-ratio)), 100%);
+  width:min(660px, calc((100vh - 240px) * var(--sheet-ratio)), 100%);
   margin:0 auto;aspect-ratio:var(--sheet-ratio);
   container-type:inline-size;cursor:zoom-in;
 }
@@ -288,19 +288,18 @@ a{color:inherit}
 .corner-slip{position:absolute;left:7cqi;top:5cqi;width:31cqi;transform:rotate(-1.2deg)}
 .slip .hd{font-size:1.2cqi;letter-spacing:.17em;text-transform:uppercase;color:#8a7550;display:block;margin-bottom:.2cqi}
 
-.recto-hint{
-  position:absolute;left:6.5cqi;bottom:4.4cqi;font-family:"Courier Prime",monospace;font-size:1.4cqi;
-  letter-spacing:.11em;color:#8b7a5c;text-transform:uppercase;
-}
-.recto-hint span{border-bottom:1px dotted #b09c76;padding-bottom:1px}
-.export-btn{
-  margin-left:2.4cqi;font:inherit;letter-spacing:inherit;text-transform:inherit;
-  background:none;border:none;padding:0 0 1px;color:#77653f;cursor:pointer;
-  border-bottom:1px solid #b09c76;
-}
-.export-btn:hover{color:#4a3b22;border-bottom-color:#8a7550}
-.export-btn:focus-visible{outline:1px dotted #8a7550;outline-offset:3px}
-.export-btn[disabled]{cursor:default;color:#9b8a67}
+.sheet-tools{max-width:660px;margin:.95rem auto 0;display:flex;align-items:baseline;justify-content:center;
+  flex-wrap:wrap;gap:.5rem 1.4rem;font-family:"Courier Prime",monospace;font-size:.72rem;
+  letter-spacing:.13em;text-transform:uppercase;color:#8b7a5c}
+.tool-btn{font:inherit;letter-spacing:inherit;text-transform:inherit;background:none;border:none;
+  padding:0 0 2px;color:#c9a55e;cursor:pointer;border-bottom:1px solid #6b5836}
+.tool-btn:hover{color:#f0dfba;border-bottom-color:#c9a55e}
+.tool-btn:focus-visible{outline:1px dotted #c9a55e;outline-offset:3px}
+.tool-btn[disabled]{cursor:default;color:#8b7a5c}
+.tools-hint{color:#6f5f43}
+.vin-export{display:block;margin:.55rem auto 0;font-family:"Courier Prime",monospace;font-size:.62rem;
+  letter-spacing:.13em;text-transform:uppercase}
+@media (max-width:1080px), (pointer:coarse){ .tools-hint{display:none} }
 
 /* --- the tray (a drawer pulled open) --- */
 .tray-head{max-width:1180px;margin:0 auto 1.1rem;display:flex;align-items:flex-end;gap:1rem;flex-wrap:wrap;
@@ -387,7 +386,8 @@ a{color:inherit}
   border:1px solid var(--hair);border-radius:2px;padding:.12rem .38rem}
 
 /* the specimen kept as a vignette on the verso */
-.vignette{flex:0 0 auto;width:172px;position:relative;cursor:zoom-in;background:none;padding:0}
+.vin-col{flex:0 0 auto;width:172px;display:flex;flex-direction:column}
+.vignette{width:100%;position:relative;cursor:zoom-in;background:none;padding:0}
 .vignette .vin{display:block;position:relative;aspect-ratio:var(--sheet-ratio);background:var(--paper-hi);
   border:1px solid var(--hair);box-shadow:0 4px 12px -6px rgba(60,44,20,.55);overflow:hidden}
 .vignette .vin svg{position:absolute;inset:0;width:100%;height:100%}

@@ -805,8 +805,12 @@ function rectoHTML(slug) {
   h += '<div class="fieldno">Field no. ' + esc(p.product.toUpperCase()) + '‑' + esc(String(pr.commits).padStart(3, '0')) + ' · ' + esc(sp.habit.n) + ' · ' + esc(sp.morph.n) + ' · ' + esc(sp.wash.n) + '</div>';
   h += cornerSlipHTML(slug);
   h += '<div class="label-stack">' + labelHTML(slug) + slipsHTML(slug) + '</div>';
-  h += '<div class="recto-hint"><span>Click the sheet to turn it over and read</span><button class="export-btn" type="button" data-export title="Download this sheet as a high-resolution PNG">Download plate \u00b7 PNG</button></div>';
   h += '</div>';
+  h += '<div class="sheet-tools" role="group" aria-label="Sheet actions">'
+    + '<button class="tool-btn" type="button" data-flipbtn data-slug="' + attr(slug) + '">Turn over \u0026 read</button>'
+    + '<button class="tool-btn" type="button" data-export title="Download this sheet as a high-resolution PNG">Download plate \u00b7 PNG</button>'
+    + '<span class="tools-hint">hover the sheet to magnify \u00b7 click it to turn it over</span>'
+    + '</div>';
   return h;
 }
 
@@ -1212,9 +1216,12 @@ function versoHTML(slug) {
     h += '<div class="vh-tags">' + p.tags.slice(0, 8).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>';
   }
   h += '</div>';
+  h += '<div class="vin-col">';
   h += '<button class="vignette" data-flip="' + attr(slug) + '" title="Turn the sheet over to the specimen">'
     + '<span class="vin">' + plantSVG(sp, 'plant') + '</span>'
     + '<figcaption><u>Recto · see the specimen</u></figcaption></button>';
+  h += '<button class="tool-btn vin-export" type="button" data-export data-slug="' + attr(slug) + '" title="Download this sheet as a high-resolution PNG">Download plate \u00b7 PNG</button>';
+  h += '</div>';
   h += '</div>';
 
   h += '<div class="verso-body">';
@@ -1531,6 +1538,7 @@ function contextFor(slug) {
 }
 
 function render() {
+  hideLens();
   var route = parseHash();
   state.route = route;
   var sc = $('#scroll');
@@ -1707,6 +1715,10 @@ function selectTab(btn, persist) {
 
 /* the magnifier */
 var lensEl, lensOn = false;
+function hideLens() {
+  if (!lensEl) return;
+  lensEl.hidden = true; lensEl.innerHTML = ''; lensOn = false;
+}
 function attachLens(el) {
   if (!el || !lensEl) return;
   if (window.matchMedia('(max-width:1080px)').matches || window.matchMedia('(pointer:coarse)').matches) return;
@@ -1758,7 +1770,7 @@ function attachLens(el) {
 var FONT_CSS = null;
 function inlineFonts() {
   if (FONT_CSS !== null) return Promise.resolve(FONT_CSS);
-  var link = document.querySelector('link[href*="fonts.googleapis.com"]');
+  var link = document.querySelector('link[rel="stylesheet"][href*="fonts.googleapis.com"]');
   if (!link) { FONT_CSS = ''; return Promise.resolve(''); }
   return fetch(link.href).then(function (r) { return r.text(); }).then(function (css) {
     var urls = [];
@@ -1789,12 +1801,25 @@ function collectCSS() {
 }
 
 function exportPlate(btn) {
-  var el = $('#recto');
-  if (!el || btn.disabled) return;
+  if (btn.disabled) return;
+  var el = $('#recto'), tmp = null;
+  if (!el) {
+    var slug0 = btn.dataset.slug || (state.route && state.route.slug);
+    if (!slug0 || !IDX.bySlug[slug0]) return;
+    tmp = document.createElement('div');
+    tmp.style.cssText = 'position:fixed;left:-10000px;top:0;width:660px;pointer-events:none';
+    tmp.innerHTML = rectoHTML(slug0);
+    document.body.appendChild(tmp);
+    el = tmp.querySelector('.sheet.recto');
+    var tl = tmp.querySelector('.sheet-tools'); if (tl) tl.parentNode.removeChild(tl);
+    if (!el) { tmp.parentNode.removeChild(tmp); return; }
+  }
   var oldLabel = btn.textContent;
   btn.disabled = true; btn.textContent = 'Preparing\u2026';
   function done(label) {
     btn.textContent = label;
+    if (tmp && tmp.parentNode) tmp.parentNode.removeChild(tmp);
+    tmp = null;
     setTimeout(function () { btn.textContent = oldLabel; btn.disabled = false; }, 2200);
   }
   var r = el.getBoundingClientRect();
@@ -1851,6 +1876,8 @@ function wire() {
     var t = e.target;
     var ex = t.closest ? t.closest('[data-export]') : null;
     if (ex) { e.preventDefault(); e.stopPropagation(); exportPlate(ex); return; }
+    var fb = t.closest ? t.closest('[data-flipbtn]') : null;
+    if (fb) { location.hash = '#' + fb.dataset.slug; return; }
     var mi = t.closest ? t.closest('.margin-idx a') : null;
     if (mi) {
       e.preventDefault();
