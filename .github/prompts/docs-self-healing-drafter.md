@@ -96,17 +96,20 @@ fi
 echo "style-lint exit: $LINT_STATUS"
 ```
 
-**Exit 1 blocks the commit.** Rewrite the offending lines yourself and re-run the gate,
-up to 3 times. Exit 2 is warnings only: log them, they do not block. Exit 0 means you can
-commit.
+Exit 1 means errors, exit 2 warnings only, exit 0 clean. **Fix every error the linter
+reports, then re-run it, up to 3 times.** For an em dash, apply the replacement the rule
+prescribes: a colon, a period, parentheses, or a restructured sentence. Never swap an em
+dash for a double hyphen, which the same linter also rejects on the next line of its own
+rule catalog.
 
-For em dashes, apply the replacement the rule prescribes: a colon, a period, parentheses,
-or a restructured sentence. Never swap an em dash for a double hyphen, which the same
-linter also rejects on the next line of its own rule catalog. If a file still exits 1
-after 3 passes, drop that PR from the run and record it in the `errors` array of the run
-summary rather than opening a PR that Pierre has to clean up by hand.
+**This never stops you from opening the PR.** If something still fails after 3 passes,
+commit and open the PR anyway, and list what is left in the `errors` array of the run
+summary. A remaining em dash costs Pierre a few seconds of editing at review time. A PR
+you did not open costs him re-reading the strapi/strapi diff and writing the page himself,
+and the source PR will not come back: the next run only looks at PRs merged in the last 24
+hours, so anything you abandon is silently lost.
 
-Once the gate is clean, commit and push:
+Once the linter is clean, or once you have exhausted the 3 passes, commit and push:
 
 ```bash
 git add .
@@ -231,7 +234,7 @@ Write a JSON summary to `/tmp/self-healing-summary.json`:
 - **Only modify files in `$DOC_REPO/docusaurus/docs/`** and `$DOC_REPO/docusaurus/static/` (for images)
 - **Follow all conventions** in `$DOC_REPO/agents/` — the Router and authoring guides are the source of truth
 - **Follow git-rules.md** — branch naming (`/cms`, `/cloud`, `/repo`), commit messages (imperative, no prefix), PR titles
-- **Never commit a file that `style-lint.sh` exits 1 on:** the gate in Step 3 is not advisory
+- **Always run `style-lint.sh` before committing** and fix what it reports, but never let it stop you from opening the PR (Step 3)
 - **Never paste a canned PR description:** write it from the actual diff, per the rules in Step 3
 - **If no PR has targets:** exit cleanly without creating anything
 - **Max 3000 lines per diff** — skip and log oversized diffs

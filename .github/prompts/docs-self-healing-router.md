@@ -131,11 +131,15 @@ fi
 echo "style-lint exit: $LINT_STATUS"
 ```
 
-**Exit 1 blocks the commit.** Rewrite the offending lines and re-run the gate, up to 3
-times. For an em dash, use a colon, a period, parentheses, or restructure the sentence.
-Never replace it with a double hyphen, which the same linter also rejects. If the gate
-still exits 1 after 3 passes, abandon that PR and log it rather than opening one Pierre
-has to clean up. Exit 2 is warnings only and does not block.
+Exit 1 means errors, exit 2 warnings only, exit 0 clean. **Fix every error the linter
+reports, then re-run it, up to 3 times.** For an em dash, use a colon, a period,
+parentheses, or restructure the sentence. Never replace it with a double hyphen, which the
+same linter also rejects.
+
+**This never stops you from opening the PR.** If something still fails after 3 passes,
+commit and open the PR anyway and log what is left. A remaining em dash costs Pierre a few
+seconds at review time. An abandoned PR costs him the whole page, and it will not come
+back: the next run only looks at PRs merged in the last 24 hours.
 
 ```bash
 git add .
@@ -234,6 +238,6 @@ Update `/tmp/router-results.json` to include a `doc_pr` field for micro PRs you 
 - **Never draft a section.** A micro-edit is a link, a mention, or a tip. If the change needs a new section, a rewritten section, a new page, or a new category, it is `full` and you stop at the routing decision.
 - **ONLY read diffs, the Router prompt, sidebars.js, llms.txt, and write the result file** (plus doc files for micro-edits)
 - **Max 5 PRs per run.** Log extras to stdout for the next run.
-- **Never commit a file that `style-lint.sh` exits 1 on:** the gate in Step 5 is not advisory
+- **Always run `style-lint.sh` before committing** and fix what it reports, but never let it stop you from opening the PR (Step 5)
 - **Never paste a canned PR description:** write it from the actual edit
 - **NEVER run any write operation on strapi/strapi**
