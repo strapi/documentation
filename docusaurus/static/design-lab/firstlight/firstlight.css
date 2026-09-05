@@ -530,14 +530,33 @@ body.darkadapt #log-tag{opacity:.32}
 .pp-comic.out{transform:rotate(-2deg) translateY(-34px);top:10px;z-index:2}
 @media (prefers-reduced-motion: reduce){.pp-comic{transition:none}}
 
-/* (g) the assembly drawing inside WHAT AM I LOOKING AT */
-.an-blue{
-  position:absolute;width:300px;background:var(--bg-2);border:var(--rule);
-  padding:8px 10px 9px;text-align:left;cursor:pointer;color:var(--white-dim);
-  pointer-events:auto;
+/* ------------------------------------------- the crossing gate ---------- */
+/* Owner's law: a door out of this survey polls the room before it opens.
+   Mission-control go/no-go, drawn in the station's own hand. Sits above
+   every overlay a door can be found inside (papers 90, annotate 95). */
+#gonogo{position:fixed;z-index:120;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(4,6,7,.74)}
+#gonogo[hidden]{display:none}
+.gn-card{
+  width:min(500px,92vw);text-align:center;background:var(--bg-2);
+  border:var(--rule);box-shadow:0 12px 48px rgba(0,0,0,.65),0 0 0 1px rgba(255,176,0,.08);
+  padding:16px 26px 14px;
 }
-.an-blue:hover,.an-blue:focus-visible{border-color:var(--amber)}
-.an-blue .ab-k{display:block;font-family:var(--f-mono);font-size:.56rem;letter-spacing:.14em;color:var(--amber);margin-bottom:4px}
-.an-blue svg{display:block;width:100%;height:auto;color:rgba(237,242,240,.75)}
-.an-blue svg text{font:500 8px "IBM Plex Mono",monospace;fill:var(--amber-hi)}
-.an-blue .ab-p{display:block;font-family:var(--f-mono);font-size:.56rem;line-height:1.7;color:var(--white-dim);margin-top:4px}
+#gonogo:not([hidden]) .gn-card{animation:gn-in .18s ease-out}
+@keyframes gn-in{from{transform:translateY(10px);opacity:0}to{transform:none;opacity:1}}
+.gn-k{font-family:var(--f-mono);font-size:.6rem;letter-spacing:.3em;color:var(--amber-dim);margin:8px 0 10px}
+.gn-main{font-family:var(--f-cond);font-weight:600;font-size:1.24rem;letter-spacing:.16em;color:var(--white);text-shadow:0 0 12px rgba(237,242,240,.3)}
+.gn-sub{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;line-height:1.9;color:var(--white-dim);margin:10px 0 2px}
+.gn-sub b{color:var(--amber-hi);font-weight:500}
+.gn-row{display:flex;gap:12px;justify-content:center;margin:14px 0 8px}
+.gn-btn{
+  font-family:var(--f-cond);font-weight:600;letter-spacing:.22em;font-size:.92rem;
+  background:var(--amber);color:var(--bg);border:1px solid var(--amber);padding:8px 24px;cursor:pointer;
+}
+.gn-btn kbd{font-family:var(--f-mono);font-size:.6rem;border:1px solid rgba(6,8,9,.45);color:var(--bg);margin:0 .5em 0 0;padding:0 .3em}
+.gn-btn:hover{background:var(--amber-hi);border-color:var(--amber-hi)}
+.gn-btn.ghost{background:transparent;color:var(--white-dim);border:1px solid rgba(237,242,240,.3)}
+.gn-btn.ghost kbd{color:var(--white-dim);border-color:rgba(237,242,240,.3)}
+.gn-btn.ghost:hover{background:transparent;color:var(--white);border-color:rgba(237,242,240,.55)}
+.gn-btn:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.gn-hint{font-family:var(--f-mono);font-size:.56rem;letter-spacing:.18em;color:var(--white-faint);margin:2px 0 6px}
+@media (prefers-reduced-motion:reduce){#gonogo:not([hidden]) .gn-card{animation:none}}

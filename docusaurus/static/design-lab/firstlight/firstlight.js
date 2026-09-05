@@ -62,6 +62,7 @@
   var sections = [], clusters = [];
   var searchDocs = [];
   var URS1 = -1;                  /* index of the navigation pulsar */
+  var QS = -1;                    /* index of the first survey target: the Quick Start Guide */
   var EPOCH = 0;                  /* max provenance.last across the corpus */
   var ALL_AUTHORS = [];           /* the hands, union of provenance.authors */
   var TOTAL_WORDS = 0, DRIFT_N = 0, DARK_N = 0, FRESH_N = 0, NIGHT_EDITS = 0, NIGHT_PAGES = 0;
@@ -82,7 +83,7 @@
   var transitTimer = 0;
   var BOOT_T = performance.now();
 
-  /* ------- the seven crossings: sister surveys of the same lab -------- */
+  /* -------- the six crossings: sister surveys of the same lab --------- */
   /* Each door is discovered through an instrument doing exactly what it
      always did. Nothing below costs a frame while it is off-screen. */
   var EGG = { ready: false,
@@ -115,6 +116,7 @@
     initCanvas();
     wireSky();
     wireChrome();
+    wireGate();
     initSearch();
     wireExtras();
     restore();
@@ -126,7 +128,7 @@
     window.addEventListener('hashchange', route);
     loop();
     logLine('FIRST LIGHT · <b>' + stars.length + '</b> bodies predicted by the almanac · <b>1</b> contact', true);
-    logLine('LOCK <b>' + stars[URS1].desig + '</b> ' + esc(stars[URS1].slug) + ' · <b>' + stars[URS1].m + '</b> inbound pulse trains · strongest emitter in system', true);
+    logLine('LOCK <b>' + stars[QS].desig + '</b> ' + esc(stars[QS].slug) + ' · <b>' + stars[QS].m + '</b> inbound pulse trains · FIRST SURVEY TARGET - BEGIN HERE', true);
     if (visited.size === 0) showPrompt();
     announceOnce('photom', 'INSTRUMENT ONLINE · PHOTOMETER (bottom center) — it graphs the locked beacon\u2019s incoming light · small bumps are citations arriving · a deep notch means an uncited page is crossing in front');
     /* the old atlas is computed while you listen; it is only consulted, never shown first */
@@ -249,6 +251,8 @@
     lum.forEach(function (i, k) { stars[i].desig = 'URS-' + pad3(k + 1); });
     dark.forEach(function (i, k) { stars[i].desig = 'URS-DARK-' + pad2(k + 1); });
     URS1 = lum[0];
+    QS = byId['/cms/quick-start'];
+    if (QS === undefined) QS = URS1; /* should the guide ever leave the almanac */
 
     $('cm-total').textContent = stars.length;
     $('ix-count').textContent = stars.length;
@@ -525,7 +529,7 @@
 
   function bootCamera() {
     if (chartN > 1) { fitVisible(true); return; }
-    var s = stars[URS1];
+    var s = stars[QS];
     cam.x = cam.tx = s.pos.cited[0]; cam.y = cam.ty = s.pos.cited[1];
     cam.s = cam.ts = 0.9;
   }
@@ -624,8 +628,8 @@
       (data.v || []).forEach(function (slug) { var i = byId[slug]; if (i !== undefined) visited.add(i); });
       completeShown = !!data.done;
     }
-    /* URS-001 transmits from the first second, always */
-    if (stars[URS1].st < 2) stars[URS1].st = 2;
+    /* the first survey target transmits from the first second, always */
+    if (stars[QS].st < 2) stars[QS].st = 2;
     chartN = 0;
     stars.forEach(function (s) { if (s.st === 2) chartN++; });
     inkRecompute();
@@ -715,7 +719,7 @@
     stars.forEach(function (s, i) { if (s.dark && s.st === 0) out.push(i); });
     return out;
   }
-  function beaconIdx() { return current != null ? current : URS1; }
+  function beaconIdx() { return current != null ? current : QS; }
 
   function maybeTransit() {
     if (transitAnim) return;
@@ -1220,6 +1224,66 @@
   /* One door, one grammar: the hint rides the instrument's own tooltip,
      activation is the existing gesture, the beat is short, and reduced
      motion crosses at once. Destinations are sister berths at ../KEY/. */
+  /* Owner's law: every door out of this survey polls the room first.
+     The card carries, in this station's voice, "you will go through a
+     portal to another world - are you sure?". Y or GO crosses; N or ESC
+     is NO GO: the poll closes and the moment is returned as it was. */
+  var goPoll = null;   /* { key, ms, beat, prev } while the poll is open */
+  var CROSS_DEST = {
+    pixelcity: 'THE CITY ON THE NIGHT SIDE',
+    longway: 'THE RIDGE LINE AT DUSK',
+    herbarium: 'WHERE THE PRESSED SEED WAS FILED',
+    cartastrapiana: 'WHEREVER THE RIGGED ECHO IS BOUND',
+    bythedeep: 'THE DEEP THE OLD ORCHESTRA PLAYS FROM',
+    secreta: 'INSIDE THE FOUR-COLOUR INSERT'
+  };
+  function askCrossing(key, ms, beat) {
+    if (crossingNow || goPoll) return;
+    hideTip();
+    goPoll = { key: key, ms: ms, beat: beat, prev: document.activeElement };
+    $('gn-sub').innerHTML = 'YOU WILL GO THROUGH THIS DOOR TO <b>ANOTHER WORLD</b> · ' +
+      (CROSS_DEST[key] || 'A SISTER SURVEY') +
+      '<br>BERTH <b>../' + esc(key) + '/</b> · THIS SKY AND YOUR CHART HOLD STATION HERE';
+    $('gonogo').hidden = false;
+    $('gn-go').focus();
+    logLine('CROSSING GATE · A DOOR OUT OF THIS SURVEY · GO / NO-GO POLL OPEN', true);
+  }
+  function closePoll() {
+    var p = goPoll; goPoll = null;
+    $('gonogo').hidden = true;
+    return p;
+  }
+  function pollGo() {
+    if (!goPoll) return;
+    var p = closePoll();
+    if (p.beat) p.beat();
+    crossTo(p.key, p.ms);
+  }
+  function pollNoGo() {
+    if (!goPoll) return;
+    var p = closePoll();
+    logLine('POLL IS NO GO · HOLDING STATION · THE DOOR KEEPS', true);
+    if (p.prev && p.prev.focus) { try { p.prev.focus(); } catch (e) {} }
+  }
+  function wireGate() {
+    $('gn-go').addEventListener('click', pollGo);
+    $('gn-no').addEventListener('click', pollNoGo);
+    $('gonogo').addEventListener('click', function (e) { if (e.target === $('gonogo')) pollNoGo(); });
+    /* capture: while the poll is open the room hears nothing else */
+    document.addEventListener('keydown', function (e) {
+      if (!goPoll) return;
+      var k = e.key;
+      if (k === 'y' || k === 'Y') { e.preventDefault(); e.stopPropagation(); pollGo(); }
+      else if (k === 'n' || k === 'N' || k === 'Escape') { e.preventDefault(); e.stopPropagation(); pollNoGo(); }
+      else if (k === 'Tab') {
+        e.preventDefault(); e.stopPropagation();
+        (document.activeElement === $('gn-no') ? $('gn-go') : $('gn-no')).focus();
+      } else if (k === 'Enter' || k === ' ') {
+        e.preventDefault(); e.stopPropagation();
+        if (document.activeElement === $('gn-no')) pollNoGo(); else pollGo();
+      } else { e.stopPropagation(); }
+    }, true);
+  }
   function crossTo(key, ms) {
     if (crossingNow) return;
     crossingNow = true;
@@ -1247,22 +1311,25 @@
     tipEl.hidden = false; moveTip(x, y);
   }
   function activateEgg(kind) {
-    if (crossingNow) return;
+    if (crossingNow || goPoll) return;
     hideTip();
     if (kind === 'home') {
-      cam.tx = EGG.home.x; cam.ty = EGG.home.y;
-      cam.ts = Math.max(cam.s, 52 / EGG.home.r);
-      logLine('AFT CAMERA · NIGHT SIDE RESOLVED · A CITY, GRIDDED AND LIT · <b>DESCENDING TO ITS SKY</b>', true);
-      safeSnd('warp');
-      crossTo('pixelcity', 1700);
+      askCrossing('pixelcity', 1700, function () {
+        cam.tx = EGG.home.x; cam.ty = EGG.home.y;
+        cam.ts = Math.max(cam.s, 52 / EGG.home.r);
+        logLine('AFT CAMERA · NIGHT SIDE RESOLVED · A CITY, GRIDDED AND LIT · <b>DESCENDING TO ITS SKY</b>', true);
+        safeSnd('warp');
+        dirty = true;
+      });
     } else {
-      cam.tx = EGG.ridge.x; cam.ty = EGG.ridge.y - 14;
-      cam.ts = Math.max(cam.s, 2.6);
-      logLine('TELEPHOTO · TWO WALKERS ON THE RIDGE AT DUSK · THE LONG WAY, THEN · <b>FALLING IN BEHIND</b>', true);
-      safeSnd('warp');
-      crossTo('longway', 1700);
+      askCrossing('longway', 1700, function () {
+        cam.tx = EGG.ridge.x; cam.ty = EGG.ridge.y - 14;
+        cam.ts = Math.max(cam.s, 2.6);
+        logLine('TELEPHOTO · TWO WALKERS ON THE RIDGE AT DUSK · THE LONG WAY, THEN · <b>FALLING IN BEHIND</b>', true);
+        safeSnd('warp');
+        dirty = true;
+      });
     }
-    dirty = true;
   }
 
   /* the pencil ghost: where the search or the warp is taking you */
@@ -1328,6 +1395,7 @@
       if (i === current) prio = 1000;
       else if (i === hovered) prio = 999;
       else if (matched) prio = matched.has(i) ? 300 + s.m : -1;
+      else if (i === QS) prio = 501;
       else if (i === URS1) prio = 500;
       else if (s.m >= 11 || (cam.s > 0.55 && s.m >= 6) || (cam.s > 1.1 && s.m >= 2) || cam.s > 2.0) prio = s.m + (s.dark ? 0.5 : 0);
       else if (s.dark && s.st === 2 && cam.s > 0.7) prio = 1;
@@ -1497,10 +1565,10 @@
     if (chh) chh.addEventListener('click', function () { toggleHands(true); });
     var sc = $('seedcell');
     if (sc) sc.addEventListener('click', function () {
-      if (crossingNow) return;
-      logLine('SAMPLE TRAY · CELL 07 · A PRESSED SEED, LABELLED IN ANOTHER HAND · <b>FOLLOWING THE LABEL</b>', true);
-      safeSnd('contact');
-      crossTo('herbarium', 1000);
+      askCrossing('herbarium', 1000, function () {
+        logLine('SAMPLE TRAY · CELL 07 · A PRESSED SEED, LABELLED IN ANOTHER HAND · <b>FOLLOWING THE LABEL</b>', true);
+        safeSnd('contact');
+      });
     });
     wireScopeSail();
     wireReceiver(i);
@@ -1674,9 +1742,10 @@
     scopeCv.addEventListener('click', function (e) {
       if (!sailHit(scopeCv, cvXY(e, scopeCv)) || crossingNow) return;
       hideTip(); sailTipOn = false;
-      logLine('SCOPE · THE RIGGED ECHO TACKS OFF THE CHART, MAKING WAY · <b>GIVING CHASE</b>', true);
-      safeSnd('transit');
-      crossTo('cartastrapiana', 1000);
+      askCrossing('cartastrapiana', 1000, function () {
+        logLine('SCOPE · THE RIGGED ECHO TACKS OFF THE CHART, MAKING WAY · <b>GIVING CHASE</b>', true);
+        safeSnd('transit');
+      });
     });
   }
   var rxHold = null, rxLastPlay = -1e9;
@@ -1724,8 +1793,9 @@
   }
   function rxCross() {
     if (crossingNow) return;
-    logLine('RECEIVER · GUARD BAND · A CARTOON ORCHESTRA UNDER THE HISS, SCRATCHED AND MERRY, A CENTURY OLD · <b>FOLLOWING IT DOWN</b>', true);
-    crossTo('bythedeep', 900);
+    askCrossing('bythedeep', 900, function () {
+      logLine('RECEIVER · GUARD BAND · A CARTOON ORCHESTRA UNDER THE HISS, SCRATCHED AND MERRY, A CENTURY OLD · <b>FOLLOWING IT DOWN</b>', true);
+    });
   }
 
   /* ----------------------------------------------------------- mission log */
@@ -1754,8 +1824,8 @@
   }
 
   function showPrompt() {
-    var s = stars[URS1];
-    $('prompt-sub').textContent = s.m + ' PULSE TRAINS ARRIVING AT ' + s.desig + ' · CLICK THE BEACON · OR PRESS / TO SEARCH';
+    var s = stars[QS];
+    $('prompt-sub').textContent = 'FIRST SURVEY TARGET - BEGIN HERE · ' + s.desig + ' · THE QUICK START GUIDE · ' + s.m + ' PULSE TRAINS ARRIVING · CLICK THE BEACON · OR PRESS / TO SEARCH';
     $('prompt').hidden = false;
   }
   function hidePrompt() { $('prompt').hidden = true; }
@@ -1785,6 +1855,7 @@
     $('pq-line2').innerHTML = 'ORIGINAL SURVEYOR · <b>' + esc(p.topAuthor || 'unknown') + '</b>' +
       (oe ? '<br><span class="oe">OTHER SPACE EXPLORERS</span> · ' + oe : '');
     $('plaque').hidden = false;
+    reflowExplain();   /* the explainer yields to the capture plaque */
     clearTimeout(plaqueTimer);
     plaqueTimer = setTimeout(function () { $('plaque').hidden = true; }, REDUCED ? 6000 : 5200);
   }
@@ -2360,7 +2431,7 @@
   };
   /* headless self-test: where the crossings live */
   window.__probeEggs = function () {
-    return { ready: EGG.ready, crossing: crossingNow,
+    return { ready: EGG.ready, crossing: crossingNow, poll: goPoll ? goPoll.key : null,
       home: { x: EGG.home.x, y: EGG.home.y, r: EGG.home.r, dots: EGG.home.dots ? EGG.home.dots.length : 0 },
       ridge: { x: EGG.ridge.x, y: EGG.ridge.y, len: EGG.ridge.len } };
   };
@@ -2433,6 +2504,7 @@
     if (ny + r.height > window.innerHeight - 8) ny = y - r.height - 14;
     tipEl.style.left = Math.max(6, nx) + 'px';
     tipEl.style.top = Math.max(6, ny) + 'px';
+    reflowExplain();   /* the explainer yields to the event panel */
   }
   function hideTip() { if (tipEl) tipEl.hidden = true; }
 
@@ -3304,30 +3376,117 @@
   /* --------------------------------------- name + one-liner on hover --- */
   /* Anything carrying data-explain introduces itself on hover or focus. */
 
-  var exEl = null;
+  /* Owner's law: the explainer NEVER sits on an event panel (the sail
+     echo card, a transit tip, the first-contact plaque, the go/no-go
+     poll). If its natural berth would touch one it yields: it moves to
+     the nearest clear screen quadrant, or stands down entirely. */
+  var exEl = null, exAnchor = null, reflowExplain = function () {};
   function initExplain() {
     exEl = document.createElement('div');
     exEl.id = 'explain';
     exEl.hidden = true;
     document.body.appendChild(exEl);
     function target(e) { return e.target && e.target.closest ? e.target.closest('[data-explain]') : null; }
+    function panelRects() {
+      var out = [];
+      var t = $('tooltip');
+      if (t && !t.hidden) out.push(t.getBoundingClientRect());
+      var q = $('plaque'), b = q && !q.hidden ? q.querySelector('.pq-box') : null;
+      if (b) out.push(b.getBoundingClientRect());
+      var g = $('gonogo'), c = g && !g.hidden ? g.querySelector('.gn-card') : null;
+      if (c) out.push(c.getBoundingClientRect());
+      return out;
+    }
+    function clearOf(x, y, w, h, rs) {
+      for (var i = 0; i < rs.length; i++) {
+        var r = rs[i];
+        if (x < r.right && x + w > r.left && y < r.bottom && y + h > r.top) return false;
+      }
+      return true;
+    }
+    function place(t) {
+      /* measure from a neutral berth so width never inherits a stale left */
+      exEl.style.left = '6px'; exEl.style.top = '0px';
+      var r = t.getBoundingClientRect(), er = exEl.getBoundingClientRect();
+      var ew = er.width, eh = er.height;
+      /* the natural berth, exactly as it always was */
+      var x0 = clamp(r.left + r.width / 2 - ew / 2, 6, W - ew - 6);
+      var y0 = r.bottom + 8;
+      if (y0 + eh > H - 6) y0 = r.top - eh - 8;
+      y0 = Math.max(6, y0);
+      var rs = panelRects();
+      var cand = [
+        [x0, y0],
+        [r.left + r.width / 2 - ew / 2, r.top - eh - 8],
+        [r.left + r.width / 2 - ew / 2, r.bottom + 8],
+        [r.right + 10, r.top],
+        [r.left - ew - 10, r.top]
+      ];
+      /* the four screen quadrants, nearest the instrument first */
+      var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      [[W * 0.25, H * 0.25], [W * 0.75, H * 0.25], [W * 0.25, H * 0.75], [W * 0.75, H * 0.75]]
+        .sort(function (a, b) {
+          return ((a[0] - cx) * (a[0] - cx) + (a[1] - cy) * (a[1] - cy)) -
+                 ((b[0] - cx) * (b[0] - cx) + (b[1] - cy) * (b[1] - cy));
+        })
+        .forEach(function (qd) { cand.push([qd[0] - ew / 2, qd[1] - eh / 2]); });
+      for (var i = 0; i < cand.length; i++) {
+        var x = clamp(cand[i][0], 6, W - ew - 6);
+        var y = clamp(cand[i][1], 6, H - eh - 6);
+        if (clearOf(x, y, ew, eh, rs)) {
+          exEl.style.left = x + 'px';
+          exEl.style.top = y + 'px';
+          return;
+        }
+      }
+      exEl.hidden = true;   /* nowhere clear: the explainer stands down */
+    }
     function show(t) {
       var name = t.getAttribute('data-name') || (t.textContent || '').trim().slice(0, 26);
       exEl.innerHTML = '<b>' + esc(name) + '</b><span>' + esc(t.getAttribute('data-explain')) + '</span>';
       exEl.hidden = false;
-      var r = t.getBoundingClientRect(), er = exEl.getBoundingClientRect();
-      var x = clamp(r.left + r.width / 2 - er.width / 2, 6, W - er.width - 6);
-      var y = r.bottom + 8;
-      if (y + er.height > H - 6) y = r.top - er.height - 8;
-      exEl.style.left = x + 'px';
-      exEl.style.top = Math.max(6, y) + 'px';
+      exAnchor = t;
+      place(t);
     }
+    reflowExplain = function () {
+      if (!exEl || exEl.hidden || !exAnchor) return;
+      if (!document.body.contains(exAnchor)) { exEl.hidden = true; exAnchor = null; return; }
+      place(exAnchor);
+    };
     document.addEventListener('mouseover', function (e) {
       var t = target(e);
       if (t) show(t); else if (!exEl.hidden) exEl.hidden = true;
     });
     document.addEventListener('focusin', function (e) { var t = target(e); if (t) show(t); });
     document.addEventListener('focusout', function () { exEl.hidden = true; });
+    /* deliberate clash, for the record: raise the sail-echo card at
+       (x, y) and an instrument explainer at the very same spot, then
+       report both rectangles after the yield rule has spoken. */
+    window.__probeExplainClash = function (x, y) {
+      tipEl = tipEl || $('tooltip');
+      tipEl.innerHTML = '<b>SAIL ECHO</b><span class="dg">EMISSION SCOPE · BEARING 296</span>' +
+        '<span>one echo returns rigged - no body in this system carries sail</span>';
+      tipEl.hidden = false;
+      tipEl.style.left = x + 'px';
+      tipEl.style.top = y + 'px';
+      var a = document.createElement('span');
+      a.setAttribute('data-name', 'EMISSION SCOPE');
+      a.setAttribute('data-explain', 'One upward picket per page citing this one, one downward tick per page it links to.');
+      a.style.cssText = 'position:fixed;left:' + x + 'px;top:' + y + 'px;width:130px;height:18px;';
+      document.body.appendChild(a);
+      show(a);
+      var tr = tipEl.getBoundingClientRect();
+      var er = exEl.hidden ? null : exEl.getBoundingClientRect();
+      var res = {
+        tip: [tr.left, tr.top, tr.right, tr.bottom],
+        ex: er ? [er.left, er.top, er.right, er.bottom] : null,
+        yielded: !er,
+        intersect: !!er && er.left < tr.right && er.right > tr.left &&
+                   er.top < tr.bottom && er.bottom > tr.top
+      };
+      document.body.removeChild(a);
+      return res;
+    };
   }
 
   /* ------------------------------------- WHAT AM I LOOKING AT (key ?) -- */
@@ -3378,43 +3537,8 @@
       html.push('<div class="an-c" style="left:' + it.bx + 'px;top:' + it.by + 'px"><b>' + esc(it.n) + '</b>' + esc(it.t) + '</div>');
     });
     svg.push('</svg>');
-    /* (g) the probe's own assembly drawing rides with the annotations */
-    var abx = clamp(W - 316, 8, W - 316), aby = clamp(H - 352, 54, H - 352);
-    html.push('<button type="button" class="an-blue" id="bluecard" style="left:' + abx + 'px;top:' + aby + 'px" ' +
-      'data-name="ASSEMBLY DWG NO. 7" ' +
-      'data-explain="The probe&#39;s own blueprint. The parts are numbered like a toy catalog back home - as if anyone was meant to build one. Press to read the sheet.">' +
-      '<span class="ab-k">FIRST LIGHT PROBE · ASSEMBLY DWG NO. 7 · SHEET 1 OF 1</span>' +
-      '<svg viewBox="0 0 260 132" aria-hidden="true">' +
-      '<g fill="none" stroke="currentColor" stroke-width="1">' +
-      '<path d="M64 46 Q106 14 148 46"/>' +
-      '<line x1="106" y1="30" x2="106" y2="52"/>' +
-      '<rect x="88" y="52" width="36" height="26"/>' +
-      '<line x1="124" y1="62" x2="196" y2="62"/>' +
-      '<rect x="196" y="56" width="14" height="12"/>' +
-      '<line x1="88" y1="66" x2="46" y2="66"/>' +
-      '<line x1="46" y1="58" x2="46" y2="74"/>' +
-      '<line x1="140" y1="52" x2="140" y2="38"/>' +
-      '<line x1="96" y1="78" x2="90" y2="96"/><line x1="116" y1="78" x2="122" y2="96"/>' +
-      '</g>' +
-      '<g stroke="rgba(237,242,240,.35)" stroke-width="0.7">' +
-      '<line x1="106" y1="22" x2="60" y2="12"/><line x1="106" y1="66" x2="150" y2="102"/>' +
-      '<line x1="47" y1="62" x2="26" y2="40"/><line x1="203" y1="58" x2="224" y2="30"/>' +
-      '<line x1="93" y1="92" x2="70" y2="112"/>' +
-      '</g>' +
-      '<text x="52" y="10">1</text><text x="152" y="108">2</text><text x="20" y="36">3</text>' +
-      '<text x="226" y="26">4</text><text x="62" y="118">5</text>' +
-      '</svg>' +
-      '<span class="ab-p">1 DISH · PART 3962 ×1 &nbsp; 2 BUS · PART 3001 ×1 &nbsp; 3 VANE · PART 4589 ×4<br>4 DRIVE · PART 3062 ×1 &nbsp; 5 LEG · PART 3020 ×2 · NO GLUE · NO TOOLS</span></button>');
     $('an-lines').innerHTML = svg.join('');
     $('an-items').innerHTML = html.join('');
-    var bc = $('bluecard');
-    if (bc) bc.addEventListener('click', function (e) {
-      e.stopPropagation();
-      if (crossingNow) return;
-      logLine('BLUEPRINTS · THE PART NUMBERS ARE A TOY CATALOG&#39;S, BACK HOME · SOMEONE MEANT IT TO BE BUILT AGAIN · <b>READING THE SHEET</b>', true);
-      safeSnd('chart');
-      crossTo('secretb', 950);
-    });
   }
 
   function toggleAnnotate(force) {
@@ -3483,11 +3607,12 @@
     var cp = $('comicpeek');
     if (cp) cp.addEventListener('click', function () {
       if (crossingNow) return;
-      cp.classList.add('out');
-      if (cp.parentElement) cp.parentElement.classList.add('out');
-      logLine('MISSION PAPERS · A FOUR-COLOUR INSERT, SCHOOLS PROGRAMME, PRINT RUN 40,000 · <b>OPENING IT</b>', true);
-      safeSnd('almanac');
-      crossTo('secreta', 950);
+      askCrossing('secreta', 950, function () {
+        cp.classList.add('out');
+        if (cp.parentElement) cp.parentElement.classList.add('out');
+        logLine('MISSION PAPERS · A FOUR-COLOUR INSERT, SCHOOLS PROGRAMME, PRINT RUN 40,000 · <b>OPENING IT</b>', true);
+        safeSnd('almanac');
+      });
     });
     window.addEventListener('resize', function () { if (!$('annotate').hidden) buildAnnotate(); });
   }
