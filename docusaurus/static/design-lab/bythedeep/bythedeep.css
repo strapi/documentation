@@ -364,3 +364,44 @@ body { font-family: var(--serif); color: var(--ink); }
 .reelcard .tally b { font-family: var(--serif); font-size: 34px; letter-spacing: .04em; color: var(--ink); }
 .reelcard .tally b small { font-size: 15px; color: var(--ink-soft); }
 .reelcard .tally span { font-family: var(--serif); font-size: 9.5px; letter-spacing: .2em; color: var(--brass); }
+
+/* =========================================================================
+   THE LOBBY GRAFTS.
+   The wall of coming attractions and the ticket booth live in the lobby
+   only; the sea stays exactly as the tribunal ruled.
+   ========================================================================= */
+
+/* ---------- ALSO SHOWING: the wall of coming attractions ---------- */
+#indexwall, #indexlist { flex: 1 1 auto; min-height: 140px; }
+#alsoshowing { flex: none; border-top: 3px solid var(--card-edge); background: #eadfbd; padding: 8px 18px 12px; }
+.as-head { font-family: var(--serif); font-size: 10px; letter-spacing: .22em; color: var(--ink-soft);
+  text-transform: uppercase; padding: 2px 2px 8px; }
+.as-head b { color: var(--ink); letter-spacing: .3em; }
+#posterwall { display: flex; gap: 12px; justify-content: space-between; }
+.poster { flex: 0 1 100px; background: none; border: none; padding: 0; cursor: pointer; }
+.poster canvas { display: block; width: 100%; height: auto; box-shadow: 2px 3px 0 rgba(41,33,27,.3);
+  transform: rotate(-.45deg); }
+.poster:nth-child(2n) canvas { transform: rotate(.4deg); }
+.poster:nth-child(3n) canvas { transform: rotate(-.2deg); }
+.poster:hover canvas, .poster:focus-visible canvas { box-shadow: 2px 3px 0 var(--brass); }
+.poster:focus-visible { outline: 3px solid var(--brass); outline-offset: 2px; }
+
+/* ---------- the ticket booth (portal confirm law: never a native dialog) ---------- */
+#boothlayer { position: absolute; inset: 0; z-index: 26; background: rgba(16,12,9,.6); }
+.boothcard { max-width: 560px; padding: 28px 40px; }
+.boothcard .bigline { font-size: 23px; line-height: 1.3; }
+.boothcard .body { font-size: 14px; letter-spacing: .12em; text-transform: uppercase; margin-top: 8px; }
+.boothcard .body b { color: var(--ink); }
+.booth-btns { display: flex; gap: 14px; justify-content: center; margin: 4px 0 2px; }
+.booth-btns button { font-family: var(--serif); font-size: 12px; letter-spacing: .18em; color: var(--ink);
+  background: var(--card); border: 2px solid var(--card-edge); padding: 10px 16px; cursor: pointer; }
+.booth-btns button small { color: var(--brass); font-size: 10px; }
+.booth-btns button:hover { background: #f7efd9; }
+.booth-btns button:focus-visible { outline: 3px solid var(--brass); outline-offset: 2px; background: #f7efd9; }
+.boothcard .go { margin-top: 12px; font-size: 10.5px; letter-spacing: .2em; }
+#boothlayer.anim .boothcard { animation: boothrise .26s ease-out; }
+@keyframes boothrise {
+  from { transform: translate(-50%,-46%) rotate(-.4deg); opacity: 0; }
+  to   { transform: translate(-50%,-50%) rotate(-.4deg); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { #boothlayer.anim .boothcard { animation: none; } }

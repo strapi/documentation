@@ -56,6 +56,28 @@ async function loadData(status){
     get('communities.json',true), get('provenance.json',true),
     get('gitlog-docs.txt',false)
   ]);
+  /* the owner banned the generator's "More pages" bucket: taxonomy.json maps
+     every slug to its real sidebar section - override before anything derives */
+  try {
+    const tax = await get('taxonomy.json', true);
+    for (const slug of Object.keys(content.pages)) {
+      if (tax[slug] && tax[slug].section) content.pages[slug].section = tax[slug].section;
+    }
+    /* communities.json ships a precomputed dominant from the old labels -
+       recompute it as the modal section of the members under the real taxonomy */
+    for (const k of Object.keys(communities)) {
+      const c = communities[k];
+      if (!c || !c.members) continue;
+      const tally = {};
+      for (const m of c.members) {
+        const sec = (content.pages[m] && content.pages[m].section) || '';
+        if (sec) tally[sec] = (tally[sec] || 0) + 1;
+      }
+      let best = null, bn = -1;
+      for (const [sec, n] of Object.entries(tally)) if (n > bn) { bn = n; best = sec; }
+      if (best) c.dominant = best;
+    }
+  } catch (e) { /* absent taxonomy leaves the shipped labels */ }
   status('deriving the sea…');
   derive(content, graph, communities, provenance, gitlog);
 }
@@ -191,7 +213,7 @@ function derive(content, graph, communities, provenance, gitlog){
   D.comms=[]; const inComm=new Set();
   for(const k of Object.keys(communities)){
     const c=communities[k];
-    D.comms.push({id:+k, hub:c.hub, purity:c.purity, members:c.members.slice()});
+    D.comms.push({id:+k, hub:c.hub, purity:c.purity, dominant:c.dominant, members:c.members.slice()});
     for(const m of c.members) inComm.add(m);
   }
   D.outside = D.slugs.filter(s=>!inComm.has(s)).sort();
@@ -305,11 +327,12 @@ function buildWorld(){
 
   // island records for communities
   const isles = D.comms.map(c=>({kind:'island', id:c.id, hub:c.hub, purity:c.purity,
-    members:c.members.slice(), product:D.pages[c.hub].product,
+    members:c.members.slice(), product:D.pages[c.hub].product, dominant:c.dominant,
     ord:D.orderIdx[c.hub]!==undefined?D.orderIdx[c.hub]:9999}));
   // 11 open-water islets: one page each; three of them the desert trio
   const islets = D.outside.map(s=>({kind:'islet', id:-1, hub:s, purity:1, members:[s],
-    product:D.pages[s].product, ord:D.orderIdx[s]!==undefined?D.orderIdx[s]:9999}));
+    product:D.pages[s].product, dominant:D.pages[s].section,
+    ord:D.orderIdx[s]!==undefined?D.orderIdx[s]:9999}));
 
   const west = isles.filter(i=>i.product==='cloud').concat(islets.filter(i=>i.product==='cloud'));
   const east = isles.filter(i=>i.product!=='cloud').concat(islets.filter(i=>i.product!=='cloud'));
@@ -863,6 +886,26 @@ function buildWorld(){
    Every actor added below is ledgered to a named field, printed in the
    program, and drawn as an authored cel. No humans: the crew is gloves.
    ========================================================================= */
+/* THE OFFICIAL TAXONOMY ON EVERY PRINTED LABEL (the lab law). Any grouping
+   name a visitor can read speaks content.json product+section: Getting
+   Started, Features, Content APIs, Configurations, Development, Plugins
+   development, TypeScript, AI, Command Line Interface, Upgrades, More pages,
+   and the Cloud sections likewise. Louvain keeps shaping the water adjacency
+   SILENTLY: no community number or invented district name is ever printed.
+   For an island the section is the community's dominant section as the
+   corpus files it; for an open-water islet it is the page's own. */
+function sectionLabelOf(st){
+  const pg=D.pages[st.hub]||{};
+  const sec=String(st.dominant||pg.section||'Getting Started').replace(/[^A-Za-z0-9 &-]/g,'').trim();
+  const prod=(st.product||pg.product||'cms');
+  return ((prod==='cloud'?'CLOUD ':'')+sec).toUpperCase();
+}
+/* the harbour's own page title: a PAGE name, lawful anywhere, and the line
+   that tells two same-billed districts apart without naming a community */
+function harbourTitleOf(st){
+  const pg=D.pages[st.hub]||{};
+  return String(pg.sidebarLabel||pg.title||st.hub).toUpperCase();
+}
 function buildTheTen(){
   const wordsOf=s=>D.graph.words[s]||0;
 
@@ -884,14 +927,13 @@ function buildTheTen(){
     const hub=st.hub, lf=W.bySlug[hub];
     if(!lf) continue;
     const sp=SPECIES.find(s=>st.purity>=s.min);
-    const pg=D.pages[hub];
-    /* the name is the district, as the corpus files it, plus the species */
-    let district=(pg.section||pg.product||'open water').replace(/[^A-Za-z0-9 &-]/g,'').trim();
-    district=district.toUpperCase();
+    /* THE BILLING IS THE LAB LAW'S: the creature survives, but it is billed
+       under its district's official product+section and nothing else —
+       THE KRAKEN OF THE UPGRADES WATERS, never a community's name. */
     const arms=D.graph.inbound[hub]||0;
     W.bosses.push({
       hub, lf, st, x: lf.x+lf.w/2,
-      name:'THE '+district+' '+sp.k,
+      name:'THE '+sp.k+' OF THE '+sectionLabelOf(st)+' WATERS',
       species:sp.k, armKind:sp.arms,
       arms,                                  /* one arm per real citation of the hub */
       pages: st.members.length,
@@ -909,25 +951,13 @@ function buildTheTen(){
   { const memberOf={}; for(const st of W.stops) for(const m of st.members) memberOf[m]=st.hub;
     const inner={}; for(const [a,b] of D.edges){ if(memberOf[a]&&memberOf[a]===memberOf[b]) inner[memberOf[a]]=(inner[memberOf[a]]||0)+1; }
     for(const bs of W.bosses) bs.lanes=inner[bs.hub]||0; }
-  /* NO TWO BOSSES ANSWER TO THE SAME NAME. Eleven of the twenty-seven districts
-     are filed under a section another district also uses, so the round-5 naming
-     put three THE CONFIGURATIONS OCTOPUS on one bill. Where a section name is
-     shared, the boss takes its own hub page's name instead — still the corpus's
-     own word for it, and unique because a slug is. */
-  { const seen={};
-    for(const bs of W.bosses) seen[bs.name]=(seen[bs.name]||0)+1;
-    for(const bs of W.bosses){
-      if(seen[bs.name]<2) continue;
-      const pg=D.pages[bs.hub];
-      const own=String(pg.sidebarLabel||pg.title).replace(/[^A-Za-z0-9 &-]/g,'').trim().toUpperCase();
-      if(own) bs.name='THE '+own+' '+bs.species;
-    }
-    /* and if the corpus still hands us a collision, the slug settles it */
-    const seen2={};
-    for(const bs of W.bosses){
-      if(seen2[bs.name]){ bs.name=bs.name+' (' +bs.hub+ ')'; }
-      seen2[bs.name]=1;
-    } }
+  /* SEVERAL DISTRICTS ARE FILED UNDER ONE SECTION, so several creatures now
+     lawfully share a billing: the lab law prints the official taxonomy and
+     nothing else, and the round-5 uniqueness renaming (a hub PAGE title
+     standing in as a grouping name) is retired by it. Wherever two
+     same-billed creatures could be confused, the line beside the name says
+     HARBOUR OF <the hub page's own title> — a page name, not a grouping
+     name — and the printed programme lists every hub slug. */
   W.bossBySlug={}; for(const bs of W.bosses) W.bossBySlug[bs.hub]=bs;
   D.bossArmsTotal=W.bosses.reduce((a,b)=>a+b.arms,0);
   D.bossBiggest=W.bosses.reduce((a,b)=>b.arms>a.arms?b:a, W.bosses[0]);
@@ -6016,7 +6046,8 @@ function renderBlocks(blocks){
       case 'columns':
         h+='<div class="pg-columns">'+(b.cols||[]).map(cl=>'<div>'+renderBlocks(cl)+'</div>').join('')+'</div>'; break;
       case 'img': {
-        const src=b.light||b.src||'';
+        /* relative src: resolves at /bythedeep/ and at build root alike (document URL never leaves the house) */
+        const src=(b.light||b.src||'').replace(/^\/(?!\/)/,'');
         h+='<figure><img loading="lazy" src="'+escapeHtml(src)+'" alt="'+escapeHtml(b.alt||'')+'">'
           +(b.caption?'<figcaption>'+escapeHtml(b.caption)+'</figcaption>':'')+'</figure>'; break; }
       case 'hr': h+='<hr>'; break;
@@ -6051,6 +6082,9 @@ function openReader(slug, frag){
        ? '<div class="ec-row">BILLED BY '+D.graph.inbound[slug]+' OTHER PAGE'+(D.graph.inbound[slug]>1?'S':'')+'</div>'
        : '<div class="ec-row">NO PAGE EVER BILLED THIS PICTURE — YOU WERE ITS AUDIENCE</div>')
     +'<div class="ec-fin">FIN</div></div>';
+  /* relativize any inline root-absolute image src from content html (icons etc.):
+     resolves at /bythedeep/ and at build root alike, same law as the img block case */
+  h=h.replace(/(\ssrc=")\/(img\/)/g,'$1$2');
   $('reader-page').innerHTML=h;
   $('reader-crumb').textContent=slug+' — '+(pg.description||'');
   /* (19) the sketchbook draws itself as you go */
@@ -6147,8 +6181,11 @@ function startBout(bs){
   S.bout={boss:bs, phase:RM?'idle':'rise', t:RM?99:0, shown:99,
           ko:!!S.knockouts[bs.hub], cardT:0};
   sfxXylo(Math.min(7,Math.max(3,Math.round(bs.arms/9))), bs.arms);
-  /* one card, once, clear of the face (boss cards sit at the head of the frame) */
-  titleCard(bs.name, bs.pages+' PICTURES · '+bs.arms+' CITATIONS · UNITY '+bs.purity.toFixed(2)
+  /* one card, once, clear of the face (boss cards sit at the head of the
+     frame); the harbour's page title rides first, so two creatures billed
+     under one section never read as one creature */
+  titleCard(bs.name, 'HARBOUR OF '+harbourTitleOf(bs.st)+' · '+bs.pages+' PICTURES · '
+    +bs.arms+' CITATIONS · UNITY '+bs.purity.toFixed(2)
     +' · '+fmt(bs.words)+' WORDS', 'boss', 'boss');
 }
 /* THE PREMIERE, ELEVEN WORDS, NON-BLOCKING (by the ruling): the stage is
@@ -6294,6 +6331,7 @@ function openIndex(){
     $('lobbytally').textContent='PICTURES '+seen+' / '+D.slugs.length
       +' · PREMIERES '+pn+' / '+D.neverRan.length+' — type, then Enter'; }
   learned('lobby');
+  ensurePosterWall();   /* the coming attractions hang on first open, then never repaint */
   refreshIndex($('searchbox').value);
   setTimeout(()=>$('searchbox').focus(),0);
 }
@@ -6322,7 +6360,8 @@ function openProgram(){
      here one by one, with the fields that draw them. */
   const bossRows=W.bosses.slice().sort((a,b)=>b.arms-a.arms).map(b=>
     '<tr><td>'+escapeHtml(b.name)+'</td><td class="nums">'+b.hub+'</td>'
-    +'<td>'+b.arms+' '+b.armKind+(b.arms===1?'':'s')+' (its hub\u2019s real inbound citations)'
+    +'<td>harbour of '+escapeHtml(D.pages[b.hub].sidebarLabel||D.pages[b.hub].title)
+    +' \u00b7 '+b.arms+' '+b.armKind+(b.arms===1?'':'s')+' (its hub\u2019s real inbound citations)'
     +' \u00b7 mass '+b.pages+' picture'+(b.pages===1?'':'s')+' in the district'
     +' \u00b7 species '+b.species+' (unity '+b.purity.toFixed(2)+')'
     +' \u00b7 '+b.lanes+' lane'+(b.lanes===1?'':'s')+' inside its own water'
@@ -6584,6 +6623,8 @@ function keyHint(text){ S.hint=String(text||''); }
 /* ---------------- 13. input ---------------- */
 function bindInput(){
   window.addEventListener('keydown',(e)=>{
+    /* the ticket booth owns the keyboard while it stands (portal confirm law) */
+    if(S.booth){ boothKey(e); return; }
     if(e.key==='Tab'){ e.preventDefault(); audioBoot();
       $('indexpanel').hidden?openIndex():closeIndex(); return; }
     const inSearch=document.activeElement===$('searchbox');
@@ -6662,6 +6703,14 @@ function bindInput(){
   $('btn-neverran').addEventListener('click',()=>{ neverShelf=!neverShelf;
     $('btn-neverran').classList.toggle('on', neverShelf); refreshIndex($('searchbox').value); });
   $('btn-reel').addEventListener('click',()=>{ closeIndex(); startExhibit(0); });
+  /* the wall of coming attractions: activating a poster asks the booth first */
+  $('posterwall').addEventListener('click',(e)=>{
+    const pb=e.target.closest('.poster'); if(!pb||!pb.dataset.key) return;
+    openBooth(pb.dataset.key, pb);
+  });
+  $('booth-yes').addEventListener('click',boothGo);
+  $('booth-no').addEventListener('click',closeBooth);
+  $('boothlayer').addEventListener('click',(e)=>{ if(e.target===$('boothlayer')) closeBooth(); });
   document.querySelectorAll('#reelbar .rb-ch').forEach(b=>b.addEventListener('click',()=>{
     const ch=+b.dataset.ch; startExhibit(ch===0?0:(ch===1?M.beatTimes.erasure-2.0:M.beatTimes['credits-end']-14)); }));
   $('reelscrub').addEventListener('input',()=>{ S.mt=(+$('reelscrub').value/1000)*M.total; S.mPlaying=true; lastCapKey=''; });
@@ -9264,18 +9313,19 @@ function renderIndexWall(q){
   WALLQ.length=0;
   let h='';
   if(!needle && !neverShelf){
-    /* THE CHART OF THE DISTRICTS: the wall is hung by harbour, west to east,
-       each district headed by its own name and its fare */
+    /* THE CHART OF THE DISTRICTS: the wall is hung by harbour, west to east.
+       THE HEADING SPEAKS THE OFFICIAL TAXONOMY (the lab law): the printed
+       grouping name is content.json product+section, and the harbour's own
+       page title rides beside it so two districts filed under one section
+       stay tellable — a page name, never a community's. */
     const bySlug={}; for(const r of idxFiltered) bySlug[r.slug]=r;
     let i=0;
     for(const st of W.stops){
       const rows=st.members.map(m=>bySlug[m]).filter(Boolean);
       if(!rows.length) continue;
-      const bs=W.bosses.find(b2=>b2.st===st);
-      const hubPg=D.pages[st.hub];
-      const nm=bs? bs.name : (hubPg? (hubPg.sidebarLabel||hubPg.title).toUpperCase() : 'OPEN WATER');
-      h+='<div class="wall-district"><b>'+escapeHtml(nm)+'</b> · '+rows.length
-        +' PICTURE'+(rows.length===1?'':'S')+'<small>FARE '+fareSeconds(st.hub)+' S</small></div>';
+      h+='<div class="wall-district"><b>'+escapeHtml(sectionLabelOf(st))+'</b> · '+rows.length
+        +' PICTURE'+(rows.length===1?'':'S')+' · HARBOUR OF '+escapeHtml(harbourTitleOf(st))
+        +'<small>FARE '+fareSeconds(st.hub)+' S</small></div>';
       for(const r of rows){ h+=lobbyCardHtml(r,i); i++; }
     }
     idxFiltered=[...idxFiltered];
@@ -9323,6 +9373,191 @@ function setIndexView(mode){
   refreshIndex($('searchbox').value);
 }
 function refreshIndex(q){ if(wallMode) renderIndexWall(q); else renderIndexList(q); }
+
+/* ---- ALSO SHOWING: THE WALL OF COMING ATTRACTIONS ------------------------
+   Six sister works, billed in the lobby as 1930s picture posters: showcard
+   lettering, one honest tagline each in the period voice, nothing invented.
+   They hang in the LOBBY ONLY — the sea stays exactly as the tribunal ruled —
+   and they cost nothing off-screen: each poster is painted once, the first
+   time the lobby opens, and no clock ever runs behind the wall. Crossing to a
+   sister house is gated by THE TICKET BOOTH below (the portal confirm law). */
+const ATTRACTIONS=[
+  {key:'pixelcity',      title:['PIXEL','DOCS','CITY'],      tag:'A CARTOON METROPOLIS!',                emblem:'city',    wash:'#576d99'},
+  {key:'longway',        title:['THE LONG','WAY','THROUGH'], tag:'FILMED ON FOOT ACROSS 319,153 WORDS!', emblem:'road',    wash:'#8e6532'},
+  {key:'cartastrapiana', title:['CARTA','STRAPIANA'],        tag:'PHOTOGRAPHED ENTIRELY AT SEA!',        emblem:'compass', wash:'#3f867a'},
+  {key:'firstlight',     title:['FIRST','LIGHT'],            tag:'THRILLS FROM BEYOND THE SKY!',         emblem:'comet',   wash:'#7d4d86'},
+  {key:'herbarium',      title:['THE','HERBARIUM'],          tag:'NATURE’S OWN PICTURE BOOK!',      emblem:'leaf',    wash:'#6b8144'},
+  {key:'secreta',        title:['THE','FOUR-COLOR'],         tag:'NOW ALSO IN PRINT!',                   emblem:'four',    wash:'#8a4a33'}
+];
+const POSTER_W=192, POSTER_H=260;    /* drawn at 2x, hung at 96x130 */
+let postersPainted=false;
+function paintPoster(cv,att){
+  const g=cv.getContext('2d'); const Wp=POSTER_W, Hp=POSTER_H;
+  const h=hashStr(att.key);
+  const INK='#241d16', GOLD='#c9a24b', CREAM='#f6ecd0';
+  /* the paper, and the age it has earned hanging in a lobby */
+  const bg=g.createLinearGradient(0,0,0,Hp);
+  bg.addColorStop(0,'#f0e5c4'); bg.addColorStop(1,'#e4d3a6');
+  g.fillStyle=bg; g.fillRect(0,0,Wp,Hp);
+  g.fillStyle='rgba(150,110,50,.09)';
+  for(let i=0;i<9;i++){ const x=(h>>>(i*2))%Wp, y=(h>>>(i*3+1))%Hp;
+    g.beginPath(); g.arc(x,y,4+((h>>>i)%7),0,7); g.fill(); }
+  /* the house wash behind the lettering block */
+  g.globalAlpha=.16; g.fillStyle=att.wash; g.fillRect(9,9,Wp-18,102); g.globalAlpha=1;
+  /* the double rule and the four tack dots */
+  g.strokeStyle=INK; g.lineWidth=3; g.strokeRect(4,4,Wp-8,Hp-8);
+  g.lineWidth=1.2; g.strokeRect(9.5,9.5,Wp-19,Hp-19);
+  g.fillStyle=INK;
+  for(const [cx,cy] of [[16,16],[Wp-16,16],[16,Hp-16],[Wp-16,Hp-16]]){
+    g.beginPath(); g.arc(cx,cy,2.2,0,7); g.fill(); }
+  /* the hand-lettered title: stacked words, gold under ink, each line with
+     its own small lean the way a showcard writer's arm leaves one */
+  g.textAlign='center'; g.textBaseline='alphabetic';
+  let y=40;
+  att.title.forEach((word,i)=>{
+    let fs=att.title.length>2?26:30;
+    g.font='700 '+fs+'px "Iowan Old Style", Georgia, serif';
+    while(g.measureText(word).width>Wp-38 && fs>12){ fs-=1; g.font='700 '+fs+'px "Iowan Old Style", Georgia, serif'; }
+    g.save(); g.translate(Wp/2,y); g.rotate((((h>>>(i*5))%7)-3)*0.005);
+    g.fillStyle=GOLD; g.fillText(word,1.7,1.7);
+    g.fillStyle=INK;  g.fillText(word,0,0);
+    g.restore();
+    y+=fs*0.96+5;
+  });
+  /* the picture: one small honest emblem per house */
+  const ex=Wp/2, ey=158;
+  g.strokeStyle=INK; g.fillStyle=INK; g.lineWidth=1.6;
+  switch(att.emblem){
+    case 'city': {           /* a cartoon metropolis: three towers, lit pixels */
+      const t=[[ex-42,ey+30,24,-52],[ex-8,ey+30,26,-70],[ex+26,ey+30,20,-40]];
+      for(const [x,yb,w2,h2] of t){
+        g.fillStyle=att.wash; g.fillRect(x,yb+h2,w2,-h2);
+        g.strokeRect(x,yb+h2,w2,-h2);
+        g.fillStyle='#f6dd93';
+        for(let r=0;r<(-h2-8)/10;r++) for(let cx2=0;cx2<(w2-8)/9;cx2++)
+          if(((h>>>(r+cx2))&3)!==0) g.fillRect(x+4+cx2*9, yb+h2+5+r*10, 4, 5);
+      }
+      g.fillStyle=INK; g.fillRect(ex-50,ey+30,100,2.2);
+      break; }
+    case 'road': {           /* the long way: a road walked to the horizon */
+      g.fillStyle=att.wash;
+      g.beginPath(); g.moveTo(ex-46,ey+32); g.quadraticCurveTo(ex+30,ey+10,ex-12,ey-10);
+      g.quadraticCurveTo(ex-40,ey-24,ex+6,ey-34); g.lineTo(ex+14,ey-34);
+      g.quadraticCurveTo(ex-24,ey-22,ex+4,ey-10); g.quadraticCurveTo(ex+46,ey+8,ex-24,ey+32);
+      g.closePath(); g.fill(); g.stroke();
+      g.fillStyle=INK;       /* the milestone, and the footsteps on the way */
+      g.fillRect(ex+22,ey+14,6,16); g.strokeRect(ex+22,ey+14,6,16);
+      for(let i=0;i<5;i++){ g.beginPath();
+        g.ellipse(ex-30+i*9, ey+26-i*8.5, 2.6,1.4, -0.5+i*0.12, 0, 7); g.fill(); }
+      g.beginPath(); g.arc(ex+2,ey-40,6,0,7); g.stroke();   /* the hill sun it walks toward */
+      break; }
+    case 'compass': {        /* carta: a compass rose over ruled water */
+      for(let i=0;i<3;i++){ g.beginPath(); g.moveTo(ex-44,ey+18+i*8);
+        g.quadraticCurveTo(ex,ey+13+i*8,ex+44,ey+18+i*8); g.stroke(); }
+      for(let a=0;a<4;a++){ const an=a*Math.PI/2 - Math.PI/2;
+        g.fillStyle=a%2?att.wash:INK;
+        g.beginPath(); g.moveTo(ex+Math.cos(an)*30, ey-8+Math.sin(an)*30);
+        g.lineTo(ex+Math.cos(an+2.6)*7, ey-8+Math.sin(an+2.6)*7);
+        g.lineTo(ex+Math.cos(an-2.6)*7, ey-8+Math.sin(an-2.6)*7);
+        g.closePath(); g.fill(); g.stroke(); }
+      g.fillStyle=CREAM; g.beginPath(); g.arc(ex,ey-8,4.4,0,7); g.fill(); g.stroke();
+      break; }
+    case 'comet': {          /* first light: a comet and its witnesses */
+      g.fillStyle=att.wash;
+      g.beginPath(); g.moveTo(ex+30,ey-22); g.lineTo(ex-44,ey+2); g.lineTo(ex-44,ey-2);
+      g.lineTo(ex+30,ey-30); g.closePath(); g.fill();
+      g.fillStyle='#f6dd93'; g.beginPath(); g.arc(ex+30,ey-24,9,0,7); g.fill(); g.stroke();
+      g.fillStyle=INK;
+      for(let i=0;i<6;i++){ const sx=ex-40+((h>>>(i*4))%80), sy=ey+8+((h>>>(i*3))%26);
+        g.fillRect(sx,sy,2,2); }
+      break; }
+    case 'leaf': {           /* the herbarium: one pressed sprig */
+      g.strokeStyle=INK; g.lineWidth=2;
+      g.beginPath(); g.moveTo(ex,ey+32); g.quadraticCurveTo(ex-4,ey,ex+2,ey-32); g.stroke();
+      g.fillStyle=att.wash; g.lineWidth=1.3;
+      for(let i=0;i<5;i++){ const t=i/4, ly=ey+24-t*48, s=(i%2?1:-1), ln=16-6*t;
+        g.beginPath(); g.ellipse(ex+s*(ln*0.55), ly, ln*0.62, 4.6-1.5*t, s*0.5, 0, 7);
+        g.fill(); g.stroke(); }
+      g.fillStyle=INK; g.font='700 8px Georgia,serif';
+      g.fillText('No. '+(1+(h%89)), ex+30, ey+34);   /* the specimen number */
+      break; }
+    default: {               /* the four-color: four panels, four inks */
+      const cols=['#4f86a0','#a0527e','#c9a24b','#3a3128'];
+      let n=0;
+      for(const [px,py] of [[ex-36,ey-26],[ex+2,ey-26],[ex-36,ey+4],[ex+2,ey+4]]){
+        g.fillStyle='#faf3df'; g.fillRect(px,py,34,26); g.strokeRect(px,py,34,26);
+        g.fillStyle=cols[n];
+        for(let r=0;r<3;r++) for(let c2=0;c2<5;c2++){
+          g.beginPath(); g.arc(px+6+c2*5.6, py+6+r*7, 1.7+((r+c2+n)%2)*0.7, 0, 7); g.fill(); }
+        n++;
+      }
+      break; }
+  }
+  /* the honest tagline, on the bill band */
+  g.fillStyle='#1c1712'; g.fillRect(13,Hp-52,Wp-26,36);
+  g.strokeStyle=GOLD; g.lineWidth=1; g.strokeRect(15,Hp-50,Wp-30,32);
+  const words=att.tag.split(' ');
+  let lines=[att.tag], fs2=11;
+  const fits=(s,f)=>{ g.font='700 '+f+'px "Iowan Old Style", Georgia, serif'; return g.measureText(s).width<=Wp-40; };
+  if(!fits(att.tag,fs2)){
+    let best=1e9, cut=Math.ceil(words.length/2);
+    for(let i=1;i<words.length;i++){ const a=words.slice(0,i).join(' '), b2=words.slice(i).join(' ');
+      const wdt=Math.max(g.measureText(a).width,g.measureText(b2).width);
+      if(wdt<best){ best=wdt; cut=i; } }
+    lines=[words.slice(0,cut).join(' '), words.slice(cut).join(' ')];
+    while(fs2>7.5 && !(fits(lines[0],fs2)&&fits(lines[1],fs2))) fs2-=0.5;
+  }
+  g.fillStyle=CREAM; g.font='700 '+fs2+'px "Iowan Old Style", Georgia, serif';
+  if(lines.length===1) g.fillText(lines[0], Wp/2, Hp-30);
+  else { g.fillText(lines[0], Wp/2, Hp-36); g.fillText(lines[1], Wp/2, Hp-23); }
+  cv.dataset.painted='1';
+}
+/* painted once, the first time the lobby opens; free forever after */
+function ensurePosterWall(){
+  if(postersPainted) return; postersPainted=true;
+  for(const att of ATTRACTIONS){
+    const cv=document.querySelector('.poster[data-key="'+att.key+'"] canvas');
+    if(cv && !cv.dataset.painted) paintPoster(cv,att);
+  }
+}
+
+/* ---- THE TICKET BOOTH ASKS FIRST (the portal confirm law) ----------------
+   Activating a poster never navigates by itself: a booth card rises in the
+   house voice with YES and NO. Mouse works, Tab cycles the two controls,
+   Y confirms, N or Escape cancels, Enter fires whichever control holds the
+   focus (focus opens on NO, so a stray double-Enter stays in the lobby).
+   Cancel returns the lobby exactly as it stood; under reduced motion the
+   card stands unanimated. Never a native dialog. */
+function openBooth(key, fromEl){
+  const att=ATTRACTIONS.find(a=>a.key===key); if(!att) return;
+  S.booth={key, from:fromEl||null};
+  const L=$('boothlayer');
+  L.classList.toggle('anim', !RM);
+  $('boothbill').innerHTML='<b>'+escapeHtml(att.title.join(' '))+'</b> · '
+    +escapeHtml(att.tag)+'<br>THIS DOOR OPENS ON ../'+escapeHtml(key)+'/';
+  L.hidden=false;
+  setTimeout(()=>{ const b=$('booth-no'); if(b&&S.booth) b.focus(); },0);
+}
+function closeBooth(){
+  const b=S.booth; S.booth=null;
+  $('boothlayer').hidden=true;
+  /* the lobby stands exactly as it stood; the hand returns to the poster */
+  if(b&&b.from&&b.from.focus) b.from.focus();
+}
+function boothGo(){
+  const b=S.booth; if(!b) return;
+  S.booth=null; $('boothlayer').hidden=true;
+  location.href='../'+b.key+'/';
+}
+/* the booth owns the keyboard while it stands (called first by the one
+   window keydown handler; Enter is left alone so the focused control's own
+   activation fires it, which is what "Enter fires the focused control" means) */
+function boothKey(e){
+  if(e.key==='Tab'){ e.preventDefault();
+    (document.activeElement===$('booth-yes')?$('booth-no'):$('booth-yes')).focus(); }
+  else if(e.key==='y'||e.key==='Y'){ e.preventDefault(); boothGo(); }
+  else if(e.key==='n'||e.key==='N'||e.key==='Escape'){ e.preventDefault(); closeBooth(); }
+}
 
 /* ---- (19) THE CAPTAIN'S SKETCHBOOK --------------------------------------
    A personal index that draws itself. Every picture you visit gets a pencil
@@ -10101,6 +10336,7 @@ async function boot(){
     windSegs(){ return W.windSegs.map(s=>({x0:Math.round(s.x0), x1:Math.round(s.x1),
       share:+s.w.toFixed(3), net:s.net, gross:s.gross})); },
     teleport(x){ if(S.ship){ S.ship.x=clamp(x,500,W.width-500); S.cam.x=S.ship.x+S.ship.dir*VW*0.16-VW/2; } },
+    hubX(slug){ const lf=W.bySlug[slug]; return lf? lf.x+lf.w/2 : 0; },
     shipStart:()=>W.shipStart, worldWidth:()=>W.width,
     /* the highest neck height any leviathan is holding this frame */
     levRise(){ let m=0;
@@ -10252,6 +10488,8 @@ async function boot(){
     /* WHO IS SPEAKING IN THIS FRAME. The audit for the card-collision finding:
        at most one showcard, and the slate, the door sign, the boss numbers and
        the lens each stand down for it. */
+    /* the one canvas card, read as text (an instrument, not a mark) */
+    cardNow(){ return S.card? {kind:S.card.kind, title:S.card.title, sub:S.card.sub} : null; },
     frameSpeakers(){
       const list=[];
       if(S.card) list.push('card:'+S.card.kind);

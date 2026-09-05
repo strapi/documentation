@@ -58,6 +58,18 @@
              placeholder="Search 290 pages by title, path or tag&hellip;">
       <div id="indexlist" tabindex="-1" hidden></div>
       <div id="indexwall" tabindex="-1"></div>
+      <!-- ALSO SHOWING: the wall of coming attractions. Lobby only, by the ruling. -->
+      <div id="alsoshowing">
+        <div class="as-head"><b>ALSO SHOWING</b> &middot; THE WALL OF COMING ATTRACTIONS &middot; SIX SISTER WORKS, EACH PLAYING ANOTHER PICTURE HOUSE</div>
+        <div id="posterwall">
+          <button class="poster" data-key="pixelcity" title="PIXEL DOCS CITY &middot; a cartoon metropolis!"><canvas width="192" height="260"></canvas></button>
+          <button class="poster" data-key="longway" title="THE LONG WAY THROUGH &middot; filmed on foot across 319,153 words!"><canvas width="192" height="260"></canvas></button>
+          <button class="poster" data-key="cartastrapiana" title="CARTA STRAPIANA &middot; photographed entirely at sea!"><canvas width="192" height="260"></canvas></button>
+          <button class="poster" data-key="firstlight" title="FIRST LIGHT &middot; thrills from beyond the sky!"><canvas width="192" height="260"></canvas></button>
+          <button class="poster" data-key="herbarium" title="THE HERBARIUM &middot; nature&#39;s own picture book!"><canvas width="192" height="260"></canvas></button>
+          <button class="poster" data-key="secreta" title="THE FOUR-COLOR &middot; now also in print!"><canvas width="192" height="260"></canvas></button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -117,6 +129,21 @@
       <div id="singrule"></div>
       <div id="singtrack"><div id="singwords"></div><div id="singball"></div></div>
       <button id="sing-close" title="Stop the sing-along (B)">&times;</button>
+    </div>
+  </div>
+
+  <!-- the ticket booth asks first: never a native dialog -->
+  <div id="boothlayer" hidden>
+    <div class="showcard boothcard" role="alertdialog" aria-modal="true" aria-label="The ticket booth asks first">
+      <div class="kicker">THE TICKET BOOTH</div>
+      <div class="bigline">THIS TICKET IS FOR ANOTHER<br>PICTURE HOUSE ENTIRELY. GO?</div>
+      <div class="body" id="boothbill"></div>
+      <div class="rule"></div>
+      <div class="booth-btns">
+        <button id="booth-yes">YES &middot; TEAR THE TICKET <small>(Y)</small></button>
+        <button id="booth-no">NO &middot; STAY IN THE LOBBY <small>(N)</small></button>
+      </div>
+      <div class="go">TAB CYCLES &middot; ENTER FIRES THE FOCUSED CONTROL &middot; ESCAPE STAYS</div>
     </div>
   </div>
 
