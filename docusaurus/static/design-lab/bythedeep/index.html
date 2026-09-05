@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BY THE DEEP</title>
+<link rel="stylesheet" href="bythedeep.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="sea"></canvas>
+
+  <!-- film frame furniture (world layer; never over the reading surface) -->
+  <div id="filmframe" aria-hidden="true"></div>
+
+  <!-- showcard overlays (title, studio card, captions) -->
+  <div id="cardlayer" aria-hidden="false"></div>
+
+  <!-- HUD: wheel, sail pennant, spyglass, mute -->
+  <div id="hud" hidden>
+    <div id="wheelbox" title="The wheel. Order the helm with A / D or the arrow keys.">
+      <canvas id="wheel" width="92" height="92"></canvas>
+    </div>
+    <div id="sailstate" title="Sail state. W for more sail, S for less.">FULL SAIL</div>
+    <div id="hudright">
+      <button id="btn-spyglass" class="hudbtn" title="Spyglass (G)">SPYGLASS</button>
+      <button id="btn-index" class="hudbtn" title="The index (Tab). Every page, one keystroke away.">INDEX</button>
+      <button id="btn-program" class="hudbtn" title="The printed program (P)">PROGRAM</button>
+      <button id="btn-hatch" class="hudbtn" title="Open the hatch on the orchestra in the hold (H)">THE BAND</button>
+      <button id="btn-sketch" class="hudbtn" title="The captain&#39;s sketchbook (K)">SKETCHBOOK</button>
+      <button id="btn-mute" class="hudbtn" title="Sound on or off (M)">SOUND ON</button>
+    </div>
+    <div id="windtell" title="The wind between two islands blows with the net citation flow between them."></div>
+  </div>
+
+  <button id="btn-skip" hidden>SKIP THE OPENING &rarr;</button>
+
+  <!-- index / search -->
+  <div id="indexpanel" hidden>
+    <div class="panel-card" role="dialog" aria-label="Index of all pages">
+      <div class="panel-head">
+        <span class="panel-title">THE INDEX</span>
+        <span class="panel-sub">every picture in the house &mdash; type, then Enter</span>
+        <button id="btn-wall" class="panel-toggle" title="The lobby card wall, or the plain list">PLAIN LIST</button>
+        <button class="panel-close" data-close="indexpanel">&times;</button>
+      </div>
+      <input id="searchbox" type="text" autocomplete="off" spellcheck="false"
+             placeholder="Search 290 pages by title, path or tag&hellip;">
+      <div id="indexlist" tabindex="-1" hidden></div>
+      <div id="indexwall" tabindex="-1"></div>
+    </div>
+  </div>
+
+  <!-- printed program -->
+  <div id="programpanel" hidden>
+    <div class="panel-card program" role="dialog" aria-label="The printed program">
+      <div class="panel-head">
+        <span class="panel-title">THE PROGRAM</span>
+        <span class="panel-sub">printed for the patrons of this house</span>
+        <button class="panel-close" data-close="programpanel">&times;</button>
+      </div>
+      <div id="programbody"></div>
+    </div>
+  </div>
+
+  <!-- (18) the orchestra in the hold: who plays what, and what it counts -->
+  <div id="hatchpanel" hidden>
+    <div class="panel-card band" role="dialog" aria-label="The orchestra in the hold">
+      <div class="panel-head">
+        <span class="panel-title">THE HOLD</span>
+        <span class="panel-sub">the band below deck &mdash; one player per sound, each counting a real number</span>
+        <button class="panel-close" data-close="hatchpanel">&times;</button>
+      </div>
+      <canvas id="bandcanvas" width="900" height="400"></canvas>
+      <div id="bandbody"></div>
+    </div>
+  </div>
+
+  <!-- (19) the captain's sketchbook: a personal index that draws itself -->
+  <div id="sketchpanel" hidden>
+    <div class="panel-card sketch" role="dialog" aria-label="The captain&#39;s sketchbook">
+      <div class="panel-head">
+        <span class="panel-title">THE SKETCHBOOK</span>
+        <span class="panel-sub">every picture you visit, drawn as you go &mdash; kept in this browser only</span>
+        <button class="panel-close" data-close="sketchpanel">&times;</button>
+      </div>
+      <canvas id="sketchcanvas" width="900" height="560"></canvas>
+      <div class="sketch-bar">
+        <button id="sketch-prev">&larr; EARLIER LEAF</button>
+        <span id="sketchnav">LEAF 1 OF 1</span>
+        <button id="sketch-next">LATER LEAF &rarr;</button>
+        <button id="sketch-export">LIFT A PRINT &mdash; PNG AT 3&times;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- reading surface: crisp DOM on cream, exempt from grain and boil -->
+  <div id="reader" hidden>
+    <div id="reader-bar">
+      <button id="btn-tosea" title="Weigh anchor and return to the sea">&#9875; BACK TO THE SEA</button>
+      <span id="reader-crumb"></span>
+      <button id="btn-reader-index" title="Index (Tab)">INDEX</button>
+    </div>
+    <div id="reader-scroll"><article id="reader-page"></article></div>
+    <!-- (15) follow the bouncing ball: the page's own key words, in time -->
+    <div id="singalong" hidden>
+      <div id="singrule"></div>
+      <div id="singtrack"><div id="singwords"></div><div id="singball"></div></div>
+      <button id="sing-close" title="Stop the sing-along (B)">&times;</button>
+    </div>
+  </div>
+
+  <div id="iris" aria-hidden="true"></div>
+  <div id="boot">
+    <div id="boot-card">
+      <div class="boot-line">BY THE DEEP</div>
+      <div class="boot-sub" id="boot-status">warming the projector&hellip;</div>
+    </div>
+  </div>
+</div>
+<script src="bythedeep.js"></script>
+</body>
+</html>

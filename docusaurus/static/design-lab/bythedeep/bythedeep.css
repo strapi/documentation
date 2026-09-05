@@ -1,0 +1,337 @@
+/* BY THE DEEP - a hand-inked cartoon sea for the Strapi documentation corpus.
+   World layers wear grain, boil and weave; the reading surface never does. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #29211b;
+  --ink-soft: #4a3f34;
+  --cream: #f4ecd7;         /* world paper */
+  --cream-read: #f8f2e2;    /* reading surface, slightly brighter */
+  --card: #efe4c6;
+  --card-edge: #2b241d;
+  --brass: #8a6d3a;
+  --red: #a4432e;
+  --gold: #c9a24b;
+  --shadow: rgba(41,33,27,.45);
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --human: "Seravek", "Gill Sans", "Avenir Next", "Trebuchet MS", Verdana, system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+html, body { height: 100%; background: #14100c; overflow: hidden; }
+body { font-family: var(--serif); color: var(--ink); }
+
+#stage { position: fixed; inset: 0; overflow: hidden; }
+#sea { position: absolute; inset: 0; width: 100%; height: 100%; display: block; background: var(--cream); }
+
+/* ---------- film frame furniture ---------- */
+#filmframe { position: absolute; inset: 0; pointer-events: none; z-index: 4;
+  box-shadow: inset 0 0 0 6px #14100c, inset 0 0 0 8px #3a2f24, inset 0 0 90px rgba(20,16,12,.28);
+  border-radius: 10px; }
+
+/* ---------- showcard layer ---------- */
+#cardlayer { position: absolute; inset: 0; z-index: 6; pointer-events: none; }
+#cardlayer .clickable { pointer-events: auto; }
+
+.showcard {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) rotate(-.4deg);
+  background: var(--card);
+  border: 3px solid var(--card-edge);
+  outline: 1px solid var(--card-edge);
+  outline-offset: 5px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.5), inset 0 0 60px rgba(120,95,55,.18);
+  padding: 34px 46px; text-align: center; max-width: 74%;
+}
+.showcard .rule { width: 58%; height: 2px; background: var(--card-edge); margin: 14px auto; opacity: .85; }
+.showcard .kicker { font-family: var(--serif); letter-spacing: .34em; font-size: 13px; color: var(--ink-soft); text-transform: uppercase; }
+.showcard .bigline { font-family: var(--serif); font-weight: 700; letter-spacing: .12em; font-size: 30px; margin: 10px 0 2px; text-transform: uppercase; }
+.showcard .body { font-size: 17px; line-height: 1.55; color: var(--ink-soft); }
+.showcard .go { margin-top: 18px; font-size: 13px; letter-spacing: .28em; color: var(--brass); text-transform: uppercase; }
+
+.caption-card {
+  position: absolute; left: 50%; bottom: 7.5%; transform: translateX(-50%) rotate(-.3deg);
+  background: #1c1712; color: #efe4c6; border: 2px solid #efe4c6; outline: 1px solid #1c1712; outline-offset: 4px;
+  padding: 10px 26px; font-family: var(--serif); letter-spacing: .16em; font-size: 15px;
+  text-transform: uppercase; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,.55);
+  max-width: 82%;
+}
+.caption-card small { display: block; letter-spacing: .1em; font-size: 12px; color: #cbb98d; margin-top: 5px; text-transform: none; }
+
+/* ---------- boot ---------- */
+#boot { position: absolute; inset: 0; background: #14100c; z-index: 40; display: flex; align-items: center; justify-content: center; }
+#boot-card { text-align: center; color: #efe4c6; }
+.boot-line { font-family: var(--serif); letter-spacing: .5em; font-size: 22px; }
+.boot-sub { margin-top: 12px; font-size: 13px; letter-spacing: .2em; color: #9d8b66; }
+
+/* ---------- iris ---------- */
+#iris { position: absolute; inset: 0; z-index: 30; pointer-events: none; background: #14100c;
+  -webkit-mask: radial-gradient(circle var(--iris-r,150vmax) at var(--iris-x,50%) var(--iris-y,50%), transparent 0 calc(var(--iris-r,150vmax) - 2px), black var(--iris-r,150vmax));
+  mask: radial-gradient(circle var(--iris-r,150vmax) at var(--iris-x,50%) var(--iris-y,50%), transparent 0 calc(var(--iris-r,150vmax) - 2px), black var(--iris-r,150vmax)); }
+
+/* ---------- HUD ---------- */
+#hud { position: absolute; inset: 0; z-index: 8; pointer-events: none; }
+#wheelbox { position: absolute; left: 22px; bottom: 20px; pointer-events: auto; filter: drop-shadow(0 4px 8px rgba(0,0,0,.35)); }
+#sailstate { position: absolute; left: 126px; bottom: 44px; pointer-events: auto;
+  font-family: var(--serif); font-size: 12px; letter-spacing: .22em; color: var(--ink);
+  background: var(--card); border: 2px solid var(--card-edge); padding: 5px 12px; transform: rotate(-1deg); }
+#windtell { position: absolute; left: 126px; bottom: 14px; font-size: 11px; letter-spacing: .14em; color: var(--ink-soft);
+  font-family: var(--serif); background: rgba(244,236,215,.8); padding: 3px 8px; border: 1px solid rgba(43,36,29,.4); }
+#hudright { position: absolute; right: 22px; bottom: 20px; display: flex; gap: 8px; pointer-events: auto; }
+.hudbtn { font-family: var(--serif); font-size: 11px; letter-spacing: .18em; color: var(--ink);
+  background: var(--card); border: 2px solid var(--card-edge); padding: 7px 11px; cursor: pointer; }
+.hudbtn:hover { background: #f7efd9; }
+#btn-skip { position: absolute; right: 26px; bottom: 24px; z-index: 12; font-family: var(--serif); font-size: 12px;
+  letter-spacing: .22em; color: var(--ink); background: var(--card); border: 2px solid var(--card-edge);
+  padding: 9px 16px; cursor: pointer; transform: rotate(.6deg); }
+#btn-skip:hover { background: #f7efd9; }
+
+/* ---------- panels (index / program) ---------- */
+#indexpanel, #programpanel, #hatchpanel, #sketchpanel { position: absolute; inset: 0; z-index: 22; display: flex; align-items: center; justify-content: center;
+  background: rgba(16,12,9,.55); }
+.panel-card { width: min(880px, 92vw); max-height: 84vh; display: flex; flex-direction: column;
+  background: var(--cream-read); border: 3px solid var(--card-edge); outline: 1px solid var(--card-edge); outline-offset: 5px;
+  box-shadow: 0 18px 60px rgba(0,0,0,.6); }
+.panel-head { display: flex; align-items: baseline; gap: 14px; padding: 18px 22px 10px; border-bottom: 2px solid var(--card-edge); }
+.panel-title { font-family: var(--serif); font-weight: 700; letter-spacing: .3em; font-size: 17px; }
+.panel-sub { font-size: 12px; letter-spacing: .08em; color: var(--ink-soft); flex: 1; }
+.panel-close { background: none; border: none; font-size: 26px; line-height: 1; cursor: pointer; color: var(--ink); }
+#searchbox { margin: 14px 22px 8px; padding: 10px 14px; font-family: var(--human); font-size: 16px;
+  border: 2px solid var(--card-edge); background: #fffdf4; color: var(--ink); }
+#searchbox:focus { outline: 2px solid var(--brass); }
+#indexlist { overflow-y: auto; padding: 4px 10px 18px; }
+.idx-row { display: flex; gap: 12px; align-items: baseline; padding: 7px 14px; cursor: pointer; border-bottom: 1px dotted rgba(43,36,29,.25); }
+.idx-row:hover, .idx-row.sel { background: #ede2c2; }
+.idx-title { font-family: var(--human); font-size: 15px; font-weight: 600; }
+.idx-slug { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); flex: 1; }
+.idx-sec { font-size: 11px; letter-spacing: .06em; color: var(--brass); white-space: nowrap; }
+.idx-never { font-size: 10px; letter-spacing: .14em; color: var(--red); border: 1px solid var(--red); padding: 1px 5px; white-space: nowrap; }
+
+.program #programbody { overflow-y: auto; padding: 16px 26px 26px; font-size: 14.5px; line-height: 1.55; }
+.program h3 { font-family: var(--serif); letter-spacing: .24em; font-size: 13px; margin: 20px 0 8px; text-transform: uppercase;
+  border-bottom: 1px solid rgba(43,36,29,.4); padding-bottom: 4px; }
+.program table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.program td { padding: 5px 8px; vertical-align: top; border-bottom: 1px dotted rgba(43,36,29,.25); }
+.program td:first-child { font-weight: 700; font-family: var(--serif); letter-spacing: .06em; }
+.program .quiet { color: var(--ink-soft); font-style: italic; }
+.program .nums { font-family: var(--mono); font-size: 12.5px; }
+/* THE THREE-COLUMN ROWS SET LIKE A PROGRAM, NOT LIKE A SPREADSHEET. The named
+   cast tables carry a long slug in the middle column, and left to itself the
+   browser gave that column half the width and squeezed the derivation into a
+   four-word ribbon. The name and the slug are held to a measure; the
+   derivation takes what is left. */
+.program tr > td:first-child { width: 245px; }
+.program td.nums { width: 210px; word-break: normal; overflow-wrap: anywhere; }
+.program tr > td:last-child:not(:first-child):not(.nums) { width: auto; }
+
+/* ---------- reading surface: crisp DOM on cream. No grain, no boil, ever. ---------- */
+#reader { position: absolute; inset: 0; z-index: 18; background: var(--cream-read); display: flex; flex-direction: column; }
+#reader-bar { display: flex; align-items: center; gap: 16px; padding: 10px 18px;
+  border-bottom: 2px solid var(--card-edge); background: var(--card); flex: none; }
+#reader-bar button { font-family: var(--serif); font-size: 11.5px; letter-spacing: .18em; color: var(--ink);
+  background: var(--cream-read); border: 2px solid var(--card-edge); padding: 6px 12px; cursor: pointer; }
+#reader-crumb { flex: 1; font-size: 12.5px; letter-spacing: .06em; color: var(--ink-soft); font-family: var(--human);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#reader-scroll { overflow-y: auto; flex: 1; }
+#reader-page { max-width: 840px; margin: 0 auto; padding: 34px 30px 90px; font-family: var(--human);
+  font-size: 16px; line-height: 1.65; color: #241d16; }
+
+#reader-page .pg-titlecard { text-align: center; border: 3px solid var(--card-edge); outline: 1px solid var(--card-edge);
+  outline-offset: 4px; background: var(--card); padding: 26px 30px; margin: 6px 0 34px; transform: rotate(-.25deg); }
+#reader-page .pg-titlecard .pt-kicker { font-family: var(--serif); font-size: 11px; letter-spacing: .3em; color: var(--brass); text-transform: uppercase; }
+#reader-page .pg-titlecard h1 { font-family: var(--serif); font-size: 30px; letter-spacing: .04em; margin: 8px 0 10px; }
+#reader-page .pg-titlecard .pt-tldr { font-size: 15.5px; line-height: 1.6; color: var(--ink-soft); text-align: left; }
+#reader-page .pg-titlecard .pt-tldr::before { content: "IN THIS PICTURE — "; font-family: var(--serif); font-size: 11px; letter-spacing: .22em; color: var(--brass); }
+
+#reader-page h2, #reader-page h3, #reader-page h4, #reader-page h5, #reader-page h6 { font-family: var(--serif); margin: 34px 0 12px; line-height: 1.25; }
+#reader-page h2 { font-size: 25px; border-bottom: 2px solid rgba(43,36,29,.5); padding-bottom: 6px; }
+#reader-page h3 { font-size: 20px; }
+#reader-page h4 { font-size: 17px; }
+#reader-page h5, #reader-page h6 { font-size: 15px; letter-spacing: .04em; }
+#reader-page p { margin: 0 0 14px; }
+#reader-page ul, #reader-page ol { margin: 0 0 16px 26px; }
+#reader-page li { margin-bottom: 6px; }
+#reader-page a { color: #7c4a12; text-decoration: underline; text-decoration-color: rgba(124,74,18,.5); }
+#reader-page a:hover { color: var(--red); }
+#reader-page code { font-family: var(--mono); font-size: .88em; background: #efe6cc; padding: 1px 5px; border-radius: 3px; }
+#reader-page pre { background: #211b14; color: #efe4c6; padding: 16px 18px; border-radius: 6px; overflow-x: auto;
+  margin: 0 0 18px; border: 2px solid var(--card-edge); }
+#reader-page pre code { background: none; color: inherit; padding: 0; font-size: 13px; line-height: 1.5; }
+#reader-page .code-title { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); margin-bottom: 4px; }
+#reader-page table { border-collapse: collapse; margin: 0 0 20px; width: 100%; font-size: 14.5px; }
+#reader-page th, #reader-page td { border: 1px solid rgba(43,36,29,.45); padding: 8px 10px; text-align: left; vertical-align: top; }
+#reader-page th { background: var(--card); font-family: var(--serif); letter-spacing: .04em; }
+#reader-page .tablewrap { overflow-x: auto; margin-bottom: 20px; }
+#reader-page .tablewrap table { margin-bottom: 0; }
+#reader-page img { max-width: 100%; border: 2px solid var(--card-edge); margin: 4px 0 6px; }
+#reader-page figure { margin: 0 0 18px; }
+#reader-page figcaption { font-size: 13px; color: var(--ink-soft); font-style: italic; }
+#reader-page hr { border: none; border-top: 2px solid rgba(43,36,29,.4); margin: 26px auto; width: 40%; }
+
+/* intertitle: admonitions as silent-film cards, text crisp.
+   EVERY rule below carries the #reader-page id. The plain-class versions lost
+   to the id-scoped base rules, which is how inline <code> came to print cream
+   #f0e6cb on the cream #efe6cc chip of the base rule: a contrast ratio of
+   1.00, invisible, on 158 of the 290 pages. A dark card needs a dark-ground
+   ruleset at the same weight as the light one, not a lighter one. */
+#reader-page .intertitle { background: #1c1712; color: #f2e8ce; border: 2px solid #f0e6cb; outline: 1px solid #1c1712;
+  outline-offset: 4px; margin: 6px 2px 24px; padding: 18px 24px; }
+#reader-page .intertitle .it-kind { font-family: var(--serif); font-size: 11px; letter-spacing: .34em; text-transform: uppercase;
+  color: #d9c795; text-align: center; margin-bottom: 8px; }
+#reader-page .intertitle .it-title { font-family: var(--serif); font-size: 16px; letter-spacing: .08em; text-align: center; margin-bottom: 10px; }
+#reader-page .intertitle p,
+#reader-page .intertitle li,
+#reader-page .intertitle strong,
+#reader-page .intertitle em { color: #f2e8ce; }
+#reader-page .intertitle a { color: #f0c877; text-decoration-color: rgba(240,200,119,.6); }
+#reader-page .intertitle a:hover { color: #f6dda6; }
+/* the inline token on the dark card: its own ground, its own rule */
+#reader-page .intertitle code { background: #3b2f20; color: #fbf3dd;
+  border: 1px solid rgba(240,230,203,.34); padding: 1px 5px; border-radius: 3px; }
+#reader-page .intertitle pre { border-color: rgba(240,230,203,.6); background: #100c08; }
+#reader-page .intertitle pre code { background: none; border: none; color: #f3e8c9; }
+#reader-page .intertitle .code-title { color: #cdbb8e; }
+#reader-page .intertitle figcaption { color: #cdbb8e; }
+#reader-page .intertitle hr { border-top-color: rgba(240,230,203,.4); }
+#reader-page .intertitle ul, #reader-page .intertitle ol { margin-left: 24px; }
+/* components that carry their OWN light ground keep the ink colour inside a
+   dark card, instead of inheriting cream onto cream */
+#reader-page .intertitle .pg-details,
+#reader-page .intertitle .pg-tabs,
+#reader-page .intertitle .pg-endpoint,
+#reader-page .intertitle .pg-card,
+#reader-page .intertitle table { color: var(--ink); }
+#reader-page .intertitle table th { background: #e9dfbe; }
+#reader-page .intertitle th, #reader-page .intertitle td { border-color: rgba(43,36,29,.5); }
+#reader-page .intertitle .pg-details code,
+#reader-page .intertitle .pg-tabs code,
+#reader-page .intertitle .pg-endpoint code,
+#reader-page .intertitle table code { background: #efe6cc; color: var(--ink); border-color: rgba(43,36,29,.28); }
+#reader-page .intertitle .pg-details a,
+#reader-page .intertitle .pg-tabs a,
+#reader-page .intertitle .pg-endpoint a,
+#reader-page .intertitle table a { color: #7c4a12; }
+
+.pg-details { border: 2px dashed rgba(43,36,29,.5); padding: 12px 18px; margin: 0 0 18px; background: #f2ead3; }
+.pg-details summary { font-family: var(--serif); cursor: pointer; letter-spacing: .04em; font-weight: 700; }
+.pg-details[open] summary { margin-bottom: 10px; }
+
+.pg-tabs { border: 2px solid rgba(43,36,29,.5); margin: 0 0 20px; background: #f2ead3; }
+.pg-tabbar { display: flex; flex-wrap: wrap; border-bottom: 2px solid rgba(43,36,29,.5); }
+.pg-tabbar button { font-family: var(--serif); font-size: 12.5px; letter-spacing: .1em; padding: 8px 16px;
+  background: none; border: none; border-right: 1px solid rgba(43,36,29,.3); cursor: pointer; color: var(--ink-soft); }
+.pg-tabbar button.on { background: var(--card-edge); color: var(--cream-read); }
+.pg-tabpane { padding: 14px 16px 4px; }
+
+.pg-endpoint { border: 2px solid var(--card-edge); margin: 0 0 20px; background: #f2ead3; }
+.pg-endpoint .ep-head { padding: 10px 16px; border-bottom: 1px solid rgba(43,36,29,.4); font-family: var(--mono); font-size: 13px; }
+.pg-endpoint .ep-head .ep-method { font-weight: 700; color: var(--red); margin-right: 8px; }
+.pg-endpoint .ep-title { font-family: var(--serif); font-weight: 700; padding: 10px 16px 0; }
+.pg-endpoint .ep-desc { padding: 4px 16px 8px; font-size: 14.5px; color: var(--ink-soft); }
+.pg-endpoint .ep-body { padding: 0 16px 8px; }
+
+.pg-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin: 0 0 20px; }
+.pg-card { border: 2px solid var(--card-edge); background: #f2ead3; padding: 14px 16px; display: block; color: inherit; text-decoration: none; }
+.pg-card:hover { background: #ede2c2; }
+.pg-card .c-ico { font-size: 20px; }
+.pg-card .c-title { font-family: var(--serif); font-weight: 700; margin: 6px 0 4px; }
+.pg-card .c-desc { font-size: 13.5px; color: var(--ink-soft); }
+
+.pg-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 8px; }
+@media (max-width: 700px) { .pg-columns { grid-template-columns: 1fr; } }
+
+.pg-badge { display: inline-block; font-family: var(--serif); font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  border: 2px solid var(--brass); color: var(--brass); padding: 3px 10px; margin: 0 0 14px; }
+
+/* end credits card of a page */
+#reader-page .pg-endcard { margin-top: 50px; border: 3px solid var(--card-edge); outline: 1px solid var(--card-edge); outline-offset: 4px;
+  background: #1c1712; color: #efe4c6; text-align: center; padding: 26px 30px; transform: rotate(.2deg); }
+#reader-page .pg-endcard .ec-kicker { font-family: var(--serif); font-size: 11px; letter-spacing: .34em; color: #cbb98d; }
+#reader-page .pg-endcard .ec-row { font-family: var(--serif); font-size: 15px; letter-spacing: .1em; margin-top: 10px; }
+#reader-page .pg-endcard .ec-hands { font-size: 13.5px; color: #d9caa4; margin-top: 8px; line-height: 1.6; }
+#reader-page .pg-endcard .ec-fin { font-family: var(--serif); font-size: 22px; letter-spacing: .5em; margin-top: 16px; }
+
+/* premiere card */
+.premiere-card { text-align: center; }
+.premiere-card .marquee-canvas { display: block; margin: 0 auto 12px; }
+.premiere-card .pm-name { font-family: var(--serif); font-weight: 700; font-size: 24px; letter-spacing: .08em; text-transform: uppercase; margin-top: 4px; }
+.premiere-card .pm-line { font-size: 14.5px; color: var(--ink-soft); margin-top: 10px; }
+
+.keyhint { position: absolute; left: 50%; bottom: 112px; transform: translateX(-50%); z-index: 8;
+  font-family: var(--serif); font-size: 11px; letter-spacing: .2em; color: var(--ink-soft);
+  background: rgba(244,236,215,.85); border: 1px solid rgba(43,36,29,.4); padding: 4px 12px; pointer-events: none; }
+
+::selection { background: #d8c390; }
+#reader ::selection { background: #e3d3a4; }
+
+/* the hidden attribute always wins over layout display values */
+[hidden] { display: none !important; }
+
+/* =========================================================================
+   THE SECOND TEN.
+   The world may wear the print's age; the reading never does. Everything
+   below that touches text keeps a crisp ground and a real contrast ratio.
+   ========================================================================= */
+
+/* ---------- (8) the lobby card wall ---------- */
+.panel-toggle { font-family: var(--serif); font-size: 10.5px; letter-spacing: .18em; color: var(--ink);
+  background: var(--card); border: 2px solid var(--card-edge); padding: 5px 10px; cursor: pointer; white-space: nowrap; }
+.panel-toggle:hover { background: #f7efd9; }
+#indexwall { overflow-y: auto; padding: 14px 18px 20px; display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(178px, 1fr)); gap: 16px 14px; align-content: start; }
+.lobby { cursor: pointer; background: #efe4c6; border: 2px solid var(--card-edge);
+  box-shadow: 3px 4px 0 rgba(41,33,27,.28); padding: 0 0 6px; transform: rotate(-.25deg); }
+.lobby:nth-child(2n) { transform: rotate(.3deg); }
+.lobby:nth-child(3n) { transform: rotate(-.15deg); }
+.lobby:hover, .lobby.sel { background: #fbf3dc; box-shadow: 3px 4px 0 var(--brass); }
+.lobby canvas { display: block; width: 100%; height: auto; }
+.lb-bill { font-family: var(--serif); font-size: 9.5px; letter-spacing: .1em; color: #55452c;
+  padding: 6px 8px 2px; line-height: 1.35; }
+.lb-slug { font-family: var(--mono); font-size: 9.5px; color: #6f5c3d; padding: 0 8px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lb-empty { grid-column: 1 / -1; font-family: var(--human); font-size: 15px; color: var(--ink-soft); padding: 20px 6px; }
+
+/* ---------- (18) the orchestra in the hold ---------- */
+.panel-card.band { width: min(940px, 94vw); }
+#bandcanvas { display: block; width: 100%; height: auto; border-bottom: 2px solid var(--card-edge); }
+#bandbody { overflow-y: auto; padding: 14px 24px 22px; font-size: 14px; line-height: 1.5; }
+#bandbody table { width: 100%; border-collapse: collapse; font-size: 13px; }
+#bandbody td { padding: 5px 8px; vertical-align: top; border-bottom: 1px dotted rgba(43,36,29,.25); }
+#bandbody td:first-child { font-family: var(--serif); font-weight: 700; letter-spacing: .08em; white-space: nowrap; }
+#bandbody td.nums { font-family: var(--mono); font-size: 12.5px; text-align: right; white-space: nowrap; color: #7c4a12; }
+#bandbody .quiet { color: var(--ink-soft); font-style: italic; margin-top: 12px; }
+
+/* ---------- (19) the captain's sketchbook ---------- */
+.panel-card.sketch { width: min(960px, 94vw); }
+#sketchcanvas { display: block; width: 100%; height: auto; background: #f3ecd8;
+  border-bottom: 2px solid var(--card-edge); }
+.sketch-bar { display: flex; align-items: center; gap: 12px; padding: 12px 20px; }
+.sketch-bar button { font-family: var(--serif); font-size: 11px; letter-spacing: .16em; color: var(--ink);
+  background: var(--card); border: 2px solid var(--card-edge); padding: 7px 12px; cursor: pointer; }
+.sketch-bar button:hover { background: #f7efd9; }
+#sketchnav { font-family: var(--serif); font-size: 11.5px; letter-spacing: .22em; color: var(--ink-soft); flex: 1; text-align: center; }
+#sketch-export { margin-left: auto; border-color: var(--brass); color: #6b4a12; }
+
+/* ---------- (15) the bouncing ball ---------- */
+#singalong { flex: none; position: relative; background: #1c1712; border-top: 3px solid var(--card-edge);
+  padding: 8px 46px 14px 20px; }
+#singrule { font-family: var(--serif); font-size: 10.5px; letter-spacing: .14em; color: #cbb98d; margin-bottom: 8px; }
+#singtrack { position: relative; padding-top: 32px; }
+#singwords { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+#singwords .sw { font-family: var(--serif); font-weight: 700; font-size: 17px; letter-spacing: .05em;
+  color: #efe4c6; cursor: pointer; padding: 1px 3px; }
+#singwords .sw:hover { color: #ffdf7e; }
+#singwords .sw.on { color: #ffdf7e; text-shadow: 0 0 0 currentColor; }
+#singball { position: absolute; top: 4px; left: 0; width: 18px; height: 18px; border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #fffdf2 0 26%, #f0e2b4 60%, #cbb98d 100%);
+  border: 2px solid #241d16; pointer-events: none; }
+#sing-close { position: absolute; right: 12px; top: 8px; background: none; border: none;
+  color: #cbb98d; font-size: 22px; line-height: 1; cursor: pointer; }
+#reader-page .sing-hit { background: #f6e3a8; box-shadow: 0 0 0 4px #f6e3a8; border-radius: 2px; }
+
+/* ---------- (11) the end of the reel ---------- */
+.reelcard .tally { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 6px 0 16px; }
+.reelcard .tally div { display: flex; flex-direction: column; gap: 4px; }
+.reelcard .tally b { font-family: var(--serif); font-size: 34px; letter-spacing: .04em; color: var(--ink); }
+.reelcard .tally b small { font-size: 15px; color: var(--ink-soft); }
+.reelcard .tally span { font-family: var(--serif); font-size: 9.5px; letter-spacing: .2em; color: var(--brass); }
