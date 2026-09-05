@@ -489,3 +489,55 @@ body.darkadapt #log-tag{opacity:.32}
 /* the crew register's door to the wall */
 .crew-wall{display:block;width:100%;margin-top:7px;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.1em;color:var(--amber-hi);background:transparent;border:1px dashed rgba(255,176,0,.4);padding:4px 6px;cursor:pointer}
 .crew-wall:hover{border-style:solid;color:var(--amber)}
+
+/* ================== round 6: the seven crossings ======================== */
+/* Doors to the sister surveys, each living inside an instrument that
+   already worked this way. Nothing here is drawn until the instrument
+   shows it; nothing covers reading. */
+
+/* (e) the sample tray: eleven cut cells and one that was full at launch */
+.tray{display:flex;gap:2px;margin:4px 0 2px}
+.tray .cell{flex:1 1 0;height:20px;border:1px solid rgba(237,242,240,.16);background:#04090A;position:relative}
+.tray .cell.got::after{content:"";position:absolute;inset:5px;background:var(--amber-dim)}
+.tray .cell.seed{cursor:pointer;padding:1px;border-color:rgba(255,210,122,.5);background:#070906}
+.tray .cell.seed svg{display:block;width:100%;height:100%;stroke:#D9A05B;fill:#D9A05B;fill-opacity:.75;stroke-width:1;stroke-linecap:round}
+.tray .cell.seed:hover,.tray .cell.seed:focus-visible{border-color:var(--amber-hi);background:#0A0D08}
+.in-row .dr7{color:var(--amber-hi)}
+
+/* (c) the guard band caption under the spectrograph */
+#rx-cap[hidden]{display:none}
+#rx-cap span{color:var(--amber-hi)}
+#speccv{cursor:crosshair}
+
+/* (f) mission papers: the four-colour corner under the briefing stack */
+.papers{margin:.9rem 0 .2rem}
+.pp-k{font-family:var(--f-cond);font-size:.68rem;letter-spacing:.3em;color:var(--white-faint)}
+.pp-stack{position:relative;height:64px;margin-top:6px;overflow:hidden}
+.pp-stack.out{overflow:visible}
+.pp-sheet{position:absolute;left:0;right:0;height:16px;background:var(--bg-3);border:1px solid rgba(237,242,240,.14);z-index:1;pointer-events:none}
+.pp-sheet.s1{top:0}.pp-sheet.s2{top:14px;left:6px;right:-2px}.pp-sheet.s3{top:28px;left:2px}
+.pp-comic{
+  position:absolute;left:18px;top:34px;width:150px;height:96px;border:1px solid rgba(6,8,9,.8);z-index:0;
+  transform:rotate(-7deg);cursor:pointer;padding:6px 8px;text-align:left;
+  background:
+    repeating-linear-gradient(90deg, rgba(0,0,0,0) 0 3px, rgba(255,255,255,.07) 3px 4px),
+    linear-gradient(160deg,#E23B2E 0 34%,#F4C300 34% 58%,#1F7ED0 58% 82%,#18A05A 82% 100%);
+  transition:transform .5s ease, top .5s ease;
+}
+.pp-comic .pc-mast{display:block;font-family:var(--f-cond);font-weight:600;font-size:.95rem;letter-spacing:.14em;color:#FFF7E0;text-shadow:1px 1px 0 #1A1206}
+.pp-comic .pc-sub{display:block;font-family:var(--f-mono);font-size:.5rem;color:#1A1206;background:#FFF7E0;padding:0 3px;margin-top:2px;width:max-content}
+.pp-comic:hover,.pp-comic:focus-visible{transform:rotate(-5deg) translateY(-4px)}
+.pp-comic.out{transform:rotate(-2deg) translateY(-34px);top:10px;z-index:2}
+@media (prefers-reduced-motion: reduce){.pp-comic{transition:none}}
+
+/* (g) the assembly drawing inside WHAT AM I LOOKING AT */
+.an-blue{
+  position:absolute;width:300px;background:var(--bg-2);border:var(--rule);
+  padding:8px 10px 9px;text-align:left;cursor:pointer;color:var(--white-dim);
+  pointer-events:auto;
+}
+.an-blue:hover,.an-blue:focus-visible{border-color:var(--amber)}
+.an-blue .ab-k{display:block;font-family:var(--f-mono);font-size:.56rem;letter-spacing:.14em;color:var(--amber);margin-bottom:4px}
+.an-blue svg{display:block;width:100%;height:auto;color:rgba(237,242,240,.75)}
+.an-blue svg text{font:500 8px "IBM Plex Mono",monospace;fill:var(--amber-hi)}
+.an-blue .ab-p{display:block;font-family:var(--f-mono);font-size:.56rem;line-height:1.7;color:var(--white-dim);margin-top:4px}

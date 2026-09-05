@@ -82,6 +82,15 @@
   var transitTimer = 0;
   var BOOT_T = performance.now();
 
+  /* ------- the seven crossings: sister surveys of the same lab -------- */
+  /* Each door is discovered through an instrument doing exactly what it
+     always did. Nothing below costs a frame while it is off-screen. */
+  var EGG = { ready: false,
+    home:  { x: 0, y: 0, r: 30, ux: 1, uy: 0, dots: null },
+    ridge: { x: 0, y: 0, len: 320, pts: null } };
+  var eggHover = null;        /* 'home' | 'ridge' | null */
+  var crossingNow = false;    /* a crossing beat is playing */
+
   var cam = { x: 0, y: 0, s: 0.85, tx: 0, ty: 0, ts: 0.85 };
   var canvas, ctx, DPR = 1, W = 0, H = 0;
   var scopeCv = null, specCv = null, photCv = null;
@@ -102,6 +111,7 @@
     computeLayout(clusters, 'cited', 71130244);   /* measured positions first: the probe needs them now */
     stars.forEach(function (s) { s.x = s.pos.cited[0]; s.y = s.pos.cited[1]; });
     buildPickGrid();
+    computeEggs();
     initCanvas();
     wireSky();
     wireChrome();
@@ -544,6 +554,49 @@
     dirty = true;
   }
 
+  /* ------------------------------------------- the outer bodies -------- */
+  /* Two things the almanac never predicted, found only by pointing the
+     camera where there is nothing left to survey: the homeworld astern,
+     and a ridge line at the southern edge of the plate. Positions are
+     fixed once, from the measured bounds of the chart. */
+  function computeEggs() {
+    var minx = 1e9, miny = 1e9, maxx = -1e9, maxy = -1e9, i;
+    for (i = 0; i < stars.length; i++) {
+      var pp = stars[i].pos.cited;
+      if (pp[0] < minx) minx = pp[0]; if (pp[0] > maxx) maxx = pp[0];
+      if (pp[1] < miny) miny = pp[1]; if (pp[1] > maxy) maxy = pp[1];
+    }
+    var cx = (minx + maxx) / 2, cy = (miny + maxy) / 2;
+    var R = Math.max(maxx - minx, maxy - miny) / 2 || 600;
+    var h = EGG.home;
+    h.x = cx - R * 1.34; h.y = cy + R * 0.52;
+    h.r = Math.max(26, R * 0.05);
+    var d = Math.hypot(h.x - cx, h.y - cy) || 1;
+    h.ux = (h.x - cx) / d; h.uy = (h.y - cy) / d;  /* night side faces away */
+    var rnd = mulberry32(902609);
+    var dots = [];
+    for (var gx = -6; gx <= 6; gx++) for (var gy = -6; gy <= 6; gy++) {
+      var nx = gx / 7 + (rnd() - 0.5) * 0.03, ny = gy / 7 + (rnd() - 0.5) * 0.03;
+      var ph = rnd() * 6.283, cc = rnd();
+      if (nx * nx + ny * ny > 0.82) continue;      /* inside the disc */
+      if (nx * h.ux + ny * h.uy < 0.06) continue;  /* lights only in the dark */
+      if (cc > 0.9) continue;                      /* the grid has gaps */
+      dots.push([nx, ny, ph, cc]);
+    }
+    h.dots = dots;
+    var rg = EGG.ridge;
+    rg.x = cx + R * 1.22; rg.y = cy + R * 1.18;
+    rg.len = Math.max(300, R * 0.5);
+    var pts = [], N = 26, rr = mulberry32(714209);
+    for (var k = 0; k <= N; k++) {
+      var t = k / N;
+      pts.push([(t - 0.5) * rg.len,
+        -Math.sin(t * 9.4) * rg.len * 0.014 - (rr() * 10 - 5) - Math.sin(t * 3.1) * rg.len * 0.02]);
+    }
+    rg.pts = pts;
+    EGG.ready = true;
+  }
+
   /* -------------------------------------------------------- persistence */
 
   var SAVE_KEY = 'firstlight.survey.v1';
@@ -763,6 +816,7 @@
     drawPulseTrains(now, dimAll);
     drawBodies(now, dimAll);
     if (darkAdapt) drawNightBloom(now);
+    if (EGG.ready) { drawHomeworld(now, dimAll); drawRidge(now, dimAll); }
     drawGhost(now);
     drawReticle(now);
     drawLabels(dimAll);
@@ -1057,6 +1111,160 @@
     }
   }
 
+  /* -------------------------------------------- the aft camera --------- */
+  /* (a) THE HOMEWORLD. The camera turned back the way the probe came:
+     a small planet, day limb toward the survey, and on the night side a
+     glitter no geology explains - a grid, streets, a city. Locking on
+     descends to its sky. Drawn only while it is actually on screen. */
+  function drawHomeworld(now, dim) {
+    var h = EGG.home;
+    var p = w2s(h.x, h.y), R = h.r * cam.s;
+    var m = R * 1.8 + 40;
+    if (p[0] < -m || p[0] > W + m || p[1] < -m || p[1] > H + m) return;
+    var res = R >= 42;                       /* the camera resolves the grid */
+    ctx.save();
+    ctx.beginPath(); ctx.arc(p[0], p[1], Math.max(2, R), 0, 6.2832);
+    ctx.fillStyle = '#0A0F12'; ctx.fill();
+    ctx.strokeStyle = rgba(WHITE, 0.16 * dim); ctx.lineWidth = 1; ctx.stroke();
+    /* day limb: lit by the system the probe is surveying */
+    var la = Math.atan2(-h.uy, -h.ux);
+    ctx.beginPath(); ctx.arc(p[0], p[1], Math.max(2, R) - 0.5, la - 1.25, la + 1.25);
+    ctx.strokeStyle = rgba(AMBER, (res ? 0.45 : 0.75) * dim);
+    ctx.lineWidth = Math.max(1, R * 0.045); ctx.stroke();
+    ctx.lineWidth = 1;
+    if (R >= 7 && h.dots) {
+      var hot = eggHover === 'home' ? 1.2 : 1;
+      for (var k = 0; k < h.dots.length; k++) {
+        var d0 = h.dots[k];
+        var a = res
+          ? (REDUCED ? 0.75 : 0.45 + 0.4 * Math.sin(now / 640 + d0[2]))
+          : (REDUCED ? 0.5  : 0.3  + 0.3 * Math.sin(now / 640 + d0[2]));
+        var sz = res ? 2 : 1;
+        ctx.fillStyle = d0[3] < 0.1 ? rgba(MINT, a * dim)
+          : d0[3] < 0.32 ? rgba(WHITE, a * dim)
+          : rgba(AMBER_HI, Math.min(1, a * hot) * dim);
+        ctx.fillRect(p[0] + d0[0] * R - sz / 2, p[1] + d0[1] * R - sz / 2, sz, sz);
+      }
+    }
+    if (res) {
+      ctx.font = '500 9.5px "IBM Plex Mono", monospace';
+      ctx.fillStyle = rgba(WHITE, 0.55 * dim);
+      ctx.fillText('AFT CAMERA · THE HOMEWORLD · NIGHT SIDE', p[0] - R * 0.92, p[1] - R - 12);
+    }
+    ctx.restore();
+  }
+
+  /* -------------------------------------------- the telephoto ---------- */
+  /* (d) THE RIDGE. At the southern edge of the plate, at dusk: a ridge
+     line, a small figure walking it, a smaller one trotting behind. */
+  function drawRidge(now, dim) {
+    var rg = EGG.ridge;
+    var p = w2s(rg.x, rg.y);
+    var half = (rg.len / 2) * cam.s + 80;
+    if (p[0] < -half || p[0] > W + half || p[1] < -140 || p[1] > H + 140) return;
+    var res = cam.s >= 2.1;                              /* telephoto reach */
+    var pts = rg.pts, n = pts.length, k, x, y;
+    ctx.save();
+    if (res) {
+      /* dusk: a low amber wash dying against the ridge */
+      var gTop = p[1] - 90, gBot = p[1] + 10;
+      var grad = ctx.createLinearGradient(0, gTop, 0, gBot);
+      grad.addColorStop(0, 'rgba(255,176,0,0)');
+      grad.addColorStop(1, 'rgba(255,176,0,' + (0.10 * dim).toFixed(3) + ')');
+      ctx.fillStyle = grad;
+      ctx.fillRect(p[0] - (rg.len / 2) * cam.s, gTop, rg.len * cam.s, gBot - gTop);
+    }
+    ctx.beginPath();
+    for (k = 0; k < n; k++) {
+      x = p[0] + pts[k][0] * cam.s;
+      y = p[1] + pts[k][1] * cam.s * 0.6;
+      if (k) ctx.lineTo(x, y); else ctx.moveTo(x, y);
+    }
+    if (res) {
+      /* the land below the line is already night */
+      ctx.lineTo(p[0] + (rg.len / 2) * cam.s, p[1] + 70);
+      ctx.lineTo(p[0] - (rg.len / 2) * cam.s, p[1] + 70);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(3,6,8,' + (0.9 * dim).toFixed(3) + ')';
+      ctx.fill();
+    }
+    ctx.strokeStyle = rgba(WHITE, (res ? 0.5 : 0.16) * dim);
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    if (res) {
+      var t = REDUCED ? 0.42 : ((now / 26000) % 1);
+      var t2 = t - 0.045;                        /* the smaller one, behind */
+      var ry = function (tt) {
+        var f = clamp(tt, 0, 1) * (n - 1), i0 = Math.floor(f), fr = f - i0;
+        var i1 = Math.min(n - 1, i0 + 1);
+        return [p[0] + (pts[i0][0] + (pts[i1][0] - pts[i0][0]) * fr) * cam.s,
+                p[1] + (pts[i0][1] + (pts[i1][1] - pts[i0][1]) * fr) * cam.s * 0.6];
+      };
+      var A = ry(t), B2 = ry(t2);
+      var hgt = clamp(cam.s * 2.4, 5, 9);
+      ctx.strokeStyle = rgba(WHITE, 0.85 * dim);
+      ctx.beginPath(); ctx.moveTo(A[0], A[1]); ctx.lineTo(A[0], A[1] - hgt); ctx.stroke();
+      ctx.fillStyle = rgba(WHITE, 0.85 * dim);
+      ctx.fillRect(A[0] - 1, A[1] - hgt - 2, 2, 2);
+      var bob = REDUCED ? 0 : Math.sin(now / 95) * 0.9;  /* the trot */
+      ctx.beginPath(); ctx.moveTo(B2[0], B2[1] + bob); ctx.lineTo(B2[0], B2[1] - hgt * 0.5 + bob); ctx.stroke();
+      ctx.fillRect(B2[0] - 1, B2[1] - hgt * 0.5 - 1.8 + bob, 2, 1.6);
+      ctx.font = '500 9.5px "IBM Plex Mono", monospace';
+      ctx.fillStyle = rgba(WHITE, 0.55 * dim);
+      ctx.fillText('TELEPHOTO · RIDGE LINE · DUSK', p[0] - 80, p[1] - 98);
+    }
+    ctx.restore();
+  }
+
+  /* --------------------------------- crossings: hit, hint, beat -------- */
+  /* One door, one grammar: the hint rides the instrument's own tooltip,
+     activation is the existing gesture, the beat is short, and reduced
+     motion crosses at once. Destinations are sister berths at ../KEY/. */
+  function crossTo(key, ms) {
+    if (crossingNow) return;
+    crossingNow = true;
+    var go = function () { location.href = '../' + key + '/'; };
+    if (REDUCED) { go(); return; }
+    setTimeout(go, ms == null ? 900 : ms);
+  }
+  function eggAt(wx, wy) {
+    if (!EGG.ready || crossingNow) return null;
+    var h = EGG.home;
+    if (Math.hypot(wx - h.x, wy - h.y) < h.r * 1.3 + 12 / cam.s) return 'home';
+    var rg = EGG.ridge;
+    if (Math.abs(wy - rg.y) < 40 / cam.s + 18 && Math.abs(wx - rg.x) < rg.len / 2 + 20 / cam.s) return 'ridge';
+    return null;
+  }
+  function showEggTip(kind, x, y) {
+    tipEl = tipEl || $('tooltip');
+    tipEl.innerHTML = kind === 'home'
+      ? '<b>THE HOMEWORLD</b><span class="dg">AFT CAMERA · NIGHT SIDE</span>' +
+        '<span>the night side glitters - someone built a city down there</span>' +
+        '<span class="dr">lock on to descend to its sky</span>'
+      : '<b>TWO WALKERS</b><span class="dg">TELEPHOTO · RIDGE LINE · DUSK</span>' +
+        '<span>a small figure walks the ridge - a smaller one trots behind</span>' +
+        '<span class="dr">lock on to fall in behind them</span>';
+    tipEl.hidden = false; moveTip(x, y);
+  }
+  function activateEgg(kind) {
+    if (crossingNow) return;
+    hideTip();
+    if (kind === 'home') {
+      cam.tx = EGG.home.x; cam.ty = EGG.home.y;
+      cam.ts = Math.max(cam.s, 52 / EGG.home.r);
+      logLine('AFT CAMERA · NIGHT SIDE RESOLVED · A CITY, GRIDDED AND LIT · <b>DESCENDING TO ITS SKY</b>', true);
+      safeSnd('warp');
+      crossTo('pixelcity', 1700);
+    } else {
+      cam.tx = EGG.ridge.x; cam.ty = EGG.ridge.y - 14;
+      cam.ts = Math.max(cam.s, 2.6);
+      logLine('TELEPHOTO · TWO WALKERS ON THE RIDGE AT DUSK · THE LONG WAY, THEN · <b>FALLING IN BEHIND</b>', true);
+      safeSnd('warp');
+      crossTo('longway', 1700);
+    }
+    dirty = true;
+  }
+
   /* the pencil ghost: where the search or the warp is taking you */
   function drawGhost(now) {
     if (!ghost) return;
@@ -1220,6 +1428,7 @@
     o.push('<div class="in-row"><span>' + (cl.loose
       ? 'no citation community claimed this body'
       : 'purity <b>' + cl.purity.toFixed(2) + '</b> · ' + cl.members.length + ' members · hub ' + esc(cl.label)) + '</span></div>');
+    o.push('<div class="in-row rx" id="rx-cap" hidden><span>past C27 the band is not empty - hold the carrier to follow it down</span></div>');
 
     o.push('<div class="in-k">EST. MASS <b>' + fmtN(s.words) + ' WORDS</b></div>');
     o.push('<div class="in-bar"><i style="width:' + Math.max(1, Math.round(s.words / maxWords * 100)) + '%"></i></div>');
@@ -1244,6 +1453,26 @@
     o.push('<div class="in-row"><span>days of care</span><b>' + p.careDays + '</b></div>');
     if (p.night) o.push('<div class="in-row"><span class="fresh">' + p.night + ' commit' + (p.night === 1 ? '' : 's') + ' made at night</span></div>');
 
+    /* (e) the return capsule rides with every survey; eleven cells fill
+       as the mission logs flora - cell 07 was already full at launch */
+    var cells = 12, got = Math.min(cells - 1, Math.floor(visited.size / 24));
+    o.push('<div class="in-k">SAMPLE TRAY <b>RETURN CAPSULE · 12 CELLS</b></div>');
+    var tray = '<div class="tray">';
+    for (var C = 0; C < cells; C++) {
+      if (C === 6) {
+        tray += '<button type="button" class="cell seed" id="seedcell" data-name="CELL 07 · PRESSED SEED" ' +
+          'data-explain="Flat as paper, under glass, labelled in another hand. This did not come aboard with us.">' +
+          '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 16 C 9 12 9 9 10.5 6.5" fill="none"/>' +
+          '<ellipse cx="11.4" cy="5.6" rx="2.6" ry="1.7" transform="rotate(-28 11.4 5.6)"/>' +
+          '<path d="M11 7 C 14 8.5 15.5 11 15 14 C 12.5 13 11 10.5 11 7 Z"/></svg></button>';
+      } else {
+        tray += '<i class="cell' + ((C < 6 ? C : C - 1) < got ? ' got' : '') + '"></i>';
+      }
+    }
+    tray += '</div>';
+    o.push(tray);
+    o.push('<div class="in-row"><span>' + got + ' cell' + (got === 1 ? '' : 's') + ' logged this mission</span><span class="dr7">cell 07 · not ours</span></div>');
+
     o.push('<div class="in-k">CREW REGISTER <b>' + (p.authors || []).length + ' HAND' + ((p.authors || []).length === 1 ? '' : 'S') + '</b></div>');
     o.push('<div class="crew" data-name="CREW REGISTER" data-explain="Everyone who ever committed to this page, from provenance; the chief surveyor made the most commits">');
     (p.authors || []).forEach(function (a) {
@@ -1266,6 +1495,15 @@
     if (lb) lb.addEventListener('click', function () { audioCore(i, true); });
     var chh = $('crewhall');
     if (chh) chh.addEventListener('click', function () { toggleHands(true); });
+    var sc = $('seedcell');
+    if (sc) sc.addEventListener('click', function () {
+      if (crossingNow) return;
+      logLine('SAMPLE TRAY · CELL 07 · A PRESSED SEED, LABELLED IN ANOTHER HAND · <b>FOLLOWING THE LABEL</b>', true);
+      safeSnd('contact');
+      crossTo('herbarium', 1000);
+    });
+    wireScopeSail();
+    wireReceiver(i);
     needPhot = true;
   }
 
@@ -1302,6 +1540,26 @@
       g.fillStyle = rgba(WHITE, 0.55);
       g.fillText('FLATLINE · NO INBOUND CITATIONS', 10, base - 10);
     }
+    /* (b) one echo returns rigged: hull, mast and a filled sail where
+       every other body answers with a bare spike. It blooms when the
+       sweep passes over it, the way any echo would. */
+    var sailX = PW * 0.82;
+    var bloom = 0;
+    if (!REDUCED) {
+      var swp = ((now % 2600) / 2600) * PW;
+      bloom = Math.max(0, 1 - Math.abs(swp - sailX) / 30);
+    }
+    var sa = REDUCED ? 0.55 : 0.3 + 0.65 * bloom;
+    g.strokeStyle = rgba(AMBER_HI, sa);
+    g.beginPath();
+    g.moveTo(sailX - 5, base - 2); g.lineTo(sailX + 5, base - 2);
+    g.moveTo(sailX, base - 2); g.lineTo(sailX, base - 15);
+    g.stroke();
+    g.fillStyle = rgba(AMBER_HI, sa * 0.8);
+    g.beginPath();
+    g.moveTo(sailX, base - 15); g.lineTo(sailX + 7, base - 5); g.lineTo(sailX, base - 5);
+    g.closePath(); g.fill();
+
     /* the sweep */
     if (!REDUCED) {
       var sx = ((now % 2600) / 2600) * PW;
@@ -1326,6 +1584,7 @@
       g.fillText('NO CLASS · CONTINUUM ONLY', 10, PH / 2 + 3);
       g.strokeStyle = rgba(WHITE, 0.2);
       g.beginPath(); g.moveTo(0, PH * 0.8); g.lineTo(PW, PH * 0.8); g.stroke();
+      specGuard(g, PW, PH);
       return;
     }
     var hue = Math.round(s.comIdx / clusters.length * 360);
@@ -1346,6 +1605,127 @@
       g.fillRect(rnd() * PW, rnd() * PH, 1, 1);
     }
     g.lineWidth = 1;
+    specGuard(g, PW, PH);
+  }
+
+  /* (c) past the last class the band is ruled off - and never quite empty */
+  function specGuard(g, PW, PH) {
+    var gb = PW * 0.9;
+    g.strokeStyle = rgba(WHITE, 0.22);
+    g.setLineDash([2, 3]);
+    g.beginPath(); g.moveTo(gb, 2); g.lineTo(gb, PH - 2); g.stroke();
+    g.setLineDash([]);
+    g.font = '500 8px "IBM Plex Mono", monospace';
+    g.fillStyle = rgba(WHITE, 0.3);
+    g.fillText('GB', gb + 4, 9);
+  }
+
+  /* the tuning needle rides the spectrograph on pointer movement only */
+  function drawSpecNeedle(i, px, holdFrac) {
+    if (!specCv) return;
+    drawSpectrograph(i);
+    if (px == null) return;
+    var g = specCv.getContext('2d');
+    var PW = specCv.width, PH = specCv.height;
+    g.strokeStyle = rgba(WHITE, 0.85);
+    g.beginPath(); g.moveTo(px, 0); g.lineTo(px, PH); g.stroke();
+    var kHz = (px / PW * 9.6 + 0.4).toFixed(2);
+    g.font = '500 8px "IBM Plex Mono", monospace';
+    g.fillStyle = rgba(WHITE, 0.7);
+    g.fillText('TUNE ' + kHz + ' kHz', Math.min(PW - 78, Math.max(2, px + 5)), PH - 5);
+    if (px >= PW * 0.9) {
+      g.fillStyle = rgba(AMBER_HI, 0.9);
+      g.fillText('CARRIER', PW * 0.9 - 46, 9);
+      if (holdFrac > 0) {
+        g.fillStyle = rgba(AMBER, 0.9);
+        g.fillRect(PW * 0.9, PH - 3, (PW - PW * 0.9) * Math.min(1, holdFrac), 2);
+      }
+    }
+  }
+
+  /* ---------------------- the sail echo + the guard band (wiring) ------ */
+  /* Both live on canvases the readings panel already rebuilds per lock,
+     so listeners never stack and cost nothing while the panel is shut. */
+  function cvXY(e, cv) {
+    var r = cv.getBoundingClientRect();
+    return [(e.clientX - r.left) * (cv.width / Math.max(1, r.width)),
+            (e.clientY - r.top) * (cv.height / Math.max(1, r.height))];
+  }
+  function sailHit(cv, q) {
+    var base = cv.height * 0.55;
+    return Math.abs(q[0] - cv.width * 0.82) <= 12 && q[1] > base - 20 && q[1] < base + 6;
+  }
+  var sailTipOn = false;
+  function wireScopeSail() {
+    if (!scopeCv) return;
+    scopeCv.addEventListener('pointermove', function (e) {
+      var on = sailHit(scopeCv, cvXY(e, scopeCv));
+      scopeCv.style.cursor = on ? 'pointer' : '';
+      if (on) {
+        tipEl = tipEl || $('tooltip');
+        tipEl.innerHTML = '<b>SAIL ECHO</b><span class="dg">EMISSION SCOPE · BEARING 296</span>' +
+          '<span>one echo returns rigged - no body in this system carries sail</span>' +
+          '<span class="dr">strike it to give chase</span>';
+        tipEl.hidden = false; moveTip(e.clientX, e.clientY);
+      } else if (sailTipOn) hideTip();
+      sailTipOn = on;
+    });
+    scopeCv.addEventListener('pointerleave', function () { if (sailTipOn) hideTip(); sailTipOn = false; });
+    scopeCv.addEventListener('click', function (e) {
+      if (!sailHit(scopeCv, cvXY(e, scopeCv)) || crossingNow) return;
+      hideTip(); sailTipOn = false;
+      logLine('SCOPE · THE RIGGED ECHO TACKS OFF THE CHART, MAKING WAY · <b>GIVING CHASE</b>', true);
+      safeSnd('transit');
+      crossTo('cartastrapiana', 1000);
+    });
+  }
+  var rxHold = null, rxLastPlay = -1e9;
+  function wireReceiver(i) {
+    if (!specCv) return;
+    var inBand = function (q) { return q[0] >= specCv.width * 0.9; };
+    var cap = function (show) { var el = $('rx-cap'); if (el) el.hidden = !show; };
+    specCv.addEventListener('pointermove', function (e) {
+      if (rxHold) return;
+      var q = cvXY(e, specCv);
+      drawSpecNeedle(i, q[0], 0);
+      var on = inBand(q);
+      cap(on);
+      if (on && performance.now() - rxLastPlay > 4000) {
+        rxLastPlay = performance.now();
+        safeSnd('broadcast');
+      }
+    });
+    specCv.addEventListener('pointerleave', function () {
+      if (!rxHold) { drawSpectrograph(i); cap(false); }
+    });
+    specCv.addEventListener('pointerdown', function (e) {
+      var q = cvXY(e, specCv);
+      if (!inBand(q) || crossingNow || rxHold) return;
+      try { specCv.setPointerCapture(e.pointerId); } catch (err) {}
+      if (REDUCED) { rxCross(); return; }
+      var dur = (audioOn && audioUnlocked) ? 2200 : 800;
+      if (audioOn && performance.now() - rxLastPlay > 1200) {
+        rxLastPlay = performance.now();
+        safeSnd('broadcast');
+      }
+      var t0 = performance.now();
+      rxHold = { iv: 0 };
+      rxHold.iv = setInterval(function () {
+        var f = (performance.now() - t0) / dur;
+        drawSpecNeedle(i, specCv.width * 0.96, f);
+        if (f >= 1) { clearInterval(rxHold.iv); rxHold = null; rxCross(); }
+      }, 80);
+    });
+    var rxUp = function () {
+      if (rxHold) { clearInterval(rxHold.iv); rxHold = null; drawSpecNeedle(i, specCv.width * 0.96, 0); }
+    };
+    specCv.addEventListener('pointerup', rxUp);
+    specCv.addEventListener('pointercancel', rxUp);
+  }
+  function rxCross() {
+    if (crossingNow) return;
+    logLine('RECEIVER · GUARD BAND · A CARTOON ORCHESTRA UNDER THE HISS, SCRATCHED AND MERRY, A CENTURY OLD · <b>FOLLOWING IT DOWN</b>', true);
+    crossTo('bythedeep', 900);
   }
 
   /* ----------------------------------------------------------- mission log */
@@ -1444,9 +1824,14 @@
        almanac         the old atlas is opened
        hall pad        the Hall of Hands is open
        plate           the survey completes at 290/290
-       zoom in / out   one mirrored sine glide per zoom gesture:
-                       rising when you zoom in, the same shape falling
-                       when you zoom out — gentle, below every event voice
+       zoom in / out   one continuous voice per zoom gesture, by owner
+                       order: it swells in as the gesture begins, lasts
+                       exactly as long as the wheel keeps turning (ticks
+                       coalesced into one stream), and lets go gently the
+                       moment the hand stops — pitch rides the zoom itself
+                       (in rising, out falling, exact mirrors), speed
+                       fills the voice out; never a click, never a cut,
+                       never louder than the old glide
      Toggling SOUND off silences everything for the visit. */
 
   var AC = null, audioOn = true, audioUnlocked = false, rack = null;
@@ -1694,11 +2079,13 @@
       o.connect(g); g.connect(R.dry);
       o.start(t); vib.start(t); o.stop(t + 0.6); vib.stop(t + 0.6);
     },
-    /* mirrored zoom pair: IN is a short rising sine glide, OUT the exact
-       same shape falling — same timbre family, inverse pitch trajectory,
-       sine through the tape echo, no noise, under every event voice. */
-    zoomIn: function (R, t) { zoomGlide(R, t, true); },
-    zoomOut: function (R, t) { zoomGlide(R, t, false); },
+    /* mirrored zoom pair, offline signature: one representative 0.45 s
+       gesture rendered through the same sustained recipe the live wheel
+       drives — soft attack, pitch crossing the band, gentle release.
+       IN rises, OUT is the exact inverse. Live zooming never calls
+       these; it feeds the continuous voice below. */
+    zoomIn: function (R, t) { zoomScript(R, t, true); },
+    zoomOut: function (R, t) { zoomScript(R, t, false); },
     /* the almanac opens: a short burst of tape flutter and one reel click */
     almanac: function (R, t) {
       var c = R.ctx;
@@ -1735,38 +2122,185 @@
         o.connect(lp); lp.connect(g); g.connect(R.dry);
         o.start(tt); o.stop(tt + 0.55);
       });
+    },
+    /* (c) the guard band broadcast: two seconds of a 1930s cartoon pit
+       band heard through a century of shellac - oom-pah low brass, a
+       muted lead with too much vibrato, offbeat chord stabs, and crackle
+       from the same seeded noise as everything else. No sample. */
+    broadcast: function (R, t) {
+      var c = R.ctx;
+      var out = c.createGain();
+      out.gain.setValueAtTime(0.0001, t);
+      out.gain.exponentialRampToValueAtTime(0.55, t + 0.45);
+      out.gain.setValueAtTime(0.55, t + 1.95);
+      out.gain.exponentialRampToValueAtTime(0.0001, t + 2.3);
+      var bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1300; bp.Q.value = 0.55;
+      bp.connect(out); out.connect(R.dry);
+      var s = c.createGain(); s.gain.value = 0.2; out.connect(s); s.connect(R.send);
+      var B = 0.23, k;                                /* eighth notes */
+      var bass = [98, 0, 73.42, 0, 98, 0, 73.42, 0, 98, 0];  /* the oom */
+      for (k = 0; k < bass.length; k++) {
+        if (!bass[k]) continue;
+        var bo = c.createOscillator(); bo.type = 'triangle'; bo.frequency.value = bass[k];
+        var bg = c.createGain();
+        var bt = t + 0.15 + k * B;
+        bg.gain.setValueAtTime(0.0001, bt);
+        bg.gain.exponentialRampToValueAtTime(0.13, bt + 0.015);
+        bg.gain.exponentialRampToValueAtTime(0.0001, bt + 0.16);
+        bo.connect(bg); bg.connect(bp);
+        bo.start(bt); bo.stop(bt + 0.18);
+      }
+      for (k = 1; k < 10; k += 2) {                   /* the pah */
+        var st = t + 0.15 + k * B;
+        [293.66, 369.99, 440].forEach(function (f) {
+          var so = c.createOscillator(); so.type = 'square'; so.frequency.value = f;
+          var sg = c.createGain();
+          sg.gain.setValueAtTime(0.0001, st);
+          sg.gain.exponentialRampToValueAtTime(0.02, st + 0.008);
+          sg.gain.exponentialRampToValueAtTime(0.0001, st + 0.07);
+          so.connect(sg); sg.connect(bp);
+          so.start(st); so.stop(st + 0.09);
+        });
+      }
+      /* the lead: one merry phrase, too much vibrato */
+      var vib = c.createOscillator(); vib.frequency.value = 6.8;
+      var vg = c.createGain(); vg.gain.value = 14;
+      vib.connect(vg); vib.start(t); vib.stop(t + 2.1);
+      var mel = [[587.33, 0, 1.5], [698.46, 1.5, 0.5], [783.99, 2, 2], [698.46, 4, 1], [659.25, 5, 1], [587.33, 6, 2], [783.99, 8, 1.4]];
+      for (k = 0; k < mel.length; k++) {
+        var mo = c.createOscillator(); mo.type = 'sawtooth'; mo.frequency.value = mel[k][0];
+        vg.connect(mo.frequency);
+        var mlp = c.createBiquadFilter(); mlp.type = 'lowpass'; mlp.frequency.value = 2100; mlp.Q.value = 2.2;
+        var mg = c.createGain();
+        var mt = t + 0.15 + mel[k][1] * B, md = mel[k][2] * B;
+        mg.gain.setValueAtTime(0.0001, mt);
+        mg.gain.exponentialRampToValueAtTime(0.06, mt + 0.02);
+        mg.gain.setValueAtTime(0.06, mt + md - 0.03);
+        mg.gain.exponentialRampToValueAtTime(0.0001, mt + md);
+        mo.connect(mlp); mlp.connect(mg); mg.connect(bp);
+        mo.start(mt); mo.stop(mt + md + 0.02);
+      }
+      /* shellac: crackle rides the seeded noise, ticking at the rpm */
+      var ns = c.createBufferSource(); ns.buffer = noiseBuf(c, 2.2);
+      var hp = c.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 2400;
+      var ng = c.createGain(); ng.gain.value = 0.02;
+      var crk = c.createOscillator(); crk.type = 'square'; crk.frequency.value = 8.3;
+      var cg = c.createGain(); cg.gain.value = 0.01;
+      crk.connect(cg); cg.connect(ng.gain);
+      ns.connect(hp); hp.connect(ng); ng.connect(bp);
+      ns.start(t); ns.stop(t + 2.3); crk.start(t); crk.stop(t + 2.3);
     }
   };
 
-  /* one shared builder so IN and OUT are exact mirrors of each other:
-     G4 (392 Hz) to D5 (587.33 Hz) rising, D5 to G4 falling, ~0.3 s. */
-  function zoomGlide(R, t, up) {
+  /* THE CONTINUOUS ZOOM VOICE (owner order, this wave). The one-shot
+     glide pair is retired; in its place one sustained sine — same
+     timbre family, same G4..D5 band, same tape-echo send — that lives
+     exactly as long as the hand keeps zooming. Pitch is not a scripted
+     ramp: it RIDES the zoom itself, mapped from the camera scale across
+     the band, so zooming in rises, zooming out falls, and the two
+     directions stay exact mirrors (the same path, walked the other
+     way). Wheel ticks coalesce into one gesture stream: a soft ~45 ms
+     attack as the stream opens, a sustain that tracks the hand (zoom
+     speed opens the lowpass and fills the gain out), and a gentle release
+     (120 ms constant) that begins only after 180 ms of wheel silence.
+     setTargetAtTime everywhere: no click, no cut, no loop seam. Only
+     the human wheel drives it — the cold open, programmatic camera
+     moves and the search warp still never sound it.
+     GAIN DISCIPLINE: the rack's compressor lifts a sustained tone about
+     2x more than it lifted the old 0.13 s transient (adaptive makeup),
+     so the envelope ceiling here is 0.0085 — measured offline through
+     the full rack, the voice peaks 0.019, just under the shipped
+     glide's 0.020. Quieter at the node, identical in the room. */
+  var ZF_LO = 392, ZF_HI = 587.33;                /* G4 .. D5, as ruled */
+  var ZLN0 = Math.log(0.06), ZLN1 = Math.log(8);  /* cam.s bounds */
+  function zvPitch(s) {
+    var u = (Math.log(clamp(s, 0.06, 8)) - ZLN0) / (ZLN1 - ZLN0);
+    return ZF_LO * Math.pow(ZF_HI / ZF_LO, u);
+  }
+  var zv = null, zvRelT = 0, zvSpd = 0, zvLastAt = 0, zvStarts = 0;
+  var ZV_QUIET = 180;            /* ms of wheel silence before letting go */
+  function zvStart(fHz) {
+    var c = AC;
+    var o = c.createOscillator(); o.type = 'sine'; o.frequency.value = fHz;
+    var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; lp.Q.value = 0.7;
+    var g = c.createGain(); g.gain.value = 0.0001;
+    o.connect(lp); lp.connect(g); g.connect(rack.dry);
+    var s = c.createGain(); s.gain.value = 0.18; g.connect(s); s.connect(rack.send);
+    o.start();
+    zv = { o: o, lp: lp, g: g }; zvStarts++;
+  }
+  function zvRelease() {
+    if (!zv || !AC) return;
+    var v = zv; zv = null;
+    try {
+      var t = AC.currentTime;
+      v.g.gain.setTargetAtTime(0.0001, t, 0.12);  /* the gentle letting-go */
+      v.o.stop(t + 0.9);
+    } catch (e) {}
+  }
+  function zvKill(fast) {                         /* SOUND OFF mid-gesture */
+    if (zvRelT) { clearTimeout(zvRelT); zvRelT = 0; }
+    if (!zv || !AC) return;
+    var v = zv; zv = null;
+    try {
+      var t = AC.currentTime;
+      v.g.gain.setTargetAtTime(0.0001, t, fast || 0.06);
+      v.o.stop(t + 0.5);
+    } catch (e) {}
+  }
+  function zoomSound(zin, ns, os) {
+    if (!audioUnlocked || !audioOn || !rack || !AC) return;
+    if (document.documentElement.hasAttribute('data-boot') || performance.now() - BOOT_T < 1200) return;
+    var now = performance.now();
+    try {
+      var t = AC.currentTime;
+      /* gesture speed: |dlog s| per second, smoothed across ticks */
+      var mag = Math.abs(Math.log((ns || cam.s) / (os || cam.s))) || 0.02;
+      var dt = Math.min(Math.max((now - zvLastAt) / 1000, 0.016), 0.5);
+      zvLastAt = now;
+      var inst = mag / dt;
+      zvSpd += 0.35 * (inst - zvSpd);
+      var x = Math.min(zvSpd / 1.5, 1);           /* 0 idle .. 1 flat out */
+      var f = zvPitch(ns || cam.s);
+      var opening = !zv;
+      if (opening) { zvSpd = inst; zvStart(f); }
+      /* the sustain rides the hand: pitch follows the zoom itself,
+         speed fills the voice out — fuller gain, wider filter — and it
+         eases back between ticks. Ceiling 0.0085 (see GAIN DISCIPLINE). */
+      zv.o.frequency.setTargetAtTime(f, t, opening ? 0.02 : 0.05);
+      zv.g.gain.setTargetAtTime(0.0050 + 0.0035 * x, t, opening ? 0.045 : 0.06);
+      zv.lp.frequency.setTargetAtTime(900 + 1700 * x, t, 0.08);
+      if (zvRelT) clearTimeout(zvRelT);
+      zvRelT = setTimeout(function () { zvRelT = 0; zvRelease(); }, ZV_QUIET);
+    } catch (e) { /* silence, never errors */ }
+  }
+  /* offline signature for the probe: one representative 0.45 s gesture
+     rendered through the same recipe — sine through the opening lowpass,
+     same dry + 0.18 echo send, the live voice's attack/sustain/release
+     constants. IN walks G4 -> D5, OUT the exact inverse. */
+  function zoomScript(R, t, up) {
     var c = R.ctx;
     var o = c.createOscillator(); o.type = 'sine';
-    o.frequency.setValueAtTime(up ? 392 : 587.33, t);
-    o.frequency.exponentialRampToValueAtTime(up ? 587.33 : 392, t + 0.22);
+    o.frequency.setValueAtTime(up ? ZF_LO : ZF_HI, t);
+    o.frequency.exponentialRampToValueAtTime(up ? ZF_HI : ZF_LO, t + 0.4);
+    var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 0.7;
+    lp.frequency.setValueAtTime(900, t);
+    lp.frequency.setTargetAtTime(2200, t + 0.05, 0.08);
+    lp.frequency.setTargetAtTime(900, t + 0.34, 0.08);
     var g = c.createGain();
     g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(0.018, t + 0.025);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
-    o.connect(g); g.connect(R.dry);
+    g.gain.setTargetAtTime(0.008, t, 0.045);      /* soft attack */
+    g.gain.setTargetAtTime(0.0001, t + 0.45, 0.12); /* gentle release */
+    o.connect(lp); lp.connect(g); g.connect(R.dry);
     var s = c.createGain(); s.gain.value = 0.18; g.connect(s); s.connect(R.send);
-    o.start(t); o.stop(t + 0.32);
+    o.start(t); o.stop(t + 1.1);
   }
-
-  /* zoom voices fire once per zoom gesture (a burst of wheel steps one
-     way); re-armed by a direction flip or a quiet gap. Only the human
-     wheel calls this — the cold open and programmatic camera moves
-     never do, and the search warp keeps its own voice. */
-  var zoomSndDir = 0, zoomSndAt = -1e9;
-  function zoomSound(zin) {
-    if (!audioUnlocked || !audioOn || !rack) return;
-    if (document.documentElement.hasAttribute('data-boot') || performance.now() - BOOT_T < 1200) return;
-    var now = performance.now(), dir = zin ? 1 : -1;
-    if (dir === zoomSndDir && now - zoomSndAt < 300) { zoomSndAt = now; return; }
-    zoomSndDir = dir; zoomSndAt = now;
-    safeSnd(zin ? 'zoomIn' : 'zoomOut');
-  }
+  /* headless self-test: the live zoom voice, mid-gesture */
+  window.__probeZoomVoice = function () {
+    if (!zv) return { active: false, starts: zvStarts };
+    return { active: true, starts: zvStarts,
+      f: zv.o.frequency.value, g: zv.g.gain.value, lp: zv.lp.frequency.value };
+  };
 
   function safeSnd(name) {
     if (!audioOn || !rack || !AC) return;
@@ -1819,10 +2353,22 @@
     return true;
   };
 
+  /* headless self-test: aim the camera (world coords) for photography */
+  window.__probeAim = function (x, y, s) {
+    cam.x = cam.tx = x; cam.y = cam.ty = y; cam.s = cam.ts = s;
+    dirty = true; return true;
+  };
+  /* headless self-test: where the crossings live */
+  window.__probeEggs = function () {
+    return { ready: EGG.ready, crossing: crossingNow,
+      home: { x: EGG.home.x, y: EGG.home.y, r: EGG.home.r, dots: EGG.home.dots ? EGG.home.dots.length : 0 },
+      ridge: { x: EGG.ridge.x, y: EGG.ridge.y, len: EGG.ridge.len } };
+  };
+
   /* headless self-test: render one event offline, report its signature */
   window.__probeSound = function (name, secs) {
     try {
-      var durs = { bed: 4, hall: 2.5, plate: 2, contact: 2, transit: 1.5, chart: 1.5, warp: 1.5, lock: 1.2, almanac: 1.5, zoomIn: 0.6, zoomOut: 0.6 };
+      var durs = { bed: 4, hall: 2.5, plate: 2, contact: 2, transit: 1.5, chart: 1.5, warp: 1.5, lock: 1.2, almanac: 1.5, zoomIn: 1.2, zoomOut: 1.2, broadcast: 2.4 };
       var dur = secs || durs[name] || 1.2;
       var OC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
       var o = new OC(1, Math.ceil(44100 * dur), 44100);
@@ -1834,20 +2380,21 @@
       else SND[name](R, 0.02);
       return o.startRendering().then(function (buf) {
         var d = buf.getChannelData(0), n = d.length, sr = buf.sampleRate;
-        var rms = 0, peak = 0, zc = 0, e1 = 0, e2 = 0, half = n >> 1;
+        var rms = 0, peak = 0, zc = 0, zc1 = 0, e1 = 0, e2 = 0, half = n >> 1;
         var TH = 0.004; /* ~ -48 dBFS: the audible-envelope floor */
         var a0 = -1, a1 = -1;
         for (var i = 0; i < n; i++) {
           var v = d[i], av = v < 0 ? -v : v;
           rms += v * v; if (av > peak) peak = av;
           if (av > TH) { if (a0 < 0) a0 = i; a1 = i; }
-          if (i && ((d[i - 1] < 0 && v >= 0) || (d[i - 1] >= 0 && v < 0))) zc++;
+          if (i && ((d[i - 1] < 0 && v >= 0) || (d[i - 1] >= 0 && v < 0))) { zc++; if (i < half) zc1++; }
           if (i < half) e1 += v * v; else e2 += v * v;
         }
         rms = Math.sqrt(rms / n);
         return { name: name, dur: dur, rms: rms, peak: peak,
                  audDur: a0 < 0 ? 0 : (a1 - a0) / sr,
-                 zcrHz: zc / (2 * dur), split: (e1 + e2) > 0 ? e2 / (e1 + e2) : 0 };
+                 zcrHz: zc / (2 * dur), zcr1Hz: zc1 / dur, zcr2Hz: (zc - zc1) / dur,
+                 split: (e1 + e2) > 0 ? e2 / (e1 + e2) : 0 };
       });
     } catch (e) {
       return Promise.resolve({ name: name, error: String(e && e.message) });
@@ -1908,12 +2455,14 @@
       }
       var wp = s2w(e.clientX, e.clientY);
       var hit = pick(wp[0], wp[1], 15 / cam.s);
-      if (hit !== hovered) {
-        hovered = hit; dirty = true;
+      var eg = hit < 0 ? eggAt(wp[0], wp[1]) : null;
+      if (hit !== hovered || eg !== eggHover) {
+        hovered = hit; eggHover = eg; dirty = true;
         if (hit >= 0) showTip(stars[hit], e.clientX, e.clientY);
+        else if (eg) showEggTip(eg, e.clientX, e.clientY);
         else hideTip();
-      } else if (hit >= 0) moveTip(e.clientX, e.clientY);
-      canvas.style.cursor = hit >= 0 ? 'pointer' : 'grab';
+      } else if (hit >= 0 || eg) moveTip(e.clientX, e.clientY);
+      canvas.style.cursor = (hit >= 0 || eg) ? 'pointer' : 'grab';
     });
     canvas.addEventListener('pointerup', function (e) {
       if (!dragging) return;
@@ -1921,6 +2470,10 @@
       if (moved) return;
       var wp = s2w(e.clientX, e.clientY);
       var hit = pick(wp[0], wp[1], 15 / cam.s);
+      if (hit < 0) {
+        var eg = eggAt(wp[0], wp[1]);
+        if (eg) { activateEgg(eg); return; }
+      }
       if (hit >= 0) {
         var s = stars[hit];
         if (s.st === 1 && !s.dark) {
@@ -1932,13 +2485,13 @@
       }
     });
     canvas.addEventListener('pointercancel', function () { dragging = false; canvas.classList.remove('dragging'); });
-    canvas.addEventListener('pointerleave', function () { hovered = -1; hideTip(); dirty = true; });
+    canvas.addEventListener('pointerleave', function () { hovered = -1; eggHover = null; hideTip(); dirty = true; });
     canvas.addEventListener('wheel', function (e) {
       e.preventDefault();
       var before = s2w(e.clientX, e.clientY);
       var f = Math.exp(-e.deltaY * (e.deltaMode === 1 ? 0.05 : 0.0016));
       var ns = clamp(cam.s * f, 0.06, 8);
-      if (ns !== cam.s) zoomSound(ns > cam.s);
+      if (ns !== cam.s) zoomSound(ns > cam.s, ns, cam.s);
       cam.s = ns; cam.ts = cam.s;
       var after = s2w(e.clientX, e.clientY);
       cam.x += before[0] - after[0]; cam.y += before[1] - after[1];
@@ -2001,6 +2554,7 @@
         logLine('SOUND ON · every sound is a measurement · pings are commits, night commits one octave lower');
       } else {
         stopBed();
+        zvKill();
         if (hallNodes) { releaseNodes(hallNodes, 0.4); hallNodes = null; }
         logLine('SOUND OFF · silenced for this visit');
       }
@@ -2824,8 +3378,43 @@
       html.push('<div class="an-c" style="left:' + it.bx + 'px;top:' + it.by + 'px"><b>' + esc(it.n) + '</b>' + esc(it.t) + '</div>');
     });
     svg.push('</svg>');
+    /* (g) the probe's own assembly drawing rides with the annotations */
+    var abx = clamp(W - 316, 8, W - 316), aby = clamp(H - 352, 54, H - 352);
+    html.push('<button type="button" class="an-blue" id="bluecard" style="left:' + abx + 'px;top:' + aby + 'px" ' +
+      'data-name="ASSEMBLY DWG NO. 7" ' +
+      'data-explain="The probe&#39;s own blueprint. The parts are numbered like a toy catalog back home - as if anyone was meant to build one. Press to read the sheet.">' +
+      '<span class="ab-k">FIRST LIGHT PROBE · ASSEMBLY DWG NO. 7 · SHEET 1 OF 1</span>' +
+      '<svg viewBox="0 0 260 132" aria-hidden="true">' +
+      '<g fill="none" stroke="currentColor" stroke-width="1">' +
+      '<path d="M64 46 Q106 14 148 46"/>' +
+      '<line x1="106" y1="30" x2="106" y2="52"/>' +
+      '<rect x="88" y="52" width="36" height="26"/>' +
+      '<line x1="124" y1="62" x2="196" y2="62"/>' +
+      '<rect x="196" y="56" width="14" height="12"/>' +
+      '<line x1="88" y1="66" x2="46" y2="66"/>' +
+      '<line x1="46" y1="58" x2="46" y2="74"/>' +
+      '<line x1="140" y1="52" x2="140" y2="38"/>' +
+      '<line x1="96" y1="78" x2="90" y2="96"/><line x1="116" y1="78" x2="122" y2="96"/>' +
+      '</g>' +
+      '<g stroke="rgba(237,242,240,.35)" stroke-width="0.7">' +
+      '<line x1="106" y1="22" x2="60" y2="12"/><line x1="106" y1="66" x2="150" y2="102"/>' +
+      '<line x1="47" y1="62" x2="26" y2="40"/><line x1="203" y1="58" x2="224" y2="30"/>' +
+      '<line x1="93" y1="92" x2="70" y2="112"/>' +
+      '</g>' +
+      '<text x="52" y="10">1</text><text x="152" y="108">2</text><text x="20" y="36">3</text>' +
+      '<text x="226" y="26">4</text><text x="62" y="118">5</text>' +
+      '</svg>' +
+      '<span class="ab-p">1 DISH · PART 3962 ×1 &nbsp; 2 BUS · PART 3001 ×1 &nbsp; 3 VANE · PART 4589 ×4<br>4 DRIVE · PART 3062 ×1 &nbsp; 5 LEG · PART 3020 ×2 · NO GLUE · NO TOOLS</span></button>');
     $('an-lines').innerHTML = svg.join('');
     $('an-items').innerHTML = html.join('');
+    var bc = $('bluecard');
+    if (bc) bc.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (crossingNow) return;
+      logLine('BLUEPRINTS · THE PART NUMBERS ARE A TOY CATALOG&#39;S, BACK HOME · SOMEONE MEANT IT TO BE BUILT AGAIN · <b>READING THE SHEET</b>', true);
+      safeSnd('chart');
+      crossTo('secretb', 950);
+    });
   }
 
   function toggleAnnotate(force) {
@@ -2890,6 +3479,16 @@
       else { guideStep++; renderGuideStep(); }
     });
     $('gd-skip').addEventListener('click', hideGuide);
+    /* (f) the four-colour insert under the mission papers */
+    var cp = $('comicpeek');
+    if (cp) cp.addEventListener('click', function () {
+      if (crossingNow) return;
+      cp.classList.add('out');
+      if (cp.parentElement) cp.parentElement.classList.add('out');
+      logLine('MISSION PAPERS · A FOUR-COLOUR INSERT, SCHOOLS PROGRAMME, PRINT RUN 40,000 · <b>OPENING IT</b>', true);
+      safeSnd('almanac');
+      crossTo('secreta', 950);
+    });
     window.addEventListener('resize', function () { if (!$('annotate').hidden) buildAnnotate(); });
   }
 
