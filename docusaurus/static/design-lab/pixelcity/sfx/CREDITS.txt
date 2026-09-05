@@ -94,3 +94,24 @@ From "Dove cooing.ogg" (Wikimedia Commons) - License: Public domain
 Entry: https://commons.wikimedia.org/wiki/File:Dove_cooing.ogg
 File:  https://upload.wikimedia.org/wikipedia/commons/0/05/Dove_cooing.ogg
   pigeon_coo.ogg    (2.6 s cut, fades added)
+
+--------------------------------------------------------------------------
+WAVE 4 (TOWN LIFE) - SYNTHESIZED IN THE ENGINE, NO FILES
+--------------------------------------------------------------------------
+Four one-shots added with the post office, the noticeboards, the delivery
+rounds and photo mode are generated at runtime by the Web Audio API in
+pixelcity.js (sndSynth), not loaded from any recording:
+
+  whoosh   - the pneumatic tube at the post office counter
+             (band-passed white noise, 320 Hz -> 2.4 kHz over 380 ms)
+  chime    - a delivery stamped, and the plaza plaque lighting
+             (two sine partials, A5 + E6, 700 ms decay)
+  blip     - a parcel taken, a note pinned, a night lantern logged
+             (triangle wave, 980 -> 1400 Hz, 160 ms)
+  shutter  - the postcard camera in photo mode
+             (square wave, 2.2 kHz, 50 ms)
+  pop      - a founding-day firework
+             (low-passed white noise, 160 ms)
+
+They are original to this build, carry no third-party rights, and obey the
+same master gain and mute toggle as every recorded sound above.

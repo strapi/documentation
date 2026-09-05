@@ -161,6 +161,7 @@ let spotQ = null, spotA = 0, spotOn = false;   // district spotlight state
 let orient = 0;                  // map orientation 0..3 (quarter turns, Q/E)
 let Wv = 0, Hv = 0;              // view-space map dims in tiles (swap when orient is odd)
 let rotFx = null;                // shutter transition while the world re-bakes
+let snapWaiting = false;         // a postcard requested mid-turn, taken once it lands
 let propList = [];               // every placed prop, in tile space, for re-projection
 let groundStamp = [-1, -1, -1, -1]; // orientation each season's ground set was baked at
 let seasonPrev = -1, seasonBlend = 1; // eased ground crossfade between seasons
@@ -2210,6 +2211,62 @@ function projectStatics() {
         wx: Math.round(isoX(pr.lx, pr.ly)) - 12, wy: Math.round(isoY(pr.lx, pr.ly)) + HH - 20,
         depth: depthOf(pr.lx, pr.ly) + 0.3
       });
+    } else if (pr.kind === 'landmark') {
+      // a 2x2 civic block: anchor its footprint like a building
+      const cv2 = SPR[pr.name];
+      const r = viewRectOf(pr.tx, pr.ty, pr.w, pr.d);
+      const gTopX = OX + (r.x - r.y) * HW, gTopY = OY + (r.x + r.y) * HH;
+      const st = {
+        cv: cv2, name: pr.name,
+        wx: Math.round(gTopX - HW * 2), wy: Math.round(gTopY - cv2.anchorY),
+        depth: (r.x + r.w - 1) + (r.y + r.h - 1) + 0.6
+      };
+      statics.push(st); pr.st = st;
+    } else if (pr.kind === 'newsstand') {
+      const cv2 = SPR.newsstand;
+      const st = {
+        cv: cv2, name: 'newsstand',
+        wx: Math.round(isoX(pr.tx + 0.5, pr.ty + 0.5)) - (cv2.width >> 1),
+        wy: Math.round(isoY(pr.tx + 0.5, pr.ty + 0.5)) - cv2.height + 2,
+        depth: depthTile(pr.tx, pr.ty, 0.3)
+      };
+      statics.push(st); pr.st = st;
+    } else if (pr.kind === 'plaque') {
+      const nm2 = plaqueEarned ? 'plaque_lit' : 'plaque_dark';
+      const cv2 = SPR[nm2];
+      const st = {
+        cv: cv2, name: nm2,
+        wx: Math.round(isoX(pr.tx + 0.5, pr.ty + 0.5)) - (cv2.width >> 1),
+        wy: Math.round(isoY(pr.tx + 0.5, pr.ty + 0.5)) - cv2.height + 2,
+        depth: depthTile(pr.tx, pr.ty, 0.3)
+      };
+      statics.push(st); pr.st = st;
+    } else if (pr.kind === 'vacant') {
+      const cv2 = SPR.vacantlot;
+      const st = {
+        cv: cv2, name: 'vacantlot',
+        wx: Math.round(isoX(pr.tx + 0.5, pr.ty + 0.5)) - (cv2.width >> 1) + (pr.dx || 0),
+        wy: Math.round(isoY(pr.tx + 0.5, pr.ty + 0.5)) - cv2.height + 3,
+        depth: depthTile(pr.tx, pr.ty, 0.35)
+      };
+      statics.push(st); pr.st = st;
+    } else if (pr.kind === 'board') {
+      // a small noticeboard standing on the ground beside the door, always to
+      // the screen-right of it so it reads the same at every orientation
+      const d2 = doorBySlug[pr.slug];
+      if (d2) {
+        const off = viewDirToWorld(0.52, -0.12);
+        const bx2 = d2.px + off[0], by2 = d2.py + off[1];
+        const nm2 = notesPinned.has(pr.slug) ? 'doorboard_pin' : 'doorboard';
+        const cv2 = SPR[nm2];
+        const st = {
+          cv: cv2, name: nm2,
+          wx: Math.round(isoX(bx2, by2)) - (cv2.width >> 1),
+          wy: Math.round(isoY(bx2, by2)) - cv2.height + 3,
+          depth: depthOf(bx2, by2) - 0.45
+        };
+        statics.push(st); pr.st = st;
+      } else pr.st = null;
     }
   }
   // lamps standing beside water throw a shimmering reflection at night
@@ -2226,6 +2283,7 @@ function projectStatics() {
     }
   }
   statics.sort((a, b2) => a.depth - b2.depth);
+  projectTown();
 }
 
 /* ==========================================================================
@@ -2592,8 +2650,84 @@ function playerBlocked(nx, ny) {
   }
   return false;
 }
+let spawnTile = [0, 0];          // the plaza tile the visitor lands on
+let plazaCore = null;            // {cx, cy, r} - the civic square carved at boot
+
+/* THE MAIN PLAZA. The visitor used to land on a stray patch of plaza paving
+   wedged between two shopfronts, and the first step in any direction met a
+   wall. A town square is not a texture: it is room. So before the ground is
+   baked we look for the widest block of ground that is ALREADY walkable and
+   whose four streets run clear, repave it as one square, and land the courier
+   in the middle of it. No lot is moved, no collision is loosened and no door
+   is displaced - the square is simply where the town already left room. */
+function carvePlaza() {
+  const at = (tx, ty) => (tx < 0 || ty < 0 || tx >= Wt || ty >= Ht) ? T.SEA : grid[ty * Wt + tx];
+  const runFrom = (tx, ty, dx, dy) => { let n = 0; while (playerWalkable(at(tx + dx * (n + 1), ty + dy * (n + 1)))) n++; return n; };
+  const cxT = Wt / 2, cyT = Ht / 2;
+  let best = null;
+  for (const R of [5, 4, 3]) {
+    for (let ty = R + 1; ty < Ht - R - 1; ty++) for (let tx = R + 1; tx < Wt - R - 1; tx++) {
+      let ok = true;
+      for (let dy = -R; dy <= R && ok; dy++) for (let dx = -R; dx <= R && ok; dx++) {
+        if (!playerWalkable(at(tx + dx, ty + dy))) ok = false;
+      }
+      if (!ok) continue;
+      const runs = [runFrom(tx, ty, 1, 0), runFrom(tx, ty, -1, 0), runFrom(tx, ty, 0, 1), runFrom(tx, ty, 0, -1)];
+      const mn = Math.min(runs[0], runs[1], runs[2], runs[3]);
+      if (mn < 9) continue;                                  // every street must run clear
+      const score = mn * 2 - Math.hypot(tx - cxT, ty - cyT) * 3;  // the middle of the island first, then wide streets
+      if (!best || score > best.score) best = { cx: tx, cy: ty, r: R, mn, runs, score };
+    }
+    if (best) break;                                          // the widest square wins
+  }
+  if (!best) return;
+  plazaCore = { cx: best.cx, cy: best.cy, r: best.r };
+  const R = best.r;
+  let paved = 0;
+  for (let dy = -R; dy <= R; dy++) for (let dx = -R; dx <= R; dx++) {
+    if (Math.abs(dx) + Math.abs(dy) > Math.round(R * 1.5)) continue;   // chamfered corners: a square, not a box
+    const tx = best.cx + dx, ty = best.cy + dy;
+    const t2 = grid[ty * Wt + tx];
+    if (t2 === T.BRIDGE || t2 === T.BANK) continue;           // the crossings keep their own stone
+    grid[ty * Wt + tx] = T.PLAZA;
+    paved++;
+  }
+  plazaCore.tiles = paved;
+  diag.plaza = { cx: best.cx, cy: best.cy, r: R, tiles: paved, runs: best.runs };
+}
+
+/* Props are scattered after the ground is baked, so the square is swept once
+   they are down: nothing stands inside it, and the four streets leaving it
+   keep a clear lane for the first strides out of town. */
+const PLAZA_ARM = 8;             // tiles of clear street beyond the square
+function inPlazaSweep(tx, ty) {
+  if (!plazaCore) return false;
+  const { cx, cy, r } = plazaCore;
+  const dx = Math.abs(tx - cx), dy = Math.abs(ty - cy);
+  if (dx <= r && dy <= r) return true;                       // the square itself
+  return (dy === 0 && dx <= r + PLAZA_ARM) || (dx === 0 && dy <= r + PLAZA_ARM);  // the four street arms
+}
+function clearPlazaProps() {
+  if (!plazaCore) return 0;
+  const { cx, cy, r } = plazaCore;
+  let n = 0;
+  for (let i = propList.length - 1; i >= 0; i--) {
+    const pr = propList[i];
+    if (pr.tx === undefined) continue;
+    if (!inPlazaSweep(pr.tx, pr.ty)) continue;
+    propList.splice(i, 1); n++;
+  }
+  for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) propSolid.delete((cx + dx) + ',' + (cy + dy));
+  for (let k = 1; k <= r + PLAZA_ARM; k++) {
+    propSolid.delete((cx + k) + ',' + cy); propSolid.delete((cx - k) + ',' + cy);
+    propSolid.delete(cx + ',' + (cy + k)); propSolid.delete(cx + ',' + (cy - k));
+  }
+  return n;
+}
+
 function initPlayerSpawn() {
-  // the main plaza: the plaza tile nearest the centre of the island whose
+  if (plazaCore) { spawnTile = [plazaCore.cx, plazaCore.cy]; player.x = plazaCore.cx + 0.5; player.y = plazaCore.cy + 0.5; return; }
+  // fallback: the plaza tile nearest the centre of the island whose
   // south-east quadrant is open, so the courier is not hidden behind a tower
   let best = null, bd = Infinity;
   const cxT = Wt / 2, cyT = Ht / 2;
@@ -2609,6 +2743,7 @@ function initPlayerSpawn() {
     if (d < bd) { bd = d; best = [tx, ty]; }
   }
   if (!best) best = [Math.floor(Wt / 2), Math.floor(Ht / 2)];
+  spawnTile = best.slice();
   player.x = best[0] + 0.5;
   player.y = best[1] + 0.5;
 }
@@ -2623,6 +2758,7 @@ function setActiveDoor(d) {
     dpTitleEl.textContent = '· ' + ((pg2 && pg2.title) || d.slug);
     doorPromptEl.hidden = false;
   } else doorPromptEl.hidden = true;
+  updatePromptRows();
 }
 
 function updatePlayer(dt) {
@@ -2711,6 +2847,7 @@ function updatePlayer(dt) {
     }
   }
   setActiveDoor(best);
+  updateSpotProximity();
   // gentle camera follow with velocity lookahead
   if (camMode === 'follow') {
     const z = cam.z;
@@ -2814,7 +2951,13 @@ function stepRotFx(dt) {
   if (!rotFx) return;
   rotFx.t += dt;
   if (!rotFx.swapped && rotFx.t >= rotFx.dur * 0.45) { rotFx.swap(); rotFx.swapped = true; }
-  if (rotFx.t >= rotFx.dur) rotFx = null;
+  if (rotFx.t >= rotFx.dur) {
+    rotFx = null;
+    if (photoMode) photoSay('now facing ' + FACING[orient], 1.8);
+    // a postcard asked for mid-turn waits for the shutter to lift: take it on
+    // the frame after this one, so the card holds the clean, turned town
+    if (snapWaiting) { snapWaiting = false; requestAnimationFrame(() => snapPostcard()); }
+  }
 }
 
 /* ==========================================================================
@@ -2991,6 +3134,8 @@ function updateParts(dt, vx0, vy0, vx1, vy1) {
     else if (p.type === 'dust') { p.wx += p.vx * dt; p.wy += p.vy * dt; p.vy -= 3 * dt; }
     else if (p.type === 'rain') { p.wx += p.vx * dt; p.wy += p.vy * dt; }
     else if (p.type === 'spark') { p.wx += p.vx * dt; p.wy += p.vy * dt; p.vy -= 2 * dt; }
+    else if (p.type === 'fw') { p.wx += p.vx * dt; p.wy += p.vy * dt; p.vy += 15 * dt; }
+    else if (p.type === 'fly') { p.wx += (p.vx + Math.sin(p.t * 2.4 + p.ph) * 3) * dt; p.wy += p.vy * dt; }
     else { p.wx += 2.5 * dt; p.wy -= 4 * dt; }   // breath
     if (p.life <= 0 || p.wy > vy1 + 16 || p.wx < vx0 - 24 || p.wx > vx1 + 24) parts.splice(i, 1);
   }
@@ -3067,7 +3212,7 @@ function sndPlay(name, vol, pan, rate) {
   const cd = (SND_COOLDOWN[coolKey] || 0.12) * 1000;
   if (sndCool[coolKey] && now - sndCool[coolKey] < cd) return;
   sndCool[coolKey] = now;
-  sndLog.push({ n: name, t: Math.round(now) });
+  sndLog.push({ n: name, t: Math.round(now), g: Math.round(clamp(vol, 0, 0.6) * 1000) / 1000 });   // g: the level it actually played at, so the mix is measurable
   if (sndLog.length > 300) sndLog.shift();
   if (!AC || !sndReady || !sndOn) return;
   const buf = sndBufs[name];
@@ -3101,36 +3246,101 @@ function sndFootstep() {
   else if (t2 === T.GRASS || t2 === T.FLOWER) base = 'step_grass_';
   else if (t2 === T.BRIDGE) base = 'step_wood_';
   const n = base === 'step_wood_' ? 0 : (Math.random() * 2) | 0;
-  sndPlay(base + n, stride ? 0.17 : 0.12, 0, 0.9 + Math.random() * 0.2);
+  // HALF THE OLD LEVEL (0.17/0.12 -> 0.085/0.06): the courier walks the town,
+  // she does not stomp it. The ground still picks the sample, the stride still
+  // sets the cadence and the small pitch jitter stays - only the level moved.
+  sndPlay(base + n, stride ? 0.085 : 0.06, 0, 0.9 + Math.random() * 0.2);
 }
+/* THE TWO POSITIONAL LOOPS - one at a time, and only when the source is close.
+   The lamp hum and the van putter used to fade in from four and nine tiles, both
+   at once, at 0.09 and 0.11, from any car (a van at nine tiles is most of the
+   street, so something was nearly always pulsing). Now each has a Schmitt
+   trigger - in at IN, out only past OUT, so drifting across the line cannot make
+   it flicker - only the nearer of the two is ever audible, both sit at a third
+   of the old level, and the putter follows REAL vans only, with a rest after
+   each pass so two vans in a row cannot merge into a drone. */
+const POSLOOP = {
+  lamp: { in: 2.2, out: 3.4, gain: 0.03 },    // was: audible from 4 tiles at 0.09
+  van: { in: 4.5, out: 6.2, gain: 0.037 }     // was: audible from 9 tiles at 0.11, any car
+};
+const POS_VAN_REST = 6;                       // seconds of guaranteed silence after a pass
+const posOn = { lamp: false, van: false };
+let posHolder = null, posVanRest = 0, posVanHeld = 0;
 /* eased loop gains, refreshed every tick */
-function sndUpdate() {
+function sndUpdate(dt) {
   if (!AC || !sndReady) return;
-  const set = (k, v, pan) => {
+  const set = (k, v, pan, tc) => {
     const L2 = sndLoops[k];
     if (!L2) return;
-    L2.g.gain.setTargetAtTime(clamp(v, 0, 0.6), AC.currentTime, 0.5);
+    const target = clamp(v, 0, 0.6);
+    // a loop asked for silence gets real silence: setTargetAtTime only ever
+    // approaches zero, so once it is inaudible the value is pinned flat
+    if (target === 0 && L2.g.gain.value < 0.0015) {
+      L2.g.gain.cancelScheduledValues(AC.currentTime);
+      L2.g.gain.setValueAtTime(0, AC.currentTime);
+    } else {
+      L2.g.gain.setTargetAtTime(target, AC.currentTime, tc || 0.5);
+    }
     if (pan !== undefined && L2.p) L2.p.pan.setTargetAtTime(clamp(pan, -1, 1), AC.currentTime, 0.25);
   };
+
   const day = 1 - nf;
   set('room', 0.055 + 0.025 * day);
   set('birds', season === 3 ? 0.015 : 0.13 * day * (1 - rainI * 0.6));
   set('crickets', 0.11 * nf * (season === 3 ? 0.25 : 1) * (1 - rainI * 0.5));
-  set('rain', 0.42 * rainI);
+  set('rain', 0.21 * rainI);                  // half of 0.42: weather you notice, not weather you shelter from
   set('wind', season === 3 ? 0.15 : 0);
+
+  /* --- how far is the nearest lamp, and the nearest moving van --- */
   let ld = 99;
-  for (const lp of lampPts) {
-    const d = Math.abs(lp.tx + 0.5 - player.x) + Math.abs(lp.ty + 0.5 - player.y);
-    if (d < ld) ld = d;
+  if (nf > 0.4) {                             // a lamp only hums once it is lit
+    for (const lp of lampPts) {
+      const d = Math.abs(lp.tx + 0.5 - player.x) + Math.abs(lp.ty + 0.5 - player.y);
+      if (d < ld) ld = d;
+    }
   }
-  set('lamp', nf > 0.4 && ld < 4 ? 0.09 * (1 - ld / 4) * nf : 0);
   let vd = 99, vpan = 0;
   for (const c of cars) {
-    if (c.stopped) continue;
-    const d = Math.hypot(c.x - player.x, c.y - player.y) * (c.van ? 1 : 1.7); // vans putter loudest
+    if (c.stopped || !c.van) continue;         // the sample is a van putter, so only vans carry it
+    const d = Math.hypot(c.x - player.x, c.y - player.y);
     if (d < vd) { vd = d; vpan = panOf(c.x, c.y); }
   }
-  set('van', vd < 9 ? 0.11 * (1 - vd / 9) : 0, vpan);
+
+  /* --- the trigger: in when close, out only when properly gone --- */
+  const step = dt || 0;
+  if (posVanRest > 0) posVanRest = Math.max(0, posVanRest - step);
+  if (posOn.lamp) { if (ld > POSLOOP.lamp.out) posOn.lamp = false; }
+  else if (ld < POSLOOP.lamp.in) posOn.lamp = true;
+  if (posOn.van) {
+    posVanHeld += step;
+    if (vd > POSLOOP.van.out) {
+      posOn.van = false;
+      posVanRest = posVanHeld > 1.5 ? POS_VAN_REST : 0;   // a real pass earns the rest
+      posVanHeld = 0;
+    }
+  } else if (vd < POSLOOP.van.in && posVanRest <= 0) { posOn.van = true; posVanHeld = 0; }
+
+  /* --- one at a time: the nearer source, in units of its own reach, holds the
+     street, and it keeps it until the other is clearly (15%) closer --- */
+  const rl = posOn.lamp ? ld / POSLOOP.lamp.out : 99;
+  const rv = posOn.van ? vd / POSLOOP.van.out : 99;
+  let hold = null;
+  if (rl < 90 || rv < 90) hold = rl <= rv ? 'lamp' : 'van';
+  if (hold && posHolder && posHolder !== hold) {
+    const rHold = posHolder === 'lamp' ? rl : rv;
+    const rNew = hold === 'lamp' ? rl : rv;
+    if (rNew > rHold * 0.85) hold = posHolder;
+  }
+  if (hold === 'lamp' && !posOn.lamp) hold = null;
+  if (hold === 'van' && !posOn.van) hold = null;
+  posHolder = hold;
+  // the pair hands the street over quickly: whichever lost it releases in about
+  // a fifth of a second, so the two never sit on top of each other, while the
+  // one that took it still fades up gently
+  const lampG = hold === 'lamp' ? POSLOOP.lamp.gain * (1 - ld / POSLOOP.lamp.out) * nf : 0;
+  const vanG = hold === 'van' ? POSLOOP.van.gain * (1 - vd / POSLOOP.van.out) : 0;
+  set('lamp', lampG, undefined, lampG > 0 ? 0.4 : 0.12);
+  set('van', vanG, vpan, vanG > 0 ? 0.4 : 0.12);
 }
 /* rare, placed one-shots: pigeon coos, the cat, autumn rustle, a seagull */
 const sndAmbTimers = { pigeon: 6, cat: 24, leaf: 10, gull: 16 };
@@ -3232,12 +3442,12 @@ function teleportTo(slug) {
     player.face = faceFromWorldDir(0, -1);
     tpHeld = 1;
     camMode = 'follow';
-    sndEvent('teleport_in', player.x, player.y, 0.5);
+    sndEvent('teleport_in', player.x, player.y, 0.167);      // a third of 0.50: a shimmer, not a whoosh
     requestDraw();
     return;
   }
   tp = { phase: 'out', t: 0, door: d };
-  sndEvent('teleport_out', player.x, player.y, 0.55);
+  sndEvent('teleport_out', player.x, player.y, 0.183);       // a third of 0.55
   burstSpark(player.x, player.y);
   startLoop();
 }
@@ -3254,7 +3464,7 @@ function stepTeleport(dt) {
     burstSpark(player.x, player.y);
     const wx = isoX(d.px, d.py), wy = isoY(d.px, d.py);
     for (let i = 0; i < 6; i++) spawnPart('dust', wx - 3 + Math.random() * 6, wy - 1, (Math.random() - 0.5) * 8, -1 - Math.random() * 3, 0.5);
-    sndEvent('teleport_in', player.x, player.y, 0.55);
+    sndEvent('teleport_in', player.x, player.y, 0.183);      // a third of 0.55
   } else if (tp.phase === 'in' && tp.t >= 0.4) tp = null;
 }
 /* the courier waves at the camera on intro and Find-me arrivals */
@@ -3536,6 +3746,8 @@ function draw() {
     dyn.push({ cv: SPR[Math.floor(animT * 3 + fl.ph) % 2 ? 'flag1' : 'flag0'], wx: fl.x, wy: fl.y, depth: 1e9 - 1 });
   }
 
+  townDynInto(dyn);   // the townsfolk: the real hands, out near the pages they tend
+
   // merge statics (pre-sorted) with dynamics; structures hiding the courier
   // (or the active door) fade see-through - only what actually occludes
   fadeCount = 0;
@@ -3605,6 +3817,8 @@ function draw() {
     }
   }
 
+  drawTownOver(vx0, vy0, vx1, vy1);   // night lanterns + founding-day pennants
+
   // one ambient wash grades everything with the hour (a rect, never per-sprite)
   if (gf > 0.02) {
     ctx.fillStyle = `rgba(255,164,58,${(0.14 * Math.min(1, gf)).toFixed(3)})`;
@@ -3661,6 +3875,8 @@ function draw() {
       else if (p.type === 'petal') { c = p.col; a = Math.min(1, p.life); if (p.ph % 3 === 0) w2 = 2; }
       else if (p.type === 'rain') { c = '#a9cde2'; h2 = 3; a = 0.62 * Math.min(1, rainI * 1.6); }
       else if (p.type === 'spark') { c = p.col || PAL.V2; a = Math.min(1, p.life / 0.4); if (p.ph % 2) { w2 = 2; } }
+      else if (p.type === 'fw') { c = p.col || PAL.YL; a = Math.min(1, p.life / 0.5); if (p.ph % 3 === 0) { w2 = 2; h2 = 2; } }
+      else if (p.type === 'fly') { c = '#b8f4c8'; a = Math.max(0, Math.min(0.9, p.life / 3)) * (0.5 + 0.5 * Math.sin(p.t * 5 + p.ph)); }
       else if (p.type === 'dust') { c = '#b9ad93'; a = Math.max(0, p.life / 0.5) * 0.7; if (p.life > 0.25) { w2 = 2; h2 = 2; } }
       else { c = '#e8ecf2'; a = Math.max(0, p.life / 0.9) * 0.55; if (p.life > 0.45) { w2 = 2; h2 = 2; } }
       ctx.globalAlpha = a;
@@ -3742,29 +3958,39 @@ function draw() {
 
   /* ---- floating labels: strictly one at a time --------------------------
      hover card > door prompt > spotlight banner; the reading panel hides all */
+  if (photoMode && !bubble.hidden) bubble.hidden = true;
   const bubbleUp = !bubble.hidden && panel.hidden;
   if (!panel.hidden && !bubble.hidden) bubble.hidden = true;
 
   // pin the door prompt above the glowing door; never let it cover the courier
   // (it also yields to the YOU ARE HERE banner - one floating label at a time)
-  const promptUp = !!activeDoor && panel.hidden && !bubbleUp && !(yahT > 0 || yahHold);
+  // one floating label at a time: between the door prompt and a townsfolk name
+  // card, whichever the courier is actually standing nearer to speaks up
+  const folkUp = drawTownLabels(z, bubbleUp);
+  folkPromptUp = folkUp;
+  const promptUp = (!!activeDoor || !!activeSpot) && panel.hidden && !bubbleUp && !(yahT > 0 || yahHold) &&
+    !photoMode && !townOverlayOpen() && !folkUp && !folkCardOpen();
   doorPromptEl.hidden = !promptUp;
   if (promptUp) {
     const rdpr = window.devicePixelRatio || 1;
-    const bx = (activeDoor.wx - cam.x) * z / rdpr;
-    let by = (activeDoor.wy - 14 - cam.y) * z / rdpr;
+    const aw = activeDoor ? activeDoor.wx : activeSpot.wx;
+    const ah = activeDoor ? activeDoor.wy : activeSpot.wy;
+    const bx = (aw - cam.x) * z / rdpr;
+    let by = (ah - 14 - cam.y) * z / rdpr;
     const pwx = isoX(player.x, player.y), pwy = isoY(player.x, player.y);
     const psL = (pwx - 7 - cam.x) * z / rdpr, psR = (pwx + 8 - cam.x) * z / rdpr;
     const psT = (pwy - 16 - cam.y) * z / rdpr, psB = (pwy + 2 - cam.y) * z / rdpr;
     const bw = doorPromptEl.offsetWidth || 140, bh = doorPromptEl.offsetHeight || 28;
     if (bx + bw / 2 > psL && bx - bw / 2 < psR && by > psT && by - bh < psB) by = psT;
+    const vw = cvs.clientWidth, vh = cvs.clientHeight;
+    if (bx < 8 || bx > vw - 8 || by < 8 || by > vh - 8) doorPromptEl.hidden = true;   // anchor off screen
     doorPromptEl.style.left = bx + 'px';
     doorPromptEl.style.top = by + 'px';
   }
 
   // spotlight name banner, pinned over the lit district (yields to card + prompt)
   const spotBanner = document.getElementById('spotbanner');
-  if (spotA > 0.05 && spotQ && panel.hidden && !bubbleUp && !promptUp) {
+  if (spotA > 0.05 && spotQ && panel.hidden && !bubbleUp && !promptUp && !folkUp) {
     const rdpr2 = window.devicePixelRatio || 1;
     const bx = (isoX(spotQ.qx + spotQ.qw / 2, spotQ.qy + spotQ.qh / 2) - cam.x) * z / rdpr2;
     const qc4 = [[spotQ.qx, spotQ.qy], [spotQ.qx + spotQ.qw, spotQ.qy], [spotQ.qx + spotQ.qw, spotQ.qy + spotQ.qh], [spotQ.qx, spotQ.qy + spotQ.qh]];
@@ -3803,7 +4029,15 @@ function draw() {
 
   const mins = Math.floor(dayT * 1440);
   const hh2 = String(Math.floor(mins / 60)).padStart(2, '0'), mm2 = String(mins % 60).padStart(2, '0');
-  hud.textContent = `${hh2}:${mm2} · ${SEASONS[season]}${rainI > 0.05 ? ' · rain' : ''} · view ${['N', 'E', 'S', 'W'][orient]} · ${Wt}x${Ht} tiles · zoom x${cam.z} · ${frameMs.toFixed(1)} ms/frame${REDUCED ? ' · motion reduced' : ''}`;
+  hud.textContent = `${hh2}:${mm2} · day ${dayNum + 1} · ${SEASONS[season]}${rainI > 0.05 ? ' · rain' : ''} · view ${['N', 'E', 'S', 'W'][orient]} · zoom x${cam.z} · ${frameMs.toFixed(1)} ms/frame${REDUCED ? ' · motion reduced' : ''}`;
+  const hud2 = document.getElementById('hud2');
+  if (hud2) {
+    const line = townNoteT > 0 ? townNote
+      : foundingActive ? `FOUNDING DAY · first recording, ${TOWN.foundingHuman}`
+      : parcels.length ? `${parcels.length} parcel${parcels.length > 1 ? 's' : ''} in the satchel · B opens the delivery book`
+      : '';
+    if (line) { hud2.textContent = line; hud2.hidden = false; } else hud2.hidden = true;
+  }
 }
 function blit(d) {
   if (d.alpha !== undefined) ctx.globalAlpha = d.alpha;
@@ -3850,6 +4084,9 @@ function motionActive() {
 /* truly idle (non-reduced): time paused, camera at rest, no particles on
    screen, panel closed, nothing animating - park the rAF loop entirely */
 function canPark() {
+  // photo mode is a still - except while a quarter turn plays out (and while
+  // the turn's re-bake is still catching up), which must be drawn frame by frame
+  if (photoMode) return !rotFx && bakeQueue.length === 0;
   return timeSpeed === 0 && panel.hidden && keysDown.size === 0 && !player.tgt &&
          Math.hypot(player.vx, player.vy) < 0.03 && camSettle < 0.5 && !camFly &&
          parts.length === 0 && bakeQueue.length === 0 && !dragging &&
@@ -3858,9 +4095,18 @@ function canPark() {
          seasonBlend >= 1 && rainI === rainTarget;
 }
 function tick(dt) {
+  if (photoMode) {
+    // photo mode freezes the world, but the framing controls still move: a
+    // quarter turn must advance here or Q/E would queue up and fire on exit
+    if (rotFx) { stepRotFx(dt); photoClampCam(); }
+    processBakeQueue(2.5);
+    lightFactors(dayT);
+    updateHudDials();
+    return;
+  }
   if (!REDUCED) {
     dayT += timeSpeed * dt / DAY_LEN;
-    if (dayT >= 1) { dayT -= 1; setSeason(season + 1); }   // the year turns: one season per day
+    if (dayT >= 1) { dayT -= 1; dayNum++; setSeason(season + 1); refreshFolk(); }   // the year turns: one season per day
     updateLife(dt);
     updateParts(dt, cam.x, cam.y, cam.x + cvs.width / cam.z, cam.y + cvs.height / cam.z);
   }
@@ -3872,8 +4118,9 @@ function tick(dt) {
   if (seasonBlend < 1) seasonBlend = Math.min(1, seasonBlend + dt / 2.5);
   stepFly(dt);
   updatePlayer(dt);
-  sndUpdate();
+  sndUpdate(dt);
   sndAmbient(dt);
+  townTick(dt);
   if (!yahHold && yahT > 0) yahT = Math.max(0, yahT - dt);
   const sT = spotOn ? 1 : 0;
   if (spotA !== sT) {
@@ -3922,6 +4169,7 @@ function startLoop() {
    ========================================================================== */
 const bubble = document.getElementById('bubble');
 let dragging = false, dragStart = null, moved = false;
+let rowPending = null;       // the door-prompt row action this gesture started on
 
 function screenToWorld(mx, my) {
   const r = cvs.getBoundingClientRect();
@@ -3946,7 +4194,7 @@ cvs.addEventListener('pointerdown', (e) => {
   camMode = 'free';                 // mouse pan suspends camera follow; a move key resumes it
   dragStart = { mx: e.clientX, my: e.clientY, cx: cam.x, cy: cam.y };
   cvs.classList.add('dragging');
-  cvs.setPointerCapture(e.pointerId);
+  try { cvs.setPointerCapture(e.pointerId); } catch (err) { }   // synthetic ids may refuse capture
 });
 cvs.addEventListener('pointermove', (e) => {
   if (!REDUCED && !running) startLoop();
@@ -3957,13 +4205,17 @@ cvs.addEventListener('pointermove', (e) => {
     if (Math.abs(dx) + Math.abs(dy) > 2) moved = true;
     cam.x = Math.round(dragStart.cx - dx);
     cam.y = Math.round(dragStart.cy - dy);
+    photoClampCam();
     bubble.hidden = true;
     if (REDUCED) draw();
     return;
   }
+  if (photoMode) return;            // framing only: no hover card, no spotlight
   const [wx, wy] = screenToWorld(e.clientX, e.clientY);
   const st = pickBuilding(wx, wy);
   const b = st ? st.b : null;
+  const tcHover = pickTownClick(wx, wy);
+  const townHit = !!tcHover && (!st || tcHover.st.depth >= st.depth);
   // district spotlight: the hovered building's quarter, or the quarter under the pointer
   let hq = b ? b.quarter : null;
   if (!hq) {
@@ -3989,6 +4241,7 @@ cvs.addEventListener('pointermove', (e) => {
     } else bubble.hidden = true;
     if (REDUCED) draw();
   }
+  if (!b) cvs.classList.toggle('pointing', townHit);   // town furniture takes the hand too
   if (b && st) {
     const r = cvs.getBoundingClientRect();
     const topX = (st.wx + st.cv.width / 2 - cam.x) * cam.z * (r.width / cvs.width);
@@ -4000,9 +4253,15 @@ cvs.addEventListener('pointermove', (e) => {
 cvs.addEventListener('pointerup', (e) => {
   dragging = false;
   cvs.classList.remove('dragging');
-  if (moved) return;
+  // a press that began on a door-prompt row: the canvas took the pointer capture,
+  // so the row will never see its own click - finish the press here instead.
+  if (rowPending) { const act = rowPending; rowPending = null; if (!moved && !photoMode) act(); return; }
+  if (moved || photoMode) return;   // photo mode: a click frames, it never acts
   const [wx, wy] = screenToWorld(e.clientX, e.clientY);
   const st = pickBuilding(wx, wy);
+  const tc = pickTownClick(wx, wy);
+  // whichever the eye sees in front wins: statics are depth-sorted
+  if (tc && (!st || tc.st.depth >= st.depth)) { tc.act(); return; }
   if (st) { location.hash = '#' + st.b.slug; return; }
   // clicking near pigeons scatters them
   const [tx, ty] = pxToWorld(wx, wy);
@@ -4308,6 +4567,7 @@ function endpointEl(b) {
 function openPage(slug, anchor) {
   const page = pagesBySlug[slug];
   if (!page) { closePanel(); return; }
+  closeFolkCard();          // a page opened over a conversation ends it
   const b = buildings.find(x => x.slug === slug);
   document.getElementById('panel-crumb').textContent =
     `${(page.product || '').toUpperCase()} / ${page.section || (b ? b.quarter.label : '')}`;
@@ -4387,6 +4647,9 @@ function route() {
 window.addEventListener('hashchange', route);
 document.addEventListener('keydown', (e) => {
   if (e.key !== 'Escape') return;
+  if (townOverlayOpen()) { closeTownOverlay(); return; }
+  if (folkCardOpen()) { closeFolkCard(); return; }
+  if (photoMode) { exitPhoto(); return; }
   const drawer = document.getElementById('drawer'), kp = document.getElementById('keypanel');
   if (!drawer.hidden) { drawer.hidden = true; return; }
   if (!kp.hidden) { kp.hidden = true; return; }
@@ -4403,7 +4666,25 @@ document.getElementById('panel-close').onclick = () => {
 /* game keys: walking, doors, time and season (never captured while typing) */
 document.addEventListener('keydown', (e) => {
   stride = e.shiftKey;              // Shift stride, tracked on every key event
-  if (e.target && e.target.closest && e.target.closest('input, textarea')) return;
+  // any form control the visitor is actually in keeps its own keys (the note's text
+  // area, the post office search box, and its page picker - arrows walk the list)
+  if (e.target && e.target.closest && e.target.closest('input, textarea, select')) return;
+  if (townOverlayOpen()) {
+    // A CIVIC CARD IS A READING SURFACE, AND THE TOWN HOLDS STILL BEHIND IT.
+    // The post desk, the noticeboard, the paper, the ledgers, the book and the plaque
+    // sit above everything (z 70), so they answer the keyboard first, in the reading
+    // panel's own grammar: the arrows and Space scroll the card, X and Escape close it.
+    // Nothing else acts - the courier does not walk off the door the card belongs to
+    // and no season turns behind the paper.
+    const onCtl = e.target && e.target.closest && e.target.closest('button, a');
+    if (onCtl && (e.code === 'Enter' || e.code === 'NumpadEnter' || e.code === 'Space')) return;
+    if (e.code === 'ArrowDown') { townOlCard.scrollBy(0, 90); e.preventDefault(); }
+    else if (e.code === 'ArrowUp') { townOlCard.scrollBy(0, -90); e.preventDefault(); }
+    else if (e.code === 'Space') { townOlCard.scrollBy(0, Math.round(townOlCard.clientHeight * 0.85)); e.preventDefault(); }
+    else if (e.key === 'x' || e.key === 'X' || e.key === 'b' || e.key === 'B') { closeTownOverlay(); e.preventDefault(); }
+    else if (KEYMAP[e.code]) e.preventDefault();
+    return;
+  }
   if (!panel.hidden) {
     // the reading panel needs the vertical keys: hand them to it
     if (e.code === 'ArrowDown') { panel.scrollBy(0, 90); e.preventDefault(); }
@@ -4415,6 +4696,22 @@ document.addEventListener('keydown', (e) => {
       else closePanel();
       e.preventDefault();
     }
+    return;
+  }
+  if (photoMode) {
+    // PHOTO MODE IS A STILL, AND THE KEYBOARD KEEPS THAT PROMISE.
+    // Only the mode's own controls answer here - the four the bar prints plus P to
+    // leave. Everything else is inert: the walk keys never queue a step that would
+    // fire the moment the courier is handed back, and the door keys, the parcel, the
+    // note, the book, the clock and the season never open or change anything behind
+    // the frozen frame, so Escape hands back the town and nothing else.
+    if (e.key === 'p' || e.key === 'P' || e.code === 'KeyP') { exitPhoto(); return; }
+    if (e.code === 'KeyF') { photoFindMe(); return; }
+    if (e.key === 'q' || e.key === 'Q' || e.code === 'KeyQ') { setOrient(orient + 3); return; }
+    if (e.key === 'e' || e.key === 'E' || e.code === 'KeyE') { setOrient(orient + 1); return; }
+    if (e.key === '+' || e.key === '=' || e.code === 'NumpadAdd') { zoomStep(1); e.preventDefault(); return; }
+    if (e.key === '-' || e.key === '_' || e.code === 'NumpadSubtract') { zoomStep(-1); e.preventDefault(); return; }
+    if (KEYMAP[e.code] || e.code === 'Space') e.preventDefault();
     return;
   }
   if (KEYMAP[e.code]) {
@@ -4429,15 +4726,27 @@ document.addEventListener('keydown', (e) => {
     startLoop();
     return;
   }
+  // the prompt over a hand is the one on screen when the courier is nearer to
+  // the person than to any door, so ENTER means exactly what that prompt says
+  if ((e.code === 'Enter' || e.code === 'Space') && folkPromptUp) {
+    talkToFolk();
+    e.preventDefault();
+    return;
+  }
   if ((e.code === 'Enter' || e.code === 'Space') && activeDoor) {
     location.hash = '#' + activeDoor.slug;
     e.preventDefault();
     return;
   }
+  if ((e.code === 'Enter' || e.code === 'Space') && activeSpot) { activateSpot(activeSpot); e.preventDefault(); return; }
+  if (e.key === 'g' || e.key === 'G' || e.code === 'KeyG') { if (activeDoor) parcelAction(activeDoor); return; }
+  if (e.key === 'n' || e.key === 'N' || e.code === 'KeyN') { if (activeDoor) openNoteForm(activeDoor.slug); return; }
+  if (e.key === 'b' || e.key === 'B' || e.code === 'KeyB') { openBook(); return; }   // B closes it again from inside the card
+  if (e.key === 'p' || e.key === 'P' || e.code === 'KeyP') { if (photoMode) exitPhoto(); else enterPhoto(); return; }
   if (e.code === 'Space') { e.preventDefault(); return; }
   if (e.code === 'KeyT') { cycleTimeSpeed(); return; }
   if (e.code === 'KeyY') { setSeason(season + 1); startLoop(); return; }
-  if (e.code === 'KeyF') { findMe(); return; }   // fly back to the courier, any time
+  if (e.code === 'KeyF') { if (photoMode) photoFindMe(); else findMe(); return; }   // back to the courier, any time
   // rotate the map a quarter turn (Q/E by letter, or their physical spots)
   if (e.key === 'q' || e.key === 'Q' || e.code === 'KeyQ') { setOrient(orient + 3); return; }
   if (e.key === 'e' || e.key === 'E' || e.code === 'KeyE') { setOrient(orient + 1); return; }
@@ -4588,6 +4897,20 @@ function initKey() {
       <li><span class="swatch" style="background:${PAL.W2}"></span><strong>The canals</strong> trace the suggested reading order: follow the water from the north-west and you pass the quarters in the order the docs recommend reading them. A boat makes the trip.</li>
       <li><strong>Street traffic</strong> is scaled from the ${edgeCount.toLocaleString('en-US')} cross-references between pages; streets around heavily-cited quarters carry more cars.</li>
     </ul>
+    <h3>TOWN LIFE</h3>
+    <ul>
+      ${plazaCore ? `<li><strong>The main square</strong> is where you land: ${plazaCore.tiles} paved tiles kept clear at the crossing of four streets, with the post office, the newsstand and the plaque set back on its rim so the middle stays yours to walk.</li>` : ''}
+      <li><strong>The post office</strong> on the plaza writes real letters: pick a page and SEND opens that page's own GitHub editor (<span class="mono">edit/main/docusaurus/&lt;file&gt;</span>), or open an issue prefilled with its title and slug.</li>
+      <li><strong>A noticeboard stands by every door</strong> (${doors.length} of them). Press N to pin a note: it posts to the same docs-feedback letterbox as the real widget. Away from the docs domain the browser blocks the call, so the board keeps your words and says so.</li>
+      <li><strong>Delivery rounds:</strong> press G at any door to take a parcel addressed to a page that page really cites, and G again at the destination to stamp the delivery book (B). Three parcels at most; the book remembers the route you took.</li>
+      <li><strong>The night shift:</strong> ${TOWN.lanternTotal} mint lanterns burn after dark for commits made after midnight, on ${lanternDoors.length} real pages. Walk up to one at night to log it; find them all and the plaza plaque lights: <em>for those who wrote after midnight</em>.</li>
+      <li><strong>The Daily Docs</strong> kiosk prints the six most recently tended pages, with their real dates. Tap a headline and the courier makes the trip.</li>
+      <li><strong>The Records Hall</strong> keeps one ledger per month from ${humanDate(TOWN.first)} to ${humanDate(TOWN.last)}, honestly labelled as the pages remember it; the ${TOWN.widest.founded.length}-page ledger of ${['January','February','March','April','May','June','July','August','September','October','November','December'][Number(TOWN.widest.key.slice(5, 7)) - 1]} ${TOWN.widest.key.slice(0, 4)} is chained to the desk.</li>
+      <li><strong>The townsfolk</strong> are the ${townsfolk.length} real hands behind these pages, standing near the page each one tends; about twenty are out on any given day. Stop beside one and the prompt reads <em>TALK</em>: press Enter or click it and their record opens - the span they signed, the pages they tended, and every one of those pages with its own count, each clickable. Walk away and the conversation ends.</li>
+      <li><strong>${TOWN.vacant.length} fenced lots</strong> mark the pages no other page links to yet. The sign says NOBODY LINKS HERE YET; walking up offers to be the first, through the post office.</li>
+      <li><strong>Photo mode</strong> (P): the scene freezes, you frame it, and the camera button saves a pixel-crisp postcard with the district, season and in-town date stamped on the border.</li>
+      <li><strong>Founding Day</strong> falls on ${TOWN.foundingHuman.replace(/ \d{4}$/, '')}, the anniversary of the first recording these pages remember: bunting strung from poles around the plaza with ${TOWN.pennants} pennants, one in each community's colour, lights along the cords after dark and fireworks over the square. Add <span class="mono">?founding=1</span> to see it any day.</li>
+    </ul>
     <h3>GETTING AROUND</h3>
     <ul>
       <li>Drag to pan, scroll or +/− to zoom: one whole-pixel step per gesture, laptop-trackpad friendly.</li>
@@ -4602,6 +4925,1518 @@ function initKey() {
     <p class="mono">Rendered at ${Wt}×${Ht} tiles · ${atlasStats.sprites} baked sprites · frame ${frameMs ? frameMs.toFixed(1) : '…'} ms</p>`;
   document.getElementById('btn-key').onclick = () => { kp.hidden = !kp.hidden; if (!kp.hidden) initKey(); };
   document.getElementById('key-close').onclick = () => { kp.hidden = true; };
+}
+
+/* ==========================================================================
+   WAVE 4 - TOWN LIFE. Ten civic features, every fact derived from
+   content/graph/provenance at boot: the Post Office (real GitHub edit
+   letters), noticeboards (real docs-feedback webhook), delivery rounds
+   (real citation edges), the night shift (real after-midnight commits),
+   the Daily Docs (real freshest pages), the Records Hall (real month
+   ledgers), the townsfolk (the 77 real hands), vacant lots (real
+   zero-inbound pages), photo mode, and Founding Day (the anniversary of
+   the first recording the data remembers).
+   ========================================================================== */
+let spots = [];                  // interactive town spots {kind, slug?, title, row, ix, iy, wx, wy}
+let activeSpot = null;
+let dayNum = 0;                  // in-game days elapsed since boot
+let TOWN = null;                 // boot-derived town facts
+let parcels = [];                // active delivery rounds, cap 3
+let bookStamps = [];             // stamped deliveries (persist for the visit)
+let notesPinned = new Set();     // slugs with a paper pinned this visit
+let lanternDoors = [];           // {slug, n} - the night-shift lanterns
+let fireflySeen = new Set();     // night-shift lanterns already logged
+let plaqueEarned = false;
+let townsfolk = [];              // all real hands {name, slug, line, hash}
+let folkVisible = [];            // seeded rotation for the current day (~20)
+let folkNear = null;
+let folkPromptUp = false;   // is the TALK prompt the label currently on screen?
+let photoMode = false, photoPrevSpeed = 1;
+let foundingActive = false, fwTimer = 1.2;
+let townNote = '', townNoteT = 0;
+let edgesFrom = {};              // slug -> [slugs it really cites]
+let doorBySlug = {};
+let pennantStrings = [];         // founding-day strings, re-projected per orientation
+let townClickables = [];         // world-px hit rects for the mouse-only path
+const FOLK_CACHE = {};
+
+function townHash(s) {
+  let hh = 2166136261 >>> 0;
+  for (let i = 0; i < s.length; i++) { hh ^= s.charCodeAt(i); hh = Math.imul(hh, 16777619) >>> 0; }
+  return hh >>> 0;
+}
+function setTownNote(msg, secs) { townNote = msg; townNoteT = secs || 4; if (!REDUCED) startLoop(); else draw(); }
+function humanDate(iso) {
+  const M = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const [y, m, d] = iso.split('-').map(Number);
+  return `${d} ${M[m - 1]} ${y}`;
+}
+function daysAgo(iso) {
+  const then = new Date(iso + 'T12:00:00Z').getTime();
+  const n = Math.max(0, Math.round((Date.now() - then) / 86400000));
+  return n === 0 ? 'tended today' : n === 1 ? 'tended yesterday' : `tended ${n} days ago`;
+}
+function editUrlFor(slug) {
+  const pg = pagesBySlug[slug];
+  return pg && pg.file ? 'https://github.com/strapi/documentation/edit/main/docusaurus/' + pg.file : null;
+}
+function issueUrlFor(slug) {
+  const pg = pagesBySlug[slug];
+  if (!pg) return null;
+  const title = encodeURIComponent('[docs] ' + (pg.title || slug));
+  const body = encodeURIComponent('Page: ' + slug + '\nFile: docusaurus/' + (pg.file || '?') + '\n\n<!-- written at the Pixel Docs City post office -->\n');
+  return `https://github.com/strapi/documentation/issues/new?title=${title}&body=${body}`;
+}
+
+/* ---- boot-time derivation: every town fact measured from the data ------- */
+function townData() {
+  FONT3[':'] = [0, 2, 0, 2, 0]; FONT3['.'] = [0, 0, 0, 0, 2];
+  // restore visit state before boards and the plaque project their sprites
+  try {
+    (JSON.parse(localStorage.getItem('pdc_notes_v1') || '[]') || []).forEach(s => notesPinned.add(s));
+    bookStamps = JSON.parse(localStorage.getItem('pdc_book_v1') || '[]') || [];
+    if (!Array.isArray(bookStamps)) bookStamps = [];
+    (JSON.parse(localStorage.getItem('pdc_lanterns_v1') || '[]') || []).forEach(s => fireflySeen.add(s));
+  } catch (err) { notesPinned = new Set(); bookStamps = []; fireflySeen = new Set(); }
+  // citation adjacency (real edges only)
+  edgesFrom = {};
+  for (const [a, b] of GRAPH.edges) {
+    if (!pagesBySlug[a] || !pagesBySlug[b] || a === b) continue;
+    (edgesFrom[a] = edgesFrom[a] || []).push(b);
+  }
+  // provenance-wide dates
+  let first = null, last = null;
+  for (const v of Object.values(PROV)) {
+    if (!first || v.first < first) first = v.first;
+    if (!last || v.last > last) last = v.last;
+  }
+  // month ledgers, first recorded month to now (as remembered by first/last)
+  const months = [];
+  {
+    let [y, m] = first.slice(0, 7).split('-').map(Number);
+    const [ly, lm] = last.slice(0, 7).split('-').map(Number);
+    while (y < ly || (y === ly && m <= lm)) {
+      const key = `${y}-${String(m).padStart(2, '0')}`;
+      const founded = [], tended = [];
+      for (const [slug, v] of Object.entries(PROV)) {
+        if (!pagesBySlug[slug]) continue;
+        if (v.first.slice(0, 7) === key) founded.push(slug);
+        else if (v.last.slice(0, 7) === key) tended.push(slug);
+      }
+      founded.sort(); tended.sort();
+      months.push({ key, founded, tended });
+      m++; if (m > 12) { m = 1; y++; }
+    }
+  }
+  let widest = months[0];
+  for (const mo of months) if (mo.founded.length > widest.founded.length) widest = mo;
+  // the freshest six, straight from provenance.last
+  const news = Object.entries(PROV)
+    .filter(([s]) => pagesBySlug[s])
+    .sort((a, b) => b[1].last.localeCompare(a[1].last) || a[0].localeCompare(b[0]))
+    .slice(0, 6)
+    .map(([slug, v]) => ({ slug, title: (pagesBySlug[slug].title || slug), last: v.last }));
+  // night-shift lanterns: real after-midnight commits
+  lanternDoors = Object.entries(PROV)
+    .filter(([s, v]) => v.night > 0 && pagesBySlug[s])
+    .map(([slug, v]) => ({ slug, n: v.night }))
+    .sort((a, b) => a.slug.localeCompare(b.slug));
+  const lanternTotal = lanternDoors.reduce((t, l) => t + l.n, 0);
+  // the real hands: home = the page they keep (topAuthor), else their busiest page
+  const byAuthor = {};
+  for (const [slug, v] of Object.entries(PROV)) {
+    if (!pagesBySlug[slug]) continue;
+    for (const a of v.authors || []) {
+      const e = (byAuthor[a] = byAuthor[a] || { kept: [], touched: [] });
+      (v.topAuthor === a ? e.kept : e.touched).push({ slug, commits: v.commits, nAuth: (v.authors || []).length });
+    }
+  }
+  townsfolk = Object.entries(byAuthor).map(([name, e]) => {
+    const home = (e.kept.length ? e.kept : e.touched).sort((a, b) => b.commits - a.commits || a.slug.localeCompare(b.slug))[0];
+    let line;
+    if (e.kept.some(k => k.slug === home.slug)) {
+      if (home.nAuth === 1) line = home.commits === 1 ? 'came once, fixed one thing' : `keeps this page - all ${home.commits} commits are theirs`;
+      else line = `keeps this page - first hand of ${home.nAuth}, over ${home.commits} commits`;
+    } else line = home.nAuth === 1 ? 'lent a hand here' : `one of ${home.nAuth} hands on this page`;
+    /* THE RECORD IS THE CONVERSATION: everything a hand can say about themselves,
+       derived here once, straight from provenance and nothing else. */
+    const all = e.kept.concat(e.touched).sort((a, b) =>
+      b.commits - a.commits || a.slug.localeCompare(b.slug));
+    const keptSet = new Set(e.kept.map(k => k.slug));
+    let firstD = '9999-99-99', lastD = '0000-00-00', sumCommits = 0, nightPages = 0, nightCommits = 0;
+    for (const pg of all) {
+      const v = PROV[pg.slug];
+      if (v.first < firstD) firstD = v.first;
+      if (v.last > lastD) lastD = v.last;
+      sumCommits += v.commits;
+      if (v.night > 0) { nightPages++; nightCommits += v.night; }
+    }
+    // the one honest line of character, in the order the town tells them apart:
+    // a keeper says they keep it, the 44 one-page hands say they came once, a
+    // night hand names the hour, and the rest are simply one of the seventy-seven
+    let card;
+    if (e.kept.length) {
+      const t0 = pagesBySlug[e.kept[0].slug] ? (pagesBySlug[e.kept[0].slug].title || e.kept[0].slug) : e.kept[0].slug;
+      card = e.kept.length === 1
+        ? `the chief surveyor of ${t0} - they keep it`
+        : `they keep ${e.kept.length} pages of the town, ${t0} among them`;
+    } else if (all.length === 1) {
+      card = 'came once, and the log keeps no other mark of them';
+    } else if (nightPages) {
+      card = nightPages === 1
+        ? 'a night hand: one of their pages carries commits made after midnight'
+        : `a night hand: ${nightPages} of their pages carry commits made after midnight`;
+    } else {
+      card = `one of the seventy-seven, across ${all.length} pages`;
+    }
+    return {
+      name, slug: home.slug, line, hash: townHash(name),
+      first: firstD, last: lastD, nPages: all.length, commits: sumCommits,
+      kept: e.kept.length, nightPages, nightCommits, card,
+      pages: all.map(pg => ({ slug: pg.slug, commits: pg.commits, nAuth: pg.nAuth, kept: keptSet.has(pg.slug) }))
+    };
+  }).sort((a, b) => a.name.localeCompare(b.name));
+  // zero-inbound pages: nobody links here yet
+  const vacant = ORDER.filter(s => !GRAPH.inbound[s]);
+  // founding day: the anniversary of the earliest recording in the data
+  const now = new Date();
+  const fMonth = Number(first.slice(5, 7)), fDay = Number(first.slice(8, 10));
+  foundingActive = /[?&]founding=1\b/.test(location.search) ||
+    (now.getMonth() + 1 === fMonth && now.getDate() === fDay);
+  TOWN = {
+    first, last, months, widest, news, vacant,
+    lanternTotal, foundingHuman: humanDate(first),
+    pennants: COMMS.length
+  };
+}
+
+/* ---- sprites ------------------------------------------------------------ */
+function bakeLandmark(name, hgt, deco) {
+  // 2x2-tile civic block. Roof diamond at the top, two wall faces below;
+  // cv.anchorY marks the footprint's top ground corner for projection.
+  const pad = 6;
+  bakeSprite(name, 32, hgt + 18 + pad, (g, cv) => {
+    const colL = (x, dy, h, col) => { g.fillStyle = col; g.fillRect(x, Math.round(pad + 8 + x / 2) + dy, 1, h); };
+    const colR = (x, dy, h, col) => { g.fillStyle = col; g.fillRect(16 + x, Math.round(pad + 16 - x / 2) + dy, 1, h); };
+    for (let x = 0; x < 16; x++) { colL(x, 0, hgt, PAL.C2); colR(x, 0, hgt, PAL.C1); }
+    for (let r = 0; r < 8; r++) { const w2 = DROWS[r] * 2; g.fillStyle = r < 2 ? PAL.S3 : PAL.S2; g.fillRect(16 - w2 / 2, pad + r * 2, w2, 2); }
+    deco({ g, colL, colR, pad });
+    cv.anchorY = pad + hgt;
+  });
+}
+function bakeTownSprites() {
+  bakeLandmark('postoffice', 26, (d) => {
+    const { g, colL, colR, pad } = d;
+    for (let x = 0; x < 16; x++) colL(x, 0, 26, x % 4 === 3 ? PAL.B2 : PAL.B3);  // warm brick front
+    for (let x = 0; x < 16; x++) colL(x, 0, 2, PAL.C3);                          // cornice
+    for (let x = 0; x < 16; x++) colR(x, 0, 2, PAL.C2);
+    for (let x = 1; x <= 2; x++) colL(x, 5, 4, PAL.GL1);                         // front windows
+    for (let x = 13; x <= 14; x++) colL(x, 5, 4, PAL.GL1);
+    px(g, 0, pad + 18, 17, 7, PAL.RS1);                                          // hanging sign board
+    drawText3x5(g, 1, pad + 19, 'POST', PAL.YL);
+    for (let x = 5; x <= 10; x++) colL(x, 16, 1, PAL.C3);                        // lintel
+    for (let x = 5; x <= 10; x++) colL(x, 17, 9, PAL.WD1);                       // double door
+    for (let x = 6; x <= 9; x++) colL(x, 18, 7, x === 7 || x === 8 ? PAL.WD1 : PAL.WD2);
+    for (let x = 3; x <= 4; x++) colR(x, 6, 18, PAL.YL);                         // brass pneumatic tube
+    for (let x = 3; x <= 4; x++) colR(x, 5, 1, PAL.L2);
+    for (let x = 8; x <= 11; x++) colR(x, 9, 4, PAL.GL1);                        // side window
+    px(g, 15, pad - 5, 1, 6, PAL.OUT);                                           // rooftop postal flag
+    px(g, 12, pad - 5, 4, 3, PAL.V1); px(g, 12, pad - 5, 4, 1, PAL.V2);
+  });
+  bakeLandmark('recordshall', 22, (d) => {
+    const { g, colL, colR, pad } = d;
+    for (let x = 0; x < 16; x++) colL(x, 0, 22, PAL.S2);                         // slate archive front
+    for (const xx of [1, 2, 13, 14]) colL(xx, 3, 19, PAL.S3);                    // pilasters
+    for (let x = 0; x < 16; x++) colL(x, 0, 2, PAL.C3);                          // frieze
+    px(g, 5, pad + 14, 6, 3, PAL.CU1); px(g, 6, pad + 15, 4, 1, PAL.CU2);        // copper scroll emblem
+    for (let x = 6; x <= 9; x++) colL(x, 12, 10, PAL.WD1);                       // tall archive door
+    for (let x = 7; x <= 8; x++) colL(x, 13, 8, PAL.WD2);
+    for (let x = 3; x <= 4; x++) colL(x, 6, 4, PAL.GL3);
+    for (let x = 11; x <= 12; x++) colL(x, 6, 4, PAL.GL3);
+    for (let x = 3; x <= 6; x++) colR(x, 8, 4, PAL.GL3);
+    for (let x = 9; x <= 12; x++) colR(x, 8, 4, PAL.GL3);
+  });
+  bakeSprite('newsstand', 20, 18, (g) => {
+    px(g, 2, 7, 16, 9, PAL.WD2);                            // kiosk body
+    px(g, 3, 9, 6, 5, PAL.C3); px(g, 11, 9, 6, 5, PAL.C3);  // paper racks
+    px(g, 4, 10, 4, 1, PAL.OUT); px(g, 4, 12, 4, 1, PAL.OUT);
+    px(g, 12, 10, 4, 1, PAL.OUT); px(g, 12, 12, 4, 1, PAL.OUT);
+    for (let i = 0; i < 10; i++) px(g, i * 2, 4, 2, 2, i % 2 ? PAL.WH : PAL.RD); // awning
+    px(g, 0, 6, 20, 1, PAL.OUT);
+    px(g, 0, 0, 20, 4, PAL.RS1);                            // masthead
+    drawText3x5(g, 1, 0, 'DAILY', PAL.WH);
+    px(g, 2, 16, 2, 2, PAL.WD1); px(g, 16, 16, 2, 2, PAL.WD1);
+  });
+  bakeSprite('plaque_dark', 11, 12, (g) => {
+    px(g, 2, 9, 7, 3, PAL.P1);                               // plinth
+    px(g, 3, 2, 5, 7, PAL.S2); px(g, 4, 3, 3, 5, PAL.S1);    // blank slate face
+  });
+  bakeSprite('plaque_lit', 11, 12, (g) => {
+    px(g, 2, 9, 7, 3, PAL.P1);
+    px(g, 3, 2, 5, 7, PAL.S2); px(g, 4, 3, 3, 5, PAL.RS1);
+    px(g, 4, 3, 3, 1, PAL.TG); px(g, 4, 5, 3, 1, PAL.TG); px(g, 4, 7, 2, 1, PAL.TG);
+  });
+  // one small board by each door - deliberately quiet street furniture
+  bakeSprite('doorboard', 6, 9, (g) => {
+    px(g, 1, 6, 1, 3, PAL.WD1); px(g, 4, 6, 1, 3, PAL.WD1);   // legs
+    px(g, 0, 1, 6, 6, PAL.WD1); px(g, 1, 2, 4, 4, PAL.P2);    // dark frame, grey cork
+    px(g, 2, 3, 2, 1, PAL.P1);
+  });
+  bakeSprite('doorboard_pin', 6, 9, (g) => {
+    px(g, 1, 6, 1, 3, PAL.WD1); px(g, 4, 6, 1, 3, PAL.WD1);
+    px(g, 0, 1, 6, 6, PAL.WD1); px(g, 1, 2, 4, 4, PAL.P2);
+    px(g, 2, 2, 2, 3, PAL.WH); px(g, 2, 2, 1, 1, PAL.RD);     // a fresh paper, pinned
+  });
+  // a fenced patch with a plain sign: nobody links here yet
+  bakeSprite('vacantlot', 17, 15, (g) => {
+    for (let i = 0; i < 5; i++) px(g, 1 + i * 3, 8, 1, 6, PAL.WD1);  // fence posts
+    px(g, 1, 9, 13, 1, PAL.WD3); px(g, 1, 11, 13, 1, PAL.WD2);       // rails
+    px(g, 3, 13, 2, 1, PAL.G2); px(g, 8, 13, 3, 1, PAL.G2);          // weeds through the gravel
+    px(g, 6, 12, 1, 1, PAL.G3);
+    px(g, 8, 0, 9, 8, PAL.WD1);                                      // the signboard
+    px(g, 9, 1, 7, 6, PAL.C3);
+    drawText3x5(g, 11, 1, '0', PAL.RS1);       // zero pages link here
+    px(g, 9, 5, 7, 1, PAL.RD);
+    px(g, 11, 8, 1, 6, PAL.WD1);                                     // its post
+  });
+  // the night-shift lantern: a hanging lamp on a wire, mint glass round a warm
+  // wick, so it never reads as one more lit window
+  bakeSprite('nlantern', 7, 13, (g) => {
+    px(g, 3, 0, 1, 4, PAL.S1);                                // wire
+    px(g, 2, 3, 3, 1, PAL.S3);                                // ring
+    px(g, 1, 4, 5, 1, PAL.S1);                                // cap
+    px(g, 1, 5, 5, 5, PAL.TG2);                               // glass frame
+    px(g, 2, 5, 3, 5, PAL.TG);                                // glass
+    px(g, 3, 6, 1, 3, PAL.L1);                                // the wick, burning warm
+    px(g, 2, 7, 1, 1, '#d8ffe8'); px(g, 4, 6, 1, 1, '#d8ffe8');
+    px(g, 1, 10, 5, 1, PAL.S1);                               // base
+    px(g, 3, 11, 1, 2, PAL.S3);                               // finial
+  });
+  bakeSprite('nlanternglow', 22, 18, (g) => {
+    for (let y = 0; y < 18; y++) for (let x = 0; x < 22; x++) {
+      const dd = ((x - 11) / 10.5) ** 2 + ((y - 9) / 8.5) ** 2;
+      if (dd <= 1) { g.fillStyle = `rgba(132,240,180,${(0.34 * (1 - dd) ** 1.3).toFixed(3)})`; g.fillRect(x, y, 1, 1); }
+    }
+  }, true);
+  for (const nm of ['postoffice', 'recordshall', 'newsstand', 'doorboard', 'doorboard_pin', 'vacantlot']) {
+    SPR[nm + '_wi'] = snowify(SPR[nm]);
+    if (SPR[nm].anchorY !== undefined) SPR[nm + '_wi'].anchorY = SPR[nm].anchorY;
+  }
+}
+
+/* ---- placement: BFS-safe plaza landmarks + per-door props ---------------- */
+function trialSolid(tiles) {
+  // temporarily claim tiles; keep them only if every door stays reachable
+  for (const k of tiles) propSolid.add(k);
+  const r = walkBFS();
+  const sx = Math.floor(player.x), sy = Math.floor(player.y);
+  const ok = r.stranded.length === 0 && !!r.seen[sy * Wt + sx];
+  if (!ok) for (const k of tiles) propSolid.delete(k);
+  return ok;
+}
+function placeTownLife() {
+  const G2 = (x, y) => y * Wt + x;
+  const freeTile = (tx, ty) => tx > 0 && ty > 0 && tx < Wt - 1 && ty < Ht - 1 &&
+    playerWalkable(grid[G2(tx, ty)]) && !propSolid.has(tx + ',' + ty) && !doorTiles.has(tx + ',' + ty);
+  const spx = player.x, spy = player.y;
+  const dist = (tx, ty) => Math.hypot(tx + 0.5 - spx, ty + 0.5 - spy);
+  doorBySlug = {};
+  for (const d of doors) doorBySlug[d.slug] = d;
+  const bBySlug = {};
+  for (const b of buildings) bBySlug[b.slug] = b;
+  for (const d of doors) d.bld = bBySlug[d.slug];
+
+  // openness: how much of the 5x5 around a tile is NOT a building lot. A civic
+  // landmark wants sky around it, or it reads as one more shopfront in the row.
+  const openness = (tx, ty) => {
+    let o = 0;
+    for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) {
+      if (tileAt(tx + dx, ty + dy) !== T.LOT) o++;
+    }
+    return o;
+  };
+  const cands = [];
+  for (let ty = 1; ty < Ht - 1; ty++) for (let tx = 1; tx < Wt - 1; tx++) {
+    if (!freeTile(tx, ty)) continue;
+    cands.push({ tx, ty, t2: grid[G2(tx, ty)], d: dist(tx, ty), op: openness(tx, ty) });
+  }
+  cands.sort((a, b) => a.d - b.d);
+  // civic sites stand on paving, and keep their elbows to themselves
+  const civic = [];
+  const paved = (c) => c.t2 === T.PLAZA || c.t2 === T.PAVE || c.t2 === T.BANK;
+  const clear = (c, sep) => civic.every(v => Math.hypot(v[0] - c.tx, v[1] - c.ty) >= sep);
+  const spawnKey = Math.floor(spx) + ',' + Math.floor(spy);
+  const takenTiles = new Set([spawnKey]);
+  // the square keeps its middle and its four streets: civic stone stands on
+  // the rim, never in the way of the first strides out of town
+  const coreR = plazaCore ? plazaCore.r : 2;
+  const sx0 = spawnTile[0], sy0 = spawnTile[1];
+  const offAxis = (tx, ty, w, d) => {
+    for (let dx = 0; dx < w; dx++) for (let dy = 0; dy < d; dy++) {
+      const ax = tx + dx, ay = ty + dy;
+      if ((ax === sx0 || ay === sy0) && Math.hypot(ax - sx0, ay - sy0) <= coreR + PLAZA_ARM) return false;
+    }
+    return true;
+  };
+  // stone belongs on the rim of the square or beyond it, never inside
+  const rimOrOut = (tx, ty, w, d) => {
+    for (let dx = 0; dx < w; dx++) for (let dy = 0; dy < d; dy++) {
+      if (Math.max(Math.abs(tx + dx - sx0), Math.abs(ty + dy - sy0)) < coreR) return false;
+    }
+    return true;
+  };
+
+  const place2x2 = (name, wantPlaza, dMin, dMax, minOpen, sep) => {
+    for (const c of cands) {
+      if (c.d < dMin || c.d > dMax) continue;
+      if (wantPlaza !== (c.t2 === T.PLAZA)) continue;
+      if (!paved(c) || !clear(c, sep === undefined ? 7 : sep)) continue;
+      if (c.op < (minOpen === undefined ? 23 : minOpen)) continue;
+      if (openness(c.tx + 1, c.ty + 1) < (minOpen === undefined ? 23 : minOpen)) continue;
+      if (!offAxis(c.tx, c.ty, 2, 2) || !rimOrOut(c.tx, c.ty, 2, 2)) continue;
+      const tiles = [];
+      let ok = true;
+      for (let dy = 0; dy < 2 && ok; dy++) for (let dx = 0; dx < 2 && ok; dx++) {
+        const k = (c.tx + dx) + ',' + (c.ty + dy);
+        if (!freeTile(c.tx + dx, c.ty + dy) || takenTiles.has(k)) ok = false; else tiles.push(k);
+      }
+      if (!ok) continue;
+      if (!freeTile(c.tx, c.ty + 2) && !freeTile(c.tx + 1, c.ty + 2)) continue;  // approachable front
+      if (!trialSolid(tiles)) continue;
+      tiles.forEach(k => takenTiles.add(k));
+      civic.push([c.tx + 0.5, c.ty + 0.5]);
+      propList.push({ kind: 'landmark', name, tx: c.tx, ty: c.ty, w: 2, d: 2 });
+      return c;
+    }
+    return null;
+  };
+  const place1 = (kind, wantPlaza, dMin, dMax, minOpen, sep) => {
+    for (const c of cands) {
+      if (c.d < dMin || c.d > dMax) continue;
+      if (wantPlaza && c.t2 !== T.PLAZA) continue;
+      if (!paved(c) || !clear(c, sep === undefined ? 4 : sep)) continue;
+      if (c.op < (minOpen === undefined ? 21 : minOpen)) continue;
+      const k = c.tx + ',' + c.ty;
+      if (!freeTile(c.tx, c.ty) || takenTiles.has(k)) continue;
+      if (!offAxis(c.tx, c.ty, 1, 1) || !rimOrOut(c.tx, c.ty, 1, 1)) continue;
+      if ((freeTile(c.tx - 1, c.ty) && freeTile(c.tx + 1, c.ty)) || (freeTile(c.tx, c.ty - 1) && freeTile(c.tx, c.ty + 1))) {
+        if (!trialSolid([k])) continue;
+        takenTiles.add(k);
+        civic.push([c.tx, c.ty]);
+        propList.push({ kind, tx: c.tx, ty: c.ty });
+        return c;
+      }
+    }
+    return null;
+  };
+
+  const RIM = coreR - 0.5;   // the rim rule above keeps them off the middle; this keeps them near
+  const po = place2x2('postoffice', true, RIM, 16) || place2x2('postoffice', false, RIM, 22) ||
+             place2x2('postoffice', true, RIM, 30, 18) || place2x2('postoffice', false, RIM, 34, 16);
+  if (po) spots.push({ kind: 'post', title: 'POST OFFICE', row: 'WRITE A LETTER ABOUT A PAGE', ix: po.tx + 1, iy: po.ty + 2.35 });
+  const ns = place1('newsstand', true, RIM, coreR + 4, 12, 3) || place1('newsstand', true, RIM, 12) ||
+             place1('newsstand', false, RIM, 18) || place1('newsstand', false, RIM, 30, 16);
+  if (ns) spots.push({ kind: 'news', title: 'THE DAILY DOCS', row: 'GRAB THE PAPER', ix: ns.tx + 0.5, iy: ns.ty + 1.35 });
+  const pq = place1('plaque', true, RIM, coreR + 4, 12, 3) || place1('plaque', true, RIM, 12) ||
+             place1('plaque', false, RIM, 18) || place1('plaque', false, RIM, 30, 16);
+  if (pq) spots.push({ kind: 'plaque', title: 'PLAZA PLAQUE', row: 'TAKE A CLOSER LOOK', ix: pq.tx + 0.5, iy: pq.ty + 1.35 });
+  const rh = place2x2('recordshall', false, 14, 30, 23, 13) || place2x2('recordshall', true, 14, 30, 23, 13) ||
+             place2x2('recordshall', false, 10, 44, 18, 10) || place2x2('recordshall', false, 6, 60, 16, 6);
+  if (rh) spots.push({ kind: 'hall', title: 'RECORDS HALL', row: 'BROWSE THE LEDGERS', ix: rh.tx + 1, iy: rh.ty + 2.35 });
+
+  // one small noticeboard beside every door (non-solid: walkability untouched)
+  for (const d of doors) propList.push({ kind: 'board', slug: d.slug });
+
+  // vacant lots beside the zero-inbound pages (non-solid fenced patches)
+  let placedVacant = 0;
+  for (const slug of TOWN.vacant) {
+    const b = bBySlug[slug];
+    if (!b) continue;
+    const per = [];
+    for (let dx = -1; dx <= b.fw; dx++) { per.push([b.tx + dx, b.ty + b.fd]); per.push([b.tx + dx, b.ty - 1]); }
+    for (let dy = 0; dy < b.fd; dy++) { per.push([b.tx - 1, b.ty + dy]); per.push([b.tx + b.fw, b.ty + dy]); }
+    const st = townHash(slug) % per.length;
+    let done = false;
+    for (let i = 0; i < per.length && !done; i++) {
+      const [tx, ty] = per[(st + i) % per.length];
+      const k = tx + ',' + ty;
+      if (!freeTile(tx, ty) || takenTiles.has(k)) continue;
+      takenTiles.add(k);
+      propList.push({ kind: 'vacant', tx, ty, slug });
+      spots.push({ kind: 'vacant', slug, title: 'BE THE FIRST', row: 'NOBODY LINKS HERE YET', ix: tx + 0.5, iy: ty + 0.5 });
+      placedVacant++; done = true;
+    }
+    if (!done) {  // marker beside the door itself, offset a few px
+      const d = doorBySlug[slug];
+      if (d) {
+        const tx = Math.floor(d.px), ty = Math.floor(d.py);
+        propList.push({ kind: 'vacant', tx, ty, slug, dx: 10 });
+        spots.push({ kind: 'vacant', slug, title: 'BE THE FIRST', row: 'NOBODY LINKS HERE YET', ix: tx + 0.5, iy: ty + 0.5 });
+        placedVacant++;
+      }
+    }
+  }
+  TOWN.vacantPlaced = placedVacant;
+  if (fireflyTally() >= TOWN.lanternTotal) plaqueEarned = true;   // remembered from this visit
+  refreshFolk();
+}
+
+/* the ~20 townsfolk out today, rotated by the day of the cycle */
+function refreshFolk() {
+  const scored = townsfolk.map(f => ({ f, s: h32(f.hash & 0xffff, (f.hash >>> 16) + dayNum, 101) }));
+  scored.sort((a, b) => a.s - b.s || a.f.name.localeCompare(b.f.name));
+  folkVisible = [];
+  const used = new Set();
+  for (const { f } of scored) {
+    if (folkVisible.length >= 20) break;
+    const b = buildings.find(bb => bb.slug === f.slug);
+    if (!b) continue;
+    const per = [];
+    for (let dx = -1; dx <= b.fw; dx++) { per.push([b.tx + dx, b.ty + b.fd]); per.push([b.tx + dx, b.ty - 1]); }
+    for (let dy = 0; dy < b.fd; dy++) { per.push([b.tx - 1, b.ty + dy]); per.push([b.tx + b.fw, b.ty + dy]); }
+    const st = f.hash % per.length;
+    // two sweeps: first a spot clear of every doorstep, then any free spot
+    let spot = null;
+    for (let pass = 0; pass < 2 && !spot; pass++) {
+      for (let i = 0; i < per.length; i++) {
+        const [tx, ty] = per[(st + i) % per.length];
+        const k = tx + ',' + ty;
+        if (tx < 1 || ty < 1 || tx >= Wt - 1 || ty >= Ht - 1) continue;
+        if (!playerWalkable(grid[ty * Wt + tx]) || propSolid.has(k) || doorTiles.has(k) || used.has(k)) continue;
+        if (pass === 0 && doors.some(d => Math.abs(d.px - tx - 0.5) < 1.6 && Math.abs(d.py - ty - 0.5) < 1.6)) continue;
+        spot = [tx, ty]; break;
+      }
+    }
+    if (spot) {
+      const [tx, ty] = spot;
+      used.add(tx + ',' + ty);
+      folkVisible.push({
+        name: f.name, slug: f.slug, line: f.line, hash: f.hash, rec: f,
+        x: tx + 0.32 + ((f.hash >>> 3) % 40) / 100, y: ty + 0.32 + ((f.hash >>> 9) % 40) / 100,
+        theme: b.quarter.themeIdx, ph: (f.hash % 63) / 10
+      });
+    }
+  }
+}
+function folkSpriteFor(f) {
+  if (FOLK_CACHE[f.name]) return FOLK_CACHE[f.name];
+  const base = SPR[`ped${f.theme}_0`];
+  const [cv, g] = mkCv(base.width, base.height + 2);
+  g.drawImage(base, 0, 2);
+  const hats = [PAL.RD, PAL.YL, PAL.W3, PAL.V2, PAL.CU2, PAL.HB2, PAL.C3, PAL.TG];
+  const hc = hats[f.hash % hats.length];
+  if ((f.hash >>> 5) % 3 === 0) { px(g, 1, 1, 3, 1, hc); px(g, 2, 0, 1, 1, hc); }   // cap
+  else if ((f.hash >>> 5) % 3 === 1) px(g, 1, 6, 3, 1, hc);                          // scarf
+  else px(g, 3, 6, 1, 2, hc);                                                        // satchel strap
+  FOLK_CACHE[f.name] = cv;
+  return cv;
+}
+
+/* ---- projection hooks (called from projectStatics) ----------------------- */
+function projectTown() {
+  townClickables = [];
+  for (const pr of propList) {
+    if (!pr.st) continue;
+    if (pr.kind === 'landmark') {
+      townClickables.push({ st: pr.st, act: pr.name === 'postoffice' ? () => openPostOffice(null) : () => openRecordsHall() });
+    } else if (pr.kind === 'newsstand') {
+      townClickables.push({ st: pr.st, act: () => openNewspaper() });
+    } else if (pr.kind === 'plaque') {
+      townClickables.push({ st: pr.st, act: () => openPlaque() });
+    } else if (pr.kind === 'vacant') {
+      townClickables.push({ st: pr.st, act: () => openPostOffice(pr.slug) });
+    } else if (pr.kind === 'board') {
+      townClickables.push({ st: pr.st, act: () => openNoteForm(pr.slug) });
+    }
+  }
+  for (const s of spots) { s.wx = isoX(s.ix, s.iy); s.wy = isoY(s.ix, s.iy) - 6; }
+  bakeFoundingStrings();
+}
+
+/* founding-day bunting: eight poles ringing the plaza, strung with the 27
+   community pennants. Anchors live in TILE space so a quarter turn re-strings
+   them exactly; the cord sags between poles and the flags hang beneath it. */
+function bakeFoundingStrings() {
+  pennantStrings = [];
+  if (!foundingActive || !TOWN) return;
+  const post = propList.find(p => p.kind === 'landmark' && p.name === 'postoffice');
+  const cxT = (post ? post.tx + 1 : player.x), cyT = (post ? post.ty + 1 : player.y);
+  const POLE_H = 34;                 // pole height in world px above the ground
+  const RING = 7.5;                  // tiles from the plaza centre
+  const poles = [];
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2 + Math.PI / 8;
+    let bx = cxT + Math.cos(a) * RING, by = cyT + Math.sin(a) * RING;
+    // slide inward until the pole stands on ground the town actually has
+    for (let k = 0; k < 8; k++) {
+      const tx = Math.floor(bx), ty = Math.floor(by);
+      if (tx > 0 && ty > 0 && tx < Wt - 1 && ty < Ht - 1 && tileAt(tx, ty) !== T.SEA && tileAt(tx, ty) !== T.WATER) break;
+      bx -= Math.cos(a) * 0.8; by -= Math.sin(a) * 0.8;
+    }
+    poles.push({ tx: bx, ty: by });
+  }
+  const perString = Math.ceil(TOWN.pennants / 8);
+  let pi = 0;
+  for (let i = 0; i < 8 && pi < TOWN.pennants; i++) {
+    const A = poles[i], B = poles[(i + 1) % 8];
+    const ax = isoX(A.tx, A.ty), ay = isoY(A.tx, A.ty) - POLE_H;
+    const bx2 = isoX(B.tx, B.ty), by2 = isoY(B.tx, B.ty) - POLE_H;
+    const sag = 9;
+    const segs = [];
+    const nSeg = Math.max(24, Math.ceil(Math.hypot(bx2 - ax, by2 - ay)));   // one sample per world pixel
+    for (let k = 0; k <= nSeg; k++) {
+      const t = k / nSeg;
+      segs.push([ax + (bx2 - ax) * t, ay + (by2 - ay) * t + Math.sin(Math.PI * t) * sag]);
+    }
+    const flags2 = [];
+    const n = Math.min(perString, TOWN.pennants - pi);
+    for (let k = 1; k <= n; k++) {
+      const t = k / (n + 1);
+      const q = quarters[pi % quarters.length];
+      flags2.push({
+        x: ax + (bx2 - ax) * t,
+        y: ay + (by2 - ay) * t + Math.sin(Math.PI * t) * sag,
+        col: q ? q.theme : THEMES[pi % THEMES.length]
+      });
+      pi++;
+    }
+    const openPole = tileAt(Math.floor(A.tx), Math.floor(A.ty)) !== T.LOT;
+    pennantStrings.push({ segs, flags: flags2, poleA: openPole ? [isoX(A.tx, A.ty), isoY(A.tx, A.ty)] : null, poleH: POLE_H });
+  }
+  TOWN.pennantsHung = pi;
+}
+
+/* ---- per-frame town work -------------------------------------------------- */
+function townTick(dt) {
+  if (townNoteT > 0) townNoteT = Math.max(0, townNoteT - dt);
+  // parcels remember the districts they cross (the route on the stamp)
+  if (parcels.length) {
+    const q = districtOfPlayer();
+    if (q) for (const p of parcels) {
+      if (p.route[p.route.length - 1] !== q.label) p.route.push(q.label);
+    }
+  }
+  // night shift: walking up to a lit lantern logs it
+  if (nf > 0.35 && panel.hidden) {
+    for (const L of lanternDoors) {
+      if (fireflySeen.has(L.slug)) continue;
+      const d = doorBySlug[L.slug];
+      if (!d) continue;
+      if (Math.hypot(player.x - d.px, player.y - d.py) < 1.7) {
+        fireflySeen.add(L.slug);
+        try { localStorage.setItem('pdc_lanterns_v1', JSON.stringify([...fireflySeen])); } catch (err) { }
+        const got = fireflyTally();
+        sndSynth('blip');
+        setTownNote(`night lantern logged · ${got}/${TOWN.lanternTotal} fireflies in the tally`, 5);
+        if (got >= TOWN.lanternTotal && !plaqueEarned) earnPlaque();
+      }
+    }
+    // fireflies drift around lit lanterns near the courier
+    if (!REDUCED && parts.length < MAXPART + 180 && Math.random() < dt * 3) {
+      for (const L of lanternDoors) {
+        const d = doorBySlug[L.slug];
+        if (!d) continue;
+        if (Math.hypot(player.x - d.px, player.y - d.py) < 9) {
+          spawnPart('fly', d.wx + (Math.random() * 22 - 11), d.wy - 4 - Math.random() * 10,
+            (Math.random() - 0.5) * 3, -(0.5 + Math.random()), 4 + Math.random() * 3);
+          break;
+        }
+      }
+    }
+  }
+  // founding-day fireworks over the plaza once night falls
+  if (foundingActive && !REDUCED && nf > 0.4 && panel.hidden && !photoMode) {
+    fwTimer -= dt;
+    if (fwTimer <= 0) {
+      fwTimer = 1.9 + Math.random() * 1.6;
+      const post = propList.find(p => p.kind === 'landmark' && p.name === 'postoffice');
+      const cx = post ? isoX(post.tx + 1, post.ty + 1) : isoX(player.x, player.y);
+      const cy = post ? isoY(post.tx + 1, post.ty + 1) : isoY(player.x, player.y);
+      const bx = cx + (Math.random() * 120 - 60), by = cy - 72 - Math.random() * 28;
+      const col = THEMES[(Math.random() * THEMES.length) | 0];
+      for (let i = 0; i < 22; i++) {
+        const a = (i / 22) * Math.PI * 2, sp2 = 16 + Math.random() * 14;
+        spawnPart('fw', bx, by, Math.cos(a) * sp2, Math.sin(a) * sp2 * 0.6, 1.1 + Math.random() * 0.5, col);
+      }
+      sndSynth('pop');
+    }
+  }
+}
+function fireflyTally() {
+  let t = 0;
+  for (const L of lanternDoors) if (fireflySeen.has(L.slug)) t += L.n;
+  return t;
+}
+function earnPlaque() {
+  plaqueEarned = true;
+  const pr = propList.find(p => p.kind === 'plaque');
+  if (pr && pr.st) { pr.st.cv = SPR.plaque_lit; pr.st.name = 'plaque_lit'; }
+  sndSynth('chime');
+  setTownNote('the plaza plaque lights up · for those who wrote after midnight', 8);
+  if (REDUCED) draw();
+}
+
+/* ---- proximity: spots, folk, prompt rows ---------------------------------- */
+function updateSpotProximity() {
+  let bestS = null, bd = 1.05;
+  if (panel.hidden && cam.z >= 3 && !activeDoor && !photoMode) {
+    for (const s of spots) {
+      const dd = Math.hypot(player.x - s.ix, player.y - s.iy);
+      if (dd < bd) { bd = dd; bestS = s; }
+    }
+  }
+  if (bestS !== activeSpot) {
+    activeSpot = bestS;
+    if (bestS) dpTitleEl.textContent = '· ' + bestS.title;
+    updatePromptRows();
+  }
+  let bf = null, bfd = 1.15;
+  if (panel.hidden && cam.z >= 3 && !photoMode) {
+    for (const f of folkVisible) {
+      const dd = Math.hypot(player.x - f.x, player.y - f.y);
+      if (dd < bfd) { bfd = dd; bf = f; }
+    }
+  }
+  folkNear = bf;
+  // WALKING AWAY CLOSES IT. The card is a conversation, not a document: it ends
+  // when the courier leaves, when a page is opened over it, or when the hand is
+  // no longer one of the twenty out today.
+  if (folkTalking) {
+    const dd = Math.hypot(player.x - folkTalking.x, player.y - folkTalking.y);
+    if (dd > 3.2 || !panel.hidden || photoMode || folkVisible.indexOf(folkTalking) < 0) closeFolkCard();
+  }
+}
+function parcelStateAt(slug) {
+  const deliver = parcels.find(p => p.to === slug);
+  if (deliver) return { mode: 'deliver', parcel: deliver };
+  if (parcels.some(p => p.from === slug)) return { mode: 'none' };
+  const outs = (edgesFrom[slug] || []).filter(t => doorBySlug[t] && !parcels.some(p => p.to === t));
+  if (!outs.length) return { mode: 'none' };
+  if (parcels.length >= 3) return { mode: 'full' };
+  const dest = outs[h32(townHash(slug) & 0xffff, dayNum, 7) % outs.length];
+  return { mode: 'take', dest };
+}
+const dpRowsEl = document.getElementById('dp-rows');
+function updatePromptRows() {
+  if (!dpRowsEl) return;
+  dpRowsEl.innerHTML = '';
+  const addRow = (key, label, act) => {
+    const r = document.createElement('div');
+    r.className = 'dp-row' + (act ? '' : ' dp-plain');
+    r.innerHTML = (key ? `<span class="dp-k2">${key}</span>` : '') + esc(label);
+    if (act) {
+      // a proper button: a click fires it, a drag from it still pans the town
+      // (the pointerdown is handed to the canvas, which captures the pointer)
+      r.addEventListener('pointerdown', (ev) => {
+        rowPending = act;
+        cvs.dispatchEvent(new PointerEvent('pointerdown', {
+          bubbles: false, clientX: ev.clientX, clientY: ev.clientY,
+          pointerId: ev.pointerId, pointerType: ev.pointerType, isPrimary: true
+        }));
+      });
+      // if the capture was refused (synthetic pointer ids), the row keeps the
+      // pointerup: finish the press here so a plain click still fires.
+      r.addEventListener('pointerup', () => {
+        if (!rowPending) return;
+        const a = rowPending; rowPending = null;
+        dragging = false; cvs.classList.remove('dragging');
+        if (!moved) a();
+      });
+      r.addEventListener('click', (ev) => { ev.stopPropagation(); ev.preventDefault(); });
+    }
+    dpRowsEl.appendChild(r);
+  };
+  if (activeDoor) {
+    const slug = activeDoor.slug;
+    const ps = parcelStateAt(slug);
+    if (ps.mode === 'deliver') addRow('G', 'DELIVER PARCEL', () => parcelAction(activeDoor));
+    else if (ps.mode === 'take') {
+      const t = (pagesBySlug[ps.dest] && (pagesBySlug[ps.dest].sidebarLabel || pagesBySlug[ps.dest].title)) || ps.dest;
+      addRow('G', 'TAKE PARCEL FOR ' + t.toUpperCase().slice(0, 24), () => parcelAction(activeDoor));
+    } else if (ps.mode === 'full') addRow('G', 'SATCHEL FULL · 3 OF 3', () => parcelAction(activeDoor));
+    addRow('N', 'PIN A NOTE', () => openNoteForm(slug));
+  } else if (activeSpot && activeSpot.row) {
+    addRow(null, activeSpot.row, null);
+  }
+}
+function activateSpot(s) {
+  if (!s) return;
+  if (s.kind === 'post') openPostOffice(null);
+  else if (s.kind === 'news') openNewspaper();
+  else if (s.kind === 'hall') openRecordsHall();
+  else if (s.kind === 'plaque') openPlaque();
+  else if (s.kind === 'vacant') openPostOffice(s.slug);
+}
+
+/* ---- delivery rounds ------------------------------------------------------- */
+function parcelAction(door) {
+  const slug = door.slug;
+  const ps = parcelStateAt(slug);
+  if (ps.mode === 'deliver') {
+    parcels = parcels.filter(p => p !== ps.parcel);
+    const mins = Math.floor(dayT * 1440);
+    bookStamps.push({
+      from: ps.parcel.from, to: ps.parcel.to, route: ps.parcel.route.slice(),
+      day: dayNum + 1, time: `${String(Math.floor(mins / 60)).padStart(2, '0')}:${String(mins % 60).padStart(2, '0')}`
+    });
+    try { localStorage.setItem('pdc_book_v1', JSON.stringify(bookStamps)); } catch (err) { }
+    sndSynth('chime');
+    setTownNote(`delivered · stamp ${bookStamps.length} in the book`, 5);
+  } else if (ps.mode === 'take') {
+    const q = districtOfPlayer();
+    parcels.push({ from: slug, to: ps.dest, route: [q ? q.label : ''] });
+    sndSynth('blip');
+    const t = (pagesBySlug[ps.dest] && pagesBySlug[ps.dest].title) || ps.dest;
+    setTownNote(`parcel taken · this page really cites ${t} · ${parcels.length}/3 in the satchel`, 6);
+  } else if (ps.mode === 'full') {
+    setTownNote('the satchel holds three parcels at most · deliver one first', 4);
+  }
+  updatePromptRows();
+}
+
+/* ---- overlays (post office, notes, paper, records, book, plaque) ---------- */
+const townOl = document.getElementById('townol');
+const townOlCard = document.getElementById('townol-card');
+function townOverlayOpen() { return !!townOl && !townOl.hidden; }
+function openTownOverlay(cls, html) {
+  closeFolkCard();
+  townOlCard.className = cls;
+  townOlCard.innerHTML = html;
+  townOl.hidden = false;
+  keysDown.clear();
+  const c = townOlCard.querySelector('[data-close]');
+  if (c) c.onclick = closeTownOverlay;
+}
+function closeTownOverlay() {
+  if (!townOl) return;
+  townOl.hidden = true;
+  townOlCard.innerHTML = '';
+  if (!REDUCED) startLoop();
+}
+function defaultLetterSlug() {
+  if (activeDoor) return activeDoor.slug;
+  if (!panel.hidden && location.hash.length > 2) {
+    const h = location.hash.slice(1).split('#')[0].replace(/\/$/, '');
+    if (pagesBySlug[h]) return h;
+  }
+  let best = null, bd = Infinity;
+  for (const d of doors) {
+    const dd = Math.hypot(player.x - d.px, player.y - d.py);
+    if (dd < bd) { bd = dd; best = d.slug; }
+  }
+  return best || ORDER[0];
+}
+function openPostOffice(slug) {
+  const first = (slug && pagesBySlug[slug]) ? slug : defaultLetterSlug();
+  openTownOverlay('to-card to-post', `
+    <div class="to-head"><strong>POST OFFICE · WRITE A LETTER ABOUT A PAGE</strong><button class="chip" data-close>✕</button></div>
+    <p class="to-sub">Every page in town accepts letters. This desk is a real counter: sending opens
+    the GitHub editor for the page's actual file, in a new tab, ready for your fix.</p>
+    <label class="to-label" for="po-filter">FIND A PAGE</label>
+    <input id="po-filter" class="to-input" type="text" placeholder="type to search the 290 pages…" autocomplete="off" spellcheck="false">
+    <select id="po-page" class="to-select" size="1"></select>
+    <div class="to-letter">
+      <div class="to-letter-head">TO: THE KEEPERS OF <span id="po-title"></span></div>
+      <div class="to-letter-slug mono" id="po-slug"></div>
+      <div class="to-letter-body">Dear keepers - the desk lends you its pen. Propose the fix in the
+      editor that opens; the town scribes will read it as a pull request.</div>
+    </div>
+    <div class="to-actions">
+      <a id="po-send" class="chip to-send" target="_blank" rel="noopener">SEND VIA CITY TUBE ↗</a>
+      <a id="po-issue" class="chip" target="_blank" rel="noopener">OPEN AN ISSUE INSTEAD ↗</a>
+    </div>
+    <div id="po-tube" class="to-tube" aria-hidden="true"><span class="to-envelope">✉</span></div>
+    <p class="to-fine mono" id="po-fine"></p>`);
+  const sel = townOlCard.querySelector('#po-page');
+  const filter = townOlCard.querySelector('#po-filter');
+  const fill = (q) => {
+    const qq = (q || '').toLowerCase();
+    const list = ORDER.filter(s => !qq ||
+      (pagesBySlug[s].title || '').toLowerCase().includes(qq) || s.toLowerCase().includes(qq));
+    sel.innerHTML = (list.length ? list : [first]).map(s =>
+      `<option value="${esc(s)}"${s === first ? ' selected' : ''}>${esc(pagesBySlug[s].title || s)}</option>`).join('');
+    if (![...sel.options].some(o => o.selected)) sel.selectedIndex = 0;
+    refresh();
+  };
+  const refresh = () => {
+    const s = sel.value, pg = pagesBySlug[s];
+    if (!pg) return;
+    townOlCard.querySelector('#po-title').textContent = (pg.title || s).toUpperCase();
+    townOlCard.querySelector('#po-slug').textContent = 'RE: ' + s;
+    townOlCard.querySelector('#po-send').href = editUrlFor(s);
+    townOlCard.querySelector('#po-issue').href = issueUrlFor(s);
+    townOlCard.querySelector('#po-fine').textContent =
+      'tube destination: github.com/strapi/documentation · edit/main/docusaurus/' + (pg.file || '?');
+  };
+  sel.onchange = refresh;
+  filter.addEventListener('input', () => fill(filter.value));
+  fill('');
+  const fire = () => {
+    sndSynth('whoosh');
+    const tube = townOlCard.querySelector('#po-tube');
+    if (tube) { tube.classList.remove('go'); void tube.offsetWidth; tube.classList.add('go'); }
+  };
+  townOlCard.querySelector('#po-send').addEventListener('click', fire);
+  townOlCard.querySelector('#po-issue').addEventListener('click', fire);
+}
+
+const FEEDBACK_URL = 'https://n8n.tools.strapi.team/webhook/docs-feedback';
+function pinBoardFor(slug) {
+  notesPinned.add(slug);
+  try { localStorage.setItem('pdc_notes_v1', JSON.stringify([...notesPinned])); } catch (err) { }
+  const pr = propList.find(p => p.kind === 'board' && p.slug === slug);
+  if (pr && pr.st) { pr.st.cv = SPR.doorboard_pin; pr.st.name = 'doorboard_pin'; }
+  if (REDUCED) draw();
+}
+function openNoteForm(slug) {
+  const pg = pagesBySlug[slug];
+  if (!pg) return;
+  openTownOverlay('to-card to-note', `
+    <div class="to-head"><strong>NOTICEBOARD · ${esc((pg.title || slug).toUpperCase())}</strong><button class="chip" data-close>✕</button></div>
+    <p class="to-sub">Pin a note for the keepers of this page. No name, no address - just the note.
+    It travels to the same letterbox as the real docs feedback widget.</p>
+    <textarea id="nb-text" class="to-text" maxlength="2000" rows="5" placeholder="what should the keepers know about this page?"></textarea>
+    <div class="to-actions">
+      <button id="nb-send" class="chip to-send">PIN IT</button>
+      <span id="nb-count" class="mono to-count">0 / 2000</span>
+    </div>
+    <p id="nb-msg" class="to-fine" hidden></p>`);
+  const ta = townOlCard.querySelector('#nb-text');
+  const count = townOlCard.querySelector('#nb-count');
+  const msg = townOlCard.querySelector('#nb-msg');
+  ta.addEventListener('input', () => { count.textContent = `${ta.value.length} / 2000`; });
+  setTimeout(() => ta.focus(), 30);
+  townOlCard.querySelector('#nb-send').onclick = () => {
+    const note = ta.value.trim();
+    if (note.length < 1) { msg.hidden = false; msg.textContent = 'the board wants at least a word.'; return; }
+    msg.hidden = false;
+    msg.textContent = 'the pneumatic post is taking it…';
+    const body = {
+      vote: 'up', kind: 'element', comment: note.slice(0, 2000),
+      pagePath: slug, pageTitle: pg.title || slug,
+      selectionHeading: 'Design Lab - Pixel Docs City', channel: 'design-lab'
+    };
+    sndSynth('blip');
+    fetch(FEEDBACK_URL, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-feedback-source': 'docs-widget' },
+      body: JSON.stringify(body)
+    }).then(r => {
+      if (r.ok) msg.textContent = 'pinned - and delivered to the keepers of the real letterbox.';
+      else msg.textContent = 'the wind took this one - it will reach the keepers from the real portal. your note stays pinned here.';
+      pinBoardFor(slug);
+    }).catch(() => {
+      msg.textContent = 'the wind took this one - it will reach the keepers from the real portal. your note stays pinned here.';
+      pinBoardFor(slug);
+    });
+  };
+}
+
+function openNewspaper() {
+  const rows = TOWN.news.map(n => `
+    <a class="np-head" href="#np" data-slug="${esc(n.slug)}">
+      <span class="np-title">${esc(n.title)}</span>
+      <span class="np-when">${esc(daysAgo(n.last))} · ${esc(humanDate(n.last))}</span>
+    </a>`).join('');
+  openTownOverlay('to-card to-paper', `
+    <div class="to-head np-mast"><strong>THE DAILY DOCS</strong><button class="chip" data-close>✕</button></div>
+    <div class="np-strap mono">the six most recently tended pages in town · recomputed from the ledgers at every dawn</div>
+    <div class="np-cols">${rows}</div>
+    <div class="np-foot mono">tap a headline and the courier makes the trip · ${esc(String(ORDER.length))} pages in circulation</div>`);
+  townOlCard.querySelectorAll('.np-head').forEach(a => {
+    a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const s = a.getAttribute('data-slug');
+      closeTownOverlay();
+      teleportTo(s);
+      camMode = 'follow';
+      if (REDUCED) draw(); else startLoop();
+    });
+  });
+}
+
+/* ---- TALKING TO A HAND ------------------------------------------------------
+   The people in the streets are the 77 real hands from the log, and the record
+   IS the conversation: no dialogue, no biography, nothing invented. The card is
+   deliberately NOT modal - the town keeps running behind it and the courier can
+   simply walk away, which closes it, exactly as leaving a conversation should. */
+const folkCardEl = document.getElementById('folkcard');
+const fcNameEl = document.getElementById('fc-name');
+const fcBodyEl = document.getElementById('fc-body');
+let folkTalking = null;
+function folkCardOpen() { return !!folkTalking; }
+function closeFolkCard() {
+  if (!folkTalking) return;
+  folkTalking = null;
+  if (folkCardEl) folkCardEl.hidden = true;
+  if (fcBodyEl) fcBodyEl.innerHTML = '';
+  if (REDUCED) draw(); else startLoop();
+}
+function openFolkCard(who) {
+  if (!who || !folkCardEl) return;
+  folkTalking = who;
+  const f = who.rec || who;      // a street walker carries its record; the record IS one
+  closeTownOverlay();
+  fcNameEl.textContent = f.name;
+  fcNameEl.title = f.name;
+  const span = f.first === f.last
+    ? `signed the log once, on ${humanDate(f.first)}`
+    : `signed the log from ${humanDate(f.first)} to ${humanDate(f.last)}`;
+  const stats = [
+    `<div class="fc-stat"><b>${f.nPages}</b><span>${f.nPages === 1 ? 'PAGE TENDED' : 'PAGES TENDED'}</span></div>`,
+    `<div class="fc-stat"><b>${f.commits}</b><span>COMMITS ON THEM</span></div>`
+  ];
+  if (f.kept) stats.push(`<div class="fc-stat"><b>${f.kept}</b><span>${f.kept === 1 ? 'PAGE KEPT' : 'PAGES KEPT'}</span></div>`);
+  else if (f.nightPages) stats.push(`<div class="fc-stat"><b>${f.nightPages}</b><span>${f.nightPages === 1 ? 'NIGHT PAGE' : 'NIGHT PAGES'}</span></div>`);
+  const rows = f.pages.map(pg => {
+    const t = (pagesBySlug[pg.slug] && (pagesBySlug[pg.slug].title || pg.slug)) || pg.slug;
+    const hands = pg.nAuth === 1 ? 'the only hand'
+      : (pg.kept ? `first hand of ${pg.nAuth}` : `one of ${pg.nAuth} hands`);
+    return `<button class="fc-page${pg.kept ? ' fc-kept' : ''}" data-slug="${esc(pg.slug)}">
+      <b>${esc(t)}</b><span>${esc(hands)} · ${pg.commits} commits on the page</span></button>`;
+  }).join('');
+  fcBodyEl.innerHTML = `
+    <p class="fc-span">${esc(span)}</p>
+    <div class="fc-stats">${stats.join('')}</div>
+    <p class="fc-line">${esc(f.card)}</p>
+    <div class="fc-h">THE PAGES THEMSELVES (${f.pages.length})</div>
+    <p class="fc-strap">As remembered by the pages themselves: the log keeps which hands touched a
+    page and how many commits the page carries - not each hand's share of them, so every count
+    below is the page's own. Click one and the courier makes the trip.</p>
+    ${rows}
+    <p class="fc-foot">Walk away, or press Escape, and the conversation ends.</p>`;
+  fcBodyEl.scrollTop = 0;
+  folkCardEl.hidden = false;
+  fcBodyEl.querySelectorAll('.fc-page').forEach(b => {
+    b.addEventListener('click', () => {
+      const sl = b.getAttribute('data-slug');
+      closeFolkCard();
+      teleportTo(sl);
+      camMode = 'follow';
+      if (REDUCED) draw(); else startLoop();
+    });
+  });
+  if (REDUCED) draw(); else startLoop();
+}
+function talkToFolk() { if (folkNear) openFolkCard(folkNear); }
+if (document.getElementById('fc-close')) document.getElementById('fc-close').onclick = closeFolkCard;
+
+function openRecordsHall() {
+  const byYear = {};
+  for (const mo of TOWN.months) (byYear[mo.key.slice(0, 4)] = byYear[mo.key.slice(0, 4)] || []).push(mo);
+  const MN = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+  const html = Object.keys(byYear).sort().map(y => `
+    <h3>${esc(y)}</h3>
+    <div class="rh-year">${byYear[y].map(mo => {
+      const chained = mo.key === TOWN.widest.key;
+      const n = mo.founded.length + mo.tended.length;
+      return `<button class="rh-ledger${chained ? ' rh-chained' : ''}${n ? '' : ' rh-empty'}" data-m="${esc(mo.key)}">
+        <span class="rh-m">${MN[Number(mo.key.slice(5, 7)) - 1]}</span>
+        <span class="rh-n mono">${n ? (mo.founded.length ? mo.founded.length + ' founded' : '') + (mo.founded.length && mo.tended.length ? ' · ' : '') + (mo.tended.length ? mo.tended.length + ' tended' : '') : 'quiet'}</span>
+        ${chained ? '<span class="rh-chain">CHAINED TO THE DESK</span>' : ''}
+      </button>`;
+    }).join('')}</div>`).join('');
+  openTownOverlay('to-card to-hall', `
+    <div class="to-head"><strong>RECORDS HALL · THE MONTH LEDGERS</strong><button class="chip" data-close>✕</button></div>
+    <p class="to-sub">One ledger per month, ${esc(humanDate(TOWN.first))} to ${esc(humanDate(TOWN.last))} -
+    as remembered by the pages themselves. Each page keeps only its first and its latest tending,
+    so the months in between read quieter than they were. The flyleaf says so honestly.</p>
+    ${html}`);
+  townOlCard.querySelectorAll('.rh-ledger').forEach(b => {
+    b.addEventListener('click', () => openLedger(b.getAttribute('data-m')));
+  });
+}
+function openLedger(key) {
+  const mo = TOWN.months.find(m => m.key === key);
+  if (!mo) return;
+  const MN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const label = `${MN[Number(key.slice(5, 7)) - 1]} ${key.slice(0, 4)}`;
+  const chained = key === TOWN.widest.key;
+  const link = (s) => `<a class="rh-page" href="#${esc(s)}">${esc(pagesBySlug[s] ? (pagesBySlug[s].title || s) : s)}</a>`;
+  openTownOverlay('to-card to-hall', `
+    <div class="to-head"><strong>LEDGER · ${esc(label.toUpperCase())}</strong><button class="chip" data-close>✕</button></div>
+    ${chained ? `<p class="rh-plaque">This ledger is chained to the desk. ${esc(String(mo.founded.length))} pages
+      remember this month as their beginning - the widest change the town remembers.</p>` : ''}
+    <button class="chip" id="rh-back">← ALL LEDGERS</button>
+    ${mo.founded.length ? `<h3>FOUNDED THIS MONTH (${mo.founded.length})</h3><div class="rh-pages">${mo.founded.map(link).join('')}</div>` : ''}
+    ${mo.tended.length ? `<h3>LAST TENDED THIS MONTH (${mo.tended.length})</h3><div class="rh-pages">${mo.tended.map(link).join('')}</div>` : ''}
+    ${mo.founded.length + mo.tended.length === 0 ? '<p class="to-sub">A quiet month, as far as the pages recall.</p>' : ''}`);
+  townOlCard.querySelector('#rh-back').onclick = () => openRecordsHall();
+  townOlCard.querySelectorAll('.rh-page').forEach(a => {
+    a.addEventListener('click', () => { closeTownOverlay(); });
+  });
+}
+
+function openBook() {
+  const tf = (x) => pagesBySlug[x] ? (pagesBySlug[x].title || x) : x;
+  const stamps = bookStamps.map((s, i) => `
+    <div class="bk-stamp">
+      <span class="bk-no mono">STAMP ${i + 1} · day ${esc(String(s.day))} · ${esc(s.time)}</span>
+      <span class="bk-line"><b>${esc(tf(s.from))}</b> → <b>${esc(tf(s.to))}</b></span>
+      <span class="bk-line mono">${esc(s.from)} → ${esc(s.to)}</span>
+      <span class="bk-line">route: ${esc(s.route.filter(Boolean).join(' → ') || 'straight there')}</span>
+    </div>`).join('');
+  const carrying = parcels.map(p => `
+    <div class="bk-line">▤ for <b>${esc(tf(p.to))}</b> <span class="mono">(${esc(p.to)})</span> · handed over at ${esc(tf(p.from))}, which really cites it</div>`).join('')
+    || '<div class="bk-line">the satchel is empty · any door offers a parcel for a page it really cites (key G)</div>';
+  const seenList = lanternDoors.map(L => `
+    <div class="bk-line">${fireflySeen.has(L.slug) ? '✦' : '·'} ${esc(tf(L.slug))} <span class="mono">${esc(L.slug)} · ${L.n} night edit${L.n > 1 ? 's' : ''}</span></div>`).join('');
+  openTownOverlay('to-card to-book', `
+    <div class="to-head"><strong>THE DELIVERY BOOK</strong><button class="chip" data-close>✕</button></div>
+    <h3>IN THE SATCHEL (${parcels.length}/3)</h3>${carrying}
+    <h3>STAMPS (${bookStamps.length})</h3>
+    ${stamps || '<div class="bk-line">no stamps yet · take a parcel at any door and walk it to the page it cites</div>'}
+    <h3>NIGHT SHIFT · ${fireflyTally()}/${TOWN.lanternTotal} FIREFLIES</h3>
+    <p class="to-sub">Fifteen lanterns burn for commits made after midnight, on twelve real pages.
+    Walk up to one at night to log it. Find them all and the plaza plaque lights.</p>
+    ${seenList}`);
+}
+
+function openPlaque() {
+  if (!plaqueEarned) {
+    openTownOverlay('to-card to-plaque', `
+      <div class="to-head"><strong>PLAZA PLAQUE</strong><button class="chip" data-close>✕</button></div>
+      <p class="to-sub">A blank brass plate on a stone plinth. Something is waiting to be written here.</p>
+      <p class="to-fine mono">rumour in town: it lights for whoever finds every lantern that burns after dark · ${fireflyTally()}/${TOWN.lanternTotal} so far</p>`);
+    return;
+  }
+  const rows = lanternDoors.map(L => {
+    const t = pagesBySlug[L.slug] ? (pagesBySlug[L.slug].title || L.slug) : L.slug;
+    return `<div class="bk-line">✦ ${esc(t)} <span class="mono">${esc(L.slug)} · ${L.n} after-midnight commit${L.n > 1 ? 's' : ''}</span></div>`;
+  }).join('');
+  openTownOverlay('to-card to-plaque', `
+    <div class="to-head"><strong>PLAZA PLAQUE</strong><button class="chip" data-close>✕</button></div>
+    <p class="to-plaquetext">FOR THOSE WHO WROTE AFTER MIDNIGHT<br>
+    <span class="mono">${TOWN.lanternTotal} lanterns · ${lanternDoors.length} pages · found by a courier</span></p>
+    ${rows}`);
+}
+
+/* ---- photo mode ------------------------------------------------------------ */
+const photoBar = document.getElementById('photobar');
+const pbNote = document.getElementById('pb-note');
+let pbTimer = null;
+/* the HUD note lines are hidden in photo mode, so a paper strip above the bar
+   carries the word instead - the bar's own legend of controls never changes */
+function photoSay(msg, secs) {
+  if (!pbNote) return;
+  pbNote.textContent = msg;
+  pbNote.hidden = false;
+  clearTimeout(pbTimer);
+  pbTimer = setTimeout(() => { if (pbNote) pbNote.hidden = true; }, (secs || 2) * 1000);
+}
+function photoBarReset() {
+  clearTimeout(pbTimer);
+  if (pbNote) { pbNote.hidden = true; pbNote.textContent = ''; }
+}
+const FACING = ['north', 'east', 'south', 'west'];
+function enterPhoto() {
+  if (photoMode) return;
+  photoMode = true;
+  photoPrevSpeed = timeSpeed;
+  timeSpeed = 0;
+  camMode = 'free';
+  keysDown.clear();
+  if (townOverlayOpen()) closeTownOverlay();
+  closeFolkCard();
+  document.body.classList.add('photomode');
+  photoBarReset();
+  if (photoBar) photoBar.hidden = false;
+  bubble.hidden = true;
+  hoverB = null;
+  if (REDUCED) draw();
+}
+/* photo mode has no Find me chip and its camera flights are frozen, so F (and
+   the bar's own button) snap straight to the courier instead */
+function photoFindMe() {
+  const wx = isoX(player.x, player.y), wy = isoY(player.x, player.y);
+  cam.x = Math.round(wx - cvs.width / (2 * cam.z));
+  cam.y = Math.round(wy - cvs.height / (2 * cam.z));
+  if (REDUCED) draw(); else startLoop();
+}
+/* and a pan in photo mode always keeps a good part of the island in frame */
+function photoClampCam() {
+  if (!photoMode) return;
+  const vw = cvs.width / cam.z, vh = cvs.height / cam.z;
+  const mx = Math.min(vw, worldW) * 0.55, my = Math.min(vh, worldH) * 0.55;
+  cam.x = clamp(cam.x, -mx, worldW - vw + mx);
+  cam.y = clamp(cam.y, -my, worldH - vh + my);
+}
+function exitPhoto() {
+  if (!photoMode) return;
+  photoMode = false;
+  snapWaiting = false;              // a postcard queued behind a turn is dropped on the way out
+  timeSpeed = photoPrevSpeed;
+  document.body.classList.remove('photomode');
+  photoBarReset();
+  if (photoBar) photoBar.hidden = true;
+  if (!REDUCED) startLoop(); else draw();
+}
+function buildPostcard() {
+  const K = cvs.width * 3 <= 5400 ? 3 : 2;
+  const TS = K * 2;                       // caption scale: legible on a big card
+  const pad = 8 * K, strip = 13 * TS;
+  const pw = cvs.width * K + pad * 2, ph = cvs.height * K + pad * 2 + strip;
+  const [pc, pg] = mkCv(pw, ph);
+  pg.imageSmoothingEnabled = false;
+  pg.fillStyle = '#fdf8ea'; pg.fillRect(0, 0, pw, ph);
+  pg.drawImage(cvs, 0, 0, cvs.width, cvs.height, pad, pad, cvs.width * K, cvs.height * K);
+  pg.fillStyle = '#241f2e';
+  pg.fillRect(pad - K, pad - K, cvs.width * K + 2 * K, K);
+  pg.fillRect(pad - K, pad + cvs.height * K, cvs.width * K + 2 * K, K);
+  pg.fillRect(pad - K, pad - K, K, cvs.height * K + 2 * K);
+  pg.fillRect(pad + cvs.width * K, pad - K, K, cvs.height * K + 2 * K);
+  const q = districtOfPlayer();
+  const mins = Math.floor(dayT * 1440);
+  const right = `${(q ? q.label : 'OPEN WATER')} - ${SEASONS[season]} - DAY ${dayNum + 1} - ${String(Math.floor(mins / 60)).padStart(2, '0')}:${String(mins % 60).padStart(2, '0')}`
+    .toUpperCase().replace(/[^A-Z0-9 :.\-]/g, '');
+  const [t1, g1] = mkCv(textW('PIXEL DOCS CITY') + 2, 7);
+  drawText3x5(g1, 1, 1, 'PIXEL DOCS CITY', '#241f2e');
+  const [t2, g2] = mkCv(textW(right) + 2, 7);
+  drawText3x5(g2, 1, 1, right, '#6b5f45');
+  const ty2 = pad + cvs.height * K + K + Math.round((pad + strip - 7 * TS) / 2);
+  pg.drawImage(t1, 0, 0, t1.width, 7, pad, ty2, t1.width * TS, 7 * TS);
+  pg.drawImage(t2, 0, 0, t2.width, 7, pw - pad - t2.width * TS, ty2, t2.width * TS, 7 * TS);
+  // a violet postage stamp, the courier's own mark, perforated edge and all
+  const sx2 = pad + t1.width * TS + 4 * TS;
+  pg.fillStyle = PAL.V1; pg.fillRect(sx2, ty2 - TS, 7 * TS, 8 * TS);
+  pg.fillStyle = '#fdf8ea';
+  for (let i = 0; i < 8; i++) { pg.fillRect(sx2 - TS / 2, ty2 - TS + i * TS, TS / 2, TS / 2); pg.fillRect(sx2 + 7 * TS, ty2 - TS + i * TS, TS / 2, TS / 2); }
+  pg.fillRect(sx2 + TS, ty2, 5 * TS, 6 * TS);
+  pg.fillStyle = PAL.V2; pg.fillRect(sx2 + 2 * TS, ty2 + TS, 3 * TS, 4 * TS);
+  pg.fillStyle = '#fdf8ea'; pg.fillRect(sx2 + 3 * TS, ty2 + 2 * TS, TS, 2 * TS);
+  return pc;
+}
+function snapPostcard() {
+  if (rotFx) {                      // never bake the turn's shutter into a card
+    if (!snapWaiting) photoSay('hold still · the town is turning', 2);
+    snapWaiting = true;
+    return;
+  }
+  snapWaiting = false;
+  const pc = buildPostcard();
+  sndSynth('shutter');
+  pc.toBlob((blob) => {
+    if (!blob) return;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'pixel-docs-city-postcard.png';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  }, 'image/png');
+  photoSay('postcard saved · pixel-docs-city-postcard.png', 5);
+  setTownNote('postcard saved · pixel-docs-city-postcard.png', 5);
+}
+
+/* ---- synthesized one-shots (original, in-engine; the mute toggle rules them) */
+let synthNoise = null;
+function sndSynth(kind) {
+  if (!sndOn || !AC || !sndMaster) return;
+  try {
+    const t0 = AC.currentTime;
+    if (kind === 'whoosh' || kind === 'pop') {
+      if (!synthNoise) {
+        synthNoise = AC.createBuffer(1, Math.floor(AC.sampleRate * 0.6), AC.sampleRate);
+        const ch = synthNoise.getChannelData(0);
+        for (let i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1;
+      }
+      const src = AC.createBufferSource(); src.buffer = synthNoise;
+      const bp = AC.createBiquadFilter();
+      const g = AC.createGain();
+      src.connect(bp); bp.connect(g); g.connect(sndMaster);
+      if (kind === 'whoosh') {
+        bp.type = 'bandpass'; bp.Q.value = 1.1;
+        bp.frequency.setValueAtTime(320, t0);
+        bp.frequency.exponentialRampToValueAtTime(2400, t0 + 0.38);
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(0.22, t0 + 0.1);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.55);
+        src.start(t0); src.stop(t0 + 0.6);
+      } else {
+        bp.type = 'lowpass'; bp.frequency.value = 900;
+        g.gain.setValueAtTime(0.14, t0);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.16);
+        src.start(t0); src.stop(t0 + 0.18);
+      }
+    } else if (kind === 'chime') {
+      for (const [f, d, v] of [[880, 0, 0.10], [1318.5, 0.12, 0.08]]) {
+        const o = AC.createOscillator(), g = AC.createGain();
+        o.type = 'sine'; o.frequency.value = f;
+        o.connect(g); g.connect(sndMaster);
+        g.gain.setValueAtTime(0.0001, t0 + d);
+        g.gain.exponentialRampToValueAtTime(v, t0 + d + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + d + 0.7);
+        o.start(t0 + d); o.stop(t0 + d + 0.75);
+      }
+    } else if (kind === 'blip') {
+      const o = AC.createOscillator(), g = AC.createGain();
+      o.type = 'triangle'; o.frequency.setValueAtTime(980, t0);
+      o.frequency.exponentialRampToValueAtTime(1400, t0 + 0.09);
+      o.connect(g); g.connect(sndMaster);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(0.07, t0 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.16);
+      o.start(t0); o.stop(t0 + 0.18);
+    } else if (kind === 'shutter') {
+      const o = AC.createOscillator(), g = AC.createGain();
+      o.type = 'square'; o.frequency.value = 2200;
+      o.connect(g); g.connect(sndMaster);
+      g.gain.setValueAtTime(0.05, t0);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.05);
+      o.start(t0); o.stop(t0 + 0.06);
+    }
+    if (sndLog.length < 400) sndLog.push('synth:' + kind);
+  } catch (err) { }
+}
+
+/* ---- render hooks ----------------------------------------------------------- */
+function townDynInto(dyn) {
+  // townsfolk: the real hands, out near the pages they tend
+  if (cam.z >= 2) {
+    for (const f of folkVisible) {
+      const wx = isoX(f.x, f.y), wy = isoY(f.x, f.y);
+      const bob = !REDUCED && Math.floor(animT * 1.3 + f.ph) % 5 === 0 ? 1 : 0;
+      dyn.push({ cv: folkSpriteFor(f), wx: Math.round(wx - 2), wy: Math.round(wy - 10 + bob), depth: depthOf(f.x, f.y) - 0.98 });
+    }
+  }
+}
+function drawTownOver(vx0, vy0, vx1, vy1) {
+  // night-shift lanterns: mint lights for the after-midnight commits
+  if (nf > 0.12) {
+    const la = Math.min(1, (nf - 0.12) / 0.5);
+    for (const L of lanternDoors) {
+      const d = doorBySlug[L.slug];
+      if (!d || d.wx < vx0 - 24 || d.wx > vx1 + 24 || d.wy < vy0 - 24 || d.wy > vy1 + 24) continue;
+      for (let i = 0; i < L.n; i++) {
+        const bob = REDUCED ? 0 : Math.sin(animT * 1.6 + i * 1.7) * 1.1;
+        const lx = Math.round(d.wx + (i - (L.n - 1) / 2) * 10 - 3);
+        const ly = Math.round(d.wy - 20 + (i % 2) * 2 + bob);
+        ctx.globalAlpha = la * 0.85;
+        ctx.drawImage(SPR.nlanternglow, lx - 8, ly - 1);
+        ctx.globalAlpha = la;
+        ctx.drawImage(SPR.nlantern, lx, ly);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+  // founding day: bunting over the plaza, one pennant per community, lit at night
+  if (foundingActive && pennantStrings.length) {
+    for (const S of pennantStrings) {
+      // the pole (only where it can stand on open ground)
+      const [pxx, pyy] = S.poleA || [-1e9, 0];
+      if (S.poleA && pxx > vx0 - 8 && pxx < vx1 + 8) {
+        ctx.fillStyle = PAL.WD1;
+        ctx.fillRect(Math.round(pxx) - 1, Math.round(pyy) - S.poleH, 2, S.poleH);
+        ctx.fillStyle = PAL.WD3;
+        ctx.fillRect(Math.round(pxx) - 1, Math.round(pyy) - S.poleH, 1, S.poleH);
+      }
+      // the cord: two pixels deep so it reads against roofs and sky alike
+      for (const seg of S.segs) {
+        if (seg[0] < vx0 - 4 || seg[0] > vx1 + 4) continue;
+        ctx.fillStyle = PAL.OUT;
+        ctx.fillRect(Math.round(seg[0]), Math.round(seg[1]), 1, 2);
+        ctx.fillStyle = '#6b6478';
+        ctx.fillRect(Math.round(seg[0]), Math.round(seg[1]), 1, 1);
+      }
+      // triangular pennants hanging beneath it, one per community
+      for (let i = 0; i < S.flags.length; i++) {
+        const f = S.flags[i];
+        if (f.x < vx0 - 8 || f.x > vx1 + 8) continue;
+        const sway = REDUCED ? 0 : Math.round(Math.sin(animT * 1.7 + i * 1.3));
+        const fx = Math.round(f.x) - 2, fy = Math.round(f.y) + 2;
+        ctx.fillStyle = PAL.OUT;
+        ctx.fillRect(fx - 1 + sway, fy - 1, 7, 1);
+        for (let r = 0; r < 5; r++) {
+          const w4 = 5 - r;
+          if (w4 <= 0) break;
+          const off = Math.round(sway * (r / 5));
+          ctx.fillStyle = PAL.OUT;
+          ctx.fillRect(fx - 1 + off + sway, fy + r, w4 + 2, 1);
+          ctx.fillStyle = r === 0 ? f.col : (r < 3 ? f.col : PAL.OUT);
+          ctx.fillRect(fx + off + sway, fy + r, w4, 1);
+        }
+      }
+      // strung lights between the pennants once it is dark
+      if (nf > 0.2) {
+        const ga = Math.min(1, (nf - 0.2) * 1.8);
+        const lightStep = Math.max(5, Math.round(S.segs.length / 9));
+        for (let i = lightStep; i < S.segs.length - 2; i += lightStep) {
+          const seg = S.segs[i];
+          if (seg[0] < vx0 - 4 || seg[0] > vx1 + 4) continue;
+          ctx.globalAlpha = ga * 0.30;
+          ctx.fillStyle = PAL.L2;
+          ctx.fillRect(Math.round(seg[0]) - 2, Math.round(seg[1]), 5, 5);
+          ctx.globalAlpha = ga;
+          ctx.fillStyle = PAL.L1;
+          ctx.fillRect(Math.round(seg[0]), Math.round(seg[1]) + 2, 1, 2);
+        }
+        ctx.globalAlpha = 1;
+      }
+    }
+  }
+}
+const folkEl = document.getElementById('folklabel');
+let folkLabelFor = null;
+if (folkEl) {
+  // a click talks; a drag that starts on the card still pans the town, exactly
+  // as a door-prompt row does (the canvas takes the pointer over)
+  folkEl.addEventListener('pointerdown', (ev) => {
+    rowPending = talkToFolk;
+    cvs.dispatchEvent(new PointerEvent('pointerdown', {
+      bubbles: false, clientX: ev.clientX, clientY: ev.clientY,
+      pointerId: ev.pointerId, pointerType: ev.pointerType, isPrimary: true
+    }));
+  });
+  folkEl.addEventListener('pointerup', () => {
+    if (!rowPending) return;
+    const a = rowPending; rowPending = null;
+    dragging = false; cvs.classList.remove('dragging');
+    if (!moved) a();
+  });
+  folkEl.addEventListener('click', (ev) => { ev.stopPropagation(); ev.preventDefault(); });
+}
+function drawTownLabels(z, bubbleShown) {
+  // the townsfolk name card. It never shares the screen with another label: it
+  // speaks only when the courier is nearer to the person than to any door.
+  let folkUp = !!folkNear && panel.hidden && bubble.hidden && !bubbleShown &&
+    !(yahT > 0 || yahHold) && !photoMode && !townOverlayOpen() && !folkCardOpen();
+  if (folkUp && (activeDoor || activeSpot)) {
+    const fd2 = Math.hypot(player.x - folkNear.x, player.y - folkNear.y);
+    const od = activeDoor
+      ? Math.hypot(player.x - activeDoor.px, player.y - activeDoor.py)
+      : Math.hypot(player.x - activeSpot.ix, player.y - activeSpot.iy);
+    if (fd2 + 0.2 >= od) folkUp = false;
+  }
+  if (folkUp && folkEl) {
+    const rdpr = window.devicePixelRatio || 1;
+    const wx = isoX(folkNear.x, folkNear.y), wy = isoY(folkNear.x, folkNear.y);
+    // the door grammar, for a person: a key chip, what it does, and who with
+    if (folkLabelFor !== folkNear) {
+      folkLabelFor = folkNear;
+      // the door grammar, kept to the same DOM contract the name card always had:
+      // <b> is the name and the only <span> is the true line, so anything that
+      // read this card before still reads it now
+      folkEl.innerHTML = `<i class="dp-key">ENTER</i><em class="fl-do">TALK ·</em>` +
+        `<b>${esc(folkNear.name)}</b><span class="fl-line">${esc(folkNear.line)}</span>`;
+    }
+    folkEl.style.left = ((wx - cam.x) * z / rdpr) + 'px';
+    folkEl.style.top = ((wy - 13 - cam.y) * z / rdpr) + 'px';
+    folkEl.hidden = false;
+  } else if (folkEl) { folkEl.hidden = true; folkLabelFor = null; }
+  return folkUp;
+}
+
+/* ---- clicks: the mouse-only path to every town service ----------------------
+   Per-pixel, exactly like the building picker: a click only counts where the
+   prop actually has paint, so the ground behind a fence post stays clickable. */
+const pickMasks = new WeakMap();
+function spriteOpaqueAt(cv, lx, ly) {
+  if (lx < 0 || ly < 0 || lx >= cv.width || ly >= cv.height) return false;
+  let m = pickMasks.get(cv);
+  if (!m) {
+    m = cv.getContext('2d').getImageData(0, 0, cv.width, cv.height).data;
+    pickMasks.set(cv, m);
+  }
+  return m[(ly * cv.width + lx) * 4 + 3] > 10;
+}
+function pickTownClick(wx, wy) {
+  for (let i = townClickables.length - 1; i >= 0; i--) {
+    const st = townClickables[i].st;
+    if (!st) continue;
+    const cv = st.cv;
+    if (wx < st.wx || wy < st.wy || wx >= st.wx + cv.width || wy >= st.wy + cv.height) continue;
+    if (!spriteOpaqueAt(cv, Math.floor(wx - st.wx), Math.floor(wy - st.wy))) continue;
+    return townClickables[i];
+  }
+  return null;
+}
+
+/* ---- UI wiring ---------------------------------------------------------------- */
+function initTownUI() {
+  const bb = document.getElementById('btn-book');
+  if (bb) bb.onclick = () => { if (townOverlayOpen()) closeTownOverlay(); else openBook(); };
+  const bp = document.getElementById('btn-photo');
+  if (bp) bp.onclick = () => { if (photoMode) exitPhoto(); else enterPhoto(); };
+  const snap = document.getElementById('photo-snap');
+  if (snap) snap.onclick = () => snapPostcard();
+  const leave = document.getElementById('photo-leave');
+  if (leave) leave.onclick = () => exitPhoto();
+  const here = document.getElementById('photo-here');
+  if (here) here.onclick = () => photoFindMe();
+  if (townOl) townOl.addEventListener('pointerdown', (e) => { if (e.target === townOl) closeTownOverlay(); });
+  if (foundingActive) setTownNote(`FOUNDING DAY · first recording, ${TOWN.foundingHuman} · ${TOWN.pennantsHung || TOWN.pennants} community pennants over the plaza`, 12);
+}
+
+/* ---- test surface --------------------------------------------------------------- */
+function townTestApi() {
+  return {
+    town: () => ({
+      founding: TOWN.first, foundingActive, pennants: TOWN.pennants,
+      pennantsHung: TOWN.pennantsHung || 0, strings: pennantStrings.length,
+      vacantDerived: TOWN.vacant.length, vacantPlaced: TOWN.vacantPlaced,
+      boards: propList.filter(p => p.kind === 'board').length,
+      lanternBuildings: lanternDoors.length, lanternTotal: TOWN.lanternTotal,
+      months: TOWN.months.length, widestMonth: TOWN.widest.key, widestFounded: TOWN.widest.founded.length,
+      folk: townsfolk.length, folkVisible: folkVisible.length,
+      spots: spots.map(s => s.kind), dayNum
+    }),
+    editUrl: (s) => editUrlFor(s),
+    issueUrl: (s) => issueUrlFor(s),
+    newsData: () => TOWN.news.map(n => ({ slug: n.slug, last: n.last, title: n.title })),
+    openPost: (s) => openPostOffice(s || null),
+    openPaper: () => openNewspaper(),
+    openHall: () => openRecordsHall(),
+    openLedgerFor: (m) => openLedger(m),
+    openBookNow: () => openBook(),
+    openPlaqueNow: () => openPlaque(),
+    openNote: (s) => openNoteForm(s),
+    overlayOpen: () => townOverlayOpen(),
+    overlayHtml: () => (townOlCard ? townOlCard.innerHTML : ''),
+    closeOverlay: () => closeTownOverlay(),
+    parcelState: (s) => parcelStateAt(s),
+    parcelDo: (s) => { const d = doorBySlug[s]; if (d) parcelAction(d); },
+    parcelList: () => parcels.map(p => ({ from: p.from, to: p.to, route: p.route.slice() })),
+    stamps: () => bookStamps.slice(),
+    fireflies: () => ({ seen: [...fireflySeen], tally: fireflyTally(), total: TOWN.lanternTotal, plaque: plaqueEarned }),
+    lanternList: () => lanternDoors.map(L => ({ slug: L.slug, n: L.n })),
+    visitLantern: (s) => {
+      if (lanternDoors.some(L => L.slug === s)) fireflySeen.add(s);
+      const got = fireflyTally();
+      if (got >= TOWN.lanternTotal && !plaqueEarned) earnPlaque();
+      return got;
+    },
+    folkList: () => folkVisible.map(f => ({ name: f.name, slug: f.slug, line: f.line, x: f.x, y: f.y })),
+    folkAll: () => townsfolk.map(f => ({
+      name: f.name, slug: f.slug, line: f.line, card: f.card, first: f.first, last: f.last,
+      nPages: f.nPages, commits: f.commits, kept: f.kept, nightPages: f.nightPages,
+      pages: f.pages.map(pg => ({ slug: pg.slug, commits: pg.commits, nAuth: pg.nAuth, kept: pg.kept }))
+    })),
+    folkPromptUp: () => folkPromptUp,
+    folkPromptText: () => (folkEl && !folkEl.hidden ? folkEl.textContent : ''),
+    folkTalk: (name) => { const f = folkVisible.find(x => x.name === name); if (f) openFolkCard(f); return !!f; },
+    folkTalkOpen: () => folkCardOpen(),
+    folkTalkName: () => (folkTalking ? folkTalking.name : null),
+    folkTalkHtml: () => (folkCardEl && !folkCardEl.hidden ? folkCardEl.textContent : ''),
+    folkTalkRows: () => (fcBodyEl ? Array.from(fcBodyEl.querySelectorAll('.fc-page')).map(b => ({
+      slug: b.getAttribute('data-slug'), text: b.textContent
+    })) : []),
+    folkTalkClose: () => closeFolkCard(),
+    activeSpotKind: () => activeSpot && activeSpot.kind,
+    promptRowsText: () => (dpRowsEl ? dpRowsEl.textContent : ''),
+    notes: () => [...notesPinned],
+    boardSprite: (s) => { const pr = propList.find(p => p.kind === 'board' && p.slug === s); return pr && pr.st ? pr.st.name : null; },
+    photoOn: () => photoMode,
+    photoEnter: () => enterPhoto(),
+    photoExit: () => exitPhoto(),
+    postcard: () => { const pc = buildPostcard(); return { w: pc.width, h: pc.height, data: pc.toDataURL('image/png').length }; },
+    setDayNum: (n) => { dayNum = n; refreshFolk(); },
+    setFounding: (v) => { foundingActive = !!v; bakeFoundingStrings(); if (REDUCED) draw(); },
+    townNoteNow: () => townNote,
+    setTownNote: (m, t) => setTownNote(m, t),
+    townSpots: () => spots.map(s => ({ kind: s.kind, ix: s.ix, iy: s.iy, slug: s.slug || null })),
+    clickableCount: () => townClickables.length
+  };
 }
 
 /* ==========================================================================
@@ -4626,15 +6461,23 @@ async function boot() {
 
   resize();
   buildModel();
+  carvePlaza();        // ROOM TO MOVE: the civic square, carved before the ground bakes
   Wv = Wt; Hv = Ht;
   bakeAtlas();
+  bakeTownSprites();
   bakeWater();
   bakeGrounds();
   placeStatics();
+  clearPlazaProps();   // the square stays swept: no bench in the middle of it
   initPlayerSpawn();
+  townData();          // wave 4: every town fact derived from the data
   // BREATHING ROOM + EVERY DOOR ON FOOT: prove all doors walkable from spawn,
   // repairing placement if any prop walled a lane off; assert at boot.
-  const reach = fixReachability();
+  fixReachability();
+  // wave 4: the town's own landmarks, boards and lots go down on the repaired
+  // map, and every solid claim is trial-fitted against the same BFS first
+  placeTownLife();
+  const reach = walkBFS();
   diag.doorsReachable = reach.reachable;
   diag.doorsTotal = reach.total;
   if (reach.stranded.length) {
@@ -4652,6 +6495,7 @@ async function boot() {
   initKey();
   initHud();
   initHint();
+  initTownUI();
   lightFactors(dayT);
 
   document.getElementById('loading').remove();
@@ -4659,7 +6503,9 @@ async function boot() {
 
   route();
   window.__pixelTest = {
-    setPlayer(x, y) { player.x = x; player.y = y; player.vx = player.vy = 0; camMode = 'follow'; if (!REDUCED) startLoop(); },
+    // under reduced motion the loop is parked, so a test that teleports the courier
+    // has to refresh proximity and repaint by hand; the moving profile is untouched
+    setPlayer(x, y) { player.x = x; player.y = y; player.vx = player.vy = 0; camMode = 'follow'; if (REDUCED) { updateSpotProximity(); draw(); } else startLoop(); },
     setClock(t2) { dayT = t2; lightFactors(dayT); lastDialStep = -1; },
     setSeason(i2) { setSeason(i2); },
     setZoom(z2) { cam.z = z2; },
@@ -4718,6 +6564,11 @@ async function boot() {
     sndState: () => ({ on: sndOn, unlocked: !!AC, ready: sndReady, buffers: Object.keys(sndBufs).length, loops: Object.keys(sndLoops).length }),
     sndLoopGains: () => { const o2 = {}; for (const k in sndLoops) o2[k] = sndLoops[k].g.gain.value; return o2; },
     sndLog: () => sndLog.slice(),
+    sndPosState: () => ({ holder: posHolder, on: { lamp: posOn.lamp, van: posOn.van },
+      rest: posVanRest, cfg: POSLOOP,
+      lampD: (() => { let d3 = 99; for (const lp of lampPts) { const d4 = Math.abs(lp.tx + 0.5 - player.x) + Math.abs(lp.ty + 0.5 - player.y); if (d4 < d3) d3 = d4; } return d3; })(),
+      vanD: (() => { let d3 = 99; for (const c of cars) { if (c.stopped || !c.van) continue; const d4 = Math.hypot(c.x - player.x, c.y - player.y); if (d4 < d3) d3 = d4; } return d3; })() }),
+    sndVans: () => cars.filter(c => c.van).map(c => ({ x: c.x, y: c.y, stopped: c.stopped })),
     sndForce: (n2) => sndPlay(n2, 0.2, 0),
     fades: () => statics.filter(s2 => s2.fadeA !== undefined && s2.fadeA < 0.95).map(s2 => (s2.b ? s2.b.slug : s2.name)),
     fadeCount: () => fadeCount,
@@ -4728,6 +6579,11 @@ async function boot() {
     puddles: () => puddlePts.length,
     ready: true
   };
+  Object.assign(window.__pixelTest, townTestApi());
+  window.__pdcDebug = { propList, statics, doors, buildings, spots, spawn: spawnTile.slice(), get orient() { return orient; } };
+  window.__pdcSPR = SPR;
+  window.__pdcCard = () => buildPostcard();
+  window.__pdcCam = (wx, wy) => { camMode = 'free'; camFly = null; cam.x = Math.round(wx - cvs.width / (2 * cam.z)); cam.y = Math.round(wy - cvs.height / (2 * cam.z)); if (REDUCED) draw(); else startLoop(); };
   if (REDUCED) {
     // posed tableau: advance the world a little so nothing looks parked, then freeze
     for (let i = 0; i < 40; i++) updateLife(0.05);

@@ -34,10 +34,21 @@
   <button id="btn-season" class="chip" title="Season · click to advance (Y)"><canvas id="seasondial" width="22" height="22"></canvas><span id="seasonlabel">SUM</span></button>
   <button id="btn-find" class="chip" title="Fly back to the courier (F)">&#9678; Find me</button>
   <button id="btn-snd" class="chip" title="Sound on · click to mute">♪ on</button>
+  <button id="btn-book" class="chip" title="The delivery book (B)">▤ Book</button>
+  <button id="btn-photo" class="chip" title="Photo mode (P)">▣ Photo</button>
 </div>
 <div id="hud"></div>
+<div id="hud2" hidden></div>
 
-<div id="doorprompt" hidden><span class="dp-key">ENTER</span><span id="dp-title"></span></div>
+<div id="doorprompt" hidden>
+  <div class="dp-main"><span class="dp-key">ENTER</span><span id="dp-title"></span></div>
+  <div id="dp-rows"></div>
+</div>
+<div id="folklabel" hidden></div>
+<aside id="folkcard" hidden aria-live="polite">
+  <div class="fc-head"><strong id="fc-name"></strong><button class="chip" id="fc-close" title="Close (Esc)">✕</button></div>
+  <div id="fc-body"></div>
+</aside>
 
 <div id="yah" hidden>YOU ARE HERE</div>
 <div id="spotbanner" hidden></div>
@@ -55,6 +66,18 @@
   <strong>Welcome to Pixel Docs City</strong>
   <p>Every arrow key follows one street: &#8594; walks the down-right avenue, &#8593; the up-right one (WASD too); hold two to cut between them. Shift to stride.<br>Walk to a door and press Enter to read · or click any building or spot · F finds you again.<br>T changes the time of day · Y turns the season · Q/E turn the town.</p>
   <button id="hint-close" class="chip">Take me there</button>
+</div>
+
+<div id="photobar" hidden>
+  <span id="pb-note" class="pb-note" hidden></span>
+  <span class="pb-label">PHOTO MODE · DRAG TO FRAME · +/− ZOOM · Q/E TURN</span>
+  <button id="photo-here" class="chip" title="Frame the courier again (F)">&#9678; FIND ME</button>
+  <button id="photo-snap" class="chip">◉ SAVE POSTCARD</button>
+  <button id="photo-leave" class="chip">✕ LEAVE (ESC)</button>
+</div>
+
+<div id="townol" hidden>
+  <div id="townol-card" class="to-card"></div>
 </div>
 
 <div id="loading">

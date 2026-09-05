@@ -361,3 +361,240 @@ details.dtl .dtl-body { padding: 0 14px 10px; }
 /* ---- wave 3: rotation + sound chips ---- */
 #btn-snd.snd-off { opacity: .55; }
 #rotl, #rotr { font-size: 16px; }
+
+/* ==========================================================================
+   WAVE 4 - TOWN LIFE (post office, boards, book, paper, records, photo mode)
+   ========================================================================== */
+
+/* ---- second HUD line: the town's own small caps notices ---- */
+#hud2 {
+  position: fixed; right: 12px; bottom: 44px; z-index: 40;
+  font: 700 11px/1.4 "Courier New", ui-monospace, monospace;
+  letter-spacing: .5px; text-transform: uppercase;
+  color: #241f2e; background: #e8b23c; padding: 4px 9px;
+  border: 2px solid #241f2e; box-shadow: 3px 3px 0 rgba(10, 8, 20, .45);
+  /* town notes read to the end: wrap rather than clip a word in half */
+  max-width: min(560px, 64vw); white-space: normal; overflow-wrap: break-word; text-align: right;
+}
+
+/* ---- door prompt: the extra action rows ---- */
+#doorprompt .dp-main { display: block; }
+#dp-rows:empty { display: none; }
+#dp-rows { margin-top: 5px; display: flex; flex-direction: column; gap: 3px; pointer-events: auto; }
+.dp-row {
+  font: 700 11px/1 "Courier New", ui-monospace, monospace; letter-spacing: .4px;
+  color: #fdf8ea; background: #3a3346; border: 1px solid #6b6478;
+  padding: 4px 6px 3px; cursor: pointer; text-align: left;
+}
+.dp-row:hover { background: #4945ff; border-color: #8582ff; }
+.dp-row.dp-plain { background: transparent; border-color: transparent; color: #cbbf9d; cursor: default; }
+.dp-row.dp-plain:hover { background: transparent; }
+.dp-k2 {
+  background: #e8b23c; color: #241f2e; padding: 2px 4px 1px; margin-right: 6px;
+  border: 1px solid #241f2e; display: inline-block;
+}
+
+/* ---- townsfolk name card ---- */
+#folklabel {
+  position: fixed; z-index: 44; pointer-events: none;
+  transform: translate(-50%, -100%);
+  background: #fdf8ea; color: #241f2e; border: 2px solid #241f2e;
+  box-shadow: 3px 3px 0 rgba(10, 8, 20, .45);
+  font-family: "Courier New", ui-monospace, monospace;
+  padding: 5px 8px 4px; max-width: 260px; white-space: nowrap;
+}
+#folklabel { pointer-events: auto; cursor: pointer; }
+#folklabel b { display: inline; font-size: 12px; letter-spacing: .4px; vertical-align: middle; }
+#folklabel span.fl-line { display: block; font-size: 11px; color: #6b5f45; margin-top: 3px; }
+#folklabel .dp-key {
+  background: #4945ff; color: #fff; padding: 3px 6px 2px; margin-right: 6px;
+  border: 1px solid #8582ff; display: inline-block; font-style: normal;
+  font: 700 10px/1 "Courier New", ui-monospace, monospace; letter-spacing: .4px;
+  vertical-align: middle;
+}
+#folklabel .fl-do {
+  font: 700 12px/1 "Courier New", ui-monospace, monospace; font-style: normal;
+  letter-spacing: .5px; margin-right: 5px; vertical-align: middle;
+}
+#folklabel:hover { background: #4945ff; color: #fdf8ea; }
+#folklabel:hover span.fl-line { color: #e7e6ff; }
+
+/* ---- talking to a hand: the record IS the conversation ---- */
+#folkcard[hidden] { display: none !important; }
+#folkcard {
+  position: fixed; right: 14px; top: 58px; z-index: 47;
+  width: min(340px, 88vw); max-height: min(70vh, 560px);
+  display: flex; flex-direction: column;
+  background: #fdf8ea; color: #241f2e; border: 3px solid #241f2e;
+  box-shadow: 6px 6px 0 rgba(10, 8, 20, .5);
+  font-family: "Courier New", ui-monospace, monospace;
+}
+.fc-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 9px 11px 8px; border-bottom: 2px solid #e5dcc4; flex: none;
+}
+.fc-head strong { font-size: 12.5px; letter-spacing: .7px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fc-head strong::before { content: ""; display: inline-block; width: 8px; height: 8px; background: #4945ff; margin-right: 7px; }
+#fc-body { overflow-y: auto; padding: 10px 11px 12px; }
+.fc-span { font-size: 10.5px; color: #6b5f45; letter-spacing: .3px; margin: 0 0 9px; line-height: 1.5; }
+.fc-stats { display: flex; gap: 7px; margin: 0 0 9px; }
+.fc-stat { border: 2px solid #241f2e; padding: 5px 6px 4px; flex: 1; text-align: center; }
+.fc-stat b { display: block; font-size: 15px; line-height: 1.1; }
+.fc-stat span { display: block; font-size: 8.5px; letter-spacing: .6px; color: #6b5f45; margin-top: 2px; }
+.fc-line { background: #241f2e; color: #fdf8ea; padding: 6px 8px 5px; font-size: 11px; letter-spacing: .3px; margin: 0 0 4px; line-height: 1.45; }
+.fc-h { font-size: 10px; letter-spacing: 1px; color: #6b5f45; border-bottom: 2px solid #e5dcc4; padding-bottom: 4px; margin: 12px 0 6px; }
+.fc-page {
+  display: block; width: 100%; text-align: left; background: #f3ecd8;
+  border: 1px solid #d9cfb4; border-left-width: 4px; border-left-color: #d9cfb4;
+  padding: 5px 7px 4px; margin-bottom: 3px; cursor: pointer; color: #241f2e;
+  font: 400 11px/1.35 "Courier New", ui-monospace, monospace;
+}
+.fc-page b { display: block; font-size: 11.5px; letter-spacing: .2px; }
+.fc-page span { display: block; color: #6b5f45; font-size: 10px; }
+.fc-page.fc-kept { border-left-color: #4945ff; }
+.fc-page:hover, .fc-page:focus-visible { background: #4945ff; color: #fff; border-color: #8582ff; outline: none; }
+.fc-page:hover span, .fc-page:focus-visible span { color: #e7e6ff; }
+.fc-strap { font-size: 9.5px; color: #6b5f45; line-height: 1.55; margin: 0 0 7px; }
+.fc-foot { font-size: 9.5px; color: #6b5f45; line-height: 1.55; margin-top: 10px; border-top: 2px solid #e5dcc4; padding-top: 7px; }
+body.photomode #folkcard { display: none !important; }
+@media (max-width: 640px) { #folkcard { right: 8px; top: 52px; width: min(300px, 92vw); max-height: 52vh; } }
+
+/* ---- town overlays (one shared card, in the town's idiom) ---- */
+#townol[hidden], #photobar[hidden] { display: none !important; }
+#townol {
+  position: fixed; inset: 0; z-index: 70; display: flex;
+  align-items: center; justify-content: center; padding: 24px;
+  background: rgba(12, 20, 26, .62);
+}
+.to-card {
+  width: min(560px, 94vw); max-height: min(86vh, 720px); overflow: auto;
+  background: #fdf8ea; color: #241f2e; border: 3px solid #241f2e;
+  box-shadow: 8px 8px 0 rgba(10, 8, 20, .55);
+  font-family: "Courier New", ui-monospace, monospace;
+  padding: 14px 16px 20px;
+}
+.to-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.to-head strong { font-size: 13px; letter-spacing: .9px; }
+.to-head strong::before { content: ""; display: inline-block; width: 8px; height: 8px; background: #4945ff; margin-right: 8px; }
+.to-card h3 {
+  font-size: 11.5px; letter-spacing: 1px; margin: 16px 0 6px; color: #6b5f45;
+  border-bottom: 2px solid #e5dcc4; padding-bottom: 4px;
+}
+.to-sub { font-size: 12px; line-height: 1.6; margin: 0 0 12px; color: #4c4636; }
+.to-fine { font-size: 11px; color: #6b5f45; margin: 10px 0 0; line-height: 1.5; }
+.to-card .mono { font-family: ui-monospace, monospace; }
+.to-label { display: block; font-size: 10.5px; letter-spacing: 1px; color: #6b5f45; margin: 0 0 4px; }
+.to-input, .to-select, .to-text {
+  width: 100%; font: 12.5px/1.4 "Courier New", ui-monospace, monospace;
+  background: #fffdf6; color: #241f2e; border: 2px solid #241f2e; padding: 7px 8px;
+}
+.to-select { margin: 6px 0 12px; }
+.to-text { resize: vertical; min-height: 96px; }
+.to-actions { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.to-actions .chip { text-decoration: none; display: inline-block; }
+.to-send { background: #4945ff; color: #fff; border-color: #241f2e; }
+.to-send:hover { background: #6360ff; }
+.to-count { font-size: 11px; color: #6b5f45; }
+
+/* the letter on the counter */
+.to-letter {
+  background: #fffdf6; border: 2px dashed #c9bda1; padding: 10px 12px; margin-top: 4px;
+}
+.to-letter-head { font-size: 11.5px; letter-spacing: .6px; font-weight: 700; }
+.to-letter-slug { font-size: 11px; color: #6b5f45; margin: 2px 0 8px; }
+.to-letter-body { font-size: 12px; line-height: 1.6; color: #4c4636; }
+
+/* the pneumatic tube whoosh */
+.to-tube { height: 18px; margin-top: 8px; position: relative; overflow: hidden; }
+.to-tube::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 8px; height: 2px;
+  background: repeating-linear-gradient(90deg, #c9bda1 0 6px, transparent 6px 12px);
+}
+.to-envelope { position: absolute; left: -20px; top: 0; font-size: 14px; opacity: 0; }
+.to-tube.go .to-envelope { animation: tube-fly .55s steps(11) 1; }
+@keyframes tube-fly {
+  0% { left: -18px; opacity: 1; }
+  100% { left: 100%; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .to-tube.go .to-envelope { animation: none; left: 50%; opacity: 1; }
+}
+
+/* the newspaper */
+.to-paper { background: #f6f1e2; }
+.np-mast strong { font-size: 17px; letter-spacing: 3px; }
+.np-strap { font-size: 10.5px; letter-spacing: .4px; color: #6b5f45; border-top: 2px solid #241f2e; border-bottom: 2px solid #241f2e; padding: 4px 0; margin-bottom: 12px; }
+.np-cols { display: flex; flex-direction: column; }
+.np-head {
+  display: block; text-decoration: none; color: #241f2e;
+  border-bottom: 1px dashed #c9bda1; padding: 9px 0;
+}
+.np-head:first-child .np-title { font-size: 19px; }
+.np-head:hover { background: #efe8d3; }
+.np-title { display: block; font-size: 15px; font-weight: 700; line-height: 1.25; }
+.np-when { display: block; font-size: 11px; color: #6b5f45; margin-top: 3px; }
+.np-foot { font-size: 10.5px; color: #6b5f45; margin-top: 12px; }
+
+/* the records hall */
+.rh-year { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 6px; }
+.rh-ledger {
+  text-align: left; background: #efe8d3; color: #241f2e; border: 2px solid #241f2e;
+  padding: 7px 8px; cursor: pointer; font-family: inherit;
+  box-shadow: 2px 2px 0 rgba(10, 8, 20, .35);
+}
+.rh-ledger:hover { background: #fff; }
+.rh-ledger.rh-empty { opacity: .5; }
+.rh-ledger.rh-chained { background: #e8b23c; }
+.rh-m { display: block; font-weight: 700; font-size: 12.5px; letter-spacing: 1px; }
+.rh-n { display: block; font-size: 10.5px; color: #6b5f45; }
+.rh-chain { display: block; font-size: 9px; letter-spacing: .6px; margin-top: 3px; }
+.rh-plaque {
+  background: #241f2e; color: #fdf8ea; padding: 9px 11px; font-size: 12px; line-height: 1.55;
+  border-left: 5px solid #e8b23c; margin: 0 0 12px;
+}
+.rh-pages { display: flex; flex-direction: column; }
+.rh-page { color: #3d39cf; font-size: 12.5px; padding: 3px 0; text-decoration: none; border-bottom: 1px dotted #ddd2b4; }
+.rh-page:hover { background: #4945ff; color: #fff; }
+
+/* the delivery book + the plaque */
+.bk-stamp { border: 2px dashed #c9bda1; padding: 8px 10px; margin-bottom: 8px; background: #fffdf6; }
+.bk-no { display: block; font-size: 10px; letter-spacing: 1px; color: #6b5f45; }
+.bk-line { display: block; font-size: 12px; line-height: 1.6; }
+.bk-line .mono { font-size: 11px; color: #6b5f45; }
+.to-plaquetext {
+  background: #241f2e; color: #e8b23c; text-align: center; padding: 14px 12px;
+  font-size: 14px; letter-spacing: 1.4px; line-height: 1.7; border: 3px double #e8b23c; margin: 0 0 12px;
+}
+.to-plaquetext .mono { display: block; color: #cbbf9d; font-size: 11px; letter-spacing: .5px; margin-top: 6px; }
+
+/* ---- photo mode ---- */
+body.photomode #chrome, body.photomode #zoomctl, body.photomode #timectl,
+body.photomode #hud, body.photomode #hud2, body.photomode #doorprompt,
+body.photomode #folklabel, body.photomode #spotbanner, body.photomode #yah,
+body.photomode #hintcard, body.photomode #introprompt { display: none !important; }
+#photobar {
+  position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 60;
+  display: flex; align-items: center; gap: 10px;
+  background: #241f2e; border: 2px solid #fdf8ea; padding: 8px 10px;
+  box-shadow: 5px 5px 0 rgba(10, 8, 20, .55);
+}
+.pb-label {
+  font: 700 11px/1 "Courier New", ui-monospace, monospace; letter-spacing: .6px;
+  color: #cbbf9d; text-transform: uppercase; white-space: nowrap;
+}
+/* a small paper strip above the bar: it never moves the bar's own legend */
+.pb-note {
+  position: absolute; left: 0; bottom: calc(100% + 7px);
+  font: 700 11px/1 "Courier New", ui-monospace, monospace; letter-spacing: .6px;
+  color: #241f2e; background: #e8b23c; border: 2px solid #241f2e;
+  padding: 5px 8px; text-transform: uppercase; white-space: nowrap;
+  box-shadow: 4px 4px 0 rgba(10, 8, 20, .45);
+}
+.pb-note[hidden] { display: none !important; }
+body.photomode #photobar { display: flex !important; }
+body.photomode #city { cursor: crosshair; }
+
+@media (max-width: 900px) {
+  .pb-label { display: none; }
+  #hud2 { max-width: 80vw; }
+}
