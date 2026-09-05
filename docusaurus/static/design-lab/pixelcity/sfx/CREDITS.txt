@@ -37,7 +37,6 @@ From "Sci-Fi Sounds" by Kenney Vleugels (kenney.nl) - License: CC0
 Source page: https://kenney.nl/assets/sci-fi-sounds
 Download:    https://kenney.nl/media/pages/assets/sci-fi-sounds/6b296f9ecf-1677589334/kenney_sci-fi-sounds.zip
   van_putter.ogg    <- Audio/engineCircular_000.ogg (volume lowered)
-  lamp_hum.ogg      <- Audio/forceField_003.ogg (volume lowered)
 
 From "Interface Sounds" by Kenney Vleugels (kenney.nl) - License: CC0
 Source page: https://kenney.nl/assets/interface-sounds

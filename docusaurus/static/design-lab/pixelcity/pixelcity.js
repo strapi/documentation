@@ -933,9 +933,13 @@ function bakeAtlas() {
     px(g, 2, 2, 5, 3, PAL.G2); px(g, 3, 1, 3, 1, PAL.G3);
     px(g, 3, 3, 1, 1, PAL.RD); px(g, 5, 2, 1, 1, PAL.YL);
   });
-  bakeSprite('aboard', 7, 9, (g) => {       // sandwich board out on the pavement
-    px(g, 1, 1, 5, 6, PAL.WH); px(g, 1, 1, 5, 1, PAL.RD);
-    px(g, 2, 3, 3, 1, PAL.A2); px(g, 2, 5, 2, 1, PAL.A2);
+  bakeSprite('aboard', 7, 9, (g) => {       // sandwich board out on the pavement -
+    // redrawn as a shop's chalkboard (owner order: no white card, no banded
+    // header, nothing that could pass for an interface panel at night): a
+    // wooden A-frame around a dark slate face with two broken chalk scribbles
+    px(g, 1, 1, 5, 6, PAL.WD2); px(g, 1, 1, 5, 1, PAL.WD3);
+    px(g, 2, 2, 3, 4, '#2c3833');
+    px(g, 2, 3, 2, 1, '#c9d2c0'); px(g, 3, 5, 1, 1, '#c9d2c0');
     px(g, 0, 7, 2, 1, PAL.WD1); px(g, 5, 7, 2, 1, PAL.WD1);
   });
   bakeSprite('crate', 8, 7, (g) => {        // wooden shipping crate
@@ -2740,8 +2744,77 @@ function clearPlazaProps() {
   return n;
 }
 
+/* QUICK START FIRST (owner law). The first page a stranger is led to meet is
+   the Quick Start Guide - never forced, invited: the courier lands on the
+   plaza's edge nearest that building, facing it, its door gently lit, and the
+   first floating prompt reads ENTER · READ THE QUICK START GUIDE in the same
+   door grammar every door uses. The invitation yields to normal play the
+   moment the courier walks elsewhere. */
+const QS_SLUG = '/cms/quick-start';
+let qsInvite = false;            // the opening gesture is still standing
+let qsDoorRef = null;            // the Quick Start Guide's door (world px kept fresh per orientation)
+function retireQsInvite() { qsInvite = false; }
+
+/* the spawn plaza room law, measured with the exact predicate the regression
+   battery uses: the tile is open, at least 6 walkable tiles run down all four
+   streets, and at least 55% of the 10-tile disc is open ground. Every candidate
+   landing spot - and every later solid claim, via trialSolid - answers to it. */
+function spawnRoomOK(tx, ty, minShare) {
+  const walk = (x, y) => {
+    if (x < 0 || y < 0 || x >= Wt || y >= Ht) return false;
+    const t2 = grid[y * Wt + x];
+    const w = (t2 === T.PAVE || t2 === T.PLAZA || t2 === T.BANK || t2 === T.CROSS ||
+               t2 === T.BRIDGE || t2 === T.GRASS || t2 === T.FLOWER || t2 === T.ROAD);
+    return w && !propSolid.has(x + ',' + y);
+  };
+  if (!walk(tx, ty)) return false;
+  const run = (dx, dy) => { let n = 0; while (n < 60 && walk(tx + dx * (n + 1), ty + dy * (n + 1))) n++; return n; };
+  if (run(1, 0) < 6 || run(-1, 0) < 6 || run(0, 1) < 6 || run(0, -1) < 6) return false;
+  let inR = 0, openR = 0;
+  for (let dy = -10; dy <= 10; dy++) for (let dx = -10; dx <= 10; dx++) {
+    if (Math.hypot(dx, dy) > 10) continue;
+    inR++;
+    if (walk(tx + dx, ty + dy)) openR++;
+  }
+  return openR / inR >= (minShare === undefined ? 0.55 : minShare);
+}
+
 function initPlayerSpawn() {
-  if (plazaCore) { spawnTile = [plazaCore.cx, plazaCore.cy]; player.x = plazaCore.cx + 0.5; player.y = plazaCore.cy + 0.5; return; }
+  const qs = doors.find((d) => d.slug === QS_SLUG) || null;
+  qsDoorRef = qs;
+  if (plazaCore) {
+    /* the plaza edge nearest the Quick Start Guide, ring by ring: only paved
+       plaza tiles that keep the room law with headroom (58% first, so the
+       civic stone placed later never squeezes the disc under the 55% gate),
+       then the bare law, then inward, then the middle as the last word. */
+    let pick = null;
+    if (qs) {
+      const { cx, cy, r } = plazaCore;
+      const cham = Math.round(r * 1.5);
+      outer:
+      for (const share of [0.58, 0.55]) {
+        for (let ring = r; ring >= 1; ring--) {
+          let best = null, bd = Infinity;
+          for (let dy = -ring; dy <= ring; dy++) for (let dx = -ring; dx <= ring; dx++) {
+            if (Math.max(Math.abs(dx), Math.abs(dy)) !== ring) continue;
+            if (Math.abs(dx) + Math.abs(dy) > cham) continue;       // stay on the paved square
+            const tx = cx + dx, ty = cy + dy;
+            if (grid[ty * Wt + tx] !== T.PLAZA) continue;
+            if (!spawnRoomOK(tx, ty, share)) continue;
+            const d2 = Math.hypot(tx + 0.5 - qs.px, ty + 0.5 - qs.py);
+            if (d2 < bd) { bd = d2; best = [tx, ty]; }
+          }
+          if (best) { pick = best; break outer; }
+        }
+      }
+    }
+    if (!pick) pick = [plazaCore.cx, plazaCore.cy];
+    spawnTile = pick.slice();
+    player.x = pick[0] + 0.5;
+    player.y = pick[1] + 0.5;
+    if (qs) player.face = faceFromWorldDir(qs.px - player.x, qs.py - player.y);   // facing the Guide
+    return;
+  }
   // fallback: the plaza tile nearest the centre of the island whose
   // south-east quadrant is open, so the courier is not hidden behind a tower
   let best = null, bd = Infinity;
@@ -2761,6 +2834,7 @@ function initPlayerSpawn() {
   spawnTile = best.slice();
   player.x = best[0] + 0.5;
   player.y = best[1] + 0.5;
+  if (qs) player.face = faceFromWorldDir(qs.px - player.x, qs.py - player.y);   // still facing the Guide
 }
 
 const doorPromptEl = document.getElementById('doorprompt');
@@ -2853,9 +2927,13 @@ function updatePlayer(dt) {
     }
   }
   // nearest door within reach (no prompt while the reading panel is open,
-  // and none below street zoom, where it would float over the fit view)
+  // and none below street zoom, where it would float over the fit view).
+  // While the Quick Start invitation is standing it holds the floor alone:
+  // no door or spot arms under it, and it yields the moment the courier
+  // walks off the landing tile.
+  if (qsInvite && (Math.floor(player.x) !== spawnTile[0] || Math.floor(player.y) !== spawnTile[1])) retireQsInvite();
   let best = null, bd2 = 0.9;
-  if (panel.hidden && cam.z >= 3) {
+  if (panel.hidden && cam.z >= 3 && !qsInvite) {
     for (const d of doors) {
       const dd = Math.hypot(player.x - d.px, player.y - d.py);
       if (dd < bd2) { bd2 = dd; best = d; }
@@ -3064,6 +3142,14 @@ function endIntro(lookAround) {
   introEl.hidden = true;
   yahHold = REDUCED;
   yahT = lookAround ? 6 : 2.5;
+  if (qsInvite) {
+    // QUICK START FIRST: with the invitation still standing, the YOU ARE HERE
+    // echo steps aside quickly (at once under reduced motion, where a held
+    // marker would keep the floor forever) so the opening gesture is the
+    // first floating prompt the stranger meets
+    yahHold = false;
+    yahT = REDUCED ? 0 : 1.2;
+  }
   if (lookAround) {
     const f = fitCenter();
     startFly(f.x, f.y, f.z, null);
@@ -3169,7 +3255,7 @@ const SND_FILES = {
   pigeon_coo: 1, wing_flap: 1, cat_meow: 1, seagull: 1,
   leaf_rustle_0: 1, leaf_rustle_1: 1,
   room_tone: 1, birds_day: 1, crickets_night: 1, rain_loop: 1,
-  wind_winter: 1, lamp_hum: 1, van_putter: 1
+  wind_winter: 1, van_putter: 1
 };
 const sndLog = window.__sndLog = [];
 let sndOn = true;
@@ -3191,15 +3277,44 @@ function sndUnlock() {
     fetch('sfx/' + k + '.ogg')
       .then(r => r.arrayBuffer())
       .then(ab => new Promise((res, rej) => AC.decodeAudioData(ab, res, rej)))
-      .then(buf => { sndBufs[k] = buf; })
+      .then(buf => { sndBufs[k] = k === 'rain_loop' ? sndSeamLoop(buf, 2.5, 21.5, 2.0) : buf; })
       .catch(() => { })
   )).then(() => { sndReady = true; sndStartLoops(); });
+}
+/* THE RAIN LASTS AS LONG AS THE RAIN (owner order, 2026-09-05, r15). The
+   shipped rain_loop.ogg has ~2 s fades at both edges, so looping it raw sank
+   the bed to near-silence every 24 s. This cuts the faded edges ([a,b] in
+   seconds) and blends the tail into the head with an equal-power crossfade
+   (xf seconds), returning a buffer whose wrap is continuous rain - a loop
+   with no seam, sustained for as long as the shower holds. */
+function sndSeamLoop(buf, a, b, xf) {
+  try {
+    const sr = buf.sampleRate;
+    const s0 = Math.floor(a * sr), s1 = Math.min(buf.length, Math.floor(b * sr));
+    const N = s1 - s0, XF = Math.min(Math.floor(xf * sr), N >> 1);
+    const M = N - XF;
+    if (M < sr) return buf;                    // nothing sensible to cut: keep the original
+    const out = AC.createBuffer(buf.numberOfChannels, M, sr);
+    for (let ch = 0; ch < buf.numberOfChannels; ch++) {
+      const src2 = buf.getChannelData(ch), dst = out.getChannelData(ch);
+      for (let i = 0; i < M; i++) dst[i] = src2[s0 + i];
+      // the first XF samples morph from the region's tail into its head, so
+      // dst[M-1] -> dst[0] plays R[M-1] -> R[M]: original, contiguous rain
+      for (let i = 0; i < XF; i++) {
+        const t = i / XF, wIn = Math.sin(t * Math.PI / 2), wOut = Math.cos(t * Math.PI / 2);
+        dst[i] = src2[s0 + i] * wIn + src2[s0 + M + i] * wOut;
+      }
+    }
+    return out;
+  } catch (err) { return buf; }
 }
 window.addEventListener('pointerdown', sndUnlock);
 window.addEventListener('keydown', sndUnlock);
 /* the continuous beds: town room tone, birds by day, crickets by night,
-   rain and winter wind, a lamp hum after dark, the nearest van's putter */
-const SND_LOOPDEFS = { room: 'room_tone', birds: 'birds_day', crickets: 'crickets_night', rain: 'rain_loop', wind: 'wind_winter', lamp: 'lamp_hum', van: 'van_putter' };
+   rain and winter wind, the nearest van's putter. The street lamps glow
+   after dark but make no sound at all (owner order, 2026-09-05: the hum
+   was annoying - the night keeps its light and loses the noise). */
+const SND_LOOPDEFS = { room: 'room_tone', birds: 'birds_day', crickets: 'crickets_night', rain: 'rain_loop', wind: 'wind_winter', van: 'van_putter' };
 function sndStartLoops() {
   for (const k of Object.keys(SND_LOOPDEFS)) {
     const buf = sndBufs[SND_LOOPDEFS[k]];
@@ -3209,7 +3324,7 @@ function sndStartLoops() {
     const g = AC.createGain(); g.gain.value = 0;
     src.connect(g);
     let tail = g, p = null;
-    if ((k === 'lamp' || k === 'van') && AC.createStereoPanner) { p = AC.createStereoPanner(); g.connect(p); tail = p; }
+    if (k === 'van' && AC.createStereoPanner) { p = AC.createStereoPanner(); g.connect(p); tail = p; }
     tail.connect(sndMaster);
     src.start();
     sndLoops[k] = { g, p };
@@ -3261,25 +3376,23 @@ function sndFootstep() {
   else if (t2 === T.GRASS || t2 === T.FLOWER) base = 'step_grass_';
   else if (t2 === T.BRIDGE) base = 'step_wood_';
   const n = base === 'step_wood_' ? 0 : (Math.random() * 2) | 0;
-  // HALF THE OLD LEVEL (0.17/0.12 -> 0.085/0.06): the courier walks the town,
-  // she does not stomp it. The ground still picks the sample, the stride still
-  // sets the cadence and the small pitch jitter stays - only the level moved.
-  sndPlay(base + n, stride ? 0.085 : 0.06, 0, 0.9 + Math.random() * 0.2);
+  // HALVED AGAIN (owner, 2026-09-05, r15: 0.085/0.06 -> 0.0425/0.03; before
+  // that 0.17/0.12): the courier walks the town, she does not stomp it. The
+  // ground still picks the sample, the stride still sets the cadence and the
+  // small pitch jitter stays - only the level moved.
+  sndPlay(base + n, stride ? 0.0425 : 0.03, 0, 0.9 + Math.random() * 0.2);
 }
-/* THE TWO POSITIONAL LOOPS - one at a time, and only when the source is close.
-   The lamp hum and the van putter used to fade in from four and nine tiles, both
-   at once, at 0.09 and 0.11, from any car (a van at nine tiles is most of the
-   street, so something was nearly always pulsing). Now each has a Schmitt
-   trigger - in at IN, out only past OUT, so drifting across the line cannot make
-   it flicker - only the nearer of the two is ever audible, both sit at a third
-   of the old level, and the putter follows REAL vans only, with a rest after
-   each pass so two vans in a row cannot merge into a drone. */
+/* THE ONE POSITIONAL LOOP - the van putter, and only when a real van is close.
+   The street lamps are silent by owner order (2026-09-05): no proximity sound
+   from a lamp at all, day or night - their glow is the whole of their presence.
+   The putter keeps its Schmitt trigger - in at IN, out only past OUT, so
+   drifting across the line cannot make it flicker - it follows REAL vans only,
+   and it rests after each pass so two vans in a row cannot merge into a drone. */
 const POSLOOP = {
-  lamp: { in: 2.2, out: 3.4, gain: 0.03 },    // was: audible from 4 tiles at 0.09
   van: { in: 4.5, out: 6.2, gain: 0.037 }     // was: audible from 9 tiles at 0.11, any car
 };
 const POS_VAN_REST = 6;                       // seconds of guaranteed silence after a pass
-const posOn = { lamp: false, van: false };
+const posOn = { van: false };
 let posHolder = null, posVanRest = 0, posVanHeld = 0;
 /* eased loop gains, refreshed every tick */
 function sndUpdate(dt) {
@@ -3303,17 +3416,10 @@ function sndUpdate(dt) {
   set('room', 0.055 + 0.025 * day);
   set('birds', season === 3 ? 0.015 : 0.13 * day * (1 - rainI * 0.6));
   set('crickets', 0.11 * nf * (season === 3 ? 0.25 : 1) * (1 - rainI * 0.5));
-  set('rain', 0.21 * rainI);                  // half of 0.42: weather you notice, not weather you shelter from
+  set('rain', 0.0945 * rainI);                // 45% of the old 0.21 (owner order, r15): rain heard, never suffered
   set('wind', season === 3 ? 0.15 : 0);
 
-  /* --- how far is the nearest lamp, and the nearest moving van --- */
-  let ld = 99;
-  if (nf > 0.4) {                             // a lamp only hums once it is lit
-    for (const lp of lampPts) {
-      const d = Math.abs(lp.tx + 0.5 - player.x) + Math.abs(lp.ty + 0.5 - player.y);
-      if (d < ld) ld = d;
-    }
-  }
+  /* --- how far is the nearest moving van (the lamps make no sound) --- */
   let vd = 99, vpan = 0;
   for (const c of cars) {
     if (c.stopped || !c.van) continue;         // the sample is a van putter, so only vans carry it
@@ -3324,8 +3430,6 @@ function sndUpdate(dt) {
   /* --- the trigger: in when close, out only when properly gone --- */
   const step = dt || 0;
   if (posVanRest > 0) posVanRest = Math.max(0, posVanRest - step);
-  if (posOn.lamp) { if (ld > POSLOOP.lamp.out) posOn.lamp = false; }
-  else if (ld < POSLOOP.lamp.in) posOn.lamp = true;
   if (posOn.van) {
     posVanHeld += step;
     if (vd > POSLOOP.van.out) {
@@ -3335,26 +3439,10 @@ function sndUpdate(dt) {
     }
   } else if (vd < POSLOOP.van.in && posVanRest <= 0) { posOn.van = true; posVanHeld = 0; }
 
-  /* --- one at a time: the nearer source, in units of its own reach, holds the
-     street, and it keeps it until the other is clearly (15%) closer --- */
-  const rl = posOn.lamp ? ld / POSLOOP.lamp.out : 99;
-  const rv = posOn.van ? vd / POSLOOP.van.out : 99;
-  let hold = null;
-  if (rl < 90 || rv < 90) hold = rl <= rv ? 'lamp' : 'van';
-  if (hold && posHolder && posHolder !== hold) {
-    const rHold = posHolder === 'lamp' ? rl : rv;
-    const rNew = hold === 'lamp' ? rl : rv;
-    if (rNew > rHold * 0.85) hold = posHolder;
-  }
-  if (hold === 'lamp' && !posOn.lamp) hold = null;
-  if (hold === 'van' && !posOn.van) hold = null;
-  posHolder = hold;
-  // the pair hands the street over quickly: whichever lost it releases in about
-  // a fifth of a second, so the two never sit on top of each other, while the
-  // one that took it still fades up gently
-  const lampG = hold === 'lamp' ? POSLOOP.lamp.gain * (1 - ld / POSLOOP.lamp.out) * nf : 0;
-  const vanG = hold === 'van' ? POSLOOP.van.gain * (1 - vd / POSLOOP.van.out) : 0;
-  set('lamp', lampG, undefined, lampG > 0 ? 0.4 : 0.12);
+  /* --- the one positional voice: the van holds the street only while it is
+     genuinely near, and it still fades up gently and releases fast --- */
+  posHolder = posOn.van ? 'van' : null;
+  const vanG = posHolder === 'van' ? POSLOOP.van.gain * (1 - vd / POSLOOP.van.out) : 0;
   set('van', vanG, vpan, vanG > 0 ? 0.4 : 0.12);
 }
 /* rare, placed one-shots: pigeon coos, the cat, autumn rustle, a seagull */
@@ -3447,10 +3535,34 @@ function burstSpark(x, y) {
       Math.random() < 0.5 ? PAL.V2 : PAL.WH);
   }
 }
+/* THE TELEPORT ANNOUNCES ITSELF (owner order): any travel that is not walking
+   - a building click, a search jump, a newsstand headline, a page named in a
+   talk panel - says where it is going while it happens. One small pixel banner
+   in the town's own type, raised as the teleport begins and gone shortly after
+   arrival; it never stacks (one element, each trip replaces the last) and it
+   counts as the one floating label while it shows. The title is always the
+   destination page's true title. Reduced motion: same words, static, same
+   stay. */
+const tpBannerEl = document.getElementById('tpbanner');
+let tpBannerTimer = 0;
+function tpBannerUp() { return tpBannerEl && !tpBannerEl.hidden; }
+function showTpBanner(slug) {
+  if (!tpBannerEl) return;
+  const pg = pagesBySlug[slug];
+  const ttl = (pg && pg.title) || slug;
+  tpBannerEl.innerHTML = 'TELEPORTING YOU TO <span class="tp-dest">' + esc(ttl) + '</span>';
+  tpBannerEl.hidden = false;
+  clearTimeout(tpBannerTimer);
+  tpBannerTimer = setTimeout(() => {
+    tpBannerEl.hidden = true;
+    if (REDUCED) draw(); else startLoop();   // let whichever label waited come back
+  }, 1500);                                  // out ~0.34s + in ~0.4s: gone ~0.75s after arrival
+}
 function teleportTo(slug) {
   const d = doors.find(dd => dd.slug === slug);
   if (!d) return;
   if (Math.hypot(player.x - d.px, player.y - d.py) < 1.2) return;   // already standing at the door
+  showTpBanner(slug);
   camFly = null; player.tgt = null; keysDown.clear();
   if (REDUCED) {                       // instant reposition with a single held sparkle frame
     player.x = d.px; player.y = d.py; player.vx = player.vy = 0;
@@ -3879,6 +3991,16 @@ function draw() {
     ctx.drawImage(SPR.doorglow, Math.round(activeDoor.wx - 13), Math.round(activeDoor.wy - 12), 27, 21);
     ctx.globalAlpha = 1;
   }
+  // QUICK START FIRST: while the invitation stands, the Guide's own door is
+  // gently lit - a softer breath than the walk-up glow, calm under reduced motion
+  if (qsInvite && qsDoorRef && qsDoorRef !== activeDoor) {
+    const pulq = REDUCED ? 0.45 : 0.36 + 0.14 * Math.sin(animT * 2.2);
+    ctx.globalAlpha = pulq;
+    ctx.drawImage(SPR.doorglow, Math.round(qsDoorRef.wx - 9), Math.round(qsDoorRef.wy - 9));
+    ctx.globalAlpha = pulq * 0.5;
+    ctx.drawImage(SPR.doorglow, Math.round(qsDoorRef.wx - 13), Math.round(qsDoorRef.wy - 12), 27, 21);
+    ctx.globalAlpha = 1;
+  }
 
   // weather + dust + breath particles (drawn last so snow stays bright)
   if (parts.length) {
@@ -3921,7 +4043,11 @@ function draw() {
     Rp = [Rp[0] + m, Rp[1]];
     Bp = [Bp[0], Bp[1] + m];
     Lp = [Lp[0] - m, Lp[1]];
-    ctx.fillStyle = `rgba(30,32,46,${(0.38 * spotA).toFixed(3)})`;
+    // at the whole-town distance a gentle dim is a subtle shimmer, which the
+    // owner ruled out: pulled back to fit zoom the veil deepens so the lit
+    // quarter carries in a single glance (and in a screenshot)
+    const dimA = (cam.z <= 2 ? 0.55 : 0.38) * spotA;
+    ctx.fillStyle = `rgba(30,32,46,${dimA.toFixed(3)})`;
     ctx.beginPath();
     ctx.rect(vx0, vy0, vx1 - vx0, vy1 - vy0);
     ctx.moveTo(Lp[0], Lp[1]);
@@ -3932,6 +4058,52 @@ function draw() {
     ctx.lineTo(Bp[0], Bp[1]);
     ctx.closePath();
     ctx.fill('evenodd');
+    // and the quarter wears a bright rim: a bold cream outline that reads at
+    // every zoom, doubled with the district's own colour just inside it
+    ctx.beginPath();
+    ctx.moveTo(Lp[0], Lp[1]);
+    ctx.lineTo(Bp[0], Bp[1]);
+    ctx.lineTo(Rp[0], Rp[1]);
+    ctx.lineTo(Rp[0], Rp[1] - hgt);
+    ctx.lineTo(Tp[0], Tp[1] - hgt);
+    ctx.lineTo(Lp[0], Lp[1] - hgt);
+    ctx.closePath();
+    ctx.strokeStyle = `rgba(253,248,234,${(0.95 * spotA).toFixed(3)})`;
+    ctx.lineWidth = Math.max(1.5, 5 / cam.z);
+    ctx.stroke();
+    ctx.strokeStyle = q.theme || '#8582ff';
+    ctx.globalAlpha = 0.85 * spotA;
+    ctx.lineWidth = Math.max(0.75, 2.5 / cam.z);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  // a hovered PAGE row in the Districts panel lights its one building: a
+  // violet-washed footprint with a cream rim and a pulsing beacon column,
+  // deliberately loud enough to carry at the whole-town zoom
+  if (hlB) {
+    const b3 = hlB;
+    const cs5 = [[b3.tx, b3.ty], [b3.tx + b3.fw, b3.ty], [b3.tx + b3.fw, b3.ty + b3.fd], [b3.tx, b3.ty + b3.fd]]
+      .map(c5 => [isoX(c5[0], c5[1]), isoY(c5[0], c5[1])]);
+    ctx.beginPath();
+    ctx.moveTo(cs5[0][0], cs5[0][1]);
+    for (let i5 = 1; i5 < 4; i5++) ctx.lineTo(cs5[i5][0], cs5[i5][1]);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(73,69,255,0.45)';
+    ctx.fill();
+    ctx.strokeStyle = '#fdf8ea';
+    ctx.lineWidth = Math.max(1.5, 4 / cam.z);
+    ctx.stroke();
+    const bcx = isoX(b3.tx + b3.fw / 2, b3.ty + b3.fd / 2), bcy = isoY(b3.tx + b3.fw / 2, b3.ty + b3.fd / 2);
+    const pulse5 = REDUCED ? 0.85 : 0.6 + 0.4 * Math.sin(animT * 5);
+    const beamH = 120, beamW = Math.max(3, 8 / cam.z);
+    ctx.globalAlpha = 0.8 * pulse5;
+    ctx.fillStyle = '#8582ff';
+    ctx.fillRect(Math.round(bcx - beamW / 2), Math.round(bcy - beamH), Math.round(beamW), beamH);
+    ctx.globalAlpha = pulse5;
+    ctx.fillStyle = '#fdf8ea';
+    ctx.fillRect(Math.round(bcx - beamW / 6), Math.round(bcy - beamH), Math.max(1, Math.round(beamW / 3)), beamH);
+    ctx.globalAlpha = 1;
   }
 
   // YOU ARE HERE: pulsing rings around the courier (integer-scaled sprites)
@@ -3981,16 +4153,29 @@ function draw() {
   // (it also yields to the YOU ARE HERE banner - one floating label at a time)
   // one floating label at a time: between the door prompt and a townsfolk name
   // card, whichever the courier is actually standing nearer to speaks up
-  const folkUp = drawTownLabels(z, bubbleUp);
+  // the Quick Start invitation holds the floor while it stands: the townsfolk
+  // name card waits under it, so the FIRST floating prompt a stranger meets is
+  // the one pointing at the Guide (still one label at a time)
+  // the teleport banner counts as THE one label while it shows
+  const tpBnUp = tpBannerUp();
+  const folkUp = drawTownLabels(z, bubbleUp || qsInvite || tpBnUp);
   folkPromptUp = folkUp;
-  const promptUp = (!!activeDoor || !!activeSpot) && panel.hidden && !bubbleUp && !(yahT > 0 || yahHold) &&
+  const invUp = qsInvite && panel.hidden && !bubbleUp && !tpBnUp && !(yahT > 0 || yahHold) &&
     !photoMode && !townOverlayOpen() && !folkUp && !folkCardOpen();
+  const promptUp = invUp || ((!!activeDoor || !!activeSpot) && panel.hidden && !bubbleUp && !tpBnUp && !(yahT > 0 || yahHold) &&
+    !photoMode && !townOverlayOpen() && !folkUp && !folkCardOpen());
   doorPromptEl.hidden = !promptUp;
   if (promptUp) {
     const rdpr = window.devicePixelRatio || 1;
-    const aw = activeDoor ? activeDoor.wx : activeSpot.wx;
-    const ah = activeDoor ? activeDoor.wy : activeSpot.wy;
-    const bx = (aw - cam.x) * z / rdpr;
+    if (invUp) {
+      const invT = '· READ THE QUICK START GUIDE';
+      if (dpTitleEl.textContent !== invT) { dpTitleEl.textContent = invT; if (dpRowsEl) dpRowsEl.innerHTML = ''; }
+    }
+    const aw = invUp ? (qsDoorRef ? qsDoorRef.wx : isoX(player.x, player.y))
+      : (activeDoor ? activeDoor.wx : activeSpot.wx);
+    const ah = invUp ? (qsDoorRef ? qsDoorRef.wy : isoY(player.x, player.y))
+      : (activeDoor ? activeDoor.wy : activeSpot.wy);
+    let bx = (aw - cam.x) * z / rdpr;
     let by = (ah - 14 - cam.y) * z / rdpr;
     const pwx = isoX(player.x, player.y), pwy = isoY(player.x, player.y);
     const psL = (pwx - 7 - cam.x) * z / rdpr, psR = (pwx + 8 - cam.x) * z / rdpr;
@@ -3998,14 +4183,21 @@ function draw() {
     const bw = doorPromptEl.offsetWidth || 140, bh = doorPromptEl.offsetHeight || 28;
     if (bx + bw / 2 > psL && bx - bw / 2 < psR && by > psT && by - bh < psB) by = psT;
     const vw = cvs.clientWidth, vh = cvs.clientHeight;
-    if (bx < 8 || bx > vw - 8 || by < 8 || by > vh - 8) doorPromptEl.hidden = true;   // anchor off screen
+    if (bx < 8 || bx > vw - 8 || by < 8 || by > vh - 8) {
+      if (invUp) {
+        // the Guide's door is out of frame: the invitation stands over the
+        // courier instead, and never leaves the screen while it is the gesture
+        bx = clamp((pwx - cam.x) * z / rdpr, 8 + bw / 2, vw - 8 - bw / 2);
+        by = clamp((pwy - 18 - cam.y) * z / rdpr, 8 + bh, vh - 8);
+      } else doorPromptEl.hidden = true;   // anchor off screen
+    }
     doorPromptEl.style.left = bx + 'px';
     doorPromptEl.style.top = by + 'px';
   }
 
   // spotlight name banner, pinned over the lit district (yields to card + prompt)
   const spotBanner = document.getElementById('spotbanner');
-  if (spotA > 0.05 && spotQ && panel.hidden && !bubbleUp && !promptUp && !folkUp) {
+  if (spotA > 0.05 && spotQ && panel.hidden && !bubbleUp && !promptUp && !folkUp && !tpBnUp) {
     const rdpr2 = window.devicePixelRatio || 1;
     const bx = (isoX(spotQ.qx + spotQ.qw / 2, spotQ.qy + spotQ.qh / 2) - cam.x) * z / rdpr2;
     const qc4 = [[spotQ.qx, spotQ.qy], [spotQ.qx + spotQ.qw, spotQ.qy], [spotQ.qx + spotQ.qw, spotQ.qy + spotQ.qh], [spotQ.qx, spotQ.qy + spotQ.qh]];
@@ -4020,8 +4212,9 @@ function draw() {
     spotBanner.hidden = false;
   } else spotBanner.hidden = true;
 
-  // YOU ARE HERE label above the courier (hidden while reading)
-  if ((yahT > 0 || yahHold) && panel.hidden) {
+  // YOU ARE HERE label above the courier (hidden while reading,
+  // and it waits its turn while the teleport banner is the one label)
+  if ((yahT > 0 || yahHold) && panel.hidden && !tpBnUp) {
     const rdpr3 = window.devicePixelRatio || 1;
     const wxp = isoX(player.x, player.y), wyp = isoY(player.x, player.y);
     yahEl.style.left = ((wxp - cam.x) * z / rdpr3) + 'px';
@@ -4093,7 +4286,7 @@ const diag = window.__pixelDiag = {
 function motionActive() {
   return keysDown.size > 0 || Math.hypot(player.vx, player.vy) > 0.03 ||
          camSettle > 0.8 || bakeQueue.length > 0 || !!camFly || !!player.tgt ||
-         (!yahHold && yahT > 0) || spotA !== (spotOn ? 1 : 0) ||
+         (!yahHold && yahT > 0) || spotA !== (spotOn ? 1 : 0) || !!hlB ||
          !!tp || !!rotFx || waveT > 0 || fadeCount > 0;
 }
 /* truly idle (non-reduced): time paused, camera at rest, no particles on
@@ -4294,6 +4487,7 @@ cvs.addEventListener('pointerup', (e) => {
     player.tgtStall = 0;
     camFly = null;
     camMode = 'follow';
+    retireQsInvite();               // a click-walk is walking elsewhere too
     if (!introEl.hidden) endIntro(false);
     dismissYah(true);
     startLoop();
@@ -4582,6 +4776,7 @@ function endpointEl(b) {
 function openPage(slug, anchor) {
   const page = pagesBySlug[slug];
   if (!page) { closePanel(); return; }
+  retireQsInvite();         // any page opened means the gesture has done its work
   closeFolkCard();          // a page opened over a conversation ends it
   const b = buildings.find(x => x.slug === slug);
   document.getElementById('panel-crumb').textContent =
@@ -4662,11 +4857,12 @@ function route() {
 window.addEventListener('hashchange', route);
 document.addEventListener('keydown', (e) => {
   if (e.key !== 'Escape') return;
+  if (portalSignUp()) { portalSignNo(); return; }   // Escape puts the town sign away: no crossing
   if (townOverlayOpen()) { closeTownOverlay(); return; }
   if (folkCardOpen()) { closeFolkCard(); return; }
   if (photoMode) { exitPhoto(); return; }
   const drawer = document.getElementById('drawer'), kp = document.getElementById('keypanel');
-  if (!drawer.hidden) { drawer.hidden = true; return; }
+  if (!drawer.hidden) { closeDrawerView(false); return; }   // Escape hands the saved view back too
   if (!kp.hidden) { kp.hidden = true; return; }
   if (!panel.hidden) {
     if (location.hash && location.hash !== '#/') location.hash = '#/';
@@ -4684,6 +4880,23 @@ document.addEventListener('keydown', (e) => {
   // any form control the visitor is actually in keeps its own keys (the note's text
   // area, the post office search box, and its page picker - arrows walk the list)
   if (e.target && e.target.closest && e.target.closest('input, textarea, select')) return;
+  if (portalSignUp()) {
+    // THE TOWN SIGN HAS THE FLOOR. Y speaks YES from anywhere, N or Escape
+    // speaks NO, Tab moves between the two words, Enter (or Space) speaks the
+    // word that holds focus. Every other key waits - the courier does not
+    // walk, the season does not turn, no door opens behind the plank.
+    const yes = document.getElementById('ps-yes'), no = document.getElementById('ps-no');
+    if (e.key === 'y' || e.key === 'Y') { portalSignYes(); e.preventDefault(); return; }
+    if (e.key === 'n' || e.key === 'N' || e.key === 'Escape') { portalSignNo(); e.preventDefault(); return; }
+    if (e.key === 'Tab') { (document.activeElement === yes ? no : yes).focus(); e.preventDefault(); return; }
+    if (e.code === 'Enter' || e.code === 'NumpadEnter' || e.code === 'Space') {
+      if (e.target === yes || e.target === no) return;          // the focused word answers natively
+      if (document.activeElement === yes) { portalSignYes(); e.preventDefault(); return; }
+      if (document.activeElement === no) { portalSignNo(); e.preventDefault(); return; }
+    }
+    e.preventDefault();
+    return;
+  }
   if (townOverlayOpen()) {
     // A CIVIC CARD IS A READING SURFACE, AND THE TOWN HOLDS STILL BEHIND IT.
     // The post desk, the noticeboard, the paper, the ledgers, the book and the plaque
@@ -4735,10 +4948,18 @@ document.addEventListener('keydown', (e) => {
     camFly = null;                  // and cancels any camera flight
     player.tgt = null;
     setSpot(null);                  // walking clears the hover spotlight
+    retireQsInvite();               // walking elsewhere: the invitation yields at once
     if (!introEl.hidden) endIntro(false);   // movement dismisses the intro prompt
     dismissYah(true);
     e.preventDefault();
     startLoop();
+    return;
+  }
+  // the standing invitation speaks first: while its prompt is the one on
+  // screen, ENTER does exactly what it says - opens the Quick Start Guide
+  if ((e.code === 'Enter' || e.code === 'Space') && qsInvite && panel.hidden) {
+    location.hash = '#' + QS_SLUG;
+    e.preventDefault();
     return;
   }
   // the prompt over a hand is the one on screen when the courier is nearer to
@@ -4866,20 +5087,87 @@ function initDrawer() {
     });
   }
   body.innerHTML = html;
-  document.getElementById('btn-nav').onclick = () => { drawer.hidden = !drawer.hidden; };
-  document.getElementById('drawer-close').onclick = () => { drawer.hidden = true; setSpot(null); };
-  body.addEventListener('click', (e) => { if (e.target.closest('a')) drawer.hidden = true; });
+  document.getElementById('btn-nav').onclick = () => { if (drawer.hidden) openDrawerView(); else closeDrawerView(false); };
+  document.getElementById('drawer-close').onclick = () => closeDrawerView(false);
+  body.addEventListener('click', (e) => { if (e.target.closest('a')) closeDrawerView(true); });
   body.querySelectorAll('.d-district').forEach(el2 => {
     const q = quarters.find(q2 => q2.id === +el2.dataset.q);
     if (!q) return;
     el2.addEventListener('mouseenter', () => setSpot(q));
     el2.addEventListener('mouseleave', () => setSpot(null));
     el2.addEventListener('click', () => {
-      drawer.hidden = true;
+      closeDrawerView(true);
       setSpot(q);
       startFly(isoX(q.qx + q.qw / 2, q.qy + q.qh / 2), isoY(q.qx + q.qw / 2, q.qy + q.qh / 2), 3, null);
     });
   });
+  // hovering a PAGE row lights that page's building on the map, at whatever
+  // distance the camera stands (delegated, so every row in the long list works)
+  body.addEventListener('mouseover', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || !body.contains(a)) return;
+    const sl = decodeURIComponent(a.getAttribute('href').slice(1));
+    const b3 = buildings.find(bb => bb.slug === sl);
+    if (b3) { setHl(b3); setSpot(b3.quarter || null); }
+  });
+  body.addEventListener('mouseout', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (a && body.contains(a)) { setHl(null); setSpot(null); }
+  });
+}
+
+/* DISTRICTS OPENS ON THE WHOLE TOWN (owner order): opening the panel saves the
+   visitor's exact view and eases the camera out until the entire map fits;
+   closing without choosing eases back to precisely the saved view - position,
+   zoom and rotation all untouched by the trip. Choosing a district or a page
+   travels exactly as it always did, and the saved view is let go. Reduced
+   motion snaps both ways (startFly already arrives instantly there). */
+let drawerView = null;
+/* the whole-TOWN fit: the tightest integer zoom that holds every quarter
+   (roofs included), centred on the town itself rather than on the ocean's
+   bounding box - the crispness law (whole-pixel zoom only) holds here too */
+function fitTown() {
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (const q of quarters) {
+    for (const c4 of [[q.qx, q.qy], [q.qx + q.qw, q.qy], [q.qx + q.qw, q.qy + q.qh], [q.qx, q.qy + q.qh]]) {
+      const wx = isoX(c4[0], c4[1]), wy = isoY(c4[0], c4[1]);
+      if (wx < x0) x0 = wx;
+      if (wx > x1) x1 = wx;
+      if (wy - (q.topH || 40) < y0) y0 = wy - (q.topH || 40);
+      if (wy > y1) y1 = wy;
+    }
+  }
+  x0 -= 12; x1 += 12; y0 -= 10; y1 += 14;
+  let zf = 1;
+  for (const zz of ZLEVELS) if ((x1 - x0) * zz <= cvs.width && (y1 - y0) * zz <= cvs.height) zf = Math.max(zf, zz);
+  return { x: (x0 + x1) / 2, y: (y0 + y1) / 2, z: zf, w: x1 - x0, h: y1 - y0 };
+}
+function openDrawerView() {
+  const drawer = document.getElementById('drawer');
+  drawer.hidden = false;
+  drawerView = { x: cam.x, y: cam.y, z: cam.z, mode: camMode };
+  const f = fitTown();
+  startFly(f.x, f.y, f.z, null);
+}
+function closeDrawerView(travelled) {
+  const drawer = document.getElementById('drawer');
+  drawer.hidden = true;
+  setSpot(null); setHl(null);
+  if (travelled) { drawerView = null; return; }
+  if (!drawerView) return;
+  const v = drawerView;
+  drawerView = null;
+  startFly(v.x + cvs.width / (2 * v.z), v.y + cvs.height / (2 * v.z), v.z, () => {
+    cam.x = v.x; cam.y = v.y; cam.z = v.z; camMode = v.mode;   // exact restore, to the pixel
+    if (REDUCED) draw(); else requestDraw();
+  });
+}
+/* the one highlighted building (a hovered page row in the Districts panel) */
+let hlB = null;
+function setHl(b3) {
+  if (hlB === b3) return;
+  hlB = b3;
+  if (REDUCED) draw(); else startLoop();
 }
 
 function initKey() {
@@ -4914,7 +5202,7 @@ function initKey() {
     </ul>
     <h3>TOWN LIFE</h3>
     <ul>
-      ${plazaCore ? `<li><strong>The main square</strong> is where you land: ${plazaCore.tiles} paved tiles kept clear at the crossing of four streets, with the post office, the newsstand and the plaque set back on its rim so the middle stays yours to walk.</li>` : ''}
+      ${plazaCore ? `<li><strong>The main square</strong> is where you land: ${plazaCore.tiles} paved tiles kept clear where four streets meet, with the post office, the newsstand and the plaque set back on its rim so the middle stays yours to walk.</li>` : ''}
       <li><strong>The post office</strong> on the plaza writes real letters: pick a page and SEND opens that page's own GitHub editor (<span class="mono">edit/main/docusaurus/&lt;file&gt;</span>), or open an issue prefilled with its title and slug.</li>
       <li><strong>A noticeboard stands by every door</strong> (${doors.length} of them). Press N to pin a note: it posts to the same docs-feedback letterbox as the real widget. Away from the docs domain the browser blocks the call, so the board keeps your words and says so.</li>
       <li><strong>Delivery rounds:</strong> press G at any door to take a parcel addressed to a page that page really cites, and G again at the destination to stamp the delivery book (B). Three parcels at most; the book remembers the route you took.</li>
@@ -4922,21 +5210,24 @@ function initKey() {
       <li><strong>The Daily Docs</strong> kiosk prints the six most recently tended pages, with their real dates. Tap a headline and the courier makes the trip.</li>
       <li><strong>The Records Hall</strong> keeps one ledger per month from ${humanDate(TOWN.first)} to ${humanDate(TOWN.last)}, honestly labelled as the pages remember it; the ${TOWN.widest.founded.length}-page ledger of ${['January','February','March','April','May','June','July','August','September','October','November','December'][Number(TOWN.widest.key.slice(5, 7)) - 1]} ${TOWN.widest.key.slice(0, 4)} is chained to the desk.</li>
       <li><strong>The townsfolk are the town.</strong> All ${townsfolk.length} real hands behind these pages are out in the streets at once - they are the population, not decoration - each keeping a beat beside one of the pages provenance ties them to, and the day of the cycle picks which of their pages that is, so the same hand is somewhere else tomorrow. Stop beside one and the prompt reads <em>TALK</em>: press Enter or click it and their record opens - the span they signed, the pages they tended, and every one of those pages with its own count, each clickable. Walk away and the conversation ends.</li>
-      <li><strong>The anonymous are the exception now</strong>, and there are never more than one of them for every six named hands (${peds.length} of them today). They keep to the ground no hand is tied to - the quays and the wide streets more than ${FOLK_CLEAR} tiles from anyone - and they are plainly incidental: no hat, no name, no label, no talk prompt. Wherever the pages are, everyone you pass can be named.</li>
+      <li><strong>The anonymous are the exception</strong>: never more than one of them for every six named hands (${peds.length} of them today). They keep to the ground no hand is tied to - the quays and the wide streets more than ${FOLK_CLEAR} tiles from anyone - and they are plainly incidental: no hat, no name, no label, no talk prompt. Wherever the pages are, everyone you pass can be named.</li>
       <li><strong>${TOWN.vacant.length} fenced lots</strong> mark the pages no other page links to yet. The sign says NOBODY LINKS HERE YET; walking up offers to be the first, through the post office.</li>
       <li><strong>Photo mode</strong> (P): the scene freezes, you frame it, and the camera button saves a pixel-crisp postcard with the district, season and in-town date stamped on the border.</li>
-      <li><strong>The town has two birthdays, because the repository is older than any page still standing in it.</strong></li>
+      <li><strong>The town keeps two birthdays, because the repository is older than any page still standing in it.</strong></li>
       <li><strong>Founding Day</strong> falls on ${TOWN.foundingHuman.replace(/ \d{4}$/, '')}, the anniversary of the repository's own first commit (${TOWN.foundingHuman}, the oldest entry in the log this whole town is drawn from). Every file that commit made has since been deleted or moved, so the day is celebrated honestly: <em>nothing standing here today is that old</em>. Bunting is strung from poles around the plaza with ${TOWN.pennants} pennants, one in each community's colour, lights along the cords after dark and fireworks over the square. Add <span class="mono">?founding=1</span> to see it any day.</li>
       <li><strong>First Landfall</strong> falls on ${TOWN.landfallHuman.replace(/ \d{4}$/, '')}, the anniversary of the oldest pages that are still here: ${TOWN.landfallPages.length} Cloud pages laid down together on ${TOWN.landfallHuman} - ${TOWN.landfallPages.map(sl => `<span class="mono">${esc(sl)}</span>`).join(', ')}. It is the quieter day and shares nothing with the other: a beacon burns over each of those ${TOWN.landfallPages.length} doors, and ${TOWN.landfallCommits} paper lanterns - one for every commit those five pages have carried since - drift down the canals. Add <span class="mono">?landfall=1</span> to see it any day.</li>
-      <li><strong>Six ways out of town</strong>, for the day the courier wants a different job - none of them a menu: walk up and the town offers, ENTER crosses. A <a href="../secreta/">spinner rack of comics</a> turns in the window of FOUR-COLOR FUNNIES; two vessels lie at the harbour mooring - an engraved <a href="../cartastrapiana/">sloop</a> that sails by an older hand, and a rubber-hose <a href="../bythedeep/">steamer</a> that winks as you come near; the <a href="../firstlight/">telescope</a> at the observatory swears that star is answering, but only after dark; a fingerpost at the town edge reads THE LONG WAY OUT OF TOWN - 319,153 words - and <a href="../longway/">means it</a>; the botanist's stall keeps <a href="../herbarium/">pressed flowers</a>; and something half-glimpsed waits in the <a href="../secretb/">hobby shop</a> window.</li>
+    </ul>
+    <h3>STREET FURNITURE</h3>
+    <ul>
+      <li><strong>Some of the town is simply furniture:</strong> benches, planters, hydrants, crates and barrels, the chalkboard sandwich boards the shops stand out on the pavement, and the stone fountain playing in the park. They dress the streets and answer to nothing - if it does not raise a floating prompt when you walk up, it is scenery to enjoy on the way past.</li>
     </ul>
     <h3>GETTING AROUND</h3>
     <ul>
       <li>Drag to pan, scroll or +/− to zoom: one whole-pixel step per gesture, laptop-trackpad friendly.</li>
       <li><strong>Turn the town:</strong> Q and E (or the \u21BA \u21BB buttons) rotate the map a quarter turn to see behind any row. Buildings hiding the courier turn see-through on their own.</li>
       <li>Hover any building to read its plaque: every hand that wrote the page, keeper first.</li>
-      <li>Click a building to read the full page - and the courier beams to its door in a sparkle of pixels. Close the page with \u2715, Escape or X.</li>
-      <li><strong>Or walk it:</strong> every arrow key / WASD follows one street as drawn on screen (\u2192 walks the down-right avenue, \u2191 the up-right one); hold two neighbouring keys to cut between them. Hold Shift to stride. Click any open ground to send the courier there (shift-click strides). Walk up to a door and press Enter to step in and read - every door is walkable from the spawn plaza, proven at boot.</li>
+      <li>Click a building to read the full page - and the courier beams to its door in a sparkle of pixels, under a small banner naming the trip: TELEPORTING YOU TO the page in question. The same banner rides every beamed trip, from the search box, the newsstand or a talk panel. Close the page with \u2715, Escape or X.</li>
+      <li><strong>Or walk it:</strong> every arrow key / WASD follows one street as drawn on screen (\u2192 walks the down-right avenue, \u2191 the up-right one); hold two neighbouring keys to cut between them. Hold Shift to stride. Click any open ground to send the courier there (shift-click strides). Walk up to a door and press Enter to step in and read - every door is walkable from the spawn plaza, proven at boot. The courier lands at the plaza edge nearest the QUICK START GUIDE, facing its softly lit door: press Enter right there to read it first, or simply walk away and the invitation steps aside.</li>
       <li><strong>Never lost:</strong> press F or the \u25CE Find me button to fly back to the courier with a YOU ARE HERE marker - they wave back; at the widest zoom a violet ring marks them at all times. Hover any district (or its entry in the Districts drawer) to spotlight it; district names label the map at wider zooms.</li>
       <li><strong>The town keeps time:</strong> a full day lasts about 4 minutes and each day turns the season. Click the clock (or press T) for 1x / 8x / paused; click the season glyph (or press Y) to skip ahead. At night the windows come on street by street; spring and autumn bring passing showers with puddle glints on the streets.</li>
       <li><strong>And it sounds real:</strong> footsteps by ground, doors, pigeons, the cat, birds by day, crickets by night, rain on the rooftops - genuine CC0 / public-domain recordings, bundled locally (sources in sfx/CREDITS.txt). The ♪ button mutes everything and remembers your choice.</li>
@@ -4990,12 +5281,15 @@ let townClickables = [];         // world-px hit rects for the mouse-only path
 const FOLK_CACHE = {};
 
 /* ---- THE PORTAL NETWORK (owner ruling 3) ---------------------------------
-   Six crossings to the lab's sister projects, woven into the town fabric.
-   Each one is DISCOVERED, never a menu: the affordance lives in the town's
-   own grammar (a bookshop, two moored vessels, a telescope, a fingerpost, a
-   market stall, a shop window), the hint is one in-register line in the same
-   door prompt every door uses, and ENTER plays a short in-fiction beat before
-   the walk over to the sibling at ../KEY/. Reduced motion crosses instantly. */
+   Five stations, six berths - the crossings to the lab's sister highlights,
+   woven into the town fabric. Each one is DISCOVERED, never a menu: the
+   affordance lives in the town's own grammar (a bookshop, two moored vessels,
+   a telescope, a fingerpost, a market stall), the hint is one in-register
+   line in the same door prompt every door uses, and ENTER plays a short
+   in-fiction beat before the walk over to the sibling at ../KEY/. Reduced
+   motion crosses instantly. (2026-09-05, r15, owner order: THE KIT IS
+   ARCHIVED - the hobby shop's crossing is gone entirely; its shopfront
+   stays in the streets as silent scenery, blind drawn, offering nothing.) */
 const PORTALS = [
   { key: 'secreta', kind: 'funnies', href: '../secreta/',
     title: 'FOUR-COLOR FUNNIES', hint: 'A SPINNER RACK OF COMICS TURNS IN THE WINDOW',
@@ -5014,17 +5308,65 @@ const PORTALS = [
     beat: 'ONE FOOT AFTER THE OTHER · 319,153 WORDS TO GO', snd: 'whoosh' },
   { key: 'herbarium', kind: 'botanist', href: '../herbarium/',
     title: 'THE BOTANIST STALL', hint: 'PRESSED FLOWERS IN THE WINDOW · EVERY LEAF KEPT',
-    beat: 'A PRESSED FLOWER MARKS YOUR PAGE', snd: 'chime' },
-  { key: 'secretb', kind: 'hobby', href: '../secretb/',
-    title: 'THE HOBBY SHOP', hint: 'SOMETHING HALF-GLIMPSED IN THE WINDOW',
-    beat: 'YOU SAW IT, THEN · COME AND SEE THE REST', snd: 'blip' }
+    beat: 'A PRESSED FLOWER MARKS YOUR PAGE', snd: 'chime' }
 ];
 const PORTAL_BY_KIND = {};
 for (const P of PORTALS) PORTAL_BY_KIND[P.kind] = P;
 let portalLeaving = false;       // one crossing at a time
 let steamerProp = null;          // the vessel that winks as you approach
 
+/* THE PORTAL CONFIRM (owner law). Every activation - keyboard or mouse, all
+   five stations, all six berths - first raises a wooden town sign in the
+   door grammar: THIS WAY LEAVES TOWN - ANOTHER WORLD ENTIRELY. GO? The two
+   words on the plank are real buttons (clickable, Tab-focusable); Y speaks
+   YES from anywhere, N or Escape speaks NO, Enter speaks the focused word.
+   NO puts the sign away and hands back the exact moment before it rose.
+   Reduced motion raises the same sign with no animation. */
+let portalAsk = null;            // the crossing waiting on the visitor's word
+let portalAskFocus = null;       // where focus stood before the sign rose
+function portalSignUp() { return !!portalAsk; }
 function portalGo(key) {
+  const P = PORTALS.find((p) => p.key === key);
+  if (!P || portalLeaving || portalAsk) return;
+  portalAsk = P;
+  keysDown.clear();               // a held walk key never carries into the sign
+  player.tgt = null;
+  const el = document.getElementById('portalsign');
+  const dest = document.getElementById('ps-dest');
+  if (!el || !dest) { portalAsk = null; portalCross(key); return; }   // no sign in the DOM: never strand the crossing
+  dest.textContent = 'BOUND FOR ' + P.title;
+  el.hidden = false;
+  if (REDUCED) el.classList.add('on');
+  else requestAnimationFrame(() => el.classList.add('on'));
+  portalAskFocus = document.activeElement;
+  const yes = document.getElementById('ps-yes');
+  if (yes) yes.focus();
+  sndSynth('pop');
+  if (REDUCED) draw();
+}
+function portalSignClose() {
+  const el = document.getElementById('portalsign');
+  if (el) { el.classList.remove('on'); el.hidden = true; }
+  portalAsk = null;
+  const ae = document.activeElement;
+  if (ae && el && el.contains(ae) && ae.blur) ae.blur();
+  if (portalAskFocus && portalAskFocus !== document.body && portalAskFocus.focus) {
+    try { portalAskFocus.focus(); } catch (err) { }
+  }
+  portalAskFocus = null;
+}
+function portalSignYes() {
+  if (!portalAsk) return;
+  const key = portalAsk.key;
+  portalSignClose();
+  portalCross(key);
+}
+function portalSignNo() {
+  if (!portalAsk) return;
+  portalSignClose();               // clean return to the moment before the sign
+  if (REDUCED) draw(); else startLoop();
+}
+function portalCross(key) {
   const P = PORTALS.find((p) => p.key === key);
   if (!P || portalLeaving) return;
   portalLeaving = true;
@@ -5039,6 +5381,15 @@ function portalGo(key) {
   sndSynth(P.snd);
   setTimeout(go, 980);
 }
+/* the sign's two words answer the mouse; a click on the dusk behind the
+   plank is the visitor stepping back - the same clean NO */
+(() => {
+  const el = document.getElementById('portalsign');
+  const yes = document.getElementById('ps-yes'), no = document.getElementById('ps-no');
+  if (yes) yes.addEventListener('click', portalSignYes);
+  if (no) no.addEventListener('click', portalSignNo);
+  if (el) el.addEventListener('pointerdown', (e) => { if (e.target === el) portalSignNo(); });
+})();
 /* the telescope only answers once the stars are out; under reduced motion the
    clock is parked at the frozen golden hour, so the star answers regardless */
 function portalTelescope() {
@@ -5371,17 +5722,16 @@ function bakeTownSprites() {
     px(g, 1, pad + 17, 30, 7, PAL.RS1);                                            // the marquee
     drawText3x5(g, 2, pad + 18, 'FUNNIES', PAL.YL);
   });
-  // THE HOBBY SHOP: a quiet slate front, the window mostly blinded, and under
-  // the blind a few pale pixels that refuse to resolve into anything
+  // THE HOBBY SHOP: a quiet slate front, the blind drawn all the way down.
+  // (2026-09-05, r15, owner order: THE KIT IS ARCHIVED - silent scenery now;
+  // nothing glimpsed, nothing offered.)
   bakeLandmark('hobbyshop', 22, (d) => {
     const { g, colL, colR, pad } = d;
     for (let x = 0; x < 16; x++) colL(x, 0, 22, PAL.S2);
     for (let x = 0; x < 16; x++) colL(x, 0, 2, PAL.S3);
     for (let x = 0; x < 16; x++) colR(x, 0, 22, PAL.S1);
     for (let x = 2; x <= 9; x++) colL(x, 10, 9, PAL.DW);       // dark glass
-    for (let x = 2; x <= 9; x++) colL(x, 10, 4, PAL.C2);       // the blind, half down
-    colL(4, 16, 1, PAL.WH); colL(5, 15, 2, PAL.TG);            // the half-glimpsed thing
-    colL(6, 17, 1, PAL.L1); colL(8, 16, 1, PAL.V2);
+    for (let x = 2; x <= 9; x++) colL(x, 10, 9, PAL.C2);       // the blind, drawn
     for (let x = 12; x <= 14; x++) colL(x, 13, 9, PAL.WD2);    // door
     px(g, 1, pad + 16, 23, 7, PAL.RS1);
     drawText3x5(g, 2, pad + 17, 'HOBBY', PAL.WH);
@@ -5479,11 +5829,15 @@ function bakeTownSprites() {
 
 /* ---- placement: BFS-safe plaza landmarks + per-door props ---------------- */
 function trialSolid(tiles) {
-  // temporarily claim tiles; keep them only if every door stays reachable
+  // temporarily claim tiles; keep them only if every door stays reachable AND
+  // the spawn keeps its room law (6 clear tiles down all four streets, 55%
+  // open within 10) - the courier now lands at the plaza edge, so late stone
+  // could otherwise squeeze the landing without stranding a single door
   for (const k of tiles) propSolid.add(k);
   const r = walkBFS();
   const sx = Math.floor(player.x), sy = Math.floor(player.y);
-  const ok = r.stranded.length === 0 && !!r.seen[sy * Wt + sx];
+  const ok = r.stranded.length === 0 && !!r.seen[sy * Wt + sx] &&
+    spawnRoomOK(spawnTile[0], spawnTile[1]);
   if (!ok) for (const k of tiles) propSolid.delete(k);
   return ok;
 }
@@ -5531,10 +5885,15 @@ function placeTownLife() {
     }
     return true;
   };
-  // stone belongs on the rim of the square or beyond it, never inside
+  // stone belongs on the rim of the square or beyond it, never inside - held
+  // against the SPAWN (so nothing crowds the landing) and against the square's
+  // own middle (the spawn sits at the edge now, and Chebyshev distance from an
+  // edge tile alone would let stone stand in the very centre of the plaza)
+  const ccx = plazaCore ? plazaCore.cx : sx0, ccy = plazaCore ? plazaCore.cy : sy0;
   const rimOrOut = (tx, ty, w, d) => {
     for (let dx = 0; dx < w; dx++) for (let dy = 0; dy < d; dy++) {
       if (Math.max(Math.abs(tx + dx - sx0), Math.abs(ty + dy - sy0)) < coreR) return false;
+      if (Math.max(Math.abs(tx + dx - ccx), Math.abs(ty + dy - ccy)) < coreR) return false;
     }
     return true;
   };
@@ -5631,23 +5990,26 @@ function placeTownLife() {
   }
   TOWN.vacantPlaced = placedVacant;
 
-  /* ---- THE PORTAL NETWORK: six crossings woven into the town ------------- */
+  /* ---- THE PORTAL NETWORK: five stations, six berths (r15) ---------------- */
   // Everything below stands in the same door grammar as the civic landmarks:
   // trial-fitted against the walk BFS where it claims ground, spot + prompt +
   // ENTER like every other threshold in town.
   const portalSpot = (kind, ix, iy) => {
     const P = PORTAL_BY_KIND[kind];
+    if (!P) return false;   // a berth whose destination left the mains places nothing
     spots.push({ kind, title: P.title, row: P.hint, ix, iy });
+    return true;
   };
   let portalsPlaced = 0;
   // (a) FOUR-COLOR FUNNIES - a bookshop in the streets, sky around it
   const fb = place2x2('funnies', false, 12, 26, 20, 9) || place2x2('funnies', true, 12, 30, 18, 8) ||
              place2x2('funnies', false, 8, 40, 16, 7) || place2x2('funnies', false, 6, 60, 14, 5);
   if (fb) { portalSpot('funnies', fb.tx + 1, fb.ty + 2.35); portalsPlaced++; }
-  // (f) THE HOBBY SHOP - further out, on a quieter street
-  const hb = place2x2('hobbyshop', false, 18, 34, 18, 9) || place2x2('hobbyshop', true, 14, 34, 16, 8) ||
-             place2x2('hobbyshop', false, 8, 46, 15, 6) || place2x2('hobbyshop', false, 6, 60, 14, 5);
-  if (hb) { portalSpot('hobby', hb.tx + 1, hb.ty + 2.35); portalsPlaced++; }
+  // (f) THE HOBBY SHOP - further out, on a quieter street. (2026-09-05, r15,
+  // owner order: THE KIT IS ARCHIVED.) The shopfront stays as silent scenery,
+  // blind drawn - no spot, no prompt, no crossing, and it does not count.
+  place2x2('hobbyshop', false, 18, 34, 18, 9) || place2x2('hobbyshop', true, 14, 34, 16, 8) ||
+    place2x2('hobbyshop', false, 8, 46, 15, 6) || place2x2('hobbyshop', false, 6, 60, 14, 5);
   // (e) THE BOTANIST STALL - at the market, with the other stalls on the square
   const bt = place1('botanist', true, RIM, coreR + 6, 12, 3) || place1('botanist', true, RIM, 14) ||
              place1('botanist', false, RIM, 22) || place1('botanist', false, RIM, 34, 16);
@@ -5706,19 +6068,31 @@ function placeTownLife() {
   }
   const farFromMoor = (tx, ty) => (!moor1 || Math.hypot(tx - moor1.tx, ty - moor1.ty) > 8) &&
                                   (!moor2 || Math.hypot(tx - moor2.tx, ty - moor2.ty) > 8);
-  // (d) THE TRAIL GATE - the farthest reachable ground where the land runs out
+  // (d) THE TRAIL GATE - the farthest reachable ground where the land runs
+  // out. (2026-09-05, r15, owner screenshot: the post stood mute at night in
+  // the rain.) Made robust two ways: the spot registers FIRST and the post
+  // only goes down once it has - a fingerpost that cannot speak is forbidden -
+  // and if the strict site scan finds nothing the conditions relax in tiers
+  // (drop the mooring clearance, then the sea edge) so the gate always lands
+  // on reachable ground.
   let tgDone = false;
-  for (let i = cands.length - 1; i >= 0 && !tgDone; i--) {
-    const c = cands[i];
-    if (!seaBeside(c.tx, c.ty) || !reachable(c.tx, c.ty) || !farFromMoor(c.tx, c.ty)) continue;
-    if (!freeTile(c.tx, c.ty) || takenTiles.has(c.tx + ',' + c.ty)) continue;
-    // the post itself is street furniture: it never claims the tile, so the
-    // rim path and the BFS stay exactly as proven
-    takenTiles.add(c.tx + ',' + c.ty);
-    propList.push({ kind: 'trailgate', tx: c.tx, ty: c.ty });
-    portalSpot('trailgate', c.tx + 0.5, c.ty + 0.5); portalsPlaced++;
-    tgDone = true;
-  }
+  const tgTry = (needSea, needFar) => {
+    for (let i = cands.length - 1; i >= 0 && !tgDone; i--) {
+      const c = cands[i];
+      if (needSea && !seaBeside(c.tx, c.ty)) continue;
+      if (needFar && !farFromMoor(c.tx, c.ty)) continue;
+      if (!reachable(c.tx, c.ty)) continue;
+      if (!freeTile(c.tx, c.ty) || takenTiles.has(c.tx + ',' + c.ty)) continue;
+      // the spot speaks first; the post itself is street furniture: it never
+      // claims the tile, so the rim path and the BFS stay exactly as proven
+      if (!portalSpot('trailgate', c.tx + 0.5, c.ty + 0.5)) return;
+      takenTiles.add(c.tx + ',' + c.ty);
+      propList.push({ kind: 'trailgate', tx: c.tx, ty: c.ty });
+      portalsPlaced++;
+      tgDone = true;
+    }
+  };
+  tgTry(true, true); tgTry(true, false); tgTry(false, false);
   // (c) THE OBSERVATORY - a far grass rise with sky around it, inland
   let obDone = false;
   const obTry = (needGrass, minOpen) => {
@@ -6052,9 +6426,11 @@ function projectTown() {
   for (const pr of propList) {
     if (!pr.st) continue;
     if (pr.kind === 'landmark') {
+      // (2026-09-05, r15) THE KIT IS ARCHIVED: the hobby shop is silent
+      // scenery - no act, no crossing, not even a records-hall fallthrough.
+      if (pr.name === 'hobbyshop') continue;
       const act = pr.name === 'postoffice' ? () => openPostOffice(null)
         : pr.name === 'funnies' ? () => portalGo('secreta')
-        : pr.name === 'hobbyshop' ? () => portalGo('secretb')
         : () => openRecordsHall();
       townClickables.push({ st: pr.st, act });
     } else if (pr.kind === 'vessel') {
@@ -6254,8 +6630,11 @@ function earnPlaque() {
 
 /* ---- proximity: spots, folk, prompt rows ---------------------------------- */
 function updateSpotProximity() {
+  // the standing invitation yields the moment the courier is off the landing
+  // tile (a walk, a click-walk or a teleport all count as walking elsewhere)
+  if (qsInvite && (Math.floor(player.x) !== spawnTile[0] || Math.floor(player.y) !== spawnTile[1])) retireQsInvite();
   let bestS = null, bd = 1.05;
-  if (panel.hidden && cam.z >= 3 && !activeDoor && !photoMode) {
+  if (panel.hidden && cam.z >= 3 && !activeDoor && !photoMode && !qsInvite) {
     for (const s of spots) {
       const dd = Math.hypot(player.x - s.ix, player.y - s.iy);
       if (dd < bd) { bd = dd; bestS = s; }
@@ -7281,7 +7660,13 @@ async function boot() {
   console.log(`pixel docs city ready in ${(performance.now() - t0).toFixed(0)}ms - ${Wt}x${Ht} tiles, ${buildings.length} buildings, ${statics.length} statics, ${atlasStats.sprites} sprites, ${doors.length} doors`);
 
   route();
+  // QUICK START FIRST: the opening gesture stands for every fresh landing -
+  // a deep link straight to a page is a visitor who already knows the way
+  if (!(location.hash && location.hash.length > 2)) qsInvite = !!qsDoorRef;
   window.__pixelTest = {
+    qsInvite: () => ({ armed: qsInvite, slug: QS_SLUG, door: qsDoorRef ? { px: qsDoorRef.px, py: qsDoorRef.py } : null, face: player.face }),
+    portalSign: () => ({ up: portalSignUp(), key: portalAsk ? portalAsk.key : null, leaving: portalLeaving }),
+    spawnRoomLaw: () => spawnRoomOK(spawnTile[0], spawnTile[1]),
     // under reduced motion the loop is parked, so a test that teleports the courier
     // has to refresh proximity and repaint by hand; the moving profile is untouched
     setPlayer(x, y) { player.x = x; player.y = y; player.vx = player.vy = 0; camMode = 'follow'; if (REDUCED) { updateSpotProximity(); draw(); } else startLoop(); },
@@ -7308,6 +7693,9 @@ async function boot() {
     state: () => ({ water: waterCvs.length, grounds: groundSets.length, animT, seasonIdx: season, red: REDUCED }),
     flyActive: () => !!camFly,
     camState: () => ({ x: cam.x, y: cam.y, z: cam.z, mode: camMode }),
+    fitInfo: () => ({ fit: fitCenter(), town: fitTown(), world: { w: worldW, h: worldH }, view: { w: cvs.width, h: cvs.height } }),
+    drawerSaved: () => (drawerView ? { x: drawerView.x, y: drawerView.y, z: drawerView.z } : null),
+    hlState: () => (hlB ? hlB.slug : null),
     yah: () => ({ t: yahT, hold: yahHold, hidden: yahEl.hidden }),
     spot: () => ({ on: spotOn, a: spotA, q: spotQ ? spotQ.label : null }),
     parked: () => !running,
@@ -7343,7 +7731,7 @@ async function boot() {
     sndState: () => ({ on: sndOn, unlocked: !!AC, ready: sndReady, buffers: Object.keys(sndBufs).length, loops: Object.keys(sndLoops).length }),
     sndLoopGains: () => { const o2 = {}; for (const k in sndLoops) o2[k] = sndLoops[k].g.gain.value; return o2; },
     sndLog: () => sndLog.slice(),
-    sndPosState: () => ({ holder: posHolder, on: { lamp: posOn.lamp, van: posOn.van },
+    sndPosState: () => ({ holder: posHolder, on: { van: posOn.van },
       rest: posVanRest, cfg: POSLOOP,
       lampD: (() => { let d3 = 99; for (const lp of lampPts) { const d4 = Math.abs(lp.tx + 0.5 - player.x) + Math.abs(lp.ty + 0.5 - player.y); if (d4 < d3) d3 = d4; } return d3; })(),
       vanD: (() => { let d3 = 99; for (const c of cars) { if (c.stopped || !c.van) continue; const d4 = Math.hypot(c.x - player.x, c.y - player.y); if (d4 < d3) d3 = d4; } return d3; })() }),

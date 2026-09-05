@@ -323,6 +323,18 @@ details.dtl .dtl-body { padding: 0 14px 10px; }
   letter-spacing: .6px; padding: 5px 8px 4px; white-space: nowrap;
 }
 
+/* ---- teleport banner: TELEPORTING YOU TO <the real page title> ---- */
+#tpbanner {
+  position: fixed; left: 50%; top: 62px; transform: translateX(-50%);
+  z-index: 46; pointer-events: none;
+  background: #241f2e; color: #fdf8ea; border: 2px solid #8582ff;
+  box-shadow: 3px 3px 0 rgba(10, 8, 20, .55);
+  font: 700 12px/1 "Courier New", ui-monospace, monospace;
+  letter-spacing: .6px; padding: 7px 11px 6px; white-space: nowrap;
+  max-width: min(92vw, 560px); overflow: hidden; text-overflow: ellipsis;
+}
+#tpbanner .tp-dest { color: #b5b3ff; }
+
 /* ---- district spotlight banner ---- */
 #spotbanner {
   position: fixed; z-index: 44; pointer-events: none;
@@ -570,7 +582,7 @@ body.photomode #folkcard { display: none !important; }
 /* ---- photo mode ---- */
 body.photomode #chrome, body.photomode #zoomctl, body.photomode #timectl,
 body.photomode #hud, body.photomode #hud2, body.photomode #doorprompt,
-body.photomode #folklabel, body.photomode #spotbanner, body.photomode #yah,
+body.photomode #folklabel, body.photomode #spotbanner, body.photomode #tpbanner, body.photomode #yah,
 body.photomode #hintcard, body.photomode #introprompt { display: none !important; }
 #photobar {
   position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 60;
@@ -617,6 +629,56 @@ body.photomode #city { cursor: crosshair; }
   box-shadow: 4px 4px 0 rgba(73, 69, 255, .45);
   background: #241f2e;
 }
+/* ---- the portal confirm: a wooden town sign raised before any crossing ----
+   The owner's law: no crossing without asking first, in the town's own voice.
+   The sign is drawn in the door grammar - plank, post, key-chip words - and
+   sits UNDER the beat overlay (z 120), which only plays once YES is spoken. */
+#portalsign {
+  position: fixed; inset: 0; z-index: 110;
+  background: rgba(6, 8, 16, .55);
+  display: flex; align-items: center; justify-content: center;
+}
+#portalsign[hidden] { display: none; }
+#portalsign .ps-card {
+  display: flex; flex-direction: column; align-items: center;
+  transform: translateY(14px); opacity: 0;
+  transition: transform .22s cubic-bezier(.2, 1.4, .4, 1), opacity .18s ease;
+}
+#portalsign.on .ps-card { transform: translateY(0); opacity: 1; }
+#portalsign .ps-board {
+  background: #6b4a2a; color: #f6ecd4;
+  border: 3px solid #3d2a15; outline: 2px solid #8a6437;
+  box-shadow: 0 0 0 5px #4a331d, 6px 8px 0 rgba(6, 8, 16, .55);
+  padding: 16px 22px 14px; max-width: min(520px, 88vw); text-align: center;
+  font-family: "Courier New", ui-monospace, monospace;
+  background-image: repeating-linear-gradient(0deg, rgba(61, 42, 21, .35) 0 2px, transparent 2px 22px);
+}
+#portalsign #ps-dest {
+  margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: 2px;
+  color: #e9c987; text-transform: uppercase;
+}
+#portalsign #ps-ask {
+  margin: 0 0 12px; font-size: 14px; font-weight: 700; line-height: 1.65;
+  letter-spacing: 1.2px; text-transform: uppercase;
+}
+#portalsign .ps-row { display: flex; align-items: center; justify-content: center; gap: 12px; }
+#portalsign .ps-sep { color: #c9a86a; font-weight: 700; }
+#portalsign .ps-btn {
+  background: #241f2e; color: #fdf8ea; border: 2px solid #fdf8ea;
+  box-shadow: 3px 3px 0 rgba(10, 8, 20, .55);
+  font: 700 13px/1 "Courier New", ui-monospace, monospace;
+  letter-spacing: 1px; padding: 9px 14px 8px; cursor: pointer;
+}
+#portalsign .ps-btn:hover { background: #4945ff; border-color: #8582ff; }
+#portalsign .ps-btn:focus-visible,
+#portalsign .ps-btn:focus { outline: 3px solid #e9c987; outline-offset: 2px; background: #4945ff; border-color: #8582ff; }
+#portalsign .ps-post {
+  width: 10px; height: 46px;
+  background: #4a331d; border: 2px solid #3d2a15;
+  box-shadow: 4px 4px 0 rgba(6, 8, 16, .45);
+}
+
 @media (prefers-reduced-motion: reduce) {
   #portalbeat { transition: none; }
+  #portalsign .ps-card { transition: none; transform: none; opacity: 1; }
 }

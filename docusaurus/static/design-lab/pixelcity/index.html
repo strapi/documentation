@@ -51,8 +51,23 @@
 </aside>
 
 <div id="yah" hidden>YOU ARE HERE</div>
+<div id="portalsign" hidden role="dialog" aria-modal="true" aria-labelledby="ps-ask">
+  <div class="ps-card">
+    <div class="ps-board">
+      <p id="ps-dest"></p>
+      <p id="ps-ask">THIS WAY LEAVES TOWN - ANOTHER WORLD ENTIRELY. GO?</p>
+      <div class="ps-row">
+        <button id="ps-yes" class="ps-btn" type="button">[Y]ES</button>
+        <span class="ps-sep" aria-hidden="true">/</span>
+        <button id="ps-no" class="ps-btn" type="button">[N]O</button>
+      </div>
+    </div>
+    <div class="ps-post" aria-hidden="true"></div>
+  </div>
+</div>
 <div id="portalbeat" hidden aria-live="polite"><p id="portalbeat-line"></p></div>
 <div id="spotbanner" hidden></div>
+<div id="tpbanner" hidden aria-live="polite"></div>
 
 <div id="introprompt" hidden>
   <strong>You are here</strong>
