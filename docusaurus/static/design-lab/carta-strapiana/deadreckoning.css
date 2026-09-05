@@ -103,7 +103,7 @@ html, body {
   position: absolute;
   top: 9.6%;
   left: 1.2%;
-  max-width: 34%;
+  max-width: 42%;
   font-family: "Iowan Old Style", "Palatino", "Palatino Linotype", Georgia, serif;
   font-style: italic;
   font-size: 14.5px;
@@ -623,51 +623,136 @@ html, body {
 .bpane { flex: 1 1 auto; overflow: hidden; position: relative; }
 .bpane[hidden] { display: none !important; }
 
-/* ---- the chart ---- */
-#pane-chart:not([hidden]) { display: flex; align-items: center; justify-content: center; }
-#chart { display: block; max-width: 100%; max-height: 100%; }
-#chartlabels { position: absolute; inset: 0; pointer-events: none; }
-#chartlabels .al {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  font-size: 10.5px;
-  letter-spacing: 0.20em;
-  text-transform: uppercase;
-  color: rgba(44, 33, 20, 0.72);
-  white-space: nowrap;
-  text-shadow: 0 0 3px var(--paper), 0 0 6px var(--paper);
+/* ---- the chart: a treasure map on vellum, and its lettering ---- */
+#pane-chart:not([hidden]) {
+  display: flex; align-items: center; justify-content: center;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(120, 96, 58, 0.10), rgba(84, 64, 36, 0.26) 78%),
+    #d8caa8;
 }
+#chart { display: block; max-width: 100%; max-height: 100%; touch-action: none; }
+#chart.panning { cursor: grabbing; }
+#chartlabels { position: absolute; inset: 0; pointer-events: none; }
+#clgeo, #clpin { position: absolute; inset: 0; transform-origin: 0 0; will-change: transform; }
+#clgeo > div, #clpin > div { position: absolute; }
+
+/* the lands, in spaced capitals; the archipelagos wider still */
+.cl-land, .cl-arch {
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(34, 25, 14, 0.90);
+  text-shadow:
+    0 0 3px rgba(240, 228, 197, 0.98), 0 0 6px rgba(240, 228, 197, 0.95),
+    0 0 10px rgba(240, 228, 197, 0.8), 0 0 16px rgba(240, 228, 197, 0.5);
+}
+.cl-land.sat { color: rgba(58, 45, 28, 0.72); font-style: italic; }
+.cl-arch {
+  color: rgba(52, 40, 24, 0.52);
+  text-shadow: 0 0 4px #f2e9d3, 0 0 9px #f2e9d3, 0 0 15px rgba(242, 233, 211, 0.9);
+}
+/* the places, in the small hand a cartographer letters a village with */
+.cl-place {
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  color: rgba(56, 43, 25, 0.80);
+  text-shadow:
+    0 0 2px rgba(238, 224, 190, 0.95), 0 0 3px rgba(238, 224, 190, 0.95),
+    0 0 5px rgba(238, 224, 190, 0.85), 0 0 9px rgba(238, 224, 190, 0.6),
+    1px 0 0 rgba(238, 224, 190, 0.7), -1px 0 0 rgba(238, 224, 190, 0.7);
+}
+.cl-place.chief { font-variant: small-caps; letter-spacing: 0.06em; color: rgba(38, 28, 17, 0.95); }
+/* the beasts' names, lettered on their banderoles */
+.cl-beast {
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-style: italic;
+  white-space: nowrap;
+  color: rgba(44, 33, 20, 0.92);
+}
+.cl-beast span { display: block; }
+.cl-rose {
+  transform: translate(-50%, -50%);
+  letter-spacing: 0.06em;
+  color: rgba(38, 28, 17, 0.82);
+  text-shadow: 0 0 3px #f2e9d3, 0 0 6px #f2e9d3;
+}
+.cl-num {
+  transform: translate(-50%, -50%);
+  color: rgba(60, 46, 28, 0.85);
+  text-shadow: 0 0 3px #f2e9d3, 0 0 5px #f2e9d3;
+}
+.cl-scaption {
+  transform: translate(-50%, 0);
+  white-space: nowrap;
+  font-style: italic;
+  color: rgba(74, 58, 36, 0.9);
+  text-shadow: 0 0 3px #f2e9d3, 0 0 6px #f2e9d3;
+}
+
+/* the cartouche */
+.cl-cart { color: var(--ink-2); line-height: 1.42; text-align: center; }
+.cl-cart .cc-title {
+  font-size: 1.62em;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  color: var(--ink);
+}
+.cl-cart .cc-sub { font-style: italic; font-size: 0.94em; margin-top: 4px; color: var(--ink-3); }
+.cl-cart .cc-rule {
+  height: 1px; background: rgba(70, 53, 35, 0.34);
+  margin: 8px 16%;
+}
+.cl-cart .cc-tot { font-size: 0.96em; line-height: 1.5; }
+.cl-cart .cc-tot b { color: var(--ink); font-weight: 600; }
+
+/* sailing directions in the margin */
+.cl-dirs { color: var(--ink-2); line-height: 1.4; }
+.cl-dirs .cd-h {
+  font-size: 0.84em; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: 6px;
+}
+.cl-dirs ul { margin: 0; padding-left: 13px; }
+.cl-dirs li { margin-bottom: 5px; font-size: 0.95em; }
+.cl-dirs b { color: var(--ink); font-weight: 600; letter-spacing: 0.04em; }
+
+/* the hover readout, set inside the foot of the cartouche */
 #chartinfo {
   position: absolute;
-  left: 20px;
-  bottom: 18px;
-  max-width: 40ch;
-  font-size: 13.5px;
-  line-height: 1.5;
+  line-height: 1.42;
   color: var(--ink-2);
-  text-shadow: 0 0 4px var(--paper), 0 0 8px var(--paper);
+  text-align: center;
   pointer-events: none;
 }
 #chartinfo .ci-name {
-  font-size: 15px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 1.12em;
+  letter-spacing: 0.08em;
   color: var(--ink);
-  margin-bottom: 3px;
+  margin-bottom: 2px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-#chartinfo .ci-act { margin-top: 5px; font-style: italic; color: var(--red); }
+#chartinfo .ci-line { font-size: 0.94em; }
+#chartinfo .ci-act { margin-top: 3px; font-style: italic; font-size: 0.9em; color: var(--red); }
+
+/* the legend */
 #chartkey {
   position: absolute;
-  right: 20px;
-  bottom: 18px;
-  font-size: 11.5px;
-  line-height: 1.7;
-  color: var(--ink-3);
-  text-align: right;
-  text-shadow: 0 0 4px var(--paper), 0 0 8px var(--paper);
+  line-height: 1.4;
+  color: var(--ink-2);
   pointer-events: none;
 }
-#chartkey b { color: var(--ink-2); font-weight: 600; letter-spacing: 0.06em; }
+#chartkey .ck-h {
+  font-size: 1.16em; letter-spacing: 0.20em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 4px;
+}
+#chartkey .ck-lede { font-size: 0.93em; font-style: italic; color: var(--ink-3); margin-bottom: 8px; }
+#chartkey .ck-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  font-size: 0.93em;
+  white-space: nowrap;
+}
 
 /* ---- the index, the log, the register, the colophon ---- */
 .bscroll { position: absolute; inset: 0; overflow-y: auto; padding: 22px 34px 70px; }
@@ -852,3 +937,55 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   #caption, #plate-title, #hints, #landfall { transition: none; }
 }
+
+/* ============ the seven crossings: the two that live in the reading DOM ============ */
+/* (e) the pressed specimen, slipped from between the log's pages */
+#specimen {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 560px;
+  margin: 2px auto 14px;
+  padding: 8px 14px;
+  cursor: pointer;
+  border: 1px solid rgba(58, 44, 28, 0.28);
+  background: rgba(226, 210, 180, 0.22);
+  box-shadow: 1px 2px 0 rgba(58, 44, 28, 0.10);
+  transform: rotate(-1.2deg);
+}
+#specimen:hover, #specimen:focus-visible {
+  border-color: rgba(58, 44, 28, 0.55);
+  background: rgba(226, 210, 180, 0.34);
+  outline: none;
+}
+#specimen .sp-line {
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-2, #4a3826);
+}
+#specimen svg { flex: 0 0 auto; }
+#specimen.slipping { animation: sp-slip 1.1s cubic-bezier(0.22, 0.9, 0.32, 1) both; }
+@keyframes sp-slip {
+  0%   { transform: translateY(-46px) rotate(6deg); opacity: 0; }
+  55%  { transform: translateY(6px) rotate(-2.6deg); opacity: 1; }
+  100% { transform: translateY(0) rotate(-1.2deg); opacity: 1; }
+}
+
+/* (c) the coastal path vignette at the longest shore's anchorage */
+.egg-path .ep-line {
+  font-style: italic;
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin: 4px 0 8px;
+}
+.egg-path svg { opacity: 0.9; }
+
+/* the returning visitor's one quiet line */
+#hints.quiet { font-size: 14px; max-width: 46%; }
+
+@media (prefers-reduced-motion: reduce) {
+  #specimen.slipping { animation: none; }
+}
+/* the app's own becalm flag (?rm=1) stills the slip too */
+:root.becalmed #specimen.slipping { animation: none; }

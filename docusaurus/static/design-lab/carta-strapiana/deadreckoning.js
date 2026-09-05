@@ -28,7 +28,7 @@ function rngFor(tag) {
 const W = 1440, H = 900;
 const HORIZON = 396;
 const FOV = 70, PXDEG = W / FOV;
-const COMPRESSION = 20;            // world speed compression
+const COMPRESSION = 50;            // world speed compression (2.5x: the owner wanted to feel the ship move)
 const ORDER_LAG = 1.0;             // seconds the ship ignores the wheel
 const PAPER = '#f1e7d0';
 const params = new URLSearchParams(location.search);
@@ -551,8 +551,40 @@ const ship = {
   clearOf: null
 };
 const env = { hourMix: 0, hourTarget: 0, t: 0, boilIdx: 0 };
-const lens = { raised: false, t: 0 };
+/* The spyglass follows the hand (owner order): ax/ay is where the hand aims,
+   x/y is where the heavy brass tube actually points - it trails the aim with
+   an eased lag. Arrow keys sweep the aim while SPACE is held, for keyboard
+   visitors. Clamped so the glass never leaves the plate. */
+const lens = { raised: false, t: 0, x: W / 2, y: 330, ax: W / 2, ay: 330 };
+const LENS_AX0 = 110, LENS_AX1 = W - 110, LENS_AY0 = 100, LENS_AY1 = 648;
+function aimLens(x, y) {
+  lens.ax = clamp(x, LENS_AX0, LENS_AX1);
+  lens.ay = clamp(y, LENS_AY0, LENS_AY1);
+  if (REDUCED) { lens.x = lens.ax; lens.y = lens.ay; }
+  if (lens.raised) dirty = true;
+}
 const story = { leadsman1: false, leadsman2: false, started: false, raised: false, lastDist: null, minDist: null };
+
+/* ---------------- the calm start (owner order) ----------------
+   The ship begins STILL, hove to on a quiet sea, and the deck teaches before
+   anything moves. The sailing-orders card stays up until the first meaningful
+   input; that input sheets her in and she gathers way with the usual mass
+   while the card eases off. Returning visitors (localStorage carta.taught)
+   get one quiet line only. Reduced motion keeps her becalmed as today. */
+const calm = { done: false, pristine: true };
+function firstOrder(kind) {
+  if (calm.done) return;
+  calm.done = true;
+  try { store.set('taught', true); } catch (e) {}
+  const hints = document.getElementById('hints');
+  if (hints) hints.classList.remove('shown');   // the card eases off, no wall
+  if (calm.pristine && ship.sail === 'rest' && !ship.anchored &&
+      (kind === 'steer' || kind === 'glass')) {
+    setSail('full', true);
+    captionNow('She sheets home and gathers way.', 3400);
+  }
+  dirty = true;
+}
 
 function sailBase(s) {
   /* topgallants: the long open-water legs between archipelagos, so a crossing
@@ -2026,6 +2058,8 @@ function update(dt) {
     }
   }
 
+  eggTick(dt);
+
   diag.bearing = Math.round(ship.bearing * 10) / 10;
   diag.orderedBearing = Math.round(ship.orderedBearing * 10) / 10;
   diag.sailState = ship.sail;
@@ -2035,6 +2069,10 @@ function update(dt) {
   diag.polarFactor = Math.round(polar * 1000) / 1000;
   diag.distNm = Math.round(dist * 1000) / 1000;
   diag.spyglass = lens.raised;
+  diag.lensX = Math.round(lens.x * 10) / 10;
+  diag.lensY = Math.round(lens.y * 10) / 10;
+  diag.lensAimX = Math.round(lens.ax * 10) / 10;
+  diag.lensAimY = Math.round(lens.ay * 10) / 10;
   diag.hour = env.hourMix > 0.5 ? 'dusk' : 'afternoon';
   diag.anchored = ship.anchored;
   diag.bound = isle ? isle.slug : null;
@@ -2132,6 +2170,8 @@ function drawShoreLights(isle, cxScreen, yBase, wpx, s, dist, stage) {
 /* draw the world beyond the ship (sky, clouds, island, horizon, bands).
    Used at scale 1 for the main view and magnified inside the lens. */
 function drawWorld(sim, worldDY, opts) {
+  /* the clickable marks are re-gathered each main pass (never the lens pass) */
+  if (eggs.ready && !(opts && opts.map)) eggs.hits.length = 0;
   const t = env.t;
   const knotsFrac = sim.knotsFrac;
   const mix = env.hourMix;
@@ -2196,7 +2236,12 @@ function drawWorld(sim, worldDY, opts) {
     }
     ctx.globalAlpha = 1;
     if (dist < 1.9) drawShoreLights(isle, x, yBase, wpx, s, dist, stage);
+    if (eggs.ready && isle === eggs.crateIsle && dist < 2.1)
+      drawCrateEgg(x, yBase, wpx, dist, !!(opts && opts.map));
   }
+
+  /* crossing (a): the nameless city stands with the coasts, before the horizon line */
+  if (eggs.ready) drawCityEgg(sim, worldDY, !!(opts && opts.map));
 
   /* horizon: broken breathing line, irregular gaps (no periodic dash) */
   ctx.strokeStyle = 'rgba(70,53,35,0.55)';
@@ -2211,6 +2256,9 @@ function drawWorld(sim, worldDY, opts) {
 
   /* the rolling hatched sea */
   drawBands(sim, worldDY, maxBand, fine, opts && opts.map);
+
+  /* the marks afloat on it, and the dusk stars: crossings (b), (d), (f) */
+  if (eggs.ready) drawEggs(sim, worldDY, opts && opts.map);
 }
 
 /* The sea bands.
@@ -2249,6 +2297,13 @@ function drawBands(sim, worldDY, maxBand, fine, map) {
     const bandY = B.y + worldDY * (0.55 + nearF * 0.85);
     const ampl = B.amp * (0.8 + knotsFrac * 0.45) * (REDUCED ? 0.6 : 1);
     const dyAt = x => bandY + ampl * Math.sin(kx * x + phase);
+
+    /* inside the glass, a band wholly above or below the lens costs nothing */
+    if (map && map.y0 != null) {
+      const yTop = oy + k * (bandY - ampl - 2);
+      const yBot = oy + k * (bandY + hLog + ampl + 2);
+      if (yBot < map.y0 || yTop > map.y1) continue;
+    }
 
     // slice width from the sag budget: ampl*(1-cos(pi*sw/lambda))*k <= SAG_PX
     const u = Math.acos(clamp(1 - SAG_PX / Math.max(ampl * k, 0.2), -1, 1));
@@ -2584,8 +2639,9 @@ function drawLens(sim, worldDY) {
   const t = env.t;
   const k = lens.t;
   const R = 226 * Math.pow(k, 0.8);
-  const cx = W / 2 + (REDUCED ? 0 : Math.sin(t * 1.7) * 4 + Math.sin(t * 3.1) * 2);
-  const cy = 330 + (REDUCED ? 0 : Math.cos(t * 1.3) * 3);
+  /* the tube sits where the hand holds it, with the old slight sway on top */
+  const cx = lens.x + (REDUCED ? 0 : Math.sin(t * 1.7) * 4 + Math.sin(t * 3.1) * 2);
+  const cy = lens.y + (REDUCED ? 0 : Math.cos(t * 1.3) * 3);
 
   /* the tube blocks the world */
   ctx.save();
@@ -2602,18 +2658,20 @@ function drawLens(sim, worldDY) {
      The clip lives in device space, so the band pass may reset the transform and
      place its slices on integer screen pixels: that is what keeps the lens interior
      free of the vertical seams the magnified slice lattice used to print. */
+  /* magnify about the aim point itself: what is under the glass is what the
+     glass enlarges, wherever the hand sweeps it - horizon, sky or water */
   const MAG = 2.6;
-  const oy0 = HORIZON + worldDY + 8;
   ctx.save();
   ctx.beginPath();
   ctx.arc(cx, cy, R - 7, 0, TAU);
   ctx.clip();
   ctx.translate(cx, cy);
   ctx.scale(MAG, MAG);
-  ctx.translate(-cx, -oy0);
+  ctx.translate(-cx, -cy);
   drawWorld(sim, worldDY, {
-    stageBoost: 1, maxBand: 3, fine: true,
-    map: { k: MAG, ox: cx * (1 - MAG), oy: cy - MAG * oy0, x0: cx - R - 2, x1: cx + R + 2 }
+    stageBoost: 1, maxBand: BANDS.length - 1, fine: true,
+    map: { k: MAG, ox: cx * (1 - MAG), oy: cy * (1 - MAG),
+           x0: cx - R - 2, x1: cx + R + 2, y0: cy - R - 2, y1: cy + R + 2 }
   });
   ctx.restore();
 
@@ -2654,6 +2712,15 @@ function initInput() {
     return { x: r.left + r.width * (720 / W), y: r.top + r.height * (838 / H), scale: r.width / W };
   };
   el.addEventListener('pointerdown', e => {
+    /* a mark on the water takes the click before the wheel does */
+    if (ui.mode === 'deck' && eggs.hits.length) {
+      const rct = el.getBoundingClientRect();
+      const mx = (e.clientX - rct.left) * W / rct.width;
+      const my = (e.clientY - rct.top) * H / rct.height;
+      for (const hh of eggs.hits) {
+        if (Math.hypot(mx - hh.x, my - hh.y) < hh.r + 10) { eggActivate(hh.key); return; }
+      }
+    }
     const c = wheelCenter();
     const dx = e.clientX - c.x, dy = e.clientY - c.y;
     const rr = Math.hypot(dx, dy) / c.scale;
@@ -2663,9 +2730,17 @@ function initInput() {
       lastAng = Math.atan2(dy, dx);
       el.classList.add('turning');
       el.setPointerCapture(e.pointerId);
+      firstOrder('steer');
     }
   });
   el.addEventListener('pointermove', e => {
+    /* the hand is always tracked: the spyglass sits where the mouse is */
+    const rr2 = el.getBoundingClientRect();
+    if (rr2.width > 0) {
+      aimLens((e.clientX - rr2.left) * W / rr2.width, (e.clientY - rr2.top) * H / rr2.height);
+      if (!dragging && ui.mode === 'deck') eggHover((e.clientX - rr2.left) * W / rr2.width,
+                                                    (e.clientY - rr2.top) * H / rr2.height, el);
+    }
     if (!dragging) return;
     const c = wheelCenter();
     const ang = Math.atan2(e.clientY - c.y, e.clientX - c.x);
@@ -2709,6 +2784,11 @@ function initInput() {
       showTab(['chart', 'index', 'log', 'register', 'colophon'][+e.key - 1]);
       e.preventDefault(); return;
     }
+    if (ui.mode === 'below' && ui.tab === 'chart' &&
+        (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '_' || e.key === '0')) {
+      chartKeyZoom(e.key);
+      e.preventDefault(); return;
+    }
     if (e.key === 'c' || e.key === 'C') {
       if (ui.mode === 'below') closeBelow(); else openBelow('chart');
       e.preventDefault(); return;
@@ -2718,6 +2798,11 @@ function initInput() {
     if (e.key === '/' && ui.mode === 'below') { const q = document.getElementById('search'); if (q) { q.focus(); q.select(); e.preventDefault(); } return; }
     if (ui.mode !== 'deck') return;              // below deck the helm is nobody's business
     if (e.key === 'a' || e.key === 'A') {
+      if (eggs.ready && !eggs.crossing && eggNm('city') < 0.9) {
+        crossTo('pixelcity',
+          'The anchor goes down off the nameless city. LAND HO - a boat pulls for the glittering quay.', 1900);
+        e.preventDefault(); return;
+      }
       const b = ship.bound;
       if (b && distToNm(b) < 0.6) dropAnchor(b);
       else captionNow('Too far off to let go. Bring her inside half a mile of the shore.', 3200);
@@ -2725,17 +2810,18 @@ function initInput() {
     }
     if (e.repeat) { keys[e.key] = true; return; }
     keys[e.key] = true;
-    if (e.key === 't' || e.key === 'T') setSail('travel');
-    else if (e.key === 'f' || e.key === 'F') setSail('full');
-    else if (e.key === 'h' || e.key === 'H') setSail('half');
-    else if (e.key === 'r' || e.key === 'R') setSail('rest');
+    if (e.key === 't' || e.key === 'T') { firstOrder('sail'); setSail('travel'); }
+    else if (e.key === 'f' || e.key === 'F') { firstOrder('sail'); setSail('full'); }
+    else if (e.key === 'h' || e.key === 'H') { firstOrder('sail'); setSail('half'); }
+    else if (e.key === 'r' || e.key === 'R') { firstOrder('sail'); setSail('rest'); }
     else if (e.key === 'd' || e.key === 'D') {
       env.hourTarget = env.hourTarget > 0.5 ? 0 : 1;
       captionNow(env.hourTarget > 0.5 ? 'The dog watch. Dusk falls on Document Service waters.'
         : 'The afternoon watch returns.');
       dirty = true;
     }
-    else if (e.key === ' ') { lens.raised = true; e.preventDefault(); dirty = true; }
+    else if (e.key === ' ') { firstOrder('glass'); lens.raised = true; e.preventDefault(); dirty = true; }
+    else if (lens.raised && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) e.preventDefault();
   });
   window.addEventListener('keyup', e => {
     if (typing(e)) return;
@@ -2745,11 +2831,24 @@ function initInput() {
 
   setInterval(() => {
     if (ui.mode !== 'deck') return;
+    if (lens.raised) {
+      /* while SPACE is held the arrows sweep the glass, not the helm:
+         a hand on the tube is not a hand on the wheel */
+      let ax = lens.ax, ay = lens.ay, swept = false;
+      if (keys.ArrowLeft) { ax -= 16; swept = true; }
+      if (keys.ArrowRight) { ax += 16; swept = true; }
+      if (keys.ArrowUp) { ay -= 13; swept = true; }
+      if (keys.ArrowDown) { ay += 13; swept = true; }
+      if (swept) aimLens(ax, ay);
+      return;
+    }
     if (keys.ArrowLeft) {
+      firstOrder('steer');
       ship.wheelAngle = clamp(ship.wheelAngle - 3.4, -170, 170);
       giveOrder(-1.05);
     }
     if (keys.ArrowRight) {
+      firstOrder('steer');
       ship.wheelAngle = clamp(ship.wheelAngle + 3.4, -170, 170);
       giveOrder(1.05);
     }
@@ -2778,6 +2877,10 @@ function frame(ts) {
 
   const lt = lens.raised ? 1 : 0;
   lens.t += clamp(lt - lens.t, -dt * 5, dt * 5);
+  /* the tube trails the hand: a heavy brass spyglass, not a cursor */
+  const lk = 1 - Math.exp(-dt * 6.5);
+  lens.x += (lens.ax - lens.x) * lk;
+  lens.y += (lens.ay - lens.y) * lk;
 
   if (ui.mode !== 'deck') {
     /* reading never competes with the sea: the plate stops, the sim holds */
@@ -2813,6 +2916,7 @@ function becalmFrame() {
   const sim = update(1 / 60);
   if (dirty) {
     lens.t = lens.raised ? 1 : 0;
+    lens.x = lens.ax; lens.y = lens.ay;   // becalmed: the tube answers instantly
     render(sim);
     updateLandfallPlate(sim);
     dirty = false;
@@ -2829,6 +2933,10 @@ window.__helm = {
     giveOrder(dir * 52);
   },
   raiseSpyglass(b) { lens.raised = !!b; if (REDUCED) { lens.t = b ? 1 : 0; } dirty = true; },
+  aimGlass(x, y) { aimLens(x, y); return { ax: lens.ax, ay: lens.ay, x: lens.x, y: lens.y }; },
+  eggs() { return eggState(); },
+  sailToEgg(key, nm) { return eggSailTo(key, nm); },
+  calm() { return { sail: ship.sail, knots: ship.knots, done: calm.done, taught: store.get('taught', false) }; },
   setHour(h) { env.hourTarget = h === 'dusk' ? 1 : 0; dirty = true; },
   snapHour(h) { env.hourTarget = h === 'dusk' ? 1 : 0; env.hourMix = env.hourTarget; dirty = true; },
   sail(s) { setSail(s, true); },
@@ -2891,7 +2999,7 @@ window.__helm = {
   logRows() { return visit.log.slice(); },
   writeRemark(i, text) { const inp = document.querySelector('textarea.remark[data-i="' + i + '"]');
     if (!inp) return false; inp.value = text; inp.dispatchEvent(new Event('input')); return true; },
-  clearVisit() { try { for (const k of ['log','charted','raised','hand','lamps','islets','watches','hours'])
+  clearVisit() { try { for (const k of ['log','charted','raised','hand','lamps','islets','watches','hours','taught'])
       window.localStorage.removeItem('carta.' + k); } catch (e) {} }
 };
 
@@ -2979,6 +3087,14 @@ function fixImg(src) {
   return src.charAt(0) === '/' ? src.slice(1) : src;             // /img/... -> img/...
 }
 
+/* a list item is either plain html or { html, blocks }: a step whose body
+   carries tables, nested lists or code. Stringifying the second shape was the
+   '[object Object]' blemish the sweep caught on 11 pages. */
+function liHTML(i) {
+  if (i == null) return '';
+  if (typeof i === 'string') return i;
+  return (i.html || '') + (i.blocks || []).map(renderBlockHTML).join('');
+}
 function renderBlockHTML(b) {
   switch (b.t) {
     case 'tldr': return '<div class="tldr"><span class="tag">In brief</span>' + b.html + '</div>';
@@ -2991,9 +3107,9 @@ function renderBlockHTML(b) {
       return '<figure><img loading="lazy" src="' + esc(src) + '" alt="' + esc(b.alt || '') + '">' +
         (b.caption ? '<figcaption>' + b.caption + '</figcaption>' : '') + '</figure>';
     }
-    case 'ul': return '<ul>' + (b.items || []).map(i => '<li>' + i + '</li>').join('') + '</ul>';
+    case 'ul': return '<ul>' + (b.items || []).map(i => '<li>' + liHTML(i) + '</li>').join('') + '</ul>';
     case 'ol': return '<ol' + (b.start && b.start !== 1 ? ' start="' + b.start + '"' : '') + '>' +
-      (b.items || []).map(i => '<li>' + i + '</li>').join('') + '</ol>';
+      (b.items || []).map(i => '<li>' + liHTML(i) + '</li>').join('') + '</ol>';
     case 'table': {
       const al = b.align || [];
       const head = '<tr>' + (b.head || []).map((h, i) =>
@@ -3149,6 +3265,16 @@ function shoresideHTML(isle) {
         (hands.length === 1 ? 'this name' : 'these names')) + '</button></div>';
   }
 
+  /* crossing (c): at the longest shore in the sea, a coastal path climbs
+     from the beach - the long way round begins at this anchorage */
+  if (eggs.ready && isle === eggs.pathIsle) {
+    out += '<div class="ss-block egg-path"><h4>Ashore</h4>' + PATH_SVG +
+      '<div class="ep-line">A coastal path climbs from this beach in long, unhurried zigzags; ' +
+      'from the cliff a walker waves, and a small dog waves harder. This is the longest shore in the sea &mdash; ' +
+      commas(isle.words) + ' fathoms of it &mdash; and the path goes on past the edge of the chart.</div>' +
+      '<button class="act" type="button" data-act="path">Follow the path</button></div>';
+  }
+
   /* the citations, as instant jumps */
   const cites = [];
   for (const [a, b] of world.graph.edges) if (a === isle.slug) cites.push(b);
@@ -3167,6 +3293,7 @@ function shoresideHTML(isle) {
 let landfallStart = 0;
 function openPage(isle, how) {
   if (!isle) return;
+  firstOrder('below');
   landfallStart = performance.now();
   ui.slug = isle.slug;
   ui.mode = 'anchor';
@@ -3299,6 +3426,14 @@ function renderLog() {
   const p = $('pane-log');
   const nLamp = visit.lamps.size, nIslet = visit.islets.size, nWatch = visit.watches.size;
   let h = '<div class="bscroll">';
+  /* crossing (e): once per visit a pressed specimen slips from between the
+     pages; after that it lies where it fell, at the head of the log */
+  if (!eggs.crossing || eggs.crossing === 'herbarium') {
+    h += '<div id="specimen" class="' + (eggs.specimenSlipped ? 'lain' : 'slipping') +
+      '" role="button" tabindex="0" aria-label="A pressed specimen">' + SPECIMEN_SVG +
+      '<span class="sp-line">A pressed specimen slips from between the pages &mdash; ' +
+      'no plant of this sea. Some other garden keeps its like.</span></div>';
+  }
   h += '<p class="bnote">A ship\'s log, kept noon to noon in six ruled columns. ' +
     'H is the hour of the voyage, K the knots made good, F the fathoms sounded at the landfall &mdash; ' +
     'and in this sea a fathom is a word, so F is the true length of the page you reached. ' +
@@ -3349,6 +3484,17 @@ function renderLog() {
   }
   h += '</div>';
   p.innerHTML = h;
+
+  const spec = document.getElementById('specimen');
+  if (spec) {
+    eggs.specimenSlipped = true;
+    const goHerb = () => crossTo('herbarium',
+      'You lift it by the stem. It wants pressing back into its own book.', 1500);
+    spec.addEventListener('click', goHerb);
+    spec.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goHerb(); }
+    });
+  }
 
   const sb = $('signbtn');
   if (sb) sb.addEventListener('click', () => {
@@ -3557,225 +3703,2562 @@ function renderColophon() {
 }
 
 /* ============================================================
-   THE CHART: the same sea, seen from above, complete from minute one
+   THE CHART: a treasure map of the surveyed sea.
+
+   Not a plot. A hand-drawn sheet of vellum in the same iron-gall register as
+   the sea on deck, on a bigger sheet:
+
+     - the 27 communities are LANDS. Their coastlines are not drawn by hand and
+       they are not circles: a scalar field is raised over the sheet, one soft
+       blob per page at the page's own position and sized by its word count,
+       and the coastline is the one-contour of that field, pulled out by
+       marching squares. Pages that lie together make one shore; a page that
+       lies apart makes its own rock. Capes reach out along the community's
+       strongest citation lanes, bays are carved where the community's own
+       members leave a gap in the ring, and the crag of the coast is the
+       community's impurity: a group of one mind keeps a smooth shore, a group
+       of several a ragged one.
+     - the 234 cited pages are PLACES on those lands - an anchorage at each
+       hub, forts where many cite, settlements where many hands worked, wells
+       where the page is short, coves elsewhere - with hill hachures where the
+       page is long and marsh ticks where it has gone untended.
+     - the 50 pages nothing cites are SEA BEASTS in the open water, one apiece,
+       each built from its own numbers, each with its name on a banderole.
+     - the furniture of a real chart: cartouche, compass rose with fleur-de-lys
+       and rhumb lines, a scale bar in words, sailing directions, the visit's
+       own track in dotted red with an X at every place read, sea stipple and
+       wave hatching, and a torn and scorched vellum edge.
+
+   Every mark on the sheet comes from graph.json, content.json, communities.json
+   or provenance.json. Nothing here is decoration invented for its own sake.
    ============================================================ */
-const chart = { cv: null, g: null, W: 1180, H: 740, k: 1, ox: 0, oy: 0, hover: null, marks: [] };
+
+const CHART_W = 1400, CHART_H = 810;
+const chart = {
+  cv: null, g: null, W: CHART_W, H: CHART_H, k: 1, ox: 0, oy: 0,
+  hover: null, marks: [], geo: null, sheet: null, dpr: 1, ready: false, dbl: false,
+  /* the reading glass over the sheet (owner order: the chart must be zoomable):
+     sheet px -> canvas px is  v = p * z + t  */
+  z: 1, tx: 0, ty: 0,
+  zt: 1, txt: 0, tyt: 0,
+  anim: 0, panned: false, gesturing: false,
+  zoomCv: null, zoomKey: '', crispT: 0, layoutView: null
+};
+const CHART_ZMIN = 1, CHART_ZMAX = 9;
+
+/* the sheet's own furniture, in sheet coordinates */
+const CART = { x: 34, y: 560, w: 372, h: 218 };          // the cartouche
+const KEYB = { x: 1002, y: 576, w: 366, h: 202 };        // the legend
+const DIRS = { x: 30, y: 34, w: 300, h: 176 };           // sailing directions
+const ROSE = { x: 1272, y: 146, r: 62 };                 // the compass rose
+const SCAL = { x: 500, y: 740, w: 336, h: 54 };
+const KEY_ROW_Y = 108, KEY_ROW_H = 16;   // the legend's rows, pinned so ink and letter agree          // the scale bar
+const FURN = [CART, KEYB, DIRS, SCAL,
+  { x: ROSE.x - ROSE.r - 30, y: ROSE.y - ROSE.r - 62, w: (ROSE.r + 30) * 2, h: ROSE.r * 2 + 92 }];
+
+const INK = 'rgba(38,28,17,';
+const RED = 'rgba(141,47,34,';
+const GRN = 'rgba(46,80,38,';
 
 function chartProject(x, y) { return [chart.ox + x * chart.k, chart.oy + y * chart.k]; }
+function angWrap(a) { a = (a + Math.PI) % TAU; if (a < 0) a += TAU; return a - Math.PI; }
 
-function drawChart() {
-  const cv = $('chart');
-  if (!chart.cv) {
-    chart.cv = cv;
-    const dpr = Math.min(Math.max(window.devicePixelRatio || 1, 1), 2);
-    cv.width = Math.round(chart.W * dpr);
-    cv.height = Math.round(chart.H * dpr);
-    cv.style.width = chart.W + 'px';
-    cv.style.height = chart.H + 'px';
-    chart.g = cv.getContext('2d');
-    chart.dpr = dpr;
-  }
-  const g = chart.g, dpr = chart.dpr;
-  g.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-  const B = world.bounds, pad = 46;
-  const sx = (chart.W - pad * 2) / (B.maxx - B.minx);
-  const sy = (chart.H - pad * 2) / (B.maxy - B.miny);
+function chartFit() {
+  const B = world.bounds, pad = 74;
+  const sx = (CHART_W - pad * 2) / (B.maxx - B.minx);
+  const sy = (CHART_H - pad * 2) / (B.maxy - B.miny);
   chart.k = Math.min(sx, sy);
-  chart.ox = pad + (chart.W - pad * 2 - (B.maxx - B.minx) * chart.k) / 2 - B.minx * chart.k;
-  chart.oy = pad + (chart.H - pad * 2 - (B.maxy - B.miny) * chart.k) / 2 - B.miny * chart.k;
+  chart.ox = CHART_W / 2 - (B.minx + B.maxx) / 2 * chart.k;
+  chart.oy = CHART_H / 2 - (B.miny + B.maxy) / 2 * chart.k;
+}
 
-  g.fillStyle = PAPER;
-  g.fillRect(0, 0, chart.W, chart.H);
-  if (bake.paper) { g.globalAlpha = 0.9; g.drawImage(bake.paper, 0, 0, chart.W, chart.H); g.globalAlpha = 1; }
+/* ---- the view, clamped so the sheet always fills the glass ---- */
+function chartClampView() {
+  chart.z = clamp(chart.z, CHART_ZMIN, CHART_ZMAX);
+  chart.tx = clamp(chart.tx, CHART_W * (1 - chart.z), 0);
+  chart.ty = clamp(chart.ty, CHART_H * (1 - chart.z), 0);
+}
+function chartClampTargets() {
+  chart.zt = clamp(chart.zt, CHART_ZMIN, CHART_ZMAX);
+  chart.txt = clamp(chart.txt, CHART_W * (1 - chart.zt), 0);
+  chart.tyt = clamp(chart.tyt, CHART_H * (1 - chart.zt), 0);
+}
+/* zoom the TARGET view about a canvas-space point, so the ground under the
+   hand stays under the hand */
+function chartZoomAbout(cx, cy, zNew) {
+  zNew = clamp(zNew, CHART_ZMIN, CHART_ZMAX);
+  const sx = (cx - chart.txt) / chart.zt, sy = (cy - chart.tyt) / chart.zt;
+  chart.zt = zNew;
+  chart.txt = cx - sx * zNew;
+  chart.tyt = cy - sy * zNew;
+  chartClampTargets();
+}
+function chartViewIdent() {
+  return chart.z < 1.0005 && Math.abs(chart.tx) < 0.05 && Math.abs(chart.ty) < 0.05;
+}
 
-  /* the rhumb network: every citation, in the portolan wind colours.
-     Black for the eight principal winds, green for the half-winds, red for the
-     quarter-winds, taken from each line's own true bearing. */
-  const cols = ['rgba(38,28,17,0.42)', 'rgba(46,80,38,0.42)', 'rgba(141,47,34,0.36)'];
-  const paths = [[], [], []];
-  for (const [a, b] of world.graph.edges) {
-    const A = world.bySlug.get(a), Bo = world.bySlug.get(b);
-    if (!A || !Bo) continue;
-    const deg = Math.atan2(Bo.pos.x - A.pos.x, Bo.pos.y - A.pos.y) * 180 / Math.PI;
-    paths[pointClass(deg)].push([A, Bo]);
-  }
-  g.lineWidth = 0.65;
-  for (let c = 0; c < 3; c++) {
-    g.strokeStyle = cols[c];
-    g.beginPath();
-    for (const [A, Bo] of paths[c]) {
-      const p = chartProject(A.pos.x, A.pos.y), q = chartProject(Bo.pos.x, Bo.pos.y);
-      g.moveTo(p[0], p[1]); g.lineTo(q[0], q[1]);
+/* ---------------- small draughtsman's tools ---------------- */
+
+/* seeded value noise, bilinear with a smoothstep: the crag of a coast */
+function makeNoise(tag, cell) {
+  const rnd = rngFor(tag);
+  const gw = Math.ceil(CHART_W / cell) + 3, gh = Math.ceil(CHART_H / cell) + 3;
+  const v = new Float32Array(gw * gh);
+  for (let i = 0; i < v.length; i++) v[i] = rnd() * 2 - 1;
+  return function (x, y) {
+    const fx = x / cell + 1, fy = y / cell + 1;
+    let i0 = fx | 0, j0 = fy | 0;
+    if (i0 < 0) i0 = 0; if (j0 < 0) j0 = 0;
+    if (i0 > gw - 2) i0 = gw - 2; if (j0 > gh - 2) j0 = gh - 2;
+    const tx = fx - i0, ty = fy - j0;
+    const sx = tx * tx * (3 - 2 * tx), sy = ty * ty * (3 - 2 * ty);
+    const r0 = j0 * gw + i0, r1 = r0 + gw;
+    const a = v[r0] + (v[r0 + 1] - v[r0]) * sx;
+    const b = v[r1] + (v[r1 + 1] - v[r1]) * sx;
+    return a + (b - a) * sy;
+  };
+}
+
+/* a path laid through points with quadratic midpoints: no polygon corners */
+function pathThrough(g, pts, close) {
+  const n = pts.length;
+  if (n < 2) return;
+  if (close) {
+    const mx = (pts[n - 1][0] + pts[0][0]) / 2, my = (pts[n - 1][1] + pts[0][1]) / 2;
+    g.moveTo(mx, my);
+    for (let i = 0; i < n; i++) {
+      const a = pts[i], b = pts[(i + 1) % n];
+      g.quadraticCurveTo(a[0], a[1], (a[0] + b[0]) / 2, (a[1] + b[1]) / 2);
     }
+    g.closePath();
+  } else {
+    g.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < n - 1; i++) {
+      const a = pts[i], b = pts[i + 1];
+      g.quadraticCurveTo(a[0], a[1], (a[0] + b[0]) / 2, (a[1] + b[1]) / 2);
+    }
+    g.lineTo(pts[n - 1][0], pts[n - 1][1]);
+  }
+}
+
+/* the woodcut register: fill a closed shape with parallel burin lines */
+function hatchShape(g, pts, ang, gap, col, lw, jit) {
+  g.save();
+  g.beginPath(); pathThrough(g, pts, true); g.clip();
+  let minx = 1e9, maxx = -1e9, miny = 1e9, maxy = -1e9;
+  for (const p of pts) {
+    if (p[0] < minx) minx = p[0]; if (p[0] > maxx) maxx = p[0];
+    if (p[1] < miny) miny = p[1]; if (p[1] > maxy) maxy = p[1];
+  }
+  const cx = (minx + maxx) / 2, cy = (miny + maxy) / 2;
+  const R = Math.hypot(maxx - minx, maxy - miny) / 2 + 3;
+  const ca = Math.cos(ang), sa = Math.sin(ang);
+  g.strokeStyle = col; g.lineWidth = lw || 0.55;
+  g.beginPath();
+  for (let d = -R; d <= R; d += gap) {
+    const j = jit ? (Math.sin(d * 1.7) * 0.35) : 0;
+    const ox = cx + (-sa) * (d + j), oy = cy + ca * (d + j);
+    g.moveTo(ox - ca * R, oy - sa * R);
+    g.lineTo(ox + ca * R, oy + sa * R);
+  }
+  g.stroke();
+  g.restore();
+}
+
+/* an inked line with a hand in it: two passes, the second lighter and offset */
+function inkStroke(g, pts, close, w, col, col2) {
+  g.beginPath(); pathThrough(g, pts, close);
+  g.strokeStyle = col; g.lineWidth = w; g.lineJoin = 'round'; g.lineCap = 'round';
+  g.stroke();
+  if (col2) {
+    g.save(); g.translate(0.55, 0.55);
+    g.beginPath(); pathThrough(g, pts, close);
+    g.strokeStyle = col2; g.lineWidth = w * 0.6;
+    g.stroke();
+    g.restore();
+  }
+}
+
+function polyArea(p) {
+  let a = 0;
+  for (let i = 0, n = p.length; i < n; i++) {
+    const q = p[(i + 1) % n];
+    a += p[i][0] * q[1] - q[0] * p[i][1];
+  }
+  return a / 2;
+}
+function polyBBox(p) {
+  let minx = 1e9, maxx = -1e9, miny = 1e9, maxy = -1e9;
+  for (const q of p) {
+    if (q[0] < minx) minx = q[0]; if (q[0] > maxx) maxx = q[0];
+    if (q[1] < miny) miny = q[1]; if (q[1] > maxy) maxy = q[1];
+  }
+  return { minx, maxx, miny, maxy };
+}
+function pointInPoly(x, y, p, bb) {
+  if (bb && (x < bb.minx || x > bb.maxx || y < bb.miny || y > bb.maxy)) return false;
+  let inside = false;
+  for (let i = 0, j = p.length - 1; i < p.length; j = i++) {
+    const xi = p[i][0], yi = p[i][1], xj = p[j][0], yj = p[j][1];
+    if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) inside = !inside;
+  }
+  return inside;
+}
+function decimate(pts, minD, close) {
+  const out = [pts[0]];
+  const m2 = minD * minD;
+  for (let i = 1; i < pts.length; i++) {
+    const l = out[out.length - 1];
+    const dx = pts[i][0] - l[0], dy = pts[i][1] - l[1];
+    if (dx * dx + dy * dy >= m2) out.push(pts[i]);
+  }
+  if (close && out.length > 2) {
+    const a = out[0], b = out[out.length - 1];
+    if ((a[0] - b[0]) * (a[0] - b[0]) + (a[1] - b[1]) * (a[1] - b[1]) < m2) out.pop();
+  }
+  return out.length >= 3 ? out : pts;
+}
+function chaikin(pts, iters) {
+  let p = pts;
+  for (let it = 0; it < iters; it++) {
+    const q = [], n = p.length;
+    for (let i = 0; i < n; i++) {
+      const a = p[i], b = p[(i + 1) % n];
+      q.push([a[0] * 0.74 + b[0] * 0.26, a[1] * 0.74 + b[1] * 0.26]);
+      q.push([a[0] * 0.26 + b[0] * 0.74, a[1] * 0.26 + b[1] * 0.74]);
+    }
+    p = q;
+  }
+  return p;
+}
+
+/* ---------------- marching squares over the land field ---------------- */
+function marchLand(F, gw, gh, T, CELL) {
+  const V0 = gw * gh;
+  const segA = [], segB = [];
+  const px = new Map();
+  function hx(i, j) {
+    const k = j * gw + i;
+    if (!px.has(k)) {
+      const a = F[j * gw + i], b = F[j * gw + i + 1];
+      const t = (T - a) / (b - a);
+      px.set(k, [(i + t) * CELL, j * CELL]);
+    }
+    return k;
+  }
+  function vx(i, j) {
+    const k = V0 + j * gw + i;
+    if (!px.has(k)) {
+      const a = F[j * gw + i], b = F[(j + 1) * gw + i];
+      const t = (T - a) / (b - a);
+      px.set(k, [i * CELL, (j + t) * CELL]);
+    }
+    return k;
+  }
+  for (let j = 0; j < gh - 1; j++) {
+    for (let i = 0; i < gw - 1; i++) {
+      const f00 = F[j * gw + i], f10 = F[j * gw + i + 1],
+        f11 = F[(j + 1) * gw + i + 1], f01 = F[(j + 1) * gw + i];
+      let c = 0;
+      if (f00 >= T) c |= 1;
+      if (f10 >= T) c |= 2;
+      if (f11 >= T) c |= 4;
+      if (f01 >= T) c |= 8;
+      if (c === 0 || c === 15) continue;
+      switch (c) {
+        case 1: case 14: segA.push(vx(i, j)); segB.push(hx(i, j)); break;
+        case 2: case 13: segA.push(hx(i, j)); segB.push(vx(i + 1, j)); break;
+        case 3: case 12: segA.push(vx(i, j)); segB.push(vx(i + 1, j)); break;
+        case 4: case 11: segA.push(vx(i + 1, j)); segB.push(hx(i, j + 1)); break;
+        case 6: case 9: segA.push(hx(i, j)); segB.push(hx(i, j + 1)); break;
+        case 7: case 8: segA.push(vx(i, j)); segB.push(hx(i, j + 1)); break;
+        case 5: {
+          if ((f00 + f10 + f11 + f01) / 4 >= T) {
+            segA.push(vx(i, j)); segB.push(hx(i, j + 1));
+            segA.push(hx(i, j)); segB.push(vx(i + 1, j));
+          } else {
+            segA.push(vx(i, j)); segB.push(hx(i, j));
+            segA.push(vx(i + 1, j)); segB.push(hx(i, j + 1));
+          }
+          break;
+        }
+        case 10: {
+          if ((f00 + f10 + f11 + f01) / 4 >= T) {
+            segA.push(vx(i, j)); segB.push(hx(i, j));
+            segA.push(vx(i + 1, j)); segB.push(hx(i, j + 1));
+          } else {
+            segA.push(vx(i, j)); segB.push(hx(i, j + 1));
+            segA.push(hx(i, j)); segB.push(vx(i + 1, j));
+          }
+          break;
+        }
+      }
+    }
+  }
+  const adj = new Map();
+  for (let s = 0; s < segA.length; s++) {
+    let l = adj.get(segA[s]); if (!l) adj.set(segA[s], l = []); l.push(s);
+    l = adj.get(segB[s]); if (!l) adj.set(segB[s], l = []); l.push(s);
+  }
+  const used = new Uint8Array(segA.length);
+  const rings = [];
+  for (let s0 = 0; s0 < segA.length; s0++) {
+    if (used[s0]) continue;
+    used[s0] = 1;
+    const ring = [px.get(segA[s0]), px.get(segB[s0])];
+    const start = segA[s0];
+    let cur = segB[s0];
+    for (let guard = 0; guard < 60000; guard++) {
+      const list = adj.get(cur);
+      let nxt = -1;
+      if (list) for (const s of list) if (!used[s]) { nxt = s; break; }
+      if (nxt < 0) break;
+      used[nxt] = 1;
+      const other = segA[nxt] === cur ? segB[nxt] : segA[nxt];
+      cur = other;
+      if (cur === start) break;
+      ring.push(px.get(other));
+    }
+    if (ring.length >= 9) rings.push(ring);
+  }
+  return rings;
+}
+
+/* ============================================================
+   THE SURVEY: everything on the sheet, derived once
+   ============================================================ */
+function buildChartGeo() {
+  if (chart.geo) return chart.geo;
+  const t0 = performance.now();
+  chartFit();
+  const P = (x, y) => [chart.ox + x * chart.k, chart.oy + y * chart.k];
+  const geo = { lands: [], rings: [], places: [], beasts: [], rocks: [], lanes: [], t: 0 };
+
+  /* --- who is land and who is monster --- */
+  const drowned = new Set(world.uncited.map(i => i.slug));
+  const places = [], beastIsles = [];
+  for (const I of world.islands) (drowned.has(I.slug) ? beastIsles : places).push(I);
+
+  /* --- how untended is untended: the corpus's own last-touched dates --- */
+  const days = s => { const d = Date.parse(s + 'T00:00:00Z'); return isNaN(d) ? 0 : d / 86400000; };
+  let newest = 0;
+  for (const I of world.islands) newest = Math.max(newest, days(I.last));
+  const stale = world.islands.map(I => newest - days(I.last)).sort((a, b) => a - b);
+  const STALE_CUT = stale[Math.floor(stale.length * 0.80)] || 400;
+  const inb = world.islands.map(i => i.inbound).sort((a, b) => a - b);
+  const INB_FORT = Math.max(6, inb[Math.floor(inb.length * 0.90)]);
+
+  /* --- the character of each coast, from the community it belongs to --- */
+  const minSepPx = 0.95 / world.nmPerUnit * chart.k;
+  const A27 = world.archipelagos.map(A => {
+    const p = P(A.x, A.y);
+    const rnd = rngFor('coast:' + A.i + ':' + A.hub);
+    return {
+      i: A.i, x: p[0], y: p[1], name: A.name, size: A.size, purity: A.purity,
+      hub: A.hub, members: A.members,
+      rpx: A.r * chart.k,
+      /* a community of one mind keeps a smooth shore; a mixed one a ragged */
+      rug: 0.42 + 1.45 * (1 - A.purity),
+      m1: 3 + (A.size % 5), ph1: rnd() * TAU,
+      m2: 7 + (A.size % 6), ph2: rnd() * TAU,
+      capes: [], rnd
+    };
+  });
+  /* the capes reach out along the strongest citation lanes leaving the land */
+  const byComm = new Map();
+  for (const L of world.lanes) {
+    if (!L.w) continue;
+    for (const [a, b] of [[L.i, L.j], [L.j, L.i]]) {
+      if (a == null || b == null) continue;
+      let l = byComm.get(a); if (!l) byComm.set(a, l = []); l.push({ to: b, w: L.w });
+    }
+  }
+  for (const A of A27) {
+    const ls = (byComm.get(A.i) || []).sort((a, b) => b.w - a.w).slice(0, 3);
+    ls.forEach((L, n) => {
+      const B = A27[L.to]; if (!B) return;
+      const th = Math.atan2(B.y - A.y, B.x - A.x);
+      A.capes.push({ th, w: L.w, spit: n === 2 });
+    });
+  }
+
+  /* ============ the land field ============ */
+  const CELL = 2;
+  const gw = Math.floor(CHART_W / CELL) + 1, gh = Math.floor(CHART_H / CELL) + 1;
+  const F = new Float32Array(gw * gh);
+  const OWN = new Int16Array(gw * gh); OWN.fill(-1);
+  const BEST = new Float32Array(gw * gh);
+  const BLOB = minSepPx * 2.46;
+  const AMP = 1.95;
+  /* a community of three or four does not make a continent: her ground is
+     drawn tighter, so her pages stand off each other as a little archipelago,
+     while a community of fifty makes one long shore */
+  const groundOf = n => n >= 12 ? 1 : n >= 8 ? 0.93 : n >= 5 ? 0.82 : 0.68;
+
+  function splat(px, py, rad, amp, comm) {
+    const i0 = Math.max(0, Math.floor((px - rad) / CELL)), i1 = Math.min(gw - 1, Math.ceil((px + rad) / CELL));
+    const j0 = Math.max(0, Math.floor((py - rad) / CELL)), j1 = Math.min(gh - 1, Math.ceil((py + rad) / CELL));
+    const inv = 1 / (rad * rad);
+    for (let j = j0; j <= j1; j++) {
+      const dy = j * CELL - py, row = j * gw;
+      for (let i = i0; i <= i1; i++) {
+        const dx = i * CELL - px;
+        const d2 = (dx * dx + dy * dy) * inv;
+        if (d2 >= 1) continue;
+        const u = 1 - d2, c = amp * u * u;
+        const k = row + i;
+        F[k] += c;
+        if (comm >= 0 && c > BEST[k]) { BEST[k] = c; OWN[k] = comm; }
+      }
+    }
+  }
+
+  for (const I of places) {
+    const p = P(I.pos.x, I.pos.y);
+    I.cx = p[0]; I.cy = p[1];
+    /* a page's ground is its word count: the Document Service island is 1.00 */
+    const rad = BLOB * (0.78 + 0.62 * (I.mag - 0.44) / 1.41) *
+      (I.comm < 0 ? 0.52 : groundOf(world.archipelagos[I.comm].size));
+    I.landRad = rad;
+    splat(p[0], p[1], rad, AMP, I.comm >= 0 ? I.comm : -1);
+  }
+
+  /* capes, spits and bays: chains of blobs laid on the community's own bearings */
+  for (const A of A27) {
+    if (A.size < 5) continue;
+    const R = Math.max(A.rpx, minSepPx * 1.2);
+    const gr = groundOf(A.size);
+    for (const C of A.capes) {
+      const reach = C.spit ? R * 0.95 + 34 : R * 0.40 + 26;
+      const n = C.spit ? 6 : 4;
+      for (let s = 1; s <= n; s++) {
+        const t = s / n;
+        const d = R * 0.80 + reach * t;
+        const w = (C.spit ? BLOB * 0.44 * (1.05 - t * 0.62) : BLOB * (0.86 - t * 0.46)) * gr;
+        splat(A.x + Math.cos(C.th) * d, A.y + Math.sin(C.th) * d, w, AMP * 0.94, A.i);
+      }
+    }
+    /* bays: where the community's own members leave the ring thin, the sea gets in */
+    const bins = new Array(18).fill(0);
+    for (const m of A.members) {
+      const I = world.bySlug.get(m);
+      if (!I || drowned.has(m)) continue;
+      const th = Math.atan2(I.cy - A.y, I.cx - A.x);
+      const r = Math.hypot(I.cx - A.x, I.cy - A.y);
+      bins[Math.floor((angWrap(th) + Math.PI) / TAU * 18) % 18] += r / (R + 1);
+    }
+    const order = bins.map((v, n) => ({ v, n })).sort((a, b) => a.v - b.v);
+    const nBays = A.size >= 18 ? 3 : 2;
+    for (let b = 0; b < nBays; b++) {
+      const th = (order[b].n + 0.5) / 18 * TAU - Math.PI;
+      const d = R * 0.90;
+      splat(A.x + Math.cos(th) * d, A.y + Math.sin(th) * d,
+        BLOB * (1.15 + 0.55 * A.rnd()) * groundOf(A.size), -AMP * 0.70, -1);
+    }
+  }
+
+  /* ============ the crag: a few pixels of hand on the coastal band ============ */
+  const n1 = makeNoise('crag1', 34), n2 = makeNoise('crag2', 16), n3 = makeNoise('crag3', 7);
+  for (let j = 0; j < gh; j++) {
+    const row = j * gw, y = j * CELL;
+    for (let i = 0; i < gw; i++) {
+      const k = row + i, f = F[k];
+      if (f < 0.22 || f > 2.3) continue;
+      const w = Math.min(1, (f - 0.22) / 0.35) * Math.max(0, 1 - Math.max(0, f - 1.05) / 1.1);
+      if (w <= 0.01) continue;
+      const x = i * CELL;
+      const c = OWN[k];
+      const A = c >= 0 ? A27[c] : null;
+      let d = (n1(x, y) * 0.60 + n2(x, y) * 0.44 + n3(x, y) * 0.34) * (A ? A.rug : 0.7);
+      if (A) {
+        const th = Math.atan2(y - A.y, x - A.x);
+        d += 0.21 * Math.sin(A.m1 * th + A.ph1) + 0.13 * Math.sin(A.m2 * th + A.ph2);
+      }
+      F[k] = f + d * w;
+    }
+  }
+
+  /* ============ the coastlines ============ */
+  const raw = marchLand(F, gw, gh, 1.0, CELL);
+  const rings = [];
+  for (let r of raw) {
+    if (r.length < 10) continue;
+    let p = decimate(r, 4.4, true);
+    if (p.length < 5) continue;
+    p = chaikin(p, 2);
+    p = decimate(p, 2.4, true);
+    const a = Math.abs(polyArea(p));
+    if (a < 26) continue;
+    /* the hand: a slow wobble along the coast, baked in so fill and ink agree */
+    const rnd = rngFor('hand:' + Math.round(p[0][0]) + ':' + Math.round(p[0][1]));
+    const ph = rnd() * TAU;
+    for (let i = 0; i < p.length; i++) {
+      const q = p[i], nx = p[(i + 1) % p.length], pv = p[(i - 1 + p.length) % p.length];
+      let tx = nx[0] - pv[0], ty = nx[1] - pv[1];
+      const m = Math.hypot(tx, ty) || 1;
+      const o = 0.62 * Math.sin(i * 0.44 + ph) + 0.30 * Math.sin(i * 1.31 + ph * 2);
+      p[i] = [q[0] + (-ty / m) * o, q[1] + (tx / m) * o];
+    }
+    rings.push({ pts: p, area: a, bb: polyBBox(p), places: [], comm: -1 });
+  }
+  geo.rings = rings;
+
+  /* which land is which: the places a ring holds name it */
+  for (const I of places) {
+    let host = null;
+    for (const R of rings) {
+      if (!pointInPoly(I.cx, I.cy, R.pts, R.bb)) continue;
+      if (!host || R.area < host.area) host = R;     // the smallest ring holding it
+    }
+    if (host) { host.places.push(I); I.ring = host; }
+    else { geo.rocks.push(I); }
+  }
+  /* Naming. A land is not always one community and a community is not always
+     one land: two neighbouring groups may share a coast, and a loose group may
+     lie in three pieces. So the sheet letters GROUPS - a community's places on
+     one ring - which is what a chart actually names. The largest group of a
+     community carries her name; her lesser grounds are lettered from their own
+     principal page, Isle or Cay or Rock by their size; and a community broken
+     over three grounds or more gets her name set wide across the whole water,
+     as an archipelago. */
+  for (const R of rings) {
+    if (!R.places.length) { R.kind = 'rock'; continue; }
+    R.kind = 'land';
+    const c = polyCentroid(R.pts);
+    R.cx = c[0]; R.cy = c[1];
+  }
+  const groups = [];
+  for (const R of rings) {
+    if (!R.places.length) continue;
+    const by = new Map();
+    for (const I of R.places) {
+      const c = I.comm >= 0 ? I.comm : (I.nearComm != null ? I.nearComm : -1);
+      let l = by.get(c); if (!l) by.set(c, l = []); l.push(I);
+    }
+    for (const [c, list] of by) {
+      if (c < 0) continue;
+      let sx = 0, sy = 0;
+      for (const I of list) { sx += I.cx; sy += I.cy; }
+      groups.push({ comm: c, ring: R, places: list, n: list.length, x: sx / list.length, y: sy / list.length });
+    }
+  }
+  const byComm2 = new Map();
+  for (const G of groups) { let l = byComm2.get(G.comm); if (!l) byComm2.set(G.comm, l = []); l.push(G); }
+  geo.regions = [];
+  for (const [c, list] of byComm2) {
+    list.sort((a2, b2) => b2.n - a2.n);
+    list[0].name = A27[c].name;
+    list[0].primary = true;
+    for (let n = 1; n < list.length; n++) {
+      const G = list[n];
+      if (G.n < 2) continue;                       // one page alone keeps only its own name
+      G.chief = G.places.slice().sort((p, q) =>
+        (q.inbound * 4 + q.words / 300) - (p.inbound * 4 + p.words / 300))[0];
+      G.name = G.chief.sidebarLabel;
+      G.satellite = true;
+      G.suffix = G.ring.area < 420 ? 'Rock' : (G.ring.area < 1800 ? 'Cay' : 'Isle');
+    }
+    for (const G of list) if (G.name) geo.regions.push(G);
+    const grounds = list.filter(G => G.n >= 2).length;
+    if (grounds >= 3) {
+      let sx = 0, sy = 0, sw = 0;
+      for (const G of list) { sx += G.x * G.n; sy += G.y * G.n; sw += G.n; }
+      geo.lands.push({ arch: true, comm: c, name: A27[c].name, x: sx / sw, y: sy / sw, n: grounds });
+      list[0].name = list[0].chief ? list[0].chief.sidebarLabel : list[0].name;
+    }
+  }
+  /* the hub of a community's chief ground is the place her name is anchored to */
+  for (const G of geo.regions) {
+    G.hub = G.places.find(I => I.slug === A27[G.comm].hub) || null;
+    G.chief = G.chief || G.places.slice().sort((p, q) =>
+      (q.inbound * 4 + q.words / 300) - (p.inbound * 4 + p.words / 300))[0];
+    const bb = polyBBox(G.places.map(I => [I.cx, I.cy]));
+    G.bb = bb;
+    G.wide = Math.max(26, bb.maxx - bb.minx);
+  }
+
+  geo.A27 = A27;
+  geo.groups = groups;
+
+  /* ============ the places: what each page is, on the ground ============ */
+  for (const I of places) {
+    const rnd = rngFor('place:' + I.slug);
+    const A = I.comm >= 0 ? A27[I.comm] : null;
+    const isHub = A && A.hub === I.slug;
+    const staleDays = newest - days(I.last);
+    const sz = 3.1 + 4.4 * (I.mag - 0.44) / 1.41;
+    let kind;
+    if (isHub) kind = 'anchorage';
+    else if (I.inbound >= INB_FORT) kind = 'fort';
+    else if (I.authors.length >= 4) kind = 'town';
+    else if (I.code >= 14) kind = 'quarry';
+    else if (I.words <= 260) kind = 'well';
+    else kind = 'cove';
+    geo.places.push(I);
+    I.mark = {
+      kind, sz,
+      hill: I.words >= 1550 ? clamp(I.nH2 || 1, 1, 3) : 0,
+      hillH: 5.0 + 7.6 * Math.min(1, (I.words - 1550) / 4200),
+      marsh: staleDays >= STALE_CUT && I.words < 900,
+      houses: clamp(I.authors.length - 2, 2, 5),
+      spin: rnd() * TAU,
+      score: I.inbound * 4 + I.words / 320 + (isHub ? 60 : 0) + (kind === 'fort' ? 14 : 0)
+    };
+  }
+
+  /* ============ the deep, and what lives in it ============ */
+  layoutBeasts(geo, beastIsles, F, gw, gh, CELL);
+
+  /* ============ the sailing routes: the citation flow between lands ============ */
+  const lanes = world.lanes.filter(L => L.w > 0).sort((a, b) => b.w - a.w).slice(0, 20);
+  for (const L of lanes) {
+    const A = A27[L.i], B = A27[L.j];
+    if (!A || !B) continue;
+    geo.lanes.push({ ax: A.x, ay: A.y, bx: B.x, by: B.y, w: L.w, net: L.net });
+  }
+
+  /* what the pointer can take hold of: every one of the 290 */
+  chart.marks.length = 0;
+  for (const I of geo.places) chart.marks.push({ isle: I, x: I.cx, y: I.cy, r: Math.max(6.5, I.mark.sz * 1.9) });
+  for (const B of geo.beasts) chart.marks.push({ isle: B.isle, x: B.x, y: B.y, r: B.L * 0.36 });
+
+  geo.field = F; geo.gw = gw; geo.gh = gh; geo.cell = CELL;
+  geo.stats = { newest, STALE_CUT, INB_FORT, nPlace: places.length, nBeast: beastIsles.length };
+  geo.t = performance.now() - t0;
+  chart.geo = geo;
+  return geo;
+}
+
+function polyCentroid(p) {
+  let a = 0, cx = 0, cy = 0;
+  for (let i = 0, n = p.length; i < n; i++) {
+    const q = p[(i + 1) % n];
+    const f = p[i][0] * q[1] - q[0] * p[i][1];
+    a += f; cx += (p[i][0] + q[0]) * f; cy += (p[i][1] + q[1]) * f;
+  }
+  a *= 0.5;
+  if (Math.abs(a) < 1e-6) return [p[0][0], p[0][1]];
+  return [cx / (6 * a), cy / (6 * a)];
+}
+
+/* ============================================================
+   HERE BE DRAGONS
+   The 50 pages nothing cites are not dots on an edge: each is a beast in the
+   open water, and the beast is the page. What it becomes is the thing it has
+   the most of - bulk for words, arms for the pages it reaches out to, coils
+   for its commits, horns and spines for its sections and its code - and every
+   number it has goes into the drawing: coils from commits, eyes from night
+   edits, bulk from word count, scales from code blocks, fins from the hands
+   that kept it. No two are the same drawing.
+   ============================================================ */
+const BEAST_KINDS = ['cete', 'kraken', 'serpent', 'hornfish'];
+
+function layoutBeasts(geo, isles, F, gw, gh, CELL) {
+  if (!isles.length) return;
+  const metric = [
+    I => I.words,
+    I => I.outbound,
+    I => I.commits,
+    I => I.code + I.nH2 * 1.7
+  ];
+  const pct = metric.map(m => {
+    const v = isles.map(m).sort((a, b) => a - b);
+    return x => {
+      let lo = 0, hi = v.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (v[mid] < x) lo = mid + 1; else hi = mid; }
+      return lo / Math.max(1, v.length - 1);
+    };
+  });
+  const wmin = Math.min(...isles.map(I => I.words)), wmax = Math.max(...isles.map(I => I.words));
+
+  const list = isles.map(I => {
+    const rnd = rngFor('beast:' + I.slug);
+    let bi = 0, bv = -1;
+    for (let m = 0; m < 4; m++) {
+      const v = pct[m](metric[m](I)) + rnd() * 0.07;
+      if (v > bv) { bv = v; bi = m; }
+    }
+    /* Her bulk is her word count, and the corpus is steeply skewed: one page of
+       four thousand words, a dozen of a thousand, thirty of three hundred. The
+       sea gets the same shape - a few great beasts and a scatter of small fry -
+       rather than fifty of a size. */
+    const t = (I.words - wmin) / Math.max(1, wmax - wmin);
+    const L = 33 + 106 * Math.pow(t, 0.70);
+    return {
+      isle: I, kind: BEAST_KINDS[bi], L, rnd,
+      coils: clamp(Math.round(I.commits * 0.8) + 2, 3, 9),
+      arms: clamp(I.outbound + 4, 5, 11),
+      eyes: clamp(1 + I.night, 1, 4),
+      night: I.night, spines: clamp(I.nH2, 1, 6),
+      scales: clamp(Math.round(I.code / 2) + 2, 2, 9),
+      fins: clamp(I.authors.length, 1, 4),
+      hands: I.authors.length,
+      name: shortName(I),
+      /* her proportion is her own: a page of many sections runs long and low,
+         a page of few runs deep and short */
+      asp: clamp(1.22 - 0.055 * (I.nH2 || 1) + (rnd() - 0.5) * 0.20, 0.78, 1.28),
+      /* the clearance she wants, and the water she takes */
+      R: 0, x: 0, y: 0, flip: 1
+    };
+  }).sort((a, b) => b.L - a.L);
+  /* the water each wants is her own shape: a cete's spout stands half her
+     length above her, a kraken's arms hang half a length below */
+  const reach = { cete: 0.50, kraken: 0.52, serpent: 0.42, hornfish: 0.42 };
+  for (const B of list) B.R = B.L * reach[B.kind] + 12;
+
+  /* ---- the water: everything the land and the furniture do not hold ---- */
+  const GC = 7;
+  const cw = Math.ceil(CHART_W / GC), ch = Math.ceil(CHART_H / GC);
+  const DT = new Float32Array(cw * ch);
+  const BIG = 1e6;
+  for (let j = 0; j < ch; j++) for (let i = 0; i < cw; i++) {
+    const x = i * GC + GC / 2, y = j * GC + GC / 2;
+    const fi = Math.min(gw - 1, Math.round(x / CELL)), fj = Math.min(gh - 1, Math.round(y / CELL));
+    let solid = F[fj * gw + fi] >= 0.80;
+    if (!solid) for (const R of FURN) {
+      if (x > R.x - 12 && x < R.x + R.w + 12 && y > R.y - 12 && y < R.y + R.h + 12) { solid = true; break; }
+    }
+    if (!solid && (x < 34 || x > CHART_W - 34 || y < 30 || y > CHART_H - 30)) solid = true;
+    DT[j * cw + i] = solid ? 0 : BIG;
+  }
+  /* chamfer distance transform, in pixels */
+  const d1 = GC, d2 = GC * 1.4142;
+  for (let j = 0; j < ch; j++) for (let i = 0; i < cw; i++) {
+    const k = j * cw + i; let v = DT[k];
+    if (j > 0) { v = Math.min(v, DT[k - cw] + d1); if (i > 0) v = Math.min(v, DT[k - cw - 1] + d2); if (i < cw - 1) v = Math.min(v, DT[k - cw + 1] + d2); }
+    if (i > 0) v = Math.min(v, DT[k - 1] + d1);
+    DT[k] = v;
+  }
+  for (let j = ch - 1; j >= 0; j--) for (let i = cw - 1; i >= 0; i--) {
+    const k = j * cw + i; let v = DT[k];
+    if (j < ch - 1) { v = Math.min(v, DT[k + cw] + d1); if (i > 0) v = Math.min(v, DT[k + cw - 1] + d2); if (i < cw - 1) v = Math.min(v, DT[k + cw + 1] + d2); }
+    if (i < cw - 1) v = Math.min(v, DT[k + 1] + d1);
+    DT[k] = v;
+  }
+
+  const cand = [];
+  for (let j = 0; j < ch; j++) for (let i = 0; i < cw; i++) {
+    const d = DT[j * cw + i];
+    if (d >= 21 && d < BIG) cand.push({ x: i * GC + GC / 2, y: j * GC + GC / 2, d });
+  }
+
+  const placed = [];
+  const CX = CHART_W / 2, CY = CHART_H / 2;
+  /* Fifty beasts all steering for the same quarter would make a menagerie, not
+     a sea. They keep the order of the shores they belong to - so a land's own
+     castaways stay together - but that order is opened out around the whole
+     compass, and they take the outer water and the inner water by turns. */
+  const circle = list.map(B => {
+    const p = chartProject(B.isle.pos.x, B.isle.pos.y);
+    return { B, th: Math.atan2(p[1] - CY, p[0] - CX) };
+  }).sort((a, b) => a.th - b.th);
+  /* even in angle is not even on a sheet wider than it is tall: the fifty are
+     spread by the length of the ellipse they ride, so the flanks do not crowd */
+  const RX = 690, RY = 408, NS = 720;
+  const arc = [0];
+  for (let i = 1; i <= NS; i++) {
+    const a0 = (i - 1) / NS * TAU - Math.PI, a1 = i / NS * TAU - Math.PI;
+    arc.push(arc[i - 1] + Math.hypot(RX * (Math.cos(a1) - Math.cos(a0)), RY * (Math.sin(a1) - Math.sin(a0))));
+  }
+  const total = arc[NS];
+  const angAt = t => {
+    let lo = 0, hi = NS;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (arc[m] < t) lo = m + 1; else hi = m; }
+    return lo / NS * TAU - Math.PI;
+  };
+  /* and a sea is not a frieze: each takes her station a little off it, so the
+     deep reads as scattered soundings rather than a row of cuts */
+  circle.forEach((o, r) => {
+    const jr = rngFor('station:' + o.B.isle.slug);
+    o.B.wantTh = angAt(((r + 0.5) + (jr() - 0.5) * 0.85) / circle.length * total);
+    o.B.wantR = [1.02, 0.72, 0.90, 0.58, 1.02, 0.80][r % 6] + (jr() - 0.5) * 0.14;
+  });
+  for (const B of list) {
+    const rr = B.wantR;
+    const want = [CX + Math.cos(B.wantTh) * RX * rr, CY + Math.sin(B.wantTh) * RY * rr];
+    let best = null, bc = 1e18;
+    for (const c of cand) {
+      if (c.d < Math.max(27, B.R * 0.98)) continue;
+      let ok = true;
+      for (const q of placed) {
+        const need = (q.R + B.R) * 1.02;
+        if ((q.x - c.x) * (q.x - c.x) + (q.y - c.y) * (q.y - c.y) < need * need) { ok = false; break; }
+      }
+      if (!ok) continue;
+      const dx = c.x - want[0], dy = c.y - want[1];
+      const cost = Math.hypot(dx, dy) - Math.min(c.d, B.R * 1.6) * 1.9;
+      if (cost < bc) { bc = cost; best = c; }
+    }
+    if (!best) {
+      /* the last few take whatever water is left, at a smaller size */
+      B.L *= 0.72; B.R = B.L * reach[B.kind] + 9;
+      for (const c of cand) {
+        if (c.d < Math.max(22, B.R * 0.78)) continue;
+        let ok = true;
+        for (const q of placed) {
+          const need = (q.R + B.R) * 0.80;
+          if ((q.x - c.x) * (q.x - c.x) + (q.y - c.y) * (q.y - c.y) < need * need) { ok = false; break; }
+        }
+        if (!ok) continue;
+        const cost = Math.hypot(c.x - want[0], c.y - want[1]);
+        if (cost < bc) { bc = cost; best = c; }
+      }
+    }
+    if (!best) { B.dropped = true; continue; }
+    B.x = best.x; B.y = best.y;
+    /* most face the open sea; a quarter of them turn the other way, and none of
+       them swims quite level, so no two read as the same block cut twice */
+    B.flip = (best.x < CX ? 1 : -1) * (B.rnd() < 0.26 ? -1 : 1);
+    B.rot = (B.rnd() - 0.5) * 0.46;
+    placed.push(B);
+    geo.beasts.push(B);
+  }
+}
+
+/* a beast's name, cut to a cartographer's hand */
+function shortName(I) {
+  let s = I.sidebarLabel || I.title;
+  s = s.replace(/\s+provider setup for Users & Permissions$/i, ' provider')
+    .replace(/\s+for Users & Permissions$/i, '')
+    .replace(/\s+with the Document Service API$/i, '');
+  return s;
+}
+
+/* ---- a tapering limb: a spine walked forward, with a half-width ---- */
+function limb(x, y, ang, curl, len, w0, taper, N) {
+  const spine = [], top = [], bot = [];
+  let px = x, py = y, a = ang;
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    spine.push([px, py]);
+    const w = w0 * Math.pow(1 - t, taper);
+    top.push([px + Math.cos(a - Math.PI / 2) * w, py + Math.sin(a - Math.PI / 2) * w]);
+    bot.push([px + Math.cos(a + Math.PI / 2) * w, py + Math.sin(a + Math.PI / 2) * w]);
+    const step = len / N;
+    a += curl / N;
+    px += Math.cos(a) * step; py += Math.sin(a) * step;
+  }
+  return { spine, poly: top.concat(bot.reverse()) };
+}
+
+let beastLW = 1.0;
+function beastBody(g, poly, hatchAng, gap, rug) {
+  g.fillStyle = 'rgba(240,231,208,0.62)';
+  g.beginPath(); pathThrough(g, poly, true); g.fill();
+  hatchShape(g, poly, hatchAng, gap, INK + '0.21)', 0.45, true);
+  inkStroke(g, poly, true, beastLW, INK + '0.80)', rug ? INK + '0.16)' : null);
+}
+
+function beastEye(g, x, y, r, red) {
+  g.fillStyle = 'rgba(244,236,217,0.95)';
+  g.beginPath(); g.arc(x, y, r, 0, TAU); g.fill();
+  g.strokeStyle = INK + '0.9)'; g.lineWidth = 0.85;
+  g.beginPath(); g.arc(x, y, r, 0, TAU); g.stroke();
+  g.fillStyle = red ? RED + '0.95)' : INK + '0.92)';
+  g.beginPath(); g.arc(x + r * 0.16, y, r * 0.46, 0, TAU); g.fill();
+}
+
+/* the ruff of water a beast stands in */
+function beastWater(g, x, y, w, rnd) {
+  g.strokeStyle = INK + '0.34)'; g.lineWidth = 0.6;
+  for (let i = 0; i < 7; i++) {
+    const t = (i / 6 - 0.5) * w * 1.15;
+    const yy = y + (rnd() - 0.5) * 3.5;
+    const l = 4 + rnd() * 7;
+    g.beginPath();
+    g.moveTo(x + t - l, yy);
+    g.quadraticCurveTo(x + t - l / 2, yy - 1.6, x + t, yy);
+    g.quadraticCurveTo(x + t + l / 2, yy + 1.6, x + t + l, yy);
+    g.stroke();
+  }
+}
+
+/* ---------------- the four families, drawn from the numbers ---------------- */
+
+function drawBeast(g, B) {
+  /* reseed her drawing hand per call: the same beast is cut from the same
+     block every time the sheet is re-engraved at a new zoom */
+  B.rnd = rngFor('bod:' + B.isle.slug);
+  const L = B.L, T = (u, v) => [B.x + B.flip * u * L, B.y + v * L];
+  g.save();
+  beastWater(g, B.x, B.y + L * 0.30, L * 0.9, rngFor('wat:' + B.isle.slug));
+  g.translate(B.x, B.y); g.rotate(B.rot || 0); g.translate(-B.x, -B.y);
+  beastLW = clamp(L * 0.0105, 0.62, 1.30);
+  if (B.kind === 'serpent') drawSerpent(g, B, T, L);
+  else if (B.kind === 'cete') drawCete(g, B, T, L);
+  else if (B.kind === 'kraken') drawKraken(g, B, T, L);
+  else drawHornfish(g, B, T, L);
+  g.restore();
+}
+
+/* a horn, a tusk, a spine: a solid tapered thing, ringed the way horn is */
+function hornShape(g, x, y, ang, len, w, curl, ringed) {
+  const A = limb(x, y, ang, curl, len, w, 1.10, 10);
+  g.fillStyle = 'rgba(240,231,208,0.90)';
+  g.beginPath(); pathThrough(g, A.poly, true); g.fill();
+  inkStroke(g, A.poly, true, 0.85, INK + '0.86)');
+  if (ringed) {
+    g.strokeStyle = INK + '0.38)'; g.lineWidth = 0.45;
+    for (let i = 2; i < 9; i += 2) {
+      const p = A.poly[i], q = A.poly[A.poly.length - 1 - i];
+      g.beginPath(); g.moveTo(p[0], p[1]); g.lineTo(q[0], q[1]); g.stroke();
+    }
+  }
+  return A;
+}
+
+/* a fin: a webbed fan on rays, the way a woodcut fin is cut */
+function finFan(g, x, y, ang, len, spread, rays) {
+  const pts = [];
+  const N = 9;
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const a = ang - spread / 2 + spread * t;
+    const l = len * (0.66 + 0.34 * Math.sin(Math.PI * t));
+    pts.push([x + Math.cos(a) * l, y + Math.sin(a) * l]);
+  }
+  pts.push([x, y]);
+  g.fillStyle = 'rgba(240,231,208,0.68)';
+  g.beginPath(); pathThrough(g, pts, true); g.fill();
+  inkStroke(g, pts, true, 0.8, INK + '0.76)');
+  g.strokeStyle = INK + '0.52)'; g.lineWidth = 0.55;
+  for (let r = 1; r < rays; r++) {
+    const t = r / rays;
+    const a = ang - spread / 2 + spread * t;
+    const l = len * (0.60 + 0.30 * Math.sin(Math.PI * t));
+    g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); g.stroke();
+  }
+}
+
+/* a spout: a plume that widens as it rises, with a bushy crown and its drops */
+function spoutPlume(g, x, y, ang, len, w0, curl, rnd) {
+  const N = 12, top = [], bot = [];
+  let px = x, py = y, a = ang;
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const w = w0 * (0.28 + 2.0 * Math.pow(t, 1.5));
+    top.push([px + Math.cos(a - Math.PI / 2) * w, py + Math.sin(a - Math.PI / 2) * w]);
+    bot.push([px + Math.cos(a + Math.PI / 2) * w, py + Math.sin(a + Math.PI / 2) * w]);
+    a += curl / N;
+    px += Math.cos(a) * len / N; py += Math.sin(a) * len / N;
+  }
+  const poly = top.concat(bot.slice().reverse());
+  g.fillStyle = 'rgba(243,235,215,0.72)';
+  g.beginPath(); pathThrough(g, poly, true); g.fill();
+  inkStroke(g, poly, true, 0.7, INK + '0.58)');
+  /* the crown, blown apart at the top */
+  g.strokeStyle = INK + '0.52)'; g.lineWidth = 0.6;
+  const wEnd = w0 * 2.28;
+  for (let s = -3; s <= 3; s++) {
+    const sa = a + s * 0.26;
+    const l = wEnd * (1.5 - Math.abs(s) * 0.18);
+    g.beginPath();
+    g.moveTo(px - Math.cos(a) * len * 0.06, py - Math.sin(a) * len * 0.06);
+    g.quadraticCurveTo(px + Math.cos(sa) * l * 0.55, py + Math.sin(sa) * l * 0.55,
+      px + Math.cos(sa + s * 0.16) * l, py + Math.sin(sa + s * 0.16) * l);
+    g.stroke();
+  }
+  g.fillStyle = INK + '0.36)';
+  for (let d = 0; d < 6; d++) {
+    const sa = a + (rnd() - 0.5) * 1.7, l = wEnd * (1.3 + rnd() * 1.1);
+    g.beginPath();
+    g.arc(px + Math.cos(sa) * l, py + Math.sin(sa) * l, 0.7 + rnd() * 0.7, 0, TAU);
+    g.fill();
+  }
+}
+
+/* --- the serpent: coils from commits, a reared head, a crest of sections --- */
+function drawSerpent(g, B, T0, L) {
+  const A = B.asp, T = (u, v) => T0(u, v * A), FL = B.flip;
+  const coils = clamp(Math.round(B.coils * 0.62) + 1, 3, 6);
+  const wmax = 0.068 + 0.005 * B.fins;
+  const amp = 0.150 + 0.038 * (coils / 6);
+  const N = 48;
+  const sp = [], top = [], bot = [];
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const x = -0.30 + t * 0.80;
+    let y = amp * Math.sin((t - 0.05) * coils * Math.PI + 0.4) * (0.45 + 0.55 * Math.min(1, t * 3.2));
+    y -= 0.250 * Math.exp(-Math.pow((t - 0.005) / 0.115, 2));   // the neck rears
+    sp.push([x, y]);
+  }
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const a = sp[Math.min(N, i + 1)], b = sp[Math.max(0, i - 1)];
+    const tx = a[0] - b[0], ty = a[1] - b[1];
+    const m = Math.hypot(tx, ty) || 1;
+    const w = wmax * Math.pow(1 - t * 0.96, 0.52);
+    top.push(T(sp[i][0] + (-ty / m) * w, sp[i][1] + (tx / m) * w));
+    bot.push(T(sp[i][0] + (ty / m) * w, sp[i][1] + (-tx / m) * w));
+  }
+  const poly = top.concat(bot.slice().reverse());
+
+  /* the tail fin goes on first, so the body laps over its root */
+  const tl2 = sp[N], tp = sp[N - 3];
+  const ta2 = Math.atan2((tl2[1] - tp[1]) * A, (tl2[0] - tp[0]) * B.flip);
+  const tb = T(tl2[0], tl2[1]);
+  finFan(g, tb[0], tb[1], ta2, L * 0.175, 2.1, 6);
+
+  beastBody(g, poly, Math.PI / 3.2, 3.0, true);
+
+  /* the crest: one spine per section of the page */
+  const at = i => {
+    const a = sp[Math.min(N, i + 1)], b = sp[Math.max(0, i - 1)];
+    const tx = (a[0] - b[0]) * B.flip, ty = (a[1] - b[1]) * A;
+    const m = Math.hypot(tx, ty) || 1;
+    return { p: T(sp[i][0], sp[i][1]), tx: tx / m, ty: ty / m, nx: -ty / m, ny: tx / m,
+      w: wmax * Math.pow(1 - i / N * 0.96, 0.52) * L * A };
+  };
+  g.strokeStyle = INK + '0.82)'; g.lineWidth = 0.85;
+  g.fillStyle = 'rgba(232,220,190,0.72)';
+  for (let s = 0; s < B.spines; s++) {
+    const i = Math.round((0.08 + 0.56 * (s / Math.max(1, B.spines - 1))) * N);
+    const q = at(i);
+    const bx = q.p[0] + q.nx * q.w, by = q.p[1] + q.ny * q.w;
+    const h = L * (0.075 + 0.020 * Math.sin(s * 1.7));
+    g.beginPath();
+    g.moveTo(bx - q.tx * L * 0.028, by - q.ty * L * 0.028);
+    g.quadraticCurveTo(bx + q.nx * h - q.tx * L * 0.020, by + q.ny * h - q.ty * L * 0.020,
+      bx + q.tx * L * 0.026, by + q.ty * L * 0.026);
+    g.closePath(); g.fill(); g.stroke();
+  }
+  /* scale rows: the code the page carries */
+  g.strokeStyle = INK + '0.32)'; g.lineWidth = 0.45;
+  for (let s = 0; s < B.scales; s++) {
+    const i = Math.round((0.16 + 0.70 * (s / Math.max(1, B.scales - 1))) * N);
+    const q = at(i);
+    g.beginPath();
+    g.moveTo(q.p[0] + q.nx * q.w * 0.92, q.p[1] + q.ny * q.w * 0.92);
+    g.quadraticCurveTo(q.p[0] + q.tx * L * 0.022, q.p[1] + q.ty * L * 0.022,
+      q.p[0] - q.nx * q.w * 0.92, q.p[1] - q.ny * q.w * 0.92);
+    g.stroke();
+  }
+  /* the pectoral fin of a page many hands kept */
+  if (B.hands >= 2) {
+    const q = at(6);
+    finFan(g, q.p[0] - q.nx * q.w * 0.8, q.p[1] - q.ny * q.w * 0.8,
+      Math.atan2(-q.ny, -q.nx) + 0.5 * FL, L * 0.135, 1.3, B.fins + 2);
+  }
+
+  /* the head, reared and gaping */
+  const h0 = at(0);
+  const fa = Math.atan2(-h0.ty, -h0.tx);
+  const hb = T(sp[0][0], sp[0][1]);
+  const hl = L * 0.245;
+  const up = limb(hb[0], hb[1], fa - 0.14 * FL, -0.36 * FL, hl, wmax * L * A * 1.10, 0.80, 12);
+  const lo = limb(hb[0], hb[1], fa + 0.50 * FL, 0.44 * FL, hl * 0.78, wmax * L * A * 0.62, 0.92, 10);
+  beastBody(g, lo.poly, -Math.PI / 3, 2.4, false);
+  beastBody(g, up.poly, -Math.PI / 3, 2.4, false);
+  /* the skull behind the jaws, so the head is a head and not a spike */
+  const sk = limb(hb[0] + Math.cos(fa) * hl * 0.06, hb[1] + Math.sin(fa) * hl * 0.06,
+    fa - 0.14 * FL, -0.30 * FL, hl * 0.56, wmax * L * A * 1.75, 0.30, 9);
+  beastBody(g, sk.poly, -Math.PI / 3, 2.6, false);
+  /* the mane behind the skull */
+  g.strokeStyle = INK + '0.72)'; g.lineWidth = 0.8;
+  for (let s = 0; s < 4; s++) {
+    const q = at(1 + s);
+    const ln = L * (0.095 - s * 0.014);
+    const a = fa + FL * (Math.PI * 0.55 + s * 0.16);
+    g.beginPath();
+    g.moveTo(q.p[0] + q.nx * q.w, q.p[1] + q.ny * q.w);
+    g.quadraticCurveTo(q.p[0] + q.nx * q.w + Math.cos(a) * ln * 0.6, q.p[1] + q.ny * q.w + Math.sin(a) * ln * 0.6,
+      q.p[0] + q.nx * q.w + Math.cos(a + 0.7 * FL) * ln, q.p[1] + q.ny * q.w + Math.sin(a + 0.7 * FL) * ln);
+    g.stroke();
+  }
+  /* teeth along the two jaws */
+  g.fillStyle = 'rgba(247,240,222,0.97)'; g.strokeStyle = INK + '0.8)'; g.lineWidth = 0.5;
+  for (const [jaw, sgn, n] of [[up, 1, 4], [lo, -1, 3]]) {
+    for (let s = 1; s <= n; s++) {
+      const i = Math.round(s / (n + 1) * (jaw.spine.length - 2)) + 1;
+      const q0 = jaw.spine[i], q1 = jaw.spine[i + 1];
+      const dx = q1[0] - q0[0], dy = q1[1] - q0[1], m = Math.hypot(dx, dy) || 1;
+      const px = dy / m * sgn * FL, py = -dx / m * sgn * FL;
+      const tw = L * 0.034;
+      g.beginPath();
+      g.moveTo(q0[0], q0[1]);
+      g.lineTo(q0[0] + px * tw, q0[1] + py * tw);
+      g.lineTo(q0[0] + dx * 1.1, q0[1] + dy * 1.1);
+      g.closePath(); g.fill(); g.stroke();
+    }
+  }
+  /* horns, and the eyes the night put in her */
+  for (let s = 0; s < Math.min(3, Math.max(1, B.spines - 1)); s++) {
+    const root = up.spine[2];
+    const ang = fa + FL * (Math.PI * 0.60 + (s - 1) * 0.30);
+    hornShape(g, root[0], root[1], ang, L * (0.115 + 0.018 * s), L * 0.026, -0.7 * FL, true);
+  }
+  const er = Math.max(1.9, L * 0.040);
+  for (let e = 0; e < B.eyes; e++) {
+    const i = 2 + e * 2;
+    const q0 = sk.spine[Math.min(7, i)], q1 = sk.spine[Math.min(8, i + 1)];
+    const dx = q1[0] - q0[0], dy = q1[1] - q0[1], m = Math.hypot(dx, dy) || 1;
+    beastEye(g, q0[0] + dy / m * er * 0.95 * FL, q0[1] - dx / m * er * 0.95 * FL, er * (e ? 0.68 : 1), B.night > 0);
+  }
+  /* the forked tongue of a page much worked */
+  if (B.coils >= 6) {
+    const q0 = lo.spine[5];
+    g.strokeStyle = RED + '0.80)'; g.lineWidth = 0.85;
+    const ta = fa + 0.30 * FL, tl = L * 0.13;
+    g.beginPath(); g.moveTo(q0[0], q0[1]);
+    g.quadraticCurveTo(q0[0] + Math.cos(ta) * tl * 0.6, q0[1] + Math.sin(ta) * tl * 0.6,
+      q0[0] + Math.cos(ta - 0.5 * FL) * tl, q0[1] + Math.sin(ta - 0.5 * FL) * tl);
+    g.moveTo(q0[0] + Math.cos(ta) * tl * 0.55, q0[1] + Math.sin(ta) * tl * 0.55);
+    g.lineTo(q0[0] + Math.cos(ta + 0.42 * FL) * tl, q0[1] + Math.sin(ta + 0.42 * FL) * tl);
+    g.stroke();
+  }
+}
+
+/* --- the cete: bulk from words, a spout raised by the night, tusks --- */
+function drawCete(g, B, T0, L) {
+  const A = B.asp, T = (u, v) => T0(u, v * A), FL = B.flip;
+  const FA = a => FL > 0 ? a : Math.PI - a, FC = c => FL > 0 ? c : -c;
+  const rnd = B.rnd, j = () => (rnd() - 0.5) * 0.022;
+  /* a great square-headed thing, blunt in the bow, the way the old cuts show
+     the physeter: the head is a third of her and it is nearly a wall */
+  const key = [
+    [-0.500, -0.055], [-0.492, -0.175 + j()], [-0.445, -0.245 + j()],
+    [-0.330, -0.272 + j()], [-0.150, -0.262 + j()], [0.040, -0.238 + j()],
+    [0.195, -0.190 + j()], [0.295, -0.115 + j()], [0.330, -0.040],
+    [0.330, 0.045], [0.280, 0.150 + j()], [0.130, 0.235 + j()],
+    [-0.070, 0.268 + j()], [-0.265, 0.258 + j()], [-0.420, 0.215 + j()],
+    [-0.492, 0.135 + j()], [-0.505, 0.040]
+  ];
+  const body = key.map(p => T(p[0], p[1]));
+
+  /* the flukes, laid first so they read as behind her */
+  const fl = 0.135 + 0.016 * B.fins;
+  const flukes = [
+    T(0.30, -0.045), T(0.40, -fl * 1.7), T(0.50, -fl * 1.45), T(0.435, -0.015),
+    T(0.50, fl * 1.45), T(0.40, fl * 1.7), T(0.30, 0.045)
+  ];
+  beastBody(g, flukes, Math.PI / 2.3, 2.5, false);
+  g.strokeStyle = INK + '0.34)'; g.lineWidth = 0.45;
+  for (let s = 1; s <= 4; s++) {
+    const a = T(0.33, -0.02 + s * 0.012), b = T(0.455, -fl * 1.5 + s * fl * 0.62);
+    g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke();
+    const c = T(0.455, fl * 1.5 - s * fl * 0.62);
+    g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(c[0], c[1]); g.stroke();
+  }
+
+  /* the pectoral paddle */
+  const pr = T(-0.215, 0.245);
+  finFan(g, pr[0], pr[1], FA(1.20), L * 0.20, 0.9, B.fins + 2);
+
+  beastBody(g, body, Math.PI / 3, 3.4, true);
+
+  /* the belly pleats are the code she carries; the rings, her commits */
+  g.save();
+  g.beginPath(); pathThrough(g, body, true); g.clip();
+  g.strokeStyle = INK + '0.30)'; g.lineWidth = 0.55;
+  for (let s = 0; s < B.scales; s++) {
+    const t = -0.34 + s * 0.052;
+    const a = T(t, 0.11), b = T(t + 0.05, 0.31);
+    g.beginPath(); g.moveTo(a[0], a[1]); g.quadraticCurveTo(a[0], b[1], b[0], b[1]); g.stroke();
+  }
+  g.strokeStyle = INK + '0.20)'; g.lineWidth = 0.5;
+  for (let s = 0; s < B.coils; s++) {
+    const t = -0.06 + s * 0.046;
+    const a = T(t, -0.30), m = T(t + 0.028, 0), b = T(t, 0.30);
+    g.beginPath(); g.moveTo(a[0], a[1]); g.quadraticCurveTo(m[0], m[1], b[0], b[1]); g.stroke();
+  }
+  /* the long grinning mouth, and the teeth in it */
+  g.strokeStyle = INK + '0.80)'; g.lineWidth = 1.15;
+  let a = T(-0.505, 0.035), b = T(-0.400, 0.150), c = T(-0.190, 0.140);
+  g.beginPath(); g.moveTo(a[0], a[1]); g.quadraticCurveTo(b[0], b[1], c[0], c[1]); g.stroke();
+  g.fillStyle = 'rgba(247,240,222,0.95)'; g.strokeStyle = INK + '0.72)'; g.lineWidth = 0.5;
+  for (let s = 0; s < 5; s++) {
+    const q = T(-0.435 + s * 0.048, 0.130 - s * 0.004);
+    g.beginPath(); g.moveTo(q[0], q[1]);
+    g.lineTo(q[0] + FL * L * 0.012, q[1] - L * 0.026);
+    g.lineTo(q[0] + FL * L * 0.026, q[1] - L * 0.002);
+    g.closePath(); g.fill(); g.stroke();
+  }
+  /* the crease of the head, where the case ends */
+  g.strokeStyle = INK + '0.42)'; g.lineWidth = 0.8;
+  a = T(-0.300, -0.268); b = T(-0.268, -0.10); c = T(-0.290, 0.070);
+  g.beginPath(); g.moveTo(a[0], a[1]); g.quadraticCurveTo(b[0], b[1], c[0], c[1]); g.stroke();
+  g.restore();
+
+  /* the dorsal fin, hooked back */
+  g.fillStyle = 'rgba(240,231,208,0.72)'; g.strokeStyle = INK + '0.82)'; g.lineWidth = 0.95;
+  const df = T(-0.02, -0.286), dt = T(0.075, -0.286 - 0.075 - 0.014 * B.fins), db = T(0.135, -0.262);
+  g.beginPath(); g.moveTo(df[0], df[1]);
+  g.quadraticCurveTo(dt[0], dt[1], db[0], db[1]);
+  g.quadraticCurveTo(T(0.06, -0.278)[0], T(0.06, -0.278)[1], df[0], df[1]);
+  g.closePath(); g.fill(); g.stroke();
+
+  /* tusks out of the lower jaw, as long as the page has sections */
+  for (let s = 0; s < Math.min(2, B.spines); s++) {
+    const r = T(-0.400 + s * 0.055, 0.150);
+    hornShape(g, r[0], r[1], FA(-2.62 + s * 0.24), L * (0.105 + 0.016 * B.spines), L * 0.026, FC(1.5), true);
+  }
+
+  /* the spout: the higher the night work, the higher she blows */
+  const bh = T(-0.375, -0.255);
+  const jets = clamp(1 + Math.round(B.spines / 3), 1, 2);
+  const hgt = L * (0.42 + 0.13 * B.night);
+  for (let s = 0; s < jets; s++) {
+    const lean = jets === 1 ? 0 : (s - 0.5) * 0.62;
+    spoutPlume(g, bh[0] + s * FL * L * 0.03, bh[1],
+      -Math.PI / 2 + FC(lean * 0.30), hgt, L * 0.038, FC(lean * 0.55 + 0.22), rnd);
+  }
+  /* the eyes the night put in her */
+  const er = Math.max(2.0, L * 0.040);
+  beastEye(g, ...T(-0.360, -0.070), er, B.night > 0);
+  for (let e = 1; e < B.eyes; e++) beastEye(g, ...T(-0.17 + e * 0.115, -0.150), er * 0.60, true);
+}
+
+/* --- the many-armed horror: arms from the pages she reaches out to --- */
+function drawKraken(g, B, T0, L) {
+  const A = B.asp, T = (u, v) => T0(u, v * A), FL = B.flip;
+  const rnd = B.rnd;
+  /* the arms first, so the mantle sits over their roots */
+  const n = B.arms;
+  for (let s = 0; s < n; s++) {
+    const t = n === 1 ? 0.5 : s / (n - 1);
+    const x = -0.16 + 0.32 * t;
+    const spread = (t - 0.5) * 2;
+    const ang = Math.PI / 2 + spread * 1.42 * FL;
+    const hunt = (s === 1 || s === n - 2);
+    const ln = L * (0.52 + 0.16 * rnd()) * (hunt ? 1.5 : 1);
+    const curl = (spread >= 0 ? 1 : -1) * FL * (1.7 + rnd() * 1.5) * (hunt ? 1.3 : 1);
+    const root = T(x, 0.04);
+    const Ar = limb(root[0], root[1], ang, curl, ln, L * (0.032 + 0.008 * (1 - Math.abs(spread))), 0.90, 18);
+    beastBody(g, Ar.poly, Math.PI / 2.6, 2.3, false);
+    if (hunt) {
+      /* the club at the end of a hunting arm */
+      const tip = Ar.spine[16], pre = Ar.spine[14];
+      const aa = Math.atan2(tip[1] - pre[1], tip[0] - pre[0]);
+      finFan(g, tip[0], tip[1], aa, L * 0.075, 1.5, 3);
+    }
+    /* the suckers of a page rich in code */
+    g.fillStyle = INK + '0.44)';
+    const step = B.scales >= 6 ? 2 : 3;
+    for (let d = 3; d < 17; d += step) {
+      const p0 = Ar.spine[d], p1 = Ar.spine[d + 1];
+      if (!p1) break;
+      const dx = p1[0] - p0[0], dy = p1[1] - p0[1], m = Math.hypot(dx, dy) || 1;
+      const w = L * 0.032 * Math.pow(1 - d / 18, 0.9) * 0.7;
+      g.beginPath();
+      g.arc(p0[0] + (-dy / m) * w * FL, p0[1] + (dx / m) * w * FL, Math.max(0.45, L * 0.0075 * (1 - d / 20)), 0, TAU);
+      g.fill();
+    }
+  }
+  /* the mantle: a pointed sac with two fins at her crown */
+  const mant = [
+    T(0, -0.46), T(0.075, -0.40), T(0.135, -0.27), T(0.168, -0.13), T(0.163, 0.01),
+    T(0.085, 0.055), T(0, 0.068), T(-0.085, 0.055), T(-0.163, 0.01), T(-0.168, -0.13),
+    T(-0.135, -0.27), T(-0.075, -0.40)
+  ];
+  for (const sgn of [-1, 1]) {
+    const fin = [
+      T(sgn * 0.03, -0.44), T(sgn * 0.20, -0.40), T(sgn * 0.26, -0.31), T(sgn * 0.115, -0.30)
+    ];
+    beastBody(g, fin, Math.PI / 2.4, 2.4, false);
+  }
+  beastBody(g, mant, Math.PI / 2, 3.0, true);
+  /* the warts of much handling */
+  g.fillStyle = INK + '0.28)';
+  const wr = rngFor('wart:' + B.isle.slug);
+  for (let s = 0; s < Math.min(30, B.coils * 4); s++) {
+    const a = wr() * TAU, r = Math.sqrt(wr());
+    const p = T(Math.cos(a) * 0.115 * r, -0.20 + Math.sin(a) * 0.19 * r);
+    g.beginPath(); g.arc(p[0], p[1], 0.7, 0, TAU); g.fill();
+  }
+  /* the beak */
+  g.fillStyle = INK + '0.86)';
+  const k0 = T(-0.034, 0.048), k1 = T(0.034, 0.048), k2 = T(0, 0.105);
+  g.beginPath(); g.moveTo(k0[0], k0[1]); g.lineTo(k1[0], k1[1]); g.lineTo(k2[0], k2[1]); g.closePath(); g.fill();
+  /* the eyes */
+  const er = Math.max(2.0, L * 0.042);
+  beastEye(g, ...T(-0.088, -0.115), er, B.night > 0);
+  beastEye(g, ...T(0.088, -0.115), er, B.night > 0);
+  for (let e = 2; e < B.eyes + 1; e++) beastEye(g, ...T(-0.05 + (e - 2) * 0.10, -0.30), er * 0.52, true);
+}
+
+/* --- the horned fish: horns from her sections, spines from her code --- */
+function drawHornfish(g, B, T0, L) {
+  const A = B.asp, T = (u, v) => T0(u, v * A), FL = B.flip;
+  const FA = a => FL > 0 ? a : Math.PI - a, FC = c => FL > 0 ? c : -c;
+  const rnd = B.rnd, j = () => (rnd() - 0.5) * 0.022;
+  /* a boar-headed fish: a heavy head, an arched back, a deep belly */
+  const key = [
+    [-0.470, 0.030 + j()], [-0.455, -0.055 + j()], [-0.395, -0.130 + j()],
+    [-0.290, -0.185 + j()], [-0.110, -0.215 + j()], [0.075, -0.180 + j()],
+    [0.215, -0.115 + j()], [0.300, -0.045], [0.300, 0.040],
+    [0.205, 0.135 + j()], [0.055, 0.205 + j()], [-0.125, 0.222 + j()],
+    [-0.300, 0.180 + j()], [-0.425, 0.115 + j()]
+  ];
+  const body = key.map(p => T(p[0], p[1]));
+
+  /* the tail: a crescent on rays, one ray per commit */
+  const tr = T(0.29, 0);
+  const tail = [
+    T(0.27, -0.055), T(0.395, -0.215), T(0.475, -0.105), T(0.415, 0.000),
+    T(0.475, 0.115), T(0.395, 0.230), T(0.27, 0.060)
+  ];
+  beastBody(g, tail, Math.PI / 2.2, 2.3, false);
+  g.strokeStyle = INK + '0.40)'; g.lineWidth = 0.45;
+  for (let s = 0; s < B.coils; s++) {
+    const t = s / Math.max(1, B.coils - 1);
+    const a = T(0.295, -0.035 + t * 0.075);
+    const b = T(0.415 + 0.035 * Math.sin(t * Math.PI), -0.185 + t * 0.395);
+    g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke();
+  }
+
+  /* pectoral and pelvic fins, one ray per hand that kept her */
+  const p1 = T(-0.230, 0.150);
+  finFan(g, p1[0], p1[1], FA(0.80), L * 0.215, 1.15, B.fins + 2);
+  const p2 = T(0.03, 0.200);
+  finFan(g, p2[0], p2[1], FA(1.30), L * 0.150, 1.00, B.fins + 1);
+
+  beastBody(g, body, Math.PI / 3.4, 3.0, true);
+
+  /* rows of scales, one per two code blocks */
+  g.save();
+  g.beginPath(); pathThrough(g, body, true); g.clip();
+  g.strokeStyle = INK + '0.26)'; g.lineWidth = 0.45;
+  for (let r = 0; r < B.scales; r++) {
+    const x = -0.175 + r * 0.052;
+    for (let c = -3; c <= 3; c++) {
+      const y = c * 0.052 + (r % 2) * 0.026;
+      const a = T(x, y - 0.027), m = T(x + 0.029, y), b = T(x, y + 0.027);
+      g.beginPath(); g.moveTo(a[0], a[1]); g.quadraticCurveTo(m[0], m[1], b[0], b[1]); g.stroke();
+    }
+  }
+  /* the gill plate, and the brow that makes a head of the front of her */
+  g.strokeStyle = INK + '0.62)'; g.lineWidth = 0.9;
+  let a = T(-0.268, -0.180), b = T(-0.222, 0), c = T(-0.268, 0.190);
+  g.beginPath(); g.moveTo(a[0], a[1]); g.quadraticCurveTo(b[0], b[1], c[0], c[1]); g.stroke();
+  g.strokeStyle = INK + '0.40)'; g.lineWidth = 0.7;
+  a = T(-0.430, -0.075); b = T(-0.360, -0.135); c = T(-0.300, -0.180);
+  g.beginPath(); g.moveTo(a[0], a[1]); g.quadraticCurveTo(b[0], b[1], c[0], c[1]); g.stroke();
+  g.restore();
+
+  /* the dorsal spines: her code, stood on end */
+  g.fillStyle = 'rgba(238,228,203,0.8)'; g.strokeStyle = INK + '0.80)'; g.lineWidth = 0.75;
+  for (let s = 0; s < B.scales; s++) {
+    const t = s / Math.max(1, B.scales - 1);
+    const x = -0.095 + t * 0.300;
+    const y = -0.212 + 0.085 * Math.pow(Math.abs(t - 0.20) * 1.35, 1.6);
+    const h = 0.070 + 0.038 * Math.sin(t * Math.PI);
+    const q0 = T(x - 0.022, y), q1 = T(x + 0.010, y - h), q2 = T(x + 0.026, y);
+    g.beginPath(); g.moveTo(q0[0], q0[1]); g.quadraticCurveTo(q1[0], q1[1], q2[0], q2[1]);
+    g.closePath(); g.fill(); g.stroke();
+  }
+
+  /* the horns: one per heading, solid and swept back over the shoulders */
+  const nh = clamp(B.spines, 1, 4);
+  for (let s = 0; s < nh; s++) {
+    const r = T(-0.395 + s * 0.040, -0.150 - s * 0.014);
+    hornShape(g, r[0], r[1], FA(-1.62 + s * 0.17), L * (0.175 - 0.022 * s), L * 0.033, FC(1.10), true);
+  }
+
+  /* the mouth, open, with a boar's teeth */
+  g.strokeStyle = INK + '0.68)'; g.lineWidth = 0.95;
+  a = T(-0.472, 0.028); b = T(-0.415, 0.085); c = T(-0.320, 0.078);
+  g.beginPath(); g.moveTo(a[0], a[1]); g.quadraticCurveTo(b[0], b[1], c[0], c[1]); g.stroke();
+  g.fillStyle = 'rgba(247,240,222,0.97)'; g.lineWidth = 0.5; g.strokeStyle = INK + '0.8)';
+  for (let s = 0; s < 3; s++) {
+    const q = T(-0.430 + s * 0.036, 0.070);
+    g.beginPath(); g.moveTo(q[0], q[1]);
+    g.lineTo(q[0] + B.flip * 1.3, q[1] + L * 0.030);
+    g.lineTo(q[0] + B.flip * 2.7, q[1]);
+    g.closePath(); g.fill(); g.stroke();
+  }
+  /* a tusk curling up out of the jaw of a page rich in code */
+  if (B.scales >= 5) {
+    const r = T(-0.430, 0.085);
+    hornShape(g, r[0], r[1], FA(-2.70), L * 0.090, L * 0.020, FC(1.5), true);
+  }
+  const er = Math.max(1.7, L * 0.032);
+  beastEye(g, ...T(-0.352, -0.062), er, B.night > 0);
+  for (let e = 1; e < B.eyes; e++) beastEye(g, ...T(-0.16 + e * 0.105, -0.085), er * 0.60, true);
+}
+
+/* the banderole a beast's name is lettered on */
+function drawBanderole(g, cx, cy, w, h) {
+  const half = w / 2, s = h / 2, N = 12;
+  const top = [], bot = [];
+  for (let i = 0; i <= N; i++) {
+    const t = i / N, x = cx - half + w * t;
+    const dy = -Math.sin(t * Math.PI) * 1.3;
+    top.push([x, cy - s + dy]); bot.push([x, cy + s + dy]);
+  }
+  for (const sgn of [-1, 1]) {
+    const x0 = sgn < 0 ? cx - half : cx + half;
+    const tail = [
+      [x0, cy - s], [x0 + sgn * h * 0.85, cy - s - h * 0.30],
+      [x0 + sgn * h * 0.52, cy], [x0 + sgn * h * 0.85, cy + s + h * 0.30],
+      [x0, cy + s]
+    ];
+    g.fillStyle = 'rgba(226,214,186,0.86)';
+    g.beginPath(); pathThrough(g, tail, true); g.fill();
+    inkStroke(g, tail, true, 0.65, INK + '0.50)');
+  }
+  const poly = top.concat(bot.slice().reverse());
+  g.fillStyle = 'rgba(245,237,217,0.90)';
+  g.beginPath(); pathThrough(g, poly, true); g.fill();
+  inkStroke(g, poly, true, 0.75, INK + '0.58)');
+}
+
+/* ============================================================
+   THE PLACES ON THE GROUND
+   ============================================================ */
+function drawHill(g, x, y, n, h, rnd) {
+  g.strokeStyle = INK + '0.80)'; g.lineWidth = 0.75; g.fillStyle = 'rgba(224,208,168,0.30)';
+  for (let s = 0; s < n; s++) {
+    const off = (s - (n - 1) / 2) * (h * 0.92);
+    const hh = h * (s === Math.floor(n / 2) ? 1 : 0.74 + 0.2 * ((s * 7 % 5) / 5));
+    const bw = hh * 0.80;
+    const cx = x + off, cy = y;
+    g.beginPath();
+    g.moveTo(cx - bw, cy);
+    g.quadraticCurveTo(cx - bw * 0.42, cy - hh * 0.92, cx + bw * 0.16, cy - hh);
+    g.quadraticCurveTo(cx + bw * 0.62, cy - hh * 0.68, cx + bw, cy);
+    g.fill(); g.stroke();
+    /* the hachures run down the shaded flank */
+    g.lineWidth = 0.5; g.strokeStyle = INK + '0.52)';
+    const nh = 2 + Math.round(hh / 2.4);
+    for (let q = 1; q <= nh; q++) {
+      const t = q / (nh + 1);
+      const bx = cx - bw + 2 * bw * t;
+      const ty = cy - hh * Math.sin(Math.PI * (0.22 + t * 0.62));
+      g.beginPath(); g.moveTo(bx, cy - 0.2); g.lineTo(bx + hh * 0.10, ty + hh * 0.22); g.stroke();
+    }
+    g.lineWidth = 0.75; g.strokeStyle = INK + '0.80)';
+  }
+}
+function drawMarsh(g, x, y, sz) {
+  g.strokeStyle = INK + '0.52)'; g.lineWidth = 0.6;
+  g.beginPath();
+  for (let r = 0; r < 2; r++) {
+    const yy = y - 1.4 + r * 3.2;
+    for (let c = 0; c < 3; c++) {
+      const xx = x + (c - 1) * sz * 1.05 + (r % 2) * sz * 0.5;
+      g.moveTo(xx - sz * 0.42, yy); g.lineTo(xx + sz * 0.42, yy);
+      g.moveTo(xx, yy); g.lineTo(xx, yy - 2.1);
+    }
+  }
+  g.stroke();
+}
+function drawPlaceMark(g, I) {
+  const M = I.mark, x = I.cx, y = I.cy, s = M.sz;
+  if (M.hill) drawHill(g, x, y + s * 0.55, M.hill, M.hillH, null);
+  if (M.marsh) drawMarsh(g, x, y + s * 0.3, s * 0.9);
+  if (M.kind === 'none') return;
+  g.lineWidth = 0.85; g.strokeStyle = INK + '0.88)'; g.fillStyle = INK + '0.86)';
+  switch (M.kind) {
+    case 'anchorage': {
+      const h = s * 2.0, w = s * 0.85;
+      g.lineWidth = 1.05;
+      g.beginPath(); g.arc(x, y - h * 0.52, h * 0.14, 0, TAU); g.stroke();
+      g.beginPath();
+      g.moveTo(x, y - h * 0.38); g.lineTo(x, y + h * 0.34);
+      g.moveTo(x - w, y - h * 0.20); g.lineTo(x + w, y - h * 0.20);
+      g.stroke();
+      g.beginPath();
+      g.moveTo(x - w * 1.05, y + h * 0.10);
+      g.quadraticCurveTo(x - w * 0.95, y + h * 0.46, x, y + h * 0.44);
+      g.quadraticCurveTo(x + w * 0.95, y + h * 0.46, x + w * 1.05, y + h * 0.10);
+      g.stroke();
+      break;
+    }
+    case 'fort': {
+      const w = s * 0.92, h = s * 1.15;
+      g.fillStyle = 'rgba(233,220,190,0.9)';
+      g.beginPath(); g.rect(x - w, y - h * 0.2, w * 2, h); g.fill(); g.stroke();
+      g.beginPath();
+      for (let m = 0; m < 3; m++) {
+        const bx = x - w + (w * 2) * (m / 3) + w * 0.11;
+        g.rect(bx, y - h * 0.2 - h * 0.34, w * 0.45, h * 0.34);
+      }
+      g.fillStyle = 'rgba(233,220,190,0.9)'; g.fill(); g.stroke();
+      g.beginPath(); g.moveTo(x + w * 0.72, y - h * 0.54); g.lineTo(x + w * 0.72, y - h * 1.35); g.stroke();
+      g.fillStyle = RED + '0.82)';
+      g.beginPath(); g.moveTo(x + w * 0.72, y - h * 1.35); g.lineTo(x + w * 2.0, y - h * 1.15);
+      g.lineTo(x + w * 0.72, y - h * 0.92); g.closePath(); g.fill();
+      break;
+    }
+    case 'town': {
+      const n = M.houses;
+      g.fillStyle = 'rgba(233,220,190,0.92)';
+      for (let h = 0; h < n; h++) {
+        const a = M.spin + h * 2.399963;
+        const rr = s * 0.62 * Math.sqrt(h / Math.max(1, n - 1) + 0.18);
+        const hx = x + Math.cos(a) * rr, hy = y + Math.sin(a) * rr * 0.72;
+        const w = s * 0.46, hh = s * 0.40;
+        g.beginPath(); g.rect(hx - w / 2, hy - hh * 0.1, w, hh); g.fill(); g.stroke();
+        g.beginPath(); g.moveTo(hx - w * 0.62, hy - hh * 0.1);
+        g.lineTo(hx, hy - hh * 0.78); g.lineTo(hx + w * 0.62, hy - hh * 0.1);
+        g.closePath(); g.fill(); g.stroke();
+      }
+      if (I.authors.length >= 7) {
+        g.beginPath(); g.moveTo(x, y - s * 1.15); g.lineTo(x, y - s * 1.62);
+        g.moveTo(x - s * 0.2, y - s * 1.45); g.lineTo(x + s * 0.2, y - s * 1.45);
+        g.stroke();
+      }
+      break;
+    }
+    case 'quarry': {
+      const w = s * 0.95;
+      g.fillStyle = 'rgba(206,188,150,0.55)';
+      g.beginPath();
+      g.moveTo(x - w, y + w * 0.42);
+      g.quadraticCurveTo(x, y - w * 0.85, x + w, y + w * 0.42);
+      g.closePath(); g.fill(); g.stroke();
+      g.strokeStyle = INK + '0.5)'; g.lineWidth = 0.5;
+      for (let q = -2; q <= 2; q++) {
+        g.beginPath(); g.moveTo(x + q * w * 0.36, y + w * 0.42);
+        g.lineTo(x + q * w * 0.22, y - w * 0.30); g.stroke();
+      }
+      break;
+    }
+    case 'well': {
+      g.fillStyle = 'rgba(246,238,219,0.9)';
+      g.beginPath(); g.arc(x, y, s * 0.52, 0, TAU); g.fill(); g.stroke();
+      g.fillStyle = INK + '0.8)';
+      g.beginPath(); g.arc(x, y, s * 0.16, 0, TAU); g.fill();
+      break;
+    }
+    default: {
+      g.fillStyle = INK + '0.82)';
+      g.beginPath(); g.arc(x, y, s * 0.34, 0, TAU); g.fill();
+      g.strokeStyle = INK + '0.42)'; g.lineWidth = 0.5;
+      g.beginPath(); g.arc(x, y, s * 0.72, -0.9, 2.0); g.stroke();
+    }
+  }
+}
+
+/* ============================================================
+   THE SHEET, BAKED ONCE
+   ============================================================ */
+function tornSheetPath(g) {
+  const rnd = rngFor('vellum');
+  const pts = [];
+  const inset = 15, W = CHART_W, H = CHART_H;
+  const push = (x, y) => pts.push([x, y]);
+  const edge = (x0, y0, x1, y1, nx, ny) => {
+    const len = Math.hypot(x1 - x0, y1 - y0);
+    const n = Math.max(6, Math.round(len / 13));
+    for (let i = 0; i < n; i++) {
+      const t = i / n;
+      let o = (rnd() - 0.5) * 3.4 + Math.sin(t * 11 + rnd()) * 1.1;
+      if (rnd() < 0.055) o -= 4 + rnd() * 7;          // a tear
+      push(x0 + (x1 - x0) * t + nx * o, y0 + (y1 - y0) * t + ny * o);
+    }
+  };
+  edge(inset, inset, W - inset, inset, 0, -1);
+  edge(W - inset, inset, W - inset, H - inset, 1, 0);
+  edge(W - inset, H - inset, inset, H - inset, 0, 1);
+  edge(inset, H - inset, inset, inset, -1, 0);
+  return pts;
+}
+
+function bakeChartSheet(geo) {
+  const dpr = chart.dpr;
+  const c = document.createElement('canvas');
+  c.width = Math.round(CHART_W * dpr); c.height = Math.round(CHART_H * dpr);
+  const g = c.getContext('2d');
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.lineJoin = 'round'; g.lineCap = 'round';
+  paintSheetGeo(g, geo, { x0: -80, y0: -80, x1: CHART_W + 80, y1: CHART_H + 80 }, true);
+  chart.sheet = c;
+}
+
+/* everything that is ink on the vellum, in sheet coordinates. `vp` is the
+   visible window in sheet coordinates and culls only the DRAWING: every seeded
+   stream is consumed in full on every run, so the ink never swims between one
+   zoom stop and the next. `base` marks the whole-sheet bake, where the sea is
+   kept clear under the four table instruments. */
+function paintSheetGeo(g, geo, vp, base) {
+  const inVp = (x, y, m) => x > vp.x0 - m && x < vp.x1 + m && y > vp.y0 - m && y < vp.y1 + m;
+
+  const vell = tornSheetPath(g);
+  /* the sheet's own shadow on the table */
+  g.save();
+  g.translate(4, 6);
+  g.fillStyle = 'rgba(72,56,34,0.20)';
+  g.beginPath(); pathThrough(g, vell, true); g.fill();
+  g.restore();
+
+  g.save();
+  g.beginPath(); pathThrough(g, vell, true); g.clip();
+
+  /* --- the vellum --- */
+  g.fillStyle = '#f2e9d3';
+  g.fillRect(0, 0, CHART_W, CHART_H);
+  if (bake.paper) { g.globalAlpha = 0.78; g.drawImage(bake.paper, 0, 0, CHART_W, CHART_H); g.globalAlpha = 1; }
+  const vr = rngFor('age');
+  for (let i = 0; i < 34; i++) {
+    const x = vr() * CHART_W, y = vr() * CHART_H, r = 40 + vr() * 200;
+    const gr = g.createRadialGradient(x, y, 0, x, y, r);
+    gr.addColorStop(0, 'rgba(168,140,90,0.055)');
+    gr.addColorStop(1, 'rgba(168,140,90,0)');
+    g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2);
+  }
+
+  /* --- the rhumb network, radiating from the rose --- */
+  const RH = 34;
+  for (let i = 0; i < RH; i++) {
+    const a = i * TAU / RH - Math.PI / 2;
+    const cls = i % 4 === 0 ? 0 : (i % 4 === 2 ? 1 : 2);
+    g.strokeStyle = cls === 0 ? INK + '0.13)' : cls === 1 ? GRN + '0.11)' : RED + '0.10)';
+    g.lineWidth = cls === 0 ? 0.7 : 0.5;
+    g.beginPath();
+    g.moveTo(ROSE.x, ROSE.y);
+    g.lineTo(ROSE.x + Math.cos(a) * 2100, ROSE.y + Math.sin(a) * 2100);
+    g.stroke();
+  }
+  g.strokeStyle = INK + '0.10)'; g.lineWidth = 0.6;
+  for (const r of [230, 470]) { g.beginPath(); g.arc(ROSE.x, ROSE.y, r, 0, TAU); g.stroke(); }
+
+  /* --- the sea: stipple and wave hatching, thicker close inshore --- */
+  const F = geo.field, gw = geo.gw, gh = geo.gh, CL = geo.cell;
+  const fieldAt = (x, y) => {
+    const i = Math.min(gw - 1, Math.max(0, Math.round(x / CL)));
+    const j = Math.min(gh - 1, Math.max(0, Math.round(y / CL)));
+    return F[j * gw + i];
+  };
+  const inFurn = (x, y) => {
+    for (const R of FURN) if (x > R.x - 8 && x < R.x + R.w + 8 && y > R.y - 8 && y < R.y + R.h + 8) return true;
+    return false;
+  };
+  const sr = rngFor('stipple');
+  g.fillStyle = INK + '0.20)';
+  for (let y = 20; y < CHART_H - 18; y += 7.5) {
+    for (let x = 20; x < CHART_W - 18; x += 7.5) {
+      const px = x + (sr() - 0.5) * 6, py = y + (sr() - 0.5) * 6;
+      const gate = sr();
+      const f = fieldAt(px, py);
+      if (f > 0.55) continue;
+      if (gate > 0.22 + 0.62 * Math.min(1, f / 0.55)) continue;
+      if (base && inFurn(px, py)) continue;
+      if (!inVp(px, py, 4)) continue;
+      g.fillRect(px, py, 0.85, 0.85);
+    }
+  }
+  /* the swell does not run one way over a whole sea: it turns slowly, and the
+     burin follows it, three strokes to a set as a woodcut sea is cut */
+  const swell = makeNoise('swell', 230);
+  const wr = rngFor('waves');
+  g.strokeStyle = INK + '0.26)'; g.lineWidth = 0.5;
+  g.beginPath();
+  for (let y = 24; y < CHART_H - 20; y += 19) {
+    for (let x = 24; x < CHART_W - 20; x += 25) {
+      const px = x + (wr() - 0.5) * 19, py = y + (wr() - 0.5) * 15;
+      const gate = wr(), rowGate = wr();
+      const l = 4.5 + wr() * 6.5;
+      const h1 = 1.7 + wr() * 0.7, h2 = 1.7 + wr() * 0.7;
+      const f = fieldAt(px, py);
+      if (f > 0.30 || gate < 0.34) continue;
+      if (base && inFurn(px, py)) continue;
+      if (!inVp(px, py, 18)) continue;
+      const a = swell(px, py) * 0.42;
+      const ca = Math.cos(a), sa = Math.sin(a);
+      const rows = f > 0.05 || rowGate < 0.42 ? 2 : 1;
+      for (let r = 0; r < rows; r++) {
+        const oy = (r - (rows - 1) / 2) * 3.4;
+        const ox = -sa * oy, oyy = ca * oy;
+        const bx = px + ox, by = py + oyy;
+        const h = r === 0 ? h1 : h2;
+        g.moveTo(bx - ca * l, by - sa * l);
+        g.quadraticCurveTo(bx - ca * l * 0.5 + sa * h, by - sa * l * 0.5 - ca * h, bx, by);
+        g.quadraticCurveTo(bx + ca * l * 0.5 - sa * h, by + sa * l * 0.5 + ca * h, bx + ca * l, by + sa * l);
+      }
+    }
+  }
+  g.stroke();
+
+  /* --- the sailing routes: the citation flow between the lands --- */
+  g.setLineDash([4, 4]);
+  for (const L of geo.lanes) {
+    const t = Math.min(1, L.w / 26);
+    g.strokeStyle = INK + (0.16 + 0.16 * t).toFixed(3) + ')';
+    g.lineWidth = 0.55 + 0.5 * t;
+    const mx = (L.ax + L.bx) / 2, my = (L.ay + L.by) / 2;
+    const dx = L.bx - L.ax, dy = L.by - L.ay;
+    const bow = 0.10 * (L.net >= 0 ? 1 : -1);
+    g.beginPath();
+    g.moveTo(L.ax, L.ay);
+    g.quadraticCurveTo(mx - dy * bow, my + dx * bow, L.bx, L.by);
+    g.stroke();
+  }
+  g.setLineDash([]);
+
+  /* --- the coasts --- */
+  const rings = geo.rings;
+  /* coastal hatching: three broken offsets, the period way of shading a shore */
+  for (const R of rings) {
+    if (R.area < 40) continue;
+    if (!R.bb) R.bb = polyBBox(R.pts);
+    if (R.bb.maxx < vp.x0 - 14 || R.bb.minx > vp.x1 + 14 ||
+        R.bb.maxy < vp.y0 - 14 || R.bb.miny > vp.y1 + 14) continue;
+    const p = R.pts, n = p.length;
+    const norms = [];
+    for (let i = 0; i < n; i++) {
+      const a = p[(i + 1) % n], b = p[(i - 1 + n) % n];
+      let tx = a[0] - b[0], ty = a[1] - b[1];
+      const m = Math.hypot(tx, ty) || 1;
+      norms.push([ty / m, -tx / m]);
+    }
+    const sign = polyArea(p) > 0 ? -1 : 1;
+    let d = 0;
+    for (const off of [2.6, 6.0, 10.2]) {
+      d++;
+      const q = p.map((pt, i) => [pt[0] + norms[i][0] * off * sign, pt[1] + norms[i][1] * off * sign]);
+      g.strokeStyle = INK + (0.26 - d * 0.055).toFixed(3) + ')';
+      g.lineWidth = d === 1 ? 0.62 : 0.5;
+      g.setLineDash(d === 1 ? [] : [6, 4 + d]);
+      g.beginPath(); pathThrough(g, q, true); g.stroke();
+    }
+    g.setLineDash([]);
+  }
+  /* the land itself */
+  const landPath = new Path2D();
+  for (const R of rings) {
+    const p = R.pts;
+    landPath.moveTo((p[p.length - 1][0] + p[0][0]) / 2, (p[p.length - 1][1] + p[0][1]) / 2);
+    for (let i = 0; i < p.length; i++) {
+      const a = p[i], b = p[(i + 1) % p.length];
+      landPath.quadraticCurveTo(a[0], a[1], (a[0] + b[0]) / 2, (a[1] + b[1]) / 2);
+    }
+    landPath.closePath();
+  }
+  g.fillStyle = 'rgba(224,203,148,0.95)';
+  g.fill(landPath, 'evenodd');
+  /* the ground is darker where it meets the water: a broad soft rim, clipped in */
+  g.save();
+  g.clip(landPath, 'evenodd');
+  g.strokeStyle = 'rgba(166,136,82,0.60)'; g.lineWidth = 12;
+  g.stroke(landPath);
+  g.strokeStyle = 'rgba(142,116,72,0.34)'; g.lineWidth = 3.6;
+  g.stroke(landPath);
+  g.restore();
+  g.strokeStyle = INK + '0.94)'; g.lineWidth = 1.6;
+  g.stroke(landPath);
+  g.save(); g.translate(0.6, 0.7);
+  g.strokeStyle = INK + '0.22)'; g.lineWidth = 0.7;
+  g.stroke(landPath);
+  g.restore();
+
+  /* --- the interior, clipped to the ground --- */
+  g.save();
+  g.clip(landPath, 'evenodd');
+  const dr = rngFor('dunes');
+  g.fillStyle = INK + '0.10)';
+  for (let i = 0; i < 3400; i++) {
+    const x = dr() * CHART_W, y = dr() * CHART_H;
+    if (!inVp(x, y, 2)) continue;
+    g.fillRect(x, y, 0.8, 0.8);
+  }
+  for (const I of geo.places) { if (inVp(I.cx, I.cy, 60)) drawPlaceMark(g, I); }
+  g.restore();
+  for (const I of geo.rocks) {
+    if (!inVp(I.cx, I.cy, 6)) continue;
+    g.fillStyle = INK + '0.8)';
+    g.beginPath(); g.arc(I.cx, I.cy, 1.6, 0, TAU); g.fill();
+  }
+
+  /* --- the deep, and what lives in it --- */
+  for (const B of geo.beasts) {
+    if (!inVp(B.x, B.y, B.L * 1.5)) continue;
+    drawBeast(g, B);
+    if (B.band) {
+      const h = B.band.lines.length > 1 ? B.band.fs * 2.5 : B.band.fs * 1.85;
+      drawBanderole(g, B.x, B.band.y, B.band.w, h);
+    }
+  }
+
+  /* --- the edge: where the sheet was singed, before the furniture goes on --- */
+  const er = rngFor('scorch');
+  for (const seat of [[1382, 470], [700, 20], [900, 796], [22, 300]]) {
+    for (let i = 0; i < 20; i++) {
+      const a = er() * TAU, r = er() * 88;
+      const x = seat[0] + Math.cos(a) * r * 1.6, y = seat[1] + Math.sin(a) * r * 0.75;
+      const rr = 9 + er() * 32;
+      const gr = g.createRadialGradient(x, y, 0, x, y, rr);
+      gr.addColorStop(0, 'rgba(96,60,24,' + (0.05 + er() * 0.11).toFixed(3) + ')');
+      gr.addColorStop(1, 'rgba(96,60,24,0)');
+      g.fillStyle = gr; g.fillRect(x - rr, y - rr, rr * 2, rr * 2);
+    }
+  }
+
+  drawRose(g, ROSE.x, ROSE.y, ROSE.r);
+  g.restore();
+
+  /* the torn edge itself, inked and browned */
+  g.save();
+  g.beginPath(); pathThrough(g, vell, true);
+  g.strokeStyle = 'rgba(112,80,40,0.42)'; g.lineWidth = 2.2; g.stroke();
+  g.strokeStyle = 'rgba(70,48,22,0.30)'; g.lineWidth = 0.8; g.stroke();
+  g.restore();
+}
+
+/* the four table instruments stay pinned to the glass while the sheet moves
+   beneath them: the readout, the key, the directions and the scale are the
+   utility path, and the utility path does not zoom away */
+function paintFurniture(g) {
+  const solid = !chartViewIdent();
+  drawCartouche(g, CART);
+  drawPanel(g, KEYB, solid);
+  drawPanel(g, DIRS, solid);
+  drawKeyGlyphs(g, KEYB);
+  drawScaleBar(g, SCAL);
+}
+
+/* the crisp re-engraving of the visible window at the settled view: a gesture
+   rides on a cheap blit of the baked sheet, and this replaces it */
+function crispChartRender() {
+  if (!chart.geo || chartViewIdent()) { chart.zoomKey = ''; return; }
+  const dpr = chart.dpr;
+  if (!chart.zoomCv) {
+    chart.zoomCv = document.createElement('canvas');
+    chart.zoomCv.width = Math.round(CHART_W * dpr);
+    chart.zoomCv.height = Math.round(CHART_H * dpr);
+  }
+  const g = chart.zoomCv.getContext('2d');
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.clearRect(0, 0, CHART_W, CHART_H);
+  g.lineJoin = 'round'; g.lineCap = 'round';
+  g.save();
+  g.translate(chart.tx, chart.ty);
+  g.scale(chart.z, chart.z);
+  const vp = {
+    x0: -chart.tx / chart.z, y0: -chart.ty / chart.z,
+    x1: (CHART_W - chart.tx) / chart.z, y1: (CHART_H - chart.ty) / chart.z
+  };
+  paintSheetGeo(g, chart.geo, vp, false);
+  g.restore();
+  chart.zoomKey = chart.z.toFixed(4) + ',' + chart.tx.toFixed(1) + ',' + chart.ty.toFixed(1);
+}
+
+/* --- the compass rose: fleur-de-lys at north, thirty-two points, rhumbs --- */
+function drawRose(g, cx, cy, R) {
+  g.save();
+  g.translate(cx, cy);
+  /* the water is cleared under her, the way an engraver clears his rose */
+  g.fillStyle = 'rgba(243,234,212,0.88)';
+  g.beginPath(); g.arc(0, 0, R * 1.22, 0, TAU); g.fill();
+  g.strokeStyle = INK + '0.30)'; g.lineWidth = 0.6;
+  g.beginPath(); g.arc(0, 0, R * 1.22, 0, TAU); g.stroke();
+
+  /* the graduated rim */
+  g.strokeStyle = INK + '0.70)'; g.lineWidth = 1.0;
+  g.beginPath(); g.arc(0, 0, R, 0, TAU); g.stroke();
+  g.lineWidth = 0.6;
+  g.beginPath(); g.arc(0, 0, R * 0.945, 0, TAU); g.stroke();
+  g.lineWidth = 0.5;
+  for (let i = 0; i < 128; i++) {
+    const a = i * TAU / 128 - Math.PI / 2;
+    const l = i % 4 === 0 ? R * 0.055 : R * 0.028;
+    g.strokeStyle = INK + (i % 4 === 0 ? '0.62)' : '0.34)');
+    g.beginPath();
+    g.moveTo(Math.cos(a) * R, Math.sin(a) * R);
+    g.lineTo(Math.cos(a) * (R - l), Math.sin(a) * (R - l));
     g.stroke();
   }
 
-  /* the track this visit has actually sailed */
+  /* thirty-two points, cut as lozenges: half in shadow, half in light */
+  const draw = (i, len, wid, dark) => {
+    const a = i * TAU / 32 - Math.PI / 2;
+    const tip = [Math.cos(a) * len, Math.sin(a) * len];
+    const l = [Math.cos(a - wid) * len * 0.34, Math.sin(a - wid) * len * 0.34];
+    const r = [Math.cos(a + wid) * len * 0.34, Math.sin(a + wid) * len * 0.34];
+    g.beginPath(); g.moveTo(0, 0); g.lineTo(l[0], l[1]); g.lineTo(tip[0], tip[1]); g.closePath();
+    g.fillStyle = dark; g.fill();
+    g.beginPath(); g.moveTo(0, 0); g.lineTo(r[0], r[1]); g.lineTo(tip[0], tip[1]); g.closePath();
+    g.fillStyle = 'rgba(247,240,222,0.96)'; g.fill();
+    g.strokeStyle = INK + '0.80)'; g.lineWidth = 0.6;
+    g.beginPath(); g.moveTo(l[0], l[1]); g.lineTo(tip[0], tip[1]); g.lineTo(r[0], r[1]);
+    g.lineTo(0, 0); g.lineTo(l[0], l[1]); g.stroke();
+  };
+  for (let i = 1; i < 32; i += 2) draw(i, R * 0.58, 0.115, INK + '0.40)');
+  for (let i = 2; i < 32; i += 4) draw(i, R * 0.78, 0.175, GRN + '0.55)');
+  for (let i = 0; i < 32; i += 4) if (i % 8 !== 0) draw(i, R * 0.86, 0.235, INK + '0.58)');
+  for (let i = 0; i < 32; i += 8) draw(i, R * 0.935, 0.300, INK + '0.84)');
+
+  /* the eight-point star at her heart */
+  g.fillStyle = 'rgba(247,240,222,0.98)';
+  g.beginPath(); g.arc(0, 0, R * 0.115, 0, TAU); g.fill();
+  g.strokeStyle = INK + '0.75)'; g.lineWidth = 0.8;
+  g.beginPath(); g.arc(0, 0, R * 0.115, 0, TAU); g.stroke();
+  g.fillStyle = RED + '0.88)';
+  g.beginPath(); g.arc(0, 0, R * 0.042, 0, TAU); g.fill();
+
+  /* the fleur-de-lys, standing clear of the rim above north */
+  g.save();
+  g.translate(0, -R * 1.20);
+  const u = R * 0.086;
+  /* her own clear ground, so the rim does not cut through her */
+  g.fillStyle = 'rgba(243,234,212,0.92)';
+  g.beginPath(); g.ellipse(0, -u * 1.4, u * 3.5, u * 4.6, 0, 0, TAU); g.fill();
+  g.fillStyle = 'rgba(247,240,222,0.97)';
+  g.strokeStyle = INK + '0.88)';
+  g.lineWidth = 0.9;
+  /* the centre petal: a lance with a flared foot */
+  g.beginPath();
+  g.moveTo(0, -u * 5.2);
+  g.bezierCurveTo(u * 1.25, -u * 3.3, u * 1.30, -u * 1.4, u * 0.90, u * 0.20);
+  g.lineTo(-u * 0.90, u * 0.20);
+  g.bezierCurveTo(-u * 1.30, -u * 1.4, -u * 1.25, -u * 3.3, 0, -u * 5.2);
+  g.closePath(); g.fill(); g.stroke();
+  /* the two side lobes, curling outward the way a lily's do */
+  for (const sg of [-1, 1]) {
+    g.beginPath();
+    g.moveTo(sg * u * 0.55, -u * 1.05);
+    g.bezierCurveTo(sg * u * 2.1, -u * 2.55, sg * u * 3.3, -u * 1.0, sg * u * 2.35, u * 0.35);
+    g.bezierCurveTo(sg * u * 1.95, u * 0.95, sg * u * 1.25, u * 0.75, sg * u * 1.05, u * 0.20);
+    g.bezierCurveTo(sg * u * 1.55, u * 0.30, sg * u * 2.05, -u * 0.15, sg * u * 1.75, -u * 0.85);
+    g.bezierCurveTo(sg * u * 1.45, -u * 1.45, sg * u * 0.95, -u * 1.35, sg * u * 0.62, -u * 0.95);
+    g.closePath(); g.fill(); g.stroke();
+  }
+  /* the band, in gold, and the foot below it */
+  g.fillStyle = 'rgba(178,133,44,0.95)';
+  g.beginPath(); g.rect(-u * 1.75, u * 0.22, u * 3.5, u * 0.62); g.fill(); g.stroke();
+  g.fillStyle = 'rgba(247,240,222,0.97)';
+  g.beginPath();
+  g.moveTo(-u * 0.52, u * 0.86);
+  g.lineTo(u * 0.52, u * 0.86);
+  g.bezierCurveTo(u * 0.80, u * 1.7, u * 1.35, u * 2.0, u * 1.65, u * 2.05);
+  g.lineTo(-u * 1.65, u * 2.05);
+  g.bezierCurveTo(-u * 1.35, u * 2.0, -u * 0.80, u * 1.7, -u * 0.52, u * 0.86);
+  g.closePath(); g.fill(); g.stroke();
+  /* the iron-gall shading that gives her a face */
+  g.fillStyle = INK + '0.20)';
+  g.beginPath();
+  g.moveTo(0, -u * 5.2);
+  g.bezierCurveTo(u * 1.25, -u * 3.3, u * 1.30, -u * 1.4, u * 0.90, u * 0.20);
+  g.lineTo(u * 0.09, u * 0.20);
+  g.lineTo(u * 0.09, -u * 4.8);
+  g.closePath(); g.fill();
+  g.restore();
+
+  /* the small cross the old roses put on the eastern point, toward the Levant */
+  g.save();
+  g.translate(R * 1.05, 0);
+  g.strokeStyle = INK + '0.80)'; g.lineWidth = 1.0;
+  g.beginPath();
+  g.moveTo(0, -R * 0.085); g.lineTo(0, R * 0.085);
+  g.moveTo(-R * 0.052, -R * 0.030); g.lineTo(R * 0.052, -R * 0.030);
+  g.stroke();
+  g.restore();
+  g.restore();
+}
+
+/* --- the cartouche, and the plainer panels --- */
+function drawCartouche(g, B) {
+  const x = B.x, y = B.y, w = B.w, h = B.h;
+  const r = 13;
+  const outer = [];
+  const N = 22;
+  const rnd = rngFor('cartouche');
+  const edge = (x0, y0, x1, y1) => {
+    for (let i = 0; i < N; i++) {
+      const t = i / N;
+      outer.push([x0 + (x1 - x0) * t + (rnd() - 0.5) * 0.9, y0 + (y1 - y0) * t + (rnd() - 0.5) * 0.9]);
+    }
+  };
+  edge(x + r, y, x + w - r, y);
+  outer.push([x + w, y + r * 0.3], [x + w + 5, y + r], [x + w, y + r * 1.9]);
+  edge(x + w, y + r * 2, x + w, y + h - r * 2);
+  outer.push([x + w, y + h - r * 1.9], [x + w + 5, y + h - r], [x + w, y + h - r * 0.3]);
+  edge(x + w - r, y + h, x + r, y + h);
+  outer.push([x, y + h - r * 0.3], [x - 5, y + h - r], [x, y + h - r * 1.9]);
+  edge(x, y + h - r * 2, x, y + r * 2);
+  outer.push([x, y + r * 1.9], [x - 5, y + r], [x, y + r * 0.3]);
+
+  g.fillStyle = 'rgba(246,239,221,0.93)';
+  g.beginPath(); pathThrough(g, outer, true); g.fill();
+  inkStroke(g, outer, true, 1.5, INK + '0.82)', INK + '0.20)');
+  g.strokeStyle = INK + '0.5)'; g.lineWidth = 0.7;
+  g.strokeRect(x + 6, y + 6, w - 12, h - 12);
+  g.strokeStyle = INK + '0.28)'; g.lineWidth = 0.5;
+  g.strokeRect(x + 9.5, y + 9.5, w - 19, h - 19);
+  /* corner curls */
+  g.strokeStyle = INK + '0.62)'; g.lineWidth = 0.9;
+  for (const [sx, sy, cx0, cy0] of [[1, 1, x, y], [-1, 1, x + w, y], [1, -1, x, y + h], [-1, -1, x + w, y + h]]) {
+    g.beginPath();
+    g.moveTo(cx0 + sx * 4, cy0 + sy * 17);
+    g.quadraticCurveTo(cx0 + sx * 4, cy0 + sy * 4, cx0 + sx * 17, cy0 + sy * 4);
+    g.stroke();
+    g.beginPath();
+    g.arc(cx0 + sx * 10, cy0 + sy * 10, 3.2, 0, TAU);
+    g.stroke();
+  }
+  /* a scallop over the head of the cartouche */
+  const scx = x + w / 2, scy = y - 1;
+  g.fillStyle = 'rgba(240,231,208,0.96)'; g.strokeStyle = INK + '0.7)'; g.lineWidth = 0.85;
+  g.beginPath(); g.arc(scx, scy, 15, Math.PI, TAU); g.closePath(); g.fill(); g.stroke();
+  g.lineWidth = 0.6; g.strokeStyle = INK + '0.5)';
+  for (let i = 1; i < 7; i++) {
+    const a = Math.PI + i * Math.PI / 7;
+    g.beginPath(); g.moveTo(scx, scy); g.lineTo(scx + Math.cos(a) * 14, scy + Math.sin(a) * 14); g.stroke();
+  }
+  /* the swag under its foot */
+  g.strokeStyle = INK + '0.55)'; g.lineWidth = 0.9;
+  g.beginPath();
+  g.moveTo(x + w * 0.28, y + h + 1);
+  g.quadraticCurveTo(x + w * 0.5, y + h + 13, x + w * 0.72, y + h + 1);
+  g.stroke();
+  g.beginPath(); g.arc(x + w * 0.5, y + h + 11.5, 2.4, 0, TAU); g.stroke();
+}
+
+function drawKeyGlyphs(g, B) {
+  const x = B.x + 22;
+  const y0 = B.y + KEY_ROW_Y;
+  const rows = ['anchorage', 'fort', 'town', 'hill', 'marsh', 'x'];
+  rows.forEach((k, i) => {
+    const y = y0 + i * KEY_ROW_H;
+    if (k === 'x') {
+      g.strokeStyle = RED + '0.88)'; g.lineWidth = 1.5;
+      g.beginPath();
+      g.moveTo(x - 4, y - 4); g.lineTo(x + 4, y + 4);
+      g.moveTo(x + 4, y - 4); g.lineTo(x - 4, y + 4);
+      g.stroke();
+      return;
+    }
+    const fake = {
+      cx: x, cy: y, authors: ['a', 'b', 'c', 'd'],
+      mark: {
+        kind: (k === 'hill' || k === 'marsh') ? 'none' : k, sz: 4.0,
+        hill: k === 'hill' ? 2 : 0, hillH: 6.2, marsh: k === 'marsh',
+        houses: 3, spin: 0.8
+      }
+    };
+    drawPlaceMark(g, fake);
+  });
+}
+
+function drawPanel(g, B, solid) {
+  g.fillStyle = solid ? 'rgba(245,238,220,0.97)' : 'rgba(245,238,220,0.86)';
+  g.fillRect(B.x, B.y, B.w, B.h);
+  g.strokeStyle = INK + '0.62)'; g.lineWidth = 1.05;
+  g.strokeRect(B.x, B.y, B.w, B.h);
+  g.strokeStyle = INK + '0.30)'; g.lineWidth = 0.55;
+  g.strokeRect(B.x + 4, B.y + 4, B.w - 8, B.h - 8);
+  g.strokeStyle = INK + '0.6)'; g.lineWidth = 0.9;
+  for (const [sx, sy, cx0, cy0] of [[1, 1, B.x, B.y], [-1, 1, B.x + B.w, B.y], [1, -1, B.x, B.y + B.h], [-1, -1, B.x + B.w, B.y + B.h]]) {
+    g.beginPath();
+    g.moveTo(cx0 + sx * 0, cy0 + sy * 11);
+    g.lineTo(cx0 + sx * 0, cy0 + sy * 0);
+    g.lineTo(cx0 + sx * 11, cy0 + sy * 0);
+    g.stroke();
+  }
+}
+
+function drawScaleBar(g, B) {
+  g.fillStyle = chartViewIdent() ? 'rgba(244,236,216,0.72)' : 'rgba(244,236,216,0.95)';
+  g.fillRect(B.x + 4, B.y - 2, B.w - 8, B.h + 4);
+  g.strokeStyle = INK + '0.30)'; g.lineWidth = 0.7;
+  g.strokeRect(B.x + 4, B.y - 2, B.w - 8, B.h + 4);
+  const nmPerPx = world.nmPerUnit / (chart.k * chart.z);
+  /* the widest round span the box will hold: lean in and the scale re-letters */
+  let span = 1;
+  for (const s of [40, 20, 12, 8, 4, 2, 1]) { if (s / nmPerPx <= B.w - 40) { span = s; break; } }
+  const len = span / nmPerPx;
+  const x0 = B.x + (B.w - len) / 2, y0 = B.y + 20, h = 7;
+  g.strokeStyle = INK + '0.85)'; g.lineWidth = 0.9;
+  g.strokeRect(x0, y0, len, h);
+  g.fillStyle = INK + '0.85)';
+  for (let i = 0; i < 4; i++) if (i % 2 === 1) g.fillRect(x0 + len * i / 4, y0, len / 4, h);
+  /* the first division subdivided, as a chart's scale is */
+  g.lineWidth = 0.6;
+  for (let i = 1; i < 5; i++) {
+    const x = x0 + (len / 4) * (i / 5);
+    g.beginPath(); g.moveTo(x, y0); g.lineTo(x, y0 + h); g.stroke();
+  }
+  g.lineWidth = 0.8;
+  for (let i = 0; i <= 4; i++) {
+    const x = x0 + len * i / 4;
+    g.beginPath(); g.moveTo(x, y0 - 4); g.lineTo(x, y0 + h + 4); g.stroke();
+  }
+  chart.scaleGeom = { x0, y0, len, span };
+}
+
+/* ============================================================
+   THE LETTERING: every word on the sheet is DOM, and stays crisp
+   ============================================================ */
+const CFONT = '"Iowan Old Style", "Palatino", "Palatino Linotype", Georgia, serif';
+let _meas = null;
+function textW(text, px, style, spacing) {
+  if (!_meas) _meas = document.createElement('canvas').getContext('2d');
+  _meas.font = (style || '') + ' ' + px + 'px ' + CFONT;
+  return _meas.measureText(text).width + (spacing || 0) * Math.max(0, text.length - 1);
+}
+
+function measureBands(geo) {
+  for (const B of geo.beasts) {
+    const cap = Math.max(62, B.L * 1.30);
+    let fs = clamp(B.L * 0.088, 6.2, 9.6);
+    let lines = [B.name];
+    let w = textW(B.name, fs, 'italic', 0);
+    while (w > cap && fs > 6.0) { fs -= 0.3; w = textW(B.name, fs, 'italic', 0); }
+    if (w > cap && B.name.indexOf(' ') > 0) {
+      /* two lines, broken at the space nearest the middle */
+      const parts = B.name.split(' ');
+      let best = 1, bd = 1e9;
+      for (let i = 1; i < parts.length; i++) {
+        const a = parts.slice(0, i).join(' '), b = parts.slice(i).join(' ');
+        const d = Math.abs(textW(a, fs, 'italic', 0) - textW(b, fs, 'italic', 0));
+        if (d < bd) { bd = d; best = i; }
+      }
+      lines = [parts.slice(0, best).join(' '), parts.slice(best).join(' ')];
+      w = Math.max(textW(lines[0], fs, 'italic', 0), textW(lines[1], fs, 'italic', 0));
+    }
+    B.band = { fs, lines, w: w + fs * 2.2, y: B.y + B.L * 0.44 + (lines.length > 1 ? 6 : 3) };
+  }
+}
+
+function layoutChartDom() {
+  const geo = chart.geo, lab = $('chartlabels'), cv = chart.cv;
+  const rect = cv.getBoundingClientRect();
+  const host = lab.parentElement.getBoundingClientRect();
+  const S = rect.width / CHART_W || 1;
+  const dx = rect.left - host.left, dy = rect.top - host.top;
+  const Z = chart.z, TX = chart.tx, TY = chart.ty;
+  const vx = x => x * Z + TX, vy = y => y * Z + TY;
+  const inView = (x, y, m) => x > -m && x < CHART_W + m && y > -m && y < CHART_H + m;
+  /* free names keep a reading size: they grow only a little as the hand leans
+     in, while the ink beneath them grows with the sheet */
+  const zf = Math.pow(Z, 0.24);
+  const boxes = [];
+  const geoHtml = [], pinHtml = [];
+  const hit = b => boxes.some(q => b.x0 < q.x1 && b.x1 > q.x0 && b.y0 < q.y1 && b.y1 > q.y0);
+  const put = (arr, cls, text, x, y, w, h, style) => {
+    boxes.push({ x0: x - w / 2, x1: x + w / 2, y0: y - h / 2, y1: y + h / 2 });
+    arr.push('<div class="' + cls + '" style="left:' + (dx + x * S).toFixed(1) + 'px;top:' +
+      (dy + y * S).toFixed(1) + 'px;' + (style || '') + '">' + text + '</div>');
+  };
+  for (const R of FURN) boxes.push({ x0: R.x - 4, x1: R.x + R.w + 4, y0: R.y - 4, y1: R.y + R.h + 4 });
+
+  /* --- the beasts' banderoles: lettering ON the ink, so it rides the zoom --- */
+  for (const B of geo.beasts) {
+    const bd = B.band;
+    const bx = vx(B.x), by = vy(bd.y);
+    if (!inView(bx, by, B.L * Z + 60)) continue;
+    const fs = bd.fs * Z, lh = fs * 1.18;
+    const inner = bd.lines.map(l => '<span>' + esc(l) + '</span>').join('');
+    const bandBox = { x0: bx - bd.w * Z / 2 - 6, x1: bx + bd.w * Z / 2 + 6, y0: by - lh, y1: by + lh };
+    /* her ribbon may swim under a pinned instrument, but her name never
+       letters across one: suppressed only on true overlap with the furniture */
+    const onFurn = FURN.some(R => {
+      const ox = Math.min(bandBox.x1, R.x + R.w) - Math.max(bandBox.x0, R.x);
+      const oy = Math.min(bandBox.y1, R.y + R.h) - Math.max(bandBox.y0, R.y);
+      return ox > 6 && oy > 6;
+    });
+    boxes.push(bandBox);
+    if (onFurn) continue;
+    geoHtml.push('<div class="cl-beast" style="left:' + (dx + bx * S).toFixed(1) + 'px;top:' +
+      (dy + by * S).toFixed(1) + 'px;font-size:' + (fs * S).toFixed(2) + 'px;line-height:' +
+      (lh * S).toFixed(2) + 'px">' + inner + '</div>');
+    boxes.push({ x0: vx(B.x - B.L * 0.52), x1: vx(B.x + B.L * 0.52), y0: vy(B.y - B.L * 0.42), y1: vy(B.y + B.L * 0.42) });
+  }
+
+  /* --- the archipelago names, set across their whole water --- */
+  for (const A of geo.lands) {
+    if (!A.arch) continue;
+    const ax = vx(A.x), ay = vy(A.y);
+    if (!inView(ax, ay, 220)) continue;
+    const sp = 4.2 * zf, fs = 13.5 * zf;
+    const t = A.name.toUpperCase();
+    const w = textW(t, fs, '', sp) + 12, h = fs + 8;
+    put(geoHtml, 'cl-arch', esc(t), ax, ay, w, h,
+      'font-size:' + (fs * S).toFixed(2) + 'px;letter-spacing:' + (sp * S).toFixed(2) + 'px');
+  }
+
+  /* --- the lands --- */
+  const regions = geo.regions.slice().sort((a2, b2) => b2.n - a2.n);
+  for (const G of regions) {
+    const prime = !!G.primary;
+    const big = G.n >= 14 ? 12 : G.n >= 7 ? 10.6 : G.n >= 4 ? 9.4 : 8.6;
+    const fs = (prime ? big : 8.4) * zf;
+    const sp = (prime ? 2.5 : 1.6) * zf;
+    let nm = G.name;
+    if (nm.length > 27) nm = nm.slice(0, 25).replace(/[\s,;:-]+$/, '') + '\u2026';
+    const t = (nm + (G.suffix ? ' ' + G.suffix : '')).toUpperCase();
+    let w = textW(t, fs, '', sp) + 8, h = fs + 6;
+    const gx = vx(G.x), gy = vy(G.y);
+    if (!inView(gx, gy, 280)) continue;
+    const topY = vy(G.bb.miny), botY = vy(G.bb.maxy);
+    /* over her own ground if the name will sit there; otherwise directly under
+       it, touching, so it can never read as a name adrift on open water */
+    const tries = w < G.wide * Z * 1.45
+      ? [[gx, gy], [gx, topY - h * 0.9], [gx, botY + h * 0.9]]
+      : [[gx, botY + h * 0.85], [gx, topY - h * 0.85], [gx, gy]];
+    let ok = false;
+    for (const [px, py] of tries) {
+      for (const dyy of [0, -h, h, -h * 2, h * 2]) {
+        const bx = { x0: px - w / 2, x1: px + w / 2, y0: py + dyy - h / 2, y1: py + dyy + h / 2 };
+        if (hit(bx)) continue;
+        put(geoHtml, 'cl-land' + (prime ? '' : ' sat'), esc(t), px, py + dyy, w, h,
+          'font-size:' + (fs * S).toFixed(2) + 'px;letter-spacing:' + (sp * S).toFixed(2) + 'px');
+        ok = true; break;
+      }
+      if (ok) break;
+    }
+    if (ok) {
+      /* the land already carries this name: her chief page is not lettered twice */
+      const owner = prime ? (G.hub || G.chief) : G.chief;
+      if (owner) {
+        const n2 = t.replace(/ (ROCK|CAY|ISLE)$/, '');
+        if (n2 === (owner.sidebarLabel || '').toUpperCase() || n2 === (owner.title || '').toUpperCase()) owner._suppress = true;
+      }
+    }
+  }
+
+  /* --- the places: leaning in, every name the window will hold --- */
+  const ranked = geo.places.slice().sort((a, b) => b.mark.score - a.mark.score);
+  let lettered = 0;
+  for (const I of ranked) {
+    if (I._suppress) continue;
+    const px0 = vx(I.cx), py0 = vy(I.cy);
+    if (!inView(px0, py0, 90)) continue;
+    const t = I.sidebarLabel.length > 30 ? I.sidebarLabel.slice(0, 29) + '\u2026' : I.sidebarLabel;
+    const fs = (I.mark.kind === 'anchorage' ? 8.8 : 8.0) * zf;
+    const w = textW(t, fs, '', 0.2) + 5, h = fs + 3.4;
+    const s = I.mark.sz * Z;
+    const tries = [[0, s * 2.3 + 4], [0, -(s * 2.3 + 4)], [w / 2 + s + 3, 0], [-(w / 2 + s + 3), 0]];
+    if (Z >= 2.2) tries.push([w / 2 + s + 3, -(h * 0.8)], [-(w / 2 + s + 3), h * 0.8],
+      [0, s * 2.3 + 4 + h], [0, -(s * 2.3 + 4 + h)]);
+    for (const [ox, oy] of tries) {
+      const b = { x0: px0 + ox - w / 2, x1: px0 + ox + w / 2, y0: py0 + oy - h / 2, y1: py0 + oy + h / 2 };
+      if (hit(b)) continue;
+      put(geoHtml, 'cl-place' + (I.mark.kind === 'anchorage' ? ' chief' : ''), esc(t), px0 + ox, py0 + oy, w, h,
+        'font-size:' + (fs * S).toFixed(2) + 'px');
+      lettered++;
+      break;
+    }
+  }
+  geo.lettered = lettered;
+
+  /* --- the rose's letters ride the rose --- */
+  /* no N: on this rose the fleur-de-lys is north, as she is on the old ones */
+  for (const [t, a] of [['E', 0], ['S', Math.PI / 2], ['W', Math.PI]]) {
+    const r = ROSE.r + 24;
+    const rx = vx(ROSE.x + Math.cos(a) * r), ry = vy(ROSE.y + Math.sin(a) * r);
+    if (!inView(rx, ry, 60)) continue;
+    geoHtml.push('<div class="cl-rose" style="left:' + (dx + rx * S).toFixed(1) +
+      'px;top:' + (dy + ry * S).toFixed(1) + 'px;font-size:' + (11 * Z * S).toFixed(2) + 'px">' + t + '</div>');
+  }
+
+  /* --- the scale's numerals: pinned with its bar --- */
+  const SG = chart.scaleGeom;
+  if (SG) {
+    for (let i = 0; i <= 4; i++) {
+      pinHtml.push('<div class="cl-num" style="left:' + (dx + (SG.x0 + SG.len * i / 4) * S).toFixed(1) +
+        'px;top:' + (dy + (SG.y0 - 11) * S).toFixed(1) + 'px;font-size:' + (9 * S).toFixed(2) + 'px">' +
+        (+((i * SG.span / 4).toFixed(2))) + '</div>');
+    }
+    pinHtml.push('<div class="cl-scaption" style="left:' + (dx + (SCAL.x + SCAL.w / 2) * S).toFixed(1) +
+      'px;top:' + (dy + (SG.y0 + 20) * S).toFixed(1) + 'px;font-size:' + (10 * S).toFixed(2) + 'px">' +
+      'A scale of ' + numToWords(SG.span) + ' nautical miles, by estimation</div>');
+  }
+
+  /* --- the cartouche --- */
+  pinHtml.push('<div class="cl-cart" style="left:' + (dx + (CART.x + 15) * S).toFixed(1) + 'px;top:' +
+    (dy + (CART.y + 15) * S).toFixed(1) + 'px;width:' + ((CART.w - 30) * S).toFixed(1) +
+    'px;font-size:' + (11 * S).toFixed(2) + 'px">' + cartoucheHtml() + '</div>');
+
+  /* --- the legend --- */
+  pinHtml.push('<div class="cl-dirs" style="left:' + (dx + (DIRS.x + 14) * S).toFixed(1) + 'px;top:' +
+    (dy + (DIRS.y + 13) * S).toFixed(1) + 'px;width:' + ((DIRS.w - 28) * S).toFixed(1) +
+    'px;font-size:' + (11 * S).toFixed(2) + 'px">' + directionsHtml() + '</div>');
+
+  lab.innerHTML = '<div id="clgeo">' + geoHtml.join('') + '</div><div id="clpin">' + pinHtml.join('') + '</div>';
+  chart.layoutView = { z: Z, tx: TX, ty: TY, S, dx, dy };
+
+  /* the two live panels keep their own nodes: the readout and the key */
+  const ci = $('chartinfo');
+  ci.style.left = (dx + (CART.x + 15) * S).toFixed(1) + 'px';
+  ci.style.top = (dy + (CART.y + CART.h - 74) * S).toFixed(1) + 'px';
+  ci.style.width = ((CART.w - 30) * S).toFixed(1) + 'px';
+  ci.style.fontSize = (11.5 * S).toFixed(2) + 'px';
+  const ck = $('chartkey');
+  ck.style.left = (dx + (KEYB.x + 14) * S).toFixed(1) + 'px';
+  ck.style.top = (dy + (KEYB.y + 12) * S).toFixed(1) + 'px';
+  ck.style.width = ((KEYB.w - 28) * S).toFixed(1) + 'px';
+  ck.style.fontSize = (11 * S).toFixed(2) + 'px';
+  ck.innerHTML = keyHtml(S);
+}
+function cartoucheHtml() {
+  const g = world.graph, geo = chart.geo;
+  return '<div class="cc-title">CARTA STRAPIANA</div>' +
+    '<div class="cc-sub">A chart of the documentation of Strapi,<br>surveyed out of the corpus itself</div>' +
+    '<div class="cc-rule"></div>' +
+    '<div class="cc-tot"><b>' + world.islands.length + '</b> places &middot; <b>' +
+    geo.rings.filter(r => r.places && r.places.length).length + '</b> lands and isles &middot; <b>' +
+    commas(g.edges.length) + '</b> citations<br><b>' + Math.round(world.extentNm) +
+    '</b> nautical miles from shore to shore &middot; <b>' + world.uncited.length +
+    '</b> unreached</div>';
+}
+
+function directionsHtml() {
+  const A = world.archipelagos.slice().sort((a, b) => b.size - a.size).slice(0, 5);
+  const line = (a, b) => {
+    const brg = norm360(Math.atan2(b.x - a.x, -(b.y - a.y)) * 180 / Math.PI);
+    const nm = Math.hypot(b.x - a.x, b.y - a.y) * world.nmPerUnit;
+    return '<li>From <i>' + esc(a.name) + '</i>, the <i>' + esc(b.name) + '</i> shore bears <b>' +
+      compassPoint(brg) + '</b>, ' + numToWords(Math.max(1, Math.round(nm))) + ' miles.</li>';
+  };
+  let h = '<div class="cd-h">SAILING DIRECTIONS</div><ul>';
+  for (let i = 0; i < 3; i++) h += line(A[i], A[i + 1]);
+  h += '<li>The wind is the citation itself: it blows out of the pages that cite, into the pages cited.</li>';
+  h += '</ul>';
+  return h;
+}
+
+function keyHtml(S) {
+  const rows = [
+    'the chief page of a land',
+    'a fort: many pages cite her',
+    'a settlement: many hands',
+    'hachures: a long page',
+    'marsh: untended a long while',
+    'read on this visit (' + visit.charted.size + ')'
+  ];
+  let h = '<div class="ck-h">HERE BE DRAGONS</div>' +
+    '<div class="ck-lede">Fifty places no route yet reaches. Each beast is one of them, drawn ' +
+    'from her own numbers: bulk from words, arms from the pages she reaches out to, coils from her ' +
+    'commits, eyes from her night work.</div>';
+  /* the rows are pinned to the same rule the glyphs were inked on */
+  rows.forEach((t, i) => {
+    const top = (KEY_ROW_Y - 12 + i * KEY_ROW_H - KEY_ROW_H / 2) * S;
+    h += '<div class="ck-row" style="top:' + top.toFixed(1) + 'px;height:' + (KEY_ROW_H * S).toFixed(1) +
+      'px;line-height:' + (KEY_ROW_H * S).toFixed(1) + 'px;padding-left:' + (22 * S).toFixed(1) + 'px">' +
+      t + '</div>';
+  });
+  return h;
+}
+
+/* ============================================================
+   THE VISIT, INKED OVER THE SHEET
+   ============================================================ */
+function drawChartVisit(g) {
+  const Z = chart.z, TXv = chart.tx, TYv = chart.ty;
+  const VV = p => [p[0] * Z + TXv, p[1] * Z + TYv];
   if (visit.track.length > 1) {
-    g.strokeStyle = 'rgba(141,47,34,0.75)';
-    g.lineWidth = 1.5;
-    g.setLineDash([5, 3]);
+    g.strokeStyle = RED + '0.72)';
+    g.lineWidth = 1.4;
+    g.setLineDash([4, 3.5]);
     g.beginPath();
     let started = false;
     for (const t of visit.track) {
-      const p = chartProject(t.x, t.y);
+      const p = VV(chartProject(t.x, t.y));
       if (!started) { g.moveTo(p[0], p[1]); started = true; } else g.lineTo(p[0], p[1]);
     }
     g.stroke();
     g.setLineDash([]);
   }
-
-  /* the islands: a small derived coast apiece, inked where they are charted */
-  chart.marks.length = 0;
-  for (const I of world.islands) {
-    const p = chartProject(I.pos.x, I.pos.y);
-    const r = 2.9 + 4.6 * (I.mag - 0.44) / 1.41;
-    chart.marks.push({ isle: I, x: p[0], y: p[1], r });
-    const charted = visit.charted.has(I.slug);
-    const F = formOf(I);
-    /* a miniature of her own coast, not a dot: the same elevation field, ten steps */
-    g.beginPath();
-    const n = 12;
-    for (let s = 0; s <= n; s++) {
-      const t = s / n;
-      const x = F.x0 + t * (F.x1 - F.x0);
-      const e = F.elev(x) / 120;
-      const ang = -Math.PI + t * TAU;
-      const rr = r * (0.62 + 0.9 * e);
-      const px = p[0] + Math.cos(ang) * rr * 1.25, py = p[1] + Math.sin(ang) * rr * 0.8;
-      if (s === 0) g.moveTo(px, py); else g.lineTo(px, py);
-    }
-    g.closePath();
-    if (charted) { g.fillStyle = 'rgba(40,29,17,0.86)'; g.fill(); }
+  /* an X at every place already read */
+  g.strokeStyle = RED + '0.88)'; g.lineWidth = 1.5;
+  for (const slug of visit.charted) {
+    const I = world.bySlug.get(slug);
+    if (!I) continue;
+    let x, y;
+    if (I.cx != null) { x = I.cx; y = I.cy; }
     else {
-      g.fillStyle = I.inbound === 0 ? 'rgba(241,231,208,0.85)' : 'rgba(233,221,194,0.75)';
-      g.fill();
-      g.strokeStyle = I.inbound === 0 ? 'rgba(141,47,34,0.85)' : 'rgba(52,39,24,0.78)';
-      g.lineWidth = 1.05;
-      g.stroke();
+      const B = (chart.geo.beasts || []).find(b => b.isle === I);
+      if (B) { x = B.x; y = B.y; } else { const p = chartProject(I.pos.x, I.pos.y); x = p[0]; y = p[1]; }
     }
-  }
-
-  /* archipelago rings */
-  g.strokeStyle = 'rgba(70,53,35,0.32)';
-  g.lineWidth = 0.9;
-  g.setLineDash([2.5, 5]);
-  for (const A of world.archipelagos) {
-    const p = chartProject(A.x, A.y);
+    x = x * Z + TXv; y = y * Z + TYv;
+    const r = 4.2;
     g.beginPath();
-    g.arc(p[0], p[1], Math.max(6, A.r * chart.k * 1.16), 0, TAU);
+    g.moveTo(x - r, y - r); g.lineTo(x + r, y + r);
+    g.moveTo(x + r, y - r); g.lineTo(x - r, y + r);
     g.stroke();
   }
-  g.setLineDash([]);
-
-  /* one compass rose, red and gold, at the centre of the sheet */
-  drawRose(g, chart.W - 92, 92, 46);
-
-  /* the ship */
-  const sp = chartProject(ship.x, ship.y);
+  /* the ship, where she swims */
+  const sp = VV(chartProject(ship.x, ship.y));
   g.save();
   g.translate(sp[0], sp[1]);
+  /* a clear berth under her, so she is never lost in the ground */
+  g.fillStyle = 'rgba(243,234,212,0.80)';
+  g.beginPath(); g.ellipse(0, 0, 13, 11, 0, 0, TAU); g.fill();
   g.rotate(ship.bearing * Math.PI / 180);
-  g.fillStyle = 'rgba(141,47,34,0.95)';
+  g.strokeStyle = RED + '0.95)';
+  g.fillStyle = 'rgba(248,241,224,0.95)';
+  g.lineWidth = 1.15;
+  /* the hull */
   g.beginPath();
-  g.moveTo(0, -9); g.lineTo(5, 7); g.lineTo(0, 4); g.lineTo(-5, 7);
-  g.closePath(); g.fill();
+  g.moveTo(-5.4, 3.2);
+  g.quadraticCurveTo(0, 8.6, 5.4, 3.2);
+  g.lineTo(4.2, 0.6); g.lineTo(-4.2, 0.6);
+  g.closePath(); g.fill(); g.stroke();
+  /* two masts and a bowsprit */
+  g.beginPath();
+  g.moveTo(-1.6, 0.6); g.lineTo(-1.6, -8.2);
+  g.moveTo(2.2, 0.6); g.lineTo(2.2, -5.6);
+  g.moveTo(-4.4, 2.0); g.lineTo(-9.2, -0.6);
+  g.stroke();
+  /* her canvas, drawing */
+  g.fillStyle = RED + '0.42)';
+  g.beginPath();
+  g.moveTo(-1.2, -7.6); g.quadraticCurveTo(4.6, -5.2, 3.0, -1.2); g.lineTo(-1.2, -1.2);
+  g.closePath(); g.fill(); g.stroke();
+  g.beginPath();
+  g.moveTo(2.6, -5.2); g.quadraticCurveTo(6.6, -3.4, 5.4, -0.4); g.lineTo(2.6, -0.4);
+  g.closePath(); g.fill(); g.stroke();
   g.restore();
-  chart.ready = true;
-
-  /* the archipelago names, set as DOM so they stay crisp */
-  const lab = $('chartlabels');
-  const rect = cv.getBoundingClientRect();
-  const host = lab.parentElement.getBoundingClientRect();
-  const dx = rect.left - host.left, dy = rect.top - host.top;
-  /* the biggest archipelago gets its name first, and a name that would print
-     across one already set is left off rather than overprinted */
-  const placed = [];
-  const html = [];
-  for (const A of world.archipelagos.slice().sort((a, b) => b.size - a.size)) {
-    const p = chartProject(A.x, A.y);
-    const y = p[1] - Math.max(10, A.r * chart.k * 1.16) - 10;
-    const w = A.name.length * 7.6 + 10, h = 15;
-    const box = { x0: p[0] - w / 2, x1: p[0] + w / 2, y0: y - h / 2, y1: y + h / 2 };
-    if (placed.some(q => box.x0 < q.x1 && box.x1 > q.x0 && box.y0 < q.y1 && box.y1 > q.y0)) continue;
-    placed.push(box);
-    html.push('<div class="al" style="left:' + (dx + p[0]) + 'px;top:' + (dy + y) + 'px">' +
-      esc(A.name) + '</div>');
-  }
-  lab.innerHTML = html.join('');
-  showChartInfo(chart.hover);
-
-  $('chartkey').innerHTML =
-    '<b>' + world.islands.length + ' islands</b> &middot; ' + world.archipelagos.length + ' archipelagos<br>' +
-    '<b>' + commas(world.graph.edges.length) + ' rhumb lines</b>, one per citation<br>' +
-    'black principal winds &middot; <span style="color:#38562f">green half</span> &middot; ' +
-    '<span style="color:#8d2f22">red quarter</span><br>' +
-    'filled = charted this visit (' + visit.charted.size + ')<br>' +
-    '<span style="color:#8d2f22">outlined red</span> = dark shore, nothing cites her (' + world.uncited.length + ')';
 }
 
-function drawRose(g, cx, cy, R) {
-  g.save();
-  g.translate(cx, cy);
-  g.strokeStyle = 'rgba(70,53,35,0.55)';
-  g.lineWidth = 0.7;
-  g.beginPath(); g.arc(0, 0, R, 0, TAU); g.stroke();
-  g.beginPath(); g.arc(0, 0, R * 0.72, 0, TAU); g.stroke();
-  for (let i = 0; i < 32; i++) {
-    const a = i * TAU / 32 - Math.PI / 2;
-    const cls = i % 4 === 0 ? 0 : (i % 4 === 2 ? 1 : 2);
-    const len = cls === 0 ? R : cls === 1 ? R * 0.86 : R * 0.78;
-    g.strokeStyle = cls === 0 ? 'rgba(38,28,17,0.8)' : cls === 1 ? 'rgba(56,86,47,0.7)' : 'rgba(141,47,34,0.6)';
-    g.lineWidth = cls === 0 ? 1.1 : 0.7;
-    g.beginPath();
-    g.moveTo(0, 0);
-    g.lineTo(Math.cos(a) * len, Math.sin(a) * len);
-    g.stroke();
+/* ============================================================
+   DRAW
+   ============================================================ */
+function drawChart() {
+  const cv = $('chart');
+  if (!chart.cv) {
+    chart.cv = cv;
+    const dpr = Math.min(Math.max(window.devicePixelRatio || 1, 1), 2);
+    cv.width = Math.round(CHART_W * dpr);
+    cv.height = Math.round(CHART_H * dpr);
+    cv.style.width = CHART_W + 'px';
+    cv.style.height = CHART_H + 'px';
+    chart.g = cv.getContext('2d');
+    chart.dpr = dpr;
   }
-  /* the fleur at north, in the period manner: two gold petals over a red point */
-  g.fillStyle = 'rgba(176,132,44,0.9)';
-  g.beginPath(); g.moveTo(0, -R * 1.16); g.lineTo(4.5, -R * 0.7); g.lineTo(-4.5, -R * 0.7); g.closePath(); g.fill();
-  g.fillStyle = 'rgba(141,47,34,0.9)';
-  g.beginPath(); g.arc(0, 0, 2.6, 0, TAU); g.fill();
-  g.restore();
+  const t0 = performance.now();
+  const geo = buildChartGeo();
+  if (!chart.sheet) { measureBands(geo); bakeChartSheet(geo); }
+  drawChartCanvas();
+  layoutChartDom();
+  showChartInfo(chart.hover);
+  chart.ready = true;
+  diag.chartMs = +(performance.now() - t0).toFixed(1);
+}
+
+/* the canvas alone: what a gesture frame is allowed to cost */
+function drawChartCanvas() {
+  if (!chart.g || !chart.sheet) return;
+  const g = chart.g, dpr = chart.dpr;
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.clearRect(0, 0, CHART_W, CHART_H);
+  if (chartViewIdent()) {
+    g.drawImage(chart.sheet, 0, 0, CHART_W, CHART_H);
+  } else {
+    const key = chart.z.toFixed(4) + ',' + chart.tx.toFixed(1) + ',' + chart.ty.toFixed(1);
+    if (chart.zoomCv && chart.zoomKey === key) {
+      g.drawImage(chart.zoomCv, 0, 0, CHART_W, CHART_H);
+    } else {
+      g.save();
+      g.imageSmoothingEnabled = true;
+      try { g.imageSmoothingQuality = 'high'; } catch (err) {}
+      g.translate(chart.tx, chart.ty);
+      g.scale(chart.z, chart.z);
+      g.drawImage(chart.sheet, 0, 0, CHART_W, CHART_H);
+      g.restore();
+    }
+  }
+  g.lineJoin = 'round'; g.lineCap = 'round';
+  drawChartVisit(g);
+  paintFurniture(g);
+  diag.chartView = { z: +chart.z.toFixed(3), tx: Math.round(chart.tx), ty: Math.round(chart.ty) };
+}
+
+/* eased approach to the target view; reduced motion arrives at once */
+function chartAnimTick() {
+  chart.anim = 0;
+  if (ui.mode !== 'below' || ui.tab !== 'chart') { chartSnapToTarget(); return; }
+  const ease = REDUCED ? 1 : 0.30;
+  chart.z = lerp(chart.z, chart.zt, ease);
+  chart.tx = lerp(chart.tx, chart.txt, ease);
+  chart.ty = lerp(chart.ty, chart.tyt, ease);
+  const done = Math.abs(chart.z - chart.zt) < 0.0015 &&
+    Math.abs(chart.tx - chart.txt) < 0.3 && Math.abs(chart.ty - chart.tyt) < 0.3;
+  if (done) chartSnapToTarget();
+  chartClampView();
+  drawChartCanvas();
+  syncLabelTransform();
+  if (!done) chart.anim = requestAnimationFrame(chartAnimTick);
+  else chartSettle();
+}
+function chartSnapToTarget() {
+  chart.z = chart.zt; chart.tx = chart.txt; chart.ty = chart.tyt;
+  chartClampView();
+}
+function kickChartAnim() {
+  if (REDUCED) {
+    chartSnapToTarget();
+    drawChartCanvas();
+    syncLabelTransform();
+    chartSettle();
+    return;
+  }
+  if (!chart.anim) chart.anim = requestAnimationFrame(chartAnimTick);
+}
+/* the settled view: re-engrave the window crisp and re-set the lettering */
+function chartSettle() {
+  clearTimeout(chart.crispT);
+  chart.crispT = setTimeout(() => {
+    if (ui.mode !== 'below' || ui.tab !== 'chart' || !chart.cv) return;
+    crispChartRender();
+    drawChartCanvas();
+    layoutChartDom();
+    showChartInfo(chart.hover);
+  }, REDUCED ? 0 : 110);
+}
+/* between full layouts, the lettering rides the gesture on one transform */
+function syncLabelTransform() {
+  const el = document.getElementById('clgeo'), L = chart.layoutView;
+  if (!el || !L) return;
+  const s = chart.z / L.z;
+  const ttx = L.dx + chart.tx * L.S - s * (L.dx + L.tx * L.S);
+  const tty = L.dy + chart.ty * L.S - s * (L.dy + L.ty * L.S);
+  el.style.transform = 'translate(' + ttx.toFixed(2) + 'px,' + tty.toFixed(2) + 'px) scale(' + s.toFixed(4) + ')';
+}
+/* +/- steps, 0 home: the keys zoom about the centre of the glass */
+function chartKeyZoom(k) {
+  if (k === '0') { chart.zt = 1; chart.txt = 0; chart.tyt = 0; }
+  else {
+    const f = (k === '-' || k === '_') ? 1 / 1.7 : 1.7;
+    chartZoomAbout(CHART_W / 2, CHART_H / 2, chart.zt * f);
+  }
+  kickChartAnim();
 }
 
 function chartPick(evx, evy) {
+  if (!chart.cv || !chart.marks.length) return null;
   const r = chart.cv.getBoundingClientRect();
-  const x = (evx - r.left) * chart.W / r.width, y = (evy - r.top) * chart.H / r.height;
-  let best = null, bd = 15 * 15;
+  const x = ((evx - r.left) * CHART_W / r.width - chart.tx) / chart.z;
+  const y = ((evy - r.top) * CHART_H / r.height - chart.ty) / chart.z;
+  let best = null, bd = 1e9;
   for (const m of chart.marks) {
-    const d = (m.x - x) * (m.x - x) + (m.y - y) * (m.y - y);
-    if (d < bd) { bd = d; best = m; }
+    const dx = m.x - x, dy = m.y - y;
+    const d = Math.hypot(dx, dy);
+    if (d > m.r) continue;
+    const score = d / m.r;
+    if (score < bd) { bd = score; best = m; }
   }
   return best;
 }
+
 function showChartInfo(isle) {
   const box = $('chartinfo');
+  if (!box) return;
   if (!isle) {
     box.querySelector('.ci-name').textContent = 'The surveyed sea';
     box.querySelector('.ci-line').textContent =
-      world.islands.length + ' pages, ' + commas(world.graph.edges.length) + ' citations, ' +
-      Math.round(world.extentNm) + ' nautical miles across. Nothing here is hidden.';
-    box.querySelector('.ci-act').textContent = 'Hover an island. Click to shape a course, double-click to be carried there.';
+      'Hover any place or any beast. Every one of the ' + world.islands.length + ' is on this sheet.';
+    box.querySelector('.ci-act').textContent = 'Click to shape a course · double-click to be carried there · 2 for the plain index.';
     return;
   }
   const arch = isle.comm >= 0 ? world.archipelagos[isle.comm] : null;
   box.querySelector('.ci-name').textContent = isle.title;
-  box.querySelector('.ci-line').textContent =
-    commas(isle.words) + ' words · ' + isle.nH2 + ' headlands · ' +
-    (isle.inbound ? isle.inbound + (isle.inbound === 1 ? ' riding light' : ' riding lights') : 'a dark shore') + ' · ' +
-    (arch ? arch.name + ' archipelago' : 'off soundings') + ' · ' +
-    (isle.authors.length === 1 ? 'kept alone by ' + isle.authors[0] : isle.authors.length + ' hands');
+  const bits = [commas(isle.words) + ' words', isle.nH2 + (isle.nH2 === 1 ? ' headland' : ' headlands')];
+  bits.push(isle.inbound ? isle.inbound + (isle.inbound === 1 ? ' riding light' : ' riding lights') : 'no route reaches her');
+  bits.push(arch ? 'of ' + arch.name : 'off soundings');
+  bits.push(isle.authors.length === 1 ? 'kept alone by ' + isle.authors[0] : isle.authors.length + ' hands');
+  box.querySelector('.ci-line').textContent = bits.join(' · ');
   box.querySelector('.ci-act').textContent =
-    (visit.charted.has(isle.slug) ? 'Charted. ' : '') + 'Click to shape a course · double-click to be carried there.';
+    (visit.charted.has(isle.slug) ? 'Read this visit. ' : '') +
+    'Click to shape a course · double-click to be carried there.';
 }
 
 /* ============================================================
    BELOW DECK
    ============================================================ */
 function openBelow(tab) {
+  firstOrder('below');
   ui.mode = 'below';
   ui.tab = tab || ui.tab || 'chart';
   $('anchorage').hidden = true;
@@ -3798,7 +6281,10 @@ function showTab(tab) {
   for (const name of ['chart', 'index', 'log', 'register', 'colophon']) {
     $('pane-' + name).hidden = name !== tab;
   }
-  if (tab === 'chart') drawChart();
+  if (tab === 'chart') {
+    if (chart.sheet) drawChart();
+    else requestAnimationFrame(() => { if (ui.mode === 'below' && ui.tab === 'chart') drawChart(); });
+  }
   else if (tab === 'index') renderIndex();
   else if (tab === 'log') renderLog();
   else if (tab === 'register') renderRegister();
@@ -3855,6 +6341,9 @@ function initUI() {
           (visit.hand ? ' — ' + visit.hand + ', a stranger\'s hand' : ' — an unsigned stranger\'s hand') + '.');
       } else if (act === 'raise') {
         raiseHandsFor(isle);
+      } else if (act === 'path') {
+        crossTo('longway', 'You step ashore. The path takes the cliff in long, easy zigzags.', 1600);
+        return;
       }
       visit.save();
       $('shoreside').innerHTML = shoresideHTML(isle);
@@ -3890,6 +6379,11 @@ function initUI() {
       if (hit) { $('searchdrop').hidden = true; s.blur(); warpTo(hit.isle.slug, 'packet'); }
       e.preventDefault();
     } else if (e.key === 'Escape') { $('searchdrop').hidden = true; s.blur(); e.preventDefault(); }
+    else if (!s.value && ui.mode === 'below' && ui.tab === 'chart' &&
+      (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '_')) {
+      /* an empty search box passes the zoom keys through to the glass */
+      chartKeyZoom(e.key); e.preventDefault();
+    }
   });
   $('searchdrop').addEventListener('click', e => {
     const b = e.target.closest('.sr');
@@ -3903,12 +6397,14 @@ function initUI() {
 
   const cv = $('chart');
   cv.addEventListener('mousemove', e => {
+    if (chart.gesturing) return;
     const m = chartPick(e.clientX, e.clientY);
     const isle = m ? m.isle : null;
     if (isle !== chart.hover) { chart.hover = isle; showChartInfo(isle); }
   });
   cv.addEventListener('mouseleave', () => { chart.hover = null; showChartInfo(null); });
   cv.addEventListener('click', e => {
+    if (chart.panned) { chart.panned = false; return; }
     const m = chartPick(e.clientX, e.clientY);
     if (!m) return;
     if (e.detail > 1) return;   // the dblclick handler takes it
@@ -3923,11 +6419,84 @@ function initUI() {
     if (m) warpTo(m.isle.slug, 'packet');
   });
 
+  /* --- the reading glass: wheel and pinch zoom about the hand, drag to pan --- */
+  cv.addEventListener('wheel', e => {
+    if (ui.tab !== 'chart') return;
+    e.preventDefault();
+    const r = cv.getBoundingClientRect();
+    const cx = (e.clientX - r.left) * CHART_W / r.width;
+    const cy = (e.clientY - r.top) * CHART_H / r.height;
+    let d = e.deltaY;
+    if (e.deltaMode === 1) d *= 33; else if (e.deltaMode === 2) d *= 400;
+    chartZoomAbout(cx, cy, chart.zt * Math.exp(-d * 0.0021));
+    kickChartAnim();
+  }, { passive: false });
+
+  const cptrs = new Map();
+  let cpan = null, cpinch = null;
+  cv.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    cptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    try { cv.setPointerCapture(e.pointerId); } catch (err) {}
+    if (cptrs.size === 1) { chart.panned = false; cpan = { x: e.clientX, y: e.clientY, moved: 0 }; cpinch = null; }
+    else if (cptrs.size === 2) {
+      const [a, b] = [...cptrs.values()];
+      cpinch = { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, z: chart.zt };
+      cpan = null;
+    }
+  });
+  cv.addEventListener('pointermove', e => {
+    const p = cptrs.get(e.pointerId);
+    if (!p) return;
+    const r = cv.getBoundingClientRect();
+    const kx = CHART_W / r.width, ky = CHART_H / r.height;
+    if (cptrs.size === 1 && cpan) {
+      const mdx = e.clientX - cpan.x, mdy = e.clientY - cpan.y;
+      cpan.moved += Math.abs(mdx) + Math.abs(mdy);
+      cpan.x = e.clientX; cpan.y = e.clientY;
+      if (cpan.moved > 5) { chart.panned = true; chart.gesturing = true; cv.classList.add('panning'); }
+      if (chart.gesturing) {
+        chart.txt += mdx * kx; chart.tyt += mdy * ky;
+        chartClampTargets();
+        chartSnapToTarget();
+        drawChartCanvas();
+        syncLabelTransform();
+      }
+    }
+    p.x = e.clientX; p.y = e.clientY;
+    if (cptrs.size === 2 && cpinch) {
+      chart.gesturing = true;
+      const [a, b] = [...cptrs.values()];
+      const d = Math.hypot(a.x - b.x, a.y - b.y) || 1;
+      const mx = ((a.x + b.x) / 2 - r.left) * kx, my = ((a.y + b.y) / 2 - r.top) * ky;
+      chartZoomAbout(mx, my, cpinch.z * d / cpinch.d);
+      chartSnapToTarget();
+      drawChartCanvas();
+      syncLabelTransform();
+    }
+  });
+  const cptrEnd = e => {
+    if (!cptrs.has(e.pointerId)) return;
+    cptrs.delete(e.pointerId);
+    if (cptrs.size === 0) {
+      cpinch = null; cpan = null;
+      cv.classList.remove('panning');
+      if (chart.gesturing) { chart.gesturing = false; chartSettle(); }
+    } else if (cptrs.size === 1) {
+      cpinch = null;
+      const [a] = [...cptrs.values()];
+      cpan = { x: a.x, y: a.y, moved: 99 };
+    }
+  };
+  cv.addEventListener('pointerup', cptrEnd);
+  cv.addEventListener('pointercancel', cptrEnd);
+
   $('soundbtn').addEventListener('click', () => sound.toggle());
   $('soundbtn').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') sound.toggle(); });
 }
 
 function shapeCourse(isle) {
+  firstOrder('sail');
   closeBelow();
   if (ui.slug) { $('anchorage').hidden = true; ui.slug = null; }
   ui.mode = 'deck';
@@ -3946,6 +6515,32 @@ function shapeCourse(isle) {
 function updateLandfallPlate(sim) {
   const el = $('landfall');
   const isle = ship.bound;
+  /* crossing (a): when the nameless city is the nearer landfall the plate
+     reads LAND HO - no chart of ours gives it a name */
+  if (eggs.ready && !eggs.crossing && ui.mode === 'deck' && !ship.anchored && lens.t < 0.15) {
+    const cd = eggNm('city');
+    if (cd < 3.0 && Math.abs(angDiff(eggBearing('city'), ship.bearing)) < 50 &&
+        (!isle || cd < sim.dist)) {
+      if (el.dataset.slug !== '__landho__' || el.hidden) {
+        el.dataset.slug = '__landho__';
+        el.querySelector('.lf-name').textContent = 'LAND HO!';
+        el.querySelector('.lf-line').textContent =
+          'A strange city of light glitters on the far horizon. No chart of ours gives it a name.';
+        el.querySelector('.lf-order').textContent =
+          cd < 0.9 ? 'A to let go and pull for the quay' : 'Hold this course: the light grows';
+        el.hidden = false;
+        requestAnimationFrame(() => el.classList.add('shown'));
+      } else if (cd < 0.9 && el.querySelector('.lf-order').textContent.indexOf('quay') < 0) {
+        el.querySelector('.lf-order').textContent = 'A to let go and pull for the quay';
+      }
+      return;
+    }
+    if (el.dataset.slug === '__landho__' && !el.hidden) {
+      el.classList.remove('shown');
+      el.hidden = true;
+      el.dataset.slug = '';
+    }
+  }
   /* nothing prints over the glass: the tube blocks the world, and a plate
      floating on it would be a sticker on the lens */
   const show = isle && !ship.anchored && sim.dist < 2.6 && ui.mode === 'deck' && lens.t < 0.15;
@@ -4169,6 +6764,774 @@ const sound = {
 window.__helmSoundIsle = slug => world.bySlug.get(slug);
 
 /* ---------------- boot ---------------- */
+/* ============================================================
+   THE SEVEN CROSSINGS (portal law, owner approved)
+   Seven passages woven into the sea, each one DISCOVERED, never a menu.
+   Every affordance lives in the fiction; approaching or hovering gives one
+   in-register hint line; activating plays a short in-fiction beat and then
+   crosses to the sibling at ../KEY/. Zero cost while an egg is off-screen:
+   every draw and every tick below opens with a cheap range check.
+   Every mark derives from real data:
+   (a) the nameless city  - 27 towers, one per community, heights from member
+       counts; 290 lit windows, one per page, night-tended pages burn warmer.
+       She stands in the emptiest sixteenth of the sea, past the last island.
+   (b) the ink water      - the deepest point of the surveyed sea: the open
+       water farthest from every island, where no route passes.
+   (c) the coastal path   - at the anchorage of the longest page in the sea:
+       the longest shore is the one a walker would take.
+   (d) the moving star    - her blink counts the desert islets (the places no
+       route reaches); she rides over the newest page's water.
+   (e) the pressed specimen - slips from the captain's log, once per visit.
+   (f) the bottle         - went over the side off the home island and
+       drifted down the citation wind until it found open water.
+   (g) the crate          - washed up on the smallest strand in the sea
+       (fewest words), stamped with a mark no chandler of ours uses.
+   ============================================================ */
+const eggs = {
+  ready: false, crossing: null,
+  city: null, ink: null, bottle: null, star: null,
+  crateIsle: null, pathIsle: null,
+  fixedStars: [],
+  hits: [], hoverT: {}, cursorOn: false,
+  hinted: {}, starHold: 0, starHinted: false,
+  specimenSlipped: false,
+  cityVisU2: 0
+};
+
+const EGG_HINTS = {
+  city: 'No chart of ours gives it a name. Click, and she makes for the light.',
+  ink: 'The water runs to flat ink past that line. Click, or sail in.',
+  bottle: 'A message in a bottle. Click to fish it out.',
+  crate: 'A washed-up crate, strangely stamped. Click to break it open.'
+};
+
+function initEggs() {
+  const isles = world.islands;
+  const B = world.bounds;
+  const cx0 = (B.minx + B.maxx) / 2, cy0 = (B.miny + B.maxy) / 2;
+
+  /* (a) the city stands in the emptiest sixteenth of the horizon: sixteen
+     sectors around the sea's centre are weighed by the words they hold, and
+     the lightest one gets the light. */
+  const mass = new Array(16).fill(0);
+  let maxR = 0;
+  for (const I of isles) {
+    const dx = I.pos.x - cx0, dy = I.pos.y - cy0;
+    const s = ((Math.floor(Math.atan2(dy, dx) / TAU * 16) % 16) + 16) % 16;
+    mass[s] += I.words;
+    maxR = Math.max(maxR, Math.hypot(dx, dy));
+  }
+  let sMin = 0;
+  for (let s = 1; s < 16; s++) if (mass[s] < mass[sMin]) sMin = s;
+  const ca = (sMin + 0.5) / 16 * TAU;
+  const cr = maxR * 1.30 + 2.6 / world.nmPerUnit;
+  eggs.city = { x: cx0 + Math.cos(ca) * cr, y: cy0 + Math.sin(ca) * cr };
+  eggs.cityVisU2 = Math.pow(10.5 / world.nmPerUnit, 2);
+
+  /* (b) the deepest water: the grid point farthest from every island */
+  let bestP = null, bestD = -1;
+  for (let gy = 0; gy <= 34; gy++) for (let gx = 0; gx <= 44; gx++) {
+    const x = B.minx + (B.maxx - B.minx) * gx / 44;
+    const y = B.miny + (B.maxy - B.miny) * gy / 34;
+    let dmin = Infinity;
+    for (const I of isles) {
+      const d2 = (I.pos.x - x) * (I.pos.x - x) + (I.pos.y - y) * (I.pos.y - y);
+      if (d2 < dmin) dmin = d2;
+    }
+    if (dmin > bestD) { bestD = dmin; bestP = { x, y }; }
+  }
+  const inkR = clamp(Math.sqrt(bestD) * world.nmPerUnit * 0.34, 0.30, 0.85);
+  /* the patch edge, cut once: sixteen weights around a circle */
+  const er = rngFor('inkedge');
+  const edge = [];
+  for (let i = 0; i < 16; i++) edge.push(1 + (er() - 0.5) * 0.22);
+  eggs.ink = { x: bestP.x, y: bestP.y, rNm: inkR, edge };
+
+  /* (f) the bottle drifts down the citation wind from the home island until
+     it finds open water */
+  let bx = world.island.pos.x, by = world.island.pos.y, run = 0;
+  for (let i = 0; i < 300; i++) {
+    const w2 = windAtUnits(bx, by);
+    const m = Math.hypot(w2.x, w2.y) || 1;
+    bx += w2.x / m * 0.012; by += w2.y / m * 0.012;
+    run += 0.012 * world.nmPerUnit;
+    if (run > 1.5) {
+      let dmin = Infinity;
+      for (const I of isles) {
+        const d = Math.hypot(I.pos.x - bx, I.pos.y - by);
+        if (d < dmin) dmin = d;
+      }
+      if (dmin * world.nmPerUnit > 0.55) break;
+    }
+  }
+  eggs.bottle = { x: bx, y: by };
+
+  /* (g) the smallest strand; (c) the longest shore */
+  eggs.crateIsle = isles.reduce((a, b) =>
+    (b.words < a.words || (b.words === a.words && b.slug < a.slug)) ? b : a);
+  eggs.pathIsle = isles.reduce((a, b) =>
+    (b.words > a.words || (b.words === a.words && b.slug < a.slug)) ? b : a);
+
+  /* (d) the star: her blink counts the desert islets, and she rides over the
+     newest page's water. The fixed stars behind her are the lantern shores:
+     one for every island the raw log shows tended by night. */
+  const newest = isles.reduce((a, b) => (b.last > a.last ? b : a));
+  eggs.star = {
+    K: Math.max(2, world.desert.length),
+    seed: hash32(newest.slug),
+    y0: 84 + (hash32(newest.slug) % 110)
+  };
+  eggs.fixedStars = world.nightIsles.map(I => ({
+    x: 50 + (hash32(I.slug) % (W - 100)),
+    y: 26 + (hash32(I.slug + '#y') % (HORIZON - 170)),
+    tw: (hash32(I.slug + '#p') % 628) / 100,
+    b: clamp(0.4 + I.night * 0.12, 0.4, 1)
+  }));
+
+  eggs.ready = true;
+  diag.eggs = {
+    city: { x: +eggs.city.x.toFixed(4), y: +eggs.city.y.toFixed(4) },
+    ink: { x: +eggs.ink.x.toFixed(4), y: +eggs.ink.y.toFixed(4), rNm: +inkR.toFixed(3) },
+    bottle: { x: +bx.toFixed(4), y: +by.toFixed(4) },
+    crate: eggs.crateIsle.slug, path: eggs.pathIsle.slug,
+    starK: eggs.star.K, fixedStars: eggs.fixedStars.length
+  };
+}
+
+function eggNm(key) {
+  const E = key === 'city' ? eggs.city : key === 'ink' ? eggs.ink :
+            key === 'bottle' ? eggs.bottle : null;
+  if (!E) return Infinity;
+  return Math.hypot(E.x - ship.x, E.y - ship.y) * world.nmPerUnit;
+}
+function eggBearing(key) {
+  const E = key === 'city' ? eggs.city : key === 'ink' ? eggs.ink :
+            key === 'bottle' ? eggs.bottle : null;
+  if (!E) return 0;
+  return norm360(Math.atan2(E.x - ship.x, E.y - ship.y) * 180 / Math.PI);
+}
+
+/* the beat, then the crossing. Reduced motion crosses instantly. */
+function crossTo(key, beat, ms) {
+  if (eggs.crossing) return;
+  eggs.crossing = key;
+  diag.crossing = key;
+  try { visit.save(); } catch (e) {}
+  captionNow(beat, 30000);
+  const go = () => { window.location.href = '../' + key + '/'; };
+  if (REDUCED) { go(); return; }
+  setTimeout(go, ms == null ? 1600 : ms);
+}
+
+function eggActivate(key) {
+  if (!eggs.ready || eggs.crossing) return;
+  if (key === 'bottle' && eggNm('bottle') < 1.4) {
+    crossTo('secreta', 'The cork gives: a page inked in four colours, rolled tight against the salt.', 1700);
+  } else if (key === 'ink' && eggNm('ink') < 1.8) {
+    crossTo('bythedeep', 'She noses in. The hatching closes over the hull like wet ink over a pen line.', 1700);
+  } else if (key === 'crate' && distToNm(eggs.crateIsle) < 1.7) {
+    crossTo('secretb', 'The lid comes away: straw, oilcloth, and something packed with great care.', 1700);
+  } else if (key === 'city') {
+    /* clicking the light shapes a course; the crossing is made by anchoring */
+    firstOrder('steer');
+    ship.orderedBearing = eggBearing('city');
+    pushOrder(env.t);
+    if (ship.sail === 'rest' && !ship.anchored) setSail('full', true);
+    captionNow('The helm goes over: she makes for the light.', 3600);
+    dirty = true;
+  }
+}
+
+function eggHover(mx, my, el) {
+  if (!eggs.ready || eggs.crossing) return;
+  let over = null;
+  for (const hh of eggs.hits) {
+    if (Math.hypot(mx - hh.x, my - hh.y) < hh.r + 10) { over = hh; break; }
+  }
+  if (over) {
+    if (!eggs.cursorOn) { el.style.cursor = 'pointer'; eggs.cursorOn = true; }
+    if (env.t - (eggs.hoverT[over.key] || -99) > 9) {
+      eggs.hoverT[over.key] = env.t;
+      captionNow(EGG_HINTS[over.key], 3600);
+    }
+  } else if (eggs.cursorOn) { el.style.cursor = ''; eggs.cursorOn = false; }
+}
+
+/* approach hints, the standing crossings, and the star watch */
+function eggTick(dt) {
+  if (!eggs.ready || eggs.crossing) return;
+  const t = env.t;
+
+  const cd = eggNm('city');
+  if (cd < 7.4 && !eggs.hinted.city &&
+      Math.abs(angDiff(eggBearing('city'), ship.bearing)) < 60) {
+    eggs.hinted.city = true;
+    caption('Light on the horizon, where the chart shows only water. The lookout has no name for it.', 5600);
+  }
+  if (cd < 0.20) {
+    crossTo('pixelcity', 'LAND HO! The way comes off her; a boat pulls for the glittering quay.', 1900);
+    return;
+  }
+
+  const nd = eggNm('ink');
+  if (nd < 1.2 && t - (eggs.hinted.ink || -99) > 26) {
+    eggs.hinted.ink = t;
+    captionNow('The sea turns to ink here. Sail in?', 4200);
+  }
+  if (nd < eggs.ink.rNm * 0.55) {
+    crossTo('bythedeep', 'She noses in. The hatching closes over the hull like wet ink over a pen line.', 1700);
+    return;
+  }
+
+  const bd = eggNm('bottle');
+  if (bd < 1.0 && t - (eggs.hinted.bottle || -99) > 26) {
+    eggs.hinted.bottle = t;
+    captionNow('A corked bottle bobs on the swell, a page rolled tight inside.', 4200);
+  }
+  if (bd < 0.10) {
+    crossTo('secreta', 'The bow lifts her from the water. The cork gives: a page inked in four colours.', 1700);
+    return;
+  }
+
+  const kd = distToNm(eggs.crateIsle);
+  if (kd < 1.3 && t - (eggs.hinted.crate || -99) > 30) {
+    eggs.hinted.crate = t;
+    captionNow('Something square lies broached on the strand: a crate, stamped with a mark no chandler of ours uses.', 4600);
+  }
+
+  /* (d) holding the glass on the one that moves */
+  if (env.hourMix > 0.55 && lens.raised && lens.t > 0.5) {
+    const sp = starScreen(t);
+    if (Math.hypot(lens.x - sp.x, lens.y - sp.y) < 54) {
+      eggs.starHold += dt;
+      if (eggs.starHold > 1.0 && !eggs.starHinted) {
+        eggs.starHinted = true;
+        captionNow('One light bears against the fixed stars - and it moves, and it blinks in ' +
+          (eggs.star.K === 2 ? 'pairs' : eggs.star.K === 3 ? 'threes' : 'counts of ' + numToWords(eggs.star.K)) + '.', 3800);
+      }
+      if (eggs.starHold > 2.8) {
+        crossTo('firstlight', 'That is no star. She is answering.', 1700);
+        return;
+      }
+    } else {
+      eggs.starHold = Math.max(0, eggs.starHold - dt * 1.6);
+    }
+  } else if (eggs.starHold > 0) {
+    eggs.starHold = Math.max(0, eggs.starHold - dt * 1.6);
+  }
+  diag.starHold = Math.round(eggs.starHold * 100) / 100;
+}
+
+/* ---- the star (d): position and signal ---- */
+function starScreen(t) {
+  const S = eggs.star;
+  const span = W - 260;
+  let u;
+  if (REDUCED) {
+    u = (S.seed % 1000) / 1000;
+  } else {
+    const p = ((S.seed % 977) / 977 + t * 2.6 / span) % 2;
+    u = p < 1 ? p : 2 - p;
+  }
+  return { x: 130 + u * span, y: S.y0 + (REDUCED ? 0 : Math.sin(t * 0.23) * 12) };
+}
+function starBlink(t) {
+  const K = eggs.star.K, FL = 0.30, GAP = 0.26, PAUSE = 1.7;
+  const cyc = K * (FL + GAP) + PAUSE;
+  const u = (t + (eggs.star.seed % 7)) % cyc;
+  const i = Math.floor(u / (FL + GAP));
+  return i < K && (u - i * (FL + GAP)) < FL;
+}
+
+function drawStars(map) {
+  const mix = env.hourMix;
+  if (mix < 0.55 || !eggs.ready) return;
+  const a0 = (mix - 0.55) / 0.45;
+  const k = map ? map.k : 1, ox = map ? map.ox : 0, oy = map ? map.oy : 0;
+  const t = env.t;
+  ctx.fillStyle = 'rgba(246,238,218,1)';
+  for (const s of eggs.fixedStars) {
+    const x = s.x * k + ox, y = s.y * k + oy;
+    if (map && (x < map.x0 || x > map.x1 || y < map.y0 || y > map.y1)) continue;
+    ctx.globalAlpha = a0 * s.b * (REDUCED ? 0.7 : (0.55 + 0.45 * Math.sin(t * 1.7 + s.tw)));
+    ctx.fillRect(x - 0.8 * k, y - 0.8 * k, 1.6 * k, 1.6 * k);
+  }
+  const sp = starScreen(t);
+  const on = starBlink(t);
+  const x = sp.x * k + ox, y = sp.y * k + oy;
+  if (!map || (x > map.x0 - 10 && x < map.x1 + 10 && y > map.y0 - 10 && y < map.y1 + 10)) {
+    ctx.globalAlpha = a0 * (on ? 0.95 : 0.15);
+    ctx.fillRect(x - 1.1 * k, y - 1.1 * k, 2.2 * k, 2.2 * k);
+    if (on) {
+      ctx.strokeStyle = 'rgba(246,238,218,0.85)';
+      ctx.lineWidth = 0.7 * k;
+      ctx.globalAlpha = a0 * 0.7;
+      ctx.beginPath();
+      ctx.moveTo(x - 4.6 * k, y); ctx.lineTo(x + 4.6 * k, y);
+      ctx.moveTo(x, y - 4.6 * k); ctx.lineTo(x, y + 4.6 * k);
+      ctx.stroke();
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+
+/* ---- shared projection for marks floating on the water ---- */
+function eggScreen(wx, wy, worldDY, map) {
+  const dx = wx - ship.x, dy = wy - ship.y;
+  const dist = Math.hypot(dx, dy) * world.nmPerUnit;
+  const az = angDiff(norm360(Math.atan2(dx, dy) * 180 / Math.PI), ship.bearing);
+  const f = Math.pow(clamp(1 - dist / 3.4, 0, 1), 1.55);
+  let x = W / 2 + az * PXDEG;
+  let y = HORIZON + 8 + f * 168 + worldDY * (0.6 + f * 0.8);
+  let s = clamp(0.34 / Math.max(dist, 0.12), 0.08, 3.4);
+  if (map) { x = x * map.k + map.ox; y = y * map.k + map.oy; s *= map.k; }
+  return { x, y, s, dist, az, f };
+}
+
+function drawEggs(sim, worldDY, map) {
+  if (!eggs.ready) return;
+  drawStars(map);
+  drawInkEgg(sim, worldDY, map);
+  drawBottleEgg(sim, worldDY, map);
+}
+
+/* (b) the ink water: flat cel fills and clean outlines, deliberately another
+   hand - past this line it is a different world. A white-gloved buoy waves. */
+function drawInkEgg(sim, worldDY, map) {
+  const E = eggs.ink;
+  const dxu = E.x - ship.x, dyu = E.y - ship.y;
+  if (dxu * dxu + dyu * dyu > Math.pow(5.2 / world.nmPerUnit, 2)) return;
+  const P = eggScreen(E.x, E.y, worldDY, map);
+  if (P.dist > 5.2 || Math.abs(P.az) > 70) return;
+  const rx = clamp(430 * E.rNm / Math.max(P.dist, 0.15), 6, 780) * (map ? map.k : 1);
+  if (rx < 7) return;
+  const ry = rx * 0.24;
+  const t = env.t, g = ctx;
+  g.save();
+  g.translate(P.x, P.y);
+  /* the patch itself */
+  const pts = [];
+  for (let i = 0; i < 16; i++) {
+    const a = i / 16 * TAU;
+    pts.push([Math.cos(a) * rx * E.edge[i], Math.sin(a) * ry * E.edge[i]]);
+  }
+  g.beginPath();
+  pathThrough(g, pts, true);
+  g.fillStyle = 'rgba(88,140,178,0.92)';
+  g.fill();
+  g.lineWidth = Math.max(1.3, rx * 0.018);
+  g.strokeStyle = 'rgba(22,34,44,0.92)';
+  g.stroke();
+  if (rx > 26) {
+    /* cel waves: fat white curls with flat ends, nothing hatched */
+    g.strokeStyle = 'rgba(244,240,230,0.95)';
+    g.lineCap = 'round';
+    for (let i = 0; i < 3; i++) {
+      const wx2 = (i - 1) * rx * 0.42 + (REDUCED ? 0 : Math.sin(t * 1.1 + i * 2.4) * rx * 0.03);
+      const wy2 = ry * (i === 1 ? 0.28 : -0.14);
+      const ww = rx * 0.22;
+      g.lineWidth = Math.max(1.6, rx * 0.028);
+      g.beginPath();
+      g.moveTo(wx2 - ww, wy2);
+      g.quadraticCurveTo(wx2, wy2 - ww * 0.5, wx2 + ww * 0.55, wy2 - ww * 0.14);
+      g.quadraticCurveTo(wx2 + ww * 0.30, wy2 - ww * 0.36, wx2 + ww * 0.16, wy2 - ww * 0.24);
+      g.stroke();
+    }
+  }
+  if (rx > 46) {
+    /* the buoy, waving its white glove */
+    const bx2 = rx * 0.24, by2 = ry * 0.1 + (REDUCED ? 0 : Math.sin(t * 2.1) * ry * 0.08);
+    const bh = rx * 0.17;
+    g.translate(bx2, by2);
+    g.rotate(REDUCED ? 0 : Math.sin(t * 1.4) * 0.06);
+    g.lineWidth = Math.max(1.4, bh * 0.09);
+    g.strokeStyle = 'rgba(22,34,44,0.95)';
+    /* body: a cel bell, red over paper bands */
+    g.beginPath();
+    g.moveTo(-bh * 0.42, 0);
+    g.quadraticCurveTo(-bh * 0.34, -bh, 0, -bh * 1.06);
+    g.quadraticCurveTo(bh * 0.34, -bh, bh * 0.42, 0);
+    g.closePath();
+    g.fillStyle = '#c8563a';
+    g.fill();
+    g.stroke();
+    g.save();
+    g.clip();
+    g.fillStyle = 'rgba(244,240,230,0.96)';
+    g.fillRect(-bh * 0.5, -bh * 0.66, bh, bh * 0.22);
+    g.restore();
+    /* the arm and the white glove, waving */
+    const wave = REDUCED ? 0.5 : Math.sin(t * 3.6) * 0.6 + 0.35;
+    g.save();
+    g.translate(0, -bh * 1.02);
+    g.rotate(-0.9 + wave * 0.55);
+    g.beginPath();
+    g.moveTo(0, 0);
+    g.quadraticCurveTo(bh * 0.30, -bh * 0.34, bh * 0.52, -bh * 0.52);
+    g.lineWidth = Math.max(1.6, bh * 0.13);
+    g.stroke();
+    g.translate(bh * 0.56, -bh * 0.58);
+    g.fillStyle = '#f6f2e8';
+    g.beginPath();
+    g.arc(0, 0, bh * 0.22, 0, TAU);
+    g.fill();
+    for (const fa of [-0.7, -0.1, 0.5]) {
+      g.beginPath();
+      g.arc(Math.cos(fa - 0.9) * bh * 0.24, Math.sin(fa - 0.9) * bh * 0.24 - bh * 0.04, bh * 0.09, 0, TAU);
+      g.fill();
+    }
+    g.lineWidth = Math.max(1.1, bh * 0.07);
+    g.beginPath();
+    g.arc(0, 0, bh * 0.22, 0, TAU);
+    g.stroke();
+    g.restore();
+  }
+  g.restore();
+  g.lineCap = 'butt';
+  if (!map) eggs.hits.push({ key: 'ink', x: P.x, y: P.y, r: Math.max(16, rx * 0.5), d: P.dist });
+}
+
+/* (f) the bottle: engraved glass, a cork, and the rolled four-colour page */
+function drawBottleEgg(sim, worldDY, map) {
+  const E = eggs.bottle;
+  const dxu = E.x - ship.x, dyu = E.y - ship.y;
+  if (dxu * dxu + dyu * dyu > Math.pow(3.0 / world.nmPerUnit, 2)) return;
+  const P = eggScreen(E.x, E.y, worldDY, map);
+  if (P.dist > 3.0 || Math.abs(P.az) > 70) return;
+  const s = P.s * 1.5;
+  if (s < 0.24) return;
+  const t = env.t, g = ctx;
+  const bob = REDUCED ? 0 : Math.sin(t * 1.3 + 1) * 3 * Math.min(s, 1.4);
+  g.save();
+  g.translate(P.x, P.y + bob);
+  /* ripple rings */
+  g.strokeStyle = 'rgba(58,44,28,0.4)';
+  g.lineWidth = Math.max(0.7, s);
+  for (const rr of [1, 1.7]) {
+    g.globalAlpha = 0.35 / rr;
+    g.beginPath();
+    g.ellipse(0, 6 * s, 26 * s * rr, 6.5 * s * rr, 0, 0, TAU);
+    g.stroke();
+  }
+  g.globalAlpha = 1;
+  g.rotate(0.42 + (REDUCED ? 0 : Math.sin(t * 0.9) * 0.12));
+  /* glass body, lying in the water */
+  const bw = 15 * s, bl = 34 * s;
+  g.fillStyle = 'rgba(70,88,64,0.42)';
+  g.strokeStyle = 'rgba(38,30,18,0.9)';
+  g.lineWidth = Math.max(0.8, 1.3 * s);
+  g.beginPath();
+  g.moveTo(-bl * 0.5, -bw * 0.5);
+  g.quadraticCurveTo(-bl * 0.62, 0, -bl * 0.5, bw * 0.5);
+  g.lineTo(bl * 0.16, bw * 0.5);
+  g.quadraticCurveTo(bl * 0.34, bw * 0.4, bl * 0.42, bw * 0.16);
+  g.lineTo(bl * 0.62, bw * 0.16);
+  g.lineTo(bl * 0.62, -bw * 0.16);
+  g.lineTo(bl * 0.42, -bw * 0.16);
+  g.quadraticCurveTo(bl * 0.34, -bw * 0.4, bl * 0.16, -bw * 0.5);
+  g.closePath();
+  g.fill();
+  g.stroke();
+  /* the rolled page inside, four colour bands showing through the glass */
+  if (s > 0.3) {
+    g.save();
+    g.rotate(-0.06);
+    g.fillStyle = 'rgba(241,231,208,0.95)';
+    g.fillRect(-bl * 0.36, -bw * 0.26, bl * 0.5, bw * 0.5);
+    const cols = ['#3f6f8e', '#a34a36', '#b8952c', '#2c2114'];
+    for (let i = 0; i < 4; i++) {
+      g.fillStyle = cols[i];
+      g.fillRect(-bl * 0.36 + 2 * s + i * bl * 0.115, -bw * 0.20, bl * 0.055, bw * 0.4);
+    }
+    g.strokeStyle = 'rgba(58,44,28,0.7)';
+    g.lineWidth = Math.max(0.6, 0.9 * s);
+    g.strokeRect(-bl * 0.36, -bw * 0.26, bl * 0.5, bw * 0.5);
+    g.restore();
+  }
+  /* cork and glint */
+  g.fillStyle = 'rgba(150,116,72,0.95)';
+  g.fillRect(bl * 0.60, -bw * 0.14, bl * 0.13, bw * 0.28);
+  g.strokeRect(bl * 0.60, -bw * 0.14, bl * 0.13, bw * 0.28);
+  g.strokeStyle = 'rgba(244,238,220,0.85)';
+  g.lineWidth = Math.max(0.7, 1.1 * s);
+  g.beginPath();
+  g.moveTo(-bl * 0.34, -bw * 0.34);
+  g.quadraticCurveTo(0, -bw * 0.48, bl * 0.22, -bw * 0.34);
+  g.stroke();
+  g.restore();
+  if (!map) eggs.hits.push({ key: 'bottle', x: P.x, y: P.y, r: Math.max(14, 30 * s), d: P.dist });
+}
+
+/* (g) the crate on the strand, drawn at its island's own waterline */
+function drawCrateEgg(x, yBase, wpx, dist, isLens) {
+  const cw = clamp(wpx * 0.075, 6, 52);
+  if (cw < 6.5) return;
+  const g = ctx;
+  const cx2 = x + wpx * 0.30, cy2 = yBase - cw * 0.10;
+  g.save();
+  g.translate(cx2, cy2);
+  /* the sand it is bedded in */
+  g.fillStyle = 'rgba(226,210,180,0.85)';
+  g.beginPath();
+  g.ellipse(0, 0, cw * 1.05, cw * 0.22, 0, 0, TAU);
+  g.fill();
+  g.rotate(-0.10);
+  /* slats */
+  g.fillStyle = 'rgba(168,138,96,0.60)';
+  g.strokeStyle = 'rgba(52,40,26,0.9)';
+  g.lineWidth = Math.max(0.8, cw * 0.045);
+  g.fillRect(-cw * 0.5, -cw * 0.74, cw, cw * 0.72);
+  g.strokeRect(-cw * 0.5, -cw * 0.74, cw, cw * 0.72);
+  g.beginPath();
+  for (const fx of [-0.17, 0.17]) {
+    g.moveTo(cw * fx, -cw * 0.74);
+    g.lineTo(cw * fx, -cw * 0.02);
+  }
+  g.moveTo(-cw * 0.5, -cw * 0.74);
+  g.lineTo(cw * 0.5, -cw * 0.02);
+  g.globalAlpha = 0.7;
+  g.stroke();
+  g.globalAlpha = 1;
+  /* the unfamiliar stamp: a bold geometric mark in dull red, no hand of ours */
+  if (cw > 15) {
+    g.strokeStyle = 'rgba(141,47,34,0.85)';
+    g.lineWidth = Math.max(1, cw * 0.06);
+    g.beginPath();
+    g.arc(0, -cw * 0.38, cw * 0.20, 0, TAU);
+    g.stroke();
+    g.beginPath();
+    g.moveTo(0, -cw * 0.52);
+    g.lineTo(cw * 0.12, -cw * 0.30);
+    g.lineTo(-cw * 0.12, -cw * 0.30);
+    g.closePath();
+    g.stroke();
+    g.fillStyle = 'rgba(141,47,34,0.85)';
+    g.beginPath();
+    g.arc(0, -cw * 0.38, cw * 0.045, 0, TAU);
+    g.fill();
+  }
+  g.restore();
+  if (!isLens) eggs.hits.push({ key: 'crate', x: cx2, y: cy2 - cw * 0.4, r: Math.max(12, cw), d: dist });
+}
+
+/* (a) the nameless city: 27 towers (one per community, heights from member
+   counts), 290 windows (one per page), lit against the far sky */
+function bakeCity() {
+  const CW = 480, CH = 190, GY = 172;
+  const [c, g] = mkCanvas(CW, CH);
+  const rnd = rngFor('city');
+  const sizes = world.communities.map((cm, i) => ({ i, n: cm.members.length }))
+    .sort((a, b) => b.n - a.n || a.i - b.i);
+  const order = [];
+  sizes.forEach((sz, k) => { if (k % 2) order.unshift(sz); else order.push(sz); });
+  const wsum = order.reduce((a, s) => a + (8 + Math.sqrt(s.n) * 3.4), 0);
+  let x = (CW - wsum) / 2;
+  const towers = [];
+  for (const sz of order) {
+    const tw = 8 + Math.sqrt(sz.n) * 3.4;
+    const th = Math.min(150, 26 + sz.n * 2.05 + rnd() * 8);
+    towers.push({ comm: sz.i, x, w: tw, h: th });
+    x += tw;
+  }
+  g.strokeStyle = 'rgba(44,33,20,0.9)';
+  g.lineWidth = 0.9;
+  for (const T of towers) {
+    g.fillStyle = 'rgba(58,44,28,0.32)';
+    g.fillRect(T.x, GY - T.h, T.w, T.h);
+    g.strokeRect(T.x + 0.5, GY - T.h + 0.5, T.w - 1, T.h - 1);
+    /* stepped crowns: the blocky profile of a city built of squares */
+    const steps = 1 + Math.floor(rnd() * 3);
+    let sy = GY - T.h, sw = T.w;
+    for (let s2 = 0; s2 < steps; s2++) {
+      sw *= 0.55;
+      sy -= 3 + rnd() * 5;
+      const sx = T.x + (T.w - sw) * (0.2 + rnd() * 0.6);
+      g.fillStyle = 'rgba(58,44,28,0.34)';
+      g.fillRect(sx, sy, sw, GY - T.h - sy + 1);
+      g.strokeRect(sx + 0.5, sy + 0.5, sw - 1, GY - T.h - sy);
+    }
+    /* light vertical hatch on the faces */
+    g.globalAlpha = 0.22;
+    g.beginPath();
+    for (let hx2 = T.x + 2; hx2 < T.x + T.w - 1; hx2 += 2.6) {
+      g.moveTo(hx2, GY - T.h + 2);
+      g.lineTo(hx2, GY - 1);
+    }
+    g.stroke();
+    g.globalAlpha = 1;
+  }
+  g.beginPath();
+  g.moveTo(towers[0].x - 14, GY);
+  g.lineTo(x + 14, GY);
+  g.stroke();
+  bake.city = c;
+  bake.cityW = CW; bake.cityH = CH; bake.cityGY = GY;
+  const byComm = new Map(towers.map(T => [T.comm, T]));
+  const wins = [];
+  let ri = 0;
+  for (const I of world.islands) {
+    let T = byComm.get(I.comm);
+    if (!T) T = towers[(ri++) % towers.length];
+    const hsh = hash32(I.slug);
+    wins.push({
+      x: T.x + 1.8 + (hsh % 997) / 997 * (T.w - 4),
+      y: GY - 4 - ((hsh >>> 10) % 997) / 997 * (T.h - 9),
+      ph: ((hsh >>> 20) % 997) / 997,
+      night: I.night > 0
+    });
+  }
+  bake.cityWins = wins;
+}
+
+function drawCityEgg(sim, worldDY, isLens) {
+  const C = eggs.city;
+  const dxu = C.x - ship.x, dyu = C.y - ship.y;
+  const d2 = dxu * dxu + dyu * dyu;
+  if (d2 > eggs.cityVisU2) return;
+  const dist = Math.sqrt(d2) * world.nmPerUnit;
+  const az = angDiff(norm360(Math.atan2(dxu, dyu) * 180 / Math.PI), ship.bearing);
+  if (Math.abs(az) > 66) return;
+  if (!bake.city) bakeCity();
+  const t = env.t, mix = env.hourMix, g = ctx;
+  const x = W / 2 + az * PXDEG;
+  const yBase = HORIZON + worldDY + 5;
+  const wpx = clamp(340 * 2.3 / Math.max(dist, 0.18), 26, 1500);
+  const s = wpx / bake.cityW;
+  const hpx = bake.cityH * s;
+  const top = yBase - bake.cityGY * s;
+  /* light over a city, before the city */
+  const glowR = Math.max(30, wpx * 0.62);
+  const gr = g.createRadialGradient(x, yBase - hpx * 0.32, 0, x, yBase - hpx * 0.32, glowR);
+  const ga = 0.10 + 0.16 * mix;
+  gr.addColorStop(0, 'rgba(255,222,150,' + ga + ')');
+  gr.addColorStop(1, 'rgba(255,222,150,0)');
+  g.fillStyle = gr;
+  g.fillRect(x - glowR, yBase - hpx * 0.32 - glowR, glowR * 2, glowR * 2);
+  /* the silhouette, hazed by range like any coast */
+  g.globalAlpha = dist <= 2.9
+    ? clamp(0.5 + (2.9 - dist) * 0.5, 0.5, 1)
+    : lerp(0.5, 0.30, clamp((dist - 2.9) / 6.5, 0, 1));
+  g.drawImage(bake.city, x - wpx / 2, top, wpx, hpx);
+  g.globalAlpha = 1;
+  /* the glitter: one window per page */
+  if (wpx > 60) {
+    const wa = 0.30 + 0.62 * Math.max(mix, 0.25);
+    const ws2 = Math.max(0.8, 1.9 * s);
+    for (const wn of bake.cityWins) {
+      const tw2 = REDUCED ? 0.75
+        : 0.42 + 0.58 * (0.5 + 0.5 * Math.sin(t * (wn.night ? 2.6 : 1.7) + wn.ph * TAU));
+      g.globalAlpha = wa * tw2;
+      g.fillStyle = wn.night ? 'rgba(255,206,120,1)' : 'rgba(250,232,180,1)';
+      g.fillRect(x - wpx / 2 + wn.x * s, top + wn.y * s, ws2, ws2);
+    }
+  } else {
+    g.globalAlpha = (0.45 + 0.4 * (REDUCED ? 0.5 : 0.5 + 0.5 * Math.sin(t * 2.3))) * (0.5 + 0.5 * mix);
+    g.fillStyle = 'rgba(252,228,160,0.95)';
+    g.fillRect(x - wpx * 0.32, yBase - 2.5, wpx * 0.64, 1.7);
+  }
+  /* her light lies on the water */
+  if (wpx > 40) {
+    g.globalAlpha = 0.10 + 0.16 * mix;
+    g.strokeStyle = 'rgba(255,214,130,0.9)';
+    g.lineWidth = 1.2;
+    g.beginPath();
+    for (let i = 0; i < 9; i++) {
+      const rx2 = x + (i - 4) * wpx * 0.05 + (REDUCED ? 0 : Math.sin(t * 1.3 + i * 2.1) * 3);
+      g.moveTo(rx2 - wpx * 0.03, yBase + 3 + i * 1.6);
+      g.lineTo(rx2 + wpx * 0.03, yBase + 3 + i * 1.6);
+    }
+    g.stroke();
+  }
+  g.globalAlpha = 1;
+  if (!isLens) eggs.hits.push({ key: 'city', x, y: yBase - hpx * 0.3, r: Math.max(26, wpx * 0.35), d: dist });
+}
+
+/* ---- helm hooks for the crossings ---- */
+function eggState() {
+  if (!eggs.ready) return null;
+  return {
+    city: { x: eggs.city.x, y: eggs.city.y, nm: +eggNm('city').toFixed(2) },
+    ink: { x: eggs.ink.x, y: eggs.ink.y, rNm: eggs.ink.rNm, nm: +eggNm('ink').toFixed(2) },
+    bottle: { x: eggs.bottle.x, y: eggs.bottle.y, nm: +eggNm('bottle').toFixed(2) },
+    crate: { slug: eggs.crateIsle.slug, nm: +distToNm(eggs.crateIsle).toFixed(2) },
+    path: { slug: eggs.pathIsle.slug },
+    star: { K: eggs.star.K, screen: starScreen(env.t), on: starBlink(env.t), hold: +eggs.starHold.toFixed(2) },
+    specimen: { slipped: eggs.specimenSlipped },
+    crossing: eggs.crossing,
+    hits: eggs.hits.map(h => ({ key: h.key, x: Math.round(h.x), y: Math.round(h.y), r: Math.round(h.r) }))
+  };
+}
+function eggSailTo(key, nm) {
+  if (!eggs.ready) return false;
+  if (key === 'crate') { placeShipAtDistance(nm == null ? 1.0 : nm, eggs.crateIsle); dirty = true; return true; }
+  if (key === 'path') { placeShipAtDistance(nm == null ? 1.0 : nm, eggs.pathIsle); dirty = true; return true; }
+  const E = key === 'city' ? eggs.city : key === 'ink' ? eggs.ink :
+            key === 'bottle' ? eggs.bottle : null;
+  if (!E) return false;
+  const B = world.bounds;
+  const cx0 = (B.minx + B.maxx) / 2, cy0 = (B.miny + B.maxy) / 2;
+  let ax2 = E.x - cx0, ay2 = E.y - cy0;
+  const m = Math.hypot(ax2, ay2);
+  if (m < 1e-6) { ax2 = 0; ay2 = 1; } else { ax2 /= m; ay2 /= m; }
+  const d = (nm == null ? 0.8 : nm) / world.nmPerUnit;
+  ship.x = E.x - ax2 * d;
+  ship.y = E.y - ay2 * d;
+  /* the bottle rides a point or so off the bow, clear of the bow post */
+  const brg = norm360(Math.atan2(E.x - ship.x, E.y - ship.y) * 180 / Math.PI -
+                      (key === 'bottle' ? 12 : 0));
+  ship.bearing = ship.orderedBearing = brg;
+  ship.omega = 0;
+  ship.orderHist = [[env.t, brg]];
+  ship.anchored = false;
+  ship.boundLock = false;
+  ship.clearOf = null;
+  ship.lastFix = { x: ship.x, y: ship.y, t: env.t };
+  calm.done = true;
+  dirty = true;
+  return true;
+}
+
+/* (e) the pressed specimen and (c) the coastal path live in the reading DOM
+   and are wired where the log and the shoreside are rendered. */
+const SPECIMEN_SVG =
+  '<svg viewBox="0 0 132 84" width="132" height="84" aria-hidden="true">' +
+  '<g fill="none" stroke="#3b2c1a" stroke-width="1.3" stroke-linecap="round">' +
+  '<path d="M 14 74 C 34 62 52 44 66 30 C 74 22 82 16 92 12"/>' +
+  '<path d="M 40 55 C 36 46 38 38 44 32" stroke-width="1"/>' +
+  '<path d="M 40 55 C 47 52 53 46 55 39" stroke-width="1"/>' +
+  '<path d="M 58 38 C 52 30 52 22 57 15" stroke-width="1"/>' +
+  '<path d="M 58 38 C 66 36 72 30 74 22" stroke-width="1"/>' +
+  '<path d="M 26 66 C 24 60 25 54 29 49" stroke-width="1"/>' +
+  '<path d="M 26 66 C 32 64 37 60 39 54" stroke-width="1"/>' +
+  '</g>' +
+  '<g fill="#6a5a3a" fill-opacity="0.30" stroke="#3b2c1a" stroke-width="0.9">' +
+  '<path d="M 44 32 C 40 24 42 16 48 11 C 52 17 52 26 48 32 Z"/>' +
+  '<path d="M 57 15 C 56 9 59 4 65 2 C 67 8 64 14 60 17 Z"/>' +
+  '<path d="M 29 49 C 25 43 25 36 30 31 C 34 37 34 44 32 49 Z"/>' +
+  '</g>' +
+  '<g fill="#8d2f22" fill-opacity="0.55" stroke="#3b2c1a" stroke-width="0.9">' +
+  '<circle cx="94" cy="10" r="4.2"/>' +
+  '<circle cx="99" cy="15" r="3.1"/>' +
+  '<circle cx="89" cy="15" r="3.1"/>' +
+  '</g></svg>';
+
+const PATH_SVG =
+  '<svg viewBox="0 0 220 120" width="100%" aria-hidden="true" style="max-width:220px;display:block;margin:0 auto 6px">' +
+  '<g fill="none" stroke="#3b2c1a" stroke-width="1.2" stroke-linecap="round">' +
+  '<path d="M 4 112 C 40 108 60 110 82 112" stroke-width="1"/>' +
+  '<path d="M 82 112 C 110 104 128 86 138 66 C 146 50 152 34 158 22 L 216 22 L 216 112 Z" fill="#6a5a3a" fill-opacity="0.14"/>' +
+  '<path d="M 138 66 C 150 62 162 62 172 64" stroke-width="0.8" stroke-opacity="0.5"/>' +
+  '<path d="M 146 50 C 156 46 168 46 178 48" stroke-width="0.8" stroke-opacity="0.5"/>' +
+  '<path d="M 90 108 L 118 96 L 102 88 L 130 76 L 116 68 L 142 56 L 132 48 L 156 36" stroke-dasharray="4 3" stroke-width="1.5"/>' +
+  '<path d="M 6 116 q 10 -4 20 0 t 20 0 t 20 0" stroke-opacity="0.55" stroke-width="0.9"/>' +
+  '</g>' +
+  '<g stroke="#3b2c1a" stroke-width="1.4" fill="none" stroke-linecap="round">' +
+  '<circle cx="164" cy="12" r="3.4" fill="#6a5a3a" fill-opacity="0.25"/>' +
+  '<path d="M 164 15 L 164 26 M 164 18 L 157 24 M 164 18 L 172 10 M 164 26 L 159 34 M 164 26 L 169 34"/>' +
+  '<path d="M 180 28 q 4 -5 9 -1 q 4 3 1 6 l -8 0 z" fill="#6a5a3a" fill-opacity="0.25"/>' +
+  '<path d="M 182 33 L 181 37 M 187 33 L 188 37 M 190 29 q 4 -3 3 -7"/>' +
+  '</g></svg>';
+
 (async function boot() {
   try {
     await loadData();
@@ -4194,28 +7557,46 @@ window.__helmSoundIsle = slug => world.bySlug.get(slug);
   for (const I of world.islands) if (visit.charted.has(I.slug)) I.charted = true;
   sound.init();
 
+  initEggs();
+
   placeShipAtDistance(parseFloat(params.get('dist')) || 2.7);
   ship.lastFix = { x: ship.x, y: ship.y, t: 0 };
   visit.track.push({ x: ship.x, y: ship.y });
   sound.setHarbour(world.island);
-  ship.sail = params.get('sail') || 'full';
+  /* the calm start (owner order): she begins hove to, no way on. A ?sail=
+     parameter is a stated order and stands, and it also ends the teaching. */
+  ship.sail = params.get('sail') || 'rest';
+  ship.knots = 0;
+  calm.pristine = !params.get('sail') && !params.get('open') && !params.get('below');
+  if (!calm.pristine) calm.done = true;
   if (params.get('hour') === 'dusk') { env.hourTarget = 1; env.hourMix = 1; }
 
   document.getElementById('loading').classList.add('hidden');
   const pt = document.getElementById('plate-title');
   const hints = document.getElementById('hints');
   pt.classList.add('shown');
-  hints.classList.add('shown');
   setTimeout(() => pt.classList.remove('shown'), 7000);
-  setTimeout(() => hints.classList.remove('shown'), 16000);
+  /* the teaching: full sailing orders the first time, one quiet line after.
+     The full card stays until the first meaningful input eases it off. */
+  const taught = store.get('taught', false);
+  if (taught) {
+    hints.innerHTML = 'Hove to. <b>F</b> makes sail &middot; drag the wheel &middot; ' +
+      'hold <b>SPACE</b> for the glass &middot; <b>C</b> the chart table.';
+    hints.classList.add('shown', 'quiet');
+    setTimeout(() => hints.classList.remove('shown'), 11000);
+  } else if (!calm.done) {
+    hints.classList.add('shown');
+  }
   if (params.get('open')) { const o = world.bySlug.get(params.get('open')); if (o) warpTo(o.slug, 'packet'); }
   if (params.get('below')) openBelow(params.get('below'));
 
   if (REDUCED) {
+    document.documentElement.classList.add('becalmed');
     caption('Becalmed: reduced motion honored. The sea holds its pose; the helm answers instantly.', 6000);
     becalmFrame();
   } else {
     requestAnimationFrame(frame);
   }
   window.__helm.ready = true;
+
 })();
