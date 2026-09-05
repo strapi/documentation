@@ -1,9 +1,10 @@
 /* ============================================================================
    APPENDIX PLATE — SPECIMENS GATHERED ABROAD
    The one addition the owner allowed: a single sheet filed after the last
-   drawer of the whole collection. Seven specimens received in exchange from
+   drawer of the whole collection. Six specimens received in exchange from
    the sister collections of the Design Lab; each one, pressed here, is a
-   door. Everything in this file is additive: it reads the cabinet's globals
+   door. (A seventh, the kit, went back to its maker when the network was
+   fixed at the seven highlights; no crossing leads there any more.) Everything in this file is additive: it reads the cabinet's globals
    (parseHash, SPECIALS, attachLens, stampSVG) and touches only the DOM it
    creates itself. If anything here fails, it fails silently and the
    herbarium is exactly what it was.
@@ -17,6 +18,27 @@
     try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
     catch (e) { return false; }
   }
+
+  /* ------------------------------------------------------ QUICK START FIRST
+     On the first visit of a session, and only at the front door (no hash),
+     the collection itself opens: the whole tray, with the Quick Start Guide
+     sheet at its top wearing a START HERE bookmark ribbon. Every later
+     visit opens exactly as it always did. An invitation, never a
+     redirection of somebody who asked for a particular sheet. */
+  var QS_SLUG = '/cms/quick-start';
+  var QS_GESTURE = false;
+  (function frontDoor() {
+    try {
+      var h = location.hash;
+      var atDoor = (!h || h === '#' || h === '#/');
+      var first = sessionStorage.getItem('herb.qsWelcomed') !== '1';
+      if (first) sessionStorage.setItem('herb.qsWelcomed', '1');
+      if (atDoor && first) {
+        QS_GESTURE = true;
+        location.replace('#~all');
+      }
+    } catch (e) { QS_GESTURE = false; /* no session memory: open as always */ }
+  })();
 
   /* ------------------------------------------------------------ tape helper
      Same linen strips plantSVG lays over its stems: a shadow pass, then the
@@ -32,7 +54,7 @@
   }
 
   /* ============================================================ the figures
-     Seven pressed specimens, each drawn in the hand of its native country. */
+     Six pressed specimens, each drawn in the hand of its native country. */
 
   /* 1 · a pixel leaf — crisp square dots, one tile per cell, no antialias */
   function figPixel() {
@@ -273,57 +295,6 @@
     return s + '</svg>';
   }
 
-  /* 7 · a moulded plant part still on its runner, oddly glossy */
-  function figSprue() {
-    var base = '#8aa05e', dark = '#5f7440', code = '#a8bd77';
-    var s = svgOpen();
-    s += '<g transform="translate(2,0)">';
-    /* pressed shadow of the whole runner */
-    s += '<g fill="#4a3a22" opacity="0.09" transform="translate(2.2,3)">'
-      + '<rect x="24" y="16" width="5" height="98" rx="2.4"/><rect x="69" y="16" width="5" height="98" rx="2.4"/>'
-      + '<rect x="24" y="16" width="50" height="5" rx="2.4"/><rect x="24" y="109" width="50" height="5" rx="2.4"/></g>';
-    /* the runner frame */
-    s += '<g fill="' + base + '">'
-      + '<rect x="24" y="16" width="5" height="98" rx="2.4"/>'
-      + '<rect x="69" y="16" width="5" height="98" rx="2.4"/>'
-      + '<rect x="24" y="16" width="50" height="5" rx="2.4"/>'
-      + '<rect x="24" y="109" width="50" height="5" rx="2.4"/>'
-      + '<rect x="24" y="61" width="50" height="4.4" rx="2.2"/></g>';
-    /* moulded shade and gloss along the rails */
-    s += '<g fill="none" stroke="' + dark + '" stroke-width="1.1" opacity="0.55">'
-      + '<path d="M28.4,20 V110 M73,20 V110"/></g>';
-    s += '<g fill="none" stroke="#ffffff" stroke-width="0.9" opacity="0.6" stroke-linecap="round">'
-      + '<path d="M25.4,20 V72 M70.4,22 V60 M26,17.8 H70"/></g>';
-    /* ejector-pin rings */
-    s += '<g fill="none" stroke="' + dark + '" stroke-width="0.6" opacity="0.4">'
-      + '<circle cx="26.5" cy="34" r="1.7"/><circle cx="71.5" cy="96" r="1.7"/></g>';
-    /* part 1: a leaf, gated to the left rail */
-    s += '<path d="M29,42 l5,1.2" stroke="' + base + '" stroke-width="2.6"/>';
-    s += '<path d="M34,43 C36,36 44,32 51,34 C50,42 43,47 36,46 C35,45 34,44 34,43 Z" fill="' + base + '"/>';
-    s += '<path d="M35,43.5 C39,40 44,37.5 49,36" fill="none" stroke="' + dark + '" stroke-width="0.8" opacity="0.6"/>';
-    s += '<ellipse cx="41" cy="38.5" rx="4.6" ry="1.7" fill="#ffffff" opacity="0.5" transform="rotate(-16 41 38.5)"/>';
-    /* part 2: a five-petal corolla, gated to the right rail */
-    s += '<path d="M69,80 l-5,0.6" stroke="' + base + '" stroke-width="2.6"/>';
-    var cor = '<g transform="translate(56,81)">';
-    for (var i = 0; i < 5; i++) cor += '<ellipse cx="0" cy="-6.2" rx="3.4" ry="5" transform="rotate(' + i * 72 + ')" fill="' + base + '"/>';
-    cor += '<circle r="2.6" fill="' + dark + '"/><circle r="1" fill="' + base + '"/>'
-      + '<ellipse cx="-2.6" cy="-4.2" rx="2.6" ry="1.2" fill="#ffffff" opacity="0.55" transform="rotate(-30 -2.6 -4.2)"/></g>';
-    s += cor;
-    /* part 3: the stolon itself, a runner on the runner, gated to the bottom bar */
-    s += '<path d="M50,109 l0,-5" stroke="' + base + '" stroke-width="2.6"/>';
-    s += '<path d="M50,104 C46,98 52,94 48,88 C46,84 50,80 48,76" fill="none" stroke="' + base + '" stroke-width="3" stroke-linecap="round"/>';
-    s += '<path d="M48.6,90 q-4,-1.4 -5,-5 q4.4,0.4 5,5 Z M48.8,80 q4,-1.4 5,-5 q-4.4,0.4 -5,5 Z" fill="' + base + '"/>';
-    s += '<path d="M49.4,101 C47,96 51,93 48.8,89" fill="none" stroke="#ffffff" stroke-width="0.8" opacity="0.55"/>';
-    /* embossed part codes, moulded a shade lighter */
-    s += '<text x="31" y="52" font-family="IBM Plex Mono,monospace" font-size="3.4" fill="' + code + '">B1</text>'
-      + '<text x="60" y="93" font-family="IBM Plex Mono,monospace" font-size="3.4" fill="' + code + '">B2</text>'
-      + '<text x="52.6" y="100" font-family="IBM Plex Mono,monospace" font-size="3.4" fill="' + code + '">B3</text>'
-      + '<text x="33" y="20" font-family="IBM Plex Mono,monospace" font-size="3" fill="' + code + '">SPRUE B · 1:1</text>';
-    s += '</g>';
-    s += tape(51, 118, -3, 26, 6.4) + tape(51, 24, 4, 20, 5.8);
-    return s + '</svg>';
-  }
-
   /* ------------------------------------------------------- collector marks */
   function markSVG(kind) {
     var open = '<svg class="appdx-mkglyph" viewBox="0 0 14 14" aria-hidden="true">';
@@ -349,19 +320,14 @@
         + '<path d="M2,10 A6.4,6.4 0 0 1 12,10"/><path d="M4.4,10 A3.4,3.4 0 0 1 9.6,10"/></g>'
         + '<circle cx="7" cy="10.6" r="1.3" fill="#2e3c4c"/></svg>';
     }
-    if (kind === 'cmyk') {
-      return open + '<circle cx="5" cy="5" r="2.5" fill="#0f9bd7" opacity="0.85"/>'
-        + '<circle cx="9" cy="5" r="2.5" fill="#e0347c" opacity="0.8"/>'
-        + '<circle cx="7" cy="8.6" r="2.5" fill="#f2c400" opacity="0.85"/>'
-        + '<circle cx="7" cy="6.2" r="1" fill="#1c1b1a"/></svg>';
-    }
-    /* kit */
-    return open + '<g fill="none" stroke="#5f7440" stroke-width="1.2">'
-      + '<path d="M2.4,2.4 V11.6 M2.4,7 H8"/></g>'
-      + '<circle cx="10.4" cy="7" r="2.6" fill="#8aa05e"/></svg>';
+    /* cmyk */
+    return open + '<circle cx="5" cy="5" r="2.5" fill="#0f9bd7" opacity="0.85"/>'
+      + '<circle cx="9" cy="5" r="2.5" fill="#e0347c" opacity="0.8"/>'
+      + '<circle cx="7" cy="8.6" r="2.5" fill="#f2c400" opacity="0.85"/>'
+      + '<circle cx="7" cy="6.2" r="1" fill="#1c1b1a"/></svg>';
   }
 
-  /* ============================================================ the seven */
+  /* ============================================================= the six */
   var SPECIMENS = [
     {
       key: 'pixelcity', href: '../pixelcity/', fig: figPixel, mark: 'pixel', rot: -0.6,
@@ -410,14 +376,6 @@
       leg: 'leg. the colourist · name withheld',
       hint: 'On loan from a printing-house that asks not to be named · press the specimen to follow it home.',
       aria: 'Rosa quadrichroma, a four-colour halftone flower from an unnamed printing-house. Press to follow it home.'
-    },
-    {
-      key: 'secretb', href: '../secretb/', fig: figSprue, mark: 'kit', rot: -0.7,
-      name: 'Herba polystyrena',
-      note: 'Part 7 on sprue B, still on its runner; detach with a gentle twist. Cement not included.',
-      leg: 'leg. the toolmaker · name withheld',
-      hint: 'On loan from a workshop that asks not to be named · press the specimen to follow it home.',
-      aria: 'Herba polystyrena, a moulded plant part still on its runner, from an unnamed workshop. Press to follow it home.'
     }
   ];
 
@@ -453,7 +411,7 @@
       + '<div class="bino">Specimens gathered abroad <span class="auth">ex herb. var.</span></div>'
       + '<div class="rule"></div>'
       + '<dl>'
-      + '<dt>Coll.</dt><dd>seven sister collections, one specimen each</dd>'
+      + '<dt>Coll.</dt><dd>six sister collections, one specimen each</dd>'
       + '<dt>Date</dt><dd>various seasons, exchanged in kind</dd>'
       + '<dt>Loc.</dt><dd>beyond this cabinet, each its own country</dd>'
       + '<dt>Det.</dt><dd>one plate; nothing else was added</dd>'
@@ -466,15 +424,15 @@
   function sheetHTML() {
     var h = '<section class="appdx" id="appdx" aria-label="Appendix plate: specimens gathered abroad">';
     h += '<div class="appdx-divider" aria-hidden="true"><span></span><b>Appendix</b><span></span></div>';
-    h += '<p class="appdx-lede">After the last drawer, one plate more: seven specimens received in exchange from the sister collections.</p>';
+    h += '<p class="appdx-lede">After the last drawer, one plate more: six specimens received in exchange from the sister collections.</p>';
     h += '<div class="sheet appdx-sheet" id="appdxSheet">';
     h += '<div class="rule-frame"></div>';
     h += '<div class="stamp" style="transform:rotate(-8deg)">' + (typeof stampSVG === 'function' ? stampSVG('apx-seal') : '') + '</div>';
     h += '<div class="acc">ACC. STR‑APP‑I</div>';
-    h += '<div class="fieldno">Field no. EXCH‑007 · exchange herbarium · seven loans</div>';
+    h += '<div class="fieldno">Field no. EXCH‑006 · exchange herbarium · six loans</div>';
     h += '<header class="appdx-head">'
       + '<h2>Specimens gathered abroad</h2>'
-      + '<p>Appendix I · seven loans from the sister collections</p>'
+      + '<p>Appendix I · six loans from the sister collections</p>'
       + '</header>';
     h += '<div class="appdx-grid">';
     for (var i = 0; i < SPECIMENS.length; i++) h += specimenHTML(SPECIMENS[i]);
@@ -499,11 +457,11 @@
     + '.appdx-head h2{margin:0;font-family:"Cormorant Garamond",serif;font-weight:600;font-size:3.1cqi;letter-spacing:.22em;text-transform:uppercase;color:#4a3c28}'
     + '.appdx-head p{margin:.7cqi 0 0;font-family:"Courier Prime",monospace;font-size:1.35cqi;letter-spacing:.16em;color:#8c7a5c}'
     + '.appdx-head::after{content:"";display:block;width:34cqi;height:1px;background:#cfbf9d;margin:1.5cqi auto 0}'
-    + '.appdx-grid{position:absolute;left:6.5cqi;right:6.5cqi;top:17.5cqi;bottom:33cqi;display:grid;'
-    + 'grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,minmax(0,1fr));gap:3cqi 2cqi}'
+    + '.appdx-grid{position:absolute;left:6.5cqi;right:6.5cqi;top:17.5cqi;bottom:47cqi;display:grid;'
+    + 'grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,minmax(0,1fr));gap:3cqi 2cqi}'
     + '.appdx-sp{position:relative;display:flex;flex-direction:column;align-items:center;gap:.7cqi;'
     + 'text-decoration:none;color:inherit;cursor:pointer;min-width:0}'
-    + '.appdx-fig{width:100%;height:16.2cqi;display:block;transition:transform .28s var(--ease,ease)}'
+    + '.appdx-fig{width:100%;height:20.5cqi;display:block;transition:transform .28s var(--ease,ease)}'
     + '.appdx-fig svg{width:100%;height:100%;display:block;overflow:visible}'
     + '.appdx-sp:hover .appdx-fig,.appdx-sp:focus-visible .appdx-fig{transform:translateY(-.4cqi)}'
     + '.appdx-lbl{display:block;position:relative;width:92%;background:linear-gradient(180deg,#fbf6ea,#f2e9d5);border:1px solid #b9a681;'
@@ -527,7 +485,7 @@
     + '.appdx-sheet.appdx-lending .appdx-sp:not(.appdx-crossing){transition:opacity .5s;opacity:.5}'
     + '@keyframes appdxThump{0%{opacity:0;transform:scale(1.75) rotate(-2deg)}'
     + '62%{opacity:.95;transform:scale(.94) rotate(-7deg)}100%{opacity:.88;transform:scale(1) rotate(-7deg)}}'
-    + '.appdx-mainlabel{position:absolute;right:4.2cqi;bottom:4.2cqi;width:45cqi}'
+    + '.appdx-mainlabel{position:absolute;left:0;right:0;bottom:6.5cqi;width:54cqi;margin:0 auto}'
     + '.appdx-tools{max-width:660px;margin:.95rem auto 0;text-align:center;font-family:"Courier Prime",monospace;'
     + 'font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:#6f5f43}'
     /* the one living specimen, and only while the plate is on the table */
@@ -550,7 +508,45 @@
     + '.appdx-hint{font-size:2.6cqi;width:118%}'
     + '.appdx-seal{width:34cqi;margin-left:-17cqi;top:10cqi}'
     + '.appdx-mainlabel{position:static;width:auto;margin:1rem;transform:none}'
-    + '}';
+    + '}'
+    /* the loan slip: the crossing is confirmed before it plays */
+    + '.appdx-veil{position:fixed;inset:0;z-index:220;background:rgba(24,18,8,.52);'
+    + 'display:grid;place-items:center;padding:1rem}'
+    + '.appdx-slip{width:min(400px,94vw);background:linear-gradient(180deg,#fbf6ea,#f1e7d2);'
+    + 'border:1px solid #b9a681;box-shadow:0 18px 50px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.6);'
+    + 'padding:1.1rem 1.3rem 1rem;transform:rotate(-1.2deg);text-align:center;'
+    + 'font-family:"Courier Prime",monospace;color:#3a3025}'
+    + '.appdx-slip-head{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;'
+    + 'color:var(--violet-ink,#4c356c);padding-bottom:.55rem;border-bottom:1px solid #cfbf9d;margin-bottom:.7rem}'
+    + '.appdx-slip-name{display:block;font-family:"Cormorant Garamond",serif;font-style:italic;'
+    + 'font-weight:600;font-size:1.35rem;line-height:1.15;color:#241c12;margin-bottom:.4rem}'
+    + '.appdx-slip-q{margin:0 auto .9rem;max-width:30ch;font-size:.86rem;line-height:1.55}'
+    + '.appdx-slip-btns{display:flex;gap:.7rem;justify-content:center}'
+    + '.appdx-slip-btn{flex:0 1 9.5rem;border:1px solid #a08a5f;background:linear-gradient(180deg,#f7efdd,#eee2c8);'
+    + 'font-family:"Courier Prime",monospace;font-size:.95rem;letter-spacing:.18em;color:#241c12;'
+    + 'padding:.5rem .4rem .45rem;cursor:pointer;box-shadow:0 2px 6px rgba(70,52,26,.25)}'
+    + '.appdx-slip-btn small{display:block;font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;'
+    + 'color:#6b5b3f;margin-top:.2rem}'
+    + '.appdx-slip-btn[data-slip="yes"]{border-color:var(--violet-ink,#4c356c);color:var(--violet-ink,#4c356c)}'
+    + '.appdx-slip-btn[data-slip="yes"] small{color:var(--violet,#63478a)}'
+    + '.appdx-slip-btn:hover{background:linear-gradient(180deg,#fdf7e8,#f3e9d1)}'
+    + '.appdx-slip-btn:focus-visible{outline:2px dotted var(--brass,#c9a55e);outline-offset:3px}'
+    + '.appdx-slip-keys{margin-top:.75rem;font-size:.56rem;letter-spacing:.26em;color:#94815e}'
+    + '@media (prefers-reduced-motion:no-preference){'
+    + '.appdx-veil{animation:appdxVeilIn .18s ease-out}'
+    + '.appdx-slip{animation:appdxSlipIn .24s cubic-bezier(.2,.9,.3,1.15)}'
+    + '}'
+    + '@keyframes appdxVeilIn{from{opacity:0}}'
+    + '@keyframes appdxSlipIn{from{opacity:0;transform:translateY(-16px) rotate(-3deg)}}'
+    /* the START HERE bookmark ribbon, worn once per session by the Quick Start sheet */
+    + '.appdx-start .appdx-ribbon{position:absolute;left:8%;top:-5px;width:1.15rem;height:48%;z-index:3;'
+    + 'background:linear-gradient(180deg,#93392c,#7c2e23 70%,#6f2920);'
+    + 'clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - .55rem),0 100%);'
+    + 'box-shadow:0 3px 7px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.1);'
+    + 'display:flex;justify-content:center;pointer-events:none}'
+    + '.appdx-start .appdx-ribbon b{writing-mode:vertical-rl;font-family:"Courier Prime",monospace;'
+    + 'font-weight:700;font-size:.54rem;letter-spacing:.3em;text-transform:uppercase;'
+    + 'color:#f6eedd;margin-top:.6rem}';
 
   /* ============================================================ mechanics */
 
@@ -569,6 +565,77 @@
     var route = parseHash();
     if (route.kind !== 'special') return false;
     return (SPECIALS[route.id] ? route.id : 'all') === 'all';
+  }
+
+  /* ------------------------------------------------- the loan slip dialog
+     Owner's law: activating a crossing first raises an in-idiom confirmation.
+     A small slip in the herbarium hand; YES and NO; mouse and keyboard alike
+     (Tab focuses, Enter activates the focused control, Y confirms, N or
+     Escape keeps the specimen filed). Cancelling returns cleanly to the
+     moment before. Reduced motion gets the same slip, unanimated. */
+  var SLIP_OPEN = false;
+
+  function slipHTML(name) {
+    return '<div class="appdx-veil" id="appdxVeil">'
+      + '<div class="appdx-slip" role="dialog" aria-modal="true"'
+      + ' aria-labelledby="appdxSlipName" aria-describedby="appdxSlipQ">'
+      + '<div class="appdx-slip-head">Loan desk \u00b7 recall of loan</div>'
+      + '<em class="appdx-slip-name" id="appdxSlipName">' + name + '</em>'
+      + '<p class="appdx-slip-q" id="appdxSlipQ">This specimen returns to its origin \u2013 '
+      + 'another world entirely. Follow it?</p>'
+      + '<div class="appdx-slip-btns">'
+      + '<button type="button" class="appdx-slip-btn" data-slip="yes">YES<small>follow it home</small></button>'
+      + '<button type="button" class="appdx-slip-btn" data-slip="no">NO<small>keep it filed</small></button>'
+      + '</div>'
+      + '<div class="appdx-slip-keys" aria-hidden="true">Y yes \u00b7 N no \u00b7 Esc keeps it filed</div>'
+      + '</div></div>';
+  }
+
+  function openSlip(name, anchor, onYes) {
+    if (SLIP_OPEN) return;
+    SLIP_OPEN = true;
+    if (typeof hideLens === 'function') { try { hideLens(); } catch (e) { /* no glass, no matter */ } }
+    document.body.insertAdjacentHTML('beforeend', slipHTML(name));
+    var veil = document.getElementById('appdxVeil');
+    var yes = veil.querySelector('[data-slip="yes"]');
+    var no = veil.querySelector('[data-slip="no"]');
+
+    function close(confirmed) {
+      SLIP_OPEN = false;
+      window.removeEventListener('keydown', onKey, true);
+      if (veil.parentNode) veil.parentNode.removeChild(veil);
+      if (confirmed) { onYes(); return; }
+      if (anchor && anchor.focus) { try { anchor.focus(); } catch (e) { /* focus is a courtesy */ } }
+    }
+
+    function onKey(e) {
+      if (e.metaKey || e.ctrlKey || e.altKey) return; /* browser chords pass through */
+      e.stopPropagation();                            /* the cabinet's own keys wait */
+      var k = e.key;
+      if (k === 'Tab') {
+        e.preventDefault();
+        (document.activeElement === yes ? no : yes).focus();
+      } else if (k === 'Escape' || k === 'n' || k === 'N') {
+        e.preventDefault();
+        close(false);
+      } else if (k === 'y' || k === 'Y') {
+        e.preventDefault();
+        close(true);
+      } else if (k === 'Enter') {
+        e.preventDefault();
+        if (document.activeElement === no) close(false);
+        else if (document.activeElement === yes) close(true);
+        else yes.focus();
+      }
+    }
+
+    veil.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('[data-slip="yes"]')) { close(true); return; }
+      if (e.target.closest && e.target.closest('[data-slip="no"]')) { close(false); return; }
+      if (e.target === veil) close(false); /* a click on the desk, not the slip */
+    });
+    window.addEventListener('keydown', onKey, true);
+    yes.focus();
   }
 
   function wireSheet(root) {
@@ -592,19 +659,25 @@
       sheet.classList.add('appdx-live');
     }
 
-    /* crossing: a loan recalled */
+    /* crossing: a loan recalled - but the slip is signed first */
     root.addEventListener('click', function (e) {
       var a = e.target && e.target.closest ? e.target.closest('.appdx-sp') : null;
       if (!a) return;
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; /* the browser knows best */
-      if (reduced()) return;                       /* reduced motion crosses instantly */
       e.preventDefault();
-      if (sheet.dataset.crossing) return;
-      sheet.dataset.crossing = '1';
-      a.classList.add('appdx-crossing');
-      sheet.classList.add('appdx-lending');
+      if (sheet.dataset.crossing || SLIP_OPEN) return;
       var href = a.getAttribute('href');
-      setTimeout(function () { location.href = href; }, CROSS_MS);
+      var sp = null;
+      for (var i = 0; i < SPECIMENS.length; i++) {
+        if (SPECIMENS[i].key === a.dataset.w) { sp = SPECIMENS[i]; break; }
+      }
+      openSlip(sp ? sp.name : 'A borrowed specimen', a, function () {
+        if (reduced()) { location.href = href; return; } /* signed: cross without the beat */
+        sheet.dataset.crossing = '1';
+        a.classList.add('appdx-crossing');
+        sheet.classList.add('appdx-lending');
+        setTimeout(function () { location.href = href; }, CROSS_MS);
+      });
     });
   }
 
@@ -625,9 +698,28 @@
     }
   }
 
+  function quickStartGesture() {
+    if (!QS_GESTURE) return;
+    QS_GESTURE = false; /* one opening, one gesture */
+    try {
+      if (!isAllTray()) return;
+      var tray = document.querySelector('#scroll .tray');
+      if (!tray) return;
+      var card = tray.querySelector('.card[data-slug="' + QS_SLUG + '"]');
+      if (!card) return;
+      ensureStyle();
+      if (tray.firstElementChild !== card) tray.insertBefore(card, tray.firstElementChild);
+      card.classList.add('appdx-start');
+      card.insertAdjacentHTML('beforeend', '<span class="appdx-ribbon"><b>Start here</b></span>');
+    } catch (err) {
+      /* the invitation must never cost the collection anything */
+    }
+  }
+
   (function waitForCabinet(tries) {
     if (window.__HERB_READY__ === true) {
       place();
+      quickStartGesture();
       window.addEventListener('hashchange', function () { setTimeout(place, 0); });
       return;
     }
@@ -637,9 +729,13 @@
 })();
 
 /* a browser restoring this page from bfcache after a crossing would keep the
-   stale loan flag and leave the specimens inert - reset on restore */
+   stale loan flag and leave the specimens inert - reset on restore. The seal
+   stays mounted (its classes are lifted instead), so a restored plate can be
+   stamped again; any slip left open is taken off the desk. */
 window.addEventListener('pageshow',function(e){
   if(!e.persisted)return;
   document.querySelectorAll('[data-crossing]').forEach(function(n){delete n.dataset.crossing;});
-  document.querySelectorAll('.appdx-seal').forEach(function(n){n.remove();});
+  document.querySelectorAll('.appdx-crossing').forEach(function(n){n.classList.remove('appdx-crossing');});
+  document.querySelectorAll('.appdx-lending').forEach(function(n){n.classList.remove('appdx-lending');});
+  document.querySelectorAll('.appdx-veil').forEach(function(n){n.remove();});
 });
