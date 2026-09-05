@@ -1,0 +1,77 @@
+CARTA STRAPIANA - THE SHANTY
+Credits and licences for the recorded human voices in this directory.
+
+Every voice here is a real person humming, and every recording was released by
+its author under the Creative Commons CC0 1.0 Universal public domain
+dedication (https://creativecommons.org/publicdomain/zero/1.0/). CC0 imposes no
+condition of attribution. The credit below is given anyway, because this whole
+piece is about crediting the hands that made a thing.
+
+No voice in this build is synthesised. If a synthesised voice were ever
+substituted for one of these files the piece would be lying, and the docket
+that commissioned it said so on the record.
+
+SOURCES  (all from freesound.org, all CC0 1.0)
+
+  hum-call.mp3
+    "Voice Male humming - Negative B" by bolkmar
+    https://freesound.org/people/bolkmar/sounds/469606/
+    cut 0.05 s - 1.37 s
+
+  hum-steady.mp3
+    "Humming in F# Minor" by xkeril
+    https://freesound.org/people/xkeril/sounds/685680/
+    cut 0.5 s - 14.7 s
+
+  hum-second.mp3
+    "Humming in A Minor" by xkeril
+    https://freesound.org/people/xkeril/sounds/685679/
+    cut 1.0 s - 12.4 s
+
+  hum-third.mp3
+    "Humming C D A for alexggqs" by drotzruhn
+    https://freesound.org/people/drotzruhn/sounds/439504/
+    cut 22.0 s - 34.0 s
+
+  hum-high.mp3
+    "woman humming" by coppolaseoul
+    https://freesound.org/people/coppolaseoul/sounds/712112/
+    cut 10.0 s - 17.6 s
+
+  hum-crowd.mp3
+    "CRWDSing_Mmm Hummed Near F_ShaneVincent_GSC24_XY" by ShangusBurger
+    https://freesound.org/people/ShangusBurger/sounds/763890/
+    cut 1.0 s - 7.4 s
+    (a crowd humming "mmm" near F: the whole watch coming in)
+
+WHAT WAS DONE TO THEM
+
+Each file is ONE continuous cut of ONE recording. Nothing is pitch-shifted,
+time-stretched, reversed, spliced or layered inside the file. The processing
+chain, identical for every voice and reproducible by running ../make-audio.sh:
+
+  highpass 95 Hz, lowpass 6.2 kHz   (an old deck has no top and no rumble)
+  0.22 s fade in, 0.45 s fade out
+  1.1 - 1.9 s of silence appended    (so a looping voice draws breath)
+  loudnorm to -22 LUFS, -3 dBTP      (so no voice shouts down another)
+  22.05 kHz, mono, MP3 48 kbit/s
+
+Total: six files, about 363 KB. MP3 was chosen over Ogg Vorbis or Opus only
+because every browser's decodeAudioData reads it.
+
+THE BED
+
+The wind and the water under the voices are NOT recordings. They are
+synthesised in the page with the Web Audio API: one looping noise buffer split
+into a band-passed wind and a low-passed sea, both breathing on slow
+oscillators tied to the swell and to the ship's actual speed through the water.
+That bed is always on, it is the whole sound if these six files fail to load,
+and one switch (S, or the control on deck) silences everything at once.
+
+HOW THEY ARE USED
+
+One voice starts when the ship has way on her. The others JOIN, one at a time,
+at an interval computed from the real commit rhythm of the island being crossed
+to: an island worked often takes up the chant quickly, a page touched twice in
+four years is slow to answer. The chorus never grows past the number of hands
+that actually keep that page. At anchor the voices fall away.

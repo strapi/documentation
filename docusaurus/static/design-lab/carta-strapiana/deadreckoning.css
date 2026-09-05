@@ -1,0 +1,854 @@
+/* CARTA STRAPIANA. Cream paper ground, iron-gall ink text.
+   The file names keep the old docket codename; nothing else does. Every reading
+   surface below is crisp DOM on cream, never themed and never on the canvas. */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #efe5cf;
+  height: 100%;
+  overflow: hidden;
+}
+
+#stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #efe5cf;
+}
+
+#sea {
+  display: block;
+  width: 1440px;
+  height: 900px;
+  max-width: 100vw;
+  max-height: 100vh;
+  cursor: grab;
+}
+#sea.turning { cursor: grabbing; }
+
+/* Engraved plate captions: DOM text, always on cream, never themed. */
+/* Sits in the clear water between the horizon and the top of the wheel:
+   the wheel sprite reaches y = 614 on the 900 px plate, the caption ends above it. */
+#caption {
+  position: absolute;
+  left: 50%;
+  bottom: 34.5%;
+  transform: translateX(-50%);
+  max-width: 62%;
+  text-align: center;
+  font-family: "Iowan Old Style", "Palatino", "Palatino Linotype", Georgia, serif;
+  font-style: italic;
+  font-size: 21px;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  color: #2c2114;
+  /* the paper is knocked out around the glyphs themselves, not behind a panel:
+     a rectangle or an ellipse of wash reads as a sticker on an engraved plate */
+  text-shadow:
+    0 0 2px rgba(244, 236, 217, 1),
+    0 0 4px rgba(244, 236, 217, 1),
+    0 0 7px rgba(244, 236, 217, 0.98),
+    0 0 12px rgba(244, 236, 217, 0.9),
+    0 0 22px rgba(244, 236, 217, 0.62),
+    1px 1px 0 rgba(244, 236, 217, 0.95),
+    -1px -1px 0 rgba(244, 236, 217, 0.95),
+    1px -1px 0 rgba(244, 236, 217, 0.95),
+    -1px 1px 0 rgba(244, 236, 217, 0.95);
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+  user-select: none;
+}
+#caption.shown { opacity: 0.94; }
+
+#plate-title {
+  position: absolute;
+  top: 5.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-family: "Iowan Old Style", "Palatino", "Palatino Linotype", Georgia, serif;
+  color: #2c2114;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+  pointer-events: none;
+  user-select: none;
+}
+#plate-title.shown { opacity: 0.9; }
+#plate-title .pt-main {
+  display: block;
+  font-size: 30px;
+  letter-spacing: 0.42em;
+  padding-left: 0.42em; /* optical centering of letterspacing */
+}
+#plate-title .pt-sub {
+  display: block;
+  margin-top: 4px;
+  font-style: italic;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+}
+
+/* The top of the plate is canvas in every sail state: full sail bellies into it, the
+   furled roll and its gaskets lie right across it. The legend is set below the lowest
+   sail foot the block can meet over its own width - full sail reaches y = 52 there,
+   luffing 66, the furled roll and its ties end at 48 - so nothing ever strikes through
+   the text, and the glyph halo carries it over the thin shrouds that remain. */
+#hints {
+  position: absolute;
+  top: 9.6%;
+  left: 1.2%;
+  max-width: 34%;
+  font-family: "Iowan Old Style", "Palatino", "Palatino Linotype", Georgia, serif;
+  font-style: italic;
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: #3b2c1a;
+  padding: 10px 16px;
+  text-shadow:
+    0 0 2px rgba(245, 238, 220, 1),
+    0 0 4px rgba(245, 238, 220, 1),
+    0 0 7px rgba(245, 238, 220, 0.96),
+    0 0 13px rgba(245, 238, 220, 0.82),
+    1px 1px 0 rgba(245, 238, 220, 0.95),
+    -1px -1px 0 rgba(245, 238, 220, 0.95),
+    1px -1px 0 rgba(245, 238, 220, 0.95),
+    -1px 1px 0 rgba(245, 238, 220, 0.95);
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  pointer-events: none;
+  user-select: none;
+}
+#hints.shown { opacity: 0.95; }
+
+#loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Iowan Old Style", "Palatino", Georgia, serif;
+  font-style: italic;
+  font-size: 19px;
+  color: #4a3a24;
+}
+#loading.hidden { display: none; }
+
+/* ============================================================
+   THE SEA BUILT OUT: the landfall plate, the anchorage, the chart table.
+   Every reading surface is crisp DOM on cream. The body text is never
+   themed and never sits on the canvas: paper, iron-gall ink, one measure.
+   ============================================================ */
+
+:root {
+  --paper: #f1e7d0;
+  --paper-2: #f6eeda;
+  --paper-3: #e8dcc0;
+  --ink: #2c2114;
+  --ink-2: #4a3a24;
+  --ink-3: #6b563a;
+  --rule: rgba(70, 53, 35, 0.30);
+  --rule-2: rgba(70, 53, 35, 0.16);
+  --red: #8d2f22;
+  --green: #38562f;
+  --serif: "Iowan Old Style", "Palatino", "Palatino Linotype", Georgia, serif;
+  --mono: "SFMono-Regular", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* ---- the plate that names the island under the bow ---- */
+#landfall {
+  position: absolute;
+  left: 50%;
+  top: 24.5%;
+  transform: translateX(-50%);
+  max-width: 58%;
+  text-align: center;
+  font-family: var(--serif);
+  color: var(--ink);
+  pointer-events: none;
+  user-select: none;
+  text-shadow:
+    0 0 2px rgba(244, 236, 217, 1), 0 0 4px rgba(244, 236, 217, 1),
+    0 0 8px rgba(244, 236, 217, 0.98), 0 0 14px rgba(244, 236, 217, 0.86),
+    1px 1px 0 rgba(244, 236, 217, 0.95), -1px -1px 0 rgba(244, 236, 217, 0.95),
+    1px -1px 0 rgba(244, 236, 217, 0.95), -1px 1px 0 rgba(244, 236, 217, 0.95);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+#landfall.shown { opacity: 0.96; }
+#landfall .lf-name {
+  font-size: 25px;
+  letter-spacing: 0.22em;
+  padding-left: 0.22em;
+  text-transform: uppercase;
+}
+#landfall .lf-line {
+  margin-top: 3px;
+  font-style: italic;
+  font-size: 15.5px;
+  letter-spacing: 0.02em;
+}
+#landfall .lf-order {
+  margin-top: 5px;
+  font-size: 14px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+/* ---- the sound toggle: one switch silences everything ---- */
+#soundbtn {
+  position: absolute;
+  right: 1.1%;
+  top: 2.4%;
+  font-family: var(--serif);
+  font-size: 13.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  cursor: pointer;
+  user-select: none;
+  opacity: 0.72;
+  text-shadow: 0 0 4px rgba(244, 236, 217, 1), 0 0 9px rgba(244, 236, 217, 0.9);
+}
+#soundbtn:hover { opacity: 1; }
+#soundbtn .sb-mark { margin-right: 6px; font-size: 15px; }
+#soundbtn.off { text-decoration: line-through; opacity: 0.5; }
+
+/* ============ THE ANCHORAGE ============ */
+#anchorage {
+  position: fixed;
+  inset: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  display: flex;
+  flex-direction: column;
+  z-index: 40;
+  overflow: hidden;
+}
+#anchorage[hidden] { display: none; }
+
+#anchorhead {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 34px 14px;
+  border-bottom: 1.5px solid var(--rule);
+  background: var(--paper-2);
+}
+#anchorhead .ah-kicker {
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 6px;
+}
+#anchorhead .ah-title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1.12;
+}
+#anchorhead .ah-sub {
+  margin-top: 7px;
+  font-style: italic;
+  font-size: 14.5px;
+  color: var(--ink-2);
+  max-width: 74ch;
+}
+#anchorhead .ah-right { text-align: right; flex: 0 0 auto; }
+#anchorhead .ah-sound {
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+  white-space: nowrap;
+}
+#weigh, #ondeck {
+  font-family: var(--serif);
+  font-size: 13.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1.4px solid var(--rule);
+  border-radius: 2px;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+#weigh:hover, #ondeck:hover { background: var(--paper-3); }
+
+#anchorbody {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  gap: 0;
+  overflow: hidden;
+}
+#pagepaper {
+  overflow-y: auto;
+  padding: 30px 46px 130px;
+  max-width: 92ch;
+  justify-self: center;
+  width: 100%;
+  font-size: 16.5px;
+  line-height: 1.62;
+}
+#shoreside {
+  overflow-y: auto;
+  border-left: 1.5px solid var(--rule);
+  background: var(--paper-2);
+  padding: 26px 24px 90px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+#shoreside h4 {
+  margin: 0 0 10px;
+  font-size: 11.5px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: 600;
+}
+#shoreside .ss-block { margin-bottom: 26px; }
+#shoreside dl { margin: 0; }
+#shoreside dt {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-top: 9px;
+}
+#shoreside dd { margin: 1px 0 0; font-size: 14px; color: var(--ink); }
+#shoreside .ss-order {
+  border-left: 3px solid var(--red);
+  padding: 8px 0 8px 12px;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+#shoreside .ss-order b { letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px; }
+#shoreside button.act {
+  margin-top: 8px;
+  font-family: var(--serif);
+  font-size: 12.5px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1.2px solid var(--red);
+  color: var(--red);
+  padding: 6px 11px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+#shoreside button.act:hover { background: rgba(141, 47, 34, 0.08); }
+#shoreside button.act[disabled] { border-color: var(--rule); color: var(--ink-3); cursor: default; }
+#shoreside ul.plain { list-style: none; margin: 6px 0 0; padding: 0; }
+#shoreside ul.plain li { margin-bottom: 4px; }
+#shoreside a, #pagepaper a { color: var(--ink); text-decoration-color: rgba(141, 47, 34, 0.55); }
+#shoreside a:hover, #pagepaper a:hover { color: var(--red); }
+
+/* ---- the page itself ---- */
+#pagepaper h2, #pagepaper h3, #pagepaper h4, #pagepaper h5, #pagepaper h6 {
+  font-weight: 600;
+  line-height: 1.24;
+  margin: 1.7em 0 0.5em;
+  letter-spacing: 0.01em;
+}
+#pagepaper h2 {
+  font-size: 24px;
+  border-bottom: 1px solid var(--rule-2);
+  padding-bottom: 5px;
+}
+#pagepaper h3 { font-size: 19.5px; }
+#pagepaper h4 { font-size: 17px; }
+#pagepaper h5, #pagepaper h6 { font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase; }
+#pagepaper p { margin: 0 0 1em; }
+#pagepaper ul, #pagepaper ol { margin: 0 0 1em; padding-left: 1.4em; }
+#pagepaper li { margin-bottom: 0.35em; }
+#pagepaper code {
+  font-family: var(--mono);
+  font-size: 0.87em;
+  background: rgba(120, 96, 60, 0.13);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+#pagepaper .tldr {
+  border-left: 3px solid var(--ink-3);
+  padding: 4px 0 4px 14px;
+  margin: 0 0 1.6em;
+  font-style: italic;
+  font-size: 17px;
+  color: var(--ink-2);
+}
+#pagepaper .tldr .tag {
+  display: block;
+  font-style: normal;
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 4px;
+}
+#pagepaper figure { margin: 1.4em 0; }
+#pagepaper img { max-width: 100%; height: auto; border: 1px solid var(--rule-2); }
+#pagepaper figcaption {
+  font-style: italic;
+  font-size: 13.5px;
+  color: var(--ink-3);
+  margin-top: 6px;
+}
+#pagepaper .twrap { overflow-x: auto; margin: 0 0 1.3em; }
+#pagepaper table { border-collapse: collapse; font-size: 14.5px; min-width: 100%; }
+#pagepaper th, #pagepaper td {
+  border: 1px solid var(--rule-2);
+  padding: 7px 11px;
+  vertical-align: top;
+}
+#pagepaper th {
+  background: var(--paper-3);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+#pagepaper .adm {
+  border: 1px solid var(--rule-2);
+  border-left: 3px solid var(--ink-3);
+  background: var(--paper-2);
+  padding: 12px 16px 2px;
+  margin: 0 0 1.3em;
+}
+#pagepaper .adm .admhead {
+  font-size: 11px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 7px;
+}
+#pagepaper .adm.k-caution, #pagepaper .adm.k-warning, #pagepaper .adm.k-danger { border-left-color: var(--red); }
+#pagepaper .adm.k-caution .admhead, #pagepaper .adm.k-warning .admhead, #pagepaper .adm.k-danger .admhead { color: var(--red); }
+#pagepaper .adm.k-tip, #pagepaper .adm.k-success { border-left-color: var(--green); }
+#pagepaper .adm.k-tip .admhead, #pagepaper .adm.k-success .admhead { color: var(--green); }
+#pagepaper .codeblk { margin: 0 0 1.3em; border: 1px solid var(--rule-2); background: #efe6cd; }
+#pagepaper .codebar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--rule-2);
+  padding: 5px 11px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+#pagepaper .codebar .ct { font-family: var(--mono); letter-spacing: 0.03em; text-transform: none; font-size: 12px; }
+#pagepaper pre {
+  margin: 0;
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.5;
+  color: #241a0f;
+}
+#pagepaper pre code { background: none; padding: 0; font-size: inherit; }
+#pagepaper .tabs { margin: 0 0 1.3em; border: 1px solid var(--rule-2); }
+#pagepaper .tabbar { display: flex; flex-wrap: wrap; background: var(--paper-3); border-bottom: 1px solid var(--rule-2); }
+#pagepaper .tabbtn {
+  font-family: var(--serif);
+  font-size: 12.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--rule-2);
+  padding: 7px 14px;
+  cursor: pointer;
+  color: var(--ink-3);
+}
+#pagepaper .tabbtn.active { color: var(--ink); background: var(--paper-2); box-shadow: inset 0 -2px 0 var(--red); }
+#pagepaper .tabpane { display: none; padding: 12px 14px 1px; }
+#pagepaper .tabpane.active { display: block; }
+#pagepaper .cardgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 0 0 1.3em; }
+#pagepaper .card { display: block; border: 1px solid var(--rule-2); padding: 12px 14px; text-decoration: none; background: var(--paper-2); }
+#pagepaper .card .ct { font-weight: 600; margin-bottom: 4px; }
+#pagepaper .card .cd { font-size: 13.5px; color: var(--ink-2); }
+#pagepaper .badge {
+  display: inline-block;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 1px 7px;
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  margin-right: 6px;
+}
+#pagepaper details.dblk { border: 1px solid var(--rule-2); padding: 9px 14px; margin: 0 0 1.3em; background: var(--paper-2); }
+#pagepaper details.dblk summary { cursor: pointer; font-style: italic; }
+#pagepaper .endpoint { border: 1px solid var(--rule); margin: 0 0 1.4em; }
+#pagepaper .ephead {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  background: var(--paper-3);
+  border-bottom: 1px solid var(--rule-2);
+  padding: 8px 13px;
+  font-family: var(--mono);
+  font-size: 13.5px;
+}
+#pagepaper .ephead .method {
+  font-family: var(--serif);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+#pagepaper .epbody { padding: 12px 14px 2px; }
+#pagepaper .epbody h4 { margin-top: 0; }
+#pagepaper .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; margin: 0 0 1.2em; }
+#pagepaper hr { border: none; border-top: 1px solid var(--rule-2); margin: 1.9em 0; }
+#pagepaper .annotation { font-style: italic; color: var(--ink-3); font-size: 0.94em; }
+#pagepaper .icon { display: none; }
+#pagepaper .endplate {
+  margin-top: 42px;
+  padding-top: 14px;
+  border-top: 1.5px solid var(--rule);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+/* ============ BELOW DECK: the chart table ============ */
+#below {
+  position: fixed;
+  inset: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  overflow: hidden;
+}
+#below[hidden] { display: none; }
+#belowhead {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding: 13px 26px;
+  border-bottom: 1.5px solid var(--rule);
+  background: var(--paper-2);
+}
+#belowhead .bh-title {
+  font-size: 14px;
+  letter-spacing: 0.30em;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+#belowtabs { display: flex; gap: 3px; }
+#belowtabs button {
+  font-family: var(--serif);
+  font-size: 13px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 7px 12px;
+  cursor: pointer;
+  color: var(--ink-3);
+}
+#belowtabs button.on { color: var(--ink); border-bottom-color: var(--red); }
+#belowtabs button:hover { color: var(--ink); }
+.bh-search { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+#search {
+  font-family: var(--serif);
+  font-size: 15px;
+  width: 400px;
+  max-width: 40vw;
+  padding: 8px 12px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1.4px solid var(--rule);
+  border-radius: 2px;
+}
+#search:focus { outline: none; border-color: var(--red); }
+#searchdrop {
+  position: absolute;
+  top: 58px;
+  right: 26px;
+  width: 560px;
+  max-width: 60vw;
+  max-height: 62vh;
+  overflow-y: auto;
+  background: var(--paper-2);
+  border: 1.4px solid var(--rule);
+  box-shadow: 0 12px 34px rgba(44, 33, 20, 0.22);
+  z-index: 60;
+}
+#searchdrop[hidden] { display: none; }
+#searchdrop .sr {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--rule-2);
+  background: transparent;
+  font-family: var(--serif);
+  padding: 9px 14px;
+  cursor: pointer;
+  color: var(--ink);
+}
+#searchdrop .sr:hover, #searchdrop .sr.sel { background: var(--paper-3); }
+#searchdrop .sr .st { font-size: 15px; }
+#searchdrop .sr .sm {
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-top: 2px;
+}
+#searchdrop .srnone { padding: 12px 14px; font-style: italic; color: var(--ink-3); }
+
+.bpane { flex: 1 1 auto; overflow: hidden; position: relative; }
+.bpane[hidden] { display: none !important; }
+
+/* ---- the chart ---- */
+#pane-chart:not([hidden]) { display: flex; align-items: center; justify-content: center; }
+#chart { display: block; max-width: 100%; max-height: 100%; }
+#chartlabels { position: absolute; inset: 0; pointer-events: none; }
+#chartlabels .al {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 10.5px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: rgba(44, 33, 20, 0.72);
+  white-space: nowrap;
+  text-shadow: 0 0 3px var(--paper), 0 0 6px var(--paper);
+}
+#chartinfo {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  max-width: 40ch;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-shadow: 0 0 4px var(--paper), 0 0 8px var(--paper);
+  pointer-events: none;
+}
+#chartinfo .ci-name {
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+#chartinfo .ci-act { margin-top: 5px; font-style: italic; color: var(--red); }
+#chartkey {
+  position: absolute;
+  right: 20px;
+  bottom: 18px;
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--ink-3);
+  text-align: right;
+  text-shadow: 0 0 4px var(--paper), 0 0 8px var(--paper);
+  pointer-events: none;
+}
+#chartkey b { color: var(--ink-2); font-weight: 600; letter-spacing: 0.06em; }
+
+/* ---- the index, the log, the register, the colophon ---- */
+.bscroll { position: absolute; inset: 0; overflow-y: auto; padding: 22px 34px 70px; }
+.bnote {
+  font-style: italic;
+  color: var(--ink-2);
+  max-width: 96ch;
+  margin: 0 0 18px;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.bsec {
+  margin: 24px 0 8px;
+  font-size: 11.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--rule-2);
+  padding-bottom: 4px;
+}
+.idxgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0 26px; }
+.idxrow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  font-family: var(--serif);
+  font-size: 14.5px;
+  padding: 3px 4px;
+  cursor: pointer;
+  color: var(--ink);
+  border-bottom: 1px dotted var(--rule-2);
+}
+.idxrow:hover { background: var(--paper-3); }
+.idxrow .ir-t { flex: 1 1 auto; }
+.idxrow .ir-m {
+  flex: 0 0 auto;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.idxrow.charted .ir-t::after { content: " \25CF"; color: var(--red); font-size: 9px; vertical-align: 2px; }
+.idxrow.dark .ir-m { color: var(--red); }
+
+/* ---- the captain's log ---- */
+#logtable { width: 100%; border-collapse: collapse; font-size: 14px; }
+#logtable th {
+  font-size: 10.5px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: 600;
+  border-bottom: 1.5px solid var(--rule);
+  padding: 5px 8px;
+  text-align: left;
+}
+#logtable td {
+  border-bottom: 1px solid var(--rule-2);
+  padding: 6px 8px;
+  vertical-align: top;
+}
+#logtable td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+#logtable td.rem { width: 38%; }
+#logtable textarea.remark {
+  display: block;
+  width: 100%;
+  min-height: 22px;
+  resize: none;
+  overflow: hidden;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rule-2);
+  padding: 1px 0 2px;
+}
+#logtable textarea.remark::placeholder { color: rgba(107, 86, 58, 0.5); }
+#logtable textarea.remark:focus { outline: none; border-bottom-color: var(--red); }
+#logtable tr.mark td { color: var(--red); font-style: italic; }
+.orders { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; margin: 4px 0 22px; }
+.order {
+  border: 1px solid var(--rule-2);
+  border-top: 3px solid var(--red);
+  padding: 12px 14px;
+  background: var(--paper-2);
+}
+.order h5 {
+  margin: 0 0 5px;
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 600;
+}
+.order p { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
+.order .tally {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.signrow { display: flex; align-items: center; gap: 10px; margin: 6px 0 20px; flex-wrap: wrap; }
+.signrow input {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  padding: 6px 10px;
+  width: 260px;
+  color: var(--ink);
+  background: var(--paper-2);
+  border: 1.2px solid var(--rule);
+  border-radius: 2px;
+}
+.signrow input:focus { outline: none; border-color: var(--red); }
+.btn {
+  font-family: var(--serif);
+  font-size: 12.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1.2px solid var(--rule);
+  color: var(--ink);
+  padding: 7px 13px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.btn:hover { background: var(--paper-3); }
+
+/* ---- the drowned register ---- */
+.regwrap { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0 26px; }
+.regline {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 4px 4px;
+  border-bottom: 1px dotted var(--rule-2);
+  font-size: 14.5px;
+}
+.regline .rn { flex: 1 1 auto; color: rgba(107, 86, 58, 0.62); }
+.regline .rm {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.regline.raised .rn { color: var(--ink); }
+.regline.raised { border-bottom-color: var(--rule); }
+.regline.raised .rn::before { content: "\2014  "; color: var(--red); }
+.plategrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 0 22px; }
+.regplate {
+  border: 1px solid var(--rule-2);
+  background: var(--paper-2);
+  padding: 14px 18px;
+  margin: 0 0 20px;
+  max-width: 96ch;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.regplate .rp-name { font-size: 17px; letter-spacing: 0.05em; }
+.regplate .rp-line { color: var(--ink-2); font-style: italic; margin-top: 4px; }
+
+/* ---- the colophon ---- */
+.colophon { max-width: 78ch; font-size: 15.5px; line-height: 1.68; }
+.colophon p { margin: 0 0 1.05em; }
+.colophon .cred {
+  font-size: 13px;
+  color: var(--ink-2);
+  border-top: 1px solid var(--rule-2);
+  padding-top: 12px;
+  margin-top: 20px;
+}
+.colophon code { font-family: var(--mono); font-size: 0.86em; }
+
+@media (prefers-reduced-motion: reduce) {
+  #caption, #plate-title, #hints, #landfall { transition: none; }
+}

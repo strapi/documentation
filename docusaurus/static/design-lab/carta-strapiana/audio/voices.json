@@ -1,0 +1,11 @@
+{
+  "note": "Recorded human voices, every one of them released CC0 by its author. See CREDITS.txt. They are layered in call-and-response over the synthesised wind-and-water bed; the bed alone is a complete piece if these files do not load.",
+  "files": [
+    { "file": "hum-call.mp3",   "role": "call",     "rate": 1.00, "gain": 0.90, "source": "Freesound 469606, bolkmar, CC0" },
+    { "file": "hum-steady.mp3", "role": "response", "rate": 1.00, "gain": 0.85, "source": "Freesound 685680, xkeril, CC0" },
+    { "file": "hum-second.mp3", "role": "response", "rate": 1.00, "gain": 0.80, "source": "Freesound 685679, xkeril, CC0" },
+    { "file": "hum-third.mp3",  "role": "response", "rate": 1.00, "gain": 0.78, "source": "Freesound 439504, drotzruhn, CC0" },
+    { "file": "hum-high.mp3",   "role": "response", "rate": 1.00, "gain": 0.72, "source": "Freesound 712112, coppolaseoul, CC0" },
+    { "file": "hum-crowd.mp3",  "role": "watch",    "rate": 1.00, "gain": 0.95, "source": "Freesound 763890, ShangusBurger, CC0" }
+  ]
+}
