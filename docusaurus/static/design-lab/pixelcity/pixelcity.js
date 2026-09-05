@@ -2250,6 +2250,26 @@ function projectStatics() {
         depth: depthTile(pr.tx, pr.ty, 0.35)
       };
       statics.push(st); pr.st = st;
+    } else if (pr.kind === 'vessel') {
+      // a moored vessel rides on its sea tile, hull settled into the water
+      const cv2 = SPR[pr.name];
+      const st = {
+        cv: cv2, name: pr.name,
+        wx: Math.round(isoX(pr.tx + 0.5, pr.ty + 0.5)) - (cv2.width >> 1),
+        wy: Math.round(isoY(pr.tx + 0.5, pr.ty + 0.5)) - cv2.height + 6,
+        depth: depthTile(pr.tx, pr.ty, 0.4)
+      };
+      statics.push(st); pr.st = st;
+    } else if (pr.kind === 'observatory' || pr.kind === 'trailgate' || pr.kind === 'botanist') {
+      const nm2 = { observatory: 'observatory', trailgate: 'fingerpost', botanist: 'botaniststall' }[pr.kind];
+      const cv2 = SPR[nm2];
+      const st = {
+        cv: cv2, name: nm2,
+        wx: Math.round(isoX(pr.tx + 0.5, pr.ty + 0.5)) - (cv2.width >> 1),
+        wy: Math.round(isoY(pr.tx + 0.5, pr.ty + 0.5)) - cv2.height + 3,
+        depth: depthTile(pr.tx, pr.ty, 0.3)
+      };
+      statics.push(st); pr.st = st;
     } else if (pr.kind === 'board') {
       // a small noticeboard standing on the ground beside the door, always to
       // the screen-right of it so it reads the same at every orientation
@@ -2405,22 +2425,10 @@ const drivable = (t2) => t2 === T.ROAD || t2 === T.CROSS || t2 === T.BRIDGE;
 
 function initLife() {
   const G = (x, yy) => yy * Wt + x;
-  // pedestrians
-  const paveTiles = [];
-  for (let ty = 0; ty < Ht; ty++) for (let tx = 0; tx < Wt; tx++) {
-    const t2 = grid[G(tx, ty)];
-    if (t2 === T.PAVE || t2 === T.PLAZA || t2 === T.BANK) paveTiles.push([tx, ty]);
-  }
-  const nPed = Math.min(520, Math.floor(paveTiles.length / 4));
-  for (let i = 0; i < nPed; i++) {
-    const [tx, ty] = paveTiles[rint(paveTiles.length)];
-    const qid = quarterOf[G(tx, ty)];
-    const themeIdx = qid >= 0 ? quarters.find(q => q.id === qid)?.themeIdx ?? rint(THEMES.length) : rint(THEMES.length);
-    peds.push({
-      x: tx + 0.5, y: ty + 0.5, fx: tx, fy: ty, nx: tx, ny: ty,
-      prog: 1, speed: 0.55 + rng() * 0.35, theme: themeIdx, ph: rng() * 10, lastDir: null
-    });
-  }
+  // the anonymous extras are NOT built here any more: the 77 named hands are the
+  // population, and rebuildExtras() tops the leftover ground up behind them
+  // (called from refreshFolk, which has already run by the time we get here).
+  rebuildExtras();
   // cars, weighted to high-traffic quarters
   const roadTiles = [];
   for (let ty = 0; ty < Ht; ty++) for (let tx = 0; tx < Wt; tx++) {
@@ -2495,9 +2503,12 @@ function updateLife(dt) {
   animT += dt;
   // peds (they hurry a little when a shower passes through)
   const pedDt = dt * (1 + 0.55 * rainI);
+  const extraTile = (nx, ny) => nx >= 0 && ny >= 0 && nx < Wt && ny < Ht &&
+    walkableP(tileAt(nx, ny)) && (!extraOK || extraOK[ny * Wt + nx] === 1);
   for (const p of peds) {
-    stepEntityGrid(p, (nx, ny) => walkableP(tileAt(nx, ny)), 2.2, pedDt, null);
+    stepEntityGrid(p, extraTile, 2.2, pedDt, null);
   }
+  stepFolk(dt);   // the named hands pace their own block
   // cars: lane rules + yields
   const carYield = (c) => {
     // next tile is a crossing with a ped on/near it?
@@ -2505,6 +2516,9 @@ function updateLife(dt) {
     if (crossTiles.has(key)) {
       for (const p of peds) {
         if (Math.abs(p.x - (c.nx + 0.5)) < 1.1 && Math.abs(p.y - (c.ny + 0.5)) < 1.1) return true;
+      }
+      for (const f of folkVisible) {   // a named hand is a person too
+        if (Math.abs(f.x - (c.nx + 0.5)) < 1.1 && Math.abs(f.y - (c.ny + 0.5)) < 1.1) return true;
       }
     }
     // car ahead
@@ -2532,6 +2546,7 @@ function updateLife(dt) {
     if (pg.st === 'peck') {
       let danger = false;
       for (const p of peds) if (Math.abs(p.x - pg.tx) < 1.4 && Math.abs(p.y - pg.ty) < 1.4) { danger = true; break; }
+      if (!danger) for (const f of folkVisible) if (Math.abs(f.x - pg.tx) < 1.4 && Math.abs(f.y - pg.ty) < 1.4) { danger = true; break; }
       if (!danger) for (const c of cars) if (Math.abs(c.x - pg.tx) < 1.6 && Math.abs(c.y - pg.ty) < 1.6) { danger = true; break; }
       if (!danger && Math.abs(player.x - pg.tx) < 1.5 && Math.abs(player.y - pg.ty) < 1.5) danger = true;
       if (danger) {
@@ -4033,7 +4048,7 @@ function draw() {
   const hud2 = document.getElementById('hud2');
   if (hud2) {
     const line = townNoteT > 0 ? townNote
-      : foundingActive ? `FOUNDING DAY · first recording, ${TOWN.foundingHuman}`
+      : (foundingActive || landfallActive) ? [foundingActive ? foundingLine() : '', landfallActive ? landfallLine() : ''].filter(Boolean).join(' · ')
       : parcels.length ? `${parcels.length} parcel${parcels.length > 1 ? 's' : ''} in the satchel · B opens the delivery book`
       : '';
     if (line) { hud2.textContent = line; hud2.hidden = false; } else hud2.hidden = true;
@@ -4906,10 +4921,14 @@ function initKey() {
       <li><strong>The night shift:</strong> ${TOWN.lanternTotal} mint lanterns burn after dark for commits made after midnight, on ${lanternDoors.length} real pages. Walk up to one at night to log it; find them all and the plaza plaque lights: <em>for those who wrote after midnight</em>.</li>
       <li><strong>The Daily Docs</strong> kiosk prints the six most recently tended pages, with their real dates. Tap a headline and the courier makes the trip.</li>
       <li><strong>The Records Hall</strong> keeps one ledger per month from ${humanDate(TOWN.first)} to ${humanDate(TOWN.last)}, honestly labelled as the pages remember it; the ${TOWN.widest.founded.length}-page ledger of ${['January','February','March','April','May','June','July','August','September','October','November','December'][Number(TOWN.widest.key.slice(5, 7)) - 1]} ${TOWN.widest.key.slice(0, 4)} is chained to the desk.</li>
-      <li><strong>The townsfolk</strong> are the ${townsfolk.length} real hands behind these pages, standing near the page each one tends; about twenty are out on any given day. Stop beside one and the prompt reads <em>TALK</em>: press Enter or click it and their record opens - the span they signed, the pages they tended, and every one of those pages with its own count, each clickable. Walk away and the conversation ends.</li>
+      <li><strong>The townsfolk are the town.</strong> All ${townsfolk.length} real hands behind these pages are out in the streets at once - they are the population, not decoration - each keeping a beat beside one of the pages provenance ties them to, and the day of the cycle picks which of their pages that is, so the same hand is somewhere else tomorrow. Stop beside one and the prompt reads <em>TALK</em>: press Enter or click it and their record opens - the span they signed, the pages they tended, and every one of those pages with its own count, each clickable. Walk away and the conversation ends.</li>
+      <li><strong>The anonymous are the exception now</strong>, and there are never more than one of them for every six named hands (${peds.length} of them today). They keep to the ground no hand is tied to - the quays and the wide streets more than ${FOLK_CLEAR} tiles from anyone - and they are plainly incidental: no hat, no name, no label, no talk prompt. Wherever the pages are, everyone you pass can be named.</li>
       <li><strong>${TOWN.vacant.length} fenced lots</strong> mark the pages no other page links to yet. The sign says NOBODY LINKS HERE YET; walking up offers to be the first, through the post office.</li>
       <li><strong>Photo mode</strong> (P): the scene freezes, you frame it, and the camera button saves a pixel-crisp postcard with the district, season and in-town date stamped on the border.</li>
-      <li><strong>Founding Day</strong> falls on ${TOWN.foundingHuman.replace(/ \d{4}$/, '')}, the anniversary of the first recording these pages remember: bunting strung from poles around the plaza with ${TOWN.pennants} pennants, one in each community's colour, lights along the cords after dark and fireworks over the square. Add <span class="mono">?founding=1</span> to see it any day.</li>
+      <li><strong>The town has two birthdays, because the repository is older than any page still standing in it.</strong></li>
+      <li><strong>Founding Day</strong> falls on ${TOWN.foundingHuman.replace(/ \d{4}$/, '')}, the anniversary of the repository's own first commit (${TOWN.foundingHuman}, the oldest entry in the log this whole town is drawn from). Every file that commit made has since been deleted or moved, so the day is celebrated honestly: <em>nothing standing here today is that old</em>. Bunting is strung from poles around the plaza with ${TOWN.pennants} pennants, one in each community's colour, lights along the cords after dark and fireworks over the square. Add <span class="mono">?founding=1</span> to see it any day.</li>
+      <li><strong>First Landfall</strong> falls on ${TOWN.landfallHuman.replace(/ \d{4}$/, '')}, the anniversary of the oldest pages that are still here: ${TOWN.landfallPages.length} Cloud pages laid down together on ${TOWN.landfallHuman} - ${TOWN.landfallPages.map(sl => `<span class="mono">${esc(sl)}</span>`).join(', ')}. It is the quieter day and shares nothing with the other: a beacon burns over each of those ${TOWN.landfallPages.length} doors, and ${TOWN.landfallCommits} paper lanterns - one for every commit those five pages have carried since - drift down the canals. Add <span class="mono">?landfall=1</span> to see it any day.</li>
+      <li><strong>Six ways out of town</strong>, for the day the courier wants a different job - none of them a menu: walk up and the town offers, ENTER crosses. A <a href="../secreta/">spinner rack of comics</a> turns in the window of FOUR-COLOR FUNNIES; two vessels lie at the harbour mooring - an engraved <a href="../cartastrapiana/">sloop</a> that sails by an older hand, and a rubber-hose <a href="../bythedeep/">steamer</a> that winks as you come near; the <a href="../firstlight/">telescope</a> at the observatory swears that star is answering, but only after dark; a fingerpost at the town edge reads THE LONG WAY OUT OF TOWN - 319,153 words - and <a href="../longway/">means it</a>; the botanist's stall keeps <a href="../herbarium/">pressed flowers</a>; and something half-glimpsed waits in the <a href="../secretb/">hobby shop</a> window.</li>
     </ul>
     <h3>GETTING AROUND</h3>
     <ul>
@@ -4953,6 +4972,16 @@ let folkNear = null;
 let folkPromptUp = false;   // is the TALK prompt the label currently on screen?
 let photoMode = false, photoPrevSpeed = 1;
 let foundingActive = false, fwTimer = 1.2;
+/* The repository's first commit, read off gitlog-docs.txt - the same log every
+   other date in this town comes from. Its oldest entry is
+   631c1f6287c3c548bd46b4c612a70bf17f4b4e13, Pierre Wizla, 2022-11-02, which
+   created docusaurus/docs/dev-docs and docusaurus/docs/user-docs. Not one of
+   those files is still in the repository, so no page in provenance.json can
+   carry this date: the town is older than anything standing in it. */
+const REPO_FIRST = '2022-11-02';
+let landfallActive = false;
+let beacons = [];                // FIRST LANDFALL: a light at each surviving oldest door
+let waterLights = [];            // FIRST LANDFALL: lanterns adrift on the canals
 let townNote = '', townNoteT = 0;
 let edgesFrom = {};              // slug -> [slugs it really cites]
 let doorBySlug = {};
@@ -4960,12 +4989,81 @@ let pennantStrings = [];         // founding-day strings, re-projected per orien
 let townClickables = [];         // world-px hit rects for the mouse-only path
 const FOLK_CACHE = {};
 
+/* ---- THE PORTAL NETWORK (owner ruling 3) ---------------------------------
+   Six crossings to the lab's sister projects, woven into the town fabric.
+   Each one is DISCOVERED, never a menu: the affordance lives in the town's
+   own grammar (a bookshop, two moored vessels, a telescope, a fingerpost, a
+   market stall, a shop window), the hint is one in-register line in the same
+   door prompt every door uses, and ENTER plays a short in-fiction beat before
+   the walk over to the sibling at ../KEY/. Reduced motion crosses instantly. */
+const PORTALS = [
+  { key: 'secreta', kind: 'funnies', href: '../secreta/',
+    title: 'FOUR-COLOR FUNNIES', hint: 'A SPINNER RACK OF COMICS TURNS IN THE WINDOW',
+    beat: 'THE RACK SPINS · FOUR COLORS BLUR INTO ONE', snd: 'pop' },
+  { key: 'cartastrapiana', kind: 'sloop', href: '../cartastrapiana/',
+    title: 'THE ENGRAVED SLOOP', hint: 'She sails by an older hand. Board her?',
+    beat: 'SHE CASTS OFF · THE ENGRAVING TAKES THE WIND', snd: 'whoosh' },
+  { key: 'bythedeep', kind: 'steamer', href: '../bythedeep/',
+    title: 'THE HARBOUR STEAMER', hint: 'THE STEAMER WINKS AS YOU COME NEAR',
+    beat: 'THE STEAMER WINKS ONCE MORE · ALL ABOARD', snd: 'whoosh' },
+  { key: 'firstlight', kind: 'observatory', href: '../firstlight/',
+    title: 'THE OBSERVATORY', hint: 'THE DOME SLEEPS TILL DARK',
+    hintNight: 'That star is answering', beat: 'THE SLIT OPENS · THE STAR ANSWERS IN KIND', snd: 'chime' },
+  { key: 'longway', kind: 'trailgate', href: '../longway/',
+    title: 'THE TRAIL GATE', hint: 'THE LONG WAY OUT OF TOWN · 319,153 WORDS',
+    beat: 'ONE FOOT AFTER THE OTHER · 319,153 WORDS TO GO', snd: 'whoosh' },
+  { key: 'herbarium', kind: 'botanist', href: '../herbarium/',
+    title: 'THE BOTANIST STALL', hint: 'PRESSED FLOWERS IN THE WINDOW · EVERY LEAF KEPT',
+    beat: 'A PRESSED FLOWER MARKS YOUR PAGE', snd: 'chime' },
+  { key: 'secretb', kind: 'hobby', href: '../secretb/',
+    title: 'THE HOBBY SHOP', hint: 'SOMETHING HALF-GLIMPSED IN THE WINDOW',
+    beat: 'YOU SAW IT, THEN · COME AND SEE THE REST', snd: 'blip' }
+];
+const PORTAL_BY_KIND = {};
+for (const P of PORTALS) PORTAL_BY_KIND[P.kind] = P;
+let portalLeaving = false;       // one crossing at a time
+let steamerProp = null;          // the vessel that winks as you approach
+
+function portalGo(key) {
+  const P = PORTALS.find((p) => p.key === key);
+  if (!P || portalLeaving) return;
+  portalLeaving = true;
+  const go = () => { location.href = P.href; };
+  if (REDUCED) { go(); return; }               // reduced motion: no beat, just the crossing
+  const ol = document.getElementById('portalbeat');
+  const line = document.getElementById('portalbeat-line');
+  if (!ol || !line) { go(); return; }
+  line.textContent = P.beat;
+  ol.hidden = false;
+  requestAnimationFrame(() => ol.classList.add('on'));
+  sndSynth(P.snd);
+  setTimeout(go, 980);
+}
+/* the telescope only answers once the stars are out; under reduced motion the
+   clock is parked at the frozen golden hour, so the star answers regardless */
+function portalTelescope() {
+  if (nf > 0.05 || REDUCED) portalGo('firstlight');
+  else setTownNote('the dome sleeps till dark · hurry the clock (T) and come back under the stars', 6);
+}
+
 function townHash(s) {
   let hh = 2166136261 >>> 0;
   for (let i = 0; i < s.length; i++) { hh ^= s.charCodeAt(i); hh = Math.imul(hh, 16777619) >>> 0; }
   return hh >>> 0;
 }
 function setTownNote(msg, secs) { townNote = msg; townNoteT = secs || 4; if (!REDUCED) startLoop(); else draw(); }
+/* the two anniversaries, each in its own words. The difference is the whole
+   point of having both, so each line says which of the two ages it is about. */
+function foundingLine() {
+  return `FOUNDING DAY · the repository's first commit, ${TOWN.foundingHuman} · no page standing today is that old`;
+}
+function landfallLine() {
+  // named by their titles, not their slugs: the HUD sets everything in capitals
+  // and a shouted path is a lie about what the path actually reads
+  const names = TOWN.landfallPages.map(sl => (pagesBySlug[sl] && pagesBySlug[sl].title) || sl);
+  return `FIRST LANDFALL · the ${names.length} oldest pages still standing were laid down ${TOWN.landfallHuman}: ` +
+    names.join(' · ');
+}
 function humanDate(iso) {
   const M = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const [y, m, d] = iso.split('-').map(Number);
@@ -5098,14 +5196,30 @@ function townData() {
   }).sort((a, b) => a.name.localeCompare(b.name));
   // zero-inbound pages: nobody links here yet
   const vacant = ORDER.filter(s => !GRAPH.inbound[s]);
-  // founding day: the anniversary of the earliest recording in the data
+  /* TWO ANNIVERSARIES, BECAUSE THE TOWN HAS TWO BIRTHDAYS AND THEY ARE NOT THE
+     SAME DAY. The repository is older than any page still standing in it.
+
+     FOUNDING DAY is the repository's own first commit. provenance.json cannot
+     hold that date - it only remembers pages that still exist - so it is read
+     off the git log the whole town was built from (gitlog-docs.txt, oldest
+     entry: 631c1f6, Pierre Wizla, 2022-11-02, the commit that laid down
+     docusaurus/docs). Every file that commit created has since been deleted or
+     moved, which is exactly what the day is honest about.
+
+     FIRST LANDFALL is the anniversary of the oldest page still standing:
+     the earliest `first` in provenance, and the pages that carry it. */
   const now = new Date();
-  const fMonth = Number(first.slice(5, 7)), fDay = Number(first.slice(8, 10));
-  foundingActive = /[?&]founding=1\b/.test(location.search) ||
-    (now.getMonth() + 1 === fMonth && now.getDate() === fDay);
+  const landfallPages = ORDER.filter(sl => PROV[sl] && PROV[sl].first === first && pagesBySlug[sl]);
+  const landfallCommits = landfallPages.reduce((t, sl) => t + PROV[sl].commits, 0);
+  const onDay = (iso) => now.getMonth() + 1 === Number(iso.slice(5, 7)) && now.getDate() === Number(iso.slice(8, 10));
+  foundingActive = /[?&]founding=1\b/.test(location.search) || onDay(REPO_FIRST);
+  landfallActive = /[?&]landfall=1\b/.test(location.search) || onDay(first);
   TOWN = {
     first, last, months, widest, news, vacant,
-    lanternTotal, foundingHuman: humanDate(first),
+    lanternTotal,
+    founding: REPO_FIRST, foundingHuman: humanDate(REPO_FIRST),
+    landfall: first, landfallHuman: humanDate(first),
+    landfallPages, landfallCommits,
     pennants: COMMS.length
   };
 }
@@ -5218,7 +5332,146 @@ function bakeTownSprites() {
       if (dd <= 1) { g.fillStyle = `rgba(132,240,180,${(0.34 * (1 - dd) ** 1.3).toFixed(3)})`; g.fillRect(x, y, 1, 1); }
     }
   }, true);
-  for (const nm of ['postoffice', 'recordshall', 'newsstand', 'doorboard', 'doorboard_pin', 'vacantlot']) {
+  // FIRST LANDFALL: the warm halo a beacon throws, and the smaller one a paper
+  // lantern throws on the water. Baked, so the celebration costs no per-pixel work.
+  bakeSprite('beaconglow', 30, 26, (g) => {
+    for (let y = 0; y < 26; y++) for (let x = 0; x < 30; x++) {
+      const dd = ((x - 15) / 14.5) ** 2 + ((y - 13) / 12.5) ** 2;
+      if (dd <= 1) { g.fillStyle = `rgba(255,207,94,${(0.30 * (1 - dd) ** 1.4).toFixed(3)})`; g.fillRect(x, y, 1, 1); }
+    }
+  }, true);
+  bakeSprite('driftlamp', 5, 8, (g) => {
+    px(g, 0, 0, 5, 5, PAL.OUT);          // paper lantern: dark frame, warm body
+    px(g, 1, 1, 3, 3, PAL.L1);
+    px(g, 1, 3, 3, 1, PAL.L2);
+    px(g, 1, 1, 1, 1, PAL.WH);
+    px(g, 1, 6, 3, 1, PAL.L2);           // the light the water gives back
+  }, true);
+  bakeSprite('driftglow', 14, 12, (g) => {
+    for (let y = 0; y < 12; y++) for (let x = 0; x < 14; x++) {
+      const dd = ((x - 7) / 6.5) ** 2 + ((y - 6) / 5.5) ** 2;
+      if (dd <= 1) { g.fillStyle = `rgba(255,207,94,${(0.30 * (1 - dd) ** 1.4).toFixed(3)})`; g.fillRect(x, y, 1, 1); }
+    }
+  }, true);
+  /* ---- the portal network's six stations (owner ruling 3) ---- */
+  // FOUR-COLOR FUNNIES: a sunny corner bookshop, a spinner rack of comics in
+  // the big display window - three tiers of little covers in printer's colours
+  bakeLandmark('funnies', 24, (d) => {
+    const { g, colL, colR, pad } = d;
+    for (let x = 0; x < 16; x++) colL(x, 0, 24, x % 5 === 4 ? PAL.B3 : PAL.B4);   // warm brick
+    for (let x = 0; x < 16; x++) colL(x, 0, 2, PAL.RD);                           // painted fascia
+    for (let x = 0; x < 16; x++) colR(x, 0, 24, PAL.B3);
+    for (let x = 0; x < 16; x++) colR(x, 0, 2, PAL.B2);
+    for (let x = 1; x <= 9; x++) colL(x, 11, 10, PAL.GL2);                        // display window
+    colL(5, 12, 9, PAL.A1);                                                        // the rack's pole
+    const CMYK = ['#3bc3e8', '#e0559e', PAL.YL, PAL.OUT];                          // four-colour press
+    for (let t = 0; t < 3; t++) for (let x = 2; x <= 8; x += 2) colL(x, 13 + t * 3, 2, CMYK[(t + (x >> 1)) & 3]);
+    for (let x = 12; x <= 14; x++) colL(x, 15, 9, x === 13 ? PAL.WD2 : PAL.WD1);  // shop door
+    for (let x = 4; x <= 7; x++) colR(x, 8, 4, PAL.GL1);                          // side window
+    px(g, 1, pad + 17, 30, 7, PAL.RS1);                                            // the marquee
+    drawText3x5(g, 2, pad + 18, 'FUNNIES', PAL.YL);
+  });
+  // THE HOBBY SHOP: a quiet slate front, the window mostly blinded, and under
+  // the blind a few pale pixels that refuse to resolve into anything
+  bakeLandmark('hobbyshop', 22, (d) => {
+    const { g, colL, colR, pad } = d;
+    for (let x = 0; x < 16; x++) colL(x, 0, 22, PAL.S2);
+    for (let x = 0; x < 16; x++) colL(x, 0, 2, PAL.S3);
+    for (let x = 0; x < 16; x++) colR(x, 0, 22, PAL.S1);
+    for (let x = 2; x <= 9; x++) colL(x, 10, 9, PAL.DW);       // dark glass
+    for (let x = 2; x <= 9; x++) colL(x, 10, 4, PAL.C2);       // the blind, half down
+    colL(4, 16, 1, PAL.WH); colL(5, 15, 2, PAL.TG);            // the half-glimpsed thing
+    colL(6, 17, 1, PAL.L1); colL(8, 16, 1, PAL.V2);
+    for (let x = 12; x <= 14; x++) colL(x, 13, 9, PAL.WD2);    // door
+    px(g, 1, pad + 16, 23, 7, PAL.RS1);
+    drawText3x5(g, 2, pad + 17, 'HOBBY', PAL.WH);
+  });
+  // THE BOTANIST STALL: leaf-green awning, pressed flowers under glass on the
+  // counter, dried bundles hanging from the bar
+  bakeSprite('botaniststall', 16, 16, (g) => {
+    px(g, 1, 9, 1, 6, PAL.WD1); px(g, 14, 9, 1, 6, PAL.WD1);   // legs
+    px(g, 1, 9, 14, 3, PAL.WD3);                                // counter
+    for (let i = 0; i < 4; i++) {                               // pressed-flower cards
+      px(g, 2 + i * 3, 10, 2, 2, PAL.WH);
+      px(g, 2 + i * 3, 10, 1, 1, [PAL.RD, PAL.YL, '#e088c8', PAL.V2][i]);
+    }
+    for (let x = 0; x < 16; x += 2) px(g, x, 4 + ((x >> 1) & 1), 2, 3, ((x >> 2) & 1) ? PAL.G3 : PAL.WH);
+    px(g, 0, 7, 16, 1, PAL.OUT);
+    px(g, 3, 8, 1, 2, PAL.G1); px(g, 8, 8, 1, 3, PAL.CU1); px(g, 12, 8, 1, 2, PAL.G2);
+  });
+  // THE TRAIL GATE: a wooden fingerpost at the town edge; the boards point
+  // off the map and the words live in the prompt when you walk up
+  bakeSprite('fingerpost', 18, 20, (g) => {
+    px(g, 8, 3, 2, 16, PAL.WD1);                                // the post
+    px(g, 7, 18, 4, 1, PAL.WD2);                                // its foot
+    px(g, 2, 4, 13, 4, PAL.WD3); px(g, 1, 5, 1, 2, PAL.WD3);    // top board, tipped west
+    px(g, 3, 5, 10, 1, PAL.RS1);                                // carved lettering line
+    px(g, 3, 9, 12, 3, PAL.WD3); px(g, 15, 10, 1, 1, PAL.WD3);  // lower board, tipped east
+    px(g, 4, 10, 9, 1, PAL.RS1);
+  });
+  // THE OBSERVATORY: a stone tower on its own grass mound, copper dome with a
+  // dark slit, the telescope barrel poking at the sky
+  bakeSprite('observatory', 26, 30, (g) => {
+    for (let i = 0; i < 5; i++) px(g, 3 + i, 29 - i, 20 - 2 * i, 1, i > 2 ? PAL.G3 : PAL.G2); // the hill
+    px(g, 8, 14, 10, 12, PAL.C2); px(g, 15, 14, 3, 12, PAL.C1); // tower + shaded face
+    px(g, 9, 17, 2, 2, PAL.GL3); px(g, 13, 19, 2, 2, PAL.GL3);  // slit windows
+    px(g, 12, 21, 3, 5, PAL.WD1);                               // door
+    for (let yy = 0; yy < 8; yy++) {                            // copper dome
+      const w = Math.round(Math.sqrt(Math.max(0, 1 - ((7 - yy) / 7.2) ** 2)) * 7);
+      px(g, 13 - w, 6 + yy, w * 2, 1, PAL.CU1);
+      px(g, 13 - w, 6 + yy, Math.max(1, w), 1, PAL.CU2);
+    }
+    px(g, 12, 6, 2, 8, PAL.TD);                                 // the open slit
+    px(g, 12, 3, 2, 4, PAL.A2); px(g, 13, 1, 2, 3, PAL.A1);     // the telescope barrel
+  });
+  // THE ENGRAVED SLOOP: she sails by an older hand - pen-and-ink on cream,
+  // hatched like a copperplate, no pixel outline pass at all
+  bakeSprite('sloop', 30, 30, (g) => {
+    const INK = '#2e2418', CRM = '#efe3c4', CRM2 = '#e2d2a8';
+    px(g, 3, 22, 24, 1, INK);                                   // sheer line
+    px(g, 4, 23, 22, 1, CRM); px(g, 5, 24, 20, 1, CRM2);        // planking
+    px(g, 6, 25, 18, 1, CRM);
+    px(g, 5, 26, 20, 1, INK);                                   // keel
+    for (let x = 6; x < 24; x += 2) px(g, x, 24, 1, 1, INK);    // engraver's ticks
+    px(g, 14, 4, 1, 18, INK);                                   // mast
+    px(g, 8, 21, 14, 1, INK);                                   // boom
+    for (let y = 5; y <= 19; y++) {                             // mainsail, hatched
+      const w = Math.max(1, Math.round((y - 4) * 0.85));
+      px(g, 15, y, w, 1, (y & 1) ? CRM : CRM2);
+      px(g, 15 + w, y, 1, 1, INK);                              // leech line
+    }
+    for (let y = 8; y <= 19; y++) {                             // jib, hatched the other way
+      const w = Math.max(1, Math.round((y - 7) * 0.55));
+      px(g, 13 - w, y, w, 1, (y & 1) ? CRM2 : CRM);
+    }
+    px(g, 14, 3, 1, 1, INK); px(g, 12, 3, 2, 1, INK);           // truck + ink pennant
+    for (let x = 1; x < 29; x++) px(g, x, 27 + ((x >> 1) & 1), 1, 1, x % 5 ? INK : CRM2); // engraved sea
+    px(g, 2, 29, 26, 1, INK);
+  }, true);
+  // THE HARBOUR STEAMER: rubber-hose cartoon - round black hull, white trim,
+  // pie-cut eyes on the bow. The second bake is the wink.
+  const steamerFace = (g, wink) => {
+    px(g, 2, 11, 22, 7, PAL.OUT);                               // hull
+    px(g, 3, 10, 20, 1, PAL.OUT); px(g, 4, 18, 18, 1, PAL.OUT); // rounded ends
+    px(g, 3, 11, 20, 1, PAL.WH);                                // gunwale stripe
+    px(g, 16, 3, 4, 8, PAL.OUT); px(g, 15, 2, 4, 2, PAL.OUT);   // funnel with a droop
+    px(g, 16, 5, 4, 1, PAL.WH);
+    px(g, 7, 6, 8, 5, PAL.OUT); px(g, 8, 7, 6, 3, PAL.WH);      // wheelhouse
+    // the eyes, on the bow where a face belongs
+    px(g, 5, 12, 4, 4, PAL.WH); px(g, 11, 12, 4, 4, PAL.WH);
+    if (wink) {
+      px(g, 5, 14, 4, 1, PAL.OUT);                              // right eye squeezed shut
+      px(g, 11, 14, 2, 2, PAL.OUT);                             // pie-cut pupil
+    } else {
+      px(g, 5, 14, 2, 2, PAL.OUT); px(g, 11, 14, 2, 2, PAL.OUT); // pie-cut pupils
+    }
+    px(g, 6, 17, 1, 1, PAL.WH); px(g, 7, 18, 3, 1, PAL.WH); px(g, 10, 17, 1, 1, PAL.WH); // the grin
+    px(g, 1, 19, 5, 1, PAL.W4); px(g, 19, 19, 6, 1, PAL.W4);    // foam at the waterline
+  };
+  bakeSprite('steamer', 26, 20, (g) => steamerFace(g, false));
+  bakeSprite('steamer_wink', 26, 20, (g) => steamerFace(g, true));
+  for (const nm of ['postoffice', 'recordshall', 'newsstand', 'doorboard', 'doorboard_pin', 'vacantlot',
+                    'funnies', 'hobbyshop', 'botaniststall', 'fingerpost', 'observatory']) {
     SPR[nm + '_wi'] = snowify(SPR[nm]);
     if (SPR[nm].anchorY !== undefined) SPR[nm + '_wi'].anchorY = SPR[nm].anchorY;
   }
@@ -5377,50 +5630,355 @@ function placeTownLife() {
     }
   }
   TOWN.vacantPlaced = placedVacant;
+
+  /* ---- THE PORTAL NETWORK: six crossings woven into the town ------------- */
+  // Everything below stands in the same door grammar as the civic landmarks:
+  // trial-fitted against the walk BFS where it claims ground, spot + prompt +
+  // ENTER like every other threshold in town.
+  const portalSpot = (kind, ix, iy) => {
+    const P = PORTAL_BY_KIND[kind];
+    spots.push({ kind, title: P.title, row: P.hint, ix, iy });
+  };
+  let portalsPlaced = 0;
+  // (a) FOUR-COLOR FUNNIES - a bookshop in the streets, sky around it
+  const fb = place2x2('funnies', false, 12, 26, 20, 9) || place2x2('funnies', true, 12, 30, 18, 8) ||
+             place2x2('funnies', false, 8, 40, 16, 7) || place2x2('funnies', false, 6, 60, 14, 5);
+  if (fb) { portalSpot('funnies', fb.tx + 1, fb.ty + 2.35); portalsPlaced++; }
+  // (f) THE HOBBY SHOP - further out, on a quieter street
+  const hb = place2x2('hobbyshop', false, 18, 34, 18, 9) || place2x2('hobbyshop', true, 14, 34, 16, 8) ||
+             place2x2('hobbyshop', false, 8, 46, 15, 6) || place2x2('hobbyshop', false, 6, 60, 14, 5);
+  if (hb) { portalSpot('hobby', hb.tx + 1, hb.ty + 2.35); portalsPlaced++; }
+  // (e) THE BOTANIST STALL - at the market, with the other stalls on the square
+  const bt = place1('botanist', true, RIM, coreR + 6, 12, 3) || place1('botanist', true, RIM, 14) ||
+             place1('botanist', false, RIM, 22) || place1('botanist', false, RIM, 34, 16);
+  if (bt) { portalSpot('botanist', bt.tx + 0.5, bt.ty + 1.35); portalsPlaced++; }
+  // the custom sites check reachability against the same BFS the doors use
+  const seen0 = walkBFS().seen;
+  const reachable = (tx, ty) => !!seen0[ty * Wt + tx];
+  const seaBeside = (tx, ty) => {
+    for (const [dx, dy] of [[0, -1], [1, 0], [0, 1], [-1, 0]]) {
+      if (tileAt(tx + dx, ty + dy) === T.SEA) return [tx + dx, ty + dy];
+    }
+    return null;
+  };
+  // (b) THE HARBOUR - the longest clear run of reachable waterfront, and two
+  // vessels moored off it: the engraved sloop and the rubber-hose steamer
+  const front = [];
+  for (const c of cands) {
+    if (c.t2 !== T.BANK || !reachable(c.tx, c.ty)) continue;
+    const sea = seaBeside(c.tx, c.ty);
+    if (sea) front.push({ tx: c.tx, ty: c.ty, sea });
+  }
+  // group the waterfront into straight runs (same row or same column)
+  front.sort((a, b) => a.ty - b.ty || a.tx - b.tx);
+  const runKey = (f) => (f.sea[0] === f.tx ? 'h' + f.ty : 'v' + f.tx);   // sea above/below vs left/right
+  const runs = {};
+  for (const f of front) (runs[runKey(f)] = runs[runKey(f)] || []).push(f);
+  let harbour = null;
+  for (const k of Object.keys(runs).sort()) {
+    const r = runs[k];
+    r.sort((a, b) => (a.tx - b.tx) || (a.ty - b.ty));
+    // longest consecutive stretch within the run
+    let s0 = 0;
+    for (let i = 1; i <= r.length; i++) {
+      const cont = i < r.length && (r[i].tx - r[i - 1].tx) + (r[i].ty - r[i - 1].ty) === 1;
+      if (!cont) {
+        const len = i - s0;
+        if (!harbour || len > harbour.len) harbour = { len, seg: r.slice(s0, i) };
+        s0 = i;
+      }
+    }
+  }
+  let moor1 = null, moor2 = null;
+  if (harbour && harbour.len >= 2) {
+    const seg = harbour.seg, mid = seg.length >> 1;
+    const gap = Math.min(2, Math.floor((seg.length - 1) / 2));
+    moor1 = seg[Math.max(0, mid - gap)];
+    moor2 = seg[Math.min(seg.length - 1, mid + gap)];
+    if (moor1 === moor2) { moor1 = seg[0]; moor2 = seg[seg.length - 1]; }
+  }
+  if (moor1 && moor2 && moor1 !== moor2) {
+    propList.push({ kind: 'vessel', name: 'sloop', tx: moor1.sea[0], ty: moor1.sea[1] });
+    portalSpot('sloop', moor1.tx + 0.5, moor1.ty + 0.5); portalsPlaced++;
+    const stm = { kind: 'vessel', name: 'steamer', tx: moor2.sea[0], ty: moor2.sea[1] };
+    propList.push(stm); steamerProp = stm;
+    portalSpot('steamer', moor2.tx + 0.5, moor2.ty + 0.5); portalsPlaced++;
+  }
+  const farFromMoor = (tx, ty) => (!moor1 || Math.hypot(tx - moor1.tx, ty - moor1.ty) > 8) &&
+                                  (!moor2 || Math.hypot(tx - moor2.tx, ty - moor2.ty) > 8);
+  // (d) THE TRAIL GATE - the farthest reachable ground where the land runs out
+  let tgDone = false;
+  for (let i = cands.length - 1; i >= 0 && !tgDone; i--) {
+    const c = cands[i];
+    if (!seaBeside(c.tx, c.ty) || !reachable(c.tx, c.ty) || !farFromMoor(c.tx, c.ty)) continue;
+    if (!freeTile(c.tx, c.ty) || takenTiles.has(c.tx + ',' + c.ty)) continue;
+    // the post itself is street furniture: it never claims the tile, so the
+    // rim path and the BFS stay exactly as proven
+    takenTiles.add(c.tx + ',' + c.ty);
+    propList.push({ kind: 'trailgate', tx: c.tx, ty: c.ty });
+    portalSpot('trailgate', c.tx + 0.5, c.ty + 0.5); portalsPlaced++;
+    tgDone = true;
+  }
+  // (c) THE OBSERVATORY - a far grass rise with sky around it, inland
+  let obDone = false;
+  const obTry = (needGrass, minOpen) => {
+    for (let i = cands.length - 1; i >= 0 && !obDone; i--) {
+      const c = cands[i];
+      if (needGrass && c.t2 !== T.GRASS && c.t2 !== T.FLOWER) continue;
+      if (!needGrass && !paved(c)) continue;
+      if (c.op < minOpen || seaBeside(c.tx, c.ty) || !reachable(c.tx, c.ty)) continue;
+      if (!freeTile(c.tx, c.ty) || takenTiles.has(c.tx + ',' + c.ty) || !clear(c, 5)) continue;
+      // needs an approachable side, then claims its single tile BFS-safely
+      if (!((freeTile(c.tx - 1, c.ty) && freeTile(c.tx + 1, c.ty)) || (freeTile(c.tx, c.ty - 1) && freeTile(c.tx, c.ty + 1)))) continue;
+      if (!trialSolid([c.tx + ',' + c.ty])) continue;
+      takenTiles.add(c.tx + ',' + c.ty);
+      civic.push([c.tx, c.ty]);
+      propList.push({ kind: 'observatory', tx: c.tx, ty: c.ty });
+      portalSpot('observatory', c.tx + 0.5, c.ty + 1.35);
+      portalsPlaced++; obDone = true;
+    }
+  };
+  obTry(true, 18); obTry(true, 12); obTry(false, 16);
+  TOWN.portalsPlaced = portalsPlaced;
+
   if (fireflyTally() >= TOWN.lanternTotal) plaqueEarned = true;   // remembered from this visit
   refreshFolk();
 }
 
-/* the ~20 townsfolk out today, rotated by the day of the cycle */
-function refreshFolk() {
-  const scored = townsfolk.map(f => ({ f, s: h32(f.hash & 0xffff, (f.hash >>> 16) + dayNum, 101) }));
-  scored.sort((a, b) => a.s - b.s || a.f.name.localeCompare(b.f.name));
-  folkVisible = [];
-  const used = new Set();
-  for (const { f } of scored) {
-    if (folkVisible.length >= 20) break;
-    const b = buildings.find(bb => bb.slug === f.slug);
-    if (!b) continue;
-    const per = [];
-    for (let dx = -1; dx <= b.fw; dx++) { per.push([b.tx + dx, b.ty + b.fd]); per.push([b.tx + dx, b.ty - 1]); }
-    for (let dy = 0; dy < b.fd; dy++) { per.push([b.tx - 1, b.ty + dy]); per.push([b.tx + b.fw, b.ty + dy]); }
-    const st = f.hash % per.length;
-    // two sweeps: first a spot clear of every doorstep, then any free spot
-    let spot = null;
-    for (let pass = 0; pass < 2 && !spot; pass++) {
-      for (let i = 0; i < per.length; i++) {
-        const [tx, ty] = per[(st + i) % per.length];
-        const k = tx + ',' + ty;
-        if (tx < 1 || ty < 1 || tx >= Wt - 1 || ty >= Ht - 1) continue;
-        if (!playerWalkable(grid[ty * Wt + tx]) || propSolid.has(k) || doorTiles.has(k) || used.has(k)) continue;
-        if (pass === 0 && doors.some(d => Math.abs(d.px - tx - 0.5) < 1.6 && Math.abs(d.py - ty - 0.5) < 1.6)) continue;
-        spot = [tx, ty]; break;
-      }
-    }
-    if (spot) {
-      const [tx, ty] = spot;
-      used.add(tx + ',' + ty);
-      folkVisible.push({
-        name: f.name, slug: f.slug, line: f.line, hash: f.hash, rec: f,
-        x: tx + 0.32 + ((f.hash >>> 3) % 40) / 100, y: ty + 0.32 + ((f.hash >>> 9) % 40) / 100,
-        theme: b.quarter.themeIdx, ph: (f.hash % 63) / 10
-      });
+/* THE STREETS ARE THE CONTRIBUTORS.
+   Every one of the 77 real hands is out in the town, all of them, all the time -
+   they are the population, not a sample of it. What rotates is WHERE each one
+   stands: a hand is tied to every page provenance says they touched, and the day
+   of the cycle picks which of those pages they keep company today. So the whole
+   77 are met the moment you walk out, and met again somewhere else tomorrow. */
+function folkLineFor(name, slug) {
+  // the same four shapes the record uses, told of the page they stand at today
+  const v = PROV[slug];
+  if (!v) return 'one of the seventy-seven';
+  const n = (v.authors || []).length;
+  if (v.topAuthor === name) {
+    if (n === 1) return v.commits === 1 ? 'came once, fixed one thing' : `keeps this page - all ${v.commits} commits are theirs`;
+    return `keeps this page - first hand of ${n}, over ${v.commits} commits`;
+  }
+  return n === 1 ? 'lent a hand here' : `one of ${n} hands on this page`;
+}
+/* CAN THE TOWN SEE THEM? A roof drawn in front of a person hides them, and in a
+   2:1 dimetric town a five-storey block hides everything behind it for a dozen
+   tiles - which is why the old twenty were so easy to miss. So a candidate tile
+   is scored on the four camera directions the map can be turned to: a direction
+   counts only if nothing in the cone in front of it is tall enough to cover a
+   person's twelve pixels. Ground drops 4px per tile of depth, so a block d tiles
+   ahead has to be taller than 4d to hide you. Open on 3 or 4 of the four is a
+   place the town can see you from almost any view. */
+let lotH = null;                   // per tile: how tall the building standing there is
+function bakeLotHeights() {
+  lotH = new Int16Array(Wt * Ht);
+  for (const b of buildings) {
+    const h = (b.fw + b.fd) * HH + (b.style === 'kiosk' ? 8 : b.s * SPX) + 10;
+    for (let y = b.ty; y < b.ty + b.fd; y++) for (let x = b.tx; x < b.tx + b.fw; x++) {
+      if (x >= 0 && y >= 0 && x < Wt && y < Ht) lotH[y * Wt + x] = h;
     }
   }
 }
-function folkSpriteFor(f) {
-  if (FOLK_CACHE[f.name]) return FOLK_CACHE[f.name];
-  const base = SPR[`ped${f.theme}_0`];
+/* the four camera directions, in the order the map turns through them:
+   depth is u+v, so the view's "towards you" is (+1,+1) at orient 0, (-1,+1) at
+   1, (-1,-1) at 2 and (+1,-1) at 3. */
+const VIEW_DIRS = [[1, 1], [-1, 1], [-1, -1], [1, -1]];
+const FOLK_VIS_CACHE = new Map();
+function folkOpenViews(tx, ty) {
+  const k = tx * 1000 + ty;
+  let mask = FOLK_VIS_CACHE.get(k);
+  if (mask === undefined) {
+    if (!lotH) bakeLotHeights();
+    mask = 0;
+    for (let o = 0; o < 4; o++) {
+      const [sx, sy] = VIEW_DIRS[o];
+      let clear = true;
+      for (let i = 0; i <= 9 && clear; i++) {
+        for (let j = 0; j <= 9; j++) {
+          const d = i + j;
+          if (d < 1 || d > 12 || Math.abs(i - j) > 3) continue;
+          const x = tx + sx * i, y = ty + sy * j;
+          if (x < 0 || y < 0 || x >= Wt || y >= Ht) continue;
+          if (lotH[y * Wt + x] > 4 * d - 2) { clear = false; break; }
+        }
+      }
+      if (clear) mask |= 1 << o;
+    }
+    FOLK_VIS_CACHE.set(k, mask);
+  }
+  let n = 0;
+  for (let o = 0; o < 4; o++) if (mask & (1 << o)) n++;
+  // seen from as many of the four as possible, and - the tie-break - seen from
+  // the one the town is being looked at from as they take up their post
+  return n + ((mask & (1 << orient)) ? 1.4 : 0);
+}
+
+/* ROOM TO PASS: how far the pavement runs in each of the four street directions,
+   capped at four apiece. A hand takes a spot people can walk up to and walk away
+   from again, not a one-tile pocket where a conversation cannot be left. */
+function folkRoom(tx, ty) {
+  let n = 0, worst = 4;
+  for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+    let k = 0, x = tx, y = ty;
+    while (k < 4 && x + dx > 0 && y + dy > 0 && x + dx < Wt - 1 && y + dy < Ht - 1 &&
+           playerWalkable(grid[(y + dy) * Wt + x + dx]) && !propSolid.has((x + dx) + ',' + (y + dy))) {
+      x += dx; y += dy; k++;
+    }
+    n += k;
+    if (k < worst) worst = k;
+  }
+  return [n, worst];   // pavement in total, and in the tightest of the four
+}
+
+/* WHERE A HAND STANDS. Not in the alley behind their page - out on the street in
+   front of it, where the town can see them. Candidates are every free tile within
+   two of their building's footprint; the pick is scored so the pavement beside a
+   real street beats the gap between two blocks, because a gap is behind a roof
+   from at least one of the four views and a street is open from all of them.
+   Every doorstep keeps its 1.6 tiles of clearance, so walking to a door still
+   raises the door's prompt and never a conversation. */
+function folkPosts(b, hash, used) {
+  const free = (tx, ty) => {
+    const k = tx + ',' + ty;
+    if (tx < 1 || ty < 1 || tx >= Wt - 1 || ty >= Ht - 1) return false;
+    return playerWalkable(grid[ty * Wt + tx]) && !propSolid.has(k) && !doorTiles.has(k) && !used.has(k);
+  };
+  const nearAnyDoor = (tx, ty, r) => doors.some(d => Math.abs(d.px - tx - 0.5) < r && Math.abs(d.py - ty - 0.5) < r);
+  const onStreet = (tx, ty) => {
+    for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+      const t2 = tileAt(tx + dx, ty + dy);
+      if (t2 === T.ROAD || t2 === T.CROSS || t2 === T.BRIDGE) return true;
+    }
+    return false;
+  };
+  const openViews = (tx, ty) => folkOpenViews(tx, ty);
+  /* how far a hand may stand from the page they belong to: their own block, or
+     - when the block is buried and every tile of it is behind a roof - the
+     nearest street corner, still inside four tiles of their own door. */
+  const dr = doorBySlug[b.slug];
+  const cands = [];
+  for (let ty = b.ty - 4; ty <= b.ty + b.fd + 3; ty++) {
+    for (let tx = b.tx - 4; tx <= b.tx + b.fw + 3; tx++) {
+      if (tx >= b.tx && tx < b.tx + b.fw && ty >= b.ty && ty < b.ty + b.fd) continue;   // the footprint
+      const inLot = tx >= b.tx - 2 && tx <= b.tx + b.fw + 1 && ty >= b.ty - 2 && ty <= b.ty + b.fd + 1;
+      const dDoor = dr ? Math.hypot(tx + 0.5 - dr.px, ty + 0.5 - dr.py) : 99;
+      if (!inLot && dDoor > 3.4) continue;
+      if (!free(tx, ty)) continue;
+      const t2 = grid[ty * Wt + tx];
+      if (t2 === T.ROAD) continue;                                     // nobody stands in the traffic
+      let sc = openViews(tx, ty) * 9;                                  // seen from how many of the four views
+      if (onStreet(tx, ty)) sc += 6;                                   // out on a street, not in a slot
+      const [rmAll, rmMin] = folkRoom(tx, ty);
+      sc += rmAll * 0.5 + rmMin * 1.6;                                 // room to pass, and room to leave in ANY direction
+      if (t2 === T.PAVE || t2 === T.PLAZA) sc += 3;                    // pavement, not a back lawn
+      if (tx >= b.tx + b.fw || ty >= b.ty + b.fd) sc += 1;             // the faces the default view shows
+      sc -= (dr ? dDoor : Math.abs(tx - b.tx) + Math.abs(ty - b.ty)) * 0.7;
+      cands.push({ tx, ty, sc, rmMin, jit: h32(tx, ty, hash & 0xffff) % 1000 });
+    }
+  }
+  if (!cands.length) return null;
+  cands.sort((a, c) => c.sc - a.sc || a.jit - c.jit);
+  /* three sweeps, each giving up one thing: first a post clear of every doorstep
+     with pavement running at least three tiles every way; then a doorstep-clear
+     post with two; then whatever is free. */
+  for (let pass = 0; pass < 3; pass++) {
+    for (const c of cands) {
+      if (pass === 0 && (nearAnyDoor(c.tx, c.ty, 1.6) || c.rmMin < 3)) continue;
+      if (pass === 1 && (nearAnyDoor(c.tx, c.ty, 1.1) || c.rmMin < 2)) continue;
+      // the second tile of their beat: one step along the street, still their block
+      let pace = null;
+      for (const [dx, dy] of [[1, 0], [0, 1], [-1, 0], [0, -1]]) {
+        const nx = c.tx + dx, ny = c.ty + dy;
+        const nIn = nx >= b.tx - 2 && nx <= b.tx + b.fw + 1 && ny >= b.ty - 2 && ny <= b.ty + b.fd + 1;
+        const nD = dr ? Math.hypot(nx + 0.5 - dr.px, ny + 0.5 - dr.py) : 99;
+        if (!nIn && nD > 3.4) continue;          // the whole beat stays at their page
+        if (!free(nx, ny) || nearAnyDoor(nx, ny, 1.6)) continue;
+        if (grid[ny * Wt + nx] === T.ROAD) continue;
+        pace = [nx, ny]; break;
+      }
+      return { post: [c.tx, c.ty], pace };
+    }
+  }
+  return null;
+}
+function refreshFolk() {
+  /* NOBODY VANISHES FROM UNDER YOUR NOSE. When the day turns and the hands move
+     to another of their pages, the ones standing near the courier keep the post
+     they are on - so a conversation in progress is a conversation you can finish,
+     and the street you are looking at does not re-cast itself while you watch. */
+  const stay = new Map();
+  for (const f of folkVisible) {
+    if (Math.hypot(player.x - f.px0, player.y - f.py0) < FOLK_HOLD) stay.set(f.name, f);
+  }
+  folkVisible = [];
+  const used = new Set();
+  for (const f of stay.values()) {
+    folkVisible.push(f);
+    used.add(Math.floor(f.px0) + ',' + Math.floor(f.py0));
+    used.add(Math.floor(f.px1) + ',' + Math.floor(f.py1));
+  }
+  // the order hands claim their post rotates too, so a crowded block is not
+  // always won by the same name
+  const scored = townsfolk.map(f => ({ f, s: h32(f.hash & 0xffff, (f.hash >>> 16) + dayNum, 101) }));
+  scored.sort((a, b) => a.s - b.s || a.f.name.localeCompare(b.f.name));
+  for (const { f } of scored) {
+    if (stay.has(f.name)) continue;
+    // today's page: one of the pages provenance really ties this hand to
+    const list = f.pages && f.pages.length ? f.pages : [{ slug: f.slug }];
+    const pick = h32(f.hash & 0xffff, dayNum, 977) % list.length;
+    let got = null, gotB = null, gotSlug = null;
+    for (let i = 0; i < list.length && !got; i++) {
+      const slug = list[(pick + i) % list.length].slug;
+      const b = buildings.find(bb => bb.slug === slug);
+      if (!b) continue;
+      const p = folkPosts(b, f.hash, used);
+      if (p) { got = p; gotB = b; gotSlug = slug; }
+    }
+    if (!got) continue;
+    used.add(got.post[0] + ',' + got.post[1]);
+    if (got.pace) used.add(got.pace[0] + ',' + got.pace[1]);
+    const jx = 0.32 + ((f.hash >>> 3) % 40) / 100, jy = 0.32 + ((f.hash >>> 9) % 40) / 100;
+    folkVisible.push({
+      name: f.name, slug: gotSlug, line: folkLineFor(f.name, gotSlug), hash: f.hash, rec: f,
+      px0: got.post[0] + jx, py0: got.post[1] + jy,
+      px1: got.pace ? got.pace[0] + jx : got.post[0] + jx,
+      py1: got.pace ? got.pace[1] + jy : got.post[1] + jy,
+      x: got.post[0] + jx, y: got.post[1] + jy,
+      leg: 0, legDir: 1, dwell: 1.5 + (f.hash % 90) / 10, moving: false, dir: null,
+      theme: gotB.quarter.themeIdx, ph: (f.hash % 63) / 10
+    });
+  }
+  rebuildExtras();
+}
+/* A HAND'S BEAT. They pace one step of their own block and back, and they hold
+   still at their post whenever anyone is near enough to speak to them - so the
+   person you walked up to is the person who is there when you arrive. Parked
+   entirely under reduced motion. */
+const FOLK_HOLD = 8;               // tiles: inside this, every hand stands at their post
+function stepFolk(dt) {
+  if (REDUCED || photoMode) return;
+  for (const f of folkVisible) {
+    const home = Math.hypot(player.x - f.px0, player.y - f.py0) < FOLK_HOLD;
+    if (home) {
+      if (f.leg > 0) { f.leg = Math.max(0, f.leg - dt * 0.55); f.moving = f.leg > 0; f.legDir = -1; }
+      else { f.moving = false; f.legDir = 1; f.dwell = 1.5 + (f.hash % 90) / 10; }
+    } else if (f.dwell > 0) { f.dwell -= dt; f.moving = false; }
+    else {
+      f.leg += dt * 0.55 * f.legDir;
+      f.moving = true;
+      if (f.leg >= 1) { f.leg = 1; f.legDir = -1; f.dwell = 2.5 + (f.hash % 70) / 10; }
+      else if (f.leg <= 0) { f.leg = 0; f.legDir = 1; f.dwell = 2.5 + ((f.hash >>> 7) % 70) / 10; }
+    }
+    f.x = f.px0 + (f.px1 - f.px0) * f.leg;
+    f.y = f.py0 + (f.py1 - f.py0) * f.leg;
+    f.dir = f.moving ? [(f.px1 - f.px0) * f.legDir, (f.py1 - f.py0) * f.legDir] : null;
+  }
+}
+function folkSpriteFor(f, frame) {
+  const key = f.name + '|' + frame;
+  if (FOLK_CACHE[key]) return FOLK_CACHE[key];
+  const base = SPR[`ped${f.theme}_${frame}`];
   const [cv, g] = mkCv(base.width, base.height + 2);
   g.drawImage(base, 0, 2);
   const hats = [PAL.RD, PAL.YL, PAL.W3, PAL.V2, PAL.CU2, PAL.HB2, PAL.C3, PAL.TG];
@@ -5428,8 +5986,64 @@ function folkSpriteFor(f) {
   if ((f.hash >>> 5) % 3 === 0) { px(g, 1, 1, 3, 1, hc); px(g, 2, 0, 1, 1, hc); }   // cap
   else if ((f.hash >>> 5) % 3 === 1) px(g, 1, 6, 3, 1, hc);                          // scarf
   else px(g, 3, 6, 1, 2, hc);                                                        // satchel strap
-  FOLK_CACHE[f.name] = cv;
+  FOLK_CACHE[key] = cv;
   return cv;
+}
+
+/* THE EXTRAS ARE NOT THE POPULATION ANY MORE. They are incidental - no name, no
+   label, no talk prompt, no hat - and they exist only on the ground no hand is
+   tied to: pavement more than FOLK_CLEAR tiles from every hand out today. They
+   never walk into a hand's street, so wherever the pages are, everyone you pass
+   can be named. The count is not a crowd size, it is one walker per EXTRA_PER
+   tiles of that leftover ground, re-derived every time the hands move. */
+const FOLK_CLEAR = 8;              // tiles of clear air a named hand keeps around them
+const EXTRA_PER = 32;              // one extra per this many tiles of leftover ground
+const EXTRA_PER_HAND = 6;          // and never more than one extra for six real hands
+let extraOK = null;                // Uint8Array mask: ground an extra may use
+let extraGround = 0;               // how many tiles of that leftover ground there are
+function rebuildExtras() {
+  if (!grid || !buildings.length) return;
+  extraOK = new Uint8Array(Wt * Ht);
+  for (let ty = 1; ty < Ht - 1; ty++) for (let tx = 1; tx < Wt - 1; tx++) {
+    const t2 = grid[ty * Wt + tx];
+    if ((t2 === T.PAVE || t2 === T.PLAZA || t2 === T.BANK) && !propSolid.has(tx + ',' + ty)) extraOK[ty * Wt + tx] = 1;
+  }
+  for (const f of folkVisible) {
+    const cx = Math.floor(f.px0), cy = Math.floor(f.py0);
+    for (let dy = -FOLK_CLEAR; dy <= FOLK_CLEAR; dy++) {
+      const ty = cy + dy;
+      if (ty < 0 || ty >= Ht) continue;
+      for (let dx = -FOLK_CLEAR; dx <= FOLK_CLEAR; dx++) {
+        const tx = cx + dx;
+        if (tx < 0 || tx >= Wt) continue;
+        if (dx * dx + dy * dy <= FOLK_CLEAR * FOLK_CLEAR) extraOK[ty * Wt + tx] = 0;
+      }
+    }
+  }
+  const free = [];
+  for (let ty = 1; ty < Ht - 1; ty++) for (let tx = 1; tx < Wt - 1; tx++) if (extraOK[ty * Wt + tx]) free.push([tx, ty]);
+  extraGround = free.length;
+  // the hard ceiling: the anonymous can never be the population again. Whatever
+  // the leftover ground measures, there is at most one extra for every six of
+  // the 77 - so at least six walkers in seven have a name, by construction.
+  const want = Math.min(Math.floor(free.length / EXTRA_PER),
+                        Math.floor(folkVisible.length / EXTRA_PER_HAND));
+  if (!peds.length && !free.length) return;
+  // keep the extras already standing on good ground, top up or trim to `want`
+  peds = peds.filter(p => extraOK[Math.floor(p.y) * Wt + Math.floor(p.x)]);
+  while (peds.length > want) peds.pop();
+  const roomToWalk = ([tx, ty]) => extraOK[ty * Wt + tx + 1] || extraOK[ty * Wt + tx - 1] ||
+    extraOK[(ty + 1) * Wt + tx] || extraOK[(ty - 1) * Wt + tx];
+  const open = free.filter(roomToWalk);
+  while (peds.length < want && open.length) {
+    const [tx, ty] = open[rint(open.length)];
+    const qid = quarterOf[ty * Wt + tx];
+    const themeIdx = qid >= 0 ? quarters.find(q => q.id === qid)?.themeIdx ?? rint(THEMES.length) : rint(THEMES.length);
+    peds.push({
+      x: tx + 0.5, y: ty + 0.5, fx: tx, fy: ty, nx: tx, ny: ty,
+      prog: 1, speed: 0.55 + rng() * 0.35, theme: themeIdx, ph: rng() * 10, lastDir: null
+    });
+  }
 }
 
 /* ---- projection hooks (called from projectStatics) ----------------------- */
@@ -5438,7 +6052,19 @@ function projectTown() {
   for (const pr of propList) {
     if (!pr.st) continue;
     if (pr.kind === 'landmark') {
-      townClickables.push({ st: pr.st, act: pr.name === 'postoffice' ? () => openPostOffice(null) : () => openRecordsHall() });
+      const act = pr.name === 'postoffice' ? () => openPostOffice(null)
+        : pr.name === 'funnies' ? () => portalGo('secreta')
+        : pr.name === 'hobbyshop' ? () => portalGo('secretb')
+        : () => openRecordsHall();
+      townClickables.push({ st: pr.st, act });
+    } else if (pr.kind === 'vessel') {
+      townClickables.push({ st: pr.st, act: pr.name === 'sloop' ? () => portalGo('cartastrapiana') : () => portalGo('bythedeep') });
+    } else if (pr.kind === 'observatory') {
+      townClickables.push({ st: pr.st, act: () => portalTelescope() });
+    } else if (pr.kind === 'trailgate') {
+      townClickables.push({ st: pr.st, act: () => portalGo('longway') });
+    } else if (pr.kind === 'botanist') {
+      townClickables.push({ st: pr.st, act: () => portalGo('herbarium') });
     } else if (pr.kind === 'newsstand') {
       townClickables.push({ st: pr.st, act: () => openNewspaper() });
     } else if (pr.kind === 'plaque') {
@@ -5451,6 +6077,7 @@ function projectTown() {
   }
   for (const s of spots) { s.wx = isoX(s.ix, s.iy); s.wy = isoY(s.ix, s.iy) - 6; }
   bakeFoundingStrings();
+  bakeLandfall();
 }
 
 /* founding-day bunting: eight poles ringing the plaza, strung with the 27
@@ -5506,6 +6133,54 @@ function bakeFoundingStrings() {
   TOWN.pennantsHung = pi;
 }
 
+/* FIRST LANDFALL: its own decorations, and nothing it shares with Founding Day.
+   No bunting, no fireworks - this is the quieter of the two days. A beacon burns
+   at each of the doors that were here first, and one paper lantern for every
+   commit those pages have carried since drifts down the canals, which is the
+   water the reading order follows. Anchors live in TILE space, so a quarter turn
+   re-lays every light exactly. */
+function bakeLandfall() {
+  beacons = []; waterLights = [];
+  if (!landfallActive || !TOWN) return;
+  TOWN.landfallPages.forEach((slug, i) => {
+    if (doorBySlug[slug]) beacons.push({ slug, ph: i * 1.7 });
+  });
+  // the canal runs: every horizontal stretch of open water, longest first
+  const runs = [];
+  for (let ty = 1; ty < Ht - 1; ty++) {
+    let x0 = -1;
+    for (let tx = 0; tx <= Wt; tx++) {
+      const wet = tx < Wt && grid[ty * Wt + tx] === T.WATER;
+      if (wet && x0 < 0) x0 = tx;
+      else if (!wet && x0 >= 0) { if (tx - x0 >= 6) runs.push({ y: ty, x0, x1: tx - 1 }); x0 = -1; }
+    }
+  }
+  if (!runs.length) return;
+  runs.sort((a, b) => a.y - b.y || a.x0 - b.x0);
+  const n = TOWN.landfallCommits;
+  for (let i = 0; i < n; i++) {
+    const r = runs[i % runs.length];
+    const k = Math.floor(i / runs.length);
+    const span = r.x1 - r.x0;
+    const t = ((k + 0.5) / Math.ceil(n / runs.length)) + (h32(i, r.y, 311) % 100) / 100 * 0.02;
+    waterLights.push({
+      x: r.x0 + (t % 1) * span, y: r.y + 0.5, x0: r.x0, x1: r.x1,
+      dir: (i % (runs.length * 2)) < runs.length ? 1 : -1,
+      ph: (h32(i, r.y, 733) % 63) / 10
+    });
+  }
+  TOWN.beaconsLit = beacons.length;
+  TOWN.waterLightsAdrift = waterLights.length;
+}
+function stepLandfall(dt) {
+  if (!landfallActive || REDUCED || photoMode) return;
+  for (const L of waterLights) {
+    L.x += L.dir * 0.28 * dt;
+    if (L.x > L.x1) L.x = L.x0;
+    if (L.x < L.x0) L.x = L.x1;
+  }
+}
+
 /* ---- per-frame town work -------------------------------------------------- */
 function townTick(dt) {
   if (townNoteT > 0) townNoteT = Math.max(0, townNoteT - dt);
@@ -5544,6 +6219,7 @@ function townTick(dt) {
       }
     }
   }
+  stepLandfall(dt);   // the landfall lanterns ride the canal
   // founding-day fireworks over the plaza once night falls
   if (foundingActive && !REDUCED && nf > 0.4 && panel.hidden && !photoMode) {
     fwTimer -= dt;
@@ -5585,12 +6261,29 @@ function updateSpotProximity() {
       if (dd < bd) { bd = dd; bestS = s; }
     }
   }
+  // the telescope's hint follows the sky: by day the dome sleeps, and once the
+  // stars are out (always, under the parked reduced-motion clock) it answers
+  if (bestS && bestS.kind === 'observatory') {
+    const P = PORTAL_BY_KIND.observatory;
+    const want = (nf > 0.05 || REDUCED) ? P.hintNight : P.hint;
+    if (bestS.row !== want) { bestS.row = want; if (bestS === activeSpot) updatePromptRows(); }
+  }
   if (bestS !== activeSpot) {
     activeSpot = bestS;
     if (bestS) dpTitleEl.textContent = '· ' + bestS.title;
     updatePromptRows();
   }
-  let bf = null, bfd = 1.15;
+  // the steamer winks as the courier comes near - a rubber-hose beat, skipped
+  // for reduced motion and costing one distance check when nobody is close
+  if (steamerProp && steamerProp.st && !REDUCED) {
+    const nd = Math.hypot(player.x - steamerProp.tx, player.y - steamerProp.ty);
+    const want = (nd < 5 && (animT % 2.4) < 0.4) ? 'steamer_wink' : 'steamer';
+    if (steamerProp.st.name !== want) steamerProp.st.name = want;
+  }
+  // a step further than the door prompt's 0.9: the hands keep a beat of their own
+  // now, so speaking distance has to hold whether they are at the post or a pace
+  // off it. Nearest still wins, so the one-label rule is untouched.
+  let bf = null, bfd = 1.85;
   if (panel.hidden && cam.z >= 3 && !photoMode) {
     for (const f of folkVisible) {
       const dd = Math.hypot(player.x - f.x, player.y - f.y);
@@ -5599,8 +6292,8 @@ function updateSpotProximity() {
   }
   folkNear = bf;
   // WALKING AWAY CLOSES IT. The card is a conversation, not a document: it ends
-  // when the courier leaves, when a page is opened over it, or when the hand is
-  // no longer one of the twenty out today.
+  // when the courier leaves, when a page is opened over it, or when the day turns
+  // and that hand has moved to another of their pages.
   if (folkTalking) {
     const dd = Math.hypot(player.x - folkTalking.x, player.y - folkTalking.y);
     if (dd > 3.2 || !panel.hidden || photoMode || folkVisible.indexOf(folkTalking) < 0) closeFolkCard();
@@ -5666,6 +6359,8 @@ function activateSpot(s) {
   else if (s.kind === 'hall') openRecordsHall();
   else if (s.kind === 'plaque') openPlaque();
   else if (s.kind === 'vacant') openPostOffice(s.slug);
+  else if (s.kind === 'observatory') portalTelescope();
+  else if (PORTAL_BY_KIND[s.kind]) portalGo(PORTAL_BY_KIND[s.kind].key);
 }
 
 /* ---- delivery rounds ------------------------------------------------------- */
@@ -6192,13 +6887,31 @@ function sndSynth(kind) {
 
 /* ---- render hooks ----------------------------------------------------------- */
 function townDynInto(dyn) {
-  // townsfolk: the real hands, out near the pages they tend
-  if (cam.z >= 2) {
-    for (const f of folkVisible) {
-      const wx = isoX(f.x, f.y), wy = isoY(f.x, f.y);
-      const bob = !REDUCED && Math.floor(animT * 1.3 + f.ph) % 5 === 0 ? 1 : 0;
-      dyn.push({ cv: folkSpriteFor(f), wx: Math.round(wx - 2), wy: Math.round(wy - 10 + bob), depth: depthOf(f.x, f.y) - 0.98 });
+  // THE POPULATION: all 77 real hands, at every zoom - the crowd on any street
+  // is the crowd that wrote it. Walk frames and facing exactly as an extra's, so
+  // a hand reads as a walker and not as a statue; the hat is the only tell.
+  /* FIRST LANDFALL: the lanterns adrift on the canals go into the same depth sort
+     as everything else that moves, so a roof in front of the water hides them
+     exactly as it hides a boat. */
+  if (landfallActive) {
+    for (const L of waterLights) {
+      const wx = isoX(L.x, L.y), wy = isoY(L.x, L.y);
+      const bob = REDUCED ? 0 : (Math.floor(animT * 1.5 + L.ph) % 2);
+      const x = Math.round(wx) - 2, y = Math.round(wy) - 4 + bob;
+      const d = depthOf(L.x, L.y) - 0.5;
+      if (nf > 0.1) dyn.push({ cv: SPR.driftglow, wx: x - 4, wy: y - 4, depth: d, alpha: Math.min(1, (nf - 0.1) * 1.8) });
+      dyn.push({ cv: SPR.driftlamp, wx: x, wy: y, depth: d });
     }
+  }
+  for (const f of folkVisible) {
+    const wx = isoX(f.x, f.y), wy = isoY(f.x, f.y);
+    const bob = !REDUCED && !f.moving && Math.floor(animT * 1.3 + f.ph) % 5 === 0 ? 1 : 0;
+    const fr = REDUCED || !f.moving ? 0 : (Math.floor(animT * 7 + f.ph) % 2) + 1;
+    const fvd = f.dir ? worldDirToView(f.dir[0], f.dir[1]) : null;
+    dyn.push({
+      cv: folkSpriteFor(f, fr), wx: Math.round(wx - 2), wy: Math.round(wy - 10 + bob),
+      depth: depthOf(f.x, f.y) - 0.98, flip: !!(fvd && fvd[0] < 0)
+    });
   }
 }
 function drawTownOver(vx0, vy0, vx1, vy1) {
@@ -6219,6 +6932,42 @@ function drawTownOver(vx0, vy0, vx1, vy1) {
       }
     }
     ctx.globalAlpha = 1;
+  }
+  /* FIRST LANDFALL: the lights on the water, then a beacon at each of the doors
+     that were here first. Nothing of Founding Day is reused - a different day
+     gets a different look. */
+  if (landfallActive && beacons.length) {
+    for (const B of beacons) {
+      const d = doorBySlug[B.slug];
+      if (!d) continue;
+      /* a harbour signal mast: three lights, one at the head and one at each yard
+         end, lit day and night. No bunting, no colour of any community - this is
+         the other day, and it does not borrow anything from Founding Day. */
+      const bx = Math.round(d.wx) + 9, by = Math.round(d.wy) + 1, H = 30;
+      if (bx < vx0 - 20 || bx > vx1 + 20 || by < vy0 - 48 || by > vy1 + 16) continue;
+      const la = 0.5 + 0.5 * Math.min(1, nf * 2);                             // brighter after dark
+      ctx.fillStyle = PAL.OUT; ctx.fillRect(bx - 5, by - 2, 11, 3);           // the stone step it rises from
+      ctx.fillStyle = PAL.C2; ctx.fillRect(bx - 5, by - 3, 11, 1);
+      ctx.fillStyle = PAL.C1; ctx.fillRect(bx - 4, by - 2, 9, 1);
+      ctx.fillStyle = PAL.WD1; ctx.fillRect(bx - 1, by - H, 2, H - 2);        // the mast
+      ctx.fillStyle = PAL.WD3; ctx.fillRect(bx - 1, by - H, 1, H - 2);
+      ctx.fillStyle = PAL.OUT; ctx.fillRect(bx - 8, by - H + 7, 17, 1);       // the yard
+      ctx.fillStyle = PAL.WD2; ctx.fillRect(bx - 8, by - H + 6, 17, 1);
+      const lamp = (lx, ly, big) => {
+        ctx.globalAlpha = la;
+        ctx.drawImage(big ? SPR.beaconglow : SPR.driftglow,
+          lx - (big ? 15 : 7) + 1, ly - (big ? 13 : 6) + 2);
+        ctx.globalAlpha = 1;
+        const w2 = big ? 5 : 3, h2 = big ? 6 : 4;
+        ctx.fillStyle = PAL.OUT; ctx.fillRect(lx - (w2 >> 1) - 1, ly - 1, w2 + 2, h2 + 2);
+        ctx.fillStyle = PAL.L2; ctx.fillRect(lx - (w2 >> 1), ly, w2, h2);
+        ctx.fillStyle = PAL.L1; ctx.fillRect(lx - (w2 >> 1), ly, w2, h2 - 1);
+        ctx.fillStyle = PAL.WH; ctx.fillRect(lx - (w2 >> 1) + 1, ly + 1, 1, 1);
+      };
+      lamp(bx, by - H - 5, true);                                             // the head light
+      lamp(bx - 7, by - H + 8, false);                                        // the yard lights
+      lamp(bx + 7, by - H + 8, false);
+    }
   }
   // founding day: bunting over the plaza, one pennant per community, lit at night
   if (foundingActive && pennantStrings.length) {
@@ -6365,20 +7114,28 @@ function initTownUI() {
   const here = document.getElementById('photo-here');
   if (here) here.onclick = () => photoFindMe();
   if (townOl) townOl.addEventListener('pointerdown', (e) => { if (e.target === townOl) closeTownOverlay(); });
-  if (foundingActive) setTownNote(`FOUNDING DAY · first recording, ${TOWN.foundingHuman} · ${TOWN.pennantsHung || TOWN.pennants} community pennants over the plaza`, 12);
+  const notes = [];
+  if (foundingActive) notes.push(`${foundingLine()} · ${TOWN.pennantsHung || TOWN.pennants} community pennants over the plaza`);
+  if (landfallActive) notes.push(`${landfallLine()} · a beacon at each of their ${TOWN.beaconsLit || beacons.length} doors and ${TOWN.waterLightsAdrift || waterLights.length} lanterns adrift, one for every commit those pages have carried since`);
+  if (notes.length) setTownNote(notes.join('  //  '), 12);
 }
 
 /* ---- test surface --------------------------------------------------------------- */
 function townTestApi() {
   return {
     town: () => ({
-      founding: TOWN.first, foundingActive, pennants: TOWN.pennants,
+      founding: TOWN.founding, foundingActive, pennants: TOWN.pennants,
       pennantsHung: TOWN.pennantsHung || 0, strings: pennantStrings.length,
+      landfall: TOWN.landfall, landfallActive, landfallPages: TOWN.landfallPages.slice(),
+      landfallCommits: TOWN.landfallCommits, beacons: beacons.length, waterLights: waterLights.length,
+      firstRecording: TOWN.first,
       vacantDerived: TOWN.vacant.length, vacantPlaced: TOWN.vacantPlaced,
       boards: propList.filter(p => p.kind === 'board').length,
       lanternBuildings: lanternDoors.length, lanternTotal: TOWN.lanternTotal,
       months: TOWN.months.length, widestMonth: TOWN.widest.key, widestFounded: TOWN.widest.founded.length,
       folk: townsfolk.length, folkVisible: folkVisible.length,
+      extras: peds.length, extraGround, extraPer: EXTRA_PER, folkClear: FOLK_CLEAR,
+      extraCap: Math.floor(folkVisible.length / EXTRA_PER_HAND), extraPerHand: EXTRA_PER_HAND,
       spots: spots.map(s => s.kind), dayNum
     }),
     editUrl: (s) => editUrlFor(s),
@@ -6406,7 +7163,22 @@ function townTestApi() {
       if (got >= TOWN.lanternTotal && !plaqueEarned) earnPlaque();
       return got;
     },
-    folkList: () => folkVisible.map(f => ({ name: f.name, slug: f.slug, line: f.line, x: f.x, y: f.y })),
+    /* x,y is the POST - the tile a hand keeps, and the tile they are standing on
+       whenever anyone is near enough to speak to them, because a hand walks back
+       to their post as soon as the courier is within FOLK_HOLD tiles. `live` is
+       the instantaneous position, which differs only while nobody is looking. */
+    folkList: () => folkVisible.map(f => ({ name: f.name, slug: f.slug, line: f.line,
+      x: f.px0, y: f.py0, live: [f.x, f.y], pace: [f.px1, f.py1], moving: !!f.moving })),
+    folkHold: () => FOLK_HOLD,
+    extraList: () => peds.map(p => ({ x: p.x, y: p.y })),
+    onScreenWalkers: () => {
+      const z = cam.z;
+      const vx0 = cam.x - 40, vy0 = cam.y - 60, vx1 = cam.x + cvs.width / z + 40, vy1 = cam.y + cvs.height / z + 40;
+      const inV = (x, y) => { const wx = isoX(x, y), wy = isoY(x, y); return wx >= vx0 && wx <= vx1 && wy >= vy0 && wy <= vy1; };
+      return { named: folkVisible.filter(f => inV(f.x, f.y)).length,
+               anon: peds.filter(p => inV(p.x, p.y)).length,
+               queue: queuers.filter(p => inV(p.x, p.y)).length };
+    },
     folkAll: () => townsfolk.map(f => ({
       name: f.name, slug: f.slug, line: f.line, card: f.card, first: f.first, last: f.last,
       nPages: f.nPages, commits: f.commits, kept: f.kept, nightPages: f.nightPages,
@@ -6432,9 +7204,16 @@ function townTestApi() {
     postcard: () => { const pc = buildPostcard(); return { w: pc.width, h: pc.height, data: pc.toDataURL('image/png').length }; },
     setDayNum: (n) => { dayNum = n; refreshFolk(); },
     setFounding: (v) => { foundingActive = !!v; bakeFoundingStrings(); if (REDUCED) draw(); },
+    setLandfall: (v) => { landfallActive = !!v; bakeLandfall(); if (REDUCED) draw(); },
+    landfallLights: () => waterLights.map(L => ({ x: L.x, y: L.y })),
+    beaconList: () => beacons.map(b => b.slug),
+    hudLine: () => { const e = document.getElementById('hud2'); return e.hidden ? '' : e.textContent; },
     townNoteNow: () => townNote,
     setTownNote: (m, t) => setTownNote(m, t),
     townSpots: () => spots.map(s => ({ kind: s.kind, ix: s.ix, iy: s.iy, slug: s.slug || null })),
+    portalSpots: () => spots.filter(s => PORTAL_BY_KIND[s.kind])
+      .map(s => ({ kind: s.kind, key: PORTAL_BY_KIND[s.kind].key, href: PORTAL_BY_KIND[s.kind].href, ix: s.ix, iy: s.iy, title: s.title, row: s.row })),
+    nightNow: () => nf,
     clickableCount: () => townClickables.length
   };
 }
@@ -6580,7 +7359,8 @@ async function boot() {
     ready: true
   };
   Object.assign(window.__pixelTest, townTestApi());
-  window.__pdcDebug = { propList, statics, doors, buildings, spots, spawn: spawnTile.slice(), get orient() { return orient; } };
+  window.__pdcDebug = { propList, statics, doors, buildings, spots, spawn: spawnTile.slice(),
+    get orient() { return orient; }, get extraOK() { return extraOK; }, get folkOut() { return folkVisible; } };
   window.__pdcSPR = SPR;
   window.__pdcCard = () => buildPostcard();
   window.__pdcCam = (wx, wy) => { camMode = 'free'; camFly = null; cam.x = Math.round(wx - cvs.width / (2 * cam.z)); cam.y = Math.round(wy - cvs.height / (2 * cam.z)); if (REDUCED) draw(); else startLoop(); };

@@ -598,3 +598,25 @@ body.photomode #city { cursor: crosshair; }
   .pb-label { display: none; }
   #hud2 { max-width: 80vw; }
 }
+
+/* ---- the crossings: a short in-fiction beat before a sister project ---- */
+#portalbeat {
+  position: fixed; inset: 0; z-index: 120;
+  background: #04070f;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .45s ease;
+  pointer-events: none;
+}
+#portalbeat.on { opacity: 1; pointer-events: all; }
+#portalbeat[hidden] { display: none; }
+#portalbeat p {
+  color: #fdf8ea; text-align: center; max-width: 82vw;
+  font: 700 15px/1.7 "Courier New", ui-monospace, monospace;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: 2px solid #fdf8ea; padding: 14px 22px;
+  box-shadow: 4px 4px 0 rgba(73, 69, 255, .45);
+  background: #241f2e;
+}
+@media (prefers-reduced-motion: reduce) {
+  #portalbeat { transition: none; }
+}
