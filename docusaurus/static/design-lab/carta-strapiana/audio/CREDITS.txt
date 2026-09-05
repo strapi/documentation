@@ -1,77 +1,148 @@
 CARTA STRAPIANA - THE SHANTY
 Credits and licences for the recorded human voices in this directory.
 
-Every voice here is a real person humming, and every recording was released by
-its author under the Creative Commons CC0 1.0 Universal public domain
-dedication (https://creativecommons.org/publicdomain/zero/1.0/). CC0 imposes no
-condition of attribution. The credit below is given anyway, because this whole
-piece is about crediting the hands that made a thing.
+Every voice here is a real person singing, chanting or humming, and every
+recording was released by its author under the Creative Commons CC0 1.0
+Universal public domain dedication
+(https://creativecommons.org/publicdomain/zero/1.0/). CC0 imposes no condition
+of attribution. The credit below is given anyway, because this whole piece is
+about crediting the hands that made a thing.
 
 No voice in this build is synthesised. If a synthesised voice were ever
 substituted for one of these files the piece would be lying, and the docket
-that commissioned it said so on the record.
+that commissioned it said so on the record. (Two candidate recordings were
+REJECTED during this build for exactly that reason: freesound 854331, a
+synthesiser wavetable wearing a yo-ho name, and freesound 385075, a music box
+playing a shanty. Neither ships. Freesound 690997, a designed ship-ambience
+FX bed, was rejected as not being a clean human phrase.)
 
-SOURCES  (all from freesound.org, all CC0 1.0)
+SOURCES  (all from freesound.org; every licence verified on its own sound
+page on 2026-09-05 - each page carries the link to
+creativecommons.org/publicdomain/zero/1.0/)
 
-  hum-call.mp3
-    "Voice Male humming - Negative B" by bolkmar
-    https://freesound.org/people/bolkmar/sounds/469606/
-    cut 0.05 s - 1.37 s
+  THE FIRST SIX (the original watch)
 
-  hum-steady.mp3
-    "Humming in F# Minor" by xkeril
-    https://freesound.org/people/xkeril/sounds/685680/
-    cut 0.5 s - 14.7 s
+  hum-call.mp3       "Voice Male humming - Negative B" by bolkmar
+                     https://freesound.org/people/bolkmar/sounds/469606/
+                     cut 0.05 s - 1.37 s
+  hum-steady.mp3     "Humming in F# Minor" by xkeril
+                     https://freesound.org/people/xkeril/sounds/685680/
+                     cut 0.5 s - 14.7 s
+  hum-second.mp3     "Humming in A Minor" by xkeril
+                     https://freesound.org/people/xkeril/sounds/685679/
+                     cut 1.0 s - 12.4 s
+  hum-third.mp3      "Humming C D A for alexggqs" by drotzruhn
+                     https://freesound.org/people/drotzruhn/sounds/439504/
+                     cut 22.0 s - 34.0 s
+  hum-high.mp3       "woman humming" by coppolaseoul
+                     https://freesound.org/people/coppolaseoul/sounds/712112/
+                     cut 10.0 s - 17.6 s
+  hum-crowd.mp3      "CRWDSing_Mmm Hummed Near F_ShaneVincent_GSC24_XY"
+                     by ShangusBurger
+                     https://freesound.org/people/ShangusBurger/sounds/763890/
+                     cut 1.0 s - 7.4 s
 
-  hum-second.mp3
-    "Humming in A Minor" by xkeril
-    https://freesound.org/people/xkeril/sounds/685679/
-    cut 1.0 s - 12.4 s
+  THE ELEVEN THAT JOINED FOR THE PROGRAMME (this wave)
 
-  hum-third.mp3
-    "Humming C D A for alexggqs" by drotzruhn
-    https://freesound.org/people/drotzruhn/sounds/439504/
-    cut 22.0 s - 34.0 s
-
-  hum-high.mp3
-    "woman humming" by coppolaseoul
-    https://freesound.org/people/coppolaseoul/sounds/712112/
-    cut 10.0 s - 17.6 s
-
-  hum-crowd.mp3
-    "CRWDSing_Mmm Hummed Near F_ShaneVincent_GSC24_XY" by ShangusBurger
-    https://freesound.org/people/ShangusBurger/sounds/763890/
-    cut 1.0 s - 7.4 s
-    (a crowd humming "mmm" near F: the whole watch coming in)
+  call-deep.mp3      "male_hum.wav" by mahakush
+                     https://freesound.org/people/mahakush/sounds/368817/
+                     cut 0.05 s - 4.35 s
+  chant-low.mp3      "Low chant.wav" by adharca
+                     https://freesound.org/people/adharca/sounds/319253/
+                     cut 0.10 s - 10.90 s
+  chant-high.mp3     "High chant.wav" by adharca
+                     https://freesound.org/people/adharca/sounds/319254/
+                     cut 0.05 s - 8.20 s
+  verse-carnival.mp3 "Carnival Fears Tuned Male Vocals - 100bpm 3_4 Dmaj.wav"
+                     by espae (a cappella male vocals)
+                     https://freesound.org/people/espae/sounds/703653/
+                     cut 16.90 s - 28.20 s
+  hum-girl.mp3       "girlprettyvoicehumming.wav" by nayruslove
+                     https://freesound.org/people/nayruslove/sounds/69979/
+                     cut 0.30 s - 11.00 s
+  hum-bride.mp3      "hum.wav" by AlucardsBride
+                     https://freesound.org/people/AlucardsBride/sounds/193938/
+                     cut 17.40 s - 29.50 s
+  hum-waltz.mp3      "devil's waltz hum.wav" by AlucardsBride
+                     https://freesound.org/people/AlucardsBride/sounds/193939/
+                     cut 38.40 s - 50.40 s
+  hum-soft.mp3       "Woman Humming Softly- MP3" by MayaTakeda
+                     https://freesound.org/people/MayaTakeda/sounds/646179/
+                     cut 6.35 s - 9.45 s
+  chorus-maya.mp3    "Woman Voice Chorus" by MayaTakeda
+                     https://freesound.org/people/MayaTakeda/sounds/716430/
+                     cut 0.05 s - 11.55 s
+  hum-sapere.mp3     "humming girl.wav" by Sapereaudio
+                     https://freesound.org/people/Sapereaudio/sounds/648210/
+                     cut 1.20 s - 11.60 s
+  hey-all.mp3        "Hey - Men Shouting together - Jewish Wedding"
+                     by khenshom
+                     https://freesound.org/people/khenshom/sounds/527740/
+                     cut 0.00 s - 0.64 s
 
 WHAT WAS DONE TO THEM
 
 Each file is ONE continuous cut of ONE recording. Nothing is pitch-shifted,
-time-stretched, reversed, spliced or layered inside the file. The processing
+time-stretched, reversed, spliced or layered inside any file. The processing
 chain, identical for every voice and reproducible by running ../make-audio.sh:
 
   highpass 95 Hz, lowpass 6.2 kHz   (an old deck has no top and no rumble)
-  0.22 s fade in, 0.45 s fade out
-  1.1 - 1.9 s of silence appended    (so a looping voice draws breath)
+  short fade in, 0.45 s fade out
   loudnorm to -22 LUFS, -3 dBTP      (so no voice shouts down another)
   22.05 kHz, mono, MP3 48 kbit/s
 
-Total: six files, about 363 KB. MP3 was chosen over Ogg Vorbis or Opus only
-because every browser's decodeAudioData reads it.
+The first six keep 1.1 - 1.9 s of appended silence from the old loop days;
+the programme no longer loops anything, so that tail is only air. Whole
+bundle: seventeen files, under 1 MB, against a 3 MB ration.
+
+THE PROGRAMME
+
+The voices are no longer loops. They are one-shot phrases scheduled as call
+and response: the lead hand calls (a call or verse phrase), the watch answers
+after the call is mostly out, each answer off the beat. Voices still JOIN one
+at a time at an interval computed from the real commit rhythm of the island
+being crossed to, and the chorus never grows past the number of hands that
+actually keep that page. Between phrases there is silence - the wind and
+water carry those bars, and they are the whole piece if no voice ever loads.
+
+Laws, every play logged in the page (window.__helmSound.trig) so they can be
+proved rather than promised:
+  - never the same phrase twice in a row, anywhere in the programme;
+  - no phrase-to-phrase sequence (A then B) heard again within ten minutes;
+  - every play gets a new small pitch (within about a third of a semitone)
+    and a new small level, so no two plays are identical;
+  - while the reading pane is open the whole mix eases to one quarter and
+    the programme keeps running behind the duck.
 
 THE BED
 
 The wind and the water under the voices are NOT recordings. They are
 synthesised in the page with the Web Audio API: one looping noise buffer split
 into a band-passed wind and a low-passed sea, both breathing on slow
-oscillators tied to the swell and to the ship's actual speed through the water.
-That bed is always on, it is the whole sound if these six files fail to load,
-and one switch (S, or the control on deck) silences everything at once.
+oscillators tied to the swell and to the ship's actual speed through the
+water. That bed is always on, it is the whole sound if every voice fails to
+load, and one switch (S, or the control on deck) silences everything at once.
+The one arrival one-shot - the anchor cable running out and the splash - is
+synthesised the same way; it is rigging, not a voice.
 
-HOW THEY ARE USED
+THE SUNO SLOT
 
-One voice starts when the ship has way on her. The others JOIN, one at a time,
-at an interval computed from the real commit rhythm of the island being crossed
-to: an island worked often takes up the chant quickly, a page touched twice in
-four years is slow to answer. The chorus never grows past the number of hands
-that actually keep that page. At anchor the voices fall away.
+The owner may commission verses of his own. Drop MP3 files into audio/suno/
+next to a manifest.json shaped like this:
+
+  {
+    "verses": [
+      { "file": "verse-one.mp3",
+        "title": "The Ballad of the Chart Table",
+        "by": "Suno, commissioned by the owner",
+        "gain": 0.55 }
+    ]
+  }
+
+file is the MP3 inside audio/suno/ (required); title and by feed the credit
+line shown on the plate when the verse plays; gain (0..1, default 0.55) sets
+its level. When the folder and manifest exist they are detected at load, and
+the verses are woven into the programme as FEATURED VERSES: now and then the
+crew stands silent, the verse takes the deck alone, and the plate names it -
+title and hand, the same credit law as every voice above. No manifest, no
+change: the bank above carries the watch.

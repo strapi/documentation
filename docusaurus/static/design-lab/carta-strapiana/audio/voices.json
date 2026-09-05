@@ -1,11 +1,107 @@
 {
-  "note": "Recorded human voices, every one of them released CC0 by its author. See CREDITS.txt. They are layered in call-and-response over the synthesised wind-and-water bed; the bed alone is a complete piece if these files do not load.",
+  "note": "Recorded human voices, every one released CC0 by its author - licences verified on each freesound page, see CREDITS.txt. The programme plays them as one-shot phrases in call-and-response over the synthesised wind-and-water bed; the bed alone is a complete piece if these files never load. Variation laws: never the same phrase twice in a row, no phrase-to-phrase sequence repeated within ten minutes, and a small new pitch and level for every play.",
   "files": [
-    { "file": "hum-call.mp3",   "role": "call",     "rate": 1.00, "gain": 0.90, "source": "Freesound 469606, bolkmar, CC0" },
-    { "file": "hum-steady.mp3", "role": "response", "rate": 1.00, "gain": 0.85, "source": "Freesound 685680, xkeril, CC0" },
-    { "file": "hum-second.mp3", "role": "response", "rate": 1.00, "gain": 0.80, "source": "Freesound 685679, xkeril, CC0" },
-    { "file": "hum-third.mp3",  "role": "response", "rate": 1.00, "gain": 0.78, "source": "Freesound 439504, drotzruhn, CC0" },
-    { "file": "hum-high.mp3",   "role": "response", "rate": 1.00, "gain": 0.72, "source": "Freesound 712112, coppolaseoul, CC0" },
-    { "file": "hum-crowd.mp3",  "role": "watch",    "rate": 1.00, "gain": 0.95, "source": "Freesound 763890, ShangusBurger, CC0" }
+    {
+      "file": "hum-call.mp3",
+      "role": "call",
+      "gain": 0.9,
+      "source": "Freesound 469606, bolkmar, CC0"
+    },
+    {
+      "file": "call-deep.mp3",
+      "role": "call",
+      "gain": 0.85,
+      "source": "Freesound 368817, mahakush, CC0"
+    },
+    {
+      "file": "hum-steady.mp3",
+      "role": "response",
+      "gain": 0.85,
+      "source": "Freesound 685680, xkeril, CC0"
+    },
+    {
+      "file": "hum-second.mp3",
+      "role": "response",
+      "gain": 0.8,
+      "source": "Freesound 685679, xkeril, CC0"
+    },
+    {
+      "file": "hum-third.mp3",
+      "role": "response",
+      "gain": 0.78,
+      "source": "Freesound 439504, drotzruhn, CC0"
+    },
+    {
+      "file": "hum-high.mp3",
+      "role": "response",
+      "gain": 0.72,
+      "source": "Freesound 712112, coppolaseoul, CC0"
+    },
+    {
+      "file": "hum-girl.mp3",
+      "role": "response",
+      "gain": 0.72,
+      "source": "Freesound 69979, nayruslove, CC0"
+    },
+    {
+      "file": "hum-soft.mp3",
+      "role": "response",
+      "gain": 0.68,
+      "source": "Freesound 646179, MayaTakeda, CC0"
+    },
+    {
+      "file": "hum-sapere.mp3",
+      "role": "response",
+      "gain": 0.7,
+      "source": "Freesound 648210, Sapereaudio, CC0"
+    },
+    {
+      "file": "chorus-maya.mp3",
+      "role": "response",
+      "gain": 0.7,
+      "source": "Freesound 716430, MayaTakeda, CC0"
+    },
+    {
+      "file": "chant-low.mp3",
+      "role": "verse",
+      "gain": 0.84,
+      "source": "Freesound 319253, adharca, CC0"
+    },
+    {
+      "file": "chant-high.mp3",
+      "role": "verse",
+      "gain": 0.76,
+      "source": "Freesound 319254, adharca, CC0"
+    },
+    {
+      "file": "verse-carnival.mp3",
+      "role": "verse",
+      "gain": 0.8,
+      "source": "Freesound 703653, espae, CC0"
+    },
+    {
+      "file": "hum-bride.mp3",
+      "role": "verse",
+      "gain": 0.74,
+      "source": "Freesound 193938, AlucardsBride, CC0"
+    },
+    {
+      "file": "hum-waltz.mp3",
+      "role": "verse",
+      "gain": 0.74,
+      "source": "Freesound 193939, AlucardsBride, CC0"
+    },
+    {
+      "file": "hum-crowd.mp3",
+      "role": "watch",
+      "gain": 0.95,
+      "source": "Freesound 763890, ShangusBurger, CC0"
+    },
+    {
+      "file": "hey-all.mp3",
+      "role": "accent",
+      "gain": 0.9,
+      "source": "Freesound 527740, khenshom, CC0"
+    }
   ]
 }

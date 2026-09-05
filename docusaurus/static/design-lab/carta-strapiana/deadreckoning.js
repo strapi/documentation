@@ -98,21 +98,23 @@ const world = {
   /* the sea itself */
   islands: [],        // 290, one per page
   bySlug: new Map(),
-  archipelagos: [],   // 27, one per community
+  archipelagos: [],   // 27, one per community (the register keeps them; the chart letters none)
   content: null, graph: null, communities: null, prov: null, register: null,
   uncited: [], desert: [], lone: [], nightIsles: []
 };
 
 async function loadData() {
-  const [graph, communities, content, prov, register] = await Promise.all([
+  const [graph, communities, content, prov, register, taxonomy] = await Promise.all([
     fetch('graph.json').then(r => r.json()),
     fetch('communities.json').then(r => r.json()),
     fetch('content.json').then(r => r.json()),
     fetch('provenance.json').then(r => r.json()),
-    fetch('register.json').then(r => r.json())
+    fetch('register.json').then(r => r.json()),
+    fetch('taxonomy.json').then(r => r.json())
   ]);
   world.prov = prov;
   world.register = register;
+  world.taxonomy = taxonomy;
 
   const of = {};
   communities.forEach((c, i) => c.members.forEach(m => { of[m] = i; }));
@@ -139,39 +141,167 @@ async function loadData() {
     [shortHub(communities[L.i].hub), shortHub(communities[L.j].hub), L.total]);
   world.interEdges = inter;
 
-  /* deterministic force layout of the 27 communities */
+  /* ============================================================
+     THE TWO CONTINENTS (owner order), PROVINCED BY THE TAXONOMY (lab law)
+     The corpus holds two products, and the sea says so plainly: every
+     CMS page is ground on one great continent, every Cloud page on a
+     smaller one across open water. A PROVINCE is an official section of
+     the docs themselves - product + section straight out of taxonomy.json,
+     the section map built from the repo's own sidebars.js (path-inherited
+     for the pages the sidebar does not carry), so no page falls into a
+     nameless bucket and no other name is ever lettered on the ground.
+     Provinces are packed
+     rim to rim, each set beside the province its pages cite hardest, so
+     the interior borders still fall where the citation graph says they
+     fall; the Louvain communities keep their work INSIDE each province,
+     shaping the sub-clusters and the adjacency of the villages, but no
+     community name is printed anywhere. Only the 11 uncommunitied pages
+     stay offshore: the data isolates them, so the sea does. (All three
+     pages of the AI section are among those 11, so the AI section holds
+     no ground on the main - the sea is honest about that too.)
+     ============================================================ */
   const n = communities.length;
-  const rnd = rngFor('layout');
+  const SECTION_LAW = {
+    cms: ['Getting Started', 'Features', 'Content APIs', 'Configurations', 'Development',
+          'Plugins development', 'TypeScript', 'AI', 'Command Line Interface', 'Upgrades'],
+    cloud: ['Getting Started', 'Projects management', 'Advanced configuration', 'Deployments',
+            'Account management', 'Command Line Interface']
+  };
+  const provinces = [];
+  const provKey = new Map();      // 'product|section' -> province
+  for (const slug of Object.keys(content.pages).sort()) {
+    if (of[slug] == null) continue;               // the uncommunitied stay offshore
+    const pg = content.pages[slug];
+    const tx = taxonomy[slug];
+    const sec = tx && tx.section;     /* the taxonomy is total over the 290 */
+    if (!sec) continue;               /* a slug the taxonomy cannot name earns no ground */
+    const key = pg.product + '|' + sec;
+    let P = provKey.get(key);
+    if (!P) {
+      P = { product: pg.product, section: sec, name: sec, members: [] };
+      provKey.set(key, P); provinces.push(P);
+    }
+    P.members.push(slug);
+  }
+  for (const P of provinces) {
+    P.size = P.members.length;
+    /* her chief page: the most-cited member anchors the ground and its name-seat */
+    P.hub = P.members.slice().sort((a, b) =>
+      (graph.inbound[b] || 0) - (graph.inbound[a] || 0) || (a < b ? -1 : 1))[0];
+    /* the dominant community inside her, and her purity: the share of one mind -
+       a mixed section keeps a ragged coast, exactly as a mixed community did */
+    const tal = new Map();
+    for (const m of P.members) { const c = of[m]; tal.set(c, (tal.get(c) || 0) + 1); }
+    let dc = -1, dn = -1;
+    for (const [c, n2] of tal) if (n2 > dn) { dn = n2; dc = c; }
+    P.comm = dc; P.purity = dn / P.size; P.nComms = tal.size;
+    P.primary = (SECTION_LAW[P.product] || []).indexOf(P.section) >= 0;
+  }
+  /* stable order: official taxonomy order first, then whatever the data adds */
+  const secRank = P => { const i = (SECTION_LAW[P.product] || []).indexOf(P.section); return i < 0 ? 999 : i; };
+  provinces.sort((a, b) => a.product === b.product
+    ? secRank(a) - secRank(b)
+    : (a.product < b.product ? -1 : 1));
+  /* the citation flow BETWEEN provinces, read straight off the raw edges:
+     it packs the mains and later draws the sheet's own sailing lanes */
+  const pIdx = new Map();
+  provinces.forEach((P, i) => { P.i0 = i; for (const m of P.members) pIdx.set(m, i); });
+  const provLaneMap = new Map();
+  for (const [a, b] of graph.edges) {
+    const pa = pIdx.get(a), pb = pIdx.get(b);
+    if (pa == null || pb == null || pa === pb) continue;
+    const i = Math.min(pa, pb), j = Math.max(pa, pb);
+    const key = i + '-' + j;
+    let L = provLaneMap.get(key);
+    if (!L) { L = { i, j, total: 0, ij: 0, ji: 0 }; provLaneMap.set(key, L); }
+    L.total++;
+    if (pa === i) L.ij++; else L.ji++;
+  }
+  world.provLanes = [...provLaneMap.values()];
+  /* the ground a province needs: the same disc its member layout will fill */
+  const SPACING_NM0 = 1.05;
+  const archScale0 = m => m <= 1 ? 0 : 0.58 * SPACING_NM0 * Math.sqrt(m) + 0.30;
+  for (const P of provinces) P.r = (archScale0(P.size) + 0.62) / world.nmPerUnit;
+  const affinity = (A, B) => {
+    const L = provLaneMap.get(Math.min(A.i0, B.i0) + '-' + Math.max(A.i0, B.i0));
+    /* the sections that cite each other share a border; a shared dominant
+       community is a smaller nudge - adjacency, never a name */
+    return (L ? L.total : 0) + (A.comm === B.comm && A.comm >= 0 ? 3 : 0);
+  };
+  function packContinent(list, tag) {
+    const rnd = rngFor('pack:' + tag);
+    const L = list.slice().sort((a, b) => b.size - a.size || a.comm - b.comm);
+    const placed = [];
+    for (const P of L) {
+      if (!placed.length) { P.x = 0; P.y = 0; placed.push(P); continue; }
+      /* she goes ashore beside the province her pages cite hardest */
+      let anchor = placed[0], aw = -1;
+      for (const Q of placed) { const w = affinity(P, Q); if (w > aw) { aw = w; anchor = Q; } }
+      let best = null, bc = 1e18;
+      for (let s = 0; s < 64; s++) {
+        const th = s / 64 * TAU + rnd() * 0.001;
+        for (const f of [1.0, 1.12, 1.28, 1.5]) {
+          const d = (P.r + anchor.r) * f;
+          const x = anchor.x + Math.cos(th) * d, y = anchor.y + Math.sin(th) * d;
+          let ok = true;
+          for (const Q of placed) { if (Math.hypot(Q.x - x, Q.y - y) < (Q.r + P.r) * 0.94) { ok = false; break; } }
+          if (!ok) continue;
+          const cost = Math.hypot(x, y) + Math.hypot(x - anchor.x, y - anchor.y) * 0.4;
+          if (cost < bc) { bc = cost; best = [x, y]; }
+          break;
+        }
+      }
+      if (!best) { P.x = (rnd() - 0.5); P.y = (rnd() - 0.5); } else { P.x = best[0]; P.y = best[1]; }
+      placed.push(P);
+    }
+    /* settle: pulled to the middle, rims kept honest */
+    for (let it = 0; it < 160; it++) {
+      for (const P of L) { const m = Math.hypot(P.x, P.y) || 1; const pull = Math.min(0.004, m * 0.02); P.x -= P.x / m * pull; P.y -= P.y / m * pull; }
+      for (let a = 0; a < L.length; a++) for (let b = a + 1; b < L.length; b++) {
+        const A = L[a], B = L[b];
+        let dx = B.x - A.x, dy = B.y - A.y, d = Math.hypot(dx, dy);
+        const need = (A.r + B.r) * 0.94;
+        if (d < need) {
+          if (d < 1e-9) { dx = 1e-6; dy = 0; d = 1e-6; }
+          const push = (need - d) / d * 0.5;
+          A.x -= dx * push; A.y -= dy * push; B.x += dx * push; B.y += dy * push;
+        }
+      }
+    }
+    let r = 0;
+    for (const P of L) r = Math.max(r, Math.hypot(P.x, P.y) + P.r);
+    return r;
+  }
+  const cmsP = provinces.filter(p => p.product === 'cms');
+  const cloudP = provinces.filter(p => p.product === 'cloud');
+  const Rcms = packContinent(cmsP, 'cms');
+  const Rcloud = packContinent(cloudP, 'cloud');
+  /* the CMS Main west of the middle sea, the Cloud Main east-north-east of
+     her, a passage of open water between the two shores */
+  const GAP = 9.5 / world.nmPerUnit;
+  const cloudDx = Rcms + GAP + Rcloud, cloudDy = -Rcms * 0.34;
+  for (const P of cloudP) { P.x += cloudDx; P.y += cloudDy; }
+  /* centre the whole survey on its own weight, so the sheet sits square */
+  let wsum = 0, wx = 0, wy = 0;
+  for (const P of provinces) { wsum += P.size; wx += P.x * P.size; wy += P.y * P.size; }
+  wx /= wsum; wy /= wsum;
+  for (const P of provinces) { P.x -= wx; P.y -= wy; }
+  world.provinces = provinces;
+  world.continents = {
+    cms: { x: -wx, y: -wy, r: Rcms, n: cmsP.reduce((s, p) => s + p.size, 0), provinces: cmsP.length },
+    cloud: { x: cloudDx - wx, y: cloudDy - wy, r: Rcloud, n: cloudP.reduce((s, p) => s + p.size, 0), provinces: cloudP.length }
+  };
+  /* the 27 community positions the wind is derived from: each community
+     stands at the weighted middle of her own pages' ground - the provinces
+     now belong to the taxonomy, so a community may straddle several */
   const pos = [];
-  for (let k = 0; k < n; k++) {
-    const ang = k * 2.399963 + rnd() * 0.35;
-    const rad = 0.35 + 0.65 * Math.sqrt((k + 1) / n);
-    pos.push({ x: Math.cos(ang) * rad, y: Math.sin(ang) * rad });
+  for (let k = 0; k < n; k++) pos.push({ x: 0, y: 0, wsum: 0 });
+  for (const P of provinces) {
+    const per = new Map();
+    for (const m of P.members) { const c = of[m]; per.set(c, (per.get(c) || 0) + 1); }
+    for (const [c, w] of per) { pos[c].x += P.x * w; pos[c].y += P.y * w; pos[c].wsum += w; }
   }
-  const REST = 0.55;
-  for (let it = 0; it < 260; it++) {
-    const fx = new Array(n).fill(0), fy = new Array(n).fill(0);
-    for (let a = 0; a < n; a++) for (let b = a + 1; b < n; b++) {
-      let dx = pos[b].x - pos[a].x, dy = pos[b].y - pos[a].y;
-      let d2 = dx * dx + dy * dy + 1e-4, d = Math.sqrt(d2);
-      const rep = 0.012 / d2;
-      fx[a] -= dx / d * rep; fy[a] -= dy / d * rep;
-      fx[b] += dx / d * rep; fy[b] += dy / d * rep;
-    }
-    for (const L of lanes) {
-      const a = L.i, b = L.j;
-      let dx = pos[b].x - pos[a].x, dy = pos[b].y - pos[a].y;
-      const d = Math.sqrt(dx * dx + dy * dy) + 1e-6;
-      const k = 0.012 * Math.log(1 + L.total) * (d - REST);
-      fx[a] += dx / d * k; fy[a] += dy / d * k;
-      fx[b] -= dx / d * k; fy[b] -= dy / d * k;
-    }
-    const cool = 1 - it / 300;
-    for (let k = 0; k < n; k++) {
-      pos[k].x += clamp(fx[k], -0.05, 0.05) * cool;
-      pos[k].y += clamp(fy[k], -0.05, 0.05) * cool;
-    }
-  }
+  for (const q of pos) { if (q.wsum) { q.x /= q.wsum; q.y /= q.wsum; } delete q.wsum; }
   world.positions = pos;
   world.lanes = lanes.map(L => {
     const A = pos[L.i], B = pos[L.j];
@@ -205,7 +335,7 @@ async function loadData() {
     pos: { x: pos[dsIdx].x, y: pos[dsIdx].y }
   };
 
-  /* the whole corpus becomes the sea: 290 islands in 27 archipelagos */
+  /* the whole corpus becomes the sea: 290 islands, provinced by the taxonomy */
   world.content = content; world.graph = graph; world.communities = communities;
   world.commOf = of;
   buildIslands();
@@ -289,7 +419,8 @@ function hash32(s) {
 
 function buildIslands() {
   const content = world.content, graph = world.graph,
-    communities = world.communities, of = world.commOf, prov = world.prov;
+    communities = world.communities, of = world.commOf, prov = world.prov,
+    taxonomy = world.taxonomy;
   const slugs = Object.keys(content.pages);
   const pos = world.positions;
 
@@ -312,7 +443,7 @@ function buildIslands() {
     const h3 = page.headings.filter(h => h.level === 3);
     const isle = {
       slug, title: page.title, sidebarLabel: page.sidebarLabel || page.title,
-      description: page.description || '', section: page.section, product: page.product,
+      description: page.description || '', section: (taxonomy[slug] || page).section, product: page.product,
       tags: page.tags || [], words,
       code: countCode(page.blocks), codeIndexed: graph.code[slug] || 0,
       inbound: graph.inbound[slug] || 0, outbound: graph.outbound[slug] || 0,
@@ -323,6 +454,7 @@ function buildIslands() {
       topAuthor: p.topAuthor || '', first: p.first || '', last: p.last || '',
       careDays: p.careDays || 0,
       comm: of[slug] == null ? -1 : of[slug],
+      prov: -1, nearProv: null,
       /* size from word count: the Document Service island, 3,447 words, is 1.00 */
       mag: clamp(Math.pow(words / 3447, 0.34), 0.44, 1.85),
       pos: { x: 0, y: 0 },
@@ -332,30 +464,47 @@ function buildIslands() {
     world.bySlug.set(slug, isle);
   }
 
-  /* --- archipelagos: a local layout per community, hub pinned at the centre --- */
+  /* --- provinces: a local layout per province, its hub pinned at the centre --- */
   /* A group of n islands at a mile between neighbours needs a disc of radius
      0.525 * s * sqrt(n) if it is packed the way circles pack. That is the
-     radius below, with a little slack, so an archipelago is a filled water
+     radius below, with a little slack, so a province is a filled ground
      rather than a ring with an empty middle. */
   const SPACING_NM = 1.05;
   const archScaleNm = n => n <= 1 ? 0 : 0.58 * SPACING_NM * Math.sqrt(n) + 0.30;
-  for (let ci = 0; ci < communities.length; ci++) {
-    const C = communities[ci];
-    const members = C.members.slice().sort();
-    const hub = C.hub;
+  const provOf = new Map();
+  for (let pi = 0; pi < world.provinces.length; pi++) {
+    const P = world.provinces[pi];
+    const members = P.members.slice().sort();
+    const hub = P.hub;
     const n = members.length;
     const R = archScaleNm(n) / world.nmPerUnit;
     const minS = 0.95 / world.nmPerUnit;    // a mile, near enough, between neighbours
-    const rnd = rngFor('arch:' + ci);
-    /* a sunflower spiral fills a disc evenly; the hub holds the centre */
+    const rnd = rngFor('prov:' + P.product + ':' + (P.section || P.comm));
+    /* the hub holds the centre; the communities shape the sub-clusters
+       (lab law): each community inside the province takes a wedge of the
+       ground sized to her pages, so pages of one mind settle as one
+       district - the citation springs below then pull the fine adjacency.
+       No community is named; she only shapes the land. */
     const rest = members.filter(m => m !== hub);
     const local = [{ x: 0, y: 0, pin: true, slug: hub }];
-    rest.forEach((m, k) => {
-      const t = (k + 0.62) / rest.length;
-      const r = R * Math.sqrt(t);
-      const a = k * 2.399963 + rnd() * 0.30;
-      local.push({ x: Math.cos(a) * r, y: Math.sin(a) * r, pin: false, slug: m });
-    });
+    const byMind = new Map();
+    for (const m of rest) {
+      const c = world.commOf[m] != null ? world.commOf[m] : -1;
+      let l = byMind.get(c); if (!l) byMind.set(c, l = []); l.push(m);
+    }
+    const wedges = [...byMind.values()].sort((a, b) => b.length - a.length);
+    let a0 = rnd() * TAU;
+    for (const gmem of wedges) {
+      const span = TAU * gmem.length / Math.max(1, rest.length);
+      const ac = a0 + span / 2;
+      gmem.forEach((m, k) => {
+        const t = (k + 0.62) / gmem.length;
+        const r = R * (0.18 + 0.82 * Math.sqrt(t));
+        const a = ac + (rnd() - 0.5) * span * 0.85;
+        local.push({ x: Math.cos(a) * r, y: Math.sin(a) * r, pin: false, slug: m });
+      });
+      a0 += span;
+    }
     const idx = new Map(local.map((L, i2) => [L.slug, i2]));
     const springRest = R * 0.42;
     for (let it = 0; it < 200; it++) {
@@ -401,51 +550,84 @@ function buildIslands() {
     let rmax = 0;
     for (const L of local) {
       const isle = world.bySlug.get(L.slug);
-      isle.pos.x = pos[ci].x + L.x;
-      isle.pos.y = pos[ci].y + L.y;
+      isle.pos.x = P.x + L.x;
+      isle.pos.y = P.y + L.y;
+      isle.prov = pi;
+      provOf.set(L.slug, pi);
       rmax = Math.max(rmax, Math.hypot(L.x, L.y));
     }
+    P.rmax = rmax;
+  }
+  /* the 27 communities keep their entry in the register, each standing at
+     the weighted middle of her own pages' ground - the provinces belong to
+     the taxonomy now, so no single shore is hers by right */
+  for (let ci = 0; ci < communities.length; ci++) {
+    const C = communities[ci];
+    let sx = 0, sy = 0, sn = 0;
+    for (const m of C.members) {
+      const I = world.bySlug.get(m);
+      if (!I) continue;
+      sx += I.pos.x; sy += I.pos.y; sn++;
+    }
+    const cx2 = sn ? sx / sn : 0, cy2 = sn ? sy / sn : 0;
+    let rr = 0;
+    for (const m of C.members) {
+      const I = world.bySlug.get(m);
+      if (I) rr = Math.max(rr, Math.hypot(I.pos.x - cx2, I.pos.y - cy2));
+    }
     world.archipelagos.push({
-      i: ci, hub, size: n, purity: C.purity, dominant: C.dominant,
-      name: (content.pages[hub] || {}).title || hub,
-      x: pos[ci].x, y: pos[ci].y, r: rmax, members
+      i: ci, hub: C.hub, size: C.members.length, purity: C.purity, dominant: C.dominant,
+      name: (content.pages[C.hub] || {}).title || C.hub,
+      x: cx2, y: cy2, r: rr, members: C.members
     });
   }
-
   /* --- the pages no community holds --- */
   const orphans = isles.filter(i => i.comm < 0);
-  /* the sheet is wider than it is tall, so the islands off soundings ride an
-     ellipse just outside the archipelagos rather than a circle that would
-     stretch the chart into empty water */
-  const rimX = Math.max(...world.positions.map(p => Math.abs(p.x))) * 1.08;
-  const rimY = Math.max(...world.positions.map(p => Math.abs(p.y))) * 1.10;
+  /* the pages off soundings ride an ellipse of outer water clear of BOTH
+     continents, so a page the corpus never touches is a shore the mainland
+     never sees */
+  let bminx = 1e9, bmaxx = -1e9, bminy = 1e9, bmaxy = -1e9;
+  for (const P of world.provinces) {
+    const pr = P.rmax || P.r;
+    bminx = Math.min(bminx, P.x - pr); bmaxx = Math.max(bmaxx, P.x + pr);
+    bminy = Math.min(bminy, P.y - pr); bmaxy = Math.max(bmaxy, P.y + pr);
+  }
+  const rimCx = (bminx + bmaxx) / 2, rimCy = (bminy + bmaxy) / 2;
+  const rimX = (bmaxx - bminx) / 2 + 3.6 / world.nmPerUnit;
+  const rimY = (bmaxy - bminy) / 2 + 3.6 / world.nmPerUnit;
   let oi = 0;
   for (const isle of orphans) {
     const nb = nbrs.get(isle.slug);
     const tally = new Map();
     if (nb) for (const [o, w] of nb) {
-      const c = of[o];
+      const c = provOf.get(o);
       if (c != null) tally.set(c, (tally.get(c) || 0) + w);
     }
     if (tally.size) {
-      /* it keeps company with the archipelago its citations point into: laid
-         just outside that group's rim, on the bearing of its strongest tie */
+      /* it keeps company with the province its citations point into: laid
+         just off that shore, an island the mainland never took in */
       let best = -1, bw = -1;
       for (const [c, w] of tally) if (w > bw) { bw = w; best = c; }
-      const A = world.archipelagos[best];
+      const A = world.provinces[best];
       const rnd = rngFor('orphan:' + isle.slug);
-      const a = rnd() * TAU;
-      const r = A.r + (0.9 + rnd() * 0.5) / world.nmPerUnit;
+      /* off the SEAWARD side of that province: outward from her continent */
+      const K = world.continents[A.product];
+      let ox = A.x - K.x, oy = A.y - K.y;
+      const om = Math.hypot(ox, oy);
+      if (om < 1e-6) { ox = 0; oy = -1; } else { ox /= om; oy /= om; }
+      const a = Math.atan2(oy, ox) + (rnd() - 0.5) * 1.4;
+      const r = (A.rmax || A.r) + (1.6 + rnd() * 1.1) / world.nmPerUnit;
       isle.pos.x = A.x + Math.cos(a) * r;
       isle.pos.y = A.y + Math.sin(a) * r;
-      isle.nearComm = best;
+      isle.nearComm = A.comm;
+      isle.nearProv = best;
     } else {
       /* nothing cites it and it cites nothing: it lies off soundings, and only
          a visitor can ever reach it */
       const a = (oi * 2.399963 + 0.6) % TAU;
       const k = 1 + (oi % 3) * 0.03;
-      isle.pos.x = Math.cos(a) * rimX * k;
-      isle.pos.y = Math.sin(a) * rimY * k;
+      isle.pos.x = rimCx + Math.cos(a) * rimX * k;
+      isle.pos.y = rimCy + Math.sin(a) * rimY * k;
       isle.offSoundings = true;
       oi++;
     }
@@ -453,7 +635,7 @@ function buildIslands() {
 
   /* --- no two islands on the same water: a separation pass, hubs pinned --- */
   const minSep = 0.95 / world.nmPerUnit;
-  const pinned = new Set(world.archipelagos.map(a => a.hub));
+  const pinned = new Set(world.provinces.map(p => p.hub));
   for (let it = 0; it < 90; it++) {
     /* coarse grid so this stays O(n) rather than O(n^2) x 90 */
     const cell = minSep * 1.05;
@@ -563,7 +745,14 @@ function aimLens(x, y) {
   if (REDUCED) { lens.x = lens.ax; lens.y = lens.ay; }
   if (lens.raised) dirty = true;
 }
-const story = { leadsman1: false, leadsman2: false, started: false, raised: false, lastDist: null, minDist: null };
+const story = { leadsman1: false, leadsman2: false, started: false, raised: false, lastDist: null, minDist: null,
+  maiden: false, qs: null };
+
+/* THE PASSAGE (owner order): clicking a place on the chart is a short sailed
+   passage, not a warp - the chart folds away, sea and sky sweep past, and she
+   arrives in those waters with the shore dead ahead. Skippable with any key;
+   reduced motion lands at once with a one-line caption. */
+const passage = { on: false, closing: false, t: 0, dur: 2, ax: 0, ay: 0, bx: 0, by: 0, isle: null, nm: 0 };
 
 /* ---------------- the calm start (owner order) ----------------
    The ship begins STILL, hove to on a quiet sea, and the deck teaches before
@@ -599,7 +788,7 @@ function placeShipAtDistance(nm, isle) {
   const d = isle ? approachDirFor(isle) : world.approachDir;
   ship.x = target.pos.x - d.x * u;
   ship.y = target.pos.y - d.y * u;
-  const brg = norm360(Math.atan2(target.pos.x - ship.x, target.pos.y - ship.y) * 180 / Math.PI);
+  const brg = norm360(Math.atan2(target.pos.x - ship.x, -(target.pos.y - ship.y)) * 180 / Math.PI);
   ship.bearing = brg;
   ship.orderedBearing = brg;
   ship.omega = 0;
@@ -628,7 +817,8 @@ function distToNm(isle) {
   return Math.hypot(dx, dy) * world.nmPerUnit;
 }
 function bearingTo(isle) {
-  return norm360(Math.atan2(isle.pos.x - ship.x, isle.pos.y - ship.y) * 180 / Math.PI);
+  /* the sheet's own north: -y, the same the rose and the rumors swear by */
+  return norm360(Math.atan2(isle.pos.x - ship.x, -(isle.pos.y - ship.y)) * 180 / Math.PI);
 }
 function distToIslandNm() { return distToNm(ship.bound || world.island); }
 function bearingToIsland() { return bearingTo(ship.bound || world.island); }
@@ -655,7 +845,7 @@ function pickVisible() {
     let d2 = dx * dx + dy * dy;
     /* the shoal: she is set outside the berth rather than sailing through a
        coast. Only the island she is bound for lets her come right in. */
-    if (d2 < clear2 && I !== ship.bound && !REDUCED) {
+    if (d2 < clear2 && I !== ship.bound && !REDUCED && !passage.on) {
       const d = Math.sqrt(d2) || 1e-9;
       const push = (clear - d) / d;
       ship.x -= dx * push;
@@ -667,7 +857,7 @@ function pickVisible() {
     if (d2 > world.visU2) continue;
     const dist = Math.sqrt(d2) * world.nmPerUnit;
     if (dist < 0.012) continue;
-    const az = angDiff(norm360(Math.atan2(dx, dy) * 180 / Math.PI), hb);
+    const az = angDiff(norm360(Math.atan2(dx, -dy) * 180 / Math.PI), hb);
     if (Math.abs(az) > 58) continue;
     vis.push({ isle: I, dist, az, bound: false });
   }
@@ -1918,7 +2108,7 @@ let dirty = true;
 function windAtShip() {
   const w = windAtUnits(ship.x, ship.y);
   const kn = clamp(Math.hypot(w.x, w.y) * world.windCal, 6, 24);
-  const deg = norm360(Math.atan2(w.x, w.y) * 180 / Math.PI);
+  const deg = norm360(Math.atan2(w.x, -w.y) * 180 / Math.PI);
   return { kn, deg, x: w.x, y: w.y };
 }
 
@@ -1935,30 +2125,39 @@ function update(dt) {
 
   const wind = windAtShip();
   const hb = ship.bearing * Math.PI / 180;
-  const hx = Math.sin(hb), hy = Math.cos(hb);
+  const hx = Math.sin(hb), hy = -Math.cos(hb);   /* north is -y, as the sheet draws it */
   const wm = Math.hypot(wind.x, wind.y) || 1;
   const cosA = (hx * wind.x + hy * wind.y) / wm;
   const polar = 0.42 + 0.58 * Math.pow((cosA + 1) / 2, 1.35);
   const windFactor = 0.75 + 0.25 * (wind.kn / 16);
-  let targetKn = ship.anchored ? 0 : sailBase(ship.sail) * polar * windFactor;
-  ship.knots += clamp(targetKn - ship.knots, -dt * 2.2, dt * 1.4);
-  if (ship.knots < 0.01 && targetKn === 0) ship.knots = 0;
+  if (!passage.on) {
+    let targetKn = ship.anchored ? 0 : sailBase(ship.sail) * polar * windFactor;
+    ship.knots += clamp(targetKn - ship.knots, -dt * 2.2, dt * 1.4);
+    if (ship.knots < 0.01 && targetKn === 0) ship.knots = 0;
+  }
 
   const eff = effectiveOrder(t);
-  if (REDUCED) {
+  if (passage.on) {
+    /* the passage cons her herself: helm and canvas answer to it alone */
+  } else if (REDUCED) {
     ship.bearing = ship.orderedBearing;
     ship.omega = 0;
   } else {
     const err = angDiff(eff, ship.bearing);
     const speedFrac = clamp(ship.knots / 8.6, 0.12, 1);
-    let alpha = clamp(err * 0.55, -6.5, 6.5) - ship.omega * 1.15;
+    /* storm waters (stage 2, idea 3): the helm goes heavy with the sea the
+       citations raise - bounded at a quarter, she always answers */
+    const heavy = 1 - 0.24 * wx.helm;
+    let alpha = (clamp(err * 0.55, -6.5, 6.5) - ship.omega * 1.15) * heavy;
     ship.omega += alpha * dt;
-    const om = (2.6 + 7.2 * speedFrac);
+    const om = (2.6 + 7.2 * speedFrac) * (1 - 0.14 * wx.helm);
     ship.omega = clamp(ship.omega, -om, om);
     ship.bearing = norm360(ship.bearing + ship.omega * dt);
   }
 
-  if (!REDUCED && !ship.anchored) {
+  if (passage.on) {
+    passageTick(dt);
+  } else if (!REDUCED && !ship.anchored) {
     const nmPerSec = ship.knots * COMPRESSION / 3600;
     const u = nmPerSec * dt / world.nmPerUnit;
     ship.x += hx * u;
@@ -1977,7 +2176,7 @@ function update(dt) {
   /* an anchor just weighed is not an anchor to let go again: until she has
      drawn clear of the roadstead she just left, that shore cannot take her */
   if (ship.clearOf && distToNm(ship.clearOf) > 0.72) ship.clearOf = null;
-  if (!ship.anchored && ship.bound && ship.bound !== ship.clearOf) {
+  if (!passage.on && !ship.anchored && ship.bound && ship.bound !== ship.clearOf) {
     const d0 = distToNm(ship.bound);
     if (d0 < 0.55 && (ship.sail === 'full' || ship.sail === 'travel')) {
       setSail('half', true);
@@ -2017,16 +2216,23 @@ function update(dt) {
 
   if (!story.started && t > 1) {
     story.started = true;
-    caption('Out of Quick Start roads, bound for the Document Service shore.', 4200);
-    caption('The wind stands fair, down the citation flow.', 3800);
+    if (story.maiden) {
+      caption('Her maiden call: the Quick Start Guide first, as every new hand raises her first.', 4800);
+      caption('The pennant flies on that shore. The wind stands fair, down the citation flow.', 4200);
+    } else {
+      caption('Out of Quick Start roads, bound for the Document Service shore.', 4200);
+      caption('The wind stands fair, down the citation flow.', 3800);
+    }
   }
   if (!story.leadsman1 && dist < 1.35) {
     story.leadsman1 = true;
+    s2Sounding(isle.words);
     caption('The leadsman heaves the lead…', 2400);
     caption('"By the deep, ' + numToWords(isle.words) + '!"', 4600);
   }
   if (!story.leadsman2 && dist < 0.6) {
     story.leadsman2 = true;
+    s2Sounding(isle.words);
     caption('"By the deep, ' + numToWords(isle.words) +
       (isle.nH2 ? '. ' + numToWords(isle.nH2) + (isle.nH2 === 1 ? ' headland' : ' headlands') + ' plain on the bow."'
                 : '. No headland: she is all one shore."'), 4800);
@@ -2049,7 +2255,7 @@ function update(dt) {
     for (const p of foam) {
       p.life -= dt;
       if (p.life <= 0) {
-        if (foamRnd() < 0.05 + knotsFrac * 0.6) respawnFoam(p, knotsFrac);
+        if (foamRnd() < 0.05 + knotsFrac * 0.6 + 0.22 * wx.seaVis) respawnFoam(p, knotsFrac);
         else p.life = -foamRnd() * 0.5;
         continue;
       }
@@ -2059,6 +2265,10 @@ function update(dt) {
   }
 
   eggTick(dt);
+  wxTick(dt);
+  bottleTick(dt);
+  fhTick();
+  catTick(dt);
 
   diag.bearing = Math.round(ship.bearing * 10) / 10;
   diag.orderedBearing = Math.round(ship.orderedBearing * 10) / 10;
@@ -2235,9 +2445,8 @@ function drawWorld(sim, worldDY, opts) {
       }
     }
     ctx.globalAlpha = 1;
+    drawLighthouses(isle, x, yBase, wpx, s, dist, stage);
     if (dist < 1.9) drawShoreLights(isle, x, yBase, wpx, s, dist, stage);
-    if (eggs.ready && isle === eggs.crateIsle && dist < 2.1)
-      drawCrateEgg(x, yBase, wpx, dist, !!(opts && opts.map));
   }
 
   /* crossing (a): the nameless city stands with the coasts, before the horizon line */
@@ -2342,7 +2551,7 @@ function render(sim) {
   const knotsFrac = sim.knotsFrac;
   ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
 
-  const swell = REDUCED ? 0 : 1;
+  const swell = (REDUCED ? 0 : 1) * (1 + 0.35 * wx.seaVis);
   const roll = swell * (1.35 * Math.sin(t * 0.62) + 0.55 * Math.sin(t * 1.13 + 1.2)) +
     clamp(ship.omega * ship.knots * 0.045, -3.5, 3.5);
   const heave = swell * (5.5 * Math.sin(t * 0.83 + 0.7) + 2.2 * Math.sin(t * 1.31));
@@ -2352,6 +2561,8 @@ function render(sim) {
   /* the world (draws its own paper + wash ground) */
   drawWorld(sim, worldDY, null);
   diag.lod = islandStage(sim.dist);
+  if (story.maiden && story.qs && ui.mode === 'deck') drawMaidenPennant(worldDY);
+  if (passage.on && !REDUCED) drawPassageSweep();
 
   /* foam stipple: same blobs and specks, gathered into a few paths.
      Drawn one rect at a time this was a thousand draw calls a frame; bucketed by
@@ -2414,6 +2625,8 @@ function render(sim) {
     ctx.globalAlpha = 1;
   }
 
+  drawBottles(sim, worldDY);
+
   /* dusk veil over the water */
   const mix = env.hourMix;
   if (mix > 0.001) {
@@ -2431,11 +2644,13 @@ function render(sim) {
     ctx.globalAlpha = 1;
   }
 
+  drawWeather(sim, worldDY);
+
   /* wind streaks */
   if (!REDUCED) {
     const wind = sim.wind;
     const hb = ship.bearing * Math.PI / 180;
-    const rx = Math.cos(hb), ry = -Math.sin(hb);
+    const rx = Math.cos(hb), ry = Math.sin(hb);   /* starboard, under the sheet's north */
     const wm = Math.hypot(wind.x, wind.y) || 1;
     const lat = (wind.x * rx + wind.y * ry) / wm;
     const along = sim.cosA;
@@ -2452,7 +2667,7 @@ function render(sim) {
       if (s.y > 600) s.y = 60 + (s.y % 60);
       const wob = Math.sin(t * 1.1 + s.ph);
       const a = 0.30 + 0.20 * (0.5 + 0.5 * Math.sin(t * 0.8 + s.ph * 2));
-      ctx.globalAlpha = a * (0.78 + 0.22 * knotsFrac);
+      ctx.globalAlpha = a * (0.78 + 0.22 * knotsFrac) * (1 + 0.45 * wx.squall);
       const L = s.len * (0.5 + wind.kn / 24) * (Math.abs(lat) * 0.6 + 0.5);
       const dir = lat >= 0 ? 1 : -1;
       ctx.beginPath();
@@ -2477,6 +2692,7 @@ function render(sim) {
   ctx.drawImage(bake.deck, 0, 0, W, H);
   drawSail(ctx, t, knotsFrac, sim.cosA);
   drawPennant(ctx, t, sim);
+  drawDeckCat(ctx, t, sim);
   ctx.restore();
 
   /* wheel */
@@ -2489,6 +2705,9 @@ function render(sim) {
   ctx.rotate((ship.wheelAngle + jitter) * Math.PI / 180);
   ctx.drawImage(bake.wheel, -235, -235, 470, 470);
   ctx.restore();
+
+  /* the passing front: wash, rain, the rare fork */
+  drawRainFront(sim);
 
   /* spyglass */
   if (lens.t > 0.003) drawLens(sim, worldDY);
@@ -2612,7 +2831,7 @@ function drawSail(g, t, knotsFrac, cosA) {
 function drawPennant(g, t, sim) {
   const wind = sim.wind;
   const hb = ship.bearing * Math.PI / 180;
-  const rx = Math.cos(hb), ry = -Math.sin(hb);
+  const rx = Math.cos(hb), ry = Math.sin(hb);   /* starboard, under the sheet's north */
   const wm = Math.hypot(wind.x, wind.y) || 1;
   const lat = (wind.x * rx + wind.y * ry) / wm;
   const px = 782, py = 128;
@@ -2713,13 +2932,15 @@ function initInput() {
   };
   el.addEventListener('pointerdown', e => {
     /* a mark on the water takes the click before the wheel does */
-    if (ui.mode === 'deck' && eggs.hits.length) {
+    if (ui.mode === 'deck') {
       const rct = el.getBoundingClientRect();
       const mx = (e.clientX - rct.left) * W / rct.width;
       const my = (e.clientY - rct.top) * H / rct.height;
       for (const hh of eggs.hits) {
         if (Math.hypot(mx - hh.x, my - hh.y) < hh.r + 10) { eggActivate(hh.key); return; }
       }
+      const sh = starPick(mx, my);
+      if (sh) { steerByStar(sh); return; }
     }
     const c = wheelCenter();
     const dx = e.clientX - c.x, dy = e.clientY - c.y;
@@ -2738,8 +2959,16 @@ function initInput() {
     const rr2 = el.getBoundingClientRect();
     if (rr2.width > 0) {
       aimLens((e.clientX - rr2.left) * W / rr2.width, (e.clientY - rr2.top) * H / rr2.height);
-      if (!dragging && ui.mode === 'deck') eggHover((e.clientX - rr2.left) * W / rr2.width,
-                                                    (e.clientY - rr2.top) * H / rr2.height, el);
+      if (!dragging && ui.mode === 'deck') {
+        const mx2 = (e.clientX - rr2.left) * W / rr2.width;
+        const my2 = (e.clientY - rr2.top) * H / rr2.height;
+        eggHover(mx2, my2, el);
+        const sh2 = starPick(mx2, my2);
+        const was = nightSky.hover;
+        nightSky.hover = sh2 ? sh2.i : -1;
+        if (sh2) el.style.cursor = 'pointer';
+        else if (was >= 0 && !eggs.cursorOn) el.style.cursor = '';
+      }
     }
     if (!dragging) return;
     const c = wheelCenter();
@@ -2767,6 +2996,8 @@ function initInput() {
     return t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
   };
   window.addEventListener('keydown', e => {
+    if (portalKeydown(e)) return;
+    if (passage.on && !typing(e)) { endPassage(true); e.preventDefault(); return; }
     if (e.key === 'Escape' && typing(e)) {
       /* the first Escape gives the keyboard back to the ship */
       e.target.blur();
@@ -2779,6 +3010,19 @@ function initInput() {
     if (e.key === 'Escape') {
       if (ui.mode === 'below') { closeBelow(); e.preventDefault(); return; }
       if (ui.mode === 'anchor') { weighAnchor(); e.preventDefault(); return; }
+    }
+    if (ui.mode === 'anchor') {
+      /* reading at anchor: the page answers every key a reader reaches for
+         (owner law: the page must scroll, always) */
+      const p = $('pagepaper');
+      if (p) {
+        const step = e.key === 'ArrowDown' ? 72 : e.key === 'ArrowUp' ? -72
+          : e.key === 'PageDown' ? Math.round(p.clientHeight * 0.88)
+          : e.key === 'PageUp' ? -Math.round(p.clientHeight * 0.88) : undefined;
+        if (step !== undefined) { p.scrollTop += step; e.preventDefault(); return; }
+        if (e.key === 'Home') { p.scrollTop = 0; e.preventDefault(); return; }
+        if (e.key === 'End') { p.scrollTop = p.scrollHeight; e.preventDefault(); return; }
+      }
     }
     if (ui.mode === 'below' && e.key >= '1' && e.key <= '5') {
       showTab(['chart', 'index', 'log', 'register', 'colophon'][+e.key - 1]);
@@ -2810,6 +3054,7 @@ function initInput() {
     }
     if (e.repeat) { keys[e.key] = true; return; }
     keys[e.key] = true;
+    if ((e.key === 'b' || e.key === 'B') && ui.mode === 'deck') { bottleOpen(); e.preventDefault(); return; }
     if (e.key === 't' || e.key === 'T') { firstOrder('sail'); setSail('travel'); }
     else if (e.key === 'f' || e.key === 'F') { firstOrder('sail'); setSail('full'); }
     else if (e.key === 'h' || e.key === 'H') { firstOrder('sail'); setSail('half'); }
@@ -2885,7 +3130,9 @@ function frame(ts) {
   if (ui.mode !== 'deck') {
     /* reading never competes with the sea: the plate stops, the sim holds */
     diag.samples.length && diag.samples.splice(0, diag.samples.length);
-    sound.step(dt, false);
+    /* mute-never-stop: behind the duck the programme keeps running while the
+       pane is open; the chart table below is its own silence */
+    sound.step(dt, ui.mode === 'anchor');
     requestAnimationFrame(frame);
     return;
   }
@@ -2893,8 +3140,10 @@ function frame(ts) {
   const sim = update(dt);
   render(sim);
   updateLandfallPlate(sim);
+  updateFirstBound();
   trackTick(dt, sim);
   sound.tune(sim.wind.kn, sim.knotsFrac);
+  if (sound.wxTune) sound.wxTune(wx.rain, wx.squall);
   sound.step(dt, !ship.anchored && ship.knots > 0.4);
   requestAnimationFrame(frame);
 }
@@ -2905,6 +3154,8 @@ function trackTick(dt, sim) {
   trackAcc += dt;
   if (trackAcc < 1.2) return;
   trackAcc = 0;
+  fogSee(ship.x, ship.y, FOG_SEE_NM);
+  fogPersist();
   const last = visit.track[visit.track.length - 1];
   if (last && Math.hypot(last.x - ship.x, last.y - ship.y) * world.nmPerUnit < 0.12) return;
   visit.track.push({ x: ship.x, y: ship.y });
@@ -2919,6 +3170,7 @@ function becalmFrame() {
     lens.x = lens.ax; lens.y = lens.ay;   // becalmed: the tube answers instantly
     render(sim);
     updateLandfallPlate(sim);
+    updateFirstBound();
     dirty = false;
   }
   setTimeout(becalmFrame, 120);
@@ -2970,8 +3222,33 @@ window.__helm = {
   },
   anchor() { if (ship.bound) dropAnchor(ship.bound); return diag.landfallMs; },
   open(slug) { warpTo(slug, 'packet'); return diag.landfallMs; },
+  fogMode(m) { fogSetMode(m, false); return fogDiag(); },
+  wx() { return diag.wx; },
+  wxForce(ix) { wx.forceIx = ix; return wx.months[ix == null ? 0 : ix]; },
+  wxBolt(frames) { wx.thunderDone = false; wxBolt('probe'); if (frames) wx.forkFrames = frames; return true; },
+  bottle(text) { bottleOpen(); const ta = document.getElementById('bottletext'); if (ta) ta.value = text; bottleToss(); return diag.lastBottle; },
+  journalPng() { return exportJournal(false); },
+  firstSentence(slug) { const I = world.bySlug.get(slug); return I ? firstSentenceOf(I) : ''; },
+  fhSay(slug) { const I = world.bySlug.get(slug); if (!I) return ''; const s = firstSentenceOf(I); const el = document.getElementById('figurehead'); el.querySelector('.fh-line').textContent = '“' + s + '”'; el.querySelector('.fh-who').textContent = 'the figurehead speaks · her page’s own first words'; el.classList.add('shown'); fh.upTil = env.t + 7.5; return s; },
+  stars() { buildConstellation(); return nightSky.stars.map(s => ({ slug: s.isle.slug, title: s.isle.title, x: s.x, y: s.y })); },
+  steerStar(i) { if (!nightSky.stars[i]) return false; steerByStar({ i }); return true; },
+  cat() { return { deck: cat.deck, u: +cat.u.toFixed(3), side: cat.side, stare: cat.stareAt && cat.stareAt.slug, home: cat.home, beasts: catBeasts().map(b => b.slug) }; },
+  catWalk() { cat.deck = 'walk'; cat.u = 0.06; cat.side = 1; return true; },
+  packetInfo(slug) { const I = world.bySlug.get(slug); return I ? packetFor(I) : null; },
+  harbourShips(slug) { const s = []; for (const [a, b] of world.graph.edges) if (b === slug) s.push(a); return s; },
+  fogLift(m) { fogSetMode(m, true); return fogDiag(); },
+  fog() { return fogDiag(); },
+  see(slug, r) { const i = world.bySlug.get(slug); if (!i) return false; fogSee(i.pos.x, i.pos.y, r || 1.2); return fogDiag(); },
   weigh() { weighAnchor(); },
   below(tab) { openBelow(tab || 'chart'); },
+  passage(slug) { const i = world.bySlug.get(slug); if (!i) return false; passageTo(i); return true; },
+  passageState() { return { on: passage.on, closing: passage.closing, t: +passage.t.toFixed(2),
+    dur: +passage.dur.toFixed(2), nm: +passage.nm.toFixed(2), isle: passage.isle ? passage.isle.slug : null }; },
+  skipPassage() { endPassage(true); },
+  portalState() { return { open: portal.open, key: portal.key, deny: Object.keys(portal.denyT) }; },
+  answerPortal(y) { portalAnswer(!!y); },
+  maiden() { return { maiden: story.maiden, qs: story.qs ? story.qs.slug : null,
+    nm: story.qs ? +distToNm(story.qs).toFixed(2) : null }; },
   onDeck() { closeBelow(); if (ui.slug) weighAnchor(); },
   search(q) { const s = document.getElementById('search'); s.value = q;
     s.dispatchEvent(new Event('input')); return ui.searchHits.slice(0, 8).map(h => h.isle.slug); },
@@ -2999,7 +3276,7 @@ window.__helm = {
   logRows() { return visit.log.slice(); },
   writeRemark(i, text) { const inp = document.querySelector('textarea.remark[data-i="' + i + '"]');
     if (!inp) return false; inp.value = text; inp.dispatchEvent(new Event('input')); return true; },
-  clearVisit() { try { for (const k of ['log','charted','raised','hand','lamps','islets','watches','hours','taught'])
+  clearVisit() { try { for (const k of ['log','charted','raised','hand','lamps','islets','watches','hours','taught','soundings','routes','packet','bottles','seen','fogmode','spoken'])
       window.localStorage.removeItem('carta.' + k); } catch (e) {} }
 };
 
@@ -3043,6 +3320,10 @@ const visit = {
   watches: new Set(store.get('watches', [])),
   track: [],
   hours: store.get('hours', 0),
+  soundings: store.get('soundings', []),
+  routes: store.get('routes', []),
+  packet: store.get('packet', null),
+  bottles: store.get('bottles', []),
   save() {
     store.set('log', this.log.slice(-400));
     store.set('charted', [...this.charted]);
@@ -3052,6 +3333,11 @@ const visit = {
     store.set('islets', [...this.islets]);
     store.set('watches', [...this.watches]);
     store.set('hours', this.hours);
+    store.set('soundings', this.soundings.slice(-240));
+    store.set('routes', this.routes.slice(-160));
+    store.set('packet', this.packet);
+    store.set('bottles', this.bottles.slice(-40));
+    fogPersist();
   }
 };
 
@@ -3191,7 +3477,7 @@ function ageOfInk(isle) {
 function shoresideHTML(isle) {
   const reg = world.register;
   const hands = (reg.bySlug[isle.slug] || []).map(i => reg.hands[i]);
-  const arch = isle.comm >= 0 ? world.archipelagos[isle.comm] : null;
+  const prov = isle.prov >= 0 ? world.provinces[isle.prov] : null;
   let out = '';
 
   out += '<div class="ss-block"><h4>The sounding</h4><dl>' +
@@ -3202,8 +3488,9 @@ function shoresideHTML(isle) {
       ? isle.inbound + (isle.inbound === 1 ? ' page cites her' : ' pages cite her')
       : '<b>none: a dark shore</b>') + '</dd>' +
     '<dt>She cites</dt><dd>' + isle.outbound + (isle.outbound === 1 ? ' page' : ' pages') + '</dd>' +
-    (arch ? '<dt>Archipelago</dt><dd>' + esc(arch.name) + ' &middot; ' + arch.size + ' islands</dd>'
-          : '<dt>Archipelago</dt><dd>none: she lies off soundings</dd>') +
+    (prov ? '<dt>Province</dt><dd>' + esc(prov.name || prov.section) + ' &middot; ' + prov.size +
+            (prov.size === 1 ? ' place' : ' places') + '</dd>'
+          : '<dt>Province</dt><dd>none: she lies off soundings</dd>') +
     '</dl></div>';
 
   out += '<div class="ss-block"><h4>The hands that keep her</h4><dl>' +
@@ -3213,6 +3500,9 @@ function shoresideHTML(isle) {
     '<dt>First and last</dt><dd>' + esc(isle.first) + ' &rarr; ' + esc(isle.last) + '</dd>' +
     '<dt>Days of care</dt><dd>' + isle.careDays + ' &middot; ' + ageOfInk(isle) + '</dd>' +
     '</dl></div>';
+
+  out += harbourMasterHTML(isle);
+  out += packetHTML(isle);
 
   /* the standing orders, answered here rather than on a checklist screen */
   const orders = [];
@@ -3291,20 +3581,40 @@ function shoresideHTML(isle) {
 }
 
 let landfallStart = 0;
+/* keep the rail true to the paper: position, proportion, thumb */
+function railSync() {
+  const rail = $('paperrail'), th = $('paperthumb'), p = $('pagepaper');
+  if (!rail || !p) return;
+  if ($('anchorage').hidden) { rail.style.display = 'none'; return; }
+  const need = p.scrollHeight > p.clientHeight + 4;
+  rail.style.display = need ? 'block' : 'none';
+  if (!need) return;
+  const pr = p.getBoundingClientRect(), ar = $('anchorbody').getBoundingClientRect();
+  rail.style.left = (pr.right - ar.left - 17) + 'px';
+  rail.style.top = (pr.top - ar.top + 6) + 'px';
+  rail.style.height = (pr.height - 12) + 'px';
+  const trackH = pr.height - 12 - 4;
+  const thH = Math.max(28, trackH * p.clientHeight / p.scrollHeight);
+  const y = (trackH - thH) * (p.scrollTop / Math.max(1, p.scrollHeight - p.clientHeight));
+  th.style.height = thH + 'px';
+  th.style.top = (2 + y) + 'px';
+}
+
 function openPage(isle, how) {
   if (!isle) return;
   firstOrder('below');
   landfallStart = performance.now();
   ui.slug = isle.slug;
+  packetDelivery(isle);
   ui.mode = 'anchor';
   const page = world.content.pages[isle.slug];
-  const arch = isle.comm >= 0 ? world.archipelagos[isle.comm] : null;
+  const prov2 = isle.prov >= 0 ? world.provinces[isle.prov] : null;
 
   $('below').hidden = true;
   const a = $('anchorage');
   a.querySelector('.ah-kicker').textContent =
     (isle.product === 'cloud' ? 'The Cloud sea' : 'The CMS ocean') + ' · ' +
-    (isle.section || 'off soundings') + (arch ? ' · ' + arch.name + ' archipelago' : '');
+    (prov2 ? (prov2.name || prov2.section) + ' province' : (isle.section ? isle.section + ' · off soundings' : 'off soundings'));
   a.querySelector('.ah-title').textContent = isle.title;
   a.querySelector('.ah-sub').textContent = isle.description || '';
   a.querySelector('.ah-sound').textContent =
@@ -3324,6 +3634,7 @@ function openPage(isle, how) {
   a.hidden = false;
   paper.scrollTop = 0;
   $('shoreside').scrollTop = 0;
+  requestAnimationFrame(railSync);
   requestAnimationFrame(() => {
     diag.landfallMs = Math.round((performance.now() - landfallStart) * 10) / 10;
   });
@@ -3336,6 +3647,7 @@ function openPage(isle, how) {
   isle.visited++;
   visit.save();
   sound.landfall(isle);
+  sound.reading(true);
 }
 
 function dropAnchor(isle) {
@@ -3344,12 +3656,15 @@ function dropAnchor(isle) {
   ship.sail = 'rest';
   ship.knots = 0;
   ship.atAnchorOff = isle;
+  fogSee(isle.pos.x, isle.pos.y, 1.1);
   logCrossing(isle);
+  sound.anchorShot();
   captionNow('The anchor bites off ' + isle.title + '.', 3000);
   openPage(isle, 'sailed');
 }
 
 function weighAnchor() {
+  sound.reading(false);
   $('anchorage').hidden = true;
   $('below').hidden = true;
   ui.mode = 'deck';
@@ -3374,6 +3689,7 @@ function warpTo(slug, why) {
   ship.sail = 'rest';
   ship.knots = 0;
   ship.atAnchorOff = isle;
+  fogSee(isle.pos.x, isle.pos.y, 1.1);
   logPacket(isle, why || 'packet');
   openPage(isle, 'packet');
   dirty = true;
@@ -3395,7 +3711,7 @@ function logCrossing(isle) {
   const hours = kn > 0 ? run / kn : 0;
   visit.hours += hours;
   const hb = ship.bearing * Math.PI / 180;
-  const cosA = (Math.sin(hb) * wind.x + Math.cos(hb) * wind.y) / (Math.hypot(wind.x, wind.y) || 1);
+  const cosA = (Math.sin(hb) * wind.x - Math.cos(hb) * wind.y) / (Math.hypot(wind.x, wind.y) || 1);
   logRow({
     h: Math.max(1, Math.round(visit.hours)),
     k: Math.round(kn * 10) / 10,
@@ -3412,7 +3728,7 @@ function logPacket(isle, why) {
   logRow({
     h: Math.max(1, Math.round(visit.hours)),
     k: 0, f: isle.words,
-    courses: why === 'citation' ? 'followed a citation' : 'carried by the packet',
+    courses: why === 'citation' ? 'followed a citation' : why === 'passage' ? 'made the passage under sail' : why === 'hailed' ? 'hailed her in harbour and boarded' : 'carried by the packet',
     winds: 'no crossing sailed',
     slug: isle.slug, title: isle.title, remark: '', mark: false
   });
@@ -3461,9 +3777,21 @@ function renderLog() {
     '</div>';
 
   h += '<div class="bsec">The log</div>';
+  if (visit.log.length) {
+    h += '<div class="exportrow"><button class="btn" id="logexport" type="button">' +
+      'Export the journal &mdash; a PNG in the engraved hand</button></div>';
+  }
   if (!visit.log.length) {
     h += '<p class="bnote">Nothing entered yet. The first crossing writes the first line.</p>';
   } else {
+    /* the first landfall on each water carries her engraved sketch */
+    const firstIdx = new Set();
+    {
+      const seenS = new Set();
+      visit.log.forEach((r, i) => {
+        if (!r.mark && r.slug && !seenS.has(r.slug)) { seenS.add(r.slug); firstIdx.add(i); }
+      });
+    }
     h += '<table id="logtable"><thead><tr><th>H</th><th>K</th><th>F</th><th>Courses</th><th>Winds</th><th>Remarks</th></tr></thead><tbody>';
     visit.log.forEach((r, i) => {
       if (r.mark) {
@@ -3474,7 +3802,10 @@ function renderLog() {
         h += '<tr><td class="num">' + r.h + '</td><td class="num">' + (r.k || '—') + '</td>' +
           '<td class="num">' + commas(r.f) + '</td>' +
           '<td>' + esc(r.courses) + '<br><span style="font-size:12px;color:var(--ink-3)">made ' +
-          esc(r.title) + '</span></td>' +
+          esc(r.title) + '</span>' +
+          (firstIdx.has(i) ? '<br><canvas class="lg-sk" width="128" height="66" data-slug="' +
+            esc(r.slug) + '" aria-label="the first-landfall sketch of ' + esc(r.title) + '"></canvas>' : '') +
+          '</td>' +
           '<td>' + esc(r.winds) + '</td>' +
           '<td class="rem"><textarea class="remark" rows="1" data-i="' + i +
           '" placeholder="in your own hand">' + esc(r.remark || '') + '</textarea></td></tr>';
@@ -3484,6 +3815,7 @@ function renderLog() {
   }
   h += '</div>';
   p.innerHTML = h;
+  wireLogSketches(p);
 
   const spec = document.getElementById('specimen');
   if (spec) {
@@ -3674,8 +4006,9 @@ function renderColophon() {
   const p = $('pane-colophon');
   p.innerHTML = '<div class="bscroll"><div class="colophon">' +
     '<p>This sea is the Strapi documentation. Every island is one page of it: ' +
-    world.islands.length + ' pages, grouped into ' + world.archipelagos.length +
-    ' archipelagos by the communities its own citation graph falls into, and placed so that pages ' +
+    world.islands.length + ' pages, laid up as two mains whose provinces are the docs\' own ' +
+    'taxonomy - product and section, straight out of the corpus - while the communities of the ' +
+    'citation graph shape the districts inside each province, so that pages ' +
     'which cite each other lie within reach of one another.</p>' +
     '<p>Nothing on the screen is decoration. An island\'s size is its word count; its headlands are ' +
     'its <code>h2</code> sections and its knolls its <code>h3</code>s, so you can count the structure of a page ' +
@@ -3688,12 +4021,22 @@ function renderColophon() {
     '<p>The crew are the people who wrote it: ' + reg.authorsEver + ' hands in the commit log, credited ' +
     'by the names they signed with. Their marks are never altered and your marks are never mixed with ' +
     'theirs &mdash; anything you write is entered as a stranger\'s hand, in your own log, kept in this ' +
-    'browser and nowhere else.</p>' +
+    'browser and nowhere else. The one exception is the bottle post: a note you write, seal and toss ' +
+    'yourself is carried to the documentation crew &mdash; your words, the waters\' true name, an ' +
+    'up-vote, and nothing else.</p>' +
     '<p>The romance this design borrows is the age of sail\'s instruments: the chart, the lead line, ' +
     'the glass, the log book. It borrows none of that era\'s economy, because there is nothing here to ' +
     'take: the islands are pages, nobody lives on them, nobody is displaced, and reading one leaves it ' +
     'exactly as it was for the next ship. The real age of sail also contained slavery, plunder and ' +
     'conquest. This chart does not stage them, and does not pretend they were not there.</p>' +
+    '<p>The second voyage taught the sea new truths, all of them the corpus\'s own. The weather is ' +
+    'its calendar: the trailing twelvemonth of last edits replayed, a month a minute &mdash; rain where ' +
+    'the ink fell thick, squalls where it fell thickest, grey mist on waters long untended, sparkle on ' +
+    'fresh ink. The chart you open shows only what your keel has surveyed, the rest by report only ' +
+    'until the fog is lifted. The sea state runs with the citations borne into the waters you sail, ' +
+    'and the storm-glass reads them before you weigh. At dusk the heavily cited capes burn one ' +
+    'lighthouse per twelve citations, and the current waters\' citations hang overhead as a ' +
+    'constellation you can lay a course by. A cat lives aboard. She owes you nothing.</p>' +
     '<p class="cred">Data: <code>content.json</code>, <code>graph.json</code>, <code>communities.json</code>, ' +
     '<code>provenance.json</code> and <code>register.json</code>, the last derived by ' +
     '<code>derive-register.js</code> from the repository\'s raw commit log. ' +
@@ -3748,12 +4091,13 @@ const CHART_ZMIN = 1, CHART_ZMAX = 9;
 
 /* the sheet's own furniture, in sheet coordinates */
 const CART = { x: 34, y: 560, w: 372, h: 218 };          // the cartouche
-const KEYB = { x: 1002, y: 576, w: 366, h: 202 };        // the legend
-const DIRS = { x: 30, y: 34, w: 300, h: 176 };           // sailing directions
+const KEYB = { x: 1002, y: 480, w: 366, h: 298 };        // the legend
+const DIRS = { x: 30, y: 34, w: 300, h: 352 };           // sailing directions + the rumors
 const ROSE = { x: 1272, y: 146, r: 62 };                 // the compass rose
 const SCAL = { x: 500, y: 740, w: 336, h: 54 };
-const KEY_ROW_Y = 108, KEY_ROW_H = 16;   // the legend's rows, pinned so ink and letter agree          // the scale bar
-const FURN = [CART, KEYB, DIRS, SCAL,
+const STGL = { x: 500, y: 656, w: 336, h: 74 };          // the storm-glass (stage 2)
+const KEY_ROW_Y = 96, KEY_ROW_H = 16;   // the legend's rows, pinned so ink and letter agree          // the scale bar
+const FURN = [CART, KEYB, DIRS, SCAL, STGL,
   { x: ROSE.x - ROSE.r - 30, y: ROSE.y - ROSE.r - 62, w: (ROSE.r + 30) * 2, h: ROSE.r * 2 + 92 }];
 
 const INK = 'rgba(38,28,17,';
@@ -4032,12 +4376,24 @@ function buildChartGeo() {
   const t0 = performance.now();
   chartFit();
   const P = (x, y) => [chart.ox + x * chart.k, chart.oy + y * chart.k];
-  const geo = { lands: [], rings: [], places: [], beasts: [], rocks: [], lanes: [], t: 0 };
+  const geo = { lands: [], rings: [], places: [], beasts: [], rocks: [], lanes: [],
+    borders: null, conts: [], decor: [], t: 0 };
 
-  /* --- who is land and who is monster --- */
-  const drowned = new Set(world.uncited.map(i => i.slug));
-  const places = [], beastIsles = [];
-  for (const I of world.islands) (drowned.has(I.slug) ? beastIsles : places).push(I);
+  /* --- the three fiercest of the fifty (owner order): the two of greatest
+     bulk, and the one with the most arms. Everything else the deep once held
+     is now told on the ground itself: dark shores and shoal crosses. --- */
+  const un = world.uncited.slice();
+  const byWords = un.slice().sort((a, b) => b.words - a.words);
+  const byOut = un.slice().sort((a, b) => b.outbound - a.outbound);
+  const fierce = [byWords[0]];
+  if (byOut[0] && fierce.indexOf(byOut[0]) < 0) fierce.push(byOut[0]);
+  for (const I of byWords) { if (fierce.length >= 3) break; if (fierce.indexOf(I) < 0) fierce.push(I); }
+  fierce[0]._beastKind = 'cete';                       // her bulk earned the water
+  if (fierce[1]) fierce[1]._beastKind = 'kraken';      // her arms did
+  if (fierce[2]) fierce[2]._beastKind = 'serpent';     // the next-heaviest coils
+  const beastSet = new Set(fierce.map(i => i.slug));
+  const places = [], beastIsles = fierce;
+  for (const I of world.islands) if (!beastSet.has(I.slug)) places.push(I);
 
   /* --- how untended is untended: the corpus's own last-touched dates --- */
   const days = s => { const d = Date.parse(s + 'T00:00:00Z'); return isNaN(d) ? 0 : d / 86400000; };
@@ -4048,54 +4404,64 @@ function buildChartGeo() {
   const inb = world.islands.map(i => i.inbound).sort((a, b) => a - b);
   const INB_FORT = Math.max(6, inb[Math.floor(inb.length * 0.90)]);
 
-  /* --- the character of each coast, from the community it belongs to --- */
+  /* --- the character of each coast, from the province that keeps it --- */
   const minSepPx = 0.95 / world.nmPerUnit * chart.k;
-  const A27 = world.archipelagos.map(A => {
-    const p = P(A.x, A.y);
-    const rnd = rngFor('coast:' + A.i + ':' + A.hub);
+  const contPx = {};
+  for (const key of ['cms', 'cloud']) {
+    const K = world.continents[key];
+    const p = P(K.x, K.y);
+    contPx[key] = { x: p[0], y: p[1], r: K.r * chart.k, n: K.n, provinces: K.provinces };
+  }
+  const PROV = world.provinces.map((Pv, pi) => {
+    const p = P(Pv.x, Pv.y);
+    const rnd = rngFor('coast:' + pi + ':' + Pv.hub);
+    const K = contPx[Pv.product];
+    let ox = p[0] - K.x, oy = p[1] - K.y;
+    const om = Math.hypot(ox, oy);
+    if (om < 1e-6) { ox = 0; oy = -1; } else { ox /= om; oy /= om; }
     return {
-      i: A.i, x: p[0], y: p[1], name: A.name, size: A.size, purity: A.purity,
-      hub: A.hub, members: A.members,
-      rpx: A.r * chart.k,
-      /* a community of one mind keeps a smooth shore; a mixed one a ragged */
-      rug: 0.42 + 1.45 * (1 - A.purity),
-      m1: 3 + (A.size % 5), ph1: rnd() * TAU,
-      m2: 7 + (A.size % 6), ph2: rnd() * TAU,
-      capes: [], rnd
+      i: pi, comm: Pv.comm, product: Pv.product, x: p[0], y: p[1],
+      /* the name is the taxonomy's own, never a community's (lab law) */
+      name: Pv.name || Pv.section,
+      size: Pv.size, purity: Pv.purity, hub: Pv.hub, members: Pv.members,
+      primary: Pv.primary,
+      rpx: (Pv.rmax || Pv.r) * chart.k,
+      centDist: om,
+      outTh: Math.atan2(oy, ox),
+      /* a section of one mind keeps a smooth shore; a mixed one a ragged */
+      rug: 0.42 + 1.45 * (1 - Pv.purity),
+      m1: 3 + (Pv.size % 5), ph1: rnd() * TAU,
+      m2: 7 + (Pv.size % 6), ph2: rnd() * TAU,
+      coastal: false, extW: 0, rnd
     };
   });
-  /* the capes reach out along the strongest citation lanes leaving the land */
-  const byComm = new Map();
+  /* who holds open coast: a province is coastal when no sister province of
+     her own continent stands beyond her on her own bearing */
+  for (const A of PROV) {
+    let outer = true;
+    for (const B of PROV) {
+      if (B === A || B.product !== A.product) continue;
+      const th = Math.atan2(B.y - contPx[A.product].y, B.x - contPx[A.product].x);
+      if (Math.abs(angWrap(th - A.outTh)) < 0.62 && B.centDist > A.centDist + B.rpx * 0.5) { outer = false; break; }
+    }
+    A.coastal = outer;
+  }
+  /* the weight of the world that pulls at each province: her external lanes */
   for (const L of world.lanes) {
     if (!L.w) continue;
-    for (const [a, b] of [[L.i, L.j], [L.j, L.i]]) {
-      if (a == null || b == null) continue;
-      let l = byComm.get(a); if (!l) byComm.set(a, l = []); l.push({ to: b, w: L.w });
-    }
-  }
-  for (const A of A27) {
-    const ls = (byComm.get(A.i) || []).sort((a, b) => b.w - a.w).slice(0, 3);
-    ls.forEach((L, n) => {
-      const B = A27[L.to]; if (!B) return;
-      const th = Math.atan2(B.y - A.y, B.x - A.x);
-      A.capes.push({ th, w: L.w, spit: n === 2 });
-    });
+    for (const A of PROV) if (A.primary && (A.comm === L.i || A.comm === L.j)) A.extW += L.total;
   }
 
   /* ============ the land field ============ */
   const CELL = 2;
   const gw = Math.floor(CHART_W / CELL) + 1, gh = Math.floor(CHART_H / CELL) + 1;
-  const F = new Float32Array(gw * gh);
+  const Fld = new Float32Array(gw * gh);
   const OWN = new Int16Array(gw * gh); OWN.fill(-1);
   const BEST = new Float32Array(gw * gh);
   const BLOB = minSepPx * 2.46;
   const AMP = 1.95;
-  /* a community of three or four does not make a continent: her ground is
-     drawn tighter, so her pages stand off each other as a little archipelago,
-     while a community of fifty makes one long shore */
-  const groundOf = n => n >= 12 ? 1 : n >= 8 ? 0.93 : n >= 5 ? 0.82 : 0.68;
 
-  function splat(px, py, rad, amp, comm) {
+  function splat(px, py, rad, amp, prov) {
     const i0 = Math.max(0, Math.floor((px - rad) / CELL)), i1 = Math.min(gw - 1, Math.ceil((px + rad) / CELL));
     const j0 = Math.max(0, Math.floor((py - rad) / CELL)), j1 = Math.min(gh - 1, Math.ceil((py + rad) / CELL));
     const inv = 1 / (rad * rad);
@@ -4107,8 +4473,8 @@ function buildChartGeo() {
         if (d2 >= 1) continue;
         const u = 1 - d2, c = amp * u * u;
         const k = row + i;
-        F[k] += c;
-        if (comm >= 0 && c > BEST[k]) { BEST[k] = c; OWN[k] = comm; }
+        Fld[k] += c;
+        if (prov >= 0 && c > BEST[k]) { BEST[k] = c; OWN[k] = prov; }
       }
     }
   }
@@ -4116,44 +4482,107 @@ function buildChartGeo() {
   for (const I of places) {
     const p = P(I.pos.x, I.pos.y);
     I.cx = p[0]; I.cy = p[1];
-    /* a page's ground is its word count: the Document Service island is 1.00 */
-    const rad = BLOB * (0.78 + 0.62 * (I.mag - 0.44) / 1.41) *
-      (I.comm < 0 ? 0.52 : groundOf(world.archipelagos[I.comm].size));
+    /* a page's ground is its word count: the Document Service island is 1.00.
+       On a continent every province is full ground; only the pages the data
+       isolates keep the lean footing of an offshore isle. */
+    const rad = BLOB * (0.78 + 0.62 * (I.mag - 0.44) / 1.41) * (I.prov < 0 ? 0.52 : 0.98);
     I.landRad = rad;
-    splat(p[0], p[1], rad, AMP, I.comm >= 0 ? I.comm : -1);
+    splat(p[0], p[1], rad, AMP, I.prov >= 0 ? I.prov : -1);
   }
+  /* the three beasts keep their true anchorage in mind, for the hand and the tooltip */
+  for (const I of beastIsles) { const p = P(I.pos.x, I.pos.y); I.cx = null; I.cy = null; I.truePx = p; }
 
-  /* capes, spits and bays: chains of blobs laid on the community's own bearings */
-  for (const A of A27) {
-    if (A.size < 5) continue;
-    const R = Math.max(A.rpx, minSepPx * 1.2);
-    const gr = groundOf(A.size);
-    for (const C of A.capes) {
-      const reach = C.spit ? R * 0.95 + 34 : R * 0.40 + 26;
-      const n = C.spit ? 6 : 4;
-      for (let s = 1; s <= n; s++) {
-        const t = s / n;
-        const d = R * 0.80 + reach * t;
-        const w = (C.spit ? BLOB * 0.44 * (1.05 - t * 0.62) : BLOB * (0.86 - t * 0.46)) * gr;
-        splat(A.x + Math.cos(C.th) * d, A.y + Math.sin(C.th) * d, w, AMP * 0.94, A.i);
+  /* ============ the knit: one continent is ONE ground ============
+     Provinces are stitched along the citation graph itself: a spanning tree
+     of the strongest ties gets an isthmus of ground per edge, wide where the
+     tie is heavy, a bare neck where the graph thins. */
+  const bridges = [];
+  for (const key of ['cms', 'cloud']) {
+    const list = PROV.filter(A => A.product === key);
+    if (list.length < 2) continue;
+    const inTree = new Set([list[0].i]);
+    const affOf = (A, B) => {
+      const L2 = world.lanes.find(L => (L.i === A.comm && L.j === B.comm) || (L.i === B.comm && L.j === A.comm));
+      return L2 ? L2.total : 0;
+    };
+    while (inTree.size < list.length) {
+      let best = null, bc = 1e18;
+      for (const A of list) {
+        if (!inTree.has(A.i)) continue;
+        for (const B of list) {
+          if (inTree.has(B.i)) continue;
+          const aff = affOf(A, B);
+          const cost = Math.hypot(A.x - B.x, A.y - B.y) / (1 + Math.log(1 + aff) * 0.9);
+          if (cost < bc) { bc = cost; best = [A, B, aff]; }
+        }
+      }
+      if (!best) break;
+      inTree.add(best[1].i);
+      bridges.push(best);
+    }
+  }
+  for (const [A, B, aff] of bridges) {
+    /* the isthmus runs between the two nearest pages of the two provinces */
+    let pa = null, pb = null, bd = 1e18;
+    for (const ma of A.members) {
+      const Ia = world.bySlug.get(ma);
+      if (!Ia || Ia.cx == null) continue;
+      for (const mb of B.members) {
+        const Ib = world.bySlug.get(mb);
+        if (!Ib || Ib.cx == null) continue;
+        const d = (Ia.cx - Ib.cx) * (Ia.cx - Ib.cx) + (Ia.cy - Ib.cy) * (Ia.cy - Ib.cy);
+        if (d < bd) { bd = d; pa = Ia; pb = Ib; }
       }
     }
-    /* bays: where the community's own members leave the ring thin, the sea gets in */
+    if (!pa || !pb) continue;
+    const d = Math.sqrt(bd);
+    const w = BLOB * (0.40 + 0.30 * Math.min(1, aff / 26));
+    const nseg = Math.max(2, Math.ceil(d / (BLOB * 0.45)));
+    for (let s = 1; s < nseg; s++) {
+      const t = s / nseg;
+      splat(pa.cx + (pb.cx - pa.cx) * t, pa.cy + (pb.cy - pa.cy) * t, w, AMP * 0.9,
+        t < 0.5 ? A.i : B.i);
+    }
+  }
+
+  /* capes and bays, on the open coast only, reaching for the sea */
+  for (const A of PROV) {
+    if (!A.coastal || A.size < 3) continue;
+    const R = Math.max(A.rpx, minSepPx * 1.2);
+    /* the cape: the province's reach into the world, on her seaward bearing */
+    const reachW = Math.min(1, A.extW / 120);
+    const nCapes = A.size >= 14 ? 2 : 1;
+    for (let cpi = 0; cpi < nCapes; cpi++) {
+      const th = A.outTh + (cpi === 0 ? (A.rnd() - 0.5) * 0.7 : (A.rnd() < 0.5 ? -1 : 1) * (0.8 + A.rnd() * 0.5));
+      const spit = reachW > 0.45 && cpi === 0;
+      const reach = spit ? R * 0.55 + 30 : R * 0.34 + 18;
+      const nseg = spit ? 6 : 4;
+      for (let s = 1; s <= nseg; s++) {
+        const t = s / nseg;
+        const d = R * 0.74 + reach * t;
+        const w = (spit ? BLOB * 0.44 * (1.05 - t * 0.62) : BLOB * (0.80 - t * 0.44));
+        splat(A.x + Math.cos(th) * d, A.y + Math.sin(th) * d, w, AMP * 0.94, A.i);
+      }
+    }
+    /* the bay: where her own members leave the seaward ring thin, the sea gets in */
     const bins = new Array(18).fill(0);
     for (const m of A.members) {
       const I = world.bySlug.get(m);
-      if (!I || drowned.has(m)) continue;
+      if (!I || I.cx == null) continue;
       const th = Math.atan2(I.cy - A.y, I.cx - A.x);
       const r = Math.hypot(I.cx - A.x, I.cy - A.y);
       bins[Math.floor((angWrap(th) + Math.PI) / TAU * 18) % 18] += r / (R + 1);
     }
-    const order = bins.map((v, n) => ({ v, n })).sort((a, b) => a.v - b.v);
-    const nBays = A.size >= 18 ? 3 : 2;
-    for (let b = 0; b < nBays; b++) {
-      const th = (order[b].n + 0.5) / 18 * TAU - Math.PI;
-      const d = R * 0.90;
-      splat(A.x + Math.cos(th) * d, A.y + Math.sin(th) * d,
-        BLOB * (1.15 + 0.55 * A.rnd()) * groundOf(A.size), -AMP * 0.70, -1);
+    let bayBin = -1, bayV = 1e9;
+    for (let b = 0; b < 18; b++) {
+      const th = b / 18 * TAU - Math.PI + TAU / 36;
+      if (Math.abs(angWrap(th - A.outTh)) > 1.35) continue;
+      if (bins[b] < bayV) { bayV = bins[b]; bayBin = b; }
+    }
+    if (bayBin >= 0 && A.size >= 6) {
+      const th = (bayBin + 0.5) / 18 * TAU - Math.PI;
+      splat(A.x + Math.cos(th) * R * 0.94, A.y + Math.sin(th) * R * 0.94,
+        BLOB * (1.0 + 0.45 * A.rnd()), -AMP * 0.62, -1);
     }
   }
 
@@ -4162,24 +4591,24 @@ function buildChartGeo() {
   for (let j = 0; j < gh; j++) {
     const row = j * gw, y = j * CELL;
     for (let i = 0; i < gw; i++) {
-      const k = row + i, f = F[k];
+      const k = row + i, f = Fld[k];
       if (f < 0.22 || f > 2.3) continue;
       const w = Math.min(1, (f - 0.22) / 0.35) * Math.max(0, 1 - Math.max(0, f - 1.05) / 1.1);
       if (w <= 0.01) continue;
       const x = i * CELL;
       const c = OWN[k];
-      const A = c >= 0 ? A27[c] : null;
+      const A = c >= 0 ? PROV[c] : null;
       let d = (n1(x, y) * 0.60 + n2(x, y) * 0.44 + n3(x, y) * 0.34) * (A ? A.rug : 0.7);
       if (A) {
         const th = Math.atan2(y - A.y, x - A.x);
         d += 0.21 * Math.sin(A.m1 * th + A.ph1) + 0.13 * Math.sin(A.m2 * th + A.ph2);
       }
-      F[k] = f + d * w;
+      Fld[k] = f + d * w;
     }
   }
 
   /* ============ the coastlines ============ */
-  const raw = marchLand(F, gw, gh, 1.0, CELL);
+  const raw = marchLand(Fld, gw, gh, 1.0, CELL);
   const rings = [];
   for (let r of raw) {
     if (r.length < 10) continue;
@@ -4199,7 +4628,20 @@ function buildChartGeo() {
       const o = 0.62 * Math.sin(i * 0.44 + ph) + 0.30 * Math.sin(i * 1.31 + ph * 2);
       p[i] = [q[0] + (-ty / m) * o, q[1] + (tx / m) * o];
     }
-    rings.push({ pts: p, area: a, bb: polyBBox(p), places: [], comm: -1 });
+    rings.push({ pts: p, area: a, bb: polyBBox(p), places: [], dark: null });
+  }
+  /* ponds: a hole inside a land ring, holding no place and smaller than a
+     roadstead, is the marching artifact of two provinces almost touching -
+     the ground closes over it. True inland seas (large holes) remain. */
+  for (let i = rings.length - 1; i >= 0; i--) {
+    const R = rings[i];
+    if (R.area >= 2600) continue;
+    let inside = false;
+    for (const Q of rings) {
+      if (Q === R || Q.area <= R.area) continue;
+      if (pointInPoly(R.pts[0][0], R.pts[0][1], Q.pts, Q.bb)) { inside = true; break; }
+    }
+    if (inside) rings.splice(i, 1);
   }
   geo.rings = rings;
 
@@ -4213,14 +4655,13 @@ function buildChartGeo() {
     if (host) { host.places.push(I); I.ring = host; }
     else { geo.rocks.push(I); }
   }
-  /* Naming. A land is not always one community and a community is not always
-     one land: two neighbouring groups may share a coast, and a loose group may
-     lie in three pieces. So the sheet letters GROUPS - a community's places on
-     one ring - which is what a chart actually names. The largest group of a
-     community carries her name; her lesser grounds are lettered from their own
-     principal page, Isle or Cay or Rock by their size; and a community broken
-     over three grounds or more gets her name set wide across the whole water,
-     as an archipelago. */
+  /* Naming. A land is not always one province and a province is not always
+     one land: on a continent many provinces share the one coast, and a loose
+     province may leave a crumb offshore. So the sheet letters GROUPS - a
+     province's places on one ring. The largest group of a province carries
+     her name - the official section of the docs taxonomy, and nothing else
+     (lab law); her offshore crumbs are lettered from their own
+     principal page, Isle or Cay or Rock by their size. */
   for (const R of rings) {
     if (!R.places.length) { R.kind = 'rock'; continue; }
     R.kind = 'land';
@@ -4232,23 +4673,25 @@ function buildChartGeo() {
     if (!R.places.length) continue;
     const by = new Map();
     for (const I of R.places) {
-      const c = I.comm >= 0 ? I.comm : (I.nearComm != null ? I.nearComm : -1);
+      const c = I.prov >= 0 ? I.prov : (I.nearProv != null ? I.nearProv : -1);
       let l = by.get(c); if (!l) by.set(c, l = []); l.push(I);
     }
     for (const [c, list] of by) {
       if (c < 0) continue;
       let sx = 0, sy = 0;
       for (const I of list) { sx += I.cx; sy += I.cy; }
-      groups.push({ comm: c, ring: R, places: list, n: list.length, x: sx / list.length, y: sy / list.length });
+      groups.push({ prov: c, comm: PROV[c].comm, ring: R, places: list, n: list.length, x: sx / list.length, y: sy / list.length });
     }
   }
-  const byComm2 = new Map();
-  for (const G of groups) { let l = byComm2.get(G.comm); if (!l) byComm2.set(G.comm, l = []); l.push(G); }
+  const byProv2 = new Map();
+  for (const G of groups) { let l = byProv2.get(G.prov); if (!l) byProv2.set(G.prov, l = []); l.push(G); }
   geo.regions = [];
-  for (const [c, list] of byComm2) {
+  for (const [c, list] of byProv2) {
     list.sort((a2, b2) => b2.n - a2.n);
-    list[0].name = A27[c].name;
-    list[0].primary = true;
+    if (list[0].n >= 2 || PROV[c].primary) {
+      list[0].name = PROV[c].name;
+      list[0].primary = !!PROV[c].primary;
+    }
     for (let n = 1; n < list.length; n++) {
       const G = list[n];
       if (G.n < 2) continue;                       // one page alone keeps only its own name
@@ -4259,17 +4702,10 @@ function buildChartGeo() {
       G.suffix = G.ring.area < 420 ? 'Rock' : (G.ring.area < 1800 ? 'Cay' : 'Isle');
     }
     for (const G of list) if (G.name) geo.regions.push(G);
-    const grounds = list.filter(G => G.n >= 2).length;
-    if (grounds >= 3) {
-      let sx = 0, sy = 0, sw = 0;
-      for (const G of list) { sx += G.x * G.n; sy += G.y * G.n; sw += G.n; }
-      geo.lands.push({ arch: true, comm: c, name: A27[c].name, x: sx / sw, y: sy / sw, n: grounds });
-      list[0].name = list[0].chief ? list[0].chief.sidebarLabel : list[0].name;
-    }
   }
-  /* the hub of a community's chief ground is the place her name is anchored to */
+  /* the hub of a province's chief ground is the place her name is anchored to */
   for (const G of geo.regions) {
-    G.hub = G.places.find(I => I.slug === A27[G.comm].hub) || null;
+    G.hub = G.places.find(I => I.slug === PROV[G.prov].hub) || null;
     G.chief = G.chief || G.places.slice().sort((p, q) =>
       (q.inbound * 4 + q.words / 300) - (p.inbound * 4 + p.words / 300))[0];
     const bb = polyBBox(G.places.map(I => [I.cx, I.cy]));
@@ -4277,18 +4713,75 @@ function buildChartGeo() {
     G.wide = Math.max(26, bb.maxx - bb.minx);
   }
 
-  geo.A27 = A27;
+  geo.PROV = PROV;
   geo.groups = groups;
+
+  /* the two continents, lettered wide across their own ground */
+  for (const key of ['cms', 'cloud']) {
+    let sx = 0, sy = 0, sn = 0;
+    for (const I of places) {
+      if (I.product !== key || I.prov < 0) continue;
+      sx += I.cx; sy += I.cy; sn++;
+    }
+    if (!sn) continue;
+    geo.conts.push({
+      key, name: key === 'cms' ? 'THE CMS MAIN' : 'THE CLOUD MAIN',
+      sub: sn + ' charted places',
+      x: sx / sn, y: sy / sn, n: sn
+    });
+  }
+
+  /* ============ the borders: province against province, in hachure ============
+     Where two provinces' ground meets, the sheet takes a period border: a
+     dotted line with cross-ticks, extracted from the ownership field itself. */
+  const bpts = [];
+  for (let j = 1; j < gh - 1; j++) {
+    const row = j * gw;
+    for (let i = 1; i < gw - 1; i++) {
+      const k = row + i;
+      if (Fld[k] < 1.0) continue;
+      const o = OWN[k];
+      if (o < 0) continue;
+      /* the point sits on a border when a land neighbour answers to another
+         province; the tick runs toward that neighbour */
+      let nx = 0, ny = 0, hit = 0;
+      const kR = k + 1, kD = k + gw;
+      if (Fld[kR] >= 1.0 && OWN[kR] >= 0 && OWN[kR] !== o) { nx += 1; hit = 1; }
+      if (Fld[kD] >= 1.0 && OWN[kD] >= 0 && OWN[kD] !== o) { ny += 1; hit = 1; }
+      if (!hit) continue;
+      bpts.push(i * CELL, j * CELL, nx, ny);
+    }
+  }
+  geo.borders = new Float32Array(bpts);
+
+  /* ============ the dark shores: the coast the fifty keep ============ */
+  const darkP = places.filter(I => I.inbound === 0 && I.ring);
+  for (const R of rings) {
+    const mine = darkP.filter(I => I.ring === R);
+    if (!mine.length) continue;
+    const dark = new Uint8Array(R.pts.length);
+    let any = false;
+    for (let i = 0; i < R.pts.length; i++) {
+      const p = R.pts[i];
+      for (const I of mine) {
+        const rr = I.landRad * 1.18;
+        const dx = p[0] - I.cx, dy = p[1] - I.cy;
+        if (dx * dx + dy * dy < rr * rr) { dark[i] = 1; any = true; break; }
+      }
+    }
+    if (any) R.dark = dark;
+  }
 
   /* ============ the places: what each page is, on the ground ============ */
   for (const I of places) {
     const rnd = rngFor('place:' + I.slug);
-    const A = I.comm >= 0 ? A27[I.comm] : null;
+    const A = I.prov >= 0 ? PROV[I.prov] : null;
     const isHub = A && A.hub === I.slug;
     const staleDays = newest - days(I.last);
     const sz = 3.1 + 4.4 * (I.mag - 0.44) / 1.41;
     let kind;
-    if (isHub) kind = 'anchorage';
+    if (I.inbound === 0) kind = 'shoal';
+    else if (isHub) kind = 'anchorage';
     else if (I.inbound >= INB_FORT) kind = 'fort';
     else if (I.authors.length >= 4) kind = 'town';
     else if (I.code >= 14) kind = 'quarry';
@@ -4299,7 +4792,7 @@ function buildChartGeo() {
       kind, sz,
       hill: I.words >= 1550 ? clamp(I.nH2 || 1, 1, 3) : 0,
       hillH: 5.0 + 7.6 * Math.min(1, (I.words - 1550) / 4200),
-      marsh: staleDays >= STALE_CUT && I.words < 900,
+      marsh: staleDays >= STALE_CUT && I.words < 900 && kind !== 'shoal',
       houses: clamp(I.authors.length - 2, 2, 5),
       spin: rnd() * TAU,
       score: I.inbound * 4 + I.words / 320 + (isHub ? 60 : 0) + (kind === 'fort' ? 14 : 0)
@@ -4307,23 +4800,96 @@ function buildChartGeo() {
   }
 
   /* ============ the deep, and what lives in it ============ */
-  layoutBeasts(geo, beastIsles, F, gw, gh, CELL);
+  layoutBeasts(geo, beastIsles, Fld, gw, gh, CELL);
 
-  /* ============ the sailing routes: the citation flow between lands ============ */
-  const lanes = world.lanes.filter(L => L.w > 0).sort((a, b) => b.w - a.w).slice(0, 20);
-  for (const L of lanes) {
-    const A = A27[L.i], B = A27[L.j];
-    if (!A || !B) continue;
+  /* ============ the sailing routes: the citation flow between lands ============
+     the lanes are the provinces' own citations now - counted straight off the
+     raw edges when the provinces were laid (world.provLanes) */
+  const pl = (world.provLanes || []).map(L => ({
+    i: L.i, j: L.j, total: L.total, net: L.ij - L.ji,
+    w: Math.abs(L.ij - L.ji) + 0.35 * L.total
+  }));
+  const sameSea = pl.filter(L =>
+    PROV[L.i] && PROV[L.j] && PROV[L.i].product === PROV[L.j].product && L.w > 0)
+    .sort((a, b) => b.w - a.w).slice(0, 14);
+  for (const L of sameSea) {
+    const A = PROV[L.i], B = PROV[L.j];
     geo.lanes.push({ ax: A.x, ay: A.y, bx: B.x, by: B.y, w: L.w, net: L.net });
   }
+  /* the straits: the sections that cite across the open water keep a packet
+     running between the mains - counted from the cross-product edges */
+  let packet = null;
+  const crossSea = pl.filter(L =>
+    PROV[L.i] && PROV[L.j] && PROV[L.i].product !== PROV[L.j].product)
+    .sort((a, b) => b.total - a.total).slice(0, 3);
+  for (const L of crossSea) {
+    const A = PROV[L.i], B = PROV[L.j];
+    const lane = { ax: A.x, ay: A.y, bx: B.x, by: B.y, w: L.total * 2.2, net: 0, strait: true };
+    geo.lanes.push(lane);
+    if (!packet || L.total > packet.w) packet = { lane, w: L.total };
+  }
+
+  /* ============ three easter eggs, placed with restraint ============
+     - a tiny packet ship on the strongest strait between the mains
+     - a spout on the horizon, at the deepest surveyed water
+     - one serpent tail between the waves, in the second-deepest water */
+  const deep = geo._deepCands || [];
+  const fieldAt2 = (x, y) => {
+    const i = Math.min(gw - 1, Math.max(0, Math.round(x / CELL)));
+    const j = Math.min(gh - 1, Math.max(0, Math.round(y / CELL)));
+    return Fld[j * gw + i];
+  };
+  if (packet) {
+    const L = packet.lane;
+    let mx = (L.ax + L.bx) / 2, my = (L.ay + L.by) / 2;
+    /* she rides the lane where the lane rides open water */
+    for (let t = 0.5, s2 = 0; s2 < 9 && fieldAt2(mx, my) > 0.45; s2++) {
+      t += (s2 % 2 ? 1 : -1) * 0.07 * (s2 + 1);
+      mx = L.ax + (L.bx - L.ax) * t; my = L.ay + (L.by - L.ay) * t;
+    }
+    geo.decor.push({ kind: 'ship', x: mx, y: my - 4 });
+  }
+  /* ============ the rumors leave their marks (owner order) ============
+     where a sailor would see them, unlabeled, just drawn: the strange isle
+     at the chart edge, a stain of darker water where the sea turns to ink,
+     a tiny flotsam mark where the bottle rides. Every position is the
+     crossing's own; the isle alone is clamped to the sheet margin, for the
+     city stands past the last surveyed water. */
+  if (eggs.ready) {
+    if (eggs.city) {
+      const c2 = P(eggs.city.x, eggs.city.y);
+      geo.decor.push({ kind: 'eggisle',
+        x: clamp(c2[0], 34, CHART_W - 34), y: clamp(c2[1], 34, CHART_H - 34) });
+    }
+    if (eggs.ink) {
+      const c2 = P(eggs.ink.x, eggs.ink.y);
+      geo.decor.push({ kind: 'inkstain', x: c2[0], y: c2[1],
+        r: clamp((eggs.ink.rNm || 1.2) / world.nmPerUnit * chart.k, 22, 54) });
+    }
+    if (eggs.bottle) {
+      const c2 = P(eggs.bottle.x, eggs.bottle.y);
+      geo.decor.push({ kind: 'flotsam', x: c2[0], y: c2[1] });
+    }
+  }
+  const farFrom = (x, y, list, d) => list.every(q => Math.hypot(q.x - x, q.y - y) > d);
+  const avoid = geo.beasts.map(B => ({ x: B.x, y: B.y })).concat(geo.decor);
+  let spout = null, tail = null;
+  for (const c2 of deep) {
+    if (!spout && farFrom(c2.x, c2.y, avoid, 150)) { spout = c2; avoid.push(c2); continue; }
+    if (spout && !tail && farFrom(c2.x, c2.y, avoid, 160)) { tail = c2; break; }
+  }
+  if (spout) geo.decor.push({ kind: 'spout', x: spout.x, y: spout.y });
+  if (tail) geo.decor.push({ kind: 'tail', x: tail.x, y: tail.y });
 
   /* what the pointer can take hold of: every one of the 290 */
   chart.marks.length = 0;
   for (const I of geo.places) chart.marks.push({ isle: I, x: I.cx, y: I.cy, r: Math.max(6.5, I.mark.sz * 1.9) });
-  for (const B of geo.beasts) chart.marks.push({ isle: B.isle, x: B.x, y: B.y, r: B.L * 0.36 });
+  for (const B of geo.beasts) chart.marks.push({ isle: B.isle, x: B.x, y: B.y, r: B.L * 0.36, beast: B });
 
-  geo.field = F; geo.gw = gw; geo.gh = gh; geo.cell = CELL;
-  geo.stats = { newest, STALE_CUT, INB_FORT, nPlace: places.length, nBeast: beastIsles.length };
+  geo.field = Fld; geo.gw = gw; geo.gh = gh; geo.cell = CELL;
+  geo.stats = { newest, STALE_CUT, INB_FORT, nPlace: places.length, nBeast: beastIsles.length,
+    nBorderPts: geo.borders.length / 4, bridges: bridges.length,
+    landRings: rings.filter(r => r.places.length).length, rocks: geo.rocks.length };
   geo.t = performance.now() - t0;
   chart.geo = geo;
   return geo;
@@ -4355,37 +4921,14 @@ const BEAST_KINDS = ['cete', 'kraken', 'serpent', 'hornfish'];
 
 function layoutBeasts(geo, isles, F, gw, gh, CELL) {
   if (!isles.length) return;
-  const metric = [
-    I => I.words,
-    I => I.outbound,
-    I => I.commits,
-    I => I.code + I.nH2 * 1.7
-  ];
-  const pct = metric.map(m => {
-    const v = isles.map(m).sort((a, b) => a - b);
-    return x => {
-      let lo = 0, hi = v.length;
-      while (lo < hi) { const mid = (lo + hi) >> 1; if (v[mid] < x) lo = mid + 1; else hi = mid; }
-      return lo / Math.max(1, v.length - 1);
-    };
-  });
   const wmin = Math.min(...isles.map(I => I.words)), wmax = Math.max(...isles.map(I => I.words));
-
   const list = isles.map(I => {
     const rnd = rngFor('beast:' + I.slug);
-    let bi = 0, bv = -1;
-    for (let m = 0; m < 4; m++) {
-      const v = pct[m](metric[m](I)) + rnd() * 0.07;
-      if (v > bv) { bv = v; bi = m; }
-    }
-    /* Her bulk is her word count, and the corpus is steeply skewed: one page of
-       four thousand words, a dozen of a thousand, thirty of three hundred. The
-       sea gets the same shape - a few great beasts and a scatter of small fry -
-       rather than fifty of a size. */
     const t = (I.words - wmin) / Math.max(1, wmax - wmin);
-    const L = 33 + 106 * Math.pow(t, 0.70);
+    /* three, and only three: each takes grand water, cut large */
+    const L = 96 + 58 * Math.pow(t, 0.70);
     return {
-      isle: I, kind: BEAST_KINDS[bi], L, rnd,
+      isle: I, kind: I._beastKind || 'serpent', L, rnd,
       coils: clamp(Math.round(I.commits * 0.8) + 2, 3, 9),
       arms: clamp(I.outbound + 4, 5, 11),
       eyes: clamp(1 + I.night, 1, 4),
@@ -4394,15 +4937,10 @@ function layoutBeasts(geo, isles, F, gw, gh, CELL) {
       fins: clamp(I.authors.length, 1, 4),
       hands: I.authors.length,
       name: shortName(I),
-      /* her proportion is her own: a page of many sections runs long and low,
-         a page of few runs deep and short */
       asp: clamp(1.22 - 0.055 * (I.nH2 || 1) + (rnd() - 0.5) * 0.20, 0.78, 1.28),
-      /* the clearance she wants, and the water she takes */
       R: 0, x: 0, y: 0, flip: 1
     };
   }).sort((a, b) => b.L - a.L);
-  /* the water each wants is her own shape: a cete's spout stands half her
-     length above her, a kraken's arms hang half a length below */
   const reach = { cete: 0.50, kraken: 0.52, serpent: 0.42, hornfish: 0.42 };
   for (const B of list) B.R = B.L * reach[B.kind] + 12;
 
@@ -4421,7 +4959,6 @@ function layoutBeasts(geo, isles, F, gw, gh, CELL) {
     if (!solid && (x < 34 || x > CHART_W - 34 || y < 30 || y > CHART_H - 30)) solid = true;
     DT[j * cw + i] = solid ? 0 : BIG;
   }
-  /* chamfer distance transform, in pixels */
   const d1 = GC, d2 = GC * 1.4142;
   for (let j = 0; j < ch; j++) for (let i = 0; i < cw; i++) {
     const k = j * cw + i; let v = DT[k];
@@ -4441,57 +4978,34 @@ function layoutBeasts(geo, isles, F, gw, gh, CELL) {
     const d = DT[j * cw + i];
     if (d >= 21 && d < BIG) cand.push({ x: i * GC + GC / 2, y: j * GC + GC / 2, d });
   }
+  /* the deepest water, kept for the sparse marks that live out there */
+  geo._deepCands = cand.slice().sort((a, b) => b.d - a.d).slice(0, 260);
 
   const placed = [];
   const CX = CHART_W / 2, CY = CHART_H / 2;
-  /* Fifty beasts all steering for the same quarter would make a menagerie, not
-     a sea. They keep the order of the shores they belong to - so a land's own
-     castaways stay together - but that order is opened out around the whole
-     compass, and they take the outer water and the inner water by turns. */
-  const circle = list.map(B => {
-    const p = chartProject(B.isle.pos.x, B.isle.pos.y);
-    return { B, th: Math.atan2(p[1] - CY, p[0] - CX) };
-  }).sort((a, b) => a.th - b.th);
-  /* even in angle is not even on a sheet wider than it is tall: the fifty are
-     spread by the length of the ellipse they ride, so the flanks do not crowd */
-  const RX = 690, RY = 408, NS = 720;
-  const arc = [0];
-  for (let i = 1; i <= NS; i++) {
-    const a0 = (i - 1) / NS * TAU - Math.PI, a1 = i / NS * TAU - Math.PI;
-    arc.push(arc[i - 1] + Math.hypot(RX * (Math.cos(a1) - Math.cos(a0)), RY * (Math.sin(a1) - Math.sin(a0))));
-  }
-  const total = arc[NS];
-  const angAt = t => {
-    let lo = 0, hi = NS;
-    while (lo < hi) { const m = (lo + hi) >> 1; if (arc[m] < t) lo = m + 1; else hi = m; }
-    return lo / NS * TAU - Math.PI;
-  };
-  /* and a sea is not a frieze: each takes her station a little off it, so the
-     deep reads as scattered soundings rather than a row of cuts */
-  circle.forEach((o, r) => {
-    const jr = rngFor('station:' + o.B.isle.slug);
-    o.B.wantTh = angAt(((r + 0.5) + (jr() - 0.5) * 0.85) / circle.length * total);
-    o.B.wantR = [1.02, 0.72, 0.90, 0.58, 1.02, 0.80][r % 6] + (jr() - 0.5) * 0.14;
-  });
+  /* each beast wants the water off her own true anchorage: the reader who
+     finds her looks toward the shore she haunts */
   for (const B of list) {
-    const rr = B.wantR;
-    const want = [CX + Math.cos(B.wantTh) * RX * rr, CY + Math.sin(B.wantTh) * RY * rr];
+    const p = B.isle.truePx || chartProject(B.isle.pos.x, B.isle.pos.y);
+    B.wantTh = Math.atan2(p[1] - CY, p[0] - CX);
+  }
+  for (const B of list) {
+    const want = [CX + Math.cos(B.wantTh) * 640, CY + Math.sin(B.wantTh) * 380];
     let best = null, bc = 1e18;
     for (const c of cand) {
-      if (c.d < Math.max(27, B.R * 0.98)) continue;
+      if (c.d < Math.max(27, B.R * 0.92)) continue;
       let ok = true;
       for (const q of placed) {
-        const need = (q.R + B.R) * 1.02;
+        const need = (q.R + B.R) * 1.05;
         if ((q.x - c.x) * (q.x - c.x) + (q.y - c.y) * (q.y - c.y) < need * need) { ok = false; break; }
       }
       if (!ok) continue;
       const dx = c.x - want[0], dy = c.y - want[1];
-      const cost = Math.hypot(dx, dy) - Math.min(c.d, B.R * 1.6) * 1.9;
+      const cost = Math.hypot(dx, dy) - Math.min(c.d, B.R * 1.6) * 2.1;
       if (cost < bc) { bc = cost; best = c; }
     }
     if (!best) {
-      /* the last few take whatever water is left, at a smaller size */
-      B.L *= 0.72; B.R = B.L * reach[B.kind] + 9;
+      B.L *= 0.78; B.R = B.L * reach[B.kind] + 9;
       for (const c of cand) {
         if (c.d < Math.max(22, B.R * 0.78)) continue;
         let ok = true;
@@ -4506,10 +5020,8 @@ function layoutBeasts(geo, isles, F, gw, gh, CELL) {
     }
     if (!best) { B.dropped = true; continue; }
     B.x = best.x; B.y = best.y;
-    /* most face the open sea; a quarter of them turn the other way, and none of
-       them swims quite level, so no two read as the same block cut twice */
     B.flip = (best.x < CX ? 1 : -1) * (B.rnd() < 0.26 ? -1 : 1);
-    B.rot = (B.rnd() - 0.5) * 0.46;
+    B.rot = (B.rnd() - 0.5) * 0.34;
     placed.push(B);
     geo.beasts.push(B);
   }
@@ -5142,6 +5654,118 @@ function drawMarsh(g, x, y, sz) {
   }
   g.stroke();
 }
+/* three sparse marks in the open water: a packet on the strait, a spout on
+   the horizon of the deepest water, one tail between the waves. Small, inked
+   in the register of the sheet, never repeated. */
+function drawChartDecor(g, D) {
+  g.save();
+  g.translate(D.x, D.y);
+  g.lineJoin = 'round'; g.lineCap = 'round';
+  if (D.kind === 'ship') {
+    g.strokeStyle = INK + '0.80)'; g.fillStyle = 'rgba(240,231,208,0.85)'; g.lineWidth = 0.9;
+    g.beginPath();
+    g.moveTo(-9, 2.5); g.quadraticCurveTo(0, 7.5, 9, 2.5);
+    g.lineTo(7.2, 0.4); g.lineTo(-7.2, 0.4); g.closePath();
+    g.fill(); g.stroke();
+    g.beginPath();
+    g.moveTo(-2.8, 0.4); g.lineTo(-2.8, -10.5);
+    g.moveTo(3.4, 0.4); g.lineTo(3.4, -7.6);
+    g.stroke();
+    g.fillStyle = 'rgba(244,236,217,0.92)';
+    g.beginPath(); g.moveTo(-2.2, -9.8); g.quadraticCurveTo(4.2, -7.0, 2.4, -1.6); g.lineTo(-2.2, -1.6); g.closePath();
+    g.fill(); g.stroke();
+    g.beginPath(); g.moveTo(3.9, -7.0); g.quadraticCurveTo(8.0, -4.6, 6.4, -0.8); g.lineTo(3.9, -0.8); g.closePath();
+    g.fill(); g.stroke();
+    g.strokeStyle = INK + '0.34)'; g.lineWidth = 0.55;
+    g.beginPath();
+    g.moveTo(-14, 5.2); g.quadraticCurveTo(-10, 4.0, -6, 5.2);
+    g.moveTo(8, 5.6); g.quadraticCurveTo(12, 4.4, 15, 5.6);
+    g.stroke();
+  } else if (D.kind === 'spout') {
+    g.strokeStyle = INK + '0.62)'; g.lineWidth = 0.9;
+    g.beginPath(); g.moveTo(-7.5, 3.5); g.quadraticCurveTo(0, -1.5, 7.5, 3.5); g.stroke();
+    g.lineWidth = 0.6; g.strokeStyle = INK + '0.55)';
+    g.beginPath();
+    g.moveTo(-1.5, 0.4); g.quadraticCurveTo(-3.4, -5.5, -6.0, -7.6);
+    g.moveTo(-0.6, 0.0); g.quadraticCurveTo(-0.6, -6.5, -1.4, -9.4);
+    g.moveTo(0.6, 0.2); g.quadraticCurveTo(2.4, -5.8, 5.2, -8.2);
+    g.stroke();
+    g.fillStyle = INK + '0.42)';
+    for (const [px2, py2] of [[-6.8, -9.0], [-0.8, -11.0], [6.0, -9.8]]) {
+      g.beginPath(); g.arc(px2, py2, 0.7, 0, TAU); g.fill();
+    }
+  } else if (D.kind === 'tail') {
+    g.strokeStyle = INK + '0.72)'; g.fillStyle = 'rgba(240,231,208,0.7)'; g.lineWidth = 0.85;
+    g.beginPath();
+    g.moveTo(-6.5, 3.0);
+    g.bezierCurveTo(-3.5, -4.5, 2.5, -7.5, 5.5, -3.5);
+    g.bezierCurveTo(7.2, -1.2, 6.2, 0.8, 4.6, 1.6);
+    g.bezierCurveTo(5.8, -1.4, 3.8, -4.4, 1.2, -3.0);
+    g.bezierCurveTo(-1.8, -1.4, -3.2, 1.4, -3.8, 3.2);
+    g.closePath(); g.fill(); g.stroke();
+    /* the fluke, thrown clear */
+    g.beginPath();
+    g.moveTo(4.6, 1.6);
+    g.quadraticCurveTo(8.6, 0.4, 10.4, -2.6);
+    g.quadraticCurveTo(9.2, 0.8, 10.0, 3.4);
+    g.quadraticCurveTo(7.2, 2.6, 4.6, 1.6);
+    g.closePath(); g.fill(); g.stroke();
+    g.strokeStyle = INK + '0.34)'; g.lineWidth = 0.55;
+    g.beginPath();
+    g.moveTo(-11, 4.6); g.quadraticCurveTo(-8, 3.4, -5, 4.6);
+    g.moveTo(6, 5.0); g.quadraticCurveTo(9, 3.8, 12, 5.0);
+    g.stroke();
+  } else if (D.kind === 'eggisle') {
+    /* the strange isle at the chart edge: a ragged unlabeled islet, hatched
+       the way a surveyor marks ground he has not walked */
+    const r0 = rngFor('eggisle');
+    g.strokeStyle = INK + '0.78)'; g.fillStyle = 'rgba(236,226,200,0.55)'; g.lineWidth = 0.95;
+    g.beginPath();
+    for (let i = 0; i <= 14; i++) {
+      const a = i / 14 * TAU;
+      const rr = 7.2 + Math.sin(a * 3 + 1.3) * 1.7 + (r0() - 0.5) * 1.6;
+      const px2 = Math.cos(a) * rr * 1.25, py2 = Math.sin(a) * rr * 0.85;
+      i ? g.lineTo(px2, py2) : g.moveTo(px2, py2);
+    }
+    g.closePath(); g.fill(); g.stroke();
+    g.strokeStyle = INK + '0.42)'; g.lineWidth = 0.55;
+    g.beginPath();
+    for (let i = -2; i <= 2; i++) { g.moveTo(i * 2.6 - 2.2, -3.2 + Math.abs(i)); g.lineTo(i * 2.6 + 1.4, 4.0); }
+    g.stroke();
+    /* one thin unexplained spire, the only thing a glass ever made out */
+    g.strokeStyle = INK + '0.66)'; g.lineWidth = 0.8;
+    g.beginPath(); g.moveTo(0.5, -2.6); g.lineTo(0.5, -8.6); g.stroke();
+  } else if (D.kind === 'inkstain') {
+    /* a stain of darker water: three soft washes and a fleck of gall ink */
+    const r0 = rngFor('inkstain');
+    for (const [ox, oy, f] of [[0, 0, 1], [-D.r * 0.34, D.r * 0.22, 0.62], [D.r * 0.30, -D.r * 0.26, 0.55]]) {
+      const rr = D.r * f;
+      const gr = g.createRadialGradient(ox, oy, 0, ox, oy, rr);
+      gr.addColorStop(0, INK + '0.16)');
+      gr.addColorStop(0.72, INK + '0.09)');
+      gr.addColorStop(1, INK + '0)');
+      g.fillStyle = gr; g.fillRect(ox - rr, oy - rr, rr * 2, rr * 2);
+    }
+    g.fillStyle = INK + '0.30)';
+    for (let i = 0; i < 12; i++) {
+      const a = r0() * TAU, d = Math.sqrt(r0()) * D.r * 0.66;
+      g.fillRect(Math.cos(a) * d, Math.sin(a) * d * 0.8, 0.7 + r0() * 0.9, 0.6 + r0() * 0.8);
+    }
+  } else if (D.kind === 'flotsam') {
+    /* a tiny flotsam mark: a spar awash and the glint of a bottle */
+    g.strokeStyle = INK + '0.70)'; g.lineWidth = 0.9;
+    g.beginPath(); g.moveTo(-4.6, 1.4); g.lineTo(4.2, -1.0); g.stroke();
+    g.fillStyle = INK + '0.62)';
+    g.beginPath(); g.arc(2.6, -1.8, 1.15, 0, TAU); g.fill();
+    g.strokeStyle = INK + '0.34)'; g.lineWidth = 0.55;
+    g.beginPath();
+    g.moveTo(-8.5, 3.4); g.quadraticCurveTo(-5.5, 2.4, -2.5, 3.4);
+    g.moveTo(3.0, 3.0); g.quadraticCurveTo(6.0, 2.0, 9.0, 3.0);
+    g.stroke();
+  }
+  g.restore();
+}
+
 function drawPlaceMark(g, I) {
   const M = I.mark, x = I.cx, y = I.cy, s = M.sz;
   if (M.hill) drawHill(g, x, y + s * 0.55, M.hill, M.hillH, null);
@@ -5219,6 +5843,18 @@ function drawPlaceMark(g, I) {
       g.beginPath(); g.arc(x, y, s * 0.52, 0, TAU); g.fill(); g.stroke();
       g.fillStyle = INK + '0.8)';
       g.beginPath(); g.arc(x, y, s * 0.16, 0, TAU); g.fill();
+      break;
+    }
+    case 'shoal': {
+      /* the cross of an unsounded danger, at the page's own door */
+      g.strokeStyle = INK + '0.90)'; g.lineWidth = 1.1;
+      const r2 = s * 0.66;
+      g.beginPath();
+      g.moveTo(x - r2, y - r2); g.lineTo(x + r2, y + r2);
+      g.moveTo(x + r2, y - r2); g.lineTo(x - r2, y + r2);
+      g.stroke();
+      g.strokeStyle = INK + '0.40)'; g.lineWidth = 0.5;
+      g.beginPath(); g.arc(x, y, r2 + 2.2, 0.3, Math.PI - 0.3); g.stroke();
       break;
     }
     default: {
@@ -5441,6 +6077,35 @@ function paintSheetGeo(g, geo, vp, base) {
   g.strokeStyle = INK + '0.22)'; g.lineWidth = 0.7;
   g.stroke(landPath);
   g.restore();
+  /* the dark shores: where a page no route reaches keeps the coast, the
+     burin presses harder and the shore hatch closes up */
+  for (const R of rings) {
+    if (!R.dark) continue;
+    if (R.bb.maxx < vp.x0 - 14 || R.bb.minx > vp.x1 + 14 ||
+        R.bb.maxy < vp.y0 - 14 || R.bb.miny > vp.y1 + 14) continue;
+    const p = R.pts, n = p.length, D = R.dark;
+    const sign = polyArea(p) > 0 ? -1 : 1;
+    g.strokeStyle = INK + '0.88)'; g.lineWidth = 2.2;
+    g.beginPath();
+    for (let i = 0; i < n; i++) {
+      const j2 = (i + 1) % n;
+      if (!D[i] || !D[j2]) continue;
+      g.moveTo(p[i][0], p[i][1]); g.lineTo(p[j2][0], p[j2][1]);
+    }
+    g.stroke();
+    g.strokeStyle = INK + '0.46)'; g.lineWidth = 0.55;
+    g.beginPath();
+    for (let i = 0; i < n; i += 2) {
+      if (!D[i]) continue;
+      const a = p[(i + 1) % n], b = p[(i - 1 + n) % n];
+      let tx = a[0] - b[0], ty = a[1] - b[1];
+      const m = Math.hypot(tx, ty) || 1;
+      const nx = ty / m * sign, ny = -tx / m * sign;
+      g.moveTo(p[i][0] + nx * 1.2, p[i][1] + ny * 1.2);
+      g.lineTo(p[i][0] + nx * 6.4, p[i][1] + ny * 6.4);
+    }
+    g.stroke();
+  }
 
   /* --- the interior, clipped to the ground --- */
   g.save();
@@ -5452,12 +6117,52 @@ function paintSheetGeo(g, geo, vp, base) {
     if (!inVp(x, y, 2)) continue;
     g.fillRect(x, y, 0.8, 0.8);
   }
+  /* the province borders, in hachure: a dotted line with cross-ticks, read
+     straight out of the ownership field - the graph's own frontier */
+  const BP = geo.borders;
+  if (BP && BP.length) {
+    g.fillStyle = INK + '0.38)';
+    for (let b2 = 0; b2 < BP.length; b2 += 4) {
+      const x = BP[b2], y = BP[b2 + 1];
+      if (!inVp(x, y, 3)) continue;
+      if (((b2 >> 2) % 3) === 2) continue;      // a dotted border breathes
+      g.fillRect(x - 0.5, y - 0.5, 1.0, 1.0);
+    }
+    g.strokeStyle = INK + '0.24)'; g.lineWidth = 0.5;
+    g.beginPath();
+    for (let b2 = 0; b2 < BP.length; b2 += 4) {
+      if (((b2 >> 2) % 6) !== 0) continue;
+      const x = BP[b2], y = BP[b2 + 1];
+      if (!inVp(x, y, 6)) continue;
+      let nx = BP[b2 + 2], ny = BP[b2 + 3];
+      const m = Math.hypot(nx, ny) || 1; nx /= m; ny /= m;
+      g.moveTo(x - nx * 2.8, y - ny * 2.8);
+      g.lineTo(x + nx * 2.8, y + ny * 2.8);
+    }
+    g.stroke();
+  }
   for (const I of geo.places) { if (inVp(I.cx, I.cy, 60)) drawPlaceMark(g, I); }
   g.restore();
   for (const I of geo.rocks) {
-    if (!inVp(I.cx, I.cy, 6)) continue;
-    g.fillStyle = INK + '0.8)';
-    g.beginPath(); g.arc(I.cx, I.cy, 1.6, 0, TAU); g.fill();
+    if (!inVp(I.cx, I.cy, 12)) continue;
+    if (I.inbound === 0) {
+      /* shoal water: the period mark for a danger no lead has sounded */
+      g.strokeStyle = INK + '0.82)'; g.lineWidth = 0.95;
+      g.beginPath();
+      for (const [ox, oy] of [[0, 0], [-4.6, 2.6], [4.4, 2.2]]) {
+        const x = I.cx + ox, y = I.cy + oy;
+        g.moveTo(x - 2.1, y - 2.1); g.lineTo(x + 2.1, y + 2.1);
+        g.moveTo(x + 2.1, y - 2.1); g.lineTo(x - 2.1, y + 2.1);
+      }
+      g.stroke();
+      g.strokeStyle = INK + '0.38)'; g.lineWidth = 0.55;
+      g.beginPath();
+      g.arc(I.cx, I.cy + 4.6, 6.4, 0.35, Math.PI - 0.35);
+      g.stroke();
+    } else {
+      g.fillStyle = INK + '0.8)';
+      g.beginPath(); g.arc(I.cx, I.cy, 1.6, 0, TAU); g.fill();
+    }
   }
 
   /* --- the deep, and what lives in it --- */
@@ -5468,6 +6173,10 @@ function paintSheetGeo(g, geo, vp, base) {
       const h = B.band.lines.length > 1 ? B.band.fs * 2.5 : B.band.fs * 1.85;
       drawBanderole(g, B.x, B.band.y, B.band.w, h);
     }
+  }
+  for (const D of geo.decor || []) {
+    if (!inVp(D.x, D.y, D.r ? D.r + 24 : 40)) continue;
+    drawChartDecor(g, D);
   }
 
   /* --- the edge: where the sheet was singed, before the furniture goes on --- */
@@ -5481,6 +6190,14 @@ function paintSheetGeo(g, geo, vp, base) {
       gr.addColorStop(0, 'rgba(96,60,24,' + (0.05 + er() * 0.11).toFixed(3) + ')');
       gr.addColorStop(1, 'rgba(96,60,24,0)');
       g.fillStyle = gr; g.fillRect(x - rr, y - rr, rr * 2, rr * 2);
+      /* a burn is fibrous under the glass: charred grain inside the bloom,
+         seeded, so the scorch keeps tooth at any magnification */
+      for (let k = 0; k < 9; k++) {
+        const ga = er() * TAU, gd = er() * rr * 0.8;
+        const gx2 = x + Math.cos(ga) * gd, gy2 = y + Math.sin(ga) * gd * 0.8;
+        g.fillStyle = 'rgba(70,42,16,' + (0.04 + er() * 0.09).toFixed(3) + ')';
+        g.fillRect(gx2, gy2, 0.5 + er() * 1.1, 0.4 + er() * 0.9);
+      }
     }
   }
 
@@ -5505,6 +6222,7 @@ function paintFurniture(g) {
   drawPanel(g, DIRS, solid);
   drawKeyGlyphs(g, KEYB);
   drawScaleBar(g, SCAL);
+  drawStormGlass(g, STGL);
 }
 
 /* the crisp re-engraving of the visible window at the settled view: a gesture
@@ -5707,7 +6425,7 @@ function drawCartouche(g, B) {
 function drawKeyGlyphs(g, B) {
   const x = B.x + 22;
   const y0 = B.y + KEY_ROW_Y;
-  const rows = ['anchorage', 'fort', 'town', 'hill', 'marsh', 'x'];
+  const rows = ['anchorage', 'fort', 'town', 'hill', 'shoal', 'dark', 'x'];
   rows.forEach((k, i) => {
     const y = y0 + i * KEY_ROW_H;
     if (k === 'x') {
@@ -5715,6 +6433,28 @@ function drawKeyGlyphs(g, B) {
       g.beginPath();
       g.moveTo(x - 4, y - 4); g.lineTo(x + 4, y + 4);
       g.moveTo(x + 4, y - 4); g.lineTo(x - 4, y + 4);
+      g.stroke();
+      return;
+    }
+    if (k === 'shoal') {
+      g.strokeStyle = INK + '0.90)'; g.lineWidth = 1.1;
+      g.beginPath();
+      g.moveTo(x - 3, y - 3); g.lineTo(x + 3, y + 3);
+      g.moveTo(x + 3, y - 3); g.lineTo(x - 3, y + 3);
+      g.stroke();
+      g.strokeStyle = INK + '0.40)'; g.lineWidth = 0.5;
+      g.beginPath(); g.arc(x, y, 5.4, 0.3, Math.PI - 0.3); g.stroke();
+      return;
+    }
+    if (k === 'dark') {
+      g.strokeStyle = INK + '0.88)'; g.lineWidth = 2.2;
+      g.beginPath(); g.moveTo(x - 6, y + 1); g.quadraticCurveTo(x, y - 2.5, x + 6, y + 1); g.stroke();
+      g.strokeStyle = INK + '0.46)'; g.lineWidth = 0.55;
+      g.beginPath();
+      for (let q = -2; q <= 2; q++) {
+        g.moveTo(x + q * 2.6, y + 0.4 - Math.abs(q) * 0.4);
+        g.lineTo(x + q * 2.6 + 1.2, y + 4.6);
+      }
       g.stroke();
       return;
     }
@@ -5825,15 +6565,40 @@ function layoutChartDom() {
   const boxes = [];
   const geoHtml = [], pinHtml = [];
   const hit = b => boxes.some(q => b.x0 < q.x1 && b.x1 > q.x0 && b.y0 < q.y1 && b.y1 > q.y0);
-  const put = (arr, cls, text, x, y, w, h, style) => {
+  /* the torn-edge law: no free name letters off the sheet. The vellum's
+     interior in view coordinates - inset 15 plus clear water off the tear */
+  const shm = 21;
+  const shX0 = vx(shm), shX1 = vx(CHART_W - shm), shY0 = vy(shm), shY1 = vy(CHART_H - shm);
+  const onSheet = b => b.x0 >= shX0 && b.x1 <= shX1 && b.y0 >= shY0 && b.y1 <= shY1;
+  const seatOnSheet = (x, y, w, h) => ({
+    x: shX1 - shX0 > w ? clamp(x, shX0 + w / 2, shX1 - w / 2) : x,
+    y: shY1 - shY0 > h ? clamp(y, shY0 + h / 2, shY1 - h / 2) : y });
+  const put = (arr, cls, text, x, y, w, h, style, attrs) => {
     boxes.push({ x0: x - w / 2, x1: x + w / 2, y0: y - h / 2, y1: y + h / 2 });
-    arr.push('<div class="' + cls + '" style="left:' + (dx + x * S).toFixed(1) + 'px;top:' +
+    arr.push('<div class="' + cls + '" ' + (attrs || '') + 'style="left:' + (dx + x * S).toFixed(1) + 'px;top:' +
       (dy + y * S).toFixed(1) + 'px;' + (style || '') + '">' + text + '</div>');
   };
   for (const R of FURN) boxes.push({ x0: R.x - 4, x1: R.x + R.w + 4, y0: R.y - 4, y1: R.y + R.h + 4 });
 
+  /* the rose and her letters ride the sheet: their ground is claimed FIRST,
+     in view coordinates, so no free name ever letters across them */
+  const roseLetters = [];
+  {
+    const rr = (ROSE.r + 10) * Z;
+    boxes.push({ x0: vx(ROSE.x) - rr, x1: vx(ROSE.x) + rr, y0: vy(ROSE.y) - rr, y1: vy(ROSE.y) + rr });
+    for (const [t, a] of [['E', 0], ['S', Math.PI / 2], ['W', Math.PI]]) {
+      const r = ROSE.r + 24;
+      const rx = vx(ROSE.x + Math.cos(a) * r), ry = vy(ROSE.y + Math.sin(a) * r);
+      if (!inView(rx, ry, 60)) continue;
+      const lw = 11 * Z * 1.1, lh = 11 * Z * 1.2;
+      boxes.push({ x0: rx - lw / 2 - 3, x1: rx + lw / 2 + 3, y0: ry - lh / 2 - 3, y1: ry + lh / 2 + 3 });
+      roseLetters.push([t, rx, ry]);
+    }
+  }
+
   /* --- the beasts' banderoles: lettering ON the ink, so it rides the zoom --- */
   for (const B of geo.beasts) {
+    if (fogHides(B.isle)) continue;
     const bd = B.band;
     const bx = vx(B.x), by = vy(bd.y);
     if (!inView(bx, by, B.L * Z + 60)) continue;
@@ -5849,33 +6614,74 @@ function layoutChartDom() {
     });
     boxes.push(bandBox);
     if (onFurn) continue;
-    geoHtml.push('<div class="cl-beast" style="left:' + (dx + bx * S).toFixed(1) + 'px;top:' +
+    geoHtml.push('<div class="cl-beast" tabindex="0" role="link" data-slug="' + esc(B.isle.slug) +
+      '" style="left:' + (dx + bx * S).toFixed(1) + 'px;top:' +
       (dy + by * S).toFixed(1) + 'px;font-size:' + (fs * S).toFixed(2) + 'px;line-height:' +
       (lh * S).toFixed(2) + 'px">' + inner + '</div>');
     boxes.push({ x0: vx(B.x - B.L * 0.52), x1: vx(B.x + B.L * 0.52), y0: vy(B.y - B.L * 0.42), y1: vy(B.y + B.L * 0.42) });
   }
 
+  /* --- the two mains, lettered wide across their own ground --- */
+  for (const K of geo.conts) {
+    const contRumor = fog.mode === 'known' && !fog.anim &&
+      !world.islands.some(ii => ii.product === K.key && isleSeen(ii));
+    const kx = vx(K.x), ky = vy(K.y);
+    if (!inView(kx, ky, 460)) continue;
+    const fs = (K.key === 'cms' ? 20 : 14.5) * zf;
+    const sp = (K.key === 'cms' ? 14 : 8.5) * zf;
+    /* the browser spends letter-spacing after the last letter too: claim it,
+       or a free name can letter flush against the ink and read as a graze */
+    const w = textW(K.name, fs, '', sp) + sp + 18, h = fs + 8;
+    let px2 = kx, py2 = ky - h * 0.4;
+    for (const [ox2, oy2] of [[0, 0], [0, -h * 1.4], [0, h * 1.4], [-w * 0.22, h * 1.6], [-w * 0.34, h * 2.4], [-w * 0.34, -h * 1.8], [0, h * 3.2], [-w * 0.5, h * 3.0], [0, 0]]) {
+      const st2 = seatOnSheet(kx + ox2, ky - h * 0.4 + oy2, w, h);
+      const b2 = { x0: st2.x - w / 2, x1: st2.x + w / 2, y0: st2.y - h / 2, y1: st2.y + h / 2 };
+      if (hit(b2)) continue;
+      px2 = st2.x; py2 = st2.y;
+      break;
+    }
+    ({ x: px2, y: py2 } = seatOnSheet(px2, py2, w, h));  /* the all-seats-taken fallback obeys the same law */
+    put(geoHtml, 'cl-cont' + (contRumor ? ' rumor' : ''), esc(K.name), px2, py2, w, h,
+      'font-size:' + (fs * S).toFixed(2) + 'px;letter-spacing:' + (sp * S).toFixed(2) + 'px');
+    const fs2 = 8.6 * zf;
+    /* the box claimed is the text lettered: the rumor suffix widens both */
+    const subT = contRumor ? K.sub + ' · by report only' : K.sub;
+    const w2 = textW(subT, fs2, 'italic', 1) + 8;
+    if (!hit({ x0: px2 - w2 / 2, x1: px2 + w2 / 2, y0: py2 + h * 0.95 - (fs2 + 4) / 2, y1: py2 + h * 0.95 + (fs2 + 4) / 2 }))
+      put(geoHtml, 'cl-contsub' + (contRumor ? ' rumor' : ''), esc(subT), px2, py2 + h * 0.95, w2, fs2 + 4,
+        'font-size:' + (fs2 * S).toFixed(2) + 'px;letter-spacing:' + (1 * S).toFixed(2) + 'px');
+  }
+
   /* --- the archipelago names, set across their whole water --- */
   for (const A of geo.lands) {
     if (!A.arch) continue;
+    const archRumor = fogRumorAt(A.x, A.y);
     const ax = vx(A.x), ay = vy(A.y);
     if (!inView(ax, ay, 220)) continue;
     const sp = 4.2 * zf, fs = 13.5 * zf;
     const t = A.name.toUpperCase();
     const w = textW(t, fs, '', sp) + 12, h = fs + 8;
-    put(geoHtml, 'cl-arch', esc(t), ax, ay, w, h,
+    const stA = seatOnSheet(ax, ay, w, h);
+    put(geoHtml, 'cl-arch' + (archRumor ? ' rumor' : ''), esc(t), stA.x, stA.y, w, h,
       'font-size:' + (fs * S).toFixed(2) + 'px;letter-spacing:' + (sp * S).toFixed(2) + 'px');
   }
 
   /* --- the lands --- */
   const regions = geo.regions.slice().sort((a2, b2) => b2.n - a2.n);
   for (const G of regions) {
+    const landRumor = fog.mode === 'known' && !fog.anim && G.places.every(ii => !isleSeen(ii));
     const prime = !!G.primary;
     const big = G.n >= 14 ? 12 : G.n >= 7 ? 10.6 : G.n >= 4 ? 9.4 : 8.6;
-    const fs = (prime ? big : 8.4) * zf;
-    const sp = (prime ? 2.5 : 1.6) * zf;
+    let fs = (prime ? big : 8.4) * zf;
+    let sp = (prime ? 2.5 : 1.6) * zf;
     let nm = G.name;
-    if (nm.length > 27) nm = nm.slice(0, 25).replace(/[\s,;:-]+$/, '') + '\u2026';
+    /* a long name is condensed - smaller hand, tighter letters - never broken
+       off with an ellipsis: no chart of the period letters "FOR ST..." */
+    if (nm.length > 27) {
+      const k = Math.max(0.68, Math.sqrt(27 / nm.length));
+      fs *= k; sp *= k * 0.75;
+      if (nm.length > 44) nm = nm.slice(0, 42).replace(/[\s,;:-]+$/, '') + '\u2026';
+    }
     const t = (nm + (G.suffix ? ' ' + G.suffix : '')).toUpperCase();
     let w = textW(t, fs, '', sp) + 8, h = fs + 6;
     const gx = vx(G.x), gy = vy(G.y);
@@ -5887,13 +6693,29 @@ function layoutChartDom() {
       ? [[gx, gy], [gx, topY - h * 0.9], [gx, botY + h * 0.9]]
       : [[gx, botY + h * 0.85], [gx, topY - h * 0.85], [gx, gy]];
     let ok = false;
-    for (const [px, py] of tries) {
-      for (const dyy of [0, -h, h, -h * 2, h * 2]) {
-        const bx = { x0: px - w / 2, x1: px + w / 2, y0: py + dyy - h / 2, y1: py + dyy + h / 2 };
-        if (hit(bx)) continue;
-        put(geoHtml, 'cl-land' + (prime ? '' : ' sat'), esc(t), px, py + dyy, w, h,
-          'font-size:' + (fs * S).toFixed(2) + 'px;letter-spacing:' + (sp * S).toFixed(2) + 'px');
-        ok = true; break;
+    /* two passes: the full hand first; if every lawful seat is taken - a
+       province clamped off the tear loses her east-west freedom - she letters
+       again in a condensed hand with a deeper north-south ladder, rather
+       than vanish from the sheet */
+    for (const pass of [0, 1]) {
+      const pfs = pass ? fs * 0.85 : fs, psp = pass ? sp * 0.72 : sp;
+      const pw = pass ? textW(t, pfs, '', psp) + 8 : w, ph = pass ? pfs + 6 : h;
+      const dys = pass ? [0, -ph, ph, -ph * 2, ph * 2, -ph * 3, ph * 3, ph * 4]
+                       : [0, -h, h, -h * 2, h * 2];
+      for (const [px0b, py] of tries) {
+        for (const dyy of dys) {
+          for (const dxx of [0, -pw * 0.42, pw * 0.42]) {
+            /* a seat past the torn edge steps back onto the vellum first */
+            const st = seatOnSheet(px0b + dxx, py + dyy, pw, ph);
+            const bx = { x0: st.x - pw / 2, x1: st.x + pw / 2, y0: st.y - ph / 2, y1: st.y + ph / 2 };
+            if (hit(bx)) continue;
+            put(geoHtml, 'cl-land' + (prime ? '' : ' sat') + (landRumor ? ' rumor' : ''), esc(t), st.x, st.y, pw, ph,
+              'font-size:' + (pfs * S).toFixed(2) + 'px;letter-spacing:' + (psp * S).toFixed(2) + 'px');
+            ok = true; break;
+          }
+          if (ok) break;
+        }
+        if (ok) break;
       }
       if (ok) break;
     }
@@ -5901,8 +6723,9 @@ function layoutChartDom() {
       /* the land already carries this name: her chief page is not lettered twice */
       const owner = prime ? (G.hub || G.chief) : G.chief;
       if (owner) {
-        const n2 = t.replace(/ (ROCK|CAY|ISLE)$/, '');
-        if (n2 === (owner.sidebarLabel || '').toUpperCase() || n2 === (owner.title || '').toUpperCase()) owner._suppress = true;
+        const full = (G.name || '').toUpperCase();
+        if (full === (owner.sidebarLabel || '').toUpperCase() ||
+            full === (owner.title || '').toUpperCase()) owner._suppress = true;
       }
     }
   }
@@ -5912,32 +6735,39 @@ function layoutChartDom() {
   let lettered = 0;
   for (const I of ranked) {
     if (I._suppress) continue;
+    if (fogHides(I)) continue;
     const px0 = vx(I.cx), py0 = vy(I.cy);
     if (!inView(px0, py0, 90)) continue;
-    const t = I.sidebarLabel.length > 30 ? I.sidebarLabel.slice(0, 29) + '\u2026' : I.sidebarLabel;
-    const fs = (I.mark.kind === 'anchorage' ? 8.8 : 8.0) * zf;
-    const w = textW(t, fs, '', 0.2) + 5, h = fs + 3.4;
+    let t = I.sidebarLabel;
+    let fs = (I.mark.kind === 'anchorage' ? 8.8 : 8.0) * zf;
+    /* long village names condense the hand before any is broken off */
+    if (t.length > 28) {
+      fs *= Math.max(0.82, Math.sqrt(28 / t.length));
+      if (t.length > 40) t = t.slice(0, 38).replace(/[\s,;:-]+$/, '') + '\u2026';
+    }
+    const chiefHand = I.mark.kind === 'anchorage';
+    const w = (chiefHand ? textW(t.toUpperCase(), fs, '', 0.06 * fs) * 0.92
+                         : textW(t, fs, '', 0.2)) + 5, h = fs + 3.4;
     const s = I.mark.sz * Z;
     const tries = [[0, s * 2.3 + 4], [0, -(s * 2.3 + 4)], [w / 2 + s + 3, 0], [-(w / 2 + s + 3), 0]];
     if (Z >= 2.2) tries.push([w / 2 + s + 3, -(h * 0.8)], [-(w / 2 + s + 3), h * 0.8],
       [0, s * 2.3 + 4 + h], [0, -(s * 2.3 + 4 + h)]);
     for (const [ox, oy] of tries) {
       const b = { x0: px0 + ox - w / 2, x1: px0 + ox + w / 2, y0: py0 + oy - h / 2, y1: py0 + oy + h / 2 };
+      if (!onSheet(b)) continue;   /* never letters into the tear: the next seat takes her */
       if (hit(b)) continue;
       put(geoHtml, 'cl-place' + (I.mark.kind === 'anchorage' ? ' chief' : ''), esc(t), px0 + ox, py0 + oy, w, h,
-        'font-size:' + (fs * S).toFixed(2) + 'px');
+        'font-size:' + (fs * S).toFixed(2) + 'px',
+        'tabindex="0" role="link" data-slug="' + esc(I.slug) + '" ');
       lettered++;
       break;
     }
   }
   geo.lettered = lettered;
 
-  /* --- the rose's letters ride the rose --- */
+  /* --- the rose's letters ride the rose (ground claimed above, first) --- */
   /* no N: on this rose the fleur-de-lys is north, as she is on the old ones */
-  for (const [t, a] of [['E', 0], ['S', Math.PI / 2], ['W', Math.PI]]) {
-    const r = ROSE.r + 24;
-    const rx = vx(ROSE.x + Math.cos(a) * r), ry = vy(ROSE.y + Math.sin(a) * r);
-    if (!inView(rx, ry, 60)) continue;
+  for (const [t, rx, ry] of roseLetters) {
     geoHtml.push('<div class="cl-rose" style="left:' + (dx + rx * S).toFixed(1) +
       'px;top:' + (dy + ry * S).toFixed(1) + 'px;font-size:' + (11 * Z * S).toFixed(2) + 'px">' + t + '</div>');
   }
@@ -5952,7 +6782,7 @@ function layoutChartDom() {
     }
     pinHtml.push('<div class="cl-scaption" style="left:' + (dx + (SCAL.x + SCAL.w / 2) * S).toFixed(1) +
       'px;top:' + (dy + (SG.y0 + 20) * S).toFixed(1) + 'px;font-size:' + (10 * S).toFixed(2) + 'px">' +
-      'A scale of ' + numToWords(SG.span) + ' nautical miles, by estimation</div>');
+      'A scale of ' + numToWords(SG.span) + (SG.span === 1 ? ' nautical mile' : ' nautical miles') + ', by estimation</div>');
   }
 
   /* --- the cartouche --- */
@@ -5974,6 +6804,21 @@ function layoutChartDom() {
   ci.style.top = (dy + (CART.y + CART.h - 74) * S).toFixed(1) + 'px';
   ci.style.width = ((CART.w - 30) * S).toFixed(1) + 'px';
   ci.style.fontSize = (11.5 * S).toFixed(2) + 'px';
+  const fsw = $('fogswitch');
+  if (fsw) {
+    fsw.style.left = (dx + (CHART_W / 2) * S).toFixed(1) + 'px';
+    fsw.style.top = (dy + 25 * S).toFixed(1) + 'px';
+    fsw.style.fontSize = (10.5 * S).toFixed(2) + 'px';
+  }
+  const sg = $('stormglass');
+  if (sg) {
+    sg.style.left = (dx + (STGL.x + 50) * S).toFixed(1) + 'px';
+    sg.style.top = (dy + (STGL.y + 9) * S).toFixed(1) + 'px';
+    sg.style.width = ((STGL.w - 62) * S).toFixed(1) + 'px';
+    sg.style.fontSize = (10.5 * S).toFixed(2) + 'px';
+    updateStormGlass();
+  }
+  placeChartCat();
   const ck = $('chartkey');
   ck.style.left = (dx + (KEYB.x + 14) * S).toFixed(1) + 'px';
   ck.style.top = (dy + (KEYB.y + 12) * S).toFixed(1) + 'px';
@@ -5986,47 +6831,82 @@ function cartoucheHtml() {
   return '<div class="cc-title">CARTA STRAPIANA</div>' +
     '<div class="cc-sub">A chart of the documentation of Strapi,<br>surveyed out of the corpus itself</div>' +
     '<div class="cc-rule"></div>' +
-    '<div class="cc-tot"><b>' + world.islands.length + '</b> places &middot; <b>' +
-    geo.rings.filter(r => r.places && r.places.length).length + '</b> lands and isles &middot; <b>' +
+    '<div class="cc-tot"><b>2</b> continents &middot; <b>' + world.provinces.length +
+    '</b> provinces &middot; <b>' + world.islands.length + '</b> places &middot; <b>' +
     commas(g.edges.length) + '</b> citations<br><b>' + Math.round(world.extentNm) +
     '</b> nautical miles from shore to shore &middot; <b>' + world.uncited.length +
     '</b> unreached</div>';
 }
 
 function directionsHtml() {
-  const A = world.archipelagos.slice().sort((a, b) => b.size - a.size).slice(0, 5);
-  const line = (a, b) => {
+  const A = world.provinces.slice().sort((a, b) => b.size - a.size).slice(0, 3);
+  const line = (a, b, an, bn) => {
     const brg = norm360(Math.atan2(b.x - a.x, -(b.y - a.y)) * 180 / Math.PI);
     const nm = Math.hypot(b.x - a.x, b.y - a.y) * world.nmPerUnit;
-    return '<li>From <i>' + esc(a.name) + '</i>, the <i>' + esc(b.name) + '</i> shore bears <b>' +
-      compassPoint(brg) + '</b>, ' + numToWords(Math.max(1, Math.round(nm))) + ' miles.</li>';
+    return '<li>From ' + an + ', ' + bn + ' bears <b>' +
+      compassPoint(brg) + '</b>, ' + numToWords(Math.max(1, Math.round(nm))) +
+      (Math.max(1, Math.round(nm)) === 1 ? ' mile.</li>' : ' miles.</li>');
   };
+  const K = world.continents;
   let h = '<div class="cd-h">SAILING DIRECTIONS</div><ul>';
-  for (let i = 0; i < 3; i++) h += line(A[i], A[i + 1]);
+  h += line(K.cms, K.cloud, 'the <i>CMS Main</i>', 'the <i>Cloud Main</i>') ;
+  h += line(A[0], A[1], 'the <i>' + esc(A[0].name) + '</i> province', 'the <i>' + esc(A[1].name) + '</i> province');
   h += '<li>The wind is the citation itself: it blows out of the pages that cite, into the pages cited.</li>';
   h += '</ul>';
+  /* RUMORS OF OTHER WATERS (owner order): one line per crossing, the WHERE
+     named plainly - every bearing below is measured, not invented - and the
+     WHAT left to the sailor. */
+  const home = world.bySlug.get(world.island.slug);
+  if (home && eggs.ready) {
+    const brgFrom = (o, E) => compassPoint(norm360(Math.atan2(E.x - o.pos.x, -(E.y - o.pos.y)) * 180 / Math.PI));
+    const nmFrom = (o, E) => Math.hypot(E.x - o.pos.x, E.y - o.pos.y) * world.nmPerUnit;
+    const distWords = nm => nm < 0.38 ? 'a quarter-mile' : nm < 0.75 ? 'a half-mile' :
+      nm < 1.5 ? 'a mile' : numToWords(Math.round(nm)) + ' miles';
+    const R = [];
+    if (eggs.bottle) R.push('Flotsam bobs ' + distWords(nmFrom(home, eggs.bottle)) + ' <b>' +
+      brgFrom(home, eggs.bottle) + '</b> of the home anchorage - some say it carries a printed page.');
+    if (eggs.ink) R.push('<b>' + brgFrom(home, eggs.ink) + '</b> of the home water, the sea is said to turn to ink.');
+    if (eggs.city) R.push('Far to the <b>' + brgFrom(home, eggs.city) + '</b> lies an isle no chart of ours will name.');
+    if (eggs.pathIsle) R.push('From the anchorage at the <i>' + esc(eggs.pathIsle.title) + '</i> a path climbs the cliff.');
+    R.push('On clear nights one star does not keep station - watch it through the glass.');
+    R.push('Keepers of the log report a pressed flower that was never theirs.');
+    h += '<div class="cd-h cd-rum-h">RUMORS OF OTHER WATERS</div><ul class="cd-rum">';
+    for (const r of R) h += '<li>' + r + '</li>';
+    h += '</ul>';
+  }
   return h;
 }
 
 function keyHtml(S) {
   const rows = [
-    'the chief page of a land',
+    'the chief page of a province',
     'a fort: many pages cite her',
     'a settlement: many hands',
     'hachures: a long page',
-    'marsh: untended a long while',
+    'shoal cross: no route reaches her',
+    'dark shore: an unreached coast',
     'read on this visit (' + visit.charted.size + ')'
   ];
   let h = '<div class="ck-h">HERE BE DRAGONS</div>' +
-    '<div class="ck-lede">Fifty places no route yet reaches. Each beast is one of them, drawn ' +
-    'from her own numbers: bulk from words, arms from the pages she reaches out to, coils from her ' +
-    'commits, eyes from her night work.</div>';
+    '<div class="ck-lede">Fifty places no route yet reaches: their coasts are inked dark and ' +
+    'their waters carry the cross. The three fiercest swim the open sea as beasts, each drawn ' +
+    'from her own numbers - bulk from words, arms from the pages she reaches for.</div>';
   /* the rows are pinned to the same rule the glyphs were inked on */
   rows.forEach((t, i) => {
     const top = (KEY_ROW_Y - 12 + i * KEY_ROW_H - KEY_ROW_H / 2) * S;
     h += '<div class="ck-row" style="top:' + top.toFixed(1) + 'px;height:' + (KEY_ROW_H * S).toFixed(1) +
       'px;line-height:' + (KEY_ROW_H * S).toFixed(1) + 'px;padding-left:' + (22 * S).toFixed(1) + 'px">' +
       t + '</div>';
+  });
+  /* the standing rules of the weather, printed small under the glyph rows */
+  const rules = [
+    'the weather is the corpus twelvemonth replayed, a month a minute: rain where the ink fell thick, squalls where it fell thickest',
+    'the sea remembers the tending: grey mist rides waters long untended; fresh ink sparkles on the swell',
+    'by night one lighthouse burns for every twelve citations on a cape; the stars overhead are the current waters&rsquo; citations &mdash; click one to lay a course'
+  ];
+  rules.forEach((t, j) => {
+    const top = (KEY_ROW_Y - 12 + 7 * KEY_ROW_H + 4 + j * 26) * S;
+    h += '<div class="ck-rule" style="top:' + top.toFixed(1) + 'px">' + t + '</div>';
   });
   return h;
 }
@@ -6037,6 +6917,8 @@ function keyHtml(S) {
 function drawChartVisit(g) {
   const Z = chart.z, TXv = chart.tx, TYv = chart.ty;
   const VV = p => [p[0] * Z + TXv, p[1] * Z + TYv];
+  drawSoundings(g);
+  drawRoutes(g, VV);
   if (visit.track.length > 1) {
     g.strokeStyle = RED + '0.72)';
     g.lineWidth = 1.4;
@@ -6075,7 +6957,9 @@ function drawChartVisit(g) {
   /* a clear berth under her, so she is never lost in the ground */
   g.fillStyle = 'rgba(243,234,212,0.80)';
   g.beginPath(); g.ellipse(0, 0, 13, 11, 0, 0, TAU); g.fill();
-  g.rotate(ship.bearing * Math.PI / 180);
+  /* the profile mark lies along her course: the bowsprit (drawn at -x)
+     leads north when she steers north, east when east - sheet-true */
+  g.rotate((ship.bearing + 90) * Math.PI / 180);
   g.strokeStyle = RED + '0.95)';
   g.fillStyle = 'rgba(248,241,224,0.95)';
   g.lineWidth = 1.15;
@@ -6125,6 +7009,7 @@ function drawChart() {
   showChartInfo(chart.hover);
   chart.ready = true;
   diag.chartMs = +(performance.now() - t0).toFixed(1);
+  diag.chartGeoStats = geo.stats;
 }
 
 /* the canvas alone: what a gesture frame is allowed to cost */
@@ -6150,6 +7035,7 @@ function drawChartCanvas() {
     }
   }
   g.lineJoin = 'round'; g.lineCap = 'round';
+  drawFog(g);
   drawChartVisit(g);
   paintFurniture(g);
   diag.chartView = { z: +chart.z.toFixed(3), tx: Math.round(chart.tx), ty: Math.round(chart.ty) };
@@ -6192,6 +7078,7 @@ function chartSettle() {
   chart.crispT = setTimeout(() => {
     if (ui.mode !== 'below' || ui.tab !== 'chart' || !chart.cv) return;
     crispChartRender();
+    crispFogRender();
     drawChartCanvas();
     layoutChartDom();
     showChartInfo(chart.hover);
@@ -6223,6 +7110,7 @@ function chartPick(evx, evy) {
   const y = ((evy - r.top) * CHART_H / r.height - chart.ty) / chart.z;
   let best = null, bd = 1e9;
   for (const m of chart.marks) {
+    if (fogHides(m.isle)) continue;
     const dx = m.x - x, dy = m.y - y;
     const d = Math.hypot(dx, dy);
     if (d > m.r) continue;
@@ -6232,26 +7120,64 @@ function chartPick(evx, evy) {
   return best;
 }
 
-function showChartInfo(isle) {
+/* THE TOOLTIP AT THE HAND (owner order): the name in the cartographic hand,
+   the bearing and distance from the ship in period terms, and one honest
+   datum line. It follows the hover and never sits under the cursor. */
+function fillChartTip(m) {
+  const tip = $('charttip');
+  if (!tip) return;
+  updateStormGlass();
+  const isle = m.isle;
+  const brg = bearingTo(isle), nm = distToNm(isle);
+  const coord = compassPoint(brg) + ' \u00b7 ' + (nm >= 9.95 ? String(Math.round(nm)) : nm.toFixed(1)) + ' nm';
+  let kindLine;
+  if (m.beast) kindLine = 'sea beast \u00b7 her true water lies with her page';
+  else if (isle.mark && isle.mark.kind === 'shoal') kindLine = 'shoal water \u00b7 no route reaches her';
+  else {
+    const A = isle.prov >= 0 && chart.geo && chart.geo.PROV ? chart.geo.PROV[isle.prov] : null;
+    kindLine = !A ? 'off soundings'
+      : A.hub === isle.slug ? 'the chief page of her province'
+      : 'of the ' + esc(A.name) + ' province';
+  }
+  tip.innerHTML =
+    '<div class="ct-name">' + esc(isle.title) + '</div>' +
+    '<div class="ct-kind">' + kindLine + '</div>' +
+    '<div class="ct-coord"><b>' + coord + '</b> from the ship</div>' +
+    '<div class="ct-datum">' + commas(isle.words) + ' words \u00b7 ' +
+      (isle.inbound ? isle.inbound + (isle.inbound === 1 ? ' citation in' : ' citations in') : 'no citation in') +
+      (visit.charted.has(isle.slug) ? ' \u00b7 read this visit' : '') + '</div>';
+  tip.hidden = false;
+}
+function placeChartTip(cx, cy) {
+  const tip = $('charttip');
+  if (!tip || tip.hidden) return;
+  const host = tip.parentElement.getBoundingClientRect();
+  let x = cx - host.left + 16, y = cy - host.top + 18;
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  if (x + tw > host.width - 8) x = cx - host.left - tw - 16;
+  if (y + th > host.height - 8) y = cy - host.top - th - 16;
+  tip.style.left = x.toFixed(0) + 'px';
+  tip.style.top = y.toFixed(0) + 'px';
+}
+function hideChartTip() {
+  const tip = $('charttip');
+  if (tip && !tip.hidden) tip.hidden = true;
+  if (chart.cv) chart.cv.classList.remove('overmark');
+}
+
+function showChartInfo() {
+  /* the cartouche keeps only the chart's identity (owner order): the naming
+     of places moved onto the sheet itself, in the tooltip at the hand */
   const box = $('chartinfo');
   if (!box) return;
-  if (!isle) {
-    box.querySelector('.ci-name').textContent = 'The surveyed sea';
-    box.querySelector('.ci-line').textContent =
-      'Hover any place or any beast. Every one of the ' + world.islands.length + ' is on this sheet.';
-    box.querySelector('.ci-act').textContent = 'Click to shape a course · double-click to be carried there · 2 for the plain index.';
-    return;
-  }
-  const arch = isle.comm >= 0 ? world.archipelagos[isle.comm] : null;
-  box.querySelector('.ci-name').textContent = isle.title;
-  const bits = [commas(isle.words) + ' words', isle.nH2 + (isle.nH2 === 1 ? ' headland' : ' headlands')];
-  bits.push(isle.inbound ? isle.inbound + (isle.inbound === 1 ? ' riding light' : ' riding lights') : 'no route reaches her');
-  bits.push(arch ? 'of ' + arch.name : 'off soundings');
-  bits.push(isle.authors.length === 1 ? 'kept alone by ' + isle.authors[0] : isle.authors.length + ' hands');
-  box.querySelector('.ci-line').textContent = bits.join(' · ');
+  box.querySelector('.ci-name').textContent = 'The surveyed sea';
+  box.querySelector('.ci-line').textContent = fog.mode === 'known'
+    ? 'THE KNOWN CHART: drawn by your own voyages — ' + fogSeenCount() + ' of ' +
+      world.islands.length + ' waters surveyed; the rest lie under the fog, by report only.'
+    : 'Two mains, ' + world.provinces.length + ' provinces, all ' + world.islands.length +
+      ' pages on the one sheet. Hover any place for her name and bearing.';
   box.querySelector('.ci-act').textContent =
-    (visit.charted.has(isle.slug) ? 'Read this visit. ' : '') +
-    'Click to shape a course · double-click to be carried there.';
+    'Click a place to make the passage \u00b7 Shift-click to shape a course.';
 }
 
 /* ============================================================
@@ -6262,6 +7188,7 @@ function openBelow(tab) {
   ui.mode = 'below';
   ui.tab = tab || ui.tab || 'chart';
   $('anchorage').hidden = true;
+  sound.reading(false);
   $('below').hidden = false;
   showTab(ui.tab);
   const s = $('search');
@@ -6271,7 +7198,7 @@ function openBelow(tab) {
 function closeBelow() {
   $('below').hidden = true;
   $('searchdrop').hidden = true;
-  if (ui.slug) { ui.mode = 'anchor'; $('anchorage').hidden = false; }
+  if (ui.slug) { ui.mode = 'anchor'; $('anchorage').hidden = false; sound.reading(true); }
   else { ui.mode = 'deck'; }
   dirty = true;
 }
@@ -6294,6 +7221,39 @@ function showTab(tab) {
 function initUI() {
   /* --- the anchorage --- */
   $('weigh').addEventListener('click', weighAnchor);
+
+  /* the engraved rail: the page's own scrollbar, always visible while reading */
+  {
+    const rail = $('paperrail'), th = $('paperthumb');
+    const pp = () => $('pagepaper');
+    pp().addEventListener('scroll', railSync, { passive: true });
+    window.addEventListener('resize', railSync);
+    let drag = null;
+    th.addEventListener('pointerdown', e => {
+      drag = { y0: e.clientY, s0: pp().scrollTop };
+      th.classList.add('held');
+      th.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+    th.addEventListener('pointermove', e => {
+      if (!drag) return;
+      const p = pp();
+      const trackH = rail.clientHeight - 4;
+      const thH = Math.max(28, trackH * p.clientHeight / p.scrollHeight);
+      const range = trackH - thH;
+      if (range > 0)
+        p.scrollTop = drag.s0 + (e.clientY - drag.y0) * (p.scrollHeight - p.clientHeight) / range;
+    });
+    const drop = () => { drag = null; th.classList.remove('held'); };
+    th.addEventListener('pointerup', drop);
+    th.addEventListener('pointercancel', drop);
+    rail.addEventListener('pointerdown', e => {
+      if (e.target === th) return;
+      const p = pp();
+      const r = rail.getBoundingClientRect();
+      p.scrollTop = ((e.clientY - r.top) / r.height) * (p.scrollHeight - p.clientHeight + p.clientHeight * 0.88) - p.clientHeight * 0.44;
+    });
+  }
   $('ondeck').addEventListener('click', () => { closeBelow(); if (!ui.slug) weighAnchor(); });
 
   $('pagepaper').addEventListener('click', e => {
@@ -6341,6 +7301,12 @@ function initUI() {
           (visit.hand ? ' — ' + visit.hand + ', a stranger\'s hand' : ' — an unsigned stranger\'s hand') + '.');
       } else if (act === 'raise') {
         raiseHandsFor(isle);
+      } else if (act === 'packet') {
+        const p = packetFor(isle);
+        if (p) {
+          visit.packet = { from: isle.slug, to: p.to, n: p.n };
+          logMark('Took the packet at ' + isle.title + ', addressed to ' + p.toTitle + '.');
+        }
       } else if (act === 'path') {
         crossTo('longway', 'You step ashore. The path takes the cliff in long, easy zigzags.', 1600);
         return;
@@ -6354,7 +7320,7 @@ function initUI() {
       const href = a.getAttribute('href') || '';
       if (href.charAt(0) === '#' && href.charAt(1) === '/') {
         e.preventDefault();
-        warpTo(href.slice(1), 'citation');
+        warpTo(href.slice(1), a.dataset.hail ? 'hailed' : 'citation');
       }
     }
   });
@@ -6395,34 +7361,65 @@ function initUI() {
     if (b) warpTo(b.dataset.slug, 'packet');
   });
 
+  $('po-yes').addEventListener('click', () => portalAnswer(true));
+  $('po-no').addEventListener('click', () => portalAnswer(false));
+
   const cv = $('chart');
   cv.addEventListener('mousemove', e => {
-    if (chart.gesturing) return;
+    if (chart.gesturing) { hideChartTip(); return; }
     const m = chartPick(e.clientX, e.clientY);
-    const isle = m ? m.isle : null;
-    if (isle !== chart.hover) { chart.hover = isle; showChartInfo(isle); }
+    if (m !== chart.hoverMark) {
+      chart.hoverMark = m;
+      chart.hover = m ? m.isle : null;
+      if (m) fillChartTip(m); else hideChartTip();
+      cv.classList.toggle('overmark', !!m);
+    }
+    if (m) placeChartTip(e.clientX, e.clientY);
   });
-  cv.addEventListener('mouseleave', () => { chart.hover = null; showChartInfo(null); });
+  cv.addEventListener('mouseleave', () => { chart.hover = null; chart.hoverMark = null; hideChartTip(); updateStormGlass(); });
   cv.addEventListener('click', e => {
     if (chart.panned) { chart.panned = false; return; }
     const m = chartPick(e.clientX, e.clientY);
     if (!m) return;
-    if (e.detail > 1) return;   // the dblclick handler takes it
-    setTimeout(() => {
-      if (chart.dbl) { chart.dbl = false; return; }
-      shapeCourse(m.isle);
-    }, 210);
+    if (e.shiftKey) { hideChartTip(); shapeCourse(m.isle); return; }
+    hideChartTip();
+    passageTo(m.isle);
   });
-  cv.addEventListener('dblclick', e => {
-    const m = chartPick(e.clientX, e.clientY);
-    chart.dbl = true;
-    if (m) warpTo(m.isle.slug, 'packet');
+  cv.addEventListener('dblclick', e => { e.preventDefault(); });
+
+  /* keyboard hands get the same tooltip on the lettered names */
+  const labHost = $('chartlabels');
+  labHost.addEventListener('focusin', e => {
+    const el2 = e.target.closest('[data-slug]');
+    if (!el2) return;
+    const isle = world.bySlug.get(el2.dataset.slug);
+    if (!isle) return;
+    let m = null;
+    for (const mm of chart.marks) if (mm.isle === isle) { m = mm; break; }
+    chart.hover = isle; chart.hoverMark = m;
+    fillChartTip(m || { isle });
+    const tip = $('charttip');
+    const r = el2.getBoundingClientRect(), host = tip.parentElement.getBoundingClientRect();
+    tip.style.left = Math.max(4, Math.min(r.right - host.left + 8, host.width - tip.offsetWidth - 8)) + 'px';
+    tip.style.top = Math.max(4, Math.min(r.top - host.top - 4, host.height - tip.offsetHeight - 8)) + 'px';
+  });
+  labHost.addEventListener('focusout', () => { chart.hoverMark = null; hideChartTip(); });
+  labHost.addEventListener('keydown', e => {
+    const el2 = e.target.closest('[data-slug]');
+    if (!el2) return;
+    if (e.key === 'Enter' || e.key === ' ') {
+      const isle = world.bySlug.get(el2.dataset.slug);
+      if (isle) { hideChartTip(); if (e.shiftKey) shapeCourse(isle); else passageTo(isle); }
+      e.preventDefault();
+    }
   });
 
   /* --- the reading glass: wheel and pinch zoom about the hand, drag to pan --- */
   cv.addEventListener('wheel', e => {
     if (ui.tab !== 'chart') return;
     e.preventDefault();
+    hideChartTip();
+    chart.hoverMark = null;
     const r = cv.getBoundingClientRect();
     const cx = (e.clientX - r.left) * CHART_W / r.width;
     const cy = (e.clientY - r.top) * CHART_H / r.height;
@@ -6454,7 +7451,7 @@ function initUI() {
       const mdx = e.clientX - cpan.x, mdy = e.clientY - cpan.y;
       cpan.moved += Math.abs(mdx) + Math.abs(mdy);
       cpan.x = e.clientX; cpan.y = e.clientY;
-      if (cpan.moved > 5) { chart.panned = true; chart.gesturing = true; cv.classList.add('panning'); }
+      if (cpan.moved > 5) { chart.panned = true; chart.gesturing = true; cv.classList.add('panning'); hideChartTip(); chart.hoverMark = null; }
       if (chart.gesturing) {
         chart.txt += mdx * kx; chart.tyt += mdy * ky;
         chartClampTargets();
@@ -6491,6 +7488,16 @@ function initUI() {
   cv.addEventListener('pointerup', cptrEnd);
   cv.addEventListener('pointercancel', cptrEnd);
 
+  {
+    const fsw2 = $('fogswitch');
+    if (fsw2) {
+      const flip = () => fogSetMode(fog.mode === 'known' ? 'full' : 'known', true);
+      fsw2.addEventListener('click', flip);
+      fsw2.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
+      });
+    }
+  }
   $('soundbtn').addEventListener('click', () => sound.toggle());
   $('soundbtn').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') sound.toggle(); });
 }
@@ -6498,7 +7505,7 @@ function initUI() {
 function shapeCourse(isle) {
   firstOrder('sail');
   closeBelow();
-  if (ui.slug) { $('anchorage').hidden = true; ui.slug = null; }
+  if (ui.slug) { $('anchorage').hidden = true; ui.slug = null; sound.reading(false); }
   ui.mode = 'deck';
   if (ship.anchored) { ship.anchored = false; ship.atAnchorOff = null; }
   setBound(isle, true);
@@ -6509,6 +7516,246 @@ function shapeCourse(isle) {
   captionNow('Course shaped for ' + isle.title + ', ' + compassPoint(brg) + ', ' +
     (Math.round(distToNm(isle) * 10) / 10) + ' nm. The helm answers in its own time.', 5200);
   dirty = true;
+}
+
+/* QUICK START FIRST (owner law): on a cold load the first landfall is the
+   Quick Start Guide - her shore flies a pennant, and a counting-down distance
+   line stands until the maiden landfall is made. */
+function drawMaidenPennant(worldDY) {
+  const qs = story.qs;
+  const dist = distToNm(qs);
+  if (dist > VIS_NM * 1.25) return;
+  const az = angDiff(bearingTo(qs), ship.bearing);
+  if (Math.abs(az) > FOV / 2 + 6) return;
+  const g = ctx, t = env.t;
+  const x = W / 2 + az * PXDEG;
+  const yBase = HORIZON + worldDY + 2;
+  const wpx = islandScreenW(dist, qs.mag);
+  const h = clamp(wpx * 0.30 + 30, 46, 168);
+  const top = yBase - h;
+  const fl = clamp(wpx * 0.09 + 16, 20, 60);
+  const wob = REDUCED ? 0 : Math.sin(t * 3.1) * fl * 0.09;
+  g.save();
+  g.globalAlpha = clamp((VIS_NM * 1.25 - dist) / 1.1, 0.35, 1);
+  g.strokeStyle = 'rgba(32,23,13,0.92)';
+  g.lineWidth = Math.max(1.1, wpx * 0.0035);
+  g.beginPath(); g.moveTo(x, yBase); g.lineTo(x, top); g.stroke();
+  g.fillStyle = 'rgba(141,47,34,0.88)';
+  g.lineWidth = 1;
+  g.beginPath();
+  g.moveTo(x, top);
+  g.quadraticCurveTo(x + fl * 0.55, top + 2 + wob * 0.4, x + fl, top + 4 + wob);
+  g.lineTo(x + fl * 0.62, top + 8 + wob * 0.5);
+  g.lineTo(x + fl, top + 13 + wob);
+  g.quadraticCurveTo(x + fl * 0.5, top + 15 + wob * 0.4, x, top + 13);
+  g.closePath(); g.fill(); g.stroke();
+  g.restore();
+}
+
+function updateFirstBound() {
+  const el = document.getElementById('firstbound');
+  if (!el) return;
+  if (story.maiden && story.qs && visit.charted.has(story.qs.slug)) {
+    story.maiden = false;
+    captionNow('Maiden landfall made. The sea is yours now: C opens the chart table.', 5200);
+  }
+  if (!story.maiden || !story.qs || ui.mode !== 'deck' || passage.on || passage.closing) {
+    if (!el.hidden) el.hidden = true;
+    return;
+  }
+  const d = distToNm(story.qs);
+  const trend = story._fbLast == null ? 0 : d - story._fbLast;
+  story._fbLast = d;
+  const txt = 'MAIDEN LANDFALL \u00b7 THE QUICK START GUIDE \u00b7 ' +
+    (d >= 9.95 ? String(Math.round(d)) : d.toFixed(2)) + ' nm' +
+    (ship.knots <= 0.25 ? ' \u00b7 F makes sail' : trend < -0.00001 ? ', closing' : trend > 0.00001 ? ', opening' : '');
+  if (el.textContent !== txt) el.textContent = txt;
+  if (el.hidden) el.hidden = false;
+}
+
+/* ---- the passage itself ---- */
+function passageTo(isle) {
+  if (!isle || passage.on || passage.closing) return;
+  firstOrder('sail');
+  passage.isle = isle;
+  passage.nm = distToNm(isle);
+  if (ui.slug) { $('anchorage').hidden = true; ui.slug = null; sound.reading(false); }
+  if (ship.anchored) { ship.anchored = false; ship.atAnchorOff = null; }
+  if (REDUCED) {
+    closeBelow();
+    ui.mode = 'deck';
+    landAfterPassage(true);
+    return;
+  }
+  passage.closing = true;
+  const below = $('below');
+  below.classList.add('passing');
+  setTimeout(() => {
+    below.classList.remove('passing');
+    passage.closing = false;
+    closeBelow();
+    ui.mode = 'deck';
+    beginPassage();
+  }, 430);
+}
+function beginPassage() {
+  const isle = passage.isle;
+  if (!isle) return;
+  const d = approachDirFor(isle);
+  const u = 0.55 / world.nmPerUnit;
+  passage.ax = ship.x; passage.ay = ship.y;
+  passage.bx = isle.pos.x - d.x * u;
+  passage.by = isle.pos.y - d.y * u;
+  passage.dur = clamp(1.4 + passage.nm * 0.022, 1.5, 2.4);
+  passage.t = 0;
+  passage.on = true;
+  diag.passage = { to: isle.slug, nm: +passage.nm.toFixed(2), dur: +passage.dur.toFixed(2) };
+  setBound(isle, true);
+  ship.sail = 'travel';
+  captionNow('Passage: ' + (Math.round(passage.nm * 10) / 10) + ' nm to ' + isle.title +
+    '. Any key lands you there.', 2800);
+  dirty = true;
+}
+function passageTick(dt) {
+  passage.t += dt;
+  const T = clamp(passage.t / passage.dur, 0, 1);
+  const s = T * T * (3 - 2 * T);
+  ship.x = lerp(passage.ax, passage.bx, s);
+  ship.y = lerp(passage.ay, passage.by, s);
+  const brg = norm360(Math.atan2(passage.bx - ship.x, -(passage.by - ship.y)) * 180 / Math.PI);
+  if (T < 0.999) { ship.bearing = ship.orderedBearing = brg; }
+  ship.omega = 0;
+  /* the way she carries, for the spray and the chant: a bell of speed */
+  ship.knots = 8 + 26 * (4 * s * (1 - s));
+  if (T >= 1) endPassage(false);
+}
+function endPassage(skipped) {
+  if (!passage.on) return;
+  passage.on = false;
+  landAfterPassage(false, skipped);
+}
+function landAfterPassage(reduced, skipped) {
+  const isle = passage.isle;
+  passage.isle = null;
+  if (!isle) return;
+  placeShipAtDistance(0.55, isle);
+  ship.sail = 'half';
+  ship.knots = 4.6;
+  visit.track.push({ x: ship.x, y: ship.y });
+  if (!reduced) fogSeePath(passage.ax, passage.ay, ship.x, ship.y, 0.8);
+  fogSee(ship.x, ship.y, FOG_SEE_NM);
+  logPacket(isle, 'passage');
+  if (reduced) {
+    captionNow('Passage made - ' + (Math.round(passage.nm * 10) / 10) + ' nm.', 5200);
+  } else {
+    captionNow('Passage made - ' + (Math.round(passage.nm * 10) / 10) + ' nm. ' +
+      isle.title + ' lies dead ahead.', 5200);
+  }
+  diag.passage = { landed: isle.slug, nm: +passage.nm.toFixed(2), skipped: !!skipped };
+  dirty = true;
+}
+function drawPassageSweep() {
+  const T = clamp(passage.t / passage.dur, 0, 1);
+  const v = Math.sin(T * Math.PI);
+  if (v <= 0.03) return;
+  const g = ctx;
+  const rr = rngFor('sweep:' + Math.floor(env.t * 14));
+  g.save();
+  /* the sky streams past */
+  g.globalAlpha = 0.34 * v;
+  g.strokeStyle = 'rgba(64,50,32,0.85)';
+  g.lineWidth = 1.4;
+  g.beginPath();
+  for (let i = 0; i < 13; i++) {
+    const y = 36 + rr() * (HORIZON - 80);
+    const x0 = rr() * (W + 200) - 100, len = (110 + rr() * 300) * v;
+    g.moveTo(x0, y); g.lineTo(x0 - len, y + len * 0.04);
+  }
+  g.stroke();
+  /* the water streams under her, drawn out into speed lines */
+  g.globalAlpha = 0.30 * v;
+  g.strokeStyle = 'rgba(70,54,34,0.8)';
+  g.lineWidth = 1.1;
+  g.beginPath();
+  for (let i = 0; i < 16; i++) {
+    const y = HORIZON + 26 + rr() * (H - HORIZON - 60);
+    const sp = (y - HORIZON) / (H - HORIZON);
+    const x0 = rr() * (W + 300) - 150, len = (60 + rr() * 200) * v * (0.5 + sp * 1.6);
+    const off = (x0 - W / 2) * 0.10 * sp;
+    g.moveTo(x0, y); g.lineTo(x0 - len + off, y + len * 0.10 * sp);
+  }
+  g.stroke();
+  /* and the bow throws spray */
+  g.globalAlpha = 0.5 * v;
+  g.fillStyle = 'rgba(241,231,208,0.92)';
+  for (let i = 0; i < 30; i++) {
+    const x = W / 2 + (rr() - 0.5) * 820;
+    const y = HORIZON + 110 + rr() * 330;
+    g.fillRect(x, y, 2 + rr() * 2.5, 1 + rr() * 2);
+  }
+  g.restore();
+}
+
+/* ---- THE PORTAL CONFIRM (owner law): every crossing asks, in the fiction ---- */
+const portal = { open: false, key: null, beat: '', ms: 0, denyT: {} };
+const PORTAL_Q = {
+  pixelcity: 'The boat stands ready under the glittering quay. Go ashore?',
+  bythedeep: 'The water ahead is ink, and the hatching waits to close over her. Sail in?',
+  longway: 'The path takes the cliff in long, easy zigzags. Follow it ashore?',
+  firstlight: 'That is no star, and she is answering. Answer her back?',
+  herbarium: 'The pressed sprig slipped from the log for a reason. Follow it?',
+  secreta: 'The cork will give if you draw it. Draw the cork?'
+};
+function portalAsk(key, beat, ms) {
+  if (portal.open) return;
+  if (portal.denyT[key] != null && env.t - portal.denyT[key] < 45) return;
+  portal.open = true; portal.key = key; portal.beat = beat; portal.ms = ms;
+  diag.portal = { open: true, key };
+  const el = $('portal');
+  el.querySelector('.po-q').textContent = PORTAL_Q[key] || 'Cross over?';
+  el.hidden = false;
+  requestAnimationFrame(() => {
+    el.classList.add('shown');
+    const y = document.getElementById('po-yes');
+    if (y) y.focus();
+  });
+}
+function portalAnswer(yes) {
+  if (!portal.open) return;
+  const key = portal.key, beat = portal.beat, ms = portal.ms;
+  portal.open = false;
+  const el = $('portal');
+  el.classList.remove('shown');
+  el.hidden = true;
+  diag.portal = { open: false, key: null, last: key, answered: yes ? 'yes' : 'no' };
+  if (yes) {
+    reallyCross(key, beat, ms);
+  } else {
+    portal.denyT[key] = env.t;
+    eggs.crossing = null;
+    diag.crossing = null;
+    captionNow('She stands off. The sea keeps what it keeps.', 3400);
+  }
+}
+function portalKeydown(e) {
+  if (!portal.open) return false;
+  const k = e.key;
+  if (k === 'Enter') {
+    const no = document.activeElement && document.activeElement.id === 'po-no';
+    portalAnswer(!no);
+    e.preventDefault(); return true;
+  }
+  if (k === 'y' || k === 'Y') { portalAnswer(true); e.preventDefault(); return true; }
+  if (k === 'n' || k === 'N' || k === 'Escape') { portalAnswer(false); e.preventDefault(); return true; }
+  if (k === 'Tab') {
+    /* the plate holds the focus: Tab (either direction) trades the two
+       answers and never walks out of the dialog */
+    const yes = document.getElementById('po-yes'), no = document.getElementById('po-no');
+    if (yes && no) (document.activeElement === yes ? no : yes).focus();
+    e.preventDefault(); return true;
+  }
+  e.preventDefault();
+  return true;                       // the plate holds the keyboard
 }
 
 /* the landfall plate on deck: crisp DOM, never painted into the canvas */
@@ -6572,11 +7819,16 @@ function updateLandfallPlate(sim) {
    ============================================================ */
 const sound = {
   on: store.get('sound', true) !== false,
-  ctx: null, master: null, bed: null, woke: false,
-  voices: [], buffers: [], credits: null,
-  singing: [], nextJoin: 0, joinEvery: 12, wantVoices: 0,
+  ctx: null, master: null, mix: null, duckG: null, an: null, bed: null, woke: false,
+  bank: [], files: null, credits: null, featured: [], featIx: 0,
+  crew: 0, nextJoin: 0, joinEvery: 12, wantVoices: 0,
+  slotNext: [], active: [],
+  lastId: null, lastPlay: null, gram: null, trig: [], lastStart: -1e9,
+  holdUntil: 0, nextFeatureAt: 0, readingOpen: false,
 
   init() {
+    this.lastPlay = new Map();
+    this.gram = new Map();
     this.paint();
     const wake = () => {
       if (this.woke) return;
@@ -6602,17 +7854,40 @@ const sound = {
   },
 
   async decodeAll() {
-    if (!this.ctx || !this.files || this.decoding || this.buffers.length) return;
+    if (!this.ctx || !this.files || this.decoding || this.bank.length) return;
     this.decoding = true;
     for (const f of this.files) {
       try {
         const ab = await fetch('audio/' + f.file).then(r => r.arrayBuffer());
         const buf = await this.ctx.decodeAudioData(ab);
-        this.buffers.push({ buf, rate: f.rate || 1, gain: f.gain || 1 });
+        this.bank.push({ name: f.file, role: f.role || 'response', buf, gain: f.gain || 1 });
       } catch (e) { /* skip a voice that will not decode */ }
     }
     this.decoding = false;
-    diag.voicesLoaded = this.buffers.length;
+    diag.voicesLoaded = this.bank.length;
+    this.loadSuno();
+  },
+
+  /* THE SUNO SLOT: drop mp3 files in audio/suno/ with a manifest.json beside
+     them ({ "verses": [{ "file", "title", "by", "gain" }] } - format documented
+     in CREDITS.txt) and they are detected here and woven into the programme as
+     featured verses, each with its credit line spoken on the plate. */
+  async loadSuno() {
+    if (!this.ctx) return;
+    try {
+      const man = await fetch('audio/suno/manifest.json').then(r => r.ok ? r.json() : null);
+      if (!man || !man.verses) return;
+      for (const v of man.verses) {
+        try {
+          const ab = await fetch('audio/suno/' + v.file).then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); });
+          const buf = await this.ctx.decodeAudioData(ab);
+          this.featured.push({ name: 'suno:' + v.file, title: v.title || v.file,
+            by: v.by || 'an unnamed hand', gain: clamp(+v.gain || 0.55, 0.05, 1), buf });
+        } catch (e) { /* a verse that will not decode stays ashore */ }
+      }
+      diag.sunoVerses = this.featured.length;
+      if (this.featured.length && this.ctx) this.nextFeatureAt = this.ctx.currentTime + 45 + Math.random() * 45;
+    } catch (e) { /* no folder, no verses: the bank carries the watch */ }
   },
 
   build() {
@@ -6624,6 +7899,17 @@ const sound = {
     this.master = c.createGain();
     this.master.gain.value = this.on ? 0.85 : 0;
     this.master.connect(c.destination);
+    /* everything - bed, voices, sfx - passes the duck before the master:
+       while the reading pane is open the whole mix eases to one quarter */
+    this.duckG = c.createGain();
+    this.duckG.gain.value = this.readingOpen ? 0.25 : 1;
+    this.mix = c.createGain();
+    this.mix.connect(this.duckG);
+    this.duckG.connect(this.master);
+    /* the ear the verifier listens with: post-master, so the toggle shows too */
+    this.an = c.createAnalyser();
+    this.an.fftSize = 2048;
+    this.master.connect(this.an);
 
     /* --- the bed: wind through rigging, and water along the hull --- */
     const len = Math.floor(c.sampleRate * 4);
@@ -6640,14 +7926,17 @@ const sound = {
 
     const windBP = c.createBiquadFilter();
     windBP.type = 'bandpass'; windBP.frequency.value = 520; windBP.Q.value = 0.7;
-    const windG = c.createGain(); windG.gain.value = 0.16;
+    /* OWNER MIX LAW (revised twice, final): the wind is a continuous sound,
+       so the whole wind layer sits at THIRTY PERCENT of its original gain -
+       first halved, then cut another 40 percent. 0.16 * 0.30 = 0.048. */
+    const windG = c.createGain(); windG.gain.value = 0.048;
 
     const seaLP = c.createBiquadFilter();
     seaLP.type = 'lowpass'; seaLP.frequency.value = 320;
     const seaG = c.createGain(); seaG.gain.value = 0.5;
 
-    src.connect(windBP); windBP.connect(windG); windG.connect(this.master);
-    src.connect(seaLP); seaLP.connect(seaG); seaG.connect(this.master);
+    src.connect(windBP); windBP.connect(windG); windG.connect(this.mix);
+    src.connect(seaLP); seaLP.connect(seaG); seaG.connect(this.mix);
     src.start();
 
     /* the swell breathes the water gain: the same period as the plate's roll */
@@ -6662,11 +7951,52 @@ const sound = {
     this.decodeAll();
   },
 
+  /* the rain layer (stage 2): a soft high wash through the same mix, so the
+     duck and the master rule it like everything else */
+  wxTune(rain, squall) {
+    if (!this.ctx || !this.bed) return;
+    const c = this.ctx, t = c.currentTime;
+    if (!this.wxRain) {
+      const len = Math.floor(c.sampleRate * 2);
+      const nb = c.createBuffer(1, len, c.sampleRate);
+      const d = nb.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      const src2 = c.createBufferSource();
+      src2.buffer = nb; src2.loop = true;
+      const bp = c.createBiquadFilter();
+      bp.type = 'bandpass'; bp.frequency.value = 2900; bp.Q.value = 0.55;
+      const gn = c.createGain(); gn.gain.value = 0;
+      src2.connect(bp); bp.connect(gn); gn.connect(this.mix);
+      src2.start();
+      this.wxRain = { gn, bp, noise: nb };
+    }
+    this.wxRain.gn.gain.setTargetAtTime(0.026 * rain + 0.012 * squall, t, 1.4);
+  },
+  /* one rolled thunder, softer than any voice, decaying long */
+  thunder() {
+    if (!this.ctx || !this.on || !this.wxRain) return;
+    const c = this.ctx, t = c.currentTime;
+    const src2 = c.createBufferSource();
+    src2.buffer = this.wxRain.noise; src2.loop = true; src2.playbackRate.value = 0.22;
+    const lp = c.createBiquadFilter();
+    lp.type = 'lowpass'; lp.frequency.value = 130; lp.Q.value = 0.4;
+    const gn = c.createGain();
+    gn.gain.setValueAtTime(0.0001, t);
+    gn.gain.exponentialRampToValueAtTime(0.20, t + 0.18);
+    gn.gain.exponentialRampToValueAtTime(0.10, t + 1.1);
+    gn.gain.exponentialRampToValueAtTime(0.0001, t + 3.2);
+    src2.connect(lp); lp.connect(gn); gn.connect(this.mix);
+    src2.start(t); src2.stop(t + 3.4);
+    diag.thunderPlayed = (diag.thunderPlayed || 0) + 1;
+  },
+
   /* the wind bed follows the real wind and the sail actually set */
   tune(windKn, knotsFrac) {
     if (!this.ctx || !this.bed) return;
     const t = this.ctx.currentTime;
-    this.bed.windG.gain.setTargetAtTime(0.09 + 0.14 * clamp(windKn / 24, 0, 1) + 0.05 * knotsFrac, t, 0.6);
+    /* the tune keeps its shape but the whole wind layer carries the owner's
+       30% trim - the chants are what one should hear, the wind stays low */
+    this.bed.windG.gain.setTargetAtTime(0.30 * (0.09 + 0.14 * clamp(windKn / 24, 0, 1) + 0.05 * knotsFrac), t, 0.6);
     this.bed.seaG.gain.setTargetAtTime(0.30 + 0.34 * knotsFrac, t, 0.6);
   },
 
@@ -6681,57 +8011,236 @@ const sound = {
     diag.joinEvery = Math.round(this.joinEvery * 10) / 10;
   },
 
+  /* ---- THE PROGRAMME ----
+     One-shot phrases in call-and-response, never looped. The lead hand calls
+     (call or verse); the watch answers after the call, each answer off the
+     beat. Laws, every one provable from the trigger log (__helmSound.trig):
+     never the same phrase twice in a row; no phrase-to-phrase sequence heard
+     again within ten minutes; a new small pitch and level for every play;
+     silence between phrases - the bed alone carries those bars. */
   step(dt, sailing) {
     if (!this.ctx || !this.on) return;
-    if (!this.buffers.length) return;
-    if (!sailing) {
-      if (this.singing.length) this.hush(2.2);
+    if (!sailing) { if (this.crew || this.active.length) this.hush(2.0); return; }
+    if (!this.bank.length) return;
+    const now = this.ctx.currentTime;
+    if (this.crew < this.wantVoices) {
+      this.nextJoin -= dt;
+      if (this.nextJoin <= 0) {
+        this.slotNext[this.crew] = now + 0.3 + Math.random() * 1.4;
+        this.crew++;
+        this.nextJoin = this.joinEvery;
+        diag.voicesSinging = this.crew;
+      }
+    }
+    if (now < this.holdUntil) return;
+    /* a featured verse (the suno slot) takes the deck alone, now and then */
+    if (this.featured.length && this.nextFeatureAt && now >= this.nextFeatureAt && this.crew > 0) {
+      this.playFeatured(now);
       return;
     }
-    this.nextJoin -= dt;
-    if (this.nextJoin <= 0 && this.singing.length < this.wantVoices) {
-      this.nextJoin = this.joinEvery;
-      this.joinVoice(this.singing.length);
+    for (let s = 0; s < this.crew; s++)
+      if (now >= (this.slotNext[s] || 0)) this.sing(s, now);
+  },
+
+  sing(s, now) {
+    /* one start per bar, ship-wide: with seventeen phrases the ten-minute
+       law affords at most ~272 pairs in the window; a floor of 1.9 s between
+       any two starts keeps the walk well inside that budget and no two
+       phrases can ever begin an audible-double apart */
+    if (now - this.lastStart < 1.9) {
+      this.slotNext[s] = this.lastStart + 1.9 + Math.random() * 0.7;
+      return;
+    }
+    const lead = s === 0;
+    let pool;
+    if (lead) pool = ['call', 'verse'];
+    else if (this.crew >= 4 && Math.random() < 0.10) pool = ['watch'];
+    else if (this.crew >= 3 && Math.random() < 0.07) pool = ['accent'];
+    else pool = ['response'];
+    const pick = this.pickPhrase(pool);
+    if (!pick) { this.slotNext[s] = now + 2; return; }
+    const dur = this.playPhrase(pick, s, now);
+    /* the silence law: every phrase is followed by a breath, longer where
+       the harbour's own rhythm is slow */
+    this.slotNext[s] = now + dur + 1.6 + Math.random() * 2.8 + this.joinEvery * 0.12;
+    if (lead) {
+      /* call and response: the watch holds until the call is mostly out */
+      for (let o = 1; o < this.crew; o++)
+        this.slotNext[o] = Math.max(this.slotNext[o] || 0,
+          now + dur * (0.55 + Math.random() * 0.5) + (o - 1) * (0.35 + Math.random() * 0.55));
     }
   },
 
-  joinVoice(n) {
+  pickPhrase(pools) {
+    const now = this.ctx.currentTime;
+    /* the three picking laws, applied to any candidate list:
+       one - never the same phrase twice in a row, anywhere in the programme;
+       one-and-a-half - no phrase STARTS again within 20 s of its own last
+       start, on any slot (the audible-double law: two slots may never take
+       up the same phrase moments apart);
+       two - no phrase-to-phrase sequence heard again within ten minutes. */
+    const lawful = list => list.filter(b =>
+      b.name !== this.lastId &&
+      now - (this.lastPlay.get(b.name) || -1e9) > 20 &&
+      (!this.lastId || (t => t === undefined || now - t > 600)(this.gram.get(this.lastId + '>' + b.name))));
+    let ok = lawful(this.bank.filter(b => pools.indexOf(b.role) >= 0));
+    /* when a role's pool has no lawful successor the WHOLE bank is asked
+       before anyone opens their mouth - and when the whole bank is unlawful
+       the bar stays SILENT and the bed carries it. The law never relaxes. */
+    if (!ok.length) ok = lawful(this.bank);
+    if (!ok.length) { diag.lawSilences = (diag.lawSilences || 0) + 1; return null; }
+    /* among the lawful, lean to the least recently heard */
+    ok.sort((a, b) => (this.lastPlay.get(a.name) || 0) - (this.lastPlay.get(b.name) || 0));
+    const w = ok.slice(0, Math.max(1, Math.min(3, ok.length)));
+    return w[Math.floor(Math.random() * w.length)];
+  },
+
+  playPhrase(pick, s, now) {
     const c = this.ctx;
-    const pick = this.buffers[n % this.buffers.length];
     const src = c.createBufferSource();
     src.buffer = pick.buf;
-    src.loop = true;
-    /* each voice its own hand: a little off the last one, never in tune with it */
-    src.playbackRate.value = pick.rate * (1 + (n === 0 ? 0 : (n % 2 ? 1 : -1) * (0.014 + 0.011 * n)));
+    /* law three: a new small pitch and level for every play */
+    const rate = 1 + (Math.random() - 0.5) * 0.036;
+    src.playbackRate.value = rate;
+    /* owner order: sung voices +20% over the old levels (0.34 lead, 0.22
+       watch), capped well below clipping by the master at 0.85 */
+    const level = pick.gain * (s === 0 ? 0.408 : 0.264) * (0.90 + Math.random() * 0.20);
+    const dur = pick.buf.duration / rate;
     const g = c.createGain();
     g.gain.value = 0;
-    g.gain.setTargetAtTime(pick.gain * (n === 0 ? 0.34 : 0.22), c.currentTime, 1.4);
+    g.gain.setTargetAtTime(level, now, 0.30);
+    g.gain.setTargetAtTime(0, now + Math.max(0.2, dur - 0.40), 0.28);
     const pan = c.createStereoPanner ? c.createStereoPanner() : null;
-    if (pan) { pan.pan.value = n === 0 ? 0 : ((n % 2 ? 1 : -1) * (0.2 + 0.12 * n)); src.connect(g); g.connect(pan); pan.connect(this.master); }
-    else { src.connect(g); g.connect(this.master); }
-    /* call and response: every voice after the first comes in off the beat */
-    src.start(c.currentTime + (n === 0 ? 0 : 0.4 + 0.22 * n));
-    this.singing.push({ src, g });
-    diag.voicesSinging = this.singing.length;
+    if (pan) {
+      pan.pan.value = s === 0 ? 0 : ((s % 2 ? 1 : -1) * (0.18 + 0.11 * s)) * (0.8 + Math.random() * 0.4);
+      src.connect(g); g.connect(pan); pan.connect(this.mix);
+    } else { src.connect(g); g.connect(this.mix); }
+    src.start(now + 0.02);
+    src.stop(now + dur + 1.0);
+    const rec = { g, src };
+    this.active.push(rec);
+    src.onended = () => { const i = this.active.indexOf(rec); if (i >= 0) this.active.splice(i, 1); };
+    /* the log that proves the laws */
+    if (this.lastId) this.gram.set(this.lastId + '>' + pick.name, now);
+    this.lastId = pick.name;
+    this.lastPlay.set(pick.name, now);
+    this.lastStart = now;
+    this.trig.push({ t: Math.round(now * 100) / 100, id: pick.name, slot: s,
+      rate: Math.round(rate * 1000) / 1000, level: Math.round(level * 1000) / 1000 });
+    if (this.trig.length > 800) this.trig.splice(0, this.trig.length - 800);
+    diag.shantyTrigs = this.trig.length;
+    if (this.gram.size > 900) {
+      for (const [k, t] of this.gram) if (now - t > 900) this.gram.delete(k);
+    }
+    return dur;
+  },
+
+  playFeatured(now) {
+    const v = this.featured[this.featIx % this.featured.length];
+    this.featIx++;
+    const c = this.ctx;
+    const src = c.createBufferSource();
+    src.buffer = v.buf;
+    const g = c.createGain();
+    g.gain.value = 0;
+    g.gain.setTargetAtTime(v.gain, now, 0.6);
+    const dur = v.buf.duration;
+    g.gain.setTargetAtTime(0, now + Math.max(0.5, dur - 0.9), 0.5);
+    src.connect(g); g.connect(this.mix);
+    src.start(now + 0.05);
+    src.stop(now + dur + 1.5);
+    const rec = { g, src };
+    this.active.push(rec);
+    src.onended = () => { const i = this.active.indexOf(rec); if (i >= 0) this.active.splice(i, 1); };
+    this.holdUntil = now + dur + 2.5;      /* the crew stands silent for the verse */
+    this.lastStart = now;
+    this.nextFeatureAt = now + dur + 90 + Math.random() * 60;
+    this.trig.push({ t: Math.round(now * 100) / 100, id: v.name, slot: 'featured', rate: 1, level: v.gain });
+    caption('The crew takes up "' + v.title + '" - ' + v.by + '.', 5600);
+  },
+
+  /* the cable runs out and the hook takes the ground: the one arrival
+     one-shot, synthesised like the bed, and it speaks BEFORE the duck settles */
+  anchorShot() {
+    if (!this.ctx || !this.on) return;
+    const c = this.ctx, t = c.currentTime;
+    const len = Math.floor(c.sampleRate * 0.9);
+    const nb = c.createBuffer(1, len, c.sampleRate);
+    const d = nb.getChannelData(0);
+    for (let i = 0; i < len; i++) {
+      const x = i / c.sampleRate;
+      const pulse = Math.max(0, Math.sin(x * 2 * Math.PI * (11 - x * 6)));
+      d[i] = (Math.random() * 2 - 1) * pulse * Math.exp(-x * 2.2);
+    }
+    const src = c.createBufferSource(); src.buffer = nb;
+    const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 820; bp.Q.value = 1.1;
+    const g = c.createGain(); g.gain.value = 0.42;
+    src.connect(bp); bp.connect(g); g.connect(this.mix);
+    src.start(t);
+    const o = c.createOscillator();
+    o.frequency.setValueAtTime(120, t + 0.55);
+    o.frequency.exponentialRampToValueAtTime(48, t + 0.85);
+    const og = c.createGain();
+    og.gain.setValueAtTime(0.0001, t + 0.55);
+    og.gain.exponentialRampToValueAtTime(0.4, t + 0.62);
+    og.gain.exponentialRampToValueAtTime(0.0001, t + 1.05);
+    o.connect(og); og.connect(this.mix);
+    o.start(t + 0.55); o.stop(t + 1.1);
+  },
+
+  /* THE DUCK (owner order): while the reading pane is open the entire mix
+     eases to one quarter - about minus twelve decibels - and eases back when
+     it closes. No clicks: exponential targets both ways. The programme keeps
+     running behind the duck; nothing stops. */
+  reading(open) {
+    open = !!open;
+    if (this.readingOpen === open) return;
+    this.readingOpen = open;
+    diag.ducked = open;
+    if (!this.ctx || !this.duckG) return;
+    const t = this.ctx.currentTime;
+    this.duckG.gain.cancelScheduledValues(t);
+    this.duckG.gain.setTargetAtTime(open ? 0.25 : 1, t + (open ? 0.35 : 0.02), open ? 0.40 : 0.30);
+  },
+
+  /* the verifier's ear: mean RMS off the analyser over roughly `sec` seconds */
+  rms(sec) {
+    const an = this.an;
+    if (!an) return Promise.resolve(0);
+    const buf = new Float32Array(an.fftSize);
+    let acc = 0, n = 0;
+    return new Promise(res => {
+      const t0 = performance.now();
+      const tick = () => {
+        an.getFloatTimeDomainData(buf);
+        let s = 0;
+        for (let i = 0; i < buf.length; i++) s += buf[i] * buf[i];
+        acc += Math.sqrt(s / buf.length); n++;
+        if (performance.now() - t0 < (sec || 2) * 1000) setTimeout(tick, 50);
+        else res(acc / Math.max(1, n));
+      };
+      tick();
+    });
   },
 
   hush(sec) {
     const c = this.ctx;
-    for (const v of this.singing) {
+    if (c) for (const v of this.active) {
       try {
+        v.g.gain.cancelScheduledValues(c.currentTime);
         v.g.gain.setTargetAtTime(0, c.currentTime, (sec || 1.5) / 3);
         v.src.stop(c.currentTime + (sec || 1.5));
       } catch (e) { /* already stopped */ }
     }
-    this.singing = [];
+    this.active = [];
+    this.crew = 0;
+    this.slotNext = [];
     this.nextJoin = 0;
     diag.voicesSinging = 0;
   },
 
   landfall(isle) {
     this.setHarbour(isle);
-    if (!this.ctx || !this.on) return;
-    this.hush(3.4);
   },
 
   toggle() {
@@ -6765,8 +8274,8 @@ window.__helmSoundIsle = slug => world.bySlug.get(slug);
 
 /* ---------------- boot ---------------- */
 /* ============================================================
-   THE SEVEN CROSSINGS (portal law, owner approved)
-   Seven passages woven into the sea, each one DISCOVERED, never a menu.
+   THE SIX CROSSINGS (portal law, owner approved; the crate left the sea)
+   Six passages woven into the sea, each one DISCOVERED, never a menu.
    Every affordance lives in the fiction; approaching or hovering gives one
    in-register hint line; activating plays a short in-fiction beat and then
    crosses to the sibling at ../KEY/. Zero cost while an egg is off-screen:
@@ -6784,13 +8293,11 @@ window.__helmSoundIsle = slug => world.bySlug.get(slug);
    (e) the pressed specimen - slips from the captain's log, once per visit.
    (f) the bottle         - went over the side off the home island and
        drifted down the citation wind until it found open water.
-   (g) the crate          - washed up on the smallest strand in the sea
-       (fewest words), stamped with a mark no chandler of ours uses.
    ============================================================ */
 const eggs = {
   ready: false, crossing: null,
   city: null, ink: null, bottle: null, star: null,
-  crateIsle: null, pathIsle: null,
+  pathIsle: null,
   fixedStars: [],
   hits: [], hoverT: {}, cursorOn: false,
   hinted: {}, starHold: 0, starHinted: false,
@@ -6801,8 +8308,7 @@ const eggs = {
 const EGG_HINTS = {
   city: 'No chart of ours gives it a name. Click, and she makes for the light.',
   ink: 'The water runs to flat ink past that line. Click, or sail in.',
-  bottle: 'A message in a bottle. Click to fish it out.',
-  crate: 'A washed-up crate, strangely stamped. Click to break it open.'
+  bottle: 'A message in a bottle. Click to fish it out.'
 };
 
 function initEggs() {
@@ -6866,9 +8372,7 @@ function initEggs() {
   }
   eggs.bottle = { x: bx, y: by };
 
-  /* (g) the smallest strand; (c) the longest shore */
-  eggs.crateIsle = isles.reduce((a, b) =>
-    (b.words < a.words || (b.words === a.words && b.slug < a.slug)) ? b : a);
+  /* (c) the longest shore */
   eggs.pathIsle = isles.reduce((a, b) =>
     (b.words > a.words || (b.words === a.words && b.slug < a.slug)) ? b : a);
 
@@ -6893,7 +8397,7 @@ function initEggs() {
     city: { x: +eggs.city.x.toFixed(4), y: +eggs.city.y.toFixed(4) },
     ink: { x: +eggs.ink.x.toFixed(4), y: +eggs.ink.y.toFixed(4), rNm: +inkR.toFixed(3) },
     bottle: { x: +bx.toFixed(4), y: +by.toFixed(4) },
-    crate: eggs.crateIsle.slug, path: eggs.pathIsle.slug,
+    path: eggs.pathIsle.slug,
     starK: eggs.star.K, fixedStars: eggs.fixedStars.length
   };
 }
@@ -6908,11 +8412,16 @@ function eggBearing(key) {
   const E = key === 'city' ? eggs.city : key === 'ink' ? eggs.ink :
             key === 'bottle' ? eggs.bottle : null;
   if (!E) return 0;
-  return norm360(Math.atan2(E.x - ship.x, E.y - ship.y) * 180 / Math.PI);
+  return norm360(Math.atan2(E.x - ship.x, -(E.y - ship.y)) * 180 / Math.PI);
 }
 
-/* the beat, then the crossing. Reduced motion crosses instantly. */
+/* the portal law: every crossing asks first, in the fiction - YES or NO,
+   mouse or Tab or Y/N or Enter/Escape. The beat plays only on YES. */
 function crossTo(key, beat, ms) {
+  if (eggs.crossing || portal.open) return;
+  portalAsk(key, beat, ms);
+}
+function reallyCross(key, beat, ms) {
   if (eggs.crossing) return;
   eggs.crossing = key;
   diag.crossing = key;
@@ -6929,8 +8438,6 @@ function eggActivate(key) {
     crossTo('secreta', 'The cork gives: a page inked in four colours, rolled tight against the salt.', 1700);
   } else if (key === 'ink' && eggNm('ink') < 1.8) {
     crossTo('bythedeep', 'She noses in. The hatching closes over the hull like wet ink over a pen line.', 1700);
-  } else if (key === 'crate' && distToNm(eggs.crateIsle) < 1.7) {
-    crossTo('secretb', 'The lid comes away: straw, oilcloth, and something packed with great care.', 1700);
   } else if (key === 'city') {
     /* clicking the light shapes a course; the crossing is made by anchoring */
     firstOrder('steer');
@@ -6991,12 +8498,6 @@ function eggTick(dt) {
   if (bd < 0.10) {
     crossTo('secreta', 'The bow lifts her from the water. The cork gives: a page inked in four colours.', 1700);
     return;
-  }
-
-  const kd = distToNm(eggs.crateIsle);
-  if (kd < 1.3 && t - (eggs.hinted.crate || -99) > 30) {
-    eggs.hinted.crate = t;
-    captionNow('Something square lies broached on the strand: a crate, stamped with a mark no chandler of ours uses.', 4600);
   }
 
   /* (d) holding the glass on the one that moves */
@@ -7079,7 +8580,7 @@ function drawStars(map) {
 function eggScreen(wx, wy, worldDY, map) {
   const dx = wx - ship.x, dy = wy - ship.y;
   const dist = Math.hypot(dx, dy) * world.nmPerUnit;
-  const az = angDiff(norm360(Math.atan2(dx, dy) * 180 / Math.PI), ship.bearing);
+  const az = angDiff(norm360(Math.atan2(dx, -dy) * 180 / Math.PI), ship.bearing);
   const f = Math.pow(clamp(1 - dist / 3.4, 0, 1), 1.55);
   let x = W / 2 + az * PXDEG;
   let y = HORIZON + 8 + f * 168 + worldDY * (0.6 + f * 0.8);
@@ -7091,6 +8592,7 @@ function eggScreen(wx, wy, worldDY, map) {
 function drawEggs(sim, worldDY, map) {
   if (!eggs.ready) return;
   drawStars(map);
+  drawConstellation(map);
   drawInkEgg(sim, worldDY, map);
   drawBottleEgg(sim, worldDY, map);
 }
@@ -7262,58 +8764,6 @@ function drawBottleEgg(sim, worldDY, map) {
   if (!map) eggs.hits.push({ key: 'bottle', x: P.x, y: P.y, r: Math.max(14, 30 * s), d: P.dist });
 }
 
-/* (g) the crate on the strand, drawn at its island's own waterline */
-function drawCrateEgg(x, yBase, wpx, dist, isLens) {
-  const cw = clamp(wpx * 0.075, 6, 52);
-  if (cw < 6.5) return;
-  const g = ctx;
-  const cx2 = x + wpx * 0.30, cy2 = yBase - cw * 0.10;
-  g.save();
-  g.translate(cx2, cy2);
-  /* the sand it is bedded in */
-  g.fillStyle = 'rgba(226,210,180,0.85)';
-  g.beginPath();
-  g.ellipse(0, 0, cw * 1.05, cw * 0.22, 0, 0, TAU);
-  g.fill();
-  g.rotate(-0.10);
-  /* slats */
-  g.fillStyle = 'rgba(168,138,96,0.60)';
-  g.strokeStyle = 'rgba(52,40,26,0.9)';
-  g.lineWidth = Math.max(0.8, cw * 0.045);
-  g.fillRect(-cw * 0.5, -cw * 0.74, cw, cw * 0.72);
-  g.strokeRect(-cw * 0.5, -cw * 0.74, cw, cw * 0.72);
-  g.beginPath();
-  for (const fx of [-0.17, 0.17]) {
-    g.moveTo(cw * fx, -cw * 0.74);
-    g.lineTo(cw * fx, -cw * 0.02);
-  }
-  g.moveTo(-cw * 0.5, -cw * 0.74);
-  g.lineTo(cw * 0.5, -cw * 0.02);
-  g.globalAlpha = 0.7;
-  g.stroke();
-  g.globalAlpha = 1;
-  /* the unfamiliar stamp: a bold geometric mark in dull red, no hand of ours */
-  if (cw > 15) {
-    g.strokeStyle = 'rgba(141,47,34,0.85)';
-    g.lineWidth = Math.max(1, cw * 0.06);
-    g.beginPath();
-    g.arc(0, -cw * 0.38, cw * 0.20, 0, TAU);
-    g.stroke();
-    g.beginPath();
-    g.moveTo(0, -cw * 0.52);
-    g.lineTo(cw * 0.12, -cw * 0.30);
-    g.lineTo(-cw * 0.12, -cw * 0.30);
-    g.closePath();
-    g.stroke();
-    g.fillStyle = 'rgba(141,47,34,0.85)';
-    g.beginPath();
-    g.arc(0, -cw * 0.38, cw * 0.045, 0, TAU);
-    g.fill();
-  }
-  g.restore();
-  if (!isLens) eggs.hits.push({ key: 'crate', x: cx2, y: cy2 - cw * 0.4, r: Math.max(12, cw), d: dist });
-}
-
 /* (a) the nameless city: 27 towers (one per community, heights from member
    counts), 290 windows (one per page), lit against the far sky */
 function bakeCity() {
@@ -7389,7 +8839,7 @@ function drawCityEgg(sim, worldDY, isLens) {
   const d2 = dxu * dxu + dyu * dyu;
   if (d2 > eggs.cityVisU2) return;
   const dist = Math.sqrt(d2) * world.nmPerUnit;
-  const az = angDiff(norm360(Math.atan2(dxu, dyu) * 180 / Math.PI), ship.bearing);
+  const az = angDiff(norm360(Math.atan2(dxu, -dyu) * 180 / Math.PI), ship.bearing);
   if (Math.abs(az) > 66) return;
   if (!bake.city) bakeCity();
   const t = env.t, mix = env.hourMix, g = ctx;
@@ -7453,7 +8903,6 @@ function eggState() {
     city: { x: eggs.city.x, y: eggs.city.y, nm: +eggNm('city').toFixed(2) },
     ink: { x: eggs.ink.x, y: eggs.ink.y, rNm: eggs.ink.rNm, nm: +eggNm('ink').toFixed(2) },
     bottle: { x: eggs.bottle.x, y: eggs.bottle.y, nm: +eggNm('bottle').toFixed(2) },
-    crate: { slug: eggs.crateIsle.slug, nm: +distToNm(eggs.crateIsle).toFixed(2) },
     path: { slug: eggs.pathIsle.slug },
     star: { K: eggs.star.K, screen: starScreen(env.t), on: starBlink(env.t), hold: +eggs.starHold.toFixed(2) },
     specimen: { slipped: eggs.specimenSlipped },
@@ -7463,7 +8912,6 @@ function eggState() {
 }
 function eggSailTo(key, nm) {
   if (!eggs.ready) return false;
-  if (key === 'crate') { placeShipAtDistance(nm == null ? 1.0 : nm, eggs.crateIsle); dirty = true; return true; }
   if (key === 'path') { placeShipAtDistance(nm == null ? 1.0 : nm, eggs.pathIsle); dirty = true; return true; }
   const E = key === 'city' ? eggs.city : key === 'ink' ? eggs.ink :
             key === 'bottle' ? eggs.bottle : null;
@@ -7477,7 +8925,7 @@ function eggSailTo(key, nm) {
   ship.x = E.x - ax2 * d;
   ship.y = E.y - ay2 * d;
   /* the bottle rides a point or so off the bow, clear of the bow post */
-  const brg = norm360(Math.atan2(E.x - ship.x, E.y - ship.y) * 180 / Math.PI -
+  const brg = norm360(Math.atan2(E.x - ship.x, -(E.y - ship.y)) * 180 / Math.PI -
                       (key === 'bottle' ? 12 : 0));
   ship.bearing = ship.orderedBearing = brg;
   ship.omega = 0;
@@ -7532,6 +8980,1745 @@ const PATH_SVG =
   '<path d="M 182 33 L 181 37 M 187 33 L 188 37 M 190 29 q 4 -3 3 -7"/>' +
   '</g></svg>';
 
+/* ============================================================
+   STAGE 2, IDEA 1 - YOUR CHART IS DRAWN BY YOUR VOYAGES
+   The chart opens as THE KNOWN CHART: only the waters this visit has
+   actually sailed are firmly inked; everything else lies under banks of
+   engraved cloud, pale rumor beneath ("by report only"). The soundings the
+   leadsman actually took are numbered along the track. A switch on the
+   sheet lifts the fog - THE FULL CHART - the banks rolling off downwind,
+   eased and directional; switching back rolls them home. Reduced motion
+   swaps at once. Everything persists for the visit through the same store
+   the log uses. Every hole in the fog is a place the keel truly went.
+   ============================================================ */
+const FOG_SEE_NM = 1.35;         /* the horizon a deck credibly surveys */
+function fogCanvas(w, h) { const c = document.createElement('canvas'); c.width = Math.ceil(w); c.height = Math.ceil(h); return c; }         /* the horizon a deck credibly surveys */
+const fog = {
+  mode: store.get('fogmode', 'known') === 'full' ? 'full' : 'known',
+  cellNm: 0.55,
+  seen: new Set(store.get('seen', [])),
+  cols: 0, rows: 0, gx0: 0, gy0: 0, cu: 0,
+  ready: false, dirty: true, seenDirty: false,
+  washCv: null, puffCv: null, puffs: [], stamps: null,
+  zoomCv: null, zoomKey: '', specs: null, holeCv: null,
+  anim: false, animT0: 0, animDur: 1600, animDir: 1, animRaf: 0,
+  vell: null
+};
+
+function fogInitGrid() {
+  if (fog.ready || !world.bounds) return;
+  const B = world.bounds, mgn = 2.4 / world.nmPerUnit;
+  fog.cu = fog.cellNm / world.nmPerUnit;
+  fog.gx0 = B.minx - mgn; fog.gy0 = B.miny - mgn;
+  fog.cols = Math.max(8, Math.ceil((B.maxx - B.minx + mgn * 2) / fog.cu));
+  fog.rows = Math.max(8, Math.ceil((B.maxy - B.miny + mgn * 2) / fog.cu));
+  fog.ready = true;
+  diag.fogGrid = { cols: fog.cols, rows: fog.rows, cellNm: fog.cellNm };
+}
+function fogIdx(gx, gy) { return gy * fog.cols + gx; }
+function fogSeenAt(x, y) {
+  if (!fog.ready) return true;
+  const gx = Math.floor((x - fog.gx0) / fog.cu), gy = Math.floor((y - fog.gy0) / fog.cu);
+  if (gx < 0 || gy < 0 || gx >= fog.cols || gy >= fog.rows) return false;
+  return fog.seen.has(fogIdx(gx, gy));
+}
+/* the keel surveys a disk of water around herself */
+function fogSee(x, y, rNm) {
+  if (!fog.ready) return;
+  const r = (rNm || FOG_SEE_NM) / world.nmPerUnit;
+  const g0x = Math.max(0, Math.floor((x - r - fog.gx0) / fog.cu));
+  const g1x = Math.min(fog.cols - 1, Math.floor((x + r - fog.gx0) / fog.cu));
+  const g0y = Math.max(0, Math.floor((y - r - fog.gy0) / fog.cu));
+  const g1y = Math.min(fog.rows - 1, Math.floor((y + r - fog.gy0) / fog.cu));
+  let grew = false;
+  for (let gy = g0y; gy <= g1y; gy++) for (let gx = g0x; gx <= g1x; gx++) {
+    const cx = fog.gx0 + (gx + 0.5) * fog.cu, cy = fog.gy0 + (gy + 0.5) * fog.cu;
+    if ((cx - x) * (cx - x) + (cy - y) * (cy - y) > r * r) continue;
+    const k = fogIdx(gx, gy);
+    if (!fog.seen.has(k)) { fog.seen.add(k); grew = true; }
+  }
+  if (grew) { fog.dirty = true; fog.seenDirty = true; diag.fogSeen = fog.seen.size; }
+}
+/* a passage is sailed water: the corridor of the crossing is surveyed too */
+function fogSeePath(ax, ay, bx, by, rNm) {
+  const d = Math.hypot(bx - ax, by - ay);
+  const step = (rNm || 0.8) / world.nmPerUnit * 0.9;
+  const n = Math.max(1, Math.ceil(d / step));
+  for (let i = 0; i <= n; i++) fogSee(lerp(ax, bx, i / n), lerp(ay, by, i / n), rNm || 0.8);
+}
+function fogPersist() {
+  if (!fog.seenDirty) return;
+  fog.seenDirty = false;
+  store.set('seen', [...fog.seen]);
+  store.set('fogmode', fog.mode);
+}
+function isleSeen(I) { return visit.charted.has(I.slug) || fogSeenAt(I.pos.x, I.pos.y); }
+function fogHides(I) {
+  /* the waters you are BOUND FOR are pricked on the chart by your own
+     sailing orders: the maiden Quick Start above all - QUICK START FIRST
+     must hold on every path, fog or no fog */
+  if (I === ship.bound || (story.maiden && story.qs && I === story.qs)) return false;
+  return fog.mode === 'known' && !fog.anim && !isleSeen(I);
+}
+function fogRumorAt(sx, sy) {
+  if (fog.mode !== 'known') return false;
+  return !fogSeenAt((sx - chart.ox) / chart.k, (sy - chart.oy) / chart.k);
+}
+function fogSeenCount() {
+  let n = 0;
+  for (const I of world.islands) if (isleSeen(I)) n++;
+  return n;
+}
+
+/* ---- the engraved cloud banks: one geometry, two hands.
+   The billows are laid down once as numbers; the bitmap stamps blit cheap
+   through gestures and the lift, and the settled zoom redraws the very
+   same banks as vectors so a magnified fog stays engraving, not pixels. ---- */
+function mkPuffSpecs() {
+  if (fog.specs) return;
+  fog.specs = [];
+  for (let v = 0; v < 3; v++) {
+    const rnd = rngFor('fogpuff:' + v);
+    const sp = { lobes: [], curlR: 0, fracs: [] };
+    const n = 3 + Math.floor(rnd() * 2);
+    for (let i = 0; i < n; i++) sp.lobes.push([14 + rnd() * 12, 9 + rnd() * 9]);
+    sp.curlR = 4 + rnd() * 2;
+    for (let i = 0; i < 4; i++) sp.fracs.push(0.7 + rnd() * 0.3);
+    fog.specs.push(sp);
+  }
+}
+function paintPuffShape(g, sp) {
+  const cx = 42, cy = 34;
+  /* the bank: a row of stacked billow arcs with a curled end, the same
+     key the sky's woodcut clouds are cut to */
+  g.fillStyle = 'rgba(240,231,210,0.96)';
+  g.strokeStyle = INK + '0.52)';
+  g.lineWidth = 1.05;
+  g.beginPath();
+  g.moveTo(cx - 34, cy + 10);
+  let x = cx - 34;
+  for (const wh of sp.lobes) {
+    g.arc(x + wh[0] / 2, cy + 10 - wh[1] * 0.24, wh[0] / 2, Math.PI, 0, false);
+    x += wh[0];
+  }
+  g.lineTo(x, cy + 10);
+  g.closePath();
+  g.fill(); g.stroke();
+  /* the curled end and the base lines */
+  g.beginPath();
+  g.arc(x - 3, cy + 6, sp.curlR, -0.6, Math.PI * 1.1);
+  g.stroke();
+  g.strokeStyle = INK + '0.30)';
+  g.lineWidth = 0.6;
+  for (let i = 0; i < 4; i++) {
+    const yy = cy + 10 - 2 - i * 2.6, span = 26 - i * 5;
+    g.beginPath(); g.moveTo(cx - span, yy); g.lineTo(cx + span * sp.fracs[i], yy);
+    g.stroke();
+  }
+}
+function bakeFogStamps() {
+  if (fog.stamps) return;
+  mkPuffSpecs();
+  fog.stamps = [];
+  for (let v = 0; v < 3; v++) {
+    const c = fogCanvas(84, 56), g = c.getContext('2d');
+    g.lineJoin = 'round'; g.lineCap = 'round';
+    paintPuffShape(g, fog.specs[v]);
+    fog.stamps.push(c);
+  }
+}
+function drawPuffVec(g, P, a) {
+  g.save();
+  g.translate(P.x, P.y);
+  g.scale(P.s * 0.5, P.s * 0.5);
+  g.translate(-42, -28);
+  g.globalAlpha = a * (0.72 + 0.22 * P.ph);
+  paintPuffShape(g, fog.specs[P.v]);
+  g.restore();
+}
+function fogHole() {
+  if (!fog.holeCv) {
+    fog.holeCv = fogCanvas(64, 64);
+    const hg = fog.holeCv.getContext('2d');
+    const rg = hg.createRadialGradient(32, 32, 4, 32, 32, 32);
+    rg.addColorStop(0, 'rgba(0,0,0,1)');
+    rg.addColorStop(0.62, 'rgba(0,0,0,0.9)');
+    rg.addColorStop(1, 'rgba(0,0,0,0)');
+    hg.fillStyle = rg; hg.fillRect(0, 0, 64, 64);
+  }
+  return fog.holeCv;
+}
+
+function fogVellumPts() {
+  if (!fog.vell) fog.vell = tornSheetPath(null);
+  return fog.vell;
+}
+
+/* ---- the fog layers, rebuilt only when the seen water grows ---- */
+function rebuildFog() {
+  if (!fog.ready || !chart.geo) return;
+  fog.dirty = false;
+  bakeFogStamps();
+  const dpr = Math.min(chart.dpr || 1, 2);
+  /* THE WASH: pale rumor over everything unsurveyed, holes where the keel went */
+  if (!fog.washCv) fog.washCv = fogCanvas(CHART_W * dpr, CHART_H * dpr);
+  {
+    const g = fog.washCv.getContext('2d');
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.clearRect(0, 0, CHART_W, CHART_H);
+    g.save();
+    g.beginPath(); pathThrough(g, fogVellumPts(), true); g.clip();
+    g.fillStyle = 'rgba(238,229,207,0.86)';
+    g.fillRect(0, 0, CHART_W, CHART_H);
+    /* a light unknown-water hatch, the draughtsman's "no survey here" */
+    g.strokeStyle = INK + '0.045)';
+    g.lineWidth = 0.7;
+    g.beginPath();
+    for (let x = -CHART_H; x < CHART_W; x += 11) {
+      g.moveTo(x, 0); g.lineTo(x + CHART_H, CHART_H);
+    }
+    g.stroke();
+    /* the holes: every surveyed cell is cut out with a soft edge */
+    const hole = fogHole();
+    g.globalCompositeOperation = 'destination-out';
+    const cellPx = fog.cu * chart.k;
+    const hr = Math.max(7, cellPx * 1.65);
+    for (const k of fog.seen) {
+      const gy = Math.floor(k / fog.cols), gx = k - gy * fog.cols;
+      const wx = fog.gx0 + (gx + 0.5) * fog.cu, wy = fog.gy0 + (gy + 0.5) * fog.cu;
+      const p = chartProject(wx, wy);
+      if (p[0] < -40 || p[0] > CHART_W + 40 || p[1] < -40 || p[1] > CHART_H + 40) continue;
+      g.drawImage(hole, p[0] - hr, p[1] - hr, hr * 2, hr * 2);
+    }
+    g.globalCompositeOperation = 'source-over';
+    /* the honest words on the unsurveyed mains */
+    g.font = 'italic 15px "Iowan Old Style", Palatino, Georgia, serif';
+    g.fillStyle = INK + '0.42)';
+    g.textAlign = 'center';
+    for (const key of ['cms', 'cloud']) {
+      const K = world.continents[key];
+      let anySeen = false;
+      for (const I of world.islands) {
+        if (I.product === key && isleSeen(I)) { anySeen = true; break; }
+      }
+      if (anySeen) continue;
+      const p = chartProject(K.x, K.y);
+      g.fillText('by report only', p[0], p[1] + 34);
+    }
+    g.restore();
+  }
+  /* THE BANKS: engraved cloud over the unknown, each with its own wind */
+  fog.puffs = [];
+  const step = 27;
+  const rnd = rngFor('fogfield');
+  for (let sy = 24; sy < CHART_H - 18; sy += step) {
+    for (let sx = 24; sx < CHART_W - 18; sx += step) {
+      const jx = sx + (rnd() - 0.5) * 14, jy = sy + (rnd() - 0.5) * 12;
+      /* the four table instruments stay clear: they sit ON the sheet */
+      let onFurn = false;
+      for (const R of FURN) {
+        if (jx > R.x - 8 && jx < R.x + R.w + 8 && jy > R.y - 8 && jy < R.y + R.h + 8) { onFurn = true; break; }
+      }
+      if (onFurn) continue;
+      const wx = (jx - chart.ox) / chart.k, wy = (jy - chart.oy) / chart.k;
+      if (fogSeenAt(wx, wy)) continue;
+      const w = windAtUnits(wx, wy);
+      const wm = Math.hypot(w.x, w.y) || 1;
+      fog.puffs.push({
+        x: jx, y: jy,
+        s: 0.55 + rnd() * 0.75,
+        v: Math.floor(rnd() * 3),
+        wx: w.x / wm, wy: w.y / wm,
+        ph: rnd()
+      });
+    }
+  }
+  /* the directional stagger: banks nearest the wind's own exit go first */
+  let dmin = 1e9, dmax = -1e9;
+  for (const P of fog.puffs) {
+    P.dd = P.x * P.wx + P.y * P.wy;
+    if (P.dd < dmin) dmin = P.dd;
+    if (P.dd > dmax) dmax = P.dd;
+  }
+  const span = Math.max(1, dmax - dmin);
+  for (const P of fog.puffs) P.dd = 1 - (P.dd - dmin) / span;
+  /* the static bank plate, so a gesture frame blits two canvases and no more */
+  if (!fog.puffCv) fog.puffCv = fogCanvas(CHART_W * dpr, CHART_H * dpr);
+  {
+    const g = fog.puffCv.getContext('2d');
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.clearRect(0, 0, CHART_W, CHART_H);
+    g.save();
+    g.beginPath(); pathThrough(g, fogVellumPts(), true); g.clip();
+    for (const P of fog.puffs) fogStampPuff(g, P, 1);
+    g.restore();
+  }
+  diag.fogPuffs = fog.puffs.length;
+}
+function fogStampPuff(g, P, a) {
+  const st = fog.stamps[P.v];
+  const w = st.width / 2 * P.s, h = st.height / 2 * P.s;
+  g.globalAlpha = a * (0.72 + 0.22 * P.ph);
+  g.drawImage(st, P.x - w / 2, P.y - h / 2, w, h);
+  g.globalAlpha = 1;
+}
+
+/* ---- the fog on the glass: cheap at rest, alive under the switch ---- */
+function fogVisibleNow() { return fog.mode === 'known' || fog.anim; }
+function easeFog(t) { return t * t * (3 - 2 * t); }
+function fogZoomKeyNow() {
+  return chart.z.toFixed(4) + ',' + chart.tx.toFixed(1) + ',' + chart.ty.toFixed(1) +
+    ',' + fog.seen.size + ',' + fog.mode;
+}
+/* the settled zoom redraws the fog as vectors, the way the sheet itself is
+   redrawn crisp: a magnified bank stays an engraving */
+function crispFogRender() {
+  if (!fog.ready || !chart.geo || fog.anim) return;
+  if (fog.mode !== 'known' || chartViewIdent()) { fog.zoomKey = ''; return; }
+  if (fog.dirty) rebuildFog();
+  const key = fogZoomKeyNow();
+  if (fog.zoomKey === key && fog.zoomCv) return;
+  const dpr = Math.min(chart.dpr || 1, 2);
+  if (!fog.zoomCv) fog.zoomCv = fogCanvas(CHART_W * dpr, CHART_H * dpr);
+  const g = fog.zoomCv.getContext('2d');
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.clearRect(0, 0, CHART_W, CHART_H);
+  g.lineJoin = 'round'; g.lineCap = 'round';
+  g.save();
+  g.translate(chart.tx, chart.ty);
+  g.scale(chart.z, chart.z);
+  g.beginPath(); pathThrough(g, fogVellumPts(), true); g.clip();
+  /* the wash, magnified as an engraving magnifies */
+  g.fillStyle = 'rgba(238,229,207,0.86)';
+  g.fillRect(0, 0, CHART_W, CHART_H);
+  g.strokeStyle = INK + '0.045)';
+  g.lineWidth = 0.7;
+  g.beginPath();
+  for (let x = -CHART_H; x < CHART_W; x += 11) {
+    g.moveTo(x, 0); g.lineTo(x + CHART_H, CHART_H);
+  }
+  g.stroke();
+  const hole = fogHole();
+  g.globalCompositeOperation = 'destination-out';
+  const cellPx = fog.cu * chart.k;
+  const hr = Math.max(7, cellPx * 1.65);
+  for (const k of fog.seen) {
+    const gy = Math.floor(k / fog.cols), gx = k - gy * fog.cols;
+    const wx = fog.gx0 + (gx + 0.5) * fog.cu, wy = fog.gy0 + (gy + 0.5) * fog.cu;
+    const p = chartProject(wx, wy);
+    g.drawImage(hole, p[0] - hr, p[1] - hr, hr * 2, hr * 2);
+  }
+  g.globalCompositeOperation = 'source-over';
+  g.font = 'italic 15px "Iowan Old Style", Palatino, Georgia, serif';
+  g.fillStyle = INK + '0.42)';
+  g.textAlign = 'center';
+  for (const key2 of ['cms', 'cloud']) {
+    const K = world.continents[key2];
+    let anySeen = false;
+    for (const I of world.islands) {
+      if (I.product === key2 && isleSeen(I)) { anySeen = true; break; }
+    }
+    if (anySeen) continue;
+    const p = chartProject(K.x, K.y);
+    g.fillText('by report only', p[0], p[1] + 34);
+  }
+  /* the banks themselves, cut fresh as vectors at this magnification */
+  for (const P of fog.puffs) drawPuffVec(g, P, 1);
+  g.restore();
+  fog.zoomKey = key;
+}
+function drawFog(g) {
+  if (!world.ready || !chart.geo || !fogVisibleNow()) return;
+  if (!fog.ready) fogInitGrid();
+  if (fog.dirty) rebuildFog();
+  if (!fog.washCv) return;
+  /* at rest on a magnified view, the settled crisp plate stands in whole */
+  if (!fog.anim && !chartViewIdent() && fog.zoomCv && fog.zoomKey === fogZoomKeyNow()) {
+    g.drawImage(fog.zoomCv, 0, 0, CHART_W, CHART_H);
+    return;
+  }
+  g.save();
+  g.translate(chart.tx, chart.ty);
+  g.scale(chart.z, chart.z);
+  let p;   /* 0 = the fog at home, 1 = lifted clean off */
+  if (fog.anim) {
+    const t = clamp((performance.now() - fog.animT0) / fog.animDur, 0, 1);
+    p = fog.animDir > 0 ? easeFog(t) : 1 - easeFog(t);
+  } else p = fog.mode === 'known' ? 0 : 1;
+  if (p < 0.999) {
+    g.globalAlpha = 1 - p;
+    g.drawImage(fog.washCv, 0, 0, CHART_W, CHART_H);
+    g.globalAlpha = 1;
+  }
+  if (!fog.anim) {
+    if (p < 0.5) g.drawImage(fog.puffCv, 0, 0, CHART_W, CHART_H);
+  } else {
+    /* the reveal itself: every bank rolls off downwind, staggered so the
+       lift crosses the sheet the way a clearing crosses a real sea */
+    g.beginPath(); pathThrough(g, fogVellumPts(), true); g.clip();
+    for (const P of fog.puffs) {
+      const pp = clamp(p * 1.45 - P.dd * 0.45, 0, 1);
+      if (pp >= 0.999) continue;
+      const e = easeFog(pp);
+      const run = e * (120 + 130 * P.ph);
+      const sx = P.x, sy = P.y;
+      P.x = sx + P.wx * run; P.y = sy + P.wy * run + e * e * 8;
+      fogStampPuff(g, P, 1 - e);
+      P.x = sx; P.y = sy;
+    }
+  }
+  g.restore();
+}
+
+function fogSetMode(mode, animate) {
+  mode = mode === 'full' ? 'full' : 'known';
+  if (mode === fog.mode && !fog.anim) { fogSyncSwitch(); return; }
+  if (fog.dirty) rebuildFog();
+  fog.mode = mode;
+  store.set('fogmode', fog.mode);
+  diag.fogMode = fog.mode;
+  fogSyncSwitch();
+  const instant = REDUCED || animate === false;
+  cancelAnimationFrame(fog.animRaf);
+  if (instant) {
+    fog.anim = false;
+    drawChartCanvas();
+    layoutChartDom();
+    showChartInfo(chart.hover);
+    return;
+  }
+  fog.anim = true;
+  fog.animT0 = performance.now();
+  fog.animDir = mode === 'full' ? 1 : -1;
+  const tick = () => {
+    if (!fog.anim) return;
+    const done = performance.now() - fog.animT0 >= fog.animDur;
+    drawChartCanvas();
+    if (done) {
+      fog.anim = false;
+      drawChartCanvas();
+      layoutChartDom();
+      showChartInfo(chart.hover);
+      return;
+    }
+    fog.animRaf = requestAnimationFrame(tick);
+  };
+  fog.animRaf = requestAnimationFrame(tick);
+}
+function fogSyncSwitch() {
+  const el = $('fogswitch');
+  if (!el) return;
+  el.classList.toggle('full', fog.mode === 'full');
+  el.setAttribute('aria-checked', fog.mode === 'full' ? 'true' : 'false');
+}
+function fogDiag() {
+  return { mode: fog.mode, anim: fog.anim, seenCells: fog.seen.size,
+    seenIsles: fogSeenCount(), puffs: fog.puffs.length,
+    soundings: visit.soundings.length };
+}
+
+/* ---- the soundings the leadsman actually took, numbered on the sheet ---- */
+function s2Sounding(f) {
+  const S = visit.soundings;
+  const last = S[S.length - 1];
+  if (last && Math.hypot(last.x - ship.x, last.y - ship.y) * world.nmPerUnit < 0.15) return;
+  S.push({ x: ship.x, y: ship.y, f });
+  if (S.length > 240) S.splice(0, S.length - 240);
+  visit.save();
+}
+function drawSoundings(g) {
+  if (fog.mode !== 'known' || !visit.soundings.length) return;
+  const Z = chart.z, TXv = chart.tx, TYv = chart.ty;
+  g.save();
+  g.font = 'italic ' + (8.5 * Math.pow(Z, 0.3)).toFixed(1) + 'px "Iowan Old Style", Palatino, Georgia, serif';
+  g.fillStyle = INK + '0.74)';
+  g.textAlign = 'left';
+  const seen = new Set();
+  for (const s of visit.soundings) {
+    const p = chartProject(s.x, s.y);
+    const x = p[0] * Z + TXv, y = p[1] * Z + TYv;
+    if (x < 8 || x > CHART_W - 8 || y < 8 || y > CHART_H - 8) continue;
+    const key = Math.round(x / 14) + ',' + Math.round(y / 12);
+    if (seen.has(key)) continue;   /* two casts in the same water print once */
+    seen.add(key);
+    g.save();
+    /* the numeral sits beside the cast, as a leadsman's figure does,
+       never under the ship's own mark */
+    g.translate(x + 10, y - 9);
+    g.rotate(-0.10 + ((s.f % 7) - 3) * 0.02);
+    g.fillText(String(s.f), 0, 3);
+    g.restore();
+  }
+  g.restore();
+}
+
+/* ============================================================
+   STAGE 2, IDEAS 2 + 3 + 4 - WEATHER AT SEA
+   PASSING WEATHER (idea 2): fronts cross the sea on the corpus's own
+   calendar - the trailing twelvemonth of real last-edit dates replayed,
+   a month a minute. Months where the ink fell thick bring hatched rain;
+   the thickest bring squall and, rarely, one engraved fork of lightning
+   with a rolled soft thunder. Months with no ink are clearings.
+   STORM WATERS (idea 3): the sea state runs with the citations borne
+   into the waters she sails - Breaking Changes (57 in) is squall
+   country: taller swell, spray, a heavier helm, all bounded so she
+   always answers. A STORM-GLASS on the chart table reads the bound-for
+   waters before you sail.
+   THE TENDING (idea 4): freshly tended waters sparkle; long-untended
+   waters carry grey and banks of mist. Freshness is provenance, nothing
+   else. Everything eases in and out, never during the title, never over
+   the reading, and reduced motion swaps state without any fork.
+   ============================================================ */
+const WX_MONTH_S = 60;                 /* one corpus month crosses in a minute */
+const WX_SNAP = '2026-09-05';          /* the corpus snapshot day (same as ageOfInk) */
+const wx = {
+  months: [], built: false, mIx: -1, forceIx: null,
+  rain: 0, squall: 0, sparkle: 0, mist: 0, grey: 0,
+  helm: 0, seaVis: 0, local: 0, lat: 1,
+  thunderDone: false, fork: null, forkFrames: 0,
+  drops: null, glints: null, glass: null, glassKey: ''
+};
+
+function wxInit() {
+  if (wx.built) return;
+  wx.built = true;
+  /* the calendar is the corpus's own: how many pages took their last ink
+     in each of the trailing twelve months before the snapshot */
+  const counts = new Map();
+  for (const I of world.islands) {
+    const m = (I.last || '').slice(0, 7);
+    if (m) counts.set(m, (counts.get(m) || 0) + 1);
+  }
+  const list = [];
+  let y = 2025, mo = 10;               /* 2025-10 .. 2026-09 */
+  for (let i = 0; i < 12; i++) {
+    const key = y + '-' + String(mo).padStart(2, '0');
+    list.push({ key, n: counts.get(key) || 0 });
+    mo++; if (mo > 12) { mo = 1; y++; }
+  }
+  /* the tending scale is the corpus's own: grey ramps from the oldest
+     quartile of the ink to the oldest ink there is */
+  const stales = world.islands
+    .filter(I => I.last)
+    .map(I => (Date.parse(WX_SNAP) - Date.parse(I.last)) / 86400000)
+    .sort((a, b) => a - b);
+  wx.staleP75 = stales[Math.floor(stales.length * 0.75)] || 90;
+  wx.staleMax = Math.max(stales[stales.length - 1] || 365, wx.staleP75 + 30);
+  diag.wxStale = { p75: Math.round(wx.staleP75), max: Math.round(wx.staleMax) };
+  const ns = list.map(m => m.n).slice().sort((a, b) => a - b);
+  const q3 = Math.max(1, ns[Math.floor(ns.length * 0.72)]);
+  const q9 = Math.max(2, ns[Math.floor(ns.length * 0.90)]);
+  for (const m of list) {
+    m.rain = m.n <= 0 ? 0 : clamp(m.n / q3, 0, 1);
+    m.squall = m.n >= q9 ? 1 : 0;
+  }
+  wx.months = list;
+  diag.wxCalendar = list.map(m => m.key.slice(2) + ':' + m.n).join(' ');
+}
+
+/* idea 3: what the citations raise in a given water */
+function wxGlassReading(I) {
+  const n = I ? (I.inbound || 0) : 0;
+  const s = clamp(n / 57, 0, 1);
+  const words =
+    n >= 45 ? 'the liquor is troubled and flaked - squall country' :
+    n >= 25 ? 'the liquor clouds - a heavy swell runs' :
+    n >= 8 ? 'a feather of crystal - a working sea' :
+    'the liquor stands clear - fair water';
+  return { n, s, words, name: I ? I.title : 'the open sea' };
+}
+
+function wxTick(dt) {
+  if (!wx.built) wxInit();
+  const live = env.t > 7.5;            /* never during the six-second title */
+  const n = wx.months.length;
+  const ix = wx.forceIx != null ? wx.forceIx : Math.floor(env.t / WX_MONTH_S) % n;
+  if (ix !== wx.mIx) { wx.mIx = ix; wx.thunderDone = false; }
+  const M = wx.months[ix];
+  const b = ship.bound || world.island;
+  wx.local = b ? clamp((b.inbound || 0) / 57, 0, 1) : 0;
+  const gate = clamp((wx.local - 0.8) / 0.2, 0, 1);   /* true squall country only */
+  const rainT = live ? M.rain : 0;
+  const squallT = live ? M.squall : 0;
+  let spT = 0, gT = 0;
+  if (live && b && b.last) {
+    const stale = (Date.parse(WX_SNAP) - Date.parse(b.last)) / 86400000;
+    if (stale < 60) spT = 1 - stale / 60;
+    gT = clamp((stale - wx.staleP75) / (wx.staleMax - wx.staleP75), 0, 1);
+  }
+  const k = REDUCED ? 1 : 1 - Math.exp(-dt / 4.2);
+  wx.rain += (rainT - wx.rain) * k;
+  wx.squall += (squallT - wx.squall) * k;
+  wx.sparkle += (spT - wx.sparkle) * k;
+  wx.mist += (gT - wx.mist) * k;
+  wx.grey = wx.mist;
+  /* the helm goes heavy only where the sea truly rises - and stays bounded */
+  const helmT = clamp(gate * (0.62 + 0.38 * wx.squall) + 0.30 * wx.squall, 0, 1);
+  wx.helm += (helmT - wx.helm) * k;
+  const visT = clamp(gate * 0.7 + wx.squall * 0.5 + wx.rain * 0.22, 0, 1);
+  wx.seaVis += (visT - wx.seaVis) * k;
+  /* the wind's lateral hand slants the rain, the same hand the streaks read */
+  const wind = windAtShip();
+  const hb2 = ship.bearing * Math.PI / 180;
+  const wmm = Math.hypot(wind.x, wind.y) || 1;
+  wx.lat = (wind.x * Math.cos(hb2) + wind.y * Math.sin(hb2)) / wmm;
+  /* THUNDER: rare, one fork, never in the first minute, never reduced */
+  if (M.squall && live && !wx.thunderDone && !REDUCED && env.t > 60 && wx.squall > 0.5) {
+    const off = 8 + (M.n * 7) % 40;
+    if ((env.t % WX_MONTH_S) >= off) wxBolt(M.key);
+  }
+  diag.wx = {
+    month: M.key, ink: M.n,
+    rain: +wx.rain.toFixed(3), squall: +wx.squall.toFixed(3),
+    sparkle: +wx.sparkle.toFixed(3), mist: +wx.mist.toFixed(3),
+    helm: +wx.helm.toFixed(3), seaVis: +wx.seaVis.toFixed(3),
+    local: +wx.local.toFixed(3)
+  };
+}
+
+function wxBolt(seed) {
+  wx.thunderDone = true;
+  wx.fork = mkFork(seed || 'now');
+  wx.forkFrames = 2;
+  setTimeout(() => { try { sound.thunder(); } catch (e) { /* the sky alone */ } }, 800);
+  diag.thunderAtT = Math.round(env.t);
+}
+
+function mkFork(seed) {
+  const rnd = rngFor('fork:' + seed);
+  let x = 250 + rnd() * (W - 500), y = 36 + rnd() * 44;
+  const pts = [[x, y]], branches = [];
+  while (y < HORIZON - 26) {
+    x += (rnd() - 0.5) * 88;
+    y += 28 + rnd() * 40;
+    pts.push([x, y]);
+    if (rnd() < 0.34 && branches.length < 2) {
+      let bx = x, by = y;
+      const b = [[bx, by]];
+      const m2 = 2 + Math.floor(rnd() * 2);
+      for (let j = 0; j < m2; j++) {
+        bx += (rnd() - 0.5) * 110; by += 22 + rnd() * 30;
+        b.push([bx, by]);
+      }
+      branches.push(b);
+    }
+  }
+  return { pts, branches };
+}
+
+function wxDrops() {
+  if (wx.drops) return wx.drops;
+  const rnd = rngFor('wxrain');
+  wx.drops = [];
+  for (let i = 0; i < 110; i++) wx.drops.push({
+    x: rnd() * (W + 300) - 150, y: rnd() * (H + 60),
+    l: 11 + rnd() * 15, sp: 300 + rnd() * 260, far: i % 3 === 0
+  });
+  return wx.drops;
+}
+function wxGlints() {
+  if (wx.glints) return wx.glints;
+  const rnd = rngFor('wxglint');
+  wx.glints = [];
+  for (let i = 0; i < 16; i++) wx.glints.push({
+    x: 90 + rnd() * (W - 180), y: HORIZON + 34 + rnd() * 190,
+    f: rnd() * 0.9, ph: rnd()
+  });
+  return wx.glints;
+}
+
+/* over the sea, under the frontispiece: the tending made visible */
+function drawWeather(sim, worldDY) {
+  const m = wx.mist;
+  if (m > 0.015) {
+    /* banks of mist on long-untended water, the fog's own billow hand laid flat */
+    ctx.save();
+    ctx.fillStyle = '#efe6cd';
+    for (let i = 0; i < 3; i++) {
+      const dy2 = REDUCED ? 0 : Math.sin(env.t * 0.11 + i * 2.1) * 6;
+      const dx2 = REDUCED ? 0 : Math.sin(env.t * 0.05 + i) * 60;
+      ctx.globalAlpha = 0.15 * m * (1 - i * 0.18);
+      ctx.beginPath();
+      ctx.ellipse(W * (0.24 + 0.26 * i) + dx2, HORIZON + worldDY + 26 + i * 46 + dy2,
+        330 + i * 90, 15 + i * 7, 0, 0, TAU);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 0.20 * m;
+    ctx.strokeStyle = 'rgba(96,80,58,0.8)';
+    ctx.lineWidth = 0.8;
+    for (let i = 0; i < 2; i++) {
+      const y = HORIZON + worldDY + 30 + i * 46;
+      ctx.beginPath();
+      for (let x2 = 120 * i; x2 < W; x2 += 96) ctx.arc(x2 + 46, y, 26, Math.PI * 1.06, Math.PI * 1.94);
+      ctx.stroke();
+    }
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+  const sp = wx.sparkle;
+  if (sp > 0.02) {
+    /* fresh ink sparkles: paper-bright glints riding the swell */
+    ctx.save();
+    ctx.fillStyle = '#faf3df';
+    for (const d of wxGlints()) {
+      const tw = REDUCED ? 0.6 : 0.5 + 0.5 * Math.sin(env.t * (1.3 + d.f) + d.ph * 6.3);
+      ctx.globalAlpha = sp * 0.55 * tw;
+      ctx.fillRect(d.x - 1.2, d.y + worldDY, 2.6, 1.1);
+      ctx.globalAlpha = sp * 0.28 * tw;
+      ctx.fillRect(d.x - 3.6, d.y + worldDY + 0.2, 7.4, 0.5);
+    }
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+}
+
+/* in front of the deck, behind the spyglass: the front itself */
+function drawRainFront(sim) {
+  const r = wx.rain, sq = wx.squall;
+  /* the wash: rain darkens the plate a stop, the squall two more */
+  const dark = 0.055 * r + 0.115 * sq;
+  if (dark > 0.004) {
+    ctx.fillStyle = 'rgba(36,38,50,' + dark.toFixed(3) + ')';
+    ctx.fillRect(0, 0, W, H);
+  }
+  if (wx.forkFrames > 0 && !REDUCED) { drawFork(); wx.forkFrames--; }
+  if (r < 0.02) return;
+  /* hatched rain, angling with the wind's lateral hand */
+  const dir = wx.lat >= 0 ? 1 : -1;
+  const slant = dir * (7 + 8 * sq);
+  ctx.save();
+  ctx.strokeStyle = 'rgba(38,30,20,1)';
+  ctx.lineCap = 'round';
+  for (const d of wxDrops()) {
+    const fall = REDUCED ? 0 : env.t * d.sp;
+    const y = ((d.y + fall) % (H + 60)) - 30;
+    const x = ((d.x + (REDUCED ? 0 : fall * 0.14 * dir) % (W + 300)) + W + 300) % (W + 300) - 150;
+    ctx.globalAlpha = r * (d.far ? 0.10 : 0.17);
+    ctx.lineWidth = d.far ? 0.7 : 1.0;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + slant * (d.l / 16), y + d.l * (d.far ? 0.8 : 1.25));
+    ctx.stroke();
+  }
+  ctx.restore();
+  ctx.globalAlpha = 1;
+}
+
+function drawFork() {
+  const F = wx.fork;
+  if (!F) return;
+  ctx.save();
+  /* the flash: the sky whitens one breath */
+  ctx.fillStyle = 'rgba(248,242,226,0.20)';
+  ctx.fillRect(0, 0, W, HORIZON + 12);
+  const run = (w2, c2) => {
+    ctx.strokeStyle = c2; ctx.lineWidth = w2;
+    ctx.lineJoin = 'miter';
+    ctx.beginPath();
+    ctx.moveTo(F.pts[0][0], F.pts[0][1]);
+    for (const p of F.pts) ctx.lineTo(p[0], p[1]);
+    for (const b of F.branches) {
+      ctx.moveTo(b[0][0], b[0][1]);
+      for (const p of b) ctx.lineTo(p[0], p[1]);
+    }
+    ctx.stroke();
+  };
+  run(3.2, 'rgba(250,245,230,0.92)');
+  run(1.15, 'rgba(46,36,24,0.85)');
+  ctx.restore();
+}
+
+/* ---- THE STORM-GLASS on the chart table (idea 3) ---- */
+function updateStormGlass() {
+  const el = $('stormglass');
+  if (!el) return;
+  const I = chart.hover || ship.bound || world.island;
+  const r = wxGlassReading(I);
+  wx.glass = r;
+  const key = r.name + '|' + r.n;
+  if (key === wx.glassKey) return;
+  wx.glassKey = key;
+  el.innerHTML =
+    '<div class="sg-h">THE STORM-GLASS</div>' +
+    '<div class="sg-line">' + (chart.hover ? 'over ' : 'bound for ') + '<b>' + esc(r.name) + '</b>: ' + r.words + '</div>' +
+    '<div class="sg-sub">' + (r.n ? r.n + (r.n === 1 ? ' citation borne in' : ' citations borne in') + ' - the sea off her runs with them'
+      : 'no citation reaches her - a still water') + '</div>';
+  chartSettle();   /* the liquor itself is engraved on the next settled plate */
+}
+function drawStormGlass(g, B) {
+  drawPanel(g, B, !chartViewIdent());
+  const r = wx.glass || wxGlassReading(ship.bound || world.island);
+  const x = B.x + 27, cy = B.y + B.h / 2;
+  g.save();
+  g.lineJoin = 'round'; g.lineCap = 'round';
+  /* the sealed vial */
+  const vw = 13, vh = 48, vx = x - vw / 2, vy = cy - vh / 2;
+  g.strokeStyle = INK + '0.85)'; g.lineWidth = 1.15;
+  g.strokeRect(vx, vy, vw, vh);
+  g.beginPath(); g.moveTo(vx - 3, vy); g.lineTo(vx + vw + 3, vy); g.stroke();
+  g.beginPath(); g.moveTo(vx + 2, vy - 3.5); g.lineTo(vx + vw - 2, vy - 3.5); g.stroke();
+  /* the liquor stands with the trouble of the bound-for water */
+  const lvl = 0.34 + 0.46 * r.s;
+  const ly = vy + vh * (1 - lvl);
+  g.fillStyle = 'rgba(118,130,118,0.28)';
+  g.fillRect(vx + 1, ly, vw - 2, vh - (ly - vy) - 1);
+  g.strokeStyle = INK + '0.62)'; g.lineWidth = 0.8;
+  if (r.s > 0.72) {
+    /* troubled and flaked */
+    g.beginPath();
+    for (let i = 0; i <= 6; i++) g.lineTo(vx + 1 + (vw - 2) * i / 6, ly + ((i % 2) ? -1.9 : 1.9));
+    g.stroke();
+    g.fillStyle = INK + '0.5)';
+    const rr = rngFor('sgflake');
+    for (let i = 0; i < 7; i++) g.fillRect(vx + 2 + rr() * (vw - 5.5), ly + 3 + rr() * (vh * lvl - 8), 1.7, 0.9);
+  } else {
+    g.beginPath(); g.moveTo(vx + 1, ly); g.lineTo(vx + vw - 1, ly); g.stroke();
+    if (r.s > 0.42) {
+      /* the liquor clouds */
+      g.strokeStyle = INK + '0.34)'; g.lineWidth = 0.6;
+      g.beginPath();
+      g.arc(vx + vw / 2, ly + 9, 3.4, 0, TAU);
+      g.arc(vx + vw / 2 - 2.6, ly + 13, 2.5, 0, TAU);
+      g.stroke();
+    } else if (r.s > 0.14) {
+      /* a feather of crystal on the wall */
+      g.strokeStyle = INK + '0.55)'; g.lineWidth = 0.7;
+      g.beginPath();
+      g.moveTo(vx + 2.5, ly + 6); g.lineTo(vx + 5.5, ly + 12);
+      g.moveTo(vx + 4, ly + 8); g.lineTo(vx + 2.8, ly + 12.5);
+      g.stroke();
+    }
+  }
+  g.restore();
+}
+
+/* ============================================================
+   STAGE 2, IDEAS 5 + 6 + 7 - THE HARBOUR VERBS
+   THE BOTTLE POST (idea 5): write a short note at sea, seal it, toss it
+   over the rail - the bottle drifts away on the current and the note goes
+   to the docs harbour (the real feedback webhook, the exact seven-key
+   contract). When the harbour will not open (CORS ashore), the note is
+   kept, the bottle still drifts, and a quiet line says the tide will
+   carry it later.
+   PACKET RUNS (idea 6): at a harbour you may take a packet addressed
+   along a real citation edge toward the destination that cites this
+   water most - counted in her own text, not guessed. Deliver it (land
+   there by any honest means) and the trade route is inked on your chart
+   for good; the strongest corpus lanes carry period route names.
+   THE HARBOUR MASTER (idea 7): a dockside slip lists the ships in
+   harbour - the real pages citing this one, every one a moored vessel
+   with her name and rig; hail one and you board her.
+   ============================================================ */
+
+/* ---- the harbour data, raised once from the same graph the sea is ---- */
+const hb = { ready: false, commOf: new Map(), laneNames: new Map(), packetCache: new Map() };
+function harbourInit() {
+  if (hb.ready || !world.communities || !world.graph) return;
+  hb.ready = true;
+  world.communities.forEach((c, i) => c.members.forEach(m => hb.commOf.set(m, i)));
+  const lm = new Map();
+  for (const [a, b2] of world.graph.edges) {
+    const ca = hb.commOf.get(a), cb2 = hb.commOf.get(b2);
+    if (ca == null || cb2 == null || ca === cb2) continue;
+    const i = Math.min(ca, cb2), j = Math.max(ca, cb2);
+    lm.set(i + '-' + j, (lm.get(i + '-' + j) || 0) + 1);
+  }
+  const top = [...lm.entries()].sort((x, y2) => y2[1] - x[1]).slice(0, 5);
+  const pretty = s => {
+    const short = s.split('/').pop();
+    return short.length <= 4 ? short.toUpperCase()
+      : short.split('-').map(w2 => w2 ? w2[0].toUpperCase() + w2.slice(1) : w2).join(' ');
+  };
+  for (const [k, total] of top) {
+    const ij = k.split('-').map(Number);
+    hb.laneNames.set(k, 'the ' + pretty(world.communities[ij[0]].hub) + ' & ' +
+      pretty(world.communities[ij[1]].hub) + ' Run');
+    void total;
+  }
+  diag.laneNames = [...hb.laneNames.values()];
+}
+function routeName(aSlug, bSlug) {
+  harbourInit();
+  const ca = hb.commOf.get(aSlug), cb2 = hb.commOf.get(bSlug);
+  if (ca == null || cb2 == null || ca === cb2) return '';
+  return hb.laneNames.get(Math.min(ca, cb2) + '-' + Math.max(ca, cb2)) || '';
+}
+
+/* the packet's true address: among the pages citing this water, the one
+   whose own text mentions her most - counted, not guessed */
+function packetFor(isle) {
+  if (!isle || !world.graph || !world.content) return null;
+  if (hb.packetCache.has(isle.slug)) return hb.packetCache.get(isle.slug);
+  const citers = [];
+  for (const [a, b2] of world.graph.edges) if (b2 === isle.slug) citers.push(a);
+  let out = null;
+  if (citers.length) {
+    const re = new RegExp(isle.slug.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![\\w-])', 'g');
+    let best = null, bestN = -1, bestIn = -1;
+    for (const q of citers) {
+      const pg = world.content.pages[q];
+      const hay = pg ? JSON.stringify(pg.blocks || []) : '';
+      const m2 = hay.match(re);
+      const cN = m2 ? m2.length : 1;
+      const qI = world.bySlug.get(q);
+      const qIn = qI ? (qI.inbound || 0) : 0;
+      if (cN > bestN || (cN === bestN && qIn > bestIn)) { best = q; bestN = cN; bestIn = qIn; }
+    }
+    const I2 = world.bySlug.get(best);
+    if (I2) out = { to: best, toTitle: I2.title, n: bestN };
+  }
+  hb.packetCache.set(isle.slug, out);
+  return out;
+}
+
+function packetHTML(isle) {
+  if (!world.graph) return '';
+  if (ui.justDelivered && ui.justDelivered.to === isle.slug) {
+    const jd = ui.justDelivered;
+    return '<div class="ss-block pk-block"><h4>The packet run</h4><div class="pk-line">' +
+      'Delivered: the packet from <b>' + esc(jd.fromTitle) + '</b> is in her hands. ' +
+      'The route is inked on your chart for good' +
+      (jd.name ? ' &mdash; she joins <i>' + esc(jd.name) + '</i>.' : '.') + '</div></div>';
+  }
+  if (visit.packet) {
+    const T = world.bySlug.get(visit.packet.to);
+    return '<div class="ss-block pk-block"><h4>The packet run</h4><div class="pk-line">' +
+      'The packet for <b>' + esc(T ? T.title : visit.packet.to) + '</b> waits in the hold. ' +
+      'Land there &mdash; by sail, by chart, by any citation &mdash; and she is delivered.</div></div>';
+  }
+  const p = packetFor(isle);
+  if (!p) return '';
+  return '<div class="ss-block pk-block"><h4>The packet run</h4><div class="pk-line">' +
+    'A packet lies here addressed to <b>' + esc(p.toTitle) + '</b> &mdash; of every page that cites ' +
+    'this water, the one that names her most (' + p.n + (p.n === 1 ? ' mention' : ' mentions') +
+    ' in her own text).</div>' +
+    '<button class="act" type="button" data-act="packet">Take the packet aboard</button></div>';
+}
+
+function packetDelivery(isle) {
+  ui.justDelivered = null;
+  const held = visit.packet;
+  if (!held || held.to !== isle.slug) return;
+  const from = world.bySlug.get(held.from);
+  const name = routeName(held.from, held.to);
+  visit.routes.push({ a: held.from, b: held.to, t: Date.now() });
+  visit.packet = null;
+  ui.justDelivered = { from: held.from, to: held.to,
+    fromTitle: from ? from.title : held.from, name };
+  logMark('Delivered the packet ' + (from ? from.title : held.from) + ' → ' + isle.title +
+    (name ? ' — ' + name + ' is inked on the chart.' : ' — the route is inked on the chart.'));
+  diag.routesRun = visit.routes.length;
+  visit.save();
+}
+
+/* the routes YOU have run, inked for good over the sheet */
+function drawRoutes(g, VV) {
+  if (!visit.routes.length) return;
+  g.save();
+  const seen2 = new Set();
+  for (const R of visit.routes) {
+    const key = R.a + '>' + R.b;
+    if (seen2.has(key)) continue;
+    seen2.add(key);
+    const A = world.bySlug.get(R.a), B2 = world.bySlug.get(R.b);
+    if (!A || !B2) continue;
+    const pa = VV(chartProject(A.pos.x, A.pos.y)), pb = VV(chartProject(B2.pos.x, B2.pos.y));
+    const mx = (pa[0] + pb[0]) / 2, my = (pa[1] + pb[1]) / 2;
+    const dx2 = pb[0] - pa[0], dy2 = pb[1] - pa[1];
+    const dd = Math.hypot(dx2, dy2) || 1;
+    const nx = -dy2 / dd, ny = dx2 / dd;
+    const bow = Math.min(34, dd * 0.14);
+    const cx2 = mx + nx * bow, cy2 = my + ny * bow;
+    g.strokeStyle = GRN + '0.72)';
+    g.lineWidth = 1.25;
+    g.setLineDash([7, 3.2]);
+    g.beginPath();
+    g.moveTo(pa[0], pa[1]);
+    g.quadraticCurveTo(cx2, cy2, pb[0], pb[1]);
+    g.stroke();
+    g.setLineDash([]);
+    g.fillStyle = GRN + '0.85)';
+    g.beginPath(); g.arc(pa[0], pa[1], 2.1, 0, TAU); g.fill();
+    const ang = Math.atan2(pb[1] - cy2, pb[0] - cx2);
+    g.beginPath();
+    g.moveTo(pb[0], pb[1]);
+    g.lineTo(pb[0] - Math.cos(ang - 0.42) * 7.5, pb[1] - Math.sin(ang - 0.42) * 7.5);
+    g.lineTo(pb[0] - Math.cos(ang + 0.42) * 7.5, pb[1] - Math.sin(ang + 0.42) * 7.5);
+    g.closePath(); g.fill();
+    const nm = routeName(R.a, R.b);
+    if (nm && (chart.z >= 1.6 || dd > 300)) {
+      g.save();
+      g.translate((mx + cx2) / 2, (my + cy2) / 2);
+      let rot = Math.atan2(dy2, dx2);
+      if (rot > Math.PI / 2) rot -= Math.PI;
+      if (rot < -Math.PI / 2) rot += Math.PI;
+      g.rotate(rot);
+      g.font = 'italic 10.5px "Iowan Old Style", Palatino, Georgia, serif';
+      g.fillStyle = GRN + '0.92)';
+      g.textAlign = 'center';
+      g.fillText(nm, 0, -4);
+      g.restore();
+    }
+  }
+  g.restore();
+}
+
+/* ---- THE HARBOUR MASTER'S SLIP ---- */
+function rigOf(I) {
+  return I.words >= 3600 ? 'a ship of the line, ' + commas(I.words) + ' words'
+    : I.words >= 2000 ? 'a barque of ' + commas(I.words) + ' words'
+    : I.words >= 900 ? 'a brig of ' + commas(I.words) + ' words'
+    : 'a sloop of ' + commas(I.words) + ' words';
+}
+function harbourMasterHTML(isle) {
+  if (!world.graph) return '';
+  const ships = [];
+  for (const [a, b2] of world.graph.edges) if (b2 === isle.slug) ships.push(a);
+  let out = '<div class="ss-block hm-block"><h4>The harbour master&rsquo;s slip</h4>';
+  if (!ships.length) {
+    return out + '<div class="hm-none">No ship rides in this harbour: no page cites her.</div></div>';
+  }
+  ships.sort((a, b2) => {
+    const A = world.bySlug.get(a), B3 = world.bySlug.get(b2);
+    return ((B3 && B3.words) || 0) - ((A && A.words) || 0);
+  });
+  out += '<div class="hm-line">' + ships.length + (ships.length === 1 ? ' ship rides' : ' ships ride') +
+    ' in harbour &mdash; every page that cites this one. Hail her and you board her.</div>' +
+    '<ul class="plain hm-list">';
+  for (const s of ships) {
+    const T = world.bySlug.get(s);
+    out += '<li><a href="#' + esc(s) + '" data-hail="1">' + esc(T ? T.title : s) + '</a>' +
+      (T ? ' <span class="hm-rig">' + rigOf(T) + '</span>' : '') + '</li>';
+  }
+  return out + '</ul></div>';
+}
+
+/* ============================================================
+   THE BOTTLE POST
+   ============================================================ */
+const bottlePost = { drift: [], hinted: false, posting: false };
+const BOTTLE_URL = 'https://n8n.tools.strapi.team/webhook/docs-feedback';
+
+function bottleWaters() {
+  return ship.atAnchorOff || ship.bound || world.island;
+}
+function bottleOpen() {
+  if (ui.mode !== 'deck' || portal.open) return;
+  const el = $('bottleplate');
+  if (!el || !el.hidden) return;
+  const I = bottleWaters();
+  el.querySelector('.bp-line').textContent =
+    'These waters: ' + I.title + '. The note sails with their name on it.';
+  el.hidden = false;
+  const ta = $('bottletext');
+  ta.value = '';
+  setTimeout(() => ta.focus(), 30);
+}
+function bottleClose() {
+  const el = $('bottleplate');
+  if (!el || el.hidden) return;
+  el.hidden = true;
+  const ta = $('bottletext');
+  if (ta) ta.blur();
+}
+function bottlePayload(comment, I) {
+  /* THE SEVEN-KEY CONTRACT, byte for byte, in this order */
+  return {
+    vote: 'up',
+    kind: 'element',
+    comment: comment,
+    pagePath: I.slug,
+    pageTitle: I.title,
+    selectionHeading: 'Design Lab - Carta Strapiana',
+    channel: 'design-lab'
+  };
+}
+function bottleToss() {
+  const ta = $('bottletext');
+  const comment = (ta.value || '').trim();
+  if (!comment) { ta.focus(); return; }
+  const I = bottleWaters();
+  const payload = bottlePayload(comment, I);
+  bottleClose();
+  /* the bottle goes over the rail whatever the harbour says */
+  if (!REDUCED) {
+    bottlePost.drift.push({
+      t: 0, life: 8.5,
+      x: 640 + Math.random() * 120, y: 560,
+      dir: (wx.lat >= 0 ? 1 : -1), ph: Math.random() * TAU
+    });
+  }
+  diag.lastBottle = { url: BOTTLE_URL, header: 'docs-widget', payload };
+  const body = JSON.stringify(payload);
+  fetch(BOTTLE_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-feedback-source': 'docs-widget' },
+    body
+  }).then(r => {
+    if (!r.ok) throw new Error('harbour closed: ' + r.status);
+    diag.bottleResult = 'sent';
+    caption('The bottle rides the current, her note aboard, bound for the harbour.', 4600);
+    logMark('A bottle away on the current for ' + I.title + ' — the note is in the harbour’s hands.');
+    visit.save();
+  }).catch(() => {
+    diag.bottleResult = 'held';
+    visit.bottles.push({ t: Date.now(), payload });
+    caption('The tide holds her note; it will carry when the harbour opens.', 4600);
+    logMark('Sealed a bottle for ' + I.title + ' — the tide holds the note until the harbour opens.');
+    visit.save();
+  });
+}
+function bottleInit() {
+  const toss = $('bp-toss'), keep = $('bp-keep'), plate = $('bottleplate');
+  if (!plate) return;
+  toss.addEventListener('click', bottleToss);
+  keep.addEventListener('click', bottleClose);
+  plate.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { e.stopPropagation(); e.preventDefault(); bottleClose(); }
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); bottleToss(); }
+  });
+}
+function bottleTick(dt) {
+  for (let i = bottlePost.drift.length - 1; i >= 0; i--) {
+    const b = bottlePost.drift[i];
+    b.t += dt;
+    if (b.t >= b.life) bottlePost.drift.splice(i, 1);
+  }
+  /* one quiet telling, once under way, never during the title */
+  if (!bottlePost.hinted && env.t > 42 && ship.knots > 2 && ui.mode === 'deck' && !REDUCED) {
+    bottlePost.hinted = true;
+    caption('A bottle and a blank note stand by the rail. B writes to the harbour.', 5200);
+  }
+}
+function drawBottles(sim, worldDY) {
+  if (!bottlePost.drift.length) return;
+  for (const b of bottlePost.drift) {
+    const p = clamp(b.t / b.life, 0, 1);
+    const e = 1 - Math.pow(1 - p, 2);
+    const x = b.x + b.dir * e * 260 + Math.sin(env.t * 1.1 + b.ph) * 4 * (1 - e);
+    const y = 560 - e * 128 + worldDY + Math.sin(env.t * 1.7 + b.ph) * 2.2 * (1 - e * 0.7);
+    const s = 1 - e * 0.72;
+    const a = p > 0.82 ? (1 - p) / 0.18 : 1;
+    ctx.save();
+    ctx.globalAlpha = a;
+    ctx.translate(x, y);
+    ctx.rotate(Math.sin(env.t * 1.3 + b.ph) * 0.18 * (1 - e) + b.dir * 0.12);
+    ctx.scale(s, s);
+    ctx.strokeStyle = 'rgba(46,36,24,0.85)';
+    ctx.fillStyle = 'rgba(240,231,210,0.92)';
+    ctx.lineWidth = 1.25;
+    ctx.beginPath();
+    ctx.moveTo(-9, -3.2);
+    ctx.lineTo(4, -3.2);
+    ctx.quadraticCurveTo(8.5, -3.2, 8.5, 0);
+    ctx.quadraticCurveTo(8.5, 3.2, 4, 3.2);
+    ctx.lineTo(-9, 3.2);
+    ctx.quadraticCurveTo(-12.5, 3.2, -12.5, 0);
+    ctx.quadraticCurveTo(-12.5, -3.2, -9, -3.2);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(8.5, -1.5); ctx.lineTo(12.5, -1.5); ctx.lineTo(12.5, 1.5); ctx.lineTo(8.5, 1.5);
+    ctx.stroke();
+    ctx.strokeRect(12.5, -1.9, 2.4, 3.8);
+    /* the note within */
+    ctx.strokeStyle = 'rgba(141,47,34,0.7)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(-7.5, 0.4); ctx.lineTo(1.5, 0.4); ctx.stroke();
+    /* her small wake */
+    ctx.strokeStyle = 'rgba(241,231,208,0.8)';
+    ctx.lineWidth = 1.1;
+    ctx.beginPath();
+    ctx.moveTo(-16, 4.6); ctx.quadraticCurveTo(-10, 6.4, -2, 5.2);
+    ctx.stroke();
+    ctx.restore();
+  }
+  ctx.globalAlpha = 1;
+}
+
+/* ============================================================
+   STAGE 2, IDEAS 8 + 9 + 10 + 11 - THE LOG ILLUSTRATED, THE FIGUREHEAD,
+   THE NIGHT PASSAGE, AND THE SHIP CAT
+   THE ILLUSTRATED LOG (8): each first landfall engraves a small sketch
+   of that island - drawn from her true baked geometry, the same plates
+   the horizon shows - beside the entry; the whole log exports as a
+   high-resolution PNG journal in the engraved hand.
+   THE FIGUREHEAD SPEAKS (9): rarely, crossing new waters, she offers the
+   true first sentence of that page on a banderole; never during reading,
+   never twice for the same waters in a visit.
+   NIGHT PASSAGE (10): at dusk the heavily cited capes burn lighthouses
+   (one per twelve citations, the rule in the key), the citation
+   constellation of the current waters hangs overhead, and a star can be
+   steered by: click one and the course is laid.
+   THE SHIP CAT (11): she naps on the chart table near the waters you
+   visit most, walks the rail now and then, and stares toward monster
+   waters before they raise. She never blocks a hand; reduced motion
+   keeps her asleep.
+   ============================================================ */
+
+/* ---------------- IDEA 8: the illustrated log ---------------- */
+function drawLogSketch(cv2) {
+  const I = world.bySlug.get(cv2.dataset.slug);
+  if (!I) return;
+  const sp = getSprite(I, 1, true);
+  if (!sp) return;
+  const g = cv2.getContext('2d');
+  const w2 = cv2.width, h2 = cv2.height;
+  g.clearRect(0, 0, w2, h2);
+  /* the vignette: her true plate, small, over a stroke of sea */
+  const asp = sp.c.width / sp.c.height;
+  let dw = w2 - 14, dh = dw / asp;
+  if (dh > h2 - 18) { dh = h2 - 18; dw = dh * asp; }
+  const dx2 = (w2 - dw) / 2, dy2 = h2 - 12 - dh;
+  g.imageSmoothingEnabled = true;
+  try { g.imageSmoothingQuality = 'high'; } catch (e) { /* older glass */ }
+  g.drawImage(sp.c, dx2, dy2, dw, dh);
+  /* the waterline and a few sea dashes, in the sketching hand */
+  g.strokeStyle = 'rgba(58,44,28,0.75)';
+  g.lineWidth = 0.9;
+  g.beginPath();
+  g.moveTo(6, h2 - 11); g.lineTo(w2 - 6, h2 - 11);
+  g.stroke();
+  g.lineWidth = 0.6;
+  g.strokeStyle = 'rgba(58,44,28,0.45)';
+  g.beginPath();
+  const rnd = rngFor('sketchsea:' + I.slug);
+  for (let i = 0; i < 5; i++) {
+    const x = 8 + rnd() * (w2 - 30), y = h2 - 8 + rnd() * 4;
+    g.moveTo(x, y); g.lineTo(x + 7 + rnd() * 9, y);
+  }
+  g.stroke();
+}
+function wireLogSketches(p) {
+  p.querySelectorAll('canvas.lg-sk').forEach(drawLogSketch);
+  const ex = p.querySelector('#logexport');
+  if (ex) ex.addEventListener('click', () => exportJournal(true));
+}
+/* the journal, engraved at high resolution and handed to the visitor */
+function exportJournal(download) {
+  const X = 2.5, JW = 1080;
+  const rows = visit.log;
+  const firstIdx = new Set();
+  {
+    const seen2 = new Set();
+    rows.forEach((r, i) => {
+      if (!r.mark && r.slug && !seen2.has(r.slug)) { seen2.add(r.slug); firstIdx.add(i); }
+    });
+  }
+  let JH = 236;
+  rows.forEach((r, i) => { JH += r.mark ? 46 : (firstIdx.has(i) ? 108 : 64); });
+  JH += 90;
+  const c = document.createElement('canvas');
+  c.width = Math.round(JW * X); c.height = Math.round(JH * X);
+  const g = c.getContext('2d');
+  g.scale(X, X);
+  /* the paper */
+  g.fillStyle = PAPER;
+  g.fillRect(0, 0, JW, JH);
+  const rndP = rngFor('journalpaper');
+  g.fillStyle = 'rgba(120,96,58,0.05)';
+  for (let i = 0; i < 260; i++) {
+    g.fillRect(rndP() * JW, rndP() * JH, 1.5 + rndP() * 3, 0.8 + rndP() * 1.6);
+  }
+  g.strokeStyle = INK + '0.6)'; g.lineWidth = 1.4;
+  g.strokeRect(18, 18, JW - 36, JH - 36);
+  g.strokeStyle = INK + '0.3)'; g.lineWidth = 0.7;
+  g.strokeRect(24, 24, JW - 48, JH - 48);
+  const SER = '"Iowan Old Style", Palatino, Georgia, serif';
+  g.fillStyle = INK + '0.92)';
+  g.textAlign = 'center';
+  g.font = '600 30px ' + SER;
+  g.fillText('T H E   C A P T A I N ’ S   L O G', JW / 2, 76);
+  g.font = 'italic 15px ' + SER;
+  g.fillStyle = INK + '0.7)';
+  g.fillText('Carta Strapiana · a chart of the Strapi documentation, sailed', JW / 2, 102);
+  g.fillText(new Date().toDateString() + ' · ' + rows.length +
+    (rows.length === 1 ? ' entry' : ' entries') + ', kept noon to noon' +
+    (visit.hand ? ' · the watch signed: ' + visit.hand : ''), JW / 2, 124);
+  g.strokeStyle = RED + '0.6)'; g.lineWidth = 1;
+  g.beginPath(); g.moveTo(JW / 2 - 120, 140); g.lineTo(JW / 2 + 120, 140); g.stroke();
+  /* the entries */
+  let y = 176;
+  g.textAlign = 'left';
+  const wrap = (txt, x, yy, wmax, lh, font, col) => {
+    g.font = font; g.fillStyle = col;
+    const words = String(txt).split(/\s+/);
+    let line = '', n2 = 0;
+    for (const w3 of words) {
+      const t2 = line ? line + ' ' + w3 : w3;
+      if (g.measureText(t2).width > wmax && line) {
+        g.fillText(line, x, yy + n2 * lh); n2++; line = w3;
+      } else line = t2;
+    }
+    if (line) { g.fillText(line, x, yy + n2 * lh); n2++; }
+    return n2 * lh;
+  };
+  rows.forEach((r, i) => {
+    g.fillStyle = INK + '0.85)';
+    g.font = '600 13px ' + SER;
+    g.fillText('H ' + r.h, 44, y);
+    if (r.mark) {
+      wrap(r.text, 92, y, JW - 160, 17, 'italic 14px ' + SER, INK + '0.85)');
+      if (r.remark) wrap('“' + r.remark + '”', 112, y + 20, JW - 200, 16, 'italic 13px ' + SER, RED + '0.8)');
+      y += 46;
+    } else {
+      const isFirst = firstIdx.has(i);
+      wrap('Made ' + r.title + ' · ' + commas(r.f) + ' fathoms · ' + r.courses + ' · ' + r.winds,
+        92, y, JW - (isFirst ? 300 : 160), 17, '14px ' + SER, INK + '0.88)');
+      if (r.remark) wrap('“' + r.remark + '”', 112, y + 36, JW - 300, 16, 'italic 13px ' + SER, RED + '0.8)');
+      if (isFirst) {
+        /* the first landfall carries her engraved sketch */
+        const I2 = world.bySlug.get(r.slug);
+        const sp = I2 ? getSprite(I2, 1, true) : null;
+        if (sp) {
+          const bw = 168, bh = 86, bx = JW - 92 - bw, by = y - 14;
+          g.strokeStyle = INK + '0.4)'; g.lineWidth = 0.8;
+          g.strokeRect(bx, by, bw, bh);
+          const asp = sp.c.width / sp.c.height;
+          let dw = bw - 16, dh = dw / asp;
+          if (dh > bh - 20) { dh = bh - 20; dw = dh * asp; }
+          g.drawImage(sp.c, bx + (bw - dw) / 2, by + bh - 12 - dh, dw, dh);
+          g.strokeStyle = 'rgba(58,44,28,0.7)'; g.lineWidth = 0.8;
+          g.beginPath(); g.moveTo(bx + 8, by + bh - 10); g.lineTo(bx + bw - 8, by + bh - 10); g.stroke();
+          g.font = 'italic 10px ' + SER;
+          g.fillStyle = INK + '0.6)';
+          g.textAlign = 'center';
+          g.fillText('first landfall', bx + bw / 2, by + bh + 12);
+          g.textAlign = 'left';
+        }
+        y += 108;
+      } else y += 64;
+    }
+  });
+  g.font = 'italic 12px ' + SER;
+  g.fillStyle = INK + '0.55)';
+  g.textAlign = 'center';
+  g.fillText('every figure in this journal is the corpus’s own · nothing is scored', JW / 2, JH - 40);
+  diag.journal = { w: c.width, h: c.height, entries: rows.length, sketches: firstIdx.size };
+  const url = c.toDataURL('image/png');
+  if (download) {
+    const a = document.createElement('a');
+    a.download = 'carta-strapiana-log.png';
+    a.href = url;
+    a.click();
+  }
+  return url;
+}
+
+/* ---------------- IDEA 9: the figurehead speaks ---------------- */
+const fh = { spoken: new Set(store.get('spoken', [])), lastAt: -1e9, upTil: 0 };
+function firstSentenceOf(I) {
+  const pg = world.content.pages[I.slug];
+  if (!pg || !pg.blocks) return '';
+  let fall = '';
+  for (const b of pg.blocks) {
+    if (b.t !== 'p' && b.t !== 'tldr') continue;
+    const txt = String(b.html || '')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+      .replace(/&nbsp;/g, ' ').replace(/&#39;/g, '’').replace(/&quot;/g, '"')
+      .replace(/\*/g, '')
+      .replace(/\s+/g, ' ').trim();
+    if (txt.length < 12) continue;
+    if (b.t === 'tldr') { if (!fall) fall = txt; continue; }
+    const m2 = txt.match(/^.{12,220}?[.!?](?=\s|$)/);
+    return (m2 ? m2[0] : txt.slice(0, 200)).trim();
+  }
+  const m3 = fall.match(/^.{12,220}?[.!?](?=\s|$)/);
+  return fall ? (m3 ? m3[0] : fall.slice(0, 200)).trim() : '';
+}
+function fhTick() {
+  const el = $('figurehead');
+  if (!el) return;
+  if (fh.upTil && env.t > fh.upTil) { el.classList.remove('shown'); fh.upTil = 0; }
+  if (ui.mode !== 'deck' || passage.on || lens.t > 0.15 || portal.open) return;
+  if (env.t < 14 || env.t - fh.lastAt < 75) return;
+  const I = ship.bound;
+  if (!I || ship.anchored) return;
+  const d = distToNm(I);
+  if (d > 2.3) return;
+  if (visit.charted.has(I.slug) || fh.spoken.has(I.slug)) return;
+  const line = firstSentenceOf(I);
+  if (!line) { fh.spoken.add(I.slug); return; }
+  fh.spoken.add(I.slug);
+  store.set('spoken', [...fh.spoken].slice(-80));
+  fh.lastAt = env.t;
+  fh.upTil = env.t + 7.5;
+  el.querySelector('.fh-line').textContent = '“' + line + '”';
+  el.querySelector('.fh-who').textContent = 'the figurehead speaks · her page’s own first words';
+  el.classList.add('shown');
+  diag.fhSpoke = I.slug;
+}
+
+/* ---------------- IDEA 10: the night passage ---------------- */
+/* lighthouses: one per twelve citations, burning from any distance at dusk */
+function drawLighthouses(isle, cxScreen, yBase, wpx, s, dist, stage) {
+  const mix = env.hourMix;
+  if (mix < 0.5 || (isle.inbound || 0) < 12) return;
+  const nL = Math.min(4, Math.floor(isle.inbound / 12));
+  const F = formOf(isle);
+  const rnd = rngFor('lighthouse:' + isle.slug);
+  const left = cxScreen - wpx / 2;
+  const a = clamp((6.4 - dist) / 3.4, 0, 1) * clamp((mix - 0.5) / 0.5, 0, 1);
+  if (a <= 0.02) return;
+  for (let i = 0; i < nL; i++) {
+    const fx = F.x0 + (0.14 + 0.72 * (i + 0.5) / nL + (rnd() - 0.5) * 0.08) * (F.x1 - F.x0);
+    const ex = left + (fx - F.x0) / (F.x1 - F.x0) * wpx;
+    const ey = yBase - (F.BASE - F.elev(fx)) * s - 2;
+    const th = clamp(26 * s * 46, 5, 15);           /* tower height on screen */
+    ctx.save();
+    ctx.globalAlpha = a;
+    /* the tower, a dark daymark */
+    ctx.fillStyle = 'rgba(40,30,18,0.85)';
+    ctx.beginPath();
+    ctx.moveTo(ex - th * 0.16, ey);
+    ctx.lineTo(ex - th * 0.10, ey - th);
+    ctx.lineTo(ex + th * 0.10, ey - th);
+    ctx.lineTo(ex + th * 0.16, ey);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillRect(ex - th * 0.16, ey - th - th * 0.14, th * 0.32, th * 0.14);
+    /* the lamp and her slow beam */
+    const ly = ey - th - th * 0.07;
+    ctx.fillStyle = 'rgba(246,214,140,0.95)';
+    ctx.beginPath(); ctx.arc(ex, ly, Math.max(1.2, th * 0.10), 0, TAU); ctx.fill();
+    const sweep = REDUCED ? (i * 1.1) : env.t * 0.5 + i * 2.1;
+    const bl = th * 3.2;
+    for (const dir of [-1, 1]) {
+      const angB = Math.PI + Math.sin(sweep) * 0.5 + (dir > 0 ? 0 : Math.PI);
+      ctx.globalAlpha = a * 0.16;
+      ctx.fillStyle = 'rgba(246,222,160,0.9)';
+      ctx.beginPath();
+      ctx.moveTo(ex, ly);
+      ctx.lineTo(ex + Math.cos(angB - 0.05) * bl, ly + Math.sin(angB - 0.05) * bl * 0.22);
+      ctx.lineTo(ex + Math.cos(angB + 0.05) * bl, ly + Math.sin(angB + 0.05) * bl * 0.22);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+  ctx.globalAlpha = 1;
+}
+/* the constellation of the current waters, hung overhead and steerable */
+const nightSky = { for: '', stars: [], hits: [], hover: -1 };
+function buildConstellation() {
+  const I = ship.bound || world.island;
+  if (!I || nightSky.for === I.slug) return;
+  nightSky.for = I.slug;
+  nightSky.stars = [];
+  const rel = new Map();
+  for (const [a, b2] of world.graph.edges) {
+    if (b2 === I.slug) rel.set(a, (rel.get(a) || 0) + 1);
+    if (a === I.slug) rel.set(b2, (rel.get(b2) || 0) + 1);
+  }
+  const list = [...rel.keys()].map(s2 => world.bySlug.get(s2)).filter(Boolean)
+    .sort((x, y3) => (y3.inbound || 0) - (x.inbound || 0)).slice(0, 12);
+  if (!list.length) return;
+  let mx = 0.001;
+  for (const T of list) {
+    mx = Math.max(mx, Math.abs(T.pos.x - I.pos.x), Math.abs(T.pos.y - I.pos.y));
+  }
+  const rnd = rngFor('sky:' + I.slug);
+  const kx = 480 / mx, ky = 132 / mx;
+  for (const T of list) {
+    nightSky.stars.push({
+      isle: T,
+      x: clamp(720 + (T.pos.x - I.pos.x) * kx + (rnd() - 0.5) * 26, 96, W - 96),
+      y: clamp(128 + (T.pos.y - I.pos.y) * ky + (rnd() - 0.5) * 20, 44, HORIZON - 128),
+      r: 2.1 + Math.min(2.4, (T.inbound || 0) * 0.05),
+      ph: rnd() * TAU
+    });
+  }
+  diag.constellation = { of: I.slug, stars: nightSky.stars.length };
+}
+function drawConstellation(map) {
+  const mix = env.hourMix;
+  nightSky.hits = [];
+  if (mix < 0.55 || ui.mode !== 'deck') return;
+  buildConstellation();
+  if (!nightSky.stars.length) return;
+  const a0 = (mix - 0.55) / 0.45;
+  const k = map ? map.k : 1, ox = map ? map.ox : 0, oy = map ? map.oy : 0;
+  const zx = 720 * k + ox, zy = 74 * k + oy;
+  ctx.save();
+  /* the figure: faint rhumbs from the zenith - the current waters - to her kin */
+  ctx.strokeStyle = 'rgba(246,238,218,0.8)';
+  ctx.lineWidth = 0.55 * k;
+  ctx.globalAlpha = a0 * 0.16;
+  ctx.beginPath();
+  for (const s2 of nightSky.stars) {
+    ctx.moveTo(zx, zy);
+    ctx.lineTo(s2.x * k + ox, s2.y * k + oy);
+  }
+  ctx.stroke();
+  /* the zenith star: the waters herself */
+  ctx.globalAlpha = a0 * 0.95;
+  ctx.fillStyle = 'rgba(246,238,218,1)';
+  const drawStar4 = (x, y, r) => {
+    ctx.beginPath();
+    ctx.moveTo(x, y - r * 2.1);
+    ctx.quadraticCurveTo(x + r * 0.35, y - r * 0.35, x + r * 2.1, y);
+    ctx.quadraticCurveTo(x + r * 0.35, y + r * 0.35, x, y + r * 2.1);
+    ctx.quadraticCurveTo(x - r * 0.35, y + r * 0.35, x - r * 2.1, y);
+    ctx.quadraticCurveTo(x - r * 0.35, y - r * 0.35, x, y - r * 2.1);
+    ctx.closePath();
+    ctx.fill();
+  };
+  drawStar4(zx, zy, 2.6 * k);
+  for (let i2 = 0; i2 < nightSky.stars.length; i2++) {
+    const s2 = nightSky.stars[i2];
+    const tw = REDUCED ? 0.8 : 0.62 + 0.38 * Math.sin(env.t * 1.4 + s2.ph);
+    const x = s2.x * k + ox, y = s2.y * k + oy;
+    ctx.globalAlpha = a0 * tw;
+    drawStar4(x, y, s2.r * k * (nightSky.hover === i2 ? 1.5 : 1));
+    nightSky.hits.push({ i: i2, x: s2.x, y: s2.y, r: 14 });
+    if (nightSky.hover === i2) {
+      ctx.globalAlpha = a0;
+      ctx.font = 'italic ' + (12.5 * k).toFixed(1) + 'px "Iowan Old Style", Palatino, Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(s2.isle.title, x, y + 22 * k);
+      ctx.font = 'italic ' + (10.5 * k).toFixed(1) + 'px "Iowan Old Style", Palatino, Georgia, serif';
+      ctx.globalAlpha = a0 * 0.75;
+      ctx.fillText('click to lay a course · ' + compassPoint(bearingTo(s2.isle)) + ' · ' +
+        (Math.round(distToNm(s2.isle) * 10) / 10) + ' nm', x, y + (22 + 15) * k);
+      ctx.textAlign = 'left';
+    }
+  }
+  ctx.restore();
+  ctx.globalAlpha = 1;
+}
+function starPick(mx, my) {
+  if (env.hourMix < 0.55 || !nightSky.hits.length) return null;
+  for (const hh of nightSky.hits) {
+    if (Math.hypot(mx - hh.x, my - hh.y) < hh.r) return hh;
+  }
+  return null;
+}
+function steerByStar(hit) {
+  const s2 = nightSky.stars[hit.i];
+  if (!s2) return;
+  const I = s2.isle;
+  setBound(I, true);
+  const delta = angDiff(bearingTo(I), effectiveOrder(env.t));
+  giveOrder(delta);
+  captionNow('A course laid by her star: ' + I.title + ', ' + compassPoint(bearingTo(I)) + ', ' +
+    (Math.round(distToNm(I) * 10) / 10) + ' nm.', 5200);
+  diag.steeredByStar = I.slug;
+}
+
+/* ---------------- IDEA 11: the ship cat ---------------- */
+const cat = {
+  deck: 'below',        /* below | walk | stare */
+  u: 0, side: 1, nextWalk: 70 + (SEED % 40), frame: 0, ft: 0,
+  stareAt: null, beasts: null, chartEl: null, chartFrame: 0, chartTimer: 0,
+  home: null
+};
+function catBeasts() {
+  if (cat.beasts) return cat.beasts;
+  /* the same three fiercest the chart raises, derived the same way */
+  const un = world.uncited.slice();
+  const byWords = un.slice().sort((a, b2) => b2.words - a.words);
+  const byOut = un.slice().sort((a, b2) => b2.outbound - a.outbound);
+  const f = [byWords[0]];
+  if (byOut[0] && f.indexOf(byOut[0]) < 0) f.push(byOut[0]);
+  for (const I of byWords) { if (f.length >= 3) break; if (f.indexOf(I) < 0) f.push(I); }
+  cat.beasts = f.filter(Boolean);
+  return cat.beasts;
+}
+function catTick(dt) {
+  if (REDUCED) return;                 /* reduced motion keeps her asleep below */
+  cat.ft += dt;
+  if (cat.ft > 0.42) { cat.ft = 0; cat.frame = (cat.frame + 1) % 3; }
+  /* monster waters near but not yet raised: she comes up to stare */
+  let nearBeast = null;
+  for (const B of catBeasts()) {
+    const d = distToNm(B);
+    if (d < 8.8 && d > VIS_NM - 0.5) { nearBeast = B; break; }
+  }
+  if (nearBeast) {
+    cat.deck = 'stare';
+    cat.stareAt = nearBeast;
+    const brg = angDiff(bearingTo(nearBeast), ship.bearing);
+    cat.side = brg >= 0 ? 1 : -1;
+    cat.u = 0.62;
+    return;
+  }
+  if (cat.deck === 'stare') { cat.deck = 'below'; cat.stareAt = null; cat.nextWalk = env.t + 24; }
+  if (cat.deck === 'below' && env.t > cat.nextWalk && ui.mode === 'deck' && !passage.on) {
+    cat.deck = 'walk';
+    cat.u = 0.04;
+    cat.side = (Math.floor(env.t) % 2) ? 1 : -1;
+  }
+  if (cat.deck === 'walk') {
+    cat.u += dt / 26;                  /* a rail walked in an unhurried half minute */
+    if (cat.u >= 0.9) { cat.deck = 'below'; cat.nextWalk = env.t + 150 + (SEED % 60); }
+  }
+}
+/* the engraved cat: authored poses, three frames per behaviour */
+function drawCatPose(g, pose, frame) {
+  g.lineJoin = 'round'; g.lineCap = 'round';
+  const ink = 'rgba(40,30,18,0.94)';
+  g.fillStyle = ink;
+  if (pose === 'curl') {
+    /* asleep in a curl: body ring, tucked head; f1 lifts the tail tip,
+       f2 raises the head a breath */
+    g.beginPath();
+    g.ellipse(0, 0, 13.5, 9.6, 0, 0, TAU);
+    g.fill();
+    g.fillStyle = PAPER;
+    g.beginPath();
+    g.ellipse(1.5, 1.6, 6.4, 4.2, 0, 0, TAU);
+    g.fill();
+    g.fillStyle = ink;
+    /* the head, tucked or lifted */
+    if (frame === 2) {
+      g.beginPath();
+      g.ellipse(8.6, -8.4, 4.6, 4.0, -0.3, 0, TAU); g.fill();
+      g.beginPath();
+      g.moveTo(6.2, -11.6); g.lineTo(5.4, -15.2); g.lineTo(8.4, -13.2);
+      g.moveTo(10.4, -12.2); g.lineTo(11.8, -15.4); g.lineTo(12.8, -11.6);
+      g.fill();
+    } else {
+      g.beginPath();
+      g.ellipse(7.8, -3.4, 5.0, 4.2, -0.5, 0, TAU); g.fill();
+      g.beginPath();
+      g.moveTo(5.2, -6.8); g.lineTo(4.2, -10.2); g.lineTo(7.4, -8.4);
+      g.moveTo(9.6, -8.0); g.lineTo(11.4, -10.8); g.lineTo(12.0, -7.2);
+      g.fill();
+    }
+    /* the tail wrap; the flick frame lifts her tip */
+    g.strokeStyle = ink; g.lineWidth = 3.1;
+    g.beginPath();
+    g.moveTo(-12.5, 3.5);
+    if (frame === 1) g.quadraticCurveTo(-17, 6, -16.5, -3.5);
+    else g.quadraticCurveTo(-18, 7, -10, 8.6);
+    g.stroke();
+  } else if (pose === 'walk') {
+    const step = frame % 2 ? 1 : -1;
+    /* the body and head, one clear silhouette */
+    g.beginPath();
+    g.moveTo(-11.5, -6.2);
+    g.bezierCurveTo(-9, -10.8, 3, -11.4, 8.5, -8.2);
+    g.lineTo(10.2, -11);
+    g.bezierCurveTo(10.8, -13.6, 12, -14.8, 13.6, -14.8);
+    g.lineTo(14.0, -18.4); g.lineTo(16.0, -15.2);
+    g.lineTo(17.8, -17.6); g.lineTo(18.4, -14.4);
+    g.bezierCurveTo(19.6, -12.9, 19.3, -10.6, 17.6, -9.6);
+    g.bezierCurveTo(16, -8.6, 14, -8.4, 12.8, -8.8);
+    g.bezierCurveTo(12.4, -6.6, 12, -5.4, 11.6, -4.6);
+    g.lineTo(-10.4, -4.6);
+    g.closePath();
+    g.fill();
+    /* four legs: two strides and a gathered glide - three authored frames */
+    g.strokeStyle = ink; g.lineWidth = 2.0; g.lineCap = 'round';
+    g.beginPath();
+    if (frame === 2) {
+      g.moveTo(9.4, -5); g.lineTo(9.8, 0.2);
+      g.moveTo(6.4, -5); g.lineTo(6.0, 0.2);
+      g.moveTo(-4.4, -5); g.lineTo(-4.0, 0.2);
+      g.moveTo(-8.0, -5); g.lineTo(-8.4, 0.2);
+    } else {
+      g.moveTo(9.6, -5); g.lineTo(10.6 + step * 2.2, 0.2);
+      g.moveTo(6.2, -5); g.lineTo(5.2 - step * 2.2, 0.2);
+      g.moveTo(-4.2, -5); g.lineTo(-3.2 + step * 2.0, 0.2);
+      g.moveTo(-8.2, -5); g.lineTo(-9.2 - step * 2.0, 0.2);
+    }
+    g.stroke();
+    /* the tail rides high, swaying with the step */
+    g.lineWidth = 2.6;
+    g.beginPath();
+    g.moveTo(-11.4, -7);
+    g.quadraticCurveTo(-16.5 - step * 1.4, -13, -14.5 + step * 1.6, -19.5);
+    g.stroke();
+  } else {
+    /* sit-and-stare, out over the rail; f1 tilts the head, f2 sways the tail */
+    const tilt = frame === 1 ? 0.12 : 0;
+    g.save();
+    g.beginPath();
+    g.moveTo(-8.5, 0);
+    g.bezierCurveTo(-10.5, -8.5, -5.5, -13.5, -1.5, -13.8);
+    g.bezierCurveTo(0.5, -14, 1.6, -13, 2.6, -11);
+    g.lineTo(3.4, -15);
+    g.rotate(tilt);
+    g.bezierCurveTo(3.6, -17.4, 4.8, -18.6, 6.4, -18.6);
+    g.lineTo(6.9, -21.4); g.lineTo(8.6, -19);
+    g.lineTo(10.3, -20.8); g.lineTo(10.8, -18.2);
+    g.bezierCurveTo(11.9, -17, 11.9, -15, 10.6, -14.1);
+    g.rotate(-tilt);
+    g.bezierCurveTo(9.4, -13.2, 7.6, -13.2, 6.6, -13.7);
+    g.bezierCurveTo(7.4, -8.6, 7.8, -4.2, 7.4, 0);
+    g.closePath();
+    g.fill();
+    g.strokeStyle = ink; g.lineWidth = 2.4;
+    g.beginPath();
+    g.moveTo(7.2, -0.5);
+    if (frame === 2) g.quadraticCurveTo(13.5, -2.5, 13.8, -8);
+    else g.quadraticCurveTo(13, -1, 13.6, -4.6);
+    g.stroke();
+    g.restore();
+  }
+}
+function drawDeckCat(g, t, sim) {
+  if (REDUCED || cat.deck === 'below' || ui.mode !== 'deck') return;
+  const [rx, ry] = railPoint(cat.side, cat.u);
+  g.save();
+  g.translate(rx, ry - 2);
+  const away = 0.62 + 0.38 * cat.u;     /* smaller toward the bow */
+  const s = 2.05 * away;
+  if (cat.deck === 'walk') {
+    g.scale(cat.side > 0 ? -s : s, s);  /* she walks toward the bow */
+    drawCatPose(g, 'walk', cat.frame);
+  } else {
+    g.scale(cat.side > 0 ? -s : s, s);  /* she faces the sea she watches */
+    drawCatPose(g, 'stare', cat.frame);
+  }
+  g.restore();
+}
+/* the chart-table cat: she settles near the waters you visit most */
+function catHomeIsle() {
+  const counts = new Map();
+  for (const r of visit.log) if (r.slug) counts.set(r.slug, (counts.get(r.slug) || 0) + 1);
+  let best = null, bn = 0;
+  for (const [s2, n2] of counts) if (n2 > bn) { bn = n2; best = s2; }
+  return best ? world.bySlug.get(best) : (ship.bound || world.island);
+}
+function drawChartCat() {
+  const el = $('chartcat');
+  if (!el) return;
+  const g = el.getContext('2d');
+  g.setTransform(2, 0, 0, 2, 0, 0);
+  g.clearRect(0, 0, 60, 46);
+  g.save();
+  g.translate(30, 27);
+  /* her small shadow on the vellum */
+  g.fillStyle = 'rgba(38,28,17,0.14)';
+  g.beginPath(); g.ellipse(0.5, 7.5, 15, 4.4, 0, 0, TAU); g.fill();
+  drawCatPose(g, 'curl', REDUCED ? 0 : cat.chartFrame);
+  g.restore();
+}
+function placeChartCat() {
+  const el = $('chartcat');
+  if (!el || !chart.layoutView) return;
+  const I = catHomeIsle();
+  cat.home = I ? I.slug : null;
+  if (!I) { el.style.display = 'none'; return; }
+  const L = chart.layoutView;
+  const p = chartProject(I.pos.x, I.pos.y);
+  const x = clamp((p[0] * L.z + L.tx) * L.S + L.dx + 26 * L.S, 60, 1400 * L.S + L.dx - 60);
+  const y = clamp((p[1] * L.z + L.ty) * L.S + L.dy - 20 * L.S, 46, 810 * L.S + L.dy - 40);
+  el.style.display = 'block';
+  el.style.left = x.toFixed(1) + 'px';
+  el.style.top = y.toFixed(1) + 'px';
+  drawChartCat();
+  diag.chartCat = { near: cat.home, x: Math.round(x), y: Math.round(y) };
+}
+function chartCatBeat() {
+  /* her tail flicks now and then; a rare frame lifts her head */
+  if (REDUCED) return;
+  cat.chartFrame = cat.chartFrame === 0 ? (Math.random() < 0.25 ? 2 : 1) : 0;
+  if (ui.mode === 'below' && ui.tab === 'chart') drawChartCat();
+}
+
 (async function boot() {
   try {
     await loadData();
@@ -7558,10 +10745,27 @@ const PATH_SVG =
   sound.init();
 
   initEggs();
+  wxInit();
+  harbourInit();
+  bottleInit();
+  setInterval(chartCatBeat, 1700);
 
-  placeShipAtDistance(parseFloat(params.get('dist')) || 2.7);
+  /* QUICK START FIRST (owner law): a cold load bears for the Quick Start
+     Guide; a stated ?dist / ?open / ?below order, or a visit that has already
+     charted her, stands as before. */
+  const qsIsle = world.bySlug.get('/cms/quick-start');
+  story.qs = qsIsle || null;
+  story.maiden = !!qsIsle && !params.get('dist') && !params.get('open') && !params.get('below') &&
+    !visit.charted.has(qsIsle.slug);
+  placeShipAtDistance(parseFloat(params.get('dist')) || 2.7, story.maiden ? qsIsle : undefined);
   ship.lastFix = { x: ship.x, y: ship.y, t: 0 };
   visit.track.push({ x: ship.x, y: ship.y });
+  /* STAGE 2: the known chart - the survey grid raised, this visit seeded */
+  fogInitGrid();
+  for (const sg of visit.charted) { const Ic = world.bySlug.get(sg); if (Ic) fogSee(Ic.pos.x, Ic.pos.y, 1.1); }
+  fogSee(ship.x, ship.y, FOG_SEE_NM);
+  fogSyncSwitch();
+  diag.fogMode = fog.mode; diag.fogSeen = fog.seen.size;
   sound.setHarbour(world.island);
   /* the calm start (owner order): she begins hove to, no way on. A ?sail=
      parameter is a stated order and stands, and it also ends the teaching. */

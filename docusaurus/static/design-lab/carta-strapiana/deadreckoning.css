@@ -287,6 +287,7 @@ html, body {
 #weigh:hover, #ondeck:hover { background: var(--paper-3); }
 
 #anchorbody {
+  position: relative;
   flex: 1 1 auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 310px;
@@ -407,6 +408,32 @@ html, body {
   margin-top: 6px;
 }
 #pagepaper .twrap { overflow-x: auto; margin: 0 0 1.3em; }
+
+/* the reading page shows its sea-mark: an engraved rail standing in the
+   margin, always visible, drawn by the page itself so no browser setting can
+   hide it (owner law: the page must scroll). The native bar is retired. */
+#pagepaper { scrollbar-width: none; }
+#pagepaper::-webkit-scrollbar { width: 0; height: 0; }
+#paperrail {
+  position: absolute;
+  width: 12px;
+  border-radius: 6px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule-2);
+  box-shadow: inset 1px 0 0 rgba(70, 53, 35, 0.08);
+  z-index: 4;
+}
+#paperthumb {
+  position: absolute;
+  left: 2px;
+  width: 6px;
+  min-height: 28px;
+  border-radius: 4px;
+  background: var(--ink-3);
+  opacity: 0.85;
+  cursor: grab;
+}
+#paperthumb:hover, #paperthumb.held { background: var(--ink-2); opacity: 1; }
 #pagepaper table { border-collapse: collapse; font-size: 14.5px; min-width: 100%; }
 #pagepaper th, #pagepaper td {
   border: 1px solid var(--rule-2);
@@ -714,6 +741,9 @@ html, body {
 }
 .cl-dirs ul { margin: 0; padding-left: 13px; }
 .cl-dirs li { margin-bottom: 5px; font-size: 0.95em; }
+.cl-dirs .cd-rum-h { margin-top: 9px; }
+.cl-dirs ul.cd-rum li { font-size: 0.88em; font-style: italic; line-height: 1.35; margin-bottom: 4px; }
+.cl-dirs ul.cd-rum b { font-style: normal; }
 .cl-dirs b { color: var(--ink); font-weight: 600; letter-spacing: 0.04em; }
 
 /* the hover readout, set inside the foot of the cartouche */
@@ -989,3 +1019,288 @@ html, body {
 }
 /* the app's own becalm flag (?rm=1) stills the slip too */
 :root.becalmed #specimen.slipping { animation: none; }
+
+/* ===== r10: the two mains, lettered wide across their ground ===== */
+.cl-cont {
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-weight: 600;
+  color: rgba(44, 33, 18, 0.34);
+  text-shadow: 0 0 5px rgba(240, 228, 197, 0.85), 0 0 12px rgba(240, 228, 197, 0.6);
+}
+.cl-contsub {
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-style: italic;
+  color: rgba(52, 40, 24, 0.40);
+  text-shadow: 0 0 4px rgba(240, 228, 197, 0.9);
+}
+
+/* ===== r10: the tooltip at the hand ===== */
+#charttip {
+  position: absolute;
+  z-index: 40;
+  pointer-events: none;
+  max-width: 300px;
+  padding: 8px 12px 7px;
+  background: #f6efdd;
+  border: 1px solid rgba(38, 28, 17, 0.75);
+  box-shadow:
+    inset 0 0 0 3px #f6efdd, inset 0 0 0 4px rgba(38, 28, 17, 0.35),
+    2px 3px 9px rgba(40, 28, 12, 0.35);
+  color: #2c2113;
+  font-family: "Iowan Old Style", "Palatino", "Palatino Linotype", Georgia, serif;
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+#charttip .ct-name { font-variant: small-caps; letter-spacing: 0.05em; font-size: 1.12em; }
+#charttip .ct-kind { font-style: italic; color: rgba(58, 45, 28, 0.85); font-size: 0.92em; }
+#charttip .ct-coord { margin-top: 2px; }
+#charttip .ct-datum { color: rgba(58, 45, 28, 0.9); font-size: 0.92em; }
+#chart.overmark { cursor: pointer; }
+#chartlabels .cl-place:focus, #chartlabels .cl-beast:focus {
+  outline: 1.5px solid rgba(141, 47, 34, 0.85);
+  outline-offset: 2px;
+}
+
+/* ===== r10: the chart folds away when a passage is made ===== */
+#below.passing {
+  transition: transform 0.42s cubic-bezier(0.5, 0, 0.9, 0.4), opacity 0.42s ease-in;
+  transform: translateY(9%) scale(0.985);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ===== r10: the maiden landfall line ===== */
+#firstbound {
+  position: absolute;
+  top: 74px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 14px;
+  background: rgba(244, 236, 216, 0.88);
+  border: 1px solid rgba(38, 28, 17, 0.5);
+  box-shadow: 1px 2px 6px rgba(40, 28, 12, 0.25);
+  color: #3b2c1a;
+  font-family: "Iowan Old Style", "Palatino", "Palatino Linotype", Georgia, serif;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+  z-index: 6;
+}
+
+/* ===== r10: the portal-confirm plate ===== */
+#portal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(24, 16, 8, 0);
+  transition: background 0.25s ease;
+}
+#portal.shown { background: rgba(24, 16, 8, 0.30); }
+#portal .po-plate {
+  background: #f4ecd6;
+  border: 1.5px solid rgba(38, 28, 17, 0.85);
+  box-shadow:
+    inset 0 0 0 4px #f4ecd6, inset 0 0 0 5.5px rgba(38, 28, 17, 0.4),
+    0 10px 34px rgba(20, 12, 4, 0.5);
+  padding: 22px 30px 16px;
+  max-width: 460px;
+  text-align: center;
+  font-family: "Iowan Old Style", "Palatino", "Palatino Linotype", Georgia, serif;
+  color: #2c2113;
+  transform: translateY(6px);
+  opacity: 0;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+#portal.shown .po-plate { transform: translateY(0); opacity: 1; }
+#portal .po-q { font-size: 17px; font-style: italic; line-height: 1.45; }
+#portal .po-acts { margin-top: 15px; display: flex; gap: 12px; justify-content: center; }
+#portal .po-acts button {
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  padding: 7px 16px;
+  background: #efe4c8;
+  color: #2c2113;
+  border: 1px solid rgba(38, 28, 17, 0.8);
+  box-shadow: inset 0 0 0 2px #efe4c8, inset 0 0 0 3px rgba(38, 28, 17, 0.3);
+  cursor: pointer;
+}
+#portal .po-acts button:hover { background: #e8dab6; }
+#portal .po-acts button:focus { outline: 2px solid rgba(141, 47, 34, 0.9); outline-offset: 1px; }
+#portal .po-hint { margin-top: 12px; font-size: 11px; color: rgba(58, 45, 28, 0.75); font-style: italic; }
+@media (prefers-reduced-motion: reduce) {
+  #portal, #portal .po-plate, #below.passing { transition: none; }
+}
+#portal[hidden], #charttip[hidden], #firstbound[hidden] { display: none; }
+#plate-title.shown ~ #firstbound { top: 168px; }
+#firstbound { transition: top 0.6s ease; }
+@media (prefers-reduced-motion: reduce) { #firstbound { transition: none; } }
+
+/* ===== STAGE 2, idea 1: the fog of voyages ===== */
+/* the switch, pinned to the sheet's head like the other instruments */
+#fogswitch {
+  position: absolute;
+  transform: translateX(-50%);
+  display: flex; gap: 0.75em; align-items: baseline;
+  padding: 0.25em 1.1em 0.35em;
+  font-variant: small-caps;
+  letter-spacing: 0.13em;
+  border: 1px solid rgba(38, 28, 17, 0.5);
+  border-radius: 2px;
+  background: rgba(240, 231, 210, 0.94);
+  box-shadow: 0 1px 0 rgba(38, 28, 17, 0.22), inset 0 0 10px rgba(38, 28, 17, 0.05);
+  color: var(--ink-2);
+  cursor: pointer;
+  user-select: none;
+  z-index: 5;
+}
+#fogswitch .fs-opt { opacity: 0.38; transition: opacity 0.35s ease, color 0.35s ease; }
+#fogswitch:not(.full) .fs-known,
+#fogswitch.full .fs-full { opacity: 1; color: var(--red); }
+#fogswitch .fs-sep { opacity: 0.45; font-size: 0.72em; }
+#fogswitch:hover { border-color: rgba(38, 28, 17, 0.8); }
+#fogswitch:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+:root.becalmed #fogswitch .fs-opt { transition: none; }
+
+/* rumor lettering: coasts known by report only, in a pale uncertain hand */
+.cl-cont.rumor { opacity: 0.42; }
+.cl-contsub.rumor { opacity: 0.55; }
+.cl-arch.rumor, .cl-land.rumor { opacity: 0.40; font-style: italic; font-weight: 400; }
+
+/* ===== STAGE 2, ideas 2+3+4: the weather ===== */
+/* the storm-glass panel text, pinned beside its engraved vial */
+#stormglass {
+  position: absolute;
+  line-height: 1.32;
+  color: var(--ink-2);
+  pointer-events: none;
+  z-index: 3;
+}
+#stormglass .sg-h {
+  font-size: 0.98em; letter-spacing: 0.18em;
+  color: var(--red);
+  margin-bottom: 1px;
+}
+#stormglass .sg-line { font-size: 0.98em; }
+#stormglass .sg-line b { font-variant: small-caps; letter-spacing: 0.04em; }
+#stormglass .sg-sub { font-style: italic; font-size: 0.9em; color: var(--ink-3); }
+
+/* the key's standing rules, in the small italic hand */
+#chartkey .ck-rule {
+  position: absolute;
+  left: 0; right: 0;
+  font-size: 0.8em;
+  font-style: italic;
+  line-height: 1.25;
+  color: var(--ink-3);
+}
+
+/* ===== STAGE 2, idea 5: the bottle post ===== */
+#bottleplate {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(30, 22, 12, 0.34);
+  z-index: 60;
+}
+#bottleplate[hidden] { display: none; }
+.bp-plate {
+  width: min(560px, 86vw);
+  background: #f1e7d0;
+  border: 1.5px solid rgba(38, 28, 17, 0.75);
+  outline: 1px solid rgba(38, 28, 17, 0.3);
+  outline-offset: 4px;
+  box-shadow: 0 18px 60px rgba(20, 14, 6, 0.5);
+  padding: 20px 26px 16px;
+  color: var(--ink-2);
+}
+.bp-h {
+  letter-spacing: 0.22em; color: var(--red);
+  font-size: 15px; margin-bottom: 6px;
+}
+.bp-line { font-style: italic; color: var(--ink-3); margin-bottom: 12px; font-size: 14px; }
+#bottletext {
+  width: 100%; resize: vertical;
+  background: rgba(255, 252, 242, 0.7);
+  border: 1px solid rgba(38, 28, 17, 0.45);
+  padding: 10px 12px;
+  font: 15px/1.5 "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+  color: #2c2113;
+}
+#bottletext:focus { outline: 2px solid var(--red); outline-offset: 1px; }
+.bp-acts { display: flex; gap: 10px; margin: 12px 0 8px; }
+.bp-acts button {
+  font: 13.5px/1.2 "Iowan Old Style", Palatino, Georgia, serif;
+  letter-spacing: 0.04em;
+  padding: 8px 14px;
+  background: #efe3c6; color: #3a2c18;
+  border: 1px solid rgba(38, 28, 17, 0.65);
+  cursor: pointer;
+}
+#bp-toss { background: #8d2f22; color: #f4ead2; border-color: #5f1f16; }
+#bp-toss:hover { background: #7c2a1e; }
+.bp-acts button:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.bp-note { font-size: 12px; font-style: italic; color: var(--ink-3); }
+
+/* ===== STAGE 2, ideas 6+7: the packet and the harbour master ===== */
+#shoreside .hm-list { max-height: 240px; overflow-y: auto; padding-right: 6px; }
+#shoreside .hm-rig { font-style: italic; color: var(--ink-3); font-size: 0.88em; }
+#shoreside .hm-line, #shoreside .pk-line { font-size: 0.95em; margin-bottom: 7px; }
+#shoreside .hm-none { font-style: italic; color: var(--ink-3); }
+
+/* ===== STAGE 2, idea 8: the illustrated log ===== */
+canvas.lg-sk { display: block; margin-top: 6px; opacity: 0.94; }
+.exportrow { margin: 0 0 12px; }
+
+/* ===== STAGE 2, idea 9: the figurehead's banderole ===== */
+#figurehead {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(8px);
+  max-width: 46%;
+  text-align: center;
+  padding: 10px 26px 8px;
+  background:
+    linear-gradient(to bottom, rgba(244, 236, 214, 0.97), rgba(238, 227, 199, 0.97));
+  border: 1px solid rgba(38, 28, 17, 0.6);
+  border-radius: 2px 14px 2px 14px;
+  box-shadow: 0 3px 14px rgba(30, 20, 8, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.1s ease, transform 1.1s ease;
+  z-index: 7;
+}
+#figurehead.shown { opacity: 1; transform: translateX(-50%) translateY(0); }
+#figurehead .fh-line {
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+  font-style: italic;
+  font-size: 17px;
+  color: #332614;
+  line-height: 1.45;
+}
+#figurehead .fh-who {
+  margin-top: 3px;
+  font-family: "Iowan Old Style", Palatino, Georgia, serif;
+  font-variant: small-caps;
+  letter-spacing: 0.14em;
+  font-size: 11px;
+  color: var(--red);
+}
+:root.becalmed #figurehead { transition: none; }
+
+/* ===== STAGE 2, idea 11: the ship cat on the chart table ===== */
+#chartcat {
+  position: absolute;
+  width: 60px; height: 46px;
+  pointer-events: none;
+  z-index: 4;
+  display: none;
+  transition: left 1.4s ease, top 1.4s ease;
+}
+:root.becalmed #chartcat { transition: none; }

@@ -23,6 +23,15 @@
 
   <div id="caption" aria-live="polite"></div>
 
+  <!-- the figurehead's banderole: a page's own first words, rarely -->
+  <div id="figurehead" aria-live="polite">
+    <div class="fh-line"></div>
+    <div class="fh-who"></div>
+  </div>
+
+  <!-- the maiden landfall line: Quick Start first, counting down -->
+  <div id="firstbound" hidden aria-live="off"></div>
+
   <!-- the plate that names the island under the bow: crisp DOM, on cream -->
   <div id="landfall" hidden>
     <div class="lf-name"></div>
@@ -53,6 +62,7 @@
   <div id="anchorbody">
     <article id="pagepaper"></article>
     <aside id="shoreside"></aside>
+    <div id="paperrail" aria-hidden="true"><div id="paperthumb"></div></div>
   </div>
 </section>
 
@@ -79,12 +89,22 @@
   <div class="bpane" id="pane-chart">
     <canvas id="chart" width="1400" height="810"></canvas>
     <div id="chartlabels"></div>
+    <canvas id="chartcat" width="120" height="92" aria-hidden="true"></canvas>
     <div id="chartinfo">
       <div class="ci-name">The surveyed sea</div>
       <div class="ci-line"></div>
       <div class="ci-act"></div>
     </div>
     <div id="chartkey"></div>
+    <div id="stormglass" aria-label="The storm-glass: the weather of the bound-for waters"></div>
+    <div id="fogswitch" role="switch" tabindex="0" aria-checked="false"
+         aria-label="Lift the fog and show the full chart"
+         title="The known chart is drawn by your own voyages. Lift the fog to see every water.">
+      <span class="fs-opt fs-known">The known chart</span>
+      <span class="fs-sep" aria-hidden="true">&#9670;</span>
+      <span class="fs-opt fs-full">The full chart</span>
+    </div>
+    <div id="charttip" hidden></div>
   </div>
 
   <div class="bpane" id="pane-index" hidden></div>
@@ -92,6 +112,33 @@
   <div class="bpane" id="pane-register" hidden></div>
   <div class="bpane" id="pane-colophon" hidden></div>
 </section>
+
+<!-- the bottle post: a note written at sea, sealed, tossed on the current -->
+<div id="bottleplate" hidden role="dialog" aria-modal="true" aria-label="The bottle post">
+  <div class="bp-plate">
+    <div class="bp-h">THE BOTTLE POST</div>
+    <div class="bp-line"></div>
+    <textarea id="bottletext" rows="4" maxlength="600" spellcheck="false"
+      placeholder="Write the note as you would speak it: what these waters want mending, what serves, what is missing."></textarea>
+    <div class="bp-acts">
+      <button id="bp-toss" type="button">Seal it and toss it over the rail</button>
+      <button id="bp-keep" type="button">Keep the note &nbsp;Esc</button>
+    </div>
+    <div class="bp-note">The bottle bears an up-vote, these waters&rsquo; true name, and your words &mdash; to the docs harbour.</div>
+  </div>
+</div>
+
+<!-- the portal-confirm plate: every crossing asks, in the fiction -->
+<div id="portal" hidden role="dialog" aria-modal="true" aria-label="A crossing offers itself">
+  <div class="po-plate">
+    <div class="po-q"></div>
+    <div class="po-acts">
+      <button id="po-yes" type="button">YES &mdash; cross over</button>
+      <button id="po-no" type="button">NO &mdash; stand off</button>
+    </div>
+    <div class="po-hint">Y / N &middot; Enter crosses &middot; Escape stands off</div>
+  </div>
+</div>
 
 <script src="deadreckoning.js"></script>
 </body>
