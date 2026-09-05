@@ -1,14 +1,28 @@
 /* THE FOUR-COLOR DOCS
    The Strapi documentation as a Silver Age comic line.
    House law: the data IS the story. Every visible fact below is derived from
-   content.json, graph.json, communities.json, provenance.json, gitlog-docs.txt. */
+   content.json, graph.json, taxonomy.json, provenance.json, gitlog-docs.txt. */
 (() => {
 'use strict';
 
 /* ================= 0. utils ================= */
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-function el(tag, cls, html){ const n=document.createElement(tag); if(cls)n.className=cls; if(html!=null)n.innerHTML=html; return n; }
+/* NO WIRE LEAVES THE BUILDING: any <img> pointing at a foreign press
+   (GitHub avatars in contributor rolls, or any external host) is reset
+   into an inked contributor stamp before it can touch the network.
+   Only the two font presses (fonts.googleapis/gstatic) are lawful. */
+function deExtImg(h){
+  return String(h).replace(/<img\b[^>]*>/gi, tag=>{
+    const m=tag.match(/\bsrc\s*=\s*"(?:https?:)?\/\/[^"]*"/i);
+    if(!m) return tag;
+    const alt=(tag.match(/\balt\s*=\s*"([^"]*)"/i)||[])[1]||'';
+    const init=(alt.trim().replace(/[^A-Za-z0-9]/g,'')[0]||'?').toUpperCase();
+    return '<span class="inkhead" title="'+alt+'">'+init+'</span>';
+  });
+}
+function el(tag, cls, html){ const n=document.createElement(tag); if(cls)n.className=cls;
+  if(html!=null) n.innerHTML=(String(html).indexOf('<img')>=0)?deExtImg(html):html; return n; }
 function hash32(str){ let h=2166136261>>>0; for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619);} return h>>>0; }
 function mulberry(seed){ let a=seed>>>0; return ()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}; }
 const clamp=(v,a,b)=>v<a?a:(v>b?b:v);
@@ -55,18 +69,18 @@ const S = {
 
 /* ================= 2. data & model ================= */
 async function loadData(){
-  const [content, graph, communities, provenance, gitlog] = await Promise.all([
+  const [content, graph, taxonomy, provenance, gitlog] = await Promise.all([
     fetch('content.json').then(r=>r.json()),
     fetch('graph.json').then(r=>r.json()),
-    fetch('communities.json').then(r=>r.json()),
+    fetch('taxonomy.json').then(r=>r.json()),
     fetch('provenance.json').then(r=>r.json()),
     fetch('gitlog-docs.txt').then(r=>r.text()),
   ]);
-  S.D = {content, graph, communities, provenance, gitlog};
+  S.D = {content, graph, taxonomy, provenance, gitlog};
 }
 
 function buildModel(){
-  const {content, graph, communities, provenance, gitlog} = S.D;
+  const {content, graph, taxonomy, provenance, gitlog} = S.D;
   const M = S.M = __fc.model = {};
   M.pages = content.pages; M.order = content.order;
 
@@ -111,39 +125,41 @@ function buildModel(){
   const epochY=+M.epoch.slice(0,4), epochMo=+M.epoch.slice(5,7);
   M.monthsSince = iso => (+iso.slice(0,4)-epochY)*12 + (+iso.slice(5,7)-epochMo);
 
-  /* --- series (27 communities + the SHOWCASE tryout book) --- */
-  const usedNouns=new Set();
-  function tighten(label){
-    let s=String(label||'').replace(/\(.*?\)/g,'').trim();
-    const cut=s.search(/\s(?:for|in)\s/i); if(cut>0 && cut>=8) s=s.slice(0,cut);
-    return s.trim();
-  }
-  function nounFor(hubSlug){
-    const pg=M.pages[hubSlug];
-    let n = tighten(pg? pg.sidebarLabel : hubSlug.split('/').pop());
-    if(usedNouns.has(n.toUpperCase()) && pg) n = tighten(stripTitle(pg.title));
-    let up=n.toUpperCase(); let k=2;
-    while(usedNouns.has(up)){ up = n.toUpperCase()+' '+('II III IV V'.split(' ')[k-2]||k); k++; }
-    usedNouns.add(up); return up;
-  }
-  const KICKERS=['TALES OF','SHOWCASE PRESENTS','THE SENSATIONAL','STRANGE ADVENTURES OF',
+  /* --- THE LINE, reorganized under the OFFICIAL TAXONOMY (owner law):
+     every title is a real product+section pair from taxonomy.json,
+     in sidebar order — CMS first, then CLOUD. No tryout book: every
+     page has a real section. Louvain communities survive only as the
+     invisible adjacency already carried by the citation graph. --- */
+  /* no kicker may whisper the banned tryout book: SHOWCASE never prints */
+  const KICKERS=['TALES OF','THE ASTONISHING','THE SENSATIONAL','STRANGE ADVENTURES OF',
     'ALL-NEW','THE MIGHTY','MYSTERY OF','OUR FIGHTING','THE DARING','HOUSE OF',
     "WORLD'S FINEST",'ADVENTURES OF','SECRET ORIGINS OF','THE BRAVE AND THE BOLD'];
-  const clustered=new Set();
+  M.tax={};
+  const secOrder=[], secMembers=new Map();
+  for(const slug of Object.keys(taxonomy)){
+    if(!M.pages[slug]) continue;
+    const v=taxonomy[slug];
+    M.tax[slug]=v;
+    const key=v.product+'|'+v.section;
+    if(!secMembers.has(key)){ secMembers.set(key,[]); secOrder.push({key,product:v.product,section:v.section}); }
+    secMembers.get(key).push(slug);
+  }
+  /* safety net: a page the taxonomy missed joins its product's first title */
+  for(const slug of M.order){
+    if(M.tax[slug]) continue;
+    const p=slug.startsWith('/cloud')?'cloud':'cms';
+    const g=secOrder.find(s2=>s2.product===p)||secOrder[0];
+    secMembers.get(g.key).push(slug);
+    M.tax[slug]={product:g.product,section:g.section,sub:null};
+  }
+  M.secLabel = s => { const v=M.tax[s]; return v ? (v.sub? v.section+' · '+v.sub : v.section) : ''; };
   M.series=[];
-  const commIds=Object.keys(communities);
-  for(const cid of commIds){
-    const c=communities[cid];
-    const members=M.order.filter(s=>c.members.includes(s));
-    members.forEach(m=>clustered.add(m));
-    M.series.push(mkSeries(+cid, members, c.hub, nounFor(c.hub)));
-  }
-  const orphans=M.order.filter(s=>!clustered.has(s));
-  if(orphans.length){
-    usedNouns.add('DOCS SHOWCASE');
-    M.series.push(mkSeries(commIds.length, orphans, orphans[0], 'DOCS SHOWCASE', true));
-  }
-  function mkSeries(idx, members, hub, noun, tryout){
+  secOrder.forEach((g,idx)=>{
+    const members=secMembers.get(g.key);
+    const noun=(g.product==='cloud'?'CLOUD ':'')+g.section.toUpperCase();
+    M.series.push(mkSeries(idx, members, members[0], noun, g.product, g.section));
+  });
+  function mkSeries(idx, members, hub, noun, product, section){
     const rng=mulberry(hash32('series'+idx+noun));
     let first='9999', last='0000', words=0, cms=0; const hands=new Set();
     for(const s of members){ const pv=provenance[s]; if(!pv)continue;
@@ -151,8 +167,8 @@ function buildModel(){
       cms+=pv.commits; pv.authors.forEach(a=>hands.add(a)); words+=graph.words[s]||0; }
     const shareTop={}; for(const s of members) for(const [a,n] of (M.credits[s]||[])) shareTop[a]=(shareTop[a]||0)+n;
     const editor=Object.entries(shareTop).sort((a,b)=>b[1]-a[1])[0];
-    return { idx, noun, hub, members, tryout:!!tryout,
-      kicker: tryout ? 'TRYOUT TALES FROM' : KICKERS[Math.floor(rng()*KICKERS.length)],
+    return { idx, noun, hub, members, product, section,
+      kicker: KICKERS[Math.floor(rng()*KICKERS.length)],
       combo: COMBOS[idx % COMBOS.length],
       first, last, words, commits:cms, hands, editor: editor?editor[0]:'the bullpen',
       rng: hash32('c'+idx) };
@@ -191,7 +207,7 @@ function buildModel(){
     const p=M.pages[slug], iss=M.issue[slug];
     M.index.push({slug, h:null, label:p.sidebarLabel||stripTitle(p.title),
       text:(p.sidebarLabel+' '+stripTitle(p.title)+' '+(p.tags||[]).join(' ')+' '+(p.description||'')).toLowerCase(),
-      series:iss.series, sub:p.section||''});
+      series:iss.series, sub:M.secLabel(slug)});
     for(const h of p.headings||[]) M.index.push({slug, h:h.id, label:p.sidebarLabel||'',
       text:h.text.toLowerCase(), series:iss.series, sub:h.text});
   }
@@ -543,26 +559,36 @@ function paintCover(canvas, slug, W, Hc, mode){
   /* ---- masthead ---- */
   const bulD=u*17;
   x.drawImage(BULLET, u*2.4, chk+u*1.6, bulD, bulD);
-  /* issue box */
-  x.font=`600 ${u*6.6}px Oswald,"Arial Narrow",sans-serif`; x.textAlign='left'; x.fillStyle='#231c12';
-  x.fillText('#'+iss.no, u*21.5, chk+u*8.6);
+  /* issue box — measured, so the logo can be fenced OFF its column */
+  x.textAlign='left'; x.fillStyle='#231c12';
+  const noTxt='#'+iss.no,
+        prTxt=iss.price+'¢',
+        dtTxt=mode==='mini'?(MONTHS[+iss.date.slice(5,7)-1]+' '+iss.date.slice(2,4)):fmtMonth(iss.date);
+  x.font=`600 ${u*6.6}px Oswald,"Arial Narrow",sans-serif`;
+  const noW=x.measureText(noTxt).width;
+  x.fillText(noTxt, u*21.5, chk+u*8.6);
   x.font=`600 ${u*3.6}px Oswald,"Arial Narrow",sans-serif`;
-  x.fillText(iss.price+'¢', u*21.5, chk+u*13.4);
-  x.fillText(mode==='mini'?(MONTHS[+iss.date.slice(5,7)-1]+' '+iss.date.slice(2,4)):fmtMonth(iss.date), u*21.5, chk+u*17.6);
+  const colW=Math.max(noW, x.measureText(prTxt).width, x.measureText(dtTxt).width);
+  x.fillText(prTxt, u*21.5, chk+u*13.4);
+  x.fillText(dtTxt, u*21.5, chk+u*17.6);
   /* the stamp */
   const stw=u*13.4;
   x.drawImage(STAMP, W-u*2.4-stw, chk+u*1.4, stw, stw*100/74);
-  /* kicker */
+  /* the logo's own ground: fenced BETWEEN the issue column and the stamp,
+     Detective-378 fashion — masthead furniture never collides again */
+  const clearL=u*21.5+colW+u*2.0, clearR=W-u*2.4-stw-u*1.4;
+  const logoCX=(clearL+clearR)/2, logoW=clearR-clearL;
+  /* kicker rides over its own logo, same axis */
   x.font=`600 ${u*3.9}px Oswald,"Arial Narrow",sans-serif`; x.textAlign='center';
   x.fillStyle='#231c12';
-  x.fillText(t.kicker, W*0.5, chk+u*4.6);
+  x.fillText(t.kicker, logoCX, chk+u*4.6);
   /* series logo */
   const lines=fitLogoLines(t.noun);
   const logoY0=chk+u*10.5;
   let ly=logoY0;
   const lh=(Hc*0.235-logoY0-u*1)/lines.length;
   lines.forEach((ln,i)=>{
-    drawLettering(x, ln, { x:W*0.5+ (i%2?u*1.2:-u*0.6), y:ly+lh*0.72, w:W*(lines.length>1?0.68:0.62),
+    drawLettering(x, ln, { x:logoCX+ (i%2?u*1.0:-u*0.5), y:ly+lh*0.72, w:logoW,
       size:Math.min(lh*0.98,u*(lines.length>1?11.5:14.5)), color:heroRGB,
       style:t.style, seed:seed+i, arc: i===0?0.13:0.02, telescope: mode==='mini'?2:3 });
     ly+=lh;
@@ -838,8 +864,8 @@ function listDOM(b){
   if(b.t==='ol'&&b.start&&b.start!==1) n.start=b.start;
   for(const it of b.items){
     const li=el('li');
-    if(typeof it==='string') li.innerHTML=it;
-    else { li.innerHTML=it.html||''; renderBlocks(it.blocks).forEach(k=>{k.style.marginTop='6px'; li.appendChild(k);}); }
+    if(typeof it==='string') li.innerHTML=deExtImg(it);
+    else { li.innerHTML=deExtImg(it.html||''); renderBlocks(it.blocks).forEach(k=>{k.style.marginTop='6px'; li.appendChild(k);}); }
     n.appendChild(li);
   }
   return n;
@@ -1048,7 +1074,7 @@ function panelize(slug){
   const pushNarr=(ps)=>{
     const n=el('div','panel rough r'+(panels.length%4)+' narr'+(firstNarr?' lede':''));
     firstNarr=false;
-    for(const p of ps) n.insertAdjacentHTML('beforeend','<p>'+p.html+'</p>');
+    for(const p of ps) n.insertAdjacentHTML('beforeend',deExtImg('<p>'+p.html+'</p>'));
     push({node:n,kind:'narr'});
     return n;
   };
@@ -1074,8 +1100,8 @@ function panelize(slug){
         }
         if(b2 && aLen<340 && (b2.html||'').length<340 && rng()<0.42 && !firstNarr){
           const row=el('div','panel-row');
-          const p1=el('div','panel rough r'+((panels.length)%4)+' narr'); p1.innerHTML='<p>'+a.html+'</p>';
-          const p2=el('div','panel rough r'+((panels.length+2)%4)+' narr'); p2.innerHTML='<p>'+b2.html+'</p>';
+          const p1=el('div','panel rough r'+((panels.length)%4)+' narr'); p1.innerHTML=deExtImg('<p>'+a.html+'</p>');
+          const p2=el('div','panel rough r'+((panels.length+2)%4)+' narr'); p2.innerHTML=deExtImg('<p>'+b2.html+'</p>');
           row.appendChild(p1); row.appendChild(p2);
           push({node:row,kind:'row'});
           j+=2;
@@ -1280,7 +1306,29 @@ function issueBook(slug){
   const pages=[];
   pages.push({kind:'cover',slug});
   pages.push({kind:'splash',slug});
-  pgn.pages.forEach((nodes,i)=>pages.push({kind:'content',slug,nodes,idx:i}));
+  /* THE PLATE LAW: one full page of pure drawn story per issue — placed
+     mid-issue at a chapter turn when the book has one, at the middle
+     otherwise. It carries no folio; printed page numbers stay honest. */
+  const N=pgn.pages.length;
+  let plateAt=Math.max(1,Math.ceil(N/2));
+  if(chapters.length>1){
+    let best=null, bestD=1e9;
+    for(const c of chapters){
+      const a=c.page-2;               /* content index of the chapter turn */
+      if(a<1) continue;
+      const d2=Math.abs(a-N/2);
+      if(d2<bestD){ bestD=d2; best=a; }
+    }
+    if(best!=null) plateAt=best;
+  }
+  if(N===0) plateAt=0;
+  pgn.pages.forEach((nodes,i)=>{
+    if(i===plateAt) pages.push({kind:'plate',slug});
+    pages.push({kind:'content',slug,nodes,idx:i});
+  });
+  if(plateAt>=N) pages.push({kind:'plate',slug});
+  /* where each chapter physically lives once the plate is bound in */
+  for(const c of chapters){ const a=c.page-2; c.phys=2+a+(a>=plateAt?1:0); }
   /* the back of the book: an interstitial crossing ad, the bulletins,
      the letters column, the also-on-stands page, and the full-page
      back-cover ad — two different portals per issue, never mid-story */
@@ -1303,6 +1351,7 @@ function buildBookPage(book,i){
     page.appendChild(c);
   }
   else if(d.kind==='splash') page=splashPage(book);
+  else if(d.kind==='plate') page=platePage(book);
   else if(d.kind==='content'){
     page=el('div','cpage');
     page.appendChild(el('div','runhead',
@@ -1319,6 +1368,22 @@ function buildBookPage(book,i){
   else if(d.kind==='sibad'||d.kind==='backad') page=CAST.sibAdPage(d.ad,{W:PAGE_W,H:PAGE_H});
   page.style.width=PAGE_W+'px'; page.style.height=PAGE_H+'px';
   book.built[i]=page;
+  return page;
+}
+/* THE PLATE — the issue's one page of pure drawn story: the subject
+   itself as myth, only floating caption boxes over the painting */
+function platePage(book){
+  const {pg,iss,series:t,slug}=book;
+  const page=el('div','cpage plate-page');
+  page.style.padding='0';
+  const tl=pg.blocks.find(b=>b.t==='tldr');
+  const teaser=(tl?textOf(tl.html):'')||pg.description||'';
+  const node=CAST ? CAST.plateScene(t, slug, {
+    title: stripTitle(pg.sidebarLabel||pg.title),
+    teaser, inb: iss.inb, file: pg.file,
+  }) : el('div','plate-art');
+  page.appendChild(node);
+  page.classList.add('left-page');
   return page;
 }
 function splashPage(book){
@@ -1390,7 +1455,7 @@ function splashPage(book){
     book.chapters.slice(0,6).forEach(c=>{
       const row=el('div','cr-row sp-toc-row',
         `<span class="toc-t">${esc(c.text)}</span><span class="cr-name">${c.page}</span>`);
-      row.addEventListener('click',()=>{ bookView.show(Math.ceil(c.page/2)); SFX.turn(); });
+      row.addEventListener('click',()=>{ bookView.show(Math.ceil((c.phys!=null?c.phys:c.page)/2)); SFX.turn(); });
       toc.appendChild(row);
     });
     boxes.appendChild(toc);
@@ -1716,7 +1781,11 @@ function openIssue(slug, opts){
   showView('bookview');
   const anchor=opts&&opts.heading!=null?book.anchors[opts.heading]:null;
   let spread=0;
-  if(anchor!=null){ const pageIdx=2+anchor; spread=Math.ceil(pageIdx/2); }
+  if(anchor!=null){
+    let pageIdx=book.pages.findIndex(p=>p.kind==='content'&&p.idx===anchor);
+    if(pageIdx<0) pageIdx=2+anchor;
+    spread=Math.ceil(pageIdx/2);
+  }
   else if(opts&&opts.atSplash) spread=1;
   bookView.show(spread,true);
   SFX.open();
@@ -1796,12 +1865,10 @@ function renderRack(){
     inner.appendChild(qb);
   }
 
-  /* shelves */
-  const sorted=[...M.series].sort((a,b)=>b.members.length-a.members.length);
+  /* shelves — the official line: product first, sections in sidebar order */
   const groups=[
-    ['THE BIG BOOKS — ANNUALS & 80-PAGE GIANTS', sorted.filter(t=>t.members.length>=17)],
-    ['THE MONTHLY TITLES', sorted.filter(t=>t.members.length>=5&&t.members.length<17)],
-    ['ONE-SHOTS & SPECIALS', sorted.filter(t=>t.members.length<5)],
+    ['STRAPI CMS — THE MAIN LINE', M.series.filter(t=>t.product!=='cloud')],
+    ['STRAPI CLOUD — THE SKY LINE', M.series.filter(t=>t.product==='cloud')],
   ];
   for(const [label,list] of groups){
     if(!list.length)continue;
@@ -1897,6 +1964,7 @@ function openSeries(idx){
   head.appendChild(logo);
   const hubPg=M.pages[t.hub];
   head.appendChild(el('div','series-meta',
+    `<span><b>${t.product==='cloud'?'STRAPI CLOUD':'STRAPI CMS'}</b> · ${esc(t.section||'')}</span>`+
     `<span><b>${t.members.length}</b> issues</span><span><b>${t.hands.size}</b> hands</span>`+
     `<span><b>${fmtNum(t.words)}</b> words</span><span><b>${t.commits}</b> printings</span>`+
     `<span>${fmtMonth(t.first)} – ${fmtMonth(t.last)}</span><span>edited by <b>${esc(t.editor)}</b></span>`+
@@ -2035,7 +2103,7 @@ function openFinder(mode, seedChar){
       const row=el('div','f-row'+(i===0?' sel':''));
       row.appendChild(el('span','f-issue',`${esc(iss.series.noun)} #${iss.no}`));
       row.appendChild(el('span','f-title', esc(p.sidebarLabel||stripTitle(p.title))));
-      row.appendChild(el('span','f-sub', e.h?('§ '+esc(e.sub)):esc(p.section||'')));
+      row.appendChild(el('span','f-sub', e.h?('§ '+esc(e.sub)):esc(S.M.secLabel(e.slug))));
       row.addEventListener('click',()=>choose(e));
       frag.appendChild(row); rows.push({row,e});
     });

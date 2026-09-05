@@ -710,3 +710,24 @@ table.cx tr:last-child td{border-bottom:none}
 .splash .sp-boxes{display:flex;gap:10px;align-items:stretch}
 .splash .sp-boxes .credits{flex:1 1 50%;min-width:0;margin:0}
 .splash .sp-boxes .sp-toc{flex:1 1 44%}
+
+/* ===== THE PLATE — one full page of pure drawn story per issue ===== */
+.plate-page{padding:0}
+.plate-art{position:absolute;inset:11px;border:3px solid var(--ink);overflow:hidden;background:#efe3c2}
+.platecap{position:absolute;z-index:2;background:#fdf6e2;border:2px solid var(--ink);
+  padding:7px 11px;font-family:var(--lett);font-size:13px;line-height:1.42;letter-spacing:.4px;
+  text-transform:uppercase;box-shadow:3px 3px 0 rgba(0,0,0,.35);max-width:56%}
+
+/* r9: the contributor roll prints INKED STAMPS, not wire photos — no
+   request ever leaves for a foreign avatar press */
+.inkhead{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:30px; height:30px; margin:2px; border-radius:50%;
+  border:2px solid #231c12; background-color:#f6efdd;
+  background-image:radial-gradient(rgba(35,28,18,.30) 1px, transparent 1.3px);
+  background-size:5px 5px;
+  font:700 15px/1 Bangers,Impact,sans-serif; color:#231c12;
+  box-shadow:2px 2px 0 rgba(35,28,18,.5);
+  vertical-align:middle; overflow:hidden;
+}
+a .inkhead{ text-decoration:none; }
