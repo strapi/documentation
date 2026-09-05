@@ -21,28 +21,38 @@
     <div id="wheelbox" title="The wheel. Order the helm with A / D or the arrow keys.">
       <canvas id="wheel" width="92" height="92"></canvas>
     </div>
-    <div id="sailstate" title="Sail state. W for more sail, S for less.">FULL SAIL</div>
+    <div id="sailstate" title="Sail state. W for more sail, S for less.">ANCHORED</div>
+    <div id="shiplog" title="The ship&#39;s log"></div>
     <div id="hudright">
-      <button id="btn-spyglass" class="hudbtn" title="Spyglass (G)">SPYGLASS</button>
-      <button id="btn-index" class="hudbtn" title="The index (Tab). Every page, one keystroke away.">INDEX</button>
-      <button id="btn-program" class="hudbtn" title="The printed program (P)">PROGRAM</button>
-      <button id="btn-hatch" class="hudbtn" title="Open the hatch on the orchestra in the hold (H)">THE BAND</button>
-      <button id="btn-sketch" class="hudbtn" title="The captain&#39;s sketchbook (K)">SKETCHBOOK</button>
+      <button id="btn-index" class="hudbtn" title="The lobby (Tab). Every picture in the house.">THE LOBBY</button>
       <button id="btn-mute" class="hudbtn" title="Sound on or off (M)">SOUND ON</button>
     </div>
     <div id="windtell" title="The wind between two islands blows with the net citation flow between them."></div>
+    <div id="score" title="The tally, chalked on the rail"></div>
   </div>
 
-  <button id="btn-skip" hidden>SKIP THE OPENING &rarr;</button>
+  <div id="reelbar" hidden>
+    <span class="rb-title">PRODUCTION No. 290 &mdash; THE MAKING OF THIS SEA</span>
+    <button class="rb-ch" data-ch="0">I &middot; FIRST LANDFALL</button>
+    <button class="rb-ch" data-ch="1">II &middot; THE GREAT REMAPPING</button>
+    <button class="rb-ch" data-ch="2">III &middot; THE PEN RESTS</button>
+    <input id="reelscrub" type="range" min="0" max="1000" value="0" step="1">
+    <button id="btn-skip" title="Back to the sea (Esc)">LEAVE &rarr;</button>
+  </div>
 
   <!-- index / search -->
   <div id="indexpanel" hidden>
     <div class="panel-card" role="dialog" aria-label="Index of all pages">
       <div class="panel-head">
-        <span class="panel-title">THE INDEX</span>
-        <span class="panel-sub">every picture in the house &mdash; type, then Enter</span>
+        <span class="panel-title">THE LOBBY</span>
+        <span class="panel-sub" id="lobbytally">every picture in the house</span>
         <button id="btn-wall" class="panel-toggle" title="The lobby card wall, or the plain list">PLAIN LIST</button>
         <button class="panel-close" data-close="indexpanel">&times;</button>
+      </div>
+      <div class="doorstrip">
+        <button id="btn-neverran" title="The pictures that never had an audience">NEVER RAN SHELF</button>
+        <button id="btn-programme" title="The programme, the band and the sketchbook">THE PROGRAMME</button>
+        <button id="btn-reel" title="The making of this sea &mdash; 43 days in ninety seconds">PRODUCTION No. 290</button>
       </div>
       <input id="searchbox" type="text" autocomplete="off" spellcheck="false"
              placeholder="Search 290 pages by title, path or tag&hellip;">

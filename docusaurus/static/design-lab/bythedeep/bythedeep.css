@@ -27,6 +27,7 @@ body { font-family: var(--serif); color: var(--ink); }
 
 /* ---------- film frame furniture ---------- */
 #filmframe { position: absolute; inset: 0; pointer-events: none; z-index: 4;
+  background: radial-gradient(ellipse 108% 105% at 50% 46%, rgba(20,16,12,0) 62%, rgba(20,16,12,.16) 84%, rgba(20,16,12,.42) 100%);
   box-shadow: inset 0 0 0 6px #14100c, inset 0 0 0 8px #3a2f24, inset 0 0 90px rgba(20,16,12,.28);
   border-radius: 10px; }
 
@@ -81,6 +82,34 @@ body { font-family: var(--serif); color: var(--ink); }
 .hudbtn { font-family: var(--serif); font-size: 11px; letter-spacing: .18em; color: var(--ink);
   background: var(--card); border: 2px solid var(--card-edge); padding: 7px 11px; cursor: pointer; }
 .hudbtn:hover { background: #f7efd9; }
+#shiplog { position: absolute; left: 126px; bottom: 14px; font-size: 11px; letter-spacing: .14em; color: var(--ink-soft);
+  text-transform: uppercase; max-width: 46vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#score { position: absolute; right: 24px; bottom: 64px; font-family: var(--serif); font-size: 12px; letter-spacing: .2em;
+  color: #efe4c6; text-shadow: 0 1px 3px rgba(20,16,12,.75), 0 0 8px rgba(20,16,12,.4);
+  text-transform: uppercase; text-align: right; opacity: .95; }
+#score.hushed { visibility: hidden; }
+#hud.hushed #sailstate, #hud.hushed #windtell, #hud.hushed #shiplog { visibility: hidden; }
+.doorstrip { display: flex; gap: 10px; padding: 10px 22px 0; }
+.doorstrip button { font-family: var(--serif); font-size: 11px; letter-spacing: .16em; color: var(--ink); cursor: pointer;
+  background: #efe3c2; border: 2px solid var(--card-edge); padding: 6px 12px; }
+.doorstrip button:hover, .doorstrip button.on { background: #f7efd9; }
+.wall-district { grid-column: 1 / -1; font-family: var(--serif); font-size: 12px; letter-spacing: .26em;
+  color: var(--ink-soft); text-transform: uppercase; border-bottom: 2px solid var(--card-edge); padding: 14px 4px 4px; }
+.wall-district b { color: var(--ink); }
+.wall-district small { letter-spacing: .1em; color: var(--brass); float: right; font-size: 11px; }
+#reelbar { position: absolute; left: 0; right: 0; bottom: 0; z-index: 12; display: flex; gap: 10px; align-items: center;
+  padding: 10px 20px; background: rgba(20,16,12,.88); }
+#reelbar .rb-title { font-family: var(--serif); font-size: 11px; letter-spacing: .2em; color: #efe4c6; white-space: nowrap; }
+#reelbar button { font-family: var(--serif); font-size: 10.5px; letter-spacing: .12em; color: #efe4c6; cursor: pointer;
+  background: none; border: 1px solid #6b5a3e; padding: 5px 9px; white-space: nowrap; }
+#reelbar button:hover { background: #2a2118; }
+#reelscrub { flex: 1; accent-color: #c9a24b; }
+.pm-banner { position: sticky; top: 0; z-index: 5; text-align: center; font-family: var(--serif); font-size: 13px;
+  letter-spacing: .18em; text-transform: uppercase; color: #f7e9b8; background: #1c1712; padding: 9px 14px;
+  border-bottom: 3px solid #c9a24b; }
+#livingtitle { position: absolute; inset: 0; z-index: 10; display: flex; align-items: flex-start; justify-content: center;
+  pointer-events: none; }
+#livingtitle canvas { filter: drop-shadow(0 3px 10px rgba(20,16,12,.25)); }
 #btn-skip { position: absolute; right: 26px; bottom: 24px; z-index: 12; font-family: var(--serif); font-size: 12px;
   letter-spacing: .22em; color: var(--ink); background: var(--card); border: 2px solid var(--card-edge);
   padding: 9px 16px; cursor: pointer; transform: rotate(.6deg); }
