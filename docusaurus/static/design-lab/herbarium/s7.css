@@ -745,3 +745,8 @@ a{color:inherit}
     transition-duration:1ms!important;scroll-behavior:auto!important}
   .boot-leaf path{stroke-dashoffset:0}
 }
+
+/* the way back to the gallery lives in the topbar, dressed as one of its own */
+a.tb-btn{text-decoration:none}
+#__labback{border-color:#8a6d3f;color:#d9c08a;letter-spacing:.08em}
+#__labback:hover,#__labback:focus-visible{border-color:#d9c08a;color:#f0e3c0}
