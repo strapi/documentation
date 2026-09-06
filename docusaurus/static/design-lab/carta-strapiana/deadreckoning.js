@@ -112,6 +112,23 @@ async function loadData() {
     fetch('register.json').then(r => r.json()),
     fetch('taxonomy.json').then(r => r.json())
   ]);
+  /* THE SEA CARRIES NO RELEASE NOTES (owner order). /release-notes-archives is
+     1,193 blocks, by far the largest page in the corpus, and it raised a jagged
+     range across the whole horizon; /release-notes moored at 2.2 nm sat right in
+     the maiden approach lane to the Quick Start Guide. Both are struck from the
+     chart at the source, so every count, every island, every citation and every
+     register line that follows is honestly computed without them. */
+  const NOT_CHARTED = /^\/release-notes(-archives)?$/;
+  for (const slug of Object.keys(content.pages)) {
+    if (NOT_CHARTED.test(slug)) delete content.pages[slug];
+  }
+  if (graph && Array.isArray(graph.edges)) {
+    graph.edges = graph.edges.filter(e => !NOT_CHARTED.test(e.src) && !NOT_CHARTED.test(e.tgt));
+  }
+  for (const c of communities) {
+    if (Array.isArray(c.members)) c.members = c.members.filter(m => !NOT_CHARTED.test(m));
+  }
+
   world.prov = prov;
   world.register = register;
   world.taxonomy = taxonomy;
