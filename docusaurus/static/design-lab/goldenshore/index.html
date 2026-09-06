@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Golden Shore</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23f2b25a'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./css/style.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.js" } }
+</script>
+</head>
+<body>
+<div id="app">
+  <canvas id="scene"></canvas>
+
+  <div id="vignette" aria-hidden="true"></div>
+  <div id="grain" aria-hidden="true"></div>
+
+  <div id="bootline" role="status">WASD to walk, mouse to look, E to read. That is all.</div>
+  <div id="fallbacknote" hidden>Pointer lock was refused. Drag to look, click the ground to walk.</div>
+
+  <div id="label" hidden>
+    <div id="label-title"></div>
+    <div id="label-meta"></div>
+    <div id="label-hint"></div>
+    <div id="tend-ring" hidden><div id="tend-fill"></div></div>
+  </div>
+
+  <canvas id="compass" width="560" height="30" aria-hidden="true"></canvas>
+  <div id="toast" hidden></div>
+
+  <div id="logbook" hidden>
+    <div class="lb-head">
+      <h2>Keeper's logbook</h2>
+      <button id="lb-close" type="button" aria-label="Close logbook">Close</button>
+    </div>
+    <div id="lb-body"></div>
+    <div id="lb-foot"></div>
+  </div>
+
+  <div id="reader" hidden>
+    <div id="reader-page">
+      <header id="reader-head">
+        <div id="reader-crumb"></div>
+        <h1 id="reader-title"></h1>
+        <div id="reader-prov"></div>
+        <button id="reader-close" type="button" aria-label="Close and return to the coast">Close</button>
+      </header>
+      <main id="reader-body"></main>
+      <footer id="reader-foot">Escape returns you to the coast, to the same spot in the same light.</footer>
+    </div>
+  </div>
+
+  <div id="glcard" hidden>
+    <div class="glc-inner">
+      <div class="glc-title">The Golden Shore</div>
+      <p>Your browser is refusing to create WebGL for every site right now, so the coast cannot be drawn. This is a browser or driver state, not a fault in this page.</p>
+      <ul>
+        <li>On Chrome: fully quit the browser and reopen it, then open <code>chrome://gpu</code> and check that the graphics status says <b>Hardware accelerated</b>.</li>
+        <li>Close other tabs running 3D scenes or heavy video, then try again.</li>
+      </ul>
+      <button id="glretry" type="button">Retry</button>
+      <div id="glnote" role="status"></div>
+    </div>
+  </div>
+
+  <div id="loading"><div class="load-inner"><div class="load-title">The Golden Shore</div><div class="load-sub" id="load-status">Reading the coast...</div></div></div>
+</div>
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>
