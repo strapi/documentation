@@ -731,3 +731,12 @@ table.cx tr:last-child td{border-bottom:none}
   vertical-align:middle; overflow:hidden;
 }
 a .inkhead{ text-decoration:none; }
+
+/* ===== the art slot: owner plate art, pixels sacred ===== */
+.plate-art>canvas.sc-c{position:relative;z-index:0}
+.plate-art-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:block;border:0;filter:none}
+.plate-owner-art>canvas.sc-c{display:none}
+.plate-art-credit{position:absolute;right:7px;bottom:5px;z-index:3;
+  font:600 9.5px Oswald,'Arial Narrow',sans-serif;letter-spacing:.5px;
+  background:rgba(253,246,226,.94);color:#231c12;border:1.5px solid #231c12;
+  padding:1px 6px;transform:rotate(-.4deg)}

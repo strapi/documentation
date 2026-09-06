@@ -79,6 +79,61 @@ async function loadData(){
   S.D = {content, graph, taxonomy, provenance, gitlog};
 }
 
+/* ============ THE ART SLOT (owner law) ============
+   The build auto-detects images/plates/ beside it: a file named by the
+   FLATTENED SLUG (cms-features-media-library.png or .jpg) replaces that
+   page's code-drawn plate with the owner's art FULL-BLEED — pixels sacred,
+   no filter, no halftone, no tint — with the plate's caption boxes overlaid
+   in their usual hand. An optional images/plates/manifest.json credits the
+   artist per file ({"cms-features-media-library.png":{"artist":"NAME"}}).
+   Pages without an image keep their drawn plate. */
+const PLATE_ART_DIR='images/plates/';
+async function loadPlateArtIndex(){
+  S.plateArt=null; S.plateArtManifest=null;
+  /* the dev press (serve.js) lists the folder at index.json; a static
+     host without it falls back to blind per-page probing */
+  try{
+    const r=await fetch(PLATE_ART_DIR+'index.json',{cache:'no-cache'});
+    if(r.ok){
+      const j=await r.json();
+      if(Array.isArray(j)) S.plateArt=new Set(j);
+    }
+  }catch(e){}
+  if(S.plateArt===null || S.plateArt.has('manifest.json')){
+    try{
+      const r=await fetch(PLATE_ART_DIR+'manifest.json',{cache:'no-cache'});
+      if(r.ok) S.plateArtManifest=await r.json();
+    }catch(e){}
+  }
+}
+function flatSlug(slug){ return String(slug||'').replace(/^\/+/,'').replace(/\//g,'-'); }
+function attachPlateArt(node, slug){
+  const flat=flatSlug(slug);
+  let exts=['.png','.jpg'];
+  if(S.plateArt) exts=exts.filter(e=>S.plateArt.has(flat+e));
+  const tryNext=()=>{
+    if(!exts.length) return;
+    const file=flat+exts.shift();
+    const img=new Image();
+    img.onload=()=>{
+      const im=el('img','plate-art-img');
+      im.src=img.src; im.alt='';
+      node.insertBefore(im,node.firstChild);
+      node.classList.add('plate-owner-art');
+      /* if the drawn plate already went to press, it stands down */
+      const cv=node.querySelector(':scope > canvas.sc-c');
+      if(cv) cv.style.display='none';
+      const man=S.plateArtManifest&&(S.plateArtManifest[file]||
+        (S.plateArtManifest.files&&S.plateArtManifest.files[file]));
+      const artist=man&&(typeof man==='string'?man:(man.artist||man.credit));
+      if(artist) node.appendChild(el('div','plate-art-credit','PLATE ART: '+esc(String(artist)).toUpperCase()));
+    };
+    img.onerror=tryNext;
+    img.src=PLATE_ART_DIR+file;
+  };
+  tryNext();
+}
+
 function buildModel(){
   const {content, graph, taxonomy, provenance, gitlog} = S.D;
   const M = S.M = __fc.model = {};
@@ -384,15 +439,16 @@ function makeSeals(){
     x.strokeStyle='#231c12'; x.lineWidth=1;
     x.beginPath(); x.moveTo(12,71); x.lineTo(w-12,71); x.stroke();
     STAMP=c; }
-  { const d=84,c=cvs(d,d,2); const x=c.getContext('2d');
+  { const d=84,c=cvs(d,d,3); const x=c.getContext('2d');
+    /* owner: the ring text must be readable - wider band, 9px caps, longer arcs */
     x.beginPath(); x.arc(d/2,d/2,d/2-2,0,7); x.fillStyle='#f6efdd'; x.fill();
     x.lineWidth=3; x.strokeStyle='#231c12'; x.stroke();
-    x.beginPath(); x.arc(d/2,d/2,d/2-11,0,7); x.lineWidth=1.4; x.stroke();
+    x.beginPath(); x.arc(d/2,d/2,d/2-14,0,7); x.lineWidth=1.4; x.stroke();
     x.fillStyle='#231c12'; x.textAlign='center';
-    x.font='600 31px Oswald,"Arial Narrow",sans-serif'; x.fillText('DC',d/2,d/2+11);
-    x.font='600 6.2px Oswald,"Arial Narrow",sans-serif';
-    arcText(x,'THE FOUR-COLOR DOCS',d/2,d/2,d/2-6.4,-Math.PI*0.82,Math.PI*-0.18);
-    arcText(x,'EST. '+fmtMonth(S.M.epoch),d/2,d/2,d/2-6.4,Math.PI*0.72,Math.PI*0.28,true);
+    x.font='600 29px Oswald,"Arial Narrow",sans-serif'; x.fillText('DC',d/2,d/2+10);
+    x.font='600 9px Oswald,"Arial Narrow",sans-serif';
+    arcText(x,'THE FOUR-COLOR DOCS',d/2,d/2,d/2-13.2,-Math.PI*0.97,Math.PI*-0.03);
+    arcText(x,'EST. '+fmtMonth(S.M.epoch),d/2,d/2,d/2-4.8,Math.PI*0.85,Math.PI*0.15,true);
     BULLET=c; }
 }
 function rr(x,a,b,w,h,r){ x.beginPath(); x.moveTo(a+r,b); x.arcTo(a+w,b,a+w,b+h,r); x.arcTo(a+w,b+h,a,b+h,r); x.arcTo(a,b+h,a,b,r); x.arcTo(a,b,a+w,b,r); x.closePath(); }
@@ -527,7 +583,7 @@ function paintCover(canvas, slug, W, Hc, mode){
   const hero=t.combo;
   const heroRGB=comboRGB(hero);
   const danger=pageDanger(slug);
-  const cc=CAST?CAST.coverComp(slug,arch,!!danger):null;
+  const cc=CAST?CAST.coverComp(slug,arch,!!danger,t):null;
 
   /* ---- art region ---- */
   const artY=Hc*0.235, artH=Hc*0.625;
@@ -541,6 +597,15 @@ function paintCover(canvas, slug, W, Hc, mode){
     else if(c2==='menace') keep={x:artR.x,y:artR.y+artR.h*0.36,w:artR.w*0.58,h:artR.h*0.64};
     else if(c2==='duo') keep={x:artR.x,y:artR.y+artR.h*0.16,w:artR.w,h:artR.h*0.84};
     else if(c2==='quiet') keep={x:artR.x+artR.w*0.10,y:artR.y+artR.h*0.22,w:artR.w*0.80,h:artR.h*0.78};
+  }
+  /* the melting-pot books stage ENSEMBLES — the whole floor stays clear
+     of background linework so five heroes read at a glance */
+  if(CAST&&cc){
+    const d16=CAST.castFor(t).hero.design;
+    if(d16&&(d16.teambook||d16.recruit)){
+      keep={x:artR.x,y:artR.y+artR.h*0.14,w:artR.w,h:artR.h*0.86};
+      cc.bg='action';   /* rays behind the ensemble, never the busy motif */
+    }
   }
   paintArt(x,rng,cc?cc.bg:arch,t,artR,drift,slug,keep);
   /* the star of the book, staged eight different ways across a run */
@@ -1378,11 +1443,28 @@ function platePage(book){
   page.style.padding='0';
   const tl=pg.blocks.find(b=>b.t==='tldr');
   const teaser=(tl?textOf(tl.html):'')||pg.description||'';
+  /* the page's OWN material — its real headings and the shape of its body —
+     is handed to the forge so the picture can only belong to this page */
+  const heads=(pg.headings||[]).filter(h=>h&&(h.level===2||h.level===3))
+    .map(h=>({l:h.level,t:String(h.text||'').replace(/\s+/g,' ').trim()}))
+    .filter(h=>h.t).slice(0,14);
+  const st={code:0,img:0,table:0,admon:0,steps:0,paras:0,tabs:0,endp:0,words:0};
+  for(const b of pg.blocks||[]){
+    if(b.t==='code')st.code++; else if(b.t==='img')st.img++;
+    else if(b.t==='table')st.table++; else if(b.t==='admonition')st.admon++;
+    else if(b.t==='ol')st.steps++; else if(b.t==='tabs')st.tabs++;
+    else if(b.t==='endpoint')st.endp++;
+    else if(b.t==='p'){st.paras++; st.words+=Math.round(String(b.html||'').length/7);}
+  }
   const node=CAST ? CAST.plateScene(t, slug, {
     title: stripTitle(pg.sidebarLabel||pg.title),
+    fullTitle: stripTitle(pg.title),
     teaser, inb: iss.inb, file: pg.file,
+    heads, stats: st, tags: pg.tags||[], section: pg.section, product: pg.product,
   }) : el('div','plate-art');
   page.appendChild(node);
+  /* the owner's plate art, if a file for this slug exists */
+  attachPlateArt(node, slug);
   page.classList.add('left-page');
   return page;
 }
@@ -2267,6 +2349,7 @@ async function boot(){
       new Promise(r=>setTimeout(r,3200))
     ]).catch(()=>{});
     await loadData();
+    await loadPlateArtIndex();
     buildModel();
     /* wire the drawn cast */
     if(window.FC_CAST) CAST=window.FC_CAST({el,esc,cvs,DPR,mulberry,hash32,clamp,

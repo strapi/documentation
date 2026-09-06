@@ -1,0 +1,32 @@
+THE FOUR-COLOR DOCS — sound credits
+
+All sounds in this piece are synthesized at runtime with the Web Audio API
+(filtered white-noise bursts and short oscillator tones written for this
+build). No recorded samples, no third-party audio assets are used.
+
+The synthesis parameters are original work created for this project and are
+dedicated to the public domain under CC0 1.0.
+
+Every sound is a countable datum:
+- page rustle        = one page turned
+- open whoosh/thump  = one issue taken off the rack
+- search tick        = one result set typeset / one tab or file toggled
+- rescue chime       = one never-reprinted story taken home from the bin
+- print clack        = one letter to the bullpen going to press
+
+One toggle (SOUND: ON/OFF, top right) silences everything.
+
+THE ART SLOT — owner plate art
+
+A file dropped into images/plates/ (beside index.html) replaces the
+code-drawn plate of the matching page, FULL-BLEED, pixels untouched —
+no filter, no halftone, no tint:
+- naming: the page slug flattened with dashes, extension .png or .jpg —
+  /cms/features/media-library -> images/plates/cms-features-media-library.png
+- captions: the plate's floating caption boxes stay overlaid in their
+  usual hand
+- credits: an optional images/plates/manifest.json names the artist per
+  file — {"cms-features-media-library.png": {"artist": "JANE DOE"}} —
+  and the credit prints on a small slip in the plate's lower right
+- removing the file restores the drawn plate on the next load.
+Owner art keeps its own copyright; everything code-drawn remains CC0.
