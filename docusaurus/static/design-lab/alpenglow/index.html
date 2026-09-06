@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alpenglow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Henny+Penny&family=Baloo+2:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- THE WORLD: one Canvas 2D panorama, painted in gouache, inked on top -->
+<canvas id="world"></canvas>
+
+<!-- QUIET TOP BAR (utility path, sacred) -->
+<header id="topbar">
+  <div class="tb-left">
+    <span class="wordmark">Alpenglow</span>
+    <span class="bureau">Guides' Bureau</span>
+  </div>
+  <div class="tb-right">
+    <div id="searchwrap">
+      <input id="search" type="search" placeholder="Search 290 summits...  ( / )" autocomplete="off" spellcheck="false">
+      <div id="searchresults" hidden></div>
+    </div>
+    <button id="btn-index" class="tb-btn" title="Index gazetteer (I)">Index</button>
+    <button id="btn-almanac" class="tb-btn" title="The Almanac">Almanac</button>
+    <button id="btn-sound" class="tb-btn tb-icon" aria-pressed="false" title="Sound">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 6v4h3l4 3V3L5 6H2z" fill="currentColor"/><path class="snd-waves" d="M11.5 5.5c1.4 1.4 1.4 3.6 0 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    </button>
+    <span id="ascentlog" title="Ascent Log">0&thinsp;/&thinsp;290</span>
+  </div>
+</header>
+
+<!-- ONE CARD: the route topo card -->
+<aside id="topocard" hidden>
+  <div class="tc-route"></div>
+  <div class="tc-facts"></div>
+  <div class="tc-pitch"></div>
+  <div class="tc-actions">
+    <button id="btn-peek" hidden>Peek</button>
+    <button id="btn-hike" title="Auto walk-up, no badges">Hike</button>
+  </div>
+</aside>
+
+<!-- Trailhead sign -->
+<div id="trailsign" hidden></div>
+
+<!-- First-paint caption -->
+<div id="caption" hidden></div>
+
+<!-- Chalk-bag grip meter -->
+<div id="gripmeter" hidden aria-label="Grip">
+  <div class="bag"><div class="fill"></div></div>
+  <span class="gv">100</span>
+</div>
+
+<!-- Fixed ropes at a summit (the descent is the citation graph) -->
+<div id="ropes" hidden>
+  <div class="ropes-title">Fixed ropes &darr;</div>
+  <div class="ropes-list"></div>
+</div>
+
+<!-- THE SUMMIT BOOK: crisp, untinted, first-class reading -->
+<aside id="book" hidden>
+  <button id="book-close" title="Close (Esc)">&times;</button>
+  <div id="book-scroll">
+    <header id="book-head">
+      <h1 id="book-title"></h1>
+      <p id="book-prov"></p>
+    </header>
+    <div id="book-content"></div>
+  </div>
+  <footer id="book-foot">
+    <button id="btn-sign">Sign the book</button>
+    <button id="btn-recoil" hidden>Re-coil the rope</button>
+    <a id="btn-report" target="_blank" rel="noopener noreferrer">Report worn rope (Guides' Bureau on GitHub)</a>
+  </footer>
+</aside>
+
+<!-- Index gazetteer -->
+<aside id="indexpanel" class="overlay-panel" hidden>
+  <button class="op-close" title="Close (Esc)">&times;</button>
+  <h2>Index, the 290 summits</h2>
+  <div id="indexbody"></div>
+</aside>
+
+<!-- The Almanac -->
+<aside id="almanac" class="overlay-panel" hidden>
+  <button class="op-close" title="Close (Esc)">&times;</button>
+  <h2>The Almanac</h2>
+  <div id="almanacbody"></div>
+</aside>
+
+<div id="dim" hidden></div>
+
+<!-- FILM PASS: grain, scratches and the iris live on this canvas; vignette + flicker are CSS -->
+<canvas id="film"></canvas>
+<div id="vignette" aria-hidden="true"></div>
+
+<!-- HAND-LETTERED TITLE CARDS: the concept told in three cards, skippable -->
+<div id="titlecards" hidden>
+  <section class="tcard" data-card="1">
+    <div class="tcard-frame">
+      <p class="tcard-over">The Guides' Bureau presents</p>
+      <h1>Every page<br>is a summit</h1>
+      <p class="tcard-body">This range is the real Strapi documentation. Each of its 290 summits is one page, and a summit's height in meters is that page's true word count.</p>
+      <div class="tcard-actions">
+        <button class="tcard-next">Next card</button>
+        <button class="tcard-skip">Skip the tour</button>
+      </div>
+      <p class="tcard-count">Card one of three</p>
+    </div>
+  </section>
+  <section class="tcard" data-card="2" hidden>
+    <div class="tcard-frame">
+      <p class="tcard-over">How the climbing works</p>
+      <h1>Hold to reach</h1>
+      <p class="tcard-body">Press and hold: your free hand swings on a pendulum. Release inside the green to latch the next hold. A route's pitches are the page's real headings, and every grade is honest.</p>
+      <div class="tcard-actions">
+        <button class="tcard-next">Next card</button>
+        <button class="tcard-skip">Skip the tour</button>
+      </div>
+      <p class="tcard-count">Card two of three</p>
+    </div>
+  </section>
+  <section class="tcard" data-card="3" hidden>
+    <div class="tcard-frame">
+      <p class="tcard-over">And at the top</p>
+      <h1>The book<br>in the box</h1>
+      <p class="tcard-body">On every summit sits a box, and inside lies the page itself, kept by the 77 real guides who wrote it. Read it, sign it, then rappel a citation rope to the next peak.</p>
+      <div class="tcard-actions">
+        <button class="tcard-next">Start climbing</button>
+      </div>
+      <p class="tcard-count">Card three of three</p>
+    </div>
+  </section>
+</div>
+
+<div id="fakecursor" hidden><svg width="20" height="24" viewBox="0 0 20 24"><path d="M2 1 L2 19 L7 15 L10 22 L13 20.6 L10 14 L16 14 Z" fill="#1a1a1a" stroke="#fff" stroke-width="1.2"/></svg></div>
+
+<script src="js/model.js"></script>
+<script src="js/reader.js"></script>
+<script src="js/world.js"></script>
+<script src="js/game.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
