@@ -748,6 +748,27 @@ function aimLens(x, y) {
 const story = { leadsman1: false, leadsman2: false, started: false, raised: false, lastDist: null, minDist: null,
   maiden: false, qs: null };
 
+/* ---------------- PAGES BY ORDER ONLY (owner law, S4) ----------------
+   A page opens ONLY as the completion of an explicit player order given
+   THIS visit: A within anchoring ground, A from afar completing through
+   the helmsman, or a deliberate chart / index / register selection. The
+   landing order below is that order, named. Nothing sets it but those
+   gestures; the standing arrival law fires only while the island she is
+   bound for IS the ordered one; any hand back on the wheel or the canvas
+   revokes it. Merely sailing near a shore never opens her page again. */
+const landing = { isle: null, why: '' };
+function landingOrder(isle, why) {
+  landing.isle = isle || null;
+  landing.why = why || '';
+  diag.landing = { isle: isle ? isle.slug : null, why: landing.why };
+}
+function landingCancel(why) {
+  if (!landing.isle) return;
+  landing.isle = null;
+  landing.why = '';
+  diag.landing = { isle: null, off: why || '' };
+}
+
 /* THE PASSAGE (owner order): clicking a place on the chart is a short sailed
    passage, not a warp - the chart folds away, sea and sky sweep past, and she
    arrives in those waters with the shore dead ahead. Skippable with any key;
@@ -833,10 +854,12 @@ let closeAboard = null;
 function pickVisible() {
   const vis = [];
   const hb = ship.bearing;
-  /* Inside the roadstead of the island she is bound for, the ship is conned in
-     rather than sheered off: a shoal berth taken from a neighbour half a mile
-     out would shove her past the landfall she crossed for. */
-  const inRoads = ship.bound && distToNm(ship.bound) < 0.8;
+  /* Inside the roadstead of the island she is ORDERED to land on, the ship
+     is conned in rather than sheered off: a shoal berth taken from a
+     neighbour half a mile out would shove her past the landfall she crossed
+     for. Without a landing order (S4) every shore keeps its berth - close
+     aboard is as close as an unordered ship ever comes. */
+  const inRoads = ship.bound && landing.isle === ship.bound && distToNm(ship.bound) < 0.8;
   const clear = (inRoads ? 0 : SHOAL_NM) / world.nmPerUnit;
   const clear2 = clear * clear;
   let near = null, nearD = Infinity;
@@ -844,8 +867,13 @@ function pickVisible() {
     let dx = I.pos.x - ship.x, dy = I.pos.y - ship.y;
     let d2 = dx * dx + dy * dy;
     /* the shoal: she is set outside the berth rather than sailing through a
-       coast. Only the island she is bound for lets her come right in. */
-    if (d2 < clear2 && I !== ship.bound && !REDUCED && !passage.on) {
+       coast. Only an island she is ORDERED to land on lets her come right
+       in (S4) - before, the bound island was exempt because the arrival law
+       anchored her first; with that law gated, an unordered bound shore
+       keeps its berth too, or she would sail clean over the land. The
+       anchored ship, and the shore she has just weighed from, stand exempt. */
+    if (d2 < clear2 && !ship.anchored && I !== ship.clearOf &&
+        !(I === ship.bound && landing.isle === I) && !REDUCED && !passage.on) {
       const d = Math.sqrt(d2) || 1e-9;
       const push = (clear - d) / d;
       ship.x -= dx * push;
@@ -2192,8 +2220,12 @@ function update(dt) {
      drawn clear of the roadstead she just left, that shore cannot take her */
   if (ship.clearOf && distToNm(ship.clearOf) > 0.72) ship.clearOf = null;
   if (!passage.on && !ship.anchored && ship.bound && ship.bound !== ship.clearOf) {
+    /* PAGES BY ORDER ONLY (S4): the arrival law completes ORDERS, it does
+       not invent them. Without a standing landing order on this very
+       island, sailing close is just sailing close: no anchor, no page. */
+    const ordered = landing.isle === ship.bound;
     const d0 = distToNm(ship.bound);
-    if (d0 < 0.55 && (ship.sail === 'full' || ship.sail === 'travel')) {
+    if (ordered && d0 < 0.55 && (ship.sail === 'full' || ship.sail === 'travel')) {
       setSail('half', true);
       captionNow('Hands aloft, the canvas comes in.', 2600);
     }
@@ -2207,8 +2239,8 @@ function update(dt) {
        not closing. That is the end of an approach, wherever the range stands. */
     const abeam = Math.abs(angDiff(bearingTo(ship.bound), ship.bearing)) > 95;
     diag.arrival = { d0: +d0.toFixed(4), min: story.minDist == null ? null : +story.minDist.toFixed(4),
-      opening, abeam, locked: ship.boundLock, bound: ship.bound.slug };
-    if (d0 <= 0.25 || (d0 < 0.62 && (opening || abeam))) dropAnchor(ship.bound);
+      opening, abeam, locked: ship.boundLock, bound: ship.bound.slug, ordered };
+    if (ordered && (d0 <= 0.25 || (d0 < 0.62 && (opening || abeam)))) dropAnchor(ship.bound);
     story.lastDist = d0;
   } else if (ship.anchored) {
     story.lastDist = null; story.minDist = null;
@@ -2925,6 +2957,7 @@ function setSail(s, silent) {
   if (ship.sail === s) return;
   ship.sail = s;
   if (!silent && typeof helmAuto !== 'undefined' && helmAuto.on) helmAutoCancel('a hand on the canvas');
+  if (!silent) landingCancel('a hand on the canvas');
   if (!silent) {
     if (s === 'full') captionNow('Full sail. The bands quicken.');
     else if (s === 'travel') captionNow('Topgallants and studdingsails. She stretches her legs.');
@@ -2935,6 +2968,7 @@ function setSail(s, silent) {
 }
 function giveOrder(deltaDeg) {
   if (helmAuto.on) helmAutoCancel('the wheel is yours again');
+  landingCancel('the wheel is yours again');
   ship.orderedBearing = norm360(ship.orderedBearing + deltaDeg);
   pushOrder(env.t);
   dirty = true;
@@ -2950,15 +2984,19 @@ const helmAuto = { on: false, isle: null };
 function helmAutoStart(isle) {
   helmAuto.on = true;
   helmAuto.isle = isle;
+  landingOrder(isle, 'helmsman');
   setBound(isle, true);
   if (ship.sail === 'rest') { setSail('full', true); firstOrder('sail'); }
-  captionNow('Taking her in — ' + distToNm(isle).toFixed(1) + ' nm to the anchorage.', 3400);
+  captionNow('Taking her in - ' + distToNm(isle).toFixed(1) + ' nm to the anchorage.', 3400);
   diag.helmAuto = { on: true, isle: isle.slug };
 }
 function helmAutoCancel(why) {
   if (!helmAuto.on) return;
   helmAuto.on = false;
   helmAuto.isle = null;
+  /* a revoked helmsman order takes its landing order with it (S4); an
+     arrival cancel happens inside dropAnchor, where completion clears it */
+  if (landing.why === 'helmsman' && why !== 'arrived') landingCancel(why);
   const el = document.getElementById('takingin');
   if (el) el.hidden = true;
   diag.helmAuto = { on: false, why: why || '' };
@@ -3132,16 +3170,16 @@ function initInput() {
       if (plainlySeen) {
         if (REDUCED) {
           /* reduced motion: A lands and opens immediately, with the caption */
-          captionNow('Taking her in — ' + distToNm(b).toFixed(1) + ' nm to the anchorage.', 2600);
+          captionNow('Taking her in - ' + distToNm(b).toFixed(1) + ' nm to the anchorage.', 2600);
           placeShipAtDistance(0.2, b);
           dropAnchor(b);
         } else if (helmAuto.on && helmAuto.isle === b) {
-          captionNow('She is already taking herself in — ' + distToNm(b).toFixed(1) + ' nm to run.', 2800);
+          captionNow('She is already taking herself in - ' + distToNm(b).toFixed(1) + ' nm to run.', 2800);
         } else {
           helmAutoStart(b);
         }
       } else {
-        captionNow('No anchorage in sight — the chart knows every shore, press C.', 3600);
+        captionNow('No anchorage in sight - the chart knows every shore, press C.', 3600);
       }
       e.preventDefault(); return;
     }
@@ -3234,6 +3272,7 @@ function frame(ts) {
   render(sim);
   updateLandfallPlate(sim);
   updateFirstBound();
+  helmTeachTick();
   trackTick(dt, sim);
   sound.tune(sim.wind.kn, sim.knotsFrac);
   if (sound.wxTune) sound.wxTune(wx.rain, wx.squall);
@@ -3258,6 +3297,7 @@ function trackTick(dt, sim) {
 function becalmFrame() {
   if (ui.mode !== 'deck') { setTimeout(becalmFrame, 160); return; }
   const sim = update(1 / 60);
+  helmTeachTick();
   if (dirty) {
     lens.t = lens.raised ? 1 : 0;
     lens.x = lens.ax; lens.y = lens.ay;   // becalmed: the tube answers instantly
@@ -3349,6 +3389,11 @@ window.__helm = {
     s.dispatchEvent(new Event('input')); return ui.searchHits.slice(0, 8).map(h => h.isle.slug); },
   mode() { return ui.mode; },
   sound(on) { if (on !== sound.on) sound.toggle(); return sound.on; },
+  /* S4 audits: the vocal warm-up, aged for a probe; the landing order, read */
+  skipWarmup() { sound.madeWay = true; sound.bootT = performance.now() - 3600000; return true; },
+  warmup() { return { madeWay: sound.madeWay, sinceBoot: +((performance.now() - sound.bootT) / 1000).toFixed(1),
+    crew: sound.crew, active: sound.active.length }; },
+  landing() { return { isle: landing.isle ? landing.isle.slug : null, why: landing.why }; },
   sets() { return { uncited: world.uncited.map(i => i.slug), desert: world.desert.map(i => i.slug),
     lone: world.lone.map(i => i.slug), night: world.nightIsles.map(i => i.slug) }; },
   inSight() { return pickVisible().map(v => ({ slug: v.isle.slug, dist: +v.dist.toFixed(2),
@@ -3371,7 +3416,7 @@ window.__helm = {
   logRows() { return visit.log.slice(); },
   writeRemark(i, text) { const inp = document.querySelector('textarea.remark[data-i="' + i + '"]');
     if (!inp) return false; inp.value = text; inp.dispatchEvent(new Event('input')); return true; },
-  clearVisit() { try { for (const k of ['log','charted','raised','hand','lamps','islets','watches','hours','taught','soundings','routes','packet','bottles','seen','fogmode','spoken'])
+  clearVisit() { try { for (const k of ['log','charted','raised','hand','lamps','islets','watches','hours','taught','helmTaught','soundings','routes','packet','bottles','seen','fogmode','spoken'])
       window.localStorage.removeItem('carta.' + k); } catch (e) {} }
 };
 
@@ -3725,6 +3770,13 @@ function openPage(isle, how) {
     ' over ' + isle.commits + ' entries, ' + esc(isle.first) + ' to ' + esc(isle.last) + '. ' +
     'Press <b>Esc</b> to weigh anchor, or <b>C</b> for the chart table.</div>';
   $('shoreside').innerHTML = shoresideHTML(isle);
+  /* prefix-safe papers (S4): raw inline images in the corpus carry absolute
+     /img/... paths that bypass fixImg; under the gallery's path prefix only
+     a relative path resolves, so the leading slash comes off at the paper */
+  for (const im of a.querySelectorAll('img')) {
+    const s = im.getAttribute('src');
+    if (s && s.charAt(0) === '/' && s.charAt(1) !== '/') im.setAttribute('src', s.slice(1));
+  }
 
   a.hidden = false;
   paper.scrollTop = 0;
@@ -3750,6 +3802,7 @@ function openPage(isle, how) {
 function dropAnchor(isle) {
   if (!isle) return;
   helmAutoCancel('arrived');
+  landingCancel('completed');
   ship.anchored = true;
   ship.sail = 'rest';
   ship.knots = 0;
@@ -3784,6 +3837,7 @@ function warpTo(slug, why) {
   const isle = world.bySlug.get(slug);
   if (!isle) return;
   helmAutoCancel('warped');
+  landingCancel('completed by packet');
   placeShipAtDistance(0.13, isle);
   ship.anchored = true;
   ship.sail = 'rest';
@@ -3899,7 +3953,7 @@ function renderLog() {
           '<td class="rem"><textarea class="remark" rows="1" data-i="' + i +
           '" placeholder="in your own hand">' + esc(r.remark || '') + '</textarea></td></tr>';
       } else {
-        h += '<tr><td class="num">' + r.h + '</td><td class="num">' + (r.k || '—') + '</td>' +
+        h += '<tr><td class="num">' + r.h + '</td><td class="num">' + (r.k || '·') + '</td>' +
           '<td class="num">' + commas(r.f) + '</td>' +
           '<td>' + esc(r.courses) + '<br><span style="font-size:12px;color:var(--ink-3)">made ' +
           esc(r.title) + '</span>' +
@@ -4079,7 +4133,7 @@ function renderIndex() {
   for (const s of world.content.order) {
     const i = world.bySlug.get(s);
     if (!i) continue;
-    const key = (i.product === 'cloud' ? 'Cloud — ' : 'CMS — ') + (i.section || 'Other pages');
+    const key = (i.product === 'cloud' ? 'Cloud - ' : 'CMS - ') + (i.section || 'Other pages');
     if (!groups.has(key)) groups.set(key, []);
     groups.get(key).push(i);
   }
@@ -4200,7 +4254,7 @@ const CHART_ZMIN = 1, CHART_ZMAX = 9;
    before it is taken: land, places, beasts and the rumor marks are all
    ground no tab may sit on. */
 const CART = { w: 372, h: 232 };                 // the cartouche, expanded
-const KEYB = { w: 366, h: 330 };                 // the legend, expanded
+const KEYB = { w: 366, h: 362 };                 // the legend, expanded (S4: + the helm rule)
 const DIRS = { w: 300, h: 352 };                 // sailing directions + rumors
 const ROSE = { x: 1272, y: 146, r: 62 };         // the compass rose (sheet ink)
 const SCAL = { x: 560, y: 752, w: 240, h: 40 };  // the scale bar: small and low
@@ -7202,7 +7256,8 @@ function keyHtml(S) {
   const rules = [
     'the weather is the corpus twelvemonth replayed, a month a minute: rain where the ink fell thick, squalls where it fell thickest',
     'the sea remembers the tending: grey mist rides waters long untended; fresh ink sparkles on the swell',
-    'by night one lighthouse burns for every twelve citations on a cape; the stars overhead are the current waters&rsquo; citations &mdash; click one to lay a course'
+    'by night one lighthouse burns for every twelve citations on a cape; the stars overhead are the current waters&rsquo; citations &mdash; click one to lay a course',
+    'the helm: <b>F</b> full sail &middot; <b>H</b> half sail &middot; T topgallants &middot; R heave to &middot; <b>A</b> anchors when near, or takes her in from afar'
   ];
   rules.forEach((t, j) => {
     const top = (KEY_ROW_Y - 12 + rows.length * KEY_ROW_H + 4 + j * 26) * S;
@@ -7473,7 +7528,7 @@ function showChartInfo() {
   if (!box) return;
   box.querySelector('.ci-name').textContent = 'The surveyed sea';
   box.querySelector('.ci-line').textContent = fog.mode === 'known'
-    ? 'THE KNOWN CHART: drawn by your own voyages — ' + fogSeenCount() + ' of ' +
+    ? 'THE KNOWN CHART: drawn by your own voyages - ' + fogSeenCount() + ' of ' +
       world.islands.length + ' waters surveyed; the rest lie under the fog, by report only.'
     : 'Two mains, ' + world.provinces.length + ' provinces, all ' + world.islands.length +
       ' pages on the one sheet. Hover any place for her name and bearing.';
@@ -7599,7 +7654,7 @@ function initUI() {
       } else if (act === 'watch') {
         visit.watches.add(isle.slug);
         logMark('Signed the watch beside ' + isle.authors[0] + ' on ' + isle.title +
-          (visit.hand ? ' — ' + visit.hand + ', a stranger\'s hand' : ' — an unsigned stranger\'s hand') + '.');
+          (visit.hand ? ' - ' + visit.hand + ', a stranger\'s hand' : ' - an unsigned stranger\'s hand') + '.');
       } else if (act === 'raise') {
         raiseHandsFor(isle);
       } else if (act === 'packet') {
@@ -7838,6 +7893,9 @@ function shapeCourse(isle) {
   ship.orderedBearing = brg;
   pushOrder(env.t);
   setSail(distToNm(isle) > 3 ? 'travel' : 'full', true);
+  /* a course shaped at the table IS a landing order (S4): the chart was
+     asked by name, and the arrival law may complete what it began */
+  landingOrder(isle, 'course');
   captionNow('Course shaped for ' + isle.title + ', ' + compassPoint(brg) + ', ' +
     (Math.round(distToNm(isle) * 10) / 10) + ' nm. The helm answers in its own time.', 5200);
   dirty = true;
@@ -7898,10 +7956,26 @@ function updateFirstBound() {
   if (el.hidden) el.hidden = false;
 }
 
+/* S4: the teaching line fades FOR GOOD the first time she makes way */
+const helmTeach = { done: false };
+function helmTeachTick() {
+  if (helmTeach.done) return;
+  const hl = document.getElementById('helmline');
+  if (!hl || hl.hidden) { helmTeach.done = true; return; }
+  if (!ship.anchored && ship.sail !== 'rest' && ship.knots > 0.4) {
+    helmTeach.done = true;
+    try { store.set('helmTaught', true); } catch (e) {}
+    hl.classList.remove('shown');                     /* the 1.4 s fade */
+    setTimeout(() => { hl.hidden = true; }, REDUCED ? 0 : 1600);
+  }
+}
+
 /* ---- the passage itself ---- */
 function passageTo(isle) {
   if (!isle || passage.on || passage.closing) return;
   helmAutoCancel('a passage shaped at the table');
+  /* the chart was clicked on this island by name: a landing order (S4) */
+  landingOrder(isle, 'passage');
   firstOrder('sail');
   passage.isle = isle;
   passage.nm = distToNm(isle);
@@ -8151,6 +8225,13 @@ const sound = {
   slotNext: [], active: [],
   lastId: null, lastPlay: null, gram: null, trig: [], lastStart: -1e9,
   holdUntil: 0, nextFeatureAt: 0, readingOpen: false,
+  /* A QUIET OPENING (owner order, S4): at first paint only the bed
+     breathes. No chant, verse, hum or vocal murmur before the ship has
+     first made way under sail AND sixty seconds have passed since boot;
+     then voices enter one at a time, and never more than one vocal layer
+     inside the first three minutes. After that warm-up the programme runs
+     exactly as before. Sirens are event-driven and keep their own laws. */
+  bootT: 0, madeWay: false,
   /* THE SIRENS (S3): the voice of the drowned register - the uncited
      dark-shore islands. The lure loops at gain 0 and rises only within
      hailing distance of an unresolved dark shore, panned toward it;
@@ -8162,6 +8243,7 @@ const sound = {
   init() {
     this.lastPlay = new Map();
     this.gram = new Map();
+    this.bootT = performance.now();
     this.paint();
     const wake = () => {
       if (this.woke) return;
@@ -8267,15 +8349,20 @@ const sound = {
 
     const seaLP = c.createBiquadFilter();
     seaLP.type = 'lowpass'; seaLP.frequency.value = 320;
-    const seaG = c.createGain(); seaG.gain.value = 0.3;   // owner: the continuous wash was too present - water down 40%
+    /* OWNER MIX LAW (S4): the sea steps FAR back - still too loud at 0.3,
+       so the whole water layer scales by 0.35 (minus 65 percent), here and
+       at the dynamic law and in the swell's breathing, all three together */
+    const seaG = c.createGain(); seaG.gain.value = 0.105;   // 0.3 * 0.35
 
     src.connect(windBP); windBP.connect(windG); windG.connect(this.mix);
     src.connect(seaLP); seaLP.connect(seaG); seaG.connect(this.mix);
     src.start();
 
-    /* the swell breathes the water gain: the same period as the plate's roll */
+    /* the swell breathes the water gain: the same period as the plate's
+       roll. Depth carries the same 0.35 trim as the water it breathes, so
+       the swell can never exceed its old proportion (0.26 * 0.35). */
     const lfo = c.createOscillator(); lfo.frequency.value = 0.19;
-    const lfoG = c.createGain(); lfoG.gain.value = 0.26;
+    const lfoG = c.createGain(); lfoG.gain.value = 0.091;
     lfo.connect(lfoG); lfoG.connect(seaG.gain); lfo.start();
     const lfo2 = c.createOscillator(); lfo2.frequency.value = 0.073;
     const lfo2G = c.createGain(); lfo2G.gain.value = 180;
@@ -8479,7 +8566,7 @@ const sound = {
     /* the tune keeps its shape but the whole wind layer carries the owner's
        30% trim - the chants are what one should hear, the wind stays low */
     this.bed.windG.gain.setTargetAtTime(0.30 * (0.09 + 0.14 * clamp(windKn / 24, 0, 1) + 0.05 * knotsFrac), t, 0.6);
-    this.bed.seaG.gain.setTargetAtTime(0.18 + 0.20 * knotsFrac, t, 0.6);   // -40% by owner order
+    this.bed.seaG.gain.setTargetAtTime(0.063 + 0.07 * knotsFrac, t, 0.6);   // (0.18 + 0.20k) * 0.35: the sea steps far back (S4)
   },
 
   /* Voices join at the cadence of the harbour's own commits. An island worked
@@ -8503,10 +8590,20 @@ const sound = {
   step(dt, sailing) {
     if (this.sirens) this.sirenTick(dt);
     if (!this.ctx || !this.on) return;
+    /* A QUIET OPENING (S4): the vocal gate. Way FIRST made under sail is
+       remembered from the ship herself - reading at a deep-linked anchor
+       is not way. Before that, and before the sixtieth second, the bed
+       alone carries the piece. Inside the first three minutes the watch
+       is one voice at most, entering with the programme's own fades. */
+    if (!this.madeWay && typeof ship !== 'undefined' &&
+        !ship.anchored && ship.sail !== 'rest' && ship.knots > 0.4) this.madeWay = true;
     if (!sailing) { if (this.crew || this.active.length) this.hush(2.0); return; }
     if (!this.bank.length) return;
+    const sinceBoot = (performance.now() - this.bootT) / 1000;
+    if (!this.madeWay || sinceBoot < 60) return;
+    const oneLayer = sinceBoot < 180;
     const now = this.ctx.currentTime;
-    if (this.crew < this.wantVoices) {
+    if (this.crew < (oneLayer ? Math.min(1, this.wantVoices) : this.wantVoices)) {
       this.nextJoin -= dt;
       if (this.nextJoin <= 0) {
         this.slotNext[this.crew] = now + 0.3 + Math.random() * 1.4;
@@ -8516,8 +8613,9 @@ const sound = {
       }
     }
     if (now < this.holdUntil) return;
-    /* a featured verse (the suno slot) takes the deck alone, now and then */
-    if (this.featured.length && this.nextFeatureAt && now >= this.nextFeatureAt && this.crew > 0) {
+    /* a featured verse (the suno slot) takes the deck alone, now and then -
+       never inside the one-voice warm-up */
+    if (!oneLayer && this.featured.length && this.nextFeatureAt && now >= this.nextFeatureAt && this.crew > 0) {
       this.playFeatured(now);
       return;
     }
@@ -8925,6 +9023,7 @@ function eggActivate(key) {
   } else if (key === 'city') {
     /* clicking the light shapes a course; the crossing is made by anchoring */
     firstOrder('steer');
+    landingCancel('the helm goes over for the light');
     ship.orderedBearing = eggBearing('city');
     pushOrder(env.t);
     if (ship.sail === 'rest' && !ship.anchored) setSail('full', true);
@@ -9321,6 +9420,7 @@ function drawCityEgg(sim, worldDY, isLens) {
   const C = eggs.city;
   const dxu = C.x - ship.x, dyu = C.y - ship.y;
   const d2 = dxu * dxu + dyu * dyu;
+  if (!Number.isFinite(d2)) return; /* a transient NaN in ship position must never reach createRadialGradient */
   if (d2 > eggs.cityVisU2) return;
   const dist = Math.sqrt(d2) * world.nmPerUnit;
   const az = angDiff(norm360(Math.atan2(dxu, -dyu) * 180 / Math.PI), ship.bearing);
@@ -10390,7 +10490,7 @@ function packetDelivery(isle) {
   ui.justDelivered = { from: held.from, to: held.to,
     fromTitle: from ? from.title : held.from, name };
   logMark('Delivered the packet ' + (from ? from.title : held.from) + ' → ' + isle.title +
-    (name ? ' — ' + name + ' is inked on the chart.' : ' — the route is inked on the chart.'));
+    (name ? ' - ' + name + ' is inked on the chart.' : ' - the route is inked on the chart.'));
   diag.routesRun = visit.routes.length;
   visit.save();
 }
@@ -10542,13 +10642,13 @@ function bottleToss() {
     if (!r.ok) throw new Error('harbour closed: ' + r.status);
     diag.bottleResult = 'sent';
     caption('The bottle rides the current, her note aboard, bound for the harbour.', 4600);
-    logMark('A bottle away on the current for ' + I.title + ' — the note is in the harbour’s hands.');
+    logMark('A bottle away on the current for ' + I.title + ' - the note is in the harbour’s hands.');
     visit.save();
   }).catch(() => {
     diag.bottleResult = 'held';
     visit.bottles.push({ t: Date.now(), payload });
     caption('The tide holds her note; it will carry when the harbour opens.', 4600);
-    logMark('Sealed a bottle for ' + I.title + ' — the tide holds the note until the harbour opens.');
+    logMark('Sealed a bottle for ' + I.title + ' - the tide holds the note until the harbour opens.');
     visit.save();
   });
 }
@@ -11455,7 +11555,12 @@ function chartCatBeat() {
   story.qs = qsIsle || null;
   story.maiden = !!qsIsle && !params.get('dist') && !params.get('open') && !params.get('below') &&
     !visit.charted.has(qsIsle.slug);
-  placeShipAtDistance(parseFloat(params.get('dist')) || 2.7, story.maiden ? qsIsle : undefined);
+  /* the maiden bow points straight at the Quick Start Guide, near enough
+     (1.6 nm, well inside the landfall plate's 2.6) that her engraved
+     silhouette AND her named caption stand dead ahead as the obvious first
+     landfall. 1.6 keeps the approach lane clear of the /release-notes
+     berth that sits right on it at 2.2 - the bow must not be shoved. */
+  placeShipAtDistance(parseFloat(params.get('dist')) || (story.maiden ? 1.6 : 2.7), story.maiden ? qsIsle : undefined);
   ship.lastFix = { x: ship.x, y: ship.y, t: 0 };
   visit.track.push({ x: ship.x, y: ship.y });
   /* STAGE 2: the known chart - the survey grid raised, this visit seeded */
@@ -11478,16 +11583,15 @@ function chartCatBeat() {
   const hints = document.getElementById('hints');
   pt.classList.add('shown');
   setTimeout(() => pt.classList.remove('shown'), 7000);
-  /* the teaching: full sailing orders the first time, one quiet line after.
-     The full card stays until the first meaningful input eases it off. */
-  const taught = store.get('taught', false);
-  if (taught) {
-    hints.innerHTML = 'Hove to. <b>F</b> makes sail &middot; drag the wheel &middot; ' +
-      'hold <b>SPACE</b> for the glass &middot; <b>C</b> the chart table.';
-    hints.classList.add('shown', 'quiet');
-    setTimeout(() => hints.classList.remove('shown'), 11000);
-  } else if (!calm.done) {
-    hints.classList.add('shown');
+  /* THE OPENING TEACHES THE HELM (owner order, S4): the sailing-orders
+     card is retired from the boot. One engraved line under the horizon
+     teaches the keys by name - H half sail, F full sail, A to anchor when
+     near - and fades for good the first time she makes way. */
+  void hints;
+  const hl = document.getElementById('helmline');
+  if (hl && calm.pristine && !store.get('helmTaught', false)) {
+    hl.hidden = false;
+    requestAnimationFrame(() => hl.classList.add('shown'));
   }
   if (params.get('open')) { const o = world.bySlug.get(params.get('open')); if (o) warpTo(o.slug, 'packet'); }
   if (params.get('below')) openBelow(params.get('below'));

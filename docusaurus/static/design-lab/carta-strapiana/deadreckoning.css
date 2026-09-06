@@ -1072,6 +1072,33 @@ html, body {
   pointer-events: none;
 }
 
+/* ===== S4: the one engraved teaching line, under the horizon =====
+   It names the keys - H half sail, F full sail, A to anchor when near -
+   and fades for good the moment the ship first makes way. */
+#helmline {
+  position: absolute;
+  top: 47.5%;                 /* just under the horizon at 44% */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 18px;
+  background: rgba(244, 236, 216, 0.90);
+  border: 1px solid rgba(38, 28, 17, 0.5);
+  box-shadow: 1px 2px 6px rgba(40, 28, 12, 0.25);
+  color: #3b2c1a;
+  font-family: "Iowan Old Style", "Palatino", "Palatino Linotype", Georgia, serif;
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+  z-index: 6;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+#helmline.shown { opacity: 0.96; }
+#helmline[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) { #helmline { transition: none; } }
+
 /* ===== r10: the maiden landfall line ===== */
 #firstbound {
   position: absolute;

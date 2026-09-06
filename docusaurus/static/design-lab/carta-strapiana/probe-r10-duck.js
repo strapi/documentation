@@ -12,6 +12,8 @@ const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_module
   await page.waitForFunction(() => window.__helm && window.__helm.ready, null, { timeout: 40000 });
   await page.mouse.click(20, 500);
   await page.waitForTimeout(2500);
+  /* S4: the quiet-opening warm-up is its own law (probe-s4-quiet); here it is aged so the programme laws stay provable */
+  await page.evaluate(() => window.__helm.skipWarmup());
   /* under way, far from any shore so she cannot arrive mid-measure */
   await page.evaluate(() => { window.__helm.sailTo('/cms/api/document-service', 24); window.__helm.sail('full'); });
   await page.waitForTimeout(30000);   // the crew joins

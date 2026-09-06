@@ -30,6 +30,8 @@ const BASE = 'http://127.0.0.1:8123/index.html';
   });
   console.log('B cadence', JSON.stringify(cad));
 
+  /* S4: the quiet-opening warm-up is its own law (probe-s4-quiet); here it is aged so the programme laws stay provable */
+  await page.evaluate(() => window.__helm.skipWarmup());
   /* C. sail and let the programme run; collect the trigger log */
   await page.evaluate(() => { window.__helm.sailTo('/cms/api/document-service', 5.5); window.__helm.sail('full'); });
   const crewSeen = [];
