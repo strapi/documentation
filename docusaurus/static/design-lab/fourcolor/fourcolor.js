@@ -64,6 +64,8 @@ const S = {
   letters: store.get('letters', []),
   toldTurn: store.get('toldTurn', false),
   view:'rack', book:null, finderMode:null, seriesOpen:null,
+  guided:false, guidedPref: store.get('guided', false),
+  toldGuided: store.get('toldGuided', false),
   paintQ:[], painting:false, pgCache:new Map(),
 };
 
@@ -1358,6 +1360,7 @@ function fillerAd(slug,i,hpx){
     <div class="ha-line">“${esc(p2.sidebarLabel||'')}” — ${fmtNum(M.words[s2]||0)} words of pure documentation${iss2.inb?', cited by '+iss2.inb+' tales':''}!</div>
     <div class="ha-foot">${fmtMonth(iss2.date)} · from the ${esc(iss2.series.noun)} title</div>`;
   screenBG(n,[[iss2.series.combo[0][0],1]],0.06);
+  n.dataset.ad=s2; /* guided view's ENTER affordance reads the destination here */
   n.addEventListener('click',()=>openIssue(s2));
   return n;
 }
@@ -1738,13 +1741,24 @@ const bookView={
     stage.appendChild(book);
     bv.appendChild(stage);
     bv.appendChild(el('div','book-hints',
-      'turn: <kbd>→</kbd>/<kbd>space</kbd>/click right page · back: <kbd>←</kbd> · title: <kbd>esc</kbd> · checklist: <kbd>i</kbd> · search: <kbd>/</kbd>'));
+      'turn: <kbd>→</kbd>/<kbd>space</kbd>/click right page · back: <kbd>←</kbd> · guided view: <kbd>g</kbd> or double-click a panel · title: <kbd>esc</kbd> · checklist: <kbd>i</kbd> · search: <kbd>/</kbd>'));
     this.root=bv; this.slots={L:slotL,R:slotR}; this.leaf=leaf;
     this.edges={L:edgeL,R:edgeR};
+    let clickT=null;
     book.addEventListener('click',e=>{
       if(e.target.closest('a,button,summary,textarea,input,pre,.tp-scroll'))return;
+      if(e.detail>1){ clearTimeout(clickT); clickT=null; return; }
       const r=book.getBoundingClientRect();
-      if(e.clientX>r.left+r.width/2) this.next(); else this.prev();
+      const fwd=e.clientX>r.left+r.width/2;
+      /* a lone click turns the page; a second knock within the window is
+         the guided-view call instead, so the turn waits out the doubt */
+      clearTimeout(clickT);
+      clickT=setTimeout(()=>{ clickT=null; if(fwd)this.next(); else this.prev(); },270);
+    });
+    book.addEventListener('dblclick',e=>{
+      if(e.target.closest('a,button,summary,textarea,input'))return;
+      clearTimeout(clickT); clickT=null;
+      guided.enterFromEvent(e);
     });
   },
   spread:0,
@@ -1825,6 +1839,408 @@ const bookView={
     markRead();
   }
 };
+/* ============ 8b. GUIDED VIEW, the panel-by-panel camera ============
+   THE GEOMETRY IS THE ENGINE'S OWN. panelize() (section 6) composes the
+   ordered panel list, paginate() (section 7) deals those nodes onto pages,
+   and buildBookPage() mounts d.nodes into .cpage-content in that same
+   order. Guided view walks those very nodes (.panel-row children taken
+   left to right) and reads each one's laid box off the offset chain up
+   to the page wrap. The camera never guesses a rectangle from pixels. */
+const GUIDED_GUT=120, G_MX=64, G_MY=44, G_ZMAX=2.6, G_ZPAN=3.25, G_DUR=640,
+      G_EASE='cubic-bezier(.26,.6,.22,1)';
+const guided={
+  active:false, leaving:false, root:null, cam:null, sh:null, frame:null, prog:null,
+  wraps:new Map(), beats:new Map(), p:0, bi:0,
+  ensureDOM(){
+    if(this.root) return;
+    const g=$('#guided');
+    g.appendChild(el('div','g-back'));
+    this.cam=el('div','g-cam'); g.appendChild(this.cam);
+    const shwrap=el('div','g-shutters'); this.sh={};
+    for(const k of ['t','b','l','r']){ const d2=el('div','g-shutter'); shwrap.appendChild(d2); this.sh[k]=d2; }
+    g.appendChild(shwrap);
+    this.frame=el('div','g-frame'); g.appendChild(this.frame);
+    this.prog=el('div','g-progress');
+    const tk=el('div','g-track'); tk.appendChild(el('div','g-fill'));
+    this.prog.appendChild(tk); this.prog.appendChild(el('div','g-label'));
+    g.appendChild(this.prog);
+    /* the tap listens in the CAPTURE phase: while the camera reads, a tap
+       is the reading gesture, so a whole-panel hot zone (house ad, photo,
+       roll-call row) never steals it to navigate. True controls (links,
+       buttons, the code clipper) stay live; ENTER opens a live panel. */
+    g.addEventListener('click',e=>{
+      if(!this.active||this.leaving) return;
+      if(e.target.closest('a,button,summary,textarea,input')) return;
+      e.stopPropagation();
+      if(String(getSelection&&getSelection())!=='') return; /* the reader is copying, not advancing */
+      if(e.detail>1){ clearTimeout(this._ct); this._ct=null; return; }
+      const back=e.clientX<innerWidth*0.2;
+      clearTimeout(this._ct);
+      this._ct=setTimeout(()=>{ this._ct=null; if(back)this.prev(); else this.next(); },270);
+    },true);
+    g.addEventListener('dblclick',e=>{
+      if(!this.active||this.leaving) return;
+      if(e.target.closest('a,button,summary,textarea,input')) return;
+      clearTimeout(this._ct); this._ct=null;
+      this.exit();
+    });
+    addEventListener('resize',()=>{
+      if(!this.active||this.leaving) return;
+      this.beats.clear();
+      const b2=this.beatsFor(this.p);
+      this.bi=clamp(this.bi,0,b2.length-1);
+      this.aim(this.target(b2[this.bi],this.p),true);
+    });
+    this.root=g;
+  },
+  mountPage(p){
+    let w=this.wraps.get(p);
+    if(w) return w;
+    w=el('div','g-pagewrap');
+    w.style.left=(p*(PAGE_W+GUIDED_GUT))+'px';
+    w.appendChild(buildBookPage(S.book,p));
+    this.cam.appendChild(w);
+    this.wraps.set(p,w);
+    /* photos land milliseconds after the mount and reflow the fixed-height
+       flex column: when one lands, the page's beat sheet is re-measured
+       and the camera re-aims, so no beat ever keeps a pre-photo rectangle */
+    for(const im of w.querySelectorAll('img')){
+      if(im.complete) continue;
+      const re=()=>this.remeasure(p);
+      im.addEventListener('load',re,{once:true});
+      im.addEventListener('error',re,{once:true});
+    }
+    this.paintSoon(w);
+    return w;
+  },
+  paintSoon(w){
+    /* neighbor art yields to the camera: canvas painting never lands
+       inside a glide (go() paints the current page before it moves) */
+    const run=()=>{
+      if(w._painted||!w.isConnected) return;
+      if(this._glideEnd&&performance.now()<this._glideEnd){ setTimeout(run,140); return; }
+      w._painted=true; paintBursts(w); if(CAST)CAST.paintScenes(w);
+    };
+    requestAnimationFrame(run);
+  },
+  remeasure(p){
+    /* a late image reflowed page p: its measured beats are stale. Drop
+       them; if the camera is on that page, rebuild at once, keep the
+       reader on the same panel, and glide to the corrected frame. */
+    if(!this.beats.has(p)) return;
+    const old=this.beats.get(p);
+    this.beats.delete(p);
+    if(!this.active||this.leaving||this.p!==p) return; /* the next visit measures fresh */
+    const cur=old[clamp(this.bi,0,old.length-1)];
+    const fresh=this.beatsFor(p);
+    let same=old.length===fresh.length;
+    for(let k=0;same&&k<old.length;k++){
+      const a=old[k], b2=fresh[k];
+      if(a.kind!==b2.kind){ same=false; break; }
+      if(a.kind!=='panel') continue;
+      same=a.node===b2.node&&a.sub===b2.sub&&a.subs===b2.subs
+        &&Math.abs(a.rect.x-b2.rect.x)<1&&Math.abs(a.rect.y-b2.rect.y)<1
+        &&Math.abs(a.rect.w-b2.rect.w)<1&&Math.abs(a.rect.h-b2.rect.h)<1;
+    }
+    if(same) return; /* the photo landed at its measured size: nothing moved */
+    let bi=0;
+    if(cur&&cur.kind==='panel'){
+      const at=n=>fresh.findIndex(b2=>b2.kind==='panel'&&b2.node===n);
+      let k=fresh.findIndex(b2=>b2.kind==='panel'&&b2.node===cur.node&&b2.sub===Math.min(cur.sub,b2.subs-1));
+      if(k<0) k=at(cur.node);
+      if(k<0){ /* the reflow swallowed the panel: stand on the nearest earlier survivor */
+        const oi=old.indexOf(cur);
+        for(let j=oi-1;j>=1&&k<0;j--){ if(old[j].kind==='panel') k=at(old[j].node); }
+      }
+      if(k>0) bi=k;
+    }
+    this.bi=clamp(bi,0,fresh.length-1);
+    recordFrames(G_DUR+140);
+    this.aim(this.target(fresh[this.bi],p)); /* an eased correction, never a cut */
+    this.progressShow();
+  },
+  ensureNeighbors(){
+    clearTimeout(this._nt);
+    /* the neighbor press run waits for the glide to land, so no
+       mount or paint ever falls inside a moving frame */
+    this._nt=setTimeout(()=>{
+      if(!this.active||this.leaving) return;
+      const p=this.p, N=S.book.pages.length;
+      if(p+1<N) this.mountPage(p+1);
+      if(p-1>=0) this.mountPage(p-1);
+      /* the cam layer carries three pages at most: less texture to
+         re-raster when the camera zooms (the 16.5ms law) */
+      for(const [k,w] of [...this.wraps]) if(Math.abs(k-p)>1){ w.remove(); this.wraps.delete(k); this.beats.delete(k); }
+    },G_DUR+140);
+  },
+  relRect(n,ancestor){
+    let x=0,y=0,e=n;
+    while(e&&e!==ancestor){ x+=e.offsetLeft; y+=e.offsetTop; e=e.offsetParent; }
+    return {x,y,w:n.offsetWidth,h:n.offsetHeight};
+  },
+  subCount(n,r){
+    /* only a drawn or photographic panel earns a pan: prose, code
+       (chip in view) and tables always fit their width; code and
+       tables carry their own laws (chip visible; scroll in place) */
+    const pict=(n.dataset&&n.dataset.viz)||n.matches('.spot,.scene,.imgpanel');
+    if(!pict||n.matches('.tech,.tablepanel,.stepseq')||r.h<90) return 1;
+    if(n.querySelector('.balloon')) return 1; /* spoken words are never cut mid-pan */
+    const vwE=innerWidth-2*G_MX, vhE=innerHeight-2*G_MY;
+    if(r.w/r.h<=1.6*(vwE/vhE)) return 1;
+    const z=Math.min(vhE/r.h,G_ZPAN), total=z*r.w;
+    if(total<=vwE*1.12) return 1;
+    return Math.max(2,Math.ceil((total-vwE)/(vwE*0.66))+1);
+  },
+  beatsFor(p){
+    if(this.beats.has(p)) return this.beats.get(p);
+    const d=S.book.pages[p];
+    const wrap=this.mountPage(p);
+    const list=[{kind:'page'}];
+    if(d.kind==='content'){
+      const cc=wrap.querySelector('.cpage-content');
+      const flat=[];
+      if(cc) for(const ch of cc.children){
+        if(ch.classList.contains('panel-row')){ for(const s2 of ch.children) flat.push(s2); }
+        else flat.push(ch);
+      }
+      for(const n of flat){
+        const r=this.relRect(n,wrap);
+        if(r.w<8||r.h<8) continue;
+        const subs=this.subCount(n,r);
+        for(let k=0;k<subs;k++) list.push({kind:'panel',node:n,rect:r,sub:k,subs});
+      }
+    }
+    this.beats.set(p,list);
+    return list;
+  },
+  target(beat,p){
+    const x0=p*(PAGE_W+GUIDED_GUT);
+    const vw=innerWidth, vh=innerHeight, vwE=vw-2*G_MX, vhE=vh-2*G_MY;
+    if(beat.kind==='page'){
+      const z=Math.min(vwE/PAGE_W,vhE/PAGE_H);
+      return {z,cx:x0+PAGE_W/2,cy:PAGE_H/2,rect:{x:x0-8,y:-8,w:PAGE_W+16,h:PAGE_H+16}};
+    }
+    const r=beat.rect, PAD=12;
+    const rect={x:x0+r.x-PAD,y:r.y-PAD,w:r.w+2*PAD,h:r.h+2*PAD};
+    if(beat.subs>1){
+      const z=Math.min(vhE/rect.h,G_ZPAN);
+      const half=(vw/2-G_MX)/z;
+      const cxA=rect.x+half, cxB=rect.x+rect.w-half;
+      const cx=cxB>cxA?cxA+(cxB-cxA)*beat.sub/(beat.subs-1):rect.x+rect.w/2;
+      return {z,cx,cy:rect.y+rect.h/2,rect};
+    }
+    const z=Math.min(vwE/rect.w,vhE/rect.h,G_ZMAX);
+    return {z,cx:rect.x+rect.w/2,cy:rect.y+rect.h/2,rect};
+  },
+  aim(t,instant){
+    const vw=innerWidth, vh=innerHeight;
+    const dur=(instant||REDUCED)?0:G_DUR;
+    this._glideEnd=dur?performance.now()+dur+60:0;
+    const tx=vw/2-t.z*t.cx, ty=vh/2-t.z*t.cy;
+    this.cam.style.transition=dur?('transform '+dur+'ms '+G_EASE):'none';
+    this.cam.style.transform='translate3d('+tx+'px,'+ty+'px,0) scale('+t.z+')';
+    const sx=tx+t.z*t.rect.x, sy=ty+t.z*t.rect.y, sw=t.z*t.rect.w, sh2=t.z*t.rect.h;
+    /* four shutters, no overlap and no group surface: top and bottom run
+       full width; the side pair is scaled to the hole's band so every
+       frame is one screen of blit, not four */
+    const moves={t:'translate3d(0,'+(sy-vh)+'px,0)',b:'translate3d(0,'+(sy+sh2)+'px,0)',
+                 l:'translate3d('+(sx-vw)+'px,'+sy+'px,0) scaleY('+(sh2/vh)+')',
+                 r:'translate3d('+(sx+sw)+'px,'+sy+'px,0) scaleY('+(sh2/vh)+')'};
+    for(const k in moves){
+      this.sh[k].style.transition=dur?('transform '+dur+'ms '+G_EASE):'none';
+      this.sh[k].style.transform=moves[k];
+    }
+    /* the hairline frame never animates its box: it sleeps through the
+       glide and wakes in place once the camera lands */
+    clearTimeout(this._ft);
+    const fr=this.frame;
+    fr.style.transition='none'; fr.style.opacity='0';
+    fr.style.left=sx+'px'; fr.style.top=sy+'px';
+    fr.style.width=sw+'px'; fr.style.height=sh2+'px';
+    if(dur) this._ft=setTimeout(()=>{ fr.style.transition='opacity .28s ease'; fr.style.opacity='1'; },dur);
+    else fr.style.opacity='1';
+  },
+  go(p,bi,instant){
+    const wasP=this.p;
+    const w=this.mountPage(p);
+    /* the page being read paints on the very next frame (the composited
+       glide never waits for it); only NEIGHBOR art yields to the camera */
+    if(!w._painted) requestAnimationFrame(()=>{ if(!w._painted&&w.isConnected){ w._painted=true; paintBursts(w); if(CAST)CAST.paintScenes(w); } });
+    const beats=this.beatsFor(p);
+    this.p=p; this.bi=clamp(bi,0,beats.length-1);
+    recordFrames(G_DUR+140);
+    this.aim(this.target(beats[this.bi],p),instant);
+    if(p!==wasP) SFX.turn(); else SFX.tick();
+    this.ensureNeighbors();
+    this.progressShow();
+    markReadSoon();
+  },
+  next(){
+    if(!this.active||this.leaving) return;
+    const beats=this.beatsFor(this.p);
+    if(this.bi+1<beats.length) this.go(this.p,this.bi+1);
+    else if(this.p+1<S.book.pages.length) this.go(this.p+1,0);
+  },
+  prev(){
+    if(!this.active||this.leaving) return;
+    if(this.bi>0) this.go(this.p,this.bi-1);
+    else if(this.p>0){ const pb=this.beatsFor(this.p-1); this.go(this.p-1,pb.length-1); }
+  },
+  openBeat(){
+    /* ENTER is the explicit affordance for a live panel: the tap always
+       advances the reading, the key opens what the panel advertises */
+    if(!this.active||this.leaving) return;
+    const beats=this.beatsFor(this.p), b2=beats[clamp(this.bi,0,beats.length-1)];
+    if(!b2||b2.kind!=='panel') return;
+    const n=b2.node;
+    if(n.classList.contains('houseAd')&&n.dataset.ad){ openIssue(n.dataset.ad); return; }
+    if(n.classList.contains('imgpanel')){
+      const im=n.querySelector('.photo img');
+      const cap=n.querySelector('.imgcap');
+      if(im) openLightbox(im.getAttribute('src'),cap?cap.textContent:'');
+    }
+  },
+  progressShow(){
+    const beats=this.beatsFor(this.p), P=S.book.pages.length;
+    const uniq=[]; let idx=0;
+    for(let k=1;k<beats.length;k++){
+      if(uniq.indexOf(beats[k].node)<0) uniq.push(beats[k].node);
+      if(k===this.bi) idx=uniq.length;
+    }
+    const b2=beats[this.bi];
+    let lab;
+    if(this.bi===0) lab=beats.length>1?('THE PAGE · '+(this.p+1)+' OF '+P):('PAGE '+(this.p+1)+' OF '+P);
+    else{
+      lab='PANEL '+idx+' OF '+uniq.length;
+      if(b2.subs>1) lab+=' · PAN '+(b2.sub+1)+'/'+b2.subs;
+      lab+=' · PAGE '+(this.p+1)+' OF '+P;
+    }
+    this.prog.querySelector('.g-label').textContent=lab;
+    this.prog.querySelector('.g-fill').style.transform='scaleX('+(((this.p+(this.bi+1)/beats.length)/P)).toFixed(4)+')';
+    this.prog.classList.add('show');
+    clearTimeout(this._pt);
+    this._pt=setTimeout(()=>this.prog.classList.remove('show'),1200);
+  },
+  slotRectFor(p){
+    const side=(p%2===1)?'L':'R';
+    const slot=bookView.slots&&bookView.slots[side];
+    if(!slot) return null;
+    const r=slot.getBoundingClientRect();
+    return r.width>10?r:null;
+  },
+  enter(opts){
+    opts=opts||{};
+    if(this.active||!S.book) return;
+    this.ensureDOM();
+    clearTimeout(this._ct); this._ct=null; /* no doubt-timer outlives its own session */
+    this.active=true; this.leaving=false;
+    S.guided=true; S.guidedPref=true; store.set('guided',true);
+    document.body.classList.add('gv-on'); /* every button sleeps while the camera reads */
+    this.wraps.clear(); this.beats.clear();
+    this.cam.innerHTML='';
+    const p=clamp(opts.page||0,0,S.book.pages.length-1);
+    this.root.hidden=false;
+    this.root.classList.remove('on');
+    /* the camera opens exactly over the page as it lies on the spread:
+       entry is a glide, never a cut */
+    const fr=opts.fromRect||this.slotRectFor(p);
+    const x0=p*(PAGE_W+GUIDED_GUT);
+    const vw=innerWidth, vh=innerHeight;
+    let z0,tx0,ty0;
+    if(fr){ z0=fr.width/PAGE_W; tx0=fr.left-z0*x0; ty0=fr.top; }
+    else{
+      z0=Math.min((vw-2*G_MX)/PAGE_W,(vh-2*G_MY)/PAGE_H)*0.8;
+      tx0=vw/2-z0*(x0+PAGE_W/2); ty0=vh/2-z0*PAGE_H/2;
+    }
+    this.cam.style.transition='none';
+    this.cam.style.transform='translate3d('+tx0+'px,'+ty0+'px,0) scale('+z0+')';
+    const open={t:'translate3d(0,'+(-vh)+'px,0)',b:'translate3d(0,'+vh+'px,0)',
+                l:'translate3d('+(-vw)+'px,0,0) scaleY(1)',r:'translate3d('+vw+'px,0,0) scaleY(1)'};
+    for(const k in open){ this.sh[k].style.transition='none'; this.sh[k].style.transform=open[k]; }
+    this.frame.style.transition='none'; this.frame.style.opacity='0';
+    this.mountPage(p);
+    const beats=this.beatsFor(p);
+    let bi=clamp(opts.beat||0,0,beats.length-1);
+    if(opts.node){ const k=beats.findIndex(b2=>b2.node===opts.node); if(k>0) bi=k; }
+    void this.root.offsetWidth; /* commit the opening frame */
+    this.root.classList.add('on');
+    this.go(p,bi,REDUCED);
+    if(!S.toldGuided){ S.toldGuided=true; store.set('toldGuided',true);
+      toast('GUIDED VIEW: click or press → for the next panel · left edge goes back · ENTER opens a live panel (house ads, photos) · ESC or double-click returns to the spread'); }
+  },
+  enterFromEvent(e){
+    if(this.active||!S.book) return;
+    if(bookView.busy) bookView.finishNow(); /* land the leaf before reading it */
+    const slot=e.target.closest('.pageslot');
+    if(!slot||slot.classList.contains('empty')) return;
+    const p=(slot===bookView.slots.L)?2*bookView.spread-1:2*bookView.spread;
+    if(p<0||p>=S.book.pages.length) return;
+    const fr=slot.getBoundingClientRect();
+    /* which laid panel was struck, matched on the engine's own nodes */
+    let hit=null;
+    const cc=slot.querySelector('.cpage-content');
+    if(cc) for(const ch of cc.children){
+      if(ch.classList.contains('panel-row')){ for(const s2 of ch.children) if(s2.contains(e.target)) hit=s2; }
+      else if(ch.contains(e.target)) hit=ch;
+    }
+    this.enter({page:p,fromRect:fr,node:hit,beat:hit?0:0});
+  },
+  enterFromSpread(){
+    if(this.active||!S.book) return;
+    let p=2*bookView.spread;
+    if(p>=S.book.pages.length) p=2*bookView.spread-1;
+    this.enter({page:clamp(p,0,S.book.pages.length-1)});
+  },
+  exit(){
+    if(!this.active||this.leaving) return;
+    this.leaving=true;
+    S.guidedPref=false; store.set('guided',false);
+    const p=this.p, side=(p%2===1)?'L':'R';
+    bookView.spread=clamp(Math.ceil(p/2),0,bookView.maxSpread());
+    bookView.leaf.classList.remove('show','turning');
+    /* stage the spread's other page beneath; ours glides home above it */
+    const other=(side==='L')?'R':'L';
+    bookView.mount(other,other==='L'?2*bookView.spread-1:2*bookView.spread);
+    const home=bookView.slots[side];
+    home.innerHTML=''; home.classList.remove('empty');
+    bookView.updateEdges();
+    requestAnimationFrame(()=>{ paintBursts(bookView.slots[other]); if(CAST)CAST.paintScenes(bookView.slots[other]); });
+    for(const [k,w] of [...this.wraps]) if(k!==p){ w.remove(); this.wraps.delete(k); }
+    this.root.classList.remove('on');
+    const fr=this.slotRectFor(p);
+    if(fr&&!REDUCED){
+      const x0=p*(PAGE_W+GUIDED_GUT), vw=innerWidth, vh=innerHeight;
+      const z0=fr.width/PAGE_W;
+      this.cam.style.transition='transform '+G_DUR+'ms '+G_EASE;
+      this.cam.style.transform='translate3d('+(fr.left-z0*x0)+'px,'+fr.top+'px,0) scale('+z0+')';
+      const open={t:'translate3d(0,'+(-vh)+'px,0)',b:'translate3d(0,'+vh+'px,0)',
+                  l:'translate3d('+(-vw)+'px,0,0) scaleY(1)',r:'translate3d('+vw+'px,0,0) scaleY(1)'};
+      for(const k in open){ this.sh[k].style.transition='transform '+G_DUR+'ms '+G_EASE; this.sh[k].style.transform=open[k]; }
+      clearTimeout(this._ft);
+      this.frame.style.transition='opacity .2s ease'; this.frame.style.opacity='0';
+      recordFrames(G_DUR+140);
+      clearTimeout(this._xt);
+      this._xt=setTimeout(()=>this.finishExit(),G_DUR+40);
+    } else this.finishExit();
+  },
+  finishExit(){
+    const spread=bookView.spread;
+    this.teardown();
+    bookView.show(spread,true);
+    markRead();
+  },
+  teardown(){
+    clearTimeout(this._xt); clearTimeout(this._nt); clearTimeout(this._pt); clearTimeout(this._ft);
+    clearTimeout(this._ct); this._ct=null; /* a live tap doubt-timer would advance the NEXT session */
+    this.active=false; this.leaving=false; S.guided=false;
+    document.body.classList.remove('gv-on');
+    if(this.root){ this.root.hidden=true; this.root.classList.remove('on'); }
+    if(this.cam) this.cam.innerHTML='';
+    this.wraps.clear(); this.beats.clear();
+    if(this.prog) this.prog.classList.remove('show');
+  },
+};
+
 function markRead(){
   const b=S.book; if(!b)return;
   if(!S.pull.has(b.slug)){
@@ -1841,6 +2257,7 @@ function openIssue(slug, opts){
   const M=S.M;
   if(!M.issue[slug]){ toast('THAT ISSUE IS NOT IN THE RACKS!'); return; }
   closeFinder();
+  if(guided.active) guided.teardown(); /* the mode itself persists via guidedPref */
   const book=issueBook(slug);
   /* the crossover strip joins the story flow as its final content panel */
   const lastContent=book.pages.map(p=>p.kind).lastIndexOf('content');
@@ -1862,17 +2279,19 @@ function openIssue(slug, opts){
   $('#bookview').dataset.era=book.series.style;
   showView('bookview');
   const anchor=opts&&opts.heading!=null?book.anchors[opts.heading]:null;
-  let spread=0;
+  let spread=0, entryPage=0;
   if(anchor!=null){
     let pageIdx=book.pages.findIndex(p=>p.kind==='content'&&p.idx===anchor);
     if(pageIdx<0) pageIdx=2+anchor;
     spread=Math.ceil(pageIdx/2);
+    entryPage=clamp(pageIdx,0,book.pages.length-1);
   }
-  else if(opts&&opts.atSplash) spread=1;
+  else if(opts&&opts.atSplash){ spread=1; entryPage=1; }
   bookView.show(spread,true);
   SFX.open();
   markReadSoon();
-  if(!S.toldTurn){ S.toldTurn=true; store.set('toldTurn',true);
+  if(S.guidedPref) guided.enter({page:entryPage});
+  if(!S.toldTurn&&!S.guidedPref){ S.toldTurn=true; store.set('toldTurn',true);
     setTimeout(()=>toast('TURN THE PAGE — press → or click the right-hand page'),450); }
   location.hash='#/read'+slug+(opts&&opts.heading?('@'+opts.heading):'');
 }
@@ -2309,6 +2728,15 @@ function initKeys(){
     if(e.target.matches('input,textarea'))return;
     if(!$('#lightbox').hidden){ if(e.key==='Escape'||e.key===' ')closeLightbox(); return; }
     if(!$('#finder').hidden){ if(e.key==='Escape')closeFinder(); return; }
+    if(S.guided){
+      if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){ e.preventDefault(); guided.next(); }
+      else if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); guided.prev(); }
+      else if(e.key==='Enter'){ e.preventDefault(); guided.openBeat(); }
+      else if(e.key==='Escape'||e.key==='g'||e.key==='G'){ e.preventDefault(); guided.exit(); }
+      else if(e.key==='/'){ e.preventDefault(); openFinder('search'); }
+      else if(e.key==='s'||e.key==='S'){ toggleSound(); }
+      return;
+    }
     if(e.key==='/'){ e.preventDefault(); openFinder('search'); return; }
     if(e.key==='i'||e.key==='I'){ e.preventDefault(); openFinder('index'); return; }
     if(e.key==='s'||e.key==='S'){ toggleSound(); return; }
@@ -2316,6 +2744,7 @@ function initKeys(){
       if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){ e.preventDefault(); bookView.next(); }
       else if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); bookView.prev(); }
       else if(e.key==='Home'){ bookView.show(0); }
+      else if(e.key==='g'||e.key==='G'){ e.preventDefault(); guided.enterFromSpread(); }
       else if(e.key==='Escape'){ openSeries(S.book.series.idx); }
     } else if(S.view==='series'){
       if(e.key==='Escape') goRack();
@@ -2372,7 +2801,7 @@ async function boot(){
     $('#boot').remove();
     route();
     __fc.ready=performance.now();
-    __fc.api={openIssue,openSeries,openFinder,paginate,bookView,S,CAST,paintCover};
+    __fc.api={openIssue,openSeries,openFinder,paginate,bookView,S,CAST,paintCover,guided};
   }catch(err){
     const b=$('#boot .boot-line'); if(b){ b.textContent='PRESS JAM! '+err.message; b.style.animation='none'; }
     console.error(err);

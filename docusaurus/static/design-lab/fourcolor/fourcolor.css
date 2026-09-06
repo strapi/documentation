@@ -740,3 +740,34 @@ a .inkhead{ text-decoration:none; }
   font:600 9.5px Oswald,'Arial Narrow',sans-serif;letter-spacing:.5px;
   background:rgba(253,246,226,.94);color:#231c12;border:1.5px solid #231c12;
   padding:1px 6px;transform:rotate(-.4deg)}
+
+/* ================================================================
+   GUIDED VIEW, the panel-by-panel camera. The letterbox is aged
+   paper dark (the bookview reading-room umber, one stop deeper), so
+   the plates stay warm inside it; chrome is a hairline that sleeps. */
+#guided{position:fixed;inset:0;z-index:46;overflow:hidden}
+#guided[hidden]{display:none}
+#guided .g-back{position:absolute;inset:0;opacity:0;transition:opacity .42s ease;
+  background:
+   radial-gradient(1200px 700px at 50% 36%, rgba(255,190,105,.06), transparent 62%),
+   linear-gradient(180deg,#1b140c,#120d07 72%)}
+#guided.on .g-back{opacity:1}
+#guided .g-cam{position:absolute;left:0;top:0;width:0;height:0;transform-origin:0 0;will-change:transform}
+#guided .g-pagewrap{position:absolute;top:0;width:575px;height:820px;background:var(--paper);
+  box-shadow:0 16px 54px rgba(0,0,0,.55)}
+#guided .g-shutters{position:absolute;inset:0;opacity:0;transition:opacity .42s ease;pointer-events:none}
+#guided.on .g-shutters{opacity:1}
+#guided .g-shutter{position:absolute;left:0;top:0;width:100vw;height:100vh;
+  transform-origin:0 0;background:rgb(22,15,9);will-change:transform}
+#guided .g-frame{position:absolute;border:1px solid rgba(219,193,141,.20);pointer-events:none;
+  box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+#guided .g-progress{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
+  width:min(540px,52vw);opacity:0;transition:opacity .32s ease;pointer-events:none;text-align:center}
+#guided .g-progress.show{opacity:1}
+#guided .g-track{height:2px;background:rgba(219,193,141,.18);border-radius:1px}
+#guided .g-fill{height:2px;background:rgba(233,200,31,.8);border-radius:1px;width:100%;
+  transform-origin:0 50%;transform:scaleX(0);transition:transform .3s ease}
+#guided .g-label{margin-top:7px;font-family:var(--block);font-size:10px;font-weight:600;
+  letter-spacing:2.4px;color:#cdbd97}
+.gv-on #sfx-toggle{opacity:0;pointer-events:none;transition:opacity .3s ease}
+.rm #guided .g-back,.rm #guided .g-shutters,.rm #guided .g-fill,.rm #guided .g-progress{transition:none}
