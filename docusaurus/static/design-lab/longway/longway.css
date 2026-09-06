@@ -8,7 +8,8 @@
   --apricot: #FFA26B;
   --cream: #FFF3E0;
   --paper: #FBEDD5;          /* cream single-strike on stock */
-  --dock-h: 38vh;
+  --dock-h: 50vh;            /* round 9: the page gets the bottom half */
+  --trail-w: 100vw;          /* round 9: the trail's own width */
   --serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
 }
 
@@ -24,7 +25,10 @@ html, body {
 
 #world {
   position: fixed;
-  inset: 0;
+  left: 0;
+  top: 0;
+  width: var(--trail-w);
+  height: calc(100vh - var(--dock-h));
   display: block;
 }
 
@@ -61,6 +65,15 @@ html, body {
   color: var(--apricot);
 }
 
+/* the month the sky is remembering, under the biome line */
+#weather {
+  margin-top: 3px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose);
+}
+
 #btnTrailhead {
   pointer-events: auto;
   font-family: var(--serif);
@@ -90,6 +103,8 @@ html, body {
 #odometer { color: var(--cream); text-shadow: 1px 1px 0 var(--violet); }
 #nextdoor { color: var(--apricot); }
 #walked   { color: var(--rose); }
+/* the quietest line in the row: how many voices the walk has earned */
+#score    { color: var(--cream); opacity: 0.72; text-shadow: 1px 1px 0 var(--aubergine); }
 
 #gatePrompt {
   position: fixed;
@@ -109,6 +124,53 @@ html, body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* the jump prompt at hazards: a small sign in the flat idiom, floating
+   over the barrier that holds you, gently pulsing, never over the dock */
+#jumpPrompt {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--dock-h) + 96px);
+  transform: translateX(-50%);
+  background: var(--cream);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--rose);
+  padding: 9px 14px;
+  z-index: 31;
+  text-align: center;
+  cursor: pointer;
+  animation: jpPulse 1.4s ease-in-out infinite;
+}
+#jpRow { display: flex; align-items: center; gap: 10px; justify-content: center; }
+#jpKey {
+  display: inline-block;
+  min-width: 74px;
+  padding: 5px 10px 7px;
+  border: 2px solid var(--ink);
+  border-bottom-width: 5px;      /* the drawn key cap's depth */
+  border-radius: 4px;
+  background: var(--cream);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+}
+#jpTxt { font-size: 11px; letter-spacing: 0.2em; white-space: nowrap; }
+#jpFirst {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--violet);
+  margin-bottom: 7px;
+  white-space: nowrap;
+}
+@keyframes jpPulse {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #jumpPrompt { animation: none; }
+}
+body.lay-side #jumpPrompt { bottom: 150px; }
 
 /* ---------- reading dock ---------- */
 #dock {
@@ -450,6 +512,52 @@ html, body {
 #gmFrom b, #gmTo b { color: var(--ink); }
 #gmDist { font-size: 11px; letter-spacing: 0.2em; color: #B05A1E; margin-top: 6px; }
 #gmHint { font-size: 10px; letter-spacing: 0.22em; color: #8a5a2e; margin-top: 10px; }
+
+/* ---------- the portal confirm: a carved trailhead notice ---------- */
+#portalask {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 15, 46, 0.82);
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#paPanel {
+  background-color: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--violet);
+  padding: 18px 26px 16px;
+  color: #241536;
+  text-align: center;
+  max-width: 470px;
+  animation: paRise 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes paRise {
+  from { transform: translateY(14px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #paPanel { animation: none; }
+}
+#paCarve { font-size: 9px; letter-spacing: 0.34em; color: #B05A1E; }
+#paTitle { font-size: 15px; letter-spacing: 0.24em; color: var(--ink); margin-top: 6px; }
+#paLine { font-size: 11px; letter-spacing: 0.2em; color: #C1226E; margin-top: 10px; }
+#paBody { font-size: 11px; letter-spacing: 0.14em; line-height: 1.7; margin-top: 10px; }
+#paRow { display: flex; gap: 12px; justify-content: center; margin-top: 14px; }
+#paRow button {
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  background-color: var(--paper);
+  color: #241536;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--rose);
+  padding: 8px 12px;
+  cursor: pointer;
+}
+#paRow button:focus { outline: 3px solid var(--rose); outline-offset: 1px; }
+#paHint { font-size: 9px; letter-spacing: 0.22em; color: #8a5a2e; margin-top: 12px; }
 
 /* ---------- landing ---------- */
 #landing {
@@ -831,6 +939,7 @@ html, body {
 .pkStamp:nth-child(odd) { box-shadow: 2px 2px 0 var(--violet); }
 .pkStamp.leaf { border-style: solid; color: #8a4a10; }
 .pkStamp.lantern { border-style: solid; color: #5a3a90; }
+.pkStamp.score { border-style: solid; color: #7a2d5e; background: var(--apricot); }
 #pkCerts { padding: 14px 18px 0; }
 #pkCerts .pkCertHead { font-size: 10px; letter-spacing: 0.24em; color: #C1226E; border-top: 2px solid var(--ink); padding-top: 12px; }
 #pkCerts .pkCertNote { font-size: 11px; color: #6b4a2e; margin-top: 6px; }
@@ -929,7 +1038,14 @@ html, body {
 #toast {
   position: fixed;
   left: 50%;
-  top: 76px;
+  /* ROUND 11 — the toast clears the HUD at every width and in both layouts.
+     It used to sit at a flat 76 px and, at 1440 stacked, clipped the corner
+     of the PACK chip; below about 1000 px it ran across PACK, GUIDE and SFX
+     together; and side by side, where the whole HUD is squeezed into the
+     trail's half, it landed on the hour dial. --hud-h is measured from the
+     HUD itself every time the window is laid out, so this is one rule
+     rather than a table of magic numbers. */
+  top: calc(var(--hud-h, 118px) + 14px);
   transform: translateX(-50%);
   background: var(--cream);
   color: var(--ink);
@@ -962,3 +1078,57 @@ html, body {
 }
 .keybtn:hover { background: var(--apricot); }
 .keybtn.off { background: #d9c6b5; color: #6b5a49; box-shadow: 2px 2px 0 #8a6a50; }
+
+/* ---------- the sound chips (r5): two independent layers ---------- */
+#hudSmall button.off { background: #d9c6b5; color: #6b5a49; box-shadow: 3px 3px 0 #8a6a50; }
+.keynote {
+  flex: 1 1 100%;
+  font-family: var(--serif);
+  font-size: 8.5px;
+  letter-spacing: 0.16em;
+  color: rgba(28, 15, 46, 0.62);
+  line-height: 1.7;
+  margin-top: 2px;
+}
+
+/* ---------- round 9: side by side (V) ----------
+   The trail keeps the left 55 % of the window, full height; the page takes
+   the rest. Everything that was pinned above the dock is pinned above
+   nothing now (--dock-h is 0 here), so only the horizontal ends move. */
+body.lay-side #dock {
+  left: var(--trail-w);
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: auto;
+  border-top: none;
+  border-left: 3px solid var(--ink);
+  box-shadow: -3px 0 0 var(--rose);
+}
+body.lay-side #hud { right: calc(100vw - var(--trail-w)); }
+/* the trail pane's two bottom voices share the floor: the walk line keeps
+   the left half, the key hints keep the right — apart by construction,
+   never printed over one another (wave 4, round 2) */
+body.lay-side #hudTrail { max-width: calc(var(--trail-w) * 0.5 - 24px); flex-wrap: wrap; }
+body.lay-side #gatePrompt {
+  left: calc(var(--trail-w) / 2);
+  max-width: calc(var(--trail-w) - 40px);
+}
+body.lay-side #help {
+  right: calc(100vw - var(--trail-w) + 18px);
+  bottom: 12px;
+  max-width: calc(var(--trail-w) * 0.42);
+}
+body.lay-side #gatePrompt { bottom: 100px; }
+body.lay-side #hudLeft { max-width: calc(var(--trail-w) - 380px); }
+/* side by side it is centred on the trail column, not on the window, and
+   never wider than that column */
+body.lay-side #toast {
+  left: calc(var(--trail-w) / 2);
+  max-width: calc(var(--trail-w) - 40px);
+}
+body.lay-side #dockContent { padding-bottom: 44vh; }
+
+/* the trail HUD row wraps rather than running under the dock */
+#hudTrail { max-width: 58vw; flex-wrap: wrap; }
+#help { max-width: 38vw; }

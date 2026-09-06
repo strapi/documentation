@@ -1,0 +1,56 @@
+THE LONG WAY THROUGH - MUSIC CREDITS
+====================================
+
+theme.ogg
+  "Meekness" by Kai Engel, from the album "Sustains" (2017-12-19).
+  Source: Free Music Archive - https://freemusicarchive.org/music/Kai_Engel/Sustains
+  License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+           https://creativecommons.org/licenses/by/4.0/
+  Attribution text: "Meekness" by Kai Engel (freemusicarchive.org), licensed
+  under CC BY 4.0. Converted to Ogg Opus 64 kbps for this build; no other edit.
+
+  HOW THAT LICENSE WAS CHECKED (round 11). Round 10 could only cite the
+  December 2019 archived copy of the FMA page, and the verifier rightly
+  refused to take that on trust: freemusicarchive.org answers this network
+  with a 404 bot wall, and archive.today rate-limits it. So the licence was
+  chased to a source that does answer, and the recording was proved to be
+  the one that source describes:
+
+    - Wikimedia Commons holds File:Kai Engel - 02 - Meekness.ogg, uploaded
+      2020-04-13 from that exact FMA track URL. Its wikitext carries
+      {{cc-by-4.0}}; its API returns LicenseShortName "CC BY 4.0",
+      UsageTerms "Creative Commons Attribution 4.0" and LicenseUrl
+      https://creativecommons.org/licenses/by/4.0 , with Kai Engel as
+      author and the FMA page as source. Six years on Commons, never
+      nominated for deletion. It is, honestly, still in
+      "Category:License review needed (audio)" - the human review is
+      pending - so it is corroboration, not a court judgment.
+    - THE FILE IN THIS BUILD IS THAT RECORDING. The Commons Ogg Vorbis
+      (163.5165 s) and this build's Opus (163.5230 s) match at pearson
+      r = 0.999800 across 817 frames of their loudness envelopes.
+      Reproducible: iterlog/r11-audition/match.py.
+    - Bandcamp shows "all rights reserved" on the track page. That is the
+      platform default: it shows the same on "The Run", an album whose
+      CC BY status archive.org attests in machine-readable metadata. The
+      footer is evidence of nothing either way.
+    - The artist's own site says he is stepping away from Creative Commons
+      for NEW work after 1 July 2025. A grant already made is irrevocable,
+      so a 2017 release is untouched - but it is why kai-engel.com no
+      longer states a licence anywhere.
+    - Not a blanket claim: most Kai Engel items on archive.org are BY-NC or
+      BY-NC-SA. It is per release, and this is the release that is CC BY.
+
+  The whole trail, with every command and its output, is in
+  iterlog/r11-audition/LICENCE-TRAIL.txt, along with the fully auditioned
+  CC BY fallback ("Harbor", from "The Run") that was prepared and not
+  needed. If the attribution above ever has to move, it moves there.
+  Used only for the trail's three rarest moments, and once each: the first
+  arrival at Land's End, walking every page of one community, and
+  completing the whole trail. (Round 11 corrected this line: it named two,
+  while the code and the key panel have always named three - audCheckComm
+  fires the theme on a completed community exactly as audLEArrive and
+  audCheckComplete do.) A moment that goes by behind a muted MUSIC layer is
+  not spent: the trail offers the theme again the next time.
+
+Everything else the music layer plays is generated live in WebAudio (a small
+music-box / kalimba voice written for this build) - no recorded material.

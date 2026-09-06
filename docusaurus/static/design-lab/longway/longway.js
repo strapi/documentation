@@ -23,7 +23,120 @@ const MIN_STRETCH = 520;    /* even a 79-word footbridge is walkable */
 const WALK_V      = 340;    /* px/s */
 const STRIDE_V    = 980;    /* px/s with Shift */
 const GATE_RANGE  = 80;     /* px to stand "at" a gate */
-const DOCK_FRAC   = 0.38;
+const DOCK_FRAC   = 0.50;   /* round 9: the page gets the bottom half */
+
+/* round 9 — the shape of the window, and the two ways to hold it */
+const LAY_SIDE  = 0.55;     /* the trail's share of the width, side by side */
+const LAY_MIN_W = 1000;     /* narrower than this and side by side folds back */
+const LAY = { mode: lsGet('longway.layout') === 'side' ? 'side' : 'stack', eff: 'stack' };
+
+/* round 9 — the weather clock walks the documentation's own calendar */
+const WX_MONTH_S = 16;      /* one real month of the corpus per 16 seconds */
+const WX_CLEAR   = 0.45;    /* a month this busy and the sky is clear again */
+const OVERCAST_INK = mix(INKS.aubergine, INKS.cream, 0.38);
+const WX = {
+  months: [], quiet: 0, max: 1, first: '', last: '', idx: 0, mt: 0, state: '',
+  grey: 0, wet: 0, wetness: 0, here: 1, rain: 0, k: 0, sig: 0,
+  turned: 0, showers: 0, clearings: 0,
+  /* MORE WEATHER (wave 3, round 2): four new fronts on the same corpus
+     calendar — snow for the quiet winter months, fog for autumn's thin
+     ones, a thunderstorm at the deep of a long quiet streak, and a rare
+     rainbow when a shower clears under a low sun. All eased, no pops. */
+  snow: 0, snowCover: 0, fog: 0, storm: 0,
+  flashT: -1e9, boltNext: 0, bolts: 0, stormKey: '',
+  stormUntil: 0, thunderAt: 0, dogStartled: false, wetPeak: 0,
+  rbA: 0, rbAt: -1e9, rbs: 0,
+  snows: 0, fogs: 0, storms: 0
+};
+/* fog is a bank, not a blindfold: the cap keeps path, hazards, prompts and
+   the walker readable through the thickest of it */
+const FOG_CAP = 0.34;
+const RB_COOLDOWN = 3600;   /* a rainbow never twice in an hour of play */
+
+/* THE SCORE'S METRIC, REDEFINED (wave 3, the owner's bug report made law):
+   progress is the share of the TRAIL DISTANCE actually covered on foot —
+   unique stretches of ground, accumulated across the visit, persisted, and
+   robust to reloads and to the corpus changing shape underneath it.
+   Walking the whole way to the end cairn is 100 percent, PERIOD. A gate
+   hop credits nothing: the stretches it jumped stay unwalked. Reading is
+   never required — the music rewards the JOURNEY. */
+const COV_SEG = 64;                     /* one ground segment, in px */
+const COV = { n: 0, x0: 10, x1: 0, bits: null, covered: 0 };
+function covInit() {
+  COV.x1 = M.totalPx;
+  for (const st of M.waymarks) if (st.kind === 'end') COV.x1 = Math.min(COV.x1, st.x);
+  COV.n = Math.max(1, Math.ceil((COV.x1 - COV.x0) / COV_SEG));
+  COV.bits = new Uint8Array(COV.n);
+  const kept = lsJSON('longway.cov.v1', null);
+  if (kept && kept.n > 0 && typeof kept.b === 'string') {
+    try {
+      const raw = atob(kept.b);
+      for (let i = 0; i < kept.n; i++) {
+        if (!((raw.charCodeAt(i >> 3) >> (i & 7)) & 1)) continue;
+        if (kept.n === COV.n) { COV.bits[i] = 1; continue; }
+        /* the corpus changed shape: each kept segment is an INTERVAL of
+           trail, so it maps onto the whole run of new segments it spans —
+           the walked share survives by proportion, upsampled or down */
+        const a0 = Math.min(COV.n - 1, Math.floor(i * COV.n / kept.n));
+        const a1 = Math.min(COV.n - 1, Math.max(a0, Math.ceil((i + 1) * COV.n / kept.n) - 1));
+        for (let j = a0; j <= a1; j++) COV.bits[j] = 1;
+      }
+    } catch (e) { /* a torn record starts the count over; it never crashes */ }
+  }
+  COV.covered = 0;
+  for (let i = 0; i < COV.n; i++) COV.covered += COV.bits[i];
+}
+function covMark(a, b) {
+  if (!COV.bits) return;
+  const lo = clamp(Math.min(a, b), COV.x0, COV.x1);
+  const hi = clamp(Math.max(a, b), COV.x0, COV.x1);
+  const i0 = clamp(Math.floor((lo - COV.x0) / COV_SEG), 0, COV.n - 1);
+  const i1 = clamp(Math.floor((hi - COV.x0) / COV_SEG), 0, COV.n - 1);
+  let grew = false;
+  for (let i = i0; i <= i1; i++) {
+    if (!COV.bits[i]) { COV.bits[i] = 1; COV.covered++; grew = true; }
+  }
+  if (grew) queueSave();
+}
+function covShare() { return COV.n ? COV.covered / COV.n : 0; }
+function covB64() {
+  if (!COV.bits) return '';
+  const bytes = new Uint8Array((COV.n + 7) >> 3);
+  for (let i = 0; i < COV.n; i++) if (COV.bits[i]) bytes[i >> 3] |= 1 << (i & 7);
+  let out = '';
+  for (let i = 0; i < bytes.length; i++) out += String.fromCharCode(bytes[i]);
+  return btoa(out);
+}
+
+/* round 9 — standing still, in three eased stages */
+const SLEEP_T1 = 30, SLEEP_T2 = 60, SLEEP_T3 = 120;   /* seconds of stillness */
+const SLP = {
+  stage: 0, t: 0, k: 0, startle: 0, waking: false, onBench: false, seatDX: 0,
+  snoreAt: 0, dogSnoreAt: 0, snores: 0, dogSnores: 0, stages: 0, wakes: 0, rIdle: 0
+};
+/* SOMETIMES, INSTEAD OF SLEEPING, SHE PLAYS (wave 3, round 2): roughly one
+   idle in five or six — never twice in a row — the settle becomes a small
+   performance: she sits, takes a kalimba or a tin whistle from the pack,
+   and the music-box voice plays a quiet solo in the seed of the stretch
+   she sits in. Twenty to thirty seconds, then she puts it away and dozes
+   as usual. Any input stops it mid-phrase with one apologetic note. */
+const PERF = {
+  on: false, t: 0, dur: 0, k: 0, inst: '', seed: '',
+  chances: 0, count: 0, last: false, interrupted: 0, force: false,
+  putaway: 0
+};
+const PERF_CHANCE = 1 / 5.5;
+
+/* FURNITURE BREATHES (wave 3, round 2): the placement-spacing law. A
+   walker step is the gait's own step — her legs pass each other once
+   every π of phase, and phase is x/26, so one step covers π·26 ≈ 82 px
+   of trail. Ten of those breathe between interactables wherever the
+   stretch has the room; a stretch too short for its own furniture spreads
+   the pieces evenly instead, which is the most breath it can hold. The
+   reading dock keeps the true block order either way. */
+const STEP_PX = Math.PI * 26;                 /* one walker step, measured */
+const BREATHE_STEPS = 10;
+const BREATHE_PX = Math.round(BREATHE_STEPS * STEP_PX);   /* ≈ 817 px */
 
 /* living-trail tuning */
 const EMAX        = 84;     /* highest crest in px — the most-cited stretch */
@@ -35,9 +148,18 @@ const DAY_SPEED_NAMES = ['1×', '6×', 'PAUSED'];
 const DAY_EPS     = 1e-4;   /* weight resolution: below one ink unit, no plates */
 const FRONT_DUR   = 4.4;    /* a weather front takes seconds, eased both ways */
 const JUMP_DUR    = 0.52, BOUNCE_DUR = 0.62, STUMBLE_DUR = 0.6;
+const HZ_EDGE     = 26;        /* the barrier holds you this far from its post */
+const HZ_PROMPT_T = 0.5;       /* the beat of being blocked before the sign speaks */
+const JUMP_CARRY_V = 190;      /* px/s the space-bar jump carries you over the bar */
 const SEASON_DAYS = [31, 92, 240];   /* spring | summer | autumn | winter */
 const SEASON_NAMES = ['SPRING', 'SUMMER', 'AUTUMN', 'WINTER'];
 const BUBBLE_RANGE = 110, BUBBLE_LIFE = 4.6, BUBBLE_PAIR_CD = 75, BUBBLE_GAP = 7;
+
+/* THE WAYS OFF THE TRAIL, PLACED DEEP (wave 4, round 2 — owner order):
+   no crossing of any kind may stand within the first fifteen pages of
+   walking, and the village kiosk stands around the twentieth page. */
+const PORTAL_MIN_PAGE = 15;        /* first page index a crossing may hold */
+const KIOSK_PAGE_LO = 18, KIOSK_PAGE_HI = 25;   /* the kiosk's lawful window */
 
 /* the living-trail wave, round 4 */
 const REG_RANGE = 78;          /* px to stand at a register box */
@@ -49,6 +171,23 @@ const MOON_NEW_DAYS = 240;     /* untended this long = new moon (winter's own ed
 const GH_EDIT = 'https://github.com/strapi/documentation/edit/main/docusaurus/';
 const GH_ISSUE = 'https://github.com/strapi/documentation/issues/new';
 const FEEDBACK_URL = 'https://n8n.tools.strapi.team/webhook/docs-feedback';
+/* ROUND 11 — THE REGISTER DOES NOT SHOUT AT A WALL.
+   The webhook that carries a register line home only answers the published
+   origin. Posting to it from a local preview cannot succeed — the browser
+   refuses the response before the handler ever sees it — and each attempt
+   printed two CORS errors to the console: the only console errors in the
+   whole build. So the ink is not sent from a local origin at all. The pen
+   still scratches, the line still goes into the box for the visit, and the
+   panel still says the ink is drying; nothing about the walk changes, and
+   the moment this trail is served from anywhere but a loopback the line
+   goes out exactly as it always did. */
+const LOCAL_ORIGIN = (() => {
+  try {
+    const h = location.hostname;
+    return location.protocol === 'file:' || h === 'localhost' || h === '127.0.0.1' ||
+           h === '::1' || h === '0.0.0.0' || h === '' || /\.local$/.test(h);
+  } catch (e) { return true; }
+})();
 const CAIRN_KINDS = ['note', 'info', 'callout', 'strapi', 'prerequisites'];
 const SIL_NAMES = { A: 'A', B: 'B', C: 'C' };
 const ACC_LIST = [
@@ -137,6 +276,7 @@ const M = {
   borderStones: 0,
   commEdges: [],        /* per community: its internal citation edges (index pairs) */
   sniffMin: 9e9,        /* inbound count that makes a door worth the dog's nose */
+  yipMin: 9e9,          /* …and the rarer door she thinks is worth saying so about */
   overlooks: 0,
   now: Date.now()
 };
@@ -183,11 +323,75 @@ function blockWords(b) {
   return w;
 }
 
-function buildModel(content, graph, communities, provenance) {
-  M.totalWords = Object.values(graph.words).reduce((a, b) => a + b, 0);
+/* FURNITURE BREATHES, LABELS NEVER COLLIDE — law (1), the placement half.
+   Every piece of interactable furniture a stretch grew (signpost, register,
+   gates, terraces, block furniture, the orientation table) is spread along
+   the stretch so that at least BREATHE_PX — about ten walker steps — stands
+   between any two, whenever the stretch is long enough to hold that. A
+   stretch too dense for the full breath spreads its pieces evenly across
+   its whole span instead, which is the widest spacing the data allows: the
+   pieces are the corpus's own (every gate is a real citation), so none may
+   be dropped. Order along the trail is preserved — the reading dock's
+   block order is untouched by any of this. */
+function spreadFurniture(p) {
+  const pieces = [];
+  pieces.push({ x: p.signX, set: (v) => { p.signX = v; p.regX = Math.max(p.regX, v); } });
+  pieces.push({ x: p.regX, set: (v) => { p.regX = v; } });
+  for (const g of p.gates) pieces.push({ x: g.x, set: ((gg) => (v) => { gg.x = v; })(g) });
+  for (const tr of p.terraces) pieces.push({ x: tr.x, set: ((tt) => (v) => { tt.x = v; })(tr) });
+  for (const f of p.furn) pieces.push({ x: f.x, set: ((ff) => (v) => { ff.x = v; })(f) });
+  if (p.overlook) pieces.push({ x: p.overlook.x, set: (v) => { p.overlook.x = v; } });
+  const n = pieces.length;
+  if (n < 2) return;
+  pieces.sort((a, b) => a.x - b.x);
+  /* 120-px edge margins double as the cross-border half of the law: two
+     pieces on either side of a stretch border keep at least 240 px */
+  const lo = p.start + 120, hi = p.start + p.len - 120;
+  const room = hi - lo;
+  const gap = Math.min(BREATHE_PX, room / (n - 1));
+  const xs = pieces.map(q => q.x);
+  if (room <= gap * (n - 1) + 1) {
+    /* the stretch is exactly as wide as its furniture needs: even spread */
+    for (let i = 0; i < n; i++) xs[i] = lo + (room * i) / (n - 1);
+  } else {
+    /* keep each piece near its own block where possible; push east, then
+       relax west, so every neighbouring pair ends at least `gap` apart */
+    xs[0] = clamp(xs[0], lo, hi - gap * (n - 1));
+    for (let i = 1; i < n; i++) xs[i] = clamp(Math.max(xs[i], xs[i - 1] + gap), lo, hi);
+    for (let i = n - 2; i >= 0; i--) xs[i] = Math.min(xs[i], xs[i + 1] - gap);
+    for (let i = 0; i < n; i++) xs[i] = clamp(xs[i], lo, hi);
+  }
+  for (let i = 0; i < n; i++) pieces[i].set(xs[i]);
+  p.gates.sort((a, b) => a.x - b.x);
+}
+
+function buildModel(content, graph, communities, provenance, trailOrder) {
+  /* THE TRAIL WALKS THE SIDEBAR (owner order): trail-order.json is the
+     single source of the walking order — the documentation's own sidebar
+     order, opening at the Quick Start Guide, CMS then Cloud then the short
+     footer annex ending at whats-new, non-sidebar sub-pages riding just
+     after their path parent. /cms/intro and the release-notes pages are
+     EXCLUDED entirely: not walked, not indexed, not searchable here. Every
+     completeness law downstream (the cairn's 100 percent, the index count,
+     the sweep) derives from M.pages and so speaks the walked count. */
+  M.excluded = new Set((trailOrder && trailOrder.excluded) || []);
+  const walkOrder = (trailOrder && Array.isArray(trailOrder.order) && trailOrder.order.length)
+    ? trailOrder.order.filter(sl => content.pages[sl])
+    : content.order.filter(sl => !M.excluded.has(sl));
 
   M.communities = communities.map((c, i) => ({ ...c, idx: i }));
   communities.forEach((c, i) => c.members.forEach(m => M.commOf.set(m, i)));
+
+  /* the sea below Land's End keeps the WHOLE documentation — the walked
+     pages and the ones the walk retired alike; each light keeps its page's
+     real numbers (the archived Working Sea's parting gift). */
+  M.sea = content.order.filter(sl => content.pages[sl]).map(sl => ({
+    slug: sl,
+    words: graph.words[sl] || 30,
+    commits: (provenance[sl] && provenance[sl].commits) || 1,
+    inC: graph.inbound[sl] | 0,
+    comm: M.commOf.has(sl) ? M.commOf.get(sl) : -1
+  }));
 
   const authors = new Set();
   for (const [slug, v] of Object.entries(provenance)) {
@@ -217,7 +421,7 @@ function buildModel(content, graph, communities, provenance) {
   }
 
   let x = 0, cw = 0;
-  for (const slug of content.order) {
+  for (const slug of walkOrder) {
     const pg = content.pages[slug];
     if (!pg) continue;
     const words = graph.words[slug] || Math.max(30, blockWords({ blocks: pg.blocks }));
@@ -297,6 +501,7 @@ function buildModel(content, graph, communities, provenance) {
     x += len; cw += words;
   }
   M.totalPx = x;
+  M.totalWords = cw;   /* the words of the WALKED trail (287 pages' worth) */
 
   for (const c of M.communities) {
     const hp = M.bySlug.get(c.hub);
@@ -331,11 +536,9 @@ function buildModel(content, graph, communities, provenance) {
       g.x = p.start + clamp(frac * p.len, 46, p.len - 46);
     }
     p.gates.sort((a, b) => a.x - b.x);
-    for (let i = 1; i < p.gates.length; i++) {
-      if (p.gates[i].x - p.gates[i - 1].x < 92) {
-        p.gates[i].x = Math.min(p.gates[i - 1].x + 92, p.start + p.len - 40);
-      }
-    }
+    /* the old 92-px de-twinning is superseded by the spacing law below
+       (spreadFurniture), which also fixes the collapse it used to cause
+       at the east end of a crowded stretch */
   }
 
   /* signposts and register boxes: fixed places, no lazy terrain needed */
@@ -409,6 +612,125 @@ function buildModel(content, graph, communities, provenance) {
     M.overlooks++;
   }
 
+  /* THE OVERLOOKS MUST BE FINDABLE (wave 3, round 2): a carved fingerpost
+     OVERLOOK AHEAD stands a couple of screens before each orientation
+     table, in the waymarker idiom, clamped inside the hub's own stretch. */
+  for (const c of M.communities) {
+    const hp = M.bySlug.get(c.hub);
+    if (!hp || !hp.overlook) continue;
+    hp.overlook.postX = Math.max(hp.start + 120, hp.overlook.x - 2200);
+  }
+
+  /* FURNITURE BREATHES: the placement-spacing law, run over every stretch
+     once all the pieces stand. Ten walker steps between interactables
+     wherever the stretch holds the room; even spread where it cannot. */
+  for (const p of M.pages) spreadFurniture(p);
+
+  /* THE RELIEF, AT LAST — RIVERS (wave 3): where a strong cross-community
+     citation stream passes, a river crosses the trail at that pair's
+     FIRST shared border, and a plank footbridge carries the walker over.
+     The water is sized by the stream (how many citations cross between
+     the two communities) and the bridge plaque names the strongest
+     single crossing — the slug pair — in the waymarker hand. Derived
+     from graph.edges, never invented; no mechanic rides on the water. */
+  const RIVER_MIN_STREAM = 8;
+  const xStream = new Map();
+  for (const [rsrc, rtgt] of graph.edges) {
+    const sa = M.commOf.has(rsrc) ? M.commOf.get(rsrc) : -1;
+    const sb = M.commOf.has(rtgt) ? M.commOf.get(rtgt) : -1;
+    if (sa < 0 || sb < 0 || sa === sb) continue;
+    if (!M.bySlug.get(rsrc) || !M.bySlug.get(rtgt)) continue;
+    const k = Math.min(sa, sb) + ':' + Math.max(sa, sb);
+    if (!xStream.has(k)) xStream.set(k, { n: 0, edges: [] });
+    const st = xStream.get(k);
+    st.n++; st.edges.push([rsrc, rtgt]);
+  }
+  M.rivers = [];
+  for (let ri = 0; ri + 1 < M.pages.length; ri++) {
+    const pa = M.pages[ri], pb = M.pages[ri + 1];
+    if (pa.comm < 0 || pb.comm < 0 || pa.comm === pb.comm) continue;
+    const k = Math.min(pa.comm, pb.comm) + ':' + Math.max(pa.comm, pb.comm);
+    const st = xStream.get(k);
+    if (!st || st.n < RIVER_MIN_STREAM || st.placed) continue;
+    st.placed = true;
+    /* the plaque names the crossing the corpus leans on hardest: the
+       edge whose target is the most cited (ties broken by slug, so the
+       same corpus always carves the same board) */
+    let e = st.edges[0];
+    for (const cand of st.edges) {
+      const cIn = M.bySlug.get(cand[1]).inCount, eIn = M.bySlug.get(e[1]).inCount;
+      if (cIn > eIn || (cIn === eIn && (cand[1] < e[1] || (cand[1] === e[1] && cand[0] < e[0])))) e = cand;
+    }
+    let half = clamp(45 + st.n * 1.7, 50, 100);
+    /* the water yields to whatever already stands on its banks — except
+       the border stone, which steps up ONTO the bank instead: a waymarker
+       belongs at a bridge end, not mid-stream */
+    for (const q of [pa, pb]) {
+      const xs2 = [q.signX, q.regX];
+      for (const g of q.gates) xs2.push(g.x);
+      for (const t2 of q.terraces) xs2.push(t2.x);
+      for (const f2 of q.furn) xs2.push(f2.x);
+      for (const hz of q.hazards) xs2.push(hz.x);
+      for (const sp2 of q.springs || []) xs2.push(sp2.x);
+      for (const x2 of xs2) {
+        const d = Math.abs(x2 - pb.start);
+        if (d < half + 26) half = Math.max(42, Math.min(half, d - 26));
+      }
+    }
+    for (const q of [pa, pb]) {
+      for (const st2 of q.stones) {
+        if (Math.abs(st2.x - pb.start) < half + 14) {
+          st2.x = st2.x <= pb.start ? pb.start - half - 18 : pb.start + half + 18;
+        }
+      }
+    }
+    M.rivers.push({ x: pb.start, half, n: st.n, a: Math.min(pa.comm, pb.comm),
+      b: Math.max(pa.comm, pb.comm), src: e[0], tgt: e[1] });
+  }
+  /* the stones that stepped aside keep the walk's order */
+  M.waymarks.sort((a2, b2) => a2.x - b2.x);
+  for (const p2 of M.pages) p2.stones.sort((a2, b2) => a2.x - b2.x);
+
+  /* THE HUBS RISE ON THE HORIZON: silhouette variants dealt in trail
+     order, so two neighbouring hubs never share a shape (eight shapes,
+     dealt one at a time down the trail), and each hub keeps its own. */
+  M.lmVar = new Map();
+  M.communities
+    .map(c2 => ({ ci: c2.idx, hp: M.bySlug.get(c2.hub) }))
+    .filter(o => o.hp)
+    .sort((a2, b2) => a2.hp.start - b2.hp.start)
+    .forEach((o, i2) => M.lmVar.set(o.ci, i2 % 8));
+  /* the fingerpost keeps clear of whatever the spread settled on — and a
+     hub too short to hold its own approach lets the post stand on the
+     trail BEFORE its border, which is where a fingerpost belongs anyway */
+  for (const p of M.pages) {
+    if (!p.overlook || p.overlook.postX == null) continue;
+    p.overlook.postX = Math.min(p.overlook.postX, p.overlook.x - 320);
+    p.overlook.postX = Math.max(p.start + 100, p.overlook.postX);
+    if (p.overlook.x - p.overlook.postX < 320) {
+      p.overlook.postX = Math.max(40, p.overlook.x - 320);
+    }
+    /* and clear of the pieces the spread settled: 140 px from any gate,
+       terrace, sign, register or furniture on this stretch or the one
+       before — a sign nobody can read behind a door helps nobody */
+    const prev = p.idx > 0 ? M.pages[p.idx - 1] : null;
+    const near = [p.signX, p.regX];
+    for (const q of prev ? [p, prev] : [p]) {
+      near.push(q.signX, q.regX);
+      for (const g of q.gates) near.push(g.x);
+      for (const t of q.terraces) near.push(t.x);
+      for (const f of q.furn) near.push(f.x);
+      for (const hz of q.hazards) near.push(hz.x);
+      for (const sp of q.springs || []) near.push(sp.x);
+      for (const st of q.stones) near.push(st.x);
+    }
+    for (const rv of M.rivers) near.push(rv.x);
+    const clearAt = (px) => near.every(x2 => Math.abs(x2 - px) >= 140);
+    let px = p.overlook.postX, tries = 0;
+    while (!clearAt(px) && px > 100 && tries < 60) { px -= 60; tries++; }
+    if (clearAt(px) && px >= 40) p.overlook.postX = px;
+  }
+
   /* constellations: each community's internal citation edges, kept by index */
   const memberIdx = M.communities.map(c => new Map(c.members.map((m, i) => [m, i])));
   M.commEdges = M.communities.map(() => []);
@@ -422,6 +744,12 @@ function buildModel(content, graph, communities, provenance) {
   /* what smells important to a dog: the top decile of cited pages */
   const ins = M.pages.map(p => p.inCount).filter(v => v > 0).sort((a, b) => a - b);
   M.sniffMin = ins.length ? ins[Math.floor(ins.length * 0.9)] : 9e9;
+  /* …and the handful of doors worth a yip about: the top fiftieth */
+  M.yipMin = ins.length ? ins[Math.min(ins.length - 1, Math.floor(ins.length * 0.98))] : 9e9;
+
+  /* past the end cairn, the ground falls away to a shore (round 5) */
+  buildLandsEnd();
+  buildPortals();   /* the six ways off the trail, placed by the data */
 }
 
 function pageAt(x) {
@@ -608,6 +936,9 @@ function gradeColor(c, w) {
   if (w.m > 0.001) out = mix(out, DAWN_TINT, 0.45 * w.m);
   if (w.d > 0.001) out = mix(out, DAYLIGHT_TINT, 0.42 * w.d);
   if (w.n > 0.001) out = mix(out, NIGHT_TINT, 0.85 * w.n);
+  /* round 9: cloud flattens the light — one more flat overprint, never a
+     wash. WX.k already carries how much light there is left to flatten. */
+  if (WX.k > 0.001) out = mix(out, OVERCAST_INK, 0.38 * WX.k);
   return out;
 }
 
@@ -616,8 +947,9 @@ function gradedPaletteFor(ci, hollow) {
   if (hollow) return NIGHT_PAL;   /* night hollows ignore the sky — data law */
   const base = paletteFor(ci, false);
   const w = DAY.wts;
-  if (w.g >= 0.999) return base;  /* golden hour = the original art, untouched */
-  const key = ci + ':' + DAY.sig;
+  /* golden hour under a clear sky is still the original art, exactly */
+  if (w.g >= 0.999 && WX.sig === 0) return base;
+  const key = ci + ':' + DAY.sig + ':' + WX.sig;
   if (gradeCache.has(key)) return gradeCache.get(key);
   const pal = {
     bands: base.bands.map(b => ({ c: gradeColor(b.c, w), h: b.h })),
@@ -646,7 +978,7 @@ const SEASON_GROUND = [
 const groundColCache = new Map();
 function groundColorFor(p) {
   if (p.prov.night > 0) return NIGHT_PAL.ground;
-  const key = p.comm + ':' + p.season + ':' + DAY.sig;
+  const key = p.comm + ':' + p.season + ':' + DAY.sig + ':' + WX.sig;
   if (groundColCache.has(key)) return groundColCache.get(key);
   const base = paletteFor(p.comm, false).ground;
   const c = gradeColor(SEASON_GROUND[p.season](base), DAY.wts);
@@ -770,18 +1102,31 @@ const cx = cv.getContext('2d');
 let W = 0, H = 0, visH = 0, horizonY = 0, groundY = 0, AVX = 0, DPR = 1;
 
 function resize() {
+  /* Round 9: the canvas IS the trail's viewport — the top half of the
+     window when stacked, the left 55 % when side by side — so every
+     drawn thing is composed for the room it actually has. */
   DPR = Math.min(window.devicePixelRatio || 1, 2);
-  W = window.innerWidth; H = window.innerHeight;
+  const R = applyLayout();
+  W = R.w; H = R.h;
   cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
   cv.style.width = W + 'px'; cv.style.height = H + 'px';
   cx.setTransform(DPR, 0, 0, DPR, 0, 0);
-  visH = H * (1 - DOCK_FRAC);
-  horizonY = visH * 0.565;
-  groundY = visH * 0.855;
-  AVX = W * 0.40;
+  visH = H;
+  /* re-composition: the ground keeps its band of foreground (never more
+     than 140 px of it, however tall the view), the horizon keeps its
+     share of the sky, and the walker keeps his place across the width */
+  const foot = clamp(visH * 0.145, 44, 140);
+  groundY = Math.round(visH - foot);
+  horizonY = Math.round(Math.min(visH * 0.565, groundY - 96));
+  AVX = Math.round(W * 0.40);
   needsDraw = true;
 }
 window.addEventListener('resize', resize);
+
+/* where the sun stands on screen this frame, and how much of it the cloud
+   has left. Set by the sky, read by the shore, so the glitter on the water
+   is under the sun rather than under a fraction guessed a second time. */
+let SUN_SX = -1, SUN_A = 0;
 
 /* grain tile — printed stock, generated once */
 let grainPat = null;
@@ -823,8 +1168,12 @@ const S = {
   face: 1,             /* last walking direction */
   jumpT: null,         /* 0..1 while airborne from a jump */
   bounceT: null,       /* 0..1 while a spring carries you */
-  stumbleT: null,      /* 0..1 while paying a hazard's beat */
-  puff: null,          /* {x, t} — the stumble's dust, 3 held frames */
+  stumbleT: null,      /* 0..1 while paying a hazard's beat (legacy clock, unused since wave 3) */
+  puff: null,          /* {x, t} — landing dust, 3 held frames */
+  hzBlock: null,       /* {hz, x, kind, face, since} — held at a hazard's edge */
+  hzLean: 0,           /* eased 0..1: how far she leans over the drop */
+  jumpCarry: 0,        /* the blocked jump carries you forward over the bar */
+  nearFlower: false,   /* standing on a flowered verge (spring stretch) */
   wave: 0,             /* player waving back at a fellow walker */
   bubble: null,        /* the one active speech bubble */
   bubbleGapT: -1,      /* global quiet time between bubbles */
@@ -876,7 +1225,11 @@ const REGBOOK = lsJSON('longway.register.v1', {});
 const DOG = {
   on: lsGet('longway.dog') !== '0',
   x: 40, face: 1, moving: false, pose: 'stand',
-  state: 'follow', stateT: 0, shookOn: '', sleepX: null,
+  state: 'follow', stateT: 0, shookOn: '', sleepX: null, restX: null,
+  barked: false, yipAt: 0, barkAt: 0,
+  found: 0,             /* this investigation earned a yip on the way up */
+  foundX: 0, foundTgt: '',   /* the door that earned it, for the w3r2 hold */
+  pend: null,           /* …and one the floor landed on, still owed */
   sniffCD: new Map()
 };
 let saveTimer = null;
@@ -888,6 +1241,7 @@ function saveAll() {
   }));
   lsSet('longway.guide.v1', JSON.stringify({ found: GUIDE.found }));
   lsSet('longway.register.v1', JSON.stringify(REGBOOK));
+  if (COV.bits) lsSet('longway.cov.v1', JSON.stringify({ n: COV.n, b: covB64() }));
 }
 function queueSave() {
   if (saveTimer) clearTimeout(saveTimer);
@@ -918,7 +1272,7 @@ const SPECIES = [
   { id: 'boardwalk', name: 'CODE BOARDWALK', what: 'Planks laid over a stretch of code — every block that carries code gets one, so your boots never touch the brackets.', count: () => M.furnCounts.boardwalk },
   { id: 'picnic', name: 'TABLE PICNIC', what: 'A picnic table wherever the page sets a table — rows and columns served flat, in the open air.', count: () => M.furnCounts.picnic },
   { id: 'cairn', name: 'NOTE CAIRN', what: 'Stacked stones marking a calm admonition: a note, an aside, a prerequisite. Read it or walk on; it asks nothing.', count: () => M.furnCounts.cairn },
-  { id: 'warnpost', name: 'WARNING POST', what: 'A low barrier with hard chevrons at every caution, warning and danger. Jump it clean or stumble a beat.', count: () => M.hazTotal },
+  { id: 'warnpost', name: 'WARNING POST', what: 'A low barrier with hard chevrons at every caution, warning and danger. It holds you at its edge until you jump it clean.', count: () => M.hazTotal },
   { id: 'spring', name: 'TIP SPRING', what: 'A rose spring pad at every tip — step on and it bounces you a few honest metres down the trail.', count: () => M.sprTotal },
   { id: 'milepost', name: 'ENDPOINT MILE-POST', what: 'A short post with the method carved on the cap, one per documented API endpoint on the trail.', count: () => M.furnCounts.milepost },
   { id: 'frame', name: 'IMAGE FRAME', what: 'An easel holding a framed print wherever the page hangs a picture or a screenshot.', count: () => M.furnCounts.frame },
@@ -954,6 +1308,7 @@ function checkGuide() {
 
 /* what the pack picks up when a stretch is entered */
 function collectPage(p) {
+  if (typeof audCheckComplete === 'function') audCheckComplete();
   if (S.sweep) return;   /* a scenic sweep flies over; only arrival collects */
   if (!PACK.visited[p.slug]) PACK.visited[p.slug] = 1;
   if (p.comm >= 0) PACK.biomes[p.comm] = 1;
@@ -969,18 +1324,22 @@ function collectPage(p) {
     PACK.stamps[p.slug] = 1;
     toast('HUB STAMP — ' + p.label.toUpperCase() + ' — IN THE PACK (B)');
   }
-  if (p.comm >= 0 && !PACK.certs['c' + p.comm]) {
+  if (p.comm >= 0 && !PACK.certs['c' + p.comm] && commComplete(p.comm)) {
     const c = M.communities[p.comm];
-    if (c.members.every(m => PACK.visited[m] || !M.bySlug.has(m))) {
-      PACK.certs['c' + p.comm] = 1;
-      toast('EVERY PAGE OF ' + String(c.dominant || '').toUpperCase() + ' WALKED — CERTIFICATE IN THE PACK (B)');
-    }
+    PACK.certs['c' + p.comm] = 1;
+    toast('EVERY PAGE OF ' + String(c.dominant || '').toUpperCase() + ' WALKED — CERTIFICATE IN THE PACK (B)');
   }
+  /* a finished community is one of the three occasions the recorded theme
+     is kept for — offered once, and owed again if it went by behind a mute */
+  if (p.comm >= 0 && typeof audCheckComm === 'function') audCheckComm(p.comm);
   if (!PACK.certs.trail && M.pages.every(pp => PACK.visited[pp.slug])) {
     PACK.certs.trail = 1;
     toast('THE WHOLE TRAIL WALKED — CERTIFICATE IN THE PACK (B)');
   }
   queueSave();
+  /* a page opened is a share of the corpus read: the score may just have
+     earned a voice */
+  if (window.__scoreReady) scoreUpdate(true);
 }
 function commComplete(ci) {
   const c = M.communities[ci];
@@ -1119,7 +1478,10 @@ function drawFigure(sx, sy, h, phase, ink, accent, moving, opts) {
   const strideMul = o && o.stride !== undefined ? o.stride : 1;
   const leg = moving ? Math.sin(phase) * 0.62 * strideMul : 0.14;
   const arm = moving ? Math.sin(phase + Math.PI) * 0.5 * strideMul : 0.1;
-  const lean = (moving ? 1.6 * h : 0) + (o && o.leanX ? o.leanX * h : 0);
+  /* rain on your neck: the shoulders come up and the walk leans into it */
+  const hunch = (o && o.hunch) ? clamp(o.hunch, 0, 1) : 0;
+  const lean = (moving ? 1.6 * h : 0) + (o && o.leanX ? o.leanX * h : 0) +
+    hunch * 2.0 * h * ((o && o.face) || 1);
   if (accent) {
     cx.save(); cx.translate(2.5, 1.5); cx.globalAlpha = 0.45;
     drawFigure(sx, sy, h, phase, accent, null, moving, opts);
@@ -1131,7 +1493,7 @@ function drawFigure(sx, sy, h, phase, ink, accent, moving, opts) {
     cx.translate(sx, sy); cx.rotate(o.pitch); cx.translate(-sx, -sy);
   }
   const hipY = sy - 26 * h;
-  const shY = sy - 46 * h;
+  const shY = sy - (46 - 3.4 * hunch) * h;
   cx.fillStyle = ink;
   cx.strokeStyle = ink;
   cx.lineCap = 'round';
@@ -1263,13 +1625,15 @@ function draw(dt) {
   /* sun: flat cream disc, rose ring misregistered — riso sun.
      The hour moves it: low rose east at dawn, high at noon, the biome's
      own place at golden hour, then it sinks behind the ridge at dusk. */
-  const sunA = clamp((0.99 - wN) / 0.20, 0, 1);
+  const sunA = clamp((0.99 - wN) / 0.20, 0, 1) * (1 - 0.88 * WX.grey);   /* cloud takes the sun */
+  SUN_SX = -1; SUN_A = 0;
   if (pal.sun && sunA > 0.004) {
     cx.globalAlpha = sunA;
     const wts = hollow ? { m: 0, d: 0, g: 0, n: 1 } : DAY.wts;
     const fx = wts.m * 0.14 + wts.d * 0.50 + (wts.g + wts.n) * pal.sun.fx;
     const fy = wts.m * 0.62 + wts.d * 0.16 + wts.g * pal.sun.fy + wts.n * 1.55;
     const sxx = W * fx, syy = horizonY * fy;
+    SUN_SX = sxx; SUN_A = sunA;      /* the shore lays its glitter under it */
     cx.fillStyle = pal.sun.ring;
     cx.beginPath(); cx.arc(sxx + 5, syy + 3.5, pal.sun.rr, 0, 7); cx.fill();
     cx.fillStyle = INKS.cream;
@@ -1284,7 +1648,7 @@ function draw(dt) {
   }
   /* moon: its phase is this stretch's freshness — full when tended this
      week, thinning as the last commit ages, new past 240 untended days */
-  const mAl = nightRamp(wN);
+  const mAl = nightRamp(wN) * (1 - 0.72 * WX.grey);   /* cloud takes the moon */
   const moonTgt = 1 - clamp((page.ageDays - MOON_FULL_DAYS) / (MOON_NEW_DAYS - MOON_FULL_DAYS), 0, 1);
   if (REDUCED) S.moonK = moonTgt;
   else S.moonK += (moonTgt - S.moonK) * Math.min(1, (dt || 0.016) * 1.6);
@@ -1310,7 +1674,7 @@ function draw(dt) {
   if (wN > 0.3) {
     cx.fillStyle = INKS.cream;
     const sr = rngFor('stars');
-    const dim = clamp((wN - 0.3) / 0.7, 0, 1);
+    const dim = clamp((wN - 0.3) / 0.7, 0, 1) * (1 - 0.78 * WX.grey);   /* and the stars */
     for (let i = 0; i < 130; i++) {
       const stx = sr() * 2400, sty = sr() * horizonY * 0.92, tw = sr();
       const px = ((stx - S.x * 0.04) % 2400 + 2400) % 2400 * (W / 2400);
@@ -1321,8 +1685,41 @@ function draw(dt) {
   }
   /* the constellations overhead are this biome's own citation graph */
   if (wN > 0.35 && page.comm >= 0) {
-    drawConstellation(page.comm, smoothT(clamp((wN - 0.35) / 0.5, 0, 1)));
+    drawConstellation(page.comm, smoothT(clamp((wN - 0.35) / 0.5, 0, 1)) * (1 - 0.55 * WX.grey));
   }
+  /* one star moves and blinks a rhythm of its own among the citations —
+     hover it and it names itself, click it and follow (firstlight) */
+  if (wN > 0.35 && page.idx >= PORTAL_MIN_PAGE) {
+    const sdim = clamp((wN - 0.35) / 0.5, 0, 1) * (1 - 0.70 * WX.grey);
+    if (sdim > 0.08) {
+      const u = REDUCED ? 0.5 : (S.t % 300) / 300;   /* a five-minute transit */
+      const sfx2 = 0.08 + 0.84 * u;
+      const sfy2 = 0.16 + 0.05 * Math.sin(REDUCED ? 1.2 : S.t * 0.11);
+      const ssx = sfx2 * W, ssy = sfy2 * horizonY;
+      /* the blink: dot dot long — no fixed star keeps that time */
+      const bt2 = S.t % 2.6;
+      const sOn = REDUCED ? 1 :
+        ((bt2 < 0.18 || (bt2 > 0.5 && bt2 < 0.68) || (bt2 > 1.05 && bt2 < 1.95)) ? 1 : 0.15);
+      PORTAL.starSX = ssx; PORTAL.starSY = ssy; PORTAL.starOn = sOn * sdim;
+      PORTAL.starHover = Math.hypot(PORTAL.mx - ssx, PORTAL.my - ssy) < 26;
+      cx.fillStyle = INKS.cream;
+      cx.globalAlpha = sdim * (0.35 + 0.65 * sOn);
+      cx.fillRect(ssx - 1.4, ssy - 1.4, 2.8, 2.8);
+      if (sOn > 0.5 && !REDUCED) {
+        cx.globalAlpha = sdim * 0.5;
+        cx.fillRect(ssx - 4.5, ssy - 0.5, 9, 1);
+        cx.fillRect(ssx - 0.5, ssy - 4.5, 1, 9);
+      }
+      if (PORTAL.starHover) {
+        cx.globalAlpha = 0.85 * sdim;
+        cx.strokeStyle = INKS.violet; cx.lineWidth = 1.2;
+        cx.strokeRect(ssx - 5.5, ssy - 5.5, 11, 11);
+        cx.strokeStyle = INKS.cream;
+        cx.strokeRect(ssx - 4.2, ssy - 4.2, 8.4, 8.4);
+      }
+      cx.globalAlpha = 1;
+    } else { PORTAL.starHover = false; PORTAL.starOn = 0; }
+  } else { PORTAL.starHover = false; PORTAL.starOn = 0; }
 
   /* ridges, far to near — faceted polylines in layer space, seamless.
      Your own climb pushes the horizon gently down: parallax follows. */
@@ -1356,10 +1753,20 @@ function draw(dt) {
   const view0 = S.x - AVX - 60, view1 = S.x + (W - AVX) + 60;
   for (let pi = pi0; pi <= pi1; pi++) drawGroundFill(pi, view0, view1);
   for (let pi = pi0; pi < pi1; pi++) drawBorderComb(pi);
+  drawRivers(view0, view1, wN);
+  labelPlanBuild(pi0, pi1);   /* one floating label at approach, measured */
   for (let pi = pi0; pi <= pi1; pi++) drawStretch(pi, pal, dt, wN);
 
+  /* the shower's leavings: a flat sheen on the path and puddles that stay
+     after the front has gone and then dry out */
+  drawWet(pal);
+  drawSnowCover();
+
+  /* past the last stretch: the headland, the cliff, and the lit coast */
+  drawLandsEnd(pal, wN);
+
   /* gust layer: soft cream streaks riding the stretch's own wind */
-  if (!REDUCED && S.wind > 0.06) drawGusts();
+  if (!REDUCED && S.wind > 0.06 && !S.atLE) drawGusts();
 
   /* greetings: one bubble at a time, ambient crossings, never a wall */
   updateGreetings(dt, wN);
@@ -1374,17 +1781,36 @@ function draw(dt) {
   if (S.bounceT !== null) airY = Math.sin(Math.PI * S.bounceT) * 78;
   const slope = (elevAt(S.x + 26) - elevAt(S.x - 26)) / 52;   /* + = uphill east */
   const eff = moving ? slope * Math.sign(S.vx) : 0;           /* uphill for me? */
+  /* held at a hazard: she leans out over the drop, eased in and out */
+  const blockedNow = S.hzBlock !== null && S.jumpT === null && S.bounceT === null;
+  if (REDUCED) S.hzLean = blockedNow ? 1 : 0;
+  else S.hzLean += ((blockedNow ? 1 : 0) - S.hzLean) * Math.min(1, dt * 6);
+  const bl = S.hzLean > 0.01 ? S.hzLean : 0;
+  const bf = S.hzBlock ? S.hzBlock.face : S.face;
+  /* kneeling to press a flower: the herbarium beat bends her down */
+  const kneel = (PORTAL.active && PORTAL.active.key === 'herbarium') ?
+    smoothT(clamp(PORTAL.active.t * 2.2, 0, 1)) : 0;
   const opts = {
     stride: clamp(1 - eff * 1.5, 0.62, 1.3),                  /* honest gait */
-    leanX: clamp(eff * 6, -3, 4.5) * Math.sign(S.vx || S.face),
-    pitch: S.stumbleT !== null ? Math.sin(Math.PI * S.stumbleT) * 0.5 * S.face : 0,
+    leanX: clamp(eff * 6, -3, 4.5) * Math.sign(S.vx || S.face) + bl * 7 * bf,
+    pitch: (S.stumbleT !== null ? Math.sin(Math.PI * S.stumbleT) * 0.5 * S.face : 0) +
+      bl * 0.30 * bf + kneel * 0.58 * S.face,
     armUp: S.wave > 0 ? (S.wave > 0.45 ? 2 : 1) : 0,
     dress: WALKER,
     face: S.face
   };
+  const hK = 1 - 0.16 * kneel;
   const ay = gYAt(S.x) - airY;
-  drawFigure(AVX - 2.6, ay - 1.8, 1, S.x / 26, 'rgba(255,243,224,0.9)', null, moving && !REDUCED, opts);
-  drawFigure(AVX, ay, 1, S.x / 26, pal.ink, pal.accent, moving && !REDUCED, opts);
+  opts.hunch = WX.rain * (moving ? 1 : 0.7);
+  if (SLP.startle > 0) opts.armUp = SLP.startle > 0.55 ? 2 : 1;   /* the stretch */
+  if ((SLP.stage > 0 || PERF.on || PERF.putaway > 0) && !moving) {
+    /* settled, nodded off, asleep — or sitting with the instrument out */
+    if (PERF.on || PERF.putaway > 0) drawPerformer(ay, pal, opts);
+    else drawSleeper(ay, pal, opts);
+  } else {
+    drawFigure(AVX - 2.6, ay - 1.8, hK, S.x / 26, 'rgba(255,243,224,0.9)', null, moving && !REDUCED, opts);
+    drawFigure(AVX, ay, hK, S.x / 26, pal.ink, pal.accent, moving && !REDUCED, opts);
+  }
 
   /* the stumble's puff — three held frames of flat dust */
   if (S.puff && S.puff.t < 1) {
@@ -1416,11 +1842,37 @@ function draw(dt) {
     }
   }
 
+  /* The month being remembered: the paper darkens a stop under cloud and
+     another under a shower, and the rain falls in hard riso streaks. None
+     of it can reach the reading strip or a prompt — those are DOM, and
+     this is the canvas the ground is printed on. */
+  drawWxPlate(0.055 * WX.k + 0.13 * WX.rain + 0.10 * WX.storm);
+  if (!S.atLE) {
+    drawRain(WX.rain);
+    if (WX.snow > 0.012) drawSnow(WX.snow);
+    if (WX.rbA > 0.01) drawRainbow(WX.rbA);
+    if (WX.fog > 0.01) drawFogBank(WX.fog);
+    drawBolt();
+  }
+
   /* grain overlay — the whole scene is printed on stock */
   if (grainPat) {
     cx.globalAlpha = 0.5;
     cx.fillStyle = grainPat;
     cx.fillRect(0, 0, W, visH + 6);
+    cx.globalAlpha = 1;
+  }
+
+  /* a crossing, taken: the ink washes up over the land, one line names
+     the way, and then you are elsewhere. Never under reduced motion —
+     that walker crosses instantly. */
+  if (PORTAL.active) {
+    const pk = smoothT(clamp(PORTAL.active.t, 0, 1));
+    cx.globalAlpha = 0.94 * pk;
+    cx.fillStyle = INKS.aubergine;
+    cx.fillRect(0, 0, W, visH + 6);
+    cx.globalAlpha = Math.min(1, pk * 1.7);
+    label(PORTAL_LINES[PORTAL.active.key] || '', W / 2, visH * 0.46, 12, INKS.cream, 'center', 2);
     cx.globalAlpha = 1;
   }
 }
@@ -1462,6 +1914,101 @@ function drawBorderComb(pi) {
   }
 }
 
+/* THE RELIEF, AT LAST — rivers and their footbridges (wave 3). Flat riso
+   water bands where the strong cross-community citation streams pass; a
+   plank footbridge carries the trail over each one and names the stream:
+   the slug pair, in the waymarker hand. Purely additive — the walking,
+   the jumping and the music are untouched, and the walker crosses at the
+   ground line she always kept, which is the deck of the bridge. */
+function shortSlug(sl) {
+  const seg = String(sl).split('/').filter(Boolean);
+  return seg.length > 2 ? seg.slice(-2).join('/') : String(sl);
+}
+function drawRivers(view0, view1, wN) {
+  if (!M.rivers) return;
+  for (const r of M.rivers) {
+    const x0 = r.x - r.half, x1 = r.x + r.half;
+    if (x1 < view0 || x0 > view1) continue;
+    const p2 = pageAt(clamp(r.x, 0, M.totalPx - 1));
+    const pal2 = gradedPaletteFor(p2.comm, p2.prov.night > 0);
+    const sx0 = w2s(x0), sx1 = w2s(x1);
+    const yA = gYAt(x0) - 6, yB = gYAt(x1) - 6;
+    const yw = Math.max(yA, yB) + 3;                /* water lies level */
+    /* the water: one flat ink, graded by the hour like everything else */
+    cx.fillStyle = gradeColor(mix(INKS.violet, INK_DARK, 0.55), DAY.wts);
+    cx.fillRect(sx0, yw, sx1 - sx0, H + 4 - yw);
+    cx.globalAlpha = 0.55;
+    cx.fillStyle = INKS.cream;   /* the surface stripe */
+    cx.fillRect(sx0 + 2, yw, sx1 - sx0 - 4, 2);
+    cx.globalAlpha = 1;
+    cx.fillStyle = INK_DARK;                        /* hard bank strikes */
+    cx.fillRect(sx0 - 2, Math.min(yA, yw), 3, H + 4 - Math.min(yA, yw));
+    cx.fillRect(sx1 - 1, Math.min(yB, yw), 3, H + 4 - Math.min(yB, yw));
+    /* drift: sparse hard cream dashes sliding east — riso, not ripple;
+       lanes ride the stream's real size, held still under reduced motion */
+    const rr = rngFor('river:' + r.x);
+    const lanes = 2 + Math.min(3, Math.round(r.n / 10));
+    const t = REDUCED ? 0 : S.t;
+    for (let i = 0; i < lanes; i++) {
+      const ly = yw + 7 + i * 9 + rr() * 4;
+      if (ly > H) break;
+      const sp = 12 + rr() * 9, per = 74 + rr() * 40, ph = rr() * per;
+      const off = ((t * sp + ph) % per + per) % per;
+      cx.globalAlpha = 0.14 + 0.08 * ((i + 1) % 2);
+      cx.fillStyle = INKS.cream;
+      for (let dx = off - per; dx < r.half * 2; dx += per) {
+        const wd = 15 + (i % 3) * 7;
+        const a2 = Math.max(sx0 + 2, sx0 + dx), b2 = Math.min(sx1 - 2, sx0 + dx + wd);
+        if (b2 > a2) cx.fillRect(a2, ly, b2 - a2, 2);
+      }
+      cx.globalAlpha = 1;
+    }
+    const nr = nightRamp(wN);
+    if (nr > 0.02) {   /* the moon keeps one still glint on the water */
+      cx.globalAlpha = 0.25 * nr;
+      cx.fillStyle = INKS.cream;
+      cx.fillRect((sx0 + sx1) / 2 - 9, yw + 5, 18, 2);
+      cx.globalAlpha = 1;
+    }
+    drawFootbridge(r, sx0, sx1, yA, yB, yw, pal2);
+  }
+}
+function drawFootbridge(r, sx0, sx1, yA, yB, yw, pal) {
+  const dx0 = sx0 - 12, dx1 = sx1 + 12;
+  const dy0 = yA - 2, dy1 = yB - 2;
+  cx.strokeStyle = INK_DARK; cx.lineWidth = 4;      /* piles in the water */
+  for (const f of [0.3, 0.7]) {
+    const px = lerp(dx0, dx1, f), py = lerp(dy0, dy1, f);
+    cx.beginPath(); cx.moveTo(px, py); cx.lineTo(px, yw + 14); cx.stroke();
+  }
+  /* a low rail BEHIND her (painted before the walker, like all furniture) */
+  cx.lineWidth = 2.5; cx.strokeStyle = pal.ink;
+  for (const f of [0.08, 0.5, 0.92]) {
+    const px = lerp(dx0, dx1, f), py = lerp(dy0, dy1, f);
+    cx.beginPath(); cx.moveTo(px, py - 3); cx.lineTo(px, py - 17); cx.stroke();
+  }
+  cx.beginPath(); cx.moveTo(dx0, dy0 - 16); cx.lineTo(dx1, dy1 - 16); cx.stroke();
+  /* the deck: one plank run, accent registration edge, carved seams */
+  cx.lineWidth = 7; cx.strokeStyle = pal.ink;
+  cx.beginPath(); cx.moveTo(dx0, dy0); cx.lineTo(dx1, dy1); cx.stroke();
+  cx.lineWidth = 2; cx.strokeStyle = pal.accent;
+  cx.beginPath(); cx.moveTo(dx0, dy0 - 3.5); cx.lineTo(dx1, dy1 - 3.5); cx.stroke();
+  cx.lineWidth = 1; cx.strokeStyle = INK_DARK;
+  const nSeam = Math.max(4, Math.round((dx1 - dx0) / 13));
+  for (let i = 1; i < nSeam; i++) {
+    const f = i / nSeam;
+    const px = lerp(dx0, dx1, f), py = lerp(dy0, dy1, f);
+    cx.beginPath(); cx.moveTo(px, py - 3); cx.lineTo(px, py + 3); cx.stroke();
+  }
+  /* the plaque: the stream's slug pair, in the waymarker hand — small,
+     carved, and never a floating signboard, so the label law is untouched */
+  if (Math.abs(r.x - S.x) < 900) {
+    const mx2 = (sx0 + sx1) / 2, my = Math.min(yA, yB) - 30;
+    label(shortSlug(r.src) + ' \u21E2 ' + shortSlug(r.tgt), mx2, my, 7.5, INKS.cream, 'center', 1.2);
+    label(r.n + ' CITATIONS CROSS THIS WATER', mx2, my + 11, 6.2, 'rgba(255,243,224,0.72)', 'center', 0.8);
+  }
+}
+
 function drawLandmarks(L, pal, rShift, wN) {
   const range = (AVX / L.f) + 400;
   for (const c of M.communities) {
@@ -1472,8 +2019,10 @@ function drawLandmarks(L, pal, rShift, wN) {
     const sx = (wx - S.x) * L.f + AVX;
     if (sx < -160 || sx > W + 160) continue;
     const baseY = ridgeY(0, wx * L.f) + 3 + (rShift || 0);
-    const hgt = Math.min(112, 30 + c.size * 1.35);    /* landmark height = community size */
-    const v = c.idx % 5;
+    /* landmark height = the hub's own inbound citations (log, exactly
+       the ground's elevation law), so the horizon and the relief agree */
+    const hgt = Math.min(112, 30 + 82 * Math.log(1 + (hp.inCount || 0)) / Math.log(1 + M.maxIn));
+    const v = M.lmVar && M.lmVar.has(c.idx) ? M.lmVar.get(c.idx) : c.idx % 8;
     const ink = mix(pal.ridgeFar, INK_DARK, 0.32);
     if (v === 0) { /* watchtower */
       drawPoly([[sx - 7, baseY], [sx - 5, baseY - hgt], [sx + 5, baseY - hgt], [sx + 7, baseY]], ink);
@@ -1487,11 +2036,30 @@ function drawLandmarks(L, pal, rShift, wN) {
     } else if (v === 3) { /* twin chimneys */
       drawPoly([[sx - 10, baseY], [sx - 10, baseY - hgt * 0.85], [sx - 3, baseY - hgt * 0.85], [sx - 3, baseY]], ink);
       drawPoly([[sx + 3, baseY], [sx + 3, baseY - hgt], [sx + 10, baseY - hgt], [sx + 10, baseY]], ink);
-    } else { /* water tower */
+    } else if (v === 4) { /* water tower */
       cx.strokeStyle = ink; cx.lineWidth = 2;
       cx.beginPath(); cx.moveTo(sx - 8, baseY); cx.lineTo(sx - 4, baseY - hgt * 0.7); cx.stroke();
       cx.beginPath(); cx.moveTo(sx + 8, baseY); cx.lineTo(sx + 4, baseY - hgt * 0.7); cx.stroke();
       drawPoly([[sx - 11, baseY - hgt * 0.7], [sx + 11, baseY - hgt * 0.7], [sx + 8, baseY - hgt], [sx - 8, baseY - hgt]], ink);
+    } else if (v === 5) { /* great tree */
+      cx.strokeStyle = ink; cx.lineWidth = 3;
+      cx.beginPath(); cx.moveTo(sx, baseY); cx.lineTo(sx, baseY - hgt * 0.55); cx.stroke();
+      drawPoly([[sx - 16, baseY - hgt * 0.42], [sx + 16, baseY - hgt * 0.42], [sx, baseY - hgt * 0.78]], ink);
+      drawPoly([[sx - 11, baseY - hgt * 0.66], [sx + 11, baseY - hgt * 0.66], [sx, baseY - hgt - 4]], ink);
+    } else if (v === 6) { /* mast */
+      cx.strokeStyle = ink; cx.lineWidth = 2;
+      cx.beginPath(); cx.moveTo(sx, baseY); cx.lineTo(sx, baseY - hgt - 8); cx.stroke();
+      cx.beginPath(); cx.moveTo(sx - 12, baseY - hgt * 0.72); cx.lineTo(sx + 12, baseY - hgt * 0.72); cx.stroke();
+      cx.beginPath(); cx.moveTo(sx - 8, baseY - hgt * 0.9); cx.lineTo(sx + 8, baseY - hgt * 0.9); cx.stroke();
+      cx.beginPath(); cx.moveTo(sx - 14, baseY); cx.lineTo(sx, baseY - hgt - 8); cx.lineTo(sx + 14, baseY); cx.stroke();
+    } else { /* mill */
+      drawPoly([[sx - 9, baseY], [sx - 5, baseY - hgt * 0.8], [sx + 5, baseY - hgt * 0.8], [sx + 9, baseY]], ink);
+      cx.strokeStyle = ink; cx.lineWidth = 2.5;
+      const hx = sx, hy = baseY - hgt * 0.8;
+      for (const a2 of [0.6, 2.17, 3.74, 5.31]) {
+        cx.beginPath(); cx.moveTo(hx, hy);
+        cx.lineTo(hx + Math.cos(a2) * hgt * 0.32, hy + Math.sin(a2) * hgt * 0.32); cx.stroke();
+      }
     }
     const lwA = nightRamp(wN);
     if (lwA > 0.01) { /* one lit window keeps watch on the far structure */
@@ -1666,7 +2234,12 @@ function drawStretch(pi, basePal, dt, wNsky) {
   drawRegister(p, pal, wN);
 
   /* the hub's overlook: bench and orientation table at the high point */
-  if (p.overlook) drawLookTable(p, pal);
+  if (p.overlook) { drawFingerpost(p, pal); drawLookTable(p, pal); }
+
+  /* the ways off the trail, living where the geography puts them */
+  if (p.overlook && pi >= PORTAL_MIN_PAGE) drawPixelCity(p, pal, wN);
+  if (pi === M.kioskPage) drawKiosk(pal);
+  if (p.slug === M.qsSlug) drawStartSign(p.start + 64, pal);
 
   if (T.nightAhead) drawWarnSign(T.nightAhead.x, 'NIGHT GROUND AHEAD', pal);
 
@@ -1888,7 +2461,7 @@ function drawStone(st, pal) {
   } else {
     drawPoly([[sx - 13, gy], [sx - 10, gy - 22], [sx, gy - 27], [sx + 10, gy - 21], [sx + 13, gy]], ink, pal.accent);
   }
-  if (near) {
+  if (near && !LBL.stoneHold.has(st)) {
     const top = st.kind === 'mile' ? 40 : 62;
     label(st.l1, sx, gy - top, st.kind === 'mile' ? 8.5 : 9.5, 'rgba(255,243,224,0.9)', 'center', 1.4);
     label(st.l2, sx, gy - top + 11, 7.5, 'rgba(255,162,107,0.85)', 'center', 0.8);
@@ -1922,6 +2495,11 @@ function drawLookTable(p, pal) {
   const sx = w2s(o.x);
   if (sx < -120 || sx > W + 120) return;
   const gy = gYAt(o.x), ink = pal.ink;
+  /* wave 3, findability: a tall carved pole and an accent pennant give the
+     table enough silhouette to be spotted at walking speed */
+  cx.strokeStyle = ink; cx.lineWidth = 2.6;
+  cx.beginPath(); cx.moveTo(sx - 44, gy); cx.lineTo(sx - 44, gy - 92); cx.stroke();
+  drawPoly([[sx - 44, gy - 92], [sx - 16, gy - 85], [sx - 44, gy - 78]], pal.accent);
   cx.fillStyle = ink;
   cx.fillRect(sx - 58, gy - 20, 40, 4.5);
   cx.fillRect(sx - 54, gy - 15, 5, 15);
@@ -1935,26 +2513,120 @@ function drawLookTable(p, pal) {
   cx.lineWidth = 1;
   cx.beginPath(); cx.moveTo(sx + 8, gy - 28.5); cx.lineTo(sx + 22, gy - 33); cx.stroke();
   cx.beginPath(); cx.moveTo(sx + 12, gy - 28); cx.lineTo(sx + 28, gy - 32); cx.stroke();
-  if (Math.abs(sx - AVX) < 240) {
+  const rk = LBL.rank.has(o) ? LBL.rank.get(o) : 2;
+  if (rk === 0) {
     label('OVERLOOK', sx, gy - 54, 8, 'rgba(255,243,224,0.85)', 'center', 1.2);
     label(o.landmarks.length ? o.landmarks.length + ' LANDMARKS IN VIEW' : 'ALL SKY — THIS HUB CITES NO PAGES',
       sx, gy - 44, 7, 'rgba(255,162,107,0.8)', 'center', 0.7);
+  } else if (rk === 1) {
+    label('OVERLOOK', sx, gy - 54, 7, 'rgba(255,243,224,0.38)', 'center', 0.6);
+  }
+}
+
+/* THE OVERLOOKS MUST BE FINDABLE (wave 3): a carved fingerpost OVERLOOK
+   AHEAD stands a couple of screens before each orientation table, in the
+   waymarker idiom — a post, a pointing board notched east, carved text. */
+function drawFingerpost(p, pal) {
+  const o = p.overlook;
+  if (o.postX == null) return;
+  const sx = w2s(o.postX);
+  if (sx < -140 || sx > W + 140) return;
+  const gy = gYAt(o.postX), ink = pal.ink;
+  cx.strokeStyle = ink; cx.lineWidth = 3.4;
+  cx.beginPath(); cx.moveTo(sx, gy); cx.lineTo(sx, gy - 56); cx.stroke();
+  drawPoly([[sx - 36, gy - 56], [sx + 30, gy - 56], [sx + 40, gy - 49], [sx + 30, gy - 42], [sx - 36, gy - 42]], ink, pal.accent);
+  cx.fillStyle = INKS.cream;
+  cx.globalAlpha = 0.9;
+  cx.fillRect(sx - 32, gy - 53.5, 58, 9);
+  cx.globalAlpha = 1;
+  label('OVERLOOK AHEAD', sx - 3, gy - 52, 6.2, INK_DARK, 'center', 0.8);
+  if (Math.abs(sx - AVX) < 230) {
+    /* under the board, clear of the row the gate labels live on */
+    label(fmt(Math.max(1, Math.round(wordsAt(o.x) - wordsAt(o.postX)))) + 'M EAST — THE TABLE AND ITS BENCH',
+      sx, gy - 31, 6.5, 'rgba(255,162,107,0.8)', 'center', 0.6);
   }
 }
 
 /* ---------------- the trail dog ---------------- */
+/* THE WEST WALL. The trail starts at x = 0 and the dog is held inside it,
+   so a resting place west of the walker is simply unreachable while she
+   stands in the first fifty pixels of the world. Round 10 chose that
+   unreachable spot anyway and left the dog running on the spot at the
+   trailhead — the DEFAULT first-visit position — beside a walker fast
+   asleep: no curl, no sigh, no small snore, and a bark going off next to a
+   sleeping woman because the pose it checks was never reached. A resting
+   place is now chosen on the side she can actually get to: her own side
+   when there is room for it, the walker's other side when the wall is in
+   the way, and never outside the world. */
+const DOG_WEST = 10;
+/* THE OWNER'S CONDITION, IN ONE PLACE (round 12). She has stopped, and you
+   have stopped with her: no walking, no click-to-walk under way, no overlay
+   over the trail, and the stop has held for a beat rather than being the
+   half-second between two strides. Every voice of hers that is not the
+   pant reads this before it sounds. */
+function stoppedTogether() {
+  return S.idleT > 1.2;
+}
+function dogRest(ax, off) {
+  let t = ax - off;
+  if (t < DOG_WEST + 2) t = ax + off;      /* the wall is west: take the east */
+  return clamp(t, DOG_WEST, M.worldEnd);
+}
 function updateDog(dt) {
   const p = S.page;
   if (REDUCED) {
     /* the calm variant: she simply keeps pace at your side */
-    DOG.x = clamp(S.x - 54, 10, M.totalPx - 10);
+    DOG.x = clamp(S.x - 54, DOG_WEST, M.worldEnd);
     DOG.pose = 'stand'; DOG.face = 1;
     return;
   }
   DOG.stateT += dt;
-  if (S.sweep) { DOG.x = S.x - 60; DOG.pose = 'run'; DOG.moving = true; DOG.face = S.face; return; }
-  if (p.inCount === 0 && DOG.shookOn !== p.slug && DOG.state !== 'shake' && Math.abs(DOG.x - S.x) < 420) {
-    DOG.state = 'shake'; DOG.stateT = 0; DOG.shookOn = p.slug;
+  if (S.sweep) { DOG.x = S.x - 60; DOG.pose = 'run'; DOG.moving = true; DOG.face = S.face; DOG.pend = null; return; }
+  /* A SNUFFLE BAD TIMING LANDED ON IS NOT A SNUFFLE SPENT. Two timings can
+     say no at the instant her nose reaches a genuine door: the floor (a
+     shower made her shake three seconds earlier), and — round 13 — the
+     walker's own idle clock, because she outruns you, and at a door you
+     stopped at together her nose arrives half a second before your 1.2 s
+     of stillness has cleared. Round 12 held the first and silently SPENT
+     the second onto the 45 s door cooldown, which is why the verifier
+     stood at a well-cited door and heard nothing. Both are now held the
+     same way: she keeps her nose down and says it the moment you are both
+     properly standing there and the floor is clear. The hold survives only
+     while the stop is real — you within 460 px of the door, her still at
+     it — and twelve seconds, then she has forgotten about it, as dogs do.
+     While you WALK past a door the hold dies with your third stride
+     (460 px is under 1.4 s at full stride), so an ordinary walking minute
+     still measures zero. */
+  if (DOG.pend) {
+    const q = DOG.pend;
+    if (S.t > q.until || Math.abs(S.x - q.x) > 460 || Math.abs(DOG.x - q.x) > 150) DOG.pend = null;
+    else if (stoppedTogether() && S.t >= (AUD.dogFloorAt || 0) && S.t > (AUD.sniffAt || 0)) {
+      const tq = M.bySlug.get(q.tgt);
+      const kind = (tq && tq.inCount >= M.yipMin) ? 'dogyip' : 'dogsniff';
+      if (dogVoice(kind, DOG.x)) {
+        AUD.sniffAt = S.t + 90 + Math.random() * 60;
+        if (DOG.state !== 'shake') { DOG.state = 'sniff'; DOG.stateT = 0; DOG.found = 0; }
+      }
+      DOG.pend = null;
+    }
+  }
+  /* wet fur: the mist of an uncited stretch, or the shower a weather front
+     brings at a biome border. One shake for each, once per stretch. */
+  const wetKey = p.inCount === 0 ? 'mist:' + p.slug
+    : (WX.rain > 0.55 ? 'rain:' + WX.showers : '');   /* a real shower, once */
+  /* …and seldom, across stretches. Round 10 held her to one shake per wet
+     stretch and one per half-minute, and the verifier still counted five in
+     five minutes — the most frequent of her six voices, and the one that
+     read closest to a tic. A shake is now a minute and a half apart at the
+     very least, and up to two and a quarter: two in a long mixed walk, not
+     five. The stretch still has to be genuinely wet; she just waits. */
+  if (wetKey && DOG.shookOn !== wetKey && DOG.state !== 'shake' &&
+      stoppedTogether() && !DOG.moving &&
+      S.t > (DOG.shakeAt || 0) && Math.abs(DOG.x - S.x) < 420) {
+    DOG.state = 'shake'; DOG.stateT = 0; DOG.shookOn = wetKey;
+    DOG.found = 0;                  /* a shake interrupts a sniff: no stale yip */
+    DOG.shakeAt = S.t + 90 + Math.random() * 45;
+    if (!S.atLE) dogVoice('dogshake', DOG.x);   /* the shore keeps its silence */
   }
   if (DOG.state === 'shake') {
     DOG.pose = 'shake'; DOG.moving = false;
@@ -1963,7 +2635,26 @@ function updateDog(dt) {
   }
   if (DOG.state === 'sniff') {
     DOG.pose = 'sniff'; DOG.moving = false;
-    if (DOG.stateT > 1.8) { DOG.state = 'follow'; DOG.stateT = 0; }
+    if (DOG.stateT > 1.8) {
+      DOG.state = 'follow'; DOG.stateT = 0;
+      /* one of the few doors in the top fiftieth: her nose comes up and she
+         says so. Booked at the start of the sniff, so an investigation is
+         ever only one sound — a snuffle OR a yip, never both.
+         W3 ROUND 2 — THE STOP IS RE-READ AT THE INSTANT SHE SPEAKS. The
+         booking proved you were standing when her nose went down; her nose
+         comes up 1.8 s later, and if you have walked on in between, the
+         yip must not land mid-stride. It is HELD instead (the round-13
+         pend, symmetric at last): given the moment you genuinely stand at
+         that door again, forgotten in twelve seconds or three strides. */
+      if (DOG.found) {
+        DOG.found = 0;
+        if (stoppedTogether()) {
+          if (dogVoice('dogyip', DOG.x)) AUD.sniffAt = S.t + 90 + Math.random() * 60;
+        } else if (DOG.foundTgt) {
+          DOG.pend = { x: DOG.foundX ?? DOG.x, tgt: DOG.foundTgt, until: S.t + 12 };
+        }
+      }
+    }
     return;
   }
   const idle = Math.abs(S.vx) < 1 && !S.overlay && S.target == null;
@@ -1980,10 +2671,42 @@ function updateDog(dt) {
   }
   let tx;
   if (sniffPull) {
+    DOG.restX = null;
     tx = sniffPull.x - 14;
     if (Math.abs(DOG.x - tx) < 7) {
       DOG.state = 'sniff'; DOG.stateT = 0;
+      DOG.found = 0;
+      /* SHE SPEAKS WHEN YOU HAVE BOTH STOPPED (round 12, the owner's rule:
+         "en marchant normalement il n'y a pas de raison qu'il fasse du
+         bruit"). Her nose still works while you walk — she runs ahead and
+         reads the door, exactly as before — but the SOUND belongs to the
+         moment you stopped there with her, and even then only once every
+         ninety seconds to two and a half minutes, drawn fresh each time.
+         The corpus holds 522 doors past sniffMin; at a walking stride she
+         met one every few seconds, which is how the snuffle became a tic. */
+      const worth = !S.atLE && S.t > (AUD.sniffAt || 0);
+      /* A gesture bad timing lands on is not a gesture spent: if what is
+         in the way is only the floor (a few seconds) or the fact that you
+         have not FINISHED stopping — her nose beats your idle clock to the
+         door by half a second whenever you stop at one together — the
+         snuffle is HELD (DOG.pend, above) and given the moment you are
+         both properly standing there. If her own cadence is what says no,
+         she has nothing to add about this door for a while, and nothing
+         is held. */
+      const ready = stoppedTogether() && S.t >= (AUD.dogFloorAt || 0);
+      if (worth && ready) {
+        const tp2 = M.bySlug.get(sniffPull.tgt);
+        if (tp2 && tp2.inCount >= M.yipMin) {
+          DOG.found = 1;                                      /* voiced on the way up */
+          DOG.foundX = sniffPull.x; DOG.foundTgt = sniffPull.tgt;   /* w3r2: the hold needs the door */
+        }
+        else if (dogVoice('dogsniff', DOG.x)) AUD.sniffAt = S.t + 90 + Math.random() * 60;
+      } else if (worth) {
+        DOG.pend = { x: sniffPull.x, tgt: sniffPull.tgt, until: S.t + 12 };
+      }
       DOG.sniffCD.set(sniffPull.x, S.t + 45);
+      /* the bark no longer belongs to the door: it is rare, it is hers,
+         and it is on its own clock (see audioTick) */
     }
   } else if (idle && S.idleT > 17) {
     if (DOG.sleepX == null) {
@@ -1992,12 +2715,15 @@ function updateDog(dt) {
       for (const b of T.benches) {
         if (!b.broken && Math.abs(b.x - S.x) < 420 && (!bb || Math.abs(b.x - S.x) < Math.abs(bb.x - S.x))) bb = b;
       }
-      DOG.sleepX = bb ? bb.x + 34 : S.x - 44;
+      DOG.sleepX = bb ? clamp(bb.x + 34, DOG_WEST, M.worldEnd) : dogRest(S.x, 44);
     }
-    tx = DOG.sleepX;
+    /* once the walker has nodded off, the dog curls up against her,
+       wherever she happens to be sitting — no bench is worth the distance */
+    tx = SLP.stage >= 2 ? dogRest(S.x + (SLP.seatDX || 0), 40) : DOG.sleepX;
+    DOG.restX = tx;               /* where she is actually going to lie down */
   } else {
-    DOG.sleepX = null;
-    tx = idle ? S.x - 44 : S.x + (S.face || 1) * 150;
+    DOG.sleepX = null; DOG.restX = null;
+    tx = idle ? dogRest(S.x, 44) : S.x + (S.face || 1) * 150;
   }
   const dx = tx - DOG.x;
   const cap = Math.abs(S.vx) > 1 ? Math.abs(S.vx) * 1.6 : 430;
@@ -2006,9 +2732,39 @@ function updateDog(dt) {
     DOG.x += Math.sign(dx) * sp * dt;
     DOG.face = Math.sign(dx) || DOG.face;
     DOG.moving = sp > 26;
-  } else DOG.moving = false;
-  DOG.x = clamp(DOG.x, 10, M.totalPx - 10);
-  if (DOG.sleepX != null && Math.abs(DOG.x - DOG.sleepX) < 8) DOG.pose = 'sleep';
+    if (DOG.moving) {
+      DOG.ran = (DOG.ran || 0) + sp * dt;
+      /* the widest daylight there ever was between you on this run */
+      DOG.gapMax = Math.max(DOG.gapMax || 0, Math.abs(dx));
+    }
+  } else {
+    DOG.moving = false;
+    const ran0 = DOG.ran || 0, gap0 = DOG.gapMax || 0;
+    /* the truly long run — a gate or a fast travel opened nine hundred
+       pixels — still earns the rare pant once you have stopped together */
+    if (ran0 > 900 && gap0 > 900) { DOG.caught = 1; DOG.caughtAt = S.t; }
+    /* THE CATCH-UP BARK — her signature (the owner refined his silence
+       order: she must not be quasi-mute). She fell behind — a door she
+       investigated, a gate that carried you — sprinted the gap down, and
+       arrives at your side with ONE happy bark. Earned every time, welcome
+       every time. Ordinary heel-keeping never opens this much daylight:
+       her lead is 150 px and a turn-around swings about 300-360; a door
+       she stayed at while you strode on opens 450 and more, which is
+       exactly the run that earns the voice. (A gate is different: the
+       travel carries you BOTH, so a gate arrival keeps its shipped rare
+       pant, not a bark — she never sprinted.) Never at the shore, never
+       arriving at a rest spot, never under reduced motion. */
+    if (ran0 > 400 && gap0 > 440 && !S.atLE && DOG.on && !REDUCED &&
+        DOG.restX == null && Math.abs(DOG.x - S.x) < 260 && S.t > (AUD.cuBarkAt || 0)) {
+      AUD.cuBarkAt = S.t + 6 + Math.random() * 4;
+      DOG.cuBarks = (DOG.cuBarks || 0) + 1;
+      dogVoiceNow('dogbark', DOG.x);
+    }
+    DOG.ran = 0; DOG.gapMax = 0;
+  }
+  DOG.x = clamp(DOG.x, DOG_WEST, M.worldEnd);
+  /* against where she was actually sent, not against a spot behind a wall */
+  if (DOG.restX != null && Math.abs(DOG.x - DOG.restX) < 8) DOG.pose = 'sleep';
   else if (idle && S.idleT > 1.1 && Math.abs(dx) <= 8) DOG.pose = 'sit';
   else DOG.pose = DOG.moving ? 'run' : 'stand';
 }
@@ -2196,6 +2952,85 @@ function drawBench(b, pal) {
   cx.restore();
 }
 
+/* FURNITURE BREATHES, LABELS NEVER COLLIDE — law (2), the label half
+   (wave 3). Signboards obey the one-floating-label rule ALREADY at
+   approach distance: only the NEAREST interactable paints its full board,
+   the next-nearest shows at most a dimmed short title, all others hold
+   their paint until you are closer. Two label boxes may never intersect —
+   measured here, every frame, before either is allowed to paint. And
+   ENTER acts on the same nearest piece the full label names: updateHUD
+   sorts the acts by the very distance this plan sorts by. */
+const LBL = { rank: new Map(), boxes: [], first: null, approach: 300, stoneHold: new Set() };
+const HUB_HINTED = {};
+function lblBox(x, topY, text, size) {
+  const w = Math.max(30, String(text).length * size * 0.62);
+  const sx = w2s(x);
+  return { x0: sx - w / 2, x1: sx + w / 2, y0: topY - 2, y1: topY + size + 4 };
+}
+function labelPlanBuild(pi0, pi1) {
+  LBL.rank.clear(); LBL.boxes.length = 0; LBL.first = null;
+  const cands = [];
+  for (let pi = pi0; pi <= pi1; pi++) {
+    const p = M.pages[pi];
+    for (const g of p.gates) {
+      const tp = M.bySlug.get(g.tgt);
+      cands.push({ id: g, x: g.x, kind: 'gate',
+        text: (tp ? tp.label : g.tgt).toUpperCase().slice(0, 26), size: 8.5,
+        top: gYAt(g.x) - 96 + (Math.round(g.x / 92) % 2) * 22, h2: 11 });
+    }
+    for (const tr of p.terraces) {
+      cands.push({ id: tr, x: tr.x, kind: 'terrace',
+        text: 'CARD TERRACE · ' + tr.items.length + ' CHOICES', size: 8.5,
+        top: gYAt(tr.x) - 84, h2: 0 });
+    }
+    if (p.overlook) {
+      cands.push({ id: p.overlook, x: p.overlook.x, kind: 'look',
+        text: 'OVERLOOK', size: 8, top: gYAt(p.overlook.x) - 54, h2: 10 });
+    }
+  }
+  cands.sort((a, b) => Math.abs(a.x - S.x) - Math.abs(b.x - S.x));
+  let first = null;
+  for (const c of cands) {
+    if (Math.abs(c.x - S.x) > LBL.approach) break;   /* sorted: rest farther */
+    if (!first) {
+      first = c;
+      c.box = lblBox(c.x, c.top, c.text, c.size);
+      c.box.y1 += c.h2;                  /* a second line deepens the box */
+      LBL.rank.set(c.id, 0);
+      LBL.boxes.push(c.box);
+      LBL.first = { kind: c.kind, x: c.x };
+      continue;
+    }
+    /* the second voice: a dimmed short title, and only if its box keeps
+       clear of the first — measured, never hoped */
+    const bx = lblBox(c.x, c.top, String(c.text).slice(0, 16), 7);
+    const a = first.box;
+    const clear = bx.x1 < a.x0 || bx.x0 > a.x1 || bx.y1 < a.y0 || bx.y0 > a.y1;
+    if (clear) { LBL.rank.set(c.id, 1); LBL.boxes.push(bx); }
+    break;                                /* all others hold their paint */
+  }
+  /* third rank (wave 4, round 2 — the river-bank nit): a waymarker's
+     carved lines are scenery, but a carve may never overprint a measured
+     signboard. Any stone whose text box would cross a held label keeps
+     its paint until the walk clears the box. */
+  LBL.stoneHold.clear();
+  if (LBL.boxes.length) {
+    for (let pi = pi0; pi <= pi1; pi++) {
+      for (const st of M.pages[pi].stones) {
+        const top = st.kind === 'mile' ? 40 : 62;
+        const sb = lblBox(st.x, gYAt(st.x) - top, st.l1, st.kind === 'mile' ? 8.5 : 9.5);
+        sb.y1 += 11;                       /* the second carved line */
+        for (const b of LBL.boxes) {
+          if (!(sb.x1 < b.x0 || sb.x0 > b.x1 || sb.y1 < b.y0 || sb.y0 > b.y1)) {
+            LBL.stoneHold.add(st);
+            break;
+          }
+        }
+      }
+    }
+  }
+}
+
 function drawGate(sx, g, pal, wN) {
   const tp = M.bySlug.get(g.tgt);
   const gy = gYAt(g.x);
@@ -2221,13 +3056,18 @@ function drawGate(sx, g, pal, wN) {
   cx.fillRect(sx - 8, gy - 59, 16, 6);   /* transom light */
   cx.globalAlpha = 1;
   const near = S.nearGate && S.nearGate.g === g;
-  if (near || Math.abs(sx - AVX) < 190) {
+  const rk = LBL.rank.has(g) ? LBL.rank.get(g) : 2;
+  const row = (Math.round(g.x / 92) % 2) * 22;   /* stagger clustered door labels */
+  if (rk === 0) {
     let name = (tp ? tp.label : g.tgt).toUpperCase();
     if (name.length > 26) name = name.slice(0, 25) + '…';
     const dW = wordsAt(tp ? tp.start : 0) - wordsAt(g.x);
-    const row = (Math.round(g.x / 92) % 2) * 22;   /* stagger clustered door labels */
     label(name, sx, gy - 96 + row, 8.5, near ? INKS.cream : 'rgba(255,243,224,0.8)', 'center', 1);
     label((dW >= 0 ? fmt(dW) + 'M EAST' : fmt(-dW) + 'M WEST'), sx, gy - 86 + row, 7.5, 'rgba(255,162,107,0.85)', 'center', 0.8);
+  } else if (rk === 1) {
+    /* the next-nearest holds a dimmed short title, nothing more */
+    label((tp ? tp.label : g.tgt).toUpperCase().slice(0, 16), sx, gy - 96 + row, 7,
+      'rgba(255,243,224,0.38)', 'center', 0.6);
   }
 }
 
@@ -2339,9 +3179,12 @@ function drawTerrace(tr, pal, p, wN) {
     label('+' + (tr.items.length - shown) + ' MORE', bx + bw / 2, gy - 44 - bh + 21 + shown * 8.5, 6, '#7a4a20', 'center', 0.6);
   }
   const near = S.nearTerrace && S.nearTerrace.tr === tr;
-  if (near || Math.abs(sx - AVX) < 200) {
+  const rk = LBL.rank.has(tr) ? LBL.rank.get(tr) : 2;
+  if (rk === 0) {
     label('CARD TERRACE · ' + tr.items.length + (tr.items.length === 1 ? ' CHOICE' : ' CHOICES'), sx, gy - 84,
       8.5, near ? INKS.cream : 'rgba(255,243,224,0.8)', 'center', 1.2);
+  } else if (rk === 1) {
+    label('CARD TERRACE', sx, gy - 84, 7, 'rgba(255,243,224,0.38)', 'center', 0.6);
   }
 }
 
@@ -2413,6 +3256,7 @@ function spawnBubble(fw, wN) {
   const gesture = (wN > 0.5 && r() < 0.5) ? 'lantern' : (gid === 0 ? 'hand' : 'hat');
   S.bubble = { wk: fw.wk, page: fw.page, text, gesture, t0: S.t };
   S.wave = 1;   /* the player waves back */
+  audEv('greet', fw.wx);
   PACK.greeted++;
   queueSave();
   bubbleCD.set(fw.page.slug + '|' + fw.wk.name, S.t + BUBBLE_PAIR_CD);
@@ -2790,6 +3634,11 @@ const odoEl = document.getElementById('odometer');
 const doorEl = document.getElementById('nextdoor');
 const walkedEl = document.getElementById('walked');
 const gatePrompt = document.getElementById('gatePrompt');
+const jumpPrompt = document.getElementById('jumpPrompt');
+const jpFirst = document.getElementById('jpFirst');
+let hzWarned = false;   /* the first hazard of the visit says one line more */
+if (jumpPrompt) jumpPrompt.addEventListener('click', () => startJump());
+const wxEl = document.getElementById('weather');
 const hudCache = {};
 function setText(elm, key, txt) {
   if (hudCache[key] === txt) return;
@@ -2808,6 +3657,52 @@ function nextDoorAhead() {
 
 function updateHUD() {
   const p = S.page;
+  setText(wxEl, 'wx', wxLabel());   /* the month the sky is remembering */
+
+  /* THE JUMP PROMPT AT HAZARDS (wave 3): held for a beat, then the sign —
+     a drawn space-bar key cap, gently pulsing, never over the reading
+     strip. The calm walker sees it at once, and it holds still. */
+  const jb = S.hzBlock;
+  const showJP = jb && !S.overlay && S.jumpT === null &&
+    (REDUCED || (S.t - jb.since) >= HZ_PROMPT_T);
+  if (showJP) {
+    if (jumpPrompt.hidden) {
+      jpFirst.hidden = hzWarned;
+      hzWarned = true;
+      jumpPrompt.hidden = false;
+    }
+    const jsx = clamp(w2s(jb.x), 130, W - 130);
+    const want = Math.round(jsx) + 'px';
+    if (hudCache.jp !== want) { jumpPrompt.style.left = want; hudCache.jp = want; }
+  } else if (!jumpPrompt.hidden) jumpPrompt.hidden = true;
+
+  if (S.atLE) {
+    setText(hudTitle, 't', 'LAND’S END');
+    setText(hudBiome, 'b', 'THE SHORE PAST THE END CAIRN · THE WHOLE TRAIL BEHIND YOU · ' +
+      fmt(M.sea.length) + ' LIGHTS ON THE WATER, ONE FOR EVERY PAGE');
+    setText(odoEl, 'o', 'WORD ' + fmt(M.totalWords) + ' OF ' + fmt(M.totalWords));
+    setText(doorEl, 'd', 'NO DOOR HERE — ONLY THE SEA');
+    setText(walkedEl, 'w', 'WALKED ' + fmt(S.walkedWords) + 'M THIS SESSION');
+    S.nearGate = null; S.nearTerrace = null; S.nearReg = null;
+    S.nearTicket = null; S.nearLook = null; S.enterAct = null;
+    S.nearFlower = false;
+    /* the two sea exits belong to the trail end: the sloop off the point,
+       and, far out on the same water, the living ink */
+    let leTxt = null;
+    if (Math.abs(S.x - (M.worldEnd - 4)) < 30) {
+      S.enterAct = { kind: 'portal', key: 'cartastrapiana' };
+      leTxt = 'A SLOOP STANDS OFF THE POINT — ENTER TO HAIL HER';
+    } else if (Math.abs(S.x - M.leBench) < 42) {
+      S.enterAct = { kind: 'portal', key: 'bythedeep' };
+      leTxt = 'FAR OUT, THE SEA TURNS TO LIVING INK — ENTER TO PUT OUT FOR IT';
+    }
+    if (leTxt) {
+      if (gatePrompt.hidden || hudCache.gp !== leTxt) {
+        gatePrompt.hidden = false; gatePrompt.textContent = leTxt; hudCache.gp = leTxt;
+      }
+    } else if (!gatePrompt.hidden) gatePrompt.hidden = true;
+    return;
+  }
   setText(hudTitle, 't', p.title);
   if (p.comm >= 0) {
     const c = M.communities[p.comm];
@@ -2872,13 +3767,40 @@ function updateHUD() {
         o.landmarks.length + ' LANDMARKS THIS HUB CITES' : 'ALL SKY, NO LANDMARKS')
     });
   }
+  /* the ways off the trail — each living where the geography puts it */
+  if (p.overlook && p.idx >= PORTAL_MIN_PAGE && S.lastWN > 0.45) {
+    const d = Math.abs(p.overlook.x + 96 - S.x);
+    if (d < 46) acts.push({ d, kind: 'portal', key: 'pixelcity',
+      txt: 'ENTER — PIXEL CITY GLITTERS IN THE VALLEY · ONE DAY OF WALKING DOWN' });
+  }
+  if (p.idx === M.kioskPage) {
+    const d = Math.abs(M.kioskX - S.x);
+    if (d < 46) acts.push({ d, kind: 'portal', key: 'secreta',
+      txt: 'ENTER — THE SPINNER RACK TURNS IN THE KIOSK' });
+  }
+  /* a flowered verge: a spring stretch, blossom overhead, and stillness */
+  S.nearFlower = false;
+  if (p.season === 0 && p.idx >= PORTAL_MIN_PAGE && Math.abs(S.vx) < 1) {
+    const Tf = terrainFor(p.idx);
+    for (const fl of Tf.flora) {
+      if (Math.abs(fl.x - S.x) < 30 &&
+          (fl.type === 'pine' || fl.type === 'cypress' || fl.type === 'bush' || fl.type === 'palm')) {
+        S.nearFlower = true;
+        break;
+      }
+    }
+  }
   acts.sort((a, b) => a.d - b.d);
   S.enterAct = acts[0] || null;
   let txt = S.enterAct ? S.enterAct.txt : null;
   if (!txt) {
-    if (S.nearReg && S.nearTicket) txt = 'R — SIGN THE REGISTER · E — REPORT TRAIL DAMAGE';
+    /* a hover is an aimed gesture: the star answers before the furniture */
+    if (PORTAL.starHover && PORTAL.starOn > 0.08)
+      txt = 'ONE STAR MOVES AMONG THE CITATIONS — CLICK IT AND FOLLOW';
+    else if (S.nearReg && S.nearTicket) txt = 'R — SIGN THE REGISTER · E — REPORT TRAIL DAMAGE';
     else if (S.nearReg) txt = REGBOOK[p.slug] ? 'R — THE REGISTER · YOUR LINE IS INSIDE' : 'R — SIGN THE TRAIL REGISTER';
     else if (S.nearTicket) txt = 'E — REPORT TRAIL DAMAGE · A RANGER TICKET FOR ' + p.label.toUpperCase();
+    else if (S.nearFlower) txt = 'H — KNEEL AND PRESS A FLOWER';
   }
   if (txt) {
     if (gatePrompt.hidden || hudCache.gp !== txt) { gatePrompt.hidden = false; gatePrompt.textContent = txt; hudCache.gp = txt; }
@@ -2911,23 +3833,34 @@ function closeOverlays() {
   document.getElementById('guidepanel').hidden = true;
   document.getElementById('overlook').hidden = true;
   document.getElementById('walkerpick').hidden = true;
+  document.getElementById('portalask').hidden = true;
   S.gm = null;
   S.tr = null;
   S.lk = null;
   needsDraw = true;
 }
+const LE_ROW = {
+  slug: 'lands-end', title: 'Land’s End', label: 'Land’s End', product: 'the shore',
+  lands: true
+};
 function buildThList(q) {
   const needle = q.trim().toLowerCase();
-  thRows = M.pages.filter(p => !needle ||
+  const hit = (p) => !needle ||
     p.title.toLowerCase().includes(needle) ||
     p.label.toLowerCase().includes(needle) ||
-    p.slug.toLowerCase().includes(needle));
+    p.slug.toLowerCase().includes(needle);
+  thRows = M.pages.filter(hit);
+  /* the trail's ending is a named destination in the index, always second
+     from the top when it matches: trailhead → Tab → Enter reaches it */
+  if (hit(LE_ROW)) thRows.unshift(LE_ROW);
   thSel = 0;
   const frag = document.createDocumentFragment();
   thRows.forEach((p, i) => {
     const li = el('li', i === 0 ? 'sel' : '');
     li.appendChild(el('span', null, esc(p.title)));
-    li.appendChild(el('span', 'thmeta', esc((p.product || '').toUpperCase() + ' · AT WORD ' + fmt(p.cumWords))));
+    li.appendChild(el('span', 'thmeta', p.lands
+      ? esc('THE SHORE PAST THE END CAIRN · ' + fmt(M.sea.length) + ' LIGHTS')
+      : esc((p.product || '').toUpperCase() + ' · AT WORD ' + fmt(p.cumWords))));
     li.dataset.slug = p.slug;
     frag.appendChild(li);
   });
@@ -2957,6 +3890,7 @@ const gmCanvas = document.getElementById('gmCanvas');
 function openGate(g) {
   const tp = M.bySlug.get(g.tgt);
   if (!tp) return;
+  audEv('gate', g.x);
   S.overlay = 'gatemap';
   S.gm = { from: S.page, to: tp, gx: g.x };
   gatemap.hidden = false;
@@ -3013,7 +3947,7 @@ function openGate(g) {
 function confirmGate() {
   const gm = S.gm;
   closeOverlays();
-  if (gm) travelTo(gm.to.slug);
+  if (gm) { audEv('gateTravel'); travelTo(gm.to.slug); }
 }
 
 /* ---------------- the terrace menu (cards, served in place) ------------ */
@@ -3105,7 +4039,14 @@ const KEY_SWATCHES = {
   'sw-dog': [INK_DARK, INKS.rose],
   'sw-guide': [INKS.cream, INKS.apricot, INKS.cream],
   'sw-cert': [INKS.rose, INKS.cream],
-  'sw-wp': [INKS.violet, INKS.rose, INKS.apricot]
+  'sw-wp': [INKS.violet, INKS.rose, INKS.apricot],
+  'sw-le': ['#0D0718', INKS.cream, '#0D0718', INKS.apricot],
+  'sw-sfx': [INKS.apricot, INKS.cream, INKS.apricot],
+  'sw-mus': [INKS.cream, INKS.rose, INKS.cream],
+  'sw-score': [INKS.cream, INKS.apricot, INKS.rose, INKS.violet],
+  'sw-wx': [OVERCAST_INK, INKS.cream, OVERCAST_INK, INKS.violet],
+  'sw-sleep': [INK_DARK, INKS.cream],
+  'sw-lay': [INKS.aubergine, INKS.cream, INKS.aubergine]
 };
 function fillKey() {
   const rows = [
@@ -3126,8 +4067,9 @@ function fillKey() {
       'PATH WEAR — commits wore this ground: dotted track → dashed → solid → double → stone slabs ' +
       '(log scale against the most-worn page).'],
     ['sw-haz',
-      'HAZARDS & SPRINGS — every caution or warning on a page stands low on its stretch: jump it ' +
-      '(SPACE) or stumble a beat (' + fmt(M.hazTotal) + ' on the trail). Every tip is a spring that bounces you forward (' +
+      'HAZARDS & SPRINGS — every caution or warning on a page stands low on its stretch and HOLDS ' +
+      'you at its edge (' + fmt(M.hazTotal) + ' on the trail): lean out, then jump it (SPACE — the sign says so ' +
+      'after a beat). Every tip is a spring that bounces you forward (' +
       fmt(M.sprTotal) + '). Reading is never gated.'],
     ['sw-terr',
       'CARD TERRACES — a page that serves a cards block grows a kiosk (' + fmt(M.terrTotal) + ' terraces, ' +
@@ -3151,9 +4093,10 @@ function fillKey() {
       ' autumn stretches, lantern light from each of the ' + fmt(M.nightPages) + ' night hollows, a stamp at each ' +
       'of the ' + fmt(M.overlooks) + ' hubs, and honest tallies. It keeps for the visit.'],
     ['sw-look',
-      'THE OVERLOOKS — each hub keeps a bench and an orientation table at its high point: the landmarks ' +
-      'are the real pages the hub cites (at most seven), distances in words. Choosing one sweeps you ' +
-      'there on an eased scenic curve.'],
+      'THE OVERLOOKS — hub stretches keep an overlook: stand at the table and press ENTER. A carved ' +
+      'OVERLOOK AHEAD fingerpost stands a couple of screens before each table, and entering a hub ' +
+      'breathes the hint once. The landmarks are the real pages the hub cites (at most seven), ' +
+      'distances in words. Choosing one sweeps you there on an eased scenic curve.'],
     ['sw-sky',
       'THE NIGHT SKY — after dark, the constellation overhead is the citation graph of the biome you walk: ' +
       'its pages as stars, its internal citations as faint lines. The moon is the stretch\u2019s freshness — ' +
@@ -3164,9 +4107,20 @@ function fillKey() {
       '); grass leans and gusts ride it. Morning mist rests on the ' + fmt(M.zeroIn) + ' stretches no page ' +
       'cites — gentle, and never over the path or the prompts.'],
     ['sw-dog',
-      'THE TRAIL DOG — she runs ahead, sniffs at doors that ' + fmt(M.sniffMin) + ' or more pages cite, sits ' +
-      'beside you while you read, shakes off the mist, and sleeps at a bench if you linger. Under reduced ' +
-      'motion she simply keeps pace. Toggle her below or at the trailhead.'],
+      'THE TRAIL DOG — she runs ahead, reads doors that ' + fmt(M.sniffMin) + ' or more pages cite, sits ' +
+      'beside you while you read, shakes off the mist, and curls up against you if you fall asleep. ' +
+      'SHE SPEAKS AT HER MOMENTS: ordinary steady walking carries no pant loop and no trotting noise, ' +
+      'but her event voices live. Her signature is THE CATCH-UP BARK — she fell behind, sprinted the ' +
+      'gap down, and arrives at your side with one happy bark, earned and welcome every time. Two ' +
+      'quick snuffles when her nose reaches a door you stopped at together, no oftener than every ' +
+      'ninety seconds; one small yip instead at the rarer doors ' + fmt(M.yipMin) + ' or more pages ' +
+      'cite; an occasional spontaneous bark on the move, unscheduled, maybe once every minute or two ' +
+      'of active play; a contented sigh once she has settled by a long read; a shake-off in a real ' +
+      'mist or a real shower, and a single startle when a storm first rolls; and the light pant, kept ' +
+      'for the rare occasion a gate has opened nine hundred pixels between you and she has run it ' +
+      'down. No two of her sounds fall within a few seconds of each other, pitch and timing shift a ' +
+      'little every play, and no voice of hers is ever louder than the wind. At the shore she is ' +
+      'silent. Under reduced motion she simply keeps pace. Toggle her below or at the trailhead.'],
     ['sw-guide',
       'THE FIELD GUIDE (G) — the first crossing of each species of trail furniture presses a card into the ' +
       'guide: ten species, from code boardwalks to night lanterns, every count the corpus\u2019s own.'],
@@ -3175,7 +4129,86 @@ function fillKey() {
       'flat-ink certificate carrying the walk\u2019s real numbers and the day\u2019s date.'],
     ['sw-wp',
       'YOUR WALKER — three silhouettes and four accessories, any mix; the choice dresses the walking ' +
-      'sprite everywhere and keeps for the visit. Change it below.']
+      'sprite everywhere and keeps for the visit. Change it below.'],
+    ['sw-le',
+      'LAND’S END — the trail does not end at a wall. Past the end cairn the ground falls away to a ' +
+      'shore, and the whole documentation lies below as a night coastline: ' + fmt(M.sea.length) +
+      ' lights on dark water, one per page, each blinking its own page’s rhythm (length sets the beat, ' +
+      'commits the offset, citations the brightness). A bench, the cliff, the lights, silence. It is in ' +
+      'the trailhead index, and L at any gate map sails you there.'],
+    ['sw-sfx',
+      'TRAIL SOUND — bundled public-domain recordings, every one tied to something countable. Walking ' +
+      'itself is silent: you make no noise on this ground. What sounds is the land — the jump and the ' +
+      'landing, the springs, gates, greetings, the register’s pen, a chime at each carved stone, gusts ' +
+      'scaled by the derived wind, night crickets, and the dog’s voices — the fog and the mist are ' +
+      'silent, on purpose. The wind ' +
+      'is weather, not a gale: the wind bed and its gusts are the QUIETEST layer on the trail, under ' +
+      'the crickets and under the rain. And the dog is never louder than the wind — no ' +
+      'voice of hers passes the peak of a gust. All distance-attenuated and panned by where the thing ' +
+      'stands on your screen. Sources, and the arithmetic, in sfx/CREDITS.txt.'],
+    ['sw-mus',
+      'MUSIC AS WEATHER — never a loop. A small music-box voice, its scale drawn from the biome you ' +
+      'walk, its register from the stretch’s freshness and its density from the hour, arrives at ' +
+      'moments — golden hour, nightfall, a biome border, an overlook — speaks a few phrases and ' +
+      'withdraws to real silence. The tine that closes a phrase is left to ring across the gap after ' +
+      'it, so a moment never falls silent inside itself; the silence you hear is the silence BETWEEN ' +
+      'moments, and it is most of the walk. One recorded acoustic theme (Kai Engel, “Meekness”, CC BY 4.0) is ' +
+      'kept for the three rarest moments: your first arrival at Land’s End, every page of one ' +
+      'community walked, and the whole trail walked.'],
+    ['sw-score',
+      'THE SCORE GROWS WITH THE JOURNEY — the further you have read, the richer the moments ' +
+      'sound. Under a tenth of the trail it is the music box alone; a sparse piano joins at a ' +
+      'tenth, a low pad at a quarter, strings at 45 in the hundred, a warm counter-melody at 70, ' +
+      'and past 90 the whole ensemble. Progress is one honest number: the share of the trail\u2019s ' +
+      'own distance your boots have covered — unique ground, kept across reloads. Walking the ' +
+      'whole way to the end cairn is 100. A gate carries you, it does not walk for you: the ' +
+      'stretches it skips stay unwalked, and reading is never required — the music rewards the ' +
+      'journey. A new voice enters exposed on the next moment, and the HUD names ' +
+      'it once. THE SILENCE IS UNCHANGED: layers make a moment thicker, never more frequent — ' +
+      'the same triggers (golden hour, nightfall, a biome border, an overlook, a sky clearing), ' +
+      'the same real quiet between them, at every rung.'],
+    ['sw-wx',
+      'THE SKY REMEMBERS THE QUIET MONTHS — the weather walks the documentation’s own calendar, ' +
+      'one real month every ' + WX_MONTH_S + ' seconds, from the first commit in the corpus (' +
+      wxSpanLabel(0) + ') to the last (' + wxSpanLabel(1) + '). A month nobody tended brings grey ' +
+      'and a shower; a busy month clears the sky. ' + fmt(WX.quiet) + ' of the ' + fmt(WX.months.length) +
+      ' months are quiet ones. The HUD names the month you are under, and names its cloud by how much ' +
+      'of the light it actually takes: HIGH CLOUD, OVERCAST, HEAVY CLOUD. (Winter frost is a different ' +
+      'thing: that belongs to the ground beneath you, not to the sky.)'],
+    ['sw-snow',
+      'SNOW — a quiet winter month on the calendar (December to February, nobody came) snows instead ' +
+      'of raining: riso flakes, the ground whitening in over a minute and thawing after; jumping, ' +
+      'bouncing and reading untouched.'],
+    ['sw-rb',
+      'RAINBOW — rare: only as a shower clears under a low sun, a banded riso arc stands a moment ' +
+      'and goes gently, never twice in an hour of play.'],
+    ['sw-fog',
+      'FOG — a thin autumn month (October or November, untended or nearly so) rolls a bank in and ' +
+      'holds it, capped so the path, the hazards, the prompts and the walker always read. The fog ' +
+      'is silent, and the dock and HUD are never dimmed.'],
+    ['sw-storm',
+      'THUNDERSTORM — the middle of a long untended streak breaks short and hard: the light drops a ' +
+      'stop, a two-frame riso flash, a soft rolled thunder at wind-level gain obeying the toggles, ' +
+      'the dog startles once then settles; never during your first minute.'],
+    ['sw-sleep',
+      'STANDING STILL — after ' + SLEEP_T1 + ' seconds the walker settles, on a bench if one is in ' +
+      'reach; after ' + SLEEP_T2 + ' she nods off and the dog curls up against her; after ' +
+      (SLEEP_T3 / 60) + ' minutes she is properly asleep and snoring. Any key or click wakes her ' +
+      'with a stretch and the walk resumes with no penalty. Reading the page keeps her on her feet ' +
+      'for the first stage only — after that she dozes beside you, which is the point of her.'],
+    ['sw-play',
+      'SOMETIMES, INSTEAD OF SLEEPING, SHE PLAYS — roughly one settle in five or six, never twice ' +
+      'in a row: she sits, takes a kalimba or a tin whistle from the pack, and plays the music of ' +
+      'the very stretch she sits in — a quiet music-box solo, twenty or thirty seconds, the dog ' +
+      'settling to listen — then puts it away and dozes as usual. Any key stops her mid-phrase ' +
+      'with one small apologetic note. Muting MUSIC mutes the tune, never the playing. Under ' +
+      'reduced motion she simply dozes.'],
+    ['sw-lay',
+      'ROOM TO READ — V, or the LAYOUT chip. STACKED gives the trail the top half of the window and ' +
+      'the page the bottom half; SIDE BY SIDE puts the trail on the left (' +
+      Math.round(LAY_SIDE * 100) + '%) and the page on the right, full height. Under ' + LAY_MIN_W +
+      ' px of width, side by side folds back to stacked. The strip stays locked to the block you ' +
+      'stand in either way, and the choice keeps for the visit.']
   ];
   const ul = document.getElementById('keyList');
   ul.innerHTML = '';
@@ -3207,7 +4240,45 @@ function fillKey() {
   wrap.appendChild(bWp);
   ctl.appendChild(wrap);
   ul.appendChild(ctl);
+  /* the two sound layers, independent, side by side (F and M) */
+  const ctl2 = el('li');
+  const sw3 = el('span', 'keysw');
+  [INKS.apricot, INKS.cream, INKS.rose].forEach(c => {
+    const st = el('span'); st.style.background = c; sw3.appendChild(st);
+  });
+  ctl2.appendChild(sw3);
+  const wrap2 = el('span', 'keyctl');
+  const bSfx = el('button', 'keybtn'); bSfx.type = 'button'; bSfx.id = 'keySfx';
+  const bMus = el('button', 'keybtn'); bMus.type = 'button'; bMus.id = 'keyMus';
+  bSfx.addEventListener('click', () => { audUnlock(); toggleSfx(); });
+  bMus.addEventListener('click', () => { audUnlock(); toggleMusic(); });
+  wrap2.appendChild(bSfx);
+  wrap2.appendChild(bMus);
+  const note = el('span', 'keynote',
+    'TWO SEPARATE LAYERS — F AND M. OFF IS A MUTE, NOT A STOP: THE WIND KEEPS BLOWING AND THE ' +
+    'MUSIC KEEPS PLAYING BEHIND IT, SO ON AGAIN LANDS YOU INSIDE WHATEVER THE TRAIL HOLDS. ' +
+    'BOTH OFF LEAVES THE TRAIL WHOLE. UNDER REDUCED MOTION BOTH START OFF.');
+  wrap2.appendChild(note);
+  ctl2.appendChild(wrap2);
+  ul.appendChild(ctl2);
+  /* and the layout, the third thing you may set from here */
+  const ctl3 = el('li');
+  const sw4 = el('span', 'keysw');
+  [INKS.aubergine, INKS.cream, INKS.violet].forEach(c => {
+    const st = el('span'); st.style.background = c; sw4.appendChild(st);
+  });
+  ctl3.appendChild(sw4);
+  const wrap3 = el('span', 'keyctl');
+  const bLay = el('button', 'keybtn'); bLay.type = 'button'; bLay.id = 'keyLayout';
+  bLay.addEventListener('click', () => toggleLayout());
+  wrap3.appendChild(bLay);
+  wrap3.appendChild(el('span', 'keynote',
+    'V SWITCHES IT. THE READING STRIP STAYS LOCKED TO THE BLOCK YOU STAND IN, EITHER WAY.'));
+  ctl3.appendChild(wrap3);
+  ul.appendChild(ctl3);
   refreshDogUI();
+  refreshAudioUI();
+  refreshLayoutUI();
 }
 document.getElementById('btnKey').addEventListener('click', () => {
   if (S.overlay === 'key') closeOverlays(); else openKey();
@@ -3227,6 +4298,7 @@ regNoteEl.addEventListener('input', updateRegCount);
 
 function openRegister(pg) {
   closeOverlays();
+  audEv('regopen', pg.regX);
   S.overlay = 'register';
   regPageRef = pg;
   document.getElementById('register').hidden = false;
@@ -3252,8 +4324,10 @@ async function signRegister() {
   if (!note || note.length > 2000) return;
   regSignEl.disabled = true;
   regStatusEl.textContent = 'SIGNING\u2026';
+  audEv('pen');   /* the pen scratches whether or not the ink reaches home */
   let sent = false;
   try {
+    if (LOCAL_ORIGIN) throw new Error('local preview: the ink stays in the box');
     const res = await fetch(FEEDBACK_URL, {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-feedback-source': 'docs-widget' },
@@ -3312,7 +4386,7 @@ function openPack() {
   closeOverlays();
   S.overlay = 'pack';
   document.getElementById('packpanel').hidden = false;
-  const visitedN = Object.keys(PACK.visited).length;
+  const visitedN = Object.keys(PACK.visited).filter(sl => M.bySlug.has(sl)).length;
   const cells = [
     [fmt(Math.round(PACK.walked)), 'WORDS WALKED'],
     [fmt(visitedN) + ' / ' + fmt(M.pages.length), 'PAGES READ'],
@@ -3334,6 +4408,8 @@ function openPack() {
   const stamps = document.getElementById('pkStamps');
   stamps.innerHTML = '';
   const chip = (cls, txt) => stamps.appendChild(el('span', 'pkStamp ' + cls, esc(txt)));
+  chip('score', 'SCORE · ' + (SCORE.tier + 1) + ' OF ' + SCORE_TIERS.length + ' VOICES · ' +
+    SCORE_TIERS[SCORE.tier].name + ' · ' + Math.round(SCORE.p * 100) + '%');
   Object.keys(PACK.stamps).forEach(sl => {
     const hp = M.bySlug.get(sl);
     chip('', 'HUB · ' + (hp ? hp.label.toUpperCase() : sl));
@@ -3470,7 +4546,7 @@ function certCanvas(which) {
   sp(name, w / 2, 210, 26, INK_DARK, 2);
   sp(pagesLine, w / 2, 246, 10.5, INKS.apricot, 2.5);
   const scopeRead = which === 'trail'
-    ? Object.keys(PACK.visited).length + ' OF ' + M.pages.length
+    ? Object.keys(PACK.visited).filter(sl => M.bySlug.has(sl)).length + ' OF ' + M.pages.length
     : M.communities[which].members.filter(m => PACK.visited[m]).length + ' OF ' + M.communities[which].size;
   const rows = [
     ['PAGES READ', scopeRead],
@@ -3709,6 +4785,10 @@ function openLook(p) {
   marks.forEach((m, i) => {
     const li = el('li', i === 0 ? 'sel' : '');
     li.dataset.i = i;
+    /* every landmark on this table is a real page of the corpus; round 11
+       says so in the DOM as well as in the model, so it can be checked from
+       outside rather than taken on the word of the renderer */
+    li.dataset.slug = m.slug;
     li.appendChild(el('span', null, esc(m.tp.title)));
     li.appendChild(el('span', 'lkDist',
       esc(fmt(Math.abs(m.dw)) + (m.dw >= 0 ? ' WORDS EAST' : ' WORDS WEST') + ' · CITED BY ' + fmt(m.tp.inCount) + ' PAGES')));
@@ -3877,10 +4957,16 @@ document.getElementById('ldWalker').addEventListener('click', (e) => {
 const wipeEl = document.getElementById('wipe');
 let suppressHash = false;
 function teleport(x) {
-  S.x = clamp(x, 10, M.totalPx - 10);
+  const from = S.x;
+  S.x = clamp(x, 10, M.worldEnd);
   S.target = null; S.vx = 0;
-  DOG.x = clamp(S.x - 54, 10, M.totalPx - 10);
-  DOG.sleepX = null;
+  /* a door, a fast travel or the index has carried you both a long way in
+     one step: she arrives with you and gets her breath back on the other
+     side. Walking beside you never does this, which is the point — the
+     owner's order is that ordinary walking makes no dog sound at all. */
+  if (Math.abs(S.x - from) > 1200) DOG.caught = 1;
+  DOG.x = clamp(S.x - 54, DOG_WEST, M.worldEnd);
+  DOG.sleepX = null; DOG.restX = null;
   needsDraw = true;
   syncPage(true);
 }
@@ -3903,10 +4989,14 @@ function travelTo(slug) {
     a2.onfinish = () => { wipeEl.hidden = true; };
   };
 }
-function routeTo(slug) { travelTo(slug); }
+function routeTo(slug) {
+  if (slug === 'lands-end') { travelToLE(); return; }
+  travelTo(slug);
+}
 window.addEventListener('hashchange', () => {
   if (suppressHash) { suppressHash = false; return; }
   const slug = location.hash.slice(1);
+  if (slug === 'lands-end') { travelToLE(true); return; }
   if (M.bySlug.has(slug)) {
     const p = M.bySlug.get(slug);
     teleport(p.start + 6);
@@ -3914,11 +5004,17 @@ window.addEventListener('hashchange', () => {
 });
 
 function syncPage(force) {
-  const p = pageAt(S.x);
+  const atLE = S.x >= M.totalPx - 2;
+  const p = pageAt(clamp(S.x, 0, M.totalPx - 1));
   if (p !== S.page || force) {
     S.page = p;
-    renderDock(p);
+    if (!atLE) renderDock(p);
     collectPage(p);
+    /* wave 3: entering a hub stretch breathes the overlook hint, once */
+    if (p.overlook && !HUB_HINTED[p.slug]) {
+      HUB_HINTED[p.slug] = 1;
+      toast('THIS HUB KEEPS AN OVERLOOK — STAND AT THE TABLE AND PRESS ENTER');
+    }
     const key = p.comm + ':' + (p.prov.night > 0 ? 'n' : 'd');
     if (key !== S.palKey) {
       const had = S.palKey !== '';
@@ -3928,12 +5024,25 @@ function syncPage(force) {
       S.fromWN = S.lastWN == null ? DAY.wts.n : S.lastWN;
       S.pal = paletteFor(p.comm, p.prov.night > 0);
       S.front = REDUCED ? 1 : 0;   /* weather front sweeps on biome change */
+      if (had) audMoment('border');   /* a biome border is a moment */
     }
-    if (!suppressHash) {
+    if (!suppressHash && !atLE) {
       try { history.replaceState(null, '', '#' + p.slug); } catch (e) { }
     }
   }
-  updateBlock(S.page, blockIndexAt(S.page, S.x));
+  if (atLE !== !!S.atLE) {
+    S.atLE = atLE;
+    if (atLE) {
+      renderLEDock();
+      audLEArrive();
+      if (!suppressHash) { try { history.replaceState(null, '', '#lands-end'); } catch (e) { } }
+    } else {
+      renderDock(S.page);
+      if (!suppressHash) { try { history.replaceState(null, '', '#' + S.page.slug); } catch (e) { } }
+    }
+    needsDraw = true;
+  }
+  if (!S.atLE) updateBlock(S.page, blockIndexAt(S.page, S.x));
 }
 
 /* ---------------- input ---------------- */
@@ -3974,6 +5083,20 @@ window.addEventListener('keydown', (e) => {
     e.preventDefault();
     return;
   }
+  if (S.overlay === 'portalask') {
+    const kk = e.key.toLowerCase();
+    if (kk === 'y') portalYes();
+    else if (kk === 'n' || e.key === 'Escape') portalNo();
+    else if (e.key === 'Enter') {
+      const f = document.activeElement;
+      if (f === paYes || f === paNo) f.click();
+    } else if (e.key === 'Tab') {
+      /* the notice keeps focus between its two carved answers */
+      (document.activeElement === paYes ? paNo : paYes).focus();
+    }
+    e.preventDefault();
+    return;
+  }
   if (e.key === 'Tab') {
     e.preventDefault();
     if (S.overlay === 'index') closeOverlays(); else openTrailhead();
@@ -4011,11 +5134,16 @@ window.addEventListener('keydown', (e) => {
   }
   const k = e.key.toLowerCase();
   if (k === 'enter') {
+    /* preventDefault: portalAsk moves focus to a button DURING this
+       keydown, and the browser's default Enter action would click it —
+       the notice must never answer the keypress that raised it */
+    e.preventDefault();
     const a = S.enterAct;
     if (a) {
       if (a.kind === 'terrace') openTerrace(a.nt);
       else if (a.kind === 'gate') openGate(a.g);
       else if (a.kind === 'look') openLook(a.p);
+      else if (a.kind === 'portal') portalAsk(a.key);
     }
     return;
   }
@@ -4026,8 +5154,14 @@ window.addEventListener('keydown', (e) => {
   if (k === 'k') { openKey(); e.preventDefault(); return; }
   if (k === 't') { cycleDaySpeed(); e.preventDefault(); return; }
   if (k === ' ' || k === 'arrowup' || k === 'w') {
-    /* jump — never gates reading; reduced motion auto-hops instead */
-    if (!REDUCED && S.jumpT === null && S.bounceT === null) S.jumpT = 0;
+    /* jump — never gates reading; a blocked calm walker crosses instantly */
+    startJump();
+    e.preventDefault();
+    return;
+  }
+  if (k === 'h') {
+    /* the flowered verge: kneel and press a flower (one quiet prompt) */
+    if (S.nearFlower && !PORTAL.active) portalAsk('herbarium');
     e.preventDefault();
     return;
   }
@@ -4050,6 +5184,14 @@ window.addEventListener('blur', () => { S.keys = {}; });
 
 function stepBlock(dir) {
   const p = S.page;
+  const cur = S.x;
+  if (S.atLE) {
+    /* the shore has no blocks: west steps back onto the last stretch */
+    if (dir < 0) S.x = p.start + p.fracs[p.blocks.length - 1] * p.len + 4;
+    needsDraw = true;
+    renderStep();
+    return;
+  }
   const bi = blockIndexAt(p, S.x);
   let ni = bi + dir;
   if (ni < 0) {
@@ -4061,21 +5203,87 @@ function stepBlock(dir) {
   } else if (ni >= p.blocks.length) {
     const idx = M.pages.indexOf(p);
     if (idx < M.pages.length - 1) S.x = M.pages[idx + 1].start + 4;
+    else S.x = M.leView;   /* past the last block waits the shore */
   } else {
     S.x = p.start + p.fracs[ni] * p.len + 4;
   }
-  S.x = clamp(S.x, 10, M.totalPx - 10);
+  S.x = clamp(S.x, 10, M.worldEnd);
+  /* the hold, in calm terms: a hazard between the two blocks stops the
+     step at its edge, the prompt shows at once, SPACE crosses instantly */
+  const hz = hzBetween(cur, S.x);
+  if (hz) holdAt(hz, S.x >= cur ? 1 : -1);
+  else if (S.hzBlock) S.hzBlock = null;
+  covMark(cur, S.x);   /* a block step is contiguous ground, walked calmly */
   needsDraw = true;
   renderStep();
 }
 
 cv.addEventListener('click', (e) => {
   if (S.overlay) return;
+  /* the moving star answers a click before the ground does */
+  if (PORTAL.starHover && PORTAL.starOn > 0.08 && !PORTAL.active) {
+    portalAsk('firstlight');
+    return;
+  }
   const wx = S.x + (e.clientX - AVX);
-  const clamped = clamp(wx, 10, M.totalPx - 10);
-  if (REDUCED) { S.x = clamped; needsDraw = true; renderStep(); }
-  else S.target = clamped;
+  const clamped = clamp(wx, 10, M.worldEnd);
+  if (REDUCED) {
+    /* the calm walk also honors the hold: a hazard on the way stops it */
+    const cur0 = S.x;
+    const hz = hzBetween(S.x, clamped);
+    if (hz) holdAt(hz, clamped >= S.x ? 1 : -1);
+    else S.x = clamped;
+    covMark(cur0, S.x);   /* the calm walk covers its ground too */
+    needsDraw = true;
+    renderStep();
+  } else S.target = clamped;
 });
+cv.addEventListener('pointermove', (e) => {
+  PORTAL.mx = e.clientX;
+  PORTAL.my = e.clientY;
+});
+
+/* ---- the jump, and the hold it answers (wave 3) ---- */
+function startJump() {
+  if (REDUCED) {
+    /* calm variant: the blocked step crosses instantly — no arc, no sound */
+    if (S.hzBlock) {
+      const b = S.hzBlock;
+      b.hz.cd = S.t + 2.5;
+      S.hzBlock = null;
+      const cur0 = S.x;
+      S.x = clamp(b.x + b.face * (HZ_EDGE + 8), 10, M.worldEnd);
+      covMark(cur0, S.x);
+      needsDraw = true;
+      renderStep();
+    }
+    return;
+  }
+  if (S.jumpT !== null || S.bounceT !== null) return;
+  if (S.hzBlock) { S.jumpCarry = S.hzBlock.face; S.hzBlock = null; }
+  S.jumpT = 0;
+  audEv('jump', S.x);
+}
+
+/* first uncleared hazard strictly between a and b, walking a -> b */
+function hzBetween(a, b) {
+  const lo = Math.min(a, b) + 2, hi = Math.max(a, b);
+  const p0 = pageAt(clamp(lo, 0, M.totalPx - 1)).idx;
+  const p1 = pageAt(clamp(hi, 0, M.totalPx - 1)).idx;
+  let best = null;
+  for (let pi = p0; pi <= p1; pi++) {
+    for (const hz of M.pages[pi].hazards) {
+      if (hz.x <= lo || hz.x > hi || hz.cd > S.t) continue;
+      if (!best ||
+          (b >= a ? hz.x < best.x : hz.x > best.x)) best = hz;
+    }
+  }
+  return best;
+}
+function holdAt(hz, face) {
+  S.x = hz.x - face * (HZ_EDGE - 2);
+  S.hzBlock = { hz, x: hz.x, kind: hz.kind, face, since: S.t };
+}
 
 /* ---------------- landing ---------------- */
 const landingEl = document.getElementById('landing');
@@ -4089,7 +5297,8 @@ function fillLanding() {
     '<span><b>' + fmt(M.hazTotal) + '</b> HAZARDS · <b>' + fmt(M.sprTotal) + '</b> SPRINGS · <b>' +
     fmt(M.terrTotal) + '</b> TERRACES</span>' +
     '<span><b>' + fmt(M.waymarks.length) + '</b> WAYMARKED STONES</span>' +
-    '<span><b>' + fmt(M.overlooks) + '</b> OVERLOOKS · <b>1</b> TRAIL DOG</span>';
+    '<span><b>' + fmt(M.overlooks) + '</b> OVERLOOKS · <b>1</b> TRAIL DOG</span>' +
+    '<span><b>LAND’S END</b> — <b>' + fmt(M.sea.length) + '</b> LIGHTS ON DARK WATER</span>';
 }
 function dismissLanding() {
   if (S.overlay !== 'landing') return;
@@ -4176,12 +5385,19 @@ document.getElementById('btnDial').addEventListener('click', cycleDaySpeed);
 
 /* ---------------- collisions: hazards jumped, springs sprung ----------- */
 function collideTrail(prevX) {
-  if (REDUCED) return;   /* auto-hop: the calm variant never stumbles */
-  const lo = Math.min(prevX, S.x), hi = Math.max(prevX, S.x);
-  if (hi - lo < 0.01 && S.bounceT === null) return;
+  if (REDUCED) return;   /* the calm variant holds in stepBlock instead */
   let airY = 0;
   if (S.jumpT !== null) airY = Math.sin(Math.PI * S.jumpT) * 54;
   if (S.bounceT !== null) airY = Math.sin(Math.PI * S.bounceT) * 78;
+  /* an active hold keeps her at the barrier's edge while she is grounded
+     and pressing into it — no creep, no jitter, just held */
+  if (S.hzBlock && airY <= 20) {
+    const b = S.hzBlock;
+    const gap = (b.x - S.x) * b.face;
+    if (gap > 0 && gap < HZ_EDGE) S.x = b.x - b.face * HZ_EDGE;
+  }
+  const lo = Math.min(prevX, S.x), hi = Math.max(prevX, S.x);
+  if (hi - lo < 0.01 && S.bounceT === null) return;
   const p0 = pageAt(clamp(lo - 20, 0, M.totalPx - 1)).idx;
   const p1 = pageAt(clamp(hi + 20, 0, M.totalPx - 1)).idx;
   const now = S.t;
@@ -4190,9 +5406,15 @@ function collideTrail(prevX) {
     for (const hz of p.hazards) {
       if (hz.x < lo - 14 || hz.x > hi + 14 || hz.cd > now) continue;
       if (airY > 20) { hz.cd = now + 1.5; continue; }   /* cleared clean */
-      hz.cd = now + 2.2;
-      S.stumbleT = 0;
-      S.puff = { x: hz.x, t: 0 };
+      /* THE HOLD (wave 3, owner order): the barrier does not let you walk
+         through. You are held at its edge, leaning over the drop, until
+         you jump it — the sign says so after a beat of being blocked. */
+      const bdir = S.x >= prevX ? 1 : -1;
+      S.x = hz.x - bdir * HZ_EDGE;
+      if (!S.hzBlock || S.hzBlock.hz !== hz) {
+        S.hzBlock = { hz, x: hz.x, kind: hz.kind, face: bdir, since: now };
+        audEv('blocked', hz.x);          /* one soft bump per hold */
+      }
     }
     if (S.bounceT === null && S.stumbleT === null) {
       for (const sp of p.springs) {
@@ -4201,6 +5423,7 @@ function collideTrail(prevX) {
         S.bounceT = 0;
         S.bounceX = sp.x;
         S.jumpT = null;
+        audEv('spring', sp.x);
       }
     }
   }
@@ -4219,8 +5442,8 @@ function frame(now) {
     tickDay(dt);
 
     /* airborne / stumble clocks — flat arcs, hard landings */
-    if (S.jumpT !== null) { S.jumpT += dt / JUMP_DUR; if (S.jumpT >= 1) S.jumpT = null; }
-    if (S.bounceT !== null) { S.bounceT += dt / BOUNCE_DUR; if (S.bounceT >= 1) S.bounceT = null; }
+    if (S.jumpT !== null) { S.jumpT += dt / JUMP_DUR; if (S.jumpT >= 1) { S.jumpT = null; S.jumpCarry = 0; audEv('land', S.x); } }
+    if (S.bounceT !== null) { S.bounceT += dt / BOUNCE_DUR; if (S.bounceT >= 1) { S.bounceT = null; audEv('land', S.x, 0.7); } }
     if (S.stumbleT !== null) { S.stumbleT += dt / STUMBLE_DUR; if (S.stumbleT >= 1) S.stumbleT = null; }
     if (S.puff && S.puff.t < 1) S.puff.t += dt / 0.4;
 
@@ -4258,28 +5481,55 @@ function frame(now) {
     } else {
       S.vx = 0;
     }
+    /* THE RELIEF IS FELT: climbing slows her a touch and descending
+       quickens her — a feel, never a mechanic (jump and bounce keep
+       their own arcs, and reduced motion keeps a perfectly even pace) */
+    if (!REDUCED && S.vx !== 0 && S.jumpT === null && S.bounceT === null) {
+      const gs = (elevAt(S.x + 30) - elevAt(S.x - 30)) / 60;
+      S.vx *= clamp(1 - gs * Math.sign(S.vx) * 0.55, 0.90, 1.08);
+    }
     const prevX = S.x;
     let nx = S.x + S.vx * dt;
     if (S.bounceT !== null) {
       /* the spring's gift: a joyful arc, a few honest metres forward */
       nx += S.face * 165 * dt * (1 - 0.35 * S.bounceT);
     }
+    if (S.jumpT !== null && S.jumpCarry) {
+      /* the blocked jump is a jump FORWARD, over the obstacle */
+      nx += S.jumpCarry * JUMP_CARRY_V * dt * (1 - 0.30 * S.jumpT);
+    }
     if (nx !== S.x) {
       const before = wordsAt(S.x);
-      S.x = clamp(nx, 10, M.totalPx - 10);
+      S.x = clamp(nx, 10, M.worldEnd);
       const dw = Math.abs(wordsAt(S.x) - before);
       S.walkedWords += dw;
       PACK.walked += dw;
+      covMark(prevX, S.x);   /* ground covered on foot, and only on foot */
       syncPage();
     }
     collideTrail(prevX);
+    /* the hold lets go when you leave it: a jump, a spring, walking away —
+       or drifting off to sleep beside it (the sign does not nag a sleeper) */
+    if (S.hzBlock && (S.bounceT !== null || SLP.stage > 0 ||
+        Math.abs(S.hzBlock.x - S.x) > HZ_EDGE + 34)) S.hzBlock = null;
+    }
+    /* a portal beat, once begun, carries you across */
+    if (PORTAL.active && !PORTAL.active.gone) {
+      PORTAL.active.t += dt / PORTAL.active.dur;
+      if (PORTAL.active.t >= 1) {
+        PORTAL.active.gone = true;
+        PORTAL.navigate('../' + PORTAL.active.key + '/');
+      }
     }
     S.idleT = (Math.abs(S.vx) < 1 && !S.overlay && S.target == null && !S.sweep) ? S.idleT + dt : 0;
+    tickWeather(dt);
+    tickSleep(dt);
     checkGuide();
     if (S.front < 1) S.front = Math.min(1, S.front + dt / FRONT_DUR);
 
     draw(dt);
     updateHUD();
+    audioTick(dt);
   }
 
   const ms = performance.now() - t0;
@@ -4292,21 +5542,27 @@ function renderStep() {
   const t0 = performance.now();
   S.t += 0.5;   /* held frames: the clock steps when you do */
   syncPage();
+  tickWeather(0.5);   /* the calm sky steps with you; the stages are held */
   checkGuide();
   draw(0);
   updateHUD();
+  audioTick(0.4);
   noteFrame(performance.now() - t0, 'reduced-step');
 }
 
 /* ---------------- boot ---------------- */
 async function boot() {
-  const [content, graph, communities, provenance] = await Promise.all([
+  const [content, graph, communities, provenance, trailOrder] = await Promise.all([
     fetch('content.json').then(r => r.json()),
     fetch('graph.json').then(r => r.json()),
     fetch('communities.json').then(r => r.json()),
-    fetch('provenance.json').then(r => r.json())
+    fetch('provenance.json').then(r => r.json()),
+    /* THE TRAIL WALKS THE SIDEBAR: the ready-made walking order (287 slugs) */
+    fetch('trail-order.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
   ]);
-  buildModel(content, graph, communities, provenance);
+  buildModel(content, graph, communities, provenance, trailOrder);
+  buildWeather();          /* the real calendar, before the first frame */
+  covInit();               /* the ground already walked, before the first step */
   resize();
   makeGrain();
   fillLanding();
@@ -4314,18 +5570,26 @@ async function boot() {
   tickDay(0);
 
   const slug = location.hash.slice(1);
-  if (slug && M.bySlug.has(slug)) {
+  if (slug === 'lands-end') {
+    landingEl.classList.add('gone');
+    teleport(M.leView);
+  } else if (slug && M.bySlug.has(slug)) {
     landingEl.classList.add('gone');
     teleport(M.bySlug.get(slug).start + 6);
   } else {
     S.overlay = 'landing';
-    teleport(12);
+    /* QUICK START FIRST: the walk opens at the Quick Start Guide's gate */
+    const qp = M.bySlug.get(M.qsSlug);
+    teleport(qp ? qp.start + 6 : 12);
   }
 
   refreshDogUI();
+  refreshLayoutUI();
+  /* now the corpus exists, the walk's share of it can be read for real */
+  if (window.__scoreReady) scoreUpdate(false);
 
   window.__lw = {
-    M, S, DAY, ambientCD, bubbleCD, bubbleFacts, terrainFor,
+    M, S, DAY, ambientCD, bubbleCD, bubbleFacts, terrainFor, LBL, lblBox,
     PACK, GUIDE, WALKER, DOG, REGBOOK, SPECIES,
     certDataURL(which) { return certCanvas(which).toDataURL('image/png'); },
     markVisited(slugs) { for (const sl of slugs) PACK.visited[sl] = 1; queueSave(); },
@@ -4333,8 +5597,17 @@ async function boot() {
     openTicket(slug) { const p2 = slug ? M.bySlug.get(slug) : S.page; if (p2) openTicket(p2); },
     openLook(slug) { const p2 = slug ? M.bySlug.get(slug) : S.page; if (p2 && p2.overlook) openLook(p2); },
     openPack, openGuide, openWalkerPick, sweepTo, toggleDog,
+    AUD, MUS, WX, SLP, LAY,
+    setLayout, toggleLayout, wxLabel, wakeWalker, buildWeather,
+    landsEnd(instant) { travelToLE(instant !== false); },
     ticketEditUrl, ticketIssueUrl, unlockSpecies,
     setX(x) { teleport(x); if (REDUCED) renderStep(); },
+    /* the frame's own geometry, so a probe can sample the drawing where the
+       drawing actually is rather than at a fraction guessed from outside */
+    geom() {
+      return { W, H, visH, horizonY, groundY, AVX, sunSX: SUN_SX, sunA: SUN_A,
+        cliffSX: w2s(M.leCliff), benchSX: w2s(M.leBench) };
+    },
     goto(s) { const p = M.bySlug.get(s); if (p) { teleport(p.start + 6); if (REDUCED) renderStep(); } },
     setHour(t) { DAY.t = ((t % 1) + 1) % 1; DAY.sig = ''; DAY.dialSig = ''; DAY.dialT = -9; tickDay(0); needsDraw = true; if (REDUCED) renderStep(); },
     daySpeed(i) { DAY.speed = clamp(i | 0, 0, DAY_SPEEDS.length - 1); },
@@ -4373,3 +5646,2901 @@ boot().catch(err => {
   document.body.insertAdjacentHTML('beforeend',
     '<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#1C0F2E;color:#FFF3E0;font-family:Georgia,serif;z-index:99">The trail data could not be loaded. Serve this folder over HTTP and try again.</div>');
 });
+
+/* ==================================================================== */
+/* ROUND 5 — LAND'S END, AND THE SOUND OF THE TRAIL                      */
+/* Two independent layers: SFX (bundled CC0 recordings, see              */
+/* sfx/CREDITS.txt) and MUSIC (a live music-box voice + one credited     */
+/* recorded theme, see music/CREDITS.txt). Music is weather: it arrives  */
+/* at moments — golden hour, an overlook, a biome border, nightfall —    */
+/* and withdraws to true silence. Land's End is the shore past the end   */
+/* cairn: the whole documentation as a night coastline of 290 lights,    */
+/* each blinking a rhythm derived from its own page's numbers.           */
+/* ==================================================================== */
+
+/* ---------------- Land's End: the model ---------------- */
+const LE_HEAD = 1150;   /* walkable headland past the end cairn, in px */
+const LE_COAST = 2300;  /* how far the lit coastline recedes east      */
+
+function buildLandsEnd() {
+  M.leStart = M.totalPx;
+  M.leCliff = M.totalPx + LE_HEAD;   /* here the ground falls away      */
+  M.leBench = M.leCliff - 150;       /* the bench, back from the brink  */
+  M.leView = M.leCliff - 60;         /* where you stand to see it whole */
+  M.worldEnd = M.leCliff - 26;       /* the brink itself, and no further*/
+  const lightInks = [INKS.cream, INKS.apricot, INKS.rose, mix(INKS.cream, INKS.rose, 0.5)];
+  M.leLights = M.sea.map((p, i) => {
+    const u = M.sea.length > 1 ? i / (M.sea.length - 1) : 0;
+    /* the shore curves in and out of bays; each page keeps its own place
+       along it, west to east, in the order the trail was walked */
+    const dep = clamp(0.20 + 0.62 * (0.5 + 0.5 * Math.sin(u * 6.1 + 0.7)) +
+                      0.14 * Math.sin(u * 23.3), 0.05, 0.97);
+    return {
+      u, dep,
+      per: 1.6 + (p.words % 97) / 97 * 3.6,        /* rhythm from its length     */
+      ph: (p.commits % 16) / 16,                   /* offset from its commits    */
+      b: 0.34 + 0.66 * Math.log(1 + p.inC) / Math.log(1 + M.maxIn),
+      ink: p.comm >= 0 ? lightInks[p.comm % lightInks.length] : mix(INKS.cream, INKS.violet, 0.4),
+      big: p.inC >= M.sniffMin
+    };
+  });
+}
+
+function travelToLE(instant) {
+  const go = () => {
+    teleport(M.leView);
+    suppressHash = true;
+    location.hash = '#lands-end';
+    if (REDUCED) renderStep();
+  };
+  if (REDUCED || instant) { go(); return; }
+  wipeEl.hidden = false;
+  wipeEl.style.transformOrigin = 'left center';
+  const a1 = wipeEl.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 170, easing: 'steps(6)', fill: 'forwards' });
+  a1.onfinish = () => {
+    go();
+    wipeEl.style.transformOrigin = 'right center';
+    const a2 = wipeEl.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }], { duration: 200, easing: 'steps(6)', fill: 'forwards' });
+    a2.onfinish = () => { wipeEl.hidden = true; };
+  };
+}
+
+function renderLEDock() {
+  document.getElementById('dockTitle').textContent = 'LAND’S END';
+  const chip = document.getElementById('blockchip');
+  chip.textContent = fmt(M.sea.length) + ' LIGHTS BELOW';
+  dockContent.innerHTML =
+    '<h1>Land’s End</h1>' +
+    '<p>The trail does not stop at a wall. Past the end cairn the ground falls away to a shore, ' +
+    'and the whole documentation lies below as a night coastline on dark water: <b>' +
+    fmt(M.sea.length) + ' lights, one for every page</b>' +
+    (M.sea.length > M.pages.length
+      ? ' — ' + fmt(M.sea.length - M.pages.length) +
+        ' of them belonging to pages the walk itself passes by; the sea keeps the whole documentation all the same.</p>'
+      : '.</p>') +
+    '<p>Every light keeps its own page’s time — its length sets the rhythm of the blink, its commits ' +
+    'set the offset, its citations set the brightness. Nothing down there is invented.</p>' +
+    '<p><em>The sea this trail was walking toward — a parting gift from the archived Working Sea.</em></p>' +
+    '<p>A bench. The cliff. The lights. Silence. Walk west when you are ready to return.</p>';
+  dockScroll.scrollTop = 0;
+}
+
+/* the shore, drawn in the trail's own idiom: flat inks, hard facets.
+   You stand at the brink and the whole documentation lies below as a night
+   coastline: 290 lights on dark water, each keeping its own page's time. */
+function drawLandsEnd(pal, wN) {
+  if (S.x + (W - AVX) + 80 <= M.totalPx) return;
+  const gy = gYAt(M.totalPx - 1);
+  const cliffSX = w2s(M.leCliff);
+  if (cliffSX > W + 40) { drawHeadland(gy, cliffSX, pal); return; }
+  const seaTop = horizonY;                        /* the far water horizon */
+  const yNear = visH - 22;
+  const water = mix('#0D0718', INKS.violet, 0.13);
+  const sx0 = Math.max(cliffSX, -40);
+  const sw = W + 60 - sx0, sh = visH - seaTop;
+
+  /* The sea is night water at every hour — that is the whole point of the
+     vista, and the lights need the dark. But the band where it meets the sky
+     used to stay pitch dark under a lit sunset ridge, so the shore read as a
+     panel pasted below the land. Now the far water and a strip of shore haze
+     take the hour's own ink, in the same flat steps: four hard bands, never a
+     gradient. At night all three terms fall to zero and the sea is exactly
+     the sea of round 7. */
+  const lit = clamp(DAY.wts.m * 0.55 + DAY.wts.d * 0.90 + DAY.wts.g * 0.72, 0, 1);
+  const skyInk = mix(mix(DAWN_TINT, DAYLIGHT_TINT, DAY.wts.d), INKS.apricot, DAY.wts.g * 0.62);
+  const hazeH = sh * 0.055;
+  cx.fillStyle = mix(water, skyInk, 0.34 * lit);
+  cx.fillRect(sx0, seaTop, sw, sh * 0.44);
+  cx.fillStyle = mix(water, '#000000', 0.34 * (1 - 0.18 * lit));
+  cx.fillRect(sx0, seaTop + sh * 0.44, sw, sh * 0.34);
+  cx.fillStyle = mix(water, '#000000', 0.62 * (1 - 0.10 * lit));
+  cx.fillRect(sx0, seaTop + sh * 0.78, sw, sh * 0.22 + 8);
+  /* the shore haze: the one band that carries the hour onto the water */
+  if (lit > 0.004) {
+    cx.fillStyle = mix(water, skyInk, 0.68 * lit);
+    cx.fillRect(sx0, seaTop + 1.6, sw, hazeH);
+  }
+  /* THE GLITTER (round 12). The sea kept its night ink through golden hour,
+     which the verifier called almost-intentional and was right to: this
+     water has to stay dark or the 290 lights have nothing to be lit against.
+     So the hour does not wash it — it strikes it. A low sun on water, drawn
+     the way this build draws a gust, is a short stack of HARD HORIZONTAL
+     BARS in the sky's own ink, widest near the horizon and shorter as they
+     come toward you, and gone by nightfall. The first cut of this was a
+     three-step wedge and it printed as a pale panel over the water: a
+     rectangle the eye read as interface, not as light. */
+  if (lit > 0.05 && SUN_A > 0.05 && SUN_SX > sx0 + 24) {
+    const pathX = clamp(SUN_SX, sx0 + 30, W - 24);   /* under the sun itself */
+    const bars = 7;
+    for (let i = 0; i < bars; i++) {
+      const f = i / (bars - 1);
+      const y = seaTop + sh * (0.075 + f * 0.60);
+      const halfW = sw * (0.075 - 0.055 * f) * (0.55 + 0.45 * Math.abs(Math.sin(i * 2.1 + 1.1)));
+      const th = Math.max(1.4, sh * (0.016 - 0.008 * f));
+      cx.fillStyle = mix(water, skyInk, (0.78 - 0.34 * f) * lit * (0.45 + 0.55 * SUN_A));
+      cx.fillRect(Math.max(sx0, pathX - halfW), y, Math.min(sw, halfW * 2), th);
+    }
+  }
+  /* the horizon's own hard line */
+  cx.fillStyle = mix(mix(INKS.cream, INKS.violet, 0.42), skyInk, 0.45 * lit);
+  cx.fillRect(sx0, seaTop, sw, 1.6);
+
+  /* the coastline of lights — one per page, blinking its own numbers */
+  if (M.leLights) {
+    const span = Math.max(240, W + 34 - (cliffSX + 26));
+    const px = (lt) => cliffSX + 26 + lt.u * span * (0.52 + 0.48 * (1 - lt.dep));
+    const py = (lt) => seaTop + 7 + (1 - lt.dep) * (yNear - seaTop - 7);
+    /* the shore itself: one hard line joining every page, west to east */
+    cx.strokeStyle = mix(water, INKS.cream, 0.22);
+    cx.lineWidth = 1.2;
+    cx.globalAlpha = 0.55;
+    cx.beginPath();
+    for (let i = 0; i < M.leLights.length; i++) {
+      const lt = M.leLights[i];
+      const x = px(lt), y = py(lt) + 1.5;
+      if (i === 0) cx.moveTo(x, y); else cx.lineTo(x, y);
+    }
+    cx.stroke();
+    cx.globalAlpha = 1;
+    for (let i = 0; i < M.leLights.length; i++) {
+      const lt = M.leLights[i];
+      /* far lights crowd toward the vanishing point; near ones spread out */
+      const sx = px(lt);
+      if (sx < cliffSX + 8 || sx > W + 20) continue;
+      const sy = py(lt);
+      let a;
+      if (REDUCED) a = lt.b;                              /* calm: steady lights */
+      else {
+        const ph = ((S.t / lt.per) + lt.ph) % 1;
+        const k = smoothT(clamp(ph / 0.10, 0, 1)) * (1 - smoothT(clamp((ph - 0.5) / 0.12, 0, 1)));
+        a = lt.b * (0.34 + 0.66 * k);
+      }
+      if (a < 0.03) continue;
+      const sz = (lt.big ? 2.8 : 2.0) * (0.62 + 0.55 * (1 - lt.dep));
+      cx.globalAlpha = a;
+      cx.fillStyle = lt.ink;
+      cx.fillRect(sx - sz / 2, sy - sz / 2, sz, sz);
+      /* the still water holds each light once, flat and offset */
+      cx.globalAlpha = a * 0.24;
+      cx.fillRect(sx - sz / 2, sy + sz + 1.5, sz, Math.max(1, sz * 0.8));
+      cx.globalAlpha = 1;
+    }
+  }
+
+  /* a sloop of engraved ink stands off the point — hail her and she will
+     carry you to CARTA STRAPIANA. She rides the swell; the calm sea holds
+     her still. */
+  {
+    const bob = REDUCED ? 0 : Math.sin(S.t * 0.9) * 1.6;
+    const bx = cliffSX + 214, by = seaTop + sh * 0.30 + bob;
+    if (bx > -60 && bx < W + 60) {
+      const hullInk = mix('#0D0718', INKS.violet, 0.5);
+      drawPoly([[bx - 26, by], [bx + 26, by], [bx + 17, by + 9], [bx - 16, by + 9]], hullInk);
+      cx.strokeStyle = mix(INKS.cream, INKS.violet, 0.3);
+      cx.lineWidth = 1.2;
+      cx.strokeRect(bx - 26, by, 52, 0.1);   /* the gunwale's engraved line */
+      cx.beginPath(); cx.moveTo(bx + 2, by); cx.lineTo(bx + 2, by - 34); cx.stroke();
+      /* gaff main and jib, cut flat from cream */
+      cx.globalAlpha = 0.92;
+      drawPoly([[bx + 4, by - 32], [bx + 4, by - 4], [bx + 25, by - 8]], INKS.cream);
+      cx.globalAlpha = 0.72;
+      drawPoly([[bx - 1, by - 29], [bx - 1, by - 5], [bx - 19, by - 7]], INKS.cream);
+      cx.globalAlpha = 1;
+      /* two engraved hatch lines on the main */
+      cx.strokeStyle = INKS.violet; cx.lineWidth = 0.8; cx.globalAlpha = 0.6;
+      cx.beginPath(); cx.moveTo(bx + 7, by - 24); cx.lineTo(bx + 18, by - 11); cx.stroke();
+      cx.beginPath(); cx.moveTo(bx + 6, by - 17); cx.lineTo(bx + 14, by - 9); cx.stroke();
+      cx.globalAlpha = 1;
+      /* the masthead lantern, patient */
+      cx.fillStyle = INKS.apricot;
+      cx.globalAlpha = REDUCED ? 0.8 : 0.45 + 0.45 * (0.5 + 0.5 * Math.sin(S.t * 1.7));
+      cx.fillRect(bx + 1, by - 37, 2.4, 2.4);
+      cx.globalAlpha = 1;
+    }
+    /* and far out on the same water, the sea turns to living cartoon ink —
+       three hard swirls that never quite settle (bythedeep) */
+    const ix = Math.min(W - 110, cliffSX + sw * 0.80), iy = seaTop + sh * 0.14;
+    if (ix > cliffSX + 90 && ix > -40) {
+      cx.lineWidth = 1.6;
+      for (let sw2 = 0; sw2 < 3; sw2++) {
+        const ph = REDUCED ? sw2 * 2.1 : S.t * (0.55 + sw2 * 0.2) + sw2 * 2.1;
+        const rr = 5 + sw2 * 4 + (REDUCED ? 0 : Math.sin(ph * 0.7) * 1.5);
+        cx.strokeStyle = sw2 === 1 ? INKS.violet : INKS.cream;
+        cx.globalAlpha = 0.5 - sw2 * 0.09;
+        cx.beginPath();
+        cx.arc(ix + sw2 * 9 - 9, iy + (sw2 % 2) * 3, rr, ph % 6.28, (ph % 6.28) + 4.4);
+        cx.stroke();
+      }
+      /* a few flicked ink drops */
+      cx.fillStyle = INKS.cream;
+      cx.globalAlpha = 0.55;
+      const dph = REDUCED ? 0 : Math.floor(S.t * 2) % 3;
+      cx.fillRect(ix - 16 + dph * 3, iy - 9, 1.6, 1.6);
+      cx.fillRect(ix + 14 - dph * 2, iy - 6 + dph, 1.6, 1.6);
+      cx.globalAlpha = 1;
+    }
+  }
+
+  drawHeadland(gy, cliffSX, pal);
+}
+
+/* the last of the land: bare ground to the brink, then a faceted face */
+function drawHeadland(gy, cliffSX, pal) {
+  const headX0 = Math.max(w2s(M.totalPx - 4), -80);
+  const hx1 = Math.min(cliffSX, W + 80);
+  if (headX0 > W + 80) return;
+  const ground = gradeColor(mix(INKS.aubergine, INKS.violet, 0.22), DAY.wts);
+  /* rose registration underlay — the riso plate slips at the brink */
+  cx.globalAlpha = 0.34;
+  cx.fillStyle = INKS.rose;
+  cx.fillRect(headX0 + 2.5, gy + 1.5, Math.max(0, hx1 - headX0), visH - gy + 8);
+  cx.globalAlpha = 1;
+  cx.fillStyle = ground;
+  cx.beginPath();
+  cx.moveTo(headX0, gy);
+  cx.lineTo(hx1, gy);
+  if (cliffSX < W + 80) {
+    cx.lineTo(cliffSX + 16, gy + (visH - gy) * 0.34);
+    cx.lineTo(cliffSX - 9, gy + (visH - gy) * 0.66);
+    cx.lineTo(cliffSX + 7, visH + 10);
+  } else cx.lineTo(hx1, visH + 10);
+  cx.lineTo(headX0, visH + 10);
+  cx.closePath(); cx.fill();
+  cx.fillStyle = mix(ground, INKS.cream, 0.16);
+  cx.fillRect(headX0, gy, Math.max(0, hx1 - headX0), 2.5);
+
+  /* THE LIT EDGE (round 12). Land and water met at a bare vertical seam,
+     and at golden hour the sky above it was lit while the join was not — the
+     one edge on the trail that did not know what hour it was. A headland at
+     that hour catches the light down its seaward facets, so the facets get
+     the sky's own ink as a hard keyline: no gradient, no glow, just the
+     plate that catches the sun printed one step brighter. Zero at night. */
+  const edgeLit = clamp(DAY.wts.m * 0.55 + DAY.wts.d * 0.90 + DAY.wts.g * 0.72, 0, 1);
+  if (cliffSX < W + 80 && edgeLit > 0.05) {
+    const eInk = mix(mix(DAWN_TINT, DAYLIGHT_TINT, DAY.wts.d), INKS.apricot, DAY.wts.g * 0.62);
+    cx.save();
+    cx.strokeStyle = mix(ground, eInk, 0.55 * edgeLit);
+    cx.lineWidth = 2.2;
+    cx.lineJoin = 'miter';
+    cx.beginPath();
+    cx.moveTo(hx1, gy);
+    cx.lineTo(cliffSX + 16, gy + (visH - gy) * 0.34);
+    cx.lineTo(cliffSX - 9, gy + (visH - gy) * 0.66);
+    cx.lineTo(cliffSX + 7, visH + 10);
+    cx.stroke();
+    /* and the brink itself, where the ground stops: one bright step */
+    cx.fillStyle = mix(ground, eInk, 0.72 * edgeLit);
+    cx.fillRect(Math.max(headX0, hx1 - 26), gy, Math.min(26, Math.max(0, hx1 - headX0)), 2.5);
+    cx.restore();
+  }
+
+  /* the bench, kept in perfect repair — someone still comes here.
+     A cream backlight rim, as the walker has, so ink reads on dark ground */
+  const leBench = { x: M.leBench, tilt: 0, broken: false, q: 1 };
+  drawBench(leBench, { ink: 'rgba(255,243,224,0.75)' });
+  cx.save(); cx.translate(-2.4, -1.6);
+  drawBench(leBench, pal);
+  cx.restore();
+
+  /* the plaque, and the caption the archive asked for */
+  const bsx = w2s(M.leBench);
+  if (bsx > -300 && bsx < W + 300) {
+    label('LAND’S END', bsx, gy - 132, 16, INKS.cream, 'center', 0.34);
+    label('THE SEA THIS TRAIL WAS WALKING TOWARD', bsx, gy - 112, 8.5,
+      mix(INKS.cream, INKS.apricot, 0.5), 'center', 0.3);
+    label(fmt(M.sea.length) + ' LIGHTS — ONE FOR EVERY PAGE, EACH ' +
+      (REDUCED ? 'HOLDING' : 'BLINKING') + ' ITS OWN NUMBERS',
+      bsx, gy - 98, 7.5, 'rgba(255,243,224,0.70)', 'center', 0.24);
+    label('A PARTING GIFT FROM THE ARCHIVED WORKING SEA', bsx, gy - 86, 7,
+      'rgba(255,243,224,0.48)', 'center', 0.24);
+  }
+}
+
+/* ==================================================================== */
+/* THE WAYS OFF THE TRAIL (wave 3) — six crossings, each discovered      */
+/* (the picnic-table crossing is gone by owner order: the Kit left the    */
+/* mains — no trace of that crossing may remain)                          */
+/* where the geography puts it, never a menu. Approaching or hovering    */
+/* shows one hint line; activating plays a short in-fiction beat, then   */
+/* the trail hands you to the sibling at ../KEY/. Reduced motion         */
+/* crosses instantly. Zero cost while an egg is off-screen.              */
+/* ==================================================================== */
+const PORTAL = {
+  active: null,                /* {key, t, dur, gone} while a beat plays */
+  seen: {},                    /* key -> times taken this visit */
+  mx: -9e9, my: -9e9,          /* last pointer position on the canvas */
+  starHover: false, starSX: -1, starSY: -1, starOn: 0,
+  navigate(url) { location.href = url; }   /* probes may stub this */
+};
+const PORTAL_DUR = { herbarium: 1.5, cartastrapiana: 1.4, bythedeep: 1.4 };
+const PORTAL_LINES = {
+  pixelcity: 'DOWN THE SWITCHBACKS — A DAY’S WALK TO THE CITY OF PIXELS',
+  cartastrapiana: 'SHE ANSWERS THE HAIL — COMING ABOUT FOR THE POINT',
+  bythedeep: 'YOU PUT OUT FOR THE LIVING INK',
+  firstlight: 'THE MOVING STAR LEADS OFF THE CHART',
+  herbarium: 'PRESSED FLAT — A FLOWER FOR THE HERBARIUM',
+  secreta: 'THE RACK SPINS — ONE COMIC SLIDES FREE'
+};
+/* THE PORTAL CONFIRM (owner's lab law): every way off the trail asks
+   before it takes you. The carved notice names where the crossing leads;
+   YES and NO are mouse-clickable and Tab-focusable, Y confirms, N or
+   Escape stays, Enter chooses the focused control. Never window.confirm. */
+const PORTAL_ASK = {
+  pixelcity: 'DOWN THE SWITCHBACKS TO THE CITY OF PIXELS',
+  cartastrapiana: 'ABOARD THE SLOOP STANDING OFF THE POINT',
+  bythedeep: 'OUT TO THE LIVING INK, FAR ON THE WATER',
+  firstlight: 'AFTER THE MOVING STAR, OFF THE CHART',
+  herbarium: 'INTO THE PRESSED PAGES OF THE HERBARIUM',
+  secreta: 'INTO THE COMIC ON THE SPINNER RACK'
+};
+const paEl = document.getElementById('portalask');
+const paLine = document.getElementById('paLine');
+const paYes = document.getElementById('paYes');
+const paNo = document.getElementById('paNo');
+const PA = { key: null };
+function portalAsk(key) {
+  if (PORTAL.active || S.overlay === 'portalask') return;
+  closeOverlays();
+  PA.key = key;
+  paLine.textContent = PORTAL_ASK[key] || key.toUpperCase();
+  paEl.hidden = false;
+  S.overlay = 'portalask';
+  S.target = null; S.keys = {};
+  try { paYes.focus(); } catch (e) { }
+  needsDraw = true;
+  if (REDUCED) renderStep();
+}
+function portalYes() { const k = PA.key; PA.key = null; closeOverlays(); if (k) portalGo(k); }
+function portalNo() {
+  /* cancelling returns the walker cleanly to the trail: nothing moved */
+  PA.key = null;
+  closeOverlays();
+  try { if (document.activeElement) document.activeElement.blur(); } catch (e) { }
+}
+paYes.addEventListener('click', portalYes);
+paNo.addEventListener('click', portalNo);
+function portalGo(key) {
+  if (PORTAL.active) return;
+  PORTAL.seen[key] = (PORTAL.seen[key] || 0) + 1;
+  if (REDUCED) { PORTAL.navigate('../' + key + '/'); return; }
+  PORTAL.active = { key, t: 0, dur: PORTAL_DUR[key] || 1.15, gone: false };
+  audEv('portal', S.x);
+}
+function buildPortals() {
+  /* THE KIOSK, PLACED DEEP (owner order — he met it ten steps in and
+     laughed): the kiosk stands around the twentieth page, at a natural
+     village stop — among pages 18-25 the stretch that set the most
+     picnic tables wins (a green with tables is a village stop if
+     anything on this trail is), ties going to the page nearest the
+     twentieth. On that stretch the kiosk takes the middle of the widest
+     gap the spread furniture left, so the ten-step law keeps its breath
+     on both sides. Derived from the corpus, never pinned to a slug. */
+  const kLo = Math.min(KIOSK_PAGE_LO, M.pages.length - 1);
+  const kHi = Math.min(KIOSK_PAGE_HI, M.pages.length - 1);
+  let kBest = null;
+  for (let ki = kLo; ki <= kHi; ki++) {
+    const kp = M.pages[ki];
+    const picnics = kp.furn.filter(f => f.kind === 'picnic').length;
+    const score = (picnics > 0 ? 1000 : 0) - Math.abs(ki - 20);
+    if (!kBest || score > kBest.score) kBest = { ki, kp, score };
+  }
+  const vp = kBest.kp;
+  const kxs = [vp.signX, vp.regX];
+  for (const g of vp.gates || []) kxs.push(g.x);
+  for (const t2 of vp.terraces) kxs.push(t2.x);
+  for (const f2 of vp.furn) kxs.push(f2.x);
+  for (const hz of vp.hazards) kxs.push(hz.x);
+  for (const sp2 of vp.springs || []) kxs.push(sp2.x);
+  if (vp.overlook) kxs.push(vp.overlook.x);
+  const eLo = vp.start + 140, eHi = vp.start + vp.len - 140;
+  kxs.sort((a, b) => a - b);
+  let gA = eLo, gB = eLo, kPrev = eLo;
+  for (const x2 of kxs.concat([eHi])) {
+    const cxx = clamp(x2, eLo, eHi);
+    if (cxx - kPrev > gB - gA) { gA = kPrev; gB = cxx; }
+    if (cxx > kPrev) kPrev = cxx;
+  }
+  M.kioskPage = kBest.ki;
+  M.kioskX = (gA + gB) / 2;
+  /* QUICK START FIRST (owner's lab law): the walk begins at the Quick
+     Start Guide stretch — found by its own title, never hardcoded */
+  let qs = null;
+  for (const p of M.pages) {
+    if (/quick[\s-]?start/i.test(p.label || p.slug)) { qs = p; break; }
+  }
+  M.qsSlug = qs ? qs.slug : M.pages[0].slug;
+}
+
+/* pixel city lights glitter in the valley below a night overlook */
+function drawPixelCity(p, pal, wN) {
+  const o = p.overlook;
+  const nk = clamp((wN - 0.45) / 0.30, 0, 1);
+  if (nk <= 0.01) return;
+  const sgx = w2s(o.x + 96);
+  if (sgx < -220 || sgx > W + 220) return;
+  const gy = gYAt(o.x + 96);
+  /* the valley: a grid-town of far pixels, each keeping its own time */
+  const r = rngFor('pixelcity:' + p.slug);
+  const y0 = horizonY + (gy - horizonY) * 0.26;
+  for (let i = 0; i < 44; i++) {
+    const px = sgx - 40 + r() * 190;
+    const py = y0 + r() * 24 - 6;
+    const cc = r();
+    const rate = 1.1 + r() * 2.2;
+    const a = REDUCED ? 0.7 :
+      (Math.sin(S.t * rate + i * 2.7) > 0.25 ? 0.9 : 0.28);
+    cx.globalAlpha = nk * a * 0.8;
+    cx.fillStyle = cc < 0.5 ? INKS.cream : (cc < 0.8 ? INKS.apricot : INKS.rose);
+    cx.fillRect(px, py, 1.6, 1.6);
+  }
+  cx.globalAlpha = 1;
+  /* the small sign that names the way down */
+  cx.strokeStyle = pal.ink; cx.lineWidth = 2.4;
+  cx.beginPath(); cx.moveTo(sgx, gy); cx.lineTo(sgx, gy - 42); cx.stroke();
+  cx.fillStyle = INKS.cream; cx.globalAlpha = 0.55 + 0.45 * nk;
+  cx.fillRect(sgx - 34, gy - 58, 68, 16);
+  cx.strokeStyle = pal.ink; cx.lineWidth = 1.5;
+  cx.strokeRect(sgx - 34, gy - 58, 68, 16);
+  cx.globalAlpha = 1;
+  label('PIXEL CITY', sgx, gy - 47, 7, INK_DARK, 'center', 0.9);
+  if (Math.abs(sgx - AVX) < 200) {
+    label('ONE DAY OF WALKING DOWN', sgx, gy - 64, 6.5,
+      'rgba(255,243,224,' + (0.5 + 0.4 * nk).toFixed(2) + ')', 'center', 0.6);
+  }
+}
+
+/* the village kiosk at its village stop, deep in the walk, with its
+   comics spinner rack (owner order: around the twentieth page) */
+function drawKiosk(pal) {
+  const kx = M.kioskX, sx = w2s(kx);
+  if (sx < -160 || sx > W + 160) return;
+  const gy = gYAt(kx), ink = pal.ink;
+  /* the hut: two posts, a counter, a striped awning */
+  cx.fillStyle = ink;
+  cx.fillRect(sx - 30, gy - 46, 4, 46);
+  cx.fillRect(sx + 8, gy - 46, 4, 46);
+  cx.fillRect(sx - 34, gy - 22, 50, 4);      /* the counter */
+  for (let i = 0; i < 4; i++) {
+    cx.fillStyle = i % 2 ? INKS.rose : INKS.cream;
+    cx.fillRect(sx - 38 + i * 15, gy - 54, 15, 7);
+  }
+  cx.strokeStyle = ink; cx.lineWidth = 1.5;
+  cx.strokeRect(sx - 38, gy - 54, 60, 7);
+  label('KIOSK', sx - 9, gy - 30, 6.5, 'rgba(255,243,224,0.8)', 'center', 0.8);
+  /* the spinner rack: three comics turning slowly on a pole */
+  const rx = sx + 34;
+  cx.fillStyle = ink;
+  cx.fillRect(rx - 1.5, gy - 44, 3, 44);
+  const covers = [INKS.rose, INKS.apricot, INKS.violet];
+  for (let t = 0; t < 3; t++) {
+    const wSpin = REDUCED ? 9 : Math.abs(Math.cos(S.t * 0.8 + t * 1.1)) * 11 + 1.5;
+    const cy = gy - 40 + t * 12;
+    cx.fillStyle = covers[t];
+    cx.fillRect(rx - wSpin, cy, wSpin * 2, 9);
+    cx.strokeStyle = INKS.cream; cx.lineWidth = 1;
+    cx.strokeRect(rx - wSpin, cy, wSpin * 2, 9);
+  }
+}
+
+/* QUICK START FIRST — a small carved sign where the whole walk begins */
+function drawStartSign(x, pal) {
+  const sx = w2s(x);
+  if (sx < -140 || sx > W + 140) return;
+  const gy = gYAt(x);
+  cx.save();
+  cx.translate(sx, gy);
+  /* the post, then a cream plate over its riso rose under-offset —
+     kept low so the border stone's own caption keeps the air above it */
+  cx.strokeStyle = pal.ink; cx.lineWidth = 3.4;
+  cx.beginPath(); cx.moveTo(0, 0); cx.lineTo(0, -24); cx.stroke();
+  cx.fillStyle = INKS.rose;
+  cx.fillRect(-44 + 2.5, -44 + 1.5, 88, 22);
+  cx.fillStyle = INKS.cream;
+  cx.fillRect(-44, -44, 88, 22);
+  cx.strokeStyle = pal.ink; cx.lineWidth = 2;
+  cx.strokeRect(-44, -44, 88, 22);
+  /* carved, not printed: dark letters pressed into the plate */
+  label('START HERE', 0, -29.5, 9, INK_DARK, 'center', 2);
+  /* a small notch pointing east — the way the reading runs */
+  cx.fillStyle = pal.ink;
+  cx.beginPath(); cx.moveTo(44, -37); cx.lineTo(52, -33); cx.lineTo(44, -29); cx.closePath(); cx.fill();
+  cx.restore();
+}
+
+/* ---------------- the audio engine: two honest layers ---------------- */
+/* Walking is silent, by the owner's order: no footstep recording is bundled,
+   and none is played. The trail's own sounds are all that speak. */
+const SFX_VARIANTS = {
+  jump: 1, land: 1, spring: 1, gate_open: 1, gate_travel: 1,
+  greet: 1, register_open: 1, pen: 1, waymarker: 1, gust: 1,
+  wind_bed: 1, crickets: 1,
+  /* round 9: rain on the path during a shower, and the small snore of a
+     walker who fell asleep standing still (the dog borrows that one, a
+     fifth higher and quieter) */
+  rain: 1, snore: 1,
+  /* THE DOG, RECAST (round 7). The old three samples were rejected by the
+     owner; these six are a fresh CC0 set, auditioned before wiring, all
+     small and friendly — not one growl, not one big dog, not one animal in
+     distress. Every voice is a countable event of its own. */
+  dog_sniff: 1, dog_pant: 2, dog_yip: 1, dog_sigh: 1, dog_shake: 1, dog_bark: 1
+};
+
+/* ROUND 11 — THE WIND IS THE QUIETEST THING ON THE TRAIL.
+   The owner's order was "divise par 3 le volume des bruits de vent", and
+   round 10 obeyed it on the bed but left the GUST the loudest ambient
+   voice of the whole build: 0.246 (file) x 0.16 (top gain) = 0.0394 of full
+   scale, over the crickets at 0.0230 and the rain at 0.0259. Weather that
+   shouts over the weather. The gust is trimmed by
+   a further 0.48 here, to 0.0189 — a hair under the wind bed's own 0.0202,
+   so the two halves of the wind are now the two quietest layers there are.
+
+   And the dog follows the wind down, because the law is that she is never
+   louder than it. The ceiling is the gust, whose peak is 0.0189, and every
+   dog voice is normalised to a 0.355 peak — so no dog gain may pass
+   0.0189 / 0.355 = 0.0533. Each of the six is set at half again what round
+   10 played (which was already half of what the mix first reached for),
+   and then clamped to that ceiling anyway. Measured, not promised: see
+   qa/r11-levels.mjs, which walks every buffer and asserts the order. */
+const DOG_PEAK = 0.355;
+const GUST_FILE = 0.246;              /* gust.ogg, as the browser decodes it */
+const GUST_TRIM = 0.48;               /* round 11: the wind stops shouting   */
+const GUST_PEAK = GUST_FILE * (0.0333 + 0.1267) * GUST_TRIM;   /* 0.01890 */
+const DOG_CEIL = GUST_PEAK / DOG_PEAK;                         /* 0.05325 */
+const DOG_GAIN = {
+  sniff: 0.050,   /* a soft double-sniff at a gate      */
+  pant:  0.043,   /* rare: she has RUN a long gap down   */
+  yip:   0.045,   /* one small yip: she found something */
+  sigh:  0.038,   /* contented, sitting by the reader   */
+  shake: 0.050,   /* a shake-off in mist or in rain     */
+  bark:  0.048    /* rare, and gentle                   */
+};
+function dogGain(voice, v) { return v * Math.min(DOG_GAIN[voice], DOG_CEIL); }
+/* EVERY DOG VOICE IS BOOKED THROUGH HERE, so that "never twice in a row"
+   and "seldom" are facts the code keeps rather than hopes. Round 12 adds
+   the floor: whatever the event, she does not speak twice inside the same
+   half-minute or so, and the gap is drawn fresh every time so it never
+   feels scheduled. A booking refused is a booking dropped — when in doubt
+   she stays quiet, and the caller learns so from the return value. */
+/* 4–9 s, and deliberately small. The floor is not where her rarity lives —
+   that is stoppedTogether() and the five per-voice clocks (snuffle 90-150 s,
+   sigh 75-140 s, shake 90-135 s, pant 110-200 s, bark 170-300 s). All this
+   does is stop two of them landing on the same instant, which is a
+   coincidence rather than a tic. A long floor here would have one genuine
+   event gagging another a few seconds later, which is worse. */
+const DOG_FLOOR_MIN = 4, DOG_FLOOR_SPAN = 5;
+/* her signature is never refused: the catch-up bark bypasses the floor
+   (it is earned, and welcome every time) but still SETS it, so no other
+   voice can land on the same instant */
+function dogVoiceNow(kind, wx) {
+  AUD.dogFloorAt = S.t + DOG_FLOOR_MIN + Math.random() * DOG_FLOOR_SPAN;
+  AUD.lastDog = kind; audEv(kind, wx);
+  if (AUD.dogTrace.length < 200) {
+    AUD.dogTrace.push({ kind: kind + '!', t: +S.t.toFixed(1), idle: +S.idleT.toFixed(2),
+      vx: +Math.abs(S.vx).toFixed(1), x: Math.round(S.x), pose: DOG.pose });
+  }
+  return true;
+}
+function dogVoice(kind, wx) {
+  if (S.t < (AUD.dogFloorAt || 0)) return false;
+  AUD.dogFloorAt = S.t + DOG_FLOOR_MIN + Math.random() * DOG_FLOOR_SPAN;
+  AUD.lastDog = kind; audEv(kind, wx);
+  /* every voice of hers, with the moment that earned it: the walker's idle
+     clock and speed at the instant she spoke. Any count of the dog can be
+     traced back to whether you were standing still when she did. */
+  if (AUD.dogTrace.length < 200) {
+    AUD.dogTrace.push({ kind, t: +S.t.toFixed(1), idle: +S.idleT.toFixed(2),
+      vx: +Math.abs(S.vx).toFixed(1), x: Math.round(S.x), pose: DOG.pose });
+  }
+  return true;
+}
+
+/* The snore answers to the same ceiling as the dog: snore.ogg peaks at
+   0.325, so nothing above 0.0394 / 0.325 = 0.121 may pass. Set at half
+   what the mix first reached for, and clamped anyway. Rain is weather:
+   at its loudest it reaches 0.13 x 0.186 = 0.0242 of full scale, under
+   the loudest gust, and it dies with the front that brought it. (Round 10
+   rebuilt rain.ogg and snore.ogg from named CC0 pages so every file in
+   sfx/ has a credit; the measured peaks are 0.186 and 0.326.) */
+const SNORE_PEAK = 0.325;
+const SNORE_CEIL = GUST_PEAK / SNORE_PEAK;             /* round 11: 0.05815 */
+const SNORE_GAIN = Math.min(0.0525, SNORE_CEIL);
+const DOGSNORE_GAIN = Math.min(0.0340, SNORE_CEIL);
+const RAIN_BED_MAX = 0.13;
+
+/* a toggle is a fade on one layer's gain, never a stop: ~0.6 s back in,
+   a shorter ease out, and then a true zero */
+const AUD_FADE_IN = 0.60, AUD_FADE_OUT = 0.38;
+
+const AUD = {
+  ctx: null, master: null,
+  sfx: { gain: null, an: null, on: false },
+  mus: { gain: null, an: null, on: false },
+  buf: new Map(), loadStarted: false, decoded: 0, decodeFail: [],
+  unlocked: false,
+  px: null,
+  beds: null, gustAt: 0, pantAt: 0, sighAt: 0, barkCD: 0, barkAt: 0, lastDog: '',
+  dogFloorAt: 0, sniffAt: 0,      /* round 12: the floor under all her voices */
+  dogTrace: [],                   /* …and the receipt for every one she gives */
+  evCount: {}, playCount: {}, log: [],
+  themePlayed: {
+    le: lsGet('longway.theme.le') === '1',
+    comm: lsGet('longway.theme.comm') === '1',
+    complete: lsGet('longway.theme.complete') === '1'
+  },
+  pendingTheme: null, themeSrc: null
+};
+/* defaults: both ON — except under reduced motion, where both are OFF
+   unless this visitor explicitly turned them on before */
+AUD.sfx.on = REDUCED ? lsGet('longway.sfx') === '1' : lsGet('longway.sfx') !== '0';
+AUD.mus.on = REDUCED ? lsGet('longway.mus') === '1' : lsGet('longway.mus') !== '0';
+
+function audUnlock() {
+  if (!AUD.unlocked) {
+    AUD.unlocked = true;
+    if (AUD.sfx.on || AUD.mus.on) audEnsureCtx();
+  }
+  if (AUD.ctx && AUD.ctx.state === 'suspended') AUD.ctx.resume().catch(() => {});
+}
+window.addEventListener('pointerdown', audUnlock, { capture: true });
+window.addEventListener('keydown', audUnlock, { capture: true });
+
+function audEnsureCtx() {
+  if (AUD.ctx || !AUD.unlocked) return;
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;
+  const c = new AC();
+  AUD.ctx = c;
+  AUD.master = c.createGain(); AUD.master.gain.value = 0.9;
+  AUD.master.connect(c.destination);
+  for (const which of ['sfx', 'mus']) {
+    const L = AUD[which];
+    L.gain = c.createGain();
+    L.gain.gain.value = L.on ? 1 : 0;
+    L.an = c.createAnalyser(); L.an.fftSize = 2048;
+    L.gain.connect(L.an); L.an.connect(AUD.master);
+  }
+  if (c.state === 'suspended') c.resume().catch(() => {});
+  audLoadAll();
+  musBuild();
+  audBedsBuild();
+  if (AUD.pendingTheme) { const w = AUD.pendingTheme; AUD.pendingTheme = null; audTheme(w); }
+}
+
+function audLoadAll() {
+  if (AUD.loadStarted || !AUD.ctx) return;
+  AUD.loadStarted = true;
+  const names = [];
+  for (const base of Object.keys(SFX_VARIANTS)) {
+    const n = SFX_VARIANTS[base];
+    if (n === 1) names.push(base);
+    else for (let i = 0; i < n; i++) names.push(base + '_' + i);
+  }
+  for (const nm of names) {
+    fetch('sfx/' + nm + '.ogg')
+      .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.arrayBuffer(); })
+      .then(ab => AUD.ctx.decodeAudioData(ab))
+      .then(b => { AUD.buf.set(nm, b); AUD.decoded++; })
+      .catch(e => { AUD.decodeFail.push(nm + ': ' + e.message); });
+  }
+}
+
+function audVariant(base) {
+  const n = SFX_VARIANTS[base] || 1;
+  if (n === 1) return AUD.buf.get(base) || null;
+  const i = Math.floor(Math.random() * n);
+  return AUD.buf.get(base + '_' + i) || AUD.buf.get(base + '_0') || null;
+}
+
+function audPlayBuf(b, vol, rate, pan, layer, delaySec) {
+  const L = AUD[layer || 'sfx'];
+  if (!AUD.ctx || !b || !L.gain) return null;
+  const c = AUD.ctx;
+  const src = c.createBufferSource(); src.buffer = b;
+  src.playbackRate.value = rate || 1;
+  const g = c.createGain(); g.gain.value = vol;
+  src.connect(g);
+  if (c.createStereoPanner) {
+    const pn = c.createStereoPanner(); pn.pan.value = clamp(pan || 0, -1, 1);
+    g.connect(pn); pn.connect(L.gain);
+  } else g.connect(L.gain);
+  src.start(c.currentTime + (delaySec || 0));
+  return src;
+}
+
+/* a two-second bed of rolled noise for the thunder — generated once,
+   normalised to a unit peak so its gain IS its peak; nothing external */
+function audNoiseBuf() {
+  if (AUD.noise || !AUD.ctx) return AUD.noise || null;
+  const c = AUD.ctx, nS = Math.floor(c.sampleRate * 2);
+  const b = c.createBuffer(1, nS, c.sampleRate);
+  const d = b.getChannelData(0);
+  let last = 0, mx = 0;
+  for (let i = 0; i < nS; i++) {
+    last = (last + (Math.random() * 2 - 1) * 0.02) * 0.998;
+    d[i] = last;
+    const a = Math.abs(last); if (a > mx) mx = a;
+  }
+  if (mx > 0) for (let i = 0; i < nS; i++) d[i] /= mx;
+  AUD.noise = b;
+  return b;
+}
+
+/* every sound maps to a countable event; the count survives even muted */
+function audEv(kind, wx, vol) {
+  AUD.evCount[kind] = (AUD.evCount[kind] || 0) + 1;
+  if (AUD.log.length < 600) AUD.log.push(kind + '@' + Math.round(S.t * 10) / 10);
+  /* MUTE, NEVER STOP: an event that happens while SFX is off still plays —
+     into a layer gain that is riding at zero. Nothing is skipped, nothing
+     is destroyed, and turning the layer back on lands you inside the sound
+     that is already in the air. */
+  if (!AUD.ctx) return;
+  const sx = wx == null ? AVX : w2s(wx);
+  const dpx = Math.abs(sx - AVX);
+  const att = 1 / (1 + Math.pow(dpx / 430, 2));           /* distance falls away */
+  const pan = clamp((sx - AVX) / (W * 0.55), -1, 1) * 0.8; /* panned by screen   */
+  const v = (vol == null ? 1 : vol) * att;
+  AUD.lastMix = { kind, dpx: Math.round(dpx), att: +att.toFixed(4), pan: +pan.toFixed(3), v: +v.toFixed(4) };
+  if (v < 0.02) return;
+  const jit = 0.94 + Math.random() * 0.12;
+  let played = true;
+  switch (kind) {
+    case 'jump': audPlayBuf(audVariant('jump'), v * 0.32, jit, pan); break;
+    case 'land': audPlayBuf(audVariant('land'), v * 0.30, 1.02 * jit, pan); break;
+    case 'spring':
+      audPlayBuf(audVariant('spring'), v * 0.42, 1.38, pan);
+      audPlayBuf(audVariant('jump'), v * 0.18, 0.88, pan, 'sfx', 0.05);
+      break;
+    case 'stumble': audPlayBuf(audVariant('land'), v * 0.36, 0.8, pan); break;
+    /* the hold: one soft bump as the barrier takes her weight — quieter
+       than a landing, felt more than heard */
+    case 'blocked': audPlayBuf(audVariant('land'), v * 0.16, 0.72, pan); break;
+    /* a crossing taken: a small two-note departure, stone then glass */
+    case 'portal':
+      audPlayBuf(audVariant('waymarker'), v * 0.30, 1.18, 0);
+      audPlayBuf(audVariant('greet'), v * 0.22, 0.9, 0, 'sfx', 0.16);
+      break;
+    /* ONE THIRD of the gain the gate used to open at — the owner listened
+       and heard a door slamming beside him; this is a latch lifting a few
+       steps away. The travel through it keeps the same restraint. */
+    case 'gate': audPlayBuf(audVariant('gate_open'), v * (0.5 / 3), jit, pan); break;
+    case 'gateTravel': audPlayBuf(audVariant('gate_travel'), v * (0.45 / 3), 1, 0); break;
+    case 'greet': audPlayBuf(audVariant('greet'), v * 0.5, 0.96 + Math.random() * 0.08, pan); break;
+    case 'regopen': audPlayBuf(audVariant('register_open'), v * 0.5, 1, pan); break;
+    case 'pen':
+      audPlayBuf(audVariant('pen'), v * 0.55, 0.92, 0);
+      audPlayBuf(audVariant('pen'), v * 0.4, 1.06, 0, 'sfx', 0.22);
+      break;
+    case 'stone': audPlayBuf(audVariant('waymarker'), v * 0.38, 0.95 + Math.random() * 0.1, pan); break;
+    case 'gust': audPlayBuf(audVariant('gust'), v * GUST_TRIM, 0.85 + Math.random() * 0.3, pan); break;
+    /* a soft rolled thunder, at wind-level gain by law: filtered noise,
+       eased in and out, through the SFX layer so the toggle rules it */
+    case 'thunder': {
+      if (!audNoiseBuf()) { played = false; break; }
+      const cth = AUD.ctx, tth = cth.currentTime;
+      const srcT = cth.createBufferSource(); srcT.buffer = AUD.noise; srcT.loop = true;
+      const lpT = cth.createBiquadFilter(); lpT.type = 'lowpass'; lpT.Q.value = 0.5;
+      lpT.frequency.setValueAtTime(120, tth);
+      lpT.frequency.linearRampToValueAtTime(300, tth + 0.45);
+      lpT.frequency.linearRampToValueAtTime(60, tth + 2.6);
+      const gT = cth.createGain();
+      const pkT = GUST_PEAK * v;             /* never past the wind */
+      gT.gain.setValueAtTime(0.0001, tth);
+      gT.gain.linearRampToValueAtTime(Math.max(0.0002, pkT), tth + 0.35);
+      gT.gain.linearRampToValueAtTime(Math.max(0.0001, pkT * 0.4), tth + 1.3);
+      gT.gain.linearRampToValueAtTime(0.0001, tth + 2.8);
+      srcT.connect(lpT); lpT.connect(gT);
+      if (cth.createStereoPanner) {
+        const pnT = cth.createStereoPanner(); pnT.pan.value = pan;
+        gT.connect(pnT); pnT.connect(AUD.sfx.gain);
+      } else gT.connect(AUD.sfx.gain);
+      srcT.start(tth); srcT.stop(tth + 3.0);
+      break;
+    }
+    /* --- the dog, recast: six voices, all of them gentle --- */
+    case 'dogsniff': {                       /* two quick snuffles at a door */
+      const r0 = 0.93 + Math.random() * 0.15;
+      audPlayBuf(audVariant('dog_sniff'), dogGain('sniff', v), r0, pan);
+      audPlayBuf(audVariant('dog_sniff'), dogGain('sniff', v) * 0.76,
+        r0 * (1.02 + Math.random() * 0.10), pan, 'sfx', 0.100 + Math.random() * 0.085);
+      break;
+    }
+    case 'dogpant':
+      audPlayBuf(audVariant('dog_pant'), dogGain('pant', v), 0.93 + Math.random() * 0.15, pan); break;
+    case 'dogyip':
+      audPlayBuf(audVariant('dog_yip'), dogGain('yip', v), 0.95 + Math.random() * 0.17, pan); break;
+    case 'dogsigh':
+      audPlayBuf(audVariant('dog_sigh'), dogGain('sigh', v), 0.90 + Math.random() * 0.14, pan); break;
+    case 'dogshake':
+      audPlayBuf(audVariant('dog_shake'), dogGain('shake', v), 0.92 + Math.random() * 0.16, pan); break;
+    case 'dogbark':
+      audPlayBuf(audVariant('dog_bark'), dogGain('bark', v), 0.96 + Math.random() * 0.11, pan); break;
+    /* --- the sleeper, and the smaller sleeper beside her --- */
+    case 'snore':
+      audPlayBuf(audVariant('snore'), v * SNORE_GAIN, 0.94 + Math.random() * 0.13, pan); break;
+    case 'dogsnore':
+      audPlayBuf(audVariant('snore'), v * DOGSNORE_GAIN, 1.42 + Math.random() * 0.17, pan); break;
+    default: played = false;
+  }
+  if (played) AUD.playCount[kind] = (AUD.playCount[kind] || 0) + 1;
+}
+
+/* --- the ambient beds: wind, crickets, rain. THE FOG FALLS SILENT
+   (wave 3, owner order): the mist's hush voice is gone entirely — no
+   recurring breath, no blowing loop, in mist or fog, place-bound or
+   weather-front. hush.ogg left the bank and the credits. Fog and mist
+   are purely visual now; the wind bed alone may whisper, at its lawful
+   third of the gain first reached for. --- */
+function audBedsBuild() {
+  if (!AUD.ctx || AUD.beds) return;
+  const mk = () => {
+    const g = AUD.ctx.createGain(); g.gain.value = 0;
+    g.connect(AUD.sfx.gain);
+    return { g, src: null, nextAt: 0, fadeAt: 0, target: 0 };
+  };
+  AUD.beds = { wind: mk(), crickets: mk(), rain: mk() };
+}
+/* How long a buffer actually SOUNDS. A file that ends in digital silence
+   would open a hole in the bed once a cycle — round 8 found wind_bed.ogg
+   running 7.9 s of nothing into every 22 s — so every bed is scheduled and
+   looped against this length and never against buf.duration. The files are
+   trimmed as well; this is the belt behind that brace. */
+const BED_XFADE = 1.0;          /* the grain fade baked into wind_bed.ogg */
+function audAudible(buf) {
+  if (buf.__lwAud !== undefined) return buf.__lwAud;
+  let out = buf.duration;
+  try {
+    const ch = buf.getChannelData(0);
+    let last = -1;
+    for (let i = ch.length - 1; i >= 0; i--) { if (Math.abs(ch[i]) > 1e-4) { last = i; break; } }
+    if (last >= 0) {
+      const d = (last + 1) / buf.sampleRate;
+      out = (buf.duration - d < 0.05) ? buf.duration : Math.max(0.5, d);
+    }
+  } catch (e) { /* keep the whole file */ }
+  try { buf.__lwAud = out; } catch (e) { /* fine, we recompute */ }
+  return out;
+}
+function audBedLoop(bed, name, loop) {
+  /* (re)start a bed's source when its buffer arrives; loopable files loop
+     natively over their audible length, the wind rides scheduled grains
+     whose baked equal-power fades crossfade one into the next */
+  if (!AUD.beds) return;
+  const B = AUD.beds[bed];
+  const buf = AUD.buf.get(name);
+  if (!buf) return;
+  const c = AUD.ctx;
+  const dur = audAudible(buf);
+  if (loop) {
+    if (B.src) return;
+    const s = c.createBufferSource(); s.buffer = buf; s.loop = true;
+    s.loopStart = 0; s.loopEnd = dur;         /* never loop through dead air */
+    s.connect(B.g); s.start();
+    B.src = s;
+  } else {
+    if (c.currentTime + 2.2 < B.nextAt) return;
+    const s = c.createBufferSource(); s.buffer = buf;
+    /* a hair of detune per grain, so the bed's own period never lines up
+       with itself twice — weather, not a tape loop */
+    const rate = 0.97 + Math.random() * 0.06;
+    s.playbackRate.value = rate;
+    s.connect(B.g);
+    const at = Math.max(B.fadeAt || 0, c.currentTime);
+    s.start(at);
+    const len = dur / rate;
+    B.nextAt = at + len;                       /* where this grain ends    */
+    B.fadeAt = at + len - BED_XFADE / rate;    /* where its fade begins    */
+  }
+}
+function audBedTarget(bed, t) {
+  const B = AUD.beds && AUD.beds[bed];
+  if (!B) return;
+  if (Math.abs((B.target || 0) - t) < 0.005) return;
+  B.target = t;
+  B.g.gain.setTargetAtTime(t, AUD.ctx.currentTime, 0.5);   /* always eased */
+}
+
+/* ==================================================================== */
+/* ROUND 10 — THE SCORE GROWS WITH THE JOURNEY                          */
+/*                                                                       */
+/* Owner order, after hearing the full ensemble at the trail end: the    */
+/* music GAINS LAYERS as the walk progresses, so the further you have    */
+/* read the richer the moments sound — one voice early, an ensemble by   */
+/* the end.                                                              */
+/*                                                                       */
+/* Progress is the share of the corpus ACTUALLY walked and read: words   */
+/* walked against the trail's true word count, pages opened against its  */
+/* true page count, and the plain mean of the two, so that neither       */
+/* sprinting nor fast-travelling alone can buy you the ensemble. It      */
+/* rides in the pack, so it keeps for the visit and across a reload.     */
+/*                                                                       */
+/* THE SILENCE DOCTRINE IS UNCHANGED. Layers make a moment THICKER, not  */
+/* more frequent: the same four triggers, the same cooldowns, the same   */
+/* three phrases, the same swell envelope and the same true silence      */
+/* between weathers. Everything a new voice does happens inside a moment */
+/* that would have happened anyway, and every voice sings through the    */
+/* same MUS.swell gate, so a moment ends exactly when it always ended.   */
+/* ==================================================================== */
+const SCORE_TIERS = [
+  { at: 0.00, name: 'MUSIC BOX',      line: 'the music box, alone' },
+  { at: 0.10, name: 'SPARSE PIANO',   line: 'a sparse piano joins' },
+  { at: 0.25, name: 'LOW PAD',        line: 'a low sustained pad' },
+  { at: 0.45, name: 'STRINGS',        line: 'strings' },
+  { at: 0.70, name: 'COUNTER-MELODY', line: 'a warm counter-melody' },
+  { at: 0.90, name: 'FULL ENSEMBLE',  line: 'the full ensemble' }
+];
+/* THICKER, NEVER LOUDER. Each voice that joins trims the whole ensemble a
+   little, so the score gains body without gaining volume: the peak of a
+   moment at the ensemble sits inside the peak of a moment at the music box.
+   Measured, not guessed — see qa/r10-levels.mjs. */
+const SCORE_TRIM = [1.00, 0.97, 0.97, 0.96, 0.95, 0.93];
+
+const SCORE = {
+  tier: 0, p: 0, words: 0, pages: 0,
+  /* the highest rung this visitor has ever reached, so a voice debuts once
+     and only once, even across a true reload */
+  reached: clamp(parseInt(lsGet('longway.score.tier') || '0', 10) || 0, 0, SCORE_TIERS.length - 1),
+  debut: -1,            /* a voice waiting to enter exposed on the next moment */
+  named: '', namedT: -1e9,
+  lastVoices: [], lastMoment: null, acct: null, unlocks: 0, debuts: 0, checkIn: 0
+};
+
+function scoreProgress() {
+  /* REDEFINED (wave 3, binding): progress is the share of the trail's own
+     DISTANCE covered on foot — unique ground, kept across reloads. The
+     words and the pages are still honest tallies for the pack, but the
+     score reads the ground alone: reading is never required, and a gate
+     hop buys nothing, because the stretches it skipped stay unwalked.
+     Walking the whole way to the end cairn reads 100 percent, PERIOD. */
+  const words = clamp(PACK.walked / Math.max(1, M.totalWords), 0, 1);
+  const pages = clamp(Object.keys(PACK.visited).filter(sl => M.bySlug.has(sl)).length / Math.max(1, M.pages.length), 0, 1);
+  return { words, pages, p: covShare() };
+}
+function scoreTierFor(p) {
+  let t = 0;
+  for (let i = 0; i < SCORE_TIERS.length; i++) if (p >= SCORE_TIERS[i].at) t = i;
+  return t;
+}
+/* one quiet line when a rung is first reached, and a voice queued to enter
+   slightly exposed on the very next moment */
+function scoreUpdate(announce) {
+  /* THE SHARES ARE OF A REAL CORPUS OR THEY ARE NOTHING. boot() fetches
+     the four data files asynchronously, so this can be reached with an
+     empty model; dividing by an empty trail would read every pack as a
+     finished walk and hand a returning visitor the whole ensemble at the
+     trailhead. Until the pages are in, the score holds. */
+  if (!M.pages.length || !M.totalWords || !COV.n) return SCORE.tier;
+  const g = scoreProgress();
+  SCORE.words = g.words; SCORE.pages = g.pages; SCORE.p = g.p;
+  const t = scoreTierFor(g.p);
+  if (t > SCORE.reached) {
+    for (let i = SCORE.reached + 1; i <= t; i++) {
+      SCORE.reached = i;
+      SCORE.debut = i;
+      SCORE.unlocks++;
+      lsSet('longway.score.tier', String(i));
+      if (announce !== false) {
+        toast('THE SCORE GAINS A VOICE — ' + SCORE_TIERS[i].name + ' · ' +
+          Math.round(g.p * 100) + '% OF THE TRAIL WALKED');
+      }
+    }
+  }
+  SCORE.tier = t;
+  refreshScoreUI();
+  return SCORE.tier;
+}
+function scoreLabel() {
+  const n = SCORE.tier + 1;
+  if (S.t - SCORE.namedT < 9 && SCORE.named) return 'SCORE · A NEW VOICE — ' + SCORE.named;
+  return 'SCORE · ' + SCORE_TIERS[SCORE.tier].name + ' · ' + n + (n === 1 ? ' VOICE' : ' VOICES') +
+    ' · ' + Math.round(SCORE.p * 100) + '%';
+}
+const scoreEl = document.getElementById('score');
+function refreshScoreUI() { if (scoreEl) setText(scoreEl, 'sc', scoreLabel()); }
+
+/* ---------------- music as weather ---------------- */
+const MUS = {
+  busIn: null, busPad: null, swell: null, built: false,
+  lastG: null, lastN: null,
+  cd: new Map(), quietUntil: 0, phraseEnd: 0,
+  lookAt: new Map(), noteSeed: 1
+};
+const MUS_SCALES = [[0, 2, 4, 7, 9], [0, 2, 5, 7, 9], [0, 3, 5, 7, 10]];
+const MUS_MOMENT_CD = { golden: 120, night: 120, border: 45, overlook: 60 };
+/* how long a moment takes to withdraw — one number, so the closing tine and
+   the silence that follows are always measured against the same fall */
+const MUS_FALL = 5;
+/* and how long it speaks before it withdraws: a moment that has not said
+   this much in two phrases speaks a third. Not a length imposed on the
+   music — the phrases are drawn exactly as they always were — but a floor
+   under how much of one the trail gets before the silence returns.
+   Nineteen made a third phrase near-certain and put the duty at 50.4 %;
+   sixteen was the point at which about half the moments had said enough in
+   two. Retuned by ear for the sidebar order (wave 4): the new walking
+   order re-seeded the rung stretches thinner — sparser phrases said only
+   ~33 % at sixteen — so eighteen re-centres the gate at the high thirties
+   while the true silences stay above sixty percent of every window. */
+const MUS_SAY = 18;
+
+function musBuild() {
+  if (MUS.built || !AUD.ctx) return;
+  MUS.built = true;
+  const c = AUD.ctx;
+  MUS.busIn = c.createGain(); MUS.busIn.gain.value = 1;
+  const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2600; lp.Q.value = 0.4;
+  MUS.swell = c.createGain(); MUS.swell.gain.value = 0;
+  MUS.busIn.connect(lp);
+  const dry = c.createGain(); dry.gain.value = 0.8;
+  lp.connect(dry); dry.connect(MUS.swell);
+  const delay = c.createDelay(2.0); delay.delayTime.value = 0.46;
+  const fb = c.createGain(); fb.gain.value = 0.30;
+  const fbLp = c.createBiquadFilter(); fbLp.type = 'lowpass'; fbLp.frequency.value = 1500;
+  const wet = c.createGain(); wet.gain.value = 0.34;
+  lp.connect(delay); delay.connect(fbLp); fbLp.connect(fb); fb.connect(delay);
+  delay.connect(wet); wet.connect(MUS.swell);
+  /* round 10: the sustained voices want the room but not the echo — their
+     own soft lowpass, straight into the same swell, so that a pad or a
+     bowed string ends at exactly the instant the moment ends */
+  MUS.busPad = c.createGain(); MUS.busPad.gain.value = 1;
+  const padLp = c.createBiquadFilter(); padLp.type = 'lowpass';
+  padLp.frequency.value = 1500; padLp.Q.value = 0.3;
+  MUS.busPad.connect(padLp); padLp.connect(MUS.swell);
+  MUS.swell.connect(AUD.mus.gain);
+}
+
+function musMidiHz(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+
+/* one struck tine: fundamental + octave shimmer + a high inharmonic ping,
+   all soft attack and long natural decay — a small instrument, not a synth.
+   `ring` (round 11) lets one tine be left to ring far past its written
+   length without changing how hard it was struck: same attack, same
+   partials, same peak, a longer decay. It is what a music box's home tine
+   actually does when nothing damps it. */
+function musNote(freq, when, vel, dur, ring) {
+  const c = AUD.ctx;
+  const mk = (f, v, d) => {
+    const o = c.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+    const g = c.createGain();
+    g.gain.setValueAtTime(0.0001, when);
+    g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), when + 0.007);
+    g.gain.exponentialRampToValueAtTime(0.0001, when + d);
+    o.connect(g); g.connect(MUS.busIn);
+    o.start(when); o.stop(when + d + 0.1);
+  };
+  mk(freq, vel, ring || dur);
+  mk(freq * 2.004, vel * 0.32, dur * 0.4);
+  mk(freq * 5.9871, vel * 0.10, dur * 0.13);
+}
+
+/* what the land gives the instrument: scale from the community, register
+   from the stretch's freshness, density from the hour */
+function musPalette() {
+  const p = S.page;
+  const c = p && p.comm >= 0 ? M.communities[p.comm] : null;
+  const h = hashStr('scale:' + (c ? String(c.dominant) : 'open-country'));
+  const scale = MUS_SCALES[h % MUS_SCALES.length];
+  const root = 50 + ((h >> 4) % 8);
+  const reg = p ? [12, 7, 0, -5][p.season] : 0;
+  const w = DAY.wts;
+  const density = clamp(0.5 + w.d * 0.45 + w.m * 0.2 + w.g * 0.1 - w.n * 0.22, 0.22, 1);
+  return { scale, root: root + reg, density };
+}
+
+/* The tune is drawn first and drawn identically at every rung of the score:
+   the same seed, the same little stepwise walk, the same gaps. Only then is
+   it handed to musRender, which dresses it with whatever the walk has
+   earned. A visitor at the music box hears exactly the phrase this trail has
+   always played. */
+function musPhrase(t0, quiet, opt) {
+  const pal = musPalette();
+  const r = mulberry32((MUS.noteSeed = (MUS.noteSeed * 1103515245 + 12345) >>> 0));
+  const nNotes = 3 + Math.floor(pal.density * 4 + r() * 2);
+  let deg = [0, 2, 4][Math.floor(r() * 3)];
+  let t = t0;
+  const notes = [];
+  for (let i = 0; i < nNotes; i++) {
+    const oct = Math.floor(deg / pal.scale.length);
+    const st = pal.scale[((deg % pal.scale.length) + pal.scale.length) % pal.scale.length];
+    const midi = pal.root + 12 * oct + st + 12;
+    const vel = (0.045 + r() * 0.035) * (quiet ? 0.6 : 1);
+    const dur = 1.5 + r() * 0.9 + (i === nNotes - 1 ? 1.1 : 0);
+    notes.push({ midi, t, vel, dur, deg });
+    /* mostly stepwise, the little walk of a music box */
+    const roll = r();
+    deg += roll < 0.55 ? (r() < 0.5 ? 1 : -1) : roll < 0.8 ? (r() < 0.5 ? 2 : -2) : 0;
+    deg = clamp(deg, -2, pal.scale.length * 2 + 1);
+    if (i === nNotes - 2) deg = r() < 0.6 ? 0 : 3;       /* settle toward home */
+    const gap = lerp(1.35, 0.5, pal.density) * (0.75 + r() * 0.55);
+    t += gap;
+  }
+  const end = t + 1.6;
+  /* ROUND 11 — THE TINE THAT CLOSES A PHRASE IS LEFT TO RING.
+     The gate of a moment was open 40-46 % of a five-minute walk and only
+     25.6 % of it actually sounded: the gaps BETWEEN the phrases of one
+     moment, and the five seconds the moment takes to withdraw, fell to a
+     true zero at the music box, where nothing sustains. So the last tine of
+     a phrase — the one the little walk already settles home on — is struck
+     exactly as hard as before and simply not damped: it rings across the
+     gap that follows it, and the last one rings out under the whole
+     withdrawal. The silence between MOMENTS is untouched, and it is still
+     the swell, not the tine, that decides when a moment is over. */
+  if (notes.length) notes[notes.length - 1].ring = (opt && opt.hold) || 9;
+  musRender(notes, pal, t0, end, quiet, r, opt || {});
+  return end;
+}
+
+
+/* --- the voices that join, one rung at a time --- */
+/* Every one of them is a small acoustic thing: soft attack, natural decay,
+   nothing that reads as a synth demo. They all sing into the same two buses
+   and through the same swell, so the moment's shape is untouched. */
+
+/* a sparse piano — a struck string with a slower hammer than the tine and a
+   decay that outlives it */
+function musPiano(freq, when, vel, dur) {
+  const c = AUD.ctx;
+  const mk = (f, v, d, type) => {
+    const o = c.createOscillator(); o.type = type || 'sine'; o.frequency.value = f;
+    const g = c.createGain();
+    g.gain.setValueAtTime(0.0001, when);
+    g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), when + 0.019);
+    g.gain.exponentialRampToValueAtTime(0.0001, when + d);
+    o.connect(g); g.connect(MUS.busIn);
+    o.start(when); o.stop(when + d + 0.1);
+  };
+  mk(freq, vel, dur);
+  mk(freq * 2.0012, vel * 0.44, dur * 0.72);
+  mk(freq * 3.0055, vel * 0.17, dur * 0.34);
+  mk(freq * 4.021, vel * 0.06, dur * 0.17, 'triangle');
+}
+
+/* a low sustained pad — two detuned pairs breathing under a slow filter */
+function musPad(rootHz, when, dur, vel) {
+  const c = AUD.ctx;
+  const g = c.createGain();
+  g.gain.setValueAtTime(0.0001, when);
+  g.gain.linearRampToValueAtTime(vel, when + dur * 0.40);      /* breathes in  */
+  g.gain.setValueAtTime(vel, when + dur * 0.58);
+  g.gain.linearRampToValueAtTime(0.0001, when + dur);          /* breathes out */
+  const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 0.7;
+  lp.frequency.setValueAtTime(300, when);
+  lp.frequency.linearRampToValueAtTime(780, when + dur * 0.5);
+  lp.frequency.linearRampToValueAtTime(290, when + dur);
+  g.connect(lp); lp.connect(MUS.busPad);
+  const parts = [[1, -4, 'triangle', 0.50], [1, 5, 'triangle', 0.46],
+                 [1.5, -3, 'sine', 0.28], [2, 2, 'sine', 0.20]];
+  for (const [mul, det, type, v] of parts) {
+    const o = c.createOscillator(); o.type = type;
+    o.frequency.value = rootHz * mul; o.detune.value = det;
+    const vg = c.createGain(); vg.gain.value = v;
+    o.connect(vg); vg.connect(g);
+    o.start(when); o.stop(when + dur + 0.2);
+  }
+}
+
+/* strings — a small consort, bowed in slowly, the faintest vibrato */
+function musStrings(rootHz, when, dur, vel, vibHz) {
+  const c = AUD.ctx;
+  const g = c.createGain();
+  const hold = Math.max(2.3, dur - 2.8);
+  g.gain.setValueAtTime(0.0001, when);
+  g.gain.linearRampToValueAtTime(vel, when + 2.0);             /* bowed, never struck */
+  g.gain.setValueAtTime(vel, when + hold);
+  g.gain.linearRampToValueAtTime(0.0001, when + dur);
+  const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1180; lp.Q.value = 0.5;
+  g.connect(lp); lp.connect(MUS.busPad);
+  const vib = c.createOscillator(); vib.type = 'sine';
+  vib.frequency.value = vibHz || 4.9;
+  const vibG = c.createGain(); vibG.gain.value = 4.5;          /* cents, barely there */
+  vib.connect(vibG);
+  vib.start(when); vib.stop(when + dur + 0.2);
+  for (const [mul, det, v] of [[1, -6, 0.46], [1.5, 4, 0.30], [2, -2, 0.20]]) {
+    const o = c.createOscillator(); o.type = 'sawtooth';
+    o.frequency.value = rootHz * mul; o.detune.value = det;
+    vibG.connect(o.detune);
+    const og = c.createGain(); og.gain.value = v;
+    o.connect(og); og.connect(g);
+    o.start(when); o.stop(when + dur + 0.2);
+  }
+}
+
+/* a warm counter-melody — a second line under the tune, moving against it */
+function musCounterNote(freq, when, vel, dur) {
+  const c = AUD.ctx;
+  const g = c.createGain();
+  g.gain.setValueAtTime(0.0001, when);
+  g.gain.linearRampToValueAtTime(vel, when + 0.24);            /* warm, not struck */
+  g.gain.setValueAtTime(vel, when + dur * 0.55);
+  g.gain.exponentialRampToValueAtTime(0.0001, when + dur);
+  const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1050; lp.Q.value = 0.4;
+  g.connect(lp); lp.connect(MUS.busIn);
+  const o = c.createOscillator(); o.type = 'triangle'; o.frequency.value = freq;
+  o.connect(g); o.start(when); o.stop(when + dur + 0.1);
+  const o2 = c.createOscillator(); o2.type = 'sine'; o2.frequency.value = freq * 2.0018;
+  const g2 = c.createGain(); g2.gain.value = 0.30;
+  o2.connect(g2); g2.connect(g); o2.start(when); o2.stop(when + dur + 0.1);
+}
+
+/* the ensemble's floor — one low bell struck under a phrase's first note */
+function musBell(freq, when, vel) {
+  const c = AUD.ctx;
+  for (const [m, v, d] of [[1, vel, 9], [2.0, vel * 0.30, 5], [2.76, vel * 0.12, 3.2], [5.43, vel * 0.05, 1.6]]) {
+    const o = c.createOscillator(); o.type = 'sine'; o.frequency.value = freq * m;
+    const g = c.createGain();
+    g.gain.setValueAtTime(0.0001, when);
+    g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), when + 0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001, when + d);
+    o.connect(g); g.connect(MUS.busIn);
+    o.start(when); o.stop(when + d + 0.1);
+  }
+}
+
+/* One phrase, rendered through whatever the walk has earned. The melody is
+   drawn first and identically at every rung — the extra voices dress it,
+   they never rewrite it. `only` is a debut: that voice alone, a little
+   exposed, so the ear catches the newcomer. */
+/* what a scheduled note costs in energy: amplitude squared times the time
+   it sounds for. Booked per voice so a moment can be read as a bill. */
+function musBook(voice, vel, dur) {
+  if (SCORE.acct) SCORE.acct[voice] += vel * vel * dur;
+}
+function musRender(notes, pal, t0, end, quiet, r, opt) {
+  const tier = opt.tier == null ? SCORE.tier : opt.tier;
+  /* a voice can only step forward if the score has actually earned it: an
+     out-of-range debut falls back to the whole ensemble rather than
+     rendering a phrase with nothing in it */
+  let only = opt.only == null ? -1 : opt.only;
+  if (only > tier) only = -1;
+  const trim = SCORE_TRIM[clamp(tier, 0, SCORE_TRIM.length - 1)];
+  const q = quiet ? 0.7 : 1;
+  const span = Math.max(4, end - t0);
+  const boost = only >= 0 ? 1.5 : 1;                 /* the newcomer, exposed */
+  /* WHERE THE AIR COMES FROM. A pad that ran under every phrase would
+     close the gaps the music box leaves and turn a moment into a wash.
+     The sustained voices live in the OPENING phrase instead: a moment
+     swells open under a pad and a bowed fifth, and then the struck
+     voices carry it and it falls, always, into a music box and silence.
+     Placing them by index instead — pad on the first two phrases,
+     strings on the middle one — looked right until the probe pointed out
+     that a moment speaks two phrases as often as three, and in a
+     two-phrase moment the middle one IS the last one. A debut always
+     sounds, wherever it lands. */
+  const ph = opt.i || 0;
+  const has = (i) => tier >= i && (only < 0 || only === i);
+  const voices = [];
+
+  const closer = notes.length ? notes[notes.length - 1] : null;
+  /* 0 — the music box, the voice the trail starts with */
+  if (only < 0 || only === 0) {
+    voices.push('box');
+    for (const n of notes) {
+      if (n === closer && n.ring) continue;      /* the closing tine takes it */
+      musNote(musMidiHz(n.midi), n.t, n.vel * trim, n.dur);
+      musBook('box', n.vel * trim, n.dur);
+    }
+  }
+  /* the closing tine sounds whoever is speaking — it is the instrument's own
+     resonance, not a rung of the ladder, so it never joins `voices` and a
+     debut still stands alone in its phrase. On a debut it is struck softer
+     still, so the newcomer keeps the light. */
+  if (closer && closer.ring) {
+    const cv = closer.vel * trim * (only >= 0 ? 0.78 : 1);
+    musNote(musMidiHz(closer.midi), closer.t, cv, closer.dur, closer.ring);
+    musBook('box', cv, closer.ring);
+  }
+  /* 1 — a sparse piano: one note in three, on a line of its own — two scale
+     steps under the tune, an octave down — and struck in the GAP the tine
+     leaves rather than on top of it. It used to double the tine at the
+     octave, which put its second partial a fraction of a hertz from that
+     tine's fundamental: the two beat against each other and the bench
+     measured a moment getting QUIETER as a voice joined it. Answering,
+     rather than doubling, is both honest physics and better music. */
+  if (has(1)) {
+    voices.push('piano');
+    for (let i = 0; i < notes.length; i++) {
+      if (i % 3 !== 1 && i !== notes.length - 1) continue;
+      const n = notes[i];
+      const gap = (i + 1 < notes.length ? notes[i + 1].t - n.t : n.dur);
+      const at = n.t + clamp(gap * (0.42 + r() * 0.12), 0.28, 1.5);
+      /* two scale steps under the tune, an octave down: a line of its own */
+      const d = n.deg - 2;
+      const oc = Math.floor(d / pal.scale.length);
+      const sd = pal.scale[((d % pal.scale.length) + pal.scale.length) % pal.scale.length];
+      musPiano(musMidiHz(pal.root + 12 * oc + sd), at,
+        n.vel * 0.55 * trim * q * boost, n.dur * 1.8);
+      musBook('piano', n.vel * 0.55 * trim * q * boost, n.dur * 1.8);
+    }
+  }
+  /* 2 — a low pad, under the opening phrases only */
+  if (has(2) && (only === 2 || ph === 0)) {
+    voices.push('pad');
+    /* the pad may start a breath before the phrase, but never before now.
+       It runs about the length of the phrase it opens and is gone before
+       the next one begins, so the gap between phrases stays a gap. */
+    const padAt = Math.max(AUD.ctx.currentTime + 0.02, t0 - 0.4);
+    const padDur = span * 0.85 + 1.6;
+    musPad(musMidiHz(pal.root - 12), padAt, padDur, 0.041 * trim * q * boost);
+    musBook('pad', 0.041 * trim * q * boost, padDur);
+  }
+  /* 3 — strings, a bowed fifth through the opening phrase */
+  if (has(3) && (only === 3 || ph === 0)) {
+    voices.push('strings');
+    const strDur = Math.max(6.0, span * 0.64 + 1.0);
+    musStrings(musMidiHz(pal.root - 5), t0 + 0.8, strDur, 0.052 * trim * q * boost, 4.5 + r() * 0.8);
+    musBook('strings', 0.052 * trim * q * boost, strDur);
+  }
+  /* 4 — the counter-melody, the tune's contour turned upside down */
+  if (has(4)) {
+    voices.push('counter');
+    const base = notes.length ? notes[0].deg : 0;
+    let ct = t0 + 1.1;
+    for (let i = 0; i < notes.length; i += 2) {
+      const inv = base - (notes[i].deg - base);
+      const oct = Math.floor(inv / pal.scale.length);
+      const st = pal.scale[((inv % pal.scale.length) + pal.scale.length) % pal.scale.length];
+      const dur = 2.6 + r() * 1.5;
+      musCounterNote(musMidiHz(pal.root + 12 * oct + st), ct, 0.040 * trim * q * boost, dur);
+      musBook('counter', 0.040 * trim * q * boost, dur);
+      ct += dur * 0.78;
+      if (ct > end) break;
+    }
+  }
+  /* 5 — the whole ensemble, with a low bell for a floor */
+  if (has(5)) {
+    voices.push('bell');
+    /* struck a beat into the phrase, not on its first note: two transients
+       landing together is the one thing that can push the ensemble's peak
+       above the music box's */
+    musBell(musMidiHz(pal.root - 12), t0 + 0.9, 0.030 * trim * q * boost);
+    musBook('bell', 0.030 * trim * q * boost, 9);
+  }
+  SCORE.lastVoices = voices;
+  /* what each phrase of the current moment actually used, in order — the
+     verifier reads it to see the debut standing alone in the first one */
+  if (SCORE.lastMoment) SCORE.lastMoment.push(voices.slice());
+  return voices;
+}
+
+/* a moment: the voice rises, speaks two or three short phrases, withdraws */
+function audMoment(kind) {
+  AUD.moments = AUD.moments || {};
+  AUD.moments[kind] = (AUD.moments[kind] || 0) + 1;
+  const cd = MUS.cd.get(kind) || 0;
+  if (S.t < cd) return;
+  /* MUTE, NEVER STOP: the score does not care whether you are listening.
+     A moment behind a muted layer still rises, still speaks its phrases and
+     still withdraws — turning MUSIC back on drops you into the middle of it,
+     and if the score holds silence right then, the next trigger sounds. */
+  if (!AUD.ctx || !MUS.built || AUD.themeSrc) return;
+  const c = AUD.ctx;
+  if (c.currentTime < MUS.quietUntil) return;             /* one weather at a time */
+  /* ROUND 11 — A MOMENT THAT CANNOT BE SPOKEN DOES NOT SPEND ITS TURN.
+     The cooldown used to be stamped above these two guards, so a golden
+     hour arriving while the trail was already singing burned its two whole
+     minutes without a note. Over a scripted five-minute walk, thirty-two
+     triggers bought four moments and the score sat through stretches of
+     thirty, fifty and seventy seconds with something to say and nothing
+     allowed to say it — the gate open barely a third of the walk, which is
+     how a build that sounded for every instant its gate was open could
+     still miss the floor. The stamp belongs where a moment actually
+     begins. It is paired with the longer silence below: a quiet that no
+     longer eats a trigger can afford to be a real quiet again. */
+  MUS.cd.set(kind, S.t + (MUS_MOMENT_CD[kind] || 60));
+  const t0 = c.currentTime + 0.35;
+  MUS.swell.gain.cancelScheduledValues(c.currentTime);
+  /* the gate opens WITH the first tine, not a third of a second before it:
+     round 11 found the swell rising into an empty room, which is a small
+     hole at the head of every moment and, worse, a gate that claims to be
+     open while nothing has been struck */
+  MUS.swell.gain.setValueAtTime(Math.max(0.0001, MUS.swell.gain.value), c.currentTime);
+  MUS.swell.gain.setValueAtTime(Math.max(0.0001, MUS.swell.gain.value), t0);
+  MUS.swell.gain.linearRampToValueAtTime(1, t0 + 1.4);    /* it rises… */
+  /* THE SCORE GROWS WITH THE JOURNEY. The same three phrases, the same
+     envelope, the same silence after — only the number of voices inside
+     them changes. A voice earned since the last moment takes that first
+     phrase alone and a little exposed, so the ear catches the newcomer;
+     it costs the moment nothing, because it replaces the phrase rather
+     than adding one. */
+  let debut = SCORE.debut;
+  if (debut > SCORE.tier) { SCORE.debut = -1; debut = -1; }   /* never a silent phrase */
+  SCORE.lastMoment = [];
+  SCORE.acct = { box: 0, piano: 0, pad: 0, strings: 0, counter: 0, bell: 0 };
+  /* ROUND 11 — the gaps are drawn BEFORE the phrases, because the tine that
+     closes a phrase has to be told how far to ring: exactly across the gap
+     that follows it, with a few seconds of margin, and for the last phrase
+     across the whole withdrawal. Same gaps, same phrases, same envelope,
+     same silence after — only the instrument now sustains through its own
+     moment instead of dropping out of it. */
+  const gapA = 2.5 + Math.random() * 2.5;
+  const gapB = 3 + Math.random() * 2;
+  /* the margins are generous on purpose: a tine that rings a second or two
+     longer than it strictly needs to costs nothing — the swell is what ends
+     a moment, and every oscillator has stopped before the next one may
+     start (quietUntil is at least MUS_FALL + 8 s past the last phrase). A
+     tine that rings a second too SHORT opens a hole, which is the whole
+     bug. Measured at every rung by qa/r11-moment.mjs. */
+  const holdLast = MUS_FALL + 9;
+  let t = musPhrase(t0, false, debut > 0
+    ? { only: debut, i: 0, hold: gapA + 7 }
+    : { i: 0, hold: gapA + 7 });
+  if (debut > 0) {
+    SCORE.debut = -1; SCORE.debuts++;
+    SCORE.named = SCORE_TIERS[debut].name; SCORE.namedT = S.t;
+    refreshScoreUI();
+  }
+  /* the second phrase always gets the long ring: it covers the gap to a
+     third phrase and the whole withdrawal equally well, so the moment does
+     not have to decide its own length before it has spoken */
+  t = musPhrase(t + gapA, false, { i: 1, hold: holdLast });
+  /* A MOMENT SPEAKS UNTIL IT HAS SAID ENOUGH — two phrases or three, as it
+     always was, but the coin is no longer blind. The number of notes in a
+     phrase is drawn from the hour, so two phrases can run twelve seconds or
+     nineteen; tossing for a third on top of that put five-minute walks at
+     39.9 % and 52.7 % of the same gate. The third phrase now answers the
+     two before it: if they were brief, the moment has more to say. Same
+     phrases, same gaps, same envelope — only the moment's LENGTH is steady
+     now, and with it the duty cycle. */
+  if (t - t0 < MUS_SAY) t = musPhrase(t + gapB, true, { i: 2, hold: holdLast });
+  MUS.swell.gain.setValueAtTime(1, t);
+  MUS.swell.gain.linearRampToValueAtTime(0.0001, t + MUS_FALL);  /* …and withdraws */
+  MUS.phraseEnd = t + MUS_FALL;
+  /* THE SILENCE IS PART OF THE PARTITION, AND IT IS LONG AGAIN.
+     Round 8 cut this from 19-37 s to 8-18 s because a long quiet ate four
+     triggers in five — but that was only true while a refused trigger
+     burned its cooldown. It no longer does (see above), so a long quiet now
+     DELAYS the next moment instead of cancelling it, and the score can
+     afford twenty-two to thirty-six seconds of genuine nothing between
+     weathers. Which is the whole doctrine: a moment of about twenty-five
+     seconds, then half a minute of trail. (Nineteen to thirty-one here;
+     the wait for the next trigger to arrive adds several more on any real
+     walk, and the measured silences between moments run 23-47 s.) */
+  MUS.quietUntil = t + MUS_FALL + 19 + Math.random() * 12;
+  AUD.playCount['moment:' + kind] = (AUD.playCount['moment:' + kind] || 0) + 1;
+}
+
+/* the recorded theme — kept for the three rarest moments only */
+function audTheme(which) {
+  if (AUD.themePlayed[which]) return;
+  if (!AUD.ctx) { AUD.pendingTheme = which; return; }
+  /* MUTE, NEVER STOP: it plays behind a muted layer like everything else, so
+     unmuting lands you inside it. But a gift this rare is only *spent* once
+     it has actually been heard — if the whole theme goes by in silence the
+     moment is still owed, and the trail will offer it again. */
+  AUD.themePlayed[which] = true;
+  AUD.themeWhich = which;
+  AUD.themeHeard = AUD.mus.on;
+  if (AUD.themeHeard) lsSet('longway.theme.' + which, '1');
+  AUD.evCount['theme:' + which] = (AUD.evCount['theme:' + which] || 0) + 1;
+  /* the stage is cleared for it, whichever of the three occasions called:
+     any music-box phrase still in the air is eased away and the generative
+     voice stays out until the theme has run its length */
+  if (AUD.ctx && MUS.swell) {
+    const t0 = AUD.ctx.currentTime;
+    MUS.swell.gain.cancelScheduledValues(t0);
+    MUS.swell.gain.setValueAtTime(MUS.swell.gain.value, t0);
+    MUS.swell.gain.linearRampToValueAtTime(0.0001, t0 + 2.5);
+    MUS.quietUntil = Math.max(MUS.quietUntil, t0 + 172);
+  }
+  fetch('music/theme.ogg')
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.arrayBuffer(); })
+    .then(ab => AUD.ctx.decodeAudioData(ab))
+    .then(b => {
+      const c = AUD.ctx;
+      const src = c.createBufferSource(); src.buffer = b;
+      const g = c.createGain();
+      g.gain.setValueAtTime(0.0001, c.currentTime);
+      g.gain.linearRampToValueAtTime(0.62, c.currentTime + 2.5);
+      src.connect(g); g.connect(AUD.mus.gain);
+      src.start();
+      AUD.themeSrc = src;
+      AUD.playCount['theme:' + which] = (AUD.playCount['theme:' + which] || 0) + 1;
+      src.onended = () => {
+        if (AUD.themeSrc === src) AUD.themeSrc = null;
+        /* it went by behind a mute: the moment is owed, not spent */
+        if (!AUD.themeHeard) {
+          AUD.themePlayed[which] = false;
+          lsSet('longway.theme.' + which, '');
+        }
+      };
+    })
+    .catch(e => { AUD.decodeFail.push('theme: ' + e.message); });
+}
+
+function audLEArrive() {
+  audEv('leArrive');
+  /* the shore takes the stage alone: any music-box phrase in the air is
+     eased away first, and the voice stays quiet while the theme plays */
+  if (AUD.ctx && MUS.swell) {
+    const t = AUD.ctx.currentTime;
+    MUS.swell.gain.cancelScheduledValues(t);
+    MUS.swell.gain.setValueAtTime(MUS.swell.gain.value, t);
+    MUS.swell.gain.linearRampToValueAtTime(0.0001, t + 2.5);
+    MUS.quietUntil = t + 200;
+  }
+  if (!AUD.themePlayed.le) audTheme('le');
+}
+function audCheckComplete() {
+  if (AUD.themePlayed.complete) return;
+  if (trailComplete()) { audEv('trailComplete'); audTheme('complete'); }
+}
+/* the second of the three rarest moments: every page of one community
+   walked. The certificate goes in the pack and the theme answers it once. */
+function audCheckComm(ci) {
+  if (AUD.themePlayed.comm || ci < 0) return;
+  if (commComplete(ci)) { audEv('commComplete'); audTheme('comm'); }
+}
+
+/* ---------------- the two toggles ---------------- */
+/* MUTE, NEVER STOP. A toggle rides its own layer's gain and touches nothing
+   else: the context is never suspended, no timer is cancelled, no node is
+   torn down, no source is stopped. Behind a muted layer the programme keeps
+   running — the wind keeps blowing, the moments keep rising, the phrases
+   keep being scheduled, the theme keeps playing — so turning it back on
+   lands you inside whatever the trail holds at that instant, eased in over
+   AUD_FADE_IN and never cut in. */
+function setAudioLayer(which, on) {
+  const L = AUD[which];
+  L.on = on;
+  lsSet(which === 'sfx' ? 'longway.sfx' : 'longway.mus', on ? '1' : '0');
+  if (on && AUD.unlocked) audEnsureCtx();
+  if (AUD.ctx && L.gain) {
+    const t = AUD.ctx.currentTime;
+    const g = L.gain.gain;
+    g.cancelScheduledValues(t);
+    g.setValueAtTime(g.value, t);
+    if (on) g.linearRampToValueAtTime(1, t + AUD_FADE_IN);
+    else {
+      g.linearRampToValueAtTime(0, t + AUD_FADE_OUT);      /* eased down… */
+      g.setValueAtTime(0, t + AUD_FADE_OUT);               /* …to a true zero */
+    }
+  }
+  refreshAudioUI();
+  if (REDUCED) renderStep();
+}
+function toggleSfx() { setAudioLayer('sfx', !AUD.sfx.on); }
+function toggleMusic() { setAudioLayer('mus', !AUD.mus.on); }
+function refreshAudioUI() {
+  const pairs = [
+    ['btnSfx', 'SFX · ' + (AUD.sfx.on ? 'ON' : 'OFF'), !AUD.sfx.on],
+    ['btnMusic', 'MUSIC · ' + (AUD.mus.on ? 'ON' : 'OFF'), !AUD.mus.on],
+    ['keySfx', 'TRAIL SOUND — ' + (AUD.sfx.on ? 'ON' : 'OFF'), !AUD.sfx.on],
+    ['keyMus', 'MUSIC — ' + (AUD.mus.on ? 'ON' : 'OFF'), !AUD.mus.on]
+  ];
+  for (const [id, txt, off] of pairs) {
+    const b = document.getElementById(id);
+    if (b) { b.textContent = txt; b.classList.toggle('off', off); }
+  }
+}
+document.getElementById('btnSfx').addEventListener('click', () => { audUnlock(); toggleSfx(); });
+document.getElementById('btnMusic').addEventListener('click', () => { audUnlock(); toggleMusic(); });
+
+/* ---------------- the per-frame breath of the sound ---------------- */
+function audioTick(dt) {
+  if (AUD.px == null) AUD.px = S.x;
+
+  /* how much of the corpus this walk has actually covered — the one thing
+     that decides how many voices a moment may use. Read about once a
+     second; nothing else in the frame touches it. */
+  if (window.__scoreReady) {
+    SCORE.checkIn -= dt;
+    if (SCORE.checkIn <= 0) { SCORE.checkIn = 1; scoreUpdate(true); }
+  }
+
+  /* the recorded theme is spent the first instant it is genuinely audible */
+  if (AUD.themeSrc && AUD.mus.on && !AUD.themeHeard) {
+    AUD.themeHeard = true;
+    lsSet('longway.theme.' + AUD.themeWhich, '1');
+  }
+
+  /* Walking itself makes no sound: the trail is walked in silence, and what
+     you hear is the land — the wind on this stretch, a stone you pass, a
+     greeting, the dog. (Owner's order; no footstep sample is bundled.) */
+
+  /* waymarker stones chime as you pass them */
+  if (Math.abs(S.x - AUD.px) > 0.01 && S.x < M.totalPx) {
+    const lo = Math.min(AUD.px, S.x), hi = Math.max(AUD.px, S.x);
+    const p0 = pageAt(clamp(lo, 0, M.totalPx - 1)), p1 = pageAt(clamp(hi, 0, M.totalPx - 1));
+    const scan = p0 === p1 ? [p0] : [p0, p1];
+    for (const pp of scan) {
+      for (const st of pp.stones) {
+        if (st.x <= lo || st.x > hi) continue;
+        if ((st.sndCD || 0) > S.t) continue;
+        st.sndCD = S.t + 30;
+        audEv('stone', st.x, st.kind === 'mile' ? 0.8 : 1);
+      }
+    }
+  }
+  AUD.px = S.x;
+
+  /* THE DOG IS MOSTLY SILENT (owner's order). Ordinary walking makes no
+     dog sound at all: no pant loop, no trotting noise, no snuffle at every
+     door she passes. Round 12 put the rule where it belongs — her voice
+     waits for the stop. She speaks only at genuine events, only once you
+     have halted and she has halted with you (stoppedTogether(), the pant
+     alone excepted), never twice inside the floor below, and rarely even
+     then — and never at the shore, which keeps its silence. */
+  if (!REDUCED && !S.atLE && DOG.on) {
+    if (AUD.barkAt === 0) AUD.barkAt = S.t + 65 + Math.random() * 75;
+    /* a contented sigh, but only once she has genuinely settled beside a
+       long read, and then seldom */
+    if ((DOG.pose === 'sit' || DOG.pose === 'sleep') && S.idleT > 25 &&
+        Math.abs(DOG.x - S.x) < 170 && S.t > AUD.sighAt) {
+      AUD.sighAt = S.t + 75 + Math.random() * 65;
+      dogVoice('dogsigh', DOG.x);
+    }
+    /* the light happy pant, kept for the rare occasion she has actually
+       run: a long gap closed at speed, and not again for two minutes.
+       Round 12 took away its exemption from the stop. The gap that earns it
+       is opened by a door, a fast travel or the index — and after one of
+       those you are standing where you landed, which is exactly when she
+       arrives puffing. Holding an arrow key through a teleport is not that
+       moment, and it was the last thing in the build that made a noise while
+       the legs were moving. She also only pants about a run she has just
+       had: twelve seconds after it, the breath is her own business. */
+    if (DOG.caught && S.t - (DOG.caughtAt || 0) > 12) DOG.caught = 0;
+    if (DOG.caught && stoppedTogether() && S.t > AUD.pantAt) {
+      DOG.caught = 0;
+      AUD.pantAt = S.t + 110 + Math.random() * 90;
+      dogVoice('dogpant', DOG.x);
+    }
+    /* AND THE SPONTANEOUS BARK ON THE MOVE (the owner refined his earlier
+       silence order — she must not be quasi-mute): unscheduled, roughly
+       once every minute or two of ACTIVE play, on its own randomised
+       clock. Active play means you are walking or only just stopped —
+       a long read or a sleeper never collects barks. Ordinary steady
+       walking still carries no pant loop and no trotting noise; this is
+       a voice, not a soundtrack. */
+    if (S.t > AUD.barkAt && DOG.pose !== 'sleep' && SLP.stage < 2 &&
+        DOG.state === 'follow' &&
+        (Math.abs(S.vx) > 1 || S.idleT < 10) && Math.abs(DOG.x - S.x) < 520) {
+      /* a bark the courtesy floor refuses does not spend the clock —
+         it retries in a few seconds; only a bark that SOUNDED spaces
+         the next one by its minute or two */
+      if (dogVoice('dogbark', DOG.x)) AUD.barkAt = S.t + 65 + Math.random() * 75;
+      else AUD.barkAt = S.t + 4 + Math.random() * 4;
+    } else if (AUD.barkAt > 0 && S.t > AUD.barkAt + 6 &&
+               (Math.abs(S.vx) > 1 || S.idleT < 10)) {
+      /* the clock ripened while she was busy elsewhere (mid-sniff, or
+         trailing a stride) — the voice is not lost: it slides a few
+         seconds at a time and lands when she is next at your side.
+         Only ACTIVE play keeps the clock warm; a sleeper or a long
+         read still never collects barks. */
+      AUD.barkAt = S.t + 3 + Math.random() * 4;
+    }
+  }
+
+  if (!AUD.ctx) return;
+  const wN = S.lastWN == null ? DAY.wts.n : S.lastWN;
+
+  /* discrete gusts ride the derived wind */
+  if (!REDUCED && S.wind > 0.12 && !S.atLE && S.t > AUD.gustAt) {
+    AUD.gustAt = S.t + lerp(9.5, 3.4, S.wind) * (0.7 + Math.random() * 0.6);
+    audEv('gust', S.x + (Math.random() - 0.35) * 520, 0.0333 + 0.1267 * S.wind);
+  }
+
+  /* beds: wind under everything, crickets after dark, rain when a front is
+     over you — and at Land's End they all bow out: the shore keeps its
+     silence. THE FOG FALLS SILENT: mist and fog carry no voice at all. */
+  if (AUD.beds) {
+    const atLE = !!S.atLE;
+    /* MUTE, NEVER STOP: what the beds do is decided by the land, never by
+       the toggle. The wind keeps blowing behind a muted layer — only the
+       layer's own gain is at zero — so turning SFX back on puts you inside
+       the weather that was already there.
+       One third of the gain the mix first reached for: the wind is weather. */
+    audBedTarget('wind', atLE ? 0.0167 : 0.10 * Math.pow(S.wind, 1.2));
+    audBedTarget('crickets', nightRamp(wN) * (atLE ? 0.035 : 0.20));
+    /* rain on the path, gentle, and fading with the front that brought it */
+    audBedTarget('rain', RAIN_BED_MAX * WX.rain);
+    if ((AUD.beds.wind.target || 0) > 0.004) audBedLoop('wind', 'wind_bed', false);
+    if ((AUD.beds.crickets.target || 0) > 0.004) audBedLoop('crickets', 'crickets', true);
+    if ((AUD.beds.rain.target || 0) > 0.004) audBedLoop('rain', 'rain', false);
+  }
+
+  /* music as weather: golden hour and nightfall are moments */
+  const g = DAY.wts.g, n = DAY.wts.n;
+  if (MUS.lastG != null && g > 0.5 && MUS.lastG <= 0.5) audMoment('golden');
+  if (MUS.lastN != null && n > 0.5 && MUS.lastN <= 0.5) audMoment('night');
+  MUS.lastG = g; MUS.lastN = n;
+
+  /* arriving at an overlook's table is a moment too */
+  const p = S.page;
+  if (p && p.overlook && !S.atLE && Math.abs(p.overlook.x - S.x) < LOOK_RANGE) {
+    const at = MUS.lookAt.get(p.slug) || 0;
+    if (S.t > at) { MUS.lookAt.set(p.slug, S.t + 300); audMoment('overlook'); }
+  }
+}
+
+/* per-layer RMS from the analysers — the verifier's ear */
+function audRMS() {
+  const out = {};
+  for (const which of ['sfx', 'mus']) {
+    const L = AUD[which];
+    if (!L.an) { out[which] = 0; continue; }
+    const a = new Float32Array(L.an.fftSize);
+    L.an.getFloatTimeDomainData(a);
+    let s = 0;
+    for (let i = 0; i < a.length; i++) s += a[i] * a[i];
+    out[which] = Math.sqrt(s / a.length);
+  }
+  return out;
+}
+
+window.__aud = {
+  get state() {
+    return {
+      unlocked: AUD.unlocked, ctx: !!AUD.ctx,
+      ctxState: AUD.ctx ? AUD.ctx.state : 'none',
+      sfxOn: AUD.sfx.on, musOn: AUD.mus.on,
+      decoded: AUD.decoded, decodeFail: AUD.decodeFail.slice(),
+      ev: Object.assign({}, AUD.evCount),
+      played: Object.assign({}, AUD.playCount),
+      moments: Object.assign({}, AUD.moments || {}),
+      themePlayed: Object.assign({}, AUD.themePlayed),
+      themeActive: !!AUD.themeSrc,
+      themeHeard: !!AUD.themeHeard,
+      sfxGain: AUD.sfx.gain ? AUD.sfx.gain.gain.value : null,
+      musGain: AUD.mus.gain ? AUD.mus.gain.gain.value : null,
+      bedTargets: AUD.beds ? {
+        wind: AUD.beds.wind.target || 0,
+        crickets: AUD.beds.crickets.target || 0,
+        rain: AUD.beds.rain.target || 0
+      } : null,
+      dogCeil: DOG_CEIL, dogGain: Object.assign({}, DOG_GAIN),
+      swell: MUS.swell ? MUS.swell.gain.value : 0,
+      quietUntil: MUS.quietUntil, phraseEnd: MUS.phraseEnd,
+      ctxTime: AUD.ctx ? AUD.ctx.currentTime : 0,
+      lastMix: AUD.lastMix || null,
+      dogTrace: AUD.dogTrace.slice(),
+      dogFloorAt: AUD.dogFloorAt, sniffAt: AUD.sniffAt, barkAt: AUD.barkAt,
+      log: AUD.log.slice(-40)
+    };
+  },
+  /* THE MIX, AS ARITHMETIC (round 11). Every voice's loudest possible peak
+     at your feet: the decoded file's own peak times the largest gain the
+     build ever plays it at. Nothing here is a constant retyped for a test —
+     it reads the same numbers the mix reads, so a probe cannot agree with a
+     comment while disagreeing with the sound. qa/r11-levels.mjs asserts the
+     order: the wind is the quietest thing on the trail, and no voice of the
+     dog passes a gust. */
+  get levels() {
+    const pk = (n) => {
+      const b = AUD.buf.get(n);
+      if (!b) return null;
+      const ch = b.getChannelData(0);
+      let m = 0;
+      for (let i = 0; i < ch.length; i++) { const v = Math.abs(ch[i]); if (v > m) m = v; }
+      return m;
+    };
+    const L = {};
+    const put = (label, name, gain) => { const p = pk(name); if (p != null) L[label] = +(p * gain).toFixed(5); };
+    /* the beds, at the loudest target audioTick can ever hand them */
+    put('wind bed', 'wind_bed', 0.10);
+    put('gust', 'gust', (0.0333 + 0.1267) * GUST_TRIM);
+    put('crickets', 'crickets', 0.20);
+    put('rain', 'rain', RAIN_BED_MAX);
+    /* the dog, each voice at its own clamped gain */
+    for (const k of Object.keys(DOG_GAIN)) {
+      put('dog ' + k, 'dog_' + k + (SFX_VARIANTS['dog_' + k] > 1 ? '_0' : ''), Math.min(DOG_GAIN[k], DOG_CEIL));
+    }
+    put('snore', 'snore', SNORE_GAIN);
+    put('dog snore', 'snore', DOGSNORE_GAIN);
+    /* the events of the trail furniture */
+    put('jump', 'jump', 0.32); put('land', 'land', 0.30); put('spring', 'spring', 0.42);
+    put('gate', 'gate_open', 0.5 / 3); put('gate travel', 'gate_travel', 0.45 / 3);
+    put('greeting', 'greet', 0.5); put('register', 'register_open', 0.5);
+    put('pen', 'pen', 0.55); put('waymarker', 'waymarker', 0.38);
+    return L;
+  },
+  rms: audRMS,
+  ev: audEv,
+  unlock: audUnlock,
+  setLayer: setAudioLayer,
+  moment: audMoment,
+  theme: audTheme,
+  resetThemes() {
+    AUD.themePlayed.le = false; AUD.themePlayed.comm = false; AUD.themePlayed.complete = false;
+    lsSet('longway.theme.le', ''); lsSet('longway.theme.comm', ''); lsSet('longway.theme.complete', '');
+  },
+  checkComm: (ci) => audCheckComm(ci)
+};
+
+/* the second keyboard: F and M toggle the layers; L in a gate map sails
+   to Land's End. Never while typing into a field. */
+window.addEventListener('keydown', (e) => {
+  const k = e.key.toLowerCase();
+  if (S.overlay === 'gatemap' && k === 'l') {
+    closeOverlays();
+    audEv('gateTravel');
+    travelToLE();
+    e.preventDefault();
+    return;
+  }
+  if (S.overlay && S.overlay !== 'key') return;   /* typing stays typing */
+  if (k === 'f') { toggleSfx(); e.preventDefault(); }
+  else if (k === 'm') { toggleMusic(); e.preventDefault(); }
+});
+
+refreshAudioUI();
+/* the score model is complete: collectPage and audioTick may read it now */
+window.__scoreReady = 1;
+scoreUpdate(false);
+
+/* ==================================================================== */
+/* ROUND 9 — WEATHER THAT PASSES, A WALKER WHO SLEEPS, ROOM TO READ      */
+/*                                                                       */
+/* Three owner orders, all of them data-true and all of them eased:      */
+/*  (1) THE SKY REMEMBERS THE QUIET MONTHS. The weather clock walks the  */
+/*      documentation's own calendar — every month from the first commit */
+/*      in the corpus to the last — and the months nobody tended bring   */
+/*      grey and rain while the busy months clear the sky. Place-bound   */
+/*      winter frost is untouched: that belongs to the ground, not the   */
+/*      sky.                                                             */
+/*  (2) STAND STILL AND THE WALKER SLEEPS. She settles, she nods off     */
+/*      with the dog curled beside her, and then she snores — three      */
+/*      eased stages announced by nothing but the drawing.               */
+/*  (3) ROOM TO READ. The trail and the page share the window half and   */
+/*      half, or side by side; the choice keeps for the visit.           */
+/* ==================================================================== */
+
+/* ---------------- the layout: two ways to hold the window ------------ */
+function layoutIsSide() { return LAY.mode === 'side' && window.innerWidth >= LAY_MIN_W; }
+
+/* the one place that decides the shape of the window, and the only one
+   that writes the CSS custom properties the chrome is positioned by */
+function applyLayout() {
+  const side = layoutIsSide();
+  const changed = LAY.eff !== (side ? 'side' : 'stack');
+  LAY.eff = side ? 'side' : 'stack';
+  document.body.classList.toggle('lay-side', side);
+  const w = window.innerWidth, h = window.innerHeight;
+  const tw = side ? Math.round(w * LAY_SIDE) : w;
+  const dh = side ? 0 : Math.round(h * DOCK_FRAC);
+  const root = document.documentElement.style;
+  root.setProperty('--trail-w', tw + 'px');
+  root.setProperty('--dock-h', dh + 'px');
+  /* ROUND 11 — how tall the HUD actually is, right now, at this width and
+     in this layout. The transient toast is placed under it rather than at a
+     flat 76 px: at 1440 stacked that flat number clipped the PACK chip,
+     under about 1000 px it ran across PACK, GUIDE and SFX, and side by side
+     — where the whole HUD is squeezed into the trail's half — it landed on
+     the hour dial, which is exactly where the layout toast appears. Read
+     after --trail-w is written, because the width is what makes the HUD
+     wrap. */
+  const hudEl = document.getElementById('hud');
+  if (hudEl) {
+    const hh = Math.round(hudEl.getBoundingClientRect().height);
+    if (hh > 0) root.setProperty('--hud-h', hh + 'px');
+  }
+  if (changed) refreshLayoutUI();
+  return { w: tw, h: h - dh };
+}
+
+function setLayout(mode) {
+  LAY.mode = mode === 'side' ? 'side' : 'stack';
+  lsSet('longway.layout', LAY.mode);
+  resize();
+  refreshLayoutUI();
+  /* the strip stays locked to the block you stand in, in both layouts:
+     the dock has a new height, so the block is re-centred in it */
+  if (dockPage && !S.atLE) {
+    const bi = S.bi < 0 ? 0 : S.bi;
+    S.bi = -1;
+    userScrollT = -1e9;
+    updateBlock(dockPage, bi);
+  }
+  needsDraw = true;
+  if (REDUCED) renderStep();
+}
+function toggleLayout() {
+  setLayout(LAY.mode === 'side' ? 'stack' : 'side');
+  toast(LAY.eff === 'side'
+    ? 'SIDE BY SIDE — TRAIL LEFT, PAGE RIGHT'
+    : (LAY.mode === 'side'
+      ? 'THE WINDOW IS TOO NARROW FOR SIDE BY SIDE — STACKED'
+      : 'STACKED — TRAIL ABOVE, PAGE BELOW'));
+}
+function refreshLayoutUI() {
+  const side = LAY.eff === 'side';
+  const b = document.getElementById('btnLayout');
+  if (b) b.textContent = 'LAYOUT · ' + (side ? 'SIDE' : 'STACK');
+  const k = document.getElementById('keyLayout');
+  if (k) k.textContent = 'READING LAYOUT — ' + (side ? 'SIDE BY SIDE' : 'STACKED') +
+    (LAY.mode === 'side' && !side ? ' (WINDOW TOO NARROW)' : '');
+}
+
+/* ---------------- the weather clock: the corpus's own calendar ------- */
+const MONTH_NAMES = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
+  'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+
+function buildWeather() {
+  /* Every month between the first commit in the corpus and the last. A
+     month's MARKS are how many pages were opened or last touched in it —
+     580 real dates read out of provenance.json, none of them invented.
+     A month with no marks is a month the documentation went untended. */
+  const marks = new Map();
+  let lo = null, hi = null;
+  for (const p of M.pages) {
+    for (const d of [p.prov.first, p.prov.last]) {
+      if (!d || d.length < 7) continue;
+      const key = d.slice(0, 7);
+      marks.set(key, (marks.get(key) || 0) + 1);
+      if (lo === null || key < lo) lo = key;
+      if (hi === null || key > hi) hi = key;
+    }
+  }
+  WX.months = [];
+  if (lo === null) { WX.months.push({ key: '', y: 0, m: 1, marks: 1, a: 1, grey: 0, wet: 0, state: 'clear' }); WX.quiet = 0; return; }
+  const y0 = +lo.slice(0, 4), m0 = +lo.slice(5, 7);
+  const y1 = +hi.slice(0, 4), m1 = +hi.slice(5, 7);
+  const n = (y1 - y0) * 12 + (m1 - m0) + 1;
+  let max = 1;
+  for (const v of marks.values()) if (v > max) max = v;
+  WX.max = max;
+  for (let i = 0; i < n; i++) {
+    const y = y0 + Math.floor((m0 - 1 + i) / 12), m = (m0 - 1 + i) % 12 + 1;
+    const key = y + '-' + (m < 10 ? '0' : '') + m;
+    const c = marks.get(key) || 0;
+    const a = c ? Math.log(1 + c) / Math.log(1 + max) : 0;
+    WX.months.push({
+      key, y, m, marks: c, a,
+      grey: c === 0 ? 1 : clamp(1 - a / WX_CLEAR, 0, 1),
+      wet: c === 0 ? 1 : 0,
+      state: c === 0 ? 'shower' : (a < WX_CLEAR ? 'overcast' : 'clear')
+    });
+  }
+  /* MORE WEATHER (wave 3) — four new fronts, every one read off the same
+     real calendar. The rules, stated once: a QUIET WINTER month (December
+     to February, nobody came) SNOWS instead of raining; a THIN AUTUMN
+     month (October or November, untended or well under the clear bar)
+     rolls a FOG bank in; the middle of every quiet streak of three months
+     or longer breaks as a short THUNDERSTORM (a non-snow month of the
+     streak, when it has one); and a RAINBOW is not a month at all — it is
+     the moment a shower clears under a low sun, and it is rare. */
+  for (const mm of WX.months) {
+    if (mm.marks === 0 && (mm.m === 12 || mm.m <= 2)) {
+      mm.state = 'snow'; mm.wet = 0; mm.grey = 0.72;
+    } else if ((mm.m === 10 || mm.m === 11) && (mm.marks === 0 || mm.a < WX_CLEAR * 0.55)) {
+      mm.state = 'fog'; mm.wet = 0; mm.grey = Math.max(mm.grey, 0.55);
+    }
+  }
+  for (let i = 0; i < WX.months.length;) {
+    if (WX.months[i].marks !== 0) { i++; continue; }
+    let j = i;
+    while (j < WX.months.length && WX.months[j].marks === 0) j++;
+    if (j - i >= 3) {
+      let pick = null;
+      const mid = (i + j - 1) >> 1;
+      for (let st2 = 0; st2 < j - i; st2++) {
+        const cand = WX.months[i + (((mid - i) + st2) % (j - i))];
+        if (cand.state !== 'snow') { pick = cand; break; }
+      }
+      if (pick) { pick.state = 'storm'; pick.wet = 1; pick.grey = 1; }
+    }
+    i = j;
+  }
+  WX.quiet = WX.months.filter(mm => mm.marks === 0).length;
+  WX.first = WX.months[0].key; WX.last = WX.months[n - 1].key;
+  WX.idx = 0;
+  WX.state = WX.months[0].state;
+  /* start the sky where the month already is — no opening lurch */
+  WX.grey = WX.months[0].grey; WX.wet = WX.months[0].wet;
+  WX.wetness = WX.wet;
+}
+function wxMonth() { return WX.months[WX.idx] || WX.months[0] || { key: '', m: 1, y: 0, marks: 0, state: 'clear' }; }
+function wxSpanLabel(which) {
+  const k = which ? WX.last : WX.first;
+  if (!k) return '';
+  return MONTH_NAMES[+k.slice(5, 7) - 1] + ' ' + k.slice(0, 4);
+}
+function wxLabel() {
+  const mm = wxMonth();
+  /* the label answers the sky you can actually see. A month a hair under
+     the clear threshold really is cloud, but it is HIGH cloud: calling it
+     OVERCAST while the light stays open read as a lie (round 12). Three
+     honest names across the one state, cut at the grey the sky is drawn
+     with, not at a second invented number. */
+  const what = mm.state === 'shower' ? 'A SHOWER'
+    : mm.state === 'snow' ? 'SNOW'
+    : mm.state === 'fog' ? 'A FOG BANK'
+    : mm.state === 'storm' ? 'A THUNDERSTORM'
+    : (mm.state === 'overcast'
+        ? (mm.grey < 0.22 ? 'HIGH CLOUD' : (mm.grey < 0.62 ? 'OVERCAST' : 'HEAVY CLOUD'))
+        : 'CLEAR');
+  const who = mm.marks
+    ? fmt(mm.marks) + (mm.marks === 1 ? ' PAGE TOUCHED' : ' PAGES TOUCHED')
+    : 'NOBODY CAME';
+  return 'SKY: ' + MONTH_NAMES[mm.m - 1] + ' ' + mm.y + ' · ' + who + ' · ' + what;
+}
+
+function tickWeather(dt) {
+  if (!WX.months.length) return;
+  WX.mt += dt;
+  const per = REDUCED ? WX_MONTH_S / 8 : WX_MONTH_S;   /* calm: the clock steps when you do */
+  while (WX.mt >= per) {
+    WX.mt -= per;
+    WX.idx = (WX.idx + 1) % WX.months.length;
+    WX.turned++;
+    const st = wxMonth().state;
+    if (st !== WX.state) {
+      /* the colour coming back is one of the moments the music answers */
+      if (st === 'clear') { WX.clearings++; audMoment('clearing'); }
+      if (st === 'shower') WX.showers++;
+      if (st === 'snow') WX.snows++;
+      if (st === 'fog') WX.fogs++;
+      WX.state = st;
+    }
+  }
+  const mm = wxMonth();
+  const ease = (tc) => Math.min(1, (dt || 0) / tc);
+  /* the thunderstorm is short: it breaks at the head of its month, rolls a
+     few bolts, and is spent — and never during the first minute of a
+     visit, which keeps its calm (the storm month then reads as cloud) */
+  const stormMonth = mm.state === 'storm' && !REDUCED;
+  if (stormMonth && WX.stormKey !== mm.key + ':' + WX.turned) {
+    WX.stormKey = mm.key + ':' + WX.turned;
+    if (S.t > 60) {
+      WX.storms++;
+      WX.stormUntil = S.t + 6.5 + Math.random() * 3;
+      WX.boltNext = S.t + 1.2 + Math.random() * 2;
+      WX.dogStartled = false;
+    } else WX.stormUntil = 0;
+  }
+  const tSnow = mm.state === 'snow' ? 1 : 0;
+  const tFog = mm.state === 'fog' ? 1 : 0;
+  /* the storm rides its own short WINDOW, not the month that armed it —
+     the month only ever opens the window (and a probe may open it too) */
+  const tStorm = (!REDUCED && S.t < WX.stormUntil) ? 1 : 0;
+  if (REDUCED) {
+    WX.grey = mm.grey; WX.wet = mm.wet;
+    WX.here = S.atLE ? 0 : 1; WX.wetness = WX.wet;
+    /* calm: the new fronts cross as held frames — no flash, no arc */
+    WX.snow = tSnow; WX.snowCover = tSnow * (S.atLE ? 0 : 1);
+    WX.fog = tFog; WX.storm = 0; WX.rbA = 0;
+    WX.wetPeak = 0;
+  } else {
+    WX.grey += (mm.grey - WX.grey) * ease(3.4);         /* fronts take seconds */
+    WX.wet += (mm.wet - WX.wet) * ease(2.6);
+    WX.here += ((S.atLE ? 0 : 1) - WX.here) * ease(0.9);
+    const wetNow = WX.wet * WX.here;
+    /* the path soaks in about ten seconds and takes half a minute to dry */
+    WX.wetness += wetNow > 0.5 ? (1 - WX.wetness) * ease(9) : -WX.wetness * ease(32);
+    WX.wetness = clamp(WX.wetness, 0, 1);
+    WX.snow += (tSnow - WX.snow) * ease(3.8);
+    WX.fog += (tFog - WX.fog) * ease(4.6);
+    WX.storm += (tStorm - WX.storm) * ease(tStorm ? 1.6 : 3.2);
+    /* the ground whitens in over a minute, and thaws after */
+    WX.snowCover += ((WX.snow * WX.here > 0.55 ? 1 : 0) - WX.snowCover) *
+      ease(WX.snow * WX.here > 0.55 ? 55 : 75);
+    WX.snowCover = clamp(WX.snowCover, 0, 1);
+    /* bolts, while the storm is hot; the flash inks two frames, the roll
+       follows it half a second to a second and a half later */
+    if (WX.storm > 0.5 && S.t < WX.stormUntil && S.t > WX.boltNext && !S.atLE) {
+      WX.boltNext = S.t + 3.5 + Math.random() * 4.5;
+      WX.flashT = S.t; WX.bolts++;
+      WX.thunderAt = S.t + 0.5 + Math.random() * 1.1;
+      needsDraw = true;
+    }
+    if (WX.thunderAt && S.t > WX.thunderAt) {
+      WX.thunderAt = 0;
+      audEv('thunder', S.x + (Math.random() - 0.5) * 700);
+      /* the dog startles once a storm, then settles */
+      if (!WX.dogStartled && DOG.on && !S.atLE && Math.abs(DOG.x - S.x) < 560) {
+        WX.dogStartled = true;
+        DOG.state = 'shake'; DOG.stateT = 0;
+        /* a startled dog yelps NOW — the courtesy floor yields to thunder,
+           though the yip still sets it so nothing else lands on top */
+        dogVoiceNow('dogyip', DOG.x);
+      }
+    }
+    /* the rainbow: only as a shower clears under a low sun, and rare —
+       never twice in an hour of play. The wet PEAK since the last clearing
+       is what remembers the shower: an eased fall crosses the threshold in
+       small steps, so a tick-to-tick comparison would never see it. Each
+       clearing spends its one chance, rainbow or not. */
+    if (WX.wet >= (WX.wetPeak || 0)) WX.wetPeak = WX.wet;
+    const lowSun = (DAY.wts.g || 0) > 0.30;
+    if ((WX.wetPeak || 0) > 0.5 && WX.wet < 0.35) {
+      if (lowSun && S.t - WX.rbAt > RB_COOLDOWN && !S.atLE) {
+        WX.rbAt = S.t; WX.rbs++;
+      }
+      WX.wetPeak = 0;
+    }
+    const rbAge = S.t - WX.rbAt;
+    WX.rbA += (((rbAge > 0 && rbAge < 16) ? 1 : 0) - WX.rbA) * ease(2.6);
+  }
+  WX.rain = WX.wet * WX.here;
+  /* overcast flattens the LIGHT — at night there is little light to
+     flatten; a storm takes one more stop on its own */
+  WX.k = clamp(WX.grey * (0.30 + 0.70 * (1 - DAY.wts.n)) + 0.30 * WX.storm, 0, 1);
+  const sig = Math.round(WX.k * 12) + Math.round(WX.snow * 7) * 100 +
+    Math.round(WX.fog * 7) * 1000 + Math.round(WX.rbA * 7) * 10000 +
+    Math.round(WX.snowCover * 9) * 100000;
+  if (sig !== WX.sig) { WX.sig = sig; needsDraw = true; }
+}
+
+/* hard-edged riso rain: two lanes of flat streaks, each with its rose
+   registration lane behind it, slanted by the stretch's own wind */
+function drawRain(a) {
+  if (a <= 0.012) return;
+  const slant = 0.16 + 0.40 * S.wind;
+  /* the count follows the room the rain has to fall in, so a tall
+     side-by-side column and a wide stacked one hold the same weather */
+  const area = (W * visH) / (1440 * 450);
+  for (let li = 0; li < 2; li++) {
+    const n = Math.round((li === 0 ? 56 : 34) * clamp(area, 0.5, 2.4));
+    const sp = li === 0 ? 1180 : 1680;
+    const len = li === 0 ? 30 : 46;
+    const lw = li === 0 ? 1.6 : 2.3;
+    const al = li === 0 ? 0.27 : 0.18;
+    for (let pass = 0; pass < 2; pass++) {
+      const ox = pass === 0 ? 2.5 : 0, oy = pass === 0 ? 1.5 : 0;
+      cx.strokeStyle = pass === 0 ? INKS.rose : INKS.cream;
+      cx.globalAlpha = (pass === 0 ? al * 0.5 : al) * a;
+      cx.lineWidth = lw;
+      cx.beginPath();
+      const r = rngFor('rain:' + li);
+      const span = visH + 320;
+      for (let i = 0; i < n; i++) {
+        const px = r() * (W + 320) - 160;
+        const fall = (S.t * sp + r() * span) % span;
+        const y = fall - 160;
+        const x = px - fall * slant * 0.30;
+        cx.moveTo(x + ox, y + oy);
+        cx.lineTo(x + ox - len * slant, y + oy + len);
+      }
+      cx.stroke();
+    }
+  }
+  cx.globalAlpha = 1;
+}
+
+/* riso snow: two lanes of short flat flakes, drifting slower than the
+   rain, swaying on the stretch's own wind */
+function drawSnow(a) {
+  if (a <= 0.012) return;
+  const area = (W * visH) / (1440 * 450);
+  for (let li = 0; li < 2; li++) {
+    const nFl = Math.round((li === 0 ? 44 : 26) * clamp(area, 0.5, 2.4));
+    const sp = li === 0 ? 150 : 96;
+    const sz = li === 0 ? 3.0 : 4.2;
+    /* a 3-px dot needs more ink than a 40-px streak: the rain reads at
+       0.27, the flakes only at half again that against the grain */
+    const al = li === 0 ? 0.58 : 0.42;
+    for (let pass = 0; pass < 2; pass++) {
+      cx.fillStyle = pass === 0 ? INKS.rose : INKS.cream;
+      cx.globalAlpha = (pass === 0 ? al * 0.4 : al) * a;
+      const ox = pass === 0 ? 1.8 : 0, oy = pass === 0 ? 1.2 : 0;
+      const r = rngFor('snow:' + li);
+      const span = visH + 260;
+      for (let i = 0; i < nFl; i++) {
+        const px = r() * (W + 260) - 130;
+        const fall = (S.t * sp + r() * span) % span;
+        const sway = Math.sin(S.t * 0.9 + i * 2.1) * (8 + 10 * S.wind);
+        cx.fillRect(px + sway + ox, fall - 130 + oy, sz, sz);
+      }
+    }
+  }
+  cx.globalAlpha = 1;
+}
+/* the ground whitens in over a minute and thaws after — a hard-edged cap
+   of white laid along the path, never a gradient. Jump, bounce and the
+   reading are untouched; the winter frost of long-untended stretches is a
+   different thing and stays place-bound as it was. */
+function drawSnowCover() {
+  const c = WX.snowCover * (S.atLE ? 0 : 1);
+  if (c <= 0.02) return;
+  cx.fillStyle = INKS.cream;
+  for (let sx = -20; sx < W + 20; sx += 24) {
+    const wx = S.x + (sx - AVX);
+    if (wx < 0 || wx > M.totalPx) continue;
+    const h1 = hashStr('snowcap:' + Math.round(wx / 24));
+    cx.globalAlpha = 0.62 * c;
+    cx.fillRect(sx, gYAt(wx) - 2.6, 20, 2.6 + (h1 & 1));
+    if ((h1 & 7) < 3) {
+      cx.globalAlpha = 0.38 * c;
+      cx.fillRect(sx + 4, gYAt(wx) - 5.2, 12, 2);
+    }
+  }
+  cx.globalAlpha = 1;
+}
+/* a fog bank rolls in and holds — but the law is LEGIBILITY: the alpha is
+   capped (FOG_CAP) so the path, the hazards, the prompts and the walker
+   always read; the reading dock and the HUD are DOM and never dimmed */
+function drawFogBank(a) {
+  const al = FOG_CAP * a;
+  if (al <= 0.01) return;
+  cx.fillStyle = mix(INKS.cream, OVERCAST_INK, 0.35);
+  for (let i = 0; i < 4; i++) {
+    const y = visH * (0.22 + 0.19 * i);
+    const hgt = visH * 0.11;
+    const drift = ((S.t * (6 + i * 3) + i * 240) % (W + 480)) - 240;
+    cx.globalAlpha = al * (0.75 - i * 0.1);
+    cx.fillRect(-240 + drift * 0.2, y, W + 480, hgt);
+    cx.globalAlpha = al * 0.5;
+    cx.fillRect(drift - 160, y + hgt * 0.25, 320 + i * 90, hgt * 0.5);
+  }
+  cx.globalAlpha = 1;
+}
+/* the flash inks the sky for two frames; reduced motion never sees it */
+function drawBolt() {
+  if (REDUCED) return;
+  const age = S.t - WX.flashT;
+  if (age < 0 || age > 0.10) return;
+  const first = age < 0.05;
+  cx.globalAlpha = first ? 0.30 : 0.16;
+  cx.fillStyle = INKS.cream;
+  cx.fillRect(0, 0, W, horizonY);
+  const r = rngFor('bolt:' + WX.bolts);
+  let bx = W * (0.25 + r() * 0.5), by = 6;
+  cx.strokeStyle = first ? INKS.cream : INKS.apricot;
+  cx.globalAlpha = first ? 0.95 : 0.5;
+  cx.lineWidth = first ? 3 : 2;
+  cx.beginPath(); cx.moveTo(bx, by);
+  while (by < horizonY - 8) {
+    bx += (r() - 0.48) * 46; by += 14 + r() * 22;
+    cx.lineTo(bx, by);
+  }
+  cx.stroke();
+  cx.globalAlpha = 1;
+}
+/* a banded riso arc as a shower clears under a low sun — one moment of
+   delight, gone gently, never twice in an hour */
+function drawRainbow(a) {
+  if (a <= 0.01) return;
+  const cxr = W * 0.62, cyr = visH * 1.06, r0 = Math.min(W, visH * 2) * 0.52;
+  const bands = [INKS.rose, INKS.apricot, INKS.cream];
+  cx.save();
+  cx.beginPath(); cx.rect(0, 0, W, visH); cx.clip();
+  for (let i = 0; i < bands.length; i++) {
+    cx.strokeStyle = bands[i];
+    /* flat and confident — a riso arc, not a watermark */
+    cx.globalAlpha = 0.52 * a * (1 - i * 0.10);
+    cx.lineWidth = 9;
+    cx.beginPath();
+    cx.arc(cxr, cyr, r0 - i * 10, Math.PI * 1.02, Math.PI * 1.98);
+    cx.stroke();
+  }
+  cx.restore();
+  cx.globalAlpha = 1;
+}
+
+/* the paper darkens a stop under cloud, and another under a shower */
+function drawWxPlate(a) {
+  if (a <= 0.004) return;
+  cx.globalAlpha = a;
+  cx.fillStyle = INK_DARK;
+  cx.fillRect(0, 0, W, visH + 6);
+  cx.globalAlpha = 1;
+}
+
+/* wet ground: a flat sheen on the path and puddles that stay behind the
+   shower and dry out afterwards — both hard-edged, neither a gradient */
+function drawWet(pal) {
+  const wet = WX.wetness * WX.here;
+  if (wet <= 0.02 || S.atLE) return;
+  cx.globalAlpha = 0.20 * wet;
+  cx.fillStyle = INKS.cream;
+  for (let sx = -20; sx < W + 20; sx += 26) {
+    const wx = S.x + (sx - AVX);
+    if (wx < 0 || wx > M.totalPx) continue;
+    if ((hashStr('sheen:' + Math.round(wx / 26)) & 3) === 0) continue;
+    cx.fillRect(sx, gYAt(wx) - 2.4, 17, 1.8);
+  }
+  const step = 340;
+  const first = Math.floor((S.x - AVX - step) / step) * step;
+  for (let wx = first; wx < S.x + (W - AVX) + step; wx += step) {
+    if (wx < 0 || wx > M.totalPx) continue;
+    const h1 = hashStr('pud:' + wx);
+    if ((h1 & 7) > 4) continue;                   /* not every place puddles */
+    const px = wx + ((h1 >>> 4) % 220) - 110;
+    const sx = w2s(px);
+    if (sx < -90 || sx > W + 90) continue;
+    const wdt = 26 + ((h1 >>> 9) % 44);
+    const gy = gYAt(px);
+    /* a puddle holds the sky, the way the sea does at Land's End: the
+       low band of this hour's own sky, laid flat on the path */
+    cx.globalAlpha = 0.62 * wet;
+    cx.fillStyle = mix(skyColAt(pal, 0.88), INKS.cream, 0.10);
+    cx.fillRect(sx - wdt / 2, gy - 3.4, wdt, 4.6);
+    cx.globalAlpha = 0.55 * wet;
+    cx.fillStyle = INKS.cream;
+    cx.fillRect(sx - wdt / 2 + 3, gy - 4.0, wdt - 6, 1.2);
+    if (WX.rain > 0.5) {
+      /* rings, two held frames — the rain still falling into the puddle */
+      const f = Math.floor((S.t * 2.2 + (h1 % 9) * 0.31) % 2);
+      cx.globalAlpha = 0.42 * WX.rain * wet;
+      const rw = 6 + f * 6;
+      cx.fillRect(sx - rw / 2, gy - 4.6, rw, 1);
+    }
+  }
+  cx.globalAlpha = 1;
+}
+
+/* ---------------- the walker falls asleep ---------------- */
+function wakeWalker() {
+  if (PERF.on) endPerform(true);   /* any input stops the tune mid-phrase */
+  if (SLP.stage > 0 && !SLP.waking) { SLP.startle = 1; SLP.waking = true; SLP.wakes++; }
+  SLP.stage = 0; SLP.t = 0; SLP.rIdle = 0;
+  SLP.dogSnoreAt = 0;
+  S.idleT = 0;                 /* she is properly awake: the clock restarts */
+  if (REDUCED && SLP.startle > 0) { needsDraw = true; renderStep(); }
+}
+
+function chooseSeat() {
+  SLP.onBench = false; SLP.seatDX = 0;
+  if (S.atLE) {
+    /* the shore keeps one bench, in perfect repair, back from the brink */
+    const d = M.leBench - S.x;
+    if (Math.abs(d) < 110) { SLP.seatDX = clamp(d, -90, 90); SLP.onBench = true; }
+    return;
+  }
+  if (!S.page) return;
+  const T = terrainFor(S.page.idx);
+  let best = null;
+  for (const b of T.benches) {
+    if (b.broken) continue;
+    const d = b.x - S.x;
+    if (Math.abs(d) < 74 && (best === null || Math.abs(d) < Math.abs(best))) best = d;
+  }
+  if (best !== null) { SLP.seatDX = best; SLP.onBench = true; }
+}
+
+function sleepStageNow() {
+  const idle = S.idleT;
+  /* a page open and being read counts as activity — but only against the
+     first stage. She may still doze beside you while you read; that is
+     the point of her. */
+  const reading = (performance.now() - userScrollT) < 4200;
+  if (idle > SLEEP_T3) return 3;
+  if (idle > SLEEP_T2) return 2;
+  if (idle > SLEEP_T1 && !reading) return 1;
+  return 0;
+}
+
+function tickSleep(dt) {
+  if (SLP.startle > 0) {
+    SLP.startle = Math.max(0, SLP.startle - dt / 0.55);
+    if (SLP.startle === 0) SLP.waking = false;
+  }
+  const busy = !!S.overlay || !!S.sweep || Math.abs(S.vx) > 1 || S.target != null ||
+    S.jumpT !== null || S.bounceT !== null || S.stumbleT !== null;
+  if (busy) { if (SLP.stage > 0) wakeWalker(); return; }
+  let st = sleepStageNow();
+  if (PERF.on) st = Math.min(st, 1);        /* the doze waits for the tune */
+  if (st !== SLP.stage) {
+    if (st === 0) wakeWalker();
+    else {
+      SLP.stage = st; SLP.t = 0; SLP.stages++;
+      if (st === 1) {
+        chooseSeat();
+        /* SOMETIMES, INSTEAD OF SLEEPING, SHE PLAYS: roughly one settle in
+           five or six, never twice in a row, never under reduced motion */
+        PERF.chances++;
+        const plays = !REDUCED && (PERF.force || (!PERF.last && Math.random() < PERF_CHANCE));
+        PERF.force = false;
+        PERF.last = plays;
+        if (plays) beginPerform();
+      }
+      if (st === 3) SLP.snoreAt = S.t + 2.4;
+    }
+  }
+  if (PERF.on) {
+    PERF.t += dt;
+    PERF.k = clamp(PERF.t / 1.2, 0, 1);
+    if (PERF.t >= PERF.dur) endPerform(false);
+  }
+  if (PERF.putaway > 0) PERF.putaway = Math.max(0, PERF.putaway - dt / 0.9);
+  if (SLP.stage > 0) {
+    SLP.t += dt;
+    SLP.k = clamp(SLP.t / 1.5, 0, 1);       /* each stage eases into itself */
+  } else SLP.k = 0;
+  /* the snore: small, spaced, never comic-loud, and never under calm */
+  if (SLP.stage >= 3 && !REDUCED) {
+    if (S.t > SLP.snoreAt) {
+      SLP.snoreAt = S.t + 4.4 + Math.random() * 3.8;
+      SLP.snores++;
+      audEv('snore', S.x);
+      /* and once in a while the dog answers with a smaller one */
+      if (DOG.on && !S.atLE && DOG.pose === 'sleep' && SLP.snores % 3 === 0) {
+        SLP.dogSnoreAt = S.t + 1.4 + Math.random() * 0.8;
+      }
+    }
+    if (SLP.dogSnoreAt && S.t > SLP.dogSnoreAt) {
+      SLP.dogSnoreAt = 0;
+      SLP.dogSnores++;
+      audEv('dogsnore', DOG.x);
+    }
+  }
+}
+
+/* SOMETIMES, INSTEAD OF SLEEPING, SHE PLAYS (wave 3). She sits, takes a
+   small instrument from the pack — a kalimba or a tin whistle, chosen by
+   the stretch — and the generative music-box voice performs a quiet solo
+   in the seed of exactly where she sits, for twenty or thirty seconds,
+   the dog settling to listen. Then she puts it away and dozes as usual.
+   Any input stops the tune mid-phrase with one small apologetic note and
+   stands her up. The tune respects the MUSIC toggle the way everything
+   does — muted, she still plays; the animation is the point — and the
+   duty-cycle ledger counts it as a moment. Reduced motion never performs. */
+function beginPerform() {
+  PERF.on = true; PERF.t = 0; PERF.k = 0;
+  PERF.dur = 20 + Math.random() * 10;       /* twenty or thirty seconds */
+  const p = S.page;
+  PERF.seed = p ? p.slug : '';
+  PERF.inst = (hashStr('inst:' + PERF.seed) & 1) ? 'whistle' : 'kalimba';
+  PERF.count++;
+  audPerform(PERF.dur);
+}
+function endPerform(interrupted) {
+  if (!PERF.on) return;
+  PERF.on = false;
+  PERF.putaway = 1;                          /* she puts it away, eased */
+  if (interrupted) {
+    PERF.interrupted++;
+    if (AUD.ctx && MUS.built && !AUD.themeSrc) {
+      const c = AUD.ctx;
+      /* the tune stops mid-phrase; one small apologetic note closes it */
+      MUS.swell.gain.cancelScheduledValues(c.currentTime);
+      MUS.swell.gain.setValueAtTime(Math.max(0.0001, MUS.swell.gain.value), c.currentTime);
+      MUS.swell.gain.linearRampToValueAtTime(0.0001, c.currentTime + 0.9);
+      try {
+        const pal = musPalette();
+        musNote(musMidiHz(pal.root + 24), c.currentTime + 0.06, 0.035, 1.6);
+      } catch (e) { }
+      MUS.quietUntil = c.currentTime + 8 + Math.random() * 6;
+      MUS.phraseEnd = c.currentTime + 0.9;
+    }
+  }
+}
+/* the solo: quiet phrases from the music box ALONE, whatever the score has
+   earned — what she plays IS the music of where she sits */
+function audPerform(dur) {
+  AUD.moments = AUD.moments || {};
+  AUD.moments.perform = (AUD.moments.perform || 0) + 1;
+  if (!AUD.ctx || !MUS.built || AUD.themeSrc) return;
+  const c = AUD.ctx;
+  const t0 = c.currentTime + 0.6;
+  MUS.swell.gain.cancelScheduledValues(c.currentTime);
+  MUS.swell.gain.setValueAtTime(Math.max(0.0001, MUS.swell.gain.value), c.currentTime);
+  MUS.swell.gain.setValueAtTime(Math.max(0.0001, MUS.swell.gain.value), t0);
+  MUS.swell.gain.linearRampToValueAtTime(1, t0 + 1.3);
+  let t = t0;
+  while (t < t0 + dur - 7) {
+    const gap = 2.2 + Math.random() * 2.6;
+    t = musPhrase(t, true, { tier: 0, i: 0, hold: gap + 6 }) + gap;
+  }
+  MUS.swell.gain.setValueAtTime(1, t);
+  MUS.swell.gain.linearRampToValueAtTime(0.0001, t + MUS_FALL);
+  MUS.phraseEnd = t + MUS_FALL;
+  MUS.quietUntil = t + MUS_FALL + 19 + Math.random() * 12;
+  AUD.playCount['moment:perform'] = (AUD.playCount['moment:perform'] || 0) + 1;
+}
+/* 3-4 authored frames in the flat idiom: the seated walker, the small
+   instrument, a plucking hand, one breathing note glyph over her */
+function drawPerformer(ay, pal, opts) {
+  const dx = SLP.seatDX || 0;
+  drawSeated(AVX + dx - 2.6, ay - 1.8, 1, 'rgba(255,243,224,0.9)', null, opts);
+  drawSeated(AVX + dx, ay, 1, pal.ink, pal.accent, opts, true);
+  const k = PERF.on ? PERF.k : PERF.putaway;
+  if (k <= 0.02) return;
+  const face = (opts && opts.face) || 1;
+  const sx = AVX + dx + 10 * face, sy = ay - 16;
+  const fr = PERF.on ? [0, 1, 2, 1][Math.floor(S.t * 2.4) % 4] : 0;
+  cx.globalAlpha = clamp(k, 0, 1);
+  if (PERF.inst === 'kalimba') {
+    cx.fillStyle = INKS.cream;
+    cx.fillRect(sx - 6, sy + 2, 12, 8);
+    cx.strokeStyle = pal.ink; cx.lineWidth = 1;
+    cx.strokeRect(sx - 6, sy + 2, 12, 8);
+    cx.fillStyle = pal.ink;
+    for (let i = 0; i < 4; i++) cx.fillRect(sx - 4 + i * 2.4, sy + 3, 1, 4 - (i === fr ? 1.4 : 0));
+    cx.fillRect(sx - 5 + fr * 3.2, sy - 1.5 - (fr === 1 ? 1.2 : 0), 3, 3);
+  } else {
+    cx.strokeStyle = INKS.cream; cx.lineWidth = 2.6;
+    cx.beginPath(); cx.moveTo(sx - 2 * face, sy - 8); cx.lineTo(sx + 12 * face, sy - 2); cx.stroke();
+    cx.fillStyle = pal.ink;
+    cx.fillRect(sx + (3 + fr * 2.6) * face - 1.5, sy - 6.5 + fr * 0.9, 3, 3);
+  }
+  if (PERF.on) {
+    const nk = (S.t % 3.4) / 3.4;
+    if (nk < 0.6) {
+      cx.globalAlpha = 0.75 * Math.sin(Math.PI * (nk / 0.6)) * k;
+      cx.fillStyle = INKS.apricot;
+      const nx2 = sx + 6 * face, ny2 = sy - 22 - nk * 10;
+      cx.fillRect(nx2, ny2, 3, 3);
+      cx.fillRect(nx2 + 2.4, ny2 - 6, 1.2, 8);
+    }
+  }
+  cx.globalAlpha = 1;
+}
+
+/* she is drawn, not announced: the whole state of her is in the pose */
+function drawSleeper(ay, pal, opts) {
+  const dx = SLP.seatDX || 0;
+  drawSeated(AVX + dx - 2.6, ay - 1.8, 1, 'rgba(255,243,224,0.9)', null, opts);
+  drawSeated(AVX + dx, ay, 1, pal.ink, pal.accent, opts, true);
+  if (SLP.stage >= 3) drawZzz((SLP.hxNow || AVX + dx) + 9, (SLP.hyNow || ay - 40) - 13);
+}
+
+function drawSeated(sx, sy, h, ink, accent, opts, keyline) {
+  if (accent) {
+    cx.save(); cx.translate(2.5, 1.5); cx.globalAlpha = 0.45;
+    drawSeated(sx, sy, h, accent, null, opts);
+    cx.restore(); cx.globalAlpha = 1;
+  }
+  const face = (opts && opts.face) || 1;
+  const st = SLP.stage;
+  /* how far under she has gone — eased inside each stage, never a snap */
+  const droopT = st >= 3 ? 1 : (st === 2 ? 0.58 : 0.08);
+  const droopP = st >= 3 ? 0.58 : (st === 2 ? 0.08 : 0);
+  const droop = lerp(droopP, droopT, SLP.k);
+  /* and past the nodding-off she goes all the way down: the body turns
+     from a sitting axis to a lying one, which is the only silhouette
+     that reads as sleep at thirty pixels tall */
+  const lie = smoothT(clamp((droop - 0.62) / 0.38, 0, 1));
+  const bench = !!SLP.onBench;
+  const floor = sy - (bench ? 20 : 0) * h;      /* the surface she is on */
+  const hipY = lerp(floor - (bench ? -1 : 7) * h, floor - 4.4 * h, lie);
+
+  /* the body axis: hips to shoulders, sitting up or laid out */
+  const shSitX = sx + droop * 7.6 * h * face, shSitY = hipY - (21 - 1.6 * droop) * h;
+  const shLieX = sx - 15 * h * face, shLieY = floor - 5.4 * h;
+  const shX = lerp(shSitX, shLieX, lie), shY = lerp(shSitY, shLieY, lie);
+  let ax = shX - sx, ay2 = shY - hipY;
+  const alen = Math.hypot(ax, ay2) || 1;
+  const ux = ax / alen, uy = ay2 / alen;        /* along the body */
+  const nx = -uy, ny = ux;                      /* across it */
+
+  /* the knees stay bent the whole way down */
+  const kneeX = lerp(sx + (bench ? 9.5 : 12.6) * h * face, sx + 12 * h * face, lie);
+  const kneeY = lerp(bench ? hipY + 2 * h : floor - 21 * h, floor - 9.5 * h, lie);
+  const footX = lerp(sx + (bench ? 12 : 15.5) * h * face, sx + 19.5 * h * face, lie);
+  const footY = lerp(floor, floor - 2.4 * h, lie);
+
+  cx.fillStyle = ink; cx.strokeStyle = ink; cx.lineCap = 'round';
+
+  /* the far leg, a hair behind */
+  cx.lineWidth = 4.2 * h;
+  cx.beginPath();
+  cx.moveTo(sx - 1.4 * h * face, hipY + 0.6 * h);
+  cx.lineTo(kneeX - 3.2 * h * face, kneeY + 2.4 * h);
+  cx.lineTo(footX - 3.6 * h * face, footY + 0.6 * h);
+  cx.stroke();
+
+  /* torso: a flat quad across the body axis, whatever angle it holds */
+  const wHip = 4.9 * h, wSh = 4.5 * h;
+  drawPoly([
+    [sx + nx * wHip, hipY + ny * wHip], [sx - nx * wHip, hipY - ny * wHip],
+    [shX - nx * wSh, shY - ny * wSh], [shX + nx * wSh, shY + ny * wSh]
+  ], ink);
+
+  /* the near leg, over the torso: the line that says "sitting", then
+     "curled up" */
+  cx.lineWidth = 4.6 * h;
+  cx.beginPath();
+  cx.moveTo(sx + 1.2 * h * face, hipY + 0.4 * h);
+  cx.lineTo(kneeX, kneeY);
+  cx.lineTo(footX, footY);
+  cx.stroke();
+
+  /* one arm props her up, lets go, and ends tucked under her head */
+  cx.lineWidth = 3.0 * h;
+  const prop = 1 - droop;
+  const ex = lerp(lerp(sx + 6.5 * h * face, sx - 8.5 * h * face, prop), sx - 9 * h * face, lie);
+  const ey = lerp(lerp(hipY + 3.5 * h, floor - 1 * h, prop), floor - 2.6 * h, lie);
+  cx.beginPath(); cx.moveTo(shX, shY + 3 * h * (1 - lie)); cx.lineTo(ex, ey); cx.stroke();
+  if (droop < 0.78) {
+    /* the near arm holds the knee until she is properly under, and then
+       lets go — the notch between knee and chest is the tell */
+    cx.globalAlpha = clamp((0.78 - droop) / 0.2, 0, 1);
+    cx.beginPath();
+    cx.moveTo(shX, shY + 3.6 * h);
+    cx.lineTo(kneeX + 1.2 * h * face, kneeY + 3.6 * h);
+    cx.stroke();
+    cx.globalAlpha = 1;
+  }
+
+  /* neck and head, carried along the same axis */
+  const headD = (10.4 - 3.4 * droop * (1 - lie) + 3.2 * lie) * h;
+  const hx = shX + ux * headD + (1 - lie) * droop * 2.0 * h * face;
+  const hy = shY + uy * headD;
+  cx.lineWidth = 3.6 * h;
+  cx.beginPath(); cx.moveTo(shX, shY); cx.lineTo(hx, hy); cx.stroke();
+  cx.beginPath(); cx.arc(hx, hy, 5.6 * h, 0, 7); cx.fill();
+  SLP.hxNow = hx; SLP.hyNow = hy;      /* the Zzz rises from her actual head */
+
+  /* THE SHOULDER LINE (round 12). Laid out flat, the torso, the near arm,
+     the tucked head and the curled legs are one ink and one mass: at 1x she
+     read as a dark blob while the dog beside her read clean. The riso
+     answer is a knocked-out keyline — a plate left unprinted — so two hard
+     cream cuts, one across the shoulder and one across the hip, break the
+     silhouette into the three masses the eye needs. Flat, no gradient, and
+     they come in with the lying-down itself so nothing pops. */
+  if (keyline && lie > 0.22) {
+    const kA = smoothT(clamp((lie - 0.22) / 0.34, 0, 1));
+    cx.save();
+    cx.strokeStyle = INKS.cream;
+    cx.lineCap = 'butt';
+    /* the cream backlight already rims her UP-LEFT edges, so a cut laid on
+       the axis simply lands on light that is there. These sit a step DOWN
+       and RIGHT of it, on the side the rim never reaches, and they cross the
+       whole silhouette: the neck, and the hip. */
+    cx.globalAlpha = kA * 0.88;
+    cx.lineWidth = 1.8 * h;
+    cx.beginPath();
+    const oX = 1.6 * h;                    /* clear of the rim, inside the ink */
+    cx.moveTo(shX + nx * wSh * 0.76 + oX, shY + ny * wSh * 0.76);
+    cx.lineTo(shX - nx * wSh * 0.76 + oX, shY - ny * wSh * 0.76);
+    cx.moveTo(sx + nx * wHip * 0.72 + oX, hipY + ny * wHip * 0.72);
+    cx.lineTo(sx - nx * wHip * 0.72 + oX, hipY - ny * wHip * 0.72);
+    cx.stroke();
+    /* and the near thigh, cut away from the torso it lies across */
+    cx.globalAlpha = kA * 0.6;
+    cx.lineWidth = 1.3 * h;
+    cx.beginPath();
+    cx.moveTo(sx + 2.4 * h * face + nx * 2.2 * h, hipY + 0.4 * h + ny * 2.2 * h);
+    cx.lineTo(kneeX * 0.72 + sx * 0.28 + nx * 2.2 * h, kneeY * 0.72 + hipY * 0.28 + ny * 2.2 * h);
+    cx.stroke();
+    cx.restore();
+    cx.globalAlpha = 1;
+  }
+
+  if (opts && opts.dress) drawDress(sx, sy, h, (shX - sx), shY, hipY, ink, opts.dress, face);
+  cx.lineCap = 'butt';
+}
+
+/* a small flat Zzz, two held frames — no tween, no easing curve on paper */
+function drawZzz(sx, sy) {
+  const f = REDUCED ? 0 : Math.floor(S.t * 1.1) % 3;
+  for (let i = 0; i < 3; i++) {
+    const s = 6.5 + i * 3.6;
+    cx.globalAlpha = [0.9, 0.6, 0.3][(i + f) % 3];
+    cx.fillStyle = INKS.cream;
+    const x = sx + i * 8.5 + f * 1.5, y = sy - i * 12 - f * 2.5;
+    cx.fillRect(x, y, s, 1.8);
+    cx.fillRect(x, y + s - 1.8, s, 1.8);
+    cx.save();
+    cx.translate(x + s, y);
+    cx.rotate(Math.PI * 0.75);
+    cx.fillRect(0, 0, s * 1.4, 1.8);
+    cx.restore();
+  }
+  cx.globalAlpha = 1;
+}
+
+/* ---------------- waking, and the second keyboard ---------------- */
+/* Any input at all wakes her. Scrolling the reading strip does not: that
+   is reading, and reading is exactly when she is allowed to doze. */
+window.addEventListener('keydown', () => { wakeWalker(); }, { capture: true });
+window.addEventListener('pointerdown', () => { wakeWalker(); }, { capture: true });
+
+/* A mouse click must not leave a chip armed. The browser keeps focus on a
+   clicked button and re-fires it on the next overlay-less Enter — so the
+   LAYOUT chip clicked once made every later gate Enter flip the layout back
+   (the owner's stacked-again bug), and the sound chips re-toggled silently
+   the same way. After any pointer press the focus goes back to the trail;
+   Tab-and-Enter keyboard travel is untouched, because a keyboard never
+   raises pointerup. */
+window.addEventListener('pointerup', (e) => {
+  const t = e.target;
+  const b = t && t.closest ? t.closest('button') : null;
+  if (b) b.blur();
+}, { capture: true });
+
+window.addEventListener('keydown', (e) => {
+  if (S.overlay && S.overlay !== 'key') return;      /* typing stays typing */
+  if (e.key.toLowerCase() === 'v') { toggleLayout(); e.preventDefault(); }
+});
+const btnLayoutEl = document.getElementById('btnLayout');
+if (btnLayoutEl) btnLayoutEl.addEventListener('click', () => toggleLayout());
+window.addEventListener('resize', () => { refreshLayoutUI(); });
+
+/* the calm variant keeps the stages as held frames: a one-second tick that
+   draws nothing at all unless a stage boundary is actually crossed, and
+   never makes a sound */
+if (REDUCED) {
+  setInterval(() => {
+    if (S.overlay) { SLP.rIdle = 0; if (SLP.stage) { SLP.stage = 0; needsDraw = true; renderStep(); } return; }
+    SLP.rIdle += 1;
+    S.idleT = SLP.rIdle;
+    const st = SLP.rIdle > SLEEP_T3 ? 3 : (SLP.rIdle > SLEEP_T2 ? 2 : (SLP.rIdle > SLEEP_T1 ? 1 : 0));
+    if (st !== SLP.stage) {
+      SLP.stage = st; SLP.k = 1; SLP.stages++;
+      if (st === 1) chooseSeat();
+      needsDraw = true;
+      renderStep();
+    }
+  }, 1000);
+}
+
+/* ---------------- what the verifier may ask ---------------- */
+window.__wx = {
+  get state() {
+    const mm = wxMonth();
+    return {
+      months: WX.months.length, quiet: WX.quiet, max: WX.max,
+      first: WX.first, last: WX.last,
+      idx: WX.idx, month: mm.key, marks: mm.marks, monthState: mm.state,
+      grey: +WX.grey.toFixed(4), wet: +WX.wet.toFixed(4),
+      wetness: +WX.wetness.toFixed(4), rain: +WX.rain.toFixed(4),
+      k: +WX.k.toFixed(4), sig: WX.sig,
+      turned: WX.turned, showers: WX.showers, clearings: WX.clearings,
+      snow: +WX.snow.toFixed(4), snowCover: +WX.snowCover.toFixed(4),
+      fog: +WX.fog.toFixed(4), storm: +WX.storm.toFixed(4),
+      rbA: +WX.rbA.toFixed(4), rbAt: +WX.rbAt.toFixed(1),
+      bolts: WX.bolts, flashT: +WX.flashT.toFixed(2),
+      stormUntil: +WX.stormUntil.toFixed(1),
+      snows: WX.snows, fogs: WX.fogs, storms: WX.storms, rbs: WX.rbs,
+      fogCap: FOG_CAP,
+      label: wxLabel()
+    };
+  },
+  setMonth(i) {
+    WX.idx = ((i | 0) % WX.months.length + WX.months.length) % WX.months.length;
+    WX.mt = 0; WX.state = wxMonth().state;
+    tickWeather(0.016);
+    needsDraw = true; if (REDUCED) renderStep();
+    return wxMonth().key;
+  },
+  settle(secs) {                 /* run the eases forward without a walk */
+    const n = Math.max(1, Math.round((secs || 6) / 0.05));
+    const keep = WX.mt;
+    for (let i = 0; i < n; i++) { WX.mt = keep; tickWeather(0.05); }
+    WX.mt = keep;
+    needsDraw = true; if (REDUCED) renderStep();
+    return this.state;
+  },
+  monthTable() { return WX.months.map(m => [m.key, m.marks, m.state]); },
+  /* a probe may break the storm now — the visit is old enough by fiat */
+  storm() {
+    WX.stormKey = 'probe:' + WX.turned + ':' + Math.random();
+    WX.storms++;
+    WX.stormUntil = S.t + 7;
+    WX.boltNext = S.t + 0.4;
+    WX.dogStartled = false;
+    return WX.stormUntil;
+  },
+  /* …or hang the arc for a screenshot; the natural path is the transition */
+  rainbow() { WX.rbAt = S.t; WX.rbs++; return WX.rbAt; }
+};
+window.__lbl = {
+  get state() {
+    return {
+      approach: LBL.approach,
+      first: LBL.first ? Object.assign({}, LBL.first) : null,
+      boxes: LBL.boxes.map(b => ({ x0: +b.x0.toFixed(1), x1: +b.x1.toFixed(1),
+        y0: +b.y0.toFixed(1), y1: +b.y1.toFixed(1) })),
+      ranks: LBL.rank.size
+    };
+  }
+};
+window.__slp = {
+  get state() {
+    return {
+      stage: SLP.stage, k: +SLP.k.toFixed(3), onBench: SLP.onBench,
+      seatDX: Math.round(SLP.seatDX || 0), startle: +SLP.startle.toFixed(3),
+      snores: SLP.snores, dogSnores: SLP.dogSnores, stages: SLP.stages,
+      wakes: SLP.wakes, idleT: +S.idleT.toFixed(2), rIdle: SLP.rIdle
+    };
+  },
+  idle(sec) { S.idleT = sec; SLP.rIdle = sec; return S.idleT; },
+  wake: wakeWalker
+};
+window.__perf = {
+  get state() {
+    return { on: PERF.on, t: +PERF.t.toFixed(2), dur: +PERF.dur.toFixed(1),
+      inst: PERF.inst, seed: PERF.seed, chances: PERF.chances, count: PERF.count,
+      last: PERF.last, interrupted: PERF.interrupted,
+      putaway: +PERF.putaway.toFixed(2), chance: PERF_CHANCE };
+  },
+  force() { PERF.force = true; return true; }
+};
+window.__score = {
+  get state() {
+    return {
+      tier: SCORE.tier, name: SCORE_TIERS[SCORE.tier].name, reached: SCORE.reached,
+      p: +SCORE.p.toFixed(4), words: +SCORE.words.toFixed(4), pages: +SCORE.pages.toFixed(4),
+      covered: COV.covered, segs: COV.n, segPx: COV_SEG, x1: Math.round(COV.x1),
+      walked: Math.round(PACK.walked), opened: Object.keys(PACK.visited).length,
+      totalWords: M.totalWords, totalPages: M.pages.length,
+      debut: SCORE.debut, debuts: SCORE.debuts, unlocks: SCORE.unlocks,
+      voices: SCORE.lastVoices.slice(), moment: (SCORE.lastMoment || []).map(v => v.slice()),
+      acct: SCORE.acct ? Object.assign({}, SCORE.acct) : null,
+      energy: SCORE.acct ? +Object.values(SCORE.acct).reduce((a, b) => a + b, 0).toFixed(8) : 0,
+      trim: SCORE_TRIM[SCORE.tier],
+      tiers: SCORE_TIERS.map(t => [t.at, t.name]), label: scoreLabel()
+    };
+  },
+  /* a probe may buy progress the honest way: real ground in the coverage
+     record, exactly the one number the redefined rule reads */
+  set(p) {
+    const want = clamp(p, 0, 1);
+    const k = Math.round(want * COV.n);
+    COV.bits.fill(0);
+    for (let i = 0; i < k; i++) COV.bits[i] = 1;
+    COV.covered = k;
+    return scoreUpdate(true);
+  },
+  update: scoreUpdate,
+  clearDebut() { SCORE.debut = -1; return SCORE.debut; },
+  /* start the walk over the way a first-time visitor starts it: no words
+     on the odometer, no pages in the pack, and no memory of a voice */
+  fresh() {
+    PACK.walked = 0; PACK.visited = {};
+    if (COV.bits) { COV.bits.fill(0); COV.covered = 0; }
+    lsSet('longway.cov.v1', '');
+    SCORE.reached = 0; SCORE.unlocks = 0; SCORE.debuts = 0; SCORE.debut = -1;
+    SCORE.lastMoment = null; SCORE.lastVoices = [];
+    lsSet('longway.score.tier', '0');
+    return scoreUpdate(false);
+  }
+};
+window.__lay = {
+  get state() { return { mode: LAY.mode, eff: LAY.eff, W, H, visH, horizonY, groundY, AVX, dockH: document.getElementById('dock').getBoundingClientRect() }; },
+  set: setLayout,
+  toggle: toggleLayout
+};
+window.__hz = {
+  get state() {
+    const b = S.hzBlock;
+    return {
+      blocked: !!b,
+      x: b ? Math.round(b.x) : null, kind: b ? b.kind : null,
+      face: b ? b.face : 0, heldFor: b ? +(S.t - b.since).toFixed(2) : 0,
+      lean: +S.hzLean.toFixed(3), carry: S.jumpCarry,
+      promptVisible: !jumpPrompt.hidden,
+      firstLineVisible: !jumpPrompt.hidden && !jpFirst.hidden,
+      warned: hzWarned,
+      promptLeft: jumpPrompt.style.left || ''
+    };
+  },
+  resetWarned() { hzWarned = false; return hzWarned; }
+};
+window.__portal = {
+  get state() {
+    return {
+      active: PORTAL.active ? PORTAL.active.key : null,
+      t: PORTAL.active ? +PORTAL.active.t.toFixed(3) : 0,
+      gone: PORTAL.active ? !!PORTAL.active.gone : false,
+      seen: Object.assign({}, PORTAL.seen),
+      star: { sx: +PORTAL.starSX.toFixed(1), sy: +PORTAL.starSY.toFixed(1),
+              on: +PORTAL.starOn.toFixed(3), hover: PORTAL.starHover },
+      near: S.enterAct && S.enterAct.kind === 'portal' ? S.enterAct.key : null,
+      nearFlower: S.nearFlower,
+      hint: gatePrompt.hidden ? '' : gatePrompt.textContent,
+      spots: {
+        kioskX: Math.round(M.kioskX),
+        kioskPage: M.kioskPage,
+        minPage: PORTAL_MIN_PAGE,
+        sloopX: Math.round(M.worldEnd - 4),
+        inkX: Math.round(M.leBench)
+      },
+      ask: S.overlay === 'portalask' ? PA.key : null,
+      lines: PORTAL_LINES
+    };
+  },
+  go: portalGo,
+  hoverStar() { PORTAL.mx = PORTAL.starSX; PORTAL.my = PORTAL.starSY; },
+  setNav(fn) { PORTAL.navigate = fn; },
+  clear() { PORTAL.active = null; }
+};

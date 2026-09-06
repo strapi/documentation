@@ -1,0 +1,235 @@
+THE LONG WAY THROUGH - SFX CREDITS
+==================================
+Every file in this folder is genuinely CC0 (Creative Commons Zero / public
+domain dedication). Sources below; files renamed for the build, some gently
+converted, trimmed, filtered or re-pitched with ffmpeg (each edit noted).
+Container is Ogg (Opus or Vorbis). Whole folder: under 400 KB, cap 3 MB.
+
+WALKING IS SILENT. No footstep recording is bundled with this build and none
+is played - not muted, not shipped. You make no sound on this ground; what
+you hear is the land.
+
+THE FOG IS SILENT (wave 3, owner order). No hush or breath voice is
+bundled and none is played, in mist or fog: the former hush.ogg was
+deleted from this bank and from these credits. Fog is purely visual.
+
+Kenney packs (all CC0, https://creativecommons.org/publicdomain/zero/1.0/):
+- "RPG Audio" by Kenney (kenney.nl) - https://kenney.nl/assets/rpg-audio
+    gate_open.ogg                        (doorOpen_1.ogg)
+    gate_travel.ogg                      (doorClose_4.ogg)
+    register_open.ogg                    (bookOpen.ogg)
+- "Impact Sounds" by Kenney - https://kenney.nl/assets/impact-sounds
+    land.ogg                             (impactSoft_medium_000.ogg)
+    spring.ogg                           (impactSoft_heavy_001.ogg)
+- "Interface Sounds" by Kenney - https://kenney.nl/assets/interface-sounds
+    greet.ogg                            (glass_002.ogg)
+    waymarker.ogg                        (bong_001.ogg)
+- "Casino Audio" by Kenney - https://kenney.nl/assets/casino-audio
+    pen.ogg                              (card-slide-3.ogg - paper-scratch foley)
+
+OpenGameArt (each page states CC0):
+- "25 sounds from Avalanche minigame" - marked CC0 on page
+  https://opengameart.org/content/25-sounds-from-avalanche-minigame
+    jump.ogg                             (Character/jump.ogg)
+    gust.ogg                             (Misc/gust.ogg)
+- "Mild wind background noise" - marked CC0 on page
+  https://opengameart.org/content/mild-wind-background-noise
+    wind_bed.ogg    (22 s cut of "wind background noise 2.wav", mono, faded)
+- "Crickets (Ambient Noise, Loopable)" - marked CC0 on page
+  https://opengameart.org/content/crickets-ambient-noise-loopable
+    crickets.ogg    (crickets_1.mp3, mono)
+
+- "Rain (loopable)" by Ylmir - marked CC0 on page
+  https://opengameart.org/content/rain-loopable
+    rain.ogg        (the first ogg of "Rain OGG.zip": a steady 12 s taken from
+                     7 s in, highpassed twice at 400 Hz so it reads as rain on
+                     a path and not a downpour on a tin roof, lowpassed 9 kHz,
+                     then closed into a seamless 11 s loop by crossfading its
+                     own last second over its first with an equal-power curve.
+                     Normalised to a 0.228 peak before encoding; 0.186 as the
+                     browser decodes it, which is the number the mix uses)
+
+- "80 CC0 creature SFX" by rubberduck - marked CC0 on page
+  https://opengameart.org/content/80-cc0-creature-sfx
+    snore.ogg       (the pack's own snore.ogg, slowed to 0.48x - an octave
+                     down, so it is a sleeping walker and not a cartoon -
+                     highpassed 110 Hz, lowpassed 2.2 kHz to take the rasp
+                     off, 45 ms in and 160 ms out so it never clicks,
+                     normalised to a 0.326 peak. The dog borrows the same
+                     recording a fifth higher and quieter when she is asleep
+                     beside the walker)
+
+
+THE DOG, RECAST (round 7)
+-------------------------
+The owner rejected the dog this build used to carry ("change le son choisi
+pour le chien, ca ne va pas du tout lol - cree plusieurs types de sons pour
+ce chien"). Those three files - a bark and a grunt from OpenGameArt's "Dog
+sounds" and "Dog grunt", and a cloth-shake from Kenney RPG Audio - are
+DELETED from this build, not silenced in it.
+
+In their place: six voices, sourced fresh, auditioned before wiring
+(waveform and spectrogram inspected for every candidate) and rejected on
+sight if they read as a growl, a big dog or an animal in distress. All six
+are peak-normalised to the same -9 dBFS ceiling; the build then plays each
+of them at half the gain the mix first reached for, and clamps every one of
+them below the peak of the loudest gust. She is never louder than the wind.
+
+ROUND 17 - THE LAW MADE TRUE AS DECODED. Low-bitrate opus had moved each
+file's decoded peak down by a different amount (measured 0.311-0.352
+against the declared 0.355), so the levelling above was only true before
+the encode. Every dog file is now re-scaled iteratively until the peak A
+DECODER MEASURES lands in 0.343-0.351 - at or under the 0.355 the mix
+arithmetic assumes, the whole set inside a 0.011 spread. Pure gain, no
+re-cut. dog_bark.ogg additionally pitched up a further 35 % (asetrate
+64800 -> 48000): fundamental ~445 -> ~600 Hz, energy-weighted centroid
+571 -> 786 Hz, duration 0.300 -> 0.222 s - a smaller dog yet, same
+recording, same source and licence.
+
+ROUND 11 - AND THE WIND ITSELF CAME DOWN. The gust was still the loudest
+ambient voice in the build (0.246 file peak x 0.16 = 0.0394 of full scale),
+above the crickets at 0.0230 and the rain at 0.0259 - weather shouting
+over weather. It is trimmed by a further 0.48 to
+0.0189, a hair under the wind bed's own 0.0202, so the two halves of the
+wind are now the quietest layers on the trail. The dog follows it down,
+because the law is that she is never louder than it: her ceiling is that
+same 0.0189, and her six gains were halved again to sit under it (measured
+peaks 0.0135 to 0.0178). The walker's snore and the dog's answer to the
+same ceiling (0.0171 and 0.0111). Every one of these numbers is asserted,
+not asserted-to: qa/r11-levels.mjs decodes each file, multiplies by the
+gain the build actually plays it at, and orders the whole mix.
+
+- "Baby animals sounds pack" by Technopeasant - marked CC0 on page
+  https://opengameart.org/content/baby-animals-sounds-pack
+    dog_yip.ogg     (Bark.ogg, the puppy's own small bark: trimmed to 0.19 s,
+                     highpassed 330 Hz, pitched down 6 % so it belongs to the
+                     same animal as dog_bark.ogg, faded both ends)
+
+- "80 CC0 creature SFX" by rubberduck - marked CC0 on page
+  https://opengameart.org/content/80-cc0-creature-sfx
+    dog_sniff.ogg   (nose.ogg: a 0.115 s cut of the snuffle, pitched up 30 %,
+                     highpassed 300 Hz / lowpassed 7 kHz. One snuffle - the
+                     build plays it twice, a tenth of a second apart and at
+                     two slightly different pitches, to make the double-sniff)
+    dog_sigh.ogg    (breath.ogg: slowed to 0.80x, highpassed 190 Hz,
+                     lowpassed 2.4 kHz, long 0.45 s tail - the contented
+                     exhale she gives once she has settled beside you)
+
+- "80 CC0 creture SFX 2" by rubberduck - marked CC0 on page
+  https://opengameart.org/content/80-cc0-creture-sfx-2
+    dog_pant_0.ogg  (breath_02.ogg: a 0.10 s huff, pitched up 18 %,
+    dog_pant_1.ogg   highpassed 260 Hz, then laid out five times at slightly
+                     different spacings and pitches to make one light, happy
+                     pant. Two cuts, so a trot never repeats itself)
+
+- "Cat flapping ears sound" by Bashar3A - marked CC0 on page
+  https://opengameart.org/content/cat-flapping-ears-sound
+    dog_shake.ogg   (cat flap ears.wav: a real animal shaking its ears, used
+                     here as the dog's shake-off foley - highpassed 340 Hz and
+                     doubled with a slower, quieter copy 95 ms behind it for
+                     body. Honest about what it is: a cat's ears standing in
+                     for a wet dog's)
+
+- "Dog barking mono" by Brandon Morris (submitted by haeldb) - marked CC0 on page
+  https://opengameart.org/content/dog-barking-mono
+    dog_bark.ogg    (dog_barking_mono.wav, the third and smallest of its four
+                     barks, 1.100-1.460 s: highpassed twice at 250 Hz to take
+                     the chest boom out, pitched up 20 % so she is a small dog,
+                     lowpassed 9 kHz, faded. Energy below 200 Hz went from
+                     10.5 % of the clip to 0.0 %, and the loudest partial
+                     climbed from 352 Hz to 445 Hz: a smaller dog, no boom.
+                     Round 17 pitched her up a further 35 % - see the
+                     ROUND 17 note above)
+
+SHE IS SILENT WHILE YOU WALK, AND ROUND 12 IS THE ROUND THAT MADE THAT TRUE.
+Rounds 10 and 11 wrote this paragraph and the build did not keep it: eight
+ordinary walking minutes measured 65 dog sounds, 8.1 a minute, because the
+snuffle was gated only per-door. The corpus holds 522 doors past sniffMin
+spread over 232 of the 290 stretches, so at a walking stride she met one
+every few seconds and the gesture became a tic.
+
+The rule now lives in one function, stoppedTogether(), and EVERY voice of
+hers - the pant included - reads it before it sounds: SHE HAS STOPPED AND
+YOU HAVE STOPPED WITH HER (S.idleT > 1.2 s - no walking, no click-to-walk under way,
+no overlay). Under it sits a small floor: no two of her sounds within 4-9 s of each
+other, the gap drawn fresh each time. The floor is NOT where her rarity
+lives - that is the stop rule and the five per-voice clocks below. All it
+does is stop two genuine events landing on the same instant. A long floor
+would have one event gagging another, which is worse; and a gesture bad
+timing lands on is not spent. Round 13 made that true in BOTH directions:
+whether it is the floor that says no, or the stop itself that has not
+finished - she outruns you, so at a door you stop at together her nose
+arrives half a second before your 1.2 s of stillness clears, which round
+12 silently spent onto the door's cooldown (the verifier stood at a
+well-cited door and heard nothing) - the snuffle is HELD, and given the
+moment you are both properly standing there. The hold lives twelve
+seconds, and only while the stop is real: you within 460 px of the door,
+her still at it. Walking past a door kills the hold inside a stride and a
+half, so an ordinary walking minute still measures zero - the round-13
+fix was measured against the same eight-minute walk that convicted round
+11 (0 sounds, 8/8 minutes silent, qa/iv2rb-dogwalk.mjs), and the held
+snuffle against a real arrow-key walk-up (qa/r13-stopsniff.mjs: silent
+walk, ONE snuffle, voiced at idle 1.84 s with the legs still).
+Her nose still works while you
+walk - she runs ahead and reads the door exactly as before - but she does it
+without a word. The table below is the code, not an intention:
+
+    dog_sniff  her nose has reached a door that M.sniffMin or more pages
+               cite, AND YOU HAVE STOPPED THERE WITH HER - the word held,
+               if need be, until your stillness clears 1.2 s and the floor
+               lifts. That door again: 45 s.
+               Any snuffle at all: 90-150 s, drawn fresh.
+    dog_yip    the same event at a rarer door - one in the top fiftieth of
+               cited pages (M.yipMin). She gives the yip INSTEAD of the
+               snuffle, when her nose comes up: an investigation is only
+               ever one sound.
+    dog_pant   the rarest of them: NOT trotting - a door, a fast travel or
+               the index has opened more than 900 px of daylight between you
+               and she has run it down, and you are standing where the travel
+               put you when she arrives. Walking beside you never opens such
+               a gap. Once per ~2 minutes at the very most, and only about a
+               run she had in the last 12 s. (Round 12 took away this voice's
+               exemption from the stop: a probe that held an arrow key THROUGH
+               a teleport heard her puff three times in eight minutes, which
+               was the last noise in the build made with the legs moving.)
+    dog_sigh   she has settled - sitting or asleep - within 170 px of you,
+               after 25 s of your stillness (once per 75-140 s; round 12
+               stretched it from 48-92 s, where it was her most frequent
+               voice at a standstill)
+    dog_shake  a genuine mist (an uncited stretch) or a genuine shower, once
+               per wet stretch, at least 90-135 s since the last shake, and
+               she plants her feet to do it - the shake, too, waits for the
+               stop (round 11 held the cooldown; round 12 added the stop)
+    dog_bark   THE ONE VOICE THE OWNER KEPT FOR THE WALK ITSELF - "sauf
+               rarement de temps en temps un petit aboiement". Her own
+               clock, 170-300 s, randomised, never twice in a row, never
+               while she or the walker sleeps, never at the shore. She
+               plants her feet to give it: a dog at a dead run keeping her
+               lead on you has neither the breath for it nor anything to
+               bark at, so the clock RIPENS while you walk and the bark
+               lands at your next real pause (idle > 2.5 s).
+
+Every voice she gives is written to AUD.dogTrace with the walker's idle
+clock and speed at that instant, readable at window.__aud.state.dogTrace, so
+no future round has to take this paragraph on trust: qa/r12-dogwalk.mjs and
+qa/r12-dogwalk2.mjs read it back.
+
+The weather and the sleeper answer to the same rule - a countable event each:
+    rain       a shower is actually passing over the stretch you stand on
+    snore      the walker has been still for two minutes and is properly
+               asleep (and once in a while the dog, a fifth higher)
+Pitch and timing shift a little on every play, so she never repeats herself.
+At Land's End she is quiet: the shore keeps its silence.
+
+Round 15 added two events; NO new file was bundled for either - both are
+re-cuts of sounds already credited above:
+    blocked    the barrier at a caution/warning/danger takes the walker's
+               weight (one soft bump per hold): land.ogg at 0.16 gain,
+               rate 0.72 - quieter than any landing, felt more than heard
+    portal     a crossing off the trail is taken (six exist since round 18
+               retired the picnic-table crossing by owner order, each a
+               countable activation, and every one now asks first at a
+               carved notice - the chime belongs to the crossing itself,
+               never to the question): waymarker.ogg at 0.30 then greet.ogg
+               at 0.22, a small two-note departure. Reduced motion crosses
+               in silence.

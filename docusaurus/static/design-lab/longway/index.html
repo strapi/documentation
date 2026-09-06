@@ -13,6 +13,7 @@
   <div id="hudLeft">
     <div id="hudTitle">&nbsp;</div>
     <div id="hudBiome">&nbsp;</div>
+    <div id="weather">&nbsp;</div>
   </div>
   <div id="hudRight">
     <button id="btnTrailhead" type="button" title="Open the trailhead index (Tab)">TRAILHEAD &middot; TAB</button>
@@ -20,6 +21,9 @@
     <div id="hudSmall">
       <button id="btnPack" type="button" title="The pack: your walk passport (B)">PACK &middot; B</button>
       <button id="btnGuide" type="button" title="The field guide of trail furniture (G)">GUIDE &middot; G</button>
+      <button id="btnSfx" type="button" title="Trail sounds: the land, not your feet &mdash; wind, stones, greetings, the dog's six voices. Off is a mute, not a stop (F)">SFX &middot; ON</button>
+      <button id="btnMusic" type="button" title="Music as weather: it arrives at moments, then withdraws. Off is a mute, not a stop &mdash; the score keeps running (M)">MUSIC &middot; ON</button>
+      <button id="btnLayout" type="button" title="How the window is shared: stacked (trail above, page below) or side by side (V)">LAYOUT &middot; STACK</button>
     </div>
     <button id="btnDial" type="button" title="The hour. Click or press T to change the sky's pace.">
       <canvas id="dialCv" width="40" height="40" aria-hidden="true"></canvas>
@@ -32,9 +36,15 @@
   <span id="odometer">WORD 0 OF 0</span>
   <span id="nextdoor">&nbsp;</span>
   <span id="walked">&nbsp;</span>
+  <span id="score">&nbsp;</span>
 </div>
 
 <div id="gatePrompt" hidden></div>
+
+<div id="jumpPrompt" hidden>
+  <div id="jpFirst" hidden>THE TRAIL WARNS YOU HERE &mdash; JUMP IT</div>
+  <div id="jpRow"><span id="jpKey">SPACE</span><span id="jpTxt">PRESS SPACE TO JUMP</span></div>
+</div>
 
 <section id="dock" aria-label="Reading strip">
   <div id="dockBar">
@@ -64,7 +74,7 @@
     <div id="gmFrom">&nbsp;</div>
     <div id="gmTo">&nbsp;</div>
     <div id="gmDist">&nbsp;</div>
-    <div id="gmHint">ENTER &mdash; WALK THROUGH &middot; ESC &mdash; STAY</div>
+    <div id="gmHint">ENTER &mdash; WALK THROUGH &middot; L &mdash; LAND&rsquo;S END, THE SHORE PAST THE CAIRN &middot; ESC &mdash; STAY</div>
   </div>
 </div>
 
@@ -97,6 +107,7 @@
       <span>SPACE JUMP</span><span>ENTER OPEN GATES &amp; TERRACES</span>
       <span>TAB TRAILHEAD INDEX</span><span>T THE HOUR</span><span>K THE KEY</span>
       <span>R SIGN THE REGISTER</span><span>E REPORT TRAIL DAMAGE</span><span>B THE PACK</span><span>G FIELD GUIDE</span>
+      <span>F TRAIL SOUND</span><span>M MUSIC</span><span>V LAYOUT</span>
     </div>
     <div id="ldChips">
       <button id="ldDog" type="button">TRAIL DOG &mdash; ON</button>
@@ -189,13 +200,27 @@
   </div>
 </div>
 
+<div id="portalask" hidden>
+  <div id="paPanel">
+    <div id="paCarve">CARVED AT THE CROSSING</div>
+    <div id="paTitle">A WAY OFF THE TRAIL</div>
+    <div id="paLine">&nbsp;</div>
+    <div id="paBody">THROUGH HERE YOU LEAVE THIS WORLD FOR ANOTHER.<br>THE TRAIL WILL KEEP YOUR PLACE.</div>
+    <div id="paRow">
+      <button id="paYes" type="button">YES &middot; Y &mdash; GO THROUGH</button>
+      <button id="paNo" type="button">NO &middot; N &mdash; STAY</button>
+    </div>
+    <div id="paHint">TAB MOVES &middot; ENTER CHOOSES THE FOCUSED ONE &middot; ESC STAYS</div>
+  </div>
+</div>
+
 <div id="toast" hidden></div>
 
 <div id="wipe" hidden></div>
 
 <footer id="help">
   <span>&larr;/&rarr; OR A/D WALK</span><span>SHIFT STRIDE</span><span>SPACE JUMP</span>
-  <span>ENTER GATE/TERRACE/TABLE</span><span>R REGISTER</span><span>E DAMAGE</span><span>B PACK</span><span>G GUIDE</span><span>TAB INDEX</span><span>T HOUR</span><span>K KEY</span><span>ESC CLOSE</span>
+  <span>ENTER GATE/TERRACE/TABLE</span><span>R REGISTER</span><span>E DAMAGE</span><span>B PACK</span><span>G GUIDE</span><span>TAB INDEX</span><span>T HOUR</span><span>K KEY</span><span>F SFX</span><span>M MUSIC</span><span>V LAYOUT</span><span>ESC CLOSE</span>
 </footer>
 
 <script src="longway.js"></script>
