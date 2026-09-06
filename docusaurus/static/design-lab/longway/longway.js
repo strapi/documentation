@@ -53,13 +53,15 @@ const WX = {
 const FOG_CAP = 0.34;
 const RB_COOLDOWN = 3600;   /* a rainbow never twice in an hour of play */
 
-/* THE SCORE'S METRIC, REDEFINED (wave 3, the owner's bug report made law):
-   progress is the share of the TRAIL DISTANCE actually covered on foot —
-   unique stretches of ground, accumulated across the visit, persisted, and
-   robust to reloads and to the corpus changing shape underneath it.
-   Walking the whole way to the end cairn is 100 percent, PERIOD. A gate
-   hop credits nothing: the stretches it jumped stay unwalked. Reading is
-   never required — the music rewards the JOURNEY. */
+/* THE SCORE'S METRIC, REDEFINED AGAIN (w5r1, the owner's own numbers made
+   law: standing at word 238,022 of 306,253 he expects 77 percent, not 3):
+   the music ladder percent is simply WHERE YOU STAND — the walker's
+   current word position over the trail's total words, exactly the number
+   the WORD x OF y odometer shows, however you got there: walking, gates,
+   Tab, search. The end cairn and Land's End read 100 percent. No coverage
+   bookkeeping feeds the music any more, and nothing needs persisting
+   beyond position. The ground-coverage record below REMAINS as an honest
+   tally (probes and the pack still read it) but the score no longer does. */
 const COV_SEG = 64;                     /* one ground segment, in px */
 const COV = { n: 0, x0: 10, x1: 0, bits: null, covered: 0 };
 function covInit() {
@@ -112,6 +114,13 @@ function covB64() {
 const SLEEP_T1 = 30, SLEEP_T2 = 60, SLEEP_T3 = 120;   /* seconds of stillness */
 const SLP = {
   stage: 0, t: 0, k: 0, startle: 0, waking: false, onBench: false, seatDX: 0,
+  /* w5r1 — SHE SITS ON THE FURNITURE: which seat (its height off the
+     ground and the way it faces her) and how far she has walked toward
+     it. seatH is the seat top in px above the ground line; seatFace is 0
+     for a bench she may face either way and ±1 for a seat that faces its
+     table; dxNow eases from 0 to seatDX at walking pace — the step or
+     two to the seat — and reduced motion holds it at seatDX. */
+  seatH: 20, seatFace: 0, dxNow: 0,
   snoreAt: 0, dogSnoreAt: 0, snores: 0, dogSnores: 0, stages: 0, wakes: 0, rIdle: 0
 };
 /* SOMETIMES, INSTEAD OF SLEEPING, SHE PLAYS (wave 3, round 2): roughly one
@@ -139,7 +148,16 @@ const BREATHE_STEPS = 10;
 const BREATHE_PX = Math.round(BREATHE_STEPS * STEP_PX);   /* ≈ 817 px */
 
 /* living-trail tuning */
-const EMAX        = 84;     /* highest crest in px — the most-cited stretch */
+/* w5r2 — THE MOUNTAINS GROW (owner, on the Breaking Changes summit:
+   "c'est pas très haut quand même"): the climb/descent AMPLITUDE is
+   tripled, 84 -> 252. The data law is untouched — altitude still follows
+   citations, log-scaled against the most-cited page — only the scale of
+   the relief changes. Everything that stands on the ground reads gYAt(),
+   so furniture, hazards, labels, dock and walker ride the steeper ground
+   for free; the camera still absorbs CAM_K of your own climb, and the
+   ridge parallax (rShift) scales with it. The gait stays a feel: the
+   stride/lean clamps in the walker options already bound tripled slopes. */
+const EMAX        = 252;    /* highest crest in px — the most-cited stretch */
 const ELEV_BLEND  = 340;    /* border zone where neighbouring elevations meet */
 const CAM_K       = 0.6;    /* how much of your own climb the camera absorbs */
 const CYCLE_S     = 300;    /* one full day of sky = five minutes */
@@ -1230,7 +1248,11 @@ const DOG = {
   found: 0,             /* this investigation earned a yip on the way up */
   foundX: 0, foundTgt: '',   /* the door that earned it, for the w3r2 hold */
   pend: null,           /* …and one the floor landed on, still owed */
-  sniffCD: new Map()
+  sniffCD: new Map(),
+  /* w5r2 — THE WHISTLE: the recall sprint, the answer owed a beat after
+     the second note, the held heel on arrival, and the look-up when she
+     was at heel all along */
+  recall: null, answer: null, heelHold: 0, lookUp: 0
 };
 let saveTimer = null;
 function saveAll() {
@@ -1804,9 +1826,27 @@ function draw(dt) {
   opts.hunch = WX.rain * (moving ? 1 : 0.7);
   if (SLP.startle > 0) opts.armUp = SLP.startle > 0.55 ? 2 : 1;   /* the stretch */
   if ((SLP.stage > 0 || PERF.on || PERF.putaway > 0) && !moving) {
-    /* settled, nodded off, asleep — or sitting with the instrument out */
-    if (PERF.on || PERF.putaway > 0) drawPerformer(ay, pal, opts);
-    else drawSleeper(ay, pal, opts);
+    /* w5r1 — the step or two to the seat: while dxNow is still short of
+       the chosen seat she is drawn WALKING toward it, in the ordinary
+       walking frames, facing the seat; the settle begins on arrival. */
+    const toSeat = SLP.onBench && !REDUCED &&
+      Math.abs((SLP.dxNow || 0) - SLP.seatDX) > 1.5;
+    if (toSeat) {
+      const wx2 = S.x + (SLP.dxNow || 0);
+      const wy = gYAt(wx2) - airY;
+      opts.face = (SLP.seatDX - (SLP.dxNow || 0)) >= 0 ? 1 : -1;
+      drawFigure(AVX + (SLP.dxNow || 0) - 2.6, wy - 1.8, hK, wx2 / 26, 'rgba(255,243,224,0.9)', null, true, opts);
+      drawFigure(AVX + (SLP.dxNow || 0), wy, hK, wx2 / 26, pal.ink, pal.accent, true, opts);
+    } else {
+      /* settled, nodded off, asleep — or sitting with the instrument out.
+         Seated on furniture she faces the way the seat faces (a picnic
+         seat faces its table), and she is grounded on the seat's own
+         stretch of ground, not the spot she idled on. */
+      if (SLP.onBench && SLP.seatFace) opts.face = SLP.seatFace;
+      const aySeat = SLP.onBench ? gYAt(S.x + SLP.seatDX) - airY : ay;
+      if (PERF.on || PERF.putaway > 0) drawPerformer(aySeat, pal, opts);
+      else drawSleeper(aySeat, pal, opts);
+    }
   } else {
     drawFigure(AVX - 2.6, ay - 1.8, hK, S.x / 26, 'rgba(255,243,224,0.9)', null, moving && !REDUCED, opts);
     drawFigure(AVX, ay, hK, S.x / 26, pal.ink, pal.accent, moving && !REDUCED, opts);
@@ -2572,6 +2612,53 @@ function dogRest(ax, off) {
   if (t < DOG_WEST + 2) t = ax + off;      /* the wall is west: take the east */
   return clamp(t, DOG_WEST, M.worldEnd);
 }
+/* w5r2 — THE WHISTLE (owner: "parfois on perd son chien !"). One key calls
+   her home: W has belonged to the jump since round 1, so the first free
+   letter took the job — C, named in the Key. A short two-note riso whistle
+   from the walker; wherever she is, she gives ONE bark in answer from her
+   distance — panned and thinned by how far she is, floored so a genuine
+   answer is never dropped, never louder than a bark at heel — then sprints
+   back and arrives with a couple of seconds of light happy panting, fading
+   as she calms: the one lawful pant, earned by the run. Whistling with her
+   already at heel: she just looks up, no bark, no sprint. Dog toggle off =
+   the key does nothing; SFX off mutes, never stops; the whistle counts in
+   the sound ledger like every other voice; reduced motion teleports her to
+   heel with the answer bark only. */
+function whistleCall() {
+  if (!DOG.on) return;                      /* dog off: the key is dead */
+  /* a held or hammered C is one whistle, not a siren: the key auto-repeat
+     is dropped at the handler, and this catches the spam-click too. The
+     answer bark bypasses her floor by design (an answer is owed), so the
+     whistle itself must be the thing that cannot machine-gun. */
+  if (S.t < (S.whistleCD || 0)) return;
+  S.whistleCD = S.t + 1.3;
+  audEv('whistle', S.x);                    /* the walker's own two notes */
+  const gap = Math.abs(DOG.x - S.x);
+  const att = 1 / (1 + Math.pow(gap / 430, 2));
+  const vol = Math.min(6, Math.max(1, 0.16 / Math.max(att, 1e-4)));
+  if (REDUCED) {
+    if (gap > 120) {
+      DOG.x = clamp(S.x - 54, DOG_WEST, M.worldEnd);
+      /* the answer, from where she was — unless this is the shore, where
+         she is silent by the standing law (she still comes) */
+      if (!S.atLE) dogVoiceNow('dogbark', DOG.x, vol);
+    }
+    needsDraw = true;
+    return;
+  }
+  if (DOG.recall) return;                   /* she is already coming */
+  if (gap <= 120) {
+    DOG.lookUp = S.t + 1.4;                 /* at heel already: she just looks up */
+    return;
+  }
+  /* AT THE SHORE SHE IS SILENT — the standing law outranks the answer:
+     the whistle sounds, she comes, but no bark and no pant break the
+     coast's own quiet (the arrival pant checks the same flag). */
+  if (!S.atLE) DOG.answer = { at: S.t + 0.55, vol };  /* the bark answers the second note */
+  DOG.recall = { t0: S.t };
+  DOG.pend = null; DOG.found = 0; DOG.sleepX = null; DOG.restX = null;
+  if (DOG.state !== 'follow') { DOG.state = 'follow'; DOG.stateT = 0; }
+}
 function updateDog(dt) {
   const p = S.page;
   if (REDUCED) {
@@ -2581,7 +2668,34 @@ function updateDog(dt) {
     return;
   }
   DOG.stateT += dt;
-  if (S.sweep) { DOG.x = S.x - 60; DOG.pose = 'run'; DOG.moving = true; DOG.face = S.face; DOG.pend = null; return; }
+  /* a sweep carries you BOTH: a recall mid-sweep is moot, and its answer
+     already sounded — clear them rather than let a gate end in the pant */
+  if (S.sweep) { DOG.x = S.x - 60; DOG.pose = 'run'; DOG.moving = true; DOG.face = S.face; DOG.pend = null; DOG.recall = null; return; }
+  /* w5r2 — the whistle's answer, owed a beat after the second note */
+  if (DOG.answer && S.t >= DOG.answer.at) {
+    dogVoiceNow('dogbark', DOG.x, DOG.answer.vol);
+    DOG.answer = null;
+  }
+  /* w5r2 — the recall: she sprints the whole gap home, settles at heel */
+  if (DOG.recall) {
+    const heel = clamp(S.x - (S.face || 1) * 48, DOG_WEST, M.worldEnd);
+    const dxr = heel - DOG.x;
+    if (Math.abs(dxr) <= 10 || S.t - DOG.recall.t0 > 30) {
+      DOG.recall = null;
+      DOG.ran = 0; DOG.gapMax = 0;      /* the sprint earned the pant, not a catch-up bark */
+      AUD.cuBarkAt = Math.max(AUD.cuBarkAt || 0, S.t + 8);
+      DOG.heelHold = S.t + 3;           /* she settles AT HEEL, not back out front */
+      /* light happy panting, fading as she calms — kept off the shore */
+      if (!S.atLE) dogVoiceNow('dogpantfade', DOG.x);
+      DOG.pose = 'sit'; DOG.moving = false;
+    } else {
+      const spr = clamp(Math.abs(dxr) * 2.8, 260, 680);   /* a real sprint home */
+      DOG.x = clamp(DOG.x + Math.sign(dxr) * spr * dt, DOG_WEST, M.worldEnd);
+      DOG.face = Math.sign(dxr) || DOG.face;
+      DOG.moving = true; DOG.pose = 'run';
+      return;
+    }
+  }
   /* A SNUFFLE BAD TIMING LANDED ON IS NOT A SNUFFLE SPENT. Two timings can
      say no at the instant her nose reaches a genuine door: the floor (a
      shower made her shake three seconds earlier), and — round 13 — the
@@ -2660,7 +2774,13 @@ function updateDog(dt) {
   const idle = Math.abs(S.vx) < 1 && !S.overlay && S.target == null;
   /* a well-cited door within nose range pulls her — the nose always wins */
   let sniffPull = null;
-  if (DOG.sleepX == null) {
+  /* w5r2: she reads the doors along YOUR passage. Each investigation costs
+     her 1.8 s while you walk on ~600 px, and until this round the next
+     door near HER — by then half a screen behind you — pulled her again,
+     chaining her ever further back (measured 1,100 px and growing on a
+     dense stretch). A door is only worth the diversion while she is near
+     you, which is also what keeps the passing snuffle within earshot. */
+  if (DOG.sleepX == null && Math.abs(DOG.x - S.x) < 320) {
     const dogPage = pageAt(clamp(DOG.x, 0, M.totalPx - 1));
     for (const g of dogPage.gates) {
       const tp = M.bySlug.get(g.tgt);
@@ -2694,6 +2814,25 @@ function updateDog(dt) {
          she has nothing to add about this door for a while, and nothing
          is held. */
       const ready = stoppedTogether() && S.t >= (AUD.dogFloorAt || 0);
+      /* w5r2 — THE SNIFF RETURNS TO THE EAR (owner: "il me semble qu'on
+         n'entend plus le chien sniffer aux portes"). Diagnosed before
+         touching anything: the investigation still fired on every stroll
+         (her nose went down at every qualifying door), but round 12's
+         stop-to-speak patch left the VOICE no path at walking pace — it
+         demanded a full stop (stoppedTogether) plus the 90-150 s clock,
+         and the walking hold above dies within three strides. A visitor
+         passing ten gates heard zero, not few. So: the plain snuffle is
+         audible IN PASSING again when the walker is close enough to hear
+         it (within 480 px — earshot, not the whole valley), on its own
+         stroll cadence (6-11 s, drawn fresh each time — never two within
+         six seconds, and with the walk between doors that measures a few
+         per ten gates at the corpus's own gate spacing, still never the
+         round-12 tic on the densest ground), the 45 s per-door
+         clock and the 4-9 s floor untouched. The STOP keeps its richer
+         law: the yip still belongs to standing at the rare door with her,
+         and the stopped snuffle keeps its 90-150 s clock. */
+      const passing = !S.atLE && !stoppedTogether() &&
+        Math.abs(S.x - sniffPull.x) < 480 && S.t > (AUD.sniffWalkAt || 0);
       if (worth && ready) {
         const tp2 = M.bySlug.get(sniffPull.tgt);
         if (tp2 && tp2.inCount >= M.yipMin) {
@@ -2701,6 +2840,8 @@ function updateDog(dt) {
           DOG.foundX = sniffPull.x; DOG.foundTgt = sniffPull.tgt;   /* w3r2: the hold needs the door */
         }
         else if (dogVoice('dogsniff', DOG.x)) AUD.sniffAt = S.t + 90 + Math.random() * 60;
+      } else if (passing && dogVoice('dogsniff', DOG.x)) {
+        AUD.sniffWalkAt = S.t + 6 + Math.random() * 5;
       } else if (worth) {
         DOG.pend = { x: sniffPull.x, tgt: sniffPull.tgt, until: S.t + 12 };
       }
@@ -2723,7 +2864,10 @@ function updateDog(dt) {
     DOG.restX = tx;               /* where she is actually going to lie down */
   } else {
     DOG.sleepX = null; DOG.restX = null;
-    tx = idle ? dogRest(S.x, 44) : S.x + (S.face || 1) * 150;
+    /* w5r2: a couple of seconds after a whistle recall she keeps to heel
+       rather than running straight back out front */
+    tx = idle ? dogRest(S.x, 44) :
+      (S.t < (DOG.heelHold || 0) ? S.x - (S.face || 1) * 48 : S.x + (S.face || 1) * 150);
   }
   const dx = tx - DOG.x;
   const cap = Math.abs(S.vx) > 1 ? Math.abs(S.vx) * 1.6 : 430;
@@ -2796,11 +2940,14 @@ function dogSil(px, py, ink, collar) {
       cx.globalAlpha = 1; cx.fillStyle = ink;
     }
   } else if (DOG.pose === 'sit') {
+    /* w5r2: a whistle with her already at heel — she just looks up, the
+       head and muzzle raised for a beat, the same flat parts */
+    const up = (!REDUCED && (DOG.lookUp || 0) > S.t) ? 3.4 : 0;
     drawPoly([[-8, 0], [-7, -14], [0, -15], [3, 0]], ink);
     cx.beginPath(); cx.moveTo(4, -13); cx.lineTo(6, 0); cx.stroke();
-    cx.beginPath(); cx.arc(6, -18, 5.4, 0, 7); cx.fill();
-    cx.fillRect(6, -20.5, 9, 4);
-    drawPoly([[2, -22], [5, -28], [7, -21]], ink);
+    cx.beginPath(); cx.arc(6, -18 - up, 5.4, 0, 7); cx.fill();
+    cx.fillRect(6, -20.5 - up, 9, 4);
+    drawPoly([[2, -22 - up], [5, -28 - up], [7, -21 - up]], ink);
     cx.beginPath(); cx.moveTo(-8, -3); cx.lineTo(-15, -8); cx.stroke();
     if (collar) { cx.fillStyle = collar; cx.fillRect(2, -16, 6, 2.2); cx.fillStyle = ink; }
   } else if (DOG.pose === 'sniff') {
@@ -2819,14 +2966,15 @@ function dogSil(px, py, ink, collar) {
       cx.globalAlpha = 1; cx.fillStyle = ink;
     }
   } else {
+    const up = (!REDUCED && (DOG.lookUp || 0) > S.t && DOG.pose !== 'run') ? 3.4 : 0;
     cx.fillRect(-11, -16, 22, 8);
     const legs = (DOG.pose === 'run' && !REDUCED) ? [[-8, 4], [8, -4], [0, 0]][frame] : [0, 0];
     cx.beginPath(); cx.moveTo(-8, -9); cx.lineTo(-8 + legs[0] * 0.5, 0); cx.stroke();
     cx.beginPath(); cx.moveTo(8, -9); cx.lineTo(8 + legs[1] * 0.5, 0); cx.stroke();
     cx.beginPath(); cx.moveTo(-11, -14); cx.lineTo(-17, DOG.pose === 'run' ? -22 + (frame === 1 ? 1.5 : 0) : -20); cx.stroke();
-    cx.beginPath(); cx.arc(13, -18, 5.2, 0, 7); cx.fill();
-    cx.fillRect(13, -19.5, 8, 3.6);
-    drawPoly([[9, -22], [11, -28], [14, -21]], ink);
+    cx.beginPath(); cx.arc(13, -18 - up, 5.2, 0, 7); cx.fill();
+    cx.fillRect(13, -19.5 - up, 8, 3.6);
+    drawPoly([[9, -22 - up], [11, -28 - up], [14, -21 - up]], ink);
     if (collar) { cx.fillStyle = collar; cx.fillRect(9, -16.5, 6, 2.4); cx.fillStyle = ink; }
     if (DOG.pose === 'shake' && collar && !REDUCED) {
       cx.fillStyle = INKS.cream; cx.globalAlpha = 0.7;
@@ -4112,15 +4260,21 @@ function fillKey() {
       'SHE SPEAKS AT HER MOMENTS: ordinary steady walking carries no pant loop and no trotting noise, ' +
       'but her event voices live. Her signature is THE CATCH-UP BARK — she fell behind, sprinted the ' +
       'gap down, and arrives at your side with one happy bark, earned and welcome every time. Two ' +
-      'quick snuffles when her nose reaches a door you stopped at together, no oftener than every ' +
-      'ninety seconds; one small yip instead at the rarer doors ' + fmt(M.yipMin) + ' or more pages ' +
-      'cite; an occasional spontaneous bark on the move, unscheduled, maybe once every minute or two ' +
+      'quick snuffles, plainly hearable, when her nose reaches a well-cited door within your earshot — ' +
+      'in passing on an ordinary stroll (never two within six seconds, ten or so apart in practice), so a walk ' +
+      'past ten gates hears her a few times; one small yip instead at the rarer doors ' + fmt(M.yipMin) + ' or more pages ' +
+      'cite, kept for the moment you stop there with her; an occasional spontaneous bark on the move, unscheduled, maybe once every minute or two ' +
       'of active play; a contented sigh once she has settled by a long read; a shake-off in a real ' +
       'mist or a real shower, and a single startle when a storm first rolls; and the light pant, kept ' +
       'for the rare occasion a gate has opened nine hundred pixels between you and she has run it ' +
       'down. No two of her sounds fall within a few seconds of each other, pitch and timing shift a ' +
       'little every play, and no voice of hers is ever louder than the wind. At the shore she is ' +
-      'silent. Under reduced motion she simply keeps pace. Toggle her below or at the trailhead.'],
+      'silent. Under reduced motion she simply keeps pace. Toggle her below or at the trailhead. ' +
+      'AND WHEN YOU LOSE HER: C WHISTLES — a short two-note whistle from you, one bark in answer ' +
+      'from wherever she is (panned and thinned by her distance), then she sprints home and settles ' +
+      'at heel with a couple of seconds of light happy panting that fades as she calms. Whistle with ' +
+      'her already at heel and she just looks up. Dog off, the key does nothing; every sound of it ' +
+      'obeys the toggles and the gain laws.'],
     ['sw-guide',
       'THE FIELD GUIDE (G) — the first crossing of each species of trail furniture presses a card into the ' +
       'guide: ten species, from code boardwalks to night lanterns, every count the corpus\u2019s own.'],
@@ -4138,7 +4292,8 @@ function fillKey() {
       'the trailhead index, and L at any gate map sails you there.'],
     ['sw-sfx',
       'TRAIL SOUND — bundled public-domain recordings, every one tied to something countable. Walking ' +
-      'itself is silent: you make no noise on this ground. What sounds is the land — the jump and the ' +
+      'itself is silent: you make no noise on this ground (the one exception is the whistle you ' +
+      'choose to give — C — capped at the gust’s own lawful peak). What sounds is the land — the jump and the ' +
       'landing, the springs, gates, greetings, the register’s pen, a chime at each carved stone, gusts ' +
       'scaled by the derived wind, night crickets, and the dog’s voices — the fog and the mist are ' +
       'silent, on purpose. The wind ' +
@@ -4191,8 +4346,9 @@ function fillKey() {
       'stop, a two-frame riso flash, a soft rolled thunder at wind-level gain obeying the toggles, ' +
       'the dog startles once then settles; never during your first minute.'],
     ['sw-sleep',
-      'STANDING STILL — after ' + SLEEP_T1 + ' seconds the walker settles, on a bench if one is in ' +
-      'reach; after ' + SLEEP_T2 + ' she nods off and the dog curls up against her; after ' +
+      'STANDING STILL — after ' + SLEEP_T1 + ' seconds the walker settles; if a bench, a picnic-table ' +
+      'seat or the overlook bench is within a step or two she walks to it and sits ON it, and only ' +
+      'bare trail sits her on the ground; after ' + SLEEP_T2 + ' she nods off and the dog curls up against her; after ' +
       (SLEEP_T3 / 60) + ' minutes she is properly asleep and snoring. Any key or click wakes her ' +
       'with a stretch and the walk resumes with no penalty. Reading the page keeps her on her feet ' +
       'for the first stage only — after that she dozes beside you, which is the point of her.'],
@@ -5066,9 +5222,16 @@ window.addEventListener('keydown', (e) => {
     return;
   }
   if (S.overlay === 'overlook') {
+    /* w5r2 — THE OVERLOOK STEERS BOTH WAYS (owner, with screenshot): the
+       panorama draws its landmarks west-to-east, LEFT TO RIGHT (lkLandmarks
+       sorts by dw and lkDraw lays them out in that order), so the picture
+       invites horizontal arrows. Left = the previous landmark in that
+       west-to-east order, right = the next; all four arrows move the ONE
+       selection, synced between the highlighted pillar and the list row
+       (lkMove repaints both). The header hint now reads all four. */
     if (e.key === 'Escape') closeOverlays();
-    else if (e.key === 'ArrowDown') lkMove(1);
-    else if (e.key === 'ArrowUp') lkMove(-1);
+    else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') lkMove(1);
+    else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') lkMove(-1);
     else if (e.key === 'Enter') lkGo(S.lkSel);
     e.preventDefault();
     return;
@@ -5162,6 +5325,13 @@ window.addEventListener('keydown', (e) => {
   if (k === 'h') {
     /* the flowered verge: kneel and press a flower (one quiet prompt) */
     if (S.nearFlower && !PORTAL.active) portalAsk('herbarium');
+    e.preventDefault();
+    return;
+  }
+  if (k === 'c') {
+    /* w5r2 — THE WHISTLE: C calls the dog home (W has been the jump since
+       round 1, so the first free letter took the job — the Key names it) */
+    if (!e.repeat) whistleCall();
     e.preventDefault();
     return;
   }
@@ -5596,7 +5766,7 @@ async function boot() {
     openRegister(slug) { const p2 = slug ? M.bySlug.get(slug) : S.page; if (p2) openRegister(p2); },
     openTicket(slug) { const p2 = slug ? M.bySlug.get(slug) : S.page; if (p2) openTicket(p2); },
     openLook(slug) { const p2 = slug ? M.bySlug.get(slug) : S.page; if (p2 && p2.overlook) openLook(p2); },
-    openPack, openGuide, openWalkerPick, sweepTo, toggleDog,
+    openPack, openGuide, openWalkerPick, sweepTo, toggleDog, whistleCall,
     AUD, MUS, WX, SLP, LAY,
     setLayout, toggleLayout, wxLabel, wakeWalker, buildWeather,
     landsEnd(instant) { travelToLE(instant !== false); },
@@ -6207,7 +6377,11 @@ const GUST_TRIM = 0.48;               /* round 11: the wind stops shouting   */
 const GUST_PEAK = GUST_FILE * (0.0333 + 0.1267) * GUST_TRIM;   /* 0.01890 */
 const DOG_CEIL = GUST_PEAK / DOG_PEAK;                         /* 0.05325 */
 const DOG_GAIN = {
-  sniff: 0.050,   /* a soft double-sniff at a gate      */
+  /* w5r2 — the sniff rides its lawful step up: 0.050 -> the ceiling the
+     wind law sets (DOG_CEIL = gust peak / dog file peak, 0.0533), clamped
+     below anyway. Still a soft nose, never a snort — the sample is the
+     same gentle double-snuffle, it merely stops hiding under the bed. */
+  sniff: 0.0533,  /* a soft double-sniff at a gate      */
   pant:  0.043,   /* rare: she has RUN a long gap down   */
   yip:   0.045,   /* one small yip: she found something */
   sigh:  0.038,   /* contented, sitting by the reader   */
@@ -6231,9 +6405,9 @@ const DOG_FLOOR_MIN = 4, DOG_FLOOR_SPAN = 5;
 /* her signature is never refused: the catch-up bark bypasses the floor
    (it is earned, and welcome every time) but still SETS it, so no other
    voice can land on the same instant */
-function dogVoiceNow(kind, wx) {
+function dogVoiceNow(kind, wx, vol) {
   AUD.dogFloorAt = S.t + DOG_FLOOR_MIN + Math.random() * DOG_FLOOR_SPAN;
-  AUD.lastDog = kind; audEv(kind, wx);
+  AUD.lastDog = kind; audEv(kind, wx, vol);
   if (AUD.dogTrace.length < 200) {
     AUD.dogTrace.push({ kind: kind + '!', t: +S.t.toFixed(1), idle: +S.idleT.toFixed(2),
       vx: +Math.abs(S.vx).toFixed(1), x: Math.round(S.x), pose: DOG.pose });
@@ -6280,6 +6454,7 @@ const AUD = {
   px: null,
   beds: null, gustAt: 0, pantAt: 0, sighAt: 0, barkCD: 0, barkAt: 0, lastDog: '',
   dogFloorAt: 0, sniffAt: 0,      /* round 12: the floor under all her voices */
+  sniffWalkAt: 0,                 /* w5r2: the passing snuffle's own stroll clock */
   dogTrace: [],                   /* …and the receipt for every one she gives */
   evCount: {}, playCount: {}, log: [],
   themePlayed: {
@@ -6466,6 +6641,39 @@ function audEv(kind, wx, vol) {
     }
     case 'dogpant':
       audPlayBuf(audVariant('dog_pant'), dogGain('pant', v), 0.93 + Math.random() * 0.15, pan); break;
+    /* w5r2 — the recall's arrival: light happy panting for a couple of
+       seconds, fading as she calms. Same pant samples, same pant gain law
+       (under the dog ceiling), each echo softer than the last. */
+    case 'dogpantfade': {
+      const rP = 0.97 + Math.random() * 0.10;
+      audPlayBuf(audVariant('dog_pant'), dogGain('pant', v), rP, pan);
+      audPlayBuf(audVariant('dog_pant'), dogGain('pant', v) * 0.55, rP * 1.03, pan, 'sfx', 1.05);
+      audPlayBuf(audVariant('dog_pant'), dogGain('pant', v) * 0.30, rP * 1.06, pan, 'sfx', 2.05);
+      break;
+    }
+    /* w5r2 — the walker's own two-note riso whistle (C): synthesized in
+       place like the thunder, so no new file enters the bank; it peaks at
+       the gust's lawful peak — the wind law caps the walker exactly as it
+       caps her dog. Counted and logged like every voice. */
+    case 'whistle': {
+      const cW = AUD.ctx, tW = cW.currentTime;
+      const noteW = (f0, f1, at, dur) => {
+        const o = cW.createOscillator(); o.type = 'triangle';
+        o.frequency.setValueAtTime(f0, tW + at);
+        o.frequency.linearRampToValueAtTime(f1, tW + at + dur);
+        const gWh = cW.createGain();
+        const pkW = Math.max(0.0002, GUST_PEAK * 0.98 * v);
+        gWh.gain.setValueAtTime(0.0001, tW + at);
+        gWh.gain.linearRampToValueAtTime(pkW, tW + at + 0.035);
+        gWh.gain.setValueAtTime(pkW, tW + at + Math.max(0.05, dur - 0.06));
+        gWh.gain.linearRampToValueAtTime(0.0001, tW + at + dur);
+        o.connect(gWh); gWh.connect(AUD.sfx.gain);
+        o.start(tW + at); o.stop(tW + at + dur + 0.03);
+      };
+      noteW(1180, 1320, 0, 0.17);           /* the short note…       */
+      noteW(1470, 1650, 0.21, 0.26);        /* …then the rising call */
+      break;
+    }
     case 'dogyip':
       audPlayBuf(audVariant('dog_yip'), dogGain('yip', v), 0.95 + Math.random() * 0.17, pan); break;
     case 'dogsigh':
@@ -6567,11 +6775,10 @@ function audBedTarget(bed, t) {
 /* read the richer the moments sound — one voice early, an ensemble by   */
 /* the end.                                                              */
 /*                                                                       */
-/* Progress is the share of the corpus ACTUALLY walked and read: words   */
-/* walked against the trail's true word count, pages opened against its  */
-/* true page count, and the plain mean of the two, so that neither       */
-/* sprinting nor fast-travelling alone can buy you the ensemble. It      */
-/* rides in the pack, so it keeps for the visit and across a reload.     */
+/* Progress (w5r1, owner redefinition): WHERE YOU STAND — the walker's   */
+/* current word position over the trail's total words, the exact number  */
+/* the WORD x OF y odometer shows, however you got there. A jump moves   */
+/* the ladder immediately, both ways; the end cairn reads 100 percent.   */
 /*                                                                       */
 /* THE SILENCE DOCTRINE IS UNCHANGED. Layers make a moment THICKER, not  */
 /* more frequent: the same four triggers, the same cooldowns, the same   */
@@ -6605,15 +6812,18 @@ const SCORE = {
 };
 
 function scoreProgress() {
-  /* REDEFINED (wave 3, binding): progress is the share of the trail's own
-     DISTANCE covered on foot — unique ground, kept across reloads. The
-     words and the pages are still honest tallies for the pack, but the
-     score reads the ground alone: reading is never required, and a gate
-     hop buys nothing, because the stretches it skipped stay unwalked.
-     Walking the whole way to the end cairn reads 100 percent, PERIOD. */
+  /* REDEFINED (w5r1, binding): the score reads WHERE YOU STAND — the
+     walker's current word position over the trail's total words, exactly
+     the number the WORD x OF y odometer shows, however you got there:
+     walking, gates, Tab, search. A gate landing deep in the trail wakes
+     the richer ensemble at the next musical moment; walking back west
+     thins it again the same honest way. The end cairn and Land's End
+     read 100 percent, PERIOD. The words and the pages stay as honest
+     tallies for the pack; the music ignores them. */
   const words = clamp(PACK.walked / Math.max(1, M.totalWords), 0, 1);
   const pages = clamp(Object.keys(PACK.visited).filter(sl => M.bySlug.has(sl)).length / Math.max(1, M.pages.length), 0, 1);
-  return { words, pages, p: covShare() };
+  const p = S.atLE ? 1 : clamp(wordsAt(S.x) / Math.max(1, M.totalWords), 0, 1);
+  return { words, pages, p };
 }
 function scoreTierFor(p) {
   let t = 0;
@@ -6628,20 +6838,24 @@ function scoreUpdate(announce) {
      empty model; dividing by an empty trail would read every pack as a
      finished walk and hand a returning visitor the whole ensemble at the
      trailhead. Until the pages are in, the score holds. */
-  if (!M.pages.length || !M.totalWords || !COV.n) return SCORE.tier;
+  if (!M.pages.length || !M.totalWords) return SCORE.tier;
   const g = scoreProgress();
   SCORE.words = g.words; SCORE.pages = g.pages; SCORE.p = g.p;
   const t = scoreTierFor(g.p);
   if (t > SCORE.reached) {
+    /* a deep gate landing can cross several rungs in one step: every rung
+       is marked reached and the TOP one is queued to debut, but the line
+       is spoken once, for where you now stand */
+    const gained = t - SCORE.reached;
     for (let i = SCORE.reached + 1; i <= t; i++) {
       SCORE.reached = i;
       SCORE.debut = i;
       SCORE.unlocks++;
       lsSet('longway.score.tier', String(i));
-      if (announce !== false) {
-        toast('THE SCORE GAINS A VOICE — ' + SCORE_TIERS[i].name + ' · ' +
-          Math.round(g.p * 100) + '% OF THE TRAIL WALKED');
-      }
+    }
+    if (announce !== false) {
+      toast('THE SCORE GAINS ' + (gained > 1 ? 'VOICES' : 'A VOICE') + ' — ' +
+        SCORE_TIERS[t].name + ' · ' + Math.round(g.p * 100) + '% ALONG THE TRAIL');
     }
   }
   SCORE.tier = t;
@@ -7986,23 +8200,51 @@ function wakeWalker() {
   if (REDUCED && SLP.startle > 0) { needsDraw = true; renderStep(); }
 }
 
+/* w5r1 — SHE SITS ON THE FURNITURE (owner, with screenshot: idling beside
+   a picnic table she sat on the ground). Everything sittable within a step
+   or two now counts: the trail benches (seat top 20 px up), the two seats
+   of every picnic table (12 px up, facing the table), the overlook bench
+   beside each orientation table (20 px up, facing it), and the Land's End
+   bench as before. The nearest seat wins; the ground-sit remains only when
+   nothing sittable is near. */
 function chooseSeat() {
-  SLP.onBench = false; SLP.seatDX = 0;
+  SLP.onBench = false; SLP.seatDX = 0; SLP.seatH = 20; SLP.seatFace = 0;
+  SLP.dxNow = 0;
   if (S.atLE) {
     /* the shore keeps one bench, in perfect repair, back from the brink */
     const d = M.leBench - S.x;
     if (Math.abs(d) < 110) { SLP.seatDX = clamp(d, -90, 90); SLP.onBench = true; }
+    if (REDUCED) SLP.dxNow = SLP.seatDX;
     return;
   }
   if (!S.page) return;
   const T = terrainFor(S.page.idx);
   let best = null;
+  const consider = (x, h, face) => {
+    const d = x - S.x;
+    if (Math.abs(d) < 74 && (best === null || Math.abs(d) < Math.abs(best.d)))
+      best = { d, h, face };
+  };
   for (const b of T.benches) {
     if (b.broken) continue;
-    const d = b.x - S.x;
-    if (Math.abs(d) < 74 && (best === null || Math.abs(d) < Math.abs(best))) best = d;
+    consider(b.x, 20, 0);
   }
-  if (best !== null) { SLP.seatDX = best; SLP.onBench = true; }
+  /* the picnic tables: a seat plank each side of the table (drawFurn draws
+     them 16..30 px out, seat top 12 px up); she takes the near one and
+     faces the table */
+  for (const f of S.page.furn) {
+    if (f.kind !== 'picnic') continue;
+    consider(f.x - 23, 12, 1);
+    consider(f.x + 23, 12, -1);
+  }
+  /* the overlook keeps a bench beside the orientation table (drawLookTable
+     puts its seat 58..18 px west of the table, top 20 px up) */
+  if (S.page.overlook) consider(S.page.overlook.x - 38, 20, 1);
+  if (best !== null) {
+    SLP.seatDX = best.d; SLP.onBench = true;
+    SLP.seatH = best.h; SLP.seatFace = best.face;
+    if (REDUCED) SLP.dxNow = best.d;   /* held poses: no walk, already there */
+  }
 }
 
 function sleepStageNow() {
@@ -8030,9 +8272,14 @@ function tickSleep(dt) {
   if (st !== SLP.stage) {
     if (st === 0) wakeWalker();
     else {
+      const fromStanding = SLP.stage === 0;
       SLP.stage = st; SLP.t = 0; SLP.stages++;
+      /* w5r1 — the seat is chosen on ANY settle from standing, not only a
+         stage-1 entry: reading the page holds stage 1 off, so a reader
+         can pass 60 s of stillness and settle straight into stage 2 — and
+         she used to sit on the ground beside a perfectly good seat */
+      if (fromStanding) chooseSeat();
       if (st === 1) {
-        chooseSeat();
         /* SOMETIMES, INSTEAD OF SLEEPING, SHE PLAYS: roughly one settle in
            five or six, never twice in a row, never under reduced motion */
         PERF.chances++;
@@ -8051,8 +8298,18 @@ function tickSleep(dt) {
   }
   if (PERF.putaway > 0) PERF.putaway = Math.max(0, PERF.putaway - dt / 0.9);
   if (SLP.stage > 0) {
-    SLP.t += dt;
-    SLP.k = clamp(SLP.t / 1.5, 0, 1);       /* each stage eases into itself */
+    /* w5r1 — the step or two to the seat comes first: dxNow walks toward
+       the chosen seat at strolling pace, and the settle pose holds off
+       until she is standing at it. The ground-sit (no seat) never walks. */
+    const away = SLP.seatDX - (SLP.dxNow || 0);
+    if (SLP.onBench && !REDUCED && Math.abs(away) > 1.5) {
+      SLP.dxNow = (SLP.dxNow || 0) + clamp(away, -64 * dt, 64 * dt);
+      SLP.t = 0; SLP.k = 0;
+    } else {
+      SLP.dxNow = SLP.seatDX;
+      SLP.t += dt;
+      SLP.k = clamp(SLP.t / 1.5, 0, 1);     /* each stage eases into itself */
+    }
   } else SLP.k = 0;
   /* the snore: small, spaced, never comic-loud, and never under calm */
   if (SLP.stage >= 3 && !REDUCED) {
@@ -8138,7 +8395,7 @@ function audPerform(dur) {
 /* 3-4 authored frames in the flat idiom: the seated walker, the small
    instrument, a plucking hand, one breathing note glyph over her */
 function drawPerformer(ay, pal, opts) {
-  const dx = SLP.seatDX || 0;
+  const dx = (SLP.dxNow == null ? SLP.seatDX : SLP.dxNow) || 0;
   drawSeated(AVX + dx - 2.6, ay - 1.8, 1, 'rgba(255,243,224,0.9)', null, opts);
   drawSeated(AVX + dx, ay, 1, pal.ink, pal.accent, opts, true);
   const k = PERF.on ? PERF.k : PERF.putaway;
@@ -8176,7 +8433,7 @@ function drawPerformer(ay, pal, opts) {
 
 /* she is drawn, not announced: the whole state of her is in the pose */
 function drawSleeper(ay, pal, opts) {
-  const dx = SLP.seatDX || 0;
+  const dx = (SLP.dxNow == null ? SLP.seatDX : SLP.dxNow) || 0;
   drawSeated(AVX + dx - 2.6, ay - 1.8, 1, 'rgba(255,243,224,0.9)', null, opts);
   drawSeated(AVX + dx, ay, 1, pal.ink, pal.accent, opts, true);
   if (SLP.stage >= 3) drawZzz((SLP.hxNow || AVX + dx) + 9, (SLP.hyNow || ay - 40) - 13);
@@ -8199,7 +8456,9 @@ function drawSeated(sx, sy, h, ink, accent, opts, keyline) {
      that reads as sleep at thirty pixels tall */
   const lie = smoothT(clamp((droop - 0.62) / 0.38, 0, 1));
   const bench = !!SLP.onBench;
-  const floor = sy - (bench ? 20 : 0) * h;      /* the surface she is on */
+  /* the surface she is on: the seat's own height — a trail or overlook
+     bench 20 px up, a picnic-table seat 12 px up, the ground itself 0 */
+  const floor = sy - (bench ? (SLP.seatH == null ? 20 : SLP.seatH) : 0) * h;
   const hipY = lerp(floor - (bench ? -1 : 7) * h, floor - 4.4 * h, lie);
 
   /* the body axis: hips to shoulders, sitting up or laid out */
@@ -8365,8 +8624,11 @@ if (REDUCED) {
     S.idleT = SLP.rIdle;
     const st = SLP.rIdle > SLEEP_T3 ? 3 : (SLP.rIdle > SLEEP_T2 ? 2 : (SLP.rIdle > SLEEP_T1 ? 1 : 0));
     if (st !== SLP.stage) {
+      const fromStanding = SLP.stage === 0;
       SLP.stage = st; SLP.k = 1; SLP.stages++;
-      if (st === 1) chooseSeat();
+      /* held poses: any settle from standing picks its seat, and reduced
+         motion sits her straight onto it (chooseSeat pins dxNow) */
+      if (fromStanding && st > 0) chooseSeat();
       needsDraw = true;
       renderStep();
     }
@@ -8438,7 +8700,9 @@ window.__slp = {
   get state() {
     return {
       stage: SLP.stage, k: +SLP.k.toFixed(3), onBench: SLP.onBench,
-      seatDX: Math.round(SLP.seatDX || 0), startle: +SLP.startle.toFixed(3),
+      seatDX: Math.round(SLP.seatDX || 0), dxNow: Math.round(SLP.dxNow || 0),
+      seatH: SLP.seatH, seatFace: SLP.seatFace,
+      startle: +SLP.startle.toFixed(3),
       snores: SLP.snores, dogSnores: SLP.dogSnores, stages: SLP.stages,
       wakes: SLP.wakes, idleT: +S.idleT.toFixed(2), rIdle: SLP.rIdle
     };
@@ -8471,14 +8735,16 @@ window.__score = {
       tiers: SCORE_TIERS.map(t => [t.at, t.name]), label: scoreLabel()
     };
   },
-  /* a probe may buy progress the honest way: real ground in the coverage
-     record, exactly the one number the redefined rule reads */
+  /* a probe may buy progress the honest way (w5r1): STAND THERE — the
+     walker is teleported to the x whose word position reads p of the
+     trail, exactly the one number the redefined rule reads */
   set(p) {
     const want = clamp(p, 0, 1);
-    const k = Math.round(want * COV.n);
-    COV.bits.fill(0);
-    for (let i = 0; i < k; i++) COV.bits[i] = 1;
-    COV.covered = k;
+    const w = want * M.totalWords;
+    let pg = M.pages[M.pages.length - 1];
+    for (const q of M.pages) if (q.cumWords <= w) pg = q; else break;
+    const x = pg.start + pg.len * clamp((w - pg.cumWords) / Math.max(1, pg.words), 0, 1);
+    teleport(clamp(x, 10, M.worldEnd));
     return scoreUpdate(true);
   },
   update: scoreUpdate,
