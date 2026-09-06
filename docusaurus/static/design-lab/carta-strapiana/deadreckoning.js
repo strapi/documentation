@@ -8546,6 +8546,64 @@ const sound = {
      Synthesized through the same mix as everything else, so the duck and
      the master rule it, and its ceiling sits below the sea bed's: the cat
      is never louder than the water. Reduced motion keeps her purr intact. */
+  /* HER VOICE (owner: a meow when you touch her). A cat call is a pitch that
+     rises then falls under two vowel formants, so: a sawtooth on a glide,
+     through a moving formant pair, with a breath of noise at the attack. No
+     sample - the same synthesis discipline as every other sound aboard - and
+     it runs through the same mix, so the reading duck, the master and the
+     sound toggle rule it. Her ceiling stays under the purr peak: she answers,
+     she does not shout over the sea. Every call is jittered, and one in five
+     is a short closed-mouth chirp instead, the way a real cat varies. */
+  meow(kind) {
+    if (!this.ctx || !this.on) { diag.meows = (diag.meows || 0) + 1; return; }
+    const c = this.ctx, t = c.currentTime;
+    const chirp = kind === 'chirp' || (kind !== 'call' && Math.random() < 0.2);
+    const dur = chirp ? 0.16 + Math.random() * 0.06 : 0.42 + Math.random() * 0.26;
+    const f0 = (chirp ? 620 : 470) * (0.92 + Math.random() * 0.18);
+    const src = c.createOscillator();
+    src.type = 'sawtooth';
+    src.frequency.setValueAtTime(f0, t);
+    if (chirp) {
+      src.frequency.exponentialRampToValueAtTime(f0 * 1.45, t + dur * 0.5);
+      src.frequency.exponentialRampToValueAtTime(f0 * 1.1, t + dur);
+    } else {
+      src.frequency.exponentialRampToValueAtTime(f0 * 1.5, t + dur * 0.28);
+      src.frequency.setValueAtTime(f0 * 1.5, t + dur * 0.42);
+      src.frequency.exponentialRampToValueAtTime(f0 * 0.72, t + dur);
+    }
+    /* the two formants that turn a buzz into a vowel, opening then closing */
+    const f1 = c.createBiquadFilter(); f1.type = 'bandpass'; f1.Q.value = 5.5;
+    f1.frequency.setValueAtTime(760, t);
+    f1.frequency.linearRampToValueAtTime(chirp ? 900 : 1020, t + dur * 0.3);
+    f1.frequency.linearRampToValueAtTime(620, t + dur);
+    const f2 = c.createBiquadFilter(); f2.type = 'bandpass'; f2.Q.value = 4;
+    f2.frequency.setValueAtTime(1850, t);
+    f2.frequency.linearRampToValueAtTime(2350, t + dur * 0.3);
+    f2.frequency.linearRampToValueAtTime(1600, t + dur);
+    const f2g = c.createGain(); f2g.gain.value = 0.45;
+    const env = c.createGain();
+    const peak = (chirp ? 0.15 : 0.22) * (0.9 + Math.random() * 0.2);   /* an answer is an event: she must be heard over the bed, unlike her ambient purr */
+    env.gain.setValueAtTime(0.0001, t);
+    env.gain.exponentialRampToValueAtTime(peak, t + (chirp ? 0.02 : 0.06));
+    env.gain.setValueAtTime(peak, t + dur * 0.55);
+    env.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.05);
+    src.connect(f1); f1.connect(env);
+    src.connect(f2); f2.connect(f2g); f2g.connect(env);
+    env.connect(this.mix);
+    src.start(t); src.stop(t + dur + 0.12);
+    /* the little breath that opens the mouth */
+    if (!chirp && this.purrNoise) {
+      const br = c.createBufferSource(); br.buffer = this.purrNoise;
+      const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1400; bp.Q.value = 0.8;
+      const bg = c.createGain();
+      bg.gain.setValueAtTime(0.03, t);
+      bg.gain.exponentialRampToValueAtTime(0.0001, t + 0.09);
+      br.connect(bp); bp.connect(bg); bg.connect(this.mix);
+      br.start(t); br.stop(t + 0.12);
+    }
+    diag.meows = (diag.meows || 0) + 1;
+  },
+
   purr(ms) {
     if (!this.ctx || !this.on) { diag.purrs = (diag.purrs || 0) + 1; return; }
     const c = this.ctx, t = c.currentTime, dur = (ms || 2600) / 1000;
@@ -11155,6 +11213,7 @@ function petCat(where) {
   cat.pets++;
   cat.archUntil = catNow() + 2.2;
   cat.blinkUntil = catNow() + 4.6;              /* the slow-blink thank-you */
+  sound.meow(cat.pets === 1 ? 'call' : undefined);   /* she answers the hand */
   sound.purr();
   if (!cat.follows && cat.pets >= CAT_FOLLOW_AT) {
     cat.follows = true;
