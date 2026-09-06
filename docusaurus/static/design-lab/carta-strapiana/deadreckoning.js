@@ -7933,7 +7933,7 @@ const sound = {
 
     const seaLP = c.createBiquadFilter();
     seaLP.type = 'lowpass'; seaLP.frequency.value = 320;
-    const seaG = c.createGain(); seaG.gain.value = 0.5;
+    const seaG = c.createGain(); seaG.gain.value = 0.3;   // owner: the continuous wash was too present - water down 40%
 
     src.connect(windBP); windBP.connect(windG); windG.connect(this.mix);
     src.connect(seaLP); seaLP.connect(seaG); seaG.connect(this.mix);
@@ -7997,7 +7997,7 @@ const sound = {
     /* the tune keeps its shape but the whole wind layer carries the owner's
        30% trim - the chants are what one should hear, the wind stays low */
     this.bed.windG.gain.setTargetAtTime(0.21 * (0.09 + 0.14 * clamp(windKn / 24, 0, 1) + 0.05 * knotsFrac), t, 0.6);
-    this.bed.seaG.gain.setTargetAtTime(0.30 + 0.34 * knotsFrac, t, 0.6);
+    this.bed.seaG.gain.setTargetAtTime(0.18 + 0.20 * knotsFrac, t, 0.6);   // -40% by owner order
   },
 
   /* Voices join at the cadence of the harbour's own commits. An island worked
