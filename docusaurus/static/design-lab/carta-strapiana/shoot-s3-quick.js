@@ -1,0 +1,26 @@
+'use strict';
+const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_modules/playwright-core');
+(async () => {
+  const br = await chromium.launch({ headless: true });
+  const page = await br.newPage({ viewport: { width: 1440, height: 900 } });
+  await page.goto('http://127.0.0.1:8123/index.html?scale=1&sail=full');
+  await page.waitForFunction(() => window.__helm && window.__helm.ready, null, { timeout: 40000 });
+  await page.evaluate(() => window.__helm.below('chart'));
+  await page.waitForFunction('chart.ready === true', null, { timeout: 20000 });
+  await page.evaluate(() => window.__helm.fogMode('full'));
+  await page.waitForTimeout(1600);
+  await page.screenshot({ path: 'iterlog/s3/q-collapsed.png' });
+  const r = await page.evaluate(() => { const q = document.getElementById('fu-dirs').getBoundingClientRect(); return { x: q.x + q.width / 2, y: q.y + q.height / 2 }; });
+  await page.mouse.move(r.x, r.y);
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: 'iterlog/s3/q-dirs-open.png' });
+  const k = await page.evaluate(() => { const q = document.getElementById('fu-key').getBoundingClientRect(); return { x: q.x + q.width / 2, y: q.y + q.height / 2 }; });
+  await page.mouse.move(k.x, k.y);
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: 'iterlog/s3/q-key-open.png' });
+  const c = await page.evaluate(() => { const q = document.getElementById('fu-cart').getBoundingClientRect(); return { x: q.x + q.width / 2, y: q.y + q.height / 2 }; });
+  await page.mouse.move(c.x, c.y);
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: 'iterlog/s3/q-cart-open.png' });
+  await br.close();
+})();

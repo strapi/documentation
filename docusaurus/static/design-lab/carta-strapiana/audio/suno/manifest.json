@@ -1,1 +1,21 @@
-{ "verses": [] }
+{
+  "verses": [],
+  "sirens": [
+    {
+      "file": "the-lure.mp3",
+      "role": "lure",
+      "title": "The Lure",
+      "by": "the owner, with Suno",
+      "gain": 0.32,
+      "note": "wordless siren vocalise, 228 s - loops at nothing and rises only within hailing of a dark shore"
+    },
+    {
+      "file": "read-us-home.mp3",
+      "role": "home",
+      "title": "Read Us Home",
+      "by": "the owner, with Suno",
+      "gain": 0.34,
+      "note": "the siren song, 137 s - sung once, whole, at the first dark-shore anchoring of a visit"
+    }
+  ]
+}

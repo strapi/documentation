@@ -2123,15 +2123,30 @@ function update(dt) {
     ship.wheelAngle += rc;
   }
 
+  helmAutoTick();
+
   const wind = windAtShip();
   const hb = ship.bearing * Math.PI / 180;
   const hx = Math.sin(hb), hy = -Math.cos(hb);   /* north is -y, as the sheet draws it */
   const wm = Math.hypot(wind.x, wind.y) || 1;
   const cosA = (hx * wind.x + hy * wind.y) / wm;
-  const polar = 0.42 + 0.58 * Math.pow((cosA + 1) / 2, 1.35);
+  /* THE WIND'S ONE LAWFUL POWER (owner order): it modulates SPEED through
+     the polar and nothing else - no leeway, no drift, no push-back; the bow
+     goes where the helm points, always. The upwind floor stands at 0.55 so
+     an approach never stalls into a feeling of being chased; downwind is
+     still the reward. */
+  const polar = 0.55 + 0.45 * Math.pow((cosA + 1) / 2, 1.35);
   const windFactor = 0.75 + 0.25 * (wind.kn / 16);
   if (!passage.on) {
     let targetKn = ship.anchored ? 0 : sailBase(ship.sail) * polar * windFactor;
+    /* within sight of the bound island, with the bow laid for her, the
+       closing pace never falls below half her full-sail speed (owner order:
+       the wind may not chase her off an approach) */
+    if (!ship.anchored && ship.bound && ship.sail !== 'rest' &&
+        distToNm(ship.bound) < VIS_NM &&
+        Math.abs(angDiff(bearingTo(ship.bound), ship.bearing)) < 75) {
+      targetKn = Math.max(targetKn, sailBase('full') * 0.5);
+    }
     ship.knots += clamp(targetKn - ship.knots, -dt * 2.2, dt * 1.4);
     if (ship.knots < 0.01 && targetKn === 0) ship.knots = 0;
   }
@@ -2909,6 +2924,7 @@ function setSail(s, silent) {
   }
   if (ship.sail === s) return;
   ship.sail = s;
+  if (!silent && typeof helmAuto !== 'undefined' && helmAuto.on) helmAutoCancel('a hand on the canvas');
   if (!silent) {
     if (s === 'full') captionNow('Full sail. The bands quicken.');
     else if (s === 'travel') captionNow('Topgallants and studdingsails. She stretches her legs.');
@@ -2918,9 +2934,54 @@ function setSail(s, silent) {
   dirty = true;
 }
 function giveOrder(deltaDeg) {
+  if (helmAuto.on) helmAutoCancel('the wheel is yours again');
   ship.orderedBearing = norm360(ship.orderedBearing + deltaDeg);
   pushOrder(env.t);
   dirty = true;
+}
+
+/* ---------------- THE HELMSMAN TAKES HER IN (owner order) ----------------
+   A pressed beyond anchoring ground, with an island bound or plainly in
+   sight, means I WANT TO LAND THERE: the ship cons herself to the anchorage
+   with the usual mass and speed, a quiet engraved line counts the distance
+   down, and any hand back on the wheel takes her back at once. The anchor
+   goes down and the page opens by the standing arrival law. */
+const helmAuto = { on: false, isle: null };
+function helmAutoStart(isle) {
+  helmAuto.on = true;
+  helmAuto.isle = isle;
+  setBound(isle, true);
+  if (ship.sail === 'rest') { setSail('full', true); firstOrder('sail'); }
+  captionNow('Taking her in — ' + distToNm(isle).toFixed(1) + ' nm to the anchorage.', 3400);
+  diag.helmAuto = { on: true, isle: isle.slug };
+}
+function helmAutoCancel(why) {
+  if (!helmAuto.on) return;
+  helmAuto.on = false;
+  helmAuto.isle = null;
+  const el = document.getElementById('takingin');
+  if (el) el.hidden = true;
+  diag.helmAuto = { on: false, why: why || '' };
+}
+function helmAutoTick() {
+  const el = document.getElementById('takingin');
+  if (!helmAuto.on || !helmAuto.isle) { if (el && !el.hidden) el.hidden = true; return; }
+  if (ship.anchored || passage.on || passage.closing) { helmAutoCancel('arrived'); return; }
+  const I = helmAuto.isle;
+  /* the auto-helm orders the bow for the anchorage, through the same wheel
+     and the same mass the player's own orders pass through */
+  const brg = bearingTo(I);
+  if (Math.abs(angDiff(brg, ship.orderedBearing)) > 0.8) {
+    ship.orderedBearing = brg;
+    pushOrder(env.t);
+  }
+  if (!el) return;
+  const d = distToNm(I);
+  const txt = 'TAKING HER IN · ' + (d >= 9.95 ? String(Math.round(d)) : d.toFixed(1)) +
+    ' nm to the anchorage · any hand on the wheel takes her back';
+  if (el.textContent !== txt) el.textContent = txt;
+  if (el.hidden && ui.mode === 'deck') el.hidden = false;
+  if (!el.hidden && ui.mode !== 'deck') el.hidden = true;
 }
 
 function initInput() {
@@ -2936,6 +2997,12 @@ function initInput() {
       const rct = el.getBoundingClientRect();
       const mx = (e.clientX - rct.left) * W / rct.width;
       const my = (e.clientY - rct.top) * H / rct.height;
+      /* the cat first: a hand reaching for her is never a helm order */
+      if (cat.deck !== 'below' && cat.hit &&
+          Math.hypot(mx - cat.hit.x, my - cat.hit.y) < cat.hit.r) {
+        petCat('deck');
+        return;
+      }
       for (const hh of eggs.hits) {
         if (Math.hypot(mx - hh.x, my - hh.y) < hh.r + 10) { eggActivate(hh.key); return; }
       }
@@ -3008,6 +3075,7 @@ function initInput() {
     }
     if (typing(e)) return;                       // a hand writing in the log owns the keyboard
     if (e.key === 'Escape') {
+      if (ui.mode === 'below' && furn.open) { furnClose(); e.preventDefault(); return; }
       if (ui.mode === 'below') { closeBelow(); e.preventDefault(); return; }
       if (ui.mode === 'anchor') { weighAnchor(); e.preventDefault(); return; }
     }
@@ -3038,6 +3106,14 @@ function initInput() {
       e.preventDefault(); return;
     }
     if (e.key === 'l' || e.key === 'L') { openBelow('log'); e.preventDefault(); return; }
+    if (e.key === 'p' || e.key === 'P') {
+      /* petting, by key, when she is near */
+      if (ui.mode === 'deck' && cat.deck !== 'below') { petCat('key'); e.preventDefault(); return; }
+      if (ui.mode === 'below' && ui.tab === 'chart' && $('chartcat').style.display !== 'none') { petCat('key'); e.preventDefault(); return; }
+      if (cat.seat) { petCat('key'); e.preventDefault(); return; }
+      if (ui.mode === 'deck') { captionNow('She is below, asleep among the charts. She will come up when it suits her.', 3600); e.preventDefault(); }
+      return;
+    }
     if (e.key === 's' || e.key === 'S') { sound.toggle(); e.preventDefault(); return; }
     if (e.key === '/' && ui.mode === 'below') { const q = document.getElementById('search'); if (q) { q.focus(); q.select(); e.preventDefault(); } return; }
     if (ui.mode !== 'deck') return;              // below deck the helm is nobody's business
@@ -3048,8 +3124,25 @@ function initInput() {
         e.preventDefault(); return;
       }
       const b = ship.bound;
-      if (b && distToNm(b) < 0.6) dropAnchor(b);
-      else captionNow('Too far off to let go. Bring her inside half a mile of the shore.', 3200);
+      if (b && distToNm(b) < 0.6) { dropAnchor(b); e.preventDefault(); return; }
+      /* beyond anchoring ground, A means I WANT TO LAND THERE (owner order):
+         with an island bound or plainly in sight the ship takes herself in;
+         silent refusal is the sin */
+      const plainlySeen = b && (ship.boundLock || pickVisible().length > 0 || distToNm(b) <= VIS_NM);
+      if (plainlySeen) {
+        if (REDUCED) {
+          /* reduced motion: A lands and opens immediately, with the caption */
+          captionNow('Taking her in — ' + distToNm(b).toFixed(1) + ' nm to the anchorage.', 2600);
+          placeShipAtDistance(0.2, b);
+          dropAnchor(b);
+        } else if (helmAuto.on && helmAuto.isle === b) {
+          captionNow('She is already taking herself in — ' + distToNm(b).toFixed(1) + ' nm to run.', 2800);
+        } else {
+          helmAutoStart(b);
+        }
+      } else {
+        captionNow('No anchorage in sight — the chart knows every shore, press C.', 3600);
+      }
       e.preventDefault(); return;
     }
     if (e.repeat) { keys[e.key] = true; return; }
@@ -3232,8 +3325,10 @@ window.__helm = {
   fhSay(slug) { const I = world.bySlug.get(slug); if (!I) return ''; const s = firstSentenceOf(I); const el = document.getElementById('figurehead'); el.querySelector('.fh-line').textContent = '“' + s + '”'; el.querySelector('.fh-who').textContent = 'the figurehead speaks · her page’s own first words'; el.classList.add('shown'); fh.upTil = env.t + 7.5; return s; },
   stars() { buildConstellation(); return nightSky.stars.map(s => ({ slug: s.isle.slug, title: s.isle.title, x: s.x, y: s.y })); },
   steerStar(i) { if (!nightSky.stars[i]) return false; steerByStar({ i }); return true; },
-  cat() { return { deck: cat.deck, u: +cat.u.toFixed(3), side: cat.side, stare: cat.stareAt && cat.stareAt.slug, home: cat.home, beasts: catBeasts().map(b => b.slug) }; },
-  catWalk() { cat.deck = 'walk'; cat.u = 0.06; cat.side = 1; return true; },
+  cat() { return catDiag(); },
+  catWalk() { cat.deck = 'walk'; cat.u = 0.06; cat.side = 1; cat.stateT = 0; return true; },
+  catSit(u) { cat.deck = 'sit'; cat.u = u == null ? 0.55 : u; cat.stateT = 0; dirty = true; return true; },
+  pet() { return petCat('helm') && catDiag(); },
   packetInfo(slug) { const I = world.bySlug.get(slug); return I ? packetFor(I) : null; },
   harbourShips(slug) { const s = []; for (const [a, b] of world.graph.edges) if (b === slug) s.push(a); return s; },
   fogLift(m) { fogSetMode(m, true); return fogDiag(); },
@@ -3648,10 +3743,13 @@ function openPage(isle, how) {
   visit.save();
   sound.landfall(isle);
   sound.reading(true);
+  /* a name read is a soul brought home (S3): her sirens fall silent */
+  sound.sirenResolve(isle);
 }
 
 function dropAnchor(isle) {
   if (!isle) return;
+  helmAutoCancel('arrived');
   ship.anchored = true;
   ship.sail = 'rest';
   ship.knots = 0;
@@ -3659,6 +3757,7 @@ function dropAnchor(isle) {
   fogSee(isle.pos.x, isle.pos.y, 1.1);
   logCrossing(isle);
   sound.anchorShot();
+  sound.sirenAnchor(isle);
   captionNow('The anchor bites off ' + isle.title + '.', 3000);
   openPage(isle, 'sailed');
 }
@@ -3684,6 +3783,7 @@ function weighAnchor() {
 function warpTo(slug, why) {
   const isle = world.bySlug.get(slug);
   if (!isle) return;
+  helmAutoCancel('warped');
   placeShipAtDistance(0.13, isle);
   ship.anchored = true;
   ship.sail = 'rest';
@@ -4089,16 +4189,34 @@ const chart = {
 };
 const CHART_ZMIN = 1, CHART_ZMAX = 9;
 
-/* the sheet's own furniture, in sheet coordinates */
-const CART = { x: 34, y: 560, w: 372, h: 218 };          // the cartouche
-const KEYB = { x: 1002, y: 480, w: 366, h: 298 };        // the legend
-const DIRS = { x: 30, y: 34, w: 300, h: 352 };           // sailing directions + the rumors
-const ROSE = { x: 1272, y: 146, r: 62 };                 // the compass rose
-const SCAL = { x: 500, y: 740, w: 336, h: 54 };
-const STGL = { x: 500, y: 656, w: 336, h: 74 };          // the storm-glass (stage 2)
-const KEY_ROW_Y = 96, KEY_ROW_H = 16;   // the legend's rows, pinned so ink and letter agree          // the scale bar
-const FURN = [CART, KEYB, DIRS, SCAL, STGL,
-  { x: ROSE.x - ROSE.r - 30, y: ROSE.y - ROSE.r - 62, w: (ROSE.r + 30) * 2, h: ROSE.r * 2 + 92 }];
+/* THE FURNITURE LAW (owner order): the furniture never covers the sea.
+   The boxes that once sat pinned over the water - the directions, the key,
+   the storm-glass, the title cartouche - are collapsed cartouche TABS by
+   default, docked at the sheet edges over open water or the torn margin.
+   Each expands on hover or click into its full box and folds back on leave;
+   at most one box is open at a time; past the first zoom stop everything
+   fades to tabs (the close chart belongs to the geography) and returns at
+   the overview. Every collapsed seat is proven against the real land mask
+   before it is taken: land, places, beasts and the rumor marks are all
+   ground no tab may sit on. */
+const CART = { w: 372, h: 232 };                 // the cartouche, expanded
+const KEYB = { w: 366, h: 330 };                 // the legend, expanded
+const DIRS = { w: 300, h: 352 };                 // sailing directions + rumors
+const ROSE = { x: 1272, y: 146, r: 62 };         // the compass rose (sheet ink)
+const SCAL = { x: 560, y: 752, w: 240, h: 40 };  // the scale bar: small and low
+const STGL = { w: 336, h: 74 };                  // the storm-glass, expanded
+const KEY_ROW_Y = 96, KEY_ROW_H = 16;   // the legend's rows, pinned so ink and letter agree
+const ROSE_RECT = { x: ROSE.x - ROSE.r - 30, y: ROSE.y - ROSE.r - 62, w: (ROSE.r + 30) * 2, h: ROSE.r * 2 + 92 };
+/* the ground the sheet must honor while collapsed: rose + tabs + scale,
+   filled by furnComputeDocks() once the geography is known */
+const FURN = [ROSE_RECT];
+const furn = { open: null, faded: false, docks: null, view: null, closeT: 0, wired: false };
+const FURNSPEC = {
+  dirs:  { title: 'SAILING DIRECTIONS', box: DIRS, edge: 'w', at: 84 },
+  key:   { title: 'HERE BE DRAGONS',    box: KEYB, edge: 'e', at: 430 },
+  glass: { title: 'THE STORM-GLASS',    box: STGL, edge: 's', at: 950 },
+  cart:  { title: 'CARTA STRAPIANA',    box: CART, edge: 'sw', at: 0 }
+};
 
 const INK = 'rgba(38,28,17,';
 const RED = 'rgba(141,47,34,';
@@ -6212,17 +6330,218 @@ function paintSheetGeo(g, geo, vp, base) {
   g.restore();
 }
 
-/* the four table instruments stay pinned to the glass while the sheet moves
-   beneath them: the readout, the key, the directions and the scale are the
-   utility path, and the utility path does not zoom away */
+/* ============================================================
+   THE CHART FURNITURE, COLLAPSED TO TABS (owner law)
+   ============================================================ */
+/* the real land mask: every coast ring, place mark, beast, rock, rumor
+   mark and the rose, rasterized once in sheet coordinates */
+function furnMask(geo) {
+  const mc = document.createElement('canvas');
+  mc.width = CHART_W; mc.height = CHART_H;
+  const g = mc.getContext('2d', { willReadFrequently: true });
+  g.fillStyle = '#000';
+  for (const R of geo.rings) {
+    if (!R.pts || R.pts.length < 3) continue;
+    g.beginPath(); pathThrough(g, R.pts, true); g.fill();
+  }
+  for (const m of chart.marks) {
+    g.beginPath(); g.arc(m.x, m.y, (m.r || 7) + 4, 0, TAU); g.fill();
+  }
+  for (const B of geo.beasts) {
+    g.beginPath(); g.ellipse(B.x, B.y, B.L * 0.60, B.L * 0.52, 0, 0, TAU); g.fill();
+    if (B.band) g.fillRect(B.x - B.band.w / 2 - 4, B.band.y - 14, B.band.w + 8, 30);
+  }
+  for (const D of geo.decor || []) {
+    const r = D.kind === 'inkstain' ? (D.r || 30) + 6 : 18;
+    g.beginPath(); g.arc(D.x, D.y, r, 0, TAU); g.fill();
+  }
+  g.fillRect(ROSE_RECT.x, ROSE_RECT.y, ROSE_RECT.w, ROSE_RECT.h);
+  return g;
+}
+function furnRectClear(mg, r) {
+  const x0 = Math.max(0, Math.floor(r.x)), y0 = Math.max(0, Math.floor(r.y));
+  const w = Math.min(CHART_W - x0, Math.ceil(r.w)), h = Math.min(CHART_H - y0, Math.ceil(r.h));
+  if (w <= 0 || h <= 0) return false;
+  const d = mg.getImageData(x0, y0, w, h).data;
+  for (let i = 3; i < d.length; i += 4) if (d[i] > 8) return false;
+  return true;
+}
+function furnTabSize(id) {
+  const sp = FURNSPEC[id];
+  const w = Math.ceil(textW(sp.title, 10.5, '600 ', 1.7)) + 32;
+  return { w, h: id === 'cart' ? 34 : 21 };
+}
+function furnComputeDocks() {
+  const geo = chart.geo;
+  if (!geo) return;
+  const mg = furnMask(geo);
+  const taken = [ROSE_RECT, { x: CHART_W / 2 - 120, y: 6, w: 240, h: 38 }];
+  const hitTaken = r => taken.some(q =>
+    r.x < q.x + q.w + 8 && r.x + r.w + 8 > q.x && r.y < q.y + q.h + 8 && r.y + r.h + 8 > q.y);
+  /* the scale bar first: small and low, proven over water like the rest */
+  {
+    let placed = false;
+    for (let step = 0; step < 40 && !placed; step++) {
+      const off = (step % 2 ? -1 : 1) * Math.ceil(step / 2) * 22;
+      const r = { x: clamp(560 + off, 30, CHART_W - SCAL.w - 30), y: SCAL.y - 14, w: SCAL.w, h: SCAL.h + 16 };
+      if (!hitTaken(r) && furnRectClear(mg, r)) { SCAL.x = r.x; taken.push(r); placed = true; }
+    }
+    if (!placed) taken.push({ x: SCAL.x, y: SCAL.y - 14, w: SCAL.w, h: SCAL.h + 16 });
+  }
+  const docks = {};
+  for (const id of Object.keys(FURNSPEC)) {
+    const sp = FURNSPEC[id], tz = furnTabSize(id);
+    let seat = null;
+    for (let step = 0; step < 56 && !seat; step++) {
+      const off = (step % 2 ? -1 : 1) * Math.ceil(step / 2) * 16;
+      let r;
+      if (sp.edge === 'w') r = { x: 5, y: sp.at + off, w: tz.w, h: tz.h };
+      else if (sp.edge === 'e') r = { x: CHART_W - tz.w - 5, y: sp.at + off, w: tz.w, h: tz.h };
+      else if (sp.edge === 's') r = { x: sp.at + off - tz.w / 2, y: CHART_H - tz.h - 5, w: tz.w, h: tz.h };
+      else r = { x: 10 + Math.max(0, off), y: CHART_H - tz.h - 6, w: tz.w, h: tz.h };
+      r.x = clamp(r.x, 4, CHART_W - tz.w - 4);
+      r.y = clamp(r.y, 4, CHART_H - tz.h - 4);
+      if (hitTaken(r)) continue;
+      if (furnRectClear(mg, r)) seat = r;
+    }
+    if (!seat) seat = sp.edge === 'e'
+      ? { x: CHART_W - tz.w - 5, y: sp.at, w: tz.w, h: tz.h }
+      : { x: 5, y: sp.edge === 'w' ? sp.at : CHART_H - tz.h - 5, w: tz.w, h: tz.h };
+    seat.clear = furnRectClear(mg, seat);
+    docks[id] = seat;
+    taken.push(seat);
+  }
+  furn.docks = docks;
+  FURN.length = 0;
+  for (const r of taken) FURN.push(r);
+  diag.furn = {
+    docks, faded: furn.faded, open: furn.open,
+    scale: { x: SCAL.x, y: SCAL.y, w: SCAL.w, h: SCAL.h },
+    collapsed: Object.keys(docks).map(id => Object.assign({ id }, docks[id]))
+  };
+}
+function furnTabEls() {
+  return ['dirs', 'key', 'glass', 'cart'].map(id => [id, $('fu-' + id)]).filter(p => p[1]);
+}
+/* place tabs (and the open box) on the glass: sheet px scaled by S */
+function furnLayout(S, dx, dy) {
+  furn.view = { S, dx, dy };
+  if (!furn.docks) return;
+  for (const [id, el] of furnTabEls()) {
+    const d = furn.docks[id];
+    if (!d) { el.style.display = 'none'; continue; }
+    el.style.display = 'block';
+    el.style.left = (dx + d.x * S).toFixed(1) + 'px';
+    el.style.top = (dy + d.y * S).toFixed(1) + 'px';
+    el.style.width = d.w + 'px';
+    el.style.transform = 'scale(' + S.toFixed(4) + ')';
+  }
+  furnPlaceBox();
+}
+function furnPlaceBox() {
+  const id = furn.open, v = furn.view;
+  if (!id || !v || !furn.docks) return;
+  const sp = FURNSPEC[id], B = sp.box, d = furn.docks[id];
+  let x, y;
+  if (sp.edge === 'w') { x = 8; y = clamp(d.y - 8, 20, CHART_H - B.h - 20); }
+  else if (sp.edge === 'e') { x = CHART_W - B.w - 8; y = clamp(d.y - 8, 20, CHART_H - B.h - 20); }
+  else if (sp.edge === 's') { x = clamp(d.x + d.w / 2 - B.w / 2, 20, CHART_W - B.w - 20); y = CHART_H - B.h - 26; }
+  else { x = 10; y = CHART_H - B.h - 12; }
+  const box = $('fu-box');
+  box.style.left = (v.dx + x * v.S).toFixed(1) + 'px';
+  box.style.top = (v.dy + y * v.S).toFixed(1) + 'px';
+  box.style.width = B.w + 'px';
+  box.style.height = B.h + 'px';
+  box.style.transform = 'scale(' + v.S.toFixed(4) + ')';
+}
+/* the engraved ink of the one open box, at 2x for the letterpress */
+function furnInkBox(id) {
+  const sp = FURNSPEC[id], B = sp.box;
+  const ink = $('fu-ink');
+  if (!ink) return;
+  if (ink.width !== B.w * 2 || ink.height !== B.h * 2) { ink.width = B.w * 2; ink.height = B.h * 2; }
+  ink.style.width = B.w + 'px'; ink.style.height = B.h + 'px';
+  const g = ink.getContext('2d');
+  g.setTransform(2, 0, 0, 2, 0, 0);
+  g.clearRect(0, 0, B.w, B.h);
+  g.lineJoin = 'round'; g.lineCap = 'round';
+  const R0 = { x: 0, y: 0, w: B.w, h: B.h };
+  if (id === 'cart') drawCartouche(g, R0);
+  else if (id === 'glass') drawStormGlass(g, R0);
+  else { drawPanel(g, R0, true); if (id === 'key') drawKeyGlyphs(g, R0); }
+}
+function furnOpen(id) {
+  clearTimeout(furn.closeT);
+  if (furn.faded || !furn.docks || !FURNSPEC[id]) return;
+  if (furn.open === id) return;
+  furn.open = id;
+  furnInkBox(id);
+  for (const el of document.querySelectorAll('#fu-body > *')) el.hidden = true;
+  if (id === 'dirs') { const dd = $('chartdirs'); dd.innerHTML = directionsHtml(); dd.hidden = false; }
+  else if (id === 'key') { const ck = $('chartkey'); ck.innerHTML = keyHtml(1); ck.hidden = false; }
+  else if (id === 'glass') { const sg = $('stormglass'); wx.glassKey = ''; sg.hidden = false; updateStormGlass(); }
+  else {
+    const cc = $('chartcart'); cc.innerHTML = cartoucheHtml(); cc.hidden = false;
+    const ci = $('chartinfo'); ci.hidden = false; showChartInfo(chart.hover);
+  }
+  const box = $('fu-box');
+  box.dataset.f = id;
+  box.hidden = false;
+  furnPlaceBox();
+  for (const [tid, el] of furnTabEls()) el.setAttribute('aria-expanded', String(tid === id));
+  if (diag.furn) diag.furn.open = id;
+}
+function furnClose() {
+  clearTimeout(furn.closeT);
+  if (!furn.open) return;
+  furn.open = null;
+  const box = $('fu-box');
+  if (box) box.hidden = true;
+  for (const [, el] of furnTabEls()) el.setAttribute('aria-expanded', 'false');
+  if (diag.furn) diag.furn.open = null;
+}
+function furnLeave() {
+  clearTimeout(furn.closeT);
+  furn.closeT = setTimeout(furnClose, REDUCED ? 0 : 260);
+}
+function furnWire() {
+  if (furn.wired) return;
+  furn.wired = true;
+  const box = $('fu-box');
+  if (!box) return;
+  for (const [id, el] of furnTabEls()) {
+    el.addEventListener('pointerenter', () => furnOpen(id));
+    el.addEventListener('pointerleave', furnLeave);
+    el.addEventListener('click', e => {
+      /* a click PINS the box open (hover already unfolded it for a mouse;
+         a touch hand gets the same unfold) - folding is by leave or Escape */
+      e.stopPropagation();
+      furnOpen(id);
+    });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault(); e.stopPropagation();
+        if (furn.open === id) furnClose(); else furnOpen(id);
+      }
+    });
+  }
+  box.addEventListener('pointerenter', () => clearTimeout(furn.closeT));
+  box.addEventListener('pointerleave', furnLeave);
+}
+/* past the first zoom stop the chart belongs to the geography */
+function furnSync() {
+  const faded = chart.z > 1.71;
+  if (faded === furn.faded) return;
+  furn.faded = faded;
+  const layer = $('furniture');
+  if (layer) layer.classList.toggle('faded', faded);
+  if (faded) furnClose();
+  if (diag.furn) diag.furn.faded = faded;
+}
+
+/* the scale bar alone stays pinned on the canvas: small and low */
 function paintFurniture(g) {
-  const solid = !chartViewIdent();
-  drawCartouche(g, CART);
-  drawPanel(g, KEYB, solid);
-  drawPanel(g, DIRS, solid);
-  drawKeyGlyphs(g, KEYB);
   drawScaleBar(g, SCAL);
-  drawStormGlass(g, STGL);
 }
 
 /* the crisp re-engraving of the visible window at the settled view: a gesture
@@ -6425,9 +6744,17 @@ function drawCartouche(g, B) {
 function drawKeyGlyphs(g, B) {
   const x = B.x + 22;
   const y0 = B.y + KEY_ROW_Y;
-  const rows = ['anchorage', 'fort', 'town', 'hill', 'shoal', 'dark', 'x'];
+  const rows = ['anchorage', 'fort', 'town', 'hill', 'shoal', 'dark', 'x', 'cat'];
   rows.forEach((k, i) => {
     const y = y0 + i * KEY_ROW_H;
+    if (k === 'cat') {
+      g.save();
+      g.translate(x, y + 2.5);
+      g.scale(0.42, 0.42);
+      drawCatPose(g, 'curl', 0);
+      g.restore();
+      return;
+    }
     if (k === 'x') {
       g.strokeStyle = RED + '0.88)'; g.lineWidth = 1.5;
       g.beginPath();
@@ -6785,46 +7112,18 @@ function layoutChartDom() {
       'A scale of ' + numToWords(SG.span) + (SG.span === 1 ? ' nautical mile' : ' nautical miles') + ', by estimation</div>');
   }
 
-  /* --- the cartouche --- */
-  pinHtml.push('<div class="cl-cart" style="left:' + (dx + (CART.x + 15) * S).toFixed(1) + 'px;top:' +
-    (dy + (CART.y + 15) * S).toFixed(1) + 'px;width:' + ((CART.w - 30) * S).toFixed(1) +
-    'px;font-size:' + (11 * S).toFixed(2) + 'px">' + cartoucheHtml() + '</div>');
-
-  /* --- the legend --- */
-  pinHtml.push('<div class="cl-dirs" style="left:' + (dx + (DIRS.x + 14) * S).toFixed(1) + 'px;top:' +
-    (dy + (DIRS.y + 13) * S).toFixed(1) + 'px;width:' + ((DIRS.w - 28) * S).toFixed(1) +
-    'px;font-size:' + (11 * S).toFixed(2) + 'px">' + directionsHtml() + '</div>');
-
   lab.innerHTML = '<div id="clgeo">' + geoHtml.join('') + '</div><div id="clpin">' + pinHtml.join('') + '</div>';
   chart.layoutView = { z: Z, tx: TX, ty: TY, S, dx, dy };
 
-  /* the two live panels keep their own nodes: the readout and the key */
-  const ci = $('chartinfo');
-  ci.style.left = (dx + (CART.x + 15) * S).toFixed(1) + 'px';
-  ci.style.top = (dy + (CART.y + CART.h - 74) * S).toFixed(1) + 'px';
-  ci.style.width = ((CART.w - 30) * S).toFixed(1) + 'px';
-  ci.style.fontSize = (11.5 * S).toFixed(2) + 'px';
   const fsw = $('fogswitch');
   if (fsw) {
     fsw.style.left = (dx + (CHART_W / 2) * S).toFixed(1) + 'px';
     fsw.style.top = (dy + 25 * S).toFixed(1) + 'px';
     fsw.style.fontSize = (10.5 * S).toFixed(2) + 'px';
   }
-  const sg = $('stormglass');
-  if (sg) {
-    sg.style.left = (dx + (STGL.x + 50) * S).toFixed(1) + 'px';
-    sg.style.top = (dy + (STGL.y + 9) * S).toFixed(1) + 'px';
-    sg.style.width = ((STGL.w - 62) * S).toFixed(1) + 'px';
-    sg.style.fontSize = (10.5 * S).toFixed(2) + 'px';
-    updateStormGlass();
-  }
   placeChartCat();
-  const ck = $('chartkey');
-  ck.style.left = (dx + (KEYB.x + 14) * S).toFixed(1) + 'px';
-  ck.style.top = (dy + (KEYB.y + 12) * S).toFixed(1) + 'px';
-  ck.style.width = ((KEYB.w - 28) * S).toFixed(1) + 'px';
-  ck.style.fontSize = (11 * S).toFixed(2) + 'px';
-  ck.innerHTML = keyHtml(S);
+  /* the furniture rides the same glass: collapsed tabs, one box at most */
+  furnLayout(S, dx, dy);
 }
 function cartoucheHtml() {
   const g = world.graph, geo = chart.geo;
@@ -6885,7 +7184,8 @@ function keyHtml(S) {
     'hachures: a long page',
     'shoal cross: no route reaches her',
     'dark shore: an unreached coast',
-    'read on this visit (' + visit.charted.size + ')'
+    'read on this visit (' + visit.charted.size + ')',
+    'the ship cat - she does what cats do; you may pet her'
   ];
   let h = '<div class="ck-h">HERE BE DRAGONS</div>' +
     '<div class="ck-lede">Fifty places no route yet reaches: their coasts are inked dark and ' +
@@ -6905,7 +7205,7 @@ function keyHtml(S) {
     'by night one lighthouse burns for every twelve citations on a cape; the stars overhead are the current waters&rsquo; citations &mdash; click one to lay a course'
   ];
   rules.forEach((t, j) => {
-    const top = (KEY_ROW_Y - 12 + 7 * KEY_ROW_H + 4 + j * 26) * S;
+    const top = (KEY_ROW_Y - 12 + rows.length * KEY_ROW_H + 4 + j * 26) * S;
     h += '<div class="ck-rule" style="top:' + top.toFixed(1) + 'px">' + t + '</div>';
   });
   return h;
@@ -7003,7 +7303,7 @@ function drawChart() {
   }
   const t0 = performance.now();
   const geo = buildChartGeo();
-  if (!chart.sheet) { measureBands(geo); bakeChartSheet(geo); }
+  if (!chart.sheet) { measureBands(geo); furnComputeDocks(); bakeChartSheet(geo); furnWire(); }
   drawChartCanvas();
   layoutChartDom();
   showChartInfo(chart.hover);
@@ -7038,6 +7338,7 @@ function drawChartCanvas() {
   drawFog(g);
   drawChartVisit(g);
   paintFurniture(g);
+  furnSync();
   diag.chartView = { z: +chart.z.toFixed(3), tx: Math.round(chart.tx), ty: Math.round(chart.ty) };
 }
 
@@ -7364,6 +7665,30 @@ function initUI() {
   $('po-yes').addEventListener('click', () => portalAnswer(true));
   $('po-no').addEventListener('click', () => portalAnswer(false));
 
+  /* the ship cat, wherever she settles, answers the hand - but only her
+     own inked body: a click through her empty air falls to what lies
+     beneath (the sheet's marks keep their law) */
+  const catCanvasClick = e => {
+    const el = e.currentTarget;
+    const r = el.getBoundingClientRect();
+    const g = el.getContext('2d');
+    let a = 255;
+    try {
+      const px = Math.floor((e.clientX - r.left) * el.width / r.width);
+      const py = Math.floor((e.clientY - r.top) * el.height / r.height);
+      a = g.getImageData(px, py, 1, 1).data[3];
+    } catch (err) {}
+    e.stopPropagation();
+    if (a > 24) { petCat(el.id === 'chartcat' ? 'chart' : 'desk'); return; }
+    el.style.pointerEvents = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    el.style.pointerEvents = 'auto';
+    if (under) under.dispatchEvent(new MouseEvent('click',
+      { clientX: e.clientX, clientY: e.clientY, bubbles: true, shiftKey: e.shiftKey }));
+  };
+  $('chartcat').addEventListener('click', catCanvasClick);
+  $('deskcat').addEventListener('click', catCanvasClick);
+
   const cv = $('chart');
   cv.addEventListener('mousemove', e => {
     if (chart.gesturing) { hideChartTip(); return; }
@@ -7576,6 +7901,7 @@ function updateFirstBound() {
 /* ---- the passage itself ---- */
 function passageTo(isle) {
   if (!isle || passage.on || passage.closing) return;
+  helmAutoCancel('a passage shaped at the table');
   firstOrder('sail');
   passage.isle = isle;
   passage.nm = distToNm(isle);
@@ -7825,6 +8151,13 @@ const sound = {
   slotNext: [], active: [],
   lastId: null, lastPlay: null, gram: null, trig: [], lastStart: -1e9,
   holdUntil: 0, nextFeatureAt: 0, readingOpen: false,
+  /* THE SIRENS (S3): the voice of the drowned register - the uncited
+     dark-shore islands. The lure loops at gain 0 and rises only within
+     hailing distance of an unresolved dark shore, panned toward it;
+     Read Us Home is sung once, whole, at the first dark-shore anchoring
+     of a visit; a name read is a soul brought home - that island's
+     sirens fall silent, and the state keeps (localStorage, wrapped). */
+  sirens: null,
 
   init() {
     this.lastPlay = new Map();
@@ -7866,6 +8199,7 @@ const sound = {
     this.decoding = false;
     diag.voicesLoaded = this.bank.length;
     this.loadSuno();
+    this.loadSirens();
   },
 
   /* THE SUNO SLOT: drop mp3 files in audio/suno/ with a manifest.json beside
@@ -7990,6 +8324,154 @@ const sound = {
     diag.thunderPlayed = (diag.thunderPlayed || 0) + 1;
   },
 
+  /* ---- THE SIRENS (S3) ---- */
+  async loadSirens() {
+    if (!this.ctx || this.sirens) return;
+    this.sirens = { lure: null, home: null, lureG: null, pan: null, homeSrc: null,
+      homePlaying: false, sungThisVisit: false, target: null, acc: 9,
+      resolved: new Set(store.get('sirensRead', [])) };
+    const S = this.sirens;
+    /* names already read on past visits were brought home then */
+    for (const sg of visit.charted) {
+      const I = world.bySlug.get(sg);
+      if (I && I.inbound === 0) S.resolved.add(sg);
+    }
+    try {
+      const man = await fetch('audio/suno/manifest.json').then(r => r.ok ? r.json() : null);
+      if (!man || !man.sirens) return;
+      for (const v of man.sirens) {
+        try {
+          const ab = await fetch('audio/suno/' + v.file).then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); });
+          const buf = await this.ctx.decodeAudioData(ab);
+          if (v.role === 'lure') { S.lure = { buf, gain: clamp(+v.gain || 0.32, 0.05, 0.4) }; }
+          else { S.home = { buf, gain: clamp(+v.gain || 0.34, 0.05, 0.45) }; }
+        } catch (e) { /* a song that will not decode stays under the sea */ }
+      }
+      if (S.lure) {
+        /* the lure loops forever at nothing; proximity alone raises her */
+        const src = this.ctx.createBufferSource();
+        src.buffer = S.lure.buf; src.loop = true;
+        S.lureG = this.ctx.createGain();
+        S.lureG.gain.value = 0;
+        let tail = S.lureG;
+        if (this.ctx.createStereoPanner) {
+          S.pan = this.ctx.createStereoPanner();
+          S.lureG.connect(S.pan); tail = S.pan;
+        }
+        tail.connect(this.mix);
+        src.connect(S.lureG);
+        src.start();
+      }
+      diag.sirens = { loaded: { lure: !!S.lure, home: !!S.home }, resolved: S.resolved.size };
+    } catch (e) { /* no sirens ashore: the sea keeps her own counsel */ }
+  },
+  /* the nearest unresolved dark shore, and the cited water that shelters you */
+  sirenScan() {
+    let best = null, bd = 1e9, citedNear = 1e9;
+    for (const I of world.islands) {
+      const d = distToNm(I);
+      if (I.inbound === 0) {
+        if (!this.sirens.resolved.has(I.slug) && d < bd) { bd = d; best = I; }
+      } else if (d < citedNear) citedNear = d;
+    }
+    return { isle: best, d: bd, citedNear };
+  },
+  sirenTick(dt) {
+    const S = this.sirens;
+    if (!S || !S.lureG || !this.ctx) return;
+    S.acc += dt || 0.016;
+    if (S.acc < 0.25) return;
+    S.acc = 0;
+    const RANGE = 5.5;                       /* hailing distance, in miles */
+    let g = 0, pan = 0;
+    if (this.on && !S.homePlaying) {
+      const sc = this.sirenScan();
+      if (sc.isle && sc.d < RANGE && sc.citedNear > 1.5) {
+        const x = clamp(1 - sc.d / RANGE, 0, 1);
+        g = 0.32 * x * x;                    /* the ceiling the law names */
+        const az = angDiff(bearingTo(sc.isle), ship.bearing) * Math.PI / 180;
+        pan = clamp(Math.sin(az) * 0.8, -0.8, 0.8);
+        S.target = sc.isle.slug;
+      } else S.target = null;
+    } else if (!S.homePlaying) S.target = null;
+    const t = this.ctx.currentTime;
+    S.lureG.gain.setTargetAtTime(g, t, 0.7);
+    if (S.pan) S.pan.pan.setTargetAtTime(pan, t, 0.6);
+    diag.sirenState = { target: S.target, gain: +g.toFixed(3), pan: +pan.toFixed(2),
+      homePlaying: S.homePlaying, sung: S.sungThisVisit, resolved: S.resolved.size };
+  },
+  /* the first dark-shore anchoring of the visit: they sing you in, whole */
+  sirenAnchor(isle) {
+    const S = this.sirens;
+    if (!S || !S.home || !this.ctx || !this.on) return;
+    if (isle.inbound !== 0 || S.resolved.has(isle.slug) || S.sungThisVisit || S.homePlaying) return;
+    S.sungThisVisit = true;
+    S.homePlaying = true;
+    const c = this.ctx, t = c.currentTime;
+    /* the lure hands over before the song begins */
+    if (S.lureG) { S.lureG.gain.cancelScheduledValues(t); S.lureG.gain.setTargetAtTime(0, t, 0.35); }
+    const src = c.createBufferSource();
+    src.buffer = S.home.buf;
+    const g = c.createGain();
+    g.gain.setValueAtTime(0.0001, t + 1.1);
+    g.gain.exponentialRampToValueAtTime(S.home.gain, t + 3.2);
+    src.connect(g); g.connect(this.mix);
+    src.onended = () => { S.homePlaying = false; S.homeSrc = null; };
+    src.start(t + 1.1);
+    S.homeSrc = src;
+    diag.sirenSong = { isle: isle.slug, at: Math.round(t * 10) / 10 };
+  },
+  /* a name read is a soul brought home: that island's sirens fall silent */
+  sirenResolve(isle) {
+    const S = this.sirens;
+    if (!S || isle.inbound !== 0 || S.resolved.has(isle.slug)) return;
+    S.resolved.add(isle.slug);
+    store.set('sirensRead', [...S.resolved]);
+    if (diag.sirens) diag.sirens.resolved = S.resolved.size;
+  },
+  sirenKill() {
+    const S = this.sirens;
+    if (!S || !this.ctx) return;
+    const t = this.ctx.currentTime;
+    if (S.lureG) { S.lureG.gain.cancelScheduledValues(t); S.lureG.gain.value = 0; }
+    if (S.homeSrc) { try { S.homeSrc.stop(); } catch (e) {} S.homeSrc = null; }
+    S.homePlaying = false;
+  },
+
+  /* THE PURR (S3): a real purr is a 20-30 Hz tremor on a chest of noise.
+     Synthesized through the same mix as everything else, so the duck and
+     the master rule it, and its ceiling sits below the sea bed's: the cat
+     is never louder than the water. Reduced motion keeps her purr intact. */
+  purr(ms) {
+    if (!this.ctx || !this.on) { diag.purrs = (diag.purrs || 0) + 1; return; }
+    const c = this.ctx, t = c.currentTime, dur = (ms || 2600) / 1000;
+    if (!this.purrNoise) {
+      const len = Math.floor(c.sampleRate * 1.2);
+      const nb = c.createBuffer(1, len, c.sampleRate);
+      const d = nb.getChannelData(0);
+      let last = 0;
+      for (let i = 0; i < len; i++) { const w = Math.random() * 2 - 1; last = 0.05 * w + 0.95 * last; d[i] = last * 2.8; }
+      this.purrNoise = nb;
+    }
+    const src = c.createBufferSource();
+    src.buffer = this.purrNoise; src.loop = true;
+    const lp = c.createBiquadFilter();
+    lp.type = 'lowpass'; lp.frequency.value = 200; lp.Q.value = 0.7;
+    const am = c.createGain(); am.gain.value = 0.55;
+    const trem = c.createOscillator(); trem.frequency.value = 24;
+    const tg = c.createGain(); tg.gain.value = 0.45;
+    trem.connect(tg); tg.connect(am.gain);
+    const env2 = c.createGain();
+    env2.gain.setValueAtTime(0.0001, t);
+    env2.gain.exponentialRampToValueAtTime(0.13, t + 0.35);
+    env2.gain.setValueAtTime(0.13, t + dur - 0.9);
+    env2.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(lp); lp.connect(am); am.connect(env2); env2.connect(this.mix);
+    trem.start(t); src.start(t);
+    src.stop(t + dur + 0.1); trem.stop(t + dur + 0.1);
+    diag.purrs = (diag.purrs || 0) + 1;
+  },
+
   /* the wind bed follows the real wind and the sail actually set */
   tune(windKn, knotsFrac) {
     if (!this.ctx || !this.bed) return;
@@ -8019,6 +8501,7 @@ const sound = {
      again within ten minutes; a new small pitch and level for every play;
      silence between phrases - the bed alone carries those bars. */
   step(dt, sailing) {
+    if (this.sirens) this.sirenTick(dt);
     if (!this.ctx || !this.on) return;
     if (!sailing) { if (this.crew || this.active.length) this.hush(2.0); return; }
     if (!this.bank.length) return;
@@ -8250,6 +8733,7 @@ const sound = {
       if (this.on && this.ctx.state === 'suspended') this.ctx.resume();
       this.master.gain.setTargetAtTime(this.on ? 0.85 : 0, this.ctx.currentTime, 0.12);
       if (!this.on) {
+        this.sirenKill();
         this.hush(0.3);
         /* and then the context itself stops: silent means silent, and costs nothing */
         clearTimeout(this.offTimer);
@@ -9743,7 +10227,7 @@ function updateStormGlass() {
     '<div class="sg-line">' + (chart.hover ? 'over ' : 'bound for ') + '<b>' + esc(r.name) + '</b>: ' + r.words + '</div>' +
     '<div class="sg-sub">' + (r.n ? r.n + (r.n === 1 ? ' citation borne in' : ' citations borne in') + ' - the sea off her runs with them'
       : 'no citation reaches her - a still water') + '</div>';
-  chartSettle();   /* the liquor itself is engraved on the next settled plate */
+  if (furn.open === 'glass') furnInkBox('glass');   /* the liquor is engraved in her own box */
 }
 function drawStormGlass(g, B) {
   drawPanel(g, B, !chartViewIdent());
@@ -10506,13 +10990,30 @@ function steerByStar(hit) {
   diag.steeredByStar = I.slug;
 }
 
-/* ---------------- IDEA 11: the ship cat ---------------- */
+/* ---------------- IDEA 11: the ship cat, made SOMEONE (S3, owner order:
+   "on peut faire quoi avec ?") ----------------
+   She has a real engraved silhouette now - ears with their notches, a tail
+   that speaks, authored postures - and a life: she walks the rail between
+   stations, sits, stretches, turns an ear, blinks slow. Her data behaviour
+   shows: she settles on the chart over the waters you visit most, sits by
+   the log while you write, and stares toward monster waters before they
+   raise. ONE interaction: petting - click her, or press P when she is near.
+   She arches into it, a soft synthesized purr runs under the gain laws
+   (never louder than the water), and the thank-you is a slow blink. Pet
+   her enough times in a visit and she follows you to whichever station
+   you open. Reduced motion: held poses, instant, purr intact. */
 const cat = {
-  deck: 'below',        /* below | walk | stare */
-  u: 0, side: 1, nextWalk: 70 + (SEED % 40), frame: 0, ft: 0,
-  stareAt: null, beasts: null, chartEl: null, chartFrame: 0, chartTimer: 0,
-  home: null
+  deck: REDUCED ? 'sit' : 'below',   /* below | walk | sit | stretch | stare */
+  u: REDUCED ? 0.55 : 0, side: 1,
+  nextWalk: REDUCED ? 0 : 16 + (SEED % 14),
+  stateT: 0, frame: 0, ft: 0,
+  stareAt: null, beasts: null, home: null, seat: null,
+  pets: 0, follows: false, archUntil: 0, blinkUntil: 0,
+  chartFrame: 0, hit: null
 };
+const CAT_FOLLOW_AT = 3;
+/* the pet timers run on the wall clock: env.t holds still below deck */
+const catNow = () => performance.now() / 1000;
 function catBeasts() {
   if (cat.beasts) return cat.beasts;
   /* the same three fiercest the chart raises, derived the same way */
@@ -10525,10 +11026,51 @@ function catBeasts() {
   cat.beasts = f.filter(Boolean);
   return cat.beasts;
 }
+function catDiag() {
+  return { deck: cat.deck, u: +cat.u.toFixed(3), side: cat.side,
+    stare: cat.stareAt && cat.stareAt.slug, home: cat.home, seat: cat.seat,
+    pets: cat.pets, follows: cat.follows,
+    arch: catNow() < cat.archUntil, beasts: catBeasts().map(b => b.slug) };
+}
+/* ---- the one interaction: petting ---- */
+function petCat(where) {
+  if (catNow() < cat.archUntil - 0.3) return;   /* she is already leaning in */
+  cat.pets++;
+  cat.archUntil = catNow() + 2.2;
+  cat.blinkUntil = catNow() + 4.6;              /* the slow-blink thank-you */
+  sound.purr();
+  if (!cat.follows && cat.pets >= CAT_FOLLOW_AT) {
+    cat.follows = true;
+    captionNow('She has made up her mind: where you go on this ship, she goes.', 4600);
+  } else if (cat.pets === 1) {
+    captionNow('She arches into your hand, and a purr runs under the deck like rigging under load.', 4200);
+  }
+  diag.cat = catDiag();
+  dirty = true;
+  if (ui.mode === 'below' && ui.tab === 'chart') drawChartCat();
+  drawDeskCat();
+  if (REDUCED) {
+    /* held poses, instant: the arch stands, then folds back on the beat */
+    setTimeout(() => { dirty = true; if (ui.mode === 'below' && ui.tab === 'chart') drawChartCat(); drawDeskCat(); }, 2300);
+  }
+  return where || true;
+}
 function catTick(dt) {
-  if (REDUCED) return;                 /* reduced motion keeps her asleep below */
+  if (REDUCED) {
+    /* becalmed: she sits the rail in a held pose; only the beasts move her eyes */
+    let nb = null;
+    for (const B of catBeasts()) {
+      const d = distToNm(B);
+      if (d < 8.8 && d > VIS_NM - 0.5) { nb = B; break; }
+    }
+    cat.deck = nb ? 'stare' : 'sit';
+    cat.stareAt = nb;
+    if (nb) { const brg = angDiff(bearingTo(nb), ship.bearing); cat.side = brg >= 0 ? 1 : -1; }
+    return;
+  }
   cat.ft += dt;
-  if (cat.ft > 0.42) { cat.ft = 0; cat.frame = (cat.frame + 1) % 3; }
+  if (cat.ft > 0.42) { cat.ft = 0; cat.frame = (cat.frame + 1) % 12; }
+  cat.stateT += dt;
   /* monster waters near but not yet raised: she comes up to stare */
   let nearBeast = null;
   for (const B of catBeasts()) {
@@ -10536,57 +11078,72 @@ function catTick(dt) {
     if (d < 8.8 && d > VIS_NM - 0.5) { nearBeast = B; break; }
   }
   if (nearBeast) {
-    cat.deck = 'stare';
+    if (cat.deck !== 'stare') { cat.deck = 'stare'; cat.stateT = 0; }
     cat.stareAt = nearBeast;
     const brg = angDiff(bearingTo(nearBeast), ship.bearing);
     cat.side = brg >= 0 ? 1 : -1;
-    cat.u = 0.62;
+    if (cat.u < 0.3 || cat.u > 0.85) cat.u = 0.62;
     return;
   }
-  if (cat.deck === 'stare') { cat.deck = 'below'; cat.stareAt = null; cat.nextWalk = env.t + 24; }
-  if (cat.deck === 'below' && env.t > cat.nextWalk && ui.mode === 'deck' && !passage.on) {
-    cat.deck = 'walk';
-    cat.u = 0.04;
-    cat.side = (Math.floor(env.t) % 2) ? 1 : -1;
-  }
-  if (cat.deck === 'walk') {
-    cat.u += dt / 26;                  /* a rail walked in an unhurried half minute */
-    if (cat.u >= 0.9) { cat.deck = 'below'; cat.nextWalk = env.t + 150 + (SEED % 60); }
+  if (cat.deck === 'stare') { cat.deck = 'sit'; cat.stareAt = null; cat.stateT = 0; }
+  switch (cat.deck) {
+    case 'below':
+      if (env.t > cat.nextWalk && ui.mode === 'deck' && !passage.on) {
+        cat.deck = 'walk'; cat.stateT = 0;
+        cat.u = 0.04; cat.side = (Math.floor(env.t) % 2) ? 1 : -1;
+      }
+      break;
+    case 'walk':
+      cat.u += dt / 26;                /* the rail walked in an unhurried half minute */
+      if (cat.u >= 0.9) {
+        /* the bow reached: she goes below awhile, sooner back if she is yours */
+        cat.deck = 'below';
+        cat.nextWalk = env.t + (cat.follows ? 8 : 40) + (SEED % 20);
+      } else if (cat.stateT > 6 && cat.u > 0.25 && cat.u < 0.8 && (cat.frame % 12) === 7 && Math.random() < 0.30) {
+        cat.deck = 'sit'; cat.stateT = 0;   /* she pauses at a station */
+      }
+      break;
+    case 'sit':
+      if (cat.stateT > 7 && Math.random() < dt * 0.10) { cat.deck = 'stretch'; cat.stateT = 0; }
+      else if (cat.stateT > 14 && Math.random() < dt * 0.18) { cat.deck = 'walk'; cat.stateT = 0; }
+      break;
+    case 'stretch':
+      if (cat.stateT > 2.4) { cat.deck = 'sit'; cat.stateT = 0; }
+      break;
   }
 }
-/* the engraved cat: authored poses, three frames per behaviour */
+/* ---- the engraved cat: authored postures, ears and tail that read ----
+   Every pose faces +x and stands on y = 0; the ink is one silhouette with
+   a paper rim so she never melts into the ground she sits on. */
 function drawCatPose(g, pose, frame) {
   g.lineJoin = 'round'; g.lineCap = 'round';
   const ink = 'rgba(40,30,18,0.94)';
+  const rim = 'rgba(244,236,216,0.50)';
+  const eye = 'rgba(238,226,198,0.92)';
   g.fillStyle = ink;
+  const earR = (cx, cy, a) => {          /* one ear: a notched triangle */
+    g.save(); g.translate(cx, cy); g.rotate(a || 0);
+    g.beginPath();
+    g.moveTo(-2.0, 0.6); g.lineTo(-0.6, -4.6); g.lineTo(2.2, 0.2);
+    g.closePath(); g.fill();
+    g.restore();
+  };
   if (pose === 'curl') {
-    /* asleep in a curl: body ring, tucked head; f1 lifts the tail tip,
-       f2 raises the head a breath */
-    g.beginPath();
-    g.ellipse(0, 0, 13.5, 9.6, 0, 0, TAU);
-    g.fill();
+    /* asleep in a ring, tail wrapped to her nose; f1 flicks the tail tip,
+       f2 lifts the head a breath, ears up */
+    g.strokeStyle = rim; g.lineWidth = 1.4;
+    g.beginPath(); g.ellipse(0, 0, 13.5, 9.6, 0, 0, TAU); g.stroke();
+    g.beginPath(); g.ellipse(0, 0, 13.5, 9.6, 0, 0, TAU); g.fill();
     g.fillStyle = PAPER;
-    g.beginPath();
-    g.ellipse(1.5, 1.6, 6.4, 4.2, 0, 0, TAU);
-    g.fill();
+    g.beginPath(); g.ellipse(1.5, 1.6, 6.2, 4.0, 0, 0, TAU); g.fill();
     g.fillStyle = ink;
-    /* the head, tucked or lifted */
     if (frame === 2) {
-      g.beginPath();
-      g.ellipse(8.6, -8.4, 4.6, 4.0, -0.3, 0, TAU); g.fill();
-      g.beginPath();
-      g.moveTo(6.2, -11.6); g.lineTo(5.4, -15.2); g.lineTo(8.4, -13.2);
-      g.moveTo(10.4, -12.2); g.lineTo(11.8, -15.4); g.lineTo(12.8, -11.6);
-      g.fill();
+      g.beginPath(); g.ellipse(8.6, -8.4, 4.6, 4.0, -0.3, 0, TAU); g.fill();
+      earR(6.4, -11.6, -0.35); earR(11.2, -11.9, 0.30);
     } else {
-      g.beginPath();
-      g.ellipse(7.8, -3.4, 5.0, 4.2, -0.5, 0, TAU); g.fill();
-      g.beginPath();
-      g.moveTo(5.2, -6.8); g.lineTo(4.2, -10.2); g.lineTo(7.4, -8.4);
-      g.moveTo(9.6, -8.0); g.lineTo(11.4, -10.8); g.lineTo(12.0, -7.2);
-      g.fill();
+      g.beginPath(); g.ellipse(7.8, -3.4, 5.0, 4.2, -0.5, 0, TAU); g.fill();
+      earR(5.4, -6.9, -0.45); earR(10.2, -7.6, 0.25);
     }
-    /* the tail wrap; the flick frame lifts her tip */
     g.strokeStyle = ink; g.lineWidth = 3.1;
     g.beginPath();
     g.moveTo(-12.5, 3.5);
@@ -10595,86 +11152,176 @@ function drawCatPose(g, pose, frame) {
     g.stroke();
   } else if (pose === 'walk') {
     const step = frame % 2 ? 1 : -1;
-    /* the body and head, one clear silhouette */
+    const glide = frame === 2;
+    /* body low and long, head carried forward */
+    g.strokeStyle = rim; g.lineWidth = 1.2;
     g.beginPath();
-    g.moveTo(-11.5, -6.2);
-    g.bezierCurveTo(-9, -10.8, 3, -11.4, 8.5, -8.2);
-    g.lineTo(10.2, -11);
-    g.bezierCurveTo(10.8, -13.6, 12, -14.8, 13.6, -14.8);
-    g.lineTo(14.0, -18.4); g.lineTo(16.0, -15.2);
-    g.lineTo(17.8, -17.6); g.lineTo(18.4, -14.4);
-    g.bezierCurveTo(19.6, -12.9, 19.3, -10.6, 17.6, -9.6);
-    g.bezierCurveTo(16, -8.6, 14, -8.4, 12.8, -8.8);
-    g.bezierCurveTo(12.4, -6.6, 12, -5.4, 11.6, -4.6);
-    g.lineTo(-10.4, -4.6);
-    g.closePath();
-    g.fill();
-    /* four legs: two strides and a gathered glide - three authored frames */
-    g.strokeStyle = ink; g.lineWidth = 2.0; g.lineCap = 'round';
+    g.moveTo(-11.5, -6.4);
+    g.bezierCurveTo(-9, -11.2, 3, -11.8, 8.5, -8.6);
+    g.bezierCurveTo(9.6, -10.6, 10.6, -12.2, 12.2, -13.4);
+    g.lineTo(11.6, -4.8);
+    g.lineTo(-10.4, -4.8);
+    g.closePath(); g.stroke(); g.fill();
+    /* the head, a clear wedge with both ears notched against the sky */
+    g.beginPath(); g.ellipse(13.2, -12.6, 4.2, 3.7, -0.18, 0, TAU); g.fill();
+    earR(11.4, -15.5, -0.42); earR(15.6, -15.4, 0.34);
+    /* the eye, a cream slit riding the head */
+    if (!glide) { g.fillStyle = eye; g.fillRect(14.2, -13.4, 1.9, 0.9); g.fillStyle = ink; }
+    /* four legs: two strides and a gathered glide */
+    g.strokeStyle = ink; g.lineWidth = 2.0;
     g.beginPath();
-    if (frame === 2) {
+    if (glide) {
       g.moveTo(9.4, -5); g.lineTo(9.8, 0.2);
       g.moveTo(6.4, -5); g.lineTo(6.0, 0.2);
       g.moveTo(-4.4, -5); g.lineTo(-4.0, 0.2);
       g.moveTo(-8.0, -5); g.lineTo(-8.4, 0.2);
     } else {
-      g.moveTo(9.6, -5); g.lineTo(10.6 + step * 2.2, 0.2);
-      g.moveTo(6.2, -5); g.lineTo(5.2 - step * 2.2, 0.2);
-      g.moveTo(-4.2, -5); g.lineTo(-3.2 + step * 2.0, 0.2);
-      g.moveTo(-8.2, -5); g.lineTo(-9.2 - step * 2.0, 0.2);
+      g.moveTo(9.6, -5); g.lineTo(10.6 + step * 2.4, 0.2);
+      g.moveTo(6.2, -5); g.lineTo(5.2 - step * 2.4, 0.2);
+      g.moveTo(-4.2, -5); g.lineTo(-3.2 + step * 2.2, 0.2);
+      g.moveTo(-8.2, -5); g.lineTo(-9.2 - step * 2.2, 0.2);
     }
     g.stroke();
     /* the tail rides high, swaying with the step */
     g.lineWidth = 2.6;
     g.beginPath();
     g.moveTo(-11.4, -7);
-    g.quadraticCurveTo(-16.5 - step * 1.4, -13, -14.5 + step * 1.6, -19.5);
+    g.quadraticCurveTo(-16.5 - step * 1.6, -13.5, -14.5 + step * 1.8, -20);
+    g.stroke();
+  } else if (pose === 'arch') {
+    /* the pet answered: feet planted, back arched high, tail a hook.
+       f1 leans deeper into the hand. */
+    const deep = frame % 2 ? 2.2 : 0;
+    g.strokeStyle = rim; g.lineWidth = 1.3;
+    g.beginPath();
+    g.moveTo(-7.6, -4.4);
+    g.bezierCurveTo(-6.5, -13 - deep, 2.5, -16.5 - deep, 6.2, -11.5);
+    g.bezierCurveTo(7.6, -9.6, 8.4, -8.2, 8.8, -6.6);
+    g.lineTo(8.2, -4.2);
+    g.closePath(); g.stroke(); g.fill();
+    /* the head lowered into the stroke, ears eased back */
+    g.beginPath(); g.ellipse(8.8, -8.0, 3.9, 3.4, 0.22, 0, TAU); g.fill();
+    earR(7.0, -10.6, -0.85); earR(11.0, -10.2, 0.75);
+    /* the slow blink lives here: her eye is shut while she arches */
+    g.strokeStyle = ink; g.lineWidth = 2.0;
+    g.beginPath();
+    g.moveTo(-6.4, -4.6); g.lineTo(-6.6, 0.2);
+    g.moveTo(-3.8, -4.6); g.lineTo(-3.6, 0.2);
+    g.moveTo(5.6, -4.6); g.lineTo(5.4, 0.2);
+    g.moveTo(7.8, -4.6); g.lineTo(8.0, 0.2);
+    g.stroke();
+    g.lineWidth = 2.7;
+    g.beginPath();
+    g.moveTo(-7.5, -5.5);
+    g.quadraticCurveTo(-12.5, -12, -10.5, -19 - deep);
+    g.stroke();
+  } else if (pose === 'stretch') {
+    /* the long bow: forepaws thrown out, rump high, tail up */
+    const deep = frame % 2 ? 1.4 : 0;
+    g.strokeStyle = rim; g.lineWidth = 1.3;
+    g.beginPath();
+    g.moveTo(12.8, -1.2);
+    g.bezierCurveTo(8, -4.8, 4.5, -5.6, 1.5, -6.4);
+    g.bezierCurveTo(-2.5, -7.6, -6.5, -11.8 - deep, -8.5, -11.6 - deep);
+    g.lineTo(-9.6, -4.2);
+    g.lineTo(-4.5, 0);
+    g.lineTo(11.8, 0);
+    g.closePath(); g.stroke(); g.fill();
+    /* head low along the outstretched forelegs */
+    g.beginPath(); g.ellipse(9.8, -4.4, 3.7, 3.2, 0.3, 0, TAU); g.fill();
+    earR(8.2, -7.0, -0.5); earR(12.0, -6.6, 0.45);
+    g.strokeStyle = ink; g.lineWidth = 2.0;
+    g.beginPath();
+    g.moveTo(-7.4, -4.6); g.lineTo(-7.8, 0.2);
+    g.moveTo(-5.2, -4.6); g.lineTo(-5.0, 0.2);
+    g.stroke();
+    g.lineWidth = 2.5;
+    g.beginPath();
+    g.moveTo(-8.8, -11 - deep);
+    g.quadraticCurveTo(-11.5, -16 - deep, -14.5, -17.5 - deep);
     g.stroke();
   } else {
-    /* sit-and-stare, out over the rail; f1 tilts the head, f2 sways the tail */
-    const tilt = frame === 1 ? 0.12 : 0;
-    g.save();
+    /* sit (and stare): upright, tail wrapped over the forepaws.
+       frames - 0 settled; 1 an ear turns; 2 the slow blink; 3 the tail
+       tip lifts. 'stare' carries her head higher, out to the sea. */
+    const stare = pose === 'stare';
+    const blink = frame === 2;
+    const earTurn = frame === 1;
+    const flick = frame === 3;
+    const hx = stare ? 7.0 : 6.2, hy = stare ? -19.6 : -17.6;
+    g.strokeStyle = rim; g.lineWidth = 1.3;
     g.beginPath();
-    g.moveTo(-8.5, 0);
-    g.bezierCurveTo(-10.5, -8.5, -5.5, -13.5, -1.5, -13.8);
-    g.bezierCurveTo(0.5, -14, 1.6, -13, 2.6, -11);
-    g.lineTo(3.4, -15);
-    g.rotate(tilt);
-    g.bezierCurveTo(3.6, -17.4, 4.8, -18.6, 6.4, -18.6);
-    g.lineTo(6.9, -21.4); g.lineTo(8.6, -19);
-    g.lineTo(10.3, -20.8); g.lineTo(10.8, -18.2);
-    g.bezierCurveTo(11.9, -17, 11.9, -15, 10.6, -14.1);
-    g.rotate(-tilt);
-    g.bezierCurveTo(9.4, -13.2, 7.6, -13.2, 6.6, -13.7);
-    g.bezierCurveTo(7.4, -8.6, 7.8, -4.2, 7.4, 0);
-    g.closePath();
-    g.fill();
-    g.strokeStyle = ink; g.lineWidth = 2.4;
+    g.moveTo(-9.8, 0);
+    g.bezierCurveTo(-11.5, -7.5, -8.5, -12.5, -4.5, -13.6);
+    g.bezierCurveTo(-1.5, -14.4, 1.8, -14.2, 3.6, -12.8);
+    g.lineTo(hx - 1.4, hy + 3.6);
+    g.lineTo(hx + 3.4, hy + 4.4);
+    g.bezierCurveTo(6.8, -7.5, 7.2, -3.4, 6.8, 0);
+    g.closePath(); g.stroke(); g.fill();
+    /* the head, carried on a real neck */
+    g.beginPath(); g.ellipse(hx, hy, 4.5, 4.0, -0.12, 0, TAU); g.fill();
+    earR(hx - 2.2, hy - 3.0, earTurn ? -1.15 : -0.40);
+    earR(hx + 2.6, hy - 2.9, 0.32);
+    /* the eye: a cream slit, gone in the slow blink */
+    if (!blink) {
+      g.fillStyle = eye;
+      g.fillRect(hx + 1.2, hy - 0.8, stare ? 2.4 : 2.0, 1.0);
+      g.fillStyle = ink;
+    }
+    /* forelegs, straight and prim */
+    g.strokeStyle = ink; g.lineWidth = 2.1;
     g.beginPath();
-    g.moveTo(7.2, -0.5);
-    if (frame === 2) g.quadraticCurveTo(13.5, -2.5, 13.8, -8);
-    else g.quadraticCurveTo(13, -1, 13.6, -4.6);
+    g.moveTo(3.4, -6.5); g.lineTo(3.6, 0);
+    g.moveTo(5.6, -6.0); g.lineTo(5.8, 0);
     g.stroke();
-    g.restore();
+    /* the tail, wrapped round to the forepaws; the flick lifts her tip */
+    g.lineWidth = 2.8;
+    g.beginPath();
+    g.moveTo(-9.6, -1.5);
+    if (flick) g.quadraticCurveTo(-13.5, 2.5, -14.5, -4.5);
+    else g.quadraticCurveTo(-12, 3.5, 1.5, 2.6);
+    g.stroke();
   }
 }
+/* which pose the moment asks of her, wherever she is drawn */
+function catPoseNow(base) {
+  if (catNow() < cat.archUntil) return 'arch';
+  if (catNow() < cat.blinkUntil && (base === 'sit' || base === 'stare' || base === 'curl')) return base + ':blink';
+  return base;
+}
+function catFrameFor(pose) {
+  if (REDUCED) return 0;
+  const raw = ui.mode === 'deck' ? cat.frame : cat.chartFrame;
+  if (pose === 'walk') return raw % 3;
+  if (pose === 'arch' || pose === 'stretch') return raw % 2;
+  /* sitting: mostly settled, an ear turn or a tail flick now and then,
+     the slow blink on its own long beat */
+  const f = raw % 12;
+  return f === 4 ? 1 : f === 9 ? 3 : f === 6 ? 2 : 0;
+}
+function drawCatAt(g, base) {
+  let pose = catPoseNow(base), frame;
+  if (pose.endsWith(':blink')) { pose = pose.slice(0, -6); frame = 2; }
+  else frame = catFrameFor(pose);
+  drawCatPose(g, pose, frame);
+}
 function drawDeckCat(g, t, sim) {
-  if (REDUCED || cat.deck === 'below' || ui.mode !== 'deck') return;
+  if (cat.deck === 'below' || ui.mode !== 'deck') { cat.hit = null; return; }
   const [rx, ry] = railPoint(cat.side, cat.u);
   g.save();
   g.translate(rx, ry - 2);
-  const away = 0.62 + 0.38 * cat.u;     /* smaller toward the bow */
-  const s = 2.05 * away;
-  if (cat.deck === 'walk') {
-    g.scale(cat.side > 0 ? -s : s, s);  /* she walks toward the bow */
-    drawCatPose(g, 'walk', cat.frame);
-  } else {
-    g.scale(cat.side > 0 ? -s : s, s);  /* she faces the sea she watches */
-    drawCatPose(g, 'stare', cat.frame);
-  }
+  const away = 0.62 + 0.38 * cat.u;            /* smaller toward the bow */
+  const s = 2.6 * away;
+  /* she faces the bow when walking, the open sea when she sits or stares */
+  g.scale(cat.side > 0 ? -s : s, s);
+  const base = cat.deck === 'walk' ? 'walk' : cat.deck === 'stretch' ? 'stretch'
+    : cat.deck === 'stare' ? 'stare' : 'sit';
+  drawCatAt(g, base);
   g.restore();
+  cat.hit = { x: rx, y: ry - 2 - 12 * s, r: 24 * s + 12 };
+  void t; void sim;
 }
-/* the chart-table cat: she settles near the waters you visit most */
+/* ---- the chart-table cat: she settles over the waters you visit most ---- */
 function catHomeIsle() {
   const counts = new Map();
   for (const r of visit.log) if (r.slug) counts.set(r.slug, (counts.get(r.slug) || 0) + 1);
@@ -10686,14 +11333,14 @@ function drawChartCat() {
   const el = $('chartcat');
   if (!el) return;
   const g = el.getContext('2d');
-  g.setTransform(2, 0, 0, 2, 0, 0);
-  g.clearRect(0, 0, 60, 46);
+  g.setTransform(2.3, 0, 0, 2.3, 0, 0);
+  g.clearRect(0, 0, 64, 50);
   g.save();
-  g.translate(30, 27);
+  g.translate(32, 30);
   /* her small shadow on the vellum */
   g.fillStyle = 'rgba(38,28,17,0.14)';
   g.beginPath(); g.ellipse(0.5, 7.5, 15, 4.4, 0, 0, TAU); g.fill();
-  drawCatPose(g, 'curl', REDUCED ? 0 : cat.chartFrame);
+  drawCatAt(g, 'curl');
   g.restore();
 }
 function placeChartCat() {
@@ -10712,11 +11359,62 @@ function placeChartCat() {
   drawChartCat();
   diag.chartCat = { near: cat.home, x: Math.round(x), y: Math.round(y) };
 }
+/* ---- the desk cat: by the log while you write, and at your side at every
+   station once she has adopted you ---- */
+function catSeatSync() {
+  const el = $('deskcat');
+  if (!el) return;
+  const bp = $('bottleplate');
+  const writing = bp && !bp.hidden;
+  let seat = null, x = 0, y = 0, face = -1;
+  if (writing) {
+    const r = document.querySelector('#bottleplate .bp-plate').getBoundingClientRect();
+    seat = 'bottle'; x = r.right - 66; y = r.top - 54; face = 1;
+  } else if (ui.mode === 'below' && ui.tab === 'log') {
+    const r = $('pane-log').getBoundingClientRect();
+    seat = 'log'; x = r.right - 132; y = r.bottom - 66;
+  } else if (cat.follows && ui.mode === 'below' && ui.tab !== 'chart') {
+    const r = $('below').getBoundingClientRect();
+    seat = 'station'; x = r.right - 128; y = r.bottom - 66;
+  } else if (cat.follows && ui.mode === 'anchor') {
+    const r = $('anchorage').getBoundingClientRect();
+    seat = 'reading'; x = r.right - 120; y = r.bottom - 64;
+  }
+  if (!seat) {
+    if (cat.seat) { cat.seat = null; el.style.display = 'none'; diag.cat = catDiag(); }
+    return;
+  }
+  cat.seat = seat;
+  el.style.display = 'block';
+  el.style.left = x.toFixed(0) + 'px';
+  el.style.top = y.toFixed(0) + 'px';
+  el.style.zIndex = writing ? 70 : 30;
+  cat.deskFace = face;
+  drawDeskCat();
+  diag.cat = catDiag();
+}
+function drawDeskCat() {
+  const el = $('deskcat');
+  if (!el || el.style.display === 'none' || !cat.seat) return;
+  const g = el.getContext('2d');
+  g.setTransform(2.3, 0, 0, 2.3, 0, 0);
+  g.clearRect(0, 0, 52, 40);
+  g.save();
+  g.translate(26, 36);
+  g.fillStyle = 'rgba(38,28,17,0.12)';
+  g.beginPath(); g.ellipse(0, 1.5, 14, 3.6, 0, 0, TAU); g.fill();
+  if ((cat.deskFace || -1) > 0) g.scale(-1, 1);
+  drawCatAt(g, cat.seat === 'reading' ? 'curl' : 'sit');
+  g.restore();
+}
 function chartCatBeat() {
-  /* her tail flicks now and then; a rare frame lifts her head */
-  if (REDUCED) return;
-  cat.chartFrame = cat.chartFrame === 0 ? (Math.random() < 0.25 ? 2 : 1) : 0;
-  if (ui.mode === 'below' && ui.tab === 'chart') drawChartCat();
+  /* her long idle beat: the ear, the tail, the rare slow blink */
+  if (!REDUCED) {
+    cat.chartFrame = (cat.chartFrame + 1) % 12;
+    if (ui.mode === 'below' && ui.tab === 'chart') drawChartCat();
+    if (cat.seat) drawDeskCat();
+  }
+  catSeatSync();
 }
 
 (async function boot() {

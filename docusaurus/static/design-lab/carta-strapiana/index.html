@@ -32,6 +32,9 @@
   <!-- the maiden landfall line: Quick Start first, counting down -->
   <div id="firstbound" hidden aria-live="off"></div>
 
+  <!-- the auto-helm's quiet engraved line: Taking her in, counting down -->
+  <div id="takingin" hidden aria-live="polite"></div>
+
   <!-- the plate that names the island under the bow: crisp DOM, on cream -->
   <div id="landfall" hidden>
     <div class="lf-name"></div>
@@ -89,14 +92,30 @@
   <div class="bpane" id="pane-chart">
     <canvas id="chart" width="1400" height="810"></canvas>
     <div id="chartlabels"></div>
-    <canvas id="chartcat" width="120" height="92" aria-hidden="true"></canvas>
-    <div id="chartinfo">
-      <div class="ci-name">The surveyed sea</div>
-      <div class="ci-line"></div>
-      <div class="ci-act"></div>
+    <canvas id="chartcat" width="148" height="116" title="The ship cat. You may pet her."></canvas>
+    <!-- the chart furniture, collapsed to cartouche tabs docked over open
+         water or the torn margin (owner law: it never covers the sea);
+         hover or click a tab and its box unfolds, one at a time -->
+    <div id="furniture">
+      <div class="fu-tab" id="fu-dirs" role="button" tabindex="0" aria-expanded="false">SAILING DIRECTIONS</div>
+      <div class="fu-tab" id="fu-key" role="button" tabindex="0" aria-expanded="false">HERE BE DRAGONS</div>
+      <div class="fu-tab" id="fu-glass" role="button" tabindex="0" aria-expanded="false">THE STORM-GLASS</div>
+      <div class="fu-tab fu-cartstrip" id="fu-cart" role="button" tabindex="0" aria-expanded="false">CARTA STRAPIANA<span class="fc-s">the corpus, surveyed</span></div>
+      <div id="fu-box" hidden>
+        <canvas id="fu-ink" width="10" height="10" aria-hidden="true"></canvas>
+        <div id="fu-body">
+          <div id="chartdirs" class="cl-dirs" hidden></div>
+          <div id="chartcart" class="cl-cart" hidden></div>
+          <div id="chartinfo" hidden>
+            <div class="ci-name">The surveyed sea</div>
+            <div class="ci-line"></div>
+            <div class="ci-act"></div>
+          </div>
+          <div id="chartkey" hidden></div>
+          <div id="stormglass" hidden aria-label="The storm-glass: the weather of the bound-for waters"></div>
+        </div>
+      </div>
     </div>
-    <div id="chartkey"></div>
-    <div id="stormglass" aria-label="The storm-glass: the weather of the bound-for waters"></div>
     <div id="fogswitch" role="switch" tabindex="0" aria-checked="false"
          aria-label="Lift the fog and show the full chart"
          title="The known chart is drawn by your own voyages. Lift the fog to see every water.">
@@ -139,6 +158,10 @@
     <div class="po-hint">Y / N &middot; Enter crosses &middot; Escape stands off</div>
   </div>
 </div>
+
+<!-- the ship cat at her stations: by the log while you write, and at your
+     side everywhere once she has adopted you -->
+<canvas id="deskcat" width="120" height="92" title="The ship cat. You may pet her."></canvas>
 
 <script src="deadreckoning.js"></script>
 </body>

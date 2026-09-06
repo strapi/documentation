@@ -1,0 +1,137 @@
+/* DEAD RECKONING - GATE-0 prototype. Cream paper ground, iron-gall ink text. */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #efe5cf;
+  height: 100%;
+  overflow: hidden;
+}
+
+#stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #efe5cf;
+}
+
+#sea {
+  display: block;
+  width: 1440px;
+  height: 900px;
+  max-width: 100vw;
+  max-height: 100vh;
+  cursor: grab;
+}
+#sea.turning { cursor: grabbing; }
+
+/* Engraved plate captions: DOM text, always on cream, never themed. */
+/* Sits in the clear water between the horizon and the top of the wheel:
+   the wheel sprite reaches y = 614 on the 900 px plate, the caption ends above it. */
+#caption {
+  position: absolute;
+  left: 50%;
+  bottom: 34.5%;
+  transform: translateX(-50%);
+  max-width: 62%;
+  text-align: center;
+  font-family: "Iowan Old Style", "Palatino", "Palatino Linotype", Georgia, serif;
+  font-style: italic;
+  font-size: 21px;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  color: #2c2114;
+  /* the paper is knocked out around the glyphs themselves, not behind a panel:
+     a rectangle or an ellipse of wash reads as a sticker on an engraved plate */
+  text-shadow:
+    0 0 2px rgba(244, 236, 217, 1),
+    0 0 4px rgba(244, 236, 217, 1),
+    0 0 7px rgba(244, 236, 217, 0.98),
+    0 0 12px rgba(244, 236, 217, 0.9),
+    0 0 22px rgba(244, 236, 217, 0.62),
+    1px 1px 0 rgba(244, 236, 217, 0.95),
+    -1px -1px 0 rgba(244, 236, 217, 0.95),
+    1px -1px 0 rgba(244, 236, 217, 0.95),
+    -1px 1px 0 rgba(244, 236, 217, 0.95);
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+  user-select: none;
+}
+#caption.shown { opacity: 0.94; }
+
+#plate-title {
+  position: absolute;
+  top: 5.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-family: "Iowan Old Style", "Palatino", "Palatino Linotype", Georgia, serif;
+  color: #2c2114;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+  pointer-events: none;
+  user-select: none;
+}
+#plate-title.shown { opacity: 0.9; }
+#plate-title .pt-main {
+  display: block;
+  font-size: 30px;
+  letter-spacing: 0.42em;
+  padding-left: 0.42em; /* optical centering of letterspacing */
+}
+#plate-title .pt-sub {
+  display: block;
+  margin-top: 4px;
+  font-style: italic;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+}
+
+/* The top of the plate is canvas in every sail state: full sail bellies into it, the
+   furled roll and its gaskets lie right across it. The legend is set below the lowest
+   sail foot the block can meet over its own width - full sail reaches y = 52 there,
+   luffing 66, the furled roll and its ties end at 48 - so nothing ever strikes through
+   the text, and the glyph halo carries it over the thin shrouds that remain. */
+#hints {
+  position: absolute;
+  top: 9.6%;
+  left: 1.2%;
+  max-width: 34%;
+  font-family: "Iowan Old Style", "Palatino", "Palatino Linotype", Georgia, serif;
+  font-style: italic;
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: #3b2c1a;
+  padding: 10px 16px;
+  text-shadow:
+    0 0 2px rgba(245, 238, 220, 1),
+    0 0 4px rgba(245, 238, 220, 1),
+    0 0 7px rgba(245, 238, 220, 0.96),
+    0 0 13px rgba(245, 238, 220, 0.82),
+    1px 1px 0 rgba(245, 238, 220, 0.95),
+    -1px -1px 0 rgba(245, 238, 220, 0.95),
+    1px -1px 0 rgba(245, 238, 220, 0.95),
+    -1px 1px 0 rgba(245, 238, 220, 0.95);
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  pointer-events: none;
+  user-select: none;
+}
+#hints.shown { opacity: 0.95; }
+
+#loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Iowan Old Style", "Palatino", Georgia, serif;
+  font-style: italic;
+  font-size: 19px;
+  color: #4a3a24;
+}
+#loading.hidden { display: none; }

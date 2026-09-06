@@ -1,0 +1,61 @@
+/* Round-12 deliverable set: geo-far, geo-mid, kraken, tooltip, passage x3. */
+'use strict';
+const path = require('path');
+const fs = require('fs');
+const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_modules/playwright-core');
+const OUT = path.join(__dirname, 'iterlog', 'r12');
+fs.mkdirSync(OUT, { recursive: true });
+(async () => {
+  const br = await chromium.launch({ headless: true });
+  const page = await br.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 });
+  const errs = [];
+  page.on('pageerror', e => errs.push('PAGEERROR ' + e.message));
+  page.on('console', m => { if (m.type() === 'error') errs.push('CONSOLE ' + m.text()); });
+  await page.goto('http://127.0.0.1:8123/index.html?scale=1&sail=full');
+  await page.waitForFunction(() => window.__helm && window.__helm.ready, null, { timeout: 40000 });
+  await page.keyboard.press('c');
+  await page.waitForFunction('chart.ready === true', null, { timeout: 20000 });
+  await page.waitForTimeout(700);
+  await page.screenshot({ path: path.join(OUT, 'geo-far.png') });
+  const K = await page.evaluate(`(() => {
+    const kr = chart.geo.beasts.find(b => b.kind === 'kraken');
+    const cms = chart.geo.conts.find(c => c.key === 'cms');
+    const cloud = chart.geo.conts.find(c => c.key === 'cloud');
+    return { kx: kr.x, ky: kr.y, mx: (cms.x + cloud.x) / 2, my: (cms.y + cloud.y) / 2 };
+  })()`);
+  await page.evaluate(`(() => { chart.zt = 1.9;
+    chart.txt = 1400/2 - ${K.mx} * 1.9; chart.tyt = 810/2 - ${K.my} * 1.9;
+    chartClampTargets(); kickChartAnim(); })()`);
+  await page.waitForFunction('!chart.anim', null, { timeout: 20000 }).catch(() => {});
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: path.join(OUT, 'geo-mid.png') });
+  await page.evaluate(`(() => { chart.zt = 3.4;
+    chart.txt = 1400/2 - ${K.kx} * 3.4; chart.tyt = 810/2 - ${K.ky} * 3.4;
+    chartClampTargets(); kickChartAnim(); })()`);
+  await page.waitForFunction('!chart.anim', null, { timeout: 20000 }).catch(() => {});
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: path.join(OUT, 'kraken.png') });
+  /* back out for the tooltip + passage */
+  await page.keyboard.press('0');
+  await page.waitForFunction('!chart.anim', null, { timeout: 20000 }).catch(() => {});
+  await page.waitForTimeout(500);
+  const pt = await page.evaluate(() => {
+    const c = document.getElementById('chart').getBoundingClientRect();
+    const isle = window.__helmSoundIsle('/cms/api/document-service');
+    return { cx: c.left, cy: c.top, w: c.width, h: c.height, ix: isle.cx, iy: isle.cy };
+  });
+  const mx = pt.cx + pt.ix * (pt.w / 1400), my = pt.cy + pt.iy * (pt.h / 810);
+  await page.mouse.move(mx, my, { steps: 4 });
+  await page.waitForTimeout(450);
+  await page.screenshot({ path: path.join(OUT, 'tooltip.png') });
+  await page.mouse.click(mx, my);
+  await page.waitForTimeout(650);
+  await page.screenshot({ path: path.join(OUT, 'passage-1.png') });
+  await page.waitForTimeout(750);
+  await page.screenshot({ path: path.join(OUT, 'passage-2.png') });
+  await page.waitForTimeout(1600);
+  await page.screenshot({ path: path.join(OUT, 'passage-3-landed.png') });
+  const landed = await page.evaluate(() => ({ p: window.__helmDiag.passage, mode: window.__helm.mode() }));
+  console.log('LANDED', JSON.stringify(landed), 'ERRORS', errs.length ? errs : 'none');
+  await br.close();
+})().catch(e => { console.error(e); process.exit(1); });

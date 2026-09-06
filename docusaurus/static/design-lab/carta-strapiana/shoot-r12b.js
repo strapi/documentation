@@ -1,0 +1,35 @@
+'use strict';
+const path = require('path');
+const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_modules/playwright-core');
+const OUT = path.join(__dirname, 'iterlog', 'r12');
+(async () => {
+  const br = await chromium.launch({ headless: true });
+  const page = await br.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 });
+  const errs = [];
+  page.on('pageerror', e => errs.push('PAGEERROR ' + e.message));
+  page.on('console', m => { if (m.type() === 'error') errs.push('CONSOLE ' + m.text()); });
+  await page.goto('http://127.0.0.1:8123/index.html?scale=1&sail=full');
+  await page.waitForFunction(() => window.__helm && window.__helm.ready, null, { timeout: 40000 });
+  await page.evaluate(() => window.__helm.below('chart'));
+  await page.waitForTimeout(1300);
+  const pt = await page.evaluate(() => {
+    const c = document.getElementById('chart').getBoundingClientRect();
+    const isle = window.__helmSoundIsle('/cms/api/document-service');
+    return { cx: c.left, cy: c.top, w: c.width, h: c.height, ix: isle.cx, iy: isle.cy };
+  });
+  const mx = pt.cx + pt.ix * (pt.w / 1400), my = pt.cy + pt.iy * (pt.h / 810);
+  await page.mouse.move(mx, my, { steps: 4 });
+  await page.waitForTimeout(450);
+  await page.screenshot({ path: path.join(OUT, 'tooltip.png') });
+  await page.mouse.click(mx, my);
+  await page.waitForTimeout(650);
+  const ps1 = await page.evaluate(() => window.__helm.passageState());
+  await page.screenshot({ path: path.join(OUT, 'passage-1.png') });
+  await page.waitForTimeout(750);
+  await page.screenshot({ path: path.join(OUT, 'passage-2.png') });
+  await page.waitForTimeout(1600);
+  await page.screenshot({ path: path.join(OUT, 'passage-3-landed.png') });
+  const landed = await page.evaluate(() => ({ p: window.__helmDiag.passage, mode: window.__helm.mode() }));
+  console.log('PS1', JSON.stringify(ps1), 'LANDED', JSON.stringify(landed), 'ERRORS', errs.length ? errs : 'none');
+  await br.close();
+})().catch(e => { console.error(e); process.exit(1); });
