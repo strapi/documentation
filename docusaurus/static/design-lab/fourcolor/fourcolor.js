@@ -1870,7 +1870,7 @@ const guided={
        buttons, the code clipper) stay live; ENTER opens a live panel. */
     g.addEventListener('click',e=>{
       if(!this.active||this.leaving) return;
-      if(e.target.closest('a,button,summary,textarea,input')) return;
+      if(e.target.closest('a,button,summary,textarea,input,.houseAd,.photo')) return;
       e.stopPropagation();
       if(String(getSelection&&getSelection())!=='') return; /* the reader is copying, not advancing */
       if(e.detail>1){ clearTimeout(this._ct); this._ct=null; return; }
@@ -1880,7 +1880,7 @@ const guided={
     },true);
     g.addEventListener('dblclick',e=>{
       if(!this.active||this.leaving) return;
-      if(e.target.closest('a,button,summary,textarea,input')) return;
+      if(e.target.closest('a,button,summary,textarea,input,.houseAd,.photo')) return;
       clearTimeout(this._ct); this._ct=null;
       this.exit();
     });
@@ -2115,7 +2115,7 @@ const guided={
       if(b2.subs>1) lab+=' · PAN '+(b2.sub+1)+'/'+b2.subs;
       lab+=' · PAGE '+(this.p+1)+' OF '+P;
     }
-    this.prog.querySelector('.g-label').textContent=lab;
+    this.prog.querySelector('.g-label').textContent = lab + '  \u00b7  ESC to leave guided view';
     this.prog.querySelector('.g-fill').style.transform='scaleX('+(((this.p+(this.bi+1)/beats.length)/P)).toFixed(4)+')';
     this.prog.classList.add('show');
     clearTimeout(this._pt);

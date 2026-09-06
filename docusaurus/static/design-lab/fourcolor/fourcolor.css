@@ -495,10 +495,10 @@ table.cx tr:last-child td{border-bottom:none}
   box-shadow:5px 5px 0 rgba(0,0,0,.55)}
 
 /* hint strip under book */
-.book-hints{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:11.5px;
+.book-hints{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:16px;
   color:#a4906c;letter-spacing:1px}
 .book-hints kbd{font-family:var(--mono);background:#2e251b;border:1px solid #55452f;color:#e8d9b4;
-  border-radius:3px;padding:0 5px;font-size:10px}
+  border-radius:3px;padding:1px 6px;font-size:15px}
 
 /* measurer */
 #measurer{position:absolute;left:-9999px;top:0;visibility:hidden;pointer-events:none}
