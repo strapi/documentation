@@ -212,6 +212,10 @@ In the <Icon name="layout" /> Content-type Builder, fields can be added at the c
 Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available.
 :::
 
+:::info Private fields and search
+When you mark a field as **Private field**, newly created private fields are automatically set to be non-searchable (searchable: false). This prevents private content from appearing in query results when using the `_q` search parameter. Existing private fields retain their current searchability settings unless you explicitly change them. If you need a private field to be searchable, you can enable it in the field's advanced settings.
+:::
+
 <ThemedImage
   alt="Fields selection"
   sources={{
