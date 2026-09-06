@@ -49,6 +49,24 @@ body { background: var(--paper); font-family: var(--baloo); color: var(--ink); }
   box-shadow: 4px 5px 0 rgba(34,26,16,.30);
 }
 
+/* the UI joins the cartoon: hand-drawn wobble on cards and buttons
+   (the summit book and the search input stay perfectly crisp) */
+#topocard, #trailsign, #caption, .rope-chip, .tb-btn, .op-close,
+#gripmeter .bag, #gripmeter .gv, .overlay-panel, .tcard-frame,
+#almanacbody button.replay, .tcard-actions button {
+  filter: url(#wobble);
+}
+/* a bounce on press, settling with an overshoot */
+.tb-btn, .tc-actions button, .rope-chip, .op-close,
+#almanacbody button.replay, .tcard-actions button, #btn-sign, #btn-recoil {
+  transition: transform .3s cubic-bezier(.34, 2.2, .44, .88);
+}
+.tb-btn:active, .tc-actions button:active, .rope-chip:active, .op-close:active,
+#almanacbody button.replay:active, .tcard-actions button:active {
+  transform: scale(.9) rotate(-1.6deg);
+}
+#btn-sign:active, #btn-recoil:active { transform: scale(.94); }
+
 /* ---------- top bar: the marquee strip ---------- */
 #topbar {
   position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 40;

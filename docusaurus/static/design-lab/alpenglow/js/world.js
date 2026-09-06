@@ -53,6 +53,10 @@ const World = (() => {
   ];
 
   let canvas, ctx, film, fx, W = 0, H = 0, dpr = 1;
+  /* THE CAMERA COMES CLOSER: an eased multiplane zoom on the wall plane.
+     The painted backdrop stays on the setback rig (1930s multiplane), so
+     nothing raster is ever upscaled; the zoomed plane is vector-redrawn. */
+  const CAM = { z: 1.6, ax: 0, ay: 0, dx: 0, dy: 0, init: false };
   let scene = null;
   let camY = 0;
   let reduced = false;
@@ -126,7 +130,8 @@ const World = (() => {
   }
   let bv = 0, bk = 0;
   function bo(mag) { return BOIL[bv][(bk++) & 127] * (mag || 1); }
-  function inkLine(w) { ctx.strokeStyle = INK; ctx.lineWidth = w; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; }
+  /* the cartoon push: every outline drawn through inkLine is a third fatter */
+  function inkLine(w) { ctx.strokeStyle = INK; ctx.lineWidth = w * 1.3; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; }
 
   /* ---------- brush kit for the paint pass ---------- */
   let brushBase = null;
@@ -169,14 +174,17 @@ const World = (() => {
   /* wall texture tile (neutral gouache noise, multiplied over the rock) */
   let wallTile = null, wallPattern = null;
   function makeWallTile() {
+    // baked at 2x so the closer camera samples it crisp (the pattern
+    // transform scales it back to a 192 px world period)
     wallTile = document.createElement('canvas');
-    wallTile.width = wallTile.height = 192;
+    wallTile.width = wallTile.height = 384;
     const g = wallTile.getContext('2d');
+    g.scale(2, 2);
     const rng = rngFor('walltile');
     const cache = {};
-    const put = (color, size, alpha) => {
+    const put = (color, size, alpha, rot) => {
       const br = tintedBrush(color, cache);
-      const x = rng() * 192, y = rng() * 192, rot = rng() * 6.28, sy = size * (0.5 + rng() * 0.4);
+      const x = rng() * 192, y = rng() * 192, sy = size * (0.32 + rng() * 0.3);
       g.globalAlpha = alpha;
       for (let ox = -192; ox <= 192; ox += 192) for (let oy = -192; oy <= 192; oy += 192) {
         g.save(); g.translate(x + ox, y + oy); g.rotate(rot);
@@ -185,16 +193,40 @@ const World = (() => {
       }
       g.globalAlpha = 1;
     };
-    for (let i = 0; i < 40; i++) put('#3a2c1a', 44 + rng() * 52, 0.085);
-    for (let i = 0; i < 26; i++) put('#fff6e0', 40 + rng() * 52, 0.085);
+    // two hatching directions, like a loaded brush dragged down the rock
+    for (let i = 0; i < 34; i++) put('#3a2c1a', 40 + rng() * 46, 0.085, -0.55 + (rng() - 0.5) * 0.5);
+    for (let i = 0; i < 30; i++) put('#3a2c1a', 22 + rng() * 30, 0.10, -0.5 + (rng() - 0.5) * 0.6);
+    for (let i = 0; i < 22; i++) put('#fff6e0', 36 + rng() * 46, 0.085, -0.62 + (rng() - 0.5) * 0.5);
+    for (let i = 0; i < 20; i++) put('#fff6e0', 20 + rng() * 26, 0.10, 0.9 + (rng() - 0.5) * 0.6);
     wallPattern = null;
+  }
+
+  /* paper tooth: a fine speckle tile pressed into the baked sky wash */
+  let paperTile = null;
+  function makePaperTile() {
+    paperTile = document.createElement('canvas');
+    paperTile.width = paperTile.height = 192;
+    const g = paperTile.getContext('2d');
+    const rng = rngFor('papertile');
+    for (let i = 0; i < 1000; i++) {
+      const a = 0.036 + rng() * 0.062;
+      g.fillStyle = rng() < 0.52 ? 'rgba(52,38,18,' + a.toFixed(3) + ')' : 'rgba(255,252,240,' + (a * 1.2).toFixed(3) + ')';
+      const r = 0.5 + rng() * 1.15;
+      g.beginPath(); g.arc(rng() * 192, rng() * 192, r, 0, 7); g.fill();
+    }
+    for (let i = 0; i < 26; i++) {
+      g.strokeStyle = 'rgba(52,38,18,' + (0.03 + rng() * 0.04).toFixed(3) + ')';
+      g.lineWidth = 0.8;
+      const x = rng() * 192, y = rng() * 192, a2 = rng() * 6.28, L = 3 + rng() * 7;
+      g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a2) * L, y + Math.sin(a2) * L); g.stroke();
+    }
   }
 
   function init(cv, filmCv) {
     canvas = cv; ctx = canvas.getContext('2d');
     film = filmCv; fx = film ? film.getContext('2d') : null;
     reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    makeBrush(); makeWallTile(); makeGrain();
+    makeBrush(); makeWallTile(); makePaperTile(); makeGrain();
     resize();
     window.addEventListener('resize', () => { resize(); if (scene) bakeLayers(scene); });
   }
@@ -377,11 +409,51 @@ const World = (() => {
       const cx = rng() * W, cy = 60 + rng() * (horizon * 0.5), cw = 90 + rng() * 130;
       dabs(sx, brushes, cloudC, 16, cx - cw / 2, cy - 16, cx + cw / 2, cy + 16, 84, 0.32, rng);
     }
+    // combed brush streaks: the wash shows its brush across the whole sky
+    for (let i = 0; i < 46; i++) {
+      const tt = rng();
+      const yy = horizon * tt;
+      const c2 = mixC(mixC(P.skyHi, P.skyLo, tt), rng() < 0.5 ? P.snow : P.skyHi, 0.2);
+      const xx = rng() * (W + 80) - 40;
+      dabs(sx, brushes, c2, 3, xx - 70, yy - 7, xx + 70, yy + 7, 60 + rng() * 60, 0.16, rng);
+    }
+    // painted swirl clouds: gouache curls rolled out of the cloud bodies
+    const swirlHi = mixC(P.snow, '#FFFFFF', 0.5);
+    const swirlSh = mixC(P.skyHi, P.snow, 0.35);
+    const nSwirl = 2 + Math.floor(rng() * 2);
+    for (let i = 0; i < nSwirl; i++) {
+      const cx = W * (0.1 + rng() * 0.8), cy = 54 + rng() * (horizon * 0.44);
+      const sw = 46 + rng() * 42, dir = rng() < 0.5 ? -1 : 1;
+      for (let arm = 0; arm < 2; arm++) {
+        const a0 = rng() * 6.28;
+        for (let k = 0; k <= 14; k++) {
+          const th = a0 + dir * k * 0.46;
+          const rr = sw * (0.12 + 0.46 * k / 14);
+          dabs(sx, brushes, k % 3 === 2 ? swirlSh : swirlHi, 1,
+            cx + Math.cos(th) * rr * 1.55 - 8, cy + Math.sin(th) * rr * 0.52 - 6,
+            cx + Math.cos(th) * rr * 1.55 + 8, cy + Math.sin(th) * rr * 0.52 + 6,
+            30 + k * 1.1, 0.34, rng);
+        }
+      }
+      for (let tl = 0; tl < 3; tl++) {
+        const ty = cy - sw * 0.2 + tl * sw * 0.24 + (rng() - 0.5) * 8;
+        for (let k = 0; k <= 8; k++) {
+          const tx = cx + dir * (sw * 0.9 + k * sw * 0.22);
+          dabs(sx, brushes, swirlHi, 1, tx - 7, ty - 5 - k * 0.6, tx + 7, ty + 5 - k * 0.6, 26 - k * 1.6, 0.26, rng);
+        }
+      }
+    }
     // valley floor below the horizon
     sx.fillStyle = mixC(P.hillA, P.skyLo, 0.25);
     sx.fillRect(0, horizon, W, H - horizon);
     dabs(sx, brushes, P.hillA, 34, 0, horizon, W, H, 200, 0.26, rng);
     dabs(sx, brushes, mixC(P.hillA, P.snow, 0.4), 20, 0, horizon, W, H, 170, 0.16, rng);
+    // the paper's tooth, pressed into the whole wash
+    sx.save();
+    sx.fillStyle = sx.createPattern(paperTile, 'repeat');
+    sx.globalAlpha = 0.9;
+    sx.fillRect(0, 0, W, H);
+    sx.restore();
     sc.skyL = sky;
     }
     if (part === 'sky') return;
@@ -393,22 +465,16 @@ const World = (() => {
     const hz = horizon;
 
     const farC = mixC(P.skyHi, P.snow, 0.42);
-    for (const p of sc.farPeaks) drawFarPeak(rx, p, hz, sc.biome, farC, P, brushes, rng);
+    const PHb = PHASES[SKY.idx];
+    const capGlow = PHb.amt ? mixC('#E8A6A0', PHb.tint, PHb.amt * 0.55) : '#E8A6A0';
+    const capFrost = mixC(P.snow, '#FFFFFF', 0.4);
+    // hazier (shorter) summits go down first, nearer ones are painted over them
+    const range = sc.farPeaks.slice().sort((a, b) => a.h - b.h);
+    for (const p of range) drawFarPeak(rx, p, hz, sc.biome, farC, P, brushes, { sleeper: p === sc.sleeper, capGlow, capFrost });
 
     // the distant most-recently-signed summit, wearing real alpenglow
     const d = sc.distant;
-    rx.fillStyle = mixC(P.skyHi, P.snow, 0.28);
-    rx.beginPath();
-    rx.moveTo(d.x - d.h * 1.05, hz + 2);
-    rx.quadraticCurveTo(d.x - d.h * 0.3, hz - d.h * 0.72, d.x, hz - d.h);
-    rx.quadraticCurveTo(d.x + d.h * 0.28, hz - d.h * 0.7, d.x + d.h * 0.95, hz + 2);
-    rx.closePath(); rx.fill();
-    rx.fillStyle = '#E8A6A0';
-    rx.beginPath();
-    rx.moveTo(d.x, hz - d.h);
-    rx.quadraticCurveTo(d.x - d.h * 0.22, hz - d.h * 0.66, d.x - d.h * 0.30, hz - d.h * 0.52);
-    rx.lineTo(d.x + d.h * 0.26, hz - d.h * 0.52);
-    rx.closePath(); rx.fill();
+    drawDistantSummit(rx, d, hz, P, brushes, capGlow);
     rx.fillStyle = INK;
     rx.font = "700 11px 'Baloo 2', sans-serif";
     rx.textAlign = 'center';
@@ -438,75 +504,183 @@ const World = (() => {
     rx.save();
     rx.beginPath(); rx.rect(0, hz - 120, W, 152); rx.clip();
     dabs(rx, brushes, mixC(P.hillB, P.snow, 0.25), 26, 0, hz - 70, W, hz + 26, 90, 0.16, mrng);
+    dabs(rx, brushes, mixC(P.hillB, P.snow, 0.5), 30, 0, hz - 64, W, hz + 20, 40, 0.2, mrng);
+    dabs(rx, brushes, mixC(P.hillB, '#221a10', 0.25), 24, 0, hz - 56, W, hz + 24, 34, 0.16, mrng);
+    // distant forest speckle on the far slopes
+    for (let i = 0; i < 170; i++) {
+      const sx2 = mrng() * W, sy2 = hz - 78 + mrng() * 96;
+      rx.fillStyle = i % 2 ? mixC(P.hillB, '#221a10', 0.4) : mixC(P.hillB, P.snow, 0.55);
+      rx.globalAlpha = 0.16 + mrng() * 0.1;
+      rx.beginPath(); rx.arc(sx2, sy2, 0.8 + mrng() * 1.5, 0, 7); rx.fill();
+    }
+    rx.globalAlpha = 1;
     rx.restore();
 
     // treeline / flora strip on the valley floor
     drawTreeline(rx, sc, hz, P, brushes, mrng);
+    // the same paper tooth as the sky, only where the backdrop has paint
+    rx.save();
+    rx.globalCompositeOperation = 'source-atop';
+    rx.fillStyle = rx.createPattern(paperTile, 'repeat');
+    rx.globalAlpha = 0.9;
+    rx.fillRect(0, 0, W, H);
+    rx.restore();
     sc.backL = back;
   }
 
-  function peakPath(rx, p, hz, biome) {
-    rx.beginPath();
+  /* The far range, painted: each biome silhouette is sampled into a
+     polyline with a deterministic per-peak wobble, so the ridge is
+     hand-drawn (never vector-clean) and identical across rebakes. */
+  function farPeakSil(p, hz, biome, prng) {
+    const pts = [];
+    const h = p.h, x = p.x;
+    const A = (px, py) => pts.push([px, py]);
+    const Q = (cx, cy, x1, y1, n) => {
+      const x0 = pts[pts.length - 1][0], y0 = pts[pts.length - 1][1];
+      for (let i = 1; i <= n; i++) {
+        const t = i / n, a = (1 - t) * (1 - t), b = 2 * (1 - t) * t, c = t * t;
+        pts.push([a * x0 + b * cx + c * x1, a * y0 + b * cy + c * y1]);
+      }
+    };
+    const L = (x1, y1, n) => {
+      const x0 = pts[pts.length - 1][0], y0 = pts[pts.length - 1][1];
+      for (let i = 1; i <= n; i++) pts.push([x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * i / n]);
+    };
     if (biome === 'skyway') {
       // cloud towers: stacked puffs
-      rx.moveTo(p.x - p.h * 0.9, hz + 2);
-      rx.quadraticCurveTo(p.x - p.h * 0.9, hz - p.h * 0.5, p.x - p.h * 0.45, hz - p.h * 0.55);
-      rx.quadraticCurveTo(p.x - p.h * 0.5, hz - p.h * 1.05, p.x, hz - p.h);
-      rx.quadraticCurveTo(p.x + p.h * 0.5, hz - p.h * 1.02, p.x + p.h * 0.4, hz - p.h * 0.5);
-      rx.quadraticCurveTo(p.x + p.h * 0.8, hz - p.h * 0.45, p.x + p.h * 0.8, hz + 2);
+      A(x - h * 0.9, hz + 2);
+      Q(x - h * 0.9, hz - h * 0.5, x - h * 0.45, hz - h * 0.55, 5);
+      Q(x - h * 0.5, hz - h * 1.05, x, hz - h, 5);
+      Q(x + h * 0.5, hz - h * 1.02, x + h * 0.4, hz - h * 0.5, 5);
+      Q(x + h * 0.8, hz - h * 0.45, x + h * 0.8, hz + 2, 5);
     } else if (biome === 'meadow') {
-      rx.moveTo(p.x - p.h * 0.95, hz + 2);
-      rx.quadraticCurveTo(p.x - p.h * 0.2, hz - p.h * 1.06, p.x + p.h * 0.15, hz - p.h * 0.72);
-      rx.quadraticCurveTo(p.x + p.h * 0.55, hz - p.h * 0.4, p.x + p.h * 0.85, hz + 2);
+      A(x - h * 0.95, hz + 2);
+      Q(x - h * 0.2, hz - h * 1.06, x + h * 0.15, hz - h * 0.72, 7);
+      Q(x + h * 0.55, hz - h * 0.4, x + h * 0.85, hz + 2, 7);
     } else if (biome === 'glacier') {
-      rx.moveTo(p.x - p.h * 0.9, hz + 2);
-      rx.lineTo(p.x - p.h * 0.45, hz - p.h * 0.6);
-      rx.lineTo(p.x - p.h * 0.2, hz - p.h * 0.42);
-      rx.lineTo(p.x, hz - p.h);
-      rx.lineTo(p.x + p.h * 0.22, hz - p.h * 0.5);
-      rx.lineTo(p.x + p.h * 0.5, hz - p.h * 0.68);
-      rx.lineTo(p.x + p.h * 0.8, hz + 2);
+      A(x - h * 0.9, hz + 2);
+      L(x - h * 0.45, hz - h * 0.6, 3); L(x - h * 0.2, hz - h * 0.42, 2);
+      L(x, hz - h, 3); L(x + h * 0.22, hz - h * 0.5, 3);
+      L(x + h * 0.5, hz - h * 0.68, 2); L(x + h * 0.8, hz + 2, 4);
     } else if (biome === 'crag') {
-      rx.moveTo(p.x - p.h * 0.7, hz + 2);
-      rx.lineTo(p.x - p.h * 0.18, hz - p.h * 0.92);
-      rx.lineTo(p.x, hz - p.h);
-      rx.lineTo(p.x + p.h * 0.12, hz - p.h * 0.78);
-      rx.lineTo(p.x + p.h * 0.55, hz + 2);
+      A(x - h * 0.7, hz + 2);
+      L(x - h * 0.18, hz - h * 0.92, 4); L(x, hz - h, 2);
+      L(x + h * 0.12, hz - h * 0.78, 2); L(x + h * 0.55, hz + 2, 4);
+    } else if (biome === 'distant') {
+      A(x - h * 1.05, hz + 2);
+      Q(x - h * 0.3, hz - h * 0.72, x, hz - h, 8);
+      Q(x + h * 0.28, hz - h * 0.7, x + h * 0.95, hz + 2, 8);
     } else {
-      rx.moveTo(p.x - p.h * 0.9, hz + 2);
-      rx.lineTo(p.x, hz - p.h);
-      rx.lineTo(p.x + p.h * 0.8, hz + 2);
+      // pine country: same base and apex, but the flanks breathe now
+      A(x - h * 0.9, hz + 2);
+      Q(x - h * 0.52, hz - h * 0.3, x, hz - h, 7);
+      Q(x + h * 0.4, hz - h * 0.34, x + h * 0.8, hz + 2, 7);
     }
-    rx.closePath();
+    // painterly wobble on every interior point
+    const mag = Math.max(1.4, h * 0.045);
+    for (let i = 1; i < pts.length - 1; i++) {
+      pts[i][0] += (prng() - 0.5) * mag;
+      pts[i][1] += (prng() - 0.5) * mag * 1.25;
+    }
+    return pts;
   }
 
-  function drawFarPeak(rx, p, hz, biome, farC, P, brushes, rng) {
-    peakPath(rx, p, hz, biome);
-    rx.fillStyle = farC;
-    rx.fill();
-    // gouache pass inside the silhouette
-    rx.save();
-    peakPath(rx, p, hz, biome);
-    rx.clip();
-    dabs(rx, brushes, mixC(farC, P.snow, 0.4), 7, p.x - p.h * 0.7, hz - p.h, p.x + p.h * 0.1, hz, p.h * 0.55, 0.3, rng);
-    dabs(rx, brushes, mixC(farC, P.skyHi, 0.45), 6, p.x - p.h * 0.1, hz - p.h * 0.8, p.x + p.h * 0.8, hz, p.h * 0.5, 0.3, rng);
-    rx.restore();
-    // alpenglow / frost caps stay honest to provenance
-    if (p.fresh) {
-      rx.fillStyle = '#E8A6A0';
-      rx.beginPath();
-      rx.moveTo(p.x, hz - p.h);
-      rx.lineTo(p.x - p.h * 0.16, hz - p.h * 0.74);
-      rx.lineTo(p.x + p.h * 0.14, hz - p.h * 0.74);
-      rx.closePath(); rx.fill();
-    } else if (p.frost) {
-      rx.fillStyle = 'rgba(250,250,245,.85)';
-      rx.beginPath();
-      rx.moveTo(p.x, hz - p.h);
-      rx.lineTo(p.x - p.h * 0.10, hz - p.h * 0.82);
-      rx.lineTo(p.x + p.h * 0.09, hz - p.h * 0.82);
-      rx.closePath(); rx.fill();
+  /* trace a wobbled silhouette, smoothed through midpoints */
+  function silPath(rx, sil, hz, close) {
+    rx.beginPath();
+    rx.moveTo(sil[0][0], sil[0][1]);
+    for (let i = 1; i < sil.length - 1; i++) {
+      rx.quadraticCurveTo(sil[i][0], sil[i][1], (sil[i][0] + sil[i + 1][0]) / 2, (sil[i][1] + sil[i + 1][1]) / 2);
     }
+    rx.lineTo(sil[sil.length - 1][0], sil[sil.length - 1][1]);
+    if (close) { rx.lineTo(sil[sil.length - 1][0], hz + 3); rx.lineTo(sil[0][0], hz + 3); rx.closePath(); }
+  }
+
+  function drawFarPeak(rx, p, hz, biome, farC, P, brushes, opt) {
+    opt = opt || {};
+    const prng = rngFor('peak:' + (p.slug || Math.round(p.x)));
+    const h = p.h;
+    const depth = Math.max(0, Math.min(1, 1 - h / 190));     // shorter peak, deeper in the haze
+    const base = mixC(farC, P.skyLo, 0.10 + depth * 0.26);
+    const sil = farPeakSil(p, hz, biome, prng);
+    let ax = p.x, ay = hz - h;
+    for (const q of sil) if (q[1] < ay) { ax = q[0]; ay = q[1]; }
+
+    // brushed body
+    silPath(rx, sil, hz, true);
+    rx.fillStyle = base;
+    rx.fill();
+
+    // gouache mottling inside the silhouette: lit flank, cool flank, weighted base
+    rx.save();
+    silPath(rx, sil, hz, true);
+    rx.clip();
+    dabs(rx, brushes, mixC(base, P.snow, 0.42), 9, p.x - h * 0.75, ay, p.x + h * 0.05, hz, h * 0.5, 0.3, prng);
+    dabs(rx, brushes, mixC(base, P.skyHi, 0.5), 8, p.x - h * 0.05, ay + h * 0.15, p.x + h * 0.8, hz, h * 0.48, 0.3, prng);
+    dabs(rx, brushes, mixC(base, P.hillB, 0.3), 5, p.x - h * 0.6, hz - h * 0.4, p.x + h * 0.6, hz + 4, h * 0.42, 0.22, prng);
+    // atmospheric haze: the range melts into the sky near its base
+    const hg = rx.createLinearGradient(0, ay, 0, hz + 2);
+    hg.addColorStop(0, 'rgba(255,255,255,0)');
+    const hc = parseC(mixC(P.skyLo, P.skyHi, 0.35));
+    hg.addColorStop(1, 'rgba(' + hc[0] + ',' + hc[1] + ',' + hc[2] + ',' + (0.26 + depth * 0.22).toFixed(2) + ')');
+    rx.fillStyle = hg;
+    rx.fillRect(p.x - h * 1.15, ay - 4, h * 2.3, hz + 6 - ay);
+    // alpenglow / frost caps stay honest to provenance, as dabs of thick paint
+    if (p.fresh || p.frost) {
+      const capC = p.fresh ? opt.capGlow : opt.capFrost;
+      dabs(rx, brushes, capC, 8, ax - h * 0.2, ay, ax + h * 0.2, ay + h * 0.24, h * 0.3, 0.55, prng);
+      dabs(rx, brushes, mixC(capC, P.snow, 0.35), 4, ax - h * 0.1, ay - h * 0.02, ax + h * 0.1, ay + h * 0.12, h * 0.2, 0.85, prng);
+    }
+    // the sleeper gets a soft lit patch, so the dozing face reads on paint
+    if (opt.sleeper) {
+      const s = Math.max(0.7, Math.min(1.25, h / 130));
+      const fy = hz - h * 0.62;
+      dabs(rx, brushes, mixC(base, P.snow, 0.5), 7, p.x - 34 * s, fy - 20 * s, p.x + 34 * s, fy + 30 * s, 46 * s, 0.38, prng);
+      dabs(rx, brushes, mixC(base, P.hillB, 0.22), 3, p.x - 26 * s, fy + 26 * s, p.x + 26 * s, fy + 42 * s, 30 * s, 0.2, prng);
+    }
+    rx.restore();
+
+    // the inked wobble outline, softened by distance
+    silPath(rx, sil, hz, false);
+    rx.strokeStyle = mixC(INK, base, 0.5 + depth * 0.2);
+    rx.lineWidth = 1.5;
+    rx.lineJoin = 'round'; rx.lineCap = 'round';
+    rx.globalAlpha = 0.66 - depth * 0.2;
+    rx.stroke();
+    rx.globalAlpha = 1;
+  }
+
+  function drawDistantSummit(rx, d, hz, P, brushes, capGlow) {
+    const prng = rngFor('peak:distant:' + d.slug);
+    const h = d.h;
+    const base = mixC(P.skyHi, P.snow, 0.28);
+    const sil = farPeakSil(d, hz, 'distant', prng);
+    let ax = d.x, ay = hz - h;
+    for (const q of sil) if (q[1] < ay) { ax = q[0]; ay = q[1]; }
+    silPath(rx, sil, hz, true);
+    rx.fillStyle = base; rx.fill();
+    rx.save();
+    silPath(rx, sil, hz, true);
+    rx.clip();
+    dabs(rx, brushes, mixC(base, P.snow, 0.5), 8, d.x - h * 0.6, ay, d.x + h * 0.1, hz, h * 0.42, 0.26, prng);
+    dabs(rx, brushes, mixC(base, P.skyHi, 0.5), 7, d.x - h * 0.05, ay + h * 0.2, d.x + h * 0.65, hz, h * 0.4, 0.26, prng);
+    // haze wash: the lightest, farthest silhouette of the range
+    const hg = rx.createLinearGradient(0, ay, 0, hz + 2);
+    hg.addColorStop(0, 'rgba(255,255,255,0)');
+    const hc = parseC(mixC(P.skyLo, P.skyHi, 0.3));
+    hg.addColorStop(1, 'rgba(' + hc[0] + ',' + hc[1] + ',' + hc[2] + ',0.42)');
+    rx.fillStyle = hg;
+    rx.fillRect(d.x - h * 1.2, ay - 4, h * 2.4, hz + 6 - ay);
+    // the real alpenglow, dabbed on the upper face like thick paint
+    dabs(rx, brushes, capGlow, 16, ax - h * 0.26, ay + 2, ax + h * 0.22, hz - h * 0.52, h * 0.28, 0.5, prng);
+    dabs(rx, brushes, mixC(capGlow, P.snow, 0.3), 7, ax - h * 0.14, ay + 2, ax + h * 0.12, hz - h * 0.66, h * 0.2, 0.8, prng);
+    rx.restore();
+    silPath(rx, sil, hz, false);
+    rx.strokeStyle = mixC(INK, base, 0.62);
+    rx.lineWidth = 1.4; rx.lineJoin = 'round'; rx.lineCap = 'round';
+    rx.globalAlpha = 0.5;
+    rx.stroke();
+    rx.globalAlpha = 1;
   }
 
   function drawTreeline(rx, sc, hz, P, brushes, mrng) {
@@ -597,6 +771,41 @@ const World = (() => {
     camY = G.snapCamera ? target : camY + (target - camY) * 0.08;
     if (Math.abs(target - camY) < 0.5) camY = target;
 
+    // the camera breathes: tighter while climbing, wider at belays, summits
+    // and open reading; reduced motion holds one fixed mid-close framing
+    const bookOpenEarly = !document.getElementById('book').hidden;
+    const panelOpen = !document.getElementById('indexpanel').hidden || !document.getElementById('almanac').hidden;
+    let fx0, fwy;
+    if (G.mode === 'rappel' && G.rappel) {
+      const rc = G.rappel.curve, rs = G.rappel.s, ri = 1 - rs;
+      fx0 = ri * ri * rc.x0 + 2 * ri * rs * rc.cx + rs * rs * rc.x1;
+      fwy = ri * ri * rc.y0 + 2 * ri * rs * rc.cy + rs * rs * rc.y1;
+    } else {
+      const fp = climberPos(G);
+      fx0 = fp.x; fwy = fp.y;
+    }
+    const fsy = s2y(fwy) - 26;
+    let zt;
+    if (reduced) zt = 1.6;
+    else if (bookOpenEarly || panelOpen) zt = 1.32;
+    else if (G.mode === 'rappel') zt = 1.3;
+    else if (G.mode === 'summit') zt = 1.44;
+    else if (G.mode === 'ledge') zt = 1.52;
+    else zt = G.holding ? 1.94 : 1.84;
+    if (G.hiking && G.mode === 'climb') zt = Math.min(zt, 1.7);
+    if (G.snapCamera || !CAM.init) {
+      CAM.z = zt; CAM.ax = fx0; CAM.ay = fsy; CAM.init = true;
+    } else if (reduced) {
+      CAM.z = 1.6; CAM.ax = fx0; CAM.ay = fsy;
+    } else {
+      CAM.z += (zt - CAM.z) * 0.045;
+      CAM.ax += (fx0 - CAM.ax) * 0.08;
+      CAM.ay += (fsy - CAM.ay) * 0.08;
+    }
+    CAM.ay = Math.max(H * 0.2, Math.min(H * 0.9, CAM.ay));
+    CAM.dx = CAM.ax;
+    CAM.dy = Math.max(H * 0.34, Math.min(H * 0.62, CAM.ay));
+
     // PAINT PASS: baked washes (crossfade during phase changes)
     if (SKY.fade < 1 && sc.prevSkyL) {
       ctx.drawImage(sc.prevSkyL, 0, 0);
@@ -629,6 +838,9 @@ const World = (() => {
 
     ctx.save();
     ctx.translate(G.shiftX || 0, 0);
+    ctx.translate(CAM.dx, CAM.dy);
+    ctx.scale(CAM.z, CAM.z);
+    ctx.translate(-CAM.ax, -CAM.ay);
     drawWall(sc, P);
     drawRoute(sc, G, night, t);
     if (sc.isCol) drawColFan(sc, G, night);
@@ -636,8 +848,9 @@ const World = (() => {
     if (G.mode === 'rappel') drawRappel(sc, G, night, t);
     else drawClimber(sc, G, t, night);
     drawParticles(G, night);
-    drawGags(sc, G, t);
+    drawGags(sc, G, t, 'wall');
     ctx.restore();
+    drawGags(sc, G, t, 'sky');
 
     drawCharacterCloud(sc, t, dt, P);   // the cloud sails in front of the wall, as clouds do in cartoons
     drawWeather(sc, dt, t, P);
@@ -650,6 +863,7 @@ const World = (() => {
     }
 
     drawFilm(t, dt);
+    G.snapCamera = false;               // a snap lands once; every later move is eased
   }
 
   /* ---------- cast: sun and moon with faces ---------- */
@@ -657,10 +871,10 @@ const World = (() => {
     const hz = sc.horizon;
     const ph = PHASES[SKY.idx].k;
     if (ph === 'night') {
-      drawMoon(W * 0.82, hz - 300, t);
+      drawMoon(W * 0.16, hz - 185, t);   // rides the open sky sliver, under the topo card, over the range
       return;
     }
-    if (ph === 'dusk') { drawMoon(W * 0.9, hz - 330, t); return; }
+    if (ph === 'dusk') { drawMoon(W * 0.17, hz - 200, t); return; }
     const sy = ph === 'dawn' ? hz - 170 : ph === 'golden' ? hz - 190 : hz - 300;
     const sxp = ph === 'golden' ? W * 0.86 : W * 0.13;
     const R = 34;
@@ -793,7 +1007,7 @@ const World = (() => {
   function drawCharacterCloud(sc, t, dt, P) {
     const c = sc.cloud;
     if (!reduced) { c.x += c.drift * dt; if (c.x > W + 120) c.x = -110; }
-    const cy = sc.horizon - 340 + Math.min(60, camY * 0.03);
+    const cy = sc.horizon - 400 + Math.min(24, camY * 0.02);
     const breeze = wxIntensity('breeze');
     const puffing = !reduced && (breeze > 0.4) && ((t % 5200) < 1500);
     ctx.save();
@@ -875,7 +1089,7 @@ const World = (() => {
   }
 
   function drawWall(sc, P) {
-    const y0 = camY - 140, y1 = camY + H + 60;
+    const y0 = camY - 460, y1 = camY + H + 200;
     const step = sc.step;
 
     // main painted face
@@ -899,7 +1113,10 @@ const World = (() => {
     ctx.closePath(); ctx.fill();
 
     // gouache tile multiplied over the face (the visible brush texture)
-    if (!wallPattern) wallPattern = ctx.createPattern(wallTile, 'repeat');
+    if (!wallPattern) {
+      wallPattern = ctx.createPattern(wallTile, 'repeat');
+      try { wallPattern.setTransform(new DOMMatrix([0.5, 0, 0, 0.5, 0, 0])); } catch (e) {}
+    }
     let bbL = 1e9, bbR = -1e9;
     for (let wy = y0; wy <= y1; wy += step) {
       const l = edgeAt(sc.leftE, sc, wy), r2 = edgeAt(sc.rightE, sc, wy);
@@ -1089,60 +1306,88 @@ const World = (() => {
 
   /* one rubber arm: shoulder to hand as a boneless curve, glove at the end */
   function rubberArm(x0, y0, x1, y1, sag) {
-    inkLine(4.6);
+    inkLine(4.4);
     ctx.strokeStyle = INK;
     ctx.beginPath();
     ctx.moveTo(x0, y0);
     ctx.quadraticCurveTo((x0 + x1) / 2 + bo(1.4), (y0 + y1) / 2 + sag + bo(1.4), x1, y1);
     ctx.stroke();
-    glove(x1, y1, 4.4, Math.atan2(y1 - y0, x1 - x0));
+    glove(x1, y1, 5.4, Math.atan2(y1 - y0, x1 - x0));
   }
   function rubberLeg(x0, y0, x1, y1, sag) {
-    inkLine(4.6);
+    inkLine(4.4);
     ctx.strokeStyle = INK;
     ctx.beginPath();
     ctx.moveTo(x0, y0);
     ctx.quadraticCurveTo((x0 + x1) / 2 + sag + bo(1.2), (y0 + y1) / 2 + bo(1.2), x1, y1);
     ctx.stroke();
     // big rounded boot
-    inkLine(1.8);
+    inkLine(2);
     ctx.fillStyle = '#31241a';
-    ctx.beginPath(); ctx.ellipse(x1 + 2, y1 + 1, 5.4, 3.6, 0.15, 0, 7); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(x1 + 2.5, y1 + 1, 6.6, 4.4, 0.15, 0, 7); ctx.fill(); ctx.stroke();
   }
 
   function climberFace(mouth, lookA, blink) {
-    // head + cap
-    inkLine(2.2);
+    // the Fleischer head: nearly a third of the whole figure
+    inkLine(2.6);
     ctx.fillStyle = SKIN;
-    ctx.beginPath(); ctx.arc(bo(0.8), bo(0.8), 9, 0, 7); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.arc(bo(0.9), bo(0.9), 12.5, 0, 7); ctx.fill(); ctx.stroke();
     ctx.fillStyle = ROPE;
-    ctx.beginPath(); ctx.arc(bo(0.8), -2.5 + bo(0.8), 9, Math.PI + 0.25, -0.25); ctx.fill(); ctx.stroke();
-    ctx.beginPath(); ctx.ellipse(0, -11.5, 3, 2, 0, 0, 7); ctx.fillStyle = ROPE; ctx.fill(); ctx.stroke();
-    pieEye(-3.6, -1, 3, blink || 0, lookA);
-    pieEye(3.6, -1, 3, blink || 0, lookA);
-    inkLine(1.8);
-    if (mouth === 'o') { ctx.fillStyle = INK; ctx.beginPath(); ctx.ellipse(0.5, 4.5, 2.2, 3, 0, 0, 7); ctx.fill(); }
-    else if (mouth === 'yodel') { ctx.fillStyle = INK; ctx.beginPath(); ctx.ellipse(0.5, 4.5, 3.2, 4.4, 0, 0, 7); ctx.fill(); }
-    else if (mouth === 'grit') { ctx.beginPath(); ctx.moveTo(-3, 5); ctx.lineTo(3.5, 4.4); ctx.stroke(); }
-    else { ctx.beginPath(); ctx.arc(0.5, 3.2, 3.4, 0.4, 2.7); ctx.stroke(); }
+    ctx.beginPath(); ctx.arc(bo(0.9), -3.4 + bo(0.9), 12.5, Math.PI + 0.22, -0.22); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(0, -16.5, 5.2, 3.6, 0, 0, 7); ctx.fillStyle = ROPE; ctx.fill(); ctx.stroke();
+    pieEye(-4.6, -2.2, 3.4, blink || 0, lookA);
+    pieEye(4.6, -2.2, 3.4, blink || 0, lookA);
+    cheeks(-8.8, 4.2, 8.8, 4.2, 3.2);
+    inkLine(2);
+    if (mouth === 'o') { ctx.fillStyle = INK; ctx.beginPath(); ctx.ellipse(0.6, 6.2, 3, 4, 0, 0, 7); ctx.fill(); }
+    else if (mouth === 'yodel') { ctx.fillStyle = INK; ctx.beginPath(); ctx.ellipse(0.6, 6.4, 4.4, 5.8, 0, 0, 7); ctx.fill(); }
+    else if (mouth === 'grit') { ctx.beginPath(); ctx.moveTo(-4.2, 6.8); ctx.lineTo(4.8, 6); ctx.stroke(); }
+    else { ctx.beginPath(); ctx.arc(0.6, 4.4, 4.6, 0.4, 2.7); ctx.stroke(); }
+  }
+
+  /* overshoot-and-settle: every landed action rings through the body once */
+  const POSE = { hold: -1, mode: '', t0: -1e9, kind: 'latch' };
+  function poseImpulse(G, t) {
+    if (POSE.mode !== G.mode) {
+      if (G.mode === 'ledge' || G.mode === 'summit') { POSE.t0 = t; POSE.kind = 'plop'; }
+      POSE.mode = G.mode; POSE.hold = G.holdIdx;
+    } else if (G.holdIdx !== POSE.hold) {
+      POSE.kind = G.holdIdx > POSE.hold ? 'latch' : 'slip';
+      POSE.t0 = t;
+      POSE.hold = G.holdIdx;
+    }
+    if (reduced) return 0;
+    const e = (t - POSE.t0) / 460;
+    if (e < 0 || e >= 1) return 0;
+    const damp = (1 - e) * (1 - e);
+    const amp = POSE.kind === 'slip' ? -0.34 : POSE.kind === 'plop' ? 0.3 : 0.26;
+    return Math.sin(e * Math.PI * 3) * damp * amp;   // overshoot, swing back, settle
+  }
+  /* the implicit beat everything idles to (about 106 to the bar) */
+  function beatPulse(t) {
+    if (reduced) return 0;
+    const b = Math.sin(t * 0.0111);
+    return Math.pow(Math.abs(b), 3);
   }
 
   function drawClimber(sc, G, t, night) {
     const p = climberPos(G);
     const x = p.x, sy = s2y(p.y);
-    if (sy < -80 || sy > H + 80) return;
+    if (sy < -120 || sy > H + 120) return;
     const next = sc.holds[Math.min(G.holdIdx + 1, sc.holds.length - 1)];
     const dirX = next ? Math.sign(next.x - x) || 1 : 1;
     const reach = G.holding ? Math.min(1, G.reach) : 0;
     const emote = G.emote && t < G.emote.until ? G.emote.kind : null;
+    const ring = poseImpulse(G, t);
+    const beat = beatPulse(t);
 
     // rope to the last piton (red, sagging, boiling)
     const piton = sc.ledges[G.pitchIdx - 1];
     if (piton && G.mode === 'climb') {
       const px = piton.x + piton.w / 2 + 15, py = s2y(piton.y - 4);
-      ctx.strokeStyle = 'rgba(196,69,44,.85)'; ctx.lineWidth = 2;
+      ctx.strokeStyle = 'rgba(196,69,44,.85)'; ctx.lineWidth = 2.4;
       ctx.beginPath(); ctx.moveTo(px, py);
-      ctx.quadraticCurveTo((px + x) / 2 + 12 + bo(2), Math.max(py, sy) + 30 + bo(2), x + 2, sy + 10);
+      ctx.quadraticCurveTo((px + x) / 2 + 12 + bo(2), Math.max(py, sy) + 30 + bo(2), x + 2, sy + 12);
       ctx.stroke();
     }
 
@@ -1152,51 +1397,55 @@ const World = (() => {
     if (G.mode === 'summit') {
       // seated by the cairn; first beat is the yodel
       const yodeling = emote === 'yodel';
+      const st = ring + beat * 0.03;
+      ctx.translate(0, 8); ctx.scale(1 - st * 0.55, 1 + st); ctx.translate(0, -8);
       // legs dangling / folded
-      rubberLeg(2, -8, -6, 6, -2);
-      rubberLeg(4, -8, 12, 6, 2);
-      // sweater body
-      inkLine(2.2);
+      rubberLeg(2, -10, -8, 8, -2);
+      rubberLeg(5, -10, 14, 8, 2);
+      // sweater body, a round pear
+      inkLine(2.8);
       ctx.fillStyle = ROPE;
       ctx.beginPath();
-      ctx.moveTo(-7 + bo(0.8), -6);
-      ctx.quadraticCurveTo(-9, -20, -5 + bo(0.8), -24);
-      ctx.lineTo(5 + bo(0.8), -24);
-      ctx.quadraticCurveTo(9, -20, 7 + bo(0.8), -6);
+      ctx.moveTo(-9 + bo(0.9), -8);
+      ctx.quadraticCurveTo(-12, -24, -6.5 + bo(0.9), -30);
+      ctx.lineTo(6.5 + bo(0.9), -30);
+      ctx.quadraticCurveTo(12, -24, 9 + bo(0.9), -8);
       ctx.closePath(); ctx.fill(); ctx.stroke();
       ctx.fillStyle = '#FFFDF4';
-      ctx.beginPath(); ctx.arc(0, -17, 1.6, 0, 7); ctx.fill();
-      ctx.beginPath(); ctx.arc(0, -11, 1.6, 0, 7); ctx.fill();
+      ctx.beginPath(); ctx.arc(0, -21, 2, 0, 7); ctx.fill();
+      ctx.beginPath(); ctx.arc(0, -14, 2, 0, 7); ctx.fill();
       if (yodeling) {
-        rubberArm(-4, -20, -16, -34, -3);
-        rubberArm(4, -20, 16, -34, -3);
-        ctx.save(); ctx.translate(0, -31); ctx.rotate(-0.12); climberFace('yodel', 4.7, 0); ctx.restore();
+        rubberArm(-5, -24, -20, -42, -4);
+        rubberArm(5, -24, 20, -42, -4);
+        ctx.save(); ctx.translate(0, -41 - beat * 1.5); ctx.rotate(-0.12); climberFace('yodel', 4.7, 0); ctx.restore();
       } else {
-        rubberArm(-4, -20, -12, -4, 3);
-        rubberArm(4, -20, 13, -5, 3);
-        ctx.save(); ctx.translate(0, -31); climberFace('smile', 1.6, reduced ? 0 : (t % 4200 < 140 ? 1 : 0)); ctx.restore();
+        rubberArm(-5, -24, -15, -5, 4);
+        rubberArm(5, -24, 16, -6, 4);
+        ctx.save(); ctx.translate(0, -41 - beat * 1.5); climberFace('smile', 1.6, reduced ? 0 : (t % 4200 < 140 ? 1 : 0)); ctx.restore();
       }
       ctx.restore();
       return;
     }
 
     if (G.mode === 'ledge') {
-      // belay rest: seated on the shelf, legs kicking happily
+      // belay rest: seated on the shelf, kicking and bouncing to the beat
       const kick = reduced ? 0 : Math.sin(t * 0.006);
-      rubberLeg(0, -8, -7, 8 + kick * 3, -3);
-      rubberLeg(3, -8, 10, 8 - kick * 3, 3);
-      inkLine(2.2);
+      const st = ring + beat * 0.045;
+      ctx.translate(0, 8); ctx.scale(1 - st * 0.55, 1 + st); ctx.translate(0, -8);
+      rubberLeg(0, -8, -14, 13 + kick * 5, -7);
+      rubberLeg(4, -8, 18, 13 - kick * 5, 7);
+      inkLine(2.8);
       ctx.fillStyle = ROPE;
       ctx.beginPath();
-      ctx.moveTo(-7 + bo(0.8), -6); ctx.quadraticCurveTo(-9, -20, -5, -25);
-      ctx.lineTo(5, -25); ctx.quadraticCurveTo(9, -20, 7 + bo(0.8), -6);
+      ctx.moveTo(-9 + bo(0.9), -8); ctx.quadraticCurveTo(-12, -24, -6.5, -31);
+      ctx.lineTo(6.5, -31); ctx.quadraticCurveTo(12, -24, 9 + bo(0.9), -8);
       ctx.closePath(); ctx.fill(); ctx.stroke();
       ctx.fillStyle = '#FFFDF4';
-      ctx.beginPath(); ctx.arc(0, -17, 1.6, 0, 7); ctx.fill();
-      ctx.beginPath(); ctx.arc(0, -12, 1.6, 0, 7); ctx.fill();
-      rubberArm(-4, -20, -13, -8, 3);
-      rubberArm(4, -20, 12, -9, 3);
-      ctx.save(); ctx.translate(0, -32);
+      ctx.beginPath(); ctx.arc(0, -21, 2, 0, 7); ctx.fill();
+      ctx.beginPath(); ctx.arc(0, -15, 2, 0, 7); ctx.fill();
+      rubberArm(-5, -24, -16, -9, 4);
+      rubberArm(5, -24, 15, -10, 4);
+      ctx.save(); ctx.translate(0, -42 - beat * 1.8);
       climberFace(emote === 'whistle' ? 'o' : 'smile', 1.6, reduced ? 0 : (t % 3800 < 140 ? 1 : 0));
       ctx.restore();
       ctx.restore();
@@ -1206,39 +1455,57 @@ const World = (() => {
     // climbing pose
     const sway = reduced ? 0 : Math.sin(t * 0.0011) * 0.03;
     ctx.rotate(sway);
+    // squash and stretch: anticipation dip on press, stretch with the reach,
+    // and the overshoot-and-settle ring of the last latch or slip
+    let st = ring;
+    if (G.holding && !reduced) {
+      const a = Math.min(1, G.holdT / 0.13);
+      st += -0.14 * (1 - a) + reach * 0.2;
+    } else {
+      st += beat * 0.04;   // idling on the wall, bouncing gently to the beat
+    }
+    ctx.translate(0, 12); ctx.scale(1 - st * 0.55, 1 + st); ctx.translate(0, -12);
     // legs splayed on the wall
-    rubberLeg(0, -10, -9 + bo(1), 10, -4);
-    rubberLeg(2, -10, 9 + bo(1), 12, 4);
-    // the sweater torso, a bendy bean
-    inkLine(2.4);
+    rubberLeg(0, -13, -12 + bo(1), 11, -5);
+    rubberLeg(3, -13, 13 + bo(1), 13, 5);
+    // the sweater torso, a fat pear that wins over the limbs
+    inkLine(2.8);
     ctx.fillStyle = ROPE;
     ctx.beginPath();
-    ctx.moveTo(-6.5 + bo(0.8), -10);
-    ctx.quadraticCurveTo(-8.5, -22, -5 + bo(0.8), -28);
-    ctx.lineTo(5 + bo(0.8), -28);
-    ctx.quadraticCurveTo(8.5, -22, 6.5 + bo(0.8), -10);
+    ctx.moveTo(-10.5 + bo(0.9), -12);
+    ctx.quadraticCurveTo(-13.5, -26, -7.5 + bo(0.9), -33);
+    ctx.lineTo(7.5 + bo(0.9), -33);
+    ctx.quadraticCurveTo(13.5, -26, 10.5 + bo(0.9), -12);
+    ctx.quadraticCurveTo(6, -8.5, 0, -8.5);
+    ctx.quadraticCurveTo(-6, -8.5, -10.5 + bo(0.9), -12);
     ctx.closePath(); ctx.fill(); ctx.stroke();
     ctx.fillStyle = '#FFFDF4';
-    ctx.beginPath(); ctx.arc(0, -21, 1.6, 0, 7); ctx.fill();
-    ctx.beginPath(); ctx.arc(0, -15, 1.6, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.arc(0, -26, 2.2, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.arc(0, -18.5, 2.2, 0, 7); ctx.fill();
     // chalk bag
-    inkLine(1.8);
+    inkLine(2);
     ctx.fillStyle = '#E4D2A8';
-    ctx.beginPath(); ctx.ellipse(-8 * dirX, -10, 4, 5, 0, 0, 7); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(-11 * dirX, -9.5, 4.2, 5, 0, 0, 7); ctx.fill(); ctx.stroke();
 
-    // anchored arm to the current hold
-    rubberArm(-dirX * 4, -25, -dirX * 7, -4, 2);
+    // anchored arm: bows out from the shoulder and grips the very hold he stands on
+    inkLine(4.4);
+    ctx.strokeStyle = INK;
+    ctx.beginPath();
+    ctx.moveTo(-dirX * 6, -27);
+    ctx.quadraticCurveTo(-dirX * 18 + bo(1.4), -13 + bo(1.4), -dirX * 3, 0);
+    ctx.stroke();
+    glove(-dirX * 3, 1, 5.4, 1.35);
 
-    // reaching arm: rubber stretches toward the next hold
+    // reaching arm: rubber stretches toward the next hold, in front
     if (next) {
       const tx = (next.x - x) * (0.22 + 0.78 * reach);
       const ty = (s2y(next.y) - sy) * (0.22 + 0.78 * reach);
-      rubberArm(dirX * 4, -26, dirX * 4 + tx * 0.94, -26 + ty * 0.94, -6 * reach);
+      rubberArm(dirX * 6, -29, dirX * 5 + tx * 0.94, -31 + ty * 0.94, -7 * reach);
     }
 
     // face looks toward the next hold
-    const lookA = next ? Math.atan2(s2y(next.y) - (sy - 34), next.x - x) : 1.6;
-    ctx.save(); ctx.translate(0, -34);
+    const lookA = next ? Math.atan2(s2y(next.y) - (sy - 44), next.x - x) : 1.6;
+    ctx.save(); ctx.translate(0, -45 - beat * 1.6);
     const mouth = emote === 'whistle' ? 'o' : emote === 'ouch' ? 'grit' : (G.holding ? 'grit' : 'smile');
     climberFace(mouth, lookA, reduced ? 0 : (t % 4600 < 140 ? 1 : 0));
     ctx.restore();
@@ -1246,7 +1513,7 @@ const World = (() => {
 
     // pendulum arc while holding: the verb, exactly as the audition built it
     if (G.holding && G.mode === 'climb' && next && !G.reduced) {
-      const shX = x, shY = sy - 28;
+      const shX = x, shY = sy - 31;
       const ang0 = Math.atan2(s2y(next.y) - shY, next.x - shX);
       const R = 62;
       const span = 60 * Math.PI / 180;
@@ -1268,7 +1535,7 @@ const World = (() => {
       ctx.beginPath(); ctx.moveTo(shX, shY);
       ctx.lineTo(shX + Math.cos(mAng) * (R - 9), shY + Math.sin(mAng) * (R - 9));
       ctx.stroke();
-      glove(shX + Math.cos(mAng) * R, shY + Math.sin(mAng) * R, 5, mAng);
+      glove(shX + Math.cos(mAng) * R, shY + Math.sin(mAng) * R, 6, mAng);
     }
     if (G.holding && G.mode === 'climb' && next && G.reduced) {
       ctx.strokeStyle = GREEN; ctx.lineWidth = 3;
@@ -1436,21 +1703,22 @@ const World = (() => {
     ctx.save();
     ctx.translate(px, py);
     ctx.rotate(0.45);
+    if (!reduced) ctx.scale(0.92, 1.12);   // stretched by the speed of the drop
     // tucked rubber-hose body
-    rubberLeg(0, 8, -3, 17, -4);
-    rubberLeg(2, 8, 6, 17, 4);
-    inkLine(2.2);
+    rubberLeg(0, 10, -4, 20, -5);
+    rubberLeg(3, 10, 8, 20, 5);
+    inkLine(2.8);
     ctx.fillStyle = ROPE;
     ctx.beginPath();
-    ctx.moveTo(-6 + bo(0.8), 9); ctx.quadraticCurveTo(-8, -3, -5, -7);
-    ctx.lineTo(5, -7); ctx.quadraticCurveTo(8, -3, 6 + bo(0.8), 9);
+    ctx.moveTo(-8 + bo(0.9), 11); ctx.quadraticCurveTo(-10.5, -4, -6, -9);
+    ctx.lineTo(6, -9); ctx.quadraticCurveTo(10.5, -4, 8 + bo(0.9), 11);
     ctx.closePath(); ctx.fill(); ctx.stroke();
-    rubberArm(0, -4, 9, -16, -2);   // arm on the rope
-    ctx.save(); ctx.translate(-1, -14); ctx.rotate(-0.2); climberFace('o', 2.4, 0); ctx.restore();
+    rubberArm(0, -5, 11, -19, -2);   // arm on the rope
+    ctx.save(); ctx.translate(-1, -19); ctx.rotate(-0.2); climberFace('o', 2.4, 0); ctx.restore();
     // a little speed scarf
-    ctx.strokeStyle = '#FFFDF4'; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(-4, -8);
-    ctx.quadraticCurveTo(-14 + bo(2), -4 + bo(2), -20, -10 + bo(3));
+    ctx.strokeStyle = '#FFFDF4'; ctx.lineWidth = 3.6;
+    ctx.beginPath(); ctx.moveTo(-5, -10);
+    ctx.quadraticCurveTo(-17 + bo(2), -5 + bo(2), -24, -12 + bo(3));
     ctx.stroke();
     ctx.restore();
   }
@@ -1480,7 +1748,11 @@ const World = (() => {
     { k: 'butterfly', sky: true, dur: 6, biomes: ['meadow', 'forest', 'skyway'] },
     { k: 'cloudpuff', sky: true, dur: 5 },
     { k: 'balloon', sky: true, dur: 8, biomes: ['skyway', 'meadow', 'glacier'] },
+    { k: 'goat', sky: false, dur: 5.5 },
+    { k: 'snail', sky: false, dur: 7 },
   ];
+  /* gags that live on the wall plane ride the camera zoom */
+  const WALLGAGS = { marmot: 1, flower: 1, rockeye: 1, icicle: 1, goat: 1, snail: 1 };
   const gags = { active: [], nextIn: 3.5 };
 
   function tickGags(dt, G, t) {
@@ -1491,7 +1763,7 @@ const World = (() => {
     if (reduced || !scene) return;
     gags.nextIn -= dt;
     if (gags.nextIn <= 0 && gags.active.length < 2) {
-      gags.nextIn = 5 + Math.random() * 5;
+      gags.nextIn = 4 + Math.random() * 4;   // something small is always about to happen
       spawnGag(null, G);
     }
   }
@@ -1512,13 +1784,29 @@ const World = (() => {
     else if (kind.k === 'cloudpuff') { inst.x = W * (0.1 + Math.random() * 0.5); inst.y = 80 + Math.random() * (hz * 0.35); }
     else if (kind.k === 'balloon') { inst.x = W * (0.1 + Math.random() * 0.3); inst.y = hz * 0.75; }
     else if (kind.k === 'pine') { inst.x = W * (0.05 + Math.random() * 0.35); inst.gy = hz + 58; }
-    else if (kind.k === 'rockeye') {
-      const wy = camY + H * (0.3 + Math.random() * 0.3);
-      inst.wy = wy; inst.wx = edgeAt(scene.midE, scene, wy) - 40 - Math.random() * 60;
-    } else if (kind.k === 'marmot' || kind.k === 'flower' || kind.k === 'icicle') {
-      const wy = camY + H * (0.35 + Math.random() * 0.3);
+    else if (WALLGAGS[kind.k]) {
+      // spawn inside the zoomed frame, beside the route, so the closer camera sees it
+      const aw = H - 70 + camY - (CAM.ay + (H * 0.5 - CAM.dy) / CAM.z);
+      const wy = aw + (Math.random() - 0.5) * H * 0.55 / CAM.z;
       inst.wy = wy;
-      inst.wx = Math.random() < 0.5 ? edgeAt(scene.leftE, scene, wy) + 14 : edgeAt(scene.rightE, scene, wy) - 14;
+      const cxp = (G && G.scene) ? climberPos(G).x : edgeAt(scene.midE, scene, wy);
+      const side = Math.random() < 0.5 ? -1 : 1;
+      if (kind.k === 'rockeye') {
+        inst.wx = cxp - 100 - Math.random() * 70;
+      } else {
+        inst.wx = cxp + side * (110 + Math.random() * 90);
+        const le = edgeAt(scene.leftE, scene, wy) + 18, re = edgeAt(scene.rightE, scene, wy) - 18;
+        inst.wx = Math.max(le, Math.min(re, inst.wx));
+      }
+      inst.dir = side;
+      // keep clear of the route: nudge away from any nearby hold
+      if (G && G.scene) {
+        for (const hh of G.scene.holds) {
+          if (Math.abs(hh.y - inst.wy) < 42 && Math.abs(hh.x - inst.wx) < 46) {
+            inst.wy -= 52; break;
+          }
+        }
+      }
     }
     gags.active.push(inst);
     if (onEvent) onEvent('gag:' + kind.k);
@@ -1527,8 +1815,9 @@ const World = (() => {
   function forceGag(kindName, G) { return spawnGag(kindName, G); }
   function clearGags() { gags.active.length = 0; }
 
-  function drawGags(sc, G, t) {
+  function drawGags(sc, G, t, space) {
     for (const g of gags.active) {
+      if (space && ((space === 'wall') !== !!WALLGAGS[g.k])) continue;
       const f = g.t / g.dur;                       // 0..1 lifecycle
       const pop = Math.min(1, g.t * 3);            // ease-in
       const out = Math.min(1, (g.dur - g.t) * 3);  // ease-out
@@ -1543,6 +1832,8 @@ const World = (() => {
         case 'butterfly': drawGagButterfly(g, f, vis, t); break;
         case 'cloudpuff': drawGagCloudpuff(g, f, vis, t); break;
         case 'balloon': drawGagBalloon(g, f, vis, t); break;
+        case 'goat': drawGagGoat(g, f, vis, t); break;
+        case 'snail': drawGagSnail(g, f, vis, t); break;
       }
     }
   }
@@ -1788,10 +2079,91 @@ const World = (() => {
     ctx.restore();
   }
 
+  /* a goat head pokes out from behind a rock, chews thoughtfully, is gone */
+  function drawGagGoat(g, f, vis, t) {
+    const x = g.wx, sy = s2y(g.wy);
+    const up = Math.sin(Math.min(1, f * 2.4) * Math.PI / 2) * 26 * vis;
+    ctx.save();
+    ctx.translate(x, sy);
+    ctx.save();
+    ctx.beginPath(); ctx.rect(-24, -54, 48, 56); ctx.clip();
+    ctx.translate(0, 10 - up);
+    const chew = reduced ? 0 : Math.sin(t * 0.02) * 1.6;
+    inkLine(2);
+    ctx.fillStyle = '#EDE4CE';
+    ctx.beginPath(); ctx.ellipse(bo(0.8), bo(0.8), 10, 12, 0, 0, 7); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#F7F1E0';
+    ctx.beginPath(); ctx.ellipse(chew * 0.7, 6, 6.5, 5, 0, 0, 7); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#EDE4CE';
+    ctx.beginPath(); ctx.moveTo(-3 + chew * 0.5, 10); ctx.quadraticCurveTo(chew * 0.5, 21 + bo(1), 3 + chew * 0.5, 10); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#C9A96A';
+    ctx.beginPath(); ctx.moveTo(-6, -10); ctx.quadraticCurveTo(-13, -20, -8, -22); ctx.quadraticCurveTo(-6, -16, -3, -11); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(6, -10); ctx.quadraticCurveTo(13, -20, 8, -22); ctx.quadraticCurveTo(6, -16, 3, -11); ctx.closePath(); ctx.fill(); ctx.stroke();
+    const wag = reduced ? 0 : Math.sin(t * 0.012) * 0.4;
+    ctx.fillStyle = '#EDE4CE';
+    ctx.save(); ctx.translate(-10, -4); ctx.rotate(-0.5 + wag); ctx.beginPath(); ctx.ellipse(0, 0, 5.5, 2.6, 0, 0, 7); ctx.fill(); ctx.stroke(); ctx.restore();
+    ctx.save(); ctx.translate(10, -4); ctx.rotate(0.5 - wag); ctx.beginPath(); ctx.ellipse(0, 0, 5.5, 2.6, 0, 0, 7); ctx.fill(); ctx.stroke(); ctx.restore();
+    pieEye(-4, -3, 2.8, f > 0.55 && f < 0.62 ? 1 : 0, 1.4);
+    pieEye(4, -3, 2.8, 0, 1.4);
+    ctx.restore();
+    // the boulder it hides behind, painted stone with an ink line
+    inkLine(2.2);
+    ctx.fillStyle = '#A08A6C';
+    ctx.beginPath();
+    ctx.moveTo(-17 + bo(0.8), 10);
+    ctx.quadraticCurveTo(-15, 1 + bo(0.8), -6, 2);
+    ctx.quadraticCurveTo(0, -1 + bo(0.8), 7, 2);
+    ctx.quadraticCurveTo(16, 2, 17 + bo(0.8), 10);
+    ctx.quadraticCurveTo(0, 15, -17 + bo(0.8), 10);
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.restore();
+  }
+
+  /* a snail in a top hat inches along the wall and tips it politely */
+  function drawGagSnail(g, f, vis, t) {
+    const x = g.wx + f * 34 * (g.dir || 1), sy = s2y(g.wy);
+    const tip = f > 0.45 && f < 0.62;
+    const squish = reduced ? 0 : Math.sin(t * 0.008) * 0.08;
+    ctx.save();
+    ctx.translate(x, sy);
+    ctx.scale(g.dir || 1, 1);
+    ctx.globalAlpha = vis;
+    ctx.strokeStyle = 'rgba(255,253,244,.5)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(-14, 5); ctx.quadraticCurveTo(-26, 4 + bo(1), -38, 6); ctx.stroke();
+    inkLine(2);
+    ctx.fillStyle = '#D9C08A';
+    ctx.beginPath(); ctx.moveTo(-12, 5); ctx.quadraticCurveTo(0, 1 - squish * 10, 13, 5); ctx.quadraticCurveTo(15, 7, 12, 7);
+    ctx.lineTo(-10, 7); ctx.quadraticCurveTo(-14, 7, -12, 5); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#D98F84';
+    ctx.beginPath(); ctx.arc(-4 + bo(0.7), -4 + bo(0.7), 8 * (1 + squish), 0, 7); ctx.fill(); ctx.stroke();
+    inkLine(1.6);
+    ctx.beginPath(); ctx.arc(-4, -4, 5, 1.2, 6.6); ctx.arc(-4, -4, 2.4, 0.4, 5.2); ctx.stroke();
+    ctx.strokeStyle = INK; ctx.lineWidth = 4; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(6, 4); ctx.quadraticCurveTo(9, -2 + bo(1), 10, -6); ctx.stroke();
+    ctx.fillStyle = '#D9C08A';
+    inkLine(2);
+    ctx.beginPath(); ctx.arc(11, -8, 4.5, 0, 7); ctx.fill(); ctx.stroke();
+    pieEye(10, -9, 1.7, 0, 0.4);
+    const lift = tip ? -5 : 0;
+    ctx.fillStyle = INK;
+    ctx.beginPath(); ctx.ellipse(11, -12.5 + lift, 4.6, 1.6, tip ? -0.3 : 0, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.rect(8.4, -18.5 + lift, 5.2, 5.4); ctx.fill();
+    if (tip) glove(16, -16 + lift, 2.6, -0.5);
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
   /* ---------- musical notes (yodel, whistles, gag chimes) ---------- */
   const notes = [];
   function emitNotes(x, y, n, big) {
     if (reduced) return;
+    // map through whatever transform is live (zoom, shift) back to screen space
+    try {
+      const m = ctx.getTransform();
+      const px = (m.a * x + m.c * y + m.e) / dpr;
+      const py = (m.b * x + m.d * y + m.f) / dpr;
+      x = px; y = py;
+    } catch (e) {}
     for (let i = 0; i < (n || 1); i++) {
       if (notes.length > 14) notes.shift();
       notes.push({
@@ -1839,14 +2211,21 @@ const World = (() => {
     const snow = wxIntensity('snow');
     const breeze = wxIntensity('breeze');
     const fog = wxIntensity('fog');
+    if (snow > 0.03) {
+      // a cool breath over the whole frame so snowfall reads at a glance
+      ctx.globalAlpha = 0.07 * snow;
+      ctx.fillStyle = '#EAF2F8';
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalAlpha = 1;
+    }
     if (snow > 0.02 && !reduced) {
-      const want = Math.floor(52 * snow);
+      const want = Math.floor(72 * snow);
       const scatter = flakes.length < 6 && snow > 0.8;
       while (flakes.length < want) {
         flakes.push({
           x: Math.random() * W,
           y: scatter ? Math.random() * H : -10 - Math.random() * H * 0.3,
-          v: 26 + Math.random() * 30, ph: Math.random() * 6.28, big: Math.random() < 0.2,
+          v: 26 + Math.random() * 30, ph: Math.random() * 6.28, big: Math.random() < 0.25,
         });
       }
       for (let i = flakes.length - 1; i >= 0; i--) {
@@ -1856,7 +2235,7 @@ const World = (() => {
         if (f.y > H + 12) { if (flakes.length > want) { flakes.splice(i, 1); continue; } f.y = -10; f.x = Math.random() * W; }
         ctx.globalAlpha = 0.92 * Math.min(1, snow * 1.6);
         ctx.fillStyle = '#FFFFFF';
-        ctx.beginPath(); ctx.arc(f.x, f.y, f.big ? 3.6 : 2.5, 0, 7); ctx.fill();
+        ctx.beginPath(); ctx.arc(f.x, f.y, f.big ? 4.6 : 3.2, 0, 7); ctx.fill();
         if (f.big) {
           ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 1.3;
           for (let a = 0; a < 3; a++) {
@@ -1946,23 +2325,27 @@ const World = (() => {
   /* =================================================================
      FILM PASS: grain + scratches + iris on the overlay canvas
      ================================================================= */
+  /* Four grain plates, cycled at ~11 fps: the worn-print speckle is
+     printed strongly enough to read at DPR 1 (2 to 4 percent coverage). */
   let grainTiles = [], grainPatterns = [];
+  const GRAINPLATES = 4;
   function makeGrain() {
     grainTiles = []; grainPatterns = [];
-    for (let v = 0; v < 3; v++) {
+    for (let v = 0; v < GRAINPLATES; v++) {
       const c = document.createElement('canvas');
       c.width = c.height = 224;
       const g = c.getContext('2d');
       const rng = rngFor('grain' + v);
-      for (let i = 0; i < 240; i++) {
-        const a = 0.16 + rng() * 0.4;
-        g.fillStyle = rng() < 0.5 ? 'rgba(20,14,6,' + a * 0.55 + ')' : 'rgba(255,250,238,' + a * 0.5 + ')';
-        const r = rng() < 0.85 ? 0.7 + rng() : 1.6 + rng() * 1.6;
+      for (let i = 0; i < 170; i++) {
+        const a = 0.30 + rng() * 0.42;
+        g.fillStyle = rng() < 0.55 ? 'rgba(24,17,8,' + (a * 0.95).toFixed(3) + ')'
+                                   : 'rgba(255,250,238,' + (a * 0.8).toFixed(3) + ')';
+        const r = rng() < 0.86 ? 0.55 + rng() * 0.75 : 1.4 + rng() * 1.2;
         g.beginPath(); g.arc(rng() * 224, rng() * 224, r, 0, 7); g.fill();
       }
-      // a couple of tiny hairs
+      // a couple of hairs caught in the gate
       for (let i = 0; i < 2; i++) {
-        g.strokeStyle = 'rgba(20,14,6,.18)'; g.lineWidth = 0.8;
+        g.strokeStyle = 'rgba(24,17,8,.38)'; g.lineWidth = 0.9;
         const x = rng() * 224, y = rng() * 224;
         g.beginPath(); g.moveTo(x, y);
         g.quadraticCurveTo(x + 6 - rng() * 12, y + 10, x + 4 - rng() * 8, y + 22);
@@ -1987,7 +2370,7 @@ const World = (() => {
 
   function drawFilm(t, dt) {
     if (!fx) return;
-    const v = reduced ? 0 : Math.floor(t / 90) % 3;
+    const v = reduced ? 0 : Math.floor(t / 90) % GRAINPLATES;
     const cyc = reduced ? -1 : Math.floor(t / 640);
     const irisLive = iris.black || iris.phase !== 'none';
     const key = v + ':' + cyc + (irisLive ? ':iris' : '');
@@ -1995,16 +2378,26 @@ const World = (() => {
     filmKey = key;
     fx.clearRect(0, 0, W, H);
     if (!grainPatterns[v]) grainPatterns[v] = fx.createPattern(grainTiles[v], 'repeat');
-    fx.globalAlpha = 0.16;
+    fx.globalAlpha = 0.55;
     fx.fillStyle = grainPatterns[v];
     fx.fillRect(0, 0, W, H);
     fx.globalAlpha = 1;
     // an occasional vertical scratch
     if (!reduced && (cyc % 6) === 0) {
       const rx = ((cyc * 2654435761) >>> 8) % W;
-      fx.strokeStyle = 'rgba(30,22,10,.12)';
+      fx.strokeStyle = 'rgba(30,22,10,.14)';
       fx.lineWidth = 1;
       fx.beginPath(); fx.moveTo(rx, 0); fx.lineTo(rx + 3, H); fx.stroke();
+    }
+    // an occasional pop: a bright flash on one plate of one cycle in three
+    if (!reduced && (cyc % 3) === 1 && v === 2) {
+      const px = ((cyc * 2654435761) >>> 7) % W;
+      const py = 40 + ((cyc * 40503) >>> 3) % Math.max(1, H - 80);
+      const pg = fx.createRadialGradient(px, py, 0, px, py, 7);
+      pg.addColorStop(0, 'rgba(255,252,240,.85)');
+      pg.addColorStop(1, 'rgba(255,252,240,0)');
+      fx.fillStyle = pg;
+      fx.fillRect(px - 8, py - 8, 16, 16);
     }
     // iris
     if (iris.black) {
@@ -2045,6 +2438,14 @@ const World = (() => {
     irisCut, irisBlack, irisOpenFromBlack,
     forceWeather, forceGag, clearGags, emitNotes,
     get camY() { return camY; }, set camY(v) { camY = v; },
+    get camZ() { return CAM.z; },
+    climberScreen(G) {
+      const p = climberPos(G);
+      return {
+        x: (p.x - CAM.ax) * CAM.z + CAM.dx + (G.shiftX || 0),
+        y: (s2y(p.y) - CAM.ay) * CAM.z + CAM.dy,
+      };
+    },
     get W() { return W; }, get H() { return H; },
     get phaseName() { return PHASES[SKY.idx].k; },
     get weatherName() { return WX.cur; },

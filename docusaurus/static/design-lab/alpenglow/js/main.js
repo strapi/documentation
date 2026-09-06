@@ -177,12 +177,12 @@
   /* climber personality: whistling while idle, yodel visuals */
   function onIdle() {
     playSound('whistle');
-    const p = Game.climberXY();
-    World.emitNotes(p.x + (G.shiftX || 0), World.s2y(p.y) - 44, 2);
+    const p = World.climberScreen(G);
+    World.emitNotes(p.x, p.y - 66, 2);
   }
   function onYodel() {
-    const p = { x: (G.scene.summitX || World.W * 0.6), y: G.scene.summitY };
-    World.emitNotes(p.x + (G.shiftX || 0) - 8, World.s2y(p.y) - 40, 3, true);
+    const p = World.climberScreen(G);
+    World.emitNotes(p.x - 8, p.y - 62, 3, true);
     if (!G.reduced) setTimeout(() => {
       // the echo returns, smaller, from the far ridge
       World.emitNotes(World.W * 0.22, World.H * 0.3, 2);
@@ -413,8 +413,10 @@
       'Weather rotates between clear air, a puffing breeze, snow and fog, easing from one to the next. ' +
       'The tallest neighbor peak dozes. The sun blinks. Clouds puff. ' +
       'A small repertory of gags (a bird tipping its hat, a whistling marmot, a shimmying pine, a blooming flower, ' +
-      'a rock that opens one eye, ringing icicles, a butterfly, a puffing cloud, a passing balloon) rotates through the scene, ' +
-      'never the same gag twice at once. All of it is decoration; none of it is data.</p>' +
+      'a rock that opens one eye, ringing icicles, a butterfly, a puffing cloud, a passing balloon, a chewing goat, ' +
+      'a snail in a top hat) rotates through the scene, never the same gag twice at once. ' +
+      'The camera keeps the climber close and breathes with the climb, easing wider at belays, summits and open books. ' +
+      'All of it is decoration; none of it is data.</p>' +
 
       '<h3>The 12 night ascents (by headlamp)</h3><div class="cols2">' + nightRows + '</div>' +
       '<h3>The 50 open problems, faces no fixed rope has reached</h3><div class="cols2">' + openRows + '</div>' +
@@ -431,7 +433,7 @@
       'They are always drawn in your rope-red and never counterfeit a fact from the corpus.</p>' +
 
       '<h3>Reduced motion</h3><p>With reduced motion set, the pendulum becomes a no-timing reach, rappels become captioned cuts, ' +
-      'gags and weather hold still, and the film grain stops boiling. Every page, signature and badge stays reachable.</p>' +
+      'the camera holds one mid-close framing, gags and weather hold still, and the film grain stops boiling. Every page, signature and badge stays reachable.</p>' +
 
       '<p style="margin-top:18px"><button class="replay">Replay the title cards</button></p>';
 

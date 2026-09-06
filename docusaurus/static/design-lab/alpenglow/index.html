@@ -14,6 +14,14 @@
 <!-- THE WORLD: one Canvas 2D panorama, painted in gouache, inked on top -->
 <canvas id="world"></canvas>
 
+<!-- hand-drawn wobble for the HUD ink cards (never applied to the summit book) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="wobble" x="-4%" y="-6%" width="108%" height="112%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
 <!-- QUIET TOP BAR (utility path, sacred) -->
 <header id="topbar">
   <div class="tb-left">
