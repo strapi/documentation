@@ -172,6 +172,13 @@ const JUMP_CARRY_V = 190;      /* px/s the space-bar jump carries you over the b
 const SEASON_DAYS = [31, 92, 240];   /* spring | summer | autumn | winter */
 const SEASON_NAMES = ['SPRING', 'SUMMER', 'AUTUMN', 'WINTER'];
 const BUBBLE_RANGE = 110, BUBBLE_LIFE = 4.6, BUBBLE_PAIR_CD = 75, BUBBLE_GAP = 7;
+/* THE TYPE GROWS (prepolish5, owner order: the in-game type was a shade
+   small). Every canvas and UI text scales by 1.5 — signposts, waymarkers,
+   walker names, bubbles, the panels, the HUD — EXCEPT the reading strip:
+   the documentation text keeps its reading size. Canvas text takes the
+   factor here, in one place, so the label collision plan measures the
+   same glyphs it paints. */
+const TYPE_SCALE = 1;   // owner: the x1.5 sweep was worse than before - world type back to its original size
 
 /* THE WAYS OFF THE TRAIL, PLACED DEEP (wave 4, round 2 — owner order):
    no crossing of any kind may stand within the first fifteen pages of
@@ -1137,6 +1144,10 @@ function resize() {
   groundY = Math.round(visH - foot);
   horizonY = Math.round(Math.min(visH * 0.565, groundY - 96));
   AVX = Math.round(W * 0.40);
+  /* the DOM band the speaking law reads has just been re-laid out with
+     everything else: make it re-measure on the next spoken frame */
+  try { bandT = -9; if (speaking) toastDodge(), document.body.classList.add('speaking'); }
+  catch (e) { /* not built yet */ }
   needsDraw = true;
 }
 window.addEventListener('resize', resize);
@@ -1280,12 +1291,21 @@ function toast(txt) {
   toastQ.push(txt);
   if (!toastBusy) nextToast();
 }
+/* WHERE THE TOAST BAND SITS, IN THE SCENE'S OWN COORDINATES (prepolish5).
+   The toast is a DOM plate and always paints over the canvas, so a speech
+   bubble that rose into it lost a line behind it. That was true of the
+   build before this round too — old and new measured side by side in
+   qa/pp5-typeab.mjs — but the type sweep put it on film, so the words now
+   step over the band instead of under it. Measured once when a toast
+   appears (and again on a resize), never per frame; #world is fixed at
+   0,0, so the viewport rect IS the scene rect. */
 function nextToast() {
   const txt = toastQ.shift();
-  if (!txt) { toastBusy = false; toastEl.hidden = true; return; }
+  if (!txt) { toastBusy = false; toastEl.hidden = true; bandT = -9; return; }
   toastBusy = true;
   toastEl.textContent = txt;
   toastEl.hidden = false;
+  bandT = -9;               /* the speaking law re-reads the band at once */
   setTimeout(nextToast, 2900);
 }
 
@@ -1601,8 +1621,18 @@ function drawDress(sx, sy, h, lean, shY, hipY, ink, dress, face) {
   }
 }
 
+/* THE READABILITY FLOOR (owner: the world signage and the walker provenance line
+   were too small to read). Sizes at or above 10 are untouched; below it the type is
+   lifted toward the floor, hardest at the smallest sizes, so nothing else shifts:
+   6.2 -> 8.3, 7 -> 8.7, 7.5 -> 8.9, 8.5 -> 9.3, 9.5 -> 9.8, 10 and up unchanged. */
+const TYPE_FLOOR = 10, FLOOR_KEEP = 0.45;
+function readable(size) {
+  const s = size || 10;
+  return s >= TYPE_FLOOR ? s : TYPE_FLOOR + (s - TYPE_FLOOR) * FLOOR_KEEP;
+}
+
 function label(txt, sx, sy, size, color, align, ls) {
-  cx.font = (size || 10) + 'px Georgia, serif';
+  cx.font = (readable(size) * TYPE_SCALE) + 'px Georgia, serif';
   cx.textAlign = align || 'center';
   try { cx.letterSpacing = (ls === undefined ? 1.5 : ls) + 'px'; } catch (e) { }
   cx.fillStyle = color || INKS.cream;
@@ -2330,8 +2360,8 @@ function drawStretch(pi, basePal, dt, wNsky) {
     drawFigure(sx - 2, gy - 1.4, wk.h * 0.94, wx / 24, 'rgba(255,243,224,0.5)', null, wkMoving, wopts);
     drawFigure(sx, gy, wk.h * 0.94, wx / 24, mix(pal.ink, INKS.violet, wk.isTop ? 0.3 : 0.12), null, wkMoving, wopts);
     if (paused) drawGesture(S.bubble, sx, gy, wk, pal);
-    label(wk.name, sx, gy - 74 * wk.h, wk.isTop ? 9.5 : 8.5, 'rgba(255,243,224,0.88)', 'center', 1);
-    if (wk.dates) label('WALKED HERE ' + wk.dates, sx, gy - 74 * wk.h + 11, 7, 'rgba(255,162,107,0.8)', 'center', 0.6);
+    label(wk.name, sx, gy - 74 * wk.h, wk.isTop ? 13.5 : 12.5, 'rgba(255,243,224,0.95)', 'center', 1);
+    if (wk.dates) label('WALKED HERE ' + wk.dates, sx, gy - 74 * wk.h + 15, 10.5, 'rgba(255,175,120,0.92)', 'center', 0.6);
     frameWalkers.push({ wk, wx, sx, gy, page: p });
   }
 }
@@ -2935,7 +2965,7 @@ function dogSil(px, py, ink, collar) {
     cx.beginPath(); cx.moveTo(-14, -5); cx.lineTo(-20, -2); cx.stroke();
     if (collar && !REDUCED && Math.floor(S.t * 1.4) % 2) {
       cx.fillStyle = INKS.cream; cx.globalAlpha = 0.7;
-      cx.font = '9px Georgia, serif'; cx.textAlign = 'center';
+      cx.font = (9 * TYPE_SCALE) + 'px Georgia, serif'; cx.textAlign = 'center';
       cx.fillText('z', 8, -14);
       cx.globalAlpha = 1; cx.fillStyle = ink;
     }
@@ -3111,9 +3141,9 @@ function drawBench(b, pal) {
 const LBL = { rank: new Map(), boxes: [], first: null, approach: 300, stoneHold: new Set() };
 const HUB_HINTED = {};
 function lblBox(x, topY, text, size) {
-  const w = Math.max(30, String(text).length * size * 0.62);
+  const w = Math.max(30, String(text).length * readable(size) * TYPE_SCALE * 0.62);
   const sx = w2s(x);
-  return { x0: sx - w / 2, x1: sx + w / 2, y0: topY - 2, y1: topY + size + 4 };
+  return { x0: sx - w / 2, x1: sx + w / 2, y0: topY - 2, y1: topY + size * TYPE_SCALE + 4 };
 }
 function labelPlanBuild(pi0, pi1) {
   LBL.rank.clear(); LBL.boxes.length = 0; LBL.first = null;
@@ -3337,72 +3367,139 @@ function drawTerrace(tr, pal, p, wN) {
 }
 
 /* ---------------- greetings: bubbles, gestures, waves ------------------ */
-function bubbleFacts(name, p) {
+/* THE WALKERS FIND THEIR WORDS (prepolish5, owner order: they always said
+   the same thing). Every walker now draws from a pool of AT LEAST SIX
+   distinct phrase templates, each one still provably true of the gitlog:
+   real commit counts, real dates, real day counts, the other stretches
+   this hand has really committed to and is walking toward. The pool is
+   rotated globally: the last four template ids are barred, so five
+   walkers met in a row never repeat a template. Each entry carries its
+   template id for that rotation; bubbleFacts() keeps its old shape (an
+   array of the true sentences) for every probe that reads it. */
+function bubbleToward(name, p) {
+  /* the nearest OTHER stretch this hand has really committed on, east
+     first — provenance, not fiction */
+  let east = null, west = null;
+  for (const q of M.pages) {
+    if (q === p || !q.prov || !(q.prov.authors || []).includes(name)) continue;
+    if (q.start > p.start) { if (!east || q.start < east.start) east = q; }
+    else if (!west || q.start > west.start) west = q;
+  }
+  return east || west;
+}
+function bubblePool(name, p) {
   const v = p.prov;
   const agg = M.authorAgg.get(name) || { pages: 1, top: 0 };
   const sole = (v.authors || []).length === 1;
   const isTop = v.topAuthor === name;
-  const f = [];
+  const out = [];
+  const F = (id, t) => out.push({ id, text: t });
+  /* --- the specific claims, exactly the true ones the trail always made --- */
   if (sole && v.commits === 1) {
-    f.push('I came once, fixed one thing, and walked on.');
-    f.push('One visit, one fix; the trail keeps the rest.');
+    F('sole1', 'I came once, fixed one thing, and walked on.');
+    F('sole1', 'One visit, one fix; the trail keeps the rest.');
   }
   if (sole && v.commits > 1) {
-    f.push(capFirst('all ' + numw(v.commits) + ' commits on this stretch are mine.'));
-    f.push('Every one of the ' + numw(v.commits) + ' commits here is mine.');
+    F('allmine', capFirst('all ' + numw(v.commits) + ' commits on this stretch are mine.'));
+    F('allmine', 'Every one of the ' + numw(v.commits) + ' commits here is mine.');
   }
   if (!sole && v.commits === v.authors.length && v.commits > 1) {
     /* N commits by N authors: provably one apiece */
-    f.push(capFirst(numw(v.authors.length)) + ' of us came; each left exactly one commit. Mine is here.');
-    f.push('One commit apiece from ' + numw(v.authors.length) + ' walkers, and one of them is mine.');
+    F('apiece', capFirst(numw(v.authors.length)) + ' of us came; each left exactly one commit. Mine is here.');
+    F('apiece', 'One commit apiece from ' + numw(v.authors.length) + ' walkers, and one of them is mine.');
   } else if (!sole && isTop && v.commits > 1) {
     if (v.authors.length === 2 && v.commits % 2 === 1) {
       /* two hands, odd count: the top hand provably holds the majority */
-      f.push('Most of the ' + numw(v.commits) + ' commits on this stretch are mine.');
-      f.push('Of the ' + numw(v.commits) + ' commits here, the greater share is mine.');
+      F('share', 'Most of the ' + numw(v.commits) + ' commits on this stretch are mine.');
+      F('share', 'Of the ' + numw(v.commits) + ' commits here, the greater share is mine.');
     } else {
-      f.push('Of the ' + numw(v.commits) + ' commits here, the greater share is mine.');
-      f.push('No hand has left more commits on this stretch than mine.');
+      F('share', 'Of the ' + numw(v.commits) + ' commits here, the greater share is mine.');
+      F('share', 'No hand has left more commits on this stretch than mine.');
     }
   }
   if (isTop && v.careDays > 0 && (sole || v.commits > v.authors.length)) {
-    f.push('I kept this stretch for ' + fmt(v.careDays) + ' days.');
-    f.push('This ground has been kept ' + fmt(v.careDays) + ' days; I kept it.');
+    F('keeper', 'I kept this stretch for ' + fmt(v.careDays) + ' days.');
+    F('keeper', 'This ground has been kept ' + fmt(v.careDays) + ' days; I kept it.');
   }
   if (sole && v.night > 0) {
-    f.push('I was here at three in the morning. ' +
+    F('night', 'I was here at three in the morning. ' +
       (v.night === 1 ? 'Once.' : v.night === 2 ? 'Twice.' : capFirst(numw(v.night)) + ' times.'));
   }
   if (!sole && v.night > 0) {
-    f.push(capFirst(numw(v.night)) + ' of the commits here landed long after midnight.');
+    F('night', capFirst(numw(v.night)) + ' of the commits here landed long after midnight.');
   }
   if (!sole && v.first) {
-    f.push(capFirst(numw(v.authors.length)) + ' of us have kept this stretch since ' + v.first + '.');
-  }
-  if (agg.pages > 3) {
-    f.push('This is one of ' + fmt(agg.pages) + ' stretches that know my step.');
-    f.push('I have walked ' + fmt(agg.pages) + ' stretches of this trail.');
+    F('since', capFirst(numw(v.authors.length)) + ' of us have kept this stretch since ' + v.first + '.');
   }
   if (isTop && agg.top >= 5) {
-    f.push('I keep ' + fmt(agg.top) + ' stretches of this trail; this one among them.');
+    F('keep', 'I keep ' + fmt(agg.top) + ' stretches of this trail; this one among them.');
   }
   if (!isTop && v.topAuthor && v.topAuthor !== name && v.commits > v.authors.length) {
-    f.push('I lent a hand here; ' + v.topAuthor + ' keeps this stretch.');
+    F('lent', 'I lent a hand here; ' + v.topAuthor + ' keeps this stretch.');
   }
-  if (!f.length && v.first && v.last) {
-    f.push('This stretch has carried boots from ' + v.first + ' to ' + v.last + '.');
+  /* --- the universal claims (prepolish5), so no walker is ever down to
+     one line: every one still read straight off the provenance --- */
+  F('hands', sole
+    ? 'No hand but mine has kept this stretch.'
+    : capFirst(numw(v.authors.length)) + ' hands have tended this stretch; mine is one of them.');
+  if (v.first) F('firsttend', 'This stretch was first tended on ' + v.first + '.');
+  if (v.last) F('lasttend', 'This stretch was last tended on ' + v.last + '.');
+  if (v.careDays > 0) F('care', 'This ground has stood tended for ' + fmt(v.careDays) + ' days.');
+  if (agg.pages > 3) {
+    F('pages', 'This is one of ' + fmt(agg.pages) + ' stretches that know my step.');
+    F('pages', 'I have walked ' + fmt(agg.pages) + ' stretches of this trail.');
+  } else if (agg.pages > 1) {
+    F('pages', 'I have walked ' + numw(agg.pages) + ' stretches of this trail.');
+  } else {
+    F('pages', 'This is the only stretch of this trail that knows my step.');
   }
-  return f;
+  const tw = bubbleToward(name, p);
+  if (tw) {
+    F('toward', 'I am walking on toward ' + tw.title + '; that stretch knows my hand too.');
+  } else {
+    const nb = M.pages[p.idx + 1] || null, pv = M.pages[p.idx - 1] || null;
+    if (nb) F('toward', 'East of here the trail runs on to ' + nb.title + '.');
+    else if (pv) F('toward', 'West of here the trail runs back to ' + pv.title + '.');
+  }
+  if (!out.length && v.first && v.last) {
+    F('boots', 'This stretch has carried boots from ' + v.first + ' to ' + v.last + '.');
+  }
+  return out;
 }
+/* the old shape, for every probe that reads it: the true sentences alone */
+function bubbleFacts(name, p) { return bubblePool(name, p).map(f => f.text); }
+
+/* the global rotation: the last four template ids and the last three
+   openers are barred, so a row of meetings never sounds like a loop */
+const BUB_ROT = { recent: [], opener: [] };
+const BUB_OPENERS_DAY = ['Well met.', 'Ho there.', 'Fair walking.',
+  'A good hour for it.', 'You keep a good pace.', 'Fine light today.'];
+const BUB_OPENERS_NIGHT = ['Evening, walker.', 'A quiet night for it.',
+  'Well met.', 'Ho there.', 'Fair walking.', 'The dark comes gently here.'];
 
 function spawnBubble(fw, wN) {
-  const facts = bubbleFacts(fw.wk.name, fw.page);
-  if (!facts.length) return;
+  const pool = bubblePool(fw.wk.name, fw.page);
+  if (!pool.length) return;
   const r = rngFor('bubble:' + fw.page.slug + ':' + fw.wk.name);
-  const text = facts[Math.floor(r() * facts.length) % facts.length];
+  /* rotation: bar the last four template ids, then draw as before */
+  let cands = pool.filter(x => !BUB_ROT.recent.includes(x.id));
+  if (!cands.length) cands = pool;
+  const pick = cands[Math.floor(r() * cands.length) % cands.length];
+  BUB_ROT.recent.push(pick.id);
+  while (BUB_ROT.recent.length > 4) BUB_ROT.recent.shift();
+  const text = pick.text;
+  /* the greeting varies too: a short opener, never the same twice
+     running, night-aware; it rides the bubble as its own first words
+     and is NOT one of the facts */
+  const OP = wN > 0.45 ? BUB_OPENERS_NIGHT : BUB_OPENERS_DAY;
+  let oc = OP.filter(o => !BUB_ROT.opener.includes(o));
+  if (!oc.length) oc = OP;
+  const opener = oc[Math.floor(r() * oc.length) % oc.length];
+  BUB_ROT.opener.push(opener);
+  while (BUB_ROT.opener.length > 3) BUB_ROT.opener.shift();
   const gid = Math.floor(r() * 2);
   const gesture = (wN > 0.5 && r() < 0.5) ? 'lantern' : (gid === 0 ? 'hand' : 'hat');
-  S.bubble = { wk: fw.wk, page: fw.page, text, gesture, t0: S.t };
+  S.bubble = { wk: fw.wk, page: fw.page, text, opener, gesture, t0: S.t };
   S.wave = 1;   /* the player waves back */
   audEv('greet', fw.wx);
   PACK.greeted++;
@@ -3414,6 +3511,35 @@ function endBubble() {
   if (!S.bubble) return;
   S.bubble = null;
   S.bubbleGapT = S.t + BUBBLE_GAP;
+}
+
+/* THE TRAIL DOES NOT TALK OVER SOMEBODY WHO IS SPEAKING (prepolish5).
+   Stacked at 900 px the trail canvas is 450 px tall: the HUD owns
+   everything down to about 188 and the toast band runs 204 to 241, which
+   is exactly the height of a walker's head — there is no room for a
+   speech plate between them, and a toast crossed the words. (It did
+   before this round too; the grown type only made it common.) So while
+   somebody is speaking the toast band steps DOWN, over the open ground,
+   and steps back the moment the words are done. Nothing moves when
+   nobody is speaking, the plate is the same plate, and how far it steps
+   is measured from the room actually there — never a magic number. */
+let speaking = false;
+function toastDodge() {
+  const ht = document.getElementById('hudTrail');
+  if (!toastEl || !ht) return;
+  document.body.classList.remove('speaking');
+  const r = toastEl.getBoundingClientRect();
+  const q = ht.getBoundingClientRect();
+  const room = (q.height ? q.top : (visH || innerHeight)) - 10 - r.bottom;
+  document.documentElement.style.setProperty('--toast-dodge',
+    Math.round(clamp(room, 0, 64)) + 'px');
+}
+function setSpeaking(on) {
+  if (on === speaking) return;
+  speaking = on;
+  if (on) toastDodge();
+  document.body.classList.toggle('speaking', on);
+  bandT = -9;                       /* the band has moved: re-measure it */
 }
 
 function updateGreetings(dt, wN) {
@@ -3439,6 +3565,7 @@ function updateGreetings(dt, wN) {
       if (S.bubble) { S.bubble.sx = best.sx; S.bubble.gy = best.gy; S.bubble.h = best.wk.h; }
     }
   }
+  setSpeaking(!!S.bubble);
   /* walker-walker crossings greet ambiently — a hand, no words */
   for (let i = 0; i < frameWalkers.length; i++) {
     for (let j = i + 1; j < frameWalkers.length; j++) {
@@ -3486,30 +3613,111 @@ function drawGesture(b, sx, gy, wk, pal) {
   cx.lineCap = 'butt';
 }
 
+/* the band the DOM paints over the scene: the HUD's two corners, the trail
+   bar, and a live toast. Read at most a few times a second, and only while
+   somebody is speaking. */
+/* var, not let: resize() and the toast queue both poke bandT and they can
+   run before this line does */
+var bandT = -9, bandBoxes = [];
+function bubbleBand() {
+  if (S.t - bandT < 0.4) return bandBoxes;
+  bandT = S.t;
+  bandBoxes = [];
+  for (const id of ['hudLeft', 'hudRight', 'hudTrail', 'toast']) {
+    const e = document.getElementById(id);
+    if (!e || e.hidden) continue;
+    const q = e.getBoundingClientRect();
+    if (q.width && q.height) bandBoxes.push({ x0: q.left, y0: q.top, x1: q.right, y1: q.bottom });
+  }
+  return bandBoxes;
+}
+function bubbleWrap(text, wrap) {
+  const words = text.split(' ');
+  const lines = [];
+  let line = '';
+  for (const wd of words) {
+    const t = line ? line + ' ' + wd : wd;
+    if (cx.measureText(t).width > wrap && line) { lines.push(line); line = wd; }
+    else line = t;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
 function drawBubble(b) {
   if (b.sx === undefined) return;
   /* the words grow from the walker — hard-edged, tail at the speaker */
   const gt = REDUCED ? 1 : clamp((S.t - b.t0) / 0.3, 0, 1);
   const scale = [0.35, 0.6, 0.85, 1][Math.min(3, Math.floor(gt * 4))];
-  cx.font = '11.5px Georgia, serif';
+  cx.font = (14.5 * TYPE_SCALE) + 'px Georgia, serif';
   cx.textAlign = 'left';
-  const words = b.text.split(' ');
-  const lines = [];
-  let line = '';
-  for (const wd of words) {
-    const t = line ? line + ' ' + wd : wd;
-    if (cx.measureText(t).width > 280 && line) { lines.push(line); line = wd; }
-    else line = t;
-  }
-  if (line) lines.push(line);
-  let bw = 0;
-  for (const l of lines) bw = Math.max(bw, cx.measureText(l).width);
-  bw += 26;
-  const bh = lines.length * 15 + 16;
+  /* the opener rides ahead of the fact as the walker's own greeting */
+  const full = (b.opener ? b.opener + ' ' : '') + b.text;
+  const lineH = 19 * TYPE_SCALE;
   const headY = b.gy - 74 * b.h - 22;
   const tipX = b.sx + 2, tipY = headY + 6;
-  const bx = clamp(b.sx - bw * 0.35, 8, W - bw - 8);
-  const by = tipY - 14 - bh;
+
+  /* THE PLATE FITS THE ROOM IT HAS (prepolish5). The HUD's corners and a
+     live toast are DOM and always paint over the canvas; a plate that
+     climbed into them lost a line behind them. Grown type made a tall
+     plate the common case, so the law is now: the words SPREAD WIDER
+     rather than climb. The wrap starts exactly where it always started —
+     on a short line, on a roomy window, this loop runs once and the plate
+     is the plate it always was — and only widens while the plate would
+     still reach into the band above it. */
+  let wrap = 350 * TYPE_SCALE;
+  let lines = bubbleWrap(full, wrap);
+  let bw = 0, bh = 0, bx = 0, by = 0;
+  const measure = () => {
+    bw = 0;
+    for (const l of lines) bw = Math.max(bw, cx.measureText(l).width);
+    bw += 26;
+    bh = lines.length * lineH + 16;
+    bx = clamp(b.sx - bw * 0.35, 8, Math.max(8, W - bw - 8));
+    by = tipY - 14 - bh;
+  };
+  measure();
+  const ceilFor = () => {
+    let c = 4;
+    for (const q of bubbleBand()) {
+      if (q.y1 >= tipY) continue;                    /* below the plate */
+      if (bx >= q.x1 || q.x0 >= bx + bw) continue;   /* beside it       */
+      if (q.y1 + 4 > c) c = q.y1 + 4;
+    }
+    return c;
+  };
+  for (let pass = 0; pass < 4; pass++) {
+    const ceil = ceilFor();
+    if (by >= ceil) break;                           /* it already fits */
+    const room = Math.max(lineH + 16, (tipY - 14) - ceil);
+    const want = Math.max(1, Math.floor((room - 16) / lineH));
+    if (lines.length <= want) break;                 /* cannot do better */
+    const cap = Math.max(280 * TYPE_SCALE, W - 60);
+    if (wrap >= cap) break;
+    wrap = Math.min(cap, wrap * 1.45);
+    const nl = bubbleWrap(full, wrap);
+    if (nl.length >= lines.length) break;            /* widening bought nothing */
+    lines = nl;
+    measure();
+  }
+  /* one last inch: a plate that is already as short as it can be may still
+     graze the band by a few pixels. It is allowed to SINK — the 14 px of
+     air it normally keeps over the head, and ten more, so at worst it
+     rests on the head with a stub of a tail — and only if sinking
+     actually clears the band. Where it cannot clear, the plate stays
+     exactly where it always stood. */
+  {
+    const ceil = ceilFor();
+    if (by < ceil && by + 24 >= ceil) by = Math.min(ceil, by + 24);
+  }
+  /* whatever room is left, the plate never climbs off the top of the scene */
+  if (by < 4) by = 4;
+  /* the plate the frame actually painted, so a probe reads the drawing
+     instead of re-deriving it and agreeing with itself (the same service
+     LBL.boxes does for the signage) */
+  S.bubbleBox = { x0: bx, y0: by, x1: bx + bw, y1: by + bh, lines: lines.length,
+    /* where the INK of the words is, as opposed to the plate around it */
+    t0: by + 8, t1: by + 8 + lines.length * lineH };
   cx.save();
   cx.translate(tipX, tipY);
   cx.scale(scale, scale);
@@ -3525,9 +3733,9 @@ function drawBubble(b) {
   cx.strokeStyle = INK_DARK; cx.lineWidth = 1.6;
   cx.beginPath(); cx.moveTo(tipX - 9, by + bh); cx.lineTo(tipX, tipY); cx.lineTo(tipX + 7, by + bh); cx.stroke();
   cx.fillStyle = INK_DARK;
-  cx.font = '11.5px Georgia, serif';
+  cx.font = (14.5 * TYPE_SCALE) + 'px Georgia, serif';
   cx.textAlign = 'left';
-  lines.forEach((l, i) => cx.fillText(l, bx + 13, by + 20 + i * 15));
+  lines.forEach((l, i) => cx.fillText(l, bx + 13, by + 8 + 11.5 * TYPE_SCALE + i * lineH));
   cx.restore();
 }
 
@@ -4076,7 +4284,7 @@ function openGate(g) {
   g2.setLineDash([]);
   g2.fillStyle = INKS.rose; g2.beginPath(); g2.arc(x1, ty + 4, 4, 0, 7); g2.fill();
   g2.fillStyle = INKS.apricot; g2.beginPath(); g2.arc(x2, ty + 4, 4, 0, 7); g2.fill();
-  g2.font = '10px Georgia, serif'; g2.textAlign = 'center'; g2.fillStyle = INKS.cream;
+  g2.font = (10 * TYPE_SCALE) + 'px Georgia, serif'; g2.textAlign = 'center'; g2.fillStyle = INKS.cream;
   if (Math.abs(x2 - x1) < 56) {
     g2.fillText('HERE', x1, ty + 22);
     g2.fillText('THERE', x2, ty + 34);
@@ -4311,17 +4519,19 @@ function fillKey() {
       'kept for the three rarest moments: your first arrival at Land’s End, every page of one ' +
       'community walked, and the whole trail walked.'],
     ['sw-score',
-      'THE SCORE GROWS WITH THE JOURNEY — the further you have read, the richer the moments ' +
-      'sound. Under a tenth of the trail it is the music box alone; a sparse piano joins at a ' +
-      'tenth, a low pad at a quarter, strings at 45 in the hundred, a warm counter-melody at 70, ' +
-      'and past 90 the whole ensemble. Progress is one honest number: the share of the trail\u2019s ' +
-      'own distance your boots have covered — unique ground, kept across reloads. Walking the ' +
-      'whole way to the end cairn is 100. A gate carries you, it does not walk for you: the ' +
-      'stretches it skips stay unwalked, and reading is never required — the music rewards the ' +
-      'journey. A new voice enters exposed on the next moment, and the HUD names ' +
-      'it once. THE SILENCE IS UNCHANGED: layers make a moment thicker, never more frequent — ' +
-      'the same triggers (golden hour, nightfall, a biome border, an overlook, a sky clearing), ' +
-      'the same real quiet between them, at every rung.'],
+      'THE SCORE GROWS WITH THE JOURNEY — the deeper you stand, the richer the moments ' +
+      'sound. To a fifth of the trail it is the sparse music box alone, exactly as at the ' +
+      'trailhead. From 20 in the hundred the same notes simply come more often. At 30 a bowed ' +
+      'string starts to visit: a gentle phrase now and then, half a minute to a minute apart, ' +
+      'never continuous. At 50 a low pad joins quietly, the air of the Land’s End ensemble ' +
+      'itself, so the climb stays in one family of sound. At 70 the warm counter-melody arrives ' +
+      'with its full five voices, and past 90 the whole ensemble, both exactly as they always ' +
+      'were. Progress is one honest number: WHERE YOU STAND — the word the odometer shows over ' +
+      'the trail’s total, however you got there; walking back west thins the score the ' +
+      'same honest way, and the end cairn reads 100. A new voice enters exposed on the next ' +
+      'moment, and the HUD names it once. THE SILENCE IS UNCHANGED: layers make a moment ' +
+      'thicker, never more frequent — the same triggers (golden hour, nightfall, a biome ' +
+      'border, an overlook, a sky clearing), the same real quiet between them, at every rung.'],
     ['sw-wx',
       'THE SKY REMEMBERS THE QUIET MONTHS — the weather walks the documentation’s own calendar, ' +
       'one real month every ' + WX_MONTH_S + ' seconds, from the first commit in the corpus (' +
@@ -4564,7 +4774,8 @@ function openPack() {
   const stamps = document.getElementById('pkStamps');
   stamps.innerHTML = '';
   const chip = (cls, txt) => stamps.appendChild(el('span', 'pkStamp ' + cls, esc(txt)));
-  chip('score', 'SCORE · ' + (SCORE.tier + 1) + ' OF ' + SCORE_TIERS.length + ' VOICES · ' +
+  chip('score', 'SCORE · ' + SCORE_VOICES[SCORE.tier] + ' OF ' +
+    SCORE_VOICES[SCORE_VOICES.length - 1] + ' VOICES · ' +
     SCORE_TIERS[SCORE.tier].name + ' · ' + Math.round(SCORE.p * 100) + '%');
   Object.keys(PACK.stamps).forEach(sl => {
     const hp = M.bySlug.get(sl);
@@ -4783,7 +4994,7 @@ function drawGuideIcon(cv2, id) {
     case 'milepost':
       g.beginPath(); g.moveTo(mid, gy); g.lineTo(mid, gy - 22); g.stroke();
       g.fillStyle = 'rgba(255,243,224,0.9)'; g.fillRect(mid - 11, gy - 32, 22, 10);
-      g.fillStyle = INK_DARK; g.font = '6.5px Georgia'; g.textAlign = 'center';
+      g.fillStyle = INK_DARK; g.font = (6.5 * TYPE_SCALE) + 'px Georgia'; g.textAlign = 'center';
       g.fillText('API', mid, gy - 24.6);
       break;
     case 'frame':
@@ -4843,8 +5054,8 @@ function openGuide() {
     else {
       const g = cv2.getContext('2d');
       g.fillStyle = 'rgba(255,243,224,0.4)';
-      g.font = '26px Georgia, serif'; g.textAlign = 'center';
-      g.fillText('?', 42, 42);
+      g.font = (26 * TYPE_SCALE) + 'px Georgia, serif'; g.textAlign = 'center';
+      g.fillText('?', 42, 48);
     }
   }
 }
@@ -4883,11 +5094,14 @@ function lkDraw() {
   for (let i = 0; i <= 16; i++) g.lineTo(wC * i / 16, hC * 0.72 - 10 - Math.sin(i * 1.8 + p.idx) * 9);
   g.lineTo(wC, hC * 0.72); g.closePath(); g.fill();
   if (!marks.length) {
-    g.fillStyle = INKS.cream; g.font = '12px Georgia, serif'; g.textAlign = 'center';
+    g.fillStyle = INKS.cream; g.font = (12 * TYPE_SCALE) + 'px Georgia, serif'; g.textAlign = 'center';
     g.fillText('ALL SKY — THIS HUB CITES NO PAGES', wC / 2, hC * 0.4);
     return;
   }
   const baseY = hC * 0.72;
+  /* every label box the table paints, so a probe reads the drawing rather
+     than re-deriving it (the service LBL.boxes does for the trail signage) */
+  S.lkBoxes = [];
   marks.forEach((m, i) => {
     const lx = wC * (0.5 + (i + 0.5 - marks.length / 2) / Math.max(4, marks.length) * 0.92);
     const hgt2 = 26 + Math.min(54, m.tp.inCount * 2.2);
@@ -4913,15 +5127,34 @@ function lkDraw() {
       g.beginPath(); g.moveTo(lx - 6, baseY); g.lineTo(lx - 3, baseY - hgt2 * 0.7); g.stroke();
       g.beginPath(); g.moveTo(lx + 6, baseY); g.lineTo(lx + 3, baseY - hgt2 * 0.7); g.stroke();
     }
-    g.font = '9px Georgia, serif';
+    g.font = (9 * TYPE_SCALE) + 'px Georgia, serif';
     g.textAlign = 'center';
     g.fillStyle = sel ? INKS.cream : 'rgba(255,243,224,0.7)';
     let nm = m.tp.label.toUpperCase();
     if (nm.length > 18) nm = nm.slice(0, 17) + '\u2026';
-    g.fillText(nm, lx, baseY - hgt2 - 16);
+    /* THE NAMES HANG ON TWO FIXED ROWS, NOT ON THE PEAKS (prepolish5).
+       Hanging each name off its own summit looked right at the old size,
+       but the peaks differ by thirty pixels of height (they are the real
+       inbound-citation counts) and grown type made neighbours on the two
+       parity rows touch anyway. Two rows above the tallest lantern the
+       table can raise, and each name shortened until a same-row neighbour
+       cannot be reached, is a law rather than a hope. */
+    const nameTop = baseY - (26 + 54) - 16;
+    const slot = wC * (0.92 / Math.max(4, marks.length)) * 2 - 8;
+    while (nm.length > 6 && g.measureText(nm).width > slot) nm = nm.slice(0, nm.length - 2) + '\u2026';
+    const nmW = g.measureText(nm).width;
+    const nmX = clamp(lx, nmW / 2 + 4, wC - nmW / 2 - 4);
+    const nmY = nameTop - (i % 2) * 18;
+    g.fillText(nm, nmX, nmY);
+    S.lkBoxes.push({ x0: nmX - nmW / 2, x1: nmX + nmW / 2, y0: nmY - 9 * TYPE_SCALE, y1: nmY + 3, t: nm });
     g.fillStyle = sel ? INKS.apricot : 'rgba(255,162,107,0.7)';
-    g.font = '8px Georgia, serif';
-    g.fillText(fmt(Math.abs(m.dw)) + (m.dw >= 0 ? ' WORDS EAST' : ' WORDS WEST'), lx, baseY + 14);
+    g.font = (8 * TYPE_SCALE) + 'px Georgia, serif';
+    const dt = fmt(Math.abs(m.dw)) + (m.dw >= 0 ? ' WORDS EAST' : ' WORDS WEST');
+    const dtW = g.measureText(dt).width;
+    const dtX = clamp(lx, dtW / 2 + 4, wC - dtW / 2 - 4);
+    const dtY = baseY + 16 + (i % 2) * 15;
+    g.fillText(dt, dtX, dtY);
+    S.lkBoxes.push({ x0: dtX - dtW / 2, x1: dtX + dtW / 2, y0: dtY - 8 * TYPE_SCALE, y1: dtY + 3, t: dt });
   });
 }
 function openLook(p) {
@@ -6581,9 +6814,12 @@ function audEv(kind, wx, vol) {
   switch (kind) {
     case 'jump': audPlayBuf(audVariant('jump'), v * 0.32, jit, pan); break;
     case 'land': audPlayBuf(audVariant('land'), v * 0.30, 1.02 * jit, pan); break;
+    /* prepolish5, owner order: the jump-with-tip sound (the spring bounce,
+       both its parts) drops forty percent. Only this and the door below
+       moved; every other effect keeps its gain. */
     case 'spring':
-      audPlayBuf(audVariant('spring'), v * 0.42, 1.38, pan);
-      audPlayBuf(audVariant('jump'), v * 0.18, 0.88, pan, 'sfx', 0.05);
+      audPlayBuf(audVariant('spring'), v * 0.42 * 0.6, 1.38, pan);
+      audPlayBuf(audVariant('jump'), v * 0.18 * 0.6, 0.88, pan, 'sfx', 0.05);
       break;
     case 'stumble': audPlayBuf(audVariant('land'), v * 0.36, 0.8, pan); break;
     /* the hold: one soft bump as the barrier takes her weight — quieter
@@ -6597,7 +6833,9 @@ function audEv(kind, wx, vol) {
     /* ONE THIRD of the gain the gate used to open at — the owner listened
        and heard a door slamming beside him; this is a latch lifting a few
        steps away. The travel through it keeps the same restraint. */
-    case 'gate': audPlayBuf(audVariant('gate_open'), v * (0.5 / 3), jit, pan); break;
+    /* prepolish5, owner order: the door softens another three tenths on
+       top of the third above — the latch is now a room further off. */
+    case 'gate': audPlayBuf(audVariant('gate_open'), v * (0.5 / 3) * 0.7, jit, pan); break;
     case 'gateTravel': audPlayBuf(audVariant('gate_travel'), v * (0.45 / 3), 1, 0); break;
     case 'greet': audPlayBuf(audVariant('greet'), v * 0.5, 0.96 + Math.random() * 0.08, pan); break;
     case 'regopen': audPlayBuf(audVariant('register_open'), v * 0.5, 1, pan); break;
@@ -6618,7 +6856,12 @@ function audEv(kind, wx, vol) {
       lpT.frequency.linearRampToValueAtTime(300, tth + 0.45);
       lpT.frequency.linearRampToValueAtTime(60, tth + 2.6);
       const gT = cth.createGain();
-      const pkT = GUST_PEAK * v;             /* never past the wind */
+      /* prepolish5, owner order: the thunder was nearly inaudible under
+         the wind bed — its gain rises two and a half times. The distance
+         attenuation (in v), the flash-to-rumble delay and the envelope
+         shape are exactly as they were; nothing else in the storm mix
+         moves. */
+      const pkT = GUST_PEAK * 2.5 * v;
       gT.gain.setValueAtTime(0.0001, tth);
       gT.gain.linearRampToValueAtTime(Math.max(0.0002, pkT), tth + 0.35);
       gT.gain.linearRampToValueAtTime(Math.max(0.0001, pkT * 0.4), tth + 1.3);
@@ -6787,19 +7030,35 @@ function audBedTarget(bed, t) {
 /* that would have happened anyway, and every voice sings through the    */
 /* same MUS.swell gate, so a moment ends exactly when it always ended.   */
 /* ==================================================================== */
+/* THE LADDER, REBUILT BETWEEN THE SACRED ENDS (prepolish5, owner order:
+   he loves the sparse opening notes and the two top characters; the old
+   middle rungs arrived too abruptly). The box he loves is untouched to a
+   fifth of the trail. From there the SAME notes simply come more often
+   (no new instrument). At three tenths a bowed string starts to visit —
+   a gentle phrase now and then, on a thirty-to-sixty-second cadence of
+   its own, never continuous. At the half the low pad joins quietly; it
+   is the air of the Land's End ensemble itself, so the climb stays in
+   one family of sound. The 78 and 100 percent characters stand on top
+   exactly as they were: COUNTER-MELODY renders the full old five-voice
+   law, FULL ENSEMBLE the old six. */
 const SCORE_TIERS = [
   { at: 0.00, name: 'MUSIC BOX',      line: 'the music box, alone' },
-  { at: 0.10, name: 'SPARSE PIANO',   line: 'a sparse piano joins' },
-  { at: 0.25, name: 'LOW PAD',        line: 'a low sustained pad' },
-  { at: 0.45, name: 'STRINGS',        line: 'strings' },
+  { at: 0.20, name: 'BUSIER BOX',     line: 'the same notes, oftener' },
+  { at: 0.30, name: 'A BOWED STRING', line: 'a bowed string, now and then' },
+  { at: 0.50, name: 'LOW PAD',        line: 'a low sustained pad' },
   { at: 0.70, name: 'COUNTER-MELODY', line: 'a warm counter-melody' },
   { at: 0.90, name: 'FULL ENSEMBLE',  line: 'the full ensemble' }
 ];
+/* how many voices actually sound at each rung — the HUD reads this, so it
+   never claims a voice the moment does not carry. The two top rungs keep
+   their old counts (5 at 78 percent, 6 at the end). */
+const SCORE_VOICES = [1, 1, 2, 3, 5, 6];
 /* THICKER, NEVER LOUDER. Each voice that joins trims the whole ensemble a
    little, so the score gains body without gaining volume: the peak of a
    moment at the ensemble sits inside the peak of a moment at the music box.
-   Measured, not guessed — see qa/r10-levels.mjs. */
-const SCORE_TRIM = [1.00, 0.97, 0.97, 0.96, 0.95, 0.93];
+   Measured, not guessed — see qa/r10-levels.mjs. The two top rungs keep
+   their old trims exactly. */
+const SCORE_TRIM = [1.00, 0.98, 0.97, 0.96, 0.95, 0.93];
 
 const SCORE = {
   tier: 0, p: 0, words: 0, pages: 0,
@@ -6863,7 +7122,7 @@ function scoreUpdate(announce) {
   return SCORE.tier;
 }
 function scoreLabel() {
-  const n = SCORE.tier + 1;
+  const n = SCORE_VOICES[SCORE.tier];
   if (S.t - SCORE.namedT < 9 && SCORE.named) return 'SCORE · A NEW VOICE — ' + SCORE.named;
   return 'SCORE · ' + SCORE_TIERS[SCORE.tier].name + ' · ' + n + (n === 1 ? ' VOICE' : ' VOICES') +
     ' · ' + Math.round(SCORE.p * 100) + '%';
@@ -6876,7 +7135,8 @@ const MUS = {
   busIn: null, busPad: null, swell: null, built: false,
   lastG: null, lastN: null,
   cd: new Map(), quietUntil: 0, phraseEnd: 0,
-  lookAt: new Map(), noteSeed: 1
+  lookAt: new Map(), noteSeed: 1,
+  stringNext: 0        /* prepolish5: the visiting string's own cadence */
 };
 const MUS_SCALES = [[0, 2, 4, 7, 9], [0, 2, 5, 7, 9], [0, 3, 5, 7, 10]];
 const MUS_MOMENT_CD = { golden: 120, night: 120, border: 45, overlook: 60 };
@@ -6967,7 +7227,15 @@ function musPalette() {
 function musPhrase(t0, quiet, opt) {
   const pal = musPalette();
   const r = mulberry32((MUS.noteSeed = (MUS.noteSeed * 1103515245 + 12345) >>> 0));
-  const nNotes = 3 + Math.floor(pal.density * 4 + r() * 2);
+  /* prepolish5, the second rung of the rebuilt ladder: from a fifth of the
+     trail THE SAME NOTES SIMPLY COME MORE OFTEN — the walk gains two steps
+     and the gaps tighten, the instrument, the velocities and the stepwise
+     law untouched. The lift lives on the middle rungs only (1 to 3): at
+     the sacred ends — the sparse box of the opening and the 78 and 100
+     percent characters — the phrase is drawn exactly as it always was. */
+  const tl = (opt && opt.tier != null) ? opt.tier : SCORE.tier;
+  const oftener = tl >= 1 && tl <= 3;
+  const nNotes = 3 + Math.floor(pal.density * 4 + r() * 2) + (oftener ? 2 : 0);
   let deg = [0, 2, 4][Math.floor(r() * 3)];
   let t = t0;
   const notes = [];
@@ -6983,7 +7251,7 @@ function musPhrase(t0, quiet, opt) {
     deg += roll < 0.55 ? (r() < 0.5 ? 1 : -1) : roll < 0.8 ? (r() < 0.5 ? 2 : -2) : 0;
     deg = clamp(deg, -2, pal.scale.length * 2 + 1);
     if (i === nNotes - 2) deg = r() < 0.6 ? 0 : 3;       /* settle toward home */
-    const gap = lerp(1.35, 0.5, pal.density) * (0.75 + r() * 0.55);
+    const gap = lerp(1.35, 0.5, pal.density) * (0.75 + r() * 0.55) * (oftener ? 0.72 : 1);
     t += gap;
   }
   const end = t + 1.6;
@@ -7119,11 +7387,23 @@ function musBook(voice, vel, dur) {
 }
 function musRender(notes, pal, t0, end, quiet, r, opt) {
   const tier = opt.tier == null ? SCORE.tier : opt.tier;
+  /* THE REBUILT LADDER'S GATES (prepolish5). Voice indices are unchanged
+     (1 piano, 2 pad, 3 strings, 4 counter, 5 bell); only the rung at which
+     each may sound moved. The bowed string is the first stranger (rung 2),
+     the pad follows at the half (rung 3), and the piano now belongs to the
+     top characters: rungs 4 and 5 render exactly the old five- and
+     six-voice laws, so 78 and 100 percent sound as they always did. */
+  const avail = (i) =>
+    i === 1 ? tier >= 4 :
+    i === 2 ? tier >= 3 :
+    i === 3 ? tier >= 2 :
+    i === 4 ? tier >= 4 :
+    tier >= 5;
   /* a voice can only step forward if the score has actually earned it: an
      out-of-range debut falls back to the whole ensemble rather than
      rendering a phrase with nothing in it */
   let only = opt.only == null ? -1 : opt.only;
-  if (only > tier) only = -1;
+  if (only > 0 && !avail(only)) only = -1;
   const trim = SCORE_TRIM[clamp(tier, 0, SCORE_TRIM.length - 1)];
   const q = quiet ? 0.7 : 1;
   const span = Math.max(4, end - t0);
@@ -7139,7 +7419,7 @@ function musRender(notes, pal, t0, end, quiet, r, opt) {
      two-phrase moment the middle one IS the last one. A debut always
      sounds, wherever it lands. */
   const ph = opt.i || 0;
-  const has = (i) => tier >= i && (only < 0 || only === i);
+  const has = (i) => avail(i) && (only < 0 || only === i);
   const voices = [];
 
   const closer = notes.length ? notes[notes.length - 1] : null;
@@ -7195,12 +7475,23 @@ function musRender(notes, pal, t0, end, quiet, r, opt) {
     musPad(musMidiHz(pal.root - 12), padAt, padDur, 0.041 * trim * q * boost);
     musBook('pad', 0.041 * trim * q * boost, padDur);
   }
-  /* 3 — strings, a bowed fifth through the opening phrase */
+  /* 3 — strings, a bowed fifth through the opening phrase. On the middle
+     rungs (prepolish5) the string only VISITS: a gentle phrase now and
+     then, on a thirty-to-sixty-second cadence of its own, never
+     continuous — the silence windows and the moment shape are untouched,
+     because the visit still lives inside a moment that was going to
+     happen anyway. At the top characters (rungs 4 and 5) it keeps its
+     old law: the opening phrase of every moment. A debut always sounds
+     and stamps the cadence. */
   if (has(3) && (only === 3 || ph === 0)) {
-    voices.push('strings');
-    const strDur = Math.max(6.0, span * 0.64 + 1.0);
-    musStrings(musMidiHz(pal.root - 5), t0 + 0.8, strDur, 0.052 * trim * q * boost, 4.5 + r() * 0.8);
-    musBook('strings', 0.052 * trim * q * boost, strDur);
+    const visiting = tier < 4;
+    if (!visiting || only === 3 || S.t >= (MUS.stringNext || 0)) {
+      voices.push('strings');
+      const strDur = Math.max(6.0, span * 0.64 + 1.0);
+      musStrings(musMidiHz(pal.root - 5), t0 + 0.8, strDur, 0.052 * trim * q * boost, 4.5 + r() * 0.8);
+      musBook('strings', 0.052 * trim * q * boost, strDur);
+      if (visiting) MUS.stringNext = S.t + 30 + Math.random() * 30;
+    }
   }
   /* 4 — the counter-melody, the tune's contour turned upside down */
   if (has(4)) {
@@ -7293,8 +7584,13 @@ function audMoment(kind) {
      tine that rings a second too SHORT opens a hole, which is the whole
      bug. Measured at every rung by qa/r11-moment.mjs. */
   const holdLast = MUS_FALL + 9;
+  /* which VOICE a rung introduces (prepolish5): rung 1 is the box itself
+     going oftener, so its debut phrase is the busier box alone; rung 2
+     brings the string (voice 3), rung 3 the pad (voice 2), rung 4 the
+     counter, rung 5 the bell. */
+  const DEBUT_VOICE = [0, 0, 3, 2, 4, 5];
   let t = musPhrase(t0, false, debut > 0
-    ? { only: debut, i: 0, hold: gapA + 7 }
+    ? { only: DEBUT_VOICE[debut], i: 0, hold: gapA + 7 }
     : { i: 0, hold: gapA + 7 });
   if (debut > 0) {
     SCORE.debut = -1; SCORE.debuts++;
@@ -7659,8 +7955,10 @@ window.__aud = {
     put('snore', 'snore', SNORE_GAIN);
     put('dog snore', 'snore', DOGSNORE_GAIN);
     /* the events of the trail furniture */
-    put('jump', 'jump', 0.32); put('land', 'land', 0.30); put('spring', 'spring', 0.42);
-    put('gate', 'gate_open', 0.5 / 3); put('gate travel', 'gate_travel', 0.45 / 3);
+    put('jump', 'jump', 0.32); put('land', 'land', 0.30);
+    put('spring', 'spring', 0.42 * 0.6);                 /* prepolish5: -40 % */
+    put('gate', 'gate_open', (0.5 / 3) * 0.7);           /* prepolish5: -30 % */
+    put('gate travel', 'gate_travel', 0.45 / 3);
     put('greeting', 'greet', 0.5); put('register', 'register_open', 0.5);
     put('pen', 'pen', 0.55); put('waymarker', 'waymarker', 0.38);
     return L;
@@ -7933,13 +8231,39 @@ function tickWeather(dt) {
     WX.wetPeak = 0;
   } else {
     WX.grey += (mm.grey - WX.grey) * ease(3.4);         /* fronts take seconds */
-    WX.wet += (mm.wet - WX.wet) * ease(2.6);
+    /* ONE SKY AT A TIME (prepolish5). Diagnosed real, not a misread: these
+       two easings used to run independently, and on the calendar's own
+       2024-02 snow to 2024-03 shower handover both draw guards held for
+       ~15 s — flakes and drops in one frame (qa/pp5-skydiag.mjs). The law
+       now: the incoming precipitation holds its target at ZERO until the
+       outgoing one has fully left the 0.012 draw floor, so a front hands
+       over through a beat of clear air, with the same eased ramps on both
+       sides. The floor is snapped to a true zero once crossed, because an
+       exponential tail alone takes eleven seconds to clear it. */
+    const clearGap = S.t < (WX.clearBeat || 0);
+    /* the incoming type waits for a TRUE zero (the snap below provides
+       one), then for the clear beat — not merely for the draw floor, or
+       it would start rising inside the last half-inch of the old front */
+    const wetTgt = (WX.snow > 0 || clearGap) ? 0 : mm.wet;
+    const snowTgt = (WX.wet > 0 || clearGap) ? 0 : tSnow;
+    WX.wet += (wetTgt - WX.wet) * ease(2.6);
+    if (wetTgt === 0 && WX.wet > 0 && WX.wet < 0.010) {
+      WX.wet = 0;
+      /* the moment a type leaves, the sky holds a true clear beat before
+         the next one may bow in — the handover reads as weather, not as
+         a swap */
+      WX.clearBeat = S.t + 2.5;
+    }
     WX.here += ((S.atLE ? 0 : 1) - WX.here) * ease(0.9);
     const wetNow = WX.wet * WX.here;
     /* the path soaks in about ten seconds and takes half a minute to dry */
     WX.wetness += wetNow > 0.5 ? (1 - WX.wetness) * ease(9) : -WX.wetness * ease(32);
     WX.wetness = clamp(WX.wetness, 0, 1);
-    WX.snow += (tSnow - WX.snow) * ease(3.8);
+    WX.snow += (snowTgt - WX.snow) * ease(3.8);
+    if (snowTgt === 0 && WX.snow > 0 && WX.snow < 0.010) {
+      WX.snow = 0;
+      WX.clearBeat = S.t + 2.5;
+    }
     WX.fog += (tFog - WX.fog) * ease(4.6);
     WX.storm += (tStorm - WX.storm) * ease(tStorm ? 1.6 : 3.2);
     /* the ground whitens in over a minute, and thaws after */

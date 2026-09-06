@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Listening Room &mdash; The Long Way Through</title>
+<style>
+  :root {
+    --ink: #2E1A47; --dark: #1C0F2E; --cream: #FFF3E0; --paper: #F3E3CD;
+    --rose: #FF4DA0; --apricot: #FFA26B; --violet: #3B37D6; --deep: #C1226E;
+    --serif: Georgia, 'Times New Roman', serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--dark); color: var(--cream); font-family: var(--serif);
+         line-height: 1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 40px 22px 90px; }
+  h1 { font-size: 34px; letter-spacing: 0.06em; margin: 0 0 4px;
+       text-shadow: 3px 3px 0 rgba(255,77,160,0.6); }
+  .kicker { font-size: 12px; letter-spacing: 0.34em; color: var(--rose); margin: 0 0 26px; }
+  h2 { font-size: 15px; letter-spacing: 0.3em; color: var(--apricot);
+       border-bottom: 2px solid var(--apricot); padding-bottom: 6px; margin: 46px 0 6px; }
+  .lede { color: #e8d6bd; }
+  .lede code { background: rgba(255,243,224,0.10); padding: 0 4px; }
+  .plate { background: var(--paper); color: var(--ink); border: 2px solid var(--cream);
+           box-shadow: 6px 6px 0 var(--violet); padding: 16px 20px; margin: 18px 0 8px; }
+  .plate p { margin: 8px 0; }
+  .card { background: var(--paper); color: var(--ink); border: 2px solid var(--ink);
+          box-shadow: 5px 5px 0 var(--rose); padding: 14px 18px; margin: 16px 0; }
+  .card.cand { box-shadow: 5px 5px 0 var(--apricot); }
+  .card h3 { margin: 0 0 2px; font-size: 19px; letter-spacing: 0.1em; color: var(--deep); }
+  .card .what { margin: 0 0 10px; font-size: 14.5px; font-style: italic; color: #5c3f22; }
+  .card audio { width: 100%; display: block; }
+  .card .meta { margin: 8px 0 0; font-size: 12px; letter-spacing: 0.06em; color: #6b4a2e; }
+  .card .lic { margin: 10px 0 2px; font-size: 13px; letter-spacing: 0.1em; color: var(--deep); }
+  .card .attr { margin: 0; font-size: 13px; color: #3d2a16;
+                border-left: 4px solid var(--apricot); padding-left: 10px; }
+  a { color: var(--violet); }
+  .card a { word-break: break-all; }
+  #shipnote { background: var(--cream); color: var(--ink); border: 3px solid var(--rose);
+              padding: 14px 18px; margin: 18px 0 0; font-size: 15px; }
+  .foot { margin-top: 40px; font-size: 12px; letter-spacing: 0.1em; color: #b39a7d; }
+  table.facts { border-collapse: collapse; width: 100%; font-size: 13.5px; margin: 10px 0 0; }
+  table.facts th, table.facts td { border-bottom: 1px solid rgba(46,26,71,0.25);
+    padding: 5px 8px; text-align: left; }
+  table.facts th { color: var(--deep); letter-spacing: 0.12em; font-size: 11.5px; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">THE LONG WAY THROUGH &middot; A ROOM OFF THE TRAIL</p>
+  <h1>The Listening Room</h1>
+
+  <div class="plate">
+    <p><strong>The end-score stems did not exist.</strong> The Land&rsquo;s End ensemble is not a
+    recording: it is built from oscillators every time a moment speaks, six voices deep, and it has
+    never been written to a file. So these were <em>rendered</em> &mdash; the game&rsquo;s own code,
+    driven through an <code>OfflineAudioContext</code> instead of the speakers.</p>
+    <p>One moment of three phrases, taken at Land&rsquo;s End itself, at the golden hour
+    (<code>0.42</code>), with the note seed pinned to <code>20260906</code>. The mix was rendered
+    once with every voice alive, then six more times with exactly one voice left alive and the other
+    five stubbed out &mdash; so the six solos below are that one performance taken apart, not six
+    different performances.</p>
+    <table class="facts">
+      <tr><th>Key</th><td>C &mdash; root MIDI 60, scale degrees 0-2-4-7-9 (a major pentatonic)</td></tr>
+      <tr><th>Pad</th><td>130.813 Hz &mdash; an octave under the root</td></tr>
+      <tr><th>First tines</th><td>659.255 Hz &middot; 783.991 Hz &middot; 659.255 Hz &middot; 880 Hz &middot; 880 Hz</td></tr>
+      <tr><th>Format</th><td>44100 Hz mono 16-bit WAV, 33s each, all cut to the same length so they line up</td></tr>
+    </table>
+  </div>
+
+  <h2>THE LAND&rsquo;S END ENSEMBLE, LAYER BY LAYER</h2>
+  <p class="lede">Start with the whole thing, then take it apart. The music box is the voice the
+  trail opens with and the only one you hear under a fifth of the way; the rest arrive as the walk
+  goes on.</p>
+  <div class="card stem">
+    <h3>THE WHOLE ENSEMBLE</h3>
+    <p class="what">the six voices as the shore actually plays them</p>
+    <audio controls preload="none" src="stems/00-full-ensemble.wav"></audio>
+    <p class="meta">00-full-ensemble.wav &middot; 33s &middot; 2842 KB &middot; 43 notes scheduled &middot; RMS 0.018768 &middot; peak 0.17296</p>
+  </div>
+  <div class="card stem">
+    <h3>THE MUSIC BOX</h3>
+    <p class="what">the voice the trail starts with, and the only one under a fifth of the way</p>
+    <audio controls preload="none" src="stems/01-music-box.wav"></audio>
+    <p class="meta">01-music-box.wav &middot; 33s &middot; 2842 KB &middot; 23 notes scheduled &middot; RMS 0.012716 &middot; peak 0.09934</p>
+  </div>
+  <div class="card stem">
+    <h3>THE SPARSE PIANO</h3>
+    <p class="what">one note in three, answering the tine in the gap it leaves</p>
+    <audio controls preload="none" src="stems/02-sparse-piano.wav"></audio>
+    <p class="meta">02-sparse-piano.wav &middot; 33s &middot; 2842 KB &middot; 9 notes scheduled &middot; RMS 0.006326 &middot; peak 0.04712</p>
+  </div>
+  <div class="card stem">
+    <h3>THE LOW PAD</h3>
+    <p class="what">an octave under the root, under the opening phrase only</p>
+    <audio controls preload="none" src="stems/03-low-pad.wav"></audio>
+    <p class="meta">03-low-pad.wav &middot; 33s &middot; 2842 KB &middot; 1 note scheduled &middot; RMS 0.005582 &middot; peak 0.05537</p>
+  </div>
+  <div class="card stem">
+    <h3>THE BOWED STRINGS</h3>
+    <p class="what">a bowed fifth through the opening phrase</p>
+    <audio controls preload="none" src="stems/04-bowed-strings.wav"></audio>
+    <p class="meta">04-bowed-strings.wav &middot; 33s &middot; 2842 KB &middot; 1 note scheduled &middot; RMS 0.004218 &middot; peak 0.05452</p>
+  </div>
+  <div class="card stem">
+    <h3>THE COUNTER-MELODY</h3>
+    <p class="what">the tune’s own contour turned upside down</p>
+    <audio controls preload="none" src="stems/05-counter-melody.wav"></audio>
+    <p class="meta">05-counter-melody.wav &middot; 33s &middot; 2842 KB &middot; 6 notes scheduled &middot; RMS 0.008955 &middot; peak 0.04034</p>
+  </div>
+  <div class="card stem">
+    <h3>THE LOW BELL</h3>
+    <p class="what">one strike an octave down, a beat into each phrase, for a floor</p>
+    <audio controls preload="none" src="stems/06-low-bell.wav"></audio>
+    <p class="meta">06-low-bell.wav &middot; 33s &middot; 2842 KB &middot; 3 notes scheduled &middot; RMS 0.004741 &middot; peak 0.02868</p>
+  </div>
+
+  <h2>CANDIDATES &mdash; MUSIC THAT IS NOT OURS</h2>
+  <p class="lede">Royalty-free tracks that might suit a dusk walk, fetched so they can simply be
+  heard next to the score above. <strong>CC0 or CC&nbsp;BY only</strong>; the licence and the exact
+  attribution line that would have to be printed are given beside each one.</p>
+  <div class="card cand">
+    <h3 class="ttl">Winter Chimes</h3>
+    <p class="what">Struck metal and long decays — the nearest thing on offer to the trail's own music box.</p>
+    <audio controls preload="none" src="candidates/winter-chimes.mp3"></audio>
+    <p class="lic">Kevin MacLeod &middot; CC BY 4.0</p>
+    <p class="attr">Winter Chimes by Kevin MacLeod. Source: https://incompetech.com/. Licensed under Creative Commons: By Attribution 4.0 License — https://creativecommons.org/licenses/by/4.0/</p>
+    <p class="meta"><a href="https://incompetech.com/music/royalty-free/mp3-royaltyfree/Winter%20Chimes.mp3">https://incompetech.com/music/royalty-free/mp3-royaltyfree/Winter%20Chimes.mp3</a> &middot; winter-chimes.mp3 &middot; 2556 KB</p>
+  </div>
+  <div class="card cand">
+    <h3 class="ttl">Peaceful Desolation</h3>
+    <p class="what">Wide, slow and almost empty — closest in temper to the long quiet stretches between moments.</p>
+    <audio controls preload="none" src="candidates/peaceful-desolation.mp3"></audio>
+    <p class="lic">Kevin MacLeod &middot; CC BY 4.0</p>
+    <p class="attr">Peaceful Desolation by Kevin MacLeod. Source: https://incompetech.com/. Licensed under Creative Commons: By Attribution 4.0 License — https://creativecommons.org/licenses/by/4.0/</p>
+    <p class="meta"><a href="https://incompetech.com/music/royalty-free/mp3-royaltyfree/Peaceful%20Desolation.mp3">https://incompetech.com/music/royalty-free/mp3-royaltyfree/Peaceful%20Desolation.mp3</a> &middot; peaceful-desolation.mp3 &middot; 3563 KB</p>
+  </div>
+  <div class="card cand">
+    <h3 class="ttl">Water Lily</h3>
+    <p class="what">Gentle, unhurried, pentatonic-leaning — it would sit in the same key family as the ensemble.</p>
+    <audio controls preload="none" src="candidates/water-lily.mp3"></audio>
+    <p class="lic">Kevin MacLeod &middot; CC BY 4.0</p>
+    <p class="attr">Water Lily by Kevin MacLeod. Source: https://incompetech.com/. Licensed under Creative Commons: By Attribution 4.0 License — https://creativecommons.org/licenses/by/4.0/</p>
+    <p class="meta"><a href="https://incompetech.com/music/royalty-free/mp3-royaltyfree/Water%20Lily.mp3">https://incompetech.com/music/royalty-free/mp3-royaltyfree/Water%20Lily.mp3</a> &middot; water-lily.mp3 &middot; 4504 KB</p>
+  </div>
+  <div class="card cand">
+    <h3 class="ttl">Heartbreaking</h3>
+    <p class="what">Solo piano, plain and slow — a test of whether the trail wants a tune at all, or only weather.</p>
+    <audio controls preload="none" src="candidates/heartbreaking.mp3"></audio>
+    <p class="lic">Kevin MacLeod &middot; CC BY 4.0</p>
+    <p class="attr">Heartbreaking by Kevin MacLeod. Source: https://incompetech.com/. Licensed under Creative Commons: By Attribution 4.0 License — https://creativecommons.org/licenses/by/4.0/</p>
+    <p class="meta"><a href="https://incompetech.com/music/royalty-free/mp3-royaltyfree/Heartbreaking.mp3">https://incompetech.com/music/royalty-free/mp3-royaltyfree/Heartbreaking.mp3</a> &middot; heartbreaking.mp3 &middot; 3855 KB</p>
+  </div>
+  <div class="card cand">
+    <h3 class="ttl">Ossuary 1 - A Beginning</h3>
+    <p class="what">A walking pulse under a held drone — the one candidate with a step in it.</p>
+    <audio controls preload="none" src="candidates/ossuary-1-a-beginning.mp3"></audio>
+    <p class="lic">Kevin MacLeod &middot; CC BY 4.0</p>
+    <p class="attr">Ossuary 1 - A Beginning by Kevin MacLeod. Source: https://incompetech.com/. Licensed under Creative Commons: By Attribution 4.0 License — https://creativecommons.org/licenses/by/4.0/</p>
+    <p class="meta"><a href="https://incompetech.com/music/royalty-free/mp3-royaltyfree/Ossuary%201%20-%20A%20Beginning.mp3">https://incompetech.com/music/royalty-free/mp3-royaltyfree/Ossuary%201%20-%20A%20Beginning.mp3</a> &middot; ossuary-1-a-beginning.mp3 &middot; 5879 KB</p>
+  </div>
+  <div class="card cand">
+    <h3 class="ttl">Meditation Impromptu 01</h3>
+    <p class="what">Plucked strings with plenty of air between phrases — the silence doctrine, in someone else's hands.</p>
+    <audio controls preload="none" src="candidates/meditation-impromptu-01.mp3"></audio>
+    <p class="lic">Kevin MacLeod &middot; CC BY 4.0</p>
+    <p class="attr">Meditation Impromptu 01 by Kevin MacLeod. Source: https://incompetech.com/. Licensed under Creative Commons: By Attribution 4.0 License — https://creativecommons.org/licenses/by/4.0/</p>
+    <p class="meta"><a href="https://incompetech.com/music/royalty-free/mp3-royaltyfree/Meditation%20Impromptu%2001.mp3">https://incompetech.com/music/royalty-free/mp3-royaltyfree/Meditation%20Impromptu%2001.mp3</a> &middot; meditation-impromptu-01.mp3 &middot; 6878 KB</p>
+  </div>
+
+  <p id="shipnote">These candidates are here <strong>for listening only</strong>. No track ships in
+  the game unless the owner chooses it &mdash; and if one is ever chosen, its attribution line above
+  goes into the build&rsquo;s CREDITS before a single note plays.</p>
+
+  <p class="foot">Rendered 2026-09-06 &middot; this page is not linked
+  from the game; open it directly at <code>listening/index.html</code>.</p>
+</div>
+</body>
+</html>

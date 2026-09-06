@@ -1,0 +1,91 @@
+{
+ "rows": [
+  {
+   "file": "00-full-ensemble.wav",
+   "tag": "all",
+   "name": "THE WHOLE ENSEMBLE",
+   "what": "the six voices as the shore actually plays them",
+   "sec": 180,
+   "rms": 0.008036,
+   "pk": 0.17296,
+   "notes": 43
+  },
+  {
+   "file": "01-music-box.wav",
+   "tag": "box",
+   "name": "THE MUSIC BOX",
+   "what": "the voice the trail starts with, and the only one under a fifth of the way",
+   "sec": 180,
+   "rms": 0.005445,
+   "pk": 0.09934,
+   "notes": 23
+  },
+  {
+   "file": "02-sparse-piano.wav",
+   "tag": "piano",
+   "name": "THE SPARSE PIANO",
+   "what": "one note in three, answering the tine in the gap it leaves",
+   "sec": 180,
+   "rms": 0.002708,
+   "pk": 0.04712,
+   "notes": 9
+  },
+  {
+   "file": "03-low-pad.wav",
+   "tag": "pad",
+   "name": "THE LOW PAD",
+   "what": "an octave under the root, under the opening phrase only",
+   "sec": 180,
+   "rms": 0.00239,
+   "pk": 0.05537,
+   "notes": 1
+  },
+  {
+   "file": "04-bowed-strings.wav",
+   "tag": "strings",
+   "name": "THE BOWED STRINGS",
+   "what": "a bowed fifth through the opening phrase",
+   "sec": 180,
+   "rms": 0.001806,
+   "pk": 0.05452,
+   "notes": 1
+  },
+  {
+   "file": "05-counter-melody.wav",
+   "tag": "counter",
+   "name": "THE COUNTER-MELODY",
+   "what": "the tune’s own contour turned upside down",
+   "sec": 180,
+   "rms": 0.003835,
+   "pk": 0.04034,
+   "notes": 6
+  },
+  {
+   "file": "06-low-bell.wav",
+   "tag": "bell",
+   "name": "THE LOW BELL",
+   "what": "one strike an octave down, a beat into each phrase, for a floor",
+   "sec": 180,
+   "rms": 0.00203,
+   "pk": 0.02868,
+   "notes": 3
+  }
+ ],
+ "palette": {
+  "root": 60,
+  "scale": "0-2-4-7-9",
+  "density": 0.95
+ },
+ "padHz": 130.813,
+ "firstTines": [
+  659.255,
+  783.991,
+  659.255,
+  880,
+  880
+ ],
+ "seed": 20260906,
+ "sampleRate": 44100,
+ "at": "lands-end",
+ "hour": 0.42
+}
