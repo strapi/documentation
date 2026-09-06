@@ -7926,10 +7926,10 @@ const sound = {
 
     const windBP = c.createBiquadFilter();
     windBP.type = 'bandpass'; windBP.frequency.value = 520; windBP.Q.value = 0.7;
-    /* OWNER MIX LAW (revised twice, final): the wind is a continuous sound,
+    /* OWNER MIX LAW (revised three times): the wind is a continuous sound -
        so the whole wind layer sits at THIRTY PERCENT of its original gain -
        first halved, then cut another 40 percent. 0.16 * 0.30 = 0.048. */
-    const windG = c.createGain(); windG.gain.value = 0.048;
+    const windG = c.createGain(); windG.gain.value = 0.0336;   // 21% of original: 30% then a further -30% by owner order
 
     const seaLP = c.createBiquadFilter();
     seaLP.type = 'lowpass'; seaLP.frequency.value = 320;
@@ -7996,7 +7996,7 @@ const sound = {
     const t = this.ctx.currentTime;
     /* the tune keeps its shape but the whole wind layer carries the owner's
        30% trim - the chants are what one should hear, the wind stays low */
-    this.bed.windG.gain.setTargetAtTime(0.30 * (0.09 + 0.14 * clamp(windKn / 24, 0, 1) + 0.05 * knotsFrac), t, 0.6);
+    this.bed.windG.gain.setTargetAtTime(0.21 * (0.09 + 0.14 * clamp(windKn / 24, 0, 1) + 0.05 * knotsFrac), t, 0.6);
     this.bed.seaG.gain.setTargetAtTime(0.30 + 0.34 * knotsFrac, t, 0.6);
   },
 
