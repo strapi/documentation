@@ -4260,9 +4260,12 @@ function buildThList(q) {
     p.label.toLowerCase().includes(needle) ||
     p.slug.toLowerCase().includes(needle);
   thRows = M.pages.filter(hit);
-  /* the trail's ending is a named destination in the index, always second
-     from the top when it matches: trailhead → Tab → Enter reaches it */
-  if (hit(LE_ROW)) thRows.unshift(LE_ROW);
+  /* (2026-09-07, owner) LAND'S END IS NOT IN THE INDEX. It used to sit at the
+     very top, which handed away the end of the trail to anyone who pressed Tab
+     on their first step. "On ne le verra qu'en lisant la derniere page." It is
+     still reached every other way it always was: on foot to the end of the
+     world, from the last page itself, and by #lands-end for anyone who already
+     knows. The row is kept because those routes still name it. */
   thSel = 0;
   const frag = document.createDocumentFragment();
   thRows.forEach((p, i) => {

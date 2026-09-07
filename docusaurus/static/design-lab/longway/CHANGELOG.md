@@ -328,3 +328,12 @@ than it sounded. Measured against a plain roll, it carries 63 percent more
 energy. Not on the shore.
 
 `probe-voices.js` measures all four through the SFX analyser.
+
+### Land's End leaves the index
+
+It used to sit at the very top of the Tab index, which handed the end of the
+trail to anyone who pressed Tab on their first step. The owner: *"on ne le verra
+qu'en lisant la dernière page."* It is out of the list entirely now, and reached
+every other way it always was: on foot to the end of the world, from the last
+page itself, and by `#lands-end` for anyone who already knows. Verified: 287
+rows in the index, none of them the shore, and the hash still arrives there.
