@@ -359,8 +359,15 @@ export function buildCrossings(scene, data) {
   // coast lends its own pressed plants out the way it borrows them.
   {
     B = new Bucket();
-    const x = -60, z = 1.4, yaw = 1.35;
-    const g = PIER.deck;
+    /* (2026-09-07, owner) OFF THE ARRIVAL JETTY. It stood on the pier boards at
+       x=-60, eighteen metres from where a visitor lands and squarely in the
+       first thing he sees: "celui-ci est litteralement sur le ponton d'arrivee".
+       A crossing that meets you is not an easter egg. It goes behind the north
+       edge of the town instead, where a crate waiting on carriage would actually
+       stand, sixty-nine metres from the landing and off every through line.
+       Measured clear: 4.3 m to the nearest collider, ground at 3.07. */
+    const x = -14, z = 26, yaw = 1.35;
+    const g = groundAt(x, z);
     box(1.05, 0.72, 0.74, x, g + 0.36, z, yaw, 0xa98a5e, SW.deal);
     box(1.10, 0.06, 0.79, x, g + 0.74, z, yaw, 0x94764c, SW.deal);   // the lid batten
     for (const off of [-0.26, 0.26]) {
@@ -377,7 +384,7 @@ export function buildCrossings(scene, data) {
       key: 'herbarium', dir: '../herbarium/', x, z, yaw,
       /* the quay is six metres wide: a long look at the crate is taken from
          up the boards, not from out on the water */
-      farStand: [-48, 1.4, Math.PI / 2],
+      farStand: [-24, 26, Math.PI / 2],
       title: 'The loan crate on the quay',
       inscription: 'ON EXCHANGE · pressed on this coast · carriage paid · dry side up',
       read: 'Sheets cut on the cliff road at the last hour, dry on the stem before they were ever picked, going out on exchange to a cabinet that keeps the whole documentation as pressed plants. It is roped, and the packet is due.',

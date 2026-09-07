@@ -1111,3 +1111,25 @@ were taken by teleporting the camera and reading its height 90 ms later. The
 camera eases toward the ground over about a third of a second, so every reading
 was pulled up toward the y it had been dropped from, and the terrain appeared to
 sit ABOVE the deck across the whole span. Settle for 700 ms before reading.
+
+## 2026-09-07 · the loan crate leaves the arrival jetty
+
+The owner, with a screenshot: *"celui-ci est littéralement sur le ponton
+d'arrivée."* It was, at x=-60 on the pier boards, eighteen metres from where a
+visitor lands and squarely in the first thing he sees. A crossing that meets you
+is not an easter egg.
+
+It stands behind the north edge of the town now, where a crate waiting on
+carriage would actually be: sixty-nine metres from the landing, off every through
+line, on ground measured clear at 4.3 metres to the nearest neighbour. Its ground
+comes from `groundAt` rather than the pier deck, since it is no longer on boards.
+
+Verified: the old spot reads 13.09 m of clearance, nothing standing there, and
+the new one reads its own collider radius.
+
+STILL TO DO, and it is not a coordinate change. The chart-boat is moored to the
+pier by construction: her bollard sits on `PIER.deck`, her hull lies off the
+boards, and the whole assembly is expressed from those two facts. Putting her
+"to the left and much further down the beach" means drawing a different boat, one
+hauled up on sand and heeled over with a post beside her, which is sculpting
+rather than moving. Left for a pass that can give it the time.
