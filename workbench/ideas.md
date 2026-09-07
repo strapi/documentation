@@ -23,7 +23,6 @@ The newest world and the least worn in, so most of this is world craft rather th
 - [ ] The stand leading to The Four-Color is too visible.
 - [ ] The loan crate to the Herbarium sits ON THE ARRIVAL JETTY, the first thing a visitor meets. Move it somewhere that has to be found.
 - [ ] Check the other five crossings for the same fault: an easter egg standing where you cannot miss it.
-- [ ] The other worlds still name their destinations in crossing copy (the Herbarium's appendix 12 times, FIRST LIGHT 5, Pixel Docs City 4, Long Way 2, Carta 2). DECIDE how far the un-naming goes: the Herbarium's plate is built on naming its sister collections, so stripping it there is a rewrite, not a case change.
 - [ ] Move the boat to Carta Strapiana to the LEFT of the jetty and much further down the beach.
 - [ ] Restore the Quick Start guide as the FIRST building after the jetty, about ten metres past the portal. Buildings currently block the portal, which also breaks QUICK START FIRST.
 - [ ] A full discoverability pass on this world's crossings, since they must stay easter eggs.
@@ -131,6 +130,7 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 
 ## The Golden Shore
 
+- [x] DECIDED how far the un-naming goes. (2026-09-07, owner: Pixel Docs City unchanged, the Herbarium unchanged, "les noms que tu as trouves sont parfaits"; he will flag any others as he finds them. The un-naming was a Golden Shore correction only, where the wave brief had wrongly demanded it.)
 - [x] The backup labels were misleading. (2026-09-07: BACKUPS.md in that build now says which restore point is which and why one of them is not one.)
 - [x] A keeper's line printed across a waymark's label at the bottom centre. (2026-09-07: the line measures the label as it speaks and stands above it; 45px of overlap before, none after.)
 
