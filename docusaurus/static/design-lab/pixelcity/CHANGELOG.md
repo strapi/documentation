@@ -290,3 +290,27 @@ one-line row keeps the exact height it always had.
 `probe-dprow-wrap.js` — the three long hints and one short one measured in
 place: nothing clipped horizontally or vertically, the long ones now two lines
 at 35px, the short one still one line, and the box itself clipping nothing.
+
+## 2026-09-07 · the lamplighter's yard moves to the water's edge
+
+The owner: *"le point d'entree vers golden shore devrait plutot etre en bord de
+map, pas loin du bateau qui mene vers carta strapiana."*
+
+The yard was sited inland, in a band 14 to 40 tiles from the centre, and it was
+sited BEFORE the harbour was measured, which is the reason it could never have
+been near the sloop: her berth is not known until the longest reachable run of
+waterfront has been found. So the placement moved down the file, after `moor1`,
+and the constraining changed hands: the distance-from-centre bands are opened
+right up and proximity to the mooring does the work instead, within eleven
+tiles, then eighteen. The strict tiers still ask for the clear three-by-three in
+front that the default view looks over, and the original inland tiers stay last
+of all, because a portal that fails to place is a crossing lost.
+
+The two ways out of town by water now share a quarter: a walker who finds one is
+within sight of the other.
+
+`probe-lampyard-place.js` — the yard lands 9.4 tiles from the sloop, all 60
+portal spots still place, zero console errors. The town plan is deterministic,
+so that is one layout measured rather than many. `qa/r19/lampyard.js`, the walk
+that actually goes to the yard and crosses, still passes and still lands on the
+Golden Shore.

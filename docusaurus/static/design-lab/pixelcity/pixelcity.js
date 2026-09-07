@@ -6046,11 +6046,9 @@ function placeTownLife() {
     }
     return true;
   };
-  const ly = place1('lampyard', false, 14, 40, 17, undefined, yardFrontClear) ||
-             place1('lampyard', false, 10, 52, 14, undefined, yardFrontClear) ||
-             place1('lampyard', false, 8, 62, 12, 3, yardFrontClear) ||
-             place1('lampyard', false, 6, 70, 10, 3);
-  if (ly) { portalSpot('lampyard', ly.tx + 0.5, ly.ty + 1.35); portalsPlaced++; }
+  /* the yard itself is sited further down, once the mooring is known: the owner
+     wants it at the water's edge near the sloop, not inland. See THE LAMPLIGHTER'S
+     YARD after the harbour. */
   // the custom sites check reachability against the same BFS the doors use
   const seen0 = walkBFS().seen;
   const reachable = (tx, ty) => !!seen0[ty * Wt + tx];
@@ -6102,6 +6100,27 @@ function placeTownLife() {
     portalSpot('sloop', moor1.tx + 0.5, moor1.ty + 0.5); portalsPlaced++;
   }
   const farFromMoor = (tx, ty) => (!moor1 || Math.hypot(tx - moor1.tx, ty - moor1.ty) > 8);
+
+  /* (2026-09-07, owner) THE LAMPLIGHTER'S YARD, moved to the EDGE OF THE MAP:
+     "le point d'entree vers golden shore devrait plutot etre en bord de map, pas
+     loin du bateau qui mene vers carta strapiana". It used to be sited inland,
+     before the harbour was measured, which is why it is placed HERE now: the
+     sloop's berth is not known until the longest waterfront run has been found.
+     So the two ways out of town by water share a quarter, and a walker who finds
+     one is within sight of the other. The distance bands are opened right up and
+     the constraining is done by proximity to the mooring instead; the strict
+     tiers still ask for the clear three-by-three in front that the default view
+     looks over, and the original inland tiers stay last of all, because a portal
+     that fails to place is a crossing lost. */
+  const nearMoor = (c) => !!moor1 && Math.hypot(c.tx - moor1.tx, c.ty - moor1.ty) <= 11;
+  const nearMoorWide = (c) => !!moor1 && Math.hypot(c.tx - moor1.tx, c.ty - moor1.ty) <= 18;
+  const ly = place1('lampyard', false, 6, 999, 17, undefined, (c) => nearMoor(c) && yardFrontClear(c)) ||
+             place1('lampyard', false, 6, 999, 13, 3, (c) => nearMoor(c) && yardFrontClear(c)) ||
+             place1('lampyard', false, 6, 999, 11, 3, nearMoor) ||
+             place1('lampyard', false, 6, 999, 10, 3, nearMoorWide) ||
+             place1('lampyard', false, 14, 40, 17, undefined, yardFrontClear) ||
+             place1('lampyard', false, 6, 70, 10, 3);
+  if (ly) { portalSpot('lampyard', ly.tx + 0.5, ly.ty + 1.35); portalsPlaced++; }
   // (d) THE TRAIL GATE - the farthest reachable ground where the land runs
   // out. (2026-09-05, r15, owner screenshot: the post stood mute at night in
   // the rain.) Made robust two ways: the spot registers FIRST and the post
