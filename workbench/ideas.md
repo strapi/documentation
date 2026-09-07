@@ -17,14 +17,11 @@ The newest world and the least worn in, so most of this is world craft rather th
 - [ ] Introduce collisions. Walking through a wall or a fence must not be possible.
 - [ ] Add SPACE to jump over an obstacle.
 - [ ] Make swimming possible.
-- [ ] The bridge does not reach the far side. (2026-09-07, measured along z=-28: the ground steps from 28.07 at x=186 to 31.85 at x=188, a 3.8 m wall at the WEST end of the span, and from 31.73 at x=204 to 32.89 at x=206, a 1.2 m step at the east. Also puzzling: the measured ground across the span sits ABOVE the deck formula's 30.4-31.55, so terrain may be burying the arch. Blocked on seeing it: the player loop overwrites any camera the probe sets, so no usable elevation could be framed. ASK HIM for a screenshot of the gap, which settled the crate question in seconds.)
 - [ ] The rain, or possibly the snow, sounds very metallic.
 - [ ] Wind and waves are indistinguishable. Waves should only be heard near the shore, fading as you walk inland.
 - [ ] The stand leading to The Four-Color is too visible.
-- [ ] The loan crate to the Herbarium sits ON THE ARRIVAL JETTY, the first thing a visitor meets. Move it somewhere that has to be found.
 - [ ] Check the other five crossings for the same fault: an easter egg standing where you cannot miss it.
-- [ ] Move the boat to Carta Strapiana to the LEFT of the jetty and much further down the beach.
-- [ ] Restore the Quick Start guide as the FIRST building after the jetty, about ten metres past the portal. Buildings currently block the portal, which also breaks QUICK START FIRST.
+- [ ] Move the boat to Carta Strapiana to the LEFT of the jetty and much further down the beach. (2026-09-07: NOT a coordinate change. She is moored to the pier by construction, her bollard on PIER.deck and her hull off the boards, and the whole assembly is expressed from those two facts. Beaching her means drawing a different boat, hauled up on sand and heeled over with a post beside her.)
 - [ ] A full discoverability pass on this world's crossings, since they must stay easter eggs.
 - [ ] Finish the province ground wave. Round 1 is complete on disk with its backup served side by side; the run was killed.
 
@@ -133,6 +130,9 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 
 ## The Golden Shore
 
+- [x] The bridge did not reach either bank. (2026-09-07: the west approach descends to 26.8 while the deck began flat at 30.4, a wall of 3.5 m; the east bank stood 1.3 above it. The span reaches back to x=182 and the deck lifts from 30.2 to 31.6, the two bank heights. Both ends meet their ground within 0.1 m.)
+- [x] Restore the Quick Start as the first building after the jetty. (2026-09-07: it was pinned 54 m inland behind a dozen houses; swapped onto the nearest plot, first station at 16 m.)
+- [x] The loan crate sat on the arrival jetty. (2026-09-07: moved behind the north edge of the town, 69 m from the landing, verified by collider.)
 - [x] Footsteps unbelievable and not varying with the ground. (2026-09-07: the eight per-surface recipes were already there; the fault was one click per footfall on an exact stride. Heel and toe, randomised, alternating feet, jittered stride.)
 - [x] Introduce collisions. (2026-09-07: measured first, he was NOT going through walls, 0.02 m worst over 1625 samples. He was going through the highland rail fences, which were drawn and never registered. Registered, plus the resolver substepped.)
 - [x] SPACE to jump over an obstacle. (2026-09-07: 4.7 m/s, apex 1.11 m measured, ground only, no pogo. Colliders may carry a height; the fence at 1.05 is vaultable, buildings are not.)
