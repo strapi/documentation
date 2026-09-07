@@ -56,12 +56,61 @@ Herbarium" ruling. Nothing else in that world moves on the same pass.
 ## Across the worlds
 
 - [ ] The space bar crosses on a focused YES in Pixel Docs City, The Herbarium, FIRST LIGHT and The Four-Color. The confirm law names only Y, N, Enter and Escape.
-- [ ] Audit text clipping. Five worlds combine `white-space: nowrap` with a hidden overflow, between two and six places each; Pixel Docs City's door prompt was cutting hints mid-word until 2026-09-07 and nothing else has been checked.
-- [ ] The ten-ideas wave for The Long Way Through.
-- [ ] The ten-ideas wave for FIRST LIGHT.
-- [ ] The ten-ideas wave for The Herbarium.
+- [x] Audit text clipping across every world. (2026-09-07: swept all seven live, revealing hidden UI and measuring real overflow. Five are clean; two are not, below.)
+- [ ] FIRST LIGHT clips **all three lines of its mission log**, in a 412px box: by 58px, 252px and 936px. The worst line is cut to about a third of itself.
+- [ ] The Four-Color clips 2 of the 7 visible `.pocket-tag` labels by 17px each, for example "GETTING STARTED · 19 ISSUES" in 141px. Sixteen exist in the DOM, so more will clip as other pockets come into view.
+See the three itemised idea lists at the end of this file.
 
 ## Small and undecided
 
 - [ ] DECIDE: the Herbarium's night view differs by five pixels inside a decorative moon ring, in roughly half of runs, against a zero-tolerance assertion that protects a real law (the appendix must be strictly additive). Either give that one assertion a documented, tight tolerance, or leave the battery permanently one short.
 - [ ] The backup labels in the Golden Shore are misleading: the `.r19.bak` files are a mid-round snapshot that already contains the new crossings, while the true pre-round restore point is `.gs.bak`.
+
+
+# The three ten-idea lists
+
+Proposed and approved in full ("j'aimerais que tu implementes TOUTES ces idees"), never built. Each
+was written as one binding condition of a wave, so each is buildable on its own; ticking them one at
+a time is fine. Every one of them must hold the world's existing laws: nothing gates the reading,
+one label at a time, and no regression.
+
+## The Long Way Through
+
+- [ ] **The night lantern.** At night the walker carries a small lantern in the flat idiom; its warm pool travels with her and becomes the focus of the frame.
+- [ ] **The memory cairns.** Passing a gate whose page was read in a previous visit shows a small cairn beside it, the real date of that reading engraved on it.
+- [ ] **The gorge echo.** Where the real relief forms a gorge, the whistle returns an echo, delayed by the width and pitch-shifted.
+- [ ] **The migrations.** Small flocks cross the sky toward sections updated in the last 30 real days, from git truth, occasionally and never busy.
+- [ ] **The bench postcards.** Sitting at a bench or picnic table offers WRITE A POSTCARD: a crisp canvas-composed postcard of the current vista.
+- [ ] **The kiosk radio.** Sheltering at the kiosk while it rains reveals a radio; turning it on plays the rendered stems from `listening/stems`, one at a time.
+- [ ] **The dog learns tricks.** At real milestones of pages read this visit (5, 15, 30, 60) she learns a trick, announced quietly and listed in the Key.
+- [ ] **The engraved keepers.** Each 10,000-word waymarker gains one engraved line naming the top real committer of that stretch, from git provenance.
+- [ ] **The long shadow.** At dusk only, the walker's shadow stretches ahead and its tip leans toward the next unread page in walking order. Subtle, never a pointer.
+- [ ] **Today on the trail.** A Key sub-page listing the real on-this-day commits: who tended what, years ago today.
+
+## FIRST LIGHT
+
+- [ ] **The mission log.** Every page read files a transmission entry, with the real visit timestamp, into a memory bank that visibly fills.
+- [ ] **Signal decay and relays.** Bodies with nought to two inbound citations arrive through static, visual and audible, in proportion to their obscurity.
+- [ ] **The burn.** Travel between systems becomes a manoeuvre: thrust, drift, flip, retro-burn with a doppler hum, on one held key, the arrival always framed.
+- [ ] **Spectrography.** Scanning a body before landing shows its composition spectrum from the real block census: code, tables, images, admonitions.
+- [ ] **The dark side.** Bodies rotate slowly; landing on the night side stages the approach under the lander's floodlight cone. The reading itself stays lit.
+- [ ] **Solar weather.** Flares derived from the real recent commit history wash the system with brief aurora and briefly extend scan range.
+- [ ] **The derelicts.** Pages with zero inbound citations drift as silent derelict stations; docking one powers it back on.
+- [ ] **The constellations.** Completing every page of an official section draws that section's constellation on the map, its bodies joined in thin engraved lines.
+- [ ] **The long ping.** One key pings; every unvisited body in range answers in order of distance, pitch mapped to its word count.
+- [ ] **The probe ages.** Hull patina and antenna wear accumulate with real distance travelled this visit, inspectable close up at the mission hub.
+
+## The Herbarium
+
+Note: these predate the envelope idea above, and the two should be designed together.
+
+- [ ] **The seasons of the garden.** Each specimen's bloom state follows its real freshness: tended recently in flower, long untended gone to seed.
+- [ ] **The pressing bench.** Any specimen can be PRESSED into a botanical plate, a crisp canvas-composed image with the drawn specimen and its real provenance.
+- [ ] **The pollinators.** A few bees travel the real citation edges between specimens, traffic proportional to edge weight, never more than a handful on screen.
+- [ ] **The gardener's rounds.** A watering-can care act: watering a specimen marks it into MY BEDS, a personal page of kept specimens with their dates.
+- [ ] **The greenhouse of hybrids.** The real CMS-to-Cloud cross citations grow as grafted hybrids in a small annex, each labelled with both parents.
+- [ ] **The Latin binomials.** Each specimen gains a period binomial derived deterministically from its taxonomy and slug, openly a flourish of the fiction.
+- [ ] **The loupe.** Hovering with the loupe reveals micro-detail from the real block census: code veins in the leaves, table lattices in the petals.
+- [ ] **The seed exchange.** Leaving through a portal hands you a seed packet named for the destination; returning later plants a souvenir specimen.
+- [ ] **The sound of the garden.** A hush bed, gentle by default and really toggleable: paper rustle on page turns, distant rain on the greenhouse glass.
+- [ ] **The card catalog.** Search gains the body of an old card-catalog drawer: typed index cards with real metadata, pulled out and read.
