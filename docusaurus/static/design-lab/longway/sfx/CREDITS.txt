@@ -233,3 +233,22 @@ re-cuts of sounds already credited above:
                never to the question): waymarker.ogg at 0.30 then greet.ogg
                at 0.22, a small two-note departure. Reduced motion crosses
                in silence.
+
+THE BARK, RECAST AGAIN (2026-09-07)
+The owner rejected the bark twice more: the sample this build carried was a
+soft "wuf" with a 30 ms attack, and a synthesised replacement never sounded
+like an animal. He asked for a real recording from the web, so:
+
+  dog_bark.ogg
+    Source   : "Sound-of-dog.ogg", Wikimedia Commons
+               https://commons.wikimedia.org/wiki/File:Sound-of-dog.ogg
+    Author   : Kriplozoik (English Wikipedia)
+    Licence  : CC BY-SA 3.0 Unported (the uploader also offers GFDL 1.2+ and
+               CC BY-SA 2.5 / 2.0 / 1.0; CC BY-SA 3.0 is the one taken here)
+    Changes  : the original holds TWO barks, at 50-310 ms and 720-990 ms. This
+               file is the FIRST of them alone, cut from 30 ms with a 80 ms
+               fade at the tail, loudness-normalised to -14 LUFS, re-encoded to
+               Ogg Vorbis. A derivative, and it stays under CC BY-SA 3.0.
+    In play  : one burst, 0.427 s, peak 0.686, booked at 0.046.
+
+The file it replaces is kept beside it as dog_bark.ogg.old.

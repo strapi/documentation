@@ -309,14 +309,23 @@ harmonic for the carry, a bandpassed breath at each onset, 1460 to 2440 for the
 chirp and 1680 to 2660 to 1880 for the call, with a slow vibrato on the long
 note because a mouth is never quite steady. Measured peak: 2391 Hz.
 
-**Her bark, synthesised.** The owner: *"on ne l'entend presque pas, et ça ne
-ressemble pas à un aboiement."* It was both, and the two faults were one: the
-sample was booked at 0.048 under a ceiling derived from the file's own peak, and
-it did not sound like a dog when it did get through. A bark is a short shout, a
-hard consonant of air and then a voiced body falling in pitch through two throat
-formants, gone inside a quarter second. Synthesised now, the same discipline as
-every other voice on this trail, with its own level rather than the file table's,
-sitting where the thunder sits. Measured peak: 844 Hz, the first formant.
+**Her bark is a real dog again, at the third attempt.** The owner: *"on ne
+l'entend presque pas, et ça ne ressemble pas à un aboiement."* Both were true:
+the sample was a soft "wuf" with a 30 ms attack, booked at 0.048 under a ceiling
+derived from its own file peak. I synthesised a replacement; it had the shape and
+none of the animal, and he said so. Four further syntheses, rendered for him to
+audition, were no better. *"Cherche sur internet"* was the right instruction.
+
+The bark is now a Wikimedia Commons recording by Kriplozoik, CC BY-SA 3.0, whose
+original holds two barks; this is the first of them alone, cut from 30 ms with a
+tail fade, loudness-normalised, re-encoded. Credited in full in `sfx/CREDITS.txt`,
+and the derivative stays under the same licence.
+
+On the level, by arithmetic rather than by ear: the old file peaked at 0.326 and
+played at 0.048, putting 0.0156 into the mix; the new one peaks at 0.686, so
+0.046 puts 0.0316 there. That is the doubling he asked for. It is booked outside
+`dogGain`, whose ceiling was computed from the old file's peak and means nothing
+for this one. Measured in play: one burst, peak 680 Hz, level 174.
 
 **And she answers twice.** She already barked from wherever she was, the moment
 she was called. She now gives one more as she drops in at your feet. One, not a

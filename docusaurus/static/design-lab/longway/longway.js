@@ -6677,8 +6677,8 @@ const DOG_GAIN = {
   yip:   0.045,   /* one small yip: she found something */
   sigh:  0.038,   /* contented, sitting by the reader   */
   shake: 0.050,   /* a shake-off in mist or in rain     */
-  bark:  0.048    /* kept for the record: her bark is synthesised now, 
-                     with its own level, and no longer reads this table */
+  bark:  0.048    /* kept for the record: her bark is a new recording now,
+                     booked at 0.046 against its own peak, not through here */
 };
 function dogGain(voice, v) { return v * Math.min(DOG_GAIN[voice], DOG_CEIL); }
 /* EVERY DOG VOICE IS BOOKED THROUGH HERE, so that "never twice in a row"
@@ -7019,56 +7019,19 @@ function audEv(kind, wx, vol) {
       audPlayBuf(audVariant('dog_sigh'), dogGain('sigh', v), 0.90 + Math.random() * 0.14, pan); break;
     case 'dogshake':
       audPlayBuf(audVariant('dog_shake'), dogGain('shake', v), 0.92 + Math.random() * 0.16, pan); break;
-    /* (2026-09-07, owner) HER BARK, SYNTHESISED. "On ne l'entend presque pas
-       et ca ne ressemble pas a un aboiement." The sample was both: booked at
-       0.048 under a ceiling derived from its own peak, and not much like a dog
-       when it did come through. A bark is a short shout: a hard consonant of
-       air, then a voiced body that falls in pitch through two throat formants,
-       gone inside a quarter second. Synthesised here, the same discipline as
-       every other voice on this trail, and it carries now - twice the old
-       level and then some, sitting where the thunder sits. */
-    case 'dogbark': {
-      const cB = AUD.ctx, tB = cB.currentTime;
-      const pkB = Math.max(0.0002, GUST_PEAK * 2.0 * v);
-      const f0 = 330 + Math.random() * 60;         /* no two barks alike */
-      const out = cB.createGain();
-      out.gain.setValueAtTime(0.0001, tB);
-      out.gain.linearRampToValueAtTime(pkB, tB + 0.007);        /* a bark starts at once */
-      out.gain.setValueAtTime(pkB, tB + 0.055);
-      out.gain.exponentialRampToValueAtTime(pkB * 0.28, tB + 0.13);
-      out.gain.exponentialRampToValueAtTime(0.0001, tB + 0.26);
-      if (cB.createStereoPanner) { const pB = cB.createStereoPanner(); pB.pan.value = pan;
-        out.connect(pB); pB.connect(AUD.sfx.gain); } else out.connect(AUD.sfx.gain);
-      /* the voice: a saw falling away, read through a throat */
-      const o = cB.createOscillator(); o.type = 'sawtooth';
-      o.frequency.setValueAtTime(f0 * 1.28, tB);
-      o.frequency.exponentialRampToValueAtTime(f0, tB + 0.045);
-      o.frequency.exponentialRampToValueAtTime(f0 * 0.72, tB + 0.24);
-      const mk = (hz, q, amp) => {
-        const bp = cB.createBiquadFilter(); bp.type = 'bandpass';
-        bp.frequency.value = hz; bp.Q.value = q;
-        const g = cB.createGain(); g.gain.value = amp;
-        o.connect(bp); bp.connect(g); g.connect(out);
-      };
-      mk(820 + Math.random() * 120, 4.5, 1.0);      /* the first formant  */
-      mk(1900 + Math.random() * 260, 6.5, 0.55);    /* the second, the edge */
-      const body = cB.createGain(); body.gain.value = 0.22;
-      o.connect(body); body.connect(out);           /* a little raw chest  */
-      o.start(tB); o.stop(tB + 0.30);
-      /* the consonant: a burst of air at the front of it */
-      if (AUD.noise) {
-        const n = cB.createBufferSource(); n.buffer = AUD.noise; n.loop = true;
-        const nb = cB.createBiquadFilter(); nb.type = 'bandpass';
-        nb.frequency.value = 1500; nb.Q.value = 0.9;
-        const ng = cB.createGain();
-        ng.gain.setValueAtTime(0.0001, tB);
-        ng.gain.linearRampToValueAtTime(0.85, tB + 0.006);
-        ng.gain.exponentialRampToValueAtTime(0.0001, tB + 0.035);
-        n.connect(nb); nb.connect(ng); ng.connect(out);
-        n.start(tB); n.stop(tB + 0.06);
-      }
-      break;
-    }
+    /* (2026-09-07, owner) HER BARK IS A REAL DOG AGAIN. Two attempts failed
+       before this one: the old sample was a soft "wuf" with a thirty-millisecond
+       attack, booked so quietly it barely reached the ear, and a synthesis of
+       mine got the shape but never sounded like an animal. "Cherche sur
+       internet" was the right call. This is a Wikimedia Commons recording,
+       trimmed to ONE bark, loudness-normalised, credited in sfx/CREDITS.txt.
+       On the level: the old file peaked at 0.326 and played at 0.048, so 0.0156
+       reached the mix; the new one peaks at 0.686, and 0.046 puts 0.0316 there,
+       which is the doubling he asked for, arrived at by arithmetic rather than
+       by ear. It is booked outside dogGain because that ceiling was computed
+       from the old file's peak and means nothing for this one. */
+    case 'dogbark':
+      audPlayBuf(audVariant('dog_bark'), v * 0.046, 0.97 + Math.random() * 0.08, pan); break;
     /* --- the sleeper, and the smaller sleeper beside her --- */
     case 'snore':
       audPlayBuf(audVariant('snore'), v * SNORE_GAIN, 0.94 + Math.random() * 0.13, pan); break;
