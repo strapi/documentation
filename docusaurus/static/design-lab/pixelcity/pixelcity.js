@@ -6112,15 +6112,32 @@ function placeTownLife() {
      tiers still ask for the clear three-by-three in front that the default view
      looks over, and the original inland tiers stay last of all, because a portal
      that fails to place is a crossing lost. */
-  const nearMoor = (c) => !!moor1 && Math.hypot(c.tx - moor1.tx, c.ty - moor1.ty) <= 11;
-  const nearMoorWide = (c) => !!moor1 && Math.hypot(c.tx - moor1.tx, c.ty - moor1.ty) <= 18;
-  const ly = place1('lampyard', false, 6, 999, 17, undefined, (c) => nearMoor(c) && yardFrontClear(c)) ||
+  const moorD = (c) => moor1 ? Math.hypot(c.tx - moor1.tx, c.ty - moor1.ty) : 1e9;
+  /* ON THE QUAY, within a few paces of the berth: a bank tile with open water
+     beside it, two tiles clear of the sloop so she keeps her elbow room, and
+     with walkable ground directly south, because the door prompt is offset a
+     tile that way and a prompt standing in the sea cannot be reached. */
+  const walkSide = (tx, ty) => reachable(tx, ty + 1) ? [0.5, 1.35]
+    : reachable(tx, ty - 1) ? [0.5, -0.35]
+    : reachable(tx + 1, ty) ? [1.35, 0.5]
+    : reachable(tx - 1, ty) ? [-0.35, 0.5] : null;
+  const onQuay = (r) => (c) => c.t2 === T.BANK && !!seaBeside(c.tx, c.ty) &&
+    moorD(c) <= r && moorD(c) >= 2 && !!walkSide(c.tx, c.ty);
+  const nearMoor = (c) => moorD(c) <= 11;
+  const nearMoorWide = (c) => moorD(c) <= 18;
+  const ly = place1('lampyard', false, 6, 999, 9, 3, onQuay(6)) ||
+             place1('lampyard', false, 6, 999, 7, 2, onQuay(10)) ||
              place1('lampyard', false, 6, 999, 13, 3, (c) => nearMoor(c) && yardFrontClear(c)) ||
              place1('lampyard', false, 6, 999, 11, 3, nearMoor) ||
              place1('lampyard', false, 6, 999, 10, 3, nearMoorWide) ||
              place1('lampyard', false, 14, 40, 17, undefined, yardFrontClear) ||
              place1('lampyard', false, 6, 70, 10, 3);
-  if (ly) { portalSpot('lampyard', ly.tx + 0.5, ly.ty + 1.35); portalsPlaced++; }
+  if (ly) {
+    /* the prompt stands on whichever side of the yard is walkable: on the quay
+       the sea may lie south, and a prompt in the water cannot be reached. */
+    const off = walkSide(ly.tx, ly.ty) || [0.5, 1.35];
+    portalSpot('lampyard', ly.tx + off[0], ly.ty + off[1]); portalsPlaced++;
+  }
   // (d) THE TRAIL GATE - the farthest reachable ground where the land runs
   // out. (2026-09-05, r15, owner screenshot: the post stood mute at night in
   // the rain.) Made robust two ways: the spot registers FIRST and the post

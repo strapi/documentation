@@ -314,3 +314,21 @@ portal spots still place, zero console errors. The town plan is deterministic,
 so that is one layout measured rather than many. `qa/r19/lampyard.js`, the walk
 that actually goes to the yard and crosses, still passes and still lands on the
 Golden Shore.
+
+### the same day, corrected: onto the quay itself
+
+Nine tiles was not what he meant. The first move placed the yard within eleven
+tiles of the mooring, which the constraint accepted at 9.2 tiles inland of it,
+and he was expecting it beside the boat on the water's edge.
+
+Two things were in the way. The distance band alone does not say WATERFRONT, so
+the site scan now demands a bank tile with open water beside it, at least two
+tiles clear of the berth so the sloop keeps her elbow room. And the door prompt
+had a hardcoded offset of a tile to the SOUTH, which on this shore is open
+water: the first quayside attempt therefore matched nothing at all and fell
+straight through to the inland tier. The prompt now stands on whichever side of
+the yard is walkable, south, north, east or west, chosen at placement time.
+
+The yard now sits 6.1 tiles from the sloop along the same strip of waterfront.
+All 60 portal spots still place, zero console errors, and `qa/r19/lampyard.js`,
+the walk that goes to the yard and crosses, still lands on the Golden Shore.
