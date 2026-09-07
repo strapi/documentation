@@ -1007,3 +1007,32 @@ itself is jittered where it is counted, 0.70 to 0.87, so the rhythm breathes.
 The pine litter cracks under about half of steps and not the others.
 
 Nothing is louder than it was. It simply stopped being a machine.
+
+## 2026-09-07 · what he was walking through, and what he was not
+
+The owner: *"introduis les collisions ! je ne dois pas pouvoir passer à travers
+un mur, une clôture."* Colliders were already there and thorough, from the
+houses to the drystone to the pillars, so this needed measuring rather than
+believing.
+
+**Measured first.** `__clear(x, z)` gives the distance from a point to the
+nearest collider surface, so a walk that never returns a negative has never been
+inside anything. Twenty-six seconds of driving into walls at angles, 1625
+samples: the deepest intrusion was 0.02 m, which is the resolver's own epsilon.
+He was NOT walking through walls. So the walls were not the complaint.
+
+**The fences were.** The highland gates carry a rail fence off each shoulder,
+seven posts a side, and it was drawn and never registered: no collider, walk
+straight through. Each post is a circle now and each span another at its middle,
+centres 1.2 apart with a radius of 0.7 so they overlap and leave no gap to slip
+between. The gate itself is untouched; the run starts 3.6 clear of it.
+
+**And the resolver is sturdier anyway.** It tested only the destination, so a
+long enough stride could step clean over a small circle. The move is walked in
+substeps of at most a third of a metre now, two passes each to settle corners.
+Measured on the same drive: deepest intrusion 0.02 m before, 0.004 m after.
+
+If something else still lets him through, it will be another thing drawn without
+a collider, and the quickest way to find it is for him to say where he was
+standing: the world is 380 metres of coast and a grid coarse enough to sweep it
+is too coarse to catch a fence rail.

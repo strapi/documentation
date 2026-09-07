@@ -1413,8 +1413,16 @@ export function buildTown(scene, data, tendedSet) {
         const pg = terrainHeight(px, pz);
         if (pg < 1.6) break;
         wood.add(new THREE.CylinderGeometry(0.09, 0.12, 1.5, 5), mat4(px, pg + 0.75, pz), 0x4A3A28, 0.16);
+        /* (2026-09-07, owner: "je ne dois pas pouvoir passer a travers... une
+           cloture") These fences were drawn and never registered, so a walker
+           went straight through the highland gates' shoulders. A post is one
+           circle and each span another at its middle: centres 1.2 apart with a
+           radius of 0.7, which overlaps, so there is no gap to slip through.
+           The gate itself is untouched - the run starts 3.6 clear of it. */
+        colliders.push({ x: px, z: pz, r: 0.7 });
         if (prev) {
           const mx = (px + prev[0]) / 2, mz = (pz + prev[1]) / 2, mg = (pg + prev[2]) / 2;
+          colliders.push({ x: mx, z: mz, r: 0.7 });
           for (const hy of [0.55, 1.05]) {
             wood.add(new THREE.BoxGeometry(0.08, 0.10, 2.45), mat4(mx, mg + hy, mz, perp), 0x5A472F, 0.14);
           }

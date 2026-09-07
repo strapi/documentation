@@ -110,16 +110,32 @@ export function initPlayer(camera, domElement, colliders, reducedMotion) {
     }
     P.velocity.lerp(move, 1 - Math.exp(-dt * 9));
     const v = P.velocity;
-    let nx = camera.position.x + v.x * dt;
-    let nz = camera.position.z + v.z * dt;
-    // circle colliders
-    for (const c of P.colliders) {
-      const dx = nx - c.x, dz = nz - c.z;
-      const d2 = dx * dx + dz * dz;
-      if (d2 < c.r * c.r && d2 > 0.0001) {
-        const d = Math.sqrt(d2);
-        nx = c.x + (dx / d) * c.r;
-        nz = c.z + (dz / d) * c.r;
+    /* (2026-09-07, owner: "je ne dois pas pouvoir passer a travers un mur, une
+       cloture") The colliders were here all along and cover the walls; what let
+       him through was TUNNELLING. Only the destination was tested, so any frame
+       whose stride was longer than a collider is wide stepped clean over it, and
+       a wall built of small circles is exactly that. The move is walked in
+       substeps no longer than a third of a metre now, each one resolved against
+       every circle, so nothing can be jumped. Two passes per substep settle the
+       corners, where being pushed out of one circle can push you into its
+       neighbour. */
+    let nx = camera.position.x, nz = camera.position.z;
+    const tx = nx + v.x * dt, tz = nz + v.z * dt;
+    const span = Math.hypot(tx - nx, tz - nz);
+    const steps = Math.max(1, Math.min(12, Math.ceil(span / 0.33)));
+    for (let s2 = 1; s2 <= steps; s2++) {
+      nx = camera.position.x + (tx - camera.position.x) * (s2 / steps);
+      nz = camera.position.z + (tz - camera.position.z) * (s2 / steps);
+      for (let pass = 0; pass < 2; pass++) {
+        for (const c of P.colliders) {
+          const dx = nx - c.x, dz = nz - c.z;
+          const d2 = dx * dx + dz * dz;
+          if (d2 < c.r * c.r && d2 > 0.0001) {
+            const d = Math.sqrt(d2);
+            nx = c.x + (dx / d) * c.r;
+            nz = c.z + (dz / d) * c.r;
+          }
+        }
       }
     }
     // world bounds
