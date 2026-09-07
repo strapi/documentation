@@ -1051,3 +1051,22 @@ tops out at 1.13 gets you over and nothing else does.
 
 Measured: apex 1.11 m, returns to the ground exactly, and holding the key leaves
 him where he started.
+
+## 2026-09-07 · the rain stops being a sheet of metal
+
+The owner: *"le bruit de la pluie est très métallique, il faut l'améliorer."*
+He was hearing exactly what was there. The rain was noise through a COMB FILTER:
+a fixed 11.5 ms delay fed back at 0.52. A comb with a fixed delay rings at one
+over the delay and at every harmonic above it, so this one sang at 87 Hz and up
+the whole time it played. That is not a flaw in the recipe, it IS the recipe for
+a struck metal plate.
+
+Rain has no pitch. It is built from what rain actually is now: a broad hiss with
+nothing resonant in it, from 520 Hz to 7.2 kHz; a soft brown roar underneath for
+water on ground; and separate DROPS, each a short bandpassed tick between 2.6
+and 6 kHz, landing a few a second, panned where they fall and arriving faster
+the harder it rains. A downpour also closes the top of the hiss by two and a
+half kilohertz, which is the difference between a hiss and a roar.
+
+Checked in a forced squall at rain 0.91: the world runs clean, no console
+errors, and there is no fixed delay left anywhere in the graph to ring.

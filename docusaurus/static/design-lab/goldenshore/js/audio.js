@@ -75,18 +75,29 @@ export function initAudio() {
       S.wind = { g, bp, shelf };
     }
 
-    // ----- rain: comb-filtered noise, gain riding the curtain -----
+    /* (2026-09-07, owner: "le bruit de la pluie est tres metallique") It was,
+       and for a textbook reason: the rain was noise through a COMB FILTER, a
+       fixed 11.5 ms delay fed back at 0.52. A comb with a fixed delay rings at
+       1/delay and every harmonic of it, here 87 Hz and up, which is precisely
+       how one synthesises a struck metal plate. Rain has no pitch at all.
+       It is built from what rain is instead: a broad hiss up top, a soft roar
+       underneath, and discrete drops that land one at a time. */
+    // ----- rain: hiss, roar, and separate drops -----
     {
-      const src = ctx.createBufferSource(); src.buffer = white; src.loop = true;
-      const pre = ctx.createGain(); pre.gain.value = 0.7;
-      const delay = ctx.createDelay(0.05); delay.delayTime.value = 0.0115;
-      const fb = ctx.createGain(); fb.gain.value = 0.52;
-      const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2600;
       const g = ctx.createGain(); g.gain.value = 0;
-      src.connect(pre).connect(delay); delay.connect(fb).connect(delay);
-      delay.connect(lp).connect(g).connect(S.duck);
-      src.start();
-      S.rain = { g };
+      g.connect(S.duck);
+      /* the hiss: the sheet of it, wide open, no resonance anywhere */
+      const hs = ctx.createBufferSource(); hs.buffer = white; hs.loop = true;
+      const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 520; hp.Q.value = 0.4;
+      const hl = ctx.createBiquadFilter(); hl.type = 'lowpass'; hl.frequency.value = 7200; hl.Q.value = 0.3;
+      const hg = ctx.createGain(); hg.gain.value = 0.62;
+      hs.connect(hp).connect(hl).connect(hg).connect(g); hs.start();
+      /* the roar: heavy water on ground, brown and dull, well under the hiss */
+      const rs = ctx.createBufferSource(); rs.buffer = S.brownBuf; rs.loop = true;
+      const rl = ctx.createBiquadFilter(); rl.type = 'lowpass'; rl.frequency.value = 900; rl.Q.value = 0.5;
+      const rg = ctx.createGain(); rg.gain.value = 0.45;
+      rs.connect(rl).connect(rg).connect(g); rs.start();
+      S.rain = { g, hl, drop: 0 };
     }
 
     // ----- lantern hum: two barely detuned sines and a gain by nearness -----
@@ -289,6 +300,19 @@ export function initAudio() {
 
       // rain follows the curtain
       S.rain.g.gain.setTargetAtTime(0.34 * rain, S.ctx.currentTime, 0.5);
+      /* heavier rain closes the top a little, the way a downpour goes from
+         hiss to roar, and lands more drops */
+      S.rain.hl.frequency.setTargetAtTime(7200 - 2600 * rain, S.ctx.currentTime, 0.8);
+      if (rain > 0.12) {
+        S.rain.drop -= dt;
+        if (S.rain.drop <= 0) {
+          S.rain.drop = (0.16 + Math.random() * 0.34) / (0.3 + rain);
+          /* one drop: a short bandpassed tick, panned where it fell */
+          const f = 2600 + Math.random() * 3400;
+          burst({ type: 'bandpass', f, q: 3.5 }, 0.030 * rain * (0.6 + Math.random() * 0.8),
+                0.020 + Math.random() * 0.02, (Math.random() - 0.5) * 1.4);
+        }
+      }
 
       // cicadas: colonnade and groves, silenced by the squall
       // cicadas are a hot dry-country insect: the terraces, and the harbour
