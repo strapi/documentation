@@ -55,8 +55,6 @@ Herbarium" ruling. Nothing else in that world moves on the same pass.
 ## Across the worlds
 
 - [ ] The space bar crosses on a focused YES in Pixel Docs City, The Herbarium, FIRST LIGHT and The Four-Color. The confirm law names only Y, N, Enter and Escape.
-- [ ] FIRST LIGHT clips **all three lines of its mission log**, in a 412px box: by 58px, 252px and 936px. The worst line is cut to about a third of itself.
-- [ ] The Four-Color clips 2 of the 7 visible `.pocket-tag` labels by 17px each, for example "GETTING STARTED · 19 ISSUES" in 141px. Sixteen exist in the DOM, so more will clip as other pockets come into view.
 See the three itemised idea lists at the end of this file.
 
 ## Small and undecided
@@ -127,4 +125,6 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 
 ## Across the worlds
 
+- [x] FIRST LIGHT clipped all three lines of its mission log. (2026-09-07: entries wrap now; the lock line had been losing FIRST SURVEY TARGET - BEGIN HERE and the photometer line its whole explanation. Panel cap 184 to 138px so it clears #prompt-sub. Battery ALL PASS.)
+- [x] The Four-Color clipped its pocket tags, losing the issue count on the longer categories. (2026-09-07: they wrap to two lines in a slightly wider box; all sixteen measured, none clipped, none overlapping a neighbour.)
 - [x] Audit text clipping across every world. (2026-09-07: swept all seven live, revealing hidden UI and measuring real overflow. Five are clean; the two that are not have their own open lines in the working list.)
