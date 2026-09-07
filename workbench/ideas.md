@@ -29,7 +29,7 @@ The newest world and the least worn in, so most of this is world craft rather th
 
 Settled otherwise, and not to be re-tuned.
 
-- [ ] Move the way to The Golden Shore to the EDGE OF THE MAP, not far from the boat that leads to Carta Strapiana. It is currently the lamplighter's yard, inland.
+- [x] Move the way to The Golden Shore to the EDGE OF THE MAP, not far from the boat that leads to Carta Strapiana. (2026-09-07: the lamplighter's yard now places after the harbour is measured and is constrained by proximity to the mooring, landing 9.4 tiles from the sloop.)
 
 ## The Herbarium
 
