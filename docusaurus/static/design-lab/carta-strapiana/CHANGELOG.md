@@ -341,3 +341,18 @@ holds focus. It is safe against the spyglass, which also lives on Space:
 `portalKeydown` runs first in the dispatch and returns immediately when no plate
 is open, so the glass path is reached exactly as before and only a raised plate
 ever sees the key.
+
+## 2026-09-07 · becalmed means becalmed
+
+Under reduced motion the hull is frozen on purpose, and travel happens by
+passage instead of by sailing. But the knots went on climbing with the sail, so
+the instruments read way through the water while the ship had not moved an inch
+and no distance ever closed. A log that reports a speed the vessel is not making
+is the one thing a chart may not do.
+
+She reads zero now. The passage is untouched and remains how she crosses to
+anywhere, the keeper coast included: measured under reduced motion, a passage
+still closes 1.6 nm to 1.2 in three seconds.
+
+The portal verifier had filed this as "the sail-in path never opens", which was
+the symptom; the cause was an instrument telling a story the sea was not.

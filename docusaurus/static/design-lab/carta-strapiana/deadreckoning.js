@@ -2182,7 +2182,15 @@ function update(dt) {
      still the reward. */
   const polar = 0.55 + 0.45 * Math.pow((cosA + 1) / 2, 1.35);
   const windFactor = 0.75 + 0.25 * (wind.kn / 16);
-  if (!passage.on) {
+  if (REDUCED && !passage.on) {
+    /* (2026-09-07) BECALMED MEANS BECALMED. Reduced motion freezes the hull on
+       purpose, and travel happens by passage instead, but the knots still
+       climbed with the sail: the instruments read way through the water while
+       the ship had not moved an inch, and no distance ever closed. She reads
+       zero now, which is the truth of it, and the passage is still how she
+       crosses to anywhere, the keeper coast included. */
+    ship.knots = 0;
+  } else if (!passage.on) {
     let targetKn = ship.anchored ? 0 : sailBase(ship.sail) * polar * windFactor;
     /* within sight of the bound island, with the bow laid for her, the
        closing pace never falls below half her full-sail speed (owner order:
