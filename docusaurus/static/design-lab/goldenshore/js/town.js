@@ -40,7 +40,7 @@ const SPECIAL_POS = {
   '/cms/quick-start': { x: 10, z: 0, yaw: Math.PI * 1.5 },          // violet door faces the pier
   '/cms/api/document-service': { x: 84, z: -34 },                   // the wellhouse
   '/cms/migration/v4-to-v5/breaking-changes': { x: 210, z: -28 },   // across the Crossing
-  '/release-notes': { x: 234, z: -66 },                             // door of the Golden Shore
+  '/release-notes': { x: 239, z: -76 },                             // door of the Golden Shore, on the light's cape
   '/cloud/projects/settings': { x: -104, z: 58 },                   // the harbormaster's desk, out on Projects
   '/cms/cli': { x: 22, z: -54 },                                    // the CMS signal mast on the harbour point
   '/cloud/cli/cloud-cli': { x: -134, z: 72 },                       // the Cloud signal mast, its own rock
@@ -52,9 +52,15 @@ const SPECIAL_POS = {
 
 // The cliff road: switchback legs the Upgrades stations climb, west of the
 // Crossing then east of it to the approach. Also drawn as the road itself.
+// The ladder used to swing west to x=146 and south to z=-56, which put two
+// thirds of its turns inside the Pine Highland's plugins ground: relimed
+// limestone way-stations standing on needle floor under maritime pine. It now
+// climbs between its own rails, x=168 to x=193, from the foot of the cliff to
+// the head of the Crossing, and the three turns of it carry Wall way-posts so
+// the road is Wall country the whole way up.
 export const CLIFF_PTS = [
-  [168, 6], [148, -2], [168, -14], [146, -26], [168, -38], [150, -48],
-  [172, -56], [186, -42], [186, -30],
+  [168, 6], [193, 3], [170, -3], [193, -9], [170, -15], [192, -21],
+  [171, -26], [183, -27],
 ];
 export const CLIFF_PTS_EAST = [
   [207, -27], [219, -35], [206, -46], [220, -57], [228, -50], [224, -54],
@@ -67,7 +73,7 @@ export const CLIFF_PTS_EAST = [
 const CROFT_FIELDS = {
   harbor:   [{ x: 4, z: -74, r: 18 }, { x: -22, z: -58, r: 14 }],
   terraces: [{ x: 96, z: 84, r: 26 }, { x: 70, z: -74, r: 20 }, { x: 120, z: 66, r: 22 }, { x: 44, z: 74, r: 18 }],
-  highland: [{ x: 148, z: 70, r: 24 }, { x: 128, z: -86, r: 24 }, { x: 176, z: -80, r: 18 }],
+  highland: [{ x: 148, z: 70, r: 24 }, { x: 132, z: -84, r: 20 }, { x: 168, z: -84, r: 18 }],
   wall:     [{ x: 208, z: 34, r: 18 }, { x: 250, z: -22, r: 16 }],
   // the archipelago has no back country, so its crofts take the seaward
   // shoulder of an islet, above the tide line and off every stepping path
@@ -895,6 +901,24 @@ export function buildTown(scene, data, tendedSet) {
   }
 
   // ----- lay out every district from the taxonomy itself -----
+  // A station stands on its own country or it does not stand there. This is
+  // tested exactly the way the waterline is tested a few lines down: if the
+  // earth under a seat belongs to another province, the seat is passed over
+  // and the page takes the next one round the ring. The house is never
+  // re-dressed to match the floor it happens to land on; it moves until the
+  // floor is its own. Returns the page's own province weight there, or -1
+  // when another province holds the ground.
+  const ownGround = (prov, x, z) => {
+    const w = provinceWeights(x, z);
+    const i = PROVINCE_KEYS.indexOf(prov);
+    if (i < 0) return 1;
+    let bi = 0;
+    for (let k2 = 1; k2 < w.length; k2++) if (w[k2] > w[bi]) bi = k2;
+    return bi === i ? w[i] : -1;
+  };
+  // deep enough inside its own country that a walker reads the handover as a
+  // handover and not as a house sitting on the fence
+  const OWN_MIN = 0.55;
   const zeroIn = (slug) => (inbound[slug] || 0) === 0;
   const crofts = [];
   for (const s of data.sections) {
@@ -1004,10 +1028,11 @@ export function buildTown(scene, data, tendedSet) {
       // concentric street rows: wall to wall like a real hill town,
       // doors opening onto the ring streets, same page same house forever
       const n = placed.length;
+      const sprov = PROVINCE_OF_SECTION[s.key];
       const avoid = Object.values(SPECIAL_POS);
       let k = 0;
       const r0 = n > 12 ? 8.5 : 6.0;
-      for (let arc = 0; arc < 5 && k < n; arc++) {
+      for (let arc = 0; arc < 6 && k < n; arc++) {
         const r = r0 + arc * 11;
         const circ = 2 * Math.PI * r;
         const seatW = 7.4;
@@ -1021,17 +1046,38 @@ export function buildTown(scene, data, tendedSet) {
           if (avoid.some(sp => Math.hypot(x - sp.x, z - sp.z) < 9)) continue;
           const hgt = terrainHeight(x, z);
           if (hgt < 1.2) continue; // never in the water
+          if (ownGround(sprov, x, z) < OWN_MIN) continue; // never in another province
           const yaw = Math.atan2(tr.x - x, tr.z - z) + (hash01(s.key + k + 'y') - 0.5) * 0.10;
           const st = stationAt(placed[k], x, z, yaw);
           if (st) st.districtKey = s.key;
           k++;
         }
       }
-      // anything the arcs could not seat falls back just outside the last ring
+      // Anything the rings could not seat walks out of the district in the
+      // direction that keeps it deepest in its own country, rather than
+      // dropping on a hashed bearing that might land it abroad.
       while (k < n) {
-        const a = hash01(s.key + k + 'ov') * 6.28;
-        const r = r0 + 5 * 11;
-        const st = stationAt(placed[k], tr.x + Math.cos(a) * r, tr.z + Math.sin(a) * r * 0.94, a + Math.PI);
+        let best = null;
+        const salt = hash01(s.key + k + 'ov') * 6.28;
+        for (let rr = r0; rr <= r0 + 70; rr += 2.2) {
+          for (let i = 0; i < 56; i++) {
+            const a = salt + (i / 56) * Math.PI * 2;
+            const x = tr.x + Math.cos(a) * rr, z = tr.z + Math.sin(a) * rr * 0.94;
+            if (terrainHeight(x, z) < 1.2) continue;
+            if (avoid.some(sp => Math.hypot(x - sp.x, z - sp.z) < 9)) continue;
+            if (stations.some(st2 => Math.hypot(x - st2.x, z - st2.z) < 6.4)) continue;
+            if (TERRACES.some(t2 => t2 !== tr && Math.hypot(x - t2.x, z - t2.z) < t2.r * 0.75)) continue;
+            const w = ownGround(sprov, x, z);
+            if (w < 0) continue;
+            // nearer home wins ties: the score falls away with the walk out
+            const score = w - rr * 0.0022;
+            if (!best || score > best.score) best = { x, z, score };
+          }
+          if (best && best.score > 0.90) break;
+        }
+        const bx = best ? best.x : tr.x + Math.cos(salt) * (r0 + 55);
+        const bz = best ? best.z : tr.z + Math.sin(salt) * (r0 + 55) * 0.94;
+        const st = stationAt(placed[k], bx, bz, Math.atan2(tr.x - bx, tr.z - bz));
         if (st) st.districtKey = s.key;
         k++;
       }
@@ -1054,7 +1100,9 @@ export function buildTown(scene, data, tendedSet) {
       const clear = prov === 'cloud'
         ? !stations.some(st2 => Math.hypot(tx - st2.x, tz - st2.z) < 6.5)
         : !TERRACES.some(t => Math.hypot(tx - t.x, tz - t.z) < t.r + 4);
-      if (h > minH && h < 46 && clear) { x = tx; z = tz; break; }
+      // a croft hides in the back country of its OWN province, and the field
+      // is what decides where that is, not the field's name
+      if (h > minH && h < 46 && clear && ownGround(prov, tx, tz) >= OWN_MIN) { x = tx; z = tz; break; }
     }
     const st = stationAt(c.slug, x, z, hash01(c.slug + 'yaw') * Math.PI * 2, { special: 'croft' });
     if (st) st.districtKey = c.key;
@@ -1401,6 +1449,31 @@ export function buildTown(scene, data, tendedSet) {
     walls.add(new THREE.BoxGeometry(0.85, 2.6, 0.85), mat4(mx, mg + 1.75, mz, ang), 0xF2EEE2, 0.05, PLASTER_UV);
     stone.add(new THREE.BoxGeometry(1.1, 0.22, 1.1), mat4(mx, mg + 3.15, mz, ang), 0xF0EADC, 0.05, STONE_UV);
     provinceStone(gx - Math.sin(perp) * 4.4 + Math.sin(ang) * 2.0, gz - Math.cos(perp) * 4.4 + Math.cos(ang) * 2.0, ang + Math.PI, 'highland', 'wall', 'The Wall foot');
+  }
+
+  // 4. The Light's Cape. Where the Wall's last way-station gives out and the
+  //    cape the harbour's light stands on begins. The Golden Shore is the
+  //    harbour's light, kept by the harbour, so the ground it turns over is
+  //    the Harbour Town's and the release notes read at its door stand on
+  //    their own earth. No gate here either: a cape has no doorway. It is
+  //    marked the way a coast marks a headland, with limewashed pillars a
+  //    boat can pick out, and the stone that says which country you are in.
+  {
+    const sp = borderSpot(226.0, -62.0, 'wall', 'harbor');
+    const gx = sp.x, gz = sp.z;
+    const ang = crossingAngle(gx, gz, 'wall', 'harbor');
+    const perp = ang + Math.PI / 2;
+    GATES.push({ x: gx, z: gz, r: 10, ang, from: 'wall', to: 'harbor', name: "The Light's Cape" });
+    gatePaths.push([[gx - Math.sin(ang) * 20, gz - Math.cos(ang) * 20], [gx, gz], [gx + Math.sin(ang) * 20, gz + Math.cos(ang) * 20]]);
+    for (const sd of [-1, 1]) {
+      const px = gx + Math.sin(perp) * sd * 3.2, pz = gz + Math.cos(perp) * sd * 3.2;
+      const pg = terrainHeight(px, pz);
+      stone.add(new THREE.BoxGeometry(1.15, 0.44, 1.15), mat4(px, pg + 0.22, pz, ang), 0xB4A98F, 0.10, STONE_UV);
+      walls.add(new THREE.CylinderGeometry(0.40, 0.50, 2.1, 10), mat4(px, pg + 1.42, pz, ang), 0xF2EEE2, 0.05, PLASTER_UV);
+      stone.add(new THREE.SphereGeometry(0.42, 10, 8), mat4(px, pg + 2.56, pz, ang), 0xE8DCC4, 0.06, STONE_UV);
+      colliders.push({ x: px, z: pz, r: 0.7 });
+    }
+    provinceStone(gx - Math.sin(perp) * 4.6 + Math.sin(ang) * 2.0, gz - Math.cos(perp) * 4.6 + Math.cos(ang) * 2.0, ang + Math.PI, 'wall', 'harbor', "The Light's Cape");
   }
 
   // ----- boundary stones for every district -----

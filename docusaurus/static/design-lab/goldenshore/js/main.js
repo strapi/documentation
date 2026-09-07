@@ -10,8 +10,9 @@ import { buildProps } from './props.js';
 import { initPlayer } from './player.js';
 import {
   initOverlay, openReader, closeReader, isReaderOpen, tend, getTended,
-  toggleLogbook, keeperHourEarned, showToast, updateLabel, drawCompass,
+  toggleLogbook, keeperHourEarned, showToast, updateLabel, updateWayLabel, drawCompass,
 } from './overlay.js';
+import { buildCrossings, initCrossings } from './crossings.js';
 import { TERRACES, groundAt, surfaceAt, provinceAt, GATES } from './terrain.js';
 import { initWeather, tickWeather, WEATHER } from './weather.js';
 import { buildKeepers } from './keepers.js';
@@ -116,9 +117,17 @@ async function boot() {
   setStatus('Planting the wind...');
   buildVegetation(WORLD.scene);
   const props = buildProps(WORLD.scene);
-  const colliders = town.colliders.concat(props.colliders);
+  // the six ways home: things on the ground, not a list on the glass
+  const crossings = buildCrossings(WORLD.scene, data);
+  const colliders = town.colliders.concat(props.colliders, crossings.colliders);
 
   const player = initPlayer(WORLD.camera, canvas, colliders, reducedMotion);
+
+  // the crossing card, and the law it keeps
+  const cross = initCrossings(crossings.waymarks, {
+    onOpen() { player.unlock(); },
+    onClose(answered) { if (!answered && !player.fallback && !isReaderOpen()) player.tryLock(); },
+  });
 
   // ----- the living coast: weather, keepers, sound -----
   setStatus('Reading the sky...');
@@ -155,7 +164,13 @@ async function boot() {
   const grainEl = document.getElementById('grain');
 
   // ----- interaction target -----
-  let target = null, targetDist = 999;
+  // Two kinds of thing answer to a look now: the 290 lanterns, and the six
+  // ways off the coast. They are scored by the same rule, and a lantern wins
+  // any tie by a clear margin, because the reading is sovereign and a page is
+  // never to be shouldered aside by a signpost. The ways stand well clear of
+  // every station anyway - nearest is over eight metres off - so the tie is
+  // a safeguard and not a daily event.
+  let target = null, targetDist = 999, wayTarget = null, wayDist = 999;
   function findTarget() {
     const cam = WORLD.camera;
     const view = new THREE.Vector3();
@@ -170,16 +185,32 @@ async function boot() {
       const score = dot * 2 - d * 0.06;
       if (score > bestScore) { bestScore = score; best = st; bestD = d; }
     }
-    target = best; targetDist = bestD;
+    let bw = null, bwD = 999, bwScore = -1;
+    for (const wm of crossings.waymarks) {
+      const dx = wm.x - cam.position.x, dz = wm.z - cam.position.z;
+      const d = Math.hypot(dx, dz);
+      if (d > 24) continue;
+      const dot = (dx / d) * view.x + (dz / d) * view.z;
+      if (d > 6 && dot < 0.45) continue;
+      const score = dot * 2 - d * 0.06;
+      if (score > bwScore) { bwScore = score; bw = wm; bwD = d; }
+    }
+    if (best && bw && bestScore + 0.25 >= bwScore) bw = null;
+    if (bw) best = null;
+    target = best; targetDist = best ? bestD : 999;
+    wayTarget = bw; wayDist = bw ? bwD : 999;
   }
 
   // ----- tending -----
   let tendHold = 0, tendActive = false;
   player.onKey = (e) => {
+    if (cross.isOpen()) return;   // the card holds the keyboard on its own
     if (e.code === 'KeyE' && !e.repeat) {
       if (isReaderOpen()) return;
       if (target && targetDist <= 9) {
         if (openReader(target.slug)) player.unlock();
+      } else if (wayTarget && wayDist <= 9) {
+        cross.ask(wayTarget);
       }
     }
     if (e.code === 'Escape') {
@@ -214,6 +245,54 @@ async function boot() {
   window.__stationsFull = () => town.stations.map(s => ({ slug: s.slug, x: s.x, z: s.z, yaw: s.yaw, province: s.province, inbound: s.inbound, type: s.type }));
   window.__gates = () => GATES.map(g => ({ x: g.x, z: g.z, r: g.r, ang: g.ang, from: g.from, to: g.to, name: g.name }));
   window.__clear = (x, z) => { let m = 1e9; for (const c of colliders) m = Math.min(m, Math.hypot(x - c.x, z - c.z) - c.r); return m; };
+  // the ways off the coast, for the honest probe
+  window.__ways = {
+    list: () => crossings.waymarks.map(w => ({
+      key: w.key, dir: w.dir, x: w.x, z: w.z, yaw: w.yaw,
+      title: w.title, inscription: w.inscription, read: w.read, ask: w.ask,
+    })),
+    near: () => (wayTarget ? { key: wayTarget.key, d: +wayDist.toFixed(2) } : null),
+    label: () => ({
+      hidden: document.getElementById('label').hidden,
+      title: document.getElementById('label-title').textContent,
+      meta: document.getElementById('label-meta').textContent,
+      hint: document.getElementById('label-hint').textContent,
+    }),
+    /* stand where the lettering can be read: out in front of the thing, at
+       the distance asked for, looking straight at it. A waymark's yaw is the
+       way its face looks, so its front is at +(sin yaw, cos yaw) and a reader
+       standing there looks back along the same line. */
+    stand: (key, back) => {
+      const w = crossings.waymarks.find(q => q.key === key);
+      if (!w) return false;
+      const d = back == null ? 5.2 : back;
+      /* two of the six stand on the quay, which is six metres wide: a long
+         look at those is taken from up the boards, not from out on the water */
+      if (d > 9 && w.farStand) player.teleport(w.farStand[0], w.farStand[1], w.farStand[2]);
+      else player.teleport(w.x + Math.sin(w.yaw) * d, w.z + Math.cos(w.yaw) * d, w.yaw);
+      WORLD.camera.rotation.x = 0;
+      return true;
+    },
+    ask: (key) => cross.ask(crossings.waymarks.find(q => q.key === key)),
+    open: () => (cross.current() ? cross.current().key : null),
+    card: () => {
+      const c = document.getElementById('crosscard');
+      return {
+        hidden: c.hidden,
+        title: document.getElementById('xc-title').textContent,
+        q: document.getElementById('xc-q').textContent,
+        yes: document.getElementById('xc-yes').textContent,
+        no: document.getElementById('xc-no').textContent,
+        focus: document.activeElement ? document.activeElement.id : null,
+      };
+    },
+    setNav: (fn) => cross.setNav(fn),
+    close: () => cross.close(),
+    hide: () => { for (const m of crossings.meshes) m.visible = false; },
+    show: () => { for (const m of crossings.meshes) m.visible = true; },
+  };
+  window.__waysHide = () => window.__ways.hide();
+
   window.__world = {
     teleport: (x, z, yaw) => player.teleport(x, z, yaw),
     look: (yaw, pitch) => { WORLD.camera.rotation.y = yaw; WORLD.camera.rotation.x = pitch || 0; },
@@ -266,7 +345,7 @@ async function boot() {
     const t = clock.elapsedTime;
     notePerf(dt);
 
-    if (!isReaderOpen() && !window.__flying) {
+    if (!isReaderOpen() && !cross.isOpen() && !window.__flying) {
       player.enabled = true;
       player.update(dt);
     } else {
@@ -287,7 +366,7 @@ async function boot() {
       if (ws.t >= ws.dur) { window.__walkState = null; window.__flying = false; window.__walkDone = true; }
     }
     findTarget();
-    if (tendActive && target && targetDist <= 9 && !tended.has(target.slug)) {
+    if (tendActive && !cross.isOpen() && target && targetDist <= 9 && !tended.has(target.slug)) {
       tendHold += dt;
       if (tendHold >= 2) {
         tendActive = false; tendHold = 0;
@@ -298,7 +377,9 @@ async function boot() {
         }
       }
     } else if (!tendActive) tendHold = 0;
-    updateLabel(isReaderOpen() ? null : target, targetDist, tendHold / 2);
+    if (isReaderOpen() || cross.isOpen()) { updateLabel(null, 0, 0); }
+    else if (wayTarget) { updateLabel(null, 0, 0); updateWayLabel(wayTarget, wayDist); }
+    else { updateLabel(target, targetDist, tendHold / 2); }
 
     tickWeather(dt, t);
     updateWorld(dt, t);

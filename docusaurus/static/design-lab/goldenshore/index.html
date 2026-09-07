@@ -67,6 +67,21 @@
     </div>
   </div>
 
+  <!-- The one question every way off this coast asks first. Same law as the
+       rest of the lab, worded the way this coast words things. -->
+  <div id="crosscard" hidden>
+    <div class="xc-inner" role="dialog" aria-modal="true" aria-labelledby="xc-title" aria-describedby="xc-q">
+      <div class="xc-kicker">A way off this coast</div>
+      <div class="xc-title" id="xc-title"></div>
+      <p class="xc-q" id="xc-q"></p>
+      <div class="xc-row">
+        <button id="xc-yes" type="button">Yes &mdash; take it</button>
+        <button id="xc-no" type="button">No &mdash; stay on the coast</button>
+      </div>
+      <div class="xc-keys">Y goes &middot; N or Escape stays &middot; Tab moves between them</div>
+    </div>
+  </div>
+
   <div id="loading"><div class="load-inner"><div class="load-title">The Golden Shore</div><div class="load-sub" id="load-status">Reading the coast...</div></div></div>
 </div>
 <script type="module" src="./js/main.js"></script>

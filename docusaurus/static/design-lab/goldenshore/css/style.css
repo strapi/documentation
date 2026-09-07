@@ -214,3 +214,32 @@ html, body { height: 100%; overflow: hidden; background: #0d0906; }
 /* the logbook groups the sixteen official sections into their five provinces */
 #lb-body tr.lb-prov td { padding-top: 14px; color: #ffd89b; letter-spacing: 0.06em;
   text-transform: uppercase; font-size: 11px; border-bottom: 1px solid rgba(255,205,140,0.22); }
+
+/* ---- the crossing card: the one question every way off this coast asks ----
+   Built as a card the coast could plausibly hand you: limewashed paper, a
+   cut rule, and two words you have to actually choose between. It sits over
+   the coast rather than replacing it, because you are being asked to leave a
+   place you can still see. */
+#crosscard { position: absolute; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center;
+  background: rgba(16, 9, 4, 0.5); backdrop-filter: blur(2px); }
+#crosscard[hidden] { display: none; }
+.xc-inner { max-width: 460px; margin: 0 22px; padding: 26px 30px 22px; border-radius: 3px;
+  background: linear-gradient(#f4ecd8, #eadfc5); color: #33291c;
+  box-shadow: 0 26px 70px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(120,96,58,0.35); }
+.xc-kicker { font: 11px var(--hud-font); letter-spacing: 0.22em; text-transform: uppercase;
+  color: #8a7550; margin-bottom: 10px; }
+.xc-title { font: 650 21px/1.25 var(--hud-font); letter-spacing: -0.005em; color: #2c2418; }
+.xc-title::after { content: ""; display: block; width: 44px; height: 2px; margin: 12px 0 0;
+  background: rgba(120,96,58,0.55); }
+.xc-q { margin: 14px 0 20px; font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  font-size: 15.5px; line-height: 1.62; color: #40382a; }
+.xc-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.xc-row button { font: 13px var(--hud-font); letter-spacing: 0.06em; padding: 9px 16px; border-radius: 3px;
+  cursor: pointer; border: 1px solid #c3b494; background: #fbf5e6; color: #4a4132; }
+.xc-row button:hover { border-color: var(--violet); color: var(--violet); }
+.xc-row button:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+#xc-yes { background: #4a3a22; border-color: #4a3a22; color: #fdf4de; }
+#xc-yes:hover { background: #5d4a2c; border-color: #5d4a2c; color: #fff8e8; }
+.xc-keys { margin-top: 14px; font: 10.5px var(--hud-font); letter-spacing: 0.16em; text-transform: uppercase;
+  color: #9a8964; }
+@media (prefers-reduced-motion: reduce) { #crosscard { backdrop-filter: none; } }

@@ -56,7 +56,7 @@ export const TERRACES = [
   { id: 'dev',        x: 126,  z: -6,   r: 22, h: 19.0 },  // Development
   { id: 'ts',         x: 146,  z: 34,   r: 15, h: 22.0 },  // TypeScript
   { id: 'clicms',     x: 22,   z: -54,  r: 9,  h: 8.6 },   // CLI signal mast, on the harbour point
-  { id: 'plugins',    x: 156,  z: -44,  r: 20, h: 25.0 },  // Plugins development
+  { id: 'plugins',    x: 144,  z: -64,  r: 20, h: 25.0 },  // Plugins development
   { id: 'upgrades',   x: 168,  z: 6,    r: 20, h: 27.0 },  // Upgrades, foot of the cliff road
   { id: 'upmid',      x: 184,  z: -12,  r: 14, h: 29.0 },
   { id: 'bankw',      x: 189,  z: -28,  r: 10, h: 30.2 },
@@ -78,11 +78,30 @@ export const TER = Object.fromEntries(TERRACES.map(t => [t.id, t]));
 // ---------- the five provinces ----------
 // Membership is the official taxonomy and nothing else: a page's province is
 // read from its product and section. Sixteen official sections, five coasts.
+// Way-posts: anchors that shape the province field and nothing else. They
+// flatten no terrain, carry no district and build no house. A province's
+// country is not only the districts it was given, it is also the ground its
+// own road walks over and the cape its own light stands on, and a way-post is
+// how the map says so. They are read by the same softmax as the districts, so
+// they widen a province's country without hardening a single border.
+export const POSTS = {
+  // the three turns of the cliff road, so the Upgrades way-stations climb
+  // Upgrades ground instead of standing in the Pine Highland's needle floor
+  'road-foot': { x: 172, z: -2,  r: 7 },
+  'road-mid':  { x: 170, z: -15, r: 7 },
+  'road-head': { x: 172, z: -27, r: 7 },
+  // the Golden Shore is the harbour's light on the far cape: the harbour
+  // keeps it, so the cape it stands on is the harbour's country, and the
+  // release notes read at its door stand on their own earth
+  'lightcape': { x: 240, z: -76, r: 13 },
+};
+export const ANCHOR = (id) => TER[id] || POSTS[id];
+
 export const PROVINCES = {
   harbor: {
     name: 'The Harbour Town', short: 'Harbour',
     sections: ['cms|Getting Started', 'cms|AI', 'cms|Command Line Interface'],
-    anchors: ['plaza', 'ai', 'clicms'],
+    anchors: ['plaza', 'ai', 'clicms', 'lightcape'],
   },
   terraces: {
     name: 'The Olive Terraces', short: 'Terraces',
@@ -97,7 +116,8 @@ export const PROVINCES = {
   wall: {
     name: 'The Upgrades Wall', short: 'Wall',
     sections: ['cms|Upgrades'],
-    anchors: ['upgrades', 'upmid', 'bankw', 'banke', 'uphigh', 'approach', 'crag'],
+    anchors: ['upgrades', 'upmid', 'bankw', 'banke', 'uphigh', 'approach',
+      'road-foot', 'road-mid', 'road-head'],
   },
   cloud: {
     name: 'The Cloud Archipelago', short: 'Archipelago',
@@ -119,13 +139,17 @@ export const PROVINCE_OF_SECTION = (() => {
 // the same weights, so they hand over together.
 const ECOTONE = 11.0;
 const _pw = new Float32Array(PROVINCE_KEYS.length);
+// anchors resolved once: districts and way-posts read exactly alike
+const _anch = PROVINCE_KEYS.map(k => PROVINCES[k].anchors.map(id => {
+  const a = ANCHOR(id);
+  if (!a) throw new Error('unknown province anchor: ' + id);
+  return a;
+}));
 export function provinceWeights(x, z) {
   let sum = 0, best = 1e9;
   for (let i = 0; i < PROVINCE_KEYS.length; i++) {
-    const prov = PROVINCES[PROVINCE_KEYS[i]];
     let d = 1e9;
-    for (const id of prov.anchors) {
-      const t = TER[id];
+    for (const t of _anch[i]) {
       const dx = x - t.x, dz = z - t.z;
       const dd = Math.sqrt(dx * dx + dz * dz) - t.r;
       if (dd < d) d = dd;

@@ -1052,6 +1052,11 @@ for (const id of ['upgrades', 'upmid', 'bankw', 'banke', 'uphigh', 'approach', '
 for (const id of ['cl-gs', 'cl-proj', 'cl-dep', 'cl-acct', 'cl-cli', 'cl-adv'])
   DISTRICT_TINT[id] = [new THREE.Color(0xE9E2CC), 0.40];
 
+function sstepW(a, b, v) {
+  const t = Math.min(1, Math.max(0, (v - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+}
+
 function buildTerrain(scene) {
   const SIZE = 1100, SEG = 340;
   const geo = new THREE.PlaneGeometry(SIZE, SIZE, SEG, SEG);
@@ -1092,14 +1097,23 @@ function buildTerrain(scene) {
       // colonnade oat gold, workshop worked ochre, upland olive, cliff-road
       // grey-green, islet lime. The province says which coast you are on; the
       // district still says which yard you are standing in.
+      // The floor used to stop dead at 0.707 of the district radius, a hard
+      // ring in a build whose whole argument is that edges are walks. It now
+      // eases out over the last third of the district, the same way the
+      // province blend and the growth do, so a yard fades into its country.
+      let dtF = 0, dtId = null;
       for (const tr of TERRACES) {
         const dx = x - tr.x, dz = z - tr.z;
-        if (dx * dx + dz * dz < tr.r * tr.r * 0.5) {
-          tmp.lerp(cTerrace, 0.30);
-          const dt = DISTRICT_TINT[tr.id];
-          if (dt) tmp.lerp(dt[0], dt[1]);
-          break;
-        }
+        const d2 = dx * dx + dz * dz;
+        const rOut = tr.r * 0.92;
+        if (d2 >= rOut * rOut) continue;
+        const f = 1 - sstepW(tr.r * 0.50, rOut, Math.sqrt(d2));
+        if (f > dtF) { dtF = f; dtId = tr.id; }
+      }
+      if (dtF > 0.002) {
+        tmp.lerp(cTerrace, 0.30 * dtF);
+        const dt = DISTRICT_TINT[dtId];
+        if (dt) tmp.lerp(dt[0], dt[1] * dtF);
       }
       if (slope > 0.55) {
         // the rock that breaks through is the province's own: granite under

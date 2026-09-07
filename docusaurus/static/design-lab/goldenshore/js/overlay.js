@@ -285,6 +285,24 @@ export function updateLabel(target, distance, tendProgress) {
   } else ring.hidden = true;
 }
 
+// A way off the coast reads in exactly the same place, in exactly the same
+// three lines, as a lantern does: the thing's own name, what is written on it,
+// and what the key does. The only difference is what the key does, and that is
+// the whole point - E on a lantern opens a page, E on a waymark asks a
+// question. (2026-09-07)
+export function updateWayLabel(wm, distance) {
+  const el = document.getElementById('label');
+  if (!wm) { el.hidden = true; return; }
+  el.hidden = false;
+  el.classList.toggle('far', distance > 9);
+  document.getElementById('label-title').textContent = wm.title;
+  document.getElementById('label-meta').textContent =
+    distance > 9 ? wm.inscription : wm.read;
+  document.getElementById('label-hint').textContent =
+    distance <= 9 ? 'E to read the way off this coast' : '';
+  document.getElementById('tend-ring').hidden = true;
+}
+
 // ---------- compass ----------
 export function drawCompass(camYaw, tendedStations, quickStart, camPos) {
   const cv = document.getElementById('compass');
