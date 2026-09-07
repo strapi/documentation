@@ -392,6 +392,20 @@ export function buildKeepers(scene, data, town, reducedMotion) {
     if (!lineEl || !k.line) return;
     lineEl.textContent = k.line;
     lineEl.hidden = false;
+    /* (2026-09-07) A keeper never speaks across a label you are reading. The
+       line sits at 17% and a waymark's label climbs from 13%, so the two used
+       to collide at the bottom centre, two text layers over each other. When a
+       label is up, the line stands just above it instead; with none, the empty
+       string hands the placement back to the stylesheet. */
+    const lab = document.getElementById('label');
+    let bottom = '';
+    if (lab) {
+      const lb = lab.getBoundingClientRect();
+      if (lb.height > 4 && parseFloat(getComputedStyle(lab).opacity) > 0.05) {
+        bottom = (Math.round(((window.innerHeight - lb.top) / window.innerHeight) * 1000) / 10 + 2.5) + '%';
+      }
+    }
+    lineEl.style.bottom = bottom;
     lineEl.classList.add('on');
     lineTimer = 7.5; lineOwner = k.id;
     if (api.onSpeak) api.onSpeak(k);

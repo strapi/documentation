@@ -951,3 +951,19 @@ and four of them were rebuilt because of what the plate showed:
 ### 8 · THIS WORLD'S OWN PROBE
 
 `qa/r19/ways.js` — every one of the six walked to, read at range and close to, and each confirm exercised ten ways: E raises it, a stray press does nothing, Tab trades the two both ways, Escape declines, N declines, the mouse declines, Enter on NO declines, Y goes, the mouse goes, Enter on YES goes. `qa/r19/perf.js` — the draw-call cost, measured with the ways in and with them hidden. `qa/r19/matrix.js` — the 42 pairs. `qa/r19/reduced.js` — the same six under reduced motion. `qa/r19/boot7.js` — all seven booted in both motion modes. `qa/r19/serve-lab.js` — the gallery-prefix server all seven are probed through.
+
+## 2026-09-07 · the keeper stops speaking over what you are reading
+
+A keeper's line sits at 17 percent from the foot and a waymark's label climbs
+from 13, so the two met at the bottom centre: `42 crates on the quay, one for
+each page touched this month` printed straight across the night-sighting hut's
+own description. Caught by the portal verifier in `way-firstlight-near.png`.
+
+The line now measures the label at the moment it speaks and stands just above
+it; with no label up, it hands the placement back to the stylesheet and sits
+where it always did. Measured against a real label: 45px of overlap before,
+none after, and the line still well on screen.
+
+`BACKUPS.md` also lands, because the restore points here were mislabelled: the
+`.gs.bak` files are the true pre-round state and the `.r19.bak` files are a
+mid-round snapshot that already carries the new crossings.
