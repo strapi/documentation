@@ -5532,7 +5532,12 @@ window.addEventListener('keydown', (e) => {
     const kk = e.key.toLowerCase();
     if (kk === 'y') portalYes();
     else if (kk === 'n' || e.key === 'Escape') portalNo();
-    else if (e.key === 'Enter') {
+    else if (e.key === 'Enter' || e.key === ' ' || e.code === 'Space') {
+      /* (2026-09-07) Space answers the carved word that holds focus, exactly as
+         Enter does. A focused button takes Space as a click everywhere on the
+         web, and the network chose to keep that convention rather than break it
+         for keyboard readers. Nothing crosses on Space unless a word is focused
+         and the notice is already up. */
       const f = document.activeElement;
       if (f === paYes || f === paNo) f.click();
     } else if (e.key === 'Tab') {

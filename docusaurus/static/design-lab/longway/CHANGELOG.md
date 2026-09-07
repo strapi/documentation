@@ -271,3 +271,15 @@ were the provenance sentences in the source comments, which named it. Those
 sentences now say what changed without naming it, and the full provenance stays
 in this changelog. Carta Strapiana keeps its leadline call, `"By the deep, N!"`,
 which is the sounding cry the sea was named after and not a reference to it.
+
+## 2026-09-07 · Space answers the carved word that holds focus
+
+The network disagreed with itself: four worlds let Space press the focused
+answer, three swallowed it. The owner ruled for the convention, which is also
+the web's own: a focused button takes Space as a click, and suppressing it
+costs keyboard readers.
+
+Space now does exactly what Enter does here, no more. Nothing crosses unless
+the notice is up AND a word holds focus. Proven both ways in a probe: Space on
+NO closes the notice and stays on the trail; Space on YES crosses to the Golden
+Shore.
