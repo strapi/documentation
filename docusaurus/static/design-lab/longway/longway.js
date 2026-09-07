@@ -1773,6 +1773,52 @@ function draw(dt) {
     } else { PORTAL.starHover = false; PORTAL.starOn = 0; }
   } else { PORTAL.starHover = false; PORTAL.starOn = 0; }
 
+  /* THE EVENING STAR (2026-09-07). Not the moving one: the first light out,
+     and the last of the day is still in it. She stands low in the west,
+     over the country the walk came from, and she burns steady and warm
+     while the rest of the sky is going violet — so she is only there in the
+     narrow band of dusk before true night, and gone once the night is up.
+     What she stands over is a coast where the sun has not finished. */
+  if (wN > 0.12 && wN < 0.66 && page.idx >= PORTAL_MIN_PAGE) {
+    /* brightest in the middle of the band, out at both ends of it */
+    const eDim = Math.sin(clamp((wN - 0.12) / 0.54, 0, 1) * Math.PI) * (1 - 0.70 * WX.grey);
+    if (eDim > 0.10) {
+      /* low in the west, and still clear of the highest far ridge, which
+         tops out at 0.43 of the visible height: she must be seen, not
+         swallowed by the skyline she is standing over */
+      const esx = W * 0.115, esy = horizonY * 0.70;
+      PORTAL.eveSX = esx; PORTAL.eveSY = esy; PORTAL.eveOn = eDim;
+      PORTAL.eveHover = Math.hypot(PORTAL.mx - esx, PORTAL.my - esy) < 26;
+      /* the warm haze she sits in: the day's last light, not her own */
+      const eg = cx.createRadialGradient(esx, esy, 0, esx, esy, 46);
+      eg.addColorStop(0, 'rgba(255,162,107,' + (0.30 * eDim).toFixed(3) + ')');
+      eg.addColorStop(1, 'rgba(255,162,107,0)');
+      cx.fillStyle = eg;
+      cx.fillRect(esx - 46, esy - 46, 92, 92);
+      /* she does not blink, and she is bigger than any citation up there */
+      cx.globalAlpha = eDim;
+      cx.fillStyle = INKS.apricot;
+      cx.fillRect(esx - 2, esy - 2, 4, 4);
+      cx.globalAlpha = eDim * 0.75;
+      cx.fillStyle = INKS.cream;
+      cx.fillRect(esx - 1, esy - 1, 2, 2);
+      if (!REDUCED) {
+        cx.globalAlpha = eDim * 0.42;
+        cx.fillStyle = INKS.apricot;
+        cx.fillRect(esx - 7.5, esy - 0.5, 15, 1);
+        cx.fillRect(esx - 0.5, esy - 7.5, 1, 15);
+      }
+      if (PORTAL.eveHover) {
+        cx.globalAlpha = 0.9 * eDim;
+        cx.strokeStyle = INKS.apricot; cx.lineWidth = 1.2;
+        cx.strokeRect(esx - 6.5, esy - 6.5, 13, 13);
+        cx.strokeStyle = INKS.cream;
+        cx.strokeRect(esx - 5.2, esy - 5.2, 10.4, 10.4);
+      }
+      cx.globalAlpha = 1;
+    } else { PORTAL.eveHover = false; PORTAL.eveOn = 0; }
+  } else { PORTAL.eveHover = false; PORTAL.eveOn = 0; }
+
   /* ridges, far to near — faceted polylines in layer space, seamless.
      Your own climb pushes the horizon gently down: parallax follows. */
   const ridgeCols = [pal.ridgeFar, pal.ridgeMid, pal.ridgeNear];
@@ -4042,15 +4088,16 @@ function updateHUD() {
     S.nearGate = null; S.nearTerrace = null; S.nearReg = null;
     S.nearTicket = null; S.nearLook = null; S.enterAct = null;
     S.nearFlower = false;
-    /* the two sea exits belong to the trail end: the sloop off the point,
-       and, far out on the same water, the living ink */
+    /* the one sea exit belongs to the trail end: the sloop off the point.
+       (2026-09-07) There were two. The far water off the bench turned to
+       living ink and carried a second crossing; that crossing was retired
+       when its destination left the network, swirls and prompt and all,
+       and the water out there is water again: the 290 lights on it are the
+       whole of what Land's End has to show. */
     let leTxt = null;
     if (Math.abs(S.x - (M.worldEnd - 4)) < 30) {
       S.enterAct = { kind: 'portal', key: 'cartastrapiana' };
       leTxt = 'A SLOOP STANDS OFF THE POINT — ENTER TO HAIL HER';
-    } else if (Math.abs(S.x - M.leBench) < 42) {
-      S.enterAct = { kind: 'portal', key: 'bythedeep' };
-      leTxt = 'FAR OUT, THE SEA TURNS TO LIVING INK — ENTER TO PUT OUT FOR IT';
     }
     if (leTxt) {
       if (gatePrompt.hidden || hudCache.gp !== leTxt) {
@@ -4153,6 +4200,8 @@ function updateHUD() {
     /* a hover is an aimed gesture: the star answers before the furniture */
     if (PORTAL.starHover && PORTAL.starOn > 0.08)
       txt = 'ONE STAR MOVES AMONG THE CITATIONS — CLICK IT AND FOLLOW';
+    else if (PORTAL.eveHover && PORTAL.eveOn > 0.10)
+      txt = 'THE EVENING STAR, LOW IN THE WEST — SHE STANDS OVER A COAST STILL IN THE LIGHT · CLICK IT AND FOLLOW';
     else if (S.nearReg && S.nearTicket) txt = 'R — SIGN THE REGISTER · E — REPORT TRAIL DAMAGE';
     else if (S.nearReg) txt = REGBOOK[p.slug] ? 'R — THE REGISTER · YOUR LINE IS INSIDE' : 'R — SIGN THE TRAIL REGISTER';
     else if (S.nearTicket) txt = 'E — REPORT TRAIL DAMAGE · A RANGER TICKET FOR ' + p.label.toUpperCase();
@@ -5628,6 +5677,11 @@ cv.addEventListener('click', (e) => {
     portalAsk('firstlight');
     return;
   }
+  /* and so does the evening star, low in the west */
+  if (PORTAL.eveHover && PORTAL.eveOn > 0.10 && !PORTAL.active) {
+    portalAsk('goldenshore');
+    return;
+  }
   const wx = S.x + (e.clientX - AVX);
   const clamped = clamp(wx, 10, M.worldEnd);
   if (REDUCED) {
@@ -6260,28 +6314,6 @@ function drawLandsEnd(pal, wN) {
       cx.fillRect(bx + 1, by - 37, 2.4, 2.4);
       cx.globalAlpha = 1;
     }
-    /* and far out on the same water, the sea turns to living cartoon ink —
-       three hard swirls that never quite settle (bythedeep) */
-    const ix = Math.min(W - 110, cliffSX + sw * 0.80), iy = seaTop + sh * 0.14;
-    if (ix > cliffSX + 90 && ix > -40) {
-      cx.lineWidth = 1.6;
-      for (let sw2 = 0; sw2 < 3; sw2++) {
-        const ph = REDUCED ? sw2 * 2.1 : S.t * (0.55 + sw2 * 0.2) + sw2 * 2.1;
-        const rr = 5 + sw2 * 4 + (REDUCED ? 0 : Math.sin(ph * 0.7) * 1.5);
-        cx.strokeStyle = sw2 === 1 ? INKS.violet : INKS.cream;
-        cx.globalAlpha = 0.5 - sw2 * 0.09;
-        cx.beginPath();
-        cx.arc(ix + sw2 * 9 - 9, iy + (sw2 % 2) * 3, rr, ph % 6.28, (ph % 6.28) + 4.4);
-        cx.stroke();
-      }
-      /* a few flicked ink drops */
-      cx.fillStyle = INKS.cream;
-      cx.globalAlpha = 0.55;
-      const dph = REDUCED ? 0 : Math.floor(S.t * 2) % 3;
-      cx.fillRect(ix - 16 + dph * 3, iy - 9, 1.6, 1.6);
-      cx.fillRect(ix + 14 - dph * 2, iy - 6 + dph, 1.6, 1.6);
-      cx.globalAlpha = 1;
-    }
   }
 
   drawHeadland(gy, cliffSX, pal);
@@ -6373,16 +6405,19 @@ const PORTAL = {
   seen: {},                    /* key -> times taken this visit */
   mx: -9e9, my: -9e9,          /* last pointer position on the canvas */
   starHover: false, starSX: -1, starSY: -1, starOn: 0,
+  /* the evening star: the first light out, low in the west, and the only
+     one on this sky that is warm (2026-09-07) */
+  eveHover: false, eveSX: -1, eveSY: -1, eveOn: 0,
   navigate(url) { location.href = url; }   /* probes may stub this */
 };
-const PORTAL_DUR = { herbarium: 1.5, cartastrapiana: 1.4, bythedeep: 1.4 };
+const PORTAL_DUR = { herbarium: 1.5, cartastrapiana: 1.4, goldenshore: 1.6 };
 const PORTAL_LINES = {
   pixelcity: 'DOWN THE SWITCHBACKS — A DAY’S WALK TO THE CITY OF PIXELS',
   cartastrapiana: 'SHE ANSWERS THE HAIL — COMING ABOUT FOR THE POINT',
-  bythedeep: 'YOU PUT OUT FOR THE LIVING INK',
   firstlight: 'THE MOVING STAR LEADS OFF THE CHART',
   herbarium: 'PRESSED FLAT — A FLOWER FOR THE HERBARIUM',
-  secreta: 'THE RACK SPINS — ONE COMIC SLIDES FREE'
+  secreta: 'THE RACK SPINS — ONE COMIC SLIDES FREE',
+  goldenshore: 'WEST, INTO THE LAST HOUR OF THE LIGHT'
 };
 /* THE PORTAL CONFIRM (owner's lab law): every way off the trail asks
    before it takes you. The carved notice names where the crossing leads;
@@ -6391,10 +6426,10 @@ const PORTAL_LINES = {
 const PORTAL_ASK = {
   pixelcity: 'DOWN THE SWITCHBACKS TO THE CITY OF PIXELS',
   cartastrapiana: 'ABOARD THE SLOOP STANDING OFF THE POINT',
-  bythedeep: 'OUT TO THE LIVING INK, FAR ON THE WATER',
   firstlight: 'AFTER THE MOVING STAR, OFF THE CHART',
   herbarium: 'INTO THE PRESSED PAGES OF THE HERBARIUM',
-  secreta: 'INTO THE COMIC ON THE SPINNER RACK'
+  secreta: 'INTO THE COMIC ON THE SPINNER RACK',
+  goldenshore: 'WEST UNDER THE EVENING STAR, TO THE COAST STILL IN THE LIGHT'
 };
 const paEl = document.getElementById('portalask');
 const paLine = document.getElementById('paLine');
@@ -9113,8 +9148,11 @@ window.__portal = {
       t: PORTAL.active ? +PORTAL.active.t.toFixed(3) : 0,
       gone: PORTAL.active ? !!PORTAL.active.gone : false,
       seen: Object.assign({}, PORTAL.seen),
+      pointer: { x: Math.round(PORTAL.mx), y: Math.round(PORTAL.my) },
       star: { sx: +PORTAL.starSX.toFixed(1), sy: +PORTAL.starSY.toFixed(1),
               on: +PORTAL.starOn.toFixed(3), hover: PORTAL.starHover },
+      eve: { sx: +PORTAL.eveSX.toFixed(1), sy: +PORTAL.eveSY.toFixed(1),
+             on: +PORTAL.eveOn.toFixed(3), hover: PORTAL.eveHover },
       near: S.enterAct && S.enterAct.kind === 'portal' ? S.enterAct.key : null,
       nearFlower: S.nearFlower,
       hint: gatePrompt.hidden ? '' : gatePrompt.textContent,
@@ -9122,8 +9160,7 @@ window.__portal = {
         kioskX: Math.round(M.kioskX),
         kioskPage: M.kioskPage,
         minPage: PORTAL_MIN_PAGE,
-        sloopX: Math.round(M.worldEnd - 4),
-        inkX: Math.round(M.leBench)
+        sloopX: Math.round(M.worldEnd - 4)
       },
       ask: S.overlay === 'portalask' ? PA.key : null,
       lines: PORTAL_LINES
@@ -9131,6 +9168,8 @@ window.__portal = {
   },
   go: portalGo,
   hoverStar() { PORTAL.mx = PORTAL.starSX; PORTAL.my = PORTAL.starSY; },
+  hoverEve() { PORTAL.mx = PORTAL.eveSX; PORTAL.my = PORTAL.eveSY; },
+  ask: portalAsk,
   setNav(fn) { PORTAL.navigate = fn; },
   clear() { PORTAL.active = null; }
 };
