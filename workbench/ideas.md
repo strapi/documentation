@@ -43,7 +43,7 @@ Herbarium" ruling. Nothing else in that world moves on the same pass.
 
 - [ ] Build the two deeper rungs, VI THE THRESHOLD and VII THE FOOTPATH, with per-island drawn landscapes. Plates validated; rung VII must be an engraved perspective scene, never a photograph. The wave script is amended and has never been launched.
 - [ ] Under `prefers-reduced-motion` the ship does not close distance, so the sail-in path to the keeper coast never opens. Pre-existing.
-- [ ] `qa/probe-s4-prefix.js` fails on `islands === 290` when the build has 288. Stale probe.
+- [x] `qa/probe-s4-prefix.js` fails on `islands === 290` when the build has 288. Stale probe. (2026-09-07: the two release-notes pages are struck at source, so the survey holds 288; constant fixed with the reason beside it, PREFIX BOOT passes.)
 
 ## The Four-Color
 
