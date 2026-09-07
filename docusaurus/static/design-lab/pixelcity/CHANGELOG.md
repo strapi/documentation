@@ -271,3 +271,22 @@ were the provenance sentences in the source comments, which named it. Those
 sentences now say what changed without naming it, and the full provenance stays
 in this changelog. Carta Strapiana keeps its leadline call, `"By the deep, N!"`,
 which is the sounding cry the sea was named after and not a reference to it.
+
+## 2026-09-07 · the door prompt stopped cutting its own hints
+
+The owner caught it in play: the lamplighter's golden-hour line read *"The
+lamplighter is leaving now, while the ligh"* and stopped. The prompt is
+`white-space: nowrap` under a 340px ceiling with `overflow: hidden`, so any
+hint longer than about 45 characters was cut off in silence, and the ellipsis
+never showed because the overflowing node is the row inside `#dp-rows`, not the
+box's own text.
+
+Three hints ran past the ceiling, the lamplighter's two the worst of all at 66
+and 53 characters, and the botanist's at 47. **The rows wrap now**, while the
+title line above them keeps its single line. Line height goes from 1 to 1.3 and
+the vertical padding from 4/3 to 2/2, which trade against each other so a
+one-line row keeps the exact height it always had.
+
+`probe-dprow-wrap.js` — the three long hints and one short one measured in
+place: nothing clipped horizontally or vertically, the long ones now two lines
+at 35px, the short one still one line, and the box itself clipping nothing.
