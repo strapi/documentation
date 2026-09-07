@@ -21,6 +21,9 @@ The newest world and the least worn in, so most of this is world craft rather th
 - [ ] The rain, or possibly the snow, sounds very metallic.
 - [ ] Wind and waves are indistinguishable. Waves should only be heard near the shore, fading as you walk inland.
 - [ ] The stand leading to The Four-Color is too visible.
+- [ ] The loan crate to the Herbarium sits ON THE ARRIVAL JETTY, the first thing a visitor meets. Move it somewhere that has to be found.
+- [ ] Check the other five crossings for the same fault: an easter egg standing where you cannot miss it.
+- [ ] The other worlds still name their destinations in crossing copy (the Herbarium's appendix 12 times, FIRST LIGHT 5, Pixel Docs City 4, Long Way 2, Carta 2). DECIDE how far the un-naming goes: the Herbarium's plate is built on naming its sister collections, so stripping it there is a rewrite, not a case change.
 - [ ] Move the boat to Carta Strapiana to the LEFT of the jetty and much further down the beach.
 - [ ] Restore the Quick Start guide as the FIRST building after the jetty, about ten metres past the portal. Buildings currently block the portal, which also breaks QUICK START FIRST.
 - [ ] A full discoverability pass on this world's crossings, since they must stay easter eggs.
