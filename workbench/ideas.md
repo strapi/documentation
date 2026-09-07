@@ -44,8 +44,8 @@ Herbarium" ruling. Nothing else in that world moves on the same pass.
 
 ## The Four-Color
 
-- [ ] `qa/r18-phantom.js` reports two failures on internal house ads: a tap navigates instead of advancing, and ENTER opens the wrong issue. Pre-existing, A/B'd as byte-identical to the earlier build.
 
+- [x] The phantom battery's two failures. (2026-09-07: neither was a defect. ENTER ran after a tap that had already navigated; and the tap check demanded the law the owner replaced when he asked that clickable things stay clickable in guided view. Re-cut, five checks pass.)
 ## The Long Way Through
 
 
@@ -91,6 +91,7 @@ one label at a time, and no regression.
 
 ## The Herbarium
 
+- [x] A real opening animation for the envelope. (2026-09-07: three movements, flap, drawn out clipped from inside, then unfolded flat from 83 degrees; measured through the movement, reduced motion exempt.)
 - [x] Fold The Golden Shore into Appendix I with the others. (2026-09-07: Appendix II retired, grid three and three, prose and field notes follow.)
 - [x] The appendix has to be OPENED: an envelope revealing the sheet. (2026-09-07: laid paper, a flap on its own fold, a wax seal; a real button with aria-expanded, and the plate is out of the document until it opens.)
 - [x] The five-pixel night flake. (2026-09-07: one named tolerance of 8 pixels at delta 32 on that assertion only; the strictly-additive law and the other four views keep zero.)
@@ -138,4 +139,5 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 
 ## The Long Way Through
 
+- [x] Halve the music, whatever file is playing. (2026-09-07: one level at the music bus, LAYER_LEVEL mus 0.5, effects left at 1.)
 - [x] The carved notice could rise behind the landing card with mouse-dead answers. (2026-09-07: the card stands aside first, without the walker pick a real dismissal opens; YES verified hit-testable.)
