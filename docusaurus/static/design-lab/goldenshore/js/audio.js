@@ -44,10 +44,17 @@ export function initAudio() {
     S.brownBuf = noiseBuffer(ctx, 3, true);
     S.whiteBuf = white;
 
-    // ----- shore: two pink-ish surf voices, swelling on their own tides -----
-    for (const [pan, base] of [[-0.55, 420], [0.5, 640]]) {
+    /* (2026-09-07, owner: "on ne distingue pas le bruit du vent du bruit des
+       vagues") They were both bandpassed white noise in neighbouring bands, so
+       of course they were one sound. The sea is now BROWN noise, low and heavy,
+       under a lowpass an octave beneath where it sat; the wind keeps the white
+       and moves up out of its way. What separates them in the end is not the
+       filter but the motion: a swell breathes slowly and regularly, a gust does
+       not. See the tick, where the surf's period is lengthened and deepened. */
+    // ----- shore: two brown surf voices, swelling on their own tides -----
+    for (const [pan, base] of [[-0.55, 240], [0.5, 330]]) {
       const src = ctx.createBufferSource();
-      src.buffer = white; src.loop = true;
+      src.buffer = S.brownBuf; src.loop = true;
       const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = base; lp.Q.value = 0.4;
       const g = ctx.createGain(); g.gain.value = 0;
       const p = ctx.createStereoPanner ? ctx.createStereoPanner() : ctx.createGain();
@@ -60,7 +67,7 @@ export function initAudio() {
     // ----- wind: bandpassed noise that shares the vegetation's gusts -----
     {
       const src = ctx.createBufferSource(); src.buffer = white; src.loop = true;
-      const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 480; bp.Q.value = 0.55;
+      const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 760; bp.Q.value = 0.5;
       const shelf = ctx.createBiquadFilter(); shelf.type = 'highshelf'; shelf.frequency.value = 1800; shelf.gain.value = 0;
       const g = ctx.createGain(); g.gain.value = 0;
       src.connect(bp).connect(shelf).connect(g).connect(S.duck);
@@ -176,6 +183,16 @@ export function initAudio() {
        filter and offset are drawn fresh every time, and the feet alternate
        across the stereo field. The stride itself is jittered where it is
        counted. Nothing here is louder than it was; it is simply not a machine. */
+    /* a window on the beds, so a probe can prove the sea fades inland and the
+       wind does not, without anyone having to trust the arithmetic */
+    levels() {
+      return {
+        surf: S.surf ? +S.surf.reduce((a, v) => a + v.g.gain.value, 0).toFixed(4) : null,
+        surfHz: S.surf && S.surf[0] ? Math.round(S.surf[0].lp.frequency.value) : null,
+        wind: S.wind ? +S.wind.g.gain.value.toFixed(4) : null,
+        windHz: S.wind ? Math.round(S.wind.bp.frequency.value) : null,
+      };
+    },
     step(surface) {
       const r = (a, b) => a + Math.random() * (b - a);
       S.footL = !S.footL;
@@ -235,12 +252,18 @@ export function initAudio() {
       S.duck.gain.setTargetAtTime(readerOpen ? 0.1 : 1, S.ctx.currentTime, 0.4);
 
       // shore by true distance to the waterline
+      /* (2026-09-07, owner: "on ne doit entendre les vagues que quand on est
+         proche du bord, et de moins en moins fort quand on s'eloigne") The old
+         fall-off was gentle enough to follow you inland: 60 metres out it was
+         still at a third. At 26 it is a third at 26 metres, a tenth at 60, and
+         gone by a hundred, which is where the pines start. */
       const shoreD = Math.max(0, x - COAST_X);
-      const shoreG = 0.28 * Math.exp(-shoreD / 60);
+      const shoreG = 0.30 * Math.exp(-shoreD / 26);
       S.surf.forEach((s, i) => {
-        const swell = 0.55 + 0.45 * Math.sin(t * (2 * Math.PI / (8 + i * 3)) + s.phase);
-        s.g.gain.setTargetAtTime(shoreG * swell, S.ctx.currentTime, 0.25);
-        s.lp.frequency.setTargetAtTime(s.base + swell * 320, S.ctx.currentTime, 0.3);
+        /* slower and deeper than the wind's gusting, which is the real tell */
+        const swell = 0.42 + 0.58 * Math.sin(t * (2 * Math.PI / (11 + i * 4)) + s.phase);
+        s.g.gain.setTargetAtTime(shoreG * swell, S.ctx.currentTime, 0.35);
+        s.lp.frequency.setTargetAtTime(s.base + swell * 190, S.ctx.currentTime, 0.4);
       });
 
       // wind shares the vegetation's gust: same clock, same weather amplitude
@@ -253,7 +276,11 @@ export function initAudio() {
       } else S.wind.shelf.gain.setTargetAtTime(0, S.ctx.currentTime, 0.8);
       // the wind's band is the province's: pine needles hiss high, bare
       // limestone whistles, the sea and the islets roar low and wide
-      const WBAND = { harbor: 380, terraces: 470, highland: 900, wall: 1300, cloud: 320 };
+      /* (2026-09-07) The harbour and the cloud archipelago had the wind sitting
+         at 380 and 320, which is exactly where the sea lives, and those are the
+         two provinces you hear the sea in. Both move up out of its way; the
+         highland and the Wall were already clear of it. */
+      const WBAND = { harbor: 680, terraces: 760, highland: 900, wall: 1300, cloud: 620 };
       const prov = provinceAt(x, z);
       const band = WBAND[prov] || 380;
       S.windBand = S.windBand === undefined ? band : S.windBand + (band - S.windBand) * 0.02;
