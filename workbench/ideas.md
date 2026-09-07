@@ -114,6 +114,8 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 
 ## Pixel Docs City
 
+- [x] The gallery card showed a mid-game view with popups. (2026-09-07: the thumbnailer now frames the whole island on arrival, plain afternoon, nothing over it; recipe kept in workbench/qa/.)
+- [x] The funnies and the botanist's stall stood too close to the landing. (2026-09-07: 11.1 and 5.8 tiles from spawn became 28.6 and 23.6; place2x2 learned the extra predicate place1 had.)
 - [x] The door prompts disagreed on case: the descriptive line under the title was sentence case on the sloop and capitals on the other five. (2026-09-07: all five follow the sloop now, case only, titles still capitals.)
 - [x] Move the way to The Golden Shore to the EDGE OF THE MAP, not far from the boat that leads to Carta Strapiana. (2026-09-07: the lamplighter's yard now places after the harbour is measured and is constrained by proximity to the mooring, landing 9.4 tiles from the sloop.)
 
