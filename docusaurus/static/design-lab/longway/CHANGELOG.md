@@ -353,3 +353,9 @@ qu'en lisant la dernière page."* It is out of the list entirely now, and reache
 every other way it always was: on foot to the end of the world, from the last
 page itself, and by `#lands-end` for anyone who already knows. Verified: 287
 rows in the index, none of them the shore, and the hash still arrives there.
+
+### and down another fifth
+
+Having heard it at half, the owner asked for twenty percent off again, so the
+music layer sits at 0.4. One number still governs the lot, whatever is playing.
+Effects unchanged at 1.

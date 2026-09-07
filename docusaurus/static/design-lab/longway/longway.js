@@ -7820,12 +7820,15 @@ function audCheckComm(ci) {
    keep being scheduled, the theme keeps playing — so turning it back on
    lands you inside whatever the trail holds at that instant, eased in over
    AUD_FADE_IN and never cut in. */
-/* (2026-09-07, owner) THE MUSIC PLAYS AT HALF. "Diminue le volume de toute la
-   musique, quel que soit le fichier joue, de moitie." Everything musical meets
-   at AUD.mus before the master - the synthesised score through MUS.swell, and
-   the theme file through its own envelope - so one level governs the lot,
-   whatever is playing. The sound effects are not his subject and keep theirs. */
-const LAYER_LEVEL = { sfx: 1, mus: 0.5 };
+/* (2026-09-07, owner, twice) THE MUSIC PLAYS AT FOUR TENTHS. First: "diminue le
+   volume de toute la musique, quel que soit le fichier joue, de moitie", which
+   put it at 0.5. Then, having heard it: "baisse encore le volume de la musique
+   de 20% partout", so 0.5 x 0.8 = 0.4. Everything musical meets at AUD.mus
+   before the master - the synthesised score through MUS.swell, and the theme
+   file through its own envelope - so one level governs the lot, whatever is
+   playing, which is what "partout" asks for inside this world. The sound
+   effects are not his subject and keep theirs. */
+const LAYER_LEVEL = { sfx: 1, mus: 0.4 };
 
 function setAudioLayer(which, on) {
   const L = AUD[which];
