@@ -139,5 +139,10 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 
 ## The Long Way Through
 
+- [x] The whistle sounded like a wolf whistle. (2026-09-07, two attempts: rise-peak-fall is exactly that curve. Now two short flat blasts, staccato; pitch range 2273-2484 Hz against 1460-2660-1880 before.)
+- [x] Her bark was inaudible and unlike a dog. (2026-09-07, third attempt: a Wikimedia Commons recording, CC BY-SA 3.0, trimmed to one bark and credited; level doubled by arithmetic, 0.0156 to 0.0316 into the mix.)
+- [x] She barks once as she settles at your feet, on top of the answer from far off.
+- [x] About one bolt in five, a second thunder clap at three times the first.
+- [x] Land's End is out of the Tab index. (2026-09-07: it sat at the top and gave away the end of the trail; still reached on foot, from the last page, or by #lands-end.)
 - [x] Halve the music, whatever file is playing. (2026-09-07: one level at the music bus, LAYER_LEVEL mus 0.5, effects left at 1.)
 - [x] The carved notice could rise behind the landing card with mouse-dead answers. (2026-09-07: the card stands aside first, without the walker pick a real dismissal opens; YES verified hit-testable.)
