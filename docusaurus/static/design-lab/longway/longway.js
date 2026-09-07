@@ -6443,6 +6443,16 @@ const paNo = document.getElementById('paNo');
 const PA = { key: null };
 function portalAsk(key) {
   if (PORTAL.active || S.overlay === 'portalask') return;
+  /* (2026-09-07) The landing card sits at z 60 and this notice at 55, so a
+     notice raised while the card was still up had mouse-dead answers. The card
+     stands aside first, without the walker pick that a real dismissal opens.
+     Not reachable by a walker, who must set out before any crossing is near,
+     but reachable from a probe, and a dialog nobody can click is not one. */
+  if (S.overlay === 'landing') {
+    landingEl.classList.add('gone');
+    S.overlay = null;
+    lsSet('longway.seen', '1');
+  }
   closeOverlays();
   PA.key = key;
   paLine.textContent = PORTAL_ASK[key] || key.toUpperCase();
