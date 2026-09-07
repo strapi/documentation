@@ -54,7 +54,6 @@ Herbarium" ruling. Nothing else in that world moves on the same pass.
 
 ## Across the worlds
 
-- [ ] The space bar crosses on a focused YES in Pixel Docs City, The Herbarium, FIRST LIGHT and The Four-Color. The confirm law names only Y, N, Enter and Escape.
 See the three itemised idea lists at the end of this file.
 
 ## Small and undecided
@@ -125,6 +124,7 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 
 ## Across the worlds
 
+- [x] The space bar disagreed across the network: four worlds let it press the focused answer, three swallowed it. (2026-09-07, owner ruled for the web convention, a focused button takes Space as a click: The Long Way Through and Carta Strapiana now honour it, probed both ways on the Long Way. THE GOLDEN SHORE IS A DELIBERATE EXCEPTION and keeps swallowing it, both because its own code argues Space is the likeliest stray press on a coast you walk, and because SPACE TO JUMP is on that world's punch list above.)
 - [x] FIRST LIGHT clipped all three lines of its mission log. (2026-09-07: entries wrap now; the lock line had been losing FIRST SURVEY TARGET - BEGIN HERE and the photometer line its whole explanation. Panel cap 184 to 138px so it clears #prompt-sub. Battery ALL PASS.)
 - [x] The Four-Color clipped its pocket tags, losing the issue count on the longer categories. (2026-09-07: they wrap to two lines in a slightly wider box; all sixteen measured, none clipped, none overlapping a neighbour.)
 - [x] Audit text clipping across every world. (2026-09-07: swept all seven live, revealing hidden UI and measuring real overflow. Five are clean; the two that are not have their own open lines in the working list.)
