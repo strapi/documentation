@@ -37,8 +37,6 @@ The newest world and the least worn in, so most of this is world craft rather th
 Both of these are an explicit new request and therefore override the standing "never touch the
 Herbarium" ruling. Nothing else in that world moves on the same pass.
 
-- [ ] ASK FIRST, then decide: fold The Golden Shore into Appendix I with the others rather than alone on the late-accession sheet filed behind. Stated as a preference, not a ruling. Re-laying the plate also means re-cutting `probe-r10.js` again.
-- [ ] The appendix should have to be OPENED: an envelope revealing the sheet of specimens, instead of being shown without effort.
 
 ## Carta Strapiana
 
@@ -58,7 +56,6 @@ See the three itemised idea lists at the end of this file.
 
 ## Small and undecided
 
-- [ ] DECIDE: the Herbarium's night view differs by five pixels inside a decorative moon ring, in roughly half of runs, against a zero-tolerance assertion that protects a real law (the appendix must be strictly additive). Either give that one assertion a documented, tight tolerance, or leave the battery permanently one short.
 
 # The three ten-idea lists
 
@@ -95,6 +92,9 @@ one label at a time, and no regression.
 
 ## The Herbarium
 
+- [x] Fold The Golden Shore into Appendix I with the others. (2026-09-07: Appendix II retired, grid three and three, prose and field notes follow.)
+- [x] The appendix has to be OPENED: an envelope revealing the sheet. (2026-09-07: laid paper, a flap on its own fold, a wax seal; a real button with aria-expanded, and the plate is out of the document until it opens.)
+- [x] The five-pixel night flake. (2026-09-07: one named tolerance of 8 pixels at delta 32 on that assertion only; the strictly-additive law and the other four views keep zero.)
 Note: these predate the envelope idea above, and the two should be designed together.
 
 - [ ] **The seasons of the garden.** Each specimen's bloom state follows its real freshness: tended recently in flower, long untended gone to seed.
