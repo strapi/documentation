@@ -25,11 +25,10 @@ The newest world and the least worn in, so most of this is world craft rather th
 - [ ] Restore the Quick Start guide as the FIRST building after the jetty, about ten metres past the portal. Buildings currently block the portal, which also breaks QUICK START FIRST.
 - [ ] A full discoverability pass on this world's crossings, since they must stay easter eggs.
 - [ ] Finish the province ground wave. Round 1 is complete on disk with its backup served side by side; the run was killed.
-- [ ] A keeper's toast can land on top of a waymark's reading line, two text layers colliding at bottom centre.
 
 ## Pixel Docs City
 
-Settled otherwise, and not to be re-tuned.
+
 
 ## The Herbarium
 
@@ -50,7 +49,6 @@ Herbarium" ruling. Nothing else in that world moves on the same pass.
 
 ## The Long Way Through
 
-- [ ] Latent: `window.__portal.ask()` can raise the carved notice while the landing card is still up, and `#landing` sits over `#portalask`, leaving the buttons mouse-dead. Not reachable in play.
 
 ## Across the worlds
 
@@ -59,7 +57,6 @@ See the three itemised idea lists at the end of this file.
 ## Small and undecided
 
 - [ ] DECIDE: the Herbarium's night view differs by five pixels inside a decorative moon ring, in roughly half of runs, against a zero-tolerance assertion that protects a real law (the appendix must be strictly additive). Either give that one assertion a documented, tight tolerance, or leave the battery permanently one short.
-- [ ] The backup labels in the Golden Shore are misleading: the `.r19.bak` files are a mid-round snapshot that already contains the new crossings, while the true pre-round restore point is `.gs.bak`.
 
 # The three ten-idea lists
 
@@ -128,3 +125,12 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 - [x] FIRST LIGHT clipped all three lines of its mission log. (2026-09-07: entries wrap now; the lock line had been losing FIRST SURVEY TARGET - BEGIN HERE and the photometer line its whole explanation. Panel cap 184 to 138px so it clears #prompt-sub. Battery ALL PASS.)
 - [x] The Four-Color clipped its pocket tags, losing the issue count on the longer categories. (2026-09-07: they wrap to two lines in a slightly wider box; all sixteen measured, none clipped, none overlapping a neighbour.)
 - [x] Audit text clipping across every world. (2026-09-07: swept all seven live, revealing hidden UI and measuring real overflow. Five are clean; the two that are not have their own open lines in the working list.)
+
+## The Golden Shore
+
+- [x] The backup labels were misleading. (2026-09-07: BACKUPS.md in that build now says which restore point is which and why one of them is not one.)
+- [x] A keeper's line printed across a waymark's label at the bottom centre. (2026-09-07: the line measures the label as it speaks and stands above it; 45px of overlap before, none after.)
+
+## The Long Way Through
+
+- [x] The carved notice could rise behind the landing card with mouse-dead answers. (2026-09-07: the card stands aside first, without the walker pick a real dismissal opens; YES verified hit-testable.)
