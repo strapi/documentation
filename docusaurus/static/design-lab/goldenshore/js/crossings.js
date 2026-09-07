@@ -295,7 +295,7 @@ export function buildCrossings(scene, data) {
     /* the arms stand clear of the post, or the post eats the first letter */
     const [ax, az] = l2w(x, z, yaw, 0.95, 0);
     const [bx, bz] = l2w(x, z, yaw, -0.78, 0);
-    const i1 = paintSign(atlas, 'oak', 'THE LONG WAY THROUGH',
+    const i1 = paintSign(atlas, 'oak', 'THE INLAND WAY',
       `${pages} pages walked end to end · dusk the whole way`);
     const i2 = paintSign(atlas, 'oak', 'THE LAMP ROOM', 'this cape · four hundred paces');
     box(1.56, 0.80, 0.05, ax - Math.sin(yaw) * 0.045, g + 2.62, az - Math.cos(yaw) * 0.045, yaw, 0x5c4128, SW.oak);
@@ -324,7 +324,7 @@ export function buildCrossings(scene, data) {
       title: 'The coast path fingerpost',
       inscription: `THE LONG WAY THROUGH · ${pages} pages walked end to end, dusk the whole way`,
       read: 'The far arm is lettered for a trail, not a village: the same pages this coast lights, laid out as one walk in the failing light. Somebody keeps the paint fresh.',
-      ask: 'The coast path leaves this cape for The Long Way Through — a whole other world, walked at dusk from end to end. Take it?',
+      ask: 'The coast path leaves this cape for a whole other world, walked at dusk from end to end. Take it?',
     });
   }
 
@@ -341,7 +341,7 @@ export function buildCrossings(scene, data) {
     box(0.66, 1.42, 0.36, x, g + 0.71, z, yaw, 0xb8ab90, SW.stone);
     box(0.76, 0.18, 0.46, x, g + 1.45, z, yaw, 0xa89b80, SW.stone);   // the weathered cap
     const [fx, fz] = l2w(x, z, yaw, 0, 0.19);
-    const i = paintSign(atlas, 'stone', 'PIXEL DOCS CITY',
+    const i = paintSign(atlas, 'stone', 'UP THE COAST',
       `one day's walk up the coast · ${pages} lit windows, one for every page`);
     signQuad(B, i, fx, g + 0.82, fz, yaw, 0.60, 0.92);
     colliders.push({ x, z, r: 0.55 });
@@ -350,7 +350,7 @@ export function buildCrossings(scene, data) {
       title: 'The milestone on the coast road',
       inscription: `PIXEL DOCS CITY · one day's walk up the coast · ${pages} lit windows, one for every page`,
       read: 'Set into the kerb where the town\'s made ground stops. The stone is honest about the distance and honest about the city: the same pages this coast keeps in lanterns are kept up there in windows instead, and the road under your boots goes all the way.',
-      ask: 'The coast road runs a day up the shore to Pixel Docs City — a whole other world, and a town made of these same pages. Walk it?',
+      ask: 'The coast road runs a day up the shore to a whole other world, a town made of these same pages. Walk it?',
     });
   }
 
@@ -369,7 +369,7 @@ export function buildCrossings(scene, data) {
       box(0.055, 0.055, 0.80, rx1, g + 0.74, rz1, yaw, 0xd9c79c, SW.hemp);
     }
     const [sx, sz] = l2w(x, z, yaw, 0, 0.375);
-    const i = paintSign(atlas, 'stencil', 'TO THE HERBARIUM',
+    const i = paintSign(atlas, 'stencil', 'ON EXCHANGE',
       'pressed on this coast · carriage paid · dry side up');
     signQuad(B, i, sx, g + 0.40, sz, yaw, 0.92, 0.46);
     colliders.push({ x, z, r: 0.72 });
@@ -379,9 +379,9 @@ export function buildCrossings(scene, data) {
          up the boards, not from out on the water */
       farStand: [-48, 1.4, Math.PI / 2],
       title: 'The loan crate on the quay',
-      inscription: 'TO THE HERBARIUM · pressed on this coast · carriage paid · dry side up',
+      inscription: 'ON EXCHANGE · pressed on this coast · carriage paid · dry side up',
       read: 'Sheets cut on the cliff road at the last hour, dry on the stem before they were ever picked, going out on exchange to a cabinet that keeps the whole documentation as pressed plants. It is roped, and the packet is due.',
-      ask: 'This crate goes back to The Herbarium — a whole other world, and a cabinet of these same pages. Go with it?',
+      ask: 'This crate goes back to a whole other world, a cabinet that keeps these same pages as pressed plants. Go with it?',
     });
   }
 
@@ -403,7 +403,7 @@ export function buildCrossings(scene, data) {
     const [hx, hz] = l2w(x, z, yaw, 0.62, 0.94);
     box(0.06, 0.74, 0.44, hx, g + 1.52, hz, yaw - 0.75, 0x6d5230, SW.oak); // the shutter, hooked back
     const [cx2, cz2] = l2w(x, z, yaw, -0.66, 0.93);
-    const i = paintSign(atlas, 'card', 'FIRST LIGHT',
+    const i = paintSign(atlas, 'card', 'NIGHT SIGHTING',
       `${pages} bodies on one plate · sighting begins at dark`);
     signQuad(B, i, cx2, g + 1.44, cz2, yaw, 0.52, 0.30);
     // the lamp inside, which is the whole reason you can read the card
@@ -419,9 +419,9 @@ export function buildCrossings(scene, data) {
     finish({
       key: 'firstlight', dir: '../firstlight/', x, z, yaw,
       title: 'The night-sighting hut',
-      inscription: `FIRST LIGHT · ${pages} bodies on one plate · sighting begins at dark`,
+      inscription: `NIGHT SIGHTING · ${pages} bodies on one plate · sighting begins at dark`,
       read: 'The shutter is hooked back and the lamp is already burning, because the work in here starts when this coast stops. The card in the window says what they point at: these same pages, read off a plate as a night sky.',
-      ask: 'The night shift in here works for FIRST LIGHT — a whole other world, and these same pages read as a sky. Sit in on it?',
+      ask: 'The night shift in here works for a whole other world, these same pages read as a sky. Sit in on it?',
     });
   }
 
@@ -438,7 +438,7 @@ export function buildCrossings(scene, data) {
     box(0.34, 0.09, 0.34, bolX, PIER.deck + 0.63, bolZ, 0.3, 0x6d5230, SW.oak);
     /* the slate faces up the pier, at the walker: she lies beyond it, so you
        read where she is bound with her hull in the same view */
-    const i = paintSign(atlas, 'lime', 'CARTA STRAPIANA',
+    const i = paintSign(atlas, 'lime', 'THE CHART-BOAT',
       `sails on the tide · ${edges} roads run as sea-lanes`);
     box(0.90, 0.48, 0.04, bolX, PIER.deck + 1.00, bolZ + 0.125, 0, 0x5c4128, SW.oak);
     signQuad(B, i, bolX, PIER.deck + 1.00, bolZ + 0.17, 0, 0.86, 0.44);
@@ -459,7 +459,7 @@ export function buildCrossings(scene, data) {
     cyl(0.055, 0.075, 6.6, bolX, hy + 3.3, hz - 0.5, 0, 0x9c7c52, SW.oak);   // the mast
     cyl(0.045, 0.05, 3.1, bolX + 0.02, hy + 0.72, hz + 1.15, 0, 0x9c7c52, SW.oak, Math.PI / 2 - 0.10);
     cyl(0.17, 0.20, 2.9, bolX + 0.02, hy + 0.88, hz + 1.15, 0, 0xe4d6b6, SW.hemp, Math.PI / 2 - 0.10, 9); // the sail, furled
-    const i2 = paintSign(atlas, 'lime', 'CARTA STRAPIANA', 'of this port');
+    const i2 = paintSign(atlas, 'lime', 'THE CHART-BOAT', 'of this port');
     signQuad(B, i2, bolX, hy + 0.42, hz + 3.42, 0.06, 1.5, 0.42);
     cyl(0.028, 0.028, 5.4, bolX + 0.30, 0.86, (bolZ + hz + 3.3) / 2, 0, 0xd9c79c, SW.hemp, Math.PI / 2 - 0.26);
     colliders.push({ x: bolX, z: bolZ, r: 0.45 });
@@ -469,7 +469,7 @@ export function buildCrossings(scene, data) {
       title: 'The chart-boat at her mooring',
       inscription: `CARTA STRAPIANA · sails on the tide · ${edges} roads run as sea-lanes`,
       read: 'A working boat with an engraver aboard. The slate on her bollard says where she is bound and what she does out there: the roads that cross this coast on foot are the lanes she runs under sail, and every page on it is an island.',
-      ask: 'She sails for Carta Strapiana on the tide — a whole other world, and this same coast drawn as a sea. Go aboard?',
+      ask: 'She sails on the tide for a whole other world, this same coast drawn as a sea. Go aboard?',
     });
   }
 
@@ -497,16 +497,16 @@ export function buildCrossings(scene, data) {
       box(0.40, 0.66, 0.03, rx + Math.sin(a) * 0.19, rg + 1.10, rz + Math.cos(a) * 0.19, a, 0x8c8a80, SW.iron);
       box(0.40, 0.66, 0.03, rx + Math.sin(a) * 0.19, rg + 0.46, rz + Math.cos(a) * 0.19, a, 0x8c8a80, SW.iron);
     }
-    const i = paintSign(atlas, 'lime', 'THE FOUR-COLOR',
+    const i = paintSign(atlas, 'lime', 'THIS WEEK\'S ISSUE',
       `this week's issue in · ${pages} pages, printed in four colours`);
     signQuad(B, i, fx, g + 1.06, fz, yaw, 1.55, 0.62);
     colliders.push({ x, z, r: 1.15 }, { x: rx, z: rz, r: 0.4 });
     finish({
       key: 'secreta', dir: '../secreta/', x, z, yaw,
       title: 'The newsstand on the promenade',
-      inscription: `THE FOUR-COLOR · this week's issue in · ${pages} pages, printed in four colours`,
+      inscription: `THIS WEEK'S ISSUE IN · ${pages} pages, printed in four colours`,
       read: 'The shutter is half down and the rack is still turning. The board says what came in on the packet: the whole documentation as a four-colour comic, off register and unashamed, and the newsagent will hand you one.',
-      ask: "The newsagent has this week's Four-Color under the counter — a whole other world, and these same pages in four colours. Buy it?",
+      ask: "The newsagent has this week's issue under the counter — a whole other world, these same pages in four colours. Buy it?",
     });
   }
 

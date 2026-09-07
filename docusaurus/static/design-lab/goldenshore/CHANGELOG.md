@@ -967,3 +967,22 @@ none after, and the line still well on screen.
 `BACKUPS.md` also lands, because the restore points here were mislabelled: the
 `.gs.bak` files are the true pre-round state and the `.r19.bak` files are a
 mid-round snapshot that already carries the new crossings.
+
+## 2026-09-07 · the crossings stop announcing where they go
+
+The owner caught the loan crate naming The Herbarium twice over: on a sign
+painted into the world, `TO THE HERBARIUM`, and again in the confirm. He was
+right, and the fault is in the brief rather than the build. The law he validated
+reads `THIS WAY LEAVES TOWN - ANOTHER WORLD ENTIRELY`, which names nothing; the
+wave brief for this world added "each names its destination honestly", and the
+builder did as it was told.
+
+All six crossings now say they lead somewhere else without saying where. The
+signs became local names for local things: THE INLAND WAY, UP THE COAST, ON
+EXCHANGE, NIGHT SIGHTING, THE CHART-BOAT, THIS WEEK'S ISSUE. Each confirm keeps
+its shape and its honesty about leaving, losing only the proper noun: *"This
+crate goes back to a whole other world, a cabinet that keeps these same pages as
+pressed plants. Go with it?"*
+
+The six names that remain in this file are in a source comment, which no player
+reads and which a maintainer needs.
