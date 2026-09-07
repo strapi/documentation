@@ -1,10 +1,13 @@
 /* ============================================================================
    APPENDIX PLATE — SPECIMENS GATHERED ABROAD
    The one addition the owner allowed: a single sheet filed after the last
-   drawer of the whole collection. Six specimens received in exchange from
+   drawer of the whole collection. Five specimens received in exchange from
    the sister collections of the Design Lab; each one, pressed here, is a
-   door. (A seventh, the kit, went back to its maker when the network was
-   fixed at the seven highlights; no crossing leads there any more.) Everything in this file is additive: it reads the cabinet's globals
+   door, and a sixth is filed behind on a late-accession sheet of its own.
+   (Two loans have gone back to their lenders: the kit, when the network was
+   fixed at the seven highlights, and a cartoon kelp specimen on
+   2026-09-07, when its collection went to the archives. No crossing leads to
+   either any more, and the plate was re-laid so that neither leaves a hole.) Everything in this file is additive: it reads the cabinet's globals
    (parseHash, SPECIALS, attachLens, stampSVG) and touches only the DOM it
    creates itself. If anything here fails, it fails silently and the
    herbarium is exactly what it was.
@@ -54,7 +57,8 @@
   }
 
   /* ============================================================ the figures
-     Six pressed specimens, each drawn in the hand of its native country. */
+     Five pressed specimens on the plate and one on the late sheet, each
+     drawn in the hand of its native country. */
 
   /* 1 · a pixel leaf — crisp square dots, one tile per cell, no antialias */
   function figPixel() {
@@ -149,36 +153,6 @@
     }
     s += '</g>';
     s += tape(50, 100, -3, 24, 6.2) + tape(52, 34, 5, 20, 5.8);
-    return s + '</svg>';
-  }
-
-  /* 3 · an inked cartoon kelp — the one living specimen; it sways */
-  function figKelp() {
-    var ink = '#16303a', fill = '#4a9a81', lite = '#6fb69c';
-    var s = svgOpen();
-    s += '<g class="appdx-kelp-sway">';
-    /* pressed shadow */
-    s += '<path d="M50,116 C44,96 52,84 46,66 C42,52 50,40 47,26" fill="none" stroke="#4a3a22" stroke-width="7" opacity="0.08" transform="translate(2.4,3)"/>';
-    /* central blade, wavy cartoon edges, flat fill + bold outline */
-    var blade = 'M50,114 C42,100 54,94 45,80 C38,68 55,62 46,48 C40,38 54,34 49,22'
-      + ' C58,26 56,36 62,44 C68,54 56,60 63,72 C69,84 56,90 61,102 C64,110 56,112 50,114 Z';
-    s += '<g class="appdx-kelp-sway2">';
-    s += '<path d="' + blade + '" fill="' + fill + '" stroke="' + ink + '" stroke-width="2.3" stroke-linejoin="round"/>';
-    s += '<path d="M52,104 C48,92 56,86 50,74 C46,64 57,58 51,46" fill="none" stroke="' + lite + '" stroke-width="2.6" stroke-linecap="round"/>';
-    s += '<path d="M49,22 C51,18 54,17 57,18" fill="none" stroke="' + ink + '" stroke-width="2.3" stroke-linecap="round"/>';
-    s += '</g>';
-    /* a side frond, one beat out of phase */
-    s += '<g class="appdx-kelp-sway3">'
-      + '<path d="M46,92 C36,86 30,76 32,64 C38,68 44,74 46,84 Z" fill="' + fill + '" stroke="' + ink + '" stroke-width="2" stroke-linejoin="round"/>'
-      + '</g>';
-    s += '</g>';
-    /* holdfast: cartoon toes gripping a pebble */
-    s += '<path d="M42,116 q3,-6 8,-2 q2,-4 6,-1 q4,-3 6,2 q4,0 3,4 l-24,0 q-2,-2 1,-3 Z" fill="#2e5a4c" stroke="' + ink + '" stroke-width="2" stroke-linejoin="round"/>';
-    s += '<ellipse cx="63" cy="119" rx="6" ry="3" fill="#b9a982" stroke="' + ink + '" stroke-width="1.4"/>';
-    /* bubbles, plainly comic */
-    s += '<g fill="none" stroke="' + ink + '" stroke-width="1.2" opacity="0.85">'
-      + '<circle cx="67" cy="40" r="2.6"/><circle cx="71" cy="30" r="1.8"/><circle cx="69" cy="21" r="1.1"/></g>';
-    s += tape(48, 108, -5, 26, 6.5);
     return s + '</svg>';
   }
 
@@ -295,6 +269,58 @@
     return s + '</svg>';
   }
 
+  /* 7 - the everlasting of the keeper coast, received after the plate was
+         made: the one sheet in the cabinet that kept its colour */
+  function figEverlasting() {
+    var stem = '#7d7a5c', felt = '#a8ab92', gold = '#e0a233', deep = '#c07a1e', pale = '#f2c766';
+    var s = svgOpen();
+    /* the pressed shadow, thrown to the low side as a late sun would throw it */
+    s += '<g fill="#4a3a22" opacity="0.09" transform="translate(3,3)">'
+      + '<path d="M50,118 C48,98 51,80 49,60 L54,60 C56,80 53,98 52,118 Z"/>'
+      + '<ellipse cx="50" cy="44" rx="24" ry="15"/></g>';
+    /* the woody stem and its grey-felted linear leaves: this plant is dry
+       before it is picked, which is why it presses without losing anything */
+    s += '<g fill="none" stroke="' + stem + '" stroke-linecap="round">';
+    s += '<path d="M50,118 C48.6,99 51.4,82 50,62" stroke-width="1.9"/>';
+    for (var L = 0; L < 9; L++) {
+      var ly = 112 - L * 6.4, side = (L % 2) ? 1 : -1;
+      s += '<path d="M' + (50 + side * 0.7) + ',' + ly + ' q' + (side * 7.5) + ',-2.4 '
+        + (side * 12.5) + ',-6.6" stroke-width="1.5" stroke="' + felt + '"/>';
+      s += '<path d="M' + (50 + side * 0.7) + ',' + ly + ' q' + (side * 6.4) + ',-2.1 '
+        + (side * 10.8) + ',-5.6" stroke-width="0.5" stroke="#cfd0bd" opacity="0.8"/>';
+    }
+    s += '<path d="M50,62 C44,58 41,54 40.6,49 M50,62 C56,58 59,54 59.4,49" stroke-width="1.2"/>';
+    s += '</g>';
+    /* the corymb: forty-odd small button flowers, flat-topped, dry gold.
+       Their arrangement is fixed, not random: a pressed sheet does not move. */
+    var buttons = [
+      [50, 30, 4.6], [42.4, 32.6, 4.2], [57.6, 32.4, 4.2], [35.6, 37.4, 3.8], [64.4, 37.2, 3.8],
+      [46.2, 36.2, 3.9], [53.8, 36.0, 3.9], [39.0, 42.2, 3.6], [61.0, 42.0, 3.6],
+      [50.0, 40.4, 4.0], [44.0, 45.2, 3.5], [56.0, 45.0, 3.5], [32.8, 44.6, 3.2],
+      [67.2, 44.4, 3.2], [50.0, 49.0, 3.4], [37.6, 50.0, 3.1], [62.4, 49.8, 3.1],
+      [43.4, 53.4, 2.9], [56.6, 53.2, 2.9], [30.4, 51.6, 2.7], [69.6, 51.4, 2.7],
+      [50.0, 57.0, 2.8], [35.0, 57.2, 2.5], [65.0, 57.0, 2.5], [46.0, 26.4, 3.2],
+      [54.0, 26.2, 3.2], [50.0, 22.4, 2.8]
+    ];
+    for (var b = 0; b < buttons.length; b++) {
+      var bx = buttons[b][0], by = buttons[b][1], br = buttons[b][2];
+      /* each button is bracts around a disc: eight short rays, then the eye */
+      s += '<g transform="translate(' + bx + ',' + by + ')">';
+      for (var r = 0; r < 8; r++) {
+        var a = r * 45;
+        s += '<ellipse cx="0" cy="' + (-br * 0.62).toFixed(2) + '" rx="' + (br * 0.28).toFixed(2)
+          + '" ry="' + (br * 0.46).toFixed(2) + '" transform="rotate(' + a + ')" fill="' + pale + '"/>';
+      }
+      s += '<circle r="' + (br * 0.52).toFixed(2) + '" fill="' + gold + '"/>';
+      s += '<circle r="' + (br * 0.22).toFixed(2) + '" fill="' + deep + '"/>';
+      s += '</g>';
+    }
+    /* the collector wrote the hour on the sheet, as this one collector does */
+    s += '<text x="14" y="112" font-family="Courier Prime,monospace" font-size="3" fill="#8a7247" opacity="0.7">19:40</text>';
+    s += tape(50, 104, -4, 25, 6.4) + tape(50, 62, 5, 20, 5.8);
+    return s + '</svg>';
+  }
+
   /* ------------------------------------------------------- collector marks */
   function markSVG(kind) {
     var open = '<svg class="appdx-mkglyph" viewBox="0 0 14 14" aria-hidden="true">';
@@ -320,6 +346,11 @@
         + '<path d="M2,10 A6.4,6.4 0 0 1 12,10"/><path d="M4.4,10 A3.4,3.4 0 0 1 9.6,10"/></g>'
         + '<circle cx="7" cy="10.6" r="1.3" fill="#2e3c4c"/></svg>';
     }
+    if (kind === 'shore') {
+      return open + '<g fill="none" stroke="#8a5a1e" stroke-width="1">'
+        + '<path d="M1.4,9.4 H12.6"/><path d="M4.2,9.4 A2.8,2.8 0 0 1 9.8,9.4"/></g>'
+        + '<path d="M7,3.6 L7.8,5.4 L7,6.2 L6.2,5.4 Z" fill="#e0a233"/></svg>';
+    }
     /* cmyk */
     return open + '<circle cx="5" cy="5" r="2.5" fill="#0f9bd7" opacity="0.85"/>'
       + '<circle cx="9" cy="5" r="2.5" fill="#e0347c" opacity="0.8"/>'
@@ -327,7 +358,7 @@
       + '<circle cx="7" cy="6.2" r="1" fill="#1c1b1a"/></svg>';
   }
 
-  /* ============================================================= the six */
+  /* ============================================================ the five */
   var SPECIMENS = [
     {
       key: 'pixelcity', href: '../pixelcity/', fig: figPixel, mark: 'pixel', rot: -0.6,
@@ -344,14 +375,6 @@
       leg: 'leg. the Chartmaker’s boat',
       hint: 'On loan from the chart-room of Carta Strapiana · press the specimen to follow it home.',
       aria: 'Erica cartographica, a sprig of sea-heather engraved in iron-gall, on loan from Carta Strapiana. Press to follow it home.'
-    },
-    {
-      key: 'bythedeep', href: '../bythedeep/', fig: figKelp, mark: 'deep', rot: -0.4,
-      name: 'Laminaria buffa',
-      note: 'Netted below panel three; refused to stop waving, and was pressed as it is.',
-      leg: 'leg. the deckhand, B.t.Deep',
-      hint: 'On loan from the waters of By the Deep · press the specimen to follow it home.',
-      aria: 'Laminaria buffa, an inked cartoon kelp on loan from By the Deep. Press to follow it home.'
     },
     {
       key: 'longway', href: '../longway/', fig: figRiso, mark: 'dusk', rot: 0.6,
@@ -378,6 +401,21 @@
       aria: 'Rosa quadrichroma, a four-colour halftone flower from an unnamed printing-house. Press to follow it home.'
     }
   ];
+
+  /* ====================================================== the seventh, late
+     The plate above was made when there were six sister collections. A
+     seventh arrived afterwards, from a coast that had not been founded when
+     the exchange was drawn up, and a herbarium does not remake a finished
+     plate for a late arrival: it mounts it on a sheet of its own and files
+     it directly behind. (2026-09-07) */
+  var SPEC7 = {
+    key: 'goldenshore', href: '../goldenshore/', fig: figEverlasting, mark: 'shore', rot: -0.5,
+    name: 'Helichrysum vespertinum',
+    note: 'Cut on the cliff road below the lamp room at the last hour of light; dry on the stem before it was ever picked, and so the only sheet in this cabinet that has not lost its colour.',
+    leg: 'leg. the lamplighter, Golden Shore',
+    hint: 'On loan from the keeper coast of The Golden Shore \u00b7 press the specimen to follow it home.',
+    aria: 'Helichrysum vespertinum, an everlasting cut at golden hour on the keeper coast, on loan from The Golden Shore. Press to follow it home.'
+  };
 
   /* ============================================================ the sheet */
 
@@ -411,10 +449,10 @@
       + '<div class="bino">Specimens gathered abroad <span class="auth">ex herb. var.</span></div>'
       + '<div class="rule"></div>'
       + '<dl>'
-      + '<dt>Coll.</dt><dd>six sister collections, one specimen each</dd>'
+      + '<dt>Coll.</dt><dd>five sister collections, one specimen each</dd>'
       + '<dt>Date</dt><dd>various seasons, exchanged in kind</dd>'
       + '<dt>Loc.</dt><dd>beyond this cabinet, each its own country</dd>'
-      + '<dt>Det.</dt><dd>one plate; nothing else was added</dd>'
+      + '<dt>Det.</dt><dd>one plate; a returned loan was struck, not replaced</dd>'
       + '</dl>'
       + '<div class="rule"></div>'
       + '<div class="foot">Held under the exchange rule. The glass reads a borrowed specimen as it reads any sheet.<br>What is lent may be recalled.</div>'
@@ -424,15 +462,15 @@
   function sheetHTML() {
     var h = '<section class="appdx" id="appdx" aria-label="Appendix plate: specimens gathered abroad">';
     h += '<div class="appdx-divider" aria-hidden="true"><span></span><b>Appendix</b><span></span></div>';
-    h += '<p class="appdx-lede">After the last drawer, one plate more: six specimens received in exchange from the sister collections.</p>';
+    h += '<p class="appdx-lede">After the last drawer, one plate more: five specimens received in exchange from the sister collections.</p>';
     h += '<div class="sheet appdx-sheet" id="appdxSheet">';
     h += '<div class="rule-frame"></div>';
     h += '<div class="stamp" style="transform:rotate(-8deg)">' + (typeof stampSVG === 'function' ? stampSVG('apx-seal') : '') + '</div>';
     h += '<div class="acc">ACC. STR‑APP‑I</div>';
-    h += '<div class="fieldno">Field no. EXCH‑006 · exchange herbarium · six loans</div>';
+    h += '<div class="fieldno">Field no. EXCH‑006 · exchange herbarium · five loans</div>';
     h += '<header class="appdx-head">'
       + '<h2>Specimens gathered abroad</h2>'
-      + '<p>Appendix I · six loans from the sister collections</p>'
+      + '<p>Appendix I · five loans from the sister collections</p>'
       + '</header>';
     h += '<div class="appdx-grid">';
     for (var i = 0; i < SPECIMENS.length; i++) h += specimenHTML(SPECIMENS[i]);
@@ -440,6 +478,43 @@
     h += mainLabelHTML();
     h += '</div>';
     h += '<div class="appdx-tools" aria-hidden="true">hover the sheet to magnify · the glass reads a loan as it reads any sheet</div>';
+    h += '</section>';
+    return h;
+  }
+
+  function lateLabelHTML() {
+    return '<div class="label appdx-mainlabel appdx-lab2" style="--lrot:0.5deg">'
+      + '<h3>Herbarium of the Strapi Documentation</h3>'
+      + '<div class="fam">Appendix II · Late accession</div>'
+      + '<div class="bino">Received after the plate was made <span class="auth">ex herb. Golden Shore</span></div>'
+      + '<div class="rule"></div>'
+      + '<dl>'
+      + '<dt>Coll.</dt><dd>one sister collection, founded after the exchange</dd>'
+      + '<dt>Date</dt><dd>golden hour, at the end of a working day</dd>'
+      + '<dt>Loc.</dt><dd>the cliff road, below the lamp room</dd>'
+      + '<dt>Det.</dt><dd>a sheet of its own; the finished plate was not remade</dd>'
+      + '</dl>'
+      + '<div class="rule"></div>'
+      + '<div class="foot">Two hundred and ninety lanterns burn on that coast, one for every page, and each one is only as bright as the days since somebody last tended it.<br>Held under the same exchange rule. What is lent may be recalled.</div>'
+      + '</div>';
+  }
+
+  function sheet2HTML() {
+    var h = '<section class="appdx appdx2" id="appdx2" aria-label="Appendix plate two: a late accession from The Golden Shore">';
+    h += '<div class="appdx-divider" aria-hidden="true"><span></span><b>Appendix II</b><span></span></div>';
+    h += '<p class="appdx-lede">Filed directly behind the plate: one loan more, from a coast that had not been founded when the exchange was drawn up.</p>';
+    h += '<div class="sheet appdx-sheet appdx-sheet2" id="appdxSheet2">';
+    h += '<div class="rule-frame"></div>';
+    h += '<div class="stamp" style="transform:rotate(6deg)">' + (typeof stampSVG === 'function' ? stampSVG('apx2-seal') : '') + '</div>';
+    h += '<div class="acc">ACC. STR‑APP‑II</div>';
+    h += '<div class="fieldno">Field no. EXCH‑007 · late accession · one loan</div>';
+    h += '<header class="appdx-head appdx-head2">'
+      + '<h2>A specimen received late</h2>'
+      + '<p>Appendix II · one loan from The Golden Shore</p>'
+      + '</header>';
+    h += '<div class="appdx-row2">' + specimenHTML(SPEC7) + lateLabelHTML() + '</div>';
+    h += '</div>';
+    h += '<div class="appdx-tools" aria-hidden="true">hover the sheet to magnify · the glass reads a late loan as it reads any sheet</div>';
     h += '</section>';
     return h;
   }
@@ -457,8 +532,16 @@
     + '.appdx-head h2{margin:0;font-family:"Cormorant Garamond",serif;font-weight:600;font-size:3.1cqi;letter-spacing:.22em;text-transform:uppercase;color:#4a3c28}'
     + '.appdx-head p{margin:.7cqi 0 0;font-family:"Courier Prime",monospace;font-size:1.35cqi;letter-spacing:.16em;color:#8c7a5c}'
     + '.appdx-head::after{content:"";display:block;width:34cqi;height:1px;background:#cfbf9d;margin:1.5cqi auto 0}'
+    /* (2026-09-07) The plate held six loans in three columns over two rows.
+       One went back to its lender, so it holds five, and a plate with a hole
+       in it is a plate nobody mounted: the sheets are laid on a six-column
+       measure, each spanning two, and the second row of two is centred under
+       the first row of three. */
     + '.appdx-grid{position:absolute;left:6.5cqi;right:6.5cqi;top:17.5cqi;bottom:47cqi;display:grid;'
-    + 'grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,minmax(0,1fr));gap:3cqi 2cqi}'
+    + 'grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(2,minmax(0,1fr));gap:3cqi 2cqi}'
+    + '.appdx-grid>.appdx-sp{grid-column:span 2}'
+    + '.appdx-grid>.appdx-sp:nth-child(4){grid-column:2/span 2}'
+    + '.appdx-grid>.appdx-sp:nth-child(5){grid-column:4/span 2}'
     + '.appdx-sp{position:relative;display:flex;flex-direction:column;align-items:center;gap:.7cqi;'
     + 'text-decoration:none;color:inherit;cursor:pointer;min-width:0}'
     + '.appdx-fig{width:100%;height:20.5cqi;display:block;transition:transform .28s var(--ease,ease)}'
@@ -486,26 +569,32 @@
     + '@keyframes appdxThump{0%{opacity:0;transform:scale(1.75) rotate(-2deg)}'
     + '62%{opacity:.95;transform:scale(.94) rotate(-7deg)}100%{opacity:.88;transform:scale(1) rotate(-7deg)}}'
     + '.appdx-mainlabel{position:absolute;left:0;right:0;bottom:6.5cqi;width:54cqi;margin:0 auto}'
+    /* the late accession keeps every rule of the plate above it, on a sheet
+       cut half as deep, because it carries one specimen instead of five */
+    + '.appdx2{margin-top:2.6rem}'
+    + '.appdx-sheet2{aspect-ratio:auto;padding:4.2cqi 5cqi 4.6cqi;display:block}'
+    + '.appdx-head2{position:static;margin:8.5cqi auto 0;left:auto;right:auto;top:auto}'
+    + '.appdx-row2{display:grid;grid-template-columns:34% 1fr;gap:4cqi;align-items:center;margin:4.5cqi 0 1cqi}'
+    + '.appdx-row2 .appdx-fig{height:30cqi}'
+    + '.appdx-row2 .appdx-lbl{width:100%}'
+    + '.appdx-row2 .appdx-hint{width:130%;font-size:1.3cqi}'
+    + '.appdx-lab2{position:static;width:auto;margin:0}'
+    + '@media (max-width:620px){.appdx-row2{grid-template-columns:1fr;gap:6cqi}'
+    + '.appdx-row2 .appdx-fig{height:40cqi}.appdx-head2{margin-top:11cqi}}'
     + '.appdx-tools{max-width:660px;margin:.95rem auto 0;text-align:center;font-family:"Courier Prime",monospace;'
     + 'font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:#6f5f43}'
-    /* the one living specimen, and only while the plate is on the table */
-    + '.appdx-kelp-sway,.appdx-kelp-sway2,.appdx-kelp-sway3{transform-box:fill-box}'
-    + '.appdx-live .appdx-kelp-sway{transform-origin:50% 100%;animation:appdxSway 5.2s ease-in-out infinite alternate}'
-    + '.appdx-live .appdx-kelp-sway2{transform-origin:50% 92%;animation:appdxSway2 4.1s ease-in-out -1.3s infinite alternate}'
-    + '.appdx-live .appdx-kelp-sway3{transform-origin:100% 60%;animation:appdxSway3 3.4s ease-in-out -0.7s infinite alternate}'
-    + '@keyframes appdxSway{from{transform:rotate(-1.5deg)}to{transform:rotate(1.7deg)}}'
-    + '@keyframes appdxSway2{from{transform:skewX(-1.3deg)}to{transform:skewX(1.5deg)}}'
-    + '@keyframes appdxSway3{from{transform:rotate(1.6deg)}to{transform:rotate(-1.4deg)}}'
     + '@media (max-width:1080px),(pointer:coarse){.appdx-tools{display:none}}'
     + '@media (max-width:620px){'
     + '.appdx-sheet{aspect-ratio:auto;padding:4cqi 3cqi 3cqi}'
     + '.appdx-head{position:static;margin:11cqi auto 0}'
     + '.appdx-head h2{font-size:4.6cqi}.appdx-head p{font-size:2.4cqi}'
     + '.appdx-grid{position:static;grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:6cqi 3cqi;margin:7cqi 1cqi 4cqi}'
+    + '.appdx-grid>.appdx-sp,.appdx-grid>.appdx-sp:nth-child(4),.appdx-grid>.appdx-sp:nth-child(5){grid-column:auto}'
     + '.appdx-fig{height:36cqi}'
     + '.appdx-lbl{font-size:2.2cqi}.appdx-lbl em{font-size:3.4cqi}.appdx-lbl .mk{font-size:2cqi}'
     + '.appdx-mkglyph{width:3.2cqi;height:3.2cqi}'
     + '.appdx-hint{font-size:2.6cqi;width:118%}'
+    + '.appdx-row2 .appdx-hint{width:100%;font-size:2.4cqi}'
     + '.appdx-seal{width:34cqi;margin-left:-17cqi;top:10cqi}'
     + '.appdx-mainlabel{position:static;width:auto;margin:1rem;transform:none}'
     + '}'
@@ -551,6 +640,8 @@
   /* ============================================================ mechanics */
 
   var FIGS_HTML = null;
+
+  var LATE_HTML = null;
 
   function ensureStyle() {
     if (document.getElementById('appdxStyle')) return;
@@ -638,14 +729,17 @@
     yes.focus();
   }
 
-  function wireSheet(root) {
-    var sheet = root.querySelector('#appdxSheet');
+  function wireSheet(root, sheetId) {
+    var sheet = root.querySelector('#' + (sheetId || 'appdxSheet'));
     if (!sheet) return;
 
     /* the same glass, over the same kind of sheet */
     if (typeof attachLens === 'function') attachLens(sheet);
 
-    /* the kelp lives only while the plate is actually on the table */
+    /* the plate marks itself live only while it is actually on the table:
+       the one specimen that moved on this sheet has gone back to its lender,
+       so nothing animates here now, and the flag is kept because the sheet's
+       own rules read it and a pressed plate should still know when it is out */
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
         for (var i = 0; i < entries.length; i++) {
@@ -668,8 +762,9 @@
       if (sheet.dataset.crossing || SLIP_OPEN) return;
       var href = a.getAttribute('href');
       var sp = null;
-      for (var i = 0; i < SPECIMENS.length; i++) {
-        if (SPECIMENS[i].key === a.dataset.w) { sp = SPECIMENS[i]; break; }
+      var all = SPECIMENS.concat([SPEC7]);
+      for (var i = 0; i < all.length; i++) {
+        if (all[i].key === a.dataset.w) { sp = all[i]; break; }
       }
       openSlip(sp ? sp.name : 'A borrowed specimen', a, function () {
         if (reduced()) { location.href = href; return; } /* signed: cross without the beat */
@@ -685,14 +780,18 @@
     try {
       if (!isAllTray()) return;
       var sc = document.getElementById('scroll');
-      if (!sc || sc.querySelector('#appdx')) return;
+      if (!sc || sc.querySelector('#appdx') || sc.querySelector('#appdx2')) return;
       /* the tray for ~all must already be on the table (guards the ordering
          where our listener could ever run before the cabinet's own render) */
       if (!sc.querySelector('.tray')) return;
       ensureStyle();
       if (FIGS_HTML === null) FIGS_HTML = sheetHTML();   /* drawn once, filed forever */
       sc.insertAdjacentHTML('beforeend', FIGS_HTML);
-      wireSheet(sc.querySelector('#appdx'));
+      wireSheet(sc.querySelector('#appdx'), 'appdxSheet');
+      /* and behind it, the late accession on its own sheet */
+      if (LATE_HTML === null) LATE_HTML = sheet2HTML();
+      sc.insertAdjacentHTML('beforeend', LATE_HTML);
+      wireSheet(sc.querySelector('#appdx2'), 'appdxSheet2');
     } catch (err) {
       /* an appendix must never cost the collection anything */
     }

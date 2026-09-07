@@ -1,0 +1,20 @@
+const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_modules/playwright-core');
+const DIR='/private/tmp/claude-501/-Users-piwi-code-documentation/0d8629c6-231f-4fec-94af-6fe3669d37b8/scratchpad/bold5/s7/';
+(async()=>{
+ const b=await chromium.launch();
+ const c=await b.newContext({viewport:{width:1440,height:900},deviceScaleFactor:1});
+ await c.addInitScript(()=>{try{localStorage.setItem('herb.seenkey','1')}catch(e){}});
+ const p=await c.newPage(); const e=[]; p.on('pageerror',x=>e.push(x.message)); p.on('console',m=>{if(m.type()==='error')e.push(m.text())});
+ await p.goto('http://127.0.0.1:8977/#~all',{waitUntil:'domcontentloaded'});
+ await p.waitForFunction(()=>window.__HERB_READY__===true,{timeout:20000});
+ await p.evaluate(()=>window.scrollTo(0,560));
+ await p.waitForTimeout(1600);
+ await p.screenshot({path:DIR+'shot-world.jpg',type:'jpeg',quality:75});
+ await p.evaluate(()=>{location.hash='#/cms/features/draft-and-publish'}); await p.waitForTimeout(1400);
+ await p.evaluate(()=>window.scrollTo(0,0)); await p.waitForTimeout(600);
+ await p.screenshot({path:DIR+'shot-read.jpg',type:'jpeg',quality:75});
+ await p.evaluate(()=>{location.hash='#~s/cms/api/document-service'}); await p.waitForTimeout(1400);
+ await p.screenshot({path:DIR+'shot-recto.jpg',type:'jpeg',quality:75});
+ console.log('errs',e);
+ await b.close();
+})();
