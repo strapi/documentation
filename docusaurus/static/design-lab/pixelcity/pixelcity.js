@@ -2264,8 +2264,8 @@ function projectStatics() {
         depth: depthTile(pr.tx, pr.ty, 0.4)
       };
       statics.push(st); pr.st = st;
-    } else if (pr.kind === 'observatory' || pr.kind === 'trailgate' || pr.kind === 'botanist') {
-      const nm2 = { observatory: 'observatory', trailgate: 'fingerpost', botanist: 'botaniststall' }[pr.kind];
+    } else if (pr.kind === 'observatory' || pr.kind === 'trailgate' || pr.kind === 'botanist' || pr.kind === 'lampyard') {
+      const nm2 = { observatory: 'observatory', trailgate: 'fingerpost', botanist: 'botaniststall', lampyard: 'lampyard' }[pr.kind];
       const cv2 = SPR[nm2];
       const st = {
         cv: cv2, name: nm2,
@@ -4354,7 +4354,7 @@ function frame(ts) {
   diag.frameMs = el;
   diag.clock = dayT;
   diag.season = SEASONS[season];
-  diag.px = player.x;
+  diag.px = player.x; diag.spots = spots.map(x=>({kind:x.kind,ix:x.ix,iy:x.iy}));
   diag.py = player.y;
   diag.mode = camMode;
   diag.samples = frameSamples;
@@ -5281,10 +5281,11 @@ let townClickables = [];         // world-px hit rects for the mouse-only path
 const FOLK_CACHE = {};
 
 /* ---- THE PORTAL NETWORK (owner ruling 3) ---------------------------------
-   Five stations, six berths - the crossings to the lab's sister highlights,
+   Six crossings out of town - one for each of the lab's sister highlights,
    woven into the town fabric. Each one is DISCOVERED, never a menu: the
    affordance lives in the town's own grammar (a bookshop, two moored vessels,
-   a telescope, a fingerpost, a market stall), the hint is one in-register
+   a telescope, a fingerpost, a market stall, a lamplighter's yard), the hint
+   is one in-register
    line in the same door prompt every door uses, and ENTER plays a short
    in-fiction beat before the walk over to the sibling at ../KEY/. Reduced
    motion crosses instantly. (2026-09-05, r15, owner order: THE KIT IS
@@ -5297,9 +5298,6 @@ const PORTALS = [
   { key: 'cartastrapiana', kind: 'sloop', href: '../cartastrapiana/',
     title: 'THE ENGRAVED SLOOP', hint: 'She sails by an older hand. Board her?',
     beat: 'SHE CASTS OFF · THE ENGRAVING TAKES THE WIND', snd: 'whoosh' },
-  { key: 'bythedeep', kind: 'steamer', href: '../bythedeep/',
-    title: 'THE HARBOUR STEAMER', hint: 'THE STEAMER WINKS AS YOU COME NEAR',
-    beat: 'THE STEAMER WINKS ONCE MORE · ALL ABOARD', snd: 'whoosh' },
   { key: 'firstlight', kind: 'observatory', href: '../firstlight/',
     title: 'THE OBSERVATORY', hint: 'THE DOME SLEEPS TILL DARK',
     hintNight: 'That star is answering', beat: 'THE SLIT OPENS · THE STAR ANSWERS IN KIND', snd: 'chime' },
@@ -5308,15 +5306,23 @@ const PORTALS = [
     beat: 'ONE FOOT AFTER THE OTHER · 319,153 WORDS TO GO', snd: 'whoosh' },
   { key: 'herbarium', kind: 'botanist', href: '../herbarium/',
     title: 'THE BOTANIST STALL', hint: 'PRESSED FLOWERS IN THE WINDOW · EVERY LEAF KEPT',
-    beat: 'A PRESSED FLOWER MARKS YOUR PAGE', snd: 'chime' }
+    beat: 'A PRESSED FLOWER MARKS YOUR PAGE', snd: 'chime' },
+  /* (2026-09-07) THE LAMPLIGHTER'S YARD. The town lights its own lamps at
+     dusk; the yard that trims them also keeps the lamps of a coast down the
+     line, one for every page, and the brightness of each is how recently
+     somebody tended it. The handcart in the yard is loaded and its shaft
+     points west, at the coast road. */
+  { key: 'goldenshore', kind: 'lampyard', href: '../goldenshore/',
+    title: "THE LAMPLIGHTER'S YARD", hint: 'THE CART IS LOADED FOR THE COAST ROAD WEST · A LAMP FOR EVERY PAGE',
+    hintGolden: 'The lamplighter is leaving now, while the light lasts',
+    beat: 'THE CART GOES WEST · THE LIGHT ON THE COAST HAS NOT FINISHED', snd: 'chime' }
 ];
 const PORTAL_BY_KIND = {};
 for (const P of PORTALS) PORTAL_BY_KIND[P.kind] = P;
 let portalLeaving = false;       // one crossing at a time
-let steamerProp = null;          // the vessel that winks as you approach
 
 /* THE PORTAL CONFIRM (owner law). Every activation - keyboard or mouse, all
-   five stations, all six berths - first raises a wooden town sign in the
+   every station and the mooring - first raises a wooden town sign in the
    door grammar: THIS WAY LEAVES TOWN - ANOTHER WORLD ENTIRELY. GO? The two
    words on the plank are real buttons (clickable, Tab-focusable); Y speaks
    YES from anywhere, N or Escape speaks NO, Enter speaks the focused word.
@@ -5704,7 +5710,7 @@ function bakeTownSprites() {
       if (dd <= 1) { g.fillStyle = `rgba(255,207,94,${(0.30 * (1 - dd) ** 1.4).toFixed(3)})`; g.fillRect(x, y, 1, 1); }
     }
   }, true);
-  /* ---- the portal network's six stations (owner ruling 3) ---- */
+  /* ---- the portal network's stations (owner ruling 3) ---- */
   // FOUR-COLOR FUNNIES: a sunny corner bookshop, a spinner rack of comics in
   // the big display window - three tiers of little covers in printer's colours
   bakeLandmark('funnies', 24, (d) => {
@@ -5759,20 +5765,51 @@ function bakeTownSprites() {
     px(g, 3, 9, 12, 3, PAL.WD3); px(g, 15, 10, 1, 1, PAL.WD3);  // lower board, tipped east
     px(g, 4, 10, 9, 1, PAL.RS1);
   });
-  // THE OBSERVATORY: a stone tower on its own grass mound, copper dome with a
-  // dark slit, the telescope barrel poking at the sky
-  bakeSprite('observatory', 26, 30, (g) => {
-    for (let i = 0; i < 5; i++) px(g, 3 + i, 29 - i, 20 - 2 * i, 1, i > 2 ? PAL.G3 : PAL.G2); // the hill
-    px(g, 8, 14, 10, 12, PAL.C2); px(g, 15, 14, 3, 12, PAL.C1); // tower + shaded face
-    px(g, 9, 17, 2, 2, PAL.GL3); px(g, 13, 19, 2, 2, PAL.GL3);  // slit windows
-    px(g, 12, 21, 3, 5, PAL.WD1);                               // door
-    for (let yy = 0; yy < 8; yy++) {                            // copper dome
-      const w = Math.round(Math.sqrt(Math.max(0, 1 - ((7 - yy) / 7.2) ** 2)) * 7);
-      px(g, 13 - w, 6 + yy, w * 2, 1, PAL.CU1);
-      px(g, 13 - w, 6 + yy, Math.max(1, w), 1, PAL.CU2);
+  // THE LAMPLIGHTER'S YARD: a low walled yard off a working street. A rack of
+  // trimmed lanterns, each burning at its own strength; a handcart loaded and
+  // pointing west at the coast road; the ladder the lamplighter goes up with.
+  bakeSprite('lampyard', 24, 20, (g) => {
+    px(g, 0, 12, 24, 1, PAL.P1);                                 // the yard floor
+    px(g, 0, 13, 24, 2, PAL.C1);                                 // the low wall, face
+    px(g, 0, 12, 24, 1, PAL.C2);                                 // its coping
+    for (let i = 0; i < 6; i++) px(g, 2 + i * 4, 13, 1, 2, PAL.C3);   // wall courses
+    px(g, 2, 4, 1, 9, PAL.WD1); px(g, 15, 4, 1, 9, PAL.WD1);     // the lantern rack uprights
+    px(g, 2, 4, 14, 1, PAL.WD2); px(g, 2, 8, 14, 1, PAL.WD2);    // its two rails
+    // the trimmed lamps: five on the rack, no two burning alike, because no
+    // two pages were tended on the same day
+    const burn = [PAL.L1, PAL.L2, PAL.YL, PAL.L1, PAL.DW];
+    for (let i = 0; i < 5; i++) {
+      const lx = 3 + i * 3;
+      px(g, lx, 5, 2, 1, PAL.A3);                                // the bail
+      px(g, lx, 6, 2, 2, burn[i]);                               // the glass
+      px(g, lx, 9, 2, 1, PAL.A3);                                // the base, hung on the low rail
     }
-    px(g, 12, 6, 2, 8, PAL.TD);                                 // the open slit
-    px(g, 12, 3, 2, 4, PAL.A2); px(g, 13, 1, 2, 3, PAL.A1);     // the telescope barrel
+    px(g, 18, 2, 1, 11, PAL.WD2); px(g, 21, 2, 1, 11, PAL.WD2);  // the ladder
+    for (let i = 0; i < 5; i++) px(g, 18, 3 + i * 2, 4, 1, PAL.WD3);
+    px(g, 5, 15, 9, 3, PAL.WD2); px(g, 5, 15, 9, 1, PAL.WD3);    // the handcart, loaded
+    px(g, 6, 14, 7, 1, PAL.L2);                                  // lamps stacked in it, lit
+    px(g, 1, 16, 4, 1, PAL.WD1);                                 // the shaft, pointing west
+    px(g, 5, 18, 2, 2, PAL.A1); px(g, 12, 18, 2, 2, PAL.A1);     // its two wheels
+  });
+  // THE OBSERVATORY: a broad low drum on a grass rise, a gallery ring running
+  // right round it, a wide copper dome, and the telescope angled out of its
+  // open shutter the way a real one sits. Squat and wide on purpose.
+  bakeSprite('observatory', 26, 30, (g) => {
+    for (let i = 0; i < 4; i++) px(g, 1 + i * 2, 29 - i, 24 - i * 4, 1, i > 1 ? PAL.G3 : PAL.G2); // the rise, broad
+    px(g, 5, 18, 16, 9, PAL.C2);                                 // the drum, wide and low
+    px(g, 17, 18, 4, 9, PAL.C1);                                 // its shaded quarter
+    px(g, 3, 17, 20, 1, PAL.C1);                                 // the gallery ring, overhanging
+    px(g, 3, 16, 20, 1, PAL.C2);                                 // its rail
+    px(g, 11, 22, 4, 5, PAL.WD1); px(g, 12, 24, 1, 1, PAL.A1);   // the door and its handle
+    px(g, 7, 20, 2, 2, PAL.GL3); px(g, 16, 20, 2, 2, PAL.GL3);   // two lit windows
+    for (let yy = 0; yy < 8; yy++) {                             // the dome, a true hemisphere
+      const w = Math.round(Math.sqrt(Math.max(0, 1 - ((7 - yy) / 8) ** 2)) * 9);   /* widest at the base, as a dome is */
+      px(g, 13 - w, 8 + yy, w * 2, 1, PAL.CU1);
+      px(g, 13 - w, 8 + yy, Math.max(1, w - 2), 1, PAL.CU2);     // the lit half
+    }
+    px(g, 14, 9, 3, 6, PAL.TD);                                  // the shutter, open to one side
+    px(g, 15, 11, 2, 2, PAL.A2); px(g, 17, 9, 2, 2, PAL.A2);     // the barrel, angled out of it
+    px(g, 19, 7, 2, 2, PAL.A1);                                  // its bright end, pointed at the sky
   });
   // THE ENGRAVED SLOOP: she sails by an older hand - pen-and-ink on cream,
   // hatched like a copperplate, no pixel outline pass at all
@@ -5798,30 +5835,8 @@ function bakeTownSprites() {
     for (let x = 1; x < 29; x++) px(g, x, 27 + ((x >> 1) & 1), 1, 1, x % 5 ? INK : CRM2); // engraved sea
     px(g, 2, 29, 26, 1, INK);
   }, true);
-  // THE HARBOUR STEAMER: rubber-hose cartoon - round black hull, white trim,
-  // pie-cut eyes on the bow. The second bake is the wink.
-  const steamerFace = (g, wink) => {
-    px(g, 2, 11, 22, 7, PAL.OUT);                               // hull
-    px(g, 3, 10, 20, 1, PAL.OUT); px(g, 4, 18, 18, 1, PAL.OUT); // rounded ends
-    px(g, 3, 11, 20, 1, PAL.WH);                                // gunwale stripe
-    px(g, 16, 3, 4, 8, PAL.OUT); px(g, 15, 2, 4, 2, PAL.OUT);   // funnel with a droop
-    px(g, 16, 5, 4, 1, PAL.WH);
-    px(g, 7, 6, 8, 5, PAL.OUT); px(g, 8, 7, 6, 3, PAL.WH);      // wheelhouse
-    // the eyes, on the bow where a face belongs
-    px(g, 5, 12, 4, 4, PAL.WH); px(g, 11, 12, 4, 4, PAL.WH);
-    if (wink) {
-      px(g, 5, 14, 4, 1, PAL.OUT);                              // right eye squeezed shut
-      px(g, 11, 14, 2, 2, PAL.OUT);                             // pie-cut pupil
-    } else {
-      px(g, 5, 14, 2, 2, PAL.OUT); px(g, 11, 14, 2, 2, PAL.OUT); // pie-cut pupils
-    }
-    px(g, 6, 17, 1, 1, PAL.WH); px(g, 7, 18, 3, 1, PAL.WH); px(g, 10, 17, 1, 1, PAL.WH); // the grin
-    px(g, 1, 19, 5, 1, PAL.W4); px(g, 19, 19, 6, 1, PAL.W4);    // foam at the waterline
-  };
-  bakeSprite('steamer', 26, 20, (g) => steamerFace(g, false));
-  bakeSprite('steamer_wink', 26, 20, (g) => steamerFace(g, true));
   for (const nm of ['postoffice', 'recordshall', 'newsstand', 'doorboard', 'doorboard_pin', 'vacantlot',
-                    'funnies', 'hobbyshop', 'botaniststall', 'fingerpost', 'observatory']) {
+                    'funnies', 'hobbyshop', 'botaniststall', 'fingerpost', 'observatory', 'lampyard']) {
     SPR[nm + '_wi'] = snowify(SPR[nm]);
     if (SPR[nm].anchorY !== undefined) SPR[nm + '_wi'].anchorY = SPR[nm].anchorY;
   }
@@ -5922,10 +5937,11 @@ function placeTownLife() {
     }
     return null;
   };
-  const place1 = (kind, wantPlaza, dMin, dMax, minOpen, sep) => {
+  const place1 = (kind, wantPlaza, dMin, dMax, minOpen, sep, extra) => {
     for (const c of cands) {
       if (c.d < dMin || c.d > dMax) continue;
       if (wantPlaza && c.t2 !== T.PLAZA) continue;
+      if (extra && !extra(c)) continue;
       if (!paved(c) || !clear(c, sep === undefined ? 4 : sep)) continue;
       if (c.op < (minOpen === undefined ? 21 : minOpen)) continue;
       const k = c.tx + ',' + c.ty;
@@ -5990,7 +6006,7 @@ function placeTownLife() {
   }
   TOWN.vacantPlaced = placedVacant;
 
-  /* ---- THE PORTAL NETWORK: five stations, six berths (r15) ---------------- */
+  /* ---- THE PORTAL NETWORK: six crossings out of town (r15, r19) ---------- */
   // Everything below stands in the same door grammar as the civic landmarks:
   // trial-fitted against the walk BFS where it claims ground, spot + prompt +
   // ENTER like every other threshold in town.
@@ -6014,6 +6030,27 @@ function placeTownLife() {
   const bt = place1('botanist', true, RIM, coreR + 6, 12, 3) || place1('botanist', true, RIM, 14) ||
              place1('botanist', false, RIM, 22) || place1('botanist', false, RIM, 34, 16);
   if (bt) { portalSpot('botanist', bt.tx + 0.5, bt.ty + 1.35); portalsPlaced++; }
+  // (g) THE LAMPLIGHTER'S YARD - out on a working street, off the square,
+  // where a yard of open flame belongs and not in the middle of the market.
+  // (2026-09-07, r19) A yard is a LOW thing: twenty pixels tall against six-
+  // storey blocks. The first placement put it on an open enough street and a
+  // tower still stood between it and the town's default heading, so the yard
+  // was only ever seen by turning the town. A low crossing has to keep its
+  // own frontage clear, so the site test now asks for nothing built on the
+  // three-by-three in front of it, which is the quarter the default view
+  // looks over.
+  const yardFrontClear = (c) => {
+    for (let dy = 0; dy <= 2; dy++) for (let dx = 0; dx <= 2; dx++) {
+      if (!dx && !dy) continue;
+      if (tileAt(c.tx + dx, c.ty + dy) === T.LOT) return false;
+    }
+    return true;
+  };
+  const ly = place1('lampyard', false, 14, 40, 17, undefined, yardFrontClear) ||
+             place1('lampyard', false, 10, 52, 14, undefined, yardFrontClear) ||
+             place1('lampyard', false, 8, 62, 12, 3, yardFrontClear) ||
+             place1('lampyard', false, 6, 70, 10, 3);
+  if (ly) { portalSpot('lampyard', ly.tx + 0.5, ly.ty + 1.35); portalsPlaced++; }
   // the custom sites check reachability against the same BFS the doors use
   const seen0 = walkBFS().seen;
   const reachable = (tx, ty) => !!seen0[ty * Wt + tx];
@@ -6023,8 +6060,12 @@ function placeTownLife() {
     }
     return null;
   };
-  // (b) THE HARBOUR - the longest clear run of reachable waterfront, and two
-  // vessels moored off it: the engraved sloop and the rubber-hose steamer
+  // (b) THE HARBOUR - the longest clear run of reachable waterfront, and the
+  // one vessel moored off it: the engraved sloop. (2026-09-07: there were two
+  // berths, and the second held a rubber-hose steamer bound for a world
+  // since retired from the network. The steamer is gone - hull, funnel,
+  // wink and berth - and the sloop, which used to lie off-centre to leave her
+  // room, now lies where a single vessel lies: at the middle of the quay.)
   const front = [];
   for (const c of cands) {
     if (c.t2 !== T.BANK || !reachable(c.tx, c.ty)) continue;
@@ -6051,23 +6092,16 @@ function placeTownLife() {
       }
     }
   }
-  let moor1 = null, moor2 = null;
-  if (harbour && harbour.len >= 2) {
-    const seg = harbour.seg, mid = seg.length >> 1;
-    const gap = Math.min(2, Math.floor((seg.length - 1) / 2));
-    moor1 = seg[Math.max(0, mid - gap)];
-    moor2 = seg[Math.min(seg.length - 1, mid + gap)];
-    if (moor1 === moor2) { moor1 = seg[0]; moor2 = seg[seg.length - 1]; }
+  let moor1 = null;
+  if (harbour && harbour.len >= 1) {
+    const seg = harbour.seg;
+    moor1 = seg[seg.length >> 1];
   }
-  if (moor1 && moor2 && moor1 !== moor2) {
+  if (moor1) {
     propList.push({ kind: 'vessel', name: 'sloop', tx: moor1.sea[0], ty: moor1.sea[1] });
     portalSpot('sloop', moor1.tx + 0.5, moor1.ty + 0.5); portalsPlaced++;
-    const stm = { kind: 'vessel', name: 'steamer', tx: moor2.sea[0], ty: moor2.sea[1] };
-    propList.push(stm); steamerProp = stm;
-    portalSpot('steamer', moor2.tx + 0.5, moor2.ty + 0.5); portalsPlaced++;
   }
-  const farFromMoor = (tx, ty) => (!moor1 || Math.hypot(tx - moor1.tx, ty - moor1.ty) > 8) &&
-                                  (!moor2 || Math.hypot(tx - moor2.tx, ty - moor2.ty) > 8);
+  const farFromMoor = (tx, ty) => (!moor1 || Math.hypot(tx - moor1.tx, ty - moor1.ty) > 8);
   // (d) THE TRAIL GATE - the farthest reachable ground where the land runs
   // out. (2026-09-05, r15, owner screenshot: the post stood mute at night in
   // the rain.) Made robust two ways: the spot registers FIRST and the post
@@ -6434,13 +6468,15 @@ function projectTown() {
         : () => openRecordsHall();
       townClickables.push({ st: pr.st, act });
     } else if (pr.kind === 'vessel') {
-      townClickables.push({ st: pr.st, act: pr.name === 'sloop' ? () => portalGo('cartastrapiana') : () => portalGo('bythedeep') });
+      townClickables.push({ st: pr.st, act: () => portalGo('cartastrapiana') });
     } else if (pr.kind === 'observatory') {
       townClickables.push({ st: pr.st, act: () => portalTelescope() });
     } else if (pr.kind === 'trailgate') {
       townClickables.push({ st: pr.st, act: () => portalGo('longway') });
     } else if (pr.kind === 'botanist') {
       townClickables.push({ st: pr.st, act: () => portalGo('herbarium') });
+    } else if (pr.kind === 'lampyard') {
+      townClickables.push({ st: pr.st, act: () => portalGo('goldenshore') });
     } else if (pr.kind === 'newsstand') {
       townClickables.push({ st: pr.st, act: () => openNewspaper() });
     } else if (pr.kind === 'plaque') {
@@ -6633,8 +6669,8 @@ function updateSpotProximity() {
   // the standing invitation yields the moment the courier is off the landing
   // tile (a walk, a click-walk or a teleport all count as walking elsewhere)
   if (qsInvite && (Math.floor(player.x) !== spawnTile[0] || Math.floor(player.y) !== spawnTile[1])) retireQsInvite();
-  let bestS = null, bd = 1.05;
-  if (panel.hidden && cam.z >= 3 && !activeDoor && !photoMode && !qsInvite) {
+  let bestS = null, bd = 1.6;   // owner stood a tile and a half out and heard nothing
+  if (panel.hidden && cam.z >= 2 && !activeDoor && !photoMode && !qsInvite) {
     for (const s of spots) {
       const dd = Math.hypot(player.x - s.ix, player.y - s.iy);
       if (dd < bd) { bd = dd; bestS = s; }
@@ -6642,6 +6678,13 @@ function updateSpotProximity() {
   }
   // the telescope's hint follows the sky: by day the dome sleeps, and once the
   // stars are out (always, under the parked reduced-motion clock) it answers
+  // the yard's line changes at golden hour, when the cart actually goes out;
+  // the crossing itself is open at any hour, unlike the sleeping dome
+  if (bestS && bestS.kind === 'lampyard') {
+    const P = PORTAL_BY_KIND.lampyard;
+    const want = (gf > 0.4) ? P.hintGolden : P.hint;
+    if (bestS.row !== want) { bestS.row = want; if (bestS === activeSpot) updatePromptRows(); }
+  }
   if (bestS && bestS.kind === 'observatory') {
     const P = PORTAL_BY_KIND.observatory;
     const want = (nf > 0.05 || REDUCED) ? P.hintNight : P.hint;
@@ -6651,13 +6694,6 @@ function updateSpotProximity() {
     activeSpot = bestS;
     if (bestS) dpTitleEl.textContent = '· ' + bestS.title;
     updatePromptRows();
-  }
-  // the steamer winks as the courier comes near - a rubber-hose beat, skipped
-  // for reduced motion and costing one distance check when nobody is close
-  if (steamerProp && steamerProp.st && !REDUCED) {
-    const nd = Math.hypot(player.x - steamerProp.tx, player.y - steamerProp.ty);
-    const want = (nd < 5 && (animT % 2.4) < 0.4) ? 'steamer_wink' : 'steamer';
-    if (steamerProp.st.name !== want) steamerProp.st.name = want;
   }
   // a step further than the door prompt's 0.9: the hands keep a beat of their own
   // now, so speaking distance has to hold whether they are at the post or a pace
