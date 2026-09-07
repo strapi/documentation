@@ -1,8 +1,10 @@
 # Design Lab · ideas and open feedback
 
-Every piece of feedback the owner has given that has not been acted on yet. Tick a box when the
-work is done AND pushed. This file is the single answer to "what is left to do": when he asks,
-read this, not a memory and not a transcript.
+Every piece of feedback the owner has given that has not been acted on yet. This file is the single
+answer to "what is left to do": when he asks, read this, not a memory and not a transcript.
+
+Tick a box when the work is done AND pushed, then move the line down to **Archives** at the
+foot of this file, keeping the section it came from. The working list above stays short that way.
 
 Last updated 2026-09-07.
 
@@ -29,8 +31,6 @@ The newest world and the least worn in, so most of this is world craft rather th
 
 Settled otherwise, and not to be re-tuned.
 
-- [x] Move the way to The Golden Shore to the EDGE OF THE MAP, not far from the boat that leads to Carta Strapiana. (2026-09-07: the lamplighter's yard now places after the harbour is measured and is constrained by proximity to the mooring, landing 9.4 tiles from the sloop.)
-
 ## The Herbarium
 
 Both of these are an explicit new request and therefore override the standing "never touch the
@@ -43,7 +43,6 @@ Herbarium" ruling. Nothing else in that world moves on the same pass.
 
 - [ ] Build the two deeper rungs, VI THE THRESHOLD and VII THE FOOTPATH, with per-island drawn landscapes. Plates validated; rung VII must be an engraved perspective scene, never a photograph. The wave script is amended and has never been launched.
 - [ ] Under `prefers-reduced-motion` the ship does not close distance, so the sail-in path to the keeper coast never opens. Pre-existing.
-- [x] `qa/probe-s4-prefix.js` fails on `islands === 290` when the build has 288. Stale probe. (2026-09-07: the two release-notes pages are struck at source, so the survey holds 288; constant fixed with the reason beside it, PREFIX BOOT passes.)
 
 ## The Four-Color
 
@@ -56,7 +55,6 @@ Herbarium" ruling. Nothing else in that world moves on the same pass.
 ## Across the worlds
 
 - [ ] The space bar crosses on a focused YES in Pixel Docs City, The Herbarium, FIRST LIGHT and The Four-Color. The confirm law names only Y, N, Enter and Escape.
-- [x] Audit text clipping across every world. (2026-09-07: swept all seven live, revealing hidden UI and measuring real overflow. Five are clean; two are not, below.)
 - [ ] FIRST LIGHT clips **all three lines of its mission log**, in a 412px box: by 58px, 252px and 936px. The worst line is cut to about a third of itself.
 - [ ] The Four-Color clips 2 of the 7 visible `.pocket-tag` labels by 17px each, for example "GETTING STARTED · 19 ISSUES" in 141px. Sixteen exist in the DOM, so more will clip as other pockets come into view.
 See the three itemised idea lists at the end of this file.
@@ -65,7 +63,6 @@ See the three itemised idea lists at the end of this file.
 
 - [ ] DECIDE: the Herbarium's night view differs by five pixels inside a decorative moon ring, in roughly half of runs, against a zero-tolerance assertion that protects a real law (the appendix must be strictly additive). Either give that one assertion a documented, tight tolerance, or leave the battery permanently one short.
 - [ ] The backup labels in the Golden Shore are misleading: the `.r19.bak` files are a mid-round snapshot that already contains the new crossings, while the true pre-round restore point is `.gs.bak`.
-
 
 # The three ten-idea lists
 
@@ -114,3 +111,19 @@ Note: these predate the envelope idea above, and the two should be designed toge
 - [ ] **The seed exchange.** Leaving through a portal hands you a seed packet named for the destination; returning later plants a souvenir specimen.
 - [ ] **The sound of the garden.** A hush bed, gentle by default and really toggleable: paper rustle on page turns, distant rain on the greenhouse glass.
 - [ ] **The card catalog.** Search gains the body of an old card-catalog drawer: typed index cards with real metadata, pulled out and read.
+
+# Archives
+
+Done and pushed. Kept for the record, and so a rollback knows what it is undoing.
+
+## Pixel Docs City
+
+- [x] Move the way to The Golden Shore to the EDGE OF THE MAP, not far from the boat that leads to Carta Strapiana. (2026-09-07: the lamplighter's yard now places after the harbour is measured and is constrained by proximity to the mooring, landing 9.4 tiles from the sloop.)
+
+## Carta Strapiana
+
+- [x] `qa/probe-s4-prefix.js` fails on `islands === 290` when the build has 288. Stale probe. (2026-09-07: the two release-notes pages are struck at source, so the survey holds 288; constant fixed with the reason beside it, PREFIX BOOT passes.)
+
+## Across the worlds
+
+- [x] Audit text clipping across every world. (2026-09-07: swept all seven live, revealing hidden UI and measuring real overflow. Five are clean; two are not, below.)
