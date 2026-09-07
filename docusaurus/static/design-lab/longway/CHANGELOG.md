@@ -300,14 +300,21 @@ Measured in play: music 0.5, effects 1, master unchanged at 0.9.
 
 ## 2026-09-07 · the whistle, her bark, and a second clap
 
-**The whistle was a penny whistle.** Two triangle notes at 1180 and 1470 Hz,
-played politely. Nobody calls a dog like that. A two-finger whistle is almost a
-pure tone, higher, up where a dog hears best; it leaks air at the onset; and the
-recall has a shape everyone knows, a short chirp up and then a long one that
-swoops up and falls away. Rebuilt as exactly that: sine with a whisper of second
-harmonic for the carry, a bandpassed breath at each onset, 1460 to 2440 for the
-chirp and 1680 to 2660 to 1880 for the call, with a slow vibrato on the long
-note because a mouth is never quite steady. Measured peak: 2391 Hz.
+**The whistle, at the second attempt.** It began as a penny whistle, two polite
+triangle notes at 1180 and 1470 Hz. Nobody calls a dog like that, so I rebuilt it
+as a near-pure tone with a breath at each onset, a short chirp up and then a long
+one that climbed and fell away. The owner heard it once: *"on dirait qu'on siffle
+une jolie fille."* He was right, and the mistake is worth writing down, because
+that curve, rise-peak-fall, IS the wolf whistle. The difference between admiring
+somebody and calling a dog is the whole of it.
+
+A recall is STACCATO: two short blasts, flat in pitch, hard on and hard off, high
+and piercing, with only the small upward flick at each onset that a real mouth
+cannot help. No glide, because a glide is a tune and a recall is a command. Now
+2180 to 2420 on the first blast and 2260 to 2500 on the second, each a tenth of a
+second, 80 ms apart. Measured: the pitch ranges 2273 to 2484 Hz across the whole
+call, against 1460 to 2660 to 1880 before, and the time domain shows two clean
+bursts, on at 11 ms off at 177, on again at 194 off at 369.
 
 **Her bark is a real dog again, at the third attempt.** The owner: *"on ne
 l'entend presque pas, et ça ne ressemble pas à un aboiement."* Both were true:

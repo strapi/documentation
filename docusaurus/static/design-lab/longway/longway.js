@@ -6958,12 +6958,15 @@ function audEv(kind, wx, vol) {
        the gust's lawful peak — the wind law caps the walker exactly as it
        caps her dog. Counted and logged like every voice. */
     case 'whistle': {
-      /* (2026-09-07, owner) A WHISTLE FOR A DOG, not a tin one. The old call was
-         two triangle notes at 1180 and 1470 Hz, which reads as a penny whistle
-         played politely. A two-finger whistle is almost a pure tone, higher, up
-         where a dog hears best; it starts on a breath of air; and the recall has
-         a shape everybody knows - a short chirp up, then a long one that swoops
-         up and falls away. That is what this makes now. */
+      /* (2026-09-07, owner, twice) A WHISTLE FOR A DOG. First it was a penny
+         whistle, two polite triangle notes at 1180 and 1470 Hz. Then I gave it a
+         short rise and a long swoop that climbs and falls away, and he heard it
+         at once: "on dirait qu'on siffle une jolie fille". He was right, that
+         curve IS the wolf whistle, and the difference is the whole point. A dog
+         is called in STACCATO: two short blasts, flat in pitch, hard on and hard
+         off, high and piercing, with only the little upward flick at each onset
+         that a real mouth cannot help. No glide, because a glide is a tune and a
+         recall is a command. */
       const cW = AUD.ctx, tW = cW.currentTime;
       const pkW = Math.max(0.0002, GUST_PEAK * 1.02 * v);
       /* the air before the tone: every real whistle leaks some */
@@ -7007,10 +7010,13 @@ function audEv(kind, wx, vol) {
         o.start(tW + at); o.stop(tW + at + dur + 0.03);
         h.start(tW + at); h.stop(tW + at + dur + 0.03);
       };
-      breath(0, 0.10, 0.34);
-      tone(0, 0.155, [[0, 1460], [0.55, 2380], [1, 2440]], 0);          /* wheet… */
-      breath(0.215, 0.13, 0.28);
-      tone(0.215, 0.40, [[0, 1680], [0.3, 2660], [1, 1880]], 26);       /* …wheeeuw */
+      /* two blasts, flat and short, the second a hair brighter as a mouth
+         tightens on the repeat. The flick at each onset lasts 18ms and covers
+         under a tone: enough to sound human, far too little to sing. */
+      breath(0, 0.055, 0.40);
+      tone(0, 0.105, [[0, 2180], [0.17, 2420], [1, 2400]], 0);
+      breath(0.185, 0.055, 0.36);
+      tone(0.185, 0.115, [[0, 2260], [0.15, 2500], [1, 2480]], 0);
       break;
     }
     case 'dogyip':
