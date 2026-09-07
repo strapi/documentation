@@ -1400,6 +1400,11 @@ function issueBook(slug){
   /* the back of the book: an interstitial crossing ad, the bulletins,
      the letters column, the also-on-stands page, and the full-page
      back-cover ad — two different portals per issue, never mid-story */
+  /* 2026-09-07: THE GOLDEN SHORE took a page on the stand like everybody
+     else, and a retired title came off it the same day - the picture closed and
+     the house does not advertise a title that is out of print. Six titles on
+     the stand, so the rotation counts to six, and the two ads in a given
+     issue are still guaranteed to be different titles. */
   const adA=hash32('sib'+slug)%6;
   const adB=(adA+1+hash32('sib2'+slug)%5)%6;
   pages.push({kind:'sibad',slug,ad:adA});

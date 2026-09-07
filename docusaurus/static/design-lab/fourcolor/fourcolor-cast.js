@@ -9999,11 +9999,11 @@ const SIBLINGS=[
     copy:'Sail uncharted documentation seas with a crew that knows every current! First-class cabins, engraved charts, and a porthole view of every page along the route!',
     coupon:'RESERVE MY BERTH — DEPARTURES DAILY FROM THIS VERY PAGE',
     foot:'STRAPIANA LINES TRAVEL AGENCY · PIER 4' },
-  { dir:'../bythedeep/', sig:'matinee',
-    cry:'SATURDAY MATINEE — NOW SHOWING', title:'BY THE DEEP', bang:'GASP!',
-    copy:'The picture the whole town is talking about! DESCEND fathom by fathom into the documentation abyss — what waits at the bottom will AMAZE you! In glorious four-color!',
-    coupon:'ADMIT ONE — CLIP THIS TICKET AND COME ON DOWN',
-    foot:'THE DEEP PICTURE PALACE · TWO SHOWS SATURDAY' },
+  { dir:'../goldenshore/', sig:'shore',
+    cry:'ONE WEEK IN THE LAST HOUR OF LIGHT', title:'THE GOLDEN SHORE', bang:'AAAH!',
+    copy:'The keeper coast where the sun NEVER quite goes down! Walk the whole documentation as one lived-in town at golden hour \u2014 290 lanterns burning along the terraces, one for every page, each one brighter the sooner somebody last tended it. Keepers on their rounds, goats on the walls, and the boat in by dinner!',
+    coupon:'BOOK MY WEEK ON THE KEEPER COAST \u2014 SEND BROCHURE AND TIDE TABLE',
+    foot:'GOLDEN SHORE TOURIST BOARD \u00b7 THE LAMP ROOM, CLIFF ROAD' },
   { dir:'../longway/', sig:'trail',
     cry:'JOIN THE HIKING CLUB — TAKE', title:'THE LONG WAY THROUGH', bang:'ONWARD!',
     copy:'Lace your boots for the grandest walking tour in documentation! Marked trails, mountain views, a campfire tale at every waypoint — no page left unvisited!',
@@ -10116,25 +10116,57 @@ function adArt(x, sig, W, H, seed){
       x.closePath(); x.fillStyle=i%2?INKC:'#c22a1c'; x.fill(); }
     x.restore();
   }
-  else if(sig==='matinee'){
-    fillScreened(x,P2(p=>p.rect(0,0,W,H)),[['C',1],['M',1]],drift,2);
-    const beam=P2(p=>{ p.moveTo(W*0.5,0); p.lineTo(W*0.2,H); p.lineTo(W*0.8,H); p.closePath(); });
-    fillScreened(x,beam,[['C',.5]],drift,2);
+  else if(sig==='shore'){
+    /* golden hour on the keeper coast: a low honey sun, its road on the water,
+       the lit lamp room over a terraced headland, and the gulls still working */
+    fillScreened(x,P2(p=>p.rect(0,0,W,H*0.58)),[['Y',1],['M',.5]],drift,2);
+    fillScreened(x,P2(p=>p.rect(0,0,W,H*0.24)),[['M',.5],['C',.25]],drift,2);
+    const sun=P2(p=>p.arc(W*0.30,H*0.44,H*0.155,0,7));
+    fillScreened(x,sun,[['Y',1],['M',.25]],drift,2);
+    x.strokeStyle=INKC; x.lineWidth=2.6; x.stroke(sun);
+    const sea=P2(p=>{ p.moveTo(0,H*0.58); p.lineTo(W,H*0.58); p.lineTo(W,H); p.lineTo(0,H); p.closePath(); });
+    fillScreened(x,sea,[['C',.5],['Y',.5]],drift,2);
+    /* the sun road: bands of gold laid on the water, widening as they come in */
+    for(let i=0;i<9;i++){
+      const yy=H*(0.60+i*0.043), hw=W*(0.035+i*0.019);
+      const band=P2(p=>p.rect(W*0.30-hw,yy,hw*2,H*0.016+i*0.5));
+      fillScreened(x,band,[['Y',1]],drift,2);
+    }
+    /* the headland to the right: terraces, houses, and the lamp room on top */
     x.fillStyle=INKC;
-    x.beginPath(); x.moveTo(W*0.12,H*0.8);
-    for(let i=0;i<4;i++){ x.quadraticCurveTo(W*(0.2+i*0.2),H*(i%2?0.62:0.9),W*(0.3+i*0.18),H*0.78); }
-    x.lineTo(W*0.86,H*0.9); x.lineTo(W*0.1,H*0.92); x.closePath(); x.fill();
-    x.beginPath(); x.moveTo(W*0.72,H*0.78);
-    x.quadraticCurveTo(W*0.86,H*0.6,W*0.78,H*0.4);
-    x.quadraticCurveTo(W*0.74,H*0.3,W*0.82,H*0.26);
-    x.quadraticCurveTo(W*0.9,H*0.36,W*0.88,H*0.52);
-    x.quadraticCurveTo(W*0.86,H*0.72,W*0.8,H*0.84); x.closePath(); x.fill();
-    x.fillStyle='#f2e7c9'; x.beginPath(); x.arc(W*0.81,H*0.32,2.6,0,7); x.fill();
-    x.strokeStyle='rgba(242,231,201,.8)'; x.lineWidth=1.6;
-    for(let i=0;i<8;i++){ x.beginPath(); x.arc(W*(0.3+rng()*0.4),H*rng()*0.5,2+rng()*4,0,7); x.stroke(); }
-    x.fillStyle='#e9c81f';
-    for(let i=0;i<Math.floor(W/18);i++){ x.beginPath(); x.arc(9+i*18,8,3,0,7); x.fill();
-      x.beginPath(); x.arc(9+i*18,H-8,3,0,7); x.fill(); }
+    x.beginPath(); x.moveTo(W,H*0.62); x.lineTo(W,H*0.20);
+    x.quadraticCurveTo(W*0.86,H*0.24,W*0.78,H*0.40);
+    x.quadraticCurveTo(W*0.72,H*0.52,W*0.60,H*0.62); x.closePath(); x.fill();
+    x.strokeStyle=INKC; x.lineWidth=1.8;
+    for(let i=0;i<4;i++){ x.beginPath();
+      x.moveTo(W*(0.63+i*0.02),H*(0.60-i*0.06));
+      x.quadraticCurveTo(W*(0.80+i*0.02),H*(0.52-i*0.07),W,H*(0.46-i*0.075)); x.stroke(); }
+    /* the lamp room, lit, with its little house-shaped neighbours */
+    x.fillStyle='#e9c81f'; x.strokeStyle=INKC; x.lineWidth=2;
+    x.fillRect(W*0.885,H*0.155,14,16); x.strokeRect(W*0.885,H*0.155,14,16);
+    x.beginPath(); x.moveTo(W*0.881,H*0.155); x.lineTo(W*0.892+7,H*0.155);
+    x.lineTo(W*0.892,H*0.115); x.closePath(); x.fill(); x.stroke();
+    for(let i=0;i<11;i++){
+      const hx=W*(0.64+rng()*0.33), hy=H*(0.30+rng()*0.28);
+      x.fillStyle='#e9c81f'; x.fillRect(hx,hy,4.5,5.5);
+    }
+    /* the fishing boat coming in on the road of light, and the gulls over her */
+    x.save(); x.translate(W*0.34,H*0.74); x.rotate(-0.04);
+    x.fillStyle=INKC;
+    x.beginPath(); x.moveTo(-30,0); x.lineTo(30,0); x.lineTo(20,11); x.lineTo(-24,11); x.closePath(); x.fill();
+    x.strokeStyle=INKC; x.lineWidth=2.4;
+    x.beginPath(); x.moveTo(-2,0); x.lineTo(-2,-26); x.stroke();
+    x.fillStyle='#fdf8ea'; x.strokeStyle=INKC; x.lineWidth=1.8;
+    x.beginPath(); x.moveTo(0,-25); x.quadraticCurveTo(14,-14,2,-3); x.closePath(); x.fill(); x.stroke();
+    x.restore();
+    x.strokeStyle=INKC; x.lineWidth=2;
+    for(let i=0;i<5;i++){
+      const gx=W*(0.14+rng()*0.5), gy=H*(0.10+rng()*0.24), gw=7+rng()*5;
+      x.beginPath();
+      x.moveTo(gx-gw,gy); x.quadraticCurveTo(gx-gw*0.4,gy-gw*0.6,gx,gy);
+      x.quadraticCurveTo(gx+gw*0.4,gy-gw*0.6,gx+gw,gy); x.stroke();
+    }
+    x.fillStyle=INKC; x.fillRect(0,H*0.58,W,2.4);
   }
   else if(sig==='trail'){
     fillScreened(x,P2(p=>p.rect(0,0,W,H*0.7)),[['C',.25],['Y',.25]],drift,2);
