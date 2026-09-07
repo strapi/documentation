@@ -160,13 +160,24 @@ a.res mark{background:rgba(255,176,0,.3);color:var(--white)}
    full line height no matter how many arrive; history scrolls, never squeezes */
 #log{
   position:fixed;z-index:24;left:10px;bottom:12px;width:min(430px,44vw);
-  max-height:184px;overflow-y:auto;overflow-x:hidden;display:block;
+  /* 138, not 184: wrapped entries make the panel reach its cap immediately,
+     and at 184 its top corner ran into #prompt-sub, the wide sub-prompt
+     centred along the same bottom edge. 138 keeps it clear of that box
+     and the history scrolls, which is what this panel already does. */
+  max-height:138px;overflow-y:auto;overflow-x:hidden;display:block;
   scrollbar-width:thin;background:rgba(6,8,9,.85);border:var(--rule-soft);
   padding:4px 8px;
   font-family:var(--f-mono);font-size:.72rem;line-height:1.8;color:var(--amber-dim);
   transition:opacity .5s;
 }
-#log .ll{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+/* (2026-09-07) The entries used to be held to one line and cut with an
+   ellipsis. It cost more than it looked: the lock line lost FIRST SURVEY
+   TARGET - BEGIN HERE, which is how this world keeps QUICK START FIRST,
+   and the photometer line lost the whole explanation of what the
+   instrument reads, which was its only reason to exist. They wrap now.
+   The panel's own law is untouched: line height never squeezes, and the
+   history scrolls inside its 184px. */
+#log .ll{white-space:normal;overflow-wrap:anywhere;flex-shrink:0}
 #log .ll.old{opacity:.55}
 #log .ll b{color:var(--amber);font-weight:500}
 #log .ll.ev{color:var(--white-dim)}

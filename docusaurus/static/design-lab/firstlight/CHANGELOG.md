@@ -272,3 +272,21 @@ were the provenance sentences in the source comments, which named it. Those
 sentences now say what changed without naming it, and the full provenance stays
 in this changelog. Carta Strapiana keeps its leadline call, `"By the deep, N!"`,
 which is the sounding cry the sea was named after and not a reference to it.
+
+## 2026-09-07 · the mission log stops eating its own sentences
+
+Every entry was held to one line and cut with an ellipsis. That looked tidy and
+cost real meaning: the lock line lost `FIRST SURVEY TARGET - BEGIN HERE`, which
+is how this world keeps QUICK START FIRST, and the photometer line lost the
+whole explanation of what the instrument reads, which was its only reason to be
+written. Entries wrap now.
+
+The panel's cap came down from 184px to 138px in the same pass, because wrapped
+entries reach the cap at once and at 184 the panel's top corner ran into
+`#prompt-sub`, the wide sub-prompt centred on the same bottom edge. At 138 it
+clears that box, the newest entry is visible, and the history scrolls, which is
+what this panel was always meant to do.
+
+Measured: no line clipped in either direction, zero overlap with the sub-prompt,
+newest entry in view. The world's protected battery (`qa/iv3-regress.js`) is
+ALL PASS, p95 unchanged.
