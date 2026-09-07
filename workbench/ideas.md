@@ -41,7 +41,6 @@ Herbarium" ruling. Nothing else in that world moves on the same pass.
 ## Carta Strapiana
 
 - [ ] Build the two deeper rungs, VI THE THRESHOLD and VII THE FOOTPATH, with per-island drawn landscapes. Plates validated; rung VII must be an engraved perspective scene, never a photograph. The wave script is amended and has never been launched.
-- [ ] Under `prefers-reduced-motion` the ship does not close distance, so the sail-in path to the keeper coast never opens. Pre-existing.
 
 ## The Four-Color
 
@@ -121,6 +120,7 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 
 ## Carta Strapiana
 
+- [x] Under reduced motion the ship closed no distance. (2026-09-07: the hull is frozen by design and travel goes by passage, but the knots kept climbing, so the log reported way she was not making. She reads zero now; a passage still closes 1.6 nm to 1.2 in three seconds.)
 - [x] `qa/probe-s4-prefix.js` fails on `islands === 290` when the build has 288. Stale probe. (2026-09-07: the two release-notes pages are struck at source, so the survey holds 288; constant fixed with the reason beside it, PREFIX BOOT passes.)
 
 ## Across the worlds
