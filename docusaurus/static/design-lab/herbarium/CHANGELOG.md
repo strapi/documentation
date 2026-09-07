@@ -310,3 +310,23 @@ are back to six on one sheet. Two traps for whoever touches this next: a
 re-render files the plate back into a sealed envelope, so a section that
 navigates must open it again; and the unfold takes 0.9s, so a hover measured too
 early reads the wrong geometry.
+
+### the opening, in three movements
+
+The owner asked for a real one rather than a fade. The flap lifts on its own
+fold and the wax breaks with it; the sheet is DRAWN OUT of the envelope's mouth,
+clipped from inside so it emerges rather than appearing over the top; and then
+it UNFOLDS flat, hinged at its head the way a folded letter opens, with a shadow
+lying across it that lifts as it comes level. The three overlap by a beat each,
+because a letter does not wait politely between them.
+
+Measured through the movement: the sheet sits clipped to nothing and folded at
+83 degrees for the first beat, is drawn out between 150 and 900ms, and unfolds
+from 83 degrees to flat between 1.05 and 2.3 seconds. Reduced motion gets the
+envelope and the plate with none of it.
+
+The animation properties are written longhand, because the shorthand's second
+time value was not honouring the delay and the whole thing collapsed into 700ms.
+And the battery's own opener now waits 2.6s rather than 1.4: a hover measured
+mid-unfold reads the wrong geometry, which is exactly the ten failures this
+world produced the first time the envelope went in.

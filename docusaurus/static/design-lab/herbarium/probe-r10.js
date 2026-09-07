@@ -45,9 +45,10 @@ async function openAppendix(page) {
       const e = document.getElementById('appdxEnv');
       if (e && !e.classList.contains('open')) e.click();
     });
-    /* the plate unfolds over 0.9s; hovering into it before it settles measures
-       the wrong geometry, which is what ten E failures turned out to be */
-    await page.waitForTimeout(1400);
+    /* the opening runs three movements over about 2.3s (flap, draw, unfold), and
+       hovering into the plate before it settles measures the wrong geometry,
+       which is what ten E failures turned out to be the first time round */
+    await page.waitForTimeout(2600);
   } catch (e) { /* no envelope on this build */ }
 }
 async function ready(page, keepSealed) {
