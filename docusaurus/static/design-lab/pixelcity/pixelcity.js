@@ -5913,10 +5913,11 @@ function placeTownLife() {
     return true;
   };
 
-  const place2x2 = (name, wantPlaza, dMin, dMax, minOpen, sep) => {
+  const place2x2 = (name, wantPlaza, dMin, dMax, minOpen, sep, extra) => {
     for (const c of cands) {
       if (c.d < dMin || c.d > dMax) continue;
       if (wantPlaza !== (c.t2 === T.PLAZA)) continue;
+      if (extra && !extra(c)) continue;
       if (!paved(c) || !clear(c, sep === undefined ? 7 : sep)) continue;
       if (c.op < (minOpen === undefined ? 23 : minOpen)) continue;
       if (openness(c.tx + 1, c.ty + 1) < (minOpen === undefined ? 23 : minOpen)) continue;
@@ -6017,8 +6018,19 @@ function placeTownLife() {
     return true;
   };
   let portalsPlaced = 0;
+  /* (2026-09-07, owner) A crossing met in the first ten paces is not an easter
+     egg. Two of them stood in sight of where the visitor lands: the botanist's
+     stall at 5.8 tiles from the spawn plaza and the funnies at 11.1, when the
+     other five sit between 33 and 77. Both now keep their distance from the
+     landing, and take a plainer site if that is the price. The old tiers stay
+     underneath, because a crossing that fails to place is a crossing lost. */
+  const offSpawn = (r) => (c) => Math.hypot(c.tx - spawnTile[0], c.ty - spawnTile[1]) >= r;
   // (a) FOUR-COLOR FUNNIES - a bookshop in the streets, sky around it
-  const fb = place2x2('funnies', false, 12, 26, 20, 9) || place2x2('funnies', true, 12, 30, 18, 8) ||
+  const fb = place2x2('funnies', false, 12, 26, 20, 9, offSpawn(26)) ||
+             place2x2('funnies', true, 12, 30, 18, 8, offSpawn(26)) ||
+             place2x2('funnies', false, 8, 40, 16, 7, offSpawn(22)) ||
+             place2x2('funnies', false, 6, 60, 14, 5, offSpawn(18)) ||
+             place2x2('funnies', false, 12, 26, 20, 9) || place2x2('funnies', true, 12, 30, 18, 8) ||
              place2x2('funnies', false, 8, 40, 16, 7) || place2x2('funnies', false, 6, 60, 14, 5);
   if (fb) { portalSpot('funnies', fb.tx + 1, fb.ty + 2.35); portalsPlaced++; }
   // (f) THE HOBBY SHOP - further out, on a quieter street. (2026-09-05, r15,
@@ -6027,7 +6039,13 @@ function placeTownLife() {
   place2x2('hobbyshop', false, 18, 34, 18, 9) || place2x2('hobbyshop', true, 14, 34, 16, 8) ||
     place2x2('hobbyshop', false, 8, 46, 15, 6) || place2x2('hobbyshop', false, 6, 60, 14, 5);
   // (e) THE BOTANIST STALL - at the market, with the other stalls on the square
-  const bt = place1('botanist', true, RIM, coreR + 6, 12, 3) || place1('botanist', true, RIM, 14) ||
+  /* the stall wanted the market square, which is where the visitor lands, so
+     it trades the market for distance: a plaza further out if there is one,
+     otherwise an ordinary street corner well away from the landing. */
+  const bt = place1('botanist', true, RIM, 999, 12, 3, offSpawn(24)) ||
+             place1('botanist', false, RIM, 999, 12, 3, offSpawn(24)) ||
+             place1('botanist', false, RIM, 999, 11, 3, offSpawn(18)) ||
+             place1('botanist', true, RIM, coreR + 6, 12, 3) || place1('botanist', true, RIM, 14) ||
              place1('botanist', false, RIM, 22) || place1('botanist', false, RIM, 34, 16);
   if (bt) { portalSpot('botanist', bt.tx + 0.5, bt.ty + 1.35); portalsPlaced++; }
   // (g) THE LAMPLIGHTER'S YARD - out on a working street, off the square,

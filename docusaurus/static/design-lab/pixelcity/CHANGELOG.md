@@ -346,3 +346,21 @@ cart. Case only, not one word rewritten. Titles stay in capitals, and the
 crossing beats are a different surface and were left alone. The golden-hour and
 after-dark variants were already sentence case, which is a fair sign of where
 the house style had been drifting.
+
+### and two crossings step away from the landing
+
+The owner again: the funnies and the botanist's flower stall stood too close to
+where a visitor lands. Measured, he was right and it was stark: the stall at 5.8
+tiles from the spawn plaza and the funnies at 11.1, when the other five
+crossings sit between 33 and 77. A crossing met in the first ten paces is not an
+easter egg.
+
+`place2x2` learned the extra predicate `place1` already had, and both sites now
+require distance from the landing tile. The stall wanted the market square,
+which is exactly where the visitor lands, so it trades the market for the
+distance: a plaza further out if there is one, otherwise an honest street corner
+well away. The old tiers stay underneath as a last resort, because a crossing
+that fails to place is a crossing lost.
+
+Now: botanist 23.6 tiles, funnies 28.6. All 60 portal spots still place, the
+spawn-room law holds, the quick-start invite still greets, zero console errors.
