@@ -2513,7 +2513,9 @@ function drawWorld(sim, worldDY, opts) {
     if (dist < 1.9) drawShoreLights(isle, x, yBase, wpx, s, dist, stage);
   }
 
-  /* crossing (a): the nameless city stands with the coasts, before the horizon line */
+  /* crossings (a) and (b): the nameless city and the lamplit coast stand with
+     the other coasts, before the horizon line */
+  if (eggs.ready) drawShoreEgg(sim, worldDY, !!(opts && opts.map));
   if (eggs.ready) drawCityEgg(sim, worldDY, !!(opts && opts.map));
 
   /* horizon: broken breathing line, irregular gaps (no periodic dash) */
@@ -3814,6 +3816,8 @@ function openPage(isle, how) {
   sound.reading(true);
   /* a name read is a soul brought home (S3): her sirens fall silent */
   sound.sirenResolve(isle);
+  /* and it counts towards the quiet opening, read or dark shore alike */
+  sound.sirenPageRead(isle);
 }
 
 function dropAnchor(isle) {
@@ -5040,25 +5044,42 @@ function buildChartGeo() {
   }
   /* ============ the rumors leave their marks (owner order) ============
      where a sailor would see them, unlabeled, just drawn: the strange isle
-     at the chart edge, a stain of darker water where the sea turns to ink,
+     at the chart edge, the lamplit coast beyond the last surveyed water,
      a tiny flotsam mark where the bottle rides. Every position is the
-     crossing's own; the isle alone is clamped to the sheet margin, for the
-     city stands past the last surveyed water. */
+     crossing's own; the isle and the coast are clamped to the sheet margin,
+     for both of them stand past the last water this keel has run. */
   if (eggs.ready) {
     if (eggs.city) {
       const c2 = P(eggs.city.x, eggs.city.y);
       geo.decor.push({ kind: 'eggisle',
         x: clamp(c2[0], 34, CHART_W - 34), y: clamp(c2[1], 34, CHART_H - 34) });
     }
-    if (eggs.ink) {
-      const c2 = P(eggs.ink.x, eggs.ink.y);
-      geo.decor.push({ kind: 'inkstain', x: c2[0], y: c2[1],
-        r: clamp((eggs.ink.rNm || 1.2) / world.nmPerUnit * chart.k, 22, 54) });
+    if (eggs.shore) {
+      /* she stands past the last surveyed water, so like the strange isle her
+         mark is pinned to the sheet's margin - and then slid along it until it
+         is clear of the beasts the engraver had already drawn there, because a
+         coast hatched under a whale is a coast nobody can read */
+      const c2 = P(eggs.shore.x, eggs.shore.y);
+      let lx = clamp(c2[0], 62, CHART_W - 62), ly = clamp(c2[1], 48, CHART_H - 48);
+      const clearOfBeasts = (yy) => geo.beasts.every(B2 =>
+        Math.hypot(B2.x - lx, B2.y - yy) > (B2.L || 60) * 0.7 + 46);
+      if (!clearOfBeasts(ly)) {
+        for (let step = 40; step <= CHART_H; step += 40) {
+          if (ly + step <= CHART_H - 48 && clearOfBeasts(ly + step)) { ly += step; break; }
+          if (ly - step >= 48 && clearOfBeasts(ly - step)) { ly -= step; break; }
+        }
+      }
+      geo.decor.push({ kind: 'lampcoast', x: lx, y: ly });
     }
     if (eggs.bottle) {
       const c2 = P(eggs.bottle.x, eggs.bottle.y);
       geo.decor.push({ kind: 'flotsam', x: c2[0], y: c2[1] });
     }
+    /* what the sheet actually carries, so a probe can read it off the chart
+       rather than take the code's word for it */
+    diag.chartDecor = geo.decor
+      .filter(d => d.kind === 'eggisle' || d.kind === 'lampcoast' || d.kind === 'flotsam')
+      .map(d => ({ kind: d.kind, x: Math.round(d.x), y: Math.round(d.y) }));
   }
   const farFrom = (x, y, list, d) => list.every(q => Math.hypot(q.x - x, q.y - y) > d);
   const avoid = geo.beasts.map(B => ({ x: B.x, y: B.y })).concat(geo.decor);
@@ -5924,22 +5945,49 @@ function drawChartDecor(g, D) {
     /* one thin unexplained spire, the only thing a glass ever made out */
     g.strokeStyle = INK + '0.66)'; g.lineWidth = 0.8;
     g.beginPath(); g.moveTo(0.5, -2.6); g.lineTo(0.5, -8.6); g.stroke();
-  } else if (D.kind === 'inkstain') {
-    /* a stain of darker water: three soft washes and a fleck of gall ink */
-    const r0 = rngFor('inkstain');
-    for (const [ox, oy, f] of [[0, 0, 1], [-D.r * 0.34, D.r * 0.22, 0.62], [D.r * 0.30, -D.r * 0.26, 0.55]]) {
-      const rr = D.r * f;
-      const gr = g.createRadialGradient(ox, oy, 0, ox, oy, rr);
-      gr.addColorStop(0, INK + '0.16)');
-      gr.addColorStop(0.72, INK + '0.09)');
-      gr.addColorStop(1, INK + '0)');
-      g.fillStyle = gr; g.fillRect(ox - rr, oy - rr, rr * 2, rr * 2);
+  } else if (D.kind === 'lampcoast') {
+    /* the lamplit coast: a stretch of unwalked shore at the sheet's margin,
+       hatched inland the way a surveyor marks ground he has only seen from
+       the water, with the little lamp-marks a chart uses for a lit shore and
+       one ray-burst where the lamp room stands. No name: no chart of ours has
+       taken her bearings yet. */
+    const r0 = rngFor('lampcoast');
+    const pts = [];
+    for (let i = 0; i <= 12; i++) {
+      const u = i / 12;
+      pts.push([-20 + u * 40, Math.sin(u * 5.1 + 0.7) * 1.7 + (r0() - 0.5) * 1.1]);
     }
-    g.fillStyle = INK + '0.30)';
-    for (let i = 0; i < 12; i++) {
-      const a = r0() * TAU, d = Math.sqrt(r0()) * D.r * 0.66;
-      g.fillRect(Math.cos(a) * d, Math.sin(a) * d * 0.8, 0.7 + r0() * 0.9, 0.6 + r0() * 0.8);
+    g.strokeStyle = INK + '0.80)'; g.lineWidth = 1.05;
+    g.beginPath();
+    for (let i = 0; i < pts.length; i++) (i ? g.lineTo(pts[i][0], pts[i][1]) : g.moveTo(pts[i][0], pts[i][1]));
+    g.stroke();
+    /* the land side, hatched short and inward */
+    g.strokeStyle = INK + '0.40)'; g.lineWidth = 0.5;
+    g.beginPath();
+    for (let i = 1; i < pts.length; i++) {
+      g.moveTo(pts[i][0], pts[i][1]);
+      g.lineTo(pts[i][0] - 1.1, pts[i][1] - 3.4 - r0() * 1.4);
     }
+    g.stroke();
+    /* the lamps along her, and the lamp room on the shoulder */
+    g.fillStyle = INK + '0.72)';
+    for (let i = 0; i < 9; i++) {
+      const q = pts[1 + i];
+      g.beginPath(); g.arc(q[0], q[1] - 1.4, 0.62, 0, TAU); g.fill();
+    }
+    const lr = pts[10];
+    g.strokeStyle = INK + '0.72)'; g.lineWidth = 0.7;
+    g.beginPath();
+    g.moveTo(lr[0], lr[1] - 1.6); g.lineTo(lr[0], lr[1] - 6.4); g.stroke();
+    g.beginPath(); g.arc(lr[0], lr[1] - 7.0, 1.15, 0, TAU); g.stroke();
+    g.lineWidth = 0.45;
+    g.beginPath();
+    for (let i = 0; i < 8; i++) {
+      const a = -Math.PI + i * (Math.PI / 7);
+      g.moveTo(lr[0] + Math.cos(a) * 2.2, lr[1] - 7.0 + Math.sin(a) * 2.2);
+      g.lineTo(lr[0] + Math.cos(a) * 4.1, lr[1] - 7.0 + Math.sin(a) * 4.1);
+    }
+    g.stroke();
   } else if (D.kind === 'flotsam') {
     /* a tiny flotsam mark: a spar awash and the glint of a bottle */
     g.strokeStyle = INK + '0.70)'; g.lineWidth = 0.9;
@@ -6423,7 +6471,7 @@ function furnMask(geo) {
     if (B.band) g.fillRect(B.x - B.band.w / 2 - 4, B.band.y - 14, B.band.w + 8, 30);
   }
   for (const D of geo.decor || []) {
-    const r = D.kind === 'inkstain' ? (D.r || 30) + 6 : 18;
+    const r = D.kind === 'lampcoast' ? 30 : 18;
     g.beginPath(); g.arc(D.x, D.y, r, 0, TAU); g.fill();
   }
   g.fillRect(ROSE_RECT.x, ROSE_RECT.y, ROSE_RECT.w, ROSE_RECT.h);
@@ -7235,7 +7283,7 @@ function directionsHtml() {
     const R = [];
     if (eggs.bottle) R.push('Flotsam bobs ' + distWords(nmFrom(home, eggs.bottle)) + ' <b>' +
       brgFrom(home, eggs.bottle) + '</b> of the home anchorage - some say it carries a printed page.');
-    if (eggs.ink) R.push('<b>' + brgFrom(home, eggs.ink) + '</b> of the home water, the sea is said to turn to ink.');
+    if (eggs.shore) R.push('<b>' + brgFrom(home, eggs.shore) + '</b> of the home water lies a coast the sun is said never to come off, lit terrace by terrace at the hour we would be shortening sail.');
     if (eggs.city) R.push('Far to the <b>' + brgFrom(home, eggs.city) + '</b> lies an isle no chart of ours will name.');
     if (eggs.pathIsle) R.push('From the anchorage at the <i>' + esc(eggs.pathIsle.title) + '</i> a path climbs the cliff.');
     R.push('On clear nights one star does not keep station - watch it through the glass.');
@@ -8117,7 +8165,7 @@ function drawPassageSweep() {
 const portal = { open: false, key: null, beat: '', ms: 0, denyT: {} };
 const PORTAL_Q = {
   pixelcity: 'The boat stands ready under the glittering quay. Go ashore?',
-  bythedeep: 'The water ahead is ink, and the hatching waits to close over her. Sail in?',
+  goldenshore: 'That coast is still in the sun, and every terrace on it is lit. Stand in for it?',
   longway: 'The path takes the cliff in long, easy zigzags. Follow it ashore?',
   firstlight: 'That is no star, and she is answering. Answer her back?',
   herbarium: 'The pressed sprig slipped from the log for a reason. Follow it?',
@@ -8237,6 +8285,13 @@ function updateLandfallPlate(sim) {
 const sound = {
   on: store.get('sound', true) !== false,
   ctx: null, master: null, mix: null, duckG: null, an: null, bed: null, woke: false,
+  amb: null, sirenPages: null,
+  /* THE QUIET OPENING (owner: "elles se declenchent trop tot... au moins 3 a 5
+     minutes apres qu'on ait commence l'application, et apres qu'on ait lu au
+     moins 4 pages"). BOTH gates must be open, and both are counted from the
+     load of this page, never from a stored visit: an arrival is always quiet. */
+  sirenQuietMs: 240000,
+  sirenQuietPages: 4,
   bank: [], files: null, credits: null, featured: [], featIx: 0,
   crew: 0, nextJoin: 0, joinEvery: 12, wantVoices: 0,
   slotNext: [], active: [],
@@ -8371,8 +8426,15 @@ const sound = {
        at the dynamic law and in the swell's breathing, all three together */
     const seaG = c.createGain(); seaG.gain.value = 0.105;   // 0.3 * 0.35
 
-    src.connect(windBP); windBP.connect(windG); windG.connect(this.mix);
-    src.connect(seaLP); seaLP.connect(seaG); seaG.connect(this.mix);
+    /* THE AMBIENT BUS (owner: the sirens must not overlap the other sound
+       plates). Wind, sea and rain are the continuous layers, and they now
+       pass through one gain the sirens can lean on. Nothing in the bed's own
+       laws changes: this node sits after them and rests at 1. */
+    const amb = c.createGain(); amb.gain.value = 1;
+    amb.connect(this.mix);
+    this.amb = amb;
+    src.connect(windBP); windBP.connect(windG); windG.connect(amb);
+    src.connect(seaLP); seaLP.connect(seaG); seaG.connect(amb);
     src.start();
 
     /* the swell breathes the water gain: the same period as the plate's
@@ -8404,7 +8466,7 @@ const sound = {
       const bp = c.createBiquadFilter();
       bp.type = 'bandpass'; bp.frequency.value = 2900; bp.Q.value = 0.55;
       const gn = c.createGain(); gn.gain.value = 0;
-      src2.connect(bp); bp.connect(gn); gn.connect(this.mix);
+      src2.connect(bp); bp.connect(gn); gn.connect(this.amb || this.mix);
       src2.start();
       this.wxRain = { gn, bp, noise: nb };
     }
@@ -8470,6 +8532,19 @@ const sound = {
     } catch (e) { /* no sirens ashore: the sea keeps her own counsel */ }
   },
   /* the nearest unresolved dark shore, and the cited water that shelters you */
+  /* both gates, and nothing sings until both are open */
+  sirenGate() {
+    return performance.now() >= this.sirenQuietMs
+        && this.sirenPages !== null && this.sirenPages.size >= this.sirenQuietPages;
+  },
+  /* one page read, counted once, for this load of the page only */
+  sirenPageRead(isle) {
+    if (!isle || !isle.slug) return;
+    if (!this.sirenPages) this.sirenPages = new Set();
+    this.sirenPages.add(isle.slug);
+    diag.sirenGate = { pages: this.sirenPages.size, needPages: this.sirenQuietPages,
+      ms: Math.round(performance.now()), needMs: this.sirenQuietMs, open: this.sirenGate() };
+  },
   sirenScan() {
     let best = null, bd = 1e9, citedNear = 1e9;
     for (const I of world.islands) {
@@ -8482,13 +8557,13 @@ const sound = {
   },
   sirenTick(dt) {
     const S = this.sirens;
-    if (!S || !S.lureG || !this.ctx) return;
+    if (!S || !this.ctx) return;
     S.acc += dt || 0.016;
     if (S.acc < 0.25) return;
     S.acc = 0;
     const RANGE = 5.5;                       /* hailing distance, in miles */
     let g = 0, pan = 0;
-    if (this.on && !S.homePlaying) {
+    if (this.on && !S.homePlaying && this.sirenGate()) {
       const sc = this.sirenScan();
       if (sc.isle && sc.d < RANGE && sc.citedNear > 1.5) {
         const x = clamp(1 - sc.d / RANGE, 0, 1);
@@ -8499,16 +8574,25 @@ const sound = {
       } else S.target = null;
     } else if (!S.homePlaying) S.target = null;
     const t = this.ctx.currentTime;
-    S.lureG.gain.setTargetAtTime(g, t, 0.7);
+    if (S.lureG) S.lureG.gain.setTargetAtTime(g, t, 0.7);
     if (S.pan) S.pan.pan.setTargetAtTime(pan, t, 0.6);
+    /* NO OVERLAP: the continuous layers step back in proportion to her, and
+       step all the way back while the song is sung whole. */
+    if (this.amb) {
+      const duck = S.homePlaying ? 0.12 : 1 - 0.88 * clamp(g / 0.32, 0, 1);
+      this.amb.gain.setTargetAtTime(duck, t, S.homePlaying ? 1.4 : 0.9);
+    }
     diag.sirenState = { target: S.target, gain: +g.toFixed(3), pan: +pan.toFixed(2),
-      homePlaying: S.homePlaying, sung: S.sungThisVisit, resolved: S.resolved.size };
+      homePlaying: S.homePlaying, sung: S.sungThisVisit, resolved: S.resolved.size,
+      gateOpen: this.sirenGate(), pages: this.sirenPages ? this.sirenPages.size : 0,
+      ambDuck: this.amb ? +this.amb.gain.value.toFixed(3) : null };
   },
   /* the first dark-shore anchoring of the visit: they sing you in, whole */
   sirenAnchor(isle) {
     const S = this.sirens;
     if (!S || !S.home || !this.ctx || !this.on) return;
     if (isle.inbound !== 0 || S.resolved.has(isle.slug) || S.sungThisVisit || S.homePlaying) return;
+    if (!this.sirenGate()) return;      /* too early in the visit: the sea keeps quiet */
     S.sungThisVisit = true;
     S.homePlaying = true;
     const c = this.ctx, t = c.currentTime;
@@ -8520,7 +8604,11 @@ const sound = {
     g.gain.setValueAtTime(0.0001, t + 1.1);
     g.gain.exponentialRampToValueAtTime(S.home.gain, t + 3.2);
     src.connect(g); g.connect(this.mix);
-    src.onended = () => { S.homePlaying = false; S.homeSrc = null; };
+    src.onended = () => {
+      S.homePlaying = false; S.homeSrc = null;
+      /* the sea comes back up behind her, in its own time */
+      if (this.amb) this.amb.gain.setTargetAtTime(1, this.ctx.currentTime, 2.2);
+    };
     src.start(t + 1.1);
     S.homeSrc = src;
     diag.sirenSong = { isle: isle.slug, at: Math.round(t * 10) / 10 };
@@ -8540,6 +8628,7 @@ const sound = {
     if (S.lureG) { S.lureG.gain.cancelScheduledValues(t); S.lureG.gain.value = 0; }
     if (S.homeSrc) { try { S.homeSrc.stop(); } catch (e) {} S.homeSrc = null; }
     S.homePlaying = false;
+    if (this.amb) { this.amb.gain.cancelScheduledValues(t); this.amb.gain.setTargetAtTime(1, t, 0.5); }
   },
 
   /* THE PURR (S3): a real purr is a 20-30 Hz tremor on a chest of noise.
@@ -8953,7 +9042,7 @@ window.__helmSoundIsle = slug => world.bySlug.get(slug);
    ============================================================ */
 const eggs = {
   ready: false, crossing: null,
-  city: null, ink: null, bottle: null, star: null,
+  city: null, shore: null, bottle: null, star: null,
   pathIsle: null,
   fixedStars: [],
   hits: [], hoverT: {}, cursorOn: false,
@@ -8964,7 +9053,7 @@ const eggs = {
 
 const EGG_HINTS = {
   city: 'No chart of ours gives it a name. Click, and she makes for the light.',
-  ink: 'The water runs to flat ink past that line. Click, or sail in.',
+  shore: 'The sun is standing on that coast, and every terrace on it is lit. Click, and she stands in.',
   bottle: 'A message in a bottle. Click to fish it out.'
 };
 
@@ -8991,24 +9080,35 @@ function initEggs() {
   eggs.city = { x: cx0 + Math.cos(ca) * cr, y: cy0 + Math.sin(ca) * cr };
   eggs.cityVisU2 = Math.pow(10.5 / world.nmPerUnit, 2);
 
-  /* (b) the deepest water: the grid point farthest from every island */
-  let bestP = null, bestD = -1;
-  for (let gy = 0; gy <= 34; gy++) for (let gx = 0; gx <= 44; gx++) {
-    const x = B.minx + (B.maxx - B.minx) * gx / 44;
-    const y = B.miny + (B.maxy - B.miny) * gy / 34;
-    let dmin = Infinity;
-    for (const I of isles) {
-      const d2 = (I.pos.x - x) * (I.pos.x - x) + (I.pos.y - y) * (I.pos.y - y);
-      if (d2 < dmin) dmin = d2;
-    }
-    if (dmin > bestD) { bestD = dmin; bestP = { x, y }; }
+  /* (b) THE KEEPER COAST (2026-09-07). This slot used to hold the ink water:
+     the deepest sounding in the survey, drawn in another hand, and sailing
+     into it took the boat to a world since retired from the network, so
+     the ink is gone from the sea, from the chart and from the rumours, and
+     the deepest water is only deep water again.
+     In its place, a different water to sail to and a different mark to make
+     for. A low coast lies beyond the last surveyed water, in the sector of
+     the sea whose islands took ink most recently - the survey's own freshest
+     quarter, because the coast where the light has not finished is the one
+     somebody tended last. Where that would stand her on the same bearing as
+     the nameless city, she takes the next freshest sector instead, so the
+     two landfalls are never taken for one another. */
+  const SHORE_SNAP = Date.parse('2026-09-05');
+  const freshMass = new Array(16).fill(0);
+  for (const I of isles) {
+    const dx = I.pos.x - cx0, dy = I.pos.y - cy0;
+    const sct = ((Math.floor(Math.atan2(dy, dx) / TAU * 16) % 16) + 16) % 16;
+    const dAge = I.last ? (SHORE_SNAP - Date.parse(I.last)) / 86400000 : 3650;
+    freshMass[sct] += 1 / (1 + Math.max(0, dAge) / 90);
   }
-  const inkR = clamp(Math.sqrt(bestD) * world.nmPerUnit * 0.34, 0.30, 0.85);
-  /* the patch edge, cut once: sixteen weights around a circle */
-  const er = rngFor('inkedge');
-  const edge = [];
-  for (let i = 0; i < 16; i++) edge.push(1 + (er() - 0.5) * 0.22);
-  eggs.ink = { x: bestP.x, y: bestP.y, rNm: inkR, edge };
+  const bySector = [];
+  for (let sct = 0; sct < 16; sct++) bySector.push(sct);
+  bySector.sort((a, b) => (freshMass[b] - freshMass[a]) || (a - b));
+  let sFresh = bySector[0];
+  for (const sct of bySector) if (sct !== sMin) { sFresh = sct; break; }
+  const sa = (sFresh + 0.5) / 16 * TAU;
+  const sr = maxR * 1.16 + 2.2 / world.nmPerUnit;
+  eggs.shore = { x: cx0 + Math.cos(sa) * sr, y: cy0 + Math.sin(sa) * sr, sector: sFresh };
+  eggs.shoreVisU2 = Math.pow(12.0 / world.nmPerUnit, 2);
 
   /* (f) the bottle drifts down the citation wind from the home island until
      it finds open water */
@@ -9052,7 +9152,7 @@ function initEggs() {
   eggs.ready = true;
   diag.eggs = {
     city: { x: +eggs.city.x.toFixed(4), y: +eggs.city.y.toFixed(4) },
-    ink: { x: +eggs.ink.x.toFixed(4), y: +eggs.ink.y.toFixed(4), rNm: +inkR.toFixed(3) },
+    shore: { x: +eggs.shore.x.toFixed(4), y: +eggs.shore.y.toFixed(4), sector: sFresh },
     bottle: { x: +bx.toFixed(4), y: +by.toFixed(4) },
     path: eggs.pathIsle.slug,
     starK: eggs.star.K, fixedStars: eggs.fixedStars.length
@@ -9060,13 +9160,13 @@ function initEggs() {
 }
 
 function eggNm(key) {
-  const E = key === 'city' ? eggs.city : key === 'ink' ? eggs.ink :
+  const E = key === 'city' ? eggs.city : key === 'shore' ? eggs.shore :
             key === 'bottle' ? eggs.bottle : null;
   if (!E) return Infinity;
   return Math.hypot(E.x - ship.x, E.y - ship.y) * world.nmPerUnit;
 }
 function eggBearing(key) {
-  const E = key === 'city' ? eggs.city : key === 'ink' ? eggs.ink :
+  const E = key === 'city' ? eggs.city : key === 'shore' ? eggs.shore :
             key === 'bottle' ? eggs.bottle : null;
   if (!E) return 0;
   return norm360(Math.atan2(E.x - ship.x, -(E.y - ship.y)) * 180 / Math.PI);
@@ -9093,8 +9193,8 @@ function eggActivate(key) {
   if (!eggs.ready || eggs.crossing) return;
   if (key === 'bottle' && eggNm('bottle') < 1.4) {
     crossTo('secreta', 'The cork gives: a page inked in four colours, rolled tight against the salt.', 1700);
-  } else if (key === 'ink' && eggNm('ink') < 1.8) {
-    crossTo('bythedeep', 'She noses in. The hatching closes over the hull like wet ink over a pen line.', 1700);
+  } else if (key === 'shore' && eggNm('shore') < 8.0) {
+    crossTo('goldenshore', 'She stands in for the light. The sun does not come off that coast, and the terraces answer lamp by lamp.', 1800);
   } else if (key === 'city') {
     /* clicking the light shapes a course; the crossing is made by anchoring */
     firstOrder('steer');
@@ -9138,13 +9238,14 @@ function eggTick(dt) {
     return;
   }
 
-  const nd = eggNm('ink');
-  if (nd < 1.2 && t - (eggs.hinted.ink || -99) > 26) {
-    eggs.hinted.ink = t;
-    captionNow('The sea turns to ink here. Sail in?', 4200);
+  const sd = eggNm('shore');
+  if (sd < 7.0 && !eggs.hinted.shore &&
+      Math.abs(angDiff(eggBearing('shore'), ship.bearing)) < 60) {
+    eggs.hinted.shore = true;
+    caption('A low coast off the bow, and the sun standing still over it. Lamps the whole length of the terraces, and not one of them out.', 5600);
   }
-  if (nd < eggs.ink.rNm * 0.55) {
-    crossTo('bythedeep', 'She noses in. The hatching closes over the hull like wet ink over a pen line.', 1700);
+  if (sd < 0.30) {
+    crossTo('goldenshore', 'She stands in for the light. The sun does not come off that coast, and the terraces answer lamp by lamp.', 1800);
     return;
   }
 
@@ -9251,104 +9352,7 @@ function drawEggs(sim, worldDY, map) {
   if (!eggs.ready) return;
   drawStars(map);
   drawConstellation(map);
-  drawInkEgg(sim, worldDY, map);
   drawBottleEgg(sim, worldDY, map);
-}
-
-/* (b) the ink water: flat cel fills and clean outlines, deliberately another
-   hand - past this line it is a different world. A white-gloved buoy waves. */
-function drawInkEgg(sim, worldDY, map) {
-  const E = eggs.ink;
-  const dxu = E.x - ship.x, dyu = E.y - ship.y;
-  if (dxu * dxu + dyu * dyu > Math.pow(5.2 / world.nmPerUnit, 2)) return;
-  const P = eggScreen(E.x, E.y, worldDY, map);
-  if (P.dist > 5.2 || Math.abs(P.az) > 70) return;
-  const rx = clamp(430 * E.rNm / Math.max(P.dist, 0.15), 6, 780) * (map ? map.k : 1);
-  if (rx < 7) return;
-  const ry = rx * 0.24;
-  const t = env.t, g = ctx;
-  g.save();
-  g.translate(P.x, P.y);
-  /* the patch itself */
-  const pts = [];
-  for (let i = 0; i < 16; i++) {
-    const a = i / 16 * TAU;
-    pts.push([Math.cos(a) * rx * E.edge[i], Math.sin(a) * ry * E.edge[i]]);
-  }
-  g.beginPath();
-  pathThrough(g, pts, true);
-  g.fillStyle = 'rgba(88,140,178,0.92)';
-  g.fill();
-  g.lineWidth = Math.max(1.3, rx * 0.018);
-  g.strokeStyle = 'rgba(22,34,44,0.92)';
-  g.stroke();
-  if (rx > 26) {
-    /* cel waves: fat white curls with flat ends, nothing hatched */
-    g.strokeStyle = 'rgba(244,240,230,0.95)';
-    g.lineCap = 'round';
-    for (let i = 0; i < 3; i++) {
-      const wx2 = (i - 1) * rx * 0.42 + (REDUCED ? 0 : Math.sin(t * 1.1 + i * 2.4) * rx * 0.03);
-      const wy2 = ry * (i === 1 ? 0.28 : -0.14);
-      const ww = rx * 0.22;
-      g.lineWidth = Math.max(1.6, rx * 0.028);
-      g.beginPath();
-      g.moveTo(wx2 - ww, wy2);
-      g.quadraticCurveTo(wx2, wy2 - ww * 0.5, wx2 + ww * 0.55, wy2 - ww * 0.14);
-      g.quadraticCurveTo(wx2 + ww * 0.30, wy2 - ww * 0.36, wx2 + ww * 0.16, wy2 - ww * 0.24);
-      g.stroke();
-    }
-  }
-  if (rx > 46) {
-    /* the buoy, waving its white glove */
-    const bx2 = rx * 0.24, by2 = ry * 0.1 + (REDUCED ? 0 : Math.sin(t * 2.1) * ry * 0.08);
-    const bh = rx * 0.17;
-    g.translate(bx2, by2);
-    g.rotate(REDUCED ? 0 : Math.sin(t * 1.4) * 0.06);
-    g.lineWidth = Math.max(1.4, bh * 0.09);
-    g.strokeStyle = 'rgba(22,34,44,0.95)';
-    /* body: a cel bell, red over paper bands */
-    g.beginPath();
-    g.moveTo(-bh * 0.42, 0);
-    g.quadraticCurveTo(-bh * 0.34, -bh, 0, -bh * 1.06);
-    g.quadraticCurveTo(bh * 0.34, -bh, bh * 0.42, 0);
-    g.closePath();
-    g.fillStyle = '#c8563a';
-    g.fill();
-    g.stroke();
-    g.save();
-    g.clip();
-    g.fillStyle = 'rgba(244,240,230,0.96)';
-    g.fillRect(-bh * 0.5, -bh * 0.66, bh, bh * 0.22);
-    g.restore();
-    /* the arm and the white glove, waving */
-    const wave = REDUCED ? 0.5 : Math.sin(t * 3.6) * 0.6 + 0.35;
-    g.save();
-    g.translate(0, -bh * 1.02);
-    g.rotate(-0.9 + wave * 0.55);
-    g.beginPath();
-    g.moveTo(0, 0);
-    g.quadraticCurveTo(bh * 0.30, -bh * 0.34, bh * 0.52, -bh * 0.52);
-    g.lineWidth = Math.max(1.6, bh * 0.13);
-    g.stroke();
-    g.translate(bh * 0.56, -bh * 0.58);
-    g.fillStyle = '#f6f2e8';
-    g.beginPath();
-    g.arc(0, 0, bh * 0.22, 0, TAU);
-    g.fill();
-    for (const fa of [-0.7, -0.1, 0.5]) {
-      g.beginPath();
-      g.arc(Math.cos(fa - 0.9) * bh * 0.24, Math.sin(fa - 0.9) * bh * 0.24 - bh * 0.04, bh * 0.09, 0, TAU);
-      g.fill();
-    }
-    g.lineWidth = Math.max(1.1, bh * 0.07);
-    g.beginPath();
-    g.arc(0, 0, bh * 0.22, 0, TAU);
-    g.stroke();
-    g.restore();
-  }
-  g.restore();
-  g.lineCap = 'butt';
-  if (!map) eggs.hits.push({ key: 'ink', x: P.x, y: P.y, r: Math.max(16, rx * 0.5), d: P.dist });
 }
 
 /* (f) the bottle: engraved glass, a cork, and the rolled four-colour page */
@@ -9420,6 +9424,160 @@ function drawBottleEgg(sim, worldDY, map) {
   g.stroke();
   g.restore();
   if (!map) eggs.hits.push({ key: 'bottle', x: P.x, y: P.y, r: Math.max(14, 30 * s), d: P.dist });
+}
+
+/* (b) THE KEEPER COAST: a low headland lying past the last surveyed water,
+   with the lamp room on its shoulder and one lantern for every page of the
+   survey burning along its terraces. It is drawn warm because the light on
+   it has not finished, and the lamps are not decorative: each one stands at
+   the brightness of the days since that page last took ink, read off the
+   same provenance this whole sea is made of. (2026-09-07) */
+function bakeShore() {
+  const CW = 620, CH = 132, GY = 122;
+  const [c, g] = mkCanvas(CW, CH);
+  const rnd = rngFor('keepercoast');
+  /* the ridge line: low at both ends, one shoulder standing up to the right
+     where the lamp room is, and nothing on it taller than the lamp */
+  const ridge = [];
+  for (let i = 0; i <= 62; i++) {
+    const u = i / 62;
+    const shoulder = Math.exp(-Math.pow((u - 0.72) / 0.15, 2)) * 46;
+    const body = Math.sin(u * Math.PI) * 26;
+    ridge.push({
+      x: u * CW,
+      y: GY - (7 + body + shoulder + Math.sin(u * 17.3) * 2.6 + rnd() * 2.2)
+    });
+  }
+  g.fillStyle = 'rgba(58,44,28,0.30)';
+  g.strokeStyle = 'rgba(44,33,20,0.9)';
+  g.lineWidth = 0.9;
+  g.beginPath();
+  g.moveTo(0, GY);
+  for (const q of ridge) g.lineTo(q.x, q.y);
+  g.lineTo(CW, GY);
+  g.closePath();
+  g.fill();
+  g.stroke();
+  /* the terraces: four contour lines cut across the face, the way a worked
+     coast is cut, each one shorter than the one below it */
+  const terr = [];
+  g.globalAlpha = 0.34;
+  for (let k = 0; k < 4; k++) {
+    const f = 0.20 + k * 0.19;
+    const line = [];
+    g.beginPath();
+    for (let i = 0; i <= 62; i++) {
+      const q = ridge[i];
+      const base = GY - 4;
+      const y = base - (base - q.y) * f;
+      if (base - q.y < 9) continue;
+      line.push({ x: q.x, y });
+      if (line.length === 1) g.moveTo(q.x, y); else g.lineTo(q.x, y);
+    }
+    g.stroke();
+    if (line.length > 3) terr.push(line);
+  }
+  g.globalAlpha = 1;
+  /* the lamp room on the shoulder: a short square tower and its gallery */
+  let sh = ridge[0];
+  for (const q of ridge) if (q.y < sh.y) sh = q;
+  g.fillStyle = 'rgba(52,39,24,0.62)';
+  g.fillRect(sh.x - 3.4, sh.y - 15, 6.8, 15);
+  g.strokeRect(sh.x - 3.4 + 0.5, sh.y - 15 + 0.5, 5.8, 14);
+  g.fillRect(sh.x - 5.2, sh.y - 18.5, 10.4, 3.5);
+  g.strokeRect(sh.x - 5.2 + 0.5, sh.y - 18.5 + 0.5, 9.4, 2.5);
+  bake.shore = c;
+  bake.shoreW = CW; bake.shoreH = CH; bake.shoreGY = GY;
+  bake.shoreLamp = { x: sh.x, y: sh.y - 17 };
+  /* one lantern per page, walked along the terraces in survey order, and each
+     one only as bright as the days since somebody last tended that page */
+  const SNAP = Date.parse('2026-09-05');
+  const lamps = [];
+  const rows = terr.length || 1;
+  world.islands.forEach((I, i) => {
+    const row = terr[i % rows];
+    if (!row) return;
+    const hsh = hash32(I.slug);
+    const q = row[Math.floor((hsh % 9973) / 9973 * row.length)];
+    const dAge = I.last ? (SNAP - Date.parse(I.last)) / 86400000 : 3650;
+    lamps.push({
+      x: q.x + ((hsh >>> 9) % 100) / 100 * 3 - 1.5,
+      y: q.y - 1.1,
+      b: 1 / (1 + Math.max(0, dAge) / 90),
+      ph: ((hsh >>> 18) % 997) / 997
+    });
+  });
+  bake.shoreLamps = lamps;
+}
+
+function drawShoreEgg(sim, worldDY, isLens) {
+  const C = eggs.shore;
+  if (!C) return;
+  const dxu = C.x - ship.x, dyu = C.y - ship.y;
+  const d2 = dxu * dxu + dyu * dyu;
+  if (!Number.isFinite(d2)) return;
+  if (d2 > eggs.shoreVisU2) return;
+  const dist = Math.sqrt(d2) * world.nmPerUnit;
+  const az = angDiff(norm360(Math.atan2(dxu, -dyu) * 180 / Math.PI), ship.bearing);
+  if (Math.abs(az) > 66) return;
+  if (!bake.shore) bakeShore();
+  const t = env.t, g = ctx;
+  const x = W / 2 + az * PXDEG;
+  const yBase = HORIZON + worldDY + 5;
+  const wpx = clamp(430 * 2.3 / Math.max(dist, 0.22), 34, 1700);
+  const sc = wpx / bake.shoreW;
+  const hpx = bake.shoreH * sc;
+  const top = yBase - bake.shoreGY * sc;
+  /* the light that is standing over her, before she is over the horizon */
+  const glowR = Math.max(34, wpx * 0.46);
+  const gy2 = yBase - hpx * 0.34;
+  const gr = g.createRadialGradient(x, gy2, 0, x, gy2, glowR);
+  gr.addColorStop(0, 'rgba(255,196,112,0.20)');
+  gr.addColorStop(1, 'rgba(255,196,112,0)');
+  g.fillStyle = gr;
+  g.fillRect(x - glowR, gy2 - glowR, glowR * 2, glowR * 2);
+  /* the coast itself, hazed by range like any other */
+  g.globalAlpha = dist <= 3.2
+    ? clamp(0.52 + (3.2 - dist) * 0.48, 0.52, 1)
+    : lerp(0.52, 0.28, clamp((dist - 3.2) / 7.5, 0, 1));
+  g.drawImage(bake.shore, x - wpx / 2, top, wpx, hpx);
+  g.globalAlpha = 1;
+  /* the lanterns: one per page, each at the brightness of its own tending */
+  if (wpx > 90) {
+    const ls = Math.max(0.8, 1.7 * sc);
+    for (const L of bake.shoreLamps) {
+      const fl = REDUCED ? 0.86
+        : 0.78 + 0.22 * Math.sin(t * 1.5 + L.ph * TAU);
+      g.globalAlpha = clamp(0.20 + 0.72 * L.b, 0.14, 0.95) * fl;
+      g.fillStyle = 'rgba(255,206,124,1)';
+      g.fillRect(x - wpx / 2 + L.x * sc, top + L.y * sc, ls, ls);
+    }
+    /* and the lamp room over the lot of them, steady */
+    const LR = bake.shoreLamp;
+    g.globalAlpha = REDUCED ? 0.92 : 0.78 + 0.20 * Math.sin(t * 0.9);
+    g.fillStyle = 'rgba(255,232,178,1)';
+    g.fillRect(x - wpx / 2 + LR.x * sc - ls, top + LR.y * sc - ls, ls * 2.2, ls * 2.2);
+  } else {
+    g.globalAlpha = 0.44 + 0.30 * (REDUCED ? 0.5 : 0.5 + 0.5 * Math.sin(t * 1.6));
+    g.fillStyle = 'rgba(255,206,124,0.95)';
+    g.fillRect(x - wpx * 0.30, yBase - 2.2, wpx * 0.60, 1.6);
+  }
+  g.globalAlpha = 1;
+  /* her light lies down the water toward us, as a low sun's does */
+  if (wpx > 46) {
+    g.globalAlpha = 0.16;
+    g.strokeStyle = 'rgba(255,190,104,0.9)';
+    g.lineWidth = 1.3;
+    g.beginPath();
+    for (let i = 0; i < 10; i++) {
+      const rx2 = x + (i - 4.5) * wpx * 0.035 + (REDUCED ? 0 : Math.sin(t * 1.1 + i * 1.9) * 3);
+      g.moveTo(rx2 - wpx * 0.045, yBase + 3 + i * 1.7);
+      g.lineTo(rx2 + wpx * 0.045, yBase + 3 + i * 1.7);
+    }
+    g.stroke();
+  }
+  g.globalAlpha = 1;
+  if (!isLens) eggs.hits.push({ key: 'shore', x, y: yBase - hpx * 0.34, r: Math.max(26, wpx * 0.30), d: dist });
 }
 
 /* (a) the nameless city: 27 towers (one per community, heights from member
@@ -9560,7 +9718,7 @@ function eggState() {
   if (!eggs.ready) return null;
   return {
     city: { x: eggs.city.x, y: eggs.city.y, nm: +eggNm('city').toFixed(2) },
-    ink: { x: eggs.ink.x, y: eggs.ink.y, rNm: eggs.ink.rNm, nm: +eggNm('ink').toFixed(2) },
+    shore: { x: eggs.shore.x, y: eggs.shore.y, sector: eggs.shore.sector, nm: +eggNm('shore').toFixed(2) },
     bottle: { x: eggs.bottle.x, y: eggs.bottle.y, nm: +eggNm('bottle').toFixed(2) },
     path: { slug: eggs.pathIsle.slug },
     star: { K: eggs.star.K, screen: starScreen(env.t), on: starBlink(env.t), hold: +eggs.starHold.toFixed(2) },
@@ -9572,7 +9730,7 @@ function eggState() {
 function eggSailTo(key, nm) {
   if (!eggs.ready) return false;
   if (key === 'path') { placeShipAtDistance(nm == null ? 1.0 : nm, eggs.pathIsle); dirty = true; return true; }
-  const E = key === 'city' ? eggs.city : key === 'ink' ? eggs.ink :
+  const E = key === 'city' ? eggs.city : key === 'shore' ? eggs.shore :
             key === 'bottle' ? eggs.bottle : null;
   if (!E) return false;
   const B = world.bounds;
