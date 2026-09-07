@@ -505,8 +505,6 @@ body.darkadapt #log-tag{opacity:.32}
 .in-row .dr7{color:var(--amber-hi)}
 
 /* (c) the guard band caption under the spectrograph */
-#rx-cap[hidden]{display:none}
-#rx-cap span{color:var(--amber-hi)}
 #speccv{cursor:crosshair}
 
 /* (f) mission papers: the four-colour corner under the briefing stack */

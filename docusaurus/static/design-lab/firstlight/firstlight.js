@@ -1234,8 +1234,8 @@
     longway: 'THE RIDGE LINE AT DUSK',
     herbarium: 'WHERE THE PRESSED SEED WAS FILED',
     cartastrapiana: 'WHEREVER THE RIGGED ECHO IS BOUND',
-    bythedeep: 'THE DEEP THE OLD ORCHESTRA PLAYS FROM',
-    secreta: 'INSIDE THE FOUR-COLOUR INSERT'
+    secreta: 'INSIDE THE FOUR-COLOUR INSERT',
+    goldenshore: 'THE SHORE STATION THAT IS STILL IN DAYLIGHT'
   };
   function askCrossing(key, ms, beat) {
     if (crossingNow || goPoll) return;
@@ -1473,6 +1473,82 @@
     g.beginPath();
     for (var gx = 0; gx < PW; gx += PW / 12) { g.moveTo(gx, PH - 5); g.lineTo(gx, PH); }
     g.stroke();
+    drawSecondTrace(g, PW, PH);
+  }
+
+  /* ------------------------------------------- the second trace (2026-09-07)
+     Under our own reading, at the bottom of the same panel, the photometer
+     has always carried a second channel it was never asked for: 0.62 microns,
+     far to the red of anything we are pointed at, and it is not a body. It is
+     a staircase, and it does not change while we watch it. It is somebody
+     else's evening photometry, taken from the ground, at a station whose sun
+     has not gone down: one lamp per page of the same 290, each read at the
+     brightness they leave it, which is to say by how lately anybody there
+     tended it. A sister survey of the same lab, done by hand, with lanterns.
+     The steps below are the real freshness figures of this sky's own bodies.
+     Strike the trace to put the probe over their evening. */
+  var lampSteps = null;
+  function lampStaircase(n) {
+    if (lampSteps && lampSteps.length === n) return lampSteps;
+    /* one step per lamp, taken in survey order and read as brightness: the
+       sooner a page was last touched, the higher the flame stands */
+    var out = [];
+    for (var i = 0; i < n; i++) {
+      var st = stars[Math.floor(i * stars.length / n)];
+      var d = st && st.freshDays != null ? st.freshDays : 400;
+      out.push(1 / (1 + Math.max(0, d) / 90));
+    }
+    lampSteps = out;
+    return out;
+  }
+  var PHOT_BAND = { y0: 0, y1: 0 };
+  function drawSecondTrace(g, PW, PH) {
+    var steps = lampStaircase(26);
+    var floor = PH - 7, span = PH * 0.20;
+    PHOT_BAND.y0 = floor - span - 4; PHOT_BAND.y1 = floor + 4;
+    g.save();
+    /* drawn warm and low, and never mistaken for our own amber trace */
+    g.strokeStyle = photHover ? 'rgba(255,138,58,0.95)' : 'rgba(255,138,58,0.55)';
+    g.lineWidth = photHover ? 1.6 : 1.1;
+    g.beginPath();
+    for (var i = 0; i < steps.length; i++) {
+      var x0 = i * PW / steps.length, x1 = (i + 1) * PW / steps.length;
+      var y = floor - steps[i] * span;
+      if (i === 0) g.moveTo(x0, y); else g.lineTo(x0, y);
+      g.lineTo(x1, y);
+    }
+    g.stroke();
+    g.fillStyle = photHover ? 'rgba(255,138,58,0.9)' : 'rgba(255,138,58,0.42)';
+    g.font = '9px "IBM Plex Mono", monospace';
+    g.fillText('0.62 \u00b5m \u00b7 NOT OURS', 6, PH - 1.5);
+    g.restore();
+  }
+  var photHover = false;
+  function photHit(q, PH) { return q[1] >= PHOT_BAND.y0 && q[1] <= PHOT_BAND.y1; }
+  function wirePhotometer() {
+    if (!photCv) return;
+    photCv.addEventListener('pointermove', function (e) {
+      var q = cvXY(e, photCv);
+      var on = photHit(q, photCv.height);
+      photCv.style.cursor = on ? 'pointer' : '';
+      if (on) {
+        tipEl = tipEl || $('tooltip');
+        tipEl.innerHTML = '<b>SECOND TRACE</b><span class="dg">PHOTOMETER · 0.62 \u00b5m · NOT OURS</span>' +
+          '<span>a staircase, not a body: somebody is reading 290 lamps by hand, one per page, each at the brightness the last hand left it</span>' +
+          '<span class="dr">strike it to put the probe over their evening</span>';
+        tipEl.hidden = false; moveTip(e.clientX, e.clientY);
+      } else if (photHover) hideTip();
+      photHover = on;
+    });
+    photCv.addEventListener('pointerleave', function () { if (photHover) hideTip(); photHover = false; });
+    photCv.addEventListener('click', function (e) {
+      if (!photHit(cvXY(e, photCv), photCv.height) || crossingNow) return;
+      hideTip(); photHover = false;
+      askCrossing('goldenshore', 1200, function () {
+        logLine('PHOTOMETER \u00b7 SECOND TRACE \u00b7 A SHORE STATION IN DAYLIGHT, READING 290 LAMPS BY HAND \u00b7 <b>PUTTING OVER THEIR EVENING</b>', true);
+        safeSnd('warp');
+      });
+    });
   }
 
   /* --------------------------------------------- HUD: instrument suite -- */
@@ -1496,7 +1572,6 @@
     o.push('<div class="in-row"><span>' + (cl.loose
       ? 'no citation community claimed this body'
       : 'purity <b>' + cl.purity.toFixed(2) + '</b> · ' + cl.members.length + ' members · hub ' + esc(cl.label)) + '</span></div>');
-    o.push('<div class="in-row rx" id="rx-cap" hidden><span>past C27 the band is not empty - hold the carrier to follow it down</span></div>');
 
     o.push('<div class="in-k">EST. MASS <b>' + fmtN(s.words) + ' WORDS</b></div>');
     o.push('<div class="in-bar"><i style="width:' + Math.max(1, Math.round(s.words / maxWords * 100)) + '%"></i></div>');
@@ -1676,7 +1751,12 @@
     specGuard(g, PW, PH);
   }
 
-  /* (c) past the last class the band is ruled off - and never quite empty */
+  /* (c) past the last class the band is ruled off. (2026-09-07) It used to
+     carry a carrier: a cartoon orchestra a century old, and holding it took
+     the room to a world since retired from the network. The carrier
+     is off the air - the caption, the hold, the broadcast and the crossing
+     all with it - and the guard band is what a guard band is: ruled, marked
+     GB, and empty. */
   function specGuard(g, PW, PH) {
     var gb = PW * 0.9;
     g.strokeStyle = rgba(WHITE, 0.22);
@@ -1689,7 +1769,7 @@
   }
 
   /* the tuning needle rides the spectrograph on pointer movement only */
-  function drawSpecNeedle(i, px, holdFrac) {
+  function drawSpecNeedle(i, px) {
     if (!specCv) return;
     drawSpectrograph(i);
     if (px == null) return;
@@ -1702,12 +1782,8 @@
     g.fillStyle = rgba(WHITE, 0.7);
     g.fillText('TUNE ' + kHz + ' kHz', Math.min(PW - 78, Math.max(2, px + 5)), PH - 5);
     if (px >= PW * 0.9) {
-      g.fillStyle = rgba(AMBER_HI, 0.9);
-      g.fillText('CARRIER', PW * 0.9 - 46, 9);
-      if (holdFrac > 0) {
-        g.fillStyle = rgba(AMBER, 0.9);
-        g.fillRect(PW * 0.9, PH - 3, (PW - PW * 0.9) * Math.min(1, holdFrac), 2);
-      }
+      g.fillStyle = rgba(WHITE, 0.42);
+      g.fillText('GUARD BAND · NO SIGNAL', PW * 0.9 - 108, 9);
     }
   }
 
@@ -1748,54 +1824,15 @@
       });
     });
   }
-  var rxHold = null, rxLastPlay = -1e9;
+  /* The receiver keeps its tuning needle - a hand can still run the band and
+     read the frequency off it - and nothing else: past C27 there is nothing
+     to tune to any more. */
   function wireReceiver(i) {
     if (!specCv) return;
-    var inBand = function (q) { return q[0] >= specCv.width * 0.9; };
-    var cap = function (show) { var el = $('rx-cap'); if (el) el.hidden = !show; };
     specCv.addEventListener('pointermove', function (e) {
-      if (rxHold) return;
-      var q = cvXY(e, specCv);
-      drawSpecNeedle(i, q[0], 0);
-      var on = inBand(q);
-      cap(on);
-      if (on && performance.now() - rxLastPlay > 4000) {
-        rxLastPlay = performance.now();
-        safeSnd('broadcast');
-      }
+      drawSpecNeedle(i, cvXY(e, specCv)[0]);
     });
-    specCv.addEventListener('pointerleave', function () {
-      if (!rxHold) { drawSpectrograph(i); cap(false); }
-    });
-    specCv.addEventListener('pointerdown', function (e) {
-      var q = cvXY(e, specCv);
-      if (!inBand(q) || crossingNow || rxHold) return;
-      try { specCv.setPointerCapture(e.pointerId); } catch (err) {}
-      if (REDUCED) { rxCross(); return; }
-      var dur = (audioOn && audioUnlocked) ? 2200 : 800;
-      if (audioOn && performance.now() - rxLastPlay > 1200) {
-        rxLastPlay = performance.now();
-        safeSnd('broadcast');
-      }
-      var t0 = performance.now();
-      rxHold = { iv: 0 };
-      rxHold.iv = setInterval(function () {
-        var f = (performance.now() - t0) / dur;
-        drawSpecNeedle(i, specCv.width * 0.96, f);
-        if (f >= 1) { clearInterval(rxHold.iv); rxHold = null; rxCross(); }
-      }, 80);
-    });
-    var rxUp = function () {
-      if (rxHold) { clearInterval(rxHold.iv); rxHold = null; drawSpecNeedle(i, specCv.width * 0.96, 0); }
-    };
-    specCv.addEventListener('pointerup', rxUp);
-    specCv.addEventListener('pointercancel', rxUp);
-  }
-  function rxCross() {
-    if (crossingNow) return;
-    askCrossing('bythedeep', 900, function () {
-      logLine('RECEIVER · GUARD BAND · A CARTOON ORCHESTRA UNDER THE HISS, SCRATCHED AND MERRY, A CENTURY OLD · <b>FOLLOWING IT DOWN</b>', true);
-    });
+    specCv.addEventListener('pointerleave', function () { drawSpectrograph(i); });
   }
 
   /* ----------------------------------------------------------- mission log */
@@ -2193,73 +2230,6 @@
         o.connect(lp); lp.connect(g); g.connect(R.dry);
         o.start(tt); o.stop(tt + 0.55);
       });
-    },
-    /* (c) the guard band broadcast: two seconds of a 1930s cartoon pit
-       band heard through a century of shellac - oom-pah low brass, a
-       muted lead with too much vibrato, offbeat chord stabs, and crackle
-       from the same seeded noise as everything else. No sample. */
-    broadcast: function (R, t) {
-      var c = R.ctx;
-      var out = c.createGain();
-      out.gain.setValueAtTime(0.0001, t);
-      out.gain.exponentialRampToValueAtTime(0.55, t + 0.45);
-      out.gain.setValueAtTime(0.55, t + 1.95);
-      out.gain.exponentialRampToValueAtTime(0.0001, t + 2.3);
-      var bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1300; bp.Q.value = 0.55;
-      bp.connect(out); out.connect(R.dry);
-      var s = c.createGain(); s.gain.value = 0.2; out.connect(s); s.connect(R.send);
-      var B = 0.23, k;                                /* eighth notes */
-      var bass = [98, 0, 73.42, 0, 98, 0, 73.42, 0, 98, 0];  /* the oom */
-      for (k = 0; k < bass.length; k++) {
-        if (!bass[k]) continue;
-        var bo = c.createOscillator(); bo.type = 'triangle'; bo.frequency.value = bass[k];
-        var bg = c.createGain();
-        var bt = t + 0.15 + k * B;
-        bg.gain.setValueAtTime(0.0001, bt);
-        bg.gain.exponentialRampToValueAtTime(0.13, bt + 0.015);
-        bg.gain.exponentialRampToValueAtTime(0.0001, bt + 0.16);
-        bo.connect(bg); bg.connect(bp);
-        bo.start(bt); bo.stop(bt + 0.18);
-      }
-      for (k = 1; k < 10; k += 2) {                   /* the pah */
-        var st = t + 0.15 + k * B;
-        [293.66, 369.99, 440].forEach(function (f) {
-          var so = c.createOscillator(); so.type = 'square'; so.frequency.value = f;
-          var sg = c.createGain();
-          sg.gain.setValueAtTime(0.0001, st);
-          sg.gain.exponentialRampToValueAtTime(0.02, st + 0.008);
-          sg.gain.exponentialRampToValueAtTime(0.0001, st + 0.07);
-          so.connect(sg); sg.connect(bp);
-          so.start(st); so.stop(st + 0.09);
-        });
-      }
-      /* the lead: one merry phrase, too much vibrato */
-      var vib = c.createOscillator(); vib.frequency.value = 6.8;
-      var vg = c.createGain(); vg.gain.value = 14;
-      vib.connect(vg); vib.start(t); vib.stop(t + 2.1);
-      var mel = [[587.33, 0, 1.5], [698.46, 1.5, 0.5], [783.99, 2, 2], [698.46, 4, 1], [659.25, 5, 1], [587.33, 6, 2], [783.99, 8, 1.4]];
-      for (k = 0; k < mel.length; k++) {
-        var mo = c.createOscillator(); mo.type = 'sawtooth'; mo.frequency.value = mel[k][0];
-        vg.connect(mo.frequency);
-        var mlp = c.createBiquadFilter(); mlp.type = 'lowpass'; mlp.frequency.value = 2100; mlp.Q.value = 2.2;
-        var mg = c.createGain();
-        var mt = t + 0.15 + mel[k][1] * B, md = mel[k][2] * B;
-        mg.gain.setValueAtTime(0.0001, mt);
-        mg.gain.exponentialRampToValueAtTime(0.06, mt + 0.02);
-        mg.gain.setValueAtTime(0.06, mt + md - 0.03);
-        mg.gain.exponentialRampToValueAtTime(0.0001, mt + md);
-        mo.connect(mlp); mlp.connect(mg); mg.connect(bp);
-        mo.start(mt); mo.stop(mt + md + 0.02);
-      }
-      /* shellac: crackle rides the seeded noise, ticking at the rpm */
-      var ns = c.createBufferSource(); ns.buffer = noiseBuf(c, 2.2);
-      var hp = c.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 2400;
-      var ng = c.createGain(); ng.gain.value = 0.02;
-      var crk = c.createOscillator(); crk.type = 'square'; crk.frequency.value = 8.3;
-      var cg = c.createGain(); cg.gain.value = 0.01;
-      crk.connect(cg); cg.connect(ng.gain);
-      ns.connect(hp); hp.connect(ng); ng.connect(bp);
-      ns.start(t); ns.stop(t + 2.3); crk.start(t); crk.stop(t + 2.3);
     }
   };
 
@@ -2432,6 +2402,8 @@
   /* headless self-test: where the crossings live */
   window.__probeEggs = function () {
     return { ready: EGG.ready, crossing: crossingNow, poll: goPoll ? goPoll.key : null,
+             photBand: { y0: PHOT_BAND.y0, y1: PHOT_BAND.y1, hover: photHover },
+             ask: askCrossing,
       home: { x: EGG.home.x, y: EGG.home.y, r: EGG.home.r, dots: EGG.home.dots ? EGG.home.dots.length : 0 },
       ridge: { x: EGG.ridge.x, y: EGG.ridge.y, len: EGG.ridge.len } };
   };
@@ -2439,7 +2411,7 @@
   /* headless self-test: render one event offline, report its signature */
   window.__probeSound = function (name, secs) {
     try {
-      var durs = { bed: 4, hall: 2.5, plate: 2, contact: 2, transit: 1.5, chart: 1.5, warp: 1.5, lock: 1.2, almanac: 1.5, zoomIn: 1.2, zoomOut: 1.2, broadcast: 2.4 };
+      var durs = { bed: 4, hall: 2.5, plate: 2, contact: 2, transit: 1.5, chart: 1.5, warp: 1.5, lock: 1.2, almanac: 1.5, zoomIn: 1.2, zoomOut: 1.2 };
       var dur = secs || durs[name] || 1.2;
       var OC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
       var o = new OC(1, Math.ceil(44100 * dur), 44100);
@@ -3603,6 +3575,7 @@
       else { guideStep++; renderGuideStep(); }
     });
     $('gd-skip').addEventListener('click', hideGuide);
+    wirePhotometer();
     /* (f) the four-colour insert under the mission papers */
     var cp = $('comicpeek');
     if (cp) cp.addEventListener('click', function () {

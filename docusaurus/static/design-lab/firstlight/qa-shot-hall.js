@@ -1,0 +1,20 @@
+'use strict';
+const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_modules/playwright-core');
+const { spawn } = require('child_process');
+const path = require('path');
+(async () => {
+  const srv = spawn('node', [path.join(__dirname, 'serve.js')]);
+  const port = await new Promise(res => srv.stdout.on('data', d => { const m = String(d).match(/PORT=(\d+)/); if (m) res(+m[1]); }));
+  const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => window.__diag && window.__diag.state !== 'boot');
+  await page.keyboard.press('h');
+  await page.waitForTimeout(900);
+  await page.screenshot({ path: path.join(__dirname, 'iterlog', 'r2-hall.png') });
+  await page.evaluate(() => { document.getElementById('hh-wall').scrollTop = 0; });
+  await page.waitForTimeout(250);
+  await page.screenshot({ path: path.join(__dirname, 'iterlog', 'r2-hall-top.png') });
+  await browser.close();
+  srv.kill();
+})().catch(e => { console.error(e); process.exit(1); });
