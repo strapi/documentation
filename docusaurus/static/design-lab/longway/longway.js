@@ -44,7 +44,7 @@ const WX = {
      rainbow when a shower clears under a low sun. All eased, no pops. */
   snow: 0, snowCover: 0, fog: 0, storm: 0,
   flashT: -1e9, boltNext: 0, bolts: 0, stormKey: '',
-  stormUntil: 0, thunderAt: 0, dogStartled: false, wetPeak: 0,
+  stormUntil: 0, thunderAt: 0, thunder2At: 0, thunder2X: 0, dogStartled: false, wetPeak: 0,
   rbA: 0, rbAt: -1e9, rbs: 0,
   snows: 0, fogs: 0, storms: 0
 };
@@ -2761,6 +2761,11 @@ function updateDog(dt) {
       DOG.ran = 0; DOG.gapMax = 0;      /* the sprint earned the pant, not a catch-up bark */
       AUD.cuBarkAt = Math.max(AUD.cuBarkAt || 0, S.t + 8);
       DOG.heelHold = S.t + 3;           /* she settles AT HEEL, not back out front */
+      /* (2026-09-07, owner) ONE BARK AS SHE ARRIVES. She already answers from
+         wherever she was, far off, the moment she is called; this is the other
+         half of it, the single bark she gives when she drops in at your feet.
+         One, not a volley, and still nothing at all on the shore. */
+      if (!S.atLE) dogVoiceNow('dogbark', DOG.x, 0.9);
       /* light happy panting, fading as she calms — kept off the shore */
       if (!S.atLE) dogVoiceNow('dogpantfade', DOG.x);
       DOG.pose = 'sit'; DOG.moving = false;
@@ -6669,7 +6674,8 @@ const DOG_GAIN = {
   yip:   0.045,   /* one small yip: she found something */
   sigh:  0.038,   /* contented, sitting by the reader   */
   shake: 0.050,   /* a shake-off in mist or in rain     */
-  bark:  0.048    /* rare, and gentle                   */
+  bark:  0.048    /* kept for the record: her bark is synthesised now, 
+                     with its own level, and no longer reads this table */
 };
 function dogGain(voice, v) { return v * Math.min(DOG_GAIN[voice], DOG_CEIL); }
 /* EVERY DOG VOICE IS BOOKED THROUGH HERE, so that "never twice in a row"
@@ -6949,22 +6955,59 @@ function audEv(kind, wx, vol) {
        the gust's lawful peak — the wind law caps the walker exactly as it
        caps her dog. Counted and logged like every voice. */
     case 'whistle': {
+      /* (2026-09-07, owner) A WHISTLE FOR A DOG, not a tin one. The old call was
+         two triangle notes at 1180 and 1470 Hz, which reads as a penny whistle
+         played politely. A two-finger whistle is almost a pure tone, higher, up
+         where a dog hears best; it starts on a breath of air; and the recall has
+         a shape everybody knows - a short chirp up, then a long one that swoops
+         up and falls away. That is what this makes now. */
       const cW = AUD.ctx, tW = cW.currentTime;
-      const noteW = (f0, f1, at, dur) => {
-        const o = cW.createOscillator(); o.type = 'triangle';
-        o.frequency.setValueAtTime(f0, tW + at);
-        o.frequency.linearRampToValueAtTime(f1, tW + at + dur);
-        const gWh = cW.createGain();
-        const pkW = Math.max(0.0002, GUST_PEAK * 0.98 * v);
-        gWh.gain.setValueAtTime(0.0001, tW + at);
-        gWh.gain.linearRampToValueAtTime(pkW, tW + at + 0.035);
-        gWh.gain.setValueAtTime(pkW, tW + at + Math.max(0.05, dur - 0.06));
-        gWh.gain.linearRampToValueAtTime(0.0001, tW + at + dur);
-        o.connect(gWh); gWh.connect(AUD.sfx.gain);
-        o.start(tW + at); o.stop(tW + at + dur + 0.03);
+      const pkW = Math.max(0.0002, GUST_PEAK * 1.02 * v);
+      /* the air before the tone: every real whistle leaks some */
+      const breath = (at, dur, amt) => {
+        if (!AUD.noise) return;
+        const n = cW.createBufferSource(); n.buffer = AUD.noise; n.loop = true;
+        const bp = cW.createBiquadFilter(); bp.type = 'bandpass';
+        bp.frequency.value = 2500; bp.Q.value = 1.0;
+        const gN = cW.createGain();
+        gN.gain.setValueAtTime(0.0001, tW + at);
+        gN.gain.linearRampToValueAtTime(pkW * amt, tW + at + 0.014);
+        gN.gain.exponentialRampToValueAtTime(0.0001, tW + at + dur);
+        n.connect(bp); bp.connect(gN); gN.connect(AUD.sfx.gain);
+        n.start(tW + at); n.stop(tW + at + dur + 0.03);
       };
-      noteW(1180, 1320, 0, 0.17);           /* the short note…       */
-      noteW(1470, 1650, 0.21, 0.26);        /* …then the rising call */
+      /* the tone: a sine carries it, with a whisper of second harmonic for the
+         edge that makes a whistle carry across a valley */
+      const tone = (at, dur, bend, vib) => {
+        const o = cW.createOscillator(); o.type = 'sine';
+        const h = cW.createOscillator(); h.type = 'sine';
+        o.frequency.setValueAtTime(bend[0][1], tW + at);
+        h.frequency.setValueAtTime(bend[0][1] * 2, tW + at);
+        for (let i = 1; i < bend.length; i++) {
+          const when = tW + at + dur * bend[i][0];
+          o.frequency.exponentialRampToValueAtTime(bend[i][1], when);
+          h.frequency.exponentialRampToValueAtTime(bend[i][1] * 2, when);
+        }
+        if (vib) {   /* a whistle is a mouth, and a mouth is never quite steady */
+          const lfo = cW.createOscillator(); lfo.frequency.value = 5.4;
+          const lg = cW.createGain(); lg.gain.value = vib;
+          lfo.connect(lg); lg.connect(o.frequency);
+          lfo.start(tW + at); lfo.stop(tW + at + dur + 0.05);
+        }
+        const g = cW.createGain(), gh = cW.createGain();
+        gh.gain.value = 0.13;
+        g.gain.setValueAtTime(0.0001, tW + at);
+        g.gain.linearRampToValueAtTime(pkW, tW + at + 0.016);          /* snap on */
+        g.gain.setValueAtTime(pkW, tW + at + Math.max(0.04, dur - 0.05));
+        g.gain.exponentialRampToValueAtTime(0.0001, tW + at + dur);
+        o.connect(g); h.connect(gh); gh.connect(g); g.connect(AUD.sfx.gain);
+        o.start(tW + at); o.stop(tW + at + dur + 0.03);
+        h.start(tW + at); h.stop(tW + at + dur + 0.03);
+      };
+      breath(0, 0.10, 0.34);
+      tone(0, 0.155, [[0, 1460], [0.55, 2380], [1, 2440]], 0);          /* wheet… */
+      breath(0.215, 0.13, 0.28);
+      tone(0.215, 0.40, [[0, 1680], [0.3, 2660], [1, 1880]], 26);       /* …wheeeuw */
       break;
     }
     case 'dogyip':
@@ -6973,8 +7016,56 @@ function audEv(kind, wx, vol) {
       audPlayBuf(audVariant('dog_sigh'), dogGain('sigh', v), 0.90 + Math.random() * 0.14, pan); break;
     case 'dogshake':
       audPlayBuf(audVariant('dog_shake'), dogGain('shake', v), 0.92 + Math.random() * 0.16, pan); break;
-    case 'dogbark':
-      audPlayBuf(audVariant('dog_bark'), dogGain('bark', v), 0.96 + Math.random() * 0.11, pan); break;
+    /* (2026-09-07, owner) HER BARK, SYNTHESISED. "On ne l'entend presque pas
+       et ca ne ressemble pas a un aboiement." The sample was both: booked at
+       0.048 under a ceiling derived from its own peak, and not much like a dog
+       when it did come through. A bark is a short shout: a hard consonant of
+       air, then a voiced body that falls in pitch through two throat formants,
+       gone inside a quarter second. Synthesised here, the same discipline as
+       every other voice on this trail, and it carries now - twice the old
+       level and then some, sitting where the thunder sits. */
+    case 'dogbark': {
+      const cB = AUD.ctx, tB = cB.currentTime;
+      const pkB = Math.max(0.0002, GUST_PEAK * 2.0 * v);
+      const f0 = 330 + Math.random() * 60;         /* no two barks alike */
+      const out = cB.createGain();
+      out.gain.setValueAtTime(0.0001, tB);
+      out.gain.linearRampToValueAtTime(pkB, tB + 0.007);        /* a bark starts at once */
+      out.gain.setValueAtTime(pkB, tB + 0.055);
+      out.gain.exponentialRampToValueAtTime(pkB * 0.28, tB + 0.13);
+      out.gain.exponentialRampToValueAtTime(0.0001, tB + 0.26);
+      if (cB.createStereoPanner) { const pB = cB.createStereoPanner(); pB.pan.value = pan;
+        out.connect(pB); pB.connect(AUD.sfx.gain); } else out.connect(AUD.sfx.gain);
+      /* the voice: a saw falling away, read through a throat */
+      const o = cB.createOscillator(); o.type = 'sawtooth';
+      o.frequency.setValueAtTime(f0 * 1.28, tB);
+      o.frequency.exponentialRampToValueAtTime(f0, tB + 0.045);
+      o.frequency.exponentialRampToValueAtTime(f0 * 0.72, tB + 0.24);
+      const mk = (hz, q, amp) => {
+        const bp = cB.createBiquadFilter(); bp.type = 'bandpass';
+        bp.frequency.value = hz; bp.Q.value = q;
+        const g = cB.createGain(); g.gain.value = amp;
+        o.connect(bp); bp.connect(g); g.connect(out);
+      };
+      mk(820 + Math.random() * 120, 4.5, 1.0);      /* the first formant  */
+      mk(1900 + Math.random() * 260, 6.5, 0.55);    /* the second, the edge */
+      const body = cB.createGain(); body.gain.value = 0.22;
+      o.connect(body); body.connect(out);           /* a little raw chest  */
+      o.start(tB); o.stop(tB + 0.30);
+      /* the consonant: a burst of air at the front of it */
+      if (AUD.noise) {
+        const n = cB.createBufferSource(); n.buffer = AUD.noise; n.loop = true;
+        const nb = cB.createBiquadFilter(); nb.type = 'bandpass';
+        nb.frequency.value = 1500; nb.Q.value = 0.9;
+        const ng = cB.createGain();
+        ng.gain.setValueAtTime(0.0001, tB);
+        ng.gain.linearRampToValueAtTime(0.85, tB + 0.006);
+        ng.gain.exponentialRampToValueAtTime(0.0001, tB + 0.035);
+        n.connect(nb); nb.connect(ng); ng.connect(out);
+        n.start(tB); n.stop(tB + 0.06);
+      }
+      break;
+    }
     /* --- the sleeper, and the smaller sleeper beside her --- */
     case 'snore':
       audPlayBuf(audVariant('snore'), v * SNORE_GAIN, 0.94 + Math.random() * 0.13, pan); break;
@@ -8335,9 +8426,23 @@ function tickWeather(dt) {
       WX.thunderAt = S.t + 0.5 + Math.random() * 1.1;
       needsDraw = true;
     }
+    /* the second clap, when the bolt earned one */
+    if (WX.thunder2At && S.t > WX.thunder2At) {
+      WX.thunder2At = 0;
+      audEv('thunder', WX.thunder2X, 3);      /* three times the first */
+    }
     if (WX.thunderAt && S.t > WX.thunderAt) {
       WX.thunderAt = 0;
       audEv('thunder', S.x + (Math.random() - 0.5) * 700);
+      /* (2026-09-07, owner) THE SECOND CLAP. About one bolt in five, the roll
+         is answered by a second that lands three times harder, a beat or two
+         behind the first. It is the crack that arrives after the rumble when
+         the strike was closer than it sounded, and it is why a storm is not
+         a loop. Not on the shore, which keeps its own quiet. */
+      if (!S.atLE && Math.random() < 0.2) {
+        WX.thunder2At = S.t + 0.9 + Math.random() * 1.4;
+        WX.thunder2X = S.x + (Math.random() - 0.5) * 380;   /* nearer, so less spread */
+      }
       /* the dog startles once a storm, then settles */
       if (!WX.dogStartled && DOG.on && !S.atLE && Math.abs(DOG.x - S.x) < 560) {
         WX.dogStartled = true;

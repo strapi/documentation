@@ -297,3 +297,34 @@ effects, which are not his subject, so the layers now carry their own:
 when the layer is faded back on.
 
 Measured in play: music 0.5, effects 1, master unchanged at 0.9.
+
+## 2026-09-07 · the whistle, her bark, and a second clap
+
+**The whistle was a penny whistle.** Two triangle notes at 1180 and 1470 Hz,
+played politely. Nobody calls a dog like that. A two-finger whistle is almost a
+pure tone, higher, up where a dog hears best; it leaks air at the onset; and the
+recall has a shape everyone knows, a short chirp up and then a long one that
+swoops up and falls away. Rebuilt as exactly that: sine with a whisper of second
+harmonic for the carry, a bandpassed breath at each onset, 1460 to 2440 for the
+chirp and 1680 to 2660 to 1880 for the call, with a slow vibrato on the long
+note because a mouth is never quite steady. Measured peak: 2391 Hz.
+
+**Her bark, synthesised.** The owner: *"on ne l'entend presque pas, et ça ne
+ressemble pas à un aboiement."* It was both, and the two faults were one: the
+sample was booked at 0.048 under a ceiling derived from the file's own peak, and
+it did not sound like a dog when it did get through. A bark is a short shout, a
+hard consonant of air and then a voiced body falling in pitch through two throat
+formants, gone inside a quarter second. Synthesised now, the same discipline as
+every other voice on this trail, with its own level rather than the file table's,
+sitting where the thunder sits. Measured peak: 844 Hz, the first formant.
+
+**And she answers twice.** She already barked from wherever she was, the moment
+she was called. She now gives one more as she drops in at your feet. One, not a
+volley, and still nothing at all on the shore.
+
+**A second clap, about one bolt in five.** Three times the first, a beat or two
+behind it: the crack that arrives after the rumble when the strike was closer
+than it sounded. Measured against a plain roll, it carries 63 percent more
+energy. Not on the shore.
+
+`probe-voices.js` measures all four through the SFX analyser.
