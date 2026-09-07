@@ -282,3 +282,26 @@ They wrap to two lines now, at a tighter leading and letter-spacing, in a box
 widened from 84 to 94 percent of its pocket. All sixteen measured: none clipped
 in either direction, eight on two lines, and no tag overlaps a neighbouring
 pocket.
+
+## 2026-09-07 · the phantom battery is re-cut to the law it should be guarding
+
+Two of its checks had been failing, and neither was a defect in the book.
+
+`ENTER ON AD` ran straight after the tap check, which by then had carried the
+reading into a different issue, so it measured a different advertisement and
+failed for a reason that had nothing to do with ENTER. Tested first, from a
+clean state, it passes.
+
+`TAP ON AD` demanded that a tap on a house ad ADVANCE the reading rather than
+navigate. That law was superseded on the owner's instruction: *"en guided view,
+les elements cliquables ne le sont plus... on ne peut plus cliquer sur la cover
+d'un autre volume de comics."* An advertisement you cannot press is not an
+advertisement. The check now asserts the ad is FOLLOWED, and a new one beside
+it asserts that a tap on ordinary art still turns the beat and not the issue,
+which is the thing the pass-through could have broken.
+
+Three traps fixed in the probe while it was open: `g` TOGGLES guided view, so
+pressing it again after re-opening an issue turned it off and the walk found no
+ad; the walk needs resetting to the first beat or a stale position hides the ad;
+and a tap must aim at the ad's own centre, because guided view frames each beat
+differently and a hardcoded 720,450 can miss the panel. Five checks, all pass.
