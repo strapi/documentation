@@ -273,3 +273,30 @@ were the provenance sentences in the source comments, which named it. Those
 sentences now say what changed without naming it, and the full provenance stays
 in this changelog. Carta Strapiana keeps its leadline call, `"By the deep, N!"`,
 which is the sounding cry the sea was named after and not a reference to it.
+
+## 2026-09-07 · THE QUIET OPENING, and the sirens stop overlapping the sea
+
+The owner: *"les musiques que j'ai creees avec suno se declenchent trop tot, il
+faudrait qu'elles arrivent au moins 3 a 5 minutes apres qu'on ait commence
+l'application... je dirais meme qu'elles doivent arriver apres qu'on ait lu au
+moins 4 pages"*, and *"elles ne doivent pas se chevaucher avec les autres
+planches sonores"*.
+
+**Two gates, and BOTH must be open.** Four minutes since this page loaded, the
+middle of the three-to-five window he named, AND four distinct pages read. Both
+are counted from the load, never from a stored visit, so an arrival is quiet
+every single time, including for a returning reader whose islands are already
+charted. Until both open, the lure stays at nothing and the anchoring song does
+not begin: `sirenTick` will not raise her and `sirenAnchor` returns early.
+
+**The ambient bus.** Wind, sea and rain now pass through one gain that rests at
+1 and sits after the bed's own laws, so nothing in the mix changes when it is
+idle. The sirens lean on it: the bed steps back in proportion as the lure rises,
+and all the way back to 0.12 while the song is sung whole, coming up again over
+two seconds when she finishes. The two songs already handed over to each other;
+now neither shares the air with the water.
+
+`probe-siren-gate.js` — twelve checks, all passing: the gate shut on arrival with
+the lure at zero and no song; time alone not enough; three pages not enough; the
+fourth opening it and a re-read counting once; the bus resting at 1, stepping to
+0.363 within two seconds of the song starting and recovering to 0.901 after it.
