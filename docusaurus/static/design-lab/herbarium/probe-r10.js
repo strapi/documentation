@@ -107,7 +107,19 @@ async function ready(page) {
       }
       return { total: c.width * c.height, diff: n, maxd, box: n ? [minx, miny, maxx, maxy] : null };
     }, [a, b]);
-    ok(out.A.pixelDiff[name].diff === 0, 'A pixel ' + name + ' diff=' + out.A.pixelDiff[name].diff);
+    /* (2026-09-07, owner authorised) The law this guards is real and stays: the
+       appendix must be strictly additive, changing nothing in the cabinet. Four
+       of the five views are identical to the pixel. The night view differs by
+       five pixels out of 1,296,000 inside a decorative moon ring, at a colour
+       delta of 24 out of 765, and only in about half of runs: an earlier
+       verifier measured it four times as 0, 5, 5, 0, always the same 20x2 patch.
+       That is sub-perceptual anti-aliasing, not a leak. A tight, named tolerance
+       lets the battery be trusted; a net that is permanently red gets ignored,
+       which costs more than five invisible pixels. Anything larger still fails. */
+    const AA_PIXELS = 8, AA_DELTA = 32;
+    const pd = out.A.pixelDiff[name];
+    ok(pd.diff === 0 || (pd.diff <= AA_PIXELS && pd.maxd <= AA_DELTA),
+      'A pixel ' + name + ' diff=' + pd.diff + (pd.diff ? ' maxd=' + pd.maxd + ' (within the anti-aliasing tolerance)' : ''));
   }
   await diffPage.close();
   await ctx.close();

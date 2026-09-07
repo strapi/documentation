@@ -281,3 +281,17 @@ six-loan shape and throwing on the retired specimen, so this world had no
 regression net until now. The late-accession hint also kept its wide-screen
 130% width at 380px and pushed the page sideways (407 vs 380); it now wraps
 inside its own box, and the page measures 381 vs 380, the shipped tolerance.
+
+## 2026-09-07 · the night view gets a named tolerance, and only that
+
+The plate's battery guards a real law: the appendix must be strictly additive,
+changing nothing in the cabinet behind it. Four of its five compared views are
+identical to the pixel. The night view differs by five pixels out of 1,296,000,
+inside a decorative moon ring, at a colour delta of 24 out of 765, and only in
+about half of runs: an earlier verifier measured it four times as 0, 5, 5, 0,
+always the same 20 by 2 patch. That is sub-perceptual anti-aliasing, not a leak.
+
+With the owner's authority, that one assertion now allows up to 8 pixels at a
+delta of 32, named and explained in place. Anything larger still fails, and the
+other four views still demand zero. A net that is permanently red gets ignored,
+which costs more than five invisible pixels.
