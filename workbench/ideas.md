@@ -126,4 +126,4 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 
 ## Across the worlds
 
-- [x] Audit text clipping across every world. (2026-09-07: swept all seven live, revealing hidden UI and measuring real overflow. Five are clean; two are not, below.)
+- [x] Audit text clipping across every world. (2026-09-07: swept all seven live, revealing hidden UI and measuring real overflow. Five are clean; the two that are not have their own open lines in the working list.)
