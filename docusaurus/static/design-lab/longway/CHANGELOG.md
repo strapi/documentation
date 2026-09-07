@@ -283,3 +283,17 @@ Space now does exactly what Enter does here, no more. Nothing crosses unless
 the notice is up AND a word holds focus. Proven both ways in a probe: Space on
 NO closes the notice and stays on the trail; Space on YES crosses to the Golden
 Shore.
+
+## 2026-09-07 · the music plays at half
+
+The owner: *"diminue le volume de toute la musique, quel que soit le fichier
+joué, de moitié."*
+
+Everything musical meets at one node before the master, the synthesised score
+through `MUS.swell` and the theme file through its own envelope, so one level
+governs the lot whatever is playing. That level was shared with the sound
+effects, which are not his subject, so the layers now carry their own:
+`LAYER_LEVEL = { sfx: 1, mus: 0.5 }`, used both when the graph is built and
+when the layer is faded back on.
+
+Measured in play: music 0.5, effects 1, master unchanged at 0.9.

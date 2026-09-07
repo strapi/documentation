@@ -6773,7 +6773,7 @@ function audEnsureCtx() {
   for (const which of ['sfx', 'mus']) {
     const L = AUD[which];
     L.gain = c.createGain();
-    L.gain.gain.value = L.on ? 1 : 0;
+    L.gain.gain.value = L.on ? LAYER_LEVEL[which] : 0;
     L.an = c.createAnalyser(); L.an.fftSize = 2048;
     L.gain.connect(L.an); L.an.connect(AUD.master);
   }
@@ -7757,6 +7757,13 @@ function audCheckComm(ci) {
    keep being scheduled, the theme keeps playing — so turning it back on
    lands you inside whatever the trail holds at that instant, eased in over
    AUD_FADE_IN and never cut in. */
+/* (2026-09-07, owner) THE MUSIC PLAYS AT HALF. "Diminue le volume de toute la
+   musique, quel que soit le fichier joue, de moitie." Everything musical meets
+   at AUD.mus before the master - the synthesised score through MUS.swell, and
+   the theme file through its own envelope - so one level governs the lot,
+   whatever is playing. The sound effects are not his subject and keep theirs. */
+const LAYER_LEVEL = { sfx: 1, mus: 0.5 };
+
 function setAudioLayer(which, on) {
   const L = AUD[which];
   L.on = on;
@@ -7767,7 +7774,7 @@ function setAudioLayer(which, on) {
     const g = L.gain.gain;
     g.cancelScheduledValues(t);
     g.setValueAtTime(g.value, t);
-    if (on) g.linearRampToValueAtTime(1, t + AUD_FADE_IN);
+    if (on) g.linearRampToValueAtTime(LAYER_LEVEL[which] || 1, t + AUD_FADE_IN);
     else {
       g.linearRampToValueAtTime(0, t + AUD_FADE_OUT);      /* eased down… */
       g.setValueAtTime(0, t + AUD_FADE_OUT);               /* …to a true zero */
