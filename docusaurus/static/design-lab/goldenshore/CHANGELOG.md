@@ -986,3 +986,24 @@ pressed plants. Go with it?"*
 
 The six names that remain in this file are in a source comment, which no player
 reads and which a maintainer needs.
+
+## 2026-09-07 · the footsteps stop sounding like a bicycle
+
+The owner: *"les bruits de pas ne sont pas réalistes, on dirait limite un vélo,"*
+and then *"fais les varier en fonction du sol."* The second half was already
+true: eight recipes, one per surface the provinces put underfoot, chosen by
+`surfaceAt` from the pier boards to the Wall's scree. The fault was elsewhere,
+and it was two faults compounding.
+
+Every footfall was ONE filtered click with a six-millisecond attack. And the
+gait fired on an exact interval, `stepAcc > 0.78`, every time. An even train of
+identical ticks is a freewheel, which is precisely what he heard.
+
+A real footfall is two sounds: a heel that lands, and a toe that scuffs forty
+milliseconds behind it. Every step is now both, each surface saying what the two
+are made of; the level, the filter frequency and the heel-to-toe gap are drawn
+fresh at every step; the feet alternate across the stereo field; and the stride
+itself is jittered where it is counted, 0.70 to 0.87, so the rhythm breathes.
+The pine litter cracks under about half of steps and not the others.
+
+Nothing is louder than it was. It simply stopped being a machine.

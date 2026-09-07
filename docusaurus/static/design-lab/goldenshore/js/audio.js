@@ -13,7 +13,7 @@ export function initAudio() {
     duck: null, ready: false, t: 0,
     surf: [], wind: null, rain: null, nodes: {},
     nextCicada: 0, nextGull: 0, nextBell: 0, nextTick: 0,
-    stepAcc: 0,
+    stepAcc: 0, stepNext: 0.78, footL: false,
   };
 
   function noiseBuffer(ctx, seconds = 2, brown = false) {
@@ -100,9 +100,9 @@ export function initAudio() {
     g.gain.linearRampToValueAtTime(peak, t0 + a);
     g.gain.exponentialRampToValueAtTime(0.0001, t0 + a + d);
   }
-  function burst(filterCfg, peak, dur, pan = 0) {
+  function burst(filterCfg, peak, dur, pan = 0, delay = 0) {
     if (!S.ready || !S.on) return;
-    const ctx = S.ctx, t0 = ctx.currentTime;
+    const ctx = S.ctx, t0 = ctx.currentTime + delay;
     const src = ctx.createBufferSource(); src.buffer = S.whiteBuf;
     src.playbackRate.value = 0.7 + Math.random() * 0.6;
     const f = ctx.createBiquadFilter();
@@ -166,21 +166,63 @@ export function initAudio() {
       const f0 = 880 + Math.random() * 480;
       tone(f0, 'sawtooth', 0.028, 0.03, 0.42, pan, f0 * 0.62);
     },
+    /* (2026-09-07, owner) THE FOOTSTEPS WERE A BICYCLE. "On dirait limite un
+       vélo." Two faults, and they compounded. Every footfall was a single
+       filtered click with a six-millisecond attack, and the gait fired on an
+       exact interval, so the ear heard an even train of ticks: a freewheel.
+       A real footfall is TWO sounds, a heel that lands and a toe that scuffs
+       forty milliseconds behind it, and no two are alike. So: every step is a
+       heel and a scuff, each surface says what the two are made of, gain and
+       filter and offset are drawn fresh every time, and the feet alternate
+       across the stereo field. The stride itself is jittered where it is
+       counted. Nothing here is louder than it was; it is simply not a machine. */
     step(surface) {
-      // one recipe per surface the provinces actually put underfoot
+      const r = (a, b) => a + Math.random() * (b - a);
+      S.footL = !S.footL;
+      const pan = S.footL ? -0.13 : 0.13;          /* left foot, right foot */
+      const lvl = r(0.78, 1.22);                   /* nobody treads twice the same */
+      const gap = r(0.030, 0.055);                 /* heel, then the toe behind it */
+      const j = (f) => f * r(0.86, 1.16);          /* the ground is never uniform */
       const R = {
-        boards: () => { burst({ type: 'lowpass', f: 520, q: 1.4 }, 0.16, 0.11); tone(88, 'sine', 0.07, 0.003, 0.1); },
-        cobbles: () => burst({ type: 'bandpass', f: 1500, q: 1.6 }, 0.11, 0.07),
-        dirt: () => burst({ type: 'lowpass', f: 300, q: 0.8 }, 0.11, 0.09),
-        grass: () => burst({ type: 'highpass', f: 2100, q: 0.6 }, 0.06, 0.09),
+        boards: () => {
+          burst({ type: 'lowpass', f: j(520), q: 1.4 }, 0.15 * lvl, 0.10, pan);
+          tone(j(86), 'sine', 0.062 * lvl, 0.004, 0.11, pan);        /* the plank answers */
+          burst({ type: 'bandpass', f: j(1750), q: 0.9 }, 0.045 * lvl, 0.07, pan, gap);
+        },
+        cobbles: () => {
+          burst({ type: 'lowpass', f: j(360), q: 0.9 }, 0.075 * lvl, 0.055, pan);
+          burst({ type: 'bandpass', f: j(1500), q: 1.6 }, 0.10 * lvl, 0.06, pan, gap * 0.6);
+        },
+        dirt: () => {
+          burst({ type: 'lowpass', f: j(300), q: 0.8 }, 0.105 * lvl, 0.085, pan);
+          burst({ type: 'bandpass', f: j(900), q: 0.7 }, 0.04 * lvl, 0.06, pan, gap);
+        },
+        grass: () => {
+          burst({ type: 'highpass', f: j(2100), q: 0.6 }, 0.055 * lvl, 0.085, pan);
+          burst({ type: 'lowpass', f: j(260), q: 0.7 }, 0.045 * lvl, 0.07, pan, gap * 0.5);
+        },
         // harbour and archipelago sand: soft, no ring at all
-        sand: () => burst({ type: 'lowpass', f: 420, q: 0.5 }, 0.09, 0.13),
+        sand: () => {
+          burst({ type: 'lowpass', f: j(420), q: 0.5 }, 0.085 * lvl, 0.12, pan);
+          burst({ type: 'lowpass', f: j(700), q: 0.4 }, 0.05 * lvl, 0.16, pan, gap * 1.3);
+        },
         // pine litter: dry, dead, a hush with a crack in it
-        needles: () => { burst({ type: 'bandpass', f: 3200, q: 0.5 }, 0.05, 0.10); burst({ type: 'lowpass', f: 240, q: 0.7 }, 0.05, 0.07); },
+        needles: () => {
+          burst({ type: 'bandpass', f: j(3200), q: 0.5 }, 0.048 * lvl, 0.09, pan);
+          burst({ type: 'lowpass', f: j(240), q: 0.7 }, 0.048 * lvl, 0.07, pan);
+          if (Math.random() < 0.45) burst({ type: 'bandpass', f: j(5200), q: 2.2 }, 0.035 * lvl, 0.04, pan, gap);
+        },
         // the Wall: loose broken limestone that slides half a step with you
-        scree: () => { burst({ type: 'bandpass', f: 2400, q: 1.1 }, 0.10, 0.16); burst({ type: 'highpass', f: 4200, q: 0.4 }, 0.05, 0.20); },
+        scree: () => {
+          burst({ type: 'bandpass', f: j(2400), q: 1.1 }, 0.095 * lvl, 0.15, pan);
+          burst({ type: 'highpass', f: j(4200), q: 0.4 }, 0.048 * lvl, 0.19, pan, gap * 0.8);
+          burst({ type: 'lowpass', f: j(320), q: 0.8 }, 0.05 * lvl, 0.09, pan);
+        },
         // islet shell sand: brighter and crisper than mainland sand
-        shell: () => burst({ type: 'bandpass', f: 2800, q: 0.8 }, 0.07, 0.10),
+        shell: () => {
+          burst({ type: 'bandpass', f: j(2800), q: 0.8 }, 0.065 * lvl, 0.09, pan);
+          burst({ type: 'lowpass', f: j(480), q: 0.6 }, 0.05 * lvl, 0.10, pan, gap * 0.7);
+        },
       };
       (R[surface] || R.dirt)();
     },
@@ -258,7 +300,12 @@ export function initAudio() {
 
       // footsteps, surface-true
       S.stepAcc += moved || 0;
-      if (S.stepAcc > 0.78) { S.stepAcc = 0; api.step(surface); }
+      /* a stride is never metronomic; the next one is drawn as it is taken */
+      if (S.stepAcc > (S.stepNext || 0.78)) {
+        S.stepAcc = 0;
+        S.stepNext = 0.70 + Math.random() * 0.17;
+        api.step(surface);
+      }
     },
   };
   return api;
