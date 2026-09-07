@@ -332,3 +332,12 @@ at source by `NOT_CHARTED` in `loadData`, because a release note is not a place
 you sail to, so the survey holds 288 islands and always has since that ruling.
 The probe simply never heard about it. Now `CHARTED = 288`, with the reason
 written beside it. PREFIX BOOT: PASS.
+
+## 2026-09-07 · Space answers the focused word on the plate
+
+Same ruling as the rest of the network: a focused button takes Space as a click,
+so the plate honours it exactly as it honours Enter, answering whichever word
+holds focus. It is safe against the spyglass, which also lives on Space:
+`portalKeydown` runs first in the dispatch and returns immediately when no plate
+is open, so the glass path is reached exactly as before and only a raised plate
+ever sees the key.

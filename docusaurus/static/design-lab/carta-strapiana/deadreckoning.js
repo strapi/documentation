@@ -8205,7 +8205,11 @@ function portalAnswer(yes) {
 function portalKeydown(e) {
   if (!portal.open) return false;
   const k = e.key;
-  if (k === 'Enter') {
+  if (k === 'Enter' || k === ' ' || e.code === 'Space') {
+    /* (2026-09-07) Space answers the focused word like Enter, the convention a
+       focused button follows everywhere. Safe here because portalKeydown runs
+       first in the dispatch and swallows the key, so the glass never rises
+       behind the plate. */
     const no = document.activeElement && document.activeElement.id === 'po-no';
     portalAnswer(!no);
     e.preventDefault(); return true;
