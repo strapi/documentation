@@ -332,3 +332,17 @@ the yard is walkable, south, north, east or west, chosen at placement time.
 The yard now sits 6.1 tiles from the sloop along the same strip of waterfront.
 All 60 portal spots still place, zero console errors, and `qa/r19/lampyard.js`,
 the walk that goes to the yard and crosses, still lands on the Golden Shore.
+
+### and the prompts agree on their own house style
+
+The owner, with a screenshot of the sloop: the descriptive line under the title
+was sentence case there and shouting capitals everywhere else, and the sloop is
+the one he wants. *"Titre en majuscules, texte descriptif en dessous en
+minuscules."*
+
+Five hints converted, the sloop's already being right: the funnies rack, the
+observatory dome, the trail gate, the botanist's stall and the lamplighter's
+cart. Case only, not one word rewritten. Titles stay in capitals, and the
+crossing beats are a different surface and were left alone. The golden-hour and
+after-dark variants were already sentence case, which is a fair sign of where
+the house style had been drifting.

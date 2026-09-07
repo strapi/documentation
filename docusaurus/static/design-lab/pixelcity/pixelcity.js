@@ -5293,19 +5293,19 @@ const FOLK_CACHE = {};
    stays in the streets as silent scenery, blind drawn, offering nothing.) */
 const PORTALS = [
   { key: 'secreta', kind: 'funnies', href: '../secreta/',
-    title: 'FOUR-COLOR FUNNIES', hint: 'A SPINNER RACK OF COMICS TURNS IN THE WINDOW',
+    title: 'FOUR-COLOR FUNNIES', hint: 'A spinner rack of comics turns in the window',
     beat: 'THE RACK SPINS · FOUR COLORS BLUR INTO ONE', snd: 'pop' },
   { key: 'cartastrapiana', kind: 'sloop', href: '../cartastrapiana/',
     title: 'THE ENGRAVED SLOOP', hint: 'She sails by an older hand. Board her?',
     beat: 'SHE CASTS OFF · THE ENGRAVING TAKES THE WIND', snd: 'whoosh' },
   { key: 'firstlight', kind: 'observatory', href: '../firstlight/',
-    title: 'THE OBSERVATORY', hint: 'THE DOME SLEEPS TILL DARK',
+    title: 'THE OBSERVATORY', hint: 'The dome sleeps till dark',
     hintNight: 'That star is answering', beat: 'THE SLIT OPENS · THE STAR ANSWERS IN KIND', snd: 'chime' },
   { key: 'longway', kind: 'trailgate', href: '../longway/',
-    title: 'THE TRAIL GATE', hint: 'THE LONG WAY OUT OF TOWN · 319,153 WORDS',
+    title: 'THE TRAIL GATE', hint: 'The long way out of town · 319,153 words',
     beat: 'ONE FOOT AFTER THE OTHER · 319,153 WORDS TO GO', snd: 'whoosh' },
   { key: 'herbarium', kind: 'botanist', href: '../herbarium/',
-    title: 'THE BOTANIST STALL', hint: 'PRESSED FLOWERS IN THE WINDOW · EVERY LEAF KEPT',
+    title: 'THE BOTANIST STALL', hint: 'Pressed flowers in the window · every leaf kept',
     beat: 'A PRESSED FLOWER MARKS YOUR PAGE', snd: 'chime' },
   /* (2026-09-07) THE LAMPLIGHTER'S YARD. The town lights its own lamps at
      dusk; the yard that trims them also keeps the lamps of a coast down the
@@ -5313,7 +5313,7 @@ const PORTALS = [
      somebody tended it. The handcart in the yard is loaded and its shaft
      points west, at the coast road. */
   { key: 'goldenshore', kind: 'lampyard', href: '../goldenshore/',
-    title: "THE LAMPLIGHTER'S YARD", hint: 'THE CART IS LOADED FOR THE COAST ROAD WEST · A LAMP FOR EVERY PAGE',
+    title: "THE LAMPLIGHTER'S YARD", hint: 'The cart is loaded for the coast road west · a lamp for every page',
     hintGolden: 'The lamplighter is leaving now, while the light lasts',
     beat: 'THE CART GOES WEST · THE LIGHT ON THE COAST HAS NOT FINISHED', snd: 'chime' }
 ];
