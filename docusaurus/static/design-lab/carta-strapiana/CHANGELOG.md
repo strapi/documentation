@@ -300,3 +300,26 @@ now neither shares the air with the water.
 the lure at zero and no song; time alone not enough; three pages not enough; the
 fourth opening it and a re-read counting once; the bus resting at 1, stepping to
 0.363 within two seconds of the song starting and recovering to 0.901 after it.
+
+## 2026-09-07 · the featured verse slot is removed
+
+The owner: *"pour les verses, enleve ce mecanisme, je n'avais pas trouve de
+chants de marins qui me plaisent donc j'ai abandonne l'idee."*
+
+The suno folder held two unrelated things under one name. The SIRENS stay: two
+recordings, event-driven, tied to the drowned register and now gated behind the
+quiet opening. The VERSES were something else entirely, a featured shanty that
+would take the deck alone while the crew stood silent, credited by caption, on
+a rotation starting 45 to 90 seconds after load. It never had a recording and
+now never will, so it is gone rather than left waiting: `loadSuno`,
+`playFeatured`, `featured`, `featIx`, `nextFeatureAt` and the trigger in the
+programme loop, plus `holdUntil`, which only `playFeatured` ever set and which
+would otherwise have been a guard that could never fire. The manifest keeps
+only its `sirens` key and the folder README says what the folder now is.
+
+Worth noting for later: had a verse ever been added, it would have arrived
+between 45 and 90 seconds after load, which is precisely what the quiet opening
+was just built to prevent. The two slots were never gated alike.
+
+Re-verified after the removal with `probe-siren-gate.js`: twelve checks, all
+still passing, zero console errors.

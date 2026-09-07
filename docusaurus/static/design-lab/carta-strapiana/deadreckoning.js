@@ -8292,11 +8292,11 @@ const sound = {
      load of this page, never from a stored visit: an arrival is always quiet. */
   sirenQuietMs: 240000,
   sirenQuietPages: 4,
-  bank: [], files: null, credits: null, featured: [], featIx: 0,
+  bank: [], files: null, credits: null,
   crew: 0, nextJoin: 0, joinEvery: 12, wantVoices: 0,
   slotNext: [], active: [],
   lastId: null, lastPlay: null, gram: null, trig: [], lastStart: -1e9,
-  holdUntil: 0, nextFeatureAt: 0, readingOpen: false,
+  readingOpen: false,
   /* A QUIET OPENING (owner order, S4): at first paint only the bed
      breathes. No chant, verse, hum or vocal murmur before the ship has
      first made way under sail AND sixty seconds have passed since boot;
@@ -8352,31 +8352,14 @@ const sound = {
     }
     this.decoding = false;
     diag.voicesLoaded = this.bank.length;
-    this.loadSuno();
     this.loadSirens();
   },
 
-  /* THE SUNO SLOT: drop mp3 files in audio/suno/ with a manifest.json beside
-     them ({ "verses": [{ "file", "title", "by", "gain" }] } - format documented
-     in CREDITS.txt) and they are detected here and woven into the programme as
-     featured verses, each with its credit line spoken on the plate. */
-  async loadSuno() {
-    if (!this.ctx) return;
-    try {
-      const man = await fetch('audio/suno/manifest.json').then(r => r.ok ? r.json() : null);
-      if (!man || !man.verses) return;
-      for (const v of man.verses) {
-        try {
-          const ab = await fetch('audio/suno/' + v.file).then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); });
-          const buf = await this.ctx.decodeAudioData(ab);
-          this.featured.push({ name: 'suno:' + v.file, title: v.title || v.file,
-            by: v.by || 'an unnamed hand', gain: clamp(+v.gain || 0.55, 0.05, 1), buf });
-        } catch (e) { /* a verse that will not decode stays ashore */ }
-      }
-      diag.sunoVerses = this.featured.length;
-      if (this.featured.length && this.ctx) this.nextFeatureAt = this.ctx.currentTime + 45 + Math.random() * 45;
-    } catch (e) { /* no folder, no verses: the bank carries the watch */ }
-  },
+  /* (2026-09-07) THE FEATURED VERSE SLOT IS GONE, at the owner's word: he never
+     found a shanty he liked, so the idea was abandoned rather than left waiting
+     ("pour les verses, enleve ce mecanisme"). The suno folder now holds only the
+     two SIRENS, loaded by loadSirens below, which are a different thing
+     entirely: event-driven, and gated behind the quiet opening. */
 
   build() {
     if (this.ctx) return;
@@ -8776,13 +8759,6 @@ const sound = {
         diag.voicesSinging = this.crew;
       }
     }
-    if (now < this.holdUntil) return;
-    /* a featured verse (the suno slot) takes the deck alone, now and then -
-       never inside the one-voice warm-up */
-    if (!oneLayer && this.featured.length && this.nextFeatureAt && now >= this.nextFeatureAt && this.crew > 0) {
-      this.playFeatured(now);
-      return;
-    }
     for (let s = 0; s < this.crew; s++)
       if (now >= (this.slotNext[s] || 0)) this.sing(s, now);
   },
@@ -8880,29 +8856,6 @@ const sound = {
     return dur;
   },
 
-  playFeatured(now) {
-    const v = this.featured[this.featIx % this.featured.length];
-    this.featIx++;
-    const c = this.ctx;
-    const src = c.createBufferSource();
-    src.buffer = v.buf;
-    const g = c.createGain();
-    g.gain.value = 0;
-    g.gain.setTargetAtTime(v.gain, now, 0.6);
-    const dur = v.buf.duration;
-    g.gain.setTargetAtTime(0, now + Math.max(0.5, dur - 0.9), 0.5);
-    src.connect(g); g.connect(this.mix);
-    src.start(now + 0.05);
-    src.stop(now + dur + 1.5);
-    const rec = { g, src };
-    this.active.push(rec);
-    src.onended = () => { const i = this.active.indexOf(rec); if (i >= 0) this.active.splice(i, 1); };
-    this.holdUntil = now + dur + 2.5;      /* the crew stands silent for the verse */
-    this.lastStart = now;
-    this.nextFeatureAt = now + dur + 90 + Math.random() * 60;
-    this.trig.push({ t: Math.round(now * 100) / 100, id: v.name, slot: 'featured', rate: 1, level: v.gain });
-    caption('The crew takes up "' + v.title + '" - ' + v.by + '.', 5600);
-  },
 
   /* the cable runs out and the hook takes the ground: the one arrival
      one-shot, synthesised like the bed, and it speaks BEFORE the duck settles */
