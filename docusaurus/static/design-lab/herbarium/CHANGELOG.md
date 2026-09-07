@@ -282,16 +282,31 @@ regression net until now. The late-accession hint also kept its wide-screen
 130% width at 380px and pushed the page sideways (407 vs 380); it now wraps
 inside its own box, and the page measures 381 vs 380, the shipped tolerance.
 
-## 2026-09-07 · the night view gets a named tolerance, and only that
+## 2026-09-07 · one plate, and an envelope to open it with
 
-The plate's battery guards a real law: the appendix must be strictly additive,
-changing nothing in the cabinet behind it. Four of its five compared views are
-identical to the pixel. The night view differs by five pixels out of 1,296,000,
-inside a decorative moon ring, at a colour delta of 24 out of 765, and only in
-about half of runs: an earlier verifier measured it four times as 0, 5, 5, 0,
-always the same 20 by 2 patch. That is sub-perceptual anti-aliasing, not a leak.
+Two changes the owner asked for, and they belong together.
 
-With the owner's authority, that one assertion now allows up to 8 pixels at a
-delta of 32, named and explained in place. Anything larger still fails, and the
-other four views still demand zero. A net that is permanently red gets ignored,
-which costs more than five invisible pixels.
+**All six on one plate.** The Golden Shore arrived after the plate was drawn and
+had been filed behind on a late-accession sheet of its own, Appendix II. He
+asked for every specimen gathered abroad to sit together, so Appendix II is
+retired: `sheet2HTML` and `lateLabelHTML` are gone with it, along with the row2
+styles, and the grid is laid three and three again rather than three and two
+with a straggler. The prose follows: six specimens, six loans, six sister
+collections, and a Det. line that now reads *"one plate; two returned loans were
+struck, and the late arrival mounted with the rest"*, which is the whole history
+of this plate in one sentence.
+
+**The plate is not handed over.** It arrives sealed in an envelope, laid paper
+with a flap on the hinge of its own fold and a wax seal that breaks when it
+lifts. The envelope is a real `<button>`, so it opens under Enter or Space as
+readily as a click, carries `aria-expanded`, and the plate is not in the
+document at all until it is opened. Reduced motion gets the same envelope
+without the unfold.
+
+The battery is re-cut around both, and green: `openAppendix` opens the envelope
+before anything measures the plate, a new A2 section proves the plate really is
+shut on arrival and that the keyboard opens it, and the composition assertions
+are back to six on one sheet. Two traps for whoever touches this next: a
+re-render files the plate back into a sealed envelope, so a section that
+navigates must open it again; and the unfold takes 0.9s, so a hover measured too
+early reads the wrong geometry.

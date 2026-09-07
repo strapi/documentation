@@ -35,8 +35,24 @@ function collectErrs(page, bucket) {
   page.on('pageerror', e => out.errors[bucket].push('pageerror: ' + e.message));
   page.on('console', m => { if (m.type() === 'error') out.errors[bucket].push('console: ' + m.text().slice(0, 200)); });
 }
-async function ready(page) {
+async function openAppendix(page) {
+  /* (2026-09-07) The plate arrives sealed now, so anything that measures it has
+     to open the envelope first. Tolerant on purpose: a build without one is not
+     an error here, it is an older build. */
+  try {
+    await page.waitForSelector('#appdxEnv', { timeout: 4000 });
+    await page.evaluate(() => {
+      const e = document.getElementById('appdxEnv');
+      if (e && !e.classList.contains('open')) e.click();
+    });
+    /* the plate unfolds over 0.9s; hovering into it before it settles measures
+       the wrong geometry, which is what ten E failures turned out to be */
+    await page.waitForTimeout(1400);
+  } catch (e) { /* no envelope on this build */ }
+}
+async function ready(page, keepSealed) {
   await page.waitForFunction(() => window.__HERB_READY__ === true, { timeout: 25000 });
+  if (!keepSealed) await openAppendix(page);
 }
 
 (async () => {
@@ -123,6 +139,38 @@ async function ready(page) {
   }
   await diffPage.close();
   await ctx.close();
+
+  /* ============ A2. the envelope keeps the plate shut ============ */
+  {
+    const ctxE = await newCtx(null, true);
+    const pE = await ctxE.newPage();
+    collectErrs(pE, 'A2-envelope');
+    await pE.goto(BASE + '#~all', { waitUntil: 'domcontentloaded' });
+    await ready(pE, true);                      /* deliberately NOT opened */
+    await settle(pE, 700);
+    const sealed = await pE.evaluate(() => {
+      const e = document.getElementById('appdxEnv'), b = document.getElementById('appdxBody');
+      return { isButton: !!e && e.tagName === 'BUTTON', expanded: e && e.getAttribute('aria-expanded'),
+        bodyHidden: b ? b.hidden : null,
+        shown: [...document.querySelectorAll('.appdx-sp')].filter(x => x.getBoundingClientRect().height > 0).length };
+    });
+    out.A2 = { sealed };
+    ok(sealed.isButton, 'A2 the envelope is a real button');
+    ok(sealed.bodyHidden === true && sealed.shown === 0, 'A2 no specimen shows before it is opened (' + sealed.shown + ' visible)');
+    ok(sealed.expanded === 'false', 'A2 it says so to a screen reader');
+    await pE.evaluate(() => document.getElementById('appdxEnv').focus());
+    await pE.keyboard.press('Enter');
+    await pE.waitForTimeout(900);
+    const opened = await pE.evaluate(() => {
+      const e = document.getElementById('appdxEnv'), b = document.getElementById('appdxBody');
+      return { expanded: e.getAttribute('aria-expanded'), hidden: b.hidden,
+        shown: [...document.querySelectorAll('.appdx-sp')].filter(x => x.getBoundingClientRect().height > 0).length };
+    });
+    out.A2.opened = opened;
+    ok(opened.expanded === 'true' && !opened.hidden && opened.shown === 6,
+      'A2 Enter opens it and all six come out (' + opened.shown + ')');
+    await ctxE.close();
+  }
 
   /* ================= B. the loan slip ================= */
   ctx = await newCtx();
@@ -493,6 +541,9 @@ async function ready(page) {
   /* specimens: hrefs and hover hints */
   await page.evaluate(() => { location.hash = '#~all'; });
   await settle(page, 700);
+  /* this section navigated since the last opening, and a re-render files the
+     plate back into a sealed envelope, so open it again before measuring */
+  await openAppendix(page);
   const plate = await page.evaluate(() => {
     return [...document.querySelectorAll('.appdx-sp')].map(x => ({ w: x.dataset.w, href: x.getAttribute('href') }));
   });
@@ -623,35 +674,28 @@ async function ready(page) {
     const grid = getComputedStyle(document.querySelector('.appdx-grid'));
     const label = document.querySelector('.appdx-mainlabel').getBoundingClientRect();
     const cards = [...document.querySelectorAll('.appdx-grid .appdx-sp')].map(x => x.getBoundingClientRect());
-    const lateEl = document.querySelector('.appdx-row2 .appdx-sp');
-    const late2 = document.getElementById('appdx2');
-    const lateInOwnSheet = !lateEl || !late2 ? false : (function () {
-      const l = lateEl.getBoundingClientRect(), s = late2.getBoundingClientRect();
-      return l.left >= s.left - 1 && l.right <= s.right + 1 && l.top >= s.top - 1 && l.bottom <= s.bottom + 1;
-    })();
     const inside = cards.every(c => c.left >= sheet.left - 1 && c.right <= sheet.right + 1 && c.top >= sheet.top - 1 && c.bottom <= sheet.bottom + 1);
     const clearOfLabel = cards.every(c => c.bottom <= label.top + 1 || c.right <= label.left + 1 || c.left >= label.right - 1);
     const sheetCx = sheet.left + sheet.width / 2, labelCx = label.left + label.width / 2;
     return {
       rows: grid.gridTemplateRows.split(' ').length,
       cols: grid.gridTemplateColumns.split(' ').length,
-      gridCards: cards.length, lateInOwnSheet,
+      gridCards: cards.length,
       inside, clearOfLabel,
       labelCentred: Math.abs(sheetCx - labelCx),
       labelInSheet: label.bottom <= sheet.bottom + 1 && label.top >= sheet.top,
       words: {
-        five: document.querySelector('.appdx-head p').textContent.indexOf('five loans') !== -1,
+        six: document.querySelector('.appdx-head p').textContent.indexOf('six loans') !== -1,
         fieldno: document.querySelector('#appdxSheet .fieldno').textContent.indexOf('EXCH\u2011006') !== -1,
-        coll: document.querySelector('.appdx-mainlabel dd').textContent.indexOf('five sister collections') !== -1
+        coll: document.querySelector('.appdx-mainlabel dd').textContent.indexOf('six sister collections') !== -1
       }
     };
   });
-  ok(out.F.lay.rows === 2 && out.F.lay.gridCards === 5,
-    'F sheet relaid 3+2 (' + out.F.lay.rows + ' rows, ' + out.F.lay.gridCards + ' loans in the grid)');
-  ok(out.F.lay.inside && out.F.lay.clearOfLabel && out.F.lay.labelInSheet, 'F five specimens compose inside the sheet, clear of the label');
-  ok(out.F.lay.lateInOwnSheet, 'F the late accession sits on its own sheet, filed behind');
+  ok(out.F.lay.rows === 2 && out.F.lay.gridCards === 6,
+    'F sheet laid 3+3 (' + out.F.lay.rows + ' rows, ' + out.F.lay.gridCards + ' loans in the grid)');
+  ok(out.F.lay.inside && out.F.lay.clearOfLabel && out.F.lay.labelInSheet, 'F six specimens compose inside the sheet, clear of the label');
   ok(out.F.lay.labelCentred < 2, 'F label centred at the foot (off by ' + out.F.lay.labelCentred + 'px)');
-  ok(out.F.lay.words.five && out.F.lay.words.fieldno && out.F.lay.words.coll, 'F the sheet speaks of five loans everywhere');
+  ok(out.F.lay.words.six && out.F.lay.words.fieldno && out.F.lay.words.coll, 'F the sheet speaks of six loans everywhere');
   const plateBox = await page.evaluate(() => {
     document.getElementById('appdxSheet').scrollIntoView({ block: 'center' });
     return null;

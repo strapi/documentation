@@ -449,10 +449,10 @@
       + '<div class="bino">Specimens gathered abroad <span class="auth">ex herb. var.</span></div>'
       + '<div class="rule"></div>'
       + '<dl>'
-      + '<dt>Coll.</dt><dd>five sister collections, one specimen each</dd>'
+      + '<dt>Coll.</dt><dd>six sister collections, one specimen each</dd>'
       + '<dt>Date</dt><dd>various seasons, exchanged in kind</dd>'
       + '<dt>Loc.</dt><dd>beyond this cabinet, each its own country</dd>'
-      + '<dt>Det.</dt><dd>one plate; a returned loan was struck, not replaced</dd>'
+      + '<dt>Det.</dt><dd>one plate; two returned loans were struck, and the late arrival mounted with the rest</dd>'
       + '</dl>'
       + '<div class="rule"></div>'
       + '<div class="foot">Held under the exchange rule. The glass reads a borrowed specimen as it reads any sheet.<br>What is lent may be recalled.</div>'
@@ -462,66 +462,77 @@
   function sheetHTML() {
     var h = '<section class="appdx" id="appdx" aria-label="Appendix plate: specimens gathered abroad">';
     h += '<div class="appdx-divider" aria-hidden="true"><span></span><b>Appendix</b><span></span></div>';
-    h += '<p class="appdx-lede">After the last drawer, one plate more: five specimens received in exchange from the sister collections.</p>';
+    /* (2026-09-07, owner) The plate is not handed over: it arrives sealed, and
+       the reader opens the envelope. A real button, so the keyboard opens it
+       too, and the plate below stays out of the document until it does. */
+    h += '<button type="button" class="appdx-env" id="appdxEnv" aria-expanded="false" aria-controls="appdxBody">'
+      + '<span class="env-paper">'
+      + '<span class="env-flap"></span>'
+      + '<span class="env-seal">' + (typeof stampSVG === 'function' ? stampSVG('apx-wax') : '') + '</span>'
+      + '<span class="env-from">From the sister collections</span>'
+      + '<span class="env-to">Specimens gathered abroad</span>'
+      + '<span class="env-note">six loans, pressed and carriage paid</span>'
+      + '</span>'
+      + '<span class="env-hint">Open the envelope</span>'
+      + '</button>';
+    h += '<div class="appdx-body" id="appdxBody" hidden>';
+    h += '<p class="appdx-lede">After the last drawer, one plate more: six specimens received in exchange from the sister collections.</p>';
     h += '<div class="sheet appdx-sheet" id="appdxSheet">';
     h += '<div class="rule-frame"></div>';
     h += '<div class="stamp" style="transform:rotate(-8deg)">' + (typeof stampSVG === 'function' ? stampSVG('apx-seal') : '') + '</div>';
     h += '<div class="acc">ACC. STR‑APP‑I</div>';
-    h += '<div class="fieldno">Field no. EXCH‑006 · exchange herbarium · five loans</div>';
+    h += '<div class="fieldno">Field no. EXCH‑006 · exchange herbarium · six loans</div>';
     h += '<header class="appdx-head">'
       + '<h2>Specimens gathered abroad</h2>'
-      + '<p>Appendix I · five loans from the sister collections</p>'
+      + '<p>Appendix I · six loans from the sister collections</p>'
       + '</header>';
     h += '<div class="appdx-grid">';
-    for (var i = 0; i < SPECIMENS.length; i++) h += specimenHTML(SPECIMENS[i]);
+    /* (2026-09-07, owner) All six on ONE plate. The Golden Shore arrived after
+       the plate was drawn and was filed behind on a late-accession sheet of its
+       own; he asked for every specimen gathered abroad to be together. */
+    var ALL = SPECIMENS.concat([SPEC7]);
+    for (var i = 0; i < ALL.length; i++) h += specimenHTML(ALL[i]);
     h += '</div>';
     h += mainLabelHTML();
     h += '</div>';
     h += '<div class="appdx-tools" aria-hidden="true">hover the sheet to magnify · the glass reads a loan as it reads any sheet</div>';
-    h += '</section>';
-    return h;
-  }
-
-  function lateLabelHTML() {
-    return '<div class="label appdx-mainlabel appdx-lab2" style="--lrot:0.5deg">'
-      + '<h3>Herbarium of the Strapi Documentation</h3>'
-      + '<div class="fam">Appendix II · Late accession</div>'
-      + '<div class="bino">Received after the plate was made <span class="auth">ex herb. Golden Shore</span></div>'
-      + '<div class="rule"></div>'
-      + '<dl>'
-      + '<dt>Coll.</dt><dd>one sister collection, founded after the exchange</dd>'
-      + '<dt>Date</dt><dd>golden hour, at the end of a working day</dd>'
-      + '<dt>Loc.</dt><dd>the cliff road, below the lamp room</dd>'
-      + '<dt>Det.</dt><dd>a sheet of its own; the finished plate was not remade</dd>'
-      + '</dl>'
-      + '<div class="rule"></div>'
-      + '<div class="foot">Two hundred and ninety lanterns burn on that coast, one for every page, and each one is only as bright as the days since somebody last tended it.<br>Held under the same exchange rule. What is lent may be recalled.</div>'
-      + '</div>';
-  }
-
-  function sheet2HTML() {
-    var h = '<section class="appdx appdx2" id="appdx2" aria-label="Appendix plate two: a late accession from The Golden Shore">';
-    h += '<div class="appdx-divider" aria-hidden="true"><span></span><b>Appendix II</b><span></span></div>';
-    h += '<p class="appdx-lede">Filed directly behind the plate: one loan more, from a coast that had not been founded when the exchange was drawn up.</p>';
-    h += '<div class="sheet appdx-sheet appdx-sheet2" id="appdxSheet2">';
-    h += '<div class="rule-frame"></div>';
-    h += '<div class="stamp" style="transform:rotate(6deg)">' + (typeof stampSVG === 'function' ? stampSVG('apx2-seal') : '') + '</div>';
-    h += '<div class="acc">ACC. STR‑APP‑II</div>';
-    h += '<div class="fieldno">Field no. EXCH‑007 · late accession · one loan</div>';
-    h += '<header class="appdx-head appdx-head2">'
-      + '<h2>A specimen received late</h2>'
-      + '<p>Appendix II · one loan from The Golden Shore</p>'
-      + '</header>';
-    h += '<div class="appdx-row2">' + specimenHTML(SPEC7) + lateLabelHTML() + '</div>';
     h += '</div>';
-    h += '<div class="appdx-tools" aria-hidden="true">hover the sheet to magnify · the glass reads a late loan as it reads any sheet</div>';
     h += '</section>';
     return h;
   }
+
+  /* (2026-09-07) lateLabelHTML and sheet2HTML are gone with Appendix II: the
+     owner asked for every specimen gathered abroad to sit on one plate, so the
+     late accession was mounted with the rest instead of filed behind. */
 
   /* ============================================================ the styles */
   var CSS = ''
     + '.appdx{margin:4.5rem auto 1rem;max-width:1180px}'
+    /* THE ENVELOPE. Cream laid paper, a flap that lifts on the hinge of its own
+       fold, a wax seal that breaks with it. It is a button, and it looks like
+       one on focus. Once open it stands aside rather than vanishing, because a
+       herbarium keeps its packaging. */
+    + '.appdx-env{display:block;width:min(430px,86%);margin:0 auto 2.2rem;padding:0;border:0;background:none;cursor:pointer;font:inherit;color:inherit}'
+    + '.appdx-env .env-paper{position:relative;display:block;padding:5.4rem 1.6rem 1.7rem;background:linear-gradient(#f6f0e2,#efe7d4);border:1px solid #cfbf9d;box-shadow:0 2px 0 rgba(90,72,42,.10),0 12px 26px -18px rgba(60,45,20,.55);text-align:center;overflow:hidden}'
+    + '.appdx-env .env-flap{position:absolute;left:-1px;right:-1px;top:0;height:74px;background:linear-gradient(#f2ead9,#e9dfc7);border-bottom:1px solid #cfbf9d;'
+      + 'clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;transition:transform .75s cubic-bezier(.3,.8,.3,1)}'
+    + '.appdx-env .env-seal{position:absolute;left:50%;top:57px;width:32px;height:32px;margin-left:-16px;border-radius:50%;'
+      + 'background:radial-gradient(circle at 38% 34%,#8d5b6a,#5f3542 70%);box-shadow:0 1px 3px rgba(40,20,25,.5);transition:opacity .4s,transform .6s;z-index:2}'
+    + '.appdx-env .env-seal svg{width:100%;height:100%;opacity:.5}'
+    + '.appdx-env .env-from{display:block;font-family:"Courier Prime",monospace;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:#94815e;margin-top:0}'
+    + '.appdx-env .env-to{display:block;font-family:"EB Garamond",serif;font-size:1.32rem;color:#4a3d28;margin:.35rem 0 .2rem}'
+    + '.appdx-env .env-note{display:block;font-family:"EB Garamond",serif;font-style:italic;font-size:.86rem;color:#8a785a}'
+    + '.appdx-env .env-hint{display:block;margin-top:.7rem;font-family:"Courier Prime",monospace;font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:#a08c66;transition:opacity .3s}'
+    + '.appdx-env:hover .env-hint,.appdx-env:focus-visible .env-hint{color:#6d5b3a}'
+    + '.appdx-env:focus-visible{outline:1px dotted var(--brass,#c9a55e);outline-offset:6px}'
+    + '.appdx-env:hover .env-flap{transform:rotateX(-14deg)}'
+    + '.appdx-env.open .env-flap{transform:rotateX(-165deg)}'
+    + '.appdx-env.open .env-seal{opacity:0;transform:translateY(6px) rotate(-14deg)}'
+    + '.appdx-env.open .env-hint{opacity:0}'
+    + '.appdx-env.open{opacity:.55;cursor:default}'
+    + '.appdx-body{animation:appdxUnfold .9s ease both}'
+    + '@keyframes appdxUnfold{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}'
+    + '@media (prefers-reduced-motion:reduce){.appdx-env .env-flap,.appdx-env .env-seal{transition:none}.appdx-body{animation:none}}'
     + '.appdx-divider{display:flex;align-items:center;gap:1rem;max-width:660px;margin:0 auto 1rem}'
     + '.appdx-divider span{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,165,94,.4));}'
     + '.appdx-divider span:last-child{background:linear-gradient(90deg,rgba(201,165,94,.4),transparent)}'
@@ -539,9 +550,9 @@
        the first row of three. */
     + '.appdx-grid{position:absolute;left:6.5cqi;right:6.5cqi;top:17.5cqi;bottom:47cqi;display:grid;'
     + 'grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(2,minmax(0,1fr));gap:3cqi 2cqi}'
+    /* six now, so three and three; the fourth and fifth used to be nudged in
+       to centre a short second row of two. */
     + '.appdx-grid>.appdx-sp{grid-column:span 2}'
-    + '.appdx-grid>.appdx-sp:nth-child(4){grid-column:2/span 2}'
-    + '.appdx-grid>.appdx-sp:nth-child(5){grid-column:4/span 2}'
     + '.appdx-sp{position:relative;display:flex;flex-direction:column;align-items:center;gap:.7cqi;'
     + 'text-decoration:none;color:inherit;cursor:pointer;min-width:0}'
     + '.appdx-fig{width:100%;height:20.5cqi;display:block;transition:transform .28s var(--ease,ease)}'
@@ -571,16 +582,6 @@
     + '.appdx-mainlabel{position:absolute;left:0;right:0;bottom:6.5cqi;width:54cqi;margin:0 auto}'
     /* the late accession keeps every rule of the plate above it, on a sheet
        cut half as deep, because it carries one specimen instead of five */
-    + '.appdx2{margin-top:2.6rem}'
-    + '.appdx-sheet2{aspect-ratio:auto;padding:4.2cqi 5cqi 4.6cqi;display:block}'
-    + '.appdx-head2{position:static;margin:8.5cqi auto 0;left:auto;right:auto;top:auto}'
-    + '.appdx-row2{display:grid;grid-template-columns:34% 1fr;gap:4cqi;align-items:center;margin:4.5cqi 0 1cqi}'
-    + '.appdx-row2 .appdx-fig{height:30cqi}'
-    + '.appdx-row2 .appdx-lbl{width:100%}'
-    + '.appdx-row2 .appdx-hint{width:130%;font-size:1.3cqi}'
-    + '.appdx-lab2{position:static;width:auto;margin:0}'
-    + '@media (max-width:620px){.appdx-row2{grid-template-columns:1fr;gap:6cqi}'
-    + '.appdx-row2 .appdx-fig{height:40cqi}.appdx-head2{margin-top:11cqi}}'
     + '.appdx-tools{max-width:660px;margin:.95rem auto 0;text-align:center;font-family:"Courier Prime",monospace;'
     + 'font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:#6f5f43}'
     + '@media (max-width:1080px),(pointer:coarse){.appdx-tools{display:none}}'
@@ -589,12 +590,11 @@
     + '.appdx-head{position:static;margin:11cqi auto 0}'
     + '.appdx-head h2{font-size:4.6cqi}.appdx-head p{font-size:2.4cqi}'
     + '.appdx-grid{position:static;grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:6cqi 3cqi;margin:7cqi 1cqi 4cqi}'
-    + '.appdx-grid>.appdx-sp,.appdx-grid>.appdx-sp:nth-child(4),.appdx-grid>.appdx-sp:nth-child(5){grid-column:auto}'
+    + '.appdx-grid>.appdx-sp{grid-column:auto}'
     + '.appdx-fig{height:36cqi}'
     + '.appdx-lbl{font-size:2.2cqi}.appdx-lbl em{font-size:3.4cqi}.appdx-lbl .mk{font-size:2cqi}'
     + '.appdx-mkglyph{width:3.2cqi;height:3.2cqi}'
     + '.appdx-hint{font-size:2.6cqi;width:118%}'
-    + '.appdx-row2 .appdx-hint{width:100%;font-size:2.4cqi}'
     + '.appdx-seal{width:34cqi;margin-left:-17cqi;top:10cqi}'
     + '.appdx-mainlabel{position:static;width:auto;margin:1rem;transform:none}'
     + '}'
@@ -640,8 +640,6 @@
   /* ============================================================ mechanics */
 
   var FIGS_HTML = null;
-
-  var LATE_HTML = null;
 
   function ensureStyle() {
     if (document.getElementById('appdxStyle')) return;
@@ -780,18 +778,26 @@
     try {
       if (!isAllTray()) return;
       var sc = document.getElementById('scroll');
-      if (!sc || sc.querySelector('#appdx') || sc.querySelector('#appdx2')) return;
+      if (!sc || sc.querySelector('#appdx')) return;
       /* the tray for ~all must already be on the table (guards the ordering
          where our listener could ever run before the cabinet's own render) */
       if (!sc.querySelector('.tray')) return;
       ensureStyle();
       if (FIGS_HTML === null) FIGS_HTML = sheetHTML();   /* drawn once, filed forever */
       sc.insertAdjacentHTML('beforeend', FIGS_HTML);
-      wireSheet(sc.querySelector('#appdx'), 'appdxSheet');
-      /* and behind it, the late accession on its own sheet */
-      if (LATE_HTML === null) LATE_HTML = sheet2HTML();
-      sc.insertAdjacentHTML('beforeend', LATE_HTML);
-      wireSheet(sc.querySelector('#appdx2'), 'appdxSheet2');
+      var env = sc.querySelector('#appdxEnv'), body = sc.querySelector('#appdxBody');
+      if (env && body) {
+        env.addEventListener('click', function () {
+          if (env.classList.contains('open')) return;
+          env.classList.add('open');
+          env.setAttribute('aria-expanded', 'true');
+          body.hidden = false;
+          /* the sheet is wired only once it exists on the page with a size */
+          wireSheet(sc.querySelector('#appdx'), 'appdxSheet');
+        });
+      } else {
+        wireSheet(sc.querySelector('#appdx'), 'appdxSheet');
+      }
     } catch (err) {
       /* an appendix must never cost the collection anything */
     }
