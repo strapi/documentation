@@ -1,5 +1,7 @@
-// Terrain of the headland. One analytic height function shared by mesh,
-// placement, paths and the player, so nothing ever floats.
+// Terrain of the headland and its five provinces. One analytic height
+// function shared by mesh, placement, paths and the player, so nothing
+// ever floats. Provinces are the official taxonomy sections grouped by
+// product and section, never a community and never an invented name.
 
 function mulberry32(a) {
   return function () {
@@ -53,7 +55,7 @@ export const TERRACES = [
   { id: 'config',     x: 100,  z: 26,   r: 24, h: 15.0 },  // Configurations
   { id: 'dev',        x: 126,  z: -6,   r: 22, h: 19.0 },  // Development
   { id: 'ts',         x: 146,  z: 34,   r: 15, h: 22.0 },  // TypeScript
-  { id: 'clicms',     x: 66,   z: -4,   r: 9,  h: 10.0 },  // CLI signal mast
+  { id: 'clicms',     x: 22,   z: -54,  r: 9,  h: 8.6 },   // CLI signal mast, on the harbour point
   { id: 'plugins',    x: 156,  z: -44,  r: 20, h: 25.0 },  // Plugins development
   { id: 'upgrades',   x: 168,  z: 6,    r: 20, h: 27.0 },  // Upgrades, foot of the cliff road
   { id: 'upmid',      x: 184,  z: -12,  r: 14, h: 29.0 },
@@ -62,13 +64,100 @@ export const TERRACES = [
   { id: 'uphigh',     x: 213,  z: -36,  r: 15, h: 33.0 },
   { id: 'approach',   x: 224,  z: -54,  r: 14, h: 39.0 },
   { id: 'crag',       x: 238,  z: -72,  r: 24, h: 47.0 },  // the Golden Shore
-  { id: 'cl-gs',      x: -16,  z: 52,   r: 14, h: 2.0 },   // Cloud Getting Started
-  { id: 'cl-proj',    x: 4,    z: 64,   r: 12, h: 2.6 },   // Projects management
-  { id: 'cl-dep',     x: -30,  z: 64,   r: 10, h: 1.7 },   // Deployments
-  { id: 'cl-acct',    x: 18,   z: 76,   r: 10, h: 3.2 },   // Account management
-  { id: 'cl-cli',     x: -6,   z: 82,   r: 8,  h: 2.2 },   // Cloud CLI
-  { id: 'cl-adv',     x: 30,   z: 58,   r: 10, h: 3.4 },   // Advanced configuration
+  // The Cloud Archipelago: six salt-white islets across the shallows, tied
+  // to the shore and to each other by the stone causeway.
+  { id: 'cl-gs',      x: -78,  z: 74,   r: 17, h: 3.0 },   // Cloud Getting Started, the largest islet
+  { id: 'cl-proj',    x: -106, z: 56,   r: 12, h: 3.3 },   // Projects management
+  { id: 'cl-adv',     x: -114, z: 92,   r: 11, h: 3.5 },   // Advanced configuration
+  { id: 'cl-dep',     x: -86,  z: 106,  r: 9,  h: 2.6 },   // Deployments
+  { id: 'cl-acct',    x: -58,  z: 98,   r: 9,  h: 2.8 },   // Account management
+  { id: 'cl-cli',     x: -134, z: 72,   r: 7,  h: 3.1 },   // Cloud CLI, a mast on its own rock
 ];
+export const TER = Object.fromEntries(TERRACES.map(t => [t.id, t]));
+
+// ---------- the five provinces ----------
+// Membership is the official taxonomy and nothing else: a page's province is
+// read from its product and section. Sixteen official sections, five coasts.
+export const PROVINCES = {
+  harbor: {
+    name: 'The Harbour Town', short: 'Harbour',
+    sections: ['cms|Getting Started', 'cms|AI', 'cms|Command Line Interface'],
+    anchors: ['plaza', 'ai', 'clicms'],
+  },
+  terraces: {
+    name: 'The Olive Terraces', short: 'Terraces',
+    sections: ['cms|Features', 'cms|Configurations', 'cms|Content APIs'],
+    anchors: ['features', 'config', 'apis'],
+  },
+  highland: {
+    name: 'The Pine Highland', short: 'Highland',
+    sections: ['cms|Development', 'cms|TypeScript', 'cms|Plugins development'],
+    anchors: ['dev', 'ts', 'plugins'],
+  },
+  wall: {
+    name: 'The Upgrades Wall', short: 'Wall',
+    sections: ['cms|Upgrades'],
+    anchors: ['upgrades', 'upmid', 'bankw', 'banke', 'uphigh', 'approach', 'crag'],
+  },
+  cloud: {
+    name: 'The Cloud Archipelago', short: 'Archipelago',
+    sections: ['cloud|Getting Started', 'cloud|Projects management', 'cloud|Deployments',
+      'cloud|Account management', 'cloud|Command Line Interface', 'cloud|Advanced configuration'],
+    anchors: ['cl-gs', 'cl-proj', 'cl-adv', 'cl-dep', 'cl-acct', 'cl-cli'],
+  },
+};
+export const PROVINCE_KEYS = Object.keys(PROVINCES);
+export const PROVINCE_OF_SECTION = (() => {
+  const out = {};
+  for (const k of PROVINCE_KEYS) for (const sec of PROVINCES[k].sections) out[sec] = k;
+  return out;
+})();
+
+// Soft province field. Softmax over the signed distance to each province's
+// nearest district edge, with a wide tau so a border is an ecotone tens of
+// metres deep and never a line: the ground, the growth and the air all read
+// the same weights, so they hand over together.
+const ECOTONE = 11.0;
+const _pw = new Float32Array(PROVINCE_KEYS.length);
+export function provinceWeights(x, z) {
+  let sum = 0, best = 1e9;
+  for (let i = 0; i < PROVINCE_KEYS.length; i++) {
+    const prov = PROVINCES[PROVINCE_KEYS[i]];
+    let d = 1e9;
+    for (const id of prov.anchors) {
+      const t = TER[id];
+      const dx = x - t.x, dz = z - t.z;
+      const dd = Math.sqrt(dx * dx + dz * dz) - t.r;
+      if (dd < d) d = dd;
+    }
+    _pw[i] = d;
+    if (d < best) best = d;
+  }
+  for (let i = 0; i < PROVINCE_KEYS.length; i++) {
+    const w = Math.exp(-(Math.max(_pw[i], 0) - Math.max(best, 0)) / ECOTONE);
+    _pw[i] = w; sum += w;
+  }
+  for (let i = 0; i < PROVINCE_KEYS.length; i++) _pw[i] /= sum;
+  return _pw; // reused buffer: copy it if you keep it
+}
+export function provinceAt(x, z) {
+  const w = provinceWeights(x, z);
+  let bi = 0;
+  for (let i = 1; i < w.length; i++) if (w[i] > w[bi]) bi = i;
+  return PROVINCE_KEYS[bi];
+}
+// How undecided the ground is here: 0 deep inside one province, 1 on a border.
+export function borderness(x, z) {
+  const w = provinceWeights(x, z);
+  let a = 0, b = 0;
+  for (let i = 0; i < w.length; i++) { if (w[i] > a) { b = a; a = w[i]; } else if (w[i] > b) b = w[i]; }
+  return Math.min(1, (b / (a || 1)) * 1.15);
+}
+
+// Gateways, filled in by the town as it builds them. Nothing grows in a
+// gateway: the town publishes where its thresholds stand and the vegetation
+// keeps out of them, the same way it keeps out of a road.
+export const GATES = [];
 
 export const COAST_X = -46;    // west of this line, the sea
 export const SEA_LEVEL = 0;
@@ -86,14 +175,23 @@ export function terrainHeight(x, z) {
   if (x < COAST_X) {
     const d = sstep(0, 34, COAST_X - x);
     h = lerp(Math.min(h, 1), -5.5, d);
+    // The archipelago stands on a shelf: the sea shallows out under the six
+    // islets, which is why the water there goes turquoise and the causeway
+    // can be built on stone rather than piles.
+    const sx = -96, sz = 82;
+    const shelf = 1 - sstep(34, 86, Math.hypot(x - sx, (z - sz) * 1.15));
+    if (shelf > 0) h = lerp(h, -1.5, shelf * 0.92);
   }
-  // Terraces flatten their districts.
+  // Terraces flatten their districts. Offshore they do the opposite and
+  // raise an islet, and an islet is a plateau with a shoulder, not a dome:
+  // the flat top is what makes a Cycladic village possible on it.
   for (const tr of TERRACES) {
     const dx = x - tr.x, dz = z - tr.z;
     const dist = Math.sqrt(dx * dx + dz * dz);
     if (dist < tr.r) {
-      const w = 1 - sstep(tr.r * 0.55, tr.r, dist);
-      h = lerp(h, tr.h, w * 0.94);
+      const islet = tr.id.charCodeAt(0) === 99 && tr.id.charCodeAt(2) === 45; // 'cl-'
+      const w = 1 - sstep(tr.r * (islet ? 0.80 : 0.55), tr.r, dist);
+      h = lerp(h, tr.h, w * (islet ? 0.985 : 0.94));
     }
   }
   // The ravine: a trench the cliff road must cross. Cut after terraces.
@@ -107,7 +205,7 @@ export function terrainHeight(x, z) {
   return h;
 }
 
-// Decks that override the ground: the pier and the stone bridge.
+// Decks that override the ground: the pier, the stone bridge, the causeway.
 export const PIER = { x0: -90, x1: -44, z0: -3.4, z1: 3.4, deck: 1.35 };
 export const BRIDGE = { x0: 187, x1: 205, z0: -31.5, z1: -24.5, deck: 30.4, rise: 1.15 };
 
@@ -116,11 +214,65 @@ export function bridgeDeckAt(x) {
   return BRIDGE.deck + Math.sin(t * Math.PI) * BRIDGE.rise;
 }
 
+// The causeway: the walked border between the Harbour Town and the Cloud
+// Archipelago. Laid stone over the shelf, low enough that the sea washes the
+// kerb, so crossing it is a handover you feel underfoot and not a teleport.
+export const CAUSEWAYS = [
+  { pts: [[-30, 42], [-42, 50], [-54, 58], [-66, 66], [-78, 72]], w: 3.0, deck: 1.05 },
+  { pts: [[-78, 74], [-92, 64], [-106, 56]], w: 1.9, deck: 0.92 },
+  { pts: [[-78, 76], [-68, 88], [-58, 98]], w: 1.9, deck: 0.92 },
+  { pts: [[-58, 98], [-72, 104], [-86, 106]], w: 1.9, deck: 0.92 },
+  { pts: [[-106, 58], [-112, 74], [-114, 92]], w: 1.9, deck: 0.92 },
+  { pts: [[-106, 56], [-120, 64], [-134, 72]], w: 1.9, deck: 0.92 },
+];
+
+function distToSeg(x, z, x0, z0, x1, z1) {
+  const dx = x1 - x0, dz = z1 - z0;
+  const L2 = dx * dx + dz * dz;
+  let t = L2 ? ((x - x0) * dx + (z - z0) * dz) / L2 : 0;
+  t = clamp(t, 0, 1);
+  return Math.hypot(x - (x0 + dx * t), z - (z0 + dz * t));
+}
+export function causewayDeckAt(x, z) {
+  if (x > -20 || x < -145 || z < 30 || z > 118) return -Infinity;
+  for (const cw of CAUSEWAYS) {
+    for (let i = 0; i < cw.pts.length - 1; i++) {
+      const [x0, z0] = cw.pts[i], [x1, z1] = cw.pts[i + 1];
+      if (distToSeg(x, z, x0, z0, x1, z1) < cw.w * 0.5 + 0.4) return cw.deck;
+    }
+  }
+  return -Infinity;
+}
+
 export function groundAt(x, z) {
   let g = terrainHeight(x, z);
   if (x >= PIER.x0 && x <= PIER.x1 && z >= PIER.z0 && z <= PIER.z1) g = Math.max(g, PIER.deck);
   if (x >= BRIDGE.x0 && x <= BRIDGE.x1 && z >= BRIDGE.z0 && z <= BRIDGE.z1) g = Math.max(g, bridgeDeckAt(x));
+  const cd = causewayDeckAt(x, z);
+  if (cd > -Infinity) g = Math.max(g, cd);
   return g;
+}
+
+// What a boot lands on, province by province. The footstep recipe changes
+// the instant the earth does, which is half of what a border sounds like.
+export function surfaceAt(x, z) {
+  if (x >= PIER.x0 && x <= PIER.x1 && Math.abs(z) <= 3.4) return 'boards';
+  if (x >= BRIDGE.x0 && x <= BRIDGE.x1 && z >= BRIDGE.z0 && z <= BRIDGE.z1) return 'boards';
+  if (causewayDeckAt(x, z) > -Infinity) return 'cobbles';
+  for (const tr of TERRACES) {
+    const dx = x - tr.x, dz = z - tr.z;
+    if (dx * dx + dz * dz < tr.r * tr.r * 0.55) {
+      return tr.id.startsWith('cl-') ? 'shell' : (tr.id === 'dev' || tr.id === 'ts' || tr.id === 'plugins' ? 'needles' : 'cobbles');
+    }
+  }
+  const h = terrainHeight(x, z);
+  if (h < 1.4) return 'sand';
+  const p = provinceAt(x, z);
+  if (p === 'highland') return 'needles';
+  if (p === 'wall') return 'scree';
+  if (p === 'cloud') return 'shell';
+  if (p === 'terraces') return h < 42 ? 'grass' : 'dirt';
+  return h < 42 ? 'grass' : 'dirt';
 }
 
 export function terrainSlope(x, z) {

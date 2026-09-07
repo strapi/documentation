@@ -3,7 +3,7 @@
 
 import * as THREE from 'three';
 import { loadData, safeStore } from './data.js';
-import { createRenderer, initWorld, updateWorld, enterKeeperHour, tickKeeperHour, WORLD } from './world.js';
+import { createRenderer, initWorld, updateWorld, enterKeeperHour, tickKeeperHour, WORLD, setRimGlobal, SKY_GAIN, setSun } from './world.js';
 import { buildTown } from './town.js';
 import { buildVegetation } from './vegetation.js';
 import { buildProps } from './props.js';
@@ -12,7 +12,10 @@ import {
   initOverlay, openReader, closeReader, isReaderOpen, tend, getTended,
   toggleLogbook, keeperHourEarned, showToast, updateLabel, drawCompass,
 } from './overlay.js';
-import { TERRACES } from './terrain.js';
+import { TERRACES, groundAt, surfaceAt, provinceAt, GATES } from './terrain.js';
+import { initWeather, tickWeather, WEATHER } from './weather.js';
+import { buildKeepers } from './keepers.js';
+import { initAudio } from './audio.js';
 
 const setStatus = (t) => { const el = document.getElementById('load-status'); if (el) el.textContent = t; };
 
@@ -35,18 +38,19 @@ function makeGrain() {
 const frameTimes = [];
 function notePerf(dt) {
   frameTimes.push(dt * 1000);
-  if (frameTimes.length > 900) frameTimes.shift();
+  const cap = window.__perfCap || 900;
+  if (frameTimes.length > cap) frameTimes.shift();
 }
 window.__perf = () => {
   const arr = frameTimes.slice().sort((a, b) => a - b);
   if (!arr.length) return { p50: 0, p95: 0, samples: 0 };
-  return {
-    p50: +arr[Math.floor(arr.length * 0.5)].toFixed(2),
-    p95: +arr[Math.floor(arr.length * 0.95)].toFixed(2),
+  return { // reported without rounding, as the law demands
+    p50: arr[Math.floor(arr.length * 0.5)],
+    p95: arr[Math.floor(arr.length * 0.95)],
     samples: arr.length,
   };
 };
-window.__perfReset = () => { frameTimes.length = 0; };
+window.__perfReset = () => { frameTimes.length = 0; window.__maxDraws = 0; };
 
 async function boot() {
   const mmRM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -116,6 +120,32 @@ async function boot() {
 
   const player = initPlayer(WORLD.camera, canvas, colliders, reducedMotion);
 
+  // ----- the living coast: weather, keepers, sound -----
+  setStatus('Reading the sky...');
+  initWeather(WORLD.scene, reducedMotion);
+  const npcs = buildKeepers(WORLD.scene, data, town, reducedMotion);
+  const audio = initAudio();
+  window.__audio = audio;
+  const audioBtn = document.getElementById('audiobtn');
+  const setGlyph = () => {
+    if (!audioBtn) return;
+    audioBtn.classList.toggle('off', !audio.on);
+    audioBtn.textContent = audio.on ? '♫' : '×';
+  };
+  setGlyph();
+  const armOnce = () => audio.arm();
+  window.addEventListener('pointerdown', armOnce, { once: true });
+  window.addEventListener('keydown', armOnce, { once: true });
+  if (audioBtn) audioBtn.addEventListener('click', () => {
+    audio.arm();
+    audio.toggle();
+    setGlyph();
+    showToast(audio.on ? 'Sound on, gentle by default. M turns it off.' : 'Sound off. The coast keeps working in silence.');
+  });
+  WEATHER.thunderCb = () => audio.thunder();
+  WEATHER.tickCb = (name, label) => { if (name === 'squall') showToast('Weather off the sea. ' + label + '.', 5000); };
+  npcs.onSpeak = () => audio.knock();
+
   if (WORLD.keeperHour === false && keeperHourEarned()) {
     // a returning keeper who earned the hour in an earlier walk
     enterKeeperHour();
@@ -159,6 +189,12 @@ async function boot() {
       toggleLogbook();
     }
     if (e.code === 'KeyF' && target && targetDist <= 9 && !tended.has(target.slug)) tendActive = true;
+    if (e.code === 'KeyM' && !e.repeat) {
+      audio.arm();
+      audio.toggle();
+      setGlyph();
+      showToast(audio.on ? 'Sound on, gentle by default.' : 'Sound off. Nothing on this coast needs it.');
+    }
   };
   player.onKeyUp = (e) => {
     if (e.code === 'KeyF') { tendActive = false; tendHold = 0; }
@@ -171,6 +207,13 @@ async function boot() {
   setTimeout(() => bootline.classList.remove('on'), 14000);
 
   // ----- debug hooks for the honest probe -----
+  window.__W = WORLD;
+  window.__gy = (x, z) => groundAt(x, z);
+  window.__prov = (x, z) => provinceAt(x, z);
+  window.__slugs = () => town.stations.map(s => s.slug);
+  window.__stationsFull = () => town.stations.map(s => ({ slug: s.slug, x: s.x, z: s.z, yaw: s.yaw, province: s.province, inbound: s.inbound, type: s.type }));
+  window.__gates = () => GATES.map(g => ({ x: g.x, z: g.z, r: g.r, ang: g.ang, from: g.from, to: g.to, name: g.name }));
+  window.__clear = (x, z) => { let m = 1e9; for (const c of colliders) m = Math.min(m, Math.hypot(x - c.x, z - c.z) - c.r); return m; };
   window.__world = {
     teleport: (x, z, yaw) => player.teleport(x, z, yaw),
     look: (yaw, pitch) => { WORLD.camera.rotation.y = yaw; WORLD.camera.rotation.x = pitch || 0; },
@@ -178,24 +221,71 @@ async function boot() {
     stations: town.stations.map(s => ({ slug: s.slug, x: s.x, z: s.z })),
     openPage: (slug) => openReader(slug),
     keeperHour: () => WORLD.keeperHour,
+    rim: (v) => setRimGlobal(v),
+    fly: (x, y, z, yaw, pitch) => {
+      window.__flying = true;
+      WORLD.camera.position.set(x, y, z);
+      WORLD.camera.rotation.y = yaw || 0;
+      WORLD.camera.rotation.x = pitch || 0;
+    },
+    walkAgain: () => { window.__flying = false; },
+    sky: (v) => { SKY_GAIN.value = v; },
+    sun: (el) => setSun(el),
+    expo: (v) => { WORLD.renderer.toneMappingExposure = v; },
+    draws: () => WORLD.renderer.info.render.calls,
+    walk: (pts, dur) => {
+      const segs = []; let L = 0;
+      for (let i = 0; i < pts.length - 1; i++) {
+        const dx = pts[i + 1][0] - pts[i][0], dz = pts[i + 1][1] - pts[i][1];
+        const l = Math.hypot(dx, dz);
+        segs.push({ a: pts[i], b: pts[i + 1], l0: L, l }); L += l;
+      }
+      window.__walkState = { segs, L, dur, t: 0 };
+      window.__walkDone = false;
+      window.__flying = true;
+    },
+    census: () => {
+      const out = {};
+      WORLD.scene.traverse(o => {
+        if (o.isMesh || o.isPoints || o.isSprite) {
+          const k = o.isInstancedMesh ? 'instanced' : o.isPoints ? 'points' : o.isSprite ? 'sprite' : 'mesh';
+          out[k] = (out[k] || 0) + 1;
+        }
+      });
+      return out;
+    },
   };
 
   // ----- the loop -----
   const clock = new THREE.Clock();
   let grainTick = 0;
+  const lastCamPos = WORLD.camera.position.clone();
   function frame() {
     requestAnimationFrame(frame);
     const dt = Math.min(clock.getDelta(), 0.1);
     const t = clock.elapsedTime;
     notePerf(dt);
 
-    if (!isReaderOpen()) {
+    if (!isReaderOpen() && !window.__flying) {
       player.enabled = true;
       player.update(dt);
     } else {
       player.enabled = false;
     }
 
+    const ws = window.__walkState;
+    if (ws) {
+      ws.t += dt;
+      const d = Math.min(1, ws.t / ws.dur) * ws.L;
+      let seg = ws.segs[ws.segs.length - 1];
+      for (const s of ws.segs) if (d <= s.l0 + s.l) { seg = s; break; }
+      const tt2 = seg.l ? (d - seg.l0) / seg.l : 0;
+      const wx = seg.a[0] + (seg.b[0] - seg.a[0]) * tt2, wz = seg.a[1] + (seg.b[1] - seg.a[1]) * tt2;
+      WORLD.camera.position.set(wx, groundAt(wx, wz) + 1.65, wz);
+      WORLD.camera.rotation.y = Math.atan2(-(seg.b[0] - seg.a[0]), -(seg.b[1] - seg.a[1]));
+      WORLD.camera.rotation.x = -0.03;
+      if (ws.t >= ws.dur) { window.__walkState = null; window.__flying = false; window.__walkDone = true; }
+    }
     findTarget();
     if (tendActive && target && targetDist <= 9 && !tended.has(target.slug)) {
       tendHold += dt;
@@ -203,15 +293,34 @@ async function boot() {
         tendActive = false; tendHold = 0;
         if (tend(target.slug)) {
           town.lanterns.setTended(target.slug);
+          audio.tendChime();
           showToast('You cup the flame. It steadies, and it will know you when you return.');
         }
       }
     } else if (!tendActive) tendHold = 0;
     updateLabel(isReaderOpen() ? null : target, targetDist, tendHold / 2);
 
+    tickWeather(dt, t);
     updateWorld(dt, t);
     const done = tickKeeperHour(dt);
     if (done) showToast('One stop warmer. The coast holds its breath at this hour.', 4500);
+
+    // the living coast walks its rounds
+    const cam = WORLD.camera;
+    npcs.tick(t, dt, { x: cam.position.x, z: cam.position.z });
+    const movedNow = cam.position.distanceTo(lastCamPos);
+    lastCamPos.copy(cam.position);
+    audio.tick(dt, {
+      x: cam.position.x, y: cam.position.y, z: cam.position.z,
+      readerOpen: isReaderOpen(),
+      gust: WORLD.gustAmp, state: WEATHER.state, rain: WEATHER.rain,
+      moved: movedNow < 1 ? movedNow : 0,
+      surface: surfaceAt(cam.position.x, cam.position.z),
+      lanternNear: target && targetDist < 6 ? 1 - targetDist / 6 : 0,
+      gullExcite: WORLD.gullExcite || 0,
+      goats: npcs.goats,
+      inUplands: provinceAt(cam.position.x, cam.position.z) === 'highland',
+    });
 
     // the Golden Shore turns only in the keeper's hour
     if (town.beam) {
@@ -224,6 +333,7 @@ async function boot() {
     }
 
     town.lanterns.tick(WORLD.camera.position, t);
+    if (town.tickLife) town.tickLife(t, dt, WORLD.reducedMotion);
 
     const tendedStations = town.stations.filter(s => tended.has(s.slug));
     const qs = overlay.readPages.has('/cms/quick-start') ? null : town.bySlug.get('/cms/quick-start');
@@ -237,7 +347,12 @@ async function boot() {
       }
     }
 
-    if (!WORLD.contextLost) WORLD.renderer.render(WORLD.scene, WORLD.camera);
+    if (!WORLD.contextLost) {
+      WORLD.renderer.render(WORLD.scene, WORLD.camera);
+      // the honest draw-call figure is the peak over a walk, not the last frame
+      const dc = WORLD.renderer.info.render.calls;
+      if (dc > (window.__maxDraws || 0)) window.__maxDraws = dc;
+    }
   }
   frame();
   window.__ready = true;

@@ -39,6 +39,34 @@ export async function loadData(setStatus) {
   const crossEdges = graph.edges.filter(([a, b]) =>
     (a.startsWith('/cms') && b.startsWith('/cloud')) || (a.startsWith('/cloud') && b.startsWith('/cms'))).length;
 
+  // pages touched in the record's own final thirty days: crates on the
+  // quay, smoke over the chimneys, the Fisher's honest month
+  const touched30 = Object.values(provenance).filter(v =>
+    (new Date(lastDate + 'T12:00:00Z') - new Date(v.last + 'T12:00:00Z')) / 86400000 <= 30).length;
+
+  // prose words of the long guide: paragraphs, lists, headings, summary
+  const populateWords = (() => {
+    const page = content.pages['/cms/api/rest/guides/understanding-populate'];
+    if (!page) return 0;
+    let words = 0;
+    const wc = (h) => String(h || '').replace(/<[^>]*>/g, ' ').split(/\s+/).filter(Boolean).length;
+    const walk = (blocks) => {
+      for (const b of blocks || []) {
+        if (b.t === 'p' || b.t === 'tldr') words += wc(b.html);
+        if (/^h[2-6]$/.test(b.t)) words += wc(b.text);
+        if (b.items) for (const it of b.items) {
+          if (typeof it === 'string') words += wc(it);
+          else if (it) { words += wc(it.html); walk(it.blocks); }
+        }
+        if (b.blocks) walk(b.blocks);
+        if (b.tabs) for (const t of b.tabs) walk(t.blocks);
+        if (b.cols) for (const c of b.cols) walk(c);
+      }
+    };
+    walk(page.blocks);
+    return words;
+  })();
+
   return {
     content, taxonomy, graph, provenance, inbound, outbound,
     sections, sectionByKey,
@@ -46,7 +74,7 @@ export async function loadData(setStatus) {
       pageCount: Object.keys(content.pages).length,
       edgeCount: graph.edges.length,
       totalCommits, keeperCount: keepers.size, nightActs,
-      firstDate, lastDate, crossEdges,
+      firstDate, lastDate, crossEdges, touched30, populateWords,
       zeroInbound: Object.keys(taxonomy).filter(s => !inbound[s]).length,
     },
   };

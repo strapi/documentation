@@ -173,3 +173,44 @@ html, body { height: 100%; overflow: hidden; background: #0d0906; }
 .load-inner { text-align: center; color: #e8cfa4; }
 .load-title { font-size: 26px; letter-spacing: 0.42em; text-transform: uppercase; font-weight: 300; margin-bottom: 14px; padding-left: 0.42em; }
 .load-sub { font-size: 12px; letter-spacing: 0.2em; color: rgba(232,207,164,0.55); }
+
+/* ---------- the living coast: keeper captions and the sound glyph ---------- */
+#npcline {
+  position: absolute;
+  left: 50%; bottom: 17%;
+  transform: translateX(-50%);
+  max-width: 620px;
+  padding: 10px 18px;
+  background: rgba(24, 16, 10, 0.62);
+  border: 1px solid rgba(255, 202, 130, 0.28);
+  border-radius: 3px;
+  color: #f6e7cd;
+  font-size: 15px;
+  line-height: 1.5;
+  letter-spacing: 0.015em;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+  z-index: 6;
+}
+#npcline.on { opacity: 1; }
+#audiobtn {
+  position: absolute;
+  right: 16px; bottom: 14px;
+  width: 38px; height: 38px;
+  background: rgba(24, 16, 10, 0.55);
+  border: 1px solid rgba(255, 202, 130, 0.3);
+  border-radius: 50%;
+  color: #f0ddba;
+  font-size: 17px;
+  cursor: pointer;
+  z-index: 7;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+#audiobtn.off { color: rgba(240, 221, 186, 0.35); }
+#audiobtn:hover { background: rgba(44, 30, 18, 0.7); }
+
+/* the logbook groups the sixteen official sections into their five provinces */
+#lb-body tr.lb-prov td { padding-top: 14px; color: #ffd89b; letter-spacing: 0.06em;
+  text-transform: uppercase; font-size: 11px; border-bottom: 1px solid rgba(255,205,140,0.22); }

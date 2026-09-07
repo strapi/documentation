@@ -2,6 +2,7 @@
 // crisp, untinted, the page's actual blocks as real HTML.
 
 import { provLine, safeStore } from './data.js';
+import { PROVINCES, PROVINCE_KEYS, PROVINCE_OF_SECTION } from './terrain.js';
 
 function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -205,21 +206,35 @@ function renderLogbook() {
     const key = t.product + '|' + t.section;
     readBySection[key] = (readBySection[key] || 0) + 1;
   }
+  // The sixteen official sections, grouped into the five provinces they make
+  // up. The grouping is the taxonomy and nothing else: a page's province is
+  // read from its own product and section.
   let rows = '';
-  for (const s of sections) {
-    const read = readBySection[s.key] || 0;
-    rows += `<tr><td>${esc(s.product === 'cms' ? 'CMS' : 'Cloud')}</td><td>${esc(s.name)}</td>
-      <td class="lb-count ${read > 0 ? 'lb-done' : ''}">${read} / ${s.count}</td>
-      ${reduced ? `<td><button type="button" class="lb-go" data-district="${esc(s.key)}">Walk there</button></td>` : ''}</tr>`;
+  for (const key of PROVINCE_KEYS) {
+    const prov = PROVINCES[key];
+    const mine = sections.filter(sc => PROVINCE_OF_SECTION[sc.key] === key);
+    if (!mine.length) continue;
+    const pages = mine.reduce((a, b) => a + b.count, 0);
+    const readHere = mine.reduce((a, b) => a + (readBySection[b.key] || 0), 0);
+    rows += `<tr class="lb-prov"><td colspan="2">${esc(prov.name)}</td>
+      <td class="lb-count ${readHere > 0 ? 'lb-done' : ''}">${readHere} / ${pages}</td>${reduced ? '<td></td>' : ''}</tr>`;
+    for (const s of mine) {
+      const read = readBySection[s.key] || 0;
+      rows += `<tr><td>${esc(s.product === 'cms' ? 'CMS' : 'Cloud')}</td><td>${esc(s.name)}</td>
+        <td class="lb-count ${read > 0 ? 'lb-done' : ''}">${read} / ${s.count}</td>
+        ${reduced ? `<td><button type="button" class="lb-go" data-district="${esc(s.key)}">Walk there</button></td>` : ''}</tr>`;
+    }
   }
   document.getElementById('lb-body').innerHTML =
-    `<table><thead><tr><th>Coast</th><th>District</th><th class="lb-count">Pages read</th>${reduced ? '<th></th>' : ''}</tr></thead><tbody>${rows}</tbody></table>`;
+    `<table><thead><tr><th>Coast</th><th>Province and district</th><th class="lb-count">Pages read</th>${reduced ? '<th></th>' : ''}</tr></thead><tbody>${rows}</tbody></table>`;
   const kh = OV.hooks.keeperHour && OV.hooks.keeperHour();
   document.getElementById('lb-foot').innerHTML =
     `${OV.tended.size} ${OV.tended.size === 1 ? 'lantern' : 'lanterns'} tended by your hand · the record holds ${stats.totalCommits.toLocaleString('en-US')} acts of care by ${stats.keeperCount} keepers since ${stats.firstDate}<br>` +
     `${stats.pageCount} pages stand on this coast · ${stats.edgeCount.toLocaleString('en-US')} footpaths worn between them · ${stats.zeroInbound} unmarked crofts off trail<br>` +
     (kh ? `<span class="keeper-hour">The keeper's hour. The sun sits two degrees lower and the Golden Shore is turning.</span>`
-        : `Read the Quick Start Guide and one page in five districts to bring the keeper's hour.`);
+        : `Read the Quick Start Guide and one page in five districts to bring the keeper's hour.`) +
+    `<br><span class="lb-legend">What a province tells you: the Harbour Town is limewashed plaster and terracotta on sand; the Olive Terraces are red terra rossa, drystone field walls and roofs burnt deeper by the same clay; the Pine Highland is grey render, timbered upper floors and dark shingle under maritime pine; the Upgrades Wall is bare bleached limestone and scree, its way-stations relimed every spring so the switchbacks can be counted from the harbour mouth; and the Cloud Archipelago is salt-white flat-roofed cubes on shell sand, reached on foot by the causeway. A province is the official sections it holds and nothing else.</span>` +
+    `<br><span class="lb-legend">What a house tells you: courtyard houses are hubs with fifteen or more roads in; stoa bays are the Content APIs; workshop fronts are Configurations, their chimneys smoking only on last-month care; trailhouses with waymark posts are the guides, one post per real numbered list; the unmarked crofts are the fifty pages nothing links to; and each landmark, the Crossing, the wellhouse, the lighthouse, the two signal masts, the five cornerstone offices, stands on its own cited record.</span>`;
   document.getElementById('lb-body').querySelectorAll('.lb-go').forEach(btn => {
     btn.addEventListener('click', () => {
       if (OV.hooks.onTeleport) OV.hooks.onTeleport(btn.dataset.district);

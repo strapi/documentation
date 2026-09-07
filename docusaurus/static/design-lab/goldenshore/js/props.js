@@ -4,7 +4,7 @@
 
 import * as THREE from 'three';
 import { groundAt, PIER, hash01 } from './terrain.js';
-import { sharedMaps, WORLD } from './world.js';
+import { sharedMaps, WORLD, noReflect, addRim } from './world.js';
 
 export function buildProps(scene) {
   const maps = sharedMaps();
@@ -45,56 +45,111 @@ export function buildProps(scene) {
     });
     mesh.instanceMatrix.needsUpdate = true;
     mesh.castShadow = true; mesh.receiveShadow = true;
+    noReflect(mesh);
     scene.add(mesh);
   }
 
   // ----- coiled rope on the pier boards -----
   {
+    // every coil on the pier, merged: one rope, one draw call
     const rope = new THREE.MeshStandardMaterial({ color: 0xB39A6C, roughness: 0.95 });
+    const parts = [];
     for (const [cx, cz, sc] of [[-58, 2.4, 1], [-76, -2.2, 0.8], [-45.5, 1.9, 0.7]]) {
-      const g = new THREE.Group();
       for (let k = 0; k < 3; k++) {
-        const t = new THREE.Mesh(new THREE.TorusGeometry(0.26 - k * 0.015, 0.055, 5, 16), rope);
-        t.rotation.x = Math.PI / 2;
-        t.position.y = 0.05 + k * 0.075;
-        t.castShadow = true;
-        g.add(t);
+        const t = new THREE.TorusGeometry(0.26 - k * 0.015, 0.055, 5, 16).toNonIndexed();
+        t.rotateX(Math.PI / 2);
+        t.scale(sc, sc, sc);
+        t.translate(cx, PIER.deck + 0.045 + (0.05 + k * 0.075) * sc, cz);
+        parts.push(t);
       }
-      g.position.set(cx, PIER.deck + 0.045, cz);
-      g.scale.setScalar(sc);
-      scene.add(g);
     }
+    let total = 0;
+    for (const g of parts) total += g.attributes.position.count;
+    const pos = new Float32Array(total * 3), nor = new Float32Array(total * 3);
+    let off = 0;
+    for (const g of parts) {
+      pos.set(g.attributes.position.array, off * 3);
+      nor.set(g.attributes.normal.array, off * 3);
+      off += g.attributes.position.count;
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geo.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
+    const mesh = new THREE.Mesh(geo, rope);
+    mesh.castShadow = true;
+    noReflect(mesh);
+    scene.add(mesh);
   }
 
   // ----- drying nets hung on the pier rail posts -----
+  // The first pass read as galvanised chain-link: the mesh was drawn at one
+  // texture repeat over four and a half metres, so each cell was the size of
+  // a dinner plate, and the twine was painted paler than the deck. Real
+  // drying net is a fine dark tarred lattice that goes to silhouette against
+  // a low sun, so: many repeats, thin cord, wet colour, and a proper sag.
   {
-    const c = document.createElement('canvas'); c.width = 128; c.height = 96;
+    const c = document.createElement('canvas'); c.width = c.height = 64;
     const ctx = c.getContext('2d');
-    ctx.clearRect(0, 0, 128, 96);
-    ctx.strokeStyle = 'rgba(255,255,255,0.95)'; ctx.lineWidth = 1.4;
-    for (let i = -8; i < 20; i++) {
-      ctx.beginPath(); ctx.moveTo(i * 12, 0); ctx.lineTo(i * 12 + 52, 96); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(i * 12, 96); ctx.lineTo(i * 12 + 52, 0); ctx.stroke();
+    ctx.clearRect(0, 0, 64, 64);
+    ctx.lineCap = 'round';
+    for (let i = -4; i < 9; i++) {
+      // hand-laid rather than ruled, so the lattice is never perfectly regular
+      for (const [dir, off] of [[1, 0], [-1, 64]]) {
+        ctx.strokeStyle = `rgba(255,255,255,${0.72 + Math.random() * 0.24})`;
+        ctx.lineWidth = 1.05 + Math.random() * 0.5;
+        ctx.beginPath();
+        ctx.moveTo(i * 8 + (Math.random() - 0.5) * 1.2, off);
+        ctx.quadraticCurveTo(i * 8 + dir * 26, 32, i * 8 + dir * 52 + (Math.random() - 0.5) * 1.2, 64 - off);
+        ctx.stroke();
+      }
     }
     const netTex = new THREE.CanvasTexture(c);
+    netTex.wrapS = netTex.wrapT = THREE.RepeatWrapping;
+    netTex.repeat.set(3.2, 2.2);
+    netTex.anisotropy = 4;
     const mat = new THREE.MeshStandardMaterial({
-      color: 0xC0A87E, roughness: 1, map: netTex, alphaMap: netTex,
-      alphaTest: 0.28, side: THREE.DoubleSide,
+      color: 0x4A3E2C, roughness: 1, map: netTex, alphaMap: netTex,
+      alphaTest: 0.22, side: THREE.DoubleSide,
     });
-    for (const [cx, cz, ry] of [[-62, 3.12, 0], [-70, -3.12, 0.06]]) {
-      const geo = new THREE.PlaneGeometry(4.6, 1.35, 8, 3);
+    addRim(mat, 0.30, { trans: 0.10 });
+    const corkMat = new THREE.MeshStandardMaterial({ color: 0xB8623A, roughness: 0.95 });
+    for (const [cx, cz, ry, w] of [[-64, 3.16, 0.05, 3.8], [-71.5, -3.16, -0.04, 3.2]]) {
+      const geo = new THREE.PlaneGeometry(w, 1.5, 14, 6);
       const pos = geo.attributes.position;
       for (let i = 0; i < pos.count; i++) {
-        const u = pos.getX(i) / 4.6 + 0.5;
-        pos.setY(i, pos.getY(i) - Math.sin(u * Math.PI) * 0.22 * (0.5 - pos.getY(i) / 1.35));
-        pos.setZ(i, Math.sin(u * Math.PI * 3) * 0.05);
+        const u = pos.getX(i) / w + 0.5;
+        const v = 0.5 - pos.getY(i) / 1.5;           // 0 at the head rope, 1 at the hem
+        // catenary between the two posts, plus a slow twist through the cloth
+        pos.setY(i, pos.getY(i) - Math.sin(u * Math.PI) * 0.30 * v);
+        pos.setZ(i, Math.sin(u * Math.PI * 2.6 + v * 1.4) * 0.075 + Math.sin(v * 3.1) * 0.05);
       }
       geo.computeVertexNormals();
       const mesh = new THREE.Mesh(geo, mat);
-      mesh.position.set(cx, PIER.deck + 1.05, cz);
+      mesh.position.set(cx, PIER.deck + 1.12, cz);
       mesh.rotation.y = ry;
       mesh.castShadow = true;
+      noReflect(mesh);
       scene.add(mesh);
+      // the head rope and its cork floats, so the net hangs off something
+      const rope = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.025, 0.025, w, 5),
+        new THREE.MeshStandardMaterial({ color: 0x8a7550, roughness: 1 })
+      );
+      rope.rotation.z = Math.PI / 2; rope.rotation.y = ry;
+      rope.position.set(cx, PIER.deck + 1.12 + 0.75, cz);
+      noReflect(rope); scene.add(rope);
+      const corks = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.06, 0.06, 0.15, 6), corkMat, 7);
+      for (let i = 0; i < 7; i++) {
+        const u = (i + 0.5) / 7 - 0.5;
+        const m = new THREE.Matrix4().compose(
+          new THREE.Vector3(cx + Math.cos(ry) * u * w, PIER.deck + 1.12 + 0.75, cz - Math.sin(ry) * u * w),
+          new THREE.Quaternion().setFromEuler(new THREE.Euler(0, ry, Math.PI / 2)),
+          new THREE.Vector3(1, 1, 1)
+        );
+        corks.setMatrixAt(i, m);
+      }
+      corks.instanceMatrix.needsUpdate = true;
+      noReflect(corks); scene.add(corks);
     }
   }
 

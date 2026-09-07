@@ -5,14 +5,16 @@
 import * as THREE from 'three';
 import { Sky } from '../vendor/Sky.js';
 import { Water } from '../vendor/Water.js';
-import { terrainHeight, terrainSlope, COAST_X, TERRACES } from './terrain.js';
+import { terrainHeight, terrainSlope, COAST_X, TERRACES, provinceWeights, PROVINCE_KEYS, fbm as tfbm } from './terrain.js';
 
 export const WORLD = {
   renderer: null, scene: null, camera: null,
   sun: null, sunDir: new THREE.Vector3(), sky: null, water: null,
   windUniforms: [], godRays: [], hazePlanes: [], bobbers: [],
-  keeperHour: false, sunElevation: 3.6, exposure: 0.62,
+  rimUniforms: [], gustAmp: 1, // weather scales every wind uniform through this
+  keeperHour: false, sunElevation: 4.2, exposure: 0.70,
   reducedMotion: false, gulls: null, contextLost: false,
+  sunDisc: null, sunHalo: null, hemi: null,
 };
 
 // ---------- height fog, patched into every fogged material ----------
@@ -54,7 +56,15 @@ THREE.ShaderChunk.fog_fragment = `
 		#else
 			float fogFactor = smoothstep( fogNear, fogFar, fogDist );
 		#endif
-		gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, clamp( fogFactor, 0.0, 1.0 ) );
+		// two gradients: warm air pools low in the terraces, cooling toward a
+		// faint violet with altitude, so stacked ridge lines read as separate
+		// planes. The violet is derived from the warm color so weather can
+		// steer both through the one fogColor uniform.
+		float fogAltT = smoothstep( 4.0, 64.0, vFogWorldPos.y );
+		vec3 fogWarm = fogColor;
+		vec3 fogCool = fogColor * vec3( 0.60, 0.60, 1.04 );
+		vec3 fogCol2 = mix( fogWarm, fogCool, fogAltT );
+		gl_FragColor.rgb = mix( gl_FragColor.rgb, fogCol2, clamp( fogFactor, 0.0, 1.0 ) );
 	}
 #endif`;
 
@@ -63,6 +73,39 @@ THREE.ShaderChunk.fog_fragment = `
 function makeCanvas(size) {
   const c = document.createElement('canvas'); c.width = c.height = size;
   return [c, c.getContext('2d')];
+}
+
+// Dry soil at arm's length: fine speckle, a scatter of pebbles, and a few
+// scuffed drags, tileable so it can be laid across the whole coast.
+export function gritCanvas(size) {
+  const [c, ctx] = makeCanvas(size);
+  ctx.fillStyle = '#808080'; ctx.fillRect(0, 0, size, size);
+  const wrapDot = (x, y, r, fill) => {
+    for (const dx of [-size, 0, size]) for (const dy of [-size, 0, size]) {
+      ctx.beginPath(); ctx.arc(x + dx, y + dy, r, 0, Math.PI * 2); ctx.fillStyle = fill; ctx.fill();
+    }
+  };
+  for (let i = 0; i < size * 9; i++) {
+    const v = Math.random();
+    const g = v < 0.5 ? 96 + Math.random() * 42 : 150 + Math.random() * 60;
+    wrapDot(Math.random() * size, Math.random() * size, 0.5 + Math.random() * 1.5,
+      `rgba(${g | 0},${g | 0},${g | 0},0.55)`);
+  }
+  for (let i = 0; i < size / 3; i++) {           // pebbles
+    const g = 140 + Math.random() * 70;
+    wrapDot(Math.random() * size, Math.random() * size, 1.6 + Math.random() * 2.6,
+      `rgba(${g | 0},${g | 0},${g | 0},0.42)`);
+  }
+  ctx.globalAlpha = 0.3; ctx.lineCap = 'round';
+  for (let i = 0; i < size / 5; i++) {           // scuff drags
+    const x = Math.random() * size, y = Math.random() * size, a = Math.random() * Math.PI;
+    const l = 6 + Math.random() * 26;
+    ctx.strokeStyle = Math.random() < 0.5 ? '#5c5c5c' : '#a8a8a8';
+    ctx.lineWidth = 0.8 + Math.random() * 1.6;
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  return c;
 }
 
 // Tileable value noise painted to a canvas, for roughness and height maps.
@@ -360,7 +403,7 @@ function tileRowAlbedo(w = 64, h = 512, tiles = 8) {
   const th = h / tiles;
   for (let i = 0; i < tiles; i++) {
     const y = i * th;
-    const hue = 15 + Math.random() * 9, sat = 48 + Math.random() * 14, li = 42 + Math.random() * 9;
+    const hue = 14 + Math.random() * 10, sat = 28 + Math.random() * 13, li = 37 + Math.random() * 8;
     ctx.fillStyle = `hsl(${hue},${sat}%,${li}%)`;
     ctx.fillRect(0, y, w, th);
     // crown light and channel shade across the curve
@@ -441,7 +484,7 @@ export function sharedMaps() {
 // mode: 'top' sways what rises (trees, grass), 'hang' ripples what hangs
 // from its top edge (cloth), 'all' shifts the whole thing.
 export function addWind(material, amplitude, mode = 'top') {
-  const u = { uTime: { value: 0 }, uAmp: { value: amplitude } };
+  const u = { uTime: { value: 0 }, uAmp: { value: amplitude }, baseAmp: amplitude };
   const weight = mode === 'top' ? 'max( position.y, 0.0 )'
     : mode === 'hang' ? 'max( -position.y, 0.0 ) * 1.7'
     : '1.0';
@@ -472,6 +515,188 @@ export function addWind(material, amplitude, mode = 'top') {
   };
   WORLD.windUniforms.push(u);
   return u;
+}
+
+// ---------- ground detail ----------
+// The terrain carried one diffuse map tiled every 3.7 metres, which at eye
+// height is a smear rather than ground. Two world-space grit layers and one
+// slow macro layer are multiplied over it: the near layer gives the soil a
+// texture you can stand on, the macro layer keeps a hundred-metre hillside
+// from reading as a single flat wash.
+export function addGroundDetail(material, detail, macro) {
+  detail.wrapS = detail.wrapT = THREE.RepeatWrapping;
+  macro.wrapS = macro.wrapT = THREE.RepeatWrapping;
+  const prev = material.onBeforeCompile;
+  material.onBeforeCompile = (shader, renderer) => {
+    if (prev) prev(shader, renderer);
+    shader.uniforms.uGDetail = { value: detail };
+    shader.uniforms.uGMacro = { value: macro };
+    shader.vertexShader = 'varying vec3 vGDPos;\n' + shader.vertexShader.replace(
+      '#include <begin_vertex>',
+      '#include <begin_vertex>\n\tvGDPos = ( modelMatrix * vec4( transformed, 1.0 ) ).xyz;'
+    );
+    shader.fragmentShader = 'uniform sampler2D uGDetail; uniform sampler2D uGMacro; varying vec3 vGDPos;\n'
+      + shader.fragmentShader.replace(
+        '#include <map_fragment>',
+        `#include <map_fragment>
+        {
+          float gA = texture2D( uGDetail, vGDPos.xz * 0.72 ).g;
+          float gB = texture2D( uGDetail, vGDPos.xz * 0.171 ).g;
+          float gM = texture2D( uGMacro, vGDPos.xz * 0.0225 ).g;
+          diffuseColor.rgb *= mix( 1.0, gA, 0.44 ) * mix( 1.0, gB, 0.40 ) * ( 0.70 + 0.62 * gM );
+          // dry litter drifts through the open ground, so the soil between
+          // the tufts belongs to the same meadow they grow out of
+          float thatch = smoothstep( 0.42, 0.86, gB ) * smoothstep( 0.30, 0.78, gM );
+          diffuseColor.rgb = mix( diffuseColor.rgb, diffuseColor.rgb * vec3( 1.30, 1.16, 0.72 ), thatch * 0.55 );
+        }`
+      );
+  };
+}
+
+// ---------- distance cull ----------
+// Small life is drawn everywhere and read nowhere: past a given radius an
+// instance is collapsed to a point in the vertex shader, which costs one
+// compare and saves the whole fill. Fades over a band so nothing pops.
+export function addDistanceCull(material, near, far) {
+  const prev = material.onBeforeCompile;
+  const u = { uCullNear: { value: near }, uCullFar: { value: far } };
+  material.onBeforeCompile = (shader, renderer) => {
+    if (prev) prev(shader, renderer);
+    shader.uniforms.uCullNear = u.uCullNear;
+    shader.uniforms.uCullFar = u.uCullFar;
+    shader.vertexShader = 'uniform float uCullNear; uniform float uCullFar;\n' + shader.vertexShader;
+    shader.vertexShader = shader.vertexShader.replace(
+      '#include <project_vertex>',
+      `{
+        vec4 cullW = modelMatrix * vec4( 0.0, 0.0, 0.0, 1.0 );
+        #ifdef USE_INSTANCING
+          cullW = modelMatrix * instanceMatrix * vec4( 0.0, 0.0, 0.0, 1.0 );
+        #endif
+        float cullD = distance( cullW.xz, cameraPosition.xz );
+        float cullK = 1.0 - smoothstep( uCullNear, uCullFar, cullD );
+        transformed *= cullK;
+      }
+      #include <project_vertex>`
+    );
+  };
+  return u;
+}
+
+// ---------- rim light and backscatter, debt two paid ----------
+
+// Fresnel rim in the sun's own honey, masked to the hemisphere that faces
+// the sun, so edges only bloom when backlit. Optional translucency lifts
+// grass cards and olive canopies from inside when the sun stands behind
+// them. Injected through onBeforeCompile so every material keeps its PBR.
+// Weather can pull the whole effect down through uRimGlobal.
+const RIM_GLOBAL = { value: 1.0 };
+export function addRim(material, strength, opts = {}) {
+  const u = {
+    uRimStrength: { value: strength },
+    uRimSun: { value: WORLD.sunDir },
+    uRimColor: { value: new THREE.Color(opts.color !== undefined ? opts.color : 0xFFB65C) },
+    uTrans: { value: opts.trans || 0 },
+  };
+  const prev = material.onBeforeCompile;
+  material.onBeforeCompile = (shader, renderer) => {
+    if (prev) prev(shader, renderer);
+    shader.uniforms.uRimStrength = u.uRimStrength;
+    shader.uniforms.uRimSun = u.uRimSun;
+    shader.uniforms.uRimColor = u.uRimColor;
+    shader.uniforms.uTrans = u.uTrans;
+    shader.uniforms.uRimGlobal = RIM_GLOBAL;
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <emissivemap_fragment>',
+      `#include <emissivemap_fragment>
+      {
+        vec3 rimV = normalize( vViewPosition );
+        vec3 rimSunView = normalize( ( viewMatrix * vec4( uRimSun, 0.0 ) ).xyz );
+        float rimBacklit = smoothstep( 0.05, 0.55, dot( normalize( -vViewPosition ), rimSunView ) );
+        float rimFres = pow( 1.0 - clamp( dot( normalize( normal ), rimV ), 0.0, 1.0 ), 3.0 );
+        float rimSunSide = 0.35 + 0.65 * clamp( dot( normalize( normal ), rimSunView ) * 0.5 + 0.5, 0.0, 1.0 );
+        totalEmissiveRadiance += uRimColor * ( rimFres * rimBacklit * rimSunSide * uRimStrength * uRimGlobal );
+        if ( uTrans > 0.0 ) {
+          // Light through a leaf only reaches the eye where the leaf is thin.
+          // Without the fresnel weight the whole canopy lit up as one solid
+          // gold blob, which is how an olive tree became a paper lantern.
+          float rimThru = pow( clamp( dot( normalize( -vViewPosition ), rimSunView ), 0.0, 1.0 ), 5.0 );
+          float rimThin = 0.16 + 0.84 * rimFres;
+          totalEmissiveRadiance += uRimColor * vec3( 1.0, 0.86, 0.55 ) * ( rimThru * rimThin * uTrans * uRimGlobal );
+        }
+      }`
+    );
+    shader.fragmentShader = 'uniform float uRimStrength; uniform vec3 uRimSun; uniform vec3 uRimColor; uniform float uTrans; uniform float uRimGlobal;\n' + shader.fragmentShader;
+    if (typeof window !== 'undefined') {
+      window.__rimCompiled = (window.__rimCompiled || 0) + 1;
+      window.__rimHasInject = shader.fragmentShader.indexOf('rimBacklit') >= 0;
+    }
+  };
+  WORLD.rimUniforms.push(u);
+  return u;
+}
+// Layer 1 draws for the eye and the shadow, never for the sea mirror:
+// the Water reflection camera stays on layer 0, so small life and overlay
+// effects skip the mirror pass and the draw budget breathes.
+export function noReflect(o) {
+  if (o.traverse) o.traverse(a => { if (a.layers) a.layers.set(1); });
+  else if (o.layers) o.layers.set(1);
+}
+
+export function setRimGlobal(v) { RIM_GLOBAL.value = v; }
+export function getRimGlobal() { return RIM_GLOBAL.value; }
+
+// ---------- marine haze on the sea ----------
+// Held here rather than on the scene fog so the sea line is under this
+// build's control and not at the mercy of a uniform refresh it never gets.
+export const SEA_HAZE = { value: new THREE.Color(0.300, 0.208, 0.152) };
+export const SEA_HAZE_K = { value: 0.0021 };
+
+// ---------- sky gain ----------
+// The Preetham dome clips to a white sheet under ACES around a low sun.
+// A single gain uniform, shared with the PMREM environment clone, pulls the
+// dome under the tone curve's shoulder so the horizon grades orange to
+// violet and the aureole saturates to honey instead of blowing out.
+export const SKY_GAIN = { value: 0.40 };
+export function patchSky(sky) {
+  const m = sky.material;
+  m.uniforms.skyGain = SKY_GAIN;
+  m.fragmentShader = ('uniform float skyGain;\n' + m.fragmentShader).replace(
+    'gl_FragColor = vec4( retColor, 1.0 );',
+    `float alt = normalize( vWorldPosition - cameraPosition ).y;
+		// the aureole. Preetham stacks so much energy within a few degrees of a
+		// low sun that the dome bleaches white and swallows the disc. Two curves
+		// hold it honey: a wide warm tint, and a tight brightness clamp so the
+		// drawn disc is always the brightest body in the frame.
+		float sunWide = pow( smoothstep( 0.80, 0.9990, cosTheta ), 1.25 );
+		float sunTight = pow( smoothstep( 0.958, 0.99985, cosTheta ), 1.30 );
+		vec3 warmed = retColor * mix( vec3( 1.0 ), vec3( 1.26, 0.68, 0.30 ), sunWide * 0.92 );
+		// only the tight core is pulled down: darkening the wide dome muddies
+		// the whole sky to slate, which is a different failure from the one
+		// being paid off here
+		// hold the sky under white within ten degrees of the sun, so the drawn
+		// body is the only thing in frame allowed to reach the top of the curve
+		warmed *= mix( 1.0, 0.235, sunTight );
+		// the violet shoulder: low sky away from the sun grades to grape, which
+		// is what makes the warm half read warm at all
+		float away = 1.0 - smoothstep( -0.55, 0.30, cosTheta );
+		float low = 1.0 - smoothstep( 0.015, 0.40, alt );
+		float band = smoothstep( -0.10, 0.03, alt ) * low;
+		warmed = mix( warmed, warmed * vec3( 0.92, 0.775, 1.18 ), band * away * 0.50 );
+		// the sea line. A razor cut between sky and water is the one thing no
+		// golden-hour photograph has: a pale warm bar of marine haze softens it.
+		// Below the horizon the Preetham dome clamps its zenith angle at ninety
+		// degrees and paints one flat sheet at full horizon brightness. Nothing
+		// looks at it directly, but the sea mirror samples it through the wave
+		// distortion, and that is where the white sheet at the sea line was
+		// really coming from. Fold it down and the water finds its colour.
+		float below = smoothstep( 0.004, -0.045, alt );
+		warmed = mix( warmed, warmed * vec3( 0.26, 0.27, 0.32 ), below );
+		float hz = exp( - abs( alt ) * 20.0 );
+		warmed += vec3( 0.052, 0.036, 0.028 ) * hz * ( 0.34 + 0.66 * smoothstep( -0.30, 0.92, cosTheta ) );
+		gl_FragColor = vec4( warmed * skyGain, 1.0 );`
+  );
+  m.needsUpdate = true;
+  return sky;
 }
 
 // ---------- world assembly ----------
@@ -525,22 +750,25 @@ export function initWorld(renderer, reducedMotion) {
   // density feeds the patched height-fog integral above, linear not squared;
   // the color is lifted past sRGB so it still glows warm after ACES pulls it down
   scene.fog = new THREE.FogExp2(0xf5ad76, 0.0023);
-  scene.fog.color.multiplyScalar(1.8);
+  scene.fog.color.multiplyScalar(1.42);
 
   const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 11000);
   camera.rotation.order = 'YXZ';
+  camera.layers.enable(1);
   WORLD.camera = camera;
 
   // Sky and sun. The sun stays eight to eleven degrees over the sea to the west.
-  const sky = new Sky();
+  const sky = patchSky(new Sky());
   sky.scale.setScalar(9000);
   scene.add(sky);
   WORLD.sky = sky;
+  // Debt one, the sky half: more dust, less blue power, a tighter forward
+  // scatter, so the western sky grades orange to violet instead of washing white.
   const su = sky.material.uniforms;
-  su.turbidity.value = 10.0;
-  su.rayleigh.value = 3.0;
-  su.mieCoefficient.value = 0.004;
-  su.mieDirectionalG.value = 0.76;
+  su.turbidity.value = 8.0;
+  su.rayleigh.value = 2.1;
+  su.mieCoefficient.value = 0.006;
+  su.mieDirectionalG.value = 0.94;
 
   const sun = new THREE.DirectionalLight(0xffa763, 8.6);
   sun.castShadow = true;
@@ -552,60 +780,178 @@ export function initWorld(renderer, reducedMotion) {
   sun.shadow.camera.top = S; sun.shadow.camera.bottom = -S;
   sun.shadow.bias = -0.0004;
   sun.shadow.normalBias = 0.9;
+  sun.shadow.camera.layers.enable(1);
   scene.add(sun); scene.add(sun.target);
   WORLD.sun = sun;
 
-  const hemi = new THREE.HemisphereLight(0xa9b6d8, 0x9a7448, 0.85);
+  // Debt two, the fill half: warm ground bounce raised so shadow-side
+  // plaster reads as material, never as a void.
+  const hemi = new THREE.HemisphereLight(0x9EB2D6, 0xC98A4E, 1.34);
   scene.add(hemi);
+  WORLD.hemi = hemi;
+
+  // The other half of debt two. A hemisphere alone leaves a backlit wall
+  // grey, because the strongest fill at this hour is not the dome, it is the
+  // ground and the sea throwing the sun back up under the eaves. One cheap
+  // unshadowed directional, aimed up from beneath the sun's own bearing,
+  // gives the shadow side its colour back without a second shadow pass.
+  const bounce = new THREE.DirectionalLight(0xF0A860, 1.55);
+  bounce.castShadow = false;
+  scene.add(bounce);
+  WORLD.bounce = bounce;
 
   setSun(WORLD.sunElevation);
 
   // Sea with a road of glitter to the harbor mouth.
   const waterNormalsCanvas = normalFromHeight(noiseCanvas(512, 40, 1.5), 2.4);
   const waterNormals = canvasTexture(waterNormalsCanvas, 1);
-  const water = new Water(new THREE.PlaneGeometry(9000, 8000), {
+  const water = new Water(new THREE.PlaneGeometry(20000, 20000), {
     textureWidth: 512, textureHeight: 512,
     waterNormals,
     sunDirection: WORLD.sunDir.clone(),
     sunColor: 0xffa54d,
-    waterColor: 0x0b3340,
-    distortionScale: 2.7,
+    waterColor: 0x0a2e3a,
+    distortionScale: 2.6,
     fog: true,
   });
   water.rotation.x = -Math.PI / 2;
-  water.position.set(-3000, 0.02, 0);
+  water.position.set(-6000, 0.02, 0);
   water.material.uniforms.size.value = 6.0;
-  water.material.uniforms.sunColor.value.setRGB(7.0, 3.1, 0.9);
+  water.material.uniforms.sunColor.value.setRGB(8.5, 2.9, 0.5);
+  // Two faults in the vendored Water, both of which showed as a blown white
+  // bar at the sea line. First, the mirror target is rendered with tone
+  // mapping and output encoding already applied, so its texels are display
+  // sRGB; the shader then treats them as linear and tone maps a second time,
+  // which makes the sea brighter than the sky it is mirroring. Linearize the
+  // sample and it sits under the sky where it belongs. Second, the fog is
+  // mixed in after the colorspace conversion, so a linear fog colour is
+  // written into sRGB output and clips; move it above the tone mapping.
+  {
+    const fs = water.material.fragmentShader;
+    const before = 'vec3 reflectionSample = vec3( texture2D( mirrorSampler, mirrorCoord.xy / mirrorCoord.w + distortion ) );';
+    const after = `vec3 reflectionSample = vec3( texture2D( mirrorSampler, mirrorCoord.xy / mirrorCoord.w + distortion ) );
+					reflectionSample = pow( max( reflectionSample, vec3( 0.0 ) ), vec3( 2.2 ) );`;
+    let out = fs.indexOf(before) >= 0 ? fs.replace(before, after) : fs;
+    // The sea's own marine haze, in place of the scene fog. Three only
+    // refreshes a material's fog uniforms when it decides the material is
+    // dirty, and the vendored Water kept a stale, pale, near-white value
+    // that washed the whole sea into one flat sheet at every distance. This
+    // is the white sheet the build owed a fix for, and it is not the sky's
+    // fault. One explicit uniform, one honest exponential, and the far
+    // water now grades into the sky instead of standing in front of it.
+    out = out.replace(
+      'gl_FragColor = vec4( outgoingLight, alpha );',
+      `float seaD = length( worldToEye );
+					float seaK = 1.0 - exp( - seaD * uSeaHazeK );
+					outgoingLight = mix( outgoingLight, uSeaHaze, clamp( seaK, 0.0, 1.0 ) );
+					gl_FragColor = vec4( outgoingLight, alpha );`
+    );
+    water.material.fragmentShader = 'uniform vec3 uSeaHaze; uniform float uSeaHazeK;\n' + out;
+    water.material.uniforms.uSeaHaze = SEA_HAZE;
+    water.material.uniforms.uSeaHazeK = SEA_HAZE_K;
+    water.material.fog = false;
+    water.material.needsUpdate = true;
+  }
   scene.add(water);
   WORLD.water = water;
 
-  // the disc itself: an honest additive glow at the sun's true direction,
-  // which the water mirror repays as the road of glitter
+  // Debt one, the disc half: the sun becomes a drawn object. A limb-darkened
+  // billboard disc at 1.1 degrees, near-white core to a deep honey rim, over
+  // an additive halo falling off across about six degrees. ACES at 0.7
+  // saturates the disc instead of clipping it to a white sheet.
   {
+    // The disc. Real limb darkening runs bright at the centre and falls to a
+    // deeper, redder edge, and the edge itself is nearly hard: the whole body
+    // is drawn inside 0.94 of the sprite so the limb never dissolves into a
+    // ring, which is how the first pass read.
+    const R = 128, EDGE = 118;
     const c = document.createElement('canvas'); c.width = c.height = 256;
     const ctx = c.getContext('2d');
-    const g = ctx.createRadialGradient(128, 128, 2, 128, 128, 128);
-    g.addColorStop(0.0, 'rgba(255,246,222,1)');
-    g.addColorStop(0.07, 'rgba(255,222,150,0.95)');
-    g.addColorStop(0.2, 'rgba(255,176,88,0.42)');
-    g.addColorStop(0.5, 'rgba(255,142,62,0.12)');
-    g.addColorStop(1.0, 'rgba(255,130,50,0)');
-    ctx.fillStyle = g; ctx.fillRect(0, 0, 256, 256);
+    const g = ctx.createRadialGradient(R, R, 2, R, R, EDGE);
+    // Limb darkening, but compressed. A true solar limb ramp across a body
+    // only fourteen pixels wide reads as a dark ring, not as a sun, so the
+    // named core and limb colours are kept and the fall between them is
+    // shortened until the edge reads as a clean honey rim.
+    g.addColorStop(0.00, 'rgba(255,252,242,1)');  // near-white core
+    g.addColorStop(0.46, 'rgba(255,243,214,1)');  // #FFF3D6, the named core
+    g.addColorStop(0.78, 'rgba(255,226,176,1)');
+    g.addColorStop(0.93, 'rgba(255,212,152,1)');
+    g.addColorStop(0.985, 'rgba(255,196,128,1)'); // honey rim, held to the edge
+    g.addColorStop(1.00, 'rgba(255,150,54,0)');   // one texel of antialias, no more
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(R, R, EDGE, 0, Math.PI * 2); ctx.fill();
     const tex = new THREE.CanvasTexture(c);
     tex.colorSpace = THREE.SRGBColorSpace;
-    const sm = new THREE.SpriteMaterial({
-      map: tex, blending: THREE.AdditiveBlending, depthWrite: false,
-      transparent: true, fog: false, opacity: 0.95,
+    const dm = new THREE.SpriteMaterial({
+      map: tex, depthWrite: false, depthTest: true, transparent: true, fog: false,
+      toneMapped: true,
     });
-    const glow = new THREE.Sprite(sm);
-    glow.scale.setScalar(430);
-    sm.opacity = 0.82;
-    scene.add(glow);
-    WORLD.sunGlow = glow;
+    // Pushed well past white so ACES lands the body at the top of the curve.
+    // The disc must out-shine its own aureole or it reads as a hole in a sheet.
+    dm.color.setRGB(4.1, 2.68, 1.24);
+    const disc = new THREE.Sprite(dm);
+    disc.renderOrder = -4;
+    // 1.1 degrees of true body, plus the sprite's own transparent margin
+    const DISC_DEG = 1.1;
+    disc.userData.w = 2800 * Math.tan(THREE.MathUtils.degToRad(DISC_DEG)) * (R / EDGE);
+    disc.scale.set(disc.userData.w, disc.userData.w, 1);
+    scene.add(disc);
+    WORLD.sunDisc = disc;
+
+    // The aureole that hugs the body. Photographs of a low sun show the disc
+    // bleeding into a tight, saturated ring of glare before the wide halo
+    // begins; without it the disc looks pasted on.
+    const mkGlow = (stops) => {
+      const gc = document.createElement('canvas'); gc.width = gc.height = 256;
+      const gx = gc.getContext('2d');
+      const gg = gx.createRadialGradient(128, 128, 1, 128, 128, 128);
+      stops.forEach(([o, col]) => gg.addColorStop(o, col));
+      gx.fillStyle = gg;
+      gx.beginPath(); gx.arc(128, 128, 128, 0, Math.PI * 2); gx.fill();
+      const t = new THREE.CanvasTexture(gc);
+      t.colorSpace = THREE.SRGBColorSpace;
+      return t;
+    };
+    const inner = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: mkGlow([
+        [0.00, 'rgba(255,228,178,0.52)'],
+        [0.12, 'rgba(255,208,140,0.40)'],
+        [0.32, 'rgba(255,180,96,0.19)'],
+        [0.62, 'rgba(255,158,68,0.06)'],
+        [1.00, 'rgba(255,150,60,0)'],
+      ]),
+      blending: THREE.AdditiveBlending, depthWrite: false, depthTest: true,
+      transparent: true, fog: false, opacity: 0.62,
+    }));
+    inner.userData.w = 2800 * Math.tan(THREE.MathUtils.degToRad(2.9)) * 2;
+    inner.scale.set(inner.userData.w, inner.userData.w, 1);
+    inner.renderOrder = -2;
+    scene.add(inner);
+    WORLD.sunGlow = inner;
+
+    // the wide halo: additive, falling off over about six degrees
+    const hm = new THREE.SpriteMaterial({
+      map: mkGlow([
+        [0.00, 'rgba(255,190,112,0.42)'],
+        [0.18, 'rgba(255,168,84,0.26)'],
+        [0.44, 'rgba(255,144,56,0.108)'],
+        [0.74, 'rgba(255,132,46,0.030)'],
+        [1.00, 'rgba(255,124,40,0)'],
+      ]),
+      blending: THREE.AdditiveBlending, depthWrite: false, depthTest: true,
+      transparent: true, fog: false, opacity: 0.85,
+    });
+    const halo = new THREE.Sprite(hm);
+    halo.userData.w = 2800 * Math.tan(THREE.MathUtils.degToRad(6.0)) * 2;
+    halo.scale.set(halo.userData.w, halo.userData.w, 1);
+    halo.renderOrder = -3;
+    scene.add(halo);
+    WORLD.sunHalo = halo;
   }
-  if (WORLD.sunGlow) WORLD.sunGlow.position.copy(WORLD.sunDir).multiplyScalar(2800);
+  placeSun(WORLD.sunDir);
 
   buildTerrain(scene);
+  buildFoam(scene);
   buildFarRidges(scene);
   buildHazePlanes(scene);
   buildGulls(scene, reducedMotion);
@@ -620,6 +966,26 @@ export function initWorld(renderer, reducedMotion) {
   return WORLD;
 }
 
+// The body, its aureole and its halo ride the sun vector together. Near the
+// horizon the disc is flattened the way refraction flattens a real one, and
+// the whole stack dims as it sets so it never out-runs the tone curve.
+function placeSun(dir) {
+  if (!WORLD.sunDisc) return;
+  const alt = Math.max(-0.02, dir.y);
+  const squash = 1 - 0.10 * Math.exp(-alt * 26);
+  const d = WORLD.sunDisc, gl = WORLD.sunGlow, ha = WORLD.sunHalo;
+  d.position.copy(dir).multiplyScalar(2800);
+  d.scale.set(d.userData.w, d.userData.w * squash, 1);
+  if (gl) {
+    gl.position.copy(dir).multiplyScalar(2810);
+    gl.scale.set(gl.userData.w, gl.userData.w * (0.5 + 0.5 * squash), 1);
+  }
+  if (ha) {
+    ha.position.copy(dir).multiplyScalar(2820);
+    ha.scale.set(ha.userData.w, ha.userData.w * (0.5 + 0.5 * squash), 1);
+  }
+}
+
 export function setSun(elevationDeg) {
   WORLD.sunElevation = elevationDeg;
   const el = THREE.MathUtils.degToRad(elevationDeg);
@@ -629,14 +995,20 @@ export function setSun(elevationDeg) {
   WORLD.sunDir.copy(dir);
   WORLD.sky.material.uniforms.sunPosition.value.copy(dir);
   WORLD.sun.position.copy(dir.clone().multiplyScalar(420));
+  if (WORLD.bounce) {
+    // up out of the water on the same bearing, so the fill reads as sea light
+    WORLD.bounce.position.set(dir.x * 300, -190, dir.z * 300);
+    WORLD.bounce.target.position.set(0, 0, 0);
+    WORLD.bounce.target.updateMatrixWorld();
+  }
   if (WORLD.water) WORLD.water.material.uniforms.sunDirection.value.copy(dir);
-  if (WORLD.sunGlow) WORLD.sunGlow.position.copy(dir).multiplyScalar(2800);
+  placeSun(dir);
 }
 
 export function buildEnvironment(renderer, scene) {
   const pmrem = new THREE.PMREMGenerator(renderer);
   const skyScene = new THREE.Scene();
-  const skyClone = new Sky();
+  const skyClone = patchSky(new Sky());
   skyClone.scale.setScalar(2000);
   const a = WORLD.sky.material.uniforms, b = skyClone.material.uniforms;
   b.turbidity.value = a.turbidity.value; b.rayleigh.value = a.rayleigh.value;
@@ -649,34 +1021,95 @@ export function buildEnvironment(renderer, scene) {
   pmrem.dispose();
 }
 
+// The ground itself says which province you are in. One palette per province,
+// blended by the same soft weights the flora reads, so the earth changes over
+// the same tens of metres the growth does and a border is a walk, not a seam.
+const PROV_GROUND = {
+  // sand, then the warm cobble dust of a worked harbour
+  harbor:   { lo: new THREE.Color(0xD6B084), hi: new THREE.Color(0xC1A87E) },
+  // terra rossa: the red iron earth the olives stand in, drying to dust gold
+  terraces: { lo: new THREE.Color(0xA85B2E), hi: new THREE.Color(0xBC8442) },
+  // needle floor over granite grit, the darkest and greenest ground here
+  highland: { lo: new THREE.Color(0x635B3C), hi: new THREE.Color(0x666B4C) },
+  // bare bleached limestone and its own scree, the only cool ground on the
+  // coast: the Wall reads white from the harbour mouth and that is the point
+  wall:     { lo: new THREE.Color(0xE6E6DA), hi: new THREE.Color(0xD2D6D0) },
+  // shell sand, salt-pale, nothing on it but thorn
+  cloud:    { lo: new THREE.Color(0xF2ECD6), hi: new THREE.Color(0xE8E4D2) },
+};
+
+// The district floors, kept from the base build and re-read over the province
+// blend rather than instead of it.
+const DISTRICT_TINT = {
+  plaza:   [new THREE.Color(0xC3AE88), 0.42], features: [new THREE.Color(0xBCA271), 0.36],
+  ai:      [new THREE.Color(0xC3AE88), 0.36], apis:     [new THREE.Color(0xC5A96A), 0.40],
+  config:  [new THREE.Color(0xA68F60), 0.38], dev:      [new THREE.Color(0x93894F), 0.34],
+  ts:      [new THREE.Color(0x93894F), 0.34], plugins:  [new THREE.Color(0x8F8A52), 0.34],
+  clicms:  [new THREE.Color(0xC5A96A), 0.32],
+};
+for (const id of ['upgrades', 'upmid', 'bankw', 'banke', 'uphigh', 'approach', 'crag'])
+  DISTRICT_TINT[id] = [new THREE.Color(0xCFC8B2), 0.34];
+for (const id of ['cl-gs', 'cl-proj', 'cl-dep', 'cl-acct', 'cl-cli', 'cl-adv'])
+  DISTRICT_TINT[id] = [new THREE.Color(0xE9E2CC), 0.40];
+
 function buildTerrain(scene) {
   const SIZE = 1100, SEG = 340;
   const geo = new THREE.PlaneGeometry(SIZE, SIZE, SEG, SEG);
   geo.rotateX(-Math.PI / 2);
   const pos = geo.attributes.position;
   const colors = new Float32Array(pos.count * 3);
-  const cSand = new THREE.Color(0xcfa46f);
-  const cGrass = new THREE.Color(0x97854a);
-  const cDry = new THREE.Color(0xbb9857);
-  const cRock = new THREE.Color(0x8d8072);
+  const cSand = new THREE.Color(0xd4ab77);
+  const cRock = new THREE.Color(0x958876);
+  const cGranite = new THREE.Color(0x8C8880);
+  const cLime = new THREE.Color(0xD2D2C4);
   const cTerrace = new THREE.Color(0xac9166);
-  const tmp = new THREE.Color();
+  const cWet = new THREE.Color(0x6E6A5C);
+  const tmp = new THREE.Color(), tmp2 = new THREE.Color();
   for (let i = 0; i < pos.count; i++) {
     const x = pos.getX(i) + 90, z = pos.getZ(i);
     const h = terrainHeight(x, z);
     pos.setX(i, x); pos.setY(i, h);
     const slope = terrainSlope(x, z);
-    if (h < 1.0) tmp.copy(cSand);
-    else {
+    if (h < 1.0) {
+      tmp.copy(cSand);
+      // the harbor waterline is wet, dark, worked stone, not holiday sand
+      if (z > 26 && x < 46 && x > -46) tmp.lerp(cWet, 0.55);
+      if (h < 0.35) tmp.lerp(cWet, 0.30);
+    } else {
+      // the province blend: every palette weighted, so the border eases
+      const w = provinceWeights(x, z);
       const dryness = Math.min(1, Math.max(0, (h - 3) / 40));
-      tmp.copy(cGrass).lerp(cDry, dryness * 0.85);
-      let onTerrace = 0;
+      const macro = tfbm(x * 0.021, z * 0.021, 3);
+      tmp.setRGB(0, 0, 0);
+      for (let pi = 0; pi < PROVINCE_KEYS.length; pi++) {
+        const pg = PROV_GROUND[PROVINCE_KEYS[pi]];
+        tmp2.copy(pg.lo).lerp(pg.hi, dryness * 0.72 + macro * 0.30);
+        tmp.r += tmp2.r * w[pi]; tmp.g += tmp2.g * w[pi]; tmp.b += tmp2.b * w[pi];
+      }
+      // A swept district floor is paler and flatter than the country round it,
+      // and each district still keeps the working tint the base build gave it
+      // on top of its province: harbour wet stone, gatefront pale cobble,
+      // colonnade oat gold, workshop worked ochre, upland olive, cliff-road
+      // grey-green, islet lime. The province says which coast you are on; the
+      // district still says which yard you are standing in.
       for (const tr of TERRACES) {
         const dx = x - tr.x, dz = z - tr.z;
-        if (dx * dx + dz * dz < tr.r * tr.r * 0.5) { onTerrace = 1; break; }
+        if (dx * dx + dz * dz < tr.r * tr.r * 0.5) {
+          tmp.lerp(cTerrace, 0.30);
+          const dt = DISTRICT_TINT[tr.id];
+          if (dt) tmp.lerp(dt[0], dt[1]);
+          break;
+        }
       }
-      if (onTerrace) tmp.lerp(cTerrace, 0.55);
-      if (slope > 0.55) tmp.lerp(cRock, Math.min(1, (slope - 0.55) * 1.8));
+      if (slope > 0.55) {
+        // the rock that breaks through is the province's own: granite under
+        // the pines, pale limestone on the Wall and round the islets, warm
+        // grey everywhere else. An islet flank has to stay light or the
+        // whole archipelago reads as a row of dark lumps at this hour.
+        const w2 = provinceWeights(x, z);
+        tmp2.copy(cRock).lerp(cGranite, w2[2]).lerp(cLime, Math.min(1, w2[3] + w2[4]));
+        tmp.lerp(tmp2, Math.min(1, (slope - 0.55) * 1.8));
+      }
     }
     // grain variation
     const n = (Math.sin(x * 12.9898 + z * 78.233) * 43758.5453) % 1;
@@ -696,8 +1129,115 @@ function buildTerrain(scene) {
     vertexColors: true, roughness: 0.96, metalness: 0.0, map: gm,
     normalMap: tn, normalScale: new THREE.Vector2(0.65, 0.65),
   });
+  addGroundDetail(mat, canvasTexture(gritCanvas(256), 1), canvasTexture(noiseCanvas(128, 4, 1.25), 1));
   const mesh = new THREE.Mesh(geo, mat);
   mesh.receiveShadow = true;
+  mesh.userData.__terrain = true;
+  scene.add(mesh);
+  buildShallows(scene);
+}
+
+// The shelf under the archipelago, read off the top of the water: a turquoise
+// veil painted over the sea where the sand comes up, so the Cloud reads
+// Cycladic from the Wall and the causeway looks like it has something to
+// stand on. One merged mesh, one draw, out of the sea mirror.
+function buildShallows(scene) {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const ctx = c.getContext('2d');
+  const g = ctx.createRadialGradient(128, 128, 6, 128, 128, 128);
+  g.addColorStop(0, 'rgba(96,206,190,0.46)');
+  g.addColorStop(0.34, 'rgba(78,190,182,0.29)');
+  g.addColorStop(0.70, 'rgba(60,166,170,0.11)');
+  g.addColorStop(1, 'rgba(50,150,162,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, 256, 256);
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const parts = [];
+  const veil = (x, z, rx, rz) => {
+    const p2 = new THREE.PlaneGeometry(1, 1).toNonIndexed();
+    p2.rotateX(-Math.PI / 2);
+    p2.scale(rx, 1, rz);
+    p2.translate(x, 0.10, z);
+    parts.push(p2);
+  };
+  for (const tr of TERRACES) if (tr.id.startsWith('cl-')) veil(tr.x, tr.z, tr.r * 3.5, tr.r * 3.2);
+  veil(-96, 82, 150, 130); // the whole shelf, faint
+  let total = 0;
+  for (const g2 of parts) total += g2.attributes.position.count;
+  const pos = new Float32Array(total * 3), uv = new Float32Array(total * 2);
+  let off = 0;
+  for (const g2 of parts) {
+    pos.set(g2.attributes.position.array, off * 3);
+    uv.set(g2.attributes.uv.array, off * 2);
+    off += g2.attributes.position.count;
+    g2.dispose();
+  }
+  const merged = new THREE.BufferGeometry();
+  merged.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  merged.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+  const m = new THREE.Mesh(merged, new THREE.MeshBasicMaterial({
+    map: tex, transparent: true, depthWrite: false, fog: true,
+  }));
+  m.renderOrder = 3;
+  noReflect(m);
+  scene.add(m);
+}
+
+// The water edge stopped dithering the day it got a foam band: a soft
+// alpha ribbon that follows the true waterline contour and hides the
+// grazing-angle seam between sea plane and sand.
+function buildFoam(scene) {
+  const pos = [], uv = [];
+  const zs = [];
+  for (let z = -260; z <= 260; z += 3) zs.push(z);
+  const waterlineX = (z) => {
+    let lo = COAST_X - 36, hi = COAST_X + 40;
+    for (let i = 0; i < 18; i++) {
+      const mid = (lo + hi) / 2;
+      if (terrainHeight(mid, z) > 0.02) hi = mid; else lo = mid;
+    }
+    return (lo + hi) / 2;
+  };
+  const OUT = 5.5, IN = 2.4, y = 0.09;
+  let prev = null;
+  for (const z of zs) {
+    const wx = waterlineX(z);
+    const cur = { a: [wx - OUT, y, z], b: [wx + IN, y + 0.02, z], v: z * 0.08 };
+    if (prev) {
+      pos.push(...prev.a, ...prev.b, ...cur.b, ...prev.a, ...cur.b, ...cur.a);
+      uv.push(0, prev.v, 1, prev.v, 1, cur.v, 0, prev.v, 1, cur.v, 0, cur.v);
+    }
+    prev = cur;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+  const nor = new Float32Array(pos.length);
+  for (let i = 0; i < nor.length; i += 3) nor[i + 1] = 1;
+  geo.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
+  // foam texture: bright lace at the sand edge fading seaward
+  const c = document.createElement('canvas'); c.width = 128; c.height = 64;
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0, 0, 128, 64);
+  for (let x = 0; x < 128; x++) {
+    const t = x / 127;
+    for (let yy = 0; yy < 64; yy++) {
+      const n = Math.abs(Math.sin(x * 0.43 + yy * 0.9) * Math.sin(x * 0.11 - yy * 0.31));
+      const edge = Math.pow(t, 2.2);
+      const a = Math.max(0, edge * (0.35 + 0.65 * n) - 0.04);
+      ctx.fillStyle = `rgba(255,232,206,${(a * 0.62).toFixed(3)})`;
+      ctx.fillRect(x, yy, 1, 1);
+    }
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  const mat = new THREE.MeshBasicMaterial({
+    map: tex, transparent: true, depthWrite: false, fog: true, opacity: 0.72,
+    color: 0xFFE7C8,
+    polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3,
+  });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.renderOrder = 3;
   scene.add(mesh);
 }
 
@@ -727,6 +1267,7 @@ function buildFarRidges(scene) {
     geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
     geo.computeVertexNormals();
     const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: L.c, roughness: 1, side: THREE.DoubleSide }));
+    mesh.userData.__terrain = true;
     scene.add(mesh);
   }
 }
@@ -754,6 +1295,7 @@ function buildHazePlanes(scene) {
     m.scale.set(s, s * 0.7, 1);
     m.renderOrder = 6;
     m.userData.base = 1.35;
+    m.layers.set(1);
     scene.add(m);
     WORLD.hazePlanes.push(m);
   }
@@ -777,7 +1319,10 @@ function buildGulls(scene, reducedMotion) {
 const _gm = new THREE.Matrix4(), _gp = new THREE.Vector3(), _gq = new THREE.Quaternion(), _gs = new THREE.Vector3(1, 1, 1);
 export function updateWorld(dt, t) {
   if (WORLD.water && !WORLD.reducedMotion) WORLD.water.material.uniforms.time.value += dt * 0.8;
-  for (const u of WORLD.windUniforms) u.uTime.value = WORLD.reducedMotion ? 0 : t;
+  for (const u of WORLD.windUniforms) {
+    u.uTime.value = WORLD.reducedMotion ? 0 : t;
+    u.uAmp.value = u.baseAmp * WORLD.gustAmp;
+  }
   if (!WORLD.reducedMotion) {
     for (const b of WORLD.bobbers) {
       b.obj.position.y = b.baseY + Math.sin(t * 0.7 + b.phase) * 0.05;
@@ -788,9 +1333,10 @@ export function updateWorld(dt, t) {
   if (WORLD.gulls) {
     const { mesh, seeds } = WORLD.gulls;
     for (let i = 0; i < seeds.length; i++) {
-      const s = seeds[i], a = t * 0.055 * (0.7 + (i % 3) * 0.18) + s * 2.4;
-      const r = 60 + (i % 4) * 22;
-      _gp.set(-30 + Math.cos(a) * r, 26 + Math.sin(t * 0.5 + s) * 4 + i * 2.5, Math.sin(a) * r * 0.8);
+      const ex = WORLD.gullExcite || 0; // the boat is in: the flock works the berth
+      const s = seeds[i], a = t * 0.055 * (0.7 + (i % 3) * 0.18) * (1 + ex * 1.4) + s * 2.4;
+      const r = (60 + (i % 4) * 22) * (1 - ex * 0.45);
+      _gp.set(-30 - ex * 42 + Math.cos(a) * r, 26 - ex * 9 + Math.sin(t * 0.5 + s) * 4 + i * 2.5, ex * 4 + Math.sin(a) * r * 0.8);
       _gq.setFromEuler(new THREE.Euler(0, -a + Math.PI / 2, Math.sin(t * 2.2 + s) * 0.35));
       const flap = 1 + Math.sin(t * 6 + s * 3) * 0.14;
       _gs.set(1.15, flap, 1.15);
@@ -808,15 +1354,24 @@ export function updateWorld(dt, t) {
   for (const hp of WORLD.hazePlanes) {
     const dy = Math.abs(cam.position.y - hp.position.y);
     const d = Math.max(1, cam.position.distanceTo(hp.position));
-    const tilt = Math.min(1, (dy / d) * 6);
-    hp.material.opacity = hp.userData.base * tilt;
+    // A horizontal additive plane seen edge on projects to a thin bar of
+    // pure glare across the sky, which is exactly the white sheet this build
+    // owes a fix for. The fade has to be sharp, not linear.
+    const t2 = (dy / d - 0.05) / 0.25;
+    const tilt = t2 <= 0 ? 0 : t2 >= 1 ? 1 : t2 * t2 * (3 - 2 * t2);
+    // and they are pools, not a coast-wide wash: from the high bank the whole
+    // set stacked into one white bank over the town
+    const t3 = (d - 70) / 110;
+    const near = 1 - (t3 <= 0 ? 0 : t3 >= 1 ? 1 : t3 * t3 * (3 - 2 * t3));
+    hp.material.opacity = hp.userData.base * tilt * near;
   }
   // God rays fade by view angle against the sun.
   if (WORLD.godRays.length) {
     const view = new THREE.Vector3();
     cam.getWorldDirection(view);
     const facing = Math.max(0, view.dot(WORLD.sunDir));
-    for (const g of WORLD.godRays) g.material.opacity = g.userData.base * (0.25 + 0.75 * facing);
+    const rg = WORLD.godRayGain === undefined ? 1 : WORLD.godRayGain;
+    for (const g of WORLD.godRays) g.material.opacity = g.userData.base * (0.25 + 0.75 * facing) * rg;
   }
 }
 
@@ -824,7 +1379,7 @@ export function updateWorld(dt, t) {
 export function enterKeeperHour() {
   if (WORLD.keeperHour) return;
   WORLD.keeperHour = true;
-  WORLD.targetElevation = WORLD.sunElevation - 2.0;
+  WORLD.targetElevation = 3.2; // the floor of the golden band, never below
   WORLD.targetExposure = 0.76;
 }
 export function tickKeeperHour(dt) {
