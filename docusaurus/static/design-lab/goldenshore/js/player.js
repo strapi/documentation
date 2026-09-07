@@ -11,6 +11,11 @@ export function initPlayer(camera, domElement, colliders, reducedMotion) {
     camera, colliders, reducedMotion,
     keys: {}, velocity: new THREE.Vector3(),
     bobPhase: 0, bobAmp: 0,
+    /* (2026-09-07, owner: "ajoute space pour sauter par-dessus un obstacle")
+       vy is metres a second, airY the height of the feet above the ground.
+       A hop of 4.7 m/s under real gravity tops out at 1.13 m and is over in
+       0.96 s, which clears a rail fence and nothing that matters. */
+    vy: 0, airY: 0, air: false,
     fallback: false, locked: false,
     walkTarget: null,
     dragging: false, dragMoved: 0, lastX: 0, lastY: 0,
@@ -82,6 +87,16 @@ export function initPlayer(camera, domElement, colliders, reducedMotion) {
   });
 
   window.addEventListener('keydown', (e) => {
+    /* SPACE jumps, and only from the ground: no double hop, no flying. The
+       repeat is ignored so a held key does not pogo. */
+    if (e.code === 'Space' && !e.repeat && P.enabled && !P.air) {
+      const tag = (e.target && e.target.tagName) || '';
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+        P.air = true; P.vy = 4.7; P.airY = 0.001;
+        if (P.onJump) P.onJump();
+        e.preventDefault();
+      }
+    }
     if (e.code === 'Tab') e.preventDefault();
     P.keys[e.code] = true;
     if (P.onKey) P.onKey(e);
@@ -130,6 +145,9 @@ export function initPlayer(camera, domElement, colliders, reducedMotion) {
         for (const c of P.colliders) {
           const dx = nx - c.x, dz = nz - c.z;
           const d2 = dx * dx + dz * dz;
+          /* a collider with a height can be cleared once the feet are over
+             it; one without is a building, and no jump clears a building */
+          if (c.h && P.airY > c.h) continue;
           if (d2 < c.r * c.r && d2 > 0.0001) {
             const d = Math.sqrt(d2);
             nx = c.x + (dx / d) * c.r;
@@ -154,8 +172,20 @@ export function initPlayer(camera, domElement, colliders, reducedMotion) {
     } else {
       P.bobAmp = THREE.MathUtils.lerp(P.bobAmp, 0, dt * 6);
     }
-    const targetY = g2 + EYE + Math.sin(P.bobPhase) * P.bobAmp;
-    camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 1 - Math.exp(-dt * 12));
+    /* the hop, under ordinary gravity; the ground is still the law, it is
+       simply further away for a second */
+    if (P.air) {
+      P.vy -= 9.81 * dt;
+      P.airY += P.vy * dt;
+      if (P.airY <= 0) {
+        P.airY = 0; P.vy = 0; P.air = false;
+        if (P.onLand) P.onLand();
+      }
+    }
+    const targetY = g2 + EYE + P.airY + (P.air ? 0 : Math.sin(P.bobPhase) * P.bobAmp);
+    /* in the air the camera follows exactly: a lerped jump reads as a lift */
+    camera.position.y = P.air ? targetY
+      : THREE.MathUtils.lerp(camera.position.y, targetY, 1 - Math.exp(-dt * 12));
   };
 
   P.unlock = () => {

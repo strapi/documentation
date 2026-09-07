@@ -1036,3 +1036,18 @@ If something else still lets him through, it will be another thing drawn without
 a collider, and the quickest way to find it is for him to say where he was
 standing: the world is 380 metres of coast and a grid coarse enough to sweep it
 is too coarse to catch a fence rail.
+
+## 2026-09-07 · Space, to get over the fence
+
+The owner asked for a jump. It is a hop, not a flight: 4.7 metres a second under
+real gravity, topping out at 1.13 m and over in under a second. It fires only
+from the ground, ignores the key's auto-repeat so a held Space cannot pogo, and
+is refused while typing. In the air the camera follows the arc exactly rather
+than easing toward it, because a lerped jump reads as a lift in a balloon.
+
+Colliders may now carry a height. One that has none is a building and no jump
+clears it; the highland rail fence carries 1.05, its top rail, so the hop that
+tops out at 1.13 gets you over and nothing else does.
+
+Measured: apex 1.11 m, returns to the ground exactly, and holding the key leaves
+him where he started.

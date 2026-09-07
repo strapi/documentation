@@ -1419,10 +1419,10 @@ export function buildTown(scene, data, tendedSet) {
            circle and each span another at its middle: centres 1.2 apart with a
            radius of 0.7, which overlaps, so there is no gap to slip through.
            The gate itself is untouched - the run starts 3.6 clear of it. */
-        colliders.push({ x: px, z: pz, r: 0.7 });
+        colliders.push({ x: px, z: pz, r: 0.7, h: 1.05 });   /* vaultable: the top rail */
         if (prev) {
           const mx = (px + prev[0]) / 2, mz = (pz + prev[1]) / 2, mg = (pg + prev[2]) / 2;
-          colliders.push({ x: mx, z: mz, r: 0.7 });
+          colliders.push({ x: mx, z: mz, r: 0.7, h: 1.05 });
           for (const hy of [0.55, 1.05]) {
             wood.add(new THREE.BoxGeometry(0.08, 0.10, 2.45), mat4(mx, mg + hy, mz, perp), 0x5A472F, 0.14);
           }
