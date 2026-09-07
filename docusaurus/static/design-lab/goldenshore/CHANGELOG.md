@@ -1070,3 +1070,19 @@ half kilohertz, which is the difference between a hiss and a roar.
 
 Checked in a forced squall at rain 0.91: the world runs clean, no console
 errors, and there is no fixed delay left anywhere in the graph to ring.
+
+## 2026-09-07 · the Quick Start is the first door off the jetty again
+
+The owner: *"le quick start guide devrait être le premier bâtiment juste après
+le ponton, comme avant, juste une dizaine de mètres après le portail ; là on a
+des bâtiments qui bloquent le portail."*
+
+Measured before moving anything. The pier head is at x=-44. The Quick Start was
+pinned at x=10, which is fifty-four metres inland with a dozen houses in front
+of it, and the first door a visitor met was `/cms/installation/docker` at
+sixteen metres. QUICK START FIRST was not being kept here at all.
+
+A straight swap: the Quick Start takes the nearest plot and Docker goes to the
+one the Quick Start held. Nothing overlaps, no other door was moved by hand.
+Measured after: the Quick Start is the first station off the jetty at 16 metres,
+the next is 24.6 behind it.

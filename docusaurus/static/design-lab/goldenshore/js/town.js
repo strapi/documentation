@@ -37,7 +37,15 @@ const DISTRICT_OF = {
 const TER = Object.fromEntries(TERRACES.map(t => [t.id, t]));
 
 const SPECIAL_POS = {
-  '/cms/quick-start': { x: 10, z: 0, yaw: Math.PI * 1.5 },          // violet door faces the pier
+  /* (2026-09-07, owner) THE QUICK START IS THE FIRST DOOR OFF THE JETTY. It
+     stood at x=10, which is fifty-four metres from the pier head and behind a
+     dozen other houses: "le quick start guide devrait etre le premier batiment
+     juste apres le ponton, comme avant... la on a des batiments qui bloquent le
+     portail." It takes the nearest plot instead, sixteen metres out, and the
+     house that held it goes back to where the Quick Start was. A straight swap,
+     so nothing overlaps and no other door moves. */
+  '/cms/quick-start': { x: -28, z: 1, yaw: Math.PI * 1.5 },         // violet door faces the pier
+  '/cms/installation/docker': { x: 10, z: 0 },                      // and Docker takes the old plot
   '/cms/api/document-service': { x: 84, z: -34 },                   // the wellhouse
   '/cms/migration/v4-to-v5/breaking-changes': { x: 210, z: -28 },   // across the Crossing
   '/release-notes': { x: 239, z: -76 },                             // door of the Golden Shore, on the light's cape
