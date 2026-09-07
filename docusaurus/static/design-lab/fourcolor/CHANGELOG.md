@@ -270,3 +270,15 @@ were the provenance sentences in the source comments, which named it. Those
 sentences now say what changed without naming it, and the full provenance stays
 in this changelog. Carta Strapiana keeps its leadline call, `"By the deep, N!"`,
 which is the sounding cry the sea was named after and not a reference to it.
+
+## 2026-09-07 · the pocket tags keep their issue counts
+
+The tags under the pockets were one nowrap line with an ellipsis, and the longer
+category names were losing the half that matters: `CLOUD ADVANCED CONFIGURATION
+· 5 ISSUES` ran 97px past its box, so the count went and the category stayed.
+Two of the seven on screen were cut, and eight of the sixteen in the rack.
+
+They wrap to two lines now, at a tighter leading and letter-spacing, in a box
+widened from 84 to 94 percent of its pocket. All sixteen measured: none clipped
+in either direction, eight on two lines, and no tag overlaps a neighbouring
+pocket.

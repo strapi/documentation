@@ -82,9 +82,14 @@ img{max-width:100%}
 .pocket:focus-visible{outline:3px dashed var(--sun);outline-offset:4px}
 .pocket canvas{display:block;width:100%;height:auto;border:1px solid rgba(0,0,0,.7);
   box-shadow:0 10px 16px -6px rgba(0,0,0,.85), inset 0 0 0 1px rgba(255,255,255,.06)}
-.pocket .pocket-tag{position:absolute;left:8%;right:8%;bottom:-9px;background:#4c3a26;color:#e8d9b4;
-  font-size:10.5px;text-align:center;letter-spacing:1px;padding:2px 4px;border:1.5px solid #20130b;text-transform:uppercase;white-space:nowrap;
-  overflow:hidden;text-overflow:ellipsis}
+/* (2026-09-07) The tags were one nowrap line with an ellipsis, and the longer
+   category names lost their issue count to it - "CLOUD ADVANCED CONFIGURATION
+   - 5 ISSUES" ran 97px past its box. They wrap now, to two lines at a tighter
+   leading, and the box is a little wider in its pocket. The count is the half
+   that was being eaten, and it is the half worth reading. */
+.pocket .pocket-tag{position:absolute;left:3%;right:3%;bottom:-9px;background:#4c3a26;color:#e8d9b4;
+  font-size:10.5px;text-align:center;letter-spacing:.7px;padding:2px 4px;border:1.5px solid #20130b;text-transform:uppercase;
+  white-space:normal;line-height:1.2;overflow-wrap:anywhere}
 
 /* longbox — the back-issue bin */
 .binwrap{margin-top:44px}
