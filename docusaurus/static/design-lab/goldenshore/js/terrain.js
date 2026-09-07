@@ -231,11 +231,22 @@ export function terrainHeight(x, z) {
 
 // Decks that override the ground: the pier, the stone bridge, the causeway.
 export const PIER = { x0: -90, x1: -44, z0: -3.4, z1: 3.4, deck: 1.35 };
-export const BRIDGE = { x0: 187, x1: 205, z0: -31.5, z1: -24.5, deck: 30.4, rise: 1.15 };
+/* (2026-09-07, owner: "le pont ne touche pas l'autre bout") It touched neither.
+   Measured along z=-28, the west approach DESCENDS into the ravine, 32.3 at
+   x=178 down to 26.8 at x=186, and the deck began at 187 sitting flat at 30.4:
+   a wall of three and a half metres where the road met the bridge. The east
+   bank is at 31.7 against the same 30.4, a step of one and a third.
+   Two changes. The span reaches back to x=182, where the ground is 30.16, so it
+   crosses the last of the descent as an approach instead of starting in mid
+   air. And the deck is no longer level: it lifts from 30.2 at the west abutment
+   to 31.6 at the east, the two bank heights, with the arch's rise on top. Both
+   ends now meet their ground within a tenth of a metre. */
+export const BRIDGE = { x0: 182, x1: 205, z0: -31.5, z1: -24.5, deck: 30.2, deckEast: 31.6, rise: 1.15 };
 
 export function bridgeDeckAt(x) {
   const t = clamp((x - BRIDGE.x0) / (BRIDGE.x1 - BRIDGE.x0), 0, 1);
-  return BRIDGE.deck + Math.sin(t * Math.PI) * BRIDGE.rise;
+  const base = BRIDGE.deck + (BRIDGE.deckEast - BRIDGE.deck) * t;
+  return base + Math.sin(t * Math.PI) * BRIDGE.rise;
 }
 
 // The causeway: the walked border between the Harbour Town and the Cloud

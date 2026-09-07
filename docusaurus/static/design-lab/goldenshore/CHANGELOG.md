@@ -1086,3 +1086,28 @@ A straight swap: the Quick Start takes the nearest plot and Docker goes to the
 one the Quick Start held. Nothing overlaps, no other door was moved by hand.
 Measured after: the Quick Start is the first station off the jetty at 16 metres,
 the next is 24.6 behind it.
+
+## 2026-09-07 · the bridge reaches both banks
+
+The owner: *"le pont ne touche pas l'autre bout."* It touched neither, and the
+west end was much the worse.
+
+Measured along z=-28: the west approach DESCENDS into the ravine, 32.3 at x=178
+down to 26.8 at x=186, while the deck began at x=187 sitting flat at 30.4. So the
+road came down the slope and met a wall of three and a half metres. The east bank
+is at 31.7 against the same flat 30.4, a step of one and a third.
+
+Two changes. The span reaches back to x=182, where the ground is 30.16, so it
+crosses the last of the descent as an approach instead of beginning in mid air.
+And the deck is no longer level: it lifts from 30.2 at the west abutment to 31.6
+at the east, which are the two bank heights, with the arch's rise on top.
+
+Both ends now meet their ground within a tenth of a metre. What is left on the
+west is the ravine lip's own slope, 1.35 m over the metre before the abutment,
+which is the ground being steep rather than the bridge being wrong.
+
+A note on method, because it nearly cost the diagnosis. The first measurements
+were taken by teleporting the camera and reading its height 90 ms later. The
+camera eases toward the ground over about a third of a second, so every reading
+was pulled up toward the y it had been dropped from, and the terrain appeared to
+sit ABOVE the deck across the whole span. Settle for 700 ms before reading.
