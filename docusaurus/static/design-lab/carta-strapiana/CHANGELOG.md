@@ -323,3 +323,12 @@ was just built to prevent. The two slots were never gated alike.
 
 Re-verified after the removal with `probe-siren-gate.js`: twelve checks, all
 still passing, zero console errors.
+
+## 2026-09-07 · the prefix probe counts the sea as it is
+
+`qa/probe-s4-prefix.js` asserted `islands === 290` and had been failing on it.
+Not a defect in the world: the two release-notes pages are struck from the sea
+at source by `NOT_CHARTED` in `loadData`, because a release note is not a place
+you sail to, so the survey holds 288 islands and always has since that ruling.
+The probe simply never heard about it. Now `CHARTED = 288`, with the reason
+written beside it. PREFIX BOOT: PASS.
