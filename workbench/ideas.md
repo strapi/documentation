@@ -10,16 +10,28 @@ Last updated 2026-09-07.
 
 ## Across the lab
 
-- [ ] **Six worlds out of seven have no way back to the Design Lab.** Raised after testing FIRST
-  LIGHT on 2026-09-08. Checked before recording, and it is not a regression: FIRST LIGHT never had
-  such a link at any point in its history. Only The Herbarium has one, `Design Lab` pointing at
-  `../`. The Long Way Through, Pixel Docs City, FIRST LIGHT, Carta Strapiana, The Four-Color and
-  The Golden Shore have none, so a visitor who arrives through a crossing can only leave with the
-  browser's back button.
+- [ ] **Three worlds have no way back to the Design Lab.** Raised after testing FIRST LIGHT on
+  2026-09-08, and it is not a regression: FIRST LIGHT never had such a link at any point in its
+  history.
+  Corrected count, after the owner pointed out three worlds I had wrongly listed as missing. My
+  first check only grepped each world's `index.html`, but these worlds draw their interface in
+  JavaScript, so it found almost nothing. Searching the js too:
+
+  | has one | where |
+  |---|---|
+  | The Long Way Through | `longway.js` |
+  | Pixel Docs City | `pixelcity.js` |
+  | The Herbarium | `appendix.js` and `index.html` |
+  | Carta Strapiana | `deadreckoning.js` and `harbour.inc.js` |
+
+  **Missing: FIRST LIGHT, The Four-Color, The Golden Shore.** Those three are dead ends: a visitor
+  who arrives through a crossing can only leave with the browser's back button.
+
   Two things to settle when building it: the link must be in each world's own idiom rather than a
-  uniform button pasted onto seven different visual languages, and it must not become a hint that
-  gives the crossings away, since those must stay easter eggs. The Herbarium's existing one is the
-  reference for how discreet it should be.
+  uniform button pasted onto three different visual languages, and it must not become a hint that
+  gives the crossings away, since those stay easter eggs. The four that already exist are the
+  reference for how discreet it should be, and copying whichever of them is closest in spirit to
+  each missing world is better than inventing something new.
 
 ## FIRST LIGHT, hand control
 
