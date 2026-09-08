@@ -19,7 +19,6 @@ The newest world and the least worn in, so most of this is world craft rather th
 - [ ] The rain, or possibly the snow, sounds very metallic.
 - [ ] Wind and waves are indistinguishable. Waves should only be heard near the shore, fading as you walk inland.
 - [ ] Check the other five crossings for the same fault: an easter egg standing where you cannot miss it.
-- [ ] Move the boat to Carta Strapiana to the LEFT of the jetty and much further down the beach. (2026-09-07: NOT a coordinate change. She is moored to the pier by construction, her bollard on PIER.deck and her hull off the boards, and the whole assembly is expressed from those two facts. Beaching her means drawing a different boat, hauled up on sand and heeled over with a post beside her.)
 - [ ] A full discoverability pass on this world's crossings, since they must stay easter eggs.
 - [ ] Finish the province ground wave. Round 1 is complete on disk with its backup served side by side; the run was killed.
 
@@ -128,6 +127,7 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 
 ## The Golden Shore
 
+- [x] Move the boat to Carta Strapiana left and far down the beach. (2026-09-08: not a move but a redraw, since she was moored by construction. Hauled out 61 m down the shore, bow to the sea, heeled on two shores, stake and painter in the sand.)
 - [x] The Four-Color stand was too visible. (2026-09-08: it stood 11 m off the harbour gate; moved to the quiet side street south of the square, 76 m from the landing and out of the gate corridor.)
 - [x] Make swimming possible. (2026-09-08: the sea refused you in one line; now below 0.45 you swim, eye riding 0.30 above the surface at four tenths pace, with strokes instead of footfalls. Measured 0.37 in the sea, 3.67 back ashore.)
 - [x] The Quick Start was jammed under the harbour gate. (2026-09-08: 61 m back, and the gate corridor is reserved so the grid cannot hand the arch to the next house.)
