@@ -16,7 +16,6 @@ The newest world and the least worn in, so most of this is world craft rather th
 - [ ] Vary footsteps with the ground underfoot: decking, earth, sand, stone, and so on.
 - [ ] Introduce collisions. Walking through a wall or a fence must not be possible.
 - [ ] Add SPACE to jump over an obstacle.
-- [ ] Make swimming possible.
 - [ ] The rain, or possibly the snow, sounds very metallic.
 - [ ] Wind and waves are indistinguishable. Waves should only be heard near the shore, fading as you walk inland.
 - [ ] The stand leading to The Four-Color is too visible.
@@ -130,6 +129,8 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 
 ## The Golden Shore
 
+- [x] Make swimming possible. (2026-09-08: the sea refused you in one line; now below 0.45 you swim, eye riding 0.30 above the surface at four tenths pace, with strokes instead of footfalls. Measured 0.37 in the sea, 3.67 back ashore.)
+- [x] The Quick Start was jammed under the harbour gate. (2026-09-08: 61 m back, and the gate corridor is reserved so the grid cannot hand the arch to the next house.)
 - [x] The bridge did not reach either bank. (2026-09-07: the west approach descends to 26.8 while the deck began flat at 30.4, a wall of 3.5 m; the east bank stood 1.3 above it. The span reaches back to x=182 and the deck lifts from 30.2 to 31.6, the two bank heights. Both ends meet their ground within 0.1 m.)
 - [x] Restore the Quick Start as the first building after the jetty. (2026-09-07: it was pinned 54 m inland behind a dozen houses; swapped onto the nearest plot, first station at 16 m.)
 - [x] The loan crate sat on the arrival jetty. (2026-09-07: moved behind the north edge of the town, 69 m from the landing, verified by collider.)
