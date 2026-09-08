@@ -39858,7 +39858,7 @@ If you also make your first steps with JavaScript web development while discover
 :::
 
 :::tip Need help?
-Customers on paid plans can reach the Strapi team through the [Strapi Support platform](https://support.strapi.io/support/home). Community users can ask questions on [GitHub Discussions](https://github.com/strapi/strapi/discussions) or [Discord](https://discord.strapi.io).
+Customers on paid plans can reach the Strapi team through the [Strapi Support platform](https://support.strapi.io/). Community users can ask questions on [GitHub Discussions](https://github.com/strapi/strapi/discussions) or [Discord](https://discord.strapi.io).
 :::
 
 
