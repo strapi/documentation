@@ -94,7 +94,7 @@ In the admin panel, some Media Library settings are available via the Global Set
 
     | Setting name   | Instructions   | Default value |
     | -------------------------- | ----------------------- |---------------|
-    | Generate AI captions and alt texts automatically on upload! | Enabling this option will turn on [AI&#8209;powered metadata generation](#ai-powered-metadata-generation) <GrowthBadge /> | True |
+    | Generate AI captions and alt texts automatically on upload! | Enabling this option will turn on [AI&#8209;powered metadata generation](#ai-powered-metadata-generation) <GrowthBadge /> | Enabled |
     Responsive friendly upload | Enabling this option will generate multiple formats (small, medium and large) of the uploaded asset.<br/>Default sizes for each format can be [configured through the code](#responsive-images). | True          |
     | Size optimization          | Enabling this option will reduce the image size and slightly reduce its quality.                     | True          |
     | Auto orientation           | Enabling this option will automatically rotate the image according to EXIF orientation tag.          | False         |
