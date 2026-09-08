@@ -2542,6 +2542,17 @@
        since the first version of this world. */
     var handX = 0, handY = 0, handGrab = false, handLastX = 0, handLastY = 0, handSnap = -1;
     var handZoomBase = null, handZoomT = null;
+    // handPosKnown guards against computing a drag delta from a position
+    // that was never actually observed. handX/handY start at (0, 0) as
+    // placeholders, not as a real reading; a hand:grab carries no position
+    // of its own (see the hand:grab listener below), so if it arrives
+    // before this world has ever seen a hand:move -- a hand that enters the
+    // frame already pinched produces present, grab and move in one single
+    // frame -- the first delta would otherwise be measured from (0, 0)
+    // rather than from wherever the hand actually first appeared. Reset on
+    // every hand:absent too, since the same gap opens again for the next
+    // hand: its first position is equally unknown to this world.
+    var handPosKnown = false;
 
     function handSnapAt(sx, sy) {
       var wp = s2w(sx, sy);
@@ -2552,12 +2563,21 @@
 
     window.addEventListener('hand:present', function () { handGrab = false; });
     window.addEventListener('hand:absent', function () {
-      handGrab = false; handSnap = -1;
+      handGrab = false; handSnap = -1; handPosKnown = false;
       if (window.__handHud) window.__handHud.setSnapped('');
     });
     window.addEventListener('hand:move', function (e) {
-      handLastX = handX; handLastY = handY;
-      handX = e.detail.x; handY = e.detail.y;
+      var nx = e.detail.x, ny = e.detail.y;
+      if (!handPosKnown) {
+        // the first position this world has ever observed for this hand:
+        // there is nothing to drag from yet, so this frame only establishes
+        // the baseline. A grab that arrived earlier in the same frame must
+        // not compute a delta against a coordinate nobody ever measured.
+        handLastX = nx; handLastY = ny; handPosKnown = true;
+      } else {
+        handLastX = handX; handLastY = handY;
+      }
+      handX = nx; handY = ny;
       if (handGrab) {
         var dx = handX - handLastX, dy = handY - handLastY;
         cam.tx -= dx / cam.s; cam.ty -= dy / cam.s;

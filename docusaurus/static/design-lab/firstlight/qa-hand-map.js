@@ -33,6 +33,21 @@ const path = require('path');
     const tag = () => { const e = document.getElementById('hand-reticle'); return e ? e.querySelector('.hr-tag').textContent : null; };
     const snappedClass = () => { const e = document.getElementById('hand-reticle'); return !!e && e.classList.contains('snapped'); };
 
+    // C3, part 1: a hand that enters the frame ALREADY pinched, before this
+    // world has ever seen a hand:move, must not compute a drag delta from
+    // the (0, 0) placeholder handX/handY carry before any real position is
+    // observed. present, grab and move all arrive in the same batch here,
+    // exactly as they do in one real inference frame.
+    const beforeAnyMove = window.__handProbe.cam();
+    fire('present');
+    fire('grab');
+    fire('move', { x: 900, y: 250 });
+    await settle();
+    const afterFirstEverGrab = window.__handProbe.cam();
+    out.noTeleportOnFirstEverGrab = Math.abs(afterFirstEverGrab.tx - beforeAnyMove.tx) < 1
+      && Math.abs(afterFirstEverGrab.ty - beforeAnyMove.ty) < 1;
+    fire('release'); fire('absent');
+
     fire('present');
     fire('move', { x: 600, y: 400 });
     await settle();
@@ -47,6 +62,19 @@ const path = require('path');
     await settle();
     out.hudTagAfterAbsent = tag();
     out.hudClearedOnAbsent = out.hudTagAfterAbsent === '' && !snappedClass();
+
+    // C3, part 2: the same defect recurs after every hand:absent, not just
+    // on the very first frame this world ever sees -- a hand that left and
+    // comes back already pinched must not teleport either.
+    const beforeReentryGrab = window.__handProbe.cam();
+    fire('present');
+    fire('grab');
+    fire('move', { x: 150, y: 700 });
+    await settle();
+    const afterReentryGrab = window.__handProbe.cam();
+    out.noTeleportOnReentryGrab = Math.abs(afterReentryGrab.tx - beforeReentryGrab.tx) < 1
+      && Math.abs(afterReentryGrab.ty - beforeReentryGrab.ty) < 1;
+    fire('release'); fire('absent');
 
     fire('present');
     fire('move', { x: 600, y: 400 });
@@ -95,6 +123,8 @@ const path = require('path');
   });
 
   const fails = [];
+  if (!r.noTeleportOnFirstEverGrab) fails.push('a hand entering already pinched, before any move was ever seen, teleported the camera');
+  if (!r.noTeleportOnReentryGrab) fails.push('a hand re-entering already pinched after hand:absent teleported the camera');
   if (!r.snappedSomething) fails.push('a hand over the chart snapped to nothing');
   if (!r.hudTagNonEmpty) fails.push('the HUD did not report a label for the snapped body');
   if (!r.hudSnappedClass) fails.push('the HUD reticle did not carry the snapped class');
@@ -105,6 +135,7 @@ const path = require('path');
   if (!r.anchorHeldOnZoomIn) fails.push('zooming in did not keep the world point under the reticle fixed');
   if (!r.zoomedOut) fails.push('two hands moving together did not lower the scale target');
   if (errors.length) fails.push('console/page errors: ' + errors.slice(0, 2).join(' | '));
+  console.log(`  no teleport on first-ever grab ${r.noTeleportOnFirstEverGrab}   on reentry after absent ${r.noTeleportOnReentryGrab}`);
   console.log(`  snapped ${r.snappedSomething} hud "${r.hudTag}"->"${r.hudTagAfterAbsent}"   drag ${r.txMoved}   zoom in ${r.zoomedIn} (anchor held ${r.anchorHeldOnZoomIn}) out ${r.zoomedOut}   errors ${errors.length}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
