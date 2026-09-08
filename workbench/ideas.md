@@ -12,12 +12,6 @@ Last updated 2026-09-07.
 
 The newest world and the least worn in, so most of this is world craft rather than polish.
 
-- [ ] Footsteps are not believable, "on dirait limite un vélo". Rebuild them.
-- [ ] Vary footsteps with the ground underfoot: decking, earth, sand, stone, and so on.
-- [ ] Introduce collisions. Walking through a wall or a fence must not be possible.
-- [ ] Add SPACE to jump over an obstacle.
-- [ ] The rain, or possibly the snow, sounds very metallic.
-- [ ] Wind and waves are indistinguishable. Waves should only be heard near the shore, fading as you walk inland.
 - [ ] Check the other five crossings for the same fault: an easter egg standing where you cannot miss it.
 - [ ] A full discoverability pass on this world's crossings, since they must stay easter eggs.
 - [ ] Finish the province ground wave. Round 1 is complete on disk with its backup served side by side; the run was killed.
@@ -115,6 +109,15 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 - [x] The funnies and the botanist's stall stood too close to the landing. (2026-09-07: 11.1 and 5.8 tiles from spawn became 28.6 and 23.6; place2x2 learned the extra predicate place1 had.)
 - [x] The door prompts disagreed on case: the descriptive line under the title was sentence case on the sloop and capitals on the other five. (2026-09-07: all five follow the sloop now, case only, titles still capitals.)
 - [x] Move the way to The Golden Shore to the EDGE OF THE MAP, not far from the boat that leads to Carta Strapiana. (2026-09-07: the lamplighter's yard now places after the harbour is measured and is constrained by proximity to the mooring, landing 9.4 tiles from the sloop.)
+
+## The Golden Shore
+
+- [x] Footsteps are not believable, "on dirait limite un vélo". (2026-09-07, commit 5d8e6654c: rebuilt as heel then toe with a real gap, alternating feet panned left and right, and per-step jitter on level and filter frequency so no two treads are alike. The complaint turned out to be rhythm, not timbre.)
+- [x] Vary footsteps with the ground underfoot. (2026-09-07, commit 5d8e6654c: nine recipes, boards, cobbles, dirt, grass, sand, needles, scree, shell and water, against the eight surfaces terrain.js actually reports, each built from what that ground is made of rather than from a pitch shift.)
+- [x] Introduce collisions. (2026-09-07, commit f32aa4d0f: the fences got colliders and the resolver stopped skipping. The complaint read as walls; measuring showed the walls already held and it was the fences that had none.)
+- [x] Add SPACE to jump. (2026-09-07, commit b4ac996a4: it clears exactly what it should and no more; collider heights were set so a fence is vaultable and a wall is not.)
+- [x] The rain sounds metallic. (2026-09-07, commit 36cf8845e: the comb filter was the metal. A comb is a plate resonator, so rain through one is rain on a roof of tin; rebuilt without it.)
+- [x] Wind and waves were one sound. (2026-09-07, commit 62077002a: the surf became brown noise against the wind, and it now fades with distance from the water instead of following you inland.)
 
 ## Across the lab
 
