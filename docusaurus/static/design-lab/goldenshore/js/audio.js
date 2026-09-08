@@ -7,6 +7,174 @@
 import { COAST_X, PIER, TERRACES, provinceAt } from './terrain.js';
 import { safeStore } from './data.js';
 
+/* ─────────────────────── FOOTSTEPS, SECOND BUILD ───────────────────────
+   (2026-09-08, owner: "ça ne ressemble absolument pas à des pas et ça ne
+   change pas en fonction du terrain")
+
+   The first build was nine recipes of filtered white noise that differed only
+   in centre frequency and level. Both complaints follow from that one fact.
+
+   It did not sound like a step because a step is an IMPACT and a filtered
+   noise burst is a puff. The tell was the envelope: a six-millisecond attack
+   has already rounded off the edge the ear uses to hear a hit. A real heel
+   strike is under a millisecond to peak.
+
+   The surfaces did not separate because the ear does not sort ground by filter
+   frequency. It sorts ground by TEXTURE: how many separate little impacts
+   arrive, how fast, and how bright. Sand and scree are not two colours of the
+   same noise, they are two grain counts. So the recipes below differ first in
+   structure and only then in tone:
+
+     surface   strike        grains            body
+     boards    hard          none              two ring modes, hollow
+     cobbles   hard, bright  none              one very short high ring
+     dirt      dull          4, dull           a dead thud
+     grass     soft          3, plus a swish   a soft thud
+     sand      almost none   2, muffled        a long soft collapse
+     needles   dry crack     12, bright        none
+     scree     hard          22, bright, slow  a small slide after the step
+     shell     sharp, bright 26, very bright   none
+     water     none          none              a swell and a break
+
+   This lives at module scope, taking its context as an argument, so that the
+   offline renderer that measures it and the coast that plays it are running
+   the same code and not two drifting copies of it. That is the whole reason
+   the first build was signed off wrongly: it was read, not heard. */
+
+const _noiseCache = new WeakMap();
+function stepNoise(ctx) {
+  let b = _noiseCache.get(ctx);
+  if (!b) {
+    b = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.5), ctx.sampleRate);
+    const d = b.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    _noiseCache.set(ctx, b);
+  }
+  return b;
+}
+function panner(ctx, pan) {
+  const p = ctx.createStereoPanner ? ctx.createStereoPanner() : ctx.createGain();
+  if (p.pan) p.pan.value = pan;
+  return p;
+}
+/* ONE IMPACT. The attack is 0.7 ms on purpose: that edge is the difference
+   between a hit and a hiss, and it is the single change that made these read
+   as footsteps at all. */
+function hit(ctx, dest, t0, cfg, peak, dur, pan) {
+  const src = ctx.createBufferSource(); src.buffer = stepNoise(ctx);
+  src.loop = true;
+  src.playbackRate.value = 0.85 + Math.random() * 0.3;
+  const f = ctx.createBiquadFilter();
+  f.type = cfg.type; f.frequency.value = cfg.f; f.Q.value = cfg.q || 1;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.linearRampToValueAtTime(peak, t0 + 0.0007);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.0007 + dur);
+  src.connect(f).connect(g).connect(panner(ctx, pan)).connect(dest);
+  src.start(t0); src.stop(t0 + dur + 0.05);
+}
+/* THE GRAIN. Loose ground is not noise, it is a scatter of tiny separate
+   impacts, and the count is what tells sand from scree. They are placed with
+   a squared random so they crowd at the strike and thin out after it, which
+   is how a foot actually settles into loose material. */
+function grains(ctx, dest, t0, n, span, cfg, peak, dur, pan) {
+  for (let i = 0; i < n; i++) {
+    const u = Math.random();
+    const at = t0 + u * u * span;
+    const bright = cfg.f * (0.6 + Math.random() * 0.9);
+    hit(ctx, dest, at, { type: cfg.type, f: bright, q: cfg.q },
+        peak * (0.35 + Math.random() * 0.85), dur * (0.5 + Math.random()),
+        pan + (Math.random() - 0.5) * 0.22);
+  }
+}
+/* THE BODY. A damped sine is the ground answering the weight: hollow and long
+   on boards, short and dead on sand. */
+function body(ctx, dest, t0, freq, peak, dur, pan, q) {
+  const o = ctx.createOscillator(); o.type = 'sine';
+  o.frequency.setValueAtTime(freq * 1.25, t0);
+  o.frequency.exponentialRampToValueAtTime(freq, t0 + Math.min(0.05, dur));
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.linearRampToValueAtTime(peak, t0 + 0.0012);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  o.connect(g).connect(panner(ctx, pan)).connect(dest);
+  o.start(t0); o.stop(t0 + dur + 0.05);
+}
+
+export const STEP_SURFACES = ['boards', 'cobbles', 'dirt', 'grass', 'sand', 'needles', 'scree', 'shell', 'water'];
+
+/* MEASURED TRIMS. A lowpass on white noise gives back a small fraction of the
+   amplitude a highpass gives, so peaks chosen by eye in the source arrive at
+   the speaker three to one apart and a walk across the coast jumps in volume
+   at every province line. These are solved from the offline render, not
+   guessed: qa/measure-steps.js prints the peaks and the spread it leaves. */
+const STEP_TRIM = { boards: 0.56, cobbles: 0.59, dirt: 1.15, grass: 1.07, sand: 1.53, needles: 1.38, scree: 0.98, shell: 1.19, water: 2.01 };
+
+export function stepVoice(ctx, dest, t0, surface, pan = 0, lvl = 1) {
+  const j = (a, b) => a + Math.random() * (b - a);
+  const L = lvl * j(0.82, 1.18) * (STEP_TRIM[surface] || 1);              /* nobody treads twice the same */
+  const toe = j(0.036, 0.062);                /* heel, then the toe behind it */
+  switch (surface) {
+    case 'boards':
+      hit(ctx, dest, t0, { type: 'lowpass', f: j(1100, 1500), q: 0.8 }, 0.185 * L, 0.035, pan);
+      body(ctx, dest, t0, j(78, 94), 0.062 * L, 0.115, pan);     /* the plank, damped by the joist */
+      body(ctx, dest, t0, j(196, 232), 0.034 * L, 0.075, pan);   /* and its second mode */
+      hit(ctx, dest, t0 + toe, { type: 'bandpass', f: j(1600, 2100), q: 1.0 }, 0.05 * L, 0.03, pan);
+      break;
+    case 'cobbles':
+      hit(ctx, dest, t0, { type: 'highpass', f: j(1300, 1900), q: 0.7 }, 0.105 * L, 0.022, pan);
+      hit(ctx, dest, t0, { type: 'lowpass', f: j(420, 560), q: 0.9 }, 0.085 * L, 0.045, pan);
+      body(ctx, dest, t0, j(280, 340), 0.022 * L, 0.045, pan);   /* stone barely rings */
+      hit(ctx, dest, t0 + toe * 0.7, { type: 'highpass', f: j(2200, 3000), q: 0.6 }, 0.055 * L, 0.018, pan);
+      break;
+    case 'dirt':
+      hit(ctx, dest, t0, { type: 'lowpass', f: j(380, 520), q: 0.7 }, 0.145 * L, 0.055, pan);
+      body(ctx, dest, t0, j(64, 78), 0.055 * L, 0.075, pan);     /* dead, no ring */
+      grains(ctx, dest, t0 + 0.004, 4, 0.05, { type: 'bandpass', f: 900, q: 1.2 }, 0.022 * L, 0.014, pan);
+      break;
+    case 'grass':
+      hit(ctx, dest, t0, { type: 'lowpass', f: j(340, 460), q: 0.7 }, 0.135 * L, 0.05, pan);
+      body(ctx, dest, t0, j(58, 70), 0.062 * L, 0.07, pan);
+      /* the swish: grass is the one ground that brushes rather than crunches.
+         It starts AFTER the strike and stays under it, or the step reads as a
+         brush with no foot in it, which is what the first measure showed. */
+      hit(ctx, dest, t0 + 0.026, { type: 'highpass', f: j(2600, 3400), q: 0.5 }, 0.022 * L, 0.13, pan);
+      grains(ctx, dest, t0 + 0.03, 3, 0.09, { type: 'highpass', f: 4200, q: 0.5 }, 0.014 * L, 0.02, pan);
+      break;
+    case 'sand':
+      /* no transient worth the name: sand takes the impact and gives nothing back */
+      hit(ctx, dest, t0, { type: 'lowpass', f: j(300, 420), q: 0.5 }, 0.135 * L, 0.115, pan);
+      body(ctx, dest, t0, j(52, 62), 0.045 * L, 0.085, pan);
+      grains(ctx, dest, t0 + 0.01, 2, 0.07, { type: 'lowpass', f: 800, q: 0.6 }, 0.02 * L, 0.03, pan);
+      break;
+    case 'needles':
+      hit(ctx, dest, t0, { type: 'bandpass', f: j(1500, 2100), q: 0.8 }, 0.125 * L, 0.03, pan);
+      hit(ctx, dest, t0, { type: 'lowpass', f: j(240, 320), q: 0.7 }, 0.045 * L, 0.05, pan);
+      grains(ctx, dest, t0 + 0.003, 12, 0.085, { type: 'bandpass', f: 3600, q: 1.4 }, 0.026 * L, 0.011, pan);
+      break;
+    case 'scree':
+      hit(ctx, dest, t0, { type: 'bandpass', f: j(1200, 1700), q: 0.7 }, 0.145 * L, 0.035, pan);
+      hit(ctx, dest, t0, { type: 'lowpass', f: j(280, 360), q: 0.8 }, 0.05 * L, 0.06, pan);
+      /* the loose limestone keeps moving after the boot has stopped */
+      grains(ctx, dest, t0 + 0.004, 22, 0.19, { type: 'bandpass', f: 2600, q: 1.1 }, 0.03 * L, 0.014, pan);
+      break;
+    case 'shell':
+      hit(ctx, dest, t0, { type: 'highpass', f: j(2400, 3200), q: 0.6 }, 0.055 * L, 0.016, pan);
+      hit(ctx, dest, t0, { type: 'lowpass', f: j(420, 560), q: 0.6 }, 0.05 * L, 0.05, pan);
+      grains(ctx, dest, t0 + 0.002, 16, 0.095, { type: 'bandpass', f: 5200, q: 1.6 }, 0.046 * L, 0.010, pan);
+      break;
+    case 'water':
+      /* a stroke, not a step: a swell pushed aside, then the hand entering */
+      hit(ctx, dest, t0, { type: 'lowpass', f: j(300, 400), q: 0.6 }, 0.135 * L, 0.13, pan);
+      body(ctx, dest, t0 + 0.02, j(150, 200), 0.03 * L, 0.10, pan);
+      hit(ctx, dest, t0 + toe * 2.2, { type: 'bandpass', f: j(1300, 1800), q: 0.8 }, 0.055 * L, 0.12, pan);
+      if (Math.random() < 0.6) hit(ctx, dest, t0 + toe * 3.4, { type: 'highpass', f: j(3200, 4200), q: 0.5 }, 0.03 * L, 0.08, pan);
+      break;
+    default:
+      stepVoice(ctx, dest, t0, 'dirt', pan, lvl);
+  }
+}
+
 export function initAudio() {
   const S = {
     ctx: null, on: safeStore.get('longlight.audio', true), master: null,
@@ -205,64 +373,10 @@ export function initAudio() {
       };
     },
     step(surface) {
-      const r = (a, b) => a + Math.random() * (b - a);
+      if (!S.ready || !S.on) return;
       S.footL = !S.footL;
-      const pan = S.footL ? -0.13 : 0.13;          /* left foot, right foot */
-      const lvl = r(0.78, 1.22);                   /* nobody treads twice the same */
-      const gap = r(0.030, 0.055);                 /* heel, then the toe behind it */
-      const j = (f) => f * r(0.86, 1.16);          /* the ground is never uniform */
-      const R = {
-        boards: () => {
-          burst({ type: 'lowpass', f: j(520), q: 1.4 }, 0.15 * lvl, 0.10, pan);
-          tone(j(86), 'sine', 0.062 * lvl, 0.004, 0.11, pan);        /* the plank answers */
-          burst({ type: 'bandpass', f: j(1750), q: 0.9 }, 0.045 * lvl, 0.07, pan, gap);
-        },
-        cobbles: () => {
-          burst({ type: 'lowpass', f: j(360), q: 0.9 }, 0.075 * lvl, 0.055, pan);
-          burst({ type: 'bandpass', f: j(1500), q: 1.6 }, 0.10 * lvl, 0.06, pan, gap * 0.6);
-        },
-        dirt: () => {
-          burst({ type: 'lowpass', f: j(300), q: 0.8 }, 0.105 * lvl, 0.085, pan);
-          burst({ type: 'bandpass', f: j(900), q: 0.7 }, 0.04 * lvl, 0.06, pan, gap);
-        },
-        grass: () => {
-          burst({ type: 'highpass', f: j(2100), q: 0.6 }, 0.055 * lvl, 0.085, pan);
-          burst({ type: 'lowpass', f: j(260), q: 0.7 }, 0.045 * lvl, 0.07, pan, gap * 0.5);
-        },
-        // harbour and archipelago sand: soft, no ring at all
-        sand: () => {
-          burst({ type: 'lowpass', f: j(420), q: 0.5 }, 0.085 * lvl, 0.12, pan);
-          burst({ type: 'lowpass', f: j(700), q: 0.4 }, 0.05 * lvl, 0.16, pan, gap * 1.3);
-        },
-        // pine litter: dry, dead, a hush with a crack in it
-        needles: () => {
-          burst({ type: 'bandpass', f: j(3200), q: 0.5 }, 0.048 * lvl, 0.09, pan);
-          burst({ type: 'lowpass', f: j(240), q: 0.7 }, 0.048 * lvl, 0.07, pan);
-          if (Math.random() < 0.45) burst({ type: 'bandpass', f: j(5200), q: 2.2 }, 0.035 * lvl, 0.04, pan, gap);
-        },
-        // the Wall: loose broken limestone that slides half a step with you
-        scree: () => {
-          burst({ type: 'bandpass', f: j(2400), q: 1.1 }, 0.095 * lvl, 0.15, pan);
-          burst({ type: 'highpass', f: j(4200), q: 0.4 }, 0.048 * lvl, 0.19, pan, gap * 0.8);
-          burst({ type: 'lowpass', f: j(320), q: 0.8 }, 0.05 * lvl, 0.09, pan);
-        },
-        /* (2026-09-08) A STROKE, not a step. Swimming reaches this the same way
-           walking does, through the stride counter, so the arms keep the same
-           metronome the legs had. A stroke is a swell of water pushed aside and
-           the small break of the hand entering: low and wide, then a short
-           bright splash a little behind it. */
-        water: () => {
-          burst({ type: 'lowpass', f: j(340), q: 0.6 }, 0.085 * lvl, 0.26, pan);
-          burst({ type: 'bandpass', f: j(1500), q: 0.8 }, 0.05 * lvl, 0.13, pan, gap * 1.6);
-          if (Math.random() < 0.55) burst({ type: 'highpass', f: j(3600), q: 0.5 }, 0.03 * lvl, 0.09, pan, gap * 2.4);
-        },
-        // islet shell sand: brighter and crisper than mainland sand
-        shell: () => {
-          burst({ type: 'bandpass', f: j(2800), q: 0.8 }, 0.065 * lvl, 0.09, pan);
-          burst({ type: 'lowpass', f: j(480), q: 0.6 }, 0.05 * lvl, 0.10, pan, gap * 0.7);
-        },
-      };
-      (R[surface] || R.dirt)();
+      /* left foot, right foot: the only thing the caller still decides */
+      stepVoice(S.ctx, S.duck, S.ctx.currentTime, surface, S.footL ? -0.13 : 0.13);
     },
     // the continuous bed ----------------------------------------------------
     tick(dt, ctx2) {

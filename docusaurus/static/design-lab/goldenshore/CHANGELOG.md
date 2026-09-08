@@ -1,5 +1,60 @@
 # The Golden Shore
 
+## 2026-09-08 · THE FOOTSTEPS, SECOND BUILD
+
+The owner, on the first build: *"le son des pieds est toujours mauvais, ça ne ressemble
+absolument pas à des pas et ça ne change pas en fonction du terrain"*. Both complaints were right
+and both follow from one fact: the first build was nine recipes of filtered white noise that
+differed only in centre frequency and level.
+
+**Why it was not a step.** A step is an impact and a filtered noise burst is a puff. The tell was
+in the envelope: a **6 ms attack** has already rounded off the edge the ear uses to hear a hit. A
+real heel strike is under a millisecond to peak. Every ground now strikes in 0.6 to 1.4 ms, except
+the three soft ones, which are allowed 6 ms because their body is a sine near 60 to 70 Hz and a
+65 Hz sine physically cannot reach its own peak faster than 3.8 ms.
+
+**Why the grounds did not separate.** The ear does not sort ground by filter frequency. It sorts
+ground by texture: how many separate small impacts arrive, how fast, and how bright. Sand and
+scree are not two colours of one noise, they are two grain counts. The recipes now differ in
+structure first: a strike, a scatter of grains, and a body, in proportions that say what the
+ground is made of.
+
+| ground | strike | grains | body |
+|---|---|---|---|
+| boards | hard | none | two ring modes, hollow |
+| cobbles | hard, bright | none | one very short high ring |
+| dirt | dull | 4, dull | a dead thud |
+| grass | soft | 3, plus a swish | a soft thud |
+| sand | almost none | 2, muffled | a long soft collapse |
+| needles | dry crack | 12, bright | none |
+| scree | hard | 22, bright, spread wide | it keeps sliding after the boot stops |
+| shell | sharp, bright | 16, very bright | none |
+| water | none | none | a swell and a break: a stroke, not a step |
+
+**The loudness had to be solved, not guessed.** A lowpass on white noise returns a small fraction
+of the amplitude a highpass returns, so peaks chosen by eye in the source arrived nearly **three
+to one** apart and a walk jumped in volume at every province line. `STEP_TRIM` holds a measured
+correction per ground, solved from the offline render over two passes. The spread is now
+**1.35 to 1**.
+
+**How it is checked now, and why that changed.** The synthesis was hoisted to module scope as
+`stepVoice(ctx, dest, t0, surface, pan, lvl)`, taking its context as an argument, so that
+`qa/measure-steps.js` renders **the same code the coast plays** into an OfflineAudioContext rather
+than a drifting copy of it. That harness prints peak, attack, decay, grain count and brightness per
+ground, writes a wav of each and a wav of a walk across all of them, and asserts three things:
+
+- every hard ground strikes inside 2.5 ms and every soft one inside 6 ms;
+- no two grounds sit close on brightness, texture AND decay at once, over all 36 pairs;
+- the loudness spread across the nine stays under 1.8 to 1.
+
+All three pass. Live walk re-checked in the world: 119 steps across cobbles, grass and sand, frame
+p95 8.9 ms, no console errors.
+
+**The method fault worth keeping.** The first build was signed off by reading the source and
+finding nine recipes there. Nine recipes existing is not nine grounds sounding different. This one
+was judged by rendering it and listening, and the harness exists so the next one has to be too.
+
+
 The marriage build. **The Living Coast is the trunk and it is intact.** The graft
 is one thing and one thing only: the coast is now five distinct provinces drawn
 from the official Strapi documentation taxonomy, and walking a footpath from one
