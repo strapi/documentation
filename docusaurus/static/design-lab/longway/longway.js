@@ -1352,7 +1352,10 @@ function checkGuide() {
 function collectPage(p) {
   if (typeof audCheckComplete === 'function') audCheckComplete();
   if (S.sweep) return;   /* a scenic sweep flies over; only arrival collects */
-  if (!PACK.visited[p.slug]) PACK.visited[p.slug] = 1;
+  /* (2026-09-08) THE MEMORY CAIRNS, the second of the ten, need a date and not
+     a tick. First reading stamps the day; older saves that hold a plain 1 keep
+     working and simply raise no cairn, because they cannot say when. */
+  if (!PACK.visited[p.slug]) PACK.visited[p.slug] = todayStamp();
   if (p.comm >= 0) PACK.biomes[p.comm] = 1;
   if (p.season === 2 && !PACK.leaves[p.slug]) {
     PACK.leaves[p.slug] = 1;
@@ -2307,6 +2310,38 @@ function drawConverge(pal) {
     /* the carved gate itself */
     if (staged && Math.abs(gsx) < W + 300) drawCarvedGate(gsx, p, pal, sources.length);
   }
+}
+
+/* the local day, as the walker's own calendar would write it */
+const __diag = (window.__lwCairnDiag = { cairns: 0 });
+function todayStamp() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+/* THIS session's opening day, so a page read a moment ago raises no cairn: a
+   cairn is for a reading you came back to, not one you are still doing */
+const SESSION_DAY = todayStamp();
+
+/* A CAIRN BESIDE THE GATE. Three or four flat stones, smallest on top, with the
+   date of the first reading cut into the base. Only for a page read on an
+   EARLIER day, and only where the gate stands, so the trail slowly fills with
+   evidence of the times you came back. */
+function drawCairnAt(bx, gy, when, pal) {
+  __diag.cairns = (__diag.cairns || 0) + 1;   /* so a probe can prove they are raised */
+  /* four flat stones, widest at the foot, each set back a little */
+  const stones = [[15, 5.6, -4.8], [12, 4.6, -10.7], [8.8, 3.8, -14.9], [5.4, 3.0, -18.4]];
+  for (const [w, h2, dy] of stones) {
+    const y = gy + dy;
+    drawPoly([[bx - w / 2, y], [bx + w / 2, y], [bx + w / 2 - 1.5, y - h2], [bx - w / 2 + 1.5, y - h2]], pal.ink);
+    /* one struck highlight along the top face, the way the waymarks are lit */
+    drawPoly([[bx - w / 2 + 1.7, y - h2 + 0.8], [bx + w / 2 - 2.7, y - h2 + 0.8],
+              [bx + w / 2 - 3.1, y - h2 + 1.9], [bx - w / 2 + 2.1, y - h2 + 1.9]], 'rgba(255,243,224,0.30)');
+  }
+  /* the date, cut into a kerb slab laid at the foot: 52px of Georgia at the
+     readable floor, so the slab is sized to the words and not the other way */
+  drawPoly([[bx - 31, gy + 0.5], [bx + 31, gy + 0.5], [bx + 28, gy - 5.2], [bx - 28, gy - 5.2]], pal.ink);
+  drawPoly([[bx - 27.4, gy - 4.2], [bx + 27.4, gy - 4.2], [bx + 26.6, gy - 5.0], [bx - 26.6, gy - 5.0]], 'rgba(255,243,224,0.22)');
+  label(when, bx, gy - 0.4, 6.5, 'rgba(255,243,224,0.66)', 'center', 0.9);
 }
 
 function drawCarvedGate(gsx, p, pal, ways) {
@@ -3352,6 +3387,11 @@ function drawGate(sx, g, pal, wN) {
   cx.globalAlpha = 0.85 + 0.15 * doorA;
   cx.fillRect(sx - 8, gy - 59, 16, 6);   /* transom light */
   cx.globalAlpha = 1;
+  /* THE MEMORY CAIRN. A door you have already walked through, on some earlier
+     day, has a small cairn heaped beside it with that day cut into the base.
+     Nothing marks a page you read a moment ago: a cairn is for a return. */
+  const when = PACK.visited[g.tgt];
+  if (typeof when === 'string' && when !== SESSION_DAY) drawCairnAt(sx - 42, gy - 4, when, pal);
   const near = S.nearGate && S.nearGate.g === g;
   const rk = LBL.rank.has(g) ? LBL.rank.get(g) : 2;
   const row = (Math.round(g.x / 92) % 2) * 22;   /* stagger clustered door labels */

@@ -1,5 +1,30 @@
 # The Long Way Through — the Golden Shore crossing
 
+## 2026-09-08 · THE MEMORY CAIRNS
+
+A door you have already walked through, on some earlier day, now has a small cairn heaped beside
+it: four flat stones, widest at the foot, on a kerb slab with the date of that first reading cut
+into it. Nothing marks a page read a moment ago. A cairn is for a return, so the trail fills up
+slowly with evidence of the times you came back rather than with a tally of what you have seen.
+
+**The pack had to learn to keep a date.** `PACK.visited[slug]` stored a plain `1`, which says that
+a page was read and nothing about when. It now stores the local day as `YYYY-MM-DD`, written once
+on first arrival. Saves made before today hold the old `1`, and the cairn code tests
+`typeof when === 'string'`, so an old pack simply raises no cairns and loses nothing.
+
+**They stand at the citation doors, not at the province gates.** The first pass put the cairn beside
+`drawCarvedGate`, the portal at a page's start, which draws only for the one staged page ahead and
+so almost never appeared. The doors inside a stretch, one per real outbound citation, are the ones
+you actually pass: 120 cairns were raised over a 2,500 m walk with the whole trail marked as read.
+
+**Method note, for the next person who sets text on a small object.** `label()` passes its size
+through `readable()`, the accessibility floor, so asking for 6.5 px gets 8 px and a ten-character
+date is 52 px wide however small you write it. The slab was sized to the measured text rather than
+the text shrunk to a chosen slab, which is the only order that works here.
+
+Probed headless: a first reading stamps today; a page read today raises nothing; doors onto pages
+read on an earlier day raise cairns; no console errors.
+
 ## 2026-09-07 · THE PORTAL NETWORK, EIGHTH ROUND: THE GOLDEN SHORE JOINS
 
 The network was fixed when there were seven highlights. The Golden Shore was born after it and
