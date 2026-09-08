@@ -2610,7 +2610,12 @@
       // snapped cam.ts back toward wherever the gesture started.
       if (e.detail.start || handZoomBase === null) handZoomBase = cam.ts;
       var next = handZoomBase * e.detail.ratio;
-      next = Math.max(0.15, Math.min(9, next));
+      // the world's own bounds (see ZLN0/ZLN1 above and the wheel handler
+      // below), not a separate pair the hand invented: past 8, the zoom
+      // voice's pitch is already clamped and goes flat, and past the world's
+      // own maximum is not a place the hand should be able to reach that the
+      // wheel cannot.
+      next = Math.max(0.06, Math.min(8, next));
       if (next !== cam.ts) {
         // The hand drives cam.ts, the TARGET, and lets the world's existing
         // easing loop (cam.s += ds * e) chase it, which is what absorbs hand
