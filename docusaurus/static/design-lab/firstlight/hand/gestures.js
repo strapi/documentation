@@ -19,19 +19,30 @@ export const LM = {
   MIDDLE_MCP: 9, MIDDLE_TIP: 12, RING_TIP: 16, PINKY_TIP: 20,
 };
 
-/* Thresholds placed by explicit rule from 2061-frame fixture analysis.
-   RULE: arming threshold sits inside the true zero-density gap (no frame on
-   boundary); disarming threshold placed for hysteresis, lands in sparse data.
-
-   PINCH ratios: closed 0.04-0.40, zero-gap 0.528-0.574, open 1.10-1.58.
-   PINCH_ON=0.55 sits in gap; PINCH_OFF=1.00 gives 0.45-wide band, lands at
-   the start of open sparse region (0.7 frames/bin vs 467 in closed, 488 open).
-
-   CURL ratios: fist 0.70-1.20, zero-gap 0.892-0.916, open 1.50-2.04.
-   FIST_ON=0.90 sits in gap; FIST_OFF=1.35 gives 0.45-wide band, lands at
-   the start of open region with acceptable sparsity (13 vs 255 fist, 288+ open). */
+/* PINCH: thumb and index tip coming together, over hand size. Derived from
+   the 1821-frame reference fixture: closed frames sit at 0.04-0.42, open
+   frames at 1.18-1.56, and the whole 0.42-1.18 span between them is a true
+   zero-density gap but for a handful of in-between-motion frames. PINCH_ON
+   =0.55 and PINCH_OFF=1.00 both land on values the fixture never produces. */
 const PINCH_ON = 0.55, PINCH_OFF = 1.00;      // thumb to index, over hand size
-const FIST_ON = 0.90, FIST_OFF = 1.35;        // mean fingertip to wrist, over hand size
+
+/* FIST cannot be told apart from a pinch by thumb-to-index distance: closing
+   the whole hand also brings the thumb near the index tip, so in the fixture
+   EVERY held-fist frame also reads as "pinched" by that measure alone (274 of
+   274). The two gestures differ in what the OTHER three fingers do instead: a
+   pinch holds middle, ring and pinky extended while thumb and index meet; a
+   fist curls all of them in together. So fisted-ness is read from the curl of
+   ONLY those three non-pinching fingers (12, 16, 20) to the wrist, over hand
+   size -- a quantity a pinch never disturbs.
+
+   In the fixture, every sustained held fist stays under 0.89 (two holds, 166
+   and 111 frames, medians 0.715 and 0.682); every sustained held open hand or
+   pinch stays over 1.40 (four holds, minimum 1.404). No HELD gesture of
+   either kind ever sits in the 0.89-1.40 band; only the handful of frames
+   where the hand is physically in the middle of opening or closing pass
+   through it. FIST_ON and FIST_OFF sit inside that band, close to its two
+   edges, so they arm and disarm on genuine held state and never on a hold. */
+const FIST_ON = 0.95, FIST_OFF = 1.35;        // curl of middle+ring+pinky to wrist, over hand size
 const LOST_MS = 150;                          // the dead man's switch
 
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
@@ -43,9 +54,12 @@ function handSize(L) {
 function pinchRatio(L) {
   return dist(L[LM.THUMB_TIP], L[LM.INDEX_TIP]) / handSize(L);
 }
-function curlRatio(L) {
+function fistCurl(L) {
+  // deliberately excludes the index: it is the finger a pinch also curls, so
+  // including it would make this measure blind to the exact case it exists
+  // to catch (see the comment on FIST_ON above)
   const w = L[LM.WRIST], s = handSize(L);
-  const tips = [LM.INDEX_TIP, LM.MIDDLE_TIP, LM.RING_TIP, LM.PINKY_TIP];
+  const tips = [LM.MIDDLE_TIP, LM.RING_TIP, LM.PINKY_TIP];
   let sum = 0;
   for (const t of tips) sum += dist(L[t], w);
   return (sum / tips.length) / s;
@@ -82,16 +96,26 @@ export function makeGestureReader() {
 
       const primary = hands[0];
       const pr = pinchRatio(primary.landmarks);
-      const cr = curlRatio(primary.landmarks);
+      const fc = fistCurl(primary.landmarks);
 
-      if (!pinched && pr < PINCH_ON) { pinched = true; evs.push({ type: 'grab', hand: primary.handedness }); }
-      else if (pinched && pr > PINCH_OFF) { pinched = false; evs.push({ type: 'release', hand: primary.handedness }); }
+      // Fist is decided first, and on its own independent measure, because
+      // it is the only one of the two that actually discriminates a fist from
+      // a pinch (see the comment on FIST_ON above: thumb-to-index distance
+      // cannot). A pinch is then only armed while the hand is not fisted, so
+      // closing the whole hand into a fist is never also read as a grab, and
+      // closing further while already pinching releases the pinch instead of
+      // stacking a lock on top of it.
+      if (!fisted && fc < FIST_ON) {
+        fisted = true;
+        evs.push({ type: 'lock', hand: primary.handedness });
+        if (pinched) { pinched = false; evs.push({ type: 'release', hand: primary.handedness }); }
+      } else if (fisted && fc > FIST_OFF) {
+        fisted = false;
+      }
 
-      // a fist is only read when NOT pinching: a pinch curls the index too, and
-      // reading both at once would fire a lock every time you grabbed something
-      if (!pinched) {
-        if (!fisted && cr < FIST_ON) { fisted = true; evs.push({ type: 'lock', hand: primary.handedness }); }
-        else if (fisted && cr > FIST_OFF) fisted = false;
+      if (!fisted) {
+        if (!pinched && pr < PINCH_ON) { pinched = true; evs.push({ type: 'grab', hand: primary.handedness }); }
+        else if (pinched && pr > PINCH_OFF) { pinched = false; evs.push({ type: 'release', hand: primary.handedness }); }
       }
 
       // two pinched hands: the distance between their pinch points is the scale

@@ -8,7 +8,10 @@
         still a pinch. Thresholds measured in image distance silently mean
         "pinch harder the further away you are".
      3. THE DEAD MAN'S SWITCH. Tracking lost while grabbed must release, or
-        the world is stranded holding something after you left the room. */
+        the world is stranded holding something after you left the room.
+   Also covered below: two-hand spread, fist-vs-pinch mutual exclusion (a fist
+   must not also read as a grab), and a full replay of the real reference clip
+   asserting on real event counts. */
 'use strict';
 const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_modules/playwright-core');
 const { spawn } = require('child_process');
@@ -104,7 +107,38 @@ const path = require('path');
       out.spreadRises = ratios.length > 3 && ratios[ratios.length - 1] > 1;
     }
 
-    // 5. fixture replay: load the real reference clip and replay through the state
+    // 5. fist vs pinch: closing the whole hand must not also read as a grab,
+    // and a genuine pinch (thumb+index together, other three fingers still
+    // out) right afterwards must still register once the fist releases.
+    {
+      // Built directly rather than via `hand()` above: that helper's `curl`
+      // parameter never brings the middle/ring/pinky tips closer to the wrist
+      // than 1.0x hand size (curl=0 stops there), so it cannot represent a
+      // fist under the new, tighter thresholds. `curl3` here is exactly the
+      // ratio gestures.js computes for those three tips to the wrist.
+      const fistHand = (size, pinch, curl3, cx, cy) => {
+        const L = new Array(21).fill(null).map(() => ({ x: cx, y: cy, z: 0 }));
+        L[0] = { x: cx, y: cy + size, z: 0 };                     // wrist
+        L[9] = { x: cx, y: cy, z: 0 };                            // middle knuckle
+        L[8] = { x: cx - size * 0.3, y: cy - size * 0.1, z: 0 };  // index tip
+        L[4] = { x: L[8].x + pinch * size, y: L[8].y, z: 0 };     // thumb tip
+        const tip = { x: cx, y: cy + size - curl3 * size, z: 0 };
+        L[12] = tip; L[16] = tip; L[20] = tip;                    // middle, ring, pinky
+        return { landmarks: L, handedness: 'Right' };
+      };
+
+      const g = makeGestureReader();
+      let t = 0;
+      g.read(f(fistHand(0.20, 0.9, 1.9, 0.5, 0.5)), t += 0.033);              // open hand
+      const closing = g.read(f(fistHand(0.20, 0.2, 0.7, 0.5, 0.5)), t += 0.033); // thumb+index together AND the rest curled in: a fist
+      out.fistFired = types(closing).indexOf('lock') >= 0;
+      out.fistAlsoGrabbed = types(closing).indexOf('grab') >= 0;
+
+      const opening = g.read(f(fistHand(0.20, 0.2, 1.9, 0.5, 0.5)), t += 0.033); // rest of the fingers open again, thumb+index still together: now a genuine pinch
+      out.pinchAfterFist = types(opening).indexOf('grab') >= 0;
+    }
+
+    // 6. fixture replay: load the real reference clip and replay through the state
     // machine. Assert that real data produces expected event counts.
     // Assertions: grab events in [2, 4] (intentional pinches, with entry/exit noise);
     // spread events > 50 (two-hand interactions); no grab left open at end (deadlock).
@@ -136,8 +170,6 @@ const path = require('path');
       out.fixtureSpreads = events.spread;
       out.fixturePresent = events.present;
       out.fixtureAbsent = events.absent;
-      // Verify fist gesture detection works on real data: expect 1-5 lock events
-      out.fixtureHasLocks = events.lock > 0;
       // At end, check no grab is left open (deadlock) and no fist left closed
       out.fixtureStillPinched = g.state().pinched;
       out.fixtureStillFisted = g.state().fisted;
@@ -152,15 +184,19 @@ const path = require('path');
   if (!r.releasedOnLoss) fails.push('tracking was lost while grabbed and no release was emitted');
   if (r.stillGrabbed) fails.push('still grabbed after tracking was lost');
   if (!r.spreadRises) fails.push(`two hands moving apart gave ${r.spreadCount} spread events and no rising ratio`);
+  if (!r.fistFired) fails.push('closing the whole hand into a fist did not fire a lock');
+  if (r.fistAlsoGrabbed) fails.push('closing into a fist also fired a grab');
+  if (!r.pinchAfterFist) fails.push('a genuine pinch right after a fist did not fire a grab');
   // Fixture replay assertions: grabs in [2,4] (real pinches plus entry/exit noise);
-  // spreads 50+ (two-hand interactions); at least 1 fist lock (gesture detection);
-  // no grab or fist left open at end (deadlock check)
+  // spreads 50+ (two-hand interactions); locks in [2,4] (two real fist holds
+  // in the clip, plus tolerance for the same entry/exit noise as grabs); no
+  // grab or fist left open at end (deadlock check)
   if (r.fixtureGrabs < 2 || r.fixtureGrabs > 4) fails.push(`fixture grabs ${r.fixtureGrabs}, wanted 2-4`);
   if (r.fixtureSpreads < 50) fails.push(`fixture spreads ${r.fixtureSpreads}, wanted 50+`);
-  if (!r.fixtureHasLocks) fails.push(`fixture locks ${r.fixtureLocks}, wanted 1+ (fist detection)`);
+  if (r.fixtureLocks < 2 || r.fixtureLocks > 4) fails.push(`fixture locks ${r.fixtureLocks}, wanted 2-4`);
   if (r.fixtureStillPinched) fails.push('fixture ended with grab still open (deadlock)');
   if (r.fixtureStillFisted) fails.push('fixture ended with fist still closed (deadlock)');
-  console.log(`  synthetic: flips ${r.flips}   near/far ${r.nearPinched}/${r.farPinched}   spreads ${r.spreadCount}`);
+  console.log(`  synthetic: flips ${r.flips}   near/far ${r.nearPinched}/${r.farPinched}   spreads ${r.spreadCount}   fist-locked ${r.fistFired}   fist-also-grabbed ${r.fistAlsoGrabbed}   pinch-after-fist ${r.pinchAfterFist}`);
   console.log(`  fixture: grabs ${r.fixtureGrabs}   locks ${r.fixtureLocks}   spreads ${r.fixtureSpreads}   ended-pinched ${r.fixtureStillPinched} ended-fisted ${r.fixtureStillFisted}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();

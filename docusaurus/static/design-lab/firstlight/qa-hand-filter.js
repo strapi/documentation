@@ -1,7 +1,12 @@
 /* QA: the One Euro filter against real hand data. The fixture is 2061 frames
    at 30 Hz from a real HandLandmarker run. We test two things:
-   1. Tremor suppression in the longest still stretch (208 frames, 6.9 seconds)
-   2. Lag during the fastest motion in the trace (peak speed 3.91 units/s)
+   1. Tremor suppression in the longest still stretch.
+   2. Lag during the fastest motion the trace lets us actually measure. The
+      single fastest frame-to-frame jump in the whole clip (3.91 units/s) is
+      the hand leaving the frame at the very end of the recording: it has only
+      one or two follow-up samples before tracking is lost, so no window can
+      be scored against it. The fastest motion with a full follow-through
+      window is slower (1.20 units/s) but real, mid-clip, and measurable.
 
    These are the only things that matter: steady hands stay steady, fast hands
    don't lag. The thresholds are chosen from what real data shows a well-tuned
@@ -92,14 +97,19 @@ const fs = require('fs');
       tremorKept = noisyRMS > 1e-8 ? smoothRMS / noisyRMS : 0;
     }
 
-    /* Measure lag during the fastest motion, not after. The old metric measured
-       59 frames (2 seconds) after peak speed, so the filter had settled and
-       reported zero lag for all values. This breaks detection of minCutoff cost.
-       New approach: (1) find peak speed window, (2) warm filter on 20 preceding
-       frames, (3) measure absolute error during the fast window (not endpoint),
-       (4) report max and mean error, which reveals cutoff effects at scale. */
-    let maxSpeed = 0, maxSpeedIdx = 0;
-    for (let i = 0; i < frames.length - 1; i++) {
+    /* Measure lag during the fastest motion we can actually score, not after
+       it settles and not at a peak with nothing following it. WARMUP frames
+       must exist before the candidate so the filter is not measured cold, and
+       WINDOW frames must exist after it so a full window can be scored: this
+       is why the search excludes the last WINDOW frames rather than taking the
+       global fastest frame-to-frame jump, which (in this fixture) is the hand
+       leaving the frame in the recording's last couple of samples -- a real
+       jump, but one with no follow-through to measure a lag against. Searching
+       only measurable candidates finds the fastest motion that IS measurable,
+       instead of finding an unmeasurable one and silently reporting zero. */
+    const WARMUP = 20, WINDOW = 15;
+    let maxSpeed = 0, maxSpeedIdx = -1;
+    for (let i = WARMUP; i + WINDOW < frames.length; i++) {
       const dt = frames[i + 1].t - frames[i].t;
       if (dt < 1e-6) continue;
       const dx = frames[i + 1].x - frames[i].x;
@@ -109,15 +119,15 @@ const fs = require('fs');
     }
 
     let lagMeanError = 0, lagMaxError = 0;
-    if (maxSpeedIdx >= 20 && maxSpeedIdx + 10 < frames.length) {
+    if (maxSpeedIdx >= 0) {
       const fast = makeOneEuro({});
       // Warm filter on preceding frames so first-call passthrough is not part of measurement
-      const warmStart = Math.max(0, maxSpeedIdx - 20);
+      const warmStart = Math.max(0, maxSpeedIdx - WARMUP);
       for (let i = warmStart; i < maxSpeedIdx; i++) {
         fast.filter(frames[i].x, frames[i].t);
       }
-      // Measure error during fast window (up to 15 frames or end of data)
-      const windowEnd = Math.min(maxSpeedIdx + 15, frames.length);
+      // Measure error across the full WINDOW frames of the fast motion
+      const windowEnd = Math.min(maxSpeedIdx + WINDOW, frames.length);
       let sumError = 0, maxErr = 0, count = 0;
       for (let i = maxSpeedIdx; i < windowEnd; i++) {
         const filtered = fast.filter(frames[i].x, frames[i].t);
@@ -140,8 +150,14 @@ const fs = require('fs');
   if (!(r.tremorKept < 0.10)) fails.push(`tremor kept ${(r.tremorKept * 100).toFixed(1)}%, wanted under 10%`);
   /* Lag during fast motion: measured as absolute error between filtered and raw
      values DURING the fast window (not after it settles). Reports max and mean
-     error across the 15-frame peak speed window. Error in pinch-ratio units. */
-  if (!(r.lagMaxError < 0.30)) fails.push(`max lag error ${r.lagMaxError.toFixed(4)}, wanted under 0.30`);
+     error across the 15-frame peak speed window. Error in pinch-ratio units.
+     Sweeping minCutoff 0.02/0.05/0.10/0.14/0.16/0.25/0.5/1.0 against this same
+     window gives a max error of 0.0739 down to 0.0528: lag is real (it moves
+     monotonically with minCutoff) but small throughout. 0.30 under-used that
+     range by 4x and would not have caught a badly broken filter; 0.15, twice
+     the worst value the sweep actually produced, still passes every value in
+     it while catching a filter that is actually lagging badly. */
+  if (!(r.lagMaxError < 0.15)) fails.push(`max lag error ${r.lagMaxError.toFixed(4)}, wanted under 0.15`);
   console.log(`  tremor kept ${(r.tremorKept * 100).toFixed(1)}%   lag max ${r.lagMaxError.toFixed(4)}   lag mean ${r.lagMeanError.toFixed(4)}   peak speed ${r.maxSpeed.toFixed(2)} u/s`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
