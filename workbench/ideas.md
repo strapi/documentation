@@ -8,6 +8,19 @@ foot of this file, keeping the section it came from. The working list above stay
 
 Last updated 2026-09-07.
 
+## Across the lab
+
+- [ ] **Six worlds out of seven have no way back to the Design Lab.** Raised after testing FIRST
+  LIGHT on 2026-09-08. Checked before recording, and it is not a regression: FIRST LIGHT never had
+  such a link at any point in its history. Only The Herbarium has one, `Design Lab` pointing at
+  `../`. The Long Way Through, Pixel Docs City, FIRST LIGHT, Carta Strapiana, The Four-Color and
+  The Golden Shore have none, so a visitor who arrives through a crossing can only leave with the
+  browser's back button.
+  Two things to settle when building it: the link must be in each world's own idiom rather than a
+  uniform button pasted onto seven different visual languages, and it must not become a hint that
+  gives the crossings away, since those must stay easter eggs. The Herbarium's existing one is the
+  reference for how discreet it should be.
+
 ## FIRST LIGHT, hand control
 
 ### Tested 2026-09-08 evening, four faults. Fix these first.
