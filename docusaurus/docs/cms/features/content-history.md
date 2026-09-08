@@ -47,7 +47,8 @@ The retention period is defined by the license of your plan:
 | CMS Growth | 14 days | 14 days |
 | CMS Enterprise | 30 days | 90 days |
 
-The retention period cannot be extended on the Growth plan. On the Enterprise plan, contact the Strapi sales team to raise it up to 90 days.
+The retention period cannot be extended on the Growth plan.
+Contact the <ExternalLink to="https://strapi.io/contact-sales" text="Strapi sales team"/> to upgrade to the Enterprise plan, which offers 30 days by default and can be extended up to 90 days.
 
 :::note
 Growth projects that were already using a 30-day retention period when the 14-day default was introduced keep it until October 31, 2026.
