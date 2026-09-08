@@ -1924,6 +1924,27 @@ function draw(dt) {
       else drawSleeper(aySeat, pal, opts);
     }
   } else {
+    /* (2026-09-08) THE NIGHT LANTERN, the first of the ten. This trail is one
+       continuous dusk and keeps no clock, so "at night" can only mean the NIGHT
+       HOLLOWS: the stretches whose pages were tended after midnight, which
+       already refuse the sky and take the night palette. She lights her lantern
+       there and carries it, and the pool that travels with her is the same three
+       flat apricot rings the waymark lanterns pool, at a walker's scale. It
+       swings with her stride, and holds nearly still when she does. */
+    if (S.page && S.page.prov && S.page.prov.night > 0) {
+      const swing = Math.sin(S.x / 26) * (REDUCED ? 0 : 2.4) * (moving ? 1 : 0.25);
+      cx.fillStyle = INKS.apricot;
+      cx.globalAlpha = 0.09; cx.beginPath(); cx.arc(AVX + swing, ay, 86, 0, 7); cx.fill();
+      cx.globalAlpha = 0.15; cx.beginPath(); cx.arc(AVX + swing, ay, 52, 0, 7); cx.fill();
+      cx.globalAlpha = 0.24; cx.beginPath(); cx.arc(AVX + swing, ay, 25, 0, 7); cx.fill();
+      cx.globalAlpha = 1;
+      /* and the lantern itself, small, in the hand she leads with */
+      const side = (opts && opts.face < 0) ? -1 : 1;
+      const lx2 = AVX + side * 5.5 + swing * 0.5, ly2 = ay - hK * 0.46;
+      cx.fillStyle = INK_DARK; cx.fillRect(lx2 - 2.5, ly2 - 3.5, 5, 7);
+      cx.fillStyle = INKS.cream; cx.fillRect(lx2 - 1, ly2 - 2, 2, 4);
+      cx.fillStyle = INKS.apricot; cx.fillRect(lx2 - 0.5, ly2 - 5.5, 1, 2);   /* the ring */
+    }
     drawFigure(AVX - 2.6, ay - 1.8, hK, S.x / 26, 'rgba(255,243,224,0.9)', null, moving && !REDUCED, opts);
     drawFigure(AVX, ay, hK, S.x / 26, pal.ink, pal.accent, moving && !REDUCED, opts);
   }

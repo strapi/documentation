@@ -359,3 +359,20 @@ rows in the index, none of them the shore, and the hash still arrives there.
 Having heard it at half, the owner asked for twenty percent off again, so the
 music layer sits at 0.4. One number still governs the lot, whatever is playing.
 Effects unchanged at 1.
+
+## 2026-09-08 · the night lantern
+
+The first of the ten ideas. The brief said "at night the walker carries a small
+lantern", but this trail is one continuous dusk and keeps no clock, so "at
+night" can only mean the NIGHT HOLLOWS: the eleven stretches whose pages were
+tended after midnight, which already refuse the sky and take the night palette.
+
+She lights her lantern there, and the pool that travels with her is the same
+three flat apricot rings the waymark lanterns pool, at a walker's scale: 86, 52
+and 25 pixels at nine, fifteen and twenty-four percent. It swings with her
+stride and holds nearly still when she stops; reduced motion holds it still
+altogether. The lantern itself is five pixels of dark with a cream flame and an
+apricot ring, carried in the hand she leads with.
+
+It makes a piece of the provenance legible underfoot: you can now see, by the
+light she needs, which parts of this documentation were written after midnight.
