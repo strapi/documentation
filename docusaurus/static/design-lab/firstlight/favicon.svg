@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="FIRST LIGHT, the first sliver over the limb">
+  <rect width="32" height="32" fill="#060809"/>
+  <!-- the sun's first sliver breaking over a dark limb: the mission's own name -->
+  <circle cx="16" cy="15" r="9" fill="#FFB000"/>
+  <circle cx="16" cy="13" r="9" fill="#FFD27A"/>
+  <path d="M0 20 Q16 13 32 20 L32 32 L0 32 Z" fill="#060809"/>
+  <path d="M0 20 Q16 13 32 20" fill="none" stroke="#5AFFC8" stroke-width="2"/>
+</svg>
