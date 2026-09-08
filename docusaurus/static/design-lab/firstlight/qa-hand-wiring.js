@@ -21,7 +21,28 @@ const path = require('path');
   });
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1000, height: 800 } });
+
+  // IMPORTANT 3: the real button, wired by the real boot.js, using the real
+  // camera source -- not the fake one the rest of this file drives. The CDN
+  // fetch is intercepted and never resolved, standing in for a slow 11 MB
+  // download that never completes on its own, so the only way out is the
+  // cancel this fix adds. Registered before navigation, so it is in place
+  // before any click can trigger it.
+  await page.route('**/vision_bundle.mjs', () => { /* never fulfilled: a stalled download */ });
   await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => !!window.__hands);
+
+  await page.click('#handctlbtn');
+  const sawLoadingLabel = await page.waitForFunction(() => {
+    const kbd = document.querySelector('#handctlbtn kbd');
+    return kbd && kbd.textContent === '…';
+  }, { timeout: 3000 }).then(() => true).catch(() => false);
+  const stateDuringLoad = await page.evaluate(() => window.__hands.state());
+  await page.click('#handctlbtn'); // cancel, mid-download
+  const cancelled = await page.waitForFunction(() => window.__hands.state() === 'off', { timeout: 3000 })
+    .then(() => true).catch(() => false);
+  const kbdAfterCancel = await page.evaluate(() => document.querySelector('#handctlbtn kbd').textContent);
+  const importantThree = { sawLoadingLabel, stateDuringLoad, cancelled, kbdAfterCancel };
 
   const r = await page.evaluate(async () => {
     const { startHands, COMFORT } = await import('./hand/hands.js');
@@ -320,8 +341,13 @@ const path = require('path');
       afterLossX,
     };
   });
+  Object.assign(r, importantThree);
 
   const fails = [];
+  if (!r.sawLoadingLabel) fails.push('the button never showed a loading state during the (intercepted) download');
+  if (r.stateDuringLoad !== 'loading') fails.push(`state during the download was ${JSON.stringify(r.stateDuringLoad)}, wanted 'loading'`);
+  if (!r.cancelled) fails.push('a second click while loading did not cancel it (state never reached off)');
+  if (r.kbdAfterCancel !== 'OFF') fails.push(`the button read ${JSON.stringify(r.kbdAfterCancel)} after cancelling, wanted OFF`);
   if (!r.reticleOnBeforeDisarm) fails.push('the reticle never turned on before disarm (test setup problem)');
   if (!r.sawAbsentOnDisarm) fails.push('disarm() did not fire hand:absent');
   if (r.reticleOnAfterDisarm) fails.push('the reticle stayed visually on after disarm');
@@ -383,6 +409,7 @@ const path = require('path');
   console.log(`  lock then move: ${r.lockThenMoveX.toFixed(1)}px (wanted ~${r.W}px)   after tracking loss mid-grab: ${r.afterLossX.toFixed(1)}px (wanted ~${AFTER_LOSS_TARGET.toFixed(1)}px)`);
   console.log(`  moves ${r.moveCount}   last (${Math.round(r.lastX)}, ${Math.round(r.lastY)}) of ${r.W}x${r.H}   grabs ${r.grabs}   rearmPresent ${r.rearmPresent}   phantom ${r.phantomCount}`);
   console.log(`  disarm turns the reticle off: on-before ${r.reticleOnBeforeDisarm}   absent-fired ${r.sawAbsentOnDisarm}   on-after ${r.reticleOnAfterDisarm} (want false)`);
+  console.log(`  loading is reachable and cancellable: loading label shown ${r.sawLoadingLabel}   state ${r.stateDuringLoad}   cancelled ${r.cancelled}   button after cancel ${r.kbdAfterCancel}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
   process.exit(fails.length ? 1 : 0);

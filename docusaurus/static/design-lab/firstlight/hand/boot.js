@@ -22,6 +22,11 @@ if (btn) {
   };
   window.addEventListener('hand:state', (e) => label(e.detail.state));
   btn.addEventListener('click', async () => {
-    if (api.state() === 'on') api.disarm(); else await api.arm();
+    // 'loading' must be disarmable too, not just 'on': without this, a
+    // second click mid-download called arm() again, which source.js's own
+    // arm() no-ops on while already 'loading', so the button had no way to
+    // cancel an 11 MB download in progress.
+    var s = api.state();
+    if (s === 'on' || s === 'loading') api.disarm(); else await api.arm();
   });
 }

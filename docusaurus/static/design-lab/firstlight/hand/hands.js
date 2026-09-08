@@ -131,6 +131,14 @@ export function startHands(opts) {
       fire('state', { state: source.state() });
     },
     async arm() {
+      // source.arm() sets its own state to 'loading' synchronously before its
+      // first await, but that await is what this whole function then awaits
+      // too, so without announcing it here first, nothing dispatches
+      // hand:state until the ENTIRE arm sequence has settled: no progress
+      // indication during an 11 MB download, and boot.js's button label never
+      // shows anything but its state from before the click. Skipped only when
+      // already 'on', since arm() is then a guaranteed no-op (see source.js).
+      if (source.state() !== 'on') fire('state', { state: 'loading' });
       await source.arm();
       fire('state', { state: source.state() });
     },
