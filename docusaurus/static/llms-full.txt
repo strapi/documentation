@@ -34733,9 +34733,9 @@ module.exports = () => ({
 
 Restart your Strapi application after the configuration change. Set the property to `false` and restart Strapi to go back to the previous UI: no asset, folder or setting is lost when you switch either way.
 
-The [Usage](#usage) section of this page describes the new UI. The [Configuration](#configuration) section applies to both. The guided tour above still shows the previous UI.
+The [Usage](#usage) section of this page describes the UI that is enabled by default, and the guided tour above shows it too. While new UI is in beta, it is documented on its own page, [Media Library beta](/cms/features/media-library-beta). The [Configuration](#configuration) section applies to both.
 
-The flag changes the  Media Library page of the admin panel, and adds the upload dialog described in [following upload progress](#upload-progress) to the whole admin panel. The following are not affected and still behave as documented:
+The flag changes the  Media Library page of the admin panel, and adds the upload dialog described in [following upload progress](/cms/features/media-library-beta#upload-progress) to the whole admin panel. The following are not affected and still behave as documented:
 
 - the media field of the  Content Manager, which still opens the previous asset picker,
 - the  _Settings > Global Settings > Media Library_ page,
@@ -34781,7 +34781,7 @@ When images in your library lack a caption or an alternative text, the AI metada
 The  button and the view configuration page described below are not available while the `betaMediaLibrary` future flag is enabled, because the beta Media Library replaces both settings:
 
 - assets load as you scroll instead of being paginated, so there is no page size to define,
-- the sort order is chosen from the toolbar and stored in the page URL (see [sorting assets](#sorting-assets)).
+- the sort order is chosen from the toolbar and stored in the page URL (see [sorting assets](/cms/features/media-library-beta#sorting-assets)).
 
 A bookmarked link to `/admin/plugins/upload/configuration` displays a blank page rather than an error while the flag is enabled.
 
@@ -35324,6 +35324,256 @@ module.exports = ({ env }) => ({
 });
 ```
 
+## Usage
+
+**Path to use the feature:**  Media Library
+
+:::info
+Strapi supports uploading images from the admin panel or programmatically. From the API, you can send a multipart/form-data request to `/api/upload` with the image file and optional `fileInfo` metadata for captions and alt text (see [REST API documentation](/cms/api/rest/upload#upload-files) for more information).
+:::
+
+The Media Library displays all assets uploaded in the application, either via the  Media Library itself or via the  Content Manager when managing a media field.
+
+Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/cms/features/content-manager#creating--writing-content).
+
+From the Media Library, it is possible to:
+
+- upload a new asset (see [adding assets](/cms/features/media-library#adding-assets)) or create a new folder (see [organizing assets with folders](/cms/features/media-library#organizing-assets-with-folders)) ,
+- sort the assets and folders or set filters  to find assets and folders more easily,
+- toggle between the list view  and the grid view  to display assets, access settings  to [configure the view](#configuring-the-view), and make a textual search   to find a specific asset or folder,
+- and view, navigate through, and manage folders .
+
+:::tip
+Click the search icon  on the right side of the user interface to use a text search and find one of your assets or folders more quickly!
+:::
+
+<!--
+### Filtering assets
+
+Right above the list of folders and assets, on the left side of the interface, a ! **Filters** button is displayed. It allows setting one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the assets that match all the conditions will be displayed).
+
+To set a new filter:
+
+1. Click on the ! **Filters** button.
+2. Click on the 1st drop-down list to choose the field on which the condition will be applied.
+3. Click on the 2nd drop-down list to choose the type of condition to apply.
+4. For conditions based on the type of asset to filter, click on the 3rd drop-down list and choose a file type to include or exclude. For conditions based on date and time (i.e. _createdAt_ or _updatedAt_ fields), click on the left field to select a date and click on the right field to select a time.
+5. Click on the **Add filter** button.
+
+:::note
+When active, filters are displayed next to the ! **Filters** button. They can be removed by clicking on the delete icon .
+:::
+-->
+
+<!--
+### Sorting assets
+
+Just above the list of folders and assets and next to the ! **Filters** button, on the left side of the interface, a drop-down button is displayed. It allows to sort the assets by upload date, alphabetical order or date of update. Click on the drop-down button and select an option in the list to automatically display the sorted assets.
+-->
+
+### Adding assets
+
+<details>
+<summary>List of media types and extensions supported by the Media Library</summary>
+
+| Media type | Supported extensions                                            |
+| ---------- | --------------------------------------------------------------- |
+| Image      | - JPEG<br />- PNG<br />- GIF<br />- SVG<br />- TIFF<br />- ICO<br />- DVU   |
+| Video      | - MPEG<br />- MP4<br />- MOV (Quicktime)<br />- WMV<br />- AVI<br />- FLV |
+| Audio      | - MP3<br />- WAV<br />- OGG                                         |
+| File       | - CSV<br />- ZIP<br />- PDF<br />- XLS, XLSX<br />- JSON                |
+<br/>
+
+SVG files are denied by default in projects generated with Strapi  and later, even though they match the supported image types (see [SVG uploads](#svg-uploads)).
+
+</details>
+
+1. Click the **Add new assets** button in the upper right corner of the Media Library.
+2. Choose whether you want to upload the new asset from your computer or from an URL:
+    - from the computer, either drag & drop the asset directly or browse files on your system,
+    - from an URL, type or copy and paste an URL(s) in the _URL_ field, making sure multiple URLs are separated by carriage returns, then click **Next**.
+3. (optional) Click the edit button  to view asset metadata and define a _File name_, _Alternative text_ and a _Caption_ for the asset (see [Managing individual assets](#managing-assets)).
+4. (optional) Add more assets by clicking **Add new assets** and going back to step 2.
+5. Click on **Upload assets to the library**.
+
+#### Automatically generating metadata with Strapi AI {#ai-powered-metadata-generation}
+
+[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI automatically generates alternative text and captions for images uploaded to the Media Library, helping you improve content accessibility and SEO. A modal window displays the AI-generated alternative text and caption, allowing you to review the metadata and modify it if needed:
+
+AI metadata generation only works with images, not files or videos. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
+
+The [Media Library settings](#configuring-settings) also allow generating metadata for existing images that lack alternative text or captions. This feature is currently in .
+
+:::note Strapi AI credits
+
+Strapi AI includes 1,000 credits per month on the  plan, and 10 free credits during the free trial. Strapi AI is not available on Enterprise plans.
+
+Lightweight actions use fewer credits, while more complex ones use more.
+
+You can check your credit usage in the [Settings Overview](http://localhost:1337/admin/settings/application-infos) of the admin panel.
+Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthly allowance. Overages apply.
+
+Credits are shared across all users within the same project instance.
+
+When your credits run out, you can keep using Strapi AI, with overages billed monthly.
+For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
+
+:::
+
+### Managing individual assets {#managing-assets}
+
+The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped.
+
+#### Editing assets
+
+Click on the edit  button of an asset to open up the "Details" window, where all the available asset management options are available.
+
+- On the left, above the preview of the asset, control buttons  allow performing various actions:
+  - click on the delete button  to delete the asset,
+  - click on the download button  to download the asset,
+  - click on the copy link button  to copy the asset's link to the clipboard,
+  - optionally, click on the crop button  to enter cropping mode for the image (see [Cropping images](#cropping-images)).
+  - optionally, click on the pin button  to enter focal point mode for the image (see [Adding a focal point](#adding-a-focal-point)).
+- On the right, meta data for the asset is displayed at the top of the window  and the fields below can be used to update the _File name_, _Alternative text_, _Caption_ and _Location_ (see [Organizing assets with folders](#organizing-assets-with-folders)) for the asset .
+- At the bottom, the **Replace Media** button  can be used to replace the asset file but keep the existing content of the other editable fields, and the **Finish** button is used to confirm any updates to the fields.
+
+#### Moving assets
+
+1. Click on the edit  button for the asset to be moved.
+2. In the window that pops up, click the _Location_ field and choose a different folder from the drop-down list.
+3. Click **Save** to confirm.
+
+:::note
+Assets can also be moved to other folders from the main view of the Media Library (see [Organizing assets with folders](#organizing-assets-with-folders)). This includes the ability to move several assets simultaneously.
+:::
+
+#### Cropping images
+
+1. Click on the edit  button for the asset to be cropped.
+2. In the window that pops up, click the crop button  to enter cropping mode.
+3. Crop the image using handles in the corners to resize the frame. The frame can also be moved by drag & drop.
+4. Click the crop  button to validate the new dimensions, and choose either to **crop the original asset** or to **duplicate & crop the asset** (i.e. to create a copy with the new dimensions while keeping the original asset untouched). Alternatively, click the stop cropping  button to cancel and quit cropping mode.
+<!-- TODO: ask devs because there seems to be a bug/unintuitive behavior:  choosing crop the original asset does not quit cropping mode 😅  -->
+5. Click **Finish** to save changes to the file.
+
+#### Adding a focal point
+
+A focal point ensures the most important part of an image remains visible when the image is cropped or resized in different contexts.
+
+To add a focal point to an image:
+
+1. Click on the edit  button.
+2. In the window that pops up, click on the pin  button to enter focal point mode.
+3. Move the crosshair to the desired location and click to set the focal point.
+4. Click the check  button to validate the new focal point. Alternatively, click the cancel  button to abandon changes and exit focal point mode.
+5. Click the reset  button to reset the focal point to the center of the image.
+6. Click **Finish** to save changes to the file.
+
+#### Deleting assets
+
+1. Click on the edit  button for the asset to be deleted.
+2. In the window that pops up, click the delete button  in the control buttons bar above the asset's preview.
+3. Click **Confirm**.
+
+:::tip
+Assets can also be deleted individually or in bulk from the main view of the Media Library. Select assets by clicking on their checkbox in the top left corner, then click the Delete icon  at the top of the window, below the filters and sorting options.
+:::
+
+### Organizing assets with folders
+
+Folders in the Media Library help you organize uploaded assets. Folders sit at the top of the Media Library view or are accessible from the Media field popup when using the [Content Manager](/cms/features/content-manager).
+
+From the Media Library, it is possible to view the list of folders and browse a folder's content, create new folders, edit an existing folder, move assets to a folder, and delete a folder.
+
+:::note
+Folders follow the permission system of assets (see [Users & Permissions feature](/cms/features/users-permissions)). It is not yet possible to define specific permissions for a folder.
+:::
+
+By default, the Media Library displays folders and assets created at the root level. Clicking a folder navigates to this folder, and displays the following elements:
+
+- the folder title and breadcrumbs to navigate to a parent folder 
+- the subfolders  the current folder contains
+- all assets  from this folder
+
+From this dedicated folder view, folders and assets can be managed, filtered, sorted and searched just like from the main Media Library.
+
+To navigate back to the parent folder, one level up, use the **Back** button at the top of the interface.
+
+:::tip
+The breadcrumb navigation can also be used to go back to a parent folder: click on a folder name to directly jump to it or click on the 3 dots `/img.` and select a parent folder from the drop-down list.
+:::
+
+#### Adding folders
+
+1. Click on **Add new folder** in the upper right of the Media Library interface.
+2. In the window that pops up, type a name for the new folder in the _Name_ field.
+3. (optional) In the _Location_ drop-down list, choose a location for the new folder. The default location is the active folder.
+4. Click **Create**.
+
+:::note
+There is no limit to how deep your folders hierarchy can go, but bear in mind it might take some effort to reach a deeply nested subfolder, as the Media Library currently has no visual hierarchy indication. Searching for files using the  on the right side of the user interface might be a faster alternative to finding the asset you are looking for.
+:::
+
+#### Moving assets to a folder
+
+Assets and folders can be moved to another folder from the root view of the Media Library or from any view for a dedicated folder.
+
+1. Select assets and folder to be moved, by clicking the checkbox on the left of the folder name or clicking the asset itself.
+2. Click the  **Move** button at the top of the interface.
+3. In the _Move elements to_ pop-up window, select the new folder from the _Location_ drop-down list.
+4. Click **Move**.
+
+#### Editing folders
+
+Once created, a folder can be renamed, moved or deleted.
+
+1. In the Folders part of the Media library, hover the folder to be edited and click its edit button .
+2. In the window that pops up, update the name and location with the _Name_ field and _Location_ drop-down list, respectively.
+3. Click **Save**.
+
+#### Deleting folders
+
+Deleting a folder can be done either from the list of folders of the Media Library, or when editing a single folder.
+
+1. Click the checkbox on the left of the folder name. Multiple folders can be selected.
+2. Click the  **Delete** button above the Folders list.
+3. In the _Confirmation_ dialog, click **Confirm**.
+
+:::note
+A single folder can also be deleted when editing it: hover the folder, click on its edit icon , and in the window that pops up, click the **Delete folder** button and confirm the deletion.
+:::
+
+### Usage with the REST API
+
+The Media Library feature has some endpoints that can accessed through Strapi's REST API:
+
+- [Upload with the REST API](/cms/api/rest/upload): Learn how to use the Strapi
+
+### Use public assets in your code {#public-assets}
+
+Public assets are static files (e.g., images, video, CSS files, etc.) that you want to make accessible to the outside world.
+
+Because an API may need to serve static assets, every new Strapi project includes by default a folder named `/public`. Any file located in this directory is accessible if the request's path doesn't match any other defined route and if it matches a public file name (e.g. an image named `company-logo.png` in `/public/` is accessible through `/company-logo.png` URL).
+
+:::tip
+`index.html` files are served if the request corresponds to a folder name (`/pictures` url will try to serve `public/pictures/index.html` file).
+:::
+
+:::caution
+The dotfiles are not exposed. It means that every file name that starts with `.`, such as `.htaccess` or `.gitignore`, are not served.
+:::
+
+
+
+# Media Library beta
+Source: https://docs.strapi.io/cms/features/media-library-beta
+
+# Media Library beta
+
+Strapi has completely reworked the  Media Library UI. This page describes the reworked UI, which is available as a beta feature  behind the `betaMediaLibrary` future flag, before it becomes the default UI.
+
+Read the [Media Library](/cms/features/media-library) page for how to enable the flag, and for every configuration option, which the flag does not change.
+
 ## Usage  {#usage}
 
 **Path to use the feature:**  Media Library
@@ -35359,7 +35609,7 @@ Each folder and asset in the list has a checkbox to select it (see [selecting it
 | Breadcrumbs above the list | A folder tree on the left (see [navigating folders](#navigating-folders)) |
 | Folder cards displaying how many items they hold | Folder names only. To know how many assets a folder holds directly, open it and read the page title |
 | Pagination, with an _Entries per page_ setting | No pagination: more assets load as you scroll |
-| A  button to configure the view | No view configuration (see [configuring the view](#configuring-the-view)) |
+| A  button to configure the view | No view configuration (see [configuring the view](/cms/features/media-library#configuring-the-view)) |
 | A  button opening a search field | A search field always displayed in the toolbar (see [searching assets](#searching-assets)) |
 | A _Details_ window that covers the library | A details panel that leaves the list usable (see [managing individual assets](#managing-assets)) |
 | A crop mode and a focal point mode, opened separately | A single _Crop & Focus area_ editor (see [cropping images and setting a focus area](#cropping-images)) |
@@ -35438,7 +35688,7 @@ The menu requires the _Create_ permission of the Upload plugin. Without it, righ
 | File       | - CSV<br />- ZIP<br />- PDF<br />- XLS, XLSX<br />- JSON                |
 <br/>
 
-The Media Library itself does not restrict file types. Which files are accepted is decided by the `security.allowedTypes` and `security.deniedTypes` options (see [security](#security)) and by the maximum file size (see [max file size](#max-file-size)). SVG files are denied by default in projects generated with Strapi  and later (see [SVG uploads](#svg-uploads)).
+The Media Library itself does not restrict file types. Which files are accepted is decided by the `security.allowedTypes` and `security.deniedTypes` options (see [security](/cms/features/media-library#security)) and by the maximum file size (see [max file size](/cms/features/media-library#max-file-size)). SVG files are denied by default in projects generated with Strapi  and later (see [SVG uploads](/cms/features/media-library#svg-uploads)).
 
 </details>
 
@@ -35489,15 +35739,15 @@ The dialog can be minimized to a summary line and maximized again. It offers a *
 **Retry** is only displayed after a cancellation, and it only restarts cancelled files. A file that failed on its own cannot be retried from the dialog: read the reason on its row, fix the cause, and upload it again.
 :::
 
-By default, files are uploaded one at a time. Increase [`concurrentUploadRequests`](#concurrent-file-uploads) to upload several files in parallel.
+By default, files are uploaded one at a time. Increase [`concurrentUploadRequests`](/cms/features/media-library#concurrent-file-uploads) to upload several files in parallel.
 
 #### Automatically generating metadata with Strapi AI {#ai-powered-metadata-generation}
 
 [When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI automatically generates an alternative text and a caption for images uploaded to the Media Library, helping you improve content accessibility and SEO. The upload dialog reports the outcome for each file, such as _Uploaded • Metadata generated_ or _Upload complete • Metadata generation skipped_.
 
-AI metadata generation only works with PNG, JPEG, WebP, HEIC and HEIF images. Every other file, including GIF, SVG and TIFF images, is reported as skipped. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
+AI metadata generation only works with PNG, JPEG, WebP, HEIC and HEIF images. Every other file, including GIF, SVG and TIFF images, is reported as skipped. The feature is enabled by default, but can be disabled in the [Media Library settings](/cms/features/media-library#configuring-settings) if needed.
 
-Metadata can also be generated for images that already exist in the library, either from the [Media Library settings](#configuring-settings) for every image that lacks one, or with the **Create metadata** bulk action for a specific selection (see [generating metadata in bulk](#bulk-metadata)).
+Metadata can also be generated for images that already exist in the library, either from the [Media Library settings](/cms/features/media-library#configuring-settings) for every image that lacks one, or with the **Create metadata** bulk action for a specific selection (see [generating metadata in bulk](#bulk-metadata)).
 
 :::note Strapi AI credits
 
