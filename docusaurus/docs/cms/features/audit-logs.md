@@ -93,3 +93,19 @@ For any log item, click the <Icon name="eye" /> icon to access a modal with more
 />
 
 With Strapi <VersionBadge version="5.52.0" noTooltip />, in the payload, the `origin` key indicates where the action came from: `mcp` for the [MCP server](/cms/features/strapi-mcp-server), or `admin` for the admin panel.
+
+### Exporting audit logs
+
+<VersionBadge version="5.52.4+" noTooltip />
+
+Users with the `export` permission for Audit Logs can export the current filtered set of entries as a CSV file. To access this feature, the user's role must have both the **Read** and **Export** permissions under **Settings > Administration Panel > Roles > Audit Logs** (see [admin panel configuration](/cms/configurations/admin-panel#audit-logs)).
+
+To export audit logs:
+
+1. (Optional) Apply filters to select the entries to export. The **Export** button caption reflects the number of matching entries (for example, "Exports all 1,234 entries").
+2. Click **Export** to start pre-downloading the file. Keep the browser tab open until the pre-download completes.
+3. Click **Download CSV** to save the exported file.
+
+Every export is itself recorded as an `audit-log.export` event. This event is included in the exported CSV file.
+
+By default, exports are limited to 1,000,000 rows. To change this limit, set the `auditLogs.exportMaxRows` parameter in the [admin panel configuration](/cms/configurations/admin-panel#audit-logs).
