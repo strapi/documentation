@@ -2541,7 +2541,7 @@
        the tremor smoothing for free, with machinery that has been running
        since the first version of this world. */
     var handX = 0, handY = 0, handGrab = false, handLastX = 0, handLastY = 0, handSnap = -1;
-    var handZoomBase = null;
+    var handZoomBase = null, handZoomT = null;
 
     function handSnapAt(sx, sy) {
       var wp = s2w(sx, sy);
@@ -2604,9 +2604,9 @@
         cam.tx += bx - ax; cam.ty += by - ay;
       }
       dirty = true;
-      clearTimeout(window.__handZoomT);
+      clearTimeout(handZoomT);
       // a gesture ends when the events stop; re-base so the next one starts fresh
-      window.__handZoomT = setTimeout(function () { handZoomBase = null; }, 220);
+      handZoomT = setTimeout(function () { handZoomBase = null; }, 220);
     });
 
     window.__handProbe = {
