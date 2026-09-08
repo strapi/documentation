@@ -1214,3 +1214,32 @@ read as a broken model.
 Her prose follows her out of the water. She is no longer "at her mooring" but
 "drawn up on the sand", and the confirm asks whether you will wait for the water
 with her rather than step aboard.
+
+## 2026-09-08 · the resolution law is repealed
+
+The owner: *"on a des graphismes niveau PlayStation 1 / PlayStation 2, on
+pourrait élever ça ?"* The first answer is not more geometry or more effects. It
+is that this world was rendering at HALF the resolution of his screen.
+
+`setPixelRatio(1)`, with the comment "DPR 1 by law; ?dpr=2 only for the stills",
+was written when the cost of the pixels was unknown. Measured on a walk at
+1440x900, and the number is the whole argument:
+
+    DPR 1     8.3 ms a frame    120 fps
+    DPR 1.25  9.7 ms            103 fps
+    DPR 1.5  11.5 ms             87 fps
+    DPR 2    14.6 ms             68 fps
+
+Quadrupling the pixels costs seventy-six percent more time, not four hundred,
+because this world is bound by its three million triangles and not by its fill.
+Half resolution on a Retina screen was the single largest thing standing between
+this coast and looking modern, and giving it back cost 6 ms.
+
+The device's own ratio is honoured now, up to 2. `?dpr=` still overrides for
+stills. And a ladder sits underneath: the frame loop watches its own rolling p95
+and, on a machine that cannot hold twenty milliseconds, steps the ratio down one
+notch through 1.5, 1.25, 1 and never raises it back, because a resolution that
+oscillates is worse to look at than one that is simply lower.
+
+Measured after: device ratio 2, renderer 2, 14.4 ms p50 and 15.8 p95, inside the
+sixty-frame budget.

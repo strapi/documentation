@@ -726,8 +726,22 @@ export async function createRenderer() {
 
 export function initWorld(renderer, reducedMotion) {
   WORLD.reducedMotion = reducedMotion;
+  /* (2026-09-08) THE DPR LAW IS REPEALED, and the measurement is why. It read
+     "DPR 1 by law; ?dpr=2 only for the stills", written when the cost of the
+     pixels was unknown. Measured on a walk at 1440x900: DPR 1 costs 8.3 ms a
+     frame, DPR 2 costs 14.6. Quadrupling the pixels costs seventy-six percent
+     more time, not four hundred, because this world is bound by its three
+     million triangles and not by its fill. Rendering at half the resolution of
+     a Retina screen was the single largest thing standing between this coast
+     and looking modern, and it was free to give back.
+     The device's own ratio is honoured up to 2, ?dpr= still overrides, and
+     `stepDownPixelRatio` below drops it a notch on a machine that cannot hold
+     the frame. */
   const dprAsk = parseFloat(new URLSearchParams(location.search).get('dpr'));
-  renderer.setPixelRatio(dprAsk >= 1 && dprAsk <= 2 ? dprAsk : 1); // DPR 1 by law; ?dpr=2 only for the stills
+  const dprAuto = Math.min(window.devicePixelRatio || 1, 2);
+  renderer.setPixelRatio(dprAsk >= 0.5 && dprAsk <= 3 ? dprAsk : dprAuto);
+  WORLD.dprLadder = [2, 1.5, 1.25, 1];
+  WORLD.dprForced = !!(dprAsk >= 0.5 && dprAsk <= 3);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -1395,6 +1409,20 @@ export function enterKeeperHour() {
   WORLD.keeperHour = true;
   WORLD.targetElevation = 3.2; // the floor of the golden band, never below
   WORLD.targetExposure = 0.76;
+}
+/* One notch down the ladder, and never back up: a machine that cannot hold the
+   frame at this resolution will not hold it a minute later either, and a ratio
+   that oscillates is worse to look at than one that is simply lower. Called
+   from the frame loop with the rolling p95; does nothing if ?dpr= was asked. */
+export function stepDownPixelRatio(p95) {
+  if (!WORLD.renderer || WORLD.dprForced || !WORLD.dprLadder) return false;
+  if (!(p95 > 20)) return false;
+  const now = WORLD.renderer.getPixelRatio();
+  const next = WORLD.dprLadder.find((v) => v < now - 0.01);
+  if (next === undefined) return false;
+  WORLD.renderer.setPixelRatio(next);
+  WORLD.renderer.setSize(window.innerWidth, window.innerHeight);
+  return next;
 }
 export function tickKeeperHour(dt) {
   if (!WORLD.keeperHour || WORLD.targetElevation === undefined) return false;

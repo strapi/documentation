@@ -3,7 +3,9 @@
 
 import * as THREE from 'three';
 import { loadData, safeStore } from './data.js';
-import { createRenderer, initWorld, updateWorld, enterKeeperHour, tickKeeperHour, WORLD, setRimGlobal, SKY_GAIN, setSun } from './world.js';
+import { createRenderer, initWorld, updateWorld, enterKeeperHour, tickKeeperHour, WORLD, setRimGlobal, SKY_GAIN, setSun,
+  stepDownPixelRatio,
+} from './world.js';
 import { buildTown } from './town.js';
 import { buildVegetation } from './vegetation.js';
 import { buildProps } from './props.js';
@@ -37,10 +39,18 @@ function makeGrain() {
 }
 
 const frameTimes = [];
+let dprChecked = 0;
 function notePerf(dt) {
   frameTimes.push(dt * 1000);
   const cap = window.__perfCap || 900;
   if (frameTimes.length > cap) frameTimes.shift();
+  /* after a warm-up, a machine that cannot hold the frame gets a notch less
+     resolution; checked every few seconds, never raised back */
+  if (frameTimes.length > 240 && performance.now() - dprChecked > 4000) {
+    dprChecked = performance.now();
+    const a = frameTimes.slice(-240).sort((x, y) => x - y);
+    stepDownPixelRatio(a[Math.floor(a.length * 0.95)]);
+  }
 }
 window.__perf = () => {
   const arr = frameTimes.slice().sort((a, b) => a - b);
