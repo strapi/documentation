@@ -76,7 +76,7 @@
   var HANDS = [], handsBuilt = false, maxHandPages = 1;
   var pendingWarp = false;
   var announced = Object.create(null);
-  var guideStep = 0, guideOn = false;
+  var guideStep = 0, guideOn = false, handGuideOn = false;
 
   var ghost = null;               /* {x,y,label} pencil-ghosted destination */
   var transitAnim = null;         /* {t0, di} a body crossing the beacon's light */
@@ -2609,7 +2609,10 @@
       // now, exactly the path a mouse click already uses (see wireSky's own
       // pointerup handler above -- both branches there resolve to the same
       // `location.hash = '#' + s.slug`, so that one line is all there is to
-      // reuse).
+      // reuse). While the hand-control arming dialog is open it owns this
+      // gesture instead: a pinch confirms it, and the canvas underneath must
+      // not also open a body the same instant.
+      if (handGuideOn) { confirmHandGuide(); return; }
       if (handSnap >= 0) location.hash = '#' + stars[handSnap].slug;
     });
     window.addEventListener('hand:fan', function (e) {
@@ -3242,6 +3245,7 @@
         else if (!$('howto').hidden) { $('howto').hidden = true; }
         else if (!$('hands').hidden) toggleHands(false);
         else if (guideOn) hideGuide();
+        else if (handGuideOn) declineHandGuide();
         else if (resEl && !resEl.hidden) closeResults();
         else if (!$('ixpanel').hidden) toggleIndex(false);
         else if (!$('plaque').hidden) $('plaque').hidden = true;
@@ -3693,13 +3697,64 @@
     $('guide').hidden = false;
   }
   function renderGuideStep() {
+    if (handGuideOn) {
+      $('gd-title').textContent = 'HAND CONTROL';
+      $('gd-step').textContent = 'ANSWER WITH A GESTURE';
+      $('gd-body').innerHTML = '<b>' + HAND_GUIDE_STEPS[0][0] + '</b>' + HAND_GUIDE_STEPS[0][1];
+      $('gd-next').textContent = 'CONFIRM';
+      $('gd-skip').textContent = 'TURN OFF CAMERA';
+      return;
+    }
+    $('gd-title').textContent = 'FIRST LOCK CONFIRMED · QUICK GUIDE';
     $('gd-step').textContent = 'STEP ' + (guideStep + 1) + '/' + GUIDE_STEPS.length;
     $('gd-body').innerHTML = '<b>' + GUIDE_STEPS[guideStep][0] + '</b>' + GUIDE_STEPS[guideStep][1];
     $('gd-next').textContent = guideStep === GUIDE_STEPS.length - 1 ? 'GOT IT' : 'NEXT →';
+    $('gd-skip').textContent = 'SKIP';
   }
   function hideGuide() {
     guideOn = false;
     $('guide').hidden = true;
+  }
+
+  /* ------------------------------------------ the hand-control guide ---- */
+  /* Shown once per visit, the moment the camera arms. REUSES the #guide
+     dialog and machinery above rather than inventing a second popup, under
+     its own storage key so it never collides with the quick guide. Answered
+     by a gesture: a brief pinch confirms, a swipe of the open hand declines
+     -- both also reachable by mouse (the same two buttons the quick guide
+     uses), since nothing in this world may be reachable only by gesture. */
+
+  var HAND_GUIDE_KEY = 'firstlight.handguide.v1';
+  var HAND_GUIDE_STEPS = [
+    ['HAND CONTROL ONLINE', 'The camera is on, and your hand is now steering the chart instead of the mouse. Open your hand and spread the fingers to zoom in, close them to zoom out, pinch and move to drag the chart, and a quick pinch clicks whatever the reticle rests on. Confirm with a quick pinch, or swipe your open hand to turn the camera back off.']
+  ];
+  function maybeHandGuide() {
+    if (handGuideOn) return;
+    var seen = false;
+    try { seen = sessionStorage.getItem(HAND_GUIDE_KEY) === '1'; } catch (e) {}
+    if (seen) return;
+    try { sessionStorage.setItem(HAND_GUIDE_KEY, '1'); } catch (e) {}
+    // the hand just armed, a deliberate action the visitor took a moment
+    // ago: it takes the #guide dialog over from the quick guide, rather
+    // than queuing behind it, if the quick guide happened to be showing.
+    if (guideOn) hideGuide();
+    handGuideOn = true;
+    renderGuideStep();
+    $('guide').hidden = false;
+  }
+  function confirmHandGuide() {
+    handGuideOn = false;
+    $('guide').hidden = true;
+  }
+  function declineHandGuide() {
+    // NOT just hiding the dialog: a dialog that hides itself while the
+    // camera keeps running would reintroduce, by the back door, the exact
+    // trust bug already fixed once. disarm() is the one path that stops
+    // every track and turns the indicator light off, the same path the
+    // HAND CONTROL button itself uses, so declining goes through it too.
+    handGuideOn = false;
+    $('guide').hidden = true;
+    if (window.__hands) window.__hands.disarm();
   }
 
   /* ------------------------------------------------- round-2 wiring ---- */
@@ -3715,10 +3770,25 @@
       if (e.target === $('annotate') || e.target.id === 'an-lines' || (e.target.tagName || '').toLowerCase() === 'svg') toggleAnnotate(false);
     });
     $('gd-next').addEventListener('click', function () {
+      if (handGuideOn) { confirmHandGuide(); return; }
       if (guideStep >= GUIDE_STEPS.length - 1) hideGuide();
       else { guideStep++; renderGuideStep(); }
     });
-    $('gd-skip').addEventListener('click', hideGuide);
+    $('gd-skip').addEventListener('click', function () {
+      if (handGuideOn) { declineHandGuide(); return; }
+      hideGuide();
+    });
+    window.addEventListener('hand:state', function (e) {
+      if (e.detail.state === 'on') maybeHandGuide();
+    });
+    // THE SWIPE. hand/gestures.js recognises it generally, on any open hand,
+    // and emits `hand:dismiss` with no opinion about what it means. This is
+    // the only listener for it anywhere in this world, and it is the only
+    // thing that gives the event a meaning: decline, and only while this
+    // dialog actually has focus.
+    window.addEventListener('hand:dismiss', function () {
+      if (handGuideOn) declineHandGuide();
+    });
     wirePhotometer();
     /* (f) the four-colour insert under the mission papers */
     var cp = $('comicpeek');

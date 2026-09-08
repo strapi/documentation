@@ -6,7 +6,10 @@
      - an open hand's FAN (fingers spread or closed) drives a zoom RATE,
        anchored on the reticle so the body under it stays under it;
      - a brief pinch opens the body under the reticle, the same way a mouse
-       click does.
+       click does;
+     - a swipe of the open hand, while the hand-control arming dialog is
+       open, declines it and turns the camera off through the real disarm
+       path.
    Driven entirely by synthetic frames through the fake source. No camera. */
 'use strict';
 const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_modules/playwright-core');
@@ -26,6 +29,7 @@ const path = require('path');
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
   await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !!window.__handProbe, { timeout: 15000 });
+  await page.waitForFunction(() => !!window.__hands, { timeout: 15000 });
   await page.waitForTimeout(2000);
 
   const r = await page.evaluate(async () => {
@@ -293,6 +297,107 @@ const path = require('path');
     for (let i = 0; i < 15; i++) { fire('fan', { rate: -50 }); await new Promise(r2 => setTimeout(r2, 40)); }
     out.zoomLowClamp = window.__handProbe.cam().ts;
 
+    // ── THE SWIPE DECLINES THE HAND-CONTROL GUIDE, full pipeline ─────────
+    // The seam this crosses is the deepest one this project has: the
+    // recogniser (gestures.js) -> the forwarder (hands.js) -> a real
+    // window event -> firstlight.js's own listener, which reads it as
+    // decline ONLY while its dialog has focus -> the button's own disarm()
+    // path (window.__hands.disarm()) -> the source reporting 'off'. Its own
+    // storage key is cleared first so the dialog is guaranteed to show
+    // regardless of what earlier cases in this file already armed.
+    {
+      sessionStorage.removeItem('firstlight.handguide.v1');
+      const { startHands } = await import('./hand/hands.js');
+      const { makeFakeSource } = await import('./hand/source.js');
+      const src = makeFakeSource();
+      const api = startHands({ source: src });
+      // window.__hands is exactly what declineHandGuide() in firstlight.js
+      // calls disarm() on: pointing it at this fake-source instance tests
+      // the real wiring (gestures.js -> hands.js -> firstlight.js's guide
+      // logic -> disarm()) without fighting a real camera in headless
+      // Chromium. The real camera teardown itself (every track stopped, a
+      // genuine MediaStreamTrack reaching 'ended') is already proven
+      // end-to-end in qa-hand-source.js; re-proving it here would not add
+      // confidence in the part this case actually exists to check.
+      window.__hands = api;
+      await api.arm();                                          // fires hand:state 'on' -> maybeHandGuide()
+      await new Promise(r2 => setTimeout(r2, 60));
+      out.guideShownOnArm = !document.getElementById('guide').hidden;
+
+      // a real hand, open, moving steadily OUTWARD for a Right hand: raw x
+      // DECREASING (hands.js mirrors x for display), well past SWIPE_SPEED
+      // for well more than SWIPE_FRAMES.
+      const openHandAt = (cx, cy) => {
+        const size = 0.20, pinch = 0.9, curl = 1;
+        const L = new Array(21).fill(null).map(() => ({ x: cx, y: cy, z: 0 }));
+        L[0] = { x: cx, y: cy + size, z: 0 };
+        L[9] = { x: cx, y: cy, z: 0 };
+        L[5] = { x: cx - size * 0.4, y: cy, z: 0 };
+        L[17] = { x: cx + size * 0.4, y: cy, z: 0 };
+        L[8] = { x: cx - size * 0.5 * curl, y: cy - size * curl, z: 0 };
+        L[4] = { x: L[8].x + pinch * size, y: L[8].y, z: 0 };
+        L[12] = { x: cx, y: cy - size * 1.05 * curl, z: 0 };
+        L[16] = { x: cx + size * 0.35 * curl, y: cy - size * 0.95 * curl, z: 0 };
+        L[20] = { x: cx + size * 0.6 * curl, y: cy - size * 0.8 * curl, z: 0 };
+        return { landmarks: L, handedness: 'Right' };
+      };
+      let cx = 0.70;
+      src.push({ hands: [openHandAt(cx, 0.5)] });
+      await new Promise(r2 => setTimeout(r2, 30));
+      for (let i = 0; i < 6; i++) {
+        cx -= 0.03;
+        src.push({ hands: [openHandAt(cx, 0.5)] });
+        await new Promise(r2 => setTimeout(r2, 30));
+      }
+      await new Promise(r2 => setTimeout(r2, 60));
+
+      out.guideHiddenAfterSwipe = document.getElementById('guide').hidden;
+      out.cameraOffAfterSwipe = api.state() === 'off';
+    }
+
+    // ── BOTH ANSWERS, BY MOUSE ────────────────────────────────────────
+    // Nothing in this project may be reachable only by gesture: the same
+    // two answers the swipe and the pinch give must also be one click each,
+    // on the two real buttons the dialog already has (#gd-next = CONFIRM,
+    // #gd-skip = TURN OFF CAMERA). Two fresh, independent sessions, so
+    // mouse-confirm and mouse-decline are proven apart from each other, not
+    // just as two assertions on the same run.
+    {
+      sessionStorage.removeItem('firstlight.handguide.v1');
+      const { startHands } = await import('./hand/hands.js');
+      const { makeFakeSource } = await import('./hand/source.js');
+      const src = makeFakeSource();
+      const api = startHands({ source: src });
+      window.__hands = api;
+      await api.arm();
+      await new Promise(r2 => setTimeout(r2, 60));
+      out.mouseConfirmGuideShown = !document.getElementById('guide').hidden;
+      document.getElementById('gd-next').click();                 // CONFIRM, by mouse
+      out.mouseConfirmGuideHidden = document.getElementById('guide').hidden;
+      out.mouseConfirmCameraStillOn = api.state() === 'on';        // confirming must NOT disarm
+      api.disarm();
+    }
+    {
+      // no sessionStorage.removeItem here: maybeHandGuide() itself must
+      // show the dialog freshly for THIS session regardless (a brand new
+      // startHands/makeFakeSource pair, exactly as a real second visit
+      // would be), which is also why this case waits for the click to have
+      // an effect rather than assuming session state from the case above.
+      sessionStorage.removeItem('firstlight.handguide.v1');
+      const { startHands } = await import('./hand/hands.js');
+      const { makeFakeSource } = await import('./hand/source.js');
+      const src = makeFakeSource();
+      const api = startHands({ source: src });
+      window.__hands = api;
+      await api.arm();
+      await new Promise(r2 => setTimeout(r2, 60));
+      out.mouseDeclineGuideShown = !document.getElementById('guide').hidden;
+      document.getElementById('gd-skip').click();                 // TURN OFF CAMERA, by mouse
+      await new Promise(r2 => setTimeout(r2, 30));
+      out.mouseDeclineGuideHidden = document.getElementById('guide').hidden;
+      out.mouseDeclineCameraOff = api.state() === 'off';           // declining MUST disarm
+    }
+
     return out;
   });
 
@@ -316,12 +421,23 @@ const path = require('path');
   if (!r.clickHashChanged) fails.push('a brief pinch over a snapped body did not change location.hash at all');
   if (!r.clickHashMatches) fails.push(`a brief pinch opened ${JSON.stringify(r.clickSetupSlug)}'s slug incorrectly (want '#${r.clickSetupSlug}')`);
   if (!r.clickReaderOpened) fails.push('a brief pinch changed the hash but the reader never opened');
+  if (!r.guideShownOnArm) fails.push('the hand-control guide did not appear when the camera armed');
+  if (!r.guideHiddenAfterSwipe) fails.push('a qualifying swipe did not close the hand-control guide');
+  if (!r.cameraOffAfterSwipe) fails.push('declining the hand-control guide by swipe did not disarm the camera (the trust bug)');
+  if (!r.mouseConfirmGuideShown) fails.push('mouse-confirm test setup problem: the guide did not appear on arm');
+  if (!r.mouseConfirmGuideHidden) fails.push('clicking CONFIRM (#gd-next) did not close the hand-control guide');
+  if (!r.mouseConfirmCameraStillOn) fails.push('clicking CONFIRM disarmed the camera; confirming must leave it on');
+  if (!r.mouseDeclineGuideShown) fails.push('mouse-decline test setup problem: the guide did not appear on arm');
+  if (!r.mouseDeclineGuideHidden) fails.push('clicking TURN OFF CAMERA (#gd-skip) did not close the hand-control guide');
+  if (!r.mouseDeclineCameraOff) fails.push('clicking TURN OFF CAMERA did not disarm the camera (the trust bug, by mouse this time)');
   if (errors.length) fails.push('console/page errors: ' + errors.slice(0, 2).join(' | '));
   console.log(`  no teleport on first-ever grab ${r.noTeleportOnFirstEverGrab}   on reentry after absent ${r.noTeleportOnReentryGrab}`);
   console.log(`  snapped ${r.snappedSomething} hud "${r.hudTag}"->"${r.hudTagAfterAbsent}"   drag ${r.txMoved}   zoom in ${r.zoomedIn} (anchor held ${r.anchorHeldOnZoomIn}) out ${r.zoomedOut}   errors ${errors.length}`);
   console.log(`  full pipeline (source->hands.js->window->world), one-hand fan: s0 ${r.pipelineS0.toFixed(3)}   s1 ${r.pipelineS1.toFixed(3)} (climbed ${r.pipelineClimbed})   s2 ${r.pipelineS2.toFixed(3)} (fell back ${r.pipelineFellBack})`);
   console.log(`  click pipeline: setup snapped ${r.clickSetupSnapped} slug ${JSON.stringify(r.clickSetupSlug)}   hash changed ${r.clickHashChanged}   hash matches ${r.clickHashMatches}   reader opened ${r.clickReaderOpened}`);
   console.log(`  zoom bounds match the world's: high clamp ${r.zoomHighClamp} (want 8)   low clamp ${r.zoomLowClamp} (want 0.06)`);
+  console.log(`  dismiss pipeline: guide shown on arm ${r.guideShownOnArm}   guide hidden after swipe ${r.guideHiddenAfterSwipe}   camera off after swipe ${r.cameraOffAfterSwipe}`);
+  console.log(`  both answers by mouse: confirm hides guide ${r.mouseConfirmGuideHidden} camera stays on ${r.mouseConfirmCameraStillOn}   decline hides guide ${r.mouseDeclineGuideHidden} camera off ${r.mouseDeclineCameraOff}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
   process.exit(fails.length ? 1 : 0);

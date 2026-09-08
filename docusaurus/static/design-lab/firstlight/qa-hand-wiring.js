@@ -49,7 +49,7 @@ const path = require('path');
     const { makeFakeSource } = await import('./hand/source.js');
     const src = makeFakeSource();
     const seen = [];
-    for (const n of ['present', 'absent', 'move', 'grab', 'release', 'lock', 'fan']) {
+    for (const n of ['present', 'absent', 'move', 'grab', 'release', 'lock', 'click', 'fan', 'dismiss']) {
       window.addEventListener('hand:' + n, (e) => seen.push({ n, d: e.detail }));
     }
     const api = startHands({ source: src });
