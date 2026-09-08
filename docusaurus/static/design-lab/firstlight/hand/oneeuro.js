@@ -12,10 +12,10 @@ function alpha(cutoff, dt) {
 
 export function makeOneEuro(opts) {
   const o = opts || {};
-  const minCutoff = o.minCutoff === undefined ? 1.0 : o.minCutoff;
+  const minCutoff = o.minCutoff === undefined ? 0.16 : o.minCutoff;
   // beta is the speed coefficient: how much the cutoff opens up as the hand
   // moves. Too small and fast motion lags; too large and tremor comes back.
-  const beta = o.beta === undefined ? 1.0 : o.beta;
+  const beta = o.beta === undefined ? 0.007 : o.beta;
   const dCutoff = o.dCutoff === undefined ? 1.0 : o.dCutoff;
 
   let xPrev = null, dxPrev = 0, tPrev = null;

@@ -19,11 +19,12 @@ export const LM = {
   MIDDLE_MCP: 9, MIDDLE_TIP: 12, RING_TIP: 16, PINKY_TIP: 20,
 };
 
-/* Starting values. They are tuned once against the reference clip; the probe
-   asserts the BEHAVIOUR they produce, not the numbers themselves, so tuning
-   them never invalidates the tests. */
-const PINCH_ON = 0.38, PINCH_OFF = 0.52;      // thumb to index, over hand size
-const FIST_ON = 1.05, FIST_OFF = 1.30;        // mean fingertip to wrist, over hand size
+/* Thresholds tuned to real HandLandmarker output (2061 frames at 30 Hz).
+   Ratios are scale-invariant and strongly bimodal. Thresholds sit within the
+   empty valleys between closed and open states, with hysteresis to prevent
+   flickering. PINCH valley: 0.40-1.10. CURL valley: 1.20-1.50. */
+const PINCH_ON = 0.35, PINCH_OFF = 1.10;      // thumb to index, over hand size
+const FIST_ON = 1.10, FIST_OFF = 1.40;        // mean fingertip to wrist, over hand size
 const LOST_MS = 150;                          // the dead man's switch
 
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
