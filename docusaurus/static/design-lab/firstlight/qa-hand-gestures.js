@@ -136,8 +136,11 @@ const path = require('path');
       out.fixtureSpreads = events.spread;
       out.fixturePresent = events.present;
       out.fixtureAbsent = events.absent;
-      // At end, check no grab is left open (deadlock)
+      // Verify fist gesture detection works on real data: expect 1-5 lock events
+      out.fixtureHasLocks = events.lock > 0;
+      // At end, check no grab is left open (deadlock) and no fist left closed
       out.fixtureStillPinched = g.state().pinched;
+      out.fixtureStillFisted = g.state().fisted;
     }
     return out;
   });
@@ -150,12 +153,15 @@ const path = require('path');
   if (r.stillGrabbed) fails.push('still grabbed after tracking was lost');
   if (!r.spreadRises) fails.push(`two hands moving apart gave ${r.spreadCount} spread events and no rising ratio`);
   // Fixture replay assertions: grabs in [2,4] (real pinches plus entry/exit noise);
-  // spreads > 50 (two-hand interactions); no grab left open (deadlock check)
+  // spreads 50+ (two-hand interactions); at least 1 fist lock (gesture detection);
+  // no grab or fist left open at end (deadlock check)
   if (r.fixtureGrabs < 2 || r.fixtureGrabs > 4) fails.push(`fixture grabs ${r.fixtureGrabs}, wanted 2-4`);
   if (r.fixtureSpreads < 50) fails.push(`fixture spreads ${r.fixtureSpreads}, wanted 50+`);
+  if (!r.fixtureHasLocks) fails.push(`fixture locks ${r.fixtureLocks}, wanted 1+ (fist detection)`);
   if (r.fixtureStillPinched) fails.push('fixture ended with grab still open (deadlock)');
+  if (r.fixtureStillFisted) fails.push('fixture ended with fist still closed (deadlock)');
   console.log(`  synthetic: flips ${r.flips}   near/far ${r.nearPinched}/${r.farPinched}   spreads ${r.spreadCount}`);
-  console.log(`  fixture: grabs ${r.fixtureGrabs}   releases ${r.fixtureReleases}   spreads ${r.fixtureSpreads}   ended-pinched ${r.fixtureStillPinched}`);
+  console.log(`  fixture: grabs ${r.fixtureGrabs}   locks ${r.fixtureLocks}   spreads ${r.fixtureSpreads}   ended-pinched ${r.fixtureStillPinched} ended-fisted ${r.fixtureStillFisted}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
   process.exit(fails.length ? 1 : 0);

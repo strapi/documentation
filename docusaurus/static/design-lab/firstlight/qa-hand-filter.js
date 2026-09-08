@@ -92,9 +92,12 @@ const fs = require('fs');
       tremorKept = noisyRMS > 1e-8 ? smoothRMS / noisyRMS : 0;
     }
 
-    /* Measure lag during the fastest motion. Find the interval with the highest
-       peak speed and see how far the filter lags at the end. Peak speed in the
-       trace is 3.91 units/s; we test with a 60-frame burst. */
+    /* Measure lag during the fastest motion, not after. The old metric measured
+       59 frames (2 seconds) after peak speed, so the filter had settled and
+       reported zero lag for all values. This breaks detection of minCutoff cost.
+       New approach: (1) find peak speed window, (2) warm filter on 20 preceding
+       frames, (3) measure absolute error during the fast window (not endpoint),
+       (4) report max and mean error, which reveals cutoff effects at scale. */
     let maxSpeed = 0, maxSpeedIdx = 0;
     for (let i = 0; i < frames.length - 1; i++) {
       const dt = frames[i + 1].t - frames[i].t;
@@ -104,18 +107,30 @@ const fs = require('fs');
       const speed = Math.sqrt(dx * dx + dy * dy) / dt;
       if (speed > maxSpeed) { maxSpeed = speed; maxSpeedIdx = i; }
     }
-    let lagAtEnd = null;
-    if (maxSpeedIdx + 60 < frames.length) {
+
+    let lagMeanError = 0, lagMaxError = 0;
+    if (maxSpeedIdx >= 20 && maxSpeedIdx + 10 < frames.length) {
       const fast = makeOneEuro({});
-      let last = frames[maxSpeedIdx].x;
-      for (let i = maxSpeedIdx; i < maxSpeedIdx + 60; i++) {
-        last = fast.filter(frames[i].x, frames[i].t);
+      // Warm filter on preceding frames so first-call passthrough is not part of measurement
+      const warmStart = Math.max(0, maxSpeedIdx - 20);
+      for (let i = warmStart; i < maxSpeedIdx; i++) {
+        fast.filter(frames[i].x, frames[i].t);
       }
-      const target = frames[maxSpeedIdx + 59].x;
-      lagAtEnd = target !== 0 ? Math.abs(1 - last / target) : 0;
+      // Measure error during fast window (up to 15 frames or end of data)
+      const windowEnd = Math.min(maxSpeedIdx + 15, frames.length);
+      let sumError = 0, maxErr = 0, count = 0;
+      for (let i = maxSpeedIdx; i < windowEnd; i++) {
+        const filtered = fast.filter(frames[i].x, frames[i].t);
+        const error = Math.abs(filtered - frames[i].x);
+        sumError += error;
+        if (error > maxErr) maxErr = error;
+        count++;
+      }
+      lagMaxError = maxErr;
+      lagMeanError = count > 0 ? sumError / count : 0;
     }
 
-    return { tremorKept, lagAtEnd, maxSpeed, stillLen: maxStillLen, still: maxStillStart };
+    return { tremorKept, lagMeanError, lagMaxError, maxSpeed, stillLen: maxStillLen, still: maxStillStart };
   }, fixture);
 
   const fails = [];
@@ -123,11 +138,11 @@ const fs = require('fs');
      Real rms is 0.0054; after filtering, peak variations in a steady hand should
      stay under 0.0006 units. Testing against tremor ratio (smooth/noisy) < 0.10. */
   if (!(r.tremorKept < 0.10)) fails.push(`tremor kept ${(r.tremorKept * 100).toFixed(1)}%, wanted under 10%`);
-  /* Lag during fast motion: at peak real speed (3.91 units/s), the filter should
-     reach within 5% of the final position, not 8% as in the synthetic test. Real
-     motion is smoother and faster, so the filter can track closer. */
-  if (!(r.lagAtEnd < 0.05)) fails.push(`lag at end ${(r.lagAtEnd * 100).toFixed(1)}%, wanted under 5%`);
-  console.log(`  tremor kept ${(r.tremorKept * 100).toFixed(1)}%   lag at end ${(r.lagAtEnd * 100).toFixed(1)}%   max speed ${r.maxSpeed.toFixed(2)} units/s`);
+  /* Lag during fast motion: measured as absolute error between filtered and raw
+     values DURING the fast window (not after it settles). Reports max and mean
+     error across the 15-frame peak speed window. Error in pinch-ratio units. */
+  if (!(r.lagMaxError < 0.30)) fails.push(`max lag error ${r.lagMaxError.toFixed(4)}, wanted under 0.30`);
+  console.log(`  tremor kept ${(r.tremorKept * 100).toFixed(1)}%   lag max ${r.lagMaxError.toFixed(4)}   lag mean ${r.lagMeanError.toFixed(4)}   peak speed ${r.maxSpeed.toFixed(2)} u/s`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
   process.exit(fails.length ? 1 : 0);
