@@ -18174,7 +18174,7 @@ export default {
    */
 
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
     },
     options: {
@@ -18220,7 +18220,7 @@ export default {
    */
 
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       /* Add your own logic here */
     },
     options: {
@@ -18253,7 +18253,7 @@ File path: ./config/cron-tasks.ts
 ```ts
 export default {
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       /* Add your own logic here */
     },
     // only run once after 10 seconds
@@ -18289,7 +18289,7 @@ File path: ./config/cron-tasks.ts
 ```ts
 export default {
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       /* Add your own logic here */
     },
     // only run once after 10 seconds
@@ -18336,7 +18336,7 @@ export default {
    * Every monday at 1am.
    */
 
-  "0 0 1 * * 1": ({ strapi }) => {
+  "0 0 1 * * 1": async ({ strapi }) => {
     // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
   },
 };
@@ -24093,7 +24093,7 @@ File path: /config/admin.js
 module.exports = ({ env }) => ({
   // … other configuration properties
   history: {
-    retentionDays: 30,
+    retentionDays: 7,
   },
 });
 ```
@@ -24106,7 +24106,7 @@ File path: /config/admin.ts
 export default ({ env }) => ({
   // … other configuration properties
   history: {
-    retentionDays: 30,
+    retentionDays: 7,
   },
 });
 ```
@@ -25926,9 +25926,9 @@ export default {
 ```
 
 
-## SVG uploads
+## File type detection for ambiguous MIME types
 Description: You can provide them by creating or editing the /config/plugins file.
-(Source: https://docs.strapi.io/cms/features/media-library#svg-uploads)
+(Source: https://docs.strapi.io/cms/features/media-library#file-type-detection-for-ambiguous-mime-types)
 
 Language: JavaScript
 File path: /config/plugins.js

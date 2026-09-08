@@ -89,7 +89,7 @@ export default {
    */
 
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
     },
     options: {
@@ -145,7 +145,7 @@ export default {
    */
 
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       /* Add your own logic here */
     },
     options: {
@@ -190,7 +190,7 @@ module.exports = {
 ```ts title="./config/cron-tasks.ts"
 export default {
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       /* Add your own logic here */
     },
     // only run once after 10 seconds
@@ -238,7 +238,7 @@ module.exports = {
 ```ts title="./config/cron-tasks.ts"
 export default {
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       /* Add your own logic here */
     },
     // only run once after 10 seconds
@@ -295,7 +295,7 @@ export default {
    * Every monday at 1am.
    */
 
-  "0 0 1 * * 1": ({ strapi }) => {
+  "0 0 1 * * 1": async ({ strapi }) => {
     // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
   },
 };

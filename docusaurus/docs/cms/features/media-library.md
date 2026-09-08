@@ -75,6 +75,7 @@ The flag changes the <Icon name="images" /> Media Library page of the admin pane
 The Media Library page displays a notice reminding you that this is a beta and that some features are still in progress. Read the [features configuration](/cms/configurations/features) documentation before enabling the flag, where the `STRAPI_FUTURE_BETA_MEDIA_LIBRARY` environment variable is also documented.
 
 You can <ExternalLink text="read more about the beta here" to="https://strapi.notion.site/Media-Library-Beta-Release-3c78f3598074810dbad6f2addfa25b6f" /> and report any issue you run into on the <ExternalLink text="strapi/strapi repository" to="https://github.com/strapi/strapi/issues" />.
+The current page still describes the stable version of the Media Library. The present documentation page has been updated to reflect the new features, and covers the behaviors of both the current stable version and the beta version of the Media Library.
 :::
 
 ## Configuration
@@ -428,6 +429,19 @@ To accept SVG uploads, remove `image/svg+xml` from `deniedTypes` in your `config
 
 :::note
 You can use `allowedTypes` and `deniedTypes` separately or together to fine-tune which files are accepted. Files must match an allowed type and must not match any denied type. If you use a wildcard like `*` in `allowedTypes`, you can narrow down the validation by specifying exceptions in `deniedTypes`.
+:::
+
+##### File type detection for ambiguous MIME types
+
+When browsers report generic MIME types for files (such as `application/octet-stream`), Strapi's Media Library performs file-type detection by examining the file's actual content bytes. This ensures accurate file classification and filtering, particularly for formats like `.mov` files on Windows systems, which are often reported with generic MIME types by the browser.
+
+The file type detection is used for:
+
+- Classifying media in the Media Library preview and grid
+- Validating media field constraints (e.g., `allowedTypes: ['video/*']`) in the Content Manager
+
+:::note
+The server remains the security boundary. While the admin panel performs client-side file type detection for better UX, the backend validates the file's MIME type before storage. This means that even if the browser initially misidentifies a file type, the correct MIME type is detected and stored on the server.
 :::
 
 You can provide them by creating or editing [the `/config/plugins` file](/cms/configurations/plugins). The following is an example of how to combine `allowedTypes` and `deniedTypes`:

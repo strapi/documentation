@@ -23374,7 +23374,7 @@ module.exports = {
    */
 
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
     },
     options: {
@@ -23418,7 +23418,7 @@ module.exports = {
    */
 
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       /* Add your own logic here */
     },
     options: {
@@ -23451,7 +23451,7 @@ module.exports = {
 ```ts title="./config/cron-tasks.ts"
 
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       /* Add your own logic here */
     },
     // only run once after 10 seconds
@@ -23487,7 +23487,7 @@ module.exports = {
 ```ts title="./config/cron-tasks.ts"
 
   myJob: {
-    task: ({ strapi }) => {
+    task: async ({ strapi }) => {
       /* Add your own logic here */
     },
     // only run once after 10 seconds
@@ -23532,7 +23532,7 @@ module.exports = {
    * Every monday at 1am.
    */
 
-  "0 0 1 * * 1": ({ strapi }) => {
+  "0 0 1 * * 1": async ({ strapi }) => {
     // Add your own logic here (e.g. send a queue of email, create a database backup, etc.).
   },
 };
@@ -31411,7 +31411,7 @@ Source: https://docs.strapi.io/cms/features/content-history
 
 # Content History
 
-Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes. Versions are only created for content edited in the Content Manager, and are kept for a maximum of 90 days.
+Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes. Versions are only created for content edited in the Content Manager, and are kept for a default of 14 days.
 
 The Content History feature, in the  Content Manager, gives you the ability to browse and restore previous versions of documents created with the [Content Manager](/cms/features/content-manager).
 
@@ -31457,7 +31457,7 @@ The retention period can be shortened, but never extended, with the [`history.re
 module.exports = ({ env }) => ({
   // … other configuration properties
   history: {
-    retentionDays: 30,
+    retentionDays: 7,
   },
 });
 ```
@@ -31465,7 +31465,7 @@ module.exports = ({ env }) => ({
 
   // … other configuration properties
   history: {
-    retentionDays: 30,
+    retentionDays: 7,
   },
 });
 ```
@@ -34730,7 +34730,7 @@ module.exports = () => ({
 
 Restart your Strapi application after the configuration change. Set the property to `false` and restart Strapi to use the current stable version again.
 
-The current page still describes the stable version of the Media Library. Over the next few weeks, the documentation will be updated to reflect the new features. In the meantime, you can [read more about it here](https://strapi.notion.site/Media-Library-Beta-Release-3c78f3598074810dbad6f2addfa25b6f).
+The current page still describes the stable version of the Media Library. Over the next few weeks, the documentation will be updated to reflect the new features. In the meantime, there is a [work-in-progress documentation](https://documentation-git-cms-media-library-beta-ui-docs-strapijs.vercel.app/cms/features/media-library) available and you can [read more about the future features here](https://strapi.notion.site/Media-Library-Beta-Release-3c78f3598074810dbad6f2addfa25b6f).
 :::
 
 ## Configuration
@@ -35007,6 +35007,19 @@ To accept SVG uploads, remove `image/svg+xml` from `deniedTypes` in your `config
 
 :::note
 You can use `allowedTypes` and `deniedTypes` separately or together to fine-tune which files are accepted. Files must match an allowed type and must not match any denied type. If you use a wildcard like `*` in `allowedTypes`, you can narrow down the validation by specifying exceptions in `deniedTypes`.
+:::
+
+##### File type detection for ambiguous MIME types
+
+When browsers report generic MIME types for files (such as `application/octet-stream`), Strapi's Media Library performs file-type detection by examining the file's actual content bytes. This ensures accurate file classification and filtering, particularly for formats like `.mov` files on Windows systems, which are often reported with generic MIME types by the browser.
+
+The file type detection is used for:
+
+- Classifying media in the Media Library preview and grid
+- Validating media field constraints (e.g., `allowedTypes: ['video/*']`) in the Content Manager
+
+:::note
+The server remains the security boundary. While the admin panel performs client-side file type detection for better UX, the backend validates the file's MIME type before storage. This means that even if the browser initially misidentifies a file type, the correct MIME type is detected and stored on the server.
 :::
 
 You can provide them by creating or editing [the `/config/plugins` file](/cms/configurations/plugins). The following is an example of how to combine `allowedTypes` and `deniedTypes`:

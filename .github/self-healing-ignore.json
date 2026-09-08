@@ -1174,6 +1174,81 @@
       "number": 27463,
       "reason": "Router: Internal admin UI enhancement to Media Library upload progress display. Changes internal store logic and component rendering to show indeterminate progress for URL uploads instead of frozen 0%. No new public API, configuration, or user-facing features exposed. UX improvement only — no new capabilities or breaking changes that warrant user documentation updates.",
       "added": "2026-08-29"
+    },
+    {
+      "number": 27497,
+      "reason": "Triage: Test infrastructure fix; adds missing required field to test calls after type change from another merged PR",
+      "added": "2026-09-01"
+    },
+    {
+      "number": 27477,
+      "reason": "Router: Internal admin UI improvements (layout, rendering, truncation) in the Media Library beta. These are visual/UX bug fixes with no new functionality, API changes, or changes to documented user-facing behavior. The existing Media Library documentation (cms/features/media-library.md) remains accurate.",
+      "added": "2026-09-01"
+    },
+    {
+      "number": 27509,
+      "reason": "Router: Internal UI layout fix for Media Library. Improves scrolling UX but doesn't add new user-facing capabilities or change documented behavior. Bug fixes to internal components do not warrant user-facing documentation.",
+      "added": "2026-09-02"
+    },
+    {
+      "number": 27501,
+      "reason": "Router: Bug fix for client-side behavior parity with legacy Media Library. Fixes user expectation (name shouldn't change on file replace), but this is expected behavior correction, not new feature documentation needed.",
+      "added": "2026-09-02"
+    },
+    {
+      "number": 27495,
+      "reason": "Router: UX improvement to Media Library folder tree. Removes broken affordance (disabled empty chevron). This is a UI polish fix, not a new capability requiring documentation.",
+      "added": "2026-09-02"
+    },
+    {
+      "number": 27488,
+      "reason": "Router: Bug fix for Content Manager relation field rendering. Now shows localized 'Untitled' instead of internal IDs. This is a correctness fix, not a new feature or configuration requiring documentation.",
+      "added": "2026-09-02"
+    },
+    {
+      "number": 27487,
+      "reason": "Router: Regression fix for i18n locale handling in nested relation navigation. Fixes broken behavior (locale preservation), not a new feature. No new documentation needed.",
+      "added": "2026-09-02"
+    },
+    {
+      "number": 27312,
+      "reason": "Router: Internal bug fix for Review Workflows when enterprise cms-content-releases feature is disabled. Adds error handling via optional chaining. This is implementation-level safety fix, not user-facing documentation.",
+      "added": "2026-09-02"
+    },
+    {
+      "number": 27430,
+      "reason": "Router: Internal security fix to the sendmail provider. The disableFileAccess and disableUrlAccess flags are automatically applied and not user-configurable. No public API or user-facing behavior changes that require documentation.",
+      "added": "2026-09-03"
+    },
+    {
+      "number": 27449,
+      "reason": "Router: UX improvement to Media Library that preserves scroll position when navigating between folders. This is an internal implementation detail that improves the user experience without changing any public APIs or requiring configuration. Users will notice the improvement but don't need new documentation to use the feature.",
+      "added": "2026-09-03"
+    },
+    {
+      "number": 27496,
+      "reason": "Router: Bug fix for Media Library focal point input fields. The fix improves field behavior (proper value binding and validation feedback) but doesn't change the user-facing API or introduce new capabilities. This is a correctness improvement for existing functionality.",
+      "added": "2026-09-03"
+    },
+    {
+      "number": 27508,
+      "reason": "Router: Bug fix for Media Library replace action. Adds MIME type filtering to the file picker to prevent uploading incompatible file types. This is an internal consistency fix that prevents invalid state without changing user-facing APIs.",
+      "added": "2026-09-03"
+    },
+    {
+      "number": 27448,
+      "reason": "Router: Internal admin UI enhancement for drawer interaction behavior. The change modifies internal drawer component behavior (opt-in outside-click dismissal for the asset details drawer) but does not expose new user-facing APIs, configuration options, or public features. No documentation updates needed.",
+      "added": "2026-09-04"
+    },
+    {
+      "number": 27565,
+      "reason": "Router: Internal error handling improvement in data transfer. Improves error messages shown to operators but doesn't change public-facing behavior or add new features requiring documentation",
+      "added": "2026-09-08"
+    },
+    {
+      "number": 27543,
+      "reason": "Router: Internal error handling fix for upload feature edge case. Prevents process crashes from fast-rejecting providers but doesn't change user-facing API or features",
+      "added": "2026-09-08"
     }
   ]
 }

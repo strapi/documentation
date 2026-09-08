@@ -114,6 +114,22 @@
     color: var(--ifm-font-color-secondary);
   }
 
+  .pageFeedback__scopeNote {
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--ifm-font-color-secondary);
+
+    a {
+      color: var(--ifm-link-color);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
   .pageFeedback__formButtons {
     display: flex;
     gap: var(--strapi-spacing-2, 0.5rem);
