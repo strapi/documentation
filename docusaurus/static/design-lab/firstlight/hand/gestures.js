@@ -45,22 +45,82 @@ export const PINCH_ON = 0.55, PINCH_OFF = 1.00; // thumb to index, over hand siz
 const FIST_ON = 0.95, FIST_OFF = 1.35;        // curl of middle+ring+pinky to wrist, over hand size
 const LOST_MS = 150;                          // the dead man's switch
 
-/* SPREAD_GAP_MS: how long a two-hand spread tolerates silence before this
-   module decides the gesture has actually ended. THIS MODULE OWNS THAT
-   DECISION, not the world that consumes `spread` events. It is the one
-   place that sees the continuous stream of frames (and the gaps in it), and
-   the one place already tested with no camera at all -- exactly why the
-   dead man's switch above lives here too. Before this, gestures.js rebased
-   its reference distance on ANY frame missing two genuinely pinched hands,
-   about one dropped detection (33ms), while firstlight.js separately rebased
-   its own scale anchor only after 220ms of silence: the two disagreed about
-   when a gesture ends, so a single dropped detection would quietly reset the
-   reference distance here while the world's anchor lived on unchanged, and
-   the very next frame's ratio -- now measured against a reference a single
-   frame old -- read close to 1.0 and snapped the world's target scale back
-   toward wherever the gesture started. 220ms is the number the world had
-   already tuned for this; it becomes the only number now. */
-const SPREAD_GAP_MS = 220;
+/* THE FAN drives zoom now: index tip to pinky tip, over hand size. The owner
+   found the old two-hand pinch-distance zoom both the wrong gesture ("je
+   prefererai qu'en fait on ferme ou ouvre la main... pour zoomer/dezoomer")
+   and too sensitive, and it needed a second hand for a feature the second
+   hand never otherwise earned its keep on (see source.js, numHands: 1). One
+   open hand, closing or opening, is what replaces it.
+
+   Measured on the fixture with the same hysteresis this file already runs:
+   898 frames read OPEN (median fan 0.893), 292 read FISTED (median 0.396),
+   631 read PINCHED (median 0.660). The fan overlaps the pinch band, so it is
+   read only on a hand that is neither pinched nor fisted -- decided by the
+   same two variables (`pinched`, `fisted`) that already gate everything else
+   below, not a separate check of its own. It clears the fist band with
+   plenty of room (fist's own max is 0.904, well under the dead zone floor
+   below). */
+function fanRatio(L) { return dist(L[LM.INDEX_TIP], L[LM.PINKY_TIP]) / handSize(L); }
+
+/* FAN_NEUTRAL and FAN_DEADZONE are derived from that same 898-frame OPEN
+   distribution, not chosen. Without a dead zone a hand held open and merely
+   resting -- never neutral to the pixel -- would drift the zoom on its own,
+   which is exactly the complaint against the old, oversensitive gesture.
+
+   FAN_NEUTRAL is the distribution's median: 0.8935, rounds to 0.89.
+   FAN_DEADZONE is the larger of its two half-spans to the 10th and 90th
+   percentile (median-to-p10 is 0.097; median-to-p90 is 0.153) so the dead
+   zone is at least as wide as the resting spread on EITHER side, not just
+   the narrower one: 0.153, rounds to 0.15. A hand held open anywhere in
+   [0.74, 1.04] produces no rate at all; 84% of the fixture's real open-hand
+   frames land inside that band, resting, exactly where nothing should
+   happen. */
+const FAN_NEUTRAL = 0.89, FAN_DEADZONE = 0.15;
+
+/* A BRIEF PINCH IS A CLICK. Timing cannot be measured from this fixture: it
+   holds exactly two deliberate pinches, at 8.1s and 12.1s, both built to
+   test drag hysteresis, and nothing shorter but one incidental 667ms pinch
+   that was not a deliberate tap either. CLICK_MAX_MS instead follows the
+   platform convention for tap vs. long-press (iOS and Android both draw
+   that line at 500ms): 400ms sits comfortably under it, and more than 20x
+   under either real hold in the fixture, so no genuine drag can misread as
+   a click. CLICK_MAX_DIST IS measured: that one incidental still pinch
+   moves the palm at most 0.0224 of hand size from where it started over its
+   whole 667ms. 0.15 sits 6-7x above that natural jitter floor -- room for a
+   real hand's tremor during a fast tap -- while staying far under the 0.73
+   and 1.06 of hand size the two genuine holds accumulate once they actually
+   start dragging. */
+export const CLICK_MAX_MS = 400, CLICK_MAX_DIST = 0.15;
+
+/* THE SWIPE. Recognised here, generally, on any open hand; what a `dismiss`
+   MEANS is decided entirely by whoever is listening (today: the hand-control
+   arming dialog, which reads it as decline; see firstlight.js). Lateral palm
+   speed, over hand size, per second -- the same ratio-to-hand-size rule as
+   everything else in this file. SWIPE_SPEED and SWIPE_FRAMES are held at the
+   values briefed: 1.0 units/s, sustained 4 frames, direction-consistent,
+   open hand only.
+
+   DISMISS IS OUTWARD, and outward depends on which hand it is: brushing
+   something away is an abduction, moving the arm away from the body's
+   midline, which costs less than crossing in front of yourself. For a
+   right hand that is rightward; for a left hand, leftward. The direction is
+   judged in SCREEN space, after hand/hands.js's own mirror (`rawX = 1 -
+   bx`), not in the raw landmark coordinates this file otherwise works in
+   throughout: a right hand moving to its own right is raw x DECREASING (the
+   camera sees you facing it) but screen x INCREASING, which is the
+   direction that actually reads as "outward" once mirrored for display.
+   Measuring in raw space instead would invert the sign and the gesture
+   would work backwards for everyone, so the flip is made explicit here
+   (screenSpeed = -rawSpeed) rather than left to be discovered by trial and
+   error. Handedness is read off the same frame the landmarks come from
+   (`h`); verified on the fixture: 1821 frames, one hand throughout,
+   labelled "Right" with zero flips, and across 389 two-hand frames the two
+   hands never once shared a label. A hand with no handedness reported (or a
+   source that never sends one) accepts a swipe in EITHER direction, still
+   requiring it stay consistent for the full streak: the direction only
+   exists to make the gesture comfortable, not to gate it shut when it is
+   simply unknown. */
+export const SWIPE_SPEED = 1.0, SWIPE_FRAMES = 4;
 
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 
@@ -81,36 +141,14 @@ function fistCurl(L) {
   for (const t of tips) sum += dist(L[t], w);
   return (sum / tips.length) / s;
 }
-function isPinchedNotFisted(L) {
-  // Used only by the two-hand spread gate below, which has no persisted
-  // hysteresis state of its own for a second hand the way the primary
-  // hand's `pinched`/`fisted` variables do. A single-frame check is still
-  // correct here because the ARMING threshold (not the release one) is the
-  // right question to ask of a hand you have not been tracking continuously:
-  // "is this hand genuinely pinched right now", not "has it stayed pinched".
-  return fistCurl(L) >= FIST_ON && pinchRatio(L) < PINCH_ON;
-}
-export function pinchPoint(L) {
-  // where the hand is "holding": between the thumb and index tips, which is
-  // what the eye tracks, not the wrist and not the palm centre. Still the
-  // right measure of the pinch itself (used for the two-handed spread below)
-  // -- it is only wrong as the thing the RETICLE follows, because thumb and
-  // index both travel toward the palm as the hand closes.
-  return { x: (L[LM.THUMB_TIP].x + L[LM.INDEX_TIP].x) / 2,
-           y: (L[LM.THUMB_TIP].y + L[LM.INDEX_TIP].y) / 2 };
-}
 
 /* PALM CENTRE: the wrist plus the index, middle and pinky knuckles (0, 5, 9,
    17). These four points are the rigid dorsal plate of the hand -- the part
    that does NOT fold when the fingers curl into a fist or draw together into
-   a pinch. pinchPoint tracks the two fingers actually doing the gesture, so
-   it travels the furthest of any candidate anchor when a real hand in the
-   reference fixture closes into a fist (measured in qa-hand-wiring.js, which
-   replays a real fist closure from the fixture and asserts on it). Palm
-   centre moves only a fraction as far for the same closure, and is also the
-   steadiest of the candidates during a pinch. A palm does not fold, so this
-   is what the reticle is anchored to instead; pinchPoint remains what a
-   pinch itself is measured from, and what the two-handed spread still uses. */
+   a pinch. This is what the reticle is anchored to (see the report on the
+   old pinch-point anchor this replaced), what the click above measures its
+   "did the hand actually move" test from, and what the swipe below tracks
+   for lateral speed. */
 export function palmCentre(L) {
   const pts = [L[LM.WRIST], L[LM.INDEX_MCP], L[LM.MIDDLE_MCP], L[LM.PINKY_MCP]];
   return {
@@ -121,7 +159,17 @@ export function palmCentre(L) {
 
 export function makeGestureReader() {
   let present = false, pinched = false, fisted = false;
-  let lastSeen = null, spreadBase = null, lastSpreadAt = null;
+  let lastSeen = null;
+  // THE CLICK: captured at the instant a grab arms, read back at the instant
+  // it releases naturally. Never set on the fist-forced release below: a
+  // closing hand overriding a pinch is not a released click, it is a
+  // gesture changing its mind.
+  let grabStartT = null, grabStartPalm = null;
+  // THE SWIPE: a short streak counter, alive only while the hand reads
+  // open. swipeFired guards against firing `dismiss` on every frame of a
+  // streak that keeps qualifying past the fourth -- one swipe, one event.
+  let swipeStreak = 0, swipeDir = 0, swipeFired = false;
+  let lastPalmX = null, lastPalmT = null;
 
   return {
     state: () => ({ present, pinched, fisted }),
@@ -135,7 +183,8 @@ export function makeGestureReader() {
           if (pinched) { pinched = false; evs.push({ type: 'release', hand: null }); }
           if (fisted) fisted = false;
           if (present) { present = false; evs.push({ type: 'absent' }); }
-          spreadBase = null; lastSpreadAt = null;
+          grabStartT = null; grabStartPalm = null;
+          lastPalmX = null; lastPalmT = null; swipeStreak = 0; swipeDir = 0; swipeFired = false;
         }
         return evs;
       }
@@ -143,8 +192,9 @@ export function makeGestureReader() {
       if (!present) { present = true; evs.push({ type: 'present' }); }
 
       const primary = hands[0];
-      const pr = pinchRatio(primary.landmarks);
-      const fc = fistCurl(primary.landmarks);
+      const L = primary.landmarks;
+      const pr = pinchRatio(L);
+      const fc = fistCurl(L);
 
       // Fist is decided first, and on its own independent measure, because
       // it is the only one of the two that actually discriminates a fist from
@@ -156,51 +206,70 @@ export function makeGestureReader() {
       if (!fisted && fc < FIST_ON) {
         fisted = true;
         evs.push({ type: 'lock', hand: primary.handedness });
-        if (pinched) { pinched = false; evs.push({ type: 'release', hand: primary.handedness }); }
+        if (pinched) {
+          pinched = false;
+          evs.push({ type: 'release', hand: primary.handedness });
+          // becoming a fist is the hand changing its mind, not a click
+          grabStartT = null; grabStartPalm = null;
+        }
       } else if (fisted && fc > FIST_OFF) {
         fisted = false;
       }
 
       if (!fisted) {
-        if (!pinched && pr < PINCH_ON) { pinched = true; evs.push({ type: 'grab', hand: primary.handedness }); }
-        else if (pinched && pr > PINCH_OFF) { pinched = false; evs.push({ type: 'release', hand: primary.handedness }); }
+        if (!pinched && pr < PINCH_ON) {
+          pinched = true;
+          grabStartT = t;
+          grabStartPalm = palmCentre(L);
+          evs.push({ type: 'grab', hand: primary.handedness });
+        } else if (pinched && pr > PINCH_OFF) {
+          pinched = false;
+          if (grabStartT !== null) {
+            const heldMs = (t - grabStartT) * 1000;
+            const moved = dist(palmCentre(L), grabStartPalm) / handSize(L);
+            if (heldMs <= CLICK_MAX_MS && moved <= CLICK_MAX_DIST) {
+              evs.push({ type: 'click' });
+            }
+          }
+          grabStartT = null; grabStartPalm = null;
+          evs.push({ type: 'release', hand: primary.handedness });
+        }
       }
 
-      // two pinched hands: the distance between their pinch points is the scale.
-      // A hand only counts as pinched here if it genuinely is, by the same
-      // fist-first discrimination the one-hand path above uses: a fist also
-      // reads as a low thumb-to-index distance (see the comment on FIST_ON),
-      // so checking pinchRatio alone -- and checking it against PINCH_OFF, the
-      // looser RELEASE threshold, rather than PINCH_ON, the ARMING one -- let
-      // two merely open hands (ratio between PINCH_ON and PINCH_OFF) and two
-      // closed fists alike read as "pinched" and drive a spread.
-      //
-      // Note there is no `else spreadBase = null` here for a frame that lacks
-      // two genuinely pinched hands: spreadBase and lastSpreadAt are left
-      // alone, harmlessly, until the next bothPinched frame decides -- by
-      // elapsed time against SPREAD_GAP_MS, not by this single frame -- one
-      // dropped detection cannot end a gesture that resumes a beat later.
-      if (hands.length >= 2) {
-        const a = hands[0].landmarks, b = hands[1].landmarks;
-        if (isPinchedNotFisted(a) && isPinchedNotFisted(b)) {
-          const d = dist(pinchPoint(a), pinchPoint(b));
-          const fresh = spreadBase === null
-            || (lastSpreadAt !== null && (t - lastSpreadAt) * 1000 >= SPREAD_GAP_MS);
-          if (fresh) {
-            // a genuinely new gesture: capture the reference distance and say
-            // so explicitly, with `start: true`, rather than silently skipping
-            // this frame the way a rebase used to. A consumer keeping its own
-            // running anchor (firstlight.js's cam.ts multiplier) needs to
-            // recapture its anchor at EXACTLY this frame, not on a separately
-            // guessed timer of its own -- two independent timers agreeing by
-            // luck is how this bug happened the first time.
-            spreadBase = d;
-            evs.push({ type: 'spread', ratio: 1, start: true });
-          } else {
-            evs.push({ type: 'spread', ratio: d / spreadBase });
-          }
-          lastSpreadAt = t;
+      // FAN (zoom rate) and SWIPE (dismiss): both read only on a hand that
+      // is, this frame, genuinely open -- neither pinched nor fisted -- so
+      // dragging or fisting never also spins the zoom or fires a dismiss.
+      if (!fisted && !pinched) {
+        const dev = fanRatio(L) - FAN_NEUTRAL;
+        if (Math.abs(dev) > FAN_DEADZONE) {
+          evs.push({ type: 'fan', rate: dev > 0 ? dev - FAN_DEADZONE : dev + FAN_DEADZONE });
         }
+
+        const pc = palmCentre(L);
+        if (lastPalmX !== null && lastPalmT !== null && t > lastPalmT) {
+          const dt = t - lastPalmT;
+          const rawSpeed = ((pc.x - lastPalmX) / handSize(L)) / dt;
+          // screen space, not raw landmark space: see the comment on
+          // SWIPE_SPEED above for why this flip is not optional.
+          const screenSpeed = -rawSpeed;
+          const dir = screenSpeed > SWIPE_SPEED ? 1 : screenSpeed < -SWIPE_SPEED ? -1 : 0;
+          // outward for THIS hand: rightward (+1) for a hand labelled
+          // Right, leftward (-1) for one labelled Left, either direction
+          // (0, meaning "match whatever dir already is") for a hand with no
+          // handedness reported at all.
+          const wantDir = primary.handedness === 'Right' ? 1 : primary.handedness === 'Left' ? -1 : 0;
+          const qualifies = dir !== 0 && (wantDir === 0 || dir === wantDir);
+          if (qualifies && dir === swipeDir) swipeStreak++;
+          else { swipeStreak = qualifies ? 1 : 0; swipeDir = qualifies ? dir : 0; swipeFired = false; }
+          if (swipeStreak >= SWIPE_FRAMES && !swipeFired) {
+            swipeFired = true;
+            evs.push({ type: 'dismiss' });
+          }
+        }
+        lastPalmX = pc.x; lastPalmT = t;
+      } else {
+        lastPalmX = null; lastPalmT = null;
+        swipeStreak = 0; swipeDir = 0; swipeFired = false;
       }
 
       return evs;

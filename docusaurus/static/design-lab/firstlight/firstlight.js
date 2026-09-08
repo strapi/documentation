@@ -2541,7 +2541,16 @@
        the tremor smoothing for free, with machinery that has been running
        since the first version of this world. */
     var handX = 0, handY = 0, handGrab = false, handLastX = 0, handLastY = 0, handSnap = -1;
-    var handZoomBase = null;
+    var fanLastT = null;
+    // FAN_GAIN is the one number this gesture is tuned by, the owner's own
+    // ask ("la sensibilite devient un seul nombre a regler"): `rate` (see
+    // gestures.js) is the fan ratio's excess past its dead zone, typically up
+    // to about 0.3-0.4 at a fully spread or closed hand. Held there for a
+    // full second this gain takes cam.ts through roughly a 2x change
+    // (ln(2)/0.3 ~= 2.3): fingers spread keeps zooming in while held,
+    // together keeps zooming out, at a pace that reads as deliberate rather
+    // than the old gesture's snap-to-a-distance sensitivity.
+    var FAN_GAIN = 2.3;
     // handPosKnown guards against computing a drag delta from a position
     // that was never actually observed. handX/handY start at (0, 0) as
     // placeholders, not as a real reading; a hand:grab carries no position
@@ -2563,7 +2572,7 @@
 
     window.addEventListener('hand:present', function () { handGrab = false; });
     window.addEventListener('hand:absent', function () {
-      handGrab = false; handSnap = -1; handPosKnown = false;
+      handGrab = false; handSnap = -1; handPosKnown = false; fanLastT = null;
       if (window.__handHud) window.__handHud.setSnapped('');
     });
     window.addEventListener('hand:move', function (e) {
@@ -2595,21 +2604,20 @@
       handGrab = true; handLastX = handX; handLastY = handY;
     });
     window.addEventListener('hand:release', function () { handGrab = false; });
-    window.addEventListener('hand:spread', function (e) {
-      // hand/gestures.js owns the decision of when a spread gesture ends
-      // (SPREAD_GAP_MS there): it is the one place that sees the continuous
-      // stream of frames, and the one place already tested with no camera
-      // at all. It marks the first ratio of a new gesture with `start:
-      // true`, and that is what re-anchors handZoomBase here -- not a
-      // second, separately-tuned timer in this file. Two independent
-      // notions of "the gesture ended" is the defect this replaced: gestures
-      // used to rebase on a single dropped detection (about 33ms) while this
-      // file rebased only after 220ms of silence, so a brief hiccup would
-      // silently reset the reference distance there while the anchor here
-      // lived on unchanged, and the very next ratio -- now close to 1.0 --
-      // snapped cam.ts back toward wherever the gesture started.
-      if (e.detail.start || handZoomBase === null) handZoomBase = cam.ts;
-      var next = handZoomBase * e.detail.ratio;
+    window.addEventListener('hand:fan', function (e) {
+      // Fingers spread zooms in and keeps zooming while held; fingers
+      // together zooms out; the dead zone (FAN_NEUTRAL/FAN_DEADZONE in
+      // gestures.js) means a hand merely resting open does nothing. `rate`
+      // is a deflection, not a position -- gestures.js is proved with
+      // hand-built frames and has no real clock of its own to trust for
+      // elapsed wall time between camera frames, so THIS world turns the
+      // deflection into a change, over however long it actually was since
+      // the last such event.
+      var now = performance.now() / 1000;
+      var dt = fanLastT === null ? 0 : Math.min(0.25, now - fanLastT);
+      fanLastT = now;
+      if (dt <= 0) { dirty = true; return; }
+      var next = cam.ts * Math.exp(e.detail.rate * FAN_GAIN * dt);
       // the world's own bounds (see ZLN0/ZLN1 above and the wheel handler
       // below), not a separate pair the hand invented: past 8, the zoom
       // voice's pitch is already clamped and goes flat, and past the world's
@@ -2628,7 +2636,7 @@
         // against that.
         zoomSound(next > cam.ts, next, cam.ts);
         // Zoom around the reticle's last known screen position, not the
-        // screen centre, or spreading your hands over a distant body would
+        // screen centre, or spreading your hand over a distant body would
         // push it off screen, the opposite of what the gesture means. This is
         // the same before/after world-point trick the wheel handler below
         // uses, worked in target-space (cam.tx/ty/ts) since the hand never

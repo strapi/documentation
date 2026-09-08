@@ -1,10 +1,10 @@
-/* QA: the map answers the hand. The three stage-1 promises:
+/* QA: the map answers the hand. The stage-1 promises:
      - a moving hand snaps the reticle to the nearest chartable body, and the
        HUD names it (and clears it when the hand leaves);
      - a pinched hand dragging moves the camera TARGET, never the camera
        itself, so the world's own damping absorbs the tremor;
-     - two pinched hands moving apart raise the scale target, and together
-       lower it, anchored on the reticle so the body under it stays under it.
+     - an open hand's FAN (fingers spread or closed) drives a zoom RATE,
+       anchored on the reticle so the body under it stays under it.
    Driven entirely by synthetic frames through the fake source. No camera. */
 'use strict';
 const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_modules/playwright-core');
@@ -96,9 +96,15 @@ const path = require('path');
     out.drivesTargetNotPosition = out.gapAfterDrag > 10;
     fire('release');
 
-    // zoom anchored on the reticle: park the reticle over a screen point,
-    // note the world point under it (in target-space, since the hand only
-    // ever moves targets), spread, and check that point is still there.
+    // ── THE FAN, synthetic: zoom anchored on the reticle ────────────────
+    // park the reticle over a screen point, note the world point under it
+    // (in target-space, since the hand only ever moves targets), feed a
+    // sustained FAN rate, and check that point is still there. `rate` is a
+    // deflection, not a distance: firstlight.js's own hand:fan listener
+    // integrates it over the REAL wall-clock time between events (see its
+    // own comment), so this dispatches several events with a real delay
+    // between each rather than one single event carrying an extreme value
+    // the way the old two-hand `ratio` field allowed.
     fire('move', { x: 900, y: 250 });
     await settle();
     const camAnchor = window.__handProbe.cam();
@@ -107,48 +113,58 @@ const path = require('path');
     const w0 = worldAtReticle(camAnchor);
 
     const s0 = window.__handProbe.cam().ts;
-    for (let i = 1; i <= 8; i++) fire('spread', { ratio: 1 + i * 0.06 });
-    await settle();
+    for (let i = 0; i < 8; i++) {
+      fire('fan', { rate: 0.2 });                 // fingers spread: zoom in
+      await new Promise(r2 => setTimeout(r2, 40));
+    }
     out.zoomedIn = window.__handProbe.cam().ts > s0;
     const camAfterIn = window.__handProbe.cam();
     const w1 = worldAtReticle(camAfterIn);
     out.anchorHeldOnZoomIn = Math.hypot(w1[0] - w0[0], w1[1] - w0[1]) < 2;
 
     const s1 = window.__handProbe.cam().ts;
-    for (let i = 1; i <= 8; i++) fire('spread', { ratio: 1 - i * 0.05 });
-    await settle();
+    for (let i = 0; i < 8; i++) {
+      fire('fan', { rate: -0.2 });                // fingers closed: zoom out
+      await new Promise(r2 => setTimeout(r2, 40));
+    }
     out.zoomedOut = window.__handProbe.cam().ts < s1;
 
-    // IMPORTANT 1, consumption side: this world must honor the `start` flag
-    // hand/gestures.js now sends, not re-anchor on some timer of its own (the
-    // old bug) or on every event regardless of the flag. ratio:1 with
-    // start:false must return to exactly the scale from BEFORE this block,
-    // since it continues relative to the anchor the preceding start:true
-    // event captured -- not to a leftover anchor from long before, which is
-    // what it would read if `start` were ignored entirely.
-    const sBeforeAnchorTest = window.__handProbe.cam().ts;
-    fire('spread', { ratio: 2, start: true });
-    await settle();
-    fire('spread', { ratio: 1, start: false });
-    await settle();
-    const sAfterAnchorTest = window.__handProbe.cam().ts;
-    out.startFlagRespected = Math.abs(sAfterAnchorTest - sBeforeAnchorTest) < 1e-6;
-
-    // FIX ROUND: the full pipeline, seam included. Every spread-related test
-    // above either drives hand/gestures.js directly (qa-hand-gestures.js) or
-    // dispatches synthetic hand:spread events straight onto window (every
-    // case in this file so far), which is why hand/hands.js's forwarder
-    // dropping `start` went uncaught: none of them cross hands.js's own
-    // re-dispatch. This one does: real frames, through a real makeFakeSource,
-    // through the real startHands() forwarder, out as real window events,
-    // into firstlight.js's real listeners, read back from window.__handProbe.
-    // A real 400ms pause is used, not a synthetic `t`, since SPREAD_GAP_MS is
-    // measured in gestures.js against the reader's own clock.
+    // ── THE FAN, full pipeline, seam included ───────────────────────────
+    // Real frames, through a real makeFakeSource, through the real
+    // startHands() forwarder, out as real window events, into
+    // firstlight.js's real listener, read back from window.__handProbe.
+    // This replaces the old two-hand pipeline case: that one proved the
+    // `start` flag survived hands.js's generic forwarder (a flag this
+    // redesign has no equivalent of -- a continuous rate has no gesture
+    // "start" to anchor, which is one of the failure modes item 1 removes
+    // entirely, not merely fixes). What this case proves instead is that a
+    // real, sustained one-hand FAN -- open then closed -- reaches cam.ts
+    // through every hop between a fake camera frame and the world's own
+    // target, in both directions.
     {
       const { startHands } = await import('./hand/hands.js');
       const { makeFakeSource } = await import('./hand/source.js');
-      const pinchedHand = (cx, cy) => {
-        const size = 0.20, pinch = 0.20, curl = 1;
+      // open hand, curl=1: fanRatio ~1.118, clearly past the dead zone's
+      // high edge (FAN_NEUTRAL + FAN_DEADZONE = 1.04) -- "fingers spread".
+      const openHand = (cx, cy) => {
+        const size = 0.20, pinch = 0.9, curl = 1;
+        const L = new Array(21).fill(null).map(() => ({ x: cx, y: cy, z: 0 }));
+        L[0] = { x: cx, y: cy + size, z: 0 };
+        L[9] = { x: cx, y: cy, z: 0 };
+        L[5] = { x: cx - size * 0.4, y: cy, z: 0 };
+        L[17] = { x: cx + size * 0.4, y: cy, z: 0 };
+        L[8] = { x: cx - size * 0.5 * curl, y: cy - size * curl, z: 0 };
+        L[4] = { x: L[8].x + pinch * size, y: L[8].y, z: 0 };
+        L[12] = { x: cx, y: cy - size * 1.05 * curl, z: 0 };
+        L[16] = { x: cx + size * 0.35 * curl, y: cy - size * 0.95 * curl, z: 0 };
+        L[20] = { x: cx + size * 0.6 * curl, y: cy - size * 0.8 * curl, z: 0 };
+        return { landmarks: L, handedness: 'Right' };
+      };
+      // curl=0.5: fanRatio ~0.559, past the dead zone's low edge (0.74),
+      // while fistCurl stays ~1.48 (nowhere near FIST_ON=0.95) -- "fingers
+      // closed", not a fist.
+      const closedHand = (cx, cy) => {
+        const size = 0.20, pinch = 0.9, curl = 0.5;
         const L = new Array(21).fill(null).map(() => ({ x: cx, y: cy, z: 0 }));
         L[0] = { x: cx, y: cy + size, z: 0 };
         L[9] = { x: cx, y: cy, z: 0 };
@@ -164,25 +180,25 @@ const path = require('path');
       const src = makeFakeSource();
       const api = startHands({ source: src });
       await api.arm();
+      // arm() fires a GLOBAL hand:state 'on' (see hands.js's fire(), which
+      // dispatches on window, not scoped to this instance), which is
+      // exactly the seam the dedicated dismiss pipeline case below tests --
+      // but it means the FIRST arm() call anywhere in this file also opens
+      // the hand-control guide, once per session. This case does not care
+      // about that dialog, so it is closed the same way a mouse would.
+      if (!document.getElementById('guide').hidden) document.getElementById('gd-next').click();
 
       const p0 = window.__handProbe.cam().ts;
-
-      // gesture 1: two pinched hands drifting apart over several real frames
-      for (let i = 0; i <= 6; i++) {
-        const d = 0.15 + i * 0.03;
-        src.push({ hands: [pinchedHand(0.5 - d, 0.5), pinchedHand(0.5 + d, 0.5)] });
+      for (let i = 0; i < 45; i++) {
+        src.push({ hands: [openHand(0.5, 0.5)] });
         await new Promise(r2 => setTimeout(r2, 30));
       }
       const p1 = window.__handProbe.cam().ts;
 
-      // a real pause, well past SPREAD_GAP_MS (220ms): nothing pushed at all
-      await new Promise(r2 => setTimeout(r2, 400));
-
-      // gesture 2: a fresh two-hand pinch at a distinct starting distance.
-      // Its first frame carries start:true from gestures.js; the assertion
-      // is that this survives the forwarder all the way to firstlight.js.
-      src.push({ hands: [pinchedHand(0.5 - 0.12, 0.5), pinchedHand(0.5 + 0.12, 0.5)] });
-      await new Promise(r2 => setTimeout(r2, 60));
+      for (let i = 0; i < 45; i++) {
+        src.push({ hands: [closedHand(0.5, 0.5)] });
+        await new Promise(r2 => setTimeout(r2, 30));
+      }
       const p2 = window.__handProbe.cam().ts;
 
       api.disarm();
@@ -190,20 +206,20 @@ const path = require('path');
       out.pipelineS0 = p0;
       out.pipelineS1 = p1;
       out.pipelineS2 = p2;
-      out.pipelineClimbed = p1 > p0 + 0.01;
-      out.pipelineNoSnapBack = Math.abs(p2 - p1) < 0.05;
+      out.pipelineClimbed = p1 > p0 * 1.05;
+      out.pipelineFellBack = p2 < p1 * 0.95;
     }
 
-    // IMPORTANT 4: the hand's zoom bounds must match the world's own (0.06 to
-    // 8, see ZLN0/ZLN1 and the wheel handler in firstlight.js), not a
-    // separate pair the hand invented. A persisted assertion, replacing the
-    // throwaway script used to first prove this, so a future edit to either
-    // the hand's clamp or the world's constants cannot silently diverge.
-    fire('spread', { ratio: 50, start: true });
-    await settle();
+    // IMPORTANT (persisted): the hand's zoom bounds must match the world's
+    // own (0.06 to 8, see ZLN0/ZLN1 and the wheel handler in firstlight.js),
+    // not a separate pair the hand invented. Held via a SUSTAINED extreme
+    // rate this time, not a single-event extreme ratio: there is no
+    // single-shot input anymore, a rate is integrated over real elapsed
+    // time (see firstlight.js's own hand:fan listener), so reaching the
+    // clamp needs several events with real delays between them.
+    for (let i = 0; i < 15; i++) { fire('fan', { rate: 50 }); await new Promise(r2 => setTimeout(r2, 40)); }
     out.zoomHighClamp = window.__handProbe.cam().ts;
-    fire('spread', { ratio: 0.001, start: true });
-    await settle();
+    for (let i = 0; i < 15; i++) { fire('fan', { rate: -50 }); await new Promise(r2 => setTimeout(r2, 40)); }
     out.zoomLowClamp = window.__handProbe.cam().ts;
 
     return out;
@@ -218,18 +234,17 @@ const path = require('path');
   if (!r.hudClearedOnAbsent) fails.push('the HUD kept its label after the hand left, got ' + JSON.stringify(r.hudTagAfterAbsent));
   if (!r.txMoved) fails.push('a pinched drag did not move the camera target');
   if (!r.drivesTargetNotPosition) fails.push('the hand set the camera position directly instead of its target');
-  if (!r.zoomedIn) fails.push('two hands moving apart did not raise the scale target');
+  if (!r.zoomedIn) fails.push('a sustained positive fan rate did not raise the scale target');
   if (!r.anchorHeldOnZoomIn) fails.push('zooming in did not keep the world point under the reticle fixed');
-  if (!r.zoomedOut) fails.push('two hands moving together did not lower the scale target');
-  if (!r.startFlagRespected) fails.push('a spread event without start:true re-anchored the zoom base instead of continuing from it');
-  if (!r.pipelineClimbed) fails.push(`full pipeline: gesture 1 did not raise the scale (s0 ${r.pipelineS0} -> s1 ${r.pipelineS1})`);
-  if (!r.pipelineNoSnapBack) fails.push(`full pipeline: gesture 2's first frame snapped the scale back (s1 ${r.pipelineS1} -> s2 ${r.pipelineS2}, s0 was ${r.pipelineS0})`);
-  if (Math.abs(r.zoomHighClamp - 8) > 1e-6) fails.push(`an oversized spread ratio reached cam.ts=${r.zoomHighClamp}, wanted exactly 8`);
-  if (Math.abs(r.zoomLowClamp - 0.06) > 1e-6) fails.push(`an undersized spread ratio reached cam.ts=${r.zoomLowClamp}, wanted exactly 0.06`);
+  if (!r.zoomedOut) fails.push('a sustained negative fan rate did not lower the scale target');
+  if (!r.pipelineClimbed) fails.push(`full pipeline: a real open hand did not raise the scale (s0 ${r.pipelineS0} -> s1 ${r.pipelineS1})`);
+  if (!r.pipelineFellBack) fails.push(`full pipeline: a real closed hand did not lower the scale (s1 ${r.pipelineS1} -> s2 ${r.pipelineS2})`);
+  if (Math.abs(r.zoomHighClamp - 8) > 1e-6) fails.push(`a sustained extreme fan rate reached cam.ts=${r.zoomHighClamp}, wanted exactly 8`);
+  if (Math.abs(r.zoomLowClamp - 0.06) > 1e-6) fails.push(`a sustained extreme negative fan rate reached cam.ts=${r.zoomLowClamp}, wanted exactly 0.06`);
   if (errors.length) fails.push('console/page errors: ' + errors.slice(0, 2).join(' | '));
   console.log(`  no teleport on first-ever grab ${r.noTeleportOnFirstEverGrab}   on reentry after absent ${r.noTeleportOnReentryGrab}`);
-  console.log(`  snapped ${r.snappedSomething} hud "${r.hudTag}"->"${r.hudTagAfterAbsent}"   drag ${r.txMoved}   zoom in ${r.zoomedIn} (anchor held ${r.anchorHeldOnZoomIn}) out ${r.zoomedOut}   start flag respected ${r.startFlagRespected}   errors ${errors.length}`);
-  console.log(`  full pipeline (source->hands.js->window->world): s0 ${r.pipelineS0.toFixed(3)}   s1 ${r.pipelineS1.toFixed(3)} (climbed ${r.pipelineClimbed})   s2 after 400ms pause ${r.pipelineS2.toFixed(3)} (no snap-back ${r.pipelineNoSnapBack})`);
+  console.log(`  snapped ${r.snappedSomething} hud "${r.hudTag}"->"${r.hudTagAfterAbsent}"   drag ${r.txMoved}   zoom in ${r.zoomedIn} (anchor held ${r.anchorHeldOnZoomIn}) out ${r.zoomedOut}   errors ${errors.length}`);
+  console.log(`  full pipeline (source->hands.js->window->world), one-hand fan: s0 ${r.pipelineS0.toFixed(3)}   s1 ${r.pipelineS1.toFixed(3)} (climbed ${r.pipelineClimbed})   s2 ${r.pipelineS2.toFixed(3)} (fell back ${r.pipelineFellBack})`);
   console.log(`  zoom bounds match the world's: high clamp ${r.zoomHighClamp} (want 8)   low clamp ${r.zoomLowClamp} (want 0.06)`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();

@@ -9,9 +9,11 @@
         "pinch harder the further away you are".
      3. THE DEAD MAN'S SWITCH. Tracking lost while grabbed must release, or
         the world is stranded holding something after you left the room.
-   Also covered below: two-hand spread, fist-vs-pinch mutual exclusion (a fist
-   must not also read as a grab), and a full replay of the real reference clip
-   asserting on real event counts. */
+   Also covered below: fist-vs-pinch mutual exclusion (a fist must not also
+   read as a grab); the FAN zoom rate (spread fingers zoom in, closed fingers
+   zoom out, a dead zone so a resting hand does not drift it, suppressed while
+   pinched or fisted); and a full replay of the real reference clip asserting
+   on real event counts. */
 'use strict';
 const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_modules/playwright-core');
 const { spawn } = require('child_process');
@@ -28,12 +30,17 @@ const path = require('path');
   await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'domcontentloaded' });
 
   const r = await page.evaluate(async () => {
-    const { makeGestureReader, PINCH_ON } = await import('./hand/gestures.js');
+    const {
+      makeGestureReader, PINCH_ON, FAN_NEUTRAL, FAN_DEADZONE,
+    } = await import('./hand/gestures.js');
 
     /* Build a synthetic hand. `size` is wrist-to-middle-knuckle in image units,
        which is how far away the person is sitting. `pinch` is the thumb-to-index
        gap as a RATIO of that size, so the same value means the same gesture at
-       any distance. `curl` at 1 is an open hand, at 0 a closed fist. */
+       any distance. `curl` at 1 is an open hand, at 0 a closed fist (though see
+       the note on qa-hand-gestures's own fistHand below: this parameter never
+       actually reaches a genuine fist under the tighter thresholds; it is only
+       ever used here to vary the FAN, i.e. how far index and pinky sit apart). */
     const hand = (size, pinch, curl, cx, cy) => {
       const L = new Array(21).fill(null).map(() => ({ x: cx, y: cy, z: 0 }));
       L[0] = { x: cx, y: cy + size, z: 0 };                       // wrist
@@ -104,107 +111,7 @@ const path = require('path');
       out.stillGrabbed = g.state().pinched;
     }
 
-    // 4. spread: two pinched hands moving apart report a rising ratio. The
-    // base below is seeded with a GENUINELY pinched pair (ratio 0.20), not
-    // the open pair (ratio 0.9) this case used to start from: seeding with
-    // open hands exercised exactly the bug case 4b below exists to catch,
-    // since the old two-hand gate misread ratio 0.9 as pinched.
-    {
-      const g = makeGestureReader();
-      let t = 0, ratios = [];
-      g.read(f(hand(0.20, 0.20, 1, 0.35, 0.5), hand(0.20, 0.20, 1, 0.65, 0.5)), t += 0.033);
-      for (let i = 0; i < 10; i++) {
-        const d = 0.15 + i * 0.02;
-        const evs = g.read(f(hand(0.20, 0.20, 1, 0.5 - d, 0.5), hand(0.20, 0.20, 1, 0.5 + d, 0.5)), t += 0.033);
-        evs.forEach(e => { if (e.type === 'spread') ratios.push(e.ratio); });
-      }
-      out.spreadCount = ratios.length;
-      out.spreadRises = ratios.length > 3 && ratios[ratios.length - 1] > 1;
-    }
-
-    // 4b. two OPEN hands (thumb-to-index ratio 0.9: comfortably above
-    // PINCH_ON=0.55, comfortably below the old gate's PINCH_OFF=1.00)
-    // moving apart. Neither hand is pinched, so this must never spread and
-    // must never grab -- the exact measured case from the finding: "two
-    // hands at a thumb-index ratio of 0.9 emit spread while never counting
-    // as pinched and producing zero grabs".
-    {
-      const g = makeGestureReader();
-      let t = 0, spreads = 0, grabs = 0;
-      for (let i = 0; i < 10; i++) {
-        const d = 0.15 + i * 0.02;
-        const evs = g.read(f(hand(0.20, 0.9, 1, 0.5 - d, 0.5), hand(0.20, 0.9, 1, 0.5 + d, 0.5)), t += 0.033);
-        evs.forEach(e => { if (e.type === 'spread') spreads++; if (e.type === 'grab') grabs++; });
-      }
-      out.openHandsSpread = spreads;
-      out.openHandsGrabbed = grabs;
-    }
-
-    // 4c. two closed FISTS moving apart. Built the same way test 5's
-    // fistHand is (curl3 0.7, under FIST_ON=0.95; pinch 0.2, which by
-    // thumb-to-index distance ALONE would misread as a pinch -- exactly why
-    // the fist must be decided first, on its own measure, before either hand
-    // counts toward a spread). This is the finding's other measured case:
-    // "two FISTS emit spread and a lock together".
-    {
-      const fistHandAt = (cx, cy) => {
-        const size = 0.20;
-        const L = new Array(21).fill(null).map(() => ({ x: cx, y: cy, z: 0 }));
-        L[0] = { x: cx, y: cy + size, z: 0 };
-        L[9] = { x: cx, y: cy, z: 0 };
-        L[8] = { x: cx - size * 0.3, y: cy - size * 0.1, z: 0 };
-        L[4] = { x: L[8].x + 0.2 * size, y: L[8].y, z: 0 };
-        const tip = { x: cx, y: cy + size - 0.7 * size, z: 0 };
-        L[12] = { x: tip.x, y: tip.y, z: 0 };
-        L[16] = { x: tip.x, y: tip.y, z: 0 };
-        L[20] = { x: tip.x, y: tip.y, z: 0 };
-        return { landmarks: L, handedness: 'Right' };
-      };
-      const g = makeGestureReader();
-      let t = 0, spreads = 0;
-      for (let i = 0; i < 10; i++) {
-        const d = 0.15 + i * 0.02;
-        const evs = g.read(f(fistHandAt(0.5 - d, 0.5), fistHandAt(0.5 + d, 0.5)), t += 0.033);
-        evs.forEach(e => { if (e.type === 'spread') spreads++; });
-      }
-      out.fistsSpread = spreads;
-    }
-
-    // 4d. IMPORTANT 1: a single dropped detection (~33ms, one missed frame)
-    // must NOT end a spread gesture. Before this fix, gestures.js rebased
-    // its reference distance on ANY frame lacking two genuinely pinched
-    // hands, so even a one-frame blip reset it, and the very next frame's
-    // ratio then read close to 1.0 relative to a reference just a frame
-    // old -- snapping the world's scale target back toward wherever the
-    // gesture started, mid-gesture.
-    {
-      const g = makeGestureReader();
-      let t = 0;
-      const evs0 = g.read(f(hand(0.20, 0.20, 1, 0.40, 0.5), hand(0.20, 0.20, 1, 0.60, 0.5)), t += 0.033);
-      const startEv = evs0.find(e => e.type === 'spread');
-      g.read(f(hand(0.20, 0.20, 1, 0.40, 0.5)), t += 0.033); // one dropped detection: only one hand
-      const evs1 = g.read(f(hand(0.20, 0.20, 1, 0.35, 0.5), hand(0.20, 0.20, 1, 0.65, 0.5)), t += 0.033);
-      const resumeEv = evs1.find(e => e.type === 'spread');
-      out.gapStartFlag = startEv ? !!startEv.start : null;
-      out.gapResumeIsContinuation = !!resumeEv && !resumeEv.start;
-    }
-
-    // 4e. the flip side: a genuine pause of SPREAD_GAP_MS or more DOES
-    // restart the gesture, marked explicitly with start:true (ratio 1) so a
-    // consumer keeping its own running anchor -- firstlight.js's cam.ts
-    // multiplier -- knows to recapture it at exactly this frame, rather than
-    // on a second, separately-tuned timer of its own.
-    {
-      const g = makeGestureReader();
-      let t = 0;
-      g.read(f(hand(0.20, 0.20, 1, 0.40, 0.5), hand(0.20, 0.20, 1, 0.60, 0.5)), t += 0.033);
-      g.read(f(hand(0.20, 0.20, 1, 0.40, 0.5)), t += 0.5); // a real pause, one hand only, 500ms
-      const evs = g.read(f(hand(0.20, 0.20, 1, 0.30, 0.5), hand(0.20, 0.20, 1, 0.70, 0.5)), t += 0.033);
-      const restartEv = evs.find(e => e.type === 'spread');
-      out.longGapRestarts = !!restartEv && restartEv.start === true && restartEv.ratio === 1;
-    }
-
-    // 5. fist vs pinch: closing the whole hand must not also read as a grab,
+    // 4. fist vs pinch: closing the whole hand must not also read as a grab,
     // and a genuine pinch (thumb+index together, other three fingers still
     // out) right afterwards must still register once the fist releases.
     {
@@ -235,10 +142,75 @@ const path = require('path');
       out.pinchAfterFist = types(opening).indexOf('grab') >= 0;
     }
 
-    // 6. fixture replay: load the real reference clip and replay through the state
-    // machine. Assert that real data produces expected event counts.
-    // Assertions: grab events in [2, 4] (intentional pinches, with entry/exit noise);
-    // spread events > 50 (two-hand interactions); no grab left open at end (deadlock).
+    // 5. THE FAN. hand()'s curl=1 places index and pinky at fanRatio ~1.118
+    // (index tip to pinky tip, over hand size): comfortably past the dead
+    // zone's high edge (FAN_NEUTRAL + FAN_DEADZONE = 1.04), so this is the
+    // gesture's "fingers spread" reading throughout the rest of this file --
+    // which is also exactly why the pinch and fist cases above never leak a
+    // `fan` event despite sitting on the same geometry: the state gate, not
+    // the geometry, is what suppresses them (checked explicitly in 5c/5d).
+    {
+      const g = makeGestureReader();
+      let t = 0;
+      g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);                 // present, establish open
+      const spread = g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);   // curl=1 -> fanRatio ~1.118
+      out.fanSpreadRate = (spread.find(e => e.type === 'fan') || {}).rate;
+    }
+    // 5b. closed but NOT fisted: curl=0.5 gives fanRatio ~0.559 (under the
+    // dead zone's low edge, 0.74) while fistCurl stays ~1.48, nowhere near
+    // FIST_ON=0.95 -- a hand making a loose fist shape, not a fist.
+    {
+      const g = makeGestureReader();
+      let t = 0;
+      g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);
+      const closed = g.read(f(hand(0.20, 0.9, 0.5, 0.5, 0.5)), t += 0.033);
+      out.fanClosedRate = (closed.find(e => e.type === 'fan') || {}).rate;
+    }
+    // 5c. neutral: curl=0.8 gives fanRatio ~0.894, inside [0.74, 1.04].
+    // A hand held open and merely resting must produce no rate at all, or a
+    // resting hand drifts the zoom on its own -- the exact complaint against
+    // the old, oversensitive gesture.
+    {
+      const g = makeGestureReader();
+      let t = 0;
+      g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);
+      const neutral = g.read(f(hand(0.20, 0.9, 0.8, 0.5, 0.5)), t += 0.033);
+      out.fanNeutralEvents = types(neutral).filter(x => x === 'fan').length;
+    }
+    // 5d. PINCHED: the exact same curl=1 geometry that reads as a clear
+    // "spread" in 5 above, but with the thumb and index together (pinch=0.2).
+    // The fan must be suppressed entirely while pinched, not merely damped:
+    // a fan overlapping the pinch band that leaked through would spin the
+    // zoom the instant you grabbed the map to drag it.
+    {
+      const g = makeGestureReader();
+      let t = 0;
+      g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);            // open first
+      const pinchedEvs = g.read(f(hand(0.20, 0.2, 1, 0.5, 0.5)), t += 0.033); // now pinched, same fan geometry
+      out.fanWhilePinched = types(pinchedEvs).filter(x => x === 'fan').length;
+    }
+    // 5e. FISTED: a genuine fist (via fistHand, curl3=0.7) must never emit a
+    // fan either, whatever its incidental fanRatio happens to be.
+    {
+      const fistHand2 = (size, curl3, cx, cy) => {
+        const L = new Array(21).fill(null).map(() => ({ x: cx, y: cy, z: 0 }));
+        L[0] = { x: cx, y: cy + size, z: 0 };
+        L[9] = { x: cx, y: cy, z: 0 };
+        L[8] = { x: cx - size * 0.3, y: cy - size * 0.1, z: 0 };
+        L[4] = { x: L[8].x + 0.9 * size, y: L[8].y, z: 0 };
+        const tip = { x: cx, y: cy + size - curl3 * size, z: 0 };
+        L[12] = tip; L[16] = tip; L[20] = tip;
+        return { landmarks: L, handedness: 'Right' };
+      };
+      const g = makeGestureReader();
+      let t = 0;
+      g.read(f(fistHand2(0.20, 1.9, 0.5, 0.5)), t += 0.033);          // open first
+      const fisted = g.read(f(fistHand2(0.20, 0.7, 0.5, 0.5)), t += 0.033); // now a fist
+      out.fanWhileFisted = types(fisted).filter(x => x === 'fan').length;
+    }
+
+    // 6. fixture replay: load the real reference clip and replay through the
+    // state machine. Assert real data produces the real event counts.
     {
       // Fixture must be loaded from the server; fetch it dynamically
       const fixtureUrl = './qa-fixtures/hand-reference-landmarks.json';
@@ -247,15 +219,15 @@ const path = require('path');
       const fixture = await response.json();
 
       const g = makeGestureReader();
-      let events = { grab: 0, release: 0, lock: 0, spread: 0, present: 0, absent: 0 };
+      let events = { grab: 0, release: 0, lock: 0, fan: 0, present: 0, absent: 0 };
 
-      for (const f of fixture.frames) {
+      for (const fr of fixture.frames) {
         // Transform fixture format [x,y] to gesture reader format {x, y}
-        const frame = { hands: f.hands.map(h => ({
+        const frame = { hands: fr.hands.map(h => ({
           landmarks: h.p.map(xy => ({ x: xy[0], y: xy[1], z: 0 })),
           handedness: h.h,
         })) };
-        const evs = g.read(frame, f.t);
+        const evs = g.read(frame, fr.t);
         for (const e of evs) {
           if (e.type in events) events[e.type]++;
         }
@@ -264,7 +236,7 @@ const path = require('path');
       out.fixtureGrabs = events.grab;
       out.fixtureReleases = events.release;
       out.fixtureLocks = events.lock;
-      out.fixtureSpreads = events.spread;
+      out.fixtureFans = events.fan;
       out.fixturePresent = events.present;
       out.fixtureAbsent = events.absent;
       // At end, check no grab is left open (deadlock) and no fist left closed
@@ -280,29 +252,23 @@ const path = require('path');
   if (!r.grabbed) fails.push('a clear pinch did not register at all');
   if (!r.releasedOnLoss) fails.push('tracking was lost while grabbed and no release was emitted');
   if (r.stillGrabbed) fails.push('still grabbed after tracking was lost');
-  if (!r.spreadRises) fails.push(`two hands moving apart gave ${r.spreadCount} spread events and no rising ratio`);
-  if (r.openHandsSpread) fails.push(`two OPEN hands (ratio 0.9, never pinched) produced ${r.openHandsSpread} spread event(s)`);
-  if (r.openHandsGrabbed) fails.push(`two OPEN hands (ratio 0.9, never pinched) produced ${r.openHandsGrabbed} grab event(s)`);
-  if (r.fistsSpread) fails.push(`two closed FISTS produced ${r.fistsSpread} spread event(s)`);
-  if (r.gapStartFlag !== true) fails.push(`the base frame of a spread gesture was not marked start:true (got ${JSON.stringify(r.gapStartFlag)})`);
-  if (!r.gapResumeIsContinuation) fails.push('a spread gesture rebased after a single dropped detection (~33ms) instead of continuing');
-  if (!r.longGapRestarts) fails.push(`a spread gesture did not restart (start:true, ratio 1) after a pause past SPREAD_GAP_MS`);
   if (!r.fistFired) fails.push('closing the whole hand into a fist did not fire a lock');
   if (r.fistAlsoGrabbed) fails.push('closing into a fist also fired a grab');
   if (!r.pinchAfterFist) fails.push('a genuine pinch right after a fist did not fire a grab');
-  // Fixture replay assertions: grabs in [2,4] (real pinches plus entry/exit noise);
-  // spreads 50+ (two-hand interactions); locks in [2,4] (two real fist holds
-  // in the clip, plus tolerance for the same entry/exit noise as grabs); no
-  // grab or fist left open at end (deadlock check)
+  if (!(r.fanSpreadRate > 0)) fails.push(`a clearly spread hand gave fan rate ${r.fanSpreadRate}, wanted a positive number`);
+  if (!(r.fanClosedRate < 0)) fails.push(`a clearly closed (not fisted) hand gave fan rate ${r.fanClosedRate}, wanted a negative number`);
+  if (r.fanNeutralEvents !== 0) fails.push(`a hand resting inside the dead zone produced ${r.fanNeutralEvents} fan event(s), wanted 0`);
+  if (r.fanWhilePinched) fails.push(`a pinched hand, on fan-triggering geometry, produced ${r.fanWhilePinched} fan event(s), wanted 0`);
+  if (r.fanWhileFisted) fails.push(`a fisted hand produced ${r.fanWhileFisted} fan event(s), wanted 0`);
   if (r.fixtureGrabs < 2 || r.fixtureGrabs > 4) fails.push(`fixture grabs ${r.fixtureGrabs}, wanted 2-4`);
-  if (r.fixtureSpreads < 50) fails.push(`fixture spreads ${r.fixtureSpreads}, wanted 50+`);
   if (r.fixtureLocks < 2 || r.fixtureLocks > 4) fails.push(`fixture locks ${r.fixtureLocks}, wanted 2-4`);
   if (r.fixtureStillPinched) fails.push('fixture ended with grab still open (deadlock)');
   if (r.fixtureStillFisted) fails.push('fixture ended with fist still closed (deadlock)');
-  console.log(`  synthetic: flips ${r.flips}   near/far ${r.nearPinched}/${r.farPinched}   spreads ${r.spreadCount}   fist-locked ${r.fistFired}   fist-also-grabbed ${r.fistAlsoGrabbed}   pinch-after-fist ${r.pinchAfterFist}`);
-  console.log(`  two-hand gate: open-hands spread/grab ${r.openHandsSpread}/${r.openHandsGrabbed} (want 0/0)   two-fists spread ${r.fistsSpread} (want 0)`);
-  console.log(`  gesture-end ownership: base marked start ${r.gapStartFlag}   33ms drop continues ${r.gapResumeIsContinuation}   500ms pause restarts ${r.longGapRestarts}`);
-  console.log(`  fixture: grabs ${r.fixtureGrabs}   locks ${r.fixtureLocks}   spreads ${r.fixtureSpreads}   ended-pinched ${r.fixtureStillPinched} ended-fisted ${r.fixtureStillFisted}`);
+  if (r.fixtureFans < 50) fails.push(`fixture fan events ${r.fixtureFans}, wanted 50+ (real open-hand motion crossing the dead zone)`);
+  console.log(`  hysteresis flips ${r.flips}   near/far pinched ${r.nearPinched}/${r.farPinched}   dead man's switch released ${r.releasedOnLoss} still-grabbed ${r.stillGrabbed}`);
+  console.log(`  fist-vs-pinch: fist-locked ${r.fistFired}   fist-also-grabbed ${r.fistAlsoGrabbed}   pinch-after-fist ${r.pinchAfterFist}`);
+  console.log(`  fan: spread rate ${r.fanSpreadRate}   closed rate ${r.fanClosedRate}   neutral events ${r.fanNeutralEvents} (want 0)   while pinched ${r.fanWhilePinched} (want 0)   while fisted ${r.fanWhileFisted} (want 0)`);
+  console.log(`  fixture: grabs ${r.fixtureGrabs}   locks ${r.fixtureLocks}   fans ${r.fixtureFans}   ended-pinched ${r.fixtureStillPinched} ended-fisted ${r.fixtureStillFisted}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
   process.exit(fails.length ? 1 : 0);
