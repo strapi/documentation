@@ -106,10 +106,19 @@ const path = require('path');
     for (let i = 0; i < 10; i++) src.push({ hands: [hand(0.20, 1, 0.5, 0.5)] });
     await new Promise(r2 => setTimeout(r2, 60));
 
+    // IMPORTANT 2: disarming must visibly turn the reticle off, not just
+    // relabel the button. boot.js mounts the real HUD on page load, and its
+    // listeners are on the same window every hand:* event travels through,
+    // so the shared #hand-reticle DOM node reflects whatever this session's
+    // own events say, same as it would for the real camera-driven session.
+    const reticleOnBeforeDisarm = document.getElementById('hand-reticle').classList.contains('on');
+
     // disarm must not leave the gesture reader's internal state (present,
     // pinched, fisted, lastSeen) behind for the next session to inherit.
     const markA = seen.length;
     api.disarm();
+    const sawAbsentOnDisarm = seen.slice(markA).some(s => s.n === 'absent');
+    const reticleOnAfterDisarm = document.getElementById('hand-reticle').classList.contains('on');
     await api.arm();
 
     // sub-case A: the rearmed session must announce itself again. A stale
@@ -297,6 +306,9 @@ const path = require('path');
       // deliberately grabs again, in a fresh session, and that second grab
       // is correct, not a defect this count should catch.
       grabs: seen.slice(0, markA).filter(s => s.n === 'grab').length,
+      reticleOnBeforeDisarm,
+      sawAbsentOnDisarm,
+      reticleOnAfterDisarm,
       rearmPresent,
       phantomCount: phantom.length,
       W: window.innerWidth, H: window.innerHeight,
@@ -310,6 +322,9 @@ const path = require('path');
   });
 
   const fails = [];
+  if (!r.reticleOnBeforeDisarm) fails.push('the reticle never turned on before disarm (test setup problem)');
+  if (!r.sawAbsentOnDisarm) fails.push('disarm() did not fire hand:absent');
+  if (r.reticleOnAfterDisarm) fails.push('the reticle stayed visually on after disarm');
   if (!r.sawPresent) fails.push('no hand:present was dispatched');
   if (!r.moveCount) fails.push('no hand:move was dispatched');
   // The stimulus is pinned exactly at leftEdge, i.e. at bx=0 in the comfort
@@ -367,6 +382,7 @@ const path = require('path');
   console.log(`  fixture replay: moves ${r.fixtureMoveCount}   lockFired ${r.fixtureLockFired}   fistDrift ${r.fixtureFistDrift.toFixed(1)}px (budget ${FIST_DRIFT_BUDGET}px)`);
   console.log(`  lock then move: ${r.lockThenMoveX.toFixed(1)}px (wanted ~${r.W}px)   after tracking loss mid-grab: ${r.afterLossX.toFixed(1)}px (wanted ~${AFTER_LOSS_TARGET.toFixed(1)}px)`);
   console.log(`  moves ${r.moveCount}   last (${Math.round(r.lastX)}, ${Math.round(r.lastY)}) of ${r.W}x${r.H}   grabs ${r.grabs}   rearmPresent ${r.rearmPresent}   phantom ${r.phantomCount}`);
+  console.log(`  disarm turns the reticle off: on-before ${r.reticleOnBeforeDisarm}   absent-fired ${r.sawAbsentOnDisarm}   on-after ${r.reticleOnAfterDisarm} (want false)`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
   process.exit(fails.length ? 1 : 0);

@@ -121,6 +121,13 @@ export function startHands(opts) {
       // a latchAnchor/latchReported pair the new hand never produced.
       latched = false;
       lastRawX = null; lastRawY = null;
+      // turning the feature off must visibly turn it off: without this, only
+      // hand:state fires, and nothing ever tells the reticle (or the world's
+      // own handGrab/handSnap bookkeeping) that the hand is gone, so it kept
+      // its 'on' class -- and whatever it was last showing -- forever after
+      // the user disarmed. Fired even if no hand was present; every listener
+      // of hand:absent is idempotent against that.
+      fire('absent');
       fire('state', { state: source.state() });
     },
     async arm() {
