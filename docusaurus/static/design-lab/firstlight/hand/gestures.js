@@ -24,7 +24,7 @@ export const LM = {
    frames at 1.18-1.56, and the whole 0.42-1.18 span between them is a true
    zero-density gap but for a handful of in-between-motion frames. PINCH_ON
    =0.55 and PINCH_OFF=1.00 both land on values the fixture never produces. */
-const PINCH_ON = 0.55, PINCH_OFF = 1.00;      // thumb to index, over hand size
+export const PINCH_ON = 0.55, PINCH_OFF = 1.00; // thumb to index, over hand size
 
 /* FIST cannot be told apart from a pinch by thumb-to-index distance: closing
    the whole hand also brings the thumb near the index tip, so in the fixture

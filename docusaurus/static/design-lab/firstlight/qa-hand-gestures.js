@@ -28,7 +28,7 @@ const path = require('path');
   await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'domcontentloaded' });
 
   const r = await page.evaluate(async () => {
-    const { makeGestureReader } = await import('./hand/gestures.js');
+    const { makeGestureReader, PINCH_ON } = await import('./hand/gestures.js');
 
     /* Build a synthetic hand. `size` is wrist-to-middle-knuckle in image units,
        which is how far away the person is sitting. `pinch` is the thumb-to-index
@@ -50,13 +50,24 @@ const path = require('path');
     const types = (evs) => evs.map(e => e.type);
     const out = {};
 
-    // 1. hysteresis: sit exactly between the two thresholds and jitter there
+    // 1. hysteresis: jitter astride the ARMING threshold (PINCH_ON), imported
+    // rather than copied, so this cannot silently drift out of date again the
+    // way it did before. The old band (0.40-0.44) sat entirely below
+    // PINCH_ON=0.55 and never came near either threshold, so it read flips=0
+    // whether hysteresis existed or not: a naive single-threshold reader
+    // (arm and release at the same value) would ALSO never flip on values
+    // that never cross that value. Jittering across PINCH_ON is exactly the
+    // input a naive reader would flip on every frame, since 0.02 above
+    // PINCH_ON is a release under a naive reader but never gets near
+    // PINCH_OFF=1.00 under the real hysteretic one, so a real flip count of 0
+    // here is actual evidence of the hysteresis band, not an artifact of a
+    // band that never tests anything.
     {
       const g = makeGestureReader();
       let t = 0, flips = 0, last = null;
       g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);           // open first
       for (let i = 0; i < 60; i++) {
-        const pinch = 0.42 + (i % 2 ? 0.02 : -0.02);                 // straddling
+        const pinch = PINCH_ON + (i % 2 ? 0.02 : -0.02);             // straddling PINCH_ON
         g.read(f(hand(0.20, pinch, 1, 0.5, 0.5)), t += 0.033);
         const now = g.state().pinched;
         if (last !== null && now !== last) flips++;
