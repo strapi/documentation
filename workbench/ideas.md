@@ -54,7 +54,7 @@ one label at a time, and no regression.
 ## The Golden Shore
 
 - [ ] **The post-processing chain washes the colour out.** EffectComposer, GTAO, bloom and OutputPass are wired and reachable with `?fx=1`, but the first A/B against `?fx=0` came back flat and grey instead of golden: a colour-space or tone-mapping fault somewhere in the chain, not a look choice. Parked OFF by default until it is diagnosed. Isolating it needs a screenshot A/B, not a canvas readback: `drawImage` off a WebGL canvas without `preserveDrawingBuffer` returns pure black, which is how the first four measurements all read zero.
-- [ ] **The Design Lab's own favicon has nowhere to live.** The overprint was chosen and is waiting in `workbench/favicons/chosen/design-lab.svg`, but there is no portal page in the repo to hang it on. Install it when the portal exists.
+- [ ] **The Design Lab portal is a local dev server, not a page in the repo.** `workbench/qa/livepreview.js` generates the gallery at localhost:8787 and is now tracked, but nothing in `docusaurus/static/` serves it. If the lab is ever to be shown at a URL, that page has to be written.
 
 ## The Long Way Through
 
@@ -121,7 +121,8 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 
 ## Across the lab
 
-- [x] Favicons, three proposals per subject. (2026-09-08: 24 marks, each in its own world's real palette read out of its own source. Judged at sixteen pixels in a tab, not on a plate; six failed that and were redrawn. Pierre chose eight; the seven worlds are installed and pushed, the lab's overprint waits for a portal to exist.)
+- [x] The Design Lab's own favicon. (2026-09-08: the portal is `workbench/qa/livepreview.js` serving localhost:8787, not a page in the repo, so it had no head to put an icon in and no route to serve one. It now serves /favicon.svg from the chosen file on the workbench, so the drawing keeps one source of truth, and links it from all three pages it writes: the gallery, the holding page and the GPU check. The script itself was untracked and disposable; it is in the repo now.)
+, three proposals per subject. (2026-09-08: 24 marks, each in its own world's real palette read out of its own source. Judged at sixteen pixels in a tab, not on a plate; six failed that and were redrawn. Pierre chose eight; the seven worlds are installed and pushed, the lab's overprint waits for a portal to exist.)
 
 ## The Long Way Through
 
