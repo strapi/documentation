@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="FIRST LIGHT, a signal trace">
+  <rect width="32" height="32" fill="#060809"/>
+  <rect x="0" y="15" width="32" height="1" fill="#0E1214"/>
+  <!-- the receiver drawing a real return out of the noise floor -->
+  <path d="M0 20 L5 20 L7 17 L9 21 L12 19 L14 6 L16 27 L18 12 L20 20 L23 18 L25 21 L27 20 L32 20"
+        fill="none" stroke="#FFB000" stroke-width="2" stroke-linejoin="miter"/>
+  <rect x="0" y="28" width="32" height="1" fill="#5AFFC8" opacity="0.5"/>
+</svg>

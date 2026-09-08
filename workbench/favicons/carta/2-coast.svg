@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="Carta Strapiana, a surveyed coast">
+  <rect width="32" height="32" fill="#f1e7d0"/>
+  <!-- land above, sounded water below -->
+  <path d="M0 0 L32 0 L32 7 Q22 16 14 12 Q7 9 0 16 Z" fill="#38562f"/>
+  <path d="M0 16 Q7 9 14 12 Q22 16 32 7" fill="none" stroke="#2c2114" stroke-width="3"/>
+  <g fill="#2c2114">
+    <rect x="4"  y="21" width="5" height="3"/>
+    <rect x="14" y="26" width="5" height="3"/>
+    <rect x="24" y="20" width="5" height="3"/>
+  </g>
+  <path d="M0 31 L32 18" fill="none" stroke="#8d2f22" stroke-width="2"/>
+</svg>

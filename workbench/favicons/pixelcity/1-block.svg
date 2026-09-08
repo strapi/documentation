@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="Pixel Docs City, a lit block">
+  <rect width="32" height="32" fill="#221c2a"/>
+  <!-- one dimetric building: two faces and a roof, brick and lit windows -->
+  <path d="M6 14 L16 9 L26 14 L16 19 Z" fill="#d98a5e"/>
+  <path d="M6 14 L16 19 L16 27 L6 22 Z" fill="#8c3b2e"/>
+  <path d="M26 14 L16 19 L16 27 L26 22 Z" fill="#5f2b26"/>
+  <rect x="8"  y="17" width="2" height="2" fill="#ffcf5e"/>
+  <rect x="12" y="19" width="2" height="2" fill="#ffcf5e"/>
+  <rect x="19" y="19" width="2" height="2" fill="#2b3247"/>
+  <rect x="22" y="17" width="2" height="2" fill="#f2a33c"/>
+</svg>

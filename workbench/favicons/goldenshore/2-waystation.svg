@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="The Golden Shore, a lit waystation">
+  <rect width="32" height="32" fill="#F0A860"/>
+  <rect x="0" y="22" width="32" height="10" fill="#D6B084"/>
+  <!-- one lantern-lit house on the sand, which is what a page is here -->
+  <path d="M6 15 L16 7 L26 15 Z" fill="#A85B2E"/>
+  <rect x="8" y="15" width="16" height="9" fill="#C1A87E"/>
+  <rect x="13" y="18" width="6" height="6" fill="#0a2e3a"/>
+  <rect x="24" y="13" width="2" height="4" fill="#635B3C"/>
+  <rect x="23" y="17" width="4" height="5" fill="#0a2e3a"/>
+  <rect x="24" y="18" width="2" height="3" fill="#FFB65C"/>
+</svg>

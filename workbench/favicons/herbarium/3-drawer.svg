@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="The Herbarium, a cabinet drawer">
+  <rect width="32" height="32" fill="#191410"/>
+  <rect x="1" y="2"  width="30" height="5" fill="#2f2419"/>
+  <rect x="1" y="26" width="30" height="5" fill="#2f2419"/>
+  <!-- the one drawer that is open, with its sheets standing in it -->
+  <rect x="1" y="8" width="30" height="17" fill="#3b2e20"/>
+  <rect x="3" y="10" width="26" height="7" fill="#f4ecdc"/>
+  <rect x="3" y="10" width="26" height="1" fill="#fbf5e9"/>
+  <rect x="6"  y="12" width="12" height="2" fill="#2a2118"/>
+  <rect x="10" y="19" width="12" height="4" fill="#c9a55e"/>
+</svg>

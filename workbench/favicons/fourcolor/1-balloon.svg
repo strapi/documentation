@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="The Four-Color, a speech balloon">
+  <rect width="32" height="32" fill="#ecdfc0"/>
+  <!-- the balloon, inked heavy the way the presses needed -->
+  <path d="M3 5 H29 V21 H17 L10 28 V21 H3 Z" fill="#f4ead0" stroke="#231c12" stroke-width="3"
+        stroke-linejoin="miter"/>
+  <rect x="8"  y="10" width="16" height="2" fill="#231c12"/>
+  <rect x="8"  y="15" width="10" height="2" fill="#231c12"/>
+</svg>

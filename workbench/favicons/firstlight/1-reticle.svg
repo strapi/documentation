@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="FIRST LIGHT, the camera reticle">
+  <rect width="32" height="32" fill="#060809"/>
+  <circle cx="16" cy="16" r="11" fill="none" stroke="#EDF2F0" stroke-width="2"/>
+  <rect x="15" y="1"  width="2" height="7" fill="#EDF2F0"/>
+  <rect x="15" y="24" width="2" height="7" fill="#EDF2F0"/>
+  <rect x="1"  y="15" width="7" height="2" fill="#EDF2F0"/>
+  <rect x="24" y="15" width="7" height="2" fill="#EDF2F0"/>
+  <rect x="13" y="13" width="6" height="6" fill="#FFB000"/>
+</svg>

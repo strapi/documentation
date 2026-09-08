@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="The Design Lab, the contact sheet">
+  <rect width="32" height="32" fill="#191410"/>
+  <!-- four frames of the same document, each printed in another world's ink -->
+  <rect x="6"  y="3"  width="11" height="11" fill="#4945FF"/>
+  <rect x="19" y="3"  width="11" height="11" fill="#FFB65C"/>
+  <rect x="6"  y="17" width="11" height="11" fill="#0e9ad6"/>
+  <rect x="19" y="17" width="11" height="11" fill="#8d2f22"/>
+  <!-- the sprocket rail, so it reads as film and not as four swatches -->
+  <rect x="0" y="0" width="4" height="32" fill="#0d0a08"/>
+  <rect x="1" y="4"  width="2" height="3" fill="#f4ecdc"/>
+  <rect x="1" y="12" width="2" height="3" fill="#f4ecdc"/>
+  <rect x="1" y="20" width="2" height="3" fill="#f4ecdc"/>
+  <rect x="1" y="28" width="2" height="3" fill="#f4ecdc"/>
+</svg>

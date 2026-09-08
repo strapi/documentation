@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="The Herbarium, a pressed leaf">
+  <rect width="32" height="32" fill="#191410"/>
+  <rect x="4" y="2" width="24" height="28" fill="#f4ecdc"/>
+  <rect x="4" y="2" width="24" height="1"  fill="#fbf5e9"/>
+  <!-- one specimen, mounted, with its midrib -->
+  <path d="M16 4 C24 10 24 20 16 28 C8 20 8 10 16 4 Z" fill="#4a3f31"/>
+  <rect x="15" y="5" width="1" height="22" fill="#f4ecdc" opacity="0.55"/>
+  <!-- the two mounting straps -->
+  <rect x="9"  y="11" width="14" height="1" fill="#c9a55e"/>
+  <rect x="9"  y="21" width="14" height="1" fill="#c9a55e"/>
+</svg>

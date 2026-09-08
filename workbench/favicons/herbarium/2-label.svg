@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="The Herbarium, a specimen label">
+  <rect width="32" height="32" fill="#191410"/>
+  <!-- the label as the whole mark: ruled card, brass pin through the corner -->
+  <rect x="2" y="7" width="28" height="18" fill="#f4ecdc"/>
+  <rect x="2" y="7" width="28" height="1"  fill="#fbf5e9"/>
+  <rect x="5" y="11" width="18" height="2" fill="#2a2118"/>
+  <rect x="5" y="16" width="22" height="1" fill="#6d6050"/>
+  <rect x="5" y="19" width="14" height="1" fill="#6d6050"/>
+  <rect x="24" y="9" width="4" height="4" fill="#c9a55e"/>
+</svg>

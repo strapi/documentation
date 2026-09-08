@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="Pixel Docs City, a facade at night">
+  <rect width="32" height="32" fill="#221c2a"/>
+  <!-- a flat facade of lit and dark windows: the city read as pure pixel grid -->
+  <rect x="4" y="3" width="24" height="26" fill="#3f4757"/>
+  <rect x="4" y="3" width="24" height="2"  fill="#5b6577"/>
+  <g fill="#2b3247">
+    <rect x="7"  y="7"  width="4" height="4"/><rect x="14" y="7"  width="4" height="4"/><rect x="21" y="7"  width="4" height="4"/>
+    <rect x="7"  y="14" width="4" height="4"/><rect x="14" y="14" width="4" height="4"/><rect x="21" y="14" width="4" height="4"/>
+    <rect x="7"  y="21" width="4" height="4"/><rect x="14" y="21" width="4" height="4"/><rect x="21" y="21" width="4" height="4"/>
+  </g>
+  <rect x="14" y="7"  width="4" height="4" fill="#ffcf5e"/>
+  <rect x="7"  y="14" width="4" height="4" fill="#f2a33c"/>
+  <rect x="21" y="21" width="4" height="4" fill="#ffcf5e"/>
+</svg>

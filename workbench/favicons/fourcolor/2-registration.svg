@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="The Four-Color, the registration target">
+  <rect width="32" height="32" fill="#ecdfc0"/>
+  <!-- the target the pressman lines the four plates up on -->
+  <path d="M16 16 L16 2 A14 14 0 0 1 30 16 Z" fill="#0e9ad6"/>
+  <path d="M16 16 L30 16 A14 14 0 0 1 16 30 Z" fill="#e0417f"/>
+  <path d="M16 16 L16 30 A14 14 0 0 1 2 16 Z" fill="#e9c81f"/>
+  <path d="M16 16 L2 16 A14 14 0 0 1 16 2 Z" fill="#231c12"/>
+  <rect x="15" y="0"  width="2"  height="32" fill="#ecdfc0"/>
+  <rect x="0"  y="15" width="32" height="2"  fill="#ecdfc0"/>
+  <circle cx="16" cy="16" r="4" fill="#ecdfc0"/>
+  <circle cx="16" cy="16" r="4" fill="none" stroke="#231c12" stroke-width="2"/>
+</svg>

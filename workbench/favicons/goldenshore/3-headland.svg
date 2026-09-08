@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="The Golden Shore, the headland">
+  <rect width="32" height="32" fill="#FFB65C"/>
+  <rect x="0" y="0"  width="32" height="11" fill="#F0A860"/>
+  <rect x="0" y="21" width="32" height="11" fill="#0a2e3a"/>
+  <!-- the cape running out into the water, dark against the low sun -->
+  <path d="M0 21 L11 12 L20 15 L32 11 L32 21 Z" fill="#A85B2E"/>
+  <path d="M0 21 L11 12 L14 13 L6 21 Z" fill="#C98A4E"/>
+  <circle cx="24" cy="7" r="4" fill="#FFF3E0" opacity="0.9"/>
+</svg>

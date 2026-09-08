@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="The Design Lab, the prism">
+  <rect width="32" height="32" fill="#1C0F2E"/>
+  <!-- one white beam in -->
+  <rect x="0" y="14" width="11" height="4" fill="#FFF3E0"/>
+  <!-- the prism, off-centre so the fan has room -->
+  <path d="M13 6 L23 16 L13 26 Z" fill="#4945FF"/>
+  <path d="M13 6 L23 16 L13 16 Z" fill="#6b68ff"/>
+  <!-- and the worlds out of it -->
+  <rect x="22" y="7"  width="10" height="4" fill="#FF4DA0"/>
+  <rect x="22" y="12" width="10" height="4" fill="#FFA26B"/>
+  <rect x="22" y="17" width="10" height="4" fill="#e9c81f"/>
+  <rect x="22" y="22" width="10" height="4" fill="#46a8ab"/>
+</svg>

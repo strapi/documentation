@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="Carta Strapiana, the dividers">
+  <rect width="32" height="32" fill="#f1e7d0"/>
+  <!-- a pair of dividers stepping off a distance, the sailor's one real instrument -->
+  <path d="M16 3 L8 29" fill="none" stroke="#2c2114" stroke-width="3"/>
+  <path d="M16 3 L24 29" fill="none" stroke="#2c2114" stroke-width="3"/>
+  <circle cx="16" cy="4" r="3" fill="#8d2f22"/>
+  <rect x="6"  y="27" width="3" height="4" fill="#2c2114"/>
+  <rect x="23" y="27" width="3" height="4" fill="#2c2114"/>
+  <rect x="0" y="30" width="32" height="1" fill="#6b563a"/>
+</svg>
