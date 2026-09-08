@@ -60,9 +60,16 @@ export function startHands(opts) {
     const t = now - t0;
 
     const events = reader.read(frame, t);
+    // Forward whatever gestures.js actually attached, rather than picking
+    // named fields by hand: a hand-picked list is exactly how `start` was
+    // dropped from spread events before this fix (the list here named only
+    // `ratio`, so `start: true` -- the flag a fresh gesture needs to reach
+    // firstlight.js at all -- silently never left this module). Rebuilding
+    // detail generically means there is no field list left to fall out of
+    // date the next time gestures.js adds one.
     for (const ev of events) {
-      if (ev.type === 'spread') fire('spread', { ratio: ev.ratio });
-      else fire(ev.type, { hand: ev.hand });
+      const { type, ...detail } = ev;
+      fire(type, detail);
     }
     // unlatch immediately on any release, including one fired by the dead
     // man's switch when tracking is lost mid-grab -- that frame has no hand

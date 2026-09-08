@@ -134,6 +134,66 @@ const path = require('path');
     const sAfterAnchorTest = window.__handProbe.cam().ts;
     out.startFlagRespected = Math.abs(sAfterAnchorTest - sBeforeAnchorTest) < 1e-6;
 
+    // FIX ROUND: the full pipeline, seam included. Every spread-related test
+    // above either drives hand/gestures.js directly (qa-hand-gestures.js) or
+    // dispatches synthetic hand:spread events straight onto window (every
+    // case in this file so far), which is why hand/hands.js's forwarder
+    // dropping `start` went uncaught: none of them cross hands.js's own
+    // re-dispatch. This one does: real frames, through a real makeFakeSource,
+    // through the real startHands() forwarder, out as real window events,
+    // into firstlight.js's real listeners, read back from window.__handProbe.
+    // A real 400ms pause is used, not a synthetic `t`, since SPREAD_GAP_MS is
+    // measured in gestures.js against the reader's own clock.
+    {
+      const { startHands } = await import('./hand/hands.js');
+      const { makeFakeSource } = await import('./hand/source.js');
+      const pinchedHand = (cx, cy) => {
+        const size = 0.20, pinch = 0.20, curl = 1;
+        const L = new Array(21).fill(null).map(() => ({ x: cx, y: cy, z: 0 }));
+        L[0] = { x: cx, y: cy + size, z: 0 };
+        L[9] = { x: cx, y: cy, z: 0 };
+        L[5] = { x: cx - size * 0.4, y: cy, z: 0 };
+        L[17] = { x: cx + size * 0.4, y: cy, z: 0 };
+        L[8] = { x: cx - size * 0.5 * curl, y: cy - size * curl, z: 0 };
+        L[4] = { x: L[8].x + pinch * size, y: L[8].y, z: 0 };
+        L[12] = { x: cx, y: cy - size * 1.05 * curl, z: 0 };
+        L[16] = { x: cx + size * 0.35 * curl, y: cy - size * 0.95 * curl, z: 0 };
+        L[20] = { x: cx + size * 0.6 * curl, y: cy - size * 0.8 * curl, z: 0 };
+        return { landmarks: L, handedness: 'Right' };
+      };
+      const src = makeFakeSource();
+      const api = startHands({ source: src });
+      await api.arm();
+
+      const p0 = window.__handProbe.cam().ts;
+
+      // gesture 1: two pinched hands drifting apart over several real frames
+      for (let i = 0; i <= 6; i++) {
+        const d = 0.15 + i * 0.03;
+        src.push({ hands: [pinchedHand(0.5 - d, 0.5), pinchedHand(0.5 + d, 0.5)] });
+        await new Promise(r2 => setTimeout(r2, 30));
+      }
+      const p1 = window.__handProbe.cam().ts;
+
+      // a real pause, well past SPREAD_GAP_MS (220ms): nothing pushed at all
+      await new Promise(r2 => setTimeout(r2, 400));
+
+      // gesture 2: a fresh two-hand pinch at a distinct starting distance.
+      // Its first frame carries start:true from gestures.js; the assertion
+      // is that this survives the forwarder all the way to firstlight.js.
+      src.push({ hands: [pinchedHand(0.5 - 0.12, 0.5), pinchedHand(0.5 + 0.12, 0.5)] });
+      await new Promise(r2 => setTimeout(r2, 60));
+      const p2 = window.__handProbe.cam().ts;
+
+      api.disarm();
+
+      out.pipelineS0 = p0;
+      out.pipelineS1 = p1;
+      out.pipelineS2 = p2;
+      out.pipelineClimbed = p1 > p0 + 0.01;
+      out.pipelineNoSnapBack = Math.abs(p2 - p1) < 0.05;
+    }
+
     return out;
   });
 
@@ -150,9 +210,12 @@ const path = require('path');
   if (!r.anchorHeldOnZoomIn) fails.push('zooming in did not keep the world point under the reticle fixed');
   if (!r.zoomedOut) fails.push('two hands moving together did not lower the scale target');
   if (!r.startFlagRespected) fails.push('a spread event without start:true re-anchored the zoom base instead of continuing from it');
+  if (!r.pipelineClimbed) fails.push(`full pipeline: gesture 1 did not raise the scale (s0 ${r.pipelineS0} -> s1 ${r.pipelineS1})`);
+  if (!r.pipelineNoSnapBack) fails.push(`full pipeline: gesture 2's first frame snapped the scale back (s1 ${r.pipelineS1} -> s2 ${r.pipelineS2}, s0 was ${r.pipelineS0})`);
   if (errors.length) fails.push('console/page errors: ' + errors.slice(0, 2).join(' | '));
   console.log(`  no teleport on first-ever grab ${r.noTeleportOnFirstEverGrab}   on reentry after absent ${r.noTeleportOnReentryGrab}`);
   console.log(`  snapped ${r.snappedSomething} hud "${r.hudTag}"->"${r.hudTagAfterAbsent}"   drag ${r.txMoved}   zoom in ${r.zoomedIn} (anchor held ${r.anchorHeldOnZoomIn}) out ${r.zoomedOut}   start flag respected ${r.startFlagRespected}   errors ${errors.length}`);
+  console.log(`  full pipeline (source->hands.js->window->world): s0 ${r.pipelineS0.toFixed(3)}   s1 ${r.pipelineS1.toFixed(3)} (climbed ${r.pipelineClimbed})   s2 after 400ms pause ${r.pipelineS2.toFixed(3)} (no snap-back ${r.pipelineNoSnapBack})`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
   process.exit(fails.length ? 1 : 0);
