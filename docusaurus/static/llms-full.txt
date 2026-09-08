@@ -34744,7 +34744,6 @@ The flag changes the  Media Library page of the admin panel, and adds the upload
 The Media Library page displays a notice reminding you that this is a beta and that some features are still in progress. Read the [features configuration](/cms/configurations/features) documentation before enabling the flag, where the `STRAPI_FUTURE_BETA_MEDIA_LIBRARY` environment variable is also documented.
 
 You can [read more about the beta here](https://strapi.notion.site/Media-Library-Beta-Release-3c78f3598074810dbad6f2addfa25b6f) and report any issue you run into on the [strapi/strapi repository](https://github.com/strapi/strapi/issues).
-The current page still describes the stable version of the Media Library. The present documentation page has been updated to reflect the new features, and covers the behaviors of both the current stable version and the beta version of the Media Library.
 :::
 
 ## Configuration
