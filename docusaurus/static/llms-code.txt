@@ -25708,27 +25708,29 @@ export default {
 Source: https://docs.strapi.io/cms/features/media-library
 
 ## Media Library
-Description: :::strapi New Media Library available in Strapi has completely reworked the Media Library UI, which is now available as a beta feature for the next few weeks before it becomes the default UI.
+Description: :::strapi New Media Library available in Strapi has completely reworked the Media Library UI.
 (Source: https://docs.strapi.io/cms/features/media-library#media-library)
 
 Language: JavaScript
-File path: /src/components/ScreenshotNumberReference.js
+File path: /config/features.js
 
 ```js
 module.exports = () => ({
   future: {
+    // highlight-next-line
     betaMediaLibrary: true,
   },
 });
 ```
 
 ---
-Language: JavaScript
-File path: /src/components/ScreenshotNumberReference.js
+Language: TypeScript
+File path: /config/features.ts
 
-```js
+```ts
 export default () => ({
   future: {
+    // highlight-next-line
     betaMediaLibrary: true,
   },
 });
@@ -26084,6 +26086,44 @@ export default {
     strapi.server.httpServer.requestTimeout = 30 * 60 * 1000;
   },
 };
+```
+
+
+## Concurrent file uploads
+Description: Both default to 1, so files are uploaded and processed one at a time.
+(Source: https://docs.strapi.io/cms/features/media-library#concurrent-file-uploads)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = () => ({
+  upload: {
+    config: {
+      // highlight-start
+      concurrentUploadRequests: 4,
+      concurrentUploadSize: 2,
+      // highlight-end
+    },
+  },
+});
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+export default () => ({
+  upload: {
+    config: {
+      // highlight-start
+      concurrentUploadRequests: 4,
+      concurrentUploadSize: 2,
+      // highlight-end
+    },
+  },
+});
 ```
 
 
