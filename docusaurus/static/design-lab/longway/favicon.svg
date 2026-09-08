@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="The Long Way Through, the walker and her lantern">
+  <rect width="32" height="32" fill="#2E1A47"/>
+  <rect x="0" y="26" width="32" height="6" fill="#1C0F2E"/>
+  <!-- the lantern first: it is the subject, she is the reason for it -->
+  <rect x="19" y="10" width="9"  height="2"  fill="#FFF3E0"/>
+  <rect x="18" y="12" width="11" height="12" fill="#1C0F2E"/>
+  <rect x="20" y="14" width="7"  height="8"  fill="#FFA26B"/>
+  <rect x="22" y="16" width="3"  height="4"  fill="#FFF3E0"/>
+  <!-- and the walker, narrow, leaning into the road -->
+  <rect x="7"  y="7"  width="5" height="5" fill="#FFF3E0"/>
+  <rect x="7"  y="13" width="5" height="8" fill="#FFF3E0"/>
+  <rect x="12" y="14" width="6" height="2" fill="#FFF3E0"/>
+  <rect x="6"  y="21" width="3" height="6" fill="#FFF3E0"/>
+  <rect x="11" y="21" width="3" height="5" fill="#FFF3E0"/>
+  <rect x="14" y="26" width="18" height="2" fill="#FFA26B" opacity="0.4"/>
+</svg>
