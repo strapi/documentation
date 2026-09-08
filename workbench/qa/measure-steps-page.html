@@ -1,0 +1,21 @@
+<!doctype html><meta charset="utf-8"><title>step render</title>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js" } }</script>
+<script type="module">
+import { stepVoice, STEP_SURFACES } from './js/audio.js';
+window.__renderStep = async (surface, seconds = 0.6) => {
+  const sr = 48000;
+  const ctx = new OfflineAudioContext(2, Math.floor(sr * seconds), sr);
+  stepVoice(ctx, ctx.destination, 0.01, surface, 0, 1);
+  const buf = await ctx.startRendering();
+  return { l: Array.from(buf.getChannelData(0)), r: Array.from(buf.getChannelData(1)), sr };
+};
+window.__renderWalk = async (list, gap = 0.62) => {
+  const sr = 48000, seconds = list.length * gap + 1.2;
+  const ctx = new OfflineAudioContext(2, Math.floor(sr * seconds), sr);
+  list.forEach((s, i) => stepVoice(ctx, ctx.destination, 0.3 + i * gap, s, i % 2 ? 0.13 : -0.13, 1));
+  const buf = await ctx.startRendering();
+  return { l: Array.from(buf.getChannelData(0)), r: Array.from(buf.getChannelData(1)), sr };
+};
+window.__surfaces = STEP_SURFACES;
+window.__ready = true;
+</script>
