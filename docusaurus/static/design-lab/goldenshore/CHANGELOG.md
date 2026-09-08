@@ -1133,3 +1133,27 @@ boards, and the whole assembly is expressed from those two facts. Putting her
 "to the left and much further down the beach" means drawing a different boat, one
 hauled up on sand and heeled over with a post beside her, which is sculpting
 rather than moving. Left for a pass that can give it the time.
+
+## 2026-09-08 · the harbour gate keeps its view
+
+The owner, with a photograph through the arch: the Quick Start was six metres
+behind the gate and read as jammed against it. *"Fais x10 pour la distance entre
+le portail et la maison."*
+
+Sixty-one metres now, still square on the gate's axis so the violet door is what
+the arch points at, on ground measured clear for eleven metres around.
+
+That alone was not enough, and the second attempt taught the real lesson: moving
+the house back simply handed the arch to whichever house the grid dropped in
+behind it, first Docker and then the content manager at 17 metres. So the
+corridor itself is reserved. Nothing may stand within forty metres east of the
+gate and six either side of its axis unless it is pinned there on purpose;
+anything the grid places inside is pushed clear, to whichever side it was already
+leaning. Verified: no station left in the corridor, all 290 still placed.
+
+Through the arch you now see a street going away into the town rather than a
+wall, which is what a gate is for.
+
+NOTE, because it contradicts the night before: at 61 metres past a gate that is
+itself 44 from the landing, the Quick Start is no longer the first building off
+the jetty. He was shown this trade and can have the earlier placement back.

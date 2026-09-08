@@ -44,8 +44,19 @@ const SPECIAL_POS = {
      portail." It takes the nearest plot instead, sixteen metres out, and the
      house that held it goes back to where the Quick Start was. A straight swap,
      so nothing overlaps and no other door moves. */
-  '/cms/quick-start': { x: -28, z: 1, yaw: Math.PI * 1.5 },         // violet door faces the pier
-  '/cms/installation/docker': { x: 10, z: 0 },                      // and Docker takes the old plot
+  /* (2026-09-08, owner, with a photograph through the arch) It was six metres
+     behind the harbour gate and read as jammed against it: "il est trop pres du
+     portail, fais x10 pour la distance". Sixty-one metres now, still square on
+     the gate's axis so the violet door is what you see through the arch, on
+     ground measured clear for eleven metres around. Note this supersedes the
+     placement of the night before: at 61 metres past a gate that is itself 44
+     from the landing, it is no longer the first building off the jetty. */
+  '/cms/quick-start': { x: 27, z: 1, yaw: Math.PI * 1.5 },          // framed by the arch, a walk away
+  /* and the plot six metres behind the gate stays EMPTY. Moving the Quick
+     Start back only handed the arch to whichever house took its place, so
+     Docker is pinned well down the road and the view through the gate is a
+     walk rather than a wall. */
+  '/cms/installation/docker': { x: 62, z: -18 },                    // well down the road, off the axis
   '/cms/api/document-service': { x: 84, z: -34 },                   // the wellhouse
   '/cms/migration/v4-to-v5/breaking-changes': { x: 210, z: -28 },   // across the Crossing
   '/release-notes': { x: 239, z: -76 },                             // door of the Golden Shore, on the light's cape
@@ -390,9 +401,24 @@ export function buildTown(scene, data, tendedSet) {
     return out;
   }
 
+  /* (2026-09-08, owner) THE GATE KEEPS ITS VIEW. He asked for ten times the
+     distance between the harbour gate and the house framed by it; moving the
+     Quick Start back only handed the arch to whichever house the grid dropped
+     in behind it. So the corridor itself is reserved: nothing may stand within
+     forty metres east of the gate and six either side of its axis, except a
+     station pinned there on purpose. Anything the grid puts in the corridor is
+     pushed clear of it, to whichever side it was already leaning. */
+  const GATE_CLEAR = { x: -34, z: 0, len: 40, half: 6 };
+  function outOfGateCorridor(x, z) {
+    const dx = x - GATE_CLEAR.x, dz = z - GATE_CLEAR.z;
+    if (dx < 0 || dx > GATE_CLEAR.len || Math.abs(dz) > GATE_CLEAR.half) return [x, z];
+    const side = dz >= 0 ? 1 : -1;
+    return [x, GATE_CLEAR.z + side * (GATE_CLEAR.half + 1.5)];
+  }
   function stationAt(slug, x, z, yaw, opts = {}) {
     const page = content.pages[slug];
     if (!page) return null;
+    if (!opts.pinned) { const c = outOfGateCorridor(x, z); x = c[0]; z = c[1]; }
     const tax = taxonomy[slug] || { product: '?', section: '?' };
     const prov = provenance[slug];
     const g = groundAt(x, z);
@@ -938,7 +964,7 @@ export function buildTown(scene, data, tendedSet) {
       if (SPECIAL_POS[slug]) {
         const sp = SPECIAL_POS[slug];
         const yaw = sp.yaw !== undefined ? sp.yaw : Math.atan2(tr.x - sp.x, tr.z - sp.z) + Math.PI;
-        const st = stationAt(slug, sp.x, sp.z, sp.yaw !== undefined ? sp.yaw : yaw + Math.PI);
+        const st = stationAt(slug, sp.x, sp.z, sp.yaw !== undefined ? sp.yaw : yaw + Math.PI, { pinned: true });
         if (st) st.districtKey = s.key;
         continue;
       }
