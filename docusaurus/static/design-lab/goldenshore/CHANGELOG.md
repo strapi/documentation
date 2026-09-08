@@ -1179,3 +1179,12 @@ counter, at a longer interval, because an arm reaches further than a foot.
 Measured: the eye sits at 3.05 on the pier, 0.37 in the sea, and 3.67 when it
 climbs back out on the beach. Jumping is refused while swimming, and the world's
 own edge still holds.
+
+### and the newsstand leaves the arrival's field of view
+
+*"Le stand qui mène vers Four-Color est trop visible."* It stood eleven metres
+off the harbour gate, in the first thing a visitor looks at. A newsagent wants
+footfall, not a stage, so it keeps to the town and moves to the quiet side street
+south of the square: seventy-six metres from the landing, out of the gate
+corridor, measured clear for nearly twelve metres around. Verified by collider,
+five metres of clearance where it used to stand.

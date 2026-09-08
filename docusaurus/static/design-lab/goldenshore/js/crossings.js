@@ -485,7 +485,13 @@ export function buildCrossings(scene, data) {
   // still out, the shutter half down because it is nearly the end of the day.
   {
     B = new Bucket();
-    const x = -34, z = 11, yaw = 0.5;
+    /* (2026-09-08, owner: "le stand qui mene vers four-color est trop visible")
+       It stood at x=-34, z=11, eleven metres off the harbour gate and squarely
+       in the arrival's field of view. A newsagent wants footfall, not a stage,
+       so it keeps to the town but moves to the quiet side street south of the
+       square: seventy-six metres from the landing, out of the gate corridor,
+       measured clear for nearly twelve metres around. */
+    const x = -8, z = -30, yaw = 0.5;
     const g = groundAt(x, z);
     box(1.9, 2.05, 1.25, x, g + 1.02, z, yaw, 0x6f9c72, SW.paint);        // the kiosk
     box(2.25, 0.12, 1.55, x, g + 2.11, z, yaw, 0x4a6f52, SW.paint);       // the roof
