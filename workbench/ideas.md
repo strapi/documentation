@@ -10,6 +10,41 @@ Last updated 2026-09-07.
 
 ## FIRST LIGHT, hand control
 
+### Tested 2026-09-08 evening, four faults. Fix these first.
+
+- [ ] **The dialog does not capture the hand.** The map is already being driven while the arming
+  dialog is still open, before the user has confirmed or declined. His words: "c'est un gros
+  probleme". This is the same principle already agreed for the reader: a surface with focus owns
+  the hand and everything behind it is frozen. The dialog is a surface with focus and nobody
+  applied the rule to it. Until it is answered, the only live gestures should be its own two.
+
+- [ ] **The swipe to decline does not fire.** Three candidate causes, in order of likelihood, and
+  the first is mine: SWIPE_SPEED was raised from 1.0 to 2.5 to kill four false positives per
+  minute, and it was never once proven that a real deliberate swipe clears 2.5, because the
+  reference clip contains no swipe. I said so at the time. Second candidate: the handedness
+  polarity or the screen-space sign is inverted, so the gesture only fires inward. Third: the
+  dialog is not listening. Diagnose in that order, and get a real swipe on video this time.
+
+- [ ] **Opening the hand zooms OUT instead of in.** A sign inversion on the fan. Almost certainly
+  the root of the complaint below as well: if opening dezooms, then zooming in requires closing the
+  fingers, which walks the hand toward the fist and pinch thresholds and makes everything fight.
+  Fix the sign first, then re-judge the rest.
+
+- [ ] **The controls feel wrong: dezooms easily, cannot re-zoom, dragging is hard.** Re-test after
+  the sign fix before tuning anything, since one inverted axis can produce all three symptoms.
+  If it persists: the rate mapping, the dead zone at 0.15, and the drag gain each need a pass, and
+  he is the instrument.
+
+**The lesson, and it is the twelfth of the day.** Every test asserts that a positive deviation
+produces a positive rate, which is self-consistent whichever way the physical gesture actually maps.
+A sign inversion is invisible to a suite that only checks its own convention against itself. The
+same blindness explains the swipe: the tests prove the threshold rejects ordinary motion, and
+nothing anywhere proves a real gesture passes it. **Both faults are the same shape: no test
+connects the code's convention to a human's actual movement.** The fixture can only fix that if it
+contains the gestures, so the next reference clip must include a deliberate swipe, a deliberate
+fan open and a deliberate fan close, each named and timed.
+
+
 Stage 1 shipped on `repo/experimental-design-firstlight` and the owner tested it. The gesture
 vocabulary is being revised from that test. Decisions taken 2026-09-08, in his words where they
 were his:
