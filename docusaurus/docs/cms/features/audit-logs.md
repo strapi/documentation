@@ -96,7 +96,7 @@ With Strapi <VersionBadge version="5.52.0" noTooltip />, in the payload, the `or
 
 ### Exporting audit logs
 
-<VersionBadge version="5.52.4+" noTooltip />
+<VersionBadge version="5.53+" noTooltip />
 
 Users with the `export` permission for Audit Logs can export the current filtered set of entries as a CSV file. To access this feature, the user's role must have both the **Read** and **Export** permissions under **Settings > Administration Panel > Roles > Audit Logs** (see [admin panel configuration](/cms/configurations/admin-panel#audit-logs)).
 
