@@ -823,7 +823,7 @@ The Media Library is organized in the following areas:
 
 A _Beta_ notice sits above the list and reminds you that some features are still in progress. Click **Close** to dismiss it: it stays dismissed in that browser.
 
-Each folder and asset in the list has a checkbox to select it (see [selecting items](#selecting-items)) and a <Icon name="dots-three" classes="ph-bold" /> **More actions** button (see [using the item actions menu](#item-actions)). The Media Library calls a folder or an asset an _item_, and several controls use that word.
+Each folder and asset in the list has a checkbox to select it (see [selecting items](#selecting-items)) and a <Icon name="dots-three" classes="ph-bold" /> button (see [using the item actions menu](#item-actions)). The Media Library calls a folder or an asset an _item_, and several controls use that word.
 
 <details>
 <summary>What changed from the previous Media Library</summary>
@@ -883,7 +883,7 @@ Strapi does not enforce a maximum folder depth. The folder tree expands automati
 
 #### Using the item actions menu {#item-actions}
 
-The <Icon name="dots-three" classes="ph-bold" /> **More actions** button of an asset or a folder opens a menu that acts on that item only, whatever else is selected in the list.
+The <Icon name="dots-three" classes="ph-bold" /> button of an asset or a folder opens a menu that acts on that item only, whatever else is selected in the list.
 
 On an asset, the menu offers:
 
@@ -1197,10 +1197,10 @@ The previous file is permanently replaced and cannot be recovered. If [AI metada
 1. Click the asset in the list to open its details panel.
 2. Click the <Icon name="download-simple" /> **Download** button to save the file to your computer, or the <Icon name="link" classes="ph-bold" /> **Copy link** button to copy its URL to the clipboard.
 
-Both actions are also available from the asset's <Icon name="dots-three" classes="ph-bold" /> **More actions** menu, as **Download media** and **Copy link to media**.
+Both actions are also available from the asset's <Icon name="dots-three" classes="ph-bold" /> actions menu, as **Download media** and **Copy link to media**.
 
 :::note
-**Copy link to media** copies the asset's own URL, the one your front end uses to serve the file. **Copy link to folder**, in a folder's <Icon name="dots-three" classes="ph-bold" /> **More actions** menu, copies a link to that folder in the admin panel, which only works for someone logged into Strapi.
+**Copy link to media** copies the asset's own URL, the one your front end uses to serve the file. **Copy link to folder**, in a folder's <Icon name="dots-three" classes="ph-bold" /> actions menu, copies a link to that folder in the admin panel, which only works for someone logged into Strapi.
 :::
 
 #### Deleting assets
@@ -1312,7 +1312,7 @@ The dialog title names the parent folder, for instance _New folder in Home_. To 
 Assets and folders can be moved in 3 ways:
 
 - By drag and drop, for a few items at a time. Drag an asset or a folder onto a folder in the list, or onto a folder of the folder tree, including <Icon name="house" /> **Home**. Hovering a folder of the tree for a moment expands it, so that you can drop items into a subfolder in one gesture. Dragging one item of a selection moves the whole selection.
-- With the _Move elements to_ dialog, for many items at once (see [moving items in bulk](#bulk-move)). It is also available for a single item, as **Move to folder** in its <Icon name="dots-three" classes="ph-bold" /> **More actions** menu.
+- With the _Move elements to_ dialog, for many items at once (see [moving items in bulk](#bulk-move)). It is also available for a single item, as **Move to folder** in its <Icon name="dots-three" classes="ph-bold" /> actions menu.
 - From the details panel of an asset, by changing its _Location_ field (see [managing individual assets](#managing-assets)).
 
 :::note
@@ -1320,12 +1320,12 @@ A folder cannot be moved into itself or into one of its own subfolders. Invalid 
 :::
 
 :::tip
-Drag and drop uses the pointer. To move items with the keyboard, use the **Move to folder** action of the <Icon name="dots-three" classes="ph-bold" /> **More actions** menu instead.
+Drag and drop uses the pointer. To move items with the keyboard, use the **Move to folder** action of the <Icon name="dots-three" classes="ph-bold" /> actions menu instead.
 :::
 
 #### Renaming folders
 
-1. Click the <Icon name="dots-three" classes="ph-bold" /> **More actions** button of the folder.
+1. Click the <Icon name="dots-three" classes="ph-bold" /> button of the folder.
 2. Click <Icon name="pencil-simple" /> **Rename folder**.
 3. Type the new name in the _Folder name_ field.
 4. Click **Save**.
@@ -1336,7 +1336,7 @@ A folder name must be unique among the folders sharing the same parent.
 
 #### Deleting folders
 
-1. Click the <Icon name="dots-three" classes="ph-bold" /> **More actions** button of the folder.
+1. Click the <Icon name="dots-three" classes="ph-bold" /> button of the folder.
 2. Click <Icon name="trash" /> **Delete folder**.
 3. Click **Confirm**.
 
