@@ -64,6 +64,15 @@ function fistCurl(L) {
   for (const t of tips) sum += dist(L[t], w);
   return (sum / tips.length) / s;
 }
+function isPinchedNotFisted(L) {
+  // Used only by the two-hand spread gate below, which has no persisted
+  // hysteresis state of its own for a second hand the way the primary
+  // hand's `pinched`/`fisted` variables do. A single-frame check is still
+  // correct here because the ARMING threshold (not the release one) is the
+  // right question to ask of a hand you have not been tracking continuously:
+  // "is this hand genuinely pinched right now", not "has it stayed pinched".
+  return fistCurl(L) >= FIST_ON && pinchRatio(L) < PINCH_ON;
+}
 export function pinchPoint(L) {
   // where the hand is "holding": between the thumb and index tips, which is
   // what the eye tracks, not the wrist and not the palm centre. Still the
@@ -140,10 +149,17 @@ export function makeGestureReader() {
         else if (pinched && pr > PINCH_OFF) { pinched = false; evs.push({ type: 'release', hand: primary.handedness }); }
       }
 
-      // two pinched hands: the distance between their pinch points is the scale
+      // two pinched hands: the distance between their pinch points is the scale.
+      // A hand only counts as pinched here if it genuinely is, by the same
+      // fist-first discrimination the one-hand path above uses: a fist also
+      // reads as a low thumb-to-index distance (see the comment on FIST_ON),
+      // so checking pinchRatio alone -- and checking it against PINCH_OFF, the
+      // looser RELEASE threshold, rather than PINCH_ON, the ARMING one -- let
+      // two merely open hands (ratio between PINCH_ON and PINCH_OFF) and two
+      // closed fists alike read as "pinched" and drive a spread.
       if (hands.length >= 2) {
         const a = hands[0].landmarks, b = hands[1].landmarks;
-        const bothPinched = pinchRatio(a) < PINCH_OFF && pinchRatio(b) < PINCH_OFF;
+        const bothPinched = isPinchedNotFisted(a) && isPinchedNotFisted(b);
         if (bothPinched) {
           const d = dist(pinchPoint(a), pinchPoint(b));
           if (spreadBase === null) spreadBase = d;
