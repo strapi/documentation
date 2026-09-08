@@ -4,7 +4,7 @@
 import * as THREE from 'three';
 import { loadData, safeStore } from './data.js';
 import { createRenderer, initWorld, updateWorld, enterKeeperHour, tickKeeperHour, WORLD, setRimGlobal, SKY_GAIN, setSun,
-  stepDownPixelRatio,
+  stepDownPixelRatio, dropAmbientOcclusion,
 } from './world.js';
 import { buildTown } from './town.js';
 import { buildVegetation } from './vegetation.js';
@@ -49,7 +49,13 @@ function notePerf(dt) {
   if (frameTimes.length > 240 && performance.now() - dprChecked > 4000) {
     dprChecked = performance.now();
     const a = frameTimes.slice(-240).sort((x, y) => x - y);
-    stepDownPixelRatio(a[Math.floor(a.length * 0.95)]);
+    const p95 = a[Math.floor(a.length * 0.95)];
+    /* the ladder first; if it had to move, ambient occlusion goes with it,
+       and the composer is told the new ratio so its targets follow */
+    if (stepDownPixelRatio(p95)) {
+      if (WORLD.composer) WORLD.composer.setPixelRatio(WORLD.renderer.getPixelRatio());
+      dropAmbientOcclusion();
+    }
   }
 }
 window.__perf = () => {
@@ -321,6 +327,21 @@ async function boot() {
     sky: (v) => { SKY_GAIN.value = v; },
     sun: (el) => setSun(el),
     expo: (v) => { WORLD.renderer.toneMappingExposure = v; },
+    /* the post chain, so a probe can read it and A/B it without a reload */
+    fx: () => ({
+      on: !!WORLD.composer, off: !!WORLD.fxOff,
+      gtao: WORLD.gtaoPass ? WORLD.gtaoPass.enabled : null,
+      aoBlend: WORLD.gtaoPass ? WORLD.gtaoPass.blendIntensity : null,
+      bloom: WORLD.bloomPass ? { strength: WORLD.bloomPass.strength, radius: WORLD.bloomPass.radius, threshold: WORLD.bloomPass.threshold } : null,
+      dpr: WORLD.renderer.getPixelRatio(),
+    }),
+    setFx: (o) => {
+      if (o.gtao !== undefined && WORLD.gtaoPass) WORLD.gtaoPass.enabled = o.gtao;
+      if (o.aoBlend !== undefined && WORLD.gtaoPass) WORLD.gtaoPass.blendIntensity = o.aoBlend;
+      if (o.bloom !== undefined && WORLD.bloomPass) WORLD.bloomPass.enabled = o.bloom;
+      if (o.strength !== undefined && WORLD.bloomPass) WORLD.bloomPass.strength = o.strength;
+      if (o.threshold !== undefined && WORLD.bloomPass) WORLD.bloomPass.threshold = o.threshold;
+    },
     draws: () => WORLD.renderer.info.render.calls,
     walk: (pts, dur) => {
       const segs = []; let L = 0;
@@ -440,7 +461,9 @@ async function boot() {
     }
 
     if (!WORLD.contextLost) {
-      WORLD.renderer.render(WORLD.scene, WORLD.camera);
+      // through the composer when there is one; straight to the canvas under ?fx=0
+      if (WORLD.composer) WORLD.composer.render(dt);
+      else WORLD.renderer.render(WORLD.scene, WORLD.camera);
       // the honest draw-call figure is the peak over a walk, not the last frame
       const dc = WORLD.renderer.info.render.calls;
       if (dc > (window.__maxDraws || 0)) window.__maxDraws = dc;

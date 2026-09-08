@@ -3,6 +3,11 @@
 // whose detail is painted to canvas at boot. WebGL2 pushed hard, honestly.
 
 import * as THREE from 'three';
+import { EffectComposer } from '../vendor/EffectComposer.js';
+import { RenderPass } from '../vendor/RenderPass.js';
+import { GTAOPass } from '../vendor/GTAOPass.js';
+import { UnrealBloomPass } from '../vendor/UnrealBloomPass.js';
+import { OutputPass } from '../vendor/OutputPass.js';
 import { Sky } from '../vendor/Sky.js';
 import { Water } from '../vendor/Water.js';
 import { terrainHeight, terrainSlope, COAST_X, TERRACES, provinceWeights, PROVINCE_KEYS, fbm as tfbm } from './terrain.js';
@@ -971,10 +976,16 @@ export function initWorld(renderer, reducedMotion) {
   buildGulls(scene, reducedMotion);
   buildEnvironment(renderer, scene);
 
+  buildComposer(renderer, scene, camera);
+
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    if (WORLD.composer) {
+      WORLD.composer.setSize(window.innerWidth, window.innerHeight);
+      WORLD.composer.setPixelRatio(renderer.getPixelRatio());
+    }
   });
 
   return WORLD;
@@ -1439,4 +1450,64 @@ export function tickKeeperHour(dt) {
     return true; // transition finished
   }
   return false;
+}
+
+// THE COMPOSER. Three passes over the beauty render, in the order a real
+// camera imposes them: the world is gathered first, then ambient occlusion
+// darkens the contacts the sun cannot reach, then the bright ends of the
+// highlights bloom, and only then is the linear HDR image tone mapped and
+// written to the screen. The last of those is why OutputPass exists: a render
+// into a target is NOT tone mapped by the renderer, only a render to the
+// canvas is, so without it the whole picture arrives raw and blown out.
+//
+// ?fx=0 turns the whole chain off and renders straight to the canvas, which
+// is both the escape hatch for a slow machine and the A/B for judging it.
+export function buildComposer(renderer, scene, camera) {
+  // OFF BY DEFAULT, on purpose, until the colour is right. The chain is wired
+  // and reachable with ?fx=1, but a first A/B showed it washing the golden hour
+  // out to a flat grey, so the world Pierre opens is still the un-composed one.
+  const ask = new URLSearchParams(location.search).get('fx');
+  WORLD.fxOff = !(ask === '1' || ask === 'on');
+  if (WORLD.fxOff) return null;
+
+  const composer = new EffectComposer(renderer);
+  composer.setSize(window.innerWidth, window.innerHeight);
+  composer.setPixelRatio(renderer.getPixelRatio());
+
+  composer.addPass(new RenderPass(scene, camera));
+
+  // Ground contact. The shore is metres across, so the radius is in world
+  // units and set to about the width of a doorstep: enough to darken where a
+  // wall meets sand and where a hull meets the beach, not enough to smudge
+  // the terrain into a dirty bowl.
+  const gtao = new GTAOPass(scene, camera, window.innerWidth, window.innerHeight);
+  gtao.output = GTAOPass.OUTPUT.Default;
+  gtao.blendIntensity = 0.62;
+  gtao.updateGtaoMaterial({ radius: 0.42, distanceExponent: 1.0, thickness: 1.0, scale: 1.0, samples: 12, screenSpaceRadius: false });
+  composer.addPass(gtao);
+  WORLD.gtaoPass = gtao;
+
+  // The bloom is deliberately timid. Golden hour already carries the picture;
+  // a strong bloom over a low sun turns it into a soft-focus greeting card.
+  // Threshold high so only the sun disc, the water glitter and the lit lantern
+  // horn cross it at all.
+  const bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.28, 0.5, 0.9);
+  composer.addPass(bloom);
+  WORLD.bloomPass = bloom;
+
+  composer.addPass(new OutputPass());
+
+  WORLD.composer = composer;
+  return composer;
+}
+
+// When the pixel-ratio ladder has had to step down, the machine is already
+// short of fill; ambient occlusion is the most expensive thing in the chain
+// and the first thing to go. It never comes back in the same session, for the
+// same reason the ladder never climbs: a picture that keeps changing quality
+// is worse than one that settled somewhere honest.
+export function dropAmbientOcclusion() {
+  if (!WORLD.gtaoPass || !WORLD.gtaoPass.enabled) return false;
+  WORLD.gtaoPass.enabled = false;
+  return true;
 }
