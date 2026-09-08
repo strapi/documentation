@@ -246,6 +246,16 @@ export function initAudio() {
           burst({ type: 'highpass', f: j(4200), q: 0.4 }, 0.048 * lvl, 0.19, pan, gap * 0.8);
           burst({ type: 'lowpass', f: j(320), q: 0.8 }, 0.05 * lvl, 0.09, pan);
         },
+        /* (2026-09-08) A STROKE, not a step. Swimming reaches this the same way
+           walking does, through the stride counter, so the arms keep the same
+           metronome the legs had. A stroke is a swell of water pushed aside and
+           the small break of the hand entering: low and wide, then a short
+           bright splash a little behind it. */
+        water: () => {
+          burst({ type: 'lowpass', f: j(340), q: 0.6 }, 0.085 * lvl, 0.26, pan);
+          burst({ type: 'bandpass', f: j(1500), q: 0.8 }, 0.05 * lvl, 0.13, pan, gap * 1.6);
+          if (Math.random() < 0.55) burst({ type: 'highpass', f: j(3600), q: 0.5 }, 0.03 * lvl, 0.09, pan, gap * 2.4);
+        },
         // islet shell sand: brighter and crisper than mainland sand
         shell: () => {
           burst({ type: 'bandpass', f: j(2800), q: 0.8 }, 0.065 * lvl, 0.09, pan);
@@ -354,7 +364,8 @@ export function initAudio() {
       /* a stride is never metronomic; the next one is drawn as it is taken */
       if (S.stepAcc > (S.stepNext || 0.78)) {
         S.stepAcc = 0;
-        S.stepNext = 0.70 + Math.random() * 0.17;
+        /* an arm reaches further than a foot */
+        S.stepNext = surface === 'water' ? 1.05 + Math.random() * 0.25 : 0.70 + Math.random() * 0.17;
         api.step(surface);
       }
     },

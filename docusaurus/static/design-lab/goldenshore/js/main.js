@@ -396,7 +396,8 @@ async function boot() {
       readerOpen: isReaderOpen(),
       gust: WORLD.gustAmp, state: WEATHER.state, rain: WEATHER.rain,
       moved: movedNow < 1 ? movedNow : 0,
-      surface: surfaceAt(cam.position.x, cam.position.z),
+      /* swimming has its own voice: strokes, not footfalls */
+      surface: player.swimming ? 'water' : surfaceAt(cam.position.x, cam.position.z),
       lanternNear: target && targetDist < 6 ? 1 - targetDist / 6 : 0,
       gullExcite: WORLD.gullExcite || 0,
       goats: npcs.goats,

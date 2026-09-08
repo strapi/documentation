@@ -1157,3 +1157,25 @@ wall, which is what a gate is for.
 NOTE, because it contradicts the night before: at 61 metres past a gate that is
 itself 44 from the landing, the Quick Start is no longer the first building off
 the jetty. He was shown this trade and can have the earlier placement back.
+
+## 2026-09-08 · you can swim
+
+The owner: *"on devrait pouvoir nager."* The sea used to refuse you outright, in
+one line that reverted any step whose ground fell below -0.6: "no swimming, the
+sea keeps you to the pier and the shore."
+
+The sea plane lies at 0.02. Anything more than 0.45 below it is water you swim
+in rather than ground you stand on, and the eye then rides 0.30 above the
+surface instead of following the seabed down. A stroke carries you at four
+tenths of walking pace, with a slow rise and fall on the swell that reduced
+motion holds level. Walking out of the water is nothing special: the ground
+comes up, the swimming stops.
+
+Swimming has its own voice rather than footfalls on nothing: a stroke is the
+low wide swell of water pushed aside, a brighter break of the hand entering
+behind it, and a splash on about half of them. It is counted by the same stride
+counter, at a longer interval, because an arm reaches further than a foot.
+
+Measured: the eye sits at 3.05 on the pier, 0.37 in the sea, and 3.67 when it
+climbs back out on the beach. Jumping is refused while swimming, and the world's
+own edge still holds.

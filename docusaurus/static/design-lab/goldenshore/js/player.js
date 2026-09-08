@@ -5,6 +5,11 @@ import * as THREE from 'three';
 import { groundAt } from './terrain.js';
 
 const EYE = 1.7;
+/* (2026-09-08, owner: "on devrait pouvoir nager") The sea plane lies at 0.02.
+   Anything more than this far below it is water you swim in rather than ground
+   you stand on; the eye then rides just clear of the surface instead of
+   following the seabed down. */
+const SEA = 0.02, WADE = 0.45, SWIM_EYE = 0.30, SWIM_SPEED = 0.42;
 
 export function initPlayer(camera, domElement, colliders, reducedMotion) {
   const P = {
@@ -16,6 +21,7 @@ export function initPlayer(camera, domElement, colliders, reducedMotion) {
        A hop of 4.7 m/s under real gravity tops out at 1.13 m and is over in
        0.96 s, which clears a rail fence and nothing that matters. */
     vy: 0, airY: 0, air: false,
+    swimming: false, swimPhase: 0, swimAcc: 0,
     fallback: false, locked: false,
     walkTarget: null,
     dragging: false, dragMoved: 0, lastX: 0, lastY: 0,
@@ -116,7 +122,8 @@ export function initPlayer(camera, domElement, colliders, reducedMotion) {
       const yaw = camera.rotation.y;
       const f = new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
       const r = new THREE.Vector3(-f.z, 0, f.x);
-      move.addScaledVector(f, fwd).addScaledVector(r, strafe).normalize().multiplyScalar(speed);
+      move.addScaledVector(f, fwd).addScaledVector(r, strafe).normalize()
+        .multiplyScalar(speed * (P.swimming ? SWIM_SPEED : 1));
     } else if (P.walkTarget) {
       const to = new THREE.Vector3(P.walkTarget.x - camera.position.x, 0, P.walkTarget.z - camera.position.z);
       const dist = to.length();
@@ -159,12 +166,14 @@ export function initPlayer(camera, domElement, colliders, reducedMotion) {
     // world bounds
     nx = THREE.MathUtils.clamp(nx, -92, 300);
     nz = THREE.MathUtils.clamp(nz, -240, 240);
-    // no swimming: the sea keeps you to the pier and the shore
-    const g = groundAt(nx, nz);
-    if (g < -0.6) { nx = camera.position.x; nz = camera.position.z; }
+    /* the sea is open now: you may walk into it and swim. Only the world's
+       own edge still stops you, which the clamp above already does. */
     camera.position.x = nx;
     camera.position.z = nz;
     const g2 = groundAt(nx, nz);
+    const wasSwimming = P.swimming;
+    P.swimming = !P.air && g2 < SEA - WADE;
+    if (P.swimming !== wasSwimming && P.onWater) P.onWater(P.swimming);
     const speedNow = Math.hypot(v.x, v.z);
     if (!P.reducedMotion && speedNow > 0.4) {
       P.bobPhase += dt * (4.4 + speedNow * 0.55);
@@ -174,6 +183,12 @@ export function initPlayer(camera, domElement, colliders, reducedMotion) {
     }
     /* the hop, under ordinary gravity; the ground is still the law, it is
        simply further away for a second */
+    if (P.swimming) {
+      /* a stroke, and the small lift and fall that goes with it */
+      P.swimPhase += dt * (1.5 + speedNow * 0.5);
+      P.swimAcc += speedNow * dt;
+      P.air = false; P.airY = 0; P.vy = 0;
+    }
     if (P.air) {
       P.vy -= 9.81 * dt;
       P.airY += P.vy * dt;
@@ -182,7 +197,9 @@ export function initPlayer(camera, domElement, colliders, reducedMotion) {
         if (P.onLand) P.onLand();
       }
     }
-    const targetY = g2 + EYE + P.airY + (P.air ? 0 : Math.sin(P.bobPhase) * P.bobAmp);
+    const targetY = P.swimming
+      ? SEA + SWIM_EYE + (P.reducedMotion ? 0 : Math.sin(P.swimPhase) * 0.055)   /* riding the surface */
+      : g2 + EYE + P.airY + (P.air ? 0 : Math.sin(P.bobPhase) * P.bobAmp);
     /* in the air the camera follows exactly: a lerped jump reads as a lift */
     camera.position.y = P.air ? targetY
       : THREE.MathUtils.lerp(camera.position.y, targetY, 1 - Math.exp(-dt * 12));
