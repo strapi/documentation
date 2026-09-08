@@ -59,7 +59,8 @@ Owns the camera, the landmarker, the smoothing and the gesture state machine. Pu
 two things and nothing else:
 
 - **Tier 1, the common grammar.** Five semantic events, stable forever, learned once,
-  valid on every surface: `present`, `move`, `grab`, `release`, `spread`. This is what
+  valid on every surface: `present`, `move`, `grab`, `release`, `spread`. `spread` carries a
+  *signed* scale delta, so one event covers zooming in and out; there is no separate pinch-in. This is what
   produces the Minority Report feeling: one language over the whole screen.
 - **Tier 2, the raw frame.** The 21 landmarks, normalised, with handedness and
   confidence, published as-is. An instrument that wants its own verb (really turning the
@@ -110,8 +111,8 @@ The core is one learnable sentence: **a pinch is a hold.** Everything follows.
 |---|---|---|
 | open palm | hand detected, fingers extended | present; moves the reticle, which snaps to the nearest body |
 | pinch, one hand | thumb tip to index tip below threshold | grab. Moving while pinched drags the map |
-| pinch, two hands | both pinched | the distance between them drives scale. Apart zooms in, together zooms out. Moving in parallel pans |
-| fist | all fingers curled | lock: enter the snapped body |
+| pinch, two hands | both pinched | the distance between them drives scale. Apart zooms in, together zooms out. Moving both in parallel also pans, though one hand is enough to pan |
+| fist | all fingers curled | lock: enter the snapped body. With nothing snapped it does nothing, and the reticle says so rather than guessing at the nearest body off-screen |
 | hand leaves frame | tracking lost | release, always |
 
 This is the trackpad model lifted into the air, which is a virtue: nobody has to learn it.
@@ -134,8 +135,12 @@ than falling, so an arm can rest without losing its target.
 - **A dead man's switch.** Tracking lost for more than 150 ms emits `release`. The world
   must never be stranded in a grabbed state because somebody stepped out of frame.
 
-Inference runs on its own loop at about 30 fps, decoupled from rendering: the world reads
-the last known state. If the model stalls, the map still runs at 60.
+Inference runs on its own loop at about 30 fps, decoupled from rendering, and the two kinds
+of signal travel differently on purpose: **discrete events are pushed** from the inference
+loop the moment a threshold is crossed, so a grab is never late; **continuous position is
+pulled**, the render loop reading the latest smoothed point each frame rather than being
+driven by it. If the model stalls, the map still runs at 60 and the reticle simply stops
+where it was.
 
 ## Camera, permission and trust
 
