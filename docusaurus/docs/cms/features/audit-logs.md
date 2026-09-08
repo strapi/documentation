@@ -102,7 +102,7 @@ Users with the `export` permission for Audit Logs can export the current filtere
 
 To export audit logs:
 
-1. (Optional) Apply filters to select the entries to export. The **Export** button caption reflects the number of matching entries (for example, "Exports all 1,234 entries").
+1. (Optional) Apply filters to select the entries to export.
 2. Click **Export** to start pre-downloading the file. Keep the browser tab open until the pre-download completes.
 3. Click **Download CSV** to save the exported file.
 
