@@ -8,6 +8,33 @@ foot of this file, keeping the section it came from. The working list above stay
 
 Last updated 2026-09-07.
 
+## FIRST LIGHT, hand control
+
+Stage 1 shipped on `repo/experimental-design-firstlight` and the owner tested it. The gesture
+vocabulary is being revised from that test. Decisions taken 2026-09-08, in his words where they
+were his:
+
+- [ ] **Zoom: drop the two-hand pinch distance, use one hand opening and closing.** "l'idee de
+  pincer 2 mains puis les rapprocher ou eloigner etait une mauvaise idee. je prefererai qu'en fait
+  on ferme ou ouvre la main pour joindre ou ecarter les doigts". Measured on his own reference
+  clip: the fan of index tip to pinky tip over hand size reads 0.89 median on an open hand, 0.40
+  on a fist (cleanly separate) and 0.67 on a pinch (overlapping), so the zoom must be suppressed
+  while pinched. The open-hand fan spans only 1.8 to 1 in that clip, which is why the proposal is
+  that the fan drives a RATE with a dead zone rather than a position: duration gives the amplitude,
+  sensitivity becomes one number, and the world's zoom voice, written to last exactly as long as
+  the hand keeps going, finally gets the gesture it was composed for.
+- [ ] **Zoom is too sensitive.** Falls out of the rate change above, but confirm by ear afterwards.
+- [ ] **The fist loses its action and keeps its job.** "je ne suis pas convaincu sur l'idee de
+  fermer pour verrouiller. pour quoi faire ?" Verified: nothing listens to `hand:lock` at all, so
+  the fist already does nothing. Its DETECTION stays, because a closing hand mechanically brings
+  thumb and index together and would otherwise read as a grab every time he rests his hand.
+- [ ] **A brief pinch that does not move opens the page.** Proposed and not yet confirmed. It is
+  what every pointing device already means by a click, it needs no new gesture, and it restores
+  the only action the hand cannot otherwise perform: actually reading a page.
+- [ ] **The second hand does nothing.** Owner confirmed. Consequence worth taking: set the
+  landmarker to one hand instead of two. Cheaper per frame, and it removes the ambiguity of which
+  hand is primary, which today depends on MediaPipe's return order rather than on anything stable.
+
 ## The Golden Shore
 
 - [ ] **The weather is a fixed script, and it should not be.** Four states exist and are good (`clear`, `sirocco`, `squall`, `mist`), but `stateAt()` runs the same ten-minute reel every visit in the same order at the same seconds: mist only on a 40 percent arrival coin, clear to 300 s, sirocco to 396, clear to 424, squall to 540, clear after. Asked 2026-09-08: make it genuinely varied, so it is not always windy, sometimes rains, sometimes storms, sometimes fogs. **No snow, it is a beach.** Two pieces: give the sequence real variability (weighted choice with sensible transitions and durations rather than a fixed reel), and add a proper thunderstorm, since `squall` is rain and wind with no lightning and no thunder. Any state can be previewed today with `?wx=clear|sirocco|squall|mist`.
