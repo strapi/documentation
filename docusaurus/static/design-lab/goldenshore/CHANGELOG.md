@@ -1188,3 +1188,29 @@ footfall, not a stage, so it keeps to the town and moves to the quiet side stree
 south of the square: seventy-six metres from the landing, out of the gate
 corridor, measured clear for nearly twelve metres around. Verified by collider,
 five metres of clearance where it used to stand.
+
+## 2026-09-08 · the chart-boat is drawn up on the sand
+
+The owner: *"le bateau qui permet de basculer vers carta strapiana devrait être
+sur la gauche depuis le ponton, mais beaucoup plus loin sur la plage."*
+
+She was moored alongside the pier at three metres from where a visitor lands.
+Measured against the other five crossings, which now sit between 67 and 320
+metres out, she was the outlier by two orders of the same walk: not a thing
+found, the first thing seen.
+
+This is not a move. She was moored BY CONSTRUCTION: her bollard stood on
+`PIER.deck`, her hull lay off the boards, and every part of her was expressed
+from those two facts. A boat on a beach lies nothing like a boat at a quay, so
+she is drawn again: hauled out above the tideline sixty-one metres down the
+shore to the left, bow to the sea, heeled twelve degrees on her starboard bilge
+with two shores under her, a stake driven in the sand with her slate hung on it
+and her painter running to it. Her mast is still stepped, her sail still furled.
+
+The gunwale, the cockpit and the hatch house go in by hand rather than through
+the `box` helper, which takes no heel: a level gunwale over a leaning hull would
+read as a broken model.
+
+Her prose follows her out of the water. She is no longer "at her mooring" but
+"drawn up on the sand", and the confirm asks whether you will wait for the water
+with her rather than step aboard.

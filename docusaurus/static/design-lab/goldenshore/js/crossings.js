@@ -433,23 +433,21 @@ export function buildCrossings(scene, data) {
   }
 
   // ======================================================= 5. THE CHART-BOAT
-  // Lying alongside the pier on the south side, her transom lettered, a slate
-  // hung on her bollard. She works this same coast, drawn as a sea.
+  // (2026-09-08, owner: "le bateau qui permet de basculer vers carta strapiana
+  // devrait etre sur la gauche depuis le ponton, mais beaucoup plus loin sur la
+  // plage") She was moored alongside the pier, three metres from where a visitor
+  // lands, which made her the first thing seen rather than a thing found. She is
+  // DRAWN UP ON THE SAND now, sixty-one metres down the shore to the left, bow
+  // to the sea and heeled on her bilge with two shores holding her, a stake
+  // driven in the sand beside her and her slate hung on it. Not a move: a
+  // different boat, because a boat on a beach lies nothing like a boat at a quay.
   {
     B = new Bucket();
-    const bolX = -78, bolZ = -2.55;
-    /* freeboard: her rail stands a good half-metre out of the water, or she
-       reads as a mast with nothing under it from the pier */
-    const hz = -7.6, hy = 0.62;
-    cyl(0.13, 0.15, 0.62, bolX, PIER.deck + 0.31, bolZ, 0, 0x7a5c39, SW.oak, 0, 9);
-    box(0.34, 0.09, 0.34, bolX, PIER.deck + 0.63, bolZ, 0.3, 0x6d5230, SW.oak);
-    /* the slate faces up the pier, at the walker: she lies beyond it, so you
-       read where she is bound with her hull in the same view */
-    const i = paintSign(atlas, 'lime', 'THE CHART-BOAT',
-      `sails on the tide · ${edges} roads run as sea-lanes`);
-    box(0.90, 0.48, 0.04, bolX, PIER.deck + 1.00, bolZ + 0.125, 0, 0x5c4128, SW.oak);
-    signQuad(B, i, bolX, PIER.deck + 1.00, bolZ + 0.17, 0, 0.86, 0.44);
-    // her hull, lying off the boards in the water
+    const bx = -40, bz = -48;              /* on the sand, left of the jetty */
+    const g = groundAt(bx, bz);
+    const HEEL = 0.22;                     /* she leans on her starboard bilge */
+    const yaw = Math.PI / 2;               /* bow to the water, stern up the beach */
+    /* her hull, the same lines as before, laid over rather than floating */
     const hull = new THREE.SphereGeometry(1, 16, 9, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2);
     const hp = hull.attributes.position;
     for (let k = 0; k < hp.count; k++) {
@@ -458,25 +456,46 @@ export function buildCrossings(scene, data) {
       hp.setY(k, hp.getY(k) * 1.30);
     }
     hull.computeVertexNormals();
-    B.add(hull, mat4(bolX, hy, hz, 0.06), 0x7a6042, SW.tar);
+    const hy = g + 0.70;                   /* she has settled into the sand, not perched on it */
+    B.add(hull, mat4(bx, hy, bz, yaw, HEEL), 0x7a6042, SW.tar);
     hull.dispose();
-    box(2.36, 0.13, 6.9, bolX, hy + 0.02, hz, 0.06, 0x8d6f4a, SW.oak);       // the gunwale
-    box(1.5, 0.10, 2.0, bolX, hy + 0.06, hz + 0.4, 0.06, 0x33261a, SW.tar);  // the dark cockpit
-    box(0.9, 0.30, 1.5, bolX, hy + 0.22, hz - 1.9, 0.06, 0x7a6042, SW.oak);  // the fore hatch house
-    cyl(0.055, 0.075, 6.6, bolX, hy + 3.3, hz - 0.5, 0, 0x9c7c52, SW.oak);   // the mast
-    cyl(0.045, 0.05, 3.1, bolX + 0.02, hy + 0.72, hz + 1.15, 0, 0x9c7c52, SW.oak, Math.PI / 2 - 0.10);
-    cyl(0.17, 0.20, 2.9, bolX + 0.02, hy + 0.88, hz + 1.15, 0, 0xe4d6b6, SW.hemp, Math.PI / 2 - 0.10, 9); // the sail, furled
+    /* the box helper takes no heel, so these go in by hand: a gunwale that
+       stayed level over a hull that leans would read as a broken model */
+    const heeled = (w, h, d, x2, y2, z2, col, cell) =>
+      B.add(new THREE.BoxGeometry(w, h, d), mat4(x2, y2, z2, yaw, HEEL), col, cell);
+    heeled(2.36, 0.13, 6.9, bx, hy + 0.02, bz, 0x8d6f4a, SW.oak);              // the gunwale
+    heeled(1.5, 0.10, 2.0, l2w(bx, bz, yaw, 0, 0.4)[0], hy + 0.06, l2w(bx, bz, yaw, 0, 0.4)[1], 0x33261a, SW.tar);
+    heeled(0.9, 0.30, 1.5, l2w(bx, bz, yaw, 0, -1.9)[0], hy + 0.22, l2w(bx, bz, yaw, 0, -1.9)[1], 0x7a6042, SW.oak);
+    cyl(0.055, 0.075, 6.6, l2w(bx, bz, yaw, 0, -0.5)[0], hy + 3.3, l2w(bx, bz, yaw, 0, -0.5)[1], 0, 0x9c7c52, SW.oak, HEEL);
+    cyl(0.045, 0.05, 3.1, l2w(bx, bz, yaw, 0.02, 1.15)[0], hy + 0.72, l2w(bx, bz, yaw, 0.02, 1.15)[1], 0, 0x9c7c52, SW.oak, Math.PI / 2 - 0.10);
+    cyl(0.17, 0.20, 2.9, l2w(bx, bz, yaw, 0.02, 1.15)[0], hy + 0.88, l2w(bx, bz, yaw, 0.02, 1.15)[1], 0, 0xe4d6b6, SW.hemp, Math.PI / 2 - 0.10, 9);
+    /* two shores under her bilge, or she would be lying on her side */
+    for (const sgn of [-1, 1]) {
+      const [px, pz] = l2w(bx, bz, yaw, 1.15, sgn * 1.9);
+      cyl(0.07, 0.09, 1.5, px, g + 0.72, pz, 0, 0x6b5535, SW.oak, 0.34);
+    }
+    /* the stake she is made fast to, and her slate on it */
+    const [kx, kz] = l2w(bx, bz, yaw, -2.4, -2.2);
+    cyl(0.09, 0.11, 1.35, kx, g + 0.62, kz, 0, 0x7a5c39, SW.oak, 0, 9);
+    const i = paintSign(atlas, 'lime', 'THE CHART-BOAT',
+      `sails on the tide · ${edges} roads run as sea-lanes`);
+    box(0.90, 0.48, 0.04, kx, g + 1.14, kz + 0.06, 0, 0x5c4128, SW.oak);
+    signQuad(B, i, kx, g + 1.14, kz + 0.10, 0, 0.86, 0.44);
+    /* her painter, from the stake to the bow */
+    const [nx2, nz2] = l2w(bx, bz, yaw, 0, -3.2);
+    cyl(0.028, 0.028, Math.hypot(nx2 - kx, nz2 - kz), (nx2 + kx) / 2, g + 0.55, (nz2 + kz) / 2,
+        Math.atan2(nx2 - kx, nz2 - kz), 0xd9c79c, SW.hemp, Math.PI / 2);
     const i2 = paintSign(atlas, 'lime', 'THE CHART-BOAT', 'of this port');
-    signQuad(B, i2, bolX, hy + 0.42, hz + 3.42, 0.06, 1.5, 0.42);
-    cyl(0.028, 0.028, 5.4, bolX + 0.30, 0.86, (bolZ + hz + 3.3) / 2, 0, 0xd9c79c, SW.hemp, Math.PI / 2 - 0.26);
-    colliders.push({ x: bolX, z: bolZ, r: 0.45 });
+    const [sx2, sz2] = l2w(bx, bz, yaw, 0, 3.42);
+    signQuad(B, i2, sx2, hy + 0.42, sz2, yaw, 1.5, 0.42);
+    colliders.push({ x: bx, z: bz, r: 2.1 }, { x: kx, z: kz, r: 0.4, h: 1.2 });
     finish({
-      key: 'cartastrapiana', dir: '../cartastrapiana/', x: bolX, z: bolZ, yaw: 0,
-      farStand: [-66, -2.55, Math.PI / 2],
-      title: 'The chart-boat at her mooring',
+      key: 'cartastrapiana', dir: '../cartastrapiana/', x: bx, z: bz, yaw,
+      farStand: [-52, -48, Math.PI / 2],
+      title: 'The chart-boat, drawn up on the sand',
       inscription: `CARTA STRAPIANA · sails on the tide · ${edges} roads run as sea-lanes`,
-      read: 'A working boat with an engraver aboard. The slate on her bollard says where she is bound and what she does out there: the roads that cross this coast on foot are the lanes she runs under sail, and every page on it is an island.',
-      ask: 'She sails on the tide for a whole other world, this same coast drawn as a sea. Go aboard?',
+      read: 'A working boat hauled out above the tideline, shored on her bilge with her mast still stepped. The slate on her stake says where she goes when the water comes back: the roads of this coast, run as sea-lanes, and an engraver aboard to draw them.',
+      ask: 'She goes back on the tide, for a whole other world, this same coast drawn as a sea. Wait for the water with her?',
     });
   }
 
