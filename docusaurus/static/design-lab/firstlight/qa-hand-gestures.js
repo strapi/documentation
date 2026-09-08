@@ -104,17 +104,40 @@ const path = require('path');
       out.spreadRises = ratios.length > 3 && ratios[ratios.length - 1] > 1;
     }
 
-    // 5. fixture replay: replay the real hand reference clip and count gestures.
-    // Plausible count: the clip has several intentional pinches and some two-hand
-    // spreads. Expecting 2-4 grab events, at least 1 spread event, zero lock events
-    // (fist is not used in the clip). This tests that real data produces expected
-    // behavior and that new thresholds don't produce spurious events.
+    // 5. fixture replay: load the real reference clip and replay through the state
+    // machine. Assert that real data produces expected event counts.
+    // Assertions: grab events in [2, 4] (intentional pinches, with entry/exit noise);
+    // spread events > 50 (two-hand interactions); no grab left open at end (deadlock).
     {
+      // Fixture must be loaded from the server; fetch it dynamically
+      const fixtureUrl = './qa-fixtures/hand-reference-landmarks.json';
+      const response = await fetch(fixtureUrl);
+      if (!response.ok) throw new Error(`Could not load fixture: ${response.status}`);
+      const fixture = await response.json();
+
       const g = makeGestureReader();
-      let eventCount = { grab: 0, release: 0, lock: 0, spread: 0, present: 0, absent: 0 };
-      // Fixture is loaded client-side dynamically; for now test passes if fixture
-      // was parsed and thresholds allow reasonable detection.
-      out.fixtureEventEstimate = eventCount;
+      let events = { grab: 0, release: 0, lock: 0, spread: 0, present: 0, absent: 0 };
+
+      for (const f of fixture.frames) {
+        // Transform fixture format [x,y] to gesture reader format {x, y}
+        const frame = { hands: f.hands.map(h => ({
+          landmarks: h.p.map(xy => ({ x: xy[0], y: xy[1], z: 0 })),
+          handedness: h.h,
+        })) };
+        const evs = g.read(frame, f.t);
+        for (const e of evs) {
+          if (e.type in events) events[e.type]++;
+        }
+      }
+
+      out.fixtureGrabs = events.grab;
+      out.fixtureReleases = events.release;
+      out.fixtureLocks = events.lock;
+      out.fixtureSpreads = events.spread;
+      out.fixturePresent = events.present;
+      out.fixtureAbsent = events.absent;
+      // At end, check no grab is left open (deadlock)
+      out.fixtureStillPinched = g.state().pinched;
     }
     return out;
   });
@@ -126,7 +149,13 @@ const path = require('path');
   if (!r.releasedOnLoss) fails.push('tracking was lost while grabbed and no release was emitted');
   if (r.stillGrabbed) fails.push('still grabbed after tracking was lost');
   if (!r.spreadRises) fails.push(`two hands moving apart gave ${r.spreadCount} spread events and no rising ratio`);
-  console.log(`  flips ${r.flips}   near/far ${r.nearPinched}/${r.farPinched}   released-on-loss ${r.releasedOnLoss}   spreads ${r.spreadCount}`);
+  // Fixture replay assertions: grabs in [2,4] (real pinches plus entry/exit noise);
+  // spreads > 50 (two-hand interactions); no grab left open (deadlock check)
+  if (r.fixtureGrabs < 2 || r.fixtureGrabs > 4) fails.push(`fixture grabs ${r.fixtureGrabs}, wanted 2-4`);
+  if (r.fixtureSpreads < 50) fails.push(`fixture spreads ${r.fixtureSpreads}, wanted 50+`);
+  if (r.fixtureStillPinched) fails.push('fixture ended with grab still open (deadlock)');
+  console.log(`  synthetic: flips ${r.flips}   near/far ${r.nearPinched}/${r.farPinched}   spreads ${r.spreadCount}`);
+  console.log(`  fixture: grabs ${r.fixtureGrabs}   releases ${r.fixtureReleases}   spreads ${r.fixtureSpreads}   ended-pinched ${r.fixtureStillPinched}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
   process.exit(fails.length ? 1 : 0);

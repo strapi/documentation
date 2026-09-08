@@ -19,12 +19,19 @@ export const LM = {
   MIDDLE_MCP: 9, MIDDLE_TIP: 12, RING_TIP: 16, PINKY_TIP: 20,
 };
 
-/* Thresholds tuned to real HandLandmarker output (2061 frames at 30 Hz).
-   Ratios are scale-invariant and strongly bimodal. Thresholds sit within the
-   empty valleys between closed and open states, with hysteresis to prevent
-   flickering. PINCH valley: 0.40-1.10. CURL valley: 1.20-1.50. */
-const PINCH_ON = 0.35, PINCH_OFF = 1.10;      // thumb to index, over hand size
-const FIST_ON = 1.10, FIST_OFF = 1.40;        // mean fingertip to wrist, over hand size
+/* Thresholds placed by explicit rule from 2061-frame fixture analysis.
+   RULE: arming threshold sits inside the true zero-density gap (no frame on
+   boundary); disarming threshold placed for hysteresis, lands in sparse data.
+
+   PINCH ratios: closed 0.04-0.40, zero-gap 0.528-0.574, open 1.10-1.58.
+   PINCH_ON=0.55 sits in gap; PINCH_OFF=1.00 gives 0.45-wide band, lands at
+   the start of open sparse region (0.7 frames/bin vs 467 in closed, 488 open).
+
+   CURL ratios: fist 0.70-1.20, zero-gap 0.892-0.916, open 1.50-2.04.
+   FIST_ON=0.90 sits in gap; FIST_OFF=1.35 gives 0.45-wide band, lands at
+   the start of open region with acceptable sparsity (13 vs 255 fist, 288+ open). */
+const PINCH_ON = 0.55, PINCH_OFF = 1.00;      // thumb to index, over hand size
+const FIST_ON = 0.90, FIST_OFF = 1.35;        // mean fingertip to wrist, over hand size
 const LOST_MS = 150;                          // the dead man's switch
 
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
