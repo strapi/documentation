@@ -14,7 +14,11 @@
    a pending arm() carries an abort token, checked after every await, and
    whatever it already acquired by the time the abort is noticed (a stream,
    a landmarker) is torn down right there rather than handed to a state that
-   claims to be off. */
+   claims to be off. disarm() also closes the current landmarker, so a source
+   that is armed once and never rearmed does not hold WASM/GPU resources for
+   the life of the page; arm() separately closes a landmarker it is about to
+   replace, for the case where it is called again without an intervening
+   disarm(). */
 
 const CDN = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.0.1';
 const MODEL = 'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task';
@@ -51,11 +55,24 @@ export function makeCameraSource() {
       // a pending arm(), if any, must never reach 'on' after this call: it
       // will find this token stale the next time it checks, right after
       // whichever await it is currently suspended on, and unwind from there.
+      // Marking it aborted here, before anything else, is also what makes
+      // closing landmarker below safe: that pending arm() can now only ever
+      // take its own aborted branches, none of which touch this variable
+      // (it either closes ITS OWN new instance and returns without reading
+      // landmarker at all, or it has already synchronously promoted a new
+      // instance into landmarker before its next await, in which case that
+      // is the very instance being closed here). Either way, nothing is
+      // left for it to promote over this close, and nothing here gets
+      // closed twice.
       if (armToken) { armToken.aborted = true; armToken = null; }
       if (raf) cancelAnimationFrame(raf), raf = 0;
       // every track, or the light stays on and the promise on the page is a lie
       if (stream) { stopTracks(stream); stream = null; }
       if (video) { video.srcObject = null; video = null; }
+      // close it here too, not only when a later arm() replaces it: without
+      // this, a source that is armed once and never rearmed holds its
+      // landmarker's WASM/GPU resources for the life of the page.
+      if (landmarker) { try { landmarker.close(); } catch (e) {} landmarker = null; }
       state = 'off';
     },
     async arm() {
@@ -95,8 +112,10 @@ export function makeCameraSource() {
         try { built.close(); } catch (e) {}
         return;
       }
-      // one landmarker instance per arm(): close the one this replaces
-      // instead of leaking it, and never leave a stale instance running.
+      // disarm() already closes landmarker on its way out, so this only
+      // ever fires when arm() is called again WITHOUT an intervening
+      // disarm() (a retry after 'denied'/'unreachable'/'unsupported'):
+      // close the instance from that previous attempt before replacing it.
       if (landmarker && landmarker !== built) { try { landmarker.close(); } catch (e) {} }
       landmarker = built;
 
