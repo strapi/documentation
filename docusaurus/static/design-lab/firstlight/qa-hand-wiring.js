@@ -62,6 +62,38 @@ const path = require('path');
       return { landmarks: L, handedness: 'Right' };
     };
 
+    // A second synthetic builder, needed only where a case below must reach
+    // a genuinely FISTED hand: hand()'s own `curl` parameter never brings
+    // the middle/ring/pinky tips closer to the wrist than 1.0x hand size, so
+    // it can never cross FIST_ON=0.95 (see qa-hand-gestures.js's fistHand
+    // for the same limitation). `curl3` here is exactly the ratio
+    // gestures.js's fistCurl computes, so a caller names the real fisted
+    // state directly. Thumb and index are held well apart (ratio 0.9, safe
+    // above PINCH_ON) so this hand never also reads as a pinch, whatever
+    // curl3 is. Aligned on palmCentre exactly like hand() above.
+    const fistHandAt = (curl3, cx, cy) => {
+      const size = 0.20;
+      const L = new Array(21).fill(null).map(() => ({ x: cx, y: cy, z: 0 }));
+      L[0] = { x: cx, y: cy + size, z: 0 };
+      L[9] = { x: cx, y: cy, z: 0 };
+      L[5] = { x: cx - size * 0.4, y: cy, z: 0 };
+      L[17] = { x: cx + size * 0.4, y: cy, z: 0 };
+      L[8] = { x: cx - size * 0.3, y: cy - size * 0.1, z: 0 };
+      L[4] = { x: L[8].x + 0.9 * size, y: L[8].y, z: 0 };
+      const tipY = cy + size - curl3 * size;
+      // three SEPARATE objects, not one shared reference: the shift loop
+      // below mutates every landmark in place, and L[12], L[16] and L[20]
+      // pointing at the same object would have it shifted three times over.
+      L[12] = { x: cx, y: tipY, z: 0 };
+      L[16] = { x: cx, y: tipY, z: 0 };
+      L[20] = { x: cx, y: tipY, z: 0 };
+      const rawPalm = { x: (L[0].x + L[5].x + L[9].x + L[17].x) / 4,
+                         y: (L[0].y + L[5].y + L[9].y + L[17].y) / 4 };
+      const dx = cx - rawPalm.x, dy = cy - rawPalm.y;
+      for (const p of L) { p.x += dx; p.y += dy; }
+      return { landmarks: L, handedness: 'Right' };
+    };
+
     // the LEFT edge of the comfort box, which must land at the RIGHT of the
     // screen once mirrored
     const leftEdge = 0.5 - COMFORT.w / 2;
@@ -162,6 +194,99 @@ const path = require('path');
     const held = lockAt !== null ? moves2.slice(lockAt) : [];
     let fistDrift = 0;
     for (const m of held) fistDrift = Math.max(fistDrift, Math.hypot(m.x - baseX, m.y - baseY));
+    // captured now, not read at the very end: moves2's listener is never
+    // removed, so it would otherwise go on collecting move events fired by
+    // the two sessions below too, and report a count that has nothing to do
+    // with this replay.
+    const fixtureMoveCount = moves2.length;
+
+    // Case: a lock must not go dead. The fixture case above proves the
+    // reticle does not JUMP at the instant a fist closes; it does not prove
+    // the reticle is still ALIVE afterward. A `lock` that latched
+    // permanently -- reasonable-sounding as "freeze the point, it's a
+    // trigger" -- would report the exact same near-zero drift on that case,
+    // because the real fixture's fisted hand barely moves once held: a
+    // frozen reticle and a correctly-tracking one both look "stable" against
+    // a hand that isn't going anywhere. So this case moves the hand a LARGE,
+    // deliberate distance while still fisted, which the fixture does not
+    // contain (checked: palmCentre's x/y range across the two genuine held
+    // fists is 52.6/44.3px and 50.0/58.5px, see round 2 of
+    // palm-anchor-report.md) -- synthetic frames stand in for fidelity here
+    // on purpose, because the point under test is "does tracking resume at
+    // all", not "what does a real hand do".
+    //
+    // The lock itself also fires at a position offset from where the hand
+    // settled just before closing (cx 0.5 -> 0.35), a deliberate exaggeration
+    // no real palmCentre reading would produce (round 1 measured under
+    // 20px for a real closure): it exists purely so that a latch-and-DRAG
+    // implementation of lock (as opposed to freeze-and-resume) would show a
+    // visibly different number too, not just a frozen one.
+    const src3 = makeFakeSource();
+    const moves3 = [];
+    let lockAt3 = null;
+    window.addEventListener('hand:move', (e) => moves3.push(e.detail.x));
+    window.addEventListener('hand:lock', () => { if (lockAt3 === null) lockAt3 = moves3.length; });
+    const api3 = startHands({ source: src3 });
+    await api3.arm();
+
+    for (let i = 0; i < 20; i++) {
+      src3.push({ hands: [fistHandAt(1.9, 0.5, 0.5)] }); // open, centred
+      await new Promise(r2 => setTimeout(r2, 20));
+    }
+    src3.push({ hands: [fistHandAt(0.7, 0.35, 0.5)] });  // closes into a fist, one frame
+    await new Promise(r2 => setTimeout(r2, 20));
+    const leftEdge3 = 0.5 - COMFORT.w / 2;
+    // 400 holds (8s of wall time), not a handful: the one-euro filter's
+    // minCutoff (0.02Hz, a ~8s time constant) means a step held constant
+    // converges slowly on purpose, for tremor suppression -- a first draft
+    // of this case used 30 holds and even fully correct tracking only
+    // reached 698px of 1000px, nowhere near tight enough to trust. 400
+    // holds gets correct tracking within about 50px of the target; it also
+    // widens the gap to the buggy shapes instead of closing it, since a
+    // persistent offset settles toward ITS OWN wrong asymptote at the same
+    // rate, only proportionally further away from the real target.
+    for (let i = 0; i < 400; i++) {
+      src3.push({ hands: [fistHandAt(0.7, leftEdge3, 0.5)] }); // still fisted, moved far
+      await new Promise(r2 => setTimeout(r2, 20));
+    }
+    const lockThenMoveX = moves3[moves3.length - 1];
+
+    // Case: the dead man's switch must unlatch a grab, not just release it.
+    // gestures.js already fires 'release' when tracking is lost mid-pinch;
+    // hands.js's own unlatch check runs unconditionally on that event
+    // (before the `if (!hands.length) return`), specifically so it still
+    // fires on the frame that has no hand at all. If that ordering were
+    // ever wrong -- the unlatch moved to after the early return, say -- the
+    // stale latch would survive the loss and silently offset every position
+    // the NEXT hand produces, in a DIFFERENT room, forever. The grab here
+    // also engages away from where the hand had settled (0.5 -> 0.32), and
+    // the hand reappears at a third, unrelated position (0.74): a stale
+    // latch computes a position built from all three, a correctly cleared
+    // one only from the third, and the two land nowhere near each other.
+    const src4 = makeFakeSource();
+    const moves4 = [];
+    window.addEventListener('hand:move', (e) => moves4.push(e.detail.x));
+    const api4 = startHands({ source: src4 });
+    await api4.arm();
+
+    for (let i = 0; i < 20; i++) {
+      src4.push({ hands: [hand(0.9, 1, 0.5, 0.5)] });      // open, centred
+      await new Promise(r2 => setTimeout(r2, 20));
+    }
+    src4.push({ hands: [hand(0.20, 1, 0.32, 0.5)] });      // grabs, one frame, jumped
+    await new Promise(r2 => setTimeout(r2, 20));
+    for (let i = 0; i < 10; i++) {
+      src4.push({ hands: [] });                            // tracking lost, still grabbed
+      await new Promise(r2 => setTimeout(r2, 20));
+    }
+    // 400 holds again, for the same reason as the case above: the filter
+    // needs real wall time to converge on the reappeared hand's position
+    // rather than sitting wherever it last settled.
+    for (let i = 0; i < 400; i++) {
+      src4.push({ hands: [hand(0.9, 1, 0.74, 0.5)] });     // a hand reappears, open, elsewhere
+      await new Promise(r2 => setTimeout(r2, 20));
+    }
+    const afterLossX = moves4[moves4.length - 1];
 
     return {
       sawPresent: seen.some(s => s.n === 'present'),
@@ -176,8 +301,11 @@ const path = require('path');
       phantomCount: phantom.length,
       W: window.innerWidth, H: window.innerHeight,
       fixtureLockFired: lockAt !== null,
-      fixtureMoveCount: moves2.length,
+      fixtureMoveCount,
       fixtureFistDrift: fistDrift,
+      lockFiredCase3: lockAt3 !== null,
+      lockThenMoveX,
+      afterLossX,
     };
   });
 
@@ -211,7 +339,33 @@ const path = require('path');
   // the old anchor produces.
   const FIST_DRIFT_BUDGET = 30;
   if (r.fixtureFistDrift > FIST_DRIFT_BUDGET) fails.push(`the reticle drifted ${r.fixtureFistDrift.toFixed(1)}px across a real fist closure, wanted under ${FIST_DRIFT_BUDGET}px`);
+  if (!r.lockFiredCase3) fails.push('the synthetic lock-then-move case never fired a lock; the state this case depends on is missing');
+  // The hand moves all the way to the comfort box's left edge, which (like
+  // the very first assertion in this file) maps to the exact far edge of
+  // the screen once mirrored: r.W. Measured: correct tracking reads 973.7px
+  // (400 holds is not quite full convergence, see the comment above). Proven
+  // by temporarily forcing the bug (revert then reapply this fix to redo
+  // it): a lock that freezes forever and never resumes reads exactly 500.0px
+  // (untouched by the move, since the move never reaches a live reading);
+  // a lock that latches-and-drags instead of freeze-then-resume reads
+  // 726.9px (converging toward its own offset asymptote at the same rate).
+  // Both are hundreds of pixels short of the correct 973.7px, so 50px of
+  // tolerance leaves both failure shapes nowhere near passing.
+  const LOCK_MOVE_TOL = 50;
+  if (Math.abs(r.lockThenMoveX - r.W) > LOCK_MOVE_TOL) fails.push(`after locking then moving the hand across the whole comfort box, the reticle read ${r.lockThenMoveX.toFixed(1)}px, wanted within ${LOCK_MOVE_TOL}px of ${r.W}px (a lock that never resumes tracking would stall well short of this)`);
+  // Correct: the reappeared hand is read directly, landing at 0.1 of the
+  // comfort box, i.e. ~100px on this 1000px viewport (measured 125.3px,
+  // same partial-convergence headroom as above). A latch that survives the
+  // loss instead settles toward 0.5 + (0.1 - 0.8) = -0.2, i.e. -200px;
+  // measured (by temporarily moving the unlatch check to after the hand
+  // presence check, reproducing the exact ordering this line's comment
+  // warns against) -172.8px. A 298px gap from the correct answer, far
+  // outside the 50px tolerance below.
+  const AFTER_LOSS_TARGET = r.W * 0.1;
+  const AFTER_LOSS_TOL = 50;
+  if (Math.abs(r.afterLossX - AFTER_LOSS_TARGET) > AFTER_LOSS_TOL) fails.push(`after losing tracking mid-grab and a new hand appearing elsewhere, the reticle read ${r.afterLossX.toFixed(1)}px, wanted within ${AFTER_LOSS_TOL}px of ${AFTER_LOSS_TARGET.toFixed(1)}px (a latch that survives the loss would offset this instead)`);
   console.log(`  fixture replay: moves ${r.fixtureMoveCount}   lockFired ${r.fixtureLockFired}   fistDrift ${r.fixtureFistDrift.toFixed(1)}px (budget ${FIST_DRIFT_BUDGET}px)`);
+  console.log(`  lock then move: ${r.lockThenMoveX.toFixed(1)}px (wanted ~${r.W}px)   after tracking loss mid-grab: ${r.afterLossX.toFixed(1)}px (wanted ~${AFTER_LOSS_TARGET.toFixed(1)}px)`);
   console.log(`  moves ${r.moveCount}   last (${Math.round(r.lastX)}, ${Math.round(r.lastY)}) of ${r.W}x${r.H}   grabs ${r.grabs}   rearmPresent ${r.rearmPresent}   phantom ${r.phantomCount}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
