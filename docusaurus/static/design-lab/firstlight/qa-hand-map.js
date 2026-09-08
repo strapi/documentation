@@ -119,6 +119,21 @@ const path = require('path');
     await settle();
     out.zoomedOut = window.__handProbe.cam().ts < s1;
 
+    // IMPORTANT 1, consumption side: this world must honor the `start` flag
+    // hand/gestures.js now sends, not re-anchor on some timer of its own (the
+    // old bug) or on every event regardless of the flag. ratio:1 with
+    // start:false must return to exactly the scale from BEFORE this block,
+    // since it continues relative to the anchor the preceding start:true
+    // event captured -- not to a leftover anchor from long before, which is
+    // what it would read if `start` were ignored entirely.
+    const sBeforeAnchorTest = window.__handProbe.cam().ts;
+    fire('spread', { ratio: 2, start: true });
+    await settle();
+    fire('spread', { ratio: 1, start: false });
+    await settle();
+    const sAfterAnchorTest = window.__handProbe.cam().ts;
+    out.startFlagRespected = Math.abs(sAfterAnchorTest - sBeforeAnchorTest) < 1e-6;
+
     return out;
   });
 
@@ -134,9 +149,10 @@ const path = require('path');
   if (!r.zoomedIn) fails.push('two hands moving apart did not raise the scale target');
   if (!r.anchorHeldOnZoomIn) fails.push('zooming in did not keep the world point under the reticle fixed');
   if (!r.zoomedOut) fails.push('two hands moving together did not lower the scale target');
+  if (!r.startFlagRespected) fails.push('a spread event without start:true re-anchored the zoom base instead of continuing from it');
   if (errors.length) fails.push('console/page errors: ' + errors.slice(0, 2).join(' | '));
   console.log(`  no teleport on first-ever grab ${r.noTeleportOnFirstEverGrab}   on reentry after absent ${r.noTeleportOnReentryGrab}`);
-  console.log(`  snapped ${r.snappedSomething} hud "${r.hudTag}"->"${r.hudTagAfterAbsent}"   drag ${r.txMoved}   zoom in ${r.zoomedIn} (anchor held ${r.anchorHeldOnZoomIn}) out ${r.zoomedOut}   errors ${errors.length}`);
+  console.log(`  snapped ${r.snappedSomething} hud "${r.hudTag}"->"${r.hudTagAfterAbsent}"   drag ${r.txMoved}   zoom in ${r.zoomedIn} (anchor held ${r.anchorHeldOnZoomIn}) out ${r.zoomedOut}   start flag respected ${r.startFlagRespected}   errors ${errors.length}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
   process.exit(fails.length ? 1 : 0);

@@ -170,6 +170,40 @@ const path = require('path');
       out.fistsSpread = spreads;
     }
 
+    // 4d. IMPORTANT 1: a single dropped detection (~33ms, one missed frame)
+    // must NOT end a spread gesture. Before this fix, gestures.js rebased
+    // its reference distance on ANY frame lacking two genuinely pinched
+    // hands, so even a one-frame blip reset it, and the very next frame's
+    // ratio then read close to 1.0 relative to a reference just a frame
+    // old -- snapping the world's scale target back toward wherever the
+    // gesture started, mid-gesture.
+    {
+      const g = makeGestureReader();
+      let t = 0;
+      const evs0 = g.read(f(hand(0.20, 0.20, 1, 0.40, 0.5), hand(0.20, 0.20, 1, 0.60, 0.5)), t += 0.033);
+      const startEv = evs0.find(e => e.type === 'spread');
+      g.read(f(hand(0.20, 0.20, 1, 0.40, 0.5)), t += 0.033); // one dropped detection: only one hand
+      const evs1 = g.read(f(hand(0.20, 0.20, 1, 0.35, 0.5), hand(0.20, 0.20, 1, 0.65, 0.5)), t += 0.033);
+      const resumeEv = evs1.find(e => e.type === 'spread');
+      out.gapStartFlag = startEv ? !!startEv.start : null;
+      out.gapResumeIsContinuation = !!resumeEv && !resumeEv.start;
+    }
+
+    // 4e. the flip side: a genuine pause of SPREAD_GAP_MS or more DOES
+    // restart the gesture, marked explicitly with start:true (ratio 1) so a
+    // consumer keeping its own running anchor -- firstlight.js's cam.ts
+    // multiplier -- knows to recapture it at exactly this frame, rather than
+    // on a second, separately-tuned timer of its own.
+    {
+      const g = makeGestureReader();
+      let t = 0;
+      g.read(f(hand(0.20, 0.20, 1, 0.40, 0.5), hand(0.20, 0.20, 1, 0.60, 0.5)), t += 0.033);
+      g.read(f(hand(0.20, 0.20, 1, 0.40, 0.5)), t += 0.5); // a real pause, one hand only, 500ms
+      const evs = g.read(f(hand(0.20, 0.20, 1, 0.30, 0.5), hand(0.20, 0.20, 1, 0.70, 0.5)), t += 0.033);
+      const restartEv = evs.find(e => e.type === 'spread');
+      out.longGapRestarts = !!restartEv && restartEv.start === true && restartEv.ratio === 1;
+    }
+
     // 5. fist vs pinch: closing the whole hand must not also read as a grab,
     // and a genuine pinch (thumb+index together, other three fingers still
     // out) right afterwards must still register once the fist releases.
@@ -250,6 +284,9 @@ const path = require('path');
   if (r.openHandsSpread) fails.push(`two OPEN hands (ratio 0.9, never pinched) produced ${r.openHandsSpread} spread event(s)`);
   if (r.openHandsGrabbed) fails.push(`two OPEN hands (ratio 0.9, never pinched) produced ${r.openHandsGrabbed} grab event(s)`);
   if (r.fistsSpread) fails.push(`two closed FISTS produced ${r.fistsSpread} spread event(s)`);
+  if (r.gapStartFlag !== true) fails.push(`the base frame of a spread gesture was not marked start:true (got ${JSON.stringify(r.gapStartFlag)})`);
+  if (!r.gapResumeIsContinuation) fails.push('a spread gesture rebased after a single dropped detection (~33ms) instead of continuing');
+  if (!r.longGapRestarts) fails.push(`a spread gesture did not restart (start:true, ratio 1) after a pause past SPREAD_GAP_MS`);
   if (!r.fistFired) fails.push('closing the whole hand into a fist did not fire a lock');
   if (r.fistAlsoGrabbed) fails.push('closing into a fist also fired a grab');
   if (!r.pinchAfterFist) fails.push('a genuine pinch right after a fist did not fire a grab');
@@ -264,6 +301,7 @@ const path = require('path');
   if (r.fixtureStillFisted) fails.push('fixture ended with fist still closed (deadlock)');
   console.log(`  synthetic: flips ${r.flips}   near/far ${r.nearPinched}/${r.farPinched}   spreads ${r.spreadCount}   fist-locked ${r.fistFired}   fist-also-grabbed ${r.fistAlsoGrabbed}   pinch-after-fist ${r.pinchAfterFist}`);
   console.log(`  two-hand gate: open-hands spread/grab ${r.openHandsSpread}/${r.openHandsGrabbed} (want 0/0)   two-fists spread ${r.fistsSpread} (want 0)`);
+  console.log(`  gesture-end ownership: base marked start ${r.gapStartFlag}   33ms drop continues ${r.gapResumeIsContinuation}   500ms pause restarts ${r.longGapRestarts}`);
   console.log(`  fixture: grabs ${r.fixtureGrabs}   locks ${r.fixtureLocks}   spreads ${r.fixtureSpreads}   ended-pinched ${r.fixtureStillPinched} ended-fisted ${r.fixtureStillFisted}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();

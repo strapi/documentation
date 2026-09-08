@@ -45,6 +45,23 @@ export const PINCH_ON = 0.55, PINCH_OFF = 1.00; // thumb to index, over hand siz
 const FIST_ON = 0.95, FIST_OFF = 1.35;        // curl of middle+ring+pinky to wrist, over hand size
 const LOST_MS = 150;                          // the dead man's switch
 
+/* SPREAD_GAP_MS: how long a two-hand spread tolerates silence before this
+   module decides the gesture has actually ended. THIS MODULE OWNS THAT
+   DECISION, not the world that consumes `spread` events. It is the one
+   place that sees the continuous stream of frames (and the gaps in it), and
+   the one place already tested with no camera at all -- exactly why the
+   dead man's switch above lives here too. Before this, gestures.js rebased
+   its reference distance on ANY frame missing two genuinely pinched hands,
+   about one dropped detection (33ms), while firstlight.js separately rebased
+   its own scale anchor only after 220ms of silence: the two disagreed about
+   when a gesture ends, so a single dropped detection would quietly reset the
+   reference distance here while the world's anchor lived on unchanged, and
+   the very next frame's ratio -- now measured against a reference a single
+   frame old -- read close to 1.0 and snapped the world's target scale back
+   toward wherever the gesture started. 220ms is the number the world had
+   already tuned for this; it becomes the only number now. */
+const SPREAD_GAP_MS = 220;
+
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 
 function handSize(L) {
@@ -104,7 +121,7 @@ export function palmCentre(L) {
 
 export function makeGestureReader() {
   let present = false, pinched = false, fisted = false;
-  let lastSeen = null, spreadBase = null;
+  let lastSeen = null, spreadBase = null, lastSpreadAt = null;
 
   return {
     state: () => ({ present, pinched, fisted }),
@@ -118,7 +135,7 @@ export function makeGestureReader() {
           if (pinched) { pinched = false; evs.push({ type: 'release', hand: null }); }
           if (fisted) fisted = false;
           if (present) { present = false; evs.push({ type: 'absent' }); }
-          spreadBase = null;
+          spreadBase = null; lastSpreadAt = null;
         }
         return evs;
       }
@@ -157,15 +174,34 @@ export function makeGestureReader() {
       // looser RELEASE threshold, rather than PINCH_ON, the ARMING one -- let
       // two merely open hands (ratio between PINCH_ON and PINCH_OFF) and two
       // closed fists alike read as "pinched" and drive a spread.
+      //
+      // Note there is no `else spreadBase = null` here for a frame that lacks
+      // two genuinely pinched hands: spreadBase and lastSpreadAt are left
+      // alone, harmlessly, until the next bothPinched frame decides -- by
+      // elapsed time against SPREAD_GAP_MS, not by this single frame -- one
+      // dropped detection cannot end a gesture that resumes a beat later.
       if (hands.length >= 2) {
         const a = hands[0].landmarks, b = hands[1].landmarks;
-        const bothPinched = isPinchedNotFisted(a) && isPinchedNotFisted(b);
-        if (bothPinched) {
+        if (isPinchedNotFisted(a) && isPinchedNotFisted(b)) {
           const d = dist(pinchPoint(a), pinchPoint(b));
-          if (spreadBase === null) spreadBase = d;
-          else if (spreadBase > 1e-6) evs.push({ type: 'spread', ratio: d / spreadBase });
-        } else spreadBase = null;
-      } else spreadBase = null;
+          const fresh = spreadBase === null
+            || (lastSpreadAt !== null && (t - lastSpreadAt) * 1000 >= SPREAD_GAP_MS);
+          if (fresh) {
+            // a genuinely new gesture: capture the reference distance and say
+            // so explicitly, with `start: true`, rather than silently skipping
+            // this frame the way a rebase used to. A consumer keeping its own
+            // running anchor (firstlight.js's cam.ts multiplier) needs to
+            // recapture its anchor at EXACTLY this frame, not on a separately
+            // guessed timer of its own -- two independent timers agreeing by
+            // luck is how this bug happened the first time.
+            spreadBase = d;
+            evs.push({ type: 'spread', ratio: 1, start: true });
+          } else {
+            evs.push({ type: 'spread', ratio: d / spreadBase });
+          }
+          lastSpreadAt = t;
+        }
+      }
 
       return evs;
     },

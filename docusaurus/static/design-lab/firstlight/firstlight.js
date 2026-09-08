@@ -2541,7 +2541,7 @@
        the tremor smoothing for free, with machinery that has been running
        since the first version of this world. */
     var handX = 0, handY = 0, handGrab = false, handLastX = 0, handLastY = 0, handSnap = -1;
-    var handZoomBase = null, handZoomT = null;
+    var handZoomBase = null;
     // handPosKnown guards against computing a drag delta from a position
     // that was never actually observed. handX/handY start at (0, 0) as
     // placeholders, not as a real reading; a hand:grab carries no position
@@ -2596,7 +2596,19 @@
     });
     window.addEventListener('hand:release', function () { handGrab = false; });
     window.addEventListener('hand:spread', function (e) {
-      if (handZoomBase === null) handZoomBase = cam.ts;
+      // hand/gestures.js owns the decision of when a spread gesture ends
+      // (SPREAD_GAP_MS there): it is the one place that sees the continuous
+      // stream of frames, and the one place already tested with no camera
+      // at all. It marks the first ratio of a new gesture with `start:
+      // true`, and that is what re-anchors handZoomBase here -- not a
+      // second, separately-tuned timer in this file. Two independent
+      // notions of "the gesture ended" is the defect this replaced: gestures
+      // used to rebase on a single dropped detection (about 33ms) while this
+      // file rebased only after 220ms of silence, so a brief hiccup would
+      // silently reset the reference distance there while the anchor here
+      // lived on unchanged, and the very next ratio -- now close to 1.0 --
+      // snapped cam.ts back toward wherever the gesture started.
+      if (e.detail.start || handZoomBase === null) handZoomBase = cam.ts;
       var next = handZoomBase * e.detail.ratio;
       next = Math.max(0.15, Math.min(9, next));
       if (next !== cam.ts) {
@@ -2624,9 +2636,6 @@
         cam.tx += bx - ax; cam.ty += by - ay;
       }
       dirty = true;
-      clearTimeout(handZoomT);
-      // a gesture ends when the events stop; re-base so the next one starts fresh
-      handZoomT = setTimeout(function () { handZoomBase = null; }, 220);
     });
 
     window.__handProbe = {
