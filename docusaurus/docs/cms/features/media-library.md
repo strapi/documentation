@@ -75,7 +75,6 @@ The flag changes the <Icon name="images" /> Media Library page of the admin pane
 The Media Library page displays a notice reminding you that this is a beta and that some features are still in progress. Read the [features configuration](/cms/configurations/features) documentation before enabling the flag, where the `STRAPI_FUTURE_BETA_MEDIA_LIBRARY` environment variable is also documented.
 
 You can <ExternalLink text="read more about the beta here" to="https://strapi.notion.site/Media-Library-Beta-Release-3c78f3598074810dbad6f2addfa25b6f" /> and report any issue you run into on the <ExternalLink text="strapi/strapi repository" to="https://github.com/strapi/strapi/issues" />.
-The current page still describes the stable version of the Media Library. The present documentation page has been updated to reflect the new features, and covers the behaviors of both the current stable version and the beta version of the Media Library.
 :::
 
 ## Configuration
