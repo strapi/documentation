@@ -10,6 +10,8 @@ Last updated 2026-09-07.
 
 ## The Golden Shore
 
+- [ ] **The weather is a fixed script, and it should not be.** Four states exist and are good (`clear`, `sirocco`, `squall`, `mist`), but `stateAt()` runs the same ten-minute reel every visit in the same order at the same seconds: mist only on a 40 percent arrival coin, clear to 300 s, sirocco to 396, clear to 424, squall to 540, clear after. Asked 2026-09-08: make it genuinely varied, so it is not always windy, sometimes rains, sometimes storms, sometimes fogs. **No snow, it is a beach.** Two pieces: give the sequence real variability (weighted choice with sensible transitions and durations rather than a fixed reel), and add a proper thunderstorm, since `squall` is rain and wind with no lightning and no thunder. Any state can be previewed today with `?wx=clear|sirocco|squall|mist`.
+
 - [ ] **The footsteps are better but not what he had in mind.** Second build shipped 2026-09-08 (commit 6bbabf8ae): impacts instead of filtered puffs, nine grounds separated by grain count, loudness spread 1.35:1, `workbench/qa/measure-steps.js` asserts all three. His verdict: "ce n'est pas exactement ce que j'avais en tête mais implémente déjà ça, on améliorera ensuite". Ask what he had in mind before touching it again.
 
 The newest world and the least worn in, so most of this is world craft rather than polish.
