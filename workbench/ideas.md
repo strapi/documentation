@@ -10,7 +10,7 @@ Last updated 2026-09-07.
 
 ## The Golden Shore
 
-- [ ] **The footsteps STILL do not sound like footsteps, and still do not change with the ground.** Reopened 2026-09-08: the first pass (commit 5d8e6654c) shipped nine recipes and a heel-and-toe rhythm, and I archived it on reading the code. That was the mistake: the code existing is not the sound being right. Judge this one by listening to a rendered walk across several surfaces, never by inspection.
+- [ ] **The footsteps are better but not what he had in mind.** Second build shipped 2026-09-08 (commit 6bbabf8ae): impacts instead of filtered puffs, nine grounds separated by grain count, loudness spread 1.35:1, `workbench/qa/measure-steps.js` asserts all three. His verdict: "ce n'est pas exactement ce que j'avais en tête mais implémente déjà ça, on améliorera ensuite". Ask what he had in mind before touching it again.
 
 The newest world and the least worn in, so most of this is world craft rather than polish.
 
@@ -55,7 +55,6 @@ one label at a time, and no regression.
 
 ## The Golden Shore
 
-- [ ] **The post-processing chain washes the colour out.** EffectComposer, GTAO, bloom and OutputPass are wired and reachable with `?fx=1`, but the first A/B against `?fx=0` came back flat and grey instead of golden: a colour-space or tone-mapping fault somewhere in the chain, not a look choice. Parked OFF by default until it is diagnosed. Isolating it needs a screenshot A/B, not a canvas readback: `drawImage` off a WebGL canvas without `preserveDrawingBuffer` returns pure black, which is how the first four measurements all read zero.
 - [ ] **The Design Lab portal is a local dev server, not a page in the repo.** `workbench/qa/livepreview.js` generates the gallery at localhost:8787 and is now tracked, but nothing in `docusaurus/static/` serves it. If the lab is ever to be shown at a URL, that page has to be written.
 
 ## The Long Way Through
@@ -118,6 +117,10 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 - [x] Add SPACE to jump. (2026-09-07, commit b4ac996a4: it clears exactly what it should and no more; collider heights were set so a fence is vaultable and a wall is not.)
 - [x] The rain sounds metallic. (2026-09-07, commit 36cf8845e: the comb filter was the metal. A comb is a plate resonator, so rain through one is rain on a roof of tin; rebuilt without it.)
 - [x] Wind and waves were one sound. (2026-09-07, commit 62077002a: the surf became brown noise against the wind, and it now fades with distance from the water instead of following you inland.)
+
+## The Golden Shore
+
+- [x] The post-processing chain. (2026-09-08: yesterday's "it washes the colour out" was wrong, and wrong because the two frames compared came from two page loads of a world whose sun moves. A/B'd on one page with the sun frozen it is 7% brighter, 9% warmer, 7% less saturated everywhere, which is highlights kept in half float rather than clipped into an 8-bit canvas. Cost settled it instead: bloom 2.2 ms, ambient occlusion 7.2, the bare round trip 7.1 at retina. Ships as bloom only, and only under a 1.5 pixel ratio. Two real defects found on the way: the composer target had no multisampling while the canvas has MSAA, and canvas readback returns black off WebGL.)
 
 ## Across the lab
 
