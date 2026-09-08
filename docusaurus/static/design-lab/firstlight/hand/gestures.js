@@ -77,6 +77,21 @@ function fanRatio(L) { return dist(L[LM.INDEX_TIP], L[LM.PINKY_TIP]) / handSize(
    happen. */
 const FAN_NEUTRAL = 0.89, FAN_DEADZONE = 0.15;
 
+/* A BRIEF PINCH IS A CLICK. Timing cannot be measured from this fixture: it
+   holds exactly two deliberate pinches, at 8.1s and 12.1s, both built to
+   test drag hysteresis, and nothing shorter but one incidental 667ms pinch
+   that was not a deliberate tap either. CLICK_MAX_MS instead follows the
+   platform convention for tap vs. long-press (iOS and Android both draw
+   that line at 500ms): 400ms sits comfortably under it, and more than 20x
+   under either real hold in the fixture, so no genuine drag can misread as
+   a click. CLICK_MAX_DIST IS measured: that one incidental still pinch
+   moves the palm at most 0.0224 of hand size from where it started over its
+   whole 667ms. 0.15 sits 6-7x above that natural jitter floor -- room for a
+   real hand's tremor during a fast tap -- while staying far under the 0.73
+   and 1.06 of hand size the two genuine holds accumulate once they actually
+   start dragging. */
+export const CLICK_MAX_MS = 400, CLICK_MAX_DIST = 0.15;
+
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 
 function handSize(L) {
@@ -101,7 +116,8 @@ function fistCurl(L) {
    17). These four points are the rigid dorsal plate of the hand -- the part
    that does NOT fold when the fingers curl into a fist or draw together into
    a pinch. This is what the reticle is anchored to (see the report on the
-   old pinch-point anchor this replaced). */
+   old pinch-point anchor this replaced), and what the click below measures
+   its "did the hand actually move" test from. */
 export function palmCentre(L) {
   const pts = [L[LM.WRIST], L[LM.INDEX_MCP], L[LM.MIDDLE_MCP], L[LM.PINKY_MCP]];
   return {
@@ -113,6 +129,11 @@ export function palmCentre(L) {
 export function makeGestureReader() {
   let present = false, pinched = false, fisted = false;
   let lastSeen = null;
+  // THE CLICK: captured at the instant a grab arms, read back at the instant
+  // it releases naturally. Never set on the fist-forced release below: a
+  // closing hand overriding a pinch is not a released click, it is a
+  // gesture changing its mind.
+  let grabStartT = null, grabStartPalm = null;
 
   return {
     state: () => ({ present, pinched, fisted }),
@@ -126,6 +147,7 @@ export function makeGestureReader() {
           if (pinched) { pinched = false; evs.push({ type: 'release', hand: null }); }
           if (fisted) fisted = false;
           if (present) { present = false; evs.push({ type: 'absent' }); }
+          grabStartT = null; grabStartPalm = null;
         }
         return evs;
       }
@@ -147,14 +169,34 @@ export function makeGestureReader() {
       if (!fisted && fc < FIST_ON) {
         fisted = true;
         evs.push({ type: 'lock', hand: primary.handedness });
-        if (pinched) { pinched = false; evs.push({ type: 'release', hand: primary.handedness }); }
+        if (pinched) {
+          pinched = false;
+          evs.push({ type: 'release', hand: primary.handedness });
+          // becoming a fist is the hand changing its mind, not a click
+          grabStartT = null; grabStartPalm = null;
+        }
       } else if (fisted && fc > FIST_OFF) {
         fisted = false;
       }
 
       if (!fisted) {
-        if (!pinched && pr < PINCH_ON) { pinched = true; evs.push({ type: 'grab', hand: primary.handedness }); }
-        else if (pinched && pr > PINCH_OFF) { pinched = false; evs.push({ type: 'release', hand: primary.handedness }); }
+        if (!pinched && pr < PINCH_ON) {
+          pinched = true;
+          grabStartT = t;
+          grabStartPalm = palmCentre(L);
+          evs.push({ type: 'grab', hand: primary.handedness });
+        } else if (pinched && pr > PINCH_OFF) {
+          pinched = false;
+          if (grabStartT !== null) {
+            const heldMs = (t - grabStartT) * 1000;
+            const moved = dist(palmCentre(L), grabStartPalm) / handSize(L);
+            if (heldMs <= CLICK_MAX_MS && moved <= CLICK_MAX_DIST) {
+              evs.push({ type: 'click' });
+            }
+          }
+          grabStartT = null; grabStartPalm = null;
+          evs.push({ type: 'release', hand: primary.handedness });
+        }
       }
 
       // THE FAN (zoom rate): read only on a hand that is, this frame,

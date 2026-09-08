@@ -12,8 +12,9 @@
    Also covered below: fist-vs-pinch mutual exclusion (a fist must not also
    read as a grab); the FAN zoom rate (spread fingers zoom in, closed fingers
    zoom out, a dead zone so a resting hand does not drift it, suppressed while
-   pinched or fisted); and a full replay of the real reference clip asserting
-   on real event counts. */
+   pinched or fisted); a brief pinch reading as a click, and NOT as a click
+   when it is really a drag or a fist taking over; and a full replay of the
+   real reference clip asserting on real event counts. */
 'use strict';
 const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_modules/playwright-core');
 const { spawn } = require('child_process');
@@ -32,6 +33,7 @@ const path = require('path');
   const r = await page.evaluate(async () => {
     const {
       makeGestureReader, PINCH_ON, FAN_NEUTRAL, FAN_DEADZONE,
+      CLICK_MAX_MS, CLICK_MAX_DIST,
     } = await import('./hand/gestures.js');
 
     /* Build a synthetic hand. `size` is wrist-to-middle-knuckle in image units,
@@ -209,7 +211,73 @@ const path = require('path');
       out.fanWhileFisted = types(fisted).filter(x => x === 'fan').length;
     }
 
-    // 6. fixture replay: load the real reference clip and replay through the
+    // 6. A BRIEF PINCH IS A CLICK. CLICK_MAX_MS and CLICK_MAX_DIST are
+    // imported, not copied, for the same reason PINCH_ON is above.
+    {
+      const g = makeGestureReader();
+      let t = 0;
+      g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);           // open, establish palm at cx=0.5
+      const grabEvs = g.read(f(hand(0.20, 0.2, 1, 0.5, 0.5)), t += 0.033); // grab, no movement
+      out.clickGrabFired = types(grabEvs).indexOf('grab') >= 0;
+      // 1.2, not 0.9: releasing needs pr to cross PINCH_OFF=1.00, the
+      // RELEASE threshold, and 0.9 sits inside the hysteresis band (never
+      // releases at all) -- the same distinction test 1's hysteresis check
+      // above exists to prove matters.
+      const releaseEvs = g.read(f(hand(0.20, 1.2, 1, 0.5, 0.5)), t += (CLICK_MAX_MS / 1000) * 0.4); // brief, still, released
+      out.briefClickFired = types(releaseEvs).indexOf('click') >= 0;
+      out.briefReleaseFired = types(releaseEvs).indexOf('release') >= 0;
+    }
+    // 6b. held too long, still no movement: must NOT click. Time alone must
+    // disqualify it, or a click stops feeling like a click and starts
+    // feeling like every held gesture just times out into one.
+    {
+      const g = makeGestureReader();
+      let t = 0;
+      g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);
+      g.read(f(hand(0.20, 0.2, 1, 0.5, 0.5)), t += 0.033);           // grab
+      t += (CLICK_MAX_MS / 1000) * 2.5;                              // held well past CLICK_MAX_MS
+      const releaseEvs = g.read(f(hand(0.20, 1.2, 1, 0.5, 0.5)), t);
+      out.longHoldReleaseFired = types(releaseEvs).indexOf('release') >= 0;
+      out.longHoldClickFired = types(releaseEvs).indexOf('click') >= 0;
+    }
+    // 6c. released quickly, but dragged first: must NOT click. Time alone is
+    // not enough either, or a fast flick-drag would misread as a tap.
+    {
+      const g = makeGestureReader();
+      let t = 0;
+      g.read(f(hand(0.20, 0.9, 1, 0.5, 0.5)), t += 0.033);
+      g.read(f(hand(0.20, 0.2, 1, 0.5, 0.5)), t += 0.033);           // grab at cx=0.5
+      t += (CLICK_MAX_MS / 1000) * 0.4;                              // quick, but...
+      const releaseEvs = g.read(f(hand(0.20, 1.2, 1, 0.60, 0.5)), t); // ...moved 0.10 (0.5 of hand size) before releasing
+      out.draggedReleaseFired = types(releaseEvs).indexOf('release') >= 0;
+      out.draggedClickFired = types(releaseEvs).indexOf('click') >= 0;
+    }
+    // 6d. a fist overtaking a pinch is the hand changing its mind, not a
+    // released click, even though it happens fast and without moving: the
+    // RELEASE this fires comes from the fisted branch, not the natural one,
+    // and must never carry a click.
+    {
+      const fistHand3 = (size, pinch, curl3, cx, cy) => {
+        const L = new Array(21).fill(null).map(() => ({ x: cx, y: cy, z: 0 }));
+        L[0] = { x: cx, y: cy + size, z: 0 };
+        L[9] = { x: cx, y: cy, z: 0 };
+        L[8] = { x: cx - size * 0.3, y: cy - size * 0.1, z: 0 };
+        L[4] = { x: L[8].x + pinch * size, y: L[8].y, z: 0 };
+        const tip = { x: cx, y: cy + size - curl3 * size, z: 0 };
+        L[12] = tip; L[16] = tip; L[20] = tip;
+        return { landmarks: L, handedness: 'Right' };
+      };
+      const g = makeGestureReader();
+      let t = 0;
+      g.read(f(fistHand3(0.20, 0.9, 1.9, 0.5, 0.5)), t += 0.033);     // open
+      g.read(f(fistHand3(0.20, 0.2, 1.9, 0.5, 0.5)), t += 0.033);     // grab (fingers still out)
+      t += 0.05;                                                     // fast, no movement
+      const closing = g.read(f(fistHand3(0.20, 0.2, 0.7, 0.5, 0.5)), t); // ...but curls into a fist
+      out.fistOverrideReleaseFired = types(closing).indexOf('release') >= 0;
+      out.fistOverrideClickFired = types(closing).indexOf('click') >= 0;
+    }
+
+    // 7. fixture replay: load the real reference clip and replay through the
     // state machine. Assert real data produces the real event counts.
     {
       // Fixture must be loaded from the server; fetch it dynamically
@@ -219,7 +287,7 @@ const path = require('path');
       const fixture = await response.json();
 
       const g = makeGestureReader();
-      let events = { grab: 0, release: 0, lock: 0, fan: 0, present: 0, absent: 0 };
+      let events = { grab: 0, release: 0, lock: 0, click: 0, fan: 0, present: 0, absent: 0 };
 
       for (const fr of fixture.frames) {
         // Transform fixture format [x,y] to gesture reader format {x, y}
@@ -236,6 +304,7 @@ const path = require('path');
       out.fixtureGrabs = events.grab;
       out.fixtureReleases = events.release;
       out.fixtureLocks = events.lock;
+      out.fixtureClicks = events.click;
       out.fixtureFans = events.fan;
       out.fixturePresent = events.present;
       out.fixtureAbsent = events.absent;
@@ -260,15 +329,31 @@ const path = require('path');
   if (r.fanNeutralEvents !== 0) fails.push(`a hand resting inside the dead zone produced ${r.fanNeutralEvents} fan event(s), wanted 0`);
   if (r.fanWhilePinched) fails.push(`a pinched hand, on fan-triggering geometry, produced ${r.fanWhilePinched} fan event(s), wanted 0`);
   if (r.fanWhileFisted) fails.push(`a fisted hand produced ${r.fanWhileFisted} fan event(s), wanted 0`);
+  if (!r.clickGrabFired) fails.push('a click test setup problem: the grab never fired');
+  if (!r.briefReleaseFired) fails.push('a click test setup problem: the release never fired');
+  if (!r.briefClickFired) fails.push('a brief, still pinch did not fire a click');
+  if (!r.longHoldReleaseFired) fails.push('a click test setup problem: the long-hold release never fired');
+  if (r.longHoldClickFired) fails.push('a pinch held well past CLICK_MAX_MS, released without moving, still fired a click');
+  if (!r.draggedReleaseFired) fails.push('a click test setup problem: the dragged release never fired');
+  if (r.draggedClickFired) fails.push('a pinch released quickly but after a real drag still fired a click');
+  if (!r.fistOverrideReleaseFired) fails.push('a fist overtaking a pinch did not fire a release');
+  if (r.fistOverrideClickFired) fails.push('a fist overtaking a pinch (fast, no movement) fired a click; it should never look at this release');
   if (r.fixtureGrabs < 2 || r.fixtureGrabs > 4) fails.push(`fixture grabs ${r.fixtureGrabs}, wanted 2-4`);
   if (r.fixtureLocks < 2 || r.fixtureLocks > 4) fails.push(`fixture locks ${r.fixtureLocks}, wanted 2-4`);
   if (r.fixtureStillPinched) fails.push('fixture ended with grab still open (deadlock)');
   if (r.fixtureStillFisted) fails.push('fixture ended with fist still closed (deadlock)');
+  // Both real pinches in the fixture (8.1s and 12.1s) were built to test
+  // drag hysteresis, not a tap, and both hugely exceed CLICK_MAX_MS the
+  // instant they start dragging; the one short, incidental pinch (667ms)
+  // still exceeds CLICK_MAX_MS on its own. 0 is the honest, measured count,
+  // not an assumption.
+  if (r.fixtureClicks !== 0) fails.push(`fixture clicks ${r.fixtureClicks}, wanted exactly 0 (see the report: no genuine tap exists in this clip)`);
   if (r.fixtureFans < 50) fails.push(`fixture fan events ${r.fixtureFans}, wanted 50+ (real open-hand motion crossing the dead zone)`);
   console.log(`  hysteresis flips ${r.flips}   near/far pinched ${r.nearPinched}/${r.farPinched}   dead man's switch released ${r.releasedOnLoss} still-grabbed ${r.stillGrabbed}`);
   console.log(`  fist-vs-pinch: fist-locked ${r.fistFired}   fist-also-grabbed ${r.fistAlsoGrabbed}   pinch-after-fist ${r.pinchAfterFist}`);
   console.log(`  fan: spread rate ${r.fanSpreadRate}   closed rate ${r.fanClosedRate}   neutral events ${r.fanNeutralEvents} (want 0)   while pinched ${r.fanWhilePinched} (want 0)   while fisted ${r.fanWhileFisted} (want 0)`);
-  console.log(`  fixture: grabs ${r.fixtureGrabs}   locks ${r.fixtureLocks}   fans ${r.fixtureFans}   ended-pinched ${r.fixtureStillPinched} ended-fisted ${r.fixtureStillFisted}`);
+  console.log(`  click: brief ${r.briefClickFired}   long-hold ${r.longHoldClickFired} (want false)   dragged ${r.draggedClickFired} (want false)   fist-override release ${r.fistOverrideReleaseFired} click ${r.fistOverrideClickFired} (want false)`);
+  console.log(`  fixture: grabs ${r.fixtureGrabs}   locks ${r.fixtureLocks}   clicks ${r.fixtureClicks} (want 0)   fans ${r.fixtureFans}   ended-pinched ${r.fixtureStillPinched} ended-fisted ${r.fixtureStillFisted}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
   process.exit(fails.length ? 1 : 0);

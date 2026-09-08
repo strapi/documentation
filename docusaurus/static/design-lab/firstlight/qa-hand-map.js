@@ -4,7 +4,9 @@
      - a pinched hand dragging moves the camera TARGET, never the camera
        itself, so the world's own damping absorbs the tremor;
      - an open hand's FAN (fingers spread or closed) drives a zoom RATE,
-       anchored on the reticle so the body under it stays under it.
+       anchored on the reticle so the body under it stays under it;
+     - a brief pinch opens the body under the reticle, the same way a mouse
+       click does.
    Driven entirely by synthetic frames through the fake source. No camera. */
 'use strict';
 const { chromium } = require('/Users/piwi/.npm/_npx/e41f203b7505f1fb/node_modules/playwright-core');
@@ -210,6 +212,75 @@ const path = require('path');
       out.pipelineFellBack = p2 < p1 * 0.95;
     }
 
+    // ── A BRIEF PINCH IS A CLICK, full pipeline ──────────────────────────
+    // Real frames, through a real makeFakeSource: settle an open hand
+    // exactly on QS (this world's own always-pickable "first survey
+    // target"), then grab and release quickly, without moving, and check
+    // that this world opened exactly that body -- the same `location.hash`
+    // a mouse click already sets. The raw landmark position is computed by
+    // INVERTING the comfort box and the mirror around QS's CURRENT screen
+    // position (via window.__handProbe.starScreen), not a fixed screen
+    // point assumed to still be valid: cam.tx/ty/ts have all moved by now,
+    // from the drag and fan cases above, so a fixed point would land
+    // wherever the camera happens to have drifted to instead of on a body.
+    {
+      const { startHands, COMFORT } = await import('./hand/hands.js');
+      const { makeFakeSource } = await import('./hand/source.js');
+      const qsScreen = window.__handProbe.starScreen(window.__handProbe.qs());
+      const rawXTarget = qsScreen[0] / window.innerWidth;
+      const rawYTarget = qsScreen[1] / window.innerHeight;
+      // invert hands.js's own `bx = (p.x - (0.5 - COMFORT.w/2)) / COMFORT.w;
+      // rawX = 1 - clamp01(bx)` for x (mirrored) and the equivalent
+      // unmirrored form for y.
+      const targetCx = (1 - rawXTarget) * COMFORT.w + (0.5 - COMFORT.w / 2);
+      const targetCy = rawYTarget * COMFORT.h + (0.5 - COMFORT.h / 2);
+      // palmCentre (mean of 0, 5, 9, 17) is shifted to land exactly at
+      // (cx, cy) regardless of pinch, the same technique qa-hand-wiring.js
+      // uses, so the click's own "did the hand move" measure reads a real
+      // zero here, not an artifact of the tips' own placement.
+      const handAt = (pinch, cx, cy) => {
+        const size = 0.20, curl = 1;
+        const L = new Array(21).fill(null).map(() => ({ x: cx, y: cy, z: 0 }));
+        L[0] = { x: cx, y: cy + size, z: 0 };
+        L[9] = { x: cx, y: cy, z: 0 };
+        L[5] = { x: cx - size * 0.4, y: cy, z: 0 };
+        L[17] = { x: cx + size * 0.4, y: cy, z: 0 };
+        L[8] = { x: cx - size * 0.5 * curl, y: cy - size * curl, z: 0 };
+        L[4] = { x: L[8].x + pinch * size, y: L[8].y, z: 0 };
+        L[12] = { x: cx, y: cy - size * 1.05 * curl, z: 0 };
+        L[16] = { x: cx + size * 0.35 * curl, y: cy - size * 0.95 * curl, z: 0 };
+        L[20] = { x: cx + size * 0.6 * curl, y: cy - size * 0.8 * curl, z: 0 };
+        const rawPalm = { x: (L[0].x + L[5].x + L[9].x + L[17].x) / 4,
+                           y: (L[0].y + L[5].y + L[9].y + L[17].y) / 4 };
+        const dx = cx - rawPalm.x, dy = cy - rawPalm.y;
+        for (const p of L) { p.x += dx; p.y += dy; }
+        return { landmarks: L, handedness: 'Right' };
+      };
+      const src = makeFakeSource();
+      const api = startHands({ source: src });
+      await api.arm();
+
+      for (let i = 0; i < 15; i++) {
+        src.push({ hands: [handAt(0.9, targetCx, targetCy)] });  // open, settling
+        await new Promise(r2 => setTimeout(r2, 20));
+      }
+      const snapIdx = window.__handProbe.snapped();
+      out.clickSetupSnapped = snapIdx >= 0;
+      out.clickSetupSlug = window.__handProbe.slug(snapIdx);
+      const beforeHash = location.hash;
+
+      src.push({ hands: [handAt(0.2, targetCx, targetCy)] });  // grab, no movement
+      await new Promise(r2 => setTimeout(r2, 60));
+      src.push({ hands: [handAt(1.2, targetCx, targetCy)] });  // release, brief, still
+      await new Promise(r2 => setTimeout(r2, 80));
+
+      out.clickHashChanged = location.hash !== beforeHash;
+      out.clickHashMatches = out.clickSetupSlug ? location.hash === ('#' + out.clickSetupSlug) : false;
+      out.clickReaderOpened = !document.getElementById('reader').hidden;
+
+      api.disarm();
+    }
+
     // IMPORTANT (persisted): the hand's zoom bounds must match the world's
     // own (0.06 to 8, see ZLN0/ZLN1 and the wheel handler in firstlight.js),
     // not a separate pair the hand invented. Held via a SUSTAINED extreme
@@ -241,10 +312,15 @@ const path = require('path');
   if (!r.pipelineFellBack) fails.push(`full pipeline: a real closed hand did not lower the scale (s1 ${r.pipelineS1} -> s2 ${r.pipelineS2})`);
   if (Math.abs(r.zoomHighClamp - 8) > 1e-6) fails.push(`a sustained extreme fan rate reached cam.ts=${r.zoomHighClamp}, wanted exactly 8`);
   if (Math.abs(r.zoomLowClamp - 0.06) > 1e-6) fails.push(`a sustained extreme negative fan rate reached cam.ts=${r.zoomLowClamp}, wanted exactly 0.06`);
+  if (!r.clickSetupSnapped) fails.push('click test setup problem: the settled hand snapped to nothing');
+  if (!r.clickHashChanged) fails.push('a brief pinch over a snapped body did not change location.hash at all');
+  if (!r.clickHashMatches) fails.push(`a brief pinch opened ${JSON.stringify(r.clickSetupSlug)}'s slug incorrectly (want '#${r.clickSetupSlug}')`);
+  if (!r.clickReaderOpened) fails.push('a brief pinch changed the hash but the reader never opened');
   if (errors.length) fails.push('console/page errors: ' + errors.slice(0, 2).join(' | '));
   console.log(`  no teleport on first-ever grab ${r.noTeleportOnFirstEverGrab}   on reentry after absent ${r.noTeleportOnReentryGrab}`);
   console.log(`  snapped ${r.snappedSomething} hud "${r.hudTag}"->"${r.hudTagAfterAbsent}"   drag ${r.txMoved}   zoom in ${r.zoomedIn} (anchor held ${r.anchorHeldOnZoomIn}) out ${r.zoomedOut}   errors ${errors.length}`);
   console.log(`  full pipeline (source->hands.js->window->world), one-hand fan: s0 ${r.pipelineS0.toFixed(3)}   s1 ${r.pipelineS1.toFixed(3)} (climbed ${r.pipelineClimbed})   s2 ${r.pipelineS2.toFixed(3)} (fell back ${r.pipelineFellBack})`);
+  console.log(`  click pipeline: setup snapped ${r.clickSetupSnapped} slug ${JSON.stringify(r.clickSetupSlug)}   hash changed ${r.clickHashChanged}   hash matches ${r.clickHashMatches}   reader opened ${r.clickReaderOpened}`);
   console.log(`  zoom bounds match the world's: high clamp ${r.zoomHighClamp} (want 8)   low clamp ${r.zoomLowClamp} (want 0.06)`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();

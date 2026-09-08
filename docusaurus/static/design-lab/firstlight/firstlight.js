@@ -2604,6 +2604,14 @@
       handGrab = true; handLastX = handX; handLastY = handY;
     });
     window.addEventListener('hand:release', function () { handGrab = false; });
+    window.addEventListener('hand:click', function () {
+      // A brief pinch is a click: open whatever is under the reticle right
+      // now, exactly the path a mouse click already uses (see wireSky's own
+      // pointerup handler above -- both branches there resolve to the same
+      // `location.hash = '#' + s.slug`, so that one line is all there is to
+      // reuse).
+      if (handSnap >= 0) location.hash = '#' + stars[handSnap].slug;
+    });
     window.addEventListener('hand:fan', function (e) {
       // Fingers spread zooms in and keeps zooming while held; fingers
       // together zooms out; the dead zone (FAN_NEUTRAL/FAN_DEADZONE in
@@ -2654,6 +2662,16 @@
     window.__handProbe = {
       cam: function () { return { x: cam.x, y: cam.y, s: cam.s, tx: cam.tx, ty: cam.ty, ts: cam.ts }; },
       snapped: function () { return handSnap; },
+      // QA-only: the slug for a star index, so a probe that snapped onto a
+      // real body can assert on exactly what a click should open, without
+      // reimplementing this world's own picker in Node.
+      slug: function (i) { return (i >= 0 && stars[i]) ? stars[i].slug : null; },
+      // QA-only: a star's CURRENT screen position (this world's own w2s,
+      // not a re-derivation of it), so a probe can aim a synthetic hand at
+      // a real, always-pickable body regardless of whatever pan/zoom
+      // earlier in the same test session left the camera at.
+      starScreen: function (i) { var s = stars[i]; return s ? w2s(s.x, s.y) : null; },
+      qs: function () { return QS; },
     };
 
     canvas.addEventListener('wheel', function (e) {
