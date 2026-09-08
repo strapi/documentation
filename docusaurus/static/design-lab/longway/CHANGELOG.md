@@ -376,3 +376,23 @@ apricot ring, carried in the hand she leads with.
 
 It makes a piece of the provenance legible underfoot: you can now see, by the
 light she needs, which parts of this documentation were written after midnight.
+
+### and she is holding it, which she was not
+
+The owner, with a screenshot: *"j'aimerais que le personnage porte RÉELLEMENT une
+lanterne plutôt que d'avoir un halo autour de lui sans explication."* He was
+right and the first pass deserved it. The lamp was five pixels at her side,
+drawn at a fixed offset rather than in her hand, and it disappeared into the
+silhouette: what was left was a glow with no cause.
+
+`drawFigure` now returns where the leading hand ended up, so the lantern can
+hang from it and swing with the arm instead of floating beside her. It is a
+storm lantern: a bail curving out of the fist, a dark frame, lit horn behind two
+astragals so it reads as panes rather than a lit brick, a cap and a ring, and a
+flame with its own tight core of light so the eye can see where the pool on the
+ground comes from.
+
+It is deliberately a size up. She stands fifty-seven pixels tall, so a lamp in
+true proportion would be seven pixels and read as nothing; at nine by twelve it
+is a fifth of her height, which is a big lantern in the hand and legible at the
+zoom this trail is actually walked at.

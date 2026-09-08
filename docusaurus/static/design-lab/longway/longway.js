@@ -1565,6 +1565,55 @@ function drawFigure(sx, sy, h, phase, ink, accent, moving, opts) {
   if (o && o.dress) drawDress(sx, sy, h, lean, shY, hipY, ink, o.dress, o.face || 1);
   cx.lineCap = 'butt';
   if (pitched) cx.restore();
+  /* where the leading hand ended up, so a caller can hang something in it */
+  return { hx: sx + lean + Math.sin(arm) * 10 * h, hy: hipY + 3 * h, h };
+}
+
+/* (2026-09-08, owner: "j'aimerais que le personnage porte REELLEMENT une
+   lanterne plutot que d'avoir un halo autour de lui sans explication") The first
+   pass drew five pixels of lamp at her side and it vanished into the silhouette,
+   leaving a glow with no cause. This is a lantern you can see her holding: a bail
+   curving out of her fist, a dark frame, four panes of horn lit from inside, a
+   cap and a ring. It hangs from the hand drawFigure reports, so it swings with
+   her arm rather than floating beside her, and it hangs BELOW the fist the way
+   weight does. */
+function drawLantern(hx, hy, h, dim) {
+  /* a storm lantern, deliberately a size up: she stands 57 pixels tall, so a
+     lamp in true proportion would be seven pixels and read as nothing. At
+     nine by twelve it is a fifth of her height, which is a big lantern in
+     the hand and legible at the zoom this trail is actually walked at. */
+  const w = 9 * h, tall = 12 * h;
+  const topY = hy + 3.4 * h;                 /* the bail's length below the fist */
+  /* the bail, out of the hand and down to the cap */
+  cx.strokeStyle = INK_DARK; cx.lineWidth = 1.5 * h; cx.lineCap = 'round';
+  cx.beginPath(); cx.moveTo(hx, hy);
+  cx.quadraticCurveTo(hx + 1.6 * h, topY - 1.2 * h, hx, topY);
+  cx.stroke();
+  /* the body: a dark frame with lit horn inside it */
+  cx.fillStyle = INK_DARK;
+  cx.fillRect(hx - w / 2, topY, w, tall);
+  cx.fillStyle = INKS.apricot;
+  cx.fillRect(hx - w / 2 + 1.1 * h, topY + 1.5 * h, w - 2.2 * h, tall - 3.4 * h);
+  cx.fillStyle = INKS.cream;
+  cx.fillRect(hx - w / 2 + 2.0 * h, topY + 2.6 * h, w - 4.0 * h, tall - 5.8 * h);
+  /* the astragals: two uprights, so it reads as panes and not a lit brick */
+  cx.fillStyle = INK_DARK;
+  cx.fillRect(hx - 0.5 * h, topY + 1.5 * h, 1.0 * h, tall - 3.4 * h);
+  /* cap and ring */
+  cx.fillRect(hx - w / 2 - 0.8 * h, topY - 1.4 * h, w + 1.6 * h, 1.6 * h);
+  cx.fillRect(hx - w / 2 - 0.4 * h, topY + tall - 0.4 * h, w + 0.8 * h, 1.4 * h);
+  /* and the flame it is all built around, with the tight core of light that
+     tells the eye where the pool on the ground is coming from */
+  if (!dim) {
+    const fy = topY + tall * 0.48;
+    cx.fillStyle = INKS.apricot;
+    cx.globalAlpha = 0.5; cx.beginPath(); cx.arc(hx, fy, 9 * h, 0, 7); cx.fill();
+    cx.globalAlpha = 0.75; cx.beginPath(); cx.arc(hx, fy, 4.5 * h, 0, 7); cx.fill();
+    cx.globalAlpha = 1;
+    cx.fillStyle = INKS.cream;
+    cx.beginPath(); cx.arc(hx, fy, 2.1 * h, 0, 7); cx.fill();
+  }
+  cx.lineCap = 'butt';
 }
 
 function drawDress(sx, sy, h, lean, shY, hipY, ink, dress, face) {
@@ -1931,22 +1980,20 @@ function draw(dt) {
        there and carries it, and the pool that travels with her is the same three
        flat apricot rings the waymark lanterns pool, at a walker's scale. It
        swings with her stride, and holds nearly still when she does. */
-    if (S.page && S.page.prov && S.page.prov.night > 0) {
+    const carrying = !!(S.page && S.page.prov && S.page.prov.night > 0);
+    if (carrying) {
+      /* the pool she walks in, thrown by the lamp she is about to be drawn
+         holding: the same three flat apricot rings the waymark lanterns pool */
       const swing = Math.sin(S.x / 26) * (REDUCED ? 0 : 2.4) * (moving ? 1 : 0.25);
       cx.fillStyle = INKS.apricot;
       cx.globalAlpha = 0.09; cx.beginPath(); cx.arc(AVX + swing, ay, 86, 0, 7); cx.fill();
       cx.globalAlpha = 0.15; cx.beginPath(); cx.arc(AVX + swing, ay, 52, 0, 7); cx.fill();
       cx.globalAlpha = 0.24; cx.beginPath(); cx.arc(AVX + swing, ay, 25, 0, 7); cx.fill();
       cx.globalAlpha = 1;
-      /* and the lantern itself, small, in the hand she leads with */
-      const side = (opts && opts.face < 0) ? -1 : 1;
-      const lx2 = AVX + side * 5.5 + swing * 0.5, ly2 = ay - hK * 0.46;
-      cx.fillStyle = INK_DARK; cx.fillRect(lx2 - 2.5, ly2 - 3.5, 5, 7);
-      cx.fillStyle = INKS.cream; cx.fillRect(lx2 - 1, ly2 - 2, 2, 4);
-      cx.fillStyle = INKS.apricot; cx.fillRect(lx2 - 0.5, ly2 - 5.5, 1, 2);   /* the ring */
     }
     drawFigure(AVX - 2.6, ay - 1.8, hK, S.x / 26, 'rgba(255,243,224,0.9)', null, moving && !REDUCED, opts);
-    drawFigure(AVX, ay, hK, S.x / 26, pal.ink, pal.accent, moving && !REDUCED, opts);
+    const hand = drawFigure(AVX, ay, hK, S.x / 26, pal.ink, pal.accent, moving && !REDUCED, opts);
+    if (carrying && hand) drawLantern(hand.hx, hand.hy, hK, false);
   }
 
   /* the stumble's puff — three held frames of flat dust */
