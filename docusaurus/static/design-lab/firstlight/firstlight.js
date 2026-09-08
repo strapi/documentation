@@ -2530,6 +2530,90 @@
     });
     canvas.addEventListener('pointercancel', function () { dragging = false; canvas.classList.remove('dragging'); });
     canvas.addEventListener('pointerleave', function () { hovered = -1; eggHover = null; hideTip(); dirty = true; });
+
+    /* ── the hand ──────────────────────────────────────────────────────────
+       This is the whole of FIRST LIGHT's dependency on hand control: a block
+       of listeners. Nothing here imports MediaPipe, and with the camera off no
+       event ever arrives, so the world is exactly what it was.
+
+       The hand drives cam.tx/ty/ts, the TARGETS, and never cam.x/y/s. The
+       damping loop that already eases the camera toward its target then does
+       the tremor smoothing for free, with machinery that has been running
+       since the first version of this world. */
+    var handX = 0, handY = 0, handGrab = false, handLastX = 0, handLastY = 0, handSnap = -1;
+    var handZoomBase = null;
+
+    function handSnapAt(sx, sy) {
+      var wp = s2w(sx, sy);
+      // the same radius picker mouse hover uses, opened up because a hand is
+      // not a mouse: 15 px of tolerance is a mouse's, 46 is a hand's
+      return pick(wp[0], wp[1], 46 / cam.s);
+    }
+
+    window.addEventListener('hand:present', function () { handGrab = false; });
+    window.addEventListener('hand:absent', function () {
+      handGrab = false; handSnap = -1;
+      if (window.__handHud) window.__handHud.setSnapped('');
+    });
+    window.addEventListener('hand:move', function (e) {
+      handLastX = handX; handLastY = handY;
+      handX = e.detail.x; handY = e.detail.y;
+      if (handGrab) {
+        var dx = handX - handLastX, dy = handY - handLastY;
+        cam.tx -= dx / cam.s; cam.ty -= dy / cam.s;
+        dirty = true;
+        return;
+      }
+      var hit = handSnapAt(handX, handY);
+      if (hit !== handSnap) {
+        handSnap = hit;
+        if (window.__handHud) window.__handHud.setSnapped(hit >= 0 ? stars[hit].page.title : '');
+        dirty = true;
+      }
+    });
+    window.addEventListener('hand:grab', function () {
+      handGrab = true; handLastX = handX; handLastY = handY;
+    });
+    window.addEventListener('hand:release', function () { handGrab = false; });
+    window.addEventListener('hand:spread', function (e) {
+      if (handZoomBase === null) handZoomBase = cam.ts;
+      var next = handZoomBase * e.detail.ratio;
+      next = Math.max(0.15, Math.min(9, next));
+      if (next !== cam.ts) {
+        // The hand drives cam.ts, the TARGET, and lets the world's existing
+        // easing loop (cam.s += ds * e) chase it, which is what absorbs hand
+        // tremor and the whole reason the hand drives targets rather than
+        // cam.s directly. Comparing the sound against cam.s would feed it a
+        // scale that is still catching up to a target set several frames
+        // ago; the PREVIOUS TARGET is the honest "where this gesture already
+        // meant to be", so that is what zoomSound is measured against here,
+        // unlike the wheel below which sets cam.s directly and so compares
+        // against that.
+        zoomSound(next > cam.ts, next, cam.ts);
+        // Zoom around the reticle's last known screen position, not the
+        // screen centre, or spreading your hands over a distant body would
+        // push it off screen, the opposite of what the gesture means. This is
+        // the same before/after world-point trick the wheel handler below
+        // uses, worked in target-space (cam.tx/ty/ts) since the hand never
+        // touches cam.x/y/s directly.
+        var bx = (handX - viewCX()) / cam.ts + cam.tx;
+        var by = (handY - H / 2) / cam.ts + cam.ty;
+        cam.ts = next;
+        var ax = (handX - viewCX()) / cam.ts + cam.tx;
+        var ay = (handY - H / 2) / cam.ts + cam.ty;
+        cam.tx += bx - ax; cam.ty += by - ay;
+      }
+      dirty = true;
+      clearTimeout(window.__handZoomT);
+      // a gesture ends when the events stop; re-base so the next one starts fresh
+      window.__handZoomT = setTimeout(function () { handZoomBase = null; }, 220);
+    });
+
+    window.__handProbe = {
+      cam: function () { return { x: cam.x, y: cam.y, s: cam.s, tx: cam.tx, ty: cam.ty, ts: cam.ts }; },
+      snapped: function () { return handSnap; },
+    };
+
     canvas.addEventListener('wheel', function (e) {
       e.preventDefault();
       var before = s2w(e.clientX, e.clientY);
