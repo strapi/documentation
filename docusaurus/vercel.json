@@ -3823,6 +3823,11 @@
       "source": "/cms/providers#configuring-providers",
       "destination": "/cms/features/media-library#providers",
       "permanent": true
+    },
+    {
+      "source": "/cms/features/media-library-beta",
+      "destination": "/cms/features/media-library",
+      "permanent": true
     }
   ]
 }
