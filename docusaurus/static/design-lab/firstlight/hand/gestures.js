@@ -16,7 +16,7 @@
 
 export const LM = {
   WRIST: 0, THUMB_TIP: 4, INDEX_MCP: 5, INDEX_TIP: 8,
-  MIDDLE_MCP: 9, MIDDLE_TIP: 12, RING_TIP: 16, PINKY_TIP: 20,
+  MIDDLE_MCP: 9, MIDDLE_TIP: 12, RING_TIP: 16, PINKY_TIP: 20, PINKY_MCP: 17,
 };
 
 /* PINCH: thumb and index tip coming together, over hand size. Derived from
@@ -66,9 +66,31 @@ function fistCurl(L) {
 }
 export function pinchPoint(L) {
   // where the hand is "holding": between the thumb and index tips, which is
-  // what the eye tracks, not the wrist and not the palm centre
+  // what the eye tracks, not the wrist and not the palm centre. Still the
+  // right measure of the pinch itself (used for the two-handed spread below)
+  // -- it is only wrong as the thing the RETICLE follows, because thumb and
+  // index both travel toward the palm as the hand closes.
   return { x: (L[LM.THUMB_TIP].x + L[LM.INDEX_TIP].x) / 2,
            y: (L[LM.THUMB_TIP].y + L[LM.INDEX_TIP].y) / 2 };
+}
+
+/* PALM CENTRE: the wrist plus the index, middle and pinky knuckles (0, 5, 9,
+   17). These four points are the rigid dorsal plate of the hand -- the part
+   that does NOT fold when the fingers curl into a fist or draw together into
+   a pinch. pinchPoint tracks the two fingers actually doing the gesture, so
+   it travels the furthest of any candidate anchor when a real hand in the
+   reference fixture closes into a fist (measured in qa-hand-wiring.js, which
+   replays a real fist closure from the fixture and asserts on it). Palm
+   centre moves only a fraction as far for the same closure, and is also the
+   steadiest of the candidates during a pinch. A palm does not fold, so this
+   is what the reticle is anchored to instead; pinchPoint remains what a
+   pinch itself is measured from, and what the two-handed spread still uses. */
+export function palmCentre(L) {
+  const pts = [L[LM.WRIST], L[LM.INDEX_MCP], L[LM.MIDDLE_MCP], L[LM.PINKY_MCP]];
+  return {
+    x: pts.reduce((sum, pt) => sum + pt.x, 0) / pts.length,
+    y: pts.reduce((sum, pt) => sum + pt.y, 0) / pts.length,
+  };
 }
 
 export function makeGestureReader() {

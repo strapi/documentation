@@ -40,20 +40,24 @@ const path = require('path');
       L[0] = { x: cx, y: cy + size, z: 0 };
       L[9] = { x: cx, y: cy, z: 0 };
       L[5] = { x: cx - size * 0.4, y: cy, z: 0 };
+      L[17] = { x: cx + size * 0.4, y: cy, z: 0 };
       L[8] = { x: cx - size * 0.5 * curl, y: cy - size * curl, z: 0 };
       L[4] = { x: L[8].x + pinch * size, y: L[8].y, z: 0 };
       L[12] = { x: cx, y: cy - size * 1.05 * curl, z: 0 };
       L[16] = { x: cx + size * 0.35 * curl, y: cy - size * 0.95 * curl, z: 0 };
       L[20] = { x: cx + size * 0.6 * curl, y: cy - size * 0.8 * curl, z: 0 };
-      // cx, cy name where the hand is HELD, i.e. the pinch point, not some
-      // unnamed part of the palm. The tips above are placed relative to a
-      // nominal centre first; then every landmark is shifted by the delta
-      // needed to put the pinch point (the same midpoint of 4 and 8 that
-      // gestures.js reads as pinchPoint) exactly at (cx, cy), so a caller's
-      // coordinates mean what they say instead of hiding a curl-dependent
-      // offset.
-      const rawPinch = { x: (L[4].x + L[8].x) / 2, y: (L[4].y + L[8].y) / 2 };
-      const dx = cx - rawPinch.x, dy = cy - rawPinch.y;
+      // cx, cy name where the hand is HELD, i.e. palmCentre (the mean of 0,
+      // 5, 9 and 17, what the reticle now follows), not the pinch point and
+      // not some other unnamed part of the palm. The tips above are placed
+      // relative to a nominal centre first; then every landmark is shifted
+      // by the delta needed to put palmCentre exactly at (cx, cy), so a
+      // caller's coordinates mean what they say. 0, 5, 9 and 17 never depend
+      // on `curl` or `pinch` above, so this shift -- and palmCentre itself --
+      // is exactly the same regardless of how open or closed the hand is,
+      // which is the whole point being anchored to it.
+      const rawPalm = { x: (L[0].x + L[5].x + L[9].x + L[17].x) / 4,
+                         y: (L[0].y + L[5].y + L[9].y + L[17].y) / 4 };
+      const dx = cx - rawPalm.x, dy = cy - rawPalm.y;
       for (const p of L) { p.x += dx; p.y += dy; }
       return { landmarks: L, handedness: 'Right' };
     };
@@ -105,6 +109,60 @@ const path = require('path');
     }
     const phantom = seen.slice(markB).filter(s => s.n === 'release' || s.n === 'absent');
 
+    // Case: a REAL fist closure, replayed from the reference fixture through
+    // the full wiring (comfort box, mirror, one-euro filter, latch) -- not
+    // synthetic geometry. Hand-built landmarks can be made to prove whatever
+    // shape the author had in mind; the whole point of anchoring the reticle
+    // to palmCentre and latching it on grab/lock is fidelity to how an
+    // actual hand closes, so the regression proof has to replay an actual
+    // hand closing.
+    //
+    // A second, independent session: this must not share the reader, filter
+    // or latch state of the session already exercised above.
+    const fixResp = await fetch('./qa-fixtures/hand-reference-landmarks.json');
+    const fixture = await fixResp.json();
+    const toFixtureFrame = (f) => ({ hands: f.hands.map(h => ({
+      landmarks: h.p.map(xy => ({ x: xy[0], y: xy[1], z: 0 })),
+      handedness: h.h,
+    })) });
+
+    const src2 = makeFakeSource();
+    const moves2 = [];
+    let lockAt = null;
+    window.addEventListener('hand:move', (e) => moves2.push({ x: e.detail.x, y: e.detail.y }));
+    window.addEventListener('hand:lock', () => { if (lockAt === null) lockAt = moves2.length; });
+    const api2 = startHands({ source: src2 });
+    await api2.arm();
+
+    // Frames 650-760 of the fixture cover a real, deliberate closing motion:
+    // the hand sits open through the low 600s, pinches around frame 694,
+    // and curls the rest of the way into a full fist by frame 715 (where a
+    // real 'lock' fires), held afterward. Replayed at the fixture's own
+    // frame-to-frame timing, not pushed back to back, because the one-euro
+    // filter's cutoff depends on dt: compressing 3.6 seconds of motion into
+    // a few milliseconds of wall-clock time would understate the smoothing
+    // (and therefore the drift) a live camera actually produces.
+    const slice = fixture.frames.slice(650, 760);
+    for (let i = 0; i < slice.length; i++) {
+      src2.push(toFixtureFrame(slice[i]));
+      if (i < slice.length - 1) {
+        const dtMs = Math.max(4, Math.min(100, (slice[i + 1].t - slice[i].t) * 1000));
+        await new Promise(r2 => setTimeout(r2, dtMs));
+      }
+    }
+    await new Promise(r2 => setTimeout(r2, 60));
+
+    // Stability across the closure: the reticle's average reported position
+    // while the hand still sat open (the first 15 moves, long enough for
+    // the one-euro filter to settle) against every position reported from
+    // the moment of the lock onward, through the held fist that follows.
+    const settle = moves2.slice(0, 15);
+    const baseX = settle.reduce((s, m) => s + m.x, 0) / settle.length;
+    const baseY = settle.reduce((s, m) => s + m.y, 0) / settle.length;
+    const held = lockAt !== null ? moves2.slice(lockAt) : [];
+    let fistDrift = 0;
+    for (const m of held) fistDrift = Math.max(fistDrift, Math.hypot(m.x - baseX, m.y - baseY));
+
     return {
       sawPresent: seen.some(s => s.n === 'present'),
       moveCount: moves.length,
@@ -117,6 +175,9 @@ const path = require('path');
       rearmPresent,
       phantomCount: phantom.length,
       W: window.innerWidth, H: window.innerHeight,
+      fixtureLockFired: lockAt !== null,
+      fixtureMoveCount: moves2.length,
+      fixtureFistDrift: fistDrift,
     };
   });
 
@@ -139,6 +200,18 @@ const path = require('path');
   if (r.grabs !== 1) fails.push(`${r.grabs} grab events for one pinch, wanted exactly 1`);
   if (!r.rearmPresent) fails.push('rearming did not re-announce hand:present (stale present flag survived disarm)');
   if (r.phantomCount) fails.push(`rearming with no hand ever seen this session still fired ${r.phantomCount} release/absent event(s) (stale lastSeen survived disarm)`);
+  if (!r.fixtureLockFired) fails.push('the fixture replay (frames 650-760) never fired a lock; the closing motion this case depends on is missing');
+  // Measured on this exact replay (palmCentre anchor, latched on grab/lock):
+  // fistDrift 9.4px. Swapping hands.js back to the OLD anchor (pinchPoint,
+  // with the latch left in place) and rerunning gives 115.2px on the same
+  // replay -- proof this budget is tight enough to catch the regression it
+  // exists for, not just a number picked to be comfortably large. 30px
+  // leaves headroom above the measured 9.4px for setTimeout jitter in the
+  // fixture replay's real-time pacing, while staying well under the 115px
+  // the old anchor produces.
+  const FIST_DRIFT_BUDGET = 30;
+  if (r.fixtureFistDrift > FIST_DRIFT_BUDGET) fails.push(`the reticle drifted ${r.fixtureFistDrift.toFixed(1)}px across a real fist closure, wanted under ${FIST_DRIFT_BUDGET}px`);
+  console.log(`  fixture replay: moves ${r.fixtureMoveCount}   lockFired ${r.fixtureLockFired}   fistDrift ${r.fixtureFistDrift.toFixed(1)}px (budget ${FIST_DRIFT_BUDGET}px)`);
   console.log(`  moves ${r.moveCount}   last (${Math.round(r.lastX)}, ${Math.round(r.lastY)}) of ${r.W}x${r.H}   grabs ${r.grabs}   rearmPresent ${r.rearmPresent}   phantom ${r.phantomCount}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
