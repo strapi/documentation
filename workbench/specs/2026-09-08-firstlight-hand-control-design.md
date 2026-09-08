@@ -123,9 +123,14 @@ than falling, so an arm can rest without losing its target.
 
 ## The four decisions that separate "it works" from "it is pleasant"
 
-- **Hysteresis on every threshold.** Pinch arms below 0.045 normalised distance and
-  disarms above 0.065. Without that band a pinch held at the threshold flickers and the
-  map convulses. Same for the fist.
+- **Hysteresis on every threshold.** Without a band, a pinch held at the threshold
+  flickers and the map convulses. Pinch arms and disarms at two different values, and so
+  does the fist.
+- **Thresholds measured against hand size, never against the image.** A raw normalised
+  image distance shrinks as you sit further from the camera, so a fixed threshold would
+  mean "pinch harder the further away you are". Every threshold is a ratio to the distance
+  from the wrist (landmark 0) to the middle-finger knuckle (landmark 9), which makes it
+  invariant to distance and to hand size.
 - **A One Euro filter, not a moving average.** It smooths hard when the hand is still and
   lets go when the hand moves fast, so stillness is calm without paying lag on motion. A
   fixed average forces a choice between the two.
@@ -144,8 +149,35 @@ where it was.
 
 ## Camera, permission and trust
 
-Nothing starts on load: not the permission prompt, not the 8 MB. A control in the
+Nothing starts on load: not the permission prompt, not the download. A control in the
 instrument strip reads `HAND CONTROL · OFF`. Clicking it downloads, asks and arms.
+
+### What it actually weighs, measured
+
+An earlier draft of this spec said 8 MB. Measured against the real artefacts at
+`@mediapipe/tasks-vision@1.0.1`:
+
+| file | on disk | over the wire |
+|---|---|---|
+| `vision_wasm_internal.wasm` | 11 MB | 3.1 MB brotli |
+| `vision_bundle.mjs` | 152 KB | 45 KB |
+| `hand_landmarker.task` (float16/1) | 7.8 MB | 7.8 MB, already compressed |
+| **total** | **19 MB** | **11 MB** |
+
+**So it is fetched from a CDN at activation, not vendored.** Nineteen megabytes in
+strapi/documentation is a real cost paid by everyone who clones a docs repo, for a feature
+almost no visitor will arm. Fetching is also consistent with what these worlds already do:
+FIRST LIGHT preconnects to `fonts.googleapis.com` today, so a third-party fetch is
+established practice here rather than a new concession.
+
+The privacy claim survives intact and should be stated precisely: **the fetch downloads
+code, it never uploads video.** There is no request that carries a frame, because inference
+runs locally once the code has landed.
+
+The cost of this choice is that the feature depends on a CDN being reachable, which is
+acceptable for an opt-in extra and lands in the degradation table below. Reversing it means
+vendoring those three files and changing one constant; the decision is contained in one
+module on purpose.
 
 Turning it off calls `stop()` on every track so **the camera light actually goes out**.
 That is the trust signal, not a reassuring sentence. The page states plainly that no
