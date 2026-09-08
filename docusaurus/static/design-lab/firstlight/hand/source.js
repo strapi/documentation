@@ -99,7 +99,13 @@ export function makeCameraSource() {
         if (token.aborted) return;
         built = await vision.HandLandmarker.createFromOptions(files, {
           baseOptions: { modelAssetPath: MODEL, delegate: 'GPU' },
-          runningMode: 'VIDEO', numHands: 2,
+          // ONE HAND. The second hand never drove anything a single hand
+          // could not: the old two-hand pinch-distance zoom is gone (see
+          // gestures.js), and nothing else in this world ever looked past
+          // hands[0]. Tracking a second hand cost a real frame of work for
+          // no feature, and left which hand counts as "primary" dependent on
+          // MediaPipe's own return order, which is not stable across frames.
+          runningMode: 'VIDEO', numHands: 1,
         });
       } catch (e) {
         if (!token.aborted) state = 'unreachable';

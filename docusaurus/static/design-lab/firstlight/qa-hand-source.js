@@ -138,8 +138,12 @@ async function withDeadline(promise, label) {
       window.__qa.pending.files = deferred();
       return window.__qa.pending.files.promise;
     };
-    window.__qa.createLandmarker = () => {
+    window.__qa.createLandmarker = (f, o) => {
       window.__qa.counts.landmarker++;
+      // captured once, the first call only: this is item 4's whole
+      // surface, one option on one call, and the only place anything
+      // outside source.js itself can see what was actually asked for.
+      if (window.__qa.lastNumHands === undefined) window.__qa.lastNumHands = o && o.numHands;
       window.__qa.pending.landmarker = deferred();
       return window.__qa.pending.landmarker.promise;
     };
@@ -204,6 +208,7 @@ async function withDeadline(promise, label) {
       l1CloseCalls: window.__l1.closeCalls,
       gumCalls: window.__qa.counts.gum,
       newCallbackCount: window.__qa.newCallbackCount,
+      numHands: window.__qa.lastNumHands,
     }));
 
     if (stateWhileBuildingLandmarker !== 'loading') fails.push(`cycle 1: state was "${stateWhileBuildingLandmarker}" while the landmarker was building, wanted "loading"`);
@@ -212,7 +217,12 @@ async function withDeadline(promise, label) {
     if (afterCycle1.l1CloseCalls !== 1) fails.push(`cycle 1: the abandoned landmarker was closed ${afterCycle1.l1CloseCalls} times, wanted 1`);
     if (afterCycle1.gumCalls !== 0) fails.push(`cycle 1: getUserMedia was called ${afterCycle1.gumCalls} times after an abort during landmarker creation, wanted 0`);
     if (afterCycle1.newCallbackCount !== ambientBaseline) fails.push(`cycle 1: a new requestAnimationFrame callback appeared (source's own loop scheduled) on an aborted cycle, wanted none`);
-    console.log(`  cycle1(landmarker-abort) closed=${afterCycle1.l1CloseCalls} gum=${afterCycle1.gumCalls} newRaf=${afterCycle1.newCallbackCount - ambientBaseline} -> ${afterCycle1.state}`);
+    // Item 4: ONE HAND, not two. The second hand never drove a feature the
+    // first could not, and left "which hand is primary" dependent on
+    // MediaPipe's own return order. This is the only place anything outside
+    // source.js itself can see what was actually asked for.
+    if (afterCycle1.numHands !== 1) fails.push(`HandLandmarker.createFromOptions was asked for numHands=${afterCycle1.numHands}, wanted exactly 1`);
+    console.log(`  cycle1(landmarker-abort) closed=${afterCycle1.l1CloseCalls} gum=${afterCycle1.gumCalls} newRaf=${afterCycle1.newCallbackCount - ambientBaseline} -> ${afterCycle1.state}   numHands=${afterCycle1.numHands} (want 1)`);
 
     // cycle 2: abort while getUserMedia is pending, with STUB tracks. This
     // is the exact bug: the camera promise resolves AFTER disarm() has
