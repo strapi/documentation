@@ -10,6 +10,8 @@ Last updated 2026-09-07.
 
 ## The Golden Shore
 
+- [ ] **The footsteps STILL do not sound like footsteps, and still do not change with the ground.** Reopened 2026-09-08: the first pass (commit 5d8e6654c) shipped nine recipes and a heel-and-toe rhythm, and I archived it on reading the code. That was the mistake: the code existing is not the sound being right. Judge this one by listening to a rendered walk across several surfaces, never by inspection.
+
 The newest world and the least worn in, so most of this is world craft rather than polish.
 
 - [ ] Check the other five crossings for the same fault: an easter egg standing where you cannot miss it.
@@ -112,8 +114,6 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 
 ## The Golden Shore
 
-- [x] Footsteps are not believable, "on dirait limite un vélo". (2026-09-07, commit 5d8e6654c: rebuilt as heel then toe with a real gap, alternating feet panned left and right, and per-step jitter on level and filter frequency so no two treads are alike. The complaint turned out to be rhythm, not timbre.)
-- [x] Vary footsteps with the ground underfoot. (2026-09-07, commit 5d8e6654c: nine recipes, boards, cobbles, dirt, grass, sand, needles, scree, shell and water, against the eight surfaces terrain.js actually reports, each built from what that ground is made of rather than from a pitch shift.)
 - [x] Introduce collisions. (2026-09-07, commit f32aa4d0f: the fences got colliders and the resolver stopped skipping. The complaint read as walls; measuring showed the walls already held and it was the fences that had none.)
 - [x] Add SPACE to jump. (2026-09-07, commit b4ac996a4: it clears exactly what it should and no more; collider heights were set so a fence is vaultable and a wall is not.)
 - [x] The rain sounds metallic. (2026-09-07, commit 36cf8845e: the comb filter was the metal. A comb is a plate resonator, so rain through one is rain on a roof of tin; rebuilt without it.)
