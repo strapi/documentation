@@ -22,7 +22,7 @@ const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
 export function startHands(opts) {
   const source = (opts && opts.source) || makeCameraSource();
-  const reader = makeGestureReader();
+  let reader = makeGestureReader();
   const fx = makeOneEuro({}), fy = makeOneEuro({});
   let t0 = null;
 
@@ -55,7 +55,17 @@ export function startHands(opts) {
 
   return {
     state: () => source.state(),
-    disarm() { source.disarm(); fx.reset(); fy.reset(); t0 = null; fire('state', { state: source.state() }); },
+    disarm() {
+      source.disarm(); fx.reset(); fy.reset(); t0 = null;
+      // a fresh reader, not just a fresh filter: without this, present,
+      // pinched, fisted and lastSeen all survive a disarm. lastSeen then
+      // holds a timestamp from the OLD t0 epoch while the next arm() starts
+      // a new one, so the dead man's switch compares against a clock that
+      // runs way ahead of it and either misfires late or not at all, and a
+      // stale present === true silently swallows the next hand:present.
+      reader = makeGestureReader();
+      fire('state', { state: source.state() });
+    },
     async arm() {
       await source.arm();
       fire('state', { state: source.state() });

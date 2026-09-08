@@ -70,12 +70,52 @@ const path = require('path');
     for (let i = 0; i < 10; i++) src.push({ hands: [hand(0.20, 1, 0.5, 0.5)] });
     await new Promise(r2 => setTimeout(r2, 60));
 
+    // disarm must not leave the gesture reader's internal state (present,
+    // pinched, fisted, lastSeen) behind for the next session to inherit.
+    const markA = seen.length;
+    api.disarm();
+    await api.arm();
+
+    // sub-case A: the rearmed session must announce itself again. A stale
+    // present === true, carried over from the session above (which ended
+    // mid grab, present and pinched both true), would silently swallow this.
+    for (let i = 0; i < 5; i++) src.push({ hands: [hand(0.20, 1, 0.5, 0.5)] });
+    await new Promise(r2 => setTimeout(r2, 30));
+    const rearmPresent = seen.slice(markA).some(s => s.n === 'present');
+
+    // sub-case B: disarm again right away, so present and pinched are true
+    // and lastSeen is small (from sub-case A, moments ago), then rearm and
+    // lose tracking with NO present frame in between. A correctly reset
+    // reader has lastSeen === null and fires nothing for a hand it never
+    // saw this session. A reader that survived the disarm keeps that small
+    // stale lastSeen, which the new session's own t (also starting near
+    // zero) will overtake within a couple hundred milliseconds: the dead
+    // man's switch does not just fire late, it fires a PHANTOM release and
+    // absent for a hand this new session never held.
+    api.disarm();
+    await api.arm();
+    const markB = seen.length;
+    // pushed repeatedly, like a real camera source that keeps emitting a
+    // frame every tick whether or not a hand is in it: the switch is only
+    // ever re-evaluated when a frame arrives, so one push and a long wait
+    // would prove nothing.
+    for (let i = 0; i < 20; i++) {
+      src.push({ hands: [] });
+      await new Promise(r2 => setTimeout(r2, 20));
+    }
+    const phantom = seen.slice(markB).filter(s => s.n === 'release' || s.n === 'absent');
+
     return {
       sawPresent: seen.some(s => s.n === 'present'),
       moveCount: moves.length,
       lastX: last ? last.d.x : null,
       lastY: last ? last.d.y : null,
-      grabs: seen.filter(s => s.n === 'grab').length,
+      // scoped to the first session only: the disarm/rearm section below
+      // deliberately grabs again, in a fresh session, and that second grab
+      // is correct, not a defect this count should catch.
+      grabs: seen.slice(0, markA).filter(s => s.n === 'grab').length,
+      rearmPresent,
+      phantomCount: phantom.length,
       W: window.innerWidth, H: window.innerHeight,
     };
   });
@@ -83,10 +123,23 @@ const path = require('path');
   const fails = [];
   if (!r.sawPresent) fails.push('no hand:present was dispatched');
   if (!r.moveCount) fails.push('no hand:move was dispatched');
-  if (r.lastX === null || r.lastX < r.W * 0.85) fails.push(`the left edge of the comfort box landed at x=${r.lastX} of ${r.W}, wanted the right edge (mirrored)`);
+  // The stimulus is pinned exactly at leftEdge, i.e. at bx=0 in the comfort
+  // box (leftEdge is DEFINED as the box's left edge), so after the box and
+  // the mirror the target fraction is exactly 1.0 and the exact expected
+  // pixel is the full viewport width, not "close to" it. The only thing that
+  // can move this away from exact is the One Euro filter: it passes its
+  // very first sample through unfiltered, and every one of the other 39
+  // pushes carries the identical unchanging landmark, so a*x+(1-a)*x stays x
+  // for any weight a. Measured deviation is 0 (bit exact); the 2px tolerance
+  // below is headroom for floating point noise across engines, not for
+  // settling time, since there is nothing here to settle.
+  const TOL_X = 2;
+  if (r.lastX === null || Math.abs(r.lastX - r.W) > TOL_X) fails.push(`the left edge of the comfort box landed at x=${r.lastX}, wanted ${r.W} (+/-${TOL_X})`);
   if (r.lastY === null || Math.abs(r.lastY - r.H / 2) > r.H * 0.12) fails.push(`a centred hand landed at y=${r.lastY}, wanted about ${r.H / 2}`);
   if (r.grabs !== 1) fails.push(`${r.grabs} grab events for one pinch, wanted exactly 1`);
-  console.log(`  moves ${r.moveCount}   last (${Math.round(r.lastX)}, ${Math.round(r.lastY)}) of ${r.W}x${r.H}   grabs ${r.grabs}`);
+  if (!r.rearmPresent) fails.push('rearming did not re-announce hand:present (stale present flag survived disarm)');
+  if (r.phantomCount) fails.push(`rearming with no hand ever seen this session still fired ${r.phantomCount} release/absent event(s) (stale lastSeen survived disarm)`);
+  console.log(`  moves ${r.moveCount}   last (${Math.round(r.lastX)}, ${Math.round(r.lastY)}) of ${r.W}x${r.H}   grabs ${r.grabs}   rearmPresent ${r.rearmPresent}   phantom ${r.phantomCount}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
   process.exit(fails.length ? 1 : 0);
