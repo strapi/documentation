@@ -59,8 +59,6 @@ one label at a time, and no regression.
 
 ## The Long Way Through
 
-- [ ] **The night lantern.** At night the walker carries a small lantern in the flat idiom; its warm pool travels with her and becomes the focus of the frame.
-- [ ] **The memory cairns.** Passing a gate whose page was read in a previous visit shows a small cairn beside it, the real date of that reading engraved on it.
 - [ ] **The gorge echo.** Where the real relief forms a gorge, the whistle returns an echo, delayed by the width and pitch-shifted.
 - [ ] **The migrations.** Small flocks cross the sky toward sections updated in the last 30 real days, from git truth, occasionally and never busy.
 - [ ] **The bench postcards.** Sitting at a bench or picnic table offers WRITE A POSTCARD: a crisp canvas-composed postcard of the current vista.
@@ -112,6 +110,11 @@ Done and pushed. Kept for the record, and so a rollback knows what it is undoing
 - [x] The funnies and the botanist's stall stood too close to the landing. (2026-09-07: 11.1 and 5.8 tiles from spawn became 28.6 and 23.6; place2x2 learned the extra predicate place1 had.)
 - [x] The door prompts disagreed on case: the descriptive line under the title was sentence case on the sloop and capitals on the other five. (2026-09-07: all five follow the sloop now, case only, titles still capitals.)
 - [x] Move the way to The Golden Shore to the EDGE OF THE MAP, not far from the boat that leads to Carta Strapiana. (2026-09-07: the lamplighter's yard now places after the harbour is measured and is constrained by proximity to the mooring, landing 9.4 tiles from the sloop.)
+
+## The Long Way Through
+
+- [x] The night lantern. (2026-09-08: she really carries it. drawFigure reports where the leading hand ended up, so a bail, a dark frame, lit horn behind two astragals, a cap, a ring and a flame hang from the fist and swing with the arm. Sized a fifth of her height on purpose: true proportion on a 57-pixel figure is seven pixels and reads as nothing.)
+- [x] The memory cairns. (2026-09-08: a door onto a page read on an earlier day gets four flat stones on a dated kerb slab. PACK.visited had to stop storing a plain 1 and start storing the local day; older saves keep working and raise nothing. They stand at the citation doors, not at the province portal, which draws only for the staged page ahead: 120 over a 2,500 m walk.)
 
 ## Carta Strapiana
 
