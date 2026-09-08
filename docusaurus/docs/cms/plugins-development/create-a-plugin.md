@@ -200,14 +200,25 @@ To resolve the issue, remove `@strapi/strapi` as a dev dependency from your plug
 
 ## Setting a local plugin in a monorepo environment without the Plugin SDK
 
-In a monorepo, you can configure your local plugin without using the Plugin SDK by adding 2 entry point files at the root of your plugin:
+In a monorepo, you can configure your local plugin without using the Plugin SDK by creating 2 entry point files at the root of your plugin folder:
 
-- server entry point: `strapi-server.js|ts`
-- admin entry point: `strapi-admin.js|ts`
+- server entry point: `strapi-server.js`
+- admin entry point: `strapi-admin.js`
+
+You create these 2 files yourself: they are not scaffolded for you. A plugin created with the Plugin SDK has no such files at its root, since the SDK declares `strapi-server` and `strapi-admin` subpath exports in the plugin's `package.json` instead, pointing to the built files in `dist/`.
+
+:::caution
+Without the Plugin SDK, both entry points must be JavaScript files, even in a TypeScript project:
+
+- Strapi loads a local plugin's server entry point directly through Node.js, which only resolves `.js` and `.json` files. A `strapi-server.ts` entry point is not transpiled at load time and resolves to an empty plugin.
+- Strapi only looks for a `strapi-admin.js` file to detect that a local plugin has an admin part. A plugin whose admin entry point is named `strapi-admin.ts` is not loaded in the admin panel at all.
+
+Files imported from `strapi-admin.js` can still be TypeScript, because the admin panel build compiles them.
+:::
 
 ### Server entry point
 
-The server entry point file initializes your plugin's server-side functionalities. The expected structure for `strapi-server.js` (or its TypeScript variant) is:
+The server entry point file initializes your plugin's server-side functionalities. The expected structure for `strapi-server.js` is:
 
 ```js
 module.exports = () => {
@@ -223,13 +234,9 @@ module.exports = () => {
 
 Here, you export a function that returns your plugin's core components such as controllers, routes, and configuration. For more details, please refer to the [Server API reference](/cms/plugins-development/server-api).
 
-:::caution
-Without the Plugin SDK, Strapi loads a local plugin's server entry point directly through Node.js, which only resolves `.js` and `.json` files. A `strapi-server.ts` entry point is not transpiled at load time and resolves to an empty plugin, so the server entry point of a local plugin configured this way must be JavaScript. The admin entry point can still use TypeScript because the admin panel build compiles it.
-:::
-
 ### Admin entry point
 
-The admin entry point file sets up your plugin within the Strapi admin panel. The expected structure for `strapi-admin.js` (or its TypeScript variant) is:
+The admin entry point file sets up your plugin within the Strapi admin panel. The expected structure for `strapi-admin.js` is:
 
 ```js
 export default {
