@@ -31,6 +31,28 @@ were his:
 - [ ] **A brief pinch that does not move opens the page.** Proposed and not yet confirmed. It is
   what every pointing device already means by a click, it needs no new gesture, and it restores
   the only action the hand cannot otherwise perform: actually reading a page.
+- [ ] **An arming dialog that teaches the gestures, and is answered BY a gesture.** His idea, and it
+  is better than a text panel: the guide stops describing the vocabulary and becomes the first
+  exercise of it. It opens when the camera arms, names what is happening ("your camera is now
+  turned on and you are now controlling the interface with hand gestures"), describes the moves,
+  then asks for a **brief pinch to confirm** or a **swipe right to decline**. Confirming by doing
+  proves the tracking sees you at the moment you learn the gesture, rather than three minutes later
+  when you think the world is broken.
+  Reuse FIRST LIGHT's existing `#guide` dialog rather than inventing a popup: it already has the
+  frame, the SKIP and NEXT buttons, session memory and the world's voice.
+  **Declining must turn the camera OFF**, through the same disarm path the button uses, which stops
+  every track. His emphasis: "non ferme le dialogue ET eteint la camera, tres important". Hiding
+  the dialog while the camera keeps running would reintroduce by the back door exactly the trust
+  bug fixed on 2026-09-08.
+  The swipe is a TIER TWO verb: it exists only while this dialog has focus and does nothing
+  anywhere else, which is the spec's own architecture getting its first real use.
+  Threshold derived from his reference clip, not guessed: lateral palm speed above 1.0 units/s
+  sustained over 4 frames, open hand only. His natural maximum with an open hand across 69 seconds
+  was 0.44 u/s and there were ZERO sustained bursts above 1.0, so false positives are impossible by
+  a factor of more than two. Not yet proven: that a real deliberate swipe clears the bar, since the
+  clip contains none.
+  Both controls stay clickable with the mouse. Nothing is reachable only by gesture.
+
 - [ ] **The second hand does nothing.** Owner confirmed. Consequence worth taking: set the
   landmarker to one hand instead of two. Cheaper per frame, and it removes the ambiguity of which
   hand is primary, which today depends on MediaPipe's return order rather than on anything stable.
