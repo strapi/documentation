@@ -10,28 +10,22 @@ Last updated 2026-09-07.
 
 ## Across the lab
 
-- [ ] **Three worlds have no way back to the Design Lab.** Raised after testing FIRST LIGHT on
-  2026-09-08, and it is not a regression: FIRST LIGHT never had such a link at any point in its
-  history.
-  Corrected count, after the owner pointed out three worlds I had wrongly listed as missing. My
-  first check only grepped each world's `index.html`, but these worlds draw their interface in
-  JavaScript, so it found almost nothing. Searching the js too:
+- [ ] **FIRST LIGHT is the only world with no way back to the Design Lab.** Every other world has
+  one. Not a regression: it never had one at any point in its history.
+  Settled by LOOKING at the rendered page, after four grep-based answers that each contradicted the
+  last and all of which the owner corrected. Recorded because the method failure is the useful part:
+  every grep was a narrow proxy for the question. Searching `index.html` missed the worlds that
+  draw their interface in JavaScript; searching for the words "design lab" missed any world whose
+  way home is worded in its own idiom; searching for a link to `../` produced a FALSE POSITIVE on
+  FIRST LIGHT, because its crossings point at `../longway/` and the like. Loading the page and
+  asking the DOM for visible links answered it in one go: none.
+  When building it, match FIRST LIGHT's own idiom, and keep it discreet enough that it does not
+  hint at the crossings, which stay easter eggs.
 
-  | has one | where |
-  |---|---|
-  | The Long Way Through | `longway.js` |
-  | Pixel Docs City | `pixelcity.js` |
-  | The Herbarium | `appendix.js` and `index.html` |
-  | Carta Strapiana | `deadreckoning.js` and `harbour.inc.js` |
-
-  **Missing: FIRST LIGHT, The Four-Color, The Golden Shore.** Those three are dead ends: a visitor
-  who arrives through a crossing can only leave with the browser's back button.
-
-  Two things to settle when building it: the link must be in each world's own idiom rather than a
-  uniform button pasted onto three different visual languages, and it must not become a hint that
-  gives the crossings away, since those stay easter eggs. The four that already exist are the
-  reference for how discreet it should be, and copying whichever of them is closest in spirit to
-  each missing world is better than inventing something new.
+- [ ] **FIRST LIGHT's top bar now overflows by 77 pixels**, 1357 against a 1280 viewport, so
+  something is pushed off screen. Caused by today's work: the `HAND CONTROL` button was added to
+  that bar. Found while looking for the missing lab link. Fix before adding anything else to that
+  bar, and note that whatever way home gets built will need room there too.
 
 ## FIRST LIGHT, hand control
 
