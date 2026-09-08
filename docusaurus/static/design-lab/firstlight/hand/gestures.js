@@ -96,9 +96,42 @@ export const CLICK_MAX_MS = 400, CLICK_MAX_DIST = 0.15;
    MEANS is decided entirely by whoever is listening (today: the hand-control
    arming dialog, which reads it as decline; see firstlight.js). Lateral palm
    speed, over hand size, per second -- the same ratio-to-hand-size rule as
-   everything else in this file. SWIPE_SPEED and SWIPE_FRAMES are held at the
-   values briefed: 1.0 units/s, sustained 4 frames, direction-consistent,
-   open hand only.
+   everything else in this file, not a raw image-space speed: a threshold in
+   raw units would mean "swipe harder the further you sit from the camera",
+   the exact mistake this file's own PINCH/FIST thresholds already correct
+   elsewhere.
+
+   SWIPE_SPEED WAS FIRST SET TO 1.0, from a measurement taken in raw image
+   units and applied here without converting it -- a hand is roughly 0.279
+   of the frame, so a raw-unit speed reads about 3.6x SMALLER than the same
+   motion measured over hand size. The result was a threshold about 3.6x too
+   low for the units this code actually compares against.
+
+   RE-MEASURED IN THE RIGHT UNITS (lateral palm speed over hand size, per
+   second), over 1819 consecutive frame pairs across the whole fixture,
+   every hand state included: median 0.064, p90 0.53, p99 1.40, single-frame
+   maximum 2.04. Sustained runs of SWIPE_FRAMES=4 consecutive frames past a
+   threshold, on this same natural footage with no deliberate swipe anywhere
+   in it:
+     threshold 1.0 -> 4 involuntary triggers
+     threshold 1.5 -> 0
+     threshold 2.0 -> 0
+     threshold 2.5 -> 0
+   At the old 1.0, ordinary use fires the single most destructive gesture in
+   this vocabulary (a dismiss disarms the camera) roughly every 17 seconds
+   by accident.
+
+   SWIPE_SPEED = 2.5, not 1.5, even though 1.5 already shows zero here: 1.5
+   sits barely above this clip's own p99 (1.40) and BELOW its single fastest
+   frame (2.04), so a slightly brisker day reaches it. 2.5 clears that
+   fastest natural frame with real margin, while a deliberate swipe -- two
+   or three hand widths in about a fifth of a second -- reads as ten or more
+   in these units: the margin sits on the safe side of a gesture that cannot
+   be undone. (This file's own state reset on every pinch/fist transition,
+   see makeGestureReader below, already suppresses two of those four raw
+   1.0-threshold triggers before the direction gate below even runs; the
+   number above is measured without either protection, on purpose, so the
+   choice of 2.5 does not quietly depend on them.)
 
    DISMISS IS OUTWARD, and outward depends on which hand it is: brushing
    something away is an abduction, moving the arm away from the body's
@@ -120,7 +153,7 @@ export const CLICK_MAX_MS = 400, CLICK_MAX_DIST = 0.15;
    requiring it stay consistent for the full streak: the direction only
    exists to make the gesture comfortable, not to gate it shut when it is
    simply unknown. */
-export const SWIPE_SPEED = 1.0, SWIPE_FRAMES = 4;
+export const SWIPE_SPEED = 2.5, SWIPE_FRAMES = 4;
 
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 

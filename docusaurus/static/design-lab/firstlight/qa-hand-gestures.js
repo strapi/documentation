@@ -281,63 +281,70 @@ const path = require('path');
       out.fistOverrideClickFired = types(closing).indexOf('click') >= 0;
     }
 
-    // 7. THE SWIPE (dismiss), RIGHT hand, genuinely OUTWARD. hands.js
-    // mirrors x for display (rawX = 1 - bx), so a right hand moving to its
-    // own right -- outward, the dismiss direction -- is screen x
+    // 7. THE SWIPE (dismiss), RIGHT hand, genuinely OUTWARD, and fast
+    // enough to be UNAMBIGUOUS -- not merely above SWIPE_SPEED, but built to
+    // model an actual deliberate swipe (two or three hand widths in about a
+    // fifth of a second), so this proves the recognizer still fires at all
+    // at the corrected threshold, not just that it stays quiet (a test that
+    // only ever asserts absence would still pass with the feature deleted).
+    // hands.js mirrors x for display (rawX = 1 - bx), so a right hand moving
+    // to its own right -- outward, the dismiss direction -- is screen x
     // INCREASING but raw landmark x DECREASING. With size=0.20 and
-    // dt=0.033, a step of -0.02 gives a screen speed of (0.02/0.20)/0.033
-    // ~= 3.0 units/s, comfortably past SWIPE_SPEED=1.0.
+    // dt=0.033, a step of -0.07 gives a screen speed of (0.07/0.20)/0.033
+    // ~= 10.6 units/s, comfortably past SWIPE_SPEED=2.5 and in the
+    // ten-or-more range a real deliberate swipe reads as.
     {
       const g = makeGestureReader();
       let t = 0, cx = 0.70, dismissCount = 0;
       g.read(f(hand(0.20, 0.9, 1, cx, 0.5)), t += 0.033);            // seed: no speed measurable yet
       for (let i = 0; i < 6; i++) {
-        cx -= 0.02;
+        cx -= 0.07;
         const evs = g.read(f(hand(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
         dismissCount += types(evs).filter(x => x === 'dismiss').length;
       }
       out.swipeRightOutwardCount = dismissCount;                     // exactly 1: edge-triggered, not one per qualifying frame
     }
-    // 7b. RIGHT hand, the WRONG direction: raw x increasing is screen x
-    // decreasing, i.e. toward the body's own midline for a right hand, not
-    // away from it. This must never read as a dismiss, whatever its speed:
-    // dismiss is outward only, not "fast enough in either direction".
+    // 7b. RIGHT hand, the WRONG direction, at the same unambiguous speed:
+    // raw x increasing is screen x decreasing, i.e. toward the body's own
+    // midline for a right hand, not away from it. This must never read as a
+    // dismiss, whatever its speed: dismiss is outward only, not "fast
+    // enough in either direction".
     {
       const g = makeGestureReader();
       let t = 0, cx = 0.30;
       g.read(f(hand(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
       let fired = false;
       for (let i = 0; i < 6; i++) {
-        cx += 0.02;
+        cx += 0.07;
         const evs = g.read(f(hand(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
         if (types(evs).indexOf('dismiss') >= 0) fired = true;
       }
       out.swipeRightInwardFired = fired;
     }
-    // 7c. only 3 qualifying (outward) frames (SWIPE_FRAMES is 4): must not
-    // fire.
+    // 7c. only 3 qualifying (outward, unambiguous-speed) frames
+    // (SWIPE_FRAMES is 4): must not fire. Speed alone is not enough either.
     {
       const g = makeGestureReader();
       let t = 0, cx = 0.70;
       g.read(f(hand(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
       let fired = false;
       for (let i = 0; i < 3; i++) {
-        cx -= 0.02;
+        cx -= 0.07;
         const evs = g.read(f(hand(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
         if (types(evs).indexOf('dismiss') >= 0) fired = true;
       }
       out.swipeShortStreakFired = fired;
     }
-    // 7d. the same qualifying (outward) motion, but PINCHED: open-hand-only
-    // means exactly that. A drag across the screen must never also read as
-    // a dismiss.
+    // 7d. the same qualifying (outward, unambiguous-speed) motion, but
+    // PINCHED: open-hand-only means exactly that. A drag across the screen
+    // must never also read as a dismiss.
     {
       const g = makeGestureReader();
       let t = 0, cx = 0.70;
       g.read(f(hand(0.20, 0.2, 1, cx, 0.5)), t += 0.033);            // pinched from the start
       let fired = false;
       for (let i = 0; i < 6; i++) {
-        cx -= 0.02;
+        cx -= 0.07;
         const evs = g.read(f(hand(0.20, 0.2, 1, cx, 0.5)), t += 0.033);
         if (types(evs).indexOf('dismiss') >= 0) fired = true;
       }
@@ -355,7 +362,7 @@ const path = require('path');
       let t = 0, cx = 0.30, dismissCount = 0;
       g.read(f(handLeft(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
       for (let i = 0; i < 6; i++) {
-        cx += 0.02;
+        cx += 0.07;
         const evs = g.read(f(handLeft(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
         dismissCount += types(evs).filter(x => x === 'dismiss').length;
       }
@@ -373,7 +380,7 @@ const path = require('path');
       const g = makeGestureReader();
       let t = 0, cx = 0.40;
       g.read(f(handUnknown(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
-      const steps = [-0.02, -0.02, 0.02, 0.02, -0.02, -0.02];
+      const steps = [-0.07, -0.07, 0.07, 0.07, -0.07, -0.07];
       let fired = false;
       for (const d of steps) {
         cx += d;
@@ -394,7 +401,7 @@ const path = require('path');
       let t = 0, cx = 0.70, dismissCount = 0;
       g.read(f(handUnknown(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
       for (let i = 0; i < 6; i++) {
-        cx -= 0.02;
+        cx -= 0.07;
         const evs = g.read(f(handUnknown(0.20, 0.9, 1, cx, 0.5)), t += 0.033);
         dismissCount += types(evs).filter(x => x === 'dismiss').length;
       }
@@ -481,24 +488,25 @@ const path = require('path');
   if (r.swipeLeftOutwardCount !== 1) fails.push(`a left hand swiping outward (the mirror-image direction) fired dismiss ${r.swipeLeftOutwardCount} times, wanted exactly 1`);
   if (r.swipeUnknownReversalFired) fails.push('unknown handedness, direction reversal mid-streak, still fired a dismiss');
   if (r.swipeUnknownSustainedCount !== 1) fails.push(`unknown handedness, sustained one direction, fired dismiss ${r.swipeUnknownSustainedCount} times, wanted exactly 1`);
-  // IMPORTANT, read the report: this is NOT 0. Real, sustained,
-  // single-direction lateral hand motion exists in this clip, in the
-  // outward direction for this hand (measured directly, twice), that
-  // crosses SWIPE_SPEED for well more than SWIPE_FRAMES. The brief the
-  // swipe/dismiss thresholds were handed down with claimed zero such bursts
-  // in this exact fixture; that claim did not hold up under direct
-  // measurement (a third burst existed too, in the inward direction, which
-  // the handedness gate now correctly excludes). 2 is what real replay
-  // produces, not what was expected, and this assertion says so plainly
-  // rather than picking a number that would let a silent regression back
-  // in.
-  if (r.fixtureDismiss !== 2) fails.push(`fixture dismiss events ${r.fixtureDismiss}, wanted exactly 2 (measured; see the report on the swipe threshold)`);
+  // SWIPE_SPEED was corrected from 1.0 to 2.5 (see the comment on it in
+  // gestures.js: the original 1.0 was derived in raw image units and never
+  // converted to this file's own hand-size-normalised units, about a 3.6x
+  // error). At 1.0 this clip's entirely natural, non-deliberate motion fired
+  // 2 real dismisses; at 2.5 it fires none, because this clip contains no
+  // deliberate swipe at all. Zero is therefore the correct, and stronger,
+  // expectation: it asserts ordinary movement never dismisses, not merely
+  // that a specific pair of accidents still happens to reproduce. (Zero
+  // alone would also pass with the whole feature deleted -- the
+  // swipeRightOutwardCount/swipeLeftOutwardCount/swipeUnknownSustainedCount
+  // assertions above are what prove the recognizer still fires at all, at a
+  // speed built to be unambiguously faster than 2.5, not merely above it.)
+  if (r.fixtureDismiss !== 0) fails.push(`fixture dismiss events ${r.fixtureDismiss}, wanted exactly 0 (this clip has no deliberate swipe; see the report on the swipe threshold correction)`);
   console.log(`  hysteresis flips ${r.flips}   near/far pinched ${r.nearPinched}/${r.farPinched}   dead man's switch released ${r.releasedOnLoss} still-grabbed ${r.stillGrabbed}`);
   console.log(`  fist-vs-pinch: fist-locked ${r.fistFired}   fist-also-grabbed ${r.fistAlsoGrabbed}   pinch-after-fist ${r.pinchAfterFist}`);
   console.log(`  fan: spread rate ${r.fanSpreadRate}   closed rate ${r.fanClosedRate}   neutral events ${r.fanNeutralEvents} (want 0)   while pinched ${r.fanWhilePinched} (want 0)   while fisted ${r.fanWhileFisted} (want 0)`);
   console.log(`  click: brief ${r.briefClickFired}   long-hold ${r.longHoldClickFired} (want false)   dragged ${r.draggedClickFired} (want false)   fist-override release ${r.fistOverrideReleaseFired} click ${r.fistOverrideClickFired} (want false)`);
   console.log(`  swipe: right-outward count ${r.swipeRightOutwardCount} (want 1)   right-inward fired ${r.swipeRightInwardFired} (want false)   short streak fired ${r.swipeShortStreakFired} (want false)   while pinched ${r.swipeWhilePinchedFired} (want false)   left-outward count ${r.swipeLeftOutwardCount} (want 1)   unknown-handedness reversal fired ${r.swipeUnknownReversalFired} (want false)   unknown-handedness sustained count ${r.swipeUnknownSustainedCount} (want 1)`);
-  console.log(`  fixture: grabs ${r.fixtureGrabs}   locks ${r.fixtureLocks}   clicks ${r.fixtureClicks} (want 0)   fans ${r.fixtureFans}   dismiss ${r.fixtureDismiss} (want 2, see report)   ended-pinched ${r.fixtureStillPinched} ended-fisted ${r.fixtureStillFisted}`);
+  console.log(`  fixture: grabs ${r.fixtureGrabs}   locks ${r.fixtureLocks}   clicks ${r.fixtureClicks} (want 0)   fans ${r.fixtureFans}   dismiss ${r.fixtureDismiss} (want 0)   ended-pinched ${r.fixtureStillPinched} ended-fisted ${r.fixtureStillFisted}`);
   console.log(fails.length ? '  FAIL\n    ' + fails.join('\n    ') : '  PASS');
   await browser.close(); srv.kill();
   process.exit(fails.length ? 1 : 0);
